@@ -25,6 +25,2626 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 6.0
+<http://tiki.org/ReleaseNotes60>
+------------------
+
+----------------------------------------------
+r29884 | Jyhem | 2010-10-07 21:13:57 +0200 (Thu, 07 Oct 2010) | 1 line
+
+[FIX] Restore correct display of sitesearchbar for FireFox
+----------------------------------------------
+r29881 | lindonb | 2010-10-07 21:02:20 +0200 (Thu, 07 Oct 2010) | 1 line
+
+Add icon to represent the plugin.
+----------------------------------------------
+r29880 | Jyhem | 2010-10-07 20:37:16 +0200 (Thu, 07 Oct 2010) | 1 line
+
+[FIX] Restore 100% width for non fixed-width option in FireFox
+----------------------------------------------
+r29879 | eromneg | 2010-10-07 20:09:06 +0200 (Thu, 07 Oct 2010) | 1 line
+
+[FIX] split row so that edit screen has full width so that wysiwyg editor shows as close as possible to the actual width
+----------------------------------------------
+r29878 | eromneg | 2010-10-07 19:44:43 +0200 (Thu, 07 Oct 2010) | 1 line
+
+[FIX] provide id to allow css changes to html within newsletter send iframe
+----------------------------------------------
+r29877 | sampaioprimo | 2010-10-07 19:30:22 +0200 (Thu, 07 Oct 2010) | 1 line
+
+Hungarian tranlations done by different contributors on i18n.tiki.org
+----------------------------------------------
+r29876 | sampaioprimo | 2010-10-07 19:12:47 +0200 (Thu, 07 Oct 2010) | 1 line
+
+Welsh tranlations done by different contributors on i18n.tiki.org
+----------------------------------------------
+r29875 | sampaioprimo | 2010-10-07 19:07:35 +0200 (Thu, 07 Oct 2010) | 1 line
+
+Brazilian Portuguese tranlations done by different contributors on i18n.tiki.org
+----------------------------------------------
+r29874 | sampaioprimo | 2010-10-07 19:05:41 +0200 (Thu, 07 Oct 2010) | 1 line
+
+Catal?\195?\160 tranlations done by different contributors on i18n.tiki.org
+----------------------------------------------
+r29873 | sampaioprimo | 2010-10-07 19:00:28 +0200 (Thu, 07 Oct 2010) | 1 line
+
+French tranlations done by different contributors on i18n.tiki.org
+----------------------------------------------
+r29872 | nkoth | 2010-10-07 18:46:49 +0200 (Thu, 07 Oct 2010) | 1 line
+
+[FIX] Autosavefields specified through query string was not being saved
+----------------------------------------------
+r29871 | sept_7 | 2010-10-07 17:34:03 +0200 (Thu, 07 Oct 2010) | 2 lines
+
+[FIX/bp 29870] fix incorrect include path
+
+----------------------------------------------
+r29868 | sylvieg | 2010-10-07 16:58:36 +0200 (Thu, 07 Oct 2010) | 1 line
+
+[FIX]TRACKER: smarty addign date and itemId to use in the custom mail
+----------------------------------------------
+r29867 | nyloth | 2010-10-07 16:11:15 +0200 (Thu, 07 Oct 2010) | 1 line
+
+[FIX] blogs: display an error when trying to display a post that does not exist.
+----------------------------------------------
+r29865 | sept_7 | 2010-10-07 13:27:00 +0200 (Thu, 07 Oct 2010) | 3 lines
+
+[FIX/bp29863] more directories ignored for the language files, mostly externals.
+This will help speeding things up in release script by avoiding useless work.
+
+----------------------------------------------
+r29864 | sept_7 | 2010-10-07 13:25:39 +0200 (Thu, 07 Oct 2010) | 2 lines
+
+[FIX/bp 29860 29861 29862] dos to unix file convertion, missing svn:properties
+
+----------------------------------------------
+r29859 | chibaguy | 2010-10-07 12:19:25 +0200 (Thu, 07 Oct 2010) | 1 line
+
+[FIX] Keep wide column content from overlapping. (Needs to be tested in all browsers and if javascript and textarea errors continue, in fixed-width and no-fixed-width configurations.)
+----------------------------------------------
+r29858 | Jyhem | 2010-10-07 12:06:40 +0200 (Thu, 07 Oct 2010) | 1 line
+
+[FIX] Remove notice
+----------------------------------------------
+r29857 | sept_7 | 2010-10-07 10:20:28 +0200 (Thu, 07 Oct 2010) | 4 lines
+
+[FIX/bp 29855] Fix error path to avoid file write error if file is not
+writable, fix notice, and add directories not to look like Zend, phplayers,
+ezcomponent etc.
+
+----------------------------------------------
+r29856 | sept_7 | 2010-10-07 10:15:28 +0200 (Thu, 07 Oct 2010) | 2 lines
+
+[ENH/bp 29854] Indentation to ease further patches
+
+----------------------------------------------
+r29853 | marclaporte | 2010-10-07 07:40:33 +0200 (Thu, 07 Oct 2010) | 1 line
+
+[MOD] On new installs, better defaults to permits to http://doc.tiki.org/Show+changes before saving, as part of http://doc.tiki.org/Live+preview   I expect debate on this change.
+----------------------------------------------
+r29852 | jonnybradley | 2010-10-07 06:25:11 +0200 (Thu, 07 Oct 2010) | 1 line
+
+[FIX] parser: Allow external wikis to be case-insensitive
+----------------------------------------------
+r29851 | marclaporte | 2010-10-07 05:04:12 +0200 (Thu, 07 Oct 2010) | 1 line
+
+[FIX] consistent title for external wiki admin panel
+----------------------------------------------
+r29850 | jonnybradley | 2010-10-07 04:55:52 +0200 (Thu, 07 Oct 2010) | 1 line
+
+[MOD] wiki_plugin_edit_view: Move toggle icone after page edit and change icons to plugin based ones.
+----------------------------------------------
+r29849 | marclaporte | 2010-10-07 04:15:01 +0200 (Thu, 07 Oct 2010) | 1 line
+
+TikiWiki -> Tiki
+----------------------------------------------
+r29848 | marclaporte | 2010-10-07 03:54:33 +0200 (Thu, 07 Oct 2010) | 1 line
+
+leftover pref
+----------------------------------------------
+r29847 | marclaporte | 2010-10-07 03:45:57 +0200 (Thu, 07 Oct 2010) | 1 line
+
+new domain name
+----------------------------------------------
+r29846 | lindonb | 2010-10-07 03:33:56 +0200 (Thu, 07 Oct 2010) | 1 line
+
+[KIL] Ancient code with queries on non-existent fields
+----------------------------------------------
+r29845 | lindonb | 2010-10-07 02:23:41 +0200 (Thu, 07 Oct 2010) | 1 line
+
+[KIL] Delete unused plugin filelink. To do: incorporate this into an existing plugin (plugin file and/or files). As discussed at TikiFestNY.
+----------------------------------------------
+r29844 | nyloth | 2010-10-07 00:08:11 +0200 (Thu, 07 Oct 2010) | 1 line
+
+[FIX] lite.css : 'display: table' on the body is causing a lot of javascript problems / weird behaviors, especially when trying to get selection range of textareas.
+----------------------------------------------
+r29843 | jonnybradley | 2010-10-06 23:56:26 +0200 (Wed, 06 Oct 2010) | 1 line
+
+[FIX] files plugin: Better titles and descriptions, use advanced section for some params, add fgal picker for fileId.
+----------------------------------------------
+r29842 | nyloth | 2010-10-06 23:47:06 +0200 (Wed, 06 Oct 2010) | 1 line
+
+[FIX] freetags : display 'no result' when there is no result found + parse tag description + strip_tags on tags names and description
+----------------------------------------------
+r29841 | nyloth | 2010-10-06 23:04:55 +0200 (Wed, 06 Oct 2010) | 1 line
+
+[FIX] dos2unix on templates/tiki-browse_freetags.tpl
+----------------------------------------------
+r29840 | jonnybradley | 2010-10-06 22:58:44 +0200 (Wed, 06 Oct 2010) | 1 line
+
+[FIX] kaltura: Workaround for save/publish not setting editor type (so you have to do it in "change details" form)
+----------------------------------------------
+r29839 | changi67 | 2010-10-06 22:19:21 +0200 (Wed, 06 Oct 2010) | 1 line
+
+~FIX~ Put the right svn property - thx pkdille
+----------------------------------------------
+r29838 | Jyhem | 2010-10-06 21:30:32 +0200 (Wed, 06 Oct 2010) | 1 line
+
+[FIX] Correct IE7 bug which displayed input field incorrectly in case searchbar is apparent
+----------------------------------------------
+r29837 | chealer | 2010-10-06 21:08:09 +0200 (Wed, 06 Oct 2010) | 1 line
+
+[FIX] Admin panel: don't say there's a new version if stable.version has old version or tiki_release from cache is outdated
+----------------------------------------------
+r29836 | nyloth | 2010-10-06 20:48:21 +0200 (Wed, 06 Oct 2010) | 1 line
+
+[FIX] CAS authentication: Keep cas=y argument for the login page when redirect to https or http.
+----------------------------------------------
+r29835 | jonnybradley | 2010-10-06 19:55:39 +0200 (Wed, 06 Oct 2010) | 1 line
+
+[FIX] kaltura: Respect page size on lists, and reveal hidden editor pref
+----------------------------------------------
+r29834 | nyloth | 2010-10-06 19:11:38 +0200 (Wed, 06 Oct 2010) | 1 line
+
+[FIX] filegals: fix images alignement in FF, IE6 and IE7 when the lines around the image varies too much
+----------------------------------------------
+r29833 | nyloth | 2010-10-06 18:59:39 +0200 (Wed, 06 Oct 2010) | 1 line
+
+[FIX] header: use breadcrumbs only if prefs.feature_breadcrumbs is enabled + also translate browsertitle and headtitle
+----------------------------------------------
+r29832 | nyloth | 2010-10-06 18:44:41 +0200 (Wed, 06 Oct 2010) | 1 line
+
+[FIX] file galleries: be able to change parent gallery just after creating a new gallery
+----------------------------------------------
+r29831 | nyloth | 2010-10-06 18:01:23 +0200 (Wed, 06 Oct 2010) | 1 line
+
+[FIX] Fix the rendering with ie7 and jquery.slidedown (correct edit tab in trackers for ie7) - this is a known jquery bug (http://dev.jquery.com/ticket/3120) which is not fixed yet.
+----------------------------------------------
+r29829 | nyloth | 2010-10-06 17:12:03 +0200 (Wed, 06 Oct 2010) | 7 lines
+
+[FIX] CAS authentication / auto-login SSO
+- Avoid CAS periodic revalidation on POST methods and when using CLI, because CAS is not able to handle those cases and data will be lost (especially POST data)
+- Auto-login SSO : do not force redirection to authentication page if not already logged in SSO
+- Auto-login SSO : Avoid infinite loop when not logged into SSO
+- Allow users to choose if the CAS logout should also log out from the CAS SSO
+
+
+----------------------------------------------
+r29828 | sept_7 | 2010-10-06 15:55:12 +0200 (Wed, 06 Oct 2010) | 7 lines
+
+[ENH/bp29805] Change the way already minified JS are handled.
+We skip minifying files if:
+ o the file name ends with '.min.js'
+ o or is added with headerlib->add_jsfile($file,$rank,true)
+  the third argument means : true minified file, false normal file
+With this modification we don't break JS file order.
+
+----------------------------------------------
+r29827 | sept_7 | 2010-10-06 15:53:34 +0200 (Wed, 06 Oct 2010) | 2 lines
+
+[EHN/bp29804 29814 29819 29820 29823] French translation + typo + allow more strings to be translated
+
+----------------------------------------------
+r29826 | nyloth | 2010-10-06 11:53:11 +0200 (Wed, 06 Oct 2010) | 1 line
+
+[FIX] Loses the session when creating a page with the character exclamation mark in the name (tested using https).
+----------------------------------------------
+r29824 | chibaguy | 2010-10-06 06:54:23 +0200 (Wed, 06 Oct 2010) | 1 line
+
+[FIX] Button hover style wasn't being applied (at least in Firefox) because hover state selector wasn't as specific as normal state (".button" vs. "span.button"). Thanks to Xavi for reporting.
+----------------------------------------------
+r29818 | pkdille | 2010-10-05 23:48:10 +0200 (Tue, 05 Oct 2010) | 1 line
+
+Rollback r29815 - too late in this branch
+----------------------------------------------
+r29817 | pkdille | 2010-10-05 23:47:45 +0200 (Tue, 05 Oct 2010) | 1 line
+
+Rollback #29812 - too late in this branch
+----------------------------------------------
+r29815 | pkdille | 2010-10-05 23:07:52 +0200 (Tue, 05 Oct 2010) | 1 line
+
+some code cleanup (zend rules) - seen on quality.tw.o
+----------------------------------------------
+r29809 | changi67 | 2010-10-05 21:05:51 +0200 (Tue, 05 Oct 2010) | 1 line
+
+accidently remove comment
+----------------------------------------------
+r29808 | changi67 | 2010-10-05 21:03:44 +0200 (Tue, 05 Oct 2010) | 1 line
+
+[FIX] Release script is broken because  is not set when you don't have a db/local.php
+----------------------------------------------
+r29806 | Jyhem | 2010-10-05 19:43:01 +0200 (Tue, 05 Oct 2010) | 1 line
+
+[FIX] Correct IE7 bug which displayed input field incorrectly
+----------------------------------------------
+r29803 | nkoth | 2010-10-05 17:13:54 +0200 (Tue, 05 Oct 2010) | 1 line
+
+[FIX] Prevent notices
+----------------------------------------------
+r29802 | nkoth | 2010-10-05 17:11:27 +0200 (Tue, 05 Oct 2010) | 1 line
+
+[FIX] Page links was broken (empty pagename) when redirect to similar was on, for aliases
+----------------------------------------------
+r29801 | sylvieg | 2010-10-05 16:54:17 +0200 (Tue, 05 Oct 2010) | 1 line
+
+[FIX]articles: pagination must be outside the loop
+----------------------------------------------
+r29800 | xavidp | 2010-10-05 13:34:42 +0200 (Tue, 05 Oct 2010) | 1 line
+
+[FIX]Fix description of the tip, since it can be shown in places where there is no "preview" button (textareas in wiki pages through PluginTracker calls, etc). while there is no better fix for this ...
+----------------------------------------------
+r29799 | chealer | 2010-10-05 08:34:04 +0200 (Tue, 05 Oct 2010) | 1 line
+
+[FIX] Since last visit module: Do not show comments which are not approved
+----------------------------------------------
+r29798 | jonnybradley | 2010-10-05 07:53:54 +0200 (Tue, 05 Oct 2010) | 1 line
+
+[FIX] kaltura: Remove upload widget after adding media.
+----------------------------------------------
+r29797 | jonnybradley | 2010-10-05 07:47:30 +0200 (Tue, 05 Oct 2010) | 1 line
+
+[DOC] kaltura: Use new plugin syntax (properly)
+----------------------------------------------
+r29796 | jonnybradley | 2010-10-05 07:23:30 +0200 (Tue, 05 Oct 2010) | 1 line
+
+[DOC] kaltura: Add plugin embed code to kaltura   info box.
+----------------------------------------------
+r29795 | marclaporte | 2010-10-05 06:52:04 +0200 (Tue, 05 Oct 2010) | 1 line
+
+[FIX] Updated help message for Kaltura 
+----------------------------------------------
+r29794 | jonnybradley | 2010-10-05 06:40:47 +0200 (Tue, 05 Oct 2010) | 1 line
+
+[FIX] plugin approval: De-sanitize plugin data to make fingerprints consistant with 5.x (so they don't need re-approving).
+----------------------------------------------
+r29793 | jonnybradley | 2010-10-05 06:30:20 +0200 (Tue, 05 Oct 2010) | 1 line
+
+[FIX] parse_data: Move test for not adding line-ends on single line "pages" to happen when wiki paragraph processing only. Fixes unit tests on parser (which don't test wiki para mode).
+----------------------------------------------
+r29792 | marclaporte | 2010-10-05 05:12:48 +0200 (Tue, 05 Oct 2010) | 1 line
+
+[DOC] this script is not working for me so documenting a workaround
+----------------------------------------------
+r29791 | marclaporte | 2010-10-05 05:10:08 +0200 (Tue, 05 Oct 2010) | 1 line
+
+spaces between words are nice
+----------------------------------------------
+r29787 | marclaporte | 2010-10-05 02:01:56 +0200 (Tue, 05 Oct 2010) | 1 line
+
+typos
+----------------------------------------------
+r29785 | sylvieg | 2010-10-04 20:07:07 +0200 (Mon, 04 Oct 2010) | 1 line
+
+[FIX]toolbar: when the toolbar is comment toolbar of the section links admin toolbar to the comment version
+----------------------------------------------
+r29781 | sylvieg | 2010-10-04 18:51:45 +0200 (Mon, 04 Oct 2010) | 1 line
+
+[FIX]toolbar: missing -=title bar=-
+----------------------------------------------
+r29780 | sylvieg | 2010-10-04 18:20:24 +0200 (Mon, 04 Oct 2010) | 1 line
+
+[NEW]captcha: introduce new params to have an easier code to read and to be able to specify image size to fit in a column
+----------------------------------------------
+r29778 | luciash | 2010-10-04 08:49:03 +0200 (Mon, 04 Oct 2010) | 1 line
+
+Kaltura entries: refactoring to avoid code duplication
+----------------------------------------------
+r29777 | lindonb | 2010-10-04 05:51:38 +0200 (Mon, 04 Oct 2010) | 1 line
+
+[FIX} Add plugin edit options and info. No change to functionality.
+----------------------------------------------
+r29776 | jonnybradley | 2010-10-04 05:51:23 +0200 (Mon, 04 Oct 2010) | 1 line
+
+[FIX] kaltura: Status as text and upload link to media not mixes
+----------------------------------------------
+r29775 | luciash | 2010-10-04 05:28:40 +0200 (Mon, 04 Oct 2010) | 1 line
+
+oops, brining back the bottom: -1px for remarksbox titles
+----------------------------------------------
+r29774 | luciash | 2010-10-04 05:17:31 +0200 (Mon, 04 Oct 2010) | 1 line
+
+[ENH] Kaltura entries: Add New Media link
+----------------------------------------------
+r29773 | nkoth | 2010-10-04 05:08:20 +0200 (Mon, 04 Oct 2010) | 1 line
+
+[FIX] New defaults
+----------------------------------------------
+r29772 | luciash | 2010-10-04 04:54:55 +0200 (Mon, 04 Oct 2010) | 1 line
+
+[ENH] Kaltura entries: better labels on button links + real buttons floated on right
+----------------------------------------------
+r29771 | nkoth | 2010-10-04 04:54:42 +0200 (Mon, 04 Oct 2010) | 1 line
+
+[FIX] only show Modified By when Kaltura user is Tiki user (also works around apparent Kaltura Safari problem where __ADMIN__xxxxx user is recorded as Modified By.
+----------------------------------------------
+r29770 | nkoth | 2010-10-04 04:50:15 +0200 (Mon, 04 Oct 2010) | 1 line
+
+[FIX] sorting of mix entries
+----------------------------------------------
+r29769 | nkoth | 2010-10-04 04:27:25 +0200 (Mon, 04 Oct 2010) | 1 line
+
+[FIX] proper link to admin panel
+----------------------------------------------
+r29768 | jonnybradley | 2010-10-04 04:09:30 +0200 (Mon, 04 Oct 2010) | 1 line
+
+[FIX] kaltura: Update entry properties fixed
+----------------------------------------------
+r29767 | nkoth | 2010-10-04 03:39:25 +0200 (Mon, 04 Oct 2010) | 1 line
+
+[FIX] Change filenames referred to
+----------------------------------------------
+r29766 | jonnybradley | 2010-10-04 03:01:37 +0200 (Mon, 04 Oct 2010) | 1 line
+
+[FIX] kaltura: Use prefs instead of hard-coded values for player etc.
+----------------------------------------------
+r29765 | luciash | 2010-10-04 03:01:34 +0200 (Mon, 04 Oct 2010) | 1 line
+
+[FIX] fixing gap (introduced by xhtml strict switch) between remarksbox title and data
+----------------------------------------------
+r29764 | jonnybradley | 2010-10-04 03:00:27 +0200 (Mon, 04 Oct 2010) | 1 line
+
+[KIL] Remove 2 old tpls not used any more and a comment about them (from early kaltura dev)
+----------------------------------------------
+r29763 | jonnybradley | 2010-10-04 02:03:14 +0200 (Mon, 04 Oct 2010) | 2 lines
+
+[FIX] kaltura: Many fixes from the Open Video Conference Hack Day.
+API updates, new players and numerous fixes.
+----------------------------------------------
+r29762 | sylvieg | 2010-10-04 00:04:26 +0200 (Mon, 04 Oct 2010) | 1 line
+
+[FIX]article: sefurl from last comments mustr open the comments zone and anchor the thread
+----------------------------------------------
+r29758 | sylvieg | 2010-10-02 16:08:03 +0200 (Sat, 02 Oct 2010) | 1 line
+
+translation
+----------------------------------------------
+r29757 | pkdille | 2010-10-02 08:01:40 +0200 (Sat, 02 Oct 2010) | 1 line
+
+[MOD] add tabs to admin menu menu options template
+----------------------------------------------
+r29754 | xavidp | 2010-10-01 13:52:49 +0200 (Fri, 01 Oct 2010) | 1 line
+
+[FIX]Fix wrong description of incompatibilities in current stable geshi releases (1.0.8.9), related to colors & line numbers, and wrap & line numbers.
+----------------------------------------------
+r29753 | jonnybradley | 2010-09-30 23:18:44 +0200 (Thu, 30 Sep 2010) | 1 line
+
+[FIX] kaltura: Make the kaltura "user" value a pref instead of being hard-wired to the server's host name.
+----------------------------------------------
+r29752 | jonnybradley | 2010-09-30 22:35:14 +0200 (Thu, 30 Sep 2010) | 1 line
+
+[FIX] kaltura: No need for the config to be in a function
+----------------------------------------------
+r29751 | jonnybradley | 2010-09-30 22:27:01 +0200 (Thu, 30 Sep 2010) | 1 line
+
+[REF] kaltura: Refactoring common code into lib
+----------------------------------------------
+r29750 | jonnybradley | 2010-09-30 21:16:15 +0200 (Thu, 30 Sep 2010) | 1 line
+
+[FIX] ckeditor: Don't attempt to do wysiwyg for trackerlists, far too dangerous. So just show the syntax as a placeholder.
+----------------------------------------------
+r29749 | sylvieg | 2010-09-30 21:14:14 +0200 (Thu, 30 Sep 2010) | 1 line
+
+[FIX]multitiki: create the local.php in the tikidomain subdir + ise tikkidomainslash
+----------------------------------------------
+r29748 | jonnybradley | 2010-09-30 20:17:36 +0200 (Thu, 30 Sep 2010) | 1 line
+
+[FIX} toolbars: PageBreak syntax was getting parsed when toolbar was in a plugin (like TRACKER)
+----------------------------------------------
+r29747 | jonnybradley | 2010-09-30 19:14:51 +0200 (Thu, 30 Sep 2010) | 1 line
+
+[DOC] htaccess: Small hint about RewriteBase
+----------------------------------------------
+r29746 | sylvieg | 2010-09-30 17:53:48 +0200 (Thu, 30 Sep 2010) | 1 line
+
+[FIX]installer: multitiki lock
+----------------------------------------------
+r29744 | sdoh | 2010-09-30 17:22:03 +0200 (Thu, 30 Sep 2010) | 1 line
+
+[FIX] youtube playlist videos module : add missing global
+----------------------------------------------
+r29743 | cdrwhite | 2010-09-30 16:46:11 +0200 (Thu, 30 Sep 2010) | 2 lines
+
+[FIX] Correct icon name for share in fgal_context_menu and correct callback URL in admin social networks
+
+----------------------------------------------
+r29741 | xavidp | 2010-09-30 11:33:48 +0200 (Thu, 30 Sep 2010) | 1 line
+
+[FIX]Add common params to the wiki edit help for toc and maketoc (after so many years, and I did still find useless the so scarce information about them without the common params; every time I had to go to the doc.t.o page to find their syntax)
+----------------------------------------------
+r29740 | sdoh | 2010-09-30 10:59:26 +0200 (Thu, 30 Sep 2010) | 1 line
+
+[FIX] wikiplugin youtube: remove codebase attribute which is not needed and is causing warnings on IE when accessing the site in HTTPS
+----------------------------------------------
+r29739 | sdoh | 2010-09-30 10:54:16 +0200 (Thu, 30 Sep 2010) | 1 line
+
+[FIX] Sync retrieved user infos from ldap with or without cas auth_mode. Logon with ldap auth_mode.
+----------------------------------------------
+r29738 | pkdille | 2010-09-29 22:22:37 +0200 (Wed, 29 Sep 2010) | 1 line
+
+adding 3.8 to twversion file
+----------------------------------------------
+r29736 | nkoth | 2010-09-29 21:58:44 +0200 (Wed, 29 Sep 2010) | 1 line
+
+[FIX] forum: avoid this variable may not be empty: $_POST['...'] once and for all for various different cases
+----------------------------------------------
+r29734 | sylvieg | 2010-09-29 21:12:26 +0200 (Wed, 29 Sep 2010) | 1 line
+
+[FIX]TRACKERLIST: missing filterfield=x, exactvalue=not(y) filters the items where fieldId x does not equals to y
+----------------------------------------------
+r29721 | sylvieg | 2010-09-29 17:51:20 +0200 (Wed, 29 Sep 2010) | 1 line
+
+[FIX]multilingual: when clicking on the logo go to the homepage of the current language
+----------------------------------------------
+r29720 | sylvieg | 2010-09-29 15:57:55 +0200 (Wed, 29 Sep 2010) | 1 line
+
+[FIX]TRACKER: multilingual value for TRACKER on an already existing itemId
+----------------------------------------------
+r29719 | marclaporte | 2010-09-29 15:32:54 +0200 (Wed, 29 Sep 2010) | 1 line
+
+[DOC] In release process, adding a cleanup step to save disk space
+----------------------------------------------
+r29717 | pkdille | 2010-09-29 07:21:06 +0200 (Wed, 29 Sep 2010) | 1 line
+
+add 5.3 to twversion file
+----------------------------------------------
+r29716 | sylvieg | 2010-09-29 01:01:07 +0200 (Wed, 29 Sep 2010) | 1 line
+
+[FIX]tracker: separate textarea for each lang
+----------------------------------------------
+r29714 | chealer | 2010-09-29 00:49:35 +0200 (Wed, 29 Sep 2010) | 2 lines
+
+[FIX] Trackers: jscalendar fields popping up invisible or partly invisible due to lower z-index than tabs (0<1). Set global jscalendar z-index to 6.
+Thanks Guillaume Hamel
+----------------------------------------------
+r29694 | jonnybradley | 2010-09-28 19:42:40 +0200 (Tue, 28 Sep 2010) | 1 line
+
+[DB] Fix order for sefurl tiki-download_file.php without params (needs to happen after thumbnail, display etc)
+----------------------------------------------
+r29693 | jonnybradley | 2010-09-28 19:38:57 +0200 (Tue, 28 Sep 2010) | 1 line
+
+[FIX] fgals manager: fix syntax for when used as a picker from the plugin edit popup and fileId or the url is required. (thanks chealer)
+----------------------------------------------
+r29688 | jonnybradley | 2010-09-28 14:00:41 +0200 (Tue, 28 Sep 2010) | 1 line
+
+[FIX] ckeditor: oops
+----------------------------------------------
+r29687 | jonnybradley | 2010-09-28 13:58:29 +0200 (Tue, 28 Sep 2010) | 1 line
+
+[FIX] ckeditor: Test for autosave feature before using it.
+----------------------------------------------
+r29683 | chealer | 2010-09-28 05:19:14 +0200 (Tue, 28 Sep 2010) | 2 lines
+
+[FIX] FILELINK: handle absence of label
+oops
+----------------------------------------------
+r29681 | sept_7 | 2010-09-28 01:00:31 +0200 (Tue, 28 Sep 2010) | 3 lines
+
+[FIX/bp 29680] more sanitization of input variable to avoid varcheck error just
+after.
+
+----------------------------------------------
+r29678 | sept_7 | 2010-09-28 00:38:58 +0200 (Tue, 28 Sep 2010) | 2 lines
+
+[FIX/bp 29677] typo :(
+
+----------------------------------------------
+r29674 | chealer | 2010-09-27 21:51:54 +0200 (Mon, 27 Sep 2010) | 2 lines
+
+[FIX] tiki-jsplugin.php (reverts r29668)
+
+----------------------------------------------
+r29673 | jonnybradley | 2010-09-27 21:46:51 +0200 (Mon, 27 Sep 2010) | 1 line
+
+[FIX] ckeditor: Better handling for selection that spans multiple elements (often in Firefox)
+----------------------------------------------
+r29672 | changi67 | 2010-09-27 21:42:01 +0200 (Mon, 27 Sep 2010) | 1 line
+
+~FIX~ Fix missing column checking if they exist or not
+----------------------------------------------
+r29671 | changi67 | 2010-09-27 21:40:57 +0200 (Mon, 27 Sep 2010) | 1 line
+
+~KIL~ Remove this sql script, will be replace by a PHP one which check the column existence
+----------------------------------------------
+r29670 | changi67 | 2010-09-27 21:37:38 +0200 (Mon, 27 Sep 2010) | 1 line
+
+~FIX~ Better to ignore when already exist
+----------------------------------------------
+r29668 | sept_7 | 2010-09-27 21:07:23 +0200 (Mon, 27 Sep 2010) | 2 lines
+
+[FIX/bp 29667] PHP notice and absolute include path
+
+----------------------------------------------
+r29666 | luciash | 2010-09-27 20:44:28 +0200 (Mon, 27 Sep 2010) | 1 line
+
+[bp/r29662] information.tpl was removed
+----------------------------------------------
+r29665 | jonnybradley | 2010-09-27 20:24:53 +0200 (Mon, 27 Sep 2010) | 2 lines
+
+[FIX] ckeditor: Use the correct dataProcessor to parse the source, not the one i found in some parallel universe.
+Fixes anchor and pagebreak elements, probably others.
+----------------------------------------------
+r29663 | chealer | 2010-09-27 19:32:37 +0200 (Mon, 27 Sep 2010) | 1 line
+
+[FIX] undefined $tikipath breaking JS with display_errors and when showing notices
+----------------------------------------------
+r29661 | luciash | 2010-09-27 19:20:56 +0200 (Mon, 27 Sep 2010) | 1 line
+
+[KIL] information.tpl: unused file
+----------------------------------------------
+r29658 | pkdille | 2010-09-27 18:14:07 +0200 (Mon, 27 Sep 2010) | 1 line
+
+Homogenize titles in tiki-view_forum_thread and in tiki-view_forum
+----------------------------------------------
+r29656 | sylvieg | 2010-09-27 16:08:11 +0200 (Mon, 27 Sep 2010) | 1 line
+
+[FIX]edit section: obsolete files
+----------------------------------------------
+r29651 | chealer | 2010-09-27 09:04:08 +0200 (Mon, 27 Sep 2010) | 1 line
+
+[SEC] Add authenticity checks and switch from ticketlib[1] to ticketlib2
+----------------------------------------------
+r29646 | sampaioprimo | 2010-09-26 17:28:51 +0200 (Sun, 26 Sep 2010) | 2 lines
+
+[FIX] second attempt to fix comments listing after replying a comment (see r28688 and r29588)
+
+----------------------------------------------
+r29635 | changi67 | 2010-09-26 15:41:40 +0200 (Sun, 26 Sep 2010) | 1 line
+
+[FIX] one space left
+----------------------------------------------
+r29634 | sept_7 | 2010-09-26 12:50:48 +0200 (Sun, 26 Sep 2010) | 2 lines
+
+[FIX/bp 29629] Sanitize inputs
+
+----------------------------------------------
+r29631 | minger0 | 2010-09-26 12:45:49 +0200 (Sun, 26 Sep 2010) | 1 line
+
+[FIX] import_csv handles the utf8 byte order mark from now on
+----------------------------------------------
+r29628 | minger0 | 2010-09-26 12:38:18 +0200 (Sun, 26 Sep 2010) | 1 line
+
+[FIX] added ~np~ to the wikiplugin_back
+----------------------------------------------
+r29623 | pkdille | 2010-09-26 08:29:13 +0200 (Sun, 26 Sep 2010) | 1 line
+
+[bp/r29589] [FIX] Solve bugs of variables 'undefined is null or not object' at unloading of the page with IE
+----------------------------------------------
+r29622 | luciash | 2010-09-26 05:15:53 +0200 (Sun, 26 Sep 2010) | 1 line
+
+missing head title
+----------------------------------------------
+r29619 | sept_7 | 2010-09-26 04:46:41 +0200 (Sun, 26 Sep 2010) | 2 lines
+
+[FIX/bp 29618] Sanitize input
+
+----------------------------------------------
+r29617 | luciash | 2010-09-26 00:59:21 +0200 (Sun, 26 Sep 2010) | 1 line
+
+[FIX] installer: prevent empty browser title
+----------------------------------------------
+r29616 | luciash | 2010-09-26 00:10:34 +0200 (Sun, 26 Sep 2010) | 1 line
+
+little typo, tweaks and restored the powered by button
+----------------------------------------------
+r29614 | jonnybradley | 2010-09-25 19:53:04 +0200 (Sat, 25 Sep 2010) | 1 line
+
+[FIX] ckeditor: Clean out cke_protected comments occurring on missing images, remove duplicated code for reparsing, improve content recovery for ajax errors (a little temporary debug code still in there for now) and a couple of comment changes
+----------------------------------------------
+r29613 | jonnybradley | 2010-09-25 19:49:56 +0200 (Sat, 25 Sep 2010) | 1 line
+
+[FIX] trackerlist: implode warning
+----------------------------------------------
+r29612 | jonnybradley | 2010-09-25 19:49:12 +0200 (Sat, 25 Sep 2010) | 1 line
+
+[FIX] ckeditor: Don't try and load the home page as a stylesheet if the style option is not set or doesn't exist (makes things a bit slow)
+----------------------------------------------
+r29611 | jonnybradley | 2010-09-25 19:47:27 +0200 (Sat, 25 Sep 2010) | 1 line
+
+[MOD] plugin editor: Don't put fields with content in, in the advanced section
+----------------------------------------------
+r29610 | luciash | 2010-09-25 16:12:35 +0200 (Sat, 25 Sep 2010) | 1 line
+
+[FIX] empty theme: misplaced quote, thanks to Wizek on IRC
+----------------------------------------------
+r29609 | chibaguy | 2010-09-25 15:11:49 +0200 (Sat, 25 Sep 2010) | 1 line
+
+[FIX] Site title text was too far to left and overlapping background image.
+----------------------------------------------
+r29608 | changi67 | 2010-09-25 15:02:22 +0200 (Sat, 25 Sep 2010) | 1 line
+
+[FIX] Missing 2 for tiki3 upgrade
+----------------------------------------------
+r29607 | changi67 | 2010-09-25 14:37:23 +0200 (Sat, 25 Sep 2010) | 1 line
+
+[FIX] Modify some column param to fit Tiki6 database from previous version
+----------------------------------------------
+r29605 | jonnybradley | 2010-09-24 20:49:07 +0200 (Fri, 24 Sep 2010) | 1 line
+
+[FIX] getCookie: use defval as default value.
+----------------------------------------------
+r29604 | jonnybradley | 2010-09-24 20:35:11 +0200 (Fri, 24 Sep 2010) | 1 line
+
+[FIX] wysiwyg: Tell parse_data if it is_html to stop wiki paragraph parsing. Also stip out empty <p> tags and remove a bit of old fck code.
+----------------------------------------------
+r29603 | jonnybradley | 2010-09-24 20:01:47 +0200 (Fri, 24 Sep 2010) | 1 line
+
+[FIX] xajax: Don't use xajax link for editpage icon on wysiwyg pages. Some sort of conflict with ckeditor's JS loading system causes the editor to fail.
+----------------------------------------------
+r29602 | robertplummer | 2010-09-24 19:27:02 +0200 (Fri, 24 Sep 2010) | 1 line
+
+[FIX] Better way of selection header tags for use with jQuery.s5
+----------------------------------------------
+r29601 | jonnybradley | 2010-09-24 18:23:17 +0200 (Fri, 24 Sep 2010) | 1 line
+
+[MOD] objectperms: Show which perms are changed for direct object perms, should not change functionality.
+----------------------------------------------
+r29600 | luciash | 2010-09-24 17:05:40 +0200 (Fri, 24 Sep 2010) | 1 line
+
+[FIX] xhtml strict re-fix: label is allowed when in p, div, etc.
+----------------------------------------------
+r29599 | jonnybradley | 2010-09-24 16:58:36 +0200 (Fri, 24 Sep 2010) | 1 line
+
+[FIX] objectperms: Use correct event to trigger from filter by text links
+----------------------------------------------
+r29598 | jonnybradley | 2010-09-24 16:44:58 +0200 (Fri, 24 Sep 2010) | 1 line
+
+[FIX] pagehistory: Various fixes - use htmldiff for html pages, show is_html on history list, parse old and new html the same and allow horizontal scroll for wide lines.
+----------------------------------------------
+r29597 | luciash | 2010-09-24 15:50:18 +0200 (Fri, 24 Sep 2010) | 1 line
+
+[ADD] missing Transitions admin menu item for fresh installs
+----------------------------------------------
+r29596 | jonnybradley | 2010-09-24 15:40:21 +0200 (Fri, 24 Sep 2010) | 2 lines
+
+[FIX] plugin html: Remove sanitisation introduced by nesting {HTML} in other plugins (thanks Xavi), parse data here using is_html (as it obviously is) or decode html. Simplify unnecessary variables used.
+Remove old help function and some strange code referring to tiki 2.2 - please test.
+----------------------------------------------
+r29593 | jonnybradley | 2010-09-24 14:59:00 +0200 (Fri, 24 Sep 2010) | 1 line
+
+[FIX] installer: use $TWV->getBaseVersion() to just get version number, not the text appearing after it as well
+----------------------------------------------
+r29592 | sylvieg | 2010-09-24 14:39:53 +0200 (Fri, 24 Sep 2010) | 1 line
+
+[FIX]transition: transition can work only on group withno category
+----------------------------------------------
+r29591 | sylvieg | 2010-09-24 14:09:19 +0200 (Fri, 24 Sep 2010) | 1 line
+
+[FIX]transition: missing changes in rollback 27986/28035
+----------------------------------------------
+r29588 | sylvieg | 2010-09-24 01:18:32 +0200 (Fri, 24 Sep 2010) | 1 line
+
+[FIX]forum: rollback 28688 to have the forum back (the replies of a topic are shown instead of the topics of the forum)
+----------------------------------------------
+r29587 | sylvieg | 2010-09-24 00:21:22 +0200 (Fri, 24 Sep 2010) | 1 line
+
+[FIX]TRACKERLIST: not to have interference betwwen TRACKERLIST on the same page
+----------------------------------------------
+r29586 | robertplummer | 2010-09-23 23:52:07 +0200 (Thu, 23 Sep 2010) | 1 line
+
+[FIX] To get jQuery.s5 working correctly
+----------------------------------------------
+r29585 | changi67 | 2010-09-23 22:38:58 +0200 (Thu, 23 Sep 2010) | 1 line
+
+Oups, wrong paste
+----------------------------------------------
+r29584 | changi67 | 2010-09-23 22:36:05 +0200 (Thu, 23 Sep 2010) | 1 line
+
+[DB] Fix column position between fresh install and upgrade - please use the AFTER parameter
+----------------------------------------------
+r29583 | changi67 | 2010-09-23 22:14:19 +0200 (Thu, 23 Sep 2010) | 1 line
+
+[FIX] XHTML Strict - label is not allowed 
+----------------------------------------------
+r29582 | changi67 | 2010-09-23 22:13:42 +0200 (Thu, 23 Sep 2010) | 1 line
+
+[FIX] XHTML Strict - Missing alt
+----------------------------------------------
+r29581 | changi67 | 2010-09-23 21:50:53 +0200 (Thu, 23 Sep 2010) | 1 line
+
+[FIX] We are still in september
+----------------------------------------------
+r29580 | changi67 | 2010-09-23 21:46:08 +0200 (Thu, 23 Sep 2010) | 1 line
+
+[DB] Missing tweetId column in tiki_shoutbox - maybe a missing file in commit r27056
+----------------------------------------------
+r29579 | jonnybradley | 2010-09-23 21:28:19 +0200 (Thu, 23 Sep 2010) | 1 line
+
+[DB] Fix columns tiki_user_votings.user and tiki_transitions.transition_lookup to be like upgrades
+----------------------------------------------
+r29578 | changi67 | 2010-09-23 21:15:55 +0200 (Thu, 23 Sep 2010) | 1 line
+
+[FIX] Lost caracter :( sorry for that
+----------------------------------------------
+r29577 | changi67 | 2010-09-23 21:04:23 +0200 (Thu, 23 Sep 2010) | 1 line
+
+[FIX] Missing db upgrade for Social Networking ( missing file in commit r27056)
+----------------------------------------------
+r29576 | changi67 | 2010-09-23 20:56:47 +0200 (Thu, 23 Sep 2010) | 1 line
+
+[FIX] Remove reltype because it's kill when you upgrade from previous version (maybe a missing file in commit 27753)
+----------------------------------------------
+r29574 | nkoth | 2010-09-23 19:15:53 +0200 (Thu, 23 Sep 2010) | 1 line
+
+[FIX] previous commit (strpos is faster than strstr)
+----------------------------------------------
+r29573 | nkoth | 2010-09-23 19:11:31 +0200 (Thu, 23 Sep 2010) | 1 line
+
+[FIX] Prevent ambiguous field database errors on clicking on headings in forum post listing
+----------------------------------------------
+r29572 | nkoth | 2010-09-23 19:08:20 +0200 (Thu, 23 Sep 2010) | 1 line
+
+[bp/r29569][FIX] Unable to sort by number of attachments (database error) so hide UI. Not useful anyway.
+----------------------------------------------
+r29571 | nkoth | 2010-09-23 19:06:54 +0200 (Thu, 23 Sep 2010) | 1 line
+
+[bp/r29565][FIX] Prevent non-link words from being changed when page is being renamedw hen page contains both links and non-links of that pagename being renamed
+----------------------------------------------
+r29568 | jonnybradley | 2010-09-23 18:40:26 +0200 (Thu, 23 Sep 2010) | 1 line
+
+[FIX] wysiwyg plugins: Don't add JS with headerlib during wysiwyg parsing as it kills ckeditor. This fixes googlemaps and probably several others.
+----------------------------------------------
+r29567 | jonnybradley | 2010-09-23 18:37:56 +0200 (Thu, 23 Sep 2010) | 1 line
+
+[FIX] preview: getCookie() disappointingly returns null, so use "" as default to stop the select menu being blanked out
+----------------------------------------------
+r29559 | chealer | 2010-09-22 21:14:39 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[FIX] perspectivelib->get_domain_map(): if multidomain_active is not set, consider it takes its default value
+----------------------------------------------
+r29557 | chealer | 2010-09-22 20:44:41 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[FIX] PHP notice "Undefined index: 1" when multidomain_config contains empty lines, breaking sites displaying PHP notices using gzip compression
+----------------------------------------------
+r29556 | jonnybradley | 2010-09-22 20:36:27 +0200 (Wed, 22 Sep 2010) | 1 line
+
+xhtml strict markup validation: Missing </div>
+----------------------------------------------
+r29555 | sylvieg | 2010-09-22 20:34:37 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[bp 29511][FIX]TRACKERFILTER: allow next/previous between items when using trackerfilter and a pretty tracker for each item (with param showpagination=y on the TRACKERLIST(itemId=, wiki=
+----------------------------------------------
+r29554 | jonnybradley | 2010-09-22 20:18:22 +0200 (Wed, 22 Sep 2010) | 1 line
+
+xhtml strict markup validation: Shouldn't have frames in a non-frameset page. Replaced iframe with object.
+----------------------------------------------
+r29551 | pkdille | 2010-09-22 19:51:08 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[FIX] tiki-show_page: if not stripped, the content is never empty and the following test on the captured section fails
+----------------------------------------------
+r29550 | jonnybradley | 2010-09-22 19:42:36 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[FIX] sheets: Add help doc - doesn't validate, TODO in external repo
+----------------------------------------------
+r29549 | jonnybradley | 2010-09-22 19:29:07 +0200 (Wed, 22 Sep 2010) | 1 line
+
+xhtml strict markup validation: <col> tag should be self closing
+----------------------------------------------
+r29548 | luciash | 2010-09-22 19:26:37 +0200 (Wed, 22 Sep 2010) | 1 line
+
+xhtml strict markup validation: form - there is no attribute "name"
+----------------------------------------------
+r29547 | luciash | 2010-09-22 19:23:40 +0200 (Wed, 22 Sep 2010) | 1 line
+
+xhtml strict markup validation: img invalid attribute "name"
+----------------------------------------------
+r29546 | jonnybradley | 2010-09-22 19:15:48 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[FIX] toolbars: Fix missing icons. Use lowercase on ck only ones, use wiki ones for ck tools without ck icons. Add some exceptions for oddities in ckeditor css.
+----------------------------------------------
+r29545 | jonnybradley | 2010-09-22 19:15:14 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[FIX] toolbars: Fix missing icons. Remove capitalised ones first.
+----------------------------------------------
+r29544 | luciash | 2010-09-22 19:13:16 +0200 (Wed, 22 Sep 2010) | 1 line
+
+xhtml strict markup validation: missing fieldset
+----------------------------------------------
+r29543 | jonnybradley | 2010-09-22 19:00:31 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[FIX] toolbars: Clear sheet view_mode if not in sheet section.
+----------------------------------------------
+r29542 | jonnybradley | 2010-09-22 18:59:21 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[MOD] toolbars: Add most wysiwyg tools to toobars, and help to sheet's one.
+----------------------------------------------
+r29541 | luciash | 2010-09-22 18:56:39 +0200 (Wed, 22 Sep 2010) | 1 line
+
+xhtml markup validation: replaced role attribute
+----------------------------------------------
+r29540 | luciash | 2010-09-22 18:52:14 +0200 (Wed, 22 Sep 2010) | 1 line
+
+xhtml markup validation: replaced role attribute, will be re-introduced for Tiki 7
+----------------------------------------------
+r29539 | luciash | 2010-09-22 18:32:44 +0200 (Wed, 22 Sep 2010) | 1 line
+
+style attribute CSS validation (reported by Opera error console)
+----------------------------------------------
+r29537 | jonnybradley | 2010-09-22 17:23:51 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[FIX] toggleCols: CSS was the right way after all, just needed the right selector (good on all bundled themes except for "Twist")
+----------------------------------------------
+r29536 | Jyhem | 2010-09-22 17:16:19 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[FIX] Tabs-spaces cleanup: Hunt and remove tabs not on beginning of lines so as not to confuse opera (see r29525)
+----------------------------------------------
+r29534 | sylvieg | 2010-09-22 16:58:58 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[FIX]article: do not need to confirm on preview ans save
+----------------------------------------------
+r29531 | luciash | 2010-09-22 16:39:22 +0200 (Wed, 22 Sep 2010) | 1 line
+
+xhtml strict markup validation
+----------------------------------------------
+r29528 | luciash | 2010-09-22 16:22:22 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[MOD] img border strict markup validation (using style="border: none" instead of border="0" attribute)
+----------------------------------------------
+r29527 | sylvieg | 2010-09-22 15:40:42 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[FIX]user: delete the watch user and not current user
+----------------------------------------------
+r29526 | luciash | 2010-09-22 15:35:17 +0200 (Wed, 22 Sep 2010) | 1 line
+
+CSS menus: missing value unit
+----------------------------------------------
+r29525 | luciash | 2010-09-22 15:05:14 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[FIX] Non-minified CSS Menus: Opera failed when there was a tab instead of space between property name and its value !
+----------------------------------------------
+r29523 | xavidp | 2010-09-22 11:17:27 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[FIX]Add missing icon for special characters since branch 6.x has been created (I guess it was missing by mistake). Otherwise, add a different icon or fix url to other icon in tpl's
+----------------------------------------------
+r29521 | chealer | 2010-09-22 04:10:39 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[bp/r29519-29520] update htaccess revision, changing from Tiki version to Subversion revision.
+----------------------------------------------
+r29518 | luciash | 2010-09-22 03:13:36 +0200 (Wed, 22 Sep 2010) | 1 line
+
+oops, wrong quotes
+----------------------------------------------
+r29517 | sampaioprimo | 2010-09-22 03:12:12 +0200 (Wed, 22 Sep 2010) | 1 line
+
+pt-br translation
+----------------------------------------------
+r29516 | luciash | 2010-09-22 03:07:10 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[FIX] solution for correct position of the sitelogo img when there is secondary sitemenu custom code on top
+----------------------------------------------
+r29515 | luciash | 2010-09-22 01:31:03 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[FIX] Darkshine theme tiki.tpl: Ajax loading needs div id="role_main" in #tiki-center
+----------------------------------------------
+r29514 | luciash | 2010-09-22 01:22:35 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[FIX] Darkshine theme: visual fix for tabs
+----------------------------------------------
+r29513 | luciash | 2010-09-22 01:19:51 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[FIX] due the Tiki 6 !DOCTYPE switch to xHTML Strict tabs view needs a little CSS adjustment
+----------------------------------------------
+r29512 | luciash | 2010-09-22 01:04:45 +0200 (Wed, 22 Sep 2010) | 1 line
+
+!DOCTYPE switch to xHTML Strict - affects slightly the tabs view (one-line fix coming in layout.css); we were too long in the Transitional mode... Tiki 6 as LTS deserves it ;) - the next one (Tiki 7) will be (hopefully) HTML5 already
+----------------------------------------------
+r29510 | sylvieg | 2010-09-22 00:33:04 +0200 (Wed, 22 Sep 2010) | 1 line
+
+[bp 29509][FIX]deprecated split
+----------------------------------------------
+r29506 | jonnybradley | 2010-09-21 20:37:03 +0200 (Tue, 21 Sep 2010) | 1 line
+
+rollback changes to test - wrong branch (should have been in trunk)
+----------------------------------------------
+r29504 | sampaioprimo | 2010-09-21 20:28:40 +0200 (Tue, 21 Sep 2010) | 2 lines
+
+[FIX] include tiki-sefurl.php before calling filter_out_sefurl()
+
+----------------------------------------------
+r29502 | jonnybradley | 2010-09-21 20:05:24 +0200 (Tue, 21 Sep 2010) | 2 lines
+
+[BRANCH] Manually created branches/6.x 0 to 29485
+(bogus commit again)
+----------------------------------------------
+r29501 | jonnybradley | 2010-09-21 19:59:20 +0200 (Tue, 21 Sep 2010) | 2 lines
+
+[BRANCH] Manually created 6.x 0 to 29485
+(bogus commit to start merge script)
+----------------------------------------------
+r29500 | jonnybradley | 2010-09-21 19:50:26 +0200 (Tue, 21 Sep 2010) | 1 line
+
+[FIX] sheets: Missing param default
+----------------------------------------------
+r29499 | jonnybradley | 2010-09-21 19:49:32 +0200 (Tue, 21 Sep 2010) | 1 line
+
+[FIX] sheets: Removed changes from last commit - JS was confusing things and enduser.documentation.html needs scrict xhtml doctype. TODO
+----------------------------------------------
+r29498 | sampaioprimo | 2010-09-21 19:44:18 +0200 (Tue, 21 Sep 2010) | 1 line
+
+tranlations done by different contributors to Czech language on i18n.tiki.org using interactive translation
+----------------------------------------------
+r29497 | sampaioprimo | 2010-09-21 19:43:34 +0200 (Tue, 21 Sep 2010) | 1 line
+
+tranlations done by different contributors to Hungarian on i18n.tiki.org using interactive translation
+----------------------------------------------
+r29496 | jonnybradley | 2010-09-21 19:34:34 +0200 (Tue, 21 Sep 2010) | 1 line
+
+[FIX] sheets: Added sheet help include, but still has problems due to nested resizables or something.
+----------------------------------------------
+r29495 | jonnybradley | 2010-09-21 19:11:43 +0200 (Tue, 21 Sep 2010) | 1 line
+
+[FIX] modules: Fix test for when sections param is an array (thanks Aidyn on irc)
+----------------------------------------------
+r29494 | jonnybradley | 2010-09-21 18:40:48 +0200 (Tue, 21 Sep 2010) | 1 line
+
+[FIX] fgals: Default wiki_syntax should have been thumb=y, as before.
+----------------------------------------------
+r29493 | jonnybradley | 2010-09-21 18:33:19 +0200 (Tue, 21 Sep 2010) | 1 line
+
+[FIX] xajax: Include cdn js files in ajax responses if using js minify
+----------------------------------------------
+r29491 | Jyhem | 2010-09-21 16:46:08 +0200 (Tue, 21 Sep 2010) | 1 line
+
++ENH+ Minor visual improvements for coelesce theme
+----------------------------------------------
+r29490 | jonnybradley | 2010-09-21 16:25:50 +0200 (Tue, 21 Sep 2010) | 1 line
+
+[FIX] ajax: Remove missed include of fck ajax autosave file tikitihtlm.php
+----------------------------------------------
+r29489 | sylvieg | 2010-09-21 14:55:19 +0200 (Tue, 21 Sep 2010) | 1 line
+
+[bp 29487][FIX]trackerfilter: quick fix: do not encode email in drop down filter (todo: have the javascript working in the option
+----------------------------------------------
+r29485 | jonnybradley | 2010-09-21 13:45:22 +0200 (Tue, 21 Sep 2010) | 1 line
+
+[BRANCH] Manually created 6.x branch
+----------------------------------------------
+r29484 | jonnybradley | 2010-09-21 13:34:24 +0200 (Tue, 21 Sep 2010) | 3 lines
+
+[bp/r29400,r29402]
+[REM] sheets: Remove the old tiki-sheets interface. Now replaced by jQuery.sheet
+[REM] sheets: Remove pref feature_jquery_sheet as it's always jquery.sheets now
+----------------------------------------------
+r29478 | chealer | 2010-09-21 05:37:59 +0200 (Tue, 21 Sep 2010) | 2 lines
+
+[FIX] WYSIWYG editor: escape single quotes in tool labels to avoid JS errors when [French] translations contain apostrophes
+second attempt
+----------------------------------------------
+r29477 | nkoth | 2010-09-21 05:29:53 +0200 (Tue, 21 Sep 2010) | 1 line
+
+[ENH] Add autocomplete to structure add page input box
+----------------------------------------------
+r29475 | marclaporte | 2010-09-21 05:03:45 +0200 (Tue, 21 Sep 2010) | 1 line
+
+[FIX] Quick WYSIWYCA fix on browse category link in wiki pages: now check global perm. TODO: make it check the permission of the categories of the current page (previous commit and revert was me, not chealer)
+----------------------------------------------
+r29473 | nkoth | 2010-09-21 03:19:13 +0200 (Tue, 21 Sep 2010) | 1 line
+
+[ENH] Add category filter to mass search and replace tool
+----------------------------------------------
+r29471 | jonnybradley | 2010-09-21 02:06:12 +0200 (Tue, 21 Sep 2010) | 2 lines
+
+[ENH] fgals: Deploy wiki_syntax gallery property.
+Allows custom wiki markup to be inserted onclick for each gallery. Inherits parent gallery's syntax if not set and defaults to {img fileId="%fileId%" thumb="y" rel="box[g]"} to continue current behaviour (should be a pref one day).
+----------------------------------------------
+r29470 | jonnybradley | 2010-09-21 02:01:18 +0200 (Tue, 21 Sep 2010) | 1 line
+
+[ENH] fgals: Expose wiki_syntax gallery property (was already in database). Deployment next...
+----------------------------------------------
+r29469 | pkdille | 2010-09-21 01:02:17 +0200 (Tue, 21 Sep 2010) | 1 line
+
+add new versions to twversion file
+----------------------------------------------
+r29468 | jonnybradley | 2010-09-21 00:53:08 +0200 (Tue, 21 Sep 2010) | 1 line
+
+upload: typo
+----------------------------------------------
+r29467 | sylvieg | 2010-09-21 00:20:52 +0200 (Tue, 21 Sep 2010) | 1 line
+
+[FIX]trackerfilter: when filterfield is speified fix the next prev in view item
+----------------------------------------------
+r29464 | sylvieg | 2010-09-21 00:15:28 +0200 (Tue, 21 Sep 2010) | 1 line
+
+[FIX]plugin: trackerlist can have params like exactvalue=:xxx. THis must parse as an array with 2 elements and second=xxx and not as an array with an element xxx : PLEASE check if side effect
+----------------------------------------------
+r29458 | Jyhem | 2010-09-20 23:44:07 +0200 (Mon, 20 Sep 2010) | 1 line
+
+[FIX] feature_group_watches should work even when feature_user_watches is disabled
+----------------------------------------------
+r29444 | sylvieg | 2010-09-20 22:25:11 +0200 (Mon, 20 Sep 2010) | 1 line
+
+[ENH]TRACKEFILTER: when no pretty, pagination on the filtered items
+----------------------------------------------
+r29441 | jonnybradley | 2010-09-20 22:24:22 +0200 (Mon, 20 Sep 2010) | 1 line
+
+[FIX] ckeditor: Deal with plugins needing approval.
+----------------------------------------------
+r29437 | jonnybradley | 2010-09-20 22:07:33 +0200 (Mon, 20 Sep 2010) | 1 line
+
+[FIX] ckeditor: Deal with nested plugins by leaving them unparsed in the body of the containing plugin. Also enclose the whole "visual" plugin in ~np~ instead of just bits of it (pointlessly).
+----------------------------------------------
+r29401 | sampaioprimo | 2010-09-20 20:42:52 +0200 (Mon, 20 Sep 2010) | 3 lines
+
+[ENH] improving post footer layout based on Jyhem work on coelesce theme
+[ENH] share this icon aligned with other icons on post footer
+
+----------------------------------------------
+r29398 | jonnybradley | 2010-09-20 19:17:57 +0200 (Mon, 20 Sep 2010) | 1 line
+
+[REM] FCKEditor removal: removed pref wysiwyg_ckeditor
+----------------------------------------------
+r29395 | chealer | 2010-09-20 18:31:06 +0200 (Mon, 20 Sep 2010) | 1 line
+
+[ENH] Editor: when selecting text and clicking the MOUSEOVER plugin icon, use the selected text as label argument instead of body
+----------------------------------------------
+r29394 | nkoth | 2010-09-20 18:20:31 +0200 (Mon, 20 Sep 2010) | 1 line
+
+[FIX] Library errors
+----------------------------------------------
+r29392 | sampaioprimo | 2010-09-20 17:34:28 +0200 (Mon, 20 Sep 2010) | 2 lines
+
+[FIX] keep url params when previewing a blog post
+
+----------------------------------------------
+r29391 | sampaioprimo | 2010-09-20 17:33:08 +0200 (Mon, 20 Sep 2010) | 2 lines
+
+[FIX] use sefurl (if enabled) to redirect to post page after creating or editing one
+
+----------------------------------------------
+r29390 | jonnybradley | 2010-09-20 17:28:53 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[bp/r29337,r29339,r29340] FCKEditor removal.
+Backported from branches/experimental/wysiwyg_ckeditor_update.
+[REM] fckeditor: Removing fck files and unlinking external lib
+[REM] fckeditor: Removing fck references in remaining file
+[REM] fckeditor: Restoring some missing fck icons needed for toolbars admin
+(Also an extra small fix on tiki-notepad_write.tpl)
+----------------------------------------------
+r29389 | sampaioprimo | 2010-09-20 17:16:06 +0200 (Mon, 20 Sep 2010) | 2 lines
+
+[FIX] r28807 $objectlib was not defined
+
+----------------------------------------------
+r29388 | robertplummer | 2010-09-20 17:01:12 +0200 (Mon, 20 Sep 2010) | 2 lines
+
+[NEW] Added the ability to view a tracker as a spreadsheet from the plugin "TRACKERLIST" through the use of parameter "displaysheet" when set to "y".
+[NEW] Added fullscreen to sheet history view, still needs work.
+----------------------------------------------
+r29387 | sylvieg | 2010-09-20 16:45:13 +0200 (Mon, 20 Sep 2010) | 1 line
+
+[FIX]fgal: trim mime type for indexation
+----------------------------------------------
+r29385 | chealer | 2010-09-20 16:07:32 +0200 (Mon, 20 Sep 2010) | 1 line
+
+French: change translation of "Select event type" from "S?\195?\169lection des types d'?\195?\169v?\195?\168nements" to "S?\195?\169lectionnez le type d'?\195?\169v?\195?\168nement"
+----------------------------------------------
+r29384 | sylvieg | 2010-09-20 14:31:10 +0200 (Mon, 20 Sep 2010) | 1 line
+
+opps schema must be identical
+----------------------------------------------
+r29383 | sylvieg | 2010-09-20 13:57:06 +0200 (Mon, 20 Sep 2010) | 1 line
+
+[ENH]todo: open the event type to more events
+----------------------------------------------
+r29382 | sept_7 | 2010-09-20 13:10:24 +0200 (Mon, 20 Sep 2010) | 2 lines
+
+[FIX] missing svn:keywords, pointed by quality.tikiwiki.org
+
+----------------------------------------------
+r29381 | cdrwhite | 2010-09-20 12:11:31 +0200 (Mon, 20 Sep 2010) | 2 lines
+
+[FIX]Glitch in escape if the first word is a html tag, renaming to tiki-page_contribution, own feature feature_page_contribution, better permission checking
+[ENH] View page button
+----------------------------------------------
+r29378 | sdoh | 2010-09-20 09:45:55 +0200 (Mon, 20 Sep 2010) | 1 line
+
+Fix 'page not found' when the title has an apostrophe.
+----------------------------------------------
+r29377 | lindonb | 2010-09-20 05:50:14 +0200 (Mon, 20 Sep 2010) | 1 line
+
+[FIX] Skip compute if no tracker items to eliminate error messages when no records found.
+----------------------------------------------
+r29376 | lindonb | 2010-09-20 05:47:32 +0200 (Mon, 20 Sep 2010) | 1 line
+
+[ENH] Allow currency amount tracker field to be applied in a profile. 
+----------------------------------------------
+r29375 | Jyhem | 2010-09-19 22:44:17 +0200 (Sun, 19 Sep 2010) | 1 line
+
+[FIX] Display accented characters correctly in remarksbox
+----------------------------------------------
+r29374 | jonnybradley | 2010-09-19 22:42:16 +0200 (Sun, 19 Sep 2010) | 1 line
+
+[FIX] toggleCols: Use "cookie" info to restore column state onready (better than nothing)
+----------------------------------------------
+r29373 | Jyhem | 2010-09-19 22:36:57 +0200 (Sun, 19 Sep 2010) | 1 line
+
+[ENH] Allow control of textarea questions size in surveys
+----------------------------------------------
+r29372 | Jyhem | 2010-09-19 21:51:31 +0200 (Sun, 19 Sep 2010) | 1 line
+
++ENH+ Same page title display everywhere
+----------------------------------------------
+r29371 | Jyhem | 2010-09-19 21:32:47 +0200 (Sun, 19 Sep 2010) | 1 line
+
++ENH+ Suppress global italics for wiki-parsed description field
+----------------------------------------------
+r29370 | jonnybradley | 2010-09-19 21:23:32 +0200 (Sun, 19 Sep 2010) | 1 line
+
+[ENH] preview: Add custom resize handle to ajax preview div. Also add preview icon/button top right.
+----------------------------------------------
+r29368 | jonnybradley | 2010-09-19 19:39:11 +0200 (Sun, 19 Sep 2010) | 1 line
+
+[FIX] preview: set preview_diff_style dropdown when ajax call finishes, not page load
+----------------------------------------------
+r29367 | jonnybradley | 2010-09-19 18:58:25 +0200 (Sun, 19 Sep 2010) | 1 line
+
+[FIX] ckeditor: Show ajaxLoading when getting html rendered (doesn't seem to work in safari/chrome - have tried in 5 different points in event chain with no joy)
+----------------------------------------------
+r29366 | jonnybradley | 2010-09-19 17:33:56 +0200 (Sun, 19 Sep 2010) | 1 line
+
+[FIX] ckeditor: Set width for body inside editor
+----------------------------------------------
+r29365 | jonnybradley | 2010-09-19 17:30:40 +0200 (Sun, 19 Sep 2010) | 1 line
+
+[FIX] ckeditor: Replace AJAX call in toHTMLSource function (which overrides dataProcessor.toDataFormat) with client-side regexp, as it seems it gets called internally by ckeditor every second or two and was flooding the server and browser leading to very slow page loading.
+----------------------------------------------
+r29364 | jonnybradley | 2010-09-19 16:35:59 +0200 (Sun, 19 Sep 2010) | 1 line
+
+Editpage: Remove redundant smarty assign (now done in {textarea})
+----------------------------------------------
+r29363 | jonnybradley | 2010-09-19 16:32:41 +0200 (Sun, 19 Sep 2010) | 1 line
+
+[MOD] editpage: Merge tools and properties tabs (one of them was usually virtually empty)
+----------------------------------------------
+r29362 | ricks99 | 2010-09-19 02:54:28 +0200 (Sun, 19 Sep 2010) | 1 line
+
+[MOD] for multilingual sites, perform the search (from the seachbar) in the language of either the site, page, or user default. Users can then change the language scope from the results page
+----------------------------------------------
+r29361 | marclaporte | 2010-09-18 23:29:44 +0200 (Sat, 18 Sep 2010) | 1 line
+
+[MOD] By default, on clean installs, comments will no longer have titles. This will make things cleaner. Up for debate.
+----------------------------------------------
+r29360 | Jyhem | 2010-09-18 23:29:24 +0200 (Sat, 18 Sep 2010) | 1 line
+
++ENH+ coelesce theme improvements in heading
+----------------------------------------------
+r29356 | sylvieg | 2010-09-17 23:04:51 +0200 (Fri, 17 Sep 2010) | 1 line
+
+[FIX]trackerlist: to have the navigation between items in non pretty mode
+----------------------------------------------
+r29355 | jonnybradley | 2010-09-17 20:30:13 +0200 (Fri, 17 Sep 2010) | 1 line
+
+[FIX] wysiwyg: Make smilies survive the trip to html and back better (ckeditor ones don't still - need mapping to tiki's ones)
+----------------------------------------------
+r29354 | jonnybradley | 2010-09-17 20:00:01 +0200 (Fri, 17 Sep 2010) | 1 line
+
+[FIX] tabset: Parse tab content individually and remove line ends in tpl.
+----------------------------------------------
+r29353 | jonnybradley | 2010-09-17 19:58:41 +0200 (Fri, 17 Sep 2010) | 2 lines
+
+[ENH] tabset: move "no tabs" button inside the tab bar (tidier layout)
+Also remove line ends creating paragraphs in html.
+----------------------------------------------
+r29352 | jonnybradley | 2010-09-17 19:55:34 +0200 (Fri, 17 Sep 2010) | 1 line
+
+[FIX] ckeditor: wysiwyg plugins: More disarming of active html in editor - means "all" plugins work again now(?)
+----------------------------------------------
+r29351 | sampaioprimo | 2010-09-17 19:01:13 +0200 (Fri, 17 Sep 2010) | 2 lines
+
+[FIX] only list comments if blog has any posts
+
+----------------------------------------------
+r29350 | robertplummer | 2010-09-17 18:43:02 +0200 (Fri, 17 Sep 2010) | 3 lines
+
+[FIX] For sheet heights, and I cleaned up a little code
+[FIX] Made sheet diff, MUCH BETTER
+[ADD] Button to edit each sheet if it is being diffed
+----------------------------------------------
+r29349 | jonnybradley | 2010-09-17 18:33:36 +0200 (Fri, 17 Sep 2010) | 1 line
+
+[FIX] ajax preview: remove script and disarm hrefs in preview data.
+----------------------------------------------
+r29348 | jonnybradley | 2010-09-17 18:29:53 +0200 (Fri, 17 Sep 2010) | 1 line
+
+[FIX] jslint: numerous tiny fixes in js added with headerlib.
+----------------------------------------------
+r29347 | sylvieg | 2010-09-17 18:07:03 +0200 (Fri, 17 Sep 2010) | 1 line
+
+[FIX]TRACKERFILTER: sync status button + open/close filter div
+----------------------------------------------
+r29346 | jonnybradley | 2010-09-17 16:24:32 +0200 (Fri, 17 Sep 2010) | 2 lines
+
+[FIX] ckeditor: wysiwyg plugins: don't parse some plugins for now as they are problematic (sharethis, tabs & toc initially).
+Also fix charset on parsing and parse body param (was missing)
+----------------------------------------------
+r29345 | sylvieg | 2010-09-17 15:08:25 +0200 (Fri, 17 Sep 2010) | 1 line
+
+[FIX]tracker: fix when using a filter with (1:2)/sqlsearch
+----------------------------------------------
+r29343 | jonnybradley | 2010-09-17 14:37:24 +0200 (Fri, 17 Sep 2010) | 1 line
+
+[REF] ckeditor: Removing references to fckeditor part 1 (missed a couple) - part of [bp/r29336]
+----------------------------------------------
+r29341 | jonnybradley | 2010-09-17 14:15:28 +0200 (Fri, 17 Sep 2010) | 3 lines
+
+[bp/r29336][REF] ckeditor: Removing references to fckeditor part 1
+tikilib and editlib - harmless renames
+(mainly renaming parse_data option['fck'] to 'ck_editor')
+----------------------------------------------
+r29335 | chealer | 2010-09-17 05:39:51 +0200 (Fri, 17 Sep 2010) | 3 lines
+
+Last changes module: re-remove minor parameter (doesn't honor maxrows, re-uses the name of the old minor parameter to ignore minor edits)
+This should be implemented in the library; see http://irc.tikiwiki.org/irclogger_log/tikiwiki?date=2010-08-03,Tue&sel=264#l260
+
+----------------------------------------------
+r29334 | chealer | 2010-09-17 04:51:21 +0200 (Fri, 17 Sep 2010) | 2 lines
+
+[FIX] remove forgotten debug statement (r22449 regression, Closes: #3542)
+thanks Lusserall
+----------------------------------------------
+r29333 | luciash | 2010-09-17 02:05:14 +0200 (Fri, 17 Sep 2010) | 1 line
+
+[FIX] Kaltura media entries list: sort by column + code cleanup
+----------------------------------------------
+r29332 | luciash | 2010-09-17 01:46:24 +0200 (Fri, 17 Sep 2010) | 1 line
+
+i18n
+----------------------------------------------
+r29331 | luciash | 2010-09-17 01:39:45 +0200 (Fri, 17 Sep 2010) | 1 line
+
+should go via headerlib like common JS (notonready)
+----------------------------------------------
+r29330 | luciash | 2010-09-17 00:58:31 +0200 (Fri, 17 Sep 2010) | 1 line
+
+when (X)AJAX on, it does not render the JS part; trying with Smarty JQ block ...
+----------------------------------------------
+r29328 | jonnybradley | 2010-09-16 23:53:59 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[FIX] parse_data: Don't wrap single line in <p> (e.g. for use in include plugin)
+----------------------------------------------
+r29327 | Jyhem | 2010-09-16 23:46:45 +0200 (Thu, 16 Sep 2010) | 1 line
+
+$ Visual improvements
+----------------------------------------------
+r29326 | jonnybradley | 2010-09-16 23:45:45 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[FIX] wikiplugin_include: WYSIWYCA perms test on edit button
+----------------------------------------------
+r29325 | jonnybradley | 2010-09-16 23:30:29 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[ENH] wikiplugin_include: nopage_text & pagedenied_text params
+----------------------------------------------
+r29324 | luciash | 2010-09-16 23:28:04 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[FIX] Kaltura entries list: sort missing &amp;
+----------------------------------------------
+r29323 | Jyhem | 2010-09-16 23:24:07 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[ENH] Making enabling/disabling fixed-width more prominent because it's an integral part of choosing a theme
+----------------------------------------------
+r29322 | luciash | 2010-09-16 23:14:10 +0200 (Thu, 16 Sep 2010) | 1 line
+
+code cleanup + some missing tr
+----------------------------------------------
+r29321 | jonnybradley | 2010-09-16 23:09:19 +0200 (Thu, 16 Sep 2010) | 2 lines
+
+[ENH] wikiplugin_include: Direct link (icon) to create/edit included page, and send back to initial page after edit.
+Also, don't show edit icons within the included page.
+----------------------------------------------
+r29320 | nkoth | 2010-09-16 23:01:06 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[NEW] Allow show map mode buttons in page and articles listings
+----------------------------------------------
+r29319 | luciash | 2010-09-16 22:54:09 +0200 (Thu, 16 Sep 2010) | 1 line
+
+code cleanup - removing the external JS references and other stuff (it did not work anyway) TODO: make better thumbnails navigation based on something we already have in Tiki (jQuery)
+----------------------------------------------
+r29318 | nkoth | 2010-09-16 21:59:21 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[NEW] Allow syncronizing of user tracker item categories with the user groups that the user is in
+----------------------------------------------
+r29317 | sampaioprimo | 2010-09-16 21:53:10 +0200 (Thu, 16 Sep 2010) | 2 lines
+
+[FIX] CSS for related blog posts was broken after someone changed the HTML structure
+
+----------------------------------------------
+r29316 | sampaioprimo | 2010-09-16 21:52:15 +0200 (Thu, 16 Sep 2010) | 2 lines
+
+only replacing <a> with {self_link} (thanks sept_7)
+
+----------------------------------------------
+r29315 | chealer | 2010-09-16 21:42:26 +0200 (Thu, 16 Sep 2010) | 1 line
+
+French: change translation for "Content templates" from "Mod?\195?\168les de contenu" to "Gabarits de contenu", to uniformize with "Content Templates"
+----------------------------------------------
+r29313 | sampaioprimo | 2010-09-16 21:19:16 +0200 (Thu, 16 Sep 2010) | 2 lines
+
+[FIX] maxLevel for duration smarty modifier works independently of user current language (was working only for English)
+
+----------------------------------------------
+r29312 | sept_7 | 2010-09-16 21:09:17 +0200 (Thu, 16 Sep 2010) | 2 lines
+
+[FIX] correct dependencies of feature_wiki_save_draft and ajax_xajax
+
+----------------------------------------------
+r29311 | pkdille | 2010-09-16 21:03:16 +0200 (Thu, 16 Sep 2010) | 1 line
+
+Code presentation
+----------------------------------------------
+r29310 | luciash | 2010-09-16 20:49:36 +0200 (Thu, 16 Sep 2010) | 1 line
+
+what will happen if we omit the external hardcoded stuff ? ;)
+----------------------------------------------
+r29309 | luciash | 2010-09-16 20:47:09 +0200 (Thu, 16 Sep 2010) | 1 line
+
+code cleanup
+----------------------------------------------
+r29308 | jonnybradley | 2010-09-16 20:38:41 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[FIX] ckeditor: more checking of selection
+----------------------------------------------
+r29307 | luciash | 2010-09-16 20:27:45 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[FIX] Kaltura entries: remix permission + couple of other little things (xhtml, tr)
+----------------------------------------------
+r29306 | nkoth | 2010-09-16 20:22:49 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[ENH] Add mapview buttons for tracker filter to switch to map view and back
+----------------------------------------------
+r29305 | jonnybradley | 2010-09-16 20:21:37 +0200 (Thu, 16 Sep 2010) | 1 line
+
+textarea: Move around some commented code used for debugging - no change
+----------------------------------------------
+r29304 | sylvieg | 2010-09-16 20:11:41 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[FIX]smarty: syntax
+----------------------------------------------
+r29303 | luciash | 2010-09-16 20:03:00 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[FIX] article plugin: incorrect xhtml
+----------------------------------------------
+r29302 | sylvieg | 2010-09-16 19:56:23 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[FIX]calendar: in calmode always display the calendar boxes even  if the viewdays of the viewed calendars are empty
+----------------------------------------------
+r29301 | jonnybradley | 2010-09-16 19:45:32 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[FIX] article plugin: Incorrect absolute url for image.
+----------------------------------------------
+r29300 | jonnybradley | 2010-09-16 19:23:09 +0200 (Thu, 16 Sep 2010) | 2 lines
+
+[ENH] ckeditor: Better processing for view source - don't show loading, pass data on to ckeditor functions for further processing.
+Still calling this code when it's not needed internally by ckeditor - monitor for problems.
+----------------------------------------------
+r29299 | jonnybradley | 2010-09-16 19:20:27 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[FIX] tooltips: check lib has loaded in convertOverlib.
+----------------------------------------------
+r29298 | jonnybradley | 2010-09-16 19:19:09 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[FIX] ckeditor: Better handling of selection (or lack of one) when inserting plugins.
+----------------------------------------------
+r29297 | sylvieg | 2010-09-16 19:12:23 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[ENH]maketoc: params level to specify which level you want in the maketoc
+----------------------------------------------
+r29296 | jonnybradley | 2010-09-16 17:07:12 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[FIX] fgals: Maintain filegals_manager param on gallery explorer tree and deploy self_link.
+----------------------------------------------
+r29295 | jonnybradley | 2010-09-16 17:04:00 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[FIX] ajax: Missing #role_main (broke ajax on fgal manager popup)
+----------------------------------------------
+r29294 | jonnybradley | 2010-09-16 17:03:08 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[FIX] ckeditor: Cope with inserting images when nothing selected in ckeditor.
+----------------------------------------------
+r29293 | jonnybradley | 2010-09-16 17:01:47 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[FIX] textarea: Missing word (minutes) and logic fix
+----------------------------------------------
+r29292 | sept_7 | 2010-09-16 16:39:15 +0200 (Thu, 16 Sep 2010) | 2 lines
+
+[FIX] Take care of correct dependencies for feature_wiki_save_draft and ajax_xajax
+
+----------------------------------------------
+r29289 | jonnybradley | 2010-09-16 16:03:42 +0200 (Thu, 16 Sep 2010) | 1 line
+
+wysiwyg admin: Some extra help text and descriptions.
+----------------------------------------------
+r29287 | sylvieg | 2010-09-16 14:28:15 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[FIX] debug thx sept7
+----------------------------------------------
+r29286 | luciash | 2010-09-16 13:56:54 +0200 (Thu, 16 Sep 2010) | 1 line
+
+code - tags cleanup
+----------------------------------------------
+r29285 | luciash | 2010-09-16 13:54:10 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[FIX] Kaltura: xhtml - style does not belong to body
+----------------------------------------------
+r29284 | jonnybradley | 2010-09-16 13:39:07 +0200 (Thu, 16 Sep 2010) | 1 line
+
+[ENH] ckeditor: Add processing for view source to parse the wysiwyg plugin code back to wiki syntax (and then back again to html for ckeditor).
+----------------------------------------------
+r29280 | luciash | 2010-09-15 23:51:32 +0200 (Wed, 15 Sep 2010) | 1 line
+
+svn sucks :-p
+----------------------------------------------
+r29279 | sylvieg | 2010-09-15 23:37:22 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[ENH]htaccess: easy to say to uncomment a line that to dictate the line
+----------------------------------------------
+r29278 | luciash | 2010-09-15 23:31:40 +0200 (Wed, 15 Sep 2010) | 1 line
+
+svn Id
+----------------------------------------------
+r29277 | luciash | 2010-09-15 23:27:00 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[FIX] Kaltura actions: perms were renamed *_kaltura_entry > *_videos
+----------------------------------------------
+r29276 | sampaioprimo | 2010-09-15 23:06:13 +0200 (Wed, 15 Sep 2010) | 2 lines
+
+[FIX] force case sensitive queries for tiki-edit_languages.php
+
+----------------------------------------------
+r29275 | sylvieg | 2010-09-15 21:38:50 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[FIX]tracker: show import tab in a tracker is selected or not
+----------------------------------------------
+r29274 | sampaioprimo | 2010-09-15 21:19:13 +0200 (Wed, 15 Sep 2010) | 2 lines
+
+[FIX] interface to edit and delete database translations is working again
+
+----------------------------------------------
+r29273 | sampaioprimo | 2010-09-15 21:17:41 +0200 (Wed, 15 Sep 2010) | 2 lines
+
+updating previously created menu entry to check if lang_use_db is enabled
+
+----------------------------------------------
+r29272 | sampaioprimo | 2010-09-15 21:13:40 +0200 (Wed, 15 Sep 2010) | 2 lines
+
+rollback my commit r29252: actually yes there is a reason for tiki-edit_languages.php check if lang_use_db is enabled
+
+----------------------------------------------
+r29271 | changi67 | 2010-09-15 21:11:25 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[FIX] Avoid function calls in a FOR loop test part - see on quality.tiki.org
+----------------------------------------------
+r29270 | jonnybradley | 2010-09-15 21:08:54 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[FIX] ckeditor: Array type plugin parameters fix. (thanks Nelson)
+----------------------------------------------
+r29269 | changi67 | 2010-09-15 21:03:23 +0200 (Wed, 15 Sep 2010) | 1 line
+
+from tikiwiki.org -> tiki.org
+----------------------------------------------
+r29266 | jonnybradley | 2010-09-15 20:09:16 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[FIX] templates: Deploy {textarea} in templates admin.
+----------------------------------------------
+r29265 | jonnybradley | 2010-09-15 20:08:06 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[FIX] textarea: Fix confirmExit() for ckeditor, and add switcheditor param for control by individual pages (unused so far).
+----------------------------------------------
+r29263 | jonnybradley | 2010-09-15 18:47:16 +0200 (Wed, 15 Sep 2010) | 1 line
+
+textarea: Rename unused param _section to section
+----------------------------------------------
+r29262 | Jyhem | 2010-09-15 18:12:21 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[ENH] coelesce style improvements
+----------------------------------------------
+r29261 | jonnybradley | 2010-09-15 17:58:23 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[FIX] upload: Add button to try again if no file specified.
+----------------------------------------------
+r29260 | luciash | 2010-09-15 17:51:17 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[FIX] Kaltura actions: perm renamed to tiki_p_delete_videos
+----------------------------------------------
+r29259 | luciash | 2010-09-15 17:48:04 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[FIX] Kaltura actions: checking only if tiki_p_admin is set is not good idea
+----------------------------------------------
+r29258 | jonnybradley | 2010-09-15 17:41:29 +0200 (Wed, 15 Sep 2010) | 2 lines
+
+[FIX] ckeditor: "No tabs" button with xajax working better...
+(thanks again Luci)
+----------------------------------------------
+r29257 | jonnybradley | 2010-09-15 17:31:32 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[FIX] toolbars: notices
+----------------------------------------------
+r29256 | sampaioprimo | 2010-09-15 17:29:18 +0200 (Wed, 15 Sep 2010) | 3 lines
+
+[ENH] message warning the user that when a new language is imported all database translations for that language are lost
+[ENH] using {remarksbox} for message after importing a language
+
+----------------------------------------------
+r29255 | jonnybradley | 2010-09-15 17:25:47 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[FIX] textarea: notices
+----------------------------------------------
+r29254 | sampaioprimo | 2010-09-15 17:22:17 +0200 (Wed, 15 Sep 2010) | 2 lines
+
+[ENH] new imported language is available for edition and exporting without having to reload the page (just moved the import code block to the top of the script)
+
+----------------------------------------------
+r29253 | sampaioprimo | 2010-09-15 17:12:30 +0200 (Wed, 15 Sep 2010) | 2 lines
+
+[ENH] menu option under admin section for tiki-edit_languages.php
+
+----------------------------------------------
+r29252 | sampaioprimo | 2010-09-15 17:08:46 +0200 (Wed, 15 Sep 2010) | 2 lines
+
+[ENH] no point for tiki-edit_languages.php to depend on lang_use_db feature (as far as I know there is no use anymore for this feature, so maybe we can remove it)
+
+----------------------------------------------
+r29250 | jonnybradley | 2010-09-15 15:59:39 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[FIX] ckeditor: Check autosave after toolbar commands not just keydown (thanks Luci)
+----------------------------------------------
+r29249 | jonnybradley | 2010-09-15 15:52:05 +0200 (Wed, 15 Sep 2010) | 2 lines
+
+[ENH] preview: Show diff in preview pane (autosave mode only).
+Also use new #autosave_preview id and various other small fixes.
+----------------------------------------------
+r29248 | jonnybradley | 2010-09-15 15:50:11 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[FIX] preview: Use distinct id for autosave_preview to restore previous appearance for non autosave mode.
+----------------------------------------------
+r29247 | jonnybradley | 2010-09-15 15:48:41 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[ENH] setCookie: Add option of "session" for cookie expires (otherwise it defaults to a year)
+----------------------------------------------
+r29246 | jonnybradley | 2010-09-15 14:06:42 +0200 (Wed, 15 Sep 2010) | 1 line
+
+indentation
+----------------------------------------------
+r29244 | marclaporte | 2010-09-15 06:00:36 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[FIX] fix link to Kaltura admin page 
+----------------------------------------------
+r29243 | luciash | 2010-09-15 03:14:53 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[MOD] main div id selector for ajax loading (htmlelement param) is role_main now by default and not needed to specify (unless needed to be loaded in another element id of course)
+----------------------------------------------
+r29242 | luciash | 2010-09-15 02:42:58 +0200 (Wed, 15 Sep 2010) | 1 line
+
+oops !
+----------------------------------------------
+r29241 | luciash | 2010-09-15 02:36:45 +0200 (Wed, 15 Sep 2010) | 1 line
+
+avoid PHP notice for htmlelement param; set to role_main if not specified
+----------------------------------------------
+r29240 | luciash | 2010-09-15 02:17:51 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[MOD] main div id selector for ajax loading (htmlelement param) is role_main by default if not specified (was tiki-center before; keeps stuff in custom_center_column_header not being replaced by ajax content)
+----------------------------------------------
+r29239 | jonnybradley | 2010-09-15 01:41:13 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[ENH] preview: Move nasty global autoSaveId declaration to common autosave block (not just for wiki editor).
+----------------------------------------------
+r29238 | jonnybradley | 2010-09-15 01:39:51 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[ENH] preview: Width overflowing on Fx
+----------------------------------------------
+r29237 | jonnybradley | 2010-09-15 01:05:18 +0200 (Wed, 15 Sep 2010) | 1 line
+
+[ENH] preview: Live preview in-page if autosave enabled. Merged the two preview buttons, kept popup window as an option (icon - pls change image). Made preview box fixed height, scrollable and resizable if jQuery ui is on.
+----------------------------------------------
+r29235 | jonnybradley | 2010-09-14 23:38:05 +0200 (Tue, 14 Sep 2010) | 3 lines
+
+[FIX] ajax: Fix loading BG with padding and restore spinner positioning removed accidentally in last commit.
+Add new JS function: ccsValueToInteger()
+
+----------------------------------------------
+r29234 | nkoth | 2010-09-14 23:22:05 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[NEW] Obscure email when using email as username if possible (coverage will not be complete) and Show user's real name instead of login in autocomplete selector (only messages and trackers feature so far)
+----------------------------------------------
+r29233 | sylvieg | 2010-09-14 23:08:15 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[FIX]tracker: some part like export fields need not to be indented
+----------------------------------------------
+r29232 | jonnybradley | 2010-09-14 23:04:34 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[FIX] ajax: Position loading BG correctly (i.e. more simply and don't forget the margins)
+----------------------------------------------
+r29231 | sylvieg | 2010-09-14 22:39:52 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[FIX]calendar: can admin if admin perm via categ
+----------------------------------------------
+r29230 | luciash | 2010-09-14 22:33:41 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[ENH] dark version of the ajax loading overlay for darkroom
+----------------------------------------------
+r29229 | luciash | 2010-09-14 22:23:15 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[ENH] new look for ajax loading gif spinners better handling various background transparency + light bg overlay really light
+----------------------------------------------
+r29228 | luciash | 2010-09-14 22:20:31 +0200 (Tue, 14 Sep 2010) | 1 line
+
+after some discussion with jonnyb partial rollback of 29173
+----------------------------------------------
+r29227 | sylvieg | 2010-09-14 21:30:35 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[FIX]blog: a blog admin can post even if the blog is not public
+----------------------------------------------
+r29226 | sampaioprimo | 2010-09-14 21:02:20 +0200 (Tue, 14 Sep 2010) | 1 line
+
+"fixing the file" (running get_strings.php?lang=cy so that it is possible to automaticaly export strings from the database to this file)
+----------------------------------------------
+r29225 | sampaioprimo | 2010-09-14 20:57:26 +0200 (Tue, 14 Sep 2010) | 2 lines
+
+[FIX] show an error when language.php is not well formated instead of writing the translations from the database anyway
+
+----------------------------------------------
+r29224 | jonnybradley | 2010-09-14 20:40:06 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[FIX] ckeditor: More on searching for plugin elements within selection (use jQuery fn as ckeditor ones sometimes aren't there?)
+----------------------------------------------
+r29223 | jonnybradley | 2010-09-14 20:36:43 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[FIX] ckeditor: Better searching for plugin elements within selection
+----------------------------------------------
+r29222 | nkoth | 2010-09-14 20:25:08 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[FIX] Missing value leading to js error
+----------------------------------------------
+r29221 | robertplummer | 2010-09-14 20:24:45 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[NEW] Added function diffSheetsAsHTML( $id, $dates ) to grid.php and some necessary framework to get it to list 2 sheets side by side.
+----------------------------------------------
+r29220 | jonnybradley | 2010-09-14 20:10:40 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[FIX] autosave: Propagate and test autoSaveId properly in all calls to auto_save JS functions.
+----------------------------------------------
+r29219 | jonnybradley | 2010-09-14 20:05:57 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[FIX] textarea: Proper test for CKEDITOR object
+----------------------------------------------
+r29218 | sampaioprimo | 2010-09-14 19:23:08 +0200 (Tue, 14 Sep 2010) | 2 lines
+
+updating machine translation tests, apparently google translate response has changed (going to check with alain if this is the case)
+
+----------------------------------------------
+r29217 | robertplummer | 2010-09-14 19:13:11 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[FIX] Moved the order in which the advanced functions for jQuery.sheet load, it was breaking.
+----------------------------------------------
+r29216 | sylvieg | 2010-09-14 19:12:35 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[FIX]sefurl: urlencode the page to replace space into +
+----------------------------------------------
+r29215 | robertplummer | 2010-09-14 19:11:24 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[NEW] Added advanced jQuery.sheet functions
+----------------------------------------------
+r29214 | sampaioprimo | 2010-09-14 18:53:08 +0200 (Tue, 14 Sep 2010) | 2 lines
+
+Marking Membership tests as incomplete since they are failing and the problem is the test itself and not the code that is being tested. If you are familiar with these test please fix it.
+
+----------------------------------------------
+r29213 | jonnybradley | 2010-09-14 18:47:22 +0200 (Tue, 14 Sep 2010) | 2 lines
+
+[ENH] autosave: Use ajax to get and restore autosaved content (as that's how it got there in the first place).
+Also some refacting of ajax responses.
+----------------------------------------------
+r29212 | sampaioprimo | 2010-09-14 18:46:30 +0200 (Tue, 14 Sep 2010) | 3 lines
+
+mocking call to $tikilib->get_ip_address() for Rating_Aggregation tests to avoid undefined $_SERVER['REMOTE_ADDRESS'] index error
+adding group name to Multilingual_Aligner_UpdatePagesTest
+
+----------------------------------------------
+r29211 | sylvieg | 2010-09-14 17:53:03 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[FIX]testunit: simulate the default perms come from category or object as the from is saved now in the structure
+----------------------------------------------
+r29210 | jonnybradley | 2010-09-14 17:37:14 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[MOD] autosave: When there is an autosave available, start off not showing it, but allow the user to select it (thanks Xavi)
+----------------------------------------------
+r29209 | sylvieg | 2010-09-14 17:35:57 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[FIX]tracker: drop down with other - since 27305 input with [] are replaced for ajax support
+----------------------------------------------
+r29207 | pkdille | 2010-09-14 16:21:55 +0200 (Tue, 14 Sep 2010) | 1 line
+
+Adding a missing svn Id - Seen on quality.tw.o
+----------------------------------------------
+r29205 | jonnybradley | 2010-09-14 15:00:09 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[FIX] ckeditor: Don't try and find selected plugin if the selection type is text (i.e. not an element)
+----------------------------------------------
+r29204 | jonnybradley | 2010-09-14 14:53:00 +0200 (Tue, 14 Sep 2010) | 3 lines
+
+[FIX] ckeditor: Better wysiwyg plugin editing selection processing.
+Process the cke selection object better, but this sometimes fails, so end up checking if there's only one plugin of this type and use that.
+More to do no doubt...
+----------------------------------------------
+r29203 | sylvieg | 2010-09-14 14:25:53 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[FIX]tracker: no confirm for view item save
+----------------------------------------------
+r29202 | luciash | 2010-09-14 11:26:19 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[FIX] Kaltura entries listing: do not show delete button without perms
+----------------------------------------------
+r29200 | marclaporte | 2010-09-14 05:10:12 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[FIX] update links to tiki.org
+----------------------------------------------
+r29199 | sylvieg | 2010-09-14 00:28:13 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[ENH]forum: show the perms origin in admin forum
+----------------------------------------------
+r29197 | pkdille | 2010-09-14 00:05:50 +0200 (Tue, 14 Sep 2010) | 1 line
+
+[FIX] there are no "thin" classes
+----------------------------------------------
+r29196 | pkdille | 2010-09-13 23:45:27 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[FIX] there are no "data" class tables
+----------------------------------------------
+r29195 | sylvieg | 2010-09-13 23:28:30 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[FIX]perms: if tracker perms come from category - say so
+----------------------------------------------
+r29193 | sylvieg | 2010-09-13 23:26:38 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[ENH]perms: memorize from where the perms of an object comes
+----------------------------------------------
+r29192 | pkdille | 2010-09-13 23:09:24 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[MOD] remove useless css class
+----------------------------------------------
+r29191 | changi67 | 2010-09-13 22:57:38 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[MOD] Remove some useless &nbsp;
+----------------------------------------------
+r29190 | robertplummer | 2010-09-13 22:50:34 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[FIX] added some fixes to the sheet syncing methods and took advantage of the new startup settings to fully sync both sheets together.
+----------------------------------------------
+r29189 | sampaioprimo | 2010-09-13 22:46:33 +0200 (Mon, 13 Sep 2010) | 1 line
+
+tranlations done by different contributors to French on i18n.tiki.org using interactive translation (please help checking the translations)
+----------------------------------------------
+r29188 | sampaioprimo | 2010-09-13 22:42:50 +0200 (Mon, 13 Sep 2010) | 1 line
+
+tranlations done by different contributors to Welsh language on i18n.tiki.org using interactive translation
+----------------------------------------------
+r29186 | sampaioprimo | 2010-09-13 22:30:39 +0200 (Mon, 13 Sep 2010) | 2 lines
+
+[ENH] use sefurl for comments link in blogs main page
+
+----------------------------------------------
+r29185 | changi67 | 2010-09-13 22:25:11 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[ENH] A quick fix to validate that template have a name - ( maybe we should use smarty validate ?)
+----------------------------------------------
+r29184 | pkdille | 2010-09-13 22:21:07 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[FIX] action calendar : don't show add event link below calendar in action calendar
+----------------------------------------------
+r29183 | changi67 | 2010-09-13 21:24:09 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[MOD] Replace <a href> with button + missing bracket
+----------------------------------------------
+r29182 | changi67 | 2010-09-13 21:22:53 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[MOD] table normal in tabcontent should be at 100%
+----------------------------------------------
+r29181 | sylvieg | 2010-09-13 21:12:18 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[ENH]tracker: use {textarea}
+----------------------------------------------
+r29180 | ricks99 | 2010-09-13 21:02:14 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[FIX]removed ROLE attributes from DIV elements for proper HTML4 validation, since HTML5 compatibility is pushed to Tiki7.
+----------------------------------------------
+r29178 | Jyhem | 2010-09-13 19:56:34 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[ENH] Complete blog templates splitting idea without any change to default themes layout and demonstrate it's power by configuring a totally different blog layout for coelesce
+----------------------------------------------
+r29177 | sampaioprimo | 2010-09-13 19:47:49 +0200 (Mon, 13 Sep 2010) | 2 lines
+
+[FIX] keep URL parameters after posting a comment
+
+----------------------------------------------
+r29176 | sampaioprimo | 2010-09-13 19:37:20 +0200 (Mon, 13 Sep 2010) | 2 lines
+
+indentation
+
+----------------------------------------------
+r29175 | chealer | 2010-09-13 19:04:59 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[FIX] escape single quotes in labels to avoid JS errors when [French] translations contain apostrophes
+----------------------------------------------
+r29174 | luciash | 2010-09-13 18:56:07 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[ENH] AJAX loading GIF image (spinner) animation transparent
+----------------------------------------------
+r29173 | luciash | 2010-09-13 18:54:45 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[ENH] AJAX loading overlay looking good (again)
+----------------------------------------------
+r29172 | jonnybradley | 2010-09-13 18:24:09 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[FIX] Tracker plugin: Create new item form inputs not appearing for non-admins when tracker writerCanModify set (thanks eronmeg)
+----------------------------------------------
+r29171 | jonnybradley | 2010-09-13 17:53:51 +0200 (Mon, 13 Sep 2010) | 4 lines
+
+[bp r29151,29163] from wysiwyg_ckeditor_update - autosave fixes.
+[MOD] autosave: Remove dependency on xajax (half of it was using jQuery, the other xajax). Several reliability fixes on the way, and improved resonse/error handling.
+Moved JS fns ajaxLoadingShow and hide to remove xajax dependency (to tiki-jquery.js for now)
+[FIX] autosave: Restore user/ip to referrer id string
+----------------------------------------------
+r29170 | jonnybradley | 2010-09-13 17:46:36 +0200 (Mon, 13 Sep 2010) | 4 lines
+
+[bp r29148,29149,29150] from wysiwyg_ckeditor_update - splitting feature_ajax.
+[ENH] ajax: splitting feature_ajax part 1. New pref for xajax
+Part 2. Low level xajax pref checks in smarty blocks, smarty and lib. Also added missing pref tests in tiki-index.php
+Part 3. replacement of feature_ajax with ajax_xajax in other files using xajax directly. Other areas (such as Google maps, auto save etc untouched).
+----------------------------------------------
+r29169 | jonnybradley | 2010-09-13 17:34:48 +0200 (Mon, 13 Sep 2010) | 3 lines
+
+[bp r29144,29145] from wysiwyg_ckeditor_update - autosave pref name change.
+[MOD] admin: new "Interface" section in features admin. Move jQuery features there.
+[MOD] ajax: rename feature_ajax_autosave to ajax_autosave and create lib/prefs/ajax.php
+----------------------------------------------
+r29168 | Jyhem | 2010-09-13 17:22:27 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[FIx] Remove duplicate section
+----------------------------------------------
+r29167 | sampaioprimo | 2010-09-13 16:58:15 +0200 (Mon, 13 Sep 2010) | 2 lines
+
+[ENH] add message warning anonymous users that their email address will not be published when they post a new comment
+
+----------------------------------------------
+r29166 | sampaioprimo | 2010-09-13 16:47:31 +0200 (Mon, 13 Sep 2010) | 2 lines
+
+[ENH] adding preference for comment vote system (off by default)
+
+----------------------------------------------
+r29165 | sampaioprimo | 2010-09-13 16:43:58 +0200 (Mon, 13 Sep 2010) | 2 lines
+
+removing unused block of code
+
+----------------------------------------------
+r29162 | sylvieg | 2010-09-13 15:19:24 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[FIX]notice: please check
+----------------------------------------------
+r29161 | jonnybradley | 2010-09-13 14:24:26 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[FIX] textareas: Add repo to link to WYSIWYG_6x profile (maybe it will actually list first time more often)
+----------------------------------------------
+r29160 | sylvieg | 2010-09-13 14:21:00 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[FIX]categ: fix tracker description
+----------------------------------------------
+r29159 | jonnybradley | 2010-09-13 14:09:07 +0200 (Mon, 13 Sep 2010) | 2 lines
+
+[ENH] textareas: Make "lose changes" warning appear for the whole form for other objects, e.g. blog etc.
+Trackers still TODO (tracker_item_field_input.tpl doesn't use {textarea} yet)
+----------------------------------------------
+r29158 | jonnybradley | 2010-09-13 13:50:29 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[FIX] textareas: Move session timeout warning into block.textarea.php (from editpage) and fix the order of the JS that shows it - for some reason it didn't work the other way round.
+----------------------------------------------
+r29157 | xavidp | 2010-09-13 13:14:03 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[MOD]Highlight more (bold and red) the tip about using saved version instead of (js-)autosaved . Thanks ricks99 for tip on html bit to add a css class. If anybody knows a better class with bold and red (instead of mandatory_star, feel free to improve.
+----------------------------------------------
+r29155 | chealer | 2010-09-13 04:23:47 +0200 (Mon, 13 Sep 2010) | 4 lines
+
+MOUSEOVER: Consider uppercase parse parameter value "N" the same as "n"
+
+[FIX] If plugin is in a list item / bullet, and body parsing is not disabled, do not interpret line breaks as the end of the list item.
+inspired by FADE, thanks Marc Laporte
+----------------------------------------------
+r29154 | lindonb | 2010-09-13 01:57:41 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[FIX] Add options for plugin edit and info for pluginmanager
+----------------------------------------------
+r29153 | lindonb | 2010-09-13 00:42:55 +0200 (Mon, 13 Sep 2010) | 1 line
+
+[FIX] Allow lower level categories to display in a PluginTracker form and use <label>.
+----------------------------------------------
+r29152 | lindonb | 2010-09-12 22:56:34 +0200 (Sun, 12 Sep 2010) | 1 line
+
+[FIX] Allow CAPTCHA and reCAPTCHA to appear in registration form when user trackers are used.
+----------------------------------------------
+r29147 | lindonb | 2010-09-12 18:57:00 +0200 (Sun, 12 Sep 2010) | 1 line
+
+[FIX] Use 'Total' instead of 'Sum'
+----------------------------------------------
+r29146 | lindonb | 2010-09-12 18:48:22 +0200 (Sun, 12 Sep 2010) | 1 line
+
+[FIX] Change $l variable in compute section to $amount to avoid collision with $l in exactvalue section. Was causing sums to be wrong sometimes (e.g., when filtering on categories). 
+----------------------------------------------
+r29139 | lindonb | 2010-09-12 06:26:09 +0200 (Sun, 12 Sep 2010) | 1 line
+
+[FIX] Descendant categories below first child level weren't showing in PluginTrackerlist displays of category fields. 
+----------------------------------------------
+r29137 | lindonb | 2010-09-11 23:41:31 +0200 (Sat, 11 Sep 2010) | 1 line
+
+[FIX] Display 0 or 'No' options properly and fix spacing.
+----------------------------------------------
+r29136 | lindonb | 2010-09-11 23:40:15 +0200 (Sat, 11 Sep 2010) | 1 line
+
+[FIX] Add options for plugin edit and other plugin information.
+----------------------------------------------
+r29135 | lindonb | 2010-09-11 23:36:53 +0200 (Sat, 11 Sep 2010) | 1 line
+
+[FIX] 'Feedback" instead of 'Feedbacks' and there is no feedback type for the remarksbox plugin.
+----------------------------------------------
+r29134 | lindonb | 2010-09-11 23:33:28 +0200 (Sat, 11 Sep 2010) | 1 line
+
+[FIX] Increase contrast between text and background for some of the dark themes - mainly for jquery items and xdebug errors.
+----------------------------------------------
+r29133 | changi67 | 2010-09-11 22:45:28 +0200 (Sat, 11 Sep 2010) | 1 line
+
+HTML Validation
+----------------------------------------------
+r29131 | robertplummer | 2010-09-11 20:40:12 +0200 (Sat, 11 Sep 2010) | 2 lines
+
+[MOD] Changed sheet history viewing page to be tiki-history_sheets.php
+[MOD] Changed sheets so that they scroll together and tab click changed them together.
+----------------------------------------------
+r29128 | jonnybradley | 2010-09-11 01:28:04 +0200 (Sat, 11 Sep 2010) | 1 line
+
+[MOD] textarea: Don't show tip about session until 5 minutes remaining
+----------------------------------------------
+r29127 | jonnybradley | 2010-09-11 01:26:18 +0200 (Sat, 11 Sep 2010) | 1 line
+
+[IGNORE] parse_data: note to fix edge case with html comments and strike wiki parsing.
+----------------------------------------------
+r29126 | jonnybradley | 2010-09-11 00:11:46 +0200 (Sat, 11 Sep 2010) | 1 line
+
+[FIX] parse_data: paragraphs - don't wiki paragraph if already html
+----------------------------------------------
+r29125 | jonnybradley | 2010-09-10 23:00:04 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[MOD] ckeditor: use non xajax wrapper for remove_save call
+----------------------------------------------
+r29124 | jonnybradley | 2010-09-10 22:57:36 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[FIX] ckeditor: register auto_save editor so it gets removed on save
+----------------------------------------------
+r29123 | jonnybradley | 2010-09-10 22:43:18 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[ENH] ckeditor: reparse content after inserting plugin or link
+----------------------------------------------
+r29122 | changi67 | 2010-09-10 22:34:51 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[FIX] HTML Validation
+----------------------------------------------
+r29121 | sylvieg | 2010-09-10 22:19:17 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[FIX]sheet: to have also categs when creating new sheet
+----------------------------------------------
+r29120 | sampaioprimo | 2010-09-10 22:17:08 +0200 (Fri, 10 Sep 2010) | 4 lines
+
+[ENH] options to control whether to display or not blog title, description and breadcrumbs
+[ENH] remove help button from each blog title
+[ENH] add sefurl to blog link in blog title
+
+----------------------------------------------
+r29119 | marclaporte | 2010-09-10 22:16:38 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[MOD] Admin panel: regrouping two Smarty-related preferences
+----------------------------------------------
+r29117 | sylvieg | 2010-09-10 22:13:25 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[FIX]parsing: [[foo must be parsed to [foo
+----------------------------------------------
+r29115 | sylvieg | 2010-09-10 21:26:53 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[FIX]sheet: perm: author can edit
+----------------------------------------------
+r29114 | changi67 | 2010-09-10 21:24:58 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[MOD] Set class odd and even on tr instead of td
+----------------------------------------------
+r29113 | sampaioprimo | 2010-09-10 20:51:46 +0200 (Fri, 10 Sep 2010) | 2 lines
+
+replacing {self_link} with <a> while {self_link} doesn't support sefurl
+
+----------------------------------------------
+r29112 | sylvieg | 2010-09-10 20:44:08 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[FIX]sheet: perm cleaning
+----------------------------------------------
+r29111 | jonnybradley | 2010-09-10 20:22:19 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[MOD] fgal manager: keep window open by default and close it when the main edit window unloads
+----------------------------------------------
+r29110 | sylvieg | 2010-09-10 19:09:20 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[FIX]sheet: use new perms + check p_view_sheet
+----------------------------------------------
+r29109 | Jyhem | 2010-09-10 17:41:21 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[FIX] Fix logic error
+----------------------------------------------
+r29108 | Jyhem | 2010-09-10 17:37:14 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[INDENT] No functional change
+----------------------------------------------
+r29107 | Jyhem | 2010-09-10 17:34:21 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[ENH] Guarantee consistency of blog posts display between print view and other views by using same templates
+----------------------------------------------
+r29106 | jonnybradley | 2010-09-10 17:30:37 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[NEW] jqui.css option: element.css
+----------------------------------------------
+r29105 | jonnybradley | 2010-09-10 17:28:57 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[MOD] jqui.css: simplebox and a button fix
+----------------------------------------------
+r29104 | jonnybradley | 2010-09-10 15:42:13 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[IGNORE] parse_data: paragraphs - typo (bad! sorry)
+----------------------------------------------
+r29103 | jonnybradley | 2010-09-10 15:29:30 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[FIX] parse_data: paragraphs - refactor block_detect and use in convert_plugin_for_ckeditor()
+----------------------------------------------
+r29102 | jonnybradley | 2010-09-10 15:04:47 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[FIX] editpage: Restore row/cols for non-wysiwyg editor (sorry)
+----------------------------------------------
+r29101 | jonnybradley | 2010-09-10 14:59:15 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[MOD] fgal manager: left and right margins
+----------------------------------------------
+r29100 | jonnybradley | 2010-09-10 14:58:43 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[MOD] editpage: Use whole width for table
+----------------------------------------------
+r29099 | jonnybradley | 2010-09-10 14:57:28 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[FIX] ckeditor: Fix autosave for when button not on toolbar.
+----------------------------------------------
+r29098 | jonnybradley | 2010-09-10 14:56:14 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[FIX] parse_data: paragraphs - missed a block (li)
+----------------------------------------------
+r29097 | jonnybradley | 2010-09-10 14:15:24 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[FIX] ckeditor: Global
+----------------------------------------------
+r29096 | jonnybradley | 2010-09-10 13:52:49 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[FIX] ckeditor: Show plugin insert icons for html mode as well.
+----------------------------------------------
+r29095 | jonnybradley | 2010-09-10 13:51:58 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[MOD] remarksbox: smaller bottom margin.
+----------------------------------------------
+r29094 | jonnybradley | 2010-09-10 13:48:18 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[FIX] ckeditor: Better default size when not set in {textarea} definition.
+----------------------------------------------
+r29093 | sylvieg | 2010-09-10 12:25:14 +0200 (Fri, 10 Sep 2010) | 1 line
+
+[ENH]install: put also in comment adodb instruction
+----------------------------------------------
+r29092 | sept_7 | 2010-09-10 10:35:48 +0200 (Fri, 10 Sep 2010) | 2 lines
+
+[FIX] fix svn:properties as pointed by quality.tikiwiki.org
+
+----------------------------------------------
+r29091 | sept_7 | 2010-09-10 10:33:26 +0200 (Fri, 10 Sep 2010) | 2 lines
+
+[FIX] convert file to Unix format... pointed by quality.tikiwiki.org
+
+----------------------------------------------
+r29090 | sampaioprimo | 2010-09-10 02:51:32 +0200 (Fri, 10 Sep 2010) | 2 lines
+
+[ENH] set column width to 50% on interactive translation interface to improve usability when translating long strings
+
+----------------------------------------------
+r29088 | sampaioprimo | 2010-09-10 00:33:55 +0200 (Fri, 10 Sep 2010) | 2 lines
+
+[KIL] removing code for the old interactive translation feature
+
+----------------------------------------------
+r29086 | sampaioprimo | 2010-09-10 00:08:14 +0200 (Fri, 10 Sep 2010) | 2 lines
+
+[FIX] remove 255 characters limit to store translations in the database
+
+----------------------------------------------
+r29083 | Jyhem | 2010-09-09 23:17:30 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[ENH] Guarantee consistency of blog posts display between blog view and post view and edit preview by using same templates
+----------------------------------------------
+r29082 | sylvieg | 2010-09-09 23:07:50 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[FIX]searh: people seem to forgot there are 2 search modes as only the advanced is documented: put back a line for natural search- perhaps to do rename advanced with boolena?
+----------------------------------------------
+r29081 | changi67 | 2010-09-09 22:56:56 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[MOD] Set class odd and even on tr instead of td - many more to come
+----------------------------------------------
+r29080 | jonnybradley | 2010-09-09 22:42:16 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[MOD] fgal upload: Remove {literal}'s and add {{'s for jquery
+----------------------------------------------
+r29078 | changi67 | 2010-09-09 21:59:25 +0200 (Thu, 09 Sep 2010) | 1 line
+
+no changes - indent only
+----------------------------------------------
+r29077 | chealer | 2010-09-09 21:49:46 +0200 (Thu, 09 Sep 2010) | 2 lines
+
+[FIX] MySQL search: language and category parameter values not kept when changing results pages (introduced r24723, r25019)
+remove filter on used lang parameter
+----------------------------------------------
+r29076 | sampaioprimo | 2010-09-09 21:42:30 +0200 (Thu, 09 Sep 2010) | 2 lines
+
+[FIX] threaded comments now works for more than 2 levels
+
+----------------------------------------------
+r29075 | sylvieg | 2010-09-09 20:40:34 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[FIX]trackerlist: avoid popup on the popup on a tracker calendar
+----------------------------------------------
+r29074 | jonnybradley | 2010-09-09 20:38:38 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[MOD] ckeditor: Add notice about ckeditor if the prefs aren't set right. Have updated the recommended profile to suit.
+----------------------------------------------
+r29073 | chealer | 2010-09-09 20:07:27 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[ENH] Search/i18n: add preference search_default_interface_language (Restrict search language by default)
+----------------------------------------------
+r29072 | jonnybradley | 2010-09-09 19:59:46 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[DB] ckeditor: Switch wysiwyg editor to use new ckeditor
+----------------------------------------------
+r29071 | jonnybradley | 2010-09-09 19:46:28 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[FIX] cclite: Show some feedback if cclite server doesn't connect.
+----------------------------------------------
+r29070 | jonnybradley | 2010-09-09 19:45:36 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[MOD] prefs: Default to using "add br" mode for wiki paragraph formatting when it's switched on.
+----------------------------------------------
+r29069 | jonnybradley | 2010-09-09 19:42:35 +0200 (Thu, 09 Sep 2010) | 2 lines
+
+[FIX] ckeditor: Use JS to set body display back to block as this will work when accessed using ajax.
+Fixes Firefox selection failure e.g. on text colour picker use.
+----------------------------------------------
+r29068 | chealer | 2010-09-09 19:41:01 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[ENH][DB] Wiki attachments: Increase filename size limit from 80 to 255, supporting LFN and files from most Unix filesystems
+----------------------------------------------
+r29067 | sylvieg | 2010-09-09 18:12:47 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[ENH]sheet: use tab
+----------------------------------------------
+r29065 | Jyhem | 2010-09-09 17:43:44 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[FIX] Avoid warnings when variables are unset
+----------------------------------------------
+r29064 | sylvieg | 2010-09-09 17:43:43 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[FIX]perm: sheet with new perm to be able to redefine edit_sheet for a group or categ
+----------------------------------------------
+r29063 | sylvieg | 2010-09-09 16:16:32 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[FIX]perms: check categ perm dor admin tracker
+----------------------------------------------
+r29062 | jonnybradley | 2010-09-09 16:16:20 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[REF] parse_data: Refactor messy preg_replaces and complete list of block elements.
+----------------------------------------------
+r29061 | sampaioprimo | 2010-09-09 16:09:15 +0200 (Thu, 09 Sep 2010) | 2 lines
+
+[ENH] parse wiki syntax for blog post excerpt
+
+----------------------------------------------
+r29060 | sylvieg | 2010-09-09 16:07:54 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[FIX]perms: cite all the perm if error on p[erm_either
+----------------------------------------------
+r29059 | sylvieg | 2010-09-09 15:40:40 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[FIX]forum: wyiwyg for buttons
+----------------------------------------------
+r29058 | jonnybradley | 2010-09-09 15:28:59 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[FIX] parse_data: Add more block elements to paragraph detection (hr and blockquote)
+----------------------------------------------
+r29056 | jonnybradley | 2010-09-09 12:55:58 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[FIX] warning: Added default for unused parameter. Didn't remove as the function is called with this param from tikilib.
+----------------------------------------------
+r29055 | jonnybradley | 2010-09-09 12:45:42 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[REM] Remove some old, dead code
+----------------------------------------------
+r29054 | jonnybradley | 2010-09-09 12:32:26 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[FIX] cachelib: Fix for when called from installer before tikilib can exist.
+----------------------------------------------
+r29053 | jonnybradley | 2010-09-09 12:18:36 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[DOC] New domain for old file
+----------------------------------------------
+r29050 | sdoh | 2010-09-09 09:22:50 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[FIX] Fixes errors with strings multibyte, best test of the maximum size tags
+----------------------------------------------
+r29048 | chealer | 2010-09-09 03:44:21 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[FIX] deleteTranslationInProgressFlags(): fix query to use bindvars
+----------------------------------------------
+r29047 | sylvieg | 2010-09-09 00:35:46 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[FIX]forum: fix 29045 - global perms are used in tpl
+----------------------------------------------
+r29046 | sylvieg | 2010-09-09 00:05:39 +0200 (Thu, 09 Sep 2010) | 1 line
+
+[FIX]delete custom code
+----------------------------------------------
+r29045 | sylvieg | 2010-09-08 23:29:07 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[FIX]forum: check categ perms->use new perms system
+----------------------------------------------
+r29044 | changi67 | 2010-09-08 23:05:02 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[FIX] Another failed substitution
+----------------------------------------------
+r29042 | changi67 | 2010-09-08 22:48:05 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[FIX] use dynamic value for colspan according to prefs to have the right number of <th> 
+----------------------------------------------
+r29041 | lphuberdeau | 2010-09-08 22:07:35 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[FIX] coelesce theme would not work correctly with inline comments due to missing class on comment content
+----------------------------------------------
+r29040 | lphuberdeau | 2010-09-08 21:46:48 +0200 (Wed, 08 Sep 2010) | 1 line
+
+Adding domain redirect preference to support domain transitions
+----------------------------------------------
+r29038 | jonnybradley | 2010-09-08 21:11:57 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[FIX] tracker export: Removed illegal style declaration in tpl (actually looks better without it in most jquery-ui themes)
+----------------------------------------------
+r29037 | changi67 | 2010-09-08 20:53:29 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[MOD] Rename admin tpl to be like the php files
+----------------------------------------------
+r29036 | jonnybradley | 2010-09-08 20:50:10 +0200 (Wed, 08 Sep 2010) | 3 lines
+
+[ENH] user messages: Add reply-to and bcc checkboxes to message send forms.
+Allows your real email to be the reply-to address on a message notification, and to be able to receive a copy via Bcc.
+Also slightly better error handling.
+----------------------------------------------
+r29035 | jonnybradley | 2010-09-08 18:36:45 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[FIX] user prefs: Allow messages to be sent via tiki-user_information.php if allowMsgs is on, even if user_information is set to private.
+----------------------------------------------
+r29034 | chealer | 2010-09-08 17:48:51 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[FIX] MySQL search: in results, if searching in wiki pages, say we found results in x *wiki pages", not x wikis
+----------------------------------------------
+r29033 | jonnybradley | 2010-09-08 17:42:18 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[MOD] user messages: Tidy up compose message layout and make priority menu cleaner (also on user info)
+----------------------------------------------
+r29032 | jonnybradley | 2010-09-08 17:35:42 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[MOD] user prefs: Swap a couple of prefs around to be more logical. Also remove dead code and make one capitalisation.
+----------------------------------------------
+r29031 | jonnybradley | 2010-09-08 17:25:45 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[FIX] auto_query_args: Set to empty (default to all fields)
+----------------------------------------------
+r29030 | jonnybradley | 2010-09-08 17:18:17 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[FIX] intertrans: Hide "add comment" link initially (thanks Marc)
+----------------------------------------------
+r29027 | sylvieg | 2010-09-08 15:44:44 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[FIX]trackerfilter: when displayList is on, show the list
+----------------------------------------------
+r29026 | chealer | 2010-09-08 15:36:21 +0200 (Wed, 08 Sep 2010) | 2 lines
+
+[FIX] HTML special chars escaping
+[FIX] most HTML issues
+----------------------------------------------
+r29023 | sdoh | 2010-09-08 14:45:45 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[FIX] Corrected vanishing bold chars bug
+----------------------------------------------
+r29021 | sylvieg | 2010-09-08 13:15:57 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[FIX]translation: hide the '2 pannels translation' for articles as it's only working for wiki page
+----------------------------------------------
+r29020 | jonnybradley | 2010-09-08 12:55:52 +0200 (Wed, 08 Sep 2010) | 7 lines
+
+[ENH] intertrans: Several improvements to interactive translation.
+Can translate more elements on page (if not all?)
+Can translate strings that were not previously translated (form label in italics to indicate that).
+Elements highlight as you mouseover.
+Escape key closes form.
+Switching off intertrans reloads the page (and flushes templaces_c).
+Various cosmetic and usability improvements (CSS moved from design.css to layout.css).
+----------------------------------------------
+r29019 | jonnybradley | 2010-09-08 12:50:42 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[REF] Deploy $cachelib->empty_cache() - missed one from r29018
+----------------------------------------------
+r29018 | jonnybradley | 2010-09-08 12:26:37 +0200 (Wed, 08 Sep 2010) | 2 lines
+
+[REF] Deploy $cachelib->empty_cache() throughout.
+(Note: interactive_translation_mode only needs to empty templates_c, which is why i started this)
+----------------------------------------------
+r29017 | jonnybradley | 2010-09-08 12:20:19 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[REF] cachelib: Move cache emptying logic from admin system into $cachelib->empty_cache(). Also rename the mysterious "du" function to count_cache_files as that's what it does (and improve file counting).
+----------------------------------------------
+r29016 | pkdille | 2010-09-08 07:40:50 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[MOD] no changes - indenting code and removing some useless comments
+----------------------------------------------
+r29015 | jonnybradley | 2010-09-08 01:53:31 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[FIX] edit lang: no ajax for full page reload on toggle button
+----------------------------------------------
+r29014 | jonnybradley | 2010-09-08 01:52:26 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[FIX] global $prefs
+----------------------------------------------
+r29013 | robertplummer | 2010-09-08 01:12:10 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[FIX] Attribute sanitizer for mediaplayer plugin
+----------------------------------------------
+r29012 | marclaporte | 2010-09-08 00:01:45 +0200 (Wed, 08 Sep 2010) | 1 line
+
+[FIX] top buttons no longer necessary now that we have tabs on this page
+----------------------------------------------
+r29011 | robertplummer | 2010-09-07 22:38:39 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[FIX] Small bug in loading js for sheet history comparing.
+----------------------------------------------
+r29010 | robertplummer | 2010-09-07 22:01:49 +0200 (Tue, 07 Sep 2010) | 5 lines
+
+[MOD] lang/en/language.php - Took away some jQuery.sheet warnings
+[ADD] lib/sheet/tiki-history-sheets.js to handle js on the history page for sheets - We may need to rename this later
+[MOD] /templates/tiki-view-sheets.tpl to handle multi read dates for sheets
+[MOD] /templates/tiki-history-sheets.tpl to be able to list and be able to compare multi sheets
+{MOD] /tiki-setup.php to add lib/sheet/tiki-history_sheets.js only on php page tiki-view_sheets.php
+----------------------------------------------
+r29009 | jonnybradley | 2010-09-07 21:49:09 +0200 (Tue, 07 Sep 2010) | 3 lines
+
+[ENH] comment annotations: Largely cosmetic improvements.
+Add title text and action buttons.
+Some help text, CSS classes and hide/show existing comments.
+----------------------------------------------
+r29008 | jonnybradley | 2010-09-07 21:46:06 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[FIX] parse_data paragraphs: <dl> is also a block element
+----------------------------------------------
+r29007 | sylvieg | 2010-09-07 21:37:34 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[FIX]textarea: param _toolbars interpreted for wiki editor + trackerhelp uses {textarea} to be able to extend textarea on any browser via jq
+----------------------------------------------
+r29006 | sylvieg | 2010-09-07 21:08:00 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[FIX]tracker: do not display Anonymous and Registered in usergroups+ do not show input label
+----------------------------------------------
+r29005 | sylvieg | 2010-09-07 20:34:21 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[ENH]trackers: field usergroups allowing to fetch dynamically the groups of a user and to filter on a group
+----------------------------------------------
+r29004 | jonnybradley | 2010-09-07 19:08:54 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[FIX] comments: Move errors box near the form and refill form inputs with posted data
+----------------------------------------------
+r29003 | jonnybradley | 2010-09-07 18:43:04 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[FIX] comments: Fill title when editing comment
+----------------------------------------------
+r29002 | sylvieg | 2010-09-07 18:38:10 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[ENH]style: Can not find a justification for &nbsp; so simplify
+----------------------------------------------
+r29001 | jonnybradley | 2010-09-07 18:12:06 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[FIX] perms admin: Do proper fine grain check for prefs as well as feature by feature.
+----------------------------------------------
+r29000 | jonnybradley | 2010-09-07 17:37:36 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[ENH] perms admin: Add show only selected checkbox (and label for toggle sections icon)
+----------------------------------------------
+r28999 | jonnybradley | 2010-09-07 16:44:13 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[FIX] wysiwyg plugins: Make edit icon float over plugin previews (thanks for the "how to" luci)
+----------------------------------------------
+r28998 | jonnybradley | 2010-09-07 16:28:59 +0200 (Tue, 07 Sep 2010) | 2 lines
+
+[ENH] wysiwyg: Plugin edit re-parses content (if ajax on). Also preview working better with multiple plugins.
+Renamed css class .cke_tiki_plugin to .tiki_plugin as ckeditor "eats" classes starting with cke_
+----------------------------------------------
+r28997 | sylvieg | 2010-09-07 15:59:11 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[FIX]trackerhelp: perm checking
+----------------------------------------------
+r28996 | sylvieg | 2010-09-07 15:13:33 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[NEW]trackerhelp: a little module to show the fieldIds of a tracker: todo->debug {textarea} to use it, autocomplete on tracker name, pagination for large tracker
+----------------------------------------------
+r28995 | jonnybradley | 2010-09-07 14:27:53 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[FIX] wysiwyg plugins: Preview and save now working (in html mode)
+----------------------------------------------
+r28994 | jonnybradley | 2010-09-07 14:27:07 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[MOD] wysiwyg plugins: Clean dead code, leave some more comments in as reminder to fix selection bug.
+----------------------------------------------
+r28993 | jonnybradley | 2010-09-07 13:35:39 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[FIX] toolbars: Mend re-encoding corruption from r28856 which was causing JS errors and preventing most edit tools from working.
+----------------------------------------------
+r28992 | chealer | 2010-09-07 07:33:00 +0200 (Tue, 07 Sep 2010) | 2 lines
+
+use new wikilib "bad characters" prevention methods
+forgotten in r28740, oops
+----------------------------------------------
+r28991 | marclaporte | 2010-09-07 04:43:39 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[ENH] Admin panel for Inline Comments
+----------------------------------------------
+r28990 | pascalstjean | 2010-09-07 04:21:04 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[FIX] Add line to get_perm_object 
+----------------------------------------------
+r28989 | robertplummer | 2010-09-07 00:46:12 +0200 (Tue, 07 Sep 2010) | 2 lines
+
+[FIX] Fullscreen mode for sheet
+[MOD] Deleted some experimental text.  Sheet is ok to use now.
+----------------------------------------------
+r28988 | marclaporte | 2010-09-07 00:25:38 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[MOD] moving permission to general comment section (instead of just wiki) to help people set comment permissions. TODO: Filter doesn't work.
+----------------------------------------------
+r28987 | marclaporte | 2010-09-07 00:18:00 +0200 (Tue, 07 Sep 2010) | 1 line
+
+[FIX] Cleanup of various comment-related preferences. Taking advantage of the recently added comments admin panel.
+----------------------------------------------
+r28986 | pkdille | 2010-09-06 23:45:34 +0200 (Mon, 06 Sep 2010) | 1 line
+
+[MOD] remove some old debug traces - please, remove it before commiting
+----------------------------------------------
+r28985 | robertplummer | 2010-09-06 22:06:10 +0200 (Mon, 06 Sep 2010) | 3 lines
+
+[ADD] 20100906_sheet_toolbar_default_tiki.sql deletes and then adds the new toolbar
+[ADD] New buttons addrowbefore and addcolumnbefore, they add before the selected cell
+[FIX] Changed some of the outdated cell adding in toolbarslib.php to be more predictable
+----------------------------------------------
+r28984 | pkdille | 2010-09-06 21:40:32 +0200 (Mon, 06 Sep 2010) | 1 line
+
+[MOD] admin metrics: deploy button plugin into this template (\!)
+----------------------------------------------
+r28982 | pkdille | 2010-09-06 21:37:08 +0200 (Mon, 06 Sep 2010) | 1 line
+
+[MOD] remove some useless css classes on td and tr tags in formcolor tables
+----------------------------------------------
+r28979 | robertplummer | 2010-09-06 20:27:24 +0200 (Mon, 06 Sep 2010) | 5 lines
+
+[FIX] Made all cells save every time you save because styles can change in grid.php.  This now enables all cells to keep their style when saved.
+[FIX] Updated $.sheet.get_sheet_json in tiki-jquery.js to be based off the more streamlined version in sheet.
+[FIX] Updated the toolbarslib.php toolbar titles to be more accurate so I can add other buttons that are more complex, like add cells above current selection.
+
+
+----------------------------------------------
+r28978 | jonnybradley | 2010-09-06 19:44:15 +0200 (Mon, 06 Sep 2010) | 3 lines
+
+[FIX] parse_data and wysiwyg: Proper parsing of line ends and paragraph processing for plugins. Only enclose in <p> if it's all inline elements.
+Also re-organise how the wysiwyg plugins work to include the ending comment inside the div or span.
+More to come on this...
+----------------------------------------------
+r28977 | sept_7 | 2010-09-06 15:50:49 +0200 (Mon, 06 Sep 2010) | 3 lines
+
+[FIX] Don't use minified version of JQuery and Jquery.UI if
+tiki_minify_javascript is not set.
+
+----------------------------------------------
+r28976 | jonnybradley | 2010-09-06 15:16:10 +0200 (Mon, 06 Sep 2010) | 1 line
+
+[MOD] admin/wysiwyg: Reorganisation to promote new ckeditor and add some dependencies.
+----------------------------------------------
+r28975 | jonnybradley | 2010-09-06 15:14:05 +0200 (Mon, 06 Sep 2010) | 1 line
+
+[MOD] admin/performance: Move "Performance" tab to first so it's the default (as it has useful stuff in it more often)
+----------------------------------------------
+r28974 | jonnybradley | 2010-09-06 15:11:11 +0200 (Mon, 06 Sep 2010) | 1 line
+
+[MOD] admin/features: Change "Need polish" to "Getting there..." for ajax and wysiwyg and add dependency.
+----------------------------------------------
+r28973 | jonnybradley | 2010-09-06 15:07:27 +0200 (Mon, 06 Sep 2010) | 1 line
+
+[FIX] textareas: "not empty" better test than isset for rows and cols
+----------------------------------------------
+r28972 | jonnybradley | 2010-09-06 15:07:00 +0200 (Mon, 06 Sep 2010) | 2 lines
+
+[FIX] wysiwyg: wysiwyg_htmltowiki depends on feature_ajax_autosave.
+Also make fonts a textarea.
+----------------------------------------------
+r28971 | sept_7 | 2010-09-06 14:35:28 +0200 (Mon, 06 Sep 2010) | 5 lines
+
+[EHN+FIX] Modifications to speed up minify generation and fix CKEditor with minify:
+ o Use minified jquery adn jquery.ui in tiki-setup
+ o modify headerlib to skip minification of JS files ending by .min.js or in minified rank
+ o modify main tpl tiki and tiki-index_p accordingly
+
+----------------------------------------------
+r28966 | chealer | 2010-09-06 06:27:11 +0200 (Mon, 06 Sep 2010) | 3 lines
+
+add commit tag [REF] for refactoring
+added by Alain D?\195?\169silets (from DevTips)
+
+----------------------------------------------
+r28965 | chealer | 2010-09-06 05:55:35 +0200 (Mon, 06 Sep 2010) | 2 lines
+
+[FIX] over-restrictive filter on client parameter (r20933 regression)
+oops. thanks MojaveMedia (Closes: #3536)
+----------------------------------------------
+r28963 | changi67 | 2010-09-05 20:59:12 +0200 (Sun, 05 Sep 2010) | 1 line
+
+[FIX] colspan should be equal to the number of <th>
+----------------------------------------------
+r28962 | marclaporte | 2010-09-05 19:37:07 +0200 (Sun, 05 Sep 2010) | 1 line
+
+[ENH] making nofollow option easier to find
+----------------------------------------------
+r28960 | eromneg | 2010-09-05 17:51:14 +0200 (Sun, 05 Sep 2010) | 1 line
+
+[ENH} reference the positioning of the arrow icon from the bottom to avoid the arrow icon being placed over the text with multi-line menu text. Individual themes will probably need to adjust the actual value.
+----------------------------------------------
+r28957 | xavidp | 2010-09-05 12:15:22 +0200 (Sun, 05 Sep 2010) | 1 line
+
+[FIX]Allow javascript (and thus, JQuery tabs, etc.) to work when pages are displayed without header, footer nor side columns
+----------------------------------------------
+r28955 | changi67 | 2010-09-04 22:19:16 +0200 (Sat, 04 Sep 2010) | 1 line
+
+[MOD] Just give a message when no records found
+----------------------------------------------
+r28953 | changi67 | 2010-09-04 22:11:04 +0200 (Sat, 04 Sep 2010) | 1 line
+
+[MOD] use dynamic value for colspan according to prefs - oops 
+----------------------------------------------
+r28952 | changi67 | 2010-09-04 22:06:39 +0200 (Sat, 04 Sep 2010) | 1 line
+
+[MOD] use dynamic value for colspan according to prefs - missed one
+----------------------------------------------
+r28951 | chealer | 2010-09-04 21:43:23 +0200 (Sat, 04 Sep 2010) | 2 lines
+
+[FIX] Installer: htaccess error showing on Microsoft IIS
+not tested much
+----------------------------------------------
+r28950 | changi67 | 2010-09-04 21:21:48 +0200 (Sat, 04 Sep 2010) | 1 line
+
+reindent only - sorry for the previous mess
+----------------------------------------------
 Version 5.1
 <http://tikiwiki.org/ReleaseNotes51>
 ------------------
