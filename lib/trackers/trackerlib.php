@@ -1328,7 +1328,7 @@ class TrackerLib extends TikiLib
 			if ($prefs['user_selector_realnames_tracker'] == 'y' && $ins_fields['data'][$i]['type'] == 'u') {
 				if (!$userlib->user_exists($ins_fields['data'][$i]['value'])) {
 					$finalusers = $userlib->find_best_user(array($ins_fields['data'][$i]['value']), '' , 'login');
-					if (!empty($finalusers[0]) && !(isset($_REQUEST['register']) && isset($_REQUEST['name']) && $_REQUEST['name'] == $u)) {
+					if (!empty($finalusers[0]) && !(isset($_REQUEST['register']) && isset($_REQUEST['name']) && $_REQUEST['name'] == $ins_fields['data'][$i]['value'])) {
 						// It could be in fact that a new user is required (when no match is found or during registration even if match is found)
 						$ins_fields['data'][$i]['value'] = $finalusers[0];
 					}
