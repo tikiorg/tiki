@@ -156,9 +156,13 @@ class Language extends TikiDb_Bridge
 				$result = $this->query($query, array($originalStr, $this->lang));
 			} else {
 				$query = 'update `tiki_language` set `tran`=?, changed=? where binary `source`=? and `lang`=?';
-				$result = $this->query($query,array($translatedStr, 1, $originalStr, $this->lang));
+				$result = $this->query($query, array($translatedStr, 1, $originalStr, $this->lang));
 			}
 		}
+
+		// remove from untranslated table if present
+		$query = "delete from `tiki_untranslated` where binary `source`=? and `lang`=?";
+		$this->query($query, array($originalStr, $this->lang));
 	}
 
 	/**

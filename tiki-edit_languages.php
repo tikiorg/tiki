@@ -42,6 +42,7 @@ if (is_writable('lang/')) {
 if (isset($_REQUEST["edit_language"])) {
 	$smarty->assign('edit_language', $_REQUEST["edit_language"]);
 	$edit_language = $_REQUEST["edit_language"];
+	$language = new Language($edit_language);
 } else {
 	$smarty->assign('edit_language', $prefs['language']);
 	$edit_language = $prefs['language'];
@@ -64,17 +65,10 @@ if (isset($_REQUEST["add_tran"])) {
 	$add_tran_tran = $_REQUEST["add_tran_tran"];
 
 	if (strlen($add_tran_source) != 0 && strlen($add_tran_tran) != 0) {
-#		$add_tran_source = htmlentities(strip_tags($add_tran_source), ENT_NOQUOTES, "UTF-8");
 		$add_tran_source = strip_tags($add_tran_source);
-#		$add_tran_tran = htmlentities(strip_tags($add_tran_tran), ENT_NOQUOTES, "UTF-8"); // we don't want htmlentities() here (converts e.g. é to &eauml;) -- luci
 		$add_tran_tran = strip_tags($add_tran_tran);
-		$query = "delete from `tiki_language` where binary `source` = ? and `lang` = ?";
-		$tikilib->query($query,array($add_tran_source,$edit_language));
-		$query = "insert into `tiki_language` (`source`, `lang`, `tran`, `changed`) values (?,?,?,?)";
-		$tikilib->query($query,array($add_tran_source,$edit_language,$add_tran_tran,1));
-		// remove from untranslated Table
-		$query = "delete from `tiki_untranslated` where binary `source`=? and `lang`=?";
-		$tikilib->query($query,array($add_tran_source,$edit_language));
+
+		$language->updateTrans($add_tran_source, $add_tran_tran);
 	}
 }
 
@@ -94,24 +88,12 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 			// Handle edits in translate recorded
 			if (isset($_REQUEST["edit_rec_$i"])) {
 				if (strlen($_REQUEST["edit_rec_tran_$i"]) > 0 && strlen($_REQUEST["edit_rec_source_$i"]) > 0) {
-					$query = "insert into `tiki_language` (`source`, `lang`, `tran`, `changed`) values(?,?,?,?)";
-					$result = $tikilib->query($query,array($_REQUEST["edit_rec_source_$i"],$edit_language,$_REQUEST["edit_rec_tran_$i"],1));
-					$query = "delete from `tiki_untranslated` where binary `source`=? and lang=?";
-					$result = $tikilib->query($query,array($_REQUEST["edit_rec_source_$i"],$edit_language));
-				// No error checking necessary
+					$language->updateTrans($_REQUEST["edit_rec_source_$i"], $_REQUEST["edit_rec_tran_$i"]);
 				}
 			} elseif (isset($_REQUEST["edt_tran_$i"])) {
 				// Handle edits in edit translations
 				if (strlen($_REQUEST["edit_edt_tran_$i"]) > 0 && strlen($_REQUEST["edit_edt_source_$i"]) > 0) {
-#					$_REQUEST["edit_edt_tran_$i"] = strip_tags($_REQUEST["edit_edt_tran_$i"]); // yes, we even don't want striptags() for existing translations as some already have html tags included and we want to keep them, right ?
-					$query = "update `tiki_language` set `tran`=?, `changed`=? where binary `source`=? and `lang`=?";
-					$result = $tikilib->query($query,array($_REQUEST["edit_edt_tran_$i"],1,$_REQUEST["edit_edt_source_$i"],$edit_language));
-
-					//if ($result->numRows()== 0 ) 
-					if (!isset($result)) {
-						$query = "insert into `tiki_language` (`source`, `lang`, `tran`, `changed`) values(?,?,?,?)";
-						$result = $tikilib->query($query,array($_REQUEST["edit_edt_source_$i"],$edit_language,$_REQUEST["edit_edt_tran_$i"],1));
-					}
+					$language->updateTrans($_REQUEST["edit_edt_source_$i"], $_REQUEST["edit_edt_tran_$i"]);
 				}
 			} elseif (isset($_REQUEST["del_tran_$i"])) {
 				// Handle deletes here
@@ -235,7 +217,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 
 if (isset($_REQUEST["exp_language"])) {
 	$exp_language = $_REQUEST["exp_language"];
-	$language = new Language($exp_language);
+	$export_language = new Language($exp_language);
 	$smarty->assign('exp_language', $exp_language);
 } else {
 	$smarty->assign('exp_language', $prefs['language']);
@@ -244,7 +226,7 @@ if (isset($_REQUEST["exp_language"])) {
 // Export
 if (isset($_REQUEST['downloadFile'])) {
 	check_ticket('import-lang');
-	$data = $language->createCustomFile();
+	$data = $export_language->createCustomFile();
 	header ("Content-type: application/unknown");
 	header ("Content-Disposition: inline; filename=language.php");
 	header ("Content-encoding: UTF-8");
@@ -255,14 +237,14 @@ if (isset($_REQUEST['downloadFile'])) {
 // Write to language.php
 if (isset($_REQUEST['exportToLanguage'])) {
 	try {
-		$stats = $language->writeLanguageFile();
+		$stats = $export_language->writeLanguageFile();
 	} catch (Exception $e) {
 		$smarty->assign('msg', $e->getMessage());
 		$smarty->display('error.tpl');
 		die;
 	}
 
-	$expmsg = sprintf(tra('Wrote %d new strings and updated %d to lang/%s/language.php'), $stats['new'], $stats['modif'], $language->lang);
+	$expmsg = sprintf(tra('Wrote %d new strings and updated %d to lang/%s/language.php'), $stats['new'], $stats['modif'], $export_language->lang);
 	$smarty->assign('expmsg', $expmsg);
 }
 

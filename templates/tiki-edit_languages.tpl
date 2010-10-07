@@ -8,9 +8,9 @@
 	{/if}
 </div>
 
-<form action="tiki-edit_languages.php" method="post">
-	{tabset}
-		{tab name="{tr}Edit languages{/tr}"}
+{tabset}
+	{tab name="{tr}Edit languages{/tr}"}
+		<form action="tiki-edit_languages.php" method="post">
 			<div class="adminoptionbox">
 				<label for="edit_language">{tr}Select the language to edit{/tr}:</label>
 				<select id="edit_language" name="edit_language">
@@ -114,9 +114,11 @@
 					<input type="hidden" name="tr_recnum" value="{$tr_recnum|escape}" />
 				</div>
 			{/if}
-		{/tab}
+		</form>
+	{/tab}
 
-		{tab name="{tr}Export languages{/tr}"}
+	{tab name="{tr}Export languages{/tr}"}
+		<form action="tiki-edit_languages.php" method="post">
 			{if isset($expmsg)}
 			    {remarksbox type="note" title="{tr}Note:{/tr}"}
 					{$expmsg}
@@ -156,6 +158,6 @@
 					{/if}
 				</div>
 			{/if}
-		{/tab}
-	{/tabset}
-</form>
+		</form>
+	{/tab}
+{/tabset}
