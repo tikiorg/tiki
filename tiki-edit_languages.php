@@ -30,10 +30,6 @@ if (isset($_REQUEST["imp_language"])) {
 $languages = $tikilib->list_languages();
 $smarty->assign_by_ref('languages', $languages);
 
-$db_languages = Language::getDbTranslatedLanguages();
-$db_languages = $tikilib->format_language_list($db_languages);
-$smarty->assign_by_ref('db_languages', $db_languages);
-
 // check if is possible to write to lang/
 // TODO: check if each language file is writable instead of the whole lang/ dir
 if (is_writable('lang/')) {
@@ -269,6 +265,10 @@ if (isset($_REQUEST['exportToLanguage'])) {
 	$expmsg = sprintf(tra('Wrote %d new strings and updated %d to lang/%s/language.php'), $stats['new'], $stats['modif'], $language->lang);
 	$smarty->assign('expmsg', $expmsg);
 }
+
+$db_languages = Language::getDbTranslatedLanguages();
+$db_languages = $tikilib->format_language_list($db_languages);
+$smarty->assign_by_ref('db_languages', $db_languages);
 
 ask_ticket('edit-languages');
 
