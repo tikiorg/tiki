@@ -33,6 +33,15 @@ body {
 	width: 100%;
 }
 
+/* next two rules, prevent column content from overlapping. */
+#fixedwidth {
+	display: table;
+}
+
+.fixed_width #fixedwidth {
+	display: inherit;
+}
+
 #c1c2 {
 	display: block;/* keep "display: block" here to prevent layout breakage (mostly in Firefox) */
 	float: left;/* from IE 5.5 to IE 7 it works only when it is floated this way */
