@@ -163,9 +163,10 @@ function collect_files ($dir)
 		if ('.'  === $file || '..' === $file || 'Zend' === $file || 
 				'htmlpurifier' === $file || 'adodb' === $file || 'smarty' === $file ||
 				'ezcomponents' === $file || 'phpcas' === $file || 
-				'phplayers' === $file || 'pear' === $file || 'lang' === $file || 
-				'templates_c' === $file || 'dump'  === $file || 'temp' === $file || 
-				'img' === $file || 'cache' === $file) {
+				'jscalendar' === $file || 'pclzip' === $file || 'jquery' === $file ||
+				'phplayers' === $file || 'pear' === $file || 'ckeditor' === $file ||
+				'lang' === $file || 'templates_c' === $file || 'dump'  === $file || 
+				'temp' === $file || 'img' === $file || 'cache' === $file) {
 			continue;
 		}
 
