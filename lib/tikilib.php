@@ -189,7 +189,7 @@ class TikiLib extends TikiDb_Bridge
     // Returns IP address or IP address forwarded by the proxy if feature load balancer is set
 	function get_ip_address() {
         global $prefs;
-        if ($prefs['feature_loadbalancer'] == "y") {
+        if (isset($prefs['feature_loadbalancer']) && $prefs['feature_loadbalancer'] == "y") {
             $ip = null;
 
             if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
