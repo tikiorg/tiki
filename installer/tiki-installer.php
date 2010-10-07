@@ -781,7 +781,7 @@ $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
-$email_test_tw = 'mailtest@tikiwiki.org';
+$email_test_tw = 'mailtest@tiki.org';
 $smarty->assign('email_test_tw', $email_test_tw);
 
 //  Sytem requirements test. 
