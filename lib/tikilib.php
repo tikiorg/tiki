@@ -7003,7 +7003,7 @@ class TikiLib extends TikiDb_Bridge
 		// Fetch all externals once
 		static $externals = false;
 		if( false === $externals ) {
-			$externals = $this->fetchMap( 'SELECT `name`, `extwiki` FROM `tiki_extwiki`' );
+			$externals = $this->fetchMap( 'SELECT LOWER(`name`), `extwiki` FROM `tiki_extwiki`' );
 		}
 		
 		$displayLink = $pageLink;
