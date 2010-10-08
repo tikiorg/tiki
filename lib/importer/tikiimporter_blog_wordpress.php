@@ -37,6 +37,21 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	);
 
 	/**
+     * Check for DOMDocument.
+     * 
+     * @see lib/importer/TikiImporter#checkRequirements()
+     *
+     * @return void 
+     * @throws Exception if DOMDocument not available
+     */
+	function checkRequirements()
+	{
+		if (!class_exists('DOMDocument')) {
+			throw new Exception(tra('Class DOMDocument not available, check your PHP installation. For more information see http://php.net/manual/en/book.dom.php'));
+		}
+	}
+
+	/**
 	 * Start the importing process by loading the XML file.
 	 * 
 	 * @see lib/importer/TikiImporter_Blog#import()
