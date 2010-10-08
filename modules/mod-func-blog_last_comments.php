@@ -16,7 +16,16 @@ function module_blog_last_comments_info() {
 		'name' => tra('Last blog post comments'),
 		'description' => tra('Displays the specified number of the blog post comments most recently added.'),
 		'prefs' => array( 'feature_blogs' ),
-		'params' => array(),
+		'params' => array(
+			'nodate' => array(
+				'name' => tra('No date'),
+				'description' => tra('If set to "y", the date of comments is not displayed in the module box.') . " " . tra('Default: "n".')
+			),
+			'moretooltips' => array(
+				'name' => tra('Verbose tooltips'),
+				'description' => tra('If set to "y", blog post title is only visible as a tooltip and not displayed.') . " " . tra('Default: "n"') . " " . tra('Options: "y,n"')
+			)
+		),
 		'common_params' => array('nonums', 'rows')
 	);
 }

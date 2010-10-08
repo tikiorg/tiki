@@ -502,6 +502,15 @@ a.linkmodule:hover {
 	color: #82a7c8;
 }
 
+small.date {
+	font-size: 0.9em;
+	font-style: italic;
+}
+
+.commentTitle {
+	font-weight: bold;
+}
+
 /** PHP Layers Menus **/
 .horbar {
 	width: 100%;
