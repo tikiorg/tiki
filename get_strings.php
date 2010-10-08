@@ -246,9 +246,15 @@ function formatted_print($string) {
 }
 ////////////////////////////////////////////////////////////////////////////
 
-$quiet = isset ($_REQUEST['quiet']);
-
 if ( $script_mode ) {
+
+	$_REQUEST = array();
+	for ( $k = 1 ; $k < $_SERVER['argc'] ; $k++ ) {
+		@list($key, $value) = explode('=', $_SERVER['argv'][$k], 2);
+		$_REQUEST[$key] = $value ? $value : 'y';
+	}
+
+	$quiet = isset ($_REQUEST['quiet']);
 
 	if ( ! $quiet ) {
 		require_once('lib/setup/timer.class.php');
@@ -263,14 +269,10 @@ if ( $script_mode ) {
 		require_once('lib/setup/prefs.php'); // Used to get default prefs
 	}
 
-	$_REQUEST = array();
-	for ( $k = 1 ; $k < $_SERVER['argc'] ; $k++ ) {
-		list($key, $value) = explode('=', $_SERVER['argv'][$k], 2);
-		$_REQUEST[$key] = $value ? $value : 'y';
-	}
 
 } else {
 	require_once('tiki-setup.php');
+	$quiet = isset ($_REQUEST['quiet']);
 	if ( $tiki_p_admin != 'y' ) die("You need to be admin to run this script");
 }
 
@@ -599,8 +601,7 @@ foreach ($languages as $ksel => $sel) {
 					$translated[$word] = $lang[$word];
 				}
 				unset ($unused[$word]);
-			}
-			else {
+			} else {
 
 				// Handle punctuations at the end of the string (cf. comments in lib/init/tra.php)
 				// For example, if word == 'Login:', we don't keep it if we also have a string 'Login'
