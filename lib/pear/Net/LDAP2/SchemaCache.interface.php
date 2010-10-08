@@ -9,8 +9,8 @@
 * @package   Net_LDAP2
 * @author    Benedikt Hallinger <beni@php.net>
 * @copyright 2009 Benedikt Hallinger
-* @license   http://www.gnu.org/copyleft/lesser.html LGPL
-* @version   CVS: $Id: SchemaCache.interface.php,v 1.3 2009/06/02 10:09:02 beni Exp $
+* @license   http://www.gnu.org/licenses/lgpl-3.0.txt LGPLv3
+* @version   SVN: $Id: SchemaCache.interface.php 286718 2009-08-03 07:30:49Z beni $
 * @link      http://pear.php.net/package/Net_LDAP2/
 */
 

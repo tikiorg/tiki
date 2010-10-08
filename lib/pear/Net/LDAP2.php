@@ -12,8 +12,8 @@
 * @author    Del <del@babel.com.au>
 * @author    Benedikt Hallinger <beni@php.net>
 * @copyright 2003-2007 Tarjej Huse, Jan Wagner, Del Elson, Benedikt Hallinger
-* @license   http://www.gnu.org/copyleft/lesser.html LGPL
-* @version   CVS: $Id: LDAP2.php,v 1.22 2009/06/02 12:57:09 beni Exp $
+* @license   http://www.gnu.org/licenses/lgpl-3.0.txt LGPLv3
+* @version   SVN: $Id: LDAP2.php 295178 2010-02-16 17:29:24Z beni $
 * @link      http://pear.php.net/package/Net_LDAP2/
 */
 
@@ -39,7 +39,7 @@ define('NET_LDAP2_ERROR', 1000);
 /**
 * Net_LDAP2 Version
 */
-define('NET_LDAP2_VERSION', '2.0.0');
+define('NET_LDAP2_VERSION', '2.0.10');
 
 /**
 * Net_LDAP2 - manipulate LDAP servers the right way!
@@ -368,13 +368,24 @@ class Net_LDAP2 extends PEAR
     /**
     * Connect to the ldap-server
     *
-    * This function connects to the given LDAP server.
+    * This function connects to the LDAP server specified in
+    * the configuration, binds and set up the LDAP protocol as needed.
     *
     * @access protected
     * @return Net_LDAP2_Error|true    Net_LDAP2_Error object or true
     */
     protected function performConnect()
     {
+        // Note: Connecting is briefly described in RFC1777.
+        // Basicly it works like this:
+        //  1. set up TCP connection
+        //  2. secure that connection if neccessary
+        //  3a. setLDAPVersion to tell server which version we want to speak
+        //  3b. perform bind
+        //  3c. setLDAPVersion to tell server which version we want to speak
+        //      together with a test for supported versions
+        //  4. set additional protocol options
+
         // Return true if we are already connected.
         if ($this->_link !== false) {
             return true;
@@ -438,28 +449,62 @@ class Net_LDAP2 extends PEAR
                 }
             }
 
-            // Set LDAP version before trying to bind.
-            // (note to myself: if Problems arise because setLDAPVersion() should be
-            // called prior startTLS(), read Bug #16272. If this is the case, we must double
-            // try to set the LDAP version of the connection. It is not 100% clear at this moment
-            // if it is ok to start TLS before submitting the LDAP version, but it should.)
-            if (self::isError($msg = $this->setLDAPVersion())) {
-                $current_error           = $msg;
-                $this->_link             = false;
-                $this->_down_host_list[] = $host;
-                continue;
+            // Try to set the configured LDAP version on the connection if LDAP
+            // server needs that before binding (eg OpenLDAP).
+            // This could be necessary since rfc-1777 states that the protocol version
+            // has to be set at the bind request.
+            // We use force here which means that the test in the rootDSE is skipped;
+            // this is neccessary, because some strict LDAP servers only allow to
+            // read the LDAP rootDSE (which tells us the supported protocol versions)
+            // with authenticated clients.
+            // This may fail in which case we try again after binding.
+            // In this case, most probably the bind() or setLDAPVersion()-call
+            // below will also fail, providing error messages.
+            $version_set = false;
+            $ignored_err = $this->setLDAPVersion(0, true);
+            if (!self::isError($ignored_err)) {
+                $version_set = true;
             }
 
             // Attempt to bind to the server. If we have credentials configured,
             // we try to use them, otherwise its an anonymous bind.
+            // As stated by RFC-1777, the bind request should be the first
+            // operation to be performed after the connection is established.
+            // This may give an protocol error if the server does not support
+            // V2 binds and the above call to setLDAPVersion() failed.
+            // In case the above call failed, we try an V2 bind here and set the
+            // version afterwards (with checking to the rootDSE).
             $msg = $this->bind();
             if (self::isError($msg)) {
                 // The bind failed, discard link and save error msg.
                 // Then record the host as down and try next one
+                if ($msg->getCode() == 0x02 && !$version_set) {
+                    // provide a finer grained error message
+                    // if protocol error arieses because of invalid version
+                    $msg = new Net_LDAP2_Error($msg->getMessage().
+                        " (could not set LDAP protocol version to ".
+                        $this->_config['version'].")",
+                        $msg->getCode());
+                }
                 $this->_link             = false;
                 $current_error           = $msg;
                 $this->_down_host_list[] = $host;
                 continue;
+            }
+
+            // Set desired LDAP version if not successfully set before.
+            // Here, a check against the rootDSE is performed, so we get a
+            // error message if the server does not support the version.
+            // The rootDSE entry should tell us which LDAP versions are
+            // supported. However, some strict LDAP servers only allow
+            // bound suers to read the rootDSE.
+            if (!$version_set) {
+                if (self::isError($msg = $this->setLDAPVersion())) {
+                    $current_error           = $msg;
+                    $this->_link             = false;
+                    $this->_down_host_list[] = $host;
+                    continue;
+                }
             }
 
             // Set LDAP parameters, now we know we have a valid connection.
@@ -567,30 +612,47 @@ class Net_LDAP2 extends PEAR
     */
     public function startTLS()
     {
-        // Test to see if the server supports TLS first.
-        // This is done via testing the extensions offered by the server.
-        // The OID 1.3.6.1.4.1.1466.20037 tells us, if TLS is supported.
+        /* Test to see if the server supports TLS first.
+           This is done via testing the extensions offered by the server.
+           The OID 1.3.6.1.4.1.1466.20037 tells us, if TLS is supported.
+           Note, that not all servers allow to feth either the rootDSE or
+           attributes over an unencrypted channel, so we must ignore errors. */
         $rootDSE = $this->rootDse();
         if (self::isError($rootDSE)) {
-            return $this->raiseError("Unable to fetch rootDSE entry ".
-            "to see if TLS is supoported: ".$rootDSE->getMessage(), $rootDSE->getCode());
-        }
-
-        $supported_extensions = $rootDSE->getValue('supportedExtension');
-        if (self::isError($supported_extensions)) {
-            return $this->raiseError("Unable to fetch rootDSE attribute 'supportedExtension' ".
-            "to see if TLS is supoported: ".$supported_extensions->getMessage(), $supported_extensions->getCode());
-        }
-
-        if (in_array('1.3.6.1.4.1.1466.20037', $supported_extensions)) {
-            if (false === @ldap_start_tls($this->_link)) {
-                return $this->raiseError("TLS not started: " .
-                                        @ldap_error($this->_link),
-                                        @ldap_errno($this->_link));
-            }
-            return true;
+            /* IGNORE this error, because server may refuse fetching the
+               RootDSE over an unencrypted connection. */
+            //return $this->raiseError("Unable to fetch rootDSE entry ".
+            //"to see if TLS is supoported: ".$rootDSE->getMessage(), $rootDSE->getCode());
         } else {
-            return $this->raiseError("Server reports that it does not support TLS");
+            /* Fetch suceeded, see, if the server supports TLS. Again, we
+               ignore errors, because the server may refuse to return
+               attributes over unencryted connections. */
+            $supported_extensions = $rootDSE->getValue('supportedExtension');
+            if (self::isError($supported_extensions)) {
+                /* IGNORE error, because server may refuse attribute
+                   returning over an unencrypted connection. */
+                //return $this->raiseError("Unable to fetch rootDSE attribute 'supportedExtension' ".
+                //"to see if TLS is supoported: ".$supported_extensions->getMessage(), $supported_extensions->getCode());
+            } else {
+                // fetch succeedet, lets see if the server supports it.
+                // if not, then drop an error. If supported, then do nothing,
+                // because then we try to issue TLS afterwards.
+                if (!in_array('1.3.6.1.4.1.1466.20037', $supported_extensions)) {
+                    return $this->raiseError("Server reports that it does not support TLS.");
+                 }
+            }
+        }
+
+        // Try to establish TLS.
+        if (false === @ldap_start_tls($this->_link)) {
+            // Starting TLS failed. This may be an error, or because
+            // the server does not support it but did not enable us to
+            // detect that above.
+            return $this->raiseError("TLS could not be started: " .
+                                    @ldap_error($this->_link),
+                                    @ldap_errno($this->_link));
+        } else {
+            return true; // TLS is started now.
         }
     }
 
@@ -1134,12 +1196,13 @@ class Net_LDAP2 extends PEAR
     /**
     * Set the LDAP_PROTOCOL_VERSION that is used on the connection.
     *
-    * @param int $version LDAP-version that should be used
+    * @param int     $version LDAP-version that should be used
+    * @param boolean $force   If set to true, the check against the rootDSE will be skipped
     *
     * @return Net_LDAP2_Error|true    Net_LDAP2_Error object or true
     * @todo Checking via the rootDSE takes much time - why? fetching and instanciation is quick!
     */
-    public function setLDAPVersion($version = 0)
+    public function setLDAPVersion($version = 0, $force = false)
     {
         if (!$version) {
             $version = $this->_config['version'];
@@ -1151,20 +1214,25 @@ class Net_LDAP2 extends PEAR
         // Todo: Why is this so horribly slow?
         // $this->rootDse() is very fast, as well as Net_LDAP2_RootDSE::fetch()
         // seems like a problem at copiyng the object inside PHP??
+        // Additionally, this is not always reproducable...
         //
-        $rootDSE = $this->rootDse();
-        if ($rootDSE instanceof Net_LDAP2_Error) {
-            return $rootDSE;
-        } else {
-            $supported_versions = $rootDSE->getValue('supportedLDAPVersion');
-            if (is_string($supported_versions)) {
-                $supported_versions = array($supported_versions);
-            }
-            if (in_array($version, $supported_versions)) {
-                return $this->setOption("LDAP_OPT_PROTOCOL_VERSION", $version);
+        if (!$force) {
+            $rootDSE = $this->rootDse();
+            if ($rootDSE instanceof Net_LDAP2_Error) {
+                return $rootDSE;
             } else {
-                return $this->raiseError("LDAP Server does not support protocol version " . $version);
+                $supported_versions = $rootDSE->getValue('supportedLDAPVersion');
+                if (is_string($supported_versions)) {
+                    $supported_versions = array($supported_versions);
+                }
+                $check_ok = in_array($version, $supported_versions);
             }
+        }
+
+        if ($force || $check_ok) {
+            return $this->setOption("LDAP_OPT_PROTOCOL_VERSION", $version);
+        } else {
+            return $this->raiseError("LDAP Server does not support protocol version " . $version);
         }
     }
 
@@ -1497,19 +1565,17 @@ class Net_LDAP2 extends PEAR
         // Fetch schema, if not tried before and no cached version available.
         // If we are already fetching the schema, we will skip fetching.
         if ($this->_schema === null) {
-            if (!$this->_schema instanceof Net_LDAP2_Schema) {
-                // store a temporary error message so subsequent calls to schema() can
-                // detect, that we are fetching the schema already.
-                // Otherwise we will get a infinite loop at Net_LDAP2_Schema::fetch()
-                $this->_schema = new Net_LDAP2_Error('Schema not initialized');
-                $this->_schema = Net_LDAP2_Schema::fetch($this, $dn);
+            // store a temporary error message so subsequent calls to schema() can
+            // detect, that we are fetching the schema already.
+            // Otherwise we will get an infinite loop at Net_LDAP2_Schema::fetch()
+            $this->_schema = new Net_LDAP2_Error('Schema not initialized');
+            $this->_schema = Net_LDAP2_Schema::fetch($this, $dn);
 
-                // If schema caching is active, advise the cache to store the schema
-                if ($this->_schema_cache) {
-                    $caching_result = $this->_schema_cache->storeSchema($schema);
-                    if ($caching_result instanceof Net_LDAP2_Error) {
-                        return $caching_result; // route error to client
-                    }
+            // If schema caching is active, advise the cache to store the schema
+            if ($this->_schema_cache) {
+                $caching_result = $this->_schema_cache->storeSchema($this->_schema);
+                if ($caching_result instanceof Net_LDAP2_Error) {
+                    return $caching_result; // route error to client
                 }
             }
         }
@@ -1550,12 +1616,13 @@ class Net_LDAP2 extends PEAR
     * @return true|Net_LDAP2_Error
     */
     public function registerSchemaCache($cache) {
-        if (!is_null($cache) || !is_object($cache) || !in_array('Net_LDAP2_SchemaCache', class_implements($cache))) {
-            return new Net_LDAP2_Error('Custom schema caching object is either no '.
-                'valid object or does not implement the Net_LDAP2_SchemaCache interface!');
-        } else {
+        if (is_null($cache)
+        || (is_object($cache) && in_array('Net_LDAP2_SchemaCache', class_implements($cache))) ) {
             $this->_schema_cache = $cache;
             return true;
+        } else {
+            return new Net_LDAP2_Error('Custom schema caching object is either no '.
+                'valid object or does not implement the Net_LDAP2_SchemaCache interface!');
         }
     }
 

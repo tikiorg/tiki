@@ -9,8 +9,8 @@
 * @package   Net_LDAP2
 * @author    Benedikt Hallinger <beni@php.net>
 * @copyright 2009 Benedikt Hallinger
-* @license   http://www.gnu.org/copyleft/lesser.html LGPL
-* @version   CVS: $Id: LDIF.php,v 1.9 2009/04/30 09:11:23 beni Exp $
+* @license   http://www.gnu.org/licenses/lgpl-3.0.txt LGPLv3
+* @version   SVN: $Id: LDIF.php 302696 2010-08-23 12:48:07Z beni $
 * @link      http://pear.php.net/package/Net_LDAP2/
 */
 
@@ -556,10 +556,10 @@ class Net_LDAP2_LDIF extends PEAR
         $attributes = array();
         $dn = false;
         foreach ($lines as $line) {
-            if (preg_match('/^(\w+)(:|::|:<)\s(.+)$/', $line, $matches)) {
-                $attr  =& $matches[1];
-                $delim =& $matches[2];
-                $data  =& $matches[3];
+            if (preg_match('/^(\w+(;binary)?)(:|::|:<)\s(.+)$/', $line, $matches)) {
+                $attr  =& $matches[1] . $matches[2];
+                $delim =& $matches[3];
+                $data  =& $matches[4];
 
                 if ($delim == ':') {
                     // normal data
@@ -682,20 +682,22 @@ class Net_LDAP2_LDIF extends PEAR
                         if (preg_match('/^version:\s(.+)$/', $data, $match)) {
                             // version statement, set version
                             $this->version($match[1]);
-                        } elseif (preg_match('/^\w+::?\s.+$/', $data)) {
+                        } elseif (preg_match('/^\w+(;binary)?::?\s.+$/', $data)) {
                             // normal attribute: add line
                             $commentmode         = false;
                             $this->_lines_next[] = trim($data);
                             $datalines_read++;
                         } elseif (preg_match('/^\s(.+)$/', $data, $matches)) {
                             // wrapped data: unwrap if not in comment mode
+                            // note that the \s above is some more liberal than
+                            // the RFC requests as it also matches tabs etc.
                             if (!$commentmode) {
                                 if ($datalines_read == 0) {
                                     // first line of entry: wrapped data is illegal
                                     $this->dropError('Net_LDAP2_LDIF error: illegal wrapping at input line '.$this->_input_line, $this->_input_line);
                                 } else {
                                     $last                = array_pop($this->_lines_next);
-                                    $last                = $last.trim($matches[1]);
+                                    $last                = $last.$matches[1];
                                     $this->_lines_next[] = $last;
                                     $datalines_read++;
                                 }
