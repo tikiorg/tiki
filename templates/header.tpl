@@ -70,7 +70,7 @@
 		{elseif !empty($categ_info.name)}
 			{$categ_info.name|escape}
 		{elseif !empty($userinfo.login)}
-			{$userinfo.login|escape}
+			{$userinfo.login|username}
 		{elseif !empty($tracker_item_main_value)}
 			{$tracker_item_main_value|escape}
 		{elseif !empty($tracker_info.name)}
