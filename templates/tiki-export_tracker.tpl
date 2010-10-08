@@ -172,7 +172,12 @@ exportProgress = function () {
 				       </option>
 				      {/foreach}
 				    </select>
-				    {$recordsMax} {tr}Items{/tr}
+				    {$recordsMax} 
+					{if $recordsMax eq 1}
+						{tr}item{/tr}
+					{else}
+						{tr}items{/tr}
+					{/if}
 					</td>
 				</tr>
 			</table>
