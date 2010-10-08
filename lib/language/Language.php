@@ -137,7 +137,10 @@ class Language extends TikiDb_Bridge
 	 * @return void
 	 */
 	public function updateTrans($originalStr, $translatedStr) {
-		global ${"lang_$this->lang"};
+		global ${"lang_$this->lang"}, $user, $tikilib;
+
+		// only the user name is globally available? not the user_id?
+		$userId = $tikilib->get_user_id($user);
 
 		// don't insert anything in the database if the translation hasn't been changed	
 		if (isset(${"lang_$this->lang"}[$originalStr]) && ${"lang_$this->lang"}[$originalStr] == $translatedStr) {
@@ -148,15 +151,15 @@ class Language extends TikiDb_Bridge
 		$result = $this->query($query, array($this->lang, $originalStr));
 
 		if (!$result->numRows()) {
-			$query = 'insert into `tiki_language` (`source`, `lang`, `tran`, `changed`) values (?,?,?,?)';
-			$result = $this->query($query, array($originalStr, $this->lang, $translatedStr, 1));
+			$query = 'insert into `tiki_language` (`source`, `lang`, `tran`, `changed`, `userId`) values (?,?,?,?,?)';
+			$result = $this->query($query, array($originalStr, $this->lang, $translatedStr, 1, $userId));
 		} else {
 			if (strlen($translatedStr) == 0) {
 				$query = 'delete from `tiki_language` where binary `source`=? and `lang`=?';
 				$result = $this->query($query, array($originalStr, $this->lang));
 			} else {
-				$query = 'update `tiki_language` set `tran`=?, changed=? where binary `source`=? and `lang`=?';
-				$result = $this->query($query, array($translatedStr, 1, $originalStr, $this->lang));
+				$query = 'update `tiki_language` set `tran`=?, `changed`=?, `userId`=? where binary `source`=? and `lang`=?';
+				$result = $this->query($query, array($translatedStr, 1, $userId, $originalStr, $this->lang));
 			}
 		}
 
