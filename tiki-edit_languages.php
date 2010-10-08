@@ -48,11 +48,10 @@ if (isset($_REQUEST["edit_language"])) {
 	$edit_language = $prefs['language'];
 }
 
-if (isset($_REQUEST["whataction"])) {
-	$smarty->assign('whataction', $_REQUEST["whataction"]);
-} else {
-	$smarty->assign('whataction', '');
+if (!isset($_REQUEST["whataction"])) {
+	$_REQUEST['whataction'] = 'edit_tran_sw';
 }
+$smarty->assign('whataction', $_REQUEST["whataction"]);
 
 if (isset($_REQUEST['only_db_translations'])) {
 	$smarty->assign('only_db_translations', 'y');
@@ -90,7 +89,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 				if (strlen($_REQUEST["edit_rec_tran_$i"]) > 0 && strlen($_REQUEST["edit_rec_source_$i"]) > 0) {
 					$language->updateTrans($_REQUEST["edit_rec_source_$i"], $_REQUEST["edit_rec_tran_$i"]);
 				}
-			} elseif (isset($_REQUEST["edt_tran_$i"])) {
+			} elseif (isset($_REQUEST["edt_tran_$i"]) || $_REQUEST['translate_all']) {
 				// Handle edits in edit translations
 				if (strlen($_REQUEST["edit_edt_tran_$i"]) > 0 && strlen($_REQUEST["edit_edt_source_$i"]) > 0) {
 					$language->updateTrans($_REQUEST["edit_edt_source_$i"], $_REQUEST["edit_edt_tran_$i"]);
@@ -107,6 +106,14 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 		if (isset($_REQUEST["tran_reset"])) {
 			$query = "delete from `tiki_untranslated`";
 			$result = $tikilib->query($query);
+		}
+
+		// update language array with new translations
+		$query = "select `source`, `tran` from `tiki_language` where `lang`=?";
+		$result = $tikilib->fetchAll($query, array($edit_language));
+
+		foreach( $result as $row ) {
+			${"lang_$edit_language"}[ $row['source'] ] = $row['tran'];
 		}
 	}
 
@@ -258,6 +265,7 @@ ask_ticket('edit-languages');
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $headerlib->add_cssfile('css/admin.css');
+$headerlib->add_jsfile('lib/language/tiki-edit_languages.js');
 
 $headtitle = tra('Edit languages');
 $description = tra('Edit or export/import languages');

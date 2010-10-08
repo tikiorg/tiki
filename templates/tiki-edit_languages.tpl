@@ -10,41 +10,38 @@
 
 {tabset}
 	{tab name="{tr}Edit languages{/tr}"}
-		<form action="tiki-edit_languages.php" method="post">
+		<form action="tiki-edit_languages.php" id="edit_translations" method="post">
 			<div class="adminoptionbox">
 				<label for="edit_language">{tr}Select the language to edit{/tr}:</label>
-				<select id="edit_language" name="edit_language">
+				<select id="edit_language" class="edit_translations "name="edit_language">
 					{section name=ix loop=$languages}
 						<option value="{$languages[ix].value|escape}" {if $edit_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
 					{/section}
 				</select>
 			</div>
 			<div class="adminoptionbox">
-				<input id="add_tran_sw" align="right" type="radio" name="whataction" value="add_tran_sw" {if $whataction eq 'add_tran_sw'}checked="checked"{/if}/>
+				<input id="add_tran_sw" class="edit_translations" align="right" type="radio" name="whataction" value="add_tran_sw" {if $whataction eq 'add_tran_sw'}checked="checked"{/if}/>
 				<label for="add_tran_sw">{tr}Add a translation{/tr}</label>
 			</div>
 			<div class="adminoptionbox">
-				<input id="edit_tran_sw" align="right" type="radio" name="whataction" value="edit_tran_sw" {if $whataction eq 'edit_tran_sw'}checked="checked"{/if}/>
+				<input id="edit_tran_sw" class="edit_translations" align="right" type="radio" name="whataction" value="edit_tran_sw" {if $whataction eq 'edit_tran_sw'}checked="checked"{/if}/>
 				<label for="edit_tran_sw">{tr}Edit translations{/tr}</label>
 				<div class="adminoptionboxchild">
-					<input id="only_db_translations" type="checkbox" name="only_db_translations" {if $only_db_translations eq 'y'}checked="checked"{/if}>
+					<input id="only_db_translations" class="edit_translations" type="checkbox" name="only_db_translations" {if $only_db_translations eq 'y'}checked="checked"{/if}>
 					<label for="only_db_translations">{tr}Show only database stored translations{/tr}</label>
 				</div>
 			</div>
 
 			{if $prefs.record_untranslated eq 'y'}
 				<div class="adminoptionbox">
-					<input id="edit_rec_sw" align="right" type="radio" name="whataction" value="edit_rec_sw" {if $whataction eq 'edit_rec_sw'}checked="checked"{/if}/>
+					<input id="edit_rec_sw" class="edit_translations" align="right" type="radio" name="whataction" value="edit_rec_sw" {if $whataction eq 'edit_rec_sw'}checked="checked"{/if}/>
 					<label for="edit_rec_sw">{tr}Translate recorded{/tr}</label>
 				</div>
 			{/if}
 
-			<div class="adminoptionbox">
-				<input type="submit" name="langaction" value="{tr}Set{/tr}" />
-			</div>
 			{if $whataction eq 'add_tran_sw'}
 				<div class="simplebox">
-					{tr}Add a translation{/tr}:<br />
+					<h4>{tr}Add a translation{/tr}:</h4>
 					<table class="formcolor">
 						<tr>
 							<td>{tr}Original{/tr}:</td>
@@ -58,7 +55,7 @@
 			{/if}
 			{if $whataction eq 'edit_rec_sw'}
 				<div class="simplebox">
-					{tr}Translate recorded{/tr}:<br />
+					<h4>{tr}Translate recorded{/tr}:</h4>
 					<table class="formcolor">
 						<tr>
 							<td align="right"><input name="tran_search" value="{$tran_search|escape}" size=10	maxlength=255></td>
@@ -86,7 +83,7 @@
 			{/if}
 			{if $whataction eq 'edit_tran_sw'}
 				<div class="simplebox">
-					{tr}Edit translations{/tr}:<br />
+					<h4>{tr}Edit translations{/tr}:</h4>
 					<table class="formcolor">
 						<tr>
 							<td align="left" colspan=4>
@@ -111,6 +108,8 @@
 					{if $untr_numrows > $tr_recnum+$maxRecords}
 						<input type="submit" name="morerec" value="{tr}next page{/tr}" />
 					{/if}
+					<br />
+					<input type="submit" name="translate_all" value="{tr}Translate all{/tr}" />
 					<input type="hidden" name="tr_recnum" value="{$tr_recnum|escape}" />
 				</div>
 			{/if}
