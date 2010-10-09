@@ -99,7 +99,7 @@
 				<tr>
 					<td class="even">{tr}Embed code{/tr}</td>
 					<td class="even">
-						{ldelim}KALTURA(id="{$videoId}"){rdelim}
+						{ldelim}kaltura id="{$videoId}"{rdelim}
 					</td>
 				</tr>
 
@@ -115,10 +115,6 @@
 				<tr>
 				<td class="odd">{tr}Plays{/tr}</td>
 				<td class="odd">{$videoInfo->plays}</td>
-				</tr>
-				<tr>
-				<td class="odd">{tr}Embed code{/tr}</td>
-				<td class="odd">{ldelim}KALTURA(id="{$videoId}"){rdelim}</td>
 				</tr>
 				{/if}
 	</table>
