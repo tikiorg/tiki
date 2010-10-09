@@ -302,7 +302,7 @@ function prefs_global_list() {
 
 		// Kaltura
 		'partnerId' => array(
-			'name' => tra('Partner Id'),
+			'name' => tra('Partner ID'),
 			'description' => tra('Kaltura Partner ID'),
 			'type' => 'text',
 			'filter' => 'digits',
