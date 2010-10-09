@@ -483,7 +483,6 @@ list($username, $usermail, $usersTrackerId, $chlogin) = array(
 	false
 );
 if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
-	$access->check_authenticity();
 	if (!is_numeric($_REQUEST["user"])) {
 		$_REQUEST["user"] = $userlib->get_user_id($_REQUEST["user"]);
 	}
@@ -491,6 +490,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 	// If login is e-mail, email field needs to be the same as name (and is generally not send)
 	if ($prefs['login_is_email'] == 'y' && isset($_POST['name'])) $_POST['email'] = $_POST['name'];
 	if (isset($_POST["edituser"]) and isset($_POST['name']) and isset($_POST['email'])) {
+		$access->check_authenticity();
 		if (!empty($_POST['name'])) {
 			if ($userinfo['login'] != $_POST['name'] && $userinfo['login'] != 'admin') {
 				if ($userlib->user_exists($_POST['name'])) {
