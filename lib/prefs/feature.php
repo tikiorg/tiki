@@ -1079,7 +1079,7 @@ function prefs_feature_list() {
 		),
 		'feature_custom_html_head_content' => array(
 			'name' => tra('Custom HTML <head> Content'),
-			'hint' => tra('Example') . "{if \$page eq 'Slideshow'}{literal}<style type=\"text/css\">.slideshow { height: 232px; width: 232px; }</style>{/literal}{/if}",
+			'hint' => tra('Example:') . " {if \$page eq 'Slideshow'}{literal}<style type=\"text/css\">.slideshow { height: 232px; width: 232px; }</style>{/literal}{/if}",
 			'description' => tra('Use to include custom &lt;meta&gt; or &lt;link&gt; tags.'),
 			'type' => 'textarea',
 			'size' => '6',
@@ -1149,7 +1149,7 @@ function prefs_feature_list() {
 		),
 		'feature_custom_center_column_header' => array(
 			'name' => tra('Custom Center Column Header'),
-			'hint' => tra('Example') . ' ' . "{if \$page eq 'Travel'}banner zone=5}{/if}",
+			'hint' => tra('Example:') . " {if \$page eq 'Travel'}{banner zone=5}{/if}",
 			'type' => 'textarea',
 			'size' => '6',
 		),
@@ -1157,6 +1157,8 @@ function prefs_feature_list() {
 			'name' => tra('Left column'),
 			'type' => 'list',
 			'help' => 'Users+Flip+Columns',
+			'hint' => tra('Controls visibility of the left column of modules'),
+			'keywords' => tra('side bar'),
 			'options' => array(
 				'y' => tra('Only if module'),
 				'fixed' => tra('Always'),
@@ -1168,6 +1170,8 @@ function prefs_feature_list() {
 			'name' => tra('Right Column'),
 			'type' => 'list',
 			'help' => 'Users+Flip+Columns',
+			'hint' => tra('Controls visibility of the right column of modules'),
+			'keywords' => tra('side bar'),
 			'options' => array(
 				'y' => tra('Only if module'),
 				'fixed' => tra('Always'),
