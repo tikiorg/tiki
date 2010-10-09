@@ -108,6 +108,10 @@
 				<td class="odd">{tr}Plays{/tr}</td>
 				<td class="odd">{$videoInfo->plays}</td>
 				</tr>
+				<tr>
+				<td class="odd">{tr}Embed code{/tr}</td>
+				<td class="odd">{ldelim}KALTURA(id="{$videoId}"){rdelim}</td>
+				</tr>
 				{/if}
 	</table>
 
