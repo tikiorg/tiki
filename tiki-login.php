@@ -353,7 +353,7 @@ if ($isvalid) {
 			case USER_NOT_FOUND:
 				$smarty->assign('error_login', $error);
 				$smarty->assign('mid', 'tiki-login.tpl');
-				$smarty->assign('error_user', $user);
+				$smarty->assign('error_user', $_REQUEST["user"]);
 				$smarty->display('tiki.tpl');
 				exit;
 
