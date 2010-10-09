@@ -465,17 +465,7 @@ if (isset($_REQUEST["filterEmail"])) {
 	$filterEmail = '';
 }
 $smarty->assign('filterEmail', $filterEmail);
-$users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial, true, $filterGroup, $filterEmail);
-if (!empty($group_management_mode) || !empty($set_default_groups_mode) || !empty($email_mode)) {
-	$arraylen = count($users['data']);
-	for ($i = 0; $i < $arraylen; $i++) {
-		if (in_array($users['data'][$i]['user'], $_REQUEST["checked"])) {
-			$users['data'][$i]['checked'] = 'y';
-		}
-	}
-}
-$smarty->assign_by_ref('users', $users["data"]);
-$smarty->assign_by_ref('cant', $users['cant']);
+
 list($username, $usermail, $usersTrackerId, $chlogin) = array(
 	'',
 	'',
@@ -491,7 +481,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 	// If login is e-mail, email field needs to be the same as name (and is generally not send)
 	if ($prefs['login_is_email'] == 'y' && isset($_POST['login'])) $_POST['email'] = $_POST['login'];
 	if (isset($_POST["edituser"]) and isset($_POST['login']) and isset($_POST['email'])) {
-		$access->check_authenticity(tra("Are you sure you want to save this user's data?"));
+		$access->check_authenticity(tra("Are you sure you want to modify this user's data?"));
 		if (!empty($_POST['login'])) {
 			if ($userinfo['login'] != $_POST['login'] && $userinfo['login'] != 'admin') {
 				if ($userlib->user_exists($_POST['login'])) {
@@ -597,6 +587,19 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 	if (!isset($cookietab)) { $cookietab = '1'; }
 	$_REQUEST["user"] = 0;
 }
+
+$users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial, true, $filterGroup, $filterEmail);
+if (!empty($group_management_mode) || !empty($set_default_groups_mode) || !empty($email_mode)) {
+	$arraylen = count($users['data']);
+	for ($i = 0; $i < $arraylen; $i++) {
+		if (in_array($users['data'][$i]['user'], $_REQUEST["checked"])) {
+			$users['data'][$i]['checked'] = 'y';
+		}
+	}
+}
+$smarty->assign_by_ref('users', $users["data"]);
+$smarty->assign_by_ref('cant', $users['cant']);
+
 if (isset($_REQUEST['add'])) {
 	$cookietab = "2";
 }
