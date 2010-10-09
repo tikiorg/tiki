@@ -205,21 +205,21 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	 }
 	$newPass = $_POST["pass"] ? $_POST["pass"] : $_POST["genepass"];                
 	// Check if the user already exists
-	if ($userlib->user_exists($_REQUEST["name"])) {
+	if ($userlib->user_exists($_REQUEST['login'])) {
 			$errors[] = array(
 				'num' => 1,
-				'mes' => sprintf(tra("User %s already exists") , $_REQUEST["name"])
+				'mes' => sprintf(tra("User %s already exists") , $_REQUEST['login'])
 			);
                $AddUser=false;
          }
-	if ($prefs['login_is_email'] == 'y' && !validate_email($_REQUEST['name'])) {
+	if ($prefs['login_is_email'] == 'y' && !validate_email($_REQUEST['login'])) {
 			$errors[] = array(
 				'num' => 1,
-				'mes' => tra("Invalid email") . ' ' . $_REQUEST['name']
+				'mes' => tra("Invalid email") . ' ' . $_REQUEST['login']
 			);
                $AddUser=false;
 		}
-       if (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $_REQUEST['name'])) {
+       if (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $_REQUEST['login'])) {
 			$errors[] = array(
 				'num' => 1,
 				'mes' => tra("User login contains invalid characters")
@@ -235,7 +235,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 				$smarty->display("error.tpl");
 				die;
 			}
-			if ($prefs['login_is_email'] == 'y' and empty($_REQUEST['email'])) $_REQUEST['email'] = $_REQUEST['name'];
+			if ($prefs['login_is_email'] == 'y' and empty($_REQUEST['email'])) $_REQUEST['email'] = $_REQUEST['login'];
 			$send_validation_email = false;
 			if (isset($_REQUEST['need_email_validation']) && $_REQUEST['need_email_validation'] == 'on') {
 				$send_validation_email = true;
@@ -243,22 +243,22 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			} else {
 				$apass = '';
 			}
-			if ($userlib->add_user($_REQUEST['name'], $newPass , $_REQUEST['email'], $pass_first_login ? $newPass : '', $pass_first_login, $apass, NULL, ($send_validation_email?'u':NULL))) {
+			if ($userlib->add_user($_REQUEST['login'], $newPass , $_REQUEST['email'], $pass_first_login ? $newPass : '', $pass_first_login, $apass, NULL, ($send_validation_email?'u':NULL))) {
 				$tikifeedback[] = array(
 					'num' => 0,
-					'mes' => sprintf(tra("New %s created with %s %s.") , tra("user") , tra("username") , $_REQUEST["name"])
+					'mes' => sprintf(tra("New %s created with %s %s.") , tra("user") , tra("username") , $_REQUEST['login'])
 				);
 				if ($send_validation_email) {
 					// No need to send credentials in mail if the user is forced to choose a new password after validation
 					$realpass = $pass_first_login ? '' : $newPass;
-					$userlib->send_validation_email($_REQUEST['name'], $apass, $_REQUEST['email'], '', '', '', 'user_creation_validation_mail', $realpass);
+					$userlib->send_validation_email($_REQUEST['login'], $apass, $_REQUEST['email'], '', '', '', 'user_creation_validation_mail', $realpass);
 				}
 				$cookietab = '1';
-				$_REQUEST['find'] = $_REQUEST["name"];
+				$_REQUEST['find'] = $_REQUEST['login'];
 			} else {
 				$errors[] = array(
 					'num' => 1,
-					'mes' => sprintf(tra("Impossible to create new %s with %s %s.") , tra("user") , tra("username") , $_REQUEST["name"])
+					'mes' => sprintf(tra("Impossible to create new %s with %s %s.") , tra("user") , tra("username") , $_REQUEST['login'])
 				);
 			}
         } 
@@ -487,31 +487,32 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 		$_REQUEST["user"] = $userlib->get_user_id($_REQUEST["user"]);
 	}
 	$userinfo = $userlib->get_userid_info($_REQUEST["user"]);
+	$cookietab = '2';
 	// If login is e-mail, email field needs to be the same as name (and is generally not send)
-	if ($prefs['login_is_email'] == 'y' && isset($_POST['name'])) $_POST['email'] = $_POST['name'];
-	if (isset($_POST["edituser"]) and isset($_POST['name']) and isset($_POST['email'])) {
-		$access->check_authenticity();
-		if (!empty($_POST['name'])) {
-			if ($userinfo['login'] != $_POST['name'] && $userinfo['login'] != 'admin') {
-				if ($userlib->user_exists($_POST['name'])) {
+	if ($prefs['login_is_email'] == 'y' && isset($_POST['login'])) $_POST['email'] = $_POST['login'];
+	if (isset($_POST["edituser"]) and isset($_POST['login']) and isset($_POST['email'])) {
+		$access->check_authenticity(tra("Are you sure you want to save this user's data?"));
+		if (!empty($_POST['login'])) {
+			if ($userinfo['login'] != $_POST['login'] && $userinfo['login'] != 'admin') {
+				if ($userlib->user_exists($_POST['login'])) {
 					$errors[] = array(
 						'num' => 1,
 						'mes' => tra('User already exists')
 					);
-				} elseif (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $_POST['name'])) {
+				} elseif (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $_POST['login'])) {
 					$errors[] = array(
 						'num' => 1,
 						'mes' => tra("Login contains invalid characters")
 					);
-				} elseif ($userlib->change_login($userinfo['login'], $_POST['name'])) {
+				} elseif ($userlib->change_login($userinfo['login'], $_POST['login'])) {
 					$tikifeedback[] = array(
 						'num' => 0,
-						'mes' => sprintf(tra("%s changed from %s to %s") , tra("login") , $userinfo['login'], $_POST["name"])
+						'mes' => sprintf(tra("%s changed from %s to %s") , tra("login") , $userinfo['login'], $_POST['login'])
 					);
-					$logslib->add_log('adminusers', 'changed login for ' . $_POST['name'] . ' from ' . $userinfo['login'] . ' to ' . $_POST["name"]);
-					$userinfo['login'] = $_POST['name'];
+					$logslib->add_log('adminusers', 'changed login for ' . $_POST['login'] . ' from ' . $userinfo['login'] . ' to ' . $_POST['login']);
+					$userinfo['login'] = $_POST['login'];
 					if ($prefs['login_is_email'] == 'y') {
-						$_POST['email'] = $_POST['name'];
+						$_POST['email'] = $_POST['login'];
 					}
 				} else {
 					$errors[] = array(
@@ -541,7 +542,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 						'num' => 0,
 						'mes' => sprintf(tra("%s modified successfully.") , tra("password"))
 					);
-					$logslib->add_log('adminusers', 'changed password for ' . $_POST['name']);
+					$logslib->add_log('adminusers', 'changed password for ' . $_POST['login']);
 				} else {
 					$errors[] = array(
 						'num' => 0,
@@ -557,7 +558,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 						'num' => 0,
 						'mes' => sprintf(tra("%s changed from %s to %s") , tra("email") , $userinfo['email'], $_POST["email"])
 					);
-					$logslib->add_log('adminusers', 'changed email for ' . $_POST['name'] . ' from ' . $userinfo['email'] . ' to ' . $_POST["email"]);
+					$logslib->add_log('adminusers', 'changed email for ' . $_POST['login'] . ' from ' . $userinfo['email'] . ' to ' . $_POST["email"]);
 				}
 				$userinfo['email'] = $_POST['email'];
 			} else {
@@ -567,7 +568,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 				);
 			}
 		}
-		setcookie("activeTabs" . urlencode(substr($_SERVER["REQUEST_URI"], 1)) , "tab1");
+		$cookietab = '1';
 	}
 	if ($prefs['userTracker'] == 'y') {
 		$re = $userlib->get_usertracker($_REQUEST["user"]);
@@ -585,7 +586,6 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 			}
 		}
 	}
-	$cookietab = "2";
 } else {
 	$userinfo['login'] = '';
 	$userinfo['email'] = '';
