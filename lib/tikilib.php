@@ -5348,7 +5348,7 @@ class TikiLib extends TikiDb_Bridge
 	}
 	
 	private function convert_plugin_for_ckeditor( $name, $args, $plugin_result, $data, $info = array() ) {
-		$ck_editor_plugin = '{'.strtoupper($name).'(';
+		$ck_editor_plugin = '{' . (empty($data) ? $name : strtoupper($name) . '(') . ' ';
 		$arg_str = '';		// not using http_build_query() as it converts spaces into +
 		if (!empty($args)) {
 			foreach( $args as $argKey => $argValue ) {
@@ -5362,7 +5362,14 @@ class TikiLib extends TikiDb_Bridge
 				}
 			}
 		}
-		$ck_editor_plugin .= ')}'.$data.'{'.strtoupper($name).'}';
+		if (substr($ck_editor_plugin, -1) === ' ') {
+			$ck_editor_plugin = substr($ck_editor_plugin, 0, -1);
+		}
+		if (!empty($data)) {
+			$ck_editor_plugin .= ')}' . $data . '{' . strtoupper($name) . '}';
+		} else {
+			$ck_editor_plugin .= '}';
+		}
 		// work out if I'm a nested plugin and return empty if so
 		$stack = debug_backtrace(true);
 		$plugin_nest_level = 0;
@@ -5378,8 +5385,8 @@ class TikiLib extends TikiDb_Bridge
 		$icon = isset($info['icon']) ? $info['icon'] : 'pics/icons/wiki_plugin_edit.png';
 
 		// some plugins are just too flakey to do wysiwyg, so show the "source" for them ;(
-		if (in_array($name, array('trackerlist'))) {
-			$plugin_result = preg_replace('/[\{\}]/m', '', $ck_editor_plugin);
+		if (in_array($name, array('trackerlist', 'kaltura'))) {
+			$plugin_result = str_replace(array('{', '}'), array('%7B' , '%7D'), $ck_editor_plugin);
 		} else {
 			// pre-parse the output so nested plugins don't fall out all over the place
 			$plugin_result = $this->parse_data($plugin_result, array('is_html' => false, 'suppress_icons' => true, 'ck_editor' => true, 'noparseplugins' => true));
@@ -5394,10 +5401,16 @@ class TikiLib extends TikiDb_Bridge
 		} else {
 			$elem = 'span';
 		}
-		$ret = '~np~<'.$elem.' class="tiki_plugin" plugin="' . $name . '" contenteditable="false" style="position:relative;"' .
+		$elem_style = 'position:relative;';
+		if (($name === 'img' || $name === 'div') && preg_match('/<'.$name.'[^>]*style="(.*?)"/i', $plugin_result, $m)) {
+			if (count($m)) {
+				$elem_style .= $m[1];
+			}
+		}
+		$ret = '~np~<'.$elem.' class="tiki_plugin" plugin="' . $name . '" contenteditable="false" style="' . $elem_style . '"' .
 				' syntax="' . htmlentities( $ck_editor_plugin, ENT_QUOTES, 'UTF-8' ) . '"' .
 				' args="' . htmlentities($arg_str, ENT_QUOTES, 'UTF-8') . '"' .
-				' body="' . htmlentities( $data, ENT_QUOTES, 'UTF-8') . '">'.
+				' body="' . htmlentities( $data, ENT_QUOTES, 'UTF-8') . '">'.	// not <!--{cke_protected}
 				'<img src="'.$icon.'" width="16" height="16" style="float:left;position:absolute;z-index:10001" />' .
 				$plugin_result.'<!-- end tiki_plugin --></'.$elem.'>~/np~';
 		
