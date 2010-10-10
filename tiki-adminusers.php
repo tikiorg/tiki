@@ -512,7 +512,8 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 				}
 			}
 		}
-		if ((isset($_POST['pass']) && $_POST["pass"]) || (isset($_POST['genepass']) && $_POST['genepass'])) {
+		$pass_first_login = (isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on');
+		if ((isset($_POST['pass']) && $_POST["pass"]) || $pass_first_login || (isset($_POST['genepass']) && $_POST['genepass'])) {
 			if ($_POST["pass"] != $_POST["pass2"]) {
 				$smarty->assign('msg', tra("The passwords do not match"));
 				$smarty->display("error.tpl");
@@ -521,12 +522,11 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 			if ($tiki_p_admin == 'y' || $tiki_p_admin_users == 'y' || $userinfo['login'] == $user) {
 				$newPass = $_POST["pass"] ? $_POST["pass"] : $_POST["genepass"];
 				$polerr = $userlib->check_password_policy($newPass);
-				if (strlen($polerr) > 0) {
+				if (strlen($polerr) > 0 && !$pass_first_login) {
 					$smarty->assign('msg', $polerr);
 					$smarty->display("error.tpl");
 					die;
 				}
-				$pass_first_login = (isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on');
 				if ($userlib->change_user_password($userinfo['login'], $newPass, $pass_first_login)) {
 					$tikifeedback[] = array(
 						'num' => 0,

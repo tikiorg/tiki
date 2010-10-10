@@ -2766,8 +2766,13 @@ class UsersLib extends TikiLib
 		}
 
 		if ($pass_first_login) {
-			$query = 'update `users_users` set `hash`=? ,`password`=? ,`pass_confirm`=?, `provpass`=?, `pass_confirm`=? where binary `login`=?';
-			$this->query($query, array($hash, $pass, $new_pass_confirm, $provpass, 0, $user));
+			if (!empty($provpass)) {
+				$query = 'update `users_users` set `hash`=? ,`password`=? ,`pass_confirm`=?, `provpass`=?, `pass_confirm`=? where binary `login`=?';
+				$this->query($query, array($hash, $pass, $new_pass_confirm, $provpass, 0, $user));
+			} else {
+				$query = 'update `users_users` set `pass_confirm`=? where binary `login`=?';
+				$this->query($query, array(0, $user));
+			}
 		} else {
 			$query = "update `users_users` set `hash`=? ,`password`=? ,`pass_confirm`=?, `provpass`=? where binary `login`=?";
 			$this->query($query, array($hash, $pass, $new_pass_confirm, '',	$user));
