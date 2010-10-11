@@ -5,7 +5,7 @@
 {/if}
 <div class="wikitext" id="gmap{$gmapname|escape}container" style="display: {if $gmaphidden}none{else}block{/if}">
 {if !$gmap_in_form && ($gmaptype eq 'locator' || $gmap_defaultset && $user)}
-<form{if $gmaptype eq 'locator'} onsubmit="showAddress{$gmapname|escape}(this.form.address.value);return false;"{/if}>
+<form{if $gmaptype eq 'locator'} onsubmit="showAddress{$gmapname|escape}(this.address.value);return false;"{/if}>
 {/if}
 {if $gmaptype eq 'locator'}
 <input type="text" size="{$gmapaddresslength}" name="address" value="{tr}enter address{/tr}" />
@@ -144,7 +144,7 @@ function loadgmap{$gmapname|escape}() {literal}{{/literal}
   {literal}});{/literal}
 
   GEvent.addListener(gmap{$gmapname|escape}map, "zoomend", function(gold, gnew) {literal}{{/literal}
-    document.getElementById('pointz').value = gnew;
+    document.getElementById('{$gmapname|escape}pointz').value = gnew;
   {literal}});{/literal}
 {/if}
 {literal}}{/literal}
