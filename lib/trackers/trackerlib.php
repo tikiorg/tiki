@@ -1351,6 +1351,11 @@ class TrackerLib extends TikiLib
 			if (!isset($ins_fields["data"][$i]["type"]) or $ins_fields["data"][$i]["type"] == 's') {
 				// system type, do nothing
 				continue;
+			} else if ($ins_fields["data"][$i]["type"] == 'S' && !empty($ins_fields["data"][$i]['description'])) {	// static text
+				
+				$the_data .= '[-[' . $ins_fields["data"][$i]['name'] . "]-] -[(unchanged)]-:\n";
+				$the_data .= $ins_fields["data"][$i]['description'] . "\n----------\n";
+				
 			} else if ($ins_fields["data"][$i]["type"] != 'u' && $ins_fields["data"][$i]["type"] != 'g' && $ins_fields["data"][$i]["type"] != 'I' && isset($ins_fields['data'][$i]['isHidden']) && ($ins_fields["data"][$i]["isHidden"] == 'p' or $ins_fields["data"][$i]["isHidden"] == 'y')and $tiki_p_admin_trackers != 'y') {
 					// hidden field type require tracker amdin perm
 			} elseif (empty($ins_fields["data"][$i]["fieldId"])) {
@@ -1732,6 +1737,12 @@ class TrackerLib extends TikiLib
 				}
 				include_once('lib/webmail/tikimaillib.php');
 				if( $simpleEmail == "n" ) {
+					if (empty($desc)) {
+						$desc = $this->get_isMain_value($trackerId, $itemId ? $itemId : $new_itemId);
+					}
+					if ($options['doNotShowEmptyField'] === 'y') {	// remove empty fields if tracker says so
+						$the_data = preg_replace('/\[-\[.*?\]-\] -\[\(.*?\)\]-:\n\n----------\n/', '', $the_data);
+					}
 					$smarty->assign('mail_date', $this->now);
 					$smarty->assign('mail_user', $user);
 					if ($itemId) {
@@ -1739,6 +1750,7 @@ class TrackerLib extends TikiLib
 					} else {
 						$smarty->assign('mail_itemId', $new_itemId);
 					}
+					$smarty->assign('mail_item_desc', $desc);
 					$smarty->assign('mail_trackerId', $trackerId);
 					$smarty->assign('mail_trackerName', $trackerName);
 					$smarty->assign('server_name', $_SERVER['SERVER_NAME']);
@@ -1754,10 +1766,11 @@ class TrackerLib extends TikiLib
 						if ($itemId) {
 							$mail_action = "\r\n".tra('Item Modification', $watcher['language'])."\r\n\r\n";
 							$mail_action.= tra('Tracker', $watcher['language']).":\n   ".$trackerName."\r\n";
-							$mail_action.= tra('Item', $watcher['language']).":\n   ".$itemId;
+							$mail_action.= tra('Item', $watcher['language']).":\n   ".$itemId . ' ' . $desc;
 						} else {
 							$mail_action = "\r\n".tra('Item creation', $watcher['language'])."\r\n\r\n";
 							$mail_action.= tra('Tracker', $watcher['language']).': '.$trackerName;
+							$mail_action.= tra('Item', $watcher['language']).":\n   ".$new_itemId . ' ' . $desc;
 						}
 						$smarty->assign('mail_action', $mail_action);
 						$smarty->assign('mail_data', $the_data);
