@@ -736,7 +736,7 @@ class Comments extends TikiLib
 		$query = 
 			$this->ifNull("a.`archived`", "'n'")." as `archived`,".
 			$this->ifNull("max(b.`commentDate`)","a.`commentDate`")." as `lastPost`,".
-			$this->ifNull("a.`type`='s'", 'false')." as `sticky`, count(b.`threadId`) as `replies` $select
+			$this->ifNull("a.`type`='s'", 'false')." as `sticky`, count(distinct b.`threadId`) as `replies` $select
 				from `tiki_comments` a left join `tiki_comments` b 
 				on b.`parentId`=a.`threadId` $join
 				where 1 = 1 $where" . ( $forumId ? 'AND a.`object`=?' : '' )
