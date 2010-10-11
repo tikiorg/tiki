@@ -46,7 +46,7 @@
 		{$field_value.value|escape}
 	{/if}
 	{foreach from=$field_value.categs item=categ name=fcategs}
-		{$categ.name|tr_if}
+		{$categ.categpath|tr_if}
 		{if !$smarty.foreach.fcategs.last}<br />{/if}
 	{/foreach}
 

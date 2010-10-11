@@ -1073,23 +1073,15 @@ class TrackerLib extends TikiLib
 				$this->update_star_field($trackerId, $itemId, $fopt);
 				break;
 			case 'e':
+				//affects plugin trackerlist and tiki-view_tracker display of category for each item
 				global $categlib;
 				include_once('lib/categories/categlib.php');
-				$mycats = $categlib->get_child_categories($fopt['options'], true);
-				if (empty($zcatItemId) || $zcatItemId != $itemId) {
-					$zcatItemId = $itemId;
-					$zcats = $categlib->get_object_categories('trackeritem', $itemId);
-				}
-				$cats = array();
-				$catIds = array();
-				foreach ( $mycats as $m ) {
-					if ( in_array($m['categId'], $zcats) ) {
-						$cats[] = $m;
-						$catIds[] = $m['categId'];
-					}
-				}
-				$fopt['categs'] = $cats;
-				$fopt['value'] = $catIds;
+				$itemcats = $categlib->get_object_categories('trackeritem', $itemId);
+				$itemcat = $itemcats[0];
+				$top = $fopt['options_array'][0];
+				$fopt['categs'] = $categlib->get_category_info($itemcat, false, $top);
+				unset ($top);
+				$fopt['value'] = $itemcat;
 				break;
 			case 'l':
 				if ( isset($fopt['options_array'][2]) && isset($fopt['options_array'][2]) && isset($fopt['options_array'][3])) {
@@ -1936,7 +1928,7 @@ class TrackerLib extends TikiLib
 			if (empty($trackersync_user)) {
 				$trackersync_user = $user;
 			}
-			$sig_catids = $categlib->get_category_descendants($prefs['user_trackersync_parentgroup'], true);
+			$sig_catids = $categlib->get_category_descendants($prefs['user_trackersync_parentgroup']);
 			$sig_add = array_intersect($sig_catids, $new_categs);
 			$sig_del = array_intersect($sig_catids, $del_categs);
 			$groupList = $userlib->list_all_groups();
@@ -4183,7 +4175,8 @@ class TrackerLib extends TikiLib
 		$all = $this->fetchAll($query, $bindvars, -1, 0);
 		foreach ($all as $f) {
 			if (!empty($item_categs) && $f['type'] == 'e') {//category
-				$field_categs = $categlib->get_child_categories($f['options']);
+				$f['options_array'] = explode(',',$f['options']);
+				$field_categs = $categlib->get_child_categories($f['options_array'][0], true);
 				$aux = array();
 				foreach ($field_categs as $cat) {
 					$aux[] = $cat['categId'];

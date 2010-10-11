@@ -1012,7 +1012,12 @@ function wikiplugin_tracker($data, $params)
 						}
 					} elseif ($f['type'] == 'e') {
 						global $categlib; include_once('lib/categories/categlib.php');
-						$flds['data'][$i]['list'] = $categlib->get_viewable_child_categories($f["options_array"][0], true);
+						if (isset($f['options_array'][3]) && $f['options_array'][3] ==1) {
+							$all_descends = true;
+						} else {
+							$all_descends = false;
+						}
+						$flds['data'][$i]['list'] = $categlib->get_viewable_child_categories($f['options_array'][0], $all_descends);
 					} elseif ($f['type'] == 'A') {
 						if (!empty($f['value'])) {
 							$flds['data'][$i]['info'] = $trklib->get_item_attachment($f['value']);

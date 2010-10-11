@@ -110,7 +110,7 @@
 	   		<option value=""></option>
 		{/if}
 		{foreach key=ku item=cat from=$field_value.list}
-			<option value="{$cat.categId}"{if (!is_array($field_value.value) and $field_value.value eq $cat.categId) or (is_array($field_value.value) and in_array($cat.categId, $field_value.value))} selected="selected"{/if}>{$cat.name|escape}</option>
+			<option value="{$cat.categId}"{if (!is_array($field_value.value) and $field_value.value eq $cat.categId) or (is_array($field_value.value) and in_array($cat.categId, $field_value.value))} selected="selected"{/if}>{$cat.categpath|escape}</option>
 		{/foreach}
 		</select>
 	{else}

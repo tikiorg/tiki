@@ -343,7 +343,7 @@ $("#newItemForm").validate({
 	{/if}
 	{foreach key=ku item=iu from=$field_value.categories name=foreache}
 	{assign var=fcat value=$iu.categId }
-	<option value="{$iu.categId}"{if $field_value.cat.$fcat eq 'y'} selected="selected"{/if}>{$iu.name|escape}</option>
+	<option value="{$iu.categId}"{if $field_value.cat.$fcat eq 'y'} selected="selected"{/if}>{$iu.categpath|escape}</option>
 	{/foreach}
 	</select>
 {else}
