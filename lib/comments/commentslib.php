@@ -744,8 +744,6 @@ class Comments extends TikiLib
 				." and a.`objectType` = 'forum'
 				and a.`parentId` = ? $time_cond group by a.`threadId`";
 
-
-		$query .=",a.`object`,a.`objectType`,a.`parentId`,a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,a.`locked`,a.`archived` ";
 		if ($reply_state == 'none') {
 			$query .= ' HAVING `replies` = 0 ';
 		}
