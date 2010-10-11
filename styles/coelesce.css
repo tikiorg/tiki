@@ -1859,6 +1859,7 @@ div.multiselect {
 .searchresults .searchdate {
 	color: gray;
 	font-size: 90%;
+  font-style: italic;
 }
 
 .calnavigation a:hover {
