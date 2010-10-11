@@ -478,7 +478,7 @@
 						{if $userinfo.userId}
 							<input type="hidden" name="user" value="{$userinfo.userId|escape}" />
 							<input type="hidden" name="edituser" value="1" />
-							<input type="submit" name="submit" value="{tr}Save{/tr}" />
+							<input type="submit" value="{tr}Save{/tr}" />
 						{else}
 							<input type="submit" name="newuser" value="{tr}Add{/tr}" />
 						{/if}
