@@ -66,15 +66,6 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$auto_save_warning = '';
 	$as_id = $params['id'];
 	
-	// fix for Firefox 3.5 and newer. *lite.css defined the document body as display:table, which seems to upset Firefox
-	// and makes it lose it's selection info when the DOM changes (like when a picker or menu is generated)
-	// this fixes it but apparently (according to *lite.css author Luci) will cause some layout issues:
-	// He says: "it's necessary for expanding content (pushing right column) to the right properly"
-	// but it looks fine to me
-	if (preg_match('/Firefox\/(\d)+\.(\d)+/i', $_SERVER['HTTP_USER_AGENT'], $m) &&count($m) > 2 && $m[1] >=3 && ($m[2] >=5 || $m[1] > 3)) {
-		//$headerlib->add_css('body {display: block; }', 10);	// xajax/loadComponent() doesn't re-parse CSS on AJAX loads (yet), so use JS instead
-		$headerlib->add_jq_onready('$("body").css("display", "block");');
-	}
 	include_once('lib/smarty_tiki/block.remarksbox.php');
 	if ($params['_simple'] === 'n' || isset($smarty->_tpl_vars['page']) && $smarty->_tpl_vars['page'] != 'sandbox') {
 		$html .= smarty_block_remarksbox( array( 'type'=>'tip', 'title'=>tra('Tip')),
