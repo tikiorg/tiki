@@ -275,7 +275,7 @@
 			{capture name=textarea_cols}{if $field_value.options_array[1] >= 1}{$field_value.options_array[1]}{else}50{/if}{/capture}
 			{capture name=textarea_rows}{if $field_value.options_array[2] >= 1}{$field_value.options_array[2]}{else}4{/if}{/capture}
 			{capture name=textarea_onkeyup}{if $field_value.options_array[5]}wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}'){elseif $field_value.options_array[3]}charCount({$field_value.options_array[3]}, this, 'cpt_{$field_value.fieldId}', '{tr}Character Limit Exceeded{/tr}'){/if}{/capture}
-			{textarea id=$smarty.capture.textarea_id name=$field_value.ins_id _toolbars=$smarty.capture.textarea_toolbars cols=$smarty.capture.textarea_cols rows=$smarty.capture.rows onkeyup=$smarty.capture.textarea_onkeyup}
+			{textarea id=$smarty.capture.textarea_id name=$field_value.ins_id _toolbars=$smarty.capture.textarea_toolbars _simple=$smarty.capture.textarea_toolbars cols=$smarty.capture.textarea_cols rows=$smarty.capture.rows onkeyup=$smarty.capture.textarea_onkeyup _wysiwyg='n'}
 				{$field_value.value}
 			{/textarea}
 		{/if}
