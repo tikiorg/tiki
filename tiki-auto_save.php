@@ -78,8 +78,8 @@ if (isset($_REQUEST['editor_id'])) {
 				}
 				$data = $editlib->partialParseWysiwygToWiki(get_autosave($_REQUEST['editor_id'], $_REQUEST['autoSaveId']));
 				$smarty->assign( 'diff_style', $_REQUEST['diff_style'] );
+				global $tikilib;
 				if (!empty($_REQUEST['diff_style'])) {
-					global $tikilib;
 					$info = $tikilib->get_page_info($autoSaveIdParts[2]);
 					if (!empty($info)) {
 						require_once('lib/diff/difflib.php');
@@ -90,7 +90,8 @@ if (isset($_REQUEST['editor_id'])) {
 						$data = $smarty->fetch('pagehistory.tpl');
 					}
 				} else {
-					$data = $tikilib->parse_data_raw($data);
+					$info = $tikilib->get_page_info($autoSaveIdParts[2], false);
+					$data = $tikilib->parse_data($data, array('is_html' => ($info['is_html'] == 1), 'preview_mode'=>true));
 				}
 				echo $data;
 				

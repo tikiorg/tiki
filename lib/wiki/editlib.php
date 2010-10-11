@@ -201,13 +201,13 @@ class EditLib
 		return $parsed;
 	}
 	
-	function parseToWysiwyg( $inData ) {
+	function parseToWysiwyg( $inData, $fromWiki = false ) {
 		global $tikilib, $tikiroot, $prefs;
 		// Parsing page data for wysiwyg editor
 		$inData = $this->partialParseWysiwygToWiki($inData);	// remove any wysiwyg plugins so they don't get double parsed
 		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
 		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true,
-														'ck_editor' => true, 'is_html' => ($prefs['wysiwyg_htmltowiki'] === 'n')));
+														'ck_editor' => true, 'is_html' => ($prefs['wysiwyg_htmltowiki'] === 'n' && !$fromWiki)));
 		
 		$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
 		return $parsed;
