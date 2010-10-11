@@ -74,8 +74,14 @@ function showJQ(selector, effect, speed, dir) {
 		$(selector).show();
 	} else if (effect === '' || effect === 'normal') {
 		$(selector).show(400);	// jquery 1.4 no longer seems to understand 'nnormal' as a speed
-	} else if (effect === 'slide') {
-		$(selector).slideDown(speed);
+	} else if (effect == 'slide') {
+		// With jquery 1.4.2 (and less) and IE7, the function slidedown is buggy
+		// See: http://dev.jquery.com/ticket/3120
+		if ($.browser.msie && parseInt($.browser.version) == 7)	{
+			$(selector).show(speed);
+		} else {
+			$(selector).slideDown(speed);
+		}
 	} else if (effect === 'fade') {
 		$(selector).fadeIn(speed);
 	} else if (effect.match(/(.*)_ui$/).length > 1) {

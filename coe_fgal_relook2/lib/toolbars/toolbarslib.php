@@ -1742,7 +1742,7 @@ class ToolbarsList
 		return $lines;
 	} // }}}
 
-	function getWikiHtml( $areaId ) // {{{
+	function getWikiHtml( $areaId, $comments='' ) // {{{
 	{
 		global $tiki_p_admin, $tiki_p_admin_toolbars, $smarty, $section, $prefs, $headerlib;
 		$html = '';
@@ -1767,6 +1767,8 @@ class ToolbarsList
 				
 				if ($c == 0 && $bitx == 1 && ($tiki_p_admin == 'y' or $tiki_p_admin_toolbars == 'y')) {
 					$params = array('_script' => 'tiki-admin_toolbars.php', '_onclick' => 'needToConfirm = true;', '_class' => 'toolbar', '_icon' => 'wrench', '_ajax' => 'n');
+					if (isset($comments) && $comments == 'y')
+						$params['comments'] = 'on';
 					if (isset($section)) { $params['section'] = $section; }
 					$content = tra('Admin Toolbars');
 					$right .= smarty_block_self_link($params, $content, $smarty);

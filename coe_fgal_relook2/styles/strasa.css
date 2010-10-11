@@ -157,11 +157,11 @@ span.button input,
 	font: normal 11px Verdana, Helvetica, Geneva, Arial, sans-serif;
 }
 
-.button a:hover,
+span.button a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
-.button input:hover,
+span.button input:hover,
 .calbuttonbox:hover {
 	color: #fff;
 	text-decoration: none;

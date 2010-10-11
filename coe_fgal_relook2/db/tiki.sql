@@ -1083,6 +1083,7 @@ CREATE TABLE `tiki_language` (
   `lang` char(16) NOT NULL default '',
   `tran` text,
   `changed` bool,
+  `userId` int(8),
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 

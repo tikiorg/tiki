@@ -9,8 +9,8 @@
 * @package   Net_LDAP2
 * @author    Benedikt Hallinger <beni@php.net>
 * @copyright 2009 Benedikt Hallinger
-* @license   http://www.gnu.org/copyleft/lesser.html LGPL
-* @version   CVS: $Id: Filter.php,v 1.11 2009/04/30 07:53:49 beni Exp $
+* @license   http://www.gnu.org/licenses/lgpl-3.0.txt LGPLv3
+* @version   SVN: $Id: Filter.php 302695 2010-08-23 12:37:08Z beni $
 * @link      http://pear.php.net/package/Net_LDAP2/
 */
 
@@ -18,7 +18,7 @@
 * Includes
 */
 require_once 'PEAR.php';
-require_once 'Util.php';
+require_once 'Net/LDAP2/Util.php';
 
 /**
 * Object representation of a part of a LDAP filter.
@@ -241,8 +241,13 @@ class Net_LDAP2_Filter extends PEAR
                     $filters = array($filter_o);
                 }
             } elseif (is_array($filters)) {
-                $err = PEAR::raiseError('Net_LDAP2_Filter combine error: operator is "not" but $filter is an array!');
-                return $err;
+                if (count($filters) != 1) {
+                    $err = PEAR::raiseError('Net_LDAP2_Filter combine error: operator is "not" but $filter is an array!');
+                    return $err;
+                } elseif (!($filters[0] instanceof Net_LDAP2_Filter)) {
+                     $err = PEAR::raiseError('Net_LDAP2_Filter combine error: operator is "not" but $filter is not a valid Net_LDAP2_Filter nor a filter string!');
+                     return $err;
+                }
             } else {
                 $err = PEAR::raiseError('Net_LDAP2_Filter combine error: operator is "not" but $filter is not a valid Net_LDAP2_Filter nor a filter string!');
                 return $err;
@@ -290,7 +295,6 @@ class Net_LDAP2_Filter extends PEAR
     * @access static
     * @return Net_LDAP2_Filter|Net_LDAP2_Error
     * @todo Leaf-mode: Do we need to escape at all? what about *-chars?check for the need of encoding values, tackle problems (see code comments)
-    * @todo If a not combination is detected, we must check that there is only one filter component following.
     */
     public static function parse($FILTER)
     {
@@ -298,26 +302,78 @@ class Net_LDAP2_Filter extends PEAR
             if (in_array(substr($matches[1], 0, 1), array('!', '|', '&'))) {
                 // Subfilter processing: pass subfilters to parse() and combine
                 // the objects using the logical operator detected
-                // we have now something like "(...)(...)(...)" but at least one part ("(...)").
+                // we have now something like "&(...)(...)(...)" but at least one part ("!(...)").
+                // Each subfilter could be an arbitary complex subfilter.
 
-                // extract logical operator and subfilters
+                // extract logical operator and filter arguments
                 $log_op              = substr($matches[1], 0, 1);
                 $remaining_component = substr($matches[1], 1);
 
-                // bite off the next filter part and parse
-                $subfilters = array();
-                while (preg_match('/^(\(.+?\))(.*)/', $remaining_component, $matches)) {
-                    $remaining_component = $matches[2];
-                    $filter_o = self::parse($matches[1]);
-                    if (PEAR::isError($filter_o)) {
-                        return $filter_o;
+                // split $remaining_component into individual subfilters
+                // we cannot use split() for this, because we do not know the
+                // complexiness of the subfilter. Thus, we look trough the filter
+                // string and just recognize ending filters at the first level.
+                // We record the index number of the char and use that information
+                // later to split the string.
+                $sub_index_pos = array();
+                $prev_char     = ''; // previous character looked at
+                $level         = 0;  // denotes the current bracket level we are,
+                                     //   >1 is too deep, 1 is ok, 0 is outside any
+                                     //   subcomponent
+                for ($curpos = 0; $curpos < strlen($remaining_component); $curpos++) {
+                    $cur_char = substr($remaining_component, $curpos, 1);
+
+                    // rise/lower bracket level
+                    if ($cur_char == '(' && $prev_char != '\\') {
+                        $level++;
+                    } elseif  ($cur_char == ')' && $prev_char != '\\') {
+                        $level--;
                     }
-                    array_push($subfilters, $filter_o);
+
+                    if ($cur_char == '(' && $prev_char == ')' && $level == 1) {
+                        array_push($sub_index_pos, $curpos); // mark the position for splitting
+                    }
+                    $prev_char = $cur_char;
                 }
 
-                // combine subfilters using the logical operator
-                $filter_o = self::combine($log_op, $subfilters);
+                // now perform the splits. To get also the last part, we
+                // need to add the "END" index to the split array
+                array_push($sub_index_pos, strlen($remaining_component));
+                $subfilters = array();
+                $oldpos = 0;
+                foreach ($sub_index_pos as $s_pos) {
+                    $str_part = substr($remaining_component, $oldpos, $s_pos - $oldpos);
+                    array_push($subfilters, $str_part);
+                    $oldpos = $s_pos;
+                }
+
+                // some error checking...
+                if (count($subfilters) == 1) {
+                    // only one subfilter found
+                } elseif (count($subfilters) > 1) {
+                    // several subfilters found
+                    if ($log_op == "!") {
+                        return PEAR::raiseError("Filter parsing error: invalid filter syntax - NOT operator detected but several arguments given!");
+                    }
+                } else {
+                    // this should not happen unless the user specified a wrong filter
+                    return PEAR::raiseError("Filter parsing error: invalid filter syntax - got operator '$log_op' but no argument!");
+                }
+
+                // Now parse the subfilters into objects and combine them using the operator
+                $subfilters_o = array();
+                foreach ($subfilters as $s_s) {
+                    $o = self::parse($s_s);
+                    if (PEAR::isError($o)) {
+                        return $o;
+                    } else {
+                        array_push($subfilters_o, self::parse($s_s));
+                    }
+                }
+
+                $filter_o = self::combine($log_op, $subfilters_o);
                 return $filter_o;
+
             } else {
                 // This is one leaf filter component, do some syntax checks, then escape and build filter_o
                 // $matches[1] should be now something like "foo=bar"

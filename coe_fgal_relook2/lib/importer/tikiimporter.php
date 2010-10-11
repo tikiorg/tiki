@@ -98,7 +98,18 @@ class TikiImporter
      * 
      * @param array $parsedData data ready to be inserted into Tiki
      */
-    function insertData($parsedData) {}
+	function insertData($parsedData) {}
+
+	/**
+	 * Abstract method to check the requirements for a
+	 * specific importer.
+     * 
+     * This method is optional and can be implemented by classes
+	 * that extends this one.
+	 *
+	 * If an error is found the methods should raise an exception.
+     */
+	function checkRequirements() {}
     
     /**
      * Return a $importOptions array with the result of the concatenation of the $importOptions

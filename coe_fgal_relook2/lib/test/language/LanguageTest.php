@@ -60,6 +60,7 @@ class LanguageTest extends TikiTestCase
 		rmdir($this->langDir);
 
 		TikiDb::get()->query('DELETE FROM `tiki_language` WHERE `lang` = ?', array($this->lang));
+		TikiDb::get()->query('DELETE FROM `tiki_untranslated` WHERE `lang` = ?', array($this->lang));
 	}
 
 	// TODO: We need a way to create a Tiki database just for the tests
@@ -117,6 +118,13 @@ class LanguageTest extends TikiTestCase
 		$result = TikiDb::get()->getOne('SELECT `changed` FROM `tiki_language` WHERE `lang` = ? AND `source` = ?', array($this->lang, 'New string'));
 		$this->assertEquals(1, $result);
 		TikiDb::get()->query('DELETE FROM `tiki_language` WHERE `lang` = ? AND `source` = ?', array($this->lang, 'New string'));
+	}
+
+	public function testUpdateTransShouldDeleteEntryFromUntranslatedTable() {
+		TikiDb::get()->query('INSERT INTO `tiki_untranslated` (`source`, `lang`) VALUES (?, ?)', array('New string', $this->lang));
+		$this->obj->updateTrans('New string', 'New translation');
+		$result = TikiDb::get()->getOne('SELECT `source` FROM `tiki_untranslated` WHERE `lang` = ? AND `source` = ?', array($this->lang, 'New string'));
+		$this->assertFalse($result);
 	}
 
 	public function testWriteLanguageFile() {

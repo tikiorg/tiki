@@ -102,7 +102,7 @@
 								<input size="5" type="text" id="archives" name="archives" value="{$gal_info.archives|escape}" />
 								<br />
 								<em>{tr}Use{/tr} 0={tr}unlimited{/tr}, -1={tr}none{/tr}.</em>
-								{if ! isset($smarty.request.parentId) and $galleryId neq $prefs.fgal_root_id}
+								{if $galleryId neq $prefs.fgal_root_id}
 							</td>
 						</tr>
 						<tr>

@@ -84,7 +84,7 @@ function module_since_last_visit_new($mod_reference, $params = null)
 
 	$ret["items"]["comments"]["label"] = tra('new comments');
 	$ret["items"]["comments"]["cname"] = "slvn_comments_menu";
-	$query = "select `object`,`objectType`,`title`,`commentDate`,`userName`,`threadId`, `parentId` from `tiki_comments` where `commentDate`>? and `objectType` != 'forum' order by `commentDate` desc";
+	$query = "select `object`,`objectType`,`title`,`commentDate`,`userName`,`threadId`, `parentId`, `approved` from `tiki_comments` where `commentDate`>? and `objectType` != 'forum' order by `commentDate` desc";
 	$result = $tikilib->query($query, array((int)$last), $resultCount);
 
 	$count = 0;
@@ -136,7 +136,12 @@ function module_since_last_visit_new($mod_reference, $params = null)
 			break;
 		}
 
-		if (!isset($perm) || $userlib->user_has_perm_on_object($user, $res['object'], $res['objectType'], $perm)) {
+		if ($res['approved'] == 'y') {
+			$visible = !isset($perm) || $userlib->user_has_perm_on_object($user, $res['object'], $res['objectType'], $perm);
+		} else {
+			$visible = $userlib->user_has_perm_on_object($user, $res['object'], $res['objectType'], 'tiki_p_admin_comments');
+		}
+		if ($visible) {
 			require_once('lib/smarty_tiki/modifier.username.php');
 			if (isset($ret["items"]["comments"]["list"][$count]["href"])) {
 				$ret["items"]["comments"]["list"][$count]["href"] .= '&comzone=show#threadId'.$res['threadId'];

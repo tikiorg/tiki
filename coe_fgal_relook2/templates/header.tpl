@@ -44,13 +44,13 @@
 {* --- tiki block --- *}
 <title>
 	{if $prefs.site_title_location eq 'before'}
-		{$prefs.browsertitle|escape} : 
+		{$prefs.browsertitle|tr_if|escape} : 
 	{/if}
-	{if isset($trail)}
+	{if $prefs.feature_breadcrumbs eq 'y' && isset($trail)}
 		{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
 	{else}
 		{if !empty($headtitle)}
-			{$headtitle|escape}
+			{$headtitle|tr_if|escape}
 		{elseif !empty($page)}
 			{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}
 				{$approvedPageName|escape}
@@ -78,7 +78,7 @@
 		{/if}
 	{/if}
 	{if $prefs.site_title_location eq 'after'}
-		: {$prefs.browsertitle|escape} 
+		: {$prefs.browsertitle|tr_if|escape}
 	{/if}
 </title>
 

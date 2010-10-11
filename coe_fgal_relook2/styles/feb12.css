@@ -123,7 +123,7 @@ span.button a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
-.button input:hover,
+span.button input:hover,
 .calbuttonbox:hover,
 #highlight,
 .highlight {

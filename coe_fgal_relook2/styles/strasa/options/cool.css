@@ -73,7 +73,7 @@ span.button input,
 	border: 1px solid #acacac;
 	background: #f5f5f5 url(cool/headerbg.jpg) repeat-x 0 100%}
 
-.button a:hover,
+span.button a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,

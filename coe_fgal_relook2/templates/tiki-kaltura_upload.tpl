@@ -6,11 +6,14 @@
 </div>
 
 <script type="text/javascript" src="lib/swfobject/swfobject.js"></script>
-<br>
+<br />
 {if $count > 0}
 {remarksbox type="info" title="{tr}Upload Successful{/tr}" }{tr}You have successfully added {$count} new entry/entries{/tr}{/remarksbox}
-{/if}
-<br>		
+<p>
+{button _text="{tr}Add more media{/tr}" href="tiki-kaltura_upload.php" }
+</p>
+{else}
+<br />
 <div id="kcwFlashObject"></div>
 
 {jq notonready=true}
@@ -37,3 +40,4 @@ swfobject.embedSWF("{{$prefs.kServiceUrl}}kcw/ui_conf_id/{{$prefs.kcwUIConf|esca
 	<div id="new_entries">
 	</div>
 </form>
+{/if}

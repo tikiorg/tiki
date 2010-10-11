@@ -58,9 +58,11 @@ class WikiParser_OutputLink
 				'class' => 'wiki external',
 			) );
 		} elseif( $info = $this->findWikiPage( $page ) ) {
-			$page = $info['pageName'];
+			if (!empty($info['pageName'])) {
+				$page = $info['pageName'];
+			}
 			$title = $page;
-			if( $info['description'] ) {
+			if(!empty($info['description'])) {
 				$title = $info['description'];
 			}
 
@@ -109,13 +111,13 @@ class WikiParser_OutputLink
 		if( count( $parts ) == 2 ) {
 			list( $token, $remotePage ) = $parts;
 
-			if( isset( $this->externals[$token] ) ) {
+			if( isset( $this->externals[strtolower($token)] ) ) {
 				if( $page == $description ) {
 					$description = $remotePage;
 				}
 
 				$page = $remotePage;
-				$pattern = $this->externals[$token];
+				$pattern = $this->externals[strtolower($token)];
 				return str_replace( '$page', urlencode( $page ), $pattern );
 			}
 		}

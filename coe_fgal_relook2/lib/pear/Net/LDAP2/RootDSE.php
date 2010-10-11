@@ -9,8 +9,8 @@
 * @package   Net_LDAP2
 * @author    Jan Wagner <wagner@netsols.de>
 * @copyright 2009 Jan Wagner
-* @license   http://www.gnu.org/copyleft/lesser.html LGPL
-* @version   CVS $Id: RootDSE.php,v 1.5 2009/04/30 08:02:37 beni Exp $
+* @license   http://www.gnu.org/licenses/lgpl-3.0.txt LGPLv3
+* @version   SVN: $Id: RootDSE.php 286718 2009-08-03 07:30:49Z beni $
 * @link      http://pear.php.net/package/Net_LDAP2/
 */
 

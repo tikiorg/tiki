@@ -5,11 +5,13 @@
 {/if}
 
 <div class="navbar">
-	{if !empty($calendarId)}
+	{if !empty($calendarId) && $tiki_p_admin_calendar eq 'y'}
 		{button _text="{tr}Create Calendar{/tr}" href="tiki-admin_calendars.php?show=mod"}
 	{/if}
 	{button _text="{tr}View Calendars{/tr}" href="tiki-calendar.php"}
-	{button _text="{tr}Import{/tr}" href="tiki-calendar_import.php"}
+	{if $tiki_p_admin_calendar eq 'y'}
+		{button _text="{tr}Import{/tr}" href="tiki-calendar_import.php"}
+	{/if}
 </div>
 
 {tabset name='tabs_admin_calendars'}

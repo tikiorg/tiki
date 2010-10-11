@@ -8,113 +8,116 @@
 	{/if}
 </div>
 
-<form action="tiki-edit_languages.php" method="post">
-	{tabset}
-		{tab name="{tr}Edit languages{/tr}"}
-			{if (empty($db_languages))}
-			    {remarksbox type="note" title="{tr}Note:{/tr}"}
-					{tr}No translations in the database. First import a language, translate strings using interactive translation or enable "Record untranslated strings" in Admin -> i18n.{/tr}
-				{/remarksbox}
-			{else}
-				<div class="adminoptionbox">
-					<label for="edit_language">{tr}Select the language to edit{/tr}:</label>
-					<select id="edit_language" name="edit_language">
-						{section name=ix loop=$db_languages}
-							<option value="{$db_languages[ix].value|escape}" {if $edit_language eq $db_languages[ix].value}selected="selected"{/if}>{$db_languages[ix].name}</option>
-						{/section}
-					</select>
+{tabset}
+	{tab name="{tr}Edit languages{/tr}"}
+		<form action="tiki-edit_languages.php" id="edit_translations" method="post">
+			<div class="adminoptionbox">
+				<label for="edit_language">{tr}Select the language to edit{/tr}:</label>
+				<select id="edit_language" class="edit_translations "name="edit_language">
+					{section name=ix loop=$languages}
+						<option value="{$languages[ix].value|escape}" {if $edit_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
+					{/section}
+				</select>
+			</div>
+			<div class="adminoptionbox">
+				<input id="add_tran_sw" class="edit_translations" align="right" type="radio" name="whataction" value="add_tran_sw" {if $whataction eq 'add_tran_sw'}checked="checked"{/if}/>
+				<label for="add_tran_sw">{tr}Add a translation{/tr}</label>
+			</div>
+			<div class="adminoptionbox">
+				<input id="edit_tran_sw" class="edit_translations" align="right" type="radio" name="whataction" value="edit_tran_sw" {if $whataction eq 'edit_tran_sw'}checked="checked"{/if}/>
+				<label for="edit_tran_sw">{tr}Edit translations{/tr}</label>
+				<div class="adminoptionboxchild">
+					<input id="only_db_translations" class="edit_translations" type="checkbox" name="only_db_translations" {if $only_db_translations eq 'y'}checked="checked"{/if}>
+					<label for="only_db_translations">{tr}Show only database stored translations{/tr}</label>
 				</div>
+			</div>
+
+			{if $prefs.record_untranslated eq 'y'}
 				<div class="adminoptionbox">
-					<input id="add_tran_sw" align="right" type="radio" name="whataction" value="add_tran_sw" {if $whataction eq 'add_tran_sw'}checked="checked"{/if}/>
-					<label for="add_tran_sw">{tr}Add a translation{/tr}</label>
-				</div>
-				<div class="adminoptionbox">
-					<input id="edit_tran_sw" align="right" type="radio" name="whataction" value="edit_tran_sw" {if $whataction eq 'edit_tran_sw'}checked="checked"{/if}/>
-					<label for="edit_tran_sw">{tr}Edit translations{/tr}</label>
-				</div>
-				<div class="adminoptionbox">
-					<input id="edit_rec_sw" align="right" type="radio" name="whataction" value="edit_rec_sw" {if $whataction eq 'edit_rec_sw'}checked="checked"{/if}/>
+					<input id="edit_rec_sw" class="edit_translations" align="right" type="radio" name="whataction" value="edit_rec_sw" {if $whataction eq 'edit_rec_sw'}checked="checked"{/if}/>
 					<label for="edit_rec_sw">{tr}Translate recorded{/tr}</label>
 				</div>
-				<div class="adminoptionbox">
-					<input type="submit" name="langaction" value="{tr}Set{/tr}" />
+			{/if}
+
+			{if $whataction eq 'add_tran_sw'}
+				<div class="simplebox">
+					<h4>{tr}Add a translation{/tr}:</h4>
+					<table class="formcolor">
+						<tr>
+							<td>{tr}Original{/tr}:</td>
+							<td><input name="add_tran_source" size=20 maxlength=255></td>
+							<td>{tr}Translation{/tr}:</td>
+							<td><input name="add_tran_tran" size=20 maxlength=255></td>
+							<td align="center"><input type="submit" name="add_tran" value="{tr}Add{/tr}" /></td>
+						</tr>
+					</table>
 				</div>
-				{if $whataction eq 'add_tran_sw'}
-					<div class="simplebox">
-						{tr}Add a translation{/tr}:<br />
-						<table class="formcolor">
+			{/if}
+			{if $whataction eq 'edit_rec_sw'}
+				<div class="simplebox">
+					<h4>{tr}Translate recorded{/tr}:</h4>
+					<table class="formcolor">
+						<tr>
+							<td align="right"><input name="tran_search" value="{$tran_search|escape}" size=10	maxlength=255></td>
+							<td align="center"><input type="submit" name="tran_search_sm" value="{tr}Search{/tr}" /></td>
+						</tr>
+						{section name=it loop=$untranslated}
 							<tr>
 								<td>{tr}Original{/tr}:</td>
-								<td><input name="add_tran_source" size=20 maxlength=255></td>
+								<td><input name="edit_rec_source_{$smarty.section.it.index}" value="{$untranslated[it]|escape}" size=20 maxlength=255 readonly="readonly"></td>
 								<td>{tr}Translation{/tr}:</td>
-								<td><input name="add_tran_tran" size=20 maxlength=255></td>
-								<td align="center"><input type="submit" name="add_tran" value="{tr}Add{/tr}" /></td>
+								<td><input name="edit_rec_tran_{$smarty.section.it.index}" size=20 maxlength=255></td>
+								<td align="center"><input type="submit" name="edit_rec_{$smarty.section.it.index}" value="{tr}Translate{/tr}" /></td>
 							</tr>
-						</table>
-					</div>
-				{/if}
-				{if $whataction eq 'edit_rec_sw'}
-					<div class="simplebox">
-						{tr}Translate recorded{/tr}:<br />
-						<table class="formcolor">
-							<tr>
-								<td align="right"><input name="tran_search" value="{$tran_search|escape}" size=10	maxlength=255></td>
-								<td align="center"><input type="submit" name="tran_search_sm" value="{tr}Search{/tr}" /></td>
-							</tr>
-							{section name=it loop=$untranslated}
-								<tr>
-									<td>{tr}Original{/tr}:</td>
-									<td><input name="edit_rec_source_{$smarty.section.it.index}" value="{$untranslated[it]|escape}" size=20 maxlength=255 readonly="readonly"></td>
-									<td>{tr}Translation{/tr}:</td>
-									<td><input name="edit_rec_tran_{$smarty.section.it.index}" size=20 maxlength=255></td>
-									<td align="center"><input type="submit" name="edit_rec_{$smarty.section.it.index}" value="{tr}Translate{/tr}" /></td>
-								</tr>
-							{/section}
-							<tr><td align="center"><input type="submit" name="tran_reset" value="{tr}reset table{/tr}" /></td></tr>
-						</table>
-						{if $tr_recnum != 0}
-							<input type="submit" name="lessrec" value="{tr}previous page{/tr}" />
-						{/if}
-						{if $untr_numrows > $tr_recnum+$maxRecords}
-							<input type="submit" name="morerec" value="{tr}next page{/tr}" />
-						{/if}
-						<input type="hidden" name="tr_recnum" value="{$tr_recnum|escape}" />
-					</div>
-				{/if}
-				{if $whataction eq 'edit_tran_sw'}
-					<div class="simplebox">
-						{tr}Edit translations{/tr}:<br />
-						<table class="formcolor">
-							<tr>
-								<td align="left" colspan=4>
-									<input name="tran_search" value="{$tran_search|escape}" size=10 maxlength=255 />
-									<input type="submit" name="tran_search_sm" value="{tr}Search{/tr}" />
-								</td>
-							</tr>
-							{section name=it loop=$untranslated}
-								<tr>
-									<td>{tr}Original{/tr}:</td>
-									<td><input name="edit_edt_source_{$smarty.section.it.index}" value="{$untranslated[it]|escape}" size=30 maxlength=255 readonly="readonly"/></td>
-									<td>{tr}Translation{/tr}:</td>
-									<td><input name="edit_edt_tran_{$smarty.section.it.index}" value="{$translation[it]|escape}" size=42 maxlength=255 /></td>
-									<td align="center"><input type="submit" name="edt_tran_{$smarty.section.it.index}" value="{tr}Translate{/tr}" /></td>
-									<td align="center"><input type="submit" name="del_tran_{$smarty.section.it.index}" value="{tr}Delete{/tr}" /></td>
-								</tr>
-							{/section}
-						</table>
-						{if $tr_recnum != 0}
-							<input type="submit" name="lessrec" value="{tr}previous page{/tr}" />
-						{/if}
-						{if $untr_numrows > $tr_recnum+$maxRecords}
-							<input type="submit" name="morerec" value="{tr}next page{/tr}" />
-						{/if}
-						<input type="hidden" name="tr_recnum" value="{$tr_recnum|escape}" />
-					</div>
-				{/if}
+						{/section}
+						<tr><td align="center"><input type="submit" name="tran_reset" value="{tr}reset table{/tr}" /></td></tr>
+					</table>
+					{if $tr_recnum != 0}
+						<input type="submit" name="lessrec" value="{tr}previous page{/tr}" />
+					{/if}
+					{if $untr_numrows > $tr_recnum+$maxRecords}
+						<input type="submit" name="morerec" value="{tr}next page{/tr}" />
+					{/if}
+					<input type="hidden" name="tr_recnum" value="{$tr_recnum|escape}" />
+				</div>
 			{/if}
-		{/tab}
+			{if $whataction eq 'edit_tran_sw'}
+				<div class="simplebox">
+					<h4>{tr}Edit translations{/tr}:</h4>
+					<table class="formcolor">
+						<tr>
+							<td align="left" colspan=4>
+								<input name="tran_search" value="{$tran_search|escape}" size=10 maxlength=255 />
+								<input type="submit" name="tran_search_sm" value="{tr}Search{/tr}" />
+							</td>
+						</tr>
+						{foreach from=$translations name=translations key=source item=translation}
+							<tr>
+								<td>{tr}Original{/tr}:</td>
+								<td><input name="edit_edt_source_{$smarty.foreach.translations.index}" value="{$source|escape}" size=30 maxlength=255 readonly="readonly"/></td>
+								<td>{tr}Translation{/tr}:</td>
+								<td><input name="edit_edt_tran_{$smarty.foreach.translations.index}" value="{$translation|escape}" size=42 maxlength=255 /></td>
+								<td align="center"><input type="submit" name="edt_tran_{$smarty.foreach.translations.index}" value="{tr}Translate{/tr}" /></td>
+								<td align="center"><input type="submit" name="del_tran_{$smarty.foreach.translations.index}" value="{tr}Delete{/tr}" /></td>
+							</tr>
+						{/foreach}
+					</table>
+					{if $tr_recnum != 0}
+						<input type="submit" name="lessrec" value="{tr}previous page{/tr}" />
+					{/if}
+					{if $untr_numrows > $tr_recnum+$maxRecords}
+						<input type="submit" name="morerec" value="{tr}next page{/tr}" />
+					{/if}
+					<br />
+					<input type="submit" name="translate_all" value="{tr}Translate all{/tr}" />
+					<input type="hidden" name="tr_recnum" value="{$tr_recnum|escape}" />
+				</div>
+			{/if}
+		</form>
+	{/tab}
 
-		{tab name="{tr}Export languages{/tr}"}
+	{tab name="{tr}Export languages{/tr}"}
+		<form action="tiki-edit_languages.php" method="post">
 			{if isset($expmsg)}
 			    {remarksbox type="note" title="{tr}Note:{/tr}"}
 					{$expmsg}
@@ -122,7 +125,7 @@
 			{/if}
 			{if (empty($db_languages))}
 			    {remarksbox type="note" title="{tr}Note:{/tr}"}
-					{tr}No translations in the database. First import a language, translate strings using interactive translation or enable "Record untranslated strings" in Admin -> i18n.{/tr}
+					{tr}No translations in the database available to export. First translate strings using interactive translation or "Edit languages" tab.{/tr}
 				{/remarksbox}
 			{else}
 				<div class="adminoptionbox">
@@ -154,29 +157,6 @@
 					{/if}
 				</div>
 			{/if}
-		{/tab}
-		
-		{tab name="{tr}Import languages{/tr}"}
-			{if isset($impmsg)}
-				{remarksbox type="note" title="{tr}Note:{/tr}"}{$impmsg}{/remarksbox}
-			{/if}
-			<div class="adminoptionbox">
-				<label for="imp_language">{tr}Select the language to import{/tr}:</label>
-				<select id="imp_language" name="imp_language">
-					{section name=ix loop=$languages}
-						<option value="{$languages[ix].value|escape}">
-							{$languages[ix].name}
-						</option>
-					{/section}
-				</select>
-			</div>
-			{remarksbox type="warning" title="{tr}Warning:{/tr}"}
-				{tr}Beware that when importing a language, all translations in the database for that language are deleted.{/tr}
-			{/remarksbox}
-			<div class="adminoptionbox">
-				<input type="submit" name="import" value="{tr}Import{/tr}" />
-			</div>
-
-		{/tab}
-	{/tabset}
-</form>
+		</form>
+	{/tab}
+{/tabset}

@@ -372,6 +372,14 @@ function wikiplugin_tracker($data, $params)
 				} else {
 					$outf = $trklib->get_pretty_fieldIds($tpl, 'tpl');
 				}
+				if (!empty($_REQUEST['autosavefields'])) {
+					$autosavefields = explode(':', $_REQUEST['autosavefields']);
+					$autosavevalues = explode(':', $_REQUEST['autosavevalues']);
+					if (isset($params['autosavefields'])) {
+						$autosavefields = array_merge($autosavefields, $params['autosavefields']);
+						$autosavevalues = array_merge($autosavevalues, $params['autosavevalues']);
+					}
+				}
 				if (!empty($autosavefields)) {
 					$outf = array_merge($outf, $autosavefields);
 				}
@@ -396,14 +404,6 @@ function wikiplugin_tracker($data, $params)
 						foreach ($_FILES[$incomingTrackName] as $lbl => $val) {
 							$_FILES['track'][$lbl][$fl["fieldId"]] = $val;
 						}
-					}
-				}
-				if (!empty($_REQUEST['autosavefields'])) {
-					$autosavefields = explode(':', $_REQUEST['autosavefields']);
-					$autosavevalues = explode(':', $_REQUEST['autosavevalues']);
-					if (isset($params['autosavefields'])) {
-						$autosavefields = array_merge($autosavefields, $params['autosavefields']);
-						$autosavevalues = array_merge($autosavevalues, $params['autosavevalues']);
 					}
 				}
 				if (!empty($autosavefields)) {
@@ -694,6 +694,8 @@ function wikiplugin_tracker($data, $params)
 							$tplSubject = array('tracker_changed_notification_subject.tpl');
 						}
 						$itpl = 0;
+						$smarty->assign('mail_date', $tikilib->now);
+						$smarty->assign('mail_itemId', $rid);
 						foreach ($emailOptions[1] as $ieo=>$ueo) {
 							@$mail_data = $smarty->fetch('mail/'.$tplSubject[$itpl]);
 							if (empty($mail_data))

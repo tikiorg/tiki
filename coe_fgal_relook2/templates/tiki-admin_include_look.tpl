@@ -86,7 +86,7 @@
 			{preference name=feature_sitemycode}
 			<div class="adminoptionboxchild" id="feature_sitemycode_childcontainer">
 				{icon _id=information}
-				<em>{tr}The Custom Site Header will display for the Admin only. Select <strong>Publish</strong> to display the content for </em>all<em> users.{/tr}</em>
+				<em>{tr}The Custom Site Header will display for the Admin only. Select <strong>Publish</strong> to display the content for <em>all</em> users.{/tr}</em>
 				{preference name=sitemycode}
 				{preference name=sitemycode_publish}
 			</div>

@@ -31,9 +31,15 @@ if (empty($_REQUEST["postId"])) {
 }
 
 $post_info = $bloglib->get_post($postId, true);
-$blogId = $post_info['blogId'];
-$blog_data = $bloglib->get_blog($blogId);
+if (!$post_info) {
+	$smarty->assign('msg', tra("Post not found"));
+	$smarty->display("error.tpl");
+	die;
+}
 
+$blogId = $post_info['blogId'];
+
+$blog_data = $bloglib->get_blog($blogId);
 if (!$blog_data) {
 	$smarty->assign('msg', tra("Blog not found"));
 	$smarty->display("error.tpl");

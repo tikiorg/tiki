@@ -183,9 +183,9 @@ select {
 	color: #BDCEC3;
 	border: 0}
 
-.button a:hover,
+span.button a:hover,
 button:hover,
-.button input:hover,
+span.button input:hover,
 .submitbutton:hover,
 option:hover,
 .calbuttonBox a:hover {

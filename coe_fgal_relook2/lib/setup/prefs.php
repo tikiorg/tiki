@@ -26,7 +26,6 @@ function get_default_prefs() {
 	if( $prefs = $cachelib->getSerialized("tiki_default_preferences_cache") ) {
 		return $prefs;
 	}
-
 	global $tikidate, $tikilib, $url_host;
 	$prefs = array(
 		// tiki and version
@@ -239,7 +238,6 @@ function get_default_prefs() {
 		'wikiplugin_fancylist' => 'y',
 		'wikiplugin_fancytable' => 'y',
 		'wikiplugin_file' => 'y',
-		'wikiplugin_filelink' => 'y',
 		'wikiplugin_files' => 'y',
 		'wikiplugin_flash' => 'y',
 		'wikiplugin_footnote' => 'n',
@@ -388,7 +386,6 @@ function get_default_prefs() {
 		'wikiplugininline_fancylist' => 'n',
 		'wikiplugininline_fancytable' => 'n',
 		'wikiplugininline_file' => 'y',
-		'wikiplugininline_filelink' => 'y',
 		'wikiplugininline_files' => 'n',
 		'wikiplugininline_flash' => 'n',
 		'wikiplugininline_footnote' => 'n',
@@ -1467,8 +1464,8 @@ function get_default_prefs() {
 		'smarty_security' => 'y',
 		'smarty_compilation' => 'modified',
 		'feature_htmlpurifier_output' => 'n',
-		'feature_ajax' => 'n',
-		'ajax_autosave' => 'n',
+		'feature_ajax' => 'y',
+		'ajax_autosave' => 'y',
 		'ajax_xajax' => 'y',
 		'feature_antibot' => 'y',
 		'feature_banners' => 'n',
@@ -1781,6 +1778,7 @@ function get_default_prefs() {
 		'cas_path' => '',
 		'cas_extra_param' => '',
 		'cas_authentication_timeout' => '0',
+		'cas_force_logout' => 'n',
 
 		// Comments
 		'feature_comments_post_as_anonymous' => 'n',
@@ -1824,7 +1822,6 @@ function initialize_prefs() {
 	
 	global $prefs, $tikiroot, $tikilib, $user_overrider_prefs;
 		
-
 	// Check if prefs needs to be reloaded
 	if (isset($_SESSION['s_prefs'])) {
 
@@ -1864,7 +1861,7 @@ function initialize_prefs() {
 		}
 
 		// Override default prefs with values specified in database
-		$modified = $tikilib->get_db_preferences();
+		$modified = isset($tikilib) ? $tikilib->get_db_preferences() : "";
 
 		// Unserialize serialized preferences
 		if ( isset($_SESSION['serialized_prefs']) && is_array($_SESSION['serialized_prefs']) ) {

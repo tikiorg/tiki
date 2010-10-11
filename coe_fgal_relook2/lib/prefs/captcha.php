@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: recaptcha.php 28075 2010-07-20 11:41:48Z jonnybradley $
+// $Id$
 
 function prefs_captcha_list() {
     return array (

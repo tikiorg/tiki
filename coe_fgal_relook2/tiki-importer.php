@@ -54,7 +54,15 @@ if (isset($_SESSION['tiki_importer_feedback'])) {
         $smarty->display("error.tpl");
         die;
     }
-    
+
+	try {
+		$importer->checkRequirements();
+	} catch (Exception $e) {
+		$smarty->assign('msg', $e->getMessage());
+		$smarty->display('error.tpl');
+		die;
+	}
+
     $importerOptions = $importer->getOptions();
 
     $smarty->assign('importerOptions', $importerOptions);
