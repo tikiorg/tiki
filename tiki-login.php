@@ -346,13 +346,14 @@ if ($isvalid) {
 			}
 			$userlib->set_unsuccessful_logins($user, $nb_bad_logins + 1);
 		}
+		unset($user); // Important so that modules are showing based on anonymous
 		unset($isvalid);
 		switch ($error) {
 			case PASSWORD_INCORRECT:
 			case USER_NOT_FOUND:
 				$smarty->assign('error_login', $error);
 				$smarty->assign('mid', 'tiki-login.tpl');
-				$smarty->assign('error_user', $user);
+				$smarty->assign('error_user', $_REQUEST["user"]);
 				$smarty->display('tiki.tpl');
 				exit;
 

@@ -2078,6 +2078,11 @@ table.webmail_message_headers th {
 	font-size: .8em;
 }
 
+.tabstoggle .button {
+	margin: 0;
+	padding: 0;
+}
+
 /* treeTable definitions - used in object-perms so far */
 
 table.treeTable {

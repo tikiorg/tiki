@@ -286,7 +286,7 @@
 				<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
 				<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}" />
 				<input type="hidden" name="comments_objectId" value="{$comments_objectId|escape}" />
-				<input type="hidden" name="comments_title" value="{if $page}{$page|escape}{else}{tr}Untitled{/tr}{/if}" />
+				<input type="hidden" name="comments_title" value="{if $page}{$page|escape}{/if}" />
 
 				{* Traverse request variables that were set to this page adding them as hidden data *}
 				{section name=i loop=$comments_request_data}
@@ -388,7 +388,7 @@
 
 							{if $forum_mode eq 'y' and $user and $prefs.feature_user_watches eq 'y'}
 								<div id="watch_thread_on_reply">
-									<input id="watch_thread" type="checkbox" name="watch" value="y"{if $user_watching_topic eq 'y' or $smarty.request.watch eq 'y'} checked="checked"{/if}> <label for="watch_thread">{tr}Send me an e-mail when someone replies{/tr}</label>
+									<input id="watch_thread" type="checkbox" name="watch" value="y"{if $user_watching_topic eq 'y' or $smarty.request.watch eq 'y'} checked="checked"{/if} /> <label for="watch_thread">{tr}Send me an e-mail when someone replies{/tr}</label>
 								</div>
 							{/if}
 						</td>

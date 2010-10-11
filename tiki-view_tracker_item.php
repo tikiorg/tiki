@@ -743,16 +743,16 @@ if ($_REQUEST["itemId"]) {
 				} else {
 					if (!isset($info["$fid"])) $info["$fid"] = '';
 				}
-				if ($fields["data"][$i]["type"] == 'e') {
+				if ($fields['data'][$i]["type"] == 'e') {
 					global $categlib;
 					include_once ('lib/categories/categlib.php');
 					$k = $fields["data"][$i]['options_array'][0];
-					if ($fields["data"][$i]['options_array'][3] == 1) {
+					if (isset($fields['data'][$i]['options_array'][3]) && $fields['data'][$i]['options_array'][3] == 1) {
 						$all_descends = true;
 					} else {
 						$all_descends = false;
 					}
-					$ins_fields["data"][$i]["$k"] = $categlib->get_viewable_child_categories($k, $all_descends);
+					$ins_fields['data'][$i]["$k"] = $categlib->get_viewable_child_categories($k, $all_descends);
 					if (!isset($cat)) {
 						$cat = $categlib->get_object_categories('trackeritem', $_REQUEST['itemId']);
 					}
@@ -764,12 +764,8 @@ if ($_REQUEST["itemId"]) {
 							}
 						}
 					} else {
-						foreach($ins_fields["data"][$i]["$k"] as $c) {
-							if (in_array($c['categId'], $cat)) {
-								$ins_fields['data'][$i]['cat'][$c['categId']] = 'y';
-								$ins_fields['data'][$i]['categs'][] = $categlib->get_category($c['categId']);
-							}
-						}
+						//displayed when viewing tracker item
+						$ins_fields['data'][$i]['categs'] = $categlib->get_category_info($cat, false, $k);
 					}
 				} elseif ($fields["data"][$i]["type"] == 'l') {
 					if (isset($fields["data"][$i]["options_array"][3])) {

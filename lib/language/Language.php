@@ -142,6 +142,11 @@ class Language extends TikiDb_Bridge
 		// only the user name is globally available? not the user_id?
 		$userId = $tikilib->get_user_id($user);
 
+		// initialize language (used when this function is called by tiki-interactive_translation.php)
+		if (!isset(${"lang_$this->lang"})) {
+			init_language($this->lang);
+		}
+
 		// don't insert anything in the database if the translation hasn't been changed	
 		if (isset(${"lang_$this->lang"}[$originalStr]) && ${"lang_$this->lang"}[$originalStr] == $translatedStr) {
 			return;

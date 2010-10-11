@@ -138,7 +138,7 @@
 <td style="text-align:right;">
 	<a class="admlink" title="{tr}View{/tr}" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{icon _id='table' alt="{tr}View{/tr}"}</a>
 	{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-		<a class="admlink" title="{tr}Configure Forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}&cookietab=2">{icon _id='page_edit'}</a>
+		<a class="admlink" title="{tr}Configure Forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}&amp;cookietab=2">{icon _id='page_edit'}</a>
 	{/if}
 </td>
 

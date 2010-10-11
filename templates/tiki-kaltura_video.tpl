@@ -5,7 +5,7 @@
 	{else}{tr}Kaltura Video{/tr}{/if}{/title}
 <div class="navbar">
 	{if $tiki_p_remix_videos eq 'y' or $tiki_p_admin_video_galleries eq 'y' or $tiki_p_admin eq 'y'}
-	{button _text="{tr}List Entries{/tr}" href="tiki-list_kaltura_entries.php" }
+	{button _text="{tr}Media Entries{/tr}" href="tiki-list_kaltura_entries.php?list=media" }
 	{/if}
 	{if $kmode ne ''}
 	{if $kmode ne 'edit' and ($tiki_p_edit_videos eq 'y' or $tiki_p_admin_video_galleries eq 'y' or $tiki_p_admin eq 'y')}
@@ -95,6 +95,14 @@
 						</td>
 					</tr>
 				{/if}
+
+				<tr>
+					<td class="even">{tr}Embed code{/tr}</td>
+					<td class="even">
+						{ldelim}kaltura id="{$videoId}"{rdelim}
+					</td>
+				</tr>
+
 				{if $kmode eq 'view'}
 				<tr>
 				<td class="odd">{tr}Duration{/tr}</td>

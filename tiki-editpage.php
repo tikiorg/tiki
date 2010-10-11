@@ -839,7 +839,7 @@ if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) ) {
 	} elseif (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg'] === 'y') {
 		// Parsing page data as first time seeing wiki page in wysiwyg editor
 		$smarty->assign('msg', "Parsing wiki to html");
-		$parsed = $editlib->parseToWysiwyg($edit_data);
+		$parsed = $editlib->parseToWysiwyg($edit_data, true);
 		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
 			$is_html = false;
 			$info['is_html'] = false;

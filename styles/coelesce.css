@@ -331,7 +331,7 @@ div#sitelogo * {
 }
 
 #sitesearchbar {
-	float: none;
+	float: right;
 	margin-top: 3px;
 	margin-right: 0;
 	margin-left: auto;
@@ -500,6 +500,15 @@ div.optionline,
 
 a.linkmodule:hover {
 	color: #82a7c8;
+}
+
+small.date {
+	font-size: 0.9em;
+	font-style: italic;
+}
+
+.commentTitle {
+	font-weight: bold;
 }
 
 /** PHP Layers Menus **/

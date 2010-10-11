@@ -329,7 +329,7 @@
 		<form action="tiki-adminusers.php" method="post" enctype="multipart/form-data" name="RegForm" autocomplete="off">
 			<table class="formcolor">
 				<tr>
-					<td><label for="name">
+					<td><label for='login'>
 						{if $prefs.login_is_email eq 'y'}
 							{tr}Email:{/tr}
 						{else}
@@ -339,7 +339,7 @@
 					</td>
 					<td>
 						{if $userinfo.login neq 'admin'}
-							<input type="text" id="name" name="name" value="{$userinfo.login|escape}" />
+							<input type="text" id='login' name='login' value="{$userinfo.login|escape}" />
 							<br /> 
 							{if $prefs.login_is_email eq 'y'}
 								<em>{tr}Use the email as username{/tr}.</em>
@@ -357,7 +357,7 @@
 								{/if}
 							{/if}
 						{else}
-							<input type="hidden" name="name" value="{$userinfo.login|escape}" />{$userinfo.login}
+							<input type="hidden" name='login' value="{$userinfo.login|escape}" />{$userinfo.login}
 						{/if}
 					</td>
 				</tr>
@@ -477,7 +477,7 @@
 						{if $userinfo.userId}
 							<input type="hidden" name="user" value="{$userinfo.userId|escape}" />
 							<input type="hidden" name="edituser" value="1" />
-							<input type="submit" name="submit" value="{tr}Save{/tr}" />
+							<input type="submit" name="save" value="{tr}Save{/tr}" />
 						{else}
 							<input type="submit" name="newuser" value="{tr}Add{/tr}" />
 						{/if}

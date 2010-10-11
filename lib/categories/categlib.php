@@ -25,8 +25,9 @@ class CategLib extends ObjectLib
 		"categpath" is a string representing the path to the category in the category tree, ordered from the ancestor to the category. Each category is separated by "::". For example, "Tiki" could have categpath "Software::Free software::Tiki". If a category is given, it is considered the root of the category tree for building categpath.
 		"tepath" is an array representing the path to the category in the category tree, ordered from the ancestor to the category. Each element is the name of the represented category.
 		"children" is the number of categories the category has as children.
-		"objects" is the number of objects directly in the category. */
-	function list_categs($categId=0, $showWS=false) {
+		"objects" is the number of objects directly in the category. 
+	If $all is set to false, only first level children obtained. */
+	function list_categs($categId=0, $showWS=false, $all = true) {
 		$back = $this->get_all_categories_ext($showWS);
 
 		if ($categId > 0) {
@@ -35,7 +36,7 @@ class CategLib extends ObjectLib
 			foreach ($back as $cat) {
 				if ($cat['categId'] == $categId)
 					$path = $cat['categpath'].'::';
-				else if ($path != '' && strpos($cat['categpath'], $path) === 0) {
+				else if (($all == true || $cat['parentId'] == $categId) && ($path != '' && strpos($cat['categpath'], $path) === 0)) {
 					$cat['categpath'] = substr($cat['categpath'], strlen($path));
 					$back2[] = $cat;
 				}
@@ -45,7 +46,40 @@ class CategLib extends ObjectLib
 			return $back;
 		}
 	}
-	
+	/* Similar to list_categs, but gets info for the category ids themselves, not descendants
+	 * $categIds can be an array.
+	 * Specifiy a common ancestor category ID in $top to remove the top level from the category path
+	 */
+	function get_category_info($categIds, $showWS=false, $top=null) {
+		$back = $this->get_all_categories_ext($showWS);
+		$i = 0;
+		$cut = '';
+		foreach ($back as $cat) {
+			$catkey = $cat['categId'];
+			if (isset($top)) {
+				if ($top == $cat['categId']) {
+					$cut = $cat['categpath'].'::';
+				} elseif ($cut != '' && strpos($cat['categpath'], $cut) === 0){
+					$cat['categpath'] = substr($cat['categpath'], strlen($cut));
+				}
+			}
+			$catlist["$catkey"] = $cat;
+			$catlist["$catkey"]['order'] = $i;
+			$i++;
+		}
+		if (is_array($categIds)) {
+			foreach ($categIds as $ids) {
+				$order = $catlist["$ids"]['order'];
+				$catinfo[$order] = $catlist["$ids"];
+			}
+			ksort($catinfo);
+			$catinfo = array_values($catinfo);
+		} else {
+			$catinfo[0] = $catlist["$categIds"];
+		}
+		return $catinfo;
+	}
+
 	function list_all_categories($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid, $showWS = false, $listOnlyWS = false) {
 		$cats = $this->get_object_categories($type, $objid);
 
@@ -869,6 +903,10 @@ class CategLib extends ObjectLib
 	}
 
 	// FUNCTIONS TO CATEGORIZE SPECIFIC OBJECTS END ////
+	
+	/*Set $all_descends to true to get all descendent categories, otherwise only first level children
+	 * Should consider combining with list_categs
+	 */
 	function get_child_categories($categId, $all_descends = false) {
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		global $prefs;
@@ -879,34 +917,7 @@ class CategLib extends ObjectLib
 			$cachekey = "childcategs$categId";
 		}
 		if( ! $ret = $cachelib->getSerialized("$cachekey") ) {
-			if ($all_descends == true) {
-				//find length of $categId name to delete later
-				$name = $this->get_category_name($categId);
-				$cut = strlen($name) +2;
-				$ids_array = $this->get_category_descendants($categId);
-				$length = count($ids_array);
-				$ids_array = array_slice($ids_array, 1, $length, true);
-				$ids_string = implode(", ", $ids_array); 
-				$query = "select * from `tiki_categories` where `categId` in (" . $ids_string . ") order by name";
-				$bindvars = array();		
-			} else {
-				$query = "select * from `tiki_categories` where `parentId`=? order by name";
-				$bindvars = array($categId);
-			}
-			$ret = $this->fetchAll($query,$bindvars);
-			foreach ( $ret as &$res ) {
-				$id = $res["categId"];
-				$query = "select count(*) from `tiki_categories` where `parentId`=?";
-				$res["children"] = $this->getOne($query,array($id));
-				$query = "select count(*) from `tiki_category_objects` where `categId`=?";
-				$res["objects"] = $this->getOne($query,array($id));
-				if ($all_descends == true) {
-					$res['name'] = $this->get_category_path_string($id);
-					$res['name'] = substr($res['name'], $cut);
-				} else {
-					$res['name']=$this->get_category_name($id);
-				}
-			}
+			$ret = $this->list_categs($categId, false, $all_descends);
 			$cachelib->cacheItem($cachekey,serialize($ret));
 		}
 		if ($prefs['feature_multilingual'] == 'y' && $prefs['language'] != 'en') {
@@ -916,13 +927,8 @@ class CategLib extends ObjectLib
 		}
 		return $ret;
 	}
-	//set $all_descends to true to get all descendent categories, otherwise only first level children
 	function get_viewable_child_categories($categId, $all_descends = false) {
-		if ($all_descends == true) {
-			$alls = $this->get_child_categories($categId, true);
-		} else {
-			$alls = $this->get_child_categories($categId);
-		}
+		$alls = $this->get_child_categories($categId, $all_descends);
 		if (empty($alls)) {
 			return $alls;
 		}

@@ -1073,23 +1073,15 @@ class TrackerLib extends TikiLib
 				$this->update_star_field($trackerId, $itemId, $fopt);
 				break;
 			case 'e':
+				//affects plugin trackerlist and tiki-view_tracker display of category for each item
 				global $categlib;
 				include_once('lib/categories/categlib.php');
-				$mycats = $categlib->get_child_categories($fopt['options'], true);
-				if (empty($zcatItemId) || $zcatItemId != $itemId) {
-					$zcatItemId = $itemId;
-					$zcats = $categlib->get_object_categories('trackeritem', $itemId);
-				}
-				$cats = array();
-				$catIds = array();
-				foreach ( $mycats as $m ) {
-					if ( in_array($m['categId'], $zcats) ) {
-						$cats[] = $m;
-						$catIds[] = $m['categId'];
-					}
-				}
-				$fopt['categs'] = $cats;
-				$fopt['value'] = $catIds;
+				$itemcats = $categlib->get_object_categories('trackeritem', $itemId);
+				$itemcat = $itemcats[0];
+				$top = $fopt['options_array'][0];
+				$fopt['categs'] = $categlib->get_category_info($itemcat, false, $top);
+				unset ($top);
+				$fopt['value'] = $itemcat;
 				break;
 			case 'l':
 				if ( isset($fopt['options_array'][2]) && isset($fopt['options_array'][2]) && isset($fopt['options_array'][3])) {
@@ -1328,7 +1320,10 @@ class TrackerLib extends TikiLib
 			if ($prefs['user_selector_realnames_tracker'] == 'y' && $ins_fields['data'][$i]['type'] == 'u') {
 				if (!$userlib->user_exists($ins_fields['data'][$i]['value'])) {
 					$finalusers = $userlib->find_best_user(array($ins_fields['data'][$i]['value']), '' , 'login');
-					$ins_fields['data'][$i]['value'] = $finalusers[0];
+					if (!empty($finalusers[0]) && !(isset($_REQUEST['register']) && isset($_REQUEST['name']) && $_REQUEST['name'] == $ins_fields['data'][$i]['value'])) {
+						// It could be in fact that a new user is required (when no match is found or during registration even if match is found)
+						$ins_fields['data'][$i]['value'] = $finalusers[0];
+					}
 				}
 			}
 			if ($ins_fields['data'][$i]['type'] == 'G' && isset($ins_fields['data'][$i]['options_array'][0]) && $ins_fields['data'][$i]['options_array'][0] == 'y') {
@@ -1356,6 +1351,11 @@ class TrackerLib extends TikiLib
 			if (!isset($ins_fields["data"][$i]["type"]) or $ins_fields["data"][$i]["type"] == 's') {
 				// system type, do nothing
 				continue;
+			} else if ($ins_fields["data"][$i]["type"] == 'S' && !empty($ins_fields["data"][$i]['description'])) {	// static text
+				
+				$the_data .= '[-[' . $ins_fields["data"][$i]['name'] . "]-] -[(unchanged)]-:\n";
+				$the_data .= $ins_fields["data"][$i]['description'] . "\n----------\n";
+				
 			} else if ($ins_fields["data"][$i]["type"] != 'u' && $ins_fields["data"][$i]["type"] != 'g' && $ins_fields["data"][$i]["type"] != 'I' && isset($ins_fields['data'][$i]['isHidden']) && ($ins_fields["data"][$i]["isHidden"] == 'p' or $ins_fields["data"][$i]["isHidden"] == 'y')and $tiki_p_admin_trackers != 'y') {
 					// hidden field type require tracker amdin perm
 			} elseif (empty($ins_fields["data"][$i]["fieldId"])) {
@@ -1737,6 +1737,12 @@ class TrackerLib extends TikiLib
 				}
 				include_once('lib/webmail/tikimaillib.php');
 				if( $simpleEmail == "n" ) {
+					if (empty($desc)) {
+						$desc = $this->get_isMain_value($trackerId, $itemId ? $itemId : $new_itemId);
+					}
+					if ($options['doNotShowEmptyField'] === 'y') {	// remove empty fields if tracker says so
+						$the_data = preg_replace('/\[-\[.*?\]-\] -\[\(.*?\)\]-:\n\n----------\n/', '', $the_data);
+					}
 					$smarty->assign('mail_date', $this->now);
 					$smarty->assign('mail_user', $user);
 					if ($itemId) {
@@ -1744,6 +1750,7 @@ class TrackerLib extends TikiLib
 					} else {
 						$smarty->assign('mail_itemId', $new_itemId);
 					}
+					$smarty->assign('mail_item_desc', $desc);
 					$smarty->assign('mail_trackerId', $trackerId);
 					$smarty->assign('mail_trackerName', $trackerName);
 					$smarty->assign('server_name', $_SERVER['SERVER_NAME']);
@@ -1759,10 +1766,11 @@ class TrackerLib extends TikiLib
 						if ($itemId) {
 							$mail_action = "\r\n".tra('Item Modification', $watcher['language'])."\r\n\r\n";
 							$mail_action.= tra('Tracker', $watcher['language']).":\n   ".$trackerName."\r\n";
-							$mail_action.= tra('Item', $watcher['language']).":\n   ".$itemId;
+							$mail_action.= tra('Item', $watcher['language']).":\n   ".$itemId . ' ' . $desc;
 						} else {
 							$mail_action = "\r\n".tra('Item creation', $watcher['language'])."\r\n\r\n";
 							$mail_action.= tra('Tracker', $watcher['language']).': '.$trackerName;
+							$mail_action.= tra('Item', $watcher['language']).":\n   ".$new_itemId . ' ' . $desc;
 						}
 						$smarty->assign('mail_action', $mail_action);
 						$smarty->assign('mail_data', $the_data);
@@ -1933,7 +1941,7 @@ class TrackerLib extends TikiLib
 			if (empty($trackersync_user)) {
 				$trackersync_user = $user;
 			}
-			$sig_catids = $categlib->get_category_descendants($prefs['user_trackersync_parentgroup'], true);
+			$sig_catids = $categlib->get_category_descendants($prefs['user_trackersync_parentgroup']);
 			$sig_add = array_intersect($sig_catids, $new_categs);
 			$sig_del = array_intersect($sig_catids, $del_categs);
 			$groupList = $userlib->list_all_groups();
@@ -4180,7 +4188,8 @@ class TrackerLib extends TikiLib
 		$all = $this->fetchAll($query, $bindvars, -1, 0);
 		foreach ($all as $f) {
 			if (!empty($item_categs) && $f['type'] == 'e') {//category
-				$field_categs = $categlib->get_child_categories($f['options']);
+				$f['options_array'] = explode(',',$f['options']);
+				$field_categs = $categlib->get_child_categories($f['options_array'][0], true);
 				$aux = array();
 				foreach ($field_categs as $cat) {
 					$aux[] = $cat['categId'];

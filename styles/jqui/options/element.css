@@ -5,12 +5,20 @@
 	Visit http://themes.tiki.org for more information.
 */
 
-a, a:visited {
+#col2 a, #col2 a:visited, #col3 a, #col3 a:visited {
 	color: #000;
 }
  
-a:active, a:hover {
+#col2 a:active, #col2 a:hover, #col3 a:active, #col3 a:hover {
 	color: #888;
+}
+
+a, a:visited {
+	color: #2A5385;
+}
+ 
+a:active, a:hover {
+	color: #7195C1;
 }
 
 #top a, #top a:visited {

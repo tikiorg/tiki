@@ -370,7 +370,12 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 			switch ($field['type']){
 			case 'e':// category
 				global $categlib; include_once('lib/categories/categlib.php');
-				$res = $categlib->get_child_categories($field['options_array'][0]);
+				if (isset($fopt['options_array'][3]) && $fopt['options_array'][3] == 1) {
+					$all_descends = true;
+				} else {
+					$all_descends = false;
+				}
+				$res = $categlib->get_child_categories($field['options_array'][0], $all_descends);
 				$formats[$fieldId] = (count($res) >= 6)? 'd': 'r';
 				break;
 			case 'd': // drop down list
