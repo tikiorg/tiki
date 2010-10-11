@@ -8,19 +8,14 @@
 
 {title help="File+Galleries" admpage="fgal"}{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}{/title}
 
-{if !empty($galleryId) or (count($galleries) > 0 and $tiki_p_list_file_galleries eq 'y') or count($uploads) > 0}
+{if $filegals_manager eq '' and ( !empty($galleryId) or (count($galleries) > 0 and $tiki_p_list_file_galleries eq 'y') or count($uploads) > 0 )}
 <div class="navbar">
 	{if !empty($galleryId)}
 		{button galleryId="$galleryId" href="tiki-list_file_gallery.php" _text="{tr}Browse Gallery{/tr}"}
 	{/if}
 
 	{if count($galleries) > 0 and $tiki_p_list_file_galleries eq 'y'}
-		{if $filegals_manager neq ''}
-			{assign var=fgmanager value=$filegals_manager|escape}
-			{button href="tiki-list_file_gallery.php?filegals_manager=$fgmanager" _text="{tr}List Galleries{/tr}"}
-		{else}
-			{button href="tiki-list_file_gallery.php" _text="{tr}List Galleries{/tr}"}
-		{/if}
+		{button href="tiki-list_file_gallery.php" _text="{tr}List Galleries{/tr}"}
 	{/if}
 	{if count($uploads) > 0}
 		{button href="#upload" _text="{tr}Upload File{/tr}"}
@@ -70,7 +65,7 @@
 			</td>
 			<td>
 				{if $filegals_manager neq ''}
-					<a href="#" onclick="window.opener.insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');checkClose();return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}">{$uploads[ix].name} ({$uploads[ix].size|kbsize})</a>
+					<a href="#" onclick="insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');checkClose();return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}">{$uploads[ix].name} ({$uploads[ix].size|kbsize})</a>
 				{else}
 					<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize})</b>
 				{/if}

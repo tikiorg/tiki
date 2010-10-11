@@ -31,53 +31,6 @@
 			{/if}
 		</div>
 		
-        {if $files and $gal_info.show_checked neq 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y')}
-			{if $smarty.request.movesel_x eq '' or isset($file_info) or $perms}
-			<div class="fg-actions">
-				<span>{tr}Perform action with checked:{/tr}</span>
-				{if !isset($file_info)}
-					{if $offset}<input type="hidden" name="offset" value="{$offset}" />{/if}
-					{if $tiki_p_admin_file_galleries eq 'y'}
-						<a class="fg-actions-icon">{icon _id='arrow_right' _tag='input_image' name='movesel' alt='{tr}Move{/tr}' title='{tr}Move Selected Files{/tr}' style='vertical-align: middle;' onclick='document.forms.fgalformid.action+=(document.forms.fgalformid.action.indexOf("?")>0?"&":"?")+"movesel_x=1"'}</a>
-					{/if}
-				{/if}
-				{if $tiki_p_admin_file_galleries eq 'y'}
-					<a class="fg-actions-icon">{icon _id='cross' _tag='input_image' ____confirm='{tr}Are you sure you want to delete the selected files?{/tr}' name='delsel' alt='{tr}Delete{/tr}' style='vertical-align: middle;' onclick='if(!confirm("{tr}Are you sure you want to delete the selected files?{/tr}"))return false;document.forms.fgalformid.action+=(document.forms.fgalformid.action.indexOf("?")>0?"&":"?")+"delsel_x=1"'}</a>
-				{/if}
-				<a class="fg-actions-icon">{icon _id='pics/icons/mime/zip.png' _tag='input_image' name='zipsel' alt='{tr}Download the zip{/tr}' style='vertical-align: middle;'}</a>
-				{if $tiki_p_assign_perm_file_gallery eq 'y'}
-					<a class="fg-actions-icon">{icon _id='key' _tag='input_image' name='permsel' alt="{tr}Assign Permissions{/tr}" title="{tr}Assign Permissions{/tr}" style='vertical-align: middle;' onclick='document.forms.fgalformid.action+=(document.forms.fgalformid.action.indexOf("?")>0?"&":"?")+"permsel_x=1"'}</a>
-				{/if}
-			</div>
-			{/if}
-			{if $smarty.request.movesel_x and !isset($file_info)}
-				<div class="fg-actions">
-					{tr}Move to{/tr}:
-					<select name="moveto">
-					{section name=ix loop=$all_galleries}
-					<option value="{$all_galleries[ix].id}">{$all_galleries[ix].label|escape}</option>
-					{/section}
-					</select>
-					<input type='submit' name='movesel' value='{tr}Move{/tr}' />
-				</div>
-			{/if}
-			{if $perms}
-				<div class="fg-actions">
-					{tr}Assign Permissions{/tr}
-					<select name="perms[]" multiple="multiple" size="5"}
-					{foreach from=$perms item=perm}
-					<option value="{$perm.permName|escape}">{$perm.permName|escape}</option>
-					{/foreach}
-					</select>
-					<select name="groups[]" multiple="multiple" size="5"}
-					{section name=grp loop=$groups}
-					<option value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName }selected="selected"{/if}>{$groups[grp].groupName|escape}</option>
-					{/section}
-					</select>
-					<input type="submit" name="permsel" value="{tr}Assign{/tr}" />
-				</div>
-			{/if}
-		{/if}
 	</div>
 </form>
 

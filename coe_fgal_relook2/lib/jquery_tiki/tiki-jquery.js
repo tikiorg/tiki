@@ -1128,15 +1128,15 @@ window.dialogData = [];
 var dialogDiv;
 var dialogDivSub;
 
-function displayDialog( ignored, list, area_id, isSub ) {
+function displayDialog( ignored, list, area_id, subUrl, subTitle ) {
 	var i, item, el, obj, tit = "";
 
 	$is_cked =  $('#cke_contents_' + area_id).length !== 0;
 
 	// 2nd version fix for Firefox 3.5 losing selection on changes to DOM
-	saveTASelection(area_id);
+	// saveTASelection(area_id);
 
-	if (isSub) {
+	if (subUrl) {
 		if (!dialogDivSub) {
 			dialogDivSub = document.createElement('div');
 			document.body.appendChild( dialogDivSub );
@@ -1150,9 +1150,7 @@ function displayDialog( ignored, list, area_id, isSub ) {
 		$(dialogDiv).empty();
 	}
 
-//	$(dialogDiv).empty();
-
-	if ( ! isSub ) {	
+	if ( ! subUrl ) {	
 		for( i = 0; i < window.dialogData[list].length; i++ ) {
 			item = window.dialogData[list][i];
 			if (item.indexOf("<") === 0) {	// form element
@@ -1173,6 +1171,8 @@ function displayDialog( ignored, list, area_id, isSub ) {
 				tit = item;
 			}
 		}
+	} else {
+		tit = subTitle;
 	}
 
 	if (!obj) { obj = {}; }
@@ -1181,14 +1181,9 @@ function displayDialog( ignored, list, area_id, isSub ) {
 	obj.autoOpen = false;
 //	obj.stack = true; ///FIXME
 //	obj.zIndex = 10000;
-//	$(dialogDiv).dialog('destroy').dialog(obj).dialog('option', 'title', tit).dialog('open');
 
-	if (isSub) {
-///		$(dialogDivSub).dialog('destroy').dialog(obj).dialog('option', 'title', tit);
-///		$(dialogDivSub).load(isSub);
-///		$(dialogDivSub).dialog({modal : true}).dialog('open');
-/*N*/
-		$(dialogDivSub).dialog('destroy').load(isSub).dialog({
+	if (subUrl) {
+		$(dialogDivSub).dialog('destroy').load(subUrl).dialog({
 			modal: true,
 			width: '700px',
 			autoOpen: true,
@@ -1196,24 +1191,14 @@ function displayDialog( ignored, list, area_id, isSub ) {
 			stack: true,
 			title: tit
 		});
-/*N*/
 	} else {
-/*N*/
 		obj.modal = true;
 		obj.width = '700px';
 		obj.title = tit;
-///		$(dialogDiv).dialog('destroy').dialog(obj);
-///		$(dialogDiv).dialog('open');
-/*N*/
-//		$(dialogDiv).dialog('destroy').dialog(obj).dialog('option', 'title', tit).dialog('open');
 ///		$(dialogDiv).dialog({modal : true}).dialog(obj).dialog('open');
 		$(dialogDiv).dialog(obj).dialog('open'); // TODO: the parent should be modal too
 	}
 
-	// 2nd version fix for Firefox 3.5 losing selection on changes to popup
-	//restoreTASelection(area_id);
-	// don't restore here - dialog will do it
-	
 	return false;
 }
 

@@ -191,11 +191,15 @@ FileGallery.upload = {
 		});
 	},
 	show: function(gallery, fm) {
+		jQuery("#tbFilegalManagerSub").dialog('open');
+		displayDialog('', 2, 'edit', 'tiki-upload_file.php?galleryId='+gallery+'&filegals_manager='+fm+'&fgspecial=1', 'Upload file');
+/*
 		this.dialog();
 		jQuery("#fg-jquery-upload-dialog").load("tiki-upload_file.php?galleryId="+gallery+"&filegals_manager="+fm+"&fgspecial=1", function() {
 			jQuery("#fg-jquery-upload-dialog").dialog("option", "height", "auto");
 			jQuery("#fg-jquery-upload-dialog").dialog("open")
 		});
+*/
 	},
 	edit: function(url) {
 		this.dialog();
