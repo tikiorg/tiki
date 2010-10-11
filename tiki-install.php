@@ -28,7 +28,7 @@ if (file_exists('db/'.$tikidomainslash.'lock')) {
 							<div style="border: solid 1px #ccc; margin: 1em auto; width: 40%;">
 								<ol style="text-align: left">
 									<li>Use your file manager application to find the directory where you have unpacked your Tiki and remove the <strong><code>lock</code></strong> file which was created in the <strong><code>db'.$td.'</code></strong> folder.</li>
-									<li>Re-run <strong><a href="tiki-install.php" title="Tiki Installer">tiki-install.php</a></strong>.</li>
+									<li>Re-run <strong><a href="tiki-install.php'.(empty($tikidomain)?'':"?multi=$tikidomain").'" title="Tiki Installer">tiki-install.php'.(empty($tikidomain)?'':"?multi=$tikidomain").'</a></strong>.</li>
 								</ol>
 							</div>';
 	createPage($title, $content);
