@@ -34,9 +34,10 @@ if ( empty($_REQUEST["sendingUniqId"]) ) {
 	$smarty->assign('sendingUniqId', $sendingUniqId);
 }
 
-if(!isset($_REQUEST['cookietab'])) {
+if(!isset($_REQUEST['cookietab']) || isset($_REQUEST['editionId'])) {
 	$_REQUEST['cookietab'] = 1;
 }
+$cookietab = $_REQUEST['cookietab'];
 $smarty->assign('newsletters', $newsletters["data"]);
 if ($_REQUEST["nlId"]) {
 	$nl_info = $nllib->get_newsletter($_REQUEST["nlId"]);
@@ -392,6 +393,7 @@ if (isset($_REQUEST["save_only"])) {
 	}
 	$info = $nllib->get_edition($editionId);
 	$smarty->assign('info', $info);
+	$cookietab = 2;
 }
 if (!isset($_REQUEST['ed_sort_mode']) && !isset($_REQUEST['dr_sort_mode'])) {
 	$ed_sort_mode = $dr_sort_mode = 'sent_desc';
@@ -461,7 +463,7 @@ if (count($tpls) > 0) {
 	$smarty->assign_by_ref('tpls', $tpls);
 }
 include_once ('tiki-section_options.php');
-setcookie('tab', $_REQUEST['cookietab']);
+setcookie('tab', $cookietab);
 $smarty->assign('cookietab', $_REQUEST['cookietab']);
 ask_ticket('send-newsletter');
 global $wikilib;
