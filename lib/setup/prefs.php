@@ -556,7 +556,7 @@ function get_default_prefs() {
 		'feature_file_galleries_rankings' => 'n',
 		'fgal_enable_auto_indexing' => 'y',
 		'fgal_asynchronous_indexing' => 'y',
-		'fgal_allow_duplicates' => 'different_galleries',
+		'fgal_allow_duplicates' => 'y',
 		'fgal_sort_mode' => '',
 		'feature_file_galleries_author' => 'n',
 		'fgal_list_id' => 'o',
