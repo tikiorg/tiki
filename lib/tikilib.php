@@ -5756,6 +5756,8 @@ class TikiLib extends TikiDb_Bridge
 		$options['suppress_icons'] = isset($options['suppress_icons']) ? (bool)$options['suppress_icons'] : false;
 		$options['parsetoc'] = isset($options['parsetoc']) ? (bool)$options['parsetoc'] : true;
 		$options['inside_pretty'] = isset($options['inside_pretty']) ? $options['inside_pretty'] : false;
+		$options['process_wiki_paragraphs'] = isset($options['process_wiki_paragraphs']) ? $options['process_wiki_paragraphs'] : true;
+		
 		if (empty($options['ck_editor'])) $options['ck_editor'] = false;
 		
 		if ($options['ck_editor']) {
@@ -6763,7 +6765,7 @@ class TikiLib extends TikiDb_Bridge
 						if ($inTable == 0 && $inPre == 0 && $inComment == 0 && $inTOC == 0 &&  $inScript == 0
 								// Don't put newlines at comments' end!
 								&& strpos($line, "-->") !== (strlen($line) - 3)
-								&& !$options['is_html']) {
+								&& $options['process_wiki_paragraphs']) {
 							 	
 							$tline = trim(str_replace('&nbsp;', '', $line));
 							
