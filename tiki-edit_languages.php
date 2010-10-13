@@ -79,58 +79,42 @@ if (isset($_REQUEST["whataction"])) {
 }
 
 if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
-
 	check_ticket('edit-languages');
 	//check if user has translated something
-	if (isset($_REQUEST["tr_recnum"])) {
-		for ($i = 0; $i <= $prefs['maxRecords']; $i++) {
-			// Handle edits in translate recorded
-			if (isset($_REQUEST["edit_rec_$i"])) {
-				if (strlen($_REQUEST["edit_rec_tran_$i"]) > 0 && strlen($_REQUEST["edit_rec_source_$i"]) > 0) {
-					$language->updateTrans($_REQUEST["edit_rec_source_$i"], $_REQUEST["edit_rec_tran_$i"]);
-				}
-			} elseif (isset($_REQUEST["edt_tran_$i"]) || $_REQUEST['translate_all']) {
-				// Handle edits in edit translations
-				if (strlen($_REQUEST["edit_edt_tran_$i"]) > 0 && strlen($_REQUEST["edit_edt_source_$i"]) > 0) {
-					$language->updateTrans($_REQUEST["edit_edt_source_$i"], $_REQUEST["edit_edt_tran_$i"]);
-				}
-			} elseif (isset($_REQUEST["del_tran_$i"])) {
-				// Handle deletes here
-				if (strlen($_REQUEST["edit_edt_source_$i"]) > 0) {
-					$query = "delete from `tiki_language` where binary `source`=? and `lang`=?";
-					$result = $tikilib->query($query,array($_REQUEST["edit_edt_source_$i"],$edit_language));
-				}
+	for ($i = 0; $i <= $prefs['maxRecords']; $i++) {
+		// Handle edits in translate recorded
+		if (isset($_REQUEST["edit_rec_$i"])) {
+			if (strlen($_REQUEST["edit_rec_tran_$i"]) > 0 && strlen($_REQUEST["edit_rec_source_$i"]) > 0) {
+				$language->updateTrans($_REQUEST["edit_rec_source_$i"], $_REQUEST["edit_rec_tran_$i"]);
 			}
-		} // end of for ...
-		// for resetting untranslated
-		if (isset($_REQUEST["tran_reset"])) {
-			$query = "delete from `tiki_untranslated`";
-			$result = $tikilib->query($query);
+		} elseif (isset($_REQUEST["edt_tran_$i"]) || $_REQUEST['translate_all']) {
+			// Handle edits in edit translations
+			if (strlen($_REQUEST["edit_edt_tran_$i"]) > 0 && strlen($_REQUEST["edit_edt_source_$i"]) > 0) {
+				$language->updateTrans($_REQUEST["edit_edt_source_$i"], $_REQUEST["edit_edt_tran_$i"]);
+			}
+		} elseif (isset($_REQUEST["del_tran_$i"])) {
+			// Handle deletes here
+			if (strlen($_REQUEST["edit_edt_source_$i"]) > 0) {
+				$query = "delete from `tiki_language` where binary `source`=? and `lang`=?";
+				$result = $tikilib->query($query,array($_REQUEST["edit_edt_source_$i"],$edit_language));
+			}
 		}
-
-		// update language array with new translations
-		$query = "select `source`, `tran` from `tiki_language` where `lang`=?";
-		$result = $tikilib->fetchAll($query, array($edit_language));
-
-		foreach( $result as $row ) {
-			${"lang_$edit_language"}[ $row['source'] ] = $row['tran'];
-		}
+	} // end of for ...
+	// for resetting untranslated
+	if (isset($_REQUEST["tran_reset"])) {
+		$query = "delete from `tiki_untranslated`";
+		$result = $tikilib->query($query);
 	}
 
-	//show only a selection of maxRecords records
-	if (!isset($_REQUEST["offset"]) || isset($_REQUEST["tran_search_sm"]) || isset($_REQUEST["langaction"])) {
-		$offset = 0;
-	} else {
-		$offset = $_REQUEST["offset"];
+	// update language array with new translations
+	$query = "select `source`, `tran` from `tiki_language` where `lang`=?";
+	$result = $tikilib->fetchAll($query, array($edit_language));
 
-		if (isset($_REQUEST["morerec"])) {
-			$offset += $prefs['offset'];
-		}
-
-		if (isset($_REQUEST["lessrec"])) {
-			$offset -= $prefs['maxRecords'];
-		}
+	foreach( $result as $row ) {
+		${"lang_$edit_language"}[ $row['source'] ] = $row['tran'];
 	}
+
+	$offset = isset($_REQUEST["offset"]) ? $_REQUEST['offset'] : 0;
 	$smarty->assign('offset', $offset);
 
 	//Handle searches
