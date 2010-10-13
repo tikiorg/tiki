@@ -42,6 +42,10 @@
 
 		<form action="tiki-edit_languages.php" method="post">
 			<input type="hidden" name="edit_language" value="{$edit_language}" />
+			<input type="hidden" name="action" value="{$action}" />
+			{if isset($only_db_translations)}
+				<input type="hidden" name="only_db_translations" value="{$only_db_translations}" />
+			{/if}
 			{if $action eq 'add_tran_sw'}
 				<div class="simplebox">
 					<h4>{tr}Add a translation{/tr}:</h4>
@@ -62,7 +66,7 @@
 					<table class="formcolor" id="edit_translations">
 						<tr>
 							<td align="left" colspan=4>
-								<input name="tran_search" value="{$tran_search|escape}" size=10 />
+								<input name="search" value="{$search|escape}" size=10 />
 								<input type="submit" name="tran_search_sm" value="{tr}Search{/tr}" />
 								{if $action eq 'edit_rec_sw'}
 									<tr><td align="center"><input type="submit" name="tran_reset" value="{tr}Delete all{/tr}" /></td></tr>
@@ -91,7 +95,7 @@
 					</table>
 					<input type="hidden" name="offset" value="{$offset|escape}" />
 					<input type="submit" name="translate_all" value="{tr}Translate all{/tr}" />
-					{pagination_links cant=$untr_numrows step=$maxRecords offset=$offset}{/pagination_links}
+					{pagination_links cant=$total step=$maxRecords offset=$offset}{/pagination_links}
 				</div>
 			{/if}
 		</form>
