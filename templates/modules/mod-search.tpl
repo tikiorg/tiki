@@ -50,7 +50,7 @@
 		    {if $module_params.show_search_button eq 'y'}
 		    	<input type = "submit" class = "wikiaction{if $module_params.default_button eq 'search'} button_default{/if}"
 		    			name = "search" value = "{tr}{$module_params.search_submit}{/tr}"
-		    			onclick = "$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$module_params.search_action}');" />
+		    			onclick = "$('#search-module-form{$search_mod_usage_counter} input[name=find]').attr('name', 'highlight'); $('#search-module-form{$search_mod_usage_counter}').attr('action', '{$module_params.search_action}');" />
 		    {/if}
 		    {if $module_params.show_go_button eq 'y'}
 		    	<input type="hidden" name="exact_match" />
