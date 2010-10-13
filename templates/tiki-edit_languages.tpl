@@ -10,31 +10,31 @@
 
 {tabset}
 	{tab name="{tr}Edit languages{/tr}"}
-		<form action="tiki-edit_languages.php" id="edit_translations" method="post">
+		<form action="tiki-edit_languages.php" id="select_action" method="post">
 			<div class="adminoptionbox">
 				<label for="edit_language">{tr}Select the language to edit{/tr}:</label>
-				<select id="edit_language" class="edit_translations "name="edit_language">
+				<select id="edit_language" class="translation_action"name="edit_language">
 					{section name=ix loop=$languages}
 						<option value="{$languages[ix].value|escape}" {if $edit_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
 					{/section}
 				</select>
 			</div>
 			<div class="adminoptionbox">
-				<input id="add_tran_sw" class="edit_translations" align="right" type="radio" name="action" value="add_tran_sw" {if $action eq 'add_tran_sw'}checked="checked"{/if}/>
+				<input id="add_tran_sw" class="translation_action" align="right" type="radio" name="action" value="add_tran_sw" {if $action eq 'add_tran_sw'}checked="checked"{/if}/>
 				<label for="add_tran_sw">{tr}Add a translation{/tr}</label>
 			</div>
 			<div class="adminoptionbox">
-				<input id="edit_tran_sw" class="edit_translations" align="right" type="radio" name="action" value="edit_tran_sw" {if $action eq 'edit_tran_sw'}checked="checked"{/if}/>
+				<input id="edit_tran_sw" class="translation_action" align="right" type="radio" name="action" value="edit_tran_sw" {if $action eq 'edit_tran_sw'}checked="checked"{/if}/>
 				<label for="edit_tran_sw">{tr}Edit translations{/tr}</label>
 				<div class="adminoptionboxchild">
-					<input id="only_db_translations" class="edit_translations" type="checkbox" name="only_db_translations" {if $only_db_translations eq 'y'}checked="checked"{/if}>
+					<input id="only_db_translations" class="translation_action" type="checkbox" name="only_db_translations" {if $only_db_translations eq 'y'}checked="checked"{/if}>
 					<label for="only_db_translations">{tr}Show only database stored translations{/tr}</label>
 				</div>
 			</div>
 
 			{if $prefs.record_untranslated eq 'y'}
 				<div class="adminoptionbox">
-					<input id="edit_rec_sw" class="edit_translations" align="right" type="radio" name="action" value="edit_rec_sw" {if $action eq 'edit_rec_sw'}checked="checked"{/if}/>
+					<input id="edit_rec_sw" class="translation_action" align="right" type="radio" name="action" value="edit_rec_sw" {if $action eq 'edit_rec_sw'}checked="checked"{/if}/>
 					<label for="edit_rec_sw">{tr}Translate recorded{/tr}</label>
 				</div>
 			{/if}
@@ -59,7 +59,7 @@
 			{if $action eq 'edit_tran_sw' || $action eq 'edit_rec_sw'}
 				<div class="simplebox">
 					<h4>{if $action eq 'edit_tran_sw'}{tr}Edit translations:{/tr}{else}{tr}Translate recorded:{/tr}{/if}</h4>
-					<table class="formcolor">
+					<table class="formcolor" id="edit_translations">
 						<tr>
 							<td align="left" colspan=4>
 								<input name="tran_search" value="{$tran_search|escape}" size=10 />
@@ -71,14 +71,21 @@
 						</tr>
 						{foreach from=$translations name=translations key=source item=translation}
 							<tr>
-								<td>{tr}Original{/tr}:</td>
-								<td><input name="source_{$smarty.foreach.translations.index}" value="{$source|escape}" readonly="readonly"/></td>
-								<td>{tr}Translation{/tr}:</td>
-								<td><input name="tran_{$smarty.foreach.translations.index}" value="{$translation|escape}" size=20 /></td>
-								<td align="center"><input type="submit" name="edit_tran_{$smarty.foreach.translations.index}" value="{tr}Translate{/tr}" /></td>
-								{if $action eq 'edit_tran_sw'}
-									<td align="center"><input type="submit" name="del_tran_{$smarty.foreach.translations.index}" value="{tr}Delete{/tr}" /></td>
-								{/if}
+								<td><label for="source_{$smarty.foreach.translations.index}">{tr}Original:{/tr}</label></td>
+								<td><input id="source_{$smarty.foreach.translations.index}" name="source_{$smarty.foreach.translations.index}" value="{$source|escape}" size=70 readonly="readonly"/>
+								<td align="center" align="center" rowspan="2">
+									<input type="submit" name="edit_tran_{$smarty.foreach.translations.index}" value="{tr}Translate{/tr}" />
+									{if $action eq 'edit_tran_sw'}
+										<input type="submit" name="del_tran_{$smarty.foreach.translations.index}" value="{tr}Delete{/tr}" />
+									{/if}
+								</td>
+							</tr>
+							<tr>
+								<td><label for="tran_{$smarty.foreach.translations.index}">{tr}Translation:{/tr}</label></td>
+								<td><input id="tran_{$smarty.foreach.translations.index}" name="tran_{$smarty.foreach.translations.index}" value="{$translation|escape}" size=70 /></td>
+							</tr>
+							<tr>
+								<td colspan="3"><hr /></td>
 							</tr>
 						{/foreach}
 					</table>
