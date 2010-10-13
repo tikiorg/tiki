@@ -48,10 +48,10 @@ if (isset($_REQUEST["edit_language"])) {
 	$edit_language = $prefs['language'];
 }
 
-if (!isset($_REQUEST["whataction"])) {
-	$_REQUEST['whataction'] = 'edit_tran_sw';
+if (!isset($_REQUEST["action"])) {
+	$_REQUEST['action'] = 'edit_tran_sw';
 }
-$smarty->assign('whataction', $_REQUEST["whataction"]);
+$smarty->assign('action', $_REQUEST["action"]);
 
 if (isset($_REQUEST['only_db_translations'])) {
 	$smarty->assign('only_db_translations', 'y');
@@ -72,31 +72,27 @@ if (isset($_REQUEST["add_tran"])) {
 }
 
 //Selection for untranslated Strings and edit translations
-if (isset($_REQUEST["whataction"])) {
-	$whataction = $_REQUEST["whataction"];
+if (isset($_REQUEST["action"])) {
+	$action = $_REQUEST["action"];
 } else {
-	$whataction = "";
+	$action = "";
 }
 
-if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
+if ($action == "edit_rec_sw" || $action == "edit_tran_sw") {
 	check_ticket('edit-languages');
 	//check if user has translated something
 	for ($i = 0; $i <= $prefs['maxRecords']; $i++) {
 		// Handle edits in translate recorded
-		if (isset($_REQUEST["edit_rec_$i"])) {
-			if (strlen($_REQUEST["edit_rec_tran_$i"]) > 0 && strlen($_REQUEST["edit_rec_source_$i"]) > 0) {
-				$language->updateTrans($_REQUEST["edit_rec_source_$i"], $_REQUEST["edit_rec_tran_$i"]);
-			}
-		} elseif (isset($_REQUEST["edt_tran_$i"]) || isset($_REQUEST['translate_all'])) {
+		if (isset($_REQUEST["edit_tran_$i"]) || isset($_REQUEST['translate_all'])) {
 			// Handle edits in edit translations
-			if (strlen($_REQUEST["edit_edt_tran_$i"]) > 0 && strlen($_REQUEST["edit_edt_source_$i"]) > 0) {
-				$language->updateTrans($_REQUEST["edit_edt_source_$i"], $_REQUEST["edit_edt_tran_$i"]);
+			if (strlen($_REQUEST["tran_$i"]) > 0 && strlen($_REQUEST["source_$i"]) > 0) {
+				$language->updateTrans($_REQUEST["source_$i"], $_REQUEST["tran_$i"]);
 			}
 		} elseif (isset($_REQUEST["del_tran_$i"])) {
 			// Handle deletes here
-			if (strlen($_REQUEST["edit_edt_source_$i"]) > 0) {
+			if (strlen($_REQUEST["source_$i"]) > 0) {
 				$query = "delete from `tiki_language` where binary `source`=? and `lang`=?";
-				$result = $tikilib->query($query,array($_REQUEST["edit_edt_source_$i"],$edit_language));
+				$result = $tikilib->query($query,array($_REQUEST["source_$i"],$edit_language));
 			}
 		}
 	} // end of for ...
@@ -140,28 +136,24 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 	$aquery = sprintf(" order by source limit %d,%d", $offset, $maxRecords);
 	$sort_mode = "source_asc";
 
-	if ($whataction == "edit_rec_sw") {
+	$translations = array();
+
+	if ($action == "edit_rec_sw") {
 		$query = "select `source` from `tiki_untranslated` where `lang`=? $squeryrec order by ".$tikilib->convertSortMode($sort_mode);
 		$nquery = "select count(*) from `tiki_untranslated` where `lang`=? $squeryrec";
 		$untr_numrows= $tikilib->getOne($nquery,$bindvars2);
         $result = $tikilib->query($query,$bindvars2,$maxRecords,$offset);
 
-		$untranslated = array();
-
 		while ($res = $result->fetchRow()) {
-			$untranslated[] = $res["source"];
+			$translations[$res['source']] = '';
 		}
-
-		$smarty->assign_by_ref('untranslated', $untranslated);
-	} elseif ($whataction == "edit_tran_sw") {
+	} elseif ($action == "edit_tran_sw") {
 		if (isset($_REQUEST['only_db_translations'])) {
 			// display only database stored translations
 			$query = "select `source`, `tran` from `tiki_language` where `lang`=? $squeryedit order by ".$tikilib->convertSortMode($sort_mode);
 			$nquery = "select count(*) from `tiki_language` where `lang`=? $squeryedit";
 			$untr_numrows= $tikilib->getOne($nquery,$bindvars);
 			$result = $tikilib->query($query,$bindvars,$maxRecords,$offset);
-
-			$translations = array();
 
 			while ($res = $result->fetchRow()) {
 				$translations[$res['source']] = $res['tran'];
@@ -194,9 +186,8 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 			$untr_numrows = count($all_translations);
 			$translations = array_slice($all_translations, $offset, $maxRecords);
 		}
-
-		$smarty->assign_by_ref('translations', $translations);
 	}
+	$smarty->assign_by_ref('translations', $translations);
 	$smarty->assign('untr_numrows', $untr_numrows);
 }
 
