@@ -79,7 +79,7 @@ function prefs_auth_list() {
 			'perspective' => false,
 		),
 		'auth_phpbb_disable_tikionly' => array(
-			'name' => tra("Disable Tiki users who doesn't have a phpBB login. (They could have been deleted)."),
+			'name' => tra("Disable Tiki users who don't have a phpBB login. (They could have been deleted)."),
 			'type' => 'flag',
 			'perspective' => false,
 		),
@@ -122,7 +122,7 @@ function prefs_auth_list() {
 			'perspective' => false,
 		),
 		'auth_ldap_permit_tiki_users' => array(
-			'name' => tra('Use Tiki authentication for users created in tiki'),
+			'name' => tra('Use Tiki authentication for users created in Tiki'),
 			'type' => 'flag',
 			'perspective' => false,
 		),
