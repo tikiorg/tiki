@@ -189,7 +189,7 @@ class TikiLdapLib
 				}
 				// set referrals to 0 to avoid LDAP_OPERATIONS_ERROR
 				$this->options['options']['LDAP_OPT_REFERRALS']=0;
-				break;
+				break;	
 			case 'plain': // plain username
 				$this->options['binddn'] = $user;
 				break;
@@ -347,7 +347,7 @@ class TikiLdapLib
 			return false;
 		}
 
-		$this->add_log('ldap', 'Searching for group entries with filter: ' . $filter->asString() . ' base ' . $this->groupbase_dn() . 'at line ' . __LINE__ . ' in ' . __FILE__);
+		$this->add_log('ldap', 'Searching for group entries with filter: ' . $filter->asString() . ' base ' . $this->groupbase_dn() . ' at line ' . __LINE__ . ' in ' . __FILE__);
 		$searchoptions = array('scope' => $this->options['scope']);
 		$searchresult = $this->ldaplink->search($this->groupbase_dn(), $filter, $searchoptions);
 
