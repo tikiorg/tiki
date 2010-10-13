@@ -41,6 +41,13 @@ FileETag none
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
+# If your Tiki is not at the root of the server (e.g. at http://example.com/tiki) 
+# You will need to uncomment and fix the RewriteBase value below to suit your installation.
+# RewriteBase   "/tiki"
+# And if you get errors like "The requested URL /absolutepath/tiki-index.php was not found on this server",
+# You may need to uncomment the following line.
+# RewriteBase   /
+
 #If your website is a checkout
 RewriteRule	^\.svn/	-	[F,L]
 
