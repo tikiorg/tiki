@@ -191,7 +191,6 @@ class TodoLib
 			if (empty($u)) {
 				$u = $object['itemUser'];
 			}
-			print_r($todo); print_r($objects);
 			if (!empty($todo['to']['body'])) { // assign whatever needed
 				$smarty->assign('todo_itemId', $object['itemId']);
 				$status = $trklib->status_types();
