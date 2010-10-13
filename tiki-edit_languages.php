@@ -118,23 +118,20 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 	}
 
 	//show only a selection of maxRecords records
-	if (!isset($_REQUEST["tr_recnum"]) || isset($_REQUEST["tran_search_sm"]) || isset($_REQUEST["langaction"])) {
-		$smarty->assign('tr_recnum', 0);
-
-		$tr_recnum = 0;
+	if (!isset($_REQUEST["offset"]) || isset($_REQUEST["tran_search_sm"]) || isset($_REQUEST["langaction"])) {
+		$offset = 0;
 	} else {
-		$tr_recnum = $_REQUEST["tr_recnum"];
+		$offset = $_REQUEST["offset"];
 
 		if (isset($_REQUEST["morerec"])) {
-			$tr_recnum += $prefs['maxRecords'];
+			$offset += $prefs['offset'];
 		}
 
 		if (isset($_REQUEST["lessrec"])) {
-			$tr_recnum -= $prefs['maxRecords'];
+			$offset -= $prefs['maxRecords'];
 		}
-
-		$smarty->assign('tr_recnum', $tr_recnum);
 	}
+	$smarty->assign('offset', $offset);
 
 	//Handle searches
 	$squery = "";
@@ -156,17 +153,14 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 		}
 	}
 
-	//get array from db
-	if (!isset($tr_recnum)) $tr_recnum = 0;
-
-	$aquery = sprintf(" order by source limit %d,%d", $tr_recnum, $maxRecords);
+	$aquery = sprintf(" order by source limit %d,%d", $offset, $maxRecords);
 	$sort_mode = "source_asc";
 
 	if ($whataction == "edit_rec_sw") {
 		$query = "select `source` from `tiki_untranslated` where `lang`=? $squeryrec order by ".$tikilib->convertSortMode($sort_mode);
 		$nquery = "select count(*) from `tiki_untranslated` where `lang`=? $squeryrec";
 		$untr_numrows= $tikilib->getOne($nquery,$bindvars2);
-        $result = $tikilib->query($query,$bindvars2,$maxRecords,$tr_recnum);
+        $result = $tikilib->query($query,$bindvars2,$maxRecords,$offset);
 
 		$untranslated = array();
 
@@ -181,7 +175,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 			$query = "select `source`, `tran` from `tiki_language` where `lang`=? $squeryedit order by ".$tikilib->convertSortMode($sort_mode);
 			$nquery = "select count(*) from `tiki_language` where `lang`=? $squeryedit";
 			$untr_numrows= $tikilib->getOne($nquery,$bindvars);
-			$result = $tikilib->query($query,$bindvars,$maxRecords,$tr_recnum);
+			$result = $tikilib->query($query,$bindvars,$maxRecords,$offset);
 
 			$translations = array();
 
@@ -214,7 +208,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 			}
 
 			$untr_numrows = count($all_translations);
-			$translations = array_slice($all_translations, $tr_recnum, $maxRecords);
+			$translations = array_slice($all_translations, $offset, $maxRecords);
 		}
 
 		$smarty->assign_by_ref('translations', $translations);

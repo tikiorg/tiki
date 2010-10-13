@@ -72,13 +72,7 @@
 						{/section}
 						<tr><td align="center"><input type="submit" name="tran_reset" value="{tr}reset table{/tr}" /></td></tr>
 					</table>
-					{if $tr_recnum != 0}
-						<input type="submit" name="lessrec" value="{tr}previous page{/tr}" />
-					{/if}
-					{if $untr_numrows > $tr_recnum+$maxRecords}
-						<input type="submit" name="morerec" value="{tr}next page{/tr}" />
-					{/if}
-					<input type="hidden" name="tr_recnum" value="{$tr_recnum|escape}" />
+					{pagination_links cant=$untr_numrows step=$maxRecords offset=$offset}{/pagination_links}
 				</div>
 			{/if}
 			{if $whataction eq 'edit_tran_sw'}
@@ -102,15 +96,8 @@
 							</tr>
 						{/foreach}
 					</table>
-					{if $tr_recnum != 0}
-						<input type="submit" name="lessrec" value="{tr}previous page{/tr}" />
-					{/if}
-					{if $untr_numrows > $tr_recnum+$maxRecords}
-						<input type="submit" name="morerec" value="{tr}next page{/tr}" />
-					{/if}
-					<br />
+					{pagination_links cant=$untr_numrows step=$maxRecords offset=$offset}{/pagination_links}
 					<input type="submit" name="translate_all" value="{tr}Translate all{/tr}" />
-					<input type="hidden" name="tr_recnum" value="{$tr_recnum|escape}" />
 				</div>
 			{/if}
 		</form>
