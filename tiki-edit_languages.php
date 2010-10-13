@@ -87,7 +87,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 			if (strlen($_REQUEST["edit_rec_tran_$i"]) > 0 && strlen($_REQUEST["edit_rec_source_$i"]) > 0) {
 				$language->updateTrans($_REQUEST["edit_rec_source_$i"], $_REQUEST["edit_rec_tran_$i"]);
 			}
-		} elseif (isset($_REQUEST["edt_tran_$i"]) || $_REQUEST['translate_all']) {
+		} elseif (isset($_REQUEST["edt_tran_$i"]) || isset($_REQUEST['translate_all'])) {
 			// Handle edits in edit translations
 			if (strlen($_REQUEST["edit_edt_tran_$i"]) > 0 && strlen($_REQUEST["edit_edt_source_$i"]) > 0) {
 				$language->updateTrans($_REQUEST["edit_edt_source_$i"], $_REQUEST["edit_edt_tran_$i"]);
