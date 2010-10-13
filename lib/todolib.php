@@ -191,12 +191,14 @@ class TodoLib
 			if (empty($u)) {
 				$u = $object['itemUser'];
 			}
+			print_r($todo); print_r($objects);
 			if (!empty($todo['to']['body'])) { // assign whatever needed
 				$smarty->assign('todo_itemId', $object['itemId']);
 				$status = $trklib->status_types();
 				$smarty->assign('todo_tostatus', $status[$todo['for']['to']['status']]['label']);
 				$smarty->assign('todo_fromstatus', $status[$todo['for']['from']['status']]['label']);
 				$smarty->assign('todo_after', $todo['to']['before']);
+				$smarty->assign('todo_desc', $trklib->get_isMain_value($object['trackerId'], $object['itemId']));
 			}
 			// mail creator
 			$this->mailTodo($todo, array('user'=>$u), 'Tracker item status will be changed');
