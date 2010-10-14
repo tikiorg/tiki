@@ -11,6 +11,12 @@
 {tabset}
 	{tab name="{tr}Edit languages{/tr}"}
 		<form action="tiki-edit_languages.php" id="select_action" method="post">
+			{if isset($find)}
+				<input type="hidden" name="find" value="{$find}" />
+			{/if}
+			{if isset($maxRecords)}
+				<input type="hidden" name="maxRecords" value="{$maxRecords}" />
+			{/if}
 			<div class="adminoptionbox">
 				<label for="edit_language">{tr}Select the language to edit{/tr}:</label>
 				<select id="edit_language" class="translation_action"name="edit_language">
@@ -65,12 +71,9 @@
 					<h4>{if $action eq 'edit_tran_sw'}{tr}Edit translations:{/tr}{else}{tr}Translate recorded:{/tr}{/if}</h4>
 					<table class="formcolor" id="edit_translations">
 						<tr>
-							<td align="left" colspan=4>
-								<input name="search" value="{$search|escape}" size=10 />
-								<input type="submit" name="tran_search_sm" value="{tr}Search{/tr}" />
-								{if $action eq 'edit_rec_sw'}
-									<tr><td align="center"><input type="submit" name="tran_reset" value="{tr}Delete all{/tr}" /></td></tr>
-								{/if}
+							<td align="center" colspan=3>
+								{include file='find.tpl' find_show_num_rows='y'}
+								<hr />
 							</td>
 						</tr>
 						{foreach from=$translations name=translations key=source item=translation}
@@ -91,10 +94,14 @@
 							<tr>
 								<td colspan="3"><hr /></td>
 							</tr>
+						{foreachelse}
+							<tr><td align="center"><h4>{tr}No records found.{/tr}</h4></td></tr>
 						{/foreach}
 					</table>
 					<input type="hidden" name="offset" value="{$offset|escape}" />
-					<input type="submit" name="translate_all" value="{tr}Translate all{/tr}" />
+					{if !empty($translations)}
+						<input type="submit" name="translate_all" value="{tr}Translate all{/tr}" />
+					{/if}
 					{pagination_links cant=$total step=$maxRecords offset=$offset}{/pagination_links}
 				</div>
 			{/if}

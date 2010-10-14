@@ -22,10 +22,6 @@ if (!isset($_SESSION['interactive_translation_mode']))
 else
 	$smarty->assign('interactive_translation_mode',$_SESSION['interactive_translation_mode']);
 
-if (isset($_REQUEST["imp_language"])) {
-	$imp_language = preg_replace('/\.\./','',$_REQUEST['imp_language']);
-}
-
 // Get available languages
 $languages = $tikilib->list_languages();
 $smarty->assign_by_ref('languages', $languages);
@@ -81,8 +77,15 @@ if (isset($_REQUEST["action"])) {
 
 if ($action == "edit_rec_sw" || $action == "edit_tran_sw") {
 	check_ticket('edit-languages');
+	
+	$offset = isset($_REQUEST["offset"]) ? $_REQUEST['offset'] : 0;
+	$smarty->assign('offset', $offset);
+	
+	$maxRecords = (isset($_REQUEST['maxRecords']) && $_REQUEST['maxRecords'] > 0) ? $_REQUEST['maxRecords'] : $prefs['maxRecords'];
+	$smarty->assign('maxRecords', $maxRecords);
+	
 	//check if user has translated something
-	for ($i = 0; $i < $prefs['maxRecords']; $i++) {
+	for ($i = 0; $i < $maxRecords; $i++) {
 		// Handle edits in translate recorded
 		if (isset($_REQUEST["edit_tran_$i"]) || isset($_REQUEST['translate_all'])) {
 			// Handle edits in edit translations
@@ -109,16 +112,12 @@ if ($action == "edit_rec_sw" || $action == "edit_tran_sw") {
 		${"lang_$edit_language"}[ $row['source'] ] = $row['tran'];
 	}
 
-	$offset = isset($_REQUEST["offset"]) ? $_REQUEST['offset'] : 0;
-	$smarty->assign('offset', $offset);
-	$smarty->assign('maxRecords', $prefs['maxRecords']);
-
 	//Handle searches
-	$search = '';
+	$find = '';
 
-	if (isset($_REQUEST['search']) && strlen($_REQUEST['search']) > 0) {
-		$search = $_REQUEST['search'];
-		$smarty->assign('search', $search);
+	if (isset($_REQUEST['find']) && strlen($_REQUEST['find']) > 0) {
+		$find = $_REQUEST['find'];
+		$smarty->assign('find', $find);
 	}
 
 	$sort_mode = "source_asc";
@@ -126,14 +125,14 @@ if ($action == "edit_rec_sw" || $action == "edit_tran_sw") {
 	$data = array();
 
 	if ($action == "edit_rec_sw") {
-		$data = $language->getRecordedUntranslated($sort_mode, $maxRecords, $offset, $search);
+		$data = $language->getRecordedUntranslated($sort_mode, $maxRecords, $offset, $find);
 	} elseif ($action == "edit_tran_sw") {
 		if (isset($_REQUEST['only_db_translations'])) {
 			// display only database stored translations
-			$data = $language->getDbTranslations($sort_mode, $maxRecords, $offset, $search);
+			$data = $language->getDbTranslations($sort_mode, $maxRecords, $offset, $find);
 		} else {
 			// display all available translations (db + custom.php + language.php)
-			$data = $language->getAllTranslations($maxRecords, $offset, $search);
+			$data = $language->getAllTranslations($maxRecords, $offset, $find);
 		}
 	}
 	$smarty->assign_by_ref('translations', $data['translations']);
