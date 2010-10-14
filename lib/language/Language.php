@@ -248,11 +248,24 @@ class Language extends TikiDb_Bridge
 	 *
 	 * @return array
 	 */
-	public function _getDbTranslations() {
-		$query = "SELECT `source`, `tran` FROM `tiki_language` WHERE `lang`=? AND `source` != '' AND `changed` = 1 ORDER BY `source` asc";
-		$result = $this->fetchMap($query,array($this->lang));
+	protected function _getDbTranslations($sort_mode = 'source_asc', $maxRecords = -1, $offset = 0, $searchQuery = null) {
+		global $tikilib;
+		
+		$bindvars = array($this->lang);
+		
+		$query = "SELECT * FROM `tiki_language` WHERE `lang`=? AND `source` != '' AND `changed` = 1 $searchQuery ORDER BY " . $this->convertSortMode($sort_mode);
+		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 
-		return $result;
+		$translations = array();
+		
+		while ($res = $result->fetchRow()) {
+			if ($res['userId']) {
+				$res['user'] = $tikilib->get_user_login($res['userId']);
+			}
+			$translations[$res['source']] = $res;
+		}
+
+		return $translations;
 	}
 
 	/**
@@ -265,8 +278,8 @@ class Language extends TikiDb_Bridge
 		$trans = $this->_getDbTranslations();
 		$escapedTrans = array();
 
-		foreach ($trans as $key => $value) {
-			$escapedTrans[$this->addPhpSlashes($key)] = $this->addPhpSlashes($value);
+		foreach ($trans as $item) {
+			$escapedTrans[$this->addPhpSlashes($item['source'])] = $this->addPhpSlashes($item['tran']);
 		}
 
 		return $escapedTrans;
@@ -327,6 +340,8 @@ class Language extends TikiDb_Bridge
 	 *  @return array database translations ('translations' and 'total')
 	 */
 	public function getDbTranslations($sort_mode, $maxRecords, $offset, $search = null) {
+		global $tikilib;
+		
 		$translations = array();
 		$bindvars = array($this->lang);
 		$searchQuery = '';
@@ -337,12 +352,7 @@ class Language extends TikiDb_Bridge
 			$bindvars[] = '%' . $search . '%';
 		}
 
-		$query = "select `source`, `tran` from `tiki_language` where `lang`=? $searchQuery order by " . $this->convertSortMode($sort_mode);
-		$result = $this->query($query, $bindvars, $maxRecords, $offset);
-
-		while ($res = $result->fetchRow()) {
-			$translations[$res['source']] = $res['tran'];
-		}
+		$translations = $this->_getDbTranslations($sort_mode, $maxRecords, $offset, $searchQuery);
 
 		$query = "select count(*) from `tiki_language` where `lang`=? $searchQuery";
 		$total = $this->getOne($query, $bindvars);
@@ -386,11 +396,11 @@ class Language extends TikiDb_Bridge
 			$bindvars[] = '%' . $search . '%';
 		}
 
-		$query = "select `source` from `tiki_untranslated` where `lang`=? $searchQuery order by " . $this->convertSortMode($sort_mode);
+		$query = "select * from `tiki_untranslated` where `lang`=? $searchQuery order by " . $this->convertSortMode($sort_mode);
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 
 		while ($res = $result->fetchRow()) {
-			$translations[$res['source']] = '';
+			$translations[] = $res;
 		}
 
 		$query = "select count(*) from `tiki_untranslated` where `lang`=? $searchQuery";
@@ -436,6 +446,40 @@ class Language extends TikiDb_Bridge
 		$total = count($all_translations);
 		$translations = array_slice($all_translations, $offset, $maxRecords);
 		
+		$translations = $this->_convertTranslationsArray($translations);
+		
 		return array('translations' => $translations, 'total' => $total);
+	}
+	
+	/**
+	 * Convert the translations array from the format used all over Tiki (where
+	 * the source string is the key and the translation is the value of one entry of an
+	 * array) to the format used on tiki-edit_languages.php (a two dimensional array with 
+	 * more information about the translation when available, when the translation is in
+	 * the database)
+	 * 
+	 * @param array $translations in the format used all over Tiki and created by init_language()
+	 * @return array $newFormat translations in the new format used by tiki-edit_language.php
+	 */
+	protected function _convertTranslationsArray($translations) {
+		$newFormat = array();
+		
+		$dbTranslations = $this->_getDbTranslations();
+
+		foreach ($translations as $source => $tran) {
+			$newItem = array();
+			
+			// if string has been changed in the database
+			if (isset($dbTranslations[$source])) {
+				$newItem = $dbTranslations[$source];
+			} else {
+				$newItem['tran'] = $tran;
+				$newItem['source'] = $source;	
+			}
+			
+			$newFormat[] = $newItem;
+		}
+		
+		return $newFormat;
 	}
 }

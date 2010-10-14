@@ -69,30 +69,35 @@
 			{if $action eq 'edit_tran_sw' || $action eq 'edit_rec_sw'}
 				<div class="simplebox">
 					<h4>{if $action eq 'edit_tran_sw'}{tr}Edit translations:{/tr}{else}{tr}Translate recorded:{/tr}{/if}</h4>
-					<table class="formcolor" id="edit_translations">
+					<table class="formcolor normal" id="edit_translations">
 						<tr>
 							<td align="center" colspan=3>
 								{include file='find.tpl' find_show_num_rows='y'}
 								<hr />
 							</td>
 						</tr>
-						{foreach from=$translations name=translations key=source item=translation}
+						{foreach from=$translations name=translations item=item}
 							<tr>
 								<td><label for="source_{$smarty.foreach.translations.index}">{tr}Original:{/tr}</label></td>
-								<td><input id="source_{$smarty.foreach.translations.index}" name="source_{$smarty.foreach.translations.index}" value="{$source|escape}" size=70 readonly="readonly"/>
+								<td><input id="source_{$smarty.foreach.translations.index}" name="source_{$smarty.foreach.translations.index}" value="{$item.source|escape}" size=65 readonly="readonly"/>
 								<td align="center" align="center" rowspan="2">
 									<input type="submit" name="edit_tran_{$smarty.foreach.translations.index}" value="{tr}Translate{/tr}" />
-									{if $action eq 'edit_tran_sw'}
+									{if $action eq 'edit_tran_sw' && isset($item.changed)}
 										<input type="submit" name="del_tran_{$smarty.foreach.translations.index}" value="{tr}Delete{/tr}" />
 									{/if}
 								</td>
 							</tr>
 							<tr>
 								<td><label for="tran_{$smarty.foreach.translations.index}">{tr}Translation:{/tr}</label></td>
-								<td><input id="tran_{$smarty.foreach.translations.index}" name="tran_{$smarty.foreach.translations.index}" value="{$translation|escape}" size=70 /></td>
+								<td><input id="tran_{$smarty.foreach.translations.index}" name="tran_{$smarty.foreach.translations.index}" value="{$item.tran|escape}" size=65 /></td>
 							</tr>
 							<tr>
-								<td colspan="3"><hr /></td>
+								<td colspan="3">
+									{if isset($item.user)}
+										{tr 0=$item.user|userlink}Last changed by %0{/tr}
+									{/if}
+									<hr />
+								</td>
 							</tr>
 						{foreachelse}
 							<tr><td align="center"><h4>{tr}No records found.{/tr}</h4></td></tr>
@@ -101,6 +106,10 @@
 					<input type="hidden" name="offset" value="{$offset|escape}" />
 					{if !empty($translations)}
 						<input type="submit" name="translate_all" value="{tr}Translate all{/tr}" />
+						{if $action eq 'edit_rec_sw'}
+							<tr><td align="center"><input type="submit" name="tran_reset" value="{tr}Delete all{/tr}" onclick="confirm('{tr}Are you sure you want to delete all untranslated strings from database?{/tr}')"/></td></tr>
+						{/if}
+						
 					{/if}
 					{pagination_links cant=$total step=$maxRecords offset=$offset}{/pagination_links}
 				</div>
