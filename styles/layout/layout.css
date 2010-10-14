@@ -2293,6 +2293,10 @@ table#edit_translations input {
 	margin: 2px 0 2px 0;
 }
 
+table#edit_translations tr.last {
+	border-bottom: #74C0E2 solid 2px;
+}
+
 /***** Kaltura *****/
 
 /* Kaltura browse entries */
