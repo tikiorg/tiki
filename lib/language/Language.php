@@ -156,15 +156,15 @@ class Language extends TikiDb_Bridge
 		$result = $this->query($query, array($this->lang, $originalStr));
 
 		if (!$result->numRows()) {
-			$query = 'insert into `tiki_language` (`source`, `lang`, `tran`, `changed`, `userId`) values (?,?,?,?,?)';
-			$result = $this->query($query, array($originalStr, $this->lang, $translatedStr, 1, $userId));
+			$query = 'insert into `tiki_language` (`source`, `lang`, `tran`, `changed`, `userId`, `lastModif`) values (?,?,?,?,?,?)';
+			$result = $this->query($query, array($originalStr, $this->lang, $translatedStr, 1, $userId, $tikilib->now));
 		} else {
 			if (strlen($translatedStr) == 0) {
 				$query = 'delete from `tiki_language` where binary `source`=? and `lang`=?';
 				$result = $this->query($query, array($originalStr, $this->lang));
 			} else {
-				$query = 'update `tiki_language` set `tran`=?, `changed`=?, `userId`=? where binary `source`=? and `lang`=?';
-				$result = $this->query($query, array($translatedStr, 1, $userId, $originalStr, $this->lang));
+				$query = 'update `tiki_language` set `tran`=?, `changed`=?, `userId`=?, `lastModif`=? where binary `source`=? and `lang`=?';
+				$result = $this->query($query, array($translatedStr, 1, $userId, $tikilib->now, $originalStr, $this->lang));
 			}
 		}
 
@@ -283,7 +283,7 @@ class Language extends TikiDb_Bridge
 				$res['user'] = $tikilib->get_user_login($res['userId']);
 			}
 
-			if ($originalTranslations && isset($lang[$res['source']])) {
+			if ($originalTranslations && isset($lang[$res['source']]) && $lang[$res['source']] != $res['tran']) {
 				require_once('lib/diff/difflib.php');
 				$res['originalTranslation'] = $lang[$res['source']];
 				$res['diff'] = diff2($res['originalTranslation'], $res['tran'], 'htmldiff');
