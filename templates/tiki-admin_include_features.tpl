@@ -123,7 +123,7 @@
 			<div class="admin featurelist">
 				<fieldset>
 					<legend class="heading">{icon _id="star"} <span>{tr}New{/tr}</span></legend>
-					<span class="description">{tr}These features are relatively new, or recently underwent major renovations. You should expect growing pains and possibly a lack of up to date documentation, as you would of a version 1.0 application{/tr}</span>
+					<p class="description">{tr}These features are relatively new, or recently underwent major renovations. You should expect growing pains and possibly a lack of up to date documentation, as you would of a version 1.0 application{/tr}</p>
 						{preference name=feature_perspective}
 						{preference name=feature_quick_object_perms}
 						{preference name=feature_kaltura}
