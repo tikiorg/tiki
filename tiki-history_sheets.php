@@ -100,5 +100,5 @@ ask_ticket('sheet');
 $smarty->assign('lock', true);
 
 // Display the template
-$smarty->assign('mid', 'tiki-history-sheets.tpl');
+$smarty->assign('mid', 'tiki-history_sheets.tpl');
 $smarty->display("tiki.tpl");

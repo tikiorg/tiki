@@ -50,9 +50,8 @@ class RankLib extends TikiLib
 				$disableBestLang = false;
 				if ($res['lang'] > '' && $prefs['feature_best_language'] == 'y') {
 					// find best language equivalent
-					if (isset($_REQUEST['bl']) || isset($_REQUEST['best_lang']) && $_REQUEST['best_lang'] == 'y') {
-						global $multilinguallib;
-						include_once('lib/multilingual/multilinguallib.php');
+					global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
+					if ($multilinguallib->useBestLanguage()) {
 						$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $res['page_id'], null, 'tiki_p_view');
 						if ($res['page_id'] != $bestLangPageId) {							
 							$res['pageName'] = $this->get_page_name_from_id($bestLangPageId);

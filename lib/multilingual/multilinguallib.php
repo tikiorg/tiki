@@ -217,9 +217,13 @@ class MultilingualLib extends TikiLib
 	/* @brief : returns an ordered list of preferred languages
 	 * @param $langContext: optional the language the user comes from
 	 */
-	function preferredLangs($langContext = null,$include_browser_lang=TRUE) {
+	function preferredLangs($langContext = null, $include_browser_lang = null) {
 		global $user, $prefs, $tikilib;
 		$langs = array();
+		
+		if ($include_browser_lang === null) {
+			$include_browser_lang = ($prefs['feature_detect_language'] === 'y');
+		}
 
 		if ($langContext) {
 			$langs[] = $langContext;
