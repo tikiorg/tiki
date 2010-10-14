@@ -249,7 +249,7 @@ function add_watch_icons($descendants, $usercatwatches, $requestid, $categid, $d
 			$objName = $categlib->get_category_path_string_with_root($categid);
 		}
 		$eyesgroup = '&nbsp;<a href="tiki-object_watches.php?objectId=' . $categid . '&amp;watch_event=category_changed&amp;objectType=Category&amp;objectName=' 
-				. $objName . '&amp;objectHref=tiki-browse_categories.php?parentId=' . $categid . '&amp;deep=' . $deep . '" >
+				. urlencode($objName) . '&amp;objectHref=tiki-browse_categories.php?parentId=' . $categid . '&amp;deep=' . $deep . '" >
 				<img src="pics/icons/eye_group.png" alt="' . tra($tip_group) . '" width="14" style="margin-bottom:2px" height="14" border="0" 
 				title="' . tra($tip_group) . '" class="catname" /></a>';
 	}
