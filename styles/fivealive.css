@@ -27,7 +27,7 @@ body.filegal_popup {
 /*#fixedwidth*/
 
 body.fixed_width #fixedwidth {
-	width: 100%;
+	width: 100% !important;
 }
 
 #header {
