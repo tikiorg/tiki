@@ -25,6 +25,7 @@ function wikiplugin_listpages_info() {
 				'required' => false,
 				'name' => tra('Result Offset'),
 				'description' => tra('Result number at which the listing should start.'),
+				'filter' => 'int',
 			),
 			'max' => array(
 				'required' => false,
@@ -40,21 +41,25 @@ function wikiplugin_listpages_info() {
 				'required' => false,
 				'name' => tra('Show Name Only'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 			'categId' => array(
 				'required' => false,
 				'name' => tra('Category'),
-				'description' => tra('Category ID'),
+				'description' => tra('Category ID').' '.tra('For an OR between categories use : (ex:1:2). For and AND use + ex(1+2).'),
+				'filter' => 'striptags',
 			),
 			'structHead' => array(
 				'required' => false,
 				'name' => tra('Structure Head'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 			'showPageAlias' => array(
 				'required' => false,
 				'name' => tra('Show Page Alias'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 			'find' => array(
 				'required' => false,
@@ -80,16 +85,19 @@ function wikiplugin_listpages_info() {
 				'required' => false,
 				'name' => tra('Exact Match'),
 				'description' => 'y|n'.' '.tra('Related to Find.'),
+				'filter' => 'alpha',
 			),
 			'only_orphan_pages' => array(
 				'required' => false,
 				'name' => tra('Only Orphan Pages'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 			'for_list_pages' => array(
 				'required' => false,
 				'name' => tra('For List Pages'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 			'sort' => array(
 				'required' => false,
@@ -110,6 +118,7 @@ function wikiplugin_listpages_info() {
 				'required' => false,
 				'name' => tra('Length'),
 				'description' => tra('Number of characters to display'),
+				'filter' => 'int',
 			),
 		),
 	);
@@ -143,7 +152,13 @@ function wikiplugin_listpages($data, $params) {
 		}
 	}
 	if (!empty($categId)) {
-		$filter['categId'] = $categId;
+		if (strstr($categId, ':')) {
+			$filter['categId'] = explode(':', $categId);
+		} elseif (strstr($categId, '+')) {
+			$filter['andCategId'] = explode('+', $categId);
+		} else {
+			$filter['categId'] = $categId;
+		}
 	}
 	if (!empty($structHead) && $structHead == 'y') {
 		$filter['structHead'] = $structHead;
