@@ -41,7 +41,7 @@ try {
 	$pdo_post_queries = array();
 
 	if( isset( $client_charset ) ) {
-		$charset_query = "SET CHARACTER SET $client_charset";
+		$charset_query = "SET NAMES $client_charset";
 
 		if ( defined('PDO::MYSQL_ATTR_INIT_COMMAND' ) ) {
 			$pdo_options[ PDO::MYSQL_ATTR_INIT_COMMAND ] = $charset_query;

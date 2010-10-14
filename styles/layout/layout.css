@@ -1412,7 +1412,6 @@ body.tiki_forums table.normal {
 }
 
 .post .postbody-title .title {
-	float: left;
 	margin-left: 5px;
 	margin-top: 3px;
 }

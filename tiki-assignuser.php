@@ -11,7 +11,7 @@ require_once ('tiki-setup.php');
 
 $auto_query_args = array('sort_mode', 'offset', 'find', 'assign_user', 'group', 'maxRecords');
 
-$access->check_permission(array('tiki_p_admin_users', 'tiki_p_subscribe_groups'));
+$access->check_permission_either(array('tiki_p_admin_users', 'tiki_p_subscribe_groups'));
 
 if (!isset($_REQUEST["assign_user"]) || ($tiki_p_admin != 'y' && $tiki_p_admin_users != 'y')) {
 	$_REQUEST['assign_user'] = $user;

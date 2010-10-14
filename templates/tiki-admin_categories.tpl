@@ -67,7 +67,7 @@
 	{tab name="{tr}Create/Edit category{/tr}"}
 		{if $categId > 0}
 			<h2>{tr}Edit this category:{/tr} <b>{$name|escape}</b> </h2>
-			{button href="tiki-admin_categories.php?parentId=$parentId#editcreate" _text="{tr}Create New{/tr}" _title="{tr}Creatae New{/tr}"}
+			{button href="tiki-admin_categories.php?parentId=$parentId#editcreate" _text="{tr}Create New{/tr}" _title="{tr}Create New{/tr}"}
 		{else}
 			<h2>{tr}Add new category{/tr}</h2>
 		{/if}

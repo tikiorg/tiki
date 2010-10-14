@@ -206,9 +206,14 @@ class EditLib
 		// Parsing page data for wysiwyg editor
 		$inData = $this->partialParseWysiwygToWiki($inData);	// remove any wysiwyg plugins so they don't get double parsed
 		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
-		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true,
-														'ck_editor' => true, 'is_html' => ($prefs['wysiwyg_htmltowiki'] === 'n' && !$fromWiki)));
 		
+		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true,
+														'ck_editor' => true, 'is_html' => ($prefs['wysiwyg_htmltowiki'] === 'n' && !$fromWiki),
+														'process_wiki_paragraphs' => ($prefs['wysiwyg_htmltowiki'] === 'y' || $fromWiki)));
+		
+		if ($prefs['wysiwyg_htmltowiki'] === 'n' && $fromWiki) {
+			$parsed = preg_replace('/^\s*<p>&nbsp;[\s]*<\/p>\s*/iu','', $parsed);						// remove added empty <p>
+		}
 		$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
 		return $parsed;
 	}
@@ -229,10 +234,10 @@ class EditLib
 		if (!$ret) { $ret = $inData; }
 		
 		// take away the <p> that f/ck introduces around wiki heading ! to have maketoc/edit section working
-		$ret = preg_replace('/<p>!(.*)<\/p>/u', "!$1\n", $ret);
+		$ret = preg_replace('/<p>!(.*)<\/p>/iu', "!$1\n", $ret);
 		
 		// strip totally empty <p> tags generated in ckeditor 3.4
-		$ret = preg_replace('/\s*<p>[\s]*<\/p>\s*/u', "!$1\n", $ret);
+		$ret = preg_replace('/\s*<p>[\s]*<\/p>\s*/iu', "!$1\n", $ret);
 		return $ret;
 	}
 	

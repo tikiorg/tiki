@@ -43,6 +43,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	}
 	$params['name'] = isset($params['name']) ? $params['name'] : 'edit';
 	$params['id'] = isset($params['id']) ? $params['id'] : 'editwiki';
+	$params['area_id'] = isset($params['area_id']) ? $params['area_id'] : $params['id'];	// legacy param for toolbars?
 	$params['class'] = isset($params['class']) ? $params['class'] : 'wikiedit';
 	
 	// mainly for modules admin - preview is for the module, not the user module so don;t need to confirmExit

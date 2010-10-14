@@ -736,7 +736,7 @@ class Comments extends TikiLib
 		$query = 
 			$this->ifNull("a.`archived`", "'n'")." as `archived`,".
 			$this->ifNull("max(b.`commentDate`)","a.`commentDate`")." as `lastPost`,".
-			$this->ifNull("a.`type`='s'", 'false')." as `sticky`, count(b.`threadId`) as `replies` $select
+			$this->ifNull("a.`type`='s'", 'false')." as `sticky`, count(distinct b.`threadId`) as `replies` $select
 				from `tiki_comments` a left join `tiki_comments` b 
 				on b.`parentId`=a.`threadId` $join
 				where 1 = 1 $where" . ( $forumId ? 'AND a.`object`=?' : '' )
@@ -744,8 +744,6 @@ class Comments extends TikiLib
 				." and a.`objectType` = 'forum'
 				and a.`parentId` = ? $time_cond group by a.`threadId`";
 
-
-		$query .=",a.`object`,a.`objectType`,a.`parentId`,a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,a.`locked`,a.`archived` ";
 		if ($reply_state == 'none') {
 			$query .= ' HAVING `replies` = 0 ';
 		}

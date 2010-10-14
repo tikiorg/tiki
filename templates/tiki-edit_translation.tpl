@@ -53,29 +53,31 @@
 <a name="#new_translation"></a>
 <h3>{tr}Translate this page to a new language{/tr}</h3>
 <form method="post" action="tiki-editpage.php" onsubmit="return validate_translation_request(this)">
-	<p>{tr}Select language to translate to:{/tr}
-		<select name="lang" id="language_list" size="1">
-		   <option value="unspecified">{tr}Unspecified{/tr}</option>
-			{section name=ix loop=$languages}
-			{if in_array($languages[ix].value, $prefs.available_languages) or $prefs.available_languages|@count eq 0 or !is_array($prefs.available_languages)}
-			<option value="{$languages[ix].value|escape}"{if $only_one_language_left eq "y"} selected="selected"{/if}>{$languages[ix].name|escape}</option>
-			{/if}
-			{/section}
-		</select>
-		<br />{tr}Enter the page title:{/tr}
-		<input type="text" size="40" name="page" id="translation_name"/>
-		<input type="hidden" name="source_page" value="{$page|escape}"/>
-		<input type="hidden" name="oldver" value="-1"/>
-		<input type="hidden" name="is_new_translation" value="y"/>
-	{if $prefs.feature_categories eq 'y'}
-		<P>
-		{tr}Below, assign categories to this new translation (Note: they should probably be the same as the categories of the page being translate){/tr}
-		<br>
-		{include file="categorize.tpl" notable=y}
-	{/if}
-	<p>
-	<input type="submit" value="{tr}Create translation{/tr}"/></p>
-	<textarea name="edit" style="display:none">{$translate_message}{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
+	<fieldset>
+		<p>{tr}Select language to translate to:{/tr}
+			<select name="lang" id="language_list" size="1">
+			   <option value="unspecified">{tr}Unspecified{/tr}</option>
+				{section name=ix loop=$languages}
+				{if in_array($languages[ix].value, $prefs.available_languages) or $prefs.available_languages|@count eq 0 or !is_array($prefs.available_languages)}
+				<option value="{$languages[ix].value|escape}"{if $only_one_language_left eq "y"} selected="selected"{/if}>{$languages[ix].name|escape}</option>
+				{/if}
+				{/section}
+			</select>
+		</p>
+		<p>{tr}Enter the page title:{/tr}
+			<input type="text" size="40" name="page" id="translation_name"/>
+			<input type="hidden" name="source_page" value="{$page|escape}"/>
+			<input type="hidden" name="oldver" value="-1"/>
+			<input type="hidden" name="is_new_translation" value="y"/>
+		</p>
+		{if $prefs.feature_categories eq 'y'}
+			{tr}Below, assign categories to this new translation (Note: they should probably be the same as the categories of the page being translate){/tr}
+			<br>
+			{include file="categorize.tpl" notable=y}
+		{/if}
+		<p align="center"><input type="submit" value="{tr}Create translation{/tr}"/></p>
+		<textarea name="edit" style="display:none">{$translate_message}{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
+	</fieldset>
 </form>
 {/if}
 
@@ -141,18 +143,20 @@ function validate_translation_request() {
 	{if ($articles and ($articles|@count ge '1')) or ($pages|@count ge '1')}
 		{* only show if there are articles or pages to select *}
 		<form action="tiki-edit_translation.php" method="post">
-			<input type="hidden" name="id" value="{$id}" />
-			<input type="hidden" name="type" value="{$type|escape}" />
-			<input type="hidden" name="page" value="{$target_page|escape}" />
-			<p>{tr}Add existing page as a translation of this page:{/tr}<br />
-
-			{if $articles}
-				<select name="srcId">{section name=ix loop=$articles}{if !empty($articles[ix].lang) and $langpage ne $articles[ix].lang}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}checked="checked"{/if}>{$articles[ix].title|truncate:80:"(...)":true|escape}</option>{/if}{/section}</select>
-			{else}
-				<select name="srcName" id="existing-page-src">{section name=ix loop=$pages}<option value="{$pages[ix].pageName|escape}" {if $pages[ix].pageName == $srcId}checked="checked"{/if}>{$pages[ix].pageName|truncate:80:"(...)":true|escape} ({$pages[ix].lang|escape})</option>{/section}</select>
-			{/if}
-			&nbsp;
-			<input type="submit" class="wikiaction" name="set" value="{tr}Go{/tr}"/>
+			<fieldset>
+				<input type="hidden" name="id" value="{$id}" />
+				<input type="hidden" name="type" value="{$type|escape}" />
+				<input type="hidden" name="page" value="{$target_page|escape}" />
+				<p>{tr}Add existing page as a translation of this page:{/tr}<br />
+	
+				{if $articles}
+					<select name="srcId">{section name=ix loop=$articles}{if !empty($articles[ix].lang) and $langpage ne $articles[ix].lang}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}checked="checked"{/if}>{$articles[ix].title|truncate:80:"(...)":true|escape}</option>{/if}{/section}</select>
+				{else}
+					<select name="srcName" id="existing-page-src">{section name=ix loop=$pages}<option value="{$pages[ix].pageName|escape}" {if $pages[ix].pageName == $srcId}checked="checked"{/if}>{$pages[ix].pageName|truncate:80:"(...)":true|escape} ({$pages[ix].lang|escape})</option>{/section}</select>
+				{/if}
+				&nbsp;
+				<input type="submit" class="wikiaction" name="set" value="{tr}Go{/tr}"/>
+			</fieldset>
 		</form>
 
 		</p>

@@ -91,7 +91,7 @@ if (isset($_REQUEST['editor_id'])) {
 					}
 				} else {
 					$info = $tikilib->get_page_info($autoSaveIdParts[2], false);
-					$data = $tikilib->parse_data($data, array('is_html' => ($info['is_html'] == 1), 'preview_mode'=>true));
+					$data = $tikilib->parse_data($data, array('is_html' => ($info['is_html'] == 1), 'preview_mode'=>true, 'process_wiki_paragraphs' => ($info['is_html'] == 0)));
 				}
 				echo $data;
 				

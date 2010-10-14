@@ -16,6 +16,7 @@ function smarty_block_wikiplugin( $params, $content, &$smarty ) {
 
 	return $tikilib->plugin_execute( $name, $content, $params, 0, false, array(
 		'context_format' => 'html',
+		'ck_editor' => false,
 	) );
 }
 
