@@ -246,10 +246,30 @@ class Language extends TikiDb_Bridge
 	 * Return all the custom translations in the database
 	 * for the current language
 	 *
+	 * @param string $sort_mode
+	 * @param int $maxRecords
+	 * @param int $offset
+	 * @param bool $originalTranslations if true include for each database translation the original translation from language.php
+	 * @param string $searchQuery if set limit the results to 
 	 * @return array
 	 */
-	protected function _getDbTranslations($sort_mode = 'source_asc', $maxRecords = -1, $offset = 0, $searchQuery = null) {
+	protected function _getDbTranslations($sort_mode = 'source_asc', $maxRecords = -1, $offset = 0, $originalTranslations = false, $searchQuery = null) {
 		global $tikilib;
+		
+		if ($originalTranslations) {
+			// load $lang with all translations excluding database translations to compare changes
+			$lang = array();
+			require("lang/$this->lang/language.php");
+			
+			if (is_file("lang/$this->lang/custom.php")) {
+				include_once("lang/$this->lang/custom.php");
+			}
+			
+			global $tikidomain;
+			if (!empty($tikidomain) && is_file("lang/$this->lang/$tikidomain/custom.php")) {
+				include_once("lang/$this->lang/$tikidomain/custom.php");
+			}
+		}
 		
 		$bindvars = array($this->lang);
 		
@@ -262,6 +282,13 @@ class Language extends TikiDb_Bridge
 			if ($res['userId']) {
 				$res['user'] = $tikilib->get_user_login($res['userId']);
 			}
+
+			if ($originalTranslations && isset($lang[$res['source']])) {
+				require_once('lib/diff/difflib.php');
+				$res['originalTranslation'] = $lang[$res['source']];
+				$res['diff'] = diff2($res['originalTranslation'], $res['tran'], 'htmldiff');
+			}
+
 			$translations[$res['source']] = $res;
 		}
 
@@ -352,7 +379,7 @@ class Language extends TikiDb_Bridge
 			$bindvars[] = '%' . $search . '%';
 		}
 
-		$translations = $this->_getDbTranslations($sort_mode, $maxRecords, $offset, $searchQuery);
+		$translations = $this->_getDbTranslations($sort_mode, $maxRecords, $offset, true, $searchQuery);
 
 		$query = "select count(*) from `tiki_language` where `lang`=? $searchQuery";
 		$total = $this->getOne($query, $bindvars);
@@ -455,8 +482,7 @@ class Language extends TikiDb_Bridge
 	 * Convert the translations array from the format used all over Tiki (where
 	 * the source string is the key and the translation is the value of one entry of an
 	 * array) to the format used on tiki-edit_languages.php (a two dimensional array with 
-	 * more information about the translation when available, when the translation is in
-	 * the database)
+	 * more information for database translations)
 	 * 
 	 * @param array $translations in the format used all over Tiki and created by init_language()
 	 * @return array $newFormat translations in the new format used by tiki-edit_language.php
@@ -464,7 +490,7 @@ class Language extends TikiDb_Bridge
 	protected function _convertTranslationsArray($translations) {
 		$newFormat = array();
 		
-		$dbTranslations = $this->_getDbTranslations();
+		$dbTranslations = $this->_getDbTranslations('source_asc', -1, 0, true);
 
 		foreach ($translations as $source => $tran) {
 			$newItem = array();
@@ -474,7 +500,7 @@ class Language extends TikiDb_Bridge
 				$newItem = $dbTranslations[$source];
 			} else {
 				$newItem['tran'] = $tran;
-				$newItem['source'] = $source;	
+				$newItem['source'] = $source;
 			}
 			
 			$newFormat[] = $newItem;
