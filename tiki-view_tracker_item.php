@@ -761,11 +761,26 @@ if ($_REQUEST["itemId"]) {
 							if (in_array($c['categId'], $ins_categs)) {
 								$ins_fields['data'][$i]['cat'][$c['categId']] = 'y';
 								$ins_fields['data'][$i]['categs'][] = $categlib->get_category($c['categId']);
+								$cpath = $categlib->get_category_path_string($c['categId']);
+								$cpath = substr($cpath, strpos($cpath, '::') + 2, strlen($cpath));	// strip the first bit off
+								$ins_fields['data'][$i]['categs'][count($ins_fields['data'][$i]['categs']) - 1]['categpath'] = $cpath;
 							}
 						}
 					} else {
-						//displayed when viewing tracker item
-						$ins_fields['data'][$i]['categs'] = $categlib->get_category_info($cat, false, $k);
+						// displayed when viewing tracker item
+						// amazingly, for tiki-view_tracker_item the fields are all rendered out using totally different smarty
+						// but only for the edit tab - view tab uses tracker_item_field_value.tpl as usual!!?!!!
+					
+						foreach($ins_fields["data"][$i]["$k"] as $c) {
+							if (in_array($c['categId'], $cat)) {
+								$ins_fields['data'][$i]['cat'][$c['categId']] = 'y';
+								$ins_fields['data'][$i]['categs'][] = $categlib->get_category($c['categId']);
+								$cpath = $categlib->get_category_path_string($c['categId']);
+								$cpath = substr($cpath, strpos($cpath, '::') + 2, strlen($cpath));	// strip the first bit off
+								$ins_fields['data'][$i]['categs'][count($ins_fields['data'][$i]['categs']) - 1]['categpath'] = $cpath;
+							}
+						}
+						
 					}
 				} elseif ($fields["data"][$i]["type"] == 'l') {
 					if (isset($fields["data"][$i]["options_array"][3])) {
