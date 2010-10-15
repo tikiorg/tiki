@@ -2257,6 +2257,7 @@ div.thumbnailcontener {
 	height: 40px;
 	background-color: #ade;
 	padding: 1em;
+	z-index: 1000;
 }
 
 #intertrans-form {
