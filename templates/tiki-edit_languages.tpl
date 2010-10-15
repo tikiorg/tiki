@@ -1,10 +1,10 @@
 {title}{tr}Edit or export/import languages{/tr}{/title}
 
 <div class="navbar">
-	{if $interactive_translation_mode eq 'on'}
-		{button href="tiki-edit_languages.php?interactive_translation_mode=off" _text="{tr}Toggle interactive translation off{/tr}" _ajax="n"}
+	{if $smarty.session.interactive_translation_mode eq 'on'}
+		{button href="tiki-interactive_trans.php?interactive_translation_mode=off" _text="{tr}Toggle interactive translation off{/tr}" _ajax="n"}
 	{else}
-		{button href="tiki-edit_languages.php?interactive_translation_mode=on" _text="{tr}Toggle interactive translation on{/tr}" _ajax="n"}
+		{button href="tiki-interactive_trans.php?interactive_translation_mode=on" _text="{tr}Toggle interactive translation on{/tr}" _ajax="n"}
 	{/if}
 </div>
 

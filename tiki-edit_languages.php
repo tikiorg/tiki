@@ -11,17 +11,6 @@ require_once('lib/language/Language.php');
 $access->check_feature('lang_use_db');
 $access->check_permission('tiki_p_edit_languages');
 
-if (!empty ($_REQUEST['interactive_translation_mode']) && $tiki_p_edit_languages == 'y'){
-	require_once("lib/multilingual/multilinguallib.php");
-	$_SESSION['interactive_translation_mode']=$_REQUEST['interactive_translation_mode'];	
-	if ($_REQUEST['interactive_translation_mode']=='off')  
-		$cachelib->empty_cache('templates_c');
-}
-if (!isset($_SESSION['interactive_translation_mode']))
-	$smarty->assign('interactive_translation_mode','off');
-else
-	$smarty->assign('interactive_translation_mode',$_SESSION['interactive_translation_mode']);
-
 // Get available languages
 $languages = $tikilib->list_languages();
 $smarty->assign_by_ref('languages', $languages);
