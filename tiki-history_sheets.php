@@ -78,20 +78,21 @@ if ( count($sheetIndexes) > 1 ) {
 	//$smarty->assign('paginate', $paginate);
 	$smarty->assign( 'grid_content', diffSheetsAsHTML($_REQUEST["sheetId"], $dates) );
 	
-	$headerlib->add_jq_onready('
-		if (typeof ajaxLoadingShow == "function") {
-			ajaxLoadingShow("role_main");
+	$headerlib->add_jq_onready("
+		if (typeof ajaxLoadingShow == 'function') {
+			ajaxLoadingShow('role_main');
 		}
 		
 		setTimeout (function () {
-			$("div.tiki_sheet").tiki("sheet", "",{
+			$('div.tiki_sheet').tiki('sheet', '',{
 				editable: false,
 				fnPaneScroll: $.sheet.paneScrollLocker,
 				fnSwitchSheet: $.sheet.switchSheetLocker,
 				height: 400
 			});
+			setValuesForCompareSheet('$sheetIndexes[0]','$sheetIndexes[1]');
 		}, 500);
-	', 500);
+	", 500);
 	
 	if ( $tiki_sheet_div_style) {
 		$smarty->assign('tiki_sheet_div_style',  $tiki_sheet_div_style);
