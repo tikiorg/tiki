@@ -40,6 +40,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *	- zero_based_offset: Items addressed as zero-based (defaults to 'y'). If 'n' then "one based" offset used (1 to cant + 1)
  *		(jb tiki5: only fully tested without reloffset and step=1) 
  *	- show_numbers: Show/hide direct_pagination links, current and total numbers (Defaults to 'y')
+ *  - _ajax : if set to 'n', will force disabling AJAX even if the ajax_xajax feature is enabled (defaults to 'y')
  */
 function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 	global $prefs;
@@ -64,6 +65,7 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 		$zero_based_min = 0;
 		$zero_based_maxminus = 1;
 	}
+	$params['_ajax'] = isset($params['_ajax']) ? $params['_ajax'] : 'y';
 	if ( isset($params['reloff']) && (
 		$params['reloff'] + $params['offset'] >= $params['cant']
 		|| $params['reloff'] + $params['offset'] < $zero_based_min
@@ -178,12 +180,21 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 		if ( ! function_exists('make_prevnext_link') ) {
 			function make_prevnext_link($url, $content, $params, $class = 'prevnext') {
 				global $smarty;
-				return "\n".'<a class="'.$class.'" '.smarty_block_ajax_href(
-					array('template' => $params['template'], 'htmlelement' => $params['htmlelement']),
-					$url,
-					$smarty,
-					false
-				).'>'.$content.'</a>';
+				
+				$link = "\n".'<a class="'.$class.'" ';
+				if ($params['_ajax'] == 'y') {
+					$link .= smarty_block_ajax_href(
+						array('template' => $params['template'], 'htmlelement' => $params['htmlelement'], '_ajax' => $params['_ajax'],),
+						$url,
+						$smarty,
+						false
+					);
+				} else {
+					$link .= " href=\"$url\" ";
+				}
+				$link .= '>'.$content.'</a>';
+				
+				return $link;
 			}
 		}
 

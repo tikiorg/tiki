@@ -131,7 +131,7 @@
 					</table>
 					<input type="hidden" name="offset" value="{$offset|escape}" />
 										
-					{pagination_links cant=$total step=$maxRecords offset=$offset}{/pagination_links}
+					{pagination_links cant=$total step=$maxRecords offset=$offset _ajax='n'}{/pagination_links}
 				</div>
 			{/if}
 		</form>
