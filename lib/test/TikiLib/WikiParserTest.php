@@ -11,13 +11,13 @@ class TikiLib_WikiParserTest extends PHPUnit_Framework_TestCase
 	 * @covers TikiLib::parse_data
 	 * @dataProvider provider
 	 */
-	public function testWikiParser($input, $output)
+	public function testWikiParser($input, $output, $options = array())
 	{
 		global $prefs;
 		$prefs['feature_page_title'] = 'y';
 		$prefs['feature_wiki_paragraph_formatting'] = 'n';
 		$o = new TikiLib;
-		$this->assertEquals($output, $o->parse_data($input));
+		$this->assertEquals($output, $o->parse_data($input, $options));
 	}
 
 	public function provider()
@@ -49,6 +49,13 @@ class TikiLib_WikiParserTest extends PHPUnit_Framework_TestCase
 			array('!!foo', '<h3 class="showhide_heading" id="foo">foo</h3>' . "\n"),	// heading 2
 			array('!! foo', '<h3 class="showhide_heading" id="foo"> foo</h3>' . "\n"),	// heading 2
 
+			//heading 1 with collapsible text open
+			array(
+				"!+foo\nheading text section",
+				"<h2 class=\"showhide_heading\" id=\"foo\">foo</h2><a id=\"flipperidHomePage1\" class=\"link\" href=\"javascript:flipWithSign('idHomePage1')\">[-]</a><div id=\"idHomePage1\" class=\"showhide_heading\" style=\"display:block;\">\nheading text section<br />\n</div>",
+				array('page' => 'HomePage'),
+			),
+			
 			array('--foo--', "<del>foo</del><br />\n"),	// strike out
 			array('-- foo --', "-- foo --<br />\n"),	// not parsed
 
