@@ -1816,7 +1816,7 @@ div.multiselect div.selection {
 }
 
 div.trackerfilter-result {
-	max-height: 50ex;
+	max-height: 120ex;
 	overflow: auto;
 }
 
