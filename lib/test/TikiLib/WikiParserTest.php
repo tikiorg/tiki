@@ -56,6 +56,18 @@ class TikiLib_WikiParserTest extends PHPUnit_Framework_TestCase
 				array('page' => 'HomePage'),
 			),
 			
+			//heading 1 with collapsible text closed
+			/* this test is failing due to a regression bug from tiki 5 to tiki 6.
+			 * apparently the problem is on line 6670 of tikilib.php. $options['ck_editor'] is set to false
+			 * this prevent the div display style to be set to 'none'. i'm not sure about the implications of changing
+			 * $options['ck_editor'] or removing it from the the if on line 6670 that is why i haven't fixed the problem - rodrigo
+			 */ 
+			array(
+				"!-foo\nheading text section",
+				"<h2 class=\"showhide_heading\" id=\"foo\">foo</h2><a id=\"flipperidHomePage1\" class=\"link\" href=\"javascript:flipWithSign('idHomePage1')\">[+]</a><div id=\"idHomePage1\" class=\"showhide_heading\" style=\"display:none;\">\nheading text section<br />\n</div>",
+				array('page' => 'HomePage'),
+			),			
+			
 			array('--foo--', "<del>foo</del><br />\n"),	// strike out
 			array('-- foo --', "-- foo --<br />\n"),	// not parsed
 
