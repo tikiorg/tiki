@@ -1085,9 +1085,9 @@ class TrackerLib extends TikiLib
 					$mycats = $categlib->get_viewable_child_categories($fopt['options_array'][0], $all_descends);
 					foreach ($mycats as $acat) {
 						if ($acat['categId'] == $itemcat) {
-							$fopt['categs'] = $acat;
+							$fopt['categs'][] = $acat;
 							$fopt['value'] = $itemcat;
-							break 2;
+							break;
 						}
 					}
 				}
