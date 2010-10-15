@@ -17,16 +17,22 @@
 <form action="messu-compose.php" method="post">
 <table class="normal" >
   <tr>
-    <td class="formcolor"><label for="mess-composeto">{tr}To:{/tr}</label></td><td class="formcolor"><input type="text" name="to" id="mess-composeto" value="{$to|escape}" class="username" />
+    <td class="formcolor"><label for="mess-composeto">{tr}To:{/tr}</label>
+    	{help url="Inter-User+Messages#Composing_messages" desc="{tr}To{/tr}:{tr}Multiple addresses can be separated with semicolons (\";\"){/tr}"}
+    </td><td class="formcolor"><input type="text" name="to" id="mess-composeto" value="{$to|escape}" class="username" />
 		<input type="hidden" name="replyto_hash" value="{$replyto_hash}" />
 		<input type="hidden" name="reply" value="{$reply}" />
 </td>
   </tr>
   <tr>
-    <td class="formcolor"><label for="mess-composecc">{tr}CC:{/tr}</label></td><td class="formcolor"><input type="text" name="cc" id="mess-composecc" value="{$cc|escape}" class="username" /></td>
+    <td class="formcolor"><label for="mess-composecc">{tr}CC:{/tr}</label>
+    	{help url="Inter-User+Messages#Composing_messages" desc="{tr}CC{/tr}:{tr}Multiple addresses can be separated with semicolons (\";\"){/tr}"}
+    </td><td class="formcolor"><input type="text" name="cc" id="mess-composecc" value="{$cc|escape}" class="username" /></td>
   </tr>
   <tr>
-    <td class="formcolor"><label for="mess-composebcc">{tr}BCC:{/tr}</label></td><td class="formcolor"><input type="text" name="bcc" id="mess-composebcc" value="{$bcc|escape}" class="username" /> </td>
+    <td class="formcolor"><label for="mess-composebcc">{tr}BCC:{/tr}</label>
+    	{help url="Inter-User+Messages#Composing_messages" desc="{tr}CC{/tr}:{tr}Multiple addresses can be separated with semicolons (\";\"){/tr}"}
+    </td><td class="formcolor"><input type="text" name="bcc" id="mess-composebcc" value="{$bcc|escape}" class="username" /> </td>
   </tr>
   <tr>
     <td class="formcolor"><label for="mess-prio">{tr}Priority:{/tr}</label></td><td class="formcolor">
