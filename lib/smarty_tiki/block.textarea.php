@@ -68,12 +68,15 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$as_id = $params['id'];
 	
 	include_once('lib/smarty_tiki/block.remarksbox.php');
-	if ($params['_simple'] === 'n' || isset($smarty->_tpl_vars['page']) && $smarty->_tpl_vars['page'] != 'sandbox') {
+	if ($params['_simple'] === 'n' && isset($smarty->_tpl_vars['page']) && $smarty->_tpl_vars['page'] != 'sandbox') {
 		$html .= smarty_block_remarksbox( array( 'type'=>'tip', 'title'=>tra('Tip')),
 			tra('This edit session will expire in') .
 				' <span id="edittimeout">' . (ini_get('session.gc_maxlifetime') / 60) .'</span> '. tra('minutes') . '. ' .
 				tra('<strong>Preview</strong> (if available) or <strong>Save</strong> your work to restart the edit session timer'),
 			$smarty)."\n";
+		if ($prefs['javascript_enabled'] === 'y') {
+			$html = str_replace('<div class="clearfix rbox tip">', '<div class="clearfix rbox tip" style="display:none;">', $html);	// quickfix to stop this box appearing before doc.ready
+		}
 	}
 
 	if ($prefs['feature_ajax'] == 'y' && $prefs['ajax_autosave'] == 'y' && $params['_simple'] == 'n') {	// retrieve autosaved content
@@ -244,6 +247,7 @@ function CKeditor_OnComplete() {
 		$smarty->assign_by_ref('pagedata', htmlspecialchars($content));
 		$smarty->assign('comments', isset($params['comments']) ? $params['comments'] : 'n');
 		$smarty->assign('switcheditor', isset($params['switcheditor']) ? $params['switcheditor'] : 'n');
+		$smarty->assign('toolbar_section', $params['section']);
 		$html .= $smarty->fetch('wiki_edit.tpl');
 
 		$html .= "\n".'<input type="hidden" name="rows" value="'.$params['rows'].'"/>'

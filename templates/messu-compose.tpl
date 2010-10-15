@@ -34,6 +34,7 @@
 			<tr>
 				<td>
 					<label for="mess-composeto">{tr}To:{/tr}</label>
+					{help url="Inter-User+Messages#Composing_messages" desc="{tr}To{/tr}:{tr}Multiple addresses can be separated with semicolons (\";\"){/tr}"}
 				</td>
 				<td>
 					<input type="text" name="to" id="mess-composeto" value="{$to|escape}" class="username" size="80" />
@@ -44,6 +45,7 @@
 			<tr>
 				<td>
 					<label for="mess-composecc">{tr}CC:{/tr}</label>
+					{help url="Inter-User+Messages#Composing_messages" desc="{tr}CC{/tr}:{tr}Multiple addresses can be separated with semicolons (\";\"){/tr}"}
 				</td>
 				<td>
 					<input type="text" name="cc" id="mess-composecc" value="{$cc|escape}" class="username" size="80" />
@@ -52,6 +54,7 @@
 			<tr>
 				<td>
 					<label for="mess-composebcc">{tr}BCC:{/tr}</label>
+					{help url="Inter-User+Messages#Composing_messages" desc="{tr}BCC{/tr}:{tr}Multiple addresses can be separated with semicolons (\";\"){/tr}"}
 				</td>
 				<td>
 					<input type="text" name="bcc" id="mess-composebcc" value="{$bcc|escape}" class="username" size="80" />

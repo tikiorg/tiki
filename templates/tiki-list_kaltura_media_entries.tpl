@@ -17,7 +17,7 @@
 			{include file=tiki-list_kaltura_entries_actions.tpl}
 		<td><input type="checkbox" name="mediaId[]" value="{$item->id}" /></td>
 		<td><a href="#" {popup trigger="onclick" sticky=1 fullhtml="1" text=$smarty.capture.actions|escape:"javascript"|escape:"html"}><img class="athumb" src="{$item->thumbnailUrl}" alt="{$item->description}" height="80" width="120" /></a></td>
-		<td><a href="{$item->downloadUrl}" title="{tr}Download{/tr}">{$item->name}</a></td>
+		<td><a href="tiki-kaltura_video.php?{$entryType}Id={$item->id}" title="{tr}View{/tr}">{$item->name}</a></td>
 		<td>{$item->mediaType}</td>
 		<td>{$item->createdAt|tiki_short_datetime}</td>
 		<td>{$item->statusString}</td>

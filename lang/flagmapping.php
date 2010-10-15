@@ -46,5 +46,6 @@ $flagmapping = array(
     'sv' 	=> array(  'Sweden'),
     'tv' 	=> array(  'Tuvalu'),
     'tw' 	=> array(  'Taiwan'),
-    'uk' 	=> array(  'Ukraine')
+    'uk' 	=> array(  'Ukraine'),
+    'cy'	=> array(  'Wales'),
 );
