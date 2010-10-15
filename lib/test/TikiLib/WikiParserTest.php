@@ -52,8 +52,8 @@ class TikiLib_WikiParserTest extends PHPUnit_Framework_TestCase
 			array('--foo--', "<del>foo</del><br />\n"),	// strike out
 			array('-- foo --', "-- foo --<br />\n"),	// not parsed
 
-			array('[foo]', '<a class="wiki"	href="foo" rel="">foo</a><br />' . "\n"), // link
-			array('[foo|bar]', '<a class="wiki"	href="foo" rel="">bar</a><br />' . "\n"), // link
+			array('[foo]', '<a class="wiki"  href="foo" rel="">foo</a><br />' . "\n"), // link
+			array('[foo|bar]', '<a class="wiki"  href="foo" rel="">bar</a><br />' . "\n"), // link
 			
 			array('[[foo', '[foo<br />' . "\n"), // Square brackets
 			array('[[foo]]', '[[foo]]<br />' . "\n"), // Square brackets
