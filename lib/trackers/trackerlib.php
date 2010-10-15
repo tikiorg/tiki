@@ -1080,11 +1080,17 @@ class TrackerLib extends TikiLib
 				global $categlib;
 				include_once('lib/categories/categlib.php');
 				$itemcats = $categlib->get_object_categories('trackeritem', $itemId);
-				$itemcat = $itemcats[0];
-				$top = $fopt['options_array'][0];
-				$fopt['categs'] = $categlib->get_category_info($itemcat, false, $top);
-				unset ($top);
-				$fopt['value'] = $itemcat;
+				$all_descends = (isset($fopt['options_array'][3]) && $fopt['options_array'][3] == 1);
+				foreach ($itemcats as $itemcat) {
+					$mycats = $categlib->get_viewable_child_categories($fopt['options_array'][0], $all_descends);
+					foreach ($mycats as $acat) {
+						if ($acat['categId'] == $itemcat) {
+							$fopt['categs'] = $acat;
+							$fopt['value'] = $itemcat;
+							break 2;
+						}
+					}
+				}
 				break;
 			case 'l':
 				if ( isset($fopt['options_array'][2]) && isset($fopt['options_array'][2]) && isset($fopt['options_array'][3])) {
@@ -4192,7 +4198,8 @@ class TrackerLib extends TikiLib
 		foreach ($all as $f) {
 			if (!empty($item_categs) && $f['type'] == 'e') {//category
 				$f['options_array'] = explode(',',$f['options']);
-				$field_categs = $categlib->get_child_categories($f['options_array'][0], true);
+				$all_descends = (isset($f['options_array'][3]) && $f['options_array'][3] == 1);
+				$field_categs = $categlib->get_child_categories($f['options_array'][0], $all_descends);
 				$aux = array();
 				foreach ($field_categs as $cat) {
 					$aux[] = $cat['categId'];
