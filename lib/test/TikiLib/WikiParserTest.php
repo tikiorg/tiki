@@ -28,7 +28,7 @@ class TikiLib_WikiParserTest extends PHPUnit_Framework_TestCase
 			array('---', "<hr />\n"),
 			array('%%%', "<br /><br />\n"), // Line break
 			
-			//array("''foo''", '<i>foo</i>' . "<br />\n"),
+			array("''foo''", '<em>foo</em>' . "<br />\n"),
 
 			array('__foo__', "<strong>foo</strong><br />" . "\n"),	 // bold
 			array('__ foo __', "<strong> foo </strong><br />" . "\n"),	 // bold
@@ -70,17 +70,15 @@ class TikiLib_WikiParserTest extends PHPUnit_Framework_TestCase
 
 			array(";foo1:bar1\n;foo2:bar2", "<dl><dt>foo1</dt><dd>bar1</dd></dl><br />\n<dl><dt>foo2</dt><dd>bar2</dd></dl><br />\n"), // Definition list
 
-// These ones are failing for some reason
-//					
-//			array("* foo\n* bar\n", "<ul><li> foo\n</li><li> bar\n</li></ul>\n\n"), // Bulleted list
-//			array("* foo1\n** foo11\n**foo12\n* bar1\n", "<ul><li> foo1\n<ul><li> foo11\n</li><li>foo12\n</li></ul></li><li> bar1\n</li></ul>\n\n"), // Nested Bulleted list
-//			array("* foo\n+ Continuation1\n+Continuation2\n* bar\n", "<ul><li> foo\n<br /> Continuation1\n<br />Continuation2\n</li><li> bar\n</li></ul>\n\n"), // Bulleted list with continuation
-//
-//			array("# foo\n# bar\n", "<ol><li> foo\n</li><li> bar\n</li></ol>\n\n"),	// Numbered list
-//			array("# foo1\n## foo11\n##foo12\n# bar1\n", "<ol><li> foo1\n<ol><li> foo11\n</li><li>foo12\n</li></ol></li><li> bar1\n</li></ol>\n\n"),	// Nested Numbered list
-//			array("# foo\n+ Continuation1\n+Continuation2\n# bar\n", "<ol><li> foo\n<br /> Continuation1\n<br />Continuation2\n</li><li> bar\n</li></ol>\n\n"), // Numbered list with continuation
-//
-//			array("||r1c1|r1c2\nr2c1|r2c2||", "||r1c1|r1c2<br />\nr2c1|r2c2||<br />\n"),
+			array("* foo\n* bar\n", "<ul><li> foo\n</li><li> bar\n</li></ul><br />\n"), // Bulleted list
+			array("* foo1\n** foo11\n**foo12\n* bar1\n", "<ul><li> foo1\n<ul><li> foo11\n</li><li>foo12\n</li></ul></li><li> bar1\n</li></ul><br />\n"), // Nested Bulleted list
+			array("* foo\n+ Continuation1\n+Continuation2\n* bar\n", "<ul><li> foo\n<br /> Continuation1\n<br />Continuation2\n</li><li> bar\n</li></ul><br />\n"), // Bulleted list with continuation
+
+			array("# foo\n# bar\n", "<ol><li> foo\n</li><li> bar\n</li></ol><br />\n"),	// Numbered list
+			array("# foo1\n## foo11\n##foo12\n# bar1\n", "<ol><li> foo1\n<ol><li> foo11\n</li><li>foo12\n</li></ol></li><li> bar1\n</li></ol><br />\n"),	// Nested Numbered list
+			array("# foo\n+ Continuation1\n+Continuation2\n# bar\n", "<ol><li> foo\n<br /> Continuation1\n<br />Continuation2\n</li><li> bar\n</li></ol><br />\n"), // Numbered list with continuation
+
+			array("||r1c1|r1c2\nr2c1|r2c2||", '<table class="wikitable"><tr><td class="wikicell" >r1c1</td><td class="wikicell" >r1c2</td></tr><tr><td class="wikicell" >r2c1</td><td class="wikicell" >r2c2</td></tr></table><br />' . "\n"),
 		);
 	}
 }
