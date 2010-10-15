@@ -46,7 +46,7 @@ function smarty_function_interactivetranslation($params, &$smarty) {
 		\$('#intertrans-form').hide();
 		return false;
 	} );
-	\$('body').css('padding-top', 50 );
+	\$('body').css('padding-top', 64);
 
 	var interTransDone = false;
 	\$('#intertrans-form form').submit( function( e ) {
