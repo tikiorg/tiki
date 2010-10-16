@@ -5391,6 +5391,9 @@ class TikiLib extends TikiDb_Bridge
 			$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
 			$plugin_result = preg_replace('/<script.*?<\/script>/mi', '', $plugin_result);
 		}
+		if (!in_array($name, array('html'))) {		// remove <p> and <br>s from non-html
+			$data = str_replace(array('<br />', '<p>', '</p>', "\t"), '', $data);
+		}
 		
 		if ($this->contains_html_block($plugin_result)) {
 			$elem = 'div';
@@ -5756,8 +5759,10 @@ class TikiLib extends TikiDb_Bridge
 		
 		if (empty($options['ck_editor'])) $options['ck_editor'] = false;
 		
+		$old_wysiwyg_parsing = null;
 		if ($options['ck_editor']) {
 			global $headerlib;
+			$old_wysiwyg_parsing = $headerlib->wysiwyg_parsing;
 			$headerlib->wysiwyg_parsing = true;
 		}
 		// if simple_wiki is true, disable some wiki syntax
@@ -5946,8 +5951,8 @@ class TikiLib extends TikiDb_Bridge
 		foreach ($this->pos_handlers as $handler) {
 			$data = $handler($data);
 		}
-		if ($options['ck_editor']) {
-			$headerlib->wysiwyg_parsing = false;
+		if ($old_wysiwyg_parsing !== null) {
+			$headerlib->wysiwyg_parsing = $old_wysiwyg_parsing;
 		}
 		return $data;
 	}
