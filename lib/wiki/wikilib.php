@@ -937,20 +937,6 @@ class WikiLib extends TikiLib
 		}
 	}
 
-	function bestlang($url) {
-		global $prefs;
-		if ($prefs['feature_multilingual'] != 'y' || $prefs['feature_best_language'] != 'y') {
-			return $url;
-		}
-		$parsed_url = parse_url($url);
-		if (!empty($parsed_url["query"])) {
-			$ret = $url . "&amp;bl=y";
-		} else {
-			$ret = $url . "?bl=y";
-		}
-		return $ret; 	
-	}
-
 	function url_for_operation_on_a_page($script_name, $page, $with_next) {
 		$href = "$script_name?page=".urlencode($page);
 		if ($with_next) {

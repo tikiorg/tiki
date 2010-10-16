@@ -292,7 +292,7 @@ if (!empty($multiprint_pages)) {
 			$gmapobjectarray[] = array('type' => 'wiki page',
 				'id' => $p["pageName"],
 				'title' => $p["pageName"],
-				'href' => "tiki-index.php?page=" . urlencode($p["pageName"]) . "&bl=y",
+				'href' => "tiki-index.php?page=" . urlencode($p["pageName"]),
 			);
 		}
 	}

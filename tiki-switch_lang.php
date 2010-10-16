@@ -62,14 +62,12 @@ if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.
 			$orig_url = preg_replace('/(.*)(tiki-index.php)$/', "$1$2?page=$newPage", $orig_url);
 		}
 	}
-	$orig_url = preg_replace('/(.*)&bl=y(.*)/', '$1$2', $orig_url);
+	$orig_url = preg_replace('/(.*)no_bl=y&(.*)/', '$1$2', $orig_url);
+	$orig_url = preg_replace('/(.*)&no_bl=y(.*)/', '$1$2', $orig_url);
 	if ($prefs['feature_sefurl'] == 'y') {
 		include_once('tiki-sefurl.php');
 		$orig_url = filter_out_sefurl($orig_url, $smarty);
 	}
-} elseif (!preg_match('/[?&]lang=/', $orig_url) && !preg_match('/[?&]bl=/', $orig_url)) {
-	if (strstr($orig_url, '?')) $orig_url.= '&bl=y';
-	else $orig_url.= '?bl=y';
 }
 $orig_url = preg_replace('/(.*\?.*)switchLang=[a-zA-Z-_]*&?(.*)/', '$1$2', $orig_url);
 $orig_url = preg_replace('/(.*[?&]lang=)[a-zA-Z-_]*(&?.*)/', '$1' . $_REQUEST['language'] . '$2', $orig_url); // for tiki-view_lang.php?lang=en
