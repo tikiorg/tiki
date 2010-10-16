@@ -1173,3 +1173,7 @@ table.treeTable .parent td {
 #captchaImg {
 	border: 1px solid black;
 }
+
+.ui-tabs .ui-tabs-nav li a {
+	padding: 0 0 0 0;
+}
