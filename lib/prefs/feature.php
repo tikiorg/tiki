@@ -49,6 +49,7 @@ function prefs_feature_list() {
 		'feature_galleries' => array(
 			'name' => tra('Image Gallery'),
 			'description' => tra('Collections of graphic images for viewing or downloading (photo album)'),
+			'warning' => tra('You can use file galleries instead.'),
 			'type' => 'flag',
 			'help' => 'Image+Gallery',
 		),
@@ -154,6 +155,7 @@ function prefs_feature_list() {
 		'feature_faqs' => array(
 			'name' => tra('FAQ'),
 			'description' => tra('Frequently asked questions and answers'),
+			'warning' => tra('You can use wiki pages instead.'),
 			'help' => 'FAQ',
 			'type' => 'flag',
 		),
