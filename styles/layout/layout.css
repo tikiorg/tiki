@@ -70,11 +70,14 @@ div.iconmenu {
 	display: inline;
 }
 
-/*
-select[multiple] {
-	height: 10em;
+/* allow disabled elements to show up - FIXME
+ * should be moved into supporting themes and made not important one day */
+select:disabled,
+option:disabled,
+input:disabled,
+textarea:disabled {
+	color: #888 !important;
 }
-*/
 
 #col2 select,
 #col3 select,
