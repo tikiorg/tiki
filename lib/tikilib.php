@@ -7490,7 +7490,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 	}
 
-	private function plugin_find_implementation( & $implementation, & $body, & $args ) {
+	private function plugin_find_implementation( & $implementation, & $data, & $args ) {
 		if( $info = $this->plugin_alias_info( $implementation ) ) {
 			$implementation = $info['implementation'];
 
