@@ -128,7 +128,7 @@
 	{/section}
 {/if}
 
-<div id="top" class="wikitext clearfix">
+<div id="top" class="wikitext clearfix{if $prefs.feature_page_title neq 'y'} nopagetitle{/if}">
 	{if !$hide_page_header}
 		{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0]) and $prefs.freetags_show_middle eq 'y'}
 			{include file='freetag_list.tpl'}
