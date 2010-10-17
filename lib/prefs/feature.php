@@ -400,7 +400,7 @@ function prefs_feature_list() {
 		),
 		'feature_wiki_save_draft' => array(
 			'name' => tra('Save draft'),
-			'warning' => tra('Requires AJAX (experimental)'),
+			'warning' => tra('Experimental (Requires AJAX)'),
 			'dependencies' => array(
 				'feature_ajax',
 			),
