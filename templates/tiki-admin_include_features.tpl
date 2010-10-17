@@ -113,9 +113,39 @@
 				{preference name=feature_xmlrpc}
 				{preference name=feature_debug_console}
 				{preference name=feature_tikitests}
-				{preference name=log_tpl}
 				{preference name=disableJavascript}
+				{preference name=smarty_compilation}
 			</div>
+
+			<div class="admin">
+				<fieldset>
+					<legend>{tr}Logging and Reporting{/tr}</legend>
+					<div class="adminoptionbox">
+						{preference name=error_reporting_level}
+						<div class="adminoptionboxchild">
+							{preference name=error_reporting_adminonly label="{tr}Visible to admin only{/tr}"}
+							{preference name=smarty_notice_reporting label="{tr}Include Smarty notices{/tr}"}
+						</div>
+					</div>
+
+					{preference name=log_mail}
+					{preference name=log_sql}
+					<div class="adminoptionboxchild" id="log_sql_childcontainer">
+						{preference name=log_sql_perf_min}
+					</div>
+					{preference name=feature_bot_bar_debug}
+					{preference name=log_tpl}
+				</fieldset>
+			</div>
+
+			<div class="admin">
+				<fieldset>
+					<legend>{tr}Custom Code{/tr}</legend>
+					{preference name="header_custom_js"}
+					{preference name=smarty_security}
+				</fieldset>
+			</div>
+			
 {/tab}
 
 {* ---------- New features ------------ *}
