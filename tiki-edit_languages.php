@@ -138,7 +138,7 @@ if (isset($_REQUEST["exp_language"])) {
 
 // Export
 if (isset($_REQUEST['downloadFile'])) {
-	check_ticket('import-lang');
+	check_ticket('edit-languages');
 	$data = $export_language->createCustomFile();
 	header ("Content-type: application/unknown");
 	header ("Content-Disposition: inline; filename=language.php");
@@ -174,7 +174,7 @@ $headerlib->add_cssfile('css/admin.css');
 $headerlib->add_jsfile('lib/language/tiki-edit_languages.js');
 
 $headtitle = tra('Edit languages');
-$description = tra('Edit or export/import languages');
+$description = tra('Edit or export languages');
 $crumbs[] = new Breadcrumb($headtitle, $description, '', '', '');
 $headtitle = breadcrumb_buildHeadTitle($crumbs);
 $smarty->assign('headtitle', $headtitle);
