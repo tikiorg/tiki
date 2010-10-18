@@ -27,6 +27,14 @@ class Language extends TikiDb_Bridge
 	public $lang;
 
 	/**
+	 * Whether or not there is translations saved in the
+	 * database for this particular language 
+	 * 
+	 * @var string
+	 */
+	public $hasDbTranslations = false;
+	
+	/**
 	 * Set the language based on the paratemer or if
 	 * no parameter given uses Tiki user or global preference
 	 */
@@ -244,7 +252,9 @@ class Language extends TikiDb_Bridge
 
 	/**
 	 * Return all the custom translations in the database
-	 * for the current language
+	 * for the current language and the original translations
+	 * from language.php if existent. Also set $this->hasDbTranslations
+	 * property to true if one or more translations exist.
 	 *
 	 * @param string $sort_mode
 	 * @param int $maxRecords
@@ -276,6 +286,10 @@ class Language extends TikiDb_Bridge
 		$query = "SELECT * FROM `tiki_language` WHERE `lang`=? AND `source` != '' AND `changed` = 1 $searchQuery ORDER BY " . $this->convertSortMode($sort_mode);
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 
+		if ($result->numrows > 0) {
+			$this->hasDbTranslations = true;
+		}
+		
 		$translations = array();
 		
 		while ($res = $result->fetchRow()) {

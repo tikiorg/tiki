@@ -57,6 +57,11 @@ if (isset($_REQUEST["add_tran"])) {
 	}
 }
 
+// Delete all db translations
+if (isset($_REQUEST['delete_all']) && $tiki_p_admin) {
+	$language->deleteTranslations();
+}
+
 //Selection for untranslated Strings and edit translations
 if (isset($_REQUEST["action"])) {
 	$action = $_REQUEST["action"];
@@ -126,6 +131,7 @@ if ($action == "edit_rec_sw" || $action == "edit_tran_sw") {
 	}
 	$smarty->assign_by_ref('translations', $data['translations']);
 	$smarty->assign('total', $data['total']);
+	$smarty->assign('hasDbTranslations', $language->hasDbTranslations);
 }
 
 if (isset($_REQUEST["exp_language"])) {
