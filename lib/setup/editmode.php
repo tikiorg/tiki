@@ -12,7 +12,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) != FALSE) {
 global $parsemode_setup, $tiki_p_admin, $tiki_p_use_HTML, $prefs, $info, $jitRequest;
 $parsemode_setup = 'y';
 $is_html = false;
-if ($prefs['feature_wysiwyg'] == 'y') {
+if ($prefs['feature_wysiwyg'] == 'y' && $prefs['javascript_enabled'] == 'y') {
 	if (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg']=='y' and $prefs['wysiwyg_optional'] == 'y') {
 		$_SESSION['wysiwyg'] = 'y';
 	} elseif (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal']=='y' and $prefs['wysiwyg_optional'] == 'y') {
