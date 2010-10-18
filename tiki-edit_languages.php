@@ -265,7 +265,7 @@ if (isset($_REQUEST['downloadFile'])) {
 }
 
 // Write to language.php
-if (isset($_REQUEST['exportToLanguage'])) {
+if (isset($_REQUEST['exportToLanguage']) && $tiki_p_admin == 'y') {
 	try {
 		$stats = $language->writeLanguageFile();
 	} catch (Exception $e) {
