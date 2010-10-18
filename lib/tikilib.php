@@ -7582,9 +7582,12 @@ class TikiLib extends TikiDb_Bridge
 		} elseif ( $_user ) {
 			// ... else, get the user timezone preferences from DB
 			$tz = $this->get_user_preference($_user, 'display_timezone');
-			if ( ! TikiDate::TimezoneIsValidId($tz) ) {
-				$tz = $prefs['server_timezone'];
-			}
+		}
+		if ( ! TikiDate::TimezoneIsValidId($tz) ) {
+			$tz = $prefs['server_timezone'];
+		}
+		if ( ! TikiDate::TimezoneIsValidId($tz) ) {
+			$tz = 'UTC';
 		}
 		return $tz;
 	}
