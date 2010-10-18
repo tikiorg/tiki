@@ -1459,7 +1459,7 @@ function get_default_prefs() {
 		'count_admin_pvs' => 'n',
 		'default_mail_charset' =>'utf-8',
 		'error_reporting_adminonly' => 'y',
-		'error_reporting_level' => 0,
+		'error_reporting_level' => 2039,	//	E_ALL & ~E_NOTICE
 		'smarty_notice_reporting' => 'n',
 		'smarty_security' => 'y',
 		'smarty_compilation' => 'modified',
