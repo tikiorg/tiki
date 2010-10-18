@@ -54,6 +54,7 @@
 
 				<div class="admin">
 					{preference name=feature_article_comments}
+					{preference name=feature_wiki_comments}
 					<div class="adminoptionboxchild" id="feature_wiki_comments_childcontainer">
 						{preference name=wiki_comments_displayed_default}
 						{preference name=wiki_comments_per_page}
@@ -71,7 +72,6 @@
 					{preference name=feature_poll_comments}
 					{preference name=feature_faq_comments}
 					{preference name=wikiplugin_trackercomments}
-					{preference name=feature_wiki_comments}
 				</div>
 			</fieldset>
 
