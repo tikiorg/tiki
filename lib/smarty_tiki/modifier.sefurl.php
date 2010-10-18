@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	exit;
 }
 
-function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_langs='' ) {
+function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_langs='', $with_title='y' ) {
 	global $prefs, $tikilib, $wikilib, $smarty;
 	include_once('lib/wiki/wikilib.php');
 
@@ -78,7 +78,7 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 	}
 	if ($prefs['feature_sefurl'] == 'y') {
 		include_once('tiki-sefurl.php');
-		return filter_out_sefurl($href, $smarty, $type, '', $with_next);
+		return filter_out_sefurl($href, $smarty, $type, '', $with_next, $with_title);
 	} else {
 		return $href;
 	}
