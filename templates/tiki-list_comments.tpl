@@ -34,6 +34,12 @@
 				{self_link _sort_arg="sort_mode" _sort_field='approved'}{tr}Approval{/tr}{/self_link}
 			</th>
 		{/if}
+		{if $tiki_p_admin_comments eq 'y' and $prefs.comments_archive eq 'y'}
+			<th>
+				{assign var=numbercol value=`$numbercol+1`}
+				{self_link _sort_arg="sort_mode" _sort_field='archive'}{tr}Archive{/tr}{/self_link}
+			</th>
+		{/if}
 		<th></th>
 	</tr>
 	
@@ -112,6 +118,16 @@
 				</td>
 			{/if}
 
+			{if $tiki_p_admin_comments eq 'y' and $prefs.comments_archive eq 'y'}
+				<td class="archive">
+					{if $comments[ix].archived eq 'n'}
+						{self_link archive='archive' checked=$id _icon='folder'}{tr}Archive{/tr}{/self_link}
+					{else}
+						{self_link archive='unarchive' checked=$id _icon='ofolder'}{tr}Unarchive{/tr}{/self_link}
+					{/if}
+				</td>
+			{/if}
+
 			<td>
 				<a title="{tr}More info{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" center=true text=$smarty.capture.over_more_info|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='information' alt="{tr}More info{/tr}"}</a>
 			</td>
@@ -128,6 +144,10 @@
 		{if $tiki_p_admin_comments eq 'y' and $prefs.feature_comments_moderation eq 'y'}
 			{icon _id='comment_approve' _tag='input_image' name='approve' value='y' alt="{tr}Approve{/tr}"}
 			{icon _id='comment_reject' _tag='input_image' name='approve' value='r' alt="{tr}Reject{/tr}"}
+		{/if}
+		{if $tiki_p_admin_comments eq 'y' and $prefs.comments_archive eq 'y'}
+			{icon _id='folder' _tag='input_image' name='archive' value='archive' alt="{tr}Archive{/tr}"}
+			{icon _id='ofolder' _tag='input_image' name='archive' value='unarchive' alt="{tr}Unarchive{/tr}"}
 		{/if}
 	</div>
 	</form>

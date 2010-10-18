@@ -94,6 +94,17 @@ if (isset($_REQUEST['checked'])) {
 			$commentslib->approve_comment($id, $_REQUEST['approve']);
 		}
 	}
+	
+	// Archive/unarchive comment(s)
+	if ($prefs['comments_archive'] == 'y' && isset($_REQUEST['archive']) && in_array($_REQUEST['archive'], array('archive', 'unarchive'))) {
+		foreach($checked as $id) {
+			if ($_REQUEST['archive'] == 'archive') {
+				$commentslib->archive_thread($id);
+			} else if ($_REQUEST['archive'] == 'unarchive') {
+				$commentslib->unarchive_thread($id);
+			}
+		}
+	}
 }
 if (isset($_REQUEST["sort_mode"])) {
 	$sort_mode = $_REQUEST["sort_mode"];

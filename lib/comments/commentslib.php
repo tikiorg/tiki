@@ -1901,17 +1901,17 @@ class Comments extends TikiLib
 	}
 
 	/**
-	 * Check if a object has any archived comments
+	 * Return the number of arquived comments for an object
 	 *
 	 * @param int|string $objectId
 	 * @param string $objectType
-	 * @return bool
+	 * @return int the number of archived comments for an object
 	 */
-	function object_has_archived_comments($objectId, $objectType) {
-		$query = 'SELECT * FROM `tiki_comments` WHERE `object` = ? AND `objectType` = ? AND `archived` = ?';
+	function count_object_archived_comments($objectId, $objectType) {
+		$query = 'SELECT COUNT(*) FROM `tiki_comments` WHERE `object` = ? AND `objectType` = ? AND `archived` = ?';
 		$result = $this->getOne($query, array($objectId, $objectType, 'y'));
 
-		return $result !== NULL;	
+		return $result;	
 	}
 
 	/* administrative functions to get all the comments of some types + enlarge find

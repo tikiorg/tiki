@@ -103,9 +103,25 @@
 									<a class="link" href="tiki-list_comments.php?types_section={$section}&amp;findfilter_approved=n{if isset($blogId)}&amp;blogId={$blogId}{/if}">{tr}queued:{/tr} {$queued}</a>
 									&nbsp;&nbsp;
 								{/if}
-								{if $prefs.comments_archive eq 'y' && $has_archived_comments}
-									<span class="button" id="comments_showArchived"><a>{tr}Show archived comments{/tr}</a></span>
-									<span class="button" id="comments_hideArchived" style="display: none;"><a>{tr}Hide archived comments{/tr}</a></span>
+								{if $prefs.comments_archive eq 'y' && $count_archived_comments > 0}
+									<span class="button" id="comments_showArchived">
+										<a>
+											{if $count_archived_comments == 1}
+												{tr 0=$count_archived_comments}Show %0 archived comment{/tr}
+											{else}
+												{tr 0=$count_archived_comments}Show %0 archived comments{/tr}
+											{/if}
+										</a>
+									</span>
+									<span class="button" id="comments_hideArchived" style="display: none;">
+										<a>
+											{if $count_archived_comments == 1}
+												{tr 0=$count_archived_comments}Hide %0 archived comment{/tr}
+											{else}
+												{tr 0=$count_archived_comments}Hide %0 archived comments{/tr}
+											{/if}
+										</a>
+									</span>
 								{/if}
 							{/if}
 							{if $prefs.feature_comments_locking eq 'y'}

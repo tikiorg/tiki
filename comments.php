@@ -297,7 +297,7 @@ if ((!isset($forum_mode) || $forum_mode == 'n') && $tiki_p_admin_comments == 'y'
 		}
 		
 		$object = explode(':', $comments_objectId);
-		$smarty->assign('has_archived_comments', $commentslib->object_has_archived_comments($object[1], $object[0]));
+		$smarty->assign('count_archived_comments', $commentslib->count_object_archived_comments($object[1], $object[0]));
 	}
 }
 
