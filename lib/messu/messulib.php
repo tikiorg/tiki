@@ -73,8 +73,12 @@ class Messu extends TikiLib
 				$smarty->assign('mail_body', stripslashes($body));
 				$mail = new TikiMail($user);
 				$lg = $this->get_user_preference($user, 'language', $prefs['site_language']);
-				$s = $smarty->fetchLang($lg, 'mail/messu_message_notification_subject.tpl');
-				$mail->setSubject(sprintf($s, $_SERVER["SERVER_NAME"]));
+				if (empty($subject)) {
+					$s = $smarty->fetchLang($lg, 'mail/messu_message_notification_subject.tpl');
+					$mail->setSubject(sprintf($s, $_SERVER["SERVER_NAME"]));
+				} else {
+					$mail->setSubject($subject);
+				}
 				$mail_data = $smarty->fetchLang($lg, 'mail/messu_message_notification.tpl');
 				$mail->setText($mail_data);
 				
