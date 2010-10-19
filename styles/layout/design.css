@@ -11,15 +11,55 @@ html#print {
 	color: #000;
 }
 
+body.db_error {
+	background: none;
+}
+
 body.fullscreen {
 	text-align: left;
 	background: #fff;
 }
 
-/* FCKeditor contrast */
+#tiki-clean {
+	background: #fff;
+	color: #000;
+}
+
+/* CKeditor contrast */
 body.wikitext {
 	background: #fff;
 	color: #000;
+}
+
+/* Ajax Loading Overlay */
+div#ajaxLoadingBG {
+	background: transparent url(../../img/overlay-light.png);
+}
+div#ajaxLoading {
+	font-size: 2em;
+	font-weight: bold;
+	color: #333;
+	background: transparent url(../../img/loading-light.gif) no-repeat 50% 50%;
+}
+
+/* ColorBox */
+#cboxTitle {
+	background-color: #fff;
+}
+
+/* Autosave Preview handle */
+#autosave_preview_grippy {
+	background-color: #ccc;
+	background-image: url("../../pics/icons/shading.png");
+}
+
+/* allow disabled elements to show up - FIXME
+ * should be moved into supporting themes and made not important one day */
+select:disabled,
+option:disabled,
+input:disabled,
+textarea:disabled {
+	color: #888 !important;
 }
 
 fieldset {
@@ -68,6 +108,11 @@ span.button.highlight a {
 /* Since button background is actually applied to the link within the button, apply button highlight to same bg area as normal button state . */
 span.button.highlight {
 	background: inherit;
+}
+
+ul.jumplinks a:active {
+	background: #ffe4e1;
+	color: #0000cd;
 }
 
 /* Highlight effect is just visual distinction, so no need for block element. */
@@ -125,6 +170,17 @@ input[type=radio] {
 	bottom: 3px;
 	right: 10px;
 	font-size: 90%;
+}
+
+span.pass a,
+span.pass a:visited,
+span.pass a:hover,
+span.register a,
+span.register a:visited,
+span.register a:hover,
+div.logged-in a,
+li.login_link ul li a {
+	background: none !important;
 }
 
 /* Center column */
@@ -276,6 +332,7 @@ ul.categories li {
 .toolbars-picker {
 	background: #fff;
 	border: thin solid #000;
+	color: #000;
 }
 
 .toolbars-picker a {
@@ -374,6 +431,22 @@ div.help_section {
 
 .box-switch_lang ul {
 	padding: 0 1em;
+}
+
+/* Icons */
+a.icon,
+img.icon {
+	border: 0 !important;
+	background: transparent;
+}
+
+/* Tabs */
+.tabcontent table {
+	background: transparent;
+}
+
+table.admin div#content1 div.tabcontent div.cbox {
+	background: transparent;
 }
 
 /* To display content without module-style background and border. */
@@ -524,10 +597,6 @@ caption {
 
 body.tiki_wiki #comments {
 	padding: 1em;
-}
-
-#wikihelp-tab table td {
-	padding: 2px;
 }
 
 p.editdate {
@@ -709,6 +778,52 @@ small.description {
 	padding: 5px 0px 15px 0px;
 }
 
+/* Comment Annotations */
+
+dl.note-list {
+	background: #fff;
+	color: #000;
+	border: solid thin black;
+}
+
+#note-editor-comment {
+	background: #fff;
+	color: #000;
+	border: #999 1px solid;
+}
+
+.note-editor-text {
+	background: #eee;
+	color: #000;
+}
+
+.note-list .postbody-title {
+	background: #ccc;
+	color: #000;
+}
+
+.note-list .title a {
+	color: #000;
+}
+
+/* Comments moderation */
+.post-approved-n {
+	border-left: 3px dotted blue;
+}
+
+.post-approved-r {
+	border-left: 3px double red;
+}
+
+.post-approved-r .content * {
+	background: url(../../img/icons2/dots.gif);
+}
+
+
+#wikihelp-tab table td {
+	padding: 2px;
+}
+
 /**** Image Galleries ****/
 
 p.norecords {
@@ -877,6 +992,11 @@ div.faqquestion {
 
 div.faqanswer {
 	padding: 0 12px 4px 12px;
+}
+
+/***** Forums *****/
+.sub_comment_area {
+	background: url("../../img/edge.gif") no-repeat top left;
 }
 
 /***** Quizzes *****/
@@ -1154,6 +1274,91 @@ table.treeTable .parent td {
 	background-repeat: no-repeat; background-position: right; background-image: url(../../pics/icons/resultset.png);
 }
 
+/* Perspectives (edit) */
+.dropzone {
+	color: #000;
+	background-color: #fff;
+	border: #999 solid 2px;
+	border-bottom-color: #ccc;
+	border-right-color: #ccc;
+}
+
+.dropzone > div:hover {
+	background-color: #eee;
+} 
+
+/* page contribution by author / wikiplugin_author */
+
+.author0 {
+	color: black;
+}
+
+.author1 {
+	color: blue;
+}
+
+.author2 {
+	color: red;
+}
+
+.author3 {
+	color: green;
+}
+
+.author4 {
+	color: maroon;
+}
+
+.author5 {
+	color: yellow;
+	background: gray;
+}
+
+.author6 {
+	color: aqua;
+	background: gray;
+}
+
+.author7 {
+	color: fuchsia;
+	background: gray;
+}
+
+.author8 {
+	color: teal;
+}
+
+.author9 {
+	color: purple;
+}
+
+.author10 {
+	color: white;
+	background: navy;
+}
+
+.author11 {
+	color: olive;
+}
+
+.author12 {
+	color: gray;
+}
+
+.author13 {
+	color: navy;
+}
+
+.author14 {
+	color: silver;
+	background: blue;
+}
+
+.author15 {
+	color: lime;
+	background: gray;
+}
+
  /* wikiplugin_tracker */
 .mandatory_note {
 	font-style: italic;
@@ -1171,4 +1376,16 @@ table.treeTable .parent td {
 
 #captchaImg {
 	border: 1px solid black;
+}
+/* interactive translations */
+
+#intertrans-indicator {
+	background-color: #ade;
+	color: #000;
+}
+
+#intertrans-form {
+	background-color: #eff;
+	border: #799 solid 2px;
+	color: #000;
 }

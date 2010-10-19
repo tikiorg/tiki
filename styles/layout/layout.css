@@ -10,10 +10,6 @@ body {
 	width: 100%;
 }
 
-body.db_error {
-	background: none;
-}
-
 body.db_error #tiki-main {
 	max-width: 800px;
 	margin: 1em auto;
@@ -67,15 +63,6 @@ input[type=submit] {
 
 div.iconmenu {
 	display: inline;
-}
-
-/* allow disabled elements to show up - FIXME
- * should be moved into supporting themes and made not important one day */
-select:disabled,
-option:disabled,
-input:disabled,
-textarea:disabled {
-	color: #888 !important;
 }
 
 #col2 select,
@@ -236,17 +223,6 @@ li#register_link {
 
 #sitesubtitle { 
 	line-height: 0.9em;
-}
-
-span.pass a,
-span.pass a:visited,
-span.pass a:hover,
-span.register a,
-span.register a:visited,
-span.register a:hover,
-div.logged-in a,
-li.login_link ul li a {
-	background: none !important;
 }
 	/*
 li#login_link span.register {
@@ -598,8 +574,6 @@ ul.jumplinks a:active {
 	position: absolute;
 	top: 9010px;
 	left: 9010px;
-	background: #ffe4e1;
-	color: #0000cd;
 	padding: 5px;
 	font-weight: bold;
 	border: 2px solid #191970;
@@ -619,8 +593,6 @@ ul.jumplinks a:active {
 #tiki-clean {
 	text-align: left;
 	padding: 1em;
-	background: #fff;
-	color: #000;
 }
 
 /****** Misc. Global Classes (layout and style) ****/
@@ -733,14 +705,9 @@ a.tikihelp:hover {
 	vertical-align: text-top;
 }
 
-#rss img {
-	vertical-align: middle;
-}
-
+#rss img,
 a.icon,
 img.icon {
-	border: 0 !important;
-	background: transparent;
 	vertical-align: middle;
 }
 
@@ -806,8 +773,6 @@ span.toolbar-list {
 	position: absolute;
 	width: 288px;
 	z-index: 300;
-	background-color: #fff;
-	color: #000;
 	line-height: 12px;
 }
 
@@ -1004,11 +969,6 @@ wikitext or custom content area. Similarly for three or four modules (or divs) a
 	overflow-x: hidden;
 }
 
-#autosave_preview_grippy {
-	background-color: #ccc;
-	background-image: url("../../pics/icons/shading.png");
-}
-
 /***** Tables, Tabs ****/
 /** Tables **/
 
@@ -1081,10 +1041,8 @@ tr.diffheader {
 }
 
 .tabcontent table {
-/*	margin: 1% auto 2% auto; */
 	text-align: left;
 	width: auto;
-	background: transparent;
 }
 
 .tabcontent table.normal {
@@ -1093,10 +1051,6 @@ tr.diffheader {
 
 .tabcontent table td {
 	padding: 5px;
-}
-
-table.admin div#content1 div.tabcontent div.cbox {
-	background: transparent;
 }
 
 /***** Wiki *****/
@@ -1545,7 +1499,6 @@ body.tiki_forums table.normal {
 
 .sub_comment_area {
 	clear: both;
-	background: url("../../img/edge.gif") no-repeat top left;
 }
 
 .forum_actions .actions {
@@ -1608,31 +1561,14 @@ span.commentstitle {
 
 dl.note-list {
 	margin: .5em;
-	background: #fff;
-	color: #000;
-	border: solid thin black;
 }
 
-#note-editor-comment {
-	background-color: #fff;
-	color: #000;
-	border: #999 1px solid;
-	padding: .5em;
-}
-
-.note-editor-text {
-	background-color: #eee;
-	color: #000;
-}
-
+#note-editor-comment,
 .note-list .postbody-title {
-	background-color: #ccc;
-	color: #000;
 	padding: .5em;
 }
 
 .note-list .title a {
-	color: #000;
 	font-size: larger;
 	font-weight: bold;
 }
@@ -1641,24 +1577,12 @@ dl.note-list {
 	float: right;
 }
 
-
 .note-list .author {
 	font-size: smaller;
 	text-align: right;
 }
 
 /* Comments moderation */
-.post-approved-n {
-	border-left: 3px dotted blue;
-}
-
-.post-approved-r {
-	border-left: 3px double red;
-}
-
-.post-approved-r .content * {
-	background: url(../../img/icons2/dots.gif);
-}
 
 textarea#editpost2 {
 	width: 98%;
@@ -2024,26 +1948,18 @@ div#ajaxLoadingBG {
 	display: none;
 	z-index: 9999;
 	position: absolute;
-	background: transparent url(../../img/overlay-light.png);
 }
 div#ajaxLoading {
 	display: none;
 	z-index: 10000;
-	font-size: 2em;
-	font-weight: bold;
 	position: absolute;
-	color: #333;
 	text-align: center;
 	vertical-align: top;
-	background: transparent url(../../img/loading-light.gif) no-repeat 50% 50%;
 	height: 80px;
 	width: 220px;
 }
 
 /* ColorBox */
-#cboxTitle {
-	background-color: #fff;
-}
 #cboxTitle div {
 	overflow: auto;
 	margin: 3px 100px 0;
@@ -2051,8 +1967,6 @@ div#ajaxLoading {
 
 /* Cluetip - JQuery tooltips
    =cluetipClass: 'default' */
-
-
 div#cluetip-close { 
 	text-align: right;
 	margin: 0;
@@ -2149,24 +2063,17 @@ div.thumbnailcontener {
 	padding-left: 28px;
 }
 
-/* Preferencies        */
+/* Preferences        */
 .pref_dependency {
 	margin-left: 20px;
 	font-size: 95%;
 }
 
-/* Perspecives (edit) */
-
+/* Perspectives (edit) */
 .dropzone {
-	color: #000;
-	background-color: #fff;
-	border: #999 solid 2px;
-	border-bottom-color: #ccc;
-	border-right-color: #ccc;
 }
 
 .dropzone > div:hover {
-	background-color: #eee;
 } 
 
 .podcast {
@@ -2175,78 +2082,6 @@ div.thumbnailcontener {
 
 .podcast div.moduledescription {
 	margin-left: 25px;
-}
-
-/* page contribution by author / wikiplugin_author */
-
-.author0 {
-	color: black;
-}
-
-.author1 {
-	color: blue;
-}
-
-.author2 {
-	color: red;
-}
-
-.author3 {
-	color: green;
-}
-
-.author4 {
-	color: maroon;
-}
-
-.author5 {
-	color: yellow;
-	background-color: gray;
-}
-
-.author6 {
-	color: aqua;
-	background-color: gray;
-}
-
-.author7 {
-	color: fuchsia;
-	background-color: gray;
-}
-
-.author8 {
-	color: teal;
-}
-
-.author9 {
-	color: purple;
-}
-
-.author10 {
-	color: white;
-	background-color: navy;
-}
-
-.author11 {
-	color: olive;
-}
-
-.author12 {
-	color: gray;
-}
-
-.author13 {
-	color: navy;
-}
-
-.author14 {
-	color: silver;
-	background-color: blue;
-}
-
-.author15 {
-	color: lime;
-	background-color: gray;
 }
 
 .deleted {
@@ -2261,7 +2096,6 @@ div.thumbnailcontener {
 	right: 0;
 	top: 0;
 	height: 40px;
-	background-color: #ade;
 	padding: 1em;
 }
 
@@ -2272,11 +2106,9 @@ div.thumbnailcontener {
 	left: 10%;
 	right: 10%;
 	overflow: auto;
-	background-color: #eff;
 	display: none;
 	z-index: 2000;
 	padding: 1em;
-	border: #799 solid 2px;
 }
 #intertrans-form table {
 	width: 98%;
