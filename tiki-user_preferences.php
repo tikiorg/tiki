@@ -21,7 +21,7 @@ if ($prefs['feature_userPreferences'] != 'y' && $prefs['change_password'] != 'y'
 }
 $access->check_user($user);
 
-$auto_query_args = array();
+$auto_query_args = array('userId', 'view_user');
 
 // Make sure user preferences uses https if set
 if (!$https_mode && isset($https_login) && $https_login == 'required') {
@@ -176,6 +176,15 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 		}
 		$smarty->assign('lon', $lon);
 		$tikilib->set_user_preference($userwatch, 'lon', $lon);
+	}
+	if (isset($_REQUEST["zoom"])) {
+		if (is_numeric($_REQUEST["zoom"])) {
+			$zoom = intval($_REQUEST["zoom"]);
+		} else {
+			$zoom = NULL;
+		}
+		$smarty->assign('zoom', $zoom);
+		$tikilib->set_user_preference($userwatch, 'zoom', $zoom);
 	}
 	// Custom fields
 	foreach($customfields as $custpref => $prefvalue) {
@@ -336,6 +345,7 @@ if ($prefs['feature_community_gender'] == 'y') {
 $tikilib->get_user_preference($userwatch, 'country', 'Other');
 $tikilib->get_user_preference($userwatch, 'lat', '');
 $tikilib->get_user_preference($userwatch, 'lon', '');
+$tikilib->get_user_preference($userwatch, 'zoom', '');
 $tikilib->get_user_preference($userwatch, 'userbreadCrumb', $prefs['site_userbreadCrumb']);
 $tikilib->get_user_preference($userwatch, 'homePage', '');
 $tikilib->get_user_preference($userwatch, 'email is public', 'n');
