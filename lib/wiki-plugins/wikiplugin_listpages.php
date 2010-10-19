@@ -5,14 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_listpages_help() {
-	$help = tra("List wiki pages.");
-	$help .= "<br />";
-	$help .= "~np~{LISTPAGES(initial=txt, showNameOnly=y|n, categId=id, structHead=y|n, showPageAlias=y|n, offset=num, max=num, find=txt, exact_match=y|n, only_orphan_pages=y|n, for_list_pages=y|n)}{LISTPAGES}~/np~";
-
-	return $help;
-}
-
 function wikiplugin_listpages_info() {
 	return array(
 		'name' => tra('List Pages'),
@@ -46,7 +38,7 @@ function wikiplugin_listpages_info() {
 			'categId' => array(
 				'required' => false,
 				'name' => tra('Category'),
-				'description' => tra('Category ID').' '.tra('For an OR between categories use : (ex:1:2). For and AND use + ex(1+2).'),
+				'description' => tra('Category ID').' '.tra('For an OR between categories use : (ex:1:2). For and AND use + ex(1+2). For substractions, use - ex(1-2-3).'),
 				'filter' => 'striptags',
 			),
 			'structHead' => array(
@@ -156,6 +148,10 @@ function wikiplugin_listpages($data, $params) {
 			$filter['categId'] = explode(':', $categId);
 		} elseif (strstr($categId, '+')) {
 			$filter['andCategId'] = explode('+', $categId);
+		} elseif (strstr($categId, '-')) {
+			$categories = explode('-', $categId);
+			$filter['categId'] = array_shift($categories);
+			$filter['notCategId'] = $categories;
 		} else {
 			$filter['categId'] = $categId;
 		}

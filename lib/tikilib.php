@@ -3554,6 +3554,11 @@ class TikiLib extends TikiDb_Bridge
 					$join_tables .= ' left join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) left join `tiki_categorized_objects` as tcdo on (tcdo.`catObjectId`=tob.`objectId`) left join `tiki_category_objects` as tco on (tcdo.`catObjectId`=tco.`catObjectId`)';
 					$join_bindvars[] = 'wiki page';
 					$tmp_mid[] = '(tco.`categId` is null)';
+				} elseif ($type == 'notCategId') {
+					foreach ($val as $v) {
+						$tmp_mid[] = '(tp.`pageName` NOT IN(SELECT itemId FROM tiki_objects INNER JOIN tiki_category_objects ON catObjectId = objectId WHERE type = "wiki page" AND categId = ?))';
+						$bindvars[] = $v;
+					}
 				} elseif ($type == 'lang') {
 					$tmp_mid[] = 'tp.`lang`=?';
 					$bindvars[] = $val;
