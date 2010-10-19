@@ -56,38 +56,43 @@ if ( isset($_REQUEST['idx_0']) ) $sheetIndexes[0] = $_REQUEST['idx_0'];
 if ( isset($_REQUEST['idx_1']) ) $sheetIndexes[1] = $_REQUEST['idx_1'];
 
 //display the history picker if no sheets are defined
-if ( count($sheetIndexes) ) {
+if ( count($sheetIndexes) > 1 ) {
 	$dates = array();
-	sort($sheetIndexes);
+	$datesFormatted = array();
 	
 	$smarty->assign_by_ref( 'sheetIndexes', $sheetIndexes );
 	
 	$j = 0;
 	foreach( $sheetIndexes as $i ) {
 		$dates[$j] = $history[(int)$i]['stamp'];
+		$datesFormatted[$j] = date("F j, Y, g:i a", strftime($dates[$j]));
 		$j++;
 	}
-
+	
+	// for revision info
+	$smarty->assign( 'datesFormatted' , $datesFormatted );
+	
 	// for pagination
 	$smarty->assign( 'ver_cant' , count($history) );
 	//$paginate = (isset($_REQUEST['paginate']) && $_REQUEST['paginate'] == 'on');
 	//$smarty->assign('paginate', $paginate);
 	$smarty->assign( 'grid_content', diffSheetsAsHTML($_REQUEST["sheetId"], $dates) );
 	
-	$headerlib->add_jq_onready('
-		if (typeof ajaxLoadingShow == "function") {
-			ajaxLoadingShow("role_main");
+	$headerlib->add_jq_onready("
+		if (typeof ajaxLoadingShow == 'function') {
+			ajaxLoadingShow('role_main');
 		}
 		
 		setTimeout (function () {
-			$("div.tiki_sheet").tiki("sheet", "",{
+			$('div.tiki_sheet').tiki('sheet', '',{
 				editable: false,
 				fnPaneScroll: $.sheet.paneScrollLocker,
 				fnSwitchSheet: $.sheet.switchSheetLocker,
 				height: 400
 			});
+			setValuesForCompareSheet('$sheetIndexes[0]','$sheetIndexes[1]');
 		}, 500);
-	', 500);
+	", 500);
 	
 	if ( $tiki_sheet_div_style) {
 		$smarty->assign('tiki_sheet_div_style',  $tiki_sheet_div_style);

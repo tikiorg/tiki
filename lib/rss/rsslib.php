@@ -542,8 +542,13 @@ class RSSLib extends TikiDb_Bridge
 
 		$expire = $publication + 3600*24*$configuration['expiry'];
 		
+		if (strpos( $data['content'], trim($data['description'])) === 0 && strlen($data['description']) < 1024) {
+			$data['content'] = substr( $data['content'], strlen(trim($data['description'])));
+		}
+		$data['content'] = trim($data['content']) == '' ? $data['content'] : '~np~' . $data['content'] . '~/np~';
+		
 		if($configuration['submission'] == true) {
-			$subid = $artlib->replace_submission( $data['title'], $data['author'], $configuration['topic'], 'n', '', 0, '', '', $data['description'], '~np~' . $data['content'] . '~/np~', $publication, $expire, 'admin', 0, 0, 0, $configuration['atype'], '', '', $data['url'], '', '', $configuration['rating'] );
+			$subid = $artlib->replace_submission( $data['title'], $data['author'], $configuration['topic'], 'n', '', 0, '', '', $data['description'], $data['content'], $publication, $expire, 'admin', 0, 0, 0, $configuration['atype'], '', '', $data['url'], '', '', $configuration['rating'] );
 
 			if( count( $configuration['categories'] ) ) {
 				global $categlib; require_once 'lib/categories/categlib.php';
@@ -556,7 +561,7 @@ class RSSLib extends TikiDb_Bridge
 		}
 		else {
 
-		$id = $artlib->replace_article( $data['title'], $data['author'], $configuration['topic'], 'n', '', 0, '', '', $data['description'], '~np~' . $data['content'] . '~/np~', $publication, $expire, 'admin', 0, 0, 0, $configuration['atype'], '', '', $data['url'], '', '', $configuration['rating'] );
+		$id = $artlib->replace_article( $data['title'], $data['author'], $configuration['topic'], 'n', '', 0, '', '', $data['description'], $data['content'], $publication, $expire, 'admin', 0, 0, 0, $configuration['atype'], '', '', $data['url'], '', '', $configuration['rating'] );
 
 			if( count( $configuration['categories'] ) ) {
 				global $categlib; require_once 'lib/categories/categlib.php';

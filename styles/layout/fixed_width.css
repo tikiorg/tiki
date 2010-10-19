@@ -8,10 +8,6 @@
 }
 
 #fixedwidth {
-	display: table;
-	margin: auto;
-	margin-top: 0;
-	margin-bottom: 0px;
 	width: 990px;
 }
 #fixedwidth[id] {

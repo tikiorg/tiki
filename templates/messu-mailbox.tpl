@@ -51,7 +51,7 @@
 	<input type="hidden" name="flag" value="{$flag|escape}" />
 	<input type="hidden" name="flagval" value="{$flagval|escape}" />
 	<input type="hidden" name="priority" value="{$priority|escape}" />
-{jq}
+{jq notonready=true}
 var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'{if not $smarty.section.user.last},{/if}{/section}}];
 {/jq}
 	<table class="normal">

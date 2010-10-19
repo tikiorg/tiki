@@ -49,6 +49,7 @@ function prefs_feature_list() {
 		'feature_galleries' => array(
 			'name' => tra('Image Gallery'),
 			'description' => tra('Collections of graphic images for viewing or downloading (photo album)'),
+			'warning' => tra('You can use file galleries instead.'),
 			'type' => 'flag',
 			'help' => 'Image+Gallery',
 		),
@@ -154,6 +155,7 @@ function prefs_feature_list() {
 		'feature_faqs' => array(
 			'name' => tra('FAQ'),
 			'description' => tra('Frequently asked questions and answers'),
+			'warning' => tra('You can use wiki pages instead.'),
 			'help' => 'FAQ',
 			'type' => 'flag',
 		),
@@ -342,13 +344,13 @@ function prefs_feature_list() {
 		),
 		'feature_mobile' => array(
 			'name' => tra('Mobile'),
-			'description' => tra('Mobile'),
+			'description' => tra('Outputs a WAP and VoiceXML version.'),
 			'help' => 'http://mobile.tiki.org',
 			'type' => 'flag',
 		),
 		'feature_morcego' => array(
 			'name' => tra('Morcego 3D browser'),
-			'description' => tra('Morcego 3D browser'),
+			'description' => tra('Visualize relationships between wiki pages, in a 3D applet'),
 			'help' => 'Wiki+3D',
 			'type' => 'flag',
 		),
@@ -360,14 +362,14 @@ function prefs_feature_list() {
 		),
 		'feature_intertiki' => array(
 			'name' => tra('Intertiki'),
-			'description' => tra('Intertiki'),
+			'description' => tra('Allows several Tiki sites (slaves) to get authentication from a master Tiki site'),
 			'help' => 'Intertiki',
 			'perspective' => false,
 			'type' => 'flag',
 		),
 		'feature_mailin' => array(
 			'name' => tra('Mail-in'),
-			'description' => tra('Mail-in'),
+			'description' => tra('Populate wiki pages and articles by email'),
 			'help' => 'Mail-in',
 			'type' => 'flag',
 		),
@@ -398,7 +400,7 @@ function prefs_feature_list() {
 		),
 		'feature_wiki_save_draft' => array(
 			'name' => tra('Save draft'),
-			'warning' => tra('Requires AJAX (experimental)'),
+			'warning' => tra('Experimental (Requires AJAX)'),
 			'dependencies' => array(
 				'feature_ajax',
 			),
@@ -454,7 +456,7 @@ function prefs_feature_list() {
 		),
 		'feature_comm' => array(
 			'name' => tra('Communications (send/receive objects)'),
-			'description' => tra('Communications (send/receive objects)'),
+			'description' => tra('Send/receive wiki pages and articles between Tiki-powered sites'),
 			'help' => 'Communication+Center',
 			'type' => 'flag',
 		),

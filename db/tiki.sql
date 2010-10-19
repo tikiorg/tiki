@@ -1,6 +1,8 @@
-- --------------------------------------------------------
+-- --------------------------------------------------------
 -- Database : Tiki 
 -- --------------------------------------------------------
+
+ALTER DATABASE DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS `messu_messages`;
 CREATE TABLE `messu_messages` (

@@ -913,7 +913,9 @@ class NlLib extends TikiLib
 		$prefs['feature_autolinks'] = $o2;
 		
 		if (!empty($pageContent)) {
-			$pageContent = strip_tags($pageContent);
+			$pageContent = strip_tags($pageContent, '<p><tr><br>');
+			$pageContent = preg_replace(array('/<p.*?>/i','/<tr.*?>/i'), "", $pageContent);	// deal with stripped html from smarty
+			$pageContent = str_replace(array('</p>','</tr>','<br />'), "\n", $pageContent);	// add linefeeds
 			$pageContent = preg_replace('/[\\n\\r]/', "\n", $pageContent);	// in case there are MS lineends
 			$pageContent = preg_replace('/\\n\\n/', "\n", $pageContent);	// remove blank lines
 			$ary = explode("\n", $pageContent);

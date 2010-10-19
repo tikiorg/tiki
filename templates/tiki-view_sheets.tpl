@@ -26,10 +26,10 @@
 			{assign var="uWarning" value=""}
 		{/if}
 		{if $editReload}
-			{button _id="edit_button" _text="{tr}Edit{/tr}" _htmlelement="role_main" _template="tiki-view-sheets.tpl" sheetId="$sheetId" _class="" parse="edit" editSheet="y" _auto_args="*" _title="{tr}New jQuery.sheet based editing{/tr}"|cat:$uWarning}
+			{button _id="edit_button" _text="{tr}Edit{/tr}" _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _class="" parse="edit" editSheet="y" _auto_args="*" _title="{tr}New jQuery.sheet based editing{/tr}"|cat:$uWarning}
 		{else}
-			{button _id="save_button" _text="{tr}Save{/tr}" _htmlelement="role_main" _template="tiki-view-sheets.tpl" sheetId="$sheetId" _class="" _title="{tr}Tiki Sheet{/tr} | {tr}Save current spreadsheet{/tr}"}
-			{button _id="edit_button" _text="{tr}Edit{/tr}" _htmlelement="role_main" _template="tiki-view-sheets.tpl" sheetId="$sheetId" _class="" _title="{tr}New jQuery.sheet based editing{/tr}"|cat:$uWarning}
+			{button _id="save_button" _text="{tr}Save{/tr}" _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _class="" _title="{tr}Tiki Sheet{/tr} | {tr}Save current spreadsheet{/tr}"}
+			{button _id="edit_button" _text="{tr}Edit{/tr}" _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _class="" _title="{tr}New jQuery.sheet based editing{/tr}"|cat:$uWarning}
 			{jq notonready=true}var editSheetButtonLabel2="{tr}Cancel{/tr}";{/jq}
 			{if $prefs.feature_contribution eq 'y'}
 				{include file='contribution.tpl'}
@@ -39,15 +39,15 @@
 	
 	{if $parseValues eq 'y'}
 		{if $smarty.request.parse eq 'y'}
-			{button parse="n" _text="{tr}No parse{/tr}"  _htmlelement="role_main" _template="tiki-view-sheets.tpl" sheetId="$sheetId" _auto_args="*"}
+			{button parse="n" _text="{tr}No parse{/tr}"  _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _auto_args="*"}
 		{else}
-			{button parse="y" _text="{tr}Parse{/tr}"  _htmlelement="role_main" _template="tiki-view-sheets.tpl" sheetId="$sheetId" _auto_args="*"}
+			{button parse="y" _text="{tr}Parse{/tr}"  _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _auto_args="*"}
 		{/if}
 	{/if}
 	{if $smarty.request.simple eq 'y'}
-		{button simple="n" _text="{tr}Spreadsheet{/tr}"  _htmlelement="role_main" _template="tiki-view-sheets.tpl" sheetId="$sheetId" _auto_args="*"}
+		{button simple="n" _text="{tr}Spreadsheet{/tr}"  _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _auto_args="*"}
 	{else}
-		{button simple="y" _text="{tr}Simple{/tr}"  _htmlelement="role_main" _template="tiki-view-sheets.tpl" sheetId="$sheetId" _auto_args="*"}
+		{button simple="y" _text="{tr}Simple{/tr}"  _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _auto_args="*"}
 	{/if}
 
 	{if $objectperms->view_sheet_history}

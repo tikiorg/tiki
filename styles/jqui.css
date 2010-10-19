@@ -640,8 +640,32 @@ div.freetagitemlist {
 /*.calodd .calfocus, .calodd .calfocuson*/
 /*.caleven .calfocus, .caleven .calfocuson {background: ;}*/
 
-/***** Admin *****/
-	
+/* Cluetip - JQuery tooltips
+   =cluetipClass: 'default' */
+
+.cluetip-default {
+	background: #999;
+	color: #000;
+}
+
+.cluetip-default #cluetip-outer {
+	background: #ccc;
+}
+.cluetip-default h3#cluetip-title {
+	background: #aaa;
+	color: #fff;
+}
+
+.cluetip-default #cluetip-title a {
+	color: #fff;
+}
+  
+
+#cluetip-close { 
+	background: #aaa;
+	color: #900;
+}
+
 /***** Ajax, jquery. etc. *****/
 /***** Ajax *****/
 /*

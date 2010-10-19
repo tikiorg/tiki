@@ -1861,10 +1861,6 @@ class TikiLib extends TikiDb_Bridge
 			if (preg_match('|^\(\((.+?)\)\)$|', $res['url'], $matches)) {
 				$res['url'] = 'tiki-index.php?page='.$matches[1];
 				$res['sefurl'] = $wikilib->sefurl($matches[1]);
-				if ($prefs['feature_multilingual'] == 'y' && $prefs['feature_best_language'] == 'y') {
-					$res['url'] .= "&amp;bl=y";
-					$res['sefurl'] .= "?bl=y";
-				}
 				$perms = Perms::get(array('type'=>'wiki page', 'object'=>$matches[1]));
 				if (!$perms->view && !$perms->wiki_view_ref) {
 					continue;
@@ -5403,6 +5399,9 @@ class TikiLib extends TikiDb_Bridge
 			$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
 			$plugin_result = preg_replace('/<script.*?<\/script>/mi', '', $plugin_result);
 		}
+		if (!in_array($name, array('html'))) {		// remove <p> and <br>s from non-html
+			$data = str_replace(array('<br />', '<p>', '</p>', "\t"), '', $data);
+		}
 		
 		if ($this->contains_html_block($plugin_result)) {
 			$elem = 'div';
@@ -5768,8 +5767,10 @@ class TikiLib extends TikiDb_Bridge
 		
 		if (empty($options['ck_editor'])) $options['ck_editor'] = false;
 		
+		$old_wysiwyg_parsing = null;
 		if ($options['ck_editor']) {
 			global $headerlib;
+			$old_wysiwyg_parsing = $headerlib->wysiwyg_parsing;
 			$headerlib->wysiwyg_parsing = true;
 		}
 		// if simple_wiki is true, disable some wiki syntax
@@ -5958,8 +5959,8 @@ class TikiLib extends TikiDb_Bridge
 		foreach ($this->pos_handlers as $handler) {
 			$data = $handler($data);
 		}
-		if ($options['ck_editor']) {
-			$headerlib->wysiwyg_parsing = false;
+		if ($old_wysiwyg_parsing !== null) {
+			$headerlib->wysiwyg_parsing = $old_wysiwyg_parsing;
 		}
 		return $data;
 	}
@@ -6665,17 +6666,13 @@ class TikiLib extends TikiDb_Bridge
 
 						// May be special signs present after '!'s?
 						$divstate = substr($line, $hdrlevel, 1);
-						if ($divstate == '+' || $divstate == '-') {
+						if (($divstate == '+' || $divstate == '-') && !$options['ck_editor']) {
 							// OK. Must insert flipper after HEADER, and then open new div...
 							$thisid = 'id' . preg_replace('/[^a-zA-z0-9]/', '',urlencode($options['page'])) .$nb_hdrs;
-							if (!$options['ck_editor']) {
-								$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
-								global $headerlib;
-								$headerlib->add_jq_onready( "setheadingstate('$thisid');" );
-							} else {
-								$aclose = '';
-							}
-							$aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' || !$options['ck_editor'] ? 'block' : 'none') . ';">';
+							$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
+							$aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
+							global $headerlib;
+							$headerlib->add_jq_onready( "setheadingstate('$thisid');" );
 							array_unshift($divdepth, $hdrlevel);
 							$addremove += 1;
 						}
@@ -7064,7 +7061,7 @@ class TikiLib extends TikiDb_Bridge
 
 	function parser_helper_wiki_link_builder( $pageLink ) {
 		global $wikilib;
-		return $wikilib->bestlang( $wikilib->sefurl($pageLink) );
+		return $wikilib->sefurl($pageLink);
 	}
 
 	function parser_helper_wiki_info_getter( $pageName ) {
@@ -7501,7 +7498,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 	}
 
-	private function plugin_find_implementation( & $implementation, & $body, & $args ) {
+	private function plugin_find_implementation( & $implementation, & $data, & $args ) {
 		if( $info = $this->plugin_alias_info( $implementation ) ) {
 			$implementation = $info['implementation'];
 
@@ -7593,9 +7590,12 @@ class TikiLib extends TikiDb_Bridge
 		} elseif ( $_user ) {
 			// ... else, get the user timezone preferences from DB
 			$tz = $this->get_user_preference($_user, 'display_timezone');
-			if ( ! TikiDate::TimezoneIsValidId($tz) ) {
-				$tz = $prefs['server_timezone'];
-			}
+		}
+		if ( ! TikiDate::TimezoneIsValidId($tz) ) {
+			$tz = $prefs['server_timezone'];
+		}
+		if ( ! TikiDate::TimezoneIsValidId($tz) ) {
+			$tz = 'UTC';
 		}
 		return $tz;
 	}

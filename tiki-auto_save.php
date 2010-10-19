@@ -82,8 +82,18 @@ if (isset($_REQUEST['editor_id'])) {
 				if (!empty($_REQUEST['diff_style'])) {
 					$info = $tikilib->get_page_info($autoSaveIdParts[2]);
 					if (!empty($info)) {
+						if (!empty($_REQUEST['hdr'])) {		// TODO refactor with code in editpage
+							if ($_REQUEST['hdr'] === 0) {
+								list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], 1);
+								$real_len = $real_start;
+								$real_start = 0;
+							} else {
+								list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
+							}
+							$info['data'] = substr($info['data'], $real_start, $real_len);
+						}
 						require_once('lib/diff/difflib.php');
-						$data = diff2( $info['data'], html_entity_decode($data, ENT_COMPAT, 'UTF-8'), $_REQUEST["diff_style"]);
+						$data = diff2( html_entity_decode($info['data'], ENT_COMPAT, 'UTF-8'), $data, $_REQUEST["diff_style"]);
 						$smarty->assign_by_ref('diffdata', $data);
 						
 						$smarty->assign( 'translation_mode', 'y' );

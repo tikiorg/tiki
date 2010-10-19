@@ -59,6 +59,9 @@ function wikiplugin_tabs($data, $params) {
 	if (!empty($data)) {
 		$tabData = explode('/////', $data);
 		foreach ($tabData as &$d) {
+			if (strpos( $d, '</p>') === 0) {
+				$d = substr( 4, $d);
+			}
 			$d = '~np~' . $tikilib->parse_data($d) . '~/np~';
 		}
 	}
