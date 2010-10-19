@@ -1,10 +1,10 @@
 {if $prefs.feature_gmap eq 'y'}
 
-{if $prefs.feature_ajax eq 'y'}
+{if $prefs.ajax_xajax eq 'y'}
 {* Ajax version using new plugin *}
 {title help="gmap"}{tr}Google Map Locator{/tr} - {$userwatch}{/title}
+<p>{button _script="tiki-user_preferences.php"  view_user=$smarty.request.view_user|escape _text="{tr}Back to preferences{/tr}"}</p>
 {wikiplugin _name="googlemap" type="locator" setdefaultxyz="y" locateitemtype="user" locateitemid="$userwatch"}{/wikiplugin}
-
 {else}
 {* Old non-ajax version which can be removed once Ajax becomes always on *}
 {title help="gmap"}{tr}Google Map Locator{/tr}{/title}
