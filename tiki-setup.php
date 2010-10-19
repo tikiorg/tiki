@@ -275,7 +275,12 @@ if ($prefs['javascript_enabled'] != 'n') {
 		$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/plugins/menu.css' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/mbMenu.min.js' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/jquery.scrollTo-min.js' );
-		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/jgcharts.min.js' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/raphael-min.js' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.raphael-min.js' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.pie-min.js' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.line-min.js' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.dot-min.js' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.bar-min.js' );
 	}
 	if( $prefs['feature_jquery_media'] == 'y' ) {
 		$headerlib->add_jsfile( 'lib/jquery/jquery.media.js');
