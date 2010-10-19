@@ -22,7 +22,7 @@ function wikiplugin_file_info()
  			'desc' => array(
 				'required' => false,
 				'name' => tra('Description'),
-				'description' => tra('Comment'),
+				'description' => tra('Used as link label instead of the file name or file description'),
 			),
     		'page' => array(
 				'required' => false,
@@ -31,8 +31,8 @@ function wikiplugin_file_info()
 			),
     		'showdesc' => array(
 				'required' => false,
-				'name' => tra('Show description'),
-				'description' => tra("Shows the description as the link text instead of the file name"),
+				'name' => tra('Show attachment description'),
+				'description' => tra("If non-empty, show the attachment description as the link label instead of the attachment name." . " " . tra('Example value:') . ' 1.'),
 			),
     		'image' =>array(
 				'required' => false,
