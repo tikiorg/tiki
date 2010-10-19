@@ -63,7 +63,7 @@
 							<a title="{tr}Delete{/tr}" class="link" href="tiki-index.php?page={$page|escape:"url"}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}{if !empty($sort_mode)}&amp;sort_mode={$sort_mode}{/if}"{if !empty($target)} target="{$target}"{/if}>{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 						{/if}
 					</td>
-					<td><small>{$atts[ix].comment}</small></td>
+					<td><small>{$atts[ix].comment|escape}</small></td>
 					<td>
 						<small>{$atts[ix].created|tiki_short_datetime}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user|userlink}{/if}</small>
 					</td>
