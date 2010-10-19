@@ -82,7 +82,7 @@ class Messu extends TikiLib
 				if ($bcc_sender === 'y' && !empty($from_email)) {
 					$mail->setHeader("Bcc", $from_email);
 				}
-				if ($replyto_email !== 'y' && $userlib->get_user_preference($from,'email is public','n') !== 'y') {
+				if ($replyto_email !== 'y' && $userlib->get_user_preference($from,'email is public','n') == 'n') {
 					$from_email = '';	// empty $from_email if not to be used - saves getting it twice
 				}
 				if (!empty($from_email)) {
