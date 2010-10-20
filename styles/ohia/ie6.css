@@ -42,7 +42,7 @@ h3.box-title {position: static}
 img.flipmodimage {border: 0}
 td {	font-size: 11px; color: #f4f4f4}
 .postbody table {font-size: 11px}
-body table.galtable {width: 97%}
+body .galtable {width: 97%}
 .addevent {padding: 0}
 .calodd {padding: 0}
 .caleven {padding: 0}

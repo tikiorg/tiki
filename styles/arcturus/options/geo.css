@@ -92,12 +92,12 @@ input, select {
 	border: 1px solid #999970;
 }
 
-span.button a,
-span.button a:visited,
+.button a,
+.button a:visited,
 button,
 input[type="reset"],
 input[type="submit"],
-span.button input,
+.button input,
 .calbuttonBox a {
 	color: #000;
 	background: #f1f1c9;
@@ -105,11 +105,11 @@ span.button input,
 	border: 1px solid #999970;	
 }
 
-span.button a:hover,
+.button a:hover,
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-span.button input:hover,
+.button input:hover,
 .calbuttonBox:hover {
 	border: 1px solid #999970;
 	font: normal 10px Verdana, Arial, Helvetica, sans-serif;
@@ -158,7 +158,7 @@ h3.box-title {
 	margin-right: 5px;
 }
 
-div.box-data li {
+.box-data li {
 	border-top: 1px solid #f1f1c9;
 	border-bottom: 1px solid #b1b299;
 }
@@ -172,7 +172,7 @@ div.box-data li {
 	border-bottom: 1px dashed #b1b299
 }
 
-div.separator {
+.separator {
 	margin-top: 4px;
 	margin-bottom: 2px;
 	padding-bottom: 2px;
@@ -204,7 +204,7 @@ div.separator {
 	padding: .2em 1em;
 }
 
-div.simplebox {
+.simplebox {
 	margin-top: 5px;
 	margin-bottom: 5px;
 	padding: 2px;

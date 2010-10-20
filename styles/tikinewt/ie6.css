@@ -24,8 +24,8 @@ input[type=reset] {
 	font: bold .95em/2em Verdana, Helvetica, Geneva, Arial, sans-serif;
 }
 
-span.button a:link,
-span.button a:visited {
+.button a:link,
+.button a:visited {
 	text-decoration: none;
 	border: 0;
 	padding: 0 4px;
@@ -59,11 +59,11 @@ td.third {
 	font-size: 11px;
 }
 
-body table.galtable {
+body .galtable {
 	width: 97%;
 }
 
-div.thumbname,
-div.thumbimage {
+.thumbname,
+.thumbimage {
 	position: absolute;
 }

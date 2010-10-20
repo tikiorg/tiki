@@ -8,11 +8,11 @@
 	display: inline;
 }
 
-div.articletitle {
+.articletitle {
 	background: url(tiki-centerbg.jpg) repeat-x
 }
 
-div.articletitle h2 {
+.articletitle h2 {
 	background: none;
 	line-height: normal;
 }

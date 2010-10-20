@@ -25,7 +25,7 @@ html>body {font-size: 76% !important}
 body.fullscreen {padding: 3em}
 
 /* next two: fixed-width: 960px */
-body.fixed_width div#fixedwidth {
+body.fixed_width #fixedwidth {
 	margin-bottom: 20px;
 	width: 900px !important;
 	background: #fff;
@@ -173,12 +173,12 @@ input[type="reset"],
 select {background: #d2d9e3; color: #000}
 
 
-span.button a,
-span.button a:visited,
+.button a,
+.button a:visited,
 button,
 input[type="reset"],
 input[type="submit"],
-span.button input,
+.button input,
 .submitbutton,
 .calbuttonBox a {
 	border-top: 1px solid #f3f3f4;
@@ -205,11 +205,11 @@ span.button input,
 	font-weight: normal;
 	padding: 2px 4px}
 
-span.button a:hover,
+.button a:hover,
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-span.button input:hover,
+.button input:hover,
 .submitbutton:hover,
 .calbuttonBox a:hover {
 	border-top: 1px solid #868f93;
@@ -225,9 +225,9 @@ ul, ol {text-align: left}
 tt {font-size: 1.2em}
 
 /***** Site Header & Identity *****/
-div#header {position: static}
+#header {position: static}
 	
-div#header-top {
+#header-top {
 	min-height: 140px;
 	background: url(eatlon/banner.gif) no-repeat 100% 100%}
 
@@ -523,14 +523,14 @@ a.flip:hover,
 
 /***** Boxes *****/
 /** Modules **/
-div.box {
+.box {
 	margin-bottom: 16px;
 	display: block}
 	
 #leftcolumn .box,
 #rightcolumn .box {width: 160px}
 	
-.wikitext div.box {width: 96%}
+.wikitext .box {width: 96%}
 
 h3.box-title {
 	color:#8F8F8F;
@@ -564,7 +564,7 @@ h3.box-title {
 	background: #cecece;
 	color: #000}
 
-div.simplebox {
+.simplebox {
 	border: 1px solid #e0e0e0;
 	padding: 4px;
 	background: white;
@@ -573,7 +573,7 @@ div.simplebox {
 /***** Tables, Tabs *****/
 /** Tables **/
 /*
-table.admin tr td div#page-bar {
+.admin tr td #page-bar {
 	margin-left: 5px;
 	margin-bottom: 0;
 	background: transparent}*/
@@ -587,11 +587,11 @@ td.normal,
 td.odd:hover,
 td.even:hover {border-right: 1px solid #e0e0e0}
 
-table.normal td.heading {font-size: 1em}
+.normal td.heading {font-size: 1em}
 
-table.normal td.odd:hover,
-table.normal td.even:hover,
-table.normal tr:hover {background: #f3f3f4}
+.normal td.odd:hover,
+.normal td.even:hover,
+.normal tr:hover {background: #f3f3f4}
 
 td.normal,
 .normal td,
@@ -669,7 +669,7 @@ form fieldset.tabcontent {
 	border: 1px solid #225566;
 	border-top: 0 !important}
 
-table.admin .tabcontent div.cbox {background: transparent}
+.admin .tabcontent .cbox {background: transparent}
 
 /***** Wiki *****/
 a.pagetitle,
@@ -679,7 +679,7 @@ a.pagetitle:hover {
 	text-decoration: none;
 	border-bottom: 0}
 
-div#description {
+#description {
 	font-size: .9em;
 	font-style: italic}
 
@@ -700,7 +700,7 @@ div#description {
 	border-bottom: 1px solid #999;
 	margin: 10px 0 10px 0}
 
-table.wikitable {
+.wikitable {
 	border: 1px solid #a9a9a9;
 	border-collapse: collapse}
 
@@ -718,7 +718,7 @@ textarea.wikiedit {font-size: 1.1em}
 
 /** Wiki plugins **/
 /* Code plugin  */
-div.code {
+.code {
 	font-size: 90%;
 	padding: 3px;
 	border: 1px dashed #ccc;
@@ -750,11 +750,11 @@ div.code {
 	font-weight: bold}
 
 /* Quote plugin */
-div.quoteheader {margin-left: 20px}
-div.quotebody {font-style: italic}
+.quoteheader {margin-left: 20px}
+.quotebody {font-style: italic}
 
 /** Wiki tocs **/
-div.tocnav {
+.tocnav {
 	background: #EBEBEB;
 	padding: 3px}
 
@@ -770,26 +770,26 @@ ul.toc {
 /***** Articles ****/
 .wikitext .article {font-size: 1em}
 
-div.articletopline {
+.articletopline {
 	font-size: 90%;
 	font-style: italic}
 
-div.articletitle {
+.articletitle {
 	margin-top: 6px;
 	margin-bottom: 15px;
 	text-align: left}
 
-div.articletitle h2 {
+.articletitle h2 {
 	font-size: 1.5em;
 	font-weight: normal}
 
-span.titleb {font-size: 1.0em}
-div.articlesubtitle {font-size: 0.9em}
-div.articleheading {margin: 6px 0}
-div.articlebody {margin-top: 1em}
+.titleb {font-size: 1.0em}
+.articlesubtitle {font-size: 0.9em}
+.articleheading {margin: 6px 0}
+.articlebody {margin-top: 1em}
 
 /***** Blogs *****/
-div.blogtitle {
+.blogtitle {
 	font-size: 1.3em;
 	font-weight: bold;
 	padding: 3px;
@@ -797,7 +797,7 @@ div.blogtitle {
 	font-weight: bold;
 	line-height: 80%}
 
-div.bloginfo {
+.bloginfo {
 	text-align: center;
 	padding: 3px;
 	line-height: 150%;
@@ -814,13 +814,13 @@ a.blogt:hover {
 
 .postinfo {font-size: 1.2em}
 
-span.posthead {
+.posthead {
 	font-weight: bold;
 	letter-spacing: .4pt}
 
-div.posthead h3 {font-size:1.2em}
+.posthead h3 {font-size:1.2em}
 
-div.postbody {
+.postbody {
 	margin-right: 8px;
 	line-height: inherit;
 	margin-bottom: 1em}
@@ -898,7 +898,7 @@ div.postbody {
 
 .forum_actions .headers .infos {font-size: smaller}
 
-div.commentsedithelp {
+.commentsedithelp {
 	background: #ffcfcf;
 	color: black;
 	border: 1px solid #ff0000;
@@ -906,7 +906,7 @@ div.commentsedithelp {
 	font-weight: bold}
 
 /**** Image Galleries ****/
-table.galtable {
+.galtable {
 	border-collapse: collapse;
 	border: 1px solid #8cacbb}
 
@@ -927,24 +927,24 @@ textarea.tshoutbox{
 	width: 132px}
 
 /***** Directory *****/
-div.dircategs {
+.dircategs {
 	border: 1px solid #8cacbb;
 	padding: 5px}
 
-div.dirlistsites {
+.dirlistsites {
 	padding: 5px 0 10px 5px;
 	margin-top: 10px}
 
-div.dirsite {
+.dirsite {
 	margin: 5px;
 	margin-bottom: 10px}
 
-div.dirrelated {
+.dirrelated {
 	margin-top: 10px;
 	padding: 5px}
 
 td.dirfooter {font-size: .95em}
-div.dirfooter {margin-top: 10px}
+.dirfooter {margin-top: 10px}
 
 /***** Messages *****/
 td.prio1,
@@ -953,17 +953,17 @@ td.prio3,
 td.prio4,
 td.prio5 {border: 1px solid #8cacbb}
 
-div.messureadflag {background: #ccc}
-div.messureadhead {background: #DEDEDE}
-div.messureadbody {background: #DEDEDE}
+.messureadflag {background: #ccc}
+.messureadhead {background: #DEDEDE}
+.messureadbody {background: #DEDEDE}
 
 /***** TikiSheets *****/
-table.default thead td,
-table.default tfoot td {
+.default thead td,
+.default tfoot td {
 	font-weight: bold;
 	text-align: center}
 
-table.default td {border: solid 1px #a9a9a9}
+.default td {border: solid 1px #a9a9a9}
 
 /***** Calendar *****/
 .Cal0,
@@ -1133,7 +1133,7 @@ td.event {background: whitesmoke}
 * html .caldark {padding: 0}
 .caldark .calfocus {background: #c4cdda}
 
-div#calscreen td.calfocuson {
+#calscreen td.calfocuson {
 	background: #d2d9e3;
 }
 

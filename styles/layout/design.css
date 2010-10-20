@@ -84,7 +84,7 @@ button,
 }
 
 #genPass .button a,
-#genPass span.button a:visited,
+#genPass .button a:visited,
 #genPass .button a:hover {
 	padding: 1px 4px !important;
 }
