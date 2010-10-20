@@ -2,7 +2,7 @@
 #calendar {
 }
 
-div.tabrow {
+.tabrow {
 	position: relative;
 	left: 0;
 	font-size: 1em;
@@ -508,7 +508,7 @@ a.viewmodeoff img {
 .status2     { background: #F66; border: 1px solid #000; color: #000; }
 
 select[name=start_Hour], select[name=start_Minute], select[name=end_Hour], select[name=end_Minute] { min-width: 40px; }
-.caltable, #calscreen table.normal { clear: both; border-collapse: collapse; margin-top: 5px; width: 100%; font-size: 11px;}
+.caltable, #calscreen .normal { clear: both; border-collapse: collapse; margin-top: 5px; width: 100%; font-size: 11px;}
 .caltable td { padding: 2px; }
 #calscreen td {vertical-align: top;}
 #calscreen td a {text-decoration: none;}

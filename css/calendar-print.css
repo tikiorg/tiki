@@ -1,11 +1,11 @@
 @import url("calendar.css");
 
-div#header, 
-div#col2, 
-div#errors,
-div#loadstats,
-span#show-errors-button,
-div.tabrow {
+#header, 
+#col2, 
+#errors,
+#loadstats,
+#show-errors-button,
+.tabrow {
   display: none !important;
 } 
 
