@@ -1683,6 +1683,21 @@ class Comments extends TikiLib
 		$this->time_control = $time;
 	}
 
+	/**
+	 * Get comments for a particular object
+	 * 
+	 * @param string $objectId objectType:objectId (example: 'wiki page:HomePage' or 'post:1') 
+	 * @param int $parentId only return child comments of $parentId
+	 * @param int $offset
+	 * @param int $maxRecords
+	 * @param string $sort_mode
+	 * @param string $find search comment title and data
+	 * @param int $threshold
+	 * @param string $style
+	 * @param int $reply_threadId
+	 * @param string $approved if user doesn't have tiki_p_admin_comments this param display or not only approved comments (default to 'y')
+	 * @return array
+	 */
 	function get_comments($objectId, $parentId, $offset = 0, $maxRecords = 0, $sort_mode = 'commentDate_asc', $find = '', $threshold = 0, $style = 'commentStyle_threaded', $reply_threadId=0, $approved='y') {
 		global $userlib, $tiki_p_admin_comments, $prefs;
 
