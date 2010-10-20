@@ -38,7 +38,7 @@
 								{elseif $pos eq "pages"}
 									<img src="pics/large/wikipages.png" alt="{tr}Wiki{/tr}" title="{tr}Wiki{/tr}"/>
 								{elseif $pos eq "comments"}
-									<img src="pics/icons/comments.png" alt="{tr}Comments{/tr}" title="{tr}Comments{/tr}"/>
+									<img src="pics/large/comments.png" alt="{tr}Comments{/tr}" title="{tr}Comments{/tr}"/>
 								{elseif $pos eq "forums"}
 									<img src="pics/large/stock_index.png" alt="{tr}Forums{/tr}" title="{tr}Forums{/tr}"/>
 								{elseif $pos eq "trackers"}
