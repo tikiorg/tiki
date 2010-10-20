@@ -61,9 +61,11 @@ function wikiplugin_calendar($data, $params) {
 	$module_reference = array(
 		'moduleId' => null,
 		'name' => 'calendar_new',
-		'params' => array( 'calIds' => $params['calIds'], 'viewnavbar'=> $params['viewnavbar'],
-													'viewlist'=> $params['viewlist'],
-													'viewmode' => $params['viewmode'] ),
+		'params' => array( 'calIds' => $params['calIds'],
+							'viewnavbar'=> $params['viewnavbar'],
+							'viewlist'=> $params['viewlist'],
+							'viewmode' => $params['viewmode'],
+							'nobox' => 'y' ),
 		'position' => null,
 		'ord' => null,
 	);
