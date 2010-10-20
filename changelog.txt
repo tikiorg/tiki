@@ -30,6 +30,406 @@ Version 6.0
 ------------------
 
 ----------------------------------------------
+r30128 | minger0 | 2010-10-19 21:28:25 +0200 (Tue, 19 Oct 2010) | 1 line
+
+[FIX] removed an unusual character
+----------------------------------------------
+r30127 | minger0 | 2010-10-19 21:16:39 +0200 (Tue, 19 Oct 2010) | 1 line
+
+[FIX] admin look and feel broken
+----------------------------------------------
+r30125 | jonnybradley | 2010-10-19 17:01:00 +0200 (Tue, 19 Oct 2010) | 2 lines
+
+[FIX] wiki: Restore legacy wiki_up insert image function for when feature_filegals_manager is off.
+Note, you also need ajax_autosave off for the old preview method to upload the selected images. Saving uploads them ok either way. (thanks ricks99)
+----------------------------------------------
+r30123 | luciash | 2010-10-19 16:10:33 +0200 (Tue, 19 Oct 2010) | 1 line
+
+cleanup: moving color and background related properties to design.css + little optimizations
+----------------------------------------------
+r30122 | jonnybradley | 2010-10-19 16:03:27 +0200 (Tue, 19 Oct 2010) | 1 line
+
+[FIX] sheets: Make new JS libs external (too buggy to be minified)
+----------------------------------------------
+r30121 | sylvieg | 2010-10-19 15:59:33 +0200 (Tue, 19 Oct 2010) | 1 line
+
+[FIX]messu: email protection at display has nothing to do with the from from messu: an email public and encoded must be used for the from in the message
+----------------------------------------------
+r30120 | sylvieg | 2010-10-19 15:52:50 +0200 (Tue, 19 Oct 2010) | 1 line
+
+[FIX]pref: email is public was lost (used in messu)
+----------------------------------------------
+r30119 | jonnybradley | 2010-10-19 14:52:34 +0200 (Tue, 19 Oct 2010) | 2 lines
+
+[MOD] user prefs: Split first tab into two for a cleaner, friendlier first impression.
+Separated gmap locator button from lat/lon/zoom values (added zoom which was missing) and added small map display to tab 1 (if ajax on).
+----------------------------------------------
+r30118 | chibaguy | 2010-10-19 14:50:18 +0200 (Tue, 19 Oct 2010) | 1 line
+
+[FIX] Language improvement (more appropriate verb for forum submit - post rather than publish)
+----------------------------------------------
+r30117 | jonnybradley | 2010-10-19 14:47:27 +0200 (Tue, 19 Oct 2010) | 1 line
+
+[FIX] gmaps: Propagate view_user (for admin of other users)
+----------------------------------------------
+r30116 | robertplummer | 2010-10-19 14:46:37 +0200 (Tue, 19 Oct 2010) | 1 line
+
+[MOD] Removed old chart references to jgcharts and added them for gRapha?\195?\171l
+----------------------------------------------
+r30115 | jonnybradley | 2010-10-19 14:46:22 +0200 (Tue, 19 Oct 2010) | 1 line
+
+[FIX] gmaps: Check for correct ajax pref (ajax_xajax) and add button to return to prefs button.
+----------------------------------------------
+r30114 | jonnybradley | 2010-10-19 14:42:58 +0200 (Tue, 19 Oct 2010) | 1 line
+
+[FIX] avatars: Propogate view_user (for admin of other users)
+----------------------------------------------
+r30111 | chibaguy | 2010-10-19 02:02:23 +0200 (Tue, 19 Oct 2010) | 1 line
+
+[FIX] Page needs to be full width when fixed-width option is off, and this percentage was preventing that. Percentage was also inherited when fixed-width was set, reducing specified fixed width by 90%.
+----------------------------------------------
+r30109 | jonnybradley | 2010-10-18 23:47:12 +0200 (Mon, 18 Oct 2010) | 1 line
+
+[FIX] prefs: default error reporting to E_ALL & ~E_NOTICE for new installs (still admin only) - to be reverted to 0 when white page issue solved.
+----------------------------------------------
+r30106 | jonnybradley | 2010-10-18 23:04:03 +0200 (Mon, 18 Oct 2010) | 1 line
+
+[DB] Set correct utf8 charset and collation on clean install
+----------------------------------------------
+r30105 | jonnybradley | 2010-10-18 22:55:08 +0200 (Mon, 18 Oct 2010) | 1 line
+
+lost hyphem
+----------------------------------------------
+r30103 | sampaioprimo | 2010-10-18 22:23:05 +0200 (Mon, 18 Oct 2010) | 2 lines
+
+[FIX] make sure only admins can write database translations back to language.php
+
+----------------------------------------------
+r30102 | jonnybradley | 2010-10-18 22:19:37 +0200 (Mon, 18 Oct 2010) | 1 line
+
+[FIX] js: wysiwyg requires javascript
+----------------------------------------------
+r30101 | jonnybradley | 2010-10-18 22:19:02 +0200 (Mon, 18 Oct 2010) | 1 line
+
+[FIX] js: setcookie expects seconds for expiry
+----------------------------------------------
+r30096 | jonnybradley | 2010-10-18 20:55:00 +0200 (Mon, 18 Oct 2010) | 1 line
+
+[FIX] messu: Fix scope for CHECKBOX_LIST var declaration now the select all function is back (thanks sylvieg)
+----------------------------------------------
+r30095 | jonnybradley | 2010-10-18 20:03:29 +0200 (Mon, 18 Oct 2010) | 1 line
+
+[FIX] article generator: Don't duplicate info when description and content start the same, and don't add ~np~ to empty content.
+----------------------------------------------
+r30093 | jonnybradley | 2010-10-18 18:42:08 +0200 (Mon, 18 Oct 2010) | 1 line
+
+[FIX] newsletters: Handle subscriptions from wiki page using trackerlist which now seems to be {strip}ed (no line feeds)
+----------------------------------------------
+r30092 | sylvieg | 2010-10-18 18:11:55 +0200 (Mon, 18 Oct 2010) | 1 line
+
+[FIX]js: move the checkbox-list_check_all function to an unconditional js for the messu_*.php script
+----------------------------------------------
+r30089 | jonnybradley | 2010-10-18 14:21:07 +0200 (Mon, 18 Oct 2010) | 2 lines
+
+[FIX] timezones: Check validity of both cases of timezone selection. Then recheck incase server_timezone is invalid.
+Should fix out of memory errors on saving user prefs and general admin in some setups (thanks Geoff).
+----------------------------------------------
+r30087 | sampaioprimo | 2010-10-18 02:58:20 +0200 (Mon, 18 Oct 2010) | 2 lines
+
+removing code comment on test (thanks jonny for fixing the issue with headings)
+
+----------------------------------------------
+r30086 | jonnybradley | 2010-10-17 21:05:57 +0200 (Sun, 17 Oct 2010) | 1 line
+
+[FIX] preview: Only diff current section when section editing. Also fix html encoding on left side of diff.
+----------------------------------------------
+r30085 | jonnybradley | 2010-10-17 21:01:40 +0200 (Sun, 17 Oct 2010) | 1 line
+
+[FIX] plugin alias admin: cookietab
+----------------------------------------------
+r30084 | jonnybradley | 2010-10-17 19:38:18 +0200 (Sun, 17 Oct 2010) | 1 line
+
+[FIX] plugin alias: Fix missing data in plugin alias body parsing (should fix wishes on dev.t.o)
+----------------------------------------------
+r30083 | jonnybradley | 2010-10-17 18:22:05 +0200 (Sun, 17 Oct 2010) | 1 line
+
+Minor change to pref warning for feature_wiki_save_draft
+----------------------------------------------
+r30082 | jonnybradley | 2010-10-17 17:36:24 +0200 (Sun, 17 Oct 2010) | 1 line
+
+validation mail - trim some whitespace
+----------------------------------------------
+r30081 | jonnybradley | 2010-10-17 17:33:30 +0200 (Sun, 17 Oct 2010) | 1 line
+
+[CSS] Make disabled elements, especially select menus, look different as most themes override the browser default.
+----------------------------------------------
+r30080 | marclaporte | 2010-10-17 16:27:54 +0200 (Sun, 17 Oct 2010) | 1 line
+
+lesser magic descriptions
+----------------------------------------------
+r30079 | marclaporte | 2010-10-17 16:20:10 +0200 (Sun, 17 Oct 2010) | 1 line
+
+documenting what people should do, not just what they shouldn't do
+----------------------------------------------
+r30078 | marclaporte | 2010-10-17 16:16:15 +0200 (Sun, 17 Oct 2010) | 1 line
+
+[ENH] Beefing up programmers's admin panel with more relevant preferences. TODO: make a dedicated panel for programmers.
+----------------------------------------------
+r30077 | chibaguy | 2010-10-17 08:33:01 +0200 (Sun, 17 Oct 2010) | 1 line
+
+[FIX] Add a CSS class to div.wikitext when "Display page name as page title" is turned off, to be able to style headings consistently. (Headings in wikitext change by one size when that option is turned on|off.)
+----------------------------------------------
+r30074 | jonnybradley | 2010-10-16 21:00:27 +0200 (Sat, 16 Oct 2010) | 1 line
+
+[CSS] cluetip "colours" for jqui
+----------------------------------------------
+r30073 | jonnybradley | 2010-10-16 20:59:53 +0200 (Sat, 16 Oct 2010) | 1 line
+
+[CSS] Move common #fixedwidth definitions into layout.css and set width when using fluid layout
+----------------------------------------------
+r30072 | jonnybradley | 2010-10-16 20:20:39 +0200 (Sat, 16 Oct 2010) | 1 line
+
+[FIX] ckeditor: Handle $headerlib->wysiwyg_parsing better for nested calls to parse_data, and remove html tags from plugin body
+----------------------------------------------
+r30071 | jonnybradley | 2010-10-16 20:01:04 +0200 (Sat, 16 Oct 2010) | 1 line
+
+[FIX] tabs module: Remove trailing </p> tags produced by ckeditor
+----------------------------------------------
+r30070 | jonnybradley | 2010-10-16 19:59:39 +0200 (Sat, 16 Oct 2010) | 1 line
+
+[FIX] ckeditor: Correct plugin regexp to allow for ckeditor reformatting source
+----------------------------------------------
+r30069 | chealer | 2010-10-16 19:42:14 +0200 (Sat, 16 Oct 2010) | 2 lines
+
+[FIX] Textareas: JavaScript escaping for apostrophes in page names when AJAX is on, fixes JS errors
+Closes: #3583. Still needs proper escaping
+----------------------------------------------
+r30068 | jonnybradley | 2010-10-16 19:03:54 +0200 (Sat, 16 Oct 2010) | 1 line
+
+[FIX] ckeditor: Don't add another body end tag
+----------------------------------------------
+r30067 | jonnybradley | 2010-10-16 16:33:36 +0200 (Sat, 16 Oct 2010) | 1 line
+
+[FIX] multilingual: Tidy up last of switch over from "bl=n" to "no_bl=y" for viewing pages not in "feature_best_language" (if enabled)
+----------------------------------------------
+r30066 | jonnybradley | 2010-10-16 16:29:25 +0200 (Sat, 16 Oct 2010) | 1 line
+
+[FIX] multilingual: Move no_bl to end of url created by translations menu
+----------------------------------------------
+r30065 | jonnybradley | 2010-10-16 15:35:31 +0200 (Sat, 16 Oct 2010) | 1 line
+
+[FIX] parse_data: Correct showhide heading regression revealed by test added in r30061 (thanks sampaioprimo)
+----------------------------------------------
+r30063 | robertplummer | 2010-10-16 00:37:47 +0200 (Sat, 16 Oct 2010) | 1 line
+
+[ADD] The event handlers for checking the values of each of the revision selectors in sheet history
+----------------------------------------------
+r30061 | sampaioprimo | 2010-10-16 00:11:09 +0200 (Sat, 16 Oct 2010) | 2 lines
+
+create new failing test to demonstrate a regression bug from 5.x to 6.x related with headings in wiki pages (see comments on top of the test for more info)
+
+----------------------------------------------
+r30060 | nkoth | 2010-10-16 00:02:26 +0200 (Sat, 16 Oct 2010) | 1 line
+
+Improve wording to make UI clearer
+----------------------------------------------
+r30059 | robertplummer | 2010-10-16 00:01:52 +0200 (Sat, 16 Oct 2010) | 5 lines
+
+[MOD] Dropped date sorting in sheet history, it got very confusing, VERY fast
+[MOD] Migrated many of the js for tiki-view_sheets.js into functions called form the page
+[ADD] Added revision dates at the top of sheet history so you know what you are looking at
+[MOD] Changed the name of tiki-view-sheets.tpl to tiki-view_sheets.tpl, it was making me very angry!
+[FIX] The back button issue for viewing sheet history
+----------------------------------------------
+r30058 | sampaioprimo | 2010-10-15 23:24:16 +0200 (Fri, 15 Oct 2010) | 2 lines
+
+add test for collapsible heading
+
+----------------------------------------------
+r30057 | sylvieg | 2010-10-15 23:09:52 +0200 (Fri, 15 Oct 2010) | 1 line
+
+[FIX]calendar: more precise message for the calendar import format
+----------------------------------------------
+r30056 | sampaioprimo | 2010-10-15 23:01:12 +0200 (Fri, 15 Oct 2010) | 1 line
+
+adding back a few tests that were commented (just had to replace \n with <br />, makes sense?)
+----------------------------------------------
+r30055 | sampaioprimo | 2010-10-15 22:52:47 +0200 (Fri, 15 Oct 2010) | 2 lines
+
+ops, changed some spaces inside strings to tab with previous commit
+
+----------------------------------------------
+r30050 | jonnybradley | 2010-10-15 19:51:12 +0200 (Fri, 15 Oct 2010) | 1 line
+
+[FIX] textarea: Correct logic for session timeout warning box and stop it appearing momentarily on page load. Also pass on tracker as section for toolbar choice for when in plugin.
+----------------------------------------------
+r30049 | jonnybradley | 2010-10-15 19:15:52 +0200 (Fri, 15 Oct 2010) | 1 line
+
+[CSS] trackerfilter-result: better max height - 120 lines instead of 50 which was way too short
+----------------------------------------------
+r30047 | ricks99 | 2010-10-15 18:31:30 +0200 (Fri, 15 Oct 2010) | 1 line
+
+[ENH]Better message to user when tree is empty. 
+----------------------------------------------
+r30046 | jonnybradley | 2010-10-15 18:10:23 +0200 (Fri, 15 Oct 2010) | 1 line
+
+[FIX] tracker plugin: Correct logic for auto-assign user fields (should fix lack of "submitted by" info experienced on dev.t.o wishlist)
+----------------------------------------------
+r30045 | jonnybradley | 2010-10-15 17:35:50 +0200 (Fri, 15 Oct 2010) | 1 line
+
+[FIX] trackers: More on category fields - fixes tiki-view_tracker.php list (tracker plugin still not quite right on multiselects)
+----------------------------------------------
+r30044 | sampaioprimo | 2010-10-15 16:54:45 +0200 (Fri, 15 Oct 2010) | 1 line
+
+[FIX] set right padding-top for interactive translation box
+----------------------------------------------
+r30041 | sampaioprimo | 2010-10-15 16:01:05 +0200 (Fri, 15 Oct 2010) | 1 line
+
+pt-br translations done on i18n.tiki.org
+----------------------------------------------
+r30040 | sampaioprimo | 2010-10-15 15:35:37 +0200 (Fri, 15 Oct 2010) | 1 line
+
+[FIX] setting file galery as home page now works (was using wrong preference name)
+----------------------------------------------
+r30039 | sylvieg | 2010-10-15 15:33:56 +0200 (Fri, 15 Oct 2010) | 1 line
+
+[FIX]perms: admin_importer and admin_toolbars do not give admin perms to all tiki perms - we were lucky the tiki_p_admin was the last one in the perms list
+----------------------------------------------
+r30038 | jonnybradley | 2010-10-15 14:53:01 +0200 (Fri, 15 Oct 2010) | 1 line
+
+[FIX] trackers: 2nd part of fix for category fields not working reliably since the "descendants" option was added. Fixes tiki-view_tracker_item.php (anywhere else needed?)
+----------------------------------------------
+r30037 | luciash | 2010-10-15 13:34:10 +0200 (Fri, 15 Oct 2010) | 1 line
+
+xhtml: added missing alt for img tags
+----------------------------------------------
+r30036 | jonnybradley | 2010-10-15 13:25:55 +0200 (Fri, 15 Oct 2010) | 1 line
+
+[FIX] trackers: Partial fix for category fields not working reliably since the "descendants" option was added. Fixes plugins, not tiki-view_tracker_item.php (yet)
+----------------------------------------------
+r30035 | luciash | 2010-10-15 13:22:21 +0200 (Fri, 15 Oct 2010) | 1 line
+
+[FIX] Kaltura media entries actions i18n: added missing tr to some strings
+----------------------------------------------
+r30034 | luciash | 2010-10-15 13:13:23 +0200 (Fri, 15 Oct 2010) | 1 line
+
+[FIX] Kaltura media entries actions: change from view to download icon link
+----------------------------------------------
+r30032 | xavidp | 2010-10-15 12:47:10 +0200 (Fri, 15 Oct 2010) | 1 line
+
+[FIX]Usability fix: Disambiguation in the labels shown to users for Share access rights with friends. Thanks J?\195?\182rn (cdrwhite)
+----------------------------------------------
+r30031 | luciash | 2010-10-15 12:29:20 +0200 (Fri, 15 Oct 2010) | 1 line
+
+[FIX] Kaltura media entries: change from download link to view link
+----------------------------------------------
+r30030 | xavidp | 2010-10-15 11:34:07 +0200 (Fri, 15 Oct 2010) | 1 line
+
+[FIX]Usability fix: after sending a message to multiple users, you see their names separated by commas for some reason, while the right syntax to have multiple usernames in the required fields is by separating them with semicolon instead. Tip added with that info.
+----------------------------------------------
+r30023 | jonnybradley | 2010-10-14 23:12:46 +0200 (Thu, 14 Oct 2010) | 1 line
+
+[FIX] multilingual: Disabled translations menu when showing structures as it doesn't work. Use the switch language module as a work-around pending a proper fix after 6.0
+----------------------------------------------
+r30022 | jonnybradley | 2010-10-14 23:04:46 +0200 (Thu, 14 Oct 2010) | 1 line
+
+[FIX] flags: Missing Welsh mapping
+----------------------------------------------
+r30020 | jonnybradley | 2010-10-14 21:57:30 +0200 (Thu, 14 Oct 2010) | 1 line
+
+[FIX] rankings: Use $multilinguallib->useBestLanguage() instead of outdated request params.
+----------------------------------------------
+r30019 | jonnybradley | 2010-10-14 21:41:53 +0200 (Thu, 14 Oct 2010) | 1 line
+
+[FIX] xhtml: Wrap form contents in divs
+----------------------------------------------
+r30017 | jonnybradley | 2010-10-14 21:25:10 +0200 (Thu, 14 Oct 2010) | 1 line
+
+[FIX] multilingual: Respect pref feature_detect_language (from browser) when detecting languages.
+----------------------------------------------
+r30014 | sept_7 | 2010-10-14 18:15:35 +0200 (Thu, 14 Oct 2010) | 2 lines
+
+[FIX] Small layout fix for consistency.
+
+----------------------------------------------
+r30011 | chibaguy | 2010-10-14 15:48:14 +0200 (Thu, 14 Oct 2010) | 1 line
+
+[FIX] Correction of where display:table is placed (from body to #fixedwidth). Please test for Javascript and textarea errors.
+----------------------------------------------
+r30008 | marclaporte | 2010-10-14 15:44:53 +0200 (Thu, 14 Oct 2010) | 1 line
+
+remove stray secdb file
+----------------------------------------------
+r30006 | chibaguy | 2010-10-14 14:57:47 +0200 (Thu, 14 Oct 2010) | 1 line
+
+[FIX] Alternative method to implement fixed-width without !important on widths, and moving rules so lite.css doesn't have Tiki-specific code. Please test again for Javascript and textarea errors.
+----------------------------------------------
+r30005 | robertplummer | 2010-10-14 14:28:16 +0200 (Thu, 14 Oct 2010) | 1 line
+
+[MOD] Changed the name of the history template, it was causing xajax to fail.
+----------------------------------------------
+r30004 | chibaguy | 2010-10-14 13:42:10 +0200 (Thu, 14 Oct 2010) | 1 line
+
+[FIX] Page background images weren't going full-width (in this theme, div#fixedwidth is full-width to allow wide header and footer background images; divs #header-top, #tiki-top .wrapper, and #middle have width: 990px).
+----------------------------------------------
+r30002 | robertplummer | 2010-10-14 03:05:13 +0200 (Thu, 14 Oct 2010) | 1 line
+
+[ENH] Changes for sheet to support pagination in history.  Still needs a bit of debug, but links are there.
+----------------------------------------------
+r30000 | chealer | 2010-10-14 00:22:54 +0200 (Thu, 14 Oct 2010) | 3 lines
+
+[FIX] PDO: uploading a file to a file gallery and recovering it breaks its non-ASCII characters when client_charset and character_set_database differ (often making applications report the file as corrupted), and operations on BLOBs in general
+partially reverts r27399. Ref: http://sourceforge.net/mailarchive/message.php?msg_name=4CAAAFFD.6040103%40gmail.com
+This will probably have the opposite effect for BLOBs populated in Tiki 5; please report if this happens
+----------------------------------------------
+r29999 | sept_7 | 2010-10-13 22:39:40 +0200 (Wed, 13 Oct 2010) | 2 lines
+
+[ENH] More french translations
+
+----------------------------------------------
+r29998 | sept_7 | 2010-10-13 22:39:02 +0200 (Wed, 13 Oct 2010) | 2 lines
+
+[FIX] small layout modification for readability of examples
+
+----------------------------------------------
+r29995 | jonnybradley | 2010-10-13 20:40:21 +0200 (Wed, 13 Oct 2010) | 1 line
+
+[FIX] xhtml: Wrap form contents in a fieldset and correct <p> tags
+----------------------------------------------
+r29993 | jonnybradley | 2010-10-13 19:23:57 +0200 (Wed, 13 Oct 2010) | 1 line
+
+[FIX] search module: Search page needs "highlight" not "find" as the main param.
+----------------------------------------------
+r29992 | jonnybradley | 2010-10-13 19:20:21 +0200 (Wed, 13 Oct 2010) | 1 line
+
+[FIX] xhtml: Wrap form contents in a div (fieldset has a border etc)
+----------------------------------------------
+r29991 | jonnybradley | 2010-10-13 19:07:55 +0200 (Wed, 13 Oct 2010) | 1 line
+
+[FIX] autocomplete: Hide selector when input is clicked on. Should make it less "sticky".
+----------------------------------------------
+r29987 | sept_7 | 2010-10-13 18:01:52 +0200 (Wed, 13 Oct 2010) | 2 lines
+
+[ENH] more French translations
+
+----------------------------------------------
+r29986 | sept_7 | 2010-10-13 18:01:20 +0200 (Wed, 13 Oct 2010) | 2 lines
+
+[ENH] Some layout modification + some more translated strings
+
+----------------------------------------------
+r29984 | Jyhem | 2010-10-13 16:23:53 +0200 (Wed, 13 Oct 2010) | 1 line
+
+[FIX] Blog titles and freetags were mixed up randomly depending on title length and number of tags. Now freetags are aways below the title
+----------------------------------------------
+r29983 | sylvieg | 2010-10-13 15:59:53 +0200 (Wed, 13 Oct 2010) | 1 line
+
+[FIX]todo: the wiki body is html - let the mail lib sorts out html and text
+----------------------------------------------
+r29980 | xavidp | 2010-10-13 14:58:23 +0200 (Wed, 13 Oct 2010) | 1 line
+
+[FIX]Tip added about a param needed in some servers for rewrite rules to work, even if not in subdirectories. Took many hours to fix that issue in one of those servers without this tip.
+----------------------------------------------
 r29884 | Jyhem | 2010-10-07 21:13:57 +0200 (Thu, 07 Oct 2010) | 1 line
 
 [FIX] Restore correct display of sitesearchbar for FireFox
