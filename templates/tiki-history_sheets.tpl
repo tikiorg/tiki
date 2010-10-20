@@ -47,7 +47,7 @@
 		</th>
 		<th></th>
 	</tr>
-	{section name=revision_date loop=$history key=i}
+	{section name=revision_date loop=$history}
 		<tr>
 			<td>
 				{$history[revision_date].string}

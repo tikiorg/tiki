@@ -46,7 +46,7 @@
 		<tr>
 			<td>{tr}Title{/tr}</td>
 			<td>
-				<input type="text" name="title" value="{$title|escape}" maxlength="255" size="80" />
+				<input type="text" name="title" value="{$title|escape}" maxlength="255" size="60" />
 			</td>
 		</tr>
 		<tr id='show_subtitle' {if $types.$type.show_subtitle eq 'y'}style="display:;"{else}style="display:none;"{/if}>
@@ -188,7 +188,7 @@
 		<tr id='show_image_caption' {if $types.$type.show_image_caption eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Image caption{/tr} *</td>
 			<td>
-				<input type="text" name="image_caption" value="{$image_caption|escape}" size="80" />
+				<input type="text" name="image_caption" value="{$image_caption|escape}" size="60" />
 			</td>
 		</tr>
 
@@ -262,7 +262,7 @@
 			{assign var='attfullname' value=$att.itemId}
 			<tr id={$attid} {if $types.$type.$attid eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 				<td>{$attname|escape}</td>
-				<td><input type="text" name="{$attfullname}" value="{$article_attributes.$attfullname|escape}" size="80" /></td>
+				<td><input type="text" name="{$attfullname}" value="{$article_attributes.$attfullname|escape}" size="60" /></td>
 			</tr>
 			{/foreach}
 		{/if}

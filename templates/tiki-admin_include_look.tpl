@@ -23,7 +23,7 @@
 				{/if}
 				
 				{if $prefs.site_style != $a_style}
-					{remarksbox type="note" title="{tr}Note{/tr}}{tr}Theme not saved yet - click "Apply"{/tr}{/remarksbox}
+					{remarksbox type="note" title="{tr}Note{/tr}"}{tr}Theme not saved yet - click "Apply"{/tr}{/remarksbox}
 				{/if}	
 			</div>
 

@@ -504,7 +504,7 @@ class WikiRenderer
 				'',
 				'');
 
-		$headtitle = breadcrumb_buildHeadTitle($crumbs);
+		$headtitle = breadcrumb_buildHeadTitle($prefs['site_title_breadcrumb'] == 'invertfull'? array_reverse($crumbs): $crumbs);
 		$this->smartyassign('headtitle', $headtitle);
 		$this->smartyassign('trail', $crumbs);
 	} // }}}

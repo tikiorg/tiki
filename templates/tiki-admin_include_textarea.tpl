@@ -199,6 +199,9 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 						<input type="submit" name="enable" value="{tr}Enable Plugins{/tr}"/>
 						<input type="submit" name="delete" value="{tr}Delete Plugins{/tr}"/>
 					</div>
+					{remarksbox type="tip" title="{tr}Tip{/tr}"}
+						{tr}Click on the plugin name to edit it.{/tr} {tr}Click on the + icon to add a new one.{/tr}
+					{/remarksbox}
 				</div>
 			</fieldset>
 			{jq}$('#pluginalias_available legend').trigger('click');{/jq}
