@@ -90,7 +90,9 @@ function module_since_last_visit_new($mod_reference, $params = null)
 
 	$ret["items"]["comments"]["label"] = tra('new comments');
 	$ret["items"]["comments"]["cname"] = "slvn_comments_menu";
-	$query = "select `object`,`objectType`,`title`,`commentDate`,`userName`,`threadId`, `parentId`, `approved` from `tiki_comments` where `commentDate`>? and `objectType` != 'forum' order by `commentDate` desc";
+	
+	//TODO: should be a function on commentslib.php or use one of the existent functions
+	$query = "select `object`,`objectType`,`title`,`commentDate`,`userName`,`threadId`, `parentId`, `approved`, `archived` from `tiki_comments` where `commentDate`>? and `objectType` != 'forum' order by `commentDate` desc";
 	$result = $tikilib->query($query, array((int)$last), $resultCount);
 	
 	$count = 0;
@@ -133,15 +135,21 @@ function module_since_last_visit_new($mod_reference, $params = null)
 			break;
 		}
 
-		if ($res['approved'] == 'y') {
-			$visible = !isset($perm) || $userlib->user_has_perm_on_object($user, $res['object'], $res['objectType'], $perm);
-		} else {
+		if ($res['approved'] == 'n' || $res['archived'] == 'y') {
 			$visible = $userlib->user_has_perm_on_object($user, $res['object'], $res['objectType'], 'tiki_p_admin_comments');
+		} else {
+			$visible = !isset($perm) || $userlib->user_has_perm_on_object($user, $res['object'], $res['objectType'], $perm);
 		}
+		
 		if ($visible) {
 			require_once('lib/smarty_tiki/modifier.username.php');
 			$ret["items"]["comments"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["commentDate"]) ." ". tra("by") ." ". smarty_modifier_username($res["userName"]);
-			$ret["items"]["comments"]["list"][$count]["label"] = $res["title"]; 
+			$ret["items"]["comments"]["list"][$count]["label"] = $res["title"];
+
+			if ($res['archived'] == 'y') {
+				$ret['items']['comments']['list'][$count]['label'] .= tra(' (archived)');
+			}
+			
 			$count++;
 		}
 	}

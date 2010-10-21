@@ -1929,8 +1929,20 @@ class Comments extends TikiLib
 		return $result;	
 	}
 
-	/* administrative functions to get all the comments of some types + enlarge find
-	 * no perms checked as it is only for admin */
+	/**
+	 * Return all comments. Administrative functions to get all the comments
+	 * of some types + enlarge find. No perms checked as it is only for admin
+	 * 
+	 * @param string|array $type one type or array of types (if empty function will return comments for all types except forum) 
+	 * @param int $offset
+	 * @param int $maxRecords
+	 * @param string $sort_mode
+	 * @param string $find search comment title, data, user name, ip and object
+	 * @param string $parent
+	 * @param string $approved set it to y or n to return only approved or rejected comments (leave empty to return all comments)
+	 * @param bool $toponly
+	 * @param array|int $objectId limit comments return to one object id or array of objects ids
+	 */
 	function get_all_comments($type = '', $offset = 0, $maxRecords = -1, $sort_mode = 'commentDate_asc', $find = '', $parent='', $approved='', $toponly=false, $objectId='') {
 		$join = '';
 		if ( empty($type) ) {
