@@ -94,5 +94,9 @@ function filter_out_sefurl($tpl_output, &$smarty, $type = null, $title = null, $
 			}
 		}
 	}
+	// Needed to prevent pagenames with : to be interpreted as protocol handler by browsers
+	if (strpos($tpl_output, '/') === false) {
+		$tpl_output = './' . $tpl_output;
+	}
 	return $tpl_output;
 }
