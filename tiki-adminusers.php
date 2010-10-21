@@ -274,7 +274,7 @@ if (isset($_REQUEST['batch']) && (is_uploaded_file($_FILES['csvlist']['tmp_name'
 	}
 } elseif (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'delete' && isset($_REQUEST["user"]) && $_REQUEST["user"] != 'admin') {
-		$access->check_authenticity(tra('Are you sure you want to delete this new user?'));
+		$access->check_authenticity(tra('Are you sure you want to delete this user?'));
 		$userlib->remove_user($_REQUEST["user"]);
 		$tikifeedback = array();
 		$tikifeedback[] = array(
