@@ -120,10 +120,10 @@
 
 			{if $tiki_p_admin_comments eq 'y' and $prefs.comments_archive eq 'y'}
 				<td class="archive">
-					{if $comments[ix].archived eq 'n'}
-						{self_link archive='archive' checked=$id _icon='folder'}{tr}Archive{/tr}{/self_link}
-					{else}
+					{if $comments[ix].archived eq 'y'}
 						{self_link archive='unarchive' checked=$id _icon='ofolder'}{tr}Unarchive{/tr}{/self_link}
+					{else}
+						{self_link archive='archive' checked=$id _icon='folder'}{tr}Archive{/tr}{/self_link}
 					{/if}
 				</td>
 			{/if}
