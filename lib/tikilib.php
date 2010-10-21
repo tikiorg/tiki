@@ -6372,6 +6372,21 @@ class TikiLib extends TikiDb_Bridge
 		} else {
 			$need_maketoc = strpos($data, "{maketoc");
 		}
+		
+		// Wysiwyg {maketoc} handling when not in editor mode (i.e. viewing)
+		if ($need_maketoc && $prefs["feature_wysiwyg"] == 'y' && $prefs["wysiwyg_htmltowiki"] != 'y') {
+			$htmlheadersearch = '/^<h([1-6])>\s*([^<]+)\s*<\/h[1-6]>$/im';
+			preg_match_all($htmlheadersearch, $data, $htmlheaders);
+			for ($i = 0; $i < count($htmlheaders[1]); $i++) {
+				$htmlheaderreplace = '';
+				for ($j = 0; $j < $htmlheaders[1][$i]; $j++) {
+					$htmlheaderreplace .= '!';
+				}
+				$htmlheaderreplace .= $htmlheaders[2][$i];
+				$data = str_replace($htmlheaders[0][$i], $htmlheaderreplace, $data);
+			}
+		}
+
 		$need_autonumbering = ( preg_match('/^\!+[\-\+]?#/m', $data) > 0 );
 
 		$anch = array();
