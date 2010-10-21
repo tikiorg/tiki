@@ -1455,7 +1455,7 @@ class Comments extends TikiLib
 		elseif ($type == 'blog') {
 			if ($prefs['feature_blogs'] != 'y')
 				return false;
-			$query = "SELECT count(*),`tiki_blog_posts`.`postId`,`tiki_blog_posts`.`title` FROM `tiki_comments` INNER JOIN `tiki_blog_posts` ON `tiki_comments`.`object`=`tiki_blog_posts`.`postId` WHERE `tiki_comments`.`objectType`='post' and `tiki_comments`.`approved`='y' GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
+			$query = "SELECT count(*),`tiki_blog_posts`.`postId`,`tiki_blog_posts`.`title` FROM `tiki_comments` INNER JOIN `tiki_blog_posts` ON `tiki_comments`.`object`=`tiki_blog_posts`.`postId` WHERE `tiki_comments`.`objectType`='blog post' and `tiki_comments`.`approved`='y' GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
 		}
 		else {
 			//Default to Wiki
@@ -1686,7 +1686,7 @@ class Comments extends TikiLib
 	/**
 	 * Get comments for a particular object
 	 * 
-	 * @param string $objectId objectType:objectId (example: 'wiki page:HomePage' or 'post:1') 
+	 * @param string $objectId objectType:objectId (example: 'wiki page:HomePage' or 'blog post:1') 
 	 * @param int $parentId only return child comments of $parentId
 	 * @param int $offset
 	 * @param int $maxRecords
@@ -2028,7 +2028,7 @@ class Comments extends TikiLib
 			case 'blog':
 				$href = 'tiki-view_blog.php?blogId=';
 				break;
-			case 'post':
+			case 'blog post':
 				$href = 'tiki-view_blog_post.php?postId=';
 				break;
 			case 'forum':
