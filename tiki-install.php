@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -104,7 +104,6 @@ if (isset($_SESSION['accessible'])) {
 
 function createPage($title, $content){
 	echo <<<END
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html 
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -112,21 +111,13 @@ function createPage($title, $content){
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link type="text/css" rel="stylesheet" href="styles/fivealive.css" />
-		<style type="text/css" media="screen">
-html {
-	background-color: #fff;
-}
-#centercolumn {
-	padding: 4em 10em;
-}
-		</style>
 		<title>$title</title>
 	</head>
-	<body class="tiki_wiki" style="text-align: center;">
-		<div id="header" style="background:url(styles/fivealive/options/blueberry/headertile.png) no-repeat 900px 0; height: auto;">
+	<body class="tiki_wiki">
+		<div id="header">
 			<div id="siteheader">
-			 	<div id="header-top" class="clearfix" style="background: url(styles/fivealive/options/blueberry/siteheader.jpg) no-repeat -252px 0; min-height: 170px; width: 990px">
-					<div id="sitelogo" style="text-align: left; padding-left: 0px; padding-top: 30px;">
+			 	<div id="header-top" class="clearfix">
+					<div id="sitelogo">
 						<img alt="Site Logo" src="img/tiki/Tiki_WCG.png" />
 					</div>
 				</div>
@@ -136,7 +127,7 @@ html {
 		</div>
 		<div id="middle" style="display: table; margin: 0 auto; width: 990px;">
 			<div id="tiki-center" style="text-align:center; ">
-				<h1 style="position: absolute; left: 42%; top: 60px; color: #fff; text-shadow: 3px 2px 0 #781437;">$title</h1>
+				<h1 style="position: absolute; top: 160px; color: #fff; text-shadow: 3px 2px 0 #781437;">$title</h1>
 				$content
 			</div>
 		</div>
