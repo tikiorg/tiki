@@ -19,17 +19,12 @@ require_once ('lib/tree/tree.php');
  */
 class CatBrowseTreeMaker extends TreeMaker
 {
-	/// Collect javascript cookie set code (internaly used after make_tree() method)
-	var $jsscriptblock;
-
 	/// Generated ID (private usage only)
 	var $itemID;
 
 	/// Constructor
 	function CatBrowseTreeMaker($prefix) {
 		$this->TreeMaker($prefix);
-
-		$this->jsscriptblock = '';
 	}
 
 	/// Generate HTML code for tree. Need to redefine to add javascript cookies block
@@ -41,7 +36,7 @@ class CatBrowseTreeMaker extends TreeMaker
 		$r .= $this->make_tree_r($rootid, $ar) . "</ul>\n";
 
 		// java script block that opens the nodes as remembered in cookies
-		$headerlib->add_jq_onready($this->jsscriptblock);
+		$headerlib->add_jq_onready('$(".tree.root:not(.init)").categ_browse_tree().addClass("init")');
 		
 		// return tree
 		return $r;
@@ -74,10 +69,7 @@ class CatBrowseTreeMaker extends TreeMaker
 
 	//
 	function node_flipper_code($nodeinfo) {
-		$this->itemID = $this->prefix . 'id' . $nodeinfo["id"];
-
-		$this->jsscriptblock .= "setFlipWithSign('" . $this->itemID . "'); ";
-		return '<a class="link categflipper" id="flipper' . $this->itemID . '" href="#" onclick="javascript:flipWithSign(\'' . $this->itemID . '\');return false;">[+]</a>&nbsp;';
+		'';
 	}
 
 	//
@@ -92,7 +84,7 @@ class CatBrowseTreeMaker extends TreeMaker
 
 	//
 	function node_child_start_code($nodeinfo) {
-		return '<ul class="tree" id="' . $this->itemID . '" style="display: none;">';
+		return '<ul class="tree" id="' . $this->itemID . '">';
 	}
 
 	//
