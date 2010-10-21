@@ -7183,28 +7183,34 @@ class TikiLib extends TikiDb_Bridge
 
 		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\)\)/", $data, $normal);
 		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\|(.+?)\)\)/", $data, $withDesc);
+		preg_match_all('/<a class="wiki" href="tiki-index.php\?page=([^\?&"]+)"/', $data, $htmlLinks);
+		foreach($htmlLinks[1] as &$h) {
+			$h = urldecode($h);
+		}
 
 		if ($prefs['feature_wikiwords'] == 'y') {
 			preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $wikiLinks);
 
-			$pageList = array_merge( $normal[2], $withDesc[2], $wikiLinks[2] );
+			$pageList = array_merge( $normal[2], $withDesc[2], $wikiLinks[2], $htmlLinks[1] );
 			if( $withReltype ) {
 				$relList = array_merge(
 					$normal[1], 
 					$withDesc[1], 
-					count($wikiLinks[2]) ? array_fill( 0, count($wikiLinks[2]), null ) : array()
+					count($wikiLinks[2]) ? array_fill( 0, count($wikiLinks[2]), null ) : array(),
+					count($htmlLinks[1]) ? array_fill( 0, count($htmlLinks[1]), null ) : array()
 				);
 			}
 		} else {
-			$pageList = array_merge( $normal[2], $withDesc[2] );
+			$pageList = array_merge( $normal[2], $withDesc[2], $htmlLinks[1] );
 			if( $withReltype ) {
 				$relList = array_merge(
 					$normal[1], 
-					$withDesc[1]
+					$withDesc[1],
+					count($htmlLinks[1]) ? array_fill( 0, count($htmlLinks[1]), null ) : array()
 				);
 			}
 		}
-
+	
 		if( $withReltype ) {
 			$complete = array();
 			foreach( $pageList as $idx => $name ) {
