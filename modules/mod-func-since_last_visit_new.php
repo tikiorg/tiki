@@ -48,7 +48,9 @@ function module_since_last_visit_new_info() {
 function module_since_last_visit_new($mod_reference, $params = null)
 {
 	global $smarty, $user;
+	require_once('lib/comments/commentslib.php'); global $commentslib; $commentslib = new Comments();
 	include_once('tiki-sefurl.php');
+	
 	if (!$user) return false;
 
 	if (!isset($params['date_as_link']) || $params['date_as_link'] != 'n') {
@@ -90,50 +92,41 @@ function module_since_last_visit_new($mod_reference, $params = null)
 	$ret["items"]["comments"]["cname"] = "slvn_comments_menu";
 	$query = "select `object`,`objectType`,`title`,`commentDate`,`userName`,`threadId`, `parentId`, `approved` from `tiki_comments` where `commentDate`>? and `objectType` != 'forum' order by `commentDate` desc";
 	$result = $tikilib->query($query, array((int)$last), $resultCount);
-
+	
 	$count = 0;
 	while ($res = $result->fetchRow())
 	{
+		$ret['items']['comments']['list'][$count]['href'] = $commentslib->getHref($res['objectType'], $res['object'], $res['threadId']);
 		switch($res["objectType"]) {
 		case "article":
 			$perm = 'tiki_p_read_article';
 			$ret["items"]["comments"]["list"][$count]["href"]
-				= filter_out_sefurl('tiki-read_article.php?articleId=' . $res['object'], $smarty, 'article', $res['title']);
+				= filter_out_sefurl($ret["items"]["comments"]["list"][$count]["href"], $smarty, 'article', $res['title']);
 			break;
 		case "post":
 			$perm = 'tiki_p_read_blog';
 			$ret["items"]["comments"]["list"][$count]["href"]
-				= filter_out_sefurl('tiki-view_blog_post.php?postId=' . $res['object'], $smarty, 'blogpost', $res['title']);
+				= filter_out_sefurl($ret["items"]["comments"]["list"][$count]["href"], $smarty, 'blogpost', $res['title']);
 			break;
 		case "blog":
 			$perm = 'tiki_p_read_blog';
 			$ret["items"]["comments"]["list"][$count]["href"]
-				= filter_out_sefurl('tiki-view_blog.php?blogId=' . $res['object'], $smarty, 'blog', $res['title']);
+				= filter_out_sefurl($ret["items"]["comments"]["list"][$count]["href"], $smarty, 'blog', $res['title']);
 			break;
 		case "faq":
 			$perm = 'tiki_p_view_faqs';
-			$ret["items"]["comments"]["list"][$count]["href"]
-				= "tiki-view_faq.php?faqId=" . $res["object"];
 			break;
 		case "file gallery":
 			$perm = 'tiki_p_view_file_gallery';
-			$ret["items"]["comments"]["list"][$count]["href"]
-				= "tiki-list_file_gallery.php?galleryId=" . $res["object"];
 			break;
 		case "image gallery":
 			$perm = 'tiki_p_view_image_gallery';
-			$ret["items"]["comments"]["list"][$count]["href"]
-				= "tiki-browse_gallery.php?galleryId=" . $res["object"];
 			break;
 		case "poll":
 			// no perm check for viewing polls, only a perm for taking them
-			$ret["items"]["comments"]["list"][$count]["href"]
-				= "tiki-poll_results.php?pollId=" . $res["object"];
 			break;
 		case "wiki page":
 			$perm = 'tiki_p_view';
-			$ret["items"]["comments"]["list"][$count]["href"]
-				= "tiki-index.php?page=" . urlencode($res["object"]);
 			break;
 		default:
 			$perm = 'tiki_p_read_comments';
@@ -147,9 +140,6 @@ function module_since_last_visit_new($mod_reference, $params = null)
 		}
 		if ($visible) {
 			require_once('lib/smarty_tiki/modifier.username.php');
-			if (isset($ret["items"]["comments"]["list"][$count]["href"])) {
-				$ret["items"]["comments"]["list"][$count]["href"] .= '&comzone=show#threadId'.$res['threadId'];
-			}
 			$ret["items"]["comments"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["commentDate"]) ." ". tra("by") ." ". smarty_modifier_username($res["userName"]);
 			$ret["items"]["comments"]["list"][$count]["label"] = $res["title"]; 
 			$count++;

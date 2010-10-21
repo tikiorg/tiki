@@ -50,7 +50,7 @@
 				<div class='opaque'>
 					<div class='box-title'>{tr}Actions{/tr}</div>
 					<div class='box-data'>
-						<a href="{$comments[ix].href}#threadId{$id}">{icon _id='magnifier' alt="{tr}Display{/tr}"}</a>
+						<a href="{$comments[ix].href}">{icon _id='magnifier' alt="{tr}Display{/tr}"}</a>
 						<a href="{$comments[ix].href|cat:"&amp;comments_threadId=`$id`&amp;edit_reply=1#form"}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
 						{self_link remove=1 checked=$id _icon='cross'}{tr}Delete{/tr}{/self_link}
 					</div>
@@ -87,7 +87,7 @@
 				<td {if $headerKey eq 'data'}{popup caption=$comments[ix].title|escape:"javascript"|escape:"html"	text=$comments[ix].parsed|escape:"javascript"|escape:"html"}{/if}>
 					<span> {* span is used for some themes CSS opacity on some cells content *}
 						{if $headerKey eq 'title'}
-							<a href="{$comments[ix].href}#threadId{$id}" title="{$val}">{$val|truncate:50:"...":true|escape}</a>
+							<a href="{$comments[ix].href}" title="{$val}">{$val|truncate:50:"...":true|escape}</a>
 						{elseif $headerKey eq 'objectType'}
 							{tr}{$val|ucwords}{/tr}
 						{elseif $headerKey eq 'object'}

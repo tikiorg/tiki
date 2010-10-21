@@ -2010,21 +2010,54 @@ class Comments extends TikiLib
 		return array('cant'=>$cant, 'data'=>$ret);
 	}
 
+	/**
+	 * Return the relative URL for a particular comment
+	 * 
+	 * @param string $type Object type (e.g. 'wiki page')
+	 * @param int|string $object object id (can be string for wiki pages or int for objects of other types)
+	 * @param int $threadId Id of a specific comment or forum thread
+	 * @return void|string void if unrecognized type or URL string otherwise
+	 */
 	function getHref($type, $object, $threadId) {
 		switch ($type) {
-			case 'wiki page': $href = 'tiki-index.php?page='; break;
-			case 'article': $href = 'tiki-read_article.php?articleId='; break;
-			case 'faq': $href = 'tiki-view_faq.php?faqId='; break;
-			case 'blog': $href = 'tiki-view_blog.php?blogId='; break;
-			case 'post': $href = 'tiki-view_blog_post.php?postId='; break;
-			case 'forum': $href = 'tiki-view_forum_thread.php?forumId='; break;
-			case 'file gallery': $href = 'tiki-list_file_gallery.php?galleryId='; break;
-			case 'image gallery': $href = 'tiki-browse_gallery.php?galleryId='; break;
+			case 'wiki page':
+				$href = 'tiki-index.php?page=';
+				$object = urlencode($object);
+				break;
+			case 'article':
+				$href = 'tiki-read_article.php?articleId=';
+				break;
+			case 'faq':
+				$href = 'tiki-view_faq.php?faqId=';
+				break;
+			case 'blog':
+				$href = 'tiki-view_blog.php?blogId=';
+				break;
+			case 'post':
+				$href = 'tiki-view_blog_post.php?postId=';
+				break;
+			case 'forum':
+				$href = 'tiki-view_forum_thread.php?forumId=';
+				break;
+			case 'file gallery':
+				$href = 'tiki-list_file_gallery.php?galleryId=';
+				break;
+			case 'image gallery':
+				$href = 'tiki-browse_gallery.php?galleryId=';
+				break;
+			case 'poll':
+				$href = 'tiki-poll_results.php?pollId=';
+				break;
+			default:
+				break;
 		}
+		
 		if (empty($href)) {
 			return;
 		}
+		
 		$href .= $object."&amp;threadId=$threadId&amp;comzone=show#threadId$threadId";
+		
 		return $href;
 	}
 
