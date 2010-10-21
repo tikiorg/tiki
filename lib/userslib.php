@@ -1848,7 +1848,7 @@ class UsersLib extends TikiLib
 		global $cachelib; require_once("lib/cache/cachelib.php");
 		$k = 'group_theme_'.$group;
 
-		if ( ! $data = $cachelib->getCached($k) ) {
+		if ( $data = $cachelib->getCached($k) ) {
 			$return = $data;
 		} elseif ( ! empty($group) ) {
 			$query = 'select `groupTheme` from `users_groups` where `groupName` = ?';
