@@ -394,6 +394,33 @@ abstract class Toolbar
 		return smarty_block_self_link($params, $content, $smarty);
 	} // }}}
 
+	protected function setupCKEditorTool($js, $name, $label = '', $icon = '') {
+		global $headerlib;
+		if (empty($label)) {
+			$label = $name;
+		}
+		$label = addcslashes($label, "'");
+		$headerlib->add_jq_onready(<<< JS
+window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
+window.CKEDITOR.plugins.add( '{$name}', {
+	init : function( editor ) {
+		var command = editor.addCommand( '{$name}', new window.CKEDITOR.command( editor , {
+			modes: { wysiwyg:1 },
+			exec: function(elem, editor, data) {
+				{$js}
+			},
+			canUndo: false
+		}));
+		editor.ui.addButton( '{$name}', {
+			label : '{$label}',
+			command : '{$name}',
+			icon: editor.config._TikiRoot + '{$icon}'
+		});
+	}
+});
+JS
+		, 10);
+	}
 }
 
 class ToolbarSeparator extends Toolbar
@@ -1228,34 +1255,11 @@ class ToolbarFileGallery extends Toolbar
 			$this->name = $this->wysiwyg;	// temp
 			$exec_js = str_replace('&amp;', '&', $this->getSyntax( $areaId ));	// odd?
 			
-			global $headerlib;
-			$label = addcslashes($this->label, "'");
-			$headerlib->add_jq_onready(<<< JS
-window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
-window.CKEDITOR.plugins.add( '{$this->name}', {
-	init : function( editor ) {
-		var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
-			modes: { wysiwyg:1 },
-			exec: function(elem, editor, data) {
-				{$exec_js}
-			},
-			canUndo: false
-		}));
-		editor.ui.addButton( '{$this->name}', {
-			label : '{$label}',
-			command : '{$this->name}',
-			icon: editor.config._TikiRoot + '{$this->icon}'
-		});
-
-	}
-});
-JS
-, 10);		
-			
+			$this->setupCKEditorTool($exec_js, $this->name, $this->label, $this->icon);
 		}
 		return $this->wysiwyg;
 	} // }}}
-	
+
 	function isAccessible() // {{{
 	{
 		return parent::isAccessible() && ! isset($_REQUEST['zoom']);
@@ -1347,7 +1351,7 @@ class ToolbarWikiplugin extends Toolbar
 				$tag = new self;
 				$tag->setLabel( str_ireplace('wikiplugin_', '', $info['name'] ))
 					->setIcon( $icon )
-					->setWysiwygToken( self::getToken( $name ) )
+					->setWysiwygToken( $info['name'] )
 					->setPluginName( $name )
 					->setType('Wikiplugin');
 
@@ -1387,6 +1391,16 @@ class ToolbarWikiplugin extends Toolbar
 		return $this->getSelfLink('popup_plugin_form(\'' . $areaId . '\',\'' . $this->pluginName . '\')',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-plugin');
 	} // }}}
+	function getWysiwygToken( $areaId ) // {{{
+	{
+		if (!empty($this->wysiwyg)) {
+			
+			$js = "popup_plugin_form('{$areaId}','{$this->pluginName}');";
+			$this->setupCKEditorTool($js, $this->wysiwyg, $this->label, $this->icon);
+		}
+		return $this->wysiwyg;
+	} // }}}
+	
 }
 
 class ToolbarSheet extends Toolbar
