@@ -128,7 +128,7 @@ if ($prefs['feature_blogposts_comments'] == 'y') {
 		'sort_mode',
 		'blogId'
 	);
-	$comments_prefix_var = 'post:';
+	$comments_prefix_var = 'blog post:';
 	$comments_object_var = 'postId';
 	include_once ("comments.php");
 }

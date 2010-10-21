@@ -149,9 +149,7 @@ if (isset($blogId)) {
 }
 
 $comments = $commentslib->get_all_comments($selected_types, $offset, $maxRecords, $sort_mode, $find, 'y', $_REQUEST['findfilter_approved'], false, $objectsIds);
-foreach($comments['data'] as $k => $v) {
-	if ($v['objectType'] == 'post') $comments['data'][$k]['objectType'] = 'blog post';
-}
+
 $smarty->assign_by_ref('comments', $comments['data']);
 $smarty->assign_by_ref('filters', $filters);
 $smarty->assign_by_ref('filter_names', $filter_names);

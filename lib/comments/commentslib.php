@@ -1931,7 +1931,7 @@ class Comments extends TikiLib
 
 	/* administrative functions to get all the comments of some types + enlarge find
 	 * no perms checked as it is only for admin */
-	function get_all_comments($type, $offset = 0, $maxRecords = -1, $sort_mode = 'commentDate_asc', $find = '', $parent='', $approved='', $toponly=false, $objectId='') {
+	function get_all_comments($type = '', $offset = 0, $maxRecords = -1, $sort_mode = 'commentDate_asc', $find = '', $parent='', $approved='', $toponly=false, $objectId='') {
 		$join = '';
 		if ( empty($type) ) {
 			// If no type has been specified, get all comments except those used for forums which must not be handled here
@@ -1945,11 +1945,6 @@ class Comments extends TikiLib
 				$mid = 'tc.`objectType`=?';
 				$bindvars[] = $type;
 			}
-		}
-
-		// Blog hack -- to fix
-		foreach ( $bindvars as $k => $v ) {
-			if ( $v == 'blog post' ) $bindvars[$k] = 'post';
 		}
 
 		if ($find) {
