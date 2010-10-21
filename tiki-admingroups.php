@@ -163,7 +163,7 @@ if (!empty($_REQUEST["group"])) {
 	if (isset($re["groupDesc"])) $groupdesc = $re["groupDesc"];
 	if (isset($re["groupHome"])) $grouphome = $re["groupHome"];
 	if (isset($re["groupDefCat"])) $groupdefcat = $re["groupDefCat"];
-	if (isset($re["groupHome"])) $grouptheme = $re["groupTheme"];
+	if (isset($re["groupTheme"])) $grouptheme = $re["groupTheme"];
 	if (isset($re['userChoice'])) $userChoice = $re['userChoice'];
 	if (isset($re['expireAfter'])) $expireAfter = $re['expireAfter'];
 	if ($prefs['userTracker'] == 'y') {

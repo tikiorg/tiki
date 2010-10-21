@@ -209,24 +209,25 @@
 		{include file='categorize.tpl'}
 
 		<tr>
-			<td>
-				{tr}Heading{/tr}
+			<td colspan="2">
+				{tr}Heading:{/tr}
 			</td>
-			<td>
-				{toolbars area_id='subheading' qtnum='1'}
-				<textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea>
+		</tr>
+		<tr>
+			<td colspan="2">
+				{textarea _simple="y" name="heading" rows="5" cols="80" Height="200px" id="subheading" comments="y"}{$heading}{/textarea}
 			</td>
 		</tr>
 
-		<tr id='heading_only' {if $types.$type.heading_only ne 'y'}style="display:table-row;"{else}style="display:none;"{/if}>
-			<td>
-				{tr}Body{/tr}
+
+		<tr id='heading_only' {if $types.$type.heading_only ne 'y'}style="display:;"{else}style="display:none;"{/if}>
+			<td colspan="2">
+				{tr}Body:{/tr}
 			</td>
-			<td>
-				{toolbars area_id='body' qtnum='2'}
-				<textarea class="wikiedit" id="body" name="body" rows="{$rows}" cols="{$cols}" wrap="virtual">{$body|escape}</textarea>
-				<input type="hidden" name="rows" value="{$rows}" />
-				<input type="hidden" name="cols" value="{$cols}" />
+		</tr>
+		<tr id='heading_only2' {if $types.$type.heading_only ne 'y'}style="display:;"{else}style="display:none;"{/if}>
+			<td colspan="2">
+				{textarea name="body" rows=$rows cols=$cols id="body"}{$body}{/textarea}
 			</td>
 		</tr>
 

@@ -4315,7 +4315,7 @@ class TikiLib extends TikiDb_Bridge
 		foreach ($pages as $a_page => $types) {
 			$this->replace_link($name, $a_page, $types);
 		}
-
+		
 		// Update the log
 		if (strtolower($name) != 'sandbox') {
 			global $logslib; include_once("lib/logs/logslib.php");
@@ -4353,6 +4353,15 @@ class TikiLib extends TikiDb_Bridge
 			'content' => $data,
 		) );
 
+		// Update HTML wanted links when wysiwyg is in use - this is not an elegant fix
+		// but will do for now until the "use wiki syntax in WYSIWYG" feature is ready 
+		if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_htmltowiki'] != 'y') {
+			global $wikilib; include_once('lib/wiki/wikilib.php');
+			$temppage = md5($this->now . $name);
+			$wikilib->wiki_rename_page($name, $temppage);
+			$wikilib->wiki_rename_page($temppage, $name);
+		}
+		
 		return true;
 	}
 
@@ -6376,6 +6385,21 @@ class TikiLib extends TikiDb_Bridge
 		} else {
 			$need_maketoc = strpos($data, "{maketoc");
 		}
+		
+		// Wysiwyg {maketoc} handling when not in editor mode (i.e. viewing)
+		if ($need_maketoc && $prefs["feature_wysiwyg"] == 'y' && $prefs["wysiwyg_htmltowiki"] != 'y') {
+			$htmlheadersearch = '/^<h([1-6])>\s*([^<]+)\s*<\/h[1-6]>$/im';
+			preg_match_all($htmlheadersearch, $data, $htmlheaders);
+			for ($i = 0; $i < count($htmlheaders[1]); $i++) {
+				$htmlheaderreplace = '';
+				for ($j = 0; $j < $htmlheaders[1][$i]; $j++) {
+					$htmlheaderreplace .= '!';
+				}
+				$htmlheaderreplace .= $htmlheaders[2][$i];
+				$data = str_replace($htmlheaders[0][$i], $htmlheaderreplace, $data);
+			}
+		}
+
 		$need_autonumbering = ( preg_match('/^\!+[\-\+]?#/m', $data) > 0 );
 
 		$anch = array();
@@ -7196,28 +7220,40 @@ class TikiLib extends TikiDb_Bridge
 
 		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\)\)/", $data, $normal);
 		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\|(.+?)\)\)/", $data, $withDesc);
+		preg_match_all('/<a class="wiki" href="tiki-index\.php\?page=([^\?&"]+)[^"]*"/', $data, $htmlLinks);
+		preg_match_all('/<a class="wiki wikinew" href="tiki-editpage\.php\?page=([^\?&"]+)"/', $data, $htmlWantedLinks);
+		foreach($htmlLinks[1] as &$h) {
+			$h = urldecode($h);
+		}
+		foreach($htmlWantedLinks[1] as &$h) {
+			$h = urldecode($h);
+		}
 
 		if ($prefs['feature_wikiwords'] == 'y') {
 			preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $wikiLinks);
 
-			$pageList = array_merge( $normal[2], $withDesc[2], $wikiLinks[2] );
+			$pageList = array_merge( $normal[2], $withDesc[2], $wikiLinks[2], $htmlLinks[1], $htmlWantedLinks[1] );
 			if( $withReltype ) {
 				$relList = array_merge(
 					$normal[1], 
 					$withDesc[1], 
-					count($wikiLinks[2]) ? array_fill( 0, count($wikiLinks[2]), null ) : array()
+					count($wikiLinks[2]) ? array_fill( 0, count($wikiLinks[2]), null ) : array(),
+					count($htmlLinks[1]) ? array_fill( 0, count($htmlLinks[1]), null ) : array(),
+					count($htmlWantedLinks[1]) ? array_fill( 0, count($htmlWantedLinks[1]), null ) : array()
 				);
 			}
 		} else {
-			$pageList = array_merge( $normal[2], $withDesc[2] );
+			$pageList = array_merge( $normal[2], $withDesc[2], $htmlLinks[1], $htmlWantedLinks[1] );
 			if( $withReltype ) {
 				$relList = array_merge(
 					$normal[1], 
-					$withDesc[1]
+					$withDesc[1],
+					count($htmlLinks[1]) ? array_fill( 0, count($htmlLinks[1]), null ) : array(),
+					count($htmlWantedLinks[1]) ? array_fill( 0, count($htmlWantedLinks[1]), null ) : array()
 				);
 			}
 		}
-
+	
 		if( $withReltype ) {
 			$complete = array();
 			foreach( $pageList as $idx => $name ) {

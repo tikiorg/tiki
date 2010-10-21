@@ -107,7 +107,7 @@
 				<ul>
 					{section name=j loop=$translation_alert[i]}
 						<li>
-							<a href="{if $translation_alert[i][j].approvedPage && $hasStaging == 'y'}{$translation_alert[i][j].approvedPage|sefurl:wiki:with_next}{else}{$translation_alert[i][j].page|sefurl:wiki:with_next}{/if}bl=n">
+							<a href="{if $translation_alert[i][j].approvedPage && $hasStaging == 'y'}{$translation_alert[i][j].approvedPage|sefurl:wiki:with_next}{else}{$translation_alert[i][j].page|sefurl:wiki:with_next}{/if}no_bl=y">
 								{if $translation_alert[i][j].approvedPage && $hasStaging == 'y'}
 									{$translation_alert[i][j].approvedPage}
 								{else}
