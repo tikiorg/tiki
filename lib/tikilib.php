@@ -7183,7 +7183,7 @@ class TikiLib extends TikiDb_Bridge
 
 		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\)\)/", $data, $normal);
 		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\|(.+?)\)\)/", $data, $withDesc);
-		preg_match_all('/<a class="wiki" href="tiki-index\.php\?page=([^\?&"]+)"/', $data, $htmlLinks);
+		preg_match_all('/<a class="wiki" href="tiki-index\.php\?page=([^\?&"]+)[^"]*"/', $data, $htmlLinks);
 		foreach($htmlLinks[1] as &$h) {
 			$h = urldecode($h);
 		}
