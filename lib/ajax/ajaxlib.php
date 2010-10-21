@@ -169,6 +169,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 	global $js_script;
 	$objResponse = new xajaxResponse();
 	$objResponse->setCharacterEncoding('UTF-8');
+	$confirmation_text = $smarty->get_template_vars('confirmation_text');
 
 	if ( $last_user != $user ) {
 
@@ -212,7 +213,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		// attach the cleaned xhtml to the response
 		$objResponse->Assign($htmlElementId, "innerHTML", $content);
 
-	} elseif ( $ajaxlib->templateIsRegistered('confirm.tpl') ) {
+	} elseif ( $ajaxlib->templateIsRegistered('confirm.tpl') && !empty($confirmation_text) ) {
 
 		$params = array(
 				'_tag' => 'n',
@@ -220,7 +221,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 				);
 
 		if ( $prefs['feature_ticketlib2'] == 'y' ) {
-			$objResponse->confirmCommands(1, $smarty->get_template_vars('confirmation_text'));
+			$objResponse->confirmCommands(1, $confirmation_text);
 			$params['daconfirm'] = 'y';
 			$params['ticket'] = $smarty->get_template_vars('ticket');
 		}
