@@ -1965,6 +1965,11 @@ div#ajaxLoading {
 	margin: 3px 100px 0;
 }
 
+/* Autosave Preview handle */
+#autosave_preview_grippy {
+	z-index: 3;
+}
+
 /* Cluetip - JQuery tooltips
    =cluetipClass: 'default' */
 div#cluetip-close { 
