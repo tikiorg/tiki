@@ -214,7 +214,7 @@ class WikiLib extends TikiLib
 			$data = preg_replace("/(?<=\(\()$quotedOldName(?=\)\)|\|)/", $newName, $data);
 			
 			$quotedOldHtmlName = preg_quote( urlencode($oldName), '/' );
-			$htmlSearch = '/<a class="wiki" href="tiki-index.php\?page=' . $quotedOldHtmlName . '([^"]*)"/';
+			$htmlSearch = '/<a class="wiki" href="tiki-index\.php\?page=' . $quotedOldHtmlName . '([^"]*)"/';
 			$htmlReplace = '<a class="wiki" href="tiki-index.php?page=' . urlencode($newName) . '\\1"';
 			$data = preg_replace($htmlSearch, $htmlReplace, $data);
 
