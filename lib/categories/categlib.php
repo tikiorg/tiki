@@ -384,11 +384,17 @@ class CategLib extends ObjectLib
 	        
 		$query = "insert into `tiki_category_objects`(`catObjectId`,`categId`) values(?,?)";
 		$result = $this->query($query,array((int) $catObjectId,(int) $categId));
+
+		global $cachelib;
+		$cachelib->invalidate("allcategs");
 	}
 
 	function uncategorize($catObjectId, $categId) {
 		$query = "delete from `tiki_category_objects` where `catObjectId`=? and `categId`=?";
 		$result = $this->query($query,array((int) $catObjectId,(int) $categId),-1,-1,false);
+
+		global $cachelib;
+		$cachelib->invalidate("allcategs");
 	}
 
 	function get_category_descendants($categId) {

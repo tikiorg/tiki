@@ -1394,3 +1394,11 @@ td.mods_update {
 	border: #799 solid 2px;
 	color: #000;
 }
+
+.tree.root .object-count {
+	float: right;
+	font-weight: bold;
+	margin-left: 10px;
+	margin-right: 10px;
+	color: #999;
+}
