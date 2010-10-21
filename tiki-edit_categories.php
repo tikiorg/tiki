@@ -81,6 +81,14 @@ BODY;
 		'data' => $body,
 	);
 }
+
+$orphans = $categlib->list_orphan_objects(0, 0, 'name_asc');
+$tree_nodes[] = array(
+	'id' => 'orphan',
+	'parent' => '0',
+	'data' => '<span class="object-count">' . $orphans['cant'] . '</span><a class="catname" href="tiki-edit_categories.php?categId=0"><em>' . tr('Orphans') . '</em></a>',
+);
+
 $tm = new CatBrowseTreeMaker('categ');
 $res = $tm->make_tree(0, $tree_nodes);
 $smarty->assign('tree', $res);
@@ -88,7 +96,13 @@ $smarty->assign('tree', $res);
 
 // Generate the object list {{{
 if (isset($_REQUEST['categId'])) {
-	$objects = $categlib->list_category_objects($_REQUEST['categId'], 0, -1, 'name_asc');
+	$categId = $_REQUEST['categId'];
+
+	if ($categId > 0) {
+		$objects = $categlib->list_category_objects($categId, 0, -1, 'name_asc');
+	} else {
+		$objects = $categlib->list_orphan_objects(0, -1, 'name_asc');
+	}
 
 	$smarty->assign('objects', $objects);
 }

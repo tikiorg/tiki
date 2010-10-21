@@ -506,10 +506,6 @@ class CategLib extends ObjectLib
 			$bindWhere[] = $type;
 		}
 
-		global $user;
-		$permMap = $this->map_object_type_to_permission();
-		$groupList = $this->get_user_groups($user);
-
 		$bindVars = $bindWhere;
 
 		$orderBy = '';
@@ -524,7 +520,19 @@ class CategLib extends ObjectLib
 		$query = $query_cant . $orderBy;
 		$result = $this->fetchAll($query,$bindVars);
 		$cant = count($result);
+
+		if ($sort_mode == 'shuffle') {
+			shuffle($ret);
+		}
+
+		return $this->filter_object_list($result, $cant, $offset, $maxRecords);
+	}
 		
+	private function filter_object_list($result, $cant, $offset, $maxRecords) {
+		global $user, $prefs;
+		$permMap = $this->map_object_type_to_permission();
+		$groupList = $this->get_user_groups($user);
+
 		// Filter based on permissions
 		$contextMap = array( 'type' => 'type', 'object' => 'itemId' );
 		$contextMapMap = array_fill_keys( array_keys( $permMap ), $contextMap );
@@ -560,14 +568,31 @@ class CategLib extends ObjectLib
 			}
 		}
 
-		$retval = array();
-		if ($sort_mode == 'shuffle') {
-			shuffle($ret);
-		}
+		return array(
+			"data" => $ret,
+			"cant" => $cant,
+		);
+	}
 
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
-		return $retval;
+	function list_orphan_objects($offset, $maxRecords, $sort_mode) {
+		$orderClause = $this->convertSortMode($sort_mode);
+
+		$common = "
+			FROM
+				tiki_objects
+				LEFT JOIN tiki_category_objects ON objectId = catObjectId
+			WHERE
+				catObjectId IS NULL
+			ORDER BY $orderClause
+			";
+
+		$query = "SELECT objectId catObjectId, 0 categId, type, itemId, name, href $common";
+		$queryCount = "SELECT COUNT(*) $common";
+		
+		$result = $this->fetchAll($query, array(), $maxRecords, $offset);
+		$count = $this->getOne($queryCount);
+
+		return $this->filter_object_list($result, $count, $offset, $maxRecords);
 	}
 
 	// get the parent categories of an object

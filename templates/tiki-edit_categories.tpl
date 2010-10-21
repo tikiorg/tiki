@@ -4,7 +4,7 @@
 	{$tree}
 </div>
 <div class="object-list">
-	{if $objects}
+	{if $objects and $objects.data}
 		<ol>
 			{foreach from=$objects.data item=object}
 				<li{permission type=$object.type object=$object.itemId name="modify_object_categories"} class="available"{/permission}>
