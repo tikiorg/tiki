@@ -5,6 +5,23 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+
+// If Apache is calling PHP in CGI mode, authentication HTTP Headers are not
+// set.
+// In this case, you have to add the following lines inside your Apache
+// VirtualHost config :
+//   RewriteEngine on
+//           RewriteCond %{HTTP:Authorization} ^(.*)
+//           RewriteRule ^(.*) - [E=HTTP_AUTHORIZATION:%1]
+//
+// The two lines below are used to set PHP_AUTH_USER and PHP_AUTH_PW from
+// HTTP_AUTHORIZATION to allow Basic Authentication in Tiki WebDAV
+
+if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+	$ha = base64_decode( substr($_SERVER['HTTP_AUTHORIZATION'],6) );
+	list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', $ha);
+}
+
 require_once 'tiki-setup.php';
 
 $debug = false;
