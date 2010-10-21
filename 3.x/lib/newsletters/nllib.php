@@ -491,18 +491,17 @@ class NlLib extends TikiLib {
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 		} else {
-			$mid = " ";
+			$mid = '';
 		}
 
-		$mid2 = ( empty( $mid ) ? ' WHERE ' : $mid . ' AND ' ) . ' tn.`nlId` = tsn.`nlId`';
-		$query = "select tn.*, max(tsn.`sent`) as lastSent from `tiki_newsletters` as tn, `tiki_sent_newsletters` as tsn $mid2 group by tn.`nlId` order by ".$this->convert_sortmode("$sort_mode");
+		$query = "select tn.*, max(tsn.`sent`) as lastSent from `tiki_newsletters` tn left join `tiki_sent_newsletters` tsn on (tn.`nlId` = tsn.`nlId`) $mid group by tn.`nlId` order by ".$this->convert_sortmode("$sort_mode");
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$query_cant = "select count(*) from  `tiki_newsletters` as tn $mid";
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-	    $objperm = $this->get_perm_object($res['nlId'], 'newsletter', '', false);
+			$objperm = $this->get_perm_object($res['nlId'], 'newsletter', '', false);
 			$res['tiki_p_admin_newsletters'] = $objperm['tiki_p_admin_newsletters'];
 			$res['tiki_p_send_newsletters'] = $objperm['tiki_p_send_newsletters'];
 			$res['tiki_p_subscribe_newsletters'] = $objperm['tiki_p_subscribe_newsletters'];
