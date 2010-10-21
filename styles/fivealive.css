@@ -8,9 +8,15 @@
 @import url("layout/layout.css");
 @import url("layout/design.css");
 
+/* make sure whole browser viewport background is always set to white */
+html {
+	background-color: #fff;
+}
+
 /***** XHTML Elements (body tag here,
 			others follow Layout) *****/ 
 body {
+	background-color: #fff;
 	font: 76%/1.5em Arial, Helvetica, sans-serif;
 	color: #000;
 }
@@ -515,6 +521,11 @@ select {
 
 #siteloginbar_popup {
 	right: 10px;
+}
+
+#siteloginbar_popup fieldset {
+	border: none;
+	margin: 0; padding: 0;
 }
 
 #siteloginbar_popup .tabmark {
