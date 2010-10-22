@@ -953,7 +953,8 @@ div.content .tabs {
 }
 
 [class].tabactive {
-	bottom: 1px;
+	bottom: 0;
+	top: 2px;
 }
 
 .tabactive a:hover {
@@ -968,6 +969,8 @@ div.content .tabs {
 /* inactive tabs */
 .tabinactive {
 	border: solid 1px #666 !important;
+	border-bottom: 0 !important;
+	top: 1px;
 }
 
 .tabcontent {
