@@ -81,6 +81,10 @@
 		{/tab}
 		
 		{tab name="{tr}General Layout options{/tr}"}
+			{preference name=feature_custom_doctype}
+			<div class="adminoptionboxchild" id="feature_custom_doctype_childcontainer">
+				{preference name=feature_custom_doctype_content}
+			</div>
 			{preference name=feature_custom_html_head_content}
 			{preference name=feature_secondary_sitemenu_custom_code}
 			{preference name=feature_sitemycode}
