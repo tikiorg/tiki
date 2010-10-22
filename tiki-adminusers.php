@@ -508,13 +508,10 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 					);
 					$logslib->add_log('adminusers', 'changed login for ' . $_POST['login'] . ' from ' . $userinfo['login'] . ' to ' . $_POST['login']);
 					$userinfo['login'] = $_POST['login'];
-					if ($prefs['login_is_email'] == 'y') {
-						$_POST['email'] = $_POST['login'];
-					}
 				} else {
 					$errors[] = array(
 						'num' => 1,
-						'mes' => sprintf(tra("Impossible to change %s from %s to %s") , tra("login") , $userinfo['email'], $_POST["email"])
+						'mes' => sprintf(tra("Impossible to change %s from %s to %s") , tra("login") , $userinfo['login'], $_POST["login"])
 					);
 				}
 			}
