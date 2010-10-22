@@ -3569,6 +3569,13 @@ class TrackerLib extends TikiLib
 		else
 				$cat_name = $mainfield;
 		$cat_href = "tiki-view_tracker_item.php?trackerId=$trackerId&itemId=$itemId";
+		// The following needed to ensure category field exist for item (to be readable by list_items)
+		$tracker_fields_info = $this->list_tracker_fields($trackerId);
+		foreach($tracker_fields_info['data'] as $t) {
+			if ( $t['type'] == 'e' ) {
+				$this->query("insert ignore into `tiki_tracker_item_fields` (`itemId`,`fieldId`,`value`) values(?,?,?)", array($itemId, $t['fieldId'], ''));
+			}
+		}
 		$categlib->update_object_categories($ins_categs, $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href);
 	}
 	function move_up_last_fields($trackerId, $fieldId, $delta=1) {
