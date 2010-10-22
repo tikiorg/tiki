@@ -102,6 +102,7 @@
 			<td>&nbsp;</td>
 			<td><input type="submit" name="register" value="{tr}Register{/tr}" /></td>
 			</tr>
+			</table>
 			</form>
 		{/if}
 		
@@ -120,13 +121,12 @@
 				<p>
 					{tr}Associate OpenID with an existing Tikiwiki account{/tr}
 				</p>
-				{include file="modules/mod-login_box.tpl"}
-	{/if}
-	
-	{if $allowRegister eq 'y'}
+				{include file="modules/mod-login_box.tpl"} 
+		{if $allowRegister eq 'y'}
 			</td>
 		</tr>
 		</table>
+		{/if}
 	{/if}
 		
 {/if}
