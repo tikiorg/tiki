@@ -13,13 +13,18 @@ class TikiWebdav_PathFactories_File implements ezcWebdavPathFactory
 
 	public function __construct()
 	{
-		global $base_url;
+		global $base_url, $https_mode;
 		if ( ( $pos = strpos($base_url, 'tiki-webdav.php/') ) !== false ) {
 			$this->baseUri = substr($base_url, 0, strpos($base_url, 'tiki-webdav.php') + 15);
 		} else {
 			$this->baseUri = $base_url . 'tiki-webdav.php';
 		}
 		$this->baseUriLength = strlen($this->baseUri);
+		/* Bug in ezcomponent if in HTTPS */
+    /* Ezcomponent always thinks we are in HTTP :( */
+		if ( $https_mode === true ) {
+			--$this->baseUriLength;
+		}
 	}
 
 	public function parseUriToPath( $uri )
@@ -53,6 +58,7 @@ class TikiWebdav_PathFactories_File implements ezcWebdavPathFactory
 			}
 		}
 
+		print_debug("parseUriToPath(baseUri): ". $this->baseUri . "\n");
 		print_debug("parseUriToPath($uri): $requestPath\n");
 		return $requestPath;
 	}
