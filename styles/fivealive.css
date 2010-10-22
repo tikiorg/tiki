@@ -944,12 +944,6 @@ a.register_link {
 	background: #a9d6eb;
 }
 
-form.admin .tabinactive:hover,
-form.admin .tabactive {
-	border: solid 1px #74C0E2;
-	background: #74C0E2;
-}
-
 .tabinactive:hover a,
 .tabactive a,
 .tabactive a:visited {
@@ -966,10 +960,6 @@ form.admin .tabactive {
 	padding: 4px;
 }
 	
-form.admin fieldset {
-	background: #74c0e2;
-}
-
 legend.heading {
 	background: transparent;
 }
