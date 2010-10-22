@@ -192,7 +192,6 @@ body.fixed_width #fixedwidth {
 }
 
 #custom_site_footer {
-/*	padding: 8px;*/
 }
 
 #custom_site_footer h3 {
@@ -336,18 +335,6 @@ span.daterow:hover {
 	border: 1px solid #11597e;
 	text-decoration: none;
 }
-/*
-span#genPass span.button a,
-span#genPass span.button a:visited {
-	color: #fff;
-	background: #2098cd;
-	padding: 1px 4px !important;
-}
-
-span#genPass span.button a:hover {
-	background: #1173a5;
-	padding: 1px 4px !important;
-}*/
 
 span#genPass span.button:hover {
 	border-width: 1px !important;
@@ -925,10 +912,6 @@ fieldset.admin label,
 a.register_link {
 	background-color: #969696;
 }
-/*
-#siteloginbar_popup .tabmark {
-	background-color: #070707;
-}*/
 
 .tabmark a,
 .tabmark a:visited {
@@ -963,14 +946,6 @@ a.register_link {
 legend.heading {
 	background: transparent;
 }
-/*	
-table.admin a.link,
-table.admin a,
-table.admin label,
-fieldset.admin label,
-.cbox fieldset.admin a {
-	color: #fff;
-}*/
 
 fieldset.admin .adminoptionbox label,
 fieldset.admin .adminoptionlabel {
@@ -1099,16 +1074,6 @@ a.dirsublink {
 /***** Messages *****/
 /***** TikiSheets *****/
 /***** Calendar *****/
-/*.caldark {
-	background: ;
-	border: 0;
-}
-
-.caldark .calfocus {background: }
-.calodd, .caleven {border: }
-.calodd .calfocus {background: }
-.caleven .calfocus, .caleven .calfocuson {background: }
-*/
 .caltable .days {
 	color: #fff;
 }
@@ -1127,51 +1092,9 @@ a.dirsublink {
 }
 
 /***** Admin *****/
-/*body.tiki_admin .simplebox,
-a.admbox,
-a.admbox.off {
-	background-color:  no-repeat center center;
-	border: ;
-}
-	
-a.admbox:hover,
-a.admbox:focus,
-a.admbox:active {
-	background-color:  no-repeat center center;
-	border-right: ;
-	border-top: ;
-	border-left: ;
-	border-bottom: ;
-	color: ;
-	text-decoration: none;
-}
-
-a.admbox.off:hover,
-a.admbox.off:focus,
-a.admbox.off:active {
-	border-right: ;
-	border-top: ;
-	border-left: ;
-	border-bottom: ;
-}
-
-.toolbars-admin .full li,
-.toolbars-admin .rows .row,
-.textarea-toolbar,
-span.toolbar-list,
-.toolbar-list,
-a.toolbar,
-a.qt-inline {
-	background: ;
-	color: ;
-}*/
 
 /***** Ajax, jquery. etc. *****/
 /***** Ajax *****/
-/*.ui-widget-content {
-	background: ;
-	color: ;
-}*/
 /***** New (unsorted) *****/
 
 /* cluptip tooltips */
