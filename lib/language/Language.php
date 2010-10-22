@@ -286,7 +286,7 @@ class Language extends TikiDb_Bridge
 		$query = "SELECT * FROM `tiki_language` WHERE `lang`=? AND `source` != '' AND `changed` = 1 $searchQuery ORDER BY " . $this->convertSortMode($sort_mode);
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 
-		if ($result->numrows > 0) {
+		if (isset($result->numrows) && $result->numrows > 0) {
 			$this->hasDbTranslations = true;
 		}
 		
