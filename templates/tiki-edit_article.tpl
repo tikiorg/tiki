@@ -16,10 +16,6 @@
 	{button href="tiki-view_articles.php" _text="{tr}View Articles{/tr}"}
 </div>
 
-{remarksbox type="tip" title="{tr}Tip{/tr}"}
-	{tr}Use ...page... to separate pages in a multi-page post{/tr}
-{/remarksbox}
-
 {if $preview}
 	{include file='tiki-preview_article.tpl'}
 {/if}
@@ -270,7 +266,7 @@
 
 		{if $tiki_p_use_HTML eq 'y'}
 			<tr>
-				<td>{tr}Allow HTML{/tr}</td>
+				<td>{tr}Allow full HTML{/tr} <em>({tr}for this edit session{/tr})</em></td>
 				<td>
 					<input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/>
 				</td>
