@@ -931,7 +931,7 @@ span.moduleflip,
 	
 .rbox-data {
 	position: relative;
-	top: -5px;
+	top: 0;
 	z-index: 0;
 }
 
@@ -2018,12 +2018,15 @@ table.webmail_message_headers th {
 
 .tabstoggle {
 	font-size: .8em;
+	position: relative;
 	width: 8%;
 }
 
 .tabstoggle .button {
 	margin: 0;
 	padding: 0;
+	position: absolute;
+	right: 0;
 }
 
 /* treeTable definitions - used in object-perms so far */
