@@ -1273,14 +1273,14 @@ class FileGalLib extends TikiLib
 		}
 		if (preg_match_all('/\[(.+)\]/Umi', $data, $matches)) {
 			foreach ($matches as $match) {
-				if ($fileId = $this->getLinkFileId($match[1])) {
+				if (isset($match[1]) && $fileId = $this->getLinkFileId($match[1])) {
 					$fileIds[] = $fileId;
 				}
 			}
 		}
 		if (preg_match_all('/<a[^>]*href=(\'|\")?([^>*])/Umi', $data, $matches)) {
 			foreach ($matches as $match) {
-				if ($fileId = $this->getLinkFileId($match[2])) {
+				if (isset($match[2]) && $fileId = $this->getLinkFileId($match[2])) {
 					$fileIds[] = $fileId;
 				}
 			}
