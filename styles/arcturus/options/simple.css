@@ -210,7 +210,7 @@ textarea {
 	background: #e1ebf0;
 	border: 0;
 	margin: 0.2em;
-	padding:
+	padding-bottom: 0; /* overrides padding-bottom: 10px of the arcturus.css */
 }
 
 h3.box-title {
