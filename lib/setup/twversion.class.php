@@ -42,6 +42,8 @@ class TWVersion
 		return $this->latestMinorRelease;
 	}
 
+	// Returns the version number string.
+	// On a development version, this returns the number of the next release on this branch.
 	function getBaseVersion()
 	{
 		return preg_replace( "/^(\d+\.\d+).*$/", '$1', $this->version );
@@ -143,7 +145,8 @@ class TWVersion
 		return $star;
 	}
 
-	// Determines the currently-running version of Tikiwiki.
+	// Returns the full version string.
+	// For example, 5.2 would return "5.2". A development version could return "7.0 SVN trunk".
 	function getVersion() {
 		return $this->version;
 	}
