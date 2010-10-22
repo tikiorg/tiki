@@ -11,6 +11,7 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 
     protected function setUp()
     {
+		date_default_timezone_set('UTC');
         $this->obj = new TikiImporter_Blog_Wordpress;
     }
 
@@ -74,6 +75,9 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 
 	public function testExtractInfoPost()
 	{
+		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractComment'));
+		$obj->expects($this->exactly(3))->method('extractComment')->will($this->returnValue(true));
+		
 		$expectedResult = array(
 			'categories' => array(
 				0 => 'argentina',
@@ -85,19 +89,23 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 				2 => 'mendoza',
 				3 => 'montanhismo',
 			),
+			'comments' => array(
+				0 => true,
+				1 => true,
+				2 => true,
+			),
 			'name' => 'Lo más importante son los veinte',
-			'type' => 'post',
 			'author' => 'rodrigo',
 			'content' => 'Test',
 			'excerpt' => '',
-			'created' => '1203795580',
+			'created' => '1203784780',
+			'type' => 'post',
 		);
 
-		$this->obj->dom = new DOMDocument;
-		$this->obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_post.xml');
-		$data = $this->obj->extractInfo($this->obj->dom->getElementsByTagName('item')->item(0));
+		$obj->dom = new DOMDocument;
+		$obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_post.xml');
+		$data = $obj->extractInfo($obj->dom->getElementsByTagName('item')->item(0));
 
-		$this->assertEquals(8, count($data));
 		$this->assertEquals($expectedResult, $data);
 	}
 
@@ -115,16 +123,17 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 				3 => 'tv',
 				4 => 'youtube',
 			),
+			'comments' => array(),
 			'name' => 'Matéria sobre a viagem de bicicleta entre as chapadas',
-			'type' => 'page',
 			'author' => 'rodrigo',
-			'excerpt' => '',
-			'created' => '1173647611',
 			'content' => 'Test',
+			'excerpt' => '',
+			'created' => 1173636811,
+			'type' => 'page',
 			'revisions' => array(
 				array(
 					'data' => 'Test',
-					'lastModif' => 1173647611,
+					'lastModif' => 1173636811,
 					'user' => 'rodrigo',
 					'ip' => '',
 					'is_html' => true,
@@ -139,6 +148,49 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 		$this->assertEquals($expectedResult, $data);
 	}
 
+	public function testExtractCommentShouldReturnFalseForSpamOrTrashOrPingback()
+	{
+		$this->obj->dom = new DOMDocument;
+		$this->obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_comment_spam.xml');
+		
+		// spam
+		$this->assertFalse($this->obj->extractComment($this->obj->dom->getElementsByTagName('comment')->item(0)));
+		
+		// trash
+		$this->assertFalse($this->obj->extractComment($this->obj->dom->getElementsByTagName('comment')->item(1)));
+		
+		// pingback
+		$this->assertFalse($this->obj->extractComment($this->obj->dom->getElementsByTagName('comment')->item(2)));
+	}
+	
+	public function testExtractCommentShouldReturnCommentArray()
+	{
+		$expectedResult = array(
+			'author' => 'rodrigo',
+			'author_email' => 'test@test.com',
+			'author_url' => '',
+			'author_ip' => '127.0.0.1',
+			'created' => 1250059024,
+			'data' => '<a href="#comment-33" rel="nofollow">@otavio </a> 
+Olá Otavio, o Torres del Paine é um parte grande e bem movimentado. Se você for no verão vai encontrar gente sempre, principalmente no W. O circuito grande é um pouco menos movimentado mas ainda sim você encontra pessoas todos os dias. As trilhas estão minimamente sinalizadas. Lembro que levei comigo a carta topográfica do parque e uma bussóla mas não cheguei a utilizá-los.
+
+Se você for fazer apenas caminhadas não terá problemas com os equipamentos que encontra no Brasil. Botas duplas só se estiver pensando em caminhar pelo Campo de Hielo Sur ou alguma outra coisa do tipo uma caminhada de vários dias por glaciares, escalar o Cerro Torre. É importante você ter uma camada impermeável (bota, calça e anorak). Eu fui com uma bota Trilogia e gostei bastante. A calça e o anorak (da Conquista e Trilhas e Rumos, respectivamente) seguraram o tranco. O problema deles é que não respiram direito, em pouco tempo de caminhada eu começo a fever dentro deles de calor, mas paciência. Equipamentos de goretex no Brasil são muito caros e não são necessários para alguma coisa como o Torres del Paine.
+
+Sobre fazer sozinho ou não o W depende muito de você. Depende de quanta de experiência tem. Para uma pessoa que tenha um bom conhecimento de trilhas no Brasil não vejo necessidade alguma de guia, mas isso é uma escolha individual.
+
+Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
+			'approved' => 1,
+			'type' => '',
+		);
+		
+		$this->obj->dom = new DOMDocument;
+		$this->obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_comment.xml');
+		
+		$comment = $this->obj->extractComment($this->obj->dom->getElementsByTagName('comment')->item(0));
+		
+		$this->assertEquals($expectedResult, $comment);
+	}
+	
 	public function testExtractBlogInfo()
 	{
 		$expectedResult = array(

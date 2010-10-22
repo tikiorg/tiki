@@ -130,7 +130,7 @@ class TikiImporter_Wiki extends TikiImporter
      * the page name already exist ($this->alreadyExistentPageName) based on parameters passed by POST
      * 
      * @param array $page
-     * @return bool true if the page has been imported, otherwise returns false 
+     * @return string|bool page name if the page has been imported, otherwise returns false 
      */
     function insertPage($page)
     {

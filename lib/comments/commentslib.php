@@ -2221,10 +2221,30 @@ class Comments extends TikiLib
 		} // end hash check
 	}
 
+	/**
+	 * Post a new comment (forum post or comment on some Tiki object)
+	 * 
+	 * @param string $objectId object type and id separated by two colon ('wiki page:HomePage' or 'blog post:2')
+	 * @param int $parentId id of parent comment of this comment 
+	 * @param string $userName if empty $anonumous_name is used
+	 * @param string $title
+	 * @param string $data
+	 * @param unknown_type $message_id
+	 * @param unknown_type $in_reply_to
+	 * @param unknown_type $type
+	 * @param unknown_type $summary
+	 * @param unknown_type $smiley
+	 * @param unknown_type $contributions
+	 * @param string $anonymous_name name when anonymous user post a comment (optional) 
+	 * @param int $postDate when the post was created (defaults to now)
+	 * @param string $anonymous_email optional
+	 * @param string $anonymous_website optional
+	 * @return int $threadId id of the new comment
+	 */
 	function post_new_comment($objectId, $parentId, $userName,
 		$title, $data, &$message_id, $in_reply_to = '', $type = 'n',
 		$summary = '', $smiley = '', $contributions = '', $anonymous_name = '',
-		$postDate = '', $anonymous_email, $anonymous_website
+		$postDate = '', $anonymous_email = '', $anonymous_website = ''
 	)
 	{
 		global $prefs, $tiki_p_admin_comments;

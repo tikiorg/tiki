@@ -82,6 +82,29 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 
         $this->assertEquals($expectedResult, $countData);
 	}
+	
+	public function testInsertDataShouldCallInsertComment()
+	{
+        $obj = $this->getMock('TikiImporter_Blog', array('insertPage', 'createBlog', 'insertComments'));
+        $obj->expects($this->once())->method('createBlog');
+        $obj->expects($this->exactly(6))->method('insertPage')->will($this->onConsecutiveCalls('Any name', 'Any name', false, 'Any name', false, 'Any name'));
+        $obj->expects($this->exactly(3))->method('insertComments');
+
+		$parsedData = array(
+			array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2, 3)),
+			array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2)),
+			array('type' => 'page', 'name' => 'Any name'),
+			array('type' => 'page', 'name' => 'Any name', 'comments' => array()),
+			array('type' => 'page', 'name' => 'Any name'),
+			array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2, 3)),
+		);
+
+        $countData = $obj->insertData($parsedData);
+        $expectedResult = array('totalPages' => 6, 'importedPages' => 4);
+
+        $this->assertEquals($expectedResult, $countData);
+		
+	}
 
 	public function testInsertPage()
 	{

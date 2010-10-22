@@ -51,6 +51,21 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		}
 	}
 
+	/*
+	 * @see lib/importer/TikiImporter_Blog#setupTiki()
+	 */
+	function setupTiki()
+	{
+		global $tikilib;
+
+		$tikilib->set_preference('feature_blogposts_comments', 'y');
+		$tikilib->set_preference('feature_comments_moderation', 'y');
+		$tikilib->set_preference('comments_notitle', 'y');
+
+		parent::setupTiki();
+	}
+	
+	
 	/**
 	 * Start the importing process by loading the XML file.
 	 * 
@@ -196,45 +211,53 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * @throws ImporterParserException if fail to parse an item
 	 */
 	function extractInfo(DOMElement $item)
-	{
+	{	
 		$data = array();
 		$data['categories'] = array();
 		$data['tags'] = array();
+		$data['comments'] = array();
 
 		$i = 0;
 		foreach ($item->childNodes as $node) {
 			if ($node instanceof DOMElement) {
-				switch ($node->tagName)
-				{
-				case 'id':
-					break;
-				case 'title':
-					$data['name'] = (string) $node->textContent;
-					break;
-				case 'wp:post_type':
-					$data['type'] = (string) $node->textContent;
-					break;
-				case 'wp:post_date':
-					$data['created'] = strtotime($node->textContent);
-					break;
-				case 'dc:creator':
-					$data['author'] = (string) $node->textContent;
-					break;
-				case 'category':
-					if ($node->hasAttribute('nicename')) {
-						if ($node->getAttribute('domain') == 'tag') {
-							$data['tags'][] = $node->textContent;
-						} else if ($node->getAttribute('domain') == 'category') {
-							$data['categories'][] = $node->textContent;
+				switch ($node->tagName)	{
+					case 'id':
+						break;
+					case 'title':
+						$data['name'] = (string) $node->textContent;
+						break;
+					case 'wp:post_type':
+						$data['type'] = (string) $node->textContent;
+						break;
+					case 'wp:post_date':
+						$data['created'] = strtotime($node->textContent);
+						break;
+					case 'dc:creator':
+						$data['author'] = (string) $node->textContent;
+						break;
+					case 'category':
+						if ($node->hasAttribute('nicename')) {
+							if ($node->getAttribute('domain') == 'tag') {
+								$data['tags'][] = $node->textContent;
+							} else if ($node->getAttribute('domain') == 'category') {
+								$data['categories'][] = $node->textContent;
+							}
 						}
-					}
-					break;
-				case 'content:encoded':
-					$data['content'] = (string) $node->textContent;
-					break;
-				case 'excerpt:encoded':
-					$data['excerpt'] = (string) $node->textContent;
-					break;
+						break;
+					case 'content:encoded':
+						$data['content'] = (string) $node->textContent;
+						break;
+					case 'excerpt:encoded':
+						$data['excerpt'] = (string) $node->textContent;
+						break;
+					case 'wp:comment':
+						$comment = $this->extractComment($node);
+						if ($comment) {
+							$data['comments'][] = $comment;
+						} 
+						break;
+					default:
+						break;					
 				}
 			}
 		}
@@ -256,6 +279,62 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		return $data;
 	}
 
+	/**
+	 * Extract information from a comment node and return it. Comments marked
+	 * as spam, trash or pingback are ignored by the importer. Pingbacks are
+	 * ignore because they are not supported by Tiki yet.
+	 * 
+	 * @param DOMElement $commentNode
+	 * @return array|false $comment return false if comment is marked as spam
+	 */
+	function extractComment(DOMElement $commentNode)
+	{
+		$comment = array();
+		
+		// if comment is marked as spam, trash or pigback we ignore it
+		if ($commentNode->getElementsByTagName('comment_approved')->item(0)->textContent == 'spam'
+			|| $commentNode->getElementsByTagName('comment_approved')->item(0)->textContent == 'trash'
+			|| $commentNode->getElementsByTagName('comment_type')->item(0)->textContent == 'pingback') {
+
+			return false;
+		}
+		
+		foreach ($commentNode->childNodes as $node) {
+			if ($node instanceof DOMElement) {
+				switch ($node->tagName) {
+					case 'wp:comment_author':
+						$comment['author'] = $node->textContent;
+						break;
+					case 'wp:comment_author_email':
+						$comment['author_email'] = $node->textContent;
+						break;
+					case 'wp:comment_author_url':
+						$comment['author_url'] = ($node->textContent != 'http://') ? $node->textContent : '';
+						break;
+					case 'wp:comment_author_IP':
+						$comment['author_ip'] = $node->textContent;
+						break;
+					case 'wp:comment_date':
+						$comment['created'] = strtotime($node->textContent);
+						break;
+					case 'wp:comment_content':
+						$comment['data'] = $node->textContent;
+						break;
+					case 'wp:comment_approved':
+						$comment['approved'] = $node->textContent;
+						break;
+					case 'wp:comment_type':
+						$comment['type'] = $node->textContent;
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		
+		return $comment;
+	}
+	
 	/**
 	 * Extract blog information (title, description etc)
 	 *

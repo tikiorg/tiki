@@ -16,6 +16,7 @@
 
 require_once('tikiimporter.php');
 require_once('lib/blogs/bloglib.php');
+require_once('lib/comments/commentslib.php');
 
 /**
  * Class to provide basic functionalities to blog importers. So far
@@ -65,6 +66,8 @@ class TikiImporter_Blog extends TikiImporter
 	 */
 	function import()
 	{
+		$this->setupTiki();
+		
 		// child classes must implement those two methods
 		$this->validateInput();
 		$parsedData = $this->parseData();
@@ -79,8 +82,22 @@ class TikiImporter_Blog extends TikiImporter
 		$_SESSION['tiki_importer_feedback'] = $importFeedback;
 		$_SESSION['tiki_importer_log'] = $this->log;
 		$_SESSION['tiki_importer_errors'] = $this->errors;
-   }
+	}
 
+	/**
+	 * This function change all the necessary Tiki preferences
+	 * in order to setup the site for the data that will be imported.
+	 * Also implemented by child classes.
+	 * 
+	 * @return void
+	 */
+	function setupTiki()
+	{
+		global $tikilib;
+		
+		$tikilib->set_preference('feature_blogs', 'y');
+	}
+	
 	/**
 	 * Insert the imported data into Tiki.
 	 * 
@@ -101,9 +118,14 @@ class TikiImporter_Blog extends TikiImporter
 			foreach ($parsedData as $item) {
 				$methodName = 'insert' . ucfirst($item['type']);
 
-				if ($this->$methodName($item)) {
+				if ($objId = $this->$methodName($item)) {
 					$countItems++;
-					$this->saveAndDisplayLog('Item ' . $item['name'] . " sucessfully imported\n");
+					$this->saveAndDisplayLog('Item ' . $item['name'] . " sucessfully imported\n");					
+					
+					if (!empty($item['comments'])) {
+						$this->insertComments($objId, $item['type'], $item['comments']);
+					}
+					
 				} else {
 					$this->saveAndDisplayLog('Item ' . $item['name'] . " NOT imported (there was already a item with the same name)\n");
 				}
@@ -160,11 +182,50 @@ class TikiImporter_Blog extends TikiImporter
 	 * Insert post into Tiki using its builtin methods
 	 *
 	 * @param array $post
-	 * @return bool true or false depending on whether was possible or not to create the new post
+	 * @return int|bool post id if one was created or false
 	 */
 	function insertPost($post)
 	{
 		global $bloglib;
 		return $bloglib->blog_post($this->blogId, $post['content'], $post['excerpt'], $post['author'], $post['name'], '', 'n', $post['created']);	
+	}
+	
+	/**
+	 * Insert comments for a wiki page or post
+	 * 
+	 * @param int|string $objId int for a post id or string for a wiki page name (used as id)
+	 * @param string $objType 'blog post' or 'wiki page'
+	 * @param array $comments
+	 * @return void
+	 */
+	function insertComments($objId, $objType, $comments)
+	{
+		global $commentslib;
+		
+		if (!is_object($commentslib)) {
+			$commentslib = new Comments();
+		}
+		
+		$objRef = $objId . ':' . $objType;
+		
+		// not used but required by $commentslib->post_new_comment() as is passed by reference
+		$message_id = '';
+				
+		foreach ($comments as $comment) {
+			// set empty values for comments properties if they are not set
+			if (!isset($comment['author'])) {
+				$comment['author'] = '';
+			}
+			if (!isset($comment['author_email'])) {
+				$comment['author_email'] = '';
+			}
+			if (!isset($comment['author_url'])) {
+				$comment['author_url'] = '';
+			}
+			
+			
+			$commentslib->post_new_comment($objRef, 0, null, '', $comment['data'], $message_id, '', 'n', '', '', '',
+				$comments['author'], $comments['created'], $comments['author_email'], $author['author_url']);
+		}
 	}
 }
