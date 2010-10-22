@@ -82,6 +82,10 @@ form {
 	padding: 0;
 }
 
+fieldset {
+	clear: both;	
+}
+
 input, legend {
 	vertical-align: middle;
 }
@@ -1003,6 +1007,11 @@ tr.diffheader {
 	display: none;
 }
 
+.tabs .container {
+	float: left;
+	width: 92%;
+}
+
 .tabmark {
 	display: inline;
 	margin: 0;
@@ -1034,7 +1043,7 @@ tr.diffheader {
 	z-index: 1;
 	position: relative;
 	padding: 4px;
-	top: -3px;
+	top: 0;
 /*	padding-top: 21px;
 	margin-bottom: 25px;
 	margin-top: -1px;*/
@@ -2009,6 +2018,7 @@ table.webmail_message_headers th {
 
 .tabstoggle {
 	font-size: .8em;
+	width: 8%;
 }
 
 .tabstoggle .button {
