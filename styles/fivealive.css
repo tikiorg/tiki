@@ -939,10 +939,15 @@ a.register_link {
 
 .tabinactive:hover,
 .tabactive {
-	border-bottom-width: 0;
 	padding-bottom: 1px;
-	border: 1px solid #aaaaaa;
+	border: 1px solid #a9d6eb;
 	background: #a9d6eb;
+}
+
+form.admin .tabinactive:hover,
+form.admin .tabactive {
+	border: solid 1px #74C0E2;
+	background: #74C0E2;
 }
 
 .tabinactive:hover a,
