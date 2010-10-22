@@ -8,10 +8,10 @@
 
 {capture name=sitetitle}
 	<div id="sitetitle">
-		{if !empty($prefs.sitetitle)}<a href="{$logohref}">{tr}{$prefs.sitetitle}{/tr}</a>{/if}
+		{if !empty($prefs.sitetitle)}<a href="{$logohref}">{tr}{$prefs.sitetitle|escape}{/tr}</a>{/if}
 	</div>
 	<div id="sitesubtitle">
-		 {if !empty($prefs.sitesubtitle)}{tr}{$prefs.sitesubtitle}{/tr}{/if}
+		 {if !empty($prefs.sitesubtitle)}{tr}{$prefs.sitesubtitle|escape}{/tr}{/if}
 	</div>
 {/capture}
 
