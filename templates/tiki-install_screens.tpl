@@ -6,12 +6,10 @@
 	<head>
 {include file='header.tpl'}
 	</head>
-	<body{html_body_attributes}>
+	<body class="tiki fixed_width">
 
 
-			<div id="tiki-mid">
 {$mid_data}
-			</div>
 
 
 {include file='footer.tpl'}
