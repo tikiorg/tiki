@@ -582,11 +582,23 @@ body.wikitext {
 
 .tabs {
 	background: none;
+	border: none;
+	border-bottom: solid 1px #000;
+	margin: 0 0.2em;
+}
+
+.tabstoggle .button {
+	display: block;
+	padding-top: 2px;
+	}
+.tabstoggle span a; .tabstoggle span a:hover {
+	display: block;
 }
 
 .tabmark {
 	font-size: 85%;
 	background: #abcdef;
+	border-color: #000;
 }
 
 .tabmark a,
@@ -612,7 +624,7 @@ body.wikitext {
 
 .tabcontent {
 	border: 1px solid #000;
-	border-top: 0;
+	top: 0;
 	padding: 6px 2px 2px 2px;
 	margin-bottom: 25px;
 	background: #f0f9ff;
