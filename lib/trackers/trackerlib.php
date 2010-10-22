@@ -1221,7 +1221,7 @@ class TrackerLib extends TikiLib
 	}
 
 	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = 0, $bulk_import = false, $tracker_info='') {
-		global $user, $smarty, $notificationlib, $prefs, $cachelib, $categlib, $tiki_p_admin_trackers, $userlib, $tikilib;
+		global $user, $smarty, $notificationlib, $prefs, $cachelib, $categlib, $tiki_p_admin_trackers, $userlib, $tikilib, $tiki_p_admin_users;
 		include_once('lib/categories/categlib.php');
 		include_once('lib/notifications/notificationlib.php');
 		global $logslib; include_once('lib/logs/logslib.php');
@@ -1311,11 +1311,25 @@ class TrackerLib extends TikiLib
 			}
 		}
 		
+		// If this is a user tracker it needs to be detected right here before actual looping of fields happen
+		$trackersync_user = $user;
+		foreach($ins_fields["data"] as $i=>$array) {
+			if ($ins_fields['data'][$i]['type'] == 'u' && isset($ins_fields['data'][$i]['options_array'][0]) && $ins_fields['data'][$i]['options_array'][0] == '1') {
+				if ($prefs['user_selector_realnames_tracker'] == 'y' && $ins_fields['data'][$i]['type'] == 'u') {
+					if (!$userlib->user_exists($ins_fields['data'][$i]['value'])) {
+						$finalusers = $userlib->find_best_user(array($ins_fields['data'][$i]['value']), '' , 'login');
+						if (!empty($finalusers[0]) && !(isset($_REQUEST['register']) && isset($_REQUEST['name']) && $_REQUEST['name'] == $ins_fields['data'][$i]['value'])) {
+							// It could be in fact that a new user is required (when no match is found or during registration even if match is found)
+							$ins_fields['data'][$i]['value'] = $finalusers[0];
+						}
+					}
+				}
+				$trackersync_user = $ins_fields['data'][$i]['value'];
+			}
+		}
+		
 		foreach($ins_fields["data"] as $i=>$array) {
 			if ($trackersync) {
-				if ($ins_fields['data'][$i]['type'] == 'u') {
-					$trackersync_user = $ins_fields['data'][$i]['value'];
-				}
 				if (isset($trackersync_realnamefields)) {
 					foreach ($trackersync_realnamefields as $index => $realnamefieldset) {
 						foreach ($realnamefieldset as $index2 => $realnamefield) {
@@ -1602,25 +1616,25 @@ class TrackerLib extends TikiLib
 						   $this->log($version, $itemId, $ins_fields['data'][$i]['fieldId'], $old_value, $linvalue['lang']);
 						}
 					}
-				} elseif ($ins_fields['data'][$i]['type']=='p') {
+				} elseif ($ins_fields['data'][$i]['type']=='p' && ($user == $trackersync_user || $tiki_p_admin_users == 'y')) {
 					if ($ins_fields['data'][$i]['options_array'][0] == 'password') {
 						if (!empty($ins_fields['data'][$i]['value']) && $prefs['change_password'] == 'y' && ($e = $userlib->check_password_policy($ins_fields['data'][$i]['value'])) == '') {
-							$userlib->change_user_password($user, $ins_fields['data'][$i]['value']);
+							$userlib->change_user_password($trackersync_user, $ins_fields['data'][$i]['value']);
 						}
 						if (!empty($itemId)) {
 						   $this->log($version, $itemId, $ins_fields['data'][$i]['fieldId'], '?');
 						}
 					} elseif ($ins_fields['data'][$i]['options_array'][0] == 'email') {
 						if (!empty($ins_fields['data'][$i]['value']) && validate_email($ins_fields['data'][$i]['value'])) {
-							$old_value = $userlib->get_user_email($user);
-							$userlib->change_user_email($user, $ins_fields['data'][$i]['value']);
+							$old_value = $userlib->get_user_email($trackersync_user);
+							$userlib->change_user_email($trackersync_user, $ins_fields['data'][$i]['value']);
 						}
 						if (!empty($itemId) && $old_value != $ins_fields['data'][$i]['value']) {
 						   $this->log($version, $itemId, $ins_fields['data'][$i]['fieldId'], $old_value);
 						}
 					} else {
-						$old_value = $tikilib->get_user_preference($user, $ins_fields['data'][$i]['options_array'][0]);
-						$tikilib->set_user_preference($user, $ins_fields['data'][$i]['options_array'][0], $ins_fields['data'][$i]['value']);
+						$old_value = $tikilib->get_user_preference($trackersync_user, $ins_fields['data'][$i]['options_array'][0]);
+						$tikilib->set_user_preference($trackersync_user, $ins_fields['data'][$i]['options_array'][0], $ins_fields['data'][$i]['value']);
 						if (!empty($itemId) && $old_value != $ins_fields['data'][$i]['value']) {
 						   $this->log($version, $itemId, $ins_fields['data'][$i]['fieldId'], $ins_fields['data'][$i]['value']);
 						}
@@ -1930,9 +1944,6 @@ class TrackerLib extends TikiLib
 					$trackersync_realname = $t_r;
 				}
 			}
-			if (empty($trackersync_user)) {
-				$trackersync_user = $user;
-			}
 			if (!empty($trackersync_realname)) {
 				$tikilib->set_user_preference($trackersync_user, 'realName', $trackersync_realname);
 			}
@@ -1947,9 +1958,6 @@ class TrackerLib extends TikiLib
 			}
 		}
 		if ($trackersync && $prefs['user_trackersync_groups'] == 'y') {
-			if (empty($trackersync_user)) {
-				$trackersync_user = $user;
-			}
 			$sig_catids = $categlib->get_category_descendants($prefs['user_trackersync_parentgroup']);
 			$sig_add = array_intersect($sig_catids, $new_categs);
 			$sig_del = array_intersect($sig_catids, $del_categs);
