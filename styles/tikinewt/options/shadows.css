@@ -14,7 +14,7 @@ body {
 
 /***** Boxes *****/
 /** Modules **/
-div.box,
+.box,
 #c1c2 #wrapper #col1 #tiki-center {
 	border: none;
 	background: url(shadows/box_shadow.png) 100% 100%;
@@ -27,26 +27,26 @@ h3.box-title {
 	background: #fff;
 }
 
-div.box h3 {
+.box h3 {
 	margin-top: 0;
 }
 
 #role_main,
 #custom_center_column_header,
-div.box-data {
+.box-data {
 	padding: 6px;
 	background: #fff;
 }
 
 /** Other boxes **/
-div.cbox {
+.cbox {
 	background: url(shadows/box_shadow.png) no-repeat 100% 100% !important;
 	padding: 0 8px 9px 0;
 	margin: 6px !important;
 	border: none;
 }
 
-div.cbox-title {
+.cbox-title {
 	border-bottom: 2px solid #f7f7f7;
 	background: #fff;
 	padding: 8px 8px 2px 8px;
@@ -55,7 +55,7 @@ div.cbox-title {
 	font-size: 17px;
 }
 
-div.cbox-data {
+.cbox-data {
 	background: #fff !important;
 	padding: 6px;
 }
@@ -64,7 +64,7 @@ div.cbox-data {
 	text-align: right;
 }
 
-div.cbox-data hr {
+.cbox-data hr {
 	height: 2px;
 	color: #ddd;
 	background: #ddd;
@@ -75,17 +75,17 @@ div.cbox-data hr {
 	border: 1px solid #ddd;
 }
 
-div.article {
+.article {
 	background: url(shadows/box_shadow.png) no-repeat 100% 100%;
 	padding: 0 8px 9px 0;
 	margin: 6px 6px 40px 6px !important
 	margin-bottom: 15px;
 }
 
-div.articletitle,
-div.articleheading,
-div.articletrailer,
-div.articletopline {
+.articletitle,
+.articleheading,
+.articletrailer,
+.articletopline {
 	background: #fff !important;
 	padding: 6px;
 	margin: 0;

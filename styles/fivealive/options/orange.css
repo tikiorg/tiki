@@ -59,43 +59,43 @@ hr {
 	color: #f06423;
 }
 
-span.button a,
-span.button a:visited,
+.button a,
+.button a:visited,
 button,
 input[type="reset"],
 input[type="submit"],
-span.button input,
+.button input,
 .calbuttonBox a,
-span#genPass span.button a,
-span#genPass span.button a:visited,
-span.daterow {
+#genPass .button a,
+#genPass .button a:visited,
+.daterow {
 	color: #fff;
 	background: #e77d4f;
 	border-color: #ebac91 #852a1c #852a1c #ebac91;
 	font-weight: bold;
 }
 	
-span.button a:hover,
+.button a:hover,
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-span.button input:hover,
+.button input:hover,
 .calbuttonBox:hover,
-span#genPass span.button a:hover,
-span.daterow:hover {
+#genPass .button a:hover,
+.daterow:hover {
 	background: #ed6223;
 	border-color: #852a1c #ebac91 #ebac91 #852a1c;
 }
 
 .highlight,
-span.button.highlight a,
-td.calfocuson {
+.button.highlight a,
+.calfocuson {
 	border: #fac5b1;
 	color: #c74b23;
 	background: #f1f8de;
 }
 
-span.button.highlight a {
+.button.highlight a {
 	background: #f8e4dd;
 	color: #c74b23;
 }
@@ -166,7 +166,7 @@ textarea,
 	background: #e7713e;
 }
 
-table.normal,
+.normal,
 .wikitable {
 	border: 2px solid #e77d4f;
 }
@@ -224,11 +224,11 @@ form.admin fieldset,
 }
 
 /* Quote plugin */
-div.quoteheader {
+.quoteheader {
 	border-bottom: 2px solid #f4d6cc;
 }
 
-div.quotebody {
+.quotebody {
 	border-left: 8px solid #f4d6cc;
 }
 
@@ -237,7 +237,7 @@ div.quotebody {
 }
 
 .post .author,
-div.dirsite {
+.dirsite {
 	background: #f4d6cc;
 }
 

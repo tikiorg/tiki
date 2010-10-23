@@ -302,7 +302,7 @@ h3.box-title {
 	text-align: start;
 }
 
-div.cbox {
+.cbox {
 	background: inherit;
 	border: none;
 }
@@ -318,10 +318,10 @@ table {
 	font-size: 1em;
 }
 
-table.normal,
-table.admin {border-collapse: collapse}
+.normal,
+.admin {border-collapse: collapse}
 
-table.normal th,
+.normal th,
 th,
 td.heading,
 tr.diffheader {
@@ -330,10 +330,10 @@ tr.diffheader {
 	width: 15px;
 }
 
-table.email td.closeButton {width: 100%}
-table.email td.closeButton form {text-align: right}
-table.email {border: solid 1px #abcdef}
-table.email td.body {border: dashed 1px #69c}
+.email .closeButton {width: 100%}
+.email .closeButton form {text-align: right}
+.email {border: solid 1px #abcdef}
+.email td.body {border: dashed 1px #69c}
 td.button {text-align: right}
 small {font-size: 0.8em}
 
@@ -638,17 +638,17 @@ body.wikitext {
 	font-size: x-small
 }
 
-div.admbox {
+.admbox {
 	border: 2px solid #abcdef;
 	height: 100px; width: 100px;
 	text-align: center; float: left; margin: 5px}
 
-div.admbox:hover {background: #ddeeff;}
-div.admbox img {margin-top: 20px;}
+.admbox:hover {background: #ddeeff;}
+.admbox img {margin-top: 20px;}
 
 /* structures toc */
-ul.toc {margin-left: 0.5em; padding-left: 0.5em; list-style-type: 0}
-ul.toc li {margin-left: .2em; padding-left: .2em}
+.toc {margin-left: 0.5em; padding-left: 0.5em; list-style-type: 0}
+.toc li {margin-left: .2em; padding-left: .2em}
 
 /* jscalendar */
 .daterow {

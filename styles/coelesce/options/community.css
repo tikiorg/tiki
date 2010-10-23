@@ -22,15 +22,15 @@ input#fuser {
 	font-weight: bold;
 }
 
-div#sitelogo {
+#sitelogo {
 	padding: 0;
 }
 
-div#sitelogo img {
+#sitelogo img {
 	margin: 0;
 }
 
-div.floatleft {
+.floatleft {
 	float: left;
 	clear: none;
 	margin: 0;
@@ -38,7 +38,7 @@ div.floatleft {
 
 /* Calendar enhancements (should be here, in option) */
 
-div.tabrow {
+.tabrow {
 	font-size: 11px;
 	width: 720px;
 	padding-top: 11px;
@@ -50,7 +50,7 @@ div.tabrow {
 .viewmode div {
 	margin-right: 4px;
 }
-div.viewmode {
+.viewmode {
 	padding: 1px;
 }
 
@@ -97,7 +97,7 @@ body.tiki_wiki_page h1.pagetitle a:hover {
 	padding-left: 0px;
 }
 
-div.titlebar {
+.titlebar {
 	background: #C3D3E5 none repeat scroll 0 0;
 	color: #3333FF;
 	padding: 0.4em;

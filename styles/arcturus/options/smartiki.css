@@ -182,7 +182,7 @@ h1, .pagetitle {
 	border-right: 1px solid #994242;
 }
 
-div.separator {
+.separator {
 	margin-top: 4px;
 	margin-bottom: 2px;
 	padding-bottom: 2px;
@@ -213,7 +213,7 @@ div.separator {
 	color: #000;
 }
 
-div.box {
+.box {
 	padding-top: 3px;
 	margin-top: 13px;
 }
@@ -240,7 +240,7 @@ h3.box-title {
   overflow: hidden;
 }
 
-div.simplebox {
+.simplebox {
 	margin: 5px 1px;
 	padding: 2px;
 	color: black;
@@ -328,7 +328,7 @@ li.even:hover {
 
 
 span.titleb,
-div.articletrailer {
+.articletrailer {
 	color:#676767;
 	font-size: 90%;
 }
@@ -345,7 +345,7 @@ div.articletrailer {
 	margin: 10px 0;
 }
 
-div.articlebody {
+.articlebody {
 	border: 1px solid #aeaeae;
 	padding: 1em 2em;
 	margin: 10px 0;
@@ -361,12 +361,12 @@ div.articlebody {
 	width: 25%;
 }
 
-td.oddthumb {
+.oddthumb {
 	background: transparent;
 	border: 1px solid #8cacbb;
 	border-collapse: collapse;}
 
-td.eventhumb,
+.eventhumb,
 .thumbnailcontener {
 	background: #f7f9fa;
 	border: 1px solid #8cacbb;
