@@ -706,7 +706,6 @@ ol.module {
 	background: white;
 	width: 95%}
 
-td.normal,
 .wikitable td,
 .normal td,
 td.odd,
@@ -748,7 +747,7 @@ td.even {
 	text-align: left}
 
 .normal td.heading {font-size: 1em}
-td.form {padding: 0.2em}
+.form {padding: 0.2em}
 
 .form td {
 	font-size: 9px;
@@ -812,7 +811,7 @@ a.sortheader:visited {
 	color: #fff;
 	text-decoration: underline}
 
-td.form {padding: 0.2em}
+.form {padding: 0.2em}
 
 .findtable {
 	margin-bottom: 20px;
@@ -907,7 +906,7 @@ a.forumspagetitle:hover {
 	border: 1px solid #a9a9a9;
 	border-collapse: collapse}
 
-td.wikicell {
+.wikicell {
 	padding: 3px;
 	border: 1px solid #999;
 	border-collapse: collapse}
@@ -952,7 +951,7 @@ td.wikicell {
 	background: #EBEBEB;
 	padding: 3px}
 
-ul.toc {
+.toc {
 	border-top: 1px dotted #999;
 	border-bottom: 1px dotted #999}
 
@@ -1012,7 +1011,7 @@ a.blogt:hover {
 	margin-top: 10px;
 	font-size: 1.2em}
 
-.posthead {
+span.posthead {
 	font-weight: bold;
 	letter-spacing: .4pt}
 
@@ -1121,7 +1120,7 @@ body.tiki_blogs .postbody {
 	width: 100%;
 	border-collapse: collapse}
 
-td.tdcategpath {
+.tdcategpath {
 	font-weight: bold;
 	padding: 0 3px;
 	margin: 0px;
@@ -1137,7 +1136,7 @@ td.tdcategpath {
 	border: 1px solid #67ade7;
 	border-collapse: collapse}
 
-td.tdsubcat {width: 25%}
+.tdsubcat {width: 25%}
 .cattitle {font-weight: bold}
 ul.catfeatures {list-style: none}
 
@@ -1180,14 +1179,14 @@ ul.catitems li {
 	padding: 5px}
 
 td.dirfooter {font-size: .95em}
-.dirfooter {margin-top: 10px}
+div.dirfooter {margin-top: 10px}
 
 /***** Messages *****/
-td.prio1,
-td.prio2,
-td.prio3,
-td.prio4,
-td.prio5 {border: 1px solid #8cacbb}
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {border: 1px solid #8cacbb}
 
 .messureadflag {background: #ccc}
 .messureadhead {background: #DEDEDE}
@@ -1294,7 +1293,7 @@ Caltrack a:visited {color: #00BD02}
 
 .calnavigation a:hover {background: red}
 #caltable .calfocuson,
-.box-data td.fc a.today,
+.box-data .fc a.today,
 .box-data td a.today {
 	background: #D4D0C8;
 	border: solid 1px #696969}

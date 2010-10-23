@@ -196,14 +196,14 @@ label {margin: 0 2px}
 	background: #d40000 url(ohia/header.png) repeat-x 0 100%;
 }
 
-#sioptions {
+div#sioptions {
 	width: 100%;
 	margin: 0}
 
-#sitelogo {
+div#sitelogo {
 	margin: auto}
 
-#sitead {margin: auto}
+div#sitead {margin: auto}
 #sitead.floatright {padding-right: 100px}
 #sitead.floatleft {padding-left: 100px}
 
@@ -552,7 +552,6 @@ td.even {
 }
 
 .normal td,
-td.normal,
 .sortable td,
 .wikitable td,
 td.odd,
@@ -681,7 +680,7 @@ h1 a.pagetitle:hover {
 	border: 1px solid #a9a9a9;
 	border-collapse: collapse}
 
-td.wikicell {
+.wikicell {
 	padding: 3px;
 	border: 1px solid #777777;
 	border-collapse: collapse}
@@ -759,13 +758,13 @@ li.toclevel a:hover {
 	color: #f4f4f4}
 
 /* TOC */
-ul.toc {
+.toc {
 	padding-left: 2em;
 	border-top: 1px dotted #a9a9a9;
 	border-bottom: 1px dotted #a9a9a9;
 	margin-bottom: 4px}
 
-ul.toc * {border: 0}
+.toc * {border: 0}
 
 /***** Articles ****/
 
@@ -860,15 +859,15 @@ a.blogt:hover {
 
 .postinfo div {margin-top: 30%}
 
-.posthead {
+div.posthead {
 	text-align: left;
 	padding: 3px}
 
-.posthead {display: block}
+span.posthead {display: block}
 	
-.posthead small {font-size: 95%}
+span.posthead small {font-size: 95%}
 
-.posthead h3 {
+div.posthead h3 {
 	font-size: 1.5em;
 	font-weight: normal}
 
@@ -1044,10 +1043,10 @@ body.tiki_galleries .findtable {display: inline}
 	text-align: center;
 	width: 100%}
 
-td.oddthumb {border-collapse: collapse}
-td.eventhumb {border-collapse: collapse}
+.oddthumb {border-collapse: collapse}
+.eventhumb {border-collapse: collapse}
 
-td.eventhumb img {
+.eventhumb img {
 	margin-left: 6px;
 	margin-right: 6px}
 
@@ -1140,22 +1139,22 @@ p.norecords {font-weight: bold}
 	padding: 5px}
 
 td.dirfooter {font-size: .95em}
-.dirfooter {margin-top: 10px}
+div.dirfooter {margin-top: 10px}
 
 /***** Messages *****/
-td.prio1,
-td.prio2,
-td.prio3,
-td.prio4,
-td.prio5 {
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {
 	border: 1px solid #990000;
 	padding-left: 2px}
 
-td.prio1 {background: #780101}
-td.prio2 {background: #8d0101}
-td.prio3 {background: #a20202}
-td.prio4 {background: #b70202}
-td.prio5 {background: #cc0202}
+.prio1 {background: #780101}
+.prio2 {background: #8d0101}
+.prio3 {background: #a20202}
+.prio4 {background: #b70202}
+.prio5 {background: #cc0202}
 
 .messureadflag {
 	background: #313131;
@@ -1206,7 +1205,7 @@ td.prio5 {background: #cc0202}
 	color: #f4f4f4}
 
 #caltable .calfocuson,
-.box-data td.fc a.today,
+.box-data .fc a.today,
 .box-data td a.today {
 	background: #5e0000;
 	border: solid 1px #990000}
@@ -1266,7 +1265,7 @@ td.prio5 {background: #cc0202}
 
 .caldark .calfocus {background: #000}
 
-#calscreen td.calfocuson {
+div#calscreen .calfocuson {
 	background: #5e0000;
 }
 

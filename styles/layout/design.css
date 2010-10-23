@@ -305,12 +305,12 @@ a.flip:hover,
 	margin-top: 5px;
 }
 
-ul.categories {
+.categories {
 	margin: 0;
 	padding: 0;
 }
 
-ul.categories li {
+.categories li {
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -553,12 +553,11 @@ img.icon {
 	border-collapse: collapse;
 }
 
-td.normal,
 .normal td,
 .wikitable td,
 .odd,
 .even,
-td.form,
+.form,
 .formcolor td,
 .editblogform td {
 	margin: 0;
@@ -566,7 +565,6 @@ td.form,
 }
 
 .normal td,
-td.normal,
 .wikitable td,
 td.odd,
 td.even {
@@ -671,14 +669,14 @@ p.editdate {
 }
 
 /* TOC */
-ul.toc {
+.toc {
 	padding-left: 2em;
 	border-top: 1px dotted #a9a9a9;
 	border-bottom: 1px dotted #a9a9a9;
 	margin-bottom: 4px;
 }
 
-ul.toc * {
+.toc * {
 	border: none;
 }
 
@@ -855,30 +853,26 @@ p.norecords {
 
 /***** Trackers (etc.) *****/
 
-.multiselect li.odd,
 .multiselect .odd {
 	color: #000;
 	background: #f4f6f7;
 }
 
-.multiselect li.odd:hover,
-.multiselect .odd:hover {
+.multiselect odd:hover {
 	background: #fff7e6;
 }
 
-.multiselect li.even,
 .multiselect .even {
 	color: #000;
 	background: #e7e9ea;
 }
 
-.multiselect .even:hover,
 .multiselect .even:hover {
 	background: #f0f2f3;
 }
 
-.multiselect .odd,
-.multiselect .even {
+.multiselect div.odd,
+.multiselect div.even {
 	border: 1px solid #80b1e2;
 }
 
@@ -1063,32 +1057,32 @@ textarea.tshoutbox{
 
 /***** Messages *****/
 
-td.prio1,
-td.prio2,
-td.prio3,
-td.prio4,
-td.prio5 {
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {
 	border: 1px solid #a9a9a9;
 	padding-left: 2px;
 }
 
-td.prio1 {
+.prio1 {
 	background: #f7f9ca
 }
 
-td.prio2 {
+.prio2 {
 	background: #f7f9ea;
 }
 
-td.prio3 {
+.prio3 {
 	background: #f7f9fa;
 }
 
-td.prio4 {
+.prio4 {
 	background: #f7f9fd;
 }
 
-td.prio5 {
+.prio5 {
 	background: #f7f9ff;
 }
 
@@ -1147,12 +1141,12 @@ td.prio5 {
 
 /* admin boxes etc (.admbox) now defined in css/admin.css */
 
-td.mods_revision {
+.mods_revision {
 	background: #b5cfb5;
 	color: #000;
 }
 
-td.mods_update {
+.mods_update {
 	background:#dcdeac;
 	color: #000;
 }

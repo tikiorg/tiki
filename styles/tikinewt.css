@@ -717,7 +717,7 @@ img.flipmodimage {
 	font-size: .95em;
 }
 
-td.module {
+.module {
 	font-size: .95em;
 	color: #fff;
 }
@@ -867,7 +867,7 @@ td {
 	width: 100%;
 }
 
-td.formlabel {
+.formlabel {
 	white-space: nowrap;
 }
 
@@ -875,7 +875,7 @@ td.formlabel {
 	border: 1px solid #8cacbb;
 }
 
-.email td.body {
+.email .body {
 	border: 1px solid #8cacbb;
 }
 
@@ -884,7 +884,7 @@ td.formlabel {
 	width: 15px;
 }
 
-.email td.closebutton {
+.email .closebutton {
 	text-align: right;
 	width: 100%;
 }
@@ -1194,7 +1194,7 @@ h1.pagetitle strong {
 	border-collapse: collapse;
 }
 
-td.wikicell {
+.wikicell {
 	border-collapse: collapse;
 	border: 1px solid #8cacbb;
 	background: #f7f9fa;
@@ -1519,21 +1519,21 @@ li.toclevel {
 	margin: 10px 0;
 }
 
-.posthead {
+div.posthead {
 	color: black;
 	padding: 0 10px;
 }
 
-.posthead td[align=right] {
+div.posthead td[align=right] {
 	vertical-align: bottom;
 	margin: 0 10px;
 }
 
-.posthead {
+span.posthead {
 	font-weight: bold;
 }
 
-.posthead small {
+span.posthead small {
 	font-size: .95em;
 	color: #666666;
 	font-weight: normal;
@@ -1746,13 +1746,13 @@ textarea#editpost2 {
 	width: 100%;
 }
 
-td.oddthumb {
+.oddthumb {
 	background: #e7e9ea;
 	border: 1px solid #8cacbb;
 	text-align: center;
 }
 
-td.eventhumb {
+.eventhumb {
 	background: #f7f9fa;
 	border: 1px solid #8cacbb;
 	text-align: center;
@@ -1904,7 +1904,7 @@ a.namealias {
 	border-collapse: collapse;
 }
 
-td.tdcategpath {
+.tdcategpath {
 	color: #578308;
 	font-weight: bold;
 	background: #cde2a7;
@@ -1923,7 +1923,7 @@ td.tdcategpath {
 	border-collapse: collapse;
 }
 
-td.tdsubcat {
+.tdsubcat {
 	width: 25%;
 	background: #8cacbb;
 }
@@ -1937,13 +1937,13 @@ td.tdsubcat {
 	border-collapse: collapse;
 }
 
-td.categobjectsnameeven,
-td.categobjectsnameodd {
+.categobjectsnameeven,
+.categobjectsnameodd {
 	color: #000;
 }
 
-td.categobjectsdataeven,
-td.categobjectsdataodd {
+.categobjectsdataeven,
+.categobjectsdataodd {
 	background: #f7f9fa;
 	color: #000;
 }
@@ -2053,7 +2053,7 @@ ul.catitems li {
 	width: 100%;
 }
 
-td.pollr {
+.pollr {
 	color: #000;
 }
 
@@ -2140,17 +2140,17 @@ td.dirfooter {
 	font-size: .95em;
 }
 
-.dirfooter {
+div.dirfooter {
 	margin-top: 10px;
 	border: 1px solid #8cacbb;
 }
 
 /***** Messages *****/
-td.prio1,
-td.prio2,
-td.prio3,
-td.prio4,
-td.prio5 {
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {
 	border: 1px solid #8cacbb;
 	padding-left: 2px;
 }

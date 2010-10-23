@@ -315,7 +315,7 @@ ol {
 	padding-top: 2px;
 }
 
-div#sioptions {
+#sioptions {
 	padding-left: 0;
 	margin: 0;
 }
@@ -324,12 +324,12 @@ div#sioptions {
 	margin: 1em;
 }
 
-div#sitelogo {
+#sitelogo {
 	margin: auto !important;
 	padding: 1em;
 }
 
-div#sitead {
+#sitead {
 	clear: none;
 	color: #999;
 	max-width: 460px;
@@ -517,7 +517,7 @@ a.phplm:active {
 	background: #474747;
 }
 
-td.phplmnormal {
+.phplmnormal {
 	background: #474747;
 }
 
@@ -986,12 +986,12 @@ table {
 	margin-bottom: 1em;
 }
 
-td.normal,
+
 .normal td,
 .wikitable td,
 td.odd,
 td.even,
-td.form,
+.form,
 .formcolor td,
 .editblogform td {
 	padding: 0.2em;
@@ -1118,7 +1118,7 @@ h1 a.pagetitle {
 	font-size: 1.2em;
 }
 
-div#description,
+#description,
 .description {
 	font-size: .95em;
 	font-style: italic;
@@ -1175,7 +1175,7 @@ a.wiki {
 	vertical-align: top;
 }
 
-td.wikicell {
+.wikicell {
 	padding: 3px;
 	border-right: 1px solid #a9a9a9;
 	border-bottom: 1px solid #a9a9a9;
@@ -1189,7 +1189,7 @@ td.wikicell {
 	background: #e4e4e4;
 }
 
-div#page-bar {
+#page-bar {
 	text-align: center;
 	line-height: 150%;
 }
@@ -1286,7 +1286,7 @@ form.wikiplugin_edit div {
 }
 
 /* TOC */
-ul.toc {
+.toc {
 	list-style-type: none;
 	margin-left: 0;
 	padding-left: 0;
@@ -1639,12 +1639,12 @@ ul.catitems li {
 	border: 1px solid #999;
 }
 
-td.oddthumb {
+.oddthumb {
 	background: #696969;
 	border: 1px solid #474747;
 }
 
-td.eventhumb {
+.eventhumb {
 	background: #3f3f3f;
 	border: 1px solid #6a6a6a;
 }
@@ -1662,7 +1662,7 @@ td.eventhumb {
 	height: 100% !important;
 }
 
-div#thumbnails {
+#thumbnails {
 	padding: 1px;
 }
 
@@ -1899,7 +1899,7 @@ caltrack a:visited {
 	background: #292929;
 }
 
-td.calodd, td.caleven {
+.calodd, .caleven {
 	border: 1px solid #999;
 }
 
@@ -1968,7 +1968,7 @@ td.calodd, td.caleven {
 }
 
 .caltable .calfocuson,
-.box-data td.fc a.today,
+.box-data .fc a.today,
 .box-data td a.today {
 	background: #292929;
 	border: solid 1px #696969;
@@ -2075,7 +2075,7 @@ a.viewmodeon img.icon {
 	padding: 0 5px;
 }
 
-td.pollr {
+.pollr {
 	color: #d8d8d8;
 }
 
@@ -2113,36 +2113,36 @@ td.dirfooter {
 	font-size: .95em;
 }
 
-.dirfooter {
+div.dirfooter {
 	margin-top: 10px;
 }
 
 /***** Messages *****/
-td.prio1,
-td.prio2,
-td.prio3,
-td.prio4,
-td.prio5 {
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {
 	border: 1px solid #999;
 }
 
-td.prio1 {
+.prio1 {
 	background: #696969;
 }
 
-td.prio2 {
+.prio2 {
 	background: #3f3f3f;
 }
 
-td.prio3 {
+.prio3 {
 	background: #474747;
 }
 
-td.prio4 {
+.prio4 {
 	background: #292929;
 }
 
-td.prio5 {
+.prio5 {
 	background: #000;
 }
 
@@ -2165,10 +2165,10 @@ td.prio5 {
 /***** Ajax *****/
 
 /* Ajax Loading Overlay */
-div#ajaxLoadingBG {
+#ajaxLoadingBG {
 	background: transparent url(../img/overlay-85.png);
 }
-div#ajaxLoading {
+#ajaxLoading {
 	background: transparent url(../img/loading.gif) no-repeat 50% 50%;
 	color: #ccc;
 }

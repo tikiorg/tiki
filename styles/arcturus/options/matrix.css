@@ -293,7 +293,7 @@ a .sf-sub-indicator {
 	background: none;
 }
 
-td.phplmnormal {
+.phplmnormal {
 	background: url(matrix/ltgreen.png);
 }
 
@@ -501,7 +501,7 @@ h1.pagetitle a:hover,
 
 .wikitext,
 .titlebar,
-td.wikicell,
+.wikicell,
 .wiki-edithelp,
 .tocnav,
 .codelisting {
@@ -555,13 +555,13 @@ td.wikicell,
 	clear: both;
 }
 
-td.oddthumb {
+.oddthumb {
 	background: transparent;
 	border: 1px solid #8cacbb;
 	border-collapse: collapse;
 }
 
-td.eventhumb,
+.eventhumb,
 .thumbnailcontener {
 		background: url(matrix/grey.png);
 		border: none;

@@ -210,7 +210,7 @@ textarea {
 	background: #e1ebf0;
 	border: 0;
 	margin: 0.2em;
-	padding:
+	padding-bottom: 0; /* overrides padding-bottom: 10px of the arcturus.css */
 }
 
 h3.box-title {
@@ -330,8 +330,8 @@ tr.diffheader {
 	width: 15px;
 }
 
-.email td.closeButton {width: 100%}
-.email td.closeButton form {text-align: right}
+.email .closeButton {width: 100%}
+.email .closeButton form {text-align: right}
 .email {border: solid 1px #abcdef}
 .email td.body {border: dashed 1px #69c}
 td.button {text-align: right}
@@ -635,8 +635,8 @@ body.wikitext {
 .admbox img {margin-top: 20px;}
 
 /* structures toc */
-ul.toc {margin-left: 0.5em; padding-left: 0.5em; list-style-type: 0}
-ul.toc li {margin-left: .2em; padding-left: .2em}
+.toc {margin-left: 0.5em; padding-left: 0.5em; list-style-type: 0}
+.toc li {margin-left: .2em; padding-left: .2em}
 
 /* jscalendar */
 .daterow {

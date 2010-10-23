@@ -701,7 +701,7 @@ li.tabmark {
 	border-bottom: 1px solid #696969;
 	vertical-align: top}
  
-td.wikicell {
+.wikicell {
 	padding: 3px;
 	border-right: 1px solid #a9a9a9;
 	border-bottom: 1px solid #a9a9a9}
@@ -875,7 +875,7 @@ a.blogt:hover {
 	margin-top: 10px;
 	font-size: 1.2em}
 
-.posthead {
+span.posthead {
 	display: block;
 	font-weight: bold;
 	letter-spacing: .4pt}
@@ -1027,11 +1027,11 @@ a.blogt:hover {
 #browse_image {background: transparent}
 .showimage {padding: 6px}
 
-td.oddthumb {
+.oddthumb {
 	background: #0E150E;
 	border: 3px solid black}
  
-td.eventhumb {
+.eventhumb {
 	background: #0E150E;
 	border: 3px solid black}
 
@@ -1069,7 +1069,7 @@ ul.catitems li {margin-right: 6px}
 	font-size: 1.2em;
 	padding: 0 5px}
 
-td.pollr {color: black}
+.pollr {color: black}
 
 /***** FAQs *****/
 /***** Quizzes *****/
@@ -1099,14 +1099,14 @@ textarea.tshoutbox {
 	padding: 5px}
 
 td.dirfooter {font-size: .95em}
-.dirfooter {margin-top: 10px}
+div.dirfooter {margin-top: 10px}
 
 /***** Messages *****/
-td.prio1,
-td.prio2,
-td.prio3,
-td.prio4,
-td.prio5 {border: 1px solid #8cacbb}
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {border: 1px solid #8cacbb}
 
 .messureadflag {background: #ccc}
 .messureadhead {background: #dedede}
@@ -1256,7 +1256,7 @@ td.prio5 {border: 1px solid #8cacbb}
 .opaque .box-data {background: #000}
 
 #caltable .calfocuson,
-.box-data td.fc a.today,
+.box-data .fc a.today,
 .box-data td a.today {
 	background: #586858 url(abse/titlebgoff.png) repeat-x;
 	color: #b3b3b3}

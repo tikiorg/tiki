@@ -361,12 +361,12 @@ li.even:hover {
 	width: 25%;
 }
 
-td.oddthumb {
+.oddthumb {
 	background: transparent;
 	border: 1px solid #8cacbb;
 	border-collapse: collapse;}
 
-td.eventhumb,
+.eventhumb,
 .thumbnailcontener {
 	background: #f7f9fa;
 	border: 1px solid #8cacbb;

@@ -90,7 +90,7 @@ span#genPass .button a:hover,
 
 .highlight,
 .button.highlight a,
-td.calfocuson {
+.calfocuson {
 	border: #fb999e;
 	color: #b51360;
 	background: #f9f6df;
@@ -197,12 +197,12 @@ tr.diffheader,
 }
 
 .odd,
-td.calodd {
+.calodd {
 	background: #f6cdd2;
 }
 
 .even,
-td.caleven {
+.caleven {
 	background: #f9f0f0;
 }
 

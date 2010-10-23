@@ -68,8 +68,8 @@ input[type="reset"],
 input[type="submit"],
 .button input,
 .calbuttonBox a,
-span#genPass .button a,
-span#genPass .button a:visited,
+#genPass .button a,
+#genPass .button a:visited,
 .daterow {
 	color: #fff;
 	background: #bcb923;
@@ -83,7 +83,7 @@ input[type="reset"]:hover,
 input[type="submit"]:hover,
 .button input:hover,
 .calbuttonBox:hover,
-span#genPass .button a:hover,
+#genPass .button a:hover,
 .daterow:hover {
 	background: #baba25;
 	border-color: #b2a713 #f0e884 #f0e884 #b2a713;
@@ -91,7 +91,7 @@ span#genPass .button a:hover,
 
 .highlight,
 .button.highlight a,
-td.calfocuson {
+.calfocuson {
 	border: #f5fb86;
 	color: #638637;
 	background: #d4f9d5;

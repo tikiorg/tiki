@@ -1055,7 +1055,6 @@ table {
 }
 
 .normal td,
-td.normal,
 .wikitable td,
 td.odd,
 td.even {
@@ -1229,7 +1228,7 @@ a.pagetitle:hover {
 	border-collapse: collapse;
 }
 
-td.wikicell {
+.wikicell {
 	padding: 3px;
 	border: 1px solid #a9a9a9;
 	border-collapse: collapse;
@@ -1336,7 +1335,7 @@ td.wikicell {
 }
 
 /* TOC */
-ul.toc {
+.toc {
 	border-top: 1px dotted #a9a9a9;
 	border-bottom: 1px dotted #a9a9a9;
 }
@@ -1446,7 +1445,7 @@ ul.toc {
 	border-bottom: none;
 }
 
-.posthead {
+span.posthead {
 	font-weight: bold;
 	letter-spacing: .4pt;
 }
@@ -1977,7 +1976,7 @@ body.tiki_blogs .post .postfooter .actions {
 	font-weight: bold;
 }
 
-.box-data td.fc a.today,
+.box-data .fc a.today,
 .box-data td a.today {
 	background: #D4D0C8;
 	border: solid 1px #696969;
@@ -2004,7 +2003,7 @@ body.tiki_blogs .post .postfooter .actions {
 	background: #F5F5F5;
 }
 
-#calscreen td.calfocuson {
+#calscreen .calfocuson {
 	background: #D4D0C8;
 }
 
@@ -2061,7 +2060,7 @@ body.tiki_blogs .post .postfooter .actions {
 	padding: 0 5px;
 }
 
-td.pollr {
+.pollr {
 	color: black;
 }
 
@@ -2101,7 +2100,7 @@ td.dirfooter {
 	font-size: .95em;
 }
 
-.dirfooter {
+div.dirfooter {
 	margin-top: 10px;
 }
 

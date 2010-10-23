@@ -984,9 +984,9 @@ td {
 	vertical-align: top;
 }
 
-.third,
+td.third,
 th,
-.heading,
+td.heading,
 tr.diffheader {
 	text-align: center;
 }
@@ -1208,7 +1208,7 @@ img.magnify {
 }
 
 /* TOC */
-ul.toc * {
+.toc * {
 	list-style: none;
 }
 
@@ -1319,12 +1319,12 @@ small.description {
 	display: block;
 }
 
-.posthead {
+div.posthead {
 	text-align: left;
 	padding: 3px;
 }
 
-.posthead {
+span.posthead {
 	display: block;
 }
 

@@ -71,8 +71,8 @@ input[type="reset"],
 input[type="submit"],
 .button input,
 .calbuttonBox a,
-span#genPass .button a,
-span#genPass .button a:visited,
+#genPass .button a,
+#genPass .button a:visited,
 .daterow {
 	color: #fff;
 	background: #18a3bb;
@@ -86,7 +86,7 @@ input[type="reset"]:hover,
 input[type="submit"]:hover,
 .button input:hover,
 .calbuttonBox:hover,
-span#genPass .button a:hover,
+#genPass .button a:hover,
 .daterow:hover {
 	background: #0b8896;
 	border-color: #168294 #77d6e5 #77d6e5 #168294 !important;

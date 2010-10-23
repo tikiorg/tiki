@@ -551,7 +551,7 @@ ul.topcontent li {float: left}
 	float: left;
 }
 
-span#ticker {
+#ticker {
 	color: #fff;
 	display: block}
 	
@@ -753,14 +753,13 @@ td.even {
 	background: #f5f5f5;
 	border-right: 1px solid #DDDDDD}
 
-td.normal,
 td.odd,
 td.even {
 	margin: 0;
 	padding: 0.2em;
 	vertical-align: top}
 
-td.form {padding: 0.2em}
+.form {padding: 0.2em}
 
 /** Tabs **/
 
@@ -865,7 +864,7 @@ a.pagetitle {
 	border: 1px solid #a9a9a9;
 	border-collapse: collapse}
 
-td.wikicell {
+.wikicell {
 	padding: 3px;
 	border: 1px solid #999;
 	border-collapse: collapse}
@@ -914,11 +913,11 @@ td.wikicell {
 li.toclevel {}
 
 /* TOC */
-ul.toc {
+.toc {
 	padding-left: 2em;
 	margin-bottom: 4px}
 
-ul.toc * {border: 0}
+.toc * {border: 0}
 
 
 /***** Articles ****/
@@ -1002,7 +1001,7 @@ img.articleimage {
 
 .postinfo div {margin-top: 30%}
 
-.posthead {
+div.posthead {
 	text-align: left;
 	padding: 3px}
 
@@ -1011,7 +1010,7 @@ img.articleimage {
 	margin-top: 10px;
 	font-size: 1.2em}
 
-.posthead {
+span.posthead {
 	display: block;
 	font-weight: bold;
 	letter-spacing: .4pt}
@@ -1202,10 +1201,10 @@ textarea#editpost2 {width: 100%}
 /**** Image Galleries ****/
 .galtable {}
 html>body .galtable {}
-td.oddthumb {border-collapse: collapse}
-td.eventhumb {border-collapse: collapse}
+.oddthumb {border-collapse: collapse}
+.eventhumb {border-collapse: collapse}
 
-td.eventhumb img {
+.eventhumb img {
 	margin-left: 6px;
 	margin-right: 6px}
 
@@ -1227,19 +1226,19 @@ textarea.tshoutbox{width: 162px}
 
 /***** Messages *****/
 
-td.prio1,
-td.prio2,
-td.prio3,
-td.prio4,
-td.prio5 {
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {
 	border: 1px solid #8cacbb;
 	padding-left: 2px}
 
-td.prio1 {background: #F7F9CA}
-td.prio2 {background: #F7F9EA}
-td.prio3 {background: #F7F9FA}
-td.prio4 {background: #F7F9FD}
-td.prio5 {background: #F7F9FF}
+.prio1 {background: #F7F9CA}
+.prio2 {background: #F7F9EA}
+.prio3 {background: #F7F9FA}
+.prio4 {background: #F7F9FD}
+.prio5 {background: #F7F9FF}
 
 .messureadflag {
 	background: #ccc;
@@ -1407,13 +1406,13 @@ Caltrack a:visited {color:#00BD02}
 .searchresults {display: inline}
 
 #caltable .calfocuson,
-.box-data td.fc a.today,
+.box-data .fc a.today,
 .box-data td a.today {
 	background: #FD9339 url(darkshine/hover_list.jpg) repeat-x;
 	color: #fff;
 	border-bottom: 1px solid #783C1C}
 
-.box-data td.fc a.today:hover,
+.box-data .fc a.today:hover,
 .box-data td a.today:hover {
 	background: #FD9339 url(darkshine/hover_list.jpg) repeat-x;
 	color: #fff}

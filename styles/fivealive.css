@@ -202,7 +202,7 @@ body.fixed_width #fixedwidth {
 	margin-bottom: 17px;
 }
 
-span#poweredby {
+#poweredby {
 	font-weight: bold;
 	color: #fff;
 }
@@ -226,13 +226,13 @@ span#poweredby {
 	margin-bottom: 13px;
 }
 
-span#show-errors-button {
+#show-errors-button {
 	text-align: right;
 	margin-top: -26px;
 	display: block;
 }
 
-span#show-errors-button a {
+#show-errors-button a {
 	background: #fff;
 	border: none;
 	border-top-left-radius: 5px;
@@ -256,7 +256,7 @@ span#show-errors-button a {
 
 .highlight,
 .button.highlight a,
-td.calfocuson {
+.calfocuson {
 	background: #fad5e0;
 	
 }
@@ -305,8 +305,8 @@ input[type="reset"],
 input[type="submit"],
 .button input,
 .calbuttonBox a,
-span#genPass .button a,
-span#genPass .button a:visited,
+#genPass .button a,
+#genPass .button a:visited,
 .daterow {
 	color: #fff;
 	background: #2098cd;
@@ -324,7 +324,7 @@ input[type="reset"]:hover,
 input[type="submit"]:hover,
 .button input:hover,
 .calbuttonBox a:hover,
-span#genPass .button a:hover,
+#genPass .button a:hover,
 .daterow:hover {
 	background: #1173a5;
 	border: 1px solid #11597e;
@@ -343,7 +343,7 @@ span#genPass .button a:hover {
 	padding: 1px 4px !important;
 }*/
 
-span#genPass .button:hover {
+#genPass .button:hover {
 	border-width: 1px !important;
 }
 	
