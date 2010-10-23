@@ -4,7 +4,7 @@
 .cssmenu_horiz * ,
 .cssmenu_vert,
 .cssmenu_vert * ,
-ul.cssmenu_vert ul {
+.cssmenu_vert ul {
 	margin: 0;
 	padding: 0;
 	padding-left: 0;
@@ -144,7 +144,7 @@ li.sfHover > a > .sf-sub-indicator {
 }
 
 /*** shadows for all but IE6 ***/
-ul.sf-shadow ul {
+.sf-shadow ul {
 	background: url(../lib/jquery/superfish/images/shadow.png) no-repeat bottom right;
 	padding: 0 8px 9px 0;
 /*	-moz-border-radius-bottomleft: 17px;
@@ -152,7 +152,7 @@ ul.sf-shadow ul {
 	-webkit-border-top-right-radius: 17px;
 	-webkit-border-bottom-left-radius: 17px;*/
 }
-ul.sf-shadow ul.sf-shadow-off {
+.sf-shadow ul.sf-shadow-off {
 	background: transparent;
 }
 

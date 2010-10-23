@@ -3,8 +3,8 @@
 	font-size: 1em;
 }
 
-span.button a:link,
-span.button a:visited {
+.button a:link,
+.button a:visited {
 	text-decoration: none;
 	border: 0;
 	padding: 0 4px;
