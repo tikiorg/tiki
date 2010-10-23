@@ -3,7 +3,7 @@
 }
 
 
-div.tabrow {
+.tabrow {
 	position: relative;
 	left: 0;
 	font-size: 1em;
@@ -330,7 +330,7 @@ div.tabrow {
 .calnavigation a.next {
 	float : right;
 }
-td.middle {
+.middle {
 	vertical-align : middle;
 }
 .mininotes {

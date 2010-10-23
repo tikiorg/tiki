@@ -144,7 +144,7 @@ a.admbox.off img {
 	clear: none;
 }
 
-div.adminanchors a {float: left}
+.adminanchors a {float: left}
 
 /* from ui-revamp branch, via coe branch - jb july 2009 */
 
