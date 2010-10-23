@@ -5410,12 +5410,12 @@ class TikiLib extends TikiDb_Bridge
 			$elem = 'span';
 		}
 		$elem_style = 'position:relative;';
-		if (($name === 'img' || $name === 'div') && preg_match('/<'.$name.'[^>]*style="(.*?)"/i', $plugin_result, $m)) {
+		if (in_array($name, array('img', 'div')) && preg_match('/<'.$name.'[^>]*style="(.*?)"/i', $plugin_result, $m)) {
 			if (count($m)) {
 				$elem_style .= $m[1];
 			}
 		}
-		$ret = '~np~<'.$elem.' class="tiki_plugin" plugin="' . $name . '" contenteditable="false" style="' . $elem_style . '"' .
+		$ret = '~np~<'.$elem.' class="tiki_plugin" plugin="' . $name . '" style="' . $elem_style . '"' .
 				' syntax="' . htmlentities( $ck_editor_plugin, ENT_QUOTES, 'UTF-8' ) . '"' .
 				' args="' . htmlentities($arg_str, ENT_QUOTES, 'UTF-8') . '"' .
 				' body="' . htmlentities( $data, ENT_QUOTES, 'UTF-8') . '">'.	// not <!--{cke_protected}
