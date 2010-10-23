@@ -178,7 +178,7 @@ tr.diffheader a:visited {
 	background: #a82a76;
 }
 
-table.normal,
+.normal,
 .wikitable {
 	border: 2px solid #a82a76;
 }

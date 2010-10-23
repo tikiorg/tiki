@@ -685,7 +685,7 @@ h1 a.pagetitle:hover {
 	border: 1px solid #777777;
 	border-collapse: collapse}
 
-div#page-bar {
+#page-bar {
 	display: block;
 	margin-top: 0;
 	float: 0}
@@ -697,7 +697,7 @@ div#page-bar {
 	border-collapse: collapse}
 
 #wikihelp-tab table td {padding: 2px}
-div#textarea-toolbar {background: white}
+#textarea-toolbar {background: white}
 
 /* Wiki plugins */
 

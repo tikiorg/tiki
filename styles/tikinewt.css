@@ -154,7 +154,7 @@ small {
 	font-size: .8em;
 }
 
-.even small {
+td.even small {
 	font-size: 1em;
 }
 

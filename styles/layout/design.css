@@ -32,10 +32,10 @@ body.wikitext {
 }
 
 /* Ajax Loading Overlay */
-div#ajaxLoadingBG {
+#ajaxLoadingBG {
 	background: transparent url(../../img/overlay-light.png);
 }
-div#ajaxLoading {
+#ajaxLoading {
 	font-size: 2em;
 	font-weight: bold;
 	color: #333;
@@ -227,7 +227,7 @@ a.flip:hover,
 	text-decoration: none;
 }
 
-div#debugconsole {
+#debugconsole {
 	background: #333;
 	color: #fff;
 	padding: 5px;
@@ -445,7 +445,7 @@ img.icon {
 	background: transparent;
 }
 
-.admin div#content1 .tabcontent .cbox {
+.admin #content1 .tabcontent .cbox {
 	background: transparent;
 }
 
