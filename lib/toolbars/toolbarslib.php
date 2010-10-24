@@ -1394,9 +1394,18 @@ class ToolbarWikiplugin extends Toolbar
 	function getWysiwygToken( $areaId ) // {{{
 	{
 		if (!empty($this->wysiwyg)) {
-			
-			$js = "popup_plugin_form('{$areaId}','{$this->pluginName}');";
-			$this->setupCKEditorTool($js, $this->wysiwyg, $this->label, $this->icon);
+			if ($this->wysiwyg === 'Image') {	// cke's own image tool overrides this so set it up to use our filegal
+				global $headerlib,  $smarty, $prefs;
+				// can't do upload the cke way yet
+				//require_once $smarty->_get_plugin_filepath('function','filegal_manager_url');
+				//$url =  smarty_function_filegal_manager_url(array('area_id'=> 'fgal_picker'), $smarty);
+				//$headerlib->add_js('CKEDITOR.config.filebrowserUploadUrl = "'.$url.'"', 5);
+				$url = 'tiki-list_file_gallery.php?galleryId='.$prefs['home_file_gallery'].'&filegals_manager=fgal_picker';
+				$headerlib->add_js('CKEDITOR.config.filebrowserBrowseUrl = "'.$url.'"', 5);
+			} else {
+				$js = "popup_plugin_form('{$areaId}','{$this->pluginName}');";
+				$this->setupCKEditorTool($js, $this->wysiwyg, $this->label, $this->icon);
+			}
 		}
 		return $this->wysiwyg;
 	} // }}}
