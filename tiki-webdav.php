@@ -82,6 +82,6 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' && $_SERVER['REQUEST_URI'] === $_SERVE
 
 	print_debug("\n=== handle() ===\n");
 	global $filegallib; require_once('lib/filegals/filegallib.php');
-	$server->handle( $backend ); 
+	$server->handle( $backend, preg_replace('#.*tiki-webdav\.php#','',$_SERVER['REQUEST_URI'] ) ); 
 	print_debug("\n=== end handle() ===\n");
 }
