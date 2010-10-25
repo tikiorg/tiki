@@ -103,7 +103,7 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 						break;
 					}
 
-					$lookupStart = $candidate + 1;
+					$lookupStart = $candidate;
 				}
 			}
 		}
@@ -222,37 +222,37 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 		$sizeDiff = - ($end - $start - strlen( $string ) );
 		$this->text = substr_replace( $this->text, $string, $start, $end - $start ); 
 
-		unset($this->ends[$end]);
+		$this->ranges = array();
+		$this->findNoParseRanges(0, strlen($this->text));
+
 		$matches = $this->ends;
+		$toRemove = array($match);
 
 		foreach( $matches as $key => $m ) {
 			if( $m->inside( $match ) ) {
-				$m->invalidate();
-				unset( $this->ends[$key] );
+				$toRemove[] = $m;
 			} elseif( $key > $end ) {
 				$m->applyOffset( $sizeDiff );
 			}
+		}
+
+		foreach ($toRemove as $m) {
+			unset( $this->ends[$m->getEnd()] );
+			unset( $this->starts[$m->getStart()] );
+			$m->invalidate();
 		}
 
 		$list = $this->ends;
 
 		$sub = $this->getSubMatcher( $start, $start + strlen( $string ) );
 		foreach( $sub as $m ) {
-			$list[] = $m;
-		}
-
-		$this->ends = array();
-		$this->starts = array();
-
-		foreach( $list as $m ) {
 			$this->ends[$m->getEnd()] = $m;
 			$this->starts[$m->getStart()] = $m;
+			$m->changeMatcher($this);
 		}
 
 		ksort( $this->ends );
 		ksort( $this->starts );
-
-		$match->invalidate();
 
 		if( $this->scanPosition == $start ) {
 			$this->scanPosition = $start - 1;

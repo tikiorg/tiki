@@ -298,6 +298,24 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 		}
 	}
 
+	function testNestingWithoutSpaces() {
+		$strings = " {A(a=1)}{A(a=2)}{a a=3}{A}{A} ";
+
+		$matches = WikiParser_PluginMatcher::match($strings);
+		$this->assertEquals(3, count($matches));
+
+		$replacements = array(
+			'~np~<div>~/np~{A(a=2)}{a a=3}{A}~np~</div>~/np~',
+			'~np~<div>~/np~{a a=3}~np~</div>~/np~',
+			'~np~<div>~/np~3~np~</div>~/np~',
+		);
+		foreach($matches as $match) {
+			$match->replaceWith(array_shift($replacements));
+		}
+
+		$this->assertEquals(0, count($matches));
+	}
+
 /*
 	// TODO : Replacement re-find existing
 	// TODO : Replacement original vs generated
