@@ -141,6 +141,11 @@ input[type="submit"]:hover,
 	font-size: 11px;
 }
 
+.highlight, .button.highlight a {
+	background: #00f000;
+	color: #000;
+}
+
 #tiki-top {
 	border: 1px outset #00A000;
 }
@@ -394,12 +399,24 @@ h3.box-title {
 .rbox-title, 
 .rbox-data {
     background: url(matrix/grey.png) repeat;
-    color: #aeaeae;
+    color: #000;
     border-color: #00ff00;
 }
 
-.rbox-title {
-	background: #222;
+.error .rbox-title,
+.errors .rbox-title,
+.warning .rbox-title {
+	background: #90ee90;
+	border-color: #00ff82 #00ff82 #90ee90;
+	color: #000;
+}
+
+.error .rbox-data,
+.errors .rbox-data,
+.warning .rbox-data {
+	background: #90ee90;
+	border-color: #90ee90;
+	color:#000;
 }
 
 .box:hover {
