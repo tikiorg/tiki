@@ -227,12 +227,16 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 
 		$matches = $this->ends;
 		$toRemove = array($match);
+		$toAdd = array();
 
 		foreach( $matches as $key => $m ) {
 			if( $m->inside( $match ) ) {
 				$toRemove[] = $m;
 			} elseif( $key > $end ) {
+				unset( $this->ends[$m->getEnd()] );
+				unset( $this->starts[$m->getStart()] );
 				$m->applyOffset( $sizeDiff );
+				$toAdd[] = $m;
 			}
 		}
 
@@ -242,13 +246,14 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 			$m->invalidate();
 		}
 
-		$list = $this->ends;
-
-		$sub = $this->getSubMatcher( $start, $start + strlen( $string ) );
-		foreach( $sub as $m ) {
+		foreach ($toAdd as $m) {
 			$this->ends[$m->getEnd()] = $m;
 			$this->starts[$m->getStart()] = $m;
-			$m->changeMatcher($this);
+		}
+
+		$sub = $this->getSubMatcher( $start, $start + strlen( $string ) );
+		if ($sub->isComplete()) {
+			$this->appendSubMatcher($sub);
 		}
 
 		ksort( $this->ends );
