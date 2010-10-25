@@ -1408,6 +1408,15 @@ class Comments extends TikiLib
 		return $ret;
 	}
 
+	/**
+	 * Return the number of comments for a specific object.
+	 * No permission check is done to verify if the user has permission
+	 * to see the object itself or its comments.
+	 * 
+	 * @param string $objectId example: 'blog post:2'
+	 * @param string $approved 'y' or 'n'
+	 * @return int the number of comments
+	 */
 	function count_comments($objectId, $approved = 'y') {
 		global $tiki_p_admin_comments, $prefs;
 

@@ -472,6 +472,11 @@ class BlogLib extends TikiDb_Bridge
 							$date_min = '', $date_max = '', $approved = 'y'
 	)  {
 		global $tikilib, $tiki_p_admin_comments, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post, $user;
+		global $commentslib; require_once('lib/comments/commentslib.php');
+		
+		if (!is_object($commentslib)) {
+			$commentslib = new Comments();
+		}
 
 		$mid = array();
 		$bindvars = array();
@@ -530,18 +535,8 @@ class BlogLib extends TikiDb_Bridge
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 
-		$cant_com_query = "select count(*) from `tiki_comments` where `object`=? and `objectType` = 'post'";
-		if ( $tiki_p_admin_comments != 'y' ) {
-			$cant_com_query .= ' and `approved`=?';
-		} else {
-			$approved = NULL;
-		}
-
 		while ($res = $result->fetchRow()) {
-			$cant_com_vars = array((int)$res['postId']);
-			if ( $approved !== NULL ) $cant_com_vars[] = $approved;
-			$cant_com = $this->getOne($cant_com_query, $cant_com_vars);
-			$res["comments"] = $cant_com;
+			$res["comments"] = $commentslib->count_comments('blog post:' . $res['postId']);
 			$res['pages'] = $this->get_number_of_pages($res['data']);
 			$res['avatar'] = $tikilib->get_user_avatar($res['user']);
 
