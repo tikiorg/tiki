@@ -28,6 +28,7 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 
 		return $ret;
 	}
+
 	function testShortMatch()
 	{
 		$matches = $this->doMatch( ' {img src=foo.png} ', 1 );
@@ -38,6 +39,18 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 		$this->assertEquals( null, $match->getBody() );
 		$this->assertEquals( 1, $match->getStart() );
 		$this->assertEquals( 18, $match->getEnd() );
+	}
+
+	function testShortLegacySyntax()
+	{
+		$matches = $this->doMatch( ' {IMG(src=foo.png)/} ', 1 );
+
+		$match = $matches[0];
+		$this->assertEquals( 'img', $match->getName() );
+		$this->assertEquals( 'src=foo.png', $match->getArguments() );
+		$this->assertEquals( null, $match->getBody() );
+		$this->assertEquals( 1, $match->getStart() );
+		$this->assertEquals( 20, $match->getEnd() );
 	}
 
 	function testFullMatch()
@@ -165,6 +178,19 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 	function testSimpleReplacement()
 	{
 		$string = '{c} {A()} {b} {A} {b}';
+		$matches = WikiParser_PluginMatcher::match( $string );
+		$this->assertEquals( 4, count($matches) );
+
+		$orig = $this->toArray( $matches );
+
+		$orig[2]->replaceWith( 'Hello' );
+
+		$this->assertEquals( '{c} {A()} Hello {A} {b}', $matches->getText() );
+	}
+
+	function testLegacyReplacement()
+	{
+		$string = '{c} {A()} {B()/} {A} {b}';
 		$matches = WikiParser_PluginMatcher::match( $string );
 		$this->assertEquals( 4, count($matches) );
 

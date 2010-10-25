@@ -264,6 +264,7 @@ class WikiParser_PluginMatcher_Match
 {
 	const LONG = 1;
 	const SHORT = 2;
+	const LEGACY = 3;
 	const NAME_MAX_LENGTH = 50;
 
 	private $matchType = false;
@@ -343,17 +344,26 @@ class WikiParser_PluginMatcher_Match
 			$unescapedFound += $this->countUnescapedQuotes( $old, $pos );
 		}
 
-		if( $this->matchType == self::LONG && $this->matcher->findText( ')', $pos - 1, $limit ) !== $pos - 1 ) {
+		if ($this->matchType == self::LONG && $this->matcher->findText( '/', $pos - 1, $limit ) === $pos - 1 ) {
+			$this->matchType = self::LEGACY;
+			--$pos;
+		}
+
+		if( in_array($this->matchType, array(self::LONG, self::LEGACY)) && $this->matcher->findText( ')', $pos - 1, $limit ) !== $pos - 1 ) {
 			$this->invalidate();
 			return false;
 		}
 
-		$this->bodyStart = $pos + 1;
-
 		$arguments = trim( $this->matcher->getChunkFrom( $this->nameEnd, $pos - $this->nameEnd ), '()' );
 		$this->arguments = trim( $arguments );
 
-		if( $this->matchType == self::SHORT ) {
+		if ($this->matchType == self::LEGACY) {
+			++$pos;
+		}
+
+		$this->bodyStart = $pos + 1;
+
+		if( $this->matchType == self::SHORT || $this->matchType == self::LEGACY ) {
 			$this->end = $this->bodyStart;
 		}
 
