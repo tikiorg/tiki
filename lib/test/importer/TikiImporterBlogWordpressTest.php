@@ -63,16 +63,42 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 
     public function testParseData()
     {
-        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractInfo', 'extractBlogInfo'));
-        $obj->dom = new DOMDocument;
-        $obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
-        $obj->expects($this->exactly(5))->method('extractInfo')->will($this->returnValue(array()));
+        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractItems', 'extractBlogInfo', 'extractTags'));
+        $obj->expects($this->once())->method('extractItems')->will($this->returnValue(array()));
         $obj->expects($this->once())->method('extractBlogInfo')->will($this->returnValue(array()));
 		$this->expectOutputString("\nStarting to parse data:\n");
 		$parsedData = $obj->parseData();
-        $this->assertEquals(5, count($parsedData));
+        $this->assertEquals(2, count($parsedData));
+	}
+	
+	public function testExtractItems()
+	{
+        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractInfo'));
+        $obj->dom = new DOMDocument;
+        $obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
+        $obj->expects($this->exactly(5))->method('extractInfo')->will($this->returnValue(array()));
+		$expectedResult = $obj->extractItems();
+        $this->assertEquals(5, count($expectedResult));		
 	}
 
+	public function testExtractTags()
+	{
+		$expectedResult = array('alta montanha', 'barcelona', 'bicicleta', 'bicicletada', 'buenos aires', 'caminhada', 'canadá', 'carga',
+			'cerro plata', 'chapada diamantina', 'chapada dos veadeiras', 'chile', 'cicloativismo', 'cicloturismo', 'cidade', 'cidades',
+			'comida', 'conhecimento livre', 'creative commons', 'davi marski', 'debate', 'die-in', 'digikam', 'dmsc', 'dmsc2010',
+			'el chaltén', 'eleições', 'escalada', 'europa', 'exiv2', 'filme', 'fotos', 'gelo', 'gettext', 'ghost bike', 'gsoc', 'hacklab',
+			'januária', 'linux', 'livros', 'londres', 'mapas', 'mediawiki', 'mendoza', 'montanhismo', 'montreal', 'mudanças', 'osorno',
+			'parser', 'partidos políticos', 'patagônia', 'pear', 'php', 'phpbb', 'phpdocumentor', 'phpt', 'phpunit', 'plugin',
+			'quinta livre', 'restaurantes vegetarianos', 'san pedro de atacama', 'santiago', 'são paulo', 'software livre', 'Text_Wiki',
+			'tikifest', 'tikiwiki', 'tinymce', 'torres del paine', 'transporte', 'trekking', 'tv', 'ubuntu', 'unit tests', 'usp',
+			'vegetarianismo', 'vídeo', 'vulcão', 'vulcão maipo', 'wiki', 'wordpress', 'youtube');
+
+		$this->obj->dom = new DOMDocument;
+        $this->obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
+		
+		$this->assertEquals($expectedResult, $this->obj->extractTags());
+	}
+	
 	public function testExtractInfoPost()
 	{
 		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractComment'));

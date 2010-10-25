@@ -115,7 +115,7 @@ class TikiImporter_Wiki_InsertPage_Test extends TikiImporter_TestCase
         $tikilib->expects($this->exactly(7))->method('update_page');
 
         // $page is set on mediawiki_page_as_array.php
-        $this->assertTrue($this->obj->insertPage($page));
+        $this->assertEquals('Redes de ensino', $this->obj->insertPage($page));
     }
 
     public function testInsertPageAlreadyExistentPageNameOverride()
@@ -127,7 +127,7 @@ class TikiImporter_Wiki_InsertPage_Test extends TikiImporter_TestCase
         $tikilib->expects($this->exactly(7))->method('update_page');
 
         $this->obj->alreadyExistentPageName = 'override';
-        $this->assertTrue($this->obj->insertPage($page));
+        $this->assertEquals('Redes de ensino', $this->obj->insertPage($page));
     }
 
     public function testInsertPageAlreadyExistentPageNameAppendPrefix()
@@ -141,7 +141,7 @@ class TikiImporter_Wiki_InsertPage_Test extends TikiImporter_TestCase
         $tikilib->expects($this->exactly(7))->method('update_page')->with($newPageName);
 
         $this->obj->alreadyExistentPageName = 'appendPrefix';
-        $this->assertTrue($this->obj->insertPage($page));
+        $this->assertEquals('Mediawiki_Redes de ensino', $this->obj->insertPage($page));
     }
 
     public function testInsertPageAlreadyExistentPageNameDoNotImport()

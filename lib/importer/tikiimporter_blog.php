@@ -114,30 +114,41 @@ class TikiImporter_Blog extends TikiImporter
 		$this->createBlog();
 
 		if (!empty($parsedData)) {
-			foreach ($parsedData as $item) {
-				$methodName = 'insert' . ucfirst($item['type']);
+			if (!empty($parsedData['tags'])) {
+				$this->createTags($parsedData['tags']);
+			}
+			if (!empty($parsedData['items'])) {
+				//TODO: move this foreach to a function (insertItems())
+				foreach ($parsedData['items'] as $item) {
+					$methodName = 'insert' . ucfirst($item['type']);
+	
+					if ($objId = $this->$methodName($item)) {
+						$countItems++;
+						$this->saveAndDisplayLog('Item ' . $item['name'] . " sucessfully imported\n");					
 
-				if ($objId = $this->$methodName($item)) {
-					$countItems++;
-					$this->saveAndDisplayLog('Item ' . $item['name'] . " sucessfully imported\n");					
-					
-					if (!empty($item['comments'])) {
 						if ($item['type'] == 'page') {
 							$type = 'wiki page';
 						} else if ($item['type'] == 'post') {
 							$type = 'blog post';
 						}
 						
-						$this->insertComments($objId, $type, $item['comments']);
+						if (!empty($item['comments'])) {
+							$this->insertComments($objId, $type, $item['comments']);
+						}
+						
+						if (!empty($item['tags'])) {
+							$this->linkObjectWithTags($objId, $type, $item['tags']);
+						}
+						
+					} else {
+						$this->saveAndDisplayLog('Item ' . $item['name'] . " NOT imported (there was already a item with the same name)\n");
 					}
-					
-				} else {
-					$this->saveAndDisplayLog('Item ' . $item['name'] . " NOT imported (there was already a item with the same name)\n");
 				}
 			}
 		}
 
-		$countData['totalPages'] = count($parsedData);
+		//TODO: extend the output to report the user how many tags and categories were created (not only pages and posts)
+		$countData['totalPages'] = (isset($parsedData['items'])) ? count($parsedData['items']) : 0;
 		$countData['importedPages'] = $countItems;
 		return $countData;
 	}
@@ -157,6 +168,36 @@ class TikiImporter_Blog extends TikiImporter
 		$this->blogId = $bloglib->replace_blog($this->blogInfo['title'], $this->blogInfo['desc'], $user, 'y', 10, false, '', 'y', 'n', 'y', 'n', 'y', 'y', 'y', 'y', 'y', 'n', '', 'y', 5, 'n');
 	}
 
+	/**
+	 * Create all existing tags for a blog. Tags here
+	 * are just created, not related yet with any object (post or page)
+	 * 
+	 * @param array $tags
+	 * @return void
+	 */
+	function createTags($tags)
+	{
+		global $freetaglib; require_once('lib/freetag/freetaglib.php');
+		foreach ($tags as $tag) {
+			$freetaglib->find_or_create_tag($tag);
+		}
+	}
+
+	/**
+	 * Link an object with its tags
+	 * 
+	 * @param $objId
+	 * @param $type
+	 * @param $tags
+	 * @return void
+	 */
+	function linkObjectWithTags($objId, $type, $tags) {
+		global $freetaglib; require_once('lib/freetag/freetaglib.php');
+		global $user;
+		
+		$freetaglib->_tag_object_array($user, $objId, $type, $tags);
+	}
+	
 	/**
 	 * Insert page into Tiki using its builtin methods
 	 *
@@ -192,7 +233,14 @@ class TikiImporter_Blog extends TikiImporter
 	function insertPost($post)
 	{
 		global $bloglib;
-		return $bloglib->blog_post($this->blogId, $post['content'], $post['excerpt'], $post['author'], $post['name'], '', 'n', $post['created']);	
+		global $objectlib; require_once('lib/objectlib.php');
+		$postId = $bloglib->blog_post($this->blogId, $post['content'], $post['excerpt'], $post['author'], $post['name'], '', 'n', $post['created']);
+
+		if ($postId) {
+			$objectlib->insert_object('blog post', $postId, '', $post['name'], 'tiki-view_blog_post.php?postId=' . urlencode($postId));
+		}
+		
+		return $postId;
 	}
 	
 	/**

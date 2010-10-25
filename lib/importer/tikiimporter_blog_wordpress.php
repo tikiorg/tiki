@@ -61,6 +61,9 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		$tikilib->set_preference('feature_blogposts_comments', 'y');
 		$tikilib->set_preference('feature_comments_moderation', 'y');
 		$tikilib->set_preference('comments_notitle', 'y');
+		$tikilib->set_preference('feature_freetags', 'y');
+		$tikilib->set_preference('feature_categories', 'y');
+		$tikilib->set_preference('feature_wiki_comments', 'y');
 
 		parent::setupTiki();
 	}
@@ -119,29 +122,46 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		}
 	}
 
-	//TODO: handle tags, categories and comments
+	//TODO: handle categories
 	/**
-	 * Foreach <item> element check if it is a post, page or
-	 * attachment and call the proper method
+	 * Calls the respective functions to extract and parse (when needed)
+	 * items (pages, posts and attachments), categories and tags.
 	 * 
-	 * @return array $parsedData
+	 * @return array each key of this array contain one set of data (items, categories and tags)
 	 */
 	function parseData()
 	{
-		$parsedData = array();
-		$items = $this->dom->getElementsByTagName('item');
-
-		$this->saveAndDisplayLog("\nStarting to parse data:\n");
-
 		$this->extractBlogInfo();
+		
+		$parsedData = array();
+		
+		$this->saveAndDisplayLog("\nStarting to parse data:\n");
+		
+		// pages or posts
+		$parsedData['items'] = $this->extractItems();
+		
+		$parsedData['tags'] = $this->extractTags();
 
-		foreach ($items as $item) {
+		return $parsedData;
+	}
+	
+	//TODO: handle attachments
+	/**
+	 * Extract pages, posts and attachments
+	 * 
+	 * @return array all extract items (pages, posts and attachments)
+	 */
+	function extractItems()
+	{
+		$data = $this->dom->getElementsByTagName('item');
+
+		foreach ($data as $item) {
 			$type = $item->getElementsByTagName('post_type')->item(0)->nodeValue;
 			$status = $item->getElementsByTagName('status')->item(0)->nodeValue;
 
 			if (($type == 'post' || $type == 'page') && $status == 'publish') {
 				try {
-					$parsedData[] = $this->extractInfo($item);
+					$items[] = $this->extractInfo($item);
 				} catch (ImporterParserException $e) {
 					$this->saveAndDisplayLog($e->getMessage(), true);
 				}
@@ -149,10 +169,28 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 			}
 		}
-
-		return $parsedData;
+		
+		return $items;
 	}
 
+	/**
+	 * Return all tags present in the Wordpress XML file
+	 * 
+	 * @return array tags
+	 */
+	function extractTags()
+	{
+		$tags = array();
+		
+		$data = $this->dom->getElementsByTagName('tag');
+
+		foreach ($data as $tag) {
+			$tags[] = $tag->getElementsByTagName('tag_name')->item(0)->nodeValue;
+		}
+
+		return $tags;
+	}
+	
 	/**
 	 * Searches for the last version of each attachments in the XML file
 	 * and try to download it to the img/wiki_up/ directory

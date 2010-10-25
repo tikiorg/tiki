@@ -48,12 +48,14 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
         $obj->expects($this->exactly(2))->method('insertPage');
         $obj->expects($this->exactly(4))->method('insertPost');
 		$parsedData = array(
-			array('type' => 'post', 'name' => 'Any name'),
-			array('type' => 'post', 'name' => 'Any name'),
-			array('type' => 'page', 'name' => 'Any name'),
-			array('type' => 'post', 'name' => 'Any name'),
-			array('type' => 'page', 'name' => 'Any name'),
-			array('type' => 'post', 'name' => 'Any name'),
+			'items' => array(
+				array('type' => 'post', 'name' => 'Any name'),
+				array('type' => 'post', 'name' => 'Any name'),
+				array('type' => 'page', 'name' => 'Any name'),
+				array('type' => 'post', 'name' => 'Any name'),
+				array('type' => 'page', 'name' => 'Any name'),
+				array('type' => 'post', 'name' => 'Any name'),
+			),
 		);
         $obj->insertData($parsedData);
     }
@@ -74,12 +76,14 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
         $obj->expects($this->exactly(6))->method('insertPage')->will($this->onConsecutiveCalls(true, true, false, true, false, true));
 
 		$parsedData = array(
-			array('type' => 'page', 'name' => 'Any name'),
-			array('type' => 'page', 'name' => 'Any name'),
-			array('type' => 'page', 'name' => 'Any name'),
-			array('type' => 'page', 'name' => 'Any name'),
-			array('type' => 'page', 'name' => 'Any name'),
-			array('type' => 'page', 'name' => 'Any name'),
+			'items' => array(
+				array('type' => 'page', 'name' => 'Any name'),
+				array('type' => 'page', 'name' => 'Any name'),
+				array('type' => 'page', 'name' => 'Any name'),
+				array('type' => 'page', 'name' => 'Any name'),
+				array('type' => 'page', 'name' => 'Any name'),
+				array('type' => 'page', 'name' => 'Any name'),
+			),
 		);
 
         $countData = $obj->insertData($parsedData);
@@ -96,12 +100,14 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
         $obj->expects($this->exactly(3))->method('insertComments')->with('Any name', 'wiki page');
 
 		$parsedData = array(
-			array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2, 3)),
-			array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2)),
-			array('type' => 'page', 'name' => 'Any name'),
-			array('type' => 'page', 'name' => 'Any name', 'comments' => array()),
-			array('type' => 'page', 'name' => 'Any name'),
-			array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2, 3)),
+			'items' => array(
+				array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2, 3)),
+				array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2)),
+				array('type' => 'page', 'name' => 'Any name'),
+				array('type' => 'page', 'name' => 'Any name', 'comments' => array()),
+				array('type' => 'page', 'name' => 'Any name'),
+				array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2, 3)),
+			),
 		);
 
         $countData = $obj->insertData($parsedData);
@@ -115,8 +121,10 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
         $obj2->expects($this->exactly(2))->method('insertComments')->with('Any name', 'blog post');
 
 		$parsedData = array(
-			array('type' => 'post', 'name' => 'Any name', 'comments' => array(1, 2, 3)),
-			array('type' => 'post', 'name' => 'Any name', 'comments' => array(1, 2)),
+			'items' => array(
+				array('type' => 'post', 'name' => 'Any name', 'comments' => array(1, 2, 3)),
+				array('type' => 'post', 'name' => 'Any name', 'comments' => array(1, 2)),
+			),
 		);
 
         $countData = $obj2->insertData($parsedData);
@@ -152,4 +160,43 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 
 		$obj->insertPage(array());
 	}
+	
+	public function testInsertPost()
+	{
+		global $objectlib; require_once('lib/objectlib.php');
+		global $bloglib; require_once('lib/blogs/bloglib.php');
+		
+		$bloglib = $this->getMock('BlogLib', array('blog_post'));
+		$bloglib->expects($this->once())->method('blog_post')->will($this->returnValue(1));
+		
+		$objectlib = $this->getMock('ObjectLib', array('insert_object'));
+		$objectlib->expects($this->once())->method('insert_object');
+
+		$post = array('content' => 'asdf', 'excerpt' => '', 'author' => 'admin', 'name' => 'blog post title', 'created' => 1234);
+		
+		$this->obj->insertPost($post);
+	}
+	
+	public function testCreateTags()
+	{
+		global $freetaglib; require_once('lib/freetag/freetaglib.php');
+		$freetaglib = $this->getMock('FreetagLib', array('find_or_create_tag'));
+		$freetaglib->expects($this->exactly(4))->method('find_or_create_tag');
+		
+		$tags = array('tag1', 'tag2', 'tag3', 'tag4');
+		
+		$this->obj->createTags($tags);
+	}
+
+	public function testLinkObjectWithTags()
+	{
+		global $freetaglib; require_once('lib/freetag/freetaglib.php');
+		$freetaglib = $this->getMock('FreetagLib', array('_tag_object_array'));
+		$freetaglib->expects($this->once())->method('_tag_object_array');
+		
+		$tags = array('tag1', 'tag2', 'tag3', 'tag4');
+		
+		$this->obj->linkObjectWithTags('user', 'HomePage', 'wiki page', $tags);
+	}
+	
 }
