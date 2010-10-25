@@ -48,7 +48,7 @@ function module_since_last_visit_new_info() {
 function module_since_last_visit_new($mod_reference, $params = null)
 {
 	global $smarty, $user;
-	require_once('lib/comments/commentslib.php'); global $commentslib; $commentslib = new Comments();
+	global $commentslib; require_once('lib/comments/commentslib.php'); $commentslib = new Comments();
 	include_once('tiki-sefurl.php');
 	
 	if (!$user) return false;
