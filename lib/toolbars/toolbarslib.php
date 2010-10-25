@@ -401,23 +401,25 @@ abstract class Toolbar
 		}
 		$label = addcslashes($label, "'");
 		$headerlib->add_jq_onready(<<< JS
-window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
-window.CKEDITOR.plugins.add( '{$name}', {
-	init : function( editor ) {
-		var command = editor.addCommand( '{$name}', new window.CKEDITOR.command( editor , {
-			modes: { wysiwyg:1 },
-			exec: function(elem, editor, data) {
-				{$js}
-			},
-			canUndo: false
-		}));
-		editor.ui.addButton( '{$name}', {
-			label : '{$label}',
-			command : '{$name}',
-			icon: editor.config._TikiRoot + '{$icon}'
-		});
-	}
-});
+if (typeof window.CKEDITOR !== "undefined") {
+	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
+	window.CKEDITOR.plugins.add( '{$name}', {
+		init : function( editor ) {
+			var command = editor.addCommand( '{$name}', new window.CKEDITOR.command( editor , {
+				modes: { wysiwyg:1 },
+				exec: function(elem, editor, data) {
+					{$js}
+				},
+				canUndo: false
+			}));
+			editor.ui.addButton( '{$name}', {
+				label : '{$label}',
+				command : '{$name}',
+				icon: editor.config._TikiRoot + '{$icon}'
+			});
+		}
+	});
+}
 JS
 		, 10);
 	}
@@ -1101,24 +1103,26 @@ class ToolbarDialog extends Toolbar
 			$headerlib->add_js( "window.dialogData[$this->index] = " . json_encode($this->list) . ";", 1 + $this->index );
 			$label = addcslashes($this->label, "'");
 			$headerlib->add_jq_onready(<<< JS
-window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
-window.CKEDITOR.plugins.add( '{$this->name}', {
-	init : function( editor ) {
-		var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
-			modes: { wysiwyg:1 },
-			exec: function(elem, editor, data) {
-				{$this->getSyntax( $areaId )};
-			},
-			canUndo: false
-		}));
-		editor.ui.addButton( '{$this->name}', {
-			label : '{$label}',
-			command : '{$this->name}',
-			icon: editor.config._TikiRoot + '{$this->icon}'
-		});
-
-	}
-});
+if (typeof window.CKEDITOR !== "undefined") {
+	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
+	window.CKEDITOR.plugins.add( '{$this->name}', {
+		init : function( editor ) {
+			var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
+				modes: { wysiwyg:1 },
+				exec: function(elem, editor, data) {
+					{$this->getSyntax( $areaId )};
+				},
+				canUndo: false
+			}));
+			editor.ui.addButton( '{$this->name}', {
+				label : '{$label}',
+				command : '{$this->name}',
+				icon: editor.config._TikiRoot + '{$this->icon}'
+			});
+	
+		}
+	});
+}
 JS
 , 10);		
 			
@@ -1200,25 +1204,27 @@ class ToolbarHelptool extends Toolbar
 		global $headerlib;
 		$label = addcslashes($this->label, "'");
 		$headerlib->add_jq_onready(<<< JS
-window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
-window.CKEDITOR.plugins.add( '{$name}', {
-	init : function( editor ) {
-		var command = editor.addCommand( '{$name}', new window.CKEDITOR.command( editor , {
-			modes: { wysiwyg:1 },
-			exec: function(elem, editor, data) {
-				openEditHelp();
-				return false;
-			},
-			canUndo: false
-		}));
-		editor.ui.addButton( '{$name}', {
-			label : '{$label}',
-			command : '{$name}',
-			icon: editor.config._TikiRoot + '{$this->icon}'
-		});
-
-	}
-});
+if (typeof window.CKEDITOR !== "undefined") {
+	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
+	window.CKEDITOR.plugins.add( '{$name}', {
+		init : function( editor ) {
+			var command = editor.addCommand( '{$name}', new window.CKEDITOR.command( editor , {
+				modes: { wysiwyg:1 },
+				exec: function(elem, editor, data) {
+					openEditHelp();
+					return false;
+				},
+				canUndo: false
+			}));
+			editor.ui.addButton( '{$name}', {
+				label : '{$label}',
+				command : '{$name}',
+				icon: editor.config._TikiRoot + '{$this->icon}'
+			});
+	
+		}
+	});
+}
 JS
 , 10);
 		return $name;
@@ -1294,24 +1300,26 @@ class ToolbarSwitchEditor extends Toolbar
 			global $headerlib;
 			$label = addcslashes($this->label, "'");
 			$headerlib->add_jq_onready(<<< JS
-window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
-window.CKEDITOR.plugins.add( '{$this->name}', {
-	init : function( editor ) {
-		var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
-			modes: { wysiwyg:1 },
-			exec: function(elem, editor, data) {
-				switchEditor('wiki', $('#$areaId').parents('form')[0]);
-			},
-			canUndo: false
-		}));
-		editor.ui.addButton( '{$this->name}', {
-			label : '{$label}',
-			command : '{$this->name}',
-			icon: editor.config._TikiRoot + '{$this->icon}'
-		});
-
-	}
-});
+if (typeof window.CKEDITOR !== "undefined") {
+	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
+	window.CKEDITOR.plugins.add( '{$this->name}', {
+		init : function( editor ) {
+			var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
+				modes: { wysiwyg:1 },
+				exec: function(elem, editor, data) {
+					switchEditor('wiki', $('#$areaId').parents('form')[0]);
+				},
+				canUndo: false
+			}));
+			editor.ui.addButton( '{$this->name}', {
+				label : '{$label}',
+				command : '{$this->name}',
+				icon: editor.config._TikiRoot + '{$this->icon}'
+			});
+	
+		}
+	});
+}
 JS
 , 10);		
 			
@@ -1401,7 +1409,7 @@ class ToolbarWikiplugin extends Toolbar
 				//$url =  smarty_function_filegal_manager_url(array('area_id'=> 'fgal_picker'), $smarty);
 				//$headerlib->add_js('CKEDITOR.config.filebrowserUploadUrl = "'.$url.'"', 5);
 				$url = 'tiki-list_file_gallery.php?galleryId='.$prefs['home_file_gallery'].'&filegals_manager=fgal_picker';
-				$headerlib->add_js('CKEDITOR.config.filebrowserBrowseUrl = "'.$url.'"', 5);
+				$headerlib->add_js('if (typeof window.CKEDITOR !== "undefined") {window.CKEDITOR.config.filebrowserBrowseUrl = "'.$url.'"}', 5);
 			} else {
 				$js = "popup_plugin_form('{$areaId}','{$this->pluginName}');";
 				$this->setupCKEditorTool($js, $this->wysiwyg, $this->label, $this->icon);
