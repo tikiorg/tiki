@@ -543,12 +543,14 @@ img.flipmodimage:hover {border: 1px solid #55914E !important}
 .cbox-data ul {padding-left: 1em}
 .cbox-data ul ul {margin: auto}
 
-.rbox {padding: 4px}
+.rbox {
+	padding: 4px;
+}
 
 .rbox-title {
-	color: #fff;
 	background: #415d44;
 	text-align: left;
+	color: #fff;
 	border-color: #ccccff;
 	border-bottom: none;
 	font-size: 1em;
@@ -556,7 +558,9 @@ img.flipmodimage:hover {border: 1px solid #55914E !important}
 
 .rbox-data {
 	background: #415d44;
-	border-color: #ccccff}
+	border-color: #ccccff;
+	color: #fff;
+}
 
 .tip .rbox-title,
 .tip .rbox-data {
