@@ -87,7 +87,13 @@
 				<td {if $headerKey eq 'data'}{popup caption=$comments[ix].title|escape:"javascript"|escape:"html"	text=$comments[ix].parsed|escape:"javascript"|escape:"html"}{/if}>
 					<span> {* span is used for some themes CSS opacity on some cells content *}
 						{if $headerKey eq 'title'}
-							<a href="{$comments[ix].href}" title="{$val}">{$val|truncate:50:"...":true|escape}</a>
+							<a href="{$comments[ix].href}" title="{$val}">
+								{if !empty($val)}
+									{$val|truncate:50:"...":true|escape}
+								{else}
+									{tr}(no title){/tr}
+								{/if}
+							</a>
 						{elseif $headerKey eq 'objectType'}
 							{tr}{$val|ucwords}{/tr}
 						{elseif $headerKey eq 'object'}
