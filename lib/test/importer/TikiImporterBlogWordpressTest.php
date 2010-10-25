@@ -134,6 +134,7 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 				array(
 					'data' => 'Test',
 					'lastModif' => 1173636811,
+					'comment' => '',
 					'user' => 'rodrigo',
 					'ip' => '',
 					'is_html' => true,

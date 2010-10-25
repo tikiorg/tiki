@@ -16,7 +16,6 @@
 
 require_once('tikiimporter.php');
 require_once('lib/blogs/bloglib.php');
-require_once('lib/comments/commentslib.php');
 
 /**
  * Class to provide basic functionalities to blog importers. So far
@@ -123,7 +122,13 @@ class TikiImporter_Blog extends TikiImporter
 					$this->saveAndDisplayLog('Item ' . $item['name'] . " sucessfully imported\n");					
 					
 					if (!empty($item['comments'])) {
-						$this->insertComments($objId, $item['type'], $item['comments']);
+						if ($item['type'] == 'page') {
+							$type = 'wiki page';
+						} else if ($item['type'] == 'post') {
+							$type = 'blog post';
+						}
+						
+						$this->insertComments($objId, $type, $item['comments']);
 					}
 					
 				} else {
@@ -200,13 +205,13 @@ class TikiImporter_Blog extends TikiImporter
 	 */
 	function insertComments($objId, $objType, $comments)
 	{
-		global $commentslib;
+		global $commentslib; require_once('lib/comments/commentslib.php');
 		
 		if (!is_object($commentslib)) {
 			$commentslib = new Comments();
 		}
 		
-		$objRef = $objId . ':' . $objType;
+		$objRef = $objType . ':' . $objId;
 		
 		// not used but required by $commentslib->post_new_comment() as is passed by reference
 		$message_id = '';
@@ -222,10 +227,9 @@ class TikiImporter_Blog extends TikiImporter
 			if (!isset($comment['author_url'])) {
 				$comment['author_url'] = '';
 			}
-			
-			
+
 			$commentslib->post_new_comment($objRef, 0, null, '', $comment['data'], $message_id, '', 'n', '', '', '',
-				$comments['author'], $comments['created'], $comments['author_email'], $author['author_url']);
+				$comment['author'], $comment['created'], $comment['author_email'], $comment['author_url']);
 		}
 	}
 }

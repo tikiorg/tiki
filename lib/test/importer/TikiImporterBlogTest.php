@@ -8,7 +8,12 @@ require_once(dirname(__FILE__) . '/../../importer/tikiimporter_blog.php');
  */
 class TikiImporter_Blog_Test extends TikiImporter_TestCase
 {
-    
+
+	protected function setUp()
+	{
+		$this->obj = new TikiImporter_Blog();
+	}
+	
     public function testImportShouldCallMethodsToStartImportProcess()
     {
         $obj = $this->getMock('TikiImporter_Blog', array('validateInput', 'parseData', 'insertData'));
@@ -83,12 +88,12 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
         $this->assertEquals($expectedResult, $countData);
 	}
 	
-	public function testInsertDataShouldCallInsertComment()
+	public function testInsertDataShouldCallInsertComments()
 	{
         $obj = $this->getMock('TikiImporter_Blog', array('insertPage', 'createBlog', 'insertComments'));
         $obj->expects($this->once())->method('createBlog');
         $obj->expects($this->exactly(6))->method('insertPage')->will($this->onConsecutiveCalls('Any name', 'Any name', false, 'Any name', false, 'Any name'));
-        $obj->expects($this->exactly(3))->method('insertComments');
+        $obj->expects($this->exactly(3))->method('insertComments')->with('Any name', 'wiki page');
 
 		$parsedData = array(
 			array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2, 3)),
@@ -104,8 +109,38 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 
         $this->assertEquals($expectedResult, $countData);
 		
+        $obj2 = $this->getMock('TikiImporter_Blog', array('insertPost', 'createBlog', 'insertComments'));
+        $obj2->expects($this->once())->method('createBlog');
+        $obj2->expects($this->exactly(2))->method('insertPost')->will($this->onConsecutiveCalls('Any name', 'Any name'));
+        $obj2->expects($this->exactly(2))->method('insertComments')->with('Any name', 'blog post');
+
+		$parsedData = array(
+			array('type' => 'post', 'name' => 'Any name', 'comments' => array(1, 2, 3)),
+			array('type' => 'post', 'name' => 'Any name', 'comments' => array(1, 2)),
+		);
+
+        $countData = $obj2->insertData($parsedData);
+        $expectedResult = array('totalPages' => 2, 'importedPages' => 2);
+
+        $this->assertEquals($expectedResult, $countData);
 	}
 
+	public function testInsertComments()
+	{
+		global $commentslib; require_once('lib/comments/commentslib.php');
+		
+		$commentslib = $this->getMock('Comments', array('post_new_comment'));
+		$commentslib->expects($this->exactly(2))->method('post_new_comment')->with('wiki page:2', 0, null, '', 'asdf', '', '', 'n', '', '', '',
+			'', 1234, '', '');
+		
+		$comments = array(
+			array('data' => 'asdf', 'created' => 1234),
+			array('data' => 'asdf', 'created' => 1234),
+		);
+		
+		$this->obj->insertComments(2, 'wiki page', $comments);
+	}
+	
 	public function testInsertPage()
 	{
 		$importerWiki = $this->getMock('TikiImporter_Wiki', array('insertPage'));
@@ -118,67 +153,3 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 		$obj->insertPage(array());
 	}
 }
-/*
-class TikiImporter_Wiki_InsertPage_Test extends TikiImporter_TestCase
-{
-
-    protected function setUp()
-    {
-        require_once(dirname(__FILE__) . '/fixtures/mediawiki_page_as_array.php');
-        global $tikilib;
-        $tikilib = $this->getMock('TikiLib', array('create_page', 'update_page', 'page_exists', 'remove_all_versions'));
-        $this->obj = new TikiImporter_Wiki_Mediawiki;
-        $this->obj->revisionsNumber = 0;
-    }
-
-    public function testInsertPage()
-    {
-        global $tikilib, $page;
-
-        $tikilib->expects($this->once())->method('page_exists')->with($page['name'])->will($this->returnValue(false));
-        $tikilib->expects($this->once())->method('create_page')->with($page['name'], 0, $page['revisions'][0]['data'], $page['revisions'][0]['lastModif'], $page['revisions'][0]['comment'], $page['revisions'][0]['user'], $page['revisions'][0]['ip']);
-        // TODO: how to test parameters for update_page for the 7 different calls
-        $tikilib->expects($this->exactly(7))->method('update_page');
-
-        // $page is set on mediawiki_page_as_array.php
-        $this->assertTrue($this->obj->insertPage($page));
-    }
-
-    public function testInsertPageAlreadyExistentPageNameOverride()
-    {
-        global $tikilib, $page;
-        $tikilib->expects($this->once())->method('page_exists')->with($page['name'])->will($this->returnValue(true));
-        $tikilib->expects($this->once())->method('remove_all_versions')->with($page['name']);
-        $tikilib->expects($this->once())->method('create_page');
-        $tikilib->expects($this->exactly(7))->method('update_page');
-
-        $this->obj->alreadyExistentPageName = 'override';
-        $this->assertTrue($this->obj->insertPage($page));
-    }
-
-    public function testInsertPageAlreadyExistentPageNameAppendPrefix()
-    {
-        global $tikilib, $page;
-
-        $newPageName = $this->obj->softwareName . '_' . $page['name'];
-
-        $tikilib->expects($this->once())->method('page_exists')->with($page['name'])->will($this->returnValue(true));
-        $tikilib->expects($this->once())->method('create_page')->with($newPageName);
-        $tikilib->expects($this->exactly(7))->method('update_page')->with($newPageName);
-
-        $this->obj->alreadyExistentPageName = 'appendPrefix';
-        $this->assertTrue($this->obj->insertPage($page));
-    }
-
-    public function testInsertPageAlreadyExistentPageNameDoNotImport()
-    {
-        global $tikilib, $page;
-
-        $tikilib->expects($this->once())->method('page_exists')->with($page['name'])->will($this->returnValue(true));
-        $tikilib->expects($this->never())->method('create_page');
-        $tikilib->expects($this->never())->method('update_page');
-
-        $this->obj->alreadyExistentPageName = 'doNotImport';
-        $this->assertFalse($this->obj->insertPage($page));
-    }
-}*/

@@ -267,6 +267,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 			$revision = array();
 			$revision['data'] = $data['content'];
 			$revision['lastModif'] = $data['created'];
+			$revision['comment'] = '';
 			$revision['user'] = $data['author'];
 			$revision['ip'] = '';
 			$revision['is_html'] = true;
