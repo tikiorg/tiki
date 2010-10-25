@@ -151,8 +151,14 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 	
 	public function testInsertPage()
 	{
+		global $objectlib; require_once('lib/objectlib.php');
+		
+		$objectlib = $this->getMock('ObjectLib', array('insert_object'));
+		$objectlib->expects($this->once())->method('insert_object');
+		
 		$importerWiki = $this->getMock('TikiImporter_Wiki', array('insertPage'));
-		$importerWiki->expects($this->once())->method('insertPage');
+		$importerWiki->expects($this->once())->method('insertPage')->will($this->returnValue('HomePage'));
+		
 		$obj = $this->getMock('TikiImporter_Blog', array('instantiateImporterWiki'));
 		$obj->expects($this->once())->method('instantiateImporterWiki');
 
@@ -187,6 +193,22 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 		
 		$this->obj->createTags($tags);
 	}
+	
+	public function testCreateCategories()
+	{
+		global $categlib; require_once('lib/categories/categlib.php');
+		$categlib = $this->getMock('CategLib', array('add_category', 'get_category_id'));
+		$categlib->expects($this->exactly(3))->method('add_category');
+		$categlib->expects($this->exactly(1))->method('get_category_id');
+		
+		$categories = array(
+			array('parent' => '', 'name' => 'categ1', 'description' => ''),
+			array('parent' => '', 'name' => 'categ2', 'description' => ''),
+			array('parent' => 'categ1', 'name' => 'categ3', 'description' => ''),
+		);
+		
+		$this->obj->createCategories($categories);
+	}
 
 	public function testLinkObjectWithTags()
 	{
@@ -196,7 +218,20 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 		
 		$tags = array('tag1', 'tag2', 'tag3', 'tag4');
 		
-		$this->obj->linkObjectWithTags('user', 'HomePage', 'wiki page', $tags);
+		$this->obj->linkObjectWithTags('HomePage', 'wiki page', $tags);
+	}
+	
+	public function testLinkObjectWithCategories()
+	{
+		global $categlib; require_once('lib/categories/categlib.php');
+		$categlib = $this->getMock('CategLib', array('get_category_id', 'get_object_id', 'categorize'));
+		$categlib->expects($this->exactly(4))->method('get_category_id');
+		$categlib->expects($this->exactly(4))->method('get_category_id');
+		$categlib->expects($this->exactly(4))->method('get_category_id');
+		
+		$categs = array('categ1', 'categ2', 'categ3', 'categ4');
+		
+		$this->obj->linkObjectWithCategories('HomePage', 'wiki page', $categs);
 	}
 	
 }

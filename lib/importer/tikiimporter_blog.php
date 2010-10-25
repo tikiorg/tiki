@@ -117,6 +117,11 @@ class TikiImporter_Blog extends TikiImporter
 			if (!empty($parsedData['tags'])) {
 				$this->createTags($parsedData['tags']);
 			}
+			
+			if (!empty($parsedData['categories'])) {
+				$this->createCategories($parsedData['categories']);
+			}
+			
 			if (!empty($parsedData['items'])) {
 				//TODO: move this foreach to a function (insertItems())
 				foreach ($parsedData['items'] as $item) {
@@ -138,6 +143,10 @@ class TikiImporter_Blog extends TikiImporter
 						
 						if (!empty($item['tags'])) {
 							$this->linkObjectWithTags($objId, $type, $item['tags']);
+						}
+						
+						if (!empty($item['categories'])) {
+							$this->linkObjectWithCategories($objId, $type, $item['categories']);
 						}
 						
 					} else {
@@ -186,12 +195,13 @@ class TikiImporter_Blog extends TikiImporter
 	/**
 	 * Link an object with its tags
 	 * 
-	 * @param $objId
-	 * @param $type
-	 * @param $tags
+	 * @param int|string $objId
+	 * @param string $type
+	 * @param array $tags
 	 * @return void
 	 */
-	function linkObjectWithTags($objId, $type, $tags) {
+	function linkObjectWithTags($objId, $type, $tags)
+	{
 		global $freetaglib; require_once('lib/freetag/freetaglib.php');
 		global $user;
 		
@@ -199,29 +209,67 @@ class TikiImporter_Blog extends TikiImporter
 	}
 	
 	/**
+	 * Create all existing categories for a blog.
+	 * 
+	 * @param array $categories
+	 * @return void
+	 */
+	function createCategories($categories)
+	{
+		global $categlib; require_once('lib/categories/categlib.php');
+		
+		foreach ($categories as $categ) {
+			if (!empty($categ['parent'])) {
+				$categ['parentId'] = $categlib->get_category_id($categ['parent']); 
+			} else {
+				$categ['parentId'] = 0;
+			}
+			
+			$categlib->add_category($categ['parentId'], $categ['name'], $categ['description']);
+		}
+	}
+	
+	/**
+	 * Link an object with its categories
+	 * 
+	 * @param int|string $objId
+	 * @param string $type
+	 * @param array $categories
+	 * @return void
+	 */
+	function linkObjectWithCategories($objId, $type, $categories)
+	{
+		global $categlib; require_once('lib/categories/categlib.php');
+		
+		foreach ($categories as $categName) {
+			$categId = $categlib->get_category_id($categName);
+			
+			//$catObjId is the id on tiki_objects table and $objId the id on object own table
+			$catObjId = $categlib->get_object_id($type, $objId);
+			
+			$categlib->categorize($catObjId, $categId);
+		}
+	}
+	
+	/**
 	 * Insert page into Tiki using its builtin methods
 	 *
 	 * @param array $page
-	 * @return bool true or false depending on whether was possible or not to create the new page
+	 * @return string|bool page name if was possible to create the new page or false
 	 */
 	function insertPage($page)
 	{
+		global $objectlib; require_once('lib/objectlib.php');
+		
 		$this->instantiateImporterWiki();
-		return $this->importerWiki->insertPage($page);
-	}
-
-	/**
-	 * This function just create an instance of
-	 * TikiImporter_Wiki and set some default values
-	 *
-	 * @return void
-	 */
-	function instantiateImporterWiki()
-	{
-		require_once('tikiimporter_wiki.php');
-		$this->importerWiki = new TikiImporter_Wiki;
-		$this->importerWiki->alreadyExistentPageName = 'appendPrefix';
-		$this->importerWiki->softwareName = $this->softwareName;
+		$pageName = $this->importerWiki->insertPage($page);
+		
+		// maybe this should go to TikiImporter_Wiki::insertPage()
+		if ($pageName) {
+			$objectlib->insert_object('wiki page', $pageName, '', $pageName, 'tiki-index.php?page=' . urlencode($pageName));
+		}
+		
+		return $pageName;
 	}
 
 	/**
@@ -280,4 +328,18 @@ class TikiImporter_Blog extends TikiImporter
 				$comment['author'], $comment['created'], $comment['author_email'], $comment['author_url']);
 		}
 	}
+	
+	/**
+	 * This function just create an instance of
+	 * TikiImporter_Wiki and set some default values
+	 *
+	 * @return void
+	 */
+	function instantiateImporterWiki()
+	{
+		require_once('tikiimporter_wiki.php');
+		$this->importerWiki = new TikiImporter_Wiki;
+		$this->importerWiki->alreadyExistentPageName = 'appendPrefix';
+		$this->importerWiki->softwareName = $this->softwareName;
+	}	
 }

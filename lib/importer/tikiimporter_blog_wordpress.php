@@ -141,6 +141,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		$parsedData['items'] = $this->extractItems();
 		
 		$parsedData['tags'] = $this->extractTags();
+		$parsedData['categories'] = $this->extractCategories();
 
 		return $parsedData;
 	}
@@ -189,6 +190,48 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		}
 
 		return $tags;
+	}
+	
+	/**
+	 * Extract categories information from Wordpress XML.
+	 * Apparently categories on Wordpress XML are always ordered with the parent
+	 * first and the childs right after. We trust in this order to create the categories
+	 * without organizing them hierarchically.
+	 * 
+	 *  @return array categories
+	 */
+	function extractCategories()
+	{
+		$categories = array();
+		
+		$data = $this->dom->getElementsByTagName('category');
+		
+		foreach ($data as $category) {
+			$categ = array();
+
+			if ($category->getElementsByTagName('cat_name')->length == 0) {
+				// if category name is not set we don't create it
+				continue;	
+			}
+			
+			if ($category->getElementsByTagName('category_parent')->length > 0) {
+				$categ['parent'] = $category->getElementsByTagName('category_parent')->item(0)->nodeValue;
+			} else {
+				$categ['parent'] = '';
+			}
+			
+			$categ['name'] = $category->getElementsByTagName('cat_name')->item(0)->nodeValue;
+			
+			if ($category->getElementsByTagName('category_description')->length > 0) {
+				$categ['description'] = $category->getElementsByTagName('category_description')->item(0)->nodeValue;
+			} else {
+				$categ['description'] = '';
+			}
+			
+			$categories[] = $categ;
+		}
+		
+		return $categories;
 	}
 	
 	/**

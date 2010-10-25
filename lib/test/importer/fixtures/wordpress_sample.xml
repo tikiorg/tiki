@@ -34,7 +34,7 @@
 	<wp:wxr_version>1.0</wp:wxr_version>
 	<wp:base_site_url>http://rodrigo.utopia.org.br/</wp:base_site_url>
 	<wp:base_blog_url>http://rodrigo.utopia.org.br</wp:base_blog_url>
-		<wp:category><wp:category_nicename>bicicleta</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[bicicleta]]></wp:cat_name></wp:category>
+		<wp:category><wp:category_nicename>bicicleta</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[bicicleta]]></wp:cat_name><wp:category_description><![CDATA[Qualquer descrição]]></wp:category_description></wp:category>
 		<wp:category><wp:category_nicename>cicloativismo</wp:category_nicename><wp:category_parent>bicicleta</wp:category_parent><wp:cat_name><![CDATA[cicloativismo]]></wp:cat_name></wp:category>
 		<wp:category><wp:category_nicename>cicloturismo</wp:category_nicename><wp:category_parent>bicicleta</wp:category_parent><wp:cat_name><![CDATA[cicloturismo]]></wp:cat_name></wp:category>
 		<wp:category><wp:category_nicename>hacklab</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[hacklab]]></wp:cat_name></wp:category>
@@ -44,7 +44,7 @@
 		<wp:category><wp:category_nicename>uncategorized</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[Uncategorized]]></wp:cat_name></wp:category>
 		<wp:category><wp:category_nicename>vegetarianismo</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[vegetarianismo]]></wp:cat_name></wp:category>
 		<wp:category><wp:category_nicename>viagens</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[viagens]]></wp:cat_name></wp:category>
-		<wp:category><wp:category_nicename>argentina</wp:category_nicename><wp:category_parent>viagens</wp:category_parent><wp:cat_name><![CDATA[argentina]]></wp:cat_name></wp:category>
+		<wp:category><wp:category_nicename>argentina</wp:category_nicename><wp:category_parent>viagens</wp:category_parent><wp:cat_name><![CDATA[argentina]]></wp:cat_name><wp:category_description><![CDATA[Another description]]></wp:category_description></wp:category>
 		<wp:category><wp:category_nicename>canada-viagens</wp:category_nicename><wp:category_parent>viagens</wp:category_parent><wp:cat_name><![CDATA[canadá]]></wp:cat_name></wp:category>
 		<wp:category><wp:category_nicename>chile-viagens</wp:category_nicename><wp:category_parent>viagens</wp:category_parent><wp:cat_name><![CDATA[chile]]></wp:cat_name></wp:category>
 		<wp:category><wp:category_nicename>europa</wp:category_nicename><wp:category_parent>viagens</wp:category_parent><wp:cat_name><![CDATA[europa]]></wp:cat_name></wp:category>

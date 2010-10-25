@@ -63,12 +63,12 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 
     public function testParseData()
     {
-        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractItems', 'extractBlogInfo', 'extractTags'));
+        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractItems', 'extractBlogInfo', 'extractTags', 'extractCategories'));
         $obj->expects($this->once())->method('extractItems')->will($this->returnValue(array()));
         $obj->expects($this->once())->method('extractBlogInfo')->will($this->returnValue(array()));
 		$this->expectOutputString("\nStarting to parse data:\n");
 		$parsedData = $obj->parseData();
-        $this->assertEquals(2, count($parsedData));
+        $this->assertEquals(3, count($parsedData));
 	}
 	
 	public function testExtractItems()
@@ -97,6 +97,31 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
 		
 		$this->assertEquals($expectedResult, $this->obj->extractTags());
+	}
+	
+	public function testExtractCategories()
+	{
+		$expectedResult = array(
+			array('parent' => '', 'name' => 'bicicleta', 'description' => 'Qualquer descrição'),
+			array('parent' => 'bicicleta', 'name' => 'cicloativismo', 'description' => ''),
+			array('parent' => 'bicicleta', 'name' => 'cicloturismo', 'description' => ''),
+			array('parent' => '', 'name' => 'hacklab', 'description' => ''),
+			array('parent' => '', 'name' => 'montanhismo', 'description' => ''),
+			array('parent' => '', 'name' => 'Sem categoria', 'description' => ''),
+			array('parent' => '', 'name' => 'software livre', 'description' => ''),
+			array('parent' => '', 'name' => 'Uncategorized', 'description' => ''),
+			array('parent' => '', 'name' => 'vegetarianismo', 'description' => ''),
+			array('parent' => '', 'name' => 'viagens', 'description' => ''),
+			array('parent' => 'viagens', 'name' => 'argentina', 'description' => 'Another description'),
+			array('parent' => 'viagens', 'name' => 'canadá', 'description' => ''),
+			array('parent' => 'viagens', 'name' => 'chile', 'description' => ''),
+			array('parent' => 'viagens', 'name' => 'europa', 'description' => ''),
+		);
+
+		$this->obj->dom = new DOMDocument;
+        $this->obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
+		
+		$this->assertEquals($expectedResult, $this->obj->extractCategories());
 	}
 	
 	public function testExtractInfoPost()
