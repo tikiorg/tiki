@@ -115,8 +115,8 @@
 <td class="{cycle advance=false}">{$history[hist].lastModif|tiki_short_datetime}</td>
 <td class="{cycle advance=false}">{$history[hist].user}</td>
 <td class="{cycle advance=false}">{$history[hist].ip}</td>
-<td class="{cycle advance=false} button">{$history[hist].version}</td>
-<td class="{cycle advance=false} button">
+<td class="{cycle advance=false} button_container">{$history[hist].version}</td>
+<td class="{cycle advance=false} button_container">
 &nbsp;<a class="link" href="tiki-map_history.php?mapfile={$mapfile}&amp;preview={$history[hist].version}" title="{tr}View{/tr}">v</a>
 {if $prefs.default_wiki_diff_style eq "old"}
 &nbsp;<a class="link" href="tiki-map_history.php?mapfile={$mapfile}&amp;diff2={$history[hist].version}&amp;diff_style=sideview" title="{tr}Compare{/tr}">c</a>
@@ -125,10 +125,10 @@
 &nbsp;
 </td>
 {if $prefs.default_wiki_diff_style ne "old"}
-<td class="{cycle advance=false} button">
+<td class="{cycle advance=false} button_container">
 <input type="radio" name="oldver" value="{$history[hist].version}" title="{tr}Older Version{/tr}" {if $old.version == $history[hist].version or (!$diff_style and $smarty.section.hist.first)}checked="checked"{/if} />
 </td>
-<td class="{cycle} button">
+<td class="{cycle} button_container">
 {* if $smarty.section.hist.last &nbsp; *}
 <input type="radio" name="newver" value="{$history[hist].version}" title="Select a newer version for comparison" {if $new.version == $history[hist].version}checked="checked"{/if} />
 </td>

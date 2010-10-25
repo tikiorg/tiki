@@ -162,18 +162,18 @@ $("#toggle_diffs a").click(function(){
 								{section name=ix loop=$contributors}{if !$smarty.section.ix.first},{/if}{$contributors[ix].login|username}{/section}
 							</td>
 						{/if}
-						<td class="odd button">{if $current eq $info.version}<strong>{/if}{$info.version}<br />{tr}Current{/tr}{if $current eq $info.version}</strong>{/if}</td>
-						<td class="odd button">{if $current eq $info.version and $info.is_html eq "1"}{icon _id="html"}{/if}</td>
-						<td class="odd button">{self_link page=$page preview=$info.version _title="{tr}View{/tr}"}v{/self_link}
+						<td class="odd button_container">{if $current eq $info.version}<strong>{/if}{$info.version}<br />{tr}Current{/tr}{if $current eq $info.version}</strong>{/if}</td>
+						<td class="odd button_container">{if $current eq $info.version and $info.is_html eq "1"}{icon _id="html"}{/if}</td>
+						<td class="odd button_container">{self_link page=$page preview=$info.version _title="{tr}View{/tr}"}v{/self_link}
 						{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
 							&nbsp;{self_link page=$page source=$info.version _title="{tr}Source{/tr}"}s{/self_link}
 						{/if}
 						</td>
 						{if $prefs.default_wiki_diff_style ne "old" and $history}
-							<td class="odd button">
+							<td class="odd button_container">
 								<input type="radio" name="oldver" value="0" title="{tr}Compare{/tr}" {if $old.version == $info.version}checked="checked"{/if} />
 							</td>
-							<td class="odd button">
+							<td class="odd button_container">
 								<input type="radio" name="newver" value="0" title="{tr}Compare{/tr}" {if $new.version == $info.version or !$smarty.request.diff_style}checked="checked"{/if} />
 							</td>
 						{/if}
@@ -183,7 +183,7 @@ $("#toggle_diffs a").click(function(){
 				{foreach name=hist item=element from=$history}
 					<tr class="{cycle}">
 						{if $tiki_p_remove eq 'y'}
-							<td class="button"><input type="checkbox" name="hist[{$element.version}]" /></td>
+							<td class="button_container"><input type="checkbox" name="hist[{$element.version}]" /></td>
 						{/if}
 						<td>{$element.lastModif|tiki_short_datetime}</td>
 						{if $tiki_p_wiki_view_author ne 'n'}<td>{$element.user|userlink}</td>{/if}
@@ -215,7 +215,7 @@ $("#toggle_diffs a").click(function(){
 								{section name=ix loop=$element.contributors}{if !$smarty.section.ix.first},{/if}{$element.contributors[ix].login|username}{/section}
 							</td>
 						{/if}
-						<td class="button">
+						<td class="button_container">
 							{if $current eq $element.version}<strong>{/if}
 							{if $show_all_versions eq "n" and not empty($element.session)}
 								<em>{$element.session} - {$element.version}</em>
@@ -224,8 +224,8 @@ $("#toggle_diffs a").click(function(){
 							{/if}
 							{if $current eq $element.version}</strong>{/if}
 						</td>
-						<td class="button">{if $element.is_html eq "1"}{icon _id="html"}{/if}</td>
-						<td class="button">
+						<td class="button_container">{if $element.is_html eq "1"}{icon _id="html"}{/if}</td>
+						<td class="button_container">
 							{self_link page=$page preview=$element.version _title="{tr}View{/tr}"}v{/self_link}
 							{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
 								&nbsp;{self_link page=$page source=$element.version _title="{tr}Source{/tr}"}s{/self_link}
@@ -239,7 +239,7 @@ $("#toggle_diffs a").click(function(){
 							{/if}
 						</td>
 						{if $prefs.default_wiki_diff_style ne "old"}
-						<td class="button">
+						<td class="button_container">
 							{if $show_all_versions eq 'n' and not empty($element.session)}
 								<input type="radio" name="oldver" value="{$element.session}"
 									title="{tr}Older Version{/tr}" {if $old.version == $element.session or (!$smarty.request.diff_style and $smarty.foreach.hist.first)}checked="checked"{/if}/>
@@ -248,7 +248,7 @@ $("#toggle_diffs a").click(function(){
 									title="{tr}Older Version{/tr}" {if $old.version == $element.version or (!$smarty.request.diff_style and $smarty.foreach.hist.first)}checked="checked"{/if}/>
 							{/if}
 						</td>
-						<td class="button">
+						<td class="button_container">
 							{* if $smarty.foreach.hist.last &nbsp; *}
 							<input type="radio" name="newver" value="{$element.version}" title="Select a newer version for comparison" {if $new.version == $element.version}checked="checked"{/if} />
 						</td>
