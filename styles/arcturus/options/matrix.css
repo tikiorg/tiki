@@ -205,6 +205,11 @@ input[type="submit"]:hover,
 	background: none;
 }
 
+.cssmenu_vert li ul li,
+.cssmenu_horiz li ul li {
+	background: #222;
+}
+
 /* next two, dropdown background and border */
 .cssmenu_horiz ul li,
 .cssmenu_vert ul li,
@@ -279,7 +284,7 @@ input[type="submit"]:hover,
 }
 
 a .sf-sub-indicator {
-	top: 0.5em;
+	top: 0.1em;
 }
 
 .sf-sub-indicator {
@@ -399,7 +404,7 @@ h3.box-title {
 .rbox-title, 
 .rbox-data {
     background: url(matrix/grey.png) repeat;
-    color: #000;
+    color: #00b000;
     border-color: #00ff00;
 }
 
