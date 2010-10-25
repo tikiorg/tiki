@@ -95,6 +95,9 @@ class LanguageTest extends TikiTestCase
 	}
 
 	public function testUpdateTransShouldNotUpdateTranslation() {
+		global ${"lang_$this->lang"};
+		${"lang_$this->lang"}['Not changed'] = 'Translation not changed';
+		
 		$this->assertEquals(null, $this->obj->updateTrans('Not changed', 'Translation not changed'));
 		$result = TikiDb::get()->getOne('SELECT `changed` FROM `tiki_language` WHERE `lang` = ? AND binary `source` = ?', array($this->lang, 'Not changed'));
 		$this->assertEquals(null, $result);
