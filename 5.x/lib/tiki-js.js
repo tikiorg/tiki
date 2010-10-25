@@ -1726,7 +1726,7 @@ function open_webdav(url) {
 		EditDocumentButton = new ActiveXObject("SharePoint.OpenDocuments.1");
 		EditDocumentButton.EditDocument(url); 
 	} else {
-		alert('Sorry Works only in IE :(');
+		alert('Please use Internet Explorer to open this file in WebDAV');
 	}
 }
 
