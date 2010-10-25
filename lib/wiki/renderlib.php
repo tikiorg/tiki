@@ -498,13 +498,14 @@ class WikiRenderer
 			$crumbpage = $this->page;
 		}
 		//global $description;
-		$crumbs[] = new Breadcrumb($crumbpage,
+		$crumbsLocal[] = new Breadcrumb($crumbpage,
 				$this->info['description'],
 				'tiki-index.php?page='.urlencode($this->page),
 				'',
 				'');
+		$crumbs = array_merge($crumbs, $crumbsLocal);
 
-		$headtitle = breadcrumb_buildHeadTitle($prefs['site_title_breadcrumb'] == 'invertfull'? array_reverse($crumbs): $crumbs);
+		$headtitle = breadcrumb_buildHeadTitle($prefs['site_title_breadcrumb'] == 'invertfull'? array_reverse($crumbsLocal): $crumbsLocal);
 		$this->smartyassign('headtitle', $headtitle);
 		$this->smartyassign('trail', $crumbs);
 	} // }}}

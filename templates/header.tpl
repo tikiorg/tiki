@@ -51,7 +51,9 @@
 	{if $prefs.feature_breadcrumbs eq 'y' && isset($trail)}
 		{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
 	{else}
-		{if !empty($headtitle)}
+		{if !empty($tracker_item_main_value)}
+			{$tracker_item_main_value|escape}
+		{elseif !empty($headtitle)}
 			{$headtitle|tr_if|escape}
 		{elseif !empty($page)}
 			{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}
@@ -73,8 +75,6 @@
 			{$categ_info.name|escape}
 		{elseif !empty($userinfo.login)}
 			{$userinfo.login|username}
-		{elseif !empty($tracker_item_main_value)}
-			{$tracker_item_main_value|escape}
 		{elseif !empty($tracker_info.name)}
 			{$tracker_info.name|escape}
 		{/if}

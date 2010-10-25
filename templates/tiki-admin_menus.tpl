@@ -1,4 +1,4 @@
-{title help="Menus" admpage="general&cookietab=3"}{tr}Admin Menus{/tr}{/title}
+{title help="Menus" admpage="general&amp;cookietab=3"}{tr}Admin Menus{/tr}{/title}
 
 {if $tiki_p_admin eq 'y'}
 	<div class="navbar">

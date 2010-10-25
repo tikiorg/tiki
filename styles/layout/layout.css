@@ -3,7 +3,7 @@
 
 /***** XHTML Elements *****/
 body {
-	display: block;
+/*	display: block;*/
 	margin: 0;
 	padding: 0;
 	text-align: left;
@@ -80,6 +80,10 @@ label {
 form {
 	margin: 0;
 	padding: 0;
+}
+
+fieldset {
+	clear: both;	
 }
 
 input, legend {
@@ -927,7 +931,7 @@ h3.box-title {
 	
 .rbox-data {
 	position: relative;
-	top: -5px;
+	top: 0;
 	z-index: 0;
 }
 
@@ -1003,6 +1007,11 @@ tr.diffheader {
 	display: none;
 }
 
+.tabs .container {
+	float: left;
+	width: 92%;
+}
+
 .tabmark {
 	display: inline;
 	margin: 0;
@@ -1034,7 +1043,7 @@ tr.diffheader {
 	z-index: 1;
 	position: relative;
 	padding: 4px;
-	top: -3px;
+	top: 0;
 /*	padding-top: 21px;
 	margin-bottom: 25px;
 	margin-top: -1px;*/
@@ -2009,11 +2018,15 @@ ul.freetag {
 
 .tabstoggle {
 	font-size: .8em;
+	position: relative;
+	width: 8%;
 }
 
 .tabstoggle .button {
 	margin: 0;
 	padding: 0;
+	position: absolute;
+	right: 0;
 }
 
 /* treeTable definitions - used in object-perms so far */

@@ -8,9 +8,15 @@
 @import url("layout/layout.css");
 @import url("layout/design.css");
 
+/* make sure whole browser viewport background is always set to white */
+html {
+	background-color: #fff;
+}
+
 /***** XHTML Elements (body tag here,
 			others follow Layout) *****/ 
 body {
+	background-color: #fff;
 	font: 76%/1.5em Arial, Helvetica, sans-serif;
 	color: #000;
 }
@@ -186,7 +192,6 @@ body.fixed_width #fixedwidth {
 }
 
 #custom_site_footer {
-/*	padding: 8px;*/
 }
 
 #custom_site_footer h3 {
@@ -330,18 +335,6 @@ input[type="submit"]:hover,
 	border: 1px solid #11597e;
 	text-decoration: none;
 }
-/*
-span#genPass .button a,
-span#genPass .button a:visited {
-	color: #fff;
-	background: #2098cd;
-	padding: 1px 4px !important;
-}
-
-span#genPass .button a:hover {
-	background: #1173a5;
-	padding: 1px 4px !important;
-}*/
 
 #genPass .button:hover {
 	border-width: 1px !important;
@@ -515,6 +508,11 @@ select {
 
 #siteloginbar_popup {
 	right: 10px;
+}
+
+#siteloginbar_popup fieldset {
+	border: none;
+	margin: 0; padding: 0;
 }
 
 #siteloginbar_popup .tabmark {
@@ -914,10 +912,6 @@ fieldset.admin label,
 a.register_link {
 	background-color: #969696;
 }
-/*
-#siteloginbar_popup .tabmark {
-	background-color: #070707;
-}*/
 
 .tabmark a,
 .tabmark a:visited {
@@ -928,9 +922,8 @@ a.register_link {
 
 .tabinactive:hover,
 .tabactive {
-	border-bottom-width: 0;
 	padding-bottom: 1px;
-	border: 1px solid #aaaaaa;
+	border: 1px solid #a9d6eb;
 	background: #a9d6eb;
 }
 
@@ -950,10 +943,6 @@ a.register_link {
 	padding: 4px;
 }
 	
-form.admin fieldset {
-	background: #74c0e2;
-}
-
 legend.heading {
 	background: transparent;
 }
@@ -1093,16 +1082,6 @@ a.dirsublink {
 /***** Messages *****/
 /***** TikiSheets *****/
 /***** Calendar *****/
-/*.caldark {
-	background: ;
-	border: 0;
-}
-
-.caldark .calfocus {background: }
-.calodd, .caleven {border: }
-.calodd .calfocus {background: }
-.caleven .calfocus, .caleven .calfocuson {background: }
-*/
 .caltable .days {
 	color: #fff;
 }
@@ -1121,24 +1100,6 @@ a.dirsublink {
 }
 
 /***** Admin *****/
-/*body.tiki_admin .simplebox,
-a.admbox,
-a.admbox.off {
-	background-color:  no-repeat center center;
-	border: ;
-}
-	
-a.admbox:hover,
-a.admbox:focus,
-a.admbox:active {
-	background-color:  no-repeat center center;
-	border-right: ;
-	border-top: ;
-	border-left: ;
-	border-bottom: ;
-	color: ;
-	text-decoration: none;
-}
 
 a.admbox.off:hover,
 a.admbox.off:focus,
@@ -1162,10 +1123,6 @@ a.qt-inline {
 
 /***** Ajax, jquery. etc. *****/
 /***** Ajax *****/
-/*.ui-widget-content {
-	background: ;
-	color: ;
-}*/
 /***** New (unsorted) *****/
 
 /* cluptip tooltips */
