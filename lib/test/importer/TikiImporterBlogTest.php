@@ -224,10 +224,11 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 	public function testLinkObjectWithCategories()
 	{
 		global $categlib; require_once('lib/categories/categlib.php');
-		$categlib = $this->getMock('CategLib', array('get_category_id', 'get_object_id', 'categorize'));
+		$categlib = $this->getMock('CategLib', array('get_category_id', 'get_object_id', 'categorize', 'add_categorized_object'));
 		$categlib->expects($this->exactly(4))->method('get_category_id');
 		$categlib->expects($this->exactly(4))->method('get_category_id');
 		$categlib->expects($this->exactly(4))->method('get_category_id');
+		$categlib->expects($this->exactly(4))->method('add_categorized_object');
 		
 		$categs = array('categ1', 'categ2', 'categ3', 'categ4');
 		

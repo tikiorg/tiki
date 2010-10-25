@@ -247,6 +247,9 @@ class TikiImporter_Blog extends TikiImporter
 			//$catObjId is the id on tiki_objects table and $objId the id on object own table
 			$catObjId = $categlib->get_object_id($type, $objId);
 			
+			// apparently this is needed only to create an entry on tiki_categorized_objects
+			$categlib->add_categorized_object($type, $objId, '', '', '');
+			
 			$categlib->categorize($catObjId, $categId);
 		}
 	}
