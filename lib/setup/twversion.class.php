@@ -27,7 +27,6 @@ class TWVersion
 
 		// Set everything else, including defaults.
 		$this->version 	= '7.0 SVN trunk';
-		$this->version 	= '6.0beta2';
 		$this->star	= '';
 		$this->releases	= array();
 
