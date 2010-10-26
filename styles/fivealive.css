@@ -378,7 +378,7 @@ select {
 #header-top {
 	min-height: 170px;
 	position: relative;
-	background: url(fivealive/options/blueberry/siteheader.jpg) no-repeat -250px 0;
+	background: url(fivealive/options/blueberry/siteheader.jpg) no-repeat;
 }
 
 #quickadmin {
