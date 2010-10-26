@@ -109,7 +109,7 @@
 		</fieldset>
 		
 		{remarksbox type="note"  title="{tr}Note{/tr}"}
-			{tr}Make sure to whitelist this domain to prevent registration emails being canned by your spam filter!{/tr}
+			{tr 0=$prefs.sender_email|default:"{tr}this domain{/tr}"}If you use an email filter, be sure to add %0 to your accepted list{/tr}
 		{/remarksbox}
 	{/if}
 	
