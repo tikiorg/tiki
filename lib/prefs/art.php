@@ -74,7 +74,7 @@ function prefs_art_list() {
 			'type' => 'flag',
 		),
 		'art_list_rating' => array(
-			'name' => tra('Rating'),
+			'name' => tra('Author Rating'),
 			'type' => 'flag',
 		),
 		'art_list_reads' => array(

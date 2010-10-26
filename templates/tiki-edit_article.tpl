@@ -112,7 +112,7 @@
 			</td>
 		</tr>
 		<tr id='use_ratings' {if $types.$type.use_ratings eq 'y'}style="display:;"{else}style="display:none;"{/if}>
-			<td>{tr}Rating{/tr}</td>
+			<td>{tr}Author Rating{/tr}</td>
 			<td>
 				<select name='rating'>
 					<option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>
