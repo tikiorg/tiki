@@ -764,6 +764,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 	private $translations;
 	private $message;
 	private $structure;
+	private $wysiwyg;
 	
 	private $mode = 'create_or_update';
 	private $exists;
@@ -794,6 +795,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 			$this->translations = $data['translations'];
 		if( array_key_exists( 'structure', $data ) )
 			$this->structure = $data['structure'];
+		if( array_key_exists( 'wysiwyg', $data ) )
+			$this->wysiwyg = $data['wysiwyg'];
 	}
 
 	function canInstall()
@@ -847,7 +850,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 		$this->replaceReferences( $this->translations );
 		$this->replaceReferences( $this->message );
 		$this->replaceReferences( $this->structure );
-		
+		$this->replaceReferences( $this->wysiwyg );
+	
 		$this->mode = $this->convertMode();
 
 		if( strpos( $this->content, 'wikidirect:' ) === 0 ) {
@@ -856,13 +860,36 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 		}
 
 		if( $this->mode == 'create' ) {
+			if ( $this->wysiwyg ) {
+				$this->wysiwyg = 'y';
+				$is_html = true;
+			} else {
+				$this->wysiwyg = 'n';
+				$is_html = false;
+			} 
 			if( ! $this->message ) {
 				$this->message = tra('Created by profile installer');
 			}
-			if( ! $tikilib->create_page( $this->name, 0, $this->content, time(), $this->message, 'admin', '0.0.0.0', $this->description, $this->lang ) )
+			if( ! $tikilib->create_page( $this->name, 0, $this->content, time(), $this->message, 'admin', '0.0.0.0', $this->description, $this->lang, $is_html, null, $this->wysiwyg ) )
 				return null;
 		} else {
 			$info = $tikilib->get_page_info( $this->name, true, true );
+
+			if( ! $this->wysiwyg ) {
+				if ( ! empty($info['wysiwyg']) ) { 
+					$this->wysiwyg = $info['wysiwyg'];
+				} else {
+					$this->wysiwyg = 'n';
+				}
+				if( isset($info['is_html']) ) {
+					$is_html = $info['is_html'];
+				} else {
+					$is_html = false;
+				} 
+			} else {
+				$this->wysiwyg = 'y';
+				$is_html = true;
+			}
 
 			if( ! $this->description )
 				$this->description = $info['description'];
@@ -877,7 +904,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 			if( ! $this->message ) {
 				$this->message = tra('Page updated by profile installer');
 			}
-			$tikilib->update_page( $this->name, $this->content, $this->message, 'admin', '0.0.0.0', $this->description, 0, $this->lang );
+
+			$tikilib->update_page( $this->name, $this->content, $this->message, 'admin', '0.0.0.0', $this->description, 0, $this->lang, $is_html, null, null, $this->wysiwyg );
 		}
 
 		global $multilinguallib;
