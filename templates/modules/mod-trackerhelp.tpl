@@ -1,6 +1,9 @@
 {tikimodule error=$module_params.error title=$tpl_module_title name="trackerhelp" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
+{jq}$(".trackername").tiki("autocomplete", "trackername");{/jq}
+{/if}
 <form action="" method="post">
-	<label>{tr}Tracker name:{/tr}<input type="text" name="trackerhelp_name" value="{$smarty.session.trackerhelp_name|escape}" /></label>
+	<label>{tr}Tracker name:{/tr}<input type="text" name="trackerhelp_name" class="trackername" value="{$smarty.session.trackerhelp_name|escape}" /></label>
 	<label><input type="submit" name="trackerhelp" value="{tr}Go{/tr}" /></label>
 </form>
 

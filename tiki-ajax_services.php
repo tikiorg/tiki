@@ -100,6 +100,13 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 		global $shippinglib; require_once 'lib/shipping/shippinglib.php';
 
 		$access->output_serialized( $shippinglib->getRates( $_REQUEST['from'], $_REQUEST['to'], $_REQUEST['packages'] ) );
+	} elseif(  $_REQUEST['listonly'] == 'trackername' ) {
+		$trackers = $tikilib->list_trackers();
+		$ret = array();
+		foreach ($trackers['data'] as $tracker) {
+			$ret[] = $tracker['name'];
+		}
+		$access->output_serialized($ret);
 	}
 }
 
