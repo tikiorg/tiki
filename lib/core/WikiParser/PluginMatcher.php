@@ -70,12 +70,10 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 			++$pos;
 
 			if( ! $match->findName( $end ) ) {
-				//die('NAME LOOKUP FAILED');
 				continue;
 			}
 
 			if( ! $match->findArguments( $end ) ) {
-				//die('ARG LOOKUP FAILED');
 				continue;
 			}
 
@@ -370,6 +368,7 @@ class WikiParser_PluginMatcher_Match
 
 		if( $this->matchType == self::SHORT || $this->matchType == self::LEGACY ) {
 			$this->end = $this->bodyStart;
+			$this->bodyStart = false;
 		}
 
 		return true;
@@ -450,9 +449,18 @@ class WikiParser_PluginMatcher_Match
 	{
 		$this->start += $offset;
 		$this->end += $offset;
-		$this->nameEnd = false;
-		$this->bodyStart = false;
-		$this->bodyEnd = false;
+
+		if ($this->nameEnd !== false) {
+			$this->nameEnd += $offset;
+		}
+
+		if ($this->bodyStart !== false) {
+			$this->bodyStart += $offset;
+		}
+
+		if ($this->bodyEnd !== false) {
+			$this->bodyEnd += $offset;
+		}
 	}
 
 	private function countUnescapedQuotes( $from, $to )
@@ -478,5 +486,11 @@ class WikiParser_PluginMatcher_Match
 	public function __toString()
 	{
 		return $this->matcher->getChunkFrom( $this->start, $this->end - $this->start );
+	}
+
+	public function debug($level = 'X')
+	{
+		echo "\nMatch [$level] {$this->name} ({$this->arguments}) = {$this->getBody()}\n";
+		echo "{$this->bodyStart}-{$this->bodyEnd} {$this->nameEnd} ({$this->matchType})\n";
 	}
 }

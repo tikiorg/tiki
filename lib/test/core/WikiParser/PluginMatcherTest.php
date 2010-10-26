@@ -298,7 +298,8 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 		}
 	}
 
-	function testNestingWithoutSpaces() {
+	function testNestingWithoutSpaces()
+	{
 		$strings = " {A(a=1)}{A(a=2)}{a a=3}{A}{A} ";
 
 		$matches = WikiParser_PluginMatcher::match($strings);
@@ -316,6 +317,32 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 		$this->assertEquals(0, count($matches));
 	}
 
+	function testIntegrityPreservedOnReplacement()
+	{
+		$strings = '{A(a=1)}{a a=2}{A(a=3)/}{A}';
+
+		$matches = WikiParser_PluginMatcher::match($strings);
+
+		$replacements = array(
+			'{a a=2}{A(a=3)/}{A(a=4)}Hello World{A}',
+			'0',
+			'1',
+			'2',
+		);
+		$obtained = array();
+		foreach($matches as $match) {
+			$obtained[] = $match->getArguments() . $match->getBody();
+			$match->replaceWith(array_shift($replacements));
+		}
+
+		$this->assertEquals('012', $matches->getText());
+		$this->assertEquals(array(
+			'a=1{a a=2}{A(a=3)/}',
+			'a=2',
+			'a=3',
+			'a=4Hello World',
+		), $obtained);
+	}
 /*
 	// TODO : Replacement re-find existing
 	// TODO : Replacement original vs generated
