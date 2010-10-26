@@ -45,7 +45,7 @@
 
 {* --- tiki block --- *}
 <title>{strip}
-	{if $prefs.site_title_location eq 'before'}{$prefs.browsertitle|tr_if|escape} : {/if}
+	{if $prefs.site_title_location eq 'before'}{$prefs.browsertitle|tr_if|escape} {$prefs.site_nav_seper} {/if}
 	{if $prefs.feature_breadcrumbs eq 'y' && isset($trail)}
 		{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
 	{else}
@@ -77,7 +77,7 @@
 			{$tracker_info.name|escape}
 		{/if}
 	{/if}
-	{if $prefs.site_title_location eq 'after'} : {$prefs.browsertitle|tr_if|escape}{/if}
+	{if $prefs.site_title_location eq 'after'} {$prefs.site_nav_seper} {$prefs.browsertitle|tr_if|escape}{/if}
 {/strip}</title>
 
 {if $prefs.site_favicon}
