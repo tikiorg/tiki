@@ -22,15 +22,25 @@ html[dir=ltr]>body {
 	width: auto;
 }
 
+/* general #fixedwidth wrapper when fixed width is off */
 #fixedwidth {
 	display: table;
 	margin: auto;
 	margin-top: 0;
 	margin-bottom: 0;
+	width: 100%;
 }
 
+/* when fixed width is set to on */
 .fixed_width #fixedwidth {
-	display: inherit;
+	width: 990px;
+}
+.fixed_width #main {
+	margin-top: 18px;
+	margin-bottom: 5px;
+}
+.fixed_width #fixedwidth[id] {
+	height: auto;
 }
 
 .button {
