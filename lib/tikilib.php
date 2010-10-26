@@ -4336,7 +4336,7 @@ class TikiLib extends TikiDb_Bridge
 			refresh_index('pages', $name);
 		}
 
-		$this->object_post_save( array( 'type'=> 'wiki page', 'object'=> $name, 'description'=> $description, 'name'=>$page, 'href'=>"tiki-index.php?page=$name" ), array(
+		$this->object_post_save( array( 'type'=> 'wiki page', 'object'=> $name, 'description'=> $description, 'name'=>$name, 'href'=>"tiki-index.php?page=$name" ), array(
 			'content' => $data,
 		) );
 
