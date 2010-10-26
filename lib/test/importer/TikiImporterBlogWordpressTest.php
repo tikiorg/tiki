@@ -19,8 +19,9 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
     {
         $parsedData = 'Some text';
 
-        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('validateInput', 'parseData', 'insertData'));
+        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('validateInput', 'extractBlogInfo', 'parseData', 'insertData'));
         $obj->expects($this->once())->method('validateInput');
+        $obj->expects($this->once())->method('extractBlogInfo')->will($this->returnValue(array()));
         $obj->expects($this->once())->method('parseData')->will($this->returnValue($parsedData));
         $obj->expects($this->once())->method('insertData')->with($parsedData);
 
@@ -47,25 +48,27 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
         $this->assertEquals($expectedImportFeedback, $_SESSION['tiki_importer_feedback']);
 	}*/
 
-/*	public function testImportShouldHandleAttachments()
+	public function testImportShouldHandleAttachments()
     {
         $parsedData = 'Some text';
 
-        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('validateInput', 'parseData', 'insertData', 'downloadAttachments'));
+        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('validateInput', 'extractBlogInfo', 'parseData', 'insertData', 'downloadAttachments'));
         $obj->expects($this->once())->method('validateInput');
+        $obj->expects($this->once())->method('extractBlogInfo')->will($this->returnValue(array()));
         $obj->expects($this->once())->method('parseData')->will($this->returnValue($parsedData));
         $obj->expects($this->once())->method('insertData')->with($parsedData);
         $obj->expects($this->once())->method('downloadAttachments');
         $_POST['importAttachments'] = 'on';
 
         $obj->import(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
-	}*/
+        
+        unset($_POST['importAttachments']);
+    }
 
     public function testParseData()
     {
-        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractItems', 'extractBlogInfo', 'extractTags', 'extractCategories'));
+        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractItems', 'extractTags', 'extractCategories'));
         $obj->expects($this->once())->method('extractItems')->will($this->returnValue(array()));
-        $obj->expects($this->once())->method('extractBlogInfo')->will($this->returnValue(array()));
 		$this->expectOutputString("\nStarting to parse data:\n");
 		$parsedData = $obj->parseData();
         $this->assertEquals(3, count($parsedData));
@@ -258,74 +261,175 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		$this->assertEquals($expectedResult, $this->obj->blogInfo);
 	}
 
-/*    public function testDownloadAttachment()
-    {
-        $this->obj->attachmentsDestDir = dirname(__FILE__) . '/fixtures/';
+	public function testExtractAttachmentsInfo()
+	{
+		$this->obj->dom = new DOMDocument;
+		$this->obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_attachments.xml');
+		
+		$expectedResult = array(
+			array(
+				'name' => 'Parte da tela de administração do TinyMCE Advanced',
+				'link' => 'http://rodrigo.utopia.org.br/files/tadv2.jpg',
+				'created' => '1241461850',
+				'author' => 'rodrigo',
+				'fileName' => 'tadv2.jpg',
+				'sizes' => array(
+					'tadv2-150x150.jpg',
+					'tadv2-300x171.jpg',
+				),
+			),
+			array(
+				'name' => 'Hostelaria Las Torres',
+				'link' => 'http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg',
+				'created' => '1242095082',
+				'author' => 'rodrigo',
+				'fileName' => '1881232-hostelaria-las-torres-0.jpg',
+				'sizes' => array(
+					'1881232-hostelaria-las-torres-0-150x150.jpg',
+					'1881232-hostelaria-las-torres-0-300x225.jpg',
+				),
+			),
+			array(
+				'name' => 'Caminhando no gelo no Vale do Silêncio',
+				'link' => 'http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
+				'created' => '1242095085',
+				'author' => 'rodrigo',
+				'fileName' => '1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
+				'sizes' => array(
+					'1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-150x150.jpg',
+					'1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-225x300.jpg',
+				),
+			),
+		);
+		
+		$attachments = $this->obj->extractAttachmentsInfo();
+		
+		$this->assertEquals($expectedResult, $attachments);
+	}
+	
+	public function testDownloadAttachmentsShouldDisplayMessageIfNoAttachments()
+	{
+		$this->obj->dom = new DOMDocument;
+		$this->expectOutputString("\n\nNo attachments found to import!\n");
+		$this->obj->downloadAttachments(); 
+	}
 
-        $sourceAttachments = array('sourceTest.jpg', 'sourceTest2.jpg');
-        $destAttachments = array('test.jpg', 'test2.jpg');
-        $i = count($sourceAttachments) - 1;
-        $cwd = getcwd();
-        chdir(dirname(__FILE__));
+	public function testDownloadAttachment()
+	{
+		global $filegallib; require_once('lib/filegals/filegallib.php');
+		
+		$filegallib = $this->getMock('FileGalLib', array('insert_file'));
+		$filegallib->expects($this->exactly(3))->method('insert_file')->will($this->returnValue(1));
+		
+		$adapter = new Zend_Http_Client_Adapter_Test();
+		
+		$adapter->setResponse(
+			"HTTP/1.1 200 OK"         . "\r\n" .
+			"Content-type: image/jpg" . "\r\n" .
+			"Content-length: 1034"	  . "\r\n" .
+										"\r\n" .
+    		'empty content'
+		);
+		
+		$client = new Zend_Http_Client();
+		$client->setAdapter($adapter);
+		
+		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('getHttpClient'));
+		$obj->expects($this->once())->method('getHttpClient')->will($this->returnValue($client));
+        $obj->dom = new DOMDocument;
+        $obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_attachments.xml');
 
-        while ($i >= 0) {
-            fopen($this->obj->attachmentsDestDir . $sourceAttachments[$i], 'w');
-            $i--;
-        }
- 
-        $this->obj->dom = new DOMDocument;
-        $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
-        $this->obj->downloadAttachments();
+        $this->expectOutputString("\n\nStarting to import attachments:\nFile tadv2.jpg successfully imported!\nFile 1881232-hostelaria-las-torres-0.jpg successfully imported!\nFile 1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg successfully imported!\n");
+        
+        $obj->downloadAttachments();
+        
+        $expectedResult = array(
+        	array('fileId' => 1, 'oldUrl' => 'http://rodrigo.utopia.org.br/files/tadv2.jpg'),
+        	array('fileId' => 1, 'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg'),
+        	array('fileId' => 1, 'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg'),
+        );
+        
+        $this->assertEquals($expectedResult, $obj->newFiles);
+	}
+	
+	public function testDownloadAttachmentShouldNotCallInsertFileWhenZendHttpClientFails()
+	{
+		global $filegallib; require_once('lib/filegals/filegallib.php');
+		
+		$filegallib = $this->getMock('FileGalLib', array('insert_file'));
+		$filegallib->expects($this->exactly(0))->method('insert_file');
+		
+		$adapter = new Zend_Http_Client_Adapter_Test();
+		$adapter->setNextRequestWillFail(true);
+		
+		$client = new Zend_Http_Client();
+		$client->setAdapter($adapter);
+		
+		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('getHttpClient'));
+		$obj->expects($this->once())->method('getHttpClient')->will($this->returnValue($client));
+        $obj->dom = new DOMDocument;
+        $obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_attachments.xml');
+        
+        $obj->downloadAttachments();
+        
+        $this->assertEquals(array(), $obj->newFiles);
+	}
+	
+	public function testDownloadAttachmentShouldNotCallInsertFileWhen404()
+	{
+		global $filegallib; require_once('lib/filegals/filegallib.php');
+		
+		$filegallib = $this->getMock('FileGalLib', array('insert_file'));
+		$filegallib->expects($this->exactly(0))->method('insert_file');
+		
+		$adapter = new Zend_Http_Client_Adapter_Test();
+		
+		$adapter->setResponse(
+			"HTTP/1.1 404 NOT FOUND"         . "\r\n" .
+			"Content-type: image/jpg" . "\r\n" .
+			"Content-length: 1034"	  . "\r\n" .
+										"\r\n" .
+    		'empty content'
+		);
+		
+		$client = new Zend_Http_Client();
+		$client->setAdapter($adapter);
+		
+		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('getHttpClient'));
+		$obj->expects($this->once())->method('getHttpClient')->will($this->returnValue($client));
+        $obj->dom = new DOMDocument;
+        $obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_attachments.xml');
 
-        $this->expectOutputString("\n\nStarting to import attachments:\nFile test2.jpg successfully imported!\nFile test.jpg successfully imported!\n");
+        $this->expectOutputString("\n\nStarting to import attachments:\nUnable to download file tadv2.jpg. Error message was: 404 NOT FOUND\nUnable to download file 1881232-hostelaria-las-torres-0.jpg. Error message was: 404 NOT FOUND\nUnable to download file 1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg. Error message was: 404 NOT FOUND\n");
+        
+        $obj->downloadAttachments();
+        
+        $this->assertEquals(array(), $obj->newFiles);
+	}
+	
+	public function testParseContentAttachmentsUrl()
+	{
 
-        $i = count($sourceAttachments) - 1;
-        while ($i >= 0) {
-            $filePath = $this->obj->attachmentsDestDir . $destAttachments[$i];
-            $this->assertFileExists($filePath);
-            unlink($filePath);
-            unlink($this->obj->attachmentsDestDir . $sourceAttachments[$i]);
-            $i--;
-        }
-        chdir($cwd);
-    }
-
-    public function testDownloadAttachmentShouldNotImportIfFileAlreadyExist()
-    {
-        $this->obj->attachmentsDestDir = dirname(__FILE__) . '/fixtures/';
-        $this->obj->dom = new DOMDocument;
-        $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
-        $attachments = array('test.jpg', 'test2.jpg');
-
-        foreach ($attachments as $attachment) {
-            $filePath = $this->obj->attachmentsDestDir . $attachment;
-            fopen($filePath, 'w');
-        }
-
-        $this->obj->downloadAttachments();
-        $this->expectOutputString("\n\nStarting to import attachments:\nNOT importing file test2.jpg as there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\nNOT importing file test.jpg as there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\n");
-       
-        foreach ($attachments as $attachment) {
-            $filePath = $this->obj->attachmentsDestDir . $attachment;
-            unlink($filePath);
-        }
-    }
-
-    public function testDownloadAttachmentsShouldDisplayMessageIfNoAttachments()
-    {
-        $this->obj->dom = new DOMDocument;
-        $this->expectOutputString("\n\nNo attachments found to import! Make sure you have created your XML file with the dumpDump.php script and with the option --uploads. This is the only way to import attachment.\n");
-        $this->obj->downloadAttachments(); 
-    }
-
-    public function testDownloadAttachmentsShouldDisplayMessageIfUnableToDownloadFile()
-    {
-        $this->obj->attachmentsDestDir = dirname(__FILE__) . '/fixtures/';
-        $this->obj->dom = new DOMDocument;
-        $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_invalid_upload.xml');
-        $this->obj->downloadAttachments();
-
-        $this->expectOutputString("\n\nStarting to import attachments:\nUnable to download file Qlandkartegt-0.11.1.tar.gz. File not found.\nUnable to download file Passelivre.jpg. File not found.\n");
-    }
- */
+		$this->obj->newFiles = array(
+			array('fileId' => 1, 'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg'),
+			array('fileId' => 2, 'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0-300x225.jpg'),
+			array('fileId' => 3, 'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg'),
+			array('fileId' => 4, 'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-225x300.jpg'),
+			array('fileId' => 5, 'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881263-paso-john-gardner-1.jpg'),
+			array('fileId' => 6, 'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881263-paso-john-gardner-1-300x225.jpg'),
+		);
+		
+		$content = file_get_contents(dirname(__FILE__) . '/fixtures/wordpress_post_content.txt');
+		
+		$expectedResult = file_get_contents(dirname(__FILE__) . '/fixtures/wordpress_post_content_parsed.txt');
+		
+		$this->assertEquals($expectedResult, $this->obj->parseContentAttachmentsUrl($content));
+	}
+	
+	public function testParseContentAttachmentsUrlShouldReturnSameContentIfNewFilesIsEmpty()
+	{
+		$content = '';
+		$this->obj->newFiles = array();
+		$this->assertEquals($content, $this->obj->parseContentAttachmentsUrl($content));
+	}
 }

@@ -26,6 +26,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	/**
 	 * Array of the valid mime types for the
 	 * input file
+	 * @var array
 	 */
 	public $validTypes = array('application/xml', 'text/xml');
 
@@ -36,6 +37,13 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
         array('name' => 'importAttachments', 'type' => 'checkbox', 'label' => 'Import images and attachments (see documentation for more information)'),
 	);
 
+	/**
+	 * List of the imported attachments used
+	 * to parse post and page content to change the links
+	 * @var array
+	 */
+	public $newFiles = array();
+	
 	/**
      * Check for DOMDocument.
      * 
@@ -70,7 +78,9 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	
 	
 	/**
-	 * Start the importing process by loading the XML file.
+	 * Start the importing process by loading the XML file. And
+	 * calling wordpress specific import functions (like extractBlogInfo()
+	 * and downloadAttachments())
 	 * 
 	 * @see lib/importer/TikiImporter_Blog#import()
 	 *
@@ -93,6 +103,8 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		$this->dom = new DOMDocument;
 		$this->dom->load($filePath);
 
+		$this->extractBlogInfo();
+		
 		if (!empty($_POST['importAttachments']) && $_POST['importAttachments'] == 'on') {
 			$this->downloadAttachments();
 		}
@@ -131,8 +143,6 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 */
 	function parseData()
 	{
-		$this->extractBlogInfo();
-		
 		$parsedData = array();
 		
 		$this->saveAndDisplayLog("\nStarting to parse data:\n");
@@ -238,51 +248,93 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * Searches for the last version of each attachments in the XML file
 	 * and try to download it to the img/wiki_up/ directory
 	 *
-	 * Note: it is not possible to generate the Mediawiki
-	 * XML file with the <upload> tag through the web interface
-	 * (Special:Export). This is only possible through the Mediawiki
-	 * script maintanance/dumpBackup.php with the experimental option
-	 * --uploads
-	 *
 	 * @return void
 	 */
 	function downloadAttachments() {
-/*		$pages = $this->dom->getElementsByTagName('page');
-
-		if ($this->dom->getElementsByTagName('upload')->length == 0) {
-			$this->saveAndDisplayLog("\n\nNo attachments found to import! Make sure you have created your XML file with the dumpDump.php script and with the option --uploads. This is the only way to import attachment.\n", true);
+		global $filegallib; require_once('lib/filegals/filegallib.php');
+		
+		$attachments = $this->extractAttachmentsInfo();
+		
+		if (empty($attachments)) {
+			$this->saveAndDisplayLog("\n\nNo attachments found to import!\n", true);
 			return;
 		}
 
 		$this->saveAndDisplayLog("\n\nStarting to import attachments:\n");
 
-		foreach ($pages as $page) {
-			$attachments = $page->getElementsByTagName('upload');
-
-			if ($attachments->length > 0) {
-				$i = $attachments->length - 1;
-				$lastVersion = $attachments->item($i);
-
-				$fileName = $lastVersion->getElementsByTagName('filename')->item(0)->nodeValue;
-				$fileUrl = $lastVersion->getElementsByTagName('src')->item(0)->nodeValue;
-
-				if (file_exists($this->attachmentsDestDir . $fileName)) {
-					$this->saveAndDisplayLog("NOT importing file $fileName as there is already a file with the same name in the destination directory ($this->attachmentsDestDir)\n", true);
-					continue;
-				}
-
-				if (@fopen($fileUrl, 'r')) {
-					$attachmentContent = @file_get_contents($fileUrl);
-					$newFile = fopen($this->attachmentsDestDir . $fileName, 'w');
-					fwrite($newFile, $attachmentContent);
-					$this->saveAndDisplayLog("File $fileName successfully imported!\n");
-				} else {
-					$this->saveAndDisplayLog("Unable to download file $fileName. File not found.\n", true);
-				}
+		$client = $this->getHttpClient();
+		
+		foreach ($attachments as $attachment) {
+			$client->setUri($attachment['link']);
+			
+			try {
+				$response = $client->request();
+			} catch (Zend_Http_Client_Adapter_Exception $e) {
+				$this->saveAndDisplayLog("Unable to download file " . $attachment['fileName'] . ". Error message was: " . $e->getMessage() . "\n", true);
+				continue;
 			}
-		}*/
+			
+			$data = $response->getRawBody();
+			$size = $response->getHeader('Content-length');
+			$mimeType = $response->getHeader('Content-type');
+
+			if ($response->isSuccessful()) {
+				$fileId = $filegallib->insert_file(1, $attachment['name'], '', $attachment['fileName'], $data, $size, $mimeType, $attachment['author'], '', '', $attachment['author']);
+				
+				$this->newFiles[] = array('fileId' => $fileId, 'oldUrl' => $attachment['link']);
+				
+				$this->saveAndDisplayLog("File " . $attachment['fileName'] . " successfully imported!\n");
+			} else {
+				$this->saveAndDisplayLog("Unable to download file " . $attachment['fileName'] . ". Error message was: " . $response->getStatus() . ' ' . $response->getMessage() . "\n", true);
+			}
+		}
 	}
 
+	/**
+	 * Extract all the attachments from a XML Wordpress file
+	 * and return them.
+	 * 
+	 * @return array all the attachments
+	 */
+	function extractAttachmentsInfo()
+	{
+		$attachments = array();
+		$items = $this->dom->getElementsByTagName('item');
+		
+		foreach ($items as $item) {
+			if ($item->getElementsByTagName('post_type')->item(0)->textContent == 'attachment') {
+				$attachment = array();
+				
+				$attachment['name'] = $item->getElementsByTagName('title')->item(0)->textContent;
+				$attachment['link'] = $item->getElementsByTagName('attachment_url')->item(0)->textContent;
+				$attachment['created'] = strtotime($item->getElementsByTagName('pubDate')->item(0)->textContent);
+				$attachment['author'] = $item->getElementsByTagName('creator')->item(0)->textContent;
+				
+				$tags = $item->getElementsByTagName('postmeta');
+				
+				foreach ($tags as $tag) {
+					if ($tag->getElementsByTagName('meta_key')->item(0)->textContent == '_wp_attached_file') {
+						$attachment['fileName'] = $tag->getElementsByTagName('meta_value')->item(0)->textContent;
+					} else if ($tag->getElementsByTagName('meta_key')->item(0)->textContent == '_wp_attachment_metadata') {
+						$metadata = unserialize($tag->getElementsByTagName('meta_value')->item(0)->textContent);
+						
+						if (is_array($metadata)) {
+							$sizes = array();
+							foreach ($metadata['sizes'] as $size) {
+								$sizes[] = $size['file'];
+							}
+							$attachment['sizes'] = $sizes; 
+						}						
+					}
+				}
+				
+				$attachments[] = $attachment;
+			}
+		}
+			
+		return $attachments;
+	}
+	
 	/**
 	 * Parse an DOM representation of a Wordpress item and return all the values
 	 * that will be imported (title, content, comments etc).
@@ -326,7 +378,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 						}
 						break;
 					case 'content:encoded':
-						$data['content'] = (string) $node->textContent;
+						$data['content'] = (string) $this->parseContentAttachmentsUrl($node->textContent);
 						break;
 					case 'excerpt:encoded':
 						$data['excerpt'] = (string) $node->textContent;
@@ -361,6 +413,27 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		return $data;
 	}
 
+	/**
+	 * Parse the content of a page or post replacing old 
+	 * attachments URLs with the new URLs of the attachments
+	 * already imported to Tiki file galleries 
+	 * 
+	 * @param string $content post or page content
+	 * @return string parsed content
+	 */
+	function parseContentAttachmentsUrl($content)
+	{
+		global $filegallib;
+		
+		if (!empty($this->newFiles)) {
+			foreach ($this->newFiles as $file) {
+				$content = str_replace($file['oldUrl'], 'tiki-download_file.php?fileId=' . $file['fileId'] . '&display', $content);
+			}
+		}
+		
+		return $content;
+	}
+	
 	/**
 	 * Extract information from a comment node and return it. Comments marked
 	 * as spam, trash or pingback are ignored by the importer. Pingbacks are
@@ -431,5 +504,19 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		$data['created'] = strtotime($this->dom->getElementsByTagName('pubDate')->item(0)->nodeValue);
 
 		$this->blogInfo = $data;
+	}
+	
+	//TODO: check if a proxy is configured and than use Zend_Http_Client_Adapter_Proxy
+	/**
+	 * Set $this->httpClient property as an instance of Zend_Http_Client
+	 * 
+	 * @return void
+	 */
+	function getHttpClient()
+	{
+		require_once('Zend/Loader.php');
+		Zend_Loader::loadClass('Zend_Http_Client');
+
+		return new Zend_Http_Client();
 	}
 }
