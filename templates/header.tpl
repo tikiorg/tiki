@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
-<meta name="generator" content="Tiki Wiki CMS Groupware - http://Tiki.org" />
+<meta name="generator" content="Tiki Wiki CMS Groupware - http://tiki.org" />
 {if !empty($forum_info.name) & $prefs.metatag_threadtitle eq 'y'}
 	<meta name="keywords" content="{tr}Forum{/tr} {$forum_info.name|escape} {$thread_info.title|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if}" />
 {elseif isset($galleryId) && $galleryId ne '' & $prefs.metatag_imagetitle ne 'n'}
@@ -44,10 +44,8 @@
 {/if}
 
 {* --- tiki block --- *}
-<title>
-	{if $prefs.site_title_location eq 'before'}
-		{$prefs.browsertitle|tr_if|escape} : 
-	{/if}
+<title>{strip}
+	{if $prefs.site_title_location eq 'before'}{$prefs.browsertitle|tr_if|escape} : {/if}
 	{if $prefs.feature_breadcrumbs eq 'y' && isset($trail)}
 		{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
 	{else}
@@ -79,10 +77,8 @@
 			{$tracker_info.name|escape}
 		{/if}
 	{/if}
-	{if $prefs.site_title_location eq 'after'}
-		: {$prefs.browsertitle|tr_if|escape}
-	{/if}
-</title>
+	{if $prefs.site_title_location eq 'after'} : {$prefs.browsertitle|tr_if|escape}{/if}
+{/strip}</title>
 
 {if $prefs.site_favicon}
 	<link rel="icon" href="{$prefs.site_favicon|escape}" />
