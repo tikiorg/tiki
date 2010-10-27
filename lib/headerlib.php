@@ -221,22 +221,9 @@ class HeaderLib
 		if (count($this->jsfiles)) {
 
 			if( $prefs['tiki_minify_javascript'] == 'y' ) {
-				$dynamic = array();
-				if( isset( $this->jsfiles['dynamic'] ) ) {
-					$dynamic = $this->jsfiles['dynamic'];
-					unset( $this->jsfiles['dynamic'] );
-				}
-
-				$external = array();
-				if( isset( $this->jsfiles['external'] ) ) {
-					$external = $this->jsfiles['external'];
-					unset( $this->jsfiles['external'] );
-				}
 
 				$jsfiles = $this->getMinifiedJs();
 
-				$jsfiles['dynamic'] = $dynamic;
-				$jsfiles['external'] = $external;
 			} else {
 				$jsfiles = $this->jsfiles;
 			}
@@ -255,6 +242,19 @@ class HeaderLib
 
 	public function getMinifiedJs() {
 		global $tikidomainslash;
+		
+		$dynamic = array();
+		if( isset( $this->jsfiles['dynamic'] ) ) {
+			$dynamic = $this->jsfiles['dynamic'];
+			unset( $this->jsfiles['dynamic'] );
+		}
+
+		$external = array();
+		if( isset( $this->jsfiles['external'] ) ) {
+			$external = $this->jsfiles['external'];
+			unset( $this->jsfiles['external'] );
+		}
+		
 		$hash = md5( serialize( $this->jsfiles ) );
 		$file = 'temp/public/'.$tikidomainslash."minified_$hash.js";
 		$minified_files = array();
@@ -279,8 +279,8 @@ class HeaderLib
 
 		$minified_files[] = $file;
 		return array(
-			'external' => array(),
-			'dynamic' => array(),
+			'external' => $external,
+			'dynamic' => $dynamic,
 			$minified_files,
 		);
 	}
