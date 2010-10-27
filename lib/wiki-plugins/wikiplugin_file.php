@@ -48,7 +48,7 @@ function wikiplugin_file_info()
 			'date' => array(
 				'required' => false,
 				'name' => tra('Date'),
-				'description' => tra('Pick the archive if exists created just before the date'),
+				'description' => tra('Pick the archive if exists created just before the date of the fileId'),
 			),
 		),
 	);
@@ -58,6 +58,7 @@ function wikiplugin_file( $data, $params )
 {
 	global $tikilib, $prefs;
 	if (isset($params['fileId'])) {
+		global $filegallib; include_once ('lib/filegals/filegallib.php');
 		if ($prefs['feature_file_galleries'] != 'y') {
 			return;
 		}
@@ -75,14 +76,19 @@ function wikiplugin_file( $data, $params )
 				}
 				$wikipluginFileDate = $date;
 			}
-			global $filegallib; include_once ('lib/filegals/filegallib.php');
 			$fileId = $filegallib->getArchiveJustBefore($fileId, $date);
 			if (empty($fileId)) {
 				return tra('No such file');
 			}
+		} else {
+			$info = $filegallib->get_file_info($fileId);
+			if (empty($info)) {
+				return tra('Incorrect param').' fileId';
+			}
 		}
+			
 		if (empty($data)) { // to avaoid problem with parsing
-			$data = ' ';
+			$data = empty($info['name'])?$info['filename']: $info['name'];
 		}
 		return "[tiki-download_file.php?fileId=$fileId|$data]";
 	}
