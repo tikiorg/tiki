@@ -43,6 +43,7 @@ function tiki_invited() {
 		$tikilib->query("UPDATE tiki_invited SET used=?, used_on_user=? WHERE id=?", array("logged", $user, $invited['id']));
 
 		if (!empty($inviterow['wikipageafter'])) {
+			$_SERVER['SCRIPT_URI'] =  empty($_SERVER['SCRIPT_URI']) ? 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] : $_SERVER['SCRIPT_URI'];			        
 			$redirect=str_replace('tiki-invited.php', 'tiki-index.php?page=', $_SERVER['SCRIPT_URI']).urlencode($inviterow['wikipageafter']);
 			header('Location: '.$redirect);
 			exit;

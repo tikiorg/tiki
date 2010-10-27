@@ -106,7 +106,7 @@ if (isset($_REQUEST['send'])) {
             $tikilib->query("INSERT INTO `tiki_invited` (id_invite, email, firstname, lastname, used) VALUES (?,?,?,?,?)",
                             array($id, $m['email'], $m['firstname'], $m['lastname'], "no"));
 
-			$_SERVER['SCRIPT_URI'] =  empty($_SERVER['SCRIPT_URI']) ? 'http://' . $_SERVER['HTTP_HOST'] . '/' . $_SERVER['REQUEST_URI'] : $_SERVER['SCRIPT_URI'];			        
+		  $_SERVER['SCRIPT_URI'] =  empty($_SERVER['SCRIPT_URI']) ? 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] : $_SERVER['SCRIPT_URI'];			        
         foreach($emails as $m) {
             $mail = new TikiMail();
             $mail->setFrom($prefs['sender_email']);
