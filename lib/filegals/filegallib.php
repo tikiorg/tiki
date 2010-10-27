@@ -143,9 +143,9 @@ class FileGalLib extends TikiLib
 	}
 
 	function set_file_gallery($file, $gallery) {
-		$query = "update `tiki_files` set `galleryId`=? where `fileId`=?";
+		$query = "update `tiki_files` set `galleryId`=? where `fileId`=? or `archiveId`=?";
 
-		$this->query($query,array($gallery,$file));
+		$this->query($query,array($gallery,$file, $file));
 		return true;
 	}
 
