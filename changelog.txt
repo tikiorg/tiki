@@ -30,6 +30,15 @@ Version 6.0
 ------------------
 
 ----------------------------------------------
+r30367 | jonnybradley | 2010-10-27 20:47:45 +0200 (Wed, 27 Oct 2010) | 1 line
+
+[FIX] wysiwyg: Strange consequence of IE fixes breaking other browsers - one missed "destroy" (well spotted nkoth)
+----------------------------------------------
+r30366 | jonnybradley | 2010-10-27 20:32:30 +0200 (Wed, 27 Oct 2010) | 2 lines
+
+[FIX] ajax/js minify: Move the logic for external and dynamic js files into getMinifiedJs so the same thing happens in ajax calls (thanks chealer)
+Now causes a different JS error (in admin for instance) but is more logical.
+----------------------------------------------
 r30360 | jonnybradley | 2010-10-27 19:10:40 +0200 (Wed, 27 Oct 2010) | 1 line
 
 [FIX] wysiwyg: Even more defensive code to handle IE behaviour.
