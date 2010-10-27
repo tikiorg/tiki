@@ -270,7 +270,7 @@ function editTimerTick() {
 	var seconds = editTimeoutSeconds - editTimeElapsedSoFar;
 	
 	if (editTimerWarnings == 0 && seconds <= 60 && window.editorDirty) {
-		alert('".addslashes(tra('Your edit session will expire in:')).' 1 '.tra('minute').'.'.
+		alert('".addslashes(tra('Your edit session will expire in:')).' 1 '.tra('minute').'. '.
 				addslashes(tra('You must PREVIEW or SAVE your work now, to avoid losing your edits.'))."');
 		editTimerWarnings++;
 	} else if (seconds <= 0) {

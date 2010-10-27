@@ -78,7 +78,7 @@
           {if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
             href="{$prefs.fgal_podcast_dir}{$files[changes].path}"
           {else}
-            href="{if $prefs.javascript_enabled eq 'y'}{$files[changes].id|sefurl:preview}{else}{$files[changes].id|sefurl:display}{/if}"
+            href="{if $prefs.javascript_enabled eq 'y' && $files[changes].type|truncate:5:'':true eq 'image'}{$files[changes].id|sefurl:preview}{elseif $files[changes].type|truncate:5:'':true neq 'image'}{$files[changes].id|sefurl:file}{else}{$files[changes].id|sefurl:display}{/if}"
           {/if}
         {/if}
       {/if}

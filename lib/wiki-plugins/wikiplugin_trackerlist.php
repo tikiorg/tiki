@@ -360,6 +360,14 @@ function wikiplugin_trackerlist_info() {
 				'filter' => 'word',
 				'default' => 'n'
 			),
+			'force_compile' => array(
+				'required' => false,
+				'name' => tra('Force Smarty recompile.'),
+				'description' => 'y|n' . ' ' . tra('Force Smarty to recompile the templates for each tracker item when using a wiki page as a template. Default=n (best performance)'),
+				'filter' => 'word',
+				'default' => 'n',
+				'advanced' => true,
+			),
 		),
 	);
 }
@@ -371,7 +379,8 @@ function wikiplugin_trackerlist($data, $params) {
 	static $iTRACKERLIST = 0;
 	++$iTRACKERLIST;
 	$smarty->assign('iTRACKERLIST', $iTRACKERLIST);
-	$default = array('calendarfielddate' => '', 'wiki' => '', 'calendarviewmode' => 'month', 'calendarstickypopup' => 'n', 'calendarbeginmonth' => 'y', 'calendarviewnavbar' => 'y', 'calendartitle'=>'', 'calendardelta' => '');
+	$default = array('calendarfielddate' => '', 'wiki' => '', 'calendarviewmode' => 'month', 'calendarstickypopup' => 'n',
+				'calendarbeginmonth' => 'y', 'calendarviewnavbar' => 'y', 'calendartitle'=>'', 'calendardelta' => '', 'force_compile' => 'n');
 	$params = array_merge($default, $params);
 	
 	extract ($params,EXTR_SKIP);
@@ -1250,7 +1259,8 @@ function wikiplugin_trackerlist($data, $params) {
 				$smarty->assign('msg', tra("Error in tracker ID"));
 				return "~np~".$smarty->fetch("error_simple.tpl")."~/np~";
 			} else {
-				if (!empty($wiki)) {					// pretty tracker needs to compile fresh for each item
+				$save_fc = null;
+				if (!empty($wiki) && $params['force_compile'] === 'y') { // some pretty trackers need to compile fresh for each item
 					$save_fc = $smarty->force_compile;
 					$smarty->force_compile = true;
 				}
@@ -1272,7 +1282,7 @@ function wikiplugin_trackerlist($data, $params) {
 				}
 				
 				$str = $smarty->fetch('wiki-plugins/wikiplugin_trackerlist.tpl');
-				if (!empty($wiki)) {
+				if ($save_fc !== null) {
 					$smarty->force_compile = $save_fc;	// presumably will be false but put it back anyway
 				}
 				
