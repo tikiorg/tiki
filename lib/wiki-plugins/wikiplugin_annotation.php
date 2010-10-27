@@ -39,9 +39,14 @@ function wikiplugin_annotation_info() {
 			'align' => array(
 				'required' => false,
 				'name' => tra('Alignment'),
-				'description' => tra('Image alignment. Possible values: left, right, center.'),
+				'description' => tra('Image alignment'),
 				'filter' => 'alpha',
 				'advanced' => true,
+				'options' => array(
+					array('text' => tra('Left'), 'value' => 'left'), 
+					array('text' => tra('Right'), 'value' => 'right'), 
+					array('text' => tra('Center'), 'value' => 'center'), 
+				),
 			),
 		)
 	);
