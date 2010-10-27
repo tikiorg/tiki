@@ -34,7 +34,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * @see lib/importer/TikiImporter#importOptions
 	 */
 	static public $importOptions = array(
-        array('name' => 'importAttachments', 'type' => 'checkbox', 'label' => 'Import images and attachments (see documentation for more information)'),
+        array('name' => 'importAttachments', 'type' => 'checkbox', 'label' => 'Import images and other attachments'),
 	);
 
 	/**
@@ -288,6 +288,11 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 				$this->saveAndDisplayLog("Unable to download file " . $attachment['fileName'] . ". Error message was: " . $response->getStatus() . ' ' . $response->getMessage() . "\n", true);
 			}
 		}
+		
+		// close connection
+		$adapter = $client->getAdapter();
+		$adapter->close();
+		
 	}
 
 	/**
