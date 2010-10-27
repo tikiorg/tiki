@@ -59,7 +59,14 @@ var openEditHelp = function() {
 		opts["width"] = parseInt(edithelp_pos[2],10);
 		opts["height"] = parseInt(edithelp_pos[3],10);
 	}
-	$("#help_sections").dialog("destroy").dialog(opts).dialog("open");
+	try {
+		if ($("#help_sections").dialog) {
+			$("#help_sections").dialog("destroy");
+		}
+	} catch( e ) {
+		// IE throws errors destroying a non-existant dialog
+	}
+	$("#help_sections").dialog(opts).dialog("open");
 	
 };');
 		$self_link_params['_onclick'] = 'openEditHelp();return false;';
