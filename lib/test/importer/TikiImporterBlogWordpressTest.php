@@ -274,8 +274,16 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 				'author' => 'rodrigo',
 				'fileName' => 'tadv2.jpg',
 				'sizes' => array(
-					'tadv2-150x150.jpg',
-					'tadv2-300x171.jpg',
+					'thumbnail' => array(
+						'name' => 'tadv2-150x150.jpg',
+						'width' => 150,
+						'height' => 150,
+					),
+					'medium' => array(
+						'name' => 'tadv2-300x171.jpg',
+						'width' => 300,
+						'height' => 171,
+					),
 				),
 			),
 			array(
@@ -285,8 +293,16 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 				'author' => 'rodrigo',
 				'fileName' => '1881232-hostelaria-las-torres-0.jpg',
 				'sizes' => array(
-					'1881232-hostelaria-las-torres-0-150x150.jpg',
-					'1881232-hostelaria-las-torres-0-300x225.jpg',
+					'thumbnail' => array(
+						'name' => '1881232-hostelaria-las-torres-0-150x150.jpg',
+						'width' => 150,
+						'height' => 150,
+					),
+					'medium' => array(
+						'name' => '1881232-hostelaria-las-torres-0-300x225.jpg',
+						'width' => 300,
+						'height' => 225,
+					),
 				),
 			),
 			array(
@@ -296,8 +312,16 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 				'author' => 'rodrigo',
 				'fileName' => '1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
 				'sizes' => array(
-					'1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-150x150.jpg',
-					'1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-225x300.jpg',
+					'thumbnail' => array(
+						'name' => '1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-150x150.jpg',
+						'width' => 150,
+						'height' => 150,
+					),
+					'medium' => array(
+						'name' => '1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-225x300.jpg',
+						'width' => 225,
+						'height' => 300,
+					),
 				),
 			),
 		);
@@ -344,9 +368,54 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
         $obj->downloadAttachments();
         
         $expectedResult = array(
-        	array('fileId' => 1, 'oldUrl' => 'http://rodrigo.utopia.org.br/files/tadv2.jpg'),
-        	array('fileId' => 1, 'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg'),
-        	array('fileId' => 1, 'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg'),
+        	array(
+        		'fileId' => 1,
+        		'oldUrl' => 'http://rodrigo.utopia.org.br/files/tadv2.jpg',
+        		'sizes' => array(
+					'thumbnail' => array(
+						'name' => 'tadv2-150x150.jpg',
+						'width' => 150,
+						'height' => 150,
+					),
+					'medium' => array(
+						'name' => 'tadv2-300x171.jpg',
+						'width' => 300,
+						'height' => 171,
+					),
+				),
+        	),
+        	array(
+        		'fileId' => 1,
+        		'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg',
+        		'sizes' => array(
+					'thumbnail' => array(
+						'name' => '1881232-hostelaria-las-torres-0-150x150.jpg',
+						'width' => 150,
+						'height' => 150,
+					),
+					'medium' => array(
+						'name' => '1881232-hostelaria-las-torres-0-300x225.jpg',
+						'width' => 300,
+						'height' => 225,
+					),
+				),
+        	),
+        	array(
+        		'fileId' => 1,
+        		'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
+        		'sizes' => array(
+					'thumbnail' => array(
+						'name' => '1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-150x150.jpg',
+						'width' => 150,
+						'height' => 150,
+					),
+					'medium' => array(
+						'name' => '1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-225x300.jpg',
+						'width' => 225,
+						'height' => 300,
+					),
+				),
+        	),
         );
         
         $this->assertEquals($expectedResult, $obj->newFiles);
@@ -411,12 +480,38 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 	{
 
 		$this->obj->newFiles = array(
-			array('fileId' => 1, 'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg'),
-			array('fileId' => 2, 'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0-300x225.jpg'),
-			array('fileId' => 3, 'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg'),
-			array('fileId' => 4, 'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-225x300.jpg'),
-			array('fileId' => 5, 'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881263-paso-john-gardner-1.jpg'),
-			array('fileId' => 6, 'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881263-paso-john-gardner-1-300x225.jpg'),
+			array(
+				'fileId' => 2,
+				'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
+				'sizes' => array(
+					'thumbnail' => array(
+						'name' => '1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-150x150.jpg',
+						'width' => 150,
+						'height' => 150,
+					),
+					'medium' => array(
+						'name' => '1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-225x300.jpg',
+						'width' => 225,
+						'height' => 300,
+					),
+				),
+			),
+			array(
+				'fileId' => 1,
+				'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg',
+				'sizes' => array(
+					'thumbnail' => array(
+						'name' => '1881232-hostelaria-las-torres-0-150x150.jpg',
+						'width' => 150,
+						'height' => 150,
+					),
+					'medium' => array(
+						'name' => '1881232-hostelaria-las-torres-0-300x225.jpg',
+						'width' => 300,
+						'height' => 225,
+					),
+				),
+			),
 		);
 		
 		$content = file_get_contents(dirname(__FILE__) . '/fixtures/wordpress_post_content.txt');

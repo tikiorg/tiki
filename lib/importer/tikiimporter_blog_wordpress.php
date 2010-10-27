@@ -281,7 +281,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 			if ($response->isSuccessful()) {
 				$fileId = $filegallib->insert_file(1, $attachment['name'], '', $attachment['fileName'], $data, $size, $mimeType, $attachment['author'], '', '', $attachment['author']);
 				
-				$this->newFiles[] = array('fileId' => $fileId, 'oldUrl' => $attachment['link']);
+				$this->newFiles[] = array('fileId' => $fileId, 'oldUrl' => $attachment['link'], 'sizes' => $attachment['sizes']);
 				
 				$this->saveAndDisplayLog("File " . $attachment['fileName'] . " successfully imported!\n");
 			} else {
@@ -320,8 +320,12 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 						
 						if (is_array($metadata)) {
 							$sizes = array();
-							foreach ($metadata['sizes'] as $size) {
-								$sizes[] = $size['file'];
+							foreach ($metadata['sizes'] as $key => $size) {
+								$sizes[$key] = array(
+									'name' => $size['file'],
+									'width' => $size['width'],
+									'height' => $size['height'],
+								);
 							}
 							$attachment['sizes'] = $sizes; 
 						}						
@@ -427,7 +431,23 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		
 		if (!empty($this->newFiles)) {
 			foreach ($this->newFiles as $file) {
-				$content = str_replace($file['oldUrl'], 'tiki-download_file.php?fileId=' . $file['fileId'] . '&display', $content);
+				$baseOldUrl = preg_replace('|(.+/).*|', '\\1', $file['oldUrl']);
+				$baseNewUrl = 'tiki-download_file.php?fileId=' . $file['fileId'] . '&display'; 
+				
+				$newUrls = array();
+				$oldUrls = array();
+				
+				$newUrls[] = $baseNewUrl;
+				$oldUrls[] = $file['oldUrl'];
+				
+				if (!empty($file['sizes'])) {
+					foreach ($file['sizes'] as $size) {
+						$newUrls[] = $baseNewUrl . '&x=' . $size['width'] . '&y=' . $size['height'];
+						$oldUrls[] = $baseOldUrl . $size['name']; 
+					}
+				}
+				
+				$content = str_replace($oldUrls, $newUrls, $content);
 			}
 		}
 		
