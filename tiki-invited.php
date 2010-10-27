@@ -1,18 +1,18 @@
 <?php
 
 require_once ('tiki-setup.php');
-if ($prefs['feature_invit'] != 'y') die("feature_invit not enabled");
+if ($prefs['feature_invite'] != 'y') die("feature_invite not enabled");
 
 function tiki_invited() {
 	global $smarty, $tikilib, $prefs, $user, $userlib;
 
-	$invit=(int)isset($_REQUEST['invit']) ? $_REQUEST['invit'] : 0;
+	$invit=(int)isset($_REQUEST['invite']) ? $_REQUEST['invite'] : 0;
 	$email=isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
 
-	if (($invit <= 0) || empty($email)) die("invalid request");
+	if (($invite <= 0) || empty($email)) die("invalid request");
 
-	$res=$tikilib->query("SELECT * FROM tiki_invited WHERE id_invit=? AND email=? AND used=?",
-						 array($invit, $email, "no"));
+	$res=$tikilib->query("SELECT * FROM tiki_invited WHERE id_invite=? AND email=? AND used=?",
+						 array($invite, $email, "no"));
 	$invited=$res->fetchRow();
 
 	if (!is_array($invited)) {
@@ -24,17 +24,17 @@ function tiki_invited() {
 	}
 
 
-	$smarty->assign("invit", $invit);
+	$smarty->assign("invite", $invite);
 	$smarty->assign("email", $email);
 
-	$res=$tikilib->query("SELECT * FROM tiki_invit WHERE id=?", array($invit));
-	$invitrow=$res->fetchRow();
-	if (!is_array($invitrow)) die("(bug) This invitation does not exist or is deprecated");
+	$res=$tikilib->query("SELECT * FROM tiki_invite WHERE id=?", array($invite));
+	$inviterow=$res->fetchRow();
+	if (!is_array($inviterow)) die("(bug) This invitation does not exist or is deprecated");
 
 
 	if (isset($_POST['validate-existing-account'])) {
 		
-		$groups = $tikilib->getOne("SELECT `tiki_invit`.`groups` FROM `tiki_invited` LEFT JOIN `tiki_invit` ON `tiki_invit`.`id` = `tiki_invited`.`id_invit` WHERE `tiki_invited`.`id` = ?",
+		$groups = $tikilib->getOne("SELECT `tiki_invite`.`groups` FROM `tiki_invited` LEFT JOIN `tiki_invite` ON `tiki_invite`.`id` = `tiki_invited`.`id_invite` WHERE `tiki_invited`.`id` = ?",
 									   array($invited['id']));
 		$groups = explode(',', $groups);
 		foreach ($groups as $group)
@@ -42,8 +42,8 @@ function tiki_invited() {
 
 		$tikilib->query("UPDATE tiki_invited SET used=?, used_on_user=? WHERE id=?", array("logged", $user, $invited['id']));
 
-		if (!empty($invitrow['wikipageafter'])) {
-			$redirect=str_replace('tiki-invited.php', 'tiki-index.php?page=', $_SERVER['SCRIPT_URI']).urlencode($invitrow['wikipageafter']);
+		if (!empty($inviterow['wikipageafter'])) {
+			$redirect=str_replace('tiki-invited.php', 'tiki-index.php?page=', $_SERVER['SCRIPT_URI']).urlencode($inviterow['wikipageafter']);
 			header('Location: '.$redirect);
 			exit;
 		}
@@ -54,7 +54,7 @@ function tiki_invited() {
 		$smarty->display("tiki.tpl");
 		return;
 	} else {
-		$text=$tikilib->parse_data($invitrow['wikicontent']);
+		$text=$tikilib->parse_data($inviterow['wikicontent']);
 		$text=str_replace('{email}', $invited['email'], $text);
 		$text=str_replace('{firstname}', $invited['firstname'], $text);
 		$text=str_replace('{lastname}', $invited['lastname'], $text);
