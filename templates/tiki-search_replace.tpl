@@ -55,12 +55,7 @@
 					{$results[search].afterSnippet[snippet]}
 				</td>
 				<td>
-					<input type="checkbox" name="checked[]" value="{$results[search].searchreplace[snippet]}"/>
-					<input type="hidden" name="searchtext" value="{$searchtext}" />
-					<input type="hidden" name="replacetext" value="{$replacetext}" />
-					<input type="hidden" name="maxRecords" value="{$maxRecords}" />
-					<input type="hidden" name="casesensitive" value="{$casesensitive}" />
-					<input type="hidden" name="paddingLength" value="{$paddingLength}" />
+					{if $results[search].searchreplace[snippet] != '0:0:0'}<input type="checkbox" name="checked[]" value="{$results[search].searchreplace[snippet]}"/>{/if} 
 				</td>
 			</tr>
 			{/section}
@@ -70,6 +65,11 @@
 	{/if}
 	{/section}
 	</table>
+	<input type="hidden" name="searchtext" value="{$searchtext}" /> 
+	<input type="hidden" name="replacetext" value="{$replacetext}" />
+	<input type="hidden" name="maxRecords" value="{$maxRecords}" />
+	<input type="hidden" name="casesensitive" value="{$casesensitive}" />
+	<input type="hidden" name="paddingLength" value="{$paddingLength}" />
 	<input type="submit" name="replace" value="{tr}Replace selected{/tr}" />
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 {/if}

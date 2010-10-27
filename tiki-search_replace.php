@@ -84,8 +84,11 @@ if (isset($_REQUEST['search']) && $searchtext) {
 				$curpos = stripos($r["data"], $searchtext, $curpos + 1);
 			}
 			if ($curpos === false) {
-				break;
-			} 
+				$r["beforeSnippet"][] = tra('This match was not case sensitive');
+				$r["afterSnippet"][] = tra('This match was not case sensitive');
+				$r["searchreplace"][] = '0:0:0'; 
+				break;	
+			}
 			// can't use str_replace because it replaces all: we need to be more precise
 			$snippetStart = max(0, $curpos - $paddingLength);
 			$leftpartLength = $curpos - $snippetStart;
