@@ -996,7 +996,7 @@ class WikiLib extends TikiLib
 		$bindvars = array_merge($bindvars, $jail_bind);
 		$results = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
 		$ret["data"] = $results;
-		$query_cant = "select count(*) from `tiki_pages` $jail_join where `data` like ? $jail_where";
+		$query_cant = "select count(*) from (select count(*) from `tiki_pages` $jail_join where `data` like ? $jail_where group by `page_id`) as `temp`";
 		$ret["cant"] = $this->getOne($query_cant, $bindvars);
 		return $ret;
 	}
