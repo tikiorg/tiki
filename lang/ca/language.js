@@ -14,6 +14,8 @@ lang = {
 "Average" : "Intermitja",
 "Weak" : "Fluixa",
 "Very Weak" : "Molt fluixa",
-"Strength" : "Força"
-
+"Strength" : "Força",
+"Valid User Name" : "Nom d'usuari vàlid",
+"Passwords match" : "Les contrasenyes coincideixen",
+"Valid Email" : "Correu-e vàlid"
 };
