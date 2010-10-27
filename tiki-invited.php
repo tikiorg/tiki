@@ -6,7 +6,7 @@ if ($prefs['feature_invite'] != 'y') die("feature_invite not enabled");
 function tiki_invited() {
 	global $smarty, $tikilib, $prefs, $user, $userlib;
 
-	$invit=(int)isset($_REQUEST['invite']) ? $_REQUEST['invite'] : 0;
+	$invite=(int)isset($_REQUEST['invite']) ? $_REQUEST['invite'] : 0;
 	$email=isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
 
 	if (($invite <= 0) || empty($email)) die("invalid request");
