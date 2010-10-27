@@ -6,16 +6,15 @@
  */
 
 lang = {
-
-"Very Secure" : "Very Secure",
-"Secure" : "Secure",
-"Very Strong" : "Very Strong",
-"Strong" : "Strong",
-"Average" : "Average",
-"Weak" : "Weak",
-"Very Weak" : "Very Weak",
-"Strength" : "Strength",
-"Valid User Name" : "Valid User Name",
-"Passwords match" : "Passwords match",
-"Valid Email" : "Valid Email"
+//	"Very Secure" : "Very Secure",
+//	"Secure" : "Secure",
+//	"Very Strong" : "Very Strong",
+//	"Strong" : "Strong",
+//	"Average" : "Average",
+//	"Weak" : "Weak",
+//	"Very Weak" : "Very Weak",
+//	"Strength" : "Strength",
+//	"Valid User Name" : "Valid User Name",
+//	"Passwords match" : "Passwords match",
+//	"Valid Email" : "Valid Email"
 };
