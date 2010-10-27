@@ -35,7 +35,7 @@ function HTMLPurifier($html, $config = null) {
 }
 
 function getHTMLPurifierTikiConfig() {
-	global $tikipath;
+	global $tikipath, $prefs;
 	
 	$d = $tikipath.'temp/cache/HTMLPurifierCache';
 	if (!is_dir($d)) {
@@ -45,6 +45,12 @@ function getHTMLPurifierTikiConfig() {
 	}
     $conf = HTMLPurifier_Config::createDefault();
     $conf->set('Cache.SerializerPath', $d);
+    if ($prefs['feature_wysiwyg'] == 'y' || $prefs['popupLinks'] == 'y') { 
+        $conf->set('HTML.DefinitionID', 'allow target');
+        $conf->set('HTML.DefinitionRev', 1); 
+        $def = $conf->getHTMLDefinition(true);
+        $def->addAttribute('a', 'target', 'Enum#_blank,_self,_target,_top');
+    } 
 	return $conf;
 }
 
