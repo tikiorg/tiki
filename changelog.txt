@@ -30,6 +30,378 @@ Version 6.0
 ------------------
 
 ----------------------------------------------
+r30360 | jonnybradley | 2010-10-27 19:10:40 +0200 (Wed, 27 Oct 2010) | 1 line
+
+[FIX] wysiwyg: Even more defensive code to handle IE behaviour.
+----------------------------------------------
+r30359 | jonnybradley | 2010-10-27 19:08:07 +0200 (Wed, 27 Oct 2010) | 1 line
+
+[FIX] autosave: ignore sprurious ajax error, now happening on save or cancel after the jquery 1.4.3 update. The autosave still gets removed ok, it seems...
+----------------------------------------------
+r30358 | jonnybradley | 2010-10-27 18:33:12 +0200 (Wed, 27 Oct 2010) | 1 line
+
+[FIX] wysiwyg: Lock selection in IE before showing popup plugin form so it gets inserted in the right place (more often).
+----------------------------------------------
+r30357 | jonnybradley | 2010-10-27 18:10:24 +0200 (Wed, 27 Oct 2010) | 1 line
+
+[MOD] language.js: Comment English translation strings to save a little memory and processing.
+----------------------------------------------
+r30353 | chealer | 2010-10-27 17:33:06 +0200 (Wed, 27 Oct 2010) | 1 line
+
+[FIX] French Admin Cache: replace "&" with "et" and avoid HTML special chars encoding issue for free
+----------------------------------------------
+r30352 | jonnybradley | 2010-10-27 17:29:21 +0200 (Wed, 27 Oct 2010) | 1 line
+
+[FIX] wysiwyg: More defensive code to handle IE behaviour concerning text selection.
+----------------------------------------------
+r30351 | jonnybradley | 2010-10-27 17:28:03 +0200 (Wed, 27 Oct 2010) | 1 line
+
+[FIX] wysiwyg: Plugin dialog not appearing first time on IE
+----------------------------------------------
+r30350 | chealer | 2010-10-27 16:58:55 +0200 (Wed, 27 Oct 2010) | 4 lines
+
+Plugin FILE:
+clarify how to use
+[FIX] remove absolute dependency on feature_wiki_attachments, since FILE now also supports files from galleries
+I'm not sure about the way it now complains when feature_wiki_attachments is actually missing.
+----------------------------------------------
+r30349 | chealer | 2010-10-27 16:55:56 +0200 (Wed, 27 Oct 2010) | 1 line
+
+Plugin ATTACH: clarify description of page parameter
+----------------------------------------------
+r30347 | jonnybradley | 2010-10-27 16:15:45 +0200 (Wed, 27 Oct 2010) | 2 lines
+
+[SVN] Release the revision fix on lib/jquery as other things need to be updated (sheet and colorbox at least).
+Cannot easily test without committing, so will be heavily testing for next couple of hours.
+----------------------------------------------
+r30346 | sylvieg | 2010-10-27 15:44:45 +0200 (Wed, 27 Oct 2010) | 1 line
+
+[FIX]FILE: display the name or the filename of the fileId if no data is given to avoid a link on a space
+----------------------------------------------
+r30345 | sylvieg | 2010-10-27 15:25:55 +0200 (Wed, 27 Oct 2010) | 1 line
+
+[FIX]fgal: when moving a file in another fgal, move also the archive (Perhaps todo? delete the archive id the fgal does not accept archive?)
+----------------------------------------------
+r30344 | xavidp | 2010-10-27 15:09:06 +0200 (Wed, 27 Oct 2010) | 1 line
+
+[FIX]Usability issue: no js file was found under the en folder, so that it was not easy to guess that this file exists, and which strings in js files can be translated (at least, the ones in here :-) )
+----------------------------------------------
+r30343 | xavidp | 2010-10-27 14:50:51 +0200 (Wed, 27 Oct 2010) | 1 line
+
+adding some new js strings seen at registration time (to see if they support current i18n)
+----------------------------------------------
+r30341 | jonnybradley | 2010-10-27 13:58:27 +0200 (Wed, 27 Oct 2010) | 1 line
+
+[MOD] trackerlist: Make Smarty force_recompile optional, as for most pretty tracker scenarios it is unnecessary and very slow (thanks Sylvie)
+----------------------------------------------
+r30340 | sylvieg | 2010-10-27 13:08:51 +0200 (Wed, 27 Oct 2010) | 1 line
+
+[FIX]layout: #fixedwidth has moved
+----------------------------------------------
+r30339 | chealer | 2010-10-27 06:36:10 +0200 (Wed, 27 Oct 2010) | 2 lines
+
+[FIX] Textarea: Missing space in timeout warning
+
+----------------------------------------------
+r30338 | nkoth | 2010-10-27 06:15:29 +0200 (Wed, 27 Oct 2010) | 1 line
+
+[FIX] In IE7, wysiwyg editor keeps on adding absolute path to links. Need to remove
+----------------------------------------------
+r30337 | nkoth | 2010-10-27 05:08:52 +0200 (Wed, 27 Oct 2010) | 1 line
+
+[FIX] Show message for matches that were not case-sensitive to avoid confusion and also avoid duplication of hidden fields
+----------------------------------------------
+r30335 | nkoth | 2010-10-27 04:31:30 +0200 (Wed, 27 Oct 2010) | 1 line
+
+[FIX] pagination for global search and replace
+----------------------------------------------
+r30332 | nkoth | 2010-10-27 03:25:47 +0200 (Wed, 27 Oct 2010) | 1 line
+
+[FIX] Paginatin not working (or rather working crazy)
+----------------------------------------------
+r30331 | nkoth | 2010-10-27 02:30:13 +0200 (Wed, 27 Oct 2010) | 1 line
+
+[FIX] target attribute being removed by HTML purifier making popupLinks feature and links set to use target attribute in wysiwyg not work. I know this not XHTML strict compliant but if these features are to work we have to use these relegated things for now
+----------------------------------------------
+r30329 | chealer | 2010-10-27 00:30:42 +0200 (Wed, 27 Oct 2010) | 1 line
+
+[FIX] French: "bares d'outils" => "barres d'outils"
+----------------------------------------------
+r30326 | changi67 | 2010-10-26 22:53:25 +0200 (Tue, 26 Oct 2010) | 1 line
+
+[FIX] if we display all files in browsing mode (that's strange because the button is browse images), then files other than images should be downloadable
+----------------------------------------------
+r30322 | jonnybradley | 2010-10-26 21:22:19 +0200 (Tue, 26 Oct 2010) | 1 line
+
+[FIX] autosave: Use page's wysiwyg setting to set process_wiki_paragraphs option for parse_data instead of is_html.
+----------------------------------------------
+r30321 | changi67 | 2010-10-26 21:20:17 +0200 (Tue, 26 Oct 2010) | 1 line
+
+[FIX] AVI deserve to have a small icon
+----------------------------------------------
+r30320 | jonnybradley | 2010-10-26 21:17:39 +0200 (Tue, 26 Oct 2010) | 1 line
+
+[FIX] autosave: Don't url encode/decode saved data (was breaking preview of default HomePage content for instance)
+----------------------------------------------
+r30319 | luciash | 2010-10-26 21:07:20 +0200 (Tue, 26 Oct 2010) | 1 line
+
+[FIX] flagmapping: cleaning up
+----------------------------------------------
+r30318 | luciash | 2010-10-26 20:54:42 +0200 (Tue, 26 Oct 2010) | 1 line
+
+[FIX] language switch flagmapping: added few missing flags where appropriate... not adding the korean language one to prevent controversy
+----------------------------------------------
+r30316 | jonnybradley | 2010-10-26 20:21:17 +0200 (Tue, 26 Oct 2010) | 1 line
+
+[FIX] fivealive: Remove sRGB colour profile from PNG file (makes it a different colour on a Mac screen)
+----------------------------------------------
+r30314 | marclaporte | 2010-10-26 19:04:06 +0200 (Tue, 26 Oct 2010) | 1 line
+
+[DOC] add relevant rating options in admin panel
+----------------------------------------------
+r30312 | marclaporte | 2010-10-26 18:51:04 +0200 (Tue, 26 Oct 2010) | 1 line
+
+better clarify that author rating and user rating are two different things
+----------------------------------------------
+r30310 | sylvieg | 2010-10-26 18:39:10 +0200 (Tue, 26 Oct 2010) | 1 line
+
+[FIX]TRACKERHELP: better strings
+----------------------------------------------
+r30307 | sampaioprimo | 2010-10-26 14:20:16 +0200 (Tue, 26 Oct 2010) | 2 lines
+
+[bp/r30279][FIX] wrong variable name when calling $tikilib->object_post_save() on $tikilib->create_page()
+
+----------------------------------------------
+r30306 | jonnybradley | 2010-10-26 13:56:41 +0200 (Tue, 26 Oct 2010) | 1 line
+
+[DOC] register: Much better language for "whilelist this domain" text - thanks ricks99
+----------------------------------------------
+r30305 | luciash | 2010-10-26 06:29:52 +0200 (Tue, 26 Oct 2010) | 1 line
+
+[FIX] fivealive theme: seamless background for the header
+----------------------------------------------
+r30304 | luciash | 2010-10-26 04:24:47 +0200 (Tue, 26 Oct 2010) | 1 line
+
+[FIX] use choices separator for browser title from admin > look and feel > misc instead of hardcoded colon
+----------------------------------------------
+r30303 | nkoth | 2010-10-26 04:18:18 +0200 (Tue, 26 Oct 2010) | 2 lines
+
+[FIX] pages created using profiles cannot be used in wysiwyg previously because settings were wrong. This corrects it by allowing setting a flag to have content be wysiwyg.
+
+----------------------------------------------
+r30302 | luciash | 2010-10-26 04:01:00 +0200 (Tue, 26 Oct 2010) | 1 line
+
+[ENH] *lite CSS update - only some handy comments were added/modified and updated the contact info
+----------------------------------------------
+r30301 | luciash | 2010-10-26 03:04:16 +0200 (Tue, 26 Oct 2010) | 1 line
+
+[FIX] final solution (hopefully) to the fixed width and "display: table" issue - tested in Chrome, Firefox, Safari so far (TODO: remove the now obsolete fixed_width.css file to save two HTTP requests ;))
+----------------------------------------------
+r30300 | luciash | 2010-10-26 02:30:45 +0200 (Tue, 26 Oct 2010) | 1 line
+
+[FIX] strip leading and trailing whitespace from browser title
+----------------------------------------------
+r30295 | nkoth | 2010-10-25 21:21:04 +0200 (Mon, 25 Oct 2010) | 1 line
+
+[FIX] Prevent "do you want to leave this page" popup due to js error in IE. Basically sel is undefined. Note: underlying problem of selection not being able to be captured in IE still an issue. See bug #3607
+----------------------------------------------
+r30294 | luciash | 2010-10-25 21:04:42 +0200 (Mon, 25 Oct 2010) | 1 line
+
+[ROLLBACK] r30271 - sorry gary, caused more trouble than good
+----------------------------------------------
+r30291 | jonnybradley | 2010-10-25 20:23:45 +0200 (Mon, 25 Oct 2010) | 1 line
+
+[FIX] toolbars admin: Test for CKEDITOR before using to stop JS errors in toolbars admin (TODO refactoring)
+----------------------------------------------
+r30290 | nkoth | 2010-10-25 20:09:57 +0200 (Mon, 25 Oct 2010) | 1 line
+
+[FIX] Insert Wiki Link popup has scroll bars in IE7 messing up view
+----------------------------------------------
+r30284 | jonnybradley | 2010-10-25 17:45:12 +0200 (Mon, 25 Oct 2010) | 1 line
+
+[FIX] Wiki link tool: Don't let links without a PageName be entered (thanks nkoth)
+----------------------------------------------
+r30281 | jonnybradley | 2010-10-25 16:59:03 +0200 (Mon, 25 Oct 2010) | 2 lines
+
+[bp/r30276][FIX] wrong variable name causing html data not being "purified" when creating a new wiki page
+(thanks sampaioprimo)
+----------------------------------------------
+r30277 | sylvieg | 2010-10-25 15:37:40 +0200 (Mon, 25 Oct 2010) | 1 line
+
+[FIX]browser title: headtitle can not contain site title as it is added in header.tpl before or after
+----------------------------------------------
+r30274 | sylvieg | 2010-10-25 14:59:25 +0200 (Mon, 25 Oct 2010) | 1 line
+
+[FIX]tracker: to have back the item name in the title instead of the 'Vire tracker item'
+----------------------------------------------
+r30273 | jonnybradley | 2010-10-25 14:45:59 +0200 (Mon, 25 Oct 2010) | 1 line
+
+[FIX] profiles: Change profile_sources pref to tiki.org (so the links from HomePage work again)
+----------------------------------------------
+r30271 | chibaguy | 2010-10-25 14:34:01 +0200 (Mon, 25 Oct 2010) | 1 line
+
+[FIX] Moved display:table from body to html in lite.css, and removed display property from body in layout.css. This fixes Fivealive's header background (display full page width) and column layout seems to be fine.
+----------------------------------------------
+r30270 | chibaguy | 2010-10-25 14:27:24 +0200 (Mon, 25 Oct 2010) | 1 line
+
+[FIX] More text/background color contrast fixes, and menu li background improvement.
+----------------------------------------------
+r30269 | jonnybradley | 2010-10-25 14:25:00 +0200 (Mon, 25 Oct 2010) | 1 line
+
+[FIX]Update homepages in EN-UK and CS with the category param for 6.x profiles
+----------------------------------------------
+r30268 | sampaioprimo | 2010-10-25 14:20:40 +0200 (Mon, 25 Oct 2010) | 1 line
+
+Hungarian tranlations done on i18n.tiki.org
+----------------------------------------------
+r30267 | sampaioprimo | 2010-10-25 14:19:13 +0200 (Mon, 25 Oct 2010) | 1 line
+
+Deutsch tranlations done on i18n.tiki.org
+----------------------------------------------
+r30266 | sept_7 | 2010-10-25 14:10:11 +0200 (Mon, 25 Oct 2010) | 2 lines
+
+[ENH] WebDAV : better message for webdav link in file gallery
+
+----------------------------------------------
+r30265 | sept_7 | 2010-10-25 14:08:59 +0200 (Mon, 25 Oct 2010) | 2 lines
+
+[FIX] WebDAV : Simplify path handling in WebDAV
+
+----------------------------------------------
+r30264 | sept_7 | 2010-10-25 14:07:39 +0200 (Mon, 25 Oct 2010) | 4 lines
+
+[FIX] Use SCRIPT_NAME instead of PHP_SELF : homogenize use of SCRIPT_NAME in
+tiki-filter-base.php as it is used all over this script and PHP_SELF is used
+only twice... 
+
+----------------------------------------------
+r30263 | xavidp | 2010-10-25 14:03:43 +0200 (Mon, 25 Oct 2010) | 1 line
+
+[FIX]Update homepages in CA and ES with the category param for 6.x profiles
+----------------------------------------------
+r30262 | chibaguy | 2010-10-25 12:44:08 +0200 (Mon, 25 Oct 2010) | 1 line
+
+[FIX] Text/background color contrast in remarks box.
+----------------------------------------------
+r30258 | chibaguy | 2010-10-25 11:31:23 +0200 (Mon, 25 Oct 2010) | 1 line
+
+[FIX] Table td with class "button" in two files messed up by removal of element name from .button in stylesheets, so class here changed to "button_container".
+----------------------------------------------
+r30257 | marclaporte | 2010-10-25 06:45:23 +0200 (Mon, 25 Oct 2010) | 1 line
+
+updating doc link
+----------------------------------------------
+r30256 | marclaporte | 2010-10-25 06:19:54 +0200 (Mon, 25 Oct 2010) | 1 line
+
+[FIX] bp/30150 Fix lesser magic reporting
+----------------------------------------------
+r30255 | marclaporte | 2010-10-25 04:26:58 +0200 (Mon, 25 Oct 2010) | 1 line
+
+removing out of sync, untranslated string
+----------------------------------------------
+r30254 | marclaporte | 2010-10-25 03:21:05 +0200 (Mon, 25 Oct 2010) | 1 line
+
+[ENH] 6.x profiles are now online, ready to test
+----------------------------------------------
+r30253 | jonnybradley | 2010-10-24 23:19:37 +0200 (Sun, 24 Oct 2010) | 1 line
+
+[FIX] wysiwyg: Image tool - use filegal manager for the ckeditor html image tool as a workaround pending perfection of the tiki_plugin plugin (so at least you can use html images from tiki filegals)
+----------------------------------------------
+r30252 | jonnybradley | 2010-10-24 21:59:04 +0200 (Sun, 24 Oct 2010) | 1 line
+
+[FIX] wysiwyg: Plugin plugin: make context menu item work, use jQuery to set up click and editable attr's and remove some dead code.
+----------------------------------------------
+r30251 | jonnybradley | 2010-10-24 21:55:15 +0200 (Sun, 24 Oct 2010) | 1 line
+
+[FIX] wysiwyg: insertAt() try parent elements whatever the selection type (make plugin edit work in more cases)
+----------------------------------------------
+r30250 | jonnybradley | 2010-10-24 19:14:26 +0200 (Sun, 24 Oct 2010) | 1 line
+
+[FIX] wysiwyg: Don't try and preview {toc}
+----------------------------------------------
+r30249 | chibaguy | 2010-10-24 04:58:13 +0200 (Sun, 24 Oct 2010) | 1 line
+
+[FIX] Necessary element name reinstated (thanks luciash).
+----------------------------------------------
+r30247 | ricks99 | 2010-10-24 01:36:31 +0200 (Sun, 24 Oct 2010) | 1 line
+
+[FIX] add missing LABEL elements for a11y. Also included default for sender email (when not set)
+----------------------------------------------
+r30246 | changi67 | 2010-10-23 18:38:50 +0200 (Sat, 23 Oct 2010) | 1 line
+
+~TRA~ I18n - Add Korean language - thanks Chahn
+----------------------------------------------
+r30245 | jonnybradley | 2010-10-23 16:44:27 +0200 (Sat, 23 Oct 2010) | 1 line
+
+[DOC] wysiwyg: Some help text - please improve
+----------------------------------------------
+r30244 | jonnybradley | 2010-10-23 16:37:08 +0200 (Sat, 23 Oct 2010) | 4 lines
+
+[FIX] ckeditor: Some more on plugins using ckeditor "fakeobjects" and protectedSource techniques to make plugin representation a read only block - partially successful (images still not right).
+Div enclosed plugins now set to 100% width to be more "realistic".
+Some refactoring and tidying of dead code.
+
+----------------------------------------------
+r30241 | chibaguy | 2010-10-23 08:22:18 +0200 (Sat, 23 Oct 2010) | 1 line
+
+[FIX] Element names removed; not needed. Also some needed ones reinstated.
+----------------------------------------------
+r30240 | chibaguy | 2010-10-23 07:55:39 +0200 (Sat, 23 Oct 2010) | 1 line
+
+[FIX] Element names removed; not needed.
+----------------------------------------------
+r30239 | chibaguy | 2010-10-23 07:39:37 +0200 (Sat, 23 Oct 2010) | 1 line
+
+[FIX] Element names removed; not needed, and in imported CSS files can cause a problem for theme overrides.
+----------------------------------------------
+r30236 | nkoth | 2010-10-23 00:45:53 +0200 (Sat, 23 Oct 2010) | 1 line
+
+[FIX] HTML Validation errors
+----------------------------------------------
+r30233 | nkoth | 2010-10-22 23:26:20 +0200 (Fri, 22 Oct 2010) | 1 line
+
+[FIX] Prevent admin's user preferences from being replaced with other user's preferences when creating new user tracker item for other user, or for example in a pretty tracker.
+----------------------------------------------
+r30231 | chealer | 2010-10-22 22:52:41 +0200 (Fri, 22 Oct 2010) | 1 line
+
+[FIX] Site title: HTML special chars encoding
+----------------------------------------------
+r30230 | chealer | 2010-10-22 22:46:18 +0200 (Fri, 22 Oct 2010) | 1 line
+
+[FIX] Admin menus: HTML special chars encoding
+----------------------------------------------
+r30229 | luciash | 2010-10-22 21:53:16 +0200 (Fri, 22 Oct 2010) | 1 line
+
+[FIX] print article: broken topic image when none set, little refactoring + KISS
+----------------------------------------------
+r30225 | luciash | 2010-10-22 20:47:06 +0200 (Fri, 22 Oct 2010) | 1 line
+
+little cleanup
+----------------------------------------------
+r30223 | jonnybradley | 2010-10-22 19:59:22 +0200 (Fri, 22 Oct 2010) | 1 line
+
+[FIX] ckeditor: Some improvement for IE trying to edit plugins, more TODO
+----------------------------------------------
+r30222 | luciash | 2010-10-22 19:49:10 +0200 (Fri, 22 Oct 2010) | 1 line
+
+[FIX] remarksboxes titles position again
+----------------------------------------------
+r30221 | luciash | 2010-10-22 19:48:14 +0200 (Fri, 22 Oct 2010) | 1 line
+
+[FIX] fivealive theme: partial rollback of 30219 as it affected the fivealive theme options too and maybe better approach ... (why should admin section have different background color for fieldsets?)
+----------------------------------------------
+r30220 | luciash | 2010-10-22 19:37:39 +0200 (Fri, 22 Oct 2010) | 1 line
+
+[FIX] better alignment of the tabs
+----------------------------------------------
+r30219 | luciash | 2010-10-22 19:22:28 +0200 (Fri, 22 Oct 2010) | 1 line
+
+[FIX] fivealive theme: colors of selected tabs in admin and no border for them
+----------------------------------------------
+r30218 | luciash | 2010-10-22 19:05:45 +0200 (Fri, 22 Oct 2010) | 1 line
+
+[FIX] better alignment of the tabs and the tabstoggle button
+----------------------------------------------
 r30128 | minger0 | 2010-10-19 21:28:25 +0200 (Tue, 19 Oct 2010) | 1 line
 
 [FIX] removed an unusual character
