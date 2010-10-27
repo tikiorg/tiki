@@ -3738,8 +3738,8 @@ CREATE TABLE `tiki_url_shortener` (
   KEY `longurl_hash` (`longurl_hash`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
-DROP TABLE IF EXISTS `tiki_invit`;
-CREATE TABLE `tiki_invit` (
+DROP TABLE IF EXISTS `tiki_invite`;
+CREATE TABLE `tiki_invite` (
   `id` int(11) NOT NULL auto_increment,
   `inviter` varchar(200) NOT NULL,
   `groups` varchar(255) default NULL,
@@ -3754,15 +3754,15 @@ CREATE TABLE `tiki_invit` (
 DROP TABLE IF EXISTS `tiki_invited`;
 CREATE TABLE `tiki_invited` (
   `id` int(11) NOT NULL auto_increment,
-  `id_invit` int(11) NOT NULL,
+  `id_invite` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `firstname` varchar(24) NOT NULL,
   `lastname` varchar(24) NOT NULL,
   `used` enum('no','registered','logged') NOT NULL,
   `used_on_user` varchar(200) default NULL,
   PRIMARY KEY  (`id`),
-  KEY `id_invit` (`id_invit`),
+  KEY `id_invite` (`id_invite`),
   KEY `used_on_user` (`used_on_user`)
 );
 
-INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES ('tiki_p_invit', 'Can invit users by email, and include them in groups', 'registered', 'tiki', NULL, 'feature_invit');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES ('tiki_p_invite_to_my_groups', 'Can invite users by email, and include them in groups', 'registered', 'tiki', NULL, 'feature_invite');

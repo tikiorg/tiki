@@ -1636,7 +1636,7 @@ function get_default_prefs() {
 		'feature_iepngfix' => 'n',
 		'iepngfix_selectors' => '#sitelogo a img',
 		'iepngfix_elements' => '',
-		'feature_invit' => 'n',
+		'feature_invite' => 'n',
 		
 		// JQuery
 		'feature_jquery' => 'y',			// Default JS lib for - now "hard-wired" on if javascript_enabled
