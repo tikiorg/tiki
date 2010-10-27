@@ -38,6 +38,8 @@ if (!isset($_REQUEST["offset"])) {
 } else {
 	$offset = $_REQUEST["offset"];
 }
+$smarty->assign('offset', $offset);
+
 if (!empty($_REQUEST['categId'])) {
 	$categFilter = array($_REQUEST['categId']);
 	$smarty->assign('find_categId', $_REQUEST['categId']);
@@ -54,6 +56,8 @@ if ($prefs['feature_categories'] == 'y') {
 if (isset($_REQUEST["maxRecords"])) {
 	$maxRecords = $_REQUEST["maxRecords"];
 }
+$smarty->assign('maxRecords', $maxRecords);
+
 if (!isset($_REQUEST["paddingLength"])) {
 	$paddingLength = 50;
 } else {
