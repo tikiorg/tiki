@@ -246,8 +246,8 @@ class FileGalLib extends TikiLib
 			'show_explorer' => $prefs['fgal_show_explorer'],
 			'show_path' => $prefs['fgal_show_path'],
 			'show_slideshow' => $prefs['fgal_show_slideshow'],
-			'wiki_syntax' => ''
-
+			'wiki_syntax' => '',
+			'default_view' => $prefs['fgal_default_view'],
 		);
 	}
 	function replace_file_gallery($fgal_info) {
