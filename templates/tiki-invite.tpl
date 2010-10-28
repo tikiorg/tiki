@@ -1,4 +1,8 @@
-<h1><a href="tiki-invite.php" class="pagetitle">{tr}Invitation{/tr}</a></h1>
+{title url="tiki-invite.php"}{tr}Invitation{/tr}{/title}
+
+<div class="navbar">
+	 {button _text="{tr}Invitations list{/tr}" href="tiki-list_invite.php"}
+</div>
 
 {if $sentresult}
  <div class="highlight">{tr}The mail has been sent to: {/tr}</div>
