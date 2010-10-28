@@ -3540,7 +3540,7 @@ CREATE TABLE `tiki_transitions` (
     `to` varchar(255) NOT NULL,
     `guards` text,
     PRIMARY KEY(`transitionId`),
-	KEY `transition_lookup` (`type`, `from`)
+    KEY `transition_lookup` (`type`, `from`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_auth_tokens`;
@@ -3766,3 +3766,38 @@ CREATE TABLE `tiki_invited` (
 );
 
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES ('tiki_p_invite', 'Can invite users by email, and include them in groups', 'registered', 'tiki', NULL, 'feature_invite');
+
+DROP TABLE IF EXISTS `tiki_credits`;
+CREATE TABLE `tiki_credits` (
+    `creditId` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+    `userId` INT( 8 ) NOT NULL ,
+    `credit_type` VARCHAR( 25 ) NOT NULL ,
+    `creation_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+    `expiration_date` TIMESTAMP NULL ,
+    `total_amount` FLOAT NOT NULL DEFAULT 0,
+    `used_amount` FLOAT NOT NULL DEFAULT 0,
+    `product_id` INT( 8 ) NULL ,
+    PRIMARY KEY ( `creditId` ) ,
+    INDEX ( `userId` , `credit_type` )
+);
+
+DROP TABLE IF EXISTS `tiki_credits_usage`;
+CREATE TABLE `tiki_credits_usage` (
+    `usageId` INT NOT NULL AUTO_INCREMENT,
+    `userId` INT NOT NULL,
+    `usage_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `credit_type` VARCHAR( 25 ) NOT NULL,
+    `used_amount` FLOAT NOT NULL DEFAULT 0,
+    `product_id` INT( 8 ) NULL ,
+    PRIMARY KEY ( `usageId` )
+);
+
+DROP TABLE IF EXISTS `tiki_credits_types`;
+CREATE TABLE `tiki_credits_types` (
+    `credit_type` VARCHAR( 25 ) NOT NULL,
+    `display_text` VARCHAR( 50 ) DEFAULT NULL,
+    `unit_text` VARCHAR( 25 ) DEFAULT NULL,
+    `is_static_level` CHAR( 1 ) DEFAULT 'n',
+    `scaling_divisor` FLOAT NOT NULL DEFAULT 1,
+    PRIMARY KEY ( `credit_type` ) 
+);
