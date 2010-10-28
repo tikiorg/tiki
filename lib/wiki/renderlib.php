@@ -227,6 +227,7 @@ class WikiRenderer
 		if( !empty($this->info['lang'])) { 
 			$this->trads = $multilinguallib->getTranslations('wiki page', $this->info['page_id'], $this->page, $this->info['lang']);
 			$this->smartyassign('trads', $this->trads);
+			$this->smartyassign('translationsCount', count($this->trads));
 			$pageLang = $this->info['lang'];
 			$this->smartyassign('pageLang', $pageLang);
 		}
