@@ -8,5 +8,22 @@ class Search_Expr_Not implements Search_Expr_Interface
 	{
 		$this->expression = $expression;
 	}
+
+	function setType($type)
+	{
+		$this->expression->setType($type);
+	}
+
+	function setField($field = 'global')
+	{
+		$this->expression->setField($field);
+	}
+
+	function walk($callback)
+	{
+		$result = $this->expression->walk($callback);
+
+		return call_user_func($callback, $this, array($result));
+	}
 }
 

@@ -3,14 +3,16 @@
 class Search_Index_Memory implements Search_Index_Interface
 {
 	private $data = array();
+	private $lastQuery;
 
 	function addDocument(array $data)
 	{
 		$this->data[] = $data;
 	}
 
-	function rawQuery($query)
+	function find(Search_Expr_Interface $query)
 	{
+		$this->lastQuery = $query;
 		return array();
 	}
 
@@ -33,6 +35,14 @@ class Search_Index_Memory implements Search_Index_Interface
 	function getDocument($index)
 	{
 		return $this->data[$index];
+	}
+
+	/**
+	 * For test purposes.
+	 */
+	function getLastQuery()
+	{
+		return $this->lastQuery;
 	}
 }
 
