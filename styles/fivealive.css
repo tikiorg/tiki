@@ -591,8 +591,9 @@ li.login_link ul li a {
 
 #tiki-top {
 	height: 50px;
-	background: url(fivealive/topbar.jpg) repeat-x;
+	background: #000 url('fivealive/topbar.jpg') repeat-x;
 }
+#tiki-top[id] {height: auto; min-height: 50px;}
 
 #tiki-top ul.cssmenu_horiz  {
 	margin-top: 2px;
