@@ -38,7 +38,7 @@
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_wp_attached_file</wp:meta_key>
-		<wp:meta_value><![CDATA[tadv2.jpg]]></wp:meta_value>
+		<wp:meta_value><![CDATA[2009/05/tadv2.jpg]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_wp_attachment_metadata</wp:meta_key>
@@ -75,7 +75,7 @@
 				<wp:attachment_url>http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg</wp:attachment_url>
 								<wp:postmeta>
 		<wp:meta_key>_wp_attached_file</wp:meta_key>
-		<wp:meta_value><![CDATA[1881232-hostelaria-las-torres-0.jpg]]></wp:meta_value>
+		<wp:meta_value><![CDATA[2008/01/20/1881232-hostelaria-las-torres-0.jpg]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_wp_attachment_metadata</wp:meta_key>

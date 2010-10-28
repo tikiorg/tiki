@@ -279,6 +279,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 			$mimeType = $response->getHeader('Content-type');
 
 			if ($response->isSuccessful()) {
+				//TODO: option to create a new file gallery for blog attachments
 				$fileId = $filegallib->insert_file(1, $attachment['name'], '', $attachment['fileName'], $data, $size, $mimeType, $attachment['author'], '', '', $attachment['author']);
 				
 				$this->newFiles[] = array('fileId' => $fileId, 'oldUrl' => $attachment['link'], 'sizes' => $attachment['sizes']);
@@ -319,11 +320,14 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 				
 				foreach ($tags as $tag) {
 					if ($tag->getElementsByTagName('meta_key')->item(0)->textContent == '_wp_attached_file') {
-						$attachment['fileName'] = $tag->getElementsByTagName('meta_value')->item(0)->textContent;
+						$fileName = $tag->getElementsByTagName('meta_value')->item(0)->textContent;
+						
+						// remove year and month from file name (e.g. 2009/10/fileName.jpg becomes fileName.jpg)
+						$attachment['fileName'] = preg_replace('|.+/|', '', $fileName);
 					} else if ($tag->getElementsByTagName('meta_key')->item(0)->textContent == '_wp_attachment_metadata') {
 						$metadata = unserialize($tag->getElementsByTagName('meta_value')->item(0)->textContent);
 						
-						if (is_array($metadata)) {
+						if (is_array($metadata) && isset($metadata['sizes'])) {
 							$sizes = array();
 							foreach ($metadata['sizes'] as $key => $size) {
 								$sizes[$key] = array(
