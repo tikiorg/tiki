@@ -333,18 +333,35 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 	
 	public function testDownloadAttachmentsShouldDisplayMessageIfNoAttachments()
 	{
+		global $filegallib; require_once('lib/filegals/filegallib.php');
+		
+		$filegallib = $this->getMock('FileGalLib', array('insert_file',));
+		$filegallib->expects($this->exactly(0))->method('insert_file')->will($this->returnValue(1));
+		
 		$this->obj->dom = new DOMDocument;
 		$this->expectOutputString("\n\nNo attachments found to import!\n");
 		$this->obj->downloadAttachments(); 
 	}
 
+	function testCreateFileGallery()
+	{
+		global $filegallib; require_once('lib/filegals/filegallib.php');
+		
+		$filegallib = $this->getMock('FileGalLib', array('replace_file_gallery'));
+		$filegallib->expects($this->once())->method('replace_file_gallery')->will($this->returnValue(3));
+		
+		$this->obj->blogInfo['title'] = 'Test';
+		
+		$this->assertEquals(3, $this->obj->createFileGallery());
+	}
+	
 	public function testDownloadAttachment()
 	{
 		global $filegallib; require_once('lib/filegals/filegallib.php');
 		
 		$filegallib = $this->getMock('FileGalLib', array('insert_file'));
 		$filegallib->expects($this->exactly(3))->method('insert_file')->will($this->returnValue(1));
-		
+				
 		$adapter = new Zend_Http_Client_Adapter_Test();
 		
 		$adapter->setResponse(
@@ -358,8 +375,9 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		$client = new Zend_Http_Client();
 		$client->setAdapter($adapter);
 		
-		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('getHttpClient'));
+		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('getHttpClient', 'createFileGallery'));
 		$obj->expects($this->once())->method('getHttpClient')->will($this->returnValue($client));
+		$obj->expects($this->once())->method('createFileGallery')->will($this->returnValue(1));
         $obj->dom = new DOMDocument;
         $obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_attachments.xml');
 
@@ -434,7 +452,8 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		$client = new Zend_Http_Client();
 		$client->setAdapter($adapter);
 		
-		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('getHttpClient'));
+		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('getHttpClient', 'createFileGallery'));
+		$obj->expects($this->once())->method('createFileGallery')->will($this->returnValue(1));
 		$obj->expects($this->once())->method('getHttpClient')->will($this->returnValue($client));
         $obj->dom = new DOMDocument;
         $obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_attachments.xml');
@@ -449,8 +468,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		global $filegallib; require_once('lib/filegals/filegallib.php');
 		
 		$filegallib = $this->getMock('FileGalLib', array('insert_file'));
-		$filegallib->expects($this->exactly(0))->method('insert_file');
-		
+		$filegallib->expects($this->exactly(0))->method('insert_file');		
 		$adapter = new Zend_Http_Client_Adapter_Test();
 		
 		$adapter->setResponse(
@@ -464,7 +482,8 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		$client = new Zend_Http_Client();
 		$client->setAdapter($adapter);
 		
-		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('getHttpClient'));
+		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('getHttpClient', 'createFileGallery'));
+		$obj->expects($this->once())->method('createFileGallery')->will($this->returnValue(1));
 		$obj->expects($this->once())->method('getHttpClient')->will($this->returnValue($client));
         $obj->dom = new DOMDocument;
         $obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_attachments.xml');

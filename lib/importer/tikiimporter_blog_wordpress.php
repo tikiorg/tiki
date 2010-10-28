@@ -262,6 +262,10 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 		$this->saveAndDisplayLog("\n\nStarting to import attachments:\n");
 
+		if (!empty($attachments)) {
+			$galleryId = $this->createFileGallery();
+		}
+		
 		$client = $this->getHttpClient();
 		
 		foreach ($attachments as $attachment) {
@@ -280,9 +284,9 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 			if ($response->isSuccessful()) {
 				//TODO: option to create a new file gallery for blog attachments
-				$fileId = $filegallib->insert_file(1, $attachment['name'], '', $attachment['fileName'], $data, $size, $mimeType, $attachment['author'], '', '', $attachment['author']);
+				$fileId = $filegallib->insert_file($galleryId, $attachment['name'], '', $attachment['fileName'], $data, $size, $mimeType, $attachment['author'], '', '', $attachment['author']);
 				
-				$this->newFiles[] = array('fileId' => $fileId, 'oldUrl' => $attachment['link'], 'sizes' => $attachment['sizes']);
+				$this->newFiles[] = array('fileId' => $fileId, 'oldUrl' => $attachment['link'], 'sizes' => isset($attachment['sizes']) ? $attachment['sizes'] : '');
 				
 				$this->saveAndDisplayLog("File " . $attachment['fileName'] . " successfully imported!\n");
 			} else {
@@ -296,6 +300,33 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		
 	}
 
+	/**
+	 * Create a file gallery to be used as a placeholder
+	 * for all imported attachments. Return the new 
+	 * gallery id.
+	 * 
+	 * @return int created gallery id
+	 */
+	function createFileGallery()
+	{
+		global $filegallib; require_once('lib/filegals/filegallib.php');
+		global $user;
+
+		$gal_info = array(
+			'galleryId' => '',
+			'parentId' => 1,
+			'name' => $this->blogInfo['title'],
+			'description' => '',
+			'user' => $user,
+			'public' => 'y',
+			'visible' => 'y',
+		);
+		
+		$id = $filegallib->replace_file_gallery($gal_info);
+		
+		return $id;
+	}
+	
 	/**
 	 * Extract all the attachments from a XML Wordpress file
 	 * and return them.
@@ -520,9 +551,8 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	}
 	
 	/**
-	 * Extract blog information (title, description etc)
-	 *
-	 * @return array blog information
+	 * Extract blog information (title, description etc) and
+	 * set $this->blogInfo.
 	 */
 	function extractBlogInfo()
 	{
