@@ -31,9 +31,9 @@ function wikiplugin_invite_info() {
 	);
 }
 function wikiplugin_invite( $data, $params) {
-	global $prefs, $tikilib, $userlib, $user, $smarty, $tiki_p_invite;
+	global $prefs, $tikilib, $userlib, $user, $smarty, $tiki_p_invite_to_my_groups;
 
-	if ($tiki_p_invite != 'y') {
+	if ($tiki_p_invite_to_my_groups != 'y') {
 		return;
 	}
 	$userGroups = $userlib->get_user_groups_inclusion($user);

@@ -1,7 +1,8 @@
 <?php
 
 require_once ('tiki-setup.php');
-if ($prefs['feature_invite'] != 'y') die("feature_invite not enabled");
+$access->check_feature('feature_invite');
+$access->check_permission('tiki_p_invite');
 
 function tiki_invited() {
 	global $smarty, $tikilib, $prefs, $user, $userlib;
