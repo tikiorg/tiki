@@ -12,7 +12,11 @@
 						</select>
 					</div>
 				</form>
-			{else} {* get method to have the param in the url *}
+			{else}
+				{if $tiki_p_edit neq 'y' and $translationsCount eq '1'}
+				  <span title="{tr}No translations available{/tr}">{tr}{$trads[0].langName|escape}{/tr}</span>
+				{else}
+			 {* get method to have the param in the url *}
 				{jq notonready=true}
 				{{if $beingStaged == 'y'}
 					var page_to_translate = '{$approvedPageName|escape:"quotes"}';
@@ -60,7 +64,7 @@
 							<option value="{$langsCandidatesForMachineTranslation[i].lang|escape}">{tr}{$langsCandidatesForMachineTranslation[i].langName|escape}{/tr} *</option>
 							{/section}
 							{/if}
-							{if $prefs.feature_multilingual_one_page eq 'y'}
+							{if $prefs.feature_multilingual_one_page eq 'y' and $translationsCount gt 1}
 							<option value="-">---</option>
 							<option value="_all_"{if basename($smarty.server.PHP_SELF) eq 'tiki-all_languages.php'} selected="selected"{/if}>{tr}All{/tr}</option>
 							{/if}
@@ -72,6 +76,7 @@
 						<input type="hidden" name="no_bl" value="y" /> 
 					</div>
 				</form>
+			  {/if}
 			{/if}
 
 		{if $td eq 'y'}</td>{/if}
