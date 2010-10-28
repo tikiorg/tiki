@@ -2,13 +2,13 @@
 {title}{tr}Invitations list{/tr}{/title}
 
 <div class="navbar">
-	 {button href="tiki-invite.php" _text="{tr}Invite{/tr}"}
+	{button href="tiki-invite.php" _text="{tr}Invite{/tr}"}
 	{if $tiki_p_admin eq 'y'}{button href="tiki-adminusers.php" _text="{tr}Admin users{/tr}"}{/if}
 </div>
-{if $cant > 0}
+
 <div class="clearfix">
-	<form class="findtable" action="tiki-list_invit.php" method="post">
-	{if $tiki_p_invite eq 'y'}
+	<form class="findtable" action="tiki-list_invite.php" method="post">
+	{if $tiki_p_admin eq 'y'}
 		<label>
 			{tr}Inviter:{/tr}
 			<input type="text"  name="inviter" value="{$inviter|escape}" />
@@ -26,13 +26,12 @@
 	<input type="submit" name="filter" value="{tr}Filter{/tr}" />
 	</form>
 </div>
-{/if}
 
 {tr}Number of invitations:{/tr} {$cant}
 {if $cant > 0}
 <table class="normal">
 <tr>
-{if $tiki_p_invite eq 'y'}
+{if $tiki_p_admin eq 'y'}
 	<th>{self_link _sort_arg='sort_mode' _sort_field='inviter'}{tr}Inviter{/tr}{/self_link}</th>
 {/if}
 <th>{self_link _sort_arg='sort_mode' _sort_field='ts'}{tr}Date{/tr}{/self_link}</th>
@@ -42,7 +41,7 @@
 {cycle values="odd,even" print=false}
 {foreach item=invited from=$inviteds}
 	<tr class="{cycle}">
-	{if $tiki_p_invite eq 'y'}
+	{if $tiki_p_admin eq 'y'}
 		<td>{$invited.inviter|userlink}</td>
 	{/if}
 	<td>{$invited.ts|tiki_short_date}</td>
