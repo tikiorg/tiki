@@ -22,7 +22,7 @@ function wikiplugin_file_info()
  			'desc' => array(
 				'required' => false,
 				'name' => tra('Description'),
-				'description' => tra('Used as link label instead of the file name or file description'),
+				'description' => tra('Wiki attachment:') . ' ' . tra('Used as link label'),
 			),
     		'page' => array(
 				'required' => false,
