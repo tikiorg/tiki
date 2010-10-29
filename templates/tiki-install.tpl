@@ -411,7 +411,7 @@
  <p>{tr}During an upgrade, it is normal to have SQL failures resulting with <strong>Table already exists</strong> messages.{/tr}</p>
 {assign var='patch' value=''} 
 {foreach from=$installer->failures item=item}
-{if $patch ne $item[2]}{if $patch ne ''}</textarea>{/if}<p><input type="checkbox" name="validPatches[]" value={$item[2]|escape} />{$item[2]|escape}</p>
+{if $patch ne $item[2]}{if $patch ne ''}</textarea>{/if}<p><input type="checkbox" name="validPatches[]" value="{$item[2]|escape}" id="ignore_{$item[2]|escape}" /><label for="ignore_{$item[2]|escape}">{$item[2]|escape}</label></p>
 <textarea rows="6" cols="80">{assign var='patch' value=$item[2]}{/if}
 {$item[0]}
 {$item[1]}
