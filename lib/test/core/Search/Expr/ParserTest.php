@@ -112,5 +112,26 @@ class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 			new Search_Expr_Not($this->parser->parse('roger OR alphonse')),
 		)), $result);
 	}
+
+	function testDoubleParenthesisClose()
+	{
+		$result = $this->parser->parse('hello (test) foo) bar');
+
+		$this->assertEquals($this->parser->parse('hello (test) foo bar'), $result);
+	}
+
+	function testMissingClose()
+	{
+		$result = $this->parser->parse('hello (test foo bar');
+
+		$this->assertEquals($this->parser->parse('hello (test foo bar)'), $result);
+	}
+
+	function testConsecutiveKeywords()
+	{
+		$result = $this->parser->parse('hello and and or + or world');
+
+		$this->assertEquals($this->parser->parse('hello and world'), $result);
+	}
 }
 

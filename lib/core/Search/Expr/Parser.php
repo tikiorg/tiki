@@ -22,6 +22,7 @@ class Search_Expr_Parser
 
 	private function reduce($tokens)
 	{
+		$tokens = $this->filterExcessiveKeywords($tokens);
 		$tokens = $this->reduceParenthesis($tokens);
 		$tokens = $this->applyOperator($tokens, 'NOT', 'buildNot');
 		$tokens = $this->applyOperator($tokens, 'OR', 'buildOr');
@@ -50,14 +51,24 @@ class Search_Expr_Parser
 				++$openCount;
 			} elseif ($token === ')') {
 				--$openCount;
+
 				if($openCount === 0) {
 					$inner = array_slice($tokens, $firstOpen + 1, $key - $firstOpen - 1);
 					$out[] = $this->reduce($inner);
 					$firstOpen = null;
 				}
+
+				// Skip extra closing parenthesis and restore state
+				$openCount = max(0, $openCount);
 			} elseif($openCount === 0) {
 				$out[] = $token;
 			}
+		}
+
+		// Handle a missing final parenthesis by reducing everything until the end
+		if ($firstOpen) {
+			$inner = array_slice($tokens, $firstOpen + 1);
+			$out[] = $this->reduce($inner);
 		}
 
 		return $out;
@@ -98,6 +109,25 @@ class Search_Expr_Parser
 	{
 		$tokens[$key] = new Search_Expr_Not($tokens[$key + 1]);
 		$tokens[$key + 1] = null;
+	}
+
+	private function filterExcessiveKeywords($tokens)
+	{
+		$out = array();
+		$skip = true;
+		foreach ($tokens as $token) {
+			if (is_string($token) && in_array($token, array('AND', 'OR', '+'))) {
+				if (! $skip) {
+					$out[] = $token;
+					$skip = true;
+				}
+			} else {
+				$skip = false;
+				$out[] = $token;
+			}
+		}
+
+		return $out;
 	}
 }
 
