@@ -460,6 +460,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 		$defaults['creation_date_format'] = '';
 		$defaults['modification_date_format'] = '';
 		$defaults['email'] = '';
+		$defaults['outboundEmail'] = '';
 		$defaults['default_status'] = 'o';
 		$defaults['modification_status'] = '';
 		$defaults['list_default_status'] = 'o';
@@ -467,6 +468,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 		$defaults['sort_default_field'] = '';
 		$defaults['restrict_start'] = '';
 		$defaults['restrict_end'] = '';
+		return $defaults;
 	} // }}}
 	
 	private function getOptionConverters() // {{{
@@ -539,6 +541,59 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 		// using false as trackerId stops multiple trackers of same name being created
 		return $trklib->replace_tracker( false, $name, $description, $options, 'y' );
 	} // }}}
+
+	function _export($trackerId) // {{{
+	{
+		global $trklib; require_once 'lib/trackers/trackerlib.php';
+		$info = $trklib->get_tracker($trackerId);
+		if (empty($info)) {
+			return '';
+		}
+		if ($options = $trklib->get_tracker_options($trackerId)) {
+			$info = array_merge($info, $options);
+		}
+		$optionMap = array_flip($this->getOptionMap());
+		$defaults = $this->getDefaults();
+		$conversions = $this->getOptionConverters();
+		$ref = 'tracker_'.$trackerId;
+		$res = array();
+		$allow = array();
+		$show = array();
+		$res[] = 'objects:';
+		$res[] = ' -';
+		$res[] = '  type: tracker';
+		$res[] = '  ref: '.$ref;
+		$res[] = '  data:';
+		$tab = '   ';
+		$res[] = $tab.'name: '.$info['name'];
+		if (!empty($info['description']))
+			$res[] = $tab.'description: '.$info['description'];
+		foreach ($info as $key => $value) {
+			if (!empty($optionMap[$key]) && (!isset($defaults[$optionMap[$key]]) || $value != $defaults[$optionMap[$key]])) {
+				if (strstr($optionMap[$key], 'allow_')) {
+					$allow[] = str_replace('allow_', '', $optionMap[$key]);
+				} elseif (strstr($optionMap[$key], 'show_')) {
+					$show[] = str_replace('show_', '', $optionMap[$key]);
+				} else {
+					$res[] = $tab.$optionMap[$key].': '.$conversions[$optionMap[$key]]->reverse( $value );
+				}
+			}
+		}
+		if (!empty($allow)) {
+			$res[] .= $tab.'allow: ['.implode(', ', $allow).']';
+		}
+		if (!empty($show)) {
+			$res[] .= $tab.'show: ['.implode(', ', $show).']';
+		}
+
+		$fields = $trklib->list_tracker_fields($trackerId);
+		$prof = new Tiki_Profile_InstallHandler_TrackerField();
+		foreach ($fields['data'] as $field) {
+			$res = array_merge($res, $prof->_export($field));
+		}
+		return implode("\n", $res);
+	} // {{{
+
 } // }}}
 
 class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandler // {{{
@@ -626,6 +681,23 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			) ),
 		);
 	} // }}}
+	private function getOptionMap() //{{{
+	{
+		return array(
+			'type' => 'type',
+			'order' => 'position',
+			'visible' => 'isHidden',
+			'description' => 'description',
+			'descparsed' => 'descriptionIsParsed',
+			'errordesc' => 'errorMsg',
+			'list' => 'IsTblVisible',
+			'link' => 'isMain',
+			'searchable' => 'isSearchable',
+			'public' => 'isPublic',
+			'mandatory' => 'isMandatory',
+			'multilingual' => 'isMultilingual',
+		);
+	} //{{{
 
 	function canInstall()
 	{
@@ -673,6 +745,37 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			$data['visby'],
 			$data['editby'],
 			$data['descparsed'] );
+	}
+
+	function _export($info)
+	{
+		$optionMap = array_flip($this->getOptionMap());
+		$defaults = $this->getDefaultValues();
+		$conversions = $this->getConverters();
+		$res[] = ' -';
+		$refi = 'field_'.$info['fieldId'];
+		$res[] = '  type: tracker_field';
+		$res[] = '  ref: '. $refi;
+		$res[] = '  data:';
+		$res[] = '   name: '.$info['name'];
+		$res[] = '   tracker: $tracker_'.$info['trackerId'];
+		$flag = array();
+		$tab = '   ';
+		foreach ($info as $key => $value) {
+			if (!empty($optionMap[$key]) && (!isset($defaults[$optionMap[$key]]) || $value != $defaults[$optionMap[$key]])) {
+				if (in_array($optionMap[$key], array('list', 'link', 'searchable', 'public', 'mandatory', 'multilingual'))) {
+					$flag[] = $optionMap[$key];
+				} elseif (!empty($conversions[$optionMap[$key]])) {
+					$res[] = $tab.$optionMap[$key].': '.$conversions[$optionMap[$key]]->reverse( $value );
+				} else {
+					$res[] = $tab.$optionMap[$key].': '.$value;
+				}
+			}
+		}
+		if (!empty($flag)) {
+				$res[] .= $tab.'flags: ['.implode(', ', $flag).']';
+		}
+		return $res;
 	}
 } // }}}
 
@@ -2684,4 +2787,10 @@ class Tiki_Profile_ValueMapConverter // {{{
 				return $value;
 		}
 	}
+	function reverse( $key)
+	{
+		$tab = array_flip($this->map);
+		return $tab[$key];
+	}
+
 } // }}}

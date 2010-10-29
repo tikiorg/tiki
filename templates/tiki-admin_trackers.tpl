@@ -594,6 +594,9 @@ categories = {$catsdump}
 	</div>
 	
 	{if $trackerId}
+		<h2>Export for profile</h2>
+		{button href="tiki-admin_trackers.php?trackerId=$trackerId&exportTrackerProfile=y" _text="{tr}Export tracker{/tr}"}
+
 		{include file='tiki-export_tracker.tpl'}
 
 		<h2>{tr}Import CSV data{/tr}</h2>
