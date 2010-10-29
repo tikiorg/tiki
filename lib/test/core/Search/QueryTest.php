@@ -66,5 +66,23 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals($expr, $index->getLastQuery());
 	}
+
+	function testFilterLanguage()
+	{
+		$index = new Search_Index_Memory;
+		$query = new Search_Query;
+		$query->filterLanguage('en or fr');
+
+		$query->search($index);
+
+		$expr = new Search_Expr_And(array(
+			$expr = new Search_Expr_Or(array(
+				new Search_Expr_Token('en', 'identifier', 'language'),
+				new Search_Expr_Token('fr', 'identifier', 'language'),
+			)),
+		));
+
+		$this->assertEquals($expr, $index->getLastQuery());
+	}
 }
 

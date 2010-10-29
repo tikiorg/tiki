@@ -15,26 +15,30 @@ class Search_Query
 
 	function addTextCriteria($query, $field = 'global')
 	{
-		$query = $this->parse($query);
-
-		$query->setType('wikitext');
-		$query->setField($field);
-		$this->expr->addPart($query);
+		$this->addPart($query, 'wikitext', $field);
 	}
 
 	function filterType($type)
 	{
 		$token = new Search_Expr_Token($type);
-		$token->setType('identifier');
-		$token->setField('object_type');
-		$this->expr->addPart($token);
+		$this->addPart($token, 'identifier', 'object_type');
 	}
 
 	function filterCategory($query)
 	{
+		$this->addPart($query, 'multivalue', 'categories');
+	}
+
+	function filterLanguage($query)
+	{
+		$this->addPart($query, 'identifier', 'language');
+	}
+
+	private function addPart($query, $type, $field)
+	{
 		$query = $this->parse($query);
-		$query->setType('multivalue');
-		$query->setField('categories');
+		$query->setType($type);
+		$query->setField($field);
 		$this->expr->addPart($query);
 	}
 

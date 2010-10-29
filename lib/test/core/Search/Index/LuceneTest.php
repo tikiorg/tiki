@@ -18,6 +18,7 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 		$index->addDocument(array(
 			'object_type' => $typeFactory->identifier('wiki page'),
 			'object_id' => $typeFactory->identifier('HomePage'),
+			'language' => $typeFactory->identifier('en'),
 			'description' => $typeFactory->plaintext('a description for the page'),
 			'wiki_content' => $typeFactory->wikitext('Hello world!'),
 			'categories' => $typeFactory->multivalue(array(1, 2, 5, 6)),
@@ -79,6 +80,14 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 		$this->assertResultCount(1, 'filterCategory', '1 and 2');
 		$this->assertResultCount(0, 'filterCategory', '1 and not 2');
 		$this->assertResultCount(1, 'filterCategory', '1 and (2 or 3)');
+	}
+
+	function testLanguageFilter()
+	{
+		$this->assertResultCount(1, 'filterLanguage', 'en');
+		$this->assertResultCount(1, 'filterLanguage', 'en or fr');
+		$this->assertResultCount(0, 'filterLanguage', 'en and fr');
+		$this->assertResultCount(0, 'filterLanguage', 'fr');
 	}
 
 	private function assertResultCount($count, $filterMethod, $argument)
