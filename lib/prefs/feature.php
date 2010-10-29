@@ -1803,7 +1803,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'help' => 'Tiki+User+Credits',
 		),
-		'feature_invit' => array(
+		'feature_invite' => array(
 			'name' => tra('Invite users'),
 			'description' => tra('Allow users to invite new users by mail to register on this tiki'),
 			'type' => 'flag',

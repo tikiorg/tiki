@@ -143,9 +143,9 @@ class FileGalLib extends TikiLib
 	}
 
 	function set_file_gallery($file, $gallery) {
-		$query = "update `tiki_files` set `galleryId`=? where `fileId`=?";
+		$query = "update `tiki_files` set `galleryId`=? where `fileId`=? or `archiveId`=?";
 
-		$this->query($query,array($gallery,$file));
+		$this->query($query,array($gallery,$file, $file));
 		return true;
 	}
 
@@ -246,8 +246,8 @@ class FileGalLib extends TikiLib
 			'show_explorer' => $prefs['fgal_show_explorer'],
 			'show_path' => $prefs['fgal_show_path'],
 			'show_slideshow' => $prefs['fgal_show_slideshow'],
-			'wiki_syntax' => ''
-
+			'wiki_syntax' => '',
+			'default_view' => $prefs['fgal_default_view'],
 		);
 	}
 	function replace_file_gallery($fgal_info) {

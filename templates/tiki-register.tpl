@@ -74,7 +74,7 @@
 {elseif $email_valid eq 'n' and $allowRegister eq 'y'}
 	<label for="email">{icon _id=error style="vertical-align:middle" align="left"} {tr}Your email could not be validated; make sure you email is correct and click register below.{/tr}</label>
  		<form action="tiki-register.php" method="post">
-			{if $smarty.request.invit}<input type='hidden' name='invit' value='{$smarty.request.invit|escape}'/>{/if}
+			{if $smarty.request.invite}<input type='hidden' name='invite' value='{$smarty.request.invite|escape}'/>{/if}
 			<input type="text" name="email" id="email" value="{$smarty.post.email}"/>
 			<input type="hidden" name="name" value="{$smarty.post.name}"/>
 			<input type="hidden" name="pass" value="{$smarty.post.pass}"/>
@@ -94,7 +94,7 @@
 			{$userTrackerData}
 		{else}
 			<form action="tiki-register.php" method="post" name="RegForm">
-                        {if $smarty.request.invit}<input type='hidden' name='invit' value='{$smarty.request.invit|escape}'/>{/if}
+                        {if $smarty.request.invite}<input type='hidden' name='invite' value='{$smarty.request.invite|escape}'/>{/if}
 			<table class="formcolor">
 			{include file="register-form.tpl"}
 			{if $merged_prefs.feature_antibot eq 'y'}{include file='antibot.tpl' td_style='formcolor'}{/if}

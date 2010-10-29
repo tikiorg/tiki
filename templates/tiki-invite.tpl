@@ -1,4 +1,8 @@
-<h1><a href="tiki-invit.php" class="pagetitle">{tr}Invitation{/tr}</a></h1>
+{title url="tiki-invite.php"}{tr}Invitation{/tr}{/title}
+
+<div class="navbar">
+	 {button _text="{tr}Invitations list{/tr}" href="tiki-list_invite.php"}
+</div>
 
 {if $sentresult}
  <div class="highlight">{tr}The mail has been sent to: {/tr}</div>
@@ -9,7 +13,7 @@
  </ul>
 {elseif $smarty.request.send && !$smarty.request.confirm && !$smarty.request.back}
  <div class="highlight">{tr}You are about to send an invitation to theses people, please confirm{/tr}</div>
- <form method='POST' action='tiki-invit.php'>
+ <form method='POST' action='tiki-invite.php'>
   <input type='hidden' name='emailslist' value='{$smarty.request.emailslist|escape}'/>
   <input type='hidden' name='emailslist_format' value='{$smarty.request.emailslist_format|escape}'/>
   <input type='hidden' name='emailsubject' value='{$smarty.request.emailsubject|escape}'/>
@@ -17,8 +21,8 @@
   <input type='hidden' name='wikicontent' value='{$smarty.request.wikicontent|escape}'/>
   <input type='hidden' name='wikipageafter' value='{$smarty.request.wikipageafter|escape}'/>
   <input type='hidden' name='send' value='{$smarty.request.send|escape}'/>
-  {foreach from=$smarty.request.invitgroups item=g}
-   <input type='hidden' name='invitgroups[]' value='{$g|escape}'/>
+  {foreach from=$smarty.request.invitegroups item=g}
+   <input type='hidden' name='invitegroups[]' value='{$g|escape}'/>
   {/foreach}
   
 
@@ -31,7 +35,7 @@
   {/foreach}
  </ul>
 {else}
- <form method='POST' action='tiki-invit.php'>
+ <form method='POST' action='tiki-invite.php'>
   <br />
   <div style='text-align: right'>
    Load a previous invitation settings : 
@@ -43,7 +47,7 @@
    </select>
   </div>
   <br />
-  <div>{tr}Fill this box with the list of e-mails you want to invit :{/tr}</div>
+  <div>{tr}Fill this box with the list of e-mails you want to invite :{/tr}</div>
   <div><textarea name='emailslist' style='width: 100%; height: 150px;'>{$smarty.request.emailslist|escape}</textarea></div>
 
   <div>{tr}Format of the list above :{/tr}
@@ -75,16 +79,16 @@ You are here because you have just clicked on the link from my invitation email.
 
 {/if}</textarea></div>
 
-{if count($invitgroups) > 0 && count($usergroups) > 0}
+{if count($invitegroups) > 0 && count($usergroups) > 0}
   <br />
   <div>{tr}Choose one or more group you want theses suscribtion to be in. Don't choose any if you don't want anything special :{/tr}</div>
-  <div><select multiple="multiple" name='invitgroups[]'>
+  <div><select multiple="multiple" name='invitegroups[]'>
    {foreach from=$usergroups item=ug}
-    <option value='{$ug|escape}' {if is_array($smarty.request.invitgroups) && in_array($ug,$smarty.request.invitgroups)}selected{/if}>{$ug|escape}{if !empty($invitgroups[$ug])} ({$invitgroups[$ug]|escape}){/if}</option>
+    <option value='{$ug|escape}' {if is_array($smarty.request.invitegroups) && in_array($ug,$smarty.request.invitegroups)}selected{/if}>{$ug|escape}{if !empty($invitegroups[$ug])} ({$invitegroups[$ug]|escape}){/if}</option>
    {/foreach}
   </select></div>
 {else}
-<input type='hidden' name='invitgroups' value=''/>
+<input type='hidden' name='invitegroups' value=''/>
 {/if} 
   <br />
   <div>Redirect to this wiki page after invitation acceptance (let it blank if unwanted) : <input type='text' name='wikipageafter' value='{$smarty.request.wikipageafter|escape}' /></div>

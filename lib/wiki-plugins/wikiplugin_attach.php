@@ -67,7 +67,7 @@ function wikiplugin_attach_info() {
 			'page' => array(
 				'required' => false,
 				'name' => tra('Page'),
-				'description' => tra("Gives the name of another page the attached file is on. The file on that page is linked to instead. Only works with wiki pages"),
+				'description' => tra("Name of the wiki page the file is attached to. If left empty when the plugin is used on a wiki page, this defaults to that wiki page."),
 			),
 			'showdesc' => array(
 				'required' => false,

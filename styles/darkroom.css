@@ -699,8 +699,7 @@ a.phplmselected:hover {
 .separator,
 .separatorline {
 	color: #f5f5f5;
-	display: block;
-	padding: 5px 4px 4px 10px;
+	padding: 5px 0px 4px 5px;
 }
 
 .separator:hover,
@@ -937,7 +936,7 @@ img.flipmodimage:hover {
 	background: #000;
 	border: 1px solid #606060;
 	border-bottom: none;
-	margin-bottom: -1px;
+	margin-bottom: 0;
 }
 
 .rbox-data {
@@ -1055,7 +1054,7 @@ td.form {
 /** Tabs **/
 .tabs {
 	border-bottom: 0;
-	margin: 10px 5px 0 5px;
+	margin: 10px 5px 0;
 	padding: .2em .2em 0;
 }
 
@@ -1072,7 +1071,6 @@ td.form {
 }
 
 .tabmark {
-	white-space: nowrap;
 	font-size: 10px;
 	background: #4e4e4e url(darkroom/button.png);
 	border: 1px solid #666;
@@ -1103,7 +1101,7 @@ td.form {
 .tabcontent {
 	padding: 2px;
 	margin: 5px;
-	margin-top: 0;
+	margin-top: 1px;
 	border: 1px solid #666;
 	background: #232323;
 }

@@ -169,7 +169,7 @@
 							{preference name=bigbluebutton_server_location}
 							{preference name=bigbluebutton_server_salt}
 						</div>
-						{preference name=feature_invit}
+						{preference name=feature_invite}
 
 				</fieldset>
 			</div>

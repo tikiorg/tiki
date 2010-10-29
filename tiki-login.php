@@ -209,24 +209,24 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 }
 if ($isvalid) {
 
-    if ($prefs['feature_invit'] == 'y') {
-        // tiki-invit, this part is just here to add groups to users which just registered after received an
-        // invitation via tiki-invit.php and set the redirect to wiki page if required by the invitation
-        $res = $tikilib->query("SELECT `id`,`id_invit` FROM `tiki_invited` WHERE `used_on_user`=? AND used=?", array($user, "registered"));
-        $invitrow=$res->fetchRow();
-        if (is_array($invitrow)) {
-            $id_invited=$invitrow['id'];
-            $id_invit=$invitrow['id_invit'];
+    if ($prefs['feature_invite'] == 'y') {
+        // tiki-invite, this part is just here to add groups to users which just registered after received an
+        // invitation via tiki-invite.php and set the redirect to wiki page if required by the invitation
+        $res = $tikilib->query("SELECT `id`,`id_invite` FROM `tiki_invited` WHERE `used_on_user`=? AND used=?", array($user, "registered"));
+        $inviterow=$res->fetchRow();
+        if (is_array($inviterow)) {
+            $id_invited=$inviterow['id'];
+            $id_invite=$inviterow['id_invite'];
             // set groups
             
-            $groups = $tikilib->getOne("SELECT `groups` FROM `tiki_invit` WHERE `id` = ?", array((int)$id_invit));
+            $groups = $tikilib->getOne("SELECT `groups` FROM `tiki_invite` WHERE `id` = ?", array((int)$id_invite));
             $groups = explode(',', $groups);
             foreach ($groups as $group)
                 $userlib->assign_user_to_group($user, trim($group));
-            $tikilib->query("UPDATE `tiki_invited` SET `used`=? WHERE id_invit=?", array("logged", (int)$id_invited));
+            $tikilib->query("UPDATE `tiki_invited` SET `used`=? WHERE id_invite=?", array("logged", (int)$id_invited));
             
             // set wiki page required by invitation
-            if (!empty($invitrow['wikipageafter'])) $_REQUEST['page']=$invitrow['wikipageafter'];
+            if (!empty($inviterow['wikipageafter'])) $_REQUEST['page']=$inviterow['wikipageafter'];
         }
     }
 

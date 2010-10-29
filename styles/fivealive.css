@@ -591,8 +591,9 @@ li.login_link ul li a {
 
 #tiki-top {
 	height: 50px;
-	background: url(fivealive/topbar.jpg) repeat-x;
+	background: #000 url('fivealive/topbar.jpg') repeat-x;
 }
+#tiki-top[id] {height: auto; min-height: 50px;}
 
 #tiki-top ul.cssmenu_horiz  {
 	margin-top: 2px;
@@ -1030,7 +1031,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 .postbody-title {
 	padding: .5em .3em .3em 1em;
 	position: relative;
-	background: url(fivealive/options/blueberry/siteheader.jpg) -550px -90px;
+	background: #28a7de url(fivealive/options/blueberry/siteheader.jpg) -300px -90px;
 	color: #222;
 	font-weight: bold;
 	font-size: 1.1em;
