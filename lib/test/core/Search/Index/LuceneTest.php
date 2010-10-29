@@ -20,6 +20,7 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 			'object_id' => $typeFactory->identifier('HomePage'),
 			'description' => $typeFactory->plaintext('a description for the page'),
 			'wiki_content' => $typeFactory->wikitext('Hello world!'),
+			'categories' => $typeFactory->multivalue(array(1, 2, 5, 6)),
 		));
 
 		$this->index = $index;
@@ -68,18 +69,24 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 
 	function testFilterType()
 	{
-		$correct = new Search_Query;
-		$correct->filterType('wiki page');
+		$this->assertResultCount(0, 'filterType', 'wiki');
+		$this->assertResultCount(0, 'filterType', 'blog post');
+		$this->assertResultCount(1, 'filterType', 'wiki page');
+	}
 
-		$invalidType = new Search_Query;
-		$invalidType->filterType('wiki');
+	function testFilterCategories()
+	{
+		$this->assertResultCount(1, 'filterCategory', '1 and 2');
+		$this->assertResultCount(0, 'filterCategory', '1 and not 2');
+		$this->assertResultCount(1, 'filterCategory', '1 and (2 or 3)');
+	}
 
-		$noResult = new Search_Query;
-		$noResult->filterType('blog post');
+	private function assertResultCount($count, $filterMethod, $argument)
+	{
+		$query = new Search_Query;
+		$query->$filterMethod($argument);
 
-		$this->assertEquals(0, count($invalidType->search($this->index)));
-		$this->assertEquals(0, count($noResult->search($this->index)));
-		$this->assertGreaterThan(0, count($correct->search($this->index)));
+		$this->assertEquals($count, count($query->search($this->index)));
 	}
 }
 

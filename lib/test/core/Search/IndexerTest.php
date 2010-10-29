@@ -81,5 +81,31 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(3, $index->size());
 	}
+
+	function testGlobalCollection()
+	{
+		$contentSource = new Search_ContentSource_Static(array(
+			'HomePage' => array(),
+			'OtherPage' => array(),
+			'Foobar' => array(),
+		), array());
+
+		$globalSource = new Search_GlobalSource_Static(array(
+			'wiki page:HomePage' => array('categories' => array(1, 2, 3)),
+			'wiki page:OtherPage' => array('categories' => array(0)),
+			'wiki page:Foobar' => array('categories' => array(2)),
+		), array('categories' => 'multivalue'));
+
+		$index = new Search_Index_Memory;
+		$indexer = new Search_Indexer($index);
+		$indexer->addContentSource('wiki page', $contentSource);
+		$indexer->addGlobalSource($globalSource);
+		$indexer->rebuild();
+
+		$document = $index->getDocument(0);
+
+		$typeFactory = $index->getTypeFactory();
+		$this->assertEquals($typeFactory->multivalue(array(1, 2, 3)), $document['categories']);
+	}
 }
 

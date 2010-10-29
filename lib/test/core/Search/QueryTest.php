@@ -48,5 +48,23 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals($expr, $index->getLastQuery());
 	}
+
+	function testFilterCategory()
+	{
+		$index = new Search_Index_Memory;
+		$query = new Search_Query;
+		$query->filterCategory('1 and 2');
+
+		$query->search($index);
+
+		$expr = new Search_Expr_And(array(
+			$expr = new Search_Expr_And(array(
+				new Search_Expr_Token('1', 'multivalue', 'categories'),
+				new Search_Expr_Token('2', 'multivalue', 'categories'),
+			)),
+		));
+
+		$this->assertEquals($expr, $index->getLastQuery());
+	}
 }
 

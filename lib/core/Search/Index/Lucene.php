@@ -48,6 +48,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$typeMap = array(
 			'Search_Type_WikiText' => 'Text',
 			'Search_Type_Whole' => 'Keyword',
+			'Search_Type_MultivalueText' => 'UnStored',
 		);
 
 		foreach ($data as $key => $value) {
@@ -111,6 +112,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 		switch (get_class($value)) {
 		case 'Search_Type_Whole':
 		case 'Search_Type_WikiText':
+		case 'Search_Type_MultivalueText':
 			$parts = explode(' ', $value->getValue());
 			if (count($parts) === 1) {
 				return new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($parts[0], $field), true);
