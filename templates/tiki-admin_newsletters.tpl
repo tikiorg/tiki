@@ -41,11 +41,9 @@
 			<td>{$channels[user].drafts}</td>
 			<td>{$channels[user].lastSent|tiki_short_datetime}</td>
 			<td>
-				{if ($channels[user].tiki_p_admin eq 'y') or ($channels[user].tiki_p_assign_perm_newsletters eq 'y')}
-					<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$channels[user].nlId}" title="{tr}Assign Permissions{/tr}">
-						<img width="16" height="16" alt="{tr}Assign Permissions{/tr}" src="pics/icons/key{if $channels[user].individual eq 'y'}_active{/if}.png" />
-					</a>
-				{/if}
+				<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$channels[user].nlId}" title="{tr}Assign Permissions{/tr}">
+					<img width="16" height="16" alt="{tr}Assign Permissions{/tr}" src="pics/icons/key{if $channels[user].individual eq 'y'}_active{/if}.png" />
+				</a>
 				{self_link _icon='page_edit' cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId}{tr}Edit{/tr}{/self_link}
 				<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$channels[user].nlId}" title="{tr}Subscriptions{/tr}">{icon _id='group' alt="{tr}Subscriptions{/tr}"}</a>
 				<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Send Newsletter{/tr}">{icon _id='email' alt="{tr}Send Newsletter{/tr}"}</a>
