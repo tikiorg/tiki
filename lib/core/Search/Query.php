@@ -27,6 +27,14 @@ class Search_Query
 		}
 	}
 
+	function filterType($type)
+	{
+		$token = new Search_Expr_Token($type);
+		$token->setType('identifier');
+		$token->setField('object_type');
+		$this->expr->addPart($token);
+	}
+
 	function search(Search_Index_Interface $index)
 	{
 		return $index->find($this->expr);

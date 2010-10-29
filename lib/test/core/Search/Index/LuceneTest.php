@@ -65,5 +65,21 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(0, count($result));
 	}
+
+	function testFilterType()
+	{
+		$correct = new Search_Query;
+		$correct->filterType('wiki page');
+
+		$invalidType = new Search_Query;
+		$invalidType->filterType('wiki');
+
+		$noResult = new Search_Query;
+		$noResult->filterType('blog post');
+
+		$this->assertEquals(0, count($invalidType->search($this->index)));
+		$this->assertEquals(0, count($noResult->search($this->index)));
+		$this->assertGreaterThan(0, count($correct->search($this->index)));
+	}
 }
 

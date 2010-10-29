@@ -32,5 +32,21 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals($expr, $index->getLastQuery());
 	}
+
+	function testFilterType()
+	{
+		$index = new Search_Index_Memory;
+		$query = new Search_Query('hello');
+		$query->filterType('wiki page');
+
+		$query->search($index);
+		
+		$expr = new Search_Expr_And(array(
+			new Search_Expr_Token('hello', 'wikitext', 'global'),
+			new Search_Expr_Token('wiki page', 'identifier', 'object_type'),
+		));
+
+		$this->assertEquals($expr, $index->getLastQuery());
+	}
 }
 
