@@ -27,7 +27,7 @@ if ( isset($section) and isset($sections[$section])) {
 		if ( $object = current_object() ) {
 			$freetaglib->delete_object_tag($object['object'], $object['type'], $_REQUEST['delTag']);
 		}
-		$url = $tikilib->httpPrefix().str_replace('&delTag='.urlencode($_REQUEST['delTag']), '', $_SERVER['REQUEST_URI']);
+		$url = $tikilib->httpPrefix().preg_replace('/[?&]delTag='.preg_quote(urlencode($_REQUEST['delTag']), '/') . '/', '', $_SERVER['REQUEST_URI']);
 		header("Location: $url");
 		die;
 	}
