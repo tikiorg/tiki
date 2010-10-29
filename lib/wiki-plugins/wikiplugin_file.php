@@ -17,7 +17,7 @@ function wikiplugin_file_info()
     		'name' => array(
 				'required' => false,
 				'name' => tra('Name'),
-				'description' => tra("Gives the name of the attached file to link to"),
+				'description' => tra('Wiki attachment:') . ' ' . tra("Gives the name of the attached file to link to"),
 			),
  			'desc' => array(
 				'required' => false,
@@ -32,7 +32,7 @@ function wikiplugin_file_info()
     		'showdesc' => array(
 				'required' => false,
 				'name' => tra('Show description'),
-				'description' => tra("Shows the description as the link text instead of the file name"),
+				'description' => tra('Wiki attachment:') . ' ' . tra("Shows the description as the link text instead of the file name"),
 			),
     		'image' =>array(
 				'required' => false,
