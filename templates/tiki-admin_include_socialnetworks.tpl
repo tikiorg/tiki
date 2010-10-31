@@ -34,6 +34,17 @@
 			{preference name=socialnetworks_facebook_api_key}
 			{preference name=socialnetworks_facebook_application_secr}
 			{preference name=socialnetworks_facebook_application_id}
+			{preference name=socialnetworks_facebook_login}
+			{preference name=socialnetworks_facebook_autocreateuser}
+			{preference name=socialnetworks_facebook_firstloginpopup}
+			{remarksbox type="note" title="{tr}Note{/tr}"}
+			{tr}The following preferences affect what permissions the user is asked to allow Tiki to do by Facebook when authorizing it.{/tr}
+			{/remarksbox}
+			{preference name=socialnetworks_facebook_offline_access}
+			{preference name=socialnetworks_facebook_publish_stream}
+			{preference name=socialnetworks_facebook_manage_events}
+			{preference name=socialnetworks_facebook_manage_pages}
+			{preference name=socialnetworks_facebook_sms}
 		</div>
 	</fieldset>
 	

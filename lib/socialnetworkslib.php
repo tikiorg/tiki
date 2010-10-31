@@ -129,13 +129,31 @@ class SocialNetworksLib extends LogsLib
 		if(!$this->facebookRegistered()) {
 			return false;
 		}
+		$scopes = array();
+		if ($prefs["socialnetworks_facebook_offline_access"] == 'y') {
+			$scopes[] = 'offline_access';
+		}
+		if ($prefs["socialnetworks_facebook_publish_stream"] == 'y') {
+			$scopes[] = 'publish_stream';
+		}
+		if ($prefs["socialnetworks_facebook_manage_events"] == 'y') {
+			$scopes[] = 'create_event';
+			$scopes[] = 'rsvp_event';
+		}
+		if ($prefs["socialnetworks_facebook_sms"] == 'y') {
+			$scopes[] = 'sms';
+		}
+		if ($prefs["socialnetworks_facebook_manage_pages"] == 'y') {
+			$scopes[] = 'manage_pages';
+		}
+		$scope = implode(',', $scopes);
 		$url=$this->getURL();
 		if (strpos($url,'?')!=0) {
 			$url=preg_replace('/\?.*/','',$url);
 		}
 		$url=urlencode($url.'?request_facebook');
 		$url='https://graph.facebook.com/oauth/authorize?client_id=' . $prefs['socialnetworks_facebook_application_id'] . 
-			 '&scope=offline_access,publish_stream,create_event,rsvp_event,sms,manage_pages&redirect_uri='.$url;
+			 '&scope=' . $scope . '&redirect_uri='.$url;
 		header("Location: $url");
 		die();
 	}
@@ -146,8 +164,8 @@ class SocialNetworksLib extends LogsLib
 	 * @param string $user  user Id of the user to store the access token for
 	 * @return bool 		true on success
 	 */
-	function getFacebookAccessToken($user) {
-		global $prefs;
+	function getFacebookAccessToken() {
+		global $prefs, $user, $userlib;
 		if($prefs['socialnetworks_facebook_application_id']=='' or $prefs['socialnetworks_facebook_api_key']=='' or $prefs['socialnetworks_facebook_application_secr']=='') {
 			return false;
 		}
@@ -178,7 +196,48 @@ class SocialNetworksLib extends LogsLib
 		$ret=$ret[1];
 
 		if(substr($ret,0,13)=='access_token=') {
-			$this->set_user_preference($user, 'facebook_token', substr($ret,13));
+			$access_token = substr($ret,13);
+			if ($endoftoken = strpos($access_token,'&')) {
+				// Returned string may have other var like expiry
+				$access_token = substr($access_token,0,$endoftoken);
+			}
+			$fb_profile = json_decode($this->facebookGraph('', 'me', array('access_token' => $access_token), false, 'GET'));
+			if (empty($fb_profile->id)) {
+				return false;
+			}
+			if (!$user) {
+				if ($prefs["socialnetworks_facebook_login"] != 'y') {
+					return false;
+				}
+				$local_user = $this->getOne("select `user` from `tiki_user_preferences` where `prefName` = 'facebook_id' and `value` = ?", array($fb_profile->id));
+				if ($local_user) {
+					$user = $local_user;
+				} elseif ($prefs["socialnetworks_facebook_autocreateuser"] == 'y') {
+					$randompass = $userlib->genPass();
+					$user = 'fb_' . $fb_profile->id;
+                	$userlib->add_user($user, $randompass, '');
+                	$this->set_user_preference($user, 'realName', $fb_profile->name);
+                	if ($prefs["socialnetworks_facebook_firstloginpopup"] == 'y') {
+                		$this->set_user_preference($user, 'socialnetworks_user_firstlogin', 'y');
+                	}
+				} else {
+					global $smarty;
+					$smarty->assign('errortype', 'login');
+					$smarty->assign('msg', tra('You need to link your local account to Facebook before you can login using it'));
+        			$smarty->display('error.tpl');
+					die;
+				}
+				global $user_cookie_site;
+				$_SESSION[$user_cookie_site] = $user;
+				$userlib->update_expired_groups();
+				$this->set_user_preference($user, 'facebook_id', $fb_profile->id);
+				$this->set_user_preference($user, 'facebook_token', $access_token);
+				header("Location: tiki-index.php");
+				die;
+			} else {
+				$this->set_user_preference($user, 'facebook_id', $fb_profile->id);			
+				$this->set_user_preference($user, 'facebook_token', $access_token);
+			}
 			return true;
 		} else {
 			return false;

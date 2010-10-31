@@ -177,4 +177,7 @@ function capLock(e){
 			</fieldset>
 		</form>
 	{/if}
+	{if $prefs.socialnetworks_facebook_login eq 'y'}
+		<div style="text-align: center"><a href="tiki-socialnetworks.php?request_facebook=true"><img src="http://developers.facebook.com/images/devsite/login-button.png" /></a></div>
+	{/if}
 {/tikimodule}
