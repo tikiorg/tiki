@@ -3,10 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_html.php 30235 2010-10-22 22:39:22Z chealer $
-
-// Include literal HTML in a Wiki page
-// Jeremy Lee  2009-02-16
+// $Id$
 
 function wikiplugin_twitter_info() {
 	return array(
