@@ -69,36 +69,9 @@ foreach($pollIds as $pK => $pId) { // iterate each poll
 		$vote_from_date = $vote_to_date = 0;
 	}
 	$options = $polllib->list_poll_options($pId, $vote_from_date, $vote_to_date);
+	$polllib->options_percent($poll_info, $options);
 	$poll_info_arr[$pK] = $poll_info;
-	if ($vote_from_date != 0) {
-		$poll_info_arr[$pK]['votes'] = 0;
-		foreach($options as $option) {
-			$poll_info_arr[$pK]['votes']+= $option['votes'];
-		}
-	}
-	$temp_max = count($options);
-	$total = 0;
-	$isNum = true; // try to find if it is a numeric poll with a title like +1, -2, 1 point...
-	foreach($options as $i => $option) {
-		if ($option['votes'] == 0) {
-			$percent = 0;
-		} else {
-			$percent = number_format($option['votes'] * 100 / $poll_info_arr[$pK]['votes'], 2);
-			$options[$i]['percent'] = $percent;
-			if ($isNum) {
-				if (preg_match('/^([+-]?[0-9]+).*/', $option['title'], $matches)) {
-					$total+= $option['votes'] * $matches[1];
-				} else {
-					$isNum = false; // it is not a nunmeric poll
-					
-				}
-			}
-		}
-		$width = $percent * 200 / 100;
-		$options[$i]['width'] = $percent;
-	}
 	$poll_info_arr[$pK]['options'] = $options;
-	$poll_info_arr[$pK]['total'] = $total;
 } // end iterate each poll
 
 function scoresort($a, $b) {

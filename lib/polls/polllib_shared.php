@@ -264,6 +264,34 @@ class PollLibShared extends TikiLib
 
 		return $pollId_new;
 	}
+	/* compute percent of each option and nb of votes and pondarated total of poll */
+	function options_percent(&$poll_info, &$options) {
+		$poll_info['votes'] = 0;
+		$total = 0;
+		$isNum = true; // try to find if it is a numeric poll with a title like +1, -2, 1 point...
+		foreach ($options as $i => $option) {
+			$poll_info['votes'] += $option['votes']; // nb of votes
+		}
+		foreach ($options as $i => $option) {
+			if ($option['votes'] == 0) {
+				$percent = 0;
+			} else {
+				$percent = number_format($option['votes'] * 100 / $poll_info['votes'], 2);
+				$options[$i]['percent'] = $percent;
+				if ($isNum) {
+					if (preg_match('/^([+-]?[0-9]+).*/', $option['title'], $matches)) {
+						$total += $option['votes'] * $matches[1];
+					} else {
+						$isNum = false; // it is not a numeric poll
+					}
+				}
+			}
+			$options[$i]['width'] = $percent;
+		}
+		if ($isNum) {
+			$poll_info['total'] = $total; // ponderated total
+		}
+	}
 
 }
 $polllib = new PollLibShared;
