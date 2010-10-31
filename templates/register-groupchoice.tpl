@@ -1,4 +1,4 @@
-{if $prefs.user_register_prettytracker eq 'y' and $prefs.user_register_prettytracker_tpl}
+{if $prefs.user_register_prettytracker eq 'y' and $prefs.user_register_prettytracker_tpl and $prefs.socialnetworks_user_firstlogin != 'y'}
 	{if isset($theChoiceGroup)}
 		<input type="hidden" name="chosenGroup" value="{$theChoiceGroup|escape}" />
 	{elseif isset($listgroups)}
