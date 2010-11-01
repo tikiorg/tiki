@@ -7,6 +7,7 @@
 {if $showtitle ne 'n'}{$menu_info.title|escape}<br />{/if}
 <form method="post" action="{$ownurl}">
 	<input type="hidden" name="polls_pollId" value="{$menu_info.pollId|escape}" />
+	{if !empty($showresult) && $showresult ne 'link'}<input type="hidden" name="showresult" value="{$showresult|escape}" />{/if}
 	{if $tiki_p_vote_poll ne 'n' && ($user ||  $prefs.feature_poll_anonymous == 'y' || $prefs.feature_antibot eq 'y')}
 		{section name=ix loop=$channels}
 			<label><input type="radio" name="polls_optionId" value="{$channels[ix].optionId|escape}"{if $polls_optionId == $channels[ix].optionId} checked="checked"{/if} />{tr}{$channels[ix].title|escape}{/tr}</label><br />

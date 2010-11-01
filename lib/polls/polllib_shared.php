@@ -299,7 +299,7 @@ class PollLibShared extends TikiLib
 			$query .= '`user`=?';
 			$bindvars[] = $user;
 		} else {
-			$query .= '`ip`=?`';
+			$query .= '`ip`=?';
 			$bindvars[] = $ip;
 		}
 		$this->query($query, $bindvars);
@@ -307,7 +307,7 @@ class PollLibShared extends TikiLib
 		$this->query($query, array($pollId, $optionId));
 		$query = 'update `tiki_polls` set `votes`=`votes`-1 where `pollId`=?';
 		$this->query($query, array($pollId));
-		unset($_SESSION['votes']['poll'.$pollId]);
+		$_SESSION['votes'] = array_diff($_SESSION['votes'], array('poll'.$pollId));
 	}
 
 }
