@@ -3,6 +3,7 @@
 class Search_Query
 {
 	private $expr;
+	private $sortOrder;
 
 	function __construct($query = null)
 	{
@@ -42,9 +43,24 @@ class Search_Query
 		$this->expr->addPart($query);
 	}
 
+	function setOrder($order)
+	{
+		if (is_string($order)) {
+			$this->sortOrder = Search_Query_Order::parse($order);
+		} else {
+			$this->sortOrder = $order;
+		}
+	}
+
 	function search(Search_Index_Interface $index)
 	{
-		return $index->find($this->expr);
+		if ($this->sortOrder) {
+			$sortOrder = $this->sortOrder;
+		} else {
+			$sortOrder = Search_Query_Order::getDefault();
+		}
+
+		return $index->find($this->expr, $sortOrder);
 	}
 	
 	private function parse($query)

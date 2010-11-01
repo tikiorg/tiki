@@ -84,5 +84,39 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals($expr, $index->getLastQuery());
 	}
+
+	function testDefaultSearchOrder()
+	{
+		$index = new Search_Index_Memory;
+		$query = new Search_Query;
+
+		$query->search($index);
+
+		$this->assertEquals(Search_Query_Order::searchResult(), $index->getLastOrder());
+	}
+
+	function testSpecifiedOrder()
+	{
+		$index = new Search_Index_Memory;
+		$query = new Search_Query;
+
+		$query->setOrder(Search_Query_Order::recentChanges());
+
+		$query->search($index);
+
+		$this->assertEquals(Search_Query_Order::recentChanges(), $index->getLastOrder());
+	}
+
+	function testOrderFromString()
+	{
+		$index = new Search_Index_Memory;
+		$query = new Search_Query;
+
+		$query->setOrder('title_asc');
+
+		$query->search($index);
+
+		$this->assertEquals(new Search_Query_Order('title', 'text', 'asc'), $index->getLastOrder());
+	}
 }
 

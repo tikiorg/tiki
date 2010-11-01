@@ -20,11 +20,11 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$this->lucene->addDocument($document);
 	}
 
-	function find(Search_Expr_Interface $query)
+	function find(Search_Expr_Interface $query, Search_Query_Order $sortOrder)
 	{
 		$query = $this->buildQuery($query);
 
-		$hits = $this->lucene->find((string)$query);
+		$hits = $this->lucene->find((string)$query, $this->getSortField($sortOrder), $this->getSortType($sortOrder), $this->getSortOrder($sortOrder));
 		$result = array();
 
 		foreach ($hits as $hit) {
@@ -37,6 +37,31 @@ class Search_Index_Lucene implements Search_Index_Interface
 		return $result;
 	}
 
+	private function getSortField($sortOrder)
+	{
+		return $sortOrder->getField();
+	}
+
+	private function getSortType($sortOrder)
+	{
+		switch ($sortOrder->getMode()) {
+		case Search_Query_Order::MODE_NUMERIC:
+			return SORT_NUMERIC;
+		case Search_Query_Order::MODE_TEXT:
+			return SORT_STRING;
+		}
+	}
+
+	private function getSortOrder($sortOrder)
+	{
+		switch ($sortOrder->getOrder()) {
+		case Search_Query_Order::ORDER_ASC:
+			return SORT_ASC;
+		case Search_Query_Order::ORDER_DESC:
+			return SORT_DESC;
+		}
+	}
+
 	function getTypeFactory()
 	{
 		return new Search_Type_Factory_Lucene;
@@ -46,9 +71,10 @@ class Search_Index_Lucene implements Search_Index_Interface
 	{
 		$document = new Zend_Search_Lucene_Document;
 		$typeMap = array(
-			'Search_Type_WikiText' => 'Text',
+			'Search_Type_WikiText' => 'UnStored',
 			'Search_Type_Whole' => 'Keyword',
 			'Search_Type_MultivalueText' => 'UnStored',
+			'Search_Type_ShortText' => 'Text',
 		);
 
 		foreach ($data as $key => $value) {

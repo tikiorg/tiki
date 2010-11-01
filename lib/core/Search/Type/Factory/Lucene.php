@@ -26,5 +26,10 @@ class Search_Type_Factory_Lucene implements Search_Type_Factory_Interface
 	{
 		return new Search_Type_MultivalueText((array) $values);
 	}
+
+	function sortable($value)
+	{
+		return new Search_Type_ShortText($value);
+	}
 }
 

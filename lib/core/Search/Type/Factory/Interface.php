@@ -7,4 +7,5 @@ interface Search_Type_Factory_Interface
 	function timestamp($value);
 	function identifier($value);
 	function multivalue($values);
+	function sortable($value);
 }
