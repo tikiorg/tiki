@@ -116,11 +116,11 @@
 	<div id="date_range_find">
 		<span class="findDateFrom">
 			{tr}From{/tr}
-			{html_select_date time="2009-01-01" prefix="find_from_" start_year="-2" end_year="+2" month_format="%m" field_order=$prefs.display_field_order}
+			{html_select_date time=$find_date_from prefix="find_from_" start_year="-2" end_year="+2" month_format="%m" field_order=$prefs.display_field_order}
 		</span>
 		<span class="findDateTo">
 			{tr}to{/tr}
-			{html_select_date prefix="find_to_" start_year="-2" end_year="+2" month_format="%m" field_order=$prefs.display_field_order}
+			{html_select_date time=$find_date_to prefix="find_to_" start_year="-2" end_year="+2" month_format="%m" field_order=$prefs.display_field_order}
 		</span>
 	</div>
 {/if}
