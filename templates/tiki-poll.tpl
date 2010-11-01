@@ -25,7 +25,7 @@
 {if $tiki_p_vote_poll ne 'n' && ($user ||  $prefs.feature_poll_anonymous == 'y' || $prefs.feature_antibot eq 'y')}
 	<input type="submit" name="pollVote" value="{tr}vote{/tr}" /><br />
 {/if}
-{if $tiki_p_view_poll_results == 'y'}
+{if $tiki_p_view_poll_results == 'y' and $showresult ne 'always' and $showresult ne 'voted'}
 	<a class="linkmodule" href="tiki-poll_results.php?pollId={$menu_info.pollId}">{tr}View Results{/tr}</a><br />
    ({tr}Votes{/tr}: {$menu_info.votes})
 {/if}
