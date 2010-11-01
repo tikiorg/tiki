@@ -42,6 +42,10 @@ if (isset($_REQUEST['which_date'])) {
 } else {
 	$which_date = '';
 }
+if ($tiki_p_admin == 'y' && !empty($_REQUEST['deletevote']) && !empty($_REQUEST['optionId'])) {
+	$polllib->delete_vote($_REQUEST['pollId'], $_REQUEST['user'], $_REQUEST['ip'], $_REQUEST['optionId']);
+}
+
 $pollIds = array();
 if (!empty($_REQUEST['pollId'])) {
 	$pollIds[] = $_REQUEST['pollId'];
@@ -113,6 +117,7 @@ if (isset($_REQUEST['scoresort']) || isset($_REQUEST['scoresort_desc'])) {
 	$sort_ok = usort($t_arr, 'scoresort');
 	if ($sort_ok) $poll_info_arr = $t_arr;
 }
+	
 if ($tiki_p_view_poll_voters == 'y' && !empty($_REQUEST['list']) && isset($_REQUEST['pollId'])) {
 	$smarty->assign_by_ref('list', $_REQUEST['list']);
 	if (empty($_REQUEST['sort_mode'])) {

@@ -292,6 +292,23 @@ class PollLibShared extends TikiLib
 			$poll_info['total'] = $total; // ponderated total
 		}
 	}
+	function delete_vote($pollId, $user, $ip, $optionId) {
+		$query = 'delete from `tiki_user_votings` where `id`=? and `optionId`=? and ';
+		$bindvars = array('poll'.$pollId, $optionId);
+		if (!empty($user)) {
+			$query .= '`user`=?';
+			$bindvars[] = $user;
+		} else {
+			$query .= '`ip`=?`';
+			$bindvars[] = $ip;
+		}
+		$this->query($query, $bindvars);
+		$query = 'update `tiki_poll_options` set `votes` = `votes`- 1 where `pollId`=? and `optionId`=?';
+		$this->query($query, array($pollId, $optionId));
+		$query = 'update `tiki_polls` set `votes`=`votes`-1 where `pollId`=?';
+		$this->query($query, array($pollId));
+		unset($_SESSION['votes']['poll'.$pollId]);
+	}
 
 }
 $polllib = new PollLibShared;
