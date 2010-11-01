@@ -1,3 +1,8 @@
+{if $showtitle eq 'y'}
+<div class="poll-title">
+    <strong>{$poll_info.title|escape}</strong>
+</div>
+{/if}
 <div class="pollresults">
 {cycle values="even,odd" print=false}
 <table class="pollresults">

@@ -72,7 +72,7 @@
 {/if}
 
 {*----------------------------------- Results *}
-{include file='tiki-poll_results_bar.tpl' poll_info=$poll_info_arr[x]}
+{include file='tiki-poll_results_bar.tpl' poll_info=$poll_info_arr[x] showtitle=n}
 
 {/section}
 
