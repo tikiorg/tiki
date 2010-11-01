@@ -2829,12 +2829,15 @@ class Tiki_Profile_InstallHandler_Sheet extends Tiki_Profile_InstallHandler // {
 			
 			for ($sheetI = 0; $sheetI < count($this->data); $sheetI++)
 			{
+				$title = $this->data[$sheetI]['title'];
+				$title = ($title ? $title : "Untitled - From Profile Import");
+				
 				for ($r = 0; $r < count($this->data[$sheetI]); $r++)
 				{
 					for ($c = 0; $c < count($this->data[$sheetI][$r]); $c++)
 					{
-						$value;
-						$formula;
+						$value = "";
+						$formula = "";
 						$rawValue = $this->data[$sheetI][$r][$c];
 						 
 						if (substr($rawValue, 0, 1) == "=") {
@@ -2854,10 +2857,9 @@ class Tiki_Profile_InstallHandler_Sheet extends Tiki_Profile_InstallHandler // {
 					}
 				}
 				
-				$sheets[$sheetI]->metadata->rows = (count($this->data[$sheetI]) - 1);
-				$sheets[$sheetI]->metadata->columns = (count($this->data[$sheetI][0]) - 1);
-				
-				$id = $sheetlib->replace_sheet(0, "Profile Test", "", $user, $parentSheetId);
+				$sheets[$sheetI]->metadata->rows = count($this->data[$sheetI]);
+				$sheets[$sheetI]->metadata->columns = count($this->data[$sheetI][0]);
+				$id = $sheetlib->replace_sheet(0, $title, "", $user, $parentSheetId);
 				$parentSheetId = ($parentSheetId ? $parentSheetId : $id);
 				
 				$grid = new TikiSheet($id);
