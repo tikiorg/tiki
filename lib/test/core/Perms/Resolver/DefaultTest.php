@@ -14,5 +14,11 @@ class Perms_Resolver_DefaultTest extends TikiTestCase
 		$resolver = new Perms_Resolver_Default( false );
 		$this->assertFalse( $resolver->check( 'view', array() ) );
 	}
+
+	function testApplicableGroups() {
+		$resolver = new Perms_Resolver_Default(true);
+		$this->assertContains('Anonymous', $resolver->applicableGroups());
+		$this->assertContains('Registered', $resolver->applicableGroups());
+	}
 }
 
