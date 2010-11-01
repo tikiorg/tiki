@@ -41,13 +41,20 @@ function wikiplugin_poll_info() {
 				'filter' => 'alpha',
 				'default' => 'link',
 			),
+			'showtotal' => array(
+				'required' => false,
+				'name' => tra('Show total votes'),
+				'description' => 'y|n',
+				'filter' => 'alpha',
+				'default' => 'y',
+			),
 		),
 	);
 }
 
 function wikiplugin_poll($data, $params) {
 	global $smarty, $polllib, $trklib, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $prefs, $_REQUEST, $user;
-	$default = array('showtitle' => 'y', 'showresult' => 'link');
+	$default = array('showtitle' => 'y', 'showresult' => 'link', 'showtotal' => 'y');
 	$params = array_merge($default, $params);
 
 	extract ($params,EXTR_SKIP);
@@ -65,6 +72,7 @@ function wikiplugin_poll($data, $params) {
 	$hasVoted = $tikilib->user_has_voted($user, 'poll' . $pollId);
 	$ret = '';
 	$smarty->assign_by_ref('showresult', $showresult);
+	$smarty->assign_by_ref('showtotal', $showtotal);
 	$smarty->assign_by_ref('hasVoted', $hasVoted);
     if (!$hasVoted || $prefs['feature_poll_revote'] == 'y') {
 		$smarty->assign_by_ref('menu_info', $poll_info);

@@ -277,7 +277,6 @@ class PollLibShared extends TikiLib
 				$percent = 0;
 			} else {
 				$percent = number_format($option['votes'] * 100 / $poll_info['votes'], 2);
-				$options[$i]['percent'] = $percent;
 				if ($isNum) {
 					if (preg_match('/^([+-]?[0-9]+).*/', $option['title'], $matches)) {
 						$total += $option['votes'] * $matches[1];
@@ -286,6 +285,7 @@ class PollLibShared extends TikiLib
 					}
 				}
 			}
+			$options[$i]['percent'] = $percent;
 			$options[$i]['width'] = $percent;
 		}
 		if ($isNum) {

@@ -9,13 +9,15 @@
 				{if $smarty.section.x.total > 1}</a>{/if}
 			</td>
     		<td class="pollr">
-				{quotabar length=$poll_info.options[ix].width}  {$poll_info.options[ix].percent}% ({$poll_info.options[ix].votes})
+				{quotabar length=$poll_info.options[ix].width}  {$poll_info.options[ix].percent}%{if $showtotal ne 'n'} ({$poll_info.options[ix].votes}){/if}
     		</td>
     	</tr>
 	{/section}
 </table>
 <br />
+{if $showtotal ne 'n'}
 {tr}Total{/tr}: {$poll_info.votes} {tr}votes{/tr}<br /><br />
+{/if}
 {if isset($poll_info.total) and $poll_info.total > 0}
 	{tr}Average:{/tr} {math equation="x/y" x=$poll_info.total y=$poll_info.votes format="%.2f"}
 {/if}
