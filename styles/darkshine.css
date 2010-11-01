@@ -1484,6 +1484,11 @@ a.admbox.off:active {
 	border: 1px solid #9f9f9f}
 /***** Ajax, jquery. etc. *****/
 
+/** tree **/
+.ui-icon {
+background-image:url('../lib/jquery/jquery-ui/themes/smoothness/images/ui-icons_888888_256x240.png');
+}
+
 /***** New (unsorted) *****/
 
 /***** End New (unsorted) *****/

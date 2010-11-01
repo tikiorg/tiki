@@ -817,7 +817,8 @@ a.tikihelp:hover {
 	color: orange;
 }
 
-/** Jquery autocomplete **/
+/**** Jquery ****/
+/**autocomplete **/
 .ac_even, .ac_odd {
 	color: #292929;
 }
@@ -839,6 +840,11 @@ a.tikihelp:hover {
 a.tikihelp, 
 a.tikihelp:hover {
 	color: #292929;
+}
+
+/**tree**/
+.ui-icon {
+background-image:url('../lib/jquery/jquery-ui/themes/ui-darkness/images/ui-icons_cccccc_256x240.png');
 }
 
 

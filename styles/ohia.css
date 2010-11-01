@@ -434,6 +434,11 @@ a.tikihelp:hover {
 	color: #fd0006;
 }
 
+/** tree **/
+.ui-icon {
+background-image:url('../lib/jquery/jquery-ui/themes/smoothness/images/ui-icons_888888_256x240.png');
+}
+
 
 /***** Boxes *****/
 /** Modules **/

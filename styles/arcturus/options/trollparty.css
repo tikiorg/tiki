@@ -261,13 +261,18 @@ input[type=submit]:hover {
 }
 
 /**infinite carousel**/
-
 #carousel {
         color: #122232;
 }
 
 #carousel a {
         color: #122232;
+}
+
+
+/** tree **/
+.ui-icon {
+background-image:url('../../../lib/jquery/jquery-ui/themes/smoothness/images/ui-icons_888888_256x240.png');
 }
 
 /**** Boxes *****/
