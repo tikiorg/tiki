@@ -33,9 +33,10 @@ class Search_Indexer
 
 			foreach ($contentSource->getDocuments() as $objectId) {
 				$data = $contentSource->getDocument($objectId, $typeFactory);
+				$initialData = $data;
 
 				foreach ($this->globalSources as $globalSource) {
-					$data = array_merge($data, $globalSource->getData($objectType, $objectId, $typeFactory));
+					$data = array_merge($data, $globalSource->getData($objectType, $objectId, $typeFactory, $initialData));
 				}
 
 				$base = array('object_type' => $type, 'object_id' => $typeFactory->identifier($objectId));

@@ -13,6 +13,9 @@ class Search_Type_MultivalueText implements Search_Type_Interface
 	{
 		$strings = array();
 		foreach ($this->values as $val) {
+			if (!is_numeric($val)) {
+				$val = md5($val);
+			}
 			$strings[] = 'token' . $val;
 		}
 

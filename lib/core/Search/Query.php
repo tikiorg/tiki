@@ -35,6 +35,18 @@ class Search_Query
 		$this->addPart($query, 'identifier', 'language');
 	}
 
+	function filterPermissions(array $groups)
+	{
+		$tokens = array();
+		foreach ($groups as $group) {
+			$tokens[] = new Search_Expr_Token($group);
+		}
+
+		$or = new Search_Expr_Or($tokens);
+
+		$this->addPart($or, 'multivalue', 'allowed_groups');
+	}
+
 	private function addPart($query, $type, $field)
 	{
 		$query = $this->parse($query);

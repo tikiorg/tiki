@@ -22,6 +22,7 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 			'description' => $typeFactory->plaintext('a description for the page'),
 			'wiki_content' => $typeFactory->wikitext('Hello world!'),
 			'categories' => $typeFactory->multivalue(array(1, 2, 5, 6)),
+			'allowed_groups' => $typeFactory->multivalue(array('Project Lead', 'Editor', 'Admins')),
 		));
 
 		$this->index = $index;
@@ -88,6 +89,15 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 		$this->assertResultCount(1, 'filterLanguage', 'en or fr');
 		$this->assertResultCount(0, 'filterLanguage', 'en and fr');
 		$this->assertResultCount(0, 'filterLanguage', 'fr');
+	}
+
+	function testFilterPermissions()
+	{
+		$this->assertResultCount(0, 'filterPermissions', array('Anonymous'));
+		$this->assertResultCount(0, 'filterPermissions', array('Registered'));
+		$this->assertResultCount(1, 'filterPermissions', array('Registered', 'Editor'));
+		$this->assertResultCount(1, 'filterPermissions', array('Project Lead'));
+		$this->assertResultCount(0, 'filterPermissions', array('Project'));
 	}
 
 	private function assertResultCount($count, $filterMethod, $argument)

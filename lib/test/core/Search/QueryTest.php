@@ -118,5 +118,24 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(new Search_Query_Order('title', 'text', 'asc'), $index->getLastOrder());
 	}
+
+	function testFilterBasedOnPermissions()
+	{
+		$index = new Search_Index_Memory;
+		$query = new Search_Query;
+		$query->filterPermissions(array('Registered', 'Editor', 'Project Lead ABC'));
+
+		$query->search($index);
+
+		$expr = new Search_Expr_And(array(
+			$expr = new Search_Expr_Or(array(
+				new Search_Expr_Token('Registered', 'multivalue', 'allowed_groups'),
+				new Search_Expr_Token('Editor', 'multivalue', 'allowed_groups'),
+				new Search_Expr_Token('Project Lead ABC', 'multivalue', 'allowed_groups'),
+			)),
+		));
+
+		$this->assertEquals($expr, $index->getLastQuery());
+	}
 }
 

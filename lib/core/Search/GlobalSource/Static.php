@@ -11,7 +11,7 @@ class Search_GlobalSource_Static implements Search_GlobalSource_Interface
 		$this->typeMap = $typeMap;
 	}
 
-	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory)
+	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
 	{
 		$out = array();
 
