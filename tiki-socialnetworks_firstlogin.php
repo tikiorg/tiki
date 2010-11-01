@@ -45,17 +45,17 @@ if (isset($_REQUEST["localinfosubmit"])) {
 }
 
 if (isset($_REQUEST["linkaccount"])) {
-	list($isvalid, $user, $error) = $userlib->validate_user($_REQUEST["userlogin"], $_REQUEST["userpass"]);
+	list($isvalid, $newuser, $error) = $userlib->validate_user($_REQUEST["userlogin"], $_REQUEST["userpass"]);
 	if (!$isvalid) {
 		$smarty->assign('msg', tra('Invalid username or password'));
 	} else {
 		$facebook_id = $tikilib->get_user_preference($user, 'facebook_id');
 		// TODO set other social networking IDs
-		$tikilib->set_user_preference($_REQUEST["userlogin"], 'socialnetworks_user_firstlogin', 'n');
-		$tikilib->set_user_preference($_REQUEST["userlogin"], 'facebook_id', $facebook_id);
+		$tikilib->set_user_preference($newuser, 'socialnetworks_user_firstlogin', 'n');
+		$tikilib->set_user_preference($newuser, 'facebook_id', $facebook_id);
 		$tikilib->set_user_preference($user, 'facebook_id', '');
 		$userlib->remove_user($user);
-		$user = $_REQUEST["userlogin"];
+		$user = $newuser;
 		$_SESSION[$user_cookie_site] = $user;
 		$smarty->assign('alldone', true);
 	}
