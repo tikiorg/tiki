@@ -81,7 +81,6 @@ function wikiplugin_poll($data, $params) {
 		$total = $polllib->options_percent($poll_info, $options);
 		$poll_info['options'] = $options;
 		$smarty->assign_by_ref('poll_info', $poll_info);
-		print_r($poll_info); print_r($options);
 		$ret .= $smarty->fetch('tiki-poll_results_bar.tpl');
 	}
 	return '~np~'.$ret.'~/np~';
