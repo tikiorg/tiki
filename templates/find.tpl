@@ -95,6 +95,7 @@
 			{/if}
 		{/section}
 		</select>
+		{if isset($find_show_languages_excluded) and $find_show_languages_excluded eq 'y'}
 		<label>{tr}not in{/tr}
 			<select name="langOrphan" class="notin">
 				<option value='' {if $find_langOrphan eq ''}selected="selected"{/if}></option>
@@ -107,6 +108,7 @@
 		{/section}
 			</select>
 		</label>
+		{/if}
 	</label>
 {/if}
 
