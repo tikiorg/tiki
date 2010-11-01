@@ -137,5 +137,28 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals($expr, $index->getLastQuery());
 	}
+
+	function testDefaultPagination()
+	{
+		$index = new Search_Index_Memory;
+		$query = new Search_Query;
+
+		$query->search($index);
+
+		$this->assertEquals(0, $index->getLastStart());
+		$this->assertEquals(50, $index->getLastCount());
+	}
+
+	function testSpecifiedRange()
+	{
+		$index = new Search_Index_Memory;
+		$query = new Search_Query;
+		$query->setRange(60, 30);
+
+		$query->search($index);
+
+		$this->assertEquals(60, $index->getLastStart());
+		$this->assertEquals(30, $index->getLastCount());
+	}
 }
 

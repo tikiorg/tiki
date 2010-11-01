@@ -20,21 +20,27 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$this->lucene->addDocument($document);
 	}
 
-	function find(Search_Expr_Interface $query, Search_Query_Order $sortOrder)
+	function find(Search_Expr_Interface $query, Search_Query_Order $sortOrder, $resultStart, $resultCount)
 	{
 		$query = $this->buildQuery($query);
 
 		$hits = $this->lucene->find((string)$query, $this->getSortField($sortOrder), $this->getSortType($sortOrder), $this->getSortOrder($sortOrder));
 		$result = array();
 
-		foreach ($hits as $hit) {
-			$result[] = array(
-				'object_type' => $hit->object_type,
-				'object_id' => $hit->object_id,
-			);
+		foreach ($hits as $key => $hit) {
+			if ($key >= $resultStart) {
+				$result[] = array(
+					'object_type' => $hit->object_type,
+					'object_id' => $hit->object_id,
+				);
+
+				if (count($result) == $resultCount) {
+					break;
+				}
+			}
 		}
 
-		return $result;
+		return new Search_ResultSet($result, count($hits));
 	}
 
 	private function getSortField($sortOrder)

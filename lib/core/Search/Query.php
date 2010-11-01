@@ -4,6 +4,8 @@ class Search_Query
 {
 	private $expr;
 	private $sortOrder;
+	private $start = 0;
+	private $count = 50;
 
 	function __construct($query = null)
 	{
@@ -64,6 +66,12 @@ class Search_Query
 		}
 	}
 
+	function setRange($start, $count)
+	{
+		$this->start = (int) $start;
+		$this->count = (int) $count;
+	}
+
 	function search(Search_Index_Interface $index)
 	{
 		if ($this->sortOrder) {
@@ -72,7 +80,7 @@ class Search_Query
 			$sortOrder = Search_Query_Order::getDefault();
 		}
 
-		return $index->find($this->expr, $sortOrder);
+		return $index->find($this->expr, $sortOrder, $this->start, $this->count);
 	}
 	
 	private function parse($query)
