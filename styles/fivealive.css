@@ -574,7 +574,7 @@ a.login_link {
 }
 
 #siteloginbar_popup .cssmenu_horiz #logout_link ul {
-	margin-left: -11.5em;
+	margin-left: -10.7em;
 	width: 20em !important; /* to override the hardcoded in-line style width */
 }
 
