@@ -17,6 +17,18 @@
 		{tab name="{tr}General Settings{/tr}"}
 			<fieldset>
 				<legend>
+					{tr}Unified Search{/tr}
+				</legend>
+
+				{preference name="unified_engine"}
+				<div class="adminoptionboxchild unified_engine_childcontainer lucene">
+					{preference name="unified_lucene_location"}
+				</div>
+
+				<a href="tiki-admin.php?page=search&amp;rebuild=now">{tr}Rebuild Index{/tr}</a>
+			</fieldset>
+			<fieldset>
+				<legend>
 					{tr}Search type{/tr}{help url="Search"}
 				</legend>
 				{preference name=feature_search_fulltext}

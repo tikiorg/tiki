@@ -90,5 +90,14 @@ require_once('lib/init/initlib.php');
 TikiInit::prependIncludePath($tikipath.'lib/pear');
 TikiInit::appendIncludePath($tikipath.'lib/core');
 TikiInit::appendIncludePath($tikipath);
-require_once('lib/core/DeclFilter.php');
-require_once('lib/core/JitFilter.php');
+require_once 'Zend/Loader/Autoloader.php';
+Zend_Loader_Autoloader::getInstance()
+	->registerNamespace('TikiFilter')
+	->registerNamespace('DeclFilter')
+	->registerNamespace('JitFilter')
+	->registerNamespace('Search')
+	->registerNamespace('Perms')
+	->registerNamespace('Math')
+	->registerNamespace('Category')
+	->registerNamespace('WikiParser');
+

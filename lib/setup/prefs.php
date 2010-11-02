@@ -264,6 +264,7 @@ function get_default_prefs() {
 		'wikiplugin_jq' => 'n',
 		'wikiplugin_lang' => 'y',
 		'wikiplugin_lastmod' => 'n',
+		'wikiplugin_list' => 'n',
 		'wikiplugin_listpages' => 'n',
 		'wikiplugin_lsdir' => 'n',
 		'wikiplugin_mail' => 'n',
@@ -412,6 +413,7 @@ function get_default_prefs() {
 		'wikiplugininline_jq' => 'n',
 		'wikiplugininline_lang' => 'n',
 		'wikiplugininline_lastmod' => 'n',
+		'wikiplugininline_list' => 'n',
 		'wikiplugininline_listpages' => 'n',
 		'wikiplugininline_lsdir' => 'n',
 		'wikiplugininline_mail' => 'y',
@@ -1809,6 +1811,10 @@ function get_default_prefs() {
 		'comments_field_website' => 'n',
 		'comments_vote' => 'n',
 		'comments_archive' => 'n',
+
+		// Unified search
+		'unified_engine' => 'lucene',
+		'unified_lucene_location' => 'temp/unified-index',
 	);
 
 	// Special default values
