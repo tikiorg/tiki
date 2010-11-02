@@ -32,6 +32,7 @@ class Session
 
 		if( $prefs['session_lifetime'] > 0 ) {
 			$qry = "select data from sessions where sesskey = ? and expiry > ?";
+			$bindvars[] = $prefs['session_lifetime'];
 		} else {
 			$qry = "select data from sessions where sesskey = ?";
 		}

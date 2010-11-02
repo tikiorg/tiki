@@ -59,7 +59,7 @@
 {/if}
 
 {if $prefs.feature_socialnetworks == 'y' and !empty($user) and ($tiki_p_socialnetworks eq 'y' or $tiki_p_admin_socialnetworks eq 'y')}
-	{button _icon="img/mytiki/socialnetworks_32.png" _text="{tr}Social networks{/tr}" href="tiki-socialnetworks.php" _menu_text="y}
+	{button _icon="pics/large/socialnetworks.png" _text="{tr}Social networks{/tr}" href="tiki-socialnetworks.php" _menu_text="y}
 {/if}
 
 </div>

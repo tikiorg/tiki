@@ -240,6 +240,8 @@ class TrackerLib extends TikiLib
 			}
 			include_once ('lib/webmail/tikimaillib.php');
 			$smarty->assign('server_name', $_SERVER['SERVER_NAME']);
+			$desc = $this->get_isMain_value($trackerId, $itemId);
+			$smarty->assign('mail_item_desc', $desc);
 			foreach ($watchers as $w) {
 				$mail = new TikiMail($w['user']);
 				$mail->setHeader("From", $prefs['sender_email']);
@@ -294,6 +296,8 @@ class TrackerLib extends TikiLib
 			}
 			include_once ('lib/webmail/tikimaillib.php');
 			$smarty->assign('server_name', $_SERVER['SERVER_NAME']);
+			$desc = $this->get_isMain_value($trackerId, $itemId);
+			$smarty->assign('mail_item_desc', $desc);
 			foreach ($watchers as $w) {
 				$mail = new TikiMail($w['user']);
 				$mail->setHeader("From", $prefs['sender_email']);
