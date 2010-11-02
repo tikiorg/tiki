@@ -206,8 +206,6 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 			$js_files = array_merge($js_files, $js);
 		}
 
-		array_push($js_files, 'lib/jquery_tiki/tiki-jquery.js');
-
 		// now remove all the js from the source
 		$content = preg_replace('/\s*<script.*javascript.*>.*\/script>\s*/Umis', '', $content);
 		// attach the cleaned xhtml to the response
@@ -241,7 +239,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		$objResponse->alert(sprintf(tra("Template %s not registered"),$template));
 	}
 
-	$js_files[] = 'tiki-jsplugin.php?language='.$prefs['language'];
+	$js_files[] = array();
 
 	if (count($js_files)) {
 		foreach($js_files as $f) {
@@ -252,6 +250,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 	}
 
 	if( $prefs['tiki_minify_javascript'] == 'y' ) {
+		ksort($headerlib->jsfiles);
 		$hjsfiles = $headerlib->getMinifiedJs();
 		if( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 			$hjsfiles[] = 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js';
