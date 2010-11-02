@@ -32,7 +32,7 @@ function wikiplugin_file_info()
     		'showdesc' => array(
 				'required' => false,
 				'name' => tra('Show attachment description'),
-				'description' => tra("Show the attachment description as the link label instead of the attachment name."),
+				'description' => tra('Wiki attachment:') . ' ' . tra("Show the attachment description as the link label instead of the attachment name."),
 				'options' => array(
 					array('text' => tra('No'), 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'),  
