@@ -78,6 +78,7 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 
 	function testFilterCategories()
 	{
+		$this->assertResultCount(0, 'filterCategory', '3');
 		$this->assertResultCount(1, 'filterCategory', '1 and 2');
 		$this->assertResultCount(0, 'filterCategory', '1 and not 2');
 		$this->assertResultCount(1, 'filterCategory', '1 and (2 or 3)');

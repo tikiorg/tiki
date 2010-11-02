@@ -27,9 +27,9 @@ class Search_Query
 		$this->addPart($token, 'identifier', 'object_type');
 	}
 
-	function filterCategory($query)
+	function filterCategory($query, $deep = false)
 	{
-		$this->addPart($query, 'multivalue', 'categories');
+		$this->addPart($query, 'multivalue', $deep ? 'deep_categories' : 'categories');
 	}
 
 	function filterLanguage($query)

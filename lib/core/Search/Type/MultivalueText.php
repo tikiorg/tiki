@@ -16,7 +16,10 @@ class Search_Type_MultivalueText implements Search_Type_Interface
 			if (!is_numeric($val)) {
 				$val = md5($val);
 			}
-			$strings[] = 'token' . $val;
+			$raw = 'token' . $val;
+
+			// Must strip numbers to prevent tokenization
+			$strings[] = strtr($raw, '1234567890', 'qrstuvwxyz');
 		}
 
 		return implode(' ', $strings);
