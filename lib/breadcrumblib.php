@@ -37,6 +37,7 @@ class Breadcrumb
 
 /* static */
 function breadcrumb_buildHeadTitle($crumbs) {
+	global $prefs;
     if( _is_assoc($crumbs) ) {
         return false;
     }
@@ -46,6 +47,8 @@ function breadcrumb_buildHeadTitle($crumbs) {
             $ret[] = breadcrumb_buildHeadTitle($crumb);
         }
         return implode(" : ", $ret);
+	} elseif ($prefs['site_title_breadcrumb'] == 'desc') {
+		return $crumbs->description;
     } else {
         return htmlspecialchars($crumbs->title);
     }
