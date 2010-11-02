@@ -68,6 +68,12 @@ function wikiplugin_split_info()
 		),
 	);
 }
+function wikiplugin_split_rollback($data, $hashes) {
+	foreach($hashes as $hash=>$match) {
+		$data = str_replace($hash, $match, $data);
+	}
+	return $data;
+}
 
 /*
  * \note This plugin should carefuly change text it have to parse
@@ -82,6 +88,14 @@ function wikiplugin_split($data, $params, $pos)
 {
 	global $tikilib, $tiki_p_admin_wiki, $tiki_p_admin, $section;
 	global $replacement;
+	preg_match_all('/{SPLIT.+{SPLIT}/imU', $data, $matches);
+	$hashes = array();
+	foreach ($matches[0] as $match) {
+		if (empty($match)) continue;
+		$hash = md5($match);
+		$hashes[$hash] = $match;
+		$data = str_replace($match, $hash, $data);
+	}
 
     // Remove first <ENTER> if exists...
     // it may be here if present after {SPLIT()} in original text
@@ -110,7 +124,7 @@ function wikiplugin_split($data, $params, $pos)
    // Is there split sections present?
    // Do not touch anything if no... even don't generate <table>
    if (count($rows) <= 1 && count($rows[0]) <= 1)
-      return $data;
+	   return wikiplugin_split_rollback($data, $hashes);
 
 	$percent = false;
 	if (isset($colsize)) {
@@ -218,7 +232,7 @@ $result .= "$pos-$icell-".htmlspecialchars(substr($data, $pos, 10));
     // Close HTML table (no \n at end!)
 	$result .= "</table>";
 
-	return $result;
+	return wikiplugin_split_rollback($result, $hashes);
 }
 
 // find the real start and the real end of a cell
