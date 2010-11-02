@@ -13,6 +13,27 @@ class Search_Index_Memory implements Search_Index_Interface
 		$this->data[] = $data;
 	}
 
+	function invalidateMultiple(array $objectList)
+	{
+		$toRemove = array();
+
+		foreach ($objectList as $object) {
+			foreach ($this->data as $key => $entry) {
+				if ($entry['object_type']->getValue() == $object['object_type']
+					&& $entry['object_id']->getValue() == $object['object_id']) {
+
+					$toRemove[] = $key;
+				}
+			}
+		}
+
+		foreach ($toRemove as $key) {
+			unset($this->data[$key]);
+		}
+
+		$this->data = array_values($this->data);
+	}
+
 	function find(Search_Expr_Interface $query, Search_Query_Order $sortOrder, $resultStart, $resultCount)
 	{
 		$this->lastQuery = $query;

@@ -26,23 +26,40 @@ class Search_Indexer
 	 */
 	function rebuild()
 	{
-		$typeFactory = $this->searchIndex->getTypeFactory();
-
 		foreach ($this->contentSources as $objectType => $contentSource) {
-			$type = $typeFactory->identifier($objectType);
-
 			foreach ($contentSource->getDocuments() as $objectId) {
-				$data = $contentSource->getDocument($objectId, $typeFactory);
-				$initialData = $data;
-
-				foreach ($this->globalSources as $globalSource) {
-					$data = array_merge($data, $globalSource->getData($objectType, $objectId, $typeFactory, $initialData));
-				}
-
-				$base = array('object_type' => $type, 'object_id' => $typeFactory->identifier($objectId));
-
-				$this->searchIndex->addDocument(array_merge($data, $base));
+				$this->addDocument($objectType, $objectId);
 			}
+		}
+	}
+
+	function update(array $objectList)
+	{
+		$this->searchIndex->invalidateMultiple($objectList);
+
+		foreach ($objectList as $object) {
+			$this->addDocument($object['object_type'], $object['object_id']);
+		}
+	}
+
+	private function addDocument($objectType, $objectId)
+	{
+		$typeFactory = $this->searchIndex->getTypeFactory();
+		$contentSource = $this->contentSources[$objectType];
+
+		if (false !== $data = $contentSource->getDocument($objectId, $typeFactory)) {
+			$initialData = $data;
+
+			foreach ($this->globalSources as $globalSource) {
+				$data = array_merge($data, $globalSource->getData($objectType, $objectId, $typeFactory, $initialData));
+			}
+
+			$base = array(
+				'object_type' => $typeFactory->identifier($objectType),
+				'object_id' => $typeFactory->identifier($objectId),
+			);
+
+			$this->searchIndex->addDocument(array_merge($data, $base));
 		}
 	}
 }

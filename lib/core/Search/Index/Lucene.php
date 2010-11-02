@@ -20,11 +20,32 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$this->lucene->addDocument($document);
 	}
 
+	function invalidateMultiple(array $objectList)
+	{
+		$hits = array();
+
+		foreach ($objectList as $object) {
+			$expr = new Search_Expr_And(array(
+				new Search_Expr_Token($object['object_type'], 'identifier', 'object_type'),
+				new Search_Expr_Token($object['object_id'], 'identifier', 'object_id'),
+			));
+
+			$query = $this->buildQuery($expr);
+			foreach ($this->lucene->find($query) as $hit) {
+				$hits[] = $hit;
+			}
+		}
+
+		foreach ($hits as $hit) {
+			$this->lucene->delete($hit->id);
+		}
+	}
+
 	function find(Search_Expr_Interface $query, Search_Query_Order $sortOrder, $resultStart, $resultCount)
 	{
 		$query = $this->buildQuery($query);
 
-		$hits = $this->lucene->find((string)$query, $this->getSortField($sortOrder), $this->getSortType($sortOrder), $this->getSortOrder($sortOrder));
+		$hits = $this->lucene->find($query, $this->getSortField($sortOrder), $this->getSortType($sortOrder), $this->getSortOrder($sortOrder));
 		$result = array();
 
 		foreach ($hits as $key => $hit) {
@@ -93,7 +114,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 
 	private function buildQuery($expr)
 	{
-		return $expr->walk(array($this, 'walkCallback'));
+		return (string) $expr->walk(array($this, 'walkCallback'));
 	}
 
 	function walkCallback($node, $childNodes)

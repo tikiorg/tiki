@@ -18,6 +18,10 @@ class Search_ContentSource_Static implements Search_ContentSource_Interface
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
 	{
+		if (! isset($this->data[$objectId])) {
+			return false;
+		}
+
 		$out = array();
 
 		foreach( $this->data[$objectId] as $key => $value) {

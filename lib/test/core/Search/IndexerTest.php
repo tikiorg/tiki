@@ -107,5 +107,44 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 		$typeFactory = $index->getTypeFactory();
 		$this->assertEquals($typeFactory->multivalue(array(1, 2, 3)), $document['categories']);
 	}
+
+	function testPartialUpdate()
+	{
+		$initialSource = new Search_ContentSource_Static(array(
+			'HomePage' => array('data' => 'initial'),
+			'SomePage' => array('data' => 'initial'),
+			'Untouchable' => array('data' => 'initial'),
+		), array('data' => 'wikitext'));
+
+		$finalSource = new Search_ContentSource_Static(array(
+			'SomePage' => array('data' => 'final'),
+			'OtherPage' => array('data' => 'final'),
+			'Untouchable' => array('data' => 'final'),
+		), array('data' => 'wikitext'));
+
+		$index = new Search_Index_Memory;
+		$indexer = new Search_Indexer($index);
+		$indexer->addContentSource('wiki page', $initialSource);
+		$indexer->rebuild();
+		
+		$indexer = new Search_Indexer($index);
+		$indexer->addContentSource('wiki page', $finalSource);
+		$indexer->update(array(
+			array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
+			array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
+			array('object_type' => 'wiki page', 'object_id' => 'OtherPage'),
+		));
+
+		$doc0 = $index->getDocument(0);
+		$doc1 = $index->getDocument(1);
+		$doc2 = $index->getDocument(2);
+
+		$this->assertEquals(3, $index->size());
+
+		$this->assertEquals('Untouchable', $doc0['object_id']->getValue());
+		$this->assertEquals('initial', $doc0['data']->getValue());
+		$this->assertEquals('final', $doc1['data']->getValue());
+		$this->assertEquals('final', $doc2['data']->getValue());
+	}
 }
 
