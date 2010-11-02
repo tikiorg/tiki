@@ -87,8 +87,20 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $this->obj->dom = new DOMDocument;
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
         $this->assertNull($this->obj->validateInput());
+        
+        $this->obj->dom = new DOMDocument;
+        $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample_v0.4.xml');
+        $this->assertNull($this->obj->validateInput());
     }
 
+    public function testValidateInputShouldRaiseExceptionForUnsupportedXmlFileVersion()
+    {
+    	$this->obj->dom = new DOMDocument;
+        $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample_v0.2.xml');
+        $this->setExpectedException('DOMException');
+        $this->obj->validateInput();
+    }
+    
     public function testValidateInputShouldRaiseExceptionForInvalidXmlFile()
     {
         $this->obj->dom = new DOMDocument;
@@ -391,6 +403,15 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $this->obj->configureParser();
         $mediawikiText = '[[someWikiLink]]';
         $expectedResult = "((someWikiLink))\n\n";
+        $this->assertEquals($expectedResult, $this->obj->convertMarkup($mediawikiText));
+    }
+    
+    public function testConvertMarkupParserWikipediaSamplePage()
+    {
+    	$this->obj->dom = new DOMDocument;
+        $this->obj->configureParser();
+        $mediawikiText = file_get_contents(dirname(__FILE__) . '/fixtures/wikipedia_train_article.txt');
+        $expectedResult = file_get_contents(dirname(__FILE__) . '/fixtures/wikipedia_train_article_parsed.txt');
         $this->assertEquals($expectedResult, $this->obj->convertMarkup($mediawikiText));
     }
 
