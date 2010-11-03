@@ -427,7 +427,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 						}
 						break;
 					case 'content:encoded':
-						$data['content'] = (string) $this->parseContentAttachmentsUrl($node->textContent);
+						$data['content'] = (string) $this->parseContent($node->textContent);
 						break;
 					case 'excerpt:encoded':
 						$data['excerpt'] = (string) $node->textContent;
@@ -463,6 +463,20 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	}
 
 	/**
+	 * Just call different parsing functions 
+	 * 
+	 * @param string $content post or page content
+	 * @return string modified content
+	 */
+	function parseContent($content)
+	{
+		$content = $this->parseContentAttachmentsUrl($content);
+		$content = $this->parseWordpressShortcodes($content);
+		
+		return $content;
+	}
+	
+	/**
 	 * Parse the content of a page or post replacing old 
 	 * attachments URLs with the new URLs of the attachments
 	 * already imported to Tiki file galleries 
@@ -497,6 +511,82 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		}
 		
 		return $content;
+	}
+	
+	/**
+	 * Identify in a page or post content Wordpress shortcodes.
+	 * In some cases replace the syntax with equivalent Tiki syntax, in
+	 * other cases just add ~np~ so that Tiki output the shortcode 
+	 * directly without trying to parse it.
+	 * 
+	 * All the following are valid shortcodes syntax:
+	 * [my-shortcode]
+	 * [my-shortcode/]
+	 * [my-shortcode foo='bar' bar='foo']
+	 * [my-shortcode foo='bar'/]
+	 * [my-shortcode]content[/my-shortcode]
+	 * [my-shortcode foo='bar']content[/my-shortcode]
+	 * 
+	 * @param string $content page or post content
+	 * @return string parsed content
+	 */
+	function parseWordpressShortcodes($content)
+	{
+		$matches = $this->matchWordpressShortcodes($content);
+		
+		foreach ($matches as $match) {
+			// add ~np~~/np~ between shorcode opening tag and closing tag (if present)
+			$replacement = '~np~[' . $match[1] . $match[2] . ']~/np~';
+			$replacement .= isset($match[3]) ? $match[3] . '~np~[/' . $match[1] . ']~/np~' : '';  
+			
+			$content = str_replace($match[0], $replacement, $content);
+		}
+
+		return $content;
+	}
+	
+	/**
+	 * Return a list of shortcodes matches from a post or page content
+	 * 
+	 * Return a array of matches. Each match is a array with the following structure:
+	 * - 0 => the whole strings that matched (e.g. [my-shortcode foo='bar']content[/my-shortcode])
+	 * - 1 => shortcode name (e.g. my-shortcode)
+	 * - 2 => shortcode parameters if any
+	 * - 3 => shortcode contents if any
+	 * 
+	 * @param string $content page or post content
+	 * @return array shortcode matches
+	 */
+	function matchWordpressShortcodes($content)
+	{
+		$matches = array();
+		
+		preg_match_all('|\[([^\s\]/]*)\b(.*?)/?](?:(.*?)\[/\1])?|', $content, $matches, PREG_SET_ORDER);
+		
+		// order matches array with the biggest shortcode string first
+		// to avoid problems when replacing it (the smallest shortcode string
+		// migth be the same as part of another shortcode string)
+		usort($matches, array($this, 'compareShortcodes'));
+		
+		return $matches;
+	}
+	
+	/**
+	 * Comparison function to sort shortcodes array
+	 * with the biggest shortcode string first and the
+	 * smallest last.
+	 * 
+	 * @param array $a
+	 * @param array $b
+	 * @return int
+	 */
+	function compareShortcodes($a, $b)
+	{
+		if ($a[0] == $b[0]) {
+			return 0;
+		}
+		
+		return (strlen($a[0]) < strlen($b[0])) ? 1 : -1;
 	}
 	
 	/**

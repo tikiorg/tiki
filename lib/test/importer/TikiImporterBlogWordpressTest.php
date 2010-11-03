@@ -113,8 +113,9 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 	
 	public function testExtractInfoPost()
 	{
-		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractComment'));
+		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractComment', 'parseContent'));
 		$obj->expects($this->exactly(3))->method('extractComment')->will($this->returnValue(true));
+		$obj->expects($this->any())->method('parseContent')->will($this->returnValue('Test'));
 		
 		$expectedResult = array(
 			'categories' => array(
@@ -149,6 +150,9 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 
 	public function testExtractInfoPage()
 	{
+		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('parseContent'));
+		$obj->expects($this->any())->method('parseContent')->will($this->returnValue('Test'));
+		
 		$expectedResult = array(
 			'categories' => array(
 				0 => 'cicloturismo',
@@ -180,9 +184,9 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 			),
 		);
 
-		$this->obj->dom = new DOMDocument;
-		$this->obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_page.xml');
-		$data = $this->obj->extractInfo($this->obj->dom->getElementsByTagName('item')->item(0));
+		$obj->dom = new DOMDocument;
+		$obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_page.xml');
+		$data = $obj->extractInfo($obj->dom->getElementsByTagName('item')->item(0));
 
 		$this->assertEquals($expectedResult, $data);
 	}
@@ -545,5 +549,29 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		$this->obj->dom = new DOMDocument;
 		$this->obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_invalid.xml');
 		$this->obj->validateInput();
+	}
+	
+	public function testMatchWordpressShortcodes()
+	{
+		$content = "[my-shortcode] [my-shortcode/] [my-shortcode foo='bar' bar='foo'] [my-shortcode foo='bar'/]
+			[my-shortcode]content[/my-shortcode] [my-shortcode foo='bar' bar='foo']content[/my-shortcode]";
+		
+		$expectedResult = array(
+			array("[my-shortcode foo='bar' bar='foo']content[/my-shortcode]", 'my-shortcode', " foo='bar' bar='foo'", 'content'),
+			array('[my-shortcode]content[/my-shortcode]', 'my-shortcode', '', 'content'),
+			array("[my-shortcode foo='bar' bar='foo']", 'my-shortcode', " foo='bar' bar='foo'"),
+			array("[my-shortcode foo='bar'/]", 'my-shortcode', " foo='bar'"),
+			array('[my-shortcode/]', 'my-shortcode', ''),
+			array('[my-shortcode]', 'my-shortcode', ''),
+		);
+		
+		$this->assertEquals($expectedResult, $this->obj->matchWordpressShortcodes($content));
+	}
+	
+	public function testParseWordpressShortcodes()
+	{
+		$content = file_get_contents(dirname(__FILE__) . '/fixtures/wordpress_post_content_shortcodes.txt');
+		$expectedResult = file_get_contents(dirname(__FILE__) . '/fixtures/wordpress_post_content_shortcodes_parsed.txt');
+		$this->assertEquals($expectedResult, $this->obj->parseWordpressShortcodes($content));
 	}
 }
