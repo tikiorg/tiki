@@ -1362,10 +1362,10 @@ class FileGalLib extends TikiLib
 	function moveFiles($to='to_fs', &$feedbacks) {
 		if ($to == 'to_db') {
 			$query = 'select * from `tiki_files` where `path` != ?';
-			$msg = tra('Number of files transfered to the database:');
+			$msg = tra('Number of files transferred to the database:');
 		} else {
 			$query = 'select * from `tiki_files` where `path` = ?';
-			$msg = tra('Number of files transfered to the file system:');
+			$msg = tra('Number of files transferred to the file system:');
 		}
 		$result = $this->query($query, array(''));
 		$nb = 0;
