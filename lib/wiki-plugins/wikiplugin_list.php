@@ -34,6 +34,8 @@ function wikiplugin_list($data, $params)
 		}
 	}
 
+	$query->filterPermissions(Perms::get()->getGroups());
+
 	global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';
 	$index = $unifiedsearchlib->getIndex();
 

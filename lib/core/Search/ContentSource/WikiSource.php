@@ -21,6 +21,8 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 
 			'wiki_content' => $typeFactory->wikitext($info['data']),
 			'wiki_description' => $typeFactory->plaintext($info['description']),
+
+			'view_permission' => $typeFactory->identifier('tiki_p_view'),
 		);
 
 		return $data;

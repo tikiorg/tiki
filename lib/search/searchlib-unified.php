@@ -39,7 +39,7 @@ class UnifiedSearchLib
 			$indexer->addGlobalSource(new Search_GlobalSource_CategorySource);
 		}
 
-		$indexer->addGlobalSource(new Search_GlobalSource_PermissionSource(Perms::getInstance()));
+		$indexer->addGlobalSource(new Search_GlobalSource_PermissionSource(Perms::getInstance(), 'Admins'));
 		$indexer->rebuild();
 
 		return $indexer;
