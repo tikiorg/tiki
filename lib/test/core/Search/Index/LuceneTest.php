@@ -46,9 +46,9 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 	function testFieldSpecificSearch()
 	{
 		$off = new Search_Query;
-		$off->addTextCriteria('description', 'wiki_content');
+		$off->filterContent('description', 'wiki_content');
 		$found = new Search_Query;
-		$found->addTextCriteria('description', 'description');
+		$found->filterContent('description', 'description');
 
 		$this->assertGreaterThan(0, count($found->search($this->index)));
 		$this->assertEquals(0, count($off->search($this->index)));

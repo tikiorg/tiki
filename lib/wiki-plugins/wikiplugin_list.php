@@ -23,13 +23,11 @@ function wikiplugin_list($data, $params)
 	foreach ($matches as $match) {
 		$name = $match->getName();
 
-		if ($name == 'filter') {
-			foreach ($argumentParser->parse($match->getArguments()) as $key => $value) {
-				$function = "wpquery_{$name}_{$key}";
+		foreach ($argumentParser->parse($match->getArguments()) as $key => $value) {
+			$function = "wpquery_{$name}_{$key}";
 
-				if (function_exists($function)) {
-					call_user_func($function, $query, $value);
-				}
+			if (function_exists($function)) {
+				call_user_func($function, $query, $value);
 			}
 		}
 	}
@@ -57,5 +55,15 @@ function wpquery_filter_type($query, $value)
 function wpquery_filter_categories($query, $value)
 {
 	$query->filterCategory($value);
+}
+
+function wpquery_filter_content($query, $value)
+{
+	$query->filterContent($value);
+}
+
+function wpquery_sort_mode($query, $value)
+{
+	$query->setOrder($value);
 }
 

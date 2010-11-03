@@ -12,11 +12,11 @@ class Search_Query
 		$this->expr = new Search_Expr_And(array());
 
 		if ($query) {
-			$this->addTextCriteria($query);
+			$this->filterContent($query);
 		}
 	}
 
-	function addTextCriteria($query, $field = 'global')
+	function filterContent($query, $field = 'global')
 	{
 		$this->addPart($query, 'wikitext', $field);
 	}
