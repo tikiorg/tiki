@@ -871,6 +871,11 @@ fieldset.admin label,
 	color: #1174a5;
 }
 
+.tabstoggle .button a,
+.tabstoggle .button a:visited {
+	color: #fff;
+}
+
 /** Tabs **/
 /* reset what's in layout.css */
 
