@@ -31,23 +31,7 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
         $this->assertTrue($obj->dom instanceof DOMDocument);
         $this->assertTrue($obj->dom->hasChildNodes());
 	}
-/*
-    public function testImportWithoutInternalMocking()
-    {
-        global $tikilib;
-        $tikilib = $this->getMock('TikiLib', array('create_page', 'update_page', 'page_exists', 'remove_all_versions'));
-        $obj = $this->getMock('TikiImporter_Wiki_Mediawiki', array('saveAndDisplayLog'));
-        $obj->expects($this->exactly(12))->method('saveAndDisplayLog');
-
-        $expectedImportFeedback = array('totalPages' => 4, 'importedPages' => 4);
-        
-        $obj->import(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
-
-        $this->assertTrue($obj->dom instanceof DOMDocument);
-        $this->assertTrue($obj->dom->hasChildNodes());
-        $this->assertEquals($expectedImportFeedback, $_SESSION['tiki_importer_feedback']);
-	}*/
-
+	
 	public function testImportShouldHandleAttachments()
     {
         $parsedData = 'Some text';
@@ -545,5 +529,21 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		$content = '';
 		$this->obj->newFiles = array();
 		$this->assertEquals($content, $this->obj->parseContentAttachmentsUrl($content));
+	}
+	
+	public function testValidateInput()
+	{
+		$this->obj->dom = new DOMDocument;
+		$this->obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
+		$this->assertNull($this->obj->validateInput());
+	}
+	
+	public function testValidateInputShouldRaiseExceptionIfInvalidFile()
+	{
+		$this->setExpectedException('DOMException');
+		
+		$this->obj->dom = new DOMDocument;
+		$this->obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_invalid.xml');
+		$this->obj->validateInput();
 	}
 }

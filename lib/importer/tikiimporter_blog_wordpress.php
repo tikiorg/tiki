@@ -113,12 +113,17 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	}
 
 	/**
-	 * There is not DTD for WXR so no validation is done
-	 * for the moment 
+	 * There is not DTD for WXR so only a very basic validation
+	 * is done by checking the value of the xmlns:wp attribute
 	 *
 	 * @see lib/importer/TikiImporter#validateInput()
 	 */
-	function validateInput() {}
+	function validateInput() {
+		$wxrUrl = $this->dom->getElementsByTagName('rss')->item(0)->getAttribute('xmlns:wp');
+		if (!preg_match('|http://wordpress\.org/export/\d+\.\d+/|', $wxrUrl)) {
+			throw new DOMException(tra('Invalid Wordpress XML file'));
+		}
+	}
 
 	/**
 	 * Check for all the requirements to import attachments.
