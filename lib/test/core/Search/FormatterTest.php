@@ -24,7 +24,7 @@ OUT;
 	function testSpecifyFormatter()
 	{
 		global $prefs;
-		$prefs['short_date_format'] = 'M j, Y';
+		$prefs['short_date_format'] = '%b %e, %Y';
 
 		$plugin = new Search_Formatter_Plugin_WikiTemplate("* {display name=object_id} ({display name=modification_date format=date})\n");
 

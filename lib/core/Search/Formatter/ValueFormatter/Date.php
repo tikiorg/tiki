@@ -4,8 +4,8 @@ class Search_Formatter_ValueFormatter_Date implements Search_Formatter_ValueForm
 {
 	function render($value)
 	{
-		global $prefs;
-		return date($prefs['short_date_format'], $value);
+		global $prefs, $tikilib;
+		return $tikilib->date_format($prefs['short_date_format'], $value);
 	}
 }
 

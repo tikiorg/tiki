@@ -50,10 +50,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 
 		foreach ($hits as $key => $hit) {
 			if ($key >= $resultStart) {
-				$result[] = array(
-					'object_type' => $hit->object_type,
-					'object_id' => $hit->object_id,
-				);
+				$result[] = $this->extractValues($hit->getDocument());
 
 				if (count($result) == $resultCount) {
 					break;
@@ -62,6 +59,16 @@ class Search_Index_Lucene implements Search_Index_Interface
 		}
 
 		return new Search_ResultSet($result, count($hits));
+	}
+
+	private function extractValues($document)
+	{
+		$data = array();
+		foreach ($document->getFieldNames() as $field) {
+			$data[$field] = $document->$field;
+		}
+
+		return $data;
 	}
 
 	private function getSortField($sortOrder)

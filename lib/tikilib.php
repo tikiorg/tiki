@@ -7543,6 +7543,11 @@ if( \$('#$id') ) {
 
 	static function date_format($format, $timestamp = false, $_user = false, $input_format = 5/*DATE_FORMAT_UNIXTIME*/, $is_strftime_format = true) {
 		global $tikidate, $tikilib;
+		if (!is_object($tikidate)) {
+			require_once('lib/tikidate.php');
+			$tikidate = new TikiDate();
+		}
+
 		if ( ! $timestamp ) {
 			$timestamp = time();
 		}

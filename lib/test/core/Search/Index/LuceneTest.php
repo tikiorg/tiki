@@ -39,8 +39,19 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 		$positive = new Search_Query('Hello');
 		$negative = new Search_Query('NotInDocument');
 
-		$this->assertContains(array('object_type' => 'wiki page', 'object_id' => 'HomePage'), $positive->search($this->index));
-		$this->assertNotContains(array('object_type' => 'wiki page', 'object_id' => 'HomePage'), $negative->search($this->index));
+		$this->assertContains(array('object_type' => 'wiki page', 'object_id' => 'HomePage'), $this->stripExtra($positive->search($this->index)));
+		$this->assertNotContains(array('object_type' => 'wiki page', 'object_id' => 'HomePage'), $this->stripExtra($negative->search($this->index)));
+	}
+
+	private function stripExtra($list)
+	{
+		$out = array();
+
+		foreach ($list as $entry) {
+			$out[] = array_intersect_key($entry, array('object_type' => '', 'object_id' => ''));
+		}
+
+		return $out;
 	}
 	
 	function testFieldSpecificSearch()
