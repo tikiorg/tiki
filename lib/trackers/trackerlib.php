@@ -1062,7 +1062,8 @@ class TrackerLib extends TikiLib
 			if ($fopt['isHidden'] == 'c' && empty($itemUser)) { // need itemUser
 				$itemUser = $this->get_item_creator($trackerId, $itemId);
 			}
-			if (empty($fopt['value'])) {
+			if (!isset($fopt['value'])) {
+				$fopt['isset'] = 'n';
 				$fopt['value'] = '';
 			}
 			switch ( $fopt['type'] ) {

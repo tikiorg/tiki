@@ -966,6 +966,8 @@ function wikiplugin_tracker($data, $params)
 
 			if (!empty($itemId)) {
 				$item = array('itemId'=>$itemId, 'trackerId'=>$trackerId);
+			} else {
+				$item = array('itemId'=>'');
 			}
 			foreach ($flds['data'] as $i=>$f) { // collect additional infos
 				if (in_array($f['fieldId'], $outf)) {
