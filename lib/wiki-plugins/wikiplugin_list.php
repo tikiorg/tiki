@@ -74,9 +74,19 @@ function wpquery_filter_categories($query, $value)
 	$query->filterCategory($value);
 }
 
+function wpquery_filter_deepcategories($query, $value)
+{
+	$query->filterCategory($value, true);
+}
+
 function wpquery_filter_content($query, $value)
 {
 	$query->filterContent($value);
+}
+
+function wpquery_filter_language($query, $value)
+{
+	$query->filterLanguage($value);
 }
 
 function wpquery_sort_mode($query, $value)
