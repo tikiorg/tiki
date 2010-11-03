@@ -26,7 +26,7 @@ class TWVersion
 		$this->branch 	= 'unstable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '6.0beta3';
+		$this->version 	= '6.0RC1';
 		$this->star	= '';
 		$this->releases	= array();
 
@@ -132,6 +132,7 @@ class TWVersion
 				'6.0beta1',
 				'6.0beta2',
 				'6.0beta3',
+				'6.0RC1',
 				);
 	}
 
