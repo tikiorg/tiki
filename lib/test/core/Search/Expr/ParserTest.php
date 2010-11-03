@@ -73,6 +73,32 @@ class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 		)), $result);
 	}
 
+	function testSequence()
+	{
+		$result = $this->parser->parse('1 and 2 and 3');
+
+		$this->assertEquals(new Search_Expr_And(array(
+			new Search_Expr_And(array(
+				$this->parser->parse('1'),
+				$this->parser->parse('2'),
+			)),
+			$this->parser->parse('3'),
+		)), $result);
+	}
+
+	function testSequenceWithOr()
+	{
+		$result = $this->parser->parse('1 or 2 or 3');
+
+		$this->assertEquals(new Search_Expr_Or(array(
+			new Search_Expr_Or(array(
+				$this->parser->parse('1'),
+				$this->parser->parse('2'),
+			)),
+			$this->parser->parse('3'),
+		)), $result);
+	}
+
 	function testRecongnizePlus()
 	{
 		$result = $this->parser->parse('(bob roger) + (test again)');

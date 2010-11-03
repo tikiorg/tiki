@@ -15,6 +15,9 @@ function wikiplugin_list_info()
 
 function wikiplugin_list($data, $params)
 {
+	$alternate = null;
+	$output = null;
+
 	$query = new Search_Query;
 
 	$matches = WikiParser_PluginMatcher::match($data);
@@ -30,6 +33,14 @@ function wikiplugin_list($data, $params)
 				call_user_func($function, $query, $value);
 			}
 		}
+
+		if ($name == 'output') {
+			$output = $match;
+		}
+
+		if ($name == 'alternate') {
+			$alternate = $match->getBody();
+		}
 	}
 
 	$query->filterPermissions(Perms::get()->getGroups());
@@ -38,10 +49,16 @@ function wikiplugin_list($data, $params)
 	$index = $unifiedsearchlib->getIndex();
 
 	$result = $query->search($index);
-	
-	$out = '';
-	foreach ($result as $row) {
-		$out .= "* {$row['object_type']} - {$row['object_id']}\n";
+
+	if (count($result)) {
+		$plugin = new Search_Formatter_Plugin_WikiTemplate($output->getBody());
+		$formatter = new Search_Formatter($plugin);
+
+		$out = $formatter->format($result);
+	} elseif($alternate) {
+		$out = $alternate;
+	} else {
+		$out = '^' . tra('No results for query.') . '^';
 	}
 
 	return $out;

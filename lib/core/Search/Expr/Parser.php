@@ -93,16 +93,30 @@ class Search_Expr_Parser
 
 	private function buildOr(&$tokens, $key)
 	{
-		$tokens[$key] = new Search_Expr_Or(array($tokens[$key - 1], $tokens[$key + 1]));
-		$tokens[$key - 1] = null;
-		$tokens[$key + 1] = null;
+		$previous = $key - 1;
+		$next = $key + 1;
+
+		while (!$tokens[$previous]) {
+			$previous--;
+		}
+
+		$tokens[$key] = new Search_Expr_Or(array($tokens[$previous], $tokens[$next]));
+		$tokens[$previous] = null;
+		$tokens[$next] = null;
 	}
 
 	private function buildAnd(&$tokens, $key)
 	{
-		$tokens[$key] = new Search_Expr_And(array($tokens[$key - 1], $tokens[$key + 1]));
-		$tokens[$key - 1] = null;
-		$tokens[$key + 1] = null;
+		$previous = $key - 1;
+		$next = $key + 1;
+
+		while (!$tokens[$previous]) {
+			$previous--;
+		}
+
+		$tokens[$key] = new Search_Expr_And(array($tokens[$previous], $tokens[$next]));
+		$tokens[$previous] = null;
+		$tokens[$next] = null;
 	}
 
 	private function buildNot(&$tokens, $key)
