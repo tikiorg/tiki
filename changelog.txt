@@ -30,6 +30,220 @@ Version 6.0
 ------------------
 
 ----------------------------------------------
+r30524 | jonnybradley | 2010-11-04 19:57:20 +0100 (Thu, 04 Nov 2010) | 1 line
+
+[FIX] autosave: Use async ajax call for autosave so as not to lock up the whole page while saving (and tidy some debugging code)
+----------------------------------------------
+r30523 | jonnybradley | 2010-11-04 19:34:04 +0100 (Thu, 04 Nov 2010) | 1 line
+
+[FIX] autosave: Don't send ajax request for autosave more than once.
+----------------------------------------------
+r30521 | sylvieg | 2010-11-04 14:52:47 +0100 (Thu, 04 Nov 2010) | 1 line
+
+[FIX]racker: export ajax was not exporting field visible by admin only
+----------------------------------------------
+r30520 | sylvieg | 2010-11-04 14:41:41 +0100 (Thu, 04 Nov 2010) | 1 line
+
+[FIX]tracker: missing lib
+----------------------------------------------
+r30519 | sylvieg | 2010-11-04 14:19:20 +0100 (Thu, 04 Nov 2010) | 1 line
+
+[FIX]TRACKER: ob_end_clean seems to bug export when output compression is on
+----------------------------------------------
+r30518 | sampaioprimo | 2010-11-04 12:12:34 +0100 (Thu, 04 Nov 2010) | 1 line
+
+French translations done on i18n.tiki.org
+----------------------------------------------
+r30517 | sampaioprimo | 2010-11-04 12:12:15 +0100 (Thu, 04 Nov 2010) | 1 line
+
+Swedish translations done on i18n.tiki.org
+----------------------------------------------
+r30516 | sampaioprimo | 2010-11-04 12:10:27 +0100 (Thu, 04 Nov 2010) | 1 line
+
+Brazilian Portuguese translations done on i18n.tiki.org
+----------------------------------------------
+r30515 | luciash | 2010-11-04 06:29:30 +0100 (Thu, 04 Nov 2010) | 1 line
+
+oops :)
+----------------------------------------------
+r30514 | luciash | 2010-11-04 06:07:31 +0100 (Thu, 04 Nov 2010) | 1 line
+
+Czech language update
+----------------------------------------------
+r30513 | luciash | 2010-11-04 02:47:43 +0100 (Thu, 04 Nov 2010) | 1 line
+
+[FIX] flagmapping: removed mapping to the flag of Taiwan because Traditional Chinese is not Taiwan specific only
+----------------------------------------------
+r30512 | sept_7 | 2010-11-04 02:33:35 +0100 (Thu, 04 Nov 2010) | 2 lines
+
+[FIX] Fix background in forum 
+
+----------------------------------------------
+r30509 | changi67 | 2010-11-03 22:43:32 +0100 (Wed, 03 Nov 2010) | 1 line
+
+[FIX] Securitycheck
+----------------------------------------------
+r30507 | nkoth | 2010-11-03 22:30:31 +0100 (Wed, 03 Nov 2010) | 1 line
+
+[FIX] If you set the login_is_user flag, registration fails with the message email_not_valid. thanks thraxisp bug 3623
+----------------------------------------------
+r30506 | luciash | 2010-11-03 21:58:03 +0100 (Wed, 03 Nov 2010) | 1 line
+
+[FIX] usability: better recognizable jini iconset matching icon for the performance admin panel (especially for ricks99)
+----------------------------------------------
+r30505 | sylvieg | 2010-11-03 21:14:59 +0100 (Wed, 03 Nov 2010) | 1 line
+
+[FIX]TRACKER: dropt-down field default for itemId partially filled up: preselect the default is field never filled up even if itemId exists + can use TACRKER without itemId avec a TRACKER with itemId
+----------------------------------------------
+r30504 | changi67 | 2010-11-03 20:55:34 +0100 (Wed, 03 Nov 2010) | 1 line
+
+[MOD] Add link to rating panel
+----------------------------------------------
+r30503 | jonnybradley | 2010-11-03 20:30:21 +0100 (Wed, 03 Nov 2010) | 1 line
+
+[FIX] wysiwyg: Wrong object for dialog (pasto) and correct jQuery version comment
+----------------------------------------------
+r30500 | nkoth | 2010-11-03 19:35:38 +0100 (Wed, 03 Nov 2010) | 1 line
+
+[FIX] If admin is trying to edit another user's tracker item with a preference field in it, and the field is mandatory, it fails with field is mandatory message
+----------------------------------------------
+r30498 | robertplummer | 2010-11-03 19:10:34 +0100 (Wed, 03 Nov 2010) | 1 line
+
+[MOD] Changed sheet startup options to send height to sheet for more stable user-interface
+----------------------------------------------
+r30497 | jonnybradley | 2010-11-03 18:33:43 +0100 (Wed, 03 Nov 2010) | 1 line
+
+[FIX] installer: IGNORE duplicate (pre-existing) entry errors on categperms upgrades.
+----------------------------------------------
+r30496 | jonnybradley | 2010-11-03 17:54:33 +0100 (Wed, 03 Nov 2010) | 1 line
+
+[DOC] installer: Change "experimental" label on charset converter warning and add clearer instruction that you still have to enter the admin account name to actually run the admin_account fix, even if the account is the default "admin". (maybe should be a checkbox?)
+----------------------------------------------
+r30495 | chibaguy | 2010-11-03 16:08:06 +0100 (Wed, 03 Nov 2010) | 1 line
+
+[FIX] Make tabs toggle button text white again.
+----------------------------------------------
+r30494 | chibaguy | 2010-11-03 16:06:45 +0100 (Wed, 03 Nov 2010) | 1 line
+
+[FIX] Make a little white space above notabs button.
+----------------------------------------------
+r30493 | sept_7 | 2010-11-03 15:20:15 +0100 (Wed, 03 Nov 2010) | 3 lines
+
+[FIX] Forum fix some inconsistencies in button style, and avoid the javascript
+popup on Publish, Preview and Reset
+
+----------------------------------------------
+r30491 | sept_7 | 2010-11-03 14:26:41 +0100 (Wed, 03 Nov 2010) | 2 lines
+
+[FIX] Fix broken layout in Admin>Features
+
+----------------------------------------------
+r30489 | jonnybradley | 2010-11-03 12:27:58 +0100 (Wed, 03 Nov 2010) | 1 line
+
+[FIX] installer: Do admin perms upgrade fix if old version is 3 or less (not 2) as some 3.x tikis do not have tiki_p_admin set for Admins group.
+----------------------------------------------
+r30486 | luciash | 2010-11-02 21:59:35 +0100 (Tue, 02 Nov 2010) | 1 line
+
+[FIX] consistency: little adjustment to have the site logout popup aligned on simmilar position as the login popup
+----------------------------------------------
+r30483 | jonnybradley | 2010-11-02 20:43:05 +0100 (Tue, 02 Nov 2010) | 1 line
+
+[FIX] xajax: Remove duplicate js files included in ajax response (now correctly included by headerlib) and key sort headerlib->jsfiles in same way as non-ajax calls so same minified file is used and contents loads in the correct order.
+----------------------------------------------
+r30482 | sylvieg | 2010-11-02 20:33:12 +0100 (Tue, 02 Nov 2010) | 1 line
+
+[FIX]browser title: description and no breadcrumb must show description in title
+----------------------------------------------
+r30481 | jonnybradley | 2010-11-02 20:15:28 +0100 (Tue, 02 Nov 2010) | 1 line
+
+[FIX] jqueryTiki.tooltips: test for feature before using it.
+----------------------------------------------
+r30480 | jonnybradley | 2010-11-02 20:13:22 +0100 (Tue, 02 Nov 2010) | 1 line
+
+[FIX] javascript_cdn: Sync jquery versions from CDN with bundled libs
+----------------------------------------------
+r30479 | sylvieg | 2010-11-02 19:40:23 +0100 (Tue, 02 Nov 2010) | 1 line
+
+[FIX]browser title: missing description
+----------------------------------------------
+r30468 | sylvieg | 2010-11-02 14:25:47 +0100 (Tue, 02 Nov 2010) | 1 line
+
+[FIX]SPLIT: quick patch to have SPLIT into SPLIT. As now the plugin are parsed from larger to smaller, the SPLIT inside SPLIT must be protected
+----------------------------------------------
+r30464 | jonnybradley | 2010-11-02 11:39:39 +0100 (Tue, 02 Nov 2010) | 1 line
+
+[FIX] trackers: Missing item description in comment and attachment notificatons (thanks Xavi)
+----------------------------------------------
+r30463 | ricks99 | 2010-11-02 04:39:16 +0100 (Tue, 02 Nov 2010) | 1 line
+
+[FIX] proper validation of <INPUT> element
+----------------------------------------------
+r30461 | nkoth | 2010-11-02 00:20:09 +0100 (Tue, 02 Nov 2010) | 1 line
+
+[FIX] Workaround Wysiwyg Image Plugin Editor in IE7 erases image on insert http://dev.tiki.org/item3615
+----------------------------------------------
+r30460 | chealer | 2010-11-01 23:56:46 +0100 (Mon, 01 Nov 2010) | 1 line
+
+[FIX] List articles: Clear filter not clearing date limits and article type
+----------------------------------------------
+r30459 | chealer | 2010-11-01 23:35:00 +0100 (Mon, 01 Nov 2010) | 1 line
+
+[FIX] List articles date range filter not remembering values when showing results (from r25035)
+----------------------------------------------
+r30458 | chealer | 2010-11-01 23:17:13 +0100 (Mon, 01 Nov 2010) | 2 lines
+
+[FIX] List articles and others: Ignored filter for excluded languages
+from r14521
+----------------------------------------------
+r30455 | changi67 | 2010-11-01 21:25:57 +0100 (Mon, 01 Nov 2010) | 1 line
+
+[FIX] put icon at the right place and modify ref in tiki-admin
+----------------------------------------------
+r30451 | sampaioprimo | 2010-11-01 17:34:47 +0100 (Mon, 01 Nov 2010) | 1 line
+
+Hungarian translations done on i18n.tiki.org
+----------------------------------------------
+r30449 | chealer | 2010-11-01 17:03:39 +0100 (Mon, 01 Nov 2010) | 2 lines
+
+[FIX] Find date selector (List Articles): remove label spanning 3 input fields, causing clicks on any field to move focus to the first field, and the selectors to be largely unusable. 
+from r25031
+----------------------------------------------
+r30440 | luciash | 2010-11-01 06:23:54 +0100 (Mon, 01 Nov 2010) | 1 line
+
+[ENH] visual: icon which looks more like map (with compass on it) jini iconset matching icon for the maps panel
+----------------------------------------------
+r30439 | luciash | 2010-11-01 06:03:36 +0100 (Mon, 01 Nov 2010) | 1 line
+
+[FIX] visual: nicer jini iconset matching icon for the intertiki panel
+----------------------------------------------
+r30438 | luciash | 2010-11-01 05:27:57 +0100 (Mon, 01 Nov 2010) | 1 line
+
+[FIX] consistency: jini iconset matching icon for the performance panel (TODO: replace path to it in the admin panels tpl)
+----------------------------------------------
+r30437 | luciash | 2010-11-01 05:23:24 +0100 (Mon, 01 Nov 2010) | 1 line
+
+[FIX] visual: nicer and not so jaggy edge jini iconset matching keys icon for the security panel
+----------------------------------------------
+r30436 | luciash | 2010-11-01 05:06:20 +0100 (Mon, 01 Nov 2010) | 1 line
+
+[FIX] consistency: jini iconset matching icon for the external feeds panel
+----------------------------------------------
+r30435 | luciash | 2010-11-01 05:04:44 +0100 (Mon, 01 Nov 2010) | 1 line
+
+[FIX] consistency: jini iconset matching icon for the semantic links panel
+----------------------------------------------
+r30434 | luciash | 2010-11-01 05:03:23 +0100 (Mon, 01 Nov 2010) | 1 line
+
+[FIX] consistency: jini iconset matching icon for the social networks panel (TODO: rename file, edit the admin panels tpl to use the bigger icon 48x48 and move this 32x32 to pics/large/ where the others are)
+----------------------------------------------
+r30433 | luciash | 2010-11-01 03:31:55 +0100 (Mon, 01 Nov 2010) | 1 line
+
+[FIX] consistency: jini iconset matching icon for the editing and plugins panel (TODO: rename file, edit the admin panels tpl and move it to pics/large/ where the others are)
+----------------------------------------------
+r30421 | robertplummer | 2010-10-30 18:37:15 +0200 (Sat, 30 Oct 2010) | 1 line
+
+[DEL] Removed sheet profiles from 6.x, adding to trunk.
+----------------------------------------------
 r30367 | jonnybradley | 2010-10-27 20:47:45 +0200 (Wed, 27 Oct 2010) | 1 line
 
 [FIX] wysiwyg: Strange consequence of IE fixes breaking other browsers - one missed "destroy" (well spotted nkoth)
