@@ -1,9 +1,9 @@
 <?php // -*- coding:utf-8 -*-
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: get_strings.php 25264 2010-02-16 16:08:30Z changi67 $
+// $Id$
 // Parameters:
 
 // lang=xx    : only translates language 'xx',
@@ -62,7 +62,7 @@
 // ###
 // ### Technical justification:
 // ### If a string ending with colon needs translating (like "{tr}Login:{/tr}")
-// ### then TikiWiki tries to translate 'Login' and ':' separately.
+// ### then Tiki tries to translate 'Login' and ':' separately.
 // ### This allows to have only one translation for "{tr}Login{/tr}" and "{tr}Login:{/tr}"
 // ### and it still allows to translate ":" as "&nbsp;:" for languages that
 // ### need it (like french)
@@ -71,7 +71,7 @@ $lang=Array(
 // ### Start of unused words
 // ### Please remove manually!
 // ### N.B. Legitimate strings may be marked// ### as unused!
-// ### Please see http://tiki.org/tiki-index.php?page=UnusedWords for further info
+// ### Please see http://tiki.org/UnusedWords for further info
 "some text" => "nějaký text",
 "Creates a box with the data" => "Vytvoří box s daty",
 "creates a title bar" => "vytvoří pruh titulku",
