@@ -147,9 +147,11 @@ $smarty->assign_by_ref('CR', $_REQUEST['CR']);
 
 if (!empty($_REQUEST['debug'])) {
 	$fp = fopen($prefs['tmpDir'].'/'.tra('tracker')."_".$_REQUEST['trackerId'].".csv", 'w');
+	echo 'ouput:'.$prefs['tmpDir'].'/'.tra('tracker')."_".$_REQUEST['trackerId'].".csv";
 } else {
 	// Compression of the stream may corrupt files on windows
-	ob_end_clean();
+	if ($prefs['feature_obzip'] != 'y')
+		ob_end_clean();
 	ini_set('zlib.output_compression','Off');
 
 	$extension = empty($_REQUEST['zip'])?'.csv':'.zip';
