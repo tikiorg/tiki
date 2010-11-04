@@ -147,6 +147,7 @@ $fp = null;
 $temp_filename = $prefs['tmpDir'].'/tracker_'.$_REQUEST['trackerId'].'.csv';
 if ($_REQUEST['debug']) {
 	$fp = fopen($temp_filename, 'w');
+	echo 'output:'.$temp_filename;
 }
 
 include_once 'lib/core/Zend/Log.php';
@@ -377,7 +378,7 @@ while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $chunkSize
 
 if (!empty($fp)) {
 	fclose($fp);
-	write_export_header();
+	$trklib->write_export_header();
 	header('Content-Length: ' . filesize($temp_filename));
 	readfile($temp_filename);
 }
