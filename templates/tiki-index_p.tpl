@@ -98,9 +98,9 @@
 {/if}
 </div>
 
-
-<p class="editdate">{tr}Last modification date{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} <a class="link" href="tiki-user_information.php?view_user={$lastUser}">{$lastUser}</a></p>
-
+{if $smarty.capture.editdate_section neq ''}
+  <p class="editdate">{tr}Last modification date{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} <a class="link" href="tiki-user_information.php?view_user={$lastUser}">{$lastUser}</a></p>
+{/if}
       
       </div>
       </td>
