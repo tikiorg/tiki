@@ -34,7 +34,9 @@ class TikiImporter_Blog extends TikiImporter
 	/**
 	 * @see lib/importer/TikiImporter#importOptions
 	 */
-	static public $importOptions = array();
+	static public $importOptions = array(
+		array('name' => 'setAsHomePage', 'type' => 'checkbox', 'label' => 'Set new blog as Tiki homepage'),
+	);
 
 	/**
 	 * Blog information extracted from the XML file (title, description, created etc)
@@ -164,7 +166,7 @@ class TikiImporter_Blog extends TikiImporter
 
 	/**
 	 * Create blog based on $this->blogInfo and 
-	 * set new blog as Tiki home page.
+	 * set new blog as Tiki home page if option selected.
 	 *
 	 * @return void
 	 */
@@ -174,13 +176,13 @@ class TikiImporter_Blog extends TikiImporter
 		
 		//TODO: refactor replace_blog() to have default values
 		//TODO: blog user can be different that the user logged in the system
-		//TODO: interface to select blog options
-		//TODO: show error when not possible to create blog
 		
 		$this->blogId = $bloglib->replace_blog($this->blogInfo['title'], $this->blogInfo['desc'], $user, 'y', 10, false, '', 'y', 'n', 'y', 'n', 'y', 'y', 'y', 'y', 'y', 'n', '', 'y', 5, 'n');
 		
-		$tikilib->set_preference('home_blog', $this->blogId);
-		$tikilib->set_preference('tikiIndex', 'tiki-view_blog.php?blogId=' . $this->blogId);
+		if (isset($_REQUEST['setAsHomePage']) && $_REQUEST['setAsHomePage'] == 'on') {
+			$tikilib->set_preference('home_blog', $this->blogId);
+			$tikilib->set_preference('tikiIndex', 'tiki-view_blog.php?blogId=' . $this->blogId);
+		}
 	}
 
 	/**

@@ -34,7 +34,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * @see lib/importer/TikiImporter#importOptions
 	 */
 	static public $importOptions = array(
-        array('name' => 'importAttachments', 'type' => 'checkbox', 'label' => 'Import images and other attachments'),
+		array('name' => 'importAttachments', 'type' => 'checkbox', 'label' => 'Import images and other attachments'),
 	);
 
 	/**
@@ -45,13 +45,13 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	public $newFiles = array();
 	
 	/**
-     * Check for DOMDocument.
-     * 
-     * @see lib/importer/TikiImporter#checkRequirements()
-     *
-     * @return void 
-     * @throws Exception if DOMDocument not available
-     */
+	 * Check for DOMDocument.
+	 * 
+	 * @see lib/importer/TikiImporter#checkRequirements()
+	 *
+	 * @return void 
+	 * @throws Exception if DOMDocument not available
+	 */
 	function checkRequirements()
 	{
 		if (!class_exists('DOMDocument')) {
@@ -75,7 +75,6 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 		parent::setupTiki();
 	}
-	
 	
 	/**
 	 * Start the importing process by loading the XML file. And
@@ -519,6 +518,9 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * other cases just add ~np~ so that Tiki output the shortcode 
 	 * directly without trying to parse it.
 	 * 
+	 * See matchWordpressShortcodes() documentation for more information
+	 * on the values of the $shortcodes array. 
+	 * 
 	 * All the following are valid shortcodes syntax:
 	 * [my-shortcode]
 	 * [my-shortcode/]
@@ -532,14 +534,14 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 */
 	function parseWordpressShortcodes($content)
 	{
-		$matches = $this->matchWordpressShortcodes($content);
+		$sortcodes = $this->matchWordpressShortcodes($content);
 		
-		foreach ($matches as $match) {
+		foreach ($sortcodes as $shortcode) {
 			// add ~np~~/np~ between shorcode opening tag and closing tag (if present)
-			$replacement = '~np~[' . $match[1] . $match[2] . ']~/np~';
-			$replacement .= isset($match[3]) ? $match[3] . '~np~[/' . $match[1] . ']~/np~' : '';  
+			$replacement = '~np~[' . $shortcode[1] . $shortcode[2] . ']~/np~';
+			$replacement .= isset($shortcode[3]) ? $shortcode[3] . '~np~[/' . $shortcode[1] . ']~/np~' : '';  
 			
-			$content = str_replace($match[0], $replacement, $content);
+			$content = str_replace($shortcode[0], $replacement, $content);
 		}
 
 		return $content;

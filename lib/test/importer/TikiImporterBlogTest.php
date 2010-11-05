@@ -235,4 +235,34 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 		$this->obj->linkObjectWithCategories('HomePage', 'wiki page', $categs);
 	}
 	
+	public function testCreateBlog()
+	{
+		global $bloglib;
+		
+		$bloglib = $this->getMock('BlogLib', array('replace_blog'));
+		$bloglib->expects($this->once())->method('replace_blog');
+
+		$this->obj->blogInfo = array('title' => 'Test title', 'desc' => 'Test description');
+		
+		$this->obj->createBlog();
+	}
+	
+	public function testCreateBlogShouldSetBlogAsHomepage()
+	{
+		global $bloglib, $tikilib;
+		
+		$bloglib = $this->getMock('BlogLib', array('replace_blog'));
+		$bloglib->expects($this->once())->method('replace_blog');
+		
+		$tikilib = $this->getMock('TikiLib', array('set_preference'));
+		$tikilib->expects($this->exactly(2))->method('set_preference');
+
+		$this->obj->blogInfo = array('title' => 'Test title', 'desc' => 'Test description');
+		
+		$_REQUEST['setAsHomePage'] = 'on';
+		
+		$this->obj->createBlog();
+		
+		unset($_REQUEST['setAsHomePage']);
+	}
 }
