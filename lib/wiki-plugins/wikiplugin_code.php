@@ -6,10 +6,6 @@
 // $Id$
 
 // Displays a snippet of code
-function wikiplugin_code_help() {
-	$help = tra("Displays a snippet of code").":<br />~np~{CODE(ln=>1,colors=>php|html|sql|javascript|css|java|c|doxygen|delphi|...,caption=>caption text,wrap=>1,wiki=>1,rtl=>1,cpy=>0)}".tra("code")."{CODE}~/np~ - ''".tra("note: colors and ln are exclusive")."''";
-	return tra($help);
-}
 
 function wikiplugin_code_info() {
 	return array(
@@ -30,7 +26,7 @@ function wikiplugin_code_info() {
 				'name' => tra('Word Wrap'),
 				'description' => tra('Enable word wrapping on the code to avoid breaking the layout. May not be used with line numbers if Geshi version 1.0.8.9+'),
 				'options' => array(
-					array('text' => tra('No'), 'value' => '0'),
+					array('text' => tra('No'), 'value' => ''),
 					array('text' => tra('Yes'), 'value' => '1'),
 				),
 			),
@@ -45,7 +41,7 @@ function wikiplugin_code_info() {
 				'name' => tra('Line numbers'),
 				'description' => tra('May not be used with colors.'),
 				'options' => array(
-					array('text' => tra('No'), 'value' => '0'),
+					array('text' => tra('No'), 'value' => ''),
 					array('text' => tra('Yes'), 'value' => '1'),
 				),
 				'advanced' => true,
@@ -55,7 +51,7 @@ function wikiplugin_code_info() {
 				'name' => tra('Wiki syntax'),
 				'description' => tra('Parse wiki syntax within the code snippet.'),
 				'options' => array(
-					array('text' => tra('No'), 'value' => '0'),
+					array('text' => tra('No'), 'value' => ''),
 					array('text' => tra('Yes'), 'value' => '1'),
 				),
 				'advanced' => true,
@@ -65,7 +61,7 @@ function wikiplugin_code_info() {
 				'name' => tra('Right to left'),
 				'description' => tra('Switch the text display from left to right to right to left'),
 				'options' => array(
-					array('text' => tra('No'), 'value' => '0'),
+					array('text' => tra('No'), 'value' => ''),
 					array('text' => tra('Yes'), 'value' => '1'),
 				),
 				'advanced' => true,
@@ -75,7 +71,7 @@ function wikiplugin_code_info() {
 				'name' => tra('Content is HTML'),
 				'description' => tra('Display the content as is instead of escaping HTML special chars'),
 				'options' => array(
-					array('text' => tra('Show HTML'), 'value' => '0'),
+					array('text' => tra('Show HTML'), 'value' => ''),
 					array('text' => tra('Interpret HTML'), 'value' => '1'),
 				),
 			),
@@ -84,7 +80,7 @@ function wikiplugin_code_info() {
 				'name' => tra('Copy To Clipboard'),
 				'description' => tra('Copy the contents of the code box to the clipboard'),
 				'options' => array(
-					array('text' => tra('No'), 'value' => '0'),
+					array('text' => tra('No'), 'value' => ''),
 					array('text' => tra('Yes'), 'value' => '1'),
 				),
 				'advanced' => true,
