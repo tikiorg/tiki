@@ -200,7 +200,11 @@ class TikiLib extends TikiDb_Bridge
                 $ip = $_SERVER['REMOTE_ADDR'];
             }
             return $ip;
-        } else return $_SERVER['REMOTE_ADDR'];
+        } elseif (isset($_SERVER['REMOTE_ADDR'])) {
+			return $_SERVER['REMOTE_ADDR'];
+		} else {
+			return '0.0.0.0';
+		}
 	}
 
 	/*shared*/
