@@ -77,5 +77,21 @@ function prefs_site_list() {
 				'image/x-icon' => tra('image/x-icon'),
 			),
 		),
+		'site_terminal_active' => array(
+			'name' => tra('Site Terminal'),
+			'description' => tra('Allows to direct users to a specific perspective depending on the origin IP address. Can be used inside intranets to use different configurations for users depending on their departements or discriminate people in web contexts. Unspecified IPs will fall back to default behavior, including multi-domain handling. Manually selected perspectives take precedence over this.'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_perspective',
+			),
+		),
+		'site_terminal_config' => array(
+			'name' => tra('Site Terminal Configuration'),
+			'description' => tra('Provides the mapping from subnets to perspective.'),
+			'type' => 'textarea',
+			'perspective' => false,
+			'size' => 10,
+			'hint' => tra('One per line. Subnet and mask, separated by comma with the perspective ID. Ex.: 192.168.12.0/8,12'),
+		),
 	);
 }

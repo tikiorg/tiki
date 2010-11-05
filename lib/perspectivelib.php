@@ -14,6 +14,15 @@ class PerspectiveLib
 			return (int) $_SESSION['current_perspective'];
 		}
 
+		global $tikilib;
+		$ip = $tikilib->get_ip_address();
+
+		foreach( $this->get_subnet_map( $prefs ) as $subnet => $perspective ) {
+			if ( $this->is_in_subnet($ip, $subnet) ) {
+				return $perspective;
+			}
+		}
+
 		$currentDomain = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
 		foreach( $this->get_domain_map( $prefs ) as $domain => $perspective ) {
 			if( $domain == $currentDomain ) {
@@ -23,15 +32,15 @@ class PerspectiveLib
 		}
 	}
 
-	function get_domain_map( $prefs = null ) {
+	private function get_map( $prefs, $active_pref, $config_pref ) {
 		if( ! $prefs ) {
 			global $prefs;
 		}
 
 		$out = array();
 		
-		if (( !isset($prefs['multidomain_active']) || $prefs['multidomain_active'] != 'n' ) && isset($prefs['multidomain_config'])) {
-			foreach( explode( "\n", $prefs['multidomain_config'] ) as $config ) {
+		if (( !isset($prefs[$active_pref]) || $prefs[$active_pref] != 'n' ) && isset($prefs[$config_pref])) {
+			foreach( explode( "\n", $prefs[$config_pref] ) as $config ) {
 				if (substr_count($config, ',') == 1) { // Ignore lines which don't have exactly one comma, such as empty lines. TODO: make sure there are no such lines in the first place
 					list( $domain, $perspective ) = explode( ',', $config );
 					$out[$domain] = trim($perspective);
@@ -40,6 +49,26 @@ class PerspectiveLib
 		}
 
 		return $out;
+	}
+
+	function get_subnet_map( $prefs = null ) {
+		return $this->get_map($prefs, 'site_terminal_active', 'site_terminal_config');
+	}
+
+	function get_domain_map( $prefs = null ) {
+		return $this->get_map($prefs, 'multidomain_active', 'multidomain_config');
+	}
+
+	private function is_in_subnet( $ip, $subnet ) {
+		list( $subnet, $mask ) = explode( '/', $subnet );
+
+		// Warning - bit shifting ahead.
+
+		// Create the real mask from the /X suffix
+		$mask = 0xFFFFFFFF ^ ((1 << (int) $mask) - 1);
+
+		// Make sure the subnet-relevant part matches for the IP and the subnet being compared
+		return (ip2long($subnet) & $mask) === (ip2long($ip) & $mask);
 	}
 
 	// Returns a string-indexed array containing the preferences for the given perspective as "pref_name" => "pref_value".
