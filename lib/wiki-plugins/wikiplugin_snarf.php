@@ -147,7 +147,6 @@ function wikiplugin_snarf($data, $params)
 	}
 
 	include_once('lib/wiki-plugins/wikiplugin_code.php');
-	$code_defaults = array();
 	$ret = wikiplugin_code($snarf, $code_defaults);
 
 	if (!$isFresh && empty($params['link'])) {
