@@ -30,6 +30,10 @@ if( isset($_REQUEST['perspective']) ) {
 	}
 }
 
-header( 'Location: tiki-index.php' );
+if( isset($_REQUEST['back']) && isset($_SERVER['HTTP_REFERER']) ) {
+	header( 'Location: ' . $_SERVER['HTTP_REFERER'] );
+} else {
+	header( 'Location: tiki-index.php' );
+}
 
 // EOF
