@@ -987,7 +987,7 @@ class NlLib extends TikiLib
 		$mail = new TikiMail();
 
 		// build the html
-		$beginHtml = '<body><div id="tiki-center" class="clearfix content"><div class="wiitext">';
+		$beginHtml = '<body><div id="tiki-center" class="clearfix content"><div class="wikitext">';
 		$endHtml = '</div></div></body>';
 		if (stristr($info['dataparsed'], '<body') === false) {
 			$html = "<html>$beginHtml" . $tikilib->parse_data($info['dataparsed'], array('absolute_links' => true, 'suppress_icons' => true)) . "$endHtml</html>";
@@ -1004,10 +1004,10 @@ class NlLib extends TikiLib
 		}
 
 		if (stristr($html, '<base') === false) {
-			if (stristr($html, '<header') === false) {
-				$html = str_ireplace('<html>', "<html><header><base href=\"$base_url\" /><style type=\"text/css\">" . $headerlib->get_all_css_content() . "</style></header>", $html);
+			if (stristr($html, '<head') === false) {
+				$html = str_ireplace('<html>', "<html><head><base href=\"$base_url\" /><style type=\"text/css\">" . $headerlib->get_all_css_content() . "</style></head>", $html);
 			} else {
-				$html = str_ireplace('<header>', "<header><base href=\"$base_url\" />", $html);
+				$html = str_ireplace('<head>', "<head><base href=\"$base_url\" />", $html);
 			}
 		}
 
