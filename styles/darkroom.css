@@ -1452,6 +1452,10 @@ body.tiki_blogs .actions {
 	text-align: right;
 }
 
+.author_actions {
+	text-align: left;
+}
+
 body.tiki_blogs .author_info {
 	background: none;
 }
