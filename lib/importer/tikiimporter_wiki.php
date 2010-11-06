@@ -27,18 +27,23 @@ class TikiImporter_Wiki extends TikiImporter
 {
 
     /**
-     * @see lib/importer/TikiImporter#importOptions
+     * @see lib/importer/TikiImporter#importOptions()
      */
-	static public $importOptions = array(
-        array('name' => 'wikiRevisions', 'type' => 'text', 'value' => 1, 'label' => 'Number of page revisions to import (0 for all revisions)'),
-        array('name' => 'alreadyExistentPageName', 'type' => 'select', 'label' => 'What to do with page names that already exists in TikiWiki?',
-            'options' => array(
-                array('name' => 'doNotImport', 'label' => 'Do not import'),
-                array('name' => 'override', 'label' => 'Override'),
-                array('name' => 'appendPrefix', 'label' => 'Append software name as prefix to the page name')
-            )
-        )     
-    );
+	static public function importOptions()
+	{
+		$options  = array(
+	        array('name' => 'wikiRevisions', 'type' => 'text', 'value' => 1, 'label' => tra('Number of page revisions to import (0 for all revisions)')),
+	        array('name' => 'alreadyExistentPageName', 'type' => 'select', 'label' => tra('What to do with page names that already exists in TikiWiki?'),
+	            'options' => array(
+	                array('name' => 'doNotImport', 'label' => tra('Do not import')),
+	                array('name' => 'override', 'label' => tra('Override')),
+	                array('name' => 'appendPrefix', 'label' => tra('Append software name as prefix to the page name')),
+	            )
+	        ),     
+    	);
+    	
+    	return $options;
+	}
     
     /**
      * Main function that starts the importing proccess

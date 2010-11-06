@@ -34,18 +34,6 @@ class TikiImporter
     public $softwareName = '';
     
     /**
-     * Options to the importer (i.e. the number of page
-     * revisions to import in the case of a wiki software)
-     * 
-     * This array is used in tiki-importer.tpl to display to the user
-     * the options related with the data import. Currently an importOptions
-     * can be of the following types: checkbox, select, text 
-     * 
-     * @var array
-     */
-    static public $importOptions = array();
-
-    /**
      * During the importing process all the log
      * strings will be appended to this object property
      * using the method saveAndDisplayLog()
@@ -63,6 +51,28 @@ class TikiImporter
      */
     public $errors = '';
 
+    /**
+     * Options to the importer (i.e. the number of page
+     * revisions to import in the case of a wiki software)
+     * 
+     * The function when implemented by child classes should return
+     * an array of options that is used in tiki-importer.tpl to display to the user
+     * the options related with the data import. Currently we support the following
+     * types: checkbox, select, text 
+     * 
+     * Example of array:
+     * 
+     * $options = array(
+     * 		array('name' => 'importAttachments', 'type' => 'checkbox', 'label' => tra('Import images and other attachments')),
+     * );
+     * 
+     * @return array
+     */
+    static public function importOptions()
+    {
+    	return array();
+    }
+    
     /**
      * Abstract method to start the import process and
      * call all other functions for each step of the importation
@@ -129,8 +139,7 @@ class TikiImporter
         $importOptions = array();
         
         do {
-            $refClass = new ReflectionClass($class);
-            $importOptions = array_merge($importOptions, $refClass->getStaticPropertyValue('importOptions', array()));
+            $importOptions = array_merge($importOptions, call_user_func(array($class, 'importOptions')));
         } while ($class = get_parent_class($class));
         
         return $importOptions;

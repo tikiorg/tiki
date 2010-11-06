@@ -32,13 +32,6 @@ class TikiImporter_Blog extends TikiImporter
 {
 
 	/**
-	 * @see lib/importer/TikiImporter#importOptions
-	 */
-	static public $importOptions = array(
-		array('name' => 'setAsHomePage', 'type' => 'checkbox', 'label' => 'Set new blog as Tiki homepage'),
-	);
-
-	/**
 	 * Blog information extracted from the XML file (title, description, created etc)
 	 * @var array
 	 */
@@ -56,6 +49,18 @@ class TikiImporter_Blog extends TikiImporter
 	 */
 	public $blogId = '';
 
+	/**
+	 * @see lib/importer/TikiImporter#importOptions()
+	 */
+	static public function importOptions()
+	{
+		$options = array(
+			array('name' => 'setAsHomePage', 'type' => 'checkbox', 'label' => tra('Set new blog as Tiki homepage')),
+		);
+		
+		return $options;
+	}
+	
 	/**
 	 * Main function that starts the importing proccess
 	 * 

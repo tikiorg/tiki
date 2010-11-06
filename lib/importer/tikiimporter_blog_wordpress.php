@@ -31,18 +31,23 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	public $validTypes = array('application/xml', 'text/xml');
 
 	/**
-	 * @see lib/importer/TikiImporter#importOptions
-	 */
-	static public $importOptions = array(
-		array('name' => 'importAttachments', 'type' => 'checkbox', 'label' => 'Import images and other attachments'),
-	);
-
-	/**
 	 * List of the imported attachments used
 	 * to parse post and page content to change the links
 	 * @var array
 	 */
 	public $newFiles = array();
+
+	/**
+	 * @see lib/importer/TikiImporter#importOptions()
+	 */
+	static public function importOptions()
+	{
+		$options = array(
+			array('name' => 'importAttachments', 'type' => 'checkbox', 'label' => tra('Import images and other attachments')),
+		);
+		
+		return $options;
+	}
 	
 	/**
 	 * Check for DOMDocument.

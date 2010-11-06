@@ -32,13 +32,6 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
     public $validTypes = array('application/xml', 'text/xml');
 
     /**
-     * @see lib/importer/TikiImporter#importOptions
-     */
-    static public $importOptions = array(
-        array('name' => 'importAttachments', 'type' => 'checkbox', 'label' => 'Import images and attachments (see documentation for more information)'),
-    );    
-
-    /**
      * The directory used to save the attachments.
      * It is defined on $this->import()
      */
@@ -50,6 +43,18 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      */
     var $parser = '';
 
+    /**
+     * @see lib/importer/TikiImporter#importOptions()
+     */
+    static public function importOptions()
+    {
+    	$options = array(
+        	array('name' => 'importAttachments', 'type' => 'checkbox', 'label' => tra('Import images and attachments (see documentation for more information)')),
+        );
+        
+        return $options;
+    }
+    
 	/**
      * Check for DOMDocument.
      * 
