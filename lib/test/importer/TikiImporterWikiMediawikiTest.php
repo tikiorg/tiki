@@ -115,7 +115,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $obj->dom = new DOMDocument;
         $obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
         $obj->expects($this->exactly(4))->method('extractInfo')->will($this->returnValue(array()));
-        $this->expectOutputString("\nStarting to parse pages:\n");
+        $this->expectOutputString("\nParsing pages:\n");
         $this->assertEquals(4, count($obj->parseData()));
     }
 
@@ -161,7 +161,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
         $this->obj->downloadAttachments();
 
-        $this->expectOutputString("\n\nStarting to import attachments:\nFile test2.jpg successfully imported!\nFile test.jpg successfully imported!\n");
+        $this->expectOutputString("\n\nImporting attachments:\nFile test2.jpg successfully imported!\nFile test.jpg successfully imported!\n");
 
         $i = count($sourceAttachments) - 1;
         while ($i >= 0) {
@@ -187,7 +187,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         }
 
         $this->obj->downloadAttachments();
-        $this->expectOutputString("\n\nStarting to import attachments:\nNOT importing file test2.jpg as there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\nNOT importing file test.jpg as there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\n");
+        $this->expectOutputString("\n\nImporting attachments:\nNOT importing file test2.jpg as there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\nNOT importing file test.jpg as there is already a file with the same name in the destination directory (" . $this->obj->attachmentsDestDir . ")\n");
        
         foreach ($attachments as $attachment) {
             $filePath = $this->obj->attachmentsDestDir . $attachment;
@@ -209,7 +209,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_invalid_upload.xml');
         $this->obj->downloadAttachments();
 
-        $this->expectOutputString("\n\nStarting to import attachments:\nUnable to download file Qlandkartegt-0.11.1.tar.gz. File not found.\nUnable to download file Passelivre.jpg. File not found.\n");
+        $this->expectOutputString("\n\nImporting attachments:\nUnable to download file Qlandkartegt-0.11.1.tar.gz. File not found.\nUnable to download file Passelivre.jpg. File not found.\n");
     }
 
     public function testExtractInfo()

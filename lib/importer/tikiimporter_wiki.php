@@ -71,7 +71,7 @@ class TikiImporter_Wiki extends TikiImporter
 
         $this->saveAndDisplayLog("\nImportation completed!");
 
-        echo "\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>";
+        echo "\n\n<b>" . tra("<a href=\"tiki-importer.php\">Click here</a> to finish the import process") . "</b>";;
         flush();
 
         $_SESSION['tiki_importer_feedback'] = $importFeedback;
@@ -91,15 +91,17 @@ class TikiImporter_Wiki extends TikiImporter
         $countData = array();
         $countPages = 0;
 
-        $this->saveAndDisplayLog("\n" . count($parsedData) . " pages parsed. Starting to insert those pages into Tiki:\n");
+        $countParsedData = count($parsedData);
+        
+        $this->saveAndDisplayLog("\n" . tra("$countParsedData pages parsed. Starting to insert those pages into Tiki:") . "\n");
 
         if (!empty($parsedData)) {
             foreach ($parsedData as $page) {
                 if ($this->insertPage($page)) {
                     $countPages++;
-                    $this->saveAndDisplayLog('Page ' . $page['name'] . " sucessfully imported\n");
+                    $this->saveAndDisplayLog(tra("Page ${page['name']} sucessfully imported") . "\n");
                 } else {
-                    $this->saveAndDisplayLog('Page ' . $page['name'] . " NOT imported (there was already a page with the same name)\n");
+                    $this->saveAndDisplayLog(tra("Page ${page['name']} NOT imported (there was already a page with the same name)") . "\n");
                 }
             }
         }

@@ -149,7 +149,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	{
 		$parsedData = array();
 		
-		$this->saveAndDisplayLog("\nStarting to parse data:\n");
+		$this->saveAndDisplayLog("\n" . tra("Extracting data from XML file:") . "\n");
 		
 		// pages or posts
 		$parsedData['items'] = $this->extractItems();
@@ -260,15 +260,17 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		$attachments = $this->extractAttachmentsInfo();
 		
 		if (empty($attachments)) {
-			$this->saveAndDisplayLog("\n\nNo attachments found to import!\n", true);
+			$this->saveAndDisplayLog("\n\n" . tra('No attachments found to import!') . "\n", true);
 			return;
 		}
 
-		$this->saveAndDisplayLog("\n\nStarting to import attachments:\n");
+		$this->saveAndDisplayLog("\n\n" . tra('Importing attachments:') . "\n");
 
 		if (!empty($attachments)) {
 			$galleryId = $this->createFileGallery();
 		}
+		
+		$feedback = array('success' => 0, 'error' => 0);
 		
 		$client = $this->getHttpClient();
 		
@@ -279,6 +281,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 				$response = $client->request();
 			} catch (Zend_Http_Client_Adapter_Exception $e) {
 				$this->saveAndDisplayLog("Unable to download file " . $attachment['fileName'] . ". Error message was: " . $e->getMessage() . "\n", true);
+				$feedback['error']++;
 				continue;
 			}
 			
@@ -292,16 +295,19 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 				
 				$this->newFiles[] = array('fileId' => $fileId, 'oldUrl' => $attachment['link'], 'sizes' => isset($attachment['sizes']) ? $attachment['sizes'] : '');
 				
-				$this->saveAndDisplayLog("File " . $attachment['fileName'] . " successfully imported!\n");
+				$this->saveAndDisplayLog(tra("Attachment ${attachment['fileName']} successfully imported!") . "\n");
+				$feedback['success']++;
 			} else {
-				$this->saveAndDisplayLog("Unable to download file " . $attachment['fileName'] . ". Error message was: " . $response->getStatus() . ' ' . $response->getMessage() . "\n", true);
+				$this->saveAndDisplayLog("Unable to download attachment " . $attachment['fileName'] . ". Error message was: " . $response->getStatus() . ' ' . $response->getMessage() . "\n", true);
+				$feedback['error']++;
 			}
 		}
+		
+		//$this->saveAndDisplayLog("Unable to download file " . $attachment['fileName'] . ". Error message was: " . $response->getStatus() . ' ' . $response->getMessage() . "\n", true);
 		
 		// close connection
 		$adapter = $client->getAdapter();
 		$adapter->close();
-		
 	}
 
 	/**
@@ -513,10 +519,9 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	}
 	
 	/**
-	 * Identify in a page or post content Wordpress shortcodes.
-	 * In some cases replace the syntax with equivalent Tiki syntax, in
-	 * other cases just add ~np~ so that Tiki output the shortcode 
-	 * directly without trying to parse it.
+	 * Identify in a page or post content Wordpress shortcodes and
+	 * add ~np~ so that Tiki output the shortcode directly without
+	 * trying to parse it.
 	 * 
 	 * See matchWordpressShortcodes() documentation for more information
 	 * on the values of the $shortcodes array. 

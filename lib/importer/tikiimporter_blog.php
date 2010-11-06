@@ -75,9 +75,9 @@ class TikiImporter_Blog extends TikiImporter
 
 		$importFeedback = $this->insertData($parsedData);
 
-		$this->saveAndDisplayLog("\nImportation completed!");
+		$this->saveAndDisplayLog("\n" . tra('Importation completed!'));
 
-		echo "\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>";
+		echo "\n\n<b>" . tra('<a href="tiki-importer.php">Click here</a> to finish the import process') . "</b>";
 		flush();
 
 		$_SESSION['tiki_importer_feedback'] = $importFeedback;
@@ -111,7 +111,9 @@ class TikiImporter_Blog extends TikiImporter
 		$countData = array();
 		$countItems= 0;
 
-		$this->saveAndDisplayLog("\n" . count($parsedData) . " items (pages and posts) parsed. Starting to insert them into Tiki:\n");
+		$countParsedData = count($parsedData);
+		
+		$this->saveAndDisplayLog("\n" . tra("$countParsedData items (pages and posts) parsed. Starting to insert them into Tiki:") . "\n");
 
 		$this->createBlog();
 
@@ -131,7 +133,7 @@ class TikiImporter_Blog extends TikiImporter
 	
 					if ($objId = $this->$methodName($item)) {
 						$countItems++;
-						$this->saveAndDisplayLog('Item ' . $item['name'] . " sucessfully imported\n");					
+						$this->saveAndDisplayLog(tra("Item \"${item['name']}\" sucessfully imported") . "\n");					
 
 						if ($item['type'] == 'page') {
 							$type = 'wiki page';
@@ -152,7 +154,7 @@ class TikiImporter_Blog extends TikiImporter
 						}
 						
 					} else {
-						$this->saveAndDisplayLog('Item ' . $item['name'] . " NOT imported (there was already a item with the same name)\n");
+						$this->saveAndDisplayLog(tra("Item \"${item['name']}\" NOT imported (there was already a item with the same name)") . "\n");
 					}
 				}
 			}
