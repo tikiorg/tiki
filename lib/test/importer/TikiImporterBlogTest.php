@@ -264,7 +264,7 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 		$bloglib = $this->getMock('BlogLib', array('replace_blog'));
 		$bloglib->expects($this->once())->method('replace_blog');
 
-		$this->obj->blogInfo = array('title' => 'Test title', 'desc' => 'Test description');
+		$this->obj->blogInfo = array('title' => 'Test title', 'desc' => 'Test description', 'lastModif' => 12345);
 		
 		$this->obj->createBlog();
 	}
@@ -279,7 +279,7 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 		$tikilib = $this->getMock('TikiLib', array('set_preference'));
 		$tikilib->expects($this->exactly(2))->method('set_preference');
 
-		$this->obj->blogInfo = array('title' => 'Test title', 'desc' => 'Test description');
+		$this->obj->blogInfo = array('title' => 'Test title', 'desc' => 'Test description', 'lastModif' => 12345);
 		
 		$_REQUEST['setAsHomePage'] = 'on';
 		
