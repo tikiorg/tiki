@@ -205,6 +205,8 @@ class TikiImporter
         }
         
         echo $msg;
+
+        ob_flush();
         flush();
     }
 }
