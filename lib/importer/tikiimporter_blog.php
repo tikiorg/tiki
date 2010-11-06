@@ -109,11 +109,13 @@ class TikiImporter_Blog extends TikiImporter
 	function insertData($parsedData)
 	{
 		$countData = array();
-		$countItems= 0;
 
-		$countParsedData = count($parsedData);
+		$countPosts = count($parsedData['posts']);
+		$countPages = count($parsedData['pages']);
+		$countTags = count($parsedData['tags']);
+		$countCategories = count($parsedData['categories']);
 		
-		$this->saveAndDisplayLog("\n" . tra("$countParsedData items (pages and posts) parsed. Starting to insert them into Tiki:") . "\n");
+		$this->saveAndDisplayLog("\n" . tra("Found $countPosts posts, $countPages pages, $countTags tags and $countCategories categories. Inserting them into Tiki:") . "\n");
 
 		$this->createBlog();
 
@@ -126,19 +128,20 @@ class TikiImporter_Blog extends TikiImporter
 				$this->createCategories($parsedData['categories']);
 			}
 			
-			if (!empty($parsedData['items'])) {
+			$items = array_merge($parsedData['posts'], $parsedData['pages']);
+			
+			if (!empty($items)) {
 				//TODO: move this foreach to a function (insertItems())
-				foreach ($parsedData['items'] as $item) {
+				foreach ($items as $item) {
 					$methodName = 'insert' . ucfirst($item['type']);
 	
 					if ($objId = $this->$methodName($item)) {
-						$countItems++;
-						$this->saveAndDisplayLog(tra("Item \"${item['name']}\" sucessfully imported") . "\n");					
-
 						if ($item['type'] == 'page') {
 							$type = 'wiki page';
+							$msg = tra("Page \"${item['name']}\" sucessfully imported");
 						} else if ($item['type'] == 'post') {
 							$type = 'blog post';
+							$msg = tra("Post \"${item['name']}\" sucessfully imported");
 						}
 						
 						if (!empty($item['comments'])) {
@@ -153,16 +156,26 @@ class TikiImporter_Blog extends TikiImporter
 							$this->linkObjectWithCategories($objId, $type, $item['categories']);
 						}
 						
+						$this->saveAndDisplayLog($msg . "\n");					
 					} else {
+						//TODO: improve feedback reporting the difference between the number of items found and items imported
+						if ($item['type'] == 'page') {
+							$countPages--;
+						} else {
+							$countPosts--;
+						}
+						
 						$this->saveAndDisplayLog(tra("Item \"${item['name']}\" NOT imported (there was already a item with the same name)") . "\n");
 					}
 				}
 			}
 		}
 
-		//TODO: extend the output to report the user how many tags and categories were created (not only pages and posts)
-		$countData['totalPages'] = (isset($parsedData['items'])) ? count($parsedData['items']) : 0;
-		$countData['importedPages'] = $countItems;
+		$countData['importedPages'] = $countPages;
+		$countData['importedPosts'] = $countPosts;
+		$countData['importedTags'] = $countTags;
+		$countData['importedCategories'] = $countCategories;
+		
 		return $countData;
 	}
 

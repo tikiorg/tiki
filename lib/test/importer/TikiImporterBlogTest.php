@@ -47,16 +47,22 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
         $obj->expects($this->once())->method('createBlog');
         $obj->expects($this->exactly(2))->method('insertPage');
         $obj->expects($this->exactly(4))->method('insertPost');
+        
 		$parsedData = array(
-			'items' => array(
-				array('type' => 'post', 'name' => 'Any name'),
-				array('type' => 'post', 'name' => 'Any name'),
+			'pages' => array(
 				array('type' => 'page', 'name' => 'Any name'),
-				array('type' => 'post', 'name' => 'Any name'),
 				array('type' => 'page', 'name' => 'Any name'),
+			),
+			'posts' => array(
+				array('type' => 'post', 'name' => 'Any name'),
+				array('type' => 'post', 'name' => 'Any name'),
+				array('type' => 'post', 'name' => 'Any name'),
 				array('type' => 'post', 'name' => 'Any name'),
 			),
+			'tags' => array(),
+			'categories' => array(),
 		);
+		
         $obj->insertData($parsedData);
     }
 
@@ -65,29 +71,39 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
         $obj = $this->getMock('TikiImporter_Blog', array('insertPage', 'createBlog'));
         $obj->expects($this->once())->method('createBlog');
         $obj->expects($this->never())->method('insertPage');
-        $parsedData = array();
+        $parsedData = array(
+        	'pages' => array(),
+        	'posts' => array(),
+        	'tags' => array(),
+        	'categories' => array(),
+        );
         $obj->insertData($parsedData);
     }
 
     public function testInsertDataShouldReturnCountData()
     {
-        $obj = $this->getMock('TikiImporter_Blog', array('insertPage', 'createBlog'));
+        $obj = $this->getMock('TikiImporter_Blog', array('insertPage', 'insertPost', 'createBlog'));
         $obj->expects($this->once())->method('createBlog');
-        $obj->expects($this->exactly(6))->method('insertPage')->will($this->onConsecutiveCalls(true, true, false, true, false, true));
+        $obj->expects($this->exactly(2))->method('insertPage')->will($this->onConsecutiveCalls(true, true));
+        $obj->expects($this->exactly(4))->method('insertPost')->will($this->onConsecutiveCalls(true, true, false, true));
 
 		$parsedData = array(
-			'items' => array(
-				array('type' => 'page', 'name' => 'Any name'),
-				array('type' => 'page', 'name' => 'Any name'),
-				array('type' => 'page', 'name' => 'Any name'),
-				array('type' => 'page', 'name' => 'Any name'),
+			'pages' => array(
 				array('type' => 'page', 'name' => 'Any name'),
 				array('type' => 'page', 'name' => 'Any name'),
 			),
+			'posts' => array(
+				array('type' => 'post', 'name' => 'Any name'),
+				array('type' => 'post', 'name' => 'Any name'),
+				array('type' => 'post', 'name' => 'Any name'),
+				array('type' => 'post', 'name' => 'Any name'),
+			),
+			'tags' => array(),
+			'categories' => array(),
 		);
 
         $countData = $obj->insertData($parsedData);
-        $expectedResult = array('totalPages' => 6, 'importedPages' => 4);
+        $expectedResult = array('importedPages' => 2, 'importedPosts' => 3, 'importedTags' => 0, 'importedCategories' => 0);
 
         $this->assertEquals($expectedResult, $countData);
 	}
@@ -100,7 +116,7 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
         $obj->expects($this->exactly(3))->method('insertComments')->with('Any name', 'wiki page');
 
 		$parsedData = array(
-			'items' => array(
+			'pages' => array(
 				array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2, 3)),
 				array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2)),
 				array('type' => 'page', 'name' => 'Any name'),
@@ -108,10 +124,13 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 				array('type' => 'page', 'name' => 'Any name'),
 				array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2, 3)),
 			),
+			'posts' => array(),
+			'tags' => array(),
+			'categories' => array(),
 		);
 
         $countData = $obj->insertData($parsedData);
-        $expectedResult = array('totalPages' => 6, 'importedPages' => 4);
+        $expectedResult = array('importedPages' => 4, 'importedPosts' => 0, 'importedTags' => 0, 'importedCategories' => 0);
 
         $this->assertEquals($expectedResult, $countData);
 		
@@ -121,14 +140,17 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
         $obj2->expects($this->exactly(2))->method('insertComments')->with('Any name', 'blog post');
 
 		$parsedData = array(
-			'items' => array(
+			'posts' => array(
 				array('type' => 'post', 'name' => 'Any name', 'comments' => array(1, 2, 3)),
 				array('type' => 'post', 'name' => 'Any name', 'comments' => array(1, 2)),
 			),
+			'pages' => array(),
+			'tags' => array(),
+			'categories' => array(),
 		);
 
         $countData = $obj2->insertData($parsedData);
-        $expectedResult = array('totalPages' => 2, 'importedPages' => 2);
+        $expectedResult = array('importedPages' => 0, 'importedPosts' => 2, 'importedTags' => 0, 'importedCategories' => 0);
 
         $this->assertEquals($expectedResult, $countData);
 	}

@@ -184,7 +184,7 @@ class TikiImporter
      * during the execution of the script using the flush() method
      *
      * @param string $msg the log message
-     * @param bool $error if the message is a error or not
+     * @param bool $error if the message is a error or not (default false)
      * @return void
      */
     function saveAndDisplayLog($msg, $error = false)

@@ -52,10 +52,10 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
     public function testParseData()
     {
         $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractItems', 'extractTags', 'extractCategories'));
-        $obj->expects($this->once())->method('extractItems')->will($this->returnValue(array()));
+        $obj->expects($this->once())->method('extractItems')->will($this->returnValue(array('posts' => array(), 'pages' => array())));
 		$this->expectOutputString("\nExtracting data from XML file:\n");
 		$parsedData = $obj->parseData();
-        $this->assertEquals(3, count($parsedData));
+        $this->assertEquals(4, count($parsedData));
 	}
 	
 	public function testExtractItems()
@@ -64,8 +64,13 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
         $obj->dom = new DOMDocument;
         $obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
         $obj->expects($this->exactly(5))->method('extractInfo')->will($this->returnValue(array()));
-		$expectedResult = $obj->extractItems();
-        $this->assertEquals(5, count($expectedResult));		
+        
+        $expectedResult = array(
+        	'posts' => array(array(), array(), array(), array()),
+        	'pages' => array(array()),
+        );
+        
+        $this->assertEquals($expectedResult, $obj->extractItems());
 	}
 
 	public function testExtractTags()
@@ -369,7 +374,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
         $obj->dom = new DOMDocument;
         $obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_attachments.xml');
 
-        $this->expectOutputString("\n\nImporting attachments:\nAttachment tadv2.jpg successfully imported!\nAttachment 1881232-hostelaria-las-torres-0.jpg successfully imported!\nAttachment 1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg successfully imported!\n");
+        $this->expectOutputString("\n\nImporting attachments:\nAttachment tadv2.jpg successfully imported!\nAttachment 1881232-hostelaria-las-torres-0.jpg successfully imported!\nAttachment 1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg successfully imported!\n3 attachments imported and 0 errors.\n");
         
         $obj->downloadAttachments();
         
@@ -476,7 +481,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
         $obj->dom = new DOMDocument;
         $obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_attachments.xml');
 
-        $this->expectOutputString("\n\nImporting attachments:\nUnable to download attachment tadv2.jpg. Error message was: 404 NOT FOUND\nUnable to download attachment 1881232-hostelaria-las-torres-0.jpg. Error message was: 404 NOT FOUND\nUnable to download attachment 1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg. Error message was: 404 NOT FOUND\n");
+        $this->expectOutputString("\n\nImporting attachments:\nUnable to download attachment tadv2.jpg. Error message was: 404 NOT FOUND\nUnable to download attachment 1881232-hostelaria-las-torres-0.jpg. Error message was: 404 NOT FOUND\nUnable to download attachment 1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg. Error message was: 404 NOT FOUND\n0 attachments imported and 3 errors.\n");
         
         $obj->downloadAttachments();
         

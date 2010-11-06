@@ -147,12 +147,10 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 */
 	function parseData()
 	{
-		$parsedData = array();
-		
 		$this->saveAndDisplayLog("\n" . tra("Extracting data from XML file:") . "\n");
 		
-		// pages or posts
-		$parsedData['items'] = $this->extractItems();
+		// extractItems return array with two keys: 'posts' and 'pages'
+		$parsedData = $this->extractItems();
 		
 		$parsedData['tags'] = $this->extractTags();
 		$parsedData['categories'] = $this->extractCategories();
@@ -170,18 +168,21 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	{
 		$data = $this->dom->getElementsByTagName('item');
 
+		$items = array(
+			'posts' => array(),
+			'pages' => array(),
+		);
+		
 		foreach ($data as $item) {
 			$type = $item->getElementsByTagName('post_type')->item(0)->nodeValue;
 			$status = $item->getElementsByTagName('status')->item(0)->nodeValue;
 
 			if (($type == 'post' || $type == 'page') && $status == 'publish') {
 				try {
-					$items[] = $this->extractInfo($item);
+					$items[$type . 's'][] = $this->extractInfo($item);
 				} catch (ImporterParserException $e) {
 					$this->saveAndDisplayLog($e->getMessage(), true);
 				}
-			} else if ($type == 'attachment') {
-
 			}
 		}
 		
@@ -303,7 +304,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 			}
 		}
 		
-		//$this->saveAndDisplayLog("Unable to download file " . $attachment['fileName'] . ". Error message was: " . $response->getStatus() . ' ' . $response->getMessage() . "\n", true);
+		$this->saveAndDisplayLog(tra("${feedback['success']} attachments imported and ${feedback['error']} errors.") . "\n");
 		
 		// close connection
 		$adapter = $client->getAdapter();
@@ -461,7 +462,12 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 			$data['revisions'][] = $revision;
 		}
 
-		$msg = 'Item "' . $data['name'] . '" successfully extracted.' . "\n";
+		if ($data['type'] == 'page') {
+			$msg = tra("Page \"${data['name']}\" successfully extracted.") . "\n";
+		} else if ($data['type'] == 'post') {
+			$msg = tra("Post \"${data['name']}\" successfully extracted.") . "\n";
+		}
+		
 		$this->saveAndDisplayLog($msg);
 
 		return $data;
