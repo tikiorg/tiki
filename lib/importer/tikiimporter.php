@@ -146,15 +146,18 @@ class TikiImporter
      */
     static function changePhpSettings()
     {
-        if (ini_get('error_reporting') != E_ALL)
+        if (ini_get('error_reporting') != E_ALL) {
             error_reporting(E_ALL);
+        }
 
-        if (ini_get('display_errors') != true)
+        if (ini_get('display_errors') != true) {
             ini_set('display_errors', true);
+        }
     
         // change max_execution_time
-        if (ini_get('max_execution_time') < 360)
-            set_time_limit(360);
+        if (ini_get('max_execution_time') < 360) {
+        	set_time_limit(360);
+        }
     }
 
     /**
@@ -175,8 +178,9 @@ class TikiImporter
             8 => tra('File upload stopped by extension.'),
         );
         
-        if (isset($errors[$code]))
+        if (isset($errors[$code])) {
             return $errors[$code];
+        }
     }
 
     /**
@@ -191,12 +195,15 @@ class TikiImporter
     {
         $this->log .= $msg;
 
-        if ($error)
+        if ($error) {
             $this->errors .= $msg;
+        }
 
         // convert \n to <br> if running script in web browser
-        if (isset($_SERVER['HTTP_HOST']))
+        if (isset($_SERVER['HTTP_HOST'])) {
             $msg = nl2br($msg);
+        }
+        
         echo $msg;
         flush();
     }
