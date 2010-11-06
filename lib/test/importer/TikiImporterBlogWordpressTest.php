@@ -238,13 +238,22 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		
 		$this->assertEquals($expectedResult, $comment);
 	}
+
+	public function testExtractBlogCreatedDate()
+	{
+		$this->obj->dom = new DOMDocument;
+		$this->obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
+		
+		$this->assertEquals(1173636811, $this->obj->extractBlogCreatedDate());
+	}
 	
 	public function testExtractBlogInfo()
 	{
 		$expectedResult = array(
 			'title' => 'rodrigo.utopia.org.br',
 			'desc' => 'Software livre, cicloativismo, montanhismo e quem sabe permacultura',
-			'created' => '1284989827',
+			'lastModif' => 1284989827,
+			'created' => 1173636811,
 		);
 
 		$this->obj->dom = new DOMDocument;
@@ -253,7 +262,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 
 		$this->assertEquals($expectedResult, $this->obj->blogInfo);
 	}
-
+	
 	public function testExtractAttachmentsInfo()
 	{
 		$this->obj->dom = new DOMDocument;

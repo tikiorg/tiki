@@ -192,7 +192,14 @@ class TikiImporter_Blog extends TikiImporter
 		//TODO: refactor replace_blog() to have default values
 		//TODO: blog user can be different that the user logged in the system
 		
-		$this->blogId = $bloglib->replace_blog($this->blogInfo['title'], $this->blogInfo['desc'], $user, 'y', 10, false, '', 'y', 'n', 'y', 'n', 'y', 'y', 'y', 'y', 'y', 'n', '', 'y', 5, 'n');
+		if (isset($this->blogInfo['created'])) {
+			$created = $this->blogInfo['created'];
+		} else {
+			$created = $tikilib->now;
+		}
+		
+		$this->blogId = $bloglib->replace_blog($this->blogInfo['title'], $this->blogInfo['desc'], $user, 'y', 10, false,
+			'', 'y', 'n', 'y', 'n', 'y', 'y', 'y', 'y', 'y', 'n', '', 'y', 5, 'n', $created, $this->blogInfo['lastModif']);
 		
 		if (isset($_REQUEST['setAsHomePage']) && $_REQUEST['setAsHomePage'] == 'on') {
 			$tikilib->set_preference('home_blog', $this->blogId);

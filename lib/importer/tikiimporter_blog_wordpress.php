@@ -664,13 +664,41 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 */
 	function extractBlogInfo()
 	{
-		$data = array();
+		$this->blogInfo['title'] = $this->dom->getElementsByTagName('title')->item(0)->nodeValue;
+		$this->blogInfo['desc'] = $this->dom->getElementsByTagName('description')->item(0)->nodeValue;
+		$this->blogInfo['lastModif'] = strtotime($this->dom->getElementsByTagName('pubDate')->item(0)->nodeValue);
+		
+		$created = $this->extractBlogCreatedDate();
 
-		$data['title'] = $this->dom->getElementsByTagName('title')->item(0)->nodeValue;
-		$data['desc'] = $this->dom->getElementsByTagName('description')->item(0)->nodeValue;
-		$data['created'] = strtotime($this->dom->getElementsByTagName('pubDate')->item(0)->nodeValue);
-
-		$this->blogInfo = $data;
+		if ($created > 0) { 
+			$this->blogInfo['created'] = $created;
+		}
+	}
+	
+	/**
+	 * Calculate blog created date based on the date of
+	 * the oldest post present in the XML file.
+	 * 
+	 * @return int blog created date (actually oldest post date)
+	 */
+	function extractBlogCreatedDate()
+	{
+		$dates = array();
+		$created = 0;
+		
+		$nodes = $this->dom->getElementsByTagName('post_date');
+		
+		foreach ($nodes as $node) {
+			$dates[] = strtotime($node->textContent);
+		}
+		
+		sort($dates);
+		
+		if (!empty($dates)) { 
+			$created = $dates[0];
+		}
+		
+		return $created;
 	}
 	
 	//TODO: check if a proxy is configured and than use Zend_Http_Client_Adapter_Proxy

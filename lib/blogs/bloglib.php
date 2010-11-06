@@ -417,27 +417,38 @@ class BlogLib extends TikiDb_Bridge
 	 * @param char[1] $show_related display related content on the bottom of each post
 	 * @param int $related_max control the maximum number of related posts displayed per post
 	 * @param int $use_excerpt use a post excerpt instead of the main content when listing posts of a blog
+	 * @param int $created if 0 use $tikilib->now
+	 * @param int $lastModif if 0 use $tikilib->now
 	 * @access public
 	 * @return int blogId
 	 */
 	function replace_blog($title, $description, $user, $public, $maxPosts, $blogId, 
 						$heading, $use_title, $use_title_in_post, $use_description, $use_breadcrumbs, 
 						$use_author, $add_date, $use_find, $allow_comments, $show_avatar, $alwaysOwner, 
-						$post_heading, $show_related, $related_max, $use_excerpt
+						$post_heading, $show_related, $related_max, $use_excerpt, $created = 0, $lastModif = 0
 	)  {
 		//TODO: all the display parameters can be one single array parameter
 		global $tikilib, $prefs;
+		
+		if ($lastModif == 0) {
+			$lastModif = $tikilib->now;
+		}
+		
 		if ($blogId) {
 			$query = "update `tiki_blogs` set `title`=? ,`description`=?,`user`=?,`public`=?,`lastModif`=?,`maxPosts`=?,`heading`=?,`use_title`=?,`use_title_in_post`=?,`use_description`=?,`use_breadcrumbs`=?,`use_author`=?,`add_date`=?,`use_find`=?,`allow_comments`=?,`show_avatar`=?,`always_owner`=?, `post_heading`=?, `show_related`=?, `related_max`=?, `use_excerpt`=? where `blogId`=?";
 
-			$result = $this->query($query, array($title, $description, $user, $public, $tikilib->now, $maxPosts, $heading, $use_title, $use_title_in_post, $use_description, $use_breadcrumbs, $use_author, $add_date, $use_find, $allow_comments, $show_avatar, $alwaysOwner, $post_heading, $show_related, $related_max, $use_excerpt, $blogId));
+			$result = $this->query($query, array($title, $description, $user, $public, $lastModif, $maxPosts, $heading, $use_title, $use_title_in_post, $use_description, $use_breadcrumbs, $use_author, $add_date, $use_find, $allow_comments, $show_avatar, $alwaysOwner, $post_heading, $show_related, $related_max, $use_excerpt, $blogId));
 			$tikilib->object_post_save( array('type'=>'blog', 'object'=>$blogId), array('content'=>$heading) );
 		} else {
+			if ($created == 0) {
+				$created = $tikilib->now;
+			}
+			
 			$query = "insert into `tiki_blogs`(`created`,`lastModif`,`title`,`description`,`user`,`public`,`posts`,`maxPosts`,`hits`,`heading`,`use_title`,`use_title_in_post`,`use_description`,`use_breadcrumbs`,`use_author`,`add_date`,`use_find`,`allow_comments`,`show_avatar`,`always_owner`,`post_heading`, `show_related`, `related_max`, `use_excerpt`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-			$result = $this->query($query, array((int) $tikilib->now, (int) $tikilib->now, $title, $description, $user, $public, 0, (int) $maxPosts, 0, $heading, $use_title, $use_title_in_post, $use_description, $use_breadcrumbs, $use_author, $add_date, $use_find, $allow_comments, $show_avatar, $alwaysOwner, $post_heading, $show_related, $related_max, $use_excerpt));
+			$result = $this->query($query, array($created, $lastModif, $title, $description, $user, $public, 0, (int) $maxPosts, 0, $heading, $use_title, $use_title_in_post, $use_description, $use_breadcrumbs, $use_author, $add_date, $use_find, $allow_comments, $show_avatar, $alwaysOwner, $post_heading, $show_related, $related_max, $use_excerpt));
 			$query2 = "select max(`blogId`) from `tiki_blogs` where `lastModif`=?";
-			$blogId = $this->getOne($query2, array((int) $tikilib->now));
+			$blogId = $this->getOne($query2, array($lastModif));
 
 			if ($prefs['feature_score'] == 'y') {
 				$tikilib->score_event($user, 'blog_new');
