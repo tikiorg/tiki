@@ -139,7 +139,7 @@ input.wikiaction,
 	white-space: nowrap;
 }
 
-.calbuttonbox{
+.calbuttonbox {
 	margin: 0 2px 0 2px;
 }
 
@@ -179,7 +179,6 @@ input[type=submit]:hover,
 
 .button {
 	font-size: 0.8em;
-/*	padding: 0;*/
 }
 
 input[type=file] {
@@ -577,7 +576,6 @@ a.phplmselected:hover {
 	text-decoration: none;
 	font-weight: bold;
 	color: #d8d8d8;
-	text-decoration: none;
 }
 
 .cssmenu_vert a:hover,	
@@ -695,7 +693,6 @@ a.phplmselected:hover {
 }
 
 /** Links in other menus **/
- 
 .separator,
 .separatorline {
 	color: #f5f5f5;
@@ -844,13 +841,11 @@ a.tikihelp:hover {
 
 /**tree**/
 .ui-icon {
-background-image:url('../lib/jquery/jquery-ui/themes/ui-darkness/images/ui-icons_cccccc_256x240.png');
+background-image: url('../lib/jquery/jquery-ui/themes/ui-darkness/images/ui-icons_cccccc_256x240.png');
 }
-
 
 /**** Boxes *****/
 /** Modules **/
-
 .box {
 	background: #292929;
 	margin-bottom: 8px;
@@ -952,6 +947,12 @@ img.flipmodimage:hover {
 	border: 1px solid #606060;
 }
 
+.rbox-data a:link,
+.rbox-data a:hover,
+.rbox-data a:visited {
+	color: #000;
+}
+
 .warning .rbox-title {
 	color: #000;
 }
@@ -972,6 +973,7 @@ img.flipmodimage:hover {
 	color: #fff;
 	background: #292929;
 }
+
 .even {
 	color: #fff;
 	background: #232323;
@@ -990,7 +992,6 @@ table {
 	margin-top: 1em;
 	margin-bottom: 1em;
 }
-
 
 .normal td,
 .wikitable td,
@@ -1241,7 +1242,6 @@ textarea.wikiedit {
 .codecaption {
 	font-size: 90%;
 	padding: 0 10px;
-	background: #fff;
 	position: relative;
 	bottom: -5px;
 	display: inline;
@@ -1390,7 +1390,6 @@ img.articleimage {
 	font-size: 1.8em;
 	font-weight: bold;
 	padding: 3px;
-	font-weight: bold;
 	letter-spacing: .4pt;
 	line-height: 80%;
 }
@@ -1426,6 +1425,7 @@ img.articleimage {
 body.tiki_blogs .post {
 	margin-bottom: 20px;
 }
+
 /*
 body.tiki_blogs .post .title {
 	width: 100%;
@@ -1462,10 +1462,7 @@ body.tiki_blogs .author_info {
 	background: none;
 }
 
-.postbody-title {
-	background: none;
-	border: 0;
-}
+/* .postbpdy-title in Forums below also applies to blogs */
 /*
 body.tiki_blogs .postbody-title {
 	float: none;
@@ -1473,6 +1470,7 @@ body.tiki_blogs .postbody-title {
 	background: none;
 	border: 0;
 }*/
+
 
 body.tiki_blogs .postfooter {
 	width: 100%;
@@ -1500,13 +1498,13 @@ body.tiki_blogs .postfooter .actions {
 /*	width: 100%;
 	min-width: 100% !important;
 	height: 100%;*/
-	color: #d8d8d8;
 }
 	
 .post .postbody .content p {
 	margin: 5px 10px;
 }
 
+/* also applies to blogs */
 .postbody-title {
 	background: #343434 url(darkroom/button.png) repeat-x;
 	border-bottom: 0;
@@ -1546,10 +1544,6 @@ body.tiki_blogs .postfooter .actions {
 	font-size: 90%;
 }
 
-.post .author_post_info {
-	border: none;
-}
-
 .post .author_info {
 	border: 0;
 	background: #575757;
@@ -1557,6 +1551,7 @@ body.tiki_blogs .postfooter .actions {
 
 .post .author_post_info {
 	background: #575757;
+	border: none;
 }
 
 .post .author_post_info_on {
@@ -1565,10 +1560,6 @@ body.tiki_blogs .postfooter .actions {
 
 .post .postbody-title .actions {
 	font-size: .9em;
-}
-
-.postbody-content {
-	/*min-width: 100%;*/
 }
 
 .post .postbody .attachments {
@@ -1877,7 +1868,6 @@ caltrack a:visited {
 
 .calcontent {
 	min-height: 60px;
-	height: auto !important;
 	height: 60px;
 }
 
@@ -1890,6 +1880,7 @@ caltrack a:visited {
 .calfocus {
 	font-size: 1em;
 	background: inherit;
+	border-bottom: none;
 }
 
 #calscreen .calfocus a {
@@ -1901,10 +1892,6 @@ caltrack a:visited {
 .calfocuson {
 	font-size: 90%;
 	background: #292929;
-}
-
-.calodd, .caleven {
-	border: 1px solid #999;
 }
 
 .calprio1 a,
@@ -1959,7 +1946,7 @@ caltrack a:visited {
 
 .searchresults li .objecttype,
 	.searchresults li .parentname ,
-	.searchresults li .objectname  {
+	.searchresults li .objectname {
 	font-size: 120%;
 	font-weight: bold;
 }
@@ -1989,11 +1976,6 @@ caltrack a:visited {
 
 .calinput {
 	background: #3f3f3f;
-}
-
-
-.calfocus {
-	border-bottom: none;
 }
 
 .calfocuson + .calcontent {
@@ -2039,11 +2021,9 @@ caltrack a:visited {
 	background: #696969;
 }
 
-
 .calfocuson, .calHeadingOn {
 	background: #292929;
 }
-
 
 .daterow {
 	margin: 2px;
@@ -2167,11 +2147,11 @@ div.dirfooter {
 }
 
 /***** Ajax *****/
-
 /* Ajax Loading Overlay */
 #ajaxLoadingBG {
 	background: transparent url(../img/overlay-85.png);
 }
+
 #ajaxLoading {
 	background: transparent url(../img/loading.gif) no-repeat 50% 50%;
 	color: #ccc;
