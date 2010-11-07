@@ -13,76 +13,129 @@ function wikiplugin_youtube_info() {
 	return array(
 		'name' => tra('Youtube'),
 		'documentation' => 'PluginYouTube',
-		'description' => tra('Display youtube video in a wiki page'),
+		'description' => tra('Display a YouTube video in a wiki page'),
 		'prefs' => array( 'wikiplugin_youtube' ),
 		'params' => array(
 			'movie' => array(
 				'required' => true,
 				'name' => 'Movie',
-				'description' => tra('URL to the Youtube video'),
+				'description' => tra('Entire URL to the YouTube video or last part (after www.youtube.com/v/)'),
+				'filter' => 'url',
+				'default' => '',
 			),
 			'width' => array(
 				'required' => false,
-				'name' => tra('width'),
+				'name' => tra('Width'),
 				'description' => tra('Width in pixels'),
+				'filter' => 'digits',
 				'default' => 425,
 			),
 			'height' => array(
 				'required' => false,
-				'name' => tra('height'),
+				'name' => tra('Height'),
 				'description' => tra('Height in pixels'),
-				'default' => 350,
+				'filter' => 'digits',
+			'default' => 350,
 			),
 			'quality' => array(
 				'required' => false,
-				'name' => tra('quality'),
-				'description' => tra('quality'),
+				'name' => tra('Quality'),
+				'description' => tra('Quality of the video'),
 				'default' => 'high',
+				'filter' => 'alpha',
+    			'options' => array(
+					array('text' => tra('High'), 'value' => 'high'), 
+					array('text' => tra('Medium'), 'value' => 'medium'), 
+					array('text' => tra('Low'), 'value' => 'low'), 
+				),  
+				'advanced' => true				
 			),
 			'allowFullScreen' => array(
 				'required' => false,
-				'name' => tra('Allow Fullscreen'),
-				'description' => 'y|n',
+				'name' => tra('Full screen'),
+				'description' => tra('Expand to full screen'),
 				'default' => 'n',
+				'filter' => 'alpha',
+    			'options' => array(
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n'), 
+				),
+				'advanced' => true				
 			),
-		),
+			'related' => array(
+				'required' => false,
+				'name' => tra('Related'),
+				'description' => tra('Show related videos'),
+				'introduced' => 7.0,
+				'filter' => 'alpha',
+    			'options' => array(
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n'), 
+				),
+				'default' => 'n',
+				'advanced' => true				
+			),
+			'background' => array(
+				'required' => false,
+				'name' => tra('Background'),
+				'description' => tra('Toolbar background color'),
+				'accepted' => tra('HTML color code, e.g. ffffff'),
+				'introduced' => 7.0,
+				'filter' => 'striptags',
+				'default' => '',
+				'advanced' => true				
+			),
+			'border' => array(
+				'required' => false,
+				'name' => tra('Borders'),
+				'description' => tra('Toolbar border colors'),
+				'accepted' => tra('HTML color code, e.g. ffffff'),
+				'introduced' => 7.0,
+				'filter' => 'striptags',
+				'default' => '',
+				'advanced' => true				
+			),
+			),
 	);
 }
 
 function wikiplugin_youtube($data, $params) {
-	
+	$plugininfo = wikiplugin_youtube_info();
+	foreach ($plugininfo['params'] as $key => $param) {
+		$default["$key"] = $param['default'];
+	}
 	extract ($params,EXTR_SKIP);
+	$params = array_merge($default, $params);
 
 	if (empty($movie)) {
-		return tra('Missing parameter movie to the youtube plugin');
-	}
-	
-	if (!isset($width)) {
-	    $width = "425";
-	}	
-
-	if (!isset($height)) {
-	    $height = "350";
-	}	
-
-	if (!isset($quality)) {
-	    $quality = "high";
+		return '^' . tra('Plugin YouTube error: the movie parameter is empty.');
 	}
 
 	$movie = "http://www.youtube.com/v/" . preg_replace('/http:\/\/(\w+\.)?youtube\.com\/watch\?v=/', '', $movie);
 	if (!empty($allowFullScreen) && $allowFullScreen = 'y') {
-		$movie .= '&fs=1';
+		$movie .= '?fs=1';
 		$fs = ' allowFullScreen="true" ';
 	}
-
-	$asetup = "<OBJECT CLASSID=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" WIDTH=\"$width\" HEIGHT=\"$height\">";
-	$asetup .= "<PARAM NAME=\"movie\" VALUE=\"$movie\">";
-	$asetup .= "<PARAM NAME=\"quality\" VALUE=\"$quality\">";
-	$asetup .= "<PARAM NAME=\"wmode\" VALUE=\"transparent\">";
-	if (!empty($allowFullScreen) && $allowFullScreen = 'y') {
-		$asetup .= '<PARAM NAME="allowFullScreen" VALUE="true"></PARAM>';
+	if ($related == 'n') {
+		$movie .= '&rel=0';
 	}
-	$asetup .= "<embed src=\"$movie\" quality=\"$quality\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$width\" height=\"$height\" $fs wmode=\"transparent\"></embed></object>";
-
+	if (!empty($border)) {
+		$movie .= '&color1=0x' . $border;
+	}
+	if (!empty($background)) {
+		$movie .= '&color2=0x' . $background;
+	}
+	
+	$asetup = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="' . $width . '" height="' . $height . '">';
+	$asetup .= "\n\t" . '<param name="movie" value="' . $movie . '"></param>';
+	if (!empty($allowFullScreen) && $allowFullScreen = 'y') {
+		$asetup .= "\n\t" . '<param name="allowFullScreen" value="true"></param>';
+	}
+	$asetup .= "\n\t" . '<param name="quality" value="' . $quality . '"></param>';
+	$asetup .= "\n\t" . '<param name="wmode" value="transparent"></param>';
+	$asetup .= "\n\t" . '<embed src="' . $movie . '" quality="' . $quality . '"'
+					. "\n\t\t" . ' pluginspage="http://www.macromedia.com/go/getflashplayer"' 
+					. "\n\t\t" . ' type="application/x-shockwave-flash" width="' . $width . '" height="' . $height . '"' .  $fs
+					. "\n\t\t" . ' wmode="transparent">' . "\n\t" . '</embed>' . "\n" . '</object>' . "\n";
 	return $asetup;
 }
