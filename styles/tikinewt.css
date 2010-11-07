@@ -1546,7 +1546,6 @@ body.tiki_blogs .post {
 body.tiki_blogs .post .postbody {
 	border: 1px solid #AEAEAE;
 	border-bottom: 1px solid #AEAEAE;
-	font-size: .95em;
 	color: black;
 	padding: 10px;
 }
@@ -1555,7 +1554,6 @@ body.tiki_blogs .post .postbody {
 	background: #f9fcff;
 	border: 1px solid #8cacbb;
 	color: #000;
-	font-size: 0.95em;
 	padding: 0;
 	margin: 5px 0;
 }
