@@ -135,7 +135,6 @@ class ModLib extends TikiLib
 
 		// Now add all the system modules
 		$h = opendir("templates/modules");
-
 		while (($file = readdir($h)) !== false) {
 			if (substr($file, 0, 4) == 'mod-' && preg_match ("/\.tpl$/", $file)) {
 				if (!strstr($file, "nocache")) {
@@ -145,7 +144,6 @@ class ModLib extends TikiLib
 				}
 			}
 		}
-
 		closedir ($h);
 		return $all_modules;
 	}
@@ -405,6 +403,22 @@ class ModLib extends TikiLib
 		}
 
 		return $out;
+	}
+	
+	function list_module_files() {
+		$files = array();
+		if (is_dir('modules')) {
+			if ($dh = opendir('modules')) {
+				while (($file = readdir($dh)) !== false) {
+					if (preg_match("/^mod-func-.*\.php$/", $file)) {
+						array_push($files, $file);
+					}
+				}
+				closedir ($dh);
+			}
+		}
+		sort($files);
+		return $files;
 	}
 
 	function get_module_info( $module ) {
