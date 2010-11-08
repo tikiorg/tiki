@@ -211,7 +211,11 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		$data = $this->dom->getElementsByTagName('tag');
 
 		foreach ($data as $tag) {
-			$tags[] = $tag->getElementsByTagName('tag_name')->item(0)->nodeValue;
+			if ($tag->getElementsByTagName('tag_name')->length != 0) {
+				$tags[] = $tag->getElementsByTagName('tag_name')->item(0)->nodeValue;
+			} else if ($tag->getElementsByTagName('tag_slug')->length != 0) {
+				$tags[] = $tag->getElementsByTagName('tag_slug')->item(0)->nodeValue;
+			}
 		}
 
 		return $tags;
