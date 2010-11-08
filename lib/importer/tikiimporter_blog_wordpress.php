@@ -102,12 +102,15 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 			$this->checkRequirementsForAttachments();
 		}
 
-		$this->saveAndDisplayLog("Loading and validating the XML file\n");
-
 		$this->dom = new DOMDocument;
-		$this->dom->load($filePath);
+		
+		if (!$this->dom->load($filePath)) {
+			throw new DOMException(tra('Error while loading XML file. Probably your XML file is malformed.'));
+		}
 
 		$this->validateInput();
+		
+		$this->saveAndDisplayLog("Loading and validating the XML file\n");
 		
 		$this->extractBlogInfo();
 		
@@ -268,7 +271,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		$attachments = $this->extractAttachmentsInfo();
 		
 		if (empty($attachments)) {
-			$this->saveAndDisplayLog("\n\n" . tra('No attachments found to import!') . "\n", true);
+			$this->saveAndDisplayLog("\n\n" . tra('No attachments found to import!') . "\n");
 			return;
 		}
 
