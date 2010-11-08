@@ -78,5 +78,74 @@ OUT;
 OUT;
 		$this->assertEquals($expect, $output);
 	}
+
+	function testBasicSmartyFormatter()
+	{
+		$plugin = new Search_Formatter_Plugin_SmartyTemplate(dirname(__FILE__).'/basic.tpl');
+
+		$formatter = new Search_Formatter($plugin);
+
+		$output = $formatter->format(array(
+			array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
+			array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
+		));
+
+		$expect = <<<OUT
+<div>~np~<table>
+	<caption>Count: 2</caption>
+	<tr><th>Object</th><th>Type</th></tr>
+	<tr><td>HomePage</td><td>wiki page</td></tr>
+	<tr><td>SomePage</td><td>wiki page</td></tr>
+</table>~/np~</div>
+OUT;
+		$this->assertXmlStringEqualsXmlString($expect, "<div>$output</div>");
+	}
+
+	function testForEmbeddedMode()
+	{
+		$plugin = new Search_Formatter_Plugin_SmartyTemplate(dirname(__FILE__).'/embedded.tpl', true);
+
+		$formatter = new Search_Formatter($plugin);
+
+		$output = $formatter->format(array(
+			array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
+			array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
+		));
+
+		$expect = <<<OUT
+<div>~np~<table>
+	<caption>Count: 2</caption>
+	<tr><th>Object</th><th>Type</th></tr>
+	<tr><td>HomePage</td><td>wiki page</td></tr>
+	<tr><td>SomePage</td><td>wiki page</td></tr>
+</table>~/np~</div>
+OUT;
+		$this->assertXmlStringEqualsXmlString($expect, "<div>$output</div>");
+	}
+
+	function testAdditionalFieldDefinition()
+	{
+		$plugin = new Search_Formatter_Plugin_SmartyTemplate(dirname(__FILE__).'/basic.tpl');
+
+		$formatter = new Search_Formatter($plugin);
+		$formatter->addSubFormatter('object_id', new Search_Formatter_Plugin_WikiTemplate("{display name=object_id}\n{display name=description default=None}"));
+
+		$output = $formatter->format(array(
+			array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
+			array('object_type' => 'wiki page', 'object_id' => 'SomePage', 'description' => 'About'),
+		));
+
+		$expect = <<<OUT
+<div>~np~<table>
+	<caption>Count: 2</caption>
+	<tr><th>Object</th><th>Type</th></tr>
+	<tr><td>~/np~HomePage
+None~np~</td><td>wiki page</td></tr>
+	<tr><td>~/np~SomePage
+About~np~</td><td>wiki page</td></tr>
+</table>~/np~</div>
+OUT;
+		$this->assertXmlStringEqualsXmlString($expect, "<div>$output</div>");
+	}
 }
 

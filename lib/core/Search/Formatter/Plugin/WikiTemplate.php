@@ -9,6 +9,11 @@ class Search_Formatter_Plugin_WikiTemplate implements Search_Formatter_Plugin_In
 		$this->template = $template;
 	}
 
+	function getFormat()
+	{
+		return self::FORMAT_WIKI;
+	}
+
 	function getFields()
 	{
 		$matches = WikiParser_PluginMatcher::match($this->template);
