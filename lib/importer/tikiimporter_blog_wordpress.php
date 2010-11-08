@@ -107,6 +107,8 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		$this->dom = new DOMDocument;
 		$this->dom->load($filePath);
 
+		$this->validateInput();
+		
 		$this->extractBlogInfo();
 		
 		if (!empty($_POST['importAttachments']) && $_POST['importAttachments'] == 'on') {

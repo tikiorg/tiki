@@ -74,8 +74,7 @@ class TikiImporter_Blog extends TikiImporter
 	{
 		$this->setupTiki();
 		
-		// child classes must implement those two methods
-		$this->validateInput();
+		// child classes must implement this method
 		$parsedData = $this->parseData();
 
 		$importFeedback = $this->insertData($parsedData);

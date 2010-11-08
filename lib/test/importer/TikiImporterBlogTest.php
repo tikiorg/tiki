@@ -16,8 +16,7 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 	
     public function testImportShouldCallMethodsToStartImportProcess()
     {
-        $obj = $this->getMock('TikiImporter_Blog', array('validateInput', 'parseData', 'insertData'));
-        $obj->expects($this->once())->method('validateInput');
+        $obj = $this->getMock('TikiImporter_Blog', array('parseData', 'insertData'));
         $obj->expects($this->once())->method('parseData');
         $obj->expects($this->once())->method('insertData');
 
@@ -28,8 +27,7 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
     public function testImportShouldSetSessionVariables()
     {
         $expectedImportFeedback = array('importedPages' => 10, 'totalPages' => '13');
-        $obj = $this->getMock('TikiImporter_Blog', array('validateInput', 'parseData', 'insertData', 'saveAndDisplayLog'));
-        $obj->expects($this->once())->method('validateInput'); 
+        $obj = $this->getMock('TikiImporter_Blog', array('parseData', 'insertData', 'saveAndDisplayLog')); 
         $obj->expects($this->once())->method('parseData');
         $obj->expects($this->once())->method('insertData')->will($this->returnValue($expectedImportFeedback));
         $obj->expects($this->once())->method('saveAndDisplayLog');
