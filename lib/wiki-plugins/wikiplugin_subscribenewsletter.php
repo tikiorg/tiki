@@ -15,18 +15,20 @@ function wikiplugin_subscribenewsletter_info() {
 		'params' => array(
 			'nlId' => array(
 				'required' => true,
-				'name' => '',
-				'description' => '',
+				'name' => tra('Newsletter Id (nlId)'),
+				'description' => 'Identification number (Id) of the Newsletter that you want to allow the users to subscribe to',
 				'filter' => 'digits',
 			),
 			'thanks' => array(
 				'required' => false,
-				'name' => tra('Confirmation message after posting form. The plugin body is then the button label.'),
+				'name' => tra('Confirmation message'),
+				'description' => tra('Confirmation message after posting form. The plugin body is then the button label.'),
 				'filter' => 'wikicontent',
 			),
 			'button' => array(
 				'required' => false,
-				'name' => tra('Button label. The plugin body is then the confirmation message'),
+				'name' => tra('Button'),
+				'description' => tra('Button label. The plugin body is then the confirmation message'),
 				'filter' => 'wikicontent',
 			),
 
