@@ -1452,6 +1452,10 @@ body.tiki_blogs .actions {
 	text-align: right;
 }
 
+body.tiki_blogs .actions .share {
+	padding: 0;
+}
+
 .author_actions {
 	text-align: left;
 }
