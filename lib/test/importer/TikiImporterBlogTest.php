@@ -66,8 +66,7 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 
     public function testInsertDataShouldNotCallInsertPage()
     {
-        $obj = $this->getMock('TikiImporter_Blog', array('insertPage', 'createBlog'));
-        $obj->expects($this->once())->method('createBlog');
+        $obj = $this->getMock('TikiImporter_Blog', array('insertPage'));
         $obj->expects($this->never())->method('insertPage');
         $parsedData = array(
         	'pages' => array(),
@@ -108,8 +107,7 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 	
 	public function testInsertDataShouldCallInsertComments()
 	{
-        $obj = $this->getMock('TikiImporter_Blog', array('insertPage', 'createBlog', 'insertComments'));
-        $obj->expects($this->once())->method('createBlog');
+        $obj = $this->getMock('TikiImporter_Blog', array('insertPage', 'insertComments'));
         $obj->expects($this->exactly(6))->method('insertPage')->will($this->onConsecutiveCalls('Any name', 'Any name', false, 'Any name', false, 'Any name'));
         $obj->expects($this->exactly(3))->method('insertComments')->with('Any name', 'wiki page');
 
@@ -153,6 +151,29 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
         $this->assertEquals($expectedResult, $countData);
 	}
 
+	public function testInsertDataShouldNotCreateBlogIfNoPosts()
+	{
+		$obj = $this->getMock('TikiImporter_Blog', array('insertPage', 'insertComments', 'createTags', 'createCategories', 'createBlog'));
+        $obj->expects($this->exactly(0))->method('insertPage');
+        $obj->expects($this->exactly(0))->method('insertComments');
+        $obj->expects($this->exactly(0))->method('createTags');
+        $obj->expects($this->exactly(0))->method('createCategories');
+        $obj->expects($this->exactly(0))->method('createBlog');
+
+		$parsedData = array(
+			'pages' => array(),
+			'posts' => array(),
+			'tags' => array(),
+			'categories' => array(),
+		);
+
+        $countData = $obj->insertData($parsedData);
+        $expectedResult = array('importedPages' => 0, 'importedPosts' => 0, 'importedTags' => 0, 'importedCategories' => 0);
+
+        $this->assertEquals($expectedResult, $countData);
+		
+	}
+	
 	public function testInsertComments()
 	{
 		global $commentslib; require_once('lib/comments/commentslib.php');

@@ -121,7 +121,9 @@ class TikiImporter_Blog extends TikiImporter
 		
 		$this->saveAndDisplayLog("\n" . tra("Found $countPosts posts, $countPages pages, $countTags tags and $countCategories categories. Inserting them into Tiki:") . "\n");
 
-		$this->createBlog();
+		if (!empty($parsedData['posts'])) {
+			$this->createBlog();
+		}
 
 		if (!empty($parsedData)) {
 			if (!empty($parsedData['tags'])) {
