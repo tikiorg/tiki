@@ -947,9 +947,21 @@ img.flipmodimage:hover {
 	border: 1px solid #606060;
 }
 
-.rbox-data a:link,
-.rbox-data a:hover,
-.rbox-data a:visited {
+.error .rbox-data a:link,
+.error .rbox-data a:hover,
+.error .rbox-data a:visited {
+	color: #000;
+}
+
+.errors .rbox-data a:link,
+.errors .rbox-data a:hover,
+.errors .rbox-data a:visited {
+	color: #000;
+}
+
+.warning .rbox-data a:link,
+.warning .rbox-data a:hover,
+.warning .rbox-data a:visited {
 	color: #000;
 }
 
