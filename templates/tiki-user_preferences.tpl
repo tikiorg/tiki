@@ -286,17 +286,7 @@
         </select>
       </td>
     </tr>
-  
-    <tr class="{cycle}">
-      <td>{tr}User information:{/tr}</td>
-      <td>
-        <select name="user_information">
-          <option value='private' {if $user_prefs.user_information eq 'private'}selected="selected"{/if}>{tr}Private{/tr}</option>
-          <option value='public' {if $user_prefs.user_information eq 'public'}selected="selected"{/if}>{tr}Public{/tr}</option>
-        </select>
-      </td>
-    </tr>
-  
+
     {if $prefs.feature_community_mouseover eq 'y'}
       <tr class="{cycle}">
         <td>{tr}Display info tooltip on mouseover for every user who allows his/her information to be public{/tr}</td>
