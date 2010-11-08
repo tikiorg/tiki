@@ -105,7 +105,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		$this->dom = new DOMDocument;
 		
 		if (!$this->dom->load($filePath)) {
-			throw new DOMException(tra('Error while loading XML file. Probably your XML file is malformed.'));
+			throw new DOMException(tra('Error while loading XML file. Probably your XML file is malformed. Some versions of Wordpress generate a malformed XML file. See the Tiki Importer documentation for more information.'));
 		}
 
 		$this->validateInput();
