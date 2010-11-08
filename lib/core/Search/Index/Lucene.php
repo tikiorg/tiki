@@ -4,8 +4,13 @@ class Search_Index_Lucene implements Search_Index_Interface
 {
 	private $lucene;
 
-	function __construct($directory)
+	function __construct($directory, $lang = 'en')
 	{
+		switch($lang) {
+		case 'en':
+		default:
+			Zend_Search_Lucene_Analysis_Analyzer::setDefault(new StandardAnalyzer_Analyzer_Standard_English());
+		}
 		try {
 			$this->lucene = Zend_Search_Lucene::open($directory);
 		} catch (Zend_Search_Lucene_Exception $e) {
