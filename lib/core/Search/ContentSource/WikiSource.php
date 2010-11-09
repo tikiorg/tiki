@@ -18,9 +18,9 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 			'title' => $typeFactory->sortable($info['pageName']),
 			'language' => $typeFactory->identifier(empty($info['lang']) ? 'unknown' : $info['lang']),
 			'modification_date' => $typeFactory->timestamp($info['lastModif']),
+			'description' => $typeFactory->plaintext($info['description']),
 
 			'wiki_content' => $typeFactory->wikitext($info['data']),
-			'wiki_description' => $typeFactory->plaintext($info['description']),
 
 			'view_permission' => $typeFactory->identifier('tiki_p_view'),
 		);
