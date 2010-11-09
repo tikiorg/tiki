@@ -506,7 +506,6 @@
 	<h2>{tr}Batch upload (CSV file):{/tr}</h2>
 
 	<form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
-		{ticket}
 		<table class="formcolor">
 			<tr>
 				<td>

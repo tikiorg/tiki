@@ -25,33 +25,40 @@ function discardUser($u, $reason) {
 }
 function batchImportUsers() {
 	global $userlib, $smarty, $logslib, $tiki_p_admin, $user, $prefs, $userGroups, $tikilib;
-
-	$fname = $_FILES['csvlist']['tmp_name'];
-	$fhandle = fopen($fname, "r");
-	$fields = fgetcsv($fhandle, 1000);
-	if (!$fields[0]) {
-		$smarty->assign('msg', tra("The file is not a CSV file or has not a correct syntax"));
-		$smarty->display("error.tpl");
-		die;
-	}
-	if (!in_array('login', $fields) || !in_array('email', $fields) || !in_array('password', $fields)) {
-		$smarty->assign('msg', tra("The file does not have the required header:") . " login, email, password");
-		$smarty->display("error.tpl");
-		die;
-	}
-	while (!feof($fhandle)) {
-		$data = fgetcsv($fhandle, 1000);
-		if (empty($data)) continue;
-		$temp_max = count($fields);
-		for ($i = 0; $i < $temp_max; $i++) {
-			if ($fields[$i] == "login" && function_exists("mb_detect_encoding") && mb_detect_encoding($data[$i], "ASCII, UTF-8, ISO-8859-1") == "ISO-8859-1") {
-				$data[$i] = utf8_encode($data[$i]);
-			}
-			@$ar[$fields[$i]] = $data[$i];
+	if (isset($_SESSION['users_to_import_temp'])) {
+		$userrecs = unserialize($_SESSION['users_to_import_temp']);
+		unset($_SESSION['users_to_import_temp']);
+	} else {
+		$fname = $_FILES['csvlist']['tmp_name'];
+		$fhandle = fopen($fname, "r");
+		$fields = fgetcsv($fhandle, 1000);
+		if (!$fields[0]) {
+			$smarty->assign('msg', tra("The file is not a CSV file or has not a correct syntax"));
+			$smarty->display("error.tpl");
+			die;
 		}
-		$userrecs[] = $ar;
+		if (!in_array('login', $fields) || !in_array('email', $fields) || !in_array('password', $fields)) {
+			$smarty->assign('msg', tra("The file does not have the required header:") . " login, email, password");
+			$smarty->display("error.tpl");
+			die;
+		}
+		while (!feof($fhandle)) {
+			$data = fgetcsv($fhandle, 1000);
+			if (empty($data)) continue;
+			$temp_max = count($fields);
+			for ($i = 0; $i < $temp_max; $i++) {
+				if ($fields[$i] == "login" && function_exists("mb_detect_encoding") && mb_detect_encoding($data[$i], "ASCII, UTF-8, ISO-8859-1") == "ISO-8859-1") {
+					$data[$i] = utf8_encode($data[$i]);
+				}
+				@$ar[$fields[$i]] = $data[$i];
+			}
+			$userrecs[] = $ar;
+		}
+		fclose($fhandle);
+		$_SESSION['users_to_import_temp'] = serialize($userrecs);	// pop the data into session while auth check
 	}
-	fclose($fhandle);
+	global $access;
+	$access->check_authenticity(tra('Do you really want to import users from this file?'));
 	
 	if (empty($userrecs) or !is_array($userrecs)) {
 		$smarty->assign('msg', tra("No records were found. Check the file please!"));
@@ -174,8 +181,7 @@ $auto_query_args = array(
 	'filterGroup'
 );
 if (!isset($cookietab)) { $cookietab = '1'; }
-if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name'])) {
-	$access->check_ticket();
+if (isset($_REQUEST['batch']) && (is_uploaded_file($_FILES['csvlist']['tmp_name']) || isset($_SESSION['users_to_import_temp']))) {
 	batchImportUsers();
 	// Process the form to add a user here
 	

@@ -431,11 +431,6 @@ if (isset($_SESSION["$user_cookie_site"])) {
 		}
 	}
 	unset($user_details);
-	
-	// Generate anti-CSRF ticket
-	if ($prefs['feature_ticketlib2'] == 'y' && !isset($_SESSION['ticket'])) {
-		$_SESSION['ticket'] = md5(uniqid(rand()));
-	}
 } else {
 	$user = NULL;
 	// if everything failed, check for user+pass params in the URL
@@ -461,7 +456,6 @@ if (isset($_SESSION["$user_cookie_site"])) {
 	// }
 	
 }
-$smarty->assign( 'CSRFTicket', isset( $_SESSION['ticket'] ) ? $_SESSION['ticket'] : null);
 require_once ('lib/setup/perms.php');
 // --------------------------------------------------------------
 // deal with register_globals
