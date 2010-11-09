@@ -51,7 +51,11 @@ function wikiplugin_list($data, $params)
 	$result = $query->search($index);
 
 	if (count($result)) {
-		$plugin = new Search_Formatter_Plugin_WikiTemplate($output->getBody());
+		if ($output) {
+			$plugin = new Search_Formatter_Plugin_WikiTemplate($output->getBody());
+		} else {
+			$plugin = new Search_Formatter_Plugin_WikiTemplate("* {display name=title}\n");
+		}
 		$formatter = new Search_Formatter($plugin);
 
 		$out = $formatter->format($result);
