@@ -117,7 +117,7 @@
 				{preference name=smarty_compilation}
 			</div>
 
-			<div class="admin">
+			<div class="adminoptionbox">
 				<fieldset>
 					<legend>{tr}Logging and Reporting{/tr}</legend>
 					<div class="adminoptionbox">

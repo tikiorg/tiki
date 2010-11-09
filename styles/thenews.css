@@ -1260,13 +1260,6 @@ body.tiki_blogs .post .postbody {
 	border: 0;
 }
 
-body.tiki_blogs .author_actions {
-	float: none;
-	background: none;
-	border: 0;
-	width: 100%;
-}
-
 body.tiki_blogs .actions {
 	background: none;
 }
@@ -1323,20 +1316,6 @@ body.tiki_blogs .postfooter .actions {
 	font-size: 12px;
 	margin-left: 5px;
 	margin-top: 3px;
-}
-
-.author_actions {
-	width: 25%;
-	float: right;
-	text-align: right;
-	border-bottom: 1px solid #acccdd;
-	border-left: 1px solid #acccdd;
-	margin-left: -1px;
-	background: #e0eaf4;
-}
-
-.author_actions .actions {
-	background: #e0eaf4;
 }
 
 .author_actions .actions a.link {

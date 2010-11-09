@@ -574,7 +574,7 @@ a.login_link {
 }
 
 #siteloginbar_popup .cssmenu_horiz #logout_link ul {
-	margin-left: -11.5em;
+	margin-left: -10.7em;
 	width: 20em !important; /* to override the hardcoded in-line style width */
 }
 
@@ -871,6 +871,11 @@ fieldset.admin label,
 	color: #1174a5;
 }
 
+.tabstoggle .button a,
+.tabstoggle .button a:visited {
+	color: #fff;
+}
+
 /** Tabs **/
 /* reset what's in layout.css */
 
@@ -1031,7 +1036,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 .postbody-title {
 	padding: .5em .3em .3em 1em;
 	position: relative;
-	background: #28a7de url(fivealive/options/blueberry/siteheader.jpg) -300px -90px;
+	background: #28A7DE url(fivealive/options/blueberry/siteheader.jpg) -300px -90px no-repeat;
 	color: #222;
 	font-weight: bold;
 	font-size: 1.1em;

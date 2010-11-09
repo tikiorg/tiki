@@ -356,11 +356,6 @@ li.even:hover {
 	background: #f0c040;
 }
 
-.author_actions {
-	float: right;
-	width: 25%;
-}
-
 .oddthumb {
 	background: transparent;
 	border: 1px solid #8cacbb;

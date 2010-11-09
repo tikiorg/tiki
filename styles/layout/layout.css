@@ -2030,6 +2030,7 @@ ul.freetag {
 	font-size: .8em;
 	position: relative;
 	width: 8%;
+	margin-top: 2px;
 }
 
 .tabstoggle .button {

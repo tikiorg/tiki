@@ -439,9 +439,9 @@
 						</td>
 
 						<td>
-							<input type="submit" id="comments_postComment" name="comments_postComment" value="{tr}Post{/tr}" />
+							<input type="submit" id="comments_postComment" name="comments_postComment" value="{tr}Post{/tr}" onclick="needToConfirm=false;" />
 							{if !empty($user) && $prefs.feature_comments_post_as_anonymous eq 'y'}
-								<input type="submit" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" />
+								<input type="submit" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" onclick="needToConfirm=false;" />
 							{/if}
 							<input type="submit" name="comments_previewComment" id="comments_previewComment" value="{tr}Preview{/tr}"
 							{if ( isset($can_attach_file) && $can_attach_file eq 'y' ) or empty($user)}{strip}
@@ -451,9 +451,9 @@
 									if ($('#userfile1').val()) alert('{$file_preview_warning|escape:"javascript"}');
 								{/if}
 								"
-							{/strip}{/if} />
+							{/strip}{else} onclick="needToConfirm=false;"{/if} />
 							{if $forum_mode eq 'y'}
-								<input type="button" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}');" />
+								<input type="submit" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}'); return false" />
 							{elseif $prefs.feature_comments_moderation eq 'y' and $tiki_p_admin_comments neq 'y'}
 								{remarksbox type="note" title="{tr}Note{/tr}"}
 									{tr}Your comment will have to be approved by the moderator before it is displayed.{/tr}

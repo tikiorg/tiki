@@ -37,6 +37,7 @@
 
 	{self_link page="rss" _class="admbox" _style="background-image: url('pics/large/feed-icon-48x48.png')" _title="{tr}Feeds{/tr}"}<span>{tr}Feeds{/tr}</span>{/self_link}
 	{self_link page="connect" _class="admbox" _style="background-image: url('pics/large/gnome-globe48x48.png')" _title="{tr}Connect{/tr}"}<span>{tr}Connect{/tr}</span>{/self_link}
+	{self_link page="rating" _class="admbox" _style="background-image: url('pics/large/rating48x48.png')" _title="{tr}Rating{/tr}"}<span>{tr}Rating{/tr}</span>{/self_link}
 	
 	{self_link page="wiki" _class="admbox" _style="background-image: url('pics/large/wikipages48x48.png')" _selected="'`$prefs.feature_wiki`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Wiki{/tr}" title="{tr}Wiki{/tr}{if $prefs.feature_wiki ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Wiki{/tr}</span>{/self_link}
 

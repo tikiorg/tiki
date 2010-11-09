@@ -15,19 +15,28 @@ function wikiplugin_subscribenewsletter_info() {
 		'params' => array(
 			'nlId' => array(
 				'required' => true,
-				'name' => '',
-				'description' => '',
+				'name' => tra('Newsletter Id (nlId)'),
+				'description' => 'Identification number (Id) of the Newsletter that you want to allow the users to subscribe to',
 				'filter' => 'digits',
 			),
 			'thanks' => array(
 				'required' => false,
-				'name' => tra('Confirmation message after posting form. The plugin body is then the button label.'),
+				'name' => tra('Confirmation message'),
+				'description' => tra('Confirmation message after posting form. The plugin body is then the button label.'),
 				'filter' => 'wikicontent',
 			),
 			'button' => array(
 				'required' => false,
-				'name' => tra('Button label. The plugin body is then the confirmation message'),
+				'name' => tra('Button'),
+				'description' => tra('Button label. The plugin body is then the confirmation message'),
 				'filter' => 'wikicontent',
+			),
+			'wikisyntax' => array(
+				'required' => false,
+				'safe' => true,
+				'name' => tra('wikisyntax'),
+				'description' => tra('Choose whether the output should be parsed as wiki syntax (Optional). Options: 0 (no parsing, default), 1 (parsing)'),
+				'filter' => 'int',
 			),
 
 		),
@@ -83,5 +92,9 @@ function wikiplugin_subscribenewsletter($data, $params) {
 	$smarty->assign('subcribeMessage', empty($button)?$data: $button);
 	$smarty->assign_by_ref('subscribeInfo', $info);
 	$res = $smarty->fetch('wiki-plugins/wikiplugin_subscribenewsletter.tpl');
-	return '~np~'.$res.'~/np~';
+	if (isset($params["wikisyntax"]) && $params["wikisyntax"]==1) {
+		return $res;
+	}else{ 		// if wikisyntax != 1 : no parsing of any wiki syntax
+		return '~np~'.$res.'~/np~';
+	}
 }

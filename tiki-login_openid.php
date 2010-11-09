@@ -73,6 +73,14 @@ function filterExistingInformation(&$data, &$messages) // {{{
 function displayRegisatrationForms($data, $messages) // {{{
 {
 	global $smarty, $userlib, $prefs;
+	global $registrationlib; require_once('lib/registration/registrationlib.php');
+
+	if (is_a($registrationlib->merged_prefs, "RegistrationError")) {
+		register_error($registrationlib->merged_prefs->msg);
+	}
+	$smarty->assign_by_ref('merged_prefs', $registrationlib->merged_prefs);
+	
+	
 	// Default values for the registration form
 	$smarty->assign('username', $data['nickname']);
 	$smarty->assign('email', $data['email']);

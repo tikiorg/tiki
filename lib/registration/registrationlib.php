@@ -396,6 +396,9 @@ class RegistrationLib extends TikiLib
 	function register_new_user($registration, $from_intertiki=false) {
 		global $prefs, $tikilib;
 
+		if ($prefs['login_is_email'] == 'y' && isset($registration['name'])) {
+			$registration['email'] = $registration['name'];
+		}
 		$result=$this->local_check_registration($registration, $from_intertiki);
 		if ($result !== null) return $result;
 

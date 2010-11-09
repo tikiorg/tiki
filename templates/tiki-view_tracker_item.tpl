@@ -277,6 +277,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;
 	{include file='tracker_item_field_value.tpl' field_value=$cur_field}
 {elseif $cur_field.type eq 'p'}
 	{if $user ne $itemUser}
+		<input type="hidden" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" /> 
 		{include file='tracker_item_field_value.tpl' field_value=$cur_field}
 	{else}
 		{include file='tracker_item_field_input.tpl' field_value=$cur_field}

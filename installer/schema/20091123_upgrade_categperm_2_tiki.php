@@ -69,7 +69,7 @@ function upgrade_20091123_upgrade_categperm_2_tiki( $installer) {
 		// first for group perms
 		$query = 'SELECT * FROM `users_grouppermissions` WHERE `permName` IN (\'' . $editString . '\')';
 		$test = 'SELECT COUNT(*) FROM `users_grouppermissions` WHERE `permName` = \'tiki_p_modify_object_categories\' AND `groupName`=?';
-		$insert = 'INSERT into `users_grouppermissions` (`permName`, `groupName`) values ( \'tiki_p_modify_object_categories\',?)';
+		$insert = 'INSERT IGNORE into `users_grouppermissions` (`permName`, `groupName`) values ( \'tiki_p_modify_object_categories\',?)';
 		
 		// add the perm tiki_p_modify_object_categories where  
 		$result = $installer->query($query);
@@ -82,7 +82,7 @@ function upgrade_20091123_upgrade_categperm_2_tiki( $installer) {
 		// then for object perms
 		$query = 'SELECT * FROM `users_objectpermissions` WHERE `permName` IN (\'' . $editString . '\')';
 		$test = 'SELECT COUNT(*) FROM `users_objectpermissions` WHERE `permName` = \'tiki_p_modify_object_categories\' AND `groupName`=? AND `objectType`=? AND `objectId`=?';
-		$insert = 'INSERT into `users_objectpermissions` (`permName`, `groupName`, `objectType`, `objectId`) values ( \'tiki_p_modify_object_categories\',?,?,?)';
+		$insert = 'INSERT IGNORE into `users_objectpermissions` (`permName`, `groupName`, `objectType`, `objectId`) values ( \'tiki_p_modify_object_categories\',?,?,?)';
 		
 		// add the perm tiki_p_modify_object_categories where  
 		$result = $installer->query($query);
@@ -121,7 +121,7 @@ function upgrade_20091123_upgrade_categperm_2_tiki( $installer) {
 
 		
 		$query = 'SELECT * FROM `users_objectpermissions` WHERE `permName` = ?';
-		$insert = 'INSERT into `users_objectpermissions` (`permName`, `groupName`, `objectType`, `objectId`) values (?,?,?,?)';
+		$insert = 'INSERT IGNORE into `users_objectpermissions` (`permName`, `groupName`, `objectType`, `objectId`) values (?,?,?,?)';
 		$test = 'SELECT COUNT(*) FROM `users_objectpermissions` WHERE `permName` = ? AND `groupName`=? AND `objectType`=? AND `objectId`=?';
 		
 		// replace the perm tiki_p_search_categorized with the adequate set of perms for the objects
@@ -134,7 +134,7 @@ function upgrade_20091123_upgrade_categperm_2_tiki( $installer) {
 			}
 		}
 		// missed from 20091113_old_categ_perm_tiki.sql
-		$installer->query('update `users_permissions` set `permDesc`=\'Obsolete tw>=4 (Can search on objects of this category)\' where `permName`=\'tiki_p_search_categorized\';');
+		$installer->query('update ignore `users_permissions` set `permDesc`=\'Obsolete tw>=4 (Can search on objects of this category)\' where `permName`=\'tiki_p_search_categorized\';');
 		
 		
 	}	// end if ($a_pref['feature_categories'])	

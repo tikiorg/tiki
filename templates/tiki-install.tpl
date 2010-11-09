@@ -288,7 +288,7 @@
 
 			<form method="post" action="">
 				<fieldset>
-					<legend>{tr}Experimental Conversion{/tr}</legend>
+					<legend>{tr}Character Set Conversion{/tr}</legend>
 					<p>{tr}Use at your own risk. If the data in the database currently contains improperly converted data, this may make matters worse. Suitable for new installations. Requires ALTER privilege on the database.{/tr}</p>
 					<p>
 						<input type="submit" name="convert_to_utf8" value="{tr}Convert database and tables to UTF-8{/tr}"/>
@@ -532,6 +532,7 @@
 				<li>{tr}Grant <em>tiki_p_admin</em> to the group, if missing{/tr}</li>
 				<li>{tr}Add the administrator account to the group, if missing{/tr}</li>
 			</ol>
+			<p><strong>{tr}To do so enter the name of the main admin account in the field below{/tr}</strong></p>
 			<p>Administrator account (optional): <input type="text" name="admin_account"/> <em>The default account is <strong>admin</strong></em></p>
 		</fieldset>
 	{/if}

@@ -576,6 +576,17 @@ a.flip:hover {
 	text-align: right;
 }
 
+.actions .share,
+.actions .share a,
+.actions .share a:visited {
+	background: none;
+	width: auto;
+	min-height: 16px;
+	line-height: 1;
+	border-bottom: none;
+	margin-top: 2px;
+}
+
 /* Also is .content */
 #tiki-center {
 	clear: both;
@@ -1505,11 +1516,10 @@ body.tiki_blogs .postbody-title {
 	
 body.tiki_blogs .postbody .postfooter {
 	width: 100%;
-	margin-bottom: 2em;
 }
 
-body.tiki_blogs .post .postfooter .actions {
-	float: left;
+body.tiki_blogs .post .author_actions {
+	text-align: left;
 }
 
 .postbody-title a.freetag {
