@@ -6,6 +6,7 @@ class UnifiedSearchLib
 	{
 		global $prefs;
 		$tempName = $prefs['unified_lucene_location'] . '-new';
+		$swapName = $prefs['unified_lucene_location'] . '-old';
 
 		if ($prefs['unified_engine'] == 'lucene') {
 			$index = new Search_Index_Lucene($tempName);
@@ -13,15 +14,21 @@ class UnifiedSearchLib
 			die('Unsupported');
 		}
 
+		// Build in -new
 		$indexer = $this->buildIndexer($index);
 
+		// Force destruction to clear locks
 		unset($indexer);
 		unset($index);
 
 		if ($prefs['unified_engine'] == 'lucene') {
-			$this->destroyDirectory($prefs['unified_lucene_location']);
-
+			// Current to -old
+			rename($prefs['unified_lucene_location'], $swapName);
+			// -new to current
 			rename($tempName, $prefs['unified_lucene_location']);
+
+			// Destroy old
+			$this->destroyDirectory($swapName);
 		}
 	}
 

@@ -99,5 +99,6 @@ Zend_Loader_Autoloader::getInstance()
 	->registerNamespace('Perms')
 	->registerNamespace('Math')
 	->registerNamespace('Category')
-	->registerNamespace('WikiParser');
+	->registerNamespace('WikiParser')
+	->registerNamespace('StandardAnalyzer');
 
