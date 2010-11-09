@@ -180,6 +180,9 @@ if( isset( $_GET['msg'] ) ) {
 	$smarty->assign( 'display_msg', '' );
 }
 
+$smarty->assign( 'CSRFTicket', isset( $_SESSION['ticket'] ) ? $_SESSION['ticket'] : null);
+
+
 if( $prefs['rating_advanced'] == 'y' && $prefs['rating_recalculation'] == 'randomload' ) {
 	global $ratinglib; require_once 'lib/rating/ratinglib.php';
 	$ratinglib->attempt_refresh();
