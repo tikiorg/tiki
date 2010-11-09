@@ -20,6 +20,10 @@ function wikiplugin_list($data, $params)
 
 	$query = new Search_Query;
 
+	if (isset($_REQUEST['offset'])) {
+		$query->setRange($_REQUEST['offset']);
+	}
+
 	$matches = WikiParser_PluginMatcher::match($data);
 	$argumentParser = new WikiParser_PluginArgumentParser;
 
@@ -59,9 +63,14 @@ function wikiplugin_list($data, $params)
 			} else {
 				$plugin = new Search_Formatter_Plugin_WikiTemplate($output->getBody());
 			}
+
+			if (isset($arguments['pagination'])) {
+				$plugin = new WikiPlugin_List_AppendPagination($plugin);
+			}
 		} else {
 			$plugin = new Search_Formatter_Plugin_WikiTemplate("* {display name=title}\n");
 		}
+
 		$formatter = new Search_Formatter($plugin);
 
 		$out = $formatter->format($result);
@@ -102,5 +111,44 @@ function wpquery_filter_language($query, $value)
 function wpquery_sort_mode($query, $value)
 {
 	$query->setOrder($value);
+}
+
+class WikiPlugin_List_AppendPagination implements Search_Formatter_Plugin_Interface
+{
+	private $parent;
+
+	function __construct(Search_Formatter_Plugin_Interface $parent)
+	{
+		$this->parent = $parent;
+	}
+
+	function getFields()
+	{
+		return $this->parent->getFields();
+	}
+
+	function getFormat()
+	{
+		return $this->parent->getFormat();
+	}
+
+	function prepareEntry($entry)
+	{
+		return $this->parent->prepareEntry($entry);
+	}
+
+	function renderEntries($entries, $count, $offset, $maxRecords)
+	{
+		global $smarty;
+		require_once $smarty->_get_plugin_filepath('block', 'pagination_links');
+		$pagination = smarty_block_pagination_links(array('cant' => $count, 'offset' => $offset, 'step' => $maxRecords), '', $smarty, false);
+
+		if ($this->getFormat() == Search_Formatter_Plugin_Interface::FORMAT_WIKI) {
+			$pagination = "~np~$pagination~/np~";
+		}
+
+		return $this->parent->renderEntries($entries, $count, $offset, $maxRecords)
+			. $pagination;
+	}
 }
 

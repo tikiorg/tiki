@@ -66,10 +66,13 @@ class Search_Query
 		}
 	}
 
-	function setRange($start, $count)
+	function setRange($start, $count = null)
 	{
 		$this->start = (int) $start;
-		$this->count = (int) $count;
+
+		if ($count) {
+			$this->count = (int) $count;
+		}
 	}
 
 	function search(Search_Index_Interface $index)
