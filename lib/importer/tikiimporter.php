@@ -142,8 +142,8 @@ class TikiImporter
             ini_set('display_errors', true);
     
         // change max_execution_time
-        if (ini_get('max_execution_time') < 360)
-            set_time_limit(360);
+        if (ini_get('max_execution_time') != 0)
+            set_time_limit(0);
     }
 
     /**
