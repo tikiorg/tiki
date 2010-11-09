@@ -198,6 +198,8 @@ class EditLib
 		$parsed = preg_replace('/\{img\(? src=.*?img\/smiles\/icon_([\w\-]*?)\..*\}/im','(:$1:)', $parsed);	// "unfix" smilies
 		$parsed = preg_replace('/%%%/m',"\n", $parsed);													// newlines
 		$parsed = preg_replace('/&nbsp;/m',' ', $parsed);												// spaces
+		// Put back htmlentities as normal char
+		$parsed = htmlspecialchars_decode($parsed,ENT_QUOTES);
 		return $parsed;
 	}
 	
