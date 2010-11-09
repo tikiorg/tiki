@@ -17,6 +17,7 @@ function wikiplugin_list($data, $params)
 {
 	$alternate = null;
 	$output = null;
+	$subPlugins = array();
 
 	$query = new Search_Query;
 
@@ -34,7 +35,13 @@ function wikiplugin_list($data, $params)
 			$function = "wpquery_{$name}_{$key}";
 
 			if (function_exists($function)) {
-				call_user_func($function, $query, $value);
+				$function($query, $value);
+			}
+
+			$function = "wpformat_{$name}_{$key}";
+
+			if (function_exists($function)) {
+				$function($subPlugins, $value, $match->getBody());
 			}
 		}
 
@@ -72,6 +79,10 @@ function wikiplugin_list($data, $params)
 		}
 
 		$formatter = new Search_Formatter($plugin);
+
+		foreach ($subPlugins as $key => $plugin) {
+			$formatter->addSubFormatter($key, $plugin);
+		}
 
 		$out = $formatter->format($result);
 	} elseif($alternate) {
@@ -111,6 +122,11 @@ function wpquery_filter_language($query, $value)
 function wpquery_sort_mode($query, $value)
 {
 	$query->setOrder($value);
+}
+
+function wpformat_format_name(&$subPlugins, $value, $body)
+{
+	$subPlugins[$value] = new Search_Formatter_Plugin_WikiTemplate($body);
 }
 
 class WikiPlugin_List_AppendPagination implements Search_Formatter_Plugin_Interface
