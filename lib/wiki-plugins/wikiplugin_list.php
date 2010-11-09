@@ -52,7 +52,13 @@ function wikiplugin_list($data, $params)
 
 	if (count($result)) {
 		if ($output) {
-			$plugin = new Search_Formatter_Plugin_WikiTemplate($output->getBody());
+			$arguments = $argumentParser->parse($output->getArguments());
+	
+			if (isset($arguments['template'])) {
+				$plugin = new Search_Formatter_Plugin_SmartyTemplate($arguments['template']);
+			} else {
+				$plugin = new Search_Formatter_Plugin_WikiTemplate($output->getBody());
+			}
 		} else {
 			$plugin = new Search_Formatter_Plugin_WikiTemplate("* {display name=title}\n");
 		}
