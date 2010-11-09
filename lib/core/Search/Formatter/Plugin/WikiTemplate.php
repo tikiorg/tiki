@@ -50,7 +50,7 @@ class Search_Formatter_Plugin_WikiTemplate implements Search_Formatter_Plugin_In
 		return $matches->getText();
 	}
 
-	function renderEntries($entries)
+	function renderEntries($entries, $count, $offset, $maxRecords)
 	{
 		return implode('', $entries);
 	}

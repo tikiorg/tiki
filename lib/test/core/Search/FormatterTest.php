@@ -147,5 +147,21 @@ About~np~</td><td>wiki page</td></tr>
 OUT;
 		$this->assertXmlStringEqualsXmlString($expect, "<div>$output</div>");
 	}
+
+	function testPaginationInformationProvided()
+	{
+		$plugin = new Search_Formatter_Plugin_SmartyTemplate(dirname(__FILE__).'/paginate.tpl');
+
+		$formatter = new Search_Formatter($plugin);
+		$output = $formatter->format(new Search_ResultSet(array(
+			array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
+			array('object_type' => 'wiki page', 'object_id' => 'SomePage', 'description' => 'About'),
+		), 22, 20, 10));
+
+		$this->assertContains('>1<', $output);
+		$this->assertContains('>2<', $output);
+		$this->assertContains('>3<', $output);
+		$this->assertNotContains('>4<', $output);
+	}
 }
 

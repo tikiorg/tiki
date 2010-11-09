@@ -63,7 +63,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 			}
 		}
 
-		return new Search_ResultSet($result, count($hits));
+		return new Search_ResultSet($result, count($hits), $resultStart, $resultCount);
 	}
 
 	private function extractValues($document)
