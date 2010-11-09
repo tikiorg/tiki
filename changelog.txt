@@ -30,6 +30,92 @@ Version 6.0
 ------------------
 
 ----------------------------------------------
+r30600 | chealer | 2010-11-09 18:53:06 +0100 (Tue, 09 Nov 2010) | 1 line
+
+revert addition of new CSRF prevention mechanism due to imminent release
+----------------------------------------------
+r30599 | chealer | 2010-11-09 18:39:07 +0100 (Tue, 09 Nov 2010) | 1 line
+
+move Smarty assignment of CSRFTicket to tiki-setup_base to have 2 related bits closer, as suggested by St?\195?\169phane Casset
+----------------------------------------------
+r30598 | chealer | 2010-11-09 18:06:40 +0100 (Tue, 09 Nov 2010) | 2 lines
+
+fix svn:keywords
+
+----------------------------------------------
+r30597 | sylvieg | 2010-11-09 17:51:42 +0100 (Tue, 09 Nov 2010) | 1 line
+
+[FIX]importer: do not limit time. 360 is reached with 50M of data
+----------------------------------------------
+r30596 | chealer | 2010-11-09 17:21:41 +0100 (Tue, 09 Nov 2010) | 2 lines
+
+[NEW] CSRF prevention mechanism which doesn't require a confirmation screen. Simple and secure option when files are uploaded.
+Use in Admin Users batch upload 
+----------------------------------------------
+r30590 | jonnybradley | 2010-11-09 15:41:38 +0100 (Tue, 09 Nov 2010) | 1 line
+
+[DB] Add IGNORE to a perms schema that causes an error each time it's run (for some reason).
+----------------------------------------------
+r30585 | xavidp | 2010-11-09 13:28:47 +0100 (Tue, 09 Nov 2010) | 1 line
+
+[FIX]Fix plugin subscribenewsletter: url for validation now allows wiki pages (SEO or not) + wiki syntax for the conformation message to be clearer than just plain text in the middle of the wikipage.
+----------------------------------------------
+r30584 | xavidp | 2010-11-09 00:10:23 +0100 (Tue, 09 Nov 2010) | 1 line
+
+[FIX]Add names for the labels of this plugin, and keep description as description param + show antibot code if the settings are set to require it for anons willing to subscribe an email. Help is needed to improve the wrong layout of the antibot code when shown in this plugin.
+----------------------------------------------
+r30583 | nkoth | 2010-11-08 23:48:12 +0100 (Mon, 08 Nov 2010) | 1 line
+
+[FIX] Trying to change user information setting fails because there was duplicate field in next tab...
+----------------------------------------------
+r30582 | changi67 | 2010-11-08 21:54:36 +0100 (Mon, 08 Nov 2010) | 1 line
+
+[TRA] Done by Cyril - I'm just the commiter :)
+----------------------------------------------
+r30575 | sylvieg | 2010-11-08 17:40:16 +0100 (Mon, 08 Nov 2010) | 1 line
+
+[FIX]invit: just in case ..
+----------------------------------------------
+r30573 | robertplummer | 2010-11-08 16:22:16 +0100 (Mon, 08 Nov 2010) | 1 line
+
+[FIX] Had to add a check to get the correct width for column if the column width has not changed for sheet.  We check attribute with of colgroup/col and css width, and get the most accurate of the two.
+----------------------------------------------
+r30572 | sampaioprimo | 2010-11-08 13:35:41 +0100 (Mon, 08 Nov 2010) | 1 line
+
+[FIX] register a new user connected with an openid account (was broken since r28111)
+----------------------------------------------
+r30571 | chibaguy | 2010-11-08 05:09:32 +0100 (Mon, 08 Nov 2010) | 1 line
+
+[FIX] Align sharethis icon with other icons in blog post actions.
+----------------------------------------------
+r30567 | xavidp | 2010-11-07 09:41:49 +0100 (Sun, 07 Nov 2010) | 1 line
+
+a few more strings translated
+----------------------------------------------
+r30566 | chibaguy | 2010-11-07 06:18:46 +0100 (Sun, 07 Nov 2010) | 1 line
+
+[FIX] Post content font size increased a little.
+----------------------------------------------
+r30565 | chibaguy | 2010-11-07 06:13:30 +0100 (Sun, 07 Nov 2010) | 1 line
+
+[FIX] Moved .author_actions icons to the left and so all icons are together, in blog post.
+----------------------------------------------
+r30564 | chibaguy | 2010-11-07 06:10:15 +0100 (Sun, 07 Nov 2010) | 1 line
+
+[FIX] Moved .author_actions icons to the left and so all icons are together, and removed background image, in blog post.
+----------------------------------------------
+r30563 | chibaguy | 2010-11-07 06:02:11 +0100 (Sun, 07 Nov 2010) | 1 line
+
+[FIX] Moved .author_actions icons to the left so all icons are together, in blog post.
+----------------------------------------------
+r30562 | chibaguy | 2010-11-07 05:56:18 +0100 (Sun, 07 Nov 2010) | 1 line
+
+[FIX] Removed width from blog author actions div in blog post to improve icon display.
+----------------------------------------------
+r30561 | chibaguy | 2010-11-07 05:50:25 +0100 (Sun, 07 Nov 2010) | 1 line
+
+[FIX] Removed background image and width from blog author actions div in blog post to improve icon display.
+----------------------------------------------
 r30524 | jonnybradley | 2010-11-04 19:57:20 +0100 (Thu, 04 Nov 2010) | 1 line
 
 [FIX] autosave: Use async ajax call for autosave so as not to lock up the whole page while saving (and tidy some debugging code)
