@@ -81,7 +81,7 @@
 <tr>
 	<td>{tr}data{/tr}</td>
 	<td>
-		<textarea rows="6" cols="60" name="data">{$msg_info.data|escape}</textarea>
+		{textarea rows="6" cols="60" name="data"}{$msg_info.data}{/textarea}
 	</td>
 </tr>
 <tr>

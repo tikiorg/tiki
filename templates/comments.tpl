@@ -378,21 +378,12 @@
 						</tr>
 					{/if}
 
-					{if $prefs.section_comments_parse eq 'y' && $forum_mode neq 'y' || $prefs.feature_forum_parse eq 'y' && $forum_mode eq 'y'}
-						{assign var=toolbars_html value=true}{* can't find where this gets set in ui-revamp project *}
-						<tr>
-							<td></td>
-							<td>
-								{toolbars area_id='editpost2' comments='y'}
-							</td>
-						</tr>
-					{/if}
 					<tr>
 						<td>
 							<label for="editpost2">{if $forum_mode eq 'y'}{tr}Reply{/tr}{else}{tr}Comment{/tr} <span class="attention">*</span>{/if}</label>
 						</td>
 						<td>
-							<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if ($forum_mode eq 'y' && $prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || ($forum_mode neq 'y' && $post_reply > 0) || $comment_preview eq 'y' || !empty($errors)}{$comment_data|escape}{/if}</textarea> 
+							{textarea id="editpost2" name="comments_data" rows=$rows cols=$cols}{if ($forum_mode eq 'y' && $prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || ($forum_mode neq 'y' && $post_reply > 0) || $comment_preview eq 'y' || !empty($errors)}{$comment_data}{/if}{/textarea} 
 							<input type="hidden" name="rows" value="{$rows}" />
 							<input type="hidden" name="cols" value="{$cols}" />
 							{if $prefs.feature_wiki_paragraph_formatting eq 'y'}

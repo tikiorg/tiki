@@ -205,7 +205,7 @@
 					{if $prefs.feature_forum_parse eq 'y'}
 						{toolbars area_id='editpost'}
 					{/if}
-					<textarea id='editpost' name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea>
+					{textarea id='editpost' name="comments_data" rows=$rows cols=$cols}{$comment_data}{/textarea}
 					<input type="hidden" name="rows" value="{$rows}"/>
 					<input type="hidden" name="cols" value="{$cols}"/>
 				</td>
