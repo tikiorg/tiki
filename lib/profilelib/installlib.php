@@ -673,6 +673,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 				'preference' => 'p',
 				'attachment' => 'A',
 				'page' => 'k',
+				'in_group' => 'N',
 			) ), // }}}
 			'visible' => new Tiki_Profile_ValueMapConverter( array(
 				'public' => 'n',
@@ -760,6 +761,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 		$res[] = '  data:';
 		$res[] = '   name: '.$info['name'];
 		$res[] = '   tracker: $tracker_'.$info['trackerId'];
+		if (!empty($info['options'])) $res[] = '   options: '.$info['options'];
 		$flag = array();
 		$tab = '   ';
 		foreach ($info as $key => $value) {
@@ -767,7 +769,8 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 				if (in_array($optionMap[$key], array('list', 'link', 'searchable', 'public', 'mandatory', 'multilingual'))) {
 					$flag[] = $optionMap[$key];
 				} elseif (!empty($conversions[$optionMap[$key]])) {
-					$res[] = $tab.$optionMap[$key].': '.$conversions[$optionMap[$key]]->reverse( $value );
+					$reverseVal = $conversions[$optionMap[$key]]->reverse( $value );
+					$res[] = $tab.$optionMap[$key].': '.(empty($reverseVal)? $value: $reverseVal);
 				} else {
 					$res[] = $tab.$optionMap[$key].': '.$value;
 				}
