@@ -31,6 +31,13 @@ function wikiplugin_subscribenewsletter_info() {
 				'description' => tra('Button label. The plugin body is then the confirmation message'),
 				'filter' => 'wikicontent',
 			),
+			'wikisyntax' => array(
+				'required' => false,
+				'safe' => true,
+				'name' => tra('wikisyntax'),
+				'description' => tra('Choose whether the output should be parsed as wiki syntax (Optional). Options: 0 (no parsing, default), 1 (parsing)'),
+				'filter' => 'int',
+			),
 
 		),
 	);
@@ -85,5 +92,9 @@ function wikiplugin_subscribenewsletter($data, $params) {
 	$smarty->assign('subcribeMessage', empty($button)?$data: $button);
 	$smarty->assign_by_ref('subscribeInfo', $info);
 	$res = $smarty->fetch('wiki-plugins/wikiplugin_subscribenewsletter.tpl');
-	return '~np~'.$res.'~/np~';
+	if (isset($params["wikisyntax"]) && $params["wikisyntax"]==1) {
+		return $res;
+	}else{ 		// if wikisyntax != 1 : no parsing of any wiki syntax
+		return '~np~'.$res.'~/np~';
+	}
 }

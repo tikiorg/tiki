@@ -357,8 +357,9 @@ class NlLib extends TikiLib
 			// Generate a code and store it and send an email  with the
 			// URL to confirm the subscription put valid as 'n'
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
-			$foopath = preg_replace('/tiki-admin_newsletter_subscriptions.php/', 'tiki-newsletters.php', $foo["path"]);
-			$url_subscribe = $tikilib->httpPrefix( true ). $foopath;
+//			$foopath = preg_replace('/tiki-admin_newsletter_subscriptions.php/', 'tiki-newsletters.php', $foo["path"]);
+//			$url_subscribe = $tikilib->httpPrefix( true ). $foopath;
+			$url_subscribe = $tikilib->httpPrefix( true ). '/tiki-newsletters.php';
 			if (empty($res)) {
 				$query = "insert into `tiki_newsletter_subscriptions`(`nlId`,`email`,`code`,`valid`,`subscribed`,`isUser`,`included`) values(?,?,?,?,?,?,?)";
 				$bindvars = array((int)$nlId,$add,$code,'n',(int)$this->now,$isUser,'n');
