@@ -422,6 +422,10 @@ class WikiLib extends TikiLib
 
 		$query = "delete from `tiki_wiki_attachments` where `attId`='$attId'";
 		$result = $this->query($query);
+		if ($prefs['feature_actionlog'] == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib->add_action('Removed', $attId, 'wiki page attachment');
+		}
 	}
 
 	function wiki_attach_file($page, $name, $type, $size, $data, $comment, $user, $fhash, $date='') {
@@ -440,6 +444,14 @@ class WikiLib extends TikiLib
 			$query = 'select `attId` from `tiki_wiki_attachments` where `page`=? and `filename`=? and `created`=? and `user`=?';
 			$attId = $this->getOne($query, array($page, $name, $now, $user));
 			sendWikiEmailNotification('wiki_file_attached', $page, $user, $comment, '', $name, '','', false, '', 0,$attId);
+		}
+		if ($prefs['feature_actionlog'] == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			if (empty($attId)) {
+				$query = 'select `attId` from `tiki_wiki_attachments` where `page`=? and `filename`=? and `created`=? and `user`=?';
+				$attId = $this->getOne($query, array($page, $name, $now, $user));
+			}
+			$logslib->add_action('Created', $attId, 'wiki page attachment');
 		}
 	}
 	function get_wiki_attach_file($page, $name, $type, $size) {
