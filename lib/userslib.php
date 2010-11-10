@@ -2778,6 +2778,11 @@ class UsersLib extends TikiLib
 				$previous = $char;
 			}
 		}
+		if ($prefs['pass_diff_username'] == 'y') {
+			if (strtolower($user) == strtolower($pass)) {
+				$errors[] = tra('Password must be different from the user login.');
+			}
+		}
 
 		return empty($errors)?'': implode(' ', $errors);
 	}

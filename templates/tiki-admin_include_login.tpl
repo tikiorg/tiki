@@ -130,6 +130,7 @@
 				{preference name=pass_chr_case}
 				{preference name=pass_chr_special}
 				{preference name=pass_repetition}
+				{preference name=pass_diff_username}
 				{preference name=min_pass_length}
 				{preference name=pass_due}
 			</fieldset>

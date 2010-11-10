@@ -35,5 +35,9 @@ function prefs_pass_list() {
 			'type' => 'flag',
 			'description' => tra('Password must contain no consecutive repetition of the same character as 111 or aab.'),
 		),
-	);	
+		'pass_diff_username' => array(
+			'name' => tra('Password must be different from the user login'),
+			'type' => 'flag',
+			'description' => tra('Password must be different from the user login.'),
+		),	);	
 }
