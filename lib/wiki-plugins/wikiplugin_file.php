@@ -22,7 +22,7 @@ function wikiplugin_file_info()
 					array('text' => tra('File from file gallery'), 'value' => 'gallery'),
 				),
 			),
-    		'name' => array(
+			'name' => array(
 				'required' => false,
 				'name' => tra('Name'),
 				'description' => tra('Wiki attachment:') . ' ' . tra("Gives the name of the attached file to link to"),
@@ -34,13 +34,13 @@ function wikiplugin_file_info()
 				'description' => tra('Wiki attachment:') . ' ' . tra('Used as link label'),
 				'parent' => array('name' => 'type', 'value' => 'attachment'),
 			),
-    		'page' => array(
+			'page' => array(
 				'required' => false,
 				'name' => tra('Page'),
 				'description' => tra('Wiki attachment:') . ' ' . tra("Name of the wiki page the file is attached to. If left empty when the plugin is used on a wiki page, this defaults to that wiki page."),
 				'parent' => array('name' => 'type', 'value' => 'attachment'),
 			),
-    		'showdesc' => array(
+			'showdesc' => array(
 				'required' => false,
 				'name' => tra('Show attachment description'),
 				'description' => tra('Wiki attachment:') . ' ' . tra("Show the attachment description as the link label instead of the attachment name."),
@@ -50,7 +50,7 @@ function wikiplugin_file_info()
 				),
 				'parent' => array('name' => 'type', 'value' => 'attachment'),
 			),
-    		'image' =>array(
+			'image' =>array(
 				'required' => false,
 				'name' => tra('Image'),
 				'description' => tra('Wiki attachment:') . ' ' . tra("Says that this file is an image, and should be displayed inline using the img tag"),
