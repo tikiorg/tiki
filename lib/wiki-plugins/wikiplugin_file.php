@@ -18,12 +18,13 @@ function wikiplugin_file_info()
 				'required' => true,
 				'name' => tra('Type'),
 				'options' => array(
+					array('text' => tra('Select an option'), 'value' => ''),
 					array('text' => tra('Wiki page attachment'), 'value' => 'attachment'),
 					array('text' => tra('File from file gallery'), 'value' => 'gallery'),
 				),
 			),
 			'name' => array(
-				'required' => false,
+				'required' => true,
 				'name' => tra('Name'),
 				'description' => tra('Wiki attachment:') . ' ' . tra("Gives the name of the attached file to link to"),
 				'parent' => array('name' => 'type', 'value' => 'attachment'),
@@ -57,7 +58,7 @@ function wikiplugin_file_info()
 				'parent' => array('name' => 'type', 'value' => 'attachment'),
 			),
 			'fileId' => array(
-				'required' => false,
+				'required' => true,
 				'name' => tra('File identifier'),
 				'description' => tra('File from gallery:') . ' ' . tra('Identifier of a file in the file galleries.') . ' ' . tra('Example value:') . ' 42',
 				'filter' => 'digits',
