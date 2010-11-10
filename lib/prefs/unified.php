@@ -17,6 +17,11 @@ function prefs_unified_list()
 			'type' => 'text',
 			'size' => 35,
 		),
+		'unified_incremental_update' => array(
+			'name' => tra('Incremental Index Update'),
+			'description' => tra('Update the index incrementally as the site content is modified. This may lead to lower performance and accuracy than processing the index on a periodic basis.'),
+			'type' => 'flag',
+		),
 	);
 }
 

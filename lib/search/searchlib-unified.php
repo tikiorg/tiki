@@ -2,6 +2,17 @@
 
 class UnifiedSearchLib
 {
+	private $incrementalQueue = array();
+
+	function processUpdateQueue()
+	{
+		if (count($this->incrementalQueue)) {
+			$indexer = $this->buildIndexer($this->getIndex());
+			$indexer->update($this->incrementalQueue);
+			$this->incrementalQueue = array();
+		}
+	}
+
 	function rebuild()
 	{
 		global $prefs;
@@ -16,6 +27,7 @@ class UnifiedSearchLib
 
 		// Build in -new
 		$indexer = $this->buildIndexer($index);
+		$indexer->rebuild();
 
 		// Force destruction to clear locks
 		unset($indexer);
@@ -30,6 +42,11 @@ class UnifiedSearchLib
 			// Destroy old
 			$this->destroyDirectory($swapName);
 		}
+	}
+
+	function invalidateObject($type, $objectId)
+	{
+		$this->incrementalQueue[] = array('object_type' => $type, 'object_id' => $objectId);
 	}
 
 	private function buildIndexer($index)
@@ -47,7 +64,6 @@ class UnifiedSearchLib
 		}
 
 		$indexer->addGlobalSource(new Search_GlobalSource_PermissionSource(Perms::getInstance(), 'Admins'));
-		$indexer->rebuild();
 
 		return $indexer;
 	}

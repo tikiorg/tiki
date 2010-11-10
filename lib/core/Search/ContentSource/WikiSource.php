@@ -2,17 +2,25 @@
 
 class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 {
+	private $db;
+	private $tikilib;
+
+	function __construct()
+	{
+		global $tikilib;
+
+		$this->db = TikiDb::get();
+		$this->tikilib = $tikilib;
+	}
+
 	function getDocuments()
 	{
-		$db = TikiDb::get();
-		return array_values($db->fetchMap('SELECT page_id, pageName FROM tiki_pages'));
+		return array_values($this->db->fetchMap('SELECT page_id, pageName FROM tiki_pages'));
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
 	{
-		global $tikilib;
-
-		$info = $tikilib->get_page_info($objectId);
+		$info = $this->tikilib->get_page_info($objectId, true, true);
 
 		$data = array(
 			'title' => $typeFactory->sortable($info['pageName']),

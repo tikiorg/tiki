@@ -27,6 +27,14 @@ require_once('lib/core/TikiDb/Bridge.php');
 
 class TikiLib extends TikiDb_Bridge
 {
+	function __destruct()
+	{
+		global $unifiedsearchlib;
+		if ($unifiedsearchlib) {
+			$unifiedsearchlib->processUpdateQueue();
+		}
+	}
+
 	var $buffer;
 	var $flag;
 	var $parser;
@@ -7363,6 +7371,11 @@ if( \$('#$id') ) {
 
 		if( isset( $data['content'] ) ) {
 			$this->apply_plugin_save_handlers( $context, $data );
+		}
+
+		if( $prefs['unified_incremental_update'] == 'y' ) {
+			global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';
+			$unifiedsearchlib->invalidateObject( $context['type'], $context['object'] );
 		}
 	}
 

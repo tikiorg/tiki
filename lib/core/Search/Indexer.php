@@ -45,21 +45,23 @@ class Search_Indexer
 	private function addDocument($objectType, $objectId)
 	{
 		$typeFactory = $this->searchIndex->getTypeFactory();
-		$contentSource = $this->contentSources[$objectType];
+		if (isset($this->contentSources[$objectType])) {
+			$contentSource = $this->contentSources[$objectType];
 
-		if (false !== $data = $contentSource->getDocument($objectId, $typeFactory)) {
-			$initialData = $data;
+			if (false !== $data = $contentSource->getDocument($objectId, $typeFactory)) {
+				$initialData = $data;
 
-			foreach ($this->globalSources as $globalSource) {
-				$data = array_merge($data, $globalSource->getData($objectType, $objectId, $typeFactory, $initialData));
+				foreach ($this->globalSources as $globalSource) {
+					$data = array_merge($data, $globalSource->getData($objectType, $objectId, $typeFactory, $initialData));
+				}
+
+				$base = array(
+					'object_type' => $typeFactory->identifier($objectType),
+					'object_id' => $typeFactory->identifier($objectId),
+				);
+
+				$this->searchIndex->addDocument(array_merge($data, $base));
 			}
-
-			$base = array(
-				'object_type' => $typeFactory->identifier($objectType),
-				'object_id' => $typeFactory->identifier($objectId),
-			);
-
-			$this->searchIndex->addDocument(array_merge($data, $base));
 		}
 	}
 }

@@ -20,6 +20,7 @@
 					{tr}Unified Search{/tr}
 				</legend>
 
+				{preference name="unified_incremental_update"}
 				{preference name="unified_engine"}
 				<div class="adminoptionboxchild unified_engine_childcontainer lucene">
 					{preference name="unified_lucene_location"}
