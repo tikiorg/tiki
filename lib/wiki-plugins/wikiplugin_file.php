@@ -14,20 +14,31 @@ function wikiplugin_file_info()
 		'prefs' => array( 'wikiplugin_file' ),
 		'inline' => true,
 		'params' => array(
+			'type' => array(
+				'required' => true,
+				'name' => tra('Type'),
+				'options' => array(
+					array('text' => tra('Wiki page attachment'), 'value' => 'attachment'),
+					array('text' => tra('File from file gallery'), 'value' => 'gallery'),
+				),
+			),
     		'name' => array(
 				'required' => false,
 				'name' => tra('Name'),
 				'description' => tra('Wiki attachment:') . ' ' . tra("Gives the name of the attached file to link to"),
+				'parent' => array('name' => 'type', 'value' => 'attachment'),
 			),
  			'desc' => array(
 				'required' => false,
 				'name' => tra('Description'),
 				'description' => tra('Wiki attachment:') . ' ' . tra('Used as link label'),
+				'parent' => array('name' => 'type', 'value' => 'attachment'),
 			),
     		'page' => array(
 				'required' => false,
 				'name' => tra('Page'),
 				'description' => tra('Wiki attachment:') . ' ' . tra("Name of the wiki page the file is attached to. If left empty when the plugin is used on a wiki page, this defaults to that wiki page."),
+				'parent' => array('name' => 'type', 'value' => 'attachment'),
 			),
     		'showdesc' => array(
 				'required' => false,
@@ -37,22 +48,26 @@ function wikiplugin_file_info()
 					array('text' => tra('No'), 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'),  
 				),
+				'parent' => array('name' => 'type', 'value' => 'attachment'),
 			),
     		'image' =>array(
 				'required' => false,
 				'name' => tra('Image'),
 				'description' => tra('Wiki attachment:') . ' ' . tra("Says that this file is an image, and should be displayed inline using the img tag"),
+				'parent' => array('name' => 'type', 'value' => 'attachment'),
 			),
 			'fileId' => array(
 				'required' => false,
 				'name' => tra('File identifier'),
 				'description' => tra('File from gallery:') . ' ' . tra('Identifier of a file in the file galleries.') . ' ' . tra('Example value:') . ' 42',
 				'filter' => 'digits',
+				'parent' => array('name' => 'type', 'value' => 'gallery'),
 			),
 			'date' => array(
 				'required' => false,
 				'name' => tra('Date'),
 				'description' => tra('File from gallery:') . ' ' . tra('Pick the archive if exists created just before the date of the fileId'),
+				'parent' => array('name' => 'type', 'value' => 'gallery'),
 			),
 		)
 	);
