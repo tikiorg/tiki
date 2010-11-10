@@ -2738,20 +2738,48 @@ class UsersLib extends TikiLib
 	*/
 	function check_password_policy($pass) {
 		global $prefs, $user;
+		$errors = array();
 
 		// Validate password here
 		if ( ( $prefs['auth_method'] != 'cas' || $user == 'admin' ) && strlen($pass) < $prefs['min_pass_length'] ) {
-			return tra("Password should be at least").' '.$prefs['min_pass_length'].' '.tra("characters long");
+			$errors[] = tra("Password should be at least").' '.$prefs['min_pass_length'].' '.tra("characters long");
 		}
 
 		// Check this code
 		if ($prefs['pass_chr_num'] == 'y') {
 			if (!preg_match_all("/[0-9]+/", $pass, $foo) || !preg_match_all("/[A-Za-z]+/", $pass, $foo)) {
-				return tra("Password must contain both letters and numbers");
+				$errors[] = tra("Password must contain both letters and numbers");
+			}
+		}
+		if ($prefs['pass_chr_case'] == 'y') {
+			if (!preg_match_all("/[a-z]+/", $pass, $foo) || !preg_match_all("/[A-Z]+/", $pass, $foo)) {
+				$errors[] = tra('Password must contain at least one alphabetical character in lower case like a and one in upper case like A.');
+			}
+		}
+		if ($prefs['pass_chr_special'] == 'y') {
+			$chars = str_split($pass);
+			$ok = false;
+			foreach ($chars as $char) {
+				if (!preg_match("/[0-9A-Za-z]+/", $char, $foo)) {
+					$ok = true;
+					break;
+				}
+			}
+			if (!$ok) $errors[] = tra('Password must contain at least one special character in lower case like " / $ % ? & * ( ) _ + ...');
+		}
+		if ($prefs['pass_repetition'] == 'y') {
+			$chars = str_split($pass);
+			$previous = '';
+			foreach ($chars as $char) {
+				if ($char == $previous) {
+					$errors[] = tra('Password must contain no consecutive repetition of the same character as 111 or aab');
+					break;
+				}
+				$previous = $char;
 			}
 		}
 
-		return "";
+		return empty($errors)?'': implode(' ', $errors);
 	}
 
 	function change_user_password($user, $pass, $pass_first_login=false) {

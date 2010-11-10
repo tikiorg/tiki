@@ -385,12 +385,7 @@
 								<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
 							</div>
 							<br />
-							{if $prefs.min_pass_length > 1}
-								<em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em>. 
-							{/if}
-							{if $prefs.pass_chr_num eq 'y'}
-								<em>{tr}Password must contain both letters and numbers{/tr}</em>.
-							{/if}
+							{include file='password_help.tpl'}
 						</td>
 					</tr>
 					<tr>

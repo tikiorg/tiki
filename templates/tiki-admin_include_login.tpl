@@ -127,6 +127,9 @@
 				{preference name=feature_crypt_passwords}
 				{preference name=change_password}
 				{preference name=pass_chr_num}
+				{preference name=pass_chr_case}
+				{preference name=pass_chr_special}
+				{preference name=pass_repetition}
 				{preference name=min_pass_length}
 				{preference name=pass_due}
 			</fieldset>
