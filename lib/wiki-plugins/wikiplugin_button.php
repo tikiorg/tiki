@@ -24,7 +24,7 @@ function wikiplugin_button_info() {
 				'required' => true,
 				'name' => tra('Url'),
 				'description' => 'URL to be produced by the button. You can use wiki argument variables like {{itemId}} in it',
-				'filter' => 'rawhtml_unsafe',
+				'filter' => 'url',
 			),
 			'_text' => array(
 				'required' => false,
