@@ -16,43 +16,36 @@ function wikiplugin_twitter_info() {
 			'tweet' => array(
 				'required' => true,
 				'name' => tra('Tweet name'),
-				'description' => tra('Tweet name.'),
 				'filter' => 'text',
 			),
 			'shellbg' => array(
 				'required' => false,
 				'name' => tra('Shell background color'),
-				'description' => tra('Shell background color'),
 				'filter' => 'text',
 			),
 			'shellcolor' => array(
 				'required' => false,
 				'name' => tra('Shell text color'),
-				'description' => tra('Shell text color'),
 				'filter' => 'text',
 			),
 			'tweetbg' => array(
 				'required' => false,
 				'name' => tra('Tweet background color'),
-				'description' => tra('Tweet background color'),
 				'filter' => 'text',
 			),
 			'tweetcolor' => array(
 				'required' => false,
 				'name' => tra('Tweet text color'),
-				'description' => tra('Tweet text color'),
 				'filter' => 'text',
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
-				'description' => tra('Height'),
 				'filter' => 'text',
 			),
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tra('Width'),
 				'filter' => 'text',
 			),
 		),
