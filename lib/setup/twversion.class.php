@@ -27,7 +27,7 @@ class TWVersion
 
 		// Set everything else, including defaults.
 		$this->version 	= '6.0';
-		$this->star	= '';
+		$this->star	= 'Rigel';
 		$this->releases	= array();
 
 		// Check for Subversion or not
