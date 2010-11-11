@@ -31,7 +31,10 @@
 				{elseif isset($icon) and $icon}
 					{icon _id='folder' align="left"}
 				{/if}
-				<span class="menuText">{if $translate eq 'n'}{$chdata.name|escape}{else}{tr}{$chdata.name}{/tr}{/if}</span>
+				{capture name=chdataName}
+					{if $translate eq 'n'}{$chdata.name}{else}{tr}{$chdata.name}{/tr}{/if}
+				{/capture}
+				<span class="menuText">{$smarty.capture.chdataName|escape}</span>
 			{if $link_on_section ne 'n'}</a>{/if}
 			{assign var=opensec value=$opensec+1}
 			<ul>
@@ -43,7 +46,10 @@
 					{if $menu_type eq 'vert' and $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and $opensec eq 0}
 						{icon _id=$chdata.icon alt='' _defaultdir=$prefs.menus_items_icons_path}
 					{/if}
-					<span class="menuText">{if $translate eq 'n'}{$chdata.name|escape}{else}{tr}{$chdata.name}{/tr}{/if}</span>
+					{capture name=chdataName}
+						{if $translate eq 'n'}{$chdata.name}{else}{tr}{$chdata.name}{/tr}{/if}
+					{/capture}
+					<span class="menuText">{$smarty.capture.chdataName|escape}</span>
 				</a>
 			</li>
 			{if $sep eq 'line'}{assign var=sep value=''}{/if}
