@@ -181,7 +181,6 @@ function validate_translation_request() {
 </div>
 </form>
 
-{* end of if !isset($allowed_for_staging_only)*}
 {else}
 	<div class="simplebox">
 		{icon _id=delete alt="{tr}Alert{/tr}" style="vertical-align:middle"} 
