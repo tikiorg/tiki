@@ -116,12 +116,11 @@
 		{/foreach}
 		</select>
 	{else}
-	{assign var=fca value=$field_value.options}
 	<table width="100%">
-		<tr>{cycle name=2_$fca values=",</tr><tr>" advance=false print=false}
+		<tr>
 		{foreach key=ku item=iu from=$field_value.list name=eforeach}
 		{assign var=fcat value=$iu.categId}
-		<td width="50%"  class="trackerCategoryName"><input type={if $field_value.options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="{$field_value.ins_id}[]" value="{$iu.categId}" id="cat{$iu.categId}" {if $field_value.cat.$fcat eq 'y'} checked="checked"{/if}/><label for="cat{$iu.categId}">{$iu.name|escape}</label></td>{if !$smarty.foreach.eforeach.last}{cycle name=2_$fca}{else}{if $field_value.list|@count%2}<td></td>{/if}{/if}
+		<td width="50%"  class="trackerCategoryName">{$smarty.foreach.eforeach.index}<input type={if $field_value.options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="{$field_value.ins_id}[]" value="{$iu.categId}" id="cat{$iu.categId}" {if $field_value.cat.$fcat eq 'y'} checked="checked"{/if}/><label for="cat{$iu.categId}">{$iu.name|escape}</label></td>{if !$smarty.foreach.eforeach.last and $smarty.foreach.eforeach.index%2}</tr><tr>{elseif $smarty.foreach.eforeach.last and !($smarty.foreach.eforeach.index%2)}<td width="50%"  class="trackerCategoryName">&nbsp;</td>{/if}
 		{/foreach}
 		</tr>
 	</table>
