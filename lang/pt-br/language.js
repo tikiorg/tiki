@@ -22,4 +22,6 @@ lang = {
 	"Submit" : "Enviar",
 	"Insert" : "Adicionar",
 	"Replace" : "Substituir",
+	"Match" : "Igual",
+	"Do not match" : "Diferente",
 };
