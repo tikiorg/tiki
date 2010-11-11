@@ -37,7 +37,7 @@
 	<li><a href="#change_language">{tr}Change language for this page{/tr}</a></li>
 </ul>
 
-<hr>
+<hr />
 
 <a name="translate_updates"></a>
 <h3>{tr}Translate updates made on this page or one of its translations{/tr}</h3>
@@ -46,11 +46,11 @@
 	{$content_of_update_translation_section}
 </div>
 
-<br>
-<hr>
-<br>
+<br />
+<hr />
+<br />
 
-<a name="#new_translation"></a>
+<a name="new_translation"></a>
 <h3>{tr}Translate this page to a new language{/tr}</h3>
 <form method="post" action="tiki-editpage.php" onsubmit="return validate_translation_request(this)">
 	<fieldset>
@@ -72,7 +72,7 @@
 		</p>
 		{if $prefs.feature_categories eq 'y'}
 			{tr}Below, assign categories to this new translation (Note: they should probably be the same as the categories of the page being translate){/tr}
-			<br>
+			<br />
 			{include file="categorize.tpl" notable=y}
 		{/if}
 		<p align="center"><input type="submit" value="{tr}Create translation{/tr}"/></p>
@@ -156,15 +156,14 @@ function validate_translation_request() {
 				{/if}
 				&nbsp;
 				<input type="submit" class="wikiaction" name="set" value="{tr}Go{/tr}"/>
+				</p>
 			</fieldset>
 		</form>
-
-		</p>
 	{/if}
 {/if}
 
-<br>
-<hr>
+<br />
+<hr />
 
 <a name="change_language"></a>
 <h3>{tr}Change language for this page{/tr}</h3>
