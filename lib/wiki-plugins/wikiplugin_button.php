@@ -26,7 +26,7 @@ function wikiplugin_button_info() {
 				'description' => 'URL to be produced by the button. You can use wiki argument variables like {{itemId}} in it',
 				'filter' => 'url',
 			),
-			'_text' => array(
+			'text' => array(
 				'required' => false,
 				'name' => tra('Label'),
 				'description' => 'Label for the button',
@@ -46,6 +46,13 @@ function wikiplugin_button($data, $params) {
 		return tra('lib/smarty_tiki/function.button.php is missing or unreadable');
 	}
 
+	// for some unknown reason if a wikiplugin param is named _text all whitespaces from
+	// its value are removed, but we need to rename the param to _text for smarty_functin  
+	if (isset($params['text'])) {
+		$params['_text'] = $params['text'];
+		unset($params['text']);
+	}
+	
 	// Parse wiki argument variables in the url, if any (i.e.: {{itemId}} for it's numeric value).
 	$tikilib->parse_wiki_argvariable($params['href']);
 
