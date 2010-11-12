@@ -369,6 +369,7 @@ select[multiple="multiple"] {
 }
 
 input[type="text"],
+input[type="password"],
 select {
 	margin: 2px;
 }

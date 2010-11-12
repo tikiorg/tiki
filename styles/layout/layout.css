@@ -78,7 +78,9 @@ input[type=submit] {
 #col2 select,
 #col3 select,
 #col3 input[type="text"],
-#col2 input[type="text"] {
+#col2 input[type="text"],
+#col3 input[type="password"],
+#col2 input[type="password"] {
 	width: 95%;
 }
 
