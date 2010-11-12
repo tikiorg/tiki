@@ -17,6 +17,8 @@
  */
 
 header('content-type: application/x-javascript');
+header('Cache-Control: no-cache, pre-check=0, post-check=0');
+header('Expires: ' . gmdate('D, d M Y H:i:s', time()+3600*24*365*10) . ' GMT');
 
 require_once('lib/init/initlib.php');
 TikiInit::appendIncludePath(dirname(__FILE__) . '/lib/core');
