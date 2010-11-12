@@ -126,12 +126,20 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * is done by checking the value of the xmlns:wp attribute
 	 *
 	 * @see lib/importer/TikiImporter#validateInput()
+	 * @throws DOMException if not able to validate file
+	 * @return bool true if valid file
 	 */
 	function validateInput() {
-		$wxrUrl = $this->dom->getElementsByTagName('rss')->item(0)->getAttribute('xmlns:wp');
-		if (!preg_match('|http://wordpress\.org/export/\d+\.\d+/|', $wxrUrl)) {
-			throw new DOMException(tra('Invalid Wordpress XML file'));
+		$rss = $this->dom->getElementsByTagName('rss');
+		
+		if ($rss->length > 0) {
+			$wxrUrl = $rss->item(0)->getAttribute('xmlns:wp');
+			if (preg_match('|http://wordpress\.org/export/\d+\.\d+/|', $wxrUrl)) {
+				return true;
+			}
 		}
+		
+		throw new DOMException(tra('Invalid Wordpress XML file'));
 	}
 
 	/**

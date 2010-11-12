@@ -553,7 +553,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 	{
 		$this->obj->dom = new DOMDocument;
 		$this->obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
-		$this->assertNull($this->obj->validateInput());
+		$this->assertTrue($this->obj->validateInput());
 	}
 	
 	public function testValidateInputShouldRaiseExceptionIfInvalidFile()
@@ -562,6 +562,15 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		
 		$this->obj->dom = new DOMDocument;
 		$this->obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_invalid.xml');
+		$this->obj->validateInput();
+	}
+	
+	public function testValidateInputShouldRaiseExceptionForMediawikiFile()
+	{
+		$this->setExpectedException('DOMException');
+		
+		$this->obj->dom = new DOMDocument;
+		$this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
 		$this->obj->validateInput();
 	}
 	
