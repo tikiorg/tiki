@@ -10,7 +10,7 @@
 	{foreach from=$payments.data item=payment}
 		<tr>
 			<td>{$payment.paymentRequestId}</td>
-			<td>{if $payment.paymentRequestId eq $smarty.request.invoice}<strong>{$payment.description|escape}</strong>{else}{$payment.description|escape}{/if}</td>
+			<td>{if $payment.paymentRequestId eq $smarty.request.invoice}<strong>{$payment.description|escape}</strong>{else}{self_link invoice=$payment.paymentRequestId}{$payment.description|escape}{/self_link}{/if}</td>
 			<td class="right">{$payment.amount|escape}&nbsp;{$payment.currency|escape}</td>
 			<td>{$payment.request_date|tiki_short_date|escape}</td>
 			{if $tiki_p_admin eq 'y'}<td>{$payment.user|userlink}</td>{/if}
@@ -22,7 +22,7 @@
 					</a>
 				{/permission}
 				{if $cancel and ($payment.user eq $user or $tiki_p_payment_admin)}
-					{self_link cancel=$payment.paymentRequestId}{icon _id=cross class=titletips title="{tr}Cancel this payment request{/tr}" alt="{tr}Cancel{/tr}"}{/self_link}
+					{self_link _ajax=n cancel=$payment.paymentRequestId}{icon _id=cross class=titletips title="{tr}Cancel this payment request{/tr}" alt="{tr}Cancel{/tr}"}{/self_link}
 				{/if}
 			</td>
 		</tr>
