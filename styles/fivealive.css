@@ -545,6 +545,10 @@ select {
 	background: #fff;
 }
 
+#sl-openid {
+	background-color: #fff;
+}
+
 /*** CSS menus shadows for all but IE6 ***/
 ul.sf-shadow ul {
 	-moz-border-radius-bottomleft: 16px;
