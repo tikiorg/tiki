@@ -1104,7 +1104,7 @@ function get_default_prefs() {
 		'pass_chr_case' => 'n',
 		'pass_chr_special' => 'n',
 		'pass_repetition' => 'n',
-		'pass_diff_username' => 'n',
+		'pass_diff_username' => 'y',
 		'pass_due' => -1,
 		'email_due' => -1,
 		'unsuccessful_logins' => 20,
