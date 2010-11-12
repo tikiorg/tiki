@@ -21,8 +21,9 @@ class PaymentLib extends TikiDb_Bridge
 	}
 
 	private function get_payments( $conditions, $offset, $max, $what='' ) {
-		$count = 'SELECT COUNT(*) FROM `tiki_payment_requests` WHERE ' . $conditions;
-		$data = 'SELECT tpr.*, uu.`login` as `user` '.$what.' FROM `tiki_payment_requests` tpr LEFT JOIN `users_users` uu ON (uu.`userId` = tpr.`userId`) WHERE ' . $conditions;
+		$mid = '`tiki_payment_requests` tpr LEFT JOIN `users_users` uu ON (uu.`userId` = tpr.`userId`)';
+		$count = 'SELECT COUNT(*) FROM ' . $mid . ' WHERE ' . $conditions;
+		$data = 'SELECT tpr.*, uu.`login` as `user` '.$what.' FROM ' . $mid . ' WHERE ' . $conditions;
 
 		$all = $this->fetchAll( $data, array(), $max, $offset );
 
@@ -32,8 +33,12 @@ class PaymentLib extends TikiDb_Bridge
 		);
 	}
 
-	function get_outstanding( $offset, $max ) {
-		return $this->get_payments( '`amount_paid` < `amount` AND NOW() <= `due_date` AND `cancel_date` IS NULL', $offset, $max );
+	function get_outstanding( $offset, $max, $ofUser = '' ) {
+		$conditions = '`amount_paid` < `amount` AND NOW() <= `due_date` AND `cancel_date` IS NULL';
+		if ($ofUser) {
+			$conditions .= " AND uu.`login` = '$ofUser'";
+		}
+		return $this->get_payments( $conditions, $offset, $max );
 	}
 
 	function get_past( $offset, $max ) {
