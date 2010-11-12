@@ -1777,6 +1777,8 @@ function get_default_prefs() {
 		'payment_system' => 'paypal',
 		'payment_currency' => 'USD',
 		'payment_default_delay' => 30,
+		'payment_user_only_his_own' => 'n',
+		'payment_user_only_his_own_past' => 'n',
 		'payment_paypal_business' => '',
 		'payment_paypal_environment' => 'https://www.paypal.com/cgi-bin/webscr',
 		'payment_paypal_ipn' => 'y',

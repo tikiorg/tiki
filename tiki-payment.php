@@ -129,14 +129,18 @@ if( isset( $_REQUEST['cancel'] ) ) {
 
 // Obtain information
 function fetch_payment_list( $type ) {
-	global $paymentlib, $prefs, $smarty;
+	global $paymentlib, $globalperms, $user, $prefs, $smarty;
 	$offsetKey = 'offset_' . $type;
 	$method = 'get_' . $type;
 
 	$offset = isset($_REQUEST[$offsetKey]) ? intval($_REQUEST[$offsetKey]) : 0;
 	$max = intval( $prefs['maxRecords'] );
 
-	$data = $paymentlib->$method( $offset, $max );
+	$forUser = '';
+	if (!$globalperms->payment_admin && ( ($type == 'outstanding' || $type == 'overdue') && $prefs["payment_user_only_his_own"] == 'y' || $type != 'outstanding' && $type != 'overdue' && $prefs["payment_user_only_his_own_past"] == 'y' ) ) {
+		$forUser = $user;
+	} 
+	$data = $paymentlib->$method( $offset, $max, $forUser );
 	$data['offset'] = $offset;
 	$data['offset_arg'] = "offset_$type";
 	$data['max'] = $max;
