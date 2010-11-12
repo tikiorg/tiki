@@ -1146,6 +1146,9 @@ function get_default_prefs() {
 		'auth_ldap_type' => 'default',
 		'auth_ldap_syncuserattr' => 'uid',
 		'auth_ldap_syncgroupattr' => 'cn',
+		'auth_ldap_host' => '',
+		'auth_ldap_port' => '',
+		'auth_ldap_groupdescattr' => '',
 		
 		'auth_phpbb_version' => 3,
 		'auth_phpbb_skip_admin' => 'y',
