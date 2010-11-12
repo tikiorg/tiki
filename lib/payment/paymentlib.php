@@ -69,7 +69,7 @@ class PaymentLib extends TikiDb_Bridge
 
 	function get_payment( $id ) {
 		global $tikilib, $prefs;
-		$info = reset( $this->fetchAll( 'SELECT * FROM `tiki_payment_requests` WHERE `paymentRequestId` = ?', array( $id ) ) );
+		$info = reset( $this->fetchAll( 'SELECT tpr.*, uu.`login` as `user` FROM `tiki_payment_requests` tpr LEFT JOIN `users_users` uu ON (uu.`userId` = tpr.`userId`) WHERE `paymentRequestId` = ?', array( $id ) ) );	
 
 		if( $info ) {
 			$info['state'] = $this->find_state( $info );
