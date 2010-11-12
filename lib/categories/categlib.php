@@ -1142,7 +1142,7 @@ class CategLib extends ObjectLib
     }
     
     //Moved from tikilib.php
-    function get_categoryobjects($catids,$types="*",$sort='created_desc',$split=true,$sub=false,$and=false) {
+    function get_categoryobjects($catids,$types="*",$sort='created_desc',$split=true,$sub=false,$and=false, $maxRecords = 500) {
 			global $smarty, $prefs;
 
 		$typetokens = array(
@@ -1188,7 +1188,6 @@ class CategLib extends ObjectLib
 		$find = "";
 		$offset = 0;
 		$firstpassed = false;
-		$maxRecords = 500;
 		$typesallowed = array();
 		if ($and) {
 			$split = false;
