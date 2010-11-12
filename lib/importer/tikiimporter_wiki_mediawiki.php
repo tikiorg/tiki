@@ -143,21 +143,27 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      */
     function validateInput()
     {
-    	$xmlVersion = $this->dom->getElementsByTagName('mediawiki')->item(0)->getAttribute('version');
+    	$mediawiki = $this->dom->getElementsByTagName('mediawiki');
 
-    	switch ($xmlVersion) {
-    		case '0.3':
-    		case '0.4':
-    			$xmlDtdFile = dirname(__FILE__) . "/mediawiki_dump_v$xmlVersion.xsd";
-    			break;
-    		default:
-    			throw new DOMException(tra("Mediawiki XML file version $xmlVersion is not supported."));
-    			break;
+    	if ($mediawiki->length > 0) {
+	    	$xmlVersion = $mediawiki->item(0)->getAttribute('version');
+	
+	    	switch ($xmlVersion) {
+	    		case '0.3':
+	    		case '0.4':
+	    			$xmlDtdFile = dirname(__FILE__) . "/mediawiki_dump_v$xmlVersion.xsd";
+	    			break;
+	    		default:
+	    			throw new DOMException(tra("Mediawiki XML file version $xmlVersion is not supported."));
+	    			break;
+	    	}
+	    	
+	        if (@$this->dom->schemaValidate($xmlDtdFile)) {
+	        	return true;
+	        }
     	}
-    	
-        if (!@$this->dom->schemaValidate($xmlDtdFile)) {
-            throw new DOMException(tra('XML file does not validate against the Mediawiki XML schema'));
-        }
+        
+        throw new DOMException(tra('XML file does not validate against the Mediawiki XML schema'));
     }
 
     /**

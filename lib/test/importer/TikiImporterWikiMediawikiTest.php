@@ -86,11 +86,11 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
     {
         $this->obj->dom = new DOMDocument;
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample.xml');
-        $this->assertNull($this->obj->validateInput());
+        $this->assertTrue($this->obj->validateInput());
         
         $this->obj->dom = new DOMDocument;
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_sample_v0.4.xml');
-        $this->assertNull($this->obj->validateInput());
+        $this->assertTrue($this->obj->validateInput());
     }
 
     public function testValidateInputShouldRaiseExceptionForUnsupportedXmlFileVersion()
@@ -105,6 +105,14 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
     {
         $this->obj->dom = new DOMDocument;
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/mediawiki_invalid.xml');
+        $this->setExpectedException('DOMException');
+        $this->obj->validateInput();
+    }
+    
+	public function testValidateInputShouldRaiseExceptionForWordpressFile()
+    {
+        $this->obj->dom = new DOMDocument;
+        $this->obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
         $this->setExpectedException('DOMException');
         $this->obj->validateInput();
     }
