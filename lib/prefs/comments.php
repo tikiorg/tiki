@@ -29,7 +29,7 @@ function prefs_comments_list() {
 		),
 		'comments_archive' => array(
 			'name' => tra('Archive comments'),
-			'description' => tra('If a comment is archived, Only admins can see it'),
+			'description' => tra('If a comment is archived, only admins can see it'),
 			'type' => 'flag',
 		),
 	);
