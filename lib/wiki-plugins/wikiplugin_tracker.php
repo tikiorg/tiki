@@ -1022,6 +1022,10 @@ function wikiplugin_tracker($data, $params)
 							$all_descends = false;
 						}
 						$flds['data'][$i]['list'] = $categlib->get_viewable_child_categories($f['options_array'][0], $all_descends);
+						// Need to load categories for purposes of showing
+						foreach($f['categs'] as $tcat) {
+							$flds['data'][$i]['cat'][$tcat['categId']] = 'y';
+						}
 					} elseif ($f['type'] == 'A') {
 						if (!empty($f['value'])) {
 							$flds['data'][$i]['info'] = $trklib->get_item_attachment($f['value']);

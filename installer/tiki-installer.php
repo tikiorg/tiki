@@ -20,6 +20,18 @@ require_once( 'tiki-filter-base.php' );
 require_once ( 'lib/smarty/libs/Smarty.class.php');
 require_once ('installer/installlib.php');
 
+class InstallerDatabaseErrorHandler implements TikiDb_ErrorHandler
+{
+	function handle(TikiDb $db, $query, $values, $result) {
+	}
+}
+
+include_once 'lib/adodb/adodb.inc.php';
+$dbTiki = ADONewConnection($db_tiki);
+$db = new TikiDb_Adodb($dbTiki);
+$db->setServerType($db_tiki);
+$db->setErrorHandler(new InstallerDatabaseErrorHandler);
+TikiDb::set($db);
 $dbTiki = false;
 $commands = array();
 @ini_set('magic_quotes_runtime',0);

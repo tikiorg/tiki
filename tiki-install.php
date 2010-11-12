@@ -11,8 +11,8 @@ if (!isset($content)) $content = 'No content specified. Something went wrong.<br
 if (!isset($dberror)) $dberror = false;
 
 // Check that PHP version is at least 5
-if (version_compare(PHP_VERSION, '5.0.0', '<')) {
-	$title = 'PHP5 is required for Tiki 3.0';
+if (version_compare(PHP_VERSION, '5.1.0', '<')) {
+	$title = 'PHP 5.1 is required';
 	$content = '<p>Please contact your system administrator ( if you are not the one ;) ).</p>';
 	createPage($title, $content);
 }
@@ -43,28 +43,12 @@ session_start();
 require_once 'lib/core/TikiDb/Adodb.php';
 require_once 'lib/core/TikiDb/Pdo.php';
 
-/**
- * 
- */
-class InstallerDatabaseErrorHandler implements TikiDb_ErrorHandler
-{
-	function handle(TikiDb $db, $query, $values, $result) {
-	}
-}
-
 // Were database details defined before? If so, load them
 if (file_exists('db/'.$tikidomainslash.'local.php')) {
 	include 'db/'.$tikidomainslash.'local.php';
 
 	// In case of replication, ignore it during installer.
 	unset( $shadow_dbs, $shadow_user, $shadow_pass, $shadow_host );
-
-	include_once 'lib/adodb/adodb.inc.php';
-	$dbTiki = ADONewConnection($db_tiki);
-	$db = new TikiDb_Adodb($dbTiki);
-	$db->setServerType($db_tiki);
-	$db->setErrorHandler(new InstallerDatabaseErrorHandler);
-	TikiDb::set($db);
 
 	// check for provided login details and check against the old, saved details that they're correct
 	if (isset($_POST['dbuser'], $_POST['dbpass'])) {
