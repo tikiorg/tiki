@@ -32,8 +32,9 @@
 					{if $prefs.payment_paypal_ipn eq 'y'}
 						<input type="hidden" name="notify_url" value="{$payment_info.paypal_ipn|escape}" />
 					{/if}
-					{tr}Pay with Paypal:{/tr} <input type="image" name="submit" border="0" src="https://www.paypal.com/en_US/i/btn/btn_paynow_LG.gif" alt="PayPal" title="{tr}Pay with Paypal{/tr}"/> 
-				</form>
+					{tr}Pay with Credit Card through Paypal:{/tr} <input type="image" name="submit" border="0" src="https://www.paypal.com/en_US/i/btn/btn_paynow_LG.gif" alt="PayPal" title="{tr}Pay with Paypal{/tr}"/> 
+					<br /><input type="image" name="submit" border="0" src="https://www.paypal.com/en_US/i/bnr/horizontal_solution_PPeCheck.gif" border="0" alt="PayPal" />
+				</form> 
 			{elseif $prefs.payment_system eq 'cclite' && $prefs.payment_cclite_gateway neq ''}
 				{if (!empty($ccresult) or !empty($ccresult2)) and $ccresult_ok}
 					<form action="{query _type='relative'}" method="post">
