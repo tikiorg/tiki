@@ -222,6 +222,9 @@
 									<a class="link" href="tiki-adminusers.php?user={$users[user].user|escape:url}&amp;action=email_due" title="{tr}Invalid email{/tr}">{icon _id='email_cross' alt="{tr}Invalid email{/tr}"}</a>
 								{/if}
 							{/if}
+							{if !empty($users[user].openid_url)}
+								{self_link userId=$users[user].userId action='remove_openid' _title="{tr}Remove link with OpenID account{/tr}" _icon="img/icons/openid_remove"}{/self_link}
+							{/if}
 						</td>
 					</tr>
 				{/if}

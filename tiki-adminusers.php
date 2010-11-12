@@ -295,6 +295,10 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 		$access->check_authenticity(tra('Are you sure you want to reset email due for this user?'));
 		$userlib->reset_email_due($_REQUEST['user']);
 	}
+	if ($_REQUEST['action'] == 'remove_openid' && isset($_REQUEST['userId'])) {
+		$access->check_authenticity(tra('Are you sure you want to remove the link with OpenID for this user?'));
+		$userlib->remove_openid_link($_REQUEST['userId']);
+	}
 	$_REQUEST["user"] = '';
 	if (isset($tikifeedback[0]['mes'])) {
 		$logslib->add_log('adminusers', '', $tikifeedback[0]['mes']);

@@ -3540,6 +3540,19 @@ class UsersLib extends TikiLib
 		}
 	}
 
+	/**
+	 * Remove the link between a Tiki user account
+	 * and an OpenID account
+	 * 
+	 * @param int $userId
+	 * @return void
+	 */
+	function remove_openid_link($userId) {
+		$query = "UPDATE `users_users` SET `openid_url` = NULL WHERE `userId` = ?";
+		$bindvars = array($userId);
+		$this->query($query, $bindvars);
+	}
+
 }
 
 /* For the emacs weenies in the crowd.
