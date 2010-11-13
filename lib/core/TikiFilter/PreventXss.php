@@ -1,8 +1,4 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
-// 
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 class TikiFilter_PreventXss implements Zend_Filter_Interface
@@ -16,8 +12,8 @@ class TikiFilter_PreventXss implements Zend_Filter_Interface
 			return $this->RemoveXSS( $value );
 	}
 
-	/* RemoveXSS initially developped by kallahar - quickwired.com, 
-	 * modified for TikiWiki Original code can be found here:
+	/* RemoveXSS initially developped by kallahar - quickwired.com, modified for Tiki
+	 * Original code could be found here:
 	 * http://quickwired.com/smallprojects/php_xss_filter_function.php
 	 */
 	function RemoveXSS($val) {
