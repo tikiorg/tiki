@@ -356,7 +356,8 @@
 }
 
 * html .calcontent {
-	height: 60px }
+	height: 60px;
+}
 
 .viewmodeon {
 	padding : 0;
@@ -536,7 +537,7 @@ a.addevent:hover {}
 	padding: 1px;
 }
 
-.viewmode div {display: inline}
+.viewmode div {display: inline;}
 .calbuttonBox {  }
 .calbuttonLeft {  }
 .calbuttonRight {  }
