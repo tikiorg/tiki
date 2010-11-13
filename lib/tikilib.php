@@ -4839,18 +4839,21 @@ class TikiLib extends TikiDb_Bridge
 							// Handle nested plugins.
 							// Comment : in a case like {TRACKERITEMFIELD(test)}{INCLUDE() /}{TRACKERITEMFIELD}. INCLUDE Must not be interpreted if TRACKERITEMFIELD return false
 							//$this->parse_first($plugin_data, $preparsed, $noparsed, $options, $real_start_diff + $pos+strlen($plugin_start));
-
-							if( true === $status = $this->plugin_can_execute( $plugin_name, $plugin_data, $arguments ) ) {
+							
+							// get info to test for preview with auto_save
+							$status = $this->plugin_can_execute( $plugin_name, $plugin_data, $arguments );
+							global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
+							$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
+							$preview = $tiki_p_plugin_preview == 'y' && $details && ! $options['preview_mode'];
+							$approve = $tiki_p_plugin_approve == 'y' && $details && ! $options['preview_mode'];
+							
+							if( $status === true || ($tiki_p_plugin_preview == 'y' && $details && $options['preview_mode'] && $prefs['ajax_autosave'] === 'y') ) {
 								if (isset($options['stripplugins']) && $options['stripplugins']) {
 									$ret = '';	
 								} else {
 									$ret = $this->plugin_execute( $plugin_name, $plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start), false, $options);
 								}
 							} else {
-								global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
-								$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
-								$preview = $tiki_p_plugin_preview == 'y' && $details && ! $options['preview_mode'];
-								$approve = $tiki_p_plugin_approve == 'y' && $details && ! $options['preview_mode'];
 
 								if( $status != 'rejected' ) {
 									$smarty->assign( 'plugin_fingerprint', $status );
