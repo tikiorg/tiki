@@ -4841,7 +4841,7 @@ class TikiLib extends TikiDb_Bridge
 							//$this->parse_first($plugin_data, $preparsed, $noparsed, $options, $real_start_diff + $pos+strlen($plugin_start));
 							
 							// get info to test for preview with auto_save
-							$status = $this->plugin_can_execute( $plugin_name, $plugin_data, $arguments );
+							$status = $this->plugin_can_execute( $plugin_name, $plugin_data, $arguments, $options['preview_mode'] || $options['ck_editor'] );
 							global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
 							$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
 							$preview = $tiki_p_plugin_preview == 'y' && $details && ! $options['preview_mode'];
@@ -5151,7 +5151,7 @@ class TikiLib extends TikiDb_Bridge
 		return false;
 	}
 
-	function plugin_can_execute( $name, $data = '', $args = array() ) {
+	function plugin_can_execute( $name, $data = '', $args = array(), $dont_modify = false ) {
 		global $prefs;
 
 		// If validation is disabled, anything can execute
@@ -5164,7 +5164,7 @@ class TikiLib extends TikiDb_Bridge
 
 		$fingerprint = $this->plugin_fingerprint( $name, $meta, $data, $args );
 
-		$val = $this->plugin_fingerprint_check( $fingerprint );
+		$val = $this->plugin_fingerprint_check( $fingerprint, $dont_modify );
 		if( strpos( $val, 'accept' ) === 0 )
 			return true;
 		elseif( strpos( $val, 'reject' ) === 0 )
@@ -5199,7 +5199,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 	}
 
-	function plugin_fingerprint_check( $fp ) {
+	function plugin_fingerprint_check( $fp, $dont_modify = false ) {
 		global $user;
 		$limit = date( 'Y-m-d H:i:s', time() - 15*24*3600 );
 		$result = $this->query( "SELECT `status`, IF(`status`='pending' AND `last_update` < ?, 'old', '') flag FROM `tiki_plugin_security` WHERE `fingerprint` = ?",
@@ -5220,7 +5220,7 @@ class TikiLib extends TikiDb_Bridge
 			$needUpdate = true;
 		}
 
-		if( $needUpdate ) {
+		if( $needUpdate && !$dont_modify ) {
 			global $page;
 			if( $page ) {
 				$objectType = 'wiki page';
