@@ -119,8 +119,8 @@ if ($postId > 0) {
 		$cat_lang = $_REQUEST['lang'];
 	}
 
-	include_once ('freetag_list.php');
 }
+include_once ('freetag_list.php');
 
 $smarty->assign('preview', 'n');
 if ($tiki_p_admin != 'y') {
