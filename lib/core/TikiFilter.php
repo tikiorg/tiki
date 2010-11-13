@@ -62,6 +62,7 @@ class TikiFilter
 			return new TikiFilter_HtmlPurifier( 'temp/cache' );
 		case 'wikicontent':
 		case 'rawhtml_unsafe':
+		case 'none':
 			require_once 'TikiFilter/RawUnsafe.php';
 			return new TikiFilter_RawUnsafe;
 		case 'lang':
