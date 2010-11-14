@@ -102,6 +102,9 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		}
 		$headerlib->add_jq_onready("register_id('$as_id','" . addcslashes($auto_save_referrer, "'") . "');");
 		$headerlib->add_js("var autoSaveId = '" . addcslashes($auto_save_referrer, "'") . "';");
+		$smarty->assign( 'autosave_js', "remove_save('$as_id','" . addcslashes($auto_save_referrer, "'") . "');");	// for cancel buttons etc that don't submit the form
+	} else {
+		$smarty->assign( 'autosave_js', '');
 	}
 
 	if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n') {
