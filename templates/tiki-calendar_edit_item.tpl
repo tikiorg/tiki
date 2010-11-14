@@ -384,10 +384,7 @@
 <td>{tr}Description{/tr}
 </td><td>
 {if $edit}
-  {toolbars area_id="save[description]"}
-  <textarea id='editwiki' class="wikiedit" cols="{$cols}" rows="{$rows}" name="save[description]" style="width:98%">{$calitem.description|escape}</textarea>
-  <input type="hidden" name="rows" value="{$rows}"/>
-  <input type="hidden" name="cols" value="{$cols}"/>
+  {textarea name="save[description]" id="editwiki"}{$calitem.description}{/textarea}
 {else}
   <span class="description">{$calitem.parsed|default:"<i>{tr}No description{/tr}</i>"}</span>
 {/if}
@@ -602,7 +599,6 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 
 {if $edit}
 <table class="normal">
-<tr><td><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
 {if $recurrence.id gt 0}
 <tr><td>
 	<input type="radio" id="id_affectEvt" name="affect" value="event" checked="checked"/><label for="id_affectEvt">{tr}Update this event only{/tr}</label><br />
@@ -613,10 +609,12 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {if !$user and $prefs.feature_antibot eq 'y'}
 	{include file='antibot.tpl'}
 {/if}
-<tr><td><input type="submit" name="act" value="{tr}Save{/tr}" />
-{if $id}&nbsp;<input type="submit" onclick='document.location="tiki-calendar_edit_item.php?calitemId={$id}&amp;delete=y";return false;' value="{tr}Delete event{/tr}"/>{/if}
-{if $recurrence.id}&nbsp;<input type="submit" onclick='document.location="tiki-calendar_edit_item.php?recurrenceId={$recurrence.id}&amp;delete=y";return false;' value="{tr}Delete Recurrent events{/tr}"/>{/if}
-&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" onclick='document.location="{$referer|escape:'html'}";return false;' value="{tr}Cancel{/tr}"/>
+<tr><td>
+	<input type="submit" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
+	&nbsp;<input type="submit" name="act" value="{tr}Save{/tr}" onclick="needToConfirm=false;" />
+	{if $id}&nbsp;<input type="submit" onclick="needToConfirm=false;{$autosave_js}document.location='tiki-calendar_edit_item.php?calitemId={$id}&amp;delete=y';return false;" value="{tr}Delete event{/tr}" />{/if}
+	{if $recurrence.id}&nbsp;<input type="submit" onclick="needToConfirm=false;{$autosave_js}document.location='tiki-calendar_edit_item.php?recurrenceId={$recurrence.id}&amp;delete=y';return false;" value="{tr}Delete Recurrent events{/tr}"/>{/if}
+	&nbsp;<input type="submit" onclick="needToConfirm=false;{$autosave_js}document.location='{$referer|escape:'html'}';return false;" value="{tr}Cancel{/tr}" />
 </td></tr>
 </table>
 {/if}
