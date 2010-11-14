@@ -4728,17 +4728,20 @@ class TikiLib extends TikiDb_Bridge
 
 				$current_index = ++$plugin_indexes[$plugin_name];
 
-				if( true === $status = $this->plugin_can_execute( $plugin_name, $plugin_data, $arguments ) ) {
+				// get info to test for preview with auto_save
+				$status = $this->plugin_can_execute( $plugin_name, $plugin_data, $arguments, $options['preview_mode'] || $options['ck_editor'] );
+				global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
+				$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
+				$preview = $tiki_p_plugin_preview == 'y' && $details && ! $options['preview_mode'];
+				$approve = $tiki_p_plugin_approve == 'y' && $details && ! $options['preview_mode'];
+							
+				if( $status === true || ($tiki_p_plugin_preview == 'y' && $details && $options['preview_mode'] && $prefs['ajax_autosave'] === 'y') ) {
 					if (isset($options['stripplugins']) && $options['stripplugins']) {
 						$ret = '';	
 					} else {
 						$ret = $this->plugin_execute( $plugin_name, $plugin_data, $arguments, $start, false, $options);
 					}
 				} else {
-					global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
-					$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
-					$preview = $tiki_p_plugin_preview == 'y' && $details && ! $options['preview_mode'];
-					$approve = $tiki_p_plugin_approve == 'y' && $details && ! $options['preview_mode'];
 
 					if( $status != 'rejected' ) {
 						$smarty->assign( 'plugin_fingerprint', $status );
@@ -5021,7 +5024,7 @@ if( \$('#$id') ) {
 		return false;
 	}
 
-	function plugin_can_execute( $name, $data = '', $args = array() ) {
+	function plugin_can_execute( $name, $data = '', $args = array(), $dont_modify = false ) {
 		global $prefs;
 
 		// If validation is disabled, anything can execute
@@ -5034,7 +5037,7 @@ if( \$('#$id') ) {
 
 		$fingerprint = $this->plugin_fingerprint( $name, $meta, $data, $args );
 
-		$val = $this->plugin_fingerprint_check( $fingerprint );
+		$val = $this->plugin_fingerprint_check( $fingerprint, $dont_modify );
 		if( strpos( $val, 'accept' ) === 0 )
 			return true;
 		elseif( strpos( $val, 'reject' ) === 0 )
@@ -5069,7 +5072,7 @@ if( \$('#$id') ) {
 		}
 	}
 
-	function plugin_fingerprint_check( $fp ) {
+	function plugin_fingerprint_check( $fp, $dont_modify = false ) {
 		global $user;
 		$limit = date( 'Y-m-d H:i:s', time() - 15*24*3600 );
 		$result = $this->query( "SELECT `status`, IF(`status`='pending' AND `last_update` < ?, 'old', '') flag FROM `tiki_plugin_security` WHERE `fingerprint` = ?",
@@ -5090,7 +5093,7 @@ if( \$('#$id') ) {
 			$needUpdate = true;
 		}
 
-		if( $needUpdate ) {
+		if( $needUpdate && !$dont_modify ) {
 			global $page;
 			if( $page ) {
 				$objectType = 'wiki page';

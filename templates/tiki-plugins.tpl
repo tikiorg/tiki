@@ -11,7 +11,9 @@
 		<p>{tr}Plugins can be individually previewed, approved, or rejected from the particular location that contains the plugin{/tr}. {tr}For security, you should review each plugin to ensure it is safe to approve{/tr}.</p>
 	<form method="post" action="">
 {cycle values="even,odd" print=false}
-		<table class="normal">
+		
+		{listfilter selectors='#plugins_list tr.odd,#plugins_list tr.even'} 
+		<table class="normal" id="plugins_list">
 			<tr>
 				<th>{select_all checkbox_names='clear[]'}</th>
 				<th>{tr}Plugin{/tr} </th>

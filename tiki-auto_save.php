@@ -37,17 +37,18 @@ function send_ajax_response($command, $data ) {
 
 if (isset($_REQUEST['editor_id'])) {
 	if (isset($_REQUEST['command']) && isset($_REQUEST['data']) && $_REQUEST['data'] != 'ajax error') {
-		$_REQUEST['referer'] = urldecode($_REQUEST['referer']);
+		$_REQUEST['referer'] = isset($_REQUEST['referer']) ? urldecode($_REQUEST['referer']) : '';
+		$referer = explode(':', $_REQUEST['referer']);	// user, section, object id
+		if ($referer && count($referer) === 3 && $referer[1] === 'wiki_page') {
+			$page = $referer[2];	// plugins use global $page for approval
+		}
+		
 		if ($_REQUEST['command'] == 'toWikiFormat') {
 			global $editlib; include_once 'lib/wiki/editlib.php';
 			$res = $editlib->parseToWiki(urldecode($_REQUEST['data']));
 		} else if ($_REQUEST['command'] == 'toHtmlFormat') {
 			global $editlib; include_once 'lib/wiki/editlib.php';
 			$res = $editlib->parseToWysiwyg(urldecode($_REQUEST['data']));
-		} else if ($_REQUEST['command'] == 'toHTMLSource') {		// TODO Remove as it's done in JS now (tiki6 freeze)
-			global $editlib; include_once 'lib/wiki/editlib.php';
-			$res = $editlib->partialParseWysiwygToWiki(urldecode($_REQUEST['data']));
-			$res = html_entity_decode($res, ENT_COMPAT, 'UTF-8');
 		} else if ($_REQUEST['command'] == 'auto_save') {
 			include_once 'lib/ajax/autosave.php';
 			$res = auto_save( $_REQUEST['editor_id'], $_REQUEST['data'], $_REQUEST['referer'] );
@@ -59,11 +60,6 @@ if (isset($_REQUEST['editor_id'])) {
 			$res = get_autosave($_REQUEST['editor_id'], $_REQUEST['referer'] );
 		}
 		send_ajax_response( $_REQUEST['command'], $res );
-	} else if (isset($_REQUEST['data']) && $_REQUEST['data'] != 'ajax error') {	// autosave
-
-		$res = auto_save($_REQUEST['editor_id'],$_REQUEST['data'],$_REQUEST['script']);
-		send_ajax_response( 'draft', $res );
-
 	} else if (isset($_REQUEST['autoSaveId'])) {	// wiki page previews
 		
 		$_REQUEST['autoSaveId'] = urldecode($_REQUEST['autoSaveId']);
@@ -71,6 +67,7 @@ if (isset($_REQUEST['editor_id'])) {
 		
 		if (count($autoSaveIdParts) === 3 && !empty($user) && $user === $autoSaveIdParts[0] && $autoSaveIdParts[1] === 'wiki_page') {
 			
+			$page = $autoSaveIdParts[2];	// plugins use global $page for approval
 			$editlib; include_once 'lib/wiki/editlib.php';
 			if (isset($_REQUEST['inPage'])) {
 				if (!isset($_REQUEST['diff_style'])) {	// use previously set diff_style
@@ -100,7 +97,7 @@ if (isset($_REQUEST['editor_id'])) {
 						$data = $smarty->fetch('pagehistory.tpl');
 					}
 				} else {
-					$info = $tikilib->get_page_info($autoSaveIdParts[2], false);
+					$info = $tikilib->get_page_info( $page, false);
 					$data = $tikilib->parse_data($data, array('is_html' => ($info['is_html'] == 1), 'preview_mode'=>true, 'process_wiki_paragraphs' => ($prefs['wysiwyg_htmltowiki'] === 'y' || $info['wysiwyg'] == 'n'), 'page' => $autoSaveIdParts[2]));
 				}
 				echo $data;
