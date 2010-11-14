@@ -92,7 +92,7 @@
 	<input type="hidden" name="recurrent" value="1"/>
 		{tr}This event depends on a recurrence rule{/tr}
 	{else}
-<input type="checkbox" id="id_recurrent" name="recurrent" value="1" onclick="toggle('recurrenceRules');toggle('startdate');toggle('enddate');return false;"{if $calitem.recurrenceId gt 0 or $recurrent eq 1}checked="checked"{/if}/><label for="id_recurrent">{tr}This event depends on a recurrence rule{/tr}</label>
+<input type="checkbox" id="id_recurrent" name="recurrent" value="1" onclick="toggle('recurrenceRules');toggle('startdate');toggle('enddate')"{if $calitem.recurrenceId gt 0 or $recurrent eq 1}checked="checked"{/if}/><label for="id_recurrent">{tr}This event depends on a recurrence rule{/tr}</label>
 	{/if}
 {else}
 	<span class="summary">{if $calitem.recurrenceId gt 0}{tr}This event depends on a recurrence rule{/tr}{else}{tr}This event is not recurrent{/tr}{/if}</span>
@@ -103,7 +103,7 @@
 	<td>&nbsp;</td>
 	<td style="padding:5px 10px">
 {if $edit}
-	  <div id="recurrenceRules" style="position:relative;top:0px;left:0px;width:100%;display:{if ( !($calitem.recurrenceId gt 0) and $recurrent neq 1 ) && $prefs.javascript_enabled eq 'y'}none{else}block{/if};">
+	  <div id="recurrenceRules" style="width:100%;{if ( !($calitem.recurrenceId gt 0) and $recurrent neq 1 ) && $prefs.javascript_enabled eq 'y'}display:none;{/if}">
 	  {if $calitem.recurrenceId gt 0}<input type="hidden" name="recurrenceId" value="{$recurrence.id}" />{/if}
 {if $recurrence.id gt 0}
 	{if $recurrence.weekly}
