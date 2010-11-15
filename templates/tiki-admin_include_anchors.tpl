@@ -153,5 +153,5 @@
 {/if}
 
 {if $prefs.ajax_xajax eq 'y' and $prefs.feature_jquery_reflection eq 'y'}{jq}$('img.reflect').reflect({});{/jq}{/if}{* for ajax *}
-{if $prefs.ajax_xajax eq 'y' and $prefs.feature_jquery_tooltips eq 'y'}{jq}$('.tips').cluetip({ splitTitle: '|', cluezIndex: 400, width: 'auto', fx: {open: 'fadeIn', openSpeed: 'fast'}, clickThrough: true });{/jq}{/if}
+{if $prefs.ajax_xajax eq 'y' and $prefs.feature_jquery_tooltips eq 'y'}{jq}setUpClueTips();{/jq}{/if}
 <br class="clear" />
