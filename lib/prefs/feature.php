@@ -285,7 +285,7 @@ function prefs_feature_list() {
 		),
 		'feature_jscalendar' => array(
 			'name' => tra('JS Calendar'),
-			'description' => tra('JavaScript popup date selector.'),
+			'description' => tra('JavaScript popup date selector. Will use jQuery UI DatePicker if enabled.'),
 			'help' => 'JS+Calendar',
 			'type' => 'flag',
 		),
