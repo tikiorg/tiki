@@ -6669,7 +6669,8 @@ if( \$('#$id') ) {
 							if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
 								if (count($lines) > 1) {	// don't apply wiki para if only single line so you can have inline includes
 									$contains_block = $this->contains_html_block( $tline );
-									
+									$contains_br = $this->contains_html_br( $tline );
+
 									if (!$contains_block) {	// check inside plugins etc for block elements
 										preg_match_all('/\xc2\xa7[^\xc2\xa7]+\xc2\xa7/', $tline, $m);	// noparse guid for plugins 
 										if (count($m) > 0) {
@@ -6697,7 +6698,7 @@ if( \$('#$id') ) {
 								 	if ($in_paragraph && ((empty($tline) && $in_empty_paragraph === 0) || $contains_block)) {
 										// If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
 										$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-									} elseif (!$in_paragraph && !$contains_block) {
+									} elseif (!$in_paragraph && !$contains_block && !$contains_br) {
 										// If not in paragraph, first non-blank line; start a paragraph; if not start of div created by plugins
 										$data .= "<p>";
 										if (empty($tline)) {
@@ -6906,6 +6907,11 @@ if( \$('#$id') ) {
 	function contains_html_block($inHtml) {
 		// detect all block elements as defined on http://www.w3.org/2007/07/xhtml-basic-ref.html
 		$block_detect_regexp = '/<[\/]?(?:address|blockquote|div|dl|fieldset|h\d|hr|li|ol|p|pre|table|ul)/i';
+		return  (preg_match( $block_detect_regexp, $inHtml) > 0);
+	}
+
+	function contains_html_br($inHtml) {
+		$block_detect_regexp = '/<(?:br)/i';
 		return  (preg_match( $block_detect_regexp, $inHtml) > 0);
 	}
 
