@@ -3,7 +3,7 @@
 {jq}$(".trackername").tiki("autocomplete", "trackername");{/jq}
 {/if}
 <form action="" method="post">
-	<label>{tr}Tracker name:{/tr}<input type="text" name="trackerhelp_name" class="trackername" value="{$smarty.session.trackerhelp_name|escape}" /></label>
+	<label>{tr}Tracker name:{/tr}<input type="text" name="trackerhelp_name" class="trackername"{if isset($smarty.session.trackerhelp_name)} value="{$smarty.session.trackerhelp_name|escape}"{/if} /></label>
 	<label><input type="submit" name="trackerhelp" value="{tr}Go{/tr}" /></label>
 </form>
 
