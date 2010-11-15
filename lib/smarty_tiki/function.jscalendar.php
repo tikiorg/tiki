@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_function_jscalendar($params, &$smarty) {
 	global $headerlib, $prefs, $tikilib;
 	
-	if ($prefs['feature_jquery_ui'] === 'y') {	// override jscalendar with jQuery UI datepicker
+	if ($prefs['feature_jquery_ui'] === 'y' && (!isset($params['showtime']) || $params['showtime'] === 'n')) {	// override jscalendar with jQuery UI datepicker
 		static $uiCalendarInstance = 0;
 		$uiCalendarInstance++;
 		
