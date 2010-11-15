@@ -32,7 +32,7 @@
 {if $addcategId}<input type="hidden" name="cat_categories[]" value="{$addcategId}" />
 <input type="hidden" name="cat_categorize" value="on" />{/if}
 {if $pastetext==1}<label>{tr}Paste content here{/tr}</label><textarea name="copypaste" style="width:96%;" cols="{$size}" rows="2"></textarea>{/if}
-<input type="submit" name="qedit" style="width:97%;" value="{$submit}" />
+<input type="submit" name="qedit" value="{$submit}" />
 </form>
 {if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
 {jq}
