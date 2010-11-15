@@ -15,5 +15,13 @@ function prefs_unsuccessful_list() {
 			'shorthint' => tra('unsuccessful login attempts'),
 			'hint' => tra('Use "-1" for never'),
 		),
+		'unsuccessful_logins_invalid' => array(
+			'name' => tra('Invalid account after unsuccessful login attempts'),
+			'type' => 'text',
+			'size' => 5,
+			'filter' => 'int',
+			'description' => tra('Invalid account after unsuccessful login attempts.').' '.tra('Do not sent email'),
+			'hint' => tra('Use "-1" for never'),
+		),
 	);	
 }

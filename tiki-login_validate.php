@@ -10,7 +10,14 @@ $access->check_feature(array('validateUsers','validateRegistration'), '', 'login
 $isvalid = false;
 if (isset($_REQUEST["user"])) {
 	if (isset($_REQUEST["pass"])) {
-		if (!empty($_SESSION['last_validation'])) {
+		if (empty($_REQUEST['pass'])) {// case: user invalidated his account with wrong password- no email was sent - admin must reactivate
+			$userlib->change_user_waiting($_REQUEST['user'], NULL);
+			$userlib->set_unsuccessful_logins($_REQUEST['user'], 0);
+			$smarty->assign('msg', tra("Account validated successfully."));
+			$smarty->assign('mid', 'tiki-information.tpl');
+			$smarty->display("tiki.tpl");
+			die;
+		} elseif (!empty($_SESSION['last_validation'])) {
 			if ($_SESSION['last_validation']['actpass'] == $_REQUEST["pass"] && $_SESSION['last_validation']['user'] == $_REQUEST["user"]) {
 				list($isvalid, $_REQUEST["user"], $error) = $userlib->validate_user($_REQUEST["user"], $_SESSION['last_validation']['pass'], '', '', true);
 			} else {

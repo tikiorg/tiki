@@ -1108,6 +1108,7 @@ function get_default_prefs() {
 		'pass_due' => -1,
 		'email_due' => -1,
 		'unsuccessful_logins' => 20,
+		'unsuccessful_logins_invalid' => -1,
 		'generate_password' => 'n',
 		'auth_method' => 'tiki',
 		'auth_pear' => 'tiki',

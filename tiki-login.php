@@ -329,8 +329,19 @@ if ($isvalid) {
 		if (isset($_REQUEST['url'])) {
 			$smarty->assign('url', $_REQUEST['url']);
 		}
-		if ($error == PASSWORD_INCORRECT && $prefs['unsuccessful_logins'] >= 0) {
-			if (($nb_bad_logins = $userlib->unsuccessful_logins($user)) >= $prefs['unsuccessful_logins']) {
+		if ($error == PASSWORD_INCORRECT && ($prefs['unsuccessful_logins'] >= 0 || $prefs['unsuccessful_logins_invalid'] >= 0)) {
+			$nb_bad_logins = $userlib->unsuccessful_logins($user);
+			if ($prefs['unsuccessful_logins_invalid'] > 0 && $nb_bad_logins >= $prefs['unsuccessful_logins_invalid']) {
+				$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins_invalid']);
+				$msg .= ' '.tra('Your account has been desactivated.').' '.tra(' Please contact your Site Administrator');
+				$smarty->assign('msg', $msg);
+				$userlib->change_user_waiting($user, 'a');
+				$smarty->assign('user', '');
+				unset($user);
+				$smarty->assign('mid', 'tiki-information.tpl');
+				$smarty->display('tiki.tpl');
+				die;
+			} elseif ($prefs['unsuccessful_logins'] > 0 && $nb_bad_logins >= $prefs['unsuccessful_logins']) {
 				$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins']);
 				$smarty->assign('msg', $msg);
 				if ($userlib->send_confirm_email($user, 'unsuccessful_logins')) {

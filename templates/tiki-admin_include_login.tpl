@@ -74,6 +74,7 @@
 				{preference name=groupTracker}
 				{preference name=email_due}
 				{preference name=unsuccessful_logins}
+				{preference name=unsuccessful_logins_invalid}
 				{preference name=eponymousGroups}
 				{preference name=desactive_login_autocomplete}
 				{preference name=feature_challenge}
