@@ -6378,7 +6378,9 @@ class TikiLib extends TikiDb_Bridge
 		
 		// Wysiwyg {maketoc} handling when not in editor mode (i.e. viewing)
 		if ($need_maketoc && $prefs["feature_wysiwyg"] == 'y' && $prefs["wysiwyg_htmltowiki"] != 'y') {
-			$htmlheadersearch = '/^<h([1-6])>\s*([^<]+)\s*<\/h[1-6]>$/im';
+			// Header needs to start at beginning of line (wysiwyg does not necessary obey)
+			$data = preg_replace('/<\/([a-z]+)><h([1-6])>/im', "</\\1>\n<h\\2>", $data);
+			$htmlheadersearch = '/<h([1-6])>\s*([^<]+)\s*<\/h[1-6]>/im';
 			preg_match_all($htmlheadersearch, $data, $htmlheaders);
 			for ($i = 0; $i < count($htmlheaders[1]); $i++) {
 				$htmlheaderreplace = '';
