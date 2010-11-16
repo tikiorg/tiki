@@ -4,7 +4,7 @@
 	</div>
 	<fieldset>
 		<legend>
-			{tr}Meta tags{/tr}{if $prefs.feature_help eq 'y'} {help url="Meta+Tags+Config"}{/if}
+			{tr}Meta tags{/tr}
 		</legend>
 
 		<div class="adminoptionbox">
