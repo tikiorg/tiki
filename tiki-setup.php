@@ -202,7 +202,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 	$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );
 	
 	if( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
-		$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js', 'external' );
+		$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js', 'external' );
 	} else {
 		if ( $prefs['tiki_minify_javascript'] === 'y' ) {
 			$headerlib->add_jsfile( 'lib/jquery/jquery.min.js' );
