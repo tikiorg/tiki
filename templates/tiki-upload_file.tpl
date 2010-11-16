@@ -195,7 +195,7 @@
 		<tr><td>
 			<label for="user">{tr}Creator:{/tr}</label>
 		</td><td width="80%">
-			{user_selector id='user' name='user' editable=$tiki_p_admin_file_galleries}
+			{user_selector id='user' name='user[]' select=$fileInfo.user editable=$tiki_p_admin_file_galleries}
 		</td></tr>
 
 		{if $prefs.feature_file_galleries_author eq 'y'}
