@@ -20,6 +20,8 @@ if ($prefs['ajax_xajax'] == "y") {
 	require_once ('lib/ajax/ajaxlib.php');
 }
 
+$auto_query_args = array('calitemId');
+
 $daysnames = array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Satursday");
 $daysnames_abr = array("Su","Mo","Tu","We","Th","Fr","Sa");
 $monthnames = array("","January","February","March","April","May","June","July","August","September","October","November","December");
@@ -487,7 +489,7 @@ if ($prefs['feature_theme_control'] == 'y') {
 
 $headerlib->add_cssfile('css/calendar.css',20);
 
-$smarty->assign('referer', empty($_SERVER['HTTP_REFERER']) ? 'tiki-calendar.php' : $_SERVER['HTTP_REFERER']);
+$smarty->assign('referer', empty($_SERVER['HTTP_REFERER']) || strpos($_SERVER['HTTP_REFERER'], 'tiki-calendar_edit_item.php') !== false ? 'tiki-calendar.php' : $_SERVER['HTTP_REFERER']);
 $smarty->assign('myurl', 'tiki-calendar_edit_item.php');
 $smarty->assign('id', $id);
 $smarty->assign('hour_minmax', $hour_minmax);

@@ -315,6 +315,14 @@ body.wikitext {
 .cssmenu_ver li a ul {border: 0}
 .cssmenu_vert li.selected > a {background: #86a48a url(abse/menubg.jpg) repeat-y}
 
+.cssmenu_horiz li ul {
+	margin-top: -10px;
+}
+
+.cssmenu_horiz li ul ul {
+	margin-top: 0;
+}
+
 /* left column width */
 #col2 ul.cssmenu_vert {
 	padding-left: 0;

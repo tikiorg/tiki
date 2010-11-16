@@ -651,6 +651,10 @@ a.phplmselected:hover {
 	background: url(thenews/arrows-005faa.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */
 }
 
+#tiki-top a > .sf-sub-indicator {
+	bottom: 0.5em;
+}
+
 #col2 a .sf-sub-indicator {
 	top: 0.5em;
 }

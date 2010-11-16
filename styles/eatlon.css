@@ -295,20 +295,17 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 }
 
 #sitesearchbar {
-	color: white}
+	color: #fff;
+	margin-top: 8px;
+}
 
 input#fuser,
-#sitesearchbar select,
-#sitesearchbar input[type="submit"] {
+#sitesearchbar select {
 	border: 1px solid;
 	border-color: #878689 #f3f3f4 #f3f3f4 #878689;
 	background: #afafaf;
 	color: #fff}
 
-#sitesearchbar input[type="submit"] {
-	background: url(eatlon/menu_bg.png) 1000px -15px;
-	color: #fff}
-	
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
 

@@ -205,10 +205,17 @@ input[type="submit"]:active,
 	background: #5A4A39;
 	color: #fff;
 	font-size: 1.1em;
+	position: relative;
 }
 
 #tiki-top a {
 	color: #fff;
+}
+
+#tiki-top input#highlight1 {
+	margin: -2px 0 !important;
+	padding: 0;
+	line-height: 1em;
 }
 	
 /****** Menus, Links ******/
@@ -251,9 +258,14 @@ input[type="submit"]:active,
 .cssmenu_vert li ul li:first-child {
 	border-top: 1px solid #000;
 }
+/*
+#tiki-top .cssmenu_horiz {
+	position: absolute;
+	bottom: 0;
+}*/
 
 #tiki-top .cssmenu_horiz li a {
-	padding: 2px 1em;
+	padding: 3px 1em;
 	font-size: 12px;
 	text-decoration: none;
 }
@@ -263,7 +275,7 @@ input[type="submit"]:active,
 }
 
 #tiki-top .cssmenu_horiz ul {
-	margin-top: -11px;
+	margin-top: -14px;
 }
 
 #tiki-top .cssmenu_horiz ul ul {
@@ -443,6 +455,13 @@ tr.diffheader {
 	font-weight: bold;
 	padding-left: 2px;
 	padding-right: 5px;
+}
+
+th a,
+th a.link,
+td.heading a,
+tr.diffheader a {
+	color: #e7dece;
 }
 	 
 tr.odd td,

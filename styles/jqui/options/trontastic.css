@@ -158,11 +158,20 @@ body.wikitext {
 }
 
 .cbox-title,
-h3.box-title {
+h3.box-title,
+th,
+td.heading,
+tr.diffheader {
 	border: 1px solid #000;
 	background: #9fda58 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x; color: #222222;
 	font-weight: bold;
 	color: #222;
+}
+
+th,
+td.heading,
+tr.diffheader {
+	border: none;
 }
 
 .box-data a:link,
