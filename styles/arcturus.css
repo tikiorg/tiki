@@ -456,6 +456,13 @@ tr.diffheader {
 	padding-left: 2px;
 	padding-right: 5px;
 }
+
+th a,
+th a.link,
+td.heading a,
+tr.diffheader a {
+	color: #e7dece;
+}
 	 
 tr.odd td,
 td.odd,
