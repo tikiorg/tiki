@@ -1,16 +1,6 @@
 {* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_metrics.tpl,v 1.62.2.8 2007/11/14 15:41:15 sylvieg Exp $ *}
 
-<h1>
-	<a class="pagetitle" href="tiki-admin_metrics.php">{tr}Admin Metrics{/tr}</a>
-
-	{if $prefs.feature_help eq 'y'}
-		<a href="{$prefs.helpurl}Metrics+Admin" target="tikihelp" class="tikihelp" title="{tr}Admin Metrics{/tr}"><img border='0' src='pics/icons/help.png' alt="{tr}Help{/tr}" width="16" height="16" /></a>
-	{/if}
-
-	{if $prefs.feature_view_tpl eq 'y'}
-		<a href="tiki-edit_templates.php?template=tiki-admin_metrics.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Metrics Template{/tr}"><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
-	{/if}
-</h1>
+{title help="Metrics" admpage="metrics"}{tr}Admin Metrics{/tr}{/title}
 
 <div class="navbar">
 	{button href="#metrics" _text="{tr}Metrics{/tr}"}
