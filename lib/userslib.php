@@ -3398,7 +3398,7 @@ class UsersLib extends TikiLib
 		$date = $this->getOne( 'SELECT `expire` FROM `users_usergroups` where `userId` = ? AND `groupName` = ?', array($userInfo['userId'], $group));
 		if ($date <= 0)
 			$date = $tikilib->now;
-		$date += $periods * 24 * 3600;
+		$date += $periods * $info['expireAfter'] * 24 * 3600;
 
 		$this->query( 'UPDATE `users_usergroups` SET `expire` = ? WHERE `userId` = ? AND `groupName` = ?', array(
 																												 $date,
