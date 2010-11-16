@@ -327,7 +327,6 @@ td.heading,
 tr.diffheader {
 	background: #abcdef;
 	font-size: 1em;
-	width: 15px;
 }
 
 .email .closeButton {width: 100%}
