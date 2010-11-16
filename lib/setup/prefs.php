@@ -1693,6 +1693,7 @@ function get_default_prefs() {
 		'feature_sefurl_title_article' =>'n',
 		'feature_sefurl_title_blog' =>'n',
 		'feature_sefurl_tracker_prefixalias' =>'n',
+		'feature_canonical_url' =>'n',
 
 		// TikiTests
 		'feature_tikitests' => 'n',

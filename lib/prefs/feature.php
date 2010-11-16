@@ -816,6 +816,12 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'require' => array('feature_sefurl', 'wiki_prefixalias_tokens'),
 		),	
+		'feature_canonical_url' => array(
+			'name' => tra('Canonical URL tag'),
+			'description' => tra('Indicates to search engines which URL to use which prevents duplicate listings'),
+			'type' => 'flag',
+			'perspective' => false,
+		),
 		'feature_modulecontrols' => array(
 			'name' => tra('Show module controls'),
 			'help' => 'Module+Control',

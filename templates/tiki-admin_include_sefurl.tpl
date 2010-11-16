@@ -1,4 +1,9 @@
 {* $Id$ *}
+
+{remarksbox type="tip" title="{tr}Tip{/tr}"}
+	{tr}See also{/tr} <a class="rbox-link" href="tiki-admin.php?page=metatags">{tr}Meta-tags{/tr}</a>.
+{/remarksbox}
+
 <form class="admin" method="post" action="tiki-admin.php?page=sefurl">
 	<div class="heading input_submit_container" style="text-align: right;">
 		<input type="submit" name="save" value="{tr}Change preferences{/tr}" />
@@ -35,7 +40,7 @@
 		{preference name=feature_sefurl_title_article}
 		{preference name=feature_sefurl_title_blog}
 		{preference name=feature_sefurl_tracker_prefixalias}
-
+		{preference name=feature_canonical_url}
 	</fieldset>
 	<div class="heading input_submit_container" style="text-align: center;padding:1em;">
 		<input type="submit" name="save" value="{tr}Change preferences{/tr}" />

@@ -26,7 +26,13 @@
 {if $prefs.metatag_revisitafter ne ''}<meta name="revisit-after" content="{$prefs.metatag_revisitafter|escape}" />
 {/if}
 
-{* --- tikiwiki block --- *}
+{* --- Canonical URL --- *}
+{if $prefs.feature_canonical_url eq 'y'}
+	{if $page neq ''} <link rel="canonical" href="{$page|sefurl}" /> {/if}
+{/if}	
+
+
+{* --- Tiki block --- *}
 {include file='bidi.tpl'}
 <title>
 {if isset($trail)}{breadcrumbs type="fulltrail" loc="head" crumbs=$trail}

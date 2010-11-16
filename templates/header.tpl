@@ -6,6 +6,12 @@
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="generator" content="Tiki Wiki CMS Groupware - http://tiki.org" />
+
+{* --- Canonical URL --- *}
+{if $prefs.feature_canonical_url eq 'y'}
+	{if $page neq ''} <link rel="canonical" href="{$page|sefurl}" /> {/if}
+{/if}	
+
 {if !empty($forum_info.name) & $prefs.metatag_threadtitle eq 'y'}
 	<meta name="keywords" content="{tr}Forum{/tr} {$forum_info.name|escape} {$thread_info.title|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if}" />
 {elseif isset($galleryId) && $galleryId ne '' & $prefs.metatag_imagetitle ne 'n'}
