@@ -108,8 +108,14 @@ if ($("#assignstructure").attr("checked")) {
 	
 	{if !empty($permissions_added) or !empty($permissions_removed)}
 		{tab name="{tr}View Differences{/tr}"}
-			{if !empty($permissions_added)}<p><strong>{tr}Permissions added:{/tr}</strong></p><blockquote>{$permissions_added}</blockquote><br />{/if}
-			{if !empty($permissions_removed)}<p><strong>{tr}Permissions removed:{/tr}</strong></p><blockquote>{$permissions_removed}</blockquote><br />{/if}
+			{if !empty($permissions_added)}
+				<h3>{tr}Permissions added:{/tr}</h3>
+				<blockquote>{$permissions_added}</blockquote>
+			{/if}
+			{if !empty($permissions_removed)}
+				<h3>{tr}Permissions removed:{/tr}</h3>
+				<blockquote>{$permissions_removed}</blockquote>
+			{/if}
 		{/tab}
 	{/if}
 
