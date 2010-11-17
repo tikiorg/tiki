@@ -3,7 +3,7 @@
 require_once(dirname(__FILE__) . '/tikiimporter_testcase.php');
 require_once(dirname(__FILE__) . '/../../importer/tikiimporter.php');
 /** 
- * @group integration
+ * @group importer
  */
 class TikiImporter_Test extends TikiImporter_TestCase
 {
@@ -41,17 +41,32 @@ class TikiImporter_Test extends TikiImporter_TestCase
 
 class TikiImporterFirstChild extends TikiImporter
 {
-    static public $importOptions = array(array('name' => 'someName', 'property1' => 'someProperty'),
-                                      array('name' => 'differentName', 'property' => 'anotherProperty'));
+    static public function importOptions()
+    {
+    	return array(
+    		array('name' => 'someName', 'property1' => 'someProperty'),
+            array('name' => 'differentName', 'property' => 'anotherProperty')
+        );
+    }
 }
 
 class TikiImporterSecondChild extends TikiImporter
 {
-    static public $importOptions = array(array('name' => 'otherName'),
-                                         array('secondName' => 'something'));
+    static public function importOptions()
+    {
+		return array(
+			array('name' => 'otherName'),
+            array('secondName' => 'something')
+        );
+    }
 }
 
 class TikiImporterGranSon extends TikiImporterSecondChild
 {
-    static public $importOptions = array(array('name' => 'name'));
+    static public function importOptions()
+    {
+    	 return array(
+    	 	array('name' => 'name')
+    	 );
+    }
 }
