@@ -51,21 +51,25 @@ class UnifiedSearchLib
 
 	private function buildIndexer($index)
 	{
+		$indexer = new Search_Indexer($index);
+		$this->addSources($indexer);
+
+		return $indexer;
+	}
+
+	private function addSources($aggregator)
+	{
 		global $prefs;
 
-		$indexer = new Search_Indexer($index);
-
 		if ($prefs['feature_wiki'] == 'y') {
-			$indexer->addContentSource('wiki page', new Search_ContentSource_WikiSource);
+			$aggregator->addContentSource('wiki page', new Search_ContentSource_WikiSource);
 		}
 
 		if ($prefs['feature_categories'] == 'y') {
-			$indexer->addGlobalSource(new Search_GlobalSource_CategorySource);
+			$aggregator->addGlobalSource(new Search_GlobalSource_CategorySource);
 		}
 
-		$indexer->addGlobalSource(new Search_GlobalSource_PermissionSource(Perms::getInstance(), 'Admins'));
-
-		return $indexer;
+		$aggregator->addGlobalSource(new Search_GlobalSource_PermissionSource(Perms::getInstance(), 'Admins'));
 	}
 
 	function getIndex()
@@ -77,6 +81,14 @@ class UnifiedSearchLib
 
 			return $index;
 		}
+	}
+
+	function getDataSource($plugin)
+	{
+		$dataSource = new Search_Formatter_DataSource_Declarative;
+		$this->addSources($dataSource);
+
+		return $dataSource;
 	}
 
 	private function destroyDirectory($path)

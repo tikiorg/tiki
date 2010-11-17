@@ -4,10 +4,16 @@ class Search_Formatter
 {
 	private $plugin;
 	private $subFormatters = array();
+	private $dataSource;
 
 	function __construct(Search_Formatter_Plugin_Interface $plugin)
 	{
 		$this->plugin = $plugin;
+	}
+
+	function setDataSource(Search_Formatter_DataSource_Interface $dataSource)
+	{
+		$this->dataSource = $dataSource;
 	}
 
 	function addSubFormatter($name, $formatter)
@@ -19,9 +25,15 @@ class Search_Formatter
 	{
 		$defaultValues = $this->plugin->getFields();
 
+		$fields = array_keys($defaultValues);
 		$subDefaults = array();
 		foreach ($this->subFormatters as $key => $plugin) {
 			$subDefault[$key] = $plugin->getFields();
+			$fields = array_merge($fields, array_keys($subDefault[$key]));
+		}
+
+		if ($this->dataSource) {
+			$list = $this->dataSource->getInformation($list, $fields);
 		}
 
 		$data = array();

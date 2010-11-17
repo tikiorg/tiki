@@ -18,7 +18,7 @@ class Search_Index_LuceneStemmingTest extends PHPUnit_Framework_TestCase
 		$index->addDocument(array(
 			'object_type' => $typeFactory->identifier('wiki page'),
 			'object_id' => $typeFactory->identifier('HomePage'),
-			'description' => $typeFactory->plaintext('a description for the pages éducation'),
+			'description' => $typeFactory->plaintext('a description for the pages éducation Case'),
 		));
 
 		$this->index = $index;
@@ -54,6 +54,13 @@ class Search_Index_LuceneStemmingTest extends PHPUnit_Framework_TestCase
 	function testSearchExtraAccents()
 	{
 		$query = new Search_Query('pagé');
+
+		$this->assertGreaterThan(0, count($query->search($this->index)));
+	}
+
+	function testCaseSensitivity()
+	{
+		$query = new Search_Query('casE');
 
 		$this->assertGreaterThan(0, count($query->search($this->index)));
 	}

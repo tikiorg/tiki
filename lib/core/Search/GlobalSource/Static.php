@@ -22,5 +22,10 @@ class Search_GlobalSource_Static implements Search_GlobalSource_Interface
 
 		return $out;
 	}
+
+	function getProvidedFields()
+	{
+		return array_keys($this->typeMap);
+	}
 }
 

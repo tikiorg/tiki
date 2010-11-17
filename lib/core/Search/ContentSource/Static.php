@@ -31,5 +31,10 @@ class Search_ContentSource_Static implements Search_ContentSource_Interface
 
 		return $out;
 	}
+
+	function getProvidedFields()
+	{
+		return array_keys($this->typeMap);
+	}
 }
 

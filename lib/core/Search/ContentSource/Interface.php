@@ -15,4 +15,10 @@ interface Search_ContentSource_Interface
 	 * @return array
 	 */
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory);
+
+	/**
+	 * Returns an array containing the list of field names that can be provided
+	 * by the content source.
+	 */
+	function getProvidedFields();
 }

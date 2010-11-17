@@ -163,5 +163,37 @@ OUT;
 		$this->assertContains('>3<', $output);
 		$this->assertNotContains('>4<', $output);
 	}
+
+	function testSpecifyDataSource()
+	{
+		$searchResult = array(
+			array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
+			array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
+		);
+		$withData = array(
+			array('object_type' => 'wiki page', 'object_id' => 'HomePage', 'description' => 'ABC'),
+			array('object_type' => 'wiki page', 'object_id' => 'SomePage', 'description' => 'DEF'),
+		);
+
+		$source = $this->getMock('Search_Formatter_DataSource_Interface');
+		$source->expects($this->once())
+			->method('getInformation')
+			->with($this->equalTo($searchResult), $this->equalTo(array('object_id', 'description')))
+			->will($this->returnValue($withData));
+
+		$plugin = new Search_Formatter_Plugin_WikiTemplate("* {display name=object_id} ({display name=description})\n");
+
+		$formatter = new Search_Formatter($plugin);
+		$formatter->setDataSource($source);
+
+		$output = $formatter->format($searchResult);
+
+		$expect = <<<OUT
+* HomePage (ABC)
+* SomePage (DEF)
+
+OUT;
+		$this->assertEquals($expect, $output);
+	}
 }
 

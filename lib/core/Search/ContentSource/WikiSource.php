@@ -35,5 +35,17 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 
 		return $data;
 	}
+
+	function getProvidedFields()
+	{
+		return array(
+			'title',
+			'language',
+			'modification_date',
+			'description',
+			'wiki_content',
+			'view_permission',
+		);
+	}
 }
 

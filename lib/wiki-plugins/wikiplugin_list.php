@@ -79,6 +79,7 @@ function wikiplugin_list($data, $params)
 		}
 
 		$formatter = new Search_Formatter($plugin);
+		$formatter->setDataSource($unifiedsearchlib->getDataSource());
 
 		foreach ($subPlugins as $key => $plugin) {
 			$formatter->addSubFormatter($key, $plugin);
