@@ -295,7 +295,7 @@
     {if $field_value.options_array[2] eq '1' and $list_mode ne 'csv'}
 		<a href="tiki-view_tracker_item.php?trackerId={$field_value.options_array[0]}&amp;itemId={$field_value.linkId}" class="link">
 	{elseif $field_value.options_array[5] and $list_mode ne 'csv'}
-		<a href="tiki-index.php?page={$field_value.options_array[5]|escape:'url'}&itemId={$field_value.linkId} class="link">
+		<a href="tiki-index.php?page={$field_value.options_array[5]|escape:'url'}&itemId={$field_value.linkId}" class="link">
 	{/if}
 	{if $field_value.displayedvalue ne ""}
         {$field_value.displayedvalue}
