@@ -207,8 +207,7 @@ if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
 }
 
 if (isset($_REQUEST['remove'])) {
-	check_ticket('object-perms');
-	
+	$access->check_authenticity(tra('Are you sure you want to remove the direct permissions from this object?'));
 	$newPermissions = new Perms_Reflection_PermissionSet;
 	$permissionApplier->apply( $newPermissions );
 
@@ -511,6 +510,9 @@ function get_assign_permissions() {
 	// get existing perms
 	$currentObject = $objectFactory->get( $_REQUEST['objectType'], $_REQUEST['objectId'] );
 	$currentPermissions = $currentObject->getDirectPermissions();
+	if (count($currentPermissions->getPermissionArray()) === 0) {
+		$currentPermissions = $currentObject->getParentPermissions();	// get "default" perms so disabled feature perms don't get removed
+	}
 
 	// set any checked ones
 	if( isset( $_REQUEST['perm'] ) && !empty($_REQUEST['perm'])) {
