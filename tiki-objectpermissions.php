@@ -679,17 +679,30 @@ function get_displayed_permissions() {
 		$displayedPermissions = $parent;
 	} else {																		// direct object perms
 		$comparator = new Perms_Reflection_PermissionComparator( $globPerms, $displayedPermissions );
-		$permissions_added = ''; $permissions_removed = '';
+		$permissions_added = array(); $permissions_removed = array();
 		foreach($comparator->getAdditions() as $p) {
-			$permissions_added .= empty($permissions_added) ? '' : ', ';
-			$permissions_added .= $p[0] . ':' . $p[1];
+			if (!isset($permissions_added[$p[0]])) {
+				$permissions_added[$p[0]] = array();
+			}
+			$permissions_added[$p[0]][] = str_replace('tiki_p_', '', $p[1]);
 		}
 		foreach($comparator->getRemovals() as $p) {
-			$permissions_removed .= empty($permissions_removed) ? '' : ', ';
-			$permissions_removed .= $p[0] . ':' . $p[1];
+			if (!isset($permissions_removed[$p[0]])) {
+				$permissions_removed[$p[0]] = array();
+			}
+			$permissions_removed[$p[0]][] = str_replace('tiki_p_', '', $p[1]);
 		}
-		$smarty->assign('permissions_added',   $permissions_added);
-		$smarty->assign('permissions_removed', $permissions_removed);
+		$added = ''; $removed = '';
+		foreach($permissions_added as $gp => $pm) {
+			$added .= '<br />';
+			$added .= '<strong>' . $gp . ':</strong> ' . implode(', ', $pm);
+		}
+		foreach($permissions_removed as $gp => $pm) {
+			$removed .= '<br />';
+			$removed .= '<strong>' . $gp . ':</strong> ' . implode(', ', $pm);
+		}
+		$smarty->assign('permissions_added',   $added);
+		$smarty->assign('permissions_removed', $removed);
 	}
 
 	return $displayedPermissions;
