@@ -236,6 +236,7 @@
 						</td>
 						<td>
 							{tr}{$actionlog.action}{/tr}
+							{if $actionlog.action eq 'Categorized' || $actionlog.action eq 'Uncategorized'}/{$actionlog.comment|replace:"categId=":""}{/if}
 						</td>
 						<td>
 							{tr}{$actionlog.objectType}{/tr}

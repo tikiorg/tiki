@@ -376,6 +376,7 @@ class CategLib extends ObjectLib
 	}
 
 	function categorize($catObjectId, $categId) {
+		global $prefs;
 		if (empty($categId)) {
 			return;
 		}
@@ -387,15 +388,27 @@ class CategLib extends ObjectLib
 
 		global $cachelib;
 		$cachelib->invalidate("allcategs");
+		if ($prefs['feature_actionlog'] == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			global $objectlib; include_once('lib/objectlib/php');
+			$info = $objectlib->get_object_via_objectid($catObjectId);
+			$logslib->add_action('Categorized', $info['itemId'], $info['type'], "categId=$categId");
+		}
 	}
 
 	function uncategorize($catObjectId, $categId) {
+		global $prefs;
 		$query = "delete from `tiki_category_objects` where `catObjectId`=? and `categId`=?";
 		$result = $this->query($query,array((int) $catObjectId,(int) $categId),-1,-1,false);
 
 		global $cachelib;
 		$cachelib->invalidate("allcategs");
-	}
+		if ($prefs['feature_actionlog'] == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			global $objectlib; include_once('lib/objectlib/php');
+			$info = $objectlib->get_object_via_objectid($catObjectId);
+			$logslib->add_action('Uncategorized', $info['itemId'], $info['type'], "categId=$categId");
+		}	}
 
 	function get_category_descendants($categId) {
 		global $user,$userlib;
