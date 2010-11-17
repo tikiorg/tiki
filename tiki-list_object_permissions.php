@@ -22,6 +22,7 @@ function is_perm($permName, $objectType) {
 function list_perms($objectId, $objectType, $objectName) {
 	global $userlib, $tikilib, $prefs;
 	$ret = array();
+	$cats = array();
 	$perms = $userlib->get_object_permissions($objectId, $objectType);
 	if (!empty($perms)) {
 		foreach($perms as $perm) {
@@ -41,7 +42,7 @@ function list_perms($objectId, $objectType, $objectName) {
 					foreach($category_perms as $category_perm) {
 						if (is_perm($category_perm['permName'], $objectType)) {
 							$config[$category_perm['groupName']][$category_perm['permName']] = 'y';
-							$ret[] = array('group' => $category_perm['groupName'], 'perm' => $category_perm['permName'],
+							$cats[] = array('group' => $category_perm['groupName'], 'perm' => $category_perm['permName'],
 									'reason' => 'Category', 'objectId' => $categId, 'objectType' => 'category',
 									'objectName' => $categlib->get_category_name($categId));
 						}
@@ -50,7 +51,7 @@ function list_perms($objectId, $objectType, $objectName) {
 			}
 		}
 	}
-	return array('objectId' => $objectId, 'special' => $ret);
+	return array('objectId' => $objectId, 'special' => $ret, 'category' => $cats);
 }
 $types = array('wiki page', 'file gallery', 'tracker', 'forum', 'group');
 include_once ("lib/comments/commentslib.php"); global $commentslib; $commentslib = new Comments($dbTiki);
@@ -71,7 +72,9 @@ foreach($types as $type) {
 		case 'wiki':
 			$objects = $tikilib->list_pageNames();
 			foreach($objects['data'] as $object) {
-				$res[$type]['objects'][] = list_perms($object['pageName'], $type, $object['pageName']);
+				$r = list_perms($object['pageName'], $type, $object['pageName']);
+				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special']); }
+				if (count($r['category']) > 0) { $res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category']); }
 			}
 			break;
 
@@ -79,7 +82,9 @@ foreach($types as $type) {
 		case 'file gallery':
 			$objects = $tikilib->list_file_galleries( 0, -1, 'name_asc', '', '', $prefs['fgal_root_id'] );
 			foreach($objects['data'] as $object) {
-				$res[$type]['objects'][] = list_perms($object['id'], $type, $object['name']);
+				$r = list_perms($object['id'], $type, $object['name']);
+				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name']); }
+				if (count($r['category']) > 0) { $res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']); }
 			}
 			break;
 
@@ -87,7 +92,9 @@ foreach($types as $type) {
 		case 'trackers':
 			$objects = $tikilib->list_trackers();
 			foreach($objects['data'] as $object) {
-				$res[$type]['objects'][] = list_perms($object['trackerId'], $type, $object['name']);
+				$r = list_perms($object['trackerId'], $type, $object['name']);
+				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name']); }
+				if (count($r['category']) > 0) { $res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']); }
 			}
 			break;
 
@@ -95,14 +102,18 @@ foreach($types as $type) {
 		case 'forums':
 			$objects = $commentslib->list_forums();
 			foreach($objects['data'] as $object) {
-				$res[$type]['objects'][] = list_perms($object['forumId'], $type, $object['name']);
+				$r = list_perms($object['forumId'], $type, $object['name']);
+				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name']); }
+				if (count($r['category']) > 0) { $res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category'], 'objectName' => $object['name']); }
 			}
 			break;
 
 		case 'group':
 		case 'groups':
 			foreach($all_groups as $object) {
-				$res[$type]['objects'][] = list_perms($object, $type, '');
+				$r = list_perms($object, $type, '');
+				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special']); }
+				if (count($r['category']) > 0) { $res[$type]['category'][] = array('objectId' => $r['objectId'], 'category' => $r['category']); }
 			}
 			break;
 
