@@ -135,8 +135,8 @@ class TikiImporter
      */
     static function changePhpSettings()
     {
-        if (ini_get('error_reporting') != E_ALL)
-            error_reporting(E_ALL);
+        if (ini_get('error_reporting') !== E_ALL & ~E_DEPRECATED)
+            error_reporting(E_ALL & ~E_DEPRECATED);
 
         if (ini_get('display_errors') != true)
             ini_set('display_errors', true);
