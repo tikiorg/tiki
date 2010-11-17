@@ -311,8 +311,8 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_cssmenus' => array(
-			'name' => tra('Css Menus'),
-			'description' => tra('Css Menus (suckerfish).'),
+			'name' => tra('CSS Menus'),
+			'description' => tra('CSS Menus (suckerfish).'),
 			'help' => 'Menus',
 			'type' => 'flag',
 		),
@@ -776,10 +776,16 @@ function prefs_feature_list() {
 		'feature_poll_comments' => array(
 			'name' => tra('Comments for polls'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_polls',
+			),
 		),	
 		'feature_faq_comments' => array(
 			'name' => tra('Comments for FAQs'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_faqs',
+			),
 		),	
 		'feature_sefurl' => array(
 			'name' => tra('Search engine friendly url'),
@@ -846,6 +852,9 @@ function prefs_feature_list() {
 		'feature_article_comments' => array(
 			'name' => tra('Comments for articles'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_articles',
+			),
 		),
 		'feature_cms_templates' => array(
 			'name' => tra('Content Templates'),
@@ -960,6 +969,9 @@ function prefs_feature_list() {
 		'feature_blogposts_comments' => array(
 			'name' => tra('Comments on blog posts'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_blogs',
+			),
 		),
 		'feature_blog_sharethis' => array(
 			'name' => tra('ShareThis buttons'),
@@ -1435,6 +1447,9 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'help' => 'Comments',
 			'description' => tra('Allow users (with permission) to post threaded comments to a page.'),
+			'dependencies' => array(
+				'feature_wiki',
+			),
 		),
 		'feature_wiki_pictures' => array(
 			'name' => tra('Pictures'),

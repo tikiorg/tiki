@@ -8,7 +8,7 @@
 function prefs_url_list() {
 	return array(
 		'url_after_validation' => array(
-			'name' => tra('Url a user is redirected to after account validation'),
+			'name' => tra('URL a user is redirected to after account validation'),
 			'hint' => tra('Default').': tiki-information.php?msg='.tra('Account validated successfully.'),
 			'type' => 'text',
 			'dependencies' => array(
@@ -16,7 +16,7 @@ function prefs_url_list() {
 			),
 		),
 		'url_anonymous_page_not_found' => array(
-			'name' => tra('Url an anonymous is redirected when page not found'),
+			'name' => tra('URL an anonymous is redirected when page not found'),
 			'type' => 'text',
 		),
 	);
