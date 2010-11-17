@@ -7,6 +7,7 @@
 
 /* {user_selector
  *     user = $user
+ *     select = 'user_tobe_selected'
  *     group = 'all'
  *     name = 'user'
  *     id = user_selector_XX
@@ -62,7 +63,11 @@ function smarty_function_user_selector($params, &$smarty) {
 		$ret .= '<select name="' . $params['name'] . '" id="' . $params['id'] . '"' . $sz . $ed . '>';
 		foreach($users as $usr) {
 			if ($params['editable'] == 'y' || $usr == $params['user']) {
+			    if (isset($params['select'])) {
+				$ret .= '<option value="' . $usr . '"' . ($usr == $params['select'] ? ' selected="selected"' : '') . ' >' . $usr .'</option>';
+				} else {
 				$ret .= '<option value="' . $usr . '"' . ($usr == $params['user'] ? ' selected="selected"' : '') . ' >' . $usr .'</option>';
+				}
 			}
 		}
 		$ret .= '</select>';

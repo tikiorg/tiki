@@ -677,6 +677,7 @@ function get_default_prefs() {
 		'feature_cms_rankings' => 'n',
 		'feature_cms_print' => 'y',
 		'feature_cms_emails' => 'n',
+		'feature_cms_sharethis' => 'n',
 		'art_sort_mode' => 'publishDate_desc',
 		'art_list_title' => 'y',
 		'art_list_title_len' => '50',
@@ -711,12 +712,14 @@ function get_default_prefs() {
 		'article_image_size_x' => '0',
 		'article_image_size_y' => '0',
 		'article_custom_attributes' => 'y',
+		'article_sharethis_publisher' => '',
 		'feature_cms_templates' => 'n',
 		'cms_bot_bar' => 'y',
 		'cms_left_column' => 'y',
 		'cms_right_column' => 'y',
 		'cms_top_bar' => 'n',
 		'art_home_title' => '',
+
 
 		// trackers
 		'feature_trackers' => 'n',

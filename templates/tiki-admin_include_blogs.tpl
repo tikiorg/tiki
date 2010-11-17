@@ -35,7 +35,7 @@
 
 			<fieldset>
 				<legend>
-					{tr}Sharing on social networks{/tr}{help url="Blog#Sharing_Social_Networks"}
+					{tr}Sharing on social networks{/tr}{help url="Social+Networks#Using+ShareThis"}
 				</legend>
 				{preference name=feature_blog_sharethis}
 				<div class="adminoptionboxchild" id="feature_blog_sharethis_childcontainer">

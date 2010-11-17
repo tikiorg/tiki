@@ -295,9 +295,9 @@ function prefs_global_list() {
 			'description' => tra('Select the Tiki feature to use as the site homepage. Only enabled features are listed.')
 		),
 		'disableJavascript' => array(
-			'name' => tra('Disable javascript'),
+			'name' => tra('Disable JavaScript'),
 			'type' => 'flag',
-			'description' => tra('Disable javascript for testing purpose even if the browser allows it'),
+			'description' => tra('Disable JavaScript for testing purpose even if the browser allows it'),
 		),
 
 		// Kaltura

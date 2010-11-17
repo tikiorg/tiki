@@ -21,8 +21,8 @@ function prefs_tiki_list() {
 			),
 		),
 		'tiki_minify_javascript' => array(
-			'name' => tra('Minify javascript'),
-			'description' => tra('Compress javascript files used in the page into a single file to be distributed statically. Changes to javascript files will require cache to be cleared. Uses http://code.google.com/p/minify/'),
+			'name' => tra('Minify JavaScript'),
+			'description' => tra('Compress JavaScript files used in the page into a single file to be distributed statically. Changes to JavaScript files will require cache to be cleared. Uses http://code.google.com/p/minify/'),
 			'type' => 'flag',
 			'perspective' => false,
 		),

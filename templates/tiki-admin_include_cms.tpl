@@ -65,6 +65,16 @@
 			</fieldset>
 
 			<fieldset>
+				<legend>
+					{tr}Sharing on social networks{/tr}{help url="Social+Networks#Using+ShareThis"}
+				</legend>
+				{preference name=feature_cms_sharethis}
+				<div class="adminoptionboxchild" id="feature_cms_sharethis_childcontainer">
+					{preference name=article_sharethis_publisher}
+				</div>
+			</fieldset>
+
+			<fieldset>
 				<legend>{tr}Import CSV file{/tr}</legend>
 				<div class="adminoptionbox">
 					<div class="adminoptionlabel">

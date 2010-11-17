@@ -867,6 +867,11 @@ function prefs_feature_list() {
 			'name' => tra('Specify notification emails when creating articles'),
 			'type' => 'flag',
 		),
+		'feature_cms_sharethis' => array(
+			'name' => tra('ShareThis buttons'),
+			'type' => 'flag',
+			'hint' => tra('Insert a ShareThis button from www.sharethis.com.'),
+		),
 		'feature_categorypath' => array(
 			'name' => tra('Category Path'),
 			'description' => tra('Show category tree, above wiki pages'),

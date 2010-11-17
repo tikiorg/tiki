@@ -823,23 +823,22 @@ if ($_REQUEST["itemId"]) {
 					}
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
 				} elseif ($fields["data"][$i]["type"] == 'G') {
-					if (empty($info["$fid"])) {
-						if (!empty($prefs['gmap_defaultx']) && !empty($prefs['gmap_defaulty']) && !empty($prefs['gmap_defaultz'])) {
-							$info["$fid"] = $prefs['gmap_defaultx'] . ',' . $prefs['gmap_defaulty'] . ',' . $prefs['gmap_defaultz'];
-						} else {
-							$info["$fid"] = '0,0,1';
+					if (!empty($info["$fid"])) {
+						$ins_fields["data"][$i]["value"] = $info["$fid"];
+						$first_comma = strpos($info["$fid"], ',');
+						$second_comma = strpos($info["$fid"], ',', $first_comma + 1);
+						if ($second_comma === false) {
+							$second_comma = strlen($info["$fid"]);
+							$ins_fields["data"][$i]["value"].= ",11";
 						}
+						$ins_fields["data"][$i]["x"] = substr($ins_fields["data"][$i]["value"], 0, $first_comma);
+						$ins_fields["data"][$i]["y"] = substr($ins_fields["data"][$i]["value"], $first_comma + 1, $second_comma - $first_comma - 1);
+						$ins_fields["data"][$i]["z"] = substr($ins_fields["data"][$i]["value"], $second_comma + 1);
+					} else {
+						$ins_fields["data"][$i]["value"] = null;
+						$ins_fields["data"][$i]["x"] = null;
+						$ins_fields["data"][$i]["y"] = null;
 					}
-					$ins_fields["data"][$i]["value"] = $info["$fid"];
-					$first_comma = strpos($info["$fid"], ',');
-					$second_comma = strpos($info["$fid"], ',', $first_comma + 1);
-					if ($second_comma === false) {
-						$second_comma = strlen($info["$fid"]);
-						$ins_fields["data"][$i]["value"].= ",11";
-					}
-					$ins_fields["data"][$i]["x"] = substr($ins_fields["data"][$i]["value"], 0, $first_comma);
-					$ins_fields["data"][$i]["y"] = substr($ins_fields["data"][$i]["value"], $first_comma + 1, $second_comma - $first_comma - 1);
-					$ins_fields["data"][$i]["z"] = substr($ins_fields["data"][$i]["value"], $second_comma + 1);
 					if (empty($ins_fields["data"][$i]["z"])) {
 						$ins_fields["data"][$i]["z"] = 1;
 					}

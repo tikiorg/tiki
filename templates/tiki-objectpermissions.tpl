@@ -29,11 +29,7 @@
 						{tr}This category's direct permissions override any global permissions affecting objects in it.{/tr}
 					{/if}
 					<br />
-					{if $tiki_p_admin eq 'y'}
-						{if !empty($permissions_added)}<em>{tr}Permissions added:{/tr} {$permissions_added}</em><br />{/if}
-						{if !empty($permissions_removed)}<em>{tr}Permissions removed:{/tr} {$permissions_removed}</em><br />{/if}
-						{tr}To edit global permissions{/tr} {self_link objectType='global' objectId='' objectName='' permType=$permType}{tr}click here{/tr}{/self_link}.
-					{/if}
+					{tr}To edit global permissions{/tr} {self_link objectType='global' objectId='' objectName='' permType=$permType}{tr}click here{/tr}{/self_link}.
 				{/remarksbox}
 			{elseif  $permissions_displayed eq 'category'}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
@@ -109,6 +105,19 @@ if ($("#assignstructure").attr("checked")) {
 	{/remarksbox}
 	
 	{/tab}
+	
+	{if !empty($permissions_added) or !empty($permissions_removed)}
+		{tab name="{tr}View Differences{/tr}"}
+			{if !empty($permissions_added)}
+				<h3>{tr}Permissions added:{/tr}</h3>
+				<blockquote>{$permissions_added}</blockquote>
+			{/if}
+			{if !empty($permissions_removed)}
+				<h3>{tr}Permissions removed:{/tr}</h3>
+				<blockquote>{$permissions_removed}</blockquote>
+			{/if}
+		{/tab}
+	{/if}
 
 	{tab name="{tr}Select groups{/tr}"}
 		<form method="post" action="{$smarty.server.PHP_SELF}?{query}">

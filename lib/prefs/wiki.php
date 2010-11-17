@@ -157,7 +157,7 @@ function prefs_wiki_list() {
 			'name' => tra('Enable edit plugin icons'),
 			'description' => tra('Permits editing of a plugin, via a popup form, without needing to edit the whole page.'),
 			'type' => 'flag',
-			'hint' => tra('Requires javascript'),
+			'hint' => tra('Requires JavaScript'),
 		),
 		'wiki_badchar_prevent' => array(
 			'name' => tra('Prevent special characters in page names'),
@@ -178,7 +178,7 @@ function prefs_wiki_list() {
 		),
 		'wiki_timeout_warning' => array(
 			'name' => tra('Warn before page lock timeout'),
-			'description' => tra('Provide a javascript alert before the user\'s lock on a page times out.'),
+			'description' => tra('Provide a JavaScript alert before the user\'s lock on a page times out.'),
 			'type' => 'flag',
 		),
 		'wiki_dynvar_style' => array(
