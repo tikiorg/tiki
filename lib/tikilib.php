@@ -7519,7 +7519,8 @@ class TikiLib extends TikiDb_Bridge
 			$body = $match->getBody();
 			$arguments = $argumentParser->parse( $match->getArguments() );
 
-			if( $this->plugin_enabled( $implementation ) ) {
+			$dummy_output = '';
+			if( $this->plugin_enabled( $implementation, $dummy_output ) ) {
 				$this->plugin_find_implementation( $implementation, $body, $arguments );
 
 				$func_name = 'wikiplugin_' . $implementation . '_save';
