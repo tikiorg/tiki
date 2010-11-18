@@ -645,7 +645,7 @@ if (!empty($_FILES)) {
 			if (isset($_REQUEST['fast']) && $prefs['fgal_asynchronous_indexing'] == 'y') {
 				$smarty->assign('reindex_file_id', $fileId);
 			}
-		} elseif ($v['error'] != 0) {
+		} elseif ($v['error'] != 0 && !empty($v['tmp_name'])) {
 			$smarty->assign('msg', tra('Upload was not successful') . ': ' . $tikilib->uploaded_file_error($v['error']));
 			$smarty->display('error.tpl');
 			die;
