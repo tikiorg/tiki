@@ -24,17 +24,17 @@ function wikiplugin_file_info()
 				'name' => tra('Description'),
 				'description' => tra('Wiki attachment:') . ' ' . tra('Comment'),
 			),
-    		'page' => array(
+			'page' => array(
 				'required' => false,
 				'name' => tra('Page'),
 				'description' => tra('Wiki attachment:') . ' ' . tra("Name of the wiki page the file is attached to. If left empty when the plugin is used on a wiki page, this defaults to that wiki page."),
 			),
-    		'showdesc' => array(
+			'showdesc' => array(
 				'required' => false,
 				'name' => tra('Show description'),
 				'description' => tra('Wiki attachment:') . ' ' . tra("Shows the description as the link text instead of the file name"),
 			),
-    		'image' =>array(
+			'image' =>array(
 				'required' => false,
 				'name' => tra('Image'),
 				'description' => tra('Wiki attachment:') . ' ' . tra("Says that this file is an image, and should be displayed inline using the img tag"),
@@ -43,6 +43,9 @@ function wikiplugin_file_info()
 				'required' => false,
 				'name' => tra('File identifier'),
 				'description' => tra('File from gallery:') . ' ' . tra('Identifier of a file in the file galleries.') . ' ' . tra('Example value:') . ' 42',
+				'type' => 'fileId',
+				'area' => 'fgal_picker_id',
+				'separator' => ':',
 				'filter' => 'digits',
 			),
 			'date' => array(
