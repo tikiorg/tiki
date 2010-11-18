@@ -111,7 +111,7 @@ function wikiplugin_youtube($data, $params) {
 		return '^' . tra('Plugin YouTube error: the movie parameter is empty.');
 	}
 
-	$movie = "http://www.youtube.com/v/" . preg_replace('/http:\/\/(\w+\.)?youtube\.com\/watch\?v=/', '', $movie);
+	$movie = "http://www.youtube.com/v/" . preg_replace('/http(s)?:\/\/(\w+\.)?youtube\.com\/watch\?v=/', '', $movie);
 	if (!empty($allowFullScreen) && $allowFullScreen = 'y') {
 		$movie .= '?fs=1';
 		$fs = ' allowFullScreen="true" ';
