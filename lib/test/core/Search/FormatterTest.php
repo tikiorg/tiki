@@ -195,5 +195,51 @@ OUT;
 OUT;
 		$this->assertEquals($expect, $output);
 	}
+
+	function testFormatValueAsLink()
+	{
+		global $prefs;
+		$prefs['feature_sefurl'] = 'y';
+
+		$plugin = new Search_Formatter_Plugin_WikiTemplate("* {display name=title format=objectlink}\n");
+
+		$formatter = new Search_Formatter($plugin);
+
+		$output = $formatter->format(array(
+			array('object_type' => 'wiki page', 'object_id' => 'HomePage', 'title' => 'Home'),
+			array('object_type' => 'wiki page', 'object_id' => 'Some Page', 'title' => 'Test'),
+		));
+
+		$expect = <<<OUT
+* ~np~<a href="HomePage">Home</a>~/np~
+* ~np~<a href="Some+Page">Test</a>~/np~
+
+OUT;
+		$this->assertEquals($expect, $output);
+	}
+
+	function testLinkInsideSmartyTemplate()
+	{
+		global $prefs;
+		$prefs['feature_sefurl'] = 'y';
+
+		$plugin = new Search_Formatter_Plugin_SmartyTemplate(dirname(__FILE__).'/basic.tpl');
+
+		$formatter = new Search_Formatter($plugin);
+		$formatter->addSubFormatter('object_id', new Search_Formatter_Plugin_WikiTemplate("{display name=object_id format=objectlink}"));
+
+		$output = $formatter->format(array(
+			array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
+		));
+
+		$expect = <<<OUT
+<div>~np~<table>
+	<caption>Count: 1</caption>
+	<tr><th>Object</th><th>Type</th></tr>
+	<tr><td><a href="HomePage">HomePage</a></td><td>wiki page</td></tr>
+</table>~/np~</div>
+OUT;
+		$this->assertXmlStringEqualsXmlString($expect, "<div>$output</div>");
+	}
 }
 

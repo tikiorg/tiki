@@ -15,10 +15,11 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_langs='', $with_title='y' ) {
 	global $prefs, $tikilib, $wikilib, $smarty;
-	include_once('lib/wiki/wikilib.php');
+	require_once('lib/wiki/wikilib.php');
 
 	switch($type){
 	case 'wiki page':
+	case 'wikipage':
 		$type = 'wiki';
 	case 'wiki':
 		return $wikilib->sefurl($source, $with_next, $all_langs);
@@ -76,7 +77,7 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 	if ($with_next) {
 		$href .= '&amp;';
 	}
-	if ($prefs['feature_sefurl'] == 'y') {
+	if ($prefs['feature_sefurl'] == 'y' && $smarty) {
 		include_once('tiki-sefurl.php');
 		return filter_out_sefurl($href, $smarty, $type, '', $with_next, $with_title);
 	} else {

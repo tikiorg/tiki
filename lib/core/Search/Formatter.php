@@ -70,12 +70,15 @@ class Search_Formatter
 		$rawOutput = $plugin->renderEntries($data, $count, $offset, $maxRecords);
 
 		if ($target == $pluginFormat) {
-			return $rawOutput;
+			$out = $rawOutput;
 		} elseif($target == Search_Formatter_Plugin_Interface::FORMAT_WIKI && $pluginFormat == Search_Formatter_Plugin_Interface::FORMAT_HTML) {
-			return "~np~$rawOutput~/np~";
+			$out = "~np~$rawOutput~/np~";
 		} elseif($target == Search_Formatter_Plugin_Interface::FORMAT_HTML && $pluginFormat == Search_Formatter_Plugin_Interface::FORMAT_WIKI) {
-			return "~/np~$rawOutput~np~";
+			$out = "~/np~$rawOutput~np~";
 		}
+
+		$out = str_replace(array('~np~~/np~', '~/np~~np~'), '', $out);
+		return $out;
 	}
 }
 

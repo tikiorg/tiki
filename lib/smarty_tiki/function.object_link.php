@@ -25,7 +25,10 @@ function smarty_function_object_link( $params, $smarty ) {
 	case 'wiki page':
 	case 'wikipage':
 	case 'wiki':
-		$function = 'smarty_function_object_link_wiki';
+		$function = 'smarty_function_object_link_default';
+		if (! $title) {
+			$title = $object;
+		}
 		break;
 	case 'user':
 		$function = 'smarty_function_object_link_user';
@@ -40,29 +43,33 @@ function smarty_function_object_link( $params, $smarty ) {
 		$function = 'smarty_function_object_link_relation_target';
 		break;
 	default:
-		return tr('No rules to display object %1 of type %0.', $type, $object );
+		$function = 'smarty_function_object_link_default';
+		break;
 	}
 
-	return $function( $object, $title );
+	return $function( $smarty, $object, $title, $type );
 }
 
-function smarty_function_object_link_wiki( $page, $title = null ) {
+function smarty_function_object_link_default( $smarty, $object, $title = null, $type = 'wiki' ) {
 	require_once 'lib/smarty_tiki/modifier.sefurl.php';
-	require_once 'lib/smarty_tiki/modifier.escape.php';
 
-	$escapedPage = smarty_modifier_escape( $title ? $title : $page );
-	$escapedHref = smarty_modifier_escape( smarty_modifier_sefurl( $page, 'wiki' ) );
+	if (! function_exists('smarty_modifier_escape')) {
+		require_once 'lib/smarty_tiki/modifier.escape.php';
+	}
+
+	$escapedPage = smarty_modifier_escape( $title ? $title : tra('No title specified') );
+	$escapedHref = smarty_modifier_escape( smarty_modifier_sefurl( $object, $type ) );
 
 	return '<a href="' . $escapedHref . '">' . $escapedPage . '</a>';
 }
 
-function smarty_function_object_link_user( $user, $title = null ) {
+function smarty_function_object_link_user( $smarty, $user, $title = null ) {
 	require_once 'lib/smarty_tiki/modifier.userlink.php';
 
 	return smarty_modifier_userlink( $user, 'link', 'not_set', $title ? $title : '' );
 }
 
-function smarty_function_object_link_external( $link, $title = null ) {
+function smarty_function_object_link_external( $smarty, $link, $title = null ) {
 	global $cachelib; require_once 'lib/cache/cachelib.php';
 	global $tikilib;
 
@@ -87,15 +94,15 @@ function smarty_function_object_link_external( $link, $title = null ) {
 	return $data;
 }
 
-function smarty_function_object_link_relation_source( $relationId, $title = null ) {
-	return smarty_function_object_link_relation_end( 'source', $relationId, $title );
+function smarty_function_object_link_relation_source( $smarty, $relationId, $title = null ) {
+	return smarty_function_object_link_relation_end( $smarty, 'source', $relationId, $title );
 }
 
-function smarty_function_object_link_relation_target( $relationId, $title = null ) {
-	return smarty_function_object_link_relation_end( 'target', $relationId, $title );
+function smarty_function_object_link_relation_target( $smarty, $relationId, $title = null ) {
+	return smarty_function_object_link_relation_end( $smarty, 'target', $relationId, $title );
 }
 
-function smarty_function_object_link_relation_end( $end, $relationId, $title = null ) {
+function smarty_function_object_link_relation_end( $smarty, $end, $relationId, $title = null ) {
 	global $relationlib; require_once 'lib/attributes/relationlib.php';
 	global $attributelib; require_once 'lib/attributes/attributelib.php';
 	global $cachelib; require_once 'lib/cache/cachelib.php';
@@ -118,7 +125,6 @@ function smarty_function_object_link_relation_end( $end, $relationId, $title = n
 			$type = $relation[ $end . '_type' ];
 			$object = $relation[ $end . '_itemId' ];
 
-			global $smarty;
 			$out = smarty_function_object_link( array(
 				'type' => $type,
 				'id' => $object,
