@@ -75,7 +75,7 @@ function wikiplugin_list($data, $params)
 				$plugin = new WikiPlugin_List_AppendPagination($plugin);
 			}
 		} else {
-			$plugin = new Search_Formatter_Plugin_WikiTemplate("* {display name=title}\n");
+			$plugin = new Search_Formatter_Plugin_WikiTemplate("* {display name=title format=objectlink}\n");
 		}
 
 		$formatter = new Search_Formatter($plugin);
