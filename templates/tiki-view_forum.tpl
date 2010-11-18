@@ -328,7 +328,7 @@
 						<select name="moveto">
 							{section name=ix loop=$all_forums}
 								{if $all_forums[ix].forumId ne $forumId}
-									<option value="{$all_forums[ix].forumId|escape}">{$all_forums[ix].name}</option>
+									<option value="{$all_forums[ix].forumId|escape}">{$all_forums[ix].name|escape}</option>
 								{/if}
 							{/section}
 						</select>
