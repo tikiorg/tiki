@@ -305,7 +305,9 @@ class WikiRenderer
 			return;
 		}
 
-		$slides = preg_split('/-=[^=]+=-/',$this->info['data']);
+		//Let us check if slides exist in the wiki page
+		$slides = preg_split('/-=[^=]+=-|![^=]+|!![^=]+!!![^=]+/',$this->info['data']);
+		
 		if(count($slides)>1) {
 			$this->smartyassign('show_slideshow','y');
 		} else {
