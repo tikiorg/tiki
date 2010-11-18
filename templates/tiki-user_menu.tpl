@@ -69,7 +69,7 @@
 {else}
 <a href="javascript:icntoggle('menu{$cname}');" class="separator">
 {/if}
-<span class="menuText">{if $translate eq 'n'}{$chdata.name|escape}{else}{tr}{$chdata.name}{/tr}{/if}</span>
+<span class="menuText">{if $translate eq 'n'}{$chdata.name}{else}{tr}{$chdata.name}{/tr}{/if}</span>  {*not escaped to allow img tags*}
 </a>
 {if ($menu_info.type eq 'e' or $menu_info.type eq 'd') and $prefs.feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('menu{$cname}');">[+]</a>{/if} 
 </div> {* separator *}
@@ -82,7 +82,7 @@
 {/if}
 {* ----------------------------- option *}
 {elseif $chdata.type eq 'o'}
-<div class="option{$sep}{if isset($chdata.selected) and $chdata.selected} selected{/if}"><a href="{if $prefs.feature_sefurl eq 'y' and !empty($chdata.sefurl)}{$chdata.sefurl}{else}{$chdata.url}{/if}" class="linkmenu">{if $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and ($opensec eq 0 or $chdata.icon neq '')}{icon _id=$chdata.icon alt='' _defaultdir=$prefs.menus_items_icons_path} {/if}<span class="menuText">{if $translate eq 'n'}{$chdata.name|escape}{else}{capture}{tr}{$chdata.name}{/tr}{/capture}{$smarty.capture.default|escape}{/if}</span></a></div>
+<div class="option{$sep}{if isset($chdata.selected) and $chdata.selected} selected{/if}"><a href="{if $prefs.feature_sefurl eq 'y' and !empty($chdata.sefurl)}{$chdata.sefurl}{else}{$chdata.url}{/if}" class="linkmenu">{if $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and ($opensec eq 0 or $chdata.icon neq '')}{icon _id=$chdata.icon alt='' _defaultdir=$prefs.menus_items_icons_path} {/if}<span class="menuText">{if $translate eq 'n'}{$chdata.name}{else}{capture}{tr}{$chdata.name}{/tr}{/capture}{$smarty.capture.default}{/if}</span></a></div> {*not escaped to allow img tags*}
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
 
 {* ----------------------------- separator *}

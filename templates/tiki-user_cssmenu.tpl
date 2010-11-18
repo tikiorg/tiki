@@ -34,7 +34,7 @@
 				{capture name=chdataName}
 					{if $translate eq 'n'}{$chdata.name}{else}{tr}{$chdata.name}{/tr}{/if}
 				{/capture}
-				<span class="menuText">{$smarty.capture.chdataName|escape}</span>
+				<span class="menuText">{$smarty.capture.chdataName}</span>  {*not escaped to allow img tags*}
 			{if $link_on_section ne 'n'}</a>{/if}
 			{assign var=opensec value=$opensec+1}
 			<ul>
@@ -49,7 +49,7 @@
 					{capture name=chdataName}
 						{if $translate eq 'n'}{$chdata.name}{else}{tr}{$chdata.name}{/tr}{/if}
 					{/capture}
-					<span class="menuText">{$smarty.capture.chdataName|escape}</span>
+					<span class="menuText">{$smarty.capture.chdataName}</span> {*not escaped to allow img tags*}
 				</a>
 			</li>
 			{if $sep eq 'line'}{assign var=sep value=''}{/if}
