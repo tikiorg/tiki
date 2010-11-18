@@ -14,31 +14,6 @@ function wikiplugin_file_info()
 		'prefs' => array( 'wikiplugin_file' ),
 		'inline' => true,
 		'params' => array(
-    		'name' => array(
-				'required' => false,
-				'name' => tra('Name'),
-				'description' => tra('Wiki attachment:') . ' ' . tra("Gives the name of the attached file to link to"),
-			),
- 			'desc' => array(
-				'required' => false,
-				'name' => tra('Description'),
-				'description' => tra('Wiki attachment:') . ' ' . tra('Comment'),
-			),
-			'page' => array(
-				'required' => false,
-				'name' => tra('Page'),
-				'description' => tra('Wiki attachment:') . ' ' . tra("Name of the wiki page the file is attached to. If left empty when the plugin is used on a wiki page, this defaults to that wiki page."),
-			),
-			'showdesc' => array(
-				'required' => false,
-				'name' => tra('Show description'),
-				'description' => tra('Wiki attachment:') . ' ' . tra("Shows the description as the link text instead of the file name"),
-			),
-			'image' =>array(
-				'required' => false,
-				'name' => tra('Image'),
-				'description' => tra('Wiki attachment:') . ' ' . tra("Says that this file is an image, and should be displayed inline using the img tag"),
-			),
 			'fileId' => array(
 				'required' => false,
 				'name' => tra('File identifier'),
@@ -48,10 +23,40 @@ function wikiplugin_file_info()
 				'separator' => ':',
 				'filter' => 'digits',
 			),
+			'name' => array(
+				'required' => false,
+				'name' => tra('Name'),
+				'description' => tra('Wiki attachment:') . ' ' . tra("Gives the name of the attached file to link to"),
+			),
+ 			'desc' => array(
+				'required' => false,
+				'name' => tra('Description'),
+				'description' => tra('Wiki attachment:') . ' ' . tra('Comment'),
+				'advanced' => true,
+			),
+			'page' => array(
+				'required' => false,
+				'name' => tra('Page'),
+				'description' => tra('Wiki attachment:') . ' ' . tra("Name of the wiki page the file is attached to. If left empty when the plugin is used on a wiki page, this defaults to that wiki page."),
+				'advanced' => true,
+			),
+			'showdesc' => array(
+				'required' => false,
+				'name' => tra('Show description'),
+				'description' => tra('Wiki attachment:') . ' ' . tra("Shows the description as the link text instead of the file name"),
+				'advanced' => true,
+			),
+			'image' =>array(
+				'required' => false,
+				'name' => tra('Image'),
+				'description' => tra('Wiki attachment:') . ' ' . tra("Says that this file is an image, and should be displayed inline using the img tag"),
+				'advanced' => true,
+			),
 			'date' => array(
 				'required' => false,
 				'name' => tra('Date'),
 				'description' => tra('File from gallery:') . ' ' . tra('Pick the archive if exists created just before the date of the fileId'),
+				'advanced' => true,
 			),
 		)
 	);
