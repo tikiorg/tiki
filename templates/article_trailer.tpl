@@ -20,7 +20,7 @@
 		{if $prefs.feature_cms_sharethis eq "y"}
 			{capture name=shared_title}{tr}Share This{/tr}{/capture}
 			{capture name=shared_link_title}{tr}ShareThis via AIM, social bookmarking and networking sites, etc.{/tr}{/capture}
-			{wiki}{literal}<script language="javascript" type="text/javascript">
+			{literal}<script language="javascript" type="text/javascript">
 				//Create your sharelet with desired properties and set button element to false
 				var object{/literal}{$articleId}{literal} = SHARETHIS.addEntry({
 					title:'{/literal}{$smarty.capture.shared_title|replace:'\'':'\\\''}{literal}'
@@ -29,9 +29,7 @@
 				//Output your customized button
 				document.write('<span class="share" id="share{/literal}{$articleId}{literal}"><a title="{/literal}{$smarty.capture.shared_link_title|replace:'\'':'\\\''}{literal}" href="javascript:void(0);"><img src="http://w.sharethis.com/images/share-icon-16x16.png?CXNID=1000014.0NXC" /></a></span>');
 				//Tie customized button to ShareThis button functionality.
-				var element{/literal}{$articleId}{literal} = document.getElementById("share{/literal}{$articleId}{literal}");
-				object{/literal}{$articleId}{literal}.attachButton(element{/literal}{$articleId}{literal});
-			</script>{/literal}{/wiki}
+				var element{/literal}{$articleId}{literal} = document.getElementById("share{/literal}{$articleId}{literal}"); object{/literal}{$articleId}{literal}.attachButton(element{/literal}{$articleId}{literal}); </script>{/literal}
 		{/if}
 		{if $prefs.feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y'}
 			<a title="{tr}Send a link{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{icon _id='email_link' alt="{tr}Send a link{/tr}"}</a>
