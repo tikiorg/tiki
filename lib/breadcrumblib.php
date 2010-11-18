@@ -237,7 +237,8 @@ function _breadcrumb_getTitle($crumbs, $loc) {
     }
     $ret .= 'refresh';
     $ret .= '" accesskey="'.($cnt);
-    $ret .= '" href="'.$crumbs[$len-1]->url.'">';
+    include_once('tiki-sefurl.php');
+    $ret .= '" href="'.filter_out_sefurl($crumbs[$len-1]->url).'">';
     if ($prefs['feature_breadcrumbs'] == 'n' && $loc == "admin")
         $ret .= tra("Administration:")." ";
         if ($prefs['wikiapproval_hideprefix'] == 'y' && $approved = $tikilib->get_approved_page( $crumbs[$len-1]->title ) ) { 
