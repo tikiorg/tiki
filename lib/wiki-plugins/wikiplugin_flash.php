@@ -95,18 +95,22 @@ function wikiplugin_flash($data, $params) {
 	}
 	
 	// Handle Youtube video
-	if (isset($params['youtube'])) {
-		$params['movie'] = "http://www.youtube.com/v/" . preg_replace('|http(s)?://(\w+\.)?youtube\.com/watch\?v=|', '', $params['youtube']);
+	if (isset($params['youtube']) && preg_match('|http(s)?://(\w+\.)?youtube\.com/watch\?v=([\w-]+)|', $params['youtube'], $matches)) {
+		$params['movie'] = "http://www.youtube.com/v/" . $matches[3];
 	}
 
 	// Handle Vimeo video
-	if (isset($params['vimeo'])) {
-		$params['movie'] = 'http://vimeo.com/moogaloop.swf?clip_id=' . preg_replace('|http(s)?://(www\.)?vimeo\.com/(clip:)?|', '', $params['vimeo']);
+	if (isset($params['vimeo']) && preg_match('|http(s)?://(www\.)?vimeo\.com/(clip:)?(\d+)|', $params['vimeo'], $matches)) {
+		$params['movie'] = 'http://vimeo.com/moogaloop.swf?clip_id=' . $matches[4];
 	}
 	
 	// Handle Blip.tv video
-	if (isset($params['bliptv'])) {
-		$params['movie'] = 'http://blip.tv/scripts/flash/showplayer.swf?file=http://blip.tv/rss/flash/' . preg_replace('|http(s)?://(www\.)?blip\.tv/file/(\d+)/?|', '\1', $params['bliptv']);
+	if (isset($params['bliptv']) && preg_match('|http(s)?://(www\.)?blip\.tv/file/(\d+)/?|', $params['bliptv'], $matches)) {
+		$params['movie'] = 'http://blip.tv/scripts/flash/showplayer.swf?file=http://blip.tv/rss/flash/' . $matches[3];
+	}
+
+	if ((isset($params['youtube']) || isset($params['vimeo']) || isset($params['bliptv'])) && !isset($params['movie'])) {		
+		return tra('Invalid URL');
 	}
 	
 	$code = $tikilib->embed_flash($params);
