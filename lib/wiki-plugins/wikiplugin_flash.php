@@ -56,7 +56,7 @@ function wikiplugin_flash_info() {
 			'bliptv' => array(
 				'required' => true,
 				'name' => tra('Blip.tv URL'),
-				'description' => tra('Entire URL to the Blip.tv video. Example: http://blip.tv/file/2568201/'),
+				'description' => tra('Blip.tv embed URL. Example: http://blip.tv/play/AYGd_GAC'),
 				'parent' => array('name' => 'type', 'value' => 'bliptv'),
 			),
 			'width' => array(
@@ -105,8 +105,9 @@ function wikiplugin_flash($data, $params) {
 	}
 	
 	// Handle Blip.tv video
-	if (isset($params['bliptv']) && preg_match('|http(s)?://(www\.)?blip\.tv/file/(\d+)/?|', $params['bliptv'], $matches)) {
-		$params['movie'] = 'http://blip.tv/scripts/flash/showplayer.swf?file=http://blip.tv/rss/flash/' . $matches[3];
+	// We need the embed URL because there is tno relation between the video URL and the embed URL
+	if (isset($params['bliptv']) && preg_match('|http://blip.tv/play/\w+|', $params['bliptv'], $matches)) {
+		$params['movie'] = $params['bliptv'];
 	}
 
 	if ((isset($params['youtube']) || isset($params['vimeo']) || isset($params['bliptv'])) && !isset($params['movie'])) {		
