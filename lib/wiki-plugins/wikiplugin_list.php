@@ -56,6 +56,10 @@ function wikiplugin_list($data, $params)
 
 	$query->filterPermissions(Perms::get()->getGroups());
 
+	if (isset($_REQUEST['sort_mode'])) {
+		$query->setOrder($_REQUEST['sort_mode']);
+	}
+
 	global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';
 	$index = $unifiedsearchlib->getIndex();
 
@@ -66,6 +70,9 @@ function wikiplugin_list($data, $params)
 			$arguments = $argumentParser->parse($output->getArguments());
 	
 			if (isset($arguments['template'])) {
+				if ($arguments['template'] == 'table') {
+					$arguments['template'] = dirname(__FILE__) . '/../../templates/table.tpl';
+				}
 				$builder = new Search_Formatter_ArrayBuilder;
 
 				$plugin = new Search_Formatter_Plugin_SmartyTemplate($arguments['template']);

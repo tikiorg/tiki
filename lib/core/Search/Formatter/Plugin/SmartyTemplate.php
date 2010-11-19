@@ -29,10 +29,7 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 
 	function prepareEntry($entry)
 	{
-		return array(
-			'object_id' => $entry->plain('object_id'),
-			'object_type' => $entry->plain('object_type'),
-		);
+		return $entry->getPlainValues();
 	}
 
 	function renderEntries($entries, $count, $offset, $maxRecords)

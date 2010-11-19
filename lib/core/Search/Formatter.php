@@ -39,6 +39,8 @@ class Search_Formatter
 		$data = array();
 
 		foreach ($list as $row) {
+			// Clear blank values so the defaults prevail
+			$row = array_filter($row);
 			$row = array_merge($defaultValues, $row);
 
 			$subEntries = array();

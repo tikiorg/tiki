@@ -9,6 +9,11 @@ class Search_Formatter_ValueFormatter
 		$this->valueSet = $valueSet;
 	}
 
+	function getPlainValues()
+	{
+		return $this->valueSet;
+	}
+
 	function __call($format, $arguments)
 	{
 		$name = array_shift($arguments);
