@@ -200,7 +200,7 @@
 
 		{if $prefs.feature_file_galleries_author eq 'y'}
 			<tr><td>
-				<label for="author">{tr}Author, if different from the 'Uploaded by' user:{/tr}</label>
+				<label for="author">{tr}Creator of file, if different from the 'Uploaded by' user:{/tr}</label>
 			</td><td width="80%">
 				<input type="text" id="author"name="author[]" value="{$fileInfo.author|escape}" />
 			</td></tr>
