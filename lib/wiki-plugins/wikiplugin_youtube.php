@@ -9,13 +9,13 @@ function wikiplugin_youtube_info() {
 	return array(
 		'name' => tra('Youtube'),
 		'documentation' => 'PluginYouTube',
-		'description' => tra('Display a YouTube video in a wiki page'),
+		'description' => tra('Display a YouTube video'),
 		'prefs' => array( 'wikiplugin_youtube' ),
 		'icon' => 'pics/icons/youtube.png',
 		'params' => array(
 			'movie' => array(
 				'required' => true,
-				'name' => 'Movie',
+				'name' => tra('Movie'),
 				'description' => tra('Entire URL to the YouTube video or last part (after www.youtube.com/v/)'),
 				'filter' => 'url',
 				'default' => '',
