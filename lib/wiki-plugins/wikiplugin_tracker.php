@@ -1142,7 +1142,7 @@ function wikiplugin_tracker($data, $params)
 					}
 
 					if (!empty($f['description']) && $f['type'] != 'h' && $f['type'] != 'S') {
-						$back .= '<br />';
+						if ($f['type'] != 'a') $back .= '<br />';
 						if ($f['descriptionIsParsed'] == 'y') {
 							$back .= $tikilib->parse_data($f['description']);
 						} else {
