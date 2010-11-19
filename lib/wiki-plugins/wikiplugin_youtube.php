@@ -36,7 +36,7 @@ function wikiplugin_youtube_info() {
 				'name' => tra('Height'),
 				'description' => tra('Height in pixels'),
 				'filter' => 'digits',
-			'default' => 350,
+				'default' => 350,
 			),
 			'quality' => array(
 				'required' => false,
@@ -96,7 +96,7 @@ function wikiplugin_youtube_info() {
 				'default' => '',
 				'advanced' => true				
 			),
-			),
+		),
 	);
 }
 
@@ -105,8 +105,9 @@ function wikiplugin_youtube($data, $params) {
 	foreach ($plugininfo['params'] as $key => $param) {
 		$default["$key"] = $param['default'];
 	}
-	extract ($params,EXTR_SKIP);
+
 	$params = array_merge($default, $params);
+	extract ($params,EXTR_SKIP);
 
 	if (empty($movie)) {
 		return '^' . tra('Plugin YouTube error: the movie parameter is empty.');
@@ -135,8 +136,8 @@ function wikiplugin_youtube($data, $params) {
 	$asetup .= "\n\t" . '<param name="quality" value="' . $quality . '"></param>';
 	$asetup .= "\n\t" . '<param name="wmode" value="transparent"></param>';
 	$asetup .= "\n\t" . '<embed src="' . $movie . '" quality="' . $quality . '"'
-					. "\n\t\t" . ' pluginspage="http://www.macromedia.com/go/getflashplayer"' 
-					. "\n\t\t" . ' type="application/x-shockwave-flash" width="' . $width . '" height="' . $height . '"' .  $fs
-					. "\n\t\t" . ' wmode="transparent">' . "\n\t" . '</embed>' . "\n" . '</object>' . "\n";
+					. ' pluginspage="http://www.macromedia.com/go/getflashplayer"' 
+					. ' type="application/x-shockwave-flash" width="' . $width . '" height="' . $height . '"' .  $fs
+					. ' wmode="transparent">' . "\n\t" . '</embed>' . "\n" . '</object>' . "\n";
 	return $asetup;
 }
