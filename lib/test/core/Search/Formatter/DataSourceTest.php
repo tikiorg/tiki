@@ -81,5 +81,22 @@ class Search_Formatter_DataSourceTest extends PHPUnit_Framework_TestCase
 			array('object_type' => 'wiki page', 'object_id' => 'Test'),
 		), array('object_id', 'description', 'categories', 'allowed_groups')));
 	}
+
+	function testProvideResultSet()
+	{
+		$source = new Search_Formatter_DataSource_Declarative;
+		$source->addContentSource('wiki page', $this->wikiSource);
+		$source->addGlobalSource($this->categorySource);
+
+		$in = new Search_ResultSet(array(
+			array('object_type' => 'wiki page', 'object_id' => 'Test'),
+		), 11, 10, 10);
+
+		$out = new Search_ResultSet(array(
+			array('object_type' => 'wiki page', 'object_id' => 'Test', 'description' => 'ABC', 'categories' => array(1, 2, 3)),
+		), 11, 10, 10);
+
+		$this->assertEquals($out, $source->getInformation($in, array('object_id', 'description', 'categories', 'allowed_groups')));
+	}
 }
 
