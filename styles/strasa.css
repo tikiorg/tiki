@@ -587,6 +587,14 @@ a.flip:hover {
 	margin-top: 2px;
 }
 
+.actions span.share img {
+	margin-top: 8px;
+}
+
+.actions span.share a {
+	padding-right: 0;
+}
+
 /* Also is .content */
 #tiki-center {
 	clear: both;

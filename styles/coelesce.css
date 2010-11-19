@@ -473,6 +473,10 @@ a.flip:hover,
 	padding: 0 30px;
 }
 
+.actions .share {
+	padding: 0;
+}
+
 .error,
 #error {
 	background: #f5f5f5 !important;
