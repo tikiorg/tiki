@@ -22,9 +22,10 @@ function wikiplugin_flash_info() {
 				'name' => tra('Flash type'),
 				'description' => tra('Whether you want to insert a Flash from a URL, a fileId from a podcast file gallery or a link to a specific service like Youtube or Vimeo'),
 				'options' => array(
-					array('text' => tra('Movie URL'), 'value' => 'url'),
+					array('text' => tra('Select an option'), 'value' => ''),
 					array('text' => tra('Blip.tv'), 'value' => 'bliptv'),
 					array('text' => tra('FileId from a podcast file gallery'), 'value' => 'fileId'),
+					array('text' => tra('Movie URL'), 'value' => 'url'),
 					array('text' => tra('Vimeo'), 'value' => 'vimeo'),
 					array('text' => tra('Youtube'), 'value' => 'youtube'),
 				),
@@ -51,7 +52,7 @@ function wikiplugin_flash_info() {
 				'required' => true,
 				'name' => tra('Vimeo URL'),
 				'description' => tra('Entire URL to the Vimeo video. Example: http://vimeo.com/3319966'),
-				'parent' => array('name' => 'type', 'value' => 'youtube'),
+				'parent' => array('name' => 'type', 'value' => 'vimeo'),
 			),
 			'bliptv' => array(
 				'required' => true,
