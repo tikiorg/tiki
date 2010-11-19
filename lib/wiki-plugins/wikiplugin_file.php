@@ -12,7 +12,7 @@ function wikiplugin_file_info()
 		'documentation' => 'PluginFile',
 		'description' => tra("Displays a link to a file (either from the file gallery or an attachment to a wiki page) and can display an image attachment."),
 		'prefs' => array( 'wikiplugin_file' ),
-		'icon' => 'pics/large/file-manager.png',
+		'icon' => 'pics/icons/file-manager.png',
 		'inline' => true,
 		'params' => array(
 			'type' => array(
