@@ -5,10 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_youtube_help() {
-        return tra("Display youtube video in a wiki page").":<br />~np~{YOUTUBE(movie=>\"url_to_youtube_video\")}{YOUTUBE}~/np~";
-}
-
 function wikiplugin_youtube_info() {
 	return array(
 		'name' => tra('Youtube'),
@@ -55,11 +51,11 @@ function wikiplugin_youtube_info() {
 				'required' => false,
 				'name' => tra('Full screen'),
 				'description' => tra('Expand to full screen'),
-				'default' => 'n',
+				'default' => 'false',
 				'filter' => 'alpha',
     			'options' => array(
-					array('text' => tra('Yes'), 'value' => 'y'), 
-					array('text' => tra('No'), 'value' => 'n'), 
+					array('text' => tra('Yes'), 'value' => 'true'), 
+					array('text' => tra('No'), 'value' => 'false'), 
 				),
 				'advanced' => true				
 			),
@@ -101,43 +97,45 @@ function wikiplugin_youtube_info() {
 }
 
 function wikiplugin_youtube($data, $params) {
+	global $tikilib;
+	
 	$plugininfo = wikiplugin_youtube_info();
 	foreach ($plugininfo['params'] as $key => $param) {
 		$default["$key"] = $param['default'];
 	}
 
 	$params = array_merge($default, $params);
-	extract ($params,EXTR_SKIP);
 
-	if (empty($movie)) {
+	if (empty($params['movie'])) {
 		return '^' . tra('Plugin YouTube error: the movie parameter is empty.');
 	}
 
-	$movie = "http://www.youtube.com/v/" . preg_replace('/http(s)?:\/\/(\w+\.)?youtube\.com\/watch\?v=/', '', $movie);
-	if (!empty($allowFullScreen) && $allowFullScreen = 'y') {
-		$movie .= '?fs=1';
-		$fs = ' allowFullScreen="true" ';
+	$params['movie'] = "http://www.youtube.com/v/" . preg_replace('/http(s)?:\/\/(\w+\.)?youtube\.com\/watch\?v=/', '', $params['movie']);
+
+	// backward compatibility
+	if ($params['allowFullScreen'] == 'y') {
+		$params['allowFullScreen'] = 'true';
+	} else if ($params['allowFullScreen'] == 'n') {
+		$params['allowFullScreen'] = 'false';
+	}
+
+	if (!empty($params['allowFullScreen']) && $params['allowFullScreen'] == 'true') {
+		$params['movie'] .= '?fs=1';
 	}
 	if ($related == 'n') {
-		$movie .= '&rel=0';
+		$params['movie'] .= '&rel=0';
 	}
-	if (!empty($border)) {
-		$movie .= '&color1=0x' . $border;
+	if (!empty($params['border'])) {
+		$params['movie'] .= '&color1=0x' . $params['border'];
 	}
-	if (!empty($background)) {
-		$movie .= '&color2=0x' . $background;
+	if (!empty($params['background'])) {
+		$params['movie'] .= '&color2=0x' . $params['background'];
 	}
-	
-	$asetup = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="' . $width . '" height="' . $height . '">';
-	$asetup .= "\n\t" . '<param name="movie" value="' . $movie . '"></param>';
-	if (!empty($allowFullScreen) && $allowFullScreen = 'y') {
-		$asetup .= "\n\t" . '<param name="allowFullScreen" value="true"></param>';
+
+	$code = $tikilib->embed_flash($params);
+
+	if ( $code === false ) {
+		return tra('Missing parameter movie to the Youtube plugin');
 	}
-	$asetup .= "\n\t" . '<param name="quality" value="' . $quality . '"></param>';
-	$asetup .= "\n\t" . '<param name="wmode" value="transparent"></param>';
-	$asetup .= "\n\t" . '<embed src="' . $movie . '" quality="' . $quality . '"'
-					. ' pluginspage="http://www.macromedia.com/go/getflashplayer"' 
-					. ' type="application/x-shockwave-flash" width="' . $width . '" height="' . $height . '"' .  $fs
-					. ' wmode="transparent">' . "\n\t" . '</embed>' . "\n" . '</object>' . "\n";
-	return $asetup;
+	return "~np~$code~/np~";
 }
