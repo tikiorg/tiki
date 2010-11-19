@@ -15,6 +15,7 @@ function wikiplugin_youtube_info() {
 		'documentation' => 'PluginYouTube',
 		'description' => tra('Display a YouTube video in a wiki page'),
 		'prefs' => array( 'wikiplugin_youtube' ),
+		'icon' => 'pics/icons/youtube.png',
 		'params' => array(
 			'movie' => array(
 				'required' => true,
