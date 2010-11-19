@@ -17,15 +17,26 @@ function wikiplugin_flash_info() {
 		'extraparams' => true,
 		'icon' => 'pics/icons/page_white_flash.png',
 		'params' => array(
+			'type' => array(
+				'required' => true,
+				'name' => tra('Flash type'),
+				'description' => tra('Whether you want to insert a Flash from a URL, a fileId from a podcast file gallery or a link to a specific service like Youtube or Vimeo'),
+				'options' => array(
+					array('text' => tra('Movie URL'), 'value' => 'url'),
+					array('text' => tra('FileId from a podcast file gallery'), 'value' => 'fileId'),
+				),
+			),
 			'movie' => array(
 				'required' => false,
 				'name' => tra('Movie URL'),
 				'description' => tra('Complete URL to the movie to include. e.g. files/test.swf'),
+				'parent' => array('name' => 'type', 'value' => 'url'),
 			),
 			'fileId' => array(
 				'required' => false,
-				'name' => tra('fileId'),
+				'name' => tra('FileId from a podcast file gallery'),
 				'description' => tra('Id of a file from a podcast gallery - will work only with podcast gallery'),
+				'parent' => array('name' => 'type', 'value' => 'fileId'),
 			),
 			'width' => array(
 				'required' => false,
