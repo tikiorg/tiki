@@ -82,6 +82,9 @@ OUT;
 	function testBasicSmartyFormatter()
 	{
 		$plugin = new Search_Formatter_Plugin_SmartyTemplate(dirname(__FILE__).'/basic.tpl');
+		$plugin->setData(array(
+			'foo' => array('bar' => 'baz'),
+		));
 
 		$formatter = new Search_Formatter($plugin);
 
@@ -92,7 +95,7 @@ OUT;
 
 		$expect = <<<OUT
 <div>~np~<table>
-	<caption>Count: 2</caption>
+	<caption>baz: 2</caption>
 	<tr><th>Object</th><th>Type</th></tr>
 	<tr><td>HomePage</td><td>wiki page</td></tr>
 	<tr><td>SomePage</td><td>wiki page</td></tr>

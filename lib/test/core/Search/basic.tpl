@@ -1,5 +1,5 @@
 <table>
-	<caption>Count: {$count|escape}</caption>
+	<caption>{$foo.bar|default:'Count'}: {$count|escape}</caption>
 	<tr>
 		<th>Object</th>
 		<th>Type</th>

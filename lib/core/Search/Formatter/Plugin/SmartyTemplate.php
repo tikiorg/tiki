@@ -4,11 +4,17 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 {
 	private $templateFile;
 	private $changeDelimiters;
+	private $data = array();
 
 	function __construct($templateFile, $changeDelimiters = false)
 	{
 		$this->templateFile = $templateFile;
 		$this->changeDelimiters = (bool) $changeDelimiters;
+	}
+
+	function setData(array $data)
+	{
+		$this->data = $data;
 	}
 
 	function getFields()
@@ -47,6 +53,10 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 		if( $this->changeDelimiters ) {
 			$smarty->left_delimiter = '{{';
 			$smarty->right_delimiter = '}}';
+		}
+
+		foreach ($this->data as $key => $value) {
+			$smarty->assign($key, $value);
 		}
 
 		$smarty->assign('results', $entries);

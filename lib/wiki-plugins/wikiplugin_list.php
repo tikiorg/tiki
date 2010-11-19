@@ -66,7 +66,10 @@ function wikiplugin_list($data, $params)
 			$arguments = $argumentParser->parse($output->getArguments());
 	
 			if (isset($arguments['template'])) {
+				$builder = new Search_Formatter_ArrayBuilder;
+
 				$plugin = new Search_Formatter_Plugin_SmartyTemplate($arguments['template']);
+				$plugin->setData($builder->getData($output->getBody()));
 			} else {
 				$plugin = new Search_Formatter_Plugin_WikiTemplate($output->getBody());
 			}
