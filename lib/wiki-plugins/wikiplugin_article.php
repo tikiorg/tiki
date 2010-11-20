@@ -49,7 +49,7 @@ function wikiplugin_article($data, $params) {
 
 	extract ($params,EXTR_SKIP);
 
-	if (!isset($Id)) {
+	if (empty($Id)) {
 		global $artlib;	include_once('lib/articles/artlib.php');
 
 		$last = $artlib->list_articles(0,1);
@@ -60,7 +60,7 @@ function wikiplugin_article($data, $params) {
 	} 
 
 	if ($tiki_p_admin_cms == 'y' || $tikilib->user_has_perm_on_object($user, $articleId, 'article', 'tiki_p_edit_article') || ($article_data["author"] == $user && $article_data["creator_edit"] == 'y')) {
-	      $add="&nbsp;<a href='tiki-edit_article.php?articleId=$Id'><img src='pics/icons/page_edit.png' style='border:none' /></a>";
+	      $add="&nbsp;<a href='tiki-edit_article.php?articleId=$Id' class='editplugin'><img src='pics/icons/page_edit.png' style='border:none' /></a>";
 	} else {
 	      $add="";
 	}
