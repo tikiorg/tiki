@@ -1146,7 +1146,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_topbar_custom_code' => array(
-			'name' => tra('Custom code'),
+			'name' => tra('Top Bar Custom Code'),
 			'type' => 'textarea',
 			'size' => '6',
 			'filter' => 'rawhtml_unsafe',
