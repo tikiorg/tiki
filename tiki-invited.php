@@ -53,7 +53,7 @@ function tiki_invited() {
 			exit;
 		}
 
-		$error=tra("Congratulation ! you are now part of this invitation group(s)");
+		$error=tra("Congratulations! You are now part of this invitation group(s)");
 		$smarty->assign('error', $error);
 		$smarty->assign('mid', 'tiki-invited.tpl');
 		$smarty->display("tiki.tpl");

@@ -1333,6 +1333,7 @@ function get_default_prefs() {
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
 		'feature_custom_html_head_content' => '{if $prefs.feature_secondary_sitemenu_custom_code ne ""}<style type="text/css">#sitelogo img {literal}{margin-top: 0; position: relative; top: -12px;}{/literal}</style>{/if}',
 		'feature_fixed_width' => 'y',
+		'feature_html_head_base_tag' => 'n',
 
 		// layout
 		'feature_left_column' => 'y',
@@ -1413,7 +1414,7 @@ function get_default_prefs() {
 		// full list in lib/toolbars/toolbarslib.php Toolbar::getList()
 		// cannot contain spaces, commas, forward-slash or pipe chars
 		'toolbar_global' => '
-			bold,italic,underline,strike, sub, sup,-,color,-,wikiplugin_img,tikiimage,tikilink,link, unlink, anchor,-,
+			bold,italic,underline,strike, sub, sup,-,color,-,wikiplugin_img,tikiimage,wikiplugin_file,tikilink,link, unlink, anchor,-,
 			undo, redo,-,find,replace,-, removeformat,specialchar,smiley|help,switcheditor,autosave/
 			templates, cut, copy, paste, pastetext, pasteword,-,h1,h2,h3, left,center,-,
 			blockquote,list,numlist,wikiplugin_mouseover,wikiplugin_module,wikiplugin_html, outdent, indent,-,

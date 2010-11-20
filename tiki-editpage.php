@@ -203,7 +203,7 @@ if ($tiki_p_edit !== 'y') {
 		$smarty->assign('urllogin', "tiki-editpage.php?cache=$cacheName");
 	}
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+	$smarty->assign('msg', tra("You do not have permission to edit this page."));
 	$smarty->display("error.tpl");
 	die;
 }
@@ -233,7 +233,7 @@ if (isset($_REQUEST["current_page_id"])) {
 	$structure_info = $structlib->s_get_structure_info($_REQUEST['current_page_id']);
 	if ( ($tiki_p_edit != 'y' && !$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit')) || (($tiki_p_edit_structures != 'y' && !$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit_structures')) ) ) {
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+		$smarty->assign('msg', tra("You do not have permission to edit this page."));
 		$smarty->display("error.tpl");
 		die;
 	}

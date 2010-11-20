@@ -152,15 +152,15 @@ function prefs_global_list() {
 			'filter' => 'digits',
 		),
 		'sitead' => array(
-			'name' => tra('Content'),
+			'name' => tra('Site Ads and Banners Content'),
 			'hint' => tra('Example:') . ' ' . "{banner zone='" . tra('Test') . "'}", 
 			'type' => 'textarea',
 			'size' => '5',
 		),
 		'urlOnUsername' => array(
-			'name' => tra('Url to go to when clicking on a username'),
+			'name' => tra('URL to go to when clicking on a username'),
 			'type' => 'text',
-			'description' => tra('Url to go to when clicking on a username.').' '.tra('Default').': tiki-user_information.php?userId=%userId% <em>('.tra('Use %user% for login name and %userId% for userId)').')</em>',
+			'description' => tra('URL to go to when clicking on a username.').' '.tra('Default').': tiki-user_information.php?userId=%userId% <em>('.tra('Use %user% for login name and %userId% for userId)').')</em>',
 		),
 		'forgotPass' => array(
 			'name' => tra('Remind/forgot password'),
@@ -172,7 +172,7 @@ function prefs_global_list() {
 			'type' => 'flag',
 		),
 		'sitemycode' => array(
-			'name' => tra('Content'),
+			'name' => tra('Custom Site Header Content'),
 			'hint' => tra ('Example:') . ' ' .  "{if \$user neq ''}<div align=\"right\" style=\"float: right; font-size: 10px\">{tr}logged as{/tr}: {\$user}</div>{/if}",
 			'type' => 'textarea',
 			'size' => '6',

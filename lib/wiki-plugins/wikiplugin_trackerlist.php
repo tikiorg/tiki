@@ -949,16 +949,16 @@ function wikiplugin_trackerlist($data, $params) {
 			}
 		}
 		$smarty->assign_by_ref('filterfield',$filterfield);
-		$smarty->assign_by_ref('filterfield',$filtervalue);
+		$smarty->assign_by_ref('filtervalue',$filtervalue);
 		$smarty->assign_by_ref('fields', $passfields);
-		$smarty->assign_by_ref('filterfield',$exactvalue);
+		$smarty->assign_by_ref('exactvalue',$exactvalue);
 		$smarty->assign_by_ref('listfields', $listfields);
 		$smarty->assign_by_ref('popupfields', $popupfields);
 		if (!empty($filterfield)) {
-			$urlquery['filterfield'] = implode(':', $filterfield);
+			$urlquery['filterfield'] =  is_array($filtervalue) ? implode(':', $filterfield) : $filterfield;
 			if (!is_array($filtervalue)) { $filtervalue = array($filtervalue); }
-			$urlquery['filtervalue'] = implode(':', $filtervalue);
-			$urlquery['exactvalue'] = implode(':', $exactvalue);
+			$urlquery['filtervalue'] = is_array($filtervalue) ? implode(':', $filtervalue) : $filtervalue;
+			$urlquery['exactvalue'] = is_array($exactvalue) ? implode(':', $exactvalue) : $exactvalue;
 			$urlquery['trackerId'] = $trackerId;
 			$smarty->assign('urlquery', $urlquery);
 		} else {

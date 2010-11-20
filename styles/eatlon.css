@@ -514,6 +514,7 @@ a.flip:hover,
 
 .tellafriend,
 .share {padding-right: 6px}
+.actions .share {padding-right: 0;}
 #tiki-center {font-size: 1.1em}
 
 /****** Misc. Global ****/

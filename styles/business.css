@@ -784,6 +784,11 @@ body.tiki_cms h1 a.pagetitle:hover {
 	padding-left: 20px;
 }
 
+.articletrailer span.share {
+	margin-left: 0;
+	padding-left: 0;
+}
+
 /***** Blogs *****/
 .blogtools {
 	margin: 10px 0 15px;

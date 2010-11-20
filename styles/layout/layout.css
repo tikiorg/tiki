@@ -546,6 +546,10 @@ ul.tree li {
 	margin-top: 2px;
 }
 
+.share img {
+	margin-bottom: -5px;
+}
+
 #rss {
 	padding: 1em 1em 0;
 }

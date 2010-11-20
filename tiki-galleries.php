@@ -167,7 +167,7 @@ if (isset($_REQUEST["edit"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 		if ($tiki_p_create_galleries != 'y') {
 			// If you can't create a gallery then you can't edit a gallery because you can't have a gallery
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("Permission denied you cannot create galleries and so you cant edit them"));
+			$smarty->assign('msg', tra("You do not have permission to create galleries and so you cannot edit them"));
 
 			$smarty->display("error.tpl");
 			die;
@@ -179,7 +179,7 @@ if (isset($_REQUEST["edit"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 
 			if (!$user || $info["user"] != $user) {
 				$smarty->assign('errortype', 401);
-				$smarty->assign('msg', tra("Permission denied you cannot edit this gallery"));
+				$smarty->assign('msg', tra("You do not have permission to edit this gallery"));
 
 				$smarty->display("error.tpl");
 				die;
@@ -321,7 +321,7 @@ if (isset($_REQUEST["removegal"])) {
 
 		if (!$user || $info["user"] != $user) {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("Permission denied you cannot remove this gallery"));
+			$smarty->assign('msg', tra("You do not have permission to remove this gallery"));
 
 			$smarty->display("error.tpl");
 			die;
@@ -340,7 +340,7 @@ if (isset($_REQUEST["make_map"])) {
 
 			if ($tiki_p_admin != 'y' || !$user || $info["user"] != $user) {
 				$smarty->assign('errortype', 401);
-				$smarty->assign('msg', tra("Permission denied you cannot make the map of this gallery"));
+				$smarty->assign('msg', tra("You do not have permission to make the map of this gallery"));
 				$smarty->display("error.tpl");
 				die;
 			}

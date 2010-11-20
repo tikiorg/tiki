@@ -12,15 +12,16 @@ function wikiplugin_file_info()
 		'documentation' => 'PluginFile',
 		'description' => tra("Displays a link to a file (either from the file gallery or an attachment to a wiki page) and can display an image attachment."),
 		'prefs' => array( 'wikiplugin_file' ),
+		'icon' => 'pics/icons/file-manager.png',
 		'inline' => true,
 		'params' => array(
 			'type' => array(
 				'required' => true,
 				'name' => tra('Type'),
+				'description' => tra('Choose either File from gallery or Wiki page attachment.'),
 				'options' => array(
-					array('text' => tra('Select an option'), 'value' => ''),
-					array('text' => tra('Wiki page attachment'), 'value' => 'attachment'),
 					array('text' => tra('File from file gallery'), 'value' => 'gallery'),
+					array('text' => tra('Wiki page attachment'), 'value' => 'attachment'),
 				),
 			),
 			'name' => array(
@@ -34,12 +35,14 @@ function wikiplugin_file_info()
 				'name' => tra('Description'),
 				'description' => tra('Used as link label'),
 				'parent' => array('name' => 'type', 'value' => 'attachment'),
+				'advanced' => true,
 			),
 			'page' => array(
 				'required' => false,
 				'name' => tra('Page'),
 				'description' => tra("Name of the wiki page the file is attached to. If left empty when the plugin is used on a wiki page, this defaults to that wiki page."),
 				'parent' => array('name' => 'type', 'value' => 'attachment'),
+				'advanced' => true,
 			),
 			'showdesc' => array(
 				'required' => false,
@@ -50,17 +53,21 @@ function wikiplugin_file_info()
 					array('text' => tra('Yes'), 'value' => 'y'),  
 				),
 				'parent' => array('name' => 'type', 'value' => 'attachment'),
+				'advanced' => true,
 			),
 			'image' =>array(
 				'required' => false,
 				'name' => tra('Image'),
 				'description' => tra("Says that this file is an image, and should be displayed inline using the img tag"),
 				'parent' => array('name' => 'type', 'value' => 'attachment'),
+				'advanced' => true,
 			),
 			'fileId' => array(
 				'required' => true,
 				'name' => tra('File identifier'),
 				'description' => tra('Identifier of a file in the file galleries.') . ' ' . tra('Example value:') . ' 42',
+				'type' => 'fileId',
+				'area' => 'fgal_picker_id',
 				'filter' => 'digits',
 				'parent' => array('name' => 'type', 'value' => 'gallery'),
 			),
@@ -69,6 +76,7 @@ function wikiplugin_file_info()
 				'name' => tra('Date'),
 				'description' => tra('Pick the archive if exists created just before the date of the fileId'),
 				'parent' => array('name' => 'type', 'value' => 'gallery'),
+				'advanced' => true,
 			),
 		)
 	);

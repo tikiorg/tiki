@@ -1142,12 +1142,13 @@ function wikiplugin_tracker($data, $params)
 					}
 
 					if (!empty($f['description']) && $f['type'] != 'h' && $f['type'] != 'S') {
-						$back .= '<br />';
+						$back .= '<div class="trackerplugindesc">';
 						if ($f['descriptionIsParsed'] == 'y') {
 							$back .= $tikilib->parse_data($f['description']);
 						} else {
-							$back .= '<span class="trackerplugindesc">'.$f['description'].'</span>';
+							$back .= $f['description'];
 						}
+						$back .= '</div>';
 					}
 					if (empty($tpl) && empty($wiki)) {
 					if ($f['type'] != 'h'){

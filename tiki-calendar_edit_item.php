@@ -439,7 +439,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	$hour_minmax = ceil(($calendar['startday']-1)/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
 } else {
   $smarty->assign('errortype', 401);
-  $smarty->assign('msg', tra("Permission denied you can not view this page"));
+  $smarty->assign('msg', tra("You do not have permission to view this page"));
   $smarty->display("error.tpl");
   die;
 }

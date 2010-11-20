@@ -431,6 +431,10 @@ a.flip:hover,
 	padding: 0 10px;
 }
 
+.actions .share {
+	padding: 0;
+}
+
 #tiki-center {
 	background: #3f3f3f;
 	margin: 10px;

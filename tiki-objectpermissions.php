@@ -52,7 +52,7 @@ if ($_REQUEST['objectType'] == 'wiki page') {
 }
 if (!($tiki_p_admin_objects == 'y' || (isset($$perm) && $$perm == 'y') || (isset($special_perm) && $special_perm == 'y'))) {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot assign permissions for this object"));
+	$smarty->assign('msg', tra("You do not have permission to assign permissions for this object"));
 	$smarty->display("error.tpl");
 	die;
 }

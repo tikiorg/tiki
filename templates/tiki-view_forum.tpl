@@ -328,7 +328,7 @@
 						<select name="moveto">
 							{section name=ix loop=$all_forums}
 								{if $all_forums[ix].forumId ne $forumId}
-									<option value="{$all_forums[ix].forumId|escape}">{$all_forums[ix].name}</option>
+									<option value="{$all_forums[ix].forumId|escape}">{$all_forums[ix].name|escape}</option>
 								{/if}
 							{/section}
 						</select>
@@ -542,7 +542,7 @@
 					{else}
 						{assign var="idt" value=$last_comments[ix].parentId}
 					{/if}
-					<a class="forumname" href="tiki-view_forum_thread.php?comments_parentId={$idt}&amp;topics_threshold={$comments_threshold}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}&amp;topics_sort_mode={$thread_sort_mode}&amp;topics_find={$comments_find}&amp;forumId={$forum_info.forumId}">{$last_comments[ix].title}</a>
+					<a class="forumname" href="tiki-view_forum_thread.php?comments_parentId={$idt}&amp;topics_threshold={$comments_threshold}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}&amp;topics_sort_mode={$thread_sort_mode}&amp;topics_find={$comments_find}&amp;forumId={$forum_info.forumId}">{$last_comments[ix].title|escape}</a>
 				</td>
 			</tr>
 		{/section}

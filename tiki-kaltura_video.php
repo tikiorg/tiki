@@ -196,5 +196,5 @@ $smarty->assign('mid','tiki-kaltura_video.tpl');
 $smarty->display("tiki.tpl");
 
 } catch( Exception $e ) {
-	$access->display_error( '', tr('Communication error'), 500, true, tr('Invalid response provided by the kaltura server. Please retry.') . '<br /><em>' . $e->getMessage() . '</em>' );
+	$access->display_error( '', tr('Communication error'), 500, true, tr('Invalid response provided by the Kaltura server. Please retry.') . '<br /><em>' . $e->getMessage() . '</em>' );
 }

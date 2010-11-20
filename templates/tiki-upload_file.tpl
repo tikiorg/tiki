@@ -193,14 +193,14 @@
 			{/if}
 		{/if}
 		<tr><td>
-			<label for="user">{tr}Creator:{/tr}</label>
+			<label for="user">{tr}Uploaded by:{/tr}</label>
 		</td><td width="80%">
 			{user_selector id='user' name='user[]' select=$fileInfo.user editable=$tiki_p_admin_file_galleries}
 		</td></tr>
 
 		{if $prefs.feature_file_galleries_author eq 'y'}
 			<tr><td>
-				<label for="author">{tr}Author, if different from the Creator:{/tr}</label>
+				<label for="author">{tr}Creator of file, if different from the 'Uploaded by' user:{/tr}</label>
 			</td><td width="80%">
 				<input type="text" id="author"name="author[]" value="{$fileInfo.author|escape}" />
 			</td></tr>
@@ -243,7 +243,7 @@
 		<br/>
 	{/if}
 </div>
-</div>
+</div><br/>
 {if $prefs.javascript_enabled eq 'y' and !$editFileId}
 	{include file='categorize.tpl' notable='y'}<br/>
 {/if}

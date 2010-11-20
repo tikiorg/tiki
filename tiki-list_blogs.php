@@ -20,7 +20,7 @@ if (isset($_REQUEST["remove"])) {
 	if ($data["user"] != $user) {
 		if ($tiki_p_blog_admin != 'y') {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("Permission denied you cannot remove this blog"));
+			$smarty->assign('msg', tra("You do not have permission to remove this blog"));
 			$smarty->display("error.tpl");
 			die;
 		}

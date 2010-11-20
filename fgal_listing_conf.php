@@ -21,9 +21,9 @@ $fgal_listing_conf = array(
 	'size' => array('name' => tra('Size')),
 	'created' => array('name' => tra('Created').' / '.tra('Uploaded')),
 	'lastModif' => array('name' => tra('Last Modified'), 'key' => 'show_modified'),
-	'creator' => array('name' => tra('Creator')),
-	'author' => array('name' => tra('Author')),
-	'last_user' => array('name' => tra('Last editor')),
+	'creator' => array('name' => tra('Uploaded by')), //this used to be Creator but updated Nov2010
+	'author' => array('name' => tra('Creator')),  //this used to be Author but updated Nov2010
+	'last_user' => array('name' => tra('Last Modified by')), //this used to be 'Last editor' but updated Nov2010
 	'comment' => array('name' => tra('Comment')),
 	'files' => array('name' => tra('Files')),
 	'hits' => array('name' => tra('Hits')),

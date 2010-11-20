@@ -361,7 +361,7 @@
 
 {* -------------------- drop down -------------------- *}
 {elseif $field_value.type eq 'd' or $field_value.type eq 'D'}
-	<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue={$field_value.value}{$field_value.http_request[5]}')"{/if}>
+	<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue='+escape(this.value),'{$field_value.http_request[5]}')"{/if}>
 	{assign var=otherValue value=$field_value.value}
 		{if $field_value.isMandatory ne 'y' || empty($field_value.value)}
 			<option value="">&nbsp;</option>
@@ -438,7 +438,7 @@
 {* -------------------- dynamic list -------------------- *}
 {elseif $field_value.type eq 'w'}
 	<script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
-<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue={$field_value.value}{$field_value.http_request[5]}')"{/if}>
+<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue='+escape(this.value),'{$field_value.http_request[5]}')"{/if}>
 	</select>
 
 

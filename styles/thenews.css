@@ -347,6 +347,14 @@ a.flip:hover {
 	margin-right: 2px;
 }
 
+.actions span.share {
+	margin-right: 0;
+}
+
+.actions span.share img {
+	margin-bottom: -6px !important;
+}
+
 .tellafriend a,
 .share a {
 	color: #adbac3;

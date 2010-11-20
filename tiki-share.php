@@ -158,7 +158,7 @@ if (isset($_REQUEST['send'])) {
 	check_ticket('share');
 	if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
 		$errors[] = $captchalib->getErrors();
-	}
+	} else {
 	if ($report == 'y') {
 		$email = !empty($prefs['feature_site_report_email']) ? $prefs['feature_site_report_email'] : (!empty($prefs['sender_email']) ? $prefs['sender_email'] : '');
 		if (empty($email)) {
@@ -224,12 +224,13 @@ if (isset($_REQUEST['send'])) {
 			}
 		} // do_forum
 	} //report != y
-	$smarty->assign_by_ref('errors', $errors);
 	$smarty->assign('errortype', 'no_redirect_login');
 	if ($ok && $report=='y') {
 		$access->redirect( $_REQUEST['url'], tra('Your link was sent.') );
 	}
 	$smarty->assign('sent',true);
+	}
+	$smarty->assign_by_ref('errors', $errors);
 } else {
 	$smarty->assign_by_ref('name', $user);
 	$smarty->assign('email', $userlib->get_user_email($user));
