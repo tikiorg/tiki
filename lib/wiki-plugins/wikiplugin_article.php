@@ -59,10 +59,10 @@ function wikiplugin_article($data, $params) {
 		$Field = 'heading';
 	} 
 
-	if ($tiki_p_admin_cms == 'y' || $tikilib->user_has_perm_on_object($user, $articleId, 'article', 'tiki_p_edit_article') || ($article_data["author"] == $user && $article_data["creator_edit"] == 'y')) {
-	      $add="&nbsp;<a href='tiki-edit_article.php?articleId=$Id' class='editplugin'><img src='pics/icons/page_edit.png' style='border:none' /></a>";
+	if ($tiki_p_admin_cms == 'y' || $tikilib->user_has_perm_on_object($user, $Id, 'article', 'tiki_p_edit_article') || (isset($article_data) && $article_data["author"] == $user && $article_data["creator_edit"] == 'y')) {
+		$add="&nbsp;<a href='tiki-edit_article.php?articleId=$Id' class='editplugin'><img src='pics/icons/page_edit.png' style='border:none' /></a>";
 	} else {
-	      $add="";
+		$add="";
 	}
 
 	global $artlib; require_once 'lib/articles/artlib.php';
