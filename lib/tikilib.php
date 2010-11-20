@@ -4909,12 +4909,11 @@ class TikiLib extends TikiDb_Bridge
 } );
 " );
 							}
+							$iconDisplayStyle = '';
 							if ($prefs['wiki_edit_icons_toggle'] == 'y' && ($prefs['wiki_edit_plugin'] == 'y' || $prefs['wiki_edit_section'] == 'y')) {
 								if (!isset($_COOKIE['wiki_plugin_edit_view'])) {
 									$iconDisplayStyle = ' style="display:none;"';
 								}
-							} else {
-								$iconDisplayStyle = '';
 							}
 							$ret = $ret.'~np~<a id="' .$id. '" href="javascript:void(1)" class="editplugin"'.$iconDisplayStyle.'>'.smarty_function_icon(array('_id'=>'wiki_plugin_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty)."</a>~/np~";
 						}
