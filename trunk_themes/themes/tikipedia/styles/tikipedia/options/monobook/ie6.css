@@ -1,0 +1,74 @@
+/* $Id$
+	IE6 rules for the Tikipedia theme for TikiWiki CMS/Groupware
+ */
+
+#header {height: 30px}
+
+#col2 ul.cssmenu_vert {
+	padding-left: 1em;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+#col2 ul.cssmenu_vert,
+#col2 ul.cssmenu_vert li {
+	width: 130px !important;
+}
+
+#col2 ul.cssmenu_vert li.sfHover ul {
+	left: 128px;
+}
+
+.box-data select {
+	font-size: 1em;
+}
+
+.wikitopline select {
+	font-size: .9em;
+}
+input[type=submit],
+input[type=reset] {
+	padding: 0 4px;
+	background: #fff;
+	font-size: 11px;
+	border: 1px solid #aaa;}
+	
+span.button a:link,
+span.button a:visited {
+	background: #fff;
+	font-size: 11px;
+	border: 1px solid #aaa;
+}
+.horbaritem a {
+	font-size: .8em;
+}
+
+.moduleflip {
+	display: block !important;
+}
+
+img.flipmodimage {
+	border: 0;
+}
+
+div.articletitle {
+	background: #fff;
+	border-bottom: 0;
+}
+ 
+.bloginfo table,
+.postbody table,
+.post .postbody {
+	font-size: 11px;
+}
+
+body table.galtable {
+	width: 97%;
+}
+
+.addevent,
+.calodd ,
+.caleven,
+.caldark {
+	padding: 0;
+}
