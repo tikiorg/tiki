@@ -1311,6 +1311,7 @@ function get_default_prefs() {
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
 		'feature_custom_html_head_content' => '{if $prefs.feature_secondary_sitemenu_custom_code ne ""}<style type="text/css">#sitelogo img {literal}{margin-top: 0; position: relative; top: -12px;}{/literal}</style>{/if}',
 		'feature_fixed_width' => 'y',
+		'feature_html_head_base_tag' => 'n',
 
 		// layout
 		'feature_left_column' => 'y',

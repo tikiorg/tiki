@@ -1,5 +1,5 @@
 {* $Id$ *}
-{if $base_url and $dir_level gt 0}
+{if $base_url and ($dir_level gt 0 or $prefs.feature_html_head_base_tag eq 'y')}
 	<base href="{$base_url|escape}" />
 {/if}
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

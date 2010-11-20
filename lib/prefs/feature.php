@@ -1121,6 +1121,11 @@ function prefs_feature_list() {
 			'size' => '6',
 			'filter' => 'rawhtml_unsafe',
 		),
+		'feature_html_head_base_tag' => array(
+			'name' => tra('Add BASE tag in the page HEAD'),
+			'type' => 'flag',
+			'description' => tra('The &lt;base&gt; tag specifies a default address for all links on a page.'),
+		),
 		'feature_sitemycode' => array(
 			'name' => tra('Custom Site Header'),
 			'type' => 'flag',
