@@ -128,7 +128,7 @@ if (isset($_REQUEST["subId"])) {
 	if ($_REQUEST["subId"] > 0) {
 		if (($tiki_p_edit_submission != 'y' and $article_data["author"] != $user) or $user == "") {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("Permission denied you cannot edit submissions"));
+			$smarty->assign('msg', tra("You do not have permission to edit submissions"));
 			$smarty->display("error.tpl");
 			die;
 		}

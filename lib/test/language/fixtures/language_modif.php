@@ -83,13 +83,13 @@ $lang=Array(
 // ### uncomment value pairs as you translate
 // "Kalture Video" => "Kalture Video",
 // "Communication error" => "Communication error",
-// "Invalid response provided by the kaltura server. Please retry" => "Invalid response provided by the kaltura server. Please retry",
+// "Invalid response provided by the Kaltura server. Please retry" => "Invalid response provided by the Kaltura server. Please retry",
 // "Delete comments" => "Delete comments",
 "Approved Status" => "Aprovado",
 // "Queued" => "Queued",
 // "The file is already locked by %s" => "The file is already locked by %s",
 // "WARNING: The file is used in" => "WARNING: The file is used in",
-// "Permission denied you can edit this file" => "Permission denied you can edit this file",
+// "You do not have permission to edit this file" => "You do not have permission to edit this file",
 // "Not modified since" => "Not modified since",
 // "Not downloaded since" => "Not downloaded since",
 // ### end of untranslated words

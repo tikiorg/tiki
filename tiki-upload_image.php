@@ -14,7 +14,7 @@ $access->check_feature('feature_galleries');
 
 if ($tiki_p_upload_images != 'y' and !$tikilib->user_has_perm_on_object($user, $_REQUEST["galleryId"], "image gallery", "tiki_p_upload_images")) {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot upload images"));
+	$smarty->assign('msg', tra("You do not have permission to upload images"));
 	$smarty->display("error.tpl");
 	die;
 }

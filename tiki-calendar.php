@@ -86,7 +86,7 @@ foreach ($rawcals["data"] as $cal_data) {
 
 if ($viewOneCal != 'y') {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot view the calendar"));
+	$smarty->assign('msg', tra("You do not have permission to view the calendar"));
 	$smarty->display("error.tpl");
 	die;
 }

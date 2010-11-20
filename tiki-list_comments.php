@@ -17,7 +17,7 @@ if (isset($_REQUEST['blogId'])) {
 	$tikilib->get_perm_object('blog', $blogId);
 
 	if ($tiki_p_blog_admin != 'y') {
-		$smarty->assign('msg', tra('Permission denied: you cannot view the comments for this blog'));
+		$smarty->assign('msg', tra('You do not have permission to view the comments for this blog'));
 		$smarty->display('error.tpl');
 		die;
 	}

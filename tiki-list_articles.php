@@ -26,7 +26,7 @@ if (isset($_REQUEST["remove"])) {
 
 	if ($artperms->remove_article != 'y') {
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot remove articles"));
+		$smarty->assign('msg', tra("You do not have permission to remove articles"));
 		$smarty->display("error.tpl");
 		die;
 	}

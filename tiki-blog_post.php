@@ -49,7 +49,7 @@ if ($postId > 0) {
 	if (!$user || ($data["user"] != $user && $user != $blog_data["user"] && !($blog_data['public'] == 'y' && $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post')))) {
 		if ($tiki_p_blog_admin != 'y' && !$tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_admin')) {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("Permission denied you cannot edit this post"));
+			$smarty->assign('msg', tra("You do not have permission to edit this post"));
 			$smarty->display("error.tpl");
 			die;
 		}

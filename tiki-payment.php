@@ -92,7 +92,7 @@ if( isset( $_POST['manual_amount'], $_POST['invoice'] ) && preg_match( '/^\d+(\.
 
 		$access->redirect( 'tiki-payment.php?invoice=' . $_POST['invoice'], tra('Manual payment entered.') );
 	} else {
-		$access->redirect( 'tiki-payment.php?invoice=' . $_POST['invoice'], tra('Permission denied to enter payment.') );
+		$access->redirect( 'tiki-payment.php?invoice=' . $_POST['invoice'], tra('You do not have permission to enter payment.') );
 	}
 }
 

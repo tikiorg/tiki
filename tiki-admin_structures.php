@@ -19,7 +19,7 @@ if ($tiki_p_edit_structures == 'y') {
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['rremove']);
 		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit')) {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+			$smarty->assign('msg', tra("You do not have permission to edit this page."));
 			$smarty->display("error.tpl");
 			die;
 		}
@@ -30,7 +30,7 @@ if ($tiki_p_edit_structures == 'y') {
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['rremovex']);
 		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit')) {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+			$smarty->assign('msg', tra("You do not have permission to edit this page."));
 			$smarty->display("error.tpl");
 			die;
 		}
@@ -96,7 +96,7 @@ if ($tiki_p_edit_structures == 'y') {
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['remove']);
 		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit')) {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+			$smarty->assign('msg', tra("You do not have permission to edit this page."));
 			$smarty->display("error.tpl");
 			die;
 		}

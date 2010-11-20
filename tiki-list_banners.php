@@ -15,7 +15,7 @@ $access->check_feature('feature_banners');
 if (isset($_REQUEST["remove"])) {
 	if ($tiki_p_admin_banners != 'y') {
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot remove banners"));
+		$smarty->assign('msg', tra("You do not have permission to remove banners"));
 		$smarty->display("error.tpl");
 		die;
 	}

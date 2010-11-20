@@ -211,7 +211,7 @@ if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasec
 					}
 					$items = $semanticlib->getItemsFromTracker($likepages[0], $suffix);
 					if (count($items) > 1) {
-						$msg = tra("There are more than one item in the tracker with this title");
+						$msg = tra("There is more than one item in the tracker with this title");
 						foreach ($items as $i) {
 							$msg .= '<br /><a href="tiki-index.php?page=' . urlencode($likepages[0]) . '&itemId=' . $i . '">' . $i . '</a>';
 						}

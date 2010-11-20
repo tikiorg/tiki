@@ -43,7 +43,7 @@ if (isset($_REQUEST['wikify']) || isset($_REQUEST['over'])) {
 				$tikilib->update_page($_REQUEST['wiki_name'], $info['data'], tra('created from notepad'), $user, '127.0.1.1', $info['name']);
 			} else {
 				$smarty->assign('errortype', 401);
-				$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+				$smarty->assign('msg', tra("You do not have permission to edit this page."));
 				$smarty->display("error.tpl");
 				die;
 			}
@@ -57,7 +57,7 @@ if (isset($_REQUEST['wikify']) || isset($_REQUEST['over'])) {
 			$tikilib->create_page($_REQUEST['wiki_name'], 0, $info['data'], $tikilib->now, tra('created from notepad'), $user, $ip = '0.0.0.0', $info['name']);
 		} else {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+			$smarty->assign('msg', tra("You do not have permission to edit this page."));
 			$smarty->display("error.tpl");
 			die;
 		}
