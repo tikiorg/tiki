@@ -44,7 +44,7 @@ function wikiplugin_article_info() {
 }
 
 function wikiplugin_article($data, $params) {
-	global $tikilib,$user,$userlib;
+	global $tikilib,$user,$userlib,$tiki_p_admin_cms;
 	global $statslib; include_once('lib/stats/statslib.php');
 
 	extract ($params,EXTR_SKIP);
