@@ -137,7 +137,7 @@ function wikiplugin_freetagged($data, $params) {
 		
 	} else {
 		$tagArray = $freetaglib->_parse_tag($tags);
-		$objects = $freetaglib->get_objects_with_tag_combo($tagArray, $type, '', $offset, $maxRecords, $sort_mode, $find, $broaden);
+		$objects = $freetaglib->get_objects_with_tag_combo($tagArray, $type, '', 0, $maxRecords, $sort_mode, $find, $broaden);
 		$objects = $objects['data'];
 	}
 	
