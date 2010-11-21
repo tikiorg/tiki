@@ -133,18 +133,18 @@ if (isset($_SERVER["REQUEST_URI"])) {
 		$cookie_path .= '/';
 	}
 	ini_set('session.cookie_path', str_replace("\\", "/", $cookie_path));
-}
-if ( $start_session ) {
-	// enabing silent sessions mean a session is only started when a cookie is presented
-	$session_params = session_get_cookie_params();
-	session_set_cookie_params($session_params['lifetime'], $cookie_path);
-	unset($session_params);
-
-	try {
-		require_once "Zend/Session.php";
-		Zend_Session::start();
-	} catch( Zend_Session_Exception $e ) {
-		// Ignore
+	if ( $start_session ) {
+		// enabing silent sessions mean a session is only started when a cookie is presented
+		$session_params = session_get_cookie_params();
+		session_set_cookie_params($session_params['lifetime'], $cookie_path);
+		unset($session_params);
+	
+		try {
+			require_once "Zend/Session.php";
+			Zend_Session::start();
+		} catch( Zend_Session_Exception $e ) {
+			// Ignore
+		}
 	}
 }
 
