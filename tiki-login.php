@@ -325,7 +325,11 @@ if ($isvalid) {
 				}
 			}
 		}
-	} else {
+	} else {	// if ($isvalid)
+		// not valid - check if site is closed first
+		unset($bypass_siteclose_check);
+		include 'lib/setup/site_closed.php';
+
 		if (isset($_REQUEST['url'])) {
 			$smarty->assign('url', $_REQUEST['url']);
 		}
