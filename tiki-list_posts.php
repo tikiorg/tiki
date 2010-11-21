@@ -28,16 +28,25 @@ if (!isset($_REQUEST["offset"])) {
 	$offset = $_REQUEST["offset"];
 }
 $smarty->assign_by_ref('offset', $offset);
+
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
 } else {
 	$find = '';
 }
 $smarty->assign('find', $find);
-// Get a list of last changes to the Wiki database
-$listpages = $bloglib->list_posts($offset, $maxRecords, $sort_mode, $find);
-$smarty->assign_by_ref('cant', $listpages["cant"]);
-$smarty->assign_by_ref('listpages', $listpages["data"]);
+if (isset($_REQUEST['blogId'])) {
+	$blogId = $_REQUEST['blogId'];
+	$blog = $bloglib->get_blog($blogId);
+	$smarty->assign('blogTitle', $blog['title']);
+	$smarty->assign('blogId', $blogId);
+} else {
+	$blogId = -1;
+}
+
+$posts = $bloglib->list_posts($offset, $maxRecords, $sort_mode, $find, $blogId);
+$smarty->assign_by_ref('cant', $posts["cant"]);
+$smarty->assign_by_ref('posts', $posts["data"]);
 
 ask_ticket('list-posts');
 // Display the template

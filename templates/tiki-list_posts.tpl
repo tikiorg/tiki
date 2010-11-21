@@ -1,50 +1,53 @@
 {* $Id$ *}
 
-{title help="Blogs"}{tr}Blogs{/tr}{/title}
+{title help="Blogs"}{if isset($blogTitle)}{tr 0=$blogTitle}Blog: %0{/tr}{else}{tr}Blog{/tr}{/if}{/title}
+ 
 
 <div class="navbar">
 	{button href="tiki-edit_blog.php" _text="{tr}Create Blog{/tr}"}
-	{button href="tiki-blog_post.php" _text="{tr}Post{/tr}"}
+	{button href="tiki-blog_post.php" _text="{tr}New Blog Post{/tr}"}
 	{button href="tiki-list_blogs.php" _text="{tr}List Blogs{/tr}"}
 </div>
 
-{if $listpages or ($find ne '')}
-  {include file='find.tpl'}
+{if $posts or ($find ne '')}
+	{include file='find.tpl'}
 {/if}
 
 <table class="normal">
 	<tr>
 		<th>
-			<a href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'postId_desc'}postId_asc{else}postId_desc{/if}">{tr}Id{/tr}</a>
+			<a href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&{/if}offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_asc'}title_desc{else}title_asc{/if}">
+				{tr}Post Title{/tr}
+			</a>
 		</th>
-		<th>{tr}Post Title{/tr}</th>
-		<th>{tr}Blog Title{/tr}</th>
+		{if !isset($blogId)}
+			<th>{tr}Blog Title{/tr}</th>
+		{/if}
 		<th>
-			<a href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a>
+			<a href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&{/if}offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a>
 		</th>
 		<th>{tr}Size{/tr}</th>
 		<th>
-			<a href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a>
+			<a href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&{/if}offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}Author{/tr}</a>
 		</th>
-		<th>{tr}Action{/tr}</th>
+		<th>{tr}Actions{/tr}</th>
 	</tr>
 
 	{cycle values="odd,even" print=false}
-	{section name=changes loop=$listpages}
+	{section name=changes loop=$posts}
 		<tr class="{cycle}">
-			<td>&nbsp;{$listpages[changes].postId}&nbsp;</td>
-			<td><a class="link" href="tiki-view_blog_post.php?postId={$listpages[changes].postId}">{$listpages[changes].title}</a></td>
+			<td><a class="link" href="tiki-view_blog_post.php?postId={$posts[changes].postId}">{$posts[changes].title}</a></td>
+			{if !isset($blogId)}
+				<td>
+					<a class="blogname" href="tiki-edit_blog.php?blogId={$posts[changes].blogId}" title="{$posts[changes].blogTitle}">{$posts[changes].blogTitle|truncate:$prefs.blog_list_title_len:"...":true|escape}</a>
+				</td>
+			{/if}
+			<td>&nbsp;{$posts[changes].created|tiki_short_date}&nbsp;</td>
+			<td>&nbsp;{$posts[changes].size}&nbsp;</td>
+			<td>&nbsp;{$posts[changes].user}&nbsp;</td>
 			<td>
-				&nbsp;
-				<a class="blogname" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}" title="{$listpages[changes].blogTitle}">{$listpages[changes].blogTitle|truncate:$prefs.blog_list_title_len:"...":true|escape}</a>
-				&nbsp;
-			</td>
-			<td>&nbsp;{$listpages[changes].created|tiki_short_datetime}&nbsp;</td>
-			<td>&nbsp;{$listpages[changes].size}&nbsp;</td>
-			<td>&nbsp;{$listpages[changes].user}&nbsp;</td>
-			<td>
-				<a class="link" href="tiki-blog_post.php?blogId={$listpages[changes].blogId}&postId={$listpages[changes].postId}">{icon _id='page_edit'}</a>
-				<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+				<a class="link" href="tiki-blog_post.php?blogId={$posts[changes].blogId}&postId={$posts[changes].postId}">{icon _id='page_edit'}</a>
+				<a class="link" href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$posts[changes].postId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 			</td>
 		</tr>
 	{sectionelse}
