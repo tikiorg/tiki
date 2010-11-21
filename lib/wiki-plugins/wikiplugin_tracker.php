@@ -71,6 +71,11 @@ function wikiplugin_tracker_info()
 				'name' => tra('Email'),
 				'description' => tra('from').'|'.tra('to').'|'.tra('template'),
 			),
+			'emailformat' => array(
+				'required' => false,
+				'name' => tra('Email format'),
+				'description' => tra('text or html setting'),				
+			),			
 			'url' => array(
 				'required' => false,
 				'name' => tra('URL'),
@@ -217,7 +222,7 @@ function wikiplugin_tracker($data, $params)
 	static $iTRACKER = 0;
 	++$iTRACKER;
 	include_once('lib/trackers/trackerlib.php');
-	$default = array('overwrite' => 'n', 'embedded' => 'n', 'showtitle' => 'n', 'showdesc' => 'n', 'sort' => 'n', 'showmandatory'=>'y', 'status' => '', 'registration' => 'n');
+	$default = array('overwrite' => 'n', 'embedded' => 'n', 'showtitle' => 'n', 'showdesc' => 'n', 'sort' => 'n', 'showmandatory'=>'y', 'status' => '', 'registration' => 'n', 'emailformat' => 'text');
 	$params = array_merge($default, $params);
 	$item = array();
 	
@@ -704,7 +709,11 @@ function wikiplugin_tracker($data, $params)
 								$mail_data = tra('Tracker was modified at '). $_SERVER["SERVER_NAME"];
 							$mail->setSubject($mail_data);
 							$mail_data = $smarty->fetch('mail/'.$emailOptions[2][$itpl]);
+							if ($emailformat == 'html') {
+							$mail->setHtml($mail_data);
+							} else {
 							$mail->setText($mail_data);
+							}
 							$mail->buildMessage(array('text_encoding' => '8bit'));
 							$mail->send($ueo);
 							if (isset($tplSubject[$itpl+1]))
