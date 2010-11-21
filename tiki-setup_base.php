@@ -127,11 +127,11 @@ if( $prefs['tiki_cdn'] ) {
 		$start_session = false;
 	}
 }
-$cookie_path = str_replace("\\", "/", dirname($_SERVER["REQUEST_URI"]));
-if ($cookie_path != '/') {
-	$cookie_path .= '/';
-}
 if (isset($_SERVER["REQUEST_URI"])) {
+	$cookie_path = str_replace("\\", "/", dirname($_SERVER["REQUEST_URI"]));
+	if ($cookie_path != '/') {
+		$cookie_path .= '/';
+	}
 	ini_set('session.cookie_path', str_replace("\\", "/", $cookie_path));
 }
 if ( $start_session ) {
