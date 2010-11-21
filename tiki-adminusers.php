@@ -419,7 +419,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			$smarty->display('error.tpl');
 			die;
 		}
-		$mail->setText($text);
+		$mail->setHtml($text);
 		$mail->send($userlib->get_user_email($mail_user));
 	}
 	$smarty->assign_by_ref('user', $user);
