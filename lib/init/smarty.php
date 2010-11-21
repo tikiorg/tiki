@@ -110,6 +110,10 @@ class Smarty_Tikiwiki extends Smarty
 					$this->assign('headtitle', tra('View ' . $str));
 					// get_strings tra('View Articles') tra('View Banner') tra('View Blog Post Image') tra('View Blog Post') tra('View Blog') tra('View Cache') tra('View Faq') tra('View Forum Thread')
 					//			 tra('View Minical Topic') tra('View Sheets') tra('View Tracker Item') tra('View Tracker More Info') tra('View Tracker')
+				} else { // still not set? guess...
+					$str = str_replace(array('tiki-', '.php', '_'), array('', '', ' '), $script_name);
+					$str = ucwords($str);
+					$this->assign('headtitle', tra($str));	// for files where no title has been set or can be reliably calculated - translators: please add comments here as you find them
 				}
 			}
 			
