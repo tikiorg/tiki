@@ -3349,13 +3349,14 @@ class TrackerLib extends TikiLib
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Allows one or more categories under a main category to be assigned to the tracker item.
-				<dt>Usage: <strong>parentId,inputtype,selectall,descendants</strong>
+				<dt>Usage: <strong>parentId,inputtype,selectall,descendants,help</strong>
 				<dt>Example: 12,radio,1
 				<dt>Description:
 				<dd><strong>[parentId]</strong> is the ID of the main category, categories in the list will be children of this;
 				<dd><strong>[inputtype]</strong> is one of [d|m|radio|checkbox], where d is a drop-down list, m is a multiple-selection drop-down list, radio and checkbox are self-explanatory;
 				<dd><strong>[selectall]</strong> will provide a checkbox to automatically select all categories in the list if set to 1, default is 0;
 				<dd><strong>[descendants]</strong> All descendant categories (not just first level children) will be included if set to 1, default is 0;
+				<dd><strong>[help]</strong> will display the description in a popup in the input if set to 1, default is 0; only for checkbox or radio
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
 		$type['r'] = array(
