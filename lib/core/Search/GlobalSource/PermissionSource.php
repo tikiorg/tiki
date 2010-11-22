@@ -18,7 +18,13 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 
 	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
 	{
-		if (! isset($data['view_permission'])) {
+		if (isset($data['view_permission'])) {
+			$viewPermission = $data['view_permission']->getValue();
+		} elseif (isset($data['parent_view_permission'], $data['parent_object_id'], $data['parent_object_type'])) {
+			$viewPermission = $data['parent_view_permission']->getValue();
+			$objectId = $data['parent_object_id']->getValue();
+			$objectType = $data['parent_object_type']->getValue();
+		} else {
 			return array('allowed_groups' => $typeFactory->multivalue(array()));
 		}
 
@@ -26,8 +32,6 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 			'type' => $objectType,
 			'object' => $objectId,
 		));
-
-		$viewPermission = $data['view_permission']->getValue();
 
 		$groups = array();
 		foreach ($this->getCheckList($accessor) as $groupName) {

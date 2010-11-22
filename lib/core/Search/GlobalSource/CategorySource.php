@@ -18,6 +18,12 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 
 	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
 	{
+		// For forum posts, and 
+		if (isset($data['parent_object_id'], $data['parent_object_type'])) {
+			$objectType = $data['parent_object_type']->getValue();
+			$objectId = $data['parent_object_id']->getValue();
+		}
+
 		$categories = $this->categlib->get_object_categories($objectType, $objectId, -1, false);
 
 		return array(

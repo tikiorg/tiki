@@ -65,6 +65,10 @@ class UnifiedSearchLib
 			$aggregator->addContentSource('wiki page', new Search_ContentSource_WikiSource);
 		}
 
+		if ($prefs['feature_forums'] == 'y') {
+			$aggregator->addContentSource('forum post', new Search_ContentSource_ForumPostSource);
+		}
+
 		if ($prefs['feature_categories'] == 'y') {
 			$aggregator->addGlobalSource(new Search_GlobalSource_CategorySource);
 		}

@@ -70,6 +70,9 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 	case 'file gallery':
 		$href = 'tiki-list_file_gallery.php?galleryId='.$source;
 		break;
+	case 'forum post':
+		$href = 'tiki-view_forum_thread.php?comments_parentId='.$source;
+		break;
 	default:
 		$href = $source;
 		break;
