@@ -237,12 +237,16 @@ if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasec
 			}
 		}
 		$access->redirect( $url );
+	} else if ($prefs['feature_wiki_pagealias'] == 'y' && count($likepages) > 1) {
+		// if two different pages use the same wiki page alias display an error
+		$smarty->assign('msg', tra("There are more than one page using this alias: ") . join(', ', $likepages));
+		$smarty->display('error.tpl');
+		die;
 	}
 	$smarty->assign_by_ref('likepages', $likepages);
 	$smarty->assign('create', $isUserPage? 'n': 'y');
 	$access->display_error( $page, tra('Page cannot be found'), '404' );
 }
-
 
 if (empty($info) && $user && $prefs['feature_wiki_userpage'] == 'y' && (strcasecmp($prefs['feature_wiki_userpage_prefix'].$user, $page) == 0 || strcasecmp($prefs['feature_wiki_userpage_prefix'], $page) == 0 )) {	
 	
