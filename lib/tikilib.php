@@ -4969,8 +4969,10 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		global $prefs;
-		if( isset($prefs['pluginaliaslist']) )
+		if( isset($prefs['pluginaliaslist']) ) {
 			$alias = @unserialize($prefs['pluginaliaslist']);
+			$alias = array_filter($alias);
+		}
 
 		if( $includeReal && $includeAlias )
 			$plugins = array_merge( $real, $alias );
@@ -4981,8 +4983,8 @@ class TikiLib extends TikiDb_Bridge
 		else
 			$plugins = array();
 
-		sort($plugins);
-
+		sort(array_filter($plugins));
+		
 		return $plugins;
 	}
 
