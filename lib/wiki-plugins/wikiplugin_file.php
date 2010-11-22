@@ -128,7 +128,7 @@ function wikiplugin_file( $data, $params )
 			$data = empty($info['name'])?$info['filename']: $info['name'];
 		}
 		if (isset($params['showicon']) & $params['showicon'] == "y") {
-			return "{img src=tiki-download_file.php?fileId=$fileId&amp;thumbnail=y width=16} [tiki-download_file.php?fileId=$fileId|$data]";
+			return "{img src=tiki-download_file.php?fileId=$fileId&amp;thumbnail=y&amp;x=16 link=tiki-download_file.php?fileId=$fileId} [tiki-download_file.php?fileId=$fileId|$data]";
 		} else {
 			return "[tiki-download_file.php?fileId=$fileId|$data]";
 		}
