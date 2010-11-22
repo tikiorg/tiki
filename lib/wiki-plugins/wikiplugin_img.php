@@ -598,7 +598,7 @@ function wikiplugin_img_info() {
 			if (!empty($imgdata['id']) || !empty($imgdata['fileId']) || !empty($imgdata['attId']) || !empty($imgdata['randomGalleryId'])) {
 				if( ! $dbinfo ) {
 					return '^' . tra('File not found.') . '^';
-				} elseif( substr($dbinfo['filetype'], 0, 5) != 'image' ) {
+				} elseif( substr($dbinfo['filetype'], 0, 5) != 'image' AND !preg_match('/thumbnail/i', $imgdata['fileId'])) {
 					return '^' . tra('File is not an image.') . '^';
 				} else {
 				require_once('lib/images/images.php');
