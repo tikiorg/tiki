@@ -100,7 +100,7 @@ if ($output["data"] == "EMPTY") {
 	}
 	$tmp = $trklib->list_items($_REQUEST[$id], 0, $prefs['feed_tracker_max'], $sort_mode, $fields, $filterfield, $filtervalue, $status, null, $exactvalue);
 	foreach($tmp["data"] as $data) {
-		$data[$titleId] = tra('Tracker item:') . ' #' . $data[$urlparam];
+		$data[$titleId] = (isset($_REQUEST['showitemId']) && $_REQUEST['showitemId'] == 'n')? '': tra('Tracker item:') . ' #' . $data[$urlparam];
 		$data[$descId] = '';
 		$first_text_field = null;
 		$aux_subject = null;
@@ -131,9 +131,9 @@ if ($output["data"] == "EMPTY") {
 		if (isset($_REQUEST['noId']) && $_REQUEST['noId'] == 'y') {
 			$data[$titleId] = empty($aux_subject) ? $first_text_field : $aux_subject;
 		} elseif (!isset($aux_subject) && isset($first_text_field)) {
-			$data[$titleId] .= ' - ' . $first_text_field;
+			$data[$titleId] .= (empty($data[$titleId])?'': ' - ') . $first_text_field;
 		} elseif (isset($aux_subject)) {
-			$data[$titleId] .= ' - ' . $aux_subject;
+			$data[$titleId] .= (empty($data[$titleId])?'': ' - ') . $aux_subject;
 		}
 		$data["id"] = $_REQUEST["$id"];
 		$data["field_values"] = null;
