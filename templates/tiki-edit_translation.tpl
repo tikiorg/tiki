@@ -1,8 +1,8 @@
-{title help="i18n" admpage="i18n"}{tr}Translate:{/tr}&nbsp;{$source_page|escape}{if isset($languageName)}&nbsp;({$languageName}, {$langpage|escape}){/if}{/title}
+{title help="i18n" admpage="i18n"}{tr}Translate:{/tr}&nbsp;{$name|escape}{if isset($languageName)}&nbsp;({$languageName}, {$langpage|escape}){/if}{/title}
 
 <div class="navbar">
 	{if $type eq 'wiki page'}
-		{assign var=thisname value=$target_page|escape:'url'}
+		{assign var=thisname value=$name|escape:'url'}
 		{button href="tiki-index.php?page=$thisname&no_bl=y" _text="{tr}View Page{/tr}"}
 	{else}
 		{button href="tiki-read_article.php?articleId=$id" _text="{tr}View Article{/tr}"}
@@ -66,7 +66,7 @@
 		</p>
 		<p>{tr}Enter the page title:{/tr}
 			<input type="text" size="40" name="page" id="translation_name"/>
-			<input type="hidden" name="source_page" value="{$page|escape}"/>
+			<input type="hidden" name="source_page" value="{$name|escape}"/>
 			<input type="hidden" name="oldver" value="-1"/>
 			<input type="hidden" name="is_new_translation" value="y"/>
 		</p>
@@ -80,7 +80,7 @@
 	</fieldset>
 </form>
 {/if}
-
+{if !isset($articles)}
 {jq}
 {literal}
 // Make the translation name have the focus.
@@ -115,16 +115,16 @@ function validate_translation_request() {
 }
 {/literal}
 {/jq}
-
+{/if}
 {if !empty($langpage)}
 	<br />
 	<hr />
 	<br />
 
 	<a name="attach_detach_translations"></a>
-	<h3>{tr}Attach or detach existing translations of this page{/tr}</h3>
+	<h3>{if isset($articles)}{tr}Attach or detach existing translations of this article{/tr}{else}{tr}Attach or detach existing translations of this page{/tr}{/if}</h3>
 		<table class="normal">
-		<tr><th>{tr}Language{/tr}</th><th>{tr}Page{/tr}</th><th>{tr}Actions{/tr}</th></tr>
+		<tr><th>{tr}Language{/tr}</th><th>{if isset($articles)}{tr}Article{/tr}{else}{tr}Page{/tr}{/if}</th><th>{tr}Actions{/tr}</th></tr>
 		{cycle values="odd,even" print=false}
 		{section name=i loop=$trads}
 		<tr class="{cycle}">
@@ -132,7 +132,7 @@ function validate_translation_request() {
 			<td>{if $type == 'wiki page'}<a href="tiki-index.php?page={$trads[i].objName|escape:url}&no_bl=y">{else}<a href="tiki-read_article.php?articleId={$trads[i].objId|escape:url}">{/if}{$trads[i].objName|escape}</a></td>
 			<td>
 				{if $tiki_p_detach_translation eq 'y' }
-					<a rel="nofollow" class="link" href="tiki-edit_translation.php?detach&amp;page={$target_page|escape}&amp;id={$id|escape:url}&amp;srcId={$trads[i].objId|escape:url}&amp;type={$type|escape:url}">{icon _id='cross' alt="{tr}detach{/tr}"}</a>
+					<a rel="nofollow" class="link" href="tiki-edit_translation.php?detach&amp;id={$id|escape:url}&amp;srcId={$trads[i].objId|escape:url}&amp;type={$type|escape:url}">{icon _id='cross' alt="{tr}detach{/tr}"}</a>
 				{/if}
 		</td></tr>
 		{/section}
@@ -146,8 +146,7 @@ function validate_translation_request() {
 			<fieldset>
 				<input type="hidden" name="id" value="{$id}" />
 				<input type="hidden" name="type" value="{$type|escape}" />
-				<input type="hidden" name="page" value="{$target_page|escape}" />
-				<p>{tr}Add existing page as a translation of this page:{/tr}<br />
+				<p>{if isset($articles)}{tr}Mark existing article as a translation of this one:{/tr}{else}{tr}Add existing page as a translation of this page:{/tr}{/if}<br />
 	
 				{if $articles}
 					<select name="srcId">{section name=ix loop=$articles}{if !empty($articles[ix].lang) and $langpage ne $articles[ix].lang}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}checked="checked"{/if}>{$articles[ix].title|truncate:80:"(...)":true|escape}</option>{/if}{/section}</select>
@@ -175,7 +174,8 @@ function validate_translation_request() {
 		<option value="{$lang.value|escape}">{$lang.name}</option>
 		{/foreach}
 	</select>
-	<input type="hidden" name="page" value="{$target_page|escape}"/>
+	<input type="hidden" name="id" value="{$id}"/>
+	<input type="hidden" name="type" value="{$type}" />
 	<input type="submit" name="switch" value="{tr}Change Language{/tr}"/>
 </div>
 </form>
@@ -195,7 +195,6 @@ function validate_translation_request() {
 			</select>
 			<input type="hidden" name="id" value="{$id}" />
 			<input type="hidden" name="type" value="{$type|escape}" />
-			<input type="hidden" name="page" value="{$target_page|escape}"/>
 			<input type="submit" value="{tr}Set Current Page's Language{/tr}"/>
 		</p>
 	</form>
