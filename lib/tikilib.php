@@ -1565,16 +1565,15 @@ class TikiLib extends TikiDb_Bridge
 
 	/*shared*/
 	function genPass() {
-		$length=8;
-		$vocales = "aeiouAEIOU";
-		$consonantes = "bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ0123456789_";
+		global $prefs;
+		$length = max($prefs['min_pass_length'], 8);
+		$list = array('aeiou', 'AEIOU', 'bcdfghjklmnpqrstvwxyz', 'BCDFGHJKLMNPQRSTVWXYZ', '0123456789');
+		$list[] = $prefs['pass_chr_special'] == 'y'? '_*&+!*-=$@':'_';
+		shuffle($list);
 		$r = '';
 		for ($i = 0; $i < $length; $i++) {
-			if ($i % 2) {
-				$r .= $vocales{rand(0, strlen($vocales) - 1)};
-			} else {
-				$r .= $consonantes{rand(0, strlen($consonantes) - 1)};
-			}
+			$ch = $list[$i % count($list)];
+			$r .= $ch{rand(0, strlen($ch) - 1)};
 		}
 		return $r;
 	}
