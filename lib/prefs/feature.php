@@ -556,8 +556,8 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_userlevels' => array(
-			'name' => tra('User Levels'),
-			'description' => tra('User Levels'),
+			'name' => tra('Menu User Levels'),
+			'description' => tra('Allows to control the menu options that can be seen by a user'),
 			'help' => 'User+Levels',
 			'type' => 'flag',
 		),
