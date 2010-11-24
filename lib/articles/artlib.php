@@ -362,7 +362,8 @@ class ArtLib extends TikiLib
 				sendEmailNotification($emails, 'watch', 'submission_notification_subject.tpl', $_SERVER['SERVER_NAME'], 'submission_notification.tpl');
 			}
 		}
-		$this->object_post_save( array(
+		global $tikilib;
+		$tikilib->object_post_save( array(
 			'type' => 'submission',
 			'object' => $id,
 			'description' => substr($heading, 0, 200), 
@@ -585,7 +586,8 @@ class ArtLib extends TikiLib
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('articles', $articleId);
 		}
-		$this->object_post_save( array(
+		global $tikilib;
+		$tikilib->object_post_save( array(
 			'type' => 'article',
 			'object' => $articleId,
 			'description' => substr($heading, 0, 200),

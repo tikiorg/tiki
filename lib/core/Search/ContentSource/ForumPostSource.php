@@ -21,7 +21,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 		$comment = $commentslib->get_comment($objectId);
 
 		$lastModification = $comment['lastModif'];
-		$content = $info['data'];
+		$content = $comment['data'];
 
 		$thread = $commentslib->get_comments($comment['objectType'] . ':' . $comment['object'], $objectId, 0, 0);
 		foreach ($thread['data'] as $reply) {

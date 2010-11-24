@@ -2225,7 +2225,8 @@ class Comments extends TikiLib
 				$type = $object[0].' comment';
 			}
 			$href = $this->getHref($object[0], $object[1], $threadId);
-			$this->object_post_save( array('type'=>$type, 'object'=>$threadId, 'description'=>'', 'href'=>$href, 'name'=>$title), array('content' => $data));
+			global $tikilib;
+			$tikilib->object_post_save( array('type'=>$type, 'object'=>$threadId, 'description'=>'', 'href'=>$href, 'name'=>$title), array('content' => $data));
 			$this->update_comment_links($data, $object[0], $threadId);
 		} // end hash check
 	}
@@ -2409,7 +2410,8 @@ class Comments extends TikiLib
 			$type = $object[0].' comment';
 		}
 		$href = $this->getHref($object[0], $object[1], $threadId);
-		$this->object_post_save( array('type'=>$type, 'object'=>$threadId, 'description'=>'', 'href'=>$href, 'name'=>$title), array( 'content' => $data ));
+		global $tikilib;
+		$tikilib->object_post_save( array('type'=>$type, 'object'=>$threadId, 'description'=>'', 'href'=>$href, 'name'=>$title), array( 'content' => $data ));
 		$this->update_comment_links($data, $object[0], $threadId);
 
 		return $threadId;
