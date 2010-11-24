@@ -8,7 +8,8 @@
 function prefs_menus_list() {
 	return array(
 		'menus_items_icons' => array(
-			'name' => tra('Allow users to define icons for menus entries'),
+			'name' => tra('Menu icons'),
+			'description' => tra('Allows to define icons for menu entries'),
 			'type' => 'flag',
 		),
 		'menus_items_icons_path' => array(
