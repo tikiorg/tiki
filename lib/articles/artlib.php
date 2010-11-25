@@ -411,8 +411,9 @@ class ArtLib extends TikiLib
 			$expireDate = $publishDate;
 		}
 		$hash = md5($title . $heading . $body);
-		if (empty($imgdata))
+		if (empty($imgdata) || $useImage === 'n') {	// remove image data if not using it
 			$imgdata = '';
+		}
 		
 		$query = 'select `name` from `tiki_topics` where `topicId` = ?';
 		$topicName = $this->getOne($query, array($topicId) );
