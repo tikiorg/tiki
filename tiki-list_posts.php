@@ -35,7 +35,6 @@ if (isset($_REQUEST["find"])) {
 	$find = '';
 }
 $smarty->assign('find', $find);
-
 if (isset($_REQUEST['blogId'])) {
 	$blogId = $_REQUEST['blogId'];
 	$blog = $bloglib->get_blog($blogId);

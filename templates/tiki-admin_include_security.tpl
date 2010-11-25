@@ -72,6 +72,14 @@
 				{preference name=auth_token_tellafriend}
 				{preference name=auth_token_share}
 		{/tab}
+
+		{tab name="{tr}Clipperz online password management{/tr}"}
+			<fieldset>
+			{tr}Tiki doesn't offer a built-in password management feature.{/tr} <a href="http://doc.tiki.org/clipperz" target="_blank">{tr}Learn more about Clipperz{/tr}</a>
+			</fieldset>
+		{/tab}		
+		
+		
 {/tabset}	
 	
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">

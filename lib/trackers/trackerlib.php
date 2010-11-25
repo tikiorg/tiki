@@ -45,7 +45,7 @@ class TrackerLib extends TikiLib
 
 	function __construct() {
 		parent::__construct();
-		$this->imgMimeTypes = array('image/jpeg', 'image/gif', 'image/png', 'image/pjpeg');
+		$this->imgMimeTypes = array('image/jpeg', 'image/gif', 'image/png', 'image/pjpeg', 'image/bmp');
 		$this->imgMaxSize = (1048576 * 4); // 4Mo
 	}
 

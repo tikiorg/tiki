@@ -162,18 +162,13 @@ function capLock(e){
 			{/if}
       </form>
     {/if}
-	{if $prefs.auth_method eq 'openid' and !$user and $registration eq 'n'}
+	{if $prefs.auth_method eq 'openid' and !$user and (!isset($registration) || $registration neq 'y')}
 		<form method="get" action="tiki-login_openid.php">
 			<fieldset>
 				<legend>{tr}OpenID Log in{/tr}</legend>
 				<input class="openid_url" type="text" name="openid_url"/>
 				<input type="submit" value="{tr}Go{/tr}"/>
 				<a class="linkmodule tikihelp" target="_blank" href="http://doc.tiki.org/OpenID">{tr}What is OpenID?{/tr}</a>
-
-				{*<div>
-					<input type="checkbox" name="action" value="force" id="openid_force"/>
-					<label for="openid_force">{tr}Force assign of new OpenID user link{/tr}</label>
-				</div>*}
 			</fieldset>
 		</form>
 	{/if}

@@ -4834,8 +4834,10 @@ if( \$('#$id') ) {
 		}
 
 		global $prefs;
-		if( isset($prefs['pluginaliaslist']) )
+		if( isset($prefs['pluginaliaslist']) ) {
 			$alias = @unserialize($prefs['pluginaliaslist']);
+			$alias = array_filter($alias);
+		}
 
 		if( $includeReal && $includeAlias )
 			$plugins = array_merge( $real, $alias );
@@ -4846,8 +4848,8 @@ if( \$('#$id') ) {
 		else
 			$plugins = array();
 
-		sort($plugins);
-
+		sort(array_filter($plugins));
+		
 		return $plugins;
 	}
 

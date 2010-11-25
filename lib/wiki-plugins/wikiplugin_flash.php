@@ -23,7 +23,7 @@ function wikiplugin_flash_info() {
 				'description' => tra('Whether you want to insert a Flash from a URL, a fileId from a podcast file gallery or a link to a specific service like Youtube or Vimeo'),
 				'options' => array(
 					array('text' => tra('Select an option'), 'value' => ''),
-					array('text' => tra('Blip.tv'), 'value' => 'bliptv'),
+					array('text' => tra('Blip.tv'), 'value' => 'bliptv'), 
 					array('text' => tra('FileId from a podcast file gallery'), 'value' => 'fileId'),
 					array('text' => tra('Movie URL'), 'value' => 'url'),
 					array('text' => tra('Vimeo'), 'value' => 'vimeo'),

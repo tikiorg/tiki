@@ -19,6 +19,7 @@ if (empty($_REQUEST['objectType'])) {
 	 $_REQUEST['objectId'] = '';
 }
 
+$smarty->assign('headtitle',tra('Object Permissions'));
 
 $auto_query_args = array(
 	'referer',

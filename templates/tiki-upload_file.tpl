@@ -25,11 +25,13 @@
 	{if count($uploads) > 0}
 		{button href="#upload" _text="{tr}Upload File{/tr}"}
 	{/if}
-	{if $simpleMode eq 'y'}{button simpleMode='n' galleryId=$galleryId href="" _text="{tr}Advanced mode{/tr}" _ajax="n"}{else}{button galleryId=$galleryId href="" _text="{tr}Simple mode{/tr}" _ajax="n"}{/if}
-	<span{if $simpleMode eq 'y'} style="display:none;"{/if}>
-		<label for="keepOpenCbx">{tr}Keep gallery window open{/tr}</label>
-		<input type="checkbox" id="keepOpenCbx" checked="checked">
-	</span>
+	{if isset($filegals_manager)}
+		{if $simpleMode eq 'y'}{button simpleMode='n' galleryId=$galleryId href="" _text="{tr}Advanced mode{/tr}" _ajax="n"}{else}{button galleryId=$galleryId href="" _text="{tr}Simple mode{/tr}" _ajax="n"}{/if}
+		<span{if $simpleMode eq 'y'} style="display:none;"{/if}>
+			<label for="keepOpenCbx">{tr}Keep gallery window open{/tr}</label>
+			<input type="checkbox" id="keepOpenCbx" checked="checked">
+		</span>
+	{/if}
 </div>
 {/if}
 

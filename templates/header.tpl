@@ -69,7 +69,7 @@
 		{* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
 		{elseif !empty($arttitle)}
 			{$arttitle|escape}
-		{elseif !empty($title)}
+		{elseif !empty($title) and !is_array($title)}
 			{$title|escape}
 		{elseif !empty($thread_info.title)}
 			{$thread_info.title|escape}

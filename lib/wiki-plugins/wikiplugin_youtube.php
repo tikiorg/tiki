@@ -49,7 +49,7 @@ function wikiplugin_youtube_info() {
 			),
 			'allowFullScreen' => array(
 				'required' => false,
-				'name' => tra('Full screen'),
+				'name' => tra('Allow Fullscreen'),
 				'description' => tra('Expand to full screen'),
 				'default' => 'false',
 				'filter' => 'alpha',
@@ -63,7 +63,7 @@ function wikiplugin_youtube_info() {
 				'required' => false,
 				'name' => tra('Related'),
 				'description' => tra('Show related videos'),
-				'introduced' => 7.0,
+				'introduced' => 6.1,
 				'filter' => 'alpha',
     			'options' => array(
 					array('text' => tra('Yes'), 'value' => 'y'), 
@@ -77,7 +77,7 @@ function wikiplugin_youtube_info() {
 				'name' => tra('Background'),
 				'description' => tra('Toolbar background color'),
 				'accepted' => tra('HTML color code, e.g. ffffff'),
-				'introduced' => 7.0,
+				'introduced' => 6.1,
 				'filter' => 'striptags',
 				'default' => '',
 				'advanced' => true				
@@ -87,7 +87,7 @@ function wikiplugin_youtube_info() {
 				'name' => tra('Borders'),
 				'description' => tra('Toolbar border colors'),
 				'accepted' => tra('HTML color code, e.g. ffffff'),
-				'introduced' => 7.0,
+				'introduced' => 6.1,
 				'filter' => 'striptags',
 				'default' => '',
 				'advanced' => true				

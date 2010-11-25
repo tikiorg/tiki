@@ -10,8 +10,9 @@ function wikiplugin_file_info()
 	return array(
 		'name' => tra( 'File' ),
 		'documentation' => 'PluginFile',
-		'description' => tra("Displays a link to a file (either from the file gallery or an attachment to a wiki page) and can display an image attachment."),
+		'description' => tra("Displays a link to a file (either from the file gallery or an attachment to a wiki page) and can display an image attachment. For more than one file from file galleries, or more optional information shown from the file/s, use the plugin FILES instead"),
 		'prefs' => array( 'wikiplugin_file' ),
+		'body' => tra('Label for the link to the file'),
 		'icon' => 'pics/icons/file-manager.png',
 		'inline' => true,
 		'params' => array(
@@ -78,6 +79,14 @@ function wikiplugin_file_info()
 				'parent' => array('name' => 'type', 'value' => 'gallery'),
 				'advanced' => true,
 			),
+			'showicon' => array(
+				'required' => false,
+				'name' => tra('Show icon'),
+				'description' => 'y|n',
+				'filter' => 'alpha',
+				'parent' => array('name' => 'type', 'value' => 'gallery'),
+				'advanced' => true,
+			),
 		)
 	);
 }
@@ -118,7 +127,11 @@ function wikiplugin_file( $data, $params )
 		if (empty($data)) { // to avaoid problem with parsing
 			$data = empty($info['name'])?$info['filename']: $info['name'];
 		}
-		return "[tiki-download_file.php?fileId=$fileId|$data]";
+		if (isset($params['showicon']) & $params['showicon'] == "y") {
+			return "{img src=tiki-download_file.php?fileId=$fileId&amp;thumbnail=y&amp;x=16 link=tiki-download_file.php?fileId=$fileId} [tiki-download_file.php?fileId=$fileId|$data]";
+		} else {
+			return "[tiki-download_file.php?fileId=$fileId|$data]";
+		}
 	}
 
 	if ($prefs['feature_wiki_attachments'] != 'y') {
