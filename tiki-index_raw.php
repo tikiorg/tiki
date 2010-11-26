@@ -166,7 +166,7 @@ $smarty->assign('dblclickedit', 'y');
 
 // If the url has the param "download", ask the browser to download it (instead of displaying it)
 if ( isset($_REQUEST['download']) && $_REQUEST['download'] !== 'n' ) {
-  header("Content-type: text/plain");
+  header("Content-type: text/plain; charset=utf-8");
   if ( isset($_REQUEST['filename']) ) { // allow the user to specify the file name & extension based on a value in the param filename=foo (for from pretty trackers, ...)
 	header("Content-Disposition: attachment; filename=\"$filename\"");
   } else {
