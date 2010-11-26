@@ -8,7 +8,7 @@
 function wikiplugin_colorbox_info() {
 	return array(
 		'name' => tra('colorbox'),
-		'documentation' => 'PluginClorBox',
+		'documentation' => 'PluginColorBox',
 		'description' => tra("Display all the images of a file gallery in a colorbox popup"),
 		'prefs' => array( 'feature_file_galleries', 'feature_shadowbox', 'wikiplugin_colorbox' ),
 		'introduced' => 5,

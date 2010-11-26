@@ -24,4 +24,6 @@ lang = {
 	"Replace" : "Substituir",
 	"Match" : "Igual",
 	"Do not match" : "Diferente",
+	"Advanced options" : "Opções avançadas",
+	"Pick a file." : "Escolha um arquivo",
 };

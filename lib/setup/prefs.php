@@ -1565,7 +1565,7 @@ function get_default_prefs() {
 		'feature_watershed' => 'n',
 		'helpurl' => "http://doc.tiki.org/",
 		'layout_section' => 'n',
-		'limitedGoGroupHome' => 'n',
+		'limitedGoGroupHome' => 'y',
 		'minical_reminders' => 0,
 		'modallgroups' => 'n',
 		'modseparateanon' => 'n',

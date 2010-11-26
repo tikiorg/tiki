@@ -105,8 +105,8 @@ $helpDescription = $description = '';
 $url = 'tiki-admin.php';
 $adminPage = '';
 
+global $prefslib; require_once 'lib/prefslib.php';
 if( isset( $_REQUEST['lm_preference'] ) ) {
-	global $prefslib; require_once 'lib/prefslib.php';
 	
 	$changes = $prefslib->applyChanges( (array) $_REQUEST['lm_preference'], $_REQUEST );
 	foreach( $changes as $pref => $val ) {
@@ -144,6 +144,8 @@ if( isset( $_REQUEST['lm_criteria'] ) ) {
 	$smarty->assign( 'lm_searchresults', '' );
 	$smarty->assign( 'lm_error', '' );
 }
+
+$smarty->assign('indexNeedsRebuilding', $prefslib->indexNeedsRebuilding());
 
 if (isset($_REQUEST["page"])) {
 	$adminPage = $_REQUEST["page"];

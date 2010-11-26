@@ -515,7 +515,7 @@ if (empty($_REQUEST['fileId'])) {
 		$galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', $prefs['fgal_root_id'], false, true, false, false, false, true, false);
 		$cachelib->cacheItem($cacheName, serialize($galleries), $cacheType);
 	}
-	$galleries['data'] = Perms::filter(array('file gallery'), 'object', $galleries['data'], array('object'=>'id'), 'upload_files');
+	$galleries['data'] = Perms::filter(array('type' => 'file gallery'), 'object', $galleries['data'], array('object'=>'id'), 'upload_files');
 	$smarty->assign_by_ref('galleries', $galleries["data"]);
 }
 if ($prefs['fgal_limit_hits_per_file'] == 'y') {

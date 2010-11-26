@@ -9,7 +9,7 @@
 	{/remarksbox*}
 	<p>
 		<label>{tr}Configuration search{/tr}: <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"/>
-		<input type="submit" value="{tr}Search{/tr}"/></label>
+		<input type="submit" value="{tr}Search{/tr}" {if $indexNeedsRebuilding} class="tips" title="{tr}Configuration search{/tr}|{tr}Note: The search index needs rebuilding, this will take a few minutes.{/tr}"{/if} /></label>
 	</p>
 </form>
 {if $lm_error}
@@ -26,7 +26,7 @@
 	</form>
 </fieldset>
 {elseif $lm_criteria}
-	{remarksbox type="warning" title="{tr}No results{/tr}"}{tr}No preferences were found for your search query.{/tr}{/remarksbox}
+	{remarksbox type="note" title="{tr}No results{/tr}" icon="magnifier"}{tr}No preferences were found for your search query.{/tr}{/remarksbox}
 {/if}
 {/if}
 
