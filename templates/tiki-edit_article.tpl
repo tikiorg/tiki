@@ -311,19 +311,25 @@
 	
 	<div align="center">
 		<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;"/>
-		<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}"  onclick="needToConfirm=false;" />
+		<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}"  onclick="this.form.saving=true;needToConfirm=false;" />
 		{if $articleId}<input type="submit" class="wikiaction tips" title="{tr}Cancel{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}"  onclick="needToConfirm=false;" />{/if}
 	</div>
 	{jq}
-$("#editpageform").submit(function(){
-	if (!$("input[name=allowhtml]:checked").length) {
+$("#editpageform").submit(function(evt) {
+	var isHtml = false;
+	if (this.saving && !$("input[name=allowhtml]:checked").length) {
 		$("textarea", this).each(function(){
 			if ($(this).val().match(/<([A-Z][A-Z0-9]*)\b[^>]*>(.*?)<\/\1>/i)) {
-				return confirm(tr('You appear to be using HTML in your article but have not selected "Allow HTML".\nThis will result in HTML tags being removed.\nDo you want to save your edits anyway?'));
+				isHtml = true;
 			}
 		});
+		if (isHtml) {
+			this.saving = false;
+			return confirm(tr('You appear to be using HTML in your article but have not selected "Allow HTML".\nThis will result in HTML tags being removed.\nDo you want to save your edits anyway?'));
+		}
 	}
-});
+	return true;
+}).attr('saving', false);
 	{/jq}
 </form>
 
