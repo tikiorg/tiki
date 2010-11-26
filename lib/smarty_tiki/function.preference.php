@@ -29,7 +29,8 @@ function smarty_function_preference( $params, $smarty ) {
 			if (count($info['pages']) > 0) {
 			$pages_string = tra(' (found in ');
 			foreach($info['pages'] as $pg) {
-				$pages_string .= '<a class="lm_result" href="tiki-admin.php?page='.$pg.'">' . $pg . '</a>, ';
+				$ct_string = $pg[1] > 1 ? '&cookietab=' . $pg[1] : '';
+				$pages_string .= '<a class="lm_result" href="tiki-admin.php?page='.$pg[0].$ct_string.'&highlight='.$info['preference'].'">' . $pg[0] . '</a>, ';
 			}
 			$pages_string = substr($pages_string, 0, strlen($pages_string) - 2);
 			$pages_string .= ')';

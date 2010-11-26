@@ -9,6 +9,13 @@ class PreferencesLib
 {
 	private $data = array();
 	private $usageArray;
+	private $file = '';
+	
+	function PreferencesLib() {
+		global $prefs;
+		
+		$this->file = 'temp/cache/preference-index-' . $prefs['language'];
+	}
 
 	function getPreference( $name, $deps = true, $source = null, $get_pages = false ) {
 		global $prefs;
@@ -232,11 +239,9 @@ class PreferencesLib
 				new StandardAnalyzer_Analyzer_Standard_English() );
 		}
 
-		$file = 'temp/cache/preference-index-' . $prefs['language'];
-
 		require_once 'Zend/Search/Lucene.php';
-		if( ! file_exists( $file ) ) {
-			$index = Zend_Search_Lucene::create( $file );
+		if( $this->indexNeedsRebuilding() ) {
+			$index = Zend_Search_Lucene::create( $this->file );
 
 			foreach( glob( 'lib/prefs/*.php' ) as $file ) {
 				$file = substr( basename( $file ), 0, -4 );
@@ -252,7 +257,11 @@ class PreferencesLib
 			return $index;
 		}
 
-		return Zend_Search_Lucene::open( $file );
+		return Zend_Search_Lucene::open( $this->file );
+	}
+	
+	public function indexNeedsRebuilding() {
+		return !file_exists( $this->file );
 	}
 
 	public function getPreferenceLocations( $name ) {
@@ -263,14 +272,14 @@ class PreferencesLib
 		$pages = array();
 		foreach($this->usageArray as $pg => $pfs) {
 			foreach ($pfs as $pf) {
-				if ($pf == $name) {
-					$pages[] = $pg;
+				if ($pf[0] == $name) {
+					$pages[] = array($pg, $pf[1]);
 				}
 			}
 		}
 
 		if (count($pages) == 0 && strpos($name, 'plugin') !== false) {
-			$pages[] = 'textarea';	// plugins are included in textarea admin dynamically
+			$pages[] = array('textarea', 0);	// plugins are included in textarea admin dynamically
 		}
 
 		return $pages;
@@ -288,8 +297,18 @@ class PreferencesLib
 				if (count($m) > 0) {
 					$page = $m[1];
 					$c = file_get_contents('templates/'.$f);
-					preg_match_all('/{preference.*name=[\'"]?(\w*)[\'"]?.*}/i', $c, $m2);
-					if (count($m2) > 0) {
+					preg_match_all('/{preference.*name=[\'"]?(\w*)[\'"]?.*}/i', $c, $m2, PREG_OFFSET_CAPTURE);
+					if (count($m2[1]) > 0) {
+						// count number of tabs in front of each found pref
+						foreach( $m2[1] as & $found) {
+							$tabs = preg_match_all('/{\/tab}/i', substr($c, 0, $found[1]), $m3);
+							if ($tabs === false) {
+								$tabs = 0;
+							} else {
+								$tabs++;
+							}
+							$found[1] = $tabs;	// replace char offset with tab number
+						}
 						$prefs_usage_array[$page] = $m2[1];
 					}
 				}
@@ -417,4 +436,4 @@ class PreferencesLib
 }
 
 global $prefslib;
-$prefslib = new PreferencesLib;
+$prefslib = new PreferencesLib();

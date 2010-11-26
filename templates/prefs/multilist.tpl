@@ -1,4 +1,4 @@
-<div class="adminoptionbox" style="text-align: left;">
+<div class="adminoptionbox{if isset($smarty.request.highlight) and $smarty.request.highlight eq $p.preference} highlight{/if}" style="text-align: left;">
 	<label for="{$p.id|escape}">{$p.name|escape}:</label>
 	<select name="{$p.preference|escape}[]" id="{$p.id|escape}" multiple="multiple">
 		{foreach from=$p.options key=value item=label}
