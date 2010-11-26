@@ -7,22 +7,20 @@
 
 function wikiplugin_file_info()
 {
-	return array(
+	global $prefs;
+	$info = array(
 		'name' => tra( 'File' ),
 		'documentation' => 'PluginFile',
 		'description' => tra("Displays a link to a file (either from the file gallery or an attachment to a wiki page) and can display an image attachment. For more than one file from file galleries, or more optional information shown from the file/s, use the plugin FILES instead"),
 		'prefs' => array( 'wikiplugin_file' ),
-		'body' => tra('Label for the link to the file'),
+		'body' => tra('Label for the link to the file (ignored if the file is a wiki attachment)'),
 		'icon' => 'pics/icons/file-manager.png',
 		'inline' => true,
 		'params' => array(
 			'type' => array(
 				'required' => true,
 				'name' => tra('Type'),
-				'description' => tra('Choose either File from gallery or Wiki page attachment.'),
-				'options' => array(
-					array('text' => tra('File from file gallery'), 'value' => 'gallery'),
-					array('text' => tra('Wiki page attachment'), 'value' => 'attachment'),
+				'options' => array( // Filled below
 				),
 			),
 			'name' => array(
@@ -89,6 +87,13 @@ function wikiplugin_file_info()
 			),
 		)
 	);
+	if ($prefs['feature_file_galleries'] == 'y') {
+		$info['params']['type']['options'][] = 	array('text' => tra('File from file gallery'), 'value' => 'gallery');
+	}
+	if ($prefs['feature_wiki_attachments'] == 'y') {
+		$info['params']['type']['options'][] = 	array('text' => tra('Wiki page attachment'), 'value' => 'attachment');
+	}
+	return $info;
 }
 
 function wikiplugin_file( $data, $params )
