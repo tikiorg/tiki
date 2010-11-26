@@ -433,6 +433,15 @@ a.flip:hover,
 	padding: 0 1em;
 }
 
+.box-search input[type=submit],
+.box-search input[type=submit]:hover {
+	font-size: smaller;
+	padding: 0.1em 0.3em;
+	margin: 0.2em;
+}
+
+
+
 /* Icons */
 a.icon,
 img.icon {
