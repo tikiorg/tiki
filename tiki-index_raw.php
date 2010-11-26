@@ -34,6 +34,9 @@ if (!isset($_REQUEST["page"])) {
 	$_REQUEST["page"] = $wikilib->get_default_wiki_page();
 }
 $page = $_REQUEST['page'];
+if (isset($_REQUEST["filename"])) {
+  $filename = $_REQUEST['filename'];
+}
 $smarty->assign('page', $page);
 
 // If the page doesn't exist then display an error
@@ -160,6 +163,16 @@ ask_ticket('index-raw');
 
 // Display the Index Template
 $smarty->assign('dblclickedit', 'y');
+
+// If the url has the param "download", ask the browser to download it (instead of displaying it)
+if ( isset($_REQUEST['download']) && $_REQUEST['download'] !== 'n' ) {
+  header("Content-type: text/plain");
+  if ( isset($_REQUEST['filename']) ) { // allow the user to specify the file name & extension based on a value in the param filename=foo (for from pretty trackers, ...)
+	header("Content-Disposition: attachment; filename=\"$filename\"");
+  } else {
+	header("Content-Disposition: attachment; filename=\"$page\"");
+  }
+}
 
 // add &full to URL to output the whole html head and body
 if (isset($_REQUEST['full']) && $_REQUEST['full'] != 'n') {
