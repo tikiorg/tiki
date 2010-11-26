@@ -54,6 +54,7 @@ function prefs_global_list() {
 			'description' => tra('Users can be sent to different pages upon login, depending on their default group.'),
 			'type' => 'flag',
 			'help' => 'Group',
+			'keywords' => 'group home page pages',
 		),
 		'limitedGoGroupHome' => array(
 			'name' => tra('Go to group homepage only if login from default homepage'),
@@ -61,6 +62,7 @@ function prefs_global_list() {
 			'dependencies' => array(
 				'useGroupHome',
 			),
+			'keywords' => 'group home page pages',
 		),
 		'language' => array(
 			'name' => tra('Default language'),
@@ -284,7 +286,7 @@ function prefs_global_list() {
 			'size' => 50,
 		),
 		'useUrlIndex' => array(
-			'name' => tra('or'),
+			'name' => tra('Use URL Index'),
 			'description' => tra('Use a Tiki feature homepage or another homepage'),
 			'type' => 'flag',
 		),
