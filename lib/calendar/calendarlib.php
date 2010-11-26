@@ -339,13 +339,27 @@ class CalendarLib extends TikiLib
 		$query.= "i.`status` as `status`, i.`url` as `url`, i.`lang` as `lang`, i.`name` as `name`, i.`description` as `description`, i.`created` as `created`, i.`lastmodif` as `lastModif`, i.`allday` as `allday`, i.`recurrenceId` as `recurrenceId`, ";
 		$query.= "t.`customlocations` as `customlocations`, t.`customcategories` as `customcategories`, t.`customlanguages` as `customlanguages`, t.`custompriorities` as `custompriorities`, ";
 		$query.= "t.`customsubscription` as `customsubscription`, ";
-		$query.= "t.`customparticipants` as `customparticipants` ";
+		$query.= "t.`customparticipants` as `customparticipants`, ";
+		
+		#region reminder
+		$query.= "r.reminder_type as reminder_type, ";
+    $query.= "r.fixed_date as reminder_fixed_date, ";
+    $query.= "r.time_offset as reminder_time_offset, ";
+    $query.= "r.related_to as reminder_related_to, ";
+    $query.= "r.when_run as reminder_when_run ";
+    #endregion reminder
+
 
 		foreach($customs as $k=>$v)
 		    $query.=", i.`$k` as `$v`";
 
 		$query.= "from `tiki_calendar_items` as i left join `tiki_calendar_locations` as l on i.`locationId`=l.`callocId` ";
-		$query.= "left join `tiki_calendar_categories` as c on i.`categoryId`=c.`calcatId` left join `tiki_calendars` as t on i.`calendarId`=t.`calendarId` where `calitemId`=?";
+		$query.= "left join `tiki_calendar_categories` as c on i.`categoryId`=c.`calcatId` left join `tiki_calendars` as t on i.`calendarId`=t.`calendarId` ";		
+		#region reminder
+    $query.= "left join custom_calendar_reminder as r on i.calitemId = r.calendar_item_id ";
+    #endregion reminder
+    $query.= "where `calitemId`=?";
+
 		$result = $this->query($query,array((int)$calitemId));
 		$res = $result->fetchRow();
 		$query = "select `username`, `role` from `tiki_calendar_roles` where `calitemId`=? order by `role`";
@@ -487,6 +501,10 @@ class CalendarLib extends TikiLib
 			$r[]=(int)$calitemId;
 
 			$result = $this->query($query,$r);
+			#region reminder
+      $this->persistReminder($calitemId, $data);
+      #endregion reminder
+
 		} else {
 			$new = true;
 			$data['lastmodif']=$this->now;
@@ -506,6 +524,10 @@ class CalendarLib extends TikiLib
 			$query = 'INSERT INTO `tiki_calendar_items` ('.implode(',', $l).') VALUES ('.implode(',', $z).')';
 			$result = $this->query($query, $r);
 			$calitemId = $this->GetOne("select `calitemId` from `tiki_calendar_items` where `calendarId`=? and `created`=?",array($data["calendarId"],$this->now));
+			#region reminder
+      $this->persistReminder($calitemId, $data);
+      #endregion reminder
+
 		}
 
 		if ($calitemId) {
@@ -556,6 +578,10 @@ class CalendarLib extends TikiLib
 		if ($calitemId) {
 			$query = "delete from `tiki_calendar_items` where `calitemId`=?";
 			$this->query($query,array($calitemId));
+			#region reminder
+			$query = "delete from `custom_calendar_reminder` where `calendar_item_id`=?";
+			$this->query($query,array($calitemId));
+      #endregion reminder
 		}
 	}
 
@@ -1037,5 +1063,84 @@ $request_year, $dayend, $myurl;
 			}
 		}
 	}
+	
+	#region reminder
+
+    function persistReminder($calendarItemId, $reminderProperties)
+    {
+        # read reminder attributes
+
+        $reminderType = $reminderProperties['reminder_type'];
+        $reminderFixedDate = $reminderProperties['reminder_fixed_date'];
+        $reminderTimeOffset = $reminderProperties['reminder_time_offset'];
+        $reminderRelatedTo = $reminderProperties['reminder_related_to'];
+        $reminderWhenRun = $reminderProperties['reminder_when_run'];
+
+        # use default values
+
+        $reminderType = $reminderType == null ? 0 : $reminderType;
+        $reminderFixedDate = $reminderFixedDate == null ? 0 : $reminderFixedDate;
+        $reminderTimeOffset = $reminderTimeOffset == null ? 0 : $reminderTimeOffset;
+        $reminderRelatedTo = $reminderRelatedTo == null ? 'S' : $reminderRelatedTo;
+        $reminderWhenRun = $reminderWhenRun == null ? 'B' : $reminderWhenRun;
+
+        // get reminder id
+
+        $reminderId = $this->GetOne("SELECT reminder_id FROM custom_calendar_reminder WHERE calendar_item_id = ?", array($calendarItemId));
+
+        // insert or update reminder
+
+        if ($reminderId == 0)
+        {
+            $query = 'INSERT INTO custom_calendar_reminder (calendar_item_id, reminder_type, fixed_date, time_offset, related_to, when_run) VALUES (?, ?, ?, ?, ?, ?)';
+
+            $r = array($calendarItemId, $reminderType, 0, 0, 'S', 'B');
+
+            switch ($reminderType)
+            {
+                case 1:
+                {
+                    $r[2] = $reminderFixedDate;
+                    break;
+                }
+                case 2:
+                {
+                    $r[3] = $reminderTimeOffset;
+                    $r[4] = $reminderRelatedTo;
+                    $r[5] = $reminderWhenRun;
+                    break;
+                }
+            }
+
+            $this->query($query, $r);
+        }
+        else
+        {
+            $query = 'UPDATE custom_calendar_reminder SET reminder_type = ?, fixed_date = ?, time_offset = ?, related_to = ?, when_run = ?, last_sent = 0 WHERE reminder_id = ?';
+
+            $r = array($reminderType, 0, 0, 'S', 'B', $reminderId);
+
+            switch ($reminderType)
+            {
+                case 1:
+                {
+                    $r[1] = $reminderFixedDate;
+                    break;
+                }
+                case 2:
+                {
+                    $r[2] = $reminderTimeOffset;
+                    $r[3] = $reminderRelatedTo;
+                    $r[4] = $reminderWhenRun;
+                    break;
+                }
+            }
+
+            $this->query($query, $r);
+        }
+    }
+
+    #endregion reminder
+
 }
 $calendarlib = new CalendarLib;
