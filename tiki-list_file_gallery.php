@@ -85,7 +85,7 @@ $smarty->assign('maxRows', $maxRecords);
 $smarty->assign('edited', 'n');
 $smarty->assign('edit_mode', 'n');
 $smarty->assign('dup_mode', 'n');
-$smarty->assign('parentId', isset($_REQUEST['parentId']) ? (int)$_REQUEST['parentId'] : -1);
+$smarty->assign('parentId', isset($_REQUEST['parentId']) ? (int)$_REQUEST['parentId'] : isset($gal_info['parentId']) ? $gal_info['parentId'] : -1);
 $smarty->assign('creator', $user);
 $smarty->assign('sortorder', 'created');
 $smarty->assign('sortdirection', 'desc');
@@ -128,12 +128,12 @@ if ($tiki_p_admin_file_galleries == 'y') {
 	
 	if (isset($_REQUEST['defaultsel_x'])) {
 		check_ticket('fgal');
-		if (!empty($_REQUEST['file'])) {
-			$filegallib->setDefault(array_values($_REQUEST['file']));
-		}
 		if (!empty($_REQUEST['subgal'])) {
 			$filegallib->setDefault(array_values($_REQUEST['subgal']));
+		} else if (!empty($_REQUEST['galleryId'])) {
+			$filegallib->setDefault(array((int)$_REQUEST['galleryId']));
 		}
+		unset($_REQUEST['view']);
 	}
 }
 

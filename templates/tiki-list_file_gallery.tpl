@@ -171,8 +171,9 @@
 {elseif $dup_mode eq 'y'}
 	{include file='duplicate_file_gallery.tpl'}
 {else}
-	{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y'}
-
+	{if $prefs.fgal_search eq 'y'}
+		{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y'}
+	{/if}
 	{if $prefs.fgal_search_in_content eq 'y' and $galleryId > 0}
 		<div class="findtable">
 			<form id="search-form" class="forms" method="get" action="tiki-search{if $prefs.feature_forum_local_tiki_search eq 'y'}index{else}results{/if}.php">

@@ -594,6 +594,7 @@ function get_default_prefs() {
 		'fgal_quota_show' => 'y',
 		'fgal_list_backlinks' => 'n',
 		'fgal_search_in_content' => 'n',
+		'fgal_search' => 'y',
 		'fgal_delete_after' => '',
 		'fgal_delete_after_email' => '',
 		'fgal_list_id_admin' => 'y',
@@ -613,6 +614,7 @@ function get_default_prefs() {
 		'fgal_list_lockedby_admin' => 'n',
 		'fgal_list_backlinks_admin' => 'y',
 		'fgal_keep_fileId' => 'n',
+		'fgal_show_thumbactions' => 'y',
 
 		// imagegals
 		'feature_galleries' => 'n',

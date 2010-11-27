@@ -49,13 +49,12 @@ foreach ( $fgal_listing_conf as $k => $v ) {
 	} else {
 		$fgal_listing_conf[$k]['value'] = $prefs['fgal_list_'.$k];
 	}
-
-	// Do not show "Locked by" info if the gallery is not lockable
-	if ( isset($gal_info) && isset($gal_info['lockable']) && $gal_info['lockable'] != 'y' ) {
-		$fgal_listing_conf['lockedby']['value'] = 'n';
-	}
-
 }
+// Do not show "Locked by" info if the gallery is not lockable
+if ( isset($gal_info) && isset($gal_info['galleryId']) && isset($gal_info['lockable']) && $gal_info['lockable'] != 'y' ) {
+	$fgal_listing_conf['lockedby']['value'] = 'n';
+}
+
 $smarty->assign_by_ref('fgal_listing_conf', $fgal_listing_conf);
 
 if (isset($section) && $section == 'admin') {

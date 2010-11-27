@@ -229,7 +229,7 @@ class FileGalLib extends TikiLib
 			'subgal_conf' => '',
 			'show_id' => $prefs['fgal_list_id'],
 			'show_icon' => $prefs['fgal_list_type'],
-			'show_name' => 'f',
+			'show_name' => $prefs['fgal_list_name'],
 			'show_description' => $prefs['fgal_list_description'],
 			'show_size' => $prefs['fgal_list_size'],
 			'show_created' => $prefs['fgal_list_created'],
@@ -1528,16 +1528,16 @@ class FileGalLib extends TikiLib
 	}
 	function setDefault($fgalIds) {
 		global $prefs;
-		$query = "update `tiki_file_galleries` set `sort_mode`=?, `maxRows`=?,
+		$query = "update `tiki_file_galleries` set `sort_mode`=?, `default_view`=?,
 			`show_id`=?, `show_icon`=?, `show_name`=?, `show_description`=?, `show_size`=?,
 			`show_created`=?, `show_modified`=?, `show_creator`=?, `show_author`=?, `show_last_user`=?,
 			`show_comment`=?, `show_files`=?, `show_hits`=?, `show_lastDownload`=?,
-			`show_lockedby`=?, `show_backlinks`=? 
+			`show_lockedby`=?, `show_backlinks`=?, `show_explorer`=?, `show_path`=?, `show_slideshow`=? 
 			where `galleryId` in (".implode(',',array_fill(0, count($fgalIds),'?')).")";
 		$this->query($query, array_merge(array($prefs['fgal_sort_mode'], $prefs['fgal_default_view'], $prefs['fgal_list_id'], $prefs['fgal_list_type'], $prefs['fgal_list_name'],
 			$prefs['fgal_list_description'], $prefs['fgal_list_size'], $prefs['fgal_list_created'], $prefs['fgal_list_lastModif'], $prefs['fgal_list_creator'], 
 			$prefs['fgal_list_author'], $prefs['fgal_list_last_user'], $prefs['fgal_list_comment'], $prefs['fgal_list_files'], $prefs['fgal_list_hits'], 
-			$prefs['fgal_list_lastDownload'], $prefs['fgal_list_lockedby'], $prefs['fgal_list_backlinks']), 
+			$prefs['fgal_list_lastDownload'], $prefs['fgal_list_lockedby'], $prefs['fgal_list_backlinks'], $prefs['fgal_show_explorer'], $prefs['fgal_show_path'], $prefs['fgal_show_slideshow']), 
 			$fgalIds));
 	}
 	function getGalleryId($name, $parentId) {
