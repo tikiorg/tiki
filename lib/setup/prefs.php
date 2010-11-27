@@ -609,6 +609,7 @@ function get_default_prefs() {
 		'fgal_list_backlinks_admin' => 'y',
 		'fgal_keep_fileId' => 'n',
 		'fgal_show_thumbactions' => 'y',
+		'fgal_thumb_max_size' => 120,
 
 		// imagegals
 		'feature_galleries' => 'n',

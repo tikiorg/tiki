@@ -823,7 +823,7 @@ if (isset($_GET['slideshow'])) {
 }
 
 // Browse view
-$smarty->assign('thumbnail_size', 120);
+$smarty->assign('thumbnail_size', $prefs['fgal_thumb_max_size']);
 $smarty->assign('show_details', isset($_REQUEST['show_details']) ? $_REQUEST['show_details'] : 'n');
 // Set comments config
 if ($prefs['feature_file_galleries_comments'] == 'y') {
