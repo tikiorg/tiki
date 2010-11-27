@@ -1273,14 +1273,14 @@ class FileGalLib extends TikiLib
 		}
 		if (preg_match_all('/\[(.+)\]/Umi', $data, $matches)) {
 			foreach ($matches as $match) {
-				if ($fileId = $this->getLinkFileId($match[1])) {
+				if (isset($match[1]) && $fileId = $this->getLinkFileId($match[1])) {
 					$fileIds[] = $fileId;
 				}
 			}
 		}
 		if (preg_match_all('/<a[^>]*href=(\'|\")?([^>*])/Umi', $data, $matches)) {
 			foreach ($matches as $match) {
-				if ($fileId = $this->getLinkFileId($match[2])) {
+				if (isset($match[2]) && $fileId = $this->getLinkFileId($match[2])) {
 					$fileIds[] = $fileId;
 				}
 			}
@@ -1361,16 +1361,16 @@ class FileGalLib extends TikiLib
 	 * return '' if ok otherwise error message */
 	function moveFiles($to='to_fs', &$feedbacks) {
 		if ($to == 'to_db') {
-			$query = 'select * from `tiki_files` where `path` != ?';
-			$msg = tra('Number of files transfered to the database:');
+			$query = 'select `fileId` from `tiki_files` where `path` != ?';
+			$msg = tra('Number of files transferred to the database:');
 		} else {
-			$query = 'select * from `tiki_files` where `path` = ?';
-			$msg = tra('Number of files transfered to the file system:');
+			$query = 'select `fileId` from `tiki_files` where `path` = ?';
+			$msg = tra('Number of files transferred to the file system:');
 		}
 		$result = $this->query($query, array(''));
 		$nb = 0;
 		while ($res = $result->fetchRow()) {
-			if (($errors = $this->moveFile($to, $res)) != '') {
+			if (($errors = $this->moveFile($to, $res['fileId'])) != '') {
 				$feedbacks[] = "$msg $nb";
 				return $errors;
 			}
@@ -1379,8 +1379,9 @@ class FileGalLib extends TikiLib
 		$feedbacks[] = "$msg $nb";
 		return '';
 	}
-	function moveFile($to='to_fs', $file_info) {
+	function moveFile($to='to_fs', $file_id) {
 		global $prefs;
+		$file_info=$this->query( "select * from `tiki_files` where `fileId` = ?", array($file_id) )->fetchRow();
 		if ($to == 'to_db') {
 			if (!($fw = fopen($prefs['fgal_use_dir'] .$file_info['path'], 'rb'))) {
 				return tra('Cannot open this file:') . $prefs['fgal_use_dir'] . $file_info['path'];
