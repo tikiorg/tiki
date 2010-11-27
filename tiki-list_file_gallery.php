@@ -130,10 +130,12 @@ if ($tiki_p_admin_file_galleries == 'y') {
 		check_ticket('fgal');
 		if (!empty($_REQUEST['file'])) {
 			$filegallib->setDefault(array_values($_REQUEST['file']));
-		}
-		if (!empty($_REQUEST['subgal'])) {
+		} else if (!empty($_REQUEST['subgal'])) {
 			$filegallib->setDefault(array_values($_REQUEST['subgal']));
+		} else if (!empty($_REQUEST['galleryId'])) {
+			$filegallib->setDefault(array((int)$_REQUEST['galleryId']));
 		}
+		unset($_REQUEST['view']);
 	}
 }
 
