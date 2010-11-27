@@ -128,9 +128,7 @@ if ($tiki_p_admin_file_galleries == 'y') {
 	
 	if (isset($_REQUEST['defaultsel_x'])) {
 		check_ticket('fgal');
-		if (!empty($_REQUEST['file'])) {
-			$filegallib->setDefault(array_values($_REQUEST['file']));
-		} else if (!empty($_REQUEST['subgal'])) {
+		if (!empty($_REQUEST['subgal'])) {
 			$filegallib->setDefault(array_values($_REQUEST['subgal']));
 		} else if (!empty($_REQUEST['galleryId'])) {
 			$filegallib->setDefault(array((int)$_REQUEST['galleryId']));
