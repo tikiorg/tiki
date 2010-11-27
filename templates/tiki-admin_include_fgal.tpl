@@ -128,6 +128,7 @@
 				</div>
 			</div>
 			{preference name='fgal_quota_show'}
+			{preference name='fgal_search'}
 			{preference name='fgal_search_in_content'}
 
 			<fieldset>

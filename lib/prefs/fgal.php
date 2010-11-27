@@ -105,6 +105,10 @@ function prefs_fgal_list() {
 			'name' => tra('Include the search box on the current gallery files just after the find div'),
 			'type' => 'flag',
 		),
+		'fgal_search' => array(
+			'name' => tra('Include a search box on file galleries'),
+			'type' => 'flag',
+		),
 		'fgal_delete_after' => array(
 			'name' => tra('Automatic deletion of old files'),
 			'description' => tra('The user will have an option when uploading a file to specify the time after which the file is deleted'),
