@@ -1539,6 +1539,18 @@ span.posthead small {
 	font-weight: normal;
 }
 
+.blog_r {
+	border-left: 1px solid #8cacbb;
+	float: right;
+	width: 80%;
+}
+
+.blog_l {
+	text-align: center;
+	float: left;
+	width: 19%;
+}
+
 body.tiki_blogs .post {
 	margin-bottom: 20px;
 }
@@ -1565,9 +1577,9 @@ body.tiki_blogs .post .postbody {
 
 body.tiki_blogs .postbody-title {
 	float: none;
-	width: 100%;
 	background: none;
 	border: 0;
+	border-bottom: 1px solid #8cacbb;
 }
 
 body.tiki_blogs .postfooter {
@@ -1576,8 +1588,19 @@ body.tiki_blogs .postfooter {
 	margin-top: 4px;
 }
 
-body.tiki_blogs .postfooter .actions {
+.tiki_blogs .author_actions,
+.tiki_blogs .actions {
+	display: inline;
+	margin: 10px 0 0 6px;
 	float: left;
+}
+
+.tiki_blogs .actions {
+	padding-top: 3px;
+}
+
+.tiki_blogs .status {
+	padding: 0 6px;
 }
 
 /***** Forums *****/
@@ -1623,8 +1646,7 @@ body.tiki_blogs .postfooter .actions {
 	width: 100% !important;
 }
 
-.tiki_blogs .post .author_info,
-.post .author {
+.tiki_forums .post .author {
 	float: left;
 	text-align: left;
 	vertical-align: top;
@@ -1644,22 +1666,16 @@ body.tiki_blogs .postfooter .actions {
 	font-style: italic;
 }
 
-.post .author_info {
-	display: block;
-	padding: 0 2px 2px 2px;
-	margin-left: 5px;
-}
-
-.commentstyle_headers .author_info {
+.tiki_forums .commentstyle_headers .author_info {
 	float: left;
 }
 
-.post .postbody-title .actions {
+.tiki_forums .post .postbody-title .actions {
 	float: right;
 	font-size: 1em;
 }
 
-.postbody-content {
+.tiki_forums .postbody-content {
 	float: right;
 	width: 73%;
 	min-width: 73%;
@@ -1671,16 +1687,16 @@ body.tiki_blogs .postfooter .actions {
 	border-top: 1px dotted #d9d9d9;
 }
 
-.post .postfooter .status {
+.tiki_forums .post .postfooter .status {
 	font-size: 10px;
 }
 
-.post .postfooter {
+.tiki_forums .post .postfooter {
 	float: right;
 	text-align: right;
 }
 
-.post .inner > .postfooter {
+.tiki_forums .post .inner > .postfooter {
 	clear: both;
 }
 
