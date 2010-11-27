@@ -229,7 +229,7 @@ class FileGalLib extends TikiLib
 			'subgal_conf' => '',
 			'show_id' => $prefs['fgal_list_id'],
 			'show_icon' => $prefs['fgal_list_type'],
-			'show_name' => 'f',
+			'show_name' => $prefs['fgal_list_name'],
 			'show_description' => $prefs['fgal_list_description'],
 			'show_size' => $prefs['fgal_list_size'],
 			'show_created' => $prefs['fgal_list_created'],
