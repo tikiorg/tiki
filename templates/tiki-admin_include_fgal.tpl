@@ -131,6 +131,7 @@
 			{preference name='fgal_search'}
 			{preference name='fgal_search_in_content'}
 			{preference name='fgal_show_thumbactions'}
+			{preference name='fgal_thumb_max_size'}
 
 			<fieldset>
 				<legend>{tr}Select which items to display when listing galleries: {/tr}</legend>
