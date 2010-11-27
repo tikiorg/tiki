@@ -130,6 +130,7 @@
 			{preference name='fgal_quota_show'}
 			{preference name='fgal_search'}
 			{preference name='fgal_search_in_content'}
+			{preference name='fgal_show_thumbactions'}
 
 			<fieldset>
 				<legend>{tr}Select which items to display when listing galleries: {/tr}</legend>

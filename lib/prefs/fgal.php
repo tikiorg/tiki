@@ -121,8 +121,13 @@ function prefs_fgal_list() {
 			'type' => 'text',
 		),
 		'fgal_keep_fileId' => array(
-			'name' => tra('Keep always the same fileId when replacing a file with archive'),
+			'name' => tra('Keep fileId for archives'),
 			'description' => tra('Keep always the same fileId when replacing a file with archive'),
+			'type' => 'flag',
+		),
+		'fgal_show_thumbactions' => array(
+			'name' => tra('Show thumbnail actions'),
+			'description' => tra('Show the checkbox and wrench icon for file actions menu when not displaying details'),
 			'type' => 'flag',
 		),
 	);
