@@ -12,7 +12,6 @@ class ImageAbstract
 	var $height = NULL;
 	var $width = NULL;
 	var $classname = 'ImageAbstract';
-	var $thumb_max_size = 120;
 	var $filename = null;
 	var $thumb = null;
 	var $loaded = false;
@@ -92,7 +91,8 @@ class ImageAbstract
 	}
 
 	function resizethumb() {
-		$this->resizemax($this->thumb_max_size);
+		global $prefs;
+		$this->resizemax($prefs['fgal_thumb_max_size']);
 	}
 
 	function scale($r) {

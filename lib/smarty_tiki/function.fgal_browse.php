@@ -22,13 +22,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 function smarty_function_fgal_browse($params, &$smarty) {
 	if ( ! is_array($params) || ! isset($params['_id']) ) return;
-	global $tikilib, $userlib, $tiki_p_view_file_gallery;
+	global $tikilib, $userlib, $tiki_p_view_file_gallery, $prefs;
 
 	if ( ! isset($params['nbCols']) ) $params['nbCols'] = 0;
 	if ( ! isset($params['show_selectall']) ) $params['show_selectall'] = 'y';
 	if ( ! isset($params['show_infos']) ) $params['show_infos'] = 'y';
 	if ( ! isset($params['show_details']) ) $params['show_details'] = 'y';
-	if ( ! isset($params['thumbnail_size']) ) $params['thumbnail_size'] = 120;
+	if ( ! isset($params['thumbnail_size']) ) $params['thumbnail_size'] = $prefs['fgal_thumb_max_size'];
 	if ( ! isset($params['checkbox_label']) ) $params['checkbox_label'] = '';
 	if ( ! isset($params['file_checkbox_name']) ) $params['file_checkbox_name'] = '';
 

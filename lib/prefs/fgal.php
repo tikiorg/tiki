@@ -130,5 +130,12 @@ function prefs_fgal_list() {
 			'description' => tra('Show the checkbox and wrench icon for file actions menu when not displaying details'),
 			'type' => 'flag',
 		),
+		'fgal_thumb_max_size' => array (
+			'name' => tra('Max thumbnail size'),
+			'description' => tra('Maximum width or height for image thumbnails'),
+			'shorthint' => tra('In pixels'),
+			'type' => 'text',
+			'size' => 5,
+		),
 	);
 }
