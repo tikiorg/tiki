@@ -2213,13 +2213,7 @@ class Comments extends TikiLib
 				$contributionlib->assign_contributions($contributions, $threadId, 'comment', $title, '', '');
 			}
 
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('comments', $threadId);
-			if ($object[0] == 'forum') {
-				$type = 'forum post';
-			} else {
-				$type = $object[0].' comment';
-			}
+			$type = $this->update_index($object[0], $threadId);
 			$href = $this->getHref($object[0], $object[1], $threadId);
 			global $tikilib;
 			$tikilib->object_post_save( array('type'=>$type, 'object'=>$threadId, 'description'=>'', 'href'=>$href, 'name'=>$title), array('content' => $data));
@@ -2392,14 +2386,7 @@ class Comments extends TikiLib
 			$contributionlib->assign_contributions($contributions, $threadId, 'comment', $title, '', '');
 		}
 
-		require_once('lib/search/refresh-functions.php');
-		if ($object[0] == 'forum') {
-			$type = 'forum post';
-			refresh_index($type, $threadId);
-		} else {
-			$type = $object[0].' comment';
-			refresh_index('comments', $threadId);
-		}
+		$type = $this->update_index($object[0], $threadId, $parentId);
 		$href = $this->getHref($object[0], $object[1], $threadId);
 		global $tikilib;
 		$tikilib->object_post_save( array('type'=>$type, 'object'=>$threadId, 'description'=>'', 'href'=>$href, 'name'=>$title), array( 'content' => $data ));
@@ -2891,6 +2878,33 @@ class Comments extends TikiLib
 		$query = 'select count(*) from `tiki_forum_attachments` tfa, `tiki_comments` tc where tc.`threadId`=tfa.`threadId` and ((tc.`threadId`=? and tc.`parentId`=?) or tc.`parentId`=?)';
 		$cant = $this->getOne($query, $bindvars);
 		return array('cant' => $cant, 'data' => $ret);
+	}
+
+	private function update_index($type, $threadId, $parentId = null) {
+		require_once('lib/search/refresh-functions.php');
+
+		refresh_index('comments', $threadId);
+
+		if ($type == 'forum') {
+			$type = 'forum post';
+
+			$root = $this->find_root($parentId ? $parentId : $threadId);
+			refresh_index($type, $root);
+
+			return $type;
+		} else {
+			return $type.' comment';
+		}
+	}
+
+	private function find_root($threadId) {
+		$parent = $this->getOne('SELECT parentId FROM tiki_comments WHERE threadId = ?', array($threadId));
+
+		if ($parent) {
+			return $this->find_root($parent);
+		} else {
+			return $threadId;
+		}
 	}
 }
 
