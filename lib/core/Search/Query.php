@@ -49,6 +49,11 @@ class Search_Query
 		$this->addPart($or, 'multivalue', 'allowed_groups');
 	}
 
+	function filterRange($from, $to, $field = 'modification_date')
+	{
+		$this->expr->addPart(new Search_Expr_Range($from, $to, 'timestamp', $field));
+	}
+
 	private function addPart($query, $type, $field)
 	{
 		$query = $this->parse($query);

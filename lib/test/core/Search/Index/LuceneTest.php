@@ -5,6 +5,7 @@
  */
 class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 {
+	const DOCUMENT_DATE = 1234567890;
 	private $dir;
 	private $index;
 
@@ -19,6 +20,7 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 			'object_type' => $typeFactory->identifier('wiki page'),
 			'object_id' => $typeFactory->identifier('HomePage'),
 			'language' => $typeFactory->identifier('en'),
+			'modification_date' => $typeFactory->timestamp(self::DOCUMENT_DATE),
 			'description' => $typeFactory->plaintext('a description for the page'),
 			'wiki_content' => $typeFactory->wikitext('Hello world!'),
 			'categories' => $typeFactory->multivalue(array(1, 2, 5, 6)),
@@ -112,10 +114,20 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 		$this->assertResultCount(0, 'filterPermissions', array('Project'));
 	}
 
+	function testRangeFilter()
+	{
+		$this->assertResultCount(1, 'filterRange', self::DOCUMENT_DATE - 1000, self::DOCUMENT_DATE + 1000);
+		$this->assertResultCount(0, 'filterRange', self::DOCUMENT_DATE - 1000, self::DOCUMENT_DATE - 500);
+		$this->assertResultCount(1, 'filterRange', 2, 2000000000); // Check lexicography
+	}
+
 	private function assertResultCount($count, $filterMethod, $argument)
 	{
+		$arguments = func_get_args();
+		$arguments = array_slice($arguments, 2);
+
 		$query = new Search_Query;
-		$query->$filterMethod($argument);
+		call_user_func_array(array($query, $filterMethod), $arguments);
 
 		$this->assertEquals($count, count($query->search($this->index)));
 	}

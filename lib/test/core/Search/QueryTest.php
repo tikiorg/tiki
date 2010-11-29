@@ -58,7 +58,7 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 		$query->search($index);
 
 		$expr = new Search_Expr_And(array(
-			$expr = new Search_Expr_And(array(
+			new Search_Expr_And(array(
 				new Search_Expr_Token('1', 'multivalue', 'categories'),
 				new Search_Expr_Token('2', 'multivalue', 'categories'),
 			)),
@@ -76,7 +76,7 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 		$query->search($index);
 
 		$expr = new Search_Expr_And(array(
-			$expr = new Search_Expr_And(array(
+			new Search_Expr_And(array(
 				new Search_Expr_Token('1', 'multivalue', 'deep_categories'),
 				new Search_Expr_Token('2', 'multivalue', 'deep_categories'),
 			)),
@@ -94,7 +94,7 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 		$query->search($index);
 
 		$expr = new Search_Expr_And(array(
-			$expr = new Search_Expr_Or(array(
+			new Search_Expr_Or(array(
 				new Search_Expr_Token('en', 'identifier', 'language'),
 				new Search_Expr_Token('fr', 'identifier', 'language'),
 			)),
@@ -146,7 +146,7 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 		$query->search($index);
 
 		$expr = new Search_Expr_And(array(
-			$expr = new Search_Expr_Or(array(
+			new Search_Expr_Or(array(
 				new Search_Expr_Token('Registered', 'multivalue', 'allowed_groups'),
 				new Search_Expr_Token('Editor', 'multivalue', 'allowed_groups'),
 				new Search_Expr_Token('Project Lead ABC', 'multivalue', 'allowed_groups'),
@@ -167,7 +167,7 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(50, $index->getLastCount());
 	}
 
-	function testSpecifiedRange()
+	function testSpecifiedPaginationRange()
 	{
 		$index = new Search_Index_Memory;
 		$query = new Search_Query;
@@ -177,6 +177,21 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals(60, $index->getLastStart());
 		$this->assertEquals(30, $index->getLastCount());
+	}
+
+	function testWithQueryRange()
+	{
+		$index = new Search_Index_Memory;
+		$query = new Search_Query;
+		$query->filterRange(1000, 2000);
+
+		$query->search($index);
+
+		$expr = new Search_Expr_And(array(
+			new Search_Expr_Range(1000, 2000, 'timestamp', 'modification_date')
+		));
+
+		$this->assertEquals($expr, $index->getLastQuery());
 	}
 }
 

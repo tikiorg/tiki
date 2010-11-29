@@ -14,7 +14,7 @@ class Search_Type_Factory_Lucene implements Search_Type_Factory_Interface
 
 	function timestamp($value)
 	{
-		return new Search_Type_Whole($value);
+		return new Search_Type_Whole(gmdate('YmdHis', $value));
 	}
 
 	function identifier($value)

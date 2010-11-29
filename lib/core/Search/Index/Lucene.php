@@ -140,6 +140,16 @@ class Search_Index_Lucene implements Search_Index_Interface
 			$result->addSubquery($childNodes[0], false);
 
 			return $result;
+		} elseif ($node instanceof Search_Expr_Range) {
+			$from = $node->getToken('from');
+			$to = $node->getToken('to');
+			$range = new Zend_Search_Lucene_Search_Query_Range(
+				$this->buildTerm($from)->getTerm(),
+				$this->buildTerm($to)->getTerm(),
+				true // inclusive
+			);
+
+			return $range;
 		} elseif ($node instanceof Search_Expr_Token) {
 			return $this->buildTerm($node);
 		}
