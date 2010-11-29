@@ -1444,13 +1444,6 @@ body.tiki_blogs .post .postbody {
 	padding: 6px 0;
 }
 
-body.tiki_blogs .author_actions {
-	float: none;
-	background: none;
-	border: 0;
-	width: 100%;
-}
-
 body.tiki_blogs .actions {
 	background: none;
 	text-align: right;
