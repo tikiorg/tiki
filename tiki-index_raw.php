@@ -34,9 +34,6 @@ if (!isset($_REQUEST["page"])) {
 	$_REQUEST["page"] = $wikilib->get_default_wiki_page();
 }
 $page = $_REQUEST['page'];
-if (isset($_REQUEST["filename"])) {
-  $filename = $_REQUEST['filename'];
-}
 $smarty->assign('page', $page);
 
 // If the page doesn't exist then display an error
@@ -166,12 +163,14 @@ $smarty->assign('dblclickedit', 'y');
 
 // If the url has the param "download", ask the browser to download it (instead of displaying it)
 if ( isset($_REQUEST['download']) && $_REQUEST['download'] !== 'n' ) {
-  header("Content-type: text/plain; charset=utf-8");
-  if ( isset($_REQUEST['filename']) ) { // allow the user to specify the file name & extension based on a value in the param filename=foo (for from pretty trackers, ...)
+	if (isset($_REQUEST["filename"])) {
+		$filename = $_REQUEST['filename'];
+	} else {
+		$filename = $page;
+	}
+	$filename = str_replace(array('?',"'",'"',':','/','\\'), '_', $filename);	// clean some bad chars
+	header("Content-type: text/plain; charset=utf-8");
 	header("Content-Disposition: attachment; filename=\"$filename\"");
-  } else {
-	header("Content-Disposition: attachment; filename=\"$page\"");
-  }
 }
 
 // add &full to URL to output the whole html head and body
@@ -179,6 +178,11 @@ if (isset($_REQUEST['full']) && $_REQUEST['full'] != 'n') {
 	$smarty->assign('mid','tiki-show_page_raw.tpl');
 	// use tiki_full to include include CSS and JavaScript
 	$smarty->display("tiki_full.tpl");
+} else if (isset($_REQUEST['textonly']) && $_REQUEST['textonly'] != 'n') {
+	$output = $smarty->fetch("tiki-show_page_raw.tpl");
+	$output = strip_tags($output);
+	$output = $tikilib::htmldecode($output);
+	echo $output;
 } else {
 	// otherwise just the contents of the page without body etc
 	$smarty->display("tiki-show_page_raw.tpl");
