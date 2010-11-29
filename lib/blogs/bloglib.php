@@ -456,10 +456,9 @@ class BlogLib extends TikiDb_Bridge
 			$tikilib->object_post_save(array('type'=>'blog', 'object'=>$blogId, 'description'=>$description, 'name'=>$title, 'href'=>"tiki-view_blog.php?blogId=$blogId"), array( 'content' => $heading ));
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('blogs', $blogId);
-		}
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('blogs', $blogId);
+
 		return $blogId;
 	}
 
@@ -756,10 +755,9 @@ class BlogLib extends TikiDb_Bridge
 			$logslib->add_action('Posted', $blogId, 'blog', "blogId=$blogId&amp;postId=$id&amp;add=" . strlen($data) . "#postId$id", '', '', '', '', $contributions);
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('blog_posts', $id);
-		}
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('blog_posts', $id);
+
 		$tikilib->object_post_save(array('type'=>'blog post', 'object'=>$id, 'description'=>substr($data, 0, 200), 'name'=>$title, 'href'=>"tiki-view_blog_post.php?postId=$id"), array('content' => $data));
 		return $id;
 	}
@@ -938,10 +936,10 @@ class BlogLib extends TikiDb_Bridge
 			global $logslib; include_once('lib/logs/logslib.php');
 			$logslib->add_action('Updated', $blogId, 'blog', "blogId=$blogId&amp;postId=$postId#postId$postId", '', '', '', '', $contributions);
 		}
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('blog_posts', $postId);
-		}
+
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('blog_posts', $postId);
+
 		$tikilib->object_post_save(array('type' => 'blog post', 'object' => $postId), array('content' => $data));
 	}
 

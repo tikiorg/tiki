@@ -12,6 +12,23 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function refresh_index($object_type, $object_id = null) {
+	global $prefs;
+
+	// First process unified search, then process the legacy indexing if required.
+
+	if( $prefs['unified_incremental_update'] == 'y' && $object_id ) {
+		$unified_type = refresh_index_convert_type($object_type);
+
+		global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';
+		$unifiedsearchlib->invalidateObject( $unified_type, $object_id );
+		$unifiedsearchlib->processUpdateQueue();
+	}
+
+	// Return unless old indexing is required
+	if ($prefs['feature_search'] != 'y' || $prefs['feature_search_fulltext'] == 'y' || $prefs['search_refresh_index_mode'] != 'normal') {
+		return;
+	}
+
 	if ( empty($object_type) ) return false;
 	global $tikilib;
 
@@ -283,6 +300,61 @@ function insert_index(&$words, $location, $page) {
 			$query = 'insert into `tiki_searchindex` (`location`,`page`,`searchword`,`count`,`last_update`) values(?,?,?,?,?)';
 			$tikilib->query($query, array($location,$page,$key,(int)$value,$tikilib->now), -1, -1, false);
 		}
+	}
+}
+
+function refresh_index_convert_type($object_type) {
+	switch ( $object_type ) {
+	case 'articles': //case 'art': case 'article':
+		return 'article';
+
+	case 'blog_posts': //case 'blog': case 'blog_post':
+		return 'blog post'; // FIXME : Unchecked
+
+	case 'blogs':
+		return 'blog'; // FIXME : Unchecked
+
+	case 'directory_categories': //case 'dir_cat':
+		return 'directory'; // FIXME : Unchecked
+
+	case 'directory_sites': //case 'dir': case 'dir_site':
+		return 'directory'; // FIXME : Unchecked
+
+	case 'comments': //case 'wiki comment': case 'comment': 
+		return 'comment'; // FIXME : Unchecked
+
+	case 'faq_questions':
+		return 'faq'; // FIXME : Unchecked
+
+	case 'faqs': //case 'faq': 
+		return 'faq'; // FIXME : Unchecked
+
+	case 'file_galleries';
+		return 'file gallery';
+
+	case 'files': //case 'fgal': case 'file': 
+		return 'file';
+
+	case 'forums': //case 'forum':
+		return 'forum post';
+
+	case 'images': //case 'gal': case 'img': 
+		return 'image';
+
+	case 'pages': //case 'wiki page': case 'wiki': 
+		return 'wiki page';
+
+	case 'tracker_items': //case 'track': case 'trackeritem': 
+		return 'trackeritem';
+
+	case 'trackers': //case 'tracker':
+		return 'tracker'; // FIXME : Unchecked
+
+	case 'galleries': // case 'imggal':
+		return 'image gallery'; // FIXME : Unchecked
+	
+	default:
+		return $object_type;
 	}
 }
 

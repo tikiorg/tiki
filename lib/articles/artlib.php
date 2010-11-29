@@ -583,10 +583,9 @@ class ArtLib extends TikiLib
 		}
 
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('articles', $articleId);
-		}
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('articles', $articleId);
+
 		global $tikilib;
 		$tikilib->object_post_save( array(
 			'type' => 'article',

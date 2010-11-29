@@ -970,10 +970,8 @@ class Comments extends TikiLib
 		}
 
 		global $prefs;
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('forums', $forumId);
-		}
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('forums', $forumId);
 
 		return $forumId;
 	}
@@ -2215,10 +2213,8 @@ class Comments extends TikiLib
 				$contributionlib->assign_contributions($contributions, $threadId, 'comment', $title, '', '');
 			}
 
-			if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-				require_once('lib/search/refresh-functions.php');
-				refresh_index('comments', $threadId);
-			}
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('comments', $threadId);
 			if ($object[0] == 'forum') {
 				$type = 'forum post';
 			} else {
@@ -2377,10 +2373,6 @@ class Comments extends TikiLib
 		$threadId = $this->getOne("select `threadId` from
 				`tiki_comments` where `hash`=?", array( $hash ) );
 
-		/* Force an index refresh of the data */
-		include_once("lib/search/refresh-functions.php");
-		refresh_index_comments( $threadId );
-
 		global $prefs;
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
@@ -2400,14 +2392,13 @@ class Comments extends TikiLib
 			$contributionlib->assign_contributions($contributions, $threadId, 'comment', $title, '', '');
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('comments', $threadId);
-		}
+		require_once('lib/search/refresh-functions.php');
 		if ($object[0] == 'forum') {
 			$type = 'forum post';
+			refresh_index($type, $threadId);
 		} else {
 			$type = $object[0].' comment';
+			refresh_index('comments', $threadId);
 		}
 		$href = $this->getHref($object[0], $object[1], $threadId);
 		global $tikilib;

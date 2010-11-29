@@ -4347,10 +4347,8 @@ class TikiLib extends TikiDb_Bridge
 			$this->score_event($user, 'wiki_new');
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('pages', $name);
-		}
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('pages', $name);
 
 		$this->object_post_save( array( 'type'=> 'wiki page', 'object'=> $name, 'description'=> $description, 'name'=>$name, 'href'=>"tiki-index.php?page=$name" ), array(
 			'content' => $data,
@@ -7355,10 +7353,9 @@ if( \$('#$id') ) {
 			}
 
 		}
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('pages', $pageName);
-		}
+
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('pages', $pageName);
 
 		$this->object_post_save( array( 'type' => 'wiki page', 'object' => $pageName ), array(
 			'content' => $edit_data,
@@ -7375,12 +7372,6 @@ if( \$('#$id') ) {
 
 		if( isset( $data['content'] ) ) {
 			$this->apply_plugin_save_handlers( $context, $data );
-		}
-
-		if( $prefs['unified_incremental_update'] == 'y' ) {
-			global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';
-			$unifiedsearchlib->invalidateObject( $context['type'], $context['object'] );
-			$unifiedsearchlib->processUpdateQueue();
 		}
 	}
 
