@@ -22,17 +22,20 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 
 		$lastModification = $comment['lastModif'];
 		$content = $comment['data'];
+		$author = array($comment['userName']);
 
 		$thread = $commentslib->get_comments($comment['objectType'] . ':' . $comment['object'], $objectId, 0, 0);
 		foreach ($thread['data'] as $reply) {
 			$content .= "\n{$reply['data']}";
 			$lastModification = max($lastModification, $reply['commentDate']);
+			$author[] = $comment['userName'];
 		}
 
 		$data = array(
 			'title' => $typeFactory->sortable($comment['title']),
 			'language' => $typeFactory->identifier('unknown'),
 			'modification_date' => $typeFactory->timestamp($lastModification),
+			'contributors' => $typeFactory->multivalue(array_unique($author)),
 
 			'post_content' => $typeFactory->wikitext($content),
 

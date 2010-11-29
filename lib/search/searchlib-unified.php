@@ -69,6 +69,10 @@ class UnifiedSearchLib
 			$aggregator->addContentSource('forum post', new Search_ContentSource_ForumPostSource);
 		}
 
+		if ($prefs['feature_blogs'] == 'y') {
+			$aggregator->addContentSource('blog post', new Search_ContentSource_BlogPostSource);
+		}
+
 		if ($prefs['feature_categories'] == 'y') {
 			$aggregator->addGlobalSource(new Search_GlobalSource_CategorySource);
 		}
