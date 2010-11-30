@@ -66,9 +66,9 @@
 		{/tab}
 
 		{tab name="{tr}Plugins{/tr}"}
-			{remarksbox type="note" title="{tr}About plugins{/tr}"}{tr}Tiki plugins add functionality to wiki pages, articles and blogs etc. You can enable and disable them below.{/tr}
+			{remarksbox type="note" title="{tr}About plugins{/tr}"}{tr}Tiki plugins add functionality to wiki pages, articles, blogs, and so on. You can enable and disable them below.{/tr}
 			{tr}You can approve plugin use at <a href="tiki-plugins.php">tiki-plugins.php</a>.{/tr}		
-			{tr}The edit plugin icon is an easy way for users to edit the parameters of each plugin in wiki pages. It can be disabled for individual plugins below.{/tr}
+			{tr}The edit-plugin icon is an easy way for users to edit the parameters of each plugin in wiki pages. It can be disabled for individual plugins below.{/tr}
 			{/remarksbox}
 			{if !isset($disabled)}
 				{button href="?page=textarea&disabled=y" _text="{tr}Check disabled plugins used in wiki pages{/tr}"}
