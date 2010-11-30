@@ -126,5 +126,21 @@ class Search_GlobalSource_PermissionSourceTest extends PHPUnit_Framework_TestCas
 		$typeFactory = $this->index->getTypeFactory();
 		$this->assertEquals($typeFactory->multivalue(array('Registered')), $document['allowed_groups']);
 	}
+
+	function testWithBothSpecified()
+	{
+		$contentSource = new Search_ContentSource_Static(array(
+			'10' => array('parent_view_permission' => 'tiki_p_topic_read', 'parent_object_id' => '1', 'parent_object_type' => 'forum', 'view_permission' => 'tiki_p_article_read'),
+		), array('parent_view_permission' => 'identifier', 'parent_object_id' => 'identifier', 'parent_object_type' => 'identifier', 'view_permission' => 'identifier'));
+
+		$this->indexer->addGlobalSource(new Search_GlobalSource_PermissionSource($this->perms));
+		$this->indexer->addContentSource('forum post', $contentSource);
+		$this->indexer->rebuild();
+
+		$document = $this->index->getDocument(0);
+
+		$typeFactory = $this->index->getTypeFactory();
+		$this->assertEquals($typeFactory->multivalue(array('Registered')), $document['allowed_groups']);
+	}
 }
 
