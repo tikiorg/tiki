@@ -1299,6 +1299,11 @@ form.wikiplugin_edit div {
 	color: #292929;
 }
 
+form.wikiplugin_edit table#plugin_params.normal div,
+form.wikiplugin_edit table#plugin_params_advanced.normal div {
+	color: #fff;
+}
+
 /** Wiki tocs **/
 .tocnav {
 	background: #474747;
@@ -1460,13 +1465,6 @@ body.tiki_blogs .post .title h2 {
 body.tiki_blogs .post .postbody {
 	margin-right: 8px;
 	padding: 6px 0;
-}
-
-body.tiki_blogs .author_actions {
-	float: none;
-	background: none;
-	border: 0;
-	width: 100%;
 }
 
 body.tiki_blogs .actions {

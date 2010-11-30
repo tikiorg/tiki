@@ -19,7 +19,7 @@ if (!empty($_REQUEST['itemId'])) {
 	$perms = Perms::get(array('type'=>'tracker', 'object'=> $item_info['trackerId']));
 	if (!$perms->view_trackers) {
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra('Permission denied. You cannot view this page.'));
+		$smarty->assign('msg', tra('You do not have permission to view this page.'));
 		$smarty->display('error.tpl');
 		die;
 	}

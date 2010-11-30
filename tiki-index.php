@@ -47,7 +47,7 @@ if ($prefs['feature_ajax'] === 'y') {
 }
 require_once ("lib/wiki/renderlib.php");
 
-$auto_query_args = array('page','best_lang','bl','page_id','pagenum','page_ref_id','mode','sort_mode',
+$auto_query_args = array('page','no_bl','page_id','pagenum','page_ref_id','mode','sort_mode',
                          'machine_translate_to_lang');
 
 if ($prefs['feature_categories'] == 'y') {
@@ -88,7 +88,7 @@ if (isset($_REQUEST['page_id'])) {
 
 if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST['page_ref_id'])) {
 	if ($objectperms->view) {
-		$access->display_error( $page, tra('Permission denied. You cannot view this page.'), '401');
+		$access->display_error( $page, tra('You do not have permission to view this page.'), '401');
 	} else {
 		$access->display_error( '', tra('No name indicated for wiki page'));
 	}
@@ -103,8 +103,14 @@ if( $prefs['feature_wiki_structure'] == 'y' ) {
 	$structure = 'n';
 	$smarty->assign('structure',$structure);
 	// Feature checks made in the function for structure language
-	$structlib->use_user_language_preferences();
-
+	if (!$use_best_language) {
+		$info = $tikilib->get_page_info($_REQUEST["page"]);
+		$langContext = $info['lang'];
+	} else {
+		$langContext = null;
+	}
+	$structlib->use_user_language_preferences( $langContext );
+	
 	if (isset($_REQUEST['page_ref_id'])) {
 		// If a structure page has been requested
 		$page_ref_id = $_REQUEST['page_ref_id'];
@@ -294,7 +300,7 @@ if( $page_ref_id )
 
 // Now check permissions to access this page
 if( ! $pageRenderer->canView ) {
-	$access->display_error( $page, tra('Permission denied. You cannot view this page.'), '401');
+	$access->display_error( $page, tra('You do not have permission to view this page.'), '401');
 }
 
 // Convert page to structure

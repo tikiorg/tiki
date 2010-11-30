@@ -1382,7 +1382,12 @@ class TrackerLib extends TikiLib
 			} else if ($ins_fields["data"][$i]["type"] == 'S' && !empty($ins_fields["data"][$i]['description'])) {	// static text
 				
 				$the_data .= '[-[' . $ins_fields["data"][$i]['name'] . "]-] -[(unchanged)]-:\n";
-				$the_data .= $ins_fields["data"][$i]['description'] . "\n----------\n";
+				if (isset($ins_fields["data"][$i]['options_array'][0]) && $ins_fields["data"][$i]['options_array'][0] == 1) {
+					$the_data .= strip_tags($tikilib->parse_data( $ins_fields["data"][$i]['description']));	// parse then strip wiki markup
+				} else {
+					$the_data .= $ins_fields["data"][$i]['description'];
+				}
+				$the_data .=  "\n----------\n";
 				
 			} else if ($ins_fields["data"][$i]["type"] != 'u' && $ins_fields["data"][$i]["type"] != 'g' && $ins_fields["data"][$i]["type"] != 'I' && isset($ins_fields['data'][$i]['isHidden']) && ($ins_fields["data"][$i]["isHidden"] == 'p' or $ins_fields["data"][$i]["isHidden"] == 'y')and $tiki_p_admin_trackers != 'y') {
 					// hidden field type require tracker amdin perm

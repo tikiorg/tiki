@@ -793,7 +793,7 @@ class ToolbarPicker extends Toolbar
 			global $headerlib;
 			foreach( $rawList as $smiley ) {
 				$tra = htmlentities( tra($smiley), ENT_QUOTES, 'UTF-8' );
-				$list["(:$smiley:)"] = '<img src="' . $headerlib->convert_cdn('img/smiles/icon_' .$smiley . '.gif') . '" alt="' . $tra . '" title="' . $tra . '" border="0" width="15" height="15" />';
+				$list["(:$smiley:)"] = '<img src="' . $headerlib->convert_cdn('img/smiles/icon_' .$smiley . '.gif') . '" alt="' . $tra . '" title="' . $tra . '" width="15" height="15" />';
 			}
 			break;
 		case 'color':
@@ -1239,7 +1239,7 @@ class ToolbarFileGallery extends Toolbar
 	{
 		$this->setLabel( tra('Choose or upload images') )
 			->setIcon( tra('pics/icons/pictures.png') )
-				->setWysiwygToken( 'tikiimage' )
+				->setWysiwygToken( '' )	/* disabling this by default for wysiwyg - make a custom tool with tikiimage as the wysiwyg token to override */
 					->setType('FileGallery')
 						->addRequiredPreference('feature_filegals_manager');
 	} // }}}

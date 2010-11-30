@@ -260,7 +260,7 @@ function _breadcrumb_getTitle($crumbs, $loc) {
     			}
     $ret .= help_doclink(array('crumb'=>$crumbs[$len-1]));
     if( isset($info['flag']) && $info['flag'] == 'L' && $print_page != 'y' ) {
-        $ret .= ' <img src="pics/icons/lock.png" border="0" height="16" width="16" alt="'.tra('locked').'" title="'.tra('locked by').' '.$info['user'].'" />';
+        $ret .= ' <img src="pics/icons/lock.png" height="16" width="16" alt="'.tra('locked').'" title="'.tra('locked by').' '.$info['user'].'" />';
     }
     if( $prefs['feature_breadcrumbs'] == 'n' || $prefs['feature_sitetitle'] == 'title' ) {
         $ret .= '</strong>';          

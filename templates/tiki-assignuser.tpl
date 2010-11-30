@@ -14,7 +14,7 @@
 
 {if $prefs.feature_intertiki eq 'y' and $prefs.feature_intertiki_import_groups eq 'y'}
 	{remarksbox type="warning" title="{tr}Warning{/tr}"}
-		{tr}Since this tiki site is in slave mode and import groups, the master groups will be automatically reimported at each login{/tr}
+		{tr}Since this Tiki site is in slave mode and imports groups, the master groups will be automatically reimported at each login{/tr}
 	{/remarksbox}
 {/if}
   

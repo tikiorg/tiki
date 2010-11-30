@@ -414,7 +414,7 @@ a.flip:hover,
 }
 .box-switch_lang .box-data img.highlight {
 	padding: .1em;
-	border: .1em solid #f00;
+	border: .1em solid #f00 !important;
 }
 
 .box-switch_lang .box-data .highlight {

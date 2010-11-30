@@ -39,7 +39,7 @@ if ($_REQUEST["galleryId"] != 0) {
 	/*
 	if( $tiki_p_admin != 'y' && $user!=$gal_info["user"] && $gal_info["public"]!='y') {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg',tra("Permission denied you cannot browse this gallery"));
+	$smarty->assign('msg',tra("You do not have permission to browse this gallery"));
 	$smarty->display("error.tpl");
 	die;
 	}

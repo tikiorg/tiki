@@ -29,9 +29,9 @@
 				<td>{$metric.metric_datatype|escape}</td>
 				<td>{$metric.metric_query|escape}</td>
 				<td>
-					<a class="link" href="tiki-admin_metrics.php?metric_edit={$i|escape:'url'}#editcreate" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
-					<a class="link" href="tiki-admin_metrics.php?assign_metric_new={$i|escape:'url'}#assign" title="{tr}Assign{/tr}"><img src="pics/icons/accept.png" border="0" width="16" height="16" alt="{tr}Assign{/tr}" /></a>
-					<a class="link" href="tiki-admin_metrics.php?metric_remove={$i|escape:'url'}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" height="16" alt="{tr}Delete{/tr}" /></a>
+					<a class="link" href="tiki-admin_metrics.php?metric_edit={$i|escape:'url'}#editcreate" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
+					<a class="link" href="tiki-admin_metrics.php?assign_metric_new={$i|escape:'url'}#assign" title="{tr}Assign{/tr}"><img src="pics/icons/accept.png" width="16" height="16" alt="{tr}Assign{/tr}" /></a>
+					<a class="link" href="tiki-admin_metrics.php?metric_remove={$i|escape:'url'}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" width="16" height="16" alt="{tr}Delete{/tr}" /></a>
 				</td>
 			</tr>
 		{/foreach}
@@ -57,8 +57,8 @@
 				<td class="first">{$tab.tab_name|escape}</td>
 				<td>{$tab.tab_order|escape}</td>
 				<td>
-					<a class="link" href="tiki-admin_metrics.php?tab_edit={$i|escape:'url'}#editcreatetab" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
-					<a class="link" href="tiki-admin_metrics.php?tab_remove={$i|escape:'url'}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" height="16" alt="{tr}Delete{/tr}" /></a>
+					<a class="link" href="tiki-admin_metrics.php?tab_edit={$i|escape:'url'}#editcreatetab" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
+					<a class="link" href="tiki-admin_metrics.php?tab_remove={$i|escape:'url'}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" width="16" height="16" alt="{tr}Delete{/tr}" /></a>
 				</td>
 			</tr>
 		{/foreach}
@@ -84,8 +84,8 @@
 				<td class="first">{$metrics_list[$assigned_item.metric_id].metric_name|escape}</td>
 				<td>{$tabs_list[$assigned_item.tab_id].tab_name|escape}</td>
 				<td>
-					<a class="link" href="tiki-admin_metrics.php?assign_metric_edit={$i|escape:'url'}#assign" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
-					<a class="link" href="tiki-admin_metrics.php?assign_remove={$i|escape:'url'}" title="{tr}Unassign{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" height="16" alt="{tr}Delete{/tr}" /></a>
+					<a class="link" href="tiki-admin_metrics.php?assign_metric_edit={$i|escape:'url'}#assign" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
+					<a class="link" href="tiki-admin_metrics.php?assign_remove={$i|escape:'url'}" title="{tr}Unassign{/tr}"><img src="pics/icons/cross.png" width="16" height="16" alt="{tr}Delete{/tr}" /></a>
 				</td>
 			</tr>
 		{/foreach}

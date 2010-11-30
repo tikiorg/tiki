@@ -39,17 +39,33 @@ function wikiplugin_versions_info()
 			'nav' => array(
 				'required' => false,
 				'name' => tra('Navigation'),
-				'description' => 'y|n - '.tr('Displays a navigation box that allows users to select a specific version to display.'),
+				'description' => tra('Displays a navigation box that allows users to select a specific version to display.'),
+				'default' => 'n',
+				'filter' => 'alpha',
+     			'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n'), 
+				),
 			),
 			'title' => array(
 				'required' => false,
 				'name' => tra('Title'),
-				'description' => 'y|n - '.tr('Display the current version name as the title. Note: Do not work when nav=>y'),
+				'description' => tra('Display the current version name as the title. No title shows when nav=>y; otherwise shows by default.'),
+				'default' => 'y',
+				'filter' => 'alpha',
+				'parent' => array('name' => 'nav', 'value' => 'n'),
+     			'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n'), 
+				),
 			),
 			'default' => array(
 				'required' => false,
-				'name' => tra('Default'),
-				'description' => tr('Specifies version label to show when displaying the page for the first time. e.g. \'Default\''),
+				'name' => tra('Default Label'),
+				'description' => tra('Specifies version label to show when displaying the page for the first time. Default label is \'Default\''),
+				'default' => tra('Default'),
 			),
 		),
 	);
@@ -63,7 +79,7 @@ function wikiplugin_versions($data, $params)
 	}
 	$data = $data;
 	$navbar = '';
-	if (!isset($default)) { $default = 'Default'; }
+	if (!isset($default)) { $default = tra('Default'); }
 	if (!isset($title)) { $title = 'y'; }
 	if (!isset($nav)) { $nav = 'n'; }
 	

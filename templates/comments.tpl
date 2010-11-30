@@ -87,8 +87,8 @@
 			{if $forum_mode neq 'y' or $prefs.forum_thread_user_settings eq 'y'}
 				{if $comments_cant > 0 and $section eq 'blogs'}
 					{* displaying just for blogs only because I'm not sure if this is useful for other sections *}
-					{capture name=comments_cant_title}{if $comments_cant == 1}{tr}{$comments_cant} comment so far{/tr}{else}{tr}{$comments_cant} comments so far{/tr}{/if}{/capture}
-					<h2>{$smarty.capture.comments_cant_title}</h2>
+					{capture name=comments_cant_title}{if $comments_cant == 1}{tr}{$comments_cant} comment{/tr}{else}{tr}{$comments_cant} comments{/tr}{/if}{/capture}
+					<h3>{$smarty.capture.comments_cant_title}</h3>
 				{/if}
 				<div class="forum_actions">
 					{if $forum_mode neq 'y'}
@@ -280,13 +280,13 @@
 			{/if}
 
 			<div>
-				<h2 style="text-align: left">
+				<h3>
 				{if $forum_mode eq 'y'}
 					{if $comments_threadId > 0}{tr}Editing reply{/tr}{elseif $comment_preview eq 'y'}{tr}Preview{/tr}{elseif $parent_com}{tr}Reply to the selected post{/tr}{else}{tr}Post new message{/tr}{/if}
 				{else}
 					{if $comments_threadId > 0}{tr}Editing comment{/tr}{elseif $parent_com}{tr}Reply to the selected comment{/tr}{else}{tr}Post new comment{/tr}{/if}
 				{/if}
-				</h2>
+				</h3>
 			</div>
 
 			{if $comment_preview eq 'y'}

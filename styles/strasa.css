@@ -1491,28 +1491,28 @@ body.tiki_blogs .post .postbody {
 	line-height: 1.2em;
 	margin-bottom: 1em;
 }
-
-body.tiki_blogs .author_actions {
-	float: none;
-	border: 0;
-	width: 100%;
-}
-
-body.tiki_blogs .author_actions .actions {
+/*
+body.tiki_blogs.actions {
+	background: url(strasa/login.jpg) no-repeat;
 	float: right;
-	background: url(strasa/login.jpg) no-repeat 100% 0;
-	text-align: right;
 	min-height: 24px;
-}
+	text-align: right;
+}*/
 
 body.tiki_blogs .actions img.icon {
 	padding: 4px 0;
 }
-
+/*
 body.tiki_blogs .author_info {
 	min-height: 24px;
-}
-
+	background: url(strasa/login.jpg) no-repeat;
+	color: #fff;
+	float: right;
+	font-size: 90%;
+	font-style: italic;
+	min-height: 24px;
+	padding-top: 1px;}
+*/
 body.tiki_blogs .author_info img {
 	vertical-align: top;
 }
@@ -1528,6 +1528,7 @@ body.tiki_blogs .postbody .postfooter {
 
 body.tiki_blogs .post .author_actions {
 	text-align: left;
+	display: inline;
 }
 
 .postbody-title a.freetag {
@@ -1607,7 +1608,7 @@ body.tiki_blogs .post .author_actions {
 	font-style: italic;
 	text-align: right;
 	min-height: 24px;
-	padding-left: 60px;
+	padding-left: 100px;
 	padding-top: 4px;
 	padding-right: 4px;
 	color: #fff;

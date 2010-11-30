@@ -107,7 +107,7 @@
       </td>
     </tr>
     <tr>
-      <td>{tr}Allow anonymous acces{/tr}</td>
+      <td>{tr}Allow anonymous access{/tr}</td>
       <td colspan="3">
         {tr}Yes{/tr}
         <input type="radio" name="anonymous" {if $info.anonymous eq 'y'}checked="checked"{/if} value="y" />

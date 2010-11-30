@@ -58,7 +58,7 @@ $uniqueid .= '/'.$articleLang;
 
 if ($topic and !$tikilib->user_has_perm_on_object($user,$topic,'topic','tiki_p_topic_read')) {
 	$smarty->assign('errortype', 401);
-	$errmsg=tra("Permission denied. You cannot view this section");
+	$errmsg=tra("You do not have permission to view this section");
 	require_once ('tiki-rss_error.php');
 }
 

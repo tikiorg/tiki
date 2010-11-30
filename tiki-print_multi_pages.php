@@ -40,7 +40,7 @@ if (isset($_REQUEST["print"]) || isset($_REQUEST["display"])) {
 		// Now check permissions to access this page
 		if (!$tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_view')) {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("Permission denied. You cannot view this page."));
+			$smarty->assign('msg', tra("You do not have permission to view this page."));
 			$smarty->display("error.tpl");
 			die;
 		}

@@ -394,7 +394,7 @@ class StructLib extends TikiLib
 		return ($this->s_get_page_info($parent_id));
 	}
 
-	function use_user_language_preferences()
+	function use_user_language_preferences( $langContext = null )
 	{
 		global $prefs, $multilinguallib;
 		if( $prefs['feature_multilingual'] != 'y' )
@@ -405,7 +405,7 @@ class StructLib extends TikiLib
 		if( !$multilinguallib )
 			include_once('lib/multilingual/multilinguallib.php');
 
-		$this->displayLanguageOrder = $multilinguallib->preferredLangs();
+		$this->displayLanguageOrder = $multilinguallib->preferredLangs( $langContext );
 	}
 
 	function build_language_order_clause( &$args, $pageTable = 'tp', $structTable = 'ts' )

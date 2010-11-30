@@ -113,9 +113,16 @@ function wikiplugin_category_info() {
 			'maxRecords' => array(
 				'required' => false,
 				'name' => tra('Max Records'),
-				'description' => 'Maximum number of objects to list. Default 50.',
+				'description' => tra('Maximum number of objects to list. Default 50'),
 				'default' => '50',
 				'filter' => 'digits',
+			),		
+			'showTitle' => array(
+				'required' => false,
+				'name' => tra('Show Title'),
+				'description' => tra('Show title text above category object lists'),
+				'default' => 'y',
+				'filter' => 'alpha',
 			),		
 		),
 	);
@@ -132,7 +139,7 @@ function wikiplugin_category($data, $params) {
 		return "<span class='warn'>" . tra("Categories are disabled"). "</span>";
 	}
 
-	$default = array('one' => 'n', 'showlinks' => 'y', 'categoryshowlink'=>'y', 'maxRecords' => 50);
+	$default = array('one' => 'n', 'showlinks' => 'y', 'categoryshowlink'=>'y', 'maxRecords' => 50, 'showTitle' => 'y');
 	$params = array_merge($default, $params);
 	extract ($params,EXTR_SKIP);
 

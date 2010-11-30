@@ -105,7 +105,7 @@
 {* Can be restored when we'll have a new http://branding.tiki.org/Badge
 			<p align="center">
 				<a target="_blank" href="http://www.tiki.org" title="Tiki Wiki CMS Groupware">
-				<img src="img/tiki/tikibutton2.png" alt="Tiki Wiki CMS Groupware" border="0" height="31" width="80"/>
+				<img src="img/tiki/tikibutton2.png" alt="Tiki Wiki CMS Groupware" height="31" width="80"/>
 				</a>
 			</p>
 *}

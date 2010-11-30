@@ -51,9 +51,9 @@
 	<fieldset class="admin">
 		<legend>{tr}bit.ly Settings{/tr}</legend>
 		{remarksbox type="note" title="{tr}Note{/tr}"}
-		<p>{tr}There is no need to set up a site wide bit.ly account, every user can have one on his own, but this allows for site wide statistics{/tr}<br />
+		<p>{tr}There is no need to set up a site-wide bit.ly account; every user can have his or her own, but this allows for site-wide statistics{/tr}<br />
 		{tr}Go to{/tr} <a href="http://bit.ly/a/sign_up">http://bit.ly/a/sign_up</a> {tr}to sign up for an account{/tr}.<br />
-		{tr}Go to{/tr} <a href="http://bit.ly/a/your_api_key">http://bit.ly/a/your_api_key</a> {tr}to retrieve the api key{/tr}.</p>
+		{tr}Go to{/tr} <a href="http://bit.ly/a/your_api_key">http://bit.ly/a/your_api_key</a> {tr}to retrieve the API key{/tr}.</p>
 		{/remarksbox}
 		<div class="adminoptionbox">
 		 	{preference name=socialnetworks_bitly_login}

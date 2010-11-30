@@ -69,7 +69,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"])) {
 				// Now check permissions to access this page
 				$perms = Perms::get( array( 'type' => 'wiki page', 'object' => $check ) );
 				if (! $perms->view ) {
-					$access->display_error($check, tra("Permission denied. You cannot view this page."), '403');
+					$access->display_error($check, tra("You do not have permission to view this page."), '403');
 				}
 				$page_info = $tikilib->get_page_info($check);
 				$page_info['parsed'] = $tikilib->parse_data($page_info['data']);

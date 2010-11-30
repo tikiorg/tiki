@@ -14,6 +14,7 @@ function wikiplugin_vimeo_info() {
 		'description' => tra('Display a Vimeo video'),
 		'prefs' => array( 'wikiplugin_vimeo' ),
 		'icon' => 'pics/icons/vimeo.png',
+		'introduced' => 6.1,
 		'params' => array(
 			'url' => array(
 				'required' => true,
@@ -27,12 +28,14 @@ function wikiplugin_vimeo_info() {
 				'name' => tra('Width'),
 				'description' => tra('Width in pixels'),
 				'filter' => 'digits',
+				'default' => 425,
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('Height in pixels'),
 				'filter' => 'digits',
+				'default' => 350,
 			),
 			'quality' => array(
 				'required' => false,
@@ -40,10 +43,12 @@ function wikiplugin_vimeo_info() {
 				'description' => tra('Quality of the video'),
 				'filter' => 'alpha',
     			'options' => array(
+					array('text' => '', 'value' => ''), 
 					array('text' => tra('High'), 'value' => 'high'), 
 					array('text' => tra('Medium'), 'value' => 'medium'), 
 					array('text' => tra('Low'), 'value' => 'low'), 
-				),  
+				),
+				'default' => 'high',
 				'advanced' => true				
 			),
 			'allowFullScreen' => array(
@@ -52,9 +57,11 @@ function wikiplugin_vimeo_info() {
 				'description' => tra('Expand to full screen'),
 				'filter' => 'alpha',
     			'options' => array(
+					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'true'), 
 					array('text' => tra('No'), 'value' => 'false'), 
 				),
+				'default' => '',
 				'advanced' => true				
 			),
 		),
