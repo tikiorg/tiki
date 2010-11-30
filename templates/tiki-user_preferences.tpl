@@ -126,14 +126,23 @@
       </tr>
     {/if}
   
-    {if $prefs.userTracker eq 'y' && $usertrackerId}
-      <tr class="{cycle}">
-        <td>{tr}Your personal tracker information:{/tr}</td>
-        <td>
-	  		<a class="link" href="tiki-view_tracker_item.php?view=+user">{tr}View extra information{/tr}</a>
-	  	</td>
-	  </tr>
-    {/if}
+	{if $prefs.userTracker eq 'y' && $usertrackerId}
+		{if $tiki_p_admin eq 'y' and !empty($userwatch) and $userwatch neq $user}
+			<tr class="{cycle}">
+				<td>{tr}User's personal tracker information:{/tr}</td>
+				<td>
+					<a class="link" href="tiki-view_tracker_item.php?trackerId={$usertrackerId}&user={$userwatch|escape:url}&view=+user">{tr}View extra information{/tr}</a>
+				</td>
+			</tr>
+		{else}
+			<tr class="{cycle}">
+				<td>{tr}Your personal tracker information:{/tr}</td>
+				<td>
+					<a class="link" href="tiki-view_tracker_item.php?view=+user">{tr}View extra information{/tr}</a>
+				</td>
+			</tr>
+		{/if}
+	{/if}
 
     {* Custom fields *}
     {section name=ir loop=$customfields}
@@ -568,7 +577,7 @@
 	{/tab}
 {/if}
 
-{if $tiki_p_delete_account eq 'y'}
+{if $tiki_p_delete_account eq 'y' and $userinfo.login neq 'admin'}
 {tab name="{tr}Account Deletion{/tr}"}
 <form action="tiki-user_preferences.php" method="post" onsubmit='return confirm("{tr 0=$userwatch|escape}Are you really sure you want to delete the account %0?{/tr}");'>
 {if !empty($userwatch)}<input type="hidden" name="view_user" value="{$userwatch|escape}" />{/if}
