@@ -61,6 +61,7 @@ class UnifiedSearchLib
 	{
 		global $prefs;
 
+		// Content Sources
 		if ($prefs['feature_wiki'] == 'y') {
 			$aggregator->addContentSource('wiki page', new Search_ContentSource_WikiSource);
 		}
@@ -77,6 +78,11 @@ class UnifiedSearchLib
 			$aggregator->addContentSource('article', new Search_ContentSource_ArticleSource);
 		}
 
+		if ($prefs['feature_file_galleries'] == 'y') {
+			$aggregator->addContentSource('file', new Search_ContentSource_FileSource);
+		}
+
+		// Global Sources
 		if ($prefs['feature_categories'] == 'y') {
 			$aggregator->addGlobalSource(new Search_GlobalSource_CategorySource);
 		}
