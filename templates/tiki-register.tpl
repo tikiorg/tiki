@@ -88,7 +88,7 @@
 {else}
 	{if $allowRegister eq 'y'}
 
-		<fieldset><legend>{tr}Register as a new user{/tr}</legend>
+		<fieldset>{if !isset($userTrackerHasDescription)}<legend>{tr}Register as a new user{/tr}</legend>{/if}
 		
 		{if $userTrackerData}
 			{$userTrackerData}

@@ -78,6 +78,10 @@ if ($registrationlib->merged_prefs['userTracker'] == 'y') {
 		} else {
 			$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y'));
 		}
+		$tr = $tikilib->get_tracker($re['usersTrackerId']);
+		if (!empty($tr['description'])) {
+			$smarty->assign('userTrackerHasDescription', true);
+		}
 		$user = ''; // reset $user for security reasons
 		$smarty->assign('userTrackerData', $userTrackerData);
 	}
