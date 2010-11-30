@@ -112,11 +112,11 @@
 				</tr>
 			{/if}
 			<tr>
-				<td><label>{tr}Display image informations in a mouseover box{/tr}:</label></td>
+				<td><label>{tr}Display image information in a mouseover box{/tr}:</label></td>
 				<td>
 					<input type="radio" name="gal_image_mouseover" value="n" {if $prefs.gal_image_mouseover eq 'n'}checked="checked"{/if}/>{tr}No{/tr}
 					<input type="radio" name="gal_image_mouseover" value="y" {if $prefs.gal_image_mouseover eq 'y'}checked="checked"{/if}/>{tr}Yes{/tr}
-					<input type="radio" name="gal_image_mouseover" value="only" {if $prefs.gal_image_mouseover eq 'only'}checked="checked"{/if}/>{tr}yes, and don't display those informations under the image{/tr}
+					<input type="radio" name="gal_image_mouseover" value="only" {if $prefs.gal_image_mouseover eq 'only'}checked="checked"{/if}/>{tr}yes, and don't display that information under the image{/tr}
 				</td>
 			</tr>
 				<tr>
