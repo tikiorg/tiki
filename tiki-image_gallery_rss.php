@@ -24,7 +24,7 @@ $tikilib->get_perm_object( $_REQUEST['galleryId'], 'image gallery' );
 
 if ($tiki_p_view_image_gallery != 'y') {
 	$smarty->assign('errortype', 401);
-	$errmsg=tra("Permission denied. You cannot view this section");
+	$errmsg=tra("You do not have permission to view this section");
 	require_once ('tiki-rss_error.php');
 }
 

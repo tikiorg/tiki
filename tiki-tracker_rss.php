@@ -24,7 +24,7 @@ if (!isset($_REQUEST["trackerId"])) {
 $perms = Perms::get(array('type' => 'tracker', 'object' => $_REQUEST['trackerId']));
 if ($tiki_p_admin_trackers != 'y' && (!$perms->view_trackers && !$perms->view_trackers_pending && !$perms->view_trackers_closed)) {
 	$smarty->assign('errortype', 401);
-	$errmsg = tra("Permission denied. You cannot view this section");
+	$errmsg = tra("You do not have permission to view this section");
 	require_once ('tiki-rss_error.php');
 }
 $feed = "tracker";
@@ -95,7 +95,7 @@ if ($output["data"] == "EMPTY") {
 	}
 	if (empty($status)) {
 		$smarty->assign('errortype', 401);
-		$errmsg = tra("Permission denied. You cannot view this section");
+		$errmsg = tra("You do not have permission to view this section");
 		require_once ('tiki-rss_error.php');
 	}
 	$tmp = $trklib->list_items($_REQUEST[$id], 0, $prefs['feed_tracker_max'], $sort_mode, $fields, $filterfield, $filtervalue, $status, null, $exactvalue);

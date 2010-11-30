@@ -89,7 +89,7 @@ if (is_array($_REQUEST['parentId'])) {
 }
 if (!$canView) {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra('Permission denied. You cannot view this page.'));
+	$smarty->assign('msg', tra('You do not have permission to view this page.'));
 	$smarty->display('error.tpl');
 	die;
 }

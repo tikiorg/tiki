@@ -88,7 +88,7 @@ if (isset($_REQUEST['page_id'])) {
 
 if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST['page_ref_id'])) {
 	if ($objectperms->view) {
-		$access->display_error( $page, tra('Permission denied. You cannot view this page.'), '401');
+		$access->display_error( $page, tra('You do not have permission to view this page.'), '401');
 	} else {
 		$access->display_error( '', tra('No name indicated for wiki page'));
 	}
@@ -300,7 +300,7 @@ if( $page_ref_id )
 
 // Now check permissions to access this page
 if( ! $pageRenderer->canView ) {
-	$access->display_error( $page, tra('Permission denied. You cannot view this page.'), '401');
+	$access->display_error( $page, tra('You do not have permission to view this page.'), '401');
 }
 
 // Convert page to structure

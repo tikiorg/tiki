@@ -37,7 +37,7 @@
 				{$parsed_body}
 {else}
 				<div class="error simplebox">
-					{tr}Permission denied. You do not have permission to read complete articles.{/tr}
+					{tr}You do not have permission to read complete articles.{/tr}
 				</div>
 {/if}
 			</div>
