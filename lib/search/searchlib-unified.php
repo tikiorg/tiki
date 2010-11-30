@@ -91,6 +91,10 @@ class UnifiedSearchLib
 			$aggregator->addGlobalSource(new Search_GlobalSource_FreeTagSource);
 		}
 
+		if ($prefs['rating_advanced'] == 'y') {
+			$aggregator->addGlobalSource(new Search_GlobalSource_AdvancedRatingSource);
+		}
+
 		$aggregator->addGlobalSource(new Search_GlobalSource_PermissionSource(Perms::getInstance(), 'Admins'));
 	}
 
