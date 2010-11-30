@@ -1281,6 +1281,11 @@ form.wikiplugin_edit div {
 	color: #292929;
 }
 
+form.wikiplugin_edit table#plugin_params.normal div,
+form.wikiplugin_edit table#plugin_params_advanced.normal div {
+	color: #fff;
+}
+
 /** Wiki tocs **/
 .tocnav {
 	background: #474747;
