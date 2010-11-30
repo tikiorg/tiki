@@ -66,23 +66,24 @@ class TikiDb_Pdo extends TikiDb
 		$starttime=$this->startTimer();
 
 		$result = false;
-		if ($values) {
-			if ( @ $pq = $this->db->prepare($query) ) {
-				if (!is_array($values)) {
-					$values = array($values);
-				}
-				$result = $pq->execute( $values );
+		if ( @ $pq = $this->db->prepare($query) ) {
+
+			if ($values and !is_array($values)) {
+				$values = array($values);
 			}
-		} else {
-			$result = $this->db->query($query);
+			if ($values) {
+				$result = $pq->execute( $values );
+			} else {
+				$result = $pq->execute();
+			}
 		}
 
 		$this->stopTimer($starttime);
 
-		if ( $result === false) {
-			if ( !$values || ! $pq) { // Query preparation or query failed 
+		if ( ! $result ) {
+			if ( ! $pq ) {
 				$tmp = $this->db->errorInfo();
-			} else { // Prepared query failed to execute
+			} else {
 				$tmp = $pq->errorInfo();
 				$pq->closeCursor();
 			}
@@ -90,9 +91,7 @@ class TikiDb_Pdo extends TikiDb
 			return false;
 		} else {
 			$this->setErrorMessage( "" );
-			if( !$values) {
-				return $result->fetchAll(PDO::FETCH_ASSOC);
-			} elseif($pq->columnCount() ) {
+			if( $pq->columnCount() ) {
 				return $pq->fetchAll(PDO::FETCH_ASSOC);
 			} else {
 				return array();
