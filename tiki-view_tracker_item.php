@@ -116,6 +116,13 @@ if ($prefs['userTracker'] == 'y' && isset($_REQUEST['view']) && $_REQUEST['view'
 	}
 	if (!empty($_REQUEST['trackerId']) && !empty($fieldId)) {
 		$_REQUEST['itemId'] = $trklib->get_item_id($_REQUEST['trackerId'], $fieldId, $_REQUEST['user']);
+		if (!$_REQUEST['itemId']) {
+			$smarty->assign('msg', tra("You don't have a personal tracker item yet. Click here to make one:") .
+					'<br /><a href="tiki-view_tracker.php?trackerId=' . $_REQUEST['trackerId'] . '&cookietab=2">' .
+					tra('Create tracker item') . '</a>');
+			$smarty->display("error.tpl");
+			die;
+		}
 	}
 }
 if ((!isset($_REQUEST["trackerId"]) || !$_REQUEST["trackerId"]) && isset($_REQUEST["itemId"])) {
