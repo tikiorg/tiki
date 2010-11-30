@@ -87,6 +87,10 @@ class UnifiedSearchLib
 			$aggregator->addGlobalSource(new Search_GlobalSource_CategorySource);
 		}
 
+		if ($prefs['feature_freetags'] == 'y') {
+			$aggregator->addGlobalSource(new Search_GlobalSource_FreeTagSource);
+		}
+
 		$aggregator->addGlobalSource(new Search_GlobalSource_PermissionSource(Perms::getInstance(), 'Admins'));
 	}
 
