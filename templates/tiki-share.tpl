@@ -14,13 +14,13 @@
 		{/if}
 		{if isset($tweetId)}
 			<div>
-				<a href="http://www.twitter.com/"><img src="img/icons/twitter_t_logo_32.png" border="0" /> </a>
+				<a href="http://www.twitter.com/"><img src="img/icons/twitter_t_logo_32.png" /> </a>
 				{tr}The link was sent via Twitter{/tr}
 			</div>
 		{/if}
 		{if isset($facebookId) and $facebookId!=false}
 			<div>
-				<img src="img/icons/facebook-logo_32.png" border="0" /> </a>{tr}The link was posted on your facebook wall{/tr}
+				<img src="img/icons/facebook-logo_32.png" /> </a>{tr}The link was posted on your facebook wall{/tr}
 			</div>
 		{/if}
 		{if isset($messageSent)}
