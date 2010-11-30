@@ -51,7 +51,10 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 			'language',
 			'modification_date',
 			'description',
+			'contributors',
+
 			'wiki_content',
+
 			'view_permission',
 		);
 	}

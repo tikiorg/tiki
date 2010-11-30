@@ -42,8 +42,13 @@ class Search_ContentSource_BlogPostSource implements Search_ContentSource_Interf
 	{
 		return array(
 			'title',
+			'language',
 			'modification_date',
-			'post_content',
+			'contributors',
+
+			'blog_id',
+			'blog_excerpt',
+			'blog_content',
 
 			'parent_view_permission',
 			'parent_object_id',

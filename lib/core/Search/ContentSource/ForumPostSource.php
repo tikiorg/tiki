@@ -51,7 +51,10 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 	{
 		return array(
 			'title',
+			'language',
 			'modification_date',
+			'contributors',
+
 			'post_content',
 
 			'parent_view_permission',
