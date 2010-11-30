@@ -91,7 +91,7 @@ class UnifiedSearchLib
 		}
 	}
 
-	function getDataSource($plugin)
+	function getDataSource()
 	{
 		$dataSource = new Search_Formatter_DataSource_Declarative;
 		$this->addSources($dataSource);

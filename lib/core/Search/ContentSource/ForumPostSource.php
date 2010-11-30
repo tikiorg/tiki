@@ -20,7 +20,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 		$commentslib = new Comments;
 		$comment = $commentslib->get_comment($objectId);
 
-		$lastModification = $comment['lastModif'];
+		$lastModification = $comment['commentDate'];
 		$content = $comment['data'];
 		$author = array($comment['userName']);
 
