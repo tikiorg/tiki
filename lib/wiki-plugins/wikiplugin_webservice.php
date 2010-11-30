@@ -18,18 +18,21 @@ function wikiplugin_webservice_info() {
 				'required' => false,
 				'name' => tra('URL'),
 				'description' => tra('Complete service URL'),
+				'default' => '',
 			),
 			'service' => array(
 				'required' => false,
 				'safe' => true,
 				'name' => tra('Service Name'),
 				'description' => tra('Registered service name.'),
+				'default' => '',
 			),
 			'template' => array(
 				'required' => false,
 				'safe' => true,
 				'name' => tra('Template Name'),
 				'description' => tra('For use with registered services, name of the template to be used to display the service output. This parameter will be ignored if a body is provided.'),
+				'default' => '',
 			),
 			'bodyname' => array(
 				'required' => false,
@@ -37,6 +40,7 @@ function wikiplugin_webservice_info() {
 				'safe' => true,
 				'name' => tra('Body as Parameter'),
 				'description' => tra('Name of the argument to send the body as for services with complex input. Named service required for this to be useful.'),
+				'default' => '',
 			),
 		),
 	);
