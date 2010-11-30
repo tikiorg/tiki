@@ -2187,5 +2187,10 @@ ul.freetag {
     margin: 20px 15px; 
 }
 
+/***** Accounting *****/
+div.aclabel, span.aclabel, label.aclabel {
+	float: left;
+	min-width: 150px;
+}
 
 /* End of File */

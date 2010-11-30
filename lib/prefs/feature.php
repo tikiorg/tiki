@@ -1844,5 +1844,11 @@ function prefs_feature_list() {
             'description' => tra('Enable this only if the server is behind a load balancer (or reverse proxy), this allow tiki to log the IP of the user, instead of the IP of the proxy server'),
             'type' => 'flag',
         ),
+        'feature_accounting' => array(
+			'name' => tra('Accounting'),
+			'description' => tra('Enable accounting system (alpha)'),
+			'help' => 'Accounting',
+			'type' => 'flag',
+		),
 	);
 }
