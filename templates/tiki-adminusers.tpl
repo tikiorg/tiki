@@ -14,8 +14,8 @@
 
 {if $prefs.feature_intertiki eq 'y' and ($prefs.feature_intertiki_import_groups eq 'y' or $prefs.feature_intertiki_import_preferences eq 'y')}
 	{remarksbox type="warning" title="{tr}Warning{/tr}"}
-		{if $prefs.feature_intertiki_import_groups eq 'y'}{tr}Since this tiki site is in slave mode and import groups, the master groups will be automatically reimported at each login{/tr}{/if}
-		{if $prefs.feature_intertiki_import_preferences eq 'y'}{tr}Since this tiki site is in slave mode and import preferences, the master user preferences will be automatically reimported at each login{/tr}{/if}
+		{if $prefs.feature_intertiki_import_groups eq 'y'}{tr}Since this Tiki site is in slave mode and imports groups, the master groups will be automatically reimported at each login{/tr}{/if}
+		{if $prefs.feature_intertiki_import_preferences eq 'y'}{tr}Since this Tiki site is in slave mode and imports preferences, the master user preferences will be automatically reimported at each login{/tr}{/if}
 	{/remarksbox}
 {/if}
 

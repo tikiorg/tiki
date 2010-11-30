@@ -61,8 +61,8 @@
       <input type="text" maxlength="20" size="20" name="rxmod" value="{$rxmod|escape}" title="{tr}subset of chars: imsxeADSXUu, which is regex modifiers{/tr}" />
     </td>
   </tr><tr>
-    <td><span title="{tr}Human readable text description of rule{/tr}">{tr}Description{/tr}</td>
-    <td><textarea name="description" rows="4" title="{tr}Human readable text description of rule{/tr}">{$description|escape}</textarea></td>
+    <td><span title="{tr}Human-readable text description of rule{/tr}">{tr}Description{/tr}</td>
+    <td><textarea name="description" rows="4" title="{tr}Human-readable text description of rule{/tr}">{$description|escape}</textarea></td>
   </tr><tr>
     <td>&nbsp;</td>
     <td>

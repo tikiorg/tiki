@@ -26,8 +26,8 @@
 <form action="tiki-admin_integrator.php" method="post">
 <input type="hidden" name="repID" value="{$repID|escape}" />
 <table class="formcolor">
-  <tr><td><span title="{tr}Human readable repository name{/tr}">{tr}Name{/tr}</span></td>
-    <td><input type="text" name="name" value="{$name|escape}" title="{tr}Human readable repository name{/tr}" /></td>
+  <tr><td><span title="{tr}Human-readable repository name{/tr}">{tr}Name{/tr}</span></td>
+    <td><input type="text" name="name" value="{$name|escape}" title="{tr}Human-readable repository name{/tr}" /></td>
   </tr><tr>
     <td><span title="{tr}Path to repository (local filesystem: relative/absolute web root, remote: prefixed with 'http://'){/tr}">{tr}Path{/tr}</span></td>
     <td><input type="text" name="path" value="{$path|escape}" title="{tr}Path to repository (local filesystem: relative/absolute web root, remote: prefixed with 'http://'){/tr}" /></td>
@@ -55,8 +55,8 @@
     <td><span title="{tr}Seconds count 'till cached page will be expired{/tr}">{tr}Cache expiration{/tr}</span></td>
     <td><input type="text" maxlength="14" size="14" name="expiration" value="{$expiration|escape}" title="{tr}Seconds count 'till cached page will be expired{/tr}" /></td>
   </tr><tr>
-    <td><span title="{tr}Human readable text description of repository{/tr}">{tr}Description{/tr}</span></td>
-    <td><textarea name="description" rows="4" title="{tr}Human readable text description of repository{/tr}">{$description|escape}</textarea></td>
+    <td><span title="{tr}Human-readable text description of repository{/tr}">{tr}Description{/tr}</span></td>
+    <td><textarea name="description" rows="4" title="{tr}Human-readable text description of repository{/tr}">{$description|escape}</textarea></td>
   </tr><tr>
     <td></td>
     <td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
