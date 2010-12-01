@@ -962,7 +962,7 @@ class ArtLib extends TikiLib
 
 	function delete_image_cache($image_type, $imageId)
 	{
-		global $prefs;
+		global $prefs, $tikidomain;
 		// Input validation: imageId must be a number, and not 0
 		if (!ctype_digit("$imageId") || !($imageId>0)) {
 			return false;
