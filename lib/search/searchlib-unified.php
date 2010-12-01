@@ -82,6 +82,10 @@ class UnifiedSearchLib
 			$aggregator->addContentSource('file', new Search_ContentSource_FileSource);
 		}
 
+		if ($prefs['feature_trackers'] == 'y') {
+			$aggregator->addContentSource('trackeritem', new Search_ContentSource_TrackerItemSource);
+		}
+
 		// Global Sources
 		if ($prefs['feature_categories'] == 'y') {
 			$aggregator->addGlobalSource(new Search_GlobalSource_CategorySource);
