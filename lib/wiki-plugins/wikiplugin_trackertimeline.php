@@ -8,83 +8,118 @@
 function wikiplugin_trackertimeline_info() {
 	return array(
 		'name' => tra( 'Tracker Timeline' ),
-		'documentation' => 'PluginTrackerTimeline',
+		'documentation' => tra('PluginTrackerTimeline'),
 		'description' => tra('Timeline view of a tracker, can be used to display event schedules or gantt charts.'),
 		'prefs' => array( 'wikiplugin_trackertimeline', 'feature_trackers' ),
 		'params' => array(
 			'tracker' => array(
 				'required' => true,
 				'name' => tra('Tracker ID'),
-				'description' => tra('Numeric value'),
+				'description' => tra('Numeric value representing the tracker ID'),
 				'filter' => 'digits',
+				'default' => '',
 			),
 			'title' => array(
 				'required' => true,
 				'name' => tra('Title Field'),
 				'description' => tra('Tracker Field ID containing the item title.'),
 				'filter' => 'digits',
+				'default' => '',
 			),
 			'summary' => array(
 				'required' => true,
 				'name' => tra('Summary Field'),
 				'description' => tra('Tracker Field ID containing the summary of the item. The summary will be displayed on the timeline when the item is focused.'),
 				'filter' => 'digits',
+				'default' => '',
 			),
 			'start' => array(
 				'required' => true,
 				'name' => tra('Start Date'),
 				'description' => tra('Tracker Field ID containing the element start date. The field must be a datetime/jscalendar field.'),
 				'filter' => 'digits',
+				'default' => ''
 			),
 			'end' => array(
 				'required' => true,
 				'name' => tra('End Date'),
 				'description' => tra('Tracker Field ID containing the element end date. The field must be a datetime/jscalendar field.'),
 				'filter' => 'digits',
+				'default' => ''
 			),
 			'group' => array(
 				'required' => true,
 				'name' => tra('Element Group'),
 				'description' => tra('Tracker Field ID containing the element\'s group. Elements of a same group are displayed on the same row.'),
 				'filter' => 'digits',
+				'default' => '',
 			),
 			'lower' => array(
 				'required' => true,
 				'name' => tra('Lower Bound'),
 				'description' => tra('Date from which element should be displayed. Date must be provided in YYYY-MM-DD HH:mm:ss format.'),
 				'filter' => 'striptags',
+				'default' => '',
+				'accepted' => 'Date in YYYY-MM-DD HH:mm:ss format',
 			),
 			'upper' => array(
 				'required' => true,
 				'name' => tra('Upper Bound'),
 				'description' => tra('Date until which element should be displayed. Date must be provided in YYYY-MM-DD HH:mm:ss format.'),
 				'filter' => 'striptags',
+				'default' => '',
+				'accepted' => 'Date in YYYY-MM-DD HH:mm:ss format',
 			),
 			'scale1' => array(
 				'required' => false,
 				'name' => tra('Primary Scale Unit'),
-				'description' => tra('hour, day, week, month or year (default to hour)'),
+				'description' => tra('Unit of time to use for the primary scale (default to hour)'),
 				'filter' => 'alpha',
+				'default' => 'hour',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Hour'), 'value' => 'hour'), 
+					array('text' => tra('Day'), 'value' => 'day'), 
+					array('text' => tra('Week'), 'value' => 'week'), 
+					array('text' => tra('Month'), 'value' => 'month'), 
+					array('text' => tra('Year'), 'value' => 'year')
+				)
 			),
 			'scale2' => array(
 				'required' => false,
 				'name' => tra('Secondary Scale Unit'),
-				'description' => tra('hour, day, week, month, year or empty (default to empty)'),
+				'description' => tra('Unit of time to use for the secondary scale (default to empty)'),
 				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Hour'), 'value' => 'hour'), 
+					array('text' => tra('Day'), 'value' => 'day'), 
+					array('text' => tra('Week'), 'value' => 'week'), 
+					array('text' => tra('Month'), 'value' => 'month'), 
+					array('text' => tra('Year'), 'value' => 'year')
+				)
 			),
 			'link_group' => array(
 				'required' => false,
 				'name' => tra('Link Group Name'),
-				'description' => tra('Convert the group name to a link. (y|n)'),
+				'description' => tra('Convert the group name to a link'),
 				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'link_page' => array(
 				'required' => false,
 				'name' => tra('Page Link Field'),
 				'description' => tra('Tracker Field ID containing the page name for item details.'),
 				'filter' => 'digits',
-			),
-		),
+				'default' => '',
+			)
+		)
 	);
 }
 
