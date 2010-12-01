@@ -36,11 +36,12 @@ function smarty_function_tree($params, &$smarty) {
 		
 		$tree_nodes = array(
 			array(
-				'id' => 1,
+				'id' => $params['data']['id'],
 				'parent' => 0,
 				'data' => '<a class="fgalname" href="' . $link . '">' . $icon . htmlspecialchars($name) .'</a>', 
 			)
 		);
+		$root_id = $params['data']['id'];
 		require_once $smarty->_get_plugin_filepath('block', 'self_link');
 		foreach($params['data']['data'] as $d) {
 			$link_params = array('_script' => $link, $link_var => $d[$link_id], '_class' => 'fgalname');
@@ -54,7 +55,7 @@ function smarty_function_tree($params, &$smarty) {
 			);
 		}
 		$tm = new CatBrowseTreeMaker('categ');
-		$res = $tm->make_tree( 1, $tree_nodes);
+		$res = $tm->make_tree( $root_id, $tree_nodes);
 		return $res;
 	}
 
