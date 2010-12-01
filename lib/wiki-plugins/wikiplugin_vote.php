@@ -18,55 +18,113 @@ function wikiplugin_vote_help() {
 function wikiplugin_vote_info() {
 	return array(
 		'name' => tra('Vote'),
-		'documentation' => 'PluginVote',
-		'description' => tra("Displays some stat of a tracker content, fields are indicated with numeric ids."),
+		'documentation' => tra('PluginVote'),
+		'description' => tra('Displays some stat of a tracker content, fields are indicated with numeric ids.'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_vote' ),
 		'body' => tra('Title'),
 		'params' => array(
 			'trackerId' => array(
 				'required' => true,
 				'name' => tra('Tracker ID'),
-				'description' => tra('Tracker ID'),
+				'description' => tra('Numeric value representing the tracker ID'),
+				'filter' => 'digits',
+				'default' => '',
 			),
 			'fields' => array(
 				'required' => true,
 				'name' => tra('Fields'),
 				'description' => tra('Colon-separated list of field IDs to be displayed. Example: 2:4:5'),
+				'default' => '',
 			),
 			'show_percent' => array(
 				'required' => false,
 				'name' => tra('Show Percentage'),
-				'description' => 'y|n',
+				'description' => tra('Choose whether to show the percentage of the vote each option received (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'show_bar' => array(
 				'required' => false,
 				'name' => tra('Show Bar'),
-				'description' => 'y|n',
+				'description' => tra('Choose whether to show a bar representing the number of votes each option received (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'show_stat' => array(
 				'required' => false,
 				'name' => tra('Show Stats'),
-				'description' => 'y|n',
+				'description' => tra('Choose whether to show the voting results (shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'show_stat_only_after' => array(
 				'required' => false,
 				'name' => tra('Show Stats After'),
-				'description' => 'y|n',
+				'description' => tra('Choose whether to show the voting results only after the date given in the tracker configuration (not set by default)'),
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'show_creator' => array(
 				'required' => false,
 				'name' => tra('Show Creator'),
-				'description' => 'y|n',
+				'description' => tra('Choose whether to display the user name of the creator of the voting tracker (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'status' => array(
 				'required' => false,
 				'name' => tra('Status Filter'),
-				'description' => 'o|p|c|op|oc|pc|opc'.' '.tra('Which item status to list. o = open, p = pending, c = closed.'),
+				'description' => tra('Only show items matching certain status filters'),
+				'filter' => 'alpha',
+				'default' => 'o',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Open'), 'value' => 'o'), 
+					array('text' => tra('Pending'), 'value' => 'p'), 
+					array('text' => tra('Closed'), 'value' => 'c'), 
+					array('text' => tra('Open & Pending'), 'value' => 'op'), 
+					array('text' => tra('Open & Closed'), 'value' => 'oc'), 
+					array('text' => tra('Pending & Closed'), 'value' => 'pc'), 
+					array('text' => tra('Open, Pending & Closed'), 'value' => 'opc')
+				)
 			),
 			'float' => array(
 				'required' => false,
 				'name' => tra('Float'),
-				'description' => 'left|right',
+				'description' => tra('Align the plugin on the page, allowing other elements to wrap around it (not set by default)'),
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Left'), 'value' => 'left'), 
+					array('text' => tra('Right'), 'value' => 'right'),
+					array('text' => tra('None'), 'value' => 'none'),
+				)
 			),
 		),
 	);

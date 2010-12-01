@@ -5,7 +5,9 @@
 	{jq} $(".previewBtn").click(function(){
 auto_save_data['editwiki'] = "";
 auto_save('editwiki', autoSaveId);
-$('#autosave_preview').slideToggle('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
+if (!ajaxPreviewWindow) {
+	$('#autosave_preview').slideDown('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
+}
 return false;
 });{/jq}
 {else}
