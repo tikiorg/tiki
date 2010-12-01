@@ -323,6 +323,7 @@ class AccountingLib extends LogsLib
 		}
 		if ($accountName==='') $errors[]=tra('Account name must not be empty.');
 		$cleanbudget=$this->cleanupAmount($bookId,$accountBudget);
+print_r("Budget: $accountBudget -> $cleanbudget");
 		if ($cleanbudget==='') $errors[]=tra('Budget is not a valid amount: '). $cleanbudget;
 		if ($locked!=0 and $locked!=1) $errors[]=tra('Locked must be either 0 or 1.');
 		if ($accountTax!=0) {
@@ -366,19 +367,20 @@ class AccountingLib extends LogsLib
 	 * 
 	 * Do a manual rollback, if the creation of a complete booking fails.
 	 * This is a workaround for missing transaction support
+	 * @param	int		$bookId		id of the current book
 	 * @param	int		$journalId	id of the entry to roll back
 	 * @return	string				Text messages stating the success/failure of the rollback
 	 */
-	function manualRollback($journalId) {
+	function manualRollback($bookId, $journalId) {
 		$errors=array();
-		$query="DELETE FROM `tiki_acct_item` WHERE `itemJournalId=?";
-		$res=$this->query($query,array($journalId));
+		$query="DELETE FROM `tiki_acct_item` WHERE `itemBookId`=? AND `itemJournalId=?";
+		$res=$this->query($query,array($bookId, $journalId));
 		$rollback =($res!==false);	
-		$query="DELETE FROM `tiki_acct_journal` WHERE `journalId`=?";
-		$res=$this->query($query,array($journalId));
+		$query="DELETE FROM `tiki_acct_journal` WHERE `journalBookId`=? AND `journalId`=?";
+		$res=$this->query($query,array($bookId, $journalId));
 		$rollback=$rollback and ($res!==false);
 		if (!$rollback) {
-			return tra('Rollback failed, inconsistent database: Cleanup needed for journalId')." $journalId";
+			return tra('Rollback failed, inconsistent database: Cleanup needed for journalId %0 in book %1',array($journalId, $bookId));
 		} else {
 			return tra('successfully rolled back #')." $journalId"; 
 		}
@@ -412,17 +414,17 @@ class AccountingLib extends LogsLib
 		}
 		$journalId=$this->lastInsertId();
 	  
-		$query="INSERT INTO `tiki_acct_item` (`itemJournalId`, `itemAccountId`, `itemType`,
+		$query="INSERT INTO `tiki_acct_item` (`itemBookId`, `itemJournalId`, `itemAccountId`, `itemType`,
 				`itemAmount`, `itemText`, `itemTs`)
-				VALUES (?, ?, ?, ?, ?, NOW())";
-		$res=$tikilib->query($query,array($journalId, $debitAccount, -1, $amount, $debitText));
+				VALUES (?, ?, ?, ?, ?, ?, NOW())";
+		$res=$tikilib->query($query,array($bookId, $journalId, $debitAccount, -1, $amount, $debitText));
 		if ($res===false) {
 	    	$errors[]=tra('Booking error creating debit entry').$this->ErrorNo().": ".$this->ErrorMsg()."<br /><pre>$query</pre>";
 			//$this->rollback();
 			$errors[]=$this->manualRollback($journalId);
 		  	return $errors;
 		}
-		$res=$tikilib->query($query,array($journalId,$creditAccount,1,$amount,$creditText));
+		$res=$tikilib->query($query,array($bookId, $journalId, $creditAccount, 1, $amount, $creditText));
 		if ($res===false) {
 			$errors[]=tra('Booking error creating credit entry').$tikilib->ErrorNo().": ".$tikilib->ErrorMsg()."<br /><pre>$query</pre>";
 			//$this->rollback();
@@ -508,12 +510,12 @@ class AccountingLib extends LogsLib
 		
 		$journalId=$this->lastInsertId();
 	  
-		$query="INSERT INTO `tiki_acct_item` (`itemJournalId`, `itemAccountId`, `itemType`,
+		$query="INSERT INTO `tiki_acct_item` (`itemBookId`, `itemJournalId`, `itemAccountId`, `itemType`,
 				`itemAmount`, `itemText`, `itemTs`)
-				VALUES (?, ?, ?, ?, ?, NOW())";			  
+				VALUES (?, ?, ?, ?, ?, ?, NOW())";			  
 		for ($i=0;$i<count($debitAccount);$i++) {
 			$a=$this->cleanupAmount($bookId, $debitAmount[$i]);
-			$res=$this->query($query,array($journalId, $debitAccount[$i], -1, $a, $debitText[$i]));
+			$res=$this->query($query,array($bookId, $journalId, $debitAccount[$i], -1, $a, $debitText[$i]));
 			if ($res===false) {
 				$errors[]=tra('Booking error creating debit entry').$tikilib->ErrorNo().": ".$tikilib->ErrorMsg()."<br /><pre>$query</pre>";
 				//$this->rollback();
@@ -523,11 +525,11 @@ class AccountingLib extends LogsLib
 		}
 		for ($i=0;$i<count($creditAccount);$i++) {
 			$a=$this->cleanupAmount($bookId, $creditAmount[$i]);
-			$res=$this->query($query,array($journalId, $creditAccount[$i], 1, $a, $creditText[$i]));
+			$res=$this->query($query,array($bookId, $journalId, $creditAccount[$i], 1, $a, $creditText[$i]));
 			if ($res===false) {
 				$errors[]=tra('Booking error creating credit entry').$tikilib->ErrorNo().": ".$tikilib->ErrorMsg()."<br /><pre>$query</pre>";
 				//$this->rollback();
-				$errors[]=$this->manualRollback($journalId);
+				$errors[]=$this->manualRollback($bookId, $journalId);
 				return $errors;
 			}
 		}
@@ -638,7 +640,7 @@ class AccountingLib extends LogsLib
 	function updateStatement($statementId, $journalId) {
 		$errors=array();
 	  
-		$query="UPDATE `tiki_acct_statements` SET `statementJournalId`=?
+		$query="UPDATE `tiki_acct_statement` SET `statementJournalId`=?
 				WHERE `statementId`=?";
 		$res=$this->query($query,array($journalId,$statementId));
 		if ($res===false) {
@@ -647,8 +649,6 @@ class AccountingLib extends LogsLib
 		}
 		return true;
 	}//updateStatement
-	
-
 	
 	/**
 	 * 
@@ -675,7 +675,7 @@ class AccountingLib extends LogsLib
 	 */
 	function cleanupAmount($bookId, $amount) {
 		$book=$this->getBook($bookId);
-		$a=str_replace($book['bookDecimals'],'.',str_replace($book['bookThousand'],'',$amount));
+		$a=str_replace($book['bookDecPoint'],'.',str_replace($book['bookThousand'],'',$amount));
 		if (!is_numeric($a)) return '';
 		return floatval($a);
 	}//cleanupAmount
