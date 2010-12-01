@@ -8,6 +8,7 @@
 function wikiplugin_transclude_info() {
 	return array(
 		'name' => tra('Transclusion'),
+		'documentation' => tra('PluginTransclusion'),
 		'description' => tra('Includes the content of a wiki page and replaces values in the body of the included page. All additional parameters will be replaced. For example %%%title%%% will be replaced with the parameter title in the plugin.'),
 		'prefs' => array('wikiplugin_transclude', 'feature_wiki'),
 		'extraparams' => true,
@@ -15,8 +16,9 @@ function wikiplugin_transclude_info() {
 		'params' => array(
 			'page' => array(
 				'required' => true,
-				'name' => tra('Page name'),
+				'name' => tra('Page Name'),
 				'description' => tra('Name of the wiki page to use as a template for the values.'),
+				'default' => '',
 			),
 		),
 	);
