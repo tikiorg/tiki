@@ -1515,6 +1515,16 @@ a.blogt:hover {
 	color: #ebf1f7;
 }
 
+.post .postfooter .actions {
+	float: right;
+	margin-right: 5px;
+}
+
+.post .postfooter .status {
+	float: left;
+	margin-left: 5px;
+}
+
 .postfooter .status {
 	float: left;
 	clear: none;
