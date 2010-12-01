@@ -966,6 +966,10 @@ function prefs_feature_list() {
 			'name' => tra('Custom blog headings'),
 			'type' => 'flag',
 		),
+		'feature_blog_edit_publish_date' => array(
+			'name' => tra('Publish dates can be modified'),
+			'type' => 'flag',
+		),
 		'feature_blogposts_comments' => array(
 			'name' => tra('Comments on blog posts'),
 			'type' => 'flag',

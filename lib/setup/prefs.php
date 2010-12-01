@@ -538,6 +538,7 @@ function get_default_prefs() {
 		'blog_list_activity' => 'n',
 		'feature_blog_mandatory_category' => '-1',
 		'feature_blog_heading' => 'y',
+		'feature_blog_edit_publish_date' => 'y',
 		'feature_blog_sharethis' => 'n',
 		'blog_sharethis_publisher' => '',
 

@@ -11644,6 +11644,7 @@ $lang=Array(
 "Note: Remember that this is only a preview, and has not yet been saved!" => "Note&nbsp;: Ceci est un aperçu, et n'a pas encore été sauvegardé",
 "Trash" => "Corbeille",
 "Publish Date" => "Date de publication",
+"Publish dates can be modified" => "Les date de publication peuvent être modifiées",
 "Admin Category" => "Administrer les catégories",
 "Admin the Category System" => "Administrer le système de catégories",
 "Browse in" => "Parcourir dans",
