@@ -18,8 +18,8 @@ function wikiplugin_usercount_help() {
 function wikiplugin_usercount_info() {
 	return array(
 		'name' => tra('User Count'),
-		'documentation' => 'PluginUserCount',		
-		'description' => tra('Displays the number of registered users'),
+		'documentation' => tra('PluginUserCount'),		
+		'description' => tra('Displays the number of users that are registered or within a group'),
 		'prefs' => array( 'wikiplugin_usercount' ),
 		'body' => tra('Group name'),
 		'icon' => 'pics/icons/group_gear.png',
