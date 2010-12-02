@@ -40,10 +40,10 @@ class HeaderLib
 		$this->wysiwyg_parsing = false;
 	}
 
-	function convert_cdn( $file ) {
+	function convert_cdn( $file, $type = null ) {
 		global $prefs, $tikiroot;
 	
-		if( !empty($prefs['tiki_cdn']) && 'http' != substr( $file, 0, 4 ) ) {
+		if( !empty($prefs['tiki_cdn']) && 'http' != substr( $file, 0, 4 ) && $type !== 'dynamic' ) {
 			$file = $prefs['tiki_cdn'] . $tikiroot . $file;
 		}
 
@@ -231,7 +231,7 @@ class HeaderLib
 			foreach ($jsfiles as $x=>$jsf) {
 				$back.= "<!-- jsfile $x -->\n";
 				foreach ($jsf as $jf) {
-					$jf = $this->convert_cdn( $jf );
+					$jf = $this->convert_cdn( $jf, $x );
 					$back.= "<script type=\"text/javascript\" src=\"".smarty_modifier_escape($jf)."\"></script>\n";
 				}
 			}
