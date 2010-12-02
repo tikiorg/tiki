@@ -186,11 +186,6 @@ class TikiDate
 		}
 		$this->date->setTimezone($dtz);
 	}
-
-	// TODO delete in Tiki 6 (if really unused)
-	function convertTZbyID($tz_id) {
-		$this->setTZbyID($tz_id);
-	}
 	
 	function convertMissingTimezone($tz_id) {
 		switch ($tz_id) {		// Convert timezones not in PHP 5
@@ -278,9 +273,10 @@ class TikiDate
 		return $this->date->format("e");
 	}
 
+	// Checks that the string is either a timezone identifier or an abbreviation. display_timezone can be manually set to an identifier in preferences but will be an [uppercase] abbreviation if auto-detected by JavaScript.
 	static function TimezoneIsValidId($id) {
-		return array_key_exists( strtolower($id), timezone_abbreviations_list() ) ||
-			in_array($id, timezone_identifiers_list());
+		return array_key_exists( strtolower($id), DateTimeZone::listAbbreviations() ) ||
+			in_array($id, DateTimeZone::listAbbreviations());
 	}
 	
 }
