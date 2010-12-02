@@ -414,7 +414,7 @@ a.flip:hover,
 }
 .box-switch_lang .box-data img.highlight {
 	padding: .1em;
-	border: .1em solid #f00 !important;
+	border: .1em solid #f00;
 }
 
 .box-switch_lang .box-data .highlight {
@@ -445,7 +445,7 @@ a.flip:hover,
 /* Icons */
 a.icon,
 img.icon {
-	border: 0 !important;
+	border: 0;
 	background: transparent;
 }
 
