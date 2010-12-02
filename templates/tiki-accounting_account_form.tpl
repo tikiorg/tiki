@@ -32,9 +32,8 @@
 		<input type="radio" name="accountLocked" id="accountLocked" {if $account.accountLocked==1}checked="checked"{/if} value="1" /> {tr}Yes{/tr}
 		<input type="radio" name="accountLocked" id="accountUnlocked" {if $account.accountLocked!=1}checked="checked"{/if} value="0" />{tr}No{/tr}<br />
 		<input type="submit" name="submit" value="{if $action=='new'}{tr}Create account{/tr}{else}{tr}Modify account{/tr}{/if}" />
-{if $account.changeable==1 && $action=="edit"}{button href="tiki-accounting_account.php?bookId=$bookId&accountId=$accountId&action=delete" _text="{tr}Delete this account{/tr}"}
-{button href="tiki-accounting.php?bookId=$bookId" _text="{tr}Back to book page{/tr}"} 
-{/if}
+{if $account.changeable==1 && $action=="edit"}{button href="tiki-accounting_account.php?bookId=$bookId&accountId=$accountId&action=delete" _text="{tr}Delete this account{/tr}"} 
+{/if}{button href="tiki-accounting.php?bookId=$bookId" _text="{tr}Back to book page{/tr}"}
     </fieldset>
 </form>
 </div>

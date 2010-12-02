@@ -31,12 +31,18 @@
 					({if $element.bookCurrencyPos==-1}{tr}before{/tr}{elseif $element.bookCurrencyPos==0}{tr}hide{/tr}{else}{tr}behind{/tr}){/if})
 					</td>
 					<td>{$element.taxAutomation}</td>
-					<td>{if $element.bookClosed=='y'}{tr}closed{/tr}{else}{tr}open{/tr}{/if}</td>
+					<td>
+						{if $element.bookClosed=='y'}{tr}closed{/tr}{else}{tr}open{/tr}
+					    	{if $canCreate}
+					    		<a class="icon" href="tiki-accounting_books.php?action=close&bookId={$element.bookId}">{icon _id="book_key" _confirm="{tr}Are you sure, you want to close this book{/tr}" alt="{tr}close book{/tr}" }</a>
+					    	{/if}
+					    {/if}
+					</td>
 				</tr>{/foreach}
 	</table>
 </div>
 {/tab}
-{if $tiki_p_acct_create_book}
+{if $canCreate}
 {tab name="{tr}Create a book{/tr}"}
 <div id="createbookform">
  <form action="tiki-accounting_books.php" method="post">

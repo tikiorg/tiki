@@ -19,16 +19,22 @@ if ($prefs['feature_accounting'] !='y') {
 if (!isset($_REQUEST['action'])) {
 	$_REQUEST['action']='';
 }
+
+$globalperms = Perms::get();
+
 switch ($_REQUEST['action']) {
-	case 'create' :
-					$access->check_user($user);
-					$access->check_permission('tiki_p_acct_create_book',tra('Create a new book'));
+	case 'create' : if (!$globalperms->acct_create_book) {
+						$smarty->assign('msg', tra("You do not have permissions to create a book") . ": feature_accounting");
+						$smarty->display("error.tpl");
+						die;
+					}
 					$bookId=$accountinglib->createBook($_REQUEST['bookName'],
 								$_REQUEST['bookStartDate'], $_REQUEST['bookEndDate'], 
 								$_REQUEST['bookCurrency'], $_REQUEST['bookCurrencyPos'],
 								$_REQUEST['bookDecimals'], $_REQUEST['bookDecPoint'],
 								$_REQUEST['bookThousand'], $_REQUEST['exportSeparator'],
-								$_REQUEST['exportEOL'], $_REQUEST['exportQuote']);
+								$_REQUEST['exportEOL'], $_REQUEST['exportQuote'],
+								$_REQUEST['bookAutoTax'],false);
 					if (!is_numeric($bookId)) {
 						$errors[]=tra($bookId);
 						$smarty->assign('errors',$errors);
@@ -43,9 +49,15 @@ switch ($_REQUEST['action']) {
 						$smarty->assign('exportSeparator',$_REQUEST['exportSeparator']);
 						$smarty->assign('exportEOL',$_REQUEST['exportEOL']);
 						$smarty->assign('exportQuote',$_REQUEST['exportQuote']);
+						$smarty->assign('bookAutoTax',$_REQUEST['bookAutoTax']);
 					}
 					break;
-	case 'close'  :
+	case 'close'  : if (!$globalperms->acct_create_book) {
+						$smarty->assign('msg', tra("You do not have permissions to close this book") . ": feature_accounting");
+						$smarty->display("error.tpl");
+						die;
+					}
+					$accountinglib->closeBook($_REQUEST['bookId']);
 					break;
 	case 'view'   :
 					break;
@@ -58,6 +70,7 @@ $filtered = Perms::filter(array( 'type' => 'accounting book' ),
 			array( 'object' => 'bookName' ),
 			'acct_view' );
 $smarty->assign('books',$books);
+$smarty->assign('canCreate',$globalperms->acct_create_book);
 ask_ticket('accounting');
 $smarty->assign('mid','tiki-accounting_books.tpl');
 $smarty->display("tiki.tpl");

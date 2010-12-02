@@ -1,5 +1,5 @@
-<a href="tiki-accounting_export.php?bookId={$bookId}&action=print&what=journal{if isset($accountId)}&accountId={$accountId}{/if}" target="new"><img src="images/ico_print.gif" border="0" align="right" alt="{tr}printable version{/tr}"/></a>
-<a href="tiki-accounting_export.php?bookId={$bookId}&action=settings&what=journal{if isset($accountId)}&accountId={$accountId}{/if}"><img src="images/ico_table.gif" border="0" align="right" alt="{tr}export table{/tr}"/></a>
+<a class="icon" href="tiki-accounting_export.php?action=print&what=journal&bookId={$bookId}{if isset($accountId)}&accountId={$accountId}{/if}" target="new">{icon _id="printer" alt="{tr}printable version{/tr}"}</a>
+<a class="icon" href="tiki-accounting_export.php?action=settings&what=journal&bookId={$bookId}{if isset($accountId)}&accountId={$accountId}{/if}">{icon _id="table" alt="{tr}export table{/tr}"}</a>
 <table class="normal">
  <tr>
   <th rowspan="2">{tr}Id{/tr}</th>
@@ -7,6 +7,7 @@
   <th rowspan="2">{tr}Description{/tr}</th>
   <th colspan="3">{tr}Debit{/tr}</th>
   <th colspan="3">{tr}Credit{/tr}</th>
+  <th rowspan="2">&nbsp;</th>
  </tr>
  <tr>
   <th>{tr}Account{/tr}</th>
@@ -29,6 +30,9 @@
   <td class="journal{if $j.journalCancelled==1}deleted{/if}" style="text-align:right">{if $i<$j.creditcount}{$j.credit[$i].itemAccountId}{/if}&nbsp;</td>
   <td class="journal{if $j.journalCancelled==1}deleted{/if}" style="text-align:right">{if $i<$j.creditcount}{if $book.bookCurrencyPos==-1}{$book.bookCurrency} {/if}{$j.credit[$i].itemAmount|currency}{if $book.bookCurrencyPos==1} {$book.bookCurrency}{/if}&nbsp;{/if}</td>
   <td class="journal{if $j.journalCancelled==1}deleted{/if}">{if $i<$j.creditcount}{$j.credit[$i].text|escape}{/if}&nbsp;</td>
+  {if $smarty.section.posts.first}<td rowspan="{$j.maxcount}">{if $j.journalCancelled==1}&nbsp;{else}
+   <a class="icon" href="tiki-accounting_cancel.php?bookId={$bookId}&journalId={$j.journalId}">{icon _id="delete" alt="{tr}cancel this transaction{/tr}" _confirm="{tr}Are you sure you want to cancel this transaction{/tr}"}</a>{/if}
+  </td>{/if}
  </tr>
 {/section}
 {foreachelse}

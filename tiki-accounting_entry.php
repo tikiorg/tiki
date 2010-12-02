@@ -17,8 +17,11 @@ if ($prefs['feature_accounting'] !='y') {
 	die;
 }
 
-if ($tiki_p_acct_book != 'y') {
-	$smarty->assign('msg', tra("You do not have the rights to book"));
+$globalperms = Perms::get();
+$objectperms = Perms::get( array( 'type' => 'accounting book', 'object' => $bookId ) );
+
+if (!($globalperms->acct_book or $objectperms->acct_book)) {
+	$smarty->assign('msg', tra("You do not have the right to book"));
 	$smarty->display("error.tpl");
 	die;		
 }
@@ -30,7 +33,6 @@ if (!isset($_REQUEST['bookId'])) {
 }
 $bookId=$_REQUEST['bookId'];
 $smarty->assign('bookId',$bookId);
-$bookPermissions=$userlib->get_object_permissions_for_user ($bookId, 'accounting book', $user);
 
 $book=$accountinglib->getBook($bookId);
 $smarty->assign('book',$book);

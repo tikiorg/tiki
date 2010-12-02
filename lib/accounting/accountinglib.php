@@ -34,6 +34,13 @@ define('ACCOUNTING_MEMBER_BASE',40000);
 
 class AccountingLib extends LogsLib
 {
+	
+	/**
+	 * 
+	 * Storing the book data if already requested once, this may save us a few queries
+	 * @var array	$_book	array with the books structure
+	 */
+	private $_book='';
 
 	/**
 	 * Lists all books available to a user
@@ -66,7 +73,7 @@ class AccountingLib extends LogsLib
 						$bookCurrency, $bookCurrencyPos=-1,
 						$bookDecimals, $bookDecPoint, $bookThousand,
 						$exportSeparator, $exportEOL, $exportQuote,
-						$bookAutoTax='y', $bookClosed=false) {
+						$bookAutoTax='y', $bookClosed='n') {
 		global $userlib, $user;
 		if (strlen($bookName)==0) {
 			return "The book must have a name";
@@ -120,9 +127,27 @@ class AccountingLib extends LogsLib
 	 * @return	array		Array with book details
 	 */
 	function getBook($bookId) {
-		$query="SELECT * FROM `tiki_acct_book` WHERE `bookId`=?";
+		if (!is_array($this->_book) or $this->_book['bookId']!=$bookId) {
+			$query="SELECT * FROM `tiki_acct_book` WHERE `bookId`=?";
+			$res=$this->query($query,array($bookId));
+			$this->_book=$res->fetchRow();
+		}
+		return $this->_book;
+	}
+
+	/**
+	 * 
+	 * This function sets a books status to closed, so transactions can no longer be used
+	 * @param	int		$bookId		id of the book to close
+	 * @return	bool				true on success
+	 */
+	function closeBook($bookId) {
+		$book=$this->getBook($bookId);
+		if ($book['bookClosed']=='y') return false;
+		$query="UPDATE `tiki_acct_book` SET `bookClosed`='y' WHERE `bookId`=?";
 		$res=$this->query($query,array($bookId));
-		return $res->fetchRow();
+		if ($res===false) return false;
+		return true;
 	}
 	
 	/**
@@ -149,8 +174,9 @@ class AccountingLib extends LogsLib
 			$res =$this->query($query,array($bookId));
 		} else {
 			$query="SELECT `journalId`, `journalDate`, `journalDescription`, `journalCancelled`
-				FROM `tiki_acct_journal`
-				INNER JOIN `tiki_acct_item` ON `tiki_acct_journal`.`journalId`=`tiki_acct_item`.`itemJournalId`
+				FROM `tiki_acct_journal` INNER JOIN `tiki_acct_item` 
+				ON (`tiki_acct_journal`.`journalBookId`=`tiki_acct_item`.`itemBookId` AND
+				`tiki_acct_journal`.`journalId`=`tiki_acct_item`.`itemJournalId`)
 				WHERE `journalBookId`=? AND `itemAccountId` LIKE ?
 				GROUP BY `journalId`, `journalDate`, `journalDescription`, `journalCancelled`
 				ORDER BY $order";
@@ -180,8 +206,9 @@ class AccountingLib extends LogsLib
 		$journal=array();
 	  
 		$query="SELECT `itemAccountId`, SUM(`itemAmount`*IF(`itemType`<0,1,0)) AS debit, sum(`itemAmount`*IF(`itemType`>0,1,0)) AS credit
-	          FROM `tiki_acct_journal`
-	          INNER JOIN `tiki_acct_item` ON `tiki_acct_journal`.`journalId`=`tiki_acct_item`.`itemJournalId`
+	          FROM `tiki_acct_journal` INNER JOIN `tiki_acct_item`
+	          ON (`tiki_acct_journal`.`journalBookId`=`tiki_acct_item`.`itemBookId` AND 
+	          `tiki_acct_journal`.`journalId`=`tiki_acct_item`.`itemJournalId`)
 	          WHERE `journalBookId`=? AND `itemAccountId` LIKE ?";
 		$res=$this->query($query,array($bookId, $accountId));
 		$totals =$res->fetchRow();
@@ -247,6 +274,10 @@ class AccountingLib extends LogsLib
 	 * @return	boolean	true, if the account can be changed/deleted
 	 */
 	function accountChangeable($bookId, $accountId) {
+		$book=$this->getBook($bookId);
+		if ($book['bookClosed']=='y') {
+			return false;
+		}
 		$query="SELECT Count(`itemAccountId`) AS posts
 			FROM `tiki_acct_journal`
 			INNER JOIN `tiki_acct_item` ON `tiki_acct_journal`.`journalId`=`tiki_acct_item`.`itemJournalId`
@@ -270,6 +301,11 @@ class AccountingLib extends LogsLib
 	 */
 	function createAccount( $bookId, $accountId, $accountName, $accountNotes,
 							$accountBudget, $accountLocked, $accountTax=0) {
+		$book=$this->getBook($bookId);
+		if ($book['bookClosed']=='y') {
+			$errors=array(tra("This book has been closed. You can't create new accounts."));
+			return $errors;
+		}
 		$errors=$this->validateId('accountId', $accountId, 'tiki_acct_account',false, 'accountBookId', $bookId);
 		if ($accountName=='') $errors[]=tra('Account name must not be empty.');
 		$cleanbudget=$this->cleanupAmount($bookId, $accountBudget);
@@ -293,13 +329,20 @@ class AccountingLib extends LogsLib
 	/**
 	 * Unlocks or locks an account which means it can not be used accidentally for booking
 	 * 
-	 * @param int		$bookId		current book
-	 * @param int		$accountId	account to lock
+	 * @param	int		$bookId		current book
+	 * @param	int		$accountId	account to lock
+	 * @return	bool				true on success
 	 */
 	function changeAccountLock($bookId, $accountId) {
-	  $query="UPDATE `tiki_acct_account` SET `accountLocked` = NOT `accountLocked` 
-	  		WHERE `accountBookId`=? AND `accountId`=?";
-	  $res=$this->query($query,array($bookId,$accountId));
+		$book=$this->getBook($bookId);
+		if ($book['bookClosed']=='y') {
+			return false;
+		}
+		$query="UPDATE `tiki_acct_account` SET `accountLocked` = NOT `accountLocked` 
+				WHERE `accountBookId`=? AND `accountId`=?";
+		$res=$this->query($query,array($bookId,$accountId));
+		if ($res===false) return false;
+		return true;
 	} //changeAccountLock
 	
 	/**
@@ -317,13 +360,17 @@ class AccountingLib extends LogsLib
 	 */
 	function updateAccount($bookId, $accountId, $newAccountId, $accountName, $accountNotes,
 						   $accountBudget, $accountLocked, $accountTax=0) {
+						   		$book=$this->getBook($bookId);
+		if ($book['bookClosed']=='y') {
+			$errors=array(tra("This book has been closed. You can't modify the account."));
+			return $errors;
+		}
 		$errors=$this->validateId('accountId',$newAccountId,'tiki_acct_account',true,'accountBookId', $bookId);
 		if ($accountId!=$newAccountId) {
 			if (!$this->accountChangeable($bookId, $accountId)) $errors[]=tra('AccountId %0 is already in use and must not be changed. Please disable it if it is no longer needed.',$args=array($accountId));
 		}
 		if ($accountName==='') $errors[]=tra('Account name must not be empty.');
 		$cleanbudget=$this->cleanupAmount($bookId,$accountBudget);
-print_r("Budget: $accountBudget -> $cleanbudget");
 		if ($cleanbudget==='') $errors[]=tra('Budget is not a valid amount: '). $cleanbudget;
 		if ($locked!=0 and $locked!=1) $errors[]=tra('Locked must be either 0 or 1.');
 		if ($accountTax!=0) {
@@ -347,16 +394,18 @@ print_r("Budget: $accountBudget -> $cleanbudget");
 	/**
 	 * Delete an account (if deleteable)
 	 *
-	 * @param	int		$bookId		current book
-	 * @param	int		$accountId	account id to delete
+	 * @param	int		$bookId				id of the current book
+	 * @param	int		$accountId			account id to delete
 	 * @param	bool	$checkChangeable	check, if the account is unused and can be deleted
-	 * @return	mixed	array with errors or true, if deletion was successful
+	 * @return	array/bool					array with errors or true, if deletion was successful
 	 */
 	function deleteAccount($bookId, $accountId, $checkChangeable=true) {
-		$errors=array();
+		$book=$this->getBook($bookId);
+		if ($book['bookClosed']=='y') {
+			return array(tra("This book has been closed. You can't delete the account."));
+		}
 		if (!$this->accountChangeable($bookId, $accountId)) {
-			$errors[]=tra('Account is already in use and must not be deleted. Please disable it, if it is no longer needed.');
-			return $errors;
+			return array(tra('Account is already in use and must not be deleted. Please disable it, if it is no longer needed.'));
 		}
 		$query="DELETE FROM `tiki_acct_account` WHERE `accountBookId`=? AND `accountId`=?";
 		$res=$this->query($query,array($bookId,$accountId));
@@ -402,6 +451,22 @@ print_r("Budget: $accountBudget -> $cleanbudget");
 	function simpleBook($bookId, $journalDate, $journalDescription, $debitAccount, $creditAccount,
 						$amount, $debitText='', $creditText='') {
 		$errors=array();
+		$book=$this->getBook($bookId);
+		if ($book['bookClosed']=='y') {
+			return array(tra("This book has been closed. You can't book into it any more."));
+		}
+		
+		$d=new DateTime($journalDate);
+		$ts=$d->getTimestamp();
+		$StartDate=new DateTime($book['bookStartDate']);
+		if ($ts<$StartDate->getTimestamp()) {
+			return array(tra("The date for the transaction is before this books start date."));
+		}
+		$EndDate=new DateTime($book['bookEndDate']);
+		if ($ts>$EndDate->getTimestamp()) {
+			return array(tra("The date for the transaction is after this books end date."));
+		}
+		
 		//$this->beginTransaction();
 		$query="INSERT INTO `tiki_acct_journal` (`journalBookId`, `journalDate`, `journalDescription`,
 				`journalCancelled`, `journalTs`)
@@ -454,6 +519,21 @@ print_r("Budget: $accountBudget -> $cleanbudget");
 	function book($bookId, $journalDate, $journalDescription, $debitAccount, $creditAccount,
 				  $debitAmount, $creditAmount, $debitText=array(), $creditText=array()) {
 		$errors=array();
+		$book=$this->getBook($bookId);
+		if ($book['bookClosed']=='y') {
+			$errors[]=tra("This book has been closed. You can't book into it any more.");
+		}
+		
+		$d=new DateTime($journalDate);
+		$ts=$d->getTimestamp();
+		$StartDate=new DateTime($book['bookStartDate']);
+		if ($ts<$StartDate->getTimestamp()) {
+			$errors[]=tra("The date for the transaction is before this books start date.");
+		}
+		$EndDate=new DateTime($book['bookEndDate']);
+		if ($ts>$EndDate->getTimestamp()) {
+			$errors[]=tra("The date for the transaction is after this books end date.");
+		}
 		if (!is_array($debitAccount)) $debitAccount=array($debitAccount);
 		if (!is_array($creditAccount)) $creditAccount=array($creditAccount);
 		if (!is_array($debitAmount)) $debitAmount=array($debitAmount);
@@ -537,6 +617,21 @@ print_r("Budget: $accountBudget -> $cleanbudget");
 		//$this->commit();
 		return $journalId;
 	}// book
+	
+	/**
+	 * Declares a statement in the journal as cancelled.
+	 * @param	int		$bookId		id of the current book
+	 * @param	int		$journalId	journalId of the statement to cancel
+	 */
+	function cancelStatement($bookId, $journalId) {
+		$book=$this->getBook($bookId);
+		if ($book['bookClosed']=='y') {
+			$errors[]=tra("This book has been closed. You can't cancel transactions in it any more.");
+		}
+		$query="UPDATE `tiki_acct_journal` SET `journalCancelled`=1 WHERE `journalBookId`=? and `journalId`=?";
+		$res=$this->query($query,array($bookId, $journalId));
+		return true;
+	}
 	
 	/**
 	 * Returns a list of bankaccounts which are related to internal accounts

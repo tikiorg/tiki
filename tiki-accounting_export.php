@@ -33,7 +33,13 @@ $smarty->assign('bookId',$bookId);
 $what=$_REQUEST['what'];
 $smarty->assign('what',$what);
 
-$bookPermissions=$userlib->get_object_permissions_for_user ($bookId, 'accounting book', $user);
+$globalperms = Perms::get();
+$objectperms = Perms::get( array( 'type' => 'accounting book', 'object' => $bookId ) );
+if (!($globalperms->acct_view or $objectperms->acct_view)) {
+	$smarty->assign('msg', tra("You do not have the right export/view this data"));
+	$smarty->display("error.tpl");
+	die;		
+}
 
 $book=$accountinglib->getBook($bookId);
 $smarty->assign('book',$book);

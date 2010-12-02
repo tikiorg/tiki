@@ -27,7 +27,8 @@ $smarty->assign('bookId',$bookId);
 $book=$accountinglib->getBook($bookId);
 $smarty->assign('book',$book);
 
-$bookPermissions=$userlib->get_object_permissions_for_user ($bookId, 'accounting book', $user);
+$globalperms = Perms::get();
+$objectperms = Perms::get( array( 'type' => 'accounting book', 'object' => $bookId ) );
 
 if (!isset($_REQUEST['action'])) {
 	$_REQUEST['action']='';
@@ -38,15 +39,17 @@ if ($_REQUEST['action']!='new' and !isset($_REQUEST['accountId'])) {
 	$smarty->display("error.tpl");
 	die;
 }
+
 $smarty->assign('action',$_REQUEST['action']);
 if ($_REQUEST['action']=='' or $_REQUEST['action']=='view') {
-	if ($tiki_p_acct_view != 'y' && $tiki_p_acct_book != 'y') {
+	if (!($globalperms->acct_view or $objectperms->acct_view or
+		  $globalperms->acct_book or $objectperms->acct_book)) {
 		$smarty->assign('msg', tra("You do not have the rights to view this account"));
 		$smarty->display("error.tpl");
 		die;		
 	}
 } else {
-	if ($tiki_p_acct_manage_accounts != 'y') {
+	if (!($globalperms->acct_manage_accounts or $objectperms->acct_manage_accounts)) {
 		$smarty->assign('msg', tra("You do not have the rights to manage accounts"));
 		$smarty->display("error.tpl");
 		die;		
@@ -104,6 +107,7 @@ switch ($_REQUEST['action']) {
 					break;
 	case 'lock'   : $accountinglib->changeAccountLock($bookId, $accountId);
 					$account=$accountinglib->getAccount($bookId, $accountId, true);
+					$smarty->assign('account',$account);
 					$template="tiki-accounting_account_view.tpl";
 					break;
 	case 'delete' :	$account=$accountinglib->getAccount($bookId, $accountId, true);

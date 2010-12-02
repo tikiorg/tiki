@@ -3901,13 +3901,14 @@ CREATE TABLE `tiki_acct_book` (
 
 DROP TABLE IF EXISTS `tiki_acct_item`; 
 CREATE TABLE `tiki_acct_item` (
+  `itemBookId` int(10) unsigned NOT NULL,
   `itemJournalId` int(10) unsigned NOT NULL DEFAULT '0',
   `itemAccountId` int(10) unsigned NOT NULL DEFAULT '0',
   `itemType` int(1) NOT NULL DEFAULT '-1',
   `itemAmount` double NOT NULL DEFAULT '0',
   `itemText` varchar(255) NOT NULL DEFAULT '',
   `itemTs` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`itemJournalId`,`itemAccountId`,`itemType`)
+  PRIMARY KEY (`itemBookId`,`itemJournalId`,`itemAccountId`,`itemType`)
 );
 
 DROP TABLE IF EXISTS `tiki_acct_journal`; 
@@ -3933,12 +3934,13 @@ CREATE TABLE `tiki_acct_stack` (
 
 DROP TABLE IF EXISTS `tiki_acct_stackitem`; 
 CREATE TABLE `tiki_acct_stackitem` (
+  `stackBookId` int(10) unsigned NOT NULL,
   `stackItemStackId` int(10) unsigned NOT NULL DEFAULT '0',
   `stackItemAccountId` int(10) unsigned NOT NULL DEFAULT '0',
   `stackItemType` int(1) NOT NULL DEFAULT '-1',
   `stackItemAmount` double NOT NULL DEFAULT '0',
   `stackItemText` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`stackItemStackId`,`stackItemAccountId`,`stackItemType`)
+  PRIMARY KEY (`stackBookId`,`stackItemStackId`,`stackItemAccountId`,`stackItemType`)
 );
 
 DROP TABLE IF EXISTS `tiki_acct_statement`;

@@ -1,5 +1,3 @@
-<a href="tiki-accounting_export.php?bookId={$bookId}&action=print&what=accounts" target="new"><img src="images/ico_print.gif" border="0" align="right" alt="{tr}printable version{/tr}"/></a>
-<a href="tiki-accounting_export.php?bookId={$bookId}&action=settings&what=accounts"><img src="images/ico_table.gif" border="0" align="right" alt="{tr}export table{/tr}"/></a>
 <table>
  <tr>
   <th>{tr}Account{/tr}</th>
@@ -10,7 +8,7 @@
   <th>{tr}Debit{/tr}</th>
   <th>{tr}Credit{/tr}</th>
   <th>{tr}Tax{/tr}</th>
-  <th>{tr}Actions{/tr}</th>
+  {if $tiki_p_acct_manage_accounts=='y'}<th style="width:64px;">{tr}Actions{/tr}</th>{/if}
  </tr>
 {foreach from=$accounts item=a}{cycle values="odd,even" assign="style"}
  <tr class="{$style}">
@@ -34,14 +32,20 @@
   	{if $book.bookCurrencyPos==1}{$book.bookCurrency}{/if}
   </td>
   <td>{$a.accountTax}</td>
-  <td>
-   {if $tiki_p_acct_manage_accounts=='y'}
-   <a href="tiki-accounting_account.php?bookId={$bookId}&accountId={$a.accountId}&action=edit"><img src="img/icons/edit.gif" alt="{tr}edit account{/tr}" border="0" /></a>
-   <a href="tiki-accounting_account.php?bookId={$bookId}&accountId={$a.accountId}&action=lock"><img src="img/icons/lock_topic.gif" alt="{tr}lock account{/tr}" border="0" /></a>
-   <a href="tiki-accounting_account.php?bookId={$bookId}&accountId={$a.accountId}&action=delete" onclick="return confirmDeleteAccount()"><img src="img/icons/del.gif" alt="delete account" border="0" /></a>{/if}
-  </td>
+  {if $tiki_p_acct_manage_accounts=='y'}<td  style="width:64px;">
+   <a class="icon" href="tiki-accounting_account.php?bookId={$bookId}&accountId={$a.accountId}&action=edit">{icon _id="page_edit" alt="{tr}edit account{/tr}"}</a>
+   <a class="icon" href="tiki-accounting_account.php?bookId={$bookId}&accountId={$a.accountId}&action=lock">
+   {if $a.accountLocked==1}
+	{icon _id="lock_open" alt="{tr}unlock account{/tr}" _confirm="{tr}Are you sure you want to unlock this account?{/tr}"}
+   {else}
+    {icon _id="lock" alt="{tr}lock account{/tr}" _confirm="{tr}Are you sure you want to lock this account?{/tr}"}
+   {/if}
+   </a>
+   <a class="icon" href="tiki-accounting_account.php?bookId={$bookId}&accountId={$a.accountId}&action=delete">{icon _id="delete" alt="{tr}delete account{/tr}" _confirm="{tr}Are you sure, you want to delete this account{/tr}"}</a>
+  </td>{/if}
  </tr>
 {/foreach}
 </table>
 {button href="tiki-accounting_account.php?action=new&bookId=$bookId" _text="{tr}Create a new account{/tr}"}
- 
+<a class="icon" href="tiki-accounting_export.php?action=print&bookId={$bookId}&what=accounts" target="new">{icon _id="printer" alt="{tr}printable version{/tr}"}</a>
+<a class="icon" href="tiki-accounting_export.php?action=settings&bookId={$bookId}&what=accounts">{icon _id="table" alt="{tr}export table{/tr}"}</a> 
