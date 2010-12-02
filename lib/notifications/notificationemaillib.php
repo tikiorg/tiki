@@ -280,6 +280,7 @@ function sendWikiEmailNotification($wikiEvent, $pageName, $edit_user, $edit_comm
 	    	$smarty->assign('mail_action', 'edit');
 	    }
 
+		include_once('lib/webmail/tikimaillib.php');
 	    foreach ($nots as $not) {
 			if (empty($not['email'])) continue;
 		    $smarty->assign('watchId', $not['watchId']);
@@ -287,12 +288,12 @@ function sendWikiEmailNotification($wikiEvent, $pageName, $edit_user, $edit_comm
 			$mail_subject = $smarty->fetchLang($not['language'], "mail/user_watch_wiki_page_changed_subject.tpl");
 			$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_wiki_page_changed.tpl");
 
-			tiki_send_admin_mail(
-				$not['email'],
-				$not['user'],
-				sprintf($mail_subject, $pageName),
-				$mail_data
-			);
+			$mail = new TikiMail($not['user']);
+			$mail->setSubject(sprintf($mail_subject, $pageName));
+			$mail->setText($mail_data);
+			$mail->setHeader("From", $prefs['sender_email']);
+			$mail->send(array($not['email']));
+
 		}
 	}
 }

@@ -1370,6 +1370,11 @@ a.blogt:hover {
 	border-bottom: none;
 }
 
+.date {
+	font-size: 0.9em;
+	font-style: italic;
+}
+
 /***** Forums *****/
 .post {
 	width: 100%;
@@ -1515,6 +1520,16 @@ a.blogt:hover {
 	color: #ebf1f7;
 }
 
+.post .postfooter .actions {
+	float: right;
+	margin-right: 5px;
+}
+
+.post .postfooter .status {
+	float: left;
+	margin-left: 5px;
+}
+
 .postfooter .status {
 	float: left;
 	clear: none;
@@ -1627,6 +1642,26 @@ textarea#editpost2 {
 	margin-top: 5px;
 }
 
+a.freetag {
+	margin : 1px;
+}
+
+a.freetag:hover {
+	background-color : #ffffff;
+	margin : 0;
+	border : 1px solid #999;
+	text-decoration: none;
+}
+
+a.freetag_1:hover,
+a.freetag_2:hover,
+a.freetag_3:hover,
+a.freetag_4:hover,
+a.freetag_5:hover,
+a.freetag_6:hover,
+a.freetag_7:hover {
+	text-decoration: none;
+}
 
 /***** Image Galleries *****/
 .galtable {

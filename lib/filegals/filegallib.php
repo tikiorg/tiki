@@ -976,7 +976,7 @@ class FileGalLib extends TikiLib
 		if ( $currentGalleryId === null ) $currentGalleryId = $rootGalleryId;
 
 		$script = 'tiki-list_file_gallery.php';
-		$tree = array('name' => tra('File Galleries'), 'data' => array(), 'link' => $script);
+		$tree = array('name' => tra('File Galleries'), 'data' => array(), 'link' => $script, 'id' => $rootGalleryId );
 
 		if ( $rootGalleryId != $prefs['fgal_root_id'] ) {
 			foreach ( $allGalleries['data'] as $k => $v ) {

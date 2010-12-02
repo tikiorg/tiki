@@ -918,7 +918,8 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 		} else if ($prefs['javascript_enabled'] != 'n') {
 			$tree_array = array('data' => $all_galleries['data'],
 				'name' => $phplayersTreeData['tree']['name'],
-				'link' => $phplayersTreeData['tree']['link']
+				'link' => $phplayersTreeData['tree']['link'],
+				'id' => $phplayersTreeData['tree']['id']
 			);
 			$smarty->assign_by_ref('tree', $tree_array);
 			$smarty->assign('expanded', '');

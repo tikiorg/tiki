@@ -26,7 +26,7 @@
 <table class="normal">
 	<tr class="{cycle}">
 		<td>{tr}Date of first pageview{/tr}</td>
-		<td style="text-align:right;">{$site_stats.started}</td>
+		<td style="text-align:right;">{$site_stats.started|tiki_long_date}</td>
 	</tr>
 	<tr class="{cycle}">
 		<td>{tr}Days since first pageview{/tr}</td>
