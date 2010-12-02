@@ -120,11 +120,13 @@ if (isset($_GET[session_name()]) && $tikilib->get_ip_address() == '127.0.0.1') {
 
 $start_session = $prefs['session_silent'] != 'y' or isset( $_COOKIE[session_name()] );
 
-// If called from the CDN, do not start the session
+// If called from the CDN, refuse to execute anything
 if( $prefs['tiki_cdn'] ) {
 	$host = parse_url( $prefs['tiki_cdn'], PHP_URL_HOST );
 	if( $host == $_SERVER['HTTP_HOST'] ) {
-		$start_session = false;
+		header("HTTP/1.0 404 Not Found");
+		echo "File not found.";
+		exit;
 	}
 }
 if (isset($_SERVER["REQUEST_URI"])) {
