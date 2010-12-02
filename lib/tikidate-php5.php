@@ -279,7 +279,8 @@ class TikiDate
 	}
 
 	static function TimezoneIsValidId($id) {
-		return array_key_exists( strtolower($id), timezone_abbreviations_list() );
+		return array_key_exists( strtolower($id), timezone_abbreviations_list() ) ||
+			in_array($id, timezone_identifiers_list());
 	}
 	
 }
