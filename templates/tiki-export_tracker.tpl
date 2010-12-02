@@ -155,7 +155,7 @@ exportProgress = function () {
 	});
 }
 {/jq}
-{remarksbox type="note" title="Warning"}Please note: Using experimental AJAX export function - work in progress!{/remarksbox}
+{remarksbox type="note" title="Note"}Please note: Using AJAX export function - please report any issues{/remarksbox}
 {/if}
 </div>
 {if $tiki_p_tracker_dump eq "y" or $tiki_p_admin eq "y"}
