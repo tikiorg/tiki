@@ -121,6 +121,32 @@ class UnifiedSearchLib
 		return $dataSource;
 	}
 
+	function buildQuery(array $filter)
+	{
+		global $categlib; require_once 'lib/categories/categlib.php';
+
+		$query = new Search_Query;
+		$query->filterPermissions(Perms::get()->getGroups());
+
+		if ($jail = $categlib->get_jail()) {
+			$query->filterCategory($jail, true);
+		}
+
+		if (isset($filter['type']) && $filter['type']) {
+			$query->filterType($filter['type']);
+		}
+
+		if (isset($filter['categories']) && $filter['categories']) {
+			$query->filterCategory($filter['categories'], isset($filter['deep']));
+		}
+
+		if (isset($filter['content']) && $filter['content']) {
+			$query->filterContent($filter['content']);
+		}
+
+		return $query;
+	}
+
 	private function destroyDirectory($path)
 	{
 		if (!$path or !is_dir($path)) return 0;

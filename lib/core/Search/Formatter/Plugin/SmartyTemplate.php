@@ -5,6 +5,7 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 	private $templateFile;
 	private $changeDelimiters;
 	private $data = array();
+	private $fields = array();
 
 	function __construct($templateFile, $changeDelimiters = false)
 	{
@@ -19,7 +20,12 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 
 	function getFields()
 	{
-		return array();
+		return $this->fields;
+	}
+
+	function setFields(array $fields)
+	{
+		$this->fields = $fields;
 	}
 
 	function getFormat()

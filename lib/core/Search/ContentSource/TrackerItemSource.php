@@ -22,7 +22,7 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 			trklib performs no meaningful work when extracting the data and strips all
 			required semantics.
 		*/
-		$item = $this->db->getOne('SELECT trackerId, createdBy, lastModifBy, status, lastModif FROM tiki_tracker_items WHERE itemId = ?', array($objectId));
+		$item = reset($this->db->fetchAll('SELECT trackerId, createdBy, lastModifBy, status, lastModif FROM tiki_tracker_items WHERE itemId = ?', array($objectId)));
 		$data = array(
 			'title' => $typeFactory->sortable(''),
 			'language' => $typeFactory->identifier('unknown'),

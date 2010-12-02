@@ -2193,4 +2193,23 @@ div.aclabel, span.aclabel, label.aclabel {
 	min-width: 150px;
 }
 
+/* Fancy filter */
+.filter .fancyfilter {
+	min-height: 1.5em;
+	border: thin solid black;
+	padding: 0.1em;
+	cursor: text;
+}
+
+.filter .fancyfilter .token {
+	display: inline-block;
+	background: #ccc;
+	cursor: default;
+}
+
+.filter .fancyfilter .token .ui-icon-close {
+	float: right;
+	cursor: pointer;
+}
+
 /* End of File */
