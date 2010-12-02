@@ -7577,7 +7577,7 @@ if( \$('#$id') ) {
 
 		// If user timezone is not also in UTC, convert the date
 		if ( $tz != 'UTC' ) {
-			$tikidate->convertTZbyID($tz);
+			$tikidate->setTZbyID($tz);
 		}
 
 		return $tikidate->format($format, $is_strftime_format);
