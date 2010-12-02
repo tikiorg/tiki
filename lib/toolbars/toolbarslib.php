@@ -947,7 +947,7 @@ class ToolbarDialog extends Toolbar
 		case 'tikilink':
 			$label = tra('Wiki Link');
 			$icon = tra('pics/icons/page_link.png');
-			$wysiwyg = 'tikilink';
+			$wysiwyg = '';	// cke link dialog now adapted for wiki links
 			$list = array('Wiki Link',
 						'<label for="tbWLinkDesc">Show this text</label>',
 						'<input type="text" id="tbWLinkDesc" class="ui-widget-content ui-corner-all" style="width: 98%" />',

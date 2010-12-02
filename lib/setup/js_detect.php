@@ -90,6 +90,7 @@ jqueryTiki.effect_tabs_direction = "'.$prefs['jquery_effect_tabs_direction'].'";
 jqueryTiki.effect_tabs_speed = '.($prefs['jquery_effect_tabs_speed'] == 'normal' ? '400' : '"'.$prefs['jquery_effect_tabs_speed'].'"').';
 
 jqueryTiki.autosave = '.($prefs['ajax_autosave'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.sefurl = '.($prefs['feature_sefurl'] == 'y' ? 'true' : 'false') . ';
 
 ';	// NB replace "normal" speeds with int to workaround issue with jQuery 1.4.2
 	$headerlib->add_js($js, 100);	
