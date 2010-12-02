@@ -2266,12 +2266,18 @@ class TrackerLib extends TikiLib
 		
 		$avail_mem = $tikilib->get_memory_avail();
 		$maxrecords_items = intval(($avail_mem - 10 * 1024 * 1025) / 5000);		// depends on size of items table (fixed)
+		if ($maxrecords_items < 0) {	// cope with memory_limit = -1
+			$maxrecords_items = -1;
+		}
 		$offset_items = 0;
 		
 		$items = $this->get_dump_items_array($query_items, $bindvars, $maxrecords_items, $offset_items);
 		
 		$avail_mem = $tikilib->get_memory_avail();							// update avail after getting first batch of items
 		$maxrecords = (int)($avail_mem / 40000) * count($fields['data']);	// depends on number of fields
+		if ($maxrecords < 0) {	// cope with memory_limit = -1
+			$maxrecords = $cant * count($fields['data']);
+		}
 		$canto = $cant * count($fields['data']);
 		$offset = 0;
 		$lastItem = -1;
@@ -2289,13 +2295,13 @@ class TrackerLib extends TikiLib
 					echo "\n".$items[$lastItem]['itemId'].','.$items[$lastItem]['status'].','.$items[$lastItem]['created'].','.$items[$lastItem]['lastModif'].',';	// also these fields weren't traditionally escaped
 					$count++;
 					$icount++;
-					if ($icount > $maxrecords_items) {
+					if ($icount > $maxrecords_items && $maxrecords_items > 0) {
 						$offset_items += $maxrecords_items;
 						$items = $this->get_dump_items_array($query_items, $bindvars, $maxrecords_items, $offset_items);
 						$icount = 0;
 					}
 				}
-				echo '"' . $res['value'] . '",';
+				echo '"' . str_replace(array('"', "\r\n", "\n"), array('\\"', '%%%', '%%%'), $res['value']) . '",';
 			}
 			ob_flush();
 			flush();
