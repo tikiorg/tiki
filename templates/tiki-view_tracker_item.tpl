@@ -476,7 +476,7 @@ or $cur_field.type eq 'i'}
 
 {if $cur_field.type ne 'S'}
 {if $cur_field.description}
-<br />{if $cur_field.descriptionIsParsed eq 'y'}{wiki}{$cur_field.description}{/wiki}{else}<em>{$cur_field.description|escape}</em>{/if}
+<br />{if $cur_field.descriptionIsParsed eq 'y'}{wiki}{$cur_field.description}{/wiki}{else}<em>{tr}{$cur_field.description|escape}{/tr}</em>{/if}
 {/if}
 {/if}
 </td>

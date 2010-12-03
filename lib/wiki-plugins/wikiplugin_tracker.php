@@ -957,9 +957,9 @@ function wikiplugin_tracker($data, $params)
 
 				if ($tracker['descriptionIsParsed'] == 'y') {
 					$back .= '<div class="wikitext">'.$tikilib->parse_data($tracker['description']).'</div><br />';
-					} else {
-					$back.= '<div class="wikitext">'.$tracker["description"].'</div><br />';
-					}
+				} else {
+					$back.= '<div class="wikitext">'.tra($tracker["description"]).'</div><br />';
+				}
 			}
 			if (isset($_REQUEST['tr_preview'])) { // use for the computed and join fields
 				$assocValues = array();
@@ -1155,7 +1155,7 @@ function wikiplugin_tracker($data, $params)
 						if ($f['descriptionIsParsed'] == 'y') {
 							$back .= $tikilib->parse_data($f['description']);
 						} else {
-							$back .= $f['description'];
+							$back .= tra($f['description']);
 						}
 						$back .= '</div>';
 					}
