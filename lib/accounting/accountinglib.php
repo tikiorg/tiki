@@ -184,10 +184,10 @@ class AccountingLib extends LogsLib
 		}
 		if ($res===false) return false;
 		while ($row = $res->fetchRow()) {
-			$query="SELECT * FROM `tiki_acct_item` WHERE `itemJournalId`=? AND `itemType`=? ORDER BY `itemAccountId` ASC";
-		    $row['debit'] =$this->fetchAll($query,array($row['journalId'],-1));
+			$query="SELECT * FROM `tiki_acct_item` WHERE `itemBookId`=? AND `itemJournalId`=? AND `itemType`=? ORDER BY `itemAccountId` ASC";
+		    $row['debit'] =$this->fetchAll($query,array($bookid, $row['journalId'],-1));
 		    $row['debitcount']=count($row['debit']);
-		    $row['credit'] =$this->fetchAll($query,array($row['journalId'],1));
+		    $row['credit'] =$this->fetchAll($query,array($bookId, $row['journalId'],1));
 		    $row['creditcount']=count($row['credit']);
 		    $row['maxcount']=max($row['creditcount'],$row['debitcount']);
 		    $journal[]=$row;
@@ -619,11 +619,35 @@ class AccountingLib extends LogsLib
 	}// book
 	
 	/**
+	 * 
+	 * Retrieves one entry from the journal
+	 * 
+	 * @param	int		$bookId		id of the current book
+	 * @param	int		$journalId	id of the post in the journal
+	 * @return	array/bool			array with post, false on error
+	 */
+	function getTransaction($bookId, $journalId) {
+		$query="SELECT `journalId`, `journalDate`, `journalDescription`, `journalCancelled`
+				FROM `tiki_acct_journal`
+				WHERE `journalBookId`=? AND `journalId`=?";
+		$res =$this->query($query,array($bookId, $journalId));
+		if ($res===false) return false;
+		$entry = $res->fetchRow();
+		$query="SELECT * FROM `tiki_acct_item` WHERE `itemBookId`=? AND `itemJournalId`=? AND `itemType`=? ORDER BY `itemAccountId` ASC";
+		$entry['debit'] =$this->fetchAll($query,array($bookId, $entry['journalId'],-1));
+		$entry['debitcount']=count($entry['debit']);
+		$entry['credit'] =$this->fetchAll($query,array($bookId, $entry['journalId'],1));
+		$entry['creditcount']=count($entry['credit']);
+		$entry['maxcount']=max($entry['creditcount'],$entry['debitcount']);
+		return $entry;		
+	} //getTransaction
+	
+	/**
 	 * Declares a statement in the journal as cancelled.
 	 * @param	int		$bookId		id of the current book
 	 * @param	int		$journalId	journalId of the statement to cancel
 	 */
-	function cancelStatement($bookId, $journalId) {
+	function cancelTransaction($bookId, $journalId) {
 		$book=$this->getBook($bookId);
 		if ($book['bookClosed']=='y') {
 			$errors[]=tra("This book has been closed. You can't cancel transactions in it any more.");
