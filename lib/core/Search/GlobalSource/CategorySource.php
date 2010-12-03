@@ -29,6 +29,10 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 			$categories = array_unique(array_merge($categories, $parentCategories));
 		}
 
+		if (empty($categories)) {
+			$categories[] = 'orphan';
+		}
+
 		return array(
 			'categories' => $typeFactory->multivalue($categories),
 			'deep_categories' => $typeFactory->multivalue($this->getWithParent($categories)),
