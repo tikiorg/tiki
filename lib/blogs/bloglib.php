@@ -861,15 +861,30 @@ class BlogLib extends TikiDb_Bridge
 	 * @param int $created when the post was created
 	 * @return array
 	 */
-	function _get_adjacent_posts($blogId, $created) {
+	function _get_adjacent_posts($blogId, $created, $publishDate = null, $user=null) {
+		global $tikilib;
 		$res = array();
 
-		$next_query = 'SELECT postId, title FROM `tiki_blog_posts` WHERE `blogId` = ? AND `created` > ? ORDER BY created ASC';
-		$result = $this->fetchAll($next_query, array($blogId, $created), 1);
+		$next_query = 'SELECT postId, title FROM `tiki_blog_posts` WHERE `blogId` = ? AND `created` > ? ';
+		$bindvars = array($blogId, $created);
+		if ($publishDate) {
+			$next_query .= 'AND (`created` <= ? OR `user` = ?)';
+			$bindvars[] = $publishDate;
+			$bindvars[] = $user;
+		}
+		$next_query .= ' ORDER BY created ASC';
+		$result = $this->fetchAll($next_query, $bindvars, 1);
 		$res['next'] = !empty($result[0]) ? $result[0] : null;
 
-		$prev_query = 'SELECT postId, title FROM `tiki_blog_posts` WHERE `blogId` = ? AND `created` < ? ORDER BY created DESC';
-		$result = $this->fetchAll($prev_query, array($blogId, $created), 1);
+		$prev_query = 'SELECT postId, title FROM `tiki_blog_posts` WHERE `blogId` = ? AND `created` < ? ';
+		$bindvars = array($blogId, $created);
+		if ($publishDate) {
+			$prev_query .= 'AND (`created` <= ? OR `user` = ?)';
+			$bindvars[] = $publishDate;
+			$bindvars[] = $user;
+		}
+		$prev_query .= ' ORDER BY created DESC';
+		$result = $this->fetchAll($prev_query, $bindvars, 1);
 		$res['prev'] = !empty($result[0]) ? $result[0] : null;
 
 		return $res;
