@@ -774,8 +774,8 @@ td {
 
 .normal td,
 .wikitable td,
-td.odd,
-td.even,
+.odd,
+.even,
 .form,
 .formcolor td,
 .editblogform td {
@@ -785,19 +785,19 @@ td.even,
 }
 
 tr.odd td,
-td.odd {
+.odd {
 	border-right: 1px solid #909090;
 	background: #F5F5F5;
 }
 
 tr.even td,
-td.even {
+.even {
 	background: #ECECEC;
 	border-right: 1px solid #909090;
 }
 
 th,
-td.heading,
+.heading,
 tr.diffheader {
 	font-size: 1em;
 	font-weight: bold;

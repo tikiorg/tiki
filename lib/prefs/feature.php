@@ -759,6 +759,7 @@ function prefs_feature_list() {
 		'feature_wiki_protect_email' => array(
 			'name' => tra('Protect email against spam'),
 			'help' => 'Spam+protection',
+			'warning' => $prefs['feature_wysiwyg'] === 'y' ? tra('Protect email against spam currently does not operate in pages edited in WYSIWYG mode (Tiki 6.1)') : '',
 			'type' => 'flag',
 		),	
 		'feature_sitead' => array(

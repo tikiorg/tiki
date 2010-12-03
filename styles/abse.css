@@ -893,7 +893,7 @@ a.blogt:hover {
 	margin-top: 10px;
 	font-size: 1.2em}
 
-span.posthead {
+.posthead {
 	display: block;
 	font-weight: bold;
 	letter-spacing: .4pt}
@@ -1117,7 +1117,7 @@ textarea.tshoutbox {
 	padding: 5px}
 
 td.dirfooter {font-size: .95em}
-div.dirfooter {margin-top: 10px}
+.dirfooter {margin-top: 10px}
 
 /***** Messages *****/
 .prio1,

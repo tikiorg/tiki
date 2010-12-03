@@ -554,7 +554,7 @@ class HeaderLib
 		return $minified;
 	}
 
-	private function minify_css( $file ) {
+	public function minify_css( $file ) {
 		global $tikipath, $tikiroot;
 		require_once 'lib/pear/Minify/CSS.php';
 		if (strpos($file, $tikiroot) === 0) {

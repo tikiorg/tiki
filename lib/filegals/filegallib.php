@@ -213,7 +213,7 @@ class FileGalLib extends TikiLib
 			'type' => 'default',
 			'parentId' => -1,
 			'lockable' => 'n',
-			'archives' => -1,
+			'archives' => 0,
 			'quota' => $prefs['fgal_quota_default'],
 			'image_max_size_x' => 0,
 			'image_max_size_y' => 0,

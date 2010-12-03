@@ -140,6 +140,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		//$headerlib->add_jsfile('lib/ckeditor/ckeditor_source.js');
 		$headerlib->add_jsfile('lib/ckeditor/ckeditor.js',0 , true);
 		$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js', 0, true);
+		$headerlib->add_jsfile('lib/ckeditor_tiki/tikilink_dialog.js');
 	
 		include_once( $smarty->_get_plugin_filepath('function', 'toolbars') );
 		$cktools = smarty_function_toolbars($params, $smarty);

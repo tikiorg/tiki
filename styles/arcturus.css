@@ -609,7 +609,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 	padding-left: 20px;
 }
 
-.articletrailer span.share {
+.articletrailer .share {
 	padding-left: 0;
 }
 

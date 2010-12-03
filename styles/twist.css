@@ -1011,7 +1011,7 @@ a.blogt:hover {
 	margin-top: 10px;
 	font-size: 1.2em}
 
-span.posthead {
+.posthead {
 	font-weight: bold;
 	letter-spacing: .4pt}
 
@@ -1179,7 +1179,7 @@ ul.catitems li {
 	padding: 5px}
 
 td.dirfooter {font-size: .95em}
-div.dirfooter {margin-top: 10px}
+.dirfooter {margin-top: 10px}
 
 /***** Messages *****/
 .prio1,

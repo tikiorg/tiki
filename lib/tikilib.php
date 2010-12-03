@@ -3510,7 +3510,7 @@ class TikiLib extends TikiDb_Bridge
 				}
 			} else {
 				$mid = " where `pageName` like ? ";
-				$bindvars = array('%' . $find . '%');
+				$bindvars = array($find);
 			}
 		} else {
 			$bindvars = array();
@@ -6387,7 +6387,9 @@ if( \$('#$id') ) {
 				$line = '<tt>' . $line . '</tt>';
 			}
 
-			$line = $this->parse_data_inline_syntax( $line, $words );
+			if (!$options['ck_editor']) {
+				$line = $this->parse_data_inline_syntax( $line, $words );
+			}
 
 			// This line is parseable then we have to see what we have
 			if (substr($line, 0, 3) == '---') {
@@ -6899,7 +6901,7 @@ if( \$('#$id') ) {
 	
 	function contains_html_block($inHtml) {
 		// detect all block elements as defined on http://www.w3.org/2007/07/xhtml-basic-ref.html
-		$block_detect_regexp = '/<[\/]?(?:address|blockquote|div|dl|fieldset|h\d|hr|li|ol|p|pre|table|ul)/i';
+		$block_detect_regexp = '/<[\/]?(?:address|blockquote|div|dl|fieldset|h\d|hr|li|noscript|ol|p|pre|table|ul)/i';
 		return  (preg_match( $block_detect_regexp, $inHtml) > 0);
 	}
 

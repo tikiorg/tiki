@@ -1001,7 +1001,7 @@ img.articleimage {
 
 .postinfo div {margin-top: 30%}
 
-div.posthead {
+.posthead {
 	text-align: left;
 	padding: 3px}
 
@@ -1010,7 +1010,7 @@ div.posthead {
 	margin-top: 10px;
 	font-size: 1.2em}
 
-span.posthead {
+.posthead {
 	display: block;
 	font-weight: bold;
 	letter-spacing: .4pt}

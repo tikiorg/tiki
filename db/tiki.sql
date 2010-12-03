@@ -739,7 +739,7 @@ CREATE TABLE `tiki_file_galleries` (
   `parentId` int(14) NOT NULL default -1,
   `lockable` char(1) default 'n',
   `show_lockedby` char(1) default NULL,
-  `archives` int(4) default -1,
+  `archives` int(4) default 0,
   `sort_mode` char(20) default NULL,
   `show_modified` char(1) default NULL,
   `show_author` char(1) default NULL,
