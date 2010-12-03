@@ -244,5 +244,28 @@ OUT;
 OUT;
 		$this->assertXmlStringEqualsXmlString($expect, "<div>$output</div>");
 	}
+	
+	function testHighlightRequested() {
+		$plugin = new Search_Formatter_Plugin_WikiTemplate('{display name=highlight}');
+
+		$resultSet = new Search_ResultSet(array(
+			array('object_type' => 'wiki page', 'object_id' => 'HomePage', 'content' => 'Hello World'),
+			array('object_type' => 'wiki page', 'object_id' => 'SomePage', 'content' => 'Test'),
+		), 22, 20, 10);
+		$resultSet->setHighlightHelper(new Search_FormatterTest_HighlightHelper);
+
+		$formatter = new Search_Formatter($plugin);
+		$output = $formatter->format($resultSet);
+
+		$this->assertContains('<strong>Hello</strong>', $output);
+	}
+}
+
+class Search_FormatterTest_HighlightHelper implements Zend_Filter_Interface
+{
+	function filter($content)
+	{
+		return str_replace('Hello', '<strong>Hello</strong>', $content);
+	}
 }
 

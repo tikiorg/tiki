@@ -22,8 +22,8 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 
 		// For forum posts, and 
 		if (isset($data['parent_object_id'], $data['parent_object_type'])) {
-			$objectType = $data['parent_object_type']->getValue();
-			$objectId = $data['parent_object_id']->getValue();
+			$objectType = is_object($data['parent_object_type']) ? $data['parent_object_type']->getValue() : $data['parent_object_type'];
+			$objectId = is_object($data['parent_object_id']) ? $data['parent_object_id']->getValue() : $data['parent_object_id'];
 
 			$parentCategories = $this->categlib->get_object_categories($objectType, $objectId, -1, false);
 			$categories = array_unique(array_merge($categories, $parentCategories));

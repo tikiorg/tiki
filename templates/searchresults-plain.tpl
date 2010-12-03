@@ -7,6 +7,8 @@
 
 		{object_link type=$result.object_type id=$result.object_id title=$result.title}
 
+		<p>{$result.highlight}</p>
+
 		{if $prefs.feature_search_show_last_modification eq 'y'}
 			<div class="searchdate">{tr}Last modification{/tr}: {$result.modification_date|tiki_long_datetime}</div>
 		{/if}

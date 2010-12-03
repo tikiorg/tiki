@@ -35,12 +35,18 @@ class Search_Formatter_DataSource_Declarative implements Search_Formatter_DataSo
 
 	private function obtainFromContentSource($type, $object, & $missingFields)
 	{
+		$requiresHighlight = in_array('highlight', $missingFields);
+
 		if (isset($this->contentSources[$type])) {
 			$contentSource = $this->contentSources[$type];
 
 			if ($this->sourceProvidesValue($contentSource, $missingFields)) {
 				$data = $contentSource->getDocument($object, new Search_Type_Factory_Direct);
-				$data = array_intersect_key($data, array_combine($missingFields, $missingFields));
+				
+				if (! $requiresHighlight) {
+					$data = array_intersect_key($data, array_combine($missingFields, $missingFields));
+				}
+
 				$missingFields = array_diff($missingFields, array_keys($data));
 
 				$raw = array();
@@ -57,9 +63,15 @@ class Search_Formatter_DataSource_Declarative implements Search_Formatter_DataSo
 
 	private function obtainFromGlobalSource($globalSource, $type, $object, & $missingFields, $data)
 	{
+		$requiresHighlight = in_array('highlight', $missingFields);
+
 		if ($this->sourceProvidesValue($globalSource, $missingFields)) {
 			$data = $globalSource->getData($type, $object, new Search_Type_Factory_Direct, $data);
-			$data = array_intersect_key($data, array_combine($missingFields, $missingFields));
+
+			if (! $requiresHighlight) {
+				$data = array_intersect_key($data, array_combine($missingFields, $missingFields));
+			}
+
 			$missingFields = array_diff($missingFields, array_keys($data));
 
 			$raw = array();
@@ -75,7 +87,7 @@ class Search_Formatter_DataSource_Declarative implements Search_Formatter_DataSo
 
 	private function sourceProvidesValue($contentSource, $missingFields)
 	{
-		return count(array_intersect($missingFields, $contentSource->getProvidedFields())) > 0;
+		return in_array('highlight', $missingFields) || count(array_intersect($missingFields, $contentSource->getProvidedFields())) > 0;
 	}
 }
 

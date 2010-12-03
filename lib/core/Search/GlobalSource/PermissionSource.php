@@ -21,15 +21,15 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 		$groups = array();
 
 		if (isset($data['view_permission'])) {
-			$viewPermission = $data['view_permission']->getValue();
+			$viewPermission = is_object($data['view_permission']) ? $data['view_permission']->getValue() : $data['view_permission'];
 
 			$groups = array_merge($groups, $this->getAllowedGroups($objectType, $objectId, $viewPermission));
 		}
 		
 		if (isset($data['parent_view_permission'], $data['parent_object_id'], $data['parent_object_type'])) {
-			$viewPermission = $data['parent_view_permission']->getValue();
-			$objectId = $data['parent_object_id']->getValue();
-			$objectType = $data['parent_object_type']->getValue();
+			$viewPermission = is_object($data['parent_view_permission']) ? $data['parent_view_permission']->getValue() : $data['parent_view_permission'];
+			$objectType = is_object($data['parent_object_type']) ? $data['parent_object_type']->getValue() : $data['parent_object_type'];
+			$objectId = is_object($data['parent_object_id']) ? $data['parent_object_id']->getValue() : $data['parent_object_id'];
 
 			$groups = array_merge($groups, $this->getAllowedGroups($objectType, $objectId, $viewPermission));
 		}

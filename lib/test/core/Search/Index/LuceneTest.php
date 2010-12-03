@@ -121,6 +121,24 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 		$this->assertResultCount(1, 'filterRange', 2, 2000000000); // Check lexicography
 	}
 
+	function testIndexProvidesHighlightHelper()
+	{
+		$query = new Search_Query('foobar or hello');
+		$resultSet = $query->search($this->index);
+
+		// Manually adding the content to avoid initializing the entire formatter
+		foreach ($resultSet as & $entry) {
+			$entry['content'] = 'Hello World';
+		}
+
+		$plugin = new Search_Formatter_Plugin_WikiTemplate('{display name=highlight}');
+		$formatter = new Search_Formatter($plugin);
+		$output = $formatter->format($resultSet);
+
+		$this->assertContains('<b style="color:black;background-color:#ff66ff">Hello</b>', $output);
+		$this->assertNotContains('<body>', $output);
+	}
+
 	private function assertResultCount($count, $filterMethod, $argument)
 	{
 		$arguments = func_get_args();

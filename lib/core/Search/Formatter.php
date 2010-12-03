@@ -36,6 +36,12 @@ class Search_Formatter
 			$list = $this->dataSource->getInformation($list, $fields);
 		}
 
+		if (in_array('highlight', $fields) && $list instanceof Search_ResultSet) {
+			foreach ($list as & $entry) {
+				$entry['highlight'] = $list->highlight($entry);
+			}
+		}
+
 		$data = array();
 
 		foreach ($list as $row) {

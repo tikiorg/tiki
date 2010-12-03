@@ -63,7 +63,11 @@ class Search_Index_Lucene implements Search_Index_Interface
 			}
 		}
 
-		return new Search_ResultSet($result, count($hits), $resultStart, $resultCount);
+		$resultSet = new Search_ResultSet($result, count($hits), $resultStart, $resultCount);
+
+		$resultSet->setHighlightHelper(new Search_Index_Lucene_HighlightHelper($query));
+
+		return $resultSet;
 	}
 
 	private function extractValues($document)
@@ -196,6 +200,21 @@ class Search_Index_Lucene implements Search_Index_Interface
 			}
 			break;
 		}
+	}
+}
+
+class Search_Index_Lucene_HighlightHelper implements Zend_Filter_Interface
+{
+	private $query;
+
+	function __construct($query)
+	{
+		$this->query = Zend_Search_Lucene_Search_QueryParser::parse($query);
+	}
+
+	function filter($content)
+	{
+		return trim(strip_tags($this->query->highlightMatches($content), '<b>'));
 	}
 }
 

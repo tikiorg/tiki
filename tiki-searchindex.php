@@ -41,6 +41,7 @@ $plugin->setData(array(
 $plugin->setFields(array(
 	'title' => null,
 	'modification_date' => null,
+	'highlight' => null,
 ));
 
 $formatter = new Search_Formatter($plugin);
