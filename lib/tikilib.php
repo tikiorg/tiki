@@ -4758,6 +4758,10 @@ class TikiLib extends TikiDb_Bridge
 				$ret = $pluginOutput->toWiki();
 			}
 
+			if ($ret === false) {
+				continue;
+			}
+
 			global $headerlib;
 			$headerlib->add_jsfile( 'tiki-jsplugin.php?language='.$prefs['language'], 'dynamic' );
 			if( $this->plugin_is_editable( $plugin_name ) && (empty($options['preview_mode']) || !$options['preview_mode']) && (empty($options['print']) || !$options['print']) && !$options['suppress_icons'] ) {
@@ -5181,7 +5185,7 @@ if( \$('#$id') ) {
 		}
 
 		if( ! $this->plugin_exists( $name, true ) ) {
-			return $this->convert_plugin_output( WikiParser_PluginOutput::internalError( tr('Plugin <strong>%0</strong> does not exist.', $name) ), '', $outputFormat, $parseOptions );
+			return false;
 		}
 
 		if( ! $validationPerformed && ! $this->plugin_enabled( $name, $output ) ) {
