@@ -178,9 +178,9 @@ function runAuth() { // {{{
 	$consumer = getConsumer();
 	// Begin the OpenID authentication process.
 	$auth_request = $consumer->begin($openid);
-	// No auth request means we can't begin OpenID.
+	// No auth request means we can't begin OpenID. Usually this is because the OpenID is invalid. Sometimes this is because the OpenID server's certificate isn't trusted.
 	if (!$auth_request) {
-		displayError(tra("Authentication error; not a valid OpenID."));
+		displayError(tra("Authentication error; probably not a valid OpenID."));
 	}
 	$sreg_request = Auth_OpenID_SRegRequest::build(
 	// Required
