@@ -101,7 +101,6 @@
 				{help url="Inter-User+Messages"}
 			</legend>
 
-			{preference name=feature_messages}
 			{preference name=users_prefs_mess_maxRecords}
 			{preference name=users_prefs_allowMsgs}
 			{preference name=users_prefs_mess_sendReadStatus}
