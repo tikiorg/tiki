@@ -3507,7 +3507,7 @@ class TikiLib extends TikiDb_Bridge
 				}
 			} else {
 				$mid = " where `pageName` like ? ";
-				$bindvars = array('%' . $find . '%');
+				$bindvars = array($find);
 			}
 		} else {
 			$bindvars = array();
