@@ -18,14 +18,28 @@ function smarty_block_filter($params, $content, &$smarty, $repeat) {
 		$params['action'] = '';
 	}
 
-	$types = array(
-		'wiki page',
-		'blog post',
-		'article',
-		'forum post',
-		'trackeritem',
+	$types = array();
 
-	);
+	if ($prefs['feature_wiki'] == 'y') {
+		$types[] = 'wiki page';
+	}
+
+	if ($prefs['feature_blogs'] == 'y') {
+		$types[] = 'blog post';
+	}
+	
+	if ($prefs['feature_articles'] == 'y') {
+		$types[] = 'article';
+	}
+
+	if ($prefs['feature_forums'] == 'y') {
+		$types[] = 'forum post';
+	}
+
+	if ($prefs['feature_trackers'] == 'y') {
+		$types[] = 'trackeritem';
+	}
+
 	$filter = isset($_REQUEST['filter']) ? $_REQUEST['filter'] : array();
 
 	// General
@@ -36,37 +50,39 @@ function smarty_block_filter($params, $content, &$smarty, $repeat) {
 	$smarty->assign('filter_types', array_combine($types, array_map('tra', $types)));
 
 	// Categories
-	$smarty->assign('filter_deep', isset($filter['deep']));
-	$smarty->assign('filter_categories', isset($filter['categories']) ? $filter['categories'] : '');
-	$smarty->assign('filter_categmap', json_encode(TikiDb::get()->fetchMap('SELECT categId, name FROM tiki_categories')));
+	if ($prefs['feature_categories'] == 'y') {
+		$smarty->assign('filter_deep', isset($filter['deep']));
+		$smarty->assign('filter_categories', isset($filter['categories']) ? $filter['categories'] : '');
+		$smarty->assign('filter_categmap', json_encode(TikiDb::get()->fetchMap('SELECT categId, name FROM tiki_categories')));
 
-	// Generate the category tree {{{
-	global $categlib; require_once 'lib/categories/categlib.php';
-	require_once 'lib/tree/categ_browse_tree.php';
-	$ctall = $categlib->get_all_categories_respect_perms(null, 'view_category');
+		// Generate the category tree {{{
+		global $categlib; require_once 'lib/categories/categlib.php';
+		require_once 'lib/tree/categ_browse_tree.php';
+		$ctall = $categlib->get_all_categories_respect_perms(null, 'view_category');
 
-	$tree_nodes = array();
-	foreach($ctall as $c) {
-		$name = htmlentities($c['name'], ENT_QUOTES, 'UTF-8');
+		$tree_nodes = array();
+		foreach($ctall as $c) {
+			$name = htmlentities($c['name'], ENT_QUOTES, 'UTF-8');
 
-		$body = <<<BODY
+			$body = <<<BODY
 <label>
 	<input type="checkbox" value="{$c['categId']}"/>
 	{$name}
 </label>
 BODY;
 
-		$tree_nodes[] = array(
-			'id' => $c['categId'],
-			'parent' => $c['parentId'],
-			'data' => $body,
-		);
-	}
+			$tree_nodes[] = array(
+				'id' => $c['categId'],
+				'parent' => $c['parentId'],
+				'data' => $body,
+			);
+		}
 
-	$tm = new CatBrowseTreeMaker('categ');
-	$res = $tm->make_tree(0, $tree_nodes);
-	$smarty->assign('filter_category_picker', $res);
-	// }}}
+		$tm = new CatBrowseTreeMaker('categ');
+		$res = $tm->make_tree(0, $tree_nodes);
+		$smarty->assign('filter_category_picker', $res);
+		// }}}
+	}
 
 	return $smarty->fetch('filter.tpl');
 }

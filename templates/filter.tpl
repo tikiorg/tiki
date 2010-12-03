@@ -13,25 +13,29 @@
 		</select>
 	</label>
 	<input type="submit" value="{tr}Search{/tr}"/>
-	<fieldset>
-		<legend>{tr}Categories{/tr}</legend>
+	{if $prefs.feature_categories eq 'y'}
+		<fieldset>
+			<legend>{tr}Categories{/tr}</legend>
 
-		<input type="text" name="filter[categories]" class="wizard" value="{$filter_categories|escape}"/>
+			<input type="text" name="filter[categories]" class="wizard" value="{$filter_categories|escape}"/>
 
-		<a class="category-lookup" href="#">{tr}Lookup{/tr}</a>
-		
-		<label>
-			<input type="checkbox" name="filter[deep]"{if $filter_deep} checked="checked"{/if}/>
-			{tr}Deep search{/tr}
-		</label>
-	</fieldset>
+			<a class="category-lookup" href="#">{tr}Lookup{/tr}</a>
+			
+			<label>
+				<input type="checkbox" name="filter[deep]"{if $filter_deep} checked="checked"{/if}/>
+				{tr}Deep search{/tr}
+			</label>
+		</fieldset>
 
-	<div class="category-picker" title="{tr}Select Categories{/tr}">
-		{$filter_category_picker}
-	</div>
+		<div class="category-picker" title="{tr}Select Categories{/tr}">
+			{$filter_category_picker}
+		</div>
+	{/if}
 </form>
 {jq}
 	$('.filter:not(.init)').addClass('init').each(function () {
+
+{{if $prefs.feature_categories eq 'y'}}
 		var categoryInput = $('.wizard', this).fancy_filter('init', {
 			map: {{$filter_categmap}}
 		});
@@ -62,5 +66,6 @@
 			categoryPicker.dialog('open');
 			return false;
 		});
+{{/if}}
 	});
 {/jq}
