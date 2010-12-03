@@ -31,6 +31,21 @@
 			{$filter_category_picker}
 		</div>
 	{/if}
+	{if $prefs.feature_multilingual eq 'y'}
+		<fieldset>
+			<legend>{tr}Language{/tr}</legend>
+			<select name="filter[language]">
+				<option value="">{tr}Any{/tr}</option>
+				{foreach from=$filter_languages item=l}
+					<option value="{$l.value|escape}"{if $filter_language eq $l.value} selected="selected"{/if}>{$l.name|escape}</option>
+				{/foreach}
+			</select>
+			<label>
+				<input type="checkbox" name="filter[language_unspecified]"{if $filter_language_unspecified} checked="checked"{/if}/>
+				{tr}Include objects without a specified language{/tr}
+			</label>
+		</fieldset>
+	{/if}
 </form>
 {jq}
 	$('.filter:not(.init)').addClass('init').each(function () {

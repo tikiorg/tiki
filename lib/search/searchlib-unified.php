@@ -144,6 +144,16 @@ class UnifiedSearchLib
 			$query->filterContent($filter['content']);
 		}
 
+		if (isset($filter['language']) && $filter['language']) {
+			$q = "\"{$filter['language']}\"";
+
+			if (isset($filter['language_unspecified'])) {
+				$q .= ' or unknown';
+			}
+
+			$query->filterLanguage($q);
+		}
+
 		return $query;
 	}
 

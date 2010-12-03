@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function smarty_block_filter($params, $content, &$smarty, $repeat) {
-	global $prefs;
+	global $prefs, $tikilib;
 	
 	if (! isset($params['action'])) {
 		$params['action'] = '';
@@ -82,6 +82,14 @@ BODY;
 		$res = $tm->make_tree(0, $tree_nodes);
 		$smarty->assign('filter_category_picker', $res);
 		// }}}
+	}
+
+	// Language
+	if ($prefs['feature_multilingual'] == 'y') {
+		$languages = $tikilib->list_languages();
+		$smarty->assign('filter_languages', $languages);
+		$smarty->assign('filter_language_unspecified', isset($filter['language_unspecified']));
+		$smarty->assign('filter_language', isset($filter['language']) ? $filter['language'] : '');
 	}
 
 	return $smarty->fetch('filter.tpl');
