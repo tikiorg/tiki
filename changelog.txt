@@ -25,6 +25,699 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 6.1
+<http://tiki.org/ReleaseNotes61>
+------------------
+
+----------------------------------------------
+r31025 | sampaioprimo | 2010-12-03 18:58:26 +0100 (Fri, 03 Dec 2010) | 1 line
+
+German translations done on i18n.tiki.org (1140 new translations and 100 translations updated!)
+----------------------------------------------
+r31024 | jonnybradley | 2010-12-03 18:47:52 +0100 (Fri, 03 Dec 2010) | 2 lines
+
+[FIX] admin community: feature_messages appeared twice in the same admin page, so you had to click both to make a change. Removed the 2nd one (and added some missing dependencies for the other prefs)
+Thanks PhilBack
+----------------------------------------------
+r31023 | jonnybradley | 2010-12-03 18:22:52 +0100 (Fri, 03 Dec 2010) | 1 line
+
+[FIX] wysiwyg: Fill tikilink "Link Text" with selection when creating a new link.
+----------------------------------------------
+r31020 | jonnybradley | 2010-12-03 17:57:21 +0100 (Fri, 03 Dec 2010) | 1 line
+
+[FIX] wysiwyg: tikilink jslint, change "Link Text" label and remove utf8 BOM
+----------------------------------------------
+r31018 | jonnybradley | 2010-12-03 17:26:11 +0100 (Fri, 03 Dec 2010) | 1 line
+
+[FIX] listpages: Do an exact match when exact_match is true
+----------------------------------------------
+r31017 | jonnybradley | 2010-12-03 17:09:37 +0100 (Fri, 03 Dec 2010) | 1 line
+
+[MOD] fgals: Change the default for gallery "archives" to 0 meaning unlimited, instead of -1 meaning none (it's the wiki way!)
+----------------------------------------------
+r31012 | jonnybradley | 2010-12-03 15:51:32 +0100 (Fri, 03 Dec 2010) | 1 line
+
+Add conditional warning to feature_wiki_protect_email pref to warn about it not working in wysiwyg mode.
+----------------------------------------------
+r31011 | jonnybradley | 2010-12-03 15:37:06 +0100 (Fri, 03 Dec 2010) | 1 line
+
+[FIX] wysiwyg: Oops, committed debug setup, apologies (thanks Geoff)
+----------------------------------------------
+r31010 | pkdille | 2010-12-03 15:34:11 +0100 (Fri, 03 Dec 2010) | 1 line
+
+Typo
+----------------------------------------------
+r31009 | jonnybradley | 2010-12-03 15:32:25 +0100 (Fri, 03 Dec 2010) | 1 line
+
+[FIX] parse_data: Don't parse inline syntax for ck_editor. Email protect JS gets sanitised and breaks the page.
+----------------------------------------------
+r31008 | chibaguy | 2010-12-03 09:12:13 +0100 (Fri, 03 Dec 2010) | 1 line
+
+[CSS] Unnecessary instances of "div.", "span." and "table." removed.
+----------------------------------------------
+r31007 | chealer | 2010-12-03 09:07:14 +0100 (Fri, 03 Dec 2010) | 2 lines
+
+[bp/r31005][FIX] OpenID: consumer->begin() can return NULL simply because the OpenID provider doesn't have a trusted certificate, so make the error message vaguer
+
+----------------------------------------------
+r31006 | chibaguy | 2010-12-03 09:05:09 +0100 (Fri, 03 Dec 2010) | 1 line
+
+[ENH] Pointless use of class removed (for simpler CSS rule).
+----------------------------------------------
+r31003 | lindonb | 2010-12-03 00:38:28 +0100 (Fri, 03 Dec 2010) | 2 lines
+
+Add options, default fields and other cleanup to plugin info for use in plugin edit popup and plugin manager
+
+----------------------------------------------
+r31002 | jonnybradley | 2010-12-03 00:19:30 +0100 (Fri, 03 Dec 2010) | 1 line
+
+[ENH] wysiwyg: Adapt ckeditor link dialog to know about wiki links and remove wiki dialog tool from toolbar.
+----------------------------------------------
+r30996 | jonnybradley | 2010-12-02 20:47:11 +0100 (Thu, 02 Dec 2010) | 1 line
+
+tracker export: Make warning about AJAX export less worrying
+----------------------------------------------
+r30994 | jonnybradley | 2010-12-02 18:20:32 +0100 (Thu, 02 Dec 2010) | 2 lines
+
+[FIX] tracker dump: Try and cope with memory_limit = -1 better (still has problems - recommend using a fixed limit for this).
+Also escape double quotes within fields and replace linefeeds with %%%.
+----------------------------------------------
+r30993 | jonnybradley | 2010-12-02 18:17:55 +0100 (Thu, 02 Dec 2010) | 2 lines
+
+[FIX] tracker export: Allow blank values for dates in filter form (otherwise it only exports items for one day - 1 Jan 2010 currently).
+Also catch error when destroying uninitialised progressbar (can't find a legitimate way of detecting if the progressbar has already been initialised)
+----------------------------------------------
+r30992 | jonnybradley | 2010-12-02 16:32:27 +0100 (Thu, 02 Dec 2010) | 1 line
+
+[FIX] timezones: TimezoneIsValidId now checks "identifiers" as well as abbreviations as half the time it's called with the short timezone "code" (e.g. GMT) and the rest of the time it should check for the longer string (e.g. Europe/London)
+----------------------------------------------
+r30991 | lphuberdeau | 2010-12-02 16:01:16 +0100 (Thu, 02 Dec 2010) | 1 line
+
+[FIX] Prevent PHP execution when called from a CDN domain to avoid indexing by google (requested by marc). Previous behavior was to disable sessions. Now return a 404 as dynamic javascript file no longer goes to the CDN (requested by changi).
+----------------------------------------------
+r30990 | lphuberdeau | 2010-12-02 15:54:39 +0100 (Thu, 02 Dec 2010) | 1 line
+
+[bp/30663] Make sure PHP files are not sent over to the CDN
+----------------------------------------------
+r30989 | chibaguy | 2010-12-02 05:22:55 +0100 (Thu, 02 Dec 2010) | 1 line
+
+[FIX] Needed for .cssmenu_vert dropdowns to display fully in right column.
+----------------------------------------------
+r30988 | chibaguy | 2010-12-02 04:40:57 +0100 (Thu, 02 Dec 2010) | 1 line
+
+[ENH] !important not needed for img border rules following removal of border="0" in files.
+----------------------------------------------
+r30983 | lindonb | 2010-12-01 22:52:37 +0100 (Wed, 01 Dec 2010) | 1 line
+
+Add default fields and other cleanup to plugin info for use in plugin edit popup and plugin manager
+----------------------------------------------
+r30982 | Jyhem | 2010-12-01 21:29:49 +0100 (Wed, 01 Dec 2010) | 1 line
+
+[ENH] Improve coelesce layout for modules 'last blog post' and 'most popular tags'
+----------------------------------------------
+r30981 | Jyhem | 2010-12-01 20:53:25 +0100 (Wed, 01 Dec 2010) | 1 line
+
+[ENH] Take 29401 into account and get back previous expected postfooter layout for coelesce
+----------------------------------------------
+r30980 | Jyhem | 2010-12-01 20:32:39 +0100 (Wed, 01 Dec 2010) | 1 line
+
+[ENH] Make optional the ability to choose published date for Blog post. It is still on by default.
+----------------------------------------------
+r30979 | jonnybradley | 2010-12-01 19:50:12 +0100 (Wed, 01 Dec 2010) | 2 lines
+
+[FIX] notification: Switch wiki notification to use TikiMail the same as everything else as tiki_send_admin_mail was causing corrupted "From" addressed on some servers (thanks again Geoff).
+TODO: This was the last reference to maillib/tiki_send_admin_mail() so that should be reviewed (and removed) after 6.1
+----------------------------------------------
+r30978 | jonnybradley | 2010-12-01 19:29:49 +0100 (Wed, 01 Dec 2010) | 1 line
+
+[FIX] stats: 'started' needs to be a timestamp int, not a string for the php functions (so format the date string in the tpl)
+----------------------------------------------
+r30976 | jonnybradley | 2010-12-01 17:56:52 +0100 (Wed, 01 Dec 2010) | 1 line
+
+[FIX] fglas: Fix fgal explorer tree when the root gallery id is not 1 (thanks Geoff)
+----------------------------------------------
+r30975 | jonnybradley | 2010-12-01 17:54:54 +0100 (Wed, 01 Dec 2010) | 1 line
+
+[FIX] articles: tikidomain missing global
+----------------------------------------------
+r30972 | jonnybradley | 2010-12-01 11:54:45 +0100 (Wed, 01 Dec 2010) | 1 line
+
+[FIX] ajax preview: Preview button now refreshes preview when clicked a second time. Also doesn't open in-page preview if popup preview window is open.
+----------------------------------------------
+r30971 | lindonb | 2010-12-01 05:27:33 +0100 (Wed, 01 Dec 2010) | 1 line
+
+Add options and other clean-up for plugin info used in plugin edit window and plugin manager
+----------------------------------------------
+r30970 | lindonb | 2010-12-01 05:02:19 +0100 (Wed, 01 Dec 2010) | 1 line
+
+Add options and other clean up of plugin info for use in plugin edit window and plugin manager
+----------------------------------------------
+r30969 | lindonb | 2010-12-01 04:53:06 +0100 (Wed, 01 Dec 2010) | 1 line
+
+Add defaults and other cleanup of plugin info used in plugin edit window and plugin manager
+----------------------------------------------
+r30968 | lindonb | 2010-12-01 04:44:39 +0100 (Wed, 01 Dec 2010) | 1 line
+
+Add tra and other minor changes to plugin info used by plugin edit window and pluginmanger
+----------------------------------------------
+r30967 | lindonb | 2010-12-01 04:32:49 +0100 (Wed, 01 Dec 2010) | 1 line
+
+Add tra and default in plugin info used in plugin edit window and pluginmanager
+----------------------------------------------
+r30966 | lindonb | 2010-12-01 04:29:20 +0100 (Wed, 01 Dec 2010) | 1 line
+
+Add tra and some rewording for plugin info used in plugin edit window
+----------------------------------------------
+r30965 | lindonb | 2010-12-01 04:26:33 +0100 (Wed, 01 Dec 2010) | 1 line
+
+Add tra and some rewording for plugin info for plugin edit window
+----------------------------------------------
+r30964 | lindonb | 2010-12-01 04:19:12 +0100 (Wed, 01 Dec 2010) | 1 line
+
+Adding options to plugin info for plugin edit window
+----------------------------------------------
+r30961 | jonnybradley | 2010-11-30 23:44:43 +0100 (Tue, 30 Nov 2010) | 1 line
+
+[ENH] pagination: Add classes to anchors around prev/next buttons: .first, .prev_fast, .prev, .next, .next_fast and .last (thanks yonixxx)
+----------------------------------------------
+r30960 | minger0 | 2010-11-30 22:46:20 +0100 (Tue, 30 Nov 2010) | 1 line
+
+[FIX] tiki-remind_password link in the e-mail was broken (slashes in the link)
+----------------------------------------------
+r30958 | jonnybradley | 2010-11-30 20:00:25 +0100 (Tue, 30 Nov 2010) | 1 line
+
+[ENH] user tracker: Show link to create user tracker item if none is found
+----------------------------------------------
+r30954 | sylvieg | 2010-11-30 18:29:04 +0100 (Tue, 30 Nov 2010) | 1 line
+
+[FIX]sefurl: sefurl the wiki page if group home page on an url mysite.com/
+----------------------------------------------
+r30953 | jonnybradley | 2010-11-30 18:22:08 +0100 (Tue, 30 Nov 2010) | 1 line
+
+[FIX] useradmin: Correct link to user tracker when admin viewing other user's preferences page.
+----------------------------------------------
+r30952 | jonnybradley | 2010-11-30 17:49:50 +0100 (Tue, 30 Nov 2010) | 1 line
+
+[FIX] useradmin: Let admins see link to user info (and indicate which ones are private using opacity)
+----------------------------------------------
+r30950 | jonnybradley | 2010-11-30 17:27:37 +0100 (Tue, 30 Nov 2010) | 1 line
+
+[MOD] registration: Don't show "Register as a new user" text if there's a user tracker and it has a description (to allow more customisation).
+----------------------------------------------
+r30947 | jonnybradley | 2010-11-30 16:58:04 +0100 (Tue, 30 Nov 2010) | 1 line
+
+[FIX] css menus: Try and position the menu within the browser window
+----------------------------------------------
+r30946 | chibaguy | 2010-11-30 15:49:39 +0100 (Tue, 30 Nov 2010) | 1 line
+
+[FIX] Changed "comment(s) so far" to just "comment(s)" for blog post comments, etc. as the "so far" states the obvious. 
+----------------------------------------------
+r30942 | chibaguy | 2010-11-30 13:34:01 +0100 (Tue, 30 Nov 2010) | 1 line
+
+[FIX] Various language string improvements.
+----------------------------------------------
+r30940 | chibaguy | 2010-11-30 12:48:30 +0100 (Tue, 30 Nov 2010) | 1 line
+
+[FIX] Replaced "informations" with "information" and adjusted sentences where necessary, in strings.
+----------------------------------------------
+r30939 | chibaguy | 2010-11-30 12:40:29 +0100 (Tue, 30 Nov 2010) | 1 line
+
+[FIX] Mellowed the tone of "Permission denied:" messages (fixed run-on sentences in some cases).
+----------------------------------------------
+r30938 | chibaguy | 2010-11-30 12:07:49 +0100 (Tue, 30 Nov 2010) | 1 line
+
+[FIX] img tag property border="0" removed as it's deprecated, and images have borders off by default anyway (CSS rule).
+----------------------------------------------
+r30937 | chealer | 2010-11-30 05:03:35 +0100 (Tue, 30 Nov 2010) | 2 lines
+
+[FIX]	jscalendar drawn under tracker form in Coelesce, bumping .calendar z-index from 6 to 300 (Closes: #3677)
+review welcome
+----------------------------------------------
+r30936 | lindonb | 2010-11-30 04:00:44 +0100 (Tue, 30 Nov 2010) | 1 line
+
+Add options to plugin info for plugin edit.
+----------------------------------------------
+r30935 | lindonb | 2010-11-30 03:46:10 +0100 (Tue, 30 Nov 2010) | 1 line
+
+Minor improvements to plugin info
+----------------------------------------------
+r30934 | lindonb | 2010-11-30 03:13:52 +0100 (Tue, 30 Nov 2010) | 1 line
+
+[FIX] Now handles old table syntax pref setting. Tried to make output table syntax more stable. Added options defaults and corrections to plugin info for plugin edit. Changed double quotes to single.
+----------------------------------------------
+r30933 | lindonb | 2010-11-30 02:54:57 +0100 (Tue, 30 Nov 2010) | 1 line
+
+Add options, defaults and minor corrections to plugin info for plugin edit
+----------------------------------------------
+r30932 | lindonb | 2010-11-30 02:39:13 +0100 (Tue, 30 Nov 2010) | 1 line
+
+Add default parameter for plugin info for display in plugin manager
+----------------------------------------------
+r30931 | lindonb | 2010-11-30 02:35:01 +0100 (Tue, 30 Nov 2010) | 1 line
+
+[FIX] Minor corrections to plugin info for plugin edit window.
+----------------------------------------------
+r30930 | lindonb | 2010-11-30 02:19:32 +0100 (Tue, 30 Nov 2010) | 1 line
+
+[FIX] Increase contrast for parameter descriptions in plugin edit window so that they are visible.
+----------------------------------------------
+r30928 | changi67 | 2010-11-29 22:18:29 +0100 (Mon, 29 Nov 2010) | 2 lines
+
+[NEW] Add an option in module since_your_last_visit to be able to use Jquery_ui tabs look
+
+----------------------------------------------
+r30925 | chealer | 2010-11-29 18:47:20 +0100 (Mon, 29 Nov 2010) | 1 line
+
+[bp/r30887][FIX] JavaScript translation:  403 Forbidden on JavaScript translation files on IIS
+----------------------------------------------
+r30924 | jonnybradley | 2010-11-29 18:44:46 +0100 (Mon, 29 Nov 2010) | 1 line
+
+[FIX] multilingual structures: Re-enable quick_switch_language menu on structures and deploy no_bl param to structure links. Also add code to pick up language from selected page to find current structure in tiki-index.php and structlib.
+----------------------------------------------
+r30922 | jonnybradley | 2010-11-29 18:06:45 +0100 (Mon, 29 Nov 2010) | 1 line
+
+[FIX] switch lang: !important needed to override img.icon border definition (also sadly using !important)
+----------------------------------------------
+r30921 | jonnybradley | 2010-11-29 17:52:18 +0100 (Mon, 29 Nov 2010) | 1 line
+
+[FIX] cclite: Small correction to cclite user logic
+----------------------------------------------
+r30920 | jonnybradley | 2010-11-29 17:35:07 +0100 (Mon, 29 Nov 2010) | 1 line
+
+[MOD] wysiwyg: Make tikiimage tool not show in wysiwyg to avoid confusion with the "normal" Image tool which uses the native ckeditor image dialog (and works more reliably in wysiwyg)
+----------------------------------------------
+r30919 | jonnybradley | 2010-11-29 17:21:39 +0100 (Mon, 29 Nov 2010) | 1 line
+
+[FIX] jquery: Change test for centre column safari animation workaround from col1 to role_mail as filegals_manager mode popup doesn't have columns.
+----------------------------------------------
+r30915 | jonnybradley | 2010-11-29 15:35:11 +0100 (Mon, 29 Nov 2010) | 1 line
+
+[FIX] trackers: Wiki parse static field descriptions for notification mails if the option is set.
+----------------------------------------------
+r30914 | jonnybradley | 2010-11-29 14:24:56 +0100 (Mon, 29 Nov 2010) | 1 line
+
+[ENH] wikiplugin_category: Add showTitle param to allow hiding the 'cattitle' heading.
+----------------------------------------------
+r30913 | jonnybradley | 2010-11-29 13:58:40 +0100 (Mon, 29 Nov 2010) | 1 line
+
+[ENH] index_raw: Add 'textonly' param to strip out html head and tags for plain text output. Also sanitize filename param to remove slashes etc.
+----------------------------------------------
+r30912 | chibaguy | 2010-11-29 07:11:12 +0100 (Mon, 29 Nov 2010) | 1 line
+
+[FIX] Headings for number of comments and editing should be smaller than the post title. Also, editing heading's inline text-align style isn't needed.
+----------------------------------------------
+r30911 | chibaguy | 2010-11-29 03:20:13 +0100 (Mon, 29 Nov 2010) | 1 line
+
+[FIX] Strasa theme: move blog post author action icons back to their original, pre-blog revamp location. 
+----------------------------------------------
+r30910 | chibaguy | 2010-11-29 02:22:15 +0100 (Mon, 29 Nov 2010) | 1 line
+
+[FIX] 100% property of blog's .author_actions prevented icons from being in one row with .action icon div.
+----------------------------------------------
+r30908 | jonnybradley | 2010-11-27 23:28:18 +0100 (Sat, 27 Nov 2010) | 1 line
+
+[ENH] fgals: Pref for max thumbnail size (missing file)
+----------------------------------------------
+r30907 | jonnybradley | 2010-11-27 23:27:28 +0100 (Sat, 27 Nov 2010) | 1 line
+
+[ENH] fgals: Pref for max thumbnail size
+----------------------------------------------
+r30905 | xavidp | 2010-11-27 19:52:38 +0100 (Sat, 27 Nov 2010) | 1 line
+
+quicktags finally re-translated as toolbars (Barres d'eines) everywhere
+----------------------------------------------
+r30904 | jonnybradley | 2010-11-27 19:22:08 +0100 (Sat, 27 Nov 2010) | 1 line
+
+[ENH] fgals: New pref to hide the thumbnail actions when not displaying file details for a cleaner look.
+----------------------------------------------
+r30903 | jonnybradley | 2010-11-27 18:56:24 +0100 (Sat, 27 Nov 2010) | 1 line
+
+[ENH] fgals: Make search optional for file galleries
+----------------------------------------------
+r30902 | jonnybradley | 2010-11-27 18:43:06 +0100 (Sat, 27 Nov 2010) | 1 line
+
+[FIX] fgals: Correct defaults for name and lockedby for new galleries
+----------------------------------------------
+r30900 | jonnybradley | 2010-11-27 18:13:23 +0100 (Sat, 27 Nov 2010) | 1 line
+
+[FIX] fgals: Set defaults - don't use fileIds as galleryIds
+----------------------------------------------
+r30899 | jonnybradley | 2010-11-27 18:10:24 +0100 (Sat, 27 Nov 2010) | 1 line
+
+[FIX] fgals: Set defaults - now work on current gallery if no subgals selected, set default_view properly and add missing show_explorer, show_path & show_slideshow settings.
+----------------------------------------------
+r30898 | jonnybradley | 2010-11-27 17:36:24 +0100 (Sat, 27 Nov 2010) | 1 line
+
+[FIX] webdav: Show URL to open file with WebDAV instead of suggesting using IE.
+----------------------------------------------
+r30897 | jonnybradley | 2010-11-27 17:26:32 +0100 (Sat, 27 Nov 2010) | 1 line
+
+[ENH] fgals: Show folders in browse image mode and add link to parent folder. Icons could be improved (please)
+----------------------------------------------
+r30896 | jonnybradley | 2010-11-27 17:13:32 +0100 (Sat, 27 Nov 2010) | 1 line
+
+[FIX] jquery: Use slide instead of default animation for elements using show() in #col1 for safari & chrome to avoid strange animation effects in those browsers.
+----------------------------------------------
+r30895 | jonnybradley | 2010-11-27 15:46:09 +0100 (Sat, 27 Nov 2010) | 2 lines
+
+[bp/r30848][FIX] file gallery: memory usage greatly reduced when moving from DB to file system by not fetching blobs
+Also backport a small fix to syncFileBacklinks() so file is in sync with trunk.
+----------------------------------------------
+r30894 | chibaguy | 2010-11-27 13:48:57 +0100 (Sat, 27 Nov 2010) | 1 line
+
+[NEW]{ENH] Different blog post layout for Tikinewt theme (as example following blog revamp).
+----------------------------------------------
+r30892 | jonnybradley | 2010-11-26 22:31:39 +0100 (Fri, 26 Nov 2010) | 1 line
+
+[ENH] search module: Automatically go to page on enter key if a page was selected from the autocomplete, don't put all the defaults into the module admin form, change "go" to "titles" (and so make buttons a little smaller) and various other fixes.
+----------------------------------------------
+r30891 | jonnybradley | 2010-11-26 21:10:46 +0100 (Fri, 26 Nov 2010) | 1 line
+
+[FIX] jslint: Removing rogue comment start error on line 803 and fix various other warnings.
+----------------------------------------------
+r30889 | jonnybradley | 2010-11-26 20:42:05 +0100 (Fri, 26 Nov 2010) | 1 line
+
+[FIX] articles: Only confirm html loss on saving, not cancel or preview.
+----------------------------------------------
+r30888 | chealer | 2010-11-26 20:21:29 +0100 (Fri, 26 Nov 2010) | 1 line
+
+[FIX] COLORBOX: Broken link to help
+----------------------------------------------
+r30886 | jonnybradley | 2010-11-26 19:56:57 +0100 (Fri, 26 Nov 2010) | 1 line
+
+[FIX] articles: Add warning confirm box if you are saving HTML in an article without the "Allow full HTML (for this edit session)" checked (not a great design)
+----------------------------------------------
+r30884 | sampaioprimo | 2010-11-26 19:10:51 +0100 (Fri, 26 Nov 2010) | 2 lines
+
+[FIX] list file galleries that the user has perm to upload when using object permissions
+
+----------------------------------------------
+r30883 | jonnybradley | 2010-11-26 19:09:00 +0100 (Fri, 26 Nov 2010) | 1 line
+
+[ENH] Lesser magic: Search improvements - link to correct tab for found features and highlight them, show a tooltip on the search button when re-indexing is required and a few minor visual improvements.
+----------------------------------------------
+r30882 | jonnybradley | 2010-11-26 19:06:16 +0100 (Fri, 26 Nov 2010) | 1 line
+
+[CSS] jqui: Nicer background for highlight class
+----------------------------------------------
+r30881 | xavidp | 2010-11-26 19:01:17 +0100 (Fri, 26 Nov 2010) | 1 line
+
+[ENH]Add default charset as utf-8 for the contents of the downloaded file
+----------------------------------------------
+r30880 | jonnybradley | 2010-11-26 17:34:03 +0100 (Fri, 26 Nov 2010) | 1 line
+
+[ENH] group home: Add useful keywords to prefs, make limitedGoGroupHome on by default (seems more logical) and add autocomplete to group home input.
+----------------------------------------------
+r30879 | xavidp | 2010-11-26 17:04:40 +0100 (Fri, 26 Nov 2010) | 1 line
+
+[ENH]Allow the user to request the raw content to be downloaded by means of including the param "&download" in the url, and also the filename foo.r if/when the the param "&filename=foo.r" is included also in the url. Useful for pretty trackers and custom buttons to allow downloading the resulting content, etc. Thanks jonnyb for tips
+----------------------------------------------
+r30878 | xavidp | 2010-11-26 15:55:37 +0100 (Fri, 26 Nov 2010) | 1 line
+
+[MOD]Wikify the process to call the clean param. No value needed, just "clean"
+----------------------------------------------
+r30877 | xavidp | 2010-11-26 15:47:56 +0100 (Fri, 26 Nov 2010) | 1 line
+
+[ENH]Allow printing a wiki page without the information abouty authors, contributors, nor the links from the tiki-page_bar.tpl, if "clean=y" is added to the url of tiki-index_raw.php. Useful to allow saving files produced from pretty trackers (combining text and tracker item values, to produce parameter file for computations in R scripts, etc). Thanks jonnyb for tips
+----------------------------------------------
+r30874 | sampaioprimo | 2010-11-25 19:38:03 +0100 (Thu, 25 Nov 2010) | 2 lines
+
+making "Pick a file" string translatable
+
+----------------------------------------------
+r30873 | sampaioprimo | 2010-11-25 19:32:53 +0100 (Thu, 25 Nov 2010) | 2 lines
+
+make "Advanced options" button translatable
+
+----------------------------------------------
+r30871 | sampaioprimo | 2010-11-25 19:09:38 +0100 (Thu, 25 Nov 2010) | 1 line
+
+removing '{treetable}' string appended to treetable smarty function user messages
+----------------------------------------------
+r30870 | sampaioprimo | 2010-11-25 19:00:00 +0100 (Thu, 25 Nov 2010) | 2 lines
+
+rollback 30839: cause problems when creating a new wiki page when others with similar name already exist
+
+----------------------------------------------
+r30869 | jonnybradley | 2010-11-25 18:51:06 +0100 (Thu, 25 Nov 2010) | 1 line
+
+[FIX] articles: Remove image data if $useImage = n (no other way of clearing article images otherwise)
+----------------------------------------------
+r30868 | sampaioprimo | 2010-11-25 18:00:13 +0100 (Thu, 25 Nov 2010) | 1 line
+
+[FIX] only display simple and advanced mode buttons when using filegals_manager
+----------------------------------------------
+r30866 | jonnybradley | 2010-11-25 16:20:34 +0100 (Thu, 25 Nov 2010) | 1 line
+
+[FIX] login: site_closed.php doesn't check pref before showing closed message (thanks Rodrigo)
+----------------------------------------------
+r30865 | marclaporte | 2010-11-25 01:20:55 +0100 (Thu, 25 Nov 2010) | 1 line
+
+[NEW] Link to Clipperz online password manager from the admin panel. LP and I met Giulio Cesare Solaroli (the lead developer) last week and we think it's an awesome project.
+----------------------------------------------
+r30864 | marclaporte | 2010-11-25 00:35:25 +0100 (Thu, 25 Nov 2010) | 1 line
+
+[MOD] XAJAX was turned on by default when AJAX was turned on by default (in 6.0) so now XAJAX is off on fresh installs but AJAX remains on
+----------------------------------------------
+r30862 | marclaporte | 2010-11-24 23:17:06 +0100 (Wed, 24 Nov 2010) | 1 line
+
+better admin panel for menus
+----------------------------------------------
+r30861 | marclaporte | 2010-11-24 16:41:39 +0100 (Wed, 24 Nov 2010) | 1 line
+
+making an option easier to find
+----------------------------------------------
+r30858 | sampaioprimo | 2010-11-24 14:06:49 +0100 (Wed, 24 Nov 2010) | 1 line
+
+German translations done on i18n.tiki.org
+----------------------------------------------
+r30854 | sampaioprimo | 2010-11-24 13:06:06 +0100 (Wed, 24 Nov 2010) | 2 lines
+
+[FIX] show openid form on tiki-login.php
+
+----------------------------------------------
+r30852 | sylvieg | 2010-11-23 18:25:47 +0100 (Tue, 23 Nov 2010) | 1 line
+
+[FIX]print: if itemId exists in the requet, keep it in the reference -> Perhaps this needs to be more generic
+----------------------------------------------
+r30851 | sylvieg | 2010-11-23 14:07:05 +0100 (Tue, 23 Nov 2010) | 1 line
+
+[FIX]tracker: add bmp image
+----------------------------------------------
+r30850 | chealer | 2010-11-23 03:15:18 +0100 (Tue, 23 Nov 2010) | 2 lines
+
+somewhat cleanup Edit translation, in particular for articles
+[FIX] "Can not change article language - page not found error" (Closes: #2925)
+----------------------------------------------
+r30849 | jonnybradley | 2010-11-22 22:50:10 +0100 (Mon, 22 Nov 2010) | 1 line
+
+[FIX] plugins: Clean empty plugin artifacts from plugin list, probably caused by upgrades from 3 to 6 (thanks Geoff)
+----------------------------------------------
+r30841 | xavidp | 2010-11-22 14:48:08 +0100 (Mon, 22 Nov 2010) | 1 line
+
+[ENH]Improve description of the url from the embed code, not the url from the video on  blip.tv. Thanks rodrigo_sampaio
+----------------------------------------------
+r30840 | xavidp | 2010-11-22 14:24:51 +0100 (Mon, 22 Nov 2010) | 1 line
+
+[FIX]Forgot to add the link to the image/icon. Still not clear how to force the icon size to be 16x16
+----------------------------------------------
+r30839 | sampaioprimo | 2010-11-22 13:31:30 +0100 (Mon, 22 Nov 2010) | 1 line
+
+[FIX] display error when two different wiki pages use the same alias
+----------------------------------------------
+r30838 | xavidp | 2010-11-22 13:23:59 +0100 (Mon, 22 Nov 2010) | 1 line
+
+[ENH]Add the optional param 'showicon' to display the icon to the left of the file added (and allow wikiplugin_img to display the icon corresponding to the file type even if the file is not an image
+----------------------------------------------
+r30837 | xavidp | 2010-11-21 20:02:13 +0100 (Sun, 21 Nov 2010) | 1 line
+
+ a few more strings translated
+----------------------------------------------
+r30836 | xavidp | 2010-11-21 19:47:59 +0100 (Sun, 21 Nov 2010) | 1 line
+
+[bp/r30801][ENH] tiki-list_posts.php accepted param blogId to list only posts from a specific blog. thanks rodrigo_sampaio
+----------------------------------------------
+r30835 | changi67 | 2010-11-21 19:15:19 +0100 (Sun, 21 Nov 2010) | 1 line
+
+[FIX] Command line tools don't need session
+----------------------------------------------
+r30834 | changi67 | 2010-11-21 19:00:33 +0100 (Sun, 21 Nov 2010) | 1 line
+
+[FIX] Sometime we don't have REQUEST_URI, especially when using command line
+----------------------------------------------
+r30833 | jonnybradley | 2010-11-21 18:41:09 +0100 (Sun, 21 Nov 2010) | 1 line
+
+[FIX] browsertitle: Don't show $title when it is an array (it often seems to be), guess a title from the $script_name when all else fails and set headtitle for object perms page.
+----------------------------------------------
+r30832 | jonnybradley | 2010-11-21 18:39:06 +0100 (Sun, 21 Nov 2010) | 1 line
+
+[FIX] breadcrumbs: Obey prefs as breadcrumbs in breadcrumb_buildHeadTitle() are used (in admin for instance) even when the pref is off. Stops the browser title repeating the site name.
+----------------------------------------------
+r30831 | xavidp | 2010-11-21 18:33:24 +0100 (Sun, 21 Nov 2010) | 1 line
+
+[bp/r30804][ENH] new wikiplugins vimeo and bliptv as alias for flash wikiplugin. Thanks rodrigo_sampaio
+----------------------------------------------
+r30830 | xavidp | 2010-11-21 18:00:10 +0100 (Sun, 21 Nov 2010) | 1 line
+
+[bp/r30798]fix vimeo param for flash wikiplugin and alphabetically order type param options. thanks rodrigo_sampaio
+----------------------------------------------
+r30829 | jonnybradley | 2010-11-21 18:00:06 +0100 (Sun, 21 Nov 2010) | 1 line
+
+[FIX] login: Check for site closed if not valid login (and redirect to simple error page if so)
+----------------------------------------------
+r30828 | xavidp | 2010-11-21 17:58:18 +0100 (Sun, 21 Nov 2010) | 3 lines
+
+[bp/r30797 r30803]Add icon to youtube wikiplugin + Refactor youtube wikiplugin to use $tikilib->embed_flash(). Thanks rodrigo_sampaio
+
+
+----------------------------------------------
+r30827 | xavidp | 2010-11-21 12:17:15 +0100 (Sun, 21 Nov 2010) | 1 line
+
+A few more strings translated
+----------------------------------------------
+r30826 | eromneg | 2010-11-21 10:01:16 +0100 (Sun, 21 Nov 2010) | 1 line
+
+[FIX] for the .tpl files used in the "email" parameter to have html and to to make it backwards compatible a new parameter 'emailformat' set to 'html' is used
+----------------------------------------------
+r30825 | eromneg | 2010-11-21 09:53:32 +0100 (Sun, 21 Nov 2010) | 1 line
+
+[FIX] for the "Send a wiki page by Email:" action option in user admin so that the wiki page can have html
+----------------------------------------------
+r30823 | jonnybradley | 2010-11-20 23:04:32 +0100 (Sat, 20 Nov 2010) | 1 line
+
+[FIX] wikiplugin_article: More warnings
+----------------------------------------------
+r30822 | jonnybradley | 2010-11-20 22:44:55 +0100 (Sat, 20 Nov 2010) | 1 line
+
+[FIX] breadcrumbs: Notice - Missing argument 2 for filter_out_sefurl()
+----------------------------------------------
+r30821 | jonnybradley | 2010-11-20 22:41:09 +0100 (Sat, 20 Nov 2010) | 1 line
+
+[FIX] trackerlist/filter: Warnings - Invalid arguments passed to function.implode. Also three vars assigned to the same smarty var ($filterfield).
+----------------------------------------------
+r30820 | jonnybradley | 2010-11-20 22:04:18 +0100 (Sat, 20 Nov 2010) | 1 line
+
+[FIX] captcha: set img height
+----------------------------------------------
+r30819 | jonnybradley | 2010-11-20 21:57:10 +0100 (Sat, 20 Nov 2010) | 1 line
+
+[FIX] captcha: return false on click
+----------------------------------------------
+r30818 | chealer | 2010-11-20 20:16:37 +0100 (Sat, 20 Nov 2010) | 2 lines
+
+Change description of IMAGE plugin alias from "Display images" to "Display images (transitional alias, use IMG plugin instead)" so editors do not insert new uses of IMAGE but use IMG instead.
+Unfortunately won't help for upgrades from Tiki 5 and above
+----------------------------------------------
+r30817 | jonnybradley | 2010-11-20 20:11:27 +0100 (Sat, 20 Nov 2010) | 1 line
+
+[FIX] $iconDisplayStyle: Notices
+----------------------------------------------
+r30816 | jonnybradley | 2010-11-20 19:28:04 +0100 (Sat, 20 Nov 2010) | 1 line
+
+[FIX] wikiplugin_freetagged: Missing var (so use 0 for offset)
+----------------------------------------------
+r30815 | jonnybradley | 2010-11-20 19:27:02 +0100 (Sat, 20 Nov 2010) | 1 line
+
+[FIX] wikiplugin_article: Missing global $tiki_p_admin_cms
+----------------------------------------------
+r30814 | jonnybradley | 2010-11-20 19:26:17 +0100 (Sat, 20 Nov 2010) | 1 line
+
+[FIX] wikiplugin_include: Missing offset param and missing $repeat param on smarty_block_ajax_href call.
+----------------------------------------------
+r30810 | jonnybradley | 2010-11-20 14:20:07 +0100 (Sat, 20 Nov 2010) | 1 line
+
+[FIX] prefs: Clarify which "Content" belongs to which pref so you can see the difference when set in perspectives.
+----------------------------------------------
+r30808 | jonnybradley | 2010-11-20 14:00:18 +0100 (Sat, 20 Nov 2010) | 1 line
+
+[FIX] wikiplugin_article: Show most recent article if Id empty and use editplugin class on edit icons so you can hide them/
+----------------------------------------------
+r30807 | jonnybradley | 2010-11-20 13:38:58 +0100 (Sat, 20 Nov 2010) | 1 line
+
+[ENH] html: Pref to control the use of the <base> tag in the page<head> (currently only used when in nested directories)
+----------------------------------------------
+r30806 | chibaguy | 2010-11-20 12:26:05 +0100 (Sat, 20 Nov 2010) | 1 line
+
+[FIX] Language edits: correct grammar of "Permission denied you cannot...." run-on sentences and lighten the militaristic tone.
+----------------------------------------------
+r30805 | chealer | 2010-11-20 01:49:51 +0100 (Sat, 20 Nov 2010) | 1 line
+
+[FIX] Literal translation of capitalization ("View Page" => "Voir la page" instead of "Voir la Page")
+----------------------------------------------
+r30796 | xavidp | 2010-11-19 19:25:47 +0100 (Fri, 19 Nov 2010) | 3 lines
+
+[bp/r30776 r30778 r30779][ENH] extending flash wikiplugin with basic support for youtube, vimeo
+and blip.tv videos.  flash wikiplugin display error if unable to recognize url for youtube, vimeo and
+blip.tv,  flash wikiplugin: use blip.tv embed URL since it is not possible to extract it from the video URL. Thanks rodrigo_sampaio
+----------------------------------------------
+r30795 | xavidp | 2010-11-19 19:12:35 +0100 (Fri, 19 Nov 2010) | 1 line
+
+[bp/r30777][ENH] youtube wikiplugin support https URL. Thanks rodrigo_sampaio
+----------------------------------------------
+r30794 | sylvieg | 2010-11-19 17:35:58 +0100 (Fri, 19 Nov 2010) | 1 line
+
+[FIX]tracker: rollback 30791 and put a div - thx luciash
+----------------------------------------------
+r30792 | eromneg | 2010-11-19 17:04:46 +0100 (Fri, 19 Nov 2010) | 1 line
+
+[ENH] completing the update of labels for various File Gallery parameters to clarify their usage
+----------------------------------------------
+r30791 | sylvieg | 2010-11-19 16:35:59 +0100 (Fri, 19 Nov 2010) | 1 line
+
+[FIX]tracker: stick the description to the textarea that is now in a div
+----------------------------------------------
+r30788 | xavidp | 2010-11-19 14:53:44 +0100 (Fri, 19 Nov 2010) | 1 line
+
+[ENH]Add the icon for wikiplugin_file in the default toolbar, with it's own 16x16 icon, to ease the task to choose or upload new files for new users in a similar way to what they can do with images. Thanks luciash and rodrigo_sampaio for tips
+----------------------------------------------
+r30787 | xavidp | 2010-11-19 14:06:56 +0100 (Fri, 19 Nov 2010) | 1 line
+
+[ENH]Option to have a popup to 'Pick a file' re-added to wikiplugin_file.php, but this time working successfully, and a few params tagged as advanced to clear the interface. Also, after agreeing with rodrigo_sampaio, set File from gallery" as the option shown by default, to avoid two extra clicks for the common task to select or add a file to a file gallery and link it from that textarea (wiki page or wherever else in tiki has a textarea). thanks rodrigo_sampaio, and chealer for previous improvmenets  in trunk, which I backported in previous commits
+----------------------------------------------
+r30783 | xavidp | 2010-11-19 13:14:41 +0100 (Fri, 19 Nov 2010) | 1 line
+
+[bp/r30623 & r30624]adding new param type and setting other params as children of one of the values of type param for wikiplugin_file.php +  replacing four spaces with tab. Thanks rodrigo_sampaio
+----------------------------------------------
+r30782 | xavidp | 2010-11-19 13:11:47 +0100 (Fri, 19 Nov 2010) | 1 line
+
+[NEW][bp/r30622]add the possibility to display a set of wiki plugin parameters only if a specific value of another parameter is selected (using flash wikiplugin as an example). Thanks rodrigo_sampaio
+----------------------------------------------
+r30781 | chibaguy | 2010-11-19 05:13:01 +0100 (Fri, 19 Nov 2010) | 1 line
+
+[FIX] Align sharethis icon with other icons in div.actions and remove padding (which is a property of the other .share implementation). (All the relevant CSS should be looked at and refactored for a better long-term fix.)
+----------------------------------------------
+r30780 | chealer | 2010-11-19 00:56:54 +0100 (Fri, 19 Nov 2010) | 1 line
+
+[FIX] HTML special characters encoding
+----------------------------------------------
+r30774 | eromneg | 2010-11-18 19:01:05 +0100 (Thu, 18 Nov 2010) | 1 line
+
+[ENH] update labels for various File Gallery parameters to clarify their usage - maybe more changes later
+----------------------------------------------
+r30773 | eromneg | 2010-11-18 18:32:03 +0100 (Thu, 18 Nov 2010) | 1 line
+
+[FIX] allow menu name fields (for all menu levels) to have img tags by not escaping when displaying
+----------------------------------------------
+r30772 | xavidp | 2010-11-18 16:50:58 +0100 (Thu, 18 Nov 2010) | 1 line
+
+[MOD]Simplified the interface for common usage, and extra params are found under the advanced tab
+----------------------------------------------
+r30771 | xavidp | 2010-11-18 16:43:08 +0100 (Thu, 18 Nov 2010) | 1 line
+
+[ENH]Add the option to "Pick a file" next to the from field for FileId, in a similar way to what it was added in PluginFiles
+----------------------------------------------
+r30770 | xavidp | 2010-11-18 16:26:02 +0100 (Thu, 18 Nov 2010) | 1 line
+
+[FIX]removing the wiki tags since they were causing an extra p tag to break display of the icon under some tiki configuration. Thanks luciash
+----------------------------------------------
+r30769 | sylvieg | 2010-11-18 16:20:10 +0100 (Thu, 18 Nov 2010) | 1 line
+
+[FIX]fgal: fix replace file when not using context menu (popup tool) - still to fix refresh popup and dl
+----------------------------------------------
+r30768 | sylvieg | 2010-11-18 14:33:20 +0100 (Thu, 18 Nov 2010) | 1 line
+
+[FIX]share: do not send email whan antibot is wrong
+----------------------------------------------
 Version 6.0
 <http://tiki.org/ReleaseNotes60>
 ------------------
