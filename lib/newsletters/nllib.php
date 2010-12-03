@@ -1006,7 +1006,20 @@ class NlLib extends TikiLib
 
 		if (stristr($html, '<base') === false) {
 			if (stristr($html, '<head') === false) {
-				$html = str_ireplace('<html>', "<html><head><base href=\"$base_url\" /><style type=\"text/css\">" . $headerlib->get_all_css_content() . "</style></head>", $html);
+				$news_cssfile = $tikilib->get_style_path($prefs['style'], '', 'newsletter.css');
+				$news_cssfile_option = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'newsletter.css');
+				$news_css = '';
+				if (!empty($news_cssfile)) {
+					$news_css .= $headerlib->minify_css($news_cssfile);
+				}
+				if (!empty($news_cssfile_option) && $news_cssfile_option !== $news_cssfile) {
+					$news_css .= $headerlib->minify_css($news_cssfile_option);
+				}
+				if (empty($news_css)) {
+					$news_css = $headerlib->get_all_css_content();
+				}
+				$news_head = "<html><head><base href=\"$base_url\" /><style type=\"text/css\">$news_css</style></head>";
+				$html = str_ireplace('<html>', $news_head, $html);
 			} else {
 				$html = str_ireplace('<head>', "<head><base href=\"$base_url\" />", $html);
 			}
