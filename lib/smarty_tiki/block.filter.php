@@ -40,5 +40,33 @@ function smarty_block_filter($params, $content, &$smarty, $repeat) {
 	$smarty->assign('filter_categories', isset($filter['categories']) ? $filter['categories'] : '');
 	$smarty->assign('filter_categmap', json_encode(TikiDb::get()->fetchMap('SELECT categId, name FROM tiki_categories')));
 
+	// Generate the category tree {{{
+	global $categlib; require_once 'lib/categories/categlib.php';
+	require_once 'lib/tree/categ_browse_tree.php';
+	$ctall = $categlib->get_all_categories_respect_perms(null, 'view_category');
+
+	$tree_nodes = array();
+	foreach($ctall as $c) {
+		$name = htmlentities($c['name'], ENT_QUOTES, 'UTF-8');
+
+		$body = <<<BODY
+<label>
+	<input type="checkbox" value="{$c['categId']}"/>
+	{$name}
+</label>
+BODY;
+
+		$tree_nodes[] = array(
+			'id' => $c['categId'],
+			'parent' => $c['parentId'],
+			'data' => $body,
+		);
+	}
+
+	$tm = new CatBrowseTreeMaker('categ');
+	$res = $tm->make_tree(0, $tree_nodes);
+	$smarty->assign('filter_category_picker', $res);
+	// }}}
+
 	return $smarty->fetch('filter.tpl');
 }
