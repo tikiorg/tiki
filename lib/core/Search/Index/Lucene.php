@@ -115,6 +115,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$document = new Zend_Search_Lucene_Document;
 		$typeMap = array(
 			'Search_Type_WikiText' => 'UnStored',
+			'Search_Type_PlainText' => 'UnStored',
 			'Search_Type_Whole' => 'Keyword',
 			'Search_Type_MultivalueText' => 'UnStored',
 			'Search_Type_ShortText' => 'Text',

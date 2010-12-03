@@ -5813,7 +5813,9 @@ if( \$('#$id') ) {
 		if (!$simple_wiki && $options['parsetoc']) {
 			$this->parse_data_process_maketoc( $data, $options, $noparsed);
 
-		} // closing if ($simple_wiki)
+		} else {
+			$data = $this->parse_data_simple( $data );
+		}
 
 		// Close BiDi DIVs if any
 		for ($i = 0; $i < $bidiCount; $i++) {
@@ -6004,7 +6006,7 @@ if( \$('#$id') ) {
 		return $data;
 	}
 
-	private function parse_data_inline_syntax( $line, $words ) {
+	private function parse_data_inline_syntax( $line, $words = array() ) {
 		global $prefs;
 
 		if ($prefs['feature_hotwords'] == 'y') {

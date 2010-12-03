@@ -48,7 +48,7 @@ class Search_ResultSet extends ArrayObject
 				 && ! empty($value) // Skip empty
 				 && ! is_array($value) // Skip arrays, multivalues fields are not human readable
 				 && ! preg_match('/^[\w-]+$/', $value)) { // Skip anything that looks like a single token
-					$text .= ' ' . $value;
+					$text .= "\n$value";
 				}
 			}
 

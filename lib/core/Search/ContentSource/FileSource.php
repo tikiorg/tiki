@@ -25,11 +25,11 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface
 			'language' => $typeFactory->identifier('unknown'),
 			'modification_date' => $typeFactory->timestamp($file['lastModif']),
 			'contributors' => $typeFactory->multivalue(array_unique(array($file['author'], $file['user'], $file['lastModifUser']))),
-			'description' => $typeFactory->wikitext($file['description']),
+			'description' => $typeFactory->plaintext($file['description']),
 
 			'gallery_id' => $typeFactory->identifier($file['galleryId']),
-			'file_comment' => $typeFactory->wikitext($file['comment']),
-			'file_content' => $typeFactory->wikitext($file['search_data']),
+			'file_comment' => $typeFactory->plaintext($file['comment']),
+			'file_content' => $typeFactory->plaintext($file['search_data']),
 
 			'parent_object_type' => $typeFactory->identifier('file gallery'),
 			'parent_object_id' => $typeFactory->identifier($file['galleryId']),

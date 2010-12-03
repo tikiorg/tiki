@@ -25,7 +25,7 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 			'language' => $typeFactory->identifier($article['lang'] ? $article['lang'] : 'unknown'),
 			'modification_date' => $typeFactory->timestamp($article['publishDate']),
 			'contributors' => $typeFactory->multivalue(array($article['author'])),
-			'description' => $typeFactory->wikitext($article['heading']),
+			'description' => $typeFactory->plaintext($article['heading']),
 
 			'topic_id' => $typeFactory->identifier($article['topicId']),
 			'article_content' => $typeFactory->wikitext($article['body']),
