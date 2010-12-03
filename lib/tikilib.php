@@ -4726,7 +4726,7 @@ class TikiLib extends TikiDb_Bridge
 							
 				if( $status === true || ($tiki_p_plugin_preview == 'y' && $details && $options['preview_mode'] && $prefs['ajax_autosave'] === 'y') ) {
 					if (isset($options['stripplugins']) && $options['stripplugins']) {
-						$ret = '';	
+						$ret = $plugin_data;
 					} else {
 						$ret = $this->plugin_execute( $plugin_name, $plugin_data, $arguments, $start, false, $options);
 					}
