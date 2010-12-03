@@ -137,8 +137,8 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'lib/ckeditor/";');
 		//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
 		//// note, this breaks ajax page load via wikitopline edit icon
-		$headerlib->add_jsfile('lib/ckeditor/ckeditor_source.js');
-		//$headerlib->add_jsfile('lib/ckeditor/ckeditor.js',0 , true);
+		//$headerlib->add_jsfile('lib/ckeditor/ckeditor_source.js');
+		$headerlib->add_jsfile('lib/ckeditor/ckeditor.js',0 , true);
 		$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js', 0, true);
 		$headerlib->add_jsfile('lib/ckeditor_tiki/tikilink_dialog.js');
 	
