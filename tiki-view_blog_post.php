@@ -61,6 +61,12 @@ if ($ownsblog == 'n' && $tiki_p_admin != 'y' && $post_info["priv"] == 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+if ($ownsblog == 'n' && $tiki_p_admin != 'y' && $post_info['created'] > $tikilib->now) {
+$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra('Permission denied'));
+	$smarty->display("error.tpl");
+	die;
+}	
 
 if(isset($post_info['priv']) && ($post_info['priv'] == 'y')) {
 	$post_info['title'] .= ' (' . tra("private") . ')';
