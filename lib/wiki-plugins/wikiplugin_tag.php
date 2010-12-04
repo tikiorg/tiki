@@ -16,7 +16,7 @@ function wikiplugin_tag_help() {
 function wikiplugin_tag_info() {
 	return array(
 		'name' => tra('Tag'),
-		'documentation' => 'PluginTag',
+		'documentation' => tra('PluginTag'),
 		'description' => tra('Displays the text between an html tag'),
 		'prefs' => array( 'wikiplugin_tag' ),
 		'validate' => 'all',
@@ -26,11 +26,13 @@ function wikiplugin_tag_info() {
 				'required' => false,
 				'name' => tra('Tag Name'),
 				'description' => tra('Any valid HTML tag, span by default.'),
+				'default' => 'span',
 			),
 			'style' => array(
 				'required' => false,
 				'name' => tra('CSS Style'),
 				'description' => tra('Equivalent to the style attribute of an HTML tag.'),
+				'default' => '',
 			),
 		),
 	);
