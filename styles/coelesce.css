@@ -75,7 +75,7 @@ input,
 textarea,
 option,
 select,
-body.wikitext {
+body.cke_show_borders {
 	background: #ecf5ff;
 	color: #4a6a90;
 	margin: 1px;

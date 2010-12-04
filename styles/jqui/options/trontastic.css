@@ -52,7 +52,7 @@ input[type="text"],
 input[type="password"],
 select,
 textarea,
-body.wikitext {
+body.cke_show_borders {
 	background: #c6e99c;
 	color: #000;
 }

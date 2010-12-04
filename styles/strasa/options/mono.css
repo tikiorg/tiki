@@ -31,7 +31,7 @@ input,
 textarea,
 option,
 select,
-body.wikitext {
+body.cke_show_borders {
 	background: #fafafa;
 	color: #000;
 }

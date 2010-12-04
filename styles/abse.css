@@ -215,7 +215,7 @@ p {
 small {font-size: 0.8em}
 
 textarea,
-body.wikitext {
+body.cke_show_borders {
 	border: solid 1px #aaa;
 	background: #586858;
 	color: #F5F5F5;
