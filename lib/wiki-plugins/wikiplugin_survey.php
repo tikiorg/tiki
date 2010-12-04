@@ -22,7 +22,7 @@ function wikiplugin_survey_info() {
 	return array(
 		'name' => tra('Survey'),
 		'documentation' => 'PluginSurvey',		
-		'description' => tra("Displays a survey"),
+		'description' => tra('Displays a survey'),
 		'prefs' => array( 'feature_surveys', 'wikiplugin_survey' ),
 		'body' => '',
 		'params' => array(
