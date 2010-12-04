@@ -918,12 +918,21 @@ a.linkmodule:hover {
 .menuSection {
 	padding: 0 0 16px 0;
 	}
+	
+li.menuSection {
+	padding: 0;
+}	
 
 
 .menuSection .menuSection,
 .menuSection .separator {
 	margin-left: 16px;
 }
+
+li.menuSection .menuSection {
+	margin-left: 0;
+}
+
 /****** Misc. Global Classes (layout and style) ****/
 .highlight,
 #highlight {
