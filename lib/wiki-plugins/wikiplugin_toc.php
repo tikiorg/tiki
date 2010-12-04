@@ -9,44 +9,75 @@ function wikiplugin_toc_info()
 {
 	return array(
 		'name' => tra('Table of Contents (Structure)'),
-		'documentation' => 'PluginTOC',		
+		'documentation' => tra('PluginTOC'),		
 		'description' => tra('Displays the table of contents for the current structure\'s subtree as part of the page content.'),
 		'prefs' => array( 'wikiplugin_toc', 'feature_wiki_structure' ),
 		'params' => array(
 			'maxdepth' => array(
 				'name' => tra('Maximum Depth'),
-				'description' => tra('Maximum number of levels to display. On very large structures, this should be limited.'),
+				'description' => tra('Maximum number of levels to display. On very large structures, this should be limited. Zero means no limit (and is the default).'),
 				'required' => false,
+				'filter' => 'digits',
+				'default' => 0,
 			),
 			'structId' => array(
 				'name' => tra('Structure ID'),
 				'description' => tra('By default, structure for the current page will be displayed. Alternate structure may be provided.'),
 				'required' => false,
+				'filter' => 'digits',
+				'default' => '',
 			),
 			'order' => array(
 				'name' => tra('Order'),
-				'description' => tra('asc|desc'),
+				'description' => tra('Order items in ascending or descending order (deafult is ascending).'),
 				'required' => false,
+				'filter' => 'alpha',
+				'default' => 'asc',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Ascending'), 'value' => 'asc'), 
+					array('text' => tra('Descending'), 'value' => 'desc')
+				)
 			),
 			'showdesc' => array(
 				'name' => tra( 'Show Description' ),
-				'description' => tra('0|1, show the page description instead of the page name'),
+				'description' => tra('Show the page description instead of the page name'),
 				'required' => false,
+				'default' => 0,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				)
 			),
 			'shownum' => array(
 				'name' => tra('Show Numbering'),
-				'description' => tra('0|1, display the section numbers or not'),
+				'description' => tra('Display the section numbers or not'),
 				'required' => false,
+				'default' => 0,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				)
 			),
 			'type' => array(
 				'name' => tra('Type'),
-				'description' => tra('plain|fancy'),
+				'description' => tra('Apply the "plain" or "fancy" style'),
 				'required' => false,
+				'filter' => 'alpha',
+				'default' => 'plain',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Plain'), 'value' => 'plain'), 
+					array('text' => tra('Fancy'), 'value' => 'fancy')
+ 				)
 			),
 			'pagename' => array(
 				'name' => tra('Page Name'),
-				'description' => tra('By default, toc for current page will be displayed. Alternate page may be provided.'),
+				'description' => tra('By default, the table of contents for the current page will be displayed. Alternate page may be provided.'),
 				'required' => false,
+				'default' => '',
 			),
 		),
 	);
