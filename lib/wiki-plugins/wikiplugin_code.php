@@ -30,6 +30,7 @@ function wikiplugin_code_info() {
 				'name' => tra('Word Wrap'),
 				'description' => tra('Enable word wrapping on the code to avoid breaking the layout. May not be used with line numbers if Geshi version 1.0.8.9+'),
 				'options' => array(
+					array('text' => '', 'value' => ''),
 					array('text' => tra('No'), 'value' => '0'),
 					array('text' => tra('Yes'), 'value' => '1'),
 				),
@@ -45,6 +46,7 @@ function wikiplugin_code_info() {
 				'name' => tra('Line numbers'),
 				'description' => tra('May not be used with colors.'),
 				'options' => array(
+					array('text' => '', 'value' => ''),
 					array('text' => tra('No'), 'value' => '0'),
 					array('text' => tra('Yes'), 'value' => '1'),
 				),
@@ -55,6 +57,7 @@ function wikiplugin_code_info() {
 				'name' => tra('Wiki syntax'),
 				'description' => tra('Parse wiki syntax within the code snippet.'),
 				'options' => array(
+					array('text' => '', 'value' => ''),
 					array('text' => tra('No'), 'value' => '0'),
 					array('text' => tra('Yes'), 'value' => '1'),
 				),
@@ -65,6 +68,7 @@ function wikiplugin_code_info() {
 				'name' => tra('Right to left'),
 				'description' => tra('Switch the text display from left to right to right to left'),
 				'options' => array(
+					array('text' => '', 'value' => ''),
 					array('text' => tra('No'), 'value' => '0'),
 					array('text' => tra('Yes'), 'value' => '1'),
 				),
@@ -75,6 +79,7 @@ function wikiplugin_code_info() {
 				'name' => tra('Content is HTML'),
 				'description' => tra('Display the content as is instead of escaping HTML special chars'),
 				'options' => array(
+					array('text' => '', 'value' => ''),
 					array('text' => tra('Show HTML'), 'value' => '0'),
 					array('text' => tra('Interpret HTML'), 'value' => '1'),
 				),
@@ -84,6 +89,7 @@ function wikiplugin_code_info() {
 				'name' => tra('Copy To Clipboard'),
 				'description' => tra('Copy the contents of the code box to the clipboard'),
 				'options' => array(
+					array('text' => '', 'value' => ''),
 					array('text' => tra('No'), 'value' => '0'),
 					array('text' => tra('Yes'), 'value' => '1'),
 				),
