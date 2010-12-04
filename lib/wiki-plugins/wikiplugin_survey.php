@@ -21,8 +21,8 @@ function wikiplugin_survey_help() {
 function wikiplugin_survey_info() {
 	return array(
 		'name' => tra('Survey'),
-		'documentation' => 'PluginSurvey',		
-		'description' => tra("Displays a survey"),
+		'documentation' => tra('PluginSurvey'),		
+		'description' => tra('Displays a survey'),
 		'prefs' => array( 'feature_surveys', 'wikiplugin_survey' ),
 		'body' => '',
 		'params' => array(
@@ -30,16 +30,21 @@ function wikiplugin_survey_info() {
 				'required' => true,
 				'name' => tra('Id'),
 				'description' => tra('Id'),
+				'filter' => 'digits',
+				'default' => '',
 			),
 			'page' => array(
 				'required' => false,
 				'name' => tra('Page'),
 				'description' => tra('Wiki Page to redirect the user after his vote'),
+				'default' => 'tiki-list_surveys.php',
 			),
 			'lang' => array(
 				'required' => false,
 				'name' => tra('Language'),
 				'description' => tra('Language'),
+				'filter' => 'alpha',
+				'default' => '',
 			),
 		),
 	);
