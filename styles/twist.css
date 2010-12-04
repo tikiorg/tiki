@@ -23,6 +23,11 @@ body.fixed_width #fixedwidth {
 	background: #fff;
 }
 
+body.cke_show_borders {
+	background: #fff;
+	color: #000;	
+}
+
 #main[id] {
 	margin-top: 0;
 }
