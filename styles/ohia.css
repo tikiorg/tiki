@@ -40,10 +40,6 @@ body.wikitext {
 	
 #middle {background: #222}
 
-.fullscreen #col1 {
-	margin-left: 30px !important;
-	margin-right: 30px !important}
-
 #c1c2 #wrapper #col1 > .content {
 	background: transparent;
 	color: #f4f4f4;
