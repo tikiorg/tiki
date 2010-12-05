@@ -15,8 +15,8 @@ function wikiplugin_sf_help() {
 function wikiplugin_sf_info() {
 	return array(
 		'name' => tra('SourceForge'),
-		'documentation' => 'PluginSF',		
-		'description' => tra('Creates a link to SourceForge tracker items (bugs, fetaure requests, patches and support requests) with this title of the item as the link text.'),
+		'documentation' => tra('PluginSF'),		
+		'description' => tra('Creates a link to SourceForge tracker items (bugs, fetaure requests, patches and support requests) with the title of the item as the link text.'),
 		'prefs' => array( 'wikiplugin_sf' ),
 		'body' => tra('text'),
 		'params' => array(
@@ -25,18 +25,21 @@ function wikiplugin_sf_info() {
 				'name' => tra('Group ID'),
 				'description' => tra('SourceForge project ID (shows as group_id in the url of a tracker item'),
 				'filter' => 'digits',
+				'default' => '',
 			),
 			'trackerid' => array(
 				'required' => true,
 				'name' => tra('Tracker ID'),
 				'description' => tra('SourceForge tracker ID (shows as atid in the url of a tracker item'),
 				'filter' => 'digits',
+				'default' => '',
 			),
 			'itemid' => array(
 				'required' => true,
 				'name' => tra('Item ID'),
-				'description' => tra('SourceForge irem ID (shows as aid in the url of a tracker item'),
+				'description' => tra('SourceForge item ID (shows as aid in the url of a tracker item'),
 				'filter' => 'digits',
+				'default' => '',
 			),
 			'title' => array(
 				'required' => false,
