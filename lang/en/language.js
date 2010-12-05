@@ -17,4 +17,12 @@ lang = {
 //	"Valid User Name" : "Valid User Name",
 //	"Passwords match" : "Passwords match",
 //	"Valid Email" : "Valid Email"
+//	"Close" : "Close",
+//	"Submit" : "Submit",
+//	"Insert" : "Insert",
+//	"Replace" : "Replace",
+//	"Match" : "Match",
+//	"Do not match" : "Do not match",
+//	"Advanced options" : "Advanced options",
+//	"Pick a file." : "Pick a file.",
 };
