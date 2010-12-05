@@ -8,16 +8,17 @@
 function wikiplugin_div_info() {
 	return array(
 		'name' => tra('Div'),
-		'documentation' => 'PluginDiv',
-		'description' => tra("Insert a division block, span, blockquote or other text formatting on wiki page."),
+		'documentation' => tra('PluginDiv'),
+		'description' => tra('Insert a division block, span, blockquote or other text formatting on wiki page.'),
 		'prefs' => array('wikiplugin_div'),
 		'body' => tra('text'),
 		'params' => array(
 			'type' => array(
 				'required' => false,
 				'name' => tra('Type'),
-				'description' => tra('div|span|pre|b|i|tt|p|blockquote'),
+				'description' => tra('Indicate the type of HTML tag to use (default is div)'),
 				'filter' => 'alpha',
+				'default' => 'div',
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Div'), 'value' => 'div'), 
@@ -32,22 +33,26 @@ function wikiplugin_div_info() {
 			),
 			'bg' => array(
 				'required' => false,
-				'name' => tra('Background color'),
+				'name' => tra('Background Color'),
 				'description' => tra('As defined by CSS, name or Hex code.'),
 				'filter' => 'striptags',
+				'default' => '',
 			),
 			'width' => array(
 				'required' => false,
 				'name' => tra('Box width'),
-				'description' => tra('In pixels or percentage. Default value is 100%.'),
+				'description' => tra('In pixels or percentage. Default is original size'),
+				'default' => '',
 			),
 			'align' => array(
 				'required' => false,
 				'name' => tra('Text Alignment'),
-				'description' => tra('left|right|center|justify'),
+				'description' => tra('Aligns the text within the element'),
 				'filter' => 'alpha',
+				'default' => '',
 				'options' => array(
-					array('text' => tra('None'), 'value' => 'left'), 
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Left'), 'value' => 'left'), 
 					array('text' => tra('Right'), 'value' => 'right'), 
 					array('text' => tra('Center'), 'value' => 'center'), 
 					array('text' => tra('Justify'), 'value' => 'justify'), 
@@ -55,25 +60,30 @@ function wikiplugin_div_info() {
 			),
 			'float' => array(
 				'required' => false,
-				'name' => tra('Float position'),
-				'description' => tra('left|right, for box with width less than 100%, make text wrap around the box.'),
+				'name' => tra('Float Position'),
+				'description' => tra('Set the alignment for the entire element. For elements with a width of less than 100%, other elements will wrap around it 
+										unless the clear parameter is appropriately set.)'),
 				'filter' => 'alpha',
+				'default' => '',
 				'options' => array(
-					array('text' => tra('None'), 'value' => 'none'), 
+					array('text' => '', 'value' => ''), 
 					array('text' => tra('Right'), 'value' => 'right'), 
 					array('text' => tra('Left'), 'value' => 'left'), 
+					array('text' => tra('None'), 'value' => 'none'), 
 				),
 			),
 			'clear' => array(
 				'required' => false,
 				'name' => tra('Clear'),
-				'description' => tra('Determine how other elements can wrap around the element.'),
+				'description' => tra('Items are not allowed to wrap around the side(s) this parameter is set to.'),
 				'filter' => 'text',
+				'default' => '',
 				'options' => array(
-					array('text' => tra('None'), 'value' => 'none'), 
+					array('text' => '', 'value' => ''), 
 					array('text' => tra('Right'), 'value' => 'right'), 
 					array('text' => tra('Left'), 'value' => 'left'), 
 					array('text' => tra('Both'), 'value' => 'both'), 
+					array('text' => tra('None'), 'value' => 'none'), 
 				),
 			),
 			'class' => array(
@@ -81,12 +91,14 @@ function wikiplugin_div_info() {
 				'name' => tra('CSS Class'),
 				'description' => tra('Apply custom CSS class to the div.'),
 				'filter' => 'text',
+				'default' => '',
 			),
 			'id' => array(
 				'required' => false,
-				'name' => tra('HTML id'),
+				'name' => tra('HTML ID'),
 				'description' => tra('Sets the div\'s id attribute, as defined by HTML.'),
 				'filter' => 'striptags',
+				'default' => '',
 			),
 		),
 	);
