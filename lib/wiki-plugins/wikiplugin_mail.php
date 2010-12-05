@@ -10,7 +10,8 @@ function wikiplugin_mail_info() {
 
 	return array(
 		'name' => tra('Mail'),
-		'description' => tra('Allow to send mail to groups or user or email directly'),
+		'documentation' => tra('PluginMail'),
+		'description' => tra('Directly mail other users or groups'),
 		'validate' => 'all',
 		'params' => array(
 			'group' => array(
@@ -18,32 +19,57 @@ function wikiplugin_mail_info() {
 				'name' => tra('Group'),
 				'description' => tra('Limit the group to the groups including this group'),
 				'filter' => 'groupname',
+				'default' => '',
 			),
 			'showgroupdd' => array(
 				'required' => false,
-				'name' => tra('Show group dropdown'),
-				'description' => 'y|n',
+				'name' => tra('Show Group Dropdown'),
+				'description' => tra('Show a dropdown list of groups (not shown by default)'),
 				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showuserdd' => array(
 				'required' => false,
-				'name' => tra('Show user dropdown'),
-				'description' => 'y|n',
+				'name' => tra('Show User Dropdown'),
+				'description' => tra('Show a dropdown list of users (not shown by default)'),
 				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showuser' => array(
 				'required' => false,
-				'name' => tra('Show an autocomplete box on user name'),
-				'description' => 'y|n',
+				'name' => tra('User Autocomplete'),
+				'description' => tra('Show an autocomplete box on user name'),
 				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showrealnamedd' => array(
 				'required' => false,
-				'name' => tra('Show  a drop down list of all the real name'),
-				'description' => 'y|n',
+				'name' => tra('Real Name Dropdown'),
+				'description' => tra('Show a dropdown list of user real names (not shown by default)'),
 				'filter' => 'alpha',
-			),
-		),
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			)
+		)
 	);
 }
 
