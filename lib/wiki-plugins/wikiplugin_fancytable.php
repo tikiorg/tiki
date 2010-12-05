@@ -26,59 +26,69 @@ function wikiplugin_fancytable_help() {
 function wikiplugin_fancytable_info() {
 	return array(
 		'name' => tra('Fancy Table'),
-		'documentation' => 'PluginFancyTable',
-		'description' => tra("Displays the data using the Tikiwiki odd/even table style"),
+		'documentation' => tra('PluginFancyTable'),
+		'description' => tra('Displays the data using the Tikiwiki odd/even table style'),
 		'prefs' => array('wikiplugin_fancytable'),
 		'body' => tra('Rows separated by >> in the header; for the table body, one row per line. Cells separated by | in both cases.'),
 		'params' => array(
 			'head' => array(
 				'required' => false,
-				'name' => tra('Heading row'),
+				'name' => tra('Heading Row'),
 				'description' => tra('Header rows of the table. Use >> to separate multiple rows.'),
+				'default' => '',
 			),
 			'headclass' => array(
 				'required' => false,
-				'name' => tra('Heading CSS class'),
+				'name' => tra('Heading CSS Class'),
 				'description' => tra('CSS class to apply to the heading row.'),
+				'default' => '',
 			),
 			'headaligns' => array(
 				'required' => false,
-				'name' => tra('Header horizontal align'),
+				'name' => tra('Header Horizontal Align'),
 				'description' => tra('Horizonatal alignments for header cells separated by |. Choices: left, right, center, justify.'),
+				'default' => '',
 			),
 			'headvaligns' => array(
 				'required' => false,
-				'name' => tra('Header vertical align'),
+				'name' => tra('Header Vertical Align'),
 				'description' => tra('Vertical alignments for header cells separated by |. Choices: top, middle, bottom, baseline.'),
+				'default' => '',
 			),
 			'sortable' => array(
 				'required' => false,
-				'name' => tra('Column sort'),
-				'description' => 'Indicate whether columns are sortable or not.',
+				'name' => tra('Column Sort'),
+				'description' => tra('Indicate whether columns are sortable or not (not sortable by default)'),
+				'default' => 'n',
 				'options' => array(
-					array('text' => tra('No'), 'value' => 'n'), 
+					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
 				),
 			),
 			'sortList' => array(
 				'required' => false,
-				'name' => tra('Pre-sorted columns'),
+				'name' => tra('Pre-sorted Columns'),
 				'description' => tra('Bracketed numbers for column number and sort direction (0 = ascending, 1 = descending), for example: [0,0],[1,0]'),
+				'default' => '',
 			),
 			'colwidths' => array(
 				'required' => false,
-				'name' => tra('Column widths'),
+				'name' => tra('Column Widths'),
 				'description' => tra('Column widths followed by px for pixels or % for percentages. Each column separated by |.'),
+				'default' => '',
 			),
 			'colaligns' => array(
 				'required' => false,
-				'name' => tra('Cell horizontal align'),
+				'name' => tra('Cell Horizontal Align'),
 				'description' => tra('Table body column horizonatal alignments separated by |. Choices: left, right, center, justify.'),
+				'default' => '',
 			),
 			'colvaligns' => array(
 				'required' => false,
-				'name' => tra('Cell vertical align'),
+				'name' => tra('Cell Vertical Align'),
 				'description' => tra('Table body column vertical alignments separated by |. Choices: top, middle, bottom, baseline.'),
+				'default' => '',
 			),
 		),
 	);
