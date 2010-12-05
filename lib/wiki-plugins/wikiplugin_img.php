@@ -19,12 +19,14 @@ function wikiplugin_img_info() {
 				'area' => 'fgal_picker',
 				'description' => tra('Full URL to the image to display. "src", id", "fileId", "attId" or "randomGalleryId" required.'),
 				'filter' => 'url',
+				'default' => '',
 			),
 			'id' => array(
 				'required' => false,
 				'name' => tra('Image ID'),
 				'description' => tra('Numeric ID of an image in an Image Gallery (or list separated by commas or |).'),
 				'filter' => 'striptags',
+				'default' => '',
 			),
 			'fileId' => array(
 				'required' => false,
@@ -33,6 +35,7 @@ function wikiplugin_img_info() {
 				'area' => 'fgal_picker_id',
 				'description' => tra('Numeric ID of an image in a File Gallery (or list separated by commas or |).'),
 				'filter' => 'striptags',
+				'default' => '',
 			),
 			'randomGalleryId' => array(
 				'required' => false,
@@ -40,18 +43,21 @@ function wikiplugin_img_info() {
 				'description' => tra('Numeric ID of a File Gallery. Displays a random image from that gallery.'),
 				'filter' => 'int',
 				'advanced' => true,
+				'default' => '',
 			),
 			'attId' => array(
 				'required' => false,
 				'name' => tra('Attachment ID'),
 				'description' => tra('Numeric ID of an image attached to a wiki page (or list separated by commas or |).'),
 				'filter' => 'striptags',
+				'default' => '',
 			),
 			'thumb' => array(
 				'required' => false,
 				'name' => tra('Thumbnail'),
 				'description' => tra('Makes the image a thumbnail that enlarges to full size when clicked or moused over (unless "link" is set to another target). "browse" and "browsepopup" only work with image gallery and "download" only works with file gallery or attachments.'),
 				'filter' => 'alpha',
+				'default' => '',
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y', 'description' => tra('Full size image appears when thumbnail is clicked.')),
@@ -68,6 +74,7 @@ function wikiplugin_img_info() {
 				'name' => tra('Enlarge button'),
 				'description' => tra('Button for enlarging image.'),
 				'filter' => 'alpha',
+				'default' => '',
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
@@ -82,6 +89,7 @@ function wikiplugin_img_info() {
 				'name' => tra('Link'),
 				'description' => tra('Enter a url to the address the image should link to. Not needed if thumb parameter is set; overrides thumb setting.'),
 				'filter' => 'url',
+				'default' => '',
 			),
 			'rel' => array(
 				'required' => false,
@@ -89,6 +97,7 @@ function wikiplugin_img_info() {
 				'filter' => 'striptags',
 				'description' => tra('Enter "box" for colorbox effect (like shadowbox and lightbox) or appropriate syntax for link relation.'),
 				'advanced' => true,
+				'default' => '',
 			),
 			'usemap' => array(
 				'required' => false,
@@ -96,24 +105,28 @@ function wikiplugin_img_info() {
 				'filter' => 'striptags',
 				'description' => tra('Name of the image map to use for the image.'),
 				'advanced' => true,
+				'default' => '',
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Image height'),
 				'description' => tra('Height in pixels or percent. Syntax: "100" or "100px" means 100 pixels; "50%" means 50 percent.'),
 				'filter' => 'striptags',
+				'default' => '',
 			),
 			'width' => array(
 				'required' => false,
 				'name' => tra('Image width'),
 				'description' => tra('Width in pixels or percent. Syntax: "100" or "100px" means 100 pixels; "50%" means 50 percent.'),
 				'filter' => 'striptags',
+				'default' => '',
 			),
 			'max' => array(
 				'required' => false,
 				'name' => tra('Maximum image size'),
 				'description' => tra('Maximum height or width in pixels (largest dimension is scaled). Overrides height and width settings.'),
 				'filter' => 'int',
+				'default' => '',
 			),
 			'imalign' => array(
 				'required' => false,
@@ -121,6 +134,7 @@ function wikiplugin_img_info() {
 				'description' => tra('Aligns the image itself. If the image is inside a box (because of other settings), use the align parameter to align the box.'),
 				'filter' => 'alpha',
 				'advanced' => true,
+				'default' => '',
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Right'), 'value' => 'right'), 
@@ -134,6 +148,7 @@ function wikiplugin_img_info() {
 				'description' => tra('Enter "border" to place a dark gray border around the image. Otherwise enter CSS styling syntax for other style effects.'),
 				'filter' => 'striptags',
 				'advanced' => true,
+				'default' => '',
 			),
 			'align' => array(
 				'required' => false,
@@ -141,6 +156,7 @@ function wikiplugin_img_info() {
 				'description' => tra('Aligns the box containing the image.'),
 				'filter' => 'alpha',
 				'advanced' => true,
+				'default' => '',
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Right'), 'value' => 'right'), 
@@ -154,6 +170,7 @@ function wikiplugin_img_info() {
 				'filter' => 'striptags',
 				'description' => tra('Enter "border" to place a dark gray border frame around the image. Otherwise enter CSS styling syntax for other style effects.'),
 				'advanced' => true,
+				'default' => '',
 			),
 			'styledesc' => array(
 				'required' => false,
@@ -161,6 +178,7 @@ function wikiplugin_img_info() {
 				'filter' => 'striptags',
 				'description' => tra('Enter "right" or "left" to align text accordingly. Otherwise enter CSS styling syntax for other style effects.'),
 				'advanced' => true,
+				'default' => '',
 			),
 			'block' => array(
 				'required' => false,
@@ -168,6 +186,7 @@ function wikiplugin_img_info() {
 				'description' => tra('Control how other items wrap around the image.'),
 				'filter' => 'alpha',
 				'advanced' => true,
+				'default' => '',
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Top'), 'value' => 'top'), 
@@ -181,12 +200,14 @@ function wikiplugin_img_info() {
 				'filter' => 'striptags',
 				'description' => tra('CSS class to apply to the image.'),
 				'advanced' => true,
+				'default' => '',
 			),
 			'desc' => array(
 				'required' => false,
 				'name' => tra('Caption'),
 				'filter' => 'text',
 				'description' => tra('Image caption. "desc" or "name" or "namedesc" for tiki images, "idesc" or "ititle" for iptc data, otherwise enter your own description.'),
+				'default' => '',
 			),
 			'title' => array(
 				'required' => false,
@@ -194,24 +215,28 @@ function wikiplugin_img_info() {
 				'filter' => 'text',
 				'description' => tra('Title text. "desc" or "name" or "namedesc", otherwise enter your own title.'),
 				'advanced' => true,
+				'default' => '',
 			),
 			'alt' => array(
 				'required' => false,
 				'name' => tra('Alternate text'),
 				'filter' => 'text',
 				'description' => tra('Alternate text that displays when image does not load. Set to "Image" by default.'),
+				'default' => 'Image',
 			),
 			'default' => array(
 				'required' => false,
 				'name' => tra('Default config settings'),
 				'description' => tra('Default configuration settings (usually set by admin in the source code or through Plugin Alias).'),
 				'advanced' => true,
+				'default' => '',
 			),
 			'mandatory' => array(
 				'required' => false,
 				'name' => tra('Mandatory admin setting'),
 				'description' => tra('Mandatory configuration settings (usually set by admin in the source code or through Plugin Alias).'),
 				'advanced' => true,
+				'default' => '',
 			),
 		),
 	);
