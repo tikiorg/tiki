@@ -14,7 +14,7 @@ function wikiplugin_code_help() {
 function wikiplugin_code_info() {
 	return array(
 		'name' => tra('Code'),
-		'documentation' => 'PluginCode',
+		'documentation' => tra('PluginCode'),
 		'description' => tra('Displays a snippet of code'),
 		'prefs' => array('wikiplugin_code'),
 		'body' => tra('Code'),
@@ -31,31 +31,32 @@ function wikiplugin_code_info() {
 				'description' => tra('Enable word wrapping on the code to avoid breaking the layout. May not be used with line numbers if Geshi version 1.0.8.9+'),
 				'options' => array(
 					array('text' => '', 'value' => ''),
-					array('text' => tra('No'), 'value' => '0'),
 					array('text' => tra('Yes'), 'value' => '1'),
+					array('text' => tra('No'), 'value' => '0'),
 				),
 			),
 			'colors' => array(
 				'required' => false,
 				'name' => tra('Colors'),
-				'description' => tra('Syntax highlighting to use. GeSHi - Generic Syntax Highlighter must be installed. May not be used with line numbers if Geshi version < 1.0.8.9. Available: php, html, sql, javascript, css, java, c, doxygen, delphi, rsplus...'),
+				'description' => tra('Syntax highlighting to use. GeSHi - Generic Syntax Highlighter must be installed for languages other than php. Without GeSHi, the php tag must be included at the 
+									beginning of the displayed code for the highlighting to work. May not be used with line numbers if Geshi version < 1.0.8.9. Available: php, html, sql, javascript, css, java, c, doxygen, delphi, rsplus...'),
 				'advanced' => true,
 			),
 			'ln' => array(
 				'required' => false,
-				'name' => tra('Line numbers'),
-				'description' => tra('May not be used with colors.'),
+				'name' => tra('Line Numbers'),
+				'description' => tra('Show line numbers for each line of code. May not be used with colors unless GeSHI is installed.'),
 				'options' => array(
 					array('text' => '', 'value' => ''),
-					array('text' => tra('No'), 'value' => '0'),
 					array('text' => tra('Yes'), 'value' => '1'),
+					array('text' => tra('No'), 'value' => '0'),
 				),
 				'advanced' => true,
 			),
 			'wiki' => array(
 				'required' => false,
-				'name' => tra('Wiki syntax'),
-				'description' => tra('Parse wiki syntax within the code snippet.'),
+				'name' => tra('Wiki Syntax'),
+				'description' => tra('Parse wiki syntax within the code snippet (not parsed by default)'),
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('No'), 'value' => '0'),
@@ -65,19 +66,19 @@ function wikiplugin_code_info() {
 			),
 			'rtl' => array(
 				'required' => false,
-				'name' => tra('Right to left'),
-				'description' => tra('Switch the text display from left to right to right to left'),
+				'name' => tra('Right to Left'),
+				'description' => tra('Switch the text display from left to right to right to left  (left to right by default)'),
 				'options' => array(
 					array('text' => '', 'value' => ''),
-					array('text' => tra('No'), 'value' => '0'),
 					array('text' => tra('Yes'), 'value' => '1'),
+					array('text' => tra('No'), 'value' => '0'),
 				),
 				'advanced' => true,
 			),
 			'ishtml' => array(
 				'required' => false,
 				'name' => tra('Content is HTML'),
-				'description' => tra('Display the content as is instead of escaping HTML special chars'),
+				'description' => tra('When set to 1 (Yes), HTML will still be processed (presented as is by default)'),
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Show HTML'), 'value' => '0'),
@@ -87,11 +88,11 @@ function wikiplugin_code_info() {
 			'cpy' => array(
 				'required' => false,
 				'name' => tra('Copy To Clipboard'),
-				'description' => tra('Copy the contents of the code box to the clipboard'),
+				'description' => tra('Copy the contents of the code box to the clipboard  (not copied to clipboard by default)'),
 				'options' => array(
 					array('text' => '', 'value' => ''),
-					array('text' => tra('No'), 'value' => '0'),
 					array('text' => tra('Yes'), 'value' => '1'),
+					array('text' => tra('No'), 'value' => '0'),
 				),
 				'advanced' => true,
 			),
