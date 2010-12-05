@@ -10,6 +10,7 @@ function wikiplugin_datachannel_info()
 	global $prefs;
 	return array(
 		'name' => tra('Data Channel'),
+		'documentation' => tra('PluginDataChannel'),
 		'description' => tra('Displays a form to trigger data channels.'),
 		'prefs' => array('wikiplugin_datachannel'),
 		'body' => tra('List of fields to display. One field per line. Comma delimited: fieldname,label') . '<br /><br />' .
@@ -21,22 +22,26 @@ function wikiplugin_datachannel_info()
 				'required' => true,
 				'name' => tra('Channel Name'),
 				'description' => tra('Name of the channel as registered by the administrator.'),
+				'default' => '',
 			),
 			'returnURI' => array(
 				'required' => false,
-				'name' => tra('Return URI'),
-				'description' => tra('URI to go to after data channel has run. Defaults to current page.'),
+				'name' => tra('Return URL'),
+				'description' => tra('URL to go to after data channel has run. Defaults to current page.'),
 				'filter' => 'pagename',
+				'default' => '$_SERVER[\'HTTP_REFERER\']',
 			),
 			'buttonLabel' => array(
 				'required' => false,
 				'name' => tra('Button Label'),
 				'description' => tra('Label for the submit button. Default: "Go".'),
+				'default' => 'Go',
 			),
 			'class' => array(
 				'required' => false,
 				'name' => tra('Class'),
 				'description' => tra('CSS class for this form'),
+				'default' => '',
 			),
 			'emptyCache' => array(
 				'required' => false,
@@ -45,6 +50,7 @@ function wikiplugin_datachannel_info()
 				'default' => 'all',
 				'filter' => 'word',
 				'options' => array(
+					array('text' => '', 'value' => ''),
 					array('text' => tra('Clear all Tiki caches'), 'value' => 'all'), 
 					array('text' => tra('./templates_c/'), 'value' => 'templates_c'),
 					array('text' => tra('./modules/cache/'), 'value' => 'modules_cache'),
@@ -64,7 +70,7 @@ function wikiplugin_datachannel_info()
 			),
 			'paymentlabel' => array(
 				'required' => false,
-				'name' => tra('Payment label'),
+				'name' => tra('Payment Label'),
 				'prefs' => array('payment_feature'),
 				'default' => '',
 				'filter' => 'text',
@@ -72,18 +78,28 @@ function wikiplugin_datachannel_info()
 			'debug' => array(
 				'required' => false,
 				'name' => tra('Debug'),
-				'description' => '(y | n) '.tra('Be careful, if debug is on, the page will not be refreshed and previous modules can be obsolete'),
+				'description' => tra('Be careful, if debug is on, the page will not be refreshed and previous modules can be obsolete (not on by default)'),
 				'default' => 'n',
 				'filter' => 'word',
 				'advanced' => true,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				),
 			),
 			'array_values' => array(
 				'required' => false,
-				'name' => tra('Multiple values'),
-				'description' => '(y | n) '.tra('Accept arrays of multiple values in the POST. e.g. itemId[]=42&itemId=43 etc.'),
+				'name' => tra('Multiple Values'),
+				'description' => tra('Accept arrays of multiple values in the POST. e.g. itemId[]=42&itemId=43 etc. (multiple values not accepted by default)'),
 				'default' => 'n',
 				'filter' => 'alpha',
 				'advanced' => true,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				),
 			),
 		),
 	);
