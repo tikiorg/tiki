@@ -12,16 +12,17 @@ function wikiplugin_sql_help() {
 function wikiplugin_sql_info() {
 	return array(
 		'name' => tra('SQL'),
-		'documentation' => 'PluginSQL',
-		'description' => tra('Run a sql query'),
+		'documentation' => tra('PluginSQL'),
+		'description' => tra('Run an SQL query on a database'),
 		'prefs' => array( 'wikiplugin_sql' ),
-		'body' => tra('sql query'),
+		'body' => tra('The SQL query goes in the body. Example: SELECT column1, column2 FROM table'),
 		'validate' => 'all',
 		'params' => array(
 			'db' => array(
 				'required' => true,
-				'name' => tra('DNS Name'),
-				'description' => tra('ADODB DNS'),
+				'name' => tra('DSN Name'),
+				'description' => tra('DSN name of the database being queried. The DSN name needs to first be defined at tiki-admin_dsn.php'),
+				'default' => '',
 			),
 		),
 	);
