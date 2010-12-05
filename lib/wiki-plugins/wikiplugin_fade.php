@@ -9,7 +9,7 @@ function wikiplugin_fade_info()
 {
 	return array(
 		'name' => tra('Fade'),
-		'documentation' => 'PluginFade',		
+		'documentation' => tra('PluginFade'),		
 		'description' => tra('Displays a label. On click, the block of content will fade in and fade out.'),
 		'prefs' => array('wikiplugin_fade'),
 		'body' => tra('Wiki syntax containing the text to display.'),
@@ -20,6 +20,7 @@ function wikiplugin_fade_info()
 				'name' => tra('Label'),
 				'filter' => 'striptags',
 				'description' => tra('Label to display on first display'),
+				'default' => tra('Unspecified label')
 			),
 		),
 	);
@@ -33,7 +34,7 @@ function wikiplugin_fade( $body, $params )
 	if( isset( $params['label'] ) ) {
 		$label = $params['label'];
 	} else {
-		$label = tra("Unspecified label");
+		$label = tra('Unspecified label');
 	}
 
 	$unique = 'wpfade-' . ++$id;
