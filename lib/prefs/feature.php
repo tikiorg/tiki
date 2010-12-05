@@ -1107,23 +1107,6 @@ function prefs_feature_list() {
 			'help' => 'Edit+Templates',
 			'perspective' => false,
 		),
-		'feature_custom_doctype' => array(
-			'name' => tra('Custom Doctype'),
-			'description' => tra('Use custom !DOCTYPE'),
-			'type' => 'flag',
-			'help' => 'Custom+Doctype',
-			'perspective' => true,
-		),
-		'feature_custom_doctype_content' => array(
-			'name' => tra('Custom Doctype Content'),
-			'hint' => tra('Example:') . "<!DOCTYPE html 
-	PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"
-	\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">",
-			'description' => tra('Use to generate the Tiki layout with custom &lt;!DOCTYPE&gt; specified.'),
-			'type' => 'textarea',
-			'size' => '3',
-			'filter' => 'rawhtml_unsafe',
-		),
 		'feature_custom_html_head_content' => array(
 			'name' => tra('Custom HTML <head> Content'),
 			'hint' => tra('Example:') . " {if \$page eq 'Slideshow'}{literal}<style type=\"text/css\">.slideshow { height: 232px; width: 232px; }</style>{/literal}{/if}",
