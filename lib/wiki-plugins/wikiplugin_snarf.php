@@ -19,7 +19,7 @@ function wikiplugin_snarf_help() {
 function wikiplugin_snarf_info() {
 	return array(
 		'name' => tra('Snarf'),
-		'documentation' => 'PluginSnarf',
+		'documentation' => tra('PluginSnarf'),
 		'description' => tra('Include the content of a remote HTTP page. Regular expression selecting the content portion to include must be specified.'),
 		'prefs' => array( 'wikiplugin_snarf' ),
 		'validate' => 'all',
@@ -28,59 +28,93 @@ function wikiplugin_snarf_info() {
 				'required' => true,
 				'name' => tra('URL'),
 				'description' => tra('Full URL to the page to include.'),
+				'filter' => 'url',
+				'default' => '',
 			),
 			'regex' => array(
 				'required' => false,
-				'name' => tra('Regular Expression'),
-				'description' => tra('PCRE compliant regular expression'),
+				'name' => tra('Regular Expression Pattern'),
+				'description' => tra('PCRE-compliant regular expression pattern to find the parts you want changed'),
+				'default' => '',
 			),
 			'regexres' => array(
 				'required' => false,
-				'name' => tra('Regular Expression Part'),
-				'description' => tra('ex: $1'),
+				'name' => tra('Regular Expression Replacement'),
+				'description' => tra('PCRE-compliant regular expression replacement syntax showing what the content should be changed to'),
+				'default' => '',
 			),
 			'wrap' => array(
 				'required' => false,
 				'name' => tra('Word Wrap'),
-				'description' => tra('0|1, Enable word wrapping on the code to avoid breaking the layout.'),
+				'description' => tra('Enable/disable word wrapping of snippets of code (enabled by default)'),
+				'default' => 1,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				)
 			),
 			'colors' => array(
 				'required' => false,
 				'name' => tra('Colors'),
-				'description' => tra('Syntax highlighting to use. May not be used with line numbers. Available: php, html, sql, javascript, css, java, c, doxygen, delphi, ...'),
+				'description' => tra('Syntax highlighting to use for code snippets. Available: php, html, sql, javascript, css, java, c, doxygen, delphi, ...'),
+				'default' => NULL
 			),
 			'ln' => array(
 				'required' => false,
-				'name' => tra('Line numbers'),
-				'description' => tra('0|1, may not be used with colors.'),
+				'name' => tra('Line Numbers'),
+				'description' => tra('Set to 1 (Yes) to add line numbers to code snippets (not shown by default)'),
+				'default' => NULL,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				)
 			),
 			'wiki' => array(
 				'required' => false,
-				'name' => tra('Wiki syntax'),
-				'description' => tra('0|1, parse wiki syntax within the code snippet.'),
+				'name' => tra('Wiki Syntax'),
+				'description' => tra('Parse wiki syntax within the code snippet (not parsed by default).'),
+				'default' => 0,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				)
 			),
 			'rtl' => array(
 				'required' => false,
-				'name' => tra('Right to left'),
-				'description' => tra('0|1, switch the text display from left to right to right to left'),
+				'name' => tra('Right to Left'),
+				'description' => tra('Switch the text display from left to right to right to left'),
+				'default' => NULL,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				)
 			),
 			'ishtml' => array(
 				'required' => false,
-				'name' => tra('Content is HTML'),
-				'description' => tra('0|1, display the content as is instead of escaping HTML special chars'),
-				'default' => 0,
+				'name' => tra('HTML Content'),
+				'description' => tra('Set to 1 (Yes) to display the content as is instead of escaping HTML special chars (not set by default).'),
+				'default' => NULL,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				)
 			),
 			'cache' => array(
 				'required' => false,
-				'name' => tra('Cache the url'),
-				'description' => tra('Cache time in minutes (0 for no cache, -1 for site preference'),
-				'default' => -1,
+				'name' => tra('Cache Url'),
+				'description' => tra('Cache time in minutes. Default is to use site preference, Set to 0 for no cache.'),
+				'default' => '',
 			),
 			'ajax' => array(
 				'required' => false,
-				'name' => tra('Text to click on to fetch the url via ajax'),
-				'description' => tra('Label'),
-				'default' => -1,
+				'name' => tra('Label'),
+				'description' => tra('Text to click on to fetch the url via ajax'),
+				'default' => '',
 			),
 		),
 	);
