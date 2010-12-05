@@ -84,7 +84,7 @@ button:hover {
 }
 
 textarea,
-body.wikitext {
+body.cke_show_borders {
 	color: #333;
 	background: #fff;
 	font-size: 1em;

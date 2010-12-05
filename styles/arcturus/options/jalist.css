@@ -337,15 +337,13 @@ h1, .pagetitle {
 }
 
 
-body.wikitext, .wikitext {
+body.cke_show_borders,
+.wikitext {
 	background:    white;
 	font-size:   11px;
 	border:   1px solid black;
 	padding: 1px;
 	margin: 5px 1px;
-}
-body.wikitext {
-	border : 0;
 }
 
 .titlebar {

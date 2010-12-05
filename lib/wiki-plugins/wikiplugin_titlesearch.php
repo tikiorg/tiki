@@ -31,7 +31,7 @@ function wikiplugin_titlesearch_help() {
     function wikiplugin_titlesearch_info() {
     	return array(
     		'name' => tra('Title Search'),
-    		'documentation' => 'PluginTitleSearch',
+    		'documentation' => tra('PluginTitleSearch'),
     		'description' => tra('Search wiki page titles.'),
     		'prefs' => array( 'feature_wiki', 'wikiplugin_titlesearch' ),
     		'params' => array(
@@ -39,21 +39,35 @@ function wikiplugin_titlesearch_help() {
     				'required' => true,
     				'name' => tra('Search Criteria'),
     				'description' => tra('Portion of a page name.'),
+    				'default' => '',
     			),
     			'info' => array(
     				'required' => false,
     				'name' => tra('Information'),
-    				'description' => tra('hits|user'),
+    				'description' => tra('Also show page hits or user'),
+					'default' => '',
+					'options' => array(
+						array('text' => '', 'value' => ''), 
+						array('text' => tra('Hits'), 'value' => 'hits'), 
+						array('text' => tra('User'), 'value' => 'user')
+					)
     			),
     			'exclude' => array(
     				'required' => false,
     				'name' => tra('Exclude'),
     				'description' => tra('Pipe-separated list of page names to exclude from results.'),
+					'default' => '',
     			),
     			'noheader' => array(
     				'required' => false,
     				'name' => tra('No Header'),
-    				'description' => tra('0|1'),
+    				'description' => tra('Set to 1 (Yes) to have no header for the search results.'),
+					'default' => 0,
+					'options' => array(
+						array('text' => '', 'value' => ''), 
+						array('text' => tra('Yes'), 'value' => 1), 
+						array('text' => tra('No'), 'value' => 0)
+					)
     			),
     		),
     	);

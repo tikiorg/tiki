@@ -11,7 +11,7 @@
 function wikiplugin_flash_info() {
 	return array(
 		'name' => tra('Flash video'),
-		'documentation' => 'PluginFlash',
+		'documentation' => tra('PluginFlash'),
 		'description' => tra('Displays a Flash (.swf) file in the wiki page'),
 		'prefs' => array('wikiplugin_flash'),
 		'extraparams' => true,
@@ -19,12 +19,13 @@ function wikiplugin_flash_info() {
 		'params' => array(
 			'type' => array(
 				'required' => true,
-				'name' => tra('Flash type'),
+				'name' => tra('Flash Type'),
 				'description' => tra('Whether you want to insert a Flash from a URL, a fileId from a podcast file gallery or a link to a specific service like Youtube or Vimeo'),
+				'default' => '',
 				'options' => array(
 					array('text' => tra('Select an option'), 'value' => ''),
 					array('text' => tra('Blip.tv'), 'value' => 'bliptv'), 
-					array('text' => tra('FileId from a podcast file gallery'), 'value' => 'fileId'),
+					array('text' => tra('File Gallery Podcast'), 'value' => 'fileId'),
 					array('text' => tra('Movie URL'), 'value' => 'url'),
 					array('text' => tra('Vimeo'), 'value' => 'vimeo'),
 					array('text' => tra('Youtube'), 'value' => 'youtube'),
@@ -35,50 +36,64 @@ function wikiplugin_flash_info() {
 				'name' => tra('Movie URL'),
 				'description' => tra('Complete URL to the movie to include. e.g. files/test.swf'),
 				'parent' => array('name' => 'type', 'value' => 'url'),
+				'default' => '',
 			),
 			'fileId' => array(
 				'required' => true,
-				'name' => tra('FileId from a podcast file gallery'),
+				'name' => tra('File Gallery Podcast ID'),
 				'description' => tra('Id of a file from a podcast gallery - will work only with podcast gallery'),
 				'parent' => array('name' => 'type', 'value' => 'fileId'),
+				'default' => '',
 			),
 			'youtube' => array(
 				'required' => true,
 				'name' => tra('Youtube URL'),
 				'description' => tra('Entire URL to the YouTube video. Example: http://www.youtube.com/watch?v=1i2ZnU4iR24'),
 				'parent' => array('name' => 'type', 'value' => 'youtube'),
+				'default' => '',
 			),
 			'vimeo' => array(
 				'required' => true,
 				'name' => tra('Vimeo URL'),
 				'description' => tra('Entire URL to the Vimeo video. Example: http://vimeo.com/3319966'),
 				'parent' => array('name' => 'type', 'value' => 'vimeo'),
+				'default' => '',
 			),
 			'bliptv' => array(
 				'required' => true,
 				'name' => tra('Blip.tv URL'),
 				'description' => tra('Blip.tv embed URL. Example: http://blip.tv/play/AYGd_GAC'),
 				'parent' => array('name' => 'type', 'value' => 'bliptv'),
+				'default' => '',
 			),
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tra('Default width: 425'),
+				'description' => tra('Width of movie in pixels (default is 425)'),
 				'advanced' => true,
+				'default' => 425,
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
-				'description' => tra('Default height: 350'),
+				'description' => tra('Height of movie in pixels (default is 350)'),
 				'advanced' => true,
+				'default' => 350,
 			),
 			'quality' => array(
 				'required' => false,
 				'name' => tra('Quality'),
 				'description' => tra('Flash video quality. Default value: high'),
 				'advanced' => true,
-			),
-		),
+				'default' => 'high',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('High'), 'value' => 'high'), 
+					array('text' => tra('Medium'), 'value' => 'medium'), 
+					array('text' => tra('Low'), 'value' => 'low'), 
+				)
+			)
+		)
 	);
 }
 

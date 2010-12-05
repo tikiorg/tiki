@@ -90,7 +90,7 @@ fieldset {
 textarea,
 option,
 select,
-body.wikitext {
+body.cke_show_borders {
 	background: #F3FCFE;
 	color: #000;
 }
@@ -230,9 +230,9 @@ label {
 	background: #fff;
 }
 
-.fullscreen #col1 {
+/*.fullscreen #col1 {
 	margin: 0 30px !important;
-}
+}*/
 
 #c1c2 #wrapper .marginleft {
 	margin-left: 240px;
@@ -918,12 +918,21 @@ a.linkmodule:hover {
 .menuSection {
 	padding: 0 0 16px 0;
 	}
+	
+li.menuSection {
+	padding: 0;
+}	
 
 
 .menuSection .menuSection,
 .menuSection .separator {
 	margin-left: 16px;
 }
+
+li.menuSection .menuSection {
+	margin-left: 0;
+}
+
 /****** Misc. Global Classes (layout and style) ****/
 .highlight,
 #highlight {

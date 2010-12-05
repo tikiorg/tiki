@@ -32,15 +32,16 @@ function wikiplugin_miniquiz_help() {
 function wikiplugin_miniquiz_info() {
 	return array(
 		'name' => tra('Mini Quiz'),
-		'documentation' => 'PluginMiniQuiz',
+		'documentation' => tra('PluginMiniQuiz'),
 		'description' => tra('Displays a miniquiz'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_miniquiz' ),
 		'body' => tra('Instructions::Feedback'),
 		'params' => array(
 			'trackerId' => array(
 				'required' => true,
-				'name' => tra('Tracker'),
-				'description' => tra('Tracker ID'),
+				'name' => tra('Tracker ID'),
+				'description' => tra('Numeric value representing the miniquiz tracker ID'),
+				'default' => '',
 			),
 		),
 	);

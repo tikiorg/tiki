@@ -20,7 +20,7 @@ body {
 
 html>body {font-size: 72% !important}
 
-body.wikitext {
+body.cke_show_borders {
 	text-align: left !important;
 }
 
@@ -39,10 +39,6 @@ body.wikitext {
 }
 	
 #middle {background: #222}
-
-.fullscreen #col1 {
-	margin-left: 30px !important;
-	margin-right: 30px !important}
 
 #c1c2 #wrapper #col1 > .content {
 	background: transparent;
@@ -133,7 +129,7 @@ button,
 input,
 textarea,
 select,
-body.wikitext {
+body.cke_show_borders {
 	background: #242424;
 	color: #cfcfcf;
 	border: 1px solid #4c4c4c}

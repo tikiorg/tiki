@@ -35,11 +35,6 @@ body {
 	background: #fff;
 }
 
-.fullscreen #col1 {
-	margin-left: 30px !important;
-	margin-right: 30px !important;
-}
-
 #c1c2 #wrapper #col1 #tiki-center {
 	background: #f3f6f9;
 	margin: 8px 3px 0;
@@ -1206,11 +1201,10 @@ h1.pagetitle strong {
 	width: auto;
 }
 
-body.wikitext {
-	margin: 10px !important;
+body.cke_show_borders {
 	background: #f3f6f9;
 }
-
+/*
 body.wikitext a {
 	color: #225566 !important;
 	font-weight: bold;
@@ -1219,7 +1213,7 @@ body.wikitext a {
 body.wikitext a:hover {
 	color: #224466 !important;
 	background: #fffff1;
-}
+}*/
 
 .wikitext .img {
 	overflow: auto;

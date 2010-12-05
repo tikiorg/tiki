@@ -18,7 +18,7 @@ function wikiplugin_jq_help() {
 function wikiplugin_jq_info() {
 	return array(
 		'name' => tra('jQuery'),
-		'documentation' => 'PluginJQ',
+		'documentation' => tra('PluginJQ'),
 		'description' => tra('Inserts JavaScript code. By default this is only executed after jQuery determines that the DOM is fully loaded.'),
 		'prefs' => array( 'wikiplugin_jq' ),
 		'body' => tra('JavaScript code'),
@@ -27,7 +27,7 @@ function wikiplugin_jq_info() {
 		'params' => array(
 			'notonready' => array(
 				'required' => false,
-				'name' => tra('NotOnReady'),
+				'name' => tra('Not On Ready'),
 				'description' => tra("Do not execute on document ready (execute inline)"),
 			),
 			'nojquery' => array(

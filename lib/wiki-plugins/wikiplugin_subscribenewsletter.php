@@ -8,20 +8,21 @@
 function wikiplugin_subscribenewsletter_info() {
 	return array(
 		'name' => tra('Subscribe newsletter'),
-		'documentation' => 'PluginSubscribeNewsletter',
+		'documentation' => tra('PluginSubscribeNewsletter'),
 		'description' => tra('A button to subscribe to a newsletter available for a user if not already in'),
 		'prefs' => array('feature_newsletters', 'wikiplugin_subscribenewsletter'),
 		'body' => tra('Invitation message'),
 		'params' => array(
 			'nlId' => array(
 				'required' => true,
-				'name' => tra('Newsletter Id (nlId)'),
-				'description' => 'Identification number (Id) of the Newsletter that you want to allow the users to subscribe to',
+				'name' => tra('Newsletter ID'),
+				'description' => tra('Identification number (nlId) of the Newsletter that you want to allow the users to subscribe to'),
 				'filter' => 'digits',
+				'default' => '',
 			),
 			'thanks' => array(
 				'required' => false,
-				'name' => tra('Confirmation message'),
+				'name' => tra('Confirmation Message'),
 				'description' => tra('Confirmation message after posting form. The plugin body is then the button label.'),
 				'filter' => 'wikicontent',
 			),
@@ -34,9 +35,15 @@ function wikiplugin_subscribenewsletter_info() {
 			'wikisyntax' => array(
 				'required' => false,
 				'safe' => true,
-				'name' => tra('wikisyntax'),
+				'name' => tra('Wiki Syntax'),
 				'description' => tra('Choose whether the output should be parsed as wiki syntax (Optional). Options: 0 (no parsing, default), 1 (parsing)'),
 				'filter' => 'int',
+				'default' => 0,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				)
 			),
 
 		),

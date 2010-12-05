@@ -43,6 +43,13 @@ html[dir=ltr]>body {
 	height: auto;
 }
 
+.fullscreen #c1c2 #wrapper #col1.marginleft {
+	margin-left: 30px;
+}
+
+.fullscreen #c1c2 #wrapper #col1.marginright {
+	margin-right: 30px}	
+
 .button {
 	display: inline-block;
 }

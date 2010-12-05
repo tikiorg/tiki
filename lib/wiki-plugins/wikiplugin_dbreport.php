@@ -1442,8 +1442,8 @@ function wikiplugin_dbreport_help() {
 function wikiplugin_dbreport_info() {
 	return array(
 		'name' => tra('DBReport'),
-		'documentation' => 'PluginDBReport',
-		'description' => tra('Run a database report'),
+		'documentation' => tra('PluginDBReport'),
+		'description' => tra('Run a database report. This plugin only works with adodb. It does not work with PDO.'),
 		'prefs' => array('wikiplugin_dbreport'),
 		'body' => tra('report definition'),
 		'validate' => 'all',
@@ -1452,21 +1452,35 @@ function wikiplugin_dbreport_info() {
 				'required' => false,
 				'name' => tra('Full DSN'),
 				'description' => tra('A full DSN (Data Source Name) connection string. eg: mysql://user:pass@server/database'),
+				'default' => '',
 			),
 			'db' => array(
 				'required' => false,
-				'name' => tra('Wiki DSN name'),
+				'name' => tra('Wiki DSN Name'),
 				'description' => tra('The name of a DSN connection defined by the Wiki administrator.'),
+				'default' => '',
 			),
 			'wiki' => array(
 				'required' => false,
-				'name' => tra('Wiki syntax'),
-				'description' => tra('0|1, parse wiki syntax within the report.'),
+				'name' => tra('Wiki Syntax'),
+				'description' => tra('Parse wiki syntax within the report (not parsed by default)'),
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				),
 			),
 			'debug' => array(
 				'required' => false,
 				'name' => tra('Debug'),
-				'description' => tra('0|1, display the parsed report definition.'),
+				'description' => tra('Display the parsed report definition (not displayed by default)'),
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				),
 			),
 		),
 	);

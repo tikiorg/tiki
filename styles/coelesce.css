@@ -75,7 +75,7 @@ input,
 textarea,
 option,
 select,
-body.wikitext {
+body.cke_show_borders {
 	background: #ecf5ff;
 	color: #4a6a90;
 	margin: 1px;
@@ -206,11 +206,6 @@ label {
 	background: white;
 	margin-top: 28px;
 	margin-bottom: 20px;
-}
-
-.fullscreen #col1 {
-	margin-left: 30px !important;
-	margin-right: 30px !important;
 }
 
 #c1c2 #wrapper .marginleft {

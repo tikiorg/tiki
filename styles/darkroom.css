@@ -25,7 +25,7 @@ body {
 	font: 74% "Trebuchet MS", "Bitstream Vera Sans", sans-serif;
 }
 
-body.wikitext {
+body.cke_show_borders {
 	color: #d8d8d8;
 	background: #474747;
 }
@@ -251,11 +251,6 @@ ol {
 	font-size: 1em;
 }
 					
-.fullscreen #col1 {
-	margin-left: 30px !important;
-	margin-right: 30px !important;
-}
-
 #c1c2 #wrapper .marginleft {
 	margin-left: 200px;
 }

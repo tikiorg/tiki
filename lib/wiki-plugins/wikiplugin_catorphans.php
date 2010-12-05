@@ -24,24 +24,31 @@ function wikiplugin_catorphans_help() {
 function wikiplugin_catorphans_info() {
 	return array(
 		'name' => tra('Category Orphans'),
-		'documentation' => 'PluginCatOrphans',
-		'description' => tra('Display Tiki objects that have not been categorized'),
+		'documentation' => tra('PluginCatOrphans'),
+		'description' => tra('Display wiki pages that have not been categorized'),
 		'prefs' => array( 'feature_categories', 'wikiplugin_catorphans' ),
 		'params' => array(
 			'objects' => array(
 				'required' => false,
-				'name' => tra('Objects'),
-				'description' => tra('wiki|article|blog|faq|fgal|forum<br />|igal|newsletter|poll|quizz<br />|survey|tracker'),
+				'name' => tra('Object'),
+				'description' => tra('Currently, only works with wiki pages (set to wiki (Wiki Pages) by default)'),
+				'default' => 'wiki',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Wiki Pages'), 'value' => 'wiki'),
+				) 
 			),
 			'max' => array(
 				'required' => false,
-				'name' => tra('max'),
-				'description' => tra('Maximum number of items').' '.tra('-1 for unlimited'),
+				'name' => tra('Max'),
+				'description' => tra('Maximum number of items. Use -1 for unlimited. Default is the site admin setting for maximum records.'),
+				'default' => '$prefs[\'maxRecords\']'
 			),
 			'offset' => array(
 				'required' => false,
 				'name' => tra('Result Offset'),
-				'description' => tra('Result number at which the listing should start.'),
+				'description' => tra('Result number at which the listing should start (default is no offset)'),
+				'default' => 0
 			),
 		),
 	);

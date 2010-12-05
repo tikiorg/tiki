@@ -33,10 +33,6 @@ html>body {font-size: .7em !important}
 	background: transparent;
 	color: #fff}
 
-.fullscreen #col1 {
-	margin-left: 30px !important;
-	margin-right: 30px !important}
-
 #c1c2	#wrapper	#col1.marginleft  {margin-left: 200px;}
 #c1c2	#wrapper	#col1.marginright {margin-right: 200px;}
 #c1c2	#wrapper	#col1	.content {background: transparent}
@@ -219,7 +215,7 @@ p {
 small {font-size: 0.8em}
 
 textarea,
-body.wikitext {
+body.cke_show_borders {
 	border: solid 1px #aaa;
 	background: #586858;
 	color: #F5F5F5;

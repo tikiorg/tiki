@@ -24,7 +24,7 @@ function wikiplugin_randominclude_help() {
 function wikiplugin_randominclude_info() {
 	return array(
 		'name' => tra('RandomInclude'),
-		'documentation' => 'PluginRandomInclude',
+		'documentation' => tra('PluginRandomInclude'),
 		'description' => tra('Include a random page\'s content.'),
 		'prefs' => array('wikiplugin_randominclude'),
 		'params' => array(),

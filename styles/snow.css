@@ -29,10 +29,6 @@ body {
 	
 #col1 {background: url(snow/flakesptn3.jpg)}
 
-body.fullscreen #col1 {
-	margin-left: 30px !important;
-	margin-right: 30px !important}
-
 #c1c2 #wrapper #col1.marginleft {margin-left: 230px}
 #c1c2 #wrapper #col1.marginright {margin-right: 230px}
 

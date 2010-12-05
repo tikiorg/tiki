@@ -121,7 +121,7 @@ fieldset {color: #000}
 button:hover {cursor: pointer}
 
 textarea,
-body.wikitext {
+body.cke_show_borders {
 	background: #fff;
 	color: #000}
 

@@ -29,7 +29,7 @@ input,
 textarea,
 option,
 select,
-body.wikitext {
+body.cke_show_borders {
 	background: #F3FCFE;
 	color: #000;
 }

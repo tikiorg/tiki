@@ -23,42 +23,70 @@ function wikiplugin_realnamelist_help() {
 function wikiplugin_realnamelist_info() {
 	return array(
 		'name' => tra('User List (showing Real Name)'),
-		'documentation' => 'PluginRealNameList',
+		'documentation' => tra('PluginRealNameList'),
 		'description' => tra("Displays a list of registered users showing their Real Names").tra(' (experimental, should be merged with UserList in Tiki5)'),		
 		'prefs' => array( 'wikiplugin_realnamelist' ),
-		'body' => tra('Login Filter'),
+		'body' => tra('Group name - only users belonging to a group or groups with group names containing this text will be included in the list. If empty all site users will be included.'),
 		'params' => array(
 			'sep' => array(
 				'required' => false,
 				'name' => tra('Separator'),
-				'description' => tra('String to use between elements of the list.'),
+				'description' => tra('String to use between elements of the list if table layout is not used'),
+				'default' => ', ',
 			),
 			'max' => array(
 				'required' => false,
 				'name' => tra('Maximum'),
-				'description' => tra('Result limit.'),
+				'description' => tra('Result limit'),
+				'default' => -1,
 			),
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort Order'),
-				'description' => 'asc|desc',
+				'description' => tra('Set to sort in ascending or descending order (unsorted by default'),
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Ascending'), 'value' => 'asc'), 
+					array('text' => tra('Descending'), 'value' => 'desc')
+				)
 			),
 			'layout' => array(
 				'required' => false,
 				'name' => tra('Layout'),
-				'description' => 'table',
+				'description' => tra('Set to table to show results in a table (not shown in a table by default)'),
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Table'), 'value' => 'table')
+				)
 			),
 			'link' => array(
 				'required' => false,
 				'name' => tra('Link'),
-				'description' => 'userpage|userinfo|userpref',
+				'description' => tra('Make the listed names links to various types of user information'),
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('User Information'), 'value' => 'userinfo'),
+					array('text' => tra('User Page'), 'value' => 'userpage'),
+					array('text' => tra('User Preferences'), 'value' => 'userpref')
+				)
 			),
 			'exclude' => array(
 				'required' => false,
 				'name' => tra('Exclude'),
-				'description' => 'test|admin|test-admin|admin-test',
-			),
-		),
+				'description' => tra('Exclude certain test or admin names from the list'),
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('admin'), 'value' => 'admin'),
+					array('text' => tra('admin-test'), 'value' => 'admin-test'),
+					array('text' => tra('test'), 'value' => 'test'),
+					array('text' => tra('test-admin'), 'value' => 'test-admin')
+				)
+			)
+		)
 	);
 }
 

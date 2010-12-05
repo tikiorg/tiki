@@ -17,34 +17,51 @@ function wikiplugin_events_help() {
 function wikiplugin_events_info() {
 	return array(
 		'name' => tra('Events'),
-		'documentation' => 'PluginEvents',
-		'description' => tra('Includes the list of events from a calendar in the page.'),
+		'documentation' => tra('PluginEvents'),
+		'description' => tra('Display upcoming events from calendars'),
 		'prefs' => array( 'feature_calendar', 'wikiplugin_events' ),
 		'params' => array(
 			'calendarid' => array(
 				'required' => true,
-				'name' => tra('Calendars filter'),
-				'description' => tra('Numeric'),
+				'name' => tra('Calendar IDs'),
+				'description' => tra('ID numbers for the site calendars whose events are to be displayed, separated by vertical bars (|)'),
+				'default' => '',
 			),
 			'maxdays' => array(
 				'required' => false,
-				'name' => tra('Maximum days'),
-				'description' => tra('Numeric'),
+				'name' => tra('Maximum Days'),
+				'description' => tra('Events occurring within this number of days in the future from today will be included in the list (unless limited by other parameter settings). Default is 365 days.'),
+				'filter' => 'digits',
+				'default' => 365,
 			),
 			'max' => array(
 				'required' => false,
-				'name' => tra('Maximum Rows'),
-				'description' => tra('Numeric'),
+				'name' => tra('Maximum Events'),
+				'description' => tra('Maximum number of events to display. Default is 10. Set to 0 to display all (unless limited by other parameter settings)'),
+				'default' => 10,
+				'filter' => 'digits',
 			),
 			'datetime' => array(
 				'required' => false,
-				'name' => tra('Datetime'),
-				'description' => tra('0|1'),
+				'name' => tra('Show Time'),
+				'description' => tra('Show the time along with the date (shown by default)'),
+				'default' => 1,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				),
 			),
 			'desc' => array(
 				'required' => false,
-				'name' => tra('Desc'),
-				'description' => tra('0|1'),
+				'name' => tra('Show Description'),
+				'description' => tra('Show the description of the event (shown by default)'),
+				'default' => 1,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				),
 			),
 		),
 	);

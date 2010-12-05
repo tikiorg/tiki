@@ -18,21 +18,27 @@ function wikiplugin_poll_help() {
 function wikiplugin_poll_info() {
 	return array(
 		'name' => tra('Poll'),
-		'documentation' => 'PluginPoll',
-		'description' => tra("Displays the output of a poll, fields are indicated with numeric ids."),
+		'documentation' => tra('PluginPoll'),
+		'description' => tra('Displays the output of a poll, fields are indicated with numeric ids.'),
 		'prefs' => array( 'feature_polls', 'wikiplugin_poll' ),
 		'body' => tra('Title'),
 		'params' => array(
 			'pollId' => array(
 				'required' => true,
 				'name' => tra('Poll'),
-				'description' => tra('Poll ID'),
+				'description' => tra('Numeric value representing the poll ID'),
+				'default' => ''
 			),
 			'showtitle' => array(
 				'required' => false,
-				'name' => tra('Show title'),
-				'description' => 'y|n',
+				'name' => tra('Show Title'),
+				'description' => tra('Show poll title (shown by default).'),
 				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showresult' => array(
 				'required' => false,

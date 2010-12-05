@@ -155,7 +155,7 @@ fieldset {
 legend {color: #a9a9a9}
 
 textarea,
-body.wikitext {
+body.cke_show_borders {
 	background: #d2d9e3;
 	color: #000}
 

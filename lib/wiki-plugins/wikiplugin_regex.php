@@ -22,16 +22,17 @@ return tra("Takes regex expressions and parses the content between the REGEX tag
 function wikiplugin_regex_info() {
 	return array(
 		'name' => tra('Regular Expression'),
-		'documentation' => 'PluginRegex',
+		'documentation' => tra('PluginRegex'),
 		'validate' => 'all',		
 		'description' => tra('Takes regex expressions and parses the content between REGEX tags and replaces the text.'),
 		'prefs' => array( 'wikiplugin_regex' ),
-		'body' => tra('one data per line'),
+		'body' => tra('Each line of content is evaluated separately'),
 		'params' => array(
 			'pageName' => array(
 				'required' => true,
 				'name' => tra('Page name'),
-				'description' => tra('Page name containing the regular expression search and replace patterns.'),
+				'description' => tra('Name of page containing search and replace expressions separated by two colons. Example of syntax on that page: /search pattern/::replacement text'),
+				'default' => 'pageName',
 			),
 		),
 	);

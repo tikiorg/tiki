@@ -20,7 +20,7 @@ function wikiplugin_lsdir_help() {
 function wikiplugin_lsdir_info() {
 	return array(
 		'name' => tra('List Directory'),
-		'documentation' => 'PluginLsDir',	
+		'documentation' => tra('PluginLsDir'),	
 		'description' => tra('Lists files in a directory'),
 		'prefs' => array( 'wikiplugin_lsdir' ),
 		'validate' => 'all',
@@ -28,27 +28,40 @@ function wikiplugin_lsdir_info() {
 			'dir' => array(
 				'required' => true,
 				'name' => tra('Directory'),
-				'description' => tra('Full path to the server-local directory.'),
+				'description' => tra('Full path to the server-local directory. Default is the document root.'),
+				'default' => '',
 			),
 			'urlprefix' => array(
 				'required' => false,
 				'name' => tra('URL Prefix'),
-				'description' => tra('?'),
+				'description' => tra('Make the file name a link to the file by adding the url path preceding the file name. Example: http://yoursite.com/tiki/'),
+				'default' => NULL
 			),
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort Order'),
-				'description' => tra('name'),
+				'description' => tra('Set the sort order of the file list'),
+				'default' => 'name',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('File Name'), 'value' => 'name'), 
+					array('text' => tra('File Size'), 'value' => 'size'), 
+					array('text' => tra('Last Access'), 'value' => 'atime'), 
+					array('text' => tra('Last Metadata Change'), 'value' => 'ctime'), 
+					array('text' => tra('Last Modified'), 'value' => 'mtime'), 
+				)
 			),
 			'filter' => array(
 				'required' => false,
 				'name' => tra('Filter'),
-				'description' => tra('.ext'),
+				'description' => tra('Only list files with filenames that contain this filter. Example: ".jpg"'),
+				'default' => NULL
 			),
 			'limit' => array(
 				'required' => false,
 				'name' => tra('Limit'),
-				'description' => tra('Maximum amount of files to display'),
+				'description' => tra('Maximum amount of files to display. Default is no limit.'),
+				'default' => 0,
 			),
 		),
 	);
@@ -56,16 +69,19 @@ function wikiplugin_lsdir_info() {
 
 function wikiplugin_lsdir($data, $params) {
 	global $tikilib;
-	$dir = '';
-	$urlprefix = NULL;
-	$sort = 'name';
+//	$dir = '';
+	$dir = $params['dir'];
+//	$urlprefix = NULL;
+	$urlprefix = $params['urlprefix'];
+//	$sort = 'name';
+	$sort = 'size';
 	$sortmode = 'asc';
 	$filter = NULL;
 	$limit = 0;
 	$tmp_array = array();
 	$ret = '';
 
-	extract ($params, EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	
 	// make sure document_root has no trailing slash
 	if (!empty($_SERVER['DOCUMENT_ROOT'])) {

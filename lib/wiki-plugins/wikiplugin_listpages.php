@@ -8,7 +8,7 @@
 function wikiplugin_listpages_info() {
 	return array(
 		'name' => tra('List Pages'),
-		'documentation' => 'PluginListpages',
+		'documentation' => tra('PluginListpages'),
 		'description' => tra('List wiki pages.'),
 		'prefs' => array('wikiplugin_listpages'),
 		'icon' => 'pics/icons/page_white_stack.png',
@@ -17,102 +17,149 @@ function wikiplugin_listpages_info() {
 				'required' => false,
 				'name' => tra('Result Offset'),
 				'description' => tra('Result number at which the listing should start.'),
-				'filter' => 'int',
+				'filter' => 'digits',
+				'default' => 0,
 			),
 			'max' => array(
 				'required' => false,
-				'name' => tra('Result Count'),
-				'description' => tra('Number of results displayed in the list.'),
+				'name' => tra('Max'),
+				'description' => tra('Limit number of items displayed in the list. Default is to display all.'),
+				'filter' => 'digits',
+				'default' => -1,
 			),
 			'initial' => array(
 				'required' => false,
 				'name' => tra('Initial'),
 				'description' => tra('txt'),
+				'default' => '',
 			),
 			'showNameOnly' => array(
 				'required' => false,
 				'name' => tra('Show Name Only'),
-				'description' => 'y|n',
+				'description' => tra('Show only the page names'),
 				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'categId' => array(
 				'required' => false,
 				'name' => tra('Category'),
-				'description' => tra('Category ID').' '.tra('For an OR between categories use : (ex:1:2). For and AND use + ex(1+2). For substractions, use - ex(1-2-3).'),
-				'filter' => 'striptags',
+				'description' => tra('Enter a category ID to filter list by a certain category'),
+				'filter' => 'digits',
+				'default' => '',
 			),
 			'structHead' => array(
 				'required' => false,
 				'name' => tra('Structure Head'),
-				'description' => 'y|n',
+				'description' => tra('Filter by structure head'),
 				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showPageAlias' => array(
 				'required' => false,
 				'name' => tra('Show Page Alias'),
-				'description' => 'y|n',
+				'description' => tra('Show page alias in the list'),
 				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'find' => array(
 				'required' => false,
 				'name' => tra('Find'),
-				'description' => tra('txt'),
+				'description' => tra('Only pages with names similar the text entered for this parameter will be listed'),
 			),
 			'lang' => array(
 				'required' => false,
 				'name' => tra('Language'),
 				'description' => tra('Two letter language code to filter pages listed.'),
+				'filter' => 'alpha',
 			),
 			'langOrphan' => array(
 				'required' => false,
 				'name' => tra('Orphan Language'),
 				'description' => tra('Two letter language code to filter pages listed. Only pages not available in the provided language will be listed.'),
+				'filter' => 'alpha',
 			),
 			'translations' => array(
 				'required' => false,
 				'name' => tra('Load Translations'),
-				'description' => tra('user or pipe separated list of two letter language codes for additional languages to display. If the language parameter is not defined, the first element of this list will be used as the primary filter.'),
+				'description' => tra('User or pipe separated list of two letter language codes for additional languages to display. If the language parameter is not defined, the first element of this list will be used as the primary filter.'),
 			),
 			'exact_match' => array(
 				'required' => false,
 				'name' => tra('Exact Match'),
-				'description' => 'y|n'.' '.tra('Related to Find.'),
+				'description' => tra('Page name and text entered for the filter parameter must match exactly to be listed'),
 				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'only_orphan_pages' => array(
 				'required' => false,
 				'name' => tra('Only Orphan Pages'),
-				'description' => 'y|n',
+				'description' => tra('Only list orphan pages'),
 				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'for_list_pages' => array(
 				'required' => false,
 				'name' => tra('For List Pages'),
 				'description' => 'y|n',
 				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort'),
-				'description' => 'lastModif_desc'.tra('or').'pageName_asc',
+				'description' => tra('Sort ascending or descending on any field in the tiki_pages table. Syntax is field name followed by _asc or _desc. Example: ')
+									. 'lastModif_desc' . tra('or') . 'pageName_asc',
+				'default' => 'pageName_asc',
 			),
 			'start' => array(
 				'required' => false,
 				'name' => tra('Start'),
 				'description' => tra('When only a portion of the page should be included, specify the marker from which inclusion should start.'),
+				'default' => '',
 			),
 			'end' => array(
 				'required' => false,
 				'name' => tra('Stop'),
 				'description' => tra('When only a portion of the page should be included, specify the marker at which inclusion should end.'),
+				'default' => '',
 			),
 			'length' => array(
 				'required' => false,
 				'name' => tra('Length'),
 				'description' => tra('Number of characters to display'),
-				'filter' => 'int',
-			),
-		),
+				'default' => '',
+			)
+		)
 	);
 }
 

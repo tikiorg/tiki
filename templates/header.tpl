@@ -1,6 +1,6 @@
 {* $Id$ *}
-{if $base_url and ($dir_level gt 0 or $prefs.feature_html_head_base_tag eq 'y')}
-	<base href="{$base_url|escape}" />
+{if $base_uri and ($dir_level gt 0 or $prefs.feature_html_head_base_tag eq 'y')}
+	<base href="{$base_uri|escape}" />
 {/if}
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Script-Type" content="text/javascript" />

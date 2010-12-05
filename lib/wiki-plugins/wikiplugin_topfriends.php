@@ -12,7 +12,7 @@ function wikiplugin_topfriends_help() {
 function wikiplugin_topfriends_info() {
 	return array(
 		'name' => tra('Top Friends'),
-		'documentation' => 'PluginTopFriends',
+		'documentation' => tra('PluginTopFriends'),
 		'description' => tra('List top-scoring users.'),
 		'prefs' => array( 'feature_friends', 'wikiplugin_topfriends' ),
 		'params' => array(
@@ -20,11 +20,19 @@ function wikiplugin_topfriends_info() {
 				'required' => false,
 				'name' => tra('Limit'),
 				'description' => tra('Maximum result count.'),
+				'filter' => 'digits',
+				'default' => 5,
 			),
 			'public' => array(
 				'required' => false,
 				'name' => tra('Public'),
-				'description' => 'y|n',
+				'description' => tra('Set whether public or not.'),
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 		),
 	);

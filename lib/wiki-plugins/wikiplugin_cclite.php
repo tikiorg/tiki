@@ -14,6 +14,7 @@ function wikiplugin_cclite_info() {
 
 	return array(
 		'name' => tra('Cclite'),
+		'documentation' => tra('PluginCclite'),
 		'description' => tra('General purpose cclite utility plugin'),
 //		'validate' => '',
 		'prefs' => array( 'wikiplugin_cclite', 'payment_feature' ),
@@ -21,12 +22,13 @@ function wikiplugin_cclite_info() {
 			'mode' => array(
 				'required' => false,
 				'name' => tra('Mode'),
-				'description' => tr('Mode of operation - summary, recent. Default: summary'),
+				'description' => tr('Mode of operation - summary or recent. Default: summary'),
 				'filter' => 'text',
+				'default' => 'summary',
 				'options' => array(
+					array('text' => '', 'value' => ''), 
 					array('text' => tra('Account summary'), 'value' => 'summary'), 
 					array('text' => tra('Recent transactions'), 'value' => 'recent'), 
-					array('text' => tra('Validate account'), 'value' => 'validate'), 
 				),
 			),
 			'registry' => array(
@@ -34,6 +36,7 @@ function wikiplugin_cclite_info() {
 				'name' => tra('Registry'),
 				'description' => tr('Registry to query. Default: site preference (or first in list when more than one)'),
 				'filter' => 'text',
+				'default' => '',
 			),
 		),
 	);
