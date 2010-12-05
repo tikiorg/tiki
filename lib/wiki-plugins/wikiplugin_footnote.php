@@ -24,7 +24,7 @@ function wikiplugin_footnote_info()
 {
 	return array(
 		'name' => tra('Footnote'),
-		'documentation' => 'PluginFootnote',
+		'documentation' => tra('PluginFootnote'),
 		'description' => tra('Inserts a superscripted footnote number next to text and takes in footnote as parameter.'),
 		'prefs' => array('wikiplugin_footnote'),
 		'body' => tra('The footnote'),
@@ -32,12 +32,20 @@ function wikiplugin_footnote_info()
 			'sameas' => array(
 				'required' => false,
 				'name' => tra('Sameas'),
-				'description' => tra('Tag to existing footnote' )
+				'description' => tra('Tag to existing footnote'),
+				'default' => ''
 			),
 			'checkDuplicate' => array(
 				'required' => false,
 				'name' => tra('CheckDuplicate'),
-				'description' => tra('Check for duplicate footnotes')
+				'description' => tra('Check for duplicate footnotes'),
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			)
 		)
 	);
