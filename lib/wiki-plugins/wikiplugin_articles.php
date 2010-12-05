@@ -133,6 +133,12 @@ function wikiplugin_articles_info()
 				'name' => tra('Additional url param'),
 				'filter' => 'striptags',
 			),
+			'actions' => array(
+				'required' => false,
+				'name' => tra('Show actions (buttons and links)'),
+				'description' => tra('Whether to show the buttons and links to do actions on each article (for the actions you have permission to do') . ' (y|n)',
+				'filter' => 'alpha',
+			),
 		),
 	);
 }
@@ -233,6 +239,7 @@ function wikiplugin_articles($data, $params)
 	}
 	$smarty->assign('usePagination', $usePagination);
 	$smarty->assign_by_ref('listpages', $listpages["data"]);
+	$smarty->assign_by_ref('actions', $actions);
 
 	if (isset($titleonly) && $titleonly == 'y') {
 		return "~np~ ".$smarty->fetch('tiki-view_articles-titleonly.tpl')." ~/np~";
