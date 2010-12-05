@@ -13,7 +13,7 @@
 function wikiplugin_html_info() {
 	return array(
 		'name' => tra('HTML'),
-		'documentation' => 'PluginHTML',
+		'documentation' => tra('PluginHTML'),
 		'description' => tra('Include literal HTML in a Wiki page'),
 		'prefs' => array('wikiplugin_html'),
 		'body' => tra('HTML code'),
@@ -26,10 +26,12 @@ function wikiplugin_html_info() {
 				'name' => tra('Wiki syntax'),
 				'description' => tra('Parse wiki syntax within the html code.'),
 				'options' => array(
-					array('text' => tra('No'), 'value' => '0'),
-					array('text' => tra('Yes'), 'value' => '1'),
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('No'), 'value' => 0),
+					array('text' => tra('Yes'), 'value' => 1),
 				),
 				'filter' => 'int',
+				'default' => '',
 			),
 		),
 	);
