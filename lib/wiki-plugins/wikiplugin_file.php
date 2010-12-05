@@ -7,10 +7,11 @@
 
 function wikiplugin_file_info()
 {
-	return array(
+	global $prefs;
+	$info = array(
 		'name' => tra( 'File' ),
-		'documentation' => 'PluginFile',
-		'description' => tra("Displays a link to a file (either from the file gallery or an attachment to a wiki page) and can display an image attachment. For more than one file from file galleries, or more optional information shown from the file/s, use the plugin FILES instead"),
+		'documentation' => tra('PluginFile'),
+		'description' => tra('Displays a link to a file (either from the file gallery or an attachment to a wiki page) and can display an image attachment. For more than one file from file galleries, or more optional information shown from the files, use the plugin FILES instead'),
 		'prefs' => array( 'wikiplugin_file' ),
 		'body' => tra('Label for the link to the file'),
 		'icon' => 'pics/icons/file-manager.png',
@@ -19,76 +20,104 @@ function wikiplugin_file_info()
 			'type' => array(
 				'required' => true,
 				'name' => tra('Type'),
-				'description' => tra('Choose either File from gallery or Wiki page attachment.'),
+				'description' => tra('Indicate whether the file is in a file gallery or is a wiki page attachment'),
+				'filter' => 'alpha',
+				'default' => '',
 				'options' => array(
-					array('text' => tra('File from file gallery'), 'value' => 'gallery'),
-					array('text' => tra('Wiki page attachment'), 'value' => 'attachment'),
-				),
+					array('text' => '', 'value' => ''), 
+				), //rest filled in below
 			),
 			'name' => array(
 				'required' => true,
 				'name' => tra('Name'),
-				'description' => tra("Gives the name of the attached file to link to"),
+				'description' => tra('Identify an attachment by entering its file name, which will show as a link to the file.
+										 If the page parameter is empty, it must be a file name of an attachment to the page where the plugin is used.'),
+				'default' => '',
 				'parent' => array('name' => 'type', 'value' => 'attachment'),
 			),
  			'desc' => array(
 				'required' => false,
-				'name' => tra('Description'),
-				'description' => tra('Used as link label'),
+				'name' => tra('Custom Description'),
+				'description' => tra('Custom text that will be used for the link instead of the file name or file description'),
 				'parent' => array('name' => 'type', 'value' => 'attachment'),
 				'advanced' => true,
+				'default' => '',
 			),
 			'page' => array(
 				'required' => false,
 				'name' => tra('Page'),
-				'description' => tra("Name of the wiki page the file is attached to. If left empty when the plugin is used on a wiki page, this defaults to that wiki page."),
+				'description' => tra('Name of the wiki page the file is attached to. Defaults to the wiki page where the plugin is used if empty.'),
 				'parent' => array('name' => 'type', 'value' => 'attachment'),
+				'default' => '',
 				'advanced' => true,
 			),
 			'showdesc' => array(
 				'required' => false,
-				'name' => tra('Show attachment description'),
-				'description' => tra("Show the attachment description as the link label instead of the attachment name."),
+				'name' => tra('Attachment Description'),
+				'description' => tra('Show the attachment description as the link label instead of the attachment file name.'),
 				'options' => array(
-					array('text' => tra('No'), 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'),  
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1),  
+					array('text' => tra('No'), 'value' => 0),
 				),
 				'parent' => array('name' => 'type', 'value' => 'attachment'),
+				'default' => '',
 				'advanced' => true,
 			),
 			'image' =>array(
 				'required' => false,
 				'name' => tra('Image'),
-				'description' => tra("Says that this file is an image, and should be displayed inline using the img tag"),
+				'description' => tra('Indicates that this attachment is an image, and should be displayed inline using the img tag'),
 				'parent' => array('name' => 'type', 'value' => 'attachment'),
 				'advanced' => true,
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				),
 			),
 			'fileId' => array(
 				'required' => true,
-				'name' => tra('File identifier'),
-				'description' => tra('Identifier of a file in the file galleries.') . ' ' . tra('Example value:') . ' 42',
+				'name' => tra('File ID'),
+				'description' => tra('File ID of a file in a file gallery or an archive.') . ' ' . tra('Example value:') . ' 42',
 				'type' => 'fileId',
 				'area' => 'fgal_picker_id',
 				'filter' => 'digits',
+				'default' => '',
 				'parent' => array('name' => 'type', 'value' => 'gallery'),
 			),
 			'date' => array(
 				'required' => false,
 				'name' => tra('Date'),
-				'description' => tra('Pick the archive if exists created just before the date of the fileId'),
+				'description' => tra('For an archive file, the archive created just before this date will be linked to.'),
 				'parent' => array('name' => 'type', 'value' => 'gallery'),
+				'default' => '',
 				'advanced' => true,
 			),
 			'showicon' => array(
 				'required' => false,
-				'name' => tra('Show icon'),
-				'description' => 'y|n',
+				'name' => tra('Show Icon'),
+				'description' => tra('Show an icon version of the file or file type with the link to the file.'),
 				'filter' => 'alpha',
 				'parent' => array('name' => 'type', 'value' => 'gallery'),
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				),
 				'advanced' => true,
 			),
 		)
 	);
+	if ($prefs['feature_file_galleries'] == 'y') {
+		$info['params']['type']['options'][] = 	array('text' => tra('File Gallery File/Archive'), 'value' => 'gallery');
+	}
+	if ($prefs['feature_wiki_attachments'] == 'y') {
+		$info['params']['type']['options'][] = 	array('text' => tra('Wiki Page Attachment'), 'value' => 'attachment');
+	}
+	return $info;
 }
 
 function wikiplugin_file( $data, $params )
@@ -120,11 +149,11 @@ function wikiplugin_file( $data, $params )
 		} else {
 			$info = $filegallib->get_file_info($fileId);
 			if (empty($info)) {
-				return tra('Incorrect param').' fileId';
+				return tra('Incorrect parameter').' fileId';
 			}
 		}
 			
-		if (empty($data)) { // to avaoid problem with parsing
+		if (empty($data)) { // to avoid problem with parsing
 			$data = empty($info['name'])?$info['filename']: $info['name'];
 		}
 		if (isset($params['showicon']) & $params['showicon'] == "y") {
