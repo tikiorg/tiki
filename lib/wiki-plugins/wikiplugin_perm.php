@@ -11,23 +11,25 @@ function wikiplugin_perm_help() {
 function wikiplugin_perm_info() {
 	return array(
 		'name' => tra('Permissions'),
-		'documentation' => 'PluginPerm',
-		'description' => tra("Display wiki text if and only if the user has at least one of a set of permissions (or none, if using notperms)."),
+		'documentation' => tra('PluginPerm'),
+		'description' => tra('Display wiki text if and only if the user has at least one of a set of permissions (or none, if using notperms).'),
 		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed if conditions are not met.'),
 		'prefs' => array('wikiplugin_perm'),
 		'filter' => 'wikicontent',
 		'params' => array(
 			'perms' => array(
 				'required' => false,
-				'name' => tra('Possible permissions'),
+				'name' => tra('Possible Permissions'),
 				'description' => tra('Pipe separated list of permissions, one of which is needed to view the default text.') . ' ' . tra('Example:') . 'tiki_p_rename|tiki_p_edit',
+				'default' => '',
 			),
 			'notperms' => array(
 				'required' => false,
-				'name' => tra('Forbidden permissions'),
+				'name' => tra('Forbidden Permissions'),
 				'description' => tra('Pipe separated list of permissions, any of which will cause the default text not to show.') . ' ' . tra('Example:') . 'tiki_p_rename|tiki_p_edit',
+				'default' => '',
 			)
-		),
+		)
 	);
 }
 
