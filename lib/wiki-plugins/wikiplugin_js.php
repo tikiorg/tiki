@@ -17,8 +17,8 @@ function wikiplugin_js_help() {
 function wikiplugin_js_info() {
 		return array(
 			'name' => tra('Javascript'),
-			'documentation' => 'PluginJS',
-			'description' => tra('Insert a javascript file or/and some javascript code.'),
+			'documentation' => tra('PluginJS'),
+			'description' => tra('Insert a javascript file and/or some javascript code.'),
 			'prefs' => array( 'wikiplugin_js' ),
 			'body' => tra('javascript code'),
 			'validate' => 'all',
@@ -27,8 +27,9 @@ function wikiplugin_js_info() {
 				'file' => array(
 					'required' => false,
 					'name' => tra('File'),
-					'description' => tra('Javascript filename.'),
+					'description' => tra('Javascript filename'),
 					'filter' => 'url',
+					'default' => '',
 				),
 			),
 		);
