@@ -10,6 +10,7 @@ function wikiplugin_memberpayment_info() {
 
 	return array(
 		'name' => tra('Member Payment'),
+		'documentation' => tra('PluginMemberPayment'),
 		'description' => tra('Receive payments from a member and extend the length of the membership to a group.'),
 		'validate' => 'all',
 		'prefs' => array( 'wikiplugin_memberpayment', 'payment_feature' ),
@@ -19,6 +20,7 @@ function wikiplugin_memberpayment_info() {
 				'name' => tra('Group'),
 				'description' => tra('Name of the group for which the subscription should be added or extended.'),
 				'filter' => 'groupname',
+				'default' => '',
 			),
 			'price' => array(
 				'required' => true,
@@ -28,21 +30,26 @@ function wikiplugin_memberpayment_info() {
 			),
 			'currentuser' => array(
 				'required' => false,
-				'name' => tra('Membership only for the current user'),
-				'description' => 'y|n',
+				'name' => tra('Current User Member'),
+				'description' => tra('Membership only for the current user'),
 				'filter' => 'alpha',
 				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'inputtitle' => array(
 				'required' => false,
-				'name' => tra('Title of the input form.'),
+				'name' => tra('Input Title'),
 				'description' => tra('Title of the input form.').' '. tra('Use %0 for the group name.').' '.tra('Supports wiki syntax'),
 				'filter' => 'text',
 				'default' => 'Membership to %0 for %1 (x%2)',
 			),
 			'howtitle' => array(
 				'required' => false,
-				'name' => tra('Title of the how to pay panel.'),
+				'name' => tra('How Title'),
 				'description' => tra('Title of the input form.').' '. tra('Use %0 for the group name, %4 for the number of days or %5 for the number of years').' '.tra('Supports wiki syntax'),
 				'filter' => 'text',
 				'default' => 'Membership to %0 for %1 (x%2)',
