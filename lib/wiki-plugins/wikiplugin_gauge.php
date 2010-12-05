@@ -30,7 +30,7 @@ function wikiplugin_gauge_help() {
 function wikiplugin_gauge_info() {
 	return array(
 		'name' => tra('Gauge'),
-		'documentation' => 'PluginGauge',
+		'documentation' => tra('PluginGauge'),
 		'description' => tra('Displays a graphical gauge'),
 		'prefs' => array('wikiplugin_gauge'),
 		'body' => tra('description'),
@@ -38,52 +38,75 @@ function wikiplugin_gauge_info() {
 			'value' => array(
 				'required' => true,
 				'name' => tra('Value'),
-				'description' => tra('current value (REQUIRED)'),
+				'description' => tra('Current value to be represented by the gauge'),
+				'default' => ''
 			),
 			'max' => array(
 				'required' => false,
 				'name' => tra('Maximum Value'),
 				'description' => tra('Maximum possible value. Default: 100'),
+				'default' => 100				
 			),
 			'label' => array(
 				'required' => false,
 				'name' => tra('Label'),
 				'description' => tra('Label displayed on the left side of the gauge.'),
+				'default' => ''
 			),
 			'color' => array(
 				'required' => false,
 				'name' => tra('Color'),
-				'description' => tra('As defined by CSS.'),
+				'description' => tra('Main color of the gauge. Use HTML color codes or names.'),
+				'default' => '#FF0000'
 			),
 			'bgcolor' => array(
 				'required' => false,
 				'name' => tra('Background Color'),
-				'description' => tra('As defined by CSS.'),
+				'description' => tra('Background color of the gauge. Use HTML color codes or names.'),
+				'default' => '#0000FF'
 			),
 			'size' => array(
 				'required' => false,
 				'name' => tra('Width'),
 				'description' => tra('Bar width in pixels.'),
+				'filter' => 'digits',
+				'default' => 150
 			),
 			'labelsize' => array(
 				'required' => false,
 				'name' => tra('Label Width'),
 				'description' => tra('Width in pixels allocated to the label.'),
+				'filter' => 'digits',
+				'default' => 50
 			),
 			'perc' => array(
 				'required' => false,
 				'name' => tra('Display Percentage'),
-				'description' => tra('true|false, if true then a percentage of the maximum is displayed.'),
+				'description' => tra('Set to true (Yes) to display a percentage of the maximum.'),
+				'default' => false,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => true), 
+					array('text' => tra('No'), 'value' => false)
+				)
 			),
 			'showvalue' => array(
 				'required' => false,
 				'name' => tra('Display Value'),
-				'description' => tra('true|false, if the numeric value is displayed.'),
+				'description' => tra('Set to false (No) to hide the numeric value (shown by default).'),
+				'default' => true,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => true), 
+					array('text' => tra('No'), 'value' => false)
+				)
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('Bar height in pixels.'),
+				'filter' => 'digits',
+				'default' => 14
 			),
 		),
 	);
