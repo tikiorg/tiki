@@ -32,7 +32,7 @@ function wikiplugin_remarksbox_help() {
 function wikiplugin_remarksbox_info() {
 	return array(
 		'name' => tra('Remarks Box'),
-		'documentation' => 'PluginRemarksBox',		
+		'documentation' => tra('PluginRemarksBox'),		
 		'description' => tra('Displays a comment, tip, note or warning box'),
 		'prefs' => array( 'wikiplugin_remarksbox' ),
 		'body' => tra('remarks text'),
@@ -40,34 +40,60 @@ function wikiplugin_remarksbox_info() {
 			'type' => array(
 				'required' => true,
 				'name' => tra('Type'),
-				'description' => 'tip|comment|note|warning',
+				'description' => tra('Select type of remarksbox, which determines what icon and style will be displayed'),
+				'default' => 'tip',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Comment'), 'value' => 'comment'), 
+					array('text' => tra('Confirm'), 'value' => 'confirm'),
+					array('text' => tra('Errors'), 'value' => 'errors'),
+					array('text' => tra('Information'), 'value' => 'information'),
+					array('text' => tra('Note'), 'value' => 'note'),
+					array('text' => tra('Tip'), 'value' => 'tip'),
+					array('text' => tra('Warning'), 'value' => 'warning')
+				)
 			),
 			'title' => array(
 				'required' => true,
-				'name' => tra('title'),
+				'name' => tra('Title'),
 				'description' => tra('Label displayed above the remark.'),
+				'default' => '',
 			),
 			'highlight' => array(
 				'required' => false,
 				'name' => tra('Highlight'),
-				'description' => 'y|n',
+				'description' => tra('Use the highlight class for formatting (not used by default).') ,
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'icon' => array(
 				'required' => false,
-				'name' => tra('Icon'),
-				'description' => tra('Icon ID.'),
+				'name' => tra('Custom Icon'),
+				'description' => tra('Enter a Tiki icon file name (with or without extension) or path to display a custom icon'),
+				'default' => '',
 			),
 			'close' => array(
 				'required' => false,
 				'name' => tra('Close'),
-				'description' => tra('y|n Show close button (default y)'),
+				'description' => tra('Show a close button (not shown by default).'),
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
 				'description' => tra('Width (e.g. 100% or 250px - default "")'),
-			),
-		),
+				'default' => ''
+			)
+		)
 	);
 }
 
