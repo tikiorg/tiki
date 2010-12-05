@@ -9,6 +9,7 @@ function wikiplugin_profile_info() {
 	return array(
 		'name' => tra('Profile application'),
 		'description' => tra('Adds controls required to apply a profile.'),
+		'documentation' => tra('PluginProfile'),
 		'prefs' => array( 'wikiplugin_profile' ),
 		'validate' => 'all',
 		'inline' => true,
@@ -17,13 +18,15 @@ function wikiplugin_profile_info() {
 				'required' => false,
 				'name' => tra('Domain'),
 				'description' => tra('Profile repository domain. Default value is profiles.tiki.org'),
+				'default' => 'profiles.tiki.org',
 			),
 			'name' => array(
 				'required' => true,
 				'name' => tra('Profile Name'),
-				'description' => tra('Name of the profile.'),
-			),
-		),
+				'description' => tra('Name of the profile to be applied.'),
+				'default' => '',
+			)
+		)
 	);
 }
 
