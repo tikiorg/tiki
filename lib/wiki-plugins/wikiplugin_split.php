@@ -27,7 +27,7 @@ function wikiplugin_split_info()
 {
 	return array(
 		'name' => tra('Split'),
-		'documentation' => 'PluginSplit',
+		'documentation' => tra('PluginSplit'),
 		'description' => tra('Split a page into rows and columns'),
 		'prefs' => array( 'wikiplugin_split' ),
 		'filter' => 'wikicontent',
@@ -35,35 +35,62 @@ function wikiplugin_split_info()
 			'joincols' => array(
 				'required' => false,
 				'name' => tra('Join Columns'),
-				'description' => 'y|n'.' '.tra('Generate the colspan attribute if columns are missing' ),
-				'filter' => 'alpha',
+				'description' => tra('Generate the colspan attribute if columns are missing' ),
+				'filter' => 'striptags',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'fixedsize' => array(
 				'required' => false,
 				'name' => tra('Fixed Size'),
-				'description' => 'y|n'.' '.tra('Generate the width attribute on the columns'),
-				'filter' => 'alpha',
+				'description' => tra('Generate the width attribute for the columns'),
+				'filter' => 'striptags',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'colsize' => array(
 				'required' => false,
-				'name' => tra('Column Size'),
-				'description' => tra('?'),
+				'name' => tra('Column Sizes'),
+				'description' => tra('Specify all column widths in number of pixels or percent, separating each width by a pipe (|)'),
+				'default' => '',
 			),
 			'first' => array(
 				'required' => false,
 				'name' => tra('First'),
-				'description' => 'col|line',
+				'description' => tra('Cells specified are ordered first left to right across rows (default) or top to bottom down columns'),
 				'filter' => 'alpha',
+				'default' => 'line',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Column'), 'value' => 'col'), 
+					array('text' => tra('Line'), 'value' => 'line')
+				)
 			),
 			'edit' => array(
 				'required' => false,
 				'name' => tra('Editable'),
-				'description' => 'y|n'.' '.tra('Display edit icon for each section'),
+				'description' => tra('Display edit icon for each section'),
+				'filter' => 'striptags',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'customclass' => array(
 				'required' => false,
-				'name' => tra('Custom class'),
-				'description' => tra('add a class to customize the design'),
+				'name' => tra('Custom Class'),
+				'description' => tra('Add a class to customize the design'),
+				'default' => '',
 			),
 		),
 	);
@@ -156,7 +183,7 @@ function wikiplugin_split($data, $params, $pos)
 
     // Attention: Dont forget to remove leading empty line in section ...
     //            it should remain from previous '---' line...
-    // Attention: origianl text must be placed between \n's!!!
+    // Attention: original text must be placed between \n's!!!
     if (!isset($first) || $first != 'col') {
        foreach ($rows as $r) {
           $result .= "<tr>";
