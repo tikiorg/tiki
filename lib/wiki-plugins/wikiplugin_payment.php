@@ -13,11 +13,12 @@ function wikiplugin_payment_info() {
 		'params' => array(
 			'id' => array(
 				'required' => true,
-				'name' => tra('Payment request number'),
-				'description' => tra('Unique identifier'),
+				'name' => tra('Payment Request Number'),
+				'description' => tra('Unique identifier of the payment request'),
 				'filter' => 'digits',
-			),
-		),
+				'default' => '',
+			)
+		)
 	);
 }
 
