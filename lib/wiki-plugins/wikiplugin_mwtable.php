@@ -84,8 +84,8 @@ function wikiplugin_mwtable_help() {
 function wikiplugin_mwtable_info() {
 	return array(
 		'name' => tra('MWTable'),
-		'documentation' => 'PluginMWTable',
-		'description' => tra("Displays a table using MediaWiki syntax").tra(' (experimental - may change in future versions)'),
+		'documentation' => tra('PluginMWTable'),
+		'description' => tra('Displays a table using MediaWiki syntax (experimental - may change in future versions)'),
 		'prefs' => array( 'wikiplugin_mwtable' ),
 		'body' => tra('URL'),
 		'validate' => 'all',
@@ -93,16 +93,28 @@ function wikiplugin_mwtable_info() {
 			'fancy' => array(
 				'safe' => true,
 				'required' => false,
-				'name' => tra('fancy'),
-				'description' => tra('true|false'),
+				'name' => tra('Fancy'),
+				'description' => tra('Set to true to apply additional formatting to the table (header style, odd/even rows, etc.)'),
+				'default' => 'false',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('True'), 'value' => 'true'), 
+					array('text' => tra('False'), 'value' => 'false')
+				)
 			),
 			'wiki_classes' => array(
 				'safe' => true,
 				'required' => false,
-				'name' => tra('wiki_classes'),
-				'description' => tra('true|false'),
-			),
-		),
+				'name' => tra('Wiki Classes'),
+				'description' => tra('Determines whether wiki style classes will be used for the table and cells (used by default)'),
+				'default' => 'true',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('True'), 'value' => 'true'), 
+					array('text' => tra('False'), 'value' => 'false')
+				)
+			)
+		)
 	);
 }
 
