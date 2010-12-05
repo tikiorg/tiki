@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function wikiplugin_button_info() {
 	return array(
 		'name' => tra('Button'),
-		'documentation' => 'PluginButton',			
+		'documentation' => tra('PluginButton'),			
 		'description' => tra('Produces a link with the shape of a button, reusing the button smarty function and requiring no validation of that plugin'),
 		'prefs' => array('wikiplugin_button'),
 		'validate' => 'none',
@@ -23,14 +23,16 @@ function wikiplugin_button_info() {
 			'href' => array(
 				'required' => true,
 				'name' => tra('Url'),
-				'description' => 'URL to be produced by the button. You can use wiki argument variables like {{itemId}} in it',
+				'description' => tra('URL to be produced by the button. You can use wiki argument variables like {{itemId}} in it'),
 				'filter' => 'url',
+				'default' => '',
 			),
 			'text' => array(
 				'required' => false,
 				'name' => tra('Label'),
-				'description' => 'Label for the button',
+				'description' => tra('Label for the button'),
 				'filter' => 'word',
+				'default' => '',
 			),
 		),
 	);
