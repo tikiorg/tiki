@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function wikiplugin_smarty_info() {
 	return array(
 		'name' => tra('Smarty function'),
-		'documentation' => 'PluginSmarty',			
+		'documentation' => tra('PluginSmarty'),			
 		'description' => tra('Provides access to the tiki smarty functions like button.'),
 		'prefs' => array('wikiplugin_smarty'),
 		'validate' => 'all',
@@ -22,9 +22,10 @@ function wikiplugin_smarty_info() {
 		'params' => array(
 			'name' => array(
 				'required' => false,
-				'name' => tra('Name of the smarty function'),
-				'description' => 'button',
+				'name' => tra('Smarty Function'),
+				'description' => tra('The name of the smarty function that the button will activate. Available functions are: lib/smarty/libs/plugins/function.[name].php'),
 				'filter' => 'word',
+				'default' => '',
 			),
 		),
 	);
@@ -33,13 +34,13 @@ function wikiplugin_smarty_info() {
 function wikiplugin_smarty($data, $params) {
 	global $smarty;
 	if (empty($params['name'])) {
-		return tra('Incorrect param');
+		return tra('Incorrect parameter');
 	}
 	$path = 'lib/smarty_tiki/function.'.$params['name'].'.php';
 	if (!file_exists($path)) {
 		$path = 'lib/smarty/libs/plugins/function.'.$params['name'].'.php';
 		if(!file_exists($path)){
-			return tra('Incorrect param');
+			return tra('Incorrect parameter');
 		}
 	}
 	include_once($path);
