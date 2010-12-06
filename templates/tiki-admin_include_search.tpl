@@ -27,6 +27,13 @@
 				</div>
 
 				<a href="tiki-admin.php?page=search&amp;rebuild=now">{tr}Rebuild Index{/tr}</a>
+				{if !empty($stat)}
+					{remarksbox type='feedback' title="{tr}Indexation{/tr}"}<ul>
+					{foreach from=$stat key=what item=nb}
+						<li>{$what|escape}: {$nb|escape}</li>
+					{/foreach}
+					</ul>{/remarksbox}
+				{/if}
 			</fieldset>
 			<fieldset>
 				<legend>

@@ -27,7 +27,7 @@ class UnifiedSearchLib
 
 		// Build in -new
 		$indexer = $this->buildIndexer($index);
-		$indexer->rebuild();
+		$stat = $indexer->rebuild();
 
 		// Force destruction to clear locks
 		unset($indexer);
@@ -42,6 +42,7 @@ class UnifiedSearchLib
 			// Destroy old
 			$this->destroyDirectory($swapName);
 		}
+		return $stat;
 	}
 
 	function invalidateObject($type, $objectId)

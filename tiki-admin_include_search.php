@@ -101,7 +101,8 @@ global $tiki_p_admin;
 if ($tiki_p_admin == 'y' && isset($_REQUEST['rebuild']) && $_REQUEST['rebuild'] == 'now') {
 	global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';
 
-	$unifiedsearchlib->rebuild();
+	$stat = $unifiedsearchlib->rebuild();
+	$smarty->assign_by_ref('stat', $stat);
 }
 
 if ($tiki_p_admin == 'y' && !empty($_REQUEST['refresh_index_all_now']) && $_REQUEST['refresh_index_all_now'] == 'y') {
