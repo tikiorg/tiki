@@ -22,116 +22,164 @@ function wikiplugin_articles_info()
 {
 	return array(
 		'name' => tra('Article List'),
-		'documentation' => 'PluginArticles',
+		'documentation' => tra('PluginArticles'),
 		'description' => tra('Inserts a list of articles in the page.'),
 		'prefs' => array( 'feature_articles', 'wikiplugin_articles' ),
 		'params' => array(
 			'usePagination' => array(
 				'required' => false,
 				'name' => tra('Use Pagination'),
-				'description' => tra('Activate pagination when articles listing are long. Default is n') . ' (n|y)',
+				'description' => tra('Activate pagination when articles listing are long. Default is n'),
 				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				),
 			),
 			'max' => array(
 				'required' => false,
-				'name' => tra('Articles displayed'),
-				'description' => tra('The number of articles to display in the list.') . tra('If Pagination is set to true, this will determine the amount of artilces per page'),
+				'name' => tra('Maximum Displayed'),
+				'description' => tra('The number of articles to display in the list (no max set by default)') . tra('If Pagination is set to y (Yes), this will determine the amount of artilces per page'),
 				'filter' => 'int',
+				'default' => -1
 			),
 			'topic' => array(
 				'required' => false,
-				'name' => tra('Topics expression'),
-				'description' => '[!]topic+topic+topic',
+				'name' => tra('Topic Name Filter'),
+				'description' => tra('Filter the list of aricles by their topic. Example: ') . '[!]topic+topic+topic',
 				'filter' => 'striptags',
+				'default' => ''
 			),
 			'topicId' => array(
 				'required' => false,
-				'name' => tra('Topic ID expression'),
-				'description' => '[!]topicId+topicId+topicId',
+				'name' => tra('Topic ID Filter'),
+				'description' => tra('Filter the list of aricles by their topic ID. Example: ') . '[!]topicId+topicId+topicId',
 				'filter' => 'striptags',
+				'default' => ''
 			),
 			'type' => array(
 				'required' => false,
-				'name' => tra('Type expression'),
-				'description' => '[!]type+type+type',
+				'name' => tra('Type Filter'),
+				'description' => tra('Filter the list of aricles by their types. Example: ') . '[!]type+type+type',
 				'filter' => 'striptags',
+				'default' => ''
 			),
 			'categId' => array(
 				'required' => false,
 				'name' => tra('Category ID'),
-				'description' => tra('The ID of the category to list from.'),
+				'description' => tra('The ID of the category that articles need to be in to be listed'),
 				'filter' => 'digits',
+				'default' => ''
 			),
 			'lang' => array(
 				'required' => false,
 				'name' => tra('Language'),
-				'description' => tra('The article language to list.'),
+				'description' => tra('List only articles in this language'),
 				'filter' => 'lang',
+				'default' => ''
 			),
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort order'),
 				'description' => tra('The column and order of the sort in columnName_asc or columnName_desc format. Defaults to "publishDate_desc" (other column examples are "title", "lang", "authorName" & "topicName")').' '.tra('Use random to have random items.'),
 				'filter' => 'word',
+				'default' => 'publishDate_desc'
 			),
 			'quiet' => array(
 				'required' => false,
 				'name' => tra('Quiet'),
-				'description' => tra('Whether to not report when there are no articles.'),
+				'description' => tra('Whether to not report when there are no articles (no reporting by default)'),
 				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				),
 			),
 			'titleonly' => array(
 				'required' => false,
-				'name' => tra('Title only'),
-				'description' => tra('Whether to only show the title of the articles.') . ' (n|y)',
+				'name' => tra('Title Only'),
+				'description' => tra('Whether to only show the title of the articles (not set to title only by default)'),
 				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				),
 			),
 			'fullbody' => array(
 				'required' => false,
-				'name' => tra('Show body'),
-				'description' => tra('Whether to only show the body of the articles or just the heading.') . ' (n|y)',
+				'name' => tra('Body Only'),
+				'description' => tra('Whether to only show the body of the articles or just the heading and title. (not set to body only by default)'),
 				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				),
 			),
 			'start' => array(
 				'required' => false,
-				'name' => tra('Starting article'),
-				'description' => tra('The article number that the list should start with.') . tra('This will not work if Pagination is used.'),
+				'name' => tra('Starting Article'),
+				'description' => tra('The article number that the list should start with (starts with first article by default)') . tra('This will not work if Pagination is used.'),
 				'filter' => 'int',
+				'default' => 0
 			),
 			'dateStart' => array(
 				'required' => false,
-				'name' => tra('Start date'),
+				'name' => tra('Start Date'),
 				'description' => tra('Earliest date to select articles from.') . ' (YYYY-MM-DD)',
 				'filter' => 'date',
+				'default' => ''
 			),
 			'dateEnd' => array(
 				'required' => false,
 				'name' => tra('End date'),
 				'description' => tra('Latest date to select articles from.') . ' (YYYY-MM-DD)',
 				'filter' => 'date',
+				'default' => ''
 			),
 			'overrideDates' => array(
 				'required' => false,
 				'name' => tra('Override Dates'),
-				'description' => tra('Whether obey article type\'s "show before publish" and "show after expiry" settings.') . ' (n|y)',
+				'description' => tra('Whether to obey article type\'s "show before publish" and "show after expiry" settings (not obeyed by default)'),
 				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				),
 			),
 			'containerClass' => array(
 				'required' => false,
 				'name' => tra('Container class'),
 				'description' => tra('CSS Class to add to the container DIV.article. (Default="wikiplugin_articles")'),
 				'filter' => 'striptags',
+				'default' => 'wikiplugin_articles'
 			),
 			'largefirstimage' => array(
 				'required' => false,
-				'name' => tra('Large first image'),
-				'description' => 'y|n',
+				'name' => tra('Large First Image'),
+				'description' => tra('If set to y (Yes), the first image will be displayed with the dimension used to view of the article'),
 				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				),
 			),
 			'urlparam' => array(
 				'required' => false,
-				'name' => tra('Additional url param'),
+				'name' => tra('Additional URL Param'),
 				'filter' => 'striptags',
+				'default' => ''
 			),
 			'actions' => array(
 				'required' => false,
