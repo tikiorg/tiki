@@ -23,7 +23,7 @@ function wikiplugin_article_help() {
 function wikiplugin_article_info() {
 	return array(
 		'name' => tra('Article'),
-		'documentation' => 'PluginArticle',
+		'documentation' => tra('PluginArticle'),
 		'description' => tra('Includes an article\'s content within the page.'),
 		'prefs' => array( 'feature_articles', 'wikiplugin_article' ),
 		'params' => array(
@@ -32,12 +32,14 @@ function wikiplugin_article_info() {
 				'name' => tra('Field'),
 				'description' => tra('The article field to display. Default field is Heading.'),
 				'filter' => 'word',
+				'default' => 'heading'
 			),
 			'Id' => array(
 				'required' => false,
 				'name' => tra('Article ID'),
 				'description' => tra('The article to display. If no value is provided, most recent article will be used.'),
 				'filter' => 'digits',
+				'default' => ''
 			),
 		),
 	);
