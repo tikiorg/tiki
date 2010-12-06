@@ -1,11 +1,11 @@
 <form method="get" action="{$filter_action|escape}" class="filter">
 	<label>
 		{tr}Content{/tr}
-		<input type="text" name="filter[content]" value="{$filter_content|escape}"/>
+		<input type="text" name="filter~content" value="{$filter_content|escape}"/>
 	</label>
 	<label>
 		{tr}Type{/tr}
-		<select name="filter[type]">
+		<select name="filter~type">
 			<option value="">{tr}Any{/tr}</option>
 			{foreach from=$filter_types key=k item=t}
 				<option value="{$k|escape}"{if $t eq $filter_type} selected="selected"{/if}>{$t|escape}</option>
@@ -17,12 +17,12 @@
 		<fieldset>
 			<legend>{tr}Categories{/tr}</legend>
 
-			<input type="text" name="filter[categories]" class="wizard" value="{$filter_categories|escape}"/>
+			<input type="text" name="filter~categories" class="wizard" value="{$filter_categories|escape}"/>
 
 			<a class="category-lookup" href="#">{tr}Lookup{/tr}</a>
 			
 			<label>
-				<input type="checkbox" name="filter[deep]"{if $filter_deep} checked="checked"{/if}/>
+				<input type="checkbox" name="filter~deep"{if $filter_deep} checked="checked"{/if}/>
 				{tr}Deep search{/tr}
 			</label>
 		</fieldset>
@@ -34,14 +34,14 @@
 	{if $prefs.feature_multilingual eq 'y'}
 		<fieldset>
 			<legend>{tr}Language{/tr}</legend>
-			<select name="filter[language]">
+			<select name="filter~language">
 				<option value="">{tr}Any{/tr}</option>
 				{foreach from=$filter_languages item=l}
 					<option value="{$l.value|escape}"{if $filter_language eq $l.value} selected="selected"{/if}>{$l.name|escape}</option>
 				{/foreach}
 			</select>
 			<label>
-				<input type="checkbox" name="filter[language_unspecified]"{if $filter_language_unspecified} checked="checked"{/if}/>
+				<input type="checkbox" name="filter~language_unspecified"{if $filter_language_unspecified} checked="checked"{/if}/>
 				{tr}Include objects without a specified language{/tr}
 			</label>
 		</fieldset>
