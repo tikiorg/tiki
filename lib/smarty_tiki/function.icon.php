@@ -36,7 +36,7 @@ function smarty_function_icon($params, &$smarty) {
 		$current_style = $tc_theme;
 		$current_style_option = !empty($tc_theme_option) ? $tc_theme_option : '';
 	}
-	$serialized_params = serialize(array_merge($params, array($current_style, $current_style_option, $_SERVER['HTTPS'])));
+	$serialized_params = serialize(array_merge($params, array($current_style, $current_style_option, isset($_SERVER['HTTPS']))));
 	$cache_key = 'icons_' . md5( $serialized_params );
 	if( $cached = $cachelib->getCached( $cache_key ) ) {
 		return $cached;
