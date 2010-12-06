@@ -129,7 +129,7 @@ function wikiplugin_backlinks_info()
 {
 	return array(
 		'name' => tra('Backlinks'),
-		'documentation' => 'PluginBacklinks',
+		'documentation' => tra('PluginBacklinks'),
 		'description' => tra('List all pages linking to the specified page.'),
 		'prefs' => array( 'feature_wiki', 'wikiplugin_backlinks' ),
 		'params' => array(
@@ -138,34 +138,40 @@ function wikiplugin_backlinks_info()
 				'name' => tra('Page'),
 				'description' => tra('The page links will point to. Default value is the current page.'),
 				'advanced' => true,
+				'default' => '[pagename]'
 			),
 			'info' => array(
 				'required' => false,
-				'name' => tra('Displayed information'),
+				'name' => tra('Displayed Information'),
 				'description' => tra('Pipe separated list of fields to display. ex: hits|user'),
 				'advanced' => true,
+				'default' => false
 			),
 			'exclude' => array(
 				'required' => false,
 				'name' => tra('Excluded pages'),
 				'description' => tra('Pipe separated list of pages to be excluded from the listing. ex: HomePage|Sandbox'),
 				'advanced' => true,
+				'default' => ''
 			),
 			'include_self' => array(
 				'required' => false,
 				'name' => tra('Include Self'),
-				'description' => tra('With or without self-link'),
+				'description' => tra('With or without self-link (default is without)'),
 				'advanced' => true,
+				'default' => 0,
 				'options' => array(
-					array('text' => tra('No'), 'value' => '0'), 
+					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => '1'), 
+					array('text' => tra('No'), 'value' => '0'), 
 				),
 			),
 			'noheader' => array(
 				'required' => false,
 				'name' => tra('Header'),
-				'description' => tra('With or without header'),
+				'description' => tra('With or without header (default is with header)'),
 				'options' => array(
+					array('text' => '', 'value' => ''), 
 					array('text' => tra('With header'), 'value' => '0'), 
 					array('text' => tra('Without header'), 'value' => '1'), 
 				),
