@@ -169,3 +169,8 @@ RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA
 #AuthName "Restricted Access"
 #AuthUserFile /etc/httpd/passwords
 #Require valid-user 
+
+<IfModule mod_dir.c>
+	DirectoryIndex tiki-index.php
+</IfModule>
+
