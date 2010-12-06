@@ -140,6 +140,10 @@ class UnifiedSearchLib
 			$query->filterCategory($filter['categories'], isset($filter['deep']));
 		}
 
+		if (isset($filter['tags']) && $filter['tags']) {
+			$query->filterTags($filter['tags']);
+		}
+
 		if (isset($filter['content']) && $filter['content']) {
 			$query->filterContent($filter['content']);
 		}

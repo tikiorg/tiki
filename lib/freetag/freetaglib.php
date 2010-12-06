@@ -1545,6 +1545,19 @@ class FreetagLib extends ObjectLib
 
 		return $tags;
 	}
+
+	function get_cloud() {
+		$query = "SELECT tag title, COUNT(*) weight, f.tagId FROM tiki_freetags f INNER JOIN tiki_freetagged_objects fo ON f.tagId = fo.tagId GROUP BY f.tagId";
+		$result = $this->fetchAll($query);
+
+		foreach ($result as &$row) {
+			$row['params'] = array('url' => $row['tagId']);
+		}
+
+		return new Zend_Tag_Cloud(array(
+			'tags' => $result,
+		));
+	}
 }
 
 $freetaglib = new FreetagLib;

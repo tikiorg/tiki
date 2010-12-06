@@ -84,6 +84,14 @@ BODY;
 		// }}}
 	}
 
+	if ($prefs['feature_freetags'] == 'y') {
+		global $freetaglib; require_once 'lib/freetag/freetaglib.php';
+		
+		$smarty->assign('filter_tags', isset($filter['tags']) ? $filter['tags'] : '');
+		$smarty->assign('filter_tagmap', json_encode(TikiDb::get()->fetchMap('SELECT tagId, tag FROM tiki_freetags')));
+		$smarty->assign('filter_tags_picker', (string) $freetaglib->get_cloud() );
+	}
+
 	// Language
 	if ($prefs['feature_multilingual'] == 'y') {
 		$languages = $tikilib->list_languages();
