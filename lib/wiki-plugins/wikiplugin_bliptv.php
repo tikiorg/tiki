@@ -10,7 +10,7 @@ require_once('lib/wiki-plugins/wikiplugin_flash.php');
 function wikiplugin_bliptv_info() {
 	return array(
 		'name' => tra('Bliptv'),
-		'documentation' => 'PluginBliptv',
+		'documentation' => tra('PluginBliptv'),
 		'description' => tra('Display a Blip.tv video'),
 		'prefs' => array( 'wikiplugin_bliptv' ),
 		'icon' => 'pics/icons/bliptv.png',
@@ -25,14 +25,16 @@ function wikiplugin_bliptv_info() {
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tra('Width in pixels'),
+				'description' => tra('Width in pixels (default is 425'),
 				'filter' => 'digits',
+				'default' => 425,
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
-				'description' => tra('Height in pixels'),
+				'description' => tra('Height in pixels (default is 350)'),
 				'filter' => 'digits',
+				'default' => 350,
 			),
 		),
 	);

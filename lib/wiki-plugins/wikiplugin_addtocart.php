@@ -8,6 +8,7 @@
 function wikiplugin_addtocart_info() {
 	return array(
 		'name' => tra('Add to cart'),
+		'documentation' => tra('PluginAddToCart'),
 		'description' => tra('Adds a product to the virtual cart. The cart can be manipulated using the cart module.'),
 		'prefs' => array( 'wikiplugin_addtocart', 'payment_feature' ),
 		'filter' => 'wikicontent',
@@ -18,30 +19,35 @@ function wikiplugin_addtocart_info() {
 				'name' => tra('Product code'),
 				'description' => tra('Unique identifier for the product. Two products with the same code will be the same and the information used will be the one of the first in.'),
 				'filter' => 'text',
+				'default' => ''
 			),
 			'description' => array(
 				'required' => true,
 				'name' => tra('Description'),
 				'description' => tra('Label for the product in the cart.'),
-				'filter' => 'text'
+				'filter' => 'text',
+				'default' => ''
 			),
 			'price' => array(
 				'required' => true,
 				'name' => tra('Price'),
 				'description' => tra('The price to charge for the item.'),
 				'filter' => 'text',
+				'default' => ''
 			),
 			'href' => array(
 				'required' => false,
 				'name' => tra('Location'),
 				'description' => tra('URL of the product\'s information. The URL may be relative or absolute (begin with http://).'),
 				'filter' => 'url',
+				'default' => ''
 			),
 			'label' => array(
 				'required' => false,
 				'name' => tra('Button label'),
 				'description' => tra('Text for the submit button. default: "Add to cart"'),
 				'filter' => 'text',
+				'default' => 'Add to cart'
 			),
 		),
 	);
