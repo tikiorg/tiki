@@ -6,12 +6,12 @@
 // $Id$
 
 function wikiplugin_pluginmanager_help() {
-	return tra("Displays a list of plugins available in this wiki.").":<br />~np~{PLUGINMANAGER(info=>version|description|arguments)}{PLUGINMANAGER}~/np~";
+	return tra('Displays a list of plugins available in this wiki') . ':<br />~np~{PLUGINMANAGER(info=>version|description|arguments)}{PLUGINMANAGER}~/np~';
 }
 /**
 * Include the library {@link PluginsLib}
 */
-require_once "lib/wiki/pluginslib.php";
+require_once 'lib/wiki/pluginslib.php';
 /**
 * Plugin Manager
 * Displays a list of plugins available in this wiki.
@@ -34,14 +34,15 @@ class WikiPluginPluginManager extends PluginsLib
         return array(
 					'info' => 'description|parameters|paraminfo', 
 					'plugin' => '', 
-					'singletitle' => 'table',
+        			'module' => '',
+					'singletitle' => 'none',
         			'titletag' => 'h3',
         			'start' => '',
         			'limit' => '',
         		);
     }
     function getName() {
-        return "PluginManager";
+        return 'PluginManager';
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
@@ -53,7 +54,7 @@ class WikiPluginPluginManager extends PluginsLib
     function run($data, $params) {
         global $wikilib, $helpurl, $tikilib;
         if (!is_dir(PLUGINS_DIR)) {
-            return $this->error("No plugins directory defined");
+            return $this->error('No plugin directory defined');
         }
         if (empty($helpurl)) {
         	$helpurl = 'http://doc.tiki.org/';
@@ -61,21 +62,39 @@ class WikiPluginPluginManager extends PluginsLib
         
         $params = $this->getParams($params);
         extract($params,EXTR_SKIP);
-              
-        $aPrincipalField = array('field' => 'plugin', 'name' => 'Plugin');
-        
-        $aPlugins = array();
+
+        if (!empty($module) && !empty($plugin)) {
+			return $this->error(tra('The module or plugin parameter must be set, but not both.'));
+        } elseif (!empty($module)) {
+        	$aPrincipalField = array('field' => 'plugin', 'name' => 'Module');
+			$helppath = $helpurl . $aPrincipalField['name'] . ' ';
+        	$filepath = 'mod-func-';
+        	global $modlib;
+        	include_once 'lib/modules/modlib.php';
+        	$aPlugins = $modlib->list_module_files();
+        	$mod = true;
+        	$plugin = $module;
+        } else {
+			$aPrincipalField = array('field' => 'plugin', 'name' => 'Plugin');
+			$helppath = $helpurl . $aPrincipalField['name'];
+			$filepath = 'wikiplugin_';
+        	$aPlugins = $wikilib->list_plugins();
+        	$mod = false;
+        }
+        //if the user set $module, that setting has now been moved to $plugin so that one code set is used
+        //$aPlugins now has the complete list of plugin or module file names - code below modifies $aPlugins
+        //if necessary based on user settings
         if (!empty($plugin)) {
 	        if (strpos($plugin, '|') !== false) {
+	        	$aPlugins = array();
 	        	$userlist = explode('|',$plugin);
 	        	foreach ($userlist as $useritem) {
-	        		$aPlugins[] = 'wikiplugin_' . $useritem . '.php';
+	        		$aPlugins[] = $filepath . $useritem . '.php';
 	        	}
         	} elseif (strpos($plugin, '-') !== false) {
         		$userrange = explode('-',$plugin);
-        		$aPlugins = $wikilib->list_plugins();
-        		$begin = array_search('wikiplugin_' . $userrange[0] . '.php', $aPlugins);
-        		$end = array_search('wikiplugin_' . $userrange[1] . '.php', $aPlugins);
+        		$begin = array_search($filepath . $userrange[0] . '.php', $aPlugins);
+        		$end = array_search($filepath . $userrange[1] . '.php', $aPlugins);
         		$beginerror = '';
         		$enderror = '';
         		if ($begin === false || $end === false) {
@@ -86,25 +105,24 @@ class WikiPluginPluginManager extends PluginsLib
         				$enderror = $userrange[1];
         				!empty($beginerror) ? $and = ' and ' : $and = '';
         			}
-        			return tra('^Plugin Manager error: ') . $beginerror . $and . $enderror . tra(' not found^');
+        			return '^' . tra('^Plugin Manager error: ') . $beginerror . $and . $enderror . tra(' not found') . '^';
         		} elseif ($end > $begin) {
         			$aPlugins = array_slice($aPlugins, $begin, $end-$begin+1);
         		} else {
         			$aPlugins = array_slice($aPlugins, $end, $begin-$end+1);
         		}     		
-        	} elseif (!empty($limit)) { 
-        		$aPlugins = $wikilib->list_plugins();
-        		$begin = array_search('wikiplugin_' . $plugin . '.php', $aPlugins); 
+			} elseif (!empty($limit)) { 
+        		$begin = array_search($filepath . $plugin . '.php', $aPlugins); 
         		if ($begin === false) {
-        			return tra('^Plugin manager error: ') . $begin . tra(' not found^');
+        			return '^' . tra('Plugin manager error: ') . $begin . tra(' not found') . '^';
         		} else {
         			$aPlugins = array_slice($aPlugins, $begin, $limit);
         		}
-        	} else {
-        		$aPlugins[] = 'wikiplugin_' . $plugin . '.php';
+        	} elseif ($plugin != 'all') {
+	        	$aPlugins = array();
+        		$aPlugins[] = $filepath . $plugin . '.php';
         	}
         } else {
-        	$aPlugins = $wikilib->list_plugins();
         	if (!empty($start) || !empty($limit)) {
         		if (!empty($start) && !empty($limit)) {
         			$aPlugins = array_slice($aPlugins, $start-1, $limit);
@@ -115,12 +133,18 @@ class WikiPluginPluginManager extends PluginsLib
         		}
         	}
         }
-        
+        //Set all data variables needed for separate code used to generate the display table
         $aData=array();
         if ($singletitle == 'table' || count($aPlugins) > 1) {
         	foreach($aPlugins as $sPluginFile) {
 	        	global $sPlugin, $numparams;
-	        	$infoPlugin = get_plugin_info($sPluginFile);
+	        	if ($mod) {
+	        		$infoPlugin = get_module_params($sPluginFile);
+	        		$namepath = $sPlugin;
+	        	} else {
+	        		$infoPlugin = get_plugin_info($sPluginFile);
+	        		$namepath = ucfirst($sPlugin);
+	        	}
 	    		if (in_array('description',$info)) {
 					if (isset($infoPlugin['description'])) {
 						if ($numparams > 1) {
@@ -145,7 +169,7 @@ class WikiPluginPluginManager extends PluginsLib
 		    					$paramblock = '~np~' . $infoPlugin['params'][$paramname]['description'] . '~/np~';
 		    				}
 		    				if (isset($param['options']) && is_array($param['options'])) {
-		    					$paramblock .= '<br /><em>Options:</em> ';
+		    					$paramblock .= '<br /><em>' . tra('Options:') . '</em> ';
 		    					$i = 0;
 								foreach($param['options'] as $oplist => $opitem) {
 									if (isset($opitem['value'])) {
@@ -165,23 +189,29 @@ class WikiPluginPluginManager extends PluginsLib
 		    				}
 		    			}
 					} else {
-						$aData[$sPlugin]['parameters']['<em>no parameters</em>'] = '<em>n/a</em>';
+						$aData[$sPlugin]['parameters']['<em>no parameters</em>'] = '<em>' . tra('n/a') . '</em>';
 					}
-				} 
-				$aData[$sPlugin]['plugin']['plugin'] = '[' . $helpurl . 'Plugin' . ucfirst($sPlugin) . '|' . ucfirst($sPlugin) . ']';
+				}
+				$aData[$sPlugin]['plugin']['plugin'] = '[' . $helppath . $namepath . '|' . ucfirst($sPlugin) . ']';
 	        } // Plugins Loop
         	return PluginsLibUtil::createTable($aData, $info, $aPrincipalField);
         } else {
-        	//Replicates a documentation table for parameters for a single plugin
-        	//Don't use plugin lib table to avoid making custom modifications
+        	//Replicates a documentation table for parameters for a single plugin or module
+        	//Not using plugin lib table to avoid making custom modifications
 			global $sPlugin, $numparams;
-	        $infoPlugin = get_plugin_info($aPlugins[0]);
-        	if ($singletitle == 'top') {
-        		$title = '<' . $titletag . '>['. $helpurl . 'Plugin' . ucfirst($sPlugin) 
+        	if ($mod) {
+        		$infoPlugin = get_module_params($aPlugins[0]);
+        		$namepath = $sPlugin;
+        	} else {
+        		$infoPlugin = get_plugin_info($aPlugins[0]);
+        		$namepath = ucfirst($sPlugin);
+        	}
+			if ($singletitle == 'top') {
+        		$title = '<' . $titletag . '>['. $helppath . $namepath 
         			. '|' . ucfirst($sPlugin) . ']</' . $titletag . '>';
         		$title .= $infoPlugin['description'] . '<br />';
         		if (isset($infoPlugin['introduced'])) {
-        			$title .= '<em>Introduced in Tiki version ' . $infoPlugin['introduced'] . '</em><br />';
+        			$title .= '<em>' . tra('Introduced in Tiki version') . ' ' . $infoPlugin['introduced'] . '</em><br />';
         		}
         		$title .= '<br />';
         	} else {
@@ -192,8 +222,8 @@ class WikiPluginPluginManager extends PluginsLib
         	$header =  "\n\t" . '<tr class="heading">' . $headbegin . 'Parameters</td>';
         	$rows = '';
         	if (isset($numparams) && $numparams > 0) {
-        		$header .= $headbegin . 'Accepted Values</td>';
- 		       	$header .= $headbegin . 'Description</td>';
+        		$header .= $headbegin . tra('Accepted Values') . '</td>';
+ 		       	$header .= $headbegin . tra('Description') . '</td>';
         		$rowCounter = 1;
         		foreach ($infoPlugin['params'] as $paramname => $paraminfo) {
         			$class = ($rowCounter%2) ? 'odd' : 'even';
@@ -230,7 +260,7 @@ class WikiPluginPluginManager extends PluginsLib
 						$rows .= '</td>';
         			} elseif (isset($paraminfo['filter'])) {
         				if ($paraminfo['filter'] == 'striptags') {
-        					$rows .= 'any string except for HTML and PHP tags';
+        					$rows .= tra('any string except for HTML and PHP tags');
         				} else {
         					$rows .= $paraminfo['filter'];
         				}
@@ -241,15 +271,16 @@ class WikiPluginPluginManager extends PluginsLib
         			//Description column
         			$rows .= $cellbegin . $paraminfo['description'] . '</td>';
         			//Default column
-        			if (isset($paraminfo['default'])) {
-        				if ($rowCounter == 1) {
-        					$header .= $headbegin . 'Default</td>';
-        				}
-						$rows .= $cellbegin . $paraminfo['default'] . '</td>';
+        			if ($rowCounter == 1) {
+        				$header .= $headbegin . tra('Default') . '</td>';
         			}
+        			if (!isset($paraminfo['default'])) {
+        				$paraminfo['default'] = '';
+        			}
+					$rows .= $cellbegin . $paraminfo['default'] . '</td>';
         		    if (isset($paraminfo['since'])) {
         				if ($rowCounter == 1) {
-        					$header .= $headbegin . 'Since</td>';
+        					$header .= $headbegin . tra('Since') . '</td>';
         				}
 						$rows .= $cellbegin . $paraminfo['since'] . '</td>';
         			}
@@ -257,20 +288,22 @@ class WikiPluginPluginManager extends PluginsLib
  		       		$rowCounter++;
         		}
         	} else {
-        		$rows .= "\n\t" . '<tr class="odd">' . $cellbegin . '<em>no parameters</em></td>';
+        		$rows .= "\n\t" . '<tr class="odd">' . $cellbegin . '<em>' . tra('no parameters') . '</em></td>';
         	}
         	$header .= "\n\t" . '</tr>';
         	if (!empty($infoPlugin['prefs'])) {
-        		$pluginprefs = '<em>Preferences required:</em> ' . implode(', ', $infoPlugin['prefs']);
+        		$pluginprefs = '<em>' . tra('Preferences required:') . '</em> ' . implode(', ', $infoPlugin['prefs']). '<br/>';
+        	} else {
+        		$pluginprefs = '';
         	}
-        	$sOutput = $title . '<em>Required parameters are in</em> <b>bold</b><br />' . 
-        				$pluginprefs . '<br/>' . '<table class="normal">' . $header . $rows . '</table>' . "\n";
+        	$sOutput = $title . '<em>' . tra('Required parameters are in</em> <b>bold</b>') . '<br />' . 
+        				$pluginprefs . '<table class="normal">' . $header . $rows . '</table>' . "\n";
         	return $sOutput;
         }
     }
     function processDescription($sDescription) {
-        $sDescription=str_replace(",",", ",$sDescription);
-        $sDescription=str_replace("|","| ",$sDescription);
+        $sDescription=str_replace(',',', ',$sDescription);
+        $sDescription=str_replace('|','| ',$sDescription);
         $sDescription=strip_tags(wordwrap($sDescription,35));
         return $sDescription;
     }
@@ -279,8 +312,8 @@ class WikiPluginPluginManager extends PluginsLib
 function wikiplugin_pluginmanager_info() {
     return array(
     	'name' => tra('Plugin Manager'),
-    	'documentation' => 'PluginPluginManager',
-    	'description' => tra("Displays a list of plugins available in this wiki."),
+    	'documentation' => tra('PluginPluginManager'),
+    	'description' => tra('Displays a list of plugins or modules available in this wiki.'),
     	'prefs' => array( 'wikiplugin_pluginmanager' ),
     	'introduced' => 3,
     	'params' => array(
@@ -289,34 +322,50 @@ function wikiplugin_pluginmanager_info() {
     			'name' => tra('Information'),
     			'description' => tra('Determines what information is shown. Values separated with | . Ignored when singletitle is set to top or none.'),
    				'filter' => 'striptags',
-    			'accepted' => 'One or more of: description | parameters | paraminfo',
+    			'accepted' => tra('One or more of: description | parameters | paraminfo'),
     			'default' => 'description | parameters | paraminfo ',
     			'since' => '',    
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Description'), 'value' => 'description'), 
+					array('text' => tra('Description & Parameters'), 'value' => 'description|parameters'), 
+					array('text' => tra('Description & Parameter Info'), 'value' => 'description|paraminfo'), 
+					array('text' => tra('Parameters & Parameter Info'), 'value' => 'parameters|paraminfo'), 
+					array('text' => tra('All'), 'value' => 'description|parameters|paraminfo')
+				)
     		),
 			'plugin' => array(
     			'required' => false,
     			'name' => tra('Plugin'),
     			'description' => tra('Name of a plugin (e.g., backlinks), or list separated by |, or range separated by "-". Single plugin can be used with limit parameter.'),
     			'filter' => 'striptags',
-    			'default' => 'none',
+    			'default' => '',
     			'since' => '5.0',    				
+    		),
+			'module' => array(
+    			'required' => false,
+    			'name' => tra('Module'),
+    			'description' => tra('Name of a module (e.g., calendar_new), or list separated by |, or range separated by "-". Single module can be used with limit parameter.'),
+    			'filter' => 'striptags',
+    			'default' => '',
+    			'since' => '6.1',    				
     		),
     		'singletitle' => array(
     			'required' => false,
     			'name' => tra('Single Title'),
     			'description' => tra('Set placement of plugin name and description when displaying information for only one plugin'),
     			'filter' => 'alpha', 
-    			'default' => 'table',
+    			'default' => 'none',
     			'since' => '5.0', 
     			'options' => array(
-					array('text' => tra('Top'), 'value' => 'top'), 
+					array('text' => tra(''), 'value' => ''), 
+    				array('text' => tra('Top'), 'value' => 'top'), 
 					array('text' => tra('Table'), 'value' => 'table'), 
-					array('text' => tra('None'), 'value' => 'none'), 
 				),  				
     		),
     		'titletag' => array(
     			'required' => false,
-    			'name' => tra('Title heading size'),
+    			'name' => tra('Title Heading'),
     			'description' => tra('Sets the heading size for the title, e.g., h2.'),
     			'filter' => 'striptags',
     			'default' => 'h3',
@@ -343,13 +392,23 @@ function wikiplugin_pluginmanager_info() {
 }
 
 function get_plugin_info($sPluginFile) {
-	global $wikilib, $helpurl, $tikilib;
-	require_once 'lib/wiki/pluginslib.php';
 	preg_match("/wikiplugin_(.*)\.php/i", $sPluginFile, $match);
 	global $sPlugin, $numparams;
 	$sPlugin= $match[1];
 	include_once(PLUGINS_DIR.'/'.$sPluginFile);
+	global $tikilib;
 	$infoPlugin = $tikilib->plugin_info($sPlugin);
+	$numparams = isset($infoPlugin['params']) ? count($infoPlugin['params']) : 0;
+	return $infoPlugin;
+}
+
+function get_module_params($sPluginFile) {
+	preg_match("/mod-func-(.*)\.php/i", $sPluginFile, $match);
+	global $sPlugin, $numparams;
+	$sPlugin= $match[1];
+	include_once('modules/' . $sPluginFile);
+	$info_func = "module_{$sPlugin}_info";
+	$infoPlugin = $info_func();
 	$numparams = isset($infoPlugin['params']) ? count($infoPlugin['params']) : 0;
 	return $infoPlugin;
 }
