@@ -312,7 +312,7 @@ class WikiPluginPluginManager extends PluginsLib
 function wikiplugin_pluginmanager_info() {
     return array(
     	'name' => tra('Plugin Manager'),
-    	'documentation' => 'PluginPluginManager',
+    	'documentation' => tra('PluginPluginManager'),
     	'description' => tra('Displays a list of plugins or modules available in this wiki.'),
     	'prefs' => array( 'wikiplugin_pluginmanager' ),
     	'introduced' => 3,
@@ -325,13 +325,21 @@ function wikiplugin_pluginmanager_info() {
     			'accepted' => tra('One or more of: description | parameters | paraminfo'),
     			'default' => 'description | parameters | paraminfo ',
     			'since' => '',    
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Description'), 'value' => 'description'), 
+					array('text' => tra('Description & Parameters'), 'value' => 'description|parameters'), 
+					array('text' => tra('Description & Parameter Info'), 'value' => 'description|paraminfo'), 
+					array('text' => tra('Parameters & Parameter Info'), 'value' => 'parameters|paraminfo'), 
+					array('text' => tra('All'), 'value' => 'description|parameters|paraminfo')
+				)
     		),
 			'plugin' => array(
     			'required' => false,
     			'name' => tra('Plugin'),
     			'description' => tra('Name of a plugin (e.g., backlinks), or list separated by |, or range separated by "-". Single plugin can be used with limit parameter.'),
     			'filter' => 'striptags',
-    			'default' => 'none',
+    			'default' => '',
     			'since' => '5.0',    				
     		),
 			'module' => array(
@@ -339,8 +347,8 @@ function wikiplugin_pluginmanager_info() {
     			'name' => tra('Module'),
     			'description' => tra('Name of a module (e.g., calendar_new), or list separated by |, or range separated by "-". Single module can be used with limit parameter.'),
     			'filter' => 'striptags',
-    			'default' => 'none',
-    			'since' => '7.0',    				
+    			'default' => '',
+    			'since' => '6.1',    				
     		),
     		'singletitle' => array(
     			'required' => false,
@@ -350,14 +358,14 @@ function wikiplugin_pluginmanager_info() {
     			'default' => 'none',
     			'since' => '5.0', 
     			'options' => array(
-					array('text' => tra('None'), 'value' => 'none'), 
+					array('text' => tra(''), 'value' => ''), 
     				array('text' => tra('Top'), 'value' => 'top'), 
 					array('text' => tra('Table'), 'value' => 'table'), 
 				),  				
     		),
     		'titletag' => array(
     			'required' => false,
-    			'name' => tra('Title heading size'),
+    			'name' => tra('Title Heading'),
     			'description' => tra('Sets the heading size for the title, e.g., h2.'),
     			'filter' => 'striptags',
     			'default' => 'h3',
