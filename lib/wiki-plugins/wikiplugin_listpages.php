@@ -98,6 +98,11 @@ function wikiplugin_listpages_info() {
 				'name' => tra('Load Translations'),
 				'description' => tra('User or pipe separated list of two letter language codes for additional languages to display. If the language parameter is not defined, the first element of this list will be used as the primary filter.'),
 			),
+			'translationOrphan' => array(
+				'required' => false,
+				'name' => tra('No translation'),
+				'description' => tra('User or pipe separated list of two letter language codes for additional languages to display. List pages with no language or with a missing translation in one of the language'),
+			),
 			'exact_match' => array(
 				'required' => false,
 				'name' => tra('Exact Match'),
@@ -179,7 +184,7 @@ function wikiplugin_listpages($data, $params) {
 		// the feature is disabled or the user can't read wiki pages
 		return '';
 	}
-	$default = array('offset'=>0, 'max'=>-1, 'sort'=>'pageName_asc', 'find'=>'', 'start'=>'', 'end'=>'', 'length'=>-1, 'translations'=>null);
+	$default = array('offset'=>0, 'max'=>-1, 'sort'=>'pageName_asc', 'find'=>'', 'start'=>'', 'end'=>'', 'length'=>-1, 'translations'=>null, 'translationOrphan'=>null);
 	$params = array_merge($default, $params);
 	extract($params,EXTR_SKIP);
 	$filter = array();
@@ -214,6 +219,9 @@ function wikiplugin_listpages($data, $params) {
 		} else {
 			$translations = explode( '|', $translations );
 		}
+	}
+	if (!empty($translationOrphan)) {
+		$filter['translationOrphan'] = explode('|', $translationOrphan);
 	}
 	if (!empty($langOrphan)) {
 		$filter['langOrphan'] = $langOrphan;

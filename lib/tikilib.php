@@ -3576,6 +3576,15 @@ class TikiLib extends TikiDb_Bridge
 				} elseif ($type == 'structure_orphans') {
 					$join_tables .= " left join `tiki_structures` as tss on (tss.`page_id` = tp.`page_id`) ";
 					$tmp_mid[] = "(tss.`page_ref_id` is null)";
+				} elseif ($type == 'translationOrphan') {
+					$join_tables .= " left join `tiki_translated_objects` tro on (tro.`type` = 'wiki page' AND tro.`objId` = tp.`page_id`) ";
+					$translationOrphan_mid = " tro.`traId` IS NULL OR tp.`lang`IS NULL ";
+					foreach ($val as $i=>$lg) {
+						$join_tables .= " left join `tiki_translated_objects` tro_$i on (tro_$i.`traId` = tro.`traId` AND tro_$i.`lang`=?) ";
+						$translationOrphan_mid .= " OR tro_$i.`traId` IS NULL ";
+						$bindvars[] = $lg;
+					}
+					$tmp_mid[] = "($translationOrphan_mid)";
 				}
 			}
 			if (!empty($tmp_mid)) {
