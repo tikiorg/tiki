@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	);
 	foreach($tikilib->list_languages() as $tlang) {
 		foreach($areanames as $an) {
-			$cachetag = 'plugindesc' . $tlang['value'] . $an;
+			$cachetag = 'plugindesc' . $tlang['value'] . $an . '_js=' . $prefs['javascript_enabled'];
 			$cachelib->invalidate($cachetag);
 		}
 	}
