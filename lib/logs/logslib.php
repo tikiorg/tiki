@@ -808,13 +808,13 @@ class LogsLib extends TikiLib
 
 	function export($actionlogs, $unit = 'b')
 	{
-	$csv = "user,date,time,action,type,object,category,unit,+,-,contribution<br />";
+	$csv = "user,date,time,action,type,object,category,unit,+,-,contribution\r\n";
 	foreach ($actionlogs as $action) {
 		if (!isset($action['object'])) {
 			$action['object'] = '';
 		}
-		if (!isset($action['category'])) {
-			$action['category'] = '';
+		if (!isset($action['categId'])) {
+			$action['categId'] = '';
 		}
 		if (!isset($action['add'])) {
 			$action['add'] = '';
@@ -829,7 +829,7 @@ class LogsLib extends TikiLib
 				 . '","' . $action['action']
 				 . '","' . $action['objectType']
 				 . '","' . $action['object']
-				 . '","' . $action['category']
+				 . '","' . $action['categId']
 				 . '","' . $unit
 				 . '","' . $action['add']
 				 . '","' . $action['del']
