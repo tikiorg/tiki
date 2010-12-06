@@ -51,8 +51,6 @@
 	{else}
 		{if !empty($tracker_item_main_value)}
 			{$tracker_item_main_value|escape}
-		{elseif !empty($headtitle)}
-			{$headtitle|tr_if|escape}
 		{elseif !empty($page)}
 			{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}
 				{$approvedPageName|escape}
@@ -75,6 +73,10 @@
 			{$userinfo.login|username}
 		{elseif !empty($tracker_info.name)}
 			{$tracker_info.name|escape}
+		{elseif !empty($gal_info.name)}
+			{$gal_info.name|escape}
+		{elseif !empty($headtitle)}
+			{$headtitle|tr_if|escape}{* use $headtitle last if feature specific title not found *}
 		{/if}
 	{/if}
 	{if $prefs.site_title_location eq 'after'} {$prefs.site_nav_seper} {$prefs.browsertitle|tr_if|escape}{/if}
