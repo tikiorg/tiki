@@ -16,47 +16,61 @@ function wikiplugin_bloglist_help() {
 function wikiplugin_bloglist_info() {
 	return array(
 		'name' => tra('Blog List'),
-		'documentation' => 'PluginBlogList',		
+		'documentation' => tra('PluginBlogList'),		
 		'description' => tra('Use BLOGLIST to include posts from a blog.'),
 		'prefs' => array( 'feature_blogs', 'wikiplugin_bloglist' ),
 		'params' => array(
 			'Id' => array(
 				'required' => true,
 				'name' => tra('Blog ID'),
-				'description' => tra('Numeric value'),
+				'description' => tra('The ID number of the blog on the site you wish to list posts from'),
+				'filter' => 'digits',
+				'default' => ''
 			),
 			'Items' => array(
 				'required' => false,
-				'name' => tra('Items'),
-				'description' => tra('Maximum number of entries to list.'),
+				'name' => tra('Maximum Items'),
+				'description' => tra('Maximum number of entries to list (no maximum set by default)'),
+				'filter' => 'digits',
+				'default' => ''
 			),
 			'author' => array(
 				'required' => false,
 				'name' => tra('Author'),
-				'description' => tra('Author'),
+				'description' => tra('Only display posts created by this user (all posts listed by default)'),
+				'default' => ''
 			),
 			'simpleList' => array(
 				'required' => false,
-				'name' => tra('Simple list'),
+				'name' => tra('Simple List'),
 				'description' => tra('Show simple list of date, title and author (default=y) or formatted list of blog posts (n)'),
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				),
 			),
 			'dateStart' => array(
 				'required' => false,
-				'name' => tra('Start date'),
+				'name' => tra('Start Date'),
 				'description' => tra('Earliest date to select posts from.') . ' (YYYY-MM-DD)',
 				'filter' => 'date',
+				'default' => ''
 			),
 			'dateEnd' => array(
 				'required' => false,
-				'name' => tra('End date'),
+				'name' => tra('End Date'),
 				'description' => tra('Latest date to select posts from.') . ' (YYYY-MM-DD)',
 				'filter' => 'date',
+				'default' => ''
 			),
 			'containerClass' => array(
 				'required' => false,
-				'name' => tra('Container class'),
+				'name' => tra('Container Class'),
 				'description' => tra('CSS Class to add to the container DIV.article. (Default="wikiplugin_bloglist")'),
 				'filter' => 'striptags',
+				'default' => 'wikiplugin_bloglist'
 			),
 		),
 	);
