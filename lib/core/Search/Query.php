@@ -32,6 +32,11 @@ class Search_Query
 		$this->addPart($query, 'multivalue', $deep ? 'deep_categories' : 'categories');
 	}
 
+	function filterTags($query, $deep = false)
+	{
+		$this->addPart($query, 'multivalue', 'freetags');
+	}
+
 	function filterLanguage($query)
 	{
 		$this->addPart($query, 'identifier', 'language');

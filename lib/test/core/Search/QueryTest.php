@@ -193,5 +193,23 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals($expr, $index->getLastQuery());
 	}
+
+	function testFilterTags()
+	{
+		$index = new Search_Index_Memory;
+		$query = new Search_Query;
+		$query->filterTags('1 and 2');
+
+		$query->search($index);
+
+		$expr = new Search_Expr_And(array(
+			new Search_Expr_And(array(
+				new Search_Expr_Token('1', 'multivalue', 'freetags'),
+				new Search_Expr_Token('2', 'multivalue', 'freetags'),
+			)),
+		));
+
+		$this->assertEquals($expr, $index->getLastQuery());
+	}
 }
 
