@@ -1762,6 +1762,7 @@ function get_default_prefs() {
 		'tiki_cachecontrol_session' => '',
 		'tiki_cachecontrol_nosession' => '',
 		'tiki_cdn' => '',
+		'tiki_cdn_ssl' => '',
 
 		// Token Access
 		'auth_token_access' => 'n',

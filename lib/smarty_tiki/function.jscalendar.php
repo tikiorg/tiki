@@ -31,11 +31,16 @@ function smarty_function_jscalendar($params, &$smarty) {
 		if (!isset($params['date'])) {
 			$params['date'] = $tikilib->now;
 		}
+		$datepicker_options = '{ altField: "#' . $params['id'] . '"';
+		if (!empty($params['goto'])) {
+			$datepicker_options .= ', onSelect: function(dateText, inst) { window.location="'.$params['goto'].'".replace("%s",$("#'.$params['id'].'").val()/1000); }';
+		}
+		$datepicker_options .= '}';
 		$html = '<input type="hidden" id="' . $params['id'] . '"' . $name  . ' value="'.$params['date'].'" />';
 		$html .= '<input type="text" id="' . $params['id'] . '_dptxt" value="" />';	// text version of datepicker date
 		// TODO use a parsed version of $prefs['short_date_format']
 		// Note: JS timestamp is in milliseconds - php is seconds
-		$headerlib->add_jq_onready('$("#'.$params['id'].'_dptxt").val($.datepicker.formatDate( "yy-mm-dd", new Date('.$params['date'].'* 1000))).tiki("datepicker", "jscalendar", {altField: "#' . $params['id'] . '"});');
+		$headerlib->add_jq_onready('$("#'.$params['id'].'_dptxt").val($.datepicker.formatDate( "yy-mm-dd", new Date('.$params['date'].'* 1000))).tiki("datepicker", "jscalendar", '.$datepicker_options.');');
 		return $html;
 		
 	} else {

@@ -46,6 +46,7 @@ $needed_prefs = array(
 	'session_silent' => 'n',
 	'session_cookie_name' => session_name(),
 	'tiki_cdn' => '',
+	'tiki_cdn_ssl' => '',
 	'language' => 'en',
 	'lang_use_db' => 'n',
 	'feature_pear_date' => 'y',
@@ -121,8 +122,9 @@ if (isset($_GET[session_name()]) && $tikilib->get_ip_address() == '127.0.0.1') {
 $start_session = $prefs['session_silent'] != 'y' or isset( $_COOKIE[session_name()] );
 
 // If called from the CDN, refuse to execute anything
-if( $prefs['tiki_cdn'] ) {
-	$host = parse_url( $prefs['tiki_cdn'], PHP_URL_HOST );
+$cdn_pref = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? $prefs['tiki_cdn_ssl'] : $prefs['tiki_cdn'];
+if( $cdn_pref ) {
+	$host = parse_url( $cdn_pref, PHP_URL_HOST );
 	if( $host == $_SERVER['HTTP_HOST'] ) {
 		header("HTTP/1.0 404 Not Found");
 		echo "File not found.";

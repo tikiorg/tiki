@@ -63,6 +63,10 @@ class CatBrowseTreeMaker extends TreeMaker
 		return "\t\t";
 	}
 	
+	function node_start_code_flip($nodeinfo) {
+		return "\t" . '<li class="treenode withflip">';
+	}
+
 	function node_start_code($nodeinfo) {
 		static $count = 0;
 		++$count;

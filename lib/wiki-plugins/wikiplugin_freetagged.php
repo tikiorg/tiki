@@ -114,20 +114,19 @@ function wikiplugin_freetagged_info() {
 			'h_level' => array(
 				'required' => false,
 				'name' => tra('Header Level'),
-				'description' => tra('Choos the header level for formatting. Default is 3 (for header level h3)'),
-				'filter' => 'text',
+				'description' => tra('Choose the header level for formatting. Default is 3 (for header level h3). Set to -1 for no header tags.'),
+				'filter' => 'int',
 				'default' => '3'
 			),
 			'titles_only' => array(
 				'required' => false,
 				'name' => tra('Show Titles Only'),
-				'description' => tra('Choose whether to show titles only (not set by default)'),
+				'description' => tra('Choose whether to show titles only (not shown by default)'),
 				'filter' => 'text',
 				'default' => 'n',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
+					array('text' => tra('No'), 'value' => 'n'),
 					array('text' => tra('Yes'), 'value' => 'y'), 
-					array('text' => tra('No'), 'value' => 'n')
 				)
 			),
 			'max_image_size' => array(
@@ -255,16 +254,6 @@ function wikiplugin_freetagged($data, $params) {
 
 	$smarty->assign_by_ref('objects', $objects);
 	$smarty->assign('h_level', $h_level);
-	
-	$headerlib->add_css(<<<CSS
-ul.freetagged li {
-	float: left;
-	clear: left;
-	list-style: none;
-}
-
-CSS
-	);
 	
 	$ret = $smarty->fetch('wiki-plugins/wikiplugin_freetagged.tpl');
 	return '~np~'.$ret.'~/np~';
