@@ -201,6 +201,19 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 		$this->assertEquals( '{c} {A()} Hello {A} {b}', $matches->getText() );
 	}
 
+	function testLegacyReplacementWithSpace()
+	{
+		$string = '{c} {A()} {B() /} {A} {b}';
+		$matches = WikiParser_PluginMatcher::match( $string );
+		$this->assertEquals( 4, count($matches) );
+
+		$orig = $this->toArray( $matches );
+
+		$orig[2]->replaceWith( 'Hello' );
+
+		$this->assertEquals( '{c} {A()} Hello {A} {b}', $matches->getText() );
+	}
+
 	function testLargerReplacement()
 	{
 		$string = '{c} {A()} {b} {A} {b}';

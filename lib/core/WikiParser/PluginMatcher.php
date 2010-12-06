@@ -352,12 +352,17 @@ class WikiParser_PluginMatcher_Match
 			--$pos;
 		}
 
-		if( in_array($this->matchType, array(self::LONG, self::LEGACY)) && $this->matcher->findText( ')', $pos - 1, $limit ) !== $pos - 1 ) {
+		$seek = $pos;
+		while( ctype_space($this->matcher->getChunkFrom($seek-1, '1')) ) {
+			$seek--;
+		}
+
+		if( in_array($this->matchType, array(self::LONG, self::LEGACY)) && $this->matcher->findText( ')', $seek - 1, $limit ) !== $seek - 1 ) {
 			$this->invalidate();
 			return false;
 		}
 
-		$arguments = trim( $this->matcher->getChunkFrom( $this->nameEnd, $pos - $this->nameEnd ), '()' );
+		$arguments = trim( $this->matcher->getChunkFrom( $this->nameEnd, $pos - $this->nameEnd ), '() ' );
 		$this->arguments = trim( $arguments );
 
 		if ($this->matchType == self::LEGACY) {
