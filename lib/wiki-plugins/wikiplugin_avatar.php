@@ -19,7 +19,7 @@ function wikiplugin_avatar_help() {
 function wikiplugin_avatar_info() {
 	return array(
 		'name' => tra('Avatar'),
-		'documentation' => 'PluginAvatar',
+		'documentation' => tra('PluginAvatar'),
 		'description' => tra('Displays the user Avatar'),
 		'prefs' => array('wikiplugin_avatar'),
 		'body' => tra('username'),
@@ -27,12 +27,20 @@ function wikiplugin_avatar_info() {
 			'page' => array(
 				'required' => false,
 				'name' => tra('Page'),
-				'description' => tra('The wiki page the avatar will link to.'),
+				'description' => tra('The wiki page the avatar will link to. If empty and the user\'s information is public, 
+										then the avatar will link automatically the that user\'s user information page'),
+				'default' => ''
 			),
 			'float' => array(
 				'required' => false,
 				'name' => tra('Float'),
-				'description' => tra('left|right'),
+				'description' => tra('Align the avatar on the page'),
+				'filter' => 'word',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Right'), 'value' => 'right'), 
+					array('text' => tra('Left'), 'value' => 'left')
+				),
 			),
 		),
 	);
