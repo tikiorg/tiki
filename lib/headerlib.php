@@ -42,9 +42,13 @@ class HeaderLib
 
 	function convert_cdn( $file, $type = null ) {
 		global $prefs, $tikiroot;
+
+		$https_mode = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
+
+		$cdn_pref = $https_mode ? $prefs['tiki_cdn_ssl'] : $prefs['tiki_cdn'];
 	
-		if( !empty($prefs['tiki_cdn']) && 'http' != substr( $file, 0, 4 ) && $type !== 'dynamic' ) {
-			$file = $prefs['tiki_cdn'] . $tikiroot . $file;
+		if( !empty($cdn_pref) && 'http' != substr( $file, 0, 4 ) && $type !== 'dynamic' ) {
+			$file = $cdn_pref . $tikiroot . $file;
 		}
 
 		return $file;

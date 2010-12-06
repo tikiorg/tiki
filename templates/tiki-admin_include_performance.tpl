@@ -13,6 +13,7 @@
 			{preference name=tiki_minify_javascript}
 			{preference name=javascript_cdn}
 			{preference name=tiki_cdn}
+			{preference name=tiki_cdn_ssl}
 			{preference name=tiki_minify_css}
 			<div class="adminoptionboxchild" id="tiki_minify_css_childcontainer">
 				{preference name=tiki_minify_css_single_file}

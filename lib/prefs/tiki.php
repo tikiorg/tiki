@@ -67,6 +67,15 @@ function prefs_tiki_list() {
 			'size' => 40,
 			'filter' => 'url',
 		),
+		'tiki_cdn_ssl' => array(
+			'name' => tra('Content Delivery Network (in SSL)'),
+			'description' => tra('Use an alternate domain name to serve static files from tikiwiki to avoid sending cookies, improve local caching and generally improve user experience performance. Leave empty to disable CDN in SSL mode.'),
+			'hint' => tra('Prefix to include before the static files, for example: https://cdn.example.com'),
+			'help' => 'Content+Delivery+Network',
+			'type' => 'text',
+			'size' => 40,
+			'filter' => 'url',
+		),
 		'tiki_domain_prefix' => array(
 			'name' => tra('Domain prefix handling'),
 			'description' => tra('Strip or automatically add the www. prefix on domain names to unify URLs.'),
