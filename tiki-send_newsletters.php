@@ -477,16 +477,16 @@ $smarty->assign('mid', 'tiki-send_newsletters.tpl');
 $smarty->display("tiki.tpl");
 
 function generateTxtVersion($txt) {
-	//Add line breaks if none before stripping headers, paras, and br
-	$txt =  preg_replace('/(<\/h[1-6]>) *([^\r\n])/', "$1\n\n$2", $txt);
-	$txt =  preg_replace('/(<\/div>) *([^\r\n])/', "$1\n\n$2", $txt);
-	$txt =  preg_replace('/(<\/p>) *([^\r\n])/', "$1\n\n$2", $txt);
-	$txt =  str_replace('/(<br *\/?>)/', "\n", $txt);
-	// start stripping tags
-	$txt = strip_tags(str_replace(array("\r\n", "&nbsp;"), array("\n", " "), $txt));
-	$txt = preg_replace('/^!!!(.*?)$/m', "\n$1\n", $txt);
-	$txt = preg_replace('/^!!(.*?)$/m', "\n$1\n", $txt);
-	$txt = preg_replace('/^!(.*?)$/m', "\n$1\n", $txt);
+	global $parsed, $tikilib;
+	
+	if (empty($parsed)) {
+		$txt = $tikilib->parse_data($txt, array('absolute_links' => true, 'suppress_icons' => true));
+	} else {
+		$txt = $parsed;
+	}
+	$txt = str_replace('&nbsp;', ' ', $txt);
+	$txt = strip_tags($txt);
+	
 	$txt = html_entity_decode($txt);
 	return $txt;
 }
