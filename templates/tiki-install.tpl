@@ -258,7 +258,7 @@
 			<p>{tr}Highly recommended for new installations. However, if you are upgrading or migrating a previous tiki database, you are recommended to uncheck this box{/tr}</p>
 			<input type="checkbox" name="force_utf8" id="force_utf8" value="y" checked="checked"/>
 			<label for="force_utf8">{tr}Always force connection to use UTF-8{/tr}</label>
-		<p><a href="http://doc.tiki.org/Understanding+Encoding">{tr}More information{/tr}</a></p>
+		<p><a href="http://doc.tiki.org/Understanding+Encoding" onclick="window.open(this.href); return false;">{tr}More information{/tr}</a></p>
 		</fieldset>
 		<div align="center" style="margin-top:1em;"><input type="submit" name="dbinfo" value=" {tr}Continue{/tr} " /></div>	 
 	</form>
