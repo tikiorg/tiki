@@ -255,16 +255,6 @@ function wikiplugin_freetagged($data, $params) {
 	$smarty->assign_by_ref('objects', $objects);
 	$smarty->assign('h_level', $h_level);
 	
-	$headerlib->add_css(<<<CSS
-ul.freetagged li {
-	float: left;
-	clear: left;
-	list-style: none;
-}
-
-CSS
-	);
-	
 	$ret = $smarty->fetch('wiki-plugins/wikiplugin_freetagged.tpl');
 	return '~np~'.$ret.'~/np~';
 	

@@ -1892,7 +1892,15 @@ ul.freetag {
 
 .freetagObjectName a {
 	text-decoration: none;
-}	
+}
+
+/* freetegged plugin */
+
+ul.freetagged li {
+	float: left;
+	clear: left;
+	list-style: none;
+}
 
 .searchresults {
 	list-style: none;
