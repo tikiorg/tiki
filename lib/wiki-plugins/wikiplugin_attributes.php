@@ -9,7 +9,7 @@
 function wikiplugin_attributes_info() {
 	return array(
 		'name' => tra('Attributes'),
-		'documentation' => 'PluginAttributes',			
+		'documentation' => tra('PluginAttributes'),			
 		'description' => tra('Allows for generic attributes to be assigned to the current object. Attributes are provided as parameters. For tiki.geo.lat, {attributes tiki_geo_lat=...}. Removing the plugin or values in it will not remove the attributes.'),
 		'prefs' => array( 'wikiplugin_attributes' ),
 		'extraparams' => true,
