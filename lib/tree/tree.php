@@ -78,12 +78,13 @@ class TreeMaker
 				$nl = "\n";
 				$ind .= "\t";
 				
-				$nsc = $this->node_start_code($i);
-
-				$flipper = '';
-
-				if ($have_childs)
+				if ($have_childs) {
 					$flipper = $this->node_flipper_code($i);
+					$nsc = $this->node_start_code_flip($i);
+				} else {
+					$nsc = $this->node_start_code($i);
+					$flipper = '';
+				}	
 
 				$ndsc = $this->node_data_start_code($i);
 				$ndec = $this->node_data_end_code($i);
@@ -141,6 +142,10 @@ class TreeMaker
 		return '';
 	}
 
+	function node_start_code_flip($nodeinfo) {
+		return '';
+	}
+	
 	//
 	function node_flipper_code($nodeinfo) {
 		return '';
