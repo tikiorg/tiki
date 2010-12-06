@@ -43,7 +43,7 @@ class ImageGalsLib extends TikiLib
 					$this->gdversion = "1.0";
 				}
 
-				$this->gdinfo["JPG Support"] = preg_match('/JPG Support.*enabled/', ob_get_contents());
+				$this->gdinfo["JPG Support"] = preg_match('/JPE?G Support.*enabled/', ob_get_contents());
 				$this->gdinfo["PNG Support"] = preg_match('/PNG Support.*enabled/', ob_get_contents());
 				$this->gdinfo["GIF Create Support"] = preg_match('/GIF Create Support.*enabled/', ob_get_contents());
 				$this->gdinfo["WBMP Support"] = preg_match('/WBMP Support.*enabled/', ob_get_contents());
@@ -363,7 +363,7 @@ class ImageGalsLib extends TikiLib
 				case 'image/jpeg':
 				case 'image/pjpeg':
 				case 'image/jpg':
-					return ($this->gdinfo["JPG Support"]);
+					return ($this->gdinfo["JPG Support"] || $this->gdinfo["JPEG Support"]);
 					break;
 				case 'png':
 				case 'image/png':
