@@ -21,7 +21,7 @@ function wikiplugin_box_help() {
 function wikiplugin_box_info() {
 	return array(
 		'name' => tra('Box'),
-		'documentation' => 'PluginBox',
+		'documentation' => tra('PluginBox'),
 		'description' => tra('Insert theme-styled box on wiki page'),
 		'prefs' => array('wikiplugin_box'),
 		'body' => tra('text'),
@@ -30,6 +30,7 @@ function wikiplugin_box_info() {
 				'required' => false,
 				'name' => tra('Box title'),
 				'description' => tra('Displayed above the content'),
+				'default' => '',
 			),
 			'bg' => array(
 				'required' => false,
@@ -44,12 +45,39 @@ function wikiplugin_box_info() {
 			'align' => array(
 				'required' => false,
 				'name' => tra('Text Alignment'),
-				'description' => 'left|right|center',
+				'description' => tra('Aligns the text within the box (left aligned by default)'),
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Right'), 'value' => 'right'), 
+					array('text' => tra('Center'), 'value' => 'center'), 
+				),
 			),
 			'float' => array(
 				'required' => false,
 				'name' => tra('Float Position'),
-				'description' => 'left|right' . ', ' . tra('for box with width less than 100%, make text wrap around the box.'),
+				'description' => tra('Set the alignment for the entire box. For elements with a width of less than 100%, other elements will wrap around it 
+										unless the clear parameter is appropriately set.)'),
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Left'), 'value' => 'left'), 
+					array('text' => tra('Right'), 'value' => 'right'), 
+				),
+			),
+			'clear' => array(
+				'required' => false,
+				'name' => tra('Clear'),
+				'description' => tra('Items are not allowed to wrap around the box if this parameter is set to.1 (Yes)'),
+				'filter' => 'text',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				),
 			),
 			'class' => array(
 				'required' => false,
