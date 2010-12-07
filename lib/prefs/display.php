@@ -19,5 +19,11 @@ function prefs_display_list() {
 				'YMD' => tra('Year')  . ' ' . tra('Month') . ' ' . tra('Day'),
 			),
 		),
+		'display_html_in_menus' => array(
+			'name' => tra('Show HTML in menus'),
+			'description' => tra('When set html tags in menu options will be "escaped" and displayed, otherwise option text will be rendered exactly as entered.'),
+			'help' => 'Menus',
+			'type' => 'flag',
+		),
 	);
 }

@@ -32,7 +32,11 @@
 					{icon _id='folder' align="left"}
 				{/if}
 				{capture name=chdataName}
-					{if $translate eq 'n'}{$chdata.name}{else}{tr}{$chdata.name}{/tr}{/if}
+					{if $translate eq 'n'}
+						{if $prefs.display_html_in_menus eq 'y'}{$chdata.name|escape}{else}{$chdata.name}{/if}
+					{else}
+						{tr}{if $prefs.display_html_in_menus eq 'y'}{$chdata.name|escape}{else}{$chdata.name}{/if}{/tr}
+					{/if}
 				{/capture}
 				<span class="menuText">{$smarty.capture.chdataName}</span>  {*not escaped to allow img tags*}
 			{if $link_on_section ne 'n'}</a>{/if}
@@ -47,7 +51,11 @@
 						{icon _id=$chdata.icon alt='' _defaultdir=$prefs.menus_items_icons_path}
 					{/if}
 					{capture name=chdataName}
-						{if $translate eq 'n'}{$chdata.name}{else}{tr}{$chdata.name}{/tr}{/if}
+						{if $translate eq 'n'}
+							{if $prefs.display_html_in_menus eq 'y'}{$chdata.name|escape}{else}{$chdata.name}{/if}
+						{else}
+							{tr}{if $prefs.display_html_in_menus eq 'y'}{$chdata.name|escape}{else}{$chdata.name}{/if}{/tr}
+						{/if}
 					{/capture}
 					<span class="menuText">{$smarty.capture.chdataName}</span> {*not escaped to allow img tags*}
 				</a>

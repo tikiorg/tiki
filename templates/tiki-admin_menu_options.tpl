@@ -319,7 +319,7 @@
 							<td>{$channels[user].optionId}</td>
 							<td>{$channels[user].position}</td>
 							<td>
-								<a href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" title="{tr}Edit{/tr}">{$channels[user].name}</a> {*not escaped to allow img tags*}
+								<a href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" title="{tr}Edit{/tr}">{if $prefs.display_html_in_menus eq 'y'}{$channels[user].name|escape}{else}{$channels[user].name}{/if}</a>
 								<div style="margin-left:10px;">
 									{if $channels[user].url}
 										{tr}URL:{/tr} <a href="{$channels[user].url|escape}" class="link" target="_new" title="{$channels[user].canonic}">{$channels[user].canonic|truncate:40:' ...'}</a>

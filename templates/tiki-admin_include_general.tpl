@@ -156,6 +156,7 @@
 				<div class="adminoptionbox">
 					{preference name=feature_phplayers}
 					{preference name=feature_cssmenus}
+					{preference name=display_html_in_menus}
 					{preference name=feature_userlevels}
 					{preference name=feature_featuredLinks}
 					{preference name=feature_menusfolderstyle}
