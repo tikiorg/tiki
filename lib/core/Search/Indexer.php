@@ -26,11 +26,14 @@ class Search_Indexer
 	 */
 	function rebuild()
 	{
+		$stat = array();
 		foreach ($this->contentSources as $objectType => $contentSource) {
 			foreach ($contentSource->getDocuments() as $objectId) {
 				$this->addDocument($objectType, $objectId);
+				$stat[$objectType] = empty($stat[$objectType])? 1: $stat[$objectType] + 1;
 			}
 		}
+		return $stat;
 	}
 
 	function update(array $objectList)
