@@ -55,7 +55,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 
 		foreach ($hits as $key => $hit) {
 			if ($key >= $resultStart) {
-				$result[] = $this->extractValues($hit->getDocument());
+				$result[] = array_merge($this->extractValues($hit->getDocument()), array('relevance' => round($hit->score, 2)));
 
 				if (count($result) == $resultCount) {
 					break;

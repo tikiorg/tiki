@@ -7,6 +7,10 @@
 
 		{object_link type=$result.object_type id=$result.object_id title=$result.title}
 
+		{if $prefs.feature_search_show_pertinence eq 'y' && !empty($result.relevance)}
+			<span class="itemrelevance">({tr}Relevance:{/tr} {$result.relevance})</span>
+		{/if}
+
 		<p>{$result.highlight}</p>
 
 		{if $prefs.feature_search_show_last_modification eq 'y'}
