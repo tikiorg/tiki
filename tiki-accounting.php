@@ -45,9 +45,18 @@ if (!isset($_REQUEST['journalLimit'])) {
 $journal=$accountinglib->getJournal($bookId,'%','`journalId` DESC',$_REQUEST['journalLimit']);
 $smarty->assign('journal',$journal);
 
+if ($globalperms->acct_book or $objectperms->acct_book) {
+	$smarty->assign('canBook',true);
+} else {
+	$smarty->assign('canBook',false);
+}
+if ($globalperms->acct_book_stack or $objectperms->acct_book_stack) {
+	$smarty->assign('canStack',true);
+} else {
+	$smarty->assign('canStack',false);
+}
 ask_ticket('accounting');
 
-$template='tiki-accounting.tpl';
 
-$smarty->assign('mid',$template);
+$smarty->assign('mid','tiki-accounting.tpl');
 $smarty->display("tiki.tpl");

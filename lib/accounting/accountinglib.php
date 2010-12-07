@@ -14,12 +14,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 require_once ('lib/logs/logslib.php');
 
 /**
- * This number will be added to the members userID to get the members account number. Currently this is hard coded in some views and here
- */
-define('ACCOUNTING_MEMBER_BASE',40000);
-
-
-/**
  * Basic functions used by the accounting feature
  *
  * <p>This file contains all functions used by more than one file from the ccsg_accounting feature.
@@ -34,7 +28,6 @@ define('ACCOUNTING_MEMBER_BASE',40000);
 
 class AccountingLib extends LogsLib
 {
-	
 	/**
 	 * 
 	 * Storing the book data if already requested once, this may save us a few queries
@@ -185,7 +178,7 @@ class AccountingLib extends LogsLib
 		if ($res===false) return false;
 		while ($row = $res->fetchRow()) {
 			$query="SELECT * FROM `tiki_acct_item` WHERE `itemBookId`=? AND `itemJournalId`=? AND `itemType`=? ORDER BY `itemAccountId` ASC";
-		    $row['debit'] =$this->fetchAll($query,array($bookid, $row['journalId'],-1));
+		    $row['debit'] =$this->fetchAll($query,array($bookId, $row['journalId'],-1));
 		    $row['debitcount']=count($row['debit']);
 		    $row['credit'] =$this->fetchAll($query,array($bookId, $row['journalId'],1));
 		    $row['creditcount']=count($row['credit']);
@@ -433,6 +426,24 @@ class AccountingLib extends LogsLib
 		} else {
 			return tra('successfully rolled back #')." $journalId"; 
 		}
+	} //manualRollback
+
+	/**
+	 * 
+	 * Checks if the book date is within the books limits
+	 * @param array		$book		book array
+	 * @param unknown_type $Date
+	 */
+	function checkBookDates($book, $Date) {
+		$StartDate=new Zend_Date($book['bookStartDate']);
+		if ($Date->compareDate($StartDate)===-1) {
+			return array(tra("The date for the transaction is before this books start date."));
+		}
+		$EndDate=new Zend_Date($book['bookEndDate']);
+		if ($Date->compareDate($EndDate)===1) {
+			return array(tra("The date for the transaction is after this books end date."));
+		}
+		return true;
 	}
 	
 	/**
@@ -450,28 +461,27 @@ class AccountingLib extends LogsLib
 	 */
 	function simpleBook($bookId, $journalDate, $journalDescription, $debitAccount, $creditAccount,
 						$amount, $debitText='', $creditText='') {
-		$errors=array();
+		
 		$book=$this->getBook($bookId);
 		if ($book['bookClosed']=='y') {
 			return array(tra("This book has been closed. You can't book into it any more."));
 		}
-		
-		$d=new DateTime($journalDate);
-		$ts=$d->getTimestamp();
-		$StartDate=new DateTime($book['bookStartDate']);
-		if ($ts<$StartDate->getTimestamp()) {
-			return array(tra("The date for the transaction is before this books start date."));
+		try {
+			$date=new Zend_Date($journalDate);
+		} catch(Zend_Date_Exception $e) {
+			return array(tra("Invalid booking date."));
 		}
-		$EndDate=new DateTime($book['bookEndDate']);
-		if ($ts>$EndDate->getTimestamp()) {
-			return array(tra("The date for the transaction is after this books end date."));
+		$errors=$this->checkBookDates($book, $date);
+		if (is_array($errors)) {
+			return $errors;
 		}
+		$errors=array();
 		
 		//$this->beginTransaction();
 		$query="INSERT INTO `tiki_acct_journal` (`journalBookId`, `journalDate`, `journalDescription`,
 				`journalCancelled`, `journalTs`)
 				VALUES (?,?,?,0,NOW())";
-		$res=$this->query($query,array($bookId, $journalDate, $journalDescription));
+		$res=$this->query($query,array($bookId, $date->toString('Y-M-d'), $journalDescription));
 		if ($res===false) {
 			$errors[]=tra('Booking error creating journal entry').$this->ErrorNo().": ".$this->ErrorMsg()."<br /><pre>$query</pre>";
 			$this->rollback();
@@ -518,22 +528,21 @@ class AccountingLib extends LogsLib
 	 */
 	function book($bookId, $journalDate, $journalDescription, $debitAccount, $creditAccount,
 				  $debitAmount, $creditAmount, $debitText=array(), $creditText=array()) {
-		$errors=array();
 		$book=$this->getBook($bookId);
 		if ($book['bookClosed']=='y') {
 			$errors[]=tra("This book has been closed. You can't book into it any more.");
 		}
-		
-		$d=new DateTime($journalDate);
-		$ts=$d->getTimestamp();
-		$StartDate=new DateTime($book['bookStartDate']);
-		if ($ts<$StartDate->getTimestamp()) {
-			$errors[]=tra("The date for the transaction is before this books start date.");
+		try {
+			$date=new Zend_Date($journalDate);
+		} catch(Zend_Date_Exception $e) {
+			return array(tra("Invalid booking date."));
 		}
-		$EndDate=new DateTime($book['bookEndDate']);
-		if ($ts>$EndDate->getTimestamp()) {
-			$errors[]=tra("The date for the transaction is after this books end date.");
+		$errors=$this->checkBookDates($book, $date);
+		if (is_array($errors)) {
+			return $errors;
 		}
+		$errors=array();
+
 		if (!is_array($debitAccount)) $debitAccount=array($debitAccount);
 		if (!is_array($creditAccount)) $creditAccount=array($creditAccount);
 		if (!is_array($debitAmount)) $debitAmount=array($debitAmount);
@@ -582,9 +591,9 @@ class AccountingLib extends LogsLib
 		$query="INSERT INTO `tiki_acct_journal` (`journalBookId`, `journalDate`, `journalDescription`,
 				`journalCancelled`, `journalTs`)
 				VALUES (?,?,?,0,NOW())";
-		$res=$this->query($query,array($bookId, $journalDate, $journalDescription));
+		$res=$this->query($query,array($bookId, $date->toString('Y-M-d'), $journalDescription));
 		if ($res===false) {
-			$errors[]=tra('Booking error creating journal entry').$tikilib->ErrorNo().": ".$tikilib->ErrorMsg()."<br /><pre>$query</pre>";
+			$errors[]=tra('Booking error creating journal entry').$this->ErrorNo().": ".$this->ErrorMsg()."<br /><pre>$query</pre>";
 			return $errors;
 		}
 		
@@ -597,9 +606,9 @@ class AccountingLib extends LogsLib
 			$a=$this->cleanupAmount($bookId, $debitAmount[$i]);
 			$res=$this->query($query,array($bookId, $journalId, $debitAccount[$i], -1, $a, $debitText[$i]));
 			if ($res===false) {
-				$errors[]=tra('Booking error creating debit entry').$tikilib->ErrorNo().": ".$tikilib->ErrorMsg()."<br /><pre>$query</pre>";
+				$errors[]=tra('Booking error creating debit entry').$this->ErrorNo().": ".$this->ErrorMsg()."<br /><pre>$query</pre>";
 				//$this->rollback();
-				$errors[]=$this->manualRollback($journalId);
+				$errors[]=$this->manualRollback($bookId, $journalId);
 				return $errors;
 			}
 		}
@@ -607,7 +616,7 @@ class AccountingLib extends LogsLib
 			$a=$this->cleanupAmount($bookId, $creditAmount[$i]);
 			$res=$this->query($query,array($bookId, $journalId, $creditAccount[$i], 1, $a, $creditText[$i]));
 			if ($res===false) {
-				$errors[]=tra('Booking error creating credit entry').$tikilib->ErrorNo().": ".$tikilib->ErrorMsg()."<br /><pre>$query</pre>";
+				$errors[]=tra('Booking error creating credit entry').$this->ErrorNo().": ".$this->ErrorMsg()."<br /><pre>$query</pre>";
 				//$this->rollback();
 				$errors[]=$this->manualRollback($bookId, $journalId);
 				return $errors;
@@ -655,7 +664,355 @@ class AccountingLib extends LogsLib
 		$query="UPDATE `tiki_acct_journal` SET `journalCancelled`=1 WHERE `journalBookId`=? and `journalId`=?";
 		$res=$this->query($query,array($bookId, $journalId));
 		return true;
+	} // cancelTransaction
+
+	/**
+	 * Returns the complete stack
+	 *
+	 * @param	int		$bookId		id of the current book
+	 * @return	array/bool			stack with all posts, false on errors
+	 */
+	function getStack($bookId) {	  
+		$stack=array();
+		$query="SELECT * FROM `tiki_acct_stack` WHERE `stackBookId`=?";
+		$res =$this->query($query,array($bookId));
+		if ($res===false) return false;
+		while ($row = $res->fetchRow()) {
+			$query="SELECT * FROM `tiki_acct_stackitem` WHERE `stackBookId`=? AND `stackItemStackId`=? AND `stackItemType`=? ORDER BY `stackItemAccountId` ASC";
+		    $row['debit'] =$this->fetchAll($query,array($bookId, $row['stackId'],-1));
+		    $row['debitcount']=count($row['debit']);
+		    $row['credit'] =$this->fetchAll($query,array($bookId, $row['stackId'],1));
+		    $row['creditcount']=count($row['credit']);
+		    $row['maxcount']=max($row['creditcount'],$row['debitcount']);
+		    $stack[]=$row;
+		}
+		return $stack;
 	}
+	
+	/**
+	 * 
+	 * Do a manual rollback, if the creation of a complete booking fails.
+	 * This is a workaround for missing transaction support
+	 * @param	int		$bookId		id of the current book
+	 * @param	int		$stackId	id of the entry to roll back
+	 * @return	string				Text messages stating the success/failure of the rollback
+	 */
+	function stackManualRollback($bookId, $stackId) {
+		$errors=array();
+		$query="DELETE FROM `tiki_acct_stackitem` WHERE `stackitemBookId`=? AND `stackitemJournalId=?";
+		$res=$this->query($query,array($bookId, $stackId));
+		$rollback =($res!==false);	
+		$query="DELETE FROM `tiki_acct_stack` WHERE `stackBookId`=? AND `stackId`=?";
+		$res=$this->query($query,array($bookId, $stackId));
+		$rollback=$rollback and ($res!==false);
+		if (!$rollback) {
+			return tra('Rollback failed, inconsistent database: Cleanup needed for stackId %0 in book %1',array($journalId, $bookId));
+		} else {
+			return tra('successfully rolled back #')." $stackId"; 
+		}
+	} //stackManualRollback
+		
+	/**
+	 * books a complex transaction with multiple accounts on one side into the stack
+	 *
+	 * @param	int		$bookId				id of the current book
+	 * @param	date	$stackDate			date of the transaction
+	 * @param	string	$stackDescription	description of this transaction
+	 * @param	mixed	$debitAccount		account(s) to debit
+	 * @param	mixed	$creditAccount		account(s) to credit
+	 * @param	mixed	$debitAmount		amount(s) on debit side
+	 * @param	mixed	$creditAmount		amount(s) on credit side
+	 * @param	mixed	$debitText			text(s) for the debit post, defaults to an empty string
+	 * @param	mixed	$creditText			text(s) for the credit post, defaults to an empty string
+	 *
+	 * @return	int/array					stackID or list of errors
+	 */
+	function stackBook($bookId, $stackDate, $stackDescription, $debitAccount, $creditAccount,
+				  $debitAmount, $creditAmount, $debitText=array(), $creditText=array()) {
+
+		$book=$this->getBook($bookId);
+		if ($book['bookClosed']=='y') {
+			$errors[]=tra("This book has been closed. You can't book into it any more.");
+		}
+		
+		try {
+			$date=new Zend_Date($stackDate);
+		} catch(Zend_Date_Exception $e) {
+			return array(tra("Invalid booking date."));
+		}
+		$errors=$this->checkBookDates($book, $date);
+		if (is_array($errors)) {
+			return $errors;
+		}
+		$errors=array();
+
+		if (!is_array($debitAccount)) $debitAccount=array($debitAccount);
+		if (!is_array($creditAccount)) $creditAccount=array($creditAccount);
+		if (!is_array($debitAmount)) $debitAmount=array($debitAmount);
+		if (!is_array($creditAmount)) $creditAmount=array($creditAmount);
+		if (!is_array($debitText)) $debitText=array($debitText);
+		if (!is_array($creditText)) $creditText=array($creditText);
+	
+		if (count($debitAccount)!=count($debitAmount) or count($debitAccount)!=count($debitText)) {
+			$errors[]=tra('Number of debit entries differ: ') . count($debitAccount) . '/' . count($debitAmount) . '/' . count($debitText);
+		}
+		if (count($creditAccount)!=count($creditAmount) or count($creditAccount)!=count($creditText)) {
+			$errors[]=tra('Number of credit entries differ: ') . count($creditAccount) . '/' . count($creditAmount) . '/' . count($creditText);
+		}
+		if (count($debitAccount)>1 and count($creditAccount)>1) {
+			$errors[]=tra('Splitting is only allowed on one side.');
+		}
+		$checkamount=0;
+		for ($i=0;$i<count($debitAmount);$i++) {
+			$a=$this->cleanupAmount($bookId, $debitAmount[$i]);
+			if (!is_numeric($a) or $a<=0) {
+				$errors[]=tra('Invalid debit amount ').$debitAmount[$i];
+			} else {
+				$checkamount-=$a;
+			}
+			if (!is_numeric($debitAccount[$i])) {
+				$errors[]=tra('Invalid debit account number ') . $debitAccount[$i];
+			} 
+		}
+		for ($i=0;$i<count($creditAmount);$i++) {
+			$a=$this->cleanupAmount($bookId,$creditAmount[$i]);
+			if (!is_numeric($a) or $a<=0) {
+				$errors[]=tra('Invalid credit amount ').$creditAmount[$i];
+			} else {
+				$checkamount+=$a;
+			}
+			if (!is_numeric($creditAccount[$i])) {
+				$errors[]=tra('Invalid credit account number ') . $creditAccount[$i];				
+			}
+		}
+		if ($checkamount!=0) {
+			$errors[]=tra('Difference between debit and credit amounts ').$checkamount;	
+		}
+		if (count($errors)>0) return $errors;
+
+		//$this->beginTransaction();
+		$query="INSERT INTO `tiki_acct_stack` (`stackBookId`, `stackDate`, `stackDescription`)
+				VALUES (?,?,?)";
+		$res=$this->query($query,array($bookId, $date->toString('Y-M-d'), $stackDescription));
+		if ($res===false) {
+			$errors[]=tra('Booking error creating stack entry').$this->ErrorNo().": ".$this->ErrorMsg()."<br /><pre>$query</pre>";
+			return $errors;
+		}
+		
+		$stackId=$this->lastInsertId();
+	  
+		$query="INSERT INTO `tiki_acct_stackitem` (`stackBookId`, `stackItemStackId`, `stackItemAccountId`, `stackItemType`,
+				`stackItemAmount`, `stackItemText`)
+				VALUES (?, ?, ?, ?, ?, ?)";			  
+		for ($i=0;$i<count($debitAccount);$i++) {
+			$a=$this->cleanupAmount($bookId, $debitAmount[$i]);
+			$res=$this->query($query,array($bookId, $stackId, $debitAccount[$i], -1, $a, $debitText[$i]));
+			if ($res===false) {
+				$errors[]=tra('Booking error creating stack debit entry').$this->ErrorNo().": ".$this->ErrorMsg()."<br /><pre>$query</pre>";
+				//$this->rollback();
+				$errors[]=$this->stackManualRollback($bookId,$stackId);
+				return $errors;
+			}
+		}
+		for ($i=0;$i<count($creditAccount);$i++) {
+			$a=$this->cleanupAmount($bookId, $creditAmount[$i]);
+			$res=$this->query($query,array($bookId, $stackId, $creditAccount[$i], 1, $a, $creditText[$i]));
+			if ($res===false) {
+				$errors[]=tra('Booking error creating stack credit entry').$this->ErrorNo().": ".$this->ErrorMsg()."<br /><pre>$query</pre>";
+				//$this->rollback();
+				$errors[]=$this->manualRollback($bookId, $journalId);
+				return $errors;
+			}
+		}
+		// everything ok
+		//$this->commit();
+		return $stackId;
+	}// stackBook
+
+	function stackUpdate($bookId, $stackId, $stackDate, $stackDescription, $debitAccount, $creditAccount,
+				  $debitAmount, $creditAmount, $debitText=array(), $creditText=array()) {
+
+		$book=$this->getBook($bookId);
+		if ($book['bookClosed']=='y') {
+			$errors[]=tra("This book has been closed. You can't book into it any more.");
+		}
+		try {
+			$date=new Zend_Date($stackDate);
+		} catch(Zend_Date_Exception $e) {
+			return array(tra("Invalid booking date."));
+		}
+		$errors=$this->checkBookDates($book, $date);
+		if (is_array($errors)) {
+			return $errors;
+		}
+		$errors=array();
+
+		if (!is_array($debitAccount)) $debitAccount=array($debitAccount);
+		if (!is_array($creditAccount)) $creditAccount=array($creditAccount);
+		if (!is_array($debitAmount)) $debitAmount=array($debitAmount);
+		if (!is_array($creditAmount)) $creditAmount=array($creditAmount);
+		if (!is_array($debitText)) $debitText=array($debitText);
+		if (!is_array($creditText)) $creditText=array($creditText);
+	
+		if (count($debitAccount)!=count($debitAmount) or count($debitAccount)!=count($debitText)) {
+			$errors[]=tra('Number of debit entries differ: ') . count($debitAccount) . '/' . count($debitAmount) . '/' . count($debitText);
+		}
+		if (count($creditAccount)!=count($creditAmount) or count($creditAccount)!=count($creditText)) {
+			$errors[]=tra('Number of credit entries differ: ') . count($creditAccount) . '/' . count($creditAmount) . '/' . count($creditText);
+		}
+		if (count($debitAccount)>1 and count($creditAccount)>1) {
+			$errors[]=tra('Splitting is only allowed on one side.');
+		}
+		$checkamount=0;
+		for ($i=0;$i<count($debitAmount);$i++) {
+			$a=$this->cleanupAmount($bookId, $debitAmount[$i]);
+			if (!is_numeric($a) or $a<=0) {
+				$errors[]=tra('Invalid debit amount ').$debitAmount[$i];
+			} else {
+				$checkamount-=$a;
+			}
+			if (!is_numeric($debitAccount[$i])) {
+				$errors[]=tra('Invalid debit account number ') . $debitAccount[$i];
+			} 
+		}
+		for ($i=0;$i<count($creditAmount);$i++) {
+			$a=$this->cleanupAmount($bookId,$creditAmount[$i]);
+			if (!is_numeric($a) or $a<=0) {
+				$errors[]=tra('Invalid credit amount ').$creditAmount[$i];
+			} else {
+				$checkamount+=$a;
+			}
+			if (!is_numeric($creditAccount[$i])) {
+				$errors[]=tra('Invalid credit account number ') . $creditAccount[$i];				
+			}
+		}
+		if ($checkamount!=0) {
+			$errors[]=tra('Difference between debit and credit amounts ').$checkamount;	
+		}
+		if (count($errors)>0) return $errors;
+
+		//$this->beginTransaction();
+		$query="UPDATE `tiki_acct_stack` SET `stackDate`=?, `stackDescription`=? WHERE `stackBookId`=? AND `stackId`=?";
+		$res=$this->query($query,array($date->toString('Y-M-d'), $stackDescription, $bookId, $stackId));
+		if ($res===false) {
+			$errors[]=tra('Booking error creating stack entry').$this->ErrorNo().": ".$this->ErrorMsg()."<br /><pre>$query</pre>";
+			return $errors;
+		}
+		$query="DELETE FROM `tiki_acct_stackitem` WHERE `stackBookId`=? AND `stackItemStackId`=?";
+		$res=$this->query($query,array($bookId, $stackId));
+		if ($res===false) {
+			$errors[]=tra('Booking error creating stack entry').$this->ErrorNo().": ".$this->ErrorMsg()."<br /><pre>$query</pre>";
+			$errors[]=$this->stackManualRollback($bookId,$stackId);
+			return $errors;
+		}
+		
+		$query="INSERT INTO `tiki_acct_stackitem` (`stackBookId`, `stackItemStackId`, `stackItemAccountId`, `stackItemType`,
+				`stackItemAmount`, `stackItemText`)
+				VALUES (?, ?, ?, ?, ?, ?)";			  
+		for ($i=0;$i<count($debitAccount);$i++) {
+			$a=$this->cleanupAmount($bookId, $debitAmount[$i]);
+			$res=$this->query($query,array($bookId, $stackId, $debitAccount[$i], -1, $a, $debitText[$i]));
+			if ($res===false) {
+				$errors[]=tra('Booking error creating stack debit entry').$this->ErrorNo().": ".$this->ErrorMsg()."<br /><pre>$query</pre>";
+				//$this->rollback();
+				$errors[]=$this->stackManualRollback($bookId,$stackId);
+				return $errors;
+			}
+		}
+		for ($i=0;$i<count($creditAccount);$i++) {
+			$a=$this->cleanupAmount($bookId, $creditAmount[$i]);
+			$res=$this->query($query,array($bookId, $stackId, $creditAccount[$i], 1, $a, $creditText[$i]));
+			if ($res===false) {
+				$errors[]=tra('Booking error creating stack credit entry').$this->ErrorNo().": ".$this->ErrorMsg()."<br /><pre>$query</pre>";
+				//$this->rollback();
+				$errors[]=$this->manualRollback($bookId, $journalId);
+				return $errors;
+			}
+		}
+		// everything ok
+		//$this->commit();
+		return $stackId;
+	}
+	
+	/**
+	 * deletes an entry from the stack
+	 * @param	int		$bookId		id of the current book
+	 * @param	int		$stackId	id of the entry to delete
+	 * @return	bool/array			true on success, array of error messages otherwise
+	 */
+	function stackDelete($bookId, $stackId) {
+		$errors=array();
+		$query="DELETE FROM `tiki_acct_stackitem` WHERE `stackBookId`=? AND `stackItemStackId`=?";
+		$res=$this->query($query,array($bookId, $stackId));
+		if ($res===false) {
+			$errors[]=tra('Error deleting entry from stack').$this->ErrorNo().": ".$this->ErrorMsg()."<br /><pre>$query</pre>";		
+		}
+		$query="DELETE FROM `tiki_acct_stack` WHERE `stackBookId`=? AND `stackId`=?";
+		$res=$this->query($query,array($bookId, $stackId));
+		if ($res===false) {
+			$errors[]=tra('Error deleting entry from stack').$this->ErrorNo().": ".$this->ErrorMsg()."<br /><pre>$query</pre>";		
+		}
+		if (sizeof($errors)!=0) {
+			return $errors;
+		}
+		return true;
+	}
+	
+	/**
+	 * 
+	 * Confirm a transaction and transfer it to the journal
+	 * @param	int		$bookId		id of the current book
+	 * @param	int		$stackId	id of the entry in the stack
+	 */
+	function stackConfirm($bookId, $stackId) {
+		//$this->startTransaction();
+		$query="INSERT into `tiki_acct_journal` (`journalBookId`, `journalDate`, `journalDescription`,
+				`journalCancelled`, `journalTs`)
+				SELECT ?, `stackDate`, `stackDescription` , 0, NOW() FROM `tiki_acct_stack` WHERE `stackBookId`=? AND `stackId`=?";
+		$res=$this->query($query,array($bookId, $bookId, $stackId));
+		if ($res===false) {
+			$errors[]=tra('Booking error confirming stack entry').$this->ErrorNo().": ".$this->ErrorMsg()."<br /><pre>$query</pre>";
+			return $errors;
+		}		
+		$journalId=$this->lastInsertId();
+		$query="INSERT INTO `tiki_acct_item` (`itemBookId`, `itemJournalId`, `itemAccountId`, `itemType`,
+				`itemAmount`, `itemText`, `itemTs`)
+				SELECT ?, ?, `stackItemAccountId`, `stackItemType`, `stackItemAmount`, `stackItemText`, NOW()
+				FROM `tiki_acct_stackitem` WHERE `stackBookId`=? AND `stackItemStackId`=?";
+		$res=$this->query($query,array($bookId, $journalId, $bookId, $stackId));
+		if ($res===false) {
+			$errors[]=tra('Booking error cconfirming stack entry').$this->ErrorNo().": ".$this->ErrorMsg()."<br /><pre>$query</pre>";
+			//$this->rollback();
+			$errors[]=$this->manualRollback($bookId, $journalId);
+			return $errors;
+		}
+		$this->stackDelete($bookId, $stackId);
+		$query="UPDATE `tiki_acct_statement` SET `statementJournalId`=? WHERE `statementBookId`=? AND `statementStackId`=?";
+		$res=$this->query($query,array($journalId, $bookId, $stackId));
+		return true;		
+	}
+	
+	/**
+	 * 
+	 * Retrieves one entry from the stack
+	 * 
+	 * @param	int		$bookId		id of the current book
+	 * @param	int		$journalId	id of the post in the journal
+	 * @return	array/bool			array with post, false on error
+	 */
+	function getStackTransaction($bookId, $stackId) {
+		$query="SELECT * FROM `tiki_acct_stack` WHERE `stackBookId`=? AND `stackId`=?";
+		$res =$this->query($query,array($bookId, $stackId));
+		if ($res===false) return false;
+		$entry = $res->fetchRow();
+		$query="SELECT * FROM `tiki_acct_stackitem` WHERE `stackBookId`=? AND `stackItemStackId`=? AND `stackItemType`=? ORDER BY `stackItemAccountId` ASC";
+		$entry['debit'] =$this->fetchAll($query,array($bookId, $entry['stackId'],-1));
+		$entry['debitcount']=count($entry['debit']);
+		$entry['credit'] =$this->fetchAll($query,array($bookId, $entry['stackId'],1));
+		$entry['creditcount']=count($entry['credit']);
+		$entry['maxcount']=max($entry['creditcount'],$entry['debitcount']);
+		return $entry;		
+	} //getTransaction
 	
 	/**
 	 * Returns a list of bankaccounts which are related to internal accounts
@@ -768,6 +1125,26 @@ class AccountingLib extends LogsLib
 		}
 		return true;
 	}//updateStatement
+
+	/**
+	 * updates journalId in the given statement
+	 *
+	 * @param	int		$statementId	id of the statement to update
+	 * @param	int		$journalId		id of the entry in the journal which was caused by this statement
+	 * @return	array/boolean			list of errors, empty if no errors were found
+	 */
+	function updateStatementStack($statementId, $stackId) {
+		$errors=array();
+	  
+		$query="UPDATE `tiki_acct_statement` SET `statementStackId`=?
+				WHERE `statementId`=?";
+		$res=$this->query($query,array($stackId,$statementId));
+		if ($res===false) {
+	    	$errors[]=tra('Error while updating statement:').$this->ErrorNo().": ".$this->ErrorMsg()."<br /><pre>$query</pre>";
+	    	return $errors;
+		}
+		return true;
+	}//updateStatementStack
 	
 	/**
 	 * 

@@ -28,7 +28,9 @@
 <div class="box">
 	<h3 class="boxtitle">{tr}Tasks{/tr}</h3>
 	<div class="box-data" style="width: 500px">
-		{button href="tiki-accounting_entry.php?bookId=$bookId" _text="{tr}Book new entries{/tr}"}<br />
+		{if $canBook}{button href="tiki-accounting_entry.php?bookId=$bookId" _text="{tr}Book new entries{/tr}"}<br />
+		{button href="tiki-accounting_stack.php?bookId=$bookId&hideform=1" _text="{tr}Confirm stack entries{/tr}"}<br />{/if}
+		{if $canStack}{button href="tiki-accounting_stack.php?bookId=$bookId" _text="{tr}Book into Stack{/tr}"}<br />{/if}
 	</div>
 </div>
 {/tab}
