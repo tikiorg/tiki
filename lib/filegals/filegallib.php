@@ -99,7 +99,6 @@ class FileGalLib extends TikiLib
 		if ($prefs['fgal_enable_auto_indexing'] != 'n') {
 			$search_data = $this->get_search_text_for_data($data,$path,$type, $galleryId);
 			if ($search_data === false) {
-				//@file_put_contents('/tmp/tiki4log', "insert_file search_data\n", FILE_APPEND );
 				return false;
 			}
 		}
@@ -159,13 +158,24 @@ class FileGalLib extends TikiLib
 		global $prefs;
 
 		if ($prefs['feature_file_galleries_save_draft'] == 'y') {
-			$query = "delete from `tiki_file_drafts` where `fileId`=? and `user`=?";
-			$this->query($query, array((int) $fileId, $creator));
+			$query = "select  tf.`data` from `tiki_files` tf where tf.`fileId` = ?";
+			$result = $this->query($query, array((int) $fileId));
+			$old_file = $result->fetchRow();
 
-			$query = "insert into `tiki_file_drafts`(`fileId`,`filename`,`filesize`,`filetype`,`data`,`user`,`path`,`hash`,`lastModif`,`lockedby`)
-			values(?,?,?,?,?,?,?,?,?,?)";
+			if (empty($old_file['data'])) {
+				// File has been uploaded from webdav
+				$query = "update `tiki_files` set `name`=?,`filename`=?,`filesize`=?,`filetype`=?,`data`=?,`user`=?,`path`=?,`hash`=?,`lastModif`=?,`lockedby`=? where `fileId`=?";
+				return $this->query($query, array($filename,$filename,$size,$type,$data,$creator,$path,$checksum,(int)$this->now,$lockedby,$fileId));
 
-			return $this->query($query,array($fileId,$filename,$size,$type,$data,$creator,$path,$checksum,(int)$this->now,$lockedby));
+			} else {
+				$query = "delete from `tiki_file_drafts` where `fileId`=? and `user`=?";
+				$this->query($query, array((int) $fileId, $creator));
+
+				$query = "insert into `tiki_file_drafts`(`fileId`,`filename`,`filesize`,`filetype`,`data`,`user`,`path`,`hash`,`lastModif`,`lockedby`)
+				values(?,?,?,?,?,?,?,?,?,?)";
+
+				return $this->query($query,array($fileId,$filename,$size,$type,$data,$creator,$path,$checksum,(int)$this->now,$lockedby));
+			}
 		}
 
 		return true;
