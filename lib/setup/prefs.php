@@ -1539,6 +1539,7 @@ function get_default_prefs() {
 		'feature_perspective' => 'n', // If enabling by default, update further in this file
 		'feature_phplayers' => 'n',
 		'feature_cssmenus' => 'y',
+		'display_html_in_menus' => 'n',
 		'feature_projects' => 'n',
 		'feature_ranking' => 'n',
 		'feature_redirect_on_error' => 'n',
