@@ -120,10 +120,18 @@ class Search_Index_Lucene implements Search_Index_Interface
 			'Search_Type_MultivalueText' => 'UnStored',
 			'Search_Type_ShortText' => 'Text',
 		);
-
+		$fieldBoost = array(
+			'objectId' => 5,
+			'title' => 3,
+			'description' => 2,
+		);
 		foreach ($data as $key => $value) {
 			$luceneType = $typeMap[get_class($value)];
-			$document->addField(Zend_Search_Lucene_Field::$luceneType($key, $value->getValue()));
+			$field = Zend_Search_Lucene_Field::$luceneType($key, $value->getValue());
+			if (!empty($fieldBoost[$key])) {
+				$field->boost = $fieldBoost[$key];
+			}
+			$document->addField($field);
 		}
 
 		return $document;
