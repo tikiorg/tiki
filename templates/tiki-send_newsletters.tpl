@@ -229,7 +229,7 @@
 						<label for="editwikitxt">{tr}Data Txt:{/tr}</label>
 					</td>
 					<td id="txtcol2" >
-						<textarea id='editwikitxt' name="datatxt" rows="{$rows}" cols="{$cols}">{$datatxt|escape}</textarea>
+						<textarea id='editwikitxt' name="datatxt" rows="{$rows}" cols="{$cols}">{$info.datatxt|escape}</textarea>
 					</td>
 				</tr>
 
