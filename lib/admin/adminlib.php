@@ -83,6 +83,18 @@ class AdminLib extends TikiLib
 		return $res;
 	}
 
+	function get_dsn_from_name($dsnName) {
+		$query = "select * from `tiki_dsn` where `name`=?";
+
+		$result = $this->query($query,array($dsnName));
+
+		if (!$result->numRows())
+			return false;
+
+		$res = $result->fetchRow();
+		return $res;
+	}
+
 	function list_extwiki($offset, $maxRecords, $sort_mode, $find) {
 		$bindvars=array();
 		if ($find) {

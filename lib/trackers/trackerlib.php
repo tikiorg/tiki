@@ -1199,6 +1199,43 @@ class TrackerLib extends TikiLib
 			}
 			$fields[] = $fopt;
 		}
+
+		// Field that need other field value
+		foreach ($fields as $index => $field) {
+			switch ($field['type']) {
+				case 'P':
+					if (count($field['options_array']) == 3) {
+						include_once ('lib/admin/adminlib.php');
+						include_once ('lib/ldap/ldaplib.php');
+
+						// Retrieve DSN
+						$info_ldap = $adminlib->get_dsn_from_name($field['options_array'][2]);
+
+						if ($info_ldap) {
+							$ldap_filter = $field['options_array'][0];
+
+							// Replace %field_name% by real value
+							preg_match('/%([^%]+)%/', $ldap_filter, $ldap_filter_field_names);
+
+							if (isset($ldap_filter_field_names[1])) {
+								foreach ($fields as $sub_field) {
+									if (strcmp($ldap_filter_field_names[1], $sub_field['name']) == 0) {
+										$ldap_filter = preg_replace('/%'. $ldap_filter_field_names[1] .'%/', $sub_field['value'], $ldap_filter);
+										break;
+									}
+								}
+							}
+
+							// Get LDAP field value
+							$fields[$index]['value'] = $ldaplib->get_field($info_ldap['dsn'], $ldap_filter, $field['options_array'][1]);
+						}
+					}
+					break;
+				default:
+					break;
+			}
+		}
+
 		return($fields);
 	}
 	function in_group_value($field, $itemUser) {
@@ -3554,6 +3591,23 @@ class TrackerLib extends TikiLib
 				<dt>Description:
 				<dd>Like the rating
 				<dd>
+				</dl>'));
+		$type['P'] = array(
+			'label'=>tra('ldap'),
+			'opt'=>true,
+			'options'=>array(
+				'filter'=>array('type'=>'str','label'=>tra('LDAP Filter')),
+				'field'=>array('type'=>'str','label'=>tra('Returned field')),
+				'dsn'=>array('type'=>'str','label'=>tra('DSN name')),
+			),
+			'help'=>tra('<dl>
+				<dt>Function: Display a field value from a specific user in LDAP
+				<dt>Usage: <strong>filter,field,dsn</strong>
+				<dt>Example: (&(mail=%field_name%)(objectclass=posixaccount)),displayName, authldap
+				<dt>Description:
+				<dd><strong>[filter]</strong> LDAP Filter, without commas. %field_name% can be used, and will be replaced by the tracker field %field_name% current value.;
+				<dd><strong>[field]</strong> LDAP returned field;
+				<dd><strong>[dsn]</strong> DSN name in Tiki;
 				</dl>'));
 
 		return $type;

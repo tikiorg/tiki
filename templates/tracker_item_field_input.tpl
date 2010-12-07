@@ -507,7 +507,13 @@
 		<a href="javascript:addTag{$field_value.ins_id|replace:"[":"_"|replace:"]":""}('{$smarty.capture.tagurl|escape:'javascript'|escape}');" onclick="javascript:needToConfirm=false">{$t|escape}</a>&nbsp; &nbsp; 
 	{/foreach}
 	{/if}
-		
+
+{* -------------------- LDAP -------------------- *}
+{elseif $field_value.type eq 'P'}
+	{if $field_value.value ne ''}
+		{$field_value.value}
+	{/if}
+
 {* -------------------- in group -------------------- *}
 {elseif $field_value.type eq 'N'}
 	{include file='tracker_item_field_value.tpl'}
