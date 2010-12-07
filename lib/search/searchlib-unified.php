@@ -35,7 +35,9 @@ class UnifiedSearchLib
 
 		if ($prefs['unified_engine'] == 'lucene') {
 			// Current to -old
-			rename($prefs['unified_lucene_location'], $swapName);
+			if (file_exists($prefs['unified_lucene_location'])) {
+				rename($prefs['unified_lucene_location'], $swapName);
+			}
 			// -new to current
 			rename($tempName, $prefs['unified_lucene_location']);
 
