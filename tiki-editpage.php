@@ -1272,7 +1272,7 @@ else {
 }
 
 if ($wikilib->contains_badchars($page) && ! $tikilib->page_exists($page) ) {
-	$smarty->assign('page_badchars_display', $wikilib->get_badchars($page));
+	$smarty->assign('page_badchars_display', $wikilib->get_badchars());
 }
 
 $plugins = $wikilib->list_plugins(true, 'editwiki');
