@@ -3010,7 +3010,7 @@ CREATE TABLE `users_users` (
   `waiting` char(1) default NULL,
   PRIMARY KEY (`userId`),
   KEY `score` (score),
-  KEY `login` (login),
+  UNIQUE KEY `login` (login),
   KEY `registrationDate` (`registrationDate`),
   KEY `openid_url` (openid_url)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
