@@ -808,12 +808,13 @@ class LogsLib extends TikiLib
 
 	function export($actionlogs, $unit = 'b')
 	{
-	$csv = "user,date,time,action,type,object,category,unit,+,-,contribution\r\n";
+	$csv = "user,date,time,action,type,object,category,categId, unit,+,-,contribution\r\n";
 	foreach ($actionlogs as $action) {
 		if (!isset($action['object'])) {
 			$action['object'] = '';
 		}
-		if (!isset($action['categId'])) {
+		if (!isset($action['categName'])) {
+			$action['categName'] = '';
 			$action['categId'] = '';
 		}
 		if (!isset($action['add'])) {
@@ -829,6 +830,7 @@ class LogsLib extends TikiLib
 				 . '","' . $action['action']
 				 . '","' . $action['objectType']
 				 . '","' . $action['object']
+				 . '","' . $action['categName']
 				 . '","' . $action['categId']
 				 . '","' . $unit
 				 . '","' . $action['add']
@@ -903,7 +905,7 @@ class LogsLib extends TikiLib
 			$mid = 'and `name`= ?';
 			$bindvars[] = $name;
 		}
-		$query = "delete from `tiki_actionlog_params` where `actionId`=?";
+		$query = "delete from `tiki_actionlog_params` where `actionId`=? $mid";
 		$this->query($query, $bindvars);
 	}
 
