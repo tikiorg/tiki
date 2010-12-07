@@ -62,7 +62,7 @@
 			<input type="hidden" name="data" value="{$data|escape}" />
 			<input type="hidden" name="dataparsed" value="{$dataparsed|escape}" />
 			<input type="hidden" name="cookietab" value="3" />
-			<input type="hidden" name="datatxt" value="{$datatxt|escape}" />
+			<input type="hidden" name="datatxt" value="{$info.datatxt|escape}" />
 			<input type="hidden" name="replyto" value="{$replyto|escape}" />
 			<input type="hidden" name="wysiwyg" value="{$wysiwyg|escape}" />
 			<input type="submit" name="send" value="{tr}Send{/tr}" onclick="document.getElementById('confirmArea').style.display = 'none'; document.getElementById('sendingArea').style.display = 'block';" />
