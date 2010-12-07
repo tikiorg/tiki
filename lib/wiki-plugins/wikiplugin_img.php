@@ -542,14 +542,16 @@ function wikiplugin_img_info() {
 		return $repl; // return the multiple images
 	}
 	
-	//////////////////////Set src for html///////////////////////////////
-	//Set variables for the base path for images in file galleries, image galleries and attachments
-	$imagegalpath = 'show_image.php?id=';
-	$filegalpath = 'tiki-download_file.php?fileId=';
-	$attachpath = 'tiki-download_wiki_attachment.php?attId=';
-	
 	$repl = '';
 	$absolute_links = (!empty($parseOptions['absolute_links'])) ? $parseOptions['absolute_links'] : false;
+
+	//////////////////////Set src for html///////////////////////////////
+	//Set variables for the base path for images in file galleries, image galleries and attachments
+	global $base_url;
+	$imagegalpath = ($absolute_links ? $base_url : '') . 'show_image.php?id=';
+	$filegalpath = ($absolute_links ? $base_url : '') . 'tiki-download_file.php?fileId=';
+	$attachpath = ($absolute_links ? $base_url : '') . 'tiki-download_wiki_attachment.php?attId=';
+	
 	//get random image and treat as file gallery image afterwards
 	if (!empty($imgdata['randomGalleryId'])) {
 		include_once('lib/tikilib.php');
@@ -822,7 +824,7 @@ function wikiplugin_img_info() {
 			// If not otherwise set, use default setting for thumbnail height if thumb is set
 			} elseif ((!empty($imgdata['thumb']) || !empty($urlthumb))  && empty($scale)) {
 				if (!empty($imgdata['fileId'])) {
-					$thumbdef = 120;	// filegals thumbnails size is hard-coded in lib/images/abstract.php
+					$thumbdef = $prefs['fgal_thumb_max_size'];
 				} else {
 					$thumbdef = 84;  
 				}

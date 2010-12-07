@@ -16,7 +16,7 @@ lang = {
 	"Strength" : "Força",
 	"Valid User Name" : "Nom d'usuari vàlid",
 	"Passwords match" : "Les contrasenyes coincideixen",
-	"Valid Email" : "Correu-e vàlid"
+	"Valid Email" : "Correu-e vàlid",
 	"Close" : "Tancar",
 	"Submit" : "Enviar",
 	"Insert" : "Inserir",

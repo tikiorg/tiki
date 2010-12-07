@@ -4697,7 +4697,7 @@ class TikiLib extends TikiDb_Bridge
 					 */
 				}
 
-				$plugins['arguments'] = $this->plugin_split_args( $plugins[2] );
+				$plugins['arguments'] = isset($plugins[2]) ? $this->plugin_split_args( $plugins[2] ) : array();
 			} else {
 				$plugins[1] = $plugins[0];
 				$plugins[2] = "";

@@ -286,7 +286,7 @@ function togglereminderforrecurrence() {
 					   			toggleSpan('duration');
 					   			toggleSpan('duratione');
 					   			toggleSpan('durminplus');
-					   			toggleSpan('durminminus');return false;"
+					   			toggleSpan('durminminus');"
 					   value="true" {if $calitem.allday} checked="checked" {/if} /> {tr}All day{/tr}</label>
 			</td>
 		</tr>

@@ -14,8 +14,8 @@ lang = {
 	"Weak" : "Floja",
 	"Very Weak" : "Muy Floja",
 	"Strength" : "Fuerza",
-	"Passwords match" : "Las contraseñas coinciden"
-	"Valid Email" : "Correo-e válido"
+	"Passwords match" : "Las contraseñas coinciden",
+	"Valid Email" : "Correo-e válido",
 	"Close" : "Cerrar",
 	"Submit" : "Enviar",
 	"Insert" : "Insertar",

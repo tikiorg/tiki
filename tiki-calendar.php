@@ -420,10 +420,10 @@ if ($calendarViewMode == 'day') {
 		foreach ($cell[0]["{$weekdays[0]}"]['items'] as $dayitems) {
 			$dayitems['time'] = ($dayitems['startTimeStamp'] > $cell[0]["{$weekdays[0]}"]['day'])
 				? $dayitems['time']
-				: str_pad($minHourOfDay,2,'0',STR_LEFT_PAD) . "00";
+				: str_pad($minHourOfDay,2,'0',STR_PAD_LEFT) . "00";
 			$dayitems['end'] = ($dayitems['endTimeStamp'] < ($cell[0]["{$weekdays[0]}"]['day'] + 86399))
 				? $dayitems['end']
-				: str_pad($maxHourOfDay,2,'0',STR_LEFT_PAD) . "59";
+				: str_pad($maxHourOfDay,2,'0',STR_PAD_LEFT) . "59";
 			$rawhour =intval(substr($dayitems['time'],0,2));
 			$dayitems['mins'] = substr($dayitems['time'],2);
 			$dayitems['top'] = (($rawhour - $minHourOfDay) + $dayitems['mins']/60)*24 + 35;
@@ -543,10 +543,10 @@ if ($calendarViewMode == 'day') {
 			foreach ($cell[0][$wd]['items'] as $dayitems) {
 				$dayitems['time'] = ($dayitems['startTimeStamp'] >= $cell[0][$wd]['day'])
 					? $dayitems['time']
-					: str_pad($minHourOfDay,2,'0',STR_LEFT_PAD) . "01";
+					: str_pad($minHourOfDay,2,'0',STR_PAD_LEFT) . "01";
 				$dayitems['end'] = ($dayitems['endTimeStamp'] < ($cell[0][$wd]['day'] + 86400))
 					? $dayitems['end']
-					: str_pad($maxHourOfDay,2,'0',STR_LEFT_PAD) . "59";
+					: str_pad($maxHourOfDay,2,'0',STR_PAD_LEFT) . "59";
 				$rawhour =intval(substr($dayitems['time'],0,2));
 				if ($rawhour < $minHourOfDay)
 					$rawhour = $minHourOfDay;
@@ -580,7 +580,7 @@ if ($calendarViewMode == 'day') {
 		foreach($tmpRes as $val) {
 			$maxConcurrency = max($maxConcurrency,count($val));
 		}
-		$slots = array_fill(0,min($maxSimultaneousWeekViewEvents,$maxConcurrency), -1);
+		$slots = array_fill(0,max(1,min($maxSimultaneousWeekViewEvents,$maxConcurrency)), -1);
 		foreach($tmpRes as $val) {
 			foreach($val as $index=>$evtId) {
 				$concurrencies[$wd][$evtId]['value'] = $maxConcurrency;

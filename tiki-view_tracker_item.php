@@ -736,6 +736,7 @@ if ($_REQUEST["itemId"]) {
 	}
 	$last = array();
 	$lst = '';
+	$tracker_item_main_value = '';
 	foreach($xfields["data"] as $i => $array) {
 		if ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's' and $xfields[$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y') or ($xfields['data'][$i]['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
 			$fields["data"][$i] = $xfields["data"][$i];
@@ -991,11 +992,13 @@ if ($_REQUEST["itemId"]) {
 					}
 				}
 			}
-			if ($fields['data'][$i]['isMain'] == 'y' && empty($tracker_item_main_value)) {
-				$tracker_item_main_value = $ins_fields['data'][$i]['value']; 
-				$smarty->assign('tracker_item_main_value', $ins_fields['data'][$i]['value']);
+			if ($fields['data'][$i]['isMain'] == 'y') {
+				$tracker_item_main_value .= (empty($tracker_item_main_value) ? '' : ' ') . $ins_fields['data'][$i]['value']; 
 			}
 		}
+	}
+	if (!empty($tracker_item_main_value)) {
+		$smarty->assign('tracker_item_main_value', $tracker_item_main_value);
 	}
 }
 //restore types values if there is an error
