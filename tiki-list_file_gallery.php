@@ -215,6 +215,27 @@ if (isset($_REQUEST['lock']) && isset($_REQUEST['fileId']) && $_REQUEST['fileId'
 	}
 }
 
+// Validate a draft
+if (!empty($_REQUEST['validate']) && $prefs['feature_file_galleries_save_draft'] == 'y') {
+	// To validate a draft the user must be the owner or the file or the gallery or admin
+	if (!$info = $filegallib->get_file_info($_REQUEST['validate'])) {
+		$smarty->assign('msg', tra('Incorrect param'));
+		$smarty->display('error.tpl');
+		die;
+	}
+	if ($tiki_p_admin_file_galleries != 'y' && (!$user || $user != $gal_info['user'])) {
+		if ($user != $info['user']) {
+			$smarty->assign('errortype', 401);
+			$smarty->assign('msg', tra('Permission denied you cannot validate files from this gallery'));
+			$smarty->display('error.tpl');
+			die;
+		}
+	}
+
+	$access->check_authenticity(tra('Validate draft: ') . (!empty($info['name']) ? htmlspecialchars($info['name']) . ' - ' : '') . $info['filename']);
+	$filegallib->validate_draft($info['fileId']);
+}
+
 // Delete a file
 if (!empty($_REQUEST['remove'])) {
 	// To remove an image the user must be the owner or the file or the gallery or admin
@@ -238,8 +259,14 @@ if (!empty($_REQUEST['remove'])) {
 		$smarty->assign('file_backlinks_title', 'WARNING: The file is used in:');//get_strings tra('WARNING: The file is used in:')
 		$smarty->assign('confirm_detail', $smarty->fetch('file_backlinks.tpl'));
 	}
-	$access->check_authenticity(tra('Remove file: ') . (!empty($info['name']) ? htmlspecialchars($info['name']) . ' - ' : '') . $info['filename']);
-	$filegallib->remove_file($info, $gal_info);
+
+	if (!empty($_REQUEST['draft'])) {
+		$access->check_authenticity(tra('Remove file draft: ') . (!empty($info['name']) ? htmlspecialchars($info['name']) . ' - ' : '') . $info['filename']);
+		$filegallib->remove_draft($info['fileId'], $user);
+	} else {
+		$access->check_authenticity(tra('Remove file: ') . (!empty($info['name']) ? htmlspecialchars($info['name']) . ' - ' : '') . $info['filename']);
+		$filegallib->remove_file($info, $gal_info);
+	}
 }
 
 $foo = parse_url($_SERVER['REQUEST_URI']);
@@ -589,6 +616,9 @@ if (!empty($_FILES)) {
 			$fhash = '';
 			if ($prefs['fgal_use_db'] == 'n') {
 				$fhash = md5(uniqid(md5($v['name'])));
+				if ($prefs['feature_file_galleries_save_draft'] == 'y') {
+					$fhash .= '.' . $user . '.draft';
+				}
 				@$fw = fopen($savedir . $fhash, 'wb');
 				if (!$fw) {
 					$smarty->assign('msg', tra('Cannot write to this file:') . $savedir . $fhash);

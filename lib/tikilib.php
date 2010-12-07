@@ -2095,6 +2095,40 @@ class TikiLib extends TikiDb_Bridge
 		return $result ? $result->fetchRow() : array();
 	}
 
+	/**
+	 * Retrieve file draft
+	 *
+	 * @param int $id
+	 */
+	function get_file_draft($id) {
+		global $user;
+
+		$file = $this->get_file($id);
+
+		if (!$file || empty($file)) {
+			return array();
+		}
+
+		$query = "select tfd.* from `tiki_file_drafts` tfd where `fileId`=? and `user`=?";
+		$result = $this->query($query, array((int)$id, $user));
+
+		if (!($draft = $result->fetchRow())) {
+			return $file;
+		}
+
+		$file['filename'] = $draft['filename'];
+		$file['filesize'] = $draft['filesize'];
+		$file['filetype'] = $draft['filetype'];
+		$file['data'] = $draft['data'];
+		$file['user'] = $draft['user'];
+		$file['path'] = $draft['path'];
+		$file['hash'] = $draft['hash'];
+		$file['lastModif'] = $draft['lastModif'];
+		$file['lockedby'] = $draft['lockedby'];
+
+		return $file;
+	}
+
 	/*shared: added by AW*/
 	function get_file_by_name($galleryId, $name, $column='name') {
 		$query = "select `path`,`galleryId`,`filename`,`filetype`,`data`,`filesize`,`name`,`description`, `created` from `tiki_files` where `galleryId`=? AND `$column`=? ORDER BY created DESC LIMIT 1";
@@ -2130,7 +2164,7 @@ class TikiLib extends TikiDb_Bridge
 						$recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false, $with_backlink=false, $filter='',
 						$wiki_syntax = '') {
 
-		global $user, $tiki_p_admin_file_galleries;
+		global $user, $tiki_p_admin_file_galleries, $prefs;
 		global $filegallib; require_once('lib/filegals/filegallib.php');
 
 		$f_jail_bind = array();
@@ -2211,6 +2245,11 @@ class TikiLib extends TikiDb_Bridge
 			$f_table .= ' LEFT JOIN `tiki_files` tfh ON (tf.`fileId` = tfh.`archiveId`)';
 			$f_group_by = ' GROUP BY tf.`fileId`';
 		}
+		if ( $with_files && $prefs['feature_file_galleries_save_draft'] == 'y' ) {
+			$f2g_corresp['count(tfd.`fileId`) as `nbDraft`'] = '0 as `nbDraft`';
+			$f_table .= ' LEFT JOIN `tiki_file_drafts` tfd ON (tf.`fileId` = tfd.`fileId` and tfd.`user`=?)';
+			$f_group_by = ' GROUP BY tf.`fileId`';
+		}
 		if ( $with_backlink ) {
 			$f2g_corresp['count(tfb.`fileId`) as `nbBacklinks`'] = '0 as `nbBacklinks`';
 			$f_table .= ' LEFT JOIN `tiki_file_backlinks` tfb ON (tf.`fileId` = tfb.`fileId`)';
@@ -2259,6 +2298,9 @@ class TikiLib extends TikiDb_Bridge
 		if ( !empty($filter['lastDownload']) ) {
 			$f_query .= ' AND (tf.`lastDownload` < ? or tf.`lastDownload` is NULL)';
 			$bindvars[] = $filter['lastDownload'];
+		}
+		if ( $with_files && $prefs['feature_file_galleries_save_draft'] == 'y' ) {
+			$bindvars[] = $user;
 		}
 		if (!empty($filter['fileId'])) {
 			$f_query .= ' AND tf.`fileId` in ('.implode(',',array_fill(0, count($filter['fileId']),'?')).')';

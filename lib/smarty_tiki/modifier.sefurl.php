@@ -53,6 +53,9 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 	case 'preview':
 		$href = $sefurl ? "preview$source" : "tiki-download_file.php?fileId=$source&amp;preview";
 		break;
+	case 'draft':
+		$href = 'tiki-download_file.php?fileId='. $source.'&amp;draft';
+		break;
 	case 'tracker item':
 		$type = 'trackeritem';
 	case 'trackeritem':

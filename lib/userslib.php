@@ -1664,6 +1664,7 @@ class UsersLib extends TikiLib
 			$this->query("update `tiki_private_messages` set `toNickname`=? where `toNickname`=?", array($to,$from));
 			$this->query("update `tiki_pages` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_pages` set `creator`=? where `creator`=?", array($to,$from));
+			$this->query("update `tiki_page_drafts` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_page_footnotes` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_newsletters` set `author`=? where `author`=?", array($to,$from));
 			$this->query("update `tiki_minical_events` set `user`=? where `user`=?", array($to,$from));
@@ -1686,6 +1687,7 @@ class UsersLib extends TikiLib
 			$this->query("update `tiki_files` set `lastModifUser`=? where `lastModifUser`=?", array($to,$from));
 			$this->query("update `tiki_files` set `lockedby`=? where `lockedby`=?", array($to,$from));
 			$this->query("update `tiki_file_galleries` set `user`=? where `user`=?", array($to,$from));
+			$this->query("update `tiki_file_drafts` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_copyrights` set `userName`=? where `userName`=?", array($to,$from));
 			$this->query("update `tiki_comments` set `userName`=? where `userName`=?", array($to,$from));
 			$this->query("update `tiki_chat_users` set `nickname`=? where `nickname`=?", array($to,$from));

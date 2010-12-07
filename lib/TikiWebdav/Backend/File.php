@@ -357,7 +357,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 	protected function getResourceContents( $path )
 	{
-		global $tikilib;
+		global $tikilib, $prefs;
 		global $filegallib; require_once('lib/filegals/filegallib.php');
 
 		$result = false;
@@ -365,7 +365,11 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 		if ( $objectId !== false && $objectId['type'] == 'file' )
 		{
-			$fileInfo = $tikilib->get_file($objectId['id']);
+			if ($prefs['feature_file_galleries_save_draft'] == 'y') {
+				$fileInfo = $tikilib->get_file_draft($objectId['id']);
+			} else {
+				$fileInfo = $tikilib->get_file($objectId['id']);
+			}
 			if ( empty($fileInfo['path']) ) {
 				return $fileInfo['data'];
 			} else {
@@ -486,7 +490,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 	public function getProperty( $path, $propertyName, $namespace = 'DAV:' )
 	{
-		global $tikilib;
+		global $tikilib, $prefs;
 		global $filegallib; include_once('lib/filegals/filegallib.php');
 
 		print_debug("GetProperty($path, $propertyName, $namespace)");
@@ -499,7 +503,11 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		if ( $isCollection ) {
 			$tikiInfo = $filegallib->get_file_gallery_info($objectId['id']);
 		} else {
-			$tikiInfo = $filegallib->get_file_info($objectId['id']);
+			if ($prefs['feature_file_galleries_save_draft'] == 'y') {
+				$tikiInfo = $filegallib->get_file_info($objectId['id'], true, true, true);
+			} else {
+				$tikiInfo = $filegallib->get_file_info($objectId['id']);
+			}
 		}
 
 		$storage = $this->getPropertyStorage( $path );

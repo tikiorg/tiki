@@ -555,6 +555,7 @@ function get_default_prefs() {
 		'home_file_gallery' => 1,
 		'fgal_root_id' => 1,
 		'fgal_use_db' => 'y',
+		'feature_file_galleries_save_draft' => 'n',
 		'fgal_batch_dir' => '',
 		'fgal_match_regex' => '',
 		'fgal_nmatch_regex' => '',

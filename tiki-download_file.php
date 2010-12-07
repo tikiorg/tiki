@@ -88,7 +88,11 @@ $error = '';
 
 if (!$skip) {
 	if ( isset($_REQUEST['fileId']) && !is_array($_REQUEST['fileId'])) {
-		$info = $tikilib->get_file($_REQUEST['fileId']);
+		if (isset($_GET['draft'])) {
+			$info = $tikilib->get_file_draft($_REQUEST['fileId']);
+		} else {
+			$info = $tikilib->get_file($_REQUEST['fileId']);
+		}
 	} elseif ( isset($_REQUEST['galleryId']) && isset($_REQUEST['name']) ) {
 		$info = $tikilib->get_file_by_name($_REQUEST['galleryId'], $_REQUEST['name']);
 	} elseif ( isset($_REQUEST['fileId']) && is_array($_REQUEST['fileId'])) {
