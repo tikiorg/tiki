@@ -11,7 +11,7 @@ require_once 'lib/perspectivelib.php';
 $access->check_feature( 'feature_perspective' );
 
 // Force preference reload, new perspective will be taken in account.
-unset($_SESSION['current_perspective']);
+$_SESSION['current_perspective'] = 0;
 $_SESSION['need_reload_prefs'] = true;
 
 if( isset($_REQUEST['perspective']) ) {
@@ -30,6 +30,10 @@ if( isset($_REQUEST['perspective']) ) {
 	}
 }
 
-header( 'Location: tiki-index.php' );
+if( isset($_REQUEST['back']) && isset($_SERVER['HTTP_REFERER']) ) {
+	header( 'Location: ' . $_SERVER['HTTP_REFERER'] );
+} else {
+	header( 'Location: tiki-index.php' );
+}
 
 // EOF
