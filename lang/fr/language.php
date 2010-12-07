@@ -72,7 +72,7 @@ $lang=Array(
 // ### Please remove manually!
 // ### N.B. Legitimate strings may be marked// ### as unused!
 // ### Please see http://tiki.org/UnusedWords for further info
-" But the login failed, so check the Username and Password" => "Mais l'authentification a échouée, vérifier l'identifiant et le mot de passe",
+" But the login failed, so check the Username and Password" => "Mais l'authentification a échoué, vérifier l'identifiant et le mot de passe",
 " mail account" => " compte de messagerie",
 " Syntax tips" => " astuces de syntaxe",
 " The connection failed, so check the server names" => "Connexion échouée, vérifier le nom du serveur",
