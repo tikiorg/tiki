@@ -934,7 +934,7 @@ class WikiLib extends TikiLib
 		return $this->query($query, $bindvals) ? true : false;
 	}
 	function sefurl($page, $with_next='', $all_langs='') {
-		global $prefs, $smarty;
+		global $prefs, $smarty, $info;
 		if( basename( $_SERVER['PHP_SELF'] ) == 'tiki-all_languages.php' ) {
 			return 'tiki-all_languages.php?page='.urlencode($page);
 		}
@@ -945,6 +945,15 @@ class WikiLib extends TikiLib
 		}
 
 		$href = "$script_name?page=".urlencode($page);
+
+		if ($prefs['feature_wiki_use_date_links'] == 'y') {
+			if (isset($_REQUEST['date'])) {
+				$href .= '&date='. urlencode($_REQUEST['date']);
+			} else if (isset($_REQUEST['version'])) {
+				$href .= '&date='. urlencode($info['lastModif']);
+			}
+		}
+
 		if ($with_next) {
 			$href .= '&amp;';
 		}

@@ -5,6 +5,10 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+// Special values
+define('WIKIPLUGIN_FILE_PAGE_LAST_MOD', 'PAGE_LAST_MOD');
+define('WIKIPLUGIN_FILE_PAGE_VIEW_DATE', 'PAGE_VIEW_DATE');
+
 function wikiplugin_file_info()
 {
 	global $prefs;
@@ -90,7 +94,7 @@ function wikiplugin_file_info()
 			'date' => array(
 				'required' => false,
 				'name' => tra('Date'),
-				'description' => tra('For an archive file, the archive created just before this date will be linked to.'),
+				'description' => tra('For an archive file, the archive created just before this date will be linked to. Special values : PAGE_LAST_MOD and PAGE_VIEW_DATE.'),
 				'parent' => array('name' => 'type', 'value' => 'gallery'),
 				'default' => '',
 				'advanced' => true,
@@ -122,7 +126,7 @@ function wikiplugin_file_info()
 
 function wikiplugin_file( $data, $params )
 {
-	global $tikilib, $prefs;
+	global $tikilib, $prefs, $info, $page_view_date;
 	if (isset($params['fileId'])) {
 		global $filegallib; include_once ('lib/filegals/filegallib.php');
 		if ($prefs['feature_file_galleries'] != 'y') {
@@ -137,7 +141,15 @@ function wikiplugin_file( $data, $params )
 				}
 				$date = $wikipluginFileDate;
 			} else {
-				if (($date = strtotime($params['date'])) === false) {
+				if (strcmp($params['date'], WIKIPLUGIN_FILE_PAGE_LAST_MOD) == 0) {
+					// Page last modification date
+					$date = $info['lastModif'];
+
+				} else if (strcmp($params['date'], WIKIPLUGIN_FILE_PAGE_VIEW_DATE) == 0) {
+					// Current date parameter
+					$date = (isset($page_view_date)) ? $page_view_date : time();
+
+				} else if (($date = strtotime($params['date'])) === false) {
 					return tra('Incorrect date format');
 				}
 				$wikipluginFileDate = $date;

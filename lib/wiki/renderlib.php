@@ -373,6 +373,10 @@ class WikiRenderer
 		$this->smartyassign('pagenum',$this->pageNumber);
 
 		$this->smartyassign('lastVersion',$this->info["version"]);
+		if (isset($this->info['last_version'])) {
+			$this->smartyassign('versioned', true);
+		}
+
 		$this->smartyassign('lastModif',$this->info["lastModif"]);
 		if(empty($this->info['user'])) {
 			$this->info['user']=tra('Anonymous');  

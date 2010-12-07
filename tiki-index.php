@@ -21,6 +21,7 @@ $inputConfiguration = array(
 		'removeattach' => 'digits',
 		'sort_mode' => 'word',
 		//'structure' => '', TODO
+		'version' => 'digits',
 		'watch_action' => 'word',
 		'watch_event' => 'word',
 		//'watch_object' => 'word', TODO
@@ -48,7 +49,7 @@ if ($prefs['feature_ajax'] === 'y') {
 require_once ("lib/wiki/renderlib.php");
 
 $auto_query_args = array('page','no_bl','page_id','pagenum','page_ref_id','mode','sort_mode',
-                         'machine_translate_to_lang');
+                         'machine_translate_to_lang', 'version', 'date');
 
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
@@ -169,10 +170,46 @@ if ( function_exists('utf8_encode') ) {
 }
 
 
-
-// Get page data, if available
 if (!$info) {
-	$info = $tikilib->get_page_info($page);
+        if ($prefs['feature_wiki_use_date'] == 'y' && isset($_REQUEST['date'])) {
+            // Date is required
+            include_once ('lib/wiki/histlib.php');
+
+            try {
+                $page_view_date = $histlib->get_view_date($_REQUEST['date']);
+
+                if ($page_view_date < time()) {
+                    // Asked date must be before now
+                    $_REQUEST['version'] = $histlib->get_version_by_time($page, $page_view_date);
+                }
+
+            } catch (Exception $e) {
+                // Wrong date format
+                $msg = tra("Invalid date format");
+                $smarty->assign('msg', $msg);
+                $smarty->display('error.tpl');
+                die;
+            }
+        }
+
+        if ($prefs['feature_wiki_use_date'] == 'y' && isset($_REQUEST['version'])) {
+            // Version is required
+            include_once ('lib/wiki/histlib.php');
+
+            try {
+                $info = $histlib->get_page_info($page, $_REQUEST['version']);
+
+            } catch (Exception $e) {
+                // Unknown version
+                $msg = tra("This version does not exist");
+                $smarty->assign('msg', $msg);
+                $smarty->display('error.tpl');
+                die;
+            }
+
+        } else {
+            $info = $tikilib->get_page_info($page);
+        }
 }
 	
 // If the page doesn't exist then display an error
@@ -269,7 +306,7 @@ $page = $info['pageName'];
 //	$translatedWikiMarkup = generate_machine_translated_markup($info, $_REQUEST['machine_translate_to_lang']);
 //} 
 
-$pageRenderer = new WikiRenderer( $info, $user);
+$pageRenderer = new WikiRenderer( $info, $user, $info['data'] );
 $objectperms = $pageRenderer->applyPermissions();
 
 if ($prefs['feature_wiki_comments'] == 'y' and $objectperms->wiki_view_comments ) {

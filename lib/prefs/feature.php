@@ -1552,6 +1552,14 @@ function prefs_feature_list() {
 			'name' => tra('Import HTML'),
 			'type' => 'flag',
 		),
+		'feature_wiki_use_date' => array(
+			'name' => tra('Use date parameter'),
+			'type' => 'flag',
+		),
+		'feature_wiki_use_date_links' => array(
+			'name' => tra('Report it in wiki links'),
+			'type' => 'flag',
+		),
 		'feature_wiki_import_page' => array(
 			'name' => tra('Import pages'),
 			'type' => 'flag',

@@ -220,6 +220,10 @@
 
 		{preference name=feature_wiki_import_html}
 		{preference name=feature_wiki_import_page}
+		{preference name=feature_wiki_use_date}
+		<div class="adminoptionboxchild" id="feature_wiki_use_date_links">
+			{preference name=feature_wiki_use_date_links}
+		</div>
 		{preference name=wiki_uses_slides}
 		{preference name=feature_wiki_1like_redirection}
 		{preference name=feature_wiki_userpage}

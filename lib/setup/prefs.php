@@ -75,6 +75,8 @@ function get_default_prefs() {
 		'feature_wiki_footnotes' => 'n',
 		'feature_wiki_icache' => 'n',
 		'feature_wiki_import_html' => 'n',
+		'feature_wiki_use_date' => 'n',
+		'feature_wiki_use_date_links' => 'n',
 		'feature_wiki_mindmap' => 'n',
 		'feature_wiki_monosp' => 'n',
 		'feature_wiki_multiprint' => 'n',
