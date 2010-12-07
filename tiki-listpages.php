@@ -78,6 +78,22 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"])) {
 			}
 			break;
 
+		case 'export_pdf':
+			$access->check_feature('feature_wiki_multiprint');
+			foreach($_REQUEST["checked"] as $check) {
+				$access->check_page_exists($check);
+				// Now check permissions to access this page
+				$perms = Perms::get( array( 'type' => 'wiki page', 'object' => $check ) );
+				if (! $perms->view ) {
+					$access->display_error($check, tra("You do not have permission to view this page."), '403');
+				}
+
+				$multiprint_pages[] = $check;
+			}
+
+			header("Location: tiki-print_multi_pages.php?display=pdf&printpages=" . urlencode(serialize($multiprint_pages)));
+			die;
+
 		case 'unlock_pages':
 			$access->check_feature('feature_wiki_usrlock');
 			global $wikilib;
