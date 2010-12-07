@@ -30,6 +30,226 @@ Version 6.1
 ------------------
 
 ----------------------------------------------
+r31273 | changi67 | 2010-12-07 21:29:03 +0100 (Tue, 07 Dec 2010) | 1 line
+
+[bp/30546][MOD] Add option to stay on current page when switching perspective - for Torsten
+----------------------------------------------
+r31272 | ricks99 | 2010-12-07 21:14:21 +0100 (Tue, 07 Dec 2010) | 1 line
+
+[DOC]Clearer (i hope) description of the option.
+----------------------------------------------
+r31271 | aproulx | 2010-12-07 19:37:58 +0100 (Tue, 07 Dec 2010) | 1 line
+
+[FIX] Bug with radio button in ie due to a quote forgot inside a tag
+----------------------------------------------
+r31269 | jonnybradley | 2010-12-07 18:51:59 +0100 (Tue, 07 Dec 2010) | 1 line
+
+[ENH] menus: Add pref display_html_in_menus to allow html in menu options to be escaped. Default is to use the menu text "raw" so images etc can be used to maintain previous behaviour.
+----------------------------------------------
+r31267 | jonnybradley | 2010-12-07 17:49:06 +0100 (Tue, 07 Dec 2010) | 1 line
+
+[FIX] wysiwyg: tikilink dialog - More get/setText fixes
+----------------------------------------------
+r31265 | jonnybradley | 2010-12-07 17:37:55 +0100 (Tue, 07 Dec 2010) | 1 line
+
+[FIX] wysiwyg: tikilink dialog - use getTASelection() in tiki-js.js to get selection for link text.
+----------------------------------------------
+r31264 | jonnybradley | 2010-12-07 17:36:42 +0100 (Tue, 07 Dec 2010) | 1 line
+
+[FIX] wysiwyg: Use ckeditor getText() fn for getting selection (works better in Firefox)
+----------------------------------------------
+r31256 | sept_7 | 2010-12-07 16:32:00 +0100 (Tue, 07 Dec 2010) | 2 lines
+
+[FIX] Calendar: fix warning in str_pad using bad define and in array_fill using at least 1 element in the array. Both fix errors in Calendar display
+
+----------------------------------------------
+r31255 | sylvieg | 2010-12-07 16:07:00 +0100 (Tue, 07 Dec 2010) | 1 line
+
+[FIX]actionlog: show categid and categname in the export
+----------------------------------------------
+r31253 | sept_7 | 2010-12-07 15:38:19 +0100 (Tue, 07 Dec 2010) | 2 lines
+
+[FIX] Calendar: allow all day item again
+
+----------------------------------------------
+r31250 | jonnybradley | 2010-12-07 15:04:27 +0100 (Tue, 07 Dec 2010) | 1 line
+
+[FIX] newsletters: Maintain text data on pre-send form.
+----------------------------------------------
+r31249 | jonnybradley | 2010-12-07 15:03:15 +0100 (Tue, 07 Dec 2010) | 1 line
+
+[FIX] newsletters: Show text data on page load.
+----------------------------------------------
+r31246 | jonnybradley | 2010-12-07 14:54:55 +0100 (Tue, 07 Dec 2010) | 1 line
+
+[FIX] fgals: Create parent gallery fixed (nested ternary operators needs to be nested - my bad)
+----------------------------------------------
+r31242 | xavidp | 2010-12-07 14:03:50 +0100 (Tue, 07 Dec 2010) | 1 line
+
+[FIX]Usability fix: Add language.js to the folders where it was missing, to make it easier for translators to be aware that they can also translate the js strings, reducing the risk that they forget to add commas or some other syntax needed for js to work properly
+----------------------------------------------
+r31239 | xavidp | 2010-12-07 13:46:43 +0100 (Tue, 07 Dec 2010) | 1 line
+
+[FIX]Missing commas added (thanks jonnyb!)
+----------------------------------------------
+r31221 | chealer | 2010-12-07 07:28:37 +0100 (Tue, 07 Dec 2010) | 2 lines
+
+get_badchars(): remove useless parameter $name copied by error
+sorry, thanks Sylvie
+----------------------------------------------
+r31219 | sylvieg | 2010-12-07 00:15:00 +0100 (Tue, 07 Dec 2010) | 1 line
+
+[FIX]actionlog: expoert: CR for 1- line and export categId
+----------------------------------------------
+r31218 | jonnybradley | 2010-12-06 23:02:21 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[FIX] img plugin: Handle absolute_links for fileId etc - e.g. in newsletters, and use new $prefs['fgal_thumb_max_size']
+----------------------------------------------
+r31217 | jonnybradley | 2010-12-06 23:00:42 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[FIX] newsletters: parse more (all) tags in generateTxtVersion()
+----------------------------------------------
+r31216 | jonnybradley | 2010-12-06 22:59:47 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[CSS] jqui: newsletter.css first (quick) version
+----------------------------------------------
+r31215 | sylvieg | 2010-12-06 22:39:17 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[FIX]image: some GD lib has only JPEG Support and not JPG Support
+----------------------------------------------
+r31214 | jonnybradley | 2010-12-06 20:51:15 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[FIX] browsertitle: Tracker Items: Use all isMain fields in title, not just the first one
+----------------------------------------------
+r31213 | jonnybradley | 2010-12-06 20:49:34 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[FIX] browsertitle: Restore use of object names if available (blog post, forum topic etc)
+----------------------------------------------
+r31212 | lphuberdeau | 2010-12-06 20:46:57 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[FIX] Notices, one I introduced earlier, two I spotted on themes.t.o
+----------------------------------------------
+r31209 | jonnybradley | 2010-12-06 20:09:17 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[FIX] wysiwyg: Add freetagged to list of plugins ckeditor can't handle (no tags available in edit mode)
+----------------------------------------------
+r31208 | jonnybradley | 2010-12-06 20:08:10 +0100 (Mon, 06 Dec 2010) | 2 lines
+
+[bp/r31203][ENH] Adding DirectoryIndex directive to htaccess to avoid initial redirection to tiki-index.php
+(thanks LP and sgtd)
+----------------------------------------------
+r31206 | jonnybradley | 2010-12-06 19:54:20 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[FIX] wysiwyg: tikilink: move all the code inside the dialogName == 'link' test (fixes other ckeditor dialogs)
+----------------------------------------------
+r31204 | jonnybradley | 2010-12-06 19:44:51 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[FIX] datepicker: jscalendar jQuery UI replacement - handle goto url, e.g. in tiki-calendar.php (thanks Geoff)
+----------------------------------------------
+r31201 | Jyhem | 2010-12-06 18:06:08 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[ENH] Open a new page otherwise user loses everuthing they have typed already in the page (which is very annoying)
+----------------------------------------------
+r31200 | jonnybradley | 2010-12-06 17:39:51 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[FIX] fgals: Make the contents of galleries that are not "visible" also not visible to non-admin users (not just the listing of the gallery name)
+----------------------------------------------
+r31198 | eromneg | 2010-12-06 17:19:47 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[FIX] - add additional class to category tree li tag when there is a 'child' so that when used for File Gallery tree css can be used to align the File Gallery labels at the different levels
+----------------------------------------------
+r31197 | lphuberdeau | 2010-12-06 17:02:26 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[FIX]?\194?\160Handle HTTPS CDN independently
+----------------------------------------------
+r31194 | sylvieg | 2010-12-06 15:26:22 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[FIX]wiki: badchars notice
+----------------------------------------------
+r31193 | jonnybradley | 2010-12-06 13:59:24 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[FIX] freetagged plugin: Move some CSS from inline into layout.css so it can be overridden.
+----------------------------------------------
+r31192 | jonnybradley | 2010-12-06 13:48:33 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[SVN] Fix phpcas revision (different from the rest)
+----------------------------------------------
+r31191 | jonnybradley | 2010-12-06 13:41:13 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[ENH] freetagged plugin: Minor enhancement to allow list to not be headings, also hide the description <p> if empty, and correct default for titles_only
+----------------------------------------------
+r31190 | jonnybradley | 2010-12-06 13:13:17 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[FIX] admin textarea: Invalidate correct cache for plugin help when modifying plugins.
+----------------------------------------------
+r31189 | jonnybradley | 2010-12-06 12:49:04 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[SVN] Fix external library revisions to current for LTS release (no Zend, as it's set to v1.10)
+----------------------------------------------
+r31187 | lindonb | 2010-12-06 06:14:55 +0100 (Mon, 06 Dec 2010) | 1 line
+
+Backport of r31186 and 30586 made in trunk to attempt to update plugin info in 6x without causing merge conflicts. I'll roll back if it doesn't work.
+----------------------------------------------
+r31184 | lindonb | 2010-12-06 05:46:44 +0100 (Mon, 06 Dec 2010) | 1 line
+
+Minor cleanup of plugin info
+----------------------------------------------
+r31181 | lindonb | 2010-12-06 05:35:39 +0100 (Mon, 06 Dec 2010) | 1 line
+
+Add tra to plugin info
+----------------------------------------------
+r31180 | lindonb | 2010-12-06 05:34:28 +0100 (Mon, 06 Dec 2010) | 1 line
+
+Add options, default fields and other cleanup to plugin info for use in plugin edit popup and plugin manager, Also pulled info related changes made in trunk to hopefully avoid merge conflicts.
+----------------------------------------------
+r31166 | lindonb | 2010-12-06 03:34:28 +0100 (Mon, 06 Dec 2010) | 1 line
+
+[FIX] Clear parameter missing from plugin info (although doesn't seem to make a difference on the page now that it's there (only in the source code). Also added options, defaults etc to plugin info.
+----------------------------------------------
+r31164 | lindonb | 2010-12-06 00:29:26 +0100 (Mon, 06 Dec 2010) | 1 line
+
+Backporting r31163 from trunk to 6x
+----------------------------------------------
+r31156 | lindonb | 2010-12-05 22:15:13 +0100 (Sun, 05 Dec 2010) | 1 line
+
+Clean up of plugin info
+----------------------------------------------
+r31147 | jonnybradley | 2010-12-05 20:34:24 +0100 (Sun, 05 Dec 2010) | 1 line
+
+[FIX] base tag: Use full URI from request for base tag in head. Fixes maketoc and other anchor links in pages. Works with or without sefurl.
+----------------------------------------------
+r31145 | lindonb | 2010-12-05 20:32:06 +0100 (Sun, 05 Dec 2010) | 1 line
+
+Add default fields and other cleanup to plugin info for use in plugin edit popup and plugin manager. Also carried one minor change back from trunk to avoid merge conflicts.
+----------------------------------------------
+r31138 | lindonb | 2010-12-05 18:33:48 +0100 (Sun, 05 Dec 2010) | 1 line
+
+Tahe out Tiki. Thanks Marc.
+----------------------------------------------
+r31137 | xavidp | 2010-12-05 18:14:08 +0100 (Sun, 05 Dec 2010) | 1 line
+
+new js strings translated
+----------------------------------------------
+r31135 | xavidp | 2010-12-05 17:46:59 +0100 (Sun, 05 Dec 2010) | 1 line
+
+[ENH]Add new strings from js scripts, as they were internationalized by rodrigo_sampaio thanks!)
+----------------------------------------------
+r31134 | xavidp | 2010-12-05 17:43:09 +0100 (Sun, 05 Dec 2010) | 1 line
+
+[ENH]Allow usinga new param "actions" to hide icons and links to do actions on articles. Useful for articles in newsletters, using plugin articles in the wiki page template, to avoid sending broken images and links for actions, which wouldn't work either since the url's are relative and not absolute. We stil need a feature to convert relative urls into absolute url's for newsletters (at least)
+----------------------------------------------
+r31132 | lindonb | 2010-12-05 08:06:04 +0100 (Sun, 05 Dec 2010) | 1 line
+
+Add options, default fields and other cleanup to plugin info for use in plugin edit popup and plugin manager
+----------------------------------------------
+r31115 | lindonb | 2010-12-05 05:45:53 +0100 (Sun, 05 Dec 2010) | 1 line
+
+Add documentation link to plugin info
+----------------------------------------------
+r31102 | lindonb | 2010-12-05 05:02:20 +0100 (Sun, 05 Dec 2010) | 1 line
+
+Clean up of plugin info. Needs more work - not familiar with how this plugin works.
+----------------------------------------------
 r31025 | sampaioprimo | 2010-12-03 18:58:26 +0100 (Fri, 03 Dec 2010) | 1 line
 
 German translations done on i18n.tiki.org (1140 new translations and 100 translations updated!)
