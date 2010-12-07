@@ -26,7 +26,7 @@ class TWVersion
 		$this->branch 	= 'unstable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '6.1alpha1';
+		$this->version 	= '6.1 beta 1';
 		$this->star	= 'Rigel';
 		$this->releases	= array();
 
@@ -135,7 +135,8 @@ class TWVersion
 				'6.0RC1',
 				'6.0',
 				'6.1alpha1',
-				);
+				'6.1 beta 1',
+			);
 	}
 
 	// Gets the latest star used by Tiki.
