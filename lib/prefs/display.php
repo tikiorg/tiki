@@ -20,8 +20,8 @@ function prefs_display_list() {
 			),
 		),
 		'display_html_in_menus' => array(
-			'name' => tra('Show HTML in menus'),
-			'description' => tra('When set html tags in menu options will be "escaped" and displayed, otherwise option text will be rendered exactly as entered.'),
+			'name' => tra('Allow HTML in menu options'),
+			'description' => tra('Use to "escape" and display HTML in menu options. If disabled, the literal code will be shown instead.'),
 			'help' => 'Menus',
 			'type' => 'flag',
 		),
