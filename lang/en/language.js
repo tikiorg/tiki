@@ -16,7 +16,7 @@ lang = {
 //	"Strength" : "Strength",
 //	"Valid User Name" : "Valid User Name",
 //	"Passwords match" : "Passwords match",
-//	"Valid Email" : "Valid Email"
+//	"Valid Email" : "Valid Email",
 //	"Close" : "Close",
 //	"Submit" : "Submit",
 //	"Insert" : "Insert",
