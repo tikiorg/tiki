@@ -58,12 +58,6 @@ if ( empty($_REQUEST['galleryId']) && isset($_REQUEST['parentId']) ) {
 		if ($userlib->object_has_one_permission($_REQUEST['galleryId'], 'file gallery')) {
 			$smarty->assign('individual', 'y');
 		}
-		if ($gal_info['user'] != $user && $gal_info['visible'] != 'y' && $tiki_p_admin_file_galleries != 'y') {
-			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra('You do not have permission to view this gallery'));
-			$smarty->display('error.tpl');
-			die;
-		}
 		$podCastGallery = $filegallib->isPodCastGallery($_REQUEST['galleryId'], $gal_info);
 	} else {
 		$smarty->assign('msg', tra('Non-existent gallery'));

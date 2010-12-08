@@ -112,15 +112,6 @@ if (!$skip) {
 		$smarty->display('error.tpl');
 		die;
 	}
-	$gal_info = $filegallib->get_file_gallery_info((int) $info['galleryId']);
-	if ($gal_info['user'] != $user && $gal_info['visible'] != 'y' && $tiki_p_admin_file_galleries != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra('You do not have permission to view files in this gallery'));
-		$smarty->display('error_simple.tpl');
-		die;
-	}
-} else {
-	$gal_info = null;
 }
 
 // Add hits ( if download or display only ) + lock if set
@@ -159,7 +150,7 @@ $content = &$info['data'];
 
 $md5 = '';
 if ( ! empty($info['path']) )  {
-	if (!$skip and $filegallib->isPodCastGallery($info['galleryId'], $gal_info)) {
+	if (!$skip and $filegallib->isPodCastGallery($info['galleryId'])) {
 		$filepath = $prefs['fgal_podcast_dir'].$info['path'];
 	} else {
 		$filepath = $prefs['fgal_use_dir'].$info['path'];
