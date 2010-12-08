@@ -25,25 +25,21 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$this->lucene->addDocument($document);
 	}
 
-	function invalidateMultiple(array $objectList)
+	function invalidateMultiple(Search_Expr_Interface $expr)
 	{
-		$hits = array();
+		$documents = array();
 
-		foreach ($objectList as $object) {
-			$expr = new Search_Expr_And(array(
-				new Search_Expr_Token($object['object_type'], 'identifier', 'object_type'),
-				new Search_Expr_Token($object['object_id'], 'identifier', 'object_id'),
-			));
-
-			$query = $this->buildQuery($expr);
-			foreach ($this->lucene->find($query) as $hit) {
-				$hits[] = $hit;
-			}
-		}
-
-		foreach ($hits as $hit) {
+		$query = $this->buildQuery($expr);
+		foreach ($this->lucene->find($query) as $hit) {
+			$document = $hit->getDocument();
+			$documents[] = array(
+				'object_type' => $document->object_type,
+				'object_id' => $document->object_id,
+			);
 			$this->lucene->delete($hit->id);
 		}
+
+		return $documents;
 	}
 
 	function find(Search_Expr_Interface $query, Search_Query_Order $sortOrder, $resultStart, $resultCount)

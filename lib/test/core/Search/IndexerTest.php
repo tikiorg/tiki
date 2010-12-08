@@ -114,15 +114,18 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 			'HomePage' => array('data' => 'initial'),
 			'SomePage' => array('data' => 'initial'),
 			'Untouchable' => array('data' => 'initial'),
-		), array('data' => 'wikitext'));
+		), array('data' => 'sortable'));
 
 		$finalSource = new Search_ContentSource_Static(array(
 			'SomePage' => array('data' => 'final'),
 			'OtherPage' => array('data' => 'final'),
 			'Untouchable' => array('data' => 'final'),
-		), array('data' => 'wikitext'));
+		), array('data' => 'sortable'));
 
-		$index = new Search_Index_Memory;
+		$dir = dirname(__FILE__) . '/test_index';
+		$edir = escapeshellarg($dir);
+		`rm -Rf $edir`;
+		$index = new Search_Index_Lucene($dir);
 		$indexer = new Search_Indexer($index);
 		$indexer->addContentSource('wiki page', $initialSource);
 		$indexer->rebuild();
@@ -135,16 +138,22 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 			array('object_type' => 'wiki page', 'object_id' => 'OtherPage'),
 		));
 
-		$doc0 = $index->getDocument(0);
-		$doc1 = $index->getDocument(1);
-		$doc2 = $index->getDocument(2);
+		$query = new Search_Query;
+		$query->filterType('wiki page');
 
-		$this->assertEquals(3, $index->size());
+		$result = $query->search($index);
 
-		$this->assertEquals('Untouchable', $doc0['object_id']->getValue());
-		$this->assertEquals('initial', $doc0['data']->getValue());
-		$this->assertEquals('final', $doc1['data']->getValue());
-		$this->assertEquals('final', $doc2['data']->getValue());
+		$this->assertEquals(3, count($result));
+
+		$doc0 = $result[0];
+		$doc1 = $result[1];
+		$doc2 = $result[2];
+
+		$this->assertEquals('Untouchable', $doc0['object_id']);
+		$this->assertEquals('initial', $doc0['data']);
+		$this->assertEquals('final', $doc1['data']);
+		$this->assertEquals('final', $doc2['data']);
+		`rm -Rf $edir`;
 	}
 }
 

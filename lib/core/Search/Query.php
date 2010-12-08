@@ -2,6 +2,7 @@
 
 class Search_Query
 {
+	private $objectList;
 	private $expr;
 	private $sortOrder;
 	private $start = 0;
@@ -14,6 +15,19 @@ class Search_Query
 		if ($query) {
 			$this->filterContent($query);
 		}
+	}
+
+	function addObject($type, $objectId)
+	{
+		if (is_null($this->objectList)) {
+			$this->objectList = new Search_Expr_Or(array());
+			$this->expr->addPart($this->objectList);
+		}
+
+		$type = new Search_Expr_Token($type, 'identifier', 'object_type');
+		$objectId = new Search_Expr_Token($objectId, 'identifier', 'object_id');
+
+		$this->objectList->addPart(new Search_Expr_And(array($type, $objectId)));
 	}
 
 	function filterContent($query, $field = 'global')
@@ -94,6 +108,11 @@ class Search_Query
 		}
 
 		return $index->find($this->expr, $sortOrder, $this->start, $this->count);
+	}
+
+	function invalidate(Search_Index_Interface $index)
+	{
+		return $index->invalidateMultiple($this->expr);
 	}
 	
 	private function parse($query)

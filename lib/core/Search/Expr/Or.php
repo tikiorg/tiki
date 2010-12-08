@@ -9,6 +9,11 @@ class Search_Expr_Or implements Search_Expr_Interface
 		$this->parts = $parts;
 	}
 
+	function addPart(Search_Expr_Interface $part)
+	{
+		$this->parts[] = $part;
+	}
+
 	function setType($type)
 	{
 		foreach ($this->parts as $part) {

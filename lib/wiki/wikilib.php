@@ -946,7 +946,7 @@ class WikiLib extends TikiLib
 
 		$href = "$script_name?page=".urlencode($page);
 
-		if ($prefs['feature_wiki_use_date_links'] == 'y') {
+		if (isset($prefs['feature_wiki_use_date_links']) && $prefs['feature_wiki_use_date_links'] == 'y') {
 			if (isset($_REQUEST['date'])) {
 				$href .= '&date='. urlencode($_REQUEST['date']);
 			} else if (isset($_REQUEST['version'])) {

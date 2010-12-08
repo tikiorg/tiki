@@ -26,10 +26,11 @@ class Search_Index_LuceneIncrementalUpdateTest extends PHPUnit_Framework_TestCas
 
 	function testAddNewDocument()
 	{
+		$query = new Search_Query;
+		$query->addObject('wiki page', 'NewPage');
+
 		$index = new Search_Index_Lucene($this->dir);
-		$index->invalidateMultiple(array(
-			array('object_type' => 'wiki page', 'object_id' => 'NewPage'),
-		));
+		$query->invalidate($index);
 		$this->addDocument($index, 'wiki page', 'NewPage', 'Testing out');
 
 		$this->assertResultFound('out', $index);
@@ -39,10 +40,11 @@ class Search_Index_LuceneIncrementalUpdateTest extends PHPUnit_Framework_TestCas
 
 	function testReplaceDocument()
 	{
+		$query = new Search_Query;
+		$query->addObject('wiki page', 'SomePage');
+
 		$index = new Search_Index_Lucene($this->dir);
-		$index->invalidateMultiple(array(
-			array('object_type' => 'wiki page', 'object_id' => 'SomePage'),
-		));
+		$query->invalidate($index);
 		$this->addDocument($index, 'wiki page', 'SomePage', 'Foobar');
 
 		$this->assertResultFound('foobar', $index);
