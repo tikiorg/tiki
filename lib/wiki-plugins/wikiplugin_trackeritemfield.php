@@ -133,7 +133,7 @@ function wikiplugin_trackeritemfield($data, $params) {
 			$trackerId = $item['trackerId'];
 		}
 
-		if (empty($itemId) && empty($test) && empty($status)) {// need an item
+		if (empty($itemId) || empty($test) || empty($status)) {// need an item
 			return tra('Incorrect param').': itemId';
 		}
 
