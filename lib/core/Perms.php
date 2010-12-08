@@ -313,6 +313,11 @@ class Perms
 			$resolver = false;
 		}
 
+		// Limit the amount of hashes preserved to reduce memory consumption
+		if (count($this->hashes) > 128) {
+			$this->hashes = array();
+		}
+
 		foreach( $toSet as $hash ) {
 			$this->hashes[$hash] = $resolver;
 		}

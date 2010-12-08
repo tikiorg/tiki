@@ -91,6 +91,12 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 		$objects = array();
 		$keys = array();
 
+		// Reset the internal object cache when it becomes too large
+		// Leave the internal category cache intact as it should eventually stabilize
+		if (count($this->knownObjects) > 128) {
+			$this->knownObjects = array();
+		}
+
 		foreach( $values as $v ) {
 			$key = $this->objectKey( array_merge( $baseContext, array( 'object' => $v ) ) );
 
