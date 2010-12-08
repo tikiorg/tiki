@@ -802,7 +802,7 @@ function wikiplugin_img_info() {
 					$imgalthumb == true;
 				}
 				$height = $imgdata['height'];
-				if (empty($imgdata['width'])) {
+				if (empty($imgdata['width']) && $fheight > 0) {
 					$width = floor($height * $fwidth / $fheight);
 				} else {
 					$width = $imgdata['width'];
@@ -810,7 +810,7 @@ function wikiplugin_img_info() {
 			} elseif (!empty($imgdata['width']))  {
 				//use image gal thumbs when possible
 				if ((!empty($imgdata['id']) && $imgalthumb == false) 
-					&& ($imgdata['width'] < $widtht)
+					&& ($imgdata['width'] < $fwidtht)
 				) {
 					$src .= '&thumb=1';
 					$imgalthumb == true;

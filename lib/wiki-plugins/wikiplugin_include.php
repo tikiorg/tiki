@@ -171,7 +171,7 @@ function wikiplugin_include($data, $params, $offset) {
 	}
 	$text = $tikilib->parse_data($text, array('suppress_icons' => true));	// don't show edit icons (they don't work on included pages - yet)
 	// append an edit button
-	if ($perms['tiki_p_edit'] === 'y') {
+	if (isset($perms) && $perms['tiki_p_edit'] === 'y') {
 		global $smarty;
 		require_once $smarty->_get_plugin_filepath('block', 'ajax_href');
 		require_once $smarty->_get_plugin_filepath('function', 'icon');

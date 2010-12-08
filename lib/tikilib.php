@@ -1986,6 +1986,10 @@ class TikiLib extends TikiDb_Bridge
 	/*shared*/
 	function user_has_voted($user, $id) {
 		global $prefs;
+		if (!isset($_SESSION['votes'])) {
+			return false;
+		}
+
 		$ret = false;
 		$votes = $_SESSION['votes'];
 		if (is_array($votes) && in_array($id, $votes)) { // has already voted in the session (logged or not)
@@ -2942,7 +2946,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 		$this->query($query, $bindvars, -1, -1, false);
 		$query = "insert into `tiki_sessions`(`sessionId`,`timestamp`,`user`,`tikihost`) values(?,?,?,?)";
-		$result = $this->query($query, array($this->sessionId, (int)$this->now, $user,$_SERVER['HTTP_HOST']), -1, -1, false );
+		$result = $this->query($query, array($this->sessionId, (int)$this->now, $user,isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST']:'localhost'), -1, -1, false );
 		if ($prefs['session_storage'] == 'db') {
 			// clean up adodb sessions as well in case adodb session garbage collection not working
 			$query = "delete from `sessions` where `expiry`<?";
@@ -4482,7 +4486,9 @@ class TikiLib extends TikiDb_Bridge
 				// Need to delete something; pick at random
 				$keys=array_keys($this->cache_page_info);
 				$num=rand(0,count($keys));
-				unset($this->cache_page_info[$keys[$num]]);
+				if (isset($keys[$num])) {
+					unset($this->cache_page_info[$keys[$num]]);
+				}
 			}
 
 			$this->cache_page_info[$pageNameEncode] = $row;
@@ -5090,7 +5096,9 @@ if( \$('#$id') ) {
 			return 'rejected';
 		else {
 			global $tiki_p_plugin_approve, $tiki_p_plugin_preview, $user;
-			if( $_SERVER['REQUEST_METHOD'] == 'POST'
+			if( 
+				isset($_SERVER['REQUEST_METHOD'])
+				&& $_SERVER['REQUEST_METHOD'] == 'POST'
 				&& isset( $_POST['plugin_fingerprint'] ) 
 				&& $_POST['plugin_fingerprint'] == $fingerprint
 			) {
@@ -5264,7 +5272,7 @@ if( \$('#$id') ) {
 			$output = $func_name( $data, $args, $offset, $parseOptions );
 
 			$plugin_result =  $this->convert_plugin_output( $output, $pluginFormat, $outputFormat, $parseOptions );
-			if ($parseOptions['ck_editor'] ) {
+			if (isset($parseOptions['ck_editor']) && $parseOptions['ck_editor']) {
 				return $this->convert_plugin_for_ckeditor( $name, $args, $plugin_result, $data, $info );
 			} else {
 				return $plugin_result;

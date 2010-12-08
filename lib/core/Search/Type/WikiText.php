@@ -14,6 +14,7 @@ class Search_Type_WikiText implements Search_Type_Interface
 		global $tikilib;
 		$out = $tikilib->parse_data($this->value, array(
 			'parsetoc' => false,
+			'print' => 'y', // Prevent redirect
 		));
 
 		return $out;

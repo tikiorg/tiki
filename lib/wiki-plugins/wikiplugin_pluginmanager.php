@@ -207,6 +207,10 @@ class WikiPluginPluginManager extends PluginsLib
         		$namepath = ucfirst($sPlugin);
         	}
 			if ($singletitle == 'top') {
+				if (!isset($titletag)) {
+					$titletag = 'h3';
+				}
+
         		$title = '<' . $titletag . '>['. $helppath . $namepath 
         			. '|' . ucfirst($sPlugin) . ']</' . $titletag . '>';
         		$title .= $infoPlugin['description'] . '<br />';

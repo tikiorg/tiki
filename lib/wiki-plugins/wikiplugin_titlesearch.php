@@ -104,7 +104,7 @@ class WikiPluginTitleSearch extends PluginsLib
         }
 
         // no additional infos in list output
-        if ($style == 'list') $info = false;
+        if (isset($style) && $style == 'list') $info = false;
 
         //
         /////////////////////////////////
@@ -141,7 +141,7 @@ class WikiPluginTitleSearch extends PluginsLib
         // Start of Output
         /////////////////////////////////
         //
-        if (!$noheader) {
+        if (isset($noheader) && !$noheader) {
             // Create header
             $count = $aPages["cant"];
             if (!$count) {
@@ -153,7 +153,7 @@ class WikiPluginTitleSearch extends PluginsLib
             }
             $sOutput  .= "\n";
         }
-        if ($style == 'list') {
+        if (isset($style) && $style == 'list') {
             $sOutput.=PluginsLibUtil::createList($aPages["data"]);
         }
         else {

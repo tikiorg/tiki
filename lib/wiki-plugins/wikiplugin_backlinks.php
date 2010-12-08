@@ -65,6 +65,11 @@ class WikiPluginBackLinks extends PluginsLib
         $params = $this->getParams($params, true);
         $aInfoPreset = array_keys($this->aInfoPresetNames);
         extract ($params,EXTR_SKIP);
+
+		if (! isset($page)) {
+			$page = null;
+		}
+
         /////////////////////////////////
         // Create a valid list for $info
         /////////////////////////////////
@@ -97,7 +102,7 @@ class WikiPluginBackLinks extends PluginsLib
                 $aBackRequest[] = $backlink["fromPage"];
             }
         }
-        if ($include_self) {
+        if (isset($include_self) && $include_self) {
             $aBackRequest[] = $page;
         }
         if (!$aBackRequest) {
@@ -110,7 +115,7 @@ class WikiPluginBackLinks extends PluginsLib
         // Start of Output
         /////////////////////////////////
         //
-        if (!$noheader) {
+        if (!isset($noheader) || !$noheader) {
             // Create header
             $count = $aPages["cant"];
             if ($count == 1) {

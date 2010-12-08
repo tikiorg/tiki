@@ -69,5 +69,7 @@ function wikiplugin_article($data, $params) {
 
 	global $artlib; require_once 'lib/articles/artlib.php';
 	$article_data = $artlib->get_article($Id);
-	return $article_data[$Field].$add;
+	if (isset($article_data[$Field])) {
+		return $article_data[$Field].$add;
+	}
 }

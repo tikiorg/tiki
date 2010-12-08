@@ -124,7 +124,7 @@ function wikiplugin_youtube($data, $params) {
 	if (!empty($params['allowFullScreen']) && $params['allowFullScreen'] == 'true') {
 		$params['movie'] .= '?fs=1';
 	}
-	if ($related == 'n') {
+	if (isset($related) && $related == 'n') {
 		$params['movie'] .= '&rel=0';
 	}
 	if (!empty($params['border'])) {

@@ -80,7 +80,7 @@ class PluginsLib extends TikiLib
 	            $args[$arg] = $params[$arg];
 	        } elseif(isset($_REQUEST[$arg])) {
 	            $args[$arg] = $_REQUEST[$arg];
-	        } else {
+	        } elseif (isset($_REQUEST['page'])) {
 	            // maybe this kind of transformation can be grouped on a external function
 	            if ($default_val === '[pagename]') {
 	                $default_val=$_REQUEST['page'];
@@ -88,7 +88,7 @@ class PluginsLib extends TikiLib
 	            $args[$arg] = $default_val;
 	        }
 	        if (in_array($arg, $this->expanded_params)) {
-	            if ($args[$arg]) {
+	            if (isset($args[$arg]) && $args[$arg]) {
 	            $args[$arg] = explode($this->separator, $args[$arg]);
 	            foreach($args[$arg] as $id=>$value) {
 	                $args[$arg][$id]=trim($value);

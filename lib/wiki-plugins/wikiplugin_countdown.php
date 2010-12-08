@@ -89,6 +89,7 @@ function wikiplugin_countdown_info() {
 function wikiplugin_countdown($data, $params) {
 	global $tikilib, $tikidate;
 	extract ($params,EXTR_SKIP);
+	$ret = '';
 
 	if (!isset($enddate)) {
 		return ("<strong>COUNTDOWN: Missing 'enddate' parameter for plugin</strong><br />");

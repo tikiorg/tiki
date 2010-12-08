@@ -117,9 +117,10 @@ function wikiplugin_realnamelist($data, $params) {
 			$mid .= ' ORDER BY `value`, `login` '.$sort;
 		}
 	}
+
+	$exclude_clause='';
 	if (isset($exclude)) {
 		$exclude=strtolower($exclude);
-		$exclude_clause='';
 		if (($exclude=='test') || ($exclude=='admin')) {
 			$exclude_clause= ' u.`login` NOT LIKE \'%'.$exclude.'%\' AND ' ;
 			//$exclude_clause= ' `users_users`.`login` NOT LIKE \'%'.$exclude.'%\' AND ' ;
@@ -163,7 +164,7 @@ function wikiplugin_realnamelist($data, $params) {
 					$res = '<a href="tiki-user_information.php?userId='.$row['userId'].'" title="'.tra('User Information').'">';
 				} else {
 					$user_information = $tikilib->get_user_preference($row['login'], 'user_information', 'public');
-					if ($user_information == 'private' && $row['login'] != $user) {
+					if (isset($user) && $user_information == 'private' && $row['login'] != $user) {
 						$res = '<a href="tiki-user_information.php?userId='.$row['userId'].'" title="'.tra('User Information').'">';
 					}
 				}

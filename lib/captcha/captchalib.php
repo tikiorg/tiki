@@ -79,7 +79,10 @@ class Captcha
 	 * @return void
 	 */
 	function generate() {
-		$this->captcha->generate();
+		try {
+			$this->captcha->generate();
+		} catch (Zend_Exception $e) {
+		}
 	}
 
 	/** Return captcha ID
