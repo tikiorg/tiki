@@ -162,9 +162,9 @@ class TikiDate
 		return (int)$this->date->format("W");
 	}
 
-	function setDate($date, $format = DATE_FORMAT_ISO) {
+	function setDate($date, $format = 'Y-m-d H:i:s') {
 		if (is_numeric($date)) {
-			$this->date = new DateTime(date("Y-m-d H:i:s", $date));
+			$this->date = new DateTime(date($format, $date));
 		} else {
 			$this->date = new DateTime($date);
 		}
