@@ -72,7 +72,9 @@ dt {font-weight: bold}
 
 h1, h2, h3, h4, h5 {
 	font-weight: bold;
-	color: #6c7b8c}
+	color: #6c7b8c;
+	line-height: 1.1;
+}
 	
 h1 {font-size: 1.7em}
 
@@ -497,7 +499,8 @@ h3.box-title {
 	color: #393e51;
 	font-size: 120%;
 	overflow: hidden;
-	border-bottom: 1px solid #6c7b8c;	
+	border-bottom: 1px solid #6c7b8c;
+	line-height: normal;	
 }	
 	
 #col2 h3.box-title,

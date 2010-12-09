@@ -99,6 +99,10 @@ a:hover {
 .wikitext a.link:hover {
 	color: #f4f4f4 !important;
 	text-decoration: none !important}
+	
+h1, h2, h3, h4, h5, h6 {
+	line-height: 1.1;
+}
 
 h1 {
 	font-weight: bold;

@@ -1129,15 +1129,16 @@ a.wiki {
 	text-decoration: underline;
 }
 
-.wikitext h1, 
-.wikitext h2, 
-.wikitext h3, 
-.wikitext h4 {
+h1, 
+h2, 
+h3, 
+h4 {
 	color: #b2b2b2;
 	font-weight: bold;
 	letter-spacing: -1px;
 	margin: 0 0 15px;
 	padding: 0;
+	line-height: 1.1;
 }
 
 .wikitext h2 {
