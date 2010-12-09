@@ -5346,7 +5346,7 @@ class TikiLib extends TikiDb_Bridge
 			$output = $func_name( $data, $args, $offset, $parseOptions );
 
 			$plugin_result =  $this->convert_plugin_output( $output, $pluginFormat, $outputFormat, $parseOptions );
-			if ($parseOptions['ck_editor'] ) {
+			if (isset($parseOptions['ck_editor']) && $parseOptions['ck_editor'] ) {
 				return $this->convert_plugin_for_ckeditor( $name, $args, $plugin_result, $data, $info );
 			} else {
 				return $plugin_result;
