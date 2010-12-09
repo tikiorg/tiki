@@ -89,6 +89,13 @@ input[type=submit] {
 	width: 95%;
 }
 
+#col2 input.openid_url,
+#col3 input.openid_url {
+	padding: 1px 1px 1px 18px;
+	min-height: 16px;
+	width: 85%;
+}
+
 label {
 	cursor: pointer;
 	vertical-align: middle;

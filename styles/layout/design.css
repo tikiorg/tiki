@@ -218,8 +218,7 @@ a.flip:hover,
 }
 
 .openid_url {
-	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
-	padding-left: 18px;
+	background: #fff url(../../img/icons/login-OpenID-bg.gif) 1px 1px no-repeat;
 }
 
 .bannertext {
