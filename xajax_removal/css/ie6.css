@@ -1,0 +1,136 @@
+/* Layout, etc. styles for IE6 */
+.findtable input {
+	font-size: 1em;
+}
+
+.button a:link,
+.button a:visited {
+	text-decoration: none;
+	border: 0;
+	padding: 0 4px;
+}
+
+#header-top {
+	height: 1%;
+}
+
+#sitetitle {}
+
+#siteloginbar_popup {
+	width: 300px;
+}
+
+#tiki-top {
+	font-size: 11px;
+}
+
+.upspantext {
+	position: absolute !important;
+}
+
+form.upform {
+	width: 100px;
+}
+
+#tiki-center {
+	font-size: 1em;
+}
+
+h3.box-title {
+	position: static;
+	padding-right: 18px;
+}
+
+.moduleflip,
+.wikitext .box-title span img.flipmodimage {
+	position: static;
+	float: right;
+	margin-top: -16px;
+}
+
+.box a.flipmodtitle img {
+	position: static !important;
+}
+
+.moduleflip {
+	display: block !important;
+}
+
+img.flipmodimage {
+	border: none;
+}
+
+.box-data table {
+	width: 95%;
+}
+
+.box-data ol {
+	margin-left: 0;
+}
+
+.box-data ul {
+	margin-left: 1em;
+	padding-left: .5em;
+}
+
+.box-data ul.cssmenu_vert {
+	margin-left: 0;
+	margin-top: 0;
+	padding-left: 0;
+}
+
+.box-data ul.cssmenu_vert li a {
+	padding-left: 0;
+}
+
+.box-data ul.cssmenu_vert li ul li a {
+	padding-left: 1em;
+}
+
+.normal, 
+.admin {
+	width: 97%;
+	font-size: 11px;
+}
+
+.normal td,
+.admin td {
+	font-size: 11px;
+}
+
+/* prevent css menu dropdowns from displaying under tabs and tab content */
+.tabs,
+.tabactive,
+.tabinactive {
+	position: static;
+}
+	
+.tabcontent {
+	z-index: none;
+	position: static;
+	margin-top: 2.4ex;
+}
+
+.wikiactions .icons,
+.wikiactions form {/*display: inline*/}
+
+/* IE6 doesn't do position fixed, override with absolute */
+.plugin-form-float {
+	position: absolute;
+	width: 90%;
+}
+
+#tikihelp {
+	position: absolute;
+}
+
+.bloginfo table {}
+	
+.post .postbody {}
+.postbody table {}
+
+.galtable {
+	width: 97%;
+}
+
+/* End of file */

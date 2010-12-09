@@ -1,0 +1,276 @@
+/* $Id$ 
+	Watermelon theme option for FiveAlive theme for
+	TikiWiki CMS/Groupware.
+*/
+
+#header-top {
+	background: url(watermelon/siteheader.png) no-repeat -250px 0
+}
+
+a,
+a:visited,
+tr.even a,
+tr.even a:visited,
+tr.odd a,
+tr.odd a:visited {
+	color: #c21e3b;
+}
+
+a:active,
+a:hover,
+tr.even a:active,
+tr.even a:hover,
+tr.odd a:active,
+tr.odd a:hover {
+	color: #e10c7c;
+}
+
+fieldset {
+	border: 1px solid #b51360;
+}
+
+hr {
+	background: #c31e3b;
+	color: #c31e3b;
+}
+
+#header {
+	background: url(watermelon/siteheadertile.png) 900px 0 no-repeat;
+}
+
+#sitetitle,
+#sitesubtitle {
+	text-shadow: #8b1932 3px 2px 0;
+}
+
+#footer .container {
+	border-top: 1px solid #eb1e41;
+	border-bottom: 1px solid #eb1e41;
+}
+
+#footer h3 {
+	border-bottom: 1px dotted #eb1e41;
+}
+
+#loadstats {
+	background: #eb1e41;
+}
+
+#power a {
+	color: #eb1e41;
+}
+
+.button a,
+.button a:visited,
+button,
+input[type="reset"],
+input[type="submit"],
+.button input,
+.calbuttonBox a,
+span#genPass .button a,
+span#genPass .button a:visited,
+.daterow {
+	color: #fff;
+	background: #c31e3b;
+	border-color: #e7768a #a61d35 #a61d35 #e7768a;
+	font-weight: bold;
+}
+	
+.button a:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover,
+.calbuttonBox:hover,
+span#genPass .button a:hover,
+.daterow:hover {
+	background: #b4135f;
+	border-color: #a61d35 #e7768a #e7768a #a61d35;
+}
+
+.highlight,
+.button.highlight a,
+.calfocuson {
+	border: #fb999e;
+	color: #b51360;
+	background: #f9f6df;
+}
+
+.button.highlight a {
+	background: #f9dfe2;
+	color: #b51360;
+}
+
+.cssmenu_vert li ul a,
+.cssmenu_horiz li ul a,
+#header .cssmenu_horiz li ul a,
+#header .cssmenu_horiz li:hover ul a  {
+	background: #8c1832;
+}
+
+.cssmenu_vert li ul a:hover,
+.cssmenu_horiz li ul a:hover,
+#header .cssmenu_horiz li ul a:hover  {
+	background: #fb999e;
+}
+
+#header .cssmenu_horiz li.selected a,
+.cssmenu_horiz li.selected a,
+.cssmenu_vert li.selected a {
+	color: #e22848;
+}
+
+#header .cssmenu_horiz li.selected li a,
+.cssmenu_horiz li.selected li a,
+.cssmenu_vert li.selected li a {
+	font-style: normal;
+	color: #fff;
+}
+
+.cssmenu_vert .sf-sub-indicator {
+	background: url(watermelon/arrows-c21e3b.png) no-repeat 10px 0;
+}
+
+select,
+input[type="text"],
+input[type="password"],
+input[type="file"],
+input#login-pass,
+textarea,
+.adminoptionbox option {
+	background: #f9dfe2;
+	border-color: #fb999e #f9f0f0 #f9f0f0 #fb999e;
+}
+
+/*th a:link,
+th a:visited,
+td.heading a:link,
+td.heading a:visited,
+tr.diffheader a:link,
+tr.diffheader a:visited,
+.calHeading {
+	color: #fff
+}*/
+
+.titlebar,
+.rbox-title, 
+.rbox-data {
+	border: #c31e3b;
+	background: #f6cdd2;
+	color: #8b1932;
+}
+
+.cbox {
+	background: #f6cdd2;
+	color: #8b1932;
+}
+
+.cbox-title {
+	border-bottom: 3px solid #c31e3b;
+}
+
+.simplebox {
+	border: 2px solid #c31e3b;
+}
+
+.adminanchors {
+	background: #c31e3b;
+}
+
+.normal,
+.wikitable {
+	border: 2px solid #8b1932;
+}
+
+th,
+td.heading,
+tr.diffheader,
+.calHeading,
+.weeks {
+	background: #8b1932;
+	color: #f9dfe2;
+}
+
+.calodd,
+.caleven {
+	border: 1px solid #8b1932;
+}
+
+.odd,
+.calodd {
+	background: #f6cdd2;
+}
+
+.even,
+.caleven {
+	background: #f9f0f0;
+}
+
+.wikicell {
+	border: 2px solid #f6cdd2;
+}
+
+.tabmark {
+	border: 1px solid #f588c1;
+	background: #e71e40;
+}
+
+.tabmark a {
+	color: #fff;
+}
+
+.tabinactive:hover,
+.tabactive {
+	border: 1px solid #f588c1;
+	background: #eba9b5;
+}
+
+.tabinactive:hover a,
+.tabactive a,
+.tabactive a:visited {
+	color: #8b1932;	
+}
+
+.tabcontent,
+form.admin fieldset,
+#siteloginbar_popup .cssmenu_horiz ul li {
+	background: #eba9b5;
+}
+
+/* Quote plugin */
+.quoteheader {
+	border-bottom: 2px solid #f6cdd2;
+}
+
+.quotebody {
+	border-left: 8px solid #f6cdd2;
+}
+
+.postbody-title {
+	background: #e31e40 url(watermelon/siteheader.png) -550px -90px no-repeat;
+}
+
+.post .author,
+.dirsite {
+	background: #f6cdd2;
+}
+
+/* cluptip tooltips */
+
+.cluetip-default {
+	background: #f9dfe2;
+	color: #000;
+}
+
+.cluetip-default #cluetip-outer {
+	background: #f9dfe2;
+}
+.cluetip-default h3#cluetip-title {
+	background: #A00134;
+	color: #fff;
+}
+
+.cluetip-default #cluetip-title a {
+	color: #f9dfe2;
+}
+  
