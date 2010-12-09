@@ -337,19 +337,19 @@
 		</table>
 		{pagination_links cant=$membersCount step=$prefs.maxRecords offset=$membersOffset offset_arg='membersOffset'}{/pagination_links}
 		<div class="box">{$membersCount} {tr}users in group{/tr} {$groupname|escape}</div>
-		<form method="post" action="tiki-admingroups.php">
-			<p>
-				<input type="hidden" name="group" value="{$groupname|escape}"/>
-				<select name="user">
-					{foreach from=$userslist item=iuser}
-						{if ! in_array( $iuser, $memberslist ) }
+		{if ! empty($userslist)}
+			<form method="post" action="tiki-admingroups.php">
+				<p>
+					<input type="hidden" name="group" value="{$groupname|escape}"/>
+					<select name="user">
+						{foreach from=$userslist item=iuser}
 							<option>{$iuser|escape}</option>
-						{/if}
-					{/foreach}
-				</select>
-				<input type="submit" name="adduser" value="{tr}Add to group{/tr}"/>
-			</p>
-		</form>
+						{/foreach}
+					</select>
+					<input type="submit" name="adduser" value="{tr}Add to group{/tr}"/>
+				</p>
+			</form>
+		{/if}
 	{/tab}
 {/if}
 
