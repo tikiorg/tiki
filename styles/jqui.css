@@ -489,6 +489,45 @@ li.even {
 
 /***** Wiki *****/
 
+/* code plugin */
+
+.codecaption {
+	font-size: .9em;
+	line-height: 1.4em;
+	padding: .2em 1em;
+	display: inline;
+	border: 1px solid #696969;
+	border-bottom: none;
+	margin: 0;
+	color: #696969;
+	background: #f5f5f5;
+	font-weight: bold;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+}
+
+.codelisting {
+	font-family: "Courier New", Courier, monospace;
+	line-height: 1.2em;
+	padding: 1em;
+	background: #f5f5f5;
+	margin: 0;
+	border: 1px solid #696969;
+	overflow: auto;
+	border-top-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	-moz-border-radius-topright: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	-moz-border-radius-bottomright: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+}
 
 /***** Articles ****/
 body.tiki_cms h1 a.pagetitle,
@@ -743,5 +782,6 @@ a.admbox.off {
 	-webkit-border-bottom-left-radius: 4px;
 	-webkit-border-bottom-right-radius: 4px;
 }
+
 
 /* End of File */
