@@ -304,7 +304,11 @@ if (isset($_REQUEST['group'])) {
 $av_themes = $tikilib->list_styles();
 $smarty->assign_by_ref('av_themes', $av_themes);
 $smarty->assign('memberslist', $memberslist);
-$smarty->assign('userslist', $userlib->list_all_users());
+$userslist=$userlib->list_all_users();
+foreach($memberslist as $key => $values)
+	if ( in_array($values["login"],$userslist ) )
+		unset($userslist[array_search($values["login"],$userslist,true)]);
+$smarty->assign('userslist', $userslist);
 $smarty->assign('inc', $inc);
 $smarty->assign('group', $_REQUEST["group"]);
 $smarty->assign('groupname', $groupname);

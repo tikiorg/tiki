@@ -342,9 +342,7 @@
 				<input type="hidden" name="group" value="{$groupname|escape}"/>
 				<select name="user">
 					{foreach from=$userslist item=iuser}
-						{if ! in_array( $iuser, $memberslist ) }
-							<option>{$iuser|escape}</option>
-						{/if}
+						<option>{$iuser|escape}</option>
 					{/foreach}
 				</select>
 				<input type="submit" name="adduser" value="{tr}Add to group{/tr}"/>
