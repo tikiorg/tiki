@@ -100,7 +100,9 @@ h1, h2, h3, h4, h5 {
 	font-weight: bold;
 	letter-spacing: -1px;
 	margin: 0 0 15px;
-	padding: 0}
+	padding: 0;
+	line-height: 1.1;
+}
 
 h1 {font-size:1.6em}
 h2 {font-size: 1.5em}
@@ -492,7 +494,7 @@ html>body .box:hover {background: #0e1d10}
 	height: 13px;
 	overflow: hidden;
 	background: #586858 url(abse/titlebgoff.png) repeat-x 0 1px;
-	color: #b3b3b3;
+	color: #c2c2c2;
 	font-size: 1em;
 	font-weight: normal;
 	margin: 0 0 12px}

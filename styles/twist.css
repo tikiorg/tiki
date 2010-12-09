@@ -893,8 +893,10 @@ a.forumspagetitle:hover {
 .wikitext h2,
 .wikitext h3,
 .wikitext h4 {
-	margin: 0 0 15px;
-	padding: 0}
+	margin: 7px 0 15px;
+	padding: 0;
+	line-height: 1.1;
+}
 
 .wikitext h2 {margin-bottom: 10px}
 

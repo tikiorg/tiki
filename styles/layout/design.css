@@ -183,6 +183,15 @@ li.login_link ul li a {
 	background: none !important;
 }
 
+/* Input fields autofill */
+
+/* Webkit based browser specific (Google Chrome, Chromium, etc.) */
+input:-webkit-autofill {
+	background-color: #FAFFBD !important; /* needs important because Chrome has it already important */
+	background-image: none !important;
+	color: #000 !important; /* the Google guys they forgot the number one rule... when they specify background they should specify forgeround color too ;) */
+}
+
 /* Center column */
 
 .tellafriend,
@@ -218,8 +227,7 @@ a.flip:hover,
 }
 
 .openid_url {
-	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
-	padding-left: 18px;
+	background: #fff url(../../img/icons/login-OpenID-bg.gif) 1px 1px no-repeat;
 }
 
 .bannertext {
