@@ -150,9 +150,8 @@ function smarty_function_html_select_date($params, &$smarty)
     if (preg_match('/^(\d{0,4}-\d{0,2}-\d{0,2})/', $time, $found)) {
         $time = $found[1];
     } else {
-        // TIKI: use tikilib make_time to get an unix timestamp and
-        // strftime to make yyyy-mm-dd
-        $time = strftime('%Y-%m-%d', $tikilib->make_time(0,0,0, $tikilib->date_format('%m', $time), $tikilib->date_format('%d', $time), $tikilib->date_format('%Y', $time)));
+        // TIKI: use tikilib date_format to format as yyyy-mm-dd
+        $time = $tikilib->date_format('%Y-%m-%d', $time);
     }
     // Now split this in pieces, which later can be used to set the select
     $time = explode("-", $time);
