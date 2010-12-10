@@ -181,7 +181,7 @@ if (isset($_REQUEST['full']) && $_REQUEST['full'] != 'n') {
 } else if (isset($_REQUEST['textonly']) && $_REQUEST['textonly'] != 'n') {
 	$output = $smarty->fetch("tiki-show_page_raw.tpl");
 	$output = strip_tags($output);
-	$output = $tikilib::htmldecode($output);
+	$output = $tikilib->htmldecode($output);
 	echo $output;
 } else {
 	// otherwise just the contents of the page without body etc

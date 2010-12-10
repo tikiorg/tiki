@@ -95,7 +95,7 @@
 						<td rowspan="2"><label for="icon">{tr}Icons:{/tr}</label></td>
 						<td>
 							<div>{tr}Folder Icon{/tr}</div>
-							<input type="text" id="icon" name="icon" value="{$info.icon}" style="width:95%" />
+							<input type="text" id="icon" name="icon" value="{$info.icon|escape}" style="width:95%" />
 							<br />
 							<em>{tr}Path and filename of closed folder icon{/tr}</em>.
 
