@@ -1720,7 +1720,6 @@ class UsersLib extends TikiLib
 			$this->query("update `tiki_private_messages` set `toNickname`=? where `toNickname`=?", array($to,$from));
 			$this->query("update `tiki_pages` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_pages` set `creator`=? where `creator`=?", array($to,$from));
-			$this->query("update `tiki_page_drafts` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_page_footnotes` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_newsletters` set `author`=? where `author`=?", array($to,$from));
 			$this->query("update `tiki_minical_events` set `user`=? where `user`=?", array($to,$from));

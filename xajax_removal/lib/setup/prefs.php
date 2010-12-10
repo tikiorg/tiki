@@ -103,7 +103,6 @@ function get_default_prefs() {
 		'feature_wiki_userpage_prefix' => 'User:',
 		'feature_wiki_usrlock' => 'n',
 		'feature_wiki_feedback_polls' => array(),
-		'feature_wiki_save_draft' => 'n',
 		'feature_wikiwords' => 'n',
 		'feature_wikiwords_usedash' => 'y',
 		'feature_wiki_pagealias' => 'y',

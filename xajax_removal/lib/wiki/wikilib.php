@@ -920,19 +920,6 @@ class WikiLib extends TikiLib
 		return $prefs['wikiHomePage'];
 	}
 
-	function save_draft($pageName, $pageDesc, $pageData, $pageComment) {
-		global $user;
-
-		if (!$user) return false;
-
-		$query = "delete from `tiki_page_drafts` where `user`=? and `pageName`=?";
-		$this->query($query, array($user, $pageName));
-
-		$query = "insert into `tiki_page_drafts` (`user`,`pageName`,`data`,`description`,`comment`,`lastModif`) values (?,?,?,?,?,?)";
-		$bindvals = array($user, $pageName, $pageData, $pageDesc, $pageComment, time());
-
-		return $this->query($query, $bindvals) ? true : false;
-	}
 	function sefurl($page, $with_next='', $all_langs='') {
 		global $prefs, $smarty, $info;
 		if( basename( $_SERVER['PHP_SELF'] ) == 'tiki-all_languages.php' ) {
