@@ -98,6 +98,13 @@ function activated_features() {
 	return $activated_features;
 }
 global $tiki_p_admin;
+if ($tiki_p_admin == 'y' && isset($_REQUEST['rebuild']) && $_REQUEST['rebuild'] == 'now') {
+	global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';
+
+	$stat = $unifiedsearchlib->rebuild();
+	$smarty->assign_by_ref('stat', $stat);
+}
+
 if ($tiki_p_admin == 'y' && !empty($_REQUEST['refresh_index_all_now']) && $_REQUEST['refresh_index_all_now'] == 'y') {
 	require_once ('lib/search/refresh-functions.php');
 	foreach(activated_features() as $feature) refresh_index($feature);

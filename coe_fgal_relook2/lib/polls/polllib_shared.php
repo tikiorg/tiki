@@ -264,6 +264,51 @@ class PollLibShared extends TikiLib
 
 		return $pollId_new;
 	}
+	/* compute percent of each option and nb of votes and pondarated total of poll */
+	function options_percent(&$poll_info, &$options) {
+		$poll_info['votes'] = 0;
+		$total = 0;
+		$isNum = true; // try to find if it is a numeric poll with a title like +1, -2, 1 point...
+		foreach ($options as $i => $option) {
+			$poll_info['votes'] += $option['votes']; // nb of votes
+		}
+		foreach ($options as $i => $option) {
+			if ($option['votes'] == 0) {
+				$percent = 0;
+			} else {
+				$percent = number_format($option['votes'] * 100 / $poll_info['votes'], 2);
+				if ($isNum) {
+					if (preg_match('/^([+-]?[0-9]+).*/', $option['title'], $matches)) {
+						$total += $option['votes'] * $matches[1];
+					} else {
+						$isNum = false; // it is not a numeric poll
+					}
+				}
+			}
+			$options[$i]['percent'] = $percent;
+			$options[$i]['width'] = $percent;
+		}
+		if ($isNum) {
+			$poll_info['total'] = $total; // ponderated total
+		}
+	}
+	function delete_vote($pollId, $user, $ip, $optionId) {
+		$query = 'delete from `tiki_user_votings` where `id`=? and `optionId`=? and ';
+		$bindvars = array('poll'.$pollId, $optionId);
+		if (!empty($user)) {
+			$query .= '`user`=?';
+			$bindvars[] = $user;
+		} else {
+			$query .= '`ip`=?';
+			$bindvars[] = $ip;
+		}
+		$this->query($query, $bindvars);
+		$query = 'update `tiki_poll_options` set `votes` = `votes`- 1 where `pollId`=? and `optionId`=?';
+		$this->query($query, array($pollId, $optionId));
+		$query = 'update `tiki_polls` set `votes`=`votes`-1 where `pollId`=?';
+		$this->query($query, array($pollId));
+		$_SESSION['votes'] = array_diff($_SESSION['votes'], array('poll'.$pollId));
+	}
 
 }
 $polllib = new PollLibShared;

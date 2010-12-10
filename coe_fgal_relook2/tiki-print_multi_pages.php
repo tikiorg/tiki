@@ -40,7 +40,7 @@ if (isset($_REQUEST["print"]) || isset($_REQUEST["display"])) {
 		// Now check permissions to access this page
 		if (!$tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_view')) {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("Permission denied. You cannot view this page."));
+			$smarty->assign('msg', tra("You do not have permission to view this page."));
 			$smarty->display("error.tpl");
 			die;
 		}
@@ -84,11 +84,31 @@ $smarty->assign('print_page', 'y');
 if (isset($_REQUEST['display'])) $smarty->assign('display', $_REQUEST['display']);
 // Allow PDF export by installing a Mod that define an appropriate function
 if (isset($_REQUEST['display']) && $_REQUEST['display'] == 'pdf') {
-	// Method using 'mozilla2ps' mod
-	if (file_exists('lib/mozilla2ps/mod_urltopdf.php')) {
-		include_once ('lib/mozilla2ps/mod_urltopdf.php');
-		mod_urltopdf();
+	require_once 'lib/pdflib.php';
+	$generator = new PdfGenerator();
+	$pdf = $pdfname = '';
+
+	if (!empty($printpages)) {
+		$pdf = $generator->getPdf( 'tiki-print_multi_pages.php', array('print' => 'print', 'printpages' => $_REQUEST['printpages'] ) );
+		$pdfname = implode(', ', $printpages);
+
+	} else if (!empty($printstructures)) {
+		$pdf = $generator->getPdf( 'tiki-print_multi_pages.php', array('print' => 'print', 'printstructures' => $_REQUEST['printstructures'] ) );
+		$pdfname = implode(', ', $printstructures);
+
+	} else {
+		$smarty->display("tiki-print_multi_pages.tpl");
+		die;
 	}
+
+	header("Cache-Control: public");
+	header("Content-Description: File Transfer");
+	header('Content-disposition: attachment; filename="'. $pdfname . '.pdf"');
+	header("Content-Type: application/pdf");
+	header("Content-Transfer-Encoding: binary");
+	header('Content-Length: '. strlen($pdf));
+	echo $pdf;
+
 } else {
 	$smarty->display("tiki-print_multi_pages.tpl");
 }

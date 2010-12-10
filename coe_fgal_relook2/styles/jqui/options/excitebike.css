@@ -23,12 +23,12 @@ a:hover {
 	text-decoration: underline;
 }
 
-span.button a:link,
-span.button a:visited,
+.button a:link,
+.button a:visited,
 button,
 input[type="reset"],
 input[type="submit"],
-span.button input,
+.button input,
 .calbuttonBox a {
 	border: 1px solid #2293f7;
 	font-weight: bold;
@@ -39,7 +39,7 @@ span.button input,
 	-webkit-border-radius: 4px;
 }
 
-span.button a:hover,
+.button a:hover,
 .button a:hover,
 button:hover,
 input[type="reset"]:hover,
@@ -59,7 +59,7 @@ input[type="text"],
 input[type="password"],
 select,
 textarea,
-body.wikitext {
+body.cke_show_borders {
 	background: #fff;
 	color: #000;
 }
@@ -198,8 +198,8 @@ h3.box-title {
 .box-data a:visited,
 .wikitext a,
 .wikitext a:visited,
-table.normal a.link,
-table.normal a {
+.normal a.link,
+.normal a {
 	color: #e69700;
 }
 
@@ -239,7 +239,7 @@ table.normal a {
 	text-decoration: underline;
 }
 
-table.normal {
+.normal {
 	border: 1px solid #aaaaaa;
 }
 

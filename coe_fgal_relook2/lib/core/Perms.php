@@ -130,17 +130,15 @@ class Perms
 		$accessor = new Perms_Accessor;
 		$accessor->setContext( $context );
 
-		if( self::$instance ) {
-			$accessor->setPrefix( $this->prefix );
-			$accessor->setGroups( $this->groups );
+		$accessor->setPrefix( $this->prefix );
+		$accessor->setGroups( $this->groups );
 
-			if( $this->checkSequence ) {
-				$accessor->setCheckSequence( $this->checkSequence );
-			}
+		if( $this->checkSequence ) {
+			$accessor->setCheckSequence( $this->checkSequence );
+		}
 
-			if( $resolver = $this->getResolver( $context ) ) {
-				$accessor->setResolver( $resolver );
-			}
+		if( $resolver = $this->getResolver( $context ) ) {
+			$accessor->setResolver( $resolver );
 		}
 
 		return $accessor;
@@ -313,6 +311,11 @@ class Perms
 
 		if( ! $resolver ) {
 			$resolver = false;
+		}
+
+		// Limit the amount of hashes preserved to reduce memory consumption
+		if (count($this->hashes) > 128) {
+			$this->hashes = array();
 		}
 
 		foreach( $toSet as $hash ) {

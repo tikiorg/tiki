@@ -19,6 +19,7 @@ if (empty($_REQUEST['objectType'])) {
 	 $_REQUEST['objectId'] = '';
 }
 
+$smarty->assign('headtitle',tra('Object Permissions'));
 
 $auto_query_args = array(
 	'referer',
@@ -52,7 +53,7 @@ if ($_REQUEST['objectType'] == 'wiki page') {
 }
 if (!($tiki_p_admin_objects == 'y' || (isset($$perm) && $$perm == 'y') || (isset($special_perm) && $special_perm == 'y'))) {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot assign permissions for this object"));
+	$smarty->assign('msg', tra("You do not have permission to assign permissions for this object"));
 	$smarty->display("error.tpl");
 	die;
 }
@@ -207,8 +208,7 @@ if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
 }
 
 if (isset($_REQUEST['remove'])) {
-	check_ticket('object-perms');
-	
+	$access->check_authenticity(tra('Are you sure you want to remove the direct permissions from this object?'));
 	$newPermissions = new Perms_Reflection_PermissionSet;
 	$permissionApplier->apply( $newPermissions );
 
@@ -511,6 +511,9 @@ function get_assign_permissions() {
 	// get existing perms
 	$currentObject = $objectFactory->get( $_REQUEST['objectType'], $_REQUEST['objectId'] );
 	$currentPermissions = $currentObject->getDirectPermissions();
+	if (count($currentPermissions->getPermissionArray()) === 0) {
+		$currentPermissions = $currentObject->getParentPermissions();	// get "default" perms so disabled feature perms don't get removed
+	}
 
 	// set any checked ones
 	if( isset( $_REQUEST['perm'] ) && !empty($_REQUEST['perm'])) {
@@ -679,17 +682,30 @@ function get_displayed_permissions() {
 		$displayedPermissions = $parent;
 	} else {																		// direct object perms
 		$comparator = new Perms_Reflection_PermissionComparator( $globPerms, $displayedPermissions );
-		$permissions_added = ''; $permissions_removed = '';
+		$permissions_added = array(); $permissions_removed = array();
 		foreach($comparator->getAdditions() as $p) {
-			$permissions_added .= empty($permissions_added) ? '' : ', ';
-			$permissions_added .= $p[0] . ':' . $p[1];
+			if (!isset($permissions_added[$p[0]])) {
+				$permissions_added[$p[0]] = array();
+			}
+			$permissions_added[$p[0]][] = str_replace('tiki_p_', '', $p[1]);
 		}
 		foreach($comparator->getRemovals() as $p) {
-			$permissions_removed .= empty($permissions_removed) ? '' : ', ';
-			$permissions_removed .= $p[0] . ':' . $p[1];
+			if (!isset($permissions_removed[$p[0]])) {
+				$permissions_removed[$p[0]] = array();
+			}
+			$permissions_removed[$p[0]][] = str_replace('tiki_p_', '', $p[1]);
 		}
-		$smarty->assign('permissions_added',   $permissions_added);
-		$smarty->assign('permissions_removed', $permissions_removed);
+		$added = ''; $removed = '';
+		foreach($permissions_added as $gp => $pm) {
+			$added .= '<br />';
+			$added .= '<strong>' . $gp . ':</strong> ' . implode(', ', $pm);
+		}
+		foreach($permissions_removed as $gp => $pm) {
+			$removed .= '<br />';
+			$removed .= '<strong>' . $gp . ':</strong> ' . implode(', ', $pm);
+		}
+		$smarty->assign('permissions_added',   $added);
+		$smarty->assign('permissions_removed', $removed);
 	}
 
 	return $displayedPermissions;

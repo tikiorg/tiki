@@ -41,6 +41,7 @@ chdir( dirname(__FILE__) . '/../..' );
 require_once 'lib/init/smarty.php';
 require_once 'lib/cache/cachelib.php';
 require_once 'lib/tikilib.php';
+require_once 'lib/wiki/wikilib.php';
 require_once 'lib/userslib.php';
 require_once 'lib/headerlib.php';
 require_once 'lib/init/tra.php';

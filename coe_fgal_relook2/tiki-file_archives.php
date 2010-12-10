@@ -23,7 +23,7 @@ $tikilib->get_perm_object($fileInfo['galleryId'], 'file gallery', $gal_info, tru
 
 if (!($tiki_p_admin_file_galleries == 'y' || $tiki_p_view_file_gallery == 'y')) {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot edit this file"));
+	$smarty->assign('msg', tra("You do not have permission to edit this file"));
 	$smarty->display("error.tpl");
 	die;
 }
@@ -39,7 +39,7 @@ if (!empty($_REQUEST['remove'])) {
 	}		
 	if (!($tiki_p_admin_file_galleries == 'y' || ($user && ($user == $gal_info['user'] || $user == $removeInfo['user'])))) {
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot remove files from this gallery"));
+		$smarty->assign('msg', tra("You do not have permission to remove files from this gallery"));
 		$smarty->display("error.tpl");
 		die;
 	}

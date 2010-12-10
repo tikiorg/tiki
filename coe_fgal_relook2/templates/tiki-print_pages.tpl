@@ -21,6 +21,15 @@
         <input type="submit" name="print" value="{tr}Print{/tr}" />
       </form>
 
+      {if $pdf_export eq 'y'}
+      <form method="get" action="tiki-print_multi_pages.php">
+          <input type="hidden" name="printstructures" value="{$form_printstructures|escape}" />
+          <input type="hidden" name="find" value="{$find|escape}" />
+          <input type="hidden" name="display" value="pdf" />
+          <input type="submit" name="print" value="{tr}PDF{/tr}" />
+      </form>
+      {/if}
+
       <form action="tiki-print_pages.php" method="post">
         <input type="submit" name="clearstructures" value="{tr}Clear{/tr}" />
       </form>
@@ -95,8 +104,15 @@
 <div style="float:right;margin-right:20%;">
     <form method="get" action="tiki-print_multi_pages.php">
       <input type="hidden" name="printpages" value="{$form_printpages|escape}" />
-	  <p><input type="submit" name="print" title="{tr}Print{/tr}" value="{tr}Print{/tr}" /></p>
-	</form>
+      <input type="submit" name="print" title="{tr}Print{/tr}" value="{tr}Print{/tr}" />
+    </form>
+    {if $pdf_export eq 'y'}
+    <form method="get" action="tiki-print_multi_pages.php">
+      <input type="hidden" name="display" value="pdf" />
+      <input type="hidden" name="printpages" value="{$form_printpages|escape}" />
+      <input type="submit" name="print" title="{tr}PDF{/tr}" value="{tr}PDF{/tr}" />
+    </form>
+    {/if}
 </div>
 {/if}
 {if $prefs.feature_wiki_structure eq 'y'}

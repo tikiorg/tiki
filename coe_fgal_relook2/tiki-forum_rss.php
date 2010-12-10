@@ -23,7 +23,7 @@ $tikilib->get_perm_object( $_REQUEST['forumId'], 'forum' );
 
 if ($tiki_p_forum_read != 'y') {
 	$smarty->assign('errortype', 401);
-	$errmsg=tra("Permission denied. You cannot view this section");
+	$errmsg=tra("You do not have permission to view this section");
 	require_once ('tiki-rss_error.php');
 }
 

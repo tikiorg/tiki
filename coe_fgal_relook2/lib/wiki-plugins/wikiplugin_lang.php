@@ -16,8 +16,8 @@ function wikiplugin_lang_help() {
 function wikiplugin_lang_info() {
 	return array(
 		'name' => tra('Language'),
-		'documentation' => 'PluginLang',
-		'description' => tra("Displays the text only if the language matchs"),
+		'documentation' => tra('PluginLang'),
+		'description' => tra('Displays the text only if the language matches'),
 		'prefs' => array( 'feature_multilingual', 'wikiplugin_lang' ),
 		'body' => tra('text'),
 		'params' => array(
@@ -25,11 +25,13 @@ function wikiplugin_lang_info() {
 				'required' => false,
 				'name' => tra('Language'),
 				'description' => tra('List of languages for which the block is displayed. Languages use the two letter language codes (ex: en, fr, es, ...). Multiple languages can be specified by separating codes by + signs.'),
+				'default' => '',
 			),
 			'notlang' => array(
 				'required' => false,
 				'name' => tra('Not Language'),
 				'description' => tra('List of languages for which the block is not displayed. Languages use the two letter language codes (ex: en, fr, es, ...). Multiple languages can be specified by separating codes by + signs.'),
+				'default' => '',
 			),
 		),
 	);

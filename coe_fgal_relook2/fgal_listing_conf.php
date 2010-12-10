@@ -21,9 +21,9 @@ $fgal_listing_conf = array(
 	'size' => array('name' => tra('Size')),
 	'created' => array('name' => tra('Created').' / '.tra('Uploaded')),
 	'lastModif' => array('name' => tra('Last Modified'), 'key' => 'show_modified'),
-	'creator' => array('name' => tra('Creator')),
-	'author' => array('name' => tra('Author')),
-	'last_user' => array('name' => tra('Last editor')),
+	'creator' => array('name' => tra('Uploaded by')), //this used to be Creator but updated Nov2010
+	'author' => array('name' => tra('Creator')),  //this used to be Author but updated Nov2010
+	'last_user' => array('name' => tra('Last Modified by')), //this used to be 'Last editor' but updated Nov2010
 	'comment' => array('name' => tra('Comment')),
 	'files' => array('name' => tra('Files')),
 	'hits' => array('name' => tra('Hits')),
@@ -49,13 +49,12 @@ foreach ( $fgal_listing_conf as $k => $v ) {
 	} else {
 		$fgal_listing_conf[$k]['value'] = $prefs['fgal_list_'.$k];
 	}
-
-	// Do not show "Locked by" info if the gallery is not lockable
-	if ( isset($gal_info) && isset($gal_info['lockable']) && $gal_info['lockable'] != 'y' ) {
-		$fgal_listing_conf['lockedby']['value'] = 'n';
-	}
-
 }
+// Do not show "Locked by" info if the gallery is not lockable
+if ( isset($gal_info) && isset($gal_info['galleryId']) && isset($gal_info['lockable']) && $gal_info['lockable'] != 'y' ) {
+	$fgal_listing_conf['lockedby']['value'] = 'n';
+}
+
 $smarty->assign_by_ref('fgal_listing_conf', $fgal_listing_conf);
 
 if (isset($section) && $section == 'admin') {

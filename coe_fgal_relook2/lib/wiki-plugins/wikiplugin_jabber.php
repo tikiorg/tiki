@@ -27,7 +27,7 @@ function wikiplugin_jabber_help() {
 function wikiplugin_jabber_info() {
 	return array(
 		'name' => tra('Jabber'),
-		'documentation' => 'PluginJabber',
+		'documentation' => tra('PluginJabber'),
 		'description' => tra('Runs a Java applet to access a local Jabber service'),
 		'prefs' => array( 'wikiplugin_jabber' ),
 		'params' => array(
@@ -35,21 +35,25 @@ function wikiplugin_jabber_info() {
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('Applet height in pixels'),
+				'default' => 200,
 			),
 			'width' => array(
 				'required' => false,
-				'name' => tra(''),
+				'name' => tra('Width'),
 				'description' => tra('Applet width in pixels'),
+				'default' => 200,
 			),
 			'xmlhostname' => array(
 				'required' => false,
-				'name' => tra(''),
-				'description' => tra('jabber.org'),
+				'name' => tra('XML Host Name'),
+				'description' => tra('Web site where XML is hosted. Default is jabber.org'),
+				'default' => 'jabber.org',
 			),
 			'defaultColor' => array(
 				'required' => false,
 				'name' => tra('Default Color'),
-				'description' => tra('255,255,255'),
+				'description' => tra('Set default color. Default is 255,255,255'),
+				'default' => '255,255,255',
 			),
 		),
 	);

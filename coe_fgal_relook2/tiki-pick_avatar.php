@@ -11,6 +11,7 @@ include_once ('lib/userprefs/userprefslib.php');
 include_once ('lib/imagegals/imagegallib.php');
 $access->check_feature('feature_userPreferences');
 $access->check_user($user);
+$auto_query_args = array('view_user');
 if (!isset($_REQUEST["showall"])) $_REQUEST["showall"] = 'n';
 $smarty->assign('showall', $_REQUEST["showall"]);
 $userwatch = $user;

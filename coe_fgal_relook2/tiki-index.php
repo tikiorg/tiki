@@ -4,7 +4,6 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-error_reporting(E_ALL);
 
 $inputConfiguration = array(
 	array( 'staticKeyFilters' => array(
@@ -22,6 +21,7 @@ $inputConfiguration = array(
 		'removeattach' => 'digits',
 		'sort_mode' => 'word',
 		//'structure' => '', TODO
+		'version' => 'digits',
 		'watch_action' => 'word',
 		'watch_event' => 'word',
 		//'watch_object' => 'word', TODO
@@ -48,8 +48,8 @@ if ($prefs['feature_ajax'] === 'y') {
 }
 require_once ("lib/wiki/renderlib.php");
 
-$auto_query_args = array('page','best_lang','bl','page_id','pagenum','page_ref_id','mode','sort_mode',
-                         'machine_translate_to_lang');
+$auto_query_args = array('page','no_bl','page_id','pagenum','page_ref_id','mode','sort_mode',
+                         'machine_translate_to_lang', 'version', 'date');
 
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
@@ -89,7 +89,7 @@ if (isset($_REQUEST['page_id'])) {
 
 if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST['page_ref_id'])) {
 	if ($objectperms->view) {
-		$access->display_error( $page, tra('Permission denied. You cannot view this page.'), '401');
+		$access->display_error( $page, tra('You do not have permission to view this page.'), '401');
 	} else {
 		$access->display_error( '', tra('No name indicated for wiki page'));
 	}
@@ -104,8 +104,14 @@ if( $prefs['feature_wiki_structure'] == 'y' ) {
 	$structure = 'n';
 	$smarty->assign('structure',$structure);
 	// Feature checks made in the function for structure language
-	$structlib->use_user_language_preferences();
-
+	if (!$use_best_language) {
+		$info = $tikilib->get_page_info($_REQUEST["page"]);
+		$langContext = $info['lang'];
+	} else {
+		$langContext = null;
+	}
+	$structlib->use_user_language_preferences( $langContext );
+	
 	if (isset($_REQUEST['page_ref_id'])) {
 		// If a structure page has been requested
 		$page_ref_id = $_REQUEST['page_ref_id'];
@@ -164,10 +170,46 @@ if ( function_exists('utf8_encode') ) {
 }
 
 
-
-// Get page data, if available
 if (!$info) {
-	$info = $tikilib->get_page_info($page);
+        if ($prefs['feature_wiki_use_date'] == 'y' && isset($_REQUEST['date'])) {
+            // Date is required
+            include_once ('lib/wiki/histlib.php');
+
+            try {
+                $page_view_date = $histlib->get_view_date($_REQUEST['date']);
+
+                if ($page_view_date < time()) {
+                    // Asked date must be before now
+                    $_REQUEST['version'] = $histlib->get_version_by_time($page, $page_view_date);
+                }
+
+            } catch (Exception $e) {
+                // Wrong date format
+                $msg = tra("Invalid date format");
+                $smarty->assign('msg', $msg);
+                $smarty->display('error.tpl');
+                die;
+            }
+        }
+
+        if ($prefs['feature_wiki_use_date'] == 'y' && isset($_REQUEST['version'])) {
+            // Version is required
+            include_once ('lib/wiki/histlib.php');
+
+            try {
+                $info = $histlib->get_page_info($page, $_REQUEST['version']);
+
+            } catch (Exception $e) {
+                // Unknown version
+                $msg = tra("This version does not exist");
+                $smarty->assign('msg', $msg);
+                $smarty->display('error.tpl');
+                die;
+            }
+
+        } else {
+            $info = $tikilib->get_page_info($page);
+        }
 }
 	
 // If the page doesn't exist then display an error
@@ -212,7 +254,7 @@ if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasec
 					}
 					$items = $semanticlib->getItemsFromTracker($likepages[0], $suffix);
 					if (count($items) > 1) {
-						$msg = tra("There are more than one item in the tracker with this title");
+						$msg = tra("There is more than one item in the tracker with this title");
 						foreach ($items as $i) {
 							$msg .= '<br /><a href="tiki-index.php?page=' . urlencode($likepages[0]) . '&itemId=' . $i . '">' . $i . '</a>';
 						}
@@ -264,7 +306,7 @@ $page = $info['pageName'];
 //	$translatedWikiMarkup = generate_machine_translated_markup($info, $_REQUEST['machine_translate_to_lang']);
 //} 
 
-$pageRenderer = new WikiRenderer( $info, $user);
+$pageRenderer = new WikiRenderer( $info, $user, $info['data'] );
 $objectperms = $pageRenderer->applyPermissions();
 
 if ($prefs['feature_wiki_comments'] == 'y' and $objectperms->wiki_view_comments ) {
@@ -295,7 +337,7 @@ if( $page_ref_id )
 
 // Now check permissions to access this page
 if( ! $pageRenderer->canView ) {
-	$access->display_error( $page, tra('Permission denied. You cannot view this page.'), '401');
+	$access->display_error( $page, tra('You do not have permission to view this page.'), '401');
 }
 
 // Convert page to structure
@@ -486,7 +528,7 @@ if ($prefs['feature_actionlog'] == 'y') {
 }
 
 // Detect if we have a PDF export mod installed
-$smarty->assign('pdf_export', file_exists('lib/mozilla2ps/mod_urltopdf.php') ? 'y' : 'n');
+$smarty->assign('pdf_export', ($prefs['print_pdf_from_url'] != 'none') ? 'y' : 'n');
 
 // Display the Index Template
 $pageRenderer->runSetups();

@@ -31,8 +31,8 @@
 */
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
+if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
+  header('location: index.php');
   exit;
 }
 
@@ -57,7 +57,9 @@ class PluginsLib extends TikiLib
 	* @var array
 	*/
 	var $aInfoPresetNames = array(
-	"hits" => "Hits", "lastModif" => "Last mod", "user" => "Last author", "len" => "Size", "comment" => "Com", "creator" => "Creator", "version" => "Last ver", "flag" => "Status", "versions" => "Vers", "links" => "Links", "backlinks" => "Backlinks");
+		'hits' => 'Hits', 'lastModif' => 'Last mod', 'user' => 'Last author', 'len' => 'Size', 'comment' => 'Com', 
+		'creator' => 'Creator', 'version' => 'Last ver', 'flag' => 'Status', 'versions' => 'Vers', 'links' => 'Links', 
+		'backlinks' => 'Backlinks');
 	/**
 	* Process the params, in this order:
 	* - default values, asigned on {@link PluginsLib::getDefaultArguments()}
@@ -78,15 +80,15 @@ class PluginsLib extends TikiLib
 	            $args[$arg] = $params[$arg];
 	        } elseif(isset($_REQUEST[$arg])) {
 	            $args[$arg] = $_REQUEST[$arg];
-	        } else {
+	        } elseif (isset($_REQUEST['page'])) {
 	            // maybe this kind of transformation can be grouped on a external function
-	            if ($default_val==="[pagename]") {
-	                $default_val=$_REQUEST["page"];
+	            if ($default_val === '[pagename]') {
+	                $default_val=$_REQUEST['page'];
 	            }
 	            $args[$arg] = $default_val;
 	        }
 	        if (in_array($arg, $this->expanded_params)) {
-	            if ($args[$arg]) {
+	            if (isset($args[$arg]) && $args[$arg]) {
 	            $args[$arg] = explode($this->separator, $args[$arg]);
 	            foreach($args[$arg] as $id=>$value) {
 	                $args[$arg][$id]=trim($value);
@@ -121,7 +123,7 @@ class PluginsLib extends TikiLib
 	* @return string
 	*/
 	function getVersion() {
-	    return tra("No version indicated");
+	    return tra('No version indicated');
 	    //return preg_replace("/[Revision: $]/", '',
 	    //                    "\$Revision: 1.12 $");
 	}
@@ -143,10 +145,11 @@ class PluginsLib extends TikiLib
 	    /**
 	    * UGLY ERROR!.
 	    */
-	    return $this->error("PluginsLib::run: pure virtual function. Don't be so lazy!");
+	    return $this->error('PluginsLib::run: pure virtual function. Don\'t be so lazy!');
 	}
 	function error ($message) {
-	    return "~np~<span class='warn'>".tra("Plugin ").$this->getName()." ".tra("failed")." : ".tra($message)."</span>~/np~";
+	    return '~np~<span class="warn">' . tra('Plugin ') . $this->getName() . ' ' . tra('failed') 
+	    . ' : ' . tra($message) . '</span>~/np~';
 	}
 	function getErrorDetail() {
 	    return $this->_errors;
@@ -169,10 +172,10 @@ class PluginsLibUtil
 	*              array("field"=>"pageName","name"=>"Page")
 	* @return string
 	*/
-	function createTable($aData,$aInfo=false,$aPrincipalField=false) {
+	function createTable($aData,$aInfo = false,$aPrincipalField=false) {
 	    // contract
 	    if (!$aPrincipalField or !is_array($aPrincipalField)) {
-	        $aPrincipalField=array("field"=>"pageName","name"=>"Page");
+	        $aPrincipalField = array('field' => 'pageName', 'name' => 'Page');
 	    }
 	    if (!is_array($aInfo)) {
 	        $aInfo=false;
@@ -184,14 +187,14 @@ class PluginsLibUtil
 	        $sStyle = '';
 
 	        if (in_array('parameters',$aInfo)) {
-	        	$sOutput .= '<em>Required parameters are in</em> <b>bold</b><br />';
+	        	$sOutput .= '<em>'. tra('Required parameters are in</em> <b>bold</b>') . '<br />';
 	        }
 	        // Header for info
 	        $sOutput  .= '<table class="normal">' . "\n\t" . '<tr>' . "\n\t\t" . '<td class="heading"' . $sStyle. '>' 
 	        	. tra($aPrincipalField['name']) . '</td>';
 	        foreach($aInfo as $iInfo => $sHeader) {
 	        	if ($sHeader == 'paraminfo') {
-	        		$sHeader = 'Parameter Info';
+	        		$sHeader = tra('Parameter Info');
 	        	}
 	            $sOutput  .= "\n\t\t" . '<td class="heading"' . $sStyle . '>' . ucfirst(tra($sHeader)) . '</td>';
 	        }
@@ -294,18 +297,18 @@ class PluginsLibUtil
 	}
 	
 	function createList($aData) {
-	    $aPrincipalField=array("field"=>"pageName","name"=>"Pages");
+	    $aPrincipalField = array('field' => 'pageName', 'name' => 'Pages');
 	
 	    // Header for info
-	    $sOutput = "<table class='normal'><tr><td class='heading'>".tra($aPrincipalField["name"])."</td></tr><tr><td class='even'>";
+	    $sOutput = '<table class="normal"><tr><td class="heading">' . tra($aPrincipalField['name']) . '</td></tr><tr><td class="even">';
 	    $iCounter=0;		
 	    // create a comma separated list of entries
 	    foreach($aData as $aPage) {
-	      if ($iCounter>0) $sOutput .= ", ";
-	      $sOutput  .= "((".$aPage[$aPrincipalField["field"]]."))";
+	      if ($iCounter>0) $sOutput .= ', ';
+	      $sOutput  .= '((' . $aPage[$aPrincipalField['field']] . '))';
 	      $iCounter++;
 	    }
-	      $sOutput .= "</td></tr></table>";
+	      $sOutput .= '</td></tr></table>';
 	    return $sOutput;
 	}
 }

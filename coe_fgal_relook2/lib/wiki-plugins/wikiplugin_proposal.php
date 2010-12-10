@@ -10,7 +10,7 @@
 function wikiplugin_proposal_info() {
 	return array(
 		'name' => tra('Proposal'),
-		'documentation' => 'PluginProposal',			
+		'documentation' => tra('PluginProposal'),			
 		'description' => tra('Provides a widget for users to vote on a proposal and view the current decision.'),
 		'prefs' => array( 'wikiplugin_proposal' ),
 		'body' => tra('The list of votes cast. One vote per line. Either 0, +1 or -1 followed by a username.'),
@@ -18,9 +18,10 @@ function wikiplugin_proposal_info() {
 			'caption' => array(
 				'required' => false,
 				'name' => tra( 'Caption' ),
-				'description' => tra("Short description of the proposal to vote on. Will be displayed above the result table."),
-			),
-		),
+				'description' => tra('Short description of the proposal to vote on. Will be displayed above the result table.'),
+				'default' => '',
+			)
+		)
 	);
 }
 

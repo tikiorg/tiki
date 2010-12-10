@@ -48,7 +48,8 @@ function smarty_block_ajax_href($params, $content, &$smarty, $repeat) {
     $last_user = htmlspecialchars($user);
 
     																		// temporary switch to not do ajax for ckeditor button - not reliable in tiki 6
-    if ( $prefs['ajax_xajax'] !== 'y' || $prefs['javascript_enabled'] == 'n' || ($template === 'tiki-editpage.tpl' && $info['wysiwyg'] === 'y')) {
+// Actually in tiki 6 even when not ckeditor if you edit while in tiki-index vs editpage the plugin help breaks as well, you get blank help
+    if ( $prefs['ajax_xajax'] !== 'y' || $prefs['javascript_enabled'] == 'n' || $template === 'tiki-editpage.tpl' ) {
 		return " href=\"$url\" ";
     } else {
 		$max_tikitabs = 50; // Same value as in header.tpl, <body> tag onload's param

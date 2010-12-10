@@ -177,7 +177,7 @@ if (!isset($_REQUEST["sort_mode"])) {
 	}
 }
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-
+//get field settings (no values)
 $xfields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc');
 if (!empty($tracker_info['showPopup'])) {
 	$popupFields = explode(',', $tracker_info['showPopup']);
@@ -210,6 +210,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 	} else {
 		$creatorSelector = false;
 	}
+	//exclude fields that should not be listed
 	if (($xfields["data"][$i]['isTblVisible'] == 'y' or in_array($fid, $popupFields)) and ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's' and $xfields['data'][$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y'))) {
 		$listfields[$fid]['fieldId'] = $xfields['data'][$i]['fieldId'];
 		$listfields[$fid]['type'] = $xfields["data"][$i]["type"];
@@ -224,9 +225,16 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$listfields[$fid]['description'] = $xfields["data"][$i]["description"];
 		$listfields[$fid]['visibleBy'] = $xfields['data'][$i]['visibleBy'];
 		$listfields[$fid]['editableBy'] = $xfields['data'][$i]['editableBy'];
-		if ($listfields[$fid]['type'] == 'e' && $prefs['feature_categories'] == 'y') { //category
+		//get category choices available based on option settings
+		if ($listfields[$fid]['type'] == 'e' && $prefs['feature_categories'] == 'y') {
 			$parentId = $listfields[$fid]['options_array'][0];
-			$listfields[$fid]['categories'] = $categlib->get_viewable_child_categories($parentId);
+			//get all category descendants if true, only first level children if false
+			if (isset($listfields[$fid]['options_array'][3]) && $listfields[$fid]['options_array'][3] == 1) {
+				$all_descends = true;
+			} else {
+				$all_descends = false;
+			}			
+			$listfields[$fid]['categories'] = $categlib->get_viewable_child_categories($parentId, $all_descends);
 		}
 		if ($listfields[$fid]['type'] == 'C') {
 			$allfields=null;
@@ -253,12 +261,13 @@ for ($i = 0; $i < $temp_max; $i++) {
 			}
 		} elseif ($fields["data"][$i]["type"] == 'e' && $prefs['feature_categories'] == 'y') { // category
 			$parentId = $fields["data"][$i]['options_array'][0];
-			if ($fields["data"][$i]['options_array'][3] == 1) {
+			if (isset($fields['data'][$i]['options_array'][3]) && $fields['data'][$i]['options_array'][3] == 1) {
 				$all_descends = true;
 			} else {
 				$all_descends = false;
 			}
-			$fields["data"][$i]['categories'] = $categlib->get_viewable_child_categories($parentId, $all_descends);
+			//affects dropdown list of categories in tiki-view_tracker.php Insert New Item
+			$fields['data'][$i]['categories'] = $categlib->get_viewable_child_categories($parentId, $all_descends);
 			$categId = "ins_cat_$fid";
 			if (isset($_REQUEST[$categId])) {
 				if (is_array($_REQUEST[$categId])) {
@@ -701,7 +710,7 @@ foreach($xfields['data'] as $xfd) {
 		$listfields[$fid]['editableBy'] = $xfd['editableBy'];
 		if ($listfields[$fid]['type'] == 'e' && $prefs['feature_categories'] == 'y') { //category
 			$parentId = $listfields[$fid]['options_array'][0];
-			$listfields[$fid]['categories'] = $categlib->get_viewable_child_categories($parentId);
+			$listfields[$fid]['categories'] = $categlib->get_viewable_child_categories($parentId, $all_descends);
 		}
 		if (isset($xfd['otherField'])) {
 			$listfields[$fid]['otherField'] = $xfd['otherField'];

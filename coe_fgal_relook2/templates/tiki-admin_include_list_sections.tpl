@@ -23,20 +23,21 @@
 
 	{self_link page="i18n" _class="admbox" _style="background-image: url('pics/large/i18n48x48.png')" _title="{tr}i18n{/tr}"}<span>{tr}i18n{/tr}</span>{/self_link}
 
-	{self_link page="textarea" _class="admbox" _style="background-image: url('img/icons/admin_textarea.png')" _title="{tr}Editing and Plugins{/tr}"}<span>{tr}Editing and Plugins{/tr}</span>{/self_link}
+	{self_link page="textarea" _class="admbox" _style="background-image: url('pics/large/editing48x48.png')" _title="{tr}Editing and Plugins{/tr}"}<span>{tr}Editing and Plugins{/tr}</span>{/self_link}
 
 	{self_link page="module" _class="admbox" _style="background-image: url('pics/large/display-capplet48x48.png')" _title="{tr}Module{/tr}"}<span>{tr}Module{/tr}</span>{/self_link}
 
 	{self_link page="metatags" _class="admbox" _style="background-image: url('pics/large/metatags48x48.png')" _title="{tr}Meta Tags{/tr}"}<span>{tr}Meta Tags{/tr}</span>{/self_link}
 
-	{self_link page="performance" _class="admbox" _style="background-image: url('img/mytiki/admin.gif')" _title="{tr}Performance{/tr}"}<span>{tr}Performance{/tr}</span>{/self_link}
+	{self_link page="performance" _class="admbox" _style="background-image: url('pics/large/performance48x48.png')" _title="{tr}Performance{/tr}"}<span>{tr}Performance{/tr}</span>{/self_link}
 
 	{self_link page="security" _class="admbox" _style="background-image: url('pics/large/gnome-lockscreen48x48.png')" _title="{tr}Security{/tr}"}<span>{tr}Security{/tr}</span>{/self_link}
 
-	{self_link page="comments" _class="admbox" _style="background-image: url('pics/icons/comments.png')" _title="{tr}Comments{/tr}"}<span>{tr}Comments{/tr}</span>{/self_link}
+	{self_link page="comments" _class="admbox" _style="background-image: url('pics/large/comments48x48.png')" _title="{tr}Comments{/tr}"}<span>{tr}Comments{/tr}</span>{/self_link}
 
 	{self_link page="rss" _class="admbox" _style="background-image: url('pics/large/feed-icon-48x48.png')" _title="{tr}Feeds{/tr}"}<span>{tr}Feeds{/tr}</span>{/self_link}
 	{self_link page="connect" _class="admbox" _style="background-image: url('pics/large/gnome-globe48x48.png')" _title="{tr}Connect{/tr}"}<span>{tr}Connect{/tr}</span>{/self_link}
+	{self_link page="rating" _class="admbox" _style="background-image: url('pics/large/rating48x48.png')" _title="{tr}Rating{/tr}"}<span>{tr}Rating{/tr}</span>{/self_link}
 	
 	{self_link page="wiki" _class="admbox" _style="background-image: url('pics/large/wikipages48x48.png')" _selected="'`$prefs.feature_wiki`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Wiki{/tr}" title="{tr}Wiki{/tr}{if $prefs.feature_wiki ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Wiki{/tr}</span>{/self_link}
 
@@ -96,6 +97,6 @@
 
 	{self_link page="payment" _class="admbox" _style="background-image: url('pics/large/payment48x48.png')" _selected="'`$prefs.payment_feature`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Payment{/tr}" title="{tr}Payment{/tr}{if $prefs.payment_feature ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Payment{/tr}</span>{/self_link}
 
-	{self_link page="socialnetworks" _class="admbox" _style="background-image: url('img/mytiki/socialnetworks_32.png')" _selected="'`$prefs.feature_socialnetworks`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Social Networks{/tr}" title="{tr}Social networks{/tr}{if $prefs.feature_socialnetworks ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Social networks{/tr}</span>{/self_link}
+	{self_link page="socialnetworks" _class="admbox" _style="background-image: url('pics/large/socialnetworks48x48.png')" _selected="'`$prefs.feature_socialnetworks`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Social Networks{/tr}" title="{tr}Social networks{/tr}{if $prefs.feature_socialnetworks ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Social networks{/tr}</span>{/self_link}
 
 </div>

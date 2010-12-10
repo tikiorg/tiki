@@ -57,13 +57,16 @@ function module_trackerhelp( $mod_reference, &$module_params ) {
 			$_SESSION['trackerhelp_name'] = '';
 			$_SESSION['trackerhelp_id'] = 0;
 			$_SESSION['trackerhelp_text'] = array();
+			$_SESSION['trackerhelp_pretty'] = array();
 		} else {
 			$_SESSION['trackerhelp_id'] = $trackerId;
 			$_SESSION['trackerhelp_name'] = $_REQUEST['trackerhelp_name'];
 			$fields = $trklib->list_tracker_fields($trackerId, 0, $module_params['max']);
 			$_SESSION['trackerhelp_text'] = array();
+			$_SESSION['trackerhelp_pretty'] = array();
 			foreach($fields['data'] as $field) {
 				$_SESSION['trackerhelp_text'][] = $field['fieldId'].':'.$field['name'];
+				$_SESSION['trackerhelp_pretty'][] = $field['name'].' {$f_'.$field['fieldId'].'}';
 			}
 		}
 	}	

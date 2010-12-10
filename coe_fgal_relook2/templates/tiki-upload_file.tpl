@@ -20,11 +20,13 @@
 	{if count($uploads) > 0}
 		{button href="#upload" _text="{tr}Upload File{/tr}"}
 	{/if}
-	{if $simpleMode eq 'y'}{button simpleMode='n' galleryId=$galleryId href="" _text="{tr}Advanced mode{/tr}" _ajax="n"}{else}{button galleryId=$galleryId href="" _text="{tr}Simple mode{/tr}" _ajax="n"}{/if}
-	<span{if $simpleMode eq 'y'} style="display:none;"{/if}>
-		<label for="keepOpenCbx">{tr}Keep gallery window open{/tr}</label>
-		<input type="checkbox" id="keepOpenCbx" checked="checked">
-	</span>
+	{if isset($filegals_manager)}
+		{if $simpleMode eq 'y'}{button simpleMode='n' galleryId=$galleryId href="" _text="{tr}Advanced mode{/tr}" _ajax="n"}{else}{button galleryId=$galleryId href="" _text="{tr}Simple mode{/tr}" _ajax="n"}{/if}
+		<span{if $simpleMode eq 'y'} style="display:none;"{/if}>
+			<label for="keepOpenCbx">{tr}Keep gallery window open{/tr}</label>
+			<input type="checkbox" id="keepOpenCbx" checked="checked">
+		</span>
+	{/if}
 </div>
 {/if}
 
@@ -188,14 +190,14 @@
 			{/if}
 		{/if}
 		<tr><td>
-			<label for="user">{tr}Creator:{/tr}</label>
+			<label for="user">{tr}Uploaded by:{/tr}</label>
 		</td><td width="80%">
-			{user_selector id='user' name='user' editable=$tiki_p_admin_file_galleries}
+			{user_selector id='user' name='user[]' select=$fileInfo.user editable=$tiki_p_admin_file_galleries}
 		</td></tr>
 
 		{if $prefs.feature_file_galleries_author eq 'y'}
 			<tr><td>
-				<label for="author">{tr}Author, if different from the Creator:{/tr}</label>
+				<label for="author">{tr}Creator of file, if different from the 'Uploaded by' user:{/tr}</label>
 			</td><td width="80%">
 				<input type="text" id="author"name="author[]" value="{$fileInfo.author|escape}" />
 			</td></tr>
@@ -238,7 +240,7 @@
 		<br/>
 	{/if}
 </div>
-</div>
+</div><br/>
 {if $prefs.javascript_enabled eq 'y' and !$editFileId}
 	{include file='categorize.tpl' notable='y'}<br/>
 {/if}

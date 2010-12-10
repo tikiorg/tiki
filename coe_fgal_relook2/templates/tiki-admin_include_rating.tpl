@@ -15,6 +15,22 @@
 			{preference name=rating_recalculation_count}
 		</div>
 	</fieldset>
+
+	<fieldset>
+		<legend>{tr}Wiki{/tr}</legend>
+		{preference name=wiki_simple_ratings}
+		<div class="adminoptionboxchild" id="wiki_simple_ratings_childcontainer">
+			{preference name=wiki_simple_ratings_options}
+		</div>
+	</fieldset>
+
+	<fieldset>
+		<legend>{tr}Articles{/tr}</legend>
+			{preference name=article_user_rating}
+				<div class="adminoptionboxchild" id="article_user_rating_childcontainer">
+					{preference name=article_user_rating_options}
+				</div>
+	</fieldset>
 	
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">
 		<input type="submit" value="{tr}Apply{/tr}" />

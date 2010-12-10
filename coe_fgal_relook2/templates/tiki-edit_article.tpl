@@ -16,10 +16,6 @@
 	{button href="tiki-view_articles.php" _text="{tr}View Articles{/tr}"}
 </div>
 
-{remarksbox type="tip" title="{tr}Tip{/tr}"}
-	{tr}Use ...page... to separate pages in a multi-page post{/tr}
-{/remarksbox}
-
 {if $preview}
 	{include file='tiki-preview_article.tpl'}
 {/if}
@@ -54,7 +50,7 @@
 		<tr>
 			<td>{tr}Title{/tr}</td>
 			<td>
-				<input type="text" name="title" value="{$title|escape}" maxlength="255" size="80" />
+				<input type="text" name="title" value="{$title|escape}" maxlength="255" size="60" />
 			</td>
 		</tr>
 		<tr id='show_subtitle' {if $types.$type.show_subtitle eq 'y'}style="display:;"{else}style="display:none;"{/if}>
@@ -116,7 +112,7 @@
 			</td>
 		</tr>
 		<tr id='use_ratings' {if $types.$type.use_ratings eq 'y'}style="display:;"{else}style="display:none;"{/if}>
-			<td>{tr}Rating{/tr}</td>
+			<td>{tr}Author Rating{/tr}</td>
 			<td>
 				<select name='rating'>
 					<option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>
@@ -198,7 +194,7 @@
 		<tr id='show_image_caption' {if $types.$type.show_image_caption eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Image caption{/tr} *</td>
 			<td>
-				<input type="text" name="image_caption" value="{$image_caption|escape}" size="80" />
+				<input type="text" name="image_caption" value="{$image_caption|escape}" size="60" />
 				{icon _id='help' alt="{tr}If not the topic name{/tr}"}
 			</td>
 		</tr>
@@ -270,7 +266,7 @@
 
 		{if $tiki_p_use_HTML eq 'y'}
 			<tr>
-				<td>{tr}Allow HTML{/tr}</td>
+				<td>{tr}Allow full HTML{/tr} <em>({tr}for this edit session{/tr})</em></td>
 				<td>
 					<input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/>
 				</td>
@@ -283,7 +279,7 @@
 					{tr}Emails to be notified (separated with commas){/tr}
 				</td>
 				<td>
-					<input type="text" name="emails" value="{$emails|escape}" size="80" />
+					<input type="text" name="emails" value="{$emails|escape}" size="60" />
 					<br />
 					{if !empty($userEmail) and $userEmail ne $prefs.sender_email}
 						{tr}From:{/tr} {$userEmail|escape}
@@ -301,7 +297,7 @@
 			{assign var='attfullname' value=$att.itemId}
 			<tr id={$attid} {if $types.$type.$attid eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 				<td>{$attname|escape}</td>
-				<td><input type="text" name="{$attfullname}" value="{$article_attributes.$attfullname|escape}" size="80" /></td>
+				<td><input type="text" name="{$attfullname}" value="{$article_attributes.$attfullname|escape}" size="60" /></td>
 			</tr>
 			{/foreach}
 		{/if}
@@ -315,9 +311,26 @@
 	
 	<div align="center">
 		<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;"/>
-		<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}"  onclick="needToConfirm=false;" />
-		{if $articleId}<input type="submit" class="wikiaction tips" title="{tr}Cancel{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}" />{/if}
+		<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}"  onclick="this.form.saving=true;needToConfirm=false;" />
+		{if $articleId}<input type="submit" class="wikiaction tips" title="{tr}Cancel{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}"  onclick="needToConfirm=false;" />{/if}
 	</div>
+	{jq}
+$("#editpageform").submit(function(evt) {
+	var isHtml = false;
+	if (this.saving && !$("input[name=allowhtml]:checked").length) {
+		$("textarea", this).each(function(){
+			if ($(this).val().match(/<([A-Z][A-Z0-9]*)\b[^>]*>(.*?)<\/\1>/i)) {
+				isHtml = true;
+			}
+		});
+		if (isHtml) {
+			this.saving = false;
+			return confirm(tr('You appear to be using HTML in your article but have not selected "Allow HTML".\nThis will result in HTML tags being removed.\nDo you want to save your edits anyway?'));
+		}
+	}
+	return true;
+}).attr('saving', false);
+	{/jq}
 </form>
 
 <br />

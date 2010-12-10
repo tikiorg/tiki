@@ -28,7 +28,7 @@ foreach ($_REQUEST['galleryId'] as $fgalId) {
 	}
 }
 if (empty($galleryIds)) {
-	$errmsg=tra("Permission denied. You cannot view this section");
+	$errmsg=tra("You do not have permission to view this section");
 	require_once ('tiki-rss_error.php');
 }
 

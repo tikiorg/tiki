@@ -72,12 +72,12 @@ legend {
 	color: #333;
 }
 
-span.button a,
-span.button a:visited,
+.button a,
+.button a:visited,
 button,
 input[type="reset"],
 input[type="submit"],
-span.button input,
+.button input,
 .calbuttonBox a {
 	background-color: #f0c040;
 	border: 1px solid #676767;
@@ -86,12 +86,12 @@ span.button input,
 	font-size: 12px;
 }
 
-span.button a:hover,
+.button a:hover,
 .button a:hover,
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-span.button input:hover,
+.button input:hover,
 .calbuttonBox:hover {
 	background-color: #f0ead8;
 	margin: 0;
@@ -182,7 +182,7 @@ h1, .pagetitle {
 	border-right: 1px solid #994242;
 }
 
-div.separator {
+.separator {
 	margin-top: 4px;
 	margin-bottom: 2px;
 	padding-bottom: 2px;
@@ -213,7 +213,7 @@ div.separator {
 	color: #000;
 }
 
-div.box {
+.box {
 	padding-top: 3px;
 	margin-top: 13px;
 }
@@ -240,7 +240,7 @@ h3.box-title {
   overflow: hidden;
 }
 
-div.simplebox {
+.simplebox {
 	margin: 5px 1px;
 	padding: 2px;
 	color: black;
@@ -327,8 +327,8 @@ li.even:hover {
 }
 
 
-span.titleb,
-div.articletrailer {
+.titleb,
+.articletrailer {
 	color:#676767;
 	font-size: 90%;
 }
@@ -345,7 +345,7 @@ div.articletrailer {
 	margin: 10px 0;
 }
 
-div.articlebody {
+.articlebody {
 	border: 1px solid #aeaeae;
 	padding: 1em 2em;
 	margin: 10px 0;
@@ -356,17 +356,12 @@ div.articlebody {
 	background: #f0c040;
 }
 
-.author_actions {
-	float: right;
-	width: 25%;
-}
-
-td.oddthumb {
+.oddthumb {
 	background: transparent;
 	border: 1px solid #8cacbb;
 	border-collapse: collapse;}
 
-td.eventhumb,
+.eventhumb,
 .thumbnailcontener {
 	background: #f7f9fa;
 	border: 1px solid #8cacbb;

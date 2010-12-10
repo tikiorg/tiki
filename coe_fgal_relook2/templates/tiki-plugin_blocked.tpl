@@ -44,7 +44,7 @@
 						 {tr}Body{/tr}
 					</div>
 					<div class="cbox-data">
-						<textarea rows="10" style="width: 99%">{$plugin_body|escape}</textarea>
+						<textarea rows="10" style="width: 99%">{$plugin_body}</textarea>
 					</div>
 					</div>
 				{else}

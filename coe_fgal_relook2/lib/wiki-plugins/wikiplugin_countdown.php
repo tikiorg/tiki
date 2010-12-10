@@ -27,7 +27,7 @@ function wikiplugin_countdown_help() {
 function wikiplugin_countdown_info() {
 	return array(
 		'name' => tra('Countdown'),
-		'documentation' => 'PluginCountdown',
+		'documentation' => tra('PluginCountdown'),
 		'description' => tra('Displays a countdown from now until the specified date.'),
 		'prefs' => array('wikiplugin_countdown'),
 		'icon' => 'pics/icons/clock.png',
@@ -37,21 +37,50 @@ function wikiplugin_countdown_info() {
 				'required' => true,
 				'name' => tra('End date'),
 				'description' => tra('Target date. Multiple formats accepted.'),
+				'default' => '',
 			),
 			'locatetime' => array(
 				'required' => false,
 				'name' => tra('Locate Time'),
-				'description' => tra('on|off'),
+				'description' => tra('Set to off to only show days, otherwise hours, minutes and seconds are also shown (all are shown by default)'),
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('On'), 'value' => 'on'), 
+					array('text' => tra('Off'), 'value' => 'off')
+				),
 			),
 			'show' => array(
 				'required' => false,
-				'name' => tra('Items to show'),
-				'description' => tra('Select: d=days, h=hours, m=minuts, s=seconds. Enter multiple values as: dhms. If blank, all items are shown.'),
+				'name' => tra('Items to Show'),
+				'description' => tra('Select: d=days, h=hours, m=minutes, s=seconds. Enter multiple values as: dhms. If blank, all items are shown.'),
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Days'), 'value' => 'd'), 
+					array('text' => tra('Days & Hours'), 'value' => 'dh'), 
+					array('text' => tra('Days, Hours & Minutes'), 'value' => 'dhm'), 
+					array('text' => tra('Days, Hours, Minutes & Seconds'), 'value' => 'dhms'), 
+					array('text' => tra('Hours'), 'value' => 'h'),
+					array('text' => tra('Hours & Minutes'), 'value' => 'hm'),
+					array('text' => tra('Hours, Minutes & Seconds'), 'value' => 'hms'),
+					array('text' => tra('Minutes'), 'value' => 'm'),
+					array('text' => tra('Minutes & Seconds'), 'value' => 'ms'),
+					array('text' => tra('Seconds'), 'value' => 's'),
+				),
 			),
 			'since' => array(
 				'required' => false,
 				'name' => tra('Show time since event'),
 				'description' => tra('If y, will display amount of time since the event (default). If n will simply display that the event is over.'),
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				),
 			),
 		),
 	);
@@ -60,6 +89,7 @@ function wikiplugin_countdown_info() {
 function wikiplugin_countdown($data, $params) {
 	global $tikilib, $tikidate;
 	extract ($params,EXTR_SKIP);
+	$ret = '';
 
 	if (!isset($enddate)) {
 		return ("<strong>COUNTDOWN: Missing 'enddate' parameter for plugin</strong><br />");

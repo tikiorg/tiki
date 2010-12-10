@@ -23,7 +23,7 @@
 				{if $comment.archived eq 'y'}
 					{self_link comment_archive='n' comments_threadId=$comment.threadId _anchor="threadId$anchor" _icon='ofolder'}{tr}Unarchive{/tr}{/self_link}
 				{else}
-					{self_link comment_archive='y' comments_threadId=$comment.threadId _anchor="threadId$anchor" _icon='folder'}{tr}Archive{/tr}{/self_link}
+					{self_link comment_archive='y' comments_threadId=$comment.threadId _anchor="comments" _icon='folder'}{tr}Archive{/tr}{/self_link}
 				{/if}
 			{/if}
 		{/if}

@@ -54,6 +54,7 @@ function prefs_global_list() {
 			'description' => tra('Users can be sent to different pages upon login, depending on their default group.'),
 			'type' => 'flag',
 			'help' => 'Group',
+			'keywords' => 'group home page pages',
 		),
 		'limitedGoGroupHome' => array(
 			'name' => tra('Go to group homepage only if login from default homepage'),
@@ -61,6 +62,7 @@ function prefs_global_list() {
 			'dependencies' => array(
 				'useGroupHome',
 			),
+			'keywords' => 'group home page pages',
 		),
 		'language' => array(
 			'name' => tra('Default language'),
@@ -152,15 +154,15 @@ function prefs_global_list() {
 			'filter' => 'digits',
 		),
 		'sitead' => array(
-			'name' => tra('Content'),
+			'name' => tra('Site Ads and Banners Content'),
 			'hint' => tra('Example:') . ' ' . "{banner zone='" . tra('Test') . "'}", 
 			'type' => 'textarea',
 			'size' => '5',
 		),
 		'urlOnUsername' => array(
-			'name' => tra('Url to go to when clicking on a username'),
+			'name' => tra('URL to go to when clicking on a username'),
 			'type' => 'text',
-			'description' => tra('Url to go to when clicking on a username.').' '.tra('Default').': tiki-user_information.php?userId=%userId% <em>('.tra('Use %user% for login name and %userId% for userId)').')</em>',
+			'description' => tra('URL to go to when clicking on a username.').' '.tra('Default').': tiki-user_information.php?userId=%userId% <em>('.tra('Use %user% for login name and %userId% for userId)').')</em>',
 		),
 		'forgotPass' => array(
 			'name' => tra('Remind/forgot password'),
@@ -172,7 +174,7 @@ function prefs_global_list() {
 			'type' => 'flag',
 		),
 		'sitemycode' => array(
-			'name' => tra('Content'),
+			'name' => tra('Custom Site Header Content'),
 			'hint' => tra ('Example:') . ' ' .  "{if \$user neq ''}<div align=\"right\" style=\"float: right; font-size: 10px\">{tr}logged as{/tr}: {\$user}</div>{/if}",
 			'type' => 'textarea',
 			'size' => '6',
@@ -284,7 +286,7 @@ function prefs_global_list() {
 			'size' => 50,
 		),
 		'useUrlIndex' => array(
-			'name' => tra('or'),
+			'name' => tra('Use URL Index'),
 			'description' => tra('Use a Tiki feature homepage or another homepage'),
 			'type' => 'flag',
 		),
@@ -295,14 +297,14 @@ function prefs_global_list() {
 			'description' => tra('Select the Tiki feature to use as the site homepage. Only enabled features are listed.')
 		),
 		'disableJavascript' => array(
-			'name' => tra('Disable javascript'),
+			'name' => tra('Disable JavaScript'),
 			'type' => 'flag',
-			'description' => tra('Disable javascript for testing purpose even if the browser allows it'),
+			'description' => tra('Disable JavaScript for testing purpose even if the browser allows it'),
 		),
 
 		// Kaltura
 		'partnerId' => array(
-			'name' => tra('Partner Id'),
+			'name' => tra('Partner ID'),
 			'description' => tra('Kaltura Partner ID'),
 			'type' => 'text',
 			'filter' => 'digits',
@@ -414,7 +416,7 @@ function feature_home_pages()
 	if ( $prefs['feature_file_galleries'] == 'y' ) {
 			$hgalinfo = $tikilib->get_file_gallery($prefs['home_file_gallery']);
 			$home_gal_name = substr($hgalinfo["name"], 0, 20);
-			$tikiIndex['tiki-list_file_gallery.php?galleryId=' . $prefs['home_gallery']] = tra('File Gallery:') . $home_gal_name;
+			$tikiIndex['tiki-list_file_gallery.php?galleryId=' . $prefs['home_file_gallery']] = tra('File Gallery:') . $home_gal_name;
 	}
 	
 	// Forum

@@ -362,7 +362,8 @@ class ArtLib extends TikiLib
 				sendEmailNotification($emails, 'watch', 'submission_notification_subject.tpl', $_SERVER['SERVER_NAME'], 'submission_notification.tpl');
 			}
 		}
-		$this->object_post_save( array(
+		global $tikilib;
+		$tikilib->object_post_save( array(
 			'type' => 'submission',
 			'object' => $id,
 			'description' => substr($heading, 0, 200), 
@@ -412,8 +413,9 @@ class ArtLib extends TikiLib
 			$expireDate = $publishDate;
 		}
 		$hash = md5($title . $heading . $body);
-		if (empty($imgdata))
+		if (empty($imgdata) || $useImage === 'n') {	// remove image data if not using it
 			$imgdata = '';
+		}
 		
 		$query = 'select `name` from `tiki_topics` where `topicId` = ?';
 		$topicName = $this->getOne($query, array($topicId) );
@@ -581,11 +583,11 @@ class ArtLib extends TikiLib
 		}
 
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('articles', $articleId);
-		}
-		$this->object_post_save( array(
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('articles', $articleId);
+
+		global $tikilib;
+		$tikilib->object_post_save( array(
 			'type' => 'article',
 			'object' => $articleId,
 			'description' => substr($heading, 0, 200),
@@ -1057,7 +1059,7 @@ class ArtLib extends TikiLib
 
 	function delete_image_cache($image_type, $imageId)
 	{
-		global $prefs;
+		global $prefs, $tikidomain;
 		// Input validation: imageId must be a number, and not 0
 		if (!ctype_digit("$imageId") || !($imageId>0)) {
 			return false;

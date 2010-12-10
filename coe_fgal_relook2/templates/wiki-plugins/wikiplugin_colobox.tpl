@@ -3,7 +3,7 @@
 	{capture name=url}{$colorboxUrl}{$file.$colorboxColumn}{/capture}
 	<a href="{$smarty.capture.url}{if $colorboxColumn eq "id"}&display{/if}" rel="shadowbox[colorbox{$iColorbox}];type=img" title="{$file.elTitle|escape}">
 	{if $smarty.foreach.files.first or $params.showallthumbs eq 'y'}
-		<img border="0" src="{$smarty.capture.url}{if !empty($colorboxThumb)}&{$colorboxThumb}{/if}" />
+		<img src="{$smarty.capture.url}{if !empty($colorboxThumb)}&{$colorboxThumb}{/if}" />
 	{/if}
 	</a>
 {/foreach}

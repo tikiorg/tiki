@@ -144,7 +144,7 @@ a.admbox.off img {
 	clear: none;
 }
 
-div.adminanchors a {float: left}
+.adminanchors a {float: left;}
 
 /* from ui-revamp branch, via coe branch - jb july 2009 */
 
@@ -283,8 +283,8 @@ div.adminanchors a {float: left}
 	padding: 0 .5em .5em;
 */
 }
-#toolbar_edit_div label, #toolbar_edit_div input, #toolbar_edit_div select { display:block }
-#toolbar_edit_div input, #toolbar_edit_div select { clear: right }
+#toolbar_edit_div label, #toolbar_edit_div input, #toolbar_edit_div select { display:block; }
+#toolbar_edit_div input, #toolbar_edit_div select { clear: right; }
 #toolbar_edit_div input.text { margin-bottom:12px; width:95%; padding: .4em; }
 #toolbar_edit_div fieldset { padding:0; border:0; margin-top:25px; }
 

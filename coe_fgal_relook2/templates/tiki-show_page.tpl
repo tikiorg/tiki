@@ -107,7 +107,7 @@
 				<ul>
 					{section name=j loop=$translation_alert[i]}
 						<li>
-							<a href="{if $translation_alert[i][j].approvedPage && $hasStaging == 'y'}{$translation_alert[i][j].approvedPage|sefurl:wiki:with_next}{else}{$translation_alert[i][j].page|sefurl:wiki:with_next}{/if}bl=n">
+							<a href="{if $translation_alert[i][j].approvedPage && $hasStaging == 'y'}{$translation_alert[i][j].approvedPage|sefurl:wiki:with_next}{else}{$translation_alert[i][j].page|sefurl:wiki:with_next}{/if}no_bl=y">
 								{if $translation_alert[i][j].approvedPage && $hasStaging == 'y'}
 									{$translation_alert[i][j].approvedPage}
 								{else}
@@ -128,19 +128,19 @@
 	{/section}
 {/if}
 
-<div id="top" class="wikitext clearfix">
+<div id="top" class="wikitext clearfix{if $prefs.feature_page_title neq 'y'} nopagetitle{/if}">
 	{if !$hide_page_header}
 		{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0]) and $prefs.freetags_show_middle eq 'y'}
 			{include file='freetag_list.tpl'}
 		{/if}
 
 		{if $pages > 1 and $prefs.wiki_page_navigation_bar neq 'bottom'}
-			<div align="center">
+			<div class="center navigation_bar pagination position_top">
 				<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$first_page}">{icon _id='resultset_first' alt="{tr}First page{/tr}"}</a>
 
 				<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$prev_page}">{icon _id='resultset_previous' alt="{tr}Previous page{/tr}"}</a>
 
-				<small>{tr}page{/tr}:{$pagenum}/{$pages}</small>
+				<small>{tr 0=$pagenum 1=$pages}page: %0/%1{/tr}</small>
 
 				<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$next_page}">{icon _id='resultset_next' alt="{tr}Next page{/tr}"}</a>
 
@@ -190,7 +190,7 @@
 
 	{if $pages > 1 and $prefs.wiki_page_navigation_bar neq 'top'}
 		<br />
-		<div align="center">
+		<div class="center navigation_bar pagination position_bottom">
 			<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$first_page}">{icon _id='resultset_first' alt="{tr}First page{/tr}"}</a>
 
 			<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$prev_page}">{icon _id='resultset_previous' alt="{tr}Previous page{/tr}"}</a>
@@ -217,7 +217,8 @@
 
 	{if $print_page eq 'y'}
 		<br />
-		{tr}The original document is available at{/tr} <a href="{$base_url}{$page|sefurl}">{$base_url}{$page|sefurl}</a>
+		{capture name=url}{$base_url}{$page|sefurl}{if !empty($smarty.request.itemId)}&amp;itemId={$smarty.request.itemId}{/if}{/capture}
+		{tr}The original document is available at{/tr} <a href="{$smarty.capture.url}">{$smarty.capture.url}</a>
 	{/if}
 {/strip}{/capture}
 

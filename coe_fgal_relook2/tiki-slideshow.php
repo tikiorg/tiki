@@ -8,48 +8,69 @@
 $section = 'wiki page';
 require_once ('tiki-setup.php');
 
-$access->check_feature('feature_wiki');
+include_once ('lib/structures/structlib.php');
+include_once ('lib/wiki/wikilib.php');
+
+if ($prefs['feature_wiki'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
+
+	$smarty->display("error_raw.tpl");
+	die;
+}
 
 // Create the HomePage if it doesn't exist
 if (!$tikilib->page_exists($prefs['wikiHomePage'])) {
-	$tikilib->create_page($prefs['wikiHomePage'], 0, '', $tikilib->now, 'Tiki initialization');
+	$tikilib->create_page($prefs['wikiHomePage'], 0, '', date("U"), 'Tiki initialization');
 }
+
+if (!isset($_SESSION["thedate"])) {
+	$thedate = date("U");
+} else {
+	$thedate = $_SESSION["thedate"];
+}
+
 // Get the page from the request var or default it to HomePage
 if (!isset($_REQUEST["page"])) {
-	$_REQUEST["page"] = $prefs['wikiHomePage'];
-	$page = $prefs['wikiHomePage'];
-	$smarty->assign('page', $prefs['wikiHomePage']);
-} else {
-	$page = $_REQUEST["page"];
-	$smarty->assign_by_ref('page', $_REQUEST["page"]);
+	$_REQUEST["page"] = $wikilib->get_default_wiki_page();
 }
+$page = $_REQUEST['page'];
+$smarty->assign('page', $page);
+
 // If the page doesn't exist then display an error
 if (!($info = $tikilib->get_page_info($page))) {
-	$smarty->assign('msg', tra('Page cannot be found'));
-	$smarty->display('error.tpl');
+	$smarty->assign('msg', tra("Page cannot be found"));
+	$smarty->display("error_raw.tpl");
 	die;
 }
-// Now check permissions to access this page
-$tikilib->get_perm_object($page, 'wiki page', $info);
 
-$access->check_permission('tiki_p_view');
+// Now check permissions to access this page
+$tikilib->get_perm_object( $page, 'wiki page', $info);
+if ($tiki_p_view != 'y') {
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra("Permission denied. You cannot view this page."));
+
+	$smarty->display("error_raw.tpl");
+	die;
+}
 
 // BreadCrumbNavigation here
-// Get the number of pages from the default or userPreferences
 // Remember to reverse the array when posting the array
-$anonpref = $prefs['userbreadCrumb'];
+
 if (!isset($_SESSION["breadCrumb"])) {
 	$_SESSION["breadCrumb"] = array();
 }
+
 if (!in_array($page, $_SESSION["breadCrumb"])) {
 	if (count($_SESSION["breadCrumb"]) > $prefs['userbreadCrumb']) {
-		array_shift($_SESSION["breadCrumb"]);
+		array_shift ($_SESSION["breadCrumb"]);
 	}
+
 	array_push($_SESSION["breadCrumb"], $page);
 } else {
 	// If the page is in the array move to the last position
 	$pos = array_search($page, $_SESSION["breadCrumb"]);
-	unset($_SESSION["breadCrumb"][$pos]);
+
+	unset ($_SESSION["breadCrumb"][$pos]);
 	array_push($_SESSION["breadCrumb"], $page);
 }
 
@@ -57,71 +78,88 @@ if (!in_array($page, $_SESSION["breadCrumb"])) {
 if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 	$tikilib->add_hit($page);
 }
+
 // Get page data
 $info = $tikilib->get_page_info($page);
-$smarty->assign('page_info', $info);
+
 // Verify lock status
 if ($info["flag"] == 'L') {
 	$smarty->assign('lock', true);
 } else {
 	$smarty->assign('lock', false);
 }
+
 // If not locked and last version is user version then can undo
 $smarty->assign('canundo', 'n');
+
 if ($info["flag"] != 'L' && (($tiki_p_edit == 'y' && $info["user"] == $user) || ($tiki_p_remove == 'y'))) {
 	$smarty->assign('canundo', 'y');
 }
+
 if ($tiki_p_admin_wiki == 'y') {
 	$smarty->assign('canundo', 'y');
 }
-//Now process the pages
-preg_match_all("/-=([^=]+)=-/", $info["data"], $reqs);
-$slides = preg_split('/-=[^=]+=-/', $info["data"]);
-if (count($slides) < 2) {
-	$slides = explode("...page...", $info["data"]);
-	array_unshift($slides, '');
-}
-if (!isset($_REQUEST["slide"]) or $_REQUEST["slide"] < 0) {
-	$_REQUEST["slide"] = 0;
-}
-if (!isset($slides[$_REQUEST["slide"] + 1])) {
-	$_REQUEST["slide"] = count($slides) - 2;
-}
-$smarty->assign('prev_slide', $_REQUEST["slide"] - 1);
-$smarty->assign('next_slide', $_REQUEST["slide"] + 1);
-if (isset($reqs[1][$_REQUEST["slide"]])) {
-	$slide_title = $reqs[1][$_REQUEST["slide"]];
+
+// Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
+$preparsed = array();
+$noparsed = array();
+$tikilib->parse_first( $info["data"], $preparsed, $noparsed );
+
+$pdata = $tikilib->parse_data_raw($info["data"]);
+
+if (!isset($_REQUEST['pagenum']))
+	$_REQUEST['pagenum'] = 1;
+
+$pages = $wikilib->get_number_of_pages($pdata);
+$pdata = $wikilib->get_page($pdata, $_REQUEST['pagenum']);
+$smarty->assign('pages', $pages);
+
+if ($pages > $_REQUEST['pagenum']) {
+	$smarty->assign('next_page', $_REQUEST['pagenum'] + 1);
 } else {
-	$slide_title = '';
+	$smarty->assign('next_page', $_REQUEST['pagenum']);
 }
-$slide_data = $tikilib->parse_data($slides[$_REQUEST["slide"] + 1]);
-if (isset($reqs[1][$_REQUEST["slide"] - 1])) {
-	$slide_prev_title = $reqs[1][$_REQUEST["slide"] - 1];
+
+if ($_REQUEST['pagenum'] > 1) {
+	$smarty->assign('prev_page', $_REQUEST['pagenum'] - 1);
 } else {
-	$slide_prev_title = '';
+	$smarty->assign('prev_page', 1);
 }
-if (isset($reqs[1][$_REQUEST["slide"] + 1])) {
-	$slide_next_title = $reqs[1][$_REQUEST["slide"] + 1];
-} else {
-	$slide_next_title = '';
-}
-$smarty->assign('slide_prev_title', $slide_prev_title);
-$smarty->assign('slide_next_title', $slide_next_title);
-$smarty->assign('slide_title', $slide_title);
-$smarty->assign('slide_data', $slide_data);
-$total_slides = count($slides) - 1;
-$current_slide = $_REQUEST["slide"] + 1;
-$smarty->assign('total_slides', $total_slides);
-$smarty->assign('current_slide', $current_slide);
+
+$smarty->assign('first_page', 1);
+$smarty->assign('last_page', $pages);
+$smarty->assign('pagenum', $_REQUEST['pagenum']);
+
+// Put ~pp~, ~np~ and <pre> back. --rlpowell, 24 May 2004
+$tikilib->replace_preparse( $info["data"], $preparsed, $noparsed );
+$tikilib->replace_preparse( $pdata, $preparsed, $noparsed );
+
+$smarty->assign_by_ref('parsed', $pdata);
+//$smarty->assign_by_ref('lastModif',date("l d of F, Y  [H:i:s]",$info["lastModif"]));
 $smarty->assign_by_ref('lastModif', $info["lastModif"]);
+
 if (empty($info["user"])) {
 	$info["user"] = 'anonymous';
 }
+
 $smarty->assign_by_ref('lastUser', $info["user"]);
+
+// Comments engine!
+if ($prefs['feature_wiki_comments'] == 'y') {
+	$comments_per_page = $prefs['wiki_comments_per_page'];
+
+	$thread_sort_mode = $prefs['wiki_comments_default_ordering'];
+	$comments_vars = array('page');
+	$comments_prefix_var = 'wiki page:';
+	$comments_object_var = 'page';
+	include_once ("comments.php");
+}
+
 include_once ('tiki-section_options.php');
-$smarty->assign('wiki_extras', 'y');
-ask_ticket('slideshow');
+ask_ticket('index-raw');
+
 // Display the Index Template
 $smarty->assign('dblclickedit', 'y');
-$smarty->assign('mid', 'tiki-show_page.tpl');
-$smarty->display("tiki-slideshow.tpl");
+$smarty->assign('mid','tiki-show_page_raw.tpl');
+// use tiki_full to include include CSS and JavaScript
+$smarty->display("tiki_full.tpl");

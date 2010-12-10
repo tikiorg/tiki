@@ -396,23 +396,26 @@ class RegistrationLib extends TikiLib
 	function register_new_user($registration, $from_intertiki=false) {
 		global $prefs, $tikilib;
 
+		if ($prefs['login_is_email'] == 'y' && isset($registration['name'])) {
+			$registration['email'] = $registration['name'];
+		}
 		$result=$this->local_check_registration($registration, $from_intertiki);
 		if ($result !== null) return $result;
 
-        if ($prefs['feature_invit'] == 'y') {
+        if ($prefs['feature_invite'] == 'y') {
             unset($registration['invitedid']);
-            $invit=0;
-            if (!$from_intertiki && array_key_exists('invit', $registration)) {
-                $invit=(int)$registration['invit'];
-                $res=$tikilib->query("SELECT * FROM tiki_invited WHERE id_invit=? AND email=? AND used=?",
-                                     array($invit, $registration['email'], "no"));
+            $invite=0;
+            if (!$from_intertiki && array_key_exists('invite', $registration)) {
+                $invite=(int)$registration['invite'];
+                $res=$tikilib->query("SELECT * FROM tiki_invited WHERE id_invite=? AND email=? AND used=?",
+                                     array($invite, $registration['email'], "no"));
                 $invited=$res->fetchRow();
                 if (!is_array($invited)) {
-                    return new RegistrationError('invit', tra("This invitation does not exist or is deprecated or wrong email"));
+                    return new RegistrationError('invite', tra("This invitation does not exist or is deprecated or wrong email"));
                 } else {
                     $registration['invitedid']=$invited['id'];
                 }
-            } else unset($registration['invit']);        
+            } else unset($registration['invite']);        
         }
 
 		if ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
@@ -422,15 +425,15 @@ class RegistrationLib extends TikiLib
 			$result=$this->register_new_user_local($registration, $from_intertiki);
 		}
 
-        if ($prefs['feature_invit'] == 'y') {
-            if ($invit > 0) {
-                $res=$tikilib->query("SELECT * FROM tiki_invit WHERE id=?", array($invit));
-                $invitrow=$res->fetchRow();
-                if (!is_array($invitrow)) die("(bug) This invitation does not exist or is deprecated");
+        if ($prefs['feature_invite'] == 'y') {
+            if ($invite > 0) {
+                $res=$tikilib->query("SELECT * FROM tiki_invite WHERE id=?", array($invite));
+                $inviterow=$res->fetchRow();
+                if (!is_array($inviterow)) die("(bug) This invitation does not exist or is deprecated");
                 $tikilib->query("UPDATE tiki_invited SET used=? , used_on_user=? WHERE id=?", array("registered", $registration['name'], $registration['invitedid']));
                 
-                if (!empty($invitrow['wikipageafter']))
-                    $GLOBALS['redirect']=str_replace('tiki-register.php', 'tiki-index.php?page=', $_SERVER['SCRIPT_URI']).urlencode($invitrow['wikipageafter']);
+                if (!empty($inviterow['wikipageafter']))
+                    $GLOBALS['redirect']=str_replace('tiki-register.php', 'tiki-index.php?page=', $_SERVER['SCRIPT_URI']).urlencode($inviterow['wikipageafter']);
             }
         }
 

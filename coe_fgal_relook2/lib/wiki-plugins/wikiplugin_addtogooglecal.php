@@ -11,29 +11,30 @@ function wikiplugin_addtogooglecal_help() {
 function wikiplugin_addtogooglecal_info() {
 	return array(
 		'name' => tra('Add Event to Google Calendar'),
-		'documentation' => 'PluginAddToGoogleCal',
+		'documentation' => tra('PluginAddToGoogleCal'),
 		'description' => tra('Creates an icon for a user to add an event to a Google Calendar'),
 		'prefs' => array('wikiplugin_addtogooglecal'),
     	'introduced' => 6,
 		'params' => array(
 			'calitemid' => array(
 				'required' => true,
-				'name' => 'Calendar item ID',
+				'name' => tra('Calendar item ID'),
 				'description' => tra('The item ID of the calendar to add to Google calendar.'),
-    			'accepted' => 'A calendar item ID number',
+    			'accepted' => tra('A calendar item ID number'),
 				'filter' => 'digits', 
-    			'default' => 'none',
+    			'default' => '',
     			'since' => '6.0', 
 	),
 			'iconstyle' => array(
 				'required' => false,
-				'name' => 'Icon style',
-				'description' => 'Choose the icon style',
-    			'accepted' => 'Either 1, 2 or 3',
+				'name' => tra('Icon Style'),
+				'description' => tra('Choose the icon style'),
+    			'accepted' => tra('Either 1, 2 or 3'),
 				'filter' => 'digits', 
     			'default' => 1,
     			'since' => '6.0', 
     			'options' => array(
+					array('text' => '', 'value' => ''), 
 					array('text' => tra('One'), 'value' => 1), 
 					array('text' => tra('Two'), 'value' => 2), 
 					array('text' => tra('Three'), 'value' => 3),

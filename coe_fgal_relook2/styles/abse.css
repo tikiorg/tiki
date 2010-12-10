@@ -33,10 +33,6 @@ html>body {font-size: .7em !important}
 	background: transparent;
 	color: #fff}
 
-.fullscreen #col1 {
-	margin-left: 30px !important;
-	margin-right: 30px !important}
-
 #c1c2	#wrapper	#col1.marginleft  {margin-left: 200px;}
 #c1c2	#wrapper	#col1.marginright {margin-right: 200px;}
 #c1c2	#wrapper	#col1	.content {background: transparent}
@@ -104,7 +100,9 @@ h1, h2, h3, h4, h5 {
 	font-weight: bold;
 	letter-spacing: -1px;
 	margin: 0 0 15px;
-	padding: 0}
+	padding: 0;
+	line-height: 1.1;
+}
 
 h1 {font-size:1.6em}
 h2 {font-size: 1.5em}
@@ -147,10 +145,10 @@ option {
 	color: #ccccff;
 	background: #586858 url(abse/menubg.jpg) repeat-y}
 	
-span.button a,
-span.button a:visited,
+.button a,
+.button a:visited,
 button,
-span.button input,
+.button input,
 .submitbutton,
 .calbuttonBox,
 input[type=submit],
@@ -183,9 +181,9 @@ select {
 	color: #BDCEC3;
 	border: 0}
 
-span.button a:hover,
+.button a:hover,
 button:hover,
-span.button input:hover,
+.button input:hover,
 .submitbutton:hover,
 option:hover,
 .calbuttonBox a:hover {
@@ -219,7 +217,7 @@ p {
 small {font-size: 0.8em}
 
 textarea,
-body.wikitext {
+body.cke_show_borders {
 	border: solid 1px #aaa;
 	background: #586858;
 	color: #F5F5F5;
@@ -237,7 +235,7 @@ body.wikitext {
 	
 * html #siteheader {height: 74px}
 
-div#sioptions {
+#sioptions {
 	margin: 0;
 	padding: 1em}
 
@@ -314,6 +312,14 @@ div#sioptions {
 .cssmenu_vert li {padding-bottom: 4px}
 .cssmenu_ver li a ul {border: 0}
 .cssmenu_vert li.selected > a {background: #86a48a url(abse/menubg.jpg) repeat-y}
+
+.cssmenu_horiz li ul {
+	margin-top: -10px;
+}
+
+.cssmenu_horiz li ul ul {
+	margin-top: 0;
+}
 
 /* left column width */
 #col2 ul.cssmenu_vert {
@@ -408,14 +414,14 @@ a.phplmselected:active {
 a.phplmselected:hover {background: 0}
 
 /** Links in other menus **/
-div.separator, div.separatorline {
+.separator, .separatorline {
 	color: #f5f5f5;
 	display: block;
 	padding: 2px 5px;
 	width: 140px}
 
 .option,
-div.optionline,
+.optionline,
 .option a {
 	color: #5F5F5F;
 	margin: 0}
@@ -428,8 +434,8 @@ a.linkmenu,
 .rsslink:visited {color: #bdcec3}
 
 option:hover,
-div.separator:hover,
-div.option a.linkmenu:hover {
+.separator:hover,
+.option a.linkmenu:hover {
 	text-decoration: none;
 	color: #ccccff;
 	background: #010101 url(abse/menubg.jpg) repeat-y}
@@ -459,7 +465,8 @@ a.flip:hover,
 .share {margin-bottom: 4px}
 
 /****** Misc. Global Classes (layout and style) ****/
-/** Jquery autocomplete **/
+/**** Jquery ****/
+/** autocomplete **/
 .ac_even, .ac_odd {
 	color: #415D44;
 }
@@ -468,21 +475,26 @@ a.flip:hover,
 	color: white;
 }
 
+/** tree **/
+.ui-icon {
+background-image:url('../lib/jquery/jquery-ui/themes/ui-darkness/images/ui-icons_cccccc_256x240.png');
+}
+
 /***** Boxes *****/
 /** Modules **/
-div.box {
+.box {
 	background: transparent;
 	padding-bottom: 10px;
 	margin-bottom: -20px}
 
-.wikitext div.box {width: auto}
-html>body div.box:hover {background: #0e1d10}
+.wikitext .box {width: auto}
+html>body .box:hover {background: #0e1d10}
 
 .box-title {
 	height: 13px;
 	overflow: hidden;
 	background: #586858 url(abse/titlebgoff.png) repeat-x 0 1px;
-	color: #b3b3b3;
+	color: #c2c2c2;
 	font-size: 1em;
 	font-weight: normal;
 	margin: 0 0 12px}
@@ -543,12 +555,14 @@ img.flipmodimage:hover {border: 1px solid #55914E !important}
 .cbox-data ul {padding-left: 1em}
 .cbox-data ul ul {margin: auto}
 
-.rbox {padding: 4px}
+.rbox {
+	padding: 4px;
+}
 
 .rbox-title {
-	color: #fff;
 	background: #415d44;
 	text-align: left;
+	color: #fff;
 	border-color: #ccccff;
 	border-bottom: none;
 	font-size: 1em;
@@ -556,14 +570,16 @@ img.flipmodimage:hover {border: 1px solid #55914E !important}
 
 .rbox-data {
 	background: #415d44;
-	border-color: #ccccff}
+	border-color: #ccccff;
+	color: #fff;
+}
 
 .tip .rbox-title,
 .tip .rbox-data {
 	background: #415d44;
 	color: #fff}
 
-div.simplebox {
+.simplebox {
 	border: 1px solid #666;
 	padding: 4px}
  
@@ -572,8 +588,8 @@ div.simplebox {
 
 table {font-size: 1em}
 
-table.normal, 
-table.admin {border: solid 1px #909090}
+.normal, 
+.admin {border: solid 1px #909090}
 
 tr.odd td {
 	background: #000 url(abse/menubg.jpg) repeat-y;
@@ -595,14 +611,14 @@ td.even {
 	color: #fff;
 	border-right: 1px solid #636f65}
 
-table.normal td.heading {font-size: 1em}
+.normal td.heading {font-size: 1em}
 
 td.heading {
 	background: #495149;
 	text-align: center}
 	
-table.xdebug-error tr th,
-table.xdebug-error tr td {
+.xdebug-error tr th,
+.xdebug-error tr td {
 	color: black;
 }
 
@@ -666,8 +682,8 @@ li.tabmark {
 }
 
 /***** Wiki *****/
-div#description,
-div.description {
+#description,
+.description {
 	font-size: 90%;
 	font-style: italic;
 	margin-bottom: 1.5em}
@@ -701,25 +717,25 @@ div.description {
 	border-bottom: 1px solid #696969;
 	vertical-align: top}
  
-td.wikicell {
+.wikicell {
 	padding: 3px;
 	border-right: 1px solid #a9a9a9;
 	border-bottom: 1px solid #a9a9a9}
 
 .editdate {padding-bottom: 5px}
 textarea.wikiedit {font-size: 1.25em}
-div.help_section,
+.help_section,
 
-div#tikihelp table.normal {
+#tikihelp .normal {
 	color: #fff;
 	background: #000}
 
-div#helptool {background: #86a48a; padding: 2px}
+#helptool {background: #86a48a; padding: 2px}
 #helptool a.link {color: #000}
 
 /** Wiki plugins **/
 /* Code plugin  */
-div.code {
+.code {
 	font-size: 90%;
 	padding: 3px;
 	border: 1px dashed #ccc;
@@ -747,9 +763,9 @@ div.code {
 	border-bottom: 0}
 
 /* Quote plugin */
-div.quoteheader {margin-left: 20px}
+.quoteheader {margin-left: 20px}
 
-div.quotebody {
+.quotebody {
 	margin-left: 20px;
 	font-style: italic;
 	margin: 0 5px 10px 5px;
@@ -759,7 +775,7 @@ div.quotebody {
 	background: #324c33}
 
 /** Wiki tocs **/
-div.tocnav {padding: 3px}
+.tocnav {padding: 3px}
 
 /* Wiki diff styles */
 .diff td {border: 1px solid #A9B8C2}
@@ -767,11 +783,11 @@ div.tocnav {padding: 3px}
 .diffheader {background: #A9B8C2}
 
 /***** Articles ****/
-div.articletopline {
+.articletopline {
 	font-size: 90%;
 	font-style: italic}
 
-div.articletitle {
+.articletitle {
 	margin: 0 0 15px;
 	padding: 0;
 	text-align: left;
@@ -779,20 +795,20 @@ div.articletitle {
 	background: #010101 url(abse/menubg.jpg) repeat-y;
 	margin-bottom: 1em}
  
-div.articletitle h2 {font-size: 1.4em}
+.articletitle h2 {font-size: 1.4em}
 
-div.articletitle h2 a,
-div.articletitle h2 a:visited {text-decoration: none}
+.articletitle h2 a,
+.articletitle h2 a:visited {text-decoration: none}
  
-div.articlesubtitle {
+.articlesubtitle {
 	font-size: 90%;
 	font-style: italic}
  
-div.articleheading {
+.articleheading {
 	margin-top: 6px;
 	line-height:1.5em}
  
-div.articleheadingtext {color: #D8D8D8}
+.articleheadingtext {color: #D8D8D8}
 
 img.topicimage,
 img.articleimagenofloat,
@@ -809,19 +825,19 @@ img.articleimage {
 	background: #000;
 	border: 1px solid #989898}
 
-div.articletrailer .wikitopline {float: left}
+.articletrailer .wikitopline {float: left}
  
-div.articlebody {
+.articlebody {
 	color: #D8D8D8;
 	line-height: 1.5em}
  
-div.articlesource {
+.articlesource {
 	margin-top: 5px;
 	font-style: italic;
 	font-size: 90%}
  
 /***** Blogs *****/
-div.blogtitle {
+.blogtitle {
 	font-size: 1.5em;
 	font-weight: bold;
 	padding: 3px;
@@ -839,7 +855,7 @@ h1.blogtitle {
 	font-weight: normal;
 	text-decoration: none}
 
-div.bloginfo {
+.bloginfo {
 	padding: 3px;
 	line-height: 150%;
 	text-align: right}
@@ -861,10 +877,10 @@ a.blogt:hover {
 	color: #FFF;
 	border-bottom: 1px dotted #FFF}
 
-div.postinfo a.linkmodule {}
+.postinfo a.linkmodule {}
 .postinfo div {margin-top: 30%}
 
-div.posthead {
+.posthead {
 	text-align: left;
 	padding: 3px;
 	background: #010101 url(abse/menubg.jpg) repeat-y;
@@ -875,12 +891,12 @@ div.posthead {
 	margin-top: 10px;
 	font-size: 1.2em}
 
-span.posthead {
+.posthead {
 	display: block;
 	font-weight: bold;
 	letter-spacing: .4pt}
  
-div.posthead h3 {
+.posthead h3 {
 	text-align: left;
 	margin-bottom: 10px;
 	color: #999980;
@@ -889,7 +905,7 @@ div.posthead h3 {
 	margin: 0 0 15px;
 	padding: 0}
  
-div.postbody {
+.postbody {
 	margin-right: 8px;
 	line-height: 1.5em}
 
@@ -1012,7 +1028,7 @@ div.postbody {
 	padding-top: 2px}
 
 /* Help box*/
-div.commentsedithelp {
+.commentsedithelp {
 	background: #ffcfcf;
 	color: black;
 	border: 1px solid #ff0000;
@@ -1020,29 +1036,29 @@ div.commentsedithelp {
 	font-weight: bold}
 
 /***** Image Galleries *****/
-table.galtable {
+.galtable {
 	border-collapse: collapse;
 	border: 1px solid #8cacbb}
 
-div#browse_image {background: transparent}
-div.showimage {padding: 6px}
+#browse_image {background: transparent}
+.showimage {padding: 6px}
 
-td.oddthumb {
+.oddthumb {
 	background: #0E150E;
 	border: 3px solid black}
  
-td.eventhumb {
+.eventhumb {
 	background: #0E150E;
 	border: 3px solid black}
 
 /***** File Galleries *****/
 
-div.gallerypath, div.gallerypath a {
+.gallerypath, .gallerypath a {
 	color: #bdcec3;
 	margin-left: 3px;
 	text-decoration: none}
 	
-div.gallerypath a:hover {color: #ccccff}
+.gallerypath a:hover {color: #ccccff}
 .fgalexplorer {border: 1px solid #3f6041}
 
 .fgallisting table td {
@@ -1064,16 +1080,16 @@ ul.catitems li {margin-right: 6px}
 
 /*****  Polls  *****/
 
-div.pollresults {
+.pollresults {
 	margin-top: 5px;
 	font-size: 1.2em;
 	padding: 0 5px}
 
-td.pollr {color: black}
+.pollr {color: black}
 
 /***** FAQs *****/
 /***** Quizzes *****/
-div.questionblock {padding: 4px}
+.questionblock {padding: 4px}
 
 /***** Shoutbox *****/
 textarea.tshoutbox {
@@ -1081,47 +1097,47 @@ textarea.tshoutbox {
 	width: 162px}
 
 /***** Directory *****/
-div.dircategs {
+.dircategs {
 	border: 1px solid #8cacbb;
 	padding: 5px}
 
-div.dirlistsites {
+.dirlistsites {
 	padding: 5px 0 10px 5px;
 	margin-top: 10px}
 
-div.dirsite {
+.dirsite {
 	border: 1px solid #aaa;
 	margin-bottom: 10px;
 	padding: 4px}
 
-div.dirrelated {
+.dirrelated {
 	margin-top: 10px;
 	padding: 5px}
 
 td.dirfooter {font-size: .95em}
-div.dirfooter {margin-top: 10px}
+.dirfooter {margin-top: 10px}
 
 /***** Messages *****/
-td.prio1,
-td.prio2,
-td.prio3,
-td.prio4,
-td.prio5 {border: 1px solid #8cacbb}
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {border: 1px solid #8cacbb}
 
-div.messureadflag {background: #ccc}
-div.messureadhead {background: #dedede}
-div.messureadbody {background: #dedede}
+.messureadflag {background: #ccc}
+.messureadhead {background: #dedede}
+.messureadbody {background: #dedede}
 .readlink {color: #000}
 
 /***** TikiSheet *****/
-table.default thead td,
-table.default tfoot td {
+.default thead td,
+.default tfoot td {
 	font-weight: bold;
 	text-align: center;
 	background: #000;
 	color: #d8d8d8}
 
-table.default	td {
+.default	td {
 	border: solid 1px #a9a9a9;
 	background: #000}
 
@@ -1256,7 +1272,7 @@ table.default	td {
 .opaque .box-data {background: #000}
 
 #caltable .calfocuson,
-.box-data td.fc a.today,
+.box-data .fc a.today,
 .box-data td a.today {
 	background: #586858 url(abse/titlebgoff.png) repeat-x;
 	color: #b3b3b3}
@@ -1350,7 +1366,7 @@ table.default	td {
 
 /***** Admin *****/
 
-table.admin div#content1 div.tabcontent div.cbox {
+.admin #content1 .tabcontent .cbox {
 	background: transparent}
 
 a.admbox {

@@ -4,23 +4,28 @@ var auto_save_id = [];
 var auto_save_refs = [];
 var auto_save_data = [];
 var submit = 0;
-   
+var sending_auto_save = false;
+
 function remove_save(editorId, autoSaveId) {
-	if (typeof editorId !== 'string' || !editorId || !autoSaveId) {
-		return;	// seems to get jQuery events arriving here
+	if (typeof editorId !== 'string' || !editorId || !autoSaveId || submit === 1) {
+		return;	// seems to get jQuery events arriving here or has been submitted before
+	}
+	if (sending_auto_save) {	// wait if autosaving
+		setTimeout(function () { remove_save(editorId, autoSaveId); }, 100);
 	}
 	submit = 1;
 	$.ajax({
 		url: 'tiki-auto_save.php',
 		data: 'command=auto_remove&editor_id=' + editorId + '&data=&referer=' + autoSaveId,
 		type: "POST",
+		async: false,	// called on form submit (save or cancel) so should wait 
 		// good callback
 		success: function(data) {
 			// act casual?
 		},
 		// bad callback - no good info in the params :(
 		error: function(req, status, error) {
-			alert(tr("Auto Save removal returned an error: ") + error);
+			//alert(tr("Auto Save removal returned an error: ") + error);
 		}
 	});
 }
@@ -35,11 +40,11 @@ function toggle_autosaved(editorId, autoSaveId) {
 		$.ajax({
 			url: 'tiki-auto_save.php',
 			data: 'command=auto_get&editor_id=' + editorId + '&data=&referer=' + autoSaveId,
-			async: false,
+			async: true,
 			type: "POST",
 			// good callback
 			success: function(data) {
-				output = unescape(jQuery(data).find('data').text());
+				output = jQuery(data).find('data').text();
 				// back up current
 				$("#"+editorId).parents("form:first").
 					append($("<input type='hidden' id='"+editorId+"_original' value='"+$("#"+editorId).val()+"' />"));
@@ -74,29 +79,32 @@ function toggle_autosaved(editorId, autoSaveId) {
 
 function auto_save( editorId, autoSaveId ) {
 	if (!autoSaveId) { autoSaveId = auto_save_refs[0]; }
-	if (submit === 0 && editorId && autoSaveId) {
+	if (submit === 0 && editorId && autoSaveId && !sending_auto_save) {
 		var data = $('#' + editorId).val();
 		if (auto_save_data[editorId] !== data) {
 			auto_save_data[editorId] = data;
+			sending_auto_save = true;
 			$.ajax({
 				url: 'tiki-auto_save.php',
 				data: 'command=auto_save&editor_id=' + editorId + '&data=' + encodeURIComponent(data) + '&referer=' + autoSaveId,
-				async: false,
 				type: "POST",
 				// good callback
 				success: function(data) {
 					// update button when it's there (TODO)
-					//alert(tr("here! "));
 					if (ajaxPreviewWindow && typeof ajaxPreviewWindow.get_new_preview === 'function') {
 						 ajaxPreviewWindow.get_new_preview();
 					} else {
 						ajax_preview( editorId, autoSaveId, true );
 					}
 					setTimeout(auto_save, 60000);
+					sending_auto_save = false;
 				},
 				// bad callback - no good info in the params :(
 				error: function(req, status, error) {
-					alert(tr("Auto Save an error: ") + error);
+					if (error) {
+						alert(tr("Auto Save error: ") + error);
+					}
+					sending_auto_save = false;
 				}
 			});
 		}
@@ -120,10 +128,13 @@ function ajax_preview(editorId, autoSaveId, inPage) {
 				var $prvw = $("#autosave_preview:visible");
 				if ($prvw.length) {
 					ajaxLoadingShow($("#autosave_preview .wikitext"));
+					var h = location.search.match(/&hdr=(\d?)/);
+					h = h && h.length ? h[1] : "";
 					$.get("tiki-auto_save.php", {
 						editor_id: editorId,
 						autoSaveId: escape(autoSaveId),
-						inPage: true
+						inPage: true,
+						hdr: h
 					}, function(data) {
 						// remove JS and disarm links
 						data = data.replace(/\shref/gi, " tiki_href").
@@ -148,7 +159,6 @@ function ajax_preview(editorId, autoSaveId, inPage) {
 		}
 	} else {
 		alert("Auto save data not found");
-		debugger;
 	}
 	
 }

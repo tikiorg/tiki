@@ -49,7 +49,7 @@ function prefs_auth_list() {
 			'filter' => 'digits',
 		),
 		'auth_token_tellafriend' => array(
-			'name' => tra('Share access rights with friends'),
+			'name' => tra('Share access rights with friends when using Tell a friend'),
 			'description' => tra('Allow users to share their access rights on the current page with a friend when sending the link by email. Lifespan of the links is defined by the site.'),
 			'type' => 'flag',
 			'perspective' => false,
@@ -59,7 +59,7 @@ function prefs_auth_list() {
 			),
 		),
 		'auth_token_share' => array(
-			'name' => tra('Share access rights with friends'),
+			'name' => tra('Share access rights with friends when using Share'),
 			'description' => tra('Allow users to share their access rights on the current page with a friend when sending the link by email/twitter/facebook. Lifespan of the links is defined by the site.'),
 			'type' => 'flag',
 			'perspective' => false,
@@ -79,7 +79,7 @@ function prefs_auth_list() {
 			'perspective' => false,
 		),
 		'auth_phpbb_disable_tikionly' => array(
-			'name' => tra("Disable Tiki users who doesn't have a phpBB login. (They could have been deleted)."),
+			'name' => tra("Disable Tiki users who don't have a phpBB login. (They could have been deleted)."),
 			'type' => 'flag',
 			'perspective' => false,
 		),
@@ -122,7 +122,7 @@ function prefs_auth_list() {
 			'perspective' => false,
 		),
 		'auth_ldap_permit_tiki_users' => array(
-			'name' => tra('Use Tiki authentication for users created in tiki'),
+			'name' => tra('Use Tiki authentication for users created in Tiki'),
 			'type' => 'flag',
 			'perspective' => false,
 		),

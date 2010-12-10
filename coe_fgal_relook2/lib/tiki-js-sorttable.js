@@ -84,11 +84,11 @@ function ts_resortTable(lnk) {
     newRows.sort(sortfn);
 
     if (span.getAttribute("sortdir") == 'down') {
-        ARROW = '&nbsp;&nbsp;<img src="pics/icons/resultset_up.png" border="0" width="16" height="16" />';
+        ARROW = '&nbsp;&nbsp;<img src="pics/icons/resultset_up.png" width="16" height="16" />';
         newRows.reverse();
         span.setAttribute('sortdir','up');
     } else {
-        ARROW = '&nbsp;&nbsp;<img src="pics/icons/resultset_down.png" border="0" width="16" height="16" />';
+        ARROW = '&nbsp;&nbsp;<img src="pics/icons/resultset_down.png" width="16" height="16" />';
         span.setAttribute('sortdir','down');
     }
 
@@ -170,17 +170,6 @@ function ts_sort_default(a,b) {
     if (aa<bb) return -1;
     return 1;
 }
-
-// function to allow multiselection in checkboxes
-// must be called like this :
-//
-// <input type="checkbox" onclick="checkbox_list_check_all(form_name,[checkbox_name_1,checkbox_name2 ...],true|false);">
-function checkbox_list_check_all(form,list,checking) {
-  for (var checkbox in list) {
-    document.forms[form].elements[list[checkbox]].checked=checking;
-  }
-}
-
 
 function addEvent(elm, evType, fn, useCapture)
 // addEvent and removeEvent

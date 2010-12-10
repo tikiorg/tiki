@@ -11,8 +11,7 @@
 					<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
 				</div>
 				{if $prefs.ajax_xajax ne 'y'}
-					{if $prefs.min_pass_length > 1}<div class="highlight"><em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em></div>{/if}
-					{if $prefs.pass_chr_num eq 'y'}<div class="highlight"><em>{tr}Password must contain both letters and numbers{/tr}</em></div>{/if}
+					{include file='password_help.tpl'}
 				{/if}
 			</td>
 		</tr>

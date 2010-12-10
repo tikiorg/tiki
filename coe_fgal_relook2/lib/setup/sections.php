@@ -23,7 +23,7 @@ $sections = array(
 		'feature' => 'feature_blogs',
 		'key' => 'blogId',
 		'itemkey' => 'postId',
-		'objectType' =>'blog post',
+		'objectType' =>'blog',
 		'itemObjectType' => 'blog post',
 		'itemCommentsFeature' => 'feature_blogposts_comments'
 	),

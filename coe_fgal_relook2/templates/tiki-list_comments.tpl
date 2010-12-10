@@ -34,6 +34,12 @@
 				{self_link _sort_arg="sort_mode" _sort_field='approved'}{tr}Approval{/tr}{/self_link}
 			</th>
 		{/if}
+		{if $tiki_p_admin_comments eq 'y' and $prefs.comments_archive eq 'y'}
+			<th>
+				{assign var=numbercol value=`$numbercol+1`}
+				{self_link _sort_arg="sort_mode" _sort_field='archive'}{tr}Archive{/tr}{/self_link}
+			</th>
+		{/if}
 		<th></th>
 	</tr>
 	
@@ -44,7 +50,7 @@
 				<div class='opaque'>
 					<div class='box-title'>{tr}Actions{/tr}</div>
 					<div class='box-data'>
-						<a href="{$comments[ix].href}#threadId{$id}">{icon _id='magnifier' alt="{tr}Display{/tr}"}</a>
+						<a href="{$comments[ix].href}">{icon _id='magnifier' alt="{tr}Display{/tr}"}</a>
 						<a href="{$comments[ix].href|cat:"&amp;comments_threadId=`$id`&amp;edit_reply=1#form"}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
 						{self_link remove=1 checked=$id _icon='cross'}{tr}Delete{/tr}{/self_link}
 					</div>
@@ -81,7 +87,13 @@
 				<td {if $headerKey eq 'data'}{popup caption=$comments[ix].title|escape:"javascript"|escape:"html"	text=$comments[ix].parsed|escape:"javascript"|escape:"html"}{/if}>
 					<span> {* span is used for some themes CSS opacity on some cells content *}
 						{if $headerKey eq 'title'}
-							<a href="{$comments[ix].href}#threadId{$id}" title="{$val}">{$val|truncate:50:"...":true|escape}</a>
+							<a href="{$comments[ix].href}" title="{$val}">
+								{if !empty($val)}
+									{$val|truncate:50:"...":true|escape}
+								{else}
+									{tr}(no title){/tr}
+								{/if}
+							</a>
 						{elseif $headerKey eq 'objectType'}
 							{tr}{$val|ucwords}{/tr}
 						{elseif $headerKey eq 'object'}
@@ -112,6 +124,16 @@
 				</td>
 			{/if}
 
+			{if $tiki_p_admin_comments eq 'y' and $prefs.comments_archive eq 'y'}
+				<td class="archive">
+					{if $comments[ix].archived eq 'y'}
+						{self_link archive='unarchive' checked=$id _icon='ofolder'}{tr}Unarchive{/tr}{/self_link}
+					{else}
+						{self_link archive='archive' checked=$id _icon='folder'}{tr}Archive{/tr}{/self_link}
+					{/if}
+				</td>
+			{/if}
+
 			<td>
 				<a title="{tr}More info{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" center=true text=$smarty.capture.over_more_info|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='information' alt="{tr}More info{/tr}"}</a>
 			</td>
@@ -128,6 +150,10 @@
 		{if $tiki_p_admin_comments eq 'y' and $prefs.feature_comments_moderation eq 'y'}
 			{icon _id='comment_approve' _tag='input_image' name='approve' value='y' alt="{tr}Approve{/tr}"}
 			{icon _id='comment_reject' _tag='input_image' name='approve' value='r' alt="{tr}Reject{/tr}"}
+		{/if}
+		{if $tiki_p_admin_comments eq 'y' and $prefs.comments_archive eq 'y'}
+			{icon _id='folder' _tag='input_image' name='archive' value='archive' alt="{tr}Archive{/tr}"}
+			{icon _id='ofolder' _tag='input_image' name='archive' value='unarchive' alt="{tr}Unarchive{/tr}"}
 		{/if}
 	</div>
 	</form>

@@ -19,7 +19,7 @@ if ($tiki_p_edit_structures == 'y') {
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['rremove']);
 		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit')) {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+			$smarty->assign('msg', tra("You do not have permission to edit this page."));
 			$smarty->display("error.tpl");
 			die;
 		}
@@ -30,7 +30,7 @@ if ($tiki_p_edit_structures == 'y') {
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['rremovex']);
 		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit')) {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+			$smarty->assign('msg', tra("You do not have permission to edit this page."));
 			$smarty->display("error.tpl");
 			die;
 		}
@@ -42,7 +42,7 @@ if ($tiki_p_edit_structures == 'y') {
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['export']);
 		if ($prefs['feature_wiki_export'] != 'y' || $tiki_p_admin_wiki != 'y' || !$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_view')) {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra('Permission denied. You cannot view this page.'));
+			$smarty->assign('msg', tra('You do not have permission to view this page.'));
 			$smarty->display("error.tpl");
 			die;
 		}
@@ -68,7 +68,7 @@ if ($tiki_p_edit_structures == 'y') {
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['export_tree']);
 		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_view')) {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra('Permission denied. You cannot view this page.'));
+			$smarty->assign('msg', tra('You do not have permission to view this page.'));
 			$smarty->display("error.tpl");
 			die;
 		}
@@ -96,7 +96,7 @@ if ($tiki_p_edit_structures == 'y') {
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['remove']);
 		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit')) {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+			$smarty->assign('msg', tra("You do not have permission to edit this page."));
 			$smarty->display("error.tpl");
 			die;
 		}
@@ -263,8 +263,7 @@ ask_ticket('admin-structures');
 include_once ('tiki-section_options.php');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-// Detect if we have a PDF export mod installed
-$smarty->assign('pdf_export', file_exists('lib/mozilla2ps/mod_urltopdf.php') ? 'y' : 'n');
+$smarty->assign('pdf_export', ($prefs['print_pdf_from_url'] != 'none') ? 'y' : 'n');
 // Display the template
 $smarty->assign('mid', 'tiki-admin_structures.tpl');
 $smarty->display("tiki.tpl");

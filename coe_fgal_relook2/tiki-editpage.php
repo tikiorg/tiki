@@ -203,7 +203,7 @@ if ($tiki_p_edit !== 'y') {
 		$smarty->assign('urllogin', "tiki-editpage.php?cache=$cacheName");
 	}
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+	$smarty->assign('msg', tra("You do not have permission to edit this page."));
 	$smarty->display("error.tpl");
 	die;
 }
@@ -233,7 +233,7 @@ if (isset($_REQUEST["current_page_id"])) {
 	$structure_info = $structlib->s_get_structure_info($_REQUEST['current_page_id']);
 	if ( ($tiki_p_edit != 'y' && !$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit')) || (($tiki_p_edit_structures != 'y' && !$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit_structures')) ) ) {
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+		$smarty->assign('msg', tra("You do not have permission to edit this page."));
 		$smarty->display("error.tpl");
 		die;
 	}
@@ -267,8 +267,8 @@ if (isset($_REQUEST['cancel_edit'])) {
 		}
 	}	
 
-	if ($prefs['feature_best_language'] === 'y') {
-		$url .= '&bl=n';
+	if ($prefs['feature_multilingual'] === 'y' && $prefs['feature_best_language'] === 'y' && isset($info['lang']) && $info['lang'] !== $prefs['language']) {
+		$url .= '&no_bl=y';
 	}
 
 	if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying before first call to header(), so we can see traces. Forwarding to: \$url='$url'");
@@ -510,7 +510,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 			$url = $wikilib->sefurl($page);
 		}
 		if ($prefs['feature_best_language'] === 'y') {
-			$url .= '&bl=n';
+			$url .= '&no_bl=y';
 		}
 
 		if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying before second call to header(), so we can see traces. Forwarding to: '$url'");
@@ -839,7 +839,7 @@ if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) ) {
 	} elseif (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg'] === 'y') {
 		// Parsing page data as first time seeing wiki page in wysiwyg editor
 		$smarty->assign('msg', "Parsing wiki to html");
-		$parsed = $editlib->parseToWysiwyg($edit_data);
+		$parsed = $editlib->parseToWysiwyg($edit_data, true);
 		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
 			$is_html = false;
 			$info['is_html'] = false;
@@ -857,7 +857,7 @@ if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) ) {
 				unset($_REQUEST['save']);	// don't save an ajax error
 			}
 		} else {
-		 	$parsed = $tikilib->parse_data( $edit_data, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'ck_editor' => true, 'is_html' => true));
+		 	$parsed = $tikilib->parse_data( $edit_data, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'ck_editor' => true, 'is_html' => true, 'process_wiki_paragraphs' => false));
 		}
 	}
 }
@@ -1153,7 +1153,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 	} else {
 		$url = $wikilib->sefurl($page);
 	}
-	if ($prefs['feature_multilingual'] === 'y' && ($prefs['feature_best_language'] === 'y' || isset($_REQUEST['save']))) {
+	if ($prefs['feature_multilingual'] === 'y' && $prefs['feature_best_language'] === 'y' && isset($info['lang']) && $info['lang'] !== $prefs['language']) {
 		$url .= '&no_bl=y';
 	}
 	$_SESSION['saved_msg'] = $_REQUEST["page"];

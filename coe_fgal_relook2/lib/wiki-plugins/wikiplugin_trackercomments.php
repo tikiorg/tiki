@@ -14,20 +14,29 @@ function wikiplugin_trackercomments_info() {
 			'trackerId' => array(
 				'required' => true,
 				'name' => tra('Tracker ID'),
-				'description' => tra('Tracker ID'),
-				'filter' => 'digits'
+				'description' => tra('Numeric value representing the tracker ID'),
+				'filter' => 'digits',
+				'default' => '',
 			),
 			'shownbitems' => array(
 				'required' => false,
-				'name' => tra('shownbitems'),
-				'description' => 'y|n',
-				'filter' => 'alpha'
+				'name' => tra('Item Count'),
+				'description' => tra('Determines whether the number of items will be shown (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => '',
+			'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'view' => array(
 				'required' => false,
 				'name' => tra('View'),
-				'description' => 'user '.tra('Select automatically the item of the current user'),
-				'filter' => 'alpha'
+				'description' => tra('Enter a user name to select the items of the current user'),
+				'accepted' => tra('a user name'),
+				'filter' => 'alpha',
+				'default' => ''
 			),
 		)
 	);

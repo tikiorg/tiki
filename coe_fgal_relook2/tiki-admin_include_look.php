@@ -102,7 +102,7 @@ $js
 		var o = optionDropDown.val();
 		var f = style_options[t][1][o];
 
-		if( ! f ) {
+		if( ! f ) {
 			f = style_options[t][0];
 		}
 

@@ -1,18 +1,21 @@
-/**
+﻿/**
  * *lite CSS - "like a KISS ? - lite is that easy !"
  *
- * this is an ultimate source ordered tableless layout solution ;)
- * the lite.css file is the base style which should remain untouched. it is meant to be imported at the top of your own stylesheet using @import
- * and the definitions can be overriden to suit your needs on the next lines there... for more info see the project page: http://sf.net/projects/litecss
+ * this is the ultimate source ordered tableless floating full-width or fixed-width fluid 2-1-3 and crossbrowser compatible layout solution ;)
+ * the lite.css file is the base style which *should remain untouched*. it is meant to be imported at the top of your own stylesheet using @import directive
+ * and the definitions can be overriden to suit your needs on the following lines there... for more info see the project page: http://sf.net/projects/litecss
  * 
- * @author: luciash d' being aka Lukáš 'luci' Mašek <luci2008 at ground dot cz>
+ * @author: luciash d' being <luci (at) tiki (.) org>
  * @license: LGPL
  *
  * enjoy ! -- luci
  */
-
+ 
 body {
-	display: block;
+	display: table;/* display: table is mandatory for the top block element (doesn't have to be body; can be re-set to any other child wrapper)
+			to handle occassional main content which become too wide such as bigger images, long links or tables. thanks to this property
+			the layout will behave nicely as it would in a table while keeping the document semanticaly clean. it means the content will
+			expand to the right and at the same time it will not overflow the last column but rather gently push it further aside */
 	font-family: sans-serif;
 	font-size: 80%;/* the body font-size must be in percents to scale the fonts in IE properly */
 	margin: 0; padding: 0;
@@ -33,15 +36,6 @@ body {
 	width: 100%;
 }
 
-/* next two rules, prevent column content from overlapping. */
-#fixedwidth {
-	display: table;
-}
-
-.fixed_width #fixedwidth {
-	display: inherit;
-}
-
 #c1c2 {
 	display: block;/* keep "display: block" here to prevent layout breakage (mostly in Firefox) */
 	float: left;/* from IE 5.5 to IE 7 it works only when it is floated this way */
@@ -55,8 +49,8 @@ body {
 *:first-child+html
 #c1c2 {
 	float: left;/* for IE 7 it must be redefined back to left */
-	margin-left: -180px;
-	padding-left: 180px;
+	margin-left: -180px;/* change this in your stylesheet when you change the width of #col2 */
+	padding-left: 180px;/* and this too */
 	width: auto;
 }
 
@@ -74,7 +68,7 @@ body {
 #c1c2
 	#wrapper
 		.marginleft {
-			margin-left: 180px;/* change this in your stylesheet too when you change the width of #col2 */
+			margin-left: 180px;/* also change this in your stylesheet when you change the width of #col2 */
 		}
 
 #c1c2

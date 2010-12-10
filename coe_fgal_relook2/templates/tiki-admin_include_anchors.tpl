@@ -14,21 +14,23 @@
 
 {self_link page="i18n" _class="icon tips" _title="{tr}i18n{/tr}|{tr}Internationalization and localization - mulitlingual features{/tr}"}{icon _id="pics/large/i18n.png" alt="{tr}i18n{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
-{self_link page="textarea" _class="icon tips" _title="{tr}Editing and Plugins{/tr}|{tr}Text editing settings applicable to many areas. Plugin activation and plugin alias management{/tr}"}{icon _id="img/icons/admin_textarea.png" alt="{tr}Editing and Plugins{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}      
+{self_link page="textarea" _class="icon tips" _title="{tr}Editing and Plugins{/tr}|{tr}Text editing settings applicable to many areas. Plugin activation and plugin alias management{/tr}"}{icon _id="pics/large/editing48x48.png" alt="{tr}Editing and Plugins{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}      
 
 {self_link page="module" _class="icon tips" _title="{tr}Module{/tr}|{tr}Module appearance settings{/tr}"}{icon _id="pics/large/display-capplet.png" alt="{tr}Module{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}   
 
 {self_link page="metatags" _class="icon tips" _title="{tr}Meta Tags{/tr}|{tr}Information to include in the header of each page{/tr}"}{icon _id="pics/large/metatags.png" alt="{tr}Meta Tags{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
-{self_link page="performance" _class="icon tips" _title="{tr}Performance{/tr}|{tr}Server performance settings{/tr}"}{icon _id="img/mytiki/admin.gif" alt="{tr}Performance{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+{self_link page="performance" _class="icon tips" _title="{tr}Performance{/tr}|{tr}Server performance settings{/tr}"}{icon _id="pics/large/performance.png" alt="{tr}Performance{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
 {self_link page="security" _class="security tips" _title="{tr}Security{/tr}|{tr}Site security settings{/tr}"}{icon _id="pics/large/gnome-lockscreen48x48.png" alt="{tr}Security{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
-{self_link page="comments" _class="comments tips" _title="{tr}Comments{/tr}|{tr}Comments settings{/tr}"}{icon _id="pics/icons/comments.png" alt="{tr}Comments{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+{self_link page="comments" _class="comments tips" _title="{tr}Comments{/tr}|{tr}Comments settings{/tr}"}{icon _id="pics/large/comments.png" alt="{tr}Comments{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
 {self_link page="rss" _class="icon tips" _title="{tr}Feeds{/tr}|{tr}Web feeds{/tr}"}{icon _id="pics/large/feed-icon.png" alt="{tr}Feeds{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
 {self_link page="connect" _class="icon tips" _title="{tr}Connect{/tr}|{tr}Connect{/tr}"}{icon _id="pics/large/gnome-globe.png" alt="{tr}Connect{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+
+{self_link page="rating" _class="icon tips" _title="{tr}Rating{/tr}|{tr}Rating{/tr}"}{icon _id="pics/large/rating.png" alt="{tr}Rating{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
 {if $prefs.feature_wiki eq 'y'}
 {self_link page="wiki" _class="icon tips" _title="{tr}Wiki{/tr}|{tr}Wiki page settings and features{/tr}"}{icon _id="pics/large/wikipages.png" alt="{tr}Wiki{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
@@ -147,9 +149,9 @@
 {/if}
 
 {if $prefs.feature_socialnetworks eq 'y'}
-{self_link page="socialnetworks" _class="icon tips" _title="{tr}Social networks{/tr}|{tr}Configure social networks integration{/tr}"}{icon _id="img/mytiki/socialnetworks_32.png" alt="{tr}Social networks{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+{self_link page="socialnetworks" _class="icon tips" _title="{tr}Social networks{/tr}|{tr}Configure social networks integration{/tr}"}{icon _id="pics/large/socialnetworks.png" alt="{tr}Social networks{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 
 {if $prefs.ajax_xajax eq 'y' and $prefs.feature_jquery_reflection eq 'y'}{jq}$('img.reflect').reflect({});{/jq}{/if}{* for ajax *}
-{if $prefs.ajax_xajax eq 'y' and $prefs.feature_jquery_tooltips eq 'y'}{jq}$('.tips').cluetip({ splitTitle: '|', cluezIndex: 400, width: 'auto', fx: {open: 'fadeIn', openSpeed: 'fast'}, clickThrough: true });{/jq}{/if}
+{if $prefs.ajax_xajax eq 'y' and $prefs.feature_jquery_tooltips eq 'y'}{jq}setUpClueTips();{/jq}{/if}
 <br class="clear" />

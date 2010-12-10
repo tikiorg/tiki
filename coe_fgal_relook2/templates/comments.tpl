@@ -87,8 +87,8 @@
 			{if $forum_mode neq 'y' or $prefs.forum_thread_user_settings eq 'y'}
 				{if $comments_cant > 0 and $section eq 'blogs'}
 					{* displaying just for blogs only because I'm not sure if this is useful for other sections *}
-					{capture name=comments_cant_title}{if $comments_cant == 1}{tr}{$comments_cant} comment so far{/tr}{else}{tr}{$comments_cant} comments so far{/tr}{/if}{/capture}
-					<h2>{$smarty.capture.comments_cant_title}</h2>
+					{capture name=comments_cant_title}{if $comments_cant == 1}{tr}{$comments_cant} comment{/tr}{else}{tr}{$comments_cant} comments{/tr}{/if}{/capture}
+					<h3>{$smarty.capture.comments_cant_title}</h3>
 				{/if}
 				<div class="forum_actions">
 					{if $forum_mode neq 'y'}
@@ -103,9 +103,25 @@
 									<a class="link" href="tiki-list_comments.php?types_section={$section}&amp;findfilter_approved=n{if isset($blogId)}&amp;blogId={$blogId}{/if}">{tr}queued:{/tr} {$queued}</a>
 									&nbsp;&nbsp;
 								{/if}
-								{if $prefs.comments_archive eq 'y' && $has_archived_comments}
-									<span class="button" id="comments_showArchived"><a>{tr}Show archived comments{/tr}</a></span>
-									<span class="button" id="comments_hideArchived" style="display: none;"><a>{tr}Hide archived comments{/tr}</a></span>
+								{if $prefs.comments_archive eq 'y' && $count_archived_comments > 0}
+									<span class="button" id="comments_showArchived">
+										<a>
+											{if $count_archived_comments == 1}
+												{tr 0=$count_archived_comments}Show %0 archived comment{/tr}
+											{else}
+												{tr 0=$count_archived_comments}Show %0 archived comments{/tr}
+											{/if}
+										</a>
+									</span>
+									<span class="button" id="comments_hideArchived" style="display: none;">
+										<a>
+											{if $count_archived_comments == 1}
+												{tr 0=$count_archived_comments}Hide %0 archived comment{/tr}
+											{else}
+												{tr 0=$count_archived_comments}Hide %0 archived comments{/tr}
+											{/if}
+										</a>
+									</span>
 								{/if}
 							{/if}
 							{if $prefs.feature_comments_locking eq 'y'}
@@ -264,13 +280,13 @@
 			{/if}
 
 			<div>
-				<h2 style="text-align: left">
+				<h3>
 				{if $forum_mode eq 'y'}
 					{if $comments_threadId > 0}{tr}Editing reply{/tr}{elseif $comment_preview eq 'y'}{tr}Preview{/tr}{elseif $parent_com}{tr}Reply to the selected post{/tr}{else}{tr}Post new message{/tr}{/if}
 				{else}
 					{if $comments_threadId > 0}{tr}Editing comment{/tr}{elseif $parent_com}{tr}Reply to the selected comment{/tr}{else}{tr}Post new comment{/tr}{/if}
 				{/if}
-				</h2>
+				</h3>
 			</div>
 
 			{if $comment_preview eq 'y'}
@@ -286,7 +302,7 @@
 				<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
 				<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}" />
 				<input type="hidden" name="comments_objectId" value="{$comments_objectId|escape}" />
-				<input type="hidden" name="comments_title" value="{if $page}{$page|escape}{else}{tr}Untitled{/tr}{/if}" />
+				<input type="hidden" name="comments_title" value="{if $page}{$page|escape}{/if}" />
 
 				{* Traverse request variables that were set to this page adding them as hidden data *}
 				{section name=i loop=$comments_request_data}
@@ -362,21 +378,12 @@
 						</tr>
 					{/if}
 
-					{if $prefs.section_comments_parse eq 'y' && $forum_mode neq 'y' || $prefs.feature_forum_parse eq 'y' && $forum_mode eq 'y'}
-						{assign var=toolbars_html value=true}{* can't find where this gets set in ui-revamp project *}
-						<tr>
-							<td></td>
-							<td>
-								{toolbars area_id='editpost2' comments='y'}
-							</td>
-						</tr>
-					{/if}
 					<tr>
 						<td>
 							<label for="editpost2">{if $forum_mode eq 'y'}{tr}Reply{/tr}{else}{tr}Comment{/tr} <span class="attention">*</span>{/if}</label>
 						</td>
 						<td>
-							<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if ($forum_mode eq 'y' && $prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || ($forum_mode neq 'y' && $post_reply > 0) || $comment_preview eq 'y' || !empty($errors)}{$comment_data|escape}{/if}</textarea> 
+							{textarea id="editpost2" name="comments_data" rows=$rows cols=$cols}{if ($forum_mode eq 'y' && $prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || ($forum_mode neq 'y' && $post_reply > 0) || $comment_preview eq 'y' || !empty($errors)}{$comment_data}{/if}{/textarea} 
 							<input type="hidden" name="rows" value="{$rows}" />
 							<input type="hidden" name="cols" value="{$cols}" />
 							{if $prefs.feature_wiki_paragraph_formatting eq 'y'}
@@ -388,7 +395,7 @@
 
 							{if $forum_mode eq 'y' and $user and $prefs.feature_user_watches eq 'y'}
 								<div id="watch_thread_on_reply">
-									<input id="watch_thread" type="checkbox" name="watch" value="y"{if $user_watching_topic eq 'y' or $smarty.request.watch eq 'y'} checked="checked"{/if}> <label for="watch_thread">{tr}Send me an e-mail when someone replies{/tr}</label>
+									<input id="watch_thread" type="checkbox" name="watch" value="y"{if $user_watching_topic eq 'y' or $smarty.request.watch eq 'y'} checked="checked"{/if} /> <label for="watch_thread">{tr}Send me an e-mail when someone replies{/tr}</label>
 								</div>
 							{/if}
 						</td>
@@ -423,9 +430,9 @@
 						</td>
 
 						<td>
-							<input type="submit" id="comments_postComment" name="comments_postComment" value="{tr}Post{/tr}" />
+							<input type="submit" id="comments_postComment" name="comments_postComment" value="{tr}Post{/tr}" onclick="needToConfirm=false;" />
 							{if !empty($user) && $prefs.feature_comments_post_as_anonymous eq 'y'}
-								<input type="submit" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" />
+								<input type="submit" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" onclick="needToConfirm=false;" />
 							{/if}
 							<input type="submit" name="comments_previewComment" id="comments_previewComment" value="{tr}Preview{/tr}"
 							{if ( isset($can_attach_file) && $can_attach_file eq 'y' ) or empty($user)}{strip}
@@ -435,9 +442,9 @@
 									if ($('#userfile1').val()) alert('{$file_preview_warning|escape:"javascript"}');
 								{/if}
 								"
-							{/strip}{/if} />
+							{/strip}{else} onclick="needToConfirm=false;"{/if} />
 							{if $forum_mode eq 'y'}
-								<input type="button" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}');" />
+								<input type="submit" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}'); return false" />
 							{elseif $prefs.feature_comments_moderation eq 'y' and $tiki_p_admin_comments neq 'y'}
 								{remarksbox type="note" title="{tr}Note{/tr}"}
 									{tr}Your comment will have to be approved by the moderator before it is displayed.{/tr}

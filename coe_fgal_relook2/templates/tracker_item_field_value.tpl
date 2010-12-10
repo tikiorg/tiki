@@ -46,7 +46,7 @@
 		{$field_value.value|escape}
 	{/if}
 	{foreach from=$field_value.categs item=categ name=fcategs}
-		{$categ.name|tr_if}
+		{$categ.categpath|tr_if}
 		{if !$smarty.foreach.fcategs.last}<br />{/if}
 	{/foreach}
 
@@ -295,7 +295,7 @@
     {if $field_value.options_array[2] eq '1' and $list_mode ne 'csv'}
 		<a href="tiki-view_tracker_item.php?trackerId={$field_value.options_array[0]}&amp;itemId={$field_value.linkId}" class="link">
 	{elseif $field_value.options_array[5] and $list_mode ne 'csv'}
-		<a href="tiki-index.php?page={$field_value.options_array[5]|escape:'url'}&itemId={$field_value.linkId} class="link">
+		<a href="tiki-index.php?page={$field_value.options_array[5]|escape:'url'}&itemId={$field_value.linkId}" class="link">
 	{/if}
 	{if $field_value.displayedvalue ne ""}
         {$field_value.displayedvalue}
@@ -433,14 +433,16 @@
 {* -------------------- google map -------------------- *}
 {elseif $field_value.type eq 'G'}
 	{if $prefs.feature_gmap eq 'y'}
-		{if $list_mode eq 'y'}
-			{wikiplugin _name=googlemap type=trackerfield width=200 height=200 controls=n locateitemtype=trackeritem locateitemid=`$item.itemId` trackerfieldid=`$field_value.fieldId` name=`$item.itemId`_`$field_value.fieldId`}{/wikiplugin}
-			<div class="description">{tr}Latitude{/tr} (Y) = {$field_value.y}<br /> {tr}Longitude{/tr} (X) = {$field_value.x} {if $control ne 'n'}<br />Zoom = {$field_value.z}{/if}</div>
-		{elseif $list_mode eq 'csv'}
+		{if $list_mode eq 'csv'}
 			{$field_value.value}
-		{else}
-			{wikiplugin _name=googlemap type=trackerfield width=500 height=400 controls=y locateitemtype=trackeritem locateitemid=`$item.itemId` trackerfieldid=`$field_value.fieldId` name=`$item.itemId`_`$field_value.fieldId`}{/wikiplugin}
-			<div class="description">{tr}Latitude{/tr} (Y) = {$field_value.y}<br /> {tr}Longitude{/tr} (X) = {$field_value.x} {if $control ne 'n'}<br />Zoom = {$field_value.z}{/if}</div>
+		{elseif !empty($field_value.x) && !empty($field_value.y)}
+			{if $list_mode eq 'y'}
+				{wikiplugin _name=googlemap type=trackerfield width=200 height=200 controls=n locateitemtype=trackeritem locateitemid=`$item.itemId` trackerfieldid=`$field_value.fieldId` name=`$item.itemId`_`$field_value.fieldId`}{/wikiplugin}
+				<div class="description">{tr}Latitude{/tr} (Y) = {$field_value.y}<br /> {tr}Longitude{/tr} (X) = {$field_value.x} {if $control ne 'n'}<br />Zoom = {$field_value.z}{/if}</div>
+			{else}
+				{wikiplugin _name=googlemap type=trackerfield width=500 height=400 controls=y locateitemtype=trackeritem locateitemid=`$item.itemId` trackerfieldid=`$field_value.fieldId` name=`$item.itemId`_`$field_value.fieldId`}{/wikiplugin}
+				<div class="description">{tr}Latitude{/tr} (Y) = {$field_value.y}<br /> {tr}Longitude{/tr} (X) = {$field_value.x} {if $control ne 'n'}<br />Zoom = {$field_value.z}{/if}</div>
+			{/if}
 		{/if}
 	{else}
 	  {tr}Google Maps is not enabled.{/tr}

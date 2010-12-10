@@ -24,19 +24,19 @@ a:hover {
 	text-decoration: none;
 }
 
-span.button a,
-span.button a:visited,
+.button a,
+.button a:visited,
 button,
 input[type="reset"],
 input[type="submit"],
-span.button input,
+.button input,
 .calbuttonBox a {
 	border: 1px solid #1b1613;
 	color: #b8ec79;
 	background: #0a0a0a url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_glass_40_0a0a0a_1x400.png) 50% 50% repeat-x;
 }
 
-span.button a:hover,
+.button a:hover,
 .button a:hover,
 button:hover,
 input[type="reset"]:hover,
@@ -52,7 +52,7 @@ input[type="text"],
 input[type="password"],
 select,
 textarea,
-body.wikitext {
+body.cke_show_borders {
 	background: #c6e99c;
 	color: #000;
 }
@@ -158,11 +158,20 @@ body.wikitext {
 }
 
 .cbox-title,
-h3.box-title {
+h3.box-title,
+th,
+td.heading,
+tr.diffheader {
 	border: 1px solid #000;
 	background: #9fda58 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x; color: #222222;
 	font-weight: bold;
 	color: #222;
+}
+
+th,
+td.heading,
+tr.diffheader {
+	border: none;
 }
 
 .box-data a:link,
@@ -195,7 +204,7 @@ h3.box-title {
 	border-bottom: none !important;
 }
 	
-.highlight, span.highlight a,
+.highlight, .highlight a,
 .warning .rbox-title,
 .warning .rbox-data {
 	background: #F1FBE5 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_95_f6ecd5_500x100.png) 50% 50% repeat-x;
@@ -203,7 +212,7 @@ h3.box-title {
 	color:#74736D;
 }
 
-table.normal {
+.normal {
 	border: 1px solid #95da58;
 }
 

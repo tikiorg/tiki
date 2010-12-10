@@ -3,6 +3,7 @@
 function wikiplugin_bigbluebutton_info() {
 	return array(
 		'name' => tra('BigBlueButton'),
+		'documentation' => tra('PluginBigBlueButton'),
 		'description' => tra('Allows to join a BigBlueButton meeting.'),
 		'format' => 'html',
 		'prefs' => array( 'wikiplugin_bigbluebutton', 'bigbluebutton_feature' ),
@@ -12,42 +13,49 @@ function wikiplugin_bigbluebutton_info() {
 				'name' => tra('Meeting'),
 				'description' => tra('MeetingID provided by BigBlueButton.'),
 				'filter' => 'text',
+				'default' => ''
 			),
 			'prefix' => array(
 				'required' => false,
 				'name' => tra('Anonymous prefix'),
 				'description' => tra('Unregistered users will get this token prepended to their name.'),
 				'filter' => 'text',
+				'default' => ''
 			),
 			'welcome' => array(
 				'required' => false,
 				'name' => tra('Welcome Message'),
 				'description' => tra('A message to be provided when someone enters the room.'),
 				'filter' => 'text',
+				'default' => ''
 			),
 			'number' => array(
 				'required' => false,
 				'name' => tra('Dial Number'),
 				'description' => tra('The phone-in support number to join from traditional phones.'),
 				'filter' => 'text',
+				'default' => ''
 			),
 			'voicebridge' => array(
 				'required' => false,
 				'name' => tra('Voice Bridge'),
 				'description' => tra('Code to enter for phone attendees to join the room.'),
 				'filter' => 'digits',
+				'default' => ''
 			),
 			'logout' => array(
 				'required' => false,
 				'name' => tra('Logout URL'),
 				'description' => tra('URL to which the user will be redirected when logging out from BigBlueButton.'),
 				'filter' => 'url',
+				'default' => ''
 			),
 			'max' => array(
 				'required' => false,
 				'name' => tra('Maximum Participants'),
 				'description' => tra('Limit to the amount of simultaneous participants in the room. Support for this parameter depends on the BigBlueButton server.'),
 				'filter' => 'int',
+				'default' => ''
 			),
 		),
 	);

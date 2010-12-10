@@ -37,6 +37,7 @@ Disallow: /tiki_tests/
 Disallow: /about.php
 Disallow: /get_strings.php
 Disallow: /tiki-admin
+Disallow: /tiki-all_languages.php
 Disallow: /tiki-backlinks.php
 Disallow: /tiki-browse_categories.php
 Disallow: /tiki-calendar.php

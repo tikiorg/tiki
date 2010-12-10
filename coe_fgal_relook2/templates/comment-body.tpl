@@ -13,9 +13,9 @@
 
 			<span class="author_post_info">
 				{if $comment.anonymous_name}
-					{tr}Published by{/tr} <span class="author_post_info_by">{if $comment.website}<a href="{$comment.website}" target="_blank">{/if}{$comment.anonymous_name}{if $comment.website}</a>{/if}</span>
+					{tr}Posted by{/tr} <span class="author_post_info_by">{if $comment.website}<a href="{$comment.website}" target="_blank">{/if}{$comment.anonymous_name}{if $comment.website}</a>{/if}</span>
 				{elseif $comment.userName}
-					{tr}Published by{/tr} <span class="author_post_info_by">{$comment.userName|userlink}</span>
+					{tr}Posted by{/tr} <span class="author_post_info_by">{$comment.userName|userlink}</span>
 				{/if}
 				{if $comment.commentDate > 0}
 					<span class="author_post_info_on">{$comment.commentDate|tiki_short_datetime:on}</span>

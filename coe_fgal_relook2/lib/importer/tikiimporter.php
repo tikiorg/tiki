@@ -34,18 +34,6 @@ class TikiImporter
     public $softwareName = '';
     
     /**
-     * Options to the importer (i.e. the number of page
-     * revisions to import in the case of a wiki software)
-     * 
-     * This array is used in tiki-importer.tpl to display to the user
-     * the options related with the data import. Currently an importOptions
-     * can be of the following types: checkbox, select, text 
-     * 
-     * @var array
-     */
-    static public $importOptions = array();
-
-    /**
      * During the importing process all the log
      * strings will be appended to this object property
      * using the method saveAndDisplayLog()
@@ -63,6 +51,28 @@ class TikiImporter
      */
     public $errors = '';
 
+    /**
+     * Options to the importer (i.e. the number of page
+     * revisions to import in the case of a wiki software)
+     * 
+     * The function when implemented by child classes should return
+     * an array of options that is used in tiki-importer.tpl to display to the user
+     * the options related with the data import. Currently we support the following
+     * types: checkbox, select, text 
+     * 
+     * Example of array:
+     * 
+     * $options = array(
+     * 		array('name' => 'importAttachments', 'type' => 'checkbox', 'label' => tra('Import images and other attachments')),
+     * );
+     * 
+     * @return array
+     */
+    static public function importOptions()
+    {
+    	return array();
+    }
+    
     /**
      * Abstract method to start the import process and
      * call all other functions for each step of the importation
@@ -129,8 +139,7 @@ class TikiImporter
         $importOptions = array();
         
         do {
-            $refClass = new ReflectionClass($class);
-            $importOptions = array_merge($importOptions, $refClass->getStaticPropertyValue('importOptions', array()));
+            $importOptions = array_merge($importOptions, call_user_func(array($class, 'importOptions')));
         } while ($class = get_parent_class($class));
         
         return $importOptions;
@@ -146,15 +155,18 @@ class TikiImporter
      */
     static function changePhpSettings()
     {
-        if (ini_get('error_reporting') != E_ALL)
-            error_reporting(E_ALL);
+        if (ini_get('error_reporting') != E_ALL & ~E_DEPRECATED) {
+            error_reporting(E_ALL & ~E_DEPRECATED);
+        }
 
-        if (ini_get('display_errors') != true)
+        if (ini_get('display_errors') != true) {
             ini_set('display_errors', true);
+        }
     
         // change max_execution_time
-        if (ini_get('max_execution_time') < 360)
-            set_time_limit(360);
+        if (ini_get('max_execution_time') != 0) {
+        	set_time_limit(0);
+        }
     }
 
     /**
@@ -175,8 +187,9 @@ class TikiImporter
             8 => tra('File upload stopped by extension.'),
         );
         
-        if (isset($errors[$code]))
+        if (isset($errors[$code])) {
             return $errors[$code];
+        }
     }
 
     /**
@@ -184,20 +197,25 @@ class TikiImporter
      * during the execution of the script using the flush() method
      *
      * @param string $msg the log message
-     * @param bool $error if the message is a error or not
+     * @param bool $error if the message is a error or not (default false)
      * @return void
      */
     function saveAndDisplayLog($msg, $error = false)
     {
         $this->log .= $msg;
 
-        if ($error)
+        if ($error) {
             $this->errors .= $msg;
+        }
 
         // convert \n to <br> if running script in web browser
-        if (isset($_SERVER['HTTP_HOST']))
+        if (isset($_SERVER['HTTP_HOST'])) {
             $msg = nl2br($msg);
+            ob_flush();
+        }
+        
         echo $msg;
+		
         flush();
     }
 }

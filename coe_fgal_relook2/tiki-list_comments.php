@@ -17,7 +17,7 @@ if (isset($_REQUEST['blogId'])) {
 	$tikilib->get_perm_object('blog', $blogId);
 
 	if ($tiki_p_blog_admin != 'y') {
-		$smarty->assign('msg', tra('Permission denied: you cannot view the comments for this blog'));
+		$smarty->assign('msg', tra('You do not have permission to view the comments for this blog'));
 		$smarty->display('error.tpl');
 		die;
 	}
@@ -94,6 +94,17 @@ if (isset($_REQUEST['checked'])) {
 			$commentslib->approve_comment($id, $_REQUEST['approve']);
 		}
 	}
+	
+	// Archive/unarchive comment(s)
+	if ($prefs['comments_archive'] == 'y' && isset($_REQUEST['archive']) && in_array($_REQUEST['archive'], array('archive', 'unarchive'))) {
+		foreach($checked as $id) {
+			if ($_REQUEST['archive'] == 'archive') {
+				$commentslib->archive_thread($id);
+			} else if ($_REQUEST['archive'] == 'unarchive') {
+				$commentslib->unarchive_thread($id);
+			}
+		}
+	}
 }
 if (isset($_REQUEST["sort_mode"])) {
 	$sort_mode = $_REQUEST["sort_mode"];
@@ -138,9 +149,7 @@ if (isset($blogId)) {
 }
 
 $comments = $commentslib->get_all_comments($selected_types, $offset, $maxRecords, $sort_mode, $find, 'y', $_REQUEST['findfilter_approved'], false, $objectsIds);
-foreach($comments['data'] as $k => $v) {
-	if ($v['objectType'] == 'post') $comments['data'][$k]['objectType'] = 'blog post';
-}
+
 $smarty->assign_by_ref('comments', $comments['data']);
 $smarty->assign_by_ref('filters', $filters);
 $smarty->assign_by_ref('filter_names', $filter_names);

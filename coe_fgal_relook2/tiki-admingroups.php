@@ -163,7 +163,7 @@ if (!empty($_REQUEST["group"])) {
 	if (isset($re["groupDesc"])) $groupdesc = $re["groupDesc"];
 	if (isset($re["groupHome"])) $grouphome = $re["groupHome"];
 	if (isset($re["groupDefCat"])) $groupdefcat = $re["groupDefCat"];
-	if (isset($re["groupHome"])) $grouptheme = $re["groupTheme"];
+	if (isset($re["groupTheme"])) $grouptheme = $re["groupTheme"];
 	if (isset($re['userChoice'])) $userChoice = $re['userChoice'];
 	if (isset($re['expireAfter'])) $expireAfter = $re['expireAfter'];
 	if ($prefs['userTracker'] == 'y') {
@@ -304,7 +304,13 @@ if (isset($_REQUEST['group'])) {
 $av_themes = $tikilib->list_styles();
 $smarty->assign_by_ref('av_themes', $av_themes);
 $smarty->assign('memberslist', $memberslist);
-$smarty->assign('userslist', $userlib->list_all_users());
+$userslist=$userlib->list_all_users();
+foreach($memberslist as $key => $values){
+	if ( in_array($values["login"],$userslist ) ) {
+		unset($userslist[array_search($values["login"],$userslist,true)]);
+	}
+}
+$smarty->assign('userslist', $userslist);
 $smarty->assign('inc', $inc);
 $smarty->assign('group', $_REQUEST["group"]);
 $smarty->assign('groupname', $groupname);

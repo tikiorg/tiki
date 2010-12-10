@@ -46,6 +46,16 @@
 			{/if}		
 			</div>
 		</form>
+		{if $prefs.auth_method eq 'openid'}
+			<form class="forms" method="get" action="tiki-login_openid.php">
+				<fieldset>
+					<legend>{tr}OpenID Log in{/tr}</legend>
+					<input class="openid_url" type="text" name="openid_url" id="sl-openid" size="16"/>
+					<input type="submit" value="{tr}Go{/tr}"/>
+					<a class="linkmodule tikihelp" target="_blank" href="http://doc.tiki.org/OpenID">{tr}What is OpenID?{/tr}</a>
+				</fieldset>
+			</form>
+		{/if}
 	{/if}
 {/if}
 </div>

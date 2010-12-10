@@ -39,6 +39,18 @@ if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQU
 	unset($_REQUEST); // Used to show the list of trackers instead of the new tracker after duplication
 	
 }
+if (!empty($_REQUEST['exportTrackerProfile']) && !empty($_REQUEST['trackerId'])) {
+	include_once('lib/profilelib/installlib.php');
+	$prof = new Tiki_Profile_InstallHandler_Tracker();
+	$res = $prof->_export($_REQUEST['trackerId']);
+	header("Content-type: text/yaml");
+	header('Content-Disposition: attachment; filename=tracker_'.$_REQUEST['trackerId'].'.yaml');
+	header('Expires: 0');
+	header('Pragma: public');
+	echo $res;
+	die;
+}
+
 if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
 	$cookietab = '2';
 }

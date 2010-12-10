@@ -26,7 +26,7 @@
 					</a>
 				{/permission}
 				{if $cancel and ($payment.user eq $user or $tiki_p_payment_admin)}
-					{self_link cancel=$payment.paymentRequestId}{icon _id=cross class=titletips title="{tr}Cancel this payment request{/tr}" alt="{tr}Cancel{/tr}"}{/self_link}
+					{self_link _ajax=n cancel=$payment.paymentRequestId}{icon _id=cross class=titletips title="{tr}Cancel this payment request{/tr}" alt="{tr}Cancel{/tr}"}{/self_link}
 				{/if}
 			</td>
 		</tr>

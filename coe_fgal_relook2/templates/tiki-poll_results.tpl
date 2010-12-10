@@ -72,26 +72,8 @@
 {/if}
 
 {*----------------------------------- Results *}
-<div class="pollresults">
-{cycle values="even,odd" print=false}
-<table class="pollresults">
-{section name=ix loop=$poll_info_arr[x].options}
-<tr class="{cycle}"><td class="pollr">
-{if $smarty.section.x.total > 1}<a href="tiki-poll_results.php?{if !empty($scoresort_desc)}scoresort_asc{else}scoresort_desc{/if}={$smarty.section.ix.index}">{/if}
-{$poll_info_arr[x].options[ix].title|escape}
-{if $smarty.section.x.total > 1}</a>{/if}
+{include file='tiki-poll_results_bar.tpl' poll_info=$poll_info_arr[x] showtitle=n}
 
-</td>
-    <td class="pollr">{quotabar length=$poll_info_arr[x].options[ix].width}  {$poll_info_arr[x].options[ix].percent}% ({$poll_info_arr[x].options[ix].votes})
-    </td>
-    </tr>
-{/section}
-</table>
-<br />
-{tr}Total{/tr}: {$poll_info_arr[x].votes} {tr}votes{/tr}<br /><br />
-{if isset($poll_info_arr[x].total) and $poll_info_arr[x].total > 0}{tr}Average:{/tr} {math equation="x/y" x=$poll_info_arr[x].total y=$poll_info_arr[x].votes format="%.2f"}{/if}
-<br />
-</div>
 {/section}
 
 {*---------------------------List Votes *}
@@ -122,6 +104,7 @@
 	<th>{self_link _sort_arg='sort_mode' _sort_field='ip'}{tr}IP{/tr}{/self_link}</th>
 	<th>{self_link _sort_arg='sort_mode' _sort_field='title'}{tr}Option{/tr}{/self_link}</th>
 	<th>{self_link _sort_arg='sort_mode' _sort_field='time'}{tr}Date{/tr}{/self_link}</th>
+	{if $tiki_p_admin eq 'y'}<th>{tr}Actions{/tr}</th>{/if}
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$list_votes}
@@ -130,6 +113,7 @@
 	<td>{$list_votes[ix].ip|escape}</td>
 	<td>{$list_votes[ix].title|escape}</td>
 	<td>{$list_votes[ix].time|tiki_short_date}</td>
+	{if $tiki_p_admin eq 'y'}<td>{self_link deletevote=1 user=$list_votes[ix].user ip=$list_votes[ix].ip optionId=$list_votes[ix].optionId}{icon _id=cross}{/self_link}</td>{/if}
 </tr>
 {sectionelse}
 <tr>

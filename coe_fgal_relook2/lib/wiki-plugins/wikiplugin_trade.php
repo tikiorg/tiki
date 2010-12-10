@@ -10,6 +10,7 @@ function wikiplugin_trade_info() {
 
 	return array(
 		'name' => tra('Trade'),
+		'documentation' => tra('PluginTrade'),
 		'description' => tra('Send or receive payments from one member to another. (for cclite only so far, experimental)'),
 		'validate' => 'all',
 		'prefs' => array( 'wikiplugin_trade', 'payment_feature' ),
@@ -19,47 +20,55 @@ function wikiplugin_trade_info() {
 				'name' => tra('Price'),
 				'description' => tr('Price.', $prefs['payment_currency']),
 				'filter' => 'text',
+				'default' => '',
 			),
 			'registry' => array(
 				'required' => false,
 				'name' => tra('Registry'),
 				'description' => tr('Registry to trade in. Default: site preference (or first in list when more than one)'),
 				'filter' => 'text',
+				'default' => '',
 			),
 			'currency' => array(
 				'required' => false,
 				'name' => tra('Currency'),
 				'description' => tr('Currency to trade in. Default: Cclite currency preference for registry set above'),
 				'filter' => 'text',
+				'default' => '',
 			),
 			'other_user' => array(
 				'required' => false,
-				'name' => tra('Other user'),
+				'name' => tra('Other User'),
 				'description' => tra('Name of the user to recieve or send the payment.') . ' ' . tra('Leave empty to display an input box.'),
 				'filter' => 'username',
+				'default' => '',
 			),
 			'wanted' => array(
 				'required' => false,
 				'name' => tra('Mode'),
 				'description' => tr('Offered or wanted item.') . ' ' . tr('Default') . ':' . tra('Offered'),
 				'options' => array(
+					array('text' => '', 'value' => ''), 
 					array('text' => tra('Offered'), 'value' => 'n'), 
 					array('text' => tra('Wanted'), 'value' => 'y'), 
 				),
 				'filter' => 'alpha',
+				'default' => 'n',
 			),
 			'action' => array(
 				'required' => false,
-				'name' => tra('Button label'),
+				'name' => tra('Button Label'),
 				'description' => tr('Default') . ':' . tra('Continue'),
 				'filter' => 'text',
+				'default' => tra('Continue'),
 			),
 			'inputtitle' => array(
 				'required' => false,
-				'name' => tra('Title of the input form.'),
+				'name' => tra('Input Title'),
 				'description' => tra('Title of the input form.').' '. tra('Use %0 for the amount, %1 for currency, %2 for your user name, %3 for the other user.').' '.tra('Supports wiki syntax') . '<br />'.
 									tr('Default') . ':' . tra('"Payment of %0 %1 from user %2 to %3" for offered items, "Request payment of %0 %1 to user %2 from %3" for wanted'),
 				'filter' => 'text',
+				'default' => '',
 			),
 		),
 	);

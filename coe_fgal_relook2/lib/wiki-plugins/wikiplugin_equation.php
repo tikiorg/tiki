@@ -28,7 +28,7 @@ function wikiplugin_equation_help() {
 function wikiplugin_equation_info() {
 	return array(
 		'name' => tra('Equation'),
-		'documentation' => 'PluginEquation',
+		'documentation' => tra('PluginEquation'),
 		'description' => tra('Renders an equation written in LaTeX syntax as an image.'),
 		'prefs' => array('wikiplugin_equation'),
 		'body' => tra('equation'),
@@ -36,7 +36,9 @@ function wikiplugin_equation_info() {
 			'size' => array(
 				'required' => false,
 				'name' => tra('Size'),
-				'description' => tra('Percentage of increase from normal size. 100 produces the default size. 200 produces an image twice as large.'),
+				'description' => tra('Size expressed as a percentage of the normal size. 100 produces the default size. 200 produces an image twice as large.'),
+				'default' => 100,
+				'filter' => 'digits',
 			),
 		),
 	);

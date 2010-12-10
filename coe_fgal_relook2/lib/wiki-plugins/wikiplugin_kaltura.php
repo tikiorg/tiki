@@ -12,15 +12,15 @@ function wikiplugin_kaltura_help() {
 function wikiplugin_kaltura_info() {
 	return array(
 		'name' => tra('Kaltura video'),
-		'documentation' => 'PluginKaltura',
+		'documentation' => tra('PluginKaltura'),
 		'description' => tra('Displays a KALTURA video on the wiki page'),
 		'prefs' => array('wikiplugin_kaltura'),
 		'extraparams' => true,
 		'params' => array(
 			'id' => array(
 				'required' => true,
-				'name' => tra('Kaltura Entry Id'),
-				'description' => tra('Kaltura Entry Id'),
+				'name' => tra('Kaltura Entry ID'),
+				'description' => tra('Kaltura entry ID of the video to be displayed'),
 			),
 		),
 	);

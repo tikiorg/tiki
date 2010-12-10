@@ -4,6 +4,10 @@
 {tab name="{tr}Kaltura{/tr}"}
 {remarksbox type="info" title="{tr}Kaltura Registration{/tr}" }{tr}To get a Kaltura Partner ID:{/tr} {tr}Setup your own instance of Kaltura Community Edition (CE){/tr} or <a href="http://corp.kaltura.com/about/signup">{tr}get an account via Kaltura.com{/tr}</a> {/remarksbox}
 
+	{button _text="{tr}List Media Entries{/tr}" href="tiki-list_kaltura_entries.php?list=media" }
+	{button _text="{tr}List Remix Entries{/tr}" href="tiki-list_kaltura_entries.php" }
+	{button _text="{tr}Add New Media{/tr}" href="tiki-kaltura_upload.php" }
+
 <fieldset class="admin">
 <legend>{tr}Activate the feature{/tr}</legend>
 	{preference name=feature_kaltura}

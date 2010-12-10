@@ -27,18 +27,23 @@ class TikiImporter_Wiki extends TikiImporter
 {
 
     /**
-     * @see lib/importer/TikiImporter#importOptions
+     * @see lib/importer/TikiImporter#importOptions()
      */
-	static public $importOptions = array(
-        array('name' => 'wikiRevisions', 'type' => 'text', 'value' => 1, 'label' => 'Number of page revisions to import (0 for all revisions)'),
-        array('name' => 'alreadyExistentPageName', 'type' => 'select', 'label' => 'What to do with page names that already exists in TikiWiki?',
-            'options' => array(
-                array('name' => 'doNotImport', 'label' => 'Do not import'),
-                array('name' => 'override', 'label' => 'Override'),
-                array('name' => 'appendPrefix', 'label' => 'Append software name as prefix to the page name')
-            )
-        )     
-    );
+	static public function importOptions()
+	{
+		$options  = array(
+	        array('name' => 'wikiRevisions', 'type' => 'text', 'value' => 1, 'label' => tra('Number of page revisions to import (0 for all revisions)')),
+	        array('name' => 'alreadyExistentPageName', 'type' => 'select', 'label' => tra('What to do with page names that already exists in TikiWiki?'),
+	            'options' => array(
+	                array('name' => 'doNotImport', 'label' => tra('Do not import')),
+	                array('name' => 'override', 'label' => tra('Override')),
+	                array('name' => 'appendPrefix', 'label' => tra('Append software name as prefix to the page name')),
+	            )
+	        ),     
+    	);
+    	
+    	return $options;
+	}
     
     /**
      * Main function that starts the importing proccess
@@ -71,7 +76,7 @@ class TikiImporter_Wiki extends TikiImporter
 
         $this->saveAndDisplayLog("\nImportation completed!");
 
-        echo "\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>";
+        echo "\n\n<b>" . tra("<a href=\"tiki-importer.php\">Click here</a> to finish the import process") . "</b>";;
         flush();
 
         $_SESSION['tiki_importer_feedback'] = $importFeedback;
@@ -91,15 +96,17 @@ class TikiImporter_Wiki extends TikiImporter
         $countData = array();
         $countPages = 0;
 
-        $this->saveAndDisplayLog("\n" . count($parsedData) . " pages parsed. Starting to insert those pages into Tiki:\n");
+        $countParsedData = count($parsedData);
+        
+        $this->saveAndDisplayLog("\n" . tra("$countParsedData pages parsed. Starting to insert those pages into Tiki:") . "\n");
 
         if (!empty($parsedData)) {
             foreach ($parsedData as $page) {
                 if ($this->insertPage($page)) {
                     $countPages++;
-                    $this->saveAndDisplayLog('Page ' . $page['name'] . " sucessfully imported\n");
+                    $this->saveAndDisplayLog(tra("Page ${page['name']} sucessfully imported") . "\n");
                 } else {
-                    $this->saveAndDisplayLog('Page ' . $page['name'] . " NOT imported (there was already a page with the same name)\n");
+                    $this->saveAndDisplayLog(tra("Page ${page['name']} NOT imported (there was already a page with the same name)") . "\n");
                 }
             }
         }
@@ -130,7 +137,7 @@ class TikiImporter_Wiki extends TikiImporter
      * the page name already exist ($this->alreadyExistentPageName) based on parameters passed by POST
      * 
      * @param array $page
-     * @return bool true if the page has been imported, otherwise returns false 
+     * @return string|bool page name if the page has been imported, otherwise returns false 
      */
     function insertPage($page)
     {
@@ -165,6 +172,6 @@ class TikiImporter_Wiki extends TikiImporter
             }
         }
 
-        return true;
+        return $page['name'];
     }
 }

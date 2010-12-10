@@ -46,7 +46,7 @@ function wikiplugin_include_help() {
 function wikiplugin_include_info() {
 	return array(
 		'name' => tra('Include'),
-		'documentation' => 'PluginInclude',
+		'documentation' => tra('PluginInclude'),
 		'description' => tra('Include a page\'s content.'),
 		'prefs' => array('wikiplugin_include'),
 		'params' => array(
@@ -54,33 +54,38 @@ function wikiplugin_include_info() {
 				'required' => true,
 				'name' => tra('Page Name'),
 				'description' => tra('Wiki page name to include.'),
-				'filter' => 'pagename'
+				'filter' => 'pagename',
+				'default' => '',
 			),
 			'start' => array(
 				'required' => false,
 				'name' => tra('Start'),
 				'description' => tra('When only a portion of the page should be included, specify the marker from which inclusion should start.'),
+				'default' => '',
 			),
 			'stop' => array(
 				'required' => false,
 				'name' => tra('Stop'),
 				'description' => tra('When only a portion of the page should be included, specify the marker at which inclusion should end.'),
+				'default' => '',
 			),
 			'nopage_text' => array(
 				'required' => false,
 				'name' => tra('Nopage Text'),
 				'description' => tra('Text to show when no page is found.'),
+				'default' => '',
 			),
 			'pagedenied_text' => array(
 				'required' => false,
 				'name' => tra('Page Denied Text'),
 				'description' => tra('Text to show when the page exists but is denied to the user.'),
+				'default' => '',
 			),
 		),
 	);
 }
 
-function wikiplugin_include($data, $params) {
+function wikiplugin_include($data, $params, $offset) {
 	global $tikilib,$userlib,$user;
     static $included_pages, $data;
 
@@ -166,12 +171,12 @@ function wikiplugin_include($data, $params) {
 	}
 	$text = $tikilib->parse_data($text, array('suppress_icons' => true));	// don't show edit icons (they don't work on included pages - yet)
 	// append an edit button
-	if ($perms['tiki_p_edit'] === 'y') {
+	if (isset($perms) && $perms['tiki_p_edit'] === 'y') {
 		global $smarty;
 		require_once $smarty->_get_plugin_filepath('block', 'ajax_href');
 		require_once $smarty->_get_plugin_filepath('function', 'icon');
 		$text .= '<a class="editplugin" title="'.tra('Edit this page').'" '.	// ironically smarty_block_self_link doesn't work for this! ;)
-				smarty_block_ajax_href( array('template' => 'tiki-editpage.tpl'), 'tiki-editpage.php?page='.urlencode($page).'&returnto='.urlencode($GLOBALS['page']),$smarty) .
+				smarty_block_ajax_href( array('template' => 'tiki-editpage.tpl'), 'tiki-editpage.php?page='.urlencode($page).'&returnto='.urlencode($GLOBALS['page']),$smarty, false) .
 				smarty_function_icon(array( '_id' => 'page_edit', 'alt' => tra('Edit this page')), $smarty) . '</a>';
 	}
 	if ($tikilib->contains_html_block($text)) {	// add an identifying wrapper element

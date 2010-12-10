@@ -10,37 +10,47 @@ function wikiplugin_author_help() {
 function wikiplugin_author_info() {
 	return array(
 		'name' => tra('Author'),
-		'documentation' => 'PluginAuthor',
-		'description' => tra("Color codes parts of the page like 'Track changes' in Office programs."),
+		'documentation' => tra('PluginAuthor'),
+		'description' => tra('Color codes parts of the page like \'Track changes\' in Office programs.'),
 		'prefs' => array('wikiplugin_author'),
 		'body' => tra('text'),
 		'params' => array(
 			'author' => array(
 				'required' => true,
-				'name' => tra('User name'),
+				'name' => tra('User Name'),
 				'description' => tra('User name of the user who wrote the text.'),
+				'default' => '',
+				'filter' => 'username'
 			),
 			'deleted_by' => array(
 				'required' => false,
 				'name' => tra('Deleted by User'),
 				'description' => tra('User name of the user who deleted the text.'),
+				'default' => '',
+				'filter' => 'username'
 			),
 			'visible'	=> array(
 				'required'	=> false,
-				'name'		=> tra('Make visible'),
+				'name'		=> tra('Make Visible'),
 				'description' => tra("Should this author's contribution be visible (default: no)."),
+				'filter' => 'text',
+				'default' => 0,
 				'options' => array(
-					array('text' => tra('No'), 'value' => '0'), 
+					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => '1'), 
+					array('text' => tra('No'), 'value' => '0'), 
 				),
 			),
 			'popup'	=> array(
 				'required'	=> false,
 				'name'		=> tra('Show popup with author/deleted by'),
 				'description' => tra('Generate a popup with names of author(s) (default: no).'),
+				'filter' => 'text',
+				'default' => 0,
 				'options' => array(
-					array('text' => tra('No'), 'value' => '0'), 
+					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => '1'), 
+					array('text' => tra('No'), 'value' => '0'), 
 				),
 			),
 		), // params

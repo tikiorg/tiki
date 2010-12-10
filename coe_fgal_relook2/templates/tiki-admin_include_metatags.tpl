@@ -1,10 +1,14 @@
+{remarksbox type="tip" title="{tr}Tip{/tr}"}
+	{tr}See also{/tr} <a class="rbox-link" href="tiki-admin.php?page=sefurl">{tr}Search Engine Friendly URLs{/tr}</a>.
+{/remarksbox}
+
 <form action="tiki-admin.php?page=metatags" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="metatags" value="{tr}Change preferences{/tr}" />
 	</div>
 	<fieldset>
 		<legend>
-			{tr}Meta tags{/tr}{if $prefs.feature_help eq 'y'} {help url="Meta+Tags+Config"}{/if}
+			{tr}Meta tags{/tr}
 		</legend>
 
 		<div class="adminoptionbox">

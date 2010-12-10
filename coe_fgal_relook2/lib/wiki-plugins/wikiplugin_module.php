@@ -54,8 +54,8 @@ function wikiplugin_module_info() {
 
 	return array(
 		'name' => tra('Insert Module'),
-		'documentation' => 'PluginModule',
-		'description' => tra("Displays a module inline in a wiki page. More parameters can be added, not supported by User Interface."),
+		'documentation' => tra('PluginModule'),
+		'description' => tra('Displays a module inline in a wiki page. More parameters can be added, not supported by User Interface.'),
 		'prefs' => array( 'wikiplugin_module' ),
 		'validate' => 'all',
 		'icon' => 'pics/icons/module.png',
@@ -65,60 +65,73 @@ function wikiplugin_module_info() {
 				'required' => true,
 				'name' => tra('Module Name'),
 				'description' => tra('Module name as known in Tiki'),
-				'options' => $modules_options
+				'default' => '',
+				'options' => $modules_options,
 			),
 			'float' => array(
 				'required' => false,
 				'name' => tra('Float'),
-				'description' => 'left|right|none',
+				'description' => tra('Align the module to the left or right on the page allowing other elements to align against it'),
+				'default' => 'nofloat',
 				'advanced' => true,
+				'options' => array(
+					array('text' => 'No Float', 'value' => ''), 
+					array('text' => tra('Left'), 'value' => 'left'), 
+					array('text' => tra('Right'), 'value' => 'right')
+				)
 			),
 			'decoration' => array(
 				'required' => false,
 				'name' => tra('Decoration'),
-				'description' => 'Show decorations',
+				'description' => tra('Show box decorations (default is to show them)'),
 				'advanced' => true,
 				'options' => array(
-					array('text' => tra('No'), 'value' => '0'), 
+					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => '1'), 
-				),
+					array('text' => tra('No'), 'value' => '0'), 
+				)
 			),
 			'flip' => array(
 				'required' => false,
 				'name' => tra('Flip'),
-				'description' => 'To make a module shadeable',
+				'description' => tra('Add ability to show/hide the content of the module (default is the site admin setting for modules)'),
 				'options' => array(
-					array('text' => tra('No'), 'value' => '0'), 
+					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => '1'), 
+					array('text' => tra('No'), 'value' => '0'), 
 				),
 				'advanced' => true,
 			),
 			'max' => array(
 				'required' => false,
 				'name' => tra('Max'),
-				'description' => 'Number of rows. Default: 10',
+				'description' => 'Number of rows (default: 10)',
+				'default' => 10,
 				'advanced' => true,
 			),
 			'np' => array(
 				'required' => false,
 				'name' => tra('Parse'),
-				'description' => 'Parse wiki syntax',
+				'description' => tra('Parse wiki syntax (default is to parse)'),
+				'default' => '1',
 				'options' => array(
-					array('text' => tra('Yes'), 'value' => '0'), 
-					array('text' => tra('No'), 'value' => '1'), 
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => '1'), 
+					array('text' => tra('No'), 'value' => '0'), 
 				),
 				'advanced' => true,
 			),
 			'notitle' =>array(
 				'required' => false,
 				'name' => tra('Title'),
-				'description' => 'Show/hide',
+				'description' => tra('Show/hide module title (default is to show the title)'),
 				'options' => array(
+					array('text' => '', 'value' => ''), 
 					array('text' => tra('Show title'), 'value' => 'n'), 
-					array('text' => tra('Hide title'), 'value' => 'y'), 
-				),
-			),
-		),
+					array('text' => tra('Hide title'), 'value' => 'y')
+				)
+			)
+		)
 	);
 }
 

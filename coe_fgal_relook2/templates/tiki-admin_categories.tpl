@@ -1,8 +1,9 @@
 {* $Id$ *}
-{title help="Categories+Admin" admpage="category"}{tr}Admin Categories{/tr}{/title}
+{title help="Categories" admpage="category"}{tr}Admin Categories{/tr}{/title}
 
 <div class="navbar">
 	{button href="tiki-browse_categories.php?parentId=$parentId" _text="{tr}Browse Category{/tr}" _title="{tr}Browse the category system{/tr}"}
+	{button href="tiki-edit_categories.php" _text="{tr}Organize Objects{/tr}" _title="{tr}Organize Objects{/tr}"}
 </div>
 
 {if !empty($errors)}
@@ -67,7 +68,7 @@
 	{tab name="{tr}Create/Edit category{/tr}"}
 		{if $categId > 0}
 			<h2>{tr}Edit this category:{/tr} <b>{$name|escape}</b> </h2>
-			{button href="tiki-admin_categories.php?parentId=$parentId#editcreate" _text="{tr}Create New{/tr}" _title="{tr}Creatae New{/tr}"}
+			{button href="tiki-admin_categories.php?parentId=$parentId#editcreate" _text="{tr}Create New{/tr}" _title="{tr}Create New{/tr}"}
 		{else}
 			<h2>{tr}Add new category{/tr}</h2>
 		{/if}

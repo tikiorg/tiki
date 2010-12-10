@@ -1,14 +1,17 @@
 {* $Id$ *}
 
 <div class="catblock clearfix">
-  <div class="cattitle">
-    <span class="label">{tr}Category{/tr}: </span>{foreach name=for key=id item=title from=$titles}
-    {if $params.categoryshowlink ne 'n'}<a href="tiki-browse_categories.php?parentId={$id}">{/if}
-		{$title|tr_if|escape}
-	{if $params.categoryshowlink ne 'n'}</a>{/if}
-    {if !$smarty.foreach.for.last} &amp; {/if}
-    {/foreach}
-  </div>
+	{if !isset($params.showTitle) or $params.showTitle eq 'y'}
+		<div class="cattitle">
+			<span class="label">{tr}Category{/tr}: </span>
+			{foreach name=for key=id item=title from=$titles}
+				{if $params.categoryshowlink ne 'n'}<a href="tiki-browse_categories.php?parentId={$id}">{/if}
+				{$title|tr_if|escape}
+				{if $params.categoryshowlink ne 'n'}</a>{/if}
+				{if !$smarty.foreach.for.last} &amp; {/if}
+			{/foreach}
+		</div>
+	{/if}
   <div class="catlists">
     <ul class="{if $params.showtype ne 'n'}catfeatures{elseif $params.one eq 'y'}catitemsone{else}catitems{/if}">
    {foreach key=t item=i from=$listcat}

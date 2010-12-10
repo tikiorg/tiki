@@ -53,7 +53,7 @@
  * 
  * _columnsContainHtml = 'n':	Column data gets html encoded (by default)
  * 
- * _emptyDataMessage = {treetable}: '.tra('No rows found')	: message if there are no rows
+ * _emptyDataMessage = tra('No rows found')	: message if there are no rows
  * 
  * _openall					: show folder button to open all areas (y/n default=n)
  * 
@@ -71,7 +71,7 @@ function smarty_function_treetable($params, &$smarty) {
 	
 	extract($params);
 	
-	$_emptyDataMessage = empty($_emptyDataMessage) ? '{treetable}: ' . tra('No rows found') : $_emptyDataMessage;
+	$_emptyDataMessage = empty($_emptyDataMessage) ? tra('No rows found') : $_emptyDataMessage;
 	if (empty($_data)) {
 		return $_emptyDataMessage;
 	}
@@ -89,7 +89,7 @@ function smarty_function_treetable($params, &$smarty) {
 			$_checkboxColumnIndex = preg_split('/,/', trim($_checkboxColumnIndex));
 		}
 		if (count($_checkbox) != count($_checkboxColumnIndex)) {
-			return tra('{treetable}: Number of items in _checkboxColumnIndex doesn not match items in _checkbox');
+			return tra('Number of items in _checkboxColumnIndex doesn not match items in _checkbox');
 		}
 	}
 	if (!empty($_checkboxTitles)) {
@@ -101,7 +101,7 @@ function smarty_function_treetable($params, &$smarty) {
 			}
 		}
 		if (count($_checkbox) != count($_checkboxTitles)) {
-			return tra('{treetable}: Number of items in _checkboxTitles doesn not match items in _checkbox');
+			return tra('Number of items in _checkboxTitles doesn not match items in _checkbox');
 		}
 	}
 	$_checkboxColumnIndex = empty($_checkboxColumnIndex) ? 0 : $_checkboxColumnIndex;

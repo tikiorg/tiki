@@ -277,6 +277,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;
 	{include file='tracker_item_field_value.tpl' field_value=$cur_field}
 {elseif $cur_field.type eq 'p'}
 	{if $user ne $itemUser}
+		<input type="hidden" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" /> 
 		{include file='tracker_item_field_value.tpl' field_value=$cur_field}
 	{else}
 		{include file='tracker_item_field_input.tpl' field_value=$cur_field}
@@ -367,7 +368,7 @@ $("#user_selector_{{$cur_field.id}}").tiki("autocomplete", "username", {mustMatc
 	{if $cur_field.isMandatory ne 'y'}<option value=""></option>{/if}
 	{foreach key=ku item=iu from=$cur_field.$fca name=foreache}
 	{assign var=fcat value=$iu.categId }
-	<option value="{$iu.categId}"{if $cur_field.cat.$fcat eq 'y'} selected="selected"{/if}>{$iu.name|escape}</option>
+	<option value="{$iu.categId}"{if $cur_field.cat.$fcat eq 'y'} selected="selected"{/if}>{$iu.categpath|escape}</option>
 	{/foreach}
 	</select>
 {else}
@@ -475,7 +476,7 @@ or $cur_field.type eq 'i'}
 
 {if $cur_field.type ne 'S'}
 {if $cur_field.description}
-<br />{if $cur_field.descriptionIsParsed eq 'y'}{wiki}{$cur_field.description}{/wiki}{else}<em>{$cur_field.description|escape}</em>{/if}
+<br />{if $cur_field.descriptionIsParsed eq 'y'}{wiki}{$cur_field.description}{/wiki}{else}<em>{tr}{$cur_field.description|escape}{/tr}</em>{/if}
 {/if}
 {/if}
 </td>

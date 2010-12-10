@@ -43,6 +43,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	}
 	$params['name'] = isset($params['name']) ? $params['name'] : 'edit';
 	$params['id'] = isset($params['id']) ? $params['id'] : 'editwiki';
+	$params['area_id'] = isset($params['area_id']) ? $params['area_id'] : $params['id'];	// legacy param for toolbars?
 	$params['class'] = isset($params['class']) ? $params['class'] : 'wikiedit';
 	
 	// mainly for modules admin - preview is for the module, not the user module so don;t need to confirmExit
@@ -66,22 +67,16 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$auto_save_warning = '';
 	$as_id = $params['id'];
 	
-	// fix for Firefox 3.5 and newer. *lite.css defined the document body as display:table, which seems to upset Firefox
-	// and makes it lose it's selection info when the DOM changes (like when a picker or menu is generated)
-	// this fixes it but apparently (according to *lite.css author Luci) will cause some layout issues:
-	// He says: "it's necessary for expanding content (pushing right column) to the right properly"
-	// but it looks fine to me
-	if (preg_match('/Firefox\/(\d)+\.(\d)+/i', $_SERVER['HTTP_USER_AGENT'], $m) &&count($m) > 2 && $m[1] >=3 && ($m[2] >=5 || $m[1] > 3)) {
-		//$headerlib->add_css('body {display: block; }', 10);	// xajax/loadComponent() doesn't re-parse CSS on AJAX loads (yet), so use JS instead
-		$headerlib->add_jq_onready('$("body").css("display", "block");');
-	}
 	include_once('lib/smarty_tiki/block.remarksbox.php');
-	if ($params['_simple'] === 'n' || isset($smarty->_tpl_vars['page']) && $smarty->_tpl_vars['page'] != 'sandbox') {
+	if ($params['_simple'] === 'n' && isset($smarty->_tpl_vars['page']) && $smarty->_tpl_vars['page'] != 'sandbox') {
 		$html .= smarty_block_remarksbox( array( 'type'=>'tip', 'title'=>tra('Tip')),
 			tra('This edit session will expire in') .
 				' <span id="edittimeout">' . (ini_get('session.gc_maxlifetime') / 60) .'</span> '. tra('minutes') . '. ' .
 				tra('<strong>Preview</strong> (if available) or <strong>Save</strong> your work to restart the edit session timer'),
 			$smarty)."\n";
+		if ($prefs['javascript_enabled'] === 'y') {
+			$html = str_replace('<div class="clearfix rbox tip">', '<div class="clearfix rbox tip" style="display:none;">', $html);	// quickfix to stop this box appearing before doc.ready
+		}
 	}
 
 	if ($prefs['feature_ajax'] == 'y' && $prefs['ajax_autosave'] == 'y' && $params['_simple'] == 'n') {	// retrieve autosaved content
@@ -105,8 +100,11 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 				$auto_save_warning = smarty_block_remarksbox( array( 'type'=>'info', 'title'=>tra('AutoSave')), $msg, $smarty)."\n";
 			}
 		}
-		$headerlib->add_jq_onready("register_id('$as_id','$auto_save_referrer');");
-		$headerlib->add_js("var autoSaveId = '$auto_save_referrer';");
+		$headerlib->add_jq_onready("register_id('$as_id','" . addcslashes($auto_save_referrer, "'") . "');");
+		$headerlib->add_js("var autoSaveId = '" . addcslashes($auto_save_referrer, "'") . "';");
+		$smarty->assign( 'autosave_js', "remove_save('$as_id','" . addcslashes($auto_save_referrer, "'") . "');");	// for cancel buttons etc that don't submit the form
+	} else {
+		$smarty->assign( 'autosave_js', '');
 	}
 
 	if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n') {
@@ -142,6 +140,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		//$headerlib->add_jsfile('lib/ckeditor/ckeditor_source.js');
 		$headerlib->add_jsfile('lib/ckeditor/ckeditor.js',0 , true);
 		$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js', 0, true);
+		$headerlib->add_jsfile('lib/ckeditor_tiki/tikilink_dialog.js');
 	
 		include_once( $smarty->_get_plugin_filepath('function', 'toolbars') );
 		$cktools = smarty_function_toolbars($params, $smarty);
@@ -171,7 +170,7 @@ window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",
 window.CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
 window.CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;			// RefreshTime
 window.CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;			// Sensitivity to key strokes
-register_id("'.$as_id.'","'.$auto_save_referrer.'");	// Register auto_save so it gets removed on submit
+register_id("'.$as_id.'","'.addcslashes($auto_save_referrer, '"').'");	// Register auto_save so it gets removed on submit
 ajaxLoadingShow("'.$as_id.'");
 ', 5);	// before dialog tools init (10)
 		}
@@ -197,7 +196,7 @@ $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 	toolbar: "Tiki",
 	language: "'.$prefs['language'].'",
 	customConfig: "",
-	autoSaveSelf: "'.$auto_save_referrer.'",		// unique reference for each page set up in ensureReferrer()
+	autoSaveSelf: "'.addcslashes($auto_save_referrer, '"').'",		// unique reference for each page set up in ensureReferrer()
 	font_names: "' . $prefs['wysiwyg_fonts'] . '",
 	stylesSet: "tikistyles:' . $tikiroot . 'lib/ckeditor_tiki/tikistyles.js",
 	templates_files: "' . $tikiroot . 'lib/ckeditor_tiki/tikitemplates.js",
@@ -252,6 +251,7 @@ function CKeditor_OnComplete() {
 		$smarty->assign_by_ref('pagedata', htmlspecialchars($content));
 		$smarty->assign('comments', isset($params['comments']) ? $params['comments'] : 'n');
 		$smarty->assign('switcheditor', isset($params['switcheditor']) ? $params['switcheditor'] : 'n');
+		$smarty->assign('toolbar_section', $params['section']);
 		$html .= $smarty->fetch('wiki_edit.tpl');
 
 		$html .= "\n".'<input type="hidden" name="rows" value="'.$params['rows'].'"/>'
@@ -274,7 +274,7 @@ function editTimerTick() {
 	var seconds = editTimeoutSeconds - editTimeElapsedSoFar;
 	
 	if (editTimerWarnings == 0 && seconds <= 60 && window.editorDirty) {
-		alert('".addslashes(tra('Your edit session will expire in:')).' 1 '.tra('minute').'.'.
+		alert('".addslashes(tra('Your edit session will expire in:')).' 1 '.tra('minute').'. '.
 				addslashes(tra('You must PREVIEW or SAVE your work now, to avoid losing your edits.'))."');
 		editTimerWarnings++;
 	} else if (seconds <= 0) {

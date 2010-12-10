@@ -1,6 +1,4 @@
-{* $Id$ *}<!DOCTYPE html 
-	PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+{* $Id$ *}<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}" lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}"{if !empty($page_id)} id="page_{$page_id}"{/if}>
 	<head>
 {include file='header.tpl'}
@@ -48,7 +46,7 @@
 			{if $prefs.feature_layoutshadows eq 'y'}<div id="middle-shadow">{eval var=$prefs.middle_shadow_start}{/if}<div class="clearfix" id="middle">
 				<div class="clearfix {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}nofullscreen{else}fullscreen{/if}" id="c1c2">
 					<div class="clearfix" id="wrapper">
-						<div id="col1" class="{if $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}marginleft{/if}{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n')} marginright{/if}"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+						<div id="col1" class="{if $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}marginleft{/if}{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n')} marginright{/if}"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 
 {if $smarty.session.fullscreen neq 'y'}
 	{if $prefs.feature_left_column eq 'user' or $prefs.feature_right_column eq 'user'}
@@ -151,6 +149,10 @@
 	</div> {* -- END of fixedwidth -- *}
 
 {include file='footer.tpl'}
+
+{if $prefs.socialnetworks_user_firstlogin == 'y'}
+	{include file='tiki-socialnetworks_firstlogin_launcher.tpl'}
+{/if}
 
 {if $prefs.feature_endbody_code}{*this code must be added just before </body>: needed by google analytics *}
 	{eval var=$prefs.feature_endbody_code}

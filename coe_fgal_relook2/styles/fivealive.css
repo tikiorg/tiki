@@ -1,6 +1,7 @@
 /* $Id$
 	FiveAlive theme (fivealive.css) for TikiWiki CMS/Groupware.
 	Visit http://themes.tiki.org for more information.
+	*
 */
  
 /* Import foundation CSS files. */
@@ -8,9 +9,15 @@
 @import url("layout/layout.css");
 @import url("layout/design.css");
 
+/* make sure whole browser viewport background is always set to white */
+html {
+	background-color: #fff;
+}
+
 /***** XHTML Elements (body tag here,
 			others follow Layout) *****/ 
 body {
+	background-color: #fff;
 	font: 76%/1.5em Arial, Helvetica, sans-serif;
 	color: #000;
 }
@@ -186,7 +193,6 @@ body.fixed_width #fixedwidth {
 }
 
 #custom_site_footer {
-/*	padding: 8px;*/
 }
 
 #custom_site_footer h3 {
@@ -202,7 +208,7 @@ body.fixed_width #fixedwidth {
 	margin-bottom: 17px;
 }
 
-span#poweredby {
+#poweredby {
 	font-weight: bold;
 	color: #fff;
 }
@@ -226,13 +232,13 @@ span#poweredby {
 	margin-bottom: 13px;
 }
 
-span#show-errors-button {
+#show-errors-button {
 	text-align: right;
 	margin-top: -26px;
 	display: block;
 }
 
-span#show-errors-button a {
+#show-errors-button a {
 	background: #fff;
 	border: none;
 	border-top-left-radius: 5px;
@@ -255,8 +261,8 @@ span#show-errors-button a {
 }
 
 .highlight,
-span.button.highlight a,
-td.calfocuson {
+.button.highlight a,
+.calfocuson {
 	background: #fad5e0;
 	
 }
@@ -298,16 +304,16 @@ label {
 	color: #000;
 }
 
-span.button a,
-span.button a:visited,
+.button a,
+.button a:visited,
 button,
 input[type="reset"],
 input[type="submit"],
-span.button input,
+.button input,
 .calbuttonBox a,
-span#genPass span.button a,
-span#genPass span.button a:visited,
-span.daterow {
+#genPass .button a,
+#genPass .button a:visited,
+.daterow {
 	color: #fff;
 	background: #2098cd;
 	border: 1px solid #11597e;
@@ -318,42 +324,30 @@ span.daterow {
 	-webkit-border-radius: 4px;
 }
 
-span.button a:hover,
+.button a:hover,
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-span.button input:hover,
+.button input:hover,
 .calbuttonBox a:hover,
-span#genPass span.button a:hover,
-span.daterow:hover {
+#genPass .button a:hover,
+.daterow:hover {
 	background: #1173a5;
 	border: 1px solid #11597e;
 	text-decoration: none;
 }
-/*
-span#genPass span.button a,
-span#genPass span.button a:visited {
-	color: #fff;
-	background: #2098cd;
-	padding: 1px 4px !important;
-}
 
-span#genPass span.button a:hover {
-	background: #1173a5;
-	padding: 1px 4px !important;
-}*/
-
-span#genPass span.button:hover {
+#genPass .button:hover {
 	border-width: 1px !important;
 }
 	
 .highlight,
-span.highlight a {
+.highlight a {
 	border: #9ae8fa;
 	color: #000;
 }
 
-span.button.highlight a {
+.button.highlight a {
 	background: #d6f3fa;
 	color: #000;
 }
@@ -376,6 +370,7 @@ select[multiple="multiple"] {
 }
 
 input[type="text"],
+input[type="password"],
 select {
 	margin: 2px;
 }
@@ -385,7 +380,7 @@ select {
 #header-top {
 	min-height: 170px;
 	position: relative;
-	background: url(fivealive/options/blueberry/siteheader.jpg) no-repeat -250px 0;
+	background: url(fivealive/options/blueberry/siteheader.jpg) no-repeat;
 }
 
 #quickadmin {
@@ -517,6 +512,11 @@ select {
 	right: 10px;
 }
 
+#siteloginbar_popup fieldset {
+	border: none;
+	margin: 0; padding: 0;
+}
+
 #siteloginbar_popup .tabmark {
 	border: 1px solid #696969;
 	border-bottom: 0;
@@ -545,6 +545,10 @@ select {
 
 #sl-login-user, #sl-login-pass {
 	background: #fff;
+}
+
+#sl-openid {
+	background-color: #fff;
 }
 
 /*** CSS menus shadows for all but IE6 ***/
@@ -576,7 +580,7 @@ a.login_link {
 }
 
 #siteloginbar_popup .cssmenu_horiz #logout_link ul {
-	margin-left: -11.5em;
+	margin-left: -10.7em;
 	width: 20em !important; /* to override the hardcoded in-line style width */
 }
 
@@ -593,8 +597,9 @@ li.login_link ul li a {
 
 #tiki-top {
 	height: 50px;
-	background: url(fivealive/topbar.jpg) repeat-x;
+	background: #000 url('fivealive/topbar.jpg') repeat-x;
 }
+#tiki-top[id] {height: auto; min-height: 50px;}
 
 #tiki-top ul.cssmenu_horiz  {
 	margin-top: 2px;
@@ -803,7 +808,7 @@ img.icon {
 	-webkit-border-bottom-right-radius: 3px;
 }
 
-div.error {
+.error {
 	background: none;
 }
 
@@ -818,14 +823,14 @@ div.error {
 /***** Tables, Tabs *****/
 /** Tables **/
 
-table.normal,
+.normal,
 .wikitable {
 	border: 2px solid #1d90c5;
 	border-collapse: collapse;
 }
 
-form table.normal,
-.tabcontent table.normal {
+form .normal,
+.tabcontent .normal {
 	border: none;
 }
 
@@ -859,17 +864,22 @@ th a,
 th a:visited,
 td.heading a,
 td.heading a:visited,
-table.normal th a.link, 
-table.normal th a {
+.normal th a.link, 
+.normal th a {
 	color: #fff
 }
 
-table.admin a.link,
-table.admin a,
-table.admin label,
+.admin a.link,
+.admin a,
+.admin label,
 fieldset.admin label,
 .cbox fieldset.admin a {
 	color: #1174a5;
+}
+
+.tabstoggle .button a,
+.tabstoggle .button a:visited {
+	color: #fff;
 }
 
 /** Tabs **/
@@ -914,10 +924,6 @@ fieldset.admin label,
 a.register_link {
 	background-color: #969696;
 }
-/*
-#siteloginbar_popup .tabmark {
-	background-color: #070707;
-}*/
 
 .tabmark a,
 .tabmark a:visited {
@@ -928,9 +934,8 @@ a.register_link {
 
 .tabinactive:hover,
 .tabactive {
-	border-bottom-width: 0;
 	padding-bottom: 1px;
-	border: 1px solid #aaaaaa;
+	border: 1px solid #a9d6eb;
 	background: #a9d6eb;
 }
 
@@ -950,17 +955,13 @@ a.register_link {
 	padding: 4px;
 }
 	
-form.admin fieldset {
-	background: #74c0e2;
-}
-
 legend.heading {
 	background: transparent;
 }
 /*	
-table.admin a.link,
-table.admin a,
-table.admin label,
+.admin a.link,
+.admin a,
+.admin label,
 fieldset.admin label,
 .cbox fieldset.admin a {
 	color: #fff;
@@ -980,7 +981,7 @@ fieldset.admin .adminoptionlabel {
 	padding: 1px 8px;
 }
 	
-div.code {
+.code {
 	padding: 3px;
 	border: 1px dashed #a9a9a9;
 	background: #f5f5f5;
@@ -1011,12 +1012,12 @@ div.code {
 }
 
 /* Quote plugin */
-div.quoteheader {
+.quoteheader {
 	margin-left: 30px;
 	border-bottom: 2px solid #c2eef8;
 }
 
-div.quotebody {
+.quotebody {
 	margin: 0 15px 10px 30px;
 	font-style: italic;
 	border-left: 8px solid #c2eef8;
@@ -1041,7 +1042,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 .postbody-title {
 	padding: .5em .3em .3em 1em;
 	position: relative;
-	background: url(fivealive/options/blueberry/siteheader.jpg) -550px -90px;
+	background: #28A7DE url(fivealive/options/blueberry/siteheader.jpg) -300px -90px no-repeat;
 	color: #222;
 	font-weight: bold;
 	font-size: 1.1em;
@@ -1060,7 +1061,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 }
 
 .post .author,
-div.dirsite {
+.dirsite {
 	background: #c2eef8;
 	float: none;
 	margin: 0 0 6px;
@@ -1093,16 +1094,6 @@ a.dirsublink {
 /***** Messages *****/
 /***** TikiSheets *****/
 /***** Calendar *****/
-/*.caldark {
-	background: ;
-	border: 0;
-}
-
-.caldark .calfocus {background: }
-.calodd, .caleven {border: }
-.calodd .calfocus {background: }
-.caleven .calfocus, .caleven .calfocuson {background: }
-*/
 .caltable .days {
 	color: #fff;
 }
@@ -1121,24 +1112,6 @@ a.dirsublink {
 }
 
 /***** Admin *****/
-/*body.tiki_admin .simplebox,
-a.admbox,
-a.admbox.off {
-	background-color:  no-repeat center center;
-	border: ;
-}
-	
-a.admbox:hover,
-a.admbox:focus,
-a.admbox:active {
-	background-color:  no-repeat center center;
-	border-right: ;
-	border-top: ;
-	border-left: ;
-	border-bottom: ;
-	color: ;
-	text-decoration: none;
-}
 
 a.admbox.off:hover,
 a.admbox.off:focus,
@@ -1152,7 +1125,7 @@ a.admbox.off:active {
 .toolbars-admin .full li,
 .toolbars-admin .rows .row,
 .textarea-toolbar,
-span.toolbar-list,
+.toolbar-list,
 .toolbar-list,
 a.toolbar,
 a.qt-inline {
@@ -1162,10 +1135,6 @@ a.qt-inline {
 
 /***** Ajax, jquery. etc. *****/
 /***** Ajax *****/
-/*.ui-widget-content {
-	background: ;
-	color: ;
-}*/
 /***** New (unsorted) *****/
 
 /* cluptip tooltips */

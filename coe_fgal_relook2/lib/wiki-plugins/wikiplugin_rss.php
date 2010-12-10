@@ -13,7 +13,7 @@
 function wikiplugin_rss_info() {
 	return array(
 		'name' => tra('RSS Feed'),
-		'documentation' => 'PluginRSS',
+		'documentation' => tra('PluginRSS'),
 		'description' => tra('Inserts an RSS feed output.'),
 		'prefs' => array( 'wikiplugin_rss' ),
 		'icon' => 'pics/icons/rss.png',
@@ -26,42 +26,69 @@ function wikiplugin_rss_info() {
 				'separator' => ':',
 				'filter' => 'int',
 				'description' => tra('List of feed IDs separated by colons. ex: feedId:feedId2'),
+				'default' => '',
 			),
 			'max' => array(
 				'required' => false,
 				'name' => tra('Result Count'),
 				'filter' => 'int',
 				'description' => tra('Number of results displayed.'),
+				'default' => 10,
 			),
 			'date' => array(
 				'required' => false,
 				'name' => tra('Date'),
 				'filter' => 'int',
-				'description' => '0|1',
+				'description' => tra('Show date of each item (not shown by default)'),
+				'default' => 0,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				)
 			),
 			'desc' => array(
 				'required' => false,
 				'name' => tra('Description'),
 				'filter' => 'int',
-				'description' => '0|1|max length',
+				'description' => tra('Show feed descriptions (not shown by default)'),
+				'default' => 0,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				)
 			),
 			'author' => array(
 				'required' => false,
 				'name' => tra('Author'),
 				'filter' => 'int',
-				'description' => '0|1',
+				'description' => tra('Show authors (not shown by default)'),
+				'default' => 0,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				)
 			),
 			'icon' => array(
 				'required' => false,
 				'name' => tra('Icon'),
 				'filter' => 'url',
-				'description' => 'url to a favicon to put before each entry',
+				'description' => tra('Url to a favicon to put before each entry'),
+				'default' => '',
 			),
 			'showtitle' => array(
 				'required' => false,
 				'name' => tra('Show Title'),
 				'filter' => 'int',
-				'description' => 'Set to 0 to not show the title for the feed (1 to show, which is also the default)',
+				'description' => tra('Show the title of the feed (shown by default)'),
+				'default' => 1,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				)
 			),
 		),
 	);

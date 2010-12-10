@@ -149,7 +149,7 @@ class TodoLib
 		include_once ('lib/webmail/tikimaillib.php');
 		$mail = new TikiMail(empty($to['user'])?null:$to['user']);
 		$mail->setSubject($todo['to']['subject']);
-		$mail->setText($todo['to']['body']);
+		$mail->setTextHtml($todo['to']['body']);
 		$mail->send(array($to['email']));
 	}
 	/////////////////////////////////////////////////
@@ -197,6 +197,7 @@ class TodoLib
 				$smarty->assign('todo_tostatus', $status[$todo['for']['to']['status']]['label']);
 				$smarty->assign('todo_fromstatus', $status[$todo['for']['from']['status']]['label']);
 				$smarty->assign('todo_after', $todo['to']['before']);
+				$smarty->assign('todo_desc', $trklib->get_isMain_value($object['trackerId'], $object['itemId']));
 			}
 			// mail creator
 			$this->mailTodo($todo, array('user'=>$u), 'Tracker item status will be changed');

@@ -19,6 +19,7 @@
 				<input type="hidden" name="blogfeatures" />
 				{preference name=feature_blog_rankings}
 				{preference name=feature_blog_heading}
+				{preference name=feature_blog_edit_publish_date}
 
 				{if $prefs.feature_categories eq 'y'}
 					{preference name=feature_blog_mandatory_category}
@@ -35,7 +36,7 @@
 
 			<fieldset>
 				<legend>
-					{tr}Sharing on social networks{/tr}{help url="Blog#Sharing_Social_Networks"}
+					{tr}Sharing on social networks{/tr}{help url="Social+Networks#Using+ShareThis"}
 				</legend>
 				{preference name=feature_blog_sharethis}
 				<div class="adminoptionboxchild" id="feature_blog_sharethis_childcontainer">

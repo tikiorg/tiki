@@ -8,6 +8,10 @@
 	margin-left: 1em;
 }
 
+.box-data .cssmenu_vert ul {
+	margin-left: 0;
+} 
+
 #col2 .cssmenu_vert {
 	margin-left: 0;
 }
@@ -19,6 +23,28 @@
 	padding-bottom: 1.8em;
 }
 
-form#editpageform {
+#editpageform {
 	width: 520px;
+}
+
+#header-top {
+	z-index: 4;
+}
+
+#tiki-top {
+	position: relative;
+	z-index: 3;
+}
+
+#middle {
+	z-index: 1;
+	position: relative;
+}
+
+h3.box-title {
+	z-index: 0;
+}
+
+.cssmenu_vert ul li {
+	width: inherit;
 }

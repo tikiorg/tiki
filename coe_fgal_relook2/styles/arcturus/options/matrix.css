@@ -114,12 +114,12 @@ select {
     border: 1px inset #00E000;
 }
 
-span.button a,
-span.button a:visited,
+.button a,
+.button a:visited,
 button,
 input[type="reset"],
 input[type="submit"],
-span.button input,
+.button input,
 .calbuttonBox a,
 .daterow {
 	background: url(matrix/red.png);
@@ -128,17 +128,22 @@ span.button input,
 	font-size: 11px;
 }
 
-span.button a:hover,
-span.button a:hover,
+.button a:hover,
+.button a:hover,
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-span.button input:hover,
+.button input:hover,
 .calbuttonBox:hover,
 .daterow:hover {
 	background: url(matrix/ltgreen.png);
 	border: 1px solid #676767;
 	font-size: 11px;
+}
+
+.highlight, .button.highlight a {
+	background: #00f000;
+	color: #000;
 }
 
 #tiki-top {
@@ -167,7 +172,7 @@ span.button input:hover,
     font-size: 12px;
 }
 
-div#tiki-center {
+#tiki-center {
     padding-left: 2px;
     padding-right: 2px;
 }
@@ -198,6 +203,11 @@ div#tiki-center {
 .cssmenu_horiz li ul li,
 #tiki-top .cssmenu_horiz li:hover ul li a {
 	background: none;
+}
+
+.cssmenu_vert li ul li,
+.cssmenu_horiz li ul li {
+	background: #222;
 }
 
 /* next two, dropdown background and border */
@@ -274,7 +284,7 @@ div#tiki-center {
 }
 
 a .sf-sub-indicator {
-	top: 0.5em;
+	top: 0.1em;
 }
 
 .sf-sub-indicator {
@@ -293,7 +303,7 @@ a .sf-sub-indicator {
 	background: none;
 }
 
-td.phplmnormal {
+.phplmnormal {
 	background: url(matrix/ltgreen.png);
 }
 
@@ -365,7 +375,7 @@ h3.box-title {
 	background: none;
 }
 
-div.simplebox {
+.simplebox {
 	margin: 1px 5px;
 	padding: 10px 5px 10px 20px;
 	color: #001000;
@@ -394,12 +404,24 @@ div.simplebox {
 .rbox-title, 
 .rbox-data {
     background: url(matrix/grey.png) repeat;
-    color: #aeaeae;
+    color: #00b000;
     border-color: #00ff00;
 }
 
-.rbox-title {
-	background: #222;
+.error .rbox-title,
+.errors .rbox-title,
+.warning .rbox-title {
+	background: #90ee90;
+	border-color: #00ff82 #00ff82 #90ee90;
+	color: #000;
+}
+
+.error .rbox-data,
+.errors .rbox-data,
+.warning .rbox-data {
+	background: #90ee90;
+	border-color: #90ee90;
+	color:#000;
 }
 
 .box:hover {
@@ -492,7 +514,7 @@ li.even,
 h1.pagetitle a,
 h1.pagetitle a:visited,
 h1.pagetitle a:hover,
-div.article h2 {
+.article h2 {
 	font-family: verdana,arial,helvetica,sans-serif;
 	font-size: 30px;
 	font-weight: bold;
@@ -501,9 +523,9 @@ div.article h2 {
 
 .wikitext,
 .titlebar,
-td.wikicell,
-div.wiki-edithelp,
-div.tocnav,
+.wikicell,
+.wiki-edithelp,
+.tocnav,
 .codelisting {
     background: url(matrix/ltltgreen.png) repeat;
 }
@@ -530,7 +552,7 @@ div.tocnav,
 	padding-left: 5px;
 }
 
-span.titleb {
+.titleb {
 	color: #676767;
 	font-size: 10px;
 }
@@ -543,11 +565,11 @@ span.titleb {
 	padding-top: 0.5em;
 }
 
-div.articletrailer {
+.articletrailer {
 	font-size: 9px;
 }
 
-div.articlebody {
+.articlebody {
 	border: 1px solid #aeaeae;
 	padding: 1em 2em;
 	margin: 10px 0;
@@ -555,13 +577,13 @@ div.articlebody {
 	clear: both;
 }
 
-td.oddthumb {
+.oddthumb {
 	background: transparent;
 	border: 1px solid #8cacbb;
 	border-collapse: collapse;
 }
 
-td.eventhumb,
+.eventhumb,
 .thumbnailcontener {
 		background: url(matrix/grey.png);
 		border: none;

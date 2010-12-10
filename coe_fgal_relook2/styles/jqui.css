@@ -78,6 +78,10 @@ a:active, a:hover {
 	text-decoration: none;
 }
 
+h1, h2, h3, h4, h5 {
+	line-height: 1.1;
+}
+
 h1 {
 	font-size: 180%;
 }
@@ -109,12 +113,12 @@ legend {
 	line-height: 220%;
 }
 
-span.button a,
-span.button a:visited,
+.button a,
+.button a:visited,
 button,
 input[type="reset"],
 input[type="submit"],
-span.button input,
+.button input,
 .calbuttonBox a {
 	margin: .5em .4em .5em 0;
 	cursor: pointer;
@@ -128,11 +132,11 @@ span.button input,
 	outline: none;
 }
 
-span.button a:hover,
+.button a:hover,
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-span.button input:hover,
+.button input:hover,
 .calbuttonBox:hover {
 	margin: .5em .4em .5em 0;
 	border: 1px solid #999999;
@@ -143,23 +147,23 @@ span.button input:hover,
 }
 	
 .highlight,
-span.highlight a {
+.highlight a {
 	border: 1px solid #fcefa1;
-	background: #fbf9ee url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x;
+	background: #fbf9ee url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
 	color: #363636;
 }
 
-span.button.highlight {
+.button.highlight {
 	border: none;
 }
 
-span.button.highlight a {
+.button.highlight a {
 	border: 1px solid #fcefa1;
 	background: #fbf9ee url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x;
 	color: #363636;
 }
 
-div.error {
+.error {
 	background: none;
 }
 
@@ -364,7 +368,7 @@ h3.box-title,
 	
 
 
-div.errors {
+.errors {
 	background: none;
 }
 
@@ -388,19 +392,19 @@ div.errors {
 	color: #333;
 }
 
-div.errors {
+.errors {
 	color: #cd0a0a;
 }
 
 /***** Tables, Tabs *****/
 /** Tables **/
 
-table.normal {
+.normal {
 	border: 1px solid #aaa;
 }
 /*
-table.normal a.link,
-table.normal a,
+.normal a.link,
+.normal a,
 th a,
 th a:visited,
 td.heading a,
@@ -408,9 +412,9 @@ td.heading a:visited {
 	color: ;
 }
 
-table.admin a.link,
-table.admin a,
-table.admin label,
+.admin a.link,
+.admin a,
+.admin label,
 fieldset.admin label,
 .cbox fieldset.admin a {
 	color: ;
@@ -485,6 +489,45 @@ li.even {
 
 /***** Wiki *****/
 
+/* code plugin */
+
+.codecaption {
+	font-size: .9em;
+	line-height: 1.4em;
+	padding: .2em 1em;
+	display: inline;
+	border: 1px solid #696969;
+	border-bottom: none;
+	margin: 0;
+	color: #696969;
+	background: #f5f5f5;
+	font-weight: bold;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+}
+
+.codelisting {
+	font-family: "Courier New", Courier, monospace;
+	line-height: 1.2em;
+	padding: 1em;
+	background: #f5f5f5;
+	margin: 0;
+	border: 1px solid #696969;
+	overflow: auto;
+	border-top-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	-moz-border-radius-topright: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	-moz-border-radius-bottomright: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+}
 
 /***** Articles ****/
 body.tiki_cms h1 a.pagetitle,
@@ -492,9 +535,14 @@ body.tiki_cms h1 a.pagetitle:visited,
 body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 
 	
-div.articletrailer span {
+.articletrailer span {
 	margin-left: 5px;
 	padding-left: 20px;
+}
+
+.articletrailer .share {
+	margin-left: 0;
+	padding-left: 0;
 }
 
 /***** Blogs *****/
@@ -549,7 +597,7 @@ div.articletrailer span {
 	color: #fff;
 	padding: 3px;
 }
-.forum_actions span.title {
+.forum_actions .title {
 	font-weight: bold;
 }
 
@@ -576,7 +624,7 @@ div.articletrailer span {
 /***** Categories, Tags *****/
 
 /***** Tags (freetags) *****/
-div.freetagitemlist {
+.freetagitemlist {
 	margin-bottom: 30px;
 	padding: 0 0 10px;
 }
@@ -640,8 +688,32 @@ div.freetagitemlist {
 /*.calodd .calfocus, .calodd .calfocuson*/
 /*.caleven .calfocus, .caleven .calfocuson {background: ;}*/
 
-/***** Admin *****/
-	
+/* Cluetip - JQuery tooltips
+   =cluetipClass: 'default' */
+
+.cluetip-default {
+	background: #999;
+	color: #000;
+}
+
+.cluetip-default #cluetip-outer {
+	background: #ccc;
+}
+.cluetip-default h3#cluetip-title {
+	background: #aaa;
+	color: #fff;
+}
+
+.cluetip-default #cluetip-title a {
+	color: #fff;
+}
+  
+
+#cluetip-close { 
+	background: #aaa;
+	color: #900;
+}
+
 /***** Ajax, jquery. etc. *****/
 /***** Ajax *****/
 /*
@@ -668,12 +740,12 @@ div.freetagitemlist {
 	-webkit-border-top-right-radius: 4px;
 }
 
-span.button a,
-span.button a:visited,
+.button a,
+.button a:visited,
 button,
 input[type="reset"],
 input[type="submit"],
-span.button input,
+.button input,
 .calbuttonBox a,
 #tiki-top,
 .box,
@@ -710,5 +782,6 @@ a.admbox.off {
 	-webkit-border-bottom-left-radius: 4px;
 	-webkit-border-bottom-right-radius: 4px;
 }
+
 
 /* End of File */

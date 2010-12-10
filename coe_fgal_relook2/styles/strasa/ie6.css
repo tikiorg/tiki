@@ -53,7 +53,7 @@ body {
 	height: 1%;
 }
 
-div#tikihelp {
+#tikihelp {
 	position: absolute;
 }
 
@@ -86,9 +86,9 @@ img.flipmodimage {
 	border: none;
 }
 
-table.normal, 
-table.admin,
-table.bloglist {
+.normal, 
+.admin,
+.bloglist {
 	width: 97%;
 }
 
@@ -112,7 +112,7 @@ body.tiki_blogs .author_info {
 	font-size: 11px;
 }
 
-body table.galtable {
+body .galtable {
 	width: 97%;
 }
 

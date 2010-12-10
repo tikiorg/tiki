@@ -183,6 +183,7 @@ class TikiAccessLib extends TikiLib
 	 *  Checks whether the request was willingly submitted by the user, instead of being triggered by Cross-Site Request Forgery.
 	 *  This uses random tokens. The first call brings to a request confirmation screen with a new token in the form. The second call, in the second request, verifies the submitted token matches.
 	 *  Typical usage: $access->check_authenticity();
+	 *  Warning: this mechanism does not allow passing uploaded files ($_FILES). For that, see check_ticket().
 
 	 * @param string $confirmation_text Text on the confirmation screen. Default: 'Click here to confirm your action'
 	 * @access public
@@ -196,6 +197,18 @@ class TikiAccessLib extends TikiLib
 			} else {
 				key_get(null, $confirmation_text);
 			}
+		}
+	}
+	
+	function check_ticket() {
+		global $smarty, $prefs, $user;
+		if ($prefs['feature_ticketlib2'] == 'y') {
+			if (empty($user) || (isset($_REQUEST['ticket']) && isset($_SESSION['ticket']) && $_SESSION['ticket'] == $_REQUEST['ticket'])) {
+				return true;
+			}
+			$smarty->assign('msg',tra('Sea Surfing (CSRF) detected. Operation blocked.')); // TODO: Improve feedback and allow proceeding by confirming the request. $_REQUEST needs to be saved and restored.
+			$smarty->display("error.tpl");
+			exit();
 		}
 	}
 
@@ -332,7 +345,7 @@ class TikiAccessLib extends TikiLib
 	function authorize_rss($rssrights) {
 		global $tikilib, $userlib, $user, $smarty, $prefs;
 		$perms = Perms::get();
-		$result=array('msg' => tra("Permission denied. You cannot view this section"), 'header' => 'n');
+		$result=array('msg' => tra("You do not have permission to view this section"), 'header' => 'n');
 
 		// if current user has appropriate rights, allow.
 		foreach($rssrights as $perm) {

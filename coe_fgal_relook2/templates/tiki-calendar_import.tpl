@@ -24,7 +24,8 @@
     <tr>
       <td>
         {tr}CSV File{/tr}
-        <a {popup text='name|subject,description,start date,start time,end date,end time,status,lang,categoryId,locationId,priority,url,categoryId'}>{icon _id='help'}</a>
+		{capture name=help}{tr}Column names on the first line:{/tr}<br />name,description,start&nbsp;date,start&nbsp;time,end&nbsp;date,end&nbsp;time,status,lang,categoryId,locationId,priority,url,categoryId<br /><i>{tr 0=subject 1=name}%0 column name can be used instead of %1{/tr}</i><br />{tr}Date format:{/tr} {tr}See:{/tr} http://php.net/strtotime{/capture}
+        <a {popup text=$smarty.capture.help|escape}>{icon _id='help'}</a>
       </td>
       <td>
         <input type="file" name="fileCSV" size="50" />

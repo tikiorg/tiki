@@ -138,12 +138,12 @@ select {
 }
 
 
-span.button a,
-span.button a:visited,
+.button a,
+.button a:visited,
 button,
 input[type=reset],
 input[type=submit],
-span.button input,
+.button input,
 .submitbutton,
 .calbuttonBox {
 	border: 1px solid #99ccff;
@@ -158,11 +158,11 @@ span.button input,
 	vertical-align: middle;
 }
 
-span.button a:hover,
+.button a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
-span.button input:hover,
+.button input:hover,
 .submitbutton:hover,
 .calbuttonBox:hover {
 	border: 1px solid #000;
@@ -210,7 +210,7 @@ textarea {
 	background: #e1ebf0;
 	border: 0;
 	margin: 0.2em;
-	padding:
+	padding-bottom: 0; /* overrides padding-bottom: 10px of the arcturus.css */
 }
 
 h3.box-title {
@@ -302,7 +302,7 @@ h3.box-title {
 	text-align: start;
 }
 
-div.cbox {
+.cbox {
 	background: inherit;
 	border: none;
 }
@@ -318,22 +318,21 @@ table {
 	font-size: 1em;
 }
 
-table.normal,
-table.admin {border-collapse: collapse}
+.normal,
+.admin {border-collapse: collapse}
 
-table.normal th,
+.normal th,
 th,
 td.heading,
 tr.diffheader {
 	background: #abcdef;
 	font-size: 1em;
-	width: 15px;
 }
 
-table.email td.closeButton {width: 100%}
-table.email td.closeButton form {text-align: right}
-table.email {border: solid 1px #abcdef}
-table.email td.body {border: dashed 1px #69c}
+.email .closeButton {width: 100%}
+.email .closeButton form {text-align: right}
+.email {border: solid 1px #abcdef}
+.email td.body {border: dashed 1px #69c}
 td.button {text-align: right}
 small {font-size: 0.8em}
 
@@ -582,11 +581,23 @@ body.wikitext {
 
 .tabs {
 	background: none;
+	border: none;
+	border-bottom: solid 1px #000;
+	margin: 0 0.2em;
+}
+
+.tabstoggle .button {
+	display: block;
+	padding-top: 2px;
+	}
+.tabstoggle span a; .tabstoggle span a:hover {
+	display: block;
 }
 
 .tabmark {
 	font-size: 85%;
 	background: #abcdef;
+	border-color: #000;
 }
 
 .tabmark a,
@@ -612,7 +623,7 @@ body.wikitext {
 
 .tabcontent {
 	border: 1px solid #000;
-	border-top: 0;
+	top: 0;
 	padding: 6px 2px 2px 2px;
 	margin-bottom: 25px;
 	background: #f0f9ff;
@@ -626,17 +637,17 @@ body.wikitext {
 	font-size: x-small
 }
 
-div.admbox {
+.admbox {
 	border: 2px solid #abcdef;
 	height: 100px; width: 100px;
 	text-align: center; float: left; margin: 5px}
 
-div.admbox:hover {background: #ddeeff;}
-div.admbox img {margin-top: 20px;}
+.admbox:hover {background: #ddeeff;}
+.admbox img {margin-top: 20px;}
 
 /* structures toc */
-ul.toc {margin-left: 0.5em; padding-left: 0.5em; list-style-type: 0}
-ul.toc li {margin-left: .2em; padding-left: .2em}
+.toc {margin-left: 0.5em; padding-left: 0.5em; list-style-type: 0}
+.toc li {margin-left: .2em; padding-left: .2em}
 
 /* jscalendar */
 .daterow {

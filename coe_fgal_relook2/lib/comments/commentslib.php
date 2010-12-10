@@ -736,7 +736,7 @@ class Comments extends TikiLib
 		$query = 
 			$this->ifNull("a.`archived`", "'n'")." as `archived`,".
 			$this->ifNull("max(b.`commentDate`)","a.`commentDate`")." as `lastPost`,".
-			$this->ifNull("a.`type`='s'", 'false')." as `sticky`, count(b.`threadId`) as `replies` $select
+			$this->ifNull("a.`type`='s'", 'false')." as `sticky`, count(distinct b.`threadId`) as `replies` $select
 				from `tiki_comments` a left join `tiki_comments` b 
 				on b.`parentId`=a.`threadId` $join
 				where 1 = 1 $where" . ( $forumId ? 'AND a.`object`=?' : '' )
@@ -744,8 +744,6 @@ class Comments extends TikiLib
 				." and a.`objectType` = 'forum'
 				and a.`parentId` = ? $time_cond group by a.`threadId`";
 
-
-		$query .=",a.`object`,a.`objectType`,a.`parentId`,a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,a.`locked`,a.`archived` ";
 		if ($reply_state == 'none') {
 			$query .= ' HAVING `replies` = 0 ';
 		}
@@ -972,10 +970,8 @@ class Comments extends TikiLib
 		}
 
 		global $prefs;
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('forums', $forumId);
-		}
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('forums', $forumId);
 
 		return $forumId;
 	}
@@ -1410,6 +1406,15 @@ class Comments extends TikiLib
 		return $ret;
 	}
 
+	/**
+	 * Return the number of comments for a specific object.
+	 * No permission check is done to verify if the user has permission
+	 * to see the object itself or its comments.
+	 * 
+	 * @param string $objectId example: 'blog post:2'
+	 * @param string $approved 'y' or 'n'
+	 * @return int the number of comments
+	 */
 	function count_comments($objectId, $approved = 'y') {
 		global $tiki_p_admin_comments, $prefs;
 
@@ -1457,7 +1462,7 @@ class Comments extends TikiLib
 		elseif ($type == 'blog') {
 			if ($prefs['feature_blogs'] != 'y')
 				return false;
-			$query = "SELECT count(*),`tiki_blog_posts`.`postId`,`tiki_blog_posts`.`title` FROM `tiki_comments` INNER JOIN `tiki_blog_posts` ON `tiki_comments`.`object`=`tiki_blog_posts`.`postId` WHERE `tiki_comments`.`objectType`='post' and `tiki_comments`.`approved`='y' GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
+			$query = "SELECT count(*),`tiki_blog_posts`.`postId`,`tiki_blog_posts`.`title` FROM `tiki_comments` INNER JOIN `tiki_blog_posts` ON `tiki_comments`.`object`=`tiki_blog_posts`.`postId` WHERE `tiki_comments`.`objectType`='blog post' and `tiki_comments`.`approved`='y' GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
 		}
 		else {
 			//Default to Wiki
@@ -1685,6 +1690,21 @@ class Comments extends TikiLib
 		$this->time_control = $time;
 	}
 
+	/**
+	 * Get comments for a particular object
+	 * 
+	 * @param string $objectId objectType:objectId (example: 'wiki page:HomePage' or 'blog post:1') 
+	 * @param int $parentId only return child comments of $parentId
+	 * @param int $offset
+	 * @param int $maxRecords
+	 * @param string $sort_mode
+	 * @param string $find search comment title and data
+	 * @param int $threshold
+	 * @param string $style
+	 * @param int $reply_threadId
+	 * @param string $approved if user doesn't have tiki_p_admin_comments this param display or not only approved comments (default to 'y')
+	 * @return array
+	 */
 	function get_comments($objectId, $parentId, $offset = 0, $maxRecords = 0, $sort_mode = 'commentDate_asc', $find = '', $threshold = 0, $style = 'commentStyle_threaded', $reply_threadId=0, $approved='y') {
 		global $userlib, $tiki_p_admin_comments, $prefs;
 
@@ -1903,22 +1923,34 @@ class Comments extends TikiLib
 	}
 
 	/**
-	 * Check if a object has any archived comments
+	 * Return the number of arquived comments for an object
 	 *
 	 * @param int|string $objectId
 	 * @param string $objectType
-	 * @return bool
+	 * @return int the number of archived comments for an object
 	 */
-	function object_has_archived_comments($objectId, $objectType) {
-		$query = 'SELECT * FROM `tiki_comments` WHERE `object` = ? AND `objectType` = ? AND `archived` = ?';
+	function count_object_archived_comments($objectId, $objectType) {
+		$query = 'SELECT COUNT(*) FROM `tiki_comments` WHERE `object` = ? AND `objectType` = ? AND `archived` = ?';
 		$result = $this->getOne($query, array($objectId, $objectType, 'y'));
 
-		return $result !== NULL;	
+		return $result;	
 	}
 
-	/* administrative functions to get all the comments of some types + enlarge find
-	 * no perms checked as it is only for admin */
-	function get_all_comments($type, $offset = 0, $maxRecords = -1, $sort_mode = 'commentDate_asc', $find = '', $parent='', $approved='', $toponly=false, $objectId='') {
+	/**
+	 * Return all comments. Administrative functions to get all the comments
+	 * of some types + enlarge find. No perms checked as it is only for admin
+	 * 
+	 * @param string|array $type one type or array of types (if empty function will return comments for all types except forum) 
+	 * @param int $offset
+	 * @param int $maxRecords
+	 * @param string $sort_mode
+	 * @param string $find search comment title, data, user name, ip and object
+	 * @param string $parent
+	 * @param string $approved set it to y or n to return only approved or rejected comments (leave empty to return all comments)
+	 * @param bool $toponly
+	 * @param array|int $objectId limit comments return to one object id or array of objects ids
+	 */
+	function get_all_comments($type = '', $offset = 0, $maxRecords = -1, $sort_mode = 'commentDate_asc', $find = '', $parent='', $approved='', $toponly=false, $objectId='') {
 		$join = '';
 		if ( empty($type) ) {
 			// If no type has been specified, get all comments except those used for forums which must not be handled here
@@ -1932,11 +1964,6 @@ class Comments extends TikiLib
 				$mid = 'tc.`objectType`=?';
 				$bindvars[] = $type;
 			}
-		}
-
-		// Blog hack -- to fix
-		foreach ( $bindvars as $k => $v ) {
-			if ( $v == 'blog post' ) $bindvars[$k] = 'post';
 		}
 
 		if ($find) {
@@ -1997,21 +2024,54 @@ class Comments extends TikiLib
 		return array('cant'=>$cant, 'data'=>$ret);
 	}
 
+	/**
+	 * Return the relative URL for a particular comment
+	 * 
+	 * @param string $type Object type (e.g. 'wiki page')
+	 * @param int|string $object object id (can be string for wiki pages or int for objects of other types)
+	 * @param int $threadId Id of a specific comment or forum thread
+	 * @return void|string void if unrecognized type or URL string otherwise
+	 */
 	function getHref($type, $object, $threadId) {
 		switch ($type) {
-			case 'wiki page': $href = 'tiki-index.php?page='; break;
-			case 'article': $href = 'tiki-read_article.php?articleId='; break;
-			case 'faq': $href = 'tiki-view_faq.php?faqId='; break;
-			case 'blog': $href = 'tiki-view_blog.php?blogId='; break;
-			case 'post': $href = 'tiki-view_blog_post.php?postId='; break;
-			case 'forum': $href = 'tiki-view_forum_thread.php?forumId='; break;
-			case 'file gallery': $href = 'tiki-list_file_gallery.php?galleryId='; break;
-			case 'image gallery': $href = 'tiki-browse_gallery.php?galleryId='; break;
+			case 'wiki page':
+				$href = 'tiki-index.php?page=';
+				$object = urlencode($object);
+				break;
+			case 'article':
+				$href = 'tiki-read_article.php?articleId=';
+				break;
+			case 'faq':
+				$href = 'tiki-view_faq.php?faqId=';
+				break;
+			case 'blog':
+				$href = 'tiki-view_blog.php?blogId=';
+				break;
+			case 'blog post':
+				$href = 'tiki-view_blog_post.php?postId=';
+				break;
+			case 'forum':
+				$href = 'tiki-view_forum_thread.php?forumId=';
+				break;
+			case 'file gallery':
+				$href = 'tiki-list_file_gallery.php?galleryId=';
+				break;
+			case 'image gallery':
+				$href = 'tiki-browse_gallery.php?galleryId=';
+				break;
+			case 'poll':
+				$href = 'tiki-poll_results.php?pollId=';
+				break;
+			default:
+				break;
 		}
+		
 		if (empty($href)) {
 			return;
 		}
+		
 		$href .= $object."&amp;threadId=$threadId&amp;comzone=show#threadId$threadId";
+		
 		return $href;
 	}
 
@@ -2153,25 +2213,38 @@ class Comments extends TikiLib
 				$contributionlib->assign_contributions($contributions, $threadId, 'comment', $title, '', '');
 			}
 
-			if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-				require_once('lib/search/refresh-functions.php');
-				refresh_index('comments', $threadId);
-			}
-			if ($object[0] == 'forum') {
-				$type = 'forum post';
-			} else {
-				$type = $object[0].' comment';
-			}
+			$type = $this->update_index($object[0], $threadId);
 			$href = $this->getHref($object[0], $object[1], $threadId);
-			$this->object_post_save( array('type'=>$type, 'object'=>$threadId, 'description'=>'', 'href'=>$href, 'name'=>$title), array('content' => $data));
+			global $tikilib;
+			$tikilib->object_post_save( array('type'=>$type, 'object'=>$threadId, 'description'=>'', 'href'=>$href, 'name'=>$title), array('content' => $data));
 			$this->update_comment_links($data, $object[0], $threadId);
 		} // end hash check
 	}
 
+	/**
+	 * Post a new comment (forum post or comment on some Tiki object)
+	 * 
+	 * @param string $objectId object type and id separated by two colon ('wiki page:HomePage' or 'blog post:2')
+	 * @param int $parentId id of parent comment of this comment 
+	 * @param string $userName if empty $anonumous_name is used
+	 * @param string $title
+	 * @param string $data
+	 * @param unknown_type $message_id
+	 * @param unknown_type $in_reply_to
+	 * @param unknown_type $type
+	 * @param unknown_type $summary
+	 * @param unknown_type $smiley
+	 * @param unknown_type $contributions
+	 * @param string $anonymous_name name when anonymous user post a comment (optional) 
+	 * @param int $postDate when the post was created (defaults to now)
+	 * @param string $anonymous_email optional
+	 * @param string $anonymous_website optional
+	 * @return int $threadId id of the new comment
+	 */
 	function post_new_comment($objectId, $parentId, $userName,
 		$title, $data, &$message_id, $in_reply_to = '', $type = 'n',
 		$summary = '', $smiley = '', $contributions = '', $anonymous_name = '',
-		$postDate = '', $anonymous_email, $anonymous_website
+		$postDate = '', $anonymous_email = '', $anonymous_website = ''
 	)
 	{
 		global $prefs, $tiki_p_admin_comments;
@@ -2294,10 +2367,6 @@ class Comments extends TikiLib
 		$threadId = $this->getOne("select `threadId` from
 				`tiki_comments` where `hash`=?", array( $hash ) );
 
-		/* Force an index refresh of the data */
-		include_once("lib/search/refresh-functions.php");
-		refresh_index_comments( $threadId );
-
 		global $prefs;
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
@@ -2317,17 +2386,10 @@ class Comments extends TikiLib
 			$contributionlib->assign_contributions($contributions, $threadId, 'comment', $title, '', '');
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('comments', $threadId);
-		}
-		if ($object[0] == 'forum') {
-			$type = 'forum post';
-		} else {
-			$type = $object[0].' comment';
-		}
+		$type = $this->update_index($object[0], $threadId, $parentId);
 		$href = $this->getHref($object[0], $object[1], $threadId);
-		$this->object_post_save( array('type'=>$type, 'object'=>$threadId, 'description'=>'', 'href'=>$href, 'name'=>$title), array( 'content' => $data ));
+		global $tikilib;
+		$tikilib->object_post_save( array('type'=>$type, 'object'=>$threadId, 'description'=>'', 'href'=>$href, 'name'=>$title), array( 'content' => $data ));
 		$this->update_comment_links($data, $object[0], $threadId);
 
 		return $threadId;
@@ -2585,7 +2647,7 @@ class Comments extends TikiLib
 		if ($prefs['feature_contribution'] == 'y' && $prefs['feature_contribution_mandatory_forum'] == 'y' && empty($params['contributions'])) {
 			$errors[] = tra('A contribution is mandatory');
 		}
-		if ( empty($params['comments_title']) || ( empty($params['comments_data']) && $prefs['feature_forums_allow_thread_titles'] != 'y' ) ) {
+		if ( ( $prefs['comments_notitle'] != 'y' && empty($params['comments_title']) ) || ( empty($params['comments_data']) && $prefs['feature_forums_allow_thread_titles'] != 'y' ) ) {
 			$errors[] = tra('You have to enter a title and text');
 		}
 		if (!empty($params['anonymous_email']) && !validate_email($params['anonymous_email'], $prefs['validateEmail'])) {
@@ -2750,7 +2812,7 @@ class Comments extends TikiLib
 		if ($prefs['feature_contribution'] == 'y' && $prefs['feature_contribution_mandatory_comment'] == 'y' && empty($params['contributions'])) {
 			$errors[] = tra('A contribution is mandatory');
 		}
-		if ( empty($params['comments_title']) || ( empty($params['comments_data']) && $prefs['feature_forums_allow_thread_titles'] != 'y' ) ) {
+		if ( ( $prefs['comments_notitle'] != 'y' && empty($params['comments_title']) ) || ( empty($params['comments_data']) && $prefs['feature_forums_allow_thread_titles'] != 'y' ) ) {
 			$errors[] = tra('You have to enter a title and text');
 		}
 		if (!empty($params['anonymous_email']) && !validate_email($params['anonymous_email'], $prefs['validateEmail'])) {
@@ -2816,6 +2878,33 @@ class Comments extends TikiLib
 		$query = 'select count(*) from `tiki_forum_attachments` tfa, `tiki_comments` tc where tc.`threadId`=tfa.`threadId` and ((tc.`threadId`=? and tc.`parentId`=?) or tc.`parentId`=?)';
 		$cant = $this->getOne($query, $bindvars);
 		return array('cant' => $cant, 'data' => $ret);
+	}
+
+	private function update_index($type, $threadId, $parentId = null) {
+		require_once('lib/search/refresh-functions.php');
+
+		refresh_index('comments', $threadId);
+
+		if ($type == 'forum') {
+			$type = 'forum post';
+
+			$root = $this->find_root($parentId ? $parentId : $threadId);
+			refresh_index($type, $root);
+
+			return $type;
+		} else {
+			return $type.' comment';
+		}
+	}
+
+	private function find_root($threadId) {
+		$parent = $this->getOne('SELECT parentId FROM tiki_comments WHERE threadId = ?', array($threadId));
+
+		if ($parent) {
+			return $this->find_root($parent);
+		} else {
+			return $threadId;
+		}
 	}
 }
 

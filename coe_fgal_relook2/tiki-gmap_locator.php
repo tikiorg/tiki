@@ -33,7 +33,7 @@ if (isset($_REQUEST['set_default']) && ($user == $userwatch || $tiki_p_admin =='
 	$tikilib->set_user_preference($userwatch, 'gmap_defy', $pointy);
 	$tikilib->set_user_preference($userwatch, 'gmap_defz', $pointz);
 	$smarty->assign('extraquery','?for=user');
-	$smarty->assign('backurl','tiki-user_preferences.php');
+	$smarty->assign('backurl','tiki-user_preferences.php?view_user=' . $userwatch);
 	$smarty->assign('backlink',tra('Back to preferences'));
 } elseif (isset($_REQUEST['reset_default'])) {
 	$pointx = $tikilib->get_user_preference($userwatch, 'gmap_defx', $prefs['gmap_defaultx']);
@@ -58,7 +58,7 @@ if (isset($_REQUEST['set_default']) && ($user == $userwatch || $tiki_p_admin =='
 	$pointy = $tikilib->get_user_preference($userwatch,'lat','');
 	$pointz = $tikilib->get_user_preference($userwatch,'zoom',$prefs['gmap_defaultz']);
 	$smarty->assign('extraquery','?for=user');
-	$smarty->assign('backurl','tiki-user_preferences.php');
+	$smarty->assign('backurl','tiki-user_preferences.php?view_user=' . $userwatch);
 	$smarty->assign('backlink',tra('Back to preferences'));
 } elseif (isset($_REQUEST['for']) && $_REQUEST['for'] == 'item' && !empty($_REQUEST['itemId'])) {
 	if(!empty($_REQUEST['fieldId']) && !empty($_REQUEST['trackerId'])){

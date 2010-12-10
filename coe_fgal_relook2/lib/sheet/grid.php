@@ -2413,8 +2413,6 @@ function diffSheetsAsHTML( $id, $dates = null )
 		return $result;
 	}
 	
-	sort($dates);
-	
 	$grids1 = joinWithSubGrids($_REQUEST["sheetId"], $dates[0]);
 	$grids2 = joinWithSubGrids($_REQUEST["sheetId"], $dates[1]);
 	

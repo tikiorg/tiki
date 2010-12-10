@@ -68,5 +68,11 @@ function prefs_article_list() {
 			'description' => tra('Allow additional custom fields for article types'),
 			'type' => 'flag',
 		),
+		'article_sharethis_publisher' => array(
+			'name' => tra('Your ShareThis publisher identifier (optional)'),
+			'type' => 'text',
+			'size' => '40',
+		),
+
 	);
 }

@@ -77,7 +77,7 @@
 						<div class='box-title'>{tr}Other Sorts{/tr}</div>
 						<div class='box-data'>
 							{if $other_columns_selected neq ''}
-								{self_link _class='fgalaction' sort_mode='NULL'}{tr}No Additionnal Sort{/tr}{/self_link}
+								{self_link _class='fgalaction' sort_mode='NULL'}{tr}No Additional Sort{/tr}{/self_link}
 								<hr />
 							{/if}
 							{$other_columns}

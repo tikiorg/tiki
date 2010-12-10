@@ -53,7 +53,7 @@
 				</div>
 			{/if}
 
-			<form name="fgalformid" id="fgalform" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">
+			<form name="fgalformid" id="fgalform" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}" enctype="multipart/form-data">
 				<input type="hidden" name="galleryId" value="{$gal_info.galleryId|escape}" />
 				<input type="hidden" name="find" value="{$find|escape}" />
 

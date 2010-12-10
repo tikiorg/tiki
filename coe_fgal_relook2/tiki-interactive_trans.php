@@ -7,30 +7,27 @@
 
 require_once ('tiki-setup.php');
 require_once('lib/language/Language.php');
-if ($prefs['lang_use_db'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": lang_use_db");
-	$smarty->assign('error', 'y');
-	$smarty->display("tiki-interactive_trans.tpl");
-	die;
-}
 
-if ($tiki_p_edit_languages != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied to use this feature"));
-	$smarty->assign('error', 'y');
-	$smarty->display("tiki-interactive_trans.tpl");
-	die;
-}
+$access->check_feature('lang_use_db');
+$access->check_permission('tiki_p_edit_languages');
 
-$language = new Language;
-
-// Called by the JQuery ajax request. No response expected.
-if( isset( $_REQUEST['source'], $_REQUEST['trans'] ) && count($_REQUEST['source']) == count($_REQUEST['trans']) ) {
-	$lang = $prefs['language'];
-	if( empty( $lang ) ) {
-		$lang = $prefs['site_language'];
+// start interactive translation session
+if (!empty($_REQUEST['interactive_translation_mode'])) {
+	$_SESSION['interactive_translation_mode'] = $_REQUEST['interactive_translation_mode'];	
+	if ($_REQUEST['interactive_translation_mode'] == 'off') {
+		$cachelib->empty_cache('templates_c');
 	}
 
+	header('Location: ' . $_SESSION['last_mid_php']);
+	exit;
+}
+
+/* Called by the JQuery ajax request. No response expected.
+ * Save strings translated using interactive translation to database.
+ */ 
+if( isset( $_REQUEST['source'], $_REQUEST['trans'] ) && count($_REQUEST['source']) == count($_REQUEST['trans']) ) {
+	$language = new Language;
+	
 	foreach( $_REQUEST['trans'] as $k => $translation ) {
 		$source = $_REQUEST['source'][$k];
 

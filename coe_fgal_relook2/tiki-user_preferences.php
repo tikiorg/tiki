@@ -21,7 +21,7 @@ if ($prefs['feature_userPreferences'] != 'y' && $prefs['change_password'] != 'y'
 }
 $access->check_user($user);
 
-$auto_query_args = array();
+$auto_query_args = array('userId', 'view_user');
 
 // Make sure user preferences uses https if set
 if (!$https_mode && isset($https_login) && $https_login == 'required') {
@@ -72,7 +72,7 @@ $smarty->assign('show_mouseover_user_info', isset($prefs['show_mouseover_user_in
 if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 	check_ticket('user-prefs');
 	// setting preferences
-	if ($prefs['change_theme'] == 'y' && $group_style == '') {
+	if ($prefs['change_theme'] == 'y' && empty($group_style)) {
 		if (isset($_REQUEST["mystyle"])) {
 			if ($user == $userwatch) {
 				$t = $tikidomain ? $tikidomain . '/' : '';
@@ -176,6 +176,15 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 		}
 		$smarty->assign('lon', $lon);
 		$tikilib->set_user_preference($userwatch, 'lon', $lon);
+	}
+	if (isset($_REQUEST["zoom"])) {
+		if (is_numeric($_REQUEST["zoom"])) {
+			$zoom = intval($_REQUEST["zoom"]);
+		} else {
+			$zoom = NULL;
+		}
+		$smarty->assign('zoom', $zoom);
+		$tikilib->set_user_preference($userwatch, 'zoom', $zoom);
 	}
 	// Custom fields
 	foreach($customfields as $custpref => $prefvalue) {
@@ -336,6 +345,7 @@ if ($prefs['feature_community_gender'] == 'y') {
 $tikilib->get_user_preference($userwatch, 'country', 'Other');
 $tikilib->get_user_preference($userwatch, 'lat', '');
 $tikilib->get_user_preference($userwatch, 'lon', '');
+$tikilib->get_user_preference($userwatch, 'zoom', '');
 $tikilib->get_user_preference($userwatch, 'userbreadCrumb', $prefs['site_userbreadCrumb']);
 $tikilib->get_user_preference($userwatch, 'homePage', '');
 $tikilib->get_user_preference($userwatch, 'email is public', 'n');
@@ -363,9 +373,9 @@ $user_items = $tikilib->get_user_items($userwatch);
 $smarty->assign_by_ref('user_items', $user_items);
 $flags = $tikilib->get_flags();
 $smarty->assign_by_ref('flags', $flags);
-$scramblingMethods = array("n", "strtr", "unicode", "x"); // email_isPublic utilizes 'n'
+$scramblingMethods = array("n", "strtr", "unicode", "x", 'y'); // email_isPublic utilizes 'n'
 $smarty->assign_by_ref('scramblingMethods', $scramblingMethods);
-$scramblingEmails = array(tra("no"), scrambleEmail($userinfo['email'], 'strtr'), scrambleEmail($userinfo['email'], 'unicode') . "-" . tra("unicode"), scrambleEmail($userinfo['email'], 'x'));
+$scramblingEmails = array(tra("no"), scrambleEmail($userinfo['email'], 'strtr'), scrambleEmail($userinfo['email'], 'unicode') . "-" . tra("unicode"), scrambleEmail($userinfo['email'], 'x'), $userinfo['email']);
 $smarty->assign_by_ref('scramblingEmails', $scramblingEmails);
 $avatar = $tikilib->get_user_avatar($userwatch);
 $smarty->assign_by_ref('avatar', $avatar);

@@ -417,27 +417,38 @@ class BlogLib extends TikiDb_Bridge
 	 * @param char[1] $show_related display related content on the bottom of each post
 	 * @param int $related_max control the maximum number of related posts displayed per post
 	 * @param int $use_excerpt use a post excerpt instead of the main content when listing posts of a blog
+	 * @param int $created if 0 use $tikilib->now
+	 * @param int $lastModif if 0 use $tikilib->now
 	 * @access public
 	 * @return int blogId
 	 */
 	function replace_blog($title, $description, $user, $public, $maxPosts, $blogId, 
 						$heading, $use_title, $use_title_in_post, $use_description, $use_breadcrumbs, 
 						$use_author, $add_date, $use_find, $allow_comments, $show_avatar, $alwaysOwner, 
-						$post_heading, $show_related, $related_max, $use_excerpt
+						$post_heading, $show_related, $related_max, $use_excerpt, $created = 0, $lastModif = 0
 	)  {
 		//TODO: all the display parameters can be one single array parameter
 		global $tikilib, $prefs;
+		
+		if ($lastModif == 0) {
+			$lastModif = $tikilib->now;
+		}
+		
 		if ($blogId) {
 			$query = "update `tiki_blogs` set `title`=? ,`description`=?,`user`=?,`public`=?,`lastModif`=?,`maxPosts`=?,`heading`=?,`use_title`=?,`use_title_in_post`=?,`use_description`=?,`use_breadcrumbs`=?,`use_author`=?,`add_date`=?,`use_find`=?,`allow_comments`=?,`show_avatar`=?,`always_owner`=?, `post_heading`=?, `show_related`=?, `related_max`=?, `use_excerpt`=? where `blogId`=?";
 
-			$result = $this->query($query, array($title, $description, $user, $public, $tikilib->now, $maxPosts, $heading, $use_title, $use_title_in_post, $use_description, $use_breadcrumbs, $use_author, $add_date, $use_find, $allow_comments, $show_avatar, $alwaysOwner, $post_heading, $show_related, $related_max, $use_excerpt, $blogId));
+			$result = $this->query($query, array($title, $description, $user, $public, $lastModif, $maxPosts, $heading, $use_title, $use_title_in_post, $use_description, $use_breadcrumbs, $use_author, $add_date, $use_find, $allow_comments, $show_avatar, $alwaysOwner, $post_heading, $show_related, $related_max, $use_excerpt, $blogId));
 			$tikilib->object_post_save( array('type'=>'blog', 'object'=>$blogId), array('content'=>$heading) );
 		} else {
+			if ($created == 0) {
+				$created = $tikilib->now;
+			}
+			
 			$query = "insert into `tiki_blogs`(`created`,`lastModif`,`title`,`description`,`user`,`public`,`posts`,`maxPosts`,`hits`,`heading`,`use_title`,`use_title_in_post`,`use_description`,`use_breadcrumbs`,`use_author`,`add_date`,`use_find`,`allow_comments`,`show_avatar`,`always_owner`,`post_heading`, `show_related`, `related_max`, `use_excerpt`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-			$result = $this->query($query, array((int) $tikilib->now, (int) $tikilib->now, $title, $description, $user, $public, 0, (int) $maxPosts, 0, $heading, $use_title, $use_title_in_post, $use_description, $use_breadcrumbs, $use_author, $add_date, $use_find, $allow_comments, $show_avatar, $alwaysOwner, $post_heading, $show_related, $related_max, $use_excerpt));
+			$result = $this->query($query, array($created, $lastModif, $title, $description, $user, $public, 0, (int) $maxPosts, 0, $heading, $use_title, $use_title_in_post, $use_description, $use_breadcrumbs, $use_author, $add_date, $use_find, $allow_comments, $show_avatar, $alwaysOwner, $post_heading, $show_related, $related_max, $use_excerpt));
 			$query2 = "select max(`blogId`) from `tiki_blogs` where `lastModif`=?";
-			$blogId = $this->getOne($query2, array((int) $tikilib->now));
+			$blogId = $this->getOne($query2, array($lastModif));
 
 			if ($prefs['feature_score'] == 'y') {
 				$tikilib->score_event($user, 'blog_new');
@@ -445,10 +456,9 @@ class BlogLib extends TikiDb_Bridge
 			$tikilib->object_post_save(array('type'=>'blog', 'object'=>$blogId, 'description'=>$description, 'name'=>$title, 'href'=>"tiki-view_blog.php?blogId=$blogId"), array( 'content' => $heading ));
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('blogs', $blogId);
-		}
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('blogs', $blogId);
+
 		return $blogId;
 	}
 
@@ -472,6 +482,11 @@ class BlogLib extends TikiDb_Bridge
 							$date_min = '', $date_max = '', $approved = 'y'
 	)  {
 		global $tikilib, $tiki_p_admin_comments, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post, $user;
+		global $commentslib; require_once('lib/comments/commentslib.php');
+		
+		if (!is_object($commentslib)) {
+			$commentslib = new Comments();
+		}
 
 		$mid = array();
 		$bindvars = array();
@@ -530,18 +545,8 @@ class BlogLib extends TikiDb_Bridge
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 
-		$cant_com_query = "select count(*) from `tiki_comments` where `object`=? and `objectType` = 'post'";
-		if ( $tiki_p_admin_comments != 'y' ) {
-			$cant_com_query .= ' and `approved`=?';
-		} else {
-			$approved = NULL;
-		}
-
 		while ($res = $result->fetchRow()) {
-			$cant_com_vars = array((int)$res['postId']);
-			if ( $approved !== NULL ) $cant_com_vars[] = $approved;
-			$cant_com = $this->getOne($cant_com_query, $cant_com_vars);
-			$res["comments"] = $cant_com;
+			$res["comments"] = $commentslib->count_comments('blog post:' . $res['postId']);
 			$res['pages'] = $this->get_number_of_pages($res['data']);
 			$res['avatar'] = $tikilib->get_user_avatar($res['user']);
 
@@ -750,10 +755,9 @@ class BlogLib extends TikiDb_Bridge
 			$logslib->add_action('Posted', $blogId, 'blog', "blogId=$blogId&amp;postId=$id&amp;add=" . strlen($data) . "#postId$id", '', '', '', '', $contributions);
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('blog_posts', $id);
-		}
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('blog_posts', $id);
+
 		$tikilib->object_post_save(array('type'=>'blog post', 'object'=>$id, 'description'=>substr($data, 0, 200), 'name'=>$title, 'href'=>"tiki-view_blog_post.php?postId=$id"), array('content' => $data));
 		return $id;
 	}
@@ -887,16 +891,30 @@ class BlogLib extends TikiDb_Bridge
 	 * @param int $created when the post was created
 	 * @return array
 	 */
-	function _get_adjacent_posts($blogId, $created)
-	{
+	function _get_adjacent_posts($blogId, $created, $publishDate = null, $user=null) {
+		global $tikilib;
 		$res = array();
 
-		$next_query = 'SELECT postId, title FROM `tiki_blog_posts` WHERE `blogId` = ? AND `created` > ? ORDER BY created ASC';
-		$result = $this->fetchAll($next_query, array($blogId, $created), 1);
+		$next_query = 'SELECT postId, title FROM `tiki_blog_posts` WHERE `blogId` = ? AND `created` > ? ';
+		$bindvars = array($blogId, $created);
+		if ($publishDate) {
+			$next_query .= 'AND (`created` <= ? OR `user` = ?)';
+			$bindvars[] = $publishDate;
+			$bindvars[] = $user;
+		}
+		$next_query .= ' ORDER BY created ASC';
+		$result = $this->fetchAll($next_query, $bindvars, 1);
 		$res['next'] = !empty($result[0]) ? $result[0] : null;
 
-		$prev_query = 'SELECT postId, title FROM `tiki_blog_posts` WHERE `blogId` = ? AND `created` < ? ORDER BY created DESC';
-		$result = $this->fetchAll($prev_query, array($blogId, $created), 1);
+		$prev_query = 'SELECT postId, title FROM `tiki_blog_posts` WHERE `blogId` = ? AND `created` < ? ';
+		$bindvars = array($blogId, $created);
+		if ($publishDate) {
+			$prev_query .= 'AND (`created` <= ? OR `user` = ?)';
+			$bindvars[] = $publishDate;
+			$bindvars[] = $user;
+		}
+		$prev_query .= ' ORDER BY created DESC';
+		$result = $this->fetchAll($prev_query, $bindvars, 1);
 		$res['prev'] = !empty($result[0]) ? $result[0] : null;
 
 		return $res;
@@ -923,19 +941,24 @@ class BlogLib extends TikiDb_Bridge
 		global $tikilib, $prefs;
 
 		$wysiwyg=$is_wysiwyg==TRUE?'y':'n';
-		if(!$created) {
-			$created = $tikilib->now;	
+		if ($prefs['feature_blog_edit_publish_date'] == 'y') {
+			if(!$created) {
+				$created = $tikilib->now;	
+			}
+			$query = "update `tiki_blog_posts` set `blogId`=?,`data`=?,`excerpt`=?,`created`=?,`user`=?,`title`=?, `priv`=?, `wysiwyg`=? where `postId`=?";
+			$result = $this->query($query, array($blogId, $data, $excerpt, $created,$user, $title, $priv, $wysiwyg, $postId));
+		} else {
+			$query = "update `tiki_blog_posts` set `blogId`=?,`data`=?,`excerpt`=?,`user`=?,`title`=?, `priv`=?, `wysiwyg`=? where `postId`=?";
+			$result = $this->query($query, array($blogId, $data, $excerpt, $user, $title, $priv, $wysiwyg, $postId));
 		}
-		$query = "update `tiki_blog_posts` set `blogId`=?,`data`=?,`excerpt`=?,`created`=?,`user`=?,`title`=?, `priv`=?, `wysiwyg`=? where `postId`=?";
-		$result = $this->query($query, array($blogId, $data, $excerpt, $created,$user, $title, $priv, $wysiwyg, $postId));
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$logslib->add_action('Updated', $blogId, 'blog', "blogId=$blogId&amp;postId=$postId#postId$postId", '', '', '', '', $contributions);
 		}
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('blog_posts', $postId);
-		}
+
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('blog_posts', $postId);
+
 		$tikilib->object_post_save(array('type' => 'blog post', 'object' => $postId), array('content' => $data));
 	}
 

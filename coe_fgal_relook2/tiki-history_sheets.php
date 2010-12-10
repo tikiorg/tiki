@@ -6,9 +6,14 @@
 // $Id$
 
 $section = 'sheet';
-$tiki_sheet_div_style = 'height: 400px ! important;';
+$tiki_sheet_div_style = '';
 require_once ('tiki-setup.php');
 require_once ('lib/sheet/grid.php');
+$auto_query_args = array(
+	'sheetId',
+	'idx_0',
+	'idx_1'
+);
 $access->check_feature('feature_sheet');
 
 $info = $sheetlib->get_sheet_info( $_REQUEST['sheetId'] );
@@ -17,81 +22,88 @@ if (empty($info)) {
 	$smarty->display('error.tpl');
 	die;
 }	
+
 $objectperms = Perms::get( 'sheet', $_REQUEST['sheetId'] );
 if ($tiki_p_admin != 'y' && !$objectperms->view_sheet && !($user && $info['author'] == $user)) {
 	$smarty->assign('msg', tra('Permission denied'));
 	$smarty->display('error.tpl');
 	die;
 }
-
+$smarty->assign('objectperms', $objectperms);
 $smarty->assign('sheetId', $_REQUEST["sheetId"]);
-
-// Individual permissions are checked because we may be trying to edit the gallery
-
-// Init smarty variables to blank values
-//$smarty->assign('theme','');
-
-
 $smarty->assign('title', $info['title']);
 $smarty->assign('description', $info['description']);
-
 $smarty->assign('page_mode', 'view' );
 
+$result = $tikilib->query( "SELECT DISTINCT `begin`, `user` FROM `tiki_sheet_values` WHERE `sheetId` = ? ORDER BY begin DESC", array( $_REQUEST['sheetId'] ) );
+$history = array();
+
+$i = 0;
+while( $row = $result->fetchRow() ) {
+	$history[$i] = array(
+		"stamp" => $row['begin'], 
+		"string" => $tikilib->date_format( "%Y-%m-%d %H:%M:%S", $row['begin'] ), 
+		"user" => $row['user'],
+		"index" => $i
+	);
+	$i++;
+}
+
+$smarty->assign_by_ref( 'history', $history );
+
+$sheetIndexes = array();
+if ( isset($_REQUEST['idx_0']) ) $sheetIndexes[0] = $_REQUEST['idx_0'];
+if ( isset($_REQUEST['idx_1']) ) $sheetIndexes[1] = $_REQUEST['idx_1'];
+
 //display the history picker if no sheets are defined
-if (empty($_REQUEST['readdate'])) {
-	$result = $tikilib->query( "SELECT DISTINCT `begin`, `user` FROM `tiki_sheet_values` WHERE `sheetId` = ? ORDER BY begin DESC", array( $_REQUEST['sheetId'] ) );
-	$data = array();
-	while( $row = $result->fetchRow() )
-		$data[] = array( "stamp" =>$row['begin'], "string" => $tikilib->date_format( "%Y-%m-%d %H:%M:%S", $row['begin'] ), "user" => $row['user'] );
+if ( count($sheetIndexes) > 1 ) {
+	$dates = array();
+	$datesFormatted = array();
 	
-	$smarty->assign_by_ref( 'history', $data );
+	$smarty->assign_by_ref( 'sheetIndexes', $sheetIndexes );
 	
-	include_once ('tiki-section_options.php');
-	ask_ticket('sheet');
-} else {
-	$dates = array(time());
-	
-	$i = 0;
-	$readdates = array();
-	
-	foreach( explode("|", $_REQUEST['readdate'] ) as $date ) {
-		if ( $date ) {
-			array_push( $readdates , $date );
-		}
+	$j = 0;
+	foreach( $sheetIndexes as $i ) {
+		$dates[$j] = $history[(int)$i]['stamp'];
+		$datesFormatted[$j] = date("F j, Y, g:i a", strftime($dates[$j]));
+		$j++;
 	}
 	
-	sort($readdates);
+	// for revision info
+	$smarty->assign( 'datesFormatted' , $datesFormatted );
 	
-	$smarty->assign( 'readdate', $readdates );
-	foreach ( $readdates as $dateStr ) {
-		if ( $dateStr ) {
-			$dates[$i] = $dateStr;
-			if (!is_numeric($dates[$i])) $dates[$i] = strtotime($dates[$i]);
-			if ($dates[$i] == - 1) $dates[$i] = time();
-		}
-		$i++;
-	}
-	
+	// for pagination
+	$smarty->assign( 'ver_cant' , count($history) );
+	//$paginate = (isset($_REQUEST['paginate']) && $_REQUEST['paginate'] == 'on');
+	//$smarty->assign('paginate', $paginate);
 	$smarty->assign( 'grid_content', diffSheetsAsHTML($_REQUEST["sheetId"], $dates) );
 	
-	$headerlib->add_jq_onready('
-		if (typeof ajaxLoadingShow == "function") {
-			ajaxLoadingShow("role_main");
+	$headerlib->add_jq_onready("
+		if (typeof ajaxLoadingShow == 'function') {
+			ajaxLoadingShow('role_main');
 		}
+		
 		setTimeout (function () {
-			$("div.tiki_sheet").tiki("sheet", "",{
+			$('div.tiki_sheet').tiki('sheet', '',{
 				editable: false,
 				fnPaneScroll: $.sheet.paneScrollLocker,
-				fnSwitchSheet: $.sheet.switchSheetLocker
+				fnSwitchSheet: $.sheet.switchSheetLocker,
+				height: 400
 			});
+			setValuesForCompareSheet('$sheetIndexes[0]','$sheetIndexes[1]');
 		}, 500);
-	', 500);
+	", 500);
 	
 	if ( $tiki_sheet_div_style) {
 		$smarty->assign('tiki_sheet_div_style',  $tiki_sheet_div_style);
 	}
 }
 
+include_once ('tiki-section_options.php');
+ask_ticket('sheet');
+
+$smarty->assign('lock', true);
+
 // Display the template
-$smarty->assign('mid', 'tiki-history-sheets.tpl');
+$smarty->assign('mid', 'tiki-history_sheets.tpl');
 $smarty->display("tiki.tpl");

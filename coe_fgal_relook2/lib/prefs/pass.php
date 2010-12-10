@@ -20,5 +20,24 @@ function prefs_pass_list() {
 			'shorthint' => tra('days'),
 			'hint' => tra('Use "-1" for never'),
 		),
-	);	
+		'pass_chr_case' => array(
+			'name' => tra('Require alphabetical characters in lower and upper case'),
+			'type' => 'flag',
+			'description' => tra('Password must contain at least one alphabetical character in lower case like a and one in upper case like A.'),
+		),
+		'pass_chr_special' => array(
+			'name' => tra('Require special characters'),
+			'type' => 'flag',
+			'description' => tra('Password must contain at least one special character in lower case like " / $ % ? & * ( ) _ + ...'),
+		),
+		'pass_repetition' => array(
+			'name' => tra('Require no consecutive repetition of the same character'),
+			'type' => 'flag',
+			'description' => tra('Password must contain no consecutive repetition of the same character as 111 or aab.'),
+		),
+		'pass_diff_username' => array(
+			'name' => tra('Password must be different from the user login'),
+			'type' => 'flag',
+			'description' => tra('Password must be different from the user login.'),
+		),	);	
 }

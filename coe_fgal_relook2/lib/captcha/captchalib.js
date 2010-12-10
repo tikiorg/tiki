@@ -3,6 +3,7 @@
 jQuery(document).ready(function() {
 	jQuery('#captchaRegenerate').click(function() {
 		generateCaptcha();
+		return false;
 	});
 });
 

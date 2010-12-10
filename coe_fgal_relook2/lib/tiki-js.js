@@ -361,29 +361,11 @@ function getTASelection( textarea ) {
 		cked = typeof CKEDITOR !== 'undefined' ? CKEDITOR.instances[ta_id] : null;
 		if (cked) {
 			var sel = cked.getSelection();
-			if (sel.getType() === CKEDITOR.SELECTION_TEXT) {	// why so fiddly?
-				r = sel.getRanges();
-				// collect all included elements from ranges
-				var output = "", el;
-				if (r[0].startContainer.$ === r[0].endContainer.$) {
-					output += r[0].startContainer.$.textContent.substring(r[0].startOffset, r[0].endOffset);
+			if (sel && sel.getType() === CKEDITOR.SELECTION_TEXT) {	// why so fiddly?
+				if (CKEDITOR.env.ie) {
+					output = sel.document.$.selection.createRange().text;
 				} else {
-					el = sel.getStartElement();
-					if (el) {
-						if (!el.$.nextSibling) {
-							el = el.getChildren().getItem(0);	// for node lists
-						}
-						while (el.$.nextSibling) { // loop through selection if multiple elements
-							if (el.$ === r[0].startContainer.$) {
-								output += el.$.textContent.substring(r[0].startOffset);
-							} else if (el.$ === r[0].endContainer.$) {
-								output += el.$.textContent.substring(0, r[0].endOffset);
-							} else {
-								output += el.$.textContent;
-							}
-							el = new CKEDITOR.dom.element(el.$.nextSibling);
-						}
-					}
+					output = sel.getNative().toString();
 				}
 				return output;
 			}
@@ -397,47 +379,6 @@ function getTASelection( textarea ) {
 			r = document.selection.createRange();
 			return r.text;
 		}
-	}
-}
-
-/*
- * Save selection - mainly for Firefox that keeps forgetting it
- * @param elem = DOM element or string matching id or name
- */
-
-function saveTASelection( elem ) {
-	var $el;
-	if (typeof elem === 'string') {
-		if ($('#cke_contents_' + elem).length !== 0) { return; }	// may need another method for ckeditor
-		$el = $('#' + elem);
-	} else {
-		$el = $(elem);
-	}
-	if ($el.length && $el.attr("selectionStart")) {
-        $el.attr("selectionStartSaved", $el.attr("selectionStart"))
-			.attr("selectionEndSaved", $el.attr("selectionEnd"));
-	}
-}
-
-/*
- * Restore for function above
- * @param elem = DOM element or string matching id or name
- */
-
-function restoreTASelection( elem ) {
-	var $el;
-	if (typeof elem === 'string') {
-		if ($('#cke_contents_' + elem).length !== 0) { return; }	// may need another method for ckeditor
-		$el = $('#' + elem);
-	} else {
-		$el = $(elem);
-	}
-	if ($el.length && $el.attr("selectionStartSaved")) {
-		if ($el.attr("selectionStart") != $el.attr("selectionStartSaved")) {
-			$el.attr("selectionStart", $el.attr("selectionStartSaved"))
-				.attr("selectionEnd",   $el.attr("selectionEndSaved"));
-		}
-        $el.removeAttr("selectionStartSaved").removeAttr("selectionEndSaved");
 	}
 }
 
@@ -485,11 +426,15 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 			}
 			isPlugin = isPlugin && isPlugin.length > 0;
 
-			var sel = cked.getSelection();
-			var rng = sel.getRanges();
-			if (rng.length) { rng = rng[0]; }
+			var sel = cked.getSelection(), rng;
+			if (sel) { // not from IE sometimes?
+				rng = sel.getRanges();
+				if (rng.length) {
+					rng = rng[0];
+				}
+			}
 			var plugin_el;
-			if (isPlugin && !rng.collapsed) {
+			if (isPlugin && rng && !rng.collapsed) {
 				var com = cked.getSelection().getStartElement();
 				if (typeof com !== 'undefined' && com && com.$) {
 					while (com.$.nextSibling && com.$ !== rng.endContainer.$) {	// loop through selection if multiple elements
@@ -502,7 +447,7 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 						plugin_el = $(com.$).find(".tiki_plugin"); // using jQuery
 						if (plugin_el.length == 1) { // found descendant plugin
 							com = new CKEDITOR.dom.element(plugin_el[0]);
-						} else if (sel.getType() !== CKEDITOR.SELECTION_TEXT) { // element selected, but we can't tell which one
+						} else {
 							plugin_el = $(com.$).parents(".tiki_plugin"); // try parents
 							if (plugin_el.length == 1) { // found p plugin
 								com = new CKEDITOR.dom.element(plugin_el[0]);
@@ -514,9 +459,10 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 								if (plugin_el.length == 1) { // good guess!
 									com = new CKEDITOR.dom.element(plugin_el[0]);
 								} else {
-									if (!confirm(tr("Development notice: Could not find plugin being edited, sorry. Choose cancel to debug."))) {
-										debugger;
-									}
+									// Does not seem to be a problem at least with the image plugin, commenting out for release but keeping it here in case problem reappears
+									//if (!confirm(tr("Development notice: Could not find plugin being edited, sorry. Choose cancel to debug."))) {
+									//	debugger;
+									//}
 								}
 							}
 						}
@@ -528,13 +474,20 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 					return;
 				}
 			}
-			if (sel.getType() === CKEDITOR.SELECTION_TEXT) { // why so fiddly?
-				cked.insertText( replaceString );
-				if (isPlugin || replaceString.match(/^\s?\(\(.*?\)\)\s?$/)) {	// also ((wiki links))
-					cked.reParse();
-				}
-			}
+			//if (sel.getType() === CKEDITOR.SELECTION_TEXT) {
+				// fall through to insertText as if all else failed
+			//}
 		}
+		// catch all other issues and do the insert wherever ckeditor thinks best,
+		// sadly as the first element sometimes FIXME
+		cked.insertText( replaceString );
+		if (isPlugin || replaceString.match(/^\s?\(\(.*?\)\)\s?$/)) {	// also ((wiki links))
+			cked.reParse();
+		}
+		return;
+	}
+	if (!$textarea.length && elementId === "fgal_picker") {	// ckeditor file browser
+		$(".cke_dialog_contents").find("input:first").val(replaceString);
 		return;
 	}
 
@@ -614,10 +567,11 @@ function setUserModuleFromCombo(id, textarea) {
 
 
 function toggle(foo) {
-	if (document.getElementById(foo).style.display == "none") {
+	var display = $("#"+foo).css('display');
+	if (display == "none") {
 		show(foo, true, "menu");
 	} else {
-		if (document.getElementById(foo).style.display == "block") {
+		if (display == "block") {
 			hide(foo, true, "menu");
 		} else {
 			show(foo, true, "menu");
@@ -951,44 +905,6 @@ function fixDate(date) {
 	}
 }
 
-
-//Expand/collapse lists
-
-function flipWithSign(foo) {
-	if (document.getElementById(foo).style.display == "none") {
-		show(foo, true, "showhide_headings");
-		collapseSign("flipper" + foo);
-	} else {
-		hide(foo, true, "showhide_headings");
-		expandSign("flipper" + foo);
-	}
-}
-
-//set the state of a flipped entry after page reload
-function setFlipWithSign(foo) {
-	if (getCookie(foo, "showhide_headings", "o") == "o") {
-		collapseSign("flipper" + foo);
-
-		show(foo);
-	} else {
-		expandSign("flipper" + foo);
-
-		hide(foo);
-	}
-}
-
-function expandSign(foo) {
-	if (document.getElementById(foo)) {
-		document.getElementById(foo).firstChild.nodeValue = "[+]";
-	}
-}
-
-function collapseSign(foo) {
-	if (document.getElementById(foo)) {
-		document.getElementById(foo).firstChild.nodeValue = "[-]";
-	}
-} // flipWithSign()
-
 //Set client timezone
 //Added 7/25/03 by Jeremy Jongsma (jjongsma@tickchat.com)
 //Updated 11/04/07 by Nyloth to get timezone name instead of timezone offset
@@ -1095,9 +1011,9 @@ function confirmTheLink(theLink, theMsg)
  */
 function insertImgFile(elementId, fileId, oldfileId,type,page,attach_comment) {
 	textarea = $('#' + elementId)[0];
-	fileup   = $('#' + fileId)[0];
-	oldfile  = $('#' + oldfileId)[0];
-	prefixEl = $('#' + "prefix")[0];
+	fileup   = $('input[name=' + fileId + ']')[0];
+	oldfile  = $('input[name=' + oldfileId + ']')[0];
+	prefixEl = $('input[name=prefix]')[0];
 	prefix   = "img/wiki_up/";
 
 	if (!textarea || ! fileup) {
@@ -1207,6 +1123,7 @@ function charCount(maxSize, source, cpt, message) {
 	}
 }
 
+// apparently this function is not used anymore, should we remove it? - sampaioprimo
 function show_plugin_form( type, index, pageName, pluginArgs, bodyContent )
 {
 	var target = document.getElementById( type + index );
@@ -1286,7 +1203,12 @@ function popup_plugin_form(area_id, type, index, pageName, pluginArgs, bodyConte
 			}
 		}
 
-		var blob = '{' + type.toUpperCase() + '(' + params.join(',') + ')}' + (typeof form.content != 'undefined' ? form.content.value : '') + '{' + type.toUpperCase() + '}';
+		var blob
+		if (typeof form.content != 'undefined' && form.content.length > 0) {
+			blob = '{' + type.toUpperCase() + '(' + params.join(' ') + ')}' + form.content.value + '{' + type.toUpperCase() + '}';
+		} else {
+			blob = '{' + type.toLowerCase() + ' ' + params.join(' ') + '}';
+		}
 
 		if (edit) {
 			return true;
@@ -1310,6 +1232,8 @@ function popup_plugin_form(area_id, type, index, pageName, pluginArgs, bodyConte
 		edit_icon.style.display = 'none';
 	}
 	container.appendChild( form );
+	
+	handlePluginFieldsHierarchy(type);
 }
 
 function build_plugin_form( type, index, pageName, pluginArgs, bodyContent )
@@ -1362,7 +1286,7 @@ function build_plugin_form( type, index, pageName, pluginArgs, bodyContent )
 			form.appendChild( span_advanced_button );
 
 			var advanced_button = document.createElement( 'a' );
-			advanced_button.innerHTML = 'Advanced options';
+			advanced_button.innerHTML = tr('Advanced options');
 			advanced_button.onclick = function() { flip('plugin_params_advanced');};
 			span_advanced_button.appendChild(advanced_button);
 
@@ -1448,6 +1372,7 @@ function build_plugin_form_row(row, name, label_name, requiredOrSpecial, value, 
 	var label = row.insertCell( 0 );
 	var field = row.insertCell( 1 );
 	row.className = 'formcolor';
+	row.id = 'param_' + name;
 
 	label.innerHTML = label_name;
 	label.style.width = '130px';
@@ -1481,9 +1406,6 @@ function build_plugin_form_row(row, name, label_name, requiredOrSpecial, value, 
 			input.value = value;
 		}
 	}
-	var desc = document.createElement( 'div' );
-	desc.style.fontSize = 'x-small';
-	desc.innerHTML = description; 
 
 	field.appendChild( input );
 	if (paramDef && paramDef.type == 'image') {
@@ -1496,10 +1418,16 @@ function build_plugin_form_row(row, name, label_name, requiredOrSpecial, value, 
 		var help = document.createElement( 'span' );
 		input.id = paramDef.area ? paramDef.area : 'fgal_picker';
 		help.onclick = function() {openFgalsWindowArea(paramDef.area ? paramDef.area :'fgal_picker');};
-		help.innerHTML = " <a href='#'>Pick a file.</a>";
+		help.innerHTML = " <a href='#'>" + tr('Pick a file.') + "</a>";
 		field.appendChild( help );
 	}
-	field.appendChild( desc );
+
+	if (description) {
+		var desc = document.createElement( 'div' );
+		desc.style.fontSize = 'x-small';
+		desc.innerHTML = description;
+		field.appendChild( desc );
+	}
 
 	if (paramDef && paramDef.filter) {
 		if (paramDef.filter == "pagename") {
@@ -1806,7 +1734,7 @@ function open_webdav(url) {
 		EditDocumentButton = new ActiveXObject("SharePoint.OpenDocuments.1");
 		EditDocumentButton.EditDocument(url); 
 	} else {
-		alert('Sorry Works only in IE :(');
+		prompt(tr('URL to open this file with WebDAV'), url);
 	}
 }
 
@@ -1822,4 +1750,13 @@ function ccsValueToInteger(str) {
 	}
 }
 
+// function to allow multiselection in checkboxes
+// must be called like this :
+//
+// <input type="checkbox" onclick="checkbox_list_check_all(form_name,[checkbox_name_1,checkbox_name2 ...],true|false);">
+function checkbox_list_check_all(form,list,checking) {
+  for (var checkbox in list) {
+    document.forms[form].elements[list[checkbox]].checked=checking;
+  }
+}
 

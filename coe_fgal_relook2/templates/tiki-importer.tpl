@@ -49,12 +49,33 @@
         <input type="submit" value="{tr}Import{/tr}"/>
     </form>
 {elseif !empty($importFeedback)}
-    <h4>{tr}Congratulations! You have successful imported your data to Tikiwiki.{/tr}</h4>
-    <p>{$importFeedback.importedPages} {tr}pages imported from a total of{/tr} {$importFeedback.totalPages}</p>
-    <p>{tr}You can see the list of wiki pages in your site{/tr} <a href="tiki-listpages.php">{tr}here{/tr}</a></p>
+    <h4>{tr}Congratulations! You have successful imported your data to Tiki.{/tr}</h4>
+    
+    {if isset($importFeedback.importedPages)}
+    	<p>
+	    	{if isset($importFeedback.totalPages)}
+		    	{tr 0=$importFeedback.importedPages 1=$importFeedback.totalPages}%0 pages imported from a total of %1{/tr}
+		    {else}
+		    	{tr 0=$importFeedback.importedPages}%0 pages imported{/tr}
+		    {/if}
+		    &nbsp;{tr}(you can see the list of wiki pages in your site <a href="tiki-listpages.php">here</a>).{/tr}
+		</p>
+	{/if}
+
+	{if isset($importFeedback.importedPosts)}
+       	<p>{tr 0=$importFeedback.importedPosts}%0 posts imported.{/tr}</p>
+	{/if}
+	
+	{if isset($importFeedback.importedTags)}
+       	<p>{tr 0=$importFeedback.importedTags}%0 tags imported.{/tr}</p>
+	{/if}
+	
+	{if isset($importFeedback.importedCategories)}
+       	<p>{tr 0=$importFeedback.importedCategories}%0 categories imported.{/tr}</p>
+	{/if}
 
     {if !empty($importErrors)}
-        <br /><br />
+        <br />
         <p><b>{tr}Errors:{/tr}</b></p>
         <textarea rows="15" cols="100">{$importErrors}</textarea> 
     {/if}

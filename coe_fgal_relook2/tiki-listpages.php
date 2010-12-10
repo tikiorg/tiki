@@ -69,7 +69,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"])) {
 				// Now check permissions to access this page
 				$perms = Perms::get( array( 'type' => 'wiki page', 'object' => $check ) );
 				if (! $perms->view ) {
-					$access->display_error($check, tra("Permission denied. You cannot view this page."), '403');
+					$access->display_error($check, tra("You do not have permission to view this page."), '403');
 				}
 				$page_info = $tikilib->get_page_info($check);
 				$page_info['parsed'] = $tikilib->parse_data($page_info['data']);
@@ -77,6 +77,22 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"])) {
 				$multiprint_pages[] = $page_info;
 			}
 			break;
+
+		case 'export_pdf':
+			$access->check_feature('feature_wiki_multiprint');
+			foreach($_REQUEST["checked"] as $check) {
+				$access->check_page_exists($check);
+				// Now check permissions to access this page
+				$perms = Perms::get( array( 'type' => 'wiki page', 'object' => $check ) );
+				if (! $perms->view ) {
+					$access->display_error($check, tra("You do not have permission to view this page."), '403');
+				}
+
+				$multiprint_pages[] = $check;
+			}
+
+			header("Location: tiki-print_multi_pages.php?display=pdf&printpages=" . urlencode(serialize($multiprint_pages)));
+			die;
 
 		case 'unlock_pages':
 			$access->check_feature('feature_wiki_usrlock');
@@ -292,7 +308,7 @@ if (!empty($multiprint_pages)) {
 			$gmapobjectarray[] = array('type' => 'wiki page',
 				'id' => $p["pageName"],
 				'title' => $p["pageName"],
-				'href' => "tiki-index.php?page=" . urlencode($p["pageName"]) . "&bl=y",
+				'href' => "tiki-index.php?page=" . urlencode($p["pageName"]),
 			);
 		}
 	}

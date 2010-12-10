@@ -4,11 +4,11 @@
 <ul class="freetagged clearfix">
 	{foreach item=row from=$objects}
 		<li class="{$row.type|stringfix:' ':'_'}">
-			<h{$h_level}><a href="{$row.href|escape}">{$row.name|escape}</a></h{$h_level}>
-			<p>
+			{if $h_level gt 0}<h{$h_level}>{/if}<a href="{$row.href|escape}">{$row.name|escape}</a>{if $h_level gt 0}</h{$h_level}>{/if}
+			{if !empty($row.description) or !empty($row.img)}<p>
 				<em>{$row.description}</em>
 				{$row.img}
-			</p>
+			</p>{/if}
 			{if !empty($row.date)}<p class="editdate">
 				{$row.date|tiki_short_datetime}
 			</p>{/if}

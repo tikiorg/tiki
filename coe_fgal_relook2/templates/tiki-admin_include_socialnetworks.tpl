@@ -34,15 +34,26 @@
 			{preference name=socialnetworks_facebook_api_key}
 			{preference name=socialnetworks_facebook_application_secr}
 			{preference name=socialnetworks_facebook_application_id}
+			{preference name=socialnetworks_facebook_login}
+			{preference name=socialnetworks_facebook_autocreateuser}
+			{preference name=socialnetworks_facebook_firstloginpopup}
+			{remarksbox type="note" title="{tr}Note{/tr}"}
+			{tr}The following preferences affect what permissions the user is asked to allow Tiki to do by Facebook when authorizing it.{/tr}
+			{/remarksbox}
+			{preference name=socialnetworks_facebook_offline_access}
+			{preference name=socialnetworks_facebook_publish_stream}
+			{preference name=socialnetworks_facebook_manage_events}
+			{preference name=socialnetworks_facebook_manage_pages}
+			{preference name=socialnetworks_facebook_sms}
 		</div>
 	</fieldset>
 	
 	<fieldset class="admin">
 		<legend>{tr}bit.ly Settings{/tr}</legend>
 		{remarksbox type="note" title="{tr}Note{/tr}"}
-		<p>{tr}There is no need to set up a site wide bit.ly account, every user can have one on his own, but this allows for site wide statistics{/tr}<br />
+		<p>{tr}There is no need to set up a site-wide bit.ly account; every user can have his or her own, but this allows for site-wide statistics{/tr}<br />
 		{tr}Go to{/tr} <a href="http://bit.ly/a/sign_up">http://bit.ly/a/sign_up</a> {tr}to sign up for an account{/tr}.<br />
-		{tr}Go to{/tr} <a href="http://bit.ly/a/your_api_key">http://bit.ly/a/your_api_key</a> {tr}to retrieve the api key{/tr}.</p>
+		{tr}Go to{/tr} <a href="http://bit.ly/a/your_api_key">http://bit.ly/a/your_api_key</a> {tr}to retrieve the API key{/tr}.</p>
 		{/remarksbox}
 		<div class="adminoptionbox">
 		 	{preference name=socialnetworks_bitly_login}

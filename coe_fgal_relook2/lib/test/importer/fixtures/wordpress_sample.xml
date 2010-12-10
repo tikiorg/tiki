@@ -34,7 +34,7 @@
 	<wp:wxr_version>1.0</wp:wxr_version>
 	<wp:base_site_url>http://rodrigo.utopia.org.br/</wp:base_site_url>
 	<wp:base_blog_url>http://rodrigo.utopia.org.br</wp:base_blog_url>
-		<wp:category><wp:category_nicename>bicicleta</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[bicicleta]]></wp:cat_name></wp:category>
+		<wp:category><wp:category_nicename>bicicleta</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[bicicleta]]></wp:cat_name><wp:category_description><![CDATA[Qualquer descrição]]></wp:category_description></wp:category>
 		<wp:category><wp:category_nicename>cicloativismo</wp:category_nicename><wp:category_parent>bicicleta</wp:category_parent><wp:cat_name><![CDATA[cicloativismo]]></wp:cat_name></wp:category>
 		<wp:category><wp:category_nicename>cicloturismo</wp:category_nicename><wp:category_parent>bicicleta</wp:category_parent><wp:cat_name><![CDATA[cicloturismo]]></wp:cat_name></wp:category>
 		<wp:category><wp:category_nicename>hacklab</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[hacklab]]></wp:cat_name></wp:category>
@@ -44,7 +44,7 @@
 		<wp:category><wp:category_nicename>uncategorized</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[Uncategorized]]></wp:cat_name></wp:category>
 		<wp:category><wp:category_nicename>vegetarianismo</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[vegetarianismo]]></wp:cat_name></wp:category>
 		<wp:category><wp:category_nicename>viagens</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[viagens]]></wp:cat_name></wp:category>
-		<wp:category><wp:category_nicename>argentina</wp:category_nicename><wp:category_parent>viagens</wp:category_parent><wp:cat_name><![CDATA[argentina]]></wp:cat_name></wp:category>
+		<wp:category><wp:category_nicename>argentina</wp:category_nicename><wp:category_parent>viagens</wp:category_parent><wp:cat_name><![CDATA[argentina]]></wp:cat_name><wp:category_description><![CDATA[Another description]]></wp:category_description></wp:category>
 		<wp:category><wp:category_nicename>canada-viagens</wp:category_nicename><wp:category_parent>viagens</wp:category_parent><wp:cat_name><![CDATA[canadá]]></wp:cat_name></wp:category>
 		<wp:category><wp:category_nicename>chile-viagens</wp:category_nicename><wp:category_parent>viagens</wp:category_parent><wp:cat_name><![CDATA[chile]]></wp:cat_name></wp:category>
 		<wp:category><wp:category_nicename>europa</wp:category_nicename><wp:category_parent>viagens</wp:category_parent><wp:cat_name><![CDATA[europa]]></wp:cat_name></wp:category>
@@ -95,6 +95,7 @@
 		<wp:tag><wp:tag_slug>montanhismo</wp:tag_slug><wp:tag_name><![CDATA[montanhismo]]></wp:tag_name></wp:tag>
 		<wp:tag><wp:tag_slug>montreal</wp:tag_slug><wp:tag_name><![CDATA[montreal]]></wp:tag_name></wp:tag>
 		<wp:tag><wp:tag_slug>mudancas</wp:tag_slug><wp:tag_name><![CDATA[mudanças]]></wp:tag_name></wp:tag>
+		<wp:tag><wp:tag_slug>null tag name</wp:tag_slug></wp:tag>
 		<wp:tag><wp:tag_slug>osorno</wp:tag_slug><wp:tag_name><![CDATA[osorno]]></wp:tag_name></wp:tag>
 		<wp:tag><wp:tag_slug>parser</wp:tag_slug><wp:tag_name><![CDATA[parser]]></wp:tag_name></wp:tag>
 		<wp:tag><wp:tag_slug>partidos-politicos</wp:tag_slug><wp:tag_name><![CDATA[partidos políticos]]></wp:tag_name></wp:tag>
@@ -445,7 +446,7 @@
 <br class="spacer_" />
 
 <address>Originalmente publicado em <a href="http://www.travelblog.org/South-America/Chile/Magallanes/Torres-del-Paine/blog-237739.html" target="_blank">http://www.travelblog.org/South-America/Chile/Magallanes/Torres-del-Paine/blog-237739.html</a>
-</address>Neste post pretendo colocar algumas informações sobre a caminhada que fizemos no Parque Nacional Torres del Paine. Espero que possa ser útil. Se alguém algum dia ler isso e utilizar como fonte de informação para planejar sua viagem me avisa por favor (rodrigosprimo em gmail.com) que ficarei feliz :-)
+</address>Neste post pretendo colocar algumas informações sobre a caminhada que fizemos no Parque Nacional Torres del Paine. Espero que possa ser útil. Se alguém algum dia ler isso e utilizar como fonte de informação para planejar sua viagem me avisa por favor (test em gmail.com) que ficarei feliz :-)
 
 Comentei por cima os equipamentos mais relevantes que utilizamos e também qual foi o trajeto escolhido. Muitas das opiniões refletem minha experiência de apenas nove dias no parque, aconselho buscar outras fontes de informação. A lista de equipos também não serve como checklist, falta um monte de coisas e tem um monte de checklists bons espalhados pela internet.
 
@@ -573,7 +574,7 @@ obrigado]]></wp:comment_content>
 				<wp:comment>
 		<wp:comment_id>34</wp:comment_id>
 		<wp:comment_author><![CDATA[rodrigo]]></wp:comment_author>
-		<wp:comment_author_email>rodrigosprimo@gmail.com</wp:comment_author_email>
+		<wp:comment_author_email>test.com</wp:comment_author_email>
 		<wp:comment_author_url>http://</wp:comment_author_url>
 		<wp:comment_author_IP>127.0.0.1</wp:comment_author_IP>
 		<wp:comment_date>2009-08-12 06:37:04</wp:comment_date>
@@ -614,7 +615,7 @@ Rafael]]></wp:comment_content>
 				<wp:comment>
 		<wp:comment_id>197</wp:comment_id>
 		<wp:comment_author><![CDATA[rodrigo]]></wp:comment_author>
-		<wp:comment_author_email>rodrigosprimo@gmail.com</wp:comment_author_email>
+		<wp:comment_author_email>test.com</wp:comment_author_email>
 		<wp:comment_author_url>http://</wp:comment_author_url>
 		<wp:comment_author_IP>127.0.0.1</wp:comment_author_IP>
 		<wp:comment_date>2010-02-02 01:36:51</wp:comment_date>
@@ -632,7 +633,7 @@ Meu amigo devolveu para a loja onde havia comprado e eles deram para ele um novo
 				<wp:comment>
 		<wp:comment_id>118</wp:comment_id>
 		<wp:comment_author><![CDATA[rodrigo]]></wp:comment_author>
-		<wp:comment_author_email>rodrigosprimo@gmail.com</wp:comment_author_email>
+		<wp:comment_author_email>test.com</wp:comment_author_email>
 		<wp:comment_author_url>http://</wp:comment_author_url>
 		<wp:comment_author_IP>127.0.0.1</wp:comment_author_IP>
 		<wp:comment_date>2009-11-10 10:43:10</wp:comment_date>
@@ -976,7 +977,7 @@ Abraços,]]></wp:comment_content>
 				<wp:comment>
 		<wp:comment_id>79</wp:comment_id>
 		<wp:comment_author><![CDATA[rodrigo]]></wp:comment_author>
-		<wp:comment_author_email>rodrigosprimo@gmail.com</wp:comment_author_email>
+		<wp:comment_author_email>test.com</wp:comment_author_email>
 		<wp:comment_author_url>http://</wp:comment_author_url>
 		<wp:comment_author_IP>127.0.0.1</wp:comment_author_IP>
 		<wp:comment_date>2009-10-15 10:16:18</wp:comment_date>
@@ -1005,7 +1006,7 @@ Oi Rafael, valeu pela dica. Esse plugin também parece interessante. Atualizei o
 				<wp:comment>
 		<wp:comment_id>64</wp:comment_id>
 		<wp:comment_author><![CDATA[rodrigo]]></wp:comment_author>
-		<wp:comment_author_email>rodrigosprimo@gmail.com</wp:comment_author_email>
+		<wp:comment_author_email>test.com</wp:comment_author_email>
 		<wp:comment_author_url>http://</wp:comment_author_url>
 		<wp:comment_author_IP>127.0.0.1</wp:comment_author_IP>
 		<wp:comment_date>2009-09-15 12:42:54</wp:comment_date>

@@ -76,7 +76,7 @@
 </tr>
 <tr>
 	<td>{tr}Filter{/tr}</td>
-	<td>{include file="wiki-plugins/wikiplugin_trackerfilter.tpl" showFieldId="y" inForm="y"}</td></tr>
+	<td>{include file="wiki-plugins/wikiplugin_trackerfilter.tpl" showFieldId="y" inForm="y" inExportForm="y"}</td></tr>
 {if $prefs.feature_ajax eq 'y'}
 	<tr>
 		<td><label for="recordsMax">{tr}Number of records{/tr}</label></td>
@@ -108,7 +108,8 @@ if (!$.ui) { $("#export_prog").hide(); }
 exportStart = function (el) {
 	
 	if ($.ui) {
-		$("#export_prog").progressbar("destroy").progressbar({ value: 1 });
+		try { $("#export_prog").progressbar("destroy"); } catch(e) {}
+		$("#export_prog").progressbar({ value: 1 });
 	}
 	$("#export_button").hide();
 	
@@ -154,7 +155,7 @@ exportProgress = function () {
 	});
 }
 {/jq}
-{remarksbox type="note" title="Warning"}Please note: Using experimental AJAX export function - work in progress!{/remarksbox}
+{remarksbox type="note" title="Note"}Please note: Using AJAX export function - please report any issues{/remarksbox}
 {/if}
 </div>
 {if $tiki_p_tracker_dump eq "y" or $tiki_p_admin eq "y"}
@@ -172,7 +173,12 @@ exportProgress = function () {
 				       </option>
 				      {/foreach}
 				    </select>
-				    {$recordsMax} {tr}Items{/tr}
+				    {$recordsMax} 
+					{if $recordsMax eq 1}
+						{tr}item{/tr}
+					{else}
+						{tr}items{/tr}
+					{/if}
 					</td>
 				</tr>
 			</table>

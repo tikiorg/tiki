@@ -17,6 +17,26 @@
 		{tab name="{tr}General Settings{/tr}"}
 			<fieldset>
 				<legend>
+					{tr}Unified Search{/tr}
+				</legend>
+
+				{preference name="unified_incremental_update"}
+				{preference name="unified_engine"}
+				<div class="adminoptionboxchild unified_engine_childcontainer lucene">
+					{preference name="unified_lucene_location"}
+				</div>
+
+				<a href="tiki-admin.php?page=search&amp;rebuild=now">{tr}Rebuild Index{/tr}</a>
+				{if !empty($stat)}
+					{remarksbox type='feedback' title="{tr}Indexation{/tr}"}<ul>
+					{foreach from=$stat key=what item=nb}
+						<li>{$what|escape}: {$nb|escape}</li>
+					{/foreach}
+					</ul>{/remarksbox}
+				{/if}
+			</fieldset>
+			<fieldset>
+				<legend>
 					{tr}Search type{/tr}{help url="Search"}
 				</legend>
 				{preference name=feature_search_fulltext}

@@ -40,6 +40,7 @@ class Tiki_Profile_Installer
 		'extwiki' => 'Tiki_Profile_InstallHandler_ExtWiki',
 		'webmail_account' => 'Tiki_Profile_InstallHandler_WebmailAccount',
 		'webmail' => 'Tiki_Profile_InstallHandler_Webmail',
+		'sheet' => 'Tiki_Profile_InstallHandler_Sheet',
 	);
 
 	private static $typeMap = array(
@@ -460,6 +461,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 		$defaults['creation_date_format'] = '';
 		$defaults['modification_date_format'] = '';
 		$defaults['email'] = '';
+		$defaults['outboundEmail'] = '';
 		$defaults['default_status'] = 'o';
 		$defaults['modification_status'] = '';
 		$defaults['list_default_status'] = 'o';
@@ -467,6 +469,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 		$defaults['sort_default_field'] = '';
 		$defaults['restrict_start'] = '';
 		$defaults['restrict_end'] = '';
+		return $defaults;
 	} // }}}
 	
 	private function getOptionConverters() // {{{
@@ -539,6 +542,59 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 		// using false as trackerId stops multiple trackers of same name being created
 		return $trklib->replace_tracker( false, $name, $description, $options, 'y' );
 	} // }}}
+
+	function _export($trackerId) // {{{
+	{
+		global $trklib; require_once 'lib/trackers/trackerlib.php';
+		$info = $trklib->get_tracker($trackerId);
+		if (empty($info)) {
+			return '';
+		}
+		if ($options = $trklib->get_tracker_options($trackerId)) {
+			$info = array_merge($info, $options);
+		}
+		$optionMap = array_flip($this->getOptionMap());
+		$defaults = $this->getDefaults();
+		$conversions = $this->getOptionConverters();
+		$ref = 'tracker_'.$trackerId;
+		$res = array();
+		$allow = array();
+		$show = array();
+		$res[] = 'objects:';
+		$res[] = ' -';
+		$res[] = '  type: tracker';
+		$res[] = '  ref: '.$ref;
+		$res[] = '  data:';
+		$tab = '   ';
+		$res[] = $tab.'name: '.$info['name'];
+		if (!empty($info['description']))
+			$res[] = $tab.'description: '.$info['description'];
+		foreach ($info as $key => $value) {
+			if (!empty($optionMap[$key]) && (!isset($defaults[$optionMap[$key]]) || $value != $defaults[$optionMap[$key]])) {
+				if (strstr($optionMap[$key], 'allow_')) {
+					$allow[] = str_replace('allow_', '', $optionMap[$key]);
+				} elseif (strstr($optionMap[$key], 'show_')) {
+					$show[] = str_replace('show_', '', $optionMap[$key]);
+				} else {
+					$res[] = $tab.$optionMap[$key].': '.$conversions[$optionMap[$key]]->reverse( $value );
+				}
+			}
+		}
+		if (!empty($allow)) {
+			$res[] .= $tab.'allow: ['.implode(', ', $allow).']';
+		}
+		if (!empty($show)) {
+			$res[] .= $tab.'show: ['.implode(', ', $show).']';
+		}
+
+		$fields = $trklib->list_tracker_fields($trackerId);
+		$prof = new Tiki_Profile_InstallHandler_TrackerField();
+		foreach ($fields['data'] as $field) {
+			$res = array_merge($res, $prof->_export($field));
+		}
+		return implode("\n", $res);
+	} // {{{
+
 } // }}}
 
 class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandler // {{{
@@ -617,6 +673,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 				'preference' => 'p',
 				'attachment' => 'A',
 				'page' => 'k',
+				'in_group' => 'N',
 			) ), // }}}
 			'visible' => new Tiki_Profile_ValueMapConverter( array(
 				'public' => 'n',
@@ -626,6 +683,23 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			) ),
 		);
 	} // }}}
+	private function getOptionMap() //{{{
+	{
+		return array(
+			'type' => 'type',
+			'order' => 'position',
+			'visible' => 'isHidden',
+			'description' => 'description',
+			'descparsed' => 'descriptionIsParsed',
+			'errordesc' => 'errorMsg',
+			'list' => 'IsTblVisible',
+			'link' => 'isMain',
+			'searchable' => 'isSearchable',
+			'public' => 'isPublic',
+			'mandatory' => 'isMandatory',
+			'multilingual' => 'isMultilingual',
+		);
+	} //{{{
 
 	function canInstall()
 	{
@@ -673,6 +747,39 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			$data['visby'],
 			$data['editby'],
 			$data['descparsed'] );
+	}
+
+	function _export($info)
+	{
+		$optionMap = array_flip($this->getOptionMap());
+		$defaults = $this->getDefaultValues();
+		$conversions = $this->getConverters();
+		$res[] = ' -';
+		$refi = 'field_'.$info['fieldId'];
+		$res[] = '  type: tracker_field';
+		$res[] = '  ref: '. $refi;
+		$res[] = '  data:';
+		$res[] = '   name: '.$info['name'];
+		$res[] = '   tracker: $tracker_'.$info['trackerId'];
+		if (!empty($info['options'])) $res[] = '   options: '.$info['options'];
+		$flag = array();
+		$tab = '   ';
+		foreach ($info as $key => $value) {
+			if (!empty($optionMap[$key]) && (!isset($defaults[$optionMap[$key]]) || $value != $defaults[$optionMap[$key]])) {
+				if (in_array($optionMap[$key], array('list', 'link', 'searchable', 'public', 'mandatory', 'multilingual'))) {
+					$flag[] = $optionMap[$key];
+				} elseif (!empty($conversions[$optionMap[$key]])) {
+					$reverseVal = $conversions[$optionMap[$key]]->reverse( $value );
+					$res[] = $tab.$optionMap[$key].': '.(empty($reverseVal)? $value: $reverseVal);
+				} else {
+					$res[] = $tab.$optionMap[$key].': '.$value;
+				}
+			}
+		}
+		if (!empty($flag)) {
+				$res[] .= $tab.'flags: ['.implode(', ', $flag).']';
+		}
+		return $res;
 	}
 } // }}}
 
@@ -764,6 +871,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 	private $translations;
 	private $message;
 	private $structure;
+	private $wysiwyg;
 	
 	private $mode = 'create_or_update';
 	private $exists;
@@ -794,6 +902,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 			$this->translations = $data['translations'];
 		if( array_key_exists( 'structure', $data ) )
 			$this->structure = $data['structure'];
+		if( array_key_exists( 'wysiwyg', $data ) )
+			$this->wysiwyg = $data['wysiwyg'];
 	}
 
 	function canInstall()
@@ -847,7 +957,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 		$this->replaceReferences( $this->translations );
 		$this->replaceReferences( $this->message );
 		$this->replaceReferences( $this->structure );
-		
+		$this->replaceReferences( $this->wysiwyg );
+	
 		$this->mode = $this->convertMode();
 
 		if( strpos( $this->content, 'wikidirect:' ) === 0 ) {
@@ -856,13 +967,36 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 		}
 
 		if( $this->mode == 'create' ) {
+			if ( $this->wysiwyg ) {
+				$this->wysiwyg = 'y';
+				$is_html = true;
+			} else {
+				$this->wysiwyg = 'n';
+				$is_html = false;
+			} 
 			if( ! $this->message ) {
 				$this->message = tra('Created by profile installer');
 			}
-			if( ! $tikilib->create_page( $this->name, 0, $this->content, time(), $this->message, 'admin', '0.0.0.0', $this->description, $this->lang ) )
+			if( ! $tikilib->create_page( $this->name, 0, $this->content, time(), $this->message, 'admin', '0.0.0.0', $this->description, $this->lang, $is_html, null, $this->wysiwyg ) )
 				return null;
 		} else {
 			$info = $tikilib->get_page_info( $this->name, true, true );
+
+			if( ! $this->wysiwyg ) {
+				if ( ! empty($info['wysiwyg']) ) { 
+					$this->wysiwyg = $info['wysiwyg'];
+				} else {
+					$this->wysiwyg = 'n';
+				}
+				if( isset($info['is_html']) ) {
+					$is_html = $info['is_html'];
+				} else {
+					$is_html = false;
+				} 
+			} else {
+				$this->wysiwyg = 'y';
+				$is_html = true;
+			}
 
 			if( ! $this->description )
 				$this->description = $info['description'];
@@ -877,7 +1011,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 			if( ! $this->message ) {
 				$this->message = tra('Page updated by profile installer');
 			}
-			$tikilib->update_page( $this->name, $this->content, $this->message, 'admin', '0.0.0.0', $this->description, 0, $this->lang );
+
+			$tikilib->update_page( $this->name, $this->content, $this->message, 'admin', '0.0.0.0', $this->description, 0, $this->lang, $is_html, null, null, $this->wysiwyg );
 		}
 
 		global $multilinguallib;
@@ -2654,6 +2789,90 @@ class Tiki_Profile_ValueMapConverter // {{{
 				return $this->map[$value];
 			else
 				return $value;
+		}
+	}
+	function reverse( $key)
+	{
+		$tab = array_flip($this->map);
+		return $tab[$key];
+	}
+
+} // }}}
+
+class Tiki_Profile_InstallHandler_Sheet extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+		$data = $this->obj->getData();
+		$this->replaceReferences($data);
+
+		return $this->data = $data;
+	}
+	
+	function canInstall()
+	{
+		$data = $this->getData();
+		
+		if (isset($data)) return true;
+		else return false;
+	}
+	
+	function _install()
+	{
+		if ($this->canInstall())
+		{
+			global $user;
+			require_once ('lib/sheet/grid.php');
+			
+			//here we convert the array to that of what is acceptable to the sheet lib
+			$parentSheetId;
+			$sheets = array();
+			
+			for ($sheetI = 0; $sheetI < count($this->data); $sheetI++)
+			{
+				$title = $this->data[$sheetI]['title'];
+				$title = ($title ? $title : "Untitled - From Profile Import");
+				
+				for ($r = 0; $r < count($this->data[$sheetI]); $r++)
+				{
+					for ($c = 0; $c < count($this->data[$sheetI][$r]); $c++)
+					{
+						$value = "";
+						$formula = "";
+						$rawValue = $this->data[$sheetI][$r][$c];
+						 
+						if (substr($rawValue, 0, 1) == "=") {
+							$formula = $rawValue;
+						} else {
+							$value = $rawValue;
+						}
+						
+						$ri = 'r'.$r;
+						$ci = 'c'.$c;
+						
+						$sheets[$sheetI]->data->$ri->$ci->formula = $formula;
+						$sheets[$sheetI]->data->$ri->$ci->value = $value;
+						
+						$sheets[$sheetI]->data->$ri->$ci->width = 1;
+						$sheets[$sheetI]->data->$ri->$ci->height = 1;
+					}
+				}
+				
+				$sheets[$sheetI]->metadata->rows = count($this->data[$sheetI]);
+				$sheets[$sheetI]->metadata->columns = count($this->data[$sheetI][0]);
+				$id = $sheetlib->replace_sheet(0, $title, "", $user, $parentSheetId);
+				$parentSheetId = ($parentSheetId ? $parentSheetId : $id);
+				
+				$grid = new TikiSheet($id);
+				$handler = new TikiSheetHTMLTableHandler($sheets[$sheetI]);
+				$res = $grid->import($handler);
+				$handler = new TikiSheetDatabaseHandler($id);
+				$grid->export($handler);
+			}
+			
+			return $parentSheetId;
 		}
 	}
 } // }}}

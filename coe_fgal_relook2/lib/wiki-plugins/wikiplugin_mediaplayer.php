@@ -11,8 +11,8 @@ function wikiplugin_mediaplayer_help() {
 function wikiplugin_mediaplayer_info() {
 	return array(
 		'name' => tra('Mediaplayer'),
-		'documentation' => 'PluginMediaplayer',
-		'description' => 'Simple mp3 or flv Player',
+		'documentation' => tra('PluginMediaplayer'),
+		'description' => tra('Simple mp3 or flv Player'),
 		'extraparams' =>true,
 		'prefs' => array( 'wikiplugin_mediaplayer' ),
 		'params' => array(
@@ -23,8 +23,12 @@ function wikiplugin_mediaplayer_info() {
 				'filter' => 'alpha',
 				'options' => array(
 					array(
+						'text' => '',
+						'value' => '',
+					),
+					array(
 						'text' => tra('Yes'),
-						'value' => 'true'
+						'value' => 'true',
 					),
 					array(
 						'text' => tra('No'),
@@ -36,7 +40,7 @@ function wikiplugin_mediaplayer_info() {
 				'required' => false,
 				'name'=> tra('MP3 URL'),
 				'description' => tra('Complete URL to the mp3 to include.'),
-				'filter' => 'url'
+				'filter' => 'url',
 			),
 			'flv' => array(
 				'required' => false,
@@ -48,7 +52,8 @@ function wikiplugin_mediaplayer_info() {
 				'required' => false,
 				'name'=> tra('URL'),
 				'description' => tra('Complete URL to the media to include.'). ' asx, asf, avi, flv, mov, mpg, mpeg, mp4, qt, ra, smil, swf, wmv, 3g2, 3gp,aif, aac, au, gsm, mid, midi, mov, mp3, m4a, snd, ra, ram, rm, wav, wma, bmp, html, pdf, psd, qif, qtif, qti, tif, tiff, xaml',
-				'filter' => 'url'
+				'filter' => 'url',
+				'default' => '',
 			),
 			'style' => array(
 				'required' => false,
@@ -57,36 +62,44 @@ function wikiplugin_mediaplayer_info() {
 				'filter' => 'alpha',
 				'options' => array(
 					array(
-						'text' => 'mini', 'value' => 'mini'
+						'text' => '', 'value' => ''
 					),
 					array(
-						'text' => 'normal', 'value' => 'normal'
+						'text' => 'Mini', 'value' => 'mini'
 					),
 					array(
-						'text' => 'maxi', 'value' => 'maxi'
+						'text' => 'Normal', 'value' => 'normal'
 					),
 					array(
-						'text' => 'multi', 'value' => 'multi'
+						'text' => 'Maxi', 'value' => 'maxi'
+					),
+					array(
+						'text' => 'Multi', 'value' => 'multi'
 					)
 				)
 			),
 			'wmode' => array(
 				'required' => false,
 				'name' => tra('Flash Window Mode'),
-				'description' => tra('Sets the Window Mode property of the Flash movie for transparency, layering, and positioning in the browser. Default value: ').'transparent',
+				'description' => tra('Sets the Window Mode property of the Flash movie. Transparent lets what\'s behind the movie show through and allows the movie to be covered 
+										 Opaque hides what\'s behind the movie and Window plays the movie in its own window. Default value: ').'transparent',
 				'filter' => 'alpha',
 				'options' => array(
 					array(
-						'text' => 'transparent'.tra(' - show background through and allow to be covered'),
-						'value' => 'transparent'
+						'text' => '',
+						'value' => '',
 					),
 					array(
-						'text' => 'opaque'.tra(' - hide everything behind'),
-						'value' => 'opaque'
+						'text' => tra('Transparent'),
+						'value' => 'transparent',
 					),
 					array(
-						'text' => 'window'.tra(' - play movie in its own rectangular window on a web page'),
-						'value' => 'window'
+						'text' => tra('Opaque'),
+						'value' => 'opaque',
+					),
+					array(
+						'text' => tra('Window'),
+						'value' => 'window',
 					)
 				)
 			),

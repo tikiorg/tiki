@@ -14,8 +14,8 @@ function wikiplugin_trackeritemfield_help() {
 function wikiplugin_trackeritemfield_info() {
 	return array(
 		'name' => tra('Tracker Item Field'),
-		'documentation' => 'PluginTrackerItemField',
-		'description' => tra("Displays the value of a tracker item field or the wiki text if the value of the field is set or has a value(if itemId not specified, use the itemId of the url or the user tracker)."),
+		'documentation' => tra('PluginTrackerItemField'),
+		'description' => tra('Displays the value of a tracker item field or the wiki text if the value of the field is set or has a value(if itemId not specified, use the itemId of the url or the user tracker).'),
 		'prefs' => array( 'wikiplugin_trackeritemfield', 'feature_trackers' ),
 		'body' => tra('Wiki text containing an {ELSE} marker.'),
 		'icon' => 'pics/icons/database_go.png',
@@ -23,37 +23,63 @@ function wikiplugin_trackeritemfield_info() {
 			'trackerId' => array(
 				'required' => false,
 				'name' => tra('Tracker ID'),
-				'description' => tra('Numeric value.'),
+				'description' => tra('Numeric value representing the tracker ID.'),
+				'filter' => 'digits',
+				'default' => ''
 			),
 			'itemId' => array(
 				'required' => false,
 				'name' => tra('Item ID'),
-				'description' => tra('Numeric value.'),
+				'description' => tra('Numeric value representing the item ID. Default is the user tracker item for the current user.'),
+				'filter' => 'digits',
+				'default' => ''
 			),
 			'fieldId' => array(
 				'required' => false,
 				'name' => tra('Field ID'),
-				'description' => tra('Numeric value.'),
+				'description' => tra('Numeric value representing the field ID displayed or tested'),
+				'filter' => 'digits',
+				'default' => '',
 			),
 			'fields' => array(
 				'required' => false,
 				'name' => tra('Fields'),
-				'description' => tra('Colon separated list of field IDs.'),
+				'description' => tra('Colon separated list of field IDs. Default is all fields'),
+				'default' => '',
 			),
 			'status' => array(
 				'required' => false,
 				'name' => tra('Status'),
-				'description' => tra('o|p|c|op|oc|pc|opc'),
+				'description' => tra('Status of the tracker item'),
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Open'), 'value' => 'o'), 
+					array('text' => tra('Pending'), 'value' => 'p'), 
+					array('text' => tra('Closed'), 'value' => 'c'), 
+					array('text' => tra('Open & Pending'), 'value' => 'op'), 
+					array('text' => tra('Open & Closed'), 'value' => 'oc'), 
+					array('text' => tra('Pending & Closed'), 'value' => 'pc'), 
+					array('text' => tra('Open, Pending & Closed'), 'value' => 'opc')
+				)
 			),
 			'test' => array(
 				'required' => false,
 				'name' => tra('Test'),
-				'description' => tra('0|1'),
+				'description' => tra('Set to 1 (Yes) to test whether a field is empty (if value parameter is empty) or has a value the same as the value parameter.'),
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				)
 			),
 			'value' => array(
 				'required' => true,
 				'name' => tra('Value'),
 				'description' => tra('Value to compare against.'),
+				'default' => '',
 			),
 		),
 	);
@@ -107,7 +133,7 @@ function wikiplugin_trackeritemfield($data, $params) {
 			$trackerId = $item['trackerId'];
 		}
 
-		if (empty($itemId) && empty($test) && empty($status)) {// need an item
+		if (empty($itemId) || empty($test) || empty($status)) {// need an item
 			return tra('Incorrect param').': itemId';
 		}
 

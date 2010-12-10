@@ -14,12 +14,12 @@ h1 {
 	font-size: .9em;
 }
 
-span.button a {
+.button a {
 	background: #f5f5f5;
 }
 
-span.button a:link,
-span.button a:visited {
+.button a:link,
+.button a:visited {
 	text-decoration: none;
 	border: 0;
 	padding: 0 4px;
@@ -60,11 +60,11 @@ span.button a:visited {
 	height: 1%;
 }
 
-div#tikihelp {
+#tikihelp {
 	position: absolute;
 }
 
-div.box {
+.box {
 	width: 205px !important;
 }
 
@@ -85,7 +85,7 @@ img.flipmodimage {
 	border: none;
 }
 
-#col2 div.cssmenubox .box-data {
+#col2 .cssmenubox .box-data {
 	padding-right: 0 !important;
 }
 
@@ -96,8 +96,8 @@ img.flipmodimage {
 }
 
 
-table.normal, 
-table.admin {
+.normal, 
+.admin {
 	width: 97%;
 }
 
@@ -106,7 +106,7 @@ td {
 }
 
 th,
-table.normal td.heading {
+.normal td.heading {
 	height: 32px;
 }
 
@@ -123,7 +123,7 @@ table.normal td.heading {
 	display: inline;
 }
 
-div.articletitle h2 {
+.articletitle h2 {
 	height: 26px;
 }
 
@@ -135,7 +135,7 @@ div.articletitle h2 {
 	font-size: 11px;
 }
 
-table.galtable {
+.galtable {
 	width: 97%;
 }
 

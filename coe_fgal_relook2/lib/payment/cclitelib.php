@@ -208,6 +208,7 @@ class CCLiteLib extends TikiDb_Bridge
 		global $user, $prefs;
 		
 		if (empty($other_user)) { $other_user = $this->merchant_user; }
+		if (empty($main_user)) { $main_user = $user; }
 		if (empty($registry)) { $registry = $this->get_registry(); }
 		if (empty($currency)) { $currency = $this->get_currency( $registry ); }
 		
@@ -222,11 +223,11 @@ class CCLiteLib extends TikiDb_Bridge
 			if ($logon_result[0] != 'failed' && strlen($logon_result[1])) {
 				curl_setopt($ch, CURLOPT_COOKIE, $logon_result[1]);
 			} else {
-				return tr('Connection to cclite server %0 failed for %1<br />"%2"', $cclite_base_url, $user, $logon_result[1]);
+				return tr('Connection to cclite server %0 failed for %1<br />"%2"', $cclite_base_url, $main_user, $logon_result[1]);
 			}
 		}
 		curl_setopt($ch, CURLOPT_AUTOREFERER, true);
-		curl_setopt($ch, CURLOPT_COOKIESESSION, true);
+		//curl_setopt($ch, CURLOPT_COOKIESESSION, true);
 		curl_setopt($ch, CURLOPT_FAILONERROR, false);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($ch, CURLOPT_FRESH_CONNECT, false);
@@ -240,10 +241,6 @@ class CCLiteLib extends TikiDb_Bridge
 		switch ($command) {
 			case 'recent':
 				$REST_url = "$cclite_base_url/recent/transactions";
-				//curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
-				//curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
-				//curl_setopt($ch, CURLOPT_HEADER, true);
-				//curl_setopt($ch, CURLOPT_FAILONERROR, true);
 				break;
 			case 'summary':
 				$REST_url = "$cclite_base_url/summary";

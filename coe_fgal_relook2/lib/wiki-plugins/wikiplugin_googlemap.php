@@ -11,142 +11,232 @@ function wikiplugin_googlemap_help() {
 function wikiplugin_googlemap_info() {
 	return array(
 		'name' => tra('googlemap'),
-		'documentation' => 'PluginGoogleMap',
-		'description' => tra("Displays a Google map"),
+		'documentation' => tra('PluginGoogleMap'),
+		'description' => tra('Displays a Google map'),
 		'prefs' => array( 'wikiplugin_googlemap' ),
 //		'validate' => 'all',
 		'params' => array(
 			'type' => array(
 				'safe' => true,
 				'required' => true,
-				'name' => tra('Type of items'),
+				'name' => tra('Type'),
 				'description' => tra('Type of items to show on google map'),
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Item'), 'value' => 'item'), 
+					array('text' => tra('Locator'), 'value' => 'locator'), 
+					array('text' => tra('Object List'), 'value' => 'objectlist'),
+					array('text' => tra('Tracker Field'), 'value' => 'trackerfield'),
+					array('text' => tra('User'), 'value' => 'user')
+				)
 			),
 			'mode' => array(
 				'safe' => true,
 				'required' => true,
-				'name' => tra('Map display mode'),
+				'name' => tra('Display Mode'),
 				'description' => tra('Map display mode'),
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Normal'), 'value' => 'normal'), 
+					array('text' => tra('Satellite'), 'value' => 'satellite'), 
+					array('text' => tra('Hybrid'), 'value' => 'hybrid')
+				)
 			),
 			'key' => array(
 					'safe' => true,
 					'required' => false,
 					'name' => tra('API Key'),
 					'description' => tra('Google maps key, if not set in user preferences'),
-				),
+					'default' => ''
+			),
 			'name' => array(
 				'safe' => true,
 				'required' => false,
 				'name' => tra('Map ID'),
 				'description' => tra('Id suffix of Google map div to avoid conflicts with other maps on same page'),
+				'default' => 'default'
 			),
 			'width' => array(
 				'safe' => true,
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tra('Pixels or %'),
+				'description' => tra('Width in pixels or %'),
+				'default' => 500
 			),
 			'height' => array(
 				'safe' => true,
 				'required' => false,
 				'name' => tra('Height'),
-				'description' => tra('Pixels or %'),
+				'description' => tra('Height in pixels or %'),
+				'default' => 400
 			),
 			'frameborder' => array(
 				'safe' => true,
 				'required' => false,
 				'name' => tra('Show Border'),
-				'description' => '1|0',
+				'description' => tra('Choose whether to show a frame border around the map (no border shown by default).'),
+				'default' => 0,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				)
 			),
 			'defaultx' => array(
 				'safe' => true,
 				'required' => false,
-				'name' => tra('Default longitude to center map'),
-				'description' => tra('Longitude value e.g. -79.39'),
+				'name' => tra('Default Center Longitude'),
+				'description' => tra('Default longitude value used to center the map, e.g. -79.39. Default is the default set in the Gmap feature.'),
 			),
 			'defaulty' => array(
 				'safe' => true,
 				'required' => false,
-				'name' => tra('Default latitude to center map'),
-				'description' => tra('Latitude value e.g. 43.7'),
+				'name' => tra('Default Center Latitude'),
+				'description' => tra('Default latitude value used to center the map, e.g. 43.7. Default is the default set in the Gmap feature.'),
 			),
 			'defaultz' => array(
 				'safe' => true,
 				'required' => false,
-				'name' => tra('Default zoom level to view map'),
-				'description' => tra('An integer between 0 and 19'),
+				'name' => tra('Default Zoom'),
+				'description' => tra('Use an integer between 0 and 19 to set a default zoom level for the map. Default is the default set in the Gmap feature.'),
+				'filter' => 'int'
 			),
 			'setdefaultxyz' => array(
 				'safe' => true,
 				'required' => false,
-				'name' => tra('Allow user to set map view as user default'),
-				'description' => tra('1|0, allow user to set current map view as default view for himself only'),
+				'name' => tra('Save View'),
+				'description' => tra('Allow user to set current map view as default view for himself only'),
+				'default' => false,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => true), 
+					array('text' => tra('No'), 'value' => false)
+				)
 			),
 			'locateitemtype' => array(
 				'safe' => true,
 				'required' => false,
-				'name' => tra('Type of item being geotagged'),
-				'description' => tra('user, wiki page, blog, etc..., will attempt to use current object if not specified'),
+				'name' => tra('Item Type'),
+				'description' => tra('Type of item being geotagged (user, wiki page, blog, etc). Will attempt to use current object if not specified.'),
+				'default' => ''
 			),
 			'locateitemid' => array(
 				'safe' => true,
 				'required' => false,
-				'name' => tra('ID of item being geotagged'),
-				'description' => tra('Name of page, blog ID, etc..., will attempt to use current object if not specified'),
+				'name' => tra('Item ID'),
+				'description' => tra('ID of item being geotagged (name of page, blog ID, etc). Will attempt to use current object if not specified'),
+				'default' => ''
 			),		
 			'hideifnone' => array(
 				'safe' => true,
 				'required' => false,
-				'name' => tra('Do not show map if there is no '),
-				'description' => tra('1|0, allow user to set current map view as default view for himself only'),
-			),
-			'hideifnone' => array(
-				'safe' => true,
-				'required' => false,
-				'name' => tra('Hide map if there are no markers to be shown'),
-				'description' => tra('1|0'),
+				'name' => tra('Hide If No Markers'),
+				'description' => tra('Hide map if there are no markers to be shown. Default is to show the map.'),
+				'default' => false,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => true), 
+					array('text' => tra('No'), 'value' => false)
+				)
 			),
 			'togglehidden' => array(
 				'safe' => true,
 				'required' => false,
-				'name' => tra('Ability to toggle visibility'),
-				'description' => tra('1|0'),
+				'name' => tra('Visibility Toggle'),
+				'description' => tra('Add ability to toggle visibility. No toggle by default.'),
+				'default' => 0,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				)
 			),
 			'starthidden' => array(
 				'safe' => true,
 				'required' => false,
-				'name' => tra('Start hidden'),
-				'description' => tra('1|0'),
+				'name' => tra('Start Hidden'),
+				'description' => tra('Choose whether to keep the map hidden initially. Default is to show the map initially.'),
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				)
 			),		
 			'autozoom' => array(
 				'safe' => true,
 				'required' => false,
-				'name' => tra('Auto zoom to this level on address find'),
-				'description' => tra('An integer between 0 and 19'),
+				'name' => tra('Auto Zoom'),
+				'description' => tra('Use an integer between 0 and 19 to auto zoom to this level on address find'),
+				'default' => '',
+				'filter' => 'int',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => 0, 'value' => 0), 
+					array('text' => 1, 'value' => 1), 
+					array('text' => 2, 'value' => 2), 
+					array('text' => 3, 'value' => 3), 
+					array('text' => 4, 'value' => 4), 
+					array('text' => 5, 'value' => 5), 
+					array('text' => 6, 'value' => 6), 
+					array('text' => 7, 'value' => 7), 
+					array('text' => 8, 'value' => 8), 
+					array('text' => 9, 'value' => 9), 
+					array('text' => 10, 'value' => 10), 
+					array('text' => 11, 'value' => 11), 
+					array('text' => 12, 'value' => 12), 
+					array('text' => 13, 'value' => 13), 
+					array('text' => 14, 'value' => 14), 
+					array('text' => 15, 'value' => 15), 
+					array('text' => 16, 'value' => 16), 
+					array('text' => 17, 'value' => 17), 
+					array('text' => 18, 'value' => 18), 
+					array('text' => 19, 'value' => 19), 
+				)
 			),
 			'controls' => array(
 				'safe' => true,
 				'required' => false,
-				'name' => tra('Show controls'),
-				'description' => tra('y|n'),
+				'name' => tra('Show Controls'),
+				'description' => tra('Show map controls (shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'trackerfieldid' => array(
 				'safe' => true,
 				'required' => false,
-				'name' => tra('ID of tracker field'),
+				'name' => tra('Tracker Field ID'),
 				'description' => tra('Field ID of tracker field if type is trackerfield or locator and locateitemtype is trackeritem'),
+				'filter' => 'int',
+				'default' => 0
 			),
 			'trackerinputid' => array(
 				'safe' => true,
 				'required' => false,
-				'name' => tra('HTML ID of tracker field input box'),
-				'description' => tra('HTML ID of tracker field input box where value is copied to by Javascript, auto set if used as part of entry forms'),
+				'name' => tra('HTML ID'),
+				'description' => tra('HTML ID of tracker field input box where value is copied to by Javascript. Auto set if used as part of entry forms'),
+				'default' => ''
 			),
 			'in_form' => array(
 				'safe' => true,
 				'required' => false,
-				'name' => tra('Set to 1 if this is embedded inside a form'),
-				'description' => tra('1|0, is needed to prevent nested forms which is not allowed in HTML'),
+				'name' => tra('In Form'),
+				'description' => tra('Set to 1 (Yes) if this is embedded inside a form. Needed to prevent nested forms which is not allowed in HTML.'),
+				'default' => 0,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				)
 			),
 		),
 	);
@@ -182,7 +272,7 @@ function wikiplugin_googlemap($data, $params) {
 		return tra("Google Maps API key not set");
 	}
 
-	$headerlib->add_jsfile("http://maps.google.com/maps?file=api&v=2&key=$gmapkey");
+	$headerlib->add_jsfile("http://maps.google.com/maps?file=api&v=2&key=$gmapkey", 'external');
 	
 	if (isset($params["name"]) && $params["name"]) {
 		$gmapname = str_replace(' ', '', $params["name"]);

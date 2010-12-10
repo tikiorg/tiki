@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	);
 	foreach($tikilib->list_languages() as $tlang) {
 		foreach($areanames as $an) {
-			$cachetag = 'plugindesc' . $tlang['value'] . $an;
+			$cachetag = 'plugindesc' . $tlang['value'] . $an . '_js=' . $prefs['javascript_enabled'];
 			$cachelib->invalidate($cachetag);
 		}
 	}
@@ -168,6 +168,7 @@ if (isset($_REQUEST['plugin_alias']) && $pluginInfo = $tikilib->plugin_alias_inf
 		'default' => '',
 	);
 	$smarty->assign('plugin_admin', $pluginInfo);
+	$cookietab = 3;
 } else {
 	$smarty->assign('plugin_admin', array());
 }
@@ -201,3 +202,4 @@ if (isset($_REQUEST['disabled']) && $tiki_p_admin == 'y') {
 	} while (true);
 	$smarty->assign_by_ref('disabled', $disabled);
 }
+setcookie('tab', $cookietab);

@@ -29,10 +29,10 @@ if ( $prefs['javascript_enabled'] != 'y' && $prefs['disableJavascript'] != 'y' )
 	// the first and second time, we should not trust the absence of javascript_enabled cookie yet, as it could be a redirection and the js will not get a chance to run yet, so we wait until the third run, assuming that js is on before then
 	if ( !isset($_COOKIE['runs_before_js_detect']) ) {
 		$prefs['javascript_enabled'] = 'y';
-		setcookie( 'runs_before_js_detect', '2', ( 1000 * ( $tikilib->now + 365 * 24 * 3600 ) ) );
+		setcookie( 'runs_before_js_detect', '2', $tikilib->now + 365 * 24 * 3600 );
 	} elseif ( $_COOKIE['runs_before_js_detect'] > 0 ) {
 		$prefs['javascript_enabled'] = 'y';
-		setcookie( 'runs_before_js_detect', $_COOKIE['runs_before_js_detect'] - 1, ( 1000 * ( $tikilib->now + 365 * 24 * 3600 ) ) );
+		setcookie( 'runs_before_js_detect', $_COOKIE['runs_before_js_detect'] - 1, $tikilib->now + 365 * 24 * 3600 );
 	}
 }
 if ($prefs['javascript_enabled'] == 'n') {
@@ -90,6 +90,7 @@ jqueryTiki.effect_tabs_direction = "'.$prefs['jquery_effect_tabs_direction'].'";
 jqueryTiki.effect_tabs_speed = '.($prefs['jquery_effect_tabs_speed'] == 'normal' ? '400' : '"'.$prefs['jquery_effect_tabs_speed'].'"').';
 
 jqueryTiki.autosave = '.($prefs['ajax_autosave'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.sefurl = '.($prefs['feature_sefurl'] == 'y' ? 'true' : 'false') . ';
 
 ';	// NB replace "normal" speeds with int to workaround issue with jQuery 1.4.2
 	$headerlib->add_js($js, 100);	

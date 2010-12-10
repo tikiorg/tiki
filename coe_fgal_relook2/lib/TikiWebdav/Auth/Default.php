@@ -47,7 +47,7 @@ class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAut
 
 	public function authenticateBasic( ezcWebdavBasicAuth $data )
 	{
-		global $user;
+		global $user, $prefs;
 		if (!isset($_SESSION['webdav_user']) ) {
 			if ( $data->username === '' or $data->username === 'Anonymous') {
 				$user = $_SESSION['webdav_user'] = 'Anonymous';
@@ -55,6 +55,10 @@ class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAut
 				return true;
 			}
 			global $userlib; include_once('lib/userslib.php');
+			if ($prefs['auth_method'] == 'cas') {
+				// Workaround : Webdav doesn't work with cas
+				$prefs['auth_method'] = 'ldap';
+			}
 			list($isvalid, $user, $error) = $userlib->validate_user($data->username, $data->password);
 			if ($isvalid) {
 				$userlib->update_expired_groups();

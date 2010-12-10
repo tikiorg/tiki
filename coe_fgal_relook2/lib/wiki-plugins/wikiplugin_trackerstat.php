@@ -24,8 +24,8 @@ function wikiplugin_trackerstat_info()
 {
 	return array(
 		'name' => tra('Tracker Stats'),
-		'documentation' => 'PluginTrackerStat',
-		'description' => tra("Displays some stat of a tracker content, fields are indicated with numeric ids."),
+		'documentation' => tra('PluginTrackerStat'),
+		'description' => tra('Displays some stat of a tracker content, fields are indicated with numeric ids.'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerstat' ),
 		'body' => tra('Title'),
 		'icon' => 'pics/icons/database_lightning.png',
@@ -33,40 +33,78 @@ function wikiplugin_trackerstat_info()
 			'trackerId' => array(
 				'required' => true,
 				'name' => tra('Tracker ID'),
-				'description' => tra('Tracker ID'),
+				'description' => tra('Numeric value representing the tracker ID'),
+				'filter' => 'digits',
+				'default' => '',
 			),
 			'fields' => array(
 				'required' => true,
 				'name' => tra('Fields'),
 				'description' => tra('Colon-separated list of field IDs to be displayed. Example: 2:4:5'),
+				'default' => ''
 			),
 			'show_percent' => array(
 				'required' => false,
 				'name' => tra('Show Percentage'),
-				'description' => 'y|n',
+				'description' => tra('Choose whether to show the percentage of the vote each option received (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'show_bar' => array(
 				'required' => false,
 				'name' => tra('Show Bar'),
-				'description' => 'y|n',
+				'description' => tra('Choose whether to show a bar representing the number of votes each option received (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'status' => array(
 				'required' => false,
 				'name' => tra('Status Filter'),
-				'description' => 'o|p|c|op|oc|pc|opc'.' '.tra('Which item status to list. o = open, p = pending, c = closed.'),
+				'description' => tra('Only show items matching certain status filters'),
+				'filter' => 'alpha',
+				'default' => 'o',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Open'), 'value' => 'o'), 
+					array('text' => tra('Pending'), 'value' => 'p'), 
+					array('text' => tra('Closed'), 'value' => 'c'), 
+					array('text' => tra('Open & Pending'), 'value' => 'op'), 
+					array('text' => tra('Open & Closed'), 'value' => 'oc'), 
+					array('text' => tra('Pending & Closed'), 'value' => 'pc'), 
+					array('text' => tra('Open, Pending & Closed'), 'value' => 'opc')
+				)
 			),
 			'show_link' => array(
 				'required' => false,
-				'name' => tra('Show link to tiki-view_tracker'),
-				'description' => 'y|n',
+				'name' => tra('Show Link'),
+				'description' => tra('Show link to tiki-view_tracker'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'show_lastmodif' => array(
 				'required' => false,
-				'name' => tra('Show last modification date of a tracker'),
-				'description' => tra('Date format'),
-				'filter' => 'text'
-			),
-		),
+				'name' => tra('Last Modification Date'),
+				'description' => tra('Show last modification date of a tracker. Set to y to use site setting or use PHP\s format (www.php.net/strftime).'),
+				'filter' => 'text',
+				'default' => '',
+				'accepted' => tra('y to use the site setting for short date format. Otherwise, use PHP format (www.php.net/strftime), Example: "%A %d of %B, %Y"')
+			)
+		)
 	);
 }
 
@@ -97,7 +135,7 @@ function wikiplugin_trackerstat($data, $params)
 	if (!isset($status)) {
 		$status = 'o';
 	} elseif (!$trklib->valid_status($status)) {
-		return "invalid status";
+		return tra('invalid status');
 	}
 
 	if (isset($show_percent) && $show_percent == 'y') {
@@ -152,17 +190,17 @@ function wikiplugin_trackerstat($data, $params)
 			}
 		}
 		if ($i < 0 ) {
-			return tra("incorrect fieldId")." ".$fieldId;
+			return tra('incorrect fieldId') . ' ' . $fieldId;
 		}
-		if ($allFields["data"][$i]['type'] == 'u' || $allFields["data"][$i]['type'] == 'I' || $allFields["data"][$i]['type'] == 's') {
+		if ($allFields['data'][$i]['type'] == 'u' || $allFields['data'][$i]['type'] == 'I' || $allFields['data'][$i]['type'] == 's') {
 			continue;
 		}
-		if (!($allFields["data"][$i]['isHidden'] == 'n' || $allFields["data"][$i]['isHidden'] == 'p' || ($allFields["data"][$i]['isHidden'] == 'y' && $tiki_p_admin_trackers == 'y'))) {
+		if (!($allFields['data'][$i]['isHidden'] == 'n' || $allFields['data'][$i]['isHidden'] == 'p' || ($allFields['data'][$i]['isHidden'] == 'y' && $tiki_p_admin_trackers == 'y'))) {
 			continue;
 		}
-		if ($allFields["data"][$i]['type'] == 'e') {
+		if ($allFields['data'][$i]['type'] == 'e') {
 			global $categlib; include_once('lib/categories/categlib.php');
-			$listCategs = $categlib->get_child_categories($allFields["data"][$i]['options']);
+			$listCategs = $categlib->get_child_categories($allFields['data'][$i]['options']);
 			if ($tracker_info['oneUserItem'] == 'y') {
 				$itemId = $trklib->get_user_item($trackerId, $tracker_info);
 			}
@@ -189,7 +227,7 @@ function wikiplugin_trackerstat($data, $params)
 				}
 				$v[$j]['href'] = "trackerId=$trackerId&amp;filterfield=$fieldId&amp;filtervalue[$fieldId][]=".$listCategs[$j]['categId'];
 			}
-		} else	if ($allFields["data"][$i]['type'] == 'h') {//header
+		} else	if ($allFields['data'][$i]['type'] == 'h') {//header
 			$stat['name'] = $allFields["data"][$i]['name'];
 			$stat['values'] = array();
 			$stats[] = $stat;
@@ -197,9 +235,9 @@ function wikiplugin_trackerstat($data, $params)
 		} else {
 			if ($iUser >= 0) {
 				global $user;
-				$userValues = $trklib->get_filtered_item_values($allFields["data"][$iUser]['fieldId'], $user, $allFields["data"][$i]['fieldId']);
+				$userValues = $trklib->get_filtered_item_values($allFields['data'][$iUser]['fieldId'], $user, $allFields['data'][$i]['fieldId']);
 			} else if ($iIp >= 0) {
-				$userValues = $trklib->get_filtered_item_values($allFields["data"][$iIp]['fieldId'],  $tikilib->get_ip_address(), $allFields["data"][$i]['fieldId']);
+				$userValues = $trklib->get_filtered_item_values($allFields['data'][$iIp]['fieldId'],  $tikilib->get_ip_address(), $allFields['data'][$i]['fieldId']);
 			}
 			
 			$allValues = $trklib->get_all_items($trackerId, $fieldId, $status, $allFields);
@@ -229,12 +267,12 @@ function wikiplugin_trackerstat($data, $params)
 			}
 		}
 		if (!empty($v)) {
-			$stat['name'] = $allFields["data"][$i]['name'];
+			$stat['name'] = $allFields['data'][$i]['name'];
 			$stat['values'] = $v;
 			$stats[] = $stat;
 		}
 		unset($v);
 	}
 	$smarty->assign_by_ref('stats', $stats);
-	return "~np~".$smarty->fetch('wiki-plugins/wikiplugin_trackerstat.tpl')."~/np~";
+	return '~np~' . $smarty->fetch('wiki-plugins/wikiplugin_trackerstat.tpl') . '~/np~';
 }

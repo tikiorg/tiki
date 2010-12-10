@@ -105,21 +105,26 @@
 		{select_all checkbox_names=`$field_value.ins_id`[] label="{tr}Select All{/tr}"}
 	{/if}
 	{if $field_value.options_array[1] eq 'd' || $field_value.options_array[1] eq 'm'}
+		{if $field_value.options_array[1] eq 'm'}<small>{tr}Hold "Ctrl" in order to select multiple values{/tr}</small><br />{/if}
 		<select name="{$field_value.ins_id}[]"{if $field_value.options_array[1] eq 'm'} multiple="multiple"{/if}>
 		{if $field_value.options_array[1] eq 'd' and (empty($field_value.value[0]) or $field_value.isMandatory ne 'y')}
 	   		<option value=""></option>
 		{/if}
 		{foreach key=ku item=cat from=$field_value.list}
-			<option value="{$cat.categId}"{if (!is_array($field_value.value) and $field_value.value eq $cat.categId) or (is_array($field_value.value) and in_array($cat.categId, $field_value.value))} selected="selected"{/if}>{$cat.name|escape}</option>
+			{assign var=fcat value=$cat.categId}
+			<option value="{$cat.categId}"{if $field_value.cat.$fcat eq 'y'} selected="selected"{/if}>{$cat.categpath|escape}</option>
 		{/foreach}
 		</select>
 	{else}
-	{assign var=fca value=$field_value.options}
 	<table width="100%">
-		<tr>{cycle name=2_$fca values=",</tr><tr>" advance=false print=false}
+		<tr>
 		{foreach key=ku item=iu from=$field_value.list name=eforeach}
-		{assign var=fcat value=$iu.categId }
-		<td width="50%"  class="trackerCategoryName"><input type={if $field_value.options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="{$field_value.ins_id}[]" value="{$iu.categId}" id="cat{$iu.categId}" {if (!is_array($field_value.value) and $field_value.value eq $fcat) or (is_array($field_value.value) and in_array($fcat, $field_value.value))} checked="checked"{/if}/><label for="cat{$iu.categId}">{$iu.name|escape}</label></td>{if !$smarty.foreach.eforeach.last}{cycle name=2_$fca}{else}{if $field_value.list|@count%2}<td></td>{/if}{/if}
+		{assign var=fcat value=$iu.categId}
+		<td width="50%"  class="trackerCategoryName">
+			<input type={if $field_value.options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="{$field_value.ins_id}[]" value="{$iu.categId}" id="cat{$iu.categId}" {if $field_value.cat.$fcat eq 'y'} checked="checked"{/if}/>
+			{if $field_value.options_array[4] eq 1 && !empty($iu.description)}<a href="{$iu.description|escape}" target="tikihelp" class="tikihelp" title="{$iu.name|escape}:{$iu.description|escape}">{icon _id=help alt=''}</a>{/if}
+			<label for="cat{$iu.categId}">{$iu.name|escape}</label>
+		</td>{if !$smarty.foreach.eforeach.last and $smarty.foreach.eforeach.index % 2}</tr><tr>{elseif $smarty.foreach.eforeach.last and !($smarty.foreach.eforeach.index % 2)}<td width="50%"  class="trackerCategoryName">&nbsp;</td>{/if}
 		{/foreach}
 		</tr>
 	</table>
@@ -272,10 +277,11 @@
 		{else}
 			{capture name=textarea_id}area_{$field_value.fieldId}{/capture}
 			{capture name=textarea_toolbars}{if $field_value.options_array[0] eq 1}y{else}n{/if}{/capture}
+			{capture name=textarea_simple}{if $field_value.options_array[0] eq 1}n{else}y{/if}{/capture}
 			{capture name=textarea_cols}{if $field_value.options_array[1] >= 1}{$field_value.options_array[1]}{else}50{/if}{/capture}
 			{capture name=textarea_rows}{if $field_value.options_array[2] >= 1}{$field_value.options_array[2]}{else}4{/if}{/capture}
 			{capture name=textarea_onkeyup}{if $field_value.options_array[5]}wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}'){elseif $field_value.options_array[3]}charCount({$field_value.options_array[3]}, this, 'cpt_{$field_value.fieldId}', '{tr}Character Limit Exceeded{/tr}'){/if}{/capture}
-			{textarea id=$smarty.capture.textarea_id name=$field_value.ins_id _toolbars=$smarty.capture.textarea_toolbars cols=$smarty.capture.textarea_cols rows=$smarty.capture.rows onkeyup=$smarty.capture.textarea_onkeyup}
+			{textarea id=$smarty.capture.textarea_id name=$field_value.ins_id _toolbars=$smarty.capture.textarea_toolbars _simple=$smarty.capture.textarea_simple cols=$smarty.capture.textarea_cols rows=$smarty.capture.textarea_rows onkeyup=$smarty.capture.textarea_onkeyup _wysiwyg='n' section="trackers"}
 				{$field_value.value}
 			{/textarea}
 		{/if}
@@ -340,7 +346,7 @@
 		{assign var=time value=$field_value.value}
 	{/if}
 	{if $field_value.options_array[0] ne 't'}
-		{if $field_value.isMandatory ne 'y' and (isset($field_value.options_array[3]) and $field_value.options_array[3] eq 'blank')}
+		{if ($field_value.isMandatory ne 'y' and (isset($field_value.options_array[3]) and $field_value.options_array[3] eq 'blank')) or (isset($inExportForm) and $inExportForm eq 'y')}
 			{html_select_date prefix=$field_value.ins_id time=$time start_year=$start end_year=$end field_order=$prefs.display_field_order all_empty=" "}
 		{else}
 			{html_select_date prefix=$field_value.ins_id time=$time start_year=$start end_year=$end field_order=$prefs.display_field_order}
@@ -359,13 +365,15 @@
 
 {* -------------------- drop down -------------------- *}
 {elseif $field_value.type eq 'd' or $field_value.type eq 'D'}
-	<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue={$field_value.value}{$field_value.http_request[5]}')"{/if}>
+	<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue='+escape(this.value),'{$field_value.http_request[5]}')"{/if}>
 	{assign var=otherValue value=$field_value.value}
 		{if $field_value.isMandatory ne 'y' || empty($field_value.value)}
 			<option value="">&nbsp;</option>
 		{/if}
 		{section name=jx loop=$field_value.options_array}
-			<option value="{$field_value.options_array[jx]|escape}" {if !empty($item.itemId) && $field_value.value eq $field_value.options_array[jx]}{assign var=otherValue value=''}selected="selected"{elseif (empty($item.itemId) || !isset($field_value.value)) && $field_value.defaultvalue eq $field_value.options_array[jx]}selected="selected"{/if}>{$field_value.options_array[jx]|tr_if}</option>
+			<option value="{$field_value.options_array[jx]|escape}" {if !empty($item.itemId) && ($field_value.value eq $field_value.options_array[jx] or (isset($field_value.isset) && $field_value.isset == 'n' && $field_value.defaultvalue eq $field_value.options_array[jx]))}{assign var=otherValue value=''}selected="selected"{elseif (empty($item.itemId) || !isset($field_value.value)) && $field_value.defaultvalue eq $field_value.options_array[jx]}selected="selected"{/if}>
+				{$field_value.options_array[jx]|tr_if}
+			</option>
 		{/section}
 	</select>
 	{if $field_value.type eq 'D'}
@@ -384,7 +392,7 @@
 		{/if}
 		{if !$smarty.section.jx.first or $sepR ne '<br />'}
 			<input type="radio" name="{$field_value.ins_id}" value="{$field_value.options_array[jx]|escape}" {if $field_value.value eq $field_value.options_array[jx] or $field_value.defaultvalue eq $field_value.options_array[jx]}checked="checked"{/if} id="{$field_value.ins_id[jx]}" />
-			<label for="{$field_value.ins_id[jx]}">{$field_value.options_array[jx]|tr_if}</label>
+			<label {*for="{$field_value.ins_id[jx]}"*}>{$field_value.options_array[jx]|tr_if}</label>
 			{if !$smarty.section.jx.last}{$sepR}{/if}
 		{/if}
 	{/section}
@@ -434,7 +442,7 @@
 {* -------------------- dynamic list -------------------- *}
 {elseif $field_value.type eq 'w'}
 	<script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
-<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue={$field_value.value}{$field_value.http_request[5]}')"{/if}>
+<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue='+escape(this.value),'{$field_value.http_request[5]}')"{/if}>
 	</select>
 
 
@@ -499,7 +507,13 @@
 		<a href="javascript:addTag{$field_value.ins_id|replace:"[":"_"|replace:"]":""}('{$smarty.capture.tagurl|escape:'javascript'|escape}');" onclick="javascript:needToConfirm=false">{$t|escape}</a>&nbsp; &nbsp; 
 	{/foreach}
 	{/if}
-		
+
+{* -------------------- LDAP -------------------- *}
+{elseif $field_value.type eq 'P'}
+	{if $field_value.value ne ''}
+		{$field_value.value}
+	{/if}
+
 {* -------------------- in group -------------------- *}
 {elseif $field_value.type eq 'N'}
 	{include file='tracker_item_field_value.tpl'}

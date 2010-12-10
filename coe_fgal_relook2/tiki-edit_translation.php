@@ -5,24 +5,14 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-$tracesOn = false;
-
 require_once('tiki-setup.php');
 
 include_once('lib/multilingual/multilinguallib.php');
 include_once('modules/mod-func-translation.php');
 
-if ($tracesOn) {
-	echo "<pre>-- tiki-edit_translation: \$_REQUEST="; var_dump($_REQUEST); echo "</pre>\n";
-}
-
 execute_module_translation();
 
 $access->check_feature('feature_multilingual');
-
-if (isset($_REQUEST['page'])) {
-	$smarty->assign('page', $_REQUEST['page']);
-}
 	
 if (!(isset($_REQUEST['page']) && $_REQUEST['page']) && !(isset($_REQUEST['id']) && $_REQUEST['id'])) {
 	$smarty->assign('msg',tra("No object indicated"));
@@ -50,7 +40,6 @@ if ((!isset($_REQUEST['type']) || $_REQUEST['type'] == 'wiki page' || $_REQUEST[
 	$langpage = $info['lang'];
 	$fullLangName = $langmapping[$langpage][0];
 	$smarty->assign( 'languageName', $fullLangName );
-	$smarty->assign( 'source_page', $name );
 	$cat_type = 'wiki page';
 	$cat_objid = $name;
 
@@ -78,8 +67,18 @@ else if ($_REQUEST['id']) {
 		$type = "wiki page";
 		$objId = $info['page_id'];
 		$langpage = $info['lang'];
+		$fullLangName = $langmapping[$langpage][0];
+		$smarty->assign( 'languageName', $fullLangName );
 		$cat_type = 'wiki page';
 		$cat_objid = $name;
+		
+		$edit_data = $info['data'];
+		$smarty->assign('pagedata', TikiLib::htmldecode($edit_data));
+		
+		if ($prefs['feature_translation_incomplete_notice'] == 'y') {
+			$smarty->assign('translate_message', "^".tra("Translation of this page is incomplete.")."^\n\n");
+		}
+		
 	}
 	else if ($_REQUEST['type'] == "article") {
 		global $artlib; require_once 'lib/articles/artlib.php';
@@ -93,20 +92,14 @@ else if ($_REQUEST['id']) {
 		$type = "article";
 		$objId = $_REQUEST['id'];
 		$langpage = $info['lang'];
-		$articles = $artlib->list_articles(0, -1, 'title_asc', '', '', '', $user);
-		$smarty->assign('articles', $articles["data"]);
 		$cat_type = 'article';
 		$cat_objid = $objId;
 		$fullLangName = $langmapping[$langpage][0];
 		$smarty->assign( 'languageName', $fullLangName );
-		$smarty->assign( 'source_page', $name );
-
 	}
 }
 
 $smarty->assign('name', $name);
-$smarty->assign('target_page', $name);
-
 $smarty->assign('type', $type);
 $smarty->assign('id', $objId);
 
@@ -136,7 +129,7 @@ if ($type == "wiki page") {
   }  
   if ((!isset($allowed_for_staging_only) || $allowed_for_staging_only != 'y') && !($tiki_p_admin_wiki== 'y' || $tiki_p_edit == 'y' || ($prefs['wiki_creator_admin'] == 'y' && $user && $info['creator'] == $user) )) {
 	  $smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+		$smarty->assign('msg', tra("You do not have permission to edit this page."));
 		$smarty->display("error.tpl");
 		die;
 	}
@@ -264,7 +257,7 @@ if ($type == "wiki page") {
 else if ($type == "article") {
 	if ($tiki_p_admin_cms != 'y' && !$tikilib->user_has_perm_on_object($user, $id, 'article', 'tiki_p_edit_article') and ($info['author'] != $user or $info['creator_edit'] != 'y')) {
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot edit this article"));
+		$smarty->assign('msg', tra("You do not have permission to edit this article"));
 		$smarty->display("error.tpl");
 		die;
 	}
@@ -291,6 +284,11 @@ ask_ticket('edit-translation');
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
+if ($type == 'article') {
+	$articles = $artlib->list_articles(0, -1, 'title_asc', '', '', '', $user);
+	$smarty->assign('articles', $articles["data"]);
+}
 
 // Display the template
 $smarty->assign('mid', 'tiki-edit_translation.tpl');

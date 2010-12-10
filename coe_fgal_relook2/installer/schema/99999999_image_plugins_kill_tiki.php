@@ -135,7 +135,7 @@ objects:
    description:
     name: Image
     documentation: PluginImage
-    description: Display images
+    description: Display images (transitional alias, use IMG plugin instead)
     params:
      fileId:
       required: false

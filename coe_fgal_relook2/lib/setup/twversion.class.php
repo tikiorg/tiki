@@ -23,7 +23,7 @@ class TWVersion
 		//   stable   : Represents stable releases.
 		//   unstable : Represents candidate and test/development releases.
 		//   trunk     : Represents next generation development version.
-		$this->branch 	= 'trunk';
+		$this->branch 	= 'unstable';
 
 		// Set everything else, including defaults.
 		$this->version 	= '7.0 SVN trunk';
@@ -130,7 +130,14 @@ class TWVersion
 				'5.2',
 				'5.3',
 				'6.0beta1',
-				);
+				'6.0beta2',
+				'6.0beta3',
+				'6.0RC1',
+				'6.0',
+				'6.1alpha1',
+				'6.1beta1',
+				'6.1beta2',
+			);
 	}
 
 	// Gets the latest star used by Tiki.

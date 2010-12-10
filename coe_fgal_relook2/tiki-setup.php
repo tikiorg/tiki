@@ -11,7 +11,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
 	exit;
 }
-if (version_compare(PHP_VERSION, '5.0.0', '<')) {
+if (version_compare(PHP_VERSION, '5.1.0', '<')) {
 	header('location: tiki-install.php');
 	exit;
 }
@@ -83,7 +83,7 @@ if ($prefs['feature_sefurl'] == 'y') {
 	//TODO: need a better way to know which is the type of the tikiIndex URL (wiki page, blog, file gallery etc)
 	//TODO: implement support for types other than wiki page and blog
 	if ($prefs['tikiIndex'] == 'tiki-index.php' && $prefs['wikiHomePage']) {
-		include_once('lib/wiki/wikilib.php');
+		global $wikilib; include_once('lib/wiki/wikilib.php');
 		$prefs['tikiIndex'] = $wikilib->sefurl($userlib->best_multilingual_page($prefs['wikiHomePage']));
 	} else if (substr($prefs['tikiIndex'], 0, strlen('tiki-view_blog.php')) == 'tiki-view_blog.php') {
 		include_once('tiki-sefurl.php');
@@ -202,7 +202,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 	$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );
 	
 	if( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
-		$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js', 'external' );
+		$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js', 'external' );
 	} else {
 		if ( $prefs['tiki_minify_javascript'] === 'y' ) {
 			$headerlib->add_jsfile( 'lib/jquery/jquery.min.js' );
@@ -227,7 +227,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 	
 	if( $prefs['feature_jquery_ui'] == 'y' ) {
 		if( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
-			$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js', 'external' );
+			$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js', 'external' );
 		} else {
 			if ( $prefs['tiki_minify_javascript'] === 'y' ) {
 				$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js' );
@@ -275,17 +275,30 @@ if ($prefs['javascript_enabled'] != 'n') {
 		$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/plugins/menu.css' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/mbMenu.min.js' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/jquery.scrollTo-min.js' );
-		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/jgcharts.min.js' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/raphael-min.js', 'external' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.raphael-min.js', 'external' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.pie-min.js', 'external' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.line-min.js', 'external' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.dot-min.js', 'external' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.bar-min.js', 'external' );
 	}
 	if( $prefs['feature_jquery_media'] == 'y' ) {
 		$headerlib->add_jsfile( 'lib/jquery/jquery.media.js');
 	}
 	if( $prefs['feature_jquery_jqs5'] == 'y' ) {
-		if (strpos($_SERVER['PHP_SELF'], 'tiki-index_raw.php') !== false && isset($_REQUEST['format']) && $_REQUEST['format'] == 'jqs5') {
+		if ((strpos($_SERVER['PHP_SELF'], 'tiki-index_raw.php') !== false && 
+			isset($_REQUEST['format']) && $_REQUEST['format'] == 'jqs5') ||
+			strpos($_SERVER['PHP_SELF'], 'tiki-slideshow.php') !== false
+			) {
 			$headerlib->add_cssfile( 'lib/jquery/jquery.s5/jquery.s5.css' );
 			//$headerlib->add_cssfile( 'lib/jquery/jqs5/theme/staticfree/style.css' );
 			$headerlib->add_jsfile( 'lib/jquery/jquery.s5/jquery.s5.js' );
-			$headerlib->add_jq_onready( '$("h1,h2,h3,h5,h6").first().parent().tiki("s5", "", {});', 20 );	// late, and tell jqs5 where the page is in tiki
+			$headerlib->add_jq_onready( '
+				$("h1,h2,h3,h5,h6").first().parent()
+					.tiki("s5", "", {});
+				$(".main").hide();
+				$("#show-errors-button").hide();
+			', 20 );	// late, and tell jqs5 where the page is in tiki
 			$prefs['feature_wiki_description'] = 'n';
 			$prefs['wiki_authors_style'] = 'none';
 			$prefs['feature_page_title'] = 'n';

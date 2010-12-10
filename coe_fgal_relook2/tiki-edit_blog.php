@@ -60,7 +60,7 @@ if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 	if ($data["user"] != $user || !$user) {
 		if ($tiki_p_blog_admin != 'y') {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("Permission denied you cannot edit this blog"));
+			$smarty->assign('msg', tra("You do not have permission to edit this blog"));
 
 			$smarty->display("error.tpl");
 			die;

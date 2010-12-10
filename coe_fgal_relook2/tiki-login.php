@@ -209,24 +209,24 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 }
 if ($isvalid) {
 
-    if ($prefs['feature_invit'] == 'y') {
-        // tiki-invit, this part is just here to add groups to users which just registered after received an
-        // invitation via tiki-invit.php and set the redirect to wiki page if required by the invitation
-        $res = $tikilib->query("SELECT `id`,`id_invit` FROM `tiki_invited` WHERE `used_on_user`=? AND used=?", array($user, "registered"));
-        $invitrow=$res->fetchRow();
-        if (is_array($invitrow)) {
-            $id_invited=$invitrow['id'];
-            $id_invit=$invitrow['id_invit'];
+    if ($prefs['feature_invite'] == 'y') {
+        // tiki-invite, this part is just here to add groups to users which just registered after received an
+        // invitation via tiki-invite.php and set the redirect to wiki page if required by the invitation
+        $res = $tikilib->query("SELECT `id`,`id_invite` FROM `tiki_invited` WHERE `used_on_user`=? AND used=?", array($user, "registered"));
+        $inviterow=$res->fetchRow();
+        if (is_array($inviterow)) {
+            $id_invited=$inviterow['id'];
+            $id_invite=$inviterow['id_invite'];
             // set groups
             
-            $groups = $tikilib->getOne("SELECT `groups` FROM `tiki_invit` WHERE `id` = ?", array((int)$id_invit));
+            $groups = $tikilib->getOne("SELECT `groups` FROM `tiki_invite` WHERE `id` = ?", array((int)$id_invite));
             $groups = explode(',', $groups);
             foreach ($groups as $group)
                 $userlib->assign_user_to_group($user, trim($group));
-            $tikilib->query("UPDATE `tiki_invited` SET `used`=? WHERE id_invit=?", array("logged", (int)$id_invited));
+            $tikilib->query("UPDATE `tiki_invited` SET `used`=? WHERE id_invite=?", array("logged", (int)$id_invited));
             
             // set wiki page required by invitation
-            if (!empty($invitrow['wikipageafter'])) $_REQUEST['page']=$invitrow['wikipageafter'];
+            if (!empty($inviterow['wikipageafter'])) $_REQUEST['page']=$inviterow['wikipageafter'];
         }
     }
 
@@ -325,12 +325,44 @@ if ($isvalid) {
 				}
 			}
 		}
-	} else {
+	} else {	// if ($isvalid)
+		// not valid - check if site is closed first
+		if ($prefs['site_closed'] === 'y') {
+			unset($bypass_siteclose_check);
+			include 'lib/setup/site_closed.php';
+		}
+		
 		if (isset($_REQUEST['url'])) {
 			$smarty->assign('url', $_REQUEST['url']);
 		}
-		if ($error == PASSWORD_INCORRECT && $prefs['unsuccessful_logins'] >= 0) {
-			if (($nb_bad_logins = $userlib->unsuccessful_logins($user)) >= $prefs['unsuccessful_logins']) {
+		if ($error == PASSWORD_INCORRECT && ($prefs['unsuccessful_logins'] >= 0 || $prefs['unsuccessful_logins_invalid'] >= 0)) {
+			$nb_bad_logins = $userlib->unsuccessful_logins($user);
+			if ($prefs['unsuccessful_logins_invalid'] > 0 && ($nb_bad_logins >= $prefs['unsuccessful_logins_invalid'] - 1)) {
+				$info = $userlib->get_user_info($user);
+				$userlib->change_user_waiting($user, 'a');
+				$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins_invalid']);
+				$msg .= ' '.tra('Your account has been suspended.').' '.tra('A site administrator will reactivate it');
+				include_once ('lib/webmail/tikimaillib.php');
+				$mail = new TikiMail();
+				$smarty->assign('msg', $msg);
+				$smarty->assign('mail_user', $user);
+				$foo = parse_url($_SERVER['REQUEST_URI']);
+				$mail_machine = $tikilib->httpPrefix( true ).str_replace('tiki-login.php', '', $foo['path']);
+				$smarty->assign('mail_machine', $mail_machine);
+				$mail->setText($smarty->fetch('mail/unsuccessful_logins_suspend.tpl'));
+				$mail->setSubject($smarty->fetch('mail/unsuccessful_logins_suspend_subject.tpl'));
+				$emails = !empty($prefs['validator_emails'])?preg_split('/,/', $prefs['validator_emails']): (!empty($prefs['sender_email'])? array($prefs['sender_email']): '');
+				if (!$mail->send(array($info['email'])) || !$mail->send($emails)) {
+					$smarty->assign('msg', tra("The mail can't be sent. Contact the administrator"));
+					$smarty->display("error.tpl");
+					die;
+				}
+				$smarty->assign('user', '');
+				unset($user);
+				$smarty->assign('mid', 'tiki-information.tpl');
+				$smarty->display('tiki.tpl');
+				die;
+			} elseif ($prefs['unsuccessful_logins'] > 0 && ($nb_bad_logins >= $prefs['unsuccessful_logins'] - 1)) {
 				$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins']);
 				$smarty->assign('msg', $msg);
 				if ($userlib->send_confirm_email($user, 'unsuccessful_logins')) {
@@ -346,13 +378,14 @@ if ($isvalid) {
 			}
 			$userlib->set_unsuccessful_logins($user, $nb_bad_logins + 1);
 		}
+		unset($user); // Important so that modules are showing based on anonymous
 		unset($isvalid);
 		switch ($error) {
 			case PASSWORD_INCORRECT:
 			case USER_NOT_FOUND:
 				$smarty->assign('error_login', $error);
 				$smarty->assign('mid', 'tiki-login.tpl');
-				$smarty->assign('error_user', $user);
+				$smarty->assign('error_user', $_REQUEST["user"]);
 				$smarty->display('tiki.tpl');
 				exit;
 

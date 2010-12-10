@@ -62,7 +62,7 @@
 			<input type="hidden" name="data" value="{$data|escape}" />
 			<input type="hidden" name="dataparsed" value="{$dataparsed|escape}" />
 			<input type="hidden" name="cookietab" value="3" />
-			<input type="hidden" name="datatxt" value="{$datatxt|escape}" />
+			<input type="hidden" name="datatxt" value="{$info.datatxt|escape}" />
 			<input type="hidden" name="replyto" value="{$replyto|escape}" />
 			<input type="hidden" name="wysiwyg" value="{$wysiwyg|escape}" />
 			<input type="submit" name="send" value="{tr}Send{/tr}" onclick="document.getElementById('confirmArea').style.display = 'none'; document.getElementById('sendingArea').style.display = 'block';" />
@@ -163,15 +163,15 @@
 			<input type="hidden" name="editionId" value="{$info.editionId}"/>
 			<table class="formcolor" id="newstable">
 				<tr>
-					<td>{tr}Subject:{/tr}</td>
+					<td><label for="subject">{tr}Subject:{/tr}</label></td>
 					<td>
-						<input type="text" maxlength="250" size="80" name="subject" value="{$info.subject|escape}" />
+						<input type="text" maxlength="250" size="80" id="subject" name="subject" value="{$info.subject|escape}" />
 					</td>
 				</tr>
 				<tr>
-					<td>{tr}Newsletter:{/tr}</td>
+					<td><label for="nlId">{tr}Newsletter:{/tr}</label></td>
 					<td>
-						<select name="nlId" onchange="checkNewsletterTxtArea(this.selectedIndex);">
+						<select name="nlId" id="nlId" onchange="checkNewsletterTxtArea(this.selectedIndex);">
 							{section loop=$newsletters name=ix}
 								<option value="{$newsletters[ix].nlId|escape}" {if $newsletters[ix].nlId eq $nlId}selected="selected"{/if}>
 									{$newsletters[ix].name|escape}
@@ -200,9 +200,9 @@
 			
 				{if $tpls}
 					<tr>
-						<td>{tr}Apply template{/tr}</td>
+						<td><label for="usedTpl">{tr}Apply template{/tr}</label></td>
 						<td>
-							<select name="usedTpl">
+							<select id="usedTpl"name="usedTpl">
 								<option value="">{tr}none{/tr}</option>
 								{section name=ix loop=$tpls}
 									<option value="{$tpls[ix]|escape}" {if $usedTpl eq $tpls[ix]}selected="selected"{/if}>{$tpls[ix]}</option>
@@ -214,22 +214,22 @@
 
 				<tr>
 					<td colspan="2">
-						{tr}Data HTML:{/tr}
+						<label for="editwiki">{tr}Data HTML:{/tr}</label>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
 						{textarea name='data' id='editwiki'}{$info.data}{/textarea}
-						{tr}Must be wiki parsed:{/tr} <input type="checkbox" name="wikiparse" {if empty($info.wikiparse) or $info.wikiparse eq 'y'} checked="checked"{/if} />
+						<label>{tr}Must be wiki parsed:{/tr} <input type="checkbox" name="wikiparse" {if empty($info.wikiparse) or $info.wikiparse eq 'y'} checked="checked"{/if} /></label>
 					</td>
 				</tr>
 
 				<tr>
 					<td id="txtcol1">
-						{tr}Data Txt:{/tr}
+						<label for="editwikitxt">{tr}Data Txt:{/tr}</label>
 					</td>
 					<td id="txtcol2" >
-						<textarea id='editwikitxt' name="datatxt" rows="{$rows}" cols="{$cols}">{$datatxt|escape}</textarea>
+						<textarea id='editwikitxt' name="datatxt" rows="{$rows}" cols="{$cols}">{$info.datatxt|escape}</textarea>
 					</td>
 				</tr>
 
@@ -265,8 +265,8 @@
 				</tr>
 
 				<tr>
-					<td id="txtcol1">{tr}Reply To Email{/tr}</td>
-					<td id="txtcol2" ><input type="text" name="replyto" value="{$replyto|escape}" /> {tr}if not:{/tr} {$prefs.sender_email|escape}</td>
+					<td id="txtcol1"><label for="replyto">{tr}Reply To Email{/tr}</label></td>
+					<td id="txtcol2" ><input type="text" name="replyto" id="replyto" value="{$replyto|escape}" /> {tr}if not:{/tr} {$prefs.sender_email|escape|default:"<em>{tr}Sender email not set{/tr}</em>"}</td>
 				</tr>
 
 				<tr>

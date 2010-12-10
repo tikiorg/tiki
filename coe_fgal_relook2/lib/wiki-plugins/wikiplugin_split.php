@@ -27,7 +27,7 @@ function wikiplugin_split_info()
 {
 	return array(
 		'name' => tra('Split'),
-		'documentation' => 'PluginSplit',
+		'documentation' => tra('PluginSplit'),
 		'description' => tra('Split a page into rows and columns'),
 		'prefs' => array( 'wikiplugin_split' ),
 		'filter' => 'wikicontent',
@@ -35,38 +35,71 @@ function wikiplugin_split_info()
 			'joincols' => array(
 				'required' => false,
 				'name' => tra('Join Columns'),
-				'description' => 'y|n'.' '.tra('Generate the colspan attribute if columns are missing' ),
-				'filter' => 'alpha',
+				'description' => tra('Generate the colspan attribute if columns are missing' ),
+				'filter' => 'striptags',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'fixedsize' => array(
 				'required' => false,
 				'name' => tra('Fixed Size'),
-				'description' => 'y|n'.' '.tra('Generate the width attribute on the columns'),
-				'filter' => 'alpha',
+				'description' => tra('Generate the width attribute for the columns'),
+				'filter' => 'striptags',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'colsize' => array(
 				'required' => false,
-				'name' => tra('Column Size'),
-				'description' => tra('?'),
+				'name' => tra('Column Sizes'),
+				'description' => tra('Specify all column widths in number of pixels or percent, separating each width by a pipe (|)'),
+				'default' => '',
 			),
 			'first' => array(
 				'required' => false,
 				'name' => tra('First'),
-				'description' => 'col|line',
+				'description' => tra('Cells specified are ordered first left to right across rows (default) or top to bottom down columns'),
 				'filter' => 'alpha',
+				'default' => 'line',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Column'), 'value' => 'col'), 
+					array('text' => tra('Line'), 'value' => 'line')
+				)
 			),
 			'edit' => array(
 				'required' => false,
 				'name' => tra('Editable'),
-				'description' => 'y|n'.' '.tra('Display edit icon for each section'),
+				'description' => tra('Display edit icon for each section'),
+				'filter' => 'striptags',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'customclass' => array(
 				'required' => false,
-				'name' => tra('Custom class'),
-				'description' => tra('add a class to customize the design'),
+				'name' => tra('Custom Class'),
+				'description' => tra('Add a class to customize the design'),
+				'default' => '',
 			),
 		),
 	);
+}
+function wikiplugin_split_rollback($data, $hashes) {
+	foreach($hashes as $hash=>$match) {
+		$data = str_replace($hash, $match, $data);
+	}
+	return $data;
 }
 
 /*
@@ -82,6 +115,14 @@ function wikiplugin_split($data, $params, $pos)
 {
 	global $tikilib, $tiki_p_admin_wiki, $tiki_p_admin, $section;
 	global $replacement;
+	preg_match_all('/{SPLIT.+{SPLIT}/imU', $data, $matches);
+	$hashes = array();
+	foreach ($matches[0] as $match) {
+		if (empty($match)) continue;
+		$hash = md5($match);
+		$hashes[$hash] = $match;
+		$data = str_replace($match, $hash, $data);
+	}
 
     // Remove first <ENTER> if exists...
     // it may be here if present after {SPLIT()} in original text
@@ -110,7 +151,7 @@ function wikiplugin_split($data, $params, $pos)
    // Is there split sections present?
    // Do not touch anything if no... even don't generate <table>
    if (count($rows) <= 1 && count($rows[0]) <= 1)
-      return $data;
+	   return wikiplugin_split_rollback($data, $hashes);
 
 	$percent = false;
 	if (isset($colsize)) {
@@ -142,7 +183,7 @@ function wikiplugin_split($data, $params, $pos)
 
     // Attention: Dont forget to remove leading empty line in section ...
     //            it should remain from previous '---' line...
-    // Attention: origianl text must be placed between \n's!!!
+    // Attention: original text must be placed between \n's!!!
     if (!isset($first) || $first != 'col') {
        foreach ($rows as $r) {
           $result .= "<tr>";
@@ -200,7 +241,7 @@ function wikiplugin_split($data, $params, $pos)
 				$result .= '<div class="split"><div style="float:right">';
 $result .= "$pos-$icell-".htmlspecialchars(substr($data, $pos, 10));
  				$result .= '<a href="tiki-editpage.php?page='.$object.'&amp;pos='.$pos.'&amp;cell='.$icell.'">'
-  	                    .'<img src="pics/icons/page_edit.png" alt="'.tra('Edit').'" title="'.tra('Edit').'" border="0" width="16" height="16" /></a></div><br />';
+  	                    .'<img src="pics/icons/page_edit.png" alt="'.tra('Edit').'" title="'.tra('Edit').'" width="16" height="16" /></a></div><br />';
  				$ind += strlen($i);
 				while (isset($data[$ind]) && ($data[$ind] == '-' || $data[$ind] == '@'))
 					++$ind;
@@ -218,7 +259,7 @@ $result .= "$pos-$icell-".htmlspecialchars(substr($data, $pos, 10));
     // Close HTML table (no \n at end!)
 	$result .= "</table>";
 
-	return $result;
+	return wikiplugin_split_rollback($result, $hashes);
 }
 
 // find the real start and the real end of a cell

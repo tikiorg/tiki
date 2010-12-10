@@ -22,7 +22,7 @@ function wikiplugin_quote_help() {
 function wikiplugin_quote_info() {
 	return array(
 		'name' => tra('Quote'),
-		'documentation' => 'PluginQuote',
+		'documentation' => tra('PluginQuote'),
 		'description' => tra("Quote text by surrounding the text with a box, like the [QUOTE] BBCode"),
 		'prefs' => array( 'wikiplugin_quote' ),
 		'body' => tra('Quoted text'),
@@ -31,9 +31,10 @@ function wikiplugin_quote_info() {
 		'params' => array(
 			'replyto' => array(
 				'required' => false,
-				'name' => tra('Reply to'),
+				'name' => tra('Reply To'),
 				'description' => tra('Name of the quoted person.'),
 				'filter' => 'text',
+				'default' => '',
 			),
 		),
 	);

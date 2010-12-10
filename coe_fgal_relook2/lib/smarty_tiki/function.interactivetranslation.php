@@ -46,7 +46,7 @@ function smarty_function_interactivetranslation($params, &$smarty) {
 		\$('#intertrans-form').hide();
 		return false;
 	} );
-	\$('body').css('padding-top', 50 );
+	\$('body').css('padding-top', 64);
 
 	var interTransDone = false;
 	\$('#intertrans-form form').submit( function( e ) {
@@ -86,10 +86,11 @@ function smarty_function_interactivetranslation($params, &$smarty) {
 		var alt = \$(this).attr('alt');
 		var title = \$(this).attr('title');
 		var applicable = \$(data).filter( function( k ) {
-			return ( text && text.length && text.indexOf( this[1] ) != -1 )
-				|| ( val && val.length && val.indexOf( this[1] ) != -1 )
-				|| ( alt && alt.length && alt.indexOf( this[1] ) != -1 )
-				|| ( title && title.length && title.indexOf( this[1] ) != -1 );
+			var textToSearchFor = $('<span>' + this[1] + '</span>').text();
+			return ( text && text.length && text.indexOf( textToSearchFor ) != -1 )
+				|| ( val && val.length && val.indexOf( textToSearchFor ) != -1 )
+				|| ( alt && alt.length && alt.indexOf( textToSearchFor ) != -1 )
+				|| ( title && title.length && title.indexOf( textToSearchFor ) != -1 );
 		} );
 		if (applicable.length === 0) {
 			applicable = \$([[ text, "", true ]]);

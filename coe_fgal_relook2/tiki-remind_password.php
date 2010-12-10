@@ -76,8 +76,8 @@ if (isset($_REQUEST["remind"])) {
 		$smarty->assign('mail_ip', $tikilib->get_ip_address());
 		$mail_data = sprintf($smarty->fetchLang($languageEmail, 'mail/password_reminder_subject.tpl'), $_SERVER["SERVER_NAME"]);
 		$mail = new TikiMail($name);
-		$mail->setSubject(sprintf($mail_data, $_SERVER["SERVER_NAME"]));
-		$mail->setText($smarty->fetchLang($languageEmail, 'mail/password_reminder.tpl'));
+		$mail->setSubject($mail_data);
+		$mail->setText(stripslashes($smarty->fetchLang($languageEmail, 'mail/password_reminder.tpl')));
 
 		// grab remote IP through forwarded-for header when served by cache
 		$mail->setHeader( 'X-Password-Reset-From', $tikilib->get_ip_address() );

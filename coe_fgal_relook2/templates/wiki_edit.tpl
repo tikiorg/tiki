@@ -12,7 +12,7 @@
 <div id='edit-zone'>
 	{if $textarea__toolbars ne 'n'}
 	<div class='textarea-toolbar' id='{$textarea_id|default:editwiki}_toolbar'>
-		{toolbars area_id=$textarea_id|default:editwiki comments=$comments switcheditor=$switcheditor}
+		{toolbars area_id=$textarea_id|default:editwiki comments=$comments switcheditor=$switcheditor section=$toolbar_section}
 	</div>
 	{/if}
 	<textarea id="{$textarea_id|default:editwiki}" class="{$textarea_class|default:wikiedit}" name="{$textarea_name|default:edit}" {$textarea_attributes}>{$pagedata}</textarea>

@@ -37,7 +37,7 @@ CKEDITOR.plugins.add('tikiwiki',{
 			url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
 			type: "POST",
 			data: {
-				script: editor.config.autoSaveSelf,
+				referer: editor.config.autoSaveSelf,
 				editor_id: editor.name,
 				data: encodeURIComponent(html),
 				command: "toWikiFormat"
@@ -66,7 +66,7 @@ CKEDITOR.plugins.add('tikiwiki',{
 			url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
 			type: "POST",
 			data: {
-				script: editor.config.autoSaveSelf,
+				referer: editor.config.autoSaveSelf,
 				editor_id: editor.name,
 				data: encodeURIComponent(data),
 				command: "toHtmlFormat"

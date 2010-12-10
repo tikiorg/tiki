@@ -30,116 +30,47 @@ if ($tiki_p_edit != 'y') {
 $content = $_POST['content'];
 $current = $info['data'];
 
-$pos = -1;
+$matches = WikiParser_PluginMatcher::match($current);
 $count = 0;
-while( true )
+foreach( $matches as $match )
 {
-	$posA = strpos( $current, $sa = "{{$type}(", $pos + 1 );
-	$posB = $posB = strpos( $current, $sb = "{{$plugin}", $pos + 1 );
-
-	if( $posA === false && $posB === false )
-		break;
-
-	// Make sure we didn't get a partial word with {plugin (ex: {pluginfoo)
-	if( $posB !== false && ctype_alnum( $current{$posB + 1 + strlen($plugin)} ) ) {
-		$pos = $posB;
-		$posB = false;
-	}
-	
-	$syntax = 'normal';
-	if( $posA !== false && $posB !== false ) {
-		// out of {PLUGIN( or {plugin, take the lowest one
-		$pos = min( $posA, $posB );
-	} elseif( $posA !== false ) {
-		$pos = $posA;
-	} elseif( $posB !== false ) {
-		$pos = $posB;
-		$syntax = 'short';
-	} else {
-		$pos++;
+	if( $match->getName() !== $plugin ) {
 		continue;
 	}
 
 	++$count;
 
-	if( $_POST['index'] == $count )
-	{
-		$hasBody = false;
-
-		if( $syntax == 'normal' ) {
-			$endparamA = strpos( $current, '/}', $pos );
-			$endparamB = strpos( $current, ')}', $pos );
-			if( false === $endparamA && false === $endparamB )
-				die( 'Failed to find end of plugin code.' );
-			if( ( false !== $endparamA 
-				&& ( false !== $endparamB && $endparamA < $endparamB ) )
-				|| $endparamB === false )
-			{
-				$endparam = $endparamA + 2;
-			}
-			else
-			{
-				$endparam = $endparamB + 2;
-				$hasBody = true;
-			}
-		} else {
-			if( false !== $endparam = strpos( $current, '}', $pos ) )
-				$endparam = $endparam + 1;
-		}
-
-		if( $hasBody )
-		{
-			$body = $endparam;
-			$endbody = strpos( $current, "{{$type}}", $endparam );
-			if( false === $endbody )
-				die( 'Failed to find end of plugin body.' );
-
-			$before = substr( $current, 0, $body );
-			$after = substr( $current, $endbody + strlen("{{$type}}") );
-		}
-		else
-		{
-			$before = substr( $current, 0, $endparam );
-			$after = substr( $current, $endparam );
-		}
-
+	if( $_POST['index'] == $count ) {
 		$hasBody = !empty($content) && !ctype_space( $content );
+		$params = $match->getArguments();
 
 		// If parameters are provided, rebuild the parameter line
 		if( isset( $_POST['params'] ) && is_array( $_POST['params'] ) )
 		{
-		  // $values was relaxed to accept any argument rather than those defined up front 
-		  // in the plugin's parameter list. This facilitates the use of modules as plugins.
-		        $values = $_POST['params'];
+			// $values was relaxed to accept any argument rather than those defined up front 
+			// in the plugin's parameter list. This facilitates the use of modules as plugins.
+			$values = $_POST['params'];
 
 			$parts = array();
-			foreach( $values as $key => $value )
+			foreach( $values as $key => $value ) {
 				if( ! empty( $value ) )
 					$parts[] = "$key=\"" . str_replace( '"', "\\\"", $value ) . '"';
+			}
 
 			$params = implode( ' ', $parts );
-
-			if( $hasBody )
-				$before = substr( $before, 0, $pos )
-					. "{{$type}($params)}";
-			else
-				$before = substr( $before, 0, $pos )
-					. "{{$plugin} $params}";
-		}
-		elseif( $syntax == 'short' && $hasBody )
-		{
-			// Need to convert the begining of the plugin to the long syntax
-			$before = substr( $before, 0, $pos )
-				. "{{$type}(" . substr( $before, $pos + strlen($plugin) + 2, -1 ) . ")}";
 		}
 
 		// Replace the content
-		if( $hasBody )
-			$content = $before . $content . "{{$type}}" . $after;
-		else
-			$content = $before . $content . $after;
+		if( $hasBody ) {
+			$content = "{{$type}($params)}$content{{$type}}";
+		} else {
+			$content = "{{$plugin} $params}";
+		}
 
-		$tikilib->update_page( $page, $content, $_POST['message'], $user, $tikilib->get_ip_address() );
+		$match->replaceWith($content);
+
+		$tikilib->update_page( $page, $matches->getText(), $_POST['message'], $user, $tikilib->get_ip_address() );
+		break;
 	}
 }
 

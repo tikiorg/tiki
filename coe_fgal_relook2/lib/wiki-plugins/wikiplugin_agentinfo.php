@@ -15,7 +15,7 @@ function wikiplugin_agentinfo_help() {
 function wikiplugin_agentinfo_info() {
 	return array(
 		'name' => tra( 'User Agent Info' ),
-		'documentation' => 'PluginAgentinfo',
+		'documentation' => tra('PluginAgentinfo'),
 		'description' => tra( 'Displays various information about the client.' ),
 		'prefs' => array('wikiplugin_agentinfo'),
 		'params' => array(
@@ -26,6 +26,7 @@ function wikiplugin_agentinfo_info() {
 				'default' => 'IP',
 				'filter' => 'alpha',
     			'options' => array(
+					array('text' => '', 'value' => ''), 
 					array('text' => tra('IP address'), 'value' => 'IP'), 
 					array('text' => tra('Server software'), 'value' => 'SVRSW'), 
 					array('text' => tra('Browser'), 'value' => 'BROWSER'), 
@@ -51,11 +52,11 @@ function wikiplugin_agentinfo($data, $params) {
 		$asetup = $tikilib->get_ip_address();
 	}
 
-	if ($info == 'SVRSW') {
+	if ($info == 'SVRSW' && isset($_SERVER['SERVER_SOFTWARE'])) {
 		$asetup = $_SERVER["SERVER_SOFTWARE"];
 	}
 	
-	if ($info == 'BROWSER') {
+	if ($info == 'BROWSER' && isset($_SERVER['HTTP_USER_AGENT'])) {
 		$asetup = $_SERVER["HTTP_USER_AGENT"];
 	}
 

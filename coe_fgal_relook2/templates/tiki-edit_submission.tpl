@@ -46,7 +46,7 @@
 		<tr>
 			<td>{tr}Title{/tr}</td>
 			<td>
-				<input type="text" name="title" value="{$title|escape}" maxlength="255" size="80" />
+				<input type="text" name="title" value="{$title|escape}" maxlength="255" size="60" />
 			</td>
 		</tr>
 		<tr id='show_subtitle' {if $types.$type.show_subtitle eq 'y'}style="display:;"{else}style="display:none;"{/if}>
@@ -108,7 +108,7 @@
 			</td>
 		</tr>
 		<tr id='use_ratings' {if $types.$type.use_ratings eq 'y'}style="display:;"{else}style="display:none;"{/if}>
-			<td>{tr}Rating{/tr}</td>
+			<td>{tr}Author Rating{/tr}</td>
 			<td>
 				<select name='rating'>
 					<option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>
@@ -188,7 +188,7 @@
 		<tr id='show_image_caption' {if $types.$type.show_image_caption eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Image caption{/tr} *</td>
 			<td>
-				<input type="text" name="image_caption" value="{$image_caption|escape}" size="80" />
+				<input type="text" name="image_caption" value="{$image_caption|escape}" size="60" />
 			</td>
 		</tr>
 
@@ -209,24 +209,25 @@
 		{include file='categorize.tpl'}
 
 		<tr>
-			<td>
-				{tr}Heading{/tr}
+			<td colspan="2">
+				{tr}Heading:{/tr}
 			</td>
-			<td>
-				{toolbars area_id='subheading' qtnum='1'}
-				<textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea>
+		</tr>
+		<tr>
+			<td colspan="2">
+				{textarea _simple="y" name="heading" rows="5" cols="80" Height="200px" id="subheading" comments="y"}{$heading}{/textarea}
 			</td>
 		</tr>
 
-		<tr id='heading_only' {if $types.$type.heading_only ne 'y'}style="display:table-row;"{else}style="display:none;"{/if}>
-			<td>
-				{tr}Body{/tr}
+
+		<tr id='heading_only' {if $types.$type.heading_only ne 'y'}style="display:;"{else}style="display:none;"{/if}>
+			<td colspan="2">
+				{tr}Body:{/tr}
 			</td>
-			<td>
-				{toolbars area_id='body' qtnum='2'}
-				<textarea class="wikiedit" id="body" name="body" rows="{$rows}" cols="{$cols}" wrap="virtual">{$body|escape}</textarea>
-				<input type="hidden" name="rows" value="{$rows}" />
-				<input type="hidden" name="cols" value="{$cols}" />
+		</tr>
+		<tr id='heading_only2' {if $types.$type.heading_only ne 'y'}style="display:;"{else}style="display:none;"{/if}>
+			<td colspan="2">
+				{textarea name="body" rows=$rows cols=$cols id="body"}{$body}{/textarea}
 			</td>
 		</tr>
 
@@ -262,7 +263,7 @@
 			{assign var='attfullname' value=$att.itemId}
 			<tr id={$attid} {if $types.$type.$attid eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 				<td>{$attname|escape}</td>
-				<td><input type="text" name="{$attfullname}" value="{$article_attributes.$attfullname|escape}" size="80" /></td>
+				<td><input type="text" name="{$attfullname}" value="{$article_attributes.$attfullname|escape}" size="60" /></td>
 			</tr>
 			{/foreach}
 		{/if}

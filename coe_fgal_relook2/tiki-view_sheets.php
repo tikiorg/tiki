@@ -287,5 +287,5 @@ $smarty->assign('editconflict', $editconflict);
 include_once ('tiki-section_options.php');
 ask_ticket('sheet');
 // Display the template
-$smarty->assign('mid', 'tiki-view-sheets.tpl');
+$smarty->assign('mid', 'tiki-view_sheets.tpl');
 $smarty->display("tiki.tpl");

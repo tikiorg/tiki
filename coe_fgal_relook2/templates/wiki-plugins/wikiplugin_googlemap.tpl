@@ -5,23 +5,27 @@
 {/if}
 <div class="wikitext" id="gmap{$gmapname|escape}container" style="display: {if $gmaphidden}none{else}block{/if}">
 {if !$gmap_in_form && ($gmaptype eq 'locator' || $gmap_defaultset && $user)}
-<form{if $gmaptype eq 'locator'} onsubmit="showAddress{$gmapname|escape}(this.form.address.value);return false;"{/if}>
+<form{if $gmaptype eq 'locator'} onsubmit="showAddress{$gmapname|escape}(this.address.value);return false;"{/if}>
 {/if}
 {if $gmaptype eq 'locator'}
 <input type="text" size="{$gmapaddresslength}" name="address" value="{tr}enter address{/tr}" />
+{jq}
+var $addr = $("input[name=address]");
+$addr.focus(function(){ if ($addr.val() === "{tr}enter address{/tr}") { $addr.val(""); } }).blur(function(){ if ($addr.val() === "") { $addr.val("{tr}enter address{/tr}"); } });
+{/jq}
 <input type="submit" name="cancel" value="{tr}Find address{/tr}" onclick="showAddress{$gmapname|escape}(this.form.address.value);return false;" /><br />
 {tr}Lon.{/tr}: <input type="text" name="point[x]" value="{$pointx}" id="{$gmapname|escape}pointx" size="6" />
 {tr}Lat.{/tr}: <input type="text" name="point[y]" value="{$pointy}" id="{$gmapname|escape}pointy" size="6" />
 {tr}Zoom{/tr}: <input type="text" name="point[z]" value="{$pointz}" id="{$gmapname|escape}pointz" size="2" />
 {/if}
 {if $gmap_defaultset && $user}
-<input type="submit" name="cancel" onclick="document.getElementById('gmap{$gmapname|escape}_ajax_msg').innerHTML = "{tr}saving...{/tr}";saveGmapDefaultxyz{$gmapname|escape}();return false;" value="{tr}Save current map view as user default{/tr}" />
+<input type="submit" name="cancel" onclick="document.getElementById('gmap{$gmapname|escape}_ajax_msg').innerHTML = '{tr}saving...{/tr}';saveGmapDefaultxyz{$gmapname|escape}();return false;" value="{tr}Save current map view as user default{/tr}" />
 {/if}
 {if $gmaptype eq 'locator' && $gmapitemtype eq 'user'}
-<input type="submit" name="cancel" onclick="document.getElementById('gmap{$gmapname|escape}_ajax_msg').innerHTML = "{tr}saving...{/tr}";saveGmapUser{$gmapname|escape}();return false;" value="{tr}Save as user location{/tr}" />
+<input type="submit" name="cancel" onclick="document.getElementById('gmap{$gmapname|escape}_ajax_msg').innerHTML = '{tr}saving...{/tr}';saveGmapUser{$gmapname|escape}();return false;" value="{tr}Save as user location{/tr}" />
 {/if}
-{if $gmaptype eq 'locator' && $gmapitemtype neq 'user'}
-<input type="submit" name="cancel" onclick="document.getElementById('gmap{$gmapname|escape}_ajax_msg').innerHTML = "{tr}saving...{/tr}";saveGmapItem{$gmapname|escape}();return false;" value="{tr}Save as object location{/tr}" />
+{if $gmaptype eq 'locator' && $gmapitemtype neq 'user' && $gmapitemtype neq 'trackeritem'}
+<input type="submit" name="cancel" onclick="document.getElementById('gmap{$gmapname|escape}_ajax_msg').innerHTML = '{tr}saving...{/tr}';saveGmapItem{$gmapname|escape}();return false;" value="{tr}Save as object location{/tr}" />
 {/if}
 {if !$gmap_in_form && ($gmaptype eq 'locator' || $gmap_defaultset && $user)}
 </form>
@@ -36,7 +40,7 @@ function showAddress{$gmapname|escape}(address) {literal}{{/literal}
       address,
       function(point) {literal}{{/literal}
         if (!point) {literal}{{/literal}
-          alert(address + " not found!");
+          alert("\"" + address + "\" not found!");
         {literal}} else {{/literal}
           document.getElementById('{$gmapname|escape}pointx').value = point.x;
           document.getElementById('{$gmapname|escape}pointy').value = point.y;
@@ -51,6 +55,7 @@ function showAddress{$gmapname|escape}(address) {literal}{{/literal}
           gmap{$gmapname|escape}map.addOverlay(marker);
           marker.openInfoWindowHtml(address);
         {literal}}{/literal}
+        updateGmapInput{$gmapname|escape}();
       {literal}}{/literal}
     );
   {literal}}{/literal}
@@ -66,10 +71,15 @@ function saveGmapUser{$gmapname|escape}() {literal}{{/literal}
 	xajax_saveGmapUser('gmap{$gmapname|escape}_ajax_msg', document.getElementById('{$gmapname|escape}pointx').value, document.getElementById('{$gmapname|escape}pointy').value, document.getElementById('{$gmapname|escape}pointz').value, '{$gmapitem}');
 {literal}}{/literal}
 
-function saveGmapItem{$gmapname|escape}() {literal}{{/literal}
+function updateGmapInput{$gmapname|escape}() {ldelim}
 	{if $gmaptrackerinputid}
-	document.getElementById('{$gmaptrackerinputid|escape}').value = document.getElementById('{$gmapname|escape}pointx').value + ',' + document.getElementById('{$gmapname|escape}pointy').value + ',' + document.getElementById('{$gmapname|escape}pointz').value;
+		document.getElementById('{$gmaptrackerinputid|escape}').value = document.getElementById('{$gmapname|escape}pointx').value + ',' + document.getElementById('{$gmapname|escape}pointy').value + ',' + document.getElementById('{$gmapname|escape}pointz').value;
 	{/if}
+	return;
+{rdelim}
+
+function saveGmapItem{$gmapname|escape}() {literal}{{/literal}
+	updateGmapInput{$gmapname|escape}();
 	{if $gmapitem}
 	xajax.config.requestURI = '{$smarty.server.REQUEST_URI}';
 	xajax_saveGmapItem('gmap{$gmapname|escape}_ajax_msg', document.getElementById('{$gmapname|escape}pointx').value, document.getElementById('{$gmapname|escape}pointy').value, document.getElementById('{$gmapname|escape}pointz').value, '{$gmapitemtype}', '{$gmapitem}', '{$gmaptrackerfieldid}');
@@ -140,11 +150,12 @@ function loadgmap{$gmapname|escape}() {literal}{{/literal}
       document.getElementById('{$gmapname|escape}pointz').value = gmap{$gmapname|escape}map.getZoom();
       gmap{$gmapname|escape}map.clearOverlays();
       gmap{$gmapname|escape}map.addOverlay(new GMarker(point));
+      updateGmapInput{$gmapname|escape}();
     {literal}}{/literal}
   {literal}});{/literal}
 
   GEvent.addListener(gmap{$gmapname|escape}map, "zoomend", function(gold, gnew) {literal}{{/literal}
-    document.getElementById('pointz').value = gnew;
+    document.getElementById('{$gmapname|escape}pointz').value = gnew;
   {literal}});{/literal}
 {/if}
 {literal}}{/literal}

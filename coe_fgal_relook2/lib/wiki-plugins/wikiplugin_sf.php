@@ -5,58 +5,59 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/*
- * Tikiwiki SF auto-links.
- * 
- * Syntax:
- * 
- *  {SF([groupid=>groupid,][atid=>atid,][tag=>tag,]aid=>aid)}{SF}
- # for tikiwiki, the groupid is 64258
- # bugtracker atid is 506846
- # rfe atid is 506849
- # support atid is 506847
- # patches atid is 506848
- # 
- */
 define('SF_CACHE',48); # in hours
-define('DEFAULT_TAG','bugs');
 
 function wikiplugin_sf_help() {
-	return tra("Automatically creates a link to the appropriate SourceForge object").":<br />~np~{SF(aid=>,adit=>,groupid=>)}".tra("text")."{SF}~/np~";
+	return tra('Creates a link to SourceForge tracker items (bugs, fetaure requests, patches and support requests') 
+			. ':<br />~np~{SF(groupid=> , trackerid=> , itemid=> , title=> )}{SF}~/np~';
 }
 
 function wikiplugin_sf_info() {
 	return array(
 		'name' => tra('SourceForge'),
-		'documentation' => 'PluginSF',		
-		'description' => tra("Automatically creates a link to the appropriate SourceForge object"),
+		'documentation' => tra('PluginSF'),		
+		'description' => tra('Creates a link to SourceForge tracker items (bugs, fetaure requests, patches and support requests) with the title of the item as the link text.'),
 		'prefs' => array( 'wikiplugin_sf' ),
 		'body' => tra('text'),
 		'params' => array(
-			'aid' => array(
-				'required' => true,
-				'name' => tra('aid??'),
-				'description' => tra('?'),
-			),
-			'adit' => array(
-				'required' => true,
-				'name' => tra('adit??'),
-				'description' => tra('?'),
-			),
 			'groupid' => array(
 				'required' => true,
-				'name' => tra('groupid??'),
-				'description' => tra('?'),
+				'name' => tra('Group ID'),
+				'description' => tra('SourceForge project ID (shows as group_id in the url of a tracker item'),
+				'filter' => 'digits',
+				'default' => '',
 			),
-		),
+			'trackerid' => array(
+				'required' => true,
+				'name' => tra('Tracker ID'),
+				'description' => tra('SourceForge tracker ID (shows as atid in the url of a tracker item'),
+				'filter' => 'digits',
+				'default' => '',
+			),
+			'itemid' => array(
+				'required' => true,
+				'name' => tra('Item ID'),
+				'description' => tra('SourceForge item ID (shows as aid in the url of a tracker item'),
+				'filter' => 'digits',
+				'default' => '',
+			),
+			'title' => array(
+				'required' => false,
+				'name' => tra('Link title'),
+				'description' => tra('First part of link tooltip identifying the type of tracker item (bog, feature request, patch or support request).'),
+				'filter' => 'alpha',
+				'default' => 'Item',
+				'since' => 7.0,
+			),
+			),
 	);
 }
 
-function get_artifact_label($gid,$atid,$aid,$reload=false) {
+function get_artifact_label($gid, $atid, $aid, $reload=false) {
 	$agent = $_SERVER['HTTP_USER_AGENT'];
 	$cachefile = "temp/sftrackers.cache.$gid.$atid.$aid";
 	$cachelimit = time() - 60*60*SF_CACHE;
-	$url = "http://sourceforge.net/tracker/index.php?func=detail&amp;aid=$aid&amp;group_id=$gid&amp;atid=$atid";
+	$url = 'http://sourceforge.net/tracker/index.php?func=detail&aid=' . $aid . '&group_id=' . $gid . '&atid=' . $atid;
 	if (!is_file($cachefile)) $reload = true;
 	$back = false;
 	if ($reload or (filemtime($cachefile) < $cachelimit)) {
@@ -83,36 +84,19 @@ function get_artifact_label($gid,$atid,$aid,$reload=false) {
 	return $back;
 }
 
-function wikiplugin_sf($data, $params) {
-	if (function_exists("curl_init")) {
-	# customize that (or extract it in a db)
-	$sftags['bugs'] = array('64258','506846');
-	$sftags['rfe'] = array('64258','506849');
-	$sftags['patches'] = array('64258','506848');
-	$sftags['support'] = array('64258','506847');
-	$sftags['jgbugs'] = array('43118','435210');
-	$sftags['jgsupport'] = array('43118','435211');
-	$sftags['jgrfe'] = array('43118','435213');
-
-	extract ($params,EXTR_SKIP);
-	
-	if (isset($tag) and isset($sftags["$tag"]) and is_array($sftags["$tag"])) {
-		list($sf_group_id,$sf_atid) = $sftags["$tag"];
+function wikiplugin_sf($data, $params) {	
+	if (function_exists('curl_init')) {
+		if (empty($params['itemid']) || empty($params['groupid']) || empty($params['trackerid'])) {
+			return 'Plugin SF failed. One or more of the following parameters are missing: groupid, trackerid or itemid.';
+		}
+		$title = empty($params['title']) ? 'Item' : $params['title'];	
+		$label = get_artifact_label($params['groupid'], $params['trackerid'], $params['itemid']);
+		$back = '<a href="http://sourceforge.net/tracker/index.php?func=detail&aid=' . $params['itemid'] 
+					. '&group_id=' . $params['groupid'] . '&atid=' . $params['trackerid'] 
+					. '" target="_blank" title="' . $title . ' ' . $params['itemid'] 
+					. '" class="wiki external" rel="external nofollow">' . $label . '</a>';
 	} else {
-		$sf_group_id = (isset($groupid)) ? "$groupid" : $sftags[DEFAULT_TAG][0];
-		$sf_atid = (isset($atid)) ? "$atid" : $sftags[DEFAULT_TAG][1];
-		$tag = DEFAULT_TAG;
+		$back = 'Plugin SF failed: The php-curl module must be loaded to use this plugin.';
 	}
-	if (!isset($aid)) {
-		//return "__please use (aid=>xxx) as parameters__";
-		return "<b>please use (aid=>xxx) as parameters</b>";
-	}
-	$label = get_artifact_label($sf_group_id,$sf_atid,$aid);
-	//$back = "[http://sf.net/tracker/index.php?func=detail&amp;aid=$aid&amp;group_id=$sf_group_id&amp;atid=$sf_atid|$tag:#$aid: $label|nocache]";
-	$back = "<a href='http://sf.net/tracker/index.php?func=detail&amp;aid=$aid&amp;group_id=$sf_group_id&amp;atid=$sf_atid' target='_blank' title='$tag:#$aid' class='wiki'>$label</a>";
-	} else {
-		$back = "SF plugin : You need php-curl module to be loaded to use that feature.";
-	}
-
 	return $back;
 }

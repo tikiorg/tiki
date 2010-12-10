@@ -205,7 +205,8 @@
 					{if $prefs.feature_forum_parse eq 'y'}
 						{toolbars area_id='editpost'}
 					{/if}
-					<textarea id='editpost' name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea><input type="hidden" name="rows" value="{$rows}"/>
+					{textarea id='editpost' name="comments_data" rows=$rows cols=$cols}{$comment_data}{/textarea}
+					<input type="hidden" name="rows" value="{$rows}"/>
 					<input type="hidden" name="cols" value="{$cols}"/>
 				</td>
 			</tr>
@@ -255,8 +256,8 @@
 						{if empty($user)}
 							{tr}Enter your name:{/tr}&nbsp;<input type="text" maxlength="50" size="12" id="anonymous_name" name="anonymous_name" />
 						{/if}
-						<input type="submit" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
-						<input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
+						<input type="submit" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);needToConfirm=false;"{/if} />
+						<input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);needToConfirm=false;"{/if} />
 						<input type="submit" name="comments_postCancel" value="{tr}Cancel{/tr}" {if $comment_preview neq 'y'}onclick="hide('forumpost');window.location='#header';return false;"{/if} />
 					</td>
 				</tr>
@@ -327,7 +328,7 @@
 						<select name="moveto">
 							{section name=ix loop=$all_forums}
 								{if $all_forums[ix].forumId ne $forumId}
-									<option value="{$all_forums[ix].forumId|escape}">{$all_forums[ix].name}</option>
+									<option value="{$all_forums[ix].forumId|escape}">{$all_forums[ix].name|escape}</option>
 								{/if}
 							{/section}
 						</select>
@@ -541,7 +542,7 @@
 					{else}
 						{assign var="idt" value=$last_comments[ix].parentId}
 					{/if}
-					<a class="forumname" href="tiki-view_forum_thread.php?comments_parentId={$idt}&amp;topics_threshold={$comments_threshold}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}&amp;topics_sort_mode={$thread_sort_mode}&amp;topics_find={$comments_find}&amp;forumId={$forum_info.forumId}">{$last_comments[ix].title}</a>
+					<a class="forumname" href="tiki-view_forum_thread.php?comments_parentId={$idt}&amp;topics_threshold={$comments_threshold}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}&amp;topics_sort_mode={$thread_sort_mode}&amp;topics_find={$comments_find}&amp;forumId={$forum_info.forumId}">{$last_comments[ix].title|escape}</a>
 				</td>
 			</tr>
 		{/section}

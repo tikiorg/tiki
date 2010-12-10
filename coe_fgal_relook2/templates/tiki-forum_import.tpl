@@ -36,7 +36,7 @@
 	</table>
 	<br />
 	<div align="center">
-		<input type="submit" value="Get Forum List" />
+		<input type="submit" value="{tr}Get Forum List{/tr}" />
 	</div>
 	<br />
 	</form>
@@ -109,7 +109,7 @@ End hiding of unfinished section... *}
 	</td></tr>
 	</table>
 	<div align="center">
-		<input type="submit" value="Get Forum List" />
+		<input type="submit" value="{tr}Get Forum List{/tr}" />
 	</div>
 	<br />
 	</form>
@@ -143,9 +143,9 @@ End hiding of unfinished section... *}
 	<p> </p>
 	<div align="center">
 		{if $passed eq 'true'}
-		  <input type="submit" value="Proceed" />
+		  <input type="submit" value="{tr}Proceed{/tr}" />
 		{else}
-		  <input type="submit" value="Go Back" />
+		  <input type="submit" value="{tr}Go Back{/tr}" />
 		{/if}
 	</div>
 	<br />
@@ -235,7 +235,7 @@ End hiding of unfinished section... *}
 
 		You must select both a source forum and a destination forum!
 		<div align="center">
-			<input type="submit" value="Go Back" />
+			<input type="submit" value="{tr}Go Back{/tr}" />
 		</div>
 		<br />
 		</form>

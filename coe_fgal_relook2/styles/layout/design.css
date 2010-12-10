@@ -11,15 +11,55 @@ html#print {
 	color: #000;
 }
 
+body.db_error {
+	background: none;
+}
+
 body.fullscreen {
 	text-align: left;
 	background: #fff;
 }
 
-/* FCKeditor contrast */
+#tiki-clean {
+	background: #fff;
+	color: #000;
+}
+
+/* CKeditor contrast */
 body.wikitext {
 	background: #fff;
 	color: #000;
+}
+
+/* Ajax Loading Overlay */
+#ajaxLoadingBG {
+	background: transparent url(../../img/overlay-light.png);
+}
+#ajaxLoading {
+	font-size: 2em;
+	font-weight: bold;
+	color: #333;
+	background: transparent url(../../img/loading-light.gif) no-repeat 50% 50%;
+}
+
+/* ColorBox */
+#cboxTitle {
+	background-color: #fff;
+}
+
+/* Autosave Preview handle */
+#autosave_preview_grippy {
+	background-color: #ccc;
+	background-image: url("../../pics/icons/shading.png");
+}
+
+/* allow disabled elements to show up - FIXME
+ * should be moved into supporting themes and made not important one day */
+select:disabled,
+option:disabled,
+input:disabled,
+textarea:disabled {
+	color: #888 !important;
 }
 
 fieldset {
@@ -29,23 +69,23 @@ fieldset {
 
 /* margin and padding for span surrounding the "button" links, same definition for button form element */
 button,
-span.button,
-span.button.highlight {
+.button,
+.button.highlight {
 	margin: 1px 2px;
 	padding: 2px;
 }
 
-span.button a,
-span.button a:visited,
-span.button a:hover,
-span.button input,
+.button a,
+.button a:visited,
+.button a:hover,
+.button input,
 .calbuttonBox a {
 	padding: 1px 4px;
 }
 
-span#genPass span.button a,
-span#genPass span.button a:visited,
-span#genPass span.button a:hover {
+#genPass .button a,
+#genPass .button a:visited,
+#genPass .button a:hover {
 	padding: 1px 4px !important;
 }
 
@@ -60,18 +100,23 @@ input[type=submit]:hover {
 /* highlight on interface text to draw attention; also
 highlight on "button" links, e.g. if there are some comments it highlights the "button" link in #page-bar under the content of the wiki pages */
 .highlight,
-span.button.highlight a {
+.button.highlight a {
 	background: #FC0;
 	color: #000;
 }
 
 /* Since button background is actually applied to the link within the button, apply button highlight to same bg area as normal button state . */
-span.button.highlight {
+.button.highlight {
 	background: inherit;
 }
 
+ul.jumplinks a:active {
+	background: #ffe4e1;
+	color: #0000cd;
+}
+
 /* Highlight effect is just visual distinction, so no need for block element. */
-div.highlight {
+.highlight {
 	padding: 0 .3em;
 }
 
@@ -127,6 +172,26 @@ input[type=radio] {
 	font-size: 90%;
 }
 
+.pass a,
+.pass a:visited,
+.pass a:hover,
+.register a,
+.register a:visited,
+.register a:hover,
+.logged-in a,
+li.login_link ul li a {
+	background: none !important;
+}
+
+/* Input fields autofill */
+
+/* Webkit based browser specific (Google Chrome, Chromium, etc.) */
+input:-webkit-autofill {
+	background-color: #FAFFBD !important; /* needs important because Chrome has it already important */
+	background-image: none !important;
+	color: #000 !important; /* the Google guys they forgot the number one rule... when they specify background they should specify forgeround color too ;) */
+}
+
 /* Center column */
 
 .tellafriend,
@@ -162,8 +227,7 @@ a.flip:hover,
 }
 
 .openid_url {
-	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
-	padding-left: 18px;
+	background: #fff url(../../img/icons/login-OpenID-bg.gif) 1px 1px no-repeat;
 }
 
 .bannertext {
@@ -171,7 +235,7 @@ a.flip:hover,
 	text-decoration: none;
 }
 
-div#debugconsole {
+#debugconsole {
 	background: #333;
 	color: #fff;
 	padding: 5px;
@@ -249,12 +313,12 @@ div#debugconsole {
 	margin-top: 5px;
 }
 
-ul.categories {
+.categories {
 	margin: 0;
 	padding: 0;
 }
 
-ul.categories li {
+.categories li {
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -276,6 +340,7 @@ ul.categories li {
 .toolbars-picker {
 	background: #fff;
 	border: thin solid #000;
+	color: #000;
 }
 
 .toolbars-picker a {
@@ -297,19 +362,19 @@ ul.categories li {
 	margin-right: 20px;
 }
 
-div.help_section_select {
+.help_section_select {
 	font-weight: bold;
 	font-size: 120%;
 	background: #e7e9ea;
 	color: #000;
 }
 
-div.help_sections {
+.help_sections {
 	padding:  2px;
 	background: #aac9e9;
 }
 
-div.help_section {
+.help_section {
 	background: #eee;
 	color: #000;
 }
@@ -360,7 +425,7 @@ div.help_section {
 	border: .1em solid #f00;
 }
 
-.box-switch_lang .box-data span.highlight {
+.box-switch_lang .box-data .highlight {
 	border: .1em solid #f00;
 }
 
@@ -376,13 +441,38 @@ div.help_section {
 	padding: 0 1em;
 }
 
+.box-search input[type=submit],
+.box-search input[type=submit]:hover {
+	font-size: smaller;
+	padding: 0.1em 0.3em;
+	margin: 0.2em;
+}
+
+
+
+/* Icons */
+a.icon,
+img.icon {
+	border: 0;
+	background: transparent;
+}
+
+/* Tabs */
+.tabcontent table {
+	background: transparent;
+}
+
+.admin #content1 .tabcontent .cbox {
+	background: transparent;
+}
+
 /* To display content without module-style background and border. */
-.halffloat > div.box,
-.wikitext .halffloat > div.box,
-.thirdfloat > div.box,
-.wikitext .thirdfloat > div.box,
-.quarterfloat > div.box,
-.wikitext .quarterfloat > div.box {
+.halffloat > .box,
+.wikitext .halffloat > .box,
+.thirdfloat > .box,
+.wikitext .thirdfloat > .box,
+.quarterfloat > .box,
+.wikitext .quarterfloat > .box {
 	background: none;
 	border: none;
 }
@@ -475,17 +565,16 @@ div.help_section {
 /***** Tables, Tabs ****/
 /** Tables **/
 
-table.normal, 
-table.admin {
+.normal, 
+.admin {
 	border-collapse: collapse;
 }
 
-td.normal,
 .normal td,
 .wikitable td,
 .odd,
 .even,
-td.form,
+.form,
 .formcolor td,
 .editblogform td {
 	margin: 0;
@@ -493,7 +582,6 @@ td.form,
 }
 
 .normal td,
-td.normal,
 .wikitable td,
 td.odd,
 td.even {
@@ -525,10 +613,6 @@ caption {
 
 body.tiki_wiki #comments {
 	padding: 1em;
-}
-
-#wikihelp-tab table td {
-	padding: 2px;
 }
 
 p.editdate {
@@ -592,24 +676,24 @@ p.editdate {
 }
 
 /* img plugin */
-div.imgbox {
+.imgbox {
 	    border: 1px solid #a9a9a9;
         background-color: #f9f9f9;
 }
 
-div.thumbcaption {
+.thumbcaption {
 		font-size: 90%;
 }
 
 /* TOC */
-ul.toc {
+.toc {
 	padding-left: 2em;
 	border-top: 1px dotted #a9a9a9;
 	border-bottom: 1px dotted #a9a9a9;
 	margin-bottom: 4px;
 }
 
-ul.toc * {
+.toc * {
 	border: none;
 }
 
@@ -664,7 +748,7 @@ ul.toc * {
 
 /***** Articles ****/
 
-div.articlesource {
+.articlesource {
 	margin-top: 5px;
 	font-style: italic;
 	font-size: 90%;
@@ -672,18 +756,18 @@ div.articlesource {
 
 /***** Blogs *****/
 
-div.breadcrumbs {
+.breadcrumbs {
 	font-size: 90%;
 	font-style: italic;
 }
 
-div.blogdesc {
+.blogdesc {
 	padding: 8px;
 	margin-top: 8px;
 	margin-left: 6px;
 }
 
-div.blogtools {
+.blogtools {
 	padding: 3px;
 	text-align: right
 }
@@ -710,13 +794,59 @@ small.description {
 	padding: 5px 0px 15px 0px;
 }
 
+/* Comment Annotations */
+
+dl.note-list {
+	background: #fff;
+	color: #000;
+	border: solid thin black;
+}
+
+#note-editor-comment {
+	background: #fff;
+	color: #000;
+	border: #999 1px solid;
+}
+
+.note-editor-text {
+	background: #eee;
+	color: #000;
+}
+
+.note-list .postbody-title {
+	background: #ccc;
+	color: #000;
+}
+
+.note-list .title a {
+	color: #000;
+}
+
+/* Comments moderation */
+.post-approved-n {
+	border-left: 3px dotted blue;
+}
+
+.post-approved-r {
+	border-left: 3px double red;
+}
+
+.post-approved-r .content * {
+	background: url(../../img/icons2/dots.gif);
+}
+
+
+#wikihelp-tab table td {
+	padding: 2px;
+}
+
 /**** Image Galleries ****/
 
 p.norecords {
 	font-weight: bold;
 }
 
-div.imagetitle {
+.imagetitle {
 	font-weight: bold;
 	font-size: 200%;
 }
@@ -740,46 +870,42 @@ div.imagetitle {
 
 /***** Trackers (etc.) *****/
 
-div.multiselect li.odd,
-div.multiselect div.odd {
+.multiselect .odd {
 	color: #000;
 	background: #f4f6f7;
 }
 
-div.multiselect li.odd:hover,
-div.multiselect div.odd:hover {
+.multiselect odd:hover {
 	background: #fff7e6;
 }
 
-div.multiselect li.even,
-div.multiselect div.even {
+.multiselect .even {
 	color: #000;
 	background: #e7e9ea;
 }
 
-div.multiselect div.even:hover,
-div.multiselect div.even:hover {
+.multiselect .even:hover {
 	background: #f0f2f3;
 }
 
-div.multiselect div.odd,
-div.multiselect div.even {
+.multiselect div.odd,
+.multiselect div.even {
 	border: 1px solid #80b1e2;
 }
 
-div.multiselect div.selection {
+.multiselect .selection {
 	border: 1px solid #80b1e2;
 	background: #fff;
 }
 
 /* transparent border added to keep content from shifting on hover */
-div.multiselect,
-div.multiselect div.selection {
+.multiselect,
+.multiselect .selection {
 	border: 1px solid transparent;
 }
 
-div.multiselect:hover,
-div.multiselect div.selection:hover {
+.multiselect:hover,
+.multiselect .selection:hover {
 	border: 1px solid #80b1e2;
 }
 
@@ -810,7 +936,7 @@ div.multiselect div.selection:hover {
 	text-decoration: none;
 }
 
-.freetagitemlist div.type {
+.freetagitemlist .type {
 	font-weight: bold;
 	font-size: 0.8em;
 }
@@ -863,50 +989,55 @@ a.freetag_7 {
 
 /***** FAQs *****/
 
-div.faqlistquestions {
+.faqlistquestions {
 	margin-bottom: 20px;
 }
 
-div.faqqa {
+.faqqa {
 	margin-bottom: 20px;
 }
 
-div.faqquestion {
+.faqquestion {
 	font-weight: bold;
 	padding: 2px 12px 0 12px;
 }
 
-div.faqanswer {
+.faqanswer {
 	padding: 0 12px 4px 12px;
+}
+
+/***** Forums *****/
+.sub_comment_area {
+	background: url("../../img/edge.gif") no-repeat top left;
 }
 
 /***** Quizzes *****/
 
-div.questionblock {
+.questionblock {
 	margin-bottom: 10px;
 }
 
-div.quizquestion {
+.quizquestion {
 	margin-bottom: 5px;
 }
 
-div.quizdescription {
+.quizdescription {
 	margin-bottom: 10px;
 }
 
-div.quizanswer {
+.quizanswer {
 	margin-bottom: 10px;
 }
 
 /***** Shoutbox *****/
 
-div.shoutboxmsg {
+.shoutboxmsg {
 	margin-bottom: 0;
 	padding: 4px;
 	padding-bottom: 1px;
 }
 
-div.shoutboxmodmsg {
+.shoutboxmodmsg {
 	font-size: .95em;
 	margin: 0 5px 4px 5px;
 	padding-top: 5px;
@@ -920,7 +1051,7 @@ textarea.tshoutbox{
 
 /***** Directory *****/
 
-div.dircategs {
+.dircategs {
 	font-size: 95%;
 }
 
@@ -928,61 +1059,61 @@ div.dircategs {
 	font-size: .95em;
 }
 
-div.dirsite {
+.dirsite {
 	margin-bottom: 10px;
 	padding: 4px;
 }
 
-span.dirsitetrail {
+.dirsitetrail {
 	font-size: 95%;
 }
 
-span.dirsitecats {
+.dirsitecats {
 	font-size: 95%;
 }
 
 /***** Messages *****/
 
-td.prio1,
-td.prio2,
-td.prio3,
-td.prio4,
-td.prio5 {
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {
 	border: 1px solid #a9a9a9;
 	padding-left: 2px;
 }
 
-td.prio1 {
+.prio1 {
 	background: #f7f9ca
 }
 
-td.prio2 {
+.prio2 {
 	background: #f7f9ea;
 }
 
-td.prio3 {
+.prio3 {
 	background: #f7f9fa;
 }
 
-td.prio4 {
+.prio4 {
 	background: #f7f9fd;
 }
 
-td.prio5 {
+.prio5 {
 	background: #f7f9ff;
 }
 
-div.messureadflag {
+.messureadflag {
 	background: #a9a9a9;
 	padding-left: 5px;
 }
 
-div.messureadhead {
+.messureadhead {
 	background: #dcdcdc;
 	margin-top: 2px;
 }
 
-div.messureadbody {
+.messureadbody {
 	margin-top: 5px;
 	background: #dcdcdc;
 }
@@ -1027,12 +1158,12 @@ div.messureadbody {
 
 /* admin boxes etc (.admbox) now defined in css/admin.css */
 
-td.mods_revision {
+.mods_revision {
 	background: #b5cfb5;
 	color: #000;
 }
 
-td.mods_update {
+.mods_update {
 	background:#dcdeac;
 	color: #000;
 }
@@ -1063,7 +1194,7 @@ td.mods_update {
 	padding: .9em;
 }
 
-div#cluetip-close { 
+#cluetip-close { 
 	background: #fff;
 	color: #900;
 }
@@ -1117,13 +1248,13 @@ div#cluetip-close {
 	font-family: "Courier New", Courier, monospace;
 }
 
-table.webmail_message_headers {
+.webmail_message_headers {
 	background: #fff;
 	width: 100%;
 	padding: 0 5em .5em 0;
 }
 
-table.webmail_message_headers th {
+.webmail_message_headers th {
 	font-style: italic;
 	text-align: right;
 	border: none;
@@ -1132,15 +1263,15 @@ table.webmail_message_headers th {
 
 /* treeTable definitions - used in object-perms so far */
 
-table.treeTable .checkBoxHeader {
+.treeTable .checkBoxHeader {
 	font-size: .8em;
 }
 
-table.treeTable .subHeader td {
+.treeTable .subHeader td {
 	font-weight: bold;
 }
 
-table.treeTable .parent td {
+.treeTable .parent td {
 	font-style: italic;
 }
 
@@ -1153,6 +1284,91 @@ table.treeTable .parent td {
 }
 .fancysort th.header {
 	background-repeat: no-repeat; background-position: right; background-image: url(../../pics/icons/resultset.png);
+}
+
+/* Perspectives (edit) */
+.dropzone {
+	color: #000;
+	background-color: #fff;
+	border: #999 solid 2px;
+	border-bottom-color: #ccc;
+	border-right-color: #ccc;
+}
+
+.dropzone > div:hover {
+	background-color: #eee;
+} 
+
+/* page contribution by author / wikiplugin_author */
+
+.author0 {
+	color: black;
+}
+
+.author1 {
+	color: blue;
+}
+
+.author2 {
+	color: red;
+}
+
+.author3 {
+	color: green;
+}
+
+.author4 {
+	color: maroon;
+}
+
+.author5 {
+	color: yellow;
+	background: gray;
+}
+
+.author6 {
+	color: aqua;
+	background: gray;
+}
+
+.author7 {
+	color: fuchsia;
+	background: gray;
+}
+
+.author8 {
+	color: teal;
+}
+
+.author9 {
+	color: purple;
+}
+
+.author10 {
+	color: white;
+	background: navy;
+}
+
+.author11 {
+	color: olive;
+}
+
+.author12 {
+	color: gray;
+}
+
+.author13 {
+	color: navy;
+}
+
+.author14 {
+	color: silver;
+	background: blue;
+}
+
+.author15 {
+	color: lime;
+	background: gray;
 }
 
  /* wikiplugin_tracker */
@@ -1172,4 +1388,28 @@ table.treeTable .parent td {
 
 #captchaImg {
 	border: 1px solid black;
+}
+
+.ui-tabs .ui-tabs-nav li a {
+	padding: 0 0 0 0;
+}
+/* interactive translations */
+
+#intertrans-indicator {
+	background-color: #ade;
+	color: #000;
+}
+
+#intertrans-form {
+	background-color: #eff;
+	border: #799 solid 2px;
+	color: #000;
+}
+
+.tree.root .object-count {
+	float: right;
+	font-weight: bold;
+	margin-left: 10px;
+	margin-right: 10px;
+	color: #999;
 }

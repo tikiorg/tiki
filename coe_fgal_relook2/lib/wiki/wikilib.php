@@ -131,13 +131,14 @@ class WikiLib extends TikiLib
 	}
 
 	// Returns a string containing all characters considered bad in page names
-	function get_badchars($name) {
-		return ":/?#[]@!$&'()*+,;=<>";
+	function get_badchars() {
+		return "/?#[]@$&*+;=<>";
 	}
 	
 	// Returns a boolean indicating whether the given page name contains "bad characters"
+	// See http://dev.tiki.org/Bad+characters
 	function contains_badchars($name) {
-		return preg_match("/[:\/?#\[\]@!$&'()*+,;=<>]/", $name);		
+		return preg_match("/[\/?#\[\]@$&*+;=<>]/", $name);		
 	}
 
 	// This method renames a wiki page
@@ -211,7 +212,15 @@ class WikiLib extends TikiLib
 				else
 					$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$quotedOldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
 			}
-			$data = preg_replace("/(?<=\(\()$quotedOldName(?=\)\)|\|)/", $newName, $data);
+			$data = preg_replace("/(?<=\(\()$quotedOldName(?=\)\)|\|)/i", $newName, $data);
+			
+			$quotedOldHtmlName = preg_quote( urlencode($oldName), '/' );
+			$htmlSearch = '/<a class="wiki" href="tiki-index\.php\?page=' . $quotedOldHtmlName . '([^"]*)"/i';
+			$htmlReplace = '<a class="wiki" href="tiki-index.php?page=' . urlencode($newName) . '\\1"';
+			$data = preg_replace($htmlSearch, $htmlReplace, $data);
+			
+			$htmlWantedSearch = '/(' . $quotedOldName . ')?<a class="wiki wikinew" href="tiki-editpage\.php\?page=' . $quotedOldHtmlName . '"[^<]+<\/a>/i';
+			$data = preg_replace($htmlWantedSearch, '((' . $newName . '))', $data);
 
 			if ($is_wiki_page) {
 				$query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
@@ -310,10 +319,8 @@ class WikiLib extends TikiLib
 			}
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('pages', $newName);
-		}
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('pages', $newName);
 
 		if ($prefs['wikiHomePage'] == $oldName) {
 			$tikilib->set_preference('wikiHomePage', $newName);
@@ -413,6 +420,10 @@ class WikiLib extends TikiLib
 
 		$query = "delete from `tiki_wiki_attachments` where `attId`='$attId'";
 		$result = $this->query($query);
+		if ($prefs['feature_actionlog'] == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib->add_action('Removed', $attId, 'wiki page attachment');
+		}
 	}
 
 	function wiki_attach_file($page, $name, $type, $size, $data, $comment, $user, $fhash, $date='') {
@@ -431,6 +442,14 @@ class WikiLib extends TikiLib
 			$query = 'select `attId` from `tiki_wiki_attachments` where `page`=? and `filename`=? and `created`=? and `user`=?';
 			$attId = $this->getOne($query, array($page, $name, $now, $user));
 			sendWikiEmailNotification('wiki_file_attached', $page, $user, $comment, '', $name, '','', false, '', 0,$attId);
+		}
+		if ($prefs['feature_actionlog'] == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			if (empty($attId)) {
+				$query = 'select `attId` from `tiki_wiki_attachments` where `page`=? and `filename`=? and `created`=? and `user`=?';
+				$attId = $this->getOne($query, array($page, $name, $now, $user));
+			}
+			$logslib->add_action('Created', $attId, 'wiki page attachment');
 		}
 	}
 	function get_wiki_attach_file($page, $name, $type, $size) {
@@ -915,7 +934,7 @@ class WikiLib extends TikiLib
 		return $this->query($query, $bindvals) ? true : false;
 	}
 	function sefurl($page, $with_next='', $all_langs='') {
-		global $prefs, $smarty;
+		global $prefs, $smarty, $info;
 		if( basename( $_SERVER['PHP_SELF'] ) == 'tiki-all_languages.php' ) {
 			return 'tiki-all_languages.php?page='.urlencode($page);
 		}
@@ -926,6 +945,15 @@ class WikiLib extends TikiLib
 		}
 
 		$href = "$script_name?page=".urlencode($page);
+
+		if (isset($prefs['feature_wiki_use_date_links']) && $prefs['feature_wiki_use_date_links'] == 'y') {
+			if (isset($_REQUEST['date'])) {
+				$href .= '&date='. urlencode($_REQUEST['date']);
+			} else if (isset($_REQUEST['version'])) {
+				$href .= '&date='. urlencode($info['lastModif']);
+			}
+		}
+
 		if ($with_next) {
 			$href .= '&amp;';
 		}
@@ -935,20 +963,6 @@ class WikiLib extends TikiLib
 		} else {
 			return $href;
 		}
-	}
-
-	function bestlang($url) {
-		global $prefs;
-		if ($prefs['feature_multilingual'] != 'y' || $prefs['feature_best_language'] != 'y') {
-			return $url;
-		}
-		$parsed_url = parse_url($url);
-		if (!empty($parsed_url["query"])) {
-			$ret = $url . "&amp;bl=y";
-		} else {
-			$ret = $url . "?bl=y";
-		}
-		return $ret; 	
 	}
 
 	function url_for_operation_on_a_page($script_name, $page, $with_next) {
@@ -1002,7 +1016,7 @@ class WikiLib extends TikiLib
 		$bindvars = array_merge($bindvars, $jail_bind);
 		$results = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
 		$ret["data"] = $results;
-		$query_cant = "select count(*) from `tiki_pages` $jail_join where `data` like ? $jail_where";
+		$query_cant = "select count(*) from (select count(*) from `tiki_pages` $jail_join where `data` like ? $jail_where group by `page_id`) as `temp`";
 		$ret["cant"] = $this->getOne($query_cant, $bindvars);
 		return $ret;
 	}

@@ -40,11 +40,15 @@ class HeaderLib
 		$this->wysiwyg_parsing = false;
 	}
 
-	function convert_cdn( $file ) {
+	function convert_cdn( $file, $type = null ) {
 		global $prefs, $tikiroot;
+
+		$https_mode = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
+
+		$cdn_pref = $https_mode ? $prefs['tiki_cdn_ssl'] : $prefs['tiki_cdn'];
 	
-		if( !empty($prefs['tiki_cdn']) && 'http' != substr( $file, 0, 4 ) ) {
-			$file = $prefs['tiki_cdn'] . $tikiroot . $file;
+		if( !empty($cdn_pref) && 'http' != substr( $file, 0, 4 ) && $type !== 'dynamic' ) {
+			$file = $cdn_pref . $tikiroot . $file;
 		}
 
 		return $file;
@@ -221,22 +225,9 @@ class HeaderLib
 		if (count($this->jsfiles)) {
 
 			if( $prefs['tiki_minify_javascript'] == 'y' ) {
-				$dynamic = array();
-				if( isset( $this->jsfiles['dynamic'] ) ) {
-					$dynamic = $this->jsfiles['dynamic'];
-					unset( $this->jsfiles['dynamic'] );
-				}
-
-				$external = array();
-				if( isset( $this->jsfiles['external'] ) ) {
-					$external = $this->jsfiles['external'];
-					unset( $this->jsfiles['external'] );
-				}
 
 				$jsfiles = $this->getMinifiedJs();
 
-				$jsfiles['dynamic'] = $dynamic;
-				$jsfiles['external'] = $external;
 			} else {
 				$jsfiles = $this->jsfiles;
 			}
@@ -244,7 +235,7 @@ class HeaderLib
 			foreach ($jsfiles as $x=>$jsf) {
 				$back.= "<!-- jsfile $x -->\n";
 				foreach ($jsf as $jf) {
-					$jf = $this->convert_cdn( $jf );
+					$jf = $this->convert_cdn( $jf, $x );
 					$back.= "<script type=\"text/javascript\" src=\"".smarty_modifier_escape($jf)."\"></script>\n";
 				}
 			}
@@ -255,6 +246,19 @@ class HeaderLib
 
 	public function getMinifiedJs() {
 		global $tikidomainslash;
+		
+		$dynamic = array();
+		if( isset( $this->jsfiles['dynamic'] ) ) {
+			$dynamic = $this->jsfiles['dynamic'];
+			unset( $this->jsfiles['dynamic'] );
+		}
+
+		$external = array();
+		if( isset( $this->jsfiles['external'] ) ) {
+			$external = $this->jsfiles['external'];
+			unset( $this->jsfiles['external'] );
+		}
+		
 		$hash = md5( serialize( $this->jsfiles ) );
 		$file = 'temp/public/'.$tikidomainslash."minified_$hash.js";
 		$minified_files = array();
@@ -279,8 +283,8 @@ class HeaderLib
 
 		$minified_files[] = $file;
 		return array(
-			'external' => array(),
-			'dynamic' => array(),
+			'external' => $external,
+			'dynamic' => $dynamic,
 			$minified_files,
 		);
 	}
@@ -554,7 +558,7 @@ class HeaderLib
 		return $minified;
 	}
 
-	private function minify_css( $file ) {
+	public function minify_css( $file ) {
 		global $tikipath, $tikiroot;
 		require_once 'lib/pear/Minify/CSS.php';
 		if (strpos($file, $tikiroot) === 0) {

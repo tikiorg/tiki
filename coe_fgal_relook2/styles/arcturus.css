@@ -94,6 +94,7 @@ h5 {
 	color: #000;
 	font-family: "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;
 	font-weight: bold;
+	line-height: 1.1;
 }
 
 h1 {
@@ -126,12 +127,12 @@ legend {
 	line-height: 220%;
 }
 
-span.button a,
-span.button a:visited,
+.button a,
+.button a:visited,
 button,
 input[type="reset"],
 input[type="submit"],
-span.button input,
+.button input,
 .calbuttonBox a {
 	font-size: 10px;
 	color: #000;
@@ -140,12 +141,12 @@ span.button input,
 	border: 1px solid #7c7c7c #c3c3c3 #ddd #c3c3c3;
 }
 
-span.button a:hover,
+.button a:hover,
 .button a:hover,
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-span.button input:hover,
+.button input:hover,
 .calbuttonBox:hover {
 	font-size: 10px;
 	color : #000;
@@ -159,21 +160,21 @@ button:active,
 input[type="reset"]:active,
 input[type="submit"]:active,
 .button input:active,
-span.highlight a:link,
-span.highlight a:visited {
+.highlight a:link,
+.highlight a:visited {
 	font-size: 10px;
 	color: #000;
 	background: #fff;
 	font-weight: bold;
 }
 
-span.button.highlight a {
+.button.highlight a {
 	border: 1px solid #fcefa1;
 	background: #fbf9ee;
 	color: #363636;
 }
 
-div.error {
+.error {
 	background: none;
 }
 
@@ -205,10 +206,17 @@ div.error {
 	background: #5A4A39;
 	color: #fff;
 	font-size: 1.1em;
+	position: relative;
 }
 
 #tiki-top a {
 	color: #fff;
+}
+
+#tiki-top input#highlight1 {
+	margin: -2px 0 !important;
+	padding: 0;
+	line-height: 1em;
 }
 	
 /****** Menus, Links ******/
@@ -251,9 +259,14 @@ div.error {
 .cssmenu_vert li ul li:first-child {
 	border-top: 1px solid #000;
 }
+/*
+#tiki-top .cssmenu_horiz {
+	position: absolute;
+	bottom: 0;
+}*/
 
 #tiki-top .cssmenu_horiz li a {
-	padding: 2px 1em;
+	padding: 3px 1em;
 	font-size: 12px;
 	text-decoration: none;
 }
@@ -263,7 +276,7 @@ div.error {
 }
 
 #tiki-top .cssmenu_horiz ul {
-	margin-top: -11px;
+	margin-top: -14px;
 }
 
 #tiki-top .cssmenu_horiz ul ul {
@@ -395,7 +408,7 @@ h3.box-title,
 	border-bottom: none !important;
 }
 	
-div.errors {
+.errors {
 	background: none;
 }
 
@@ -413,7 +426,7 @@ div.errors {
 	border: 1px solid #cd0a0a;
 }
 	
-div.simplebox {
+.simplebox {
 	background: #fff;
 	border: 1px solid #000;
 	color: #000;
@@ -421,14 +434,14 @@ div.simplebox {
 	padding: 2px;
 }
 
-div.errors {
+.errors {
 	color: #cd0a0a;
 }
 
 /***** Tables, Tabs *****/
 /** Tables **/
 
-table.normal {
+.normal {
 	border: 1px solid #5A4A39;
 	border-collapse: separate;
 }
@@ -443,6 +456,13 @@ tr.diffheader {
 	font-weight: bold;
 	padding-left: 2px;
 	padding-right: 5px;
+}
+
+th a,
+th a.link,
+td.heading a,
+tr.diffheader a {
+	color: #e7dece;
 }
 	 
 tr.odd td,
@@ -530,7 +550,7 @@ li.even,
 }
 
 /***** Wiki *****/
-div.article h2,
+.article h2,
 h1.pagetitle {
 	font-size: 26px;
 	font-weight: bold;
@@ -571,7 +591,7 @@ h1 a.pagetitle:hover {
 }
 
 tt,
-div.code,
+.code,
 .codelisting {
 	background: #d2b48c;
 	border: 1px dashed #adacaf;
@@ -585,9 +605,13 @@ body.tiki_cms h1 a.pagetitle,
 body.tiki_cms h1 a.pagetitle:visited,
 body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 
-div.articletrailer span {
+.articletrailer span {
 	margin-left: 5px;
 	padding-left: 20px;
+}
+
+.articletrailer .share {
+	padding-left: 0;
 }
 
 /***** Blogs *****/
@@ -633,7 +657,7 @@ div.articletrailer span {
 	color: #fff;
 /*	padding: 3px;*/
 }
-.forum_actions span.title {
+.forum_actions .title {
 	font-weight: bold;
 }
 
@@ -644,7 +668,7 @@ div.articletrailer span {
 }
 
 /***** Tags (freetags) *****/
-div.freetagitemlist {
+.freetagitemlist {
 	margin-bottom: 30px;
 	padding: 0 0 10px;
 }

@@ -8,24 +8,36 @@
 function wikiplugin_groupstat_info() {
 	return array(
 		'name' => tra('Group Stats'),
-		'documentation' => 'PluginGroupStat',
-		'description' => tra("Displays some stat about group belonging"),
+		'documentation' => tra('PluginGroupStat'),
+		'description' => tra('Displays the percentage of total users that are members of groups'),
 		'body' => tra('Title'),
 		'params' => array(
 			'groups' => array(
 				'required' => false,
-				'name' => tra('groups'),
-				'description' => tra('Groups separated by :'),
+				'name' => tra('Groups'),
+				'description' => tra('Groups separated by :. If empty, all groups will be listed.'),
 			),
 			'show_percent' => array(
 				'required' => false,
 				'name' => tra('Show Percentage'),
-				'description' => 'y|n',
+				'description' => tra('Show the percentage of total users that are members of each group (percentages are shown by default)'),
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'show_bar' => array(
 				'required' => false,
 				'name' => tra('Show Bar'),
-				'description' => 'y|n',
+				'description' => tra('Represent the percentage of total users that are members of each group in a bar graph (default is not to show the bar graph)'),
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 		),
 	);

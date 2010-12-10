@@ -35,6 +35,7 @@ $langmapping = array(
     'it' => array(  'Italiano',     tra("Italian")      ),
     'iu' => array(  'ᐃᓄᒃᑎᑐᑦ',     tra("Inuktitut")      ),
     'ja' => array(  '日本語',    tra("Japanese")     ),
+    'ko' => array(  '한국어',    tra("Korean")   ),
     'hu' => array(  'Magyar',   tra("Hungarian")   ),
     'lt' => array(  'Lithuanian',   tra("Lithuanian")   ),
     'nl' => array(  'Nederlands',   tra("Dutch")        ),

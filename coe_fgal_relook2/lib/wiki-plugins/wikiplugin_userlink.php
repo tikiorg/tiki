@@ -14,14 +14,14 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function wikiplugin_userlink_info() {
 	return array(
 		'name' => tra('Userlink function'),
-		'documentation' => 'PluginUserlink',			
+		'documentation' => tra('PluginUserlink'),			
 		'description' => tra('Makes a link to the user information page'),
 		'prefs' => array('wikiplugin_userlink'),
 		'params' => array( 
                         'user' => array(
                                 'required' => false,
                                 'name' => tra('User account name'),
-                                'description' => 'User account name (could be email)',
+                                'description' => tra('User account name (which can be an email address)'),
                                 'filter' => 'xss',
                         ),
                 ),
@@ -34,6 +34,6 @@ function wikiplugin_userlink($data, $params) {
 	$path = 'lib/smarty_tiki/modifier.userlink.php';
 	include_once($path);
 	$func = 'smarty_modifier_userlink';
-	$content = $func($params["user"], '', '', $data);
+	$content = $func($params['user'], '', '', $data);
 	return '~np~'.$content.'~/np~';
 }

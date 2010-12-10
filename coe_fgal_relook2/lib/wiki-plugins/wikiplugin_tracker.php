@@ -13,7 +13,7 @@ function wikiplugin_tracker_info()
 {
 	return array(
 		'name' => tra('Tracker'),
-		'documentation' => 'PluginTracker',
+		'documentation' => tra('PluginTracker'),
 		'description' => tra("Displays an input form for tracker submit"),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_tracker' ),
 		'body' => tra('Confirmation message after posting form'),
@@ -22,177 +22,281 @@ function wikiplugin_tracker_info()
 			'trackerId' => array(
 				'required' => true,
 				'name' => tra('Tracker ID'),
-				'description' => tra('Tracker ID'),
-				'filter' => 'digits'
+				'description' => tra('Numeric value representing the tracker ID'),
+				'filter' => 'digits',
+				'default' => '',
 			),
 			'fields' => array(
 				'required' => true,
 				'name' => tra('Fields'),
 				'description' => tra('Colon-separated list of field IDs to be displayed. Example: 2:4:5'),
+				'default' => '',
 			),
 			'action' => array(
 				'required' => false,
 				'name' => tra('Action'),
-				'description' => tra('Label on the submit button'),
+				'description' => tra('Label on the submit button. Default is "Save".'),
 				'separator' => ':',
+				'default' => 'Save'
 			),
 			'showtitle' => array(
 				'required' => false,
 				'name' => tra('Show Title'),
-				'description' => 'y|n' . ' ' . tra('Default=n'),
-				'filter' => 'alpha'
+				'description' => tra('Display the title of the tracker (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+			'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showdesc' => array(
 				'required' => false,
 				'name' => tra('Show Description'),
-				'description' => 'y|n' . ' ' . tra('Default=n'),
-				'filter' => 'alpha'
+				'description' => tra('Show the tracker\'s description (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+			'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showmandatory' => array(
 				'required' => false,
-				'name' => tra('Show Mandatory'),
-				'description' => 'y|n' . ' ' . tra('Default=y'),
-				'filter' => 'alpha'
+				'name' => tra('Mark Mandatory'),
+				'description' => tra('Indicate mandatory fields with an asterisk (shown by default).'),
+				'filter' => 'alpha',
+				'default' => 'y',
+						'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showstatus' => array(
 				'required' => false,
 				'name' => tra('Show Status'),
-				'description' => 'y|n' . ' ' . tra('Default=n'),
-				'filter' => 'alpha'
+				'description' => tra('Show the status of the items (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+			'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'embedded' => array(
 				'required' => false,
 				'name' => tra('Embedded'),
-				'description' => 'y|n' . ' ' . tra('Default=n'),
-				'filter' => 'alpha'
+				'description' => tra('Embedded'),
+				'filter' => 'alpha',
+				'default' => 'n',
+			'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'email' => array(
 				'required' => false,
 				'name' => tra('Email'),
-				'description' => tra('from').'|'.tra('to').'|'.tra('template'),
+				'description' => tra('To send an email once the tracker item has been created. Format: from').'|'.tra('to').'|'.tra('template'),
+				'default' => '',
 			),
+			'emailformat' => array(
+				'required' => false,
+				'name' => tra('Email format'),
+				'description' => tra('Text or html setting'),				
+				'default' => 'text',
+			),			
 			'url' => array(
 				'required' => false,
 				'name' => tra('URL'),
-				'description' => tra('URL used for the field links'),
+				'description' => tra('URL the user is sent to after the form is submitted'),
 				'filter' => 'url',
 				'separator' => ':',
+				'default' => '',
 			),
 			'target' => array(
 				'required' => false,
-				'name' => '_blank|_self|_parent|_top',
-				'description' => tra('Url target'),
+				'name' => tra('Url Target'),
+				'description' => tra('Set the target parameter for the url (determines whether target will open in a new pge, etc.'),
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Blank'), 'value' => '_blank'), 
+					array('text' => tra('Parent'), 'value' => '_parent'),
+					array('text' => tra('Self'), 'value' => '_self'),
+					array('text' => tra('Top'), 'value' => '_top')
+				)
 			),
 			'values' => array(
 				'required' => false,
 				'name' => tra('Values'),
-				'description' => tra('Colon-separated list of values.').' '.tra('Note that plugin arguments can be enclosed with double quotes "; this allows them to contain , or :'),
+				'description' => tra('Colon-separated list of default values.for the fields. First value corresponds to first field, second value to second field, etc.'),
+				'default' => '',
 			),
 			'overwrite' => array(
 				'required' => false,
-				'name' => tra('Overwrite the fields with values'),
-				'description' => 'y|n '.tra('Overwrite the existing field values existing or not with the param values'),
+				'name' => tra('Overwrite'),
+				'description' => tra('Overwrite current field values of the item with the input values'),
 				'filter' => 'alpha',
-				'default' => 'n'
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort'),
-				'description' => 'y|n',
-				'filter' => 'alpha'
+				'description' => tra('Display columns in the order listed in the fields parameter instead of by field ID (field ID order is used by default'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'preview' => array(
 				'required' => false,
 				'name' => tra('Preview'),
 				'description' => tra('Label for the preview button. Default:').' "'. tra('Preview') . '"',
+				'default' => 'Preview',
 			),
 			'reset' => array(
 				'required' => false,
 				'name' => tra('Reset'),
 				'description' => tra('Label for the reset button, to return all fields to their default values.'),
+				'default' => tra('reset'),
 			),
 			'view' => array(
 				'required' => false,
 				'name' => tra('View'),
-				'description' => tra('user|page'),
+				'description' => tra('View'),
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Group'), 'value' => 'group'), 
+					array('text' => tra('Page'), 'value' => 'page'),
+					array('text' => tra('User'), 'value' => 'user')
+				)
 			),
 			'status' => array(
 				'required' => false,
 				'name' => tra('Status'),
 				'description' => tra('Status of the item used in combination with:').' view=user',
+				'default' => '',
 			),
 			'itemId' =>array(
 				'required' => false,
-				'name' => tra('itemId'),
-				'description' => tra('itemId if you want to edit an item'),
-				'filter' => 'digits'
+				'name' => tra('ItemId'),
+				'description' => tra('ItemId allowing for editing an item'),
+				'filter' => 'digits',
+				'default' => '',
 			),
 			'ignoreRequestItemId' => array(
 				'required' => false,
-				'name' => tra('Do not filter on the param itemId if in the url'),
-				'description' => 'y|n',
+				'name' => tra('Ignore ItemId'),
+				'description' => tra('Do not filter on the parameter itemId if in the url'),
 				'filter' => 'alpha',
 				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'tpl' => array(
 				'required' => false,
 				'name' => tra('Template File'),
 				'description' => tra('Name of the template used to display the tracker items.'),
+				'default' => '',
 			),
 			'wiki' => array(
 				'required' => false,
 				'name' => tra('Wiki'),
 				'description' => tra('Name of the wiki page containing the template to display the tracker items.'),
-				'filter' => 'pagename'
+				'filter' => 'pagename',
+				'default' => '',
 			),
 			'newstatus' => array(
 				'required' => false,
 				'name' => tra('New Status'),
-				'description' => 'o|p|c'. ' '.tra('Default status applied to newly created items.'),
-				'filter' => 'alpha'
+				'description' => tra('Default status applied to newly created items.'),
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Open'), 'value' => 'o'), 
+					array('text' => tra('Pending'), 'value' => 'p'),
+					array('text' => tra('Closed'), 'value' => 'c')
+				)
 			),
 			'colwidth' => array(
 				'required' => false,
-				'name' => tra('Width of first column '),
-				'description' => '## or ##% '. ' '.tra('Specify the width in pixels or percentage of the first column in the tracker form.'),
+				'name' => tra('Width'),
+				'description' => tra('Specify the width in pixels or percentage of the first column (the labels) in the tracker form.'),
+				'default' => '',
+				'accepted' => '## or ##%',
 			),
 			'autosavefields' => array(
 				'required' => false,
 				'name' => tra('Autosave fields'),
 				'description' => tra('Colon-separated list of field IDs to be automatically filled with values'),
 				'filter' => 'digits',
-				'separator' => ':'
+				'separator' => ':',
+				'default' => '',
 			),
 			'autosavevalues' => array(
 				'required' => false,
 				'name' => tra('Autosavevalue'),
 				'description' => tra('Colon-separated values corresponding to autosavefields'),
 				'filter' => 'text',
-				'separator' => ':'
+				'separator' => ':',
+				'default' => '',
 			),
 			'registration' => array(
 				'required' => false,
-				'name' => tra('Add registration fields'),
-				'description' => tra('y|n Add registration fields such as Username and Password'),
-				'filter' => 'alpha'
+				'name' => tra('Registration Fields'),
+				'description' => tra('Add registration fields such as Username and Password'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'outputtowiki' => array(
 				'required' => false,
-				'name' => tra('Output to wiki using fieldId'),
+				'name' => tra('Output To Wiki'),
 				'description' => tra('Output result to a new wiki page with the name taken from the input for the specified fieldId'),
-				'filter' => 'digits'
+				'filter' => 'digits',
+				'default' => '',
 			),
 			'discarditem' => array(
 				'required' => false,
-				'name' => tra('Discard tracker item after wiki output'),
-				'description' => tra('y|n Used when results are output to a wiki page to discard the tracker item itself once the wiki page is created'),
-				'filter' => 'alpha'
+				'name' => tra('Discard After Output'),
+				'description' => tra('Used when results are output to a wiki page to discard the tracker item itself once the wiki page is created'),
+				'filter' => 'alpha',
+				'default' => '',
+			'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'outputwiki' => array(
 				'required' => false,
-				'name' => tra('Wiki template for wiki output'),
+				'name' => tra('Template Page'),
 				'description' => tra('Name of the wiki page containing the template to format the output to wiki page'),
-				'filter' => 'pagename'
+				'filter' => 'pagename',
+				'default' => '',
 			),
 		),
 	);
@@ -217,7 +321,7 @@ function wikiplugin_tracker($data, $params)
 	static $iTRACKER = 0;
 	++$iTRACKER;
 	include_once('lib/trackers/trackerlib.php');
-	$default = array('overwrite' => 'n', 'embedded' => 'n', 'showtitle' => 'n', 'showdesc' => 'n', 'sort' => 'n', 'showmandatory'=>'y', 'status' => '', 'registration' => 'n');
+	$default = array('overwrite' => 'n', 'embedded' => 'n', 'showtitle' => 'n', 'showdesc' => 'n', 'sort' => 'n', 'showmandatory'=>'y', 'status' => '', 'registration' => 'n', 'emailformat' => 'text');
 	$params = array_merge($default, $params);
 	$item = array();
 	
@@ -451,10 +555,12 @@ function wikiplugin_tracker($data, $params)
 							$_REQUEST['track'][$fl['fieldId']] = 'n';
 						}	
 					} elseif (($flds['data'][$cpt]['type'] == 'u' || $flds['data'][$cpt]['type'] == 'g' || $flds['data'][$cpt]['type'] == 'I' || $flds['data'][$cpt]['type'] == 'k') &&	// user/group/ip
-							  ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2') &&	// create or modif
-							  ($tiki_p_admin_trackers != 'y' || (!isset($_REQUEST['track'][$fl['fieldId']]) && in_array($fl['fieldId'], $fields_plugin)))) {						// but admins can override
+							  ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2')) {	// create or modif
 						
-						if (empty($itemId) && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2')) {
+						if ($tiki_p_admin_trackers === 'y' && isset($_REQUEST['track'][$fl['fieldId']]) && in_array($fl['fieldId'], $fields_plugin)) {
+							// but admins can override if the field is in the form
+							// do nothing, act casual
+						} else if (empty($itemId) && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2')) {
 							if ($flds['data'][$cpt]['type'] == 'u') {
 								$_REQUEST['track'][$fl['fieldId']] = empty($user)?(empty($_REQUEST['name'])? '':$_REQUEST['name']):$user;
 							} elseif ($flds['data'][$cpt]['type'] == 'g') {
@@ -481,7 +587,7 @@ function wikiplugin_tracker($data, $params)
 						} else {
 							$_REQUEST['track'][$fl['fieldId']] = $tikilib->now;
 						}
-					} elseif ($f['type'] == 'N' && !empty($itemId)) {
+					} elseif ($flds['data'][$cpt]['type'] == 'N' && !empty($itemId)) {
 						if (empty($itemUser)) {
 							$itemUser = $this->get_item_creator($trackerId, $itemId);
 						}
@@ -702,7 +808,11 @@ function wikiplugin_tracker($data, $params)
 								$mail_data = tra('Tracker was modified at '). $_SERVER["SERVER_NAME"];
 							$mail->setSubject($mail_data);
 							$mail_data = $smarty->fetch('mail/'.$emailOptions[2][$itpl]);
+							if ($emailformat == 'html') {
+							$mail->setHtml($mail_data);
+							} else {
 							$mail->setText($mail_data);
+							}
 							$mail->buildMessage(array('text_encoding' => '8bit'));
 							$mail->send($ueo);
 							if (isset($tplSubject[$itpl+1]))
@@ -946,9 +1056,9 @@ function wikiplugin_tracker($data, $params)
 
 				if ($tracker['descriptionIsParsed'] == 'y') {
 					$back .= '<div class="wikitext">'.$tikilib->parse_data($tracker['description']).'</div><br />';
-					} else {
-					$back.= '<div class="wikitext">'.$tracker["description"].'</div><br />';
-					}
+				} else {
+					$back.= '<div class="wikitext">'.tra($tracker["description"]).'</div><br />';
+				}
 			}
 			if (isset($_REQUEST['tr_preview'])) { // use for the computed and join fields
 				$assocValues = array();
@@ -964,6 +1074,8 @@ function wikiplugin_tracker($data, $params)
 
 			if (!empty($itemId)) {
 				$item = array('itemId'=>$itemId, 'trackerId'=>$trackerId);
+			} else {
+				$item = array('itemId'=>'');
 			}
 			foreach ($flds['data'] as $i=>$f) { // collect additional infos
 				if (in_array($f['fieldId'], $outf)) {
@@ -1012,7 +1124,16 @@ function wikiplugin_tracker($data, $params)
 						}
 					} elseif ($f['type'] == 'e') {
 						global $categlib; include_once('lib/categories/categlib.php');
-						$flds['data'][$i]['list'] = $categlib->get_viewable_child_categories($f["options_array"][0], true);
+						if (isset($f['options_array'][3]) && $f['options_array'][3] ==1) {
+							$all_descends = true;
+						} else {
+							$all_descends = false;
+						}
+						$flds['data'][$i]['list'] = $categlib->get_viewable_child_categories($f['options_array'][0], $all_descends);
+						// Need to load categories for purposes of showing
+						foreach($f['categs'] as $tcat) {
+							$flds['data'][$i]['cat'][$tcat['categId']] = 'y';
+						}
 					} elseif ($f['type'] == 'A') {
 						if (!empty($f['value'])) {
 							$flds['data'][$i]['info'] = $trklib->get_item_attachment($f['value']);
@@ -1129,12 +1250,13 @@ function wikiplugin_tracker($data, $params)
 					}
 
 					if (!empty($f['description']) && $f['type'] != 'h' && $f['type'] != 'S') {
-						$back .= '<br />';
+						$back .= '<div class="trackerplugindesc">';
 						if ($f['descriptionIsParsed'] == 'y') {
 							$back .= $tikilib->parse_data($f['description']);
 						} else {
-							$back .= '<span class="trackerplugindesc">'.$f['description'].'</span>';
+							$back .= tra($f['description']);
 						}
+						$back .= '</div>';
 					}
 					if (empty($tpl) && empty($wiki)) {
 					if ($f['type'] != 'h'){

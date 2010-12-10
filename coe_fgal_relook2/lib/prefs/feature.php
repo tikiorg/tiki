@@ -49,6 +49,7 @@ function prefs_feature_list() {
 		'feature_galleries' => array(
 			'name' => tra('Image Gallery'),
 			'description' => tra('Collections of graphic images for viewing or downloading (photo album)'),
+			'warning' => tra('You can use file galleries instead.'),
 			'type' => 'flag',
 			'help' => 'Image+Gallery',
 		),
@@ -76,6 +77,13 @@ function prefs_feature_list() {
 			'name' => tra('File Gallery'),
 			'description' => tra('Computer files, videos or software for downloading. With check-in & check-out (lock)'),
 			'help' => 'File+Gallery',
+			'type' => 'flag',
+		),
+		'feature_file_galleries_save_draft' => array(
+			'name' => tra('Save files as drafts'),
+			'dependencies' => array(
+				'feature_file_galleries',
+			),
 			'type' => 'flag',
 		),
 		'feature_articles' => array(
@@ -154,6 +162,7 @@ function prefs_feature_list() {
 		'feature_faqs' => array(
 			'name' => tra('FAQ'),
 			'description' => tra('Frequently asked questions and answers'),
+			'warning' => tra('You can use wiki pages instead.'),
 			'help' => 'FAQ',
 			'type' => 'flag',
 		),
@@ -283,7 +292,7 @@ function prefs_feature_list() {
 		),
 		'feature_jscalendar' => array(
 			'name' => tra('JS Calendar'),
-			'description' => tra('JavaScript popup date selector.'),
+			'description' => tra('JavaScript popup date selector. Will use jQuery UI DatePicker if enabled.'),
 			'help' => 'JS+Calendar',
 			'type' => 'flag',
 		),
@@ -309,8 +318,8 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_cssmenus' => array(
-			'name' => tra('Css Menus'),
-			'description' => tra('Css Menus (suckerfish).'),
+			'name' => tra('CSS Menus'),
+			'description' => tra('CSS Menus (suckerfish).'),
 			'help' => 'Menus',
 			'type' => 'flag',
 		),
@@ -342,13 +351,13 @@ function prefs_feature_list() {
 		),
 		'feature_mobile' => array(
 			'name' => tra('Mobile'),
-			'description' => tra('Mobile'),
+			'description' => tra('Outputs a WAP and VoiceXML version.'),
 			'help' => 'http://mobile.tiki.org',
 			'type' => 'flag',
 		),
 		'feature_morcego' => array(
 			'name' => tra('Morcego 3D browser'),
-			'description' => tra('Morcego 3D browser'),
+			'description' => tra('Visualize relationships between wiki pages, in a 3D applet'),
 			'help' => 'Wiki+3D',
 			'type' => 'flag',
 		),
@@ -360,14 +369,14 @@ function prefs_feature_list() {
 		),
 		'feature_intertiki' => array(
 			'name' => tra('Intertiki'),
-			'description' => tra('Intertiki'),
+			'description' => tra('Allows several Tiki sites (slaves) to get authentication from a master Tiki site'),
 			'help' => 'Intertiki',
 			'perspective' => false,
 			'type' => 'flag',
 		),
 		'feature_mailin' => array(
 			'name' => tra('Mail-in'),
-			'description' => tra('Mail-in'),
+			'description' => tra('Populate wiki pages and articles by email'),
 			'help' => 'Mail-in',
 			'type' => 'flag',
 		),
@@ -398,7 +407,7 @@ function prefs_feature_list() {
 		),
 		'feature_wiki_save_draft' => array(
 			'name' => tra('Save draft'),
-			'warning' => tra('Requires AJAX (experimental)'),
+			'warning' => tra('Experimental (Requires AJAX)'),
 			'dependencies' => array(
 				'feature_ajax',
 			),
@@ -454,7 +463,7 @@ function prefs_feature_list() {
 		),
 		'feature_comm' => array(
 			'name' => tra('Communications (send/receive objects)'),
-			'description' => tra('Communications (send/receive objects)'),
+			'description' => tra('Send/receive wiki pages and articles between Tiki-powered sites'),
 			'help' => 'Communication+Center',
 			'type' => 'flag',
 		),
@@ -554,8 +563,8 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_userlevels' => array(
-			'name' => tra('User Levels'),
-			'description' => tra('User Levels'),
+			'name' => tra('Menu User Levels'),
+			'description' => tra('Allows to control the menu options that can be seen by a user'),
 			'help' => 'User+Levels',
 			'type' => 'flag',
 		),
@@ -757,6 +766,7 @@ function prefs_feature_list() {
 		'feature_wiki_protect_email' => array(
 			'name' => tra('Protect email against spam'),
 			'help' => 'Spam+protection',
+			'warning' => $prefs['feature_wysiwyg'] === 'y' ? tra('Protect email against spam currently does not operate in pages edited in WYSIWYG mode (Tiki 6.1)') : '',
 			'type' => 'flag',
 		),	
 		'feature_sitead' => array(
@@ -774,10 +784,16 @@ function prefs_feature_list() {
 		'feature_poll_comments' => array(
 			'name' => tra('Comments for polls'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_polls',
+			),
 		),	
 		'feature_faq_comments' => array(
 			'name' => tra('Comments for FAQs'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_faqs',
+			),
 		),	
 		'feature_sefurl' => array(
 			'name' => tra('Search engine friendly url'),
@@ -814,6 +830,12 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'require' => array('feature_sefurl', 'wiki_prefixalias_tokens'),
 		),	
+		'feature_canonical_url' => array(
+			'name' => tra('Canonical URL tag'),
+			'description' => tra('Indicates to search engines which URL to use which prevents duplicate listings'),
+			'type' => 'flag',
+			'perspective' => false,
+		),
 		'feature_modulecontrols' => array(
 			'name' => tra('Show module controls'),
 			'help' => 'Module+Control',
@@ -844,6 +866,9 @@ function prefs_feature_list() {
 		'feature_article_comments' => array(
 			'name' => tra('Comments for articles'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_articles',
+			),
 		),
 		'feature_cms_templates' => array(
 			'name' => tra('Content Templates'),
@@ -858,6 +883,11 @@ function prefs_feature_list() {
 		'feature_cms_emails' => array(
 			'name' => tra('Specify notification emails when creating articles'),
 			'type' => 'flag',
+		),
+		'feature_cms_sharethis' => array(
+			'name' => tra('ShareThis buttons'),
+			'type' => 'flag',
+			'hint' => tra('Insert a ShareThis button from www.sharethis.com.'),
 		),
 		'feature_categorypath' => array(
 			'name' => tra('Category Path'),
@@ -950,9 +980,16 @@ function prefs_feature_list() {
 			'name' => tra('Custom blog headings'),
 			'type' => 'flag',
 		),
+		'feature_blog_edit_publish_date' => array(
+			'name' => tra('Publish dates can be modified'),
+			'type' => 'flag',
+		),
 		'feature_blogposts_comments' => array(
 			'name' => tra('Comments on blog posts'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_blogs',
+			),
 		),
 		'feature_blog_sharethis' => array(
 			'name' => tra('ShareThis buttons'),
@@ -1079,11 +1116,16 @@ function prefs_feature_list() {
 		),
 		'feature_custom_html_head_content' => array(
 			'name' => tra('Custom HTML <head> Content'),
-			'hint' => tra('Example') . "{if \$page eq 'Slideshow'}{literal}<style type=\"text/css\">.slideshow { height: 232px; width: 232px; }</style>{/literal}{/if}",
+			'hint' => tra('Example:') . " {if \$page eq 'Slideshow'}{literal}<style type=\"text/css\">.slideshow { height: 232px; width: 232px; }</style>{/literal}{/if}",
 			'description' => tra('Use to include custom &lt;meta&gt; or &lt;link&gt; tags.'),
 			'type' => 'textarea',
 			'size' => '6',
 			'filter' => 'rawhtml_unsafe',
+		),
+		'feature_html_head_base_tag' => array(
+			'name' => tra('Add BASE tag in the page HEAD'),
+			'type' => 'flag',
+			'description' => tra('The &lt;base&gt; tag specifies a default address for all links on a page.'),
 		),
 		'feature_sitemycode' => array(
 			'name' => tra('Custom Site Header'),
@@ -1105,7 +1147,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_topbar_custom_code' => array(
-			'name' => tra('Custom code'),
+			'name' => tra('Top Bar Custom Code'),
 			'type' => 'textarea',
 			'size' => '6',
 			'filter' => 'rawhtml_unsafe',
@@ -1149,7 +1191,7 @@ function prefs_feature_list() {
 		),
 		'feature_custom_center_column_header' => array(
 			'name' => tra('Custom Center Column Header'),
-			'hint' => tra('Example') . ' ' . "{if \$page eq 'Travel'}banner zone=5}{/if}",
+			'hint' => tra('Example:') . " {if \$page eq 'Travel'}{banner zone=5}{/if}",
 			'type' => 'textarea',
 			'size' => '6',
 		),
@@ -1157,6 +1199,8 @@ function prefs_feature_list() {
 			'name' => tra('Left column'),
 			'type' => 'list',
 			'help' => 'Users+Flip+Columns',
+			'hint' => tra('Controls visibility of the left column of modules'),
+			'keywords' => tra('side bar'),
 			'options' => array(
 				'y' => tra('Only if module'),
 				'fixed' => tra('Always'),
@@ -1168,6 +1212,8 @@ function prefs_feature_list() {
 			'name' => tra('Right Column'),
 			'type' => 'list',
 			'help' => 'Users+Flip+Columns',
+			'hint' => tra('Controls visibility of the right column of modules'),
+			'keywords' => tra('side bar'),
 			'options' => array(
 				'y' => tra('Only if module'),
 				'fixed' => tra('Always'),
@@ -1407,6 +1453,9 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'help' => 'Comments',
 			'description' => tra('Allow users (with permission) to post threaded comments to a page.'),
+			'dependencies' => array(
+				'feature_wiki',
+			),
 		),
 		'feature_wiki_pictures' => array(
 			'name' => tra('Pictures'),
@@ -1508,6 +1557,14 @@ function prefs_feature_list() {
 		),
 		'feature_wiki_import_html' => array(
 			'name' => tra('Import HTML'),
+			'type' => 'flag',
+		),
+		'feature_wiki_use_date' => array(
+			'name' => tra('Use date parameter'),
+			'type' => 'flag',
+		),
+		'feature_wiki_use_date_links' => array(
+			'name' => tra('Report it in wiki links'),
 			'type' => 'flag',
 		),
 		'feature_wiki_import_page' => array(
@@ -1747,7 +1804,7 @@ function prefs_feature_list() {
 			'name' => tra('Fixed width'),
 			'type' => 'flag',
 			'description' => tra('Constrains the site display to 990px wide.'),
-			'warning' => tra('You can modify at styles/layout/fixed_width.css'),
+			'warning' => tra('You can modify at styles/layout/layout.css - selector #fixedwidth'),
 		),
 		'feature_socialnetworks' => array(
 			'name' => tra('Social networks'),
@@ -1780,7 +1837,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'help' => 'Tiki+User+Credits',
 		),
-		'feature_invit' => array(
+		'feature_invite' => array(
 			'name' => tra('Invite users'),
 			'description' => tra('Allow users to invite new users by mail to register on this tiki'),
 			'type' => 'flag',
@@ -1790,5 +1847,11 @@ function prefs_feature_list() {
             'description' => tra('Enable this only if the server is behind a load balancer (or reverse proxy), this allow tiki to log the IP of the user, instead of the IP of the proxy server'),
             'type' => 'flag',
         ),
+        'feature_accounting' => array(
+			'name' => tra('Accounting'),
+			'description' => tra('Enable accounting system (alpha)'),
+			'help' => 'Accounting',
+			'type' => 'flag',
+		),
 	);
 }

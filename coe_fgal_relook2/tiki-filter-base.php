@@ -53,10 +53,10 @@ if(isset($_SERVER['REQUEST_URI']))
 // Usually, PHP_SELF also differs from REQUEST_URI in that PHP_SELF is URL decoded and REQUEST_URI is exactly what the client sent
 $unallowed_uri_chars = array_merge($unallowed_uri_chars, array('#', '[', ']'));
 $unallowed_uri_chars_encoded = array_merge($unallowed_uri_chars_encoded, array_map('urlencode', array('#', '[', ']')));
-$_SERVER['PHP_SELF'] = str_replace($unallowed_uri_chars, $unallowed_uri_chars_encoded, $_SERVER['PHP_SELF']);
+$_SERVER['SCRIPT_NAME'] = str_replace($unallowed_uri_chars, $unallowed_uri_chars_encoded, $_SERVER['SCRIPT_NAME']);
 
 // Note: need to substitute \ for / for Windows.
-$tikiroot = str_replace('\\','/',dirname($_SERVER['PHP_SELF']));
+$tikiroot = str_replace('\\','/',dirname($_SERVER['SCRIPT_NAME']));
 $tikipath = dirname($tiki_script_filename);
 $tikiroot_relative = '';
 
@@ -90,5 +90,15 @@ require_once('lib/init/initlib.php');
 TikiInit::prependIncludePath($tikipath.'lib/pear');
 TikiInit::appendIncludePath($tikipath.'lib/core');
 TikiInit::appendIncludePath($tikipath);
-require_once('lib/core/DeclFilter.php');
-require_once('lib/core/JitFilter.php');
+require_once 'Zend/Loader/Autoloader.php';
+Zend_Loader_Autoloader::getInstance()
+	->registerNamespace('TikiFilter')
+	->registerNamespace('DeclFilter')
+	->registerNamespace('JitFilter')
+	->registerNamespace('Search')
+	->registerNamespace('Perms')
+	->registerNamespace('Math')
+	->registerNamespace('Category')
+	->registerNamespace('WikiParser')
+	->registerNamespace('StandardAnalyzer');
+

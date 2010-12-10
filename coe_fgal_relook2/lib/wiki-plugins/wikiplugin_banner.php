@@ -16,20 +16,28 @@ function wikiplugin_banner_help() {
 function wikiplugin_banner_info() {
 	return array(
 		'name' => tra('Banner'),
-		'documentation' => 'PluginBanner',
+		'documentation' => tra('PluginBanner'),
 		'description' => tra('Insert a banner'),
 		'prefs' => array('wikiplugin_banner'),
 		'params' => array(
 			'zone' => array(
-			'required' => true,
-			'name' => tra('Zone'),
-			'description' => tra('Zone'),
+				'required' => true,
+				'name' => tra('Zone'),
+				'description' => tra('Name of the zone created in Admin > Banners'),
+				'default' => '',
 			),
 			'target' => array(
-			'required' => false,
-			'name' => tra('Target'),
-			'description' => '_blank|display'),
+				'required' => false,
+				'name' => tra('Target'),
+				'description' => tra('Determines the browser behavior once the banner is clicked'),
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Blank'), 'value' => '_blank'), 
+					array('text' => tra('Display'), 'value' => 'display')
+				)
 			)
+		)
 	);
 }
 

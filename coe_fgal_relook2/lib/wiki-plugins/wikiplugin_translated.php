@@ -18,7 +18,7 @@ function wikiplugin_translated_help() {
 function wikiplugin_translated_info() {
 	return array(
 		'name' => tra('Translated'),
-		'documentation' => 'PluginTranslated',
+		'documentation' => tra('PluginTranslated'),
 		'description' => tra('Links to a translated content'),
 		'prefs' => array( 'feature_multilingual', 'wikiplugin_translated' ),
 		'body' => tra('[url] or ((wikiname)) or ((inter:interwiki)) (use wiki syntax)'),
@@ -27,11 +27,13 @@ function wikiplugin_translated_info() {
 				'required' => true,
 				'name' => tra('Language'),
 				'description' => tra('Two letter language code of the language, ex: fr'),
+				'default' => '',
 			),
 			'flag' => array(
 				'required' => false,
 				'name' => tra('Flag'),
 				'description' => tra('Country name, ex: France'),
+				'default' => '',
 			),
 		),
 	);

@@ -73,6 +73,14 @@ function filterExistingInformation(&$data, &$messages) // {{{
 function displayRegisatrationForms($data, $messages) // {{{
 {
 	global $smarty, $userlib, $prefs;
+	global $registrationlib; require_once('lib/registration/registrationlib.php');
+
+	if (is_a($registrationlib->merged_prefs, "RegistrationError")) {
+		register_error($registrationlib->merged_prefs->msg);
+	}
+	$smarty->assign_by_ref('merged_prefs', $registrationlib->merged_prefs);
+	
+	
 	// Default values for the registration form
 	$smarty->assign('username', $data['nickname']);
 	$smarty->assign('email', $data['email']);
@@ -170,9 +178,9 @@ function runAuth() { // {{{
 	$consumer = getConsumer();
 	// Begin the OpenID authentication process.
 	$auth_request = $consumer->begin($openid);
-	// No auth request means we can't begin OpenID.
+	// No auth request means we can't begin OpenID. Usually this is because the OpenID is invalid. Sometimes this is because the OpenID server's certificate isn't trusted.
 	if (!$auth_request) {
-		displayError(tra("Authentication error; not a valid OpenID."));
+		displayError(tra("Authentication error; probably not a valid OpenID."));
 	}
 	$sreg_request = Auth_OpenID_SRegRequest::build(
 	// Required

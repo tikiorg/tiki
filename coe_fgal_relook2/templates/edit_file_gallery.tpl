@@ -199,7 +199,7 @@
 								<input size="80" type="text" name="wiki_syntax" value="{$gal_info.wiki_syntax|escape}" />
 								<br />
 								<i>{tr}The default is {/tr}"{literal}{img fileId="%fileId%" thumb="y" rel="box[g]"}{/literal}")</i>
-								<i>{tr}Field names will be replaced when enclosed in % chars. e.g. %fileId%, %src%, %title%, %description%{/tr}</i>
+								<i>{tr}Field names will be replaced when enclosed in % chars. e.g. %fileId%, %name%, %filename%, %description%{/tr}</i>
 							</td>
 						</tr>
 

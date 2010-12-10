@@ -71,6 +71,12 @@ h6 {
 .wikitext h5 {color: #6F6F6F; font-style: italic}
 .wikitext h6 {color: #909090}
 
+.wikitext.nopagetitle h1 {font-size: 1.8em; color: #309FC0; line-height: .9em; border-bottom: solid 1px #3090C0; text-transform: uppercase}
+.wikitext.nopagetitle h2 {font-size: 1.6em; color: #303030; line-height: .8em; font-style: italic; border-bottom: none; text-transform: none}
+.wikitext.nopagetitle h3 {font-size: 1.4em; border-bottom: dashed 1px #CCF0FF; color: #3F3F3F; font-style: normal}
+.wikitext.nopagetitle h4 {font-size: 1.2em; color: #6F6F6F; font-style: italic; border-bottom: none;}
+.wikitext.nopagetitle h5 {font-size: 1.05em; color: #909090}
+
 hr {
 	background: #aaa;
 	color: #000;
@@ -84,7 +90,7 @@ fieldset {
 textarea,
 option,
 select,
-body.wikitext {
+body.cke_show_borders {
 	background: #F3FCFE;
 	color: #000;
 }
@@ -138,12 +144,12 @@ input#comments-title {
 }
 
 /* Links in buttons */
-span.button a,
-span.button a:visited,
+.button a,
+.button a:visited,
 button,
 input[type=reset],
 input[type=submit],
-span.button input,
+.button input,
 .calbuttonbox {
 	color: #fff;
 	background: #1d9ccf;
@@ -157,11 +163,11 @@ span.button input,
 	font: normal 11px Verdana, Helvetica, Geneva, Arial, sans-serif;
 }
 
-span.button a:hover,
+.button a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
-span.button input:hover,
+.button input:hover,
 .calbuttonbox:hover {
 	color: #fff;
 	text-decoration: none;
@@ -173,8 +179,8 @@ button:active,
 input[type=reset]:active,
 input[type=submit]:active,
 .button input:active,
-span.highlight a:link,
-span.highlight a:visited {
+.highlight a:link,
+.highlight a:visited {
 	border-color: #223845 #41cbe7 #41cbe7 #223845;
 	background: #5cbdef !important;
 	color: #000 !important;
@@ -224,9 +230,9 @@ label {
 	background: #fff;
 }
 
-.fullscreen #col1 {
+/*.fullscreen #col1 {
 	margin: 0 30px !important;
-}
+}*/
 
 #c1c2 #wrapper .marginleft {
 	margin-left: 240px;
@@ -341,7 +347,7 @@ label {
 }
 
 /*** Print page ***/
-div#tiki-main {
+#tiki-main {
 	background: #fff;
 }
 
@@ -364,7 +370,7 @@ div#tiki-main {
 	margin: 0 58px;
 }
 
-div#sioptions {
+#sioptions {
 	padding: 0 58px;
 	position: relative;
 }
@@ -373,7 +379,7 @@ div#sioptions {
 	text-align: center;
 }
 
-div#sitelogo {
+#sitelogo {
 	padding: 8px 0 0 0;
 	overflow: hidden;
 }
@@ -448,7 +454,7 @@ div#sitelogo {
 	font-weight: normal;
 }
 
-div.logged-in {
+.logged-in {
 	padding-right: 20px;
 }
 
@@ -568,6 +574,25 @@ a.flip:hover {
 	margin: 4px 0;
 	min-height: 24px;
 	text-align: right;
+}
+
+.actions .share,
+.actions .share a,
+.actions .share a:visited {
+	background: none;
+	width: auto;
+	min-height: 16px;
+	line-height: 1;
+	border-bottom: none;
+	margin-top: 2px;
+}
+
+.actions span.share img {
+	margin-top: 8px;
+}
+
+.actions span.share a {
+	padding-right: 0;
 }
 
 /* Also is .content */
@@ -865,7 +890,7 @@ a.phplmselected:hover {
 
 
 /** Links in other menus **/
-div.separator {
+.separator {
 	border-top: 1px solid #bed8f1;
 	padding-bottom: 3px;
 }
@@ -890,22 +915,31 @@ a.linkmodule:hover {
 	color: #000000;
 }
 
-div.menuSection {
+.menuSection {
 	padding: 0 0 16px 0;
 	}
+	
+li.menuSection {
+	padding: 0;
+}	
 
 
-div.menuSection div.menuSection,
-div.menuSection div.separator {
+.menuSection .menuSection,
+.menuSection .separator {
 	margin-left: 16px;
 }
+
+li.menuSection .menuSection {
+	margin-left: 0;
+}
+
 /****** Misc. Global Classes (layout and style) ****/
 .highlight,
 #highlight {
 	background: #5cbdef;
 }
 
-span.highlight {
+.highlight {
 	background: inherit;
 }
 
@@ -914,7 +948,7 @@ span.highlight {
 }
 
 
-div.adminanchors {
+.adminanchors {
 	background: #077aa7 !important;
 }
 
@@ -954,7 +988,7 @@ img.flipmodimage:hover {
 }
 	
 /** Other boxes **/
-div.cbox {
+.cbox {
 	border: 1px solid #1b3a50;
 }
 
@@ -1013,7 +1047,7 @@ div.cbox {
 	background: #fff;
 }
 
-div.simplebox {
+.simplebox {
 	border: 1px solid #aaa;
 	background: #fff;
 	padding: 1em;
@@ -1025,8 +1059,8 @@ table {
 	font-size: 1em;
 }
 
-table.normal, 
-table.admin {
+.normal, 
+.admin {
 	border-collapse: separate;}
 
 .formcolor td,
@@ -1049,7 +1083,6 @@ table.admin {
 }
 
 .normal td,
-td.normal,
 .wikitable td,
 td.odd,
 td.even {
@@ -1059,7 +1092,7 @@ td.even {
 
  /* headings */
 th,
-table.normal td.heading {
+.normal td.heading {
 	font-size: 1em;
 	font-weight: normal;
 	color: #5ae0ff;
@@ -1185,7 +1218,7 @@ a.forumnameread {
 	border-top: 0;
 }
 
-table.admin div#content1 div.tabcontent div.cbox {
+.admin #content1 .tabcontent .cbox {
 	background: transparent;
 }
 
@@ -1205,7 +1238,7 @@ a.pagetitle:hover {
 	text-decoration: none;
 }
 
-div#description,
+#description,
 .description {
 	font-size: .9em;
 	font-style: italic;
@@ -1218,18 +1251,18 @@ div#description,
 	margin: 10px 0;
 }
 
-table.wikitable {
+.wikitable {
 	border: 1px solid #A9A9A9;
 	border-collapse: collapse;
 }
 
-td.wikicell {
+.wikicell {
 	padding: 3px;
 	border: 1px solid #a9a9a9;
 	border-collapse: collapse;
 }
 
-div#page-bar {
+#page-bar {
 	margin-top: 8px;
 }
 
@@ -1245,7 +1278,7 @@ div#page-bar {
 }
 
 /* Wiki plugins */
-div.code {
+.code {
 	padding: 3px;
 	border: 1px dashed #a9a9a9;
 	background: #F5F5F5;
@@ -1278,11 +1311,11 @@ div.code {
 }
 
 /* Quote plugin */
-div.quoteheader {
+.quoteheader {
 	margin-left: 30px;
 }
 
-div.quotebody {
+.quotebody {
 	margin: 0 15px 10px 30px;
 	font-style: italic;
 	border-left: 5px solid #D3D3D3;
@@ -1290,11 +1323,11 @@ div.quotebody {
 }
 
 /* Split */
-table.wikiplugin-split {
+.wikiplugin-split {
 	width: 100%;
 }
 
-div.split {
+.split {
 	border: 1px dashed #696969;
 	clear: both;
 }
@@ -1313,7 +1346,7 @@ div.split {
 	margin-left: -3px;
 }
 
-table.wikiplugin-split .codelisting {
+.wikiplugin-split .codelisting {
 	width: 95%;
 }
 
@@ -1324,13 +1357,13 @@ table.wikiplugin-split .codelisting {
 }
 
 /** Wiki tocs **/
-div.tocnav {
+.tocnav {
 	background: #EBEBEB;
 	padding: 3px;
 }
 
 /* TOC */
-ul.toc {
+.toc {
 	border-top: 1px dotted #a9a9a9;
 	border-bottom: 1px dotted #a9a9a9;
 }
@@ -1342,7 +1375,7 @@ ul.toc {
 }
 
 /***** Articles ****/
-div.article {
+.article {
 	border: solid 1px #a9a9a9;
 	border-top: solid 1px gray;
 	margin-top: 5px;
@@ -1351,7 +1384,7 @@ div.article {
 	font-size: 1.1em;
 }
 
-div.articletopline {
+.articletopline {
 	background: #223543;
 	color: #fff;
 	font-size: 90%;
@@ -1359,22 +1392,22 @@ div.articletopline {
 	padding-left: 6px;
 }
  
-div.articletitle h2 {
+.articletitle h2 {
 	background: #1b3c54 url(strasa/headerbg.jpg) repeat-x 0 100%;
 	color: #fff;
 	padding: 10px 5px;
 }
 
-div.articletitle h2 a {
+.articletitle h2 a {
 	color: #fff;
 	font-weight: bold;
 }
 
-div.articletitle h2 a:hover {
+.articletitle h2 a:hover {
 	text-decoration: none;
 }
 
-span.titleb {
+.titleb {
 	display: block;
 	float: right;
 	clear: both;
@@ -1387,7 +1420,7 @@ span.titleb {
 	background: #2598c5 url(strasa/login.jpg) left bottom no-repeat;
 }
 
-div.articlesubtitle {
+.articlesubtitle {
 	margin-top: -1px;
 	padding-left: 6px;
 	font-size: 0.9em;
@@ -1395,26 +1428,26 @@ div.articlesubtitle {
 	color: #fff;
 }
 
-div.articletitle br {
+.articletitle br {
 	clear: both;
 }
 
-div.articleheading {
+.articleheading {
 	margin-top: 6px;
 	padding: 4px;
 }
 
-div.article .actions {
+.article .actions {
 	padding: 2px 1px;
 }
 
-div.articlebody {
+.articlebody {
 	padding: 6px;
 }
 
 /***** Blogs *****/
 
-div.blogtitle {
+.blogtitle {
 	font-size: 1.3em;
 	font-weight: bold;
 	padding: 3px;
@@ -1423,7 +1456,7 @@ div.blogtitle {
 	line-height: 80%;
 }
 
-div.bloginfo {
+.bloginfo {
 	text-align: center;
 	padding: 3px;
 	line-height: 150%;
@@ -1467,28 +1500,28 @@ body.tiki_blogs .post .postbody {
 	line-height: 1.2em;
 	margin-bottom: 1em;
 }
-
-body.tiki_blogs div.author_actions {
-	float: none;
-	border: 0;
-	width: 100%;
-}
-
-body.tiki_blogs .author_actions .actions {
+/*
+body.tiki_blogs.actions {
+	background: url(strasa/login.jpg) no-repeat;
 	float: right;
-	background: url(strasa/login.jpg) no-repeat 100% 0;
-	text-align: right;
 	min-height: 24px;
-}
+	text-align: right;
+}*/
 
 body.tiki_blogs .actions img.icon {
 	padding: 4px 0;
 }
-
+/*
 body.tiki_blogs .author_info {
 	min-height: 24px;
-}
-
+	background: url(strasa/login.jpg) no-repeat;
+	color: #fff;
+	float: right;
+	font-size: 90%;
+	font-style: italic;
+	min-height: 24px;
+	padding-top: 1px;}
+*/
 body.tiki_blogs .author_info img {
 	vertical-align: top;
 }
@@ -1500,11 +1533,11 @@ body.tiki_blogs .postbody-title {
 	
 body.tiki_blogs .postbody .postfooter {
 	width: 100%;
-	margin-bottom: 2em;
 }
 
-body.tiki_blogs .post .postfooter .actions {
-	float: left;
+body.tiki_blogs .post .author_actions {
+	text-align: left;
+	display: inline;
 }
 
 .postbody-title a.freetag {
@@ -1584,7 +1617,7 @@ body.tiki_blogs .post .postfooter .actions {
 	font-style: italic;
 	text-align: right;
 	min-height: 24px;
-	padding-left: 60px;
+	padding-left: 100px;
 	padding-top: 4px;
 	padding-right: 4px;
 	color: #fff;
@@ -1651,7 +1684,7 @@ body.tiki_blogs .post .postfooter .actions {
 }
 
 /* Help box*/
-div.commentsedithelp {
+.commentsedithelp {
 	background: #ffcfcf;
 	color: black;
 	border: 1px solid #ff0000;
@@ -1667,17 +1700,17 @@ div.commentsedithelp {
 }
 
 /***** Tags (freetags) *****/
-div.freetagobjectname a {
+.freetagobjectname a {
 	text-decoration: none;
 }
 
 /***** Image Galleries *****/
-table.galtable {
+.galtable {
 	border-collapse: collapse;
 	border: 1px solid #696969;
 }
 
-div.thumbnailcontenerchecked div.thumbnail {
+.thumbnailcontenerchecked .thumbnail {
 	border-color: #a9a9a9;
 	background: #f8f8ff;
 }
@@ -1698,7 +1731,7 @@ div.thumbnailcontenerchecked div.thumbnail {
 /***** Trackers *****/
 
 /* also for categorize.tpl */
-div.multiselect {
+.multiselect {
 	border: 1px solid #696969;
 }
 
@@ -1971,7 +2004,7 @@ div.multiselect {
 	font-weight: bold;
 }
 
-.box-data td.fc a.today,
+.box-data .fc a.today,
 .box-data td a.today {
 	background: #D4D0C8;
 	border: solid 1px #696969;
@@ -1998,7 +2031,7 @@ div.multiselect {
 	background: #F5F5F5;
 }
 
-div#calscreen td.calfocuson {
+#calscreen .calfocuson {
 	background: #D4D0C8;
 }
 
@@ -2049,20 +2082,20 @@ div#calscreen td.calfocuson {
 }
 
 /*****  Polls  *****/
-div.pollresults {
+.pollresults {
 	margin-top: 5px;
 	font-size: 1.2em;
 	padding: 0 5px;
 }
 
-td.pollr {
+.pollr {
 	color: black;
 }
 
 /***** FAQs *****/
 
 /***** Quizzes *****/
-div.questionblock {
+.questionblock {
 	padding: 4px;
 }
 
@@ -2075,18 +2108,18 @@ textarea.tshoutbox{
 }
 
 /***** Directory *****/
-div.dircategs {
+.dircategs {
 	border: 1px solid #696969;
 	padding: 5px;
 	width: 100%;
 }
 
-div.dirlistsites {
+.dirlistsites {
 	padding: 5px 0 10px 5px;
 	margin-top: 10px;
 }
 
-div.dirrelated {
+.dirrelated {
 	margin-top: 10px;
 	padding: 5px;
 }
@@ -2106,15 +2139,15 @@ div.dirfooter {
 /***** Ajax *****/
 
 /***** TikiSheet Default Style *****/
-table.default thead td,
-table.default tfoot td {
+.default thead td,
+.default tfoot td {
 	font-weight: bold;
 	text-align: center;
 	background: #223845;
 	color: #cce5ff;
 }
 
-table.default td {
+.default td {
 	border: solid 1px #A9A9A9;
 	background: white;
 }

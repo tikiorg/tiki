@@ -34,9 +34,10 @@ if ( empty($_REQUEST["sendingUniqId"]) ) {
 	$smarty->assign('sendingUniqId', $sendingUniqId);
 }
 
-if(!isset($_REQUEST['cookietab'])) {
+if(!isset($_REQUEST['cookietab']) || isset($_REQUEST['editionId'])) {
 	$_REQUEST['cookietab'] = 1;
 }
+$cookietab = $_REQUEST['cookietab'];
 $smarty->assign('newsletters', $newsletters["data"]);
 if ($_REQUEST["nlId"]) {
 	$nl_info = $nllib->get_newsletter($_REQUEST["nlId"]);
@@ -392,6 +393,7 @@ if (isset($_REQUEST["save_only"])) {
 	}
 	$info = $nllib->get_edition($editionId);
 	$smarty->assign('info', $info);
+	$cookietab = 2;
 }
 if (!isset($_REQUEST['ed_sort_mode']) && !isset($_REQUEST['dr_sort_mode'])) {
 	$ed_sort_mode = $dr_sort_mode = 'sent_desc';
@@ -461,7 +463,7 @@ if (count($tpls) > 0) {
 	$smarty->assign_by_ref('tpls', $tpls);
 }
 include_once ('tiki-section_options.php');
-setcookie('tab', $_REQUEST['cookietab']);
+setcookie('tab', $cookietab);
 $smarty->assign('cookietab', $_REQUEST['cookietab']);
 ask_ticket('send-newsletter');
 global $wikilib;
@@ -475,16 +477,16 @@ $smarty->assign('mid', 'tiki-send_newsletters.tpl');
 $smarty->display("tiki.tpl");
 
 function generateTxtVersion($txt) {
-	//Add line breaks if none before stripping headers, paras, and br
-	$txt =  preg_replace('/(<\/h[1-6]>) *([^\r\n])/', "$1\n\n$2", $txt);
-	$txt =  preg_replace('/(<\/div>) *([^\r\n])/', "$1\n\n$2", $txt);
-	$txt =  preg_replace('/(<\/p>) *([^\r\n])/', "$1\n\n$2", $txt);
-	$txt =  str_replace('/(<br *\/?>)/', "\n", $txt);
-	// start stripping tags
-	$txt = strip_tags(str_replace(array("\r\n", "&nbsp;"), array("\n", " "), $txt));
-	$txt = preg_replace('/^!!!(.*?)$/m', "\n$1\n", $txt);
-	$txt = preg_replace('/^!!(.*?)$/m', "\n$1\n", $txt);
-	$txt = preg_replace('/^!(.*?)$/m', "\n$1\n", $txt);
+	global $parsed, $tikilib;
+	
+	if (empty($parsed)) {
+		$txt = $tikilib->parse_data($txt, array('absolute_links' => true, 'suppress_icons' => true));
+	} else {
+		$txt = $parsed;
+	}
+	$txt = str_replace('&nbsp;', ' ', $txt);
+	$txt = strip_tags($txt);
+	
 	$txt = html_entity_decode($txt);
 	return $txt;
 }

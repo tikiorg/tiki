@@ -177,7 +177,7 @@ class StatsLib extends TikiLib
 									HAVING views = '$maxvar' OR views = '$minvar'
 									ORDER BY date ASC");
 			$start = $this->getOne("select min(`day`) from `tiki_pageviews`",array());
-			$stats['started'] = $tikilib->get_long_date($start);
+			$stats['started'] = $start;
 			$stats['days'] = floor(($tikilib->now - $start)/86400);
 			$stats['pageviews'] = $this->getOne("select sum(`pageviews`) from `tiki_pageviews`");
 			$stats['ppd'] = sprintf("%.2f", ($stats['days'] ? $stats['pageviews'] / $stats['days'] : 0));

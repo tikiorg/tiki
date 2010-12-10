@@ -10,7 +10,7 @@ if( ! isset( $_SERVER['argc'] ) )
 if( ! file_exists( 'db/local.php' ) )
 	die( "Tiki is not installed yet.\n" );
 
-if( isset( $_SERVER['argv'][1] ) && $_SERVER['argv'][1] != 'install' ) {
+if( isset( $_SERVER['argv'][1] ) && $_SERVER['argv'][1] != 'install' && $_SERVER['argv'][1] != 'skiperrors' ) {
 	$multi = basename( $_SERVER['argv'][1] );
 }
 
@@ -55,9 +55,14 @@ else {
 	if( count( $installer->failures ) ) {
 		echo "\tErrors:\n";
 		foreach( $installer->failures as $key => $error ) {
-			list( $query, $message ) = $error;
+			list( $query, $message, $patch ) = $error;
 
-			echo "\t===== Error $key =====\n\t$query\n\t$message\n";
+			if (isset($_SERVER['argv'][1]) && $_SERVER['argv'][1] == 'skiperrors') {
+				echo "\tSkipping $patch\n";
+				$installer->recordPatch($patch);
+			} else {
+				echo "\t===== Error $key in $patch =====\n\t$query\n\t$message\n";
+			}
 		}
 	}
 }

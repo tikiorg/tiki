@@ -2,7 +2,7 @@
 #calendar {
 }
 
-div.tabrow {
+.tabrow {
 	position: relative;
 	left: 0;
 	font-size: 1em;
@@ -329,7 +329,7 @@ div.tabrow {
 .calnavigation a.next {
 	float: right;
 }
-td.middle {
+.middle {
 	vertical-align: middle;
 }
 .mininotes {
@@ -355,7 +355,8 @@ td.middle {
 }
 
 * html .calcontent {
-	height: 60px }
+	height: 60px;
+}
 
 .viewmodeon {
 	padding: 0;
@@ -508,7 +509,7 @@ a.viewmodeoff img {
 .status2     { background: #F66; border: 1px solid #000; color: #000; }
 
 select[name=start_Hour], select[name=start_Minute], select[name=end_Hour], select[name=end_Minute] { min-width: 40px; }
-.caltable, #calscreen table.normal { clear: both; border-collapse: collapse; margin-top: 5px; width: 100%; font-size: 11px;}
+.caltable, #calscreen .normal { clear: both; border-collapse: collapse; margin-top: 5px; width: 100%; font-size: 11px;}
 .caltable td { padding: 2px; }
 #calscreen td {vertical-align: top;}
 #calscreen td a {text-decoration: none;}
@@ -535,7 +536,7 @@ a.addevent:hover {}
 	padding: 1px;
 }
 
-.viewmode div {display: inline}
+.viewmode div {display: inline;}
 .calbuttonBox {  }
 .calbuttonLeft {  }
 .calbuttonRight {  }

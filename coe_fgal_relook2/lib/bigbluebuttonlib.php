@@ -2,7 +2,13 @@
 
 class BigBlueButtonLib
 {
+	private $version = false;
+
 	private function getVersion() {
+		if( $this->version !== false ) {
+			return $this->version;
+		}
+
 		if( $version = $this->performRequest( '', array() ) ) {
 			$values = $this->grabValues( $version->documentElement );
 			$version = $values['version'];
@@ -11,10 +17,12 @@ class BigBlueButtonLib
 				$version = substr( $version, 0, $pos );
 			}
 			
-			return $version;
+			$this->version = $version;
 		} else {
-			return '0.6';
+			$this->version = '0.6';
 		}
+
+		return $this->version;
 	}
 
 	public function getMeetings() {

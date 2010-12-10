@@ -154,6 +154,11 @@
 						{remarksbox type="tip" title="{tr}Tip{/tr}"}
 							{tr}Use wiki page name or full URL{/tr}. {tr}For other Tiki features, use relative links (such as <em>http:tiki-forums.php</em>).{/tr}
 						{/remarksbox}
+						{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
+							{jq}
+								$("#groups_home").tiki("autocomplete", "pagename");
+							{/jq}
+						{/if}
 					</td>
 				</tr>
 			{/if}
@@ -259,7 +264,7 @@
 			</tr>
 			<tr>
 				<td>{tr}Users are automatically assigned at registration in the group if their emails match the pattern{/tr}</td>
-				<td><input type="text" size="40" name="emailPattern" value="{$group_info.emailPattern|escape}" /> {tr}Example: {/tr}/@tw\.org$/ {tr}Example:{/tr} /@(tw.org$)|(tw\.com$)/</td>
+				<td><input type="text" size="40" name="emailPattern" value="{$group_info.emailPattern|escape}" /><br />{tr}Example: {/tr}/@tw\.org$/ <br />{tr}Example:{/tr} /@(tw.org$)|(tw\.com$)/</td>
 			</tr>
 
 			{if $group ne ''}
@@ -332,19 +337,19 @@
 		</table>
 		{pagination_links cant=$membersCount step=$prefs.maxRecords offset=$membersOffset offset_arg='membersOffset'}{/pagination_links}
 		<div class="box">{$membersCount} {tr}users in group{/tr} {$groupname|escape}</div>
-		<form method="post" action="tiki-admingroups.php">
-			<p>
-				<input type="hidden" name="group" value="{$groupname|escape}"/>
-				<select name="user">
-					{foreach from=$userslist item=iuser}
-						{if ! in_array( $iuser, $memberslist ) }
+		{if ! empty($userslist)}
+			<form method="post" action="tiki-admingroups.php">
+				<p>
+					<input type="hidden" name="group" value="{$groupname|escape}"/>
+					<select name="user">
+						{foreach from=$userslist item=iuser}
 							<option>{$iuser|escape}</option>
-						{/if}
-					{/foreach}
-				</select>
-				<input type="submit" name="adduser" value="{tr}Add to group{/tr}"/>
-			</p>
-		</form>
+						{/foreach}
+					</select>
+					<input type="submit" name="adduser" value="{tr}Add to group{/tr}"/>
+				</p>
+			</form>
+		{/if}
 	{/tab}
 {/if}
 

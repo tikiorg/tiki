@@ -53,7 +53,7 @@ if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
 	$_REQUEST["body"] = $template_data["content"];
 }
 
-$smarty->assign('allowhtml', 'y');
+$smarty->assign('allowhtml', '');
 $publishDate = $tikilib->now;
 $cur_time = explode(',', $tikilib->date_format('%Y,%m,%d,%H,%M,%S', $publishDate));
 $expireDate = $tikilib->make_time($cur_time[3], $cur_time[4], $cur_time[5], $cur_time[1], $cur_time[2], $cur_time[0]+1);
@@ -83,7 +83,7 @@ $smarty->assign('rating', 7);
 $smarty->assign('edit_data', 'n');
 $smarty->assign('emails', '');
 $smarty->assign('userEmail', $userlib->get_user_email($user));
-$smarty->assign('ispublished', 'y');
+$smarty->assign('ispublished', '');
 
 // If the articleId is passed then get the article data
 // GGG - You have to check for the actual value of the articleId because it
@@ -153,7 +153,7 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 // echo $tiki_p_edit_article.$article_data["author"].$article_data["creator_edit"];
 if ($tiki_p_admin_cms != 'y' && !$tikilib->user_has_perm_on_object($user, $articleId, 'article', 'tiki_p_edit_article') and ($article_data["author"] != $user or $article_data["creator_edit"] != 'y')) {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot edit this article"));
+	$smarty->assign('msg', tra("You do not have permission to edit this article"));
 
 	$smarty->display("error.tpl");
 	die;
@@ -162,8 +162,18 @@ if ($tiki_p_admin_cms != 'y' && !$tikilib->user_has_perm_on_object($user, $artic
 if (isset($_REQUEST["allowhtml"])) {
 	if ($_REQUEST["allowhtml"] == "on") {
 		$smarty->assign('allowhtml', 'y');
+	} else {
+		$smarty->assign('allowhtml', 'n');
 	}
 }
+if (isset($_REQUEST["ispublished"])) {
+	if ($_REQUEST["ispublished"] == "on") {
+		$smarty->assign('ispublished', 'y');
+	} else {
+		$smarty->assign('ispublished', 'n');
+	}
+}
+
 
 $errors = array();
 if (empty($_REQUEST['emails']) || $prefs['feature_cms_emails'] != 'y')
@@ -249,7 +259,6 @@ if (isset($_REQUEST["preview"]) or !empty($errors)) {
 	$smarty->assign_by_ref('from', $_REQUEST['from']);
 	$imgname = $_REQUEST["image_name"];
 	$data = urldecode($_REQUEST["image_data"]);
-	$smarty->assign('ispublished', $_REQUEST["ispublished"]);
 
 	// Parse the information of an uploaded file and use it for the preview
 	if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
@@ -393,7 +402,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 			die;
 		}
 	}
-	if($_REQUEST['ispublished'])
+	if($_REQUEST['ispublished'] == "on")
 		$ispublished = 'y';
 	else
 		$ispublished = 'n';

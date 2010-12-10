@@ -25,7 +25,15 @@ function module_forums_last_posts_info() {
 				'name' => tra('List of forum IDs'),
 				'description' => tra('Post only from this forum'),
 				'separator' => ':'
-			)
+			),
+			'date' => array(
+				'name' => tra('Show date'),
+				'description' => tra('If set to "y", show post date directly instead of as tooltip.') . ' ' . tra('Default:') . ' n',
+			),
+			'author' => array(
+				'name' => tra('Show author'),
+				'description' => tra('If set to "y", show post author directly instead of as tooltip.') . ' ' . tra('Default:') . ' n',
+			),
 		),
 		'common_params' => array('nonums', 'rows')
 	);
@@ -44,4 +52,6 @@ function module_forums_last_posts( $mod_reference, $module_params ) {
 	$replyprefix = tra("Re:");
 	
 	$smarty->assign('modForumsLastPosts', $ranking["data"]);
+	$smarty->assign('date', isset($module_params['date']) ? $module_params['date'] : 'n');
+	$smarty->assign('author', isset($module_params['author']) ? $module_params['author'] : 'n');
 }

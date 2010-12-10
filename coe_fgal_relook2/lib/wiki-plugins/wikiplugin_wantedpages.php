@@ -11,7 +11,7 @@
  * Minor tweaks by avgasse <amedee@amedee.be>
 */
 
-require_once "lib/wiki/pluginslib.php";
+require_once 'lib/wiki/pluginslib.php';
 
 function wikiplugin_wantedpages_help() {
 	$help = tra("Lists ''wanted'' Wiki pages: ")."\n";
@@ -45,45 +45,89 @@ function wikiplugin_wantedpages_info() {
 	return array(
 		'name' => tra('Wanted Pages'),
 		'documentation' => 'PluginWantedPages',		
-		'description' => tra("Lists ''wanted'' wiki pages"),
+		'description' => tra('Lists \'\'wanted\'\' wiki pages'),
 		'prefs' => array( 'wikiplugin_wantedpages' ),
-		'body' => tra('Custom level regex. A custom filter for wanted pages to be listed (only used when level=>custom).
-		possible values: a valid regex-expression (PCRE).'),
+		'body' => tra('Custom level regex. A custom filter for wanted pages to be listed (only used when level=>custom). Possible values: a valid regex-expression (PCRE).'),
 		'params' => array(
 			'ignore' => array(
 				'required' => false,
 				'name' => tra('Ignore'),
-				'description' => tra("A wildcard pattern of originating pages to be ignored. (refer to PHP fuction fnmatch() for details)"),
+				'description' => tra('A wildcard pattern of originating pages to be ignored. (refer to PHP fuction fnmatch() for details)'),
+				'accepted' => tra('a valid regex-expression (PCRE)'),
+				'default' => '',
+				'advanced' => true,
 			),
 			'splitby' => array(
 				'required' => false,
 				'name' => tra('Split By'),
-				'description' => tra("The character, by which ignored patterns are separated. possible values: characters"),
+				'description' => tra('The character by which ignored patterns are separated.'),
+				'default' => '+',
+				'advanced' => true,
 			),
 			'skipext' => array(
 				'required' => false,
 				'name' => tra('Skip Extension'),
-				'description' => tra("Whether to include external wikis in the list. possible values")."0 / 1",
+				'description' => tra('Whether to include external wikis in the list (not included by default)'),
+				'default' => 0,
+				'filter' => 'digits',	
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0), 
+				),  	
 			),
 			'collect' => array(
 				'required' => false,
 				'name' => tra('Collect'),
-				'description' => tra("Collect either originating or wanted pages in a cell and display them in the second column. possible values:")." from / to",
+				'description' => tra('Collect either originating (from) or wanted pages (to) in a cell and display them in the second column.'),
+				'default' => 'from',
+				'filter' => 'alpha',			
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('From'), 'value' => 'from'), 
+					array('text' => tra('To'), 'value' => 'to'), 
+				),  	
 			),
 			'debug' => array(
 				'required' => false,
 				'name' => tra('Debug'),
-				'description' => tra("Switch-on debug output with details about the items. possible values:")." 0 / 1 / 2",
+				'description' => tra('Switch on debug output with details about the items (debug not on by default)'),
+				'default' => 0,
+				'filter' => 'digits',
+				'advanced' => true,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('No'), 'value' => 0), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('Memory Saver'), 'value' => 2), 
+					),  	
 			),
 			'table' => array(
 				'required' => false,
 				'name' => tra('Table'),
-				'description' => tra("Multiple collected items are separated in distinct table rows, or by comma or line break in one cell. possible values:")." sep / co / br",
+				'description' => tra('Multiple collected items are separated in distinct table rows (default), or by comma or line break in one cell.'),
+				'filter' => 'alpha',
+				'default' => 'sep',
+				'accepted' => 'sep, co, br',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Comma'), 'value' => 'co'), 
+					array('text' => tra('Line break'), 'value' => 'br'), 
+					array('text' => tra('Separate Row'), 'value' => 'sep'), 
+				),  	
 			),
 			'level' => array(
 				'required' => false,
 				'name' => tra('Level'),
-				'description' => tra("Filter the list of wanted pages according to page_regex or custom filter. The default value is the site's __current__ page_regex."),
+				'description' => tra('Filter the list of wanted pages according to page_regex or custom filter. The default value is the site\'s __current__ page_regex.'),
+				'default' => '',
+				'advanced' => true,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Custom'), 'value' => 'custom'), 
+					array('text' => tra('Full'), 'value' => 'full'), 
+					array('text' => tra('Strict'), 'value' => 'strict'), 
+				),  	
 			),
 		),
 	);
@@ -101,11 +145,11 @@ class WikiPluginWantedPages extends PluginsLib
 						'table' => 'sep', // show each line of output in a separate table row
 						'level' => '', // use current page_regex to filter output
 						'debug' => 0); // false, no debug output; a value of 2
-						    // tries to allocate as less memory as possible.
+						    // tries to allocate as little memory as possible.
 	}
 	
 	function getName () {
-		return "WantedPages";
+		return 'WantedPages';
 	}
 	
 	function getDescription () {
@@ -131,17 +175,17 @@ class WikiPluginWantedPages extends PluginsLib
 		if (!isset($level))   {	$level = ''; }
 	
 		// for regexes and external wiki details, see tikilib.php
-		if ($level == "strict") {
+		if ($level == 'strict') {
 			$level_reg = '([A-Za-z0-9_])([\.: A-Za-z0-9_\-])*([A-Za-z0-9_])';
-		} elseif ($level == "full") {
+		} elseif ($level == 'full') {
 			$level_reg = '([A-Za-z0-9_]|[\x80-\xFF])([\.: A-Za-z0-9_\-]|[\x80-\xFF])*([A-Za-z0-9_]|[\x80-\xFF])';
-		} elseif ($level == "complete") {
+		} elseif ($level == 'complete') {
 			$level_reg = '([^|\(\)])([^|\(\)](?!\)\)))*?([^|\(\)])';
-		} elseif (($level == "custom") && ($data != "")) {
+		} elseif (($level == 'custom') && ($data != '')) {
 			if (preg_ispreg($data)) { // custom regular expression
 				$level_reg = $data;
 			} elseif ($debug == 2) {
-				echo "$data: ".tra("non-valid custom regex")."<br />";
+				echo $data . ': ' . tra('non-valid custom regex') . '<br />';
 			}
 		} else { // default
 			$level_reg = $page_regex;
@@ -149,11 +193,11 @@ class WikiPluginWantedPages extends PluginsLib
 	
 		// define the separator
 		if ($table == 'br') {
-			$break = "<br />";
+			$break = '<br />';
 		} elseif ($table == 'co') {
-			$break = tra(", ");
+			$break = tra(', ');
 		} else {
-			$break = "sep";
+			$break = 'sep';
 		}
 	
 		// get array of fromPages to be ignored
@@ -161,14 +205,13 @@ class WikiPluginWantedPages extends PluginsLib
 	
 		// Currently we only look in wiki pages.
 		// Wiki links in articles, blogs, etc are ignored.
-		$query = "select distinct tl.`toPage`, tl.`fromPage` from `tiki_links` tl";
-		$query .= " left join `tiki_pages` tp on (tl.`toPage` = tp.`pageName`)";
+		$query = 'select distinct tl.`toPage`, tl.`fromPage` from `tiki_links` tl';
+		$query .= ' left join `tiki_pages` tp on (tl.`toPage` = tp.`pageName`)';
 
 		$categories = $this->get_jail();
 		if ($categories)
-			$query .= " inner join `tiki_objects` as tob on (tob.`itemId`= tl.`fromPage` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(" . implode(', ', array_fill(0, count($categories), '?')) . "))";
-
-		$query .= " where tp.`pageName` is null";
+			$query .= ' inner join `tiki_objects` as tob on (tob.`itemId`= tl.`fromPage` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(' . implode(', ', array_fill(0, count($categories), '?')) . '))';
+		$query .= ' where tp.`pageName` is null';
 		$result = $this->query($query, $categories ? array_merge(array('wiki page'), $categories) : array());
 		$tmp = array();
 	
@@ -177,9 +220,9 @@ class WikiPluginWantedPages extends PluginsLib
 				// test whether a substring ignores this page, ignore case
 				if (fnmatch(strtolower($ipage), strtolower($row['fromPage'])) === true) {
 					if ($debug == 2) { // the "hardcore case"
-						echo $row['toPage']." [from: ".$row['fromPage']."]: ".tra("ignored")."<br />";
+						echo $row['toPage'] . ' [from: ' . $row['fromPage'] . ']: ' . tra('ignored') . '<br />';
 					} elseif ($debug) { // add this page to the table
-						$tmp[] = array($row['toPage'], $row['fromPage'], "ignored");
+						$tmp[] = array($row['toPage'], $row['fromPage'], 'ignored');
 					}
 					continue 2; // no need to test other ignorepages or toPages
 				}
@@ -190,9 +233,9 @@ class WikiPluginWantedPages extends PluginsLib
 				$parts = explode(':', $row['toPage']);
 				if (count($parts) == 2) {
 					if ($debug == 2) {
-						echo $row['toPage']." [from: ".$row['fromPage']."]: ".tra("External Wiki")."<br />";
+						echo $row['toPage'] . ' [from: ' . $row['fromPage'] . ']: ' . tra('External Wiki') . '<br />';
 					} elseif ($debug) {
-						$tmp[] = array($row['toPage'], $row['fromPage'], "External Wiki");
+						$tmp[] = array($row['toPage'], $row['fromPage'], 'External Wiki');
 					}
 					continue;
 				}
@@ -203,29 +246,17 @@ class WikiPluginWantedPages extends PluginsLib
 			// test whether toPage is a valid wiki page under current syntax
 			if ($dashWikiWord && !$WikiWord) { // a Dashed-WikiWord, can we allow this?
 				if (($prefs['feature_wikiwords'] != 'y') || ($prefs['feature_wikiwords_usedash'] != 'y')) {
-					if ($debug == 2) {
-						echo $row['toPage']." [from: ".$row['fromPage']."]: ".tra("dash-WikiWord")."<br />";
-					} elseif ($debug) {
-						$tmp[] = array($row['toPage'], $row['fromPage'], "dash-WikiWord");
-					}
+					$tmp = debug_print($row, $debug, tra('dash-WikiWord'));
 					continue;
 				}
 			} elseif ($WikiWord){ // a WikiWord, can we allow this?
 				if ($prefs['feature_wikiwords'] != 'y') {
-					if ($debug == 2) {
-						echo $row['toPage']." [from: ".$row['fromPage']."]: ".tra("WikiWord")."<br />";
-					} elseif ($debug) {
-						$tmp[] = array($row['toPage'], $row['fromPage'], "WikiWord");
-					}
+					$tmp = debug_print($row, $debug, tra('WikiWord'));
 					continue;
 				}
 			} else { // no WikiWord, we can now filter with the level parameter
 				if (!preg_match("/^($level_reg)$/", $row['toPage'])) {
-					if ($debug == 2) {
-						echo $row['toPage']." [from: ".$row['fromPage']."]: ".tra("not in level")."<br />";
-					} elseif ($debug) {
-						$tmp[] = array($row['toPage'], $row['fromPage'], "not in level");
-					}
+					$tmp = debug_print($row, $debug, tra('not in level'));
 					continue;
 				}
 			} // dashWikiWord, WikiWord, normal link
@@ -233,30 +264,30 @@ class WikiPluginWantedPages extends PluginsLib
 			if (!$debug) { // a normal, valid WantedPage:
 				$tmp[] = array($row['toPage'], $row['fromPage']);
 			} elseif ($debug == 2) {
-				echo $row['toPage']." [from: ".$row['fromPage']."]: ".tra("valid")."<br />";
+				debug_print($row, $debug, tra('valid'));
 			} // in simple debug mode, valid links are ignored
 		} // while (each entry in tiki_links is handled)
 		unset($result); // free memory
 	
 		if ($debug == 2) {
-			return(tra("End of debug output."));
+			return(tra('End of debug output.'));
 		}
 	
 		$out = array();
-		$linkin  = (!$debug) ? "((" : "~np~"; // this is how toPages are handled
-		$linkout = (!$debug) ? "))" : "~/np~";
+		$linkin  = (!$debug) ? '((' : '~np~'; // this is how toPages are handled
+		$linkout = (!$debug) ? '))' : '~/np~';
 		foreach($tmp as $row) { // row[toPage, fromPage, reason]
 			if ($debug) { // modified rejected toPages with reason
-				$row[0] = "*".tra($row[2])."* ".$row[0];
+				$row[0] = '<em>' . tra($row[2]) . '</em>: ' . $row[0];
 			}
-			$row[0] = $linkin.$row[0].$linkout; // toPages
-			$row[1] = "((".$row[1]."))"; // fromPages
+			$row[0] = $linkin . $row[0] . $linkout; // toPages
+			$row[1] = '((' . $row[1] . '))'; // fromPages
 	
 			// two identical keys may exist, they can either be displayed
 			// each in its own table row, or be collected in one cell, separated by
 			// either comma or <br />
 			if ($collect == 'from') {
-				if ($break == "sep") {
+				if ($break == 'sep') {
 					// toPages separated in each row, there might be duplicates!!!
 					$out[] = array($row[0], $row[1]);
 				} elseif (!array_key_exists($row[0], $out)) {
@@ -267,51 +298,60 @@ class WikiPluginWantedPages extends PluginsLib
 					$out[$row[0]] = $out[$row[0]].$break.$row[1];
 				}
 			} else { // $collect == to
-				if ($break == "sep") {
+				if ($break == 'sep') {
 					// fromPages separated in each row, there might be duplicates!!!
 					$out[] = array($row[1], $row[0]);
 				} elseif (!array_key_exists($row[1], $out)) {
 					// multiple toPages (for one fromPage) might be in one row, this is the first
 					$out[$row[1]] = $row[0];
 				} else { // multiple toPages might be in one row, this is a follow-up
-					$out[$row[1]] = $out[$row[1]].$break.$row[0];
+					$out[$row[1]] = $out[$row[1]] . $break . $row[0];
 				}
 			}
 		} // foreach (received row) is handled
 		unset($tmp); // free memory
 	
 		// sort the entries
-		if ($break == "sep") {
+		if ($break == 'sep') {
 			sort($out);
 		} else {
 			ksort($out);
 		}
+		
+		$headerwant = tra('Wanted Page');
+		$headerref = tra('Referenced By Page');		
+		$rowbreak = "\n";
+		$endtable = '||';
+		if ($prefs['feature_wiki_tables'] != 'new') {
+			$rowbreak = ' || ';
+			$endtable = ''; 
+		}
 	
-		$sOutput = "||\n&nbsp;&nbsp;__";
+		$sOutput = '||' . '&nbsp;&nbsp;__';
 		if ($collect == 'from') {
-			$sOutput .= tra("Wanted Page")."__&nbsp;&nbsp;|&nbsp;&nbsp;__".tra("Referenced By Page")."__&nbsp;&nbsp;\n";
-			if ($break == "sep") {
+			$sOutput .= $headerwant . '__&nbsp;&nbsp;|&nbsp;&nbsp;__' . $headerref . '__&nbsp;&nbsp;' . $rowbreak;
+			if ($break == 'sep') {
 				foreach ($out as $link) {
-					$sOutput .= "$link[0] | $link[1]\n";
+					$sOutput .= $link[0] . ' | ' . $link[1] . $rowbreak;
 				}
 			} else {
 				foreach ($out as $to => $from) {
-					$sOutput .= "$to | $from\n";
+					$sOutput .= $to . ' | ' . $from . $rowbreak;
 				}
 			}
 		} else { // $collect == 'to'
-			$sOutput .= tra("Referenced By Page")."__&nbsp;&nbsp;|&nbsp;&nbsp;__".tra("Wanted Page")."__&nbsp;&nbsp;\n";
-			if ($break == "sep") {
+			$sOutput .= $headerref . '__&nbsp;&nbsp;|&nbsp;&nbsp;__' . $headerwant . '__&nbsp;&nbsp;' . $rowbreak;
+			if ($break == 'sep') {
 				foreach ($out as $link) {
-					$sOutput .= "$link[0] | $link[1]\n";
+					$sOutput .= $link[0] . ' | ' . $link[1] . $rowbreak;
 				}
 			} else {
 				foreach ($out as $from => $to) {
-					$sOutput .= "$from | $to\n";
+					$sOutput .= $from . ' | ' . $to . $rowbreak;
 				}
 			}
 		}
-		$sOutput .= "||";
+		$sOutput .= $endtable;
 		return $sOutput;
 	} // run()
 } // class WikiPluginWantedPages
@@ -358,8 +398,8 @@ if (!function_exists('fnmatch')) {
 // comment by "alexbodn at 012 dot n@t dot il 09-Jan-2006 11:45" (as of Jan. 21 2006)
 if (!function_exists('preg_ispreg')) {
 	function preg_ispreg($str) {
-		$prefix = "";
-		$sufix = "";
+		$prefix = '';
+		$sufix = '';
 	    if ($str[0] != '^')
 	        $prefix = '^';
 	    if ($str[strlen($str) - 1] != '$')
@@ -370,3 +410,15 @@ if (!function_exists('preg_ispreg')) {
 	    return true;
 	} // function preg_ispreg
 } //!exists(preg_ispreg)
+
+if (!function_exists('debug_print')) {
+	function debug_print($row, $debug, $message) {
+		if ($debug == 2) {
+			echo $row['toPage'] . ' [from: ' . $row['fromPage'] . ']: ' . $message . '<br />';
+			return;
+		} elseif ($debug) {
+			$tmp[] = array($row['toPage'], $row['fromPage'], $message);
+			return $tmp;
+		}
+	}
+}

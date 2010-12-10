@@ -26,7 +26,7 @@ if (isset($_REQUEST["remove"])) {
 
 	if ($artperms->remove_article != 'y') {
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot remove articles"));
+		$smarty->assign('msg', tra("You do not have permission to remove articles"));
 		$smarty->display("error.tpl");
 		die;
 	}
@@ -74,7 +74,7 @@ if (($tiki_p_admin == 'y') || ($tiki_p_admin_cms == 'y')) {
 } else {
 	$date_max = $tikilib->now;
 }
-if (isset($_REQUEST["find_from_Month"]) && isset($_REQUEST["find_from_Day"]) && isset($_REQUEST["find_from_Year"])) {
+if (!empty($_REQUEST["find_from_Month"]) && !empty($_REQUEST["find_from_Day"]) && !empty($_REQUEST["find_from_Year"])) {
 	$date_min = $tikilib->make_time(0, 0, 0, $_REQUEST["find_from_Month"], $_REQUEST["find_from_Day"], $_REQUEST["find_from_Year"]);
 	$smarty->assign('find_date_from', $date_min);
 } else {

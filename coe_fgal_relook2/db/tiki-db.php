@@ -200,7 +200,7 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 }
 
 $dbInitializer = 'db/tiki-db-adodb.php';
-if (extension_loaded("pdo") and $api_tiki == 'pdo' ) {
+if ($api_tiki == 'pdo' && extension_loaded("pdo") && in_array('mysql', PDO::getAvailableDrivers())) {
 	$dbInitializer = 'db/tiki-db-pdo.php';
 }
 

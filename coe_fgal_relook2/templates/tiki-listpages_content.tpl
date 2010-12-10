@@ -349,6 +349,10 @@
 
 			{if $prefs.feature_wiki_multiprint eq 'y'}
 				<option value="print_pages" >{tr}Print{/tr}</option>
+
+			        {if $prefs.print_pdf_from_url neq 'none'}
+					<option value="export_pdf" >{tr}PDF{/tr}</option>
+				{/if}
 			{/if}
 
 			{if $prefs.feature_wiki_usrlock eq 'y' and ($tiki_p_lock eq 'y' or $tiki_p_admin_wiki eq 'y')}

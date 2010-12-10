@@ -12,7 +12,8 @@ $groupHome = $userlib->get_user_default_homepage($user);
 if ( $groupHome != '' ) {
 	if ( ! preg_match('/^(\/|https?:)/', $groupHome) ) {
 		$prefs['wikiHomePage'] = $groupHome;
-		$prefs['tikiIndex'] = 'tiki-index.php?page='.$prefs['wikiHomePage'];
+		global $wikilib; include_once('lib/wiki/wikilib.php');
+		$prefs['tikiIndex'] = $wikilib->sefurl($prefs['wikiHomePage']);
 		$smarty->assign('wikiHomePage', $prefs['wikiHomePage']);
 	} else $prefs['tikiIndex'] = $groupHome;
 }

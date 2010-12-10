@@ -227,6 +227,7 @@ class WikiRenderer
 		if( !empty($this->info['lang'])) { 
 			$this->trads = $multilinguallib->getTranslations('wiki page', $this->info['page_id'], $this->page, $this->info['lang']);
 			$this->smartyassign('trads', $this->trads);
+			$this->smartyassign('translationsCount', count($this->trads));
 			$pageLang = $this->info['lang'];
 			$this->smartyassign('pageLang', $pageLang);
 		}
@@ -304,7 +305,9 @@ class WikiRenderer
 			return;
 		}
 
-		$slides = preg_split('/-=[^=]+=-/',$this->info['data']);
+		//Let us check if slides exist in the wiki page
+		$slides = preg_split('/-=[^=]+=-|![^=]+|!![^=]+!!![^=]+/',$this->info['data']);
+		
 		if(count($slides)>1) {
 			$this->smartyassign('show_slideshow','y');
 		} else {
@@ -370,6 +373,10 @@ class WikiRenderer
 		$this->smartyassign('pagenum',$this->pageNumber);
 
 		$this->smartyassign('lastVersion',$this->info["version"]);
+		if (isset($this->info['last_version'])) {
+			$this->smartyassign('versioned', true);
+		}
+
 		$this->smartyassign('lastModif',$this->info["lastModif"]);
 		if(empty($this->info['user'])) {
 			$this->info['user']=tra('Anonymous');  
@@ -498,13 +505,14 @@ class WikiRenderer
 			$crumbpage = $this->page;
 		}
 		//global $description;
-		$crumbs[] = new Breadcrumb($crumbpage,
+		$crumbsLocal[] = new Breadcrumb($crumbpage,
 				$this->info['description'],
 				'tiki-index.php?page='.urlencode($this->page),
 				'',
 				'');
+		$crumbs = array_merge($crumbs, $crumbsLocal);
 
-		$headtitle = breadcrumb_buildHeadTitle($crumbs);
+		$headtitle = breadcrumb_buildHeadTitle($prefs['site_title_breadcrumb'] == 'invertfull'? array_reverse($crumbsLocal): $crumbsLocal);
 		$this->smartyassign('headtitle', $headtitle);
 		$this->smartyassign('trail', $crumbs);
 	} // }}}

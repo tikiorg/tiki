@@ -1,9 +1,9 @@
 //$Id$
 
 $(document).ready(function() {
-	$('form#edit_translations .edit_translations').each(function() {
+	$('form#select_action .translation_action').each(function() {
 		$(this).change(function() {
-			$('form#edit_translations').submit();
+			$('form#select_action').submit();
 		});
 	});
 });

@@ -126,7 +126,9 @@
 						<span>
 							<a href="{$listpages[ix].articleId|sefurl:article:with_next}show_comzone=y{if !empty($urlparam)}&amp;{$urlparam}{/if}#comments"{if $listpages[ix].comments_cant > 0} class="highlight"{/if}>
 								{if $listpages[ix].comments_cant == 0 or ($tiki_p_read_comments == 'n' and $tiki_p_post_comments == 'y')}
-									{tr}Add Comment{/tr}
+									{if !isset($actions) or $actions eq "y"}
+										{tr}Add Comment{/tr}
+									{/if}
 								{elseif $listpages[ix].comments_cant == 1}
 									{tr}1 comment{/tr}
 								{else}
@@ -136,20 +138,22 @@
 						</span>
 					{/if}
 				{/if}
-				<div class="actions">
-					{if $tiki_p_edit_article eq 'y' or ($listpages[ix].author eq $user and $listpages[ix].creator_edit eq 'y')}
-						<a class="icon" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}">{icon _id='page_edit'}</a>
-					{/if}
-					{if $prefs.feature_cms_print eq 'y'}
-						<a class="icon" href="tiki-print_article.php?articleId={$listpages[ix].articleId}">{icon _id='printer' alt="{tr}Print{/tr}"}</a>
-					{/if}
-					{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
-						<a class="icon" href="tiki-edit_translation.php?id={$listpages[ix].articleId}&amp;type=article">{icon _id='world' alt="{tr}Translation{/tr}"}</a>
-					{/if}
-					{if $tiki_p_remove_article eq 'y'}
-						<a class="icon" href="tiki-list_articles.php?remove={$listpages[ix].articleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
-					{/if}
-				</div>
+				{if !isset($actions) or $actions eq "y"}
+					<div class="actions">
+						{if $tiki_p_edit_article eq 'y' or ($listpages[ix].author eq $user and $listpages[ix].creator_edit eq 'y')}
+							<a class="icon" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}">{icon _id='page_edit'}</a>
+						{/if}
+						{if $prefs.feature_cms_print eq 'y'}
+							<a class="icon" href="tiki-print_article.php?articleId={$listpages[ix].articleId}">{icon _id='printer' alt="{tr}Print{/tr}"}</a>
+						{/if}
+						{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
+							<a class="icon" href="tiki-edit_translation.php?id={$listpages[ix].articleId}&amp;type=article">{icon _id='world' alt="{tr}Translation{/tr}"}</a>
+						{/if}
+						{if $tiki_p_remove_article eq 'y'}
+							<a class="icon" href="tiki-list_articles.php?remove={$listpages[ix].articleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+						{/if}
+					</div>
+				{/if}
 			</div>
 		</div>
 	{/if}

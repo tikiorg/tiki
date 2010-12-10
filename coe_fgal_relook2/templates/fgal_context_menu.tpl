@@ -62,7 +62,13 @@
 		{else}
 			<a href="{$files[changes].id|sefurl:file}">
 		{/if}
-		{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk' alt="{tr}Download{/tr}"}</a> 
+		{if $prefs.feature_file_galleries_save_draft eq 'y' and $files[changes].nbDraft gt 0}
+			{assign var=download_action_title value="{tr}Download current version{/tr}"}
+		{else}
+			{assign var=download_action_title value="{tr}Download{/tr}"}
+		{/if}
+
+		{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk' alt="$download_action_title"}</a>
 	{/if}
 
 	{if $gal_info.archives gt -1}
@@ -77,11 +83,22 @@
 		{assign var=replace_action_title value="{tr}Replace{/tr}"}
 	{/if}
 
+	{if $prefs.feature_file_galleries_save_draft eq 'y'}
+		{if $files[changes].nbDraft gt 0}
+			{assign var=replace_action_title value="{tr}Replace your draft{/tr}"}
+		{else}
+			{assign var=replace_action_title value="{tr}Upload your draft{/tr}"}
+		{/if}
+	{/if}
 	{* can edit if I am admin or the owner of the file or the locker of the file or if I have the perm to edit file on this gallery *}
 	{if $files[changes].perms.tiki_p_admin_file_galleries eq 'y'
 		or ($files[changes].lockedby and $files[changes].lockedby eq $user)
 		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or $files[changes].perms.tiki_p_edit_gallery_file eq 'y')) }
 		{if $files[changes].archiveId == 0}
+			{if $prefs.feature_file_galleries_save_draft eq 'y' and $files[changes].nbDraft gt 0}
+				{self_link _icon='accept' _menu_text=$menu_text _menu_icon=$menu_icon validate=$files[changes].fileId galleryId=$files[changes].galleryId}{tr}Validate your draft{/tr}{/self_link}
+				{self_link _icon='cross' _menu_text=$menu_text _menu_icon=$menu_icon draft=remove remove=$files[changes].fileId galleryId=$files[changes].galleryId}{tr}Delete your draft{/tr}{/self_link}
+			{/if}
 
 			{if $files[changes].perms.tiki_p_admin_file_galleries eq 'y' or !$files[changes].locked or ($files[changes].locked and $files[changes].lockedby eq $user) or $gal_info.lockable ne 'y'}
 			{if $prefs.javascript_enabled eq 'y'}
@@ -131,8 +148,14 @@
 
 	{if $prefs.feature_webdav eq 'y'}
 		{assign var=virtual_path value=$files[changes].fileId|virtual_path}
-		{self_link _icon="tree_folder_open" _menu_text=$menu_text _menu_icon=$menu_icon _script="javascript:open_webdav('$virtual_path')" _noauto="y" _ajax="n"}{tr}Open in WebDAV{/tr}{/self_link}
+
+		{if $prefs.feature_file_galleries_save_draft eq 'y'}
+			{self_link _icon="tree_folder_open" _menu_text=$menu_text _menu_icon=$menu_icon _script="javascript:open_webdav('$virtual_path')" _noauto="y" _ajax="n"}{tr}Open your draft in WebDAV{/tr}{/self_link}
+		{else}
+			{self_link _icon="tree_folder_open" _menu_text=$menu_text _menu_icon=$menu_icon _script="javascript:open_webdav('$virtual_path')" _noauto="y" _ajax="n"}{tr}Open in WebDAV{/tr}{/self_link}
+		{/if}
 	{/if}
+
 	{if $prefs.feature_share eq 'y' and $tiki_p_share eq 'y'}
 		<a href="tiki-share.php?url={$tikiroot}{$files[changes].id|sefurl:file|escape:'url'}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='share_link' alt="{tr}Share a link to this file{/tr}"}</a>
 	{/if}

@@ -198,18 +198,31 @@ class EditLib
 		$parsed = preg_replace('/\{img\(? src=.*?img\/smiles\/icon_([\w\-]*?)\..*\}/im','(:$1:)', $parsed);	// "unfix" smilies
 		$parsed = preg_replace('/%%%/m',"\n", $parsed);													// newlines
 		$parsed = preg_replace('/&nbsp;/m',' ', $parsed);												// spaces
+		// Put back htmlentities as normal char
+		$parsed = htmlspecialchars_decode($parsed,ENT_QUOTES);
 		return $parsed;
 	}
 	
-	function parseToWysiwyg( $inData ) {
+	function parseToWysiwyg( $inData, $fromWiki = false ) {
 		global $tikilib, $tikiroot, $prefs;
 		// Parsing page data for wysiwyg editor
 		$inData = $this->partialParseWysiwygToWiki($inData);	// remove any wysiwyg plugins so they don't get double parsed
 		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
-		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true,
-														'ck_editor' => true, 'is_html' => ($prefs['wysiwyg_htmltowiki'] === 'n')));
 		
+		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true,
+														'ck_editor' => true, 'is_html' => ($prefs['wysiwyg_htmltowiki'] === 'n' && !$fromWiki),
+														'process_wiki_paragraphs' => ($prefs['wysiwyg_htmltowiki'] === 'y' || $fromWiki)));
+		
+		if ($prefs['wysiwyg_htmltowiki'] === 'n' && $fromWiki) {
+			$parsed = preg_replace('/^\s*<p>&nbsp;[\s]*<\/p>\s*/iu','', $parsed);						// remove added empty <p>
+		}
 		$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
+		// Workaround Wysiwyg Image Plugin Editor in IE7 erases image on insert http://dev.tiki.org/item3615 
+		$parsed = preg_replace('/(<span class=\"tiki_plugin\".*?plugin=\"img\".*?><\/span>)<\/p>/is','$1<span>&nbsp;</span></p>', $parsed);
+		// Fix IE7 wysiwyg editor always adding absolute path
+		$search = '/(<a[^>]+href=\")https?\:\/\/' . preg_quote($_SERVER['HTTP_HOST'].$tikiroot, '/') . '([^>]+_cke_saved_href)/i'; 
+		$parsed = preg_replace($search, '$1$2', $parsed);
+
 		return $parsed;
 	}
 	
@@ -229,10 +242,10 @@ class EditLib
 		if (!$ret) { $ret = $inData; }
 		
 		// take away the <p> that f/ck introduces around wiki heading ! to have maketoc/edit section working
-		$ret = preg_replace('/<p>!(.*)<\/p>/u', "!$1\n", $ret);
+		$ret = preg_replace('/<p>!(.*)<\/p>/iu', "!$1\n", $ret);
 		
 		// strip totally empty <p> tags generated in ckeditor 3.4
-		$ret = preg_replace('/\s*<p>[\s]*<\/p>\s*/u', "!$1\n", $ret);
+		$ret = preg_replace('/\s*<p>[\s]*<\/p>\s*/iu', "!$1\n", $ret);
 		return $ret;
 	}
 	

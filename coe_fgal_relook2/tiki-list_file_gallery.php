@@ -72,7 +72,7 @@ if ( empty($_REQUEST['galleryId']) && isset($_REQUEST['parentId']) ) {
 $galleryId = $_REQUEST['galleryId'];
 if (($galleryId != 0 || $tiki_p_list_file_galleries != 'y') && ($galleryId == 0 || $tiki_p_view_file_gallery != 'y')) {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra('Permission denied. You cannot view this section'));
+	$smarty->assign('msg', tra('You do not have permission to view this section'));
 	$smarty->display('error.tpl');
 	die;
 }
@@ -85,7 +85,7 @@ $smarty->assign('maxRows', $maxRecords);
 $smarty->assign('edited', 'n');
 $smarty->assign('edit_mode', 'n');
 $smarty->assign('dup_mode', 'n');
-$smarty->assign('parentId', isset($_REQUEST['parentId']) ? (int)$_REQUEST['parentId'] : -1);
+$smarty->assign('parentId', isset($_REQUEST['parentId']) ? (int)$_REQUEST['parentId'] : (isset($gal_info['parentId']) ? $gal_info['parentId'] : -1));
 $smarty->assign('creator', $user);
 $smarty->assign('sortorder', 'created');
 $smarty->assign('sortdirection', 'desc');
@@ -128,12 +128,12 @@ if ($tiki_p_admin_file_galleries == 'y') {
 	
 	if (isset($_REQUEST['defaultsel_x'])) {
 		check_ticket('fgal');
-		if (!empty($_REQUEST['file'])) {
-			$filegallib->setDefault(array_values($_REQUEST['file']));
-		}
 		if (!empty($_REQUEST['subgal'])) {
 			$filegallib->setDefault(array_values($_REQUEST['subgal']));
+		} else if (!empty($_REQUEST['galleryId'])) {
+			$filegallib->setDefault(array((int)$_REQUEST['galleryId']));
 		}
+		unset($_REQUEST['view']);
 	}
 }
 
@@ -209,6 +209,27 @@ if (isset($_REQUEST['lock']) && isset($_REQUEST['fileId']) && $_REQUEST['fileId'
 	}
 }
 
+// Validate a draft
+if (!empty($_REQUEST['validate']) && $prefs['feature_file_galleries_save_draft'] == 'y') {
+	// To validate a draft the user must be the owner or the file or the gallery or admin
+	if (!$info = $filegallib->get_file_info($_REQUEST['validate'])) {
+		$smarty->assign('msg', tra('Incorrect param'));
+		$smarty->display('error.tpl');
+		die;
+	}
+	if ($tiki_p_admin_file_galleries != 'y' && (!$user || $user != $gal_info['user'])) {
+		if ($user != $info['user']) {
+			$smarty->assign('errortype', 401);
+			$smarty->assign('msg', tra('Permission denied you cannot validate files from this gallery'));
+			$smarty->display('error.tpl');
+			die;
+		}
+	}
+
+	$access->check_authenticity(tra('Validate draft: ') . (!empty($info['name']) ? htmlspecialchars($info['name']) . ' - ' : '') . $info['filename']);
+	$filegallib->validate_draft($info['fileId']);
+}
+
 // Delete a file
 if (!empty($_REQUEST['remove'])) {
 	// To remove an image the user must be the owner or the file or the gallery or admin
@@ -220,7 +241,7 @@ if (!empty($_REQUEST['remove'])) {
 	if ($tiki_p_admin_file_galleries != 'y' && (!$user || $user != $gal_info['user'])) {
 		if ($user != $info['user']) {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra('Permission denied you cannot remove files from this gallery'));
+			$smarty->assign('msg', tra('You do not have permission to remove files from this gallery'));
 			$smarty->display('error.tpl');
 			die;
 		}
@@ -232,8 +253,14 @@ if (!empty($_REQUEST['remove'])) {
 		$smarty->assign('file_backlinks_title', 'WARNING: The file is used in:');//get_strings tra('WARNING: The file is used in:')
 		$smarty->assign('confirm_detail', $smarty->fetch('file_backlinks.tpl'));
 	}
-	$access->check_authenticity(tra('Remove file: ') . (!empty($info['name']) ? htmlspecialchars($info['name']) . ' - ' : '') . $info['filename']);
-	$filegallib->remove_file($info, $gal_info);
+
+	if (!empty($_REQUEST['draft'])) {
+		$access->check_authenticity(tra('Remove file draft: ') . (!empty($info['name']) ? htmlspecialchars($info['name']) . ' - ' : '') . $info['filename']);
+		$filegallib->remove_draft($info['fileId'], $user);
+	} else {
+		$access->check_authenticity(tra('Remove file: ') . (!empty($info['name']) ? htmlspecialchars($info['name']) . ' - ' : '') . $info['filename']);
+		$filegallib->remove_file($info, $gal_info);
+	}
 }
 
 $foo = parse_url($_SERVER['REQUEST_URI']);
@@ -311,7 +338,7 @@ if (isset($_REQUEST['edit'])) {
 			// Check file upload rights
 			if ($tiki_p_upload_files != 'y') {
 				$smarty->assign('errortype', 401);
-				$smarty->assign('msg', tra("Permission denied you can't upload files so you can't edit them"));
+				$smarty->assign('msg', tra("You do not have permission to upload files so you cannot edit them"));
 				$smarty->display('error.tpl');
 				die;
 			}
@@ -320,7 +347,7 @@ if (isset($_REQUEST['edit'])) {
 				$info = $filegallib->get_file_info($_REQUEST["fileId"]);
 				if (!$user || $info['user'] != $user) {
 					$smarty->assign('errortype', 401);
-					$smarty->assign('msg', tra('Permission denied you cannot edit this file'));
+					$smarty->assign('msg', tra('You do not have permission to edit this file'));
 					$smarty->display('error.tpl');
 					die;
 				}
@@ -332,7 +359,7 @@ if (isset($_REQUEST['edit'])) {
 			// Check gallery creation rights
 			if ($tiki_p_create_file_galleries != 'y') {
 				$smarty->assign('errortype', 401);
-				$smarty->assign('msg', tra('Permission denied you cannot create galleries and so you cant edit them'));
+				$smarty->assign('msg', tra('You do not have permission to create galleries and so you cannot edit them'));
 				$smarty->display('error.tpl');
 				die;
 			}
@@ -340,7 +367,7 @@ if (isset($_REQUEST['edit'])) {
 			if ($galleryId > 0) {
 				if (!$user || $gal_info['user'] != $user) {
 					$smarty->assign('errortype', 401);
-					$smarty->assign('msg', tra('Permission denied you cannot edit this gallery'));
+					$smarty->assign('msg', tra('You do not have permission to edit this gallery'));
 					$smarty->display('error.tpl');
 					die;
 				}
@@ -375,7 +402,7 @@ if (isset($_REQUEST['edit'])) {
 		$$t = (isset($_REQUEST[$t]) && $_REQUEST[$t] == 'on') ? 'y' : 'n';
 		$smarty->assign($t, $$t);
 	}
-	$_REQUEST['archives'] = isset($_REQUEST['archives']) ? $_REQUEST['archives'] : -1;
+	$_REQUEST['archives'] = isset($_REQUEST['archives']) ? $_REQUEST['archives'] : 0;
 	$_REQUEST['user'] = isset($_REQUEST['user']) ? $_REQUEST['user'] : (isset($gal_info['user']) ? $gal_info['user'] : $user);
 	$_REQUEST['sortorder'] = isset($_REQUEST['sortorder']) ? $_REQUEST['sortorder'] : 'created';
 	$_REQUEST['sortdirection'] = isset($_REQUEST['sortdirection']) && $_REQUEST['sortdirection'] == 'asc' ? 'asc' : 'desc';
@@ -530,7 +557,7 @@ if (!empty($_REQUEST['removegal'])) {
 
 	if ($tiki_p_admin_file_galleries != 'y' && (!$user || $gal_info['user'] != $user)) {
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra('Permission denied you cannot remove this gallery'));
+		$smarty->assign('msg', tra('You do not have permission to remove this gallery'));
 		$smarty->display('error.tpl');
 		die;
 	}
@@ -543,7 +570,7 @@ if (!empty($_FILES)) {
 	check_ticket('fgal');
 	if ($tiki_p_upload_files != 'y' && $tiki_p_admin_file_galleries != 'y') {
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra('Permission denied you can upload files but not to this file gallery'));
+		$smarty->assign('msg', tra('You have permission to upload files but not to this file gallery'));
 		$smarty->display('error.tpl');
 		die;
 	}
@@ -567,7 +594,7 @@ if (!empty($_FILES)) {
 			} elseif (!($tiki_p_edit_gallery_file == 'y' || (!empty($user) && ($user == $fileInfo['user'] || $user == $fileInfo['lockedby'])))) {
 				// must be the owner or the locker or have the perms
 				$smarty->assign('errortype', 401);
-				$msg = tra('Permission denied you can edit this file');
+				$msg = tra('You do not have permission to edit this file');
 			} elseif (!move_uploaded_file($v['tmp_name'], $tmp_dest)) {
 				$msg = tra('Errors detected');
 			} elseif (!($fp = fopen($tmp_dest, 'rb'))) {
@@ -583,6 +610,9 @@ if (!empty($_FILES)) {
 			$fhash = '';
 			if ($prefs['fgal_use_db'] == 'n') {
 				$fhash = md5(uniqid(md5($v['name'])));
+				if ($prefs['feature_file_galleries_save_draft'] == 'y') {
+					$fhash .= '.' . $user . '.draft';
+				}
 				@$fw = fopen($savedir . $fhash, 'wb');
 				if (!$fw) {
 					$smarty->assign('msg', tra('Cannot write to this file:') . $savedir . $fhash);
@@ -645,7 +675,7 @@ if (!empty($_FILES)) {
 			if (isset($_REQUEST['fast']) && $prefs['fgal_asynchronous_indexing'] == 'y') {
 				$smarty->assign('reindex_file_id', $fileId);
 			}
-		} elseif ($v['error'] != 0) {
+		} elseif ($v['error'] != 0 && !empty($v['tmp_name'])) {
 			$smarty->assign('msg', tra('Upload was not successful') . ': ' . $tikilib->uploaded_file_error($v['error']));
 			$smarty->display('error.tpl');
 			die;
@@ -823,7 +853,7 @@ if (isset($_GET['slideshow'])) {
 }
 
 // Browse view
-$smarty->assign('thumbnail_size', 120);
+$smarty->assign('thumbnail_size', $prefs['fgal_thumb_max_size']);
 $smarty->assign('show_details', isset($_REQUEST['show_details']) ? $_REQUEST['show_details'] : 'n');
 // Set comments config
 if ($prefs['feature_file_galleries_comments'] == 'y') {
@@ -918,7 +948,8 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 		} else if ($prefs['javascript_enabled'] != 'n') {
 			$tree_array = array('data' => $all_galleries['data'],
 				'name' => $phplayersTreeData['tree']['name'],
-				'link' => $phplayersTreeData['tree']['link']
+				'link' => $phplayersTreeData['tree']['link'],
+				'id' => $phplayersTreeData['tree']['id']
 			);
 			$smarty->assign_by_ref('tree', $tree_array);
 			$smarty->assign('expanded', '');

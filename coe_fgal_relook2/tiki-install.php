@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -11,8 +11,8 @@ if (!isset($content)) $content = 'No content specified. Something went wrong.<br
 if (!isset($dberror)) $dberror = false;
 
 // Check that PHP version is at least 5
-if (version_compare(PHP_VERSION, '5.0.0', '<')) {
-	$title = 'PHP5 is required for Tiki 3.0';
+if (version_compare(PHP_VERSION, '5.1.0', '<')) {
+	$title = 'PHP 5.1 is required';
 	$content = '<p>Please contact your system administrator ( if you are not the one ;) ).</p>';
 	createPage($title, $content);
 }
@@ -28,7 +28,7 @@ if (file_exists('db/'.$tikidomainslash.'lock')) {
 							<div style="border: solid 1px #ccc; margin: 1em auto; width: 40%;">
 								<ol style="text-align: left">
 									<li>Use your file manager application to find the directory where you have unpacked your Tiki and remove the <strong><code>lock</code></strong> file which was created in the <strong><code>db'.$td.'</code></strong> folder.</li>
-									<li>Re-run <strong><a href="tiki-install.php" title="Tiki Installer">tiki-install.php</a></strong>.</li>
+									<li>Re-run <strong><a href="tiki-install.php'.(empty($tikidomain)?'':"?multi=$tikidomain").'" title="Tiki Installer">tiki-install.php'.(empty($tikidomain)?'':"?multi=$tikidomain").'</a></strong>.</li>
 								</ol>
 							</div>';
 	createPage($title, $content);
@@ -43,28 +43,12 @@ session_start();
 require_once 'lib/core/TikiDb/Adodb.php';
 require_once 'lib/core/TikiDb/Pdo.php';
 
-/**
- * 
- */
-class InstallerDatabaseErrorHandler implements TikiDb_ErrorHandler
-{
-	function handle(TikiDb $db, $query, $values, $result) {
-	}
-}
-
 // Were database details defined before? If so, load them
 if (file_exists('db/'.$tikidomainslash.'local.php')) {
 	include 'db/'.$tikidomainslash.'local.php';
 
 	// In case of replication, ignore it during installer.
 	unset( $shadow_dbs, $shadow_user, $shadow_pass, $shadow_host );
-
-	include_once 'lib/adodb/adodb.inc.php';
-	$dbTiki = ADONewConnection($db_tiki);
-	$db = new TikiDb_Adodb($dbTiki);
-	$db->setServerType($db_tiki);
-	$db->setErrorHandler(new InstallerDatabaseErrorHandler);
-	TikiDb::set($db);
 
 	// check for provided login details and check against the old, saved details that they're correct
 	if (isset($_POST['dbuser'], $_POST['dbpass'])) {
@@ -104,7 +88,6 @@ if (isset($_SESSION['accessible'])) {
 
 function createPage($title, $content){
 	echo <<<END
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html 
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -112,21 +95,13 @@ function createPage($title, $content){
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link type="text/css" rel="stylesheet" href="styles/fivealive.css" />
-		<style type="text/css" media="screen">
-html {
-	background-color: #fff;
-}
-#centercolumn {
-	padding: 4em 10em;
-}
-		</style>
 		<title>$title</title>
 	</head>
-	<body class="tiki_wiki" style="text-align: center;">
-		<div id="header" style="background:url(styles/fivealive/options/blueberry/headertile.png) no-repeat 900px 0; height: auto;">
+	<body class="tiki_wiki">
+		<div id="header">
 			<div id="siteheader">
-			 	<div id="header-top" class="clearfix" style="background: url(styles/fivealive/options/blueberry/siteheader.jpg) no-repeat -252px 0; min-height: 170px; width: 990px">
-					<div id="sitelogo" style="text-align: left; padding-left: 0px; padding-top: 30px;">
+			 	<div id="header-top" class="clearfix">
+					<div id="sitelogo">
 						<img alt="Site Logo" src="img/tiki/Tiki_WCG.png" />
 					</div>
 				</div>
@@ -136,7 +111,7 @@ html {
 		</div>
 		<div id="middle" style="display: table; margin: 0 auto; width: 990px;">
 			<div id="tiki-center" style="text-align:center; ">
-				<h1 style="position: absolute; left: 42%; top: 60px; color: #fff; text-shadow: 3px 2px 0 #781437;">$title</h1>
+				<h1 style="position: absolute; top: 160px; color: #fff; text-shadow: 3px 2px 0 #781437;">$title</h1>
 				$content
 			</div>
 		</div>

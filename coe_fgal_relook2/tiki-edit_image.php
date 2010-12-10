@@ -58,7 +58,7 @@ if (isset($_REQUEST["editimage"]) || isset($_REQUEST["editimage_andgonext"])) {
 	// Check the user to be admin or owner or the gallery is public
 	if ($tiki_p_admin_galleries != 'y' && (!$user || $user != $gal_info["user"]) && $gal_info["public"] != 'y') {
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you can edit images but not in this gallery"));
+		$smarty->assign('msg', tra("You have permission to edit images but not in this gallery"));
 
 		$smarty->display("error.tpl");
 		die;

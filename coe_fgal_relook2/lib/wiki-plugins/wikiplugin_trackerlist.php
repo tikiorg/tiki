@@ -8,7 +8,7 @@
 function wikiplugin_trackerlist_info() {
 	return array(
 		'name' => tra('Tracker List'),
-		'documentation' => 'PluginTrackerList',
+		'documentation' => tra('PluginTrackerList'),
 		'description' => tra('Displays the output of a tracker content, fields are indicated with numeric ids.'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerlist' ),
 		'body' => tra('Notice'),
@@ -18,131 +18,228 @@ function wikiplugin_trackerlist_info() {
 			'trackerId' => array(
 				'required' => true,
 				'name' => tra('Tracker ID'),
-				'description' => tra('Tracker ID'),
-				'filter' => 'digits'
+				'description' => tra('Numeric value representing the tracker ID'),
+				'filter' => 'digits',
+				'default' => '',
 			),
 			'fields' => array(
 				'required' => false,
 				'name' => tra('Fields'),
-				'description' => tra('Colon-separated list of field IDs to be displayed. Example: 2:4:5'),
+				'description' => tra('Colon-separated list of field IDs for the fields to be displayed. Example: 2:4:5'),
 				'filter' => 'digits',
 				'separator' => ':',
+				'default' => '',
 			),
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort'),
-				'description' => 'y|n'.' '.tra('If y, sort fields'),
-				'filter' => 'alpha'
+				'description' => tra('Display columns in the order listed in the fields parameter instead of by field ID (field ID order is used by default'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'popup' => array(
 				'required' => false,
 				'name' => tra('Popup'),
-				'description' => tra('Colon-separated list of fields to display in a tooltip on mouse over. Example: 6:7'),
+				'description' => tra('Colon-separated list of fields which will display in a tooltip on mouse over. Example: 6:7'),
 				'filter' => 'digits',
 				'separator' => ':',
+				'default' => '',
 			),
 			'stickypopup' => array(
 				'required' => false,
 				'name' => tra('Sticky Popup'),
-				'description' => 'y|n'.' '.tra('If y, the tooltip will stay displayed on mouse out'),
-				'filter' => 'alpha'
+				'description' => tra('Choose whether the tooltip will stay displayed on mouse out (does not stay open by default)'),
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showtitle' => array(
 				'required' => false,
 				'name' => tra('Show Title'),
-				'description' => 'y|n',
-				'filter' => 'alpha'
+				'description' => tra('Display the title of the tracker (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showlinks' => array(
 				'required' => false,
 				'name' => tra('Show Links'),
-				'description' => 'y|n',
-				'filter' => 'alpha'
+				'description' => tra('Show links to each tracker item (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showdesc' => array(
 				'required' => false,
 				'name' => tra('Show Description'),
-				'description' => 'y|n',
-				'filter' => 'alpha'
+				'description' => tra('Show the tracker\'s description (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'shownbitems' => array(
 				'required' => false,
-				'name' => tra('Show Number of Items'),
-				'description' => 'y|n',
-				'filter' => 'alpha'
+				'name' => tra('Show Item Count'),
+				'description' => tra('Show the number of items found (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showinitials' => array(
 				'required' => false,
 				'name' => tra('Show Initials'),
-				'description' => 'y|n',
-				'filter' => 'alpha'
+				'description' => tra('Show an alphabetical index by first letter to assist in navigation (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showstatus' => array(
 				'required' => false,
 				'name' => tra('Show Status'),
-				'description' => 'y|n',
-				'filter' => 'alpha'
+				'description' => tra('Show the status of the items (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showcreated' => array(
 				'required' => false,
 				'name' => tra('Show Creation Date'),
-				'description' => 'y|n',
-				'filter' => 'alpha'
+				'description' => tra('Creation date display is based on tracker settings unless overriden here'),
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showlastmodif' => array(
 				'required' => false,
-				'name' => tra('Show Last Modification'),
-				'description' => 'y|n',
-				'filter' => 'alpha'
+				'name' => tra('Last Modification Date'),
+				'description' => tra('Last modification date display is based on tracker settings unless overriden here'),
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showfieldname' => array(
 				'required' => false,
 				'name' => tra('Show Field Name'),
-				'description' => 'y|n',
-				'filter' => 'alpha'
+				'description' => tra('Use the field names as column titles (used by default)'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showitemrank' => array(
 				'required' => false,
 				'name' => tra('Show Item Rank'),
-				'description' => 'y|n',
-				'filter' => 'alpha'
+				'description' => tra('Show item ranks (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'status' => array(
 				'required' => false,
 				'name' => tra('Status Filter'),
-				'description' => 'o|p|c|op|oc|pc|opc'.' '.tra('Which item status to list. o = open, p = pending, c = closed.'),
-				'filter' => 'alpha'
+				'description' => tra('Only show items matching certain status filters (only items with open status shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'o',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Open'), 'value' => 'o'), 
+					array('text' => tra('Pending'), 'value' => 'p'), 
+					array('text' => tra('Closed'), 'value' => 'c'), 
+					array('text' => tra('Open & Pending'), 'value' => 'op'), 
+					array('text' => tra('Open & Closed'), 'value' => 'oc'), 
+					array('text' => tra('Pending & Closed'), 'value' => 'pc'), 
+					array('text' => tra('Open, Pending & Closed'), 'value' => 'opc')
+				)
 			),
 			'sort_mode' => array(
 				'required' => false,
 				'name' => tra('Sort Mode'),
-				'description' => tra('Sort mode. Example: lastModif_desc, created_asc, fieldname_desc, etc.'),
-				'filter' => 'word'
+				'description' => tra('Sort rows in ascending or descending order based on field ID, date created or date last modified using these values: ') . 
+									'created_asc, created_desc, lastModif_asc, lastModif_desc, f_fieldId_asc, f_filedId_desc ' . tra('(replacing fieldId with the field ID number).'),
+				'filter' => 'word',
+				'default' => '',
 			),
 			'sortchoice' => array(
 				'required' => false,
 				'name' => tra('Sort Choice'),
-				'description' => tra('Sort choice'),
+				'description' => tra('Add a dropdown of sorting choices. Example with two sorting choices: created_desc|Newest first: lastModif_desc|Last modified first'),
 				'filter' => 'text',
-				'separator' => ':'
+				'separator' => ':',
+				'default' => '',
 			),
 			'max' => array(
 				'required' => false,
-				'name' => tra('Maximum number of items'),
-				'description' => tra('Maximum number of items'),
-				'filter' => 'int'
+				'name' => tra('Maximum Items'),
+				'description' => tra('Maximum number of items to display. Defaults to max records preference, if set.'),
+				'filter' => 'int',
+				'default' => '',
 			),
 			'offset' => array(
 				'required' => false,
 				'name' => tra('Offset'),
-				'description' => tra('Offset of first item'),
-				'filter' => 'int'
+				'description' => tra('Offset of first item. Default is no offset.'),
+				'filter' => 'int',
+				'default' => 0,
 			),
 			'showpagination' => array(
 				'required' => false,
-				'name' => tra('Show pagination'),
-				'description' => 'y|n',
-				'filter' => 'alpha'
+				'name' => tra('Show Pagination'),
+				'description' => tra('Determines whether pagination will be shown (shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'filterfield' => array(
 				'required' => false,
@@ -150,13 +247,15 @@ function wikiplugin_trackerlist_info() {
 				'description' => tra('Colon separated list of fields to allow filtering on.'),
 				'filter' => 'digits',
 				'separator' => ':',
+				'default' => '',
 			),
 			'filtervalue' => array(
 				'required' => false,
 				'name' => tra('Filter Value'),
-				'description' => tra('Filter value of the filterfield. For better performance, use exact value instead'),
+				'description' => tra('Filter value of the filterfield. For better performance, use exactvalue instead'),
 				'filter' => 'text',
 				'separator' => ':',
+				'default' => '',
 			),
 			'exactvalue' => array(
 				'required' => false,
@@ -164,46 +263,67 @@ function wikiplugin_trackerlist_info() {
 				'description' => tra('Exact value of the filter'),
 				'filter' => 'text',
 				'separator' => ':',
+				'default' => '',
 			),
 			'checkbox' => array(
 				'required' => false,
 				'name' => tra('Checkbox'),
 				'description' => tra('Adds a checkbox on each line to be able to do an action.') . '<br />' .
-								tra('e.g. fieldId/postName/Title/Submit/ActionUrl/tpl/radio|dropdown') . '<br />' .
-								tra('More info at http://doc.tiki.org/PluginTrackerList#checkbox'),
+								tra('e.g. fieldId/postName/Title/Submit/ActionUrl/tpl/radio|dropdown') . '<br />' ,
 				'advanced' => true,
+				'default' => '',
 			),
 			'goIfOne' => array(
 				'required' => false,
 				'name' => tra('goIfOne'),
-				'description' => 'Go directly to tiki-view_tracker_item.php if only one item is found',
+				'description' => tra('Go directly to tiki-view_tracker_item.php if only one item is found'),
 				'filter' => 'alpha',
 				'advanced' => true,
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'more' => array(
 				'required' => false,
 				'name' => tra('More'),
-				'description' => 'y|n'.' '.tra('If y, show a more link'),
-				'filter' => 'alpha'
+				'description' => tra('Show a \'more\' button that links to tiki-view_tracker.php (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'moreurl' => array(
 				'required' => false,
 				'name' => tra('More URL'),
 				'description' => tra('More link pointing to specified URL instead of default tracker item link'),
-				'filter' => 'url'
+				'filter' => 'url',
+				'default' => 'tiki-view_tracker.php',
 			),
 			'view' => array(
 				'required' => false,
 				'name' => tra('View'),
-				'description' => 'user|page '.tra('Display automatically the item of the current user or the current page name'),
+				'description' => tra('Display only the items of the current user or the current page name'),
 				'filter' => 'alpha',
 				'advanced' => true,
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Page'), 'value' => 'page'), 
+					array('text' => tra('User'), 'value' => 'user')
+				)
 			),
 			'tpl' => array(
 				'required' => false,
 				'name' => tra('Template File'),
 				'description' => tra('Use content of the tpl file as template to display the item'),
 				'advanced' => true,
+				'default' => '',
 			),
 			'wiki' => array(
 				'required' => false,
@@ -211,156 +331,267 @@ function wikiplugin_trackerlist_info() {
 				'description' => tra('Use content of the wiki page as template to display the item. The page should have the permission tiki_p_use_as_template set, and that page should be only open for edition to fully trusted users such as other site admins'),
 				'filter' => 'pagename',
 				'advanced' => true,
+				'default' => '',
 			),
 			'view_user' => array(
 				'required' => false,
 				'name' => tra('View User'),
 				'description' => tra('Will display the items of the specified user'),
+				'default' => '',
 			),
 			'itemId' => array(
 				'required' => false,
 				'name' => tra('Item ID separated with :'),
-				'description' => tra('List of items Ids'),
+				'description' => tra('To restrict the list to these item IDs'),
 				'filter' => 'digits',
 				'separator' => ':',
+				'default' => '',
 			),
 			'ignoreRequestItemId' => array(
 				'required' => false,
-				'name' => tra('Do not filter on the param itemId if in the url'),
-				'description' => 'y|n',
+				'name' => tra('Ignore ItemId'),
+				'description' => tra('Ignore the itemId url parameter when filtering list (not ignored by default)'),
 				'filter' => 'alpha',
 				'default' => 'n',
 				'advanced' => true,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'url' => array(
 				'required' => false,
 				'name' => tra('URL'),
 				'description' => tra('The link that will be on each main field'),
-				'filter' => 'url'
+				'filter' => 'url',
+				'default' => '',
 			),
 			'ldelim' => array(
 				'required' => false,
 				'name' => tra('Left Deliminator'),
-				'description' => tra('Smarty left delimiter'),
+				'description' => tra('Smarty left delimiter for Latex generation'),
 				'advanced' => true,
+				'default' => '',
 			),
 			'rdelim' => array(
 				'required' => false,
 				'name' => tra('Right Deliminator'),
-				'description' => tra('Smarty right delimiter'),
+				'description' => tra('Smarty right delimiter for Latex generation'),
 				'advanced' => true,
+				'default' => '',
 			),
 			'list_mode' => array(
 				'required' => false,
 				'name' => tra('List Mode'),
-				'description' => 'y|n'.' '.tra('If y, value will be truncated'),
-				'filter' => 'alpha'
+				'description' => tra('Set output format. Yes (y) displays tracker list view with truncated values (default); 
+										No (n) displays in tracker item view; Comma Separated Values (csv) outpits without any HTML formatting.'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n'),
+					array('text' => tra('Comma Separated Values'), 'value' => 'csv')
+					)
 			),
 			'export' => array(
 				'required' => false,
 				'name' => tra('Export Button'),
-				'description' => 'y|n',
+				'description' => tra('Show an export button (not shown by default)'),
 				'filter' => 'alpha',
 				'advanced' => true,
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'compute' => array(
 				'required' => false,
 				'name' => tra('Compute'),
-				'description' => tra('Sum or average all the values of a field  and displays it at the bottom of the table.').' '.tra('fieldId').'/sum:'.tra('fieldId').'/avg',
+				'description' => tra('Sum or average all the values of a field and displays it at the bottom of the table.').' '.tra('fieldId').'/sum:'.tra('fieldId').'/avg',
 				'filter' => 'text',
 				'advanced' => true,
+				'default' => '',
 			),
 			'silent' => array(
 				'required' => false,
-				'name' => tra('Show nothing if no items'),
-				'description' => 'y|n',
-				'filter' => 'alpha'
+				'name' => tra('Silent'),
+				'description' => tra('Show nothing if no items found (the table header and a \'No records found\' message is shown by default).'),
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showdelete' => array(
 				'required' => false,
-				'name' => tra('Delete'),
-				'description' => 'y|n',
-				'filter' => 'alpha'
+				'name' => tra('Show Delete'),
+				'description' => tra('Show a delete option (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showwatch' => array(
 				'required' => false,
 				'name' => tra('Show Watch Button'),
-				'description' => 'y|n',
-				'filter' => 'alpha'
+				'description' => tra('Show a watch button (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showrss' => array(
 				'required' => false,
 				'name' => tra('Show Feed Button'),
-				'description' => 'y|n',
-				'filter' => 'alpha'
+				'description' => tra('Show an RSS feed button (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'googlemap' => array(
 				'required' => false,
-				'name' => tra('Show Google Map of Results'),
-				'description' => 'y|n',
-				'filter' => 'alpha'
+				'name' => tra('Show Google Map'),
+				'description' => tra('Show Google Map of results (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'googlemapicon' => array(
 				'required' => false,
-				'name' => tra('Url of default icon to use for markers on the map'),
-				'filter' => 'url'
+				'name' => tra('Google Map Icon'),
+				'description' => tra('Url of default icon to use for markers on the map'),
+				'filter' => 'url',
+				'default' => '',
+				'parent' => array('name' => 'googlemap', 'value' => 'y')
 			),
 			'calendarfielddate' => array(
 				'required' => false,
-				'name' => tra('One fieldId if one date, or 2 fieldIds separated with : for start:end'),
+				'name' => tra('Calendar Field IDs'),
+				'description' => tra('Used to display items in a calendar view. One fieldId if one date, or 2 fieldIds separated with : for start:end'),
 				'separator' => ':',
 				'filter' => 'digits',
 				'default' => '',
 			),
 			'calendarviewmode' => array(
 				'required' => false,
-				'name' => tra('Calendar view type time span'),
-				'description' => 'month|bimester|trimester|quarter|semester|year',
+				'name' => tra('Calendar View Mode'),
+				'description' => tra('Calendar view type time span (default is month)'),
 				'filter' => 'word',
-				'default' => 'month'
+				'default' => 'month',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Month'), 'value' => 'month'), 
+					array('text' => tra('Bimester'), 'value' => 'bimester'), 
+					array('text' => tra('Trimester'), 'value' => 'trimester'), 
+					array('text' => tra('Quarter'), 'value' => 'quarter'), 
+					array('text' => tra('Semester'), 'value' => 'semester'), 
+					array('text' => tra('Year'), 'value' => 'year')
+				)
 			),
 			'calendarstickypopup' => array(
 				'required' => false,
-				'name' => tra('Sticky popup'),
-				'description' => 'y|n',
+				'name' => tra('Sticky Popup'),
+				'description' => tra('Calendar item pop-ups will stay open if set to y (Yes). Set to n (No) by default.'),
 				'filter' => 'alpha',
-				'default' => 'n'
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'calendarbeginmonth' => array(
 				'required' => false,
-				'name' => tra('Begin calendar at a month beginning'),
-				'description' => 'y|n',
+				'name' => tra('Beginning of Month'),
+				'description' => tra('Set whether calendar will begin at the beginning of the month (does by default).'),
 				'filter' => 'alpha',
-				'default' => 'y'
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'calendarviewnavbar' => array(
 				'required' => false,
-				'name' => tra('View navigation bar'),
-				'description' => 'y|n|partial',
-				'filter' => 'word',
-				'default' => 'y'
+				'name' => tra('Navigation Bar'),
+				'description' => tra('Show calendar navigation bar (shown by default).'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n'), 
+					array('text' => tra('Partial'), 'value' => 'partial')
+				)
 			),
 			'calendartitle' => array(
 				'required' => false,
-				'name' => tra('Calendar title'),
+				'name' => tra('Calendar Title'),
+				'description' => tra('Enter a title to display a calendar title (not set by default)'),
 				'filter' => 'text',
-				'default' => ''
+				'default' => '',
 			),
 			'calendardelta' => array(
 				'required' => false,
-				'name' => tra('Calendar delta'),
-				'description' => '+month|-month|+bimester|-bimester',
+				'name' => tra('Calendar Delta'),
+				'description' => tra('Set the calendar delta that will be shown (not set by default)'),
 				'filter' => 'text',
-				'default' => ''
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Plus Month'), 'value' => '+month'), 
+					array('text' => tra('Minus Month'), 'value' => '-month'), 
+					array('text' => tra('Plus Bimester'), 'value' => '+bimester'),
+					array('text' => tra('Minus Bimester'), 'value' => '-bimester')
+				)
 			),
 			'displaysheet' => array(
 				'required' => false,
-				'name' => tra('Display tracker as spreadsheet.'),
-				'description' => 'y|n',
-				'filter' => 'word',
-				'default' => 'n'
+				'name' => tra('Display Spreadsheet.'),
+				'description' => tra('Display tracker as a spreadsheet (not used by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
-		),
+			'force_compile' => array(
+				'required' => false,
+				'name' => tra('Force Compile.'),
+				'description' => tra('Force Smarty to recompile the templates for each tracker item when using a wiki page as a template. Default=n (best performance)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'advanced' => true,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			)
+		)
 	);
 }
 
@@ -371,7 +602,8 @@ function wikiplugin_trackerlist($data, $params) {
 	static $iTRACKERLIST = 0;
 	++$iTRACKERLIST;
 	$smarty->assign('iTRACKERLIST', $iTRACKERLIST);
-	$default = array('calendarfielddate' => '', 'wiki' => '', 'calendarviewmode' => 'month', 'calendarstickypopup' => 'n', 'calendarbeginmonth' => 'y', 'calendarviewnavbar' => 'y', 'calendartitle'=>'', 'calendardelta' => '');
+	$default = array('calendarfielddate' => '', 'wiki' => '', 'calendarviewmode' => 'month', 'calendarstickypopup' => 'n',
+				'calendarbeginmonth' => 'y', 'calendarviewnavbar' => 'y', 'calendartitle'=>'', 'calendardelta' => '', 'force_compile' => 'n');
 	$params = array_merge($default, $params);
 	
 	extract ($params,EXTR_SKIP);
@@ -558,37 +790,37 @@ function wikiplugin_trackerlist($data, $params) {
 		$smarty->assign_by_ref('stickypopup', $stickypopup);
 
 		if (!isset($showtitle)) {
-			$showtitle = "n";
+			$showtitle = 'n';
 		}
 		$smarty->assign_by_ref('showtitle', $showtitle);
 		
 		if (!isset($showlinks)) {
-			$showlinks = "n";
+			$showlinks = 'n';
 		}
 		$smarty->assign_by_ref('showlinks', $showlinks);
 		
 		if (!isset($showdesc)) {
-			$showdesc = "n";
+			$showdesc = 'n';
 		}
 		$smarty->assign_by_ref('showdesc', $showdesc);
 		
 		if (!isset($showinitials)) {
-			$showinitials = "n";
+			$showinitials = 'n';
 		}
 		$smarty->assign_by_ref('showinitials', $showinitials);
 
 		if (!isset($shownbitems)) {
-			$shownbitems = "n";
+			$shownbitems = 'n';
 		}
 		$smarty->assign_by_ref('shownbitems', $shownbitems);
 		
 		if (!isset($showstatus)) {
-			$showstatus = "n";
+			$showstatus = 'n';
 		}
 		$smarty->assign_by_ref('showstatus', $showstatus);
 
 		if (!isset($showfieldname)) {
-			$showfieldname = "y";
+			$showfieldname = 'y';
 		}
 		$smarty->assign_by_ref('showfieldname', $showfieldname);
 
@@ -616,7 +848,7 @@ function wikiplugin_trackerlist($data, $params) {
 		$smarty->assign_by_ref('sortchoice', $sortchoice);
 
 		if (!isset($status)) {
-			$status = "o";
+			$status = 'o';
 		}
 		$tr_status = $status;
 		$smarty->assign_by_ref('tr_status', $tr_status);
@@ -940,16 +1172,16 @@ function wikiplugin_trackerlist($data, $params) {
 			}
 		}
 		$smarty->assign_by_ref('filterfield',$filterfield);
-		$smarty->assign_by_ref('filterfield',$filtervalue);
+		$smarty->assign_by_ref('filtervalue',$filtervalue);
 		$smarty->assign_by_ref('fields', $passfields);
-		$smarty->assign_by_ref('filterfield',$exactvalue);
+		$smarty->assign_by_ref('exactvalue',$exactvalue);
 		$smarty->assign_by_ref('listfields', $listfields);
 		$smarty->assign_by_ref('popupfields', $popupfields);
 		if (!empty($filterfield)) {
-			$urlquery['filterfield'] = implode(':', $filterfield);
+			$urlquery['filterfield'] =  is_array($filtervalue) ? implode(':', $filterfield) : $filterfield;
 			if (!is_array($filtervalue)) { $filtervalue = array($filtervalue); }
-			$urlquery['filtervalue'] = implode(':', $filtervalue);
-			$urlquery['exactvalue'] = implode(':', $exactvalue);
+			$urlquery['filtervalue'] = is_array($filtervalue) ? implode(':', $filtervalue) : $filtervalue;
+			$urlquery['exactvalue'] = is_array($exactvalue) ? implode(':', $exactvalue) : $exactvalue;
 			$urlquery['trackerId'] = $trackerId;
 			$smarty->assign('urlquery', $urlquery);
 		} else {
@@ -1250,7 +1482,8 @@ function wikiplugin_trackerlist($data, $params) {
 				$smarty->assign('msg', tra("Error in tracker ID"));
 				return "~np~".$smarty->fetch("error_simple.tpl")."~/np~";
 			} else {
-				if (!empty($wiki)) {					// pretty tracker needs to compile fresh for each item
+				$save_fc = null;
+				if (!empty($wiki) && $params['force_compile'] === 'y') { // some pretty trackers need to compile fresh for each item
 					$save_fc = $smarty->force_compile;
 					$smarty->force_compile = true;
 				}
@@ -1272,7 +1505,7 @@ function wikiplugin_trackerlist($data, $params) {
 				}
 				
 				$str = $smarty->fetch('wiki-plugins/wikiplugin_trackerlist.tpl');
-				if (!empty($wiki)) {
+				if ($save_fc !== null) {
 					$smarty->force_compile = $save_fc;	// presumably will be false but put it back anyway
 				}
 				

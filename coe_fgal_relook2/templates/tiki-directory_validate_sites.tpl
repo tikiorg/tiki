@@ -7,7 +7,7 @@
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}
 <form action="tiki-directory_validate_sites.php" method="post" name="form_validate_sites">
-{jq}
+{jq notonready=true}
 var CHECKBOX_LIST = [{{section name=user loop=$items}'sites[{$items[user].siteId}]'{if not $smarty.section.user.last},{/if}{/section}}];
 {/jq}
   <br />

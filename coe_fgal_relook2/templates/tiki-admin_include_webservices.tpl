@@ -14,9 +14,15 @@
 		<p>
 			{tr}Enter the URL of a web services returning either JSON or YAML. Parameters can be specified by enclosing a name between percentage signs. For example: %name%. %service% and %template% are reserved keywords and cannot be used.{/tr}
 		</p>
-		<p><input type="text" name="url" size="75" value="{$url|escape}" /></p>
-		<p><textarea name="postbody">{$postbody|escape}</textarea></p>
-		<p><input type="submit" name="parse" value="{tr}Lookup{/tr}"/></p>
+		<p>{tr}URL:{/tr}<input type="text" name="url" size="75" value="{$url|escape}" /></p>
+		<p>{tr}Type:{/tr}<select name="wstype">
+		{foreach from=$webservicesTypes item=_type}
+			<option value="{$_type}"{if $wstype eq $_type} selected="selected"{/if}>{$_type}</option>
+		{/foreach}
+		</select></p>
+		<p id="ws_postbody">{tr}Parameters (%name%):{/tr}<textarea name="postbody">{$postbody|escape}</textarea></p>
+		<p id="ws_operation" style="display: none;">{tr}Operation:{/tr}<input type="text" name="operation" size="30" value="{$operation|escape}" /></p>
+ 		<p><input type="submit" name="parse" value="{tr}Lookup{/tr}"/></p>
 	{/if}
 	{if $url and $params|@count}
 		<h3>{tr}Parameters{/tr}</h3>

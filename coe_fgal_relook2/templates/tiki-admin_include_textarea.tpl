@@ -60,15 +60,15 @@
 				{preference name=feature_wiki_ext_rel_nofollow}
 				{preference name=popupLinks}
 				{remarksbox type='tip' title="{tr}Tip{/tr}"}
-					<em>{tr}External links will be identified with{/tr}: </em><img border="0" class="externallink" src="img/icons/external_link.gif" alt=" (external link)" />.
+					<em>{tr}External links will be identified with{/tr}: </em><img class="externallink" src="img/icons/external_link.gif" alt=" (external link)" />.
 				{/remarksbox}
 			</fieldset>
 		{/tab}
 
 		{tab name="{tr}Plugins{/tr}"}
-			{remarksbox type="note" title="{tr}About plugins{/tr}"}{tr}Tiki plugins add functionality to wiki pages, articles and blogs etc. You can enable and disable them below.{/tr}
+			{remarksbox type="note" title="{tr}About plugins{/tr}"}{tr}Tiki plugins add functionality to wiki pages, articles, blogs, and so on. You can enable and disable them below.{/tr}
 			{tr}You can approve plugin use at <a href="tiki-plugins.php">tiki-plugins.php</a>.{/tr}		
-			{tr}The edit plugin icon is an easy way for users to edit the parameters of each plugin in wiki pages. It can be disabled for individual plugins below.{/tr}
+			{tr}The edit-plugin icon is an easy way for users to edit the parameters of each plugin in wiki pages. It can be disabled for individual plugins below.{/tr}
 			{/remarksbox}
 			{if !isset($disabled)}
 				{button href="?page=textarea&disabled=y" _text="{tr}Check disabled plugins used in wiki pages{/tr}"}
@@ -199,6 +199,9 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 						<input type="submit" name="enable" value="{tr}Enable Plugins{/tr}"/>
 						<input type="submit" name="delete" value="{tr}Delete Plugins{/tr}"/>
 					</div>
+					{remarksbox type="tip" title="{tr}Tip{/tr}"}
+						{tr}Click on the plugin name to edit it.{/tr} {tr}Click on the + icon to add a new one.{/tr}
+					{/remarksbox}
 				</div>
 			</fieldset>
 			{jq}$('#pluginalias_available legend').trigger('click');{/jq}

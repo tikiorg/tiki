@@ -32,7 +32,7 @@ function wikiplugin_alink_help() {
 function wikiplugin_alink_info() {
 	return array(
 		'name' => tra('Anchor Link'),
-		'documentation' => 'PluginAlink',
+		'documentation' => tra('PluginAlink'),
 		'description' => tra('Creates a link to an anchor within a page. Anchors can be created using the ANAME plugin.'),
 		'prefs' => array('wikiplugin_alink'),
 		'body' => tra('Anchor link label.'),
@@ -40,14 +40,16 @@ function wikiplugin_alink_info() {
 		'params' => array(
 			'aname' => array(
 				'required' => true,
-				'name' => 'Anchor name',
+				'name' => tra('Anchor Name'),
 				'description' => tra('The anchor name as defined in the ANAME plugin.'),
+				'default' => ''
 			),
 			'pagename' => array(
 				'required' => false,
-				'name' => tra('Page name'),
-				'description' => tra('The name of the wiki page containing the anchor.'),
+				'name' => tra('Page Name'),
+				'description' => tra('The name of the wiki page containing the anchor. If empty, the anchor name will be searched for on the wiki page where the plugin is used.'),
 				'filter' => 'pagename',
+				'default' => ''
 			),
 		),
 	);
@@ -85,7 +87,9 @@ function wikiplugin_alink($data, $params)
 			'" title="' . tra("Create page:") . ' ' . urlencode($pagename) . 
 			'"  class="wiki wikinew">?</a>';
 	    }
-	} else {
+	} elseif (isset($_REQUEST['page'])) {
 	    return "<a href=\"".$_REQUEST["page"]."#$aname\">$data</a>";
+	} else {
+	    return "<a href=\"#$aname\">$data</a>";
 	}
 }

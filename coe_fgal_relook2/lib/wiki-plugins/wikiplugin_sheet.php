@@ -27,7 +27,7 @@ function wikiplugin_sheet_help() {
 function wikiplugin_sheet_info() {
 	return array(
 		'name' => tra('Sheet'),
-		'documentation' => 'PluginSheet',
+		'documentation' => tra('PluginSheet'),
 		'description' => tra('Displays the content of a spreadsheet in the page.'),
 		'prefs' => array( 'wikiplugin_sheet', 'feature_sheet' ),
 		'body' => tra('Sheet Heading'),
@@ -38,7 +38,7 @@ function wikiplugin_sheet_info() {
 				'description' => tra('Internal ID of the TikiSheet.  Either id or url MUST be used.'),
 				'filter' => 'digits',
     			'accepted' => 'Sheet ID number',
-				'default' => 'none',
+				'default' => '',
     			'since' => ''
 			),
 			'url' => array(
@@ -47,7 +47,7 @@ function wikiplugin_sheet_info() {
 				'description' => tra('Internal URL of the Table to use as a spreadsheet.  Either id or url MUST be used.'),
 				'filter' => 'url',
     			'accepted' => 'Valid url',
-				'default' => 'none',
+				'default' => '',
     			'since' => '6.0'
 			),
 			'simple' => array(
@@ -59,9 +59,10 @@ function wikiplugin_sheet_info() {
 				'default' => 'n',
     			'since' => '5.0',
 				'options' => array(
-					array('text' => tra('No'), 'value' => 'n'),
-					array('text' => tra('Yes'), 'value' => 'y'),
-				),
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'width' => array(
 				'required' => false,
@@ -90,9 +91,10 @@ function wikiplugin_sheet_info() {
 				'default' => 'y',
     			'since' => '6.0',
 				'options' => array(
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n'),
-				),
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'subsheets' => array(
 				'required' => false,
@@ -103,9 +105,10 @@ function wikiplugin_sheet_info() {
 				'default' => 'y',
     			'since' => '6.0',
 				'options' => array(
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n'),
-				),
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'range' => array(
 				'required' => false,
@@ -122,7 +125,7 @@ function wikiplugin_sheet_info() {
 				'description' => tra('Apply custom CSS class to the containing div.'),
 				'filter' => 'text',
     			'accepted' => 'Any valid CSS class',
-				'default' => 'none',
+				'default' => '',
     			'since' => '6.0',
 			),
 		),

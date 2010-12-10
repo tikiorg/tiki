@@ -37,4 +37,8 @@ class Perms_Resolver_Static implements Perms_Resolver
 	function from() {
 		return $this->from;
 	}
+
+	function applicableGroups() {
+		return array_keys($this->known);
+	}
 }

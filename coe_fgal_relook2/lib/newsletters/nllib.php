@@ -357,8 +357,9 @@ class NlLib extends TikiLib
 			// Generate a code and store it and send an email  with the
 			// URL to confirm the subscription put valid as 'n'
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
-			$foopath = preg_replace('/tiki-admin_newsletter_subscriptions.php/', 'tiki-newsletters.php', $foo["path"]);
-			$url_subscribe = $tikilib->httpPrefix( true ). $foopath;
+//			$foopath = preg_replace('/tiki-admin_newsletter_subscriptions.php/', 'tiki-newsletters.php', $foo["path"]);
+//			$url_subscribe = $tikilib->httpPrefix( true ). $foopath;
+			$url_subscribe = $tikilib->httpPrefix( true ). '/tiki-newsletters.php';
 			if (empty($res)) {
 				$query = "insert into `tiki_newsletter_subscriptions`(`nlId`,`email`,`code`,`valid`,`subscribed`,`isUser`,`included`) values(?,?,?,?,?,?,?)";
 				$bindvars = array((int)$nlId,$add,$code,'n',(int)$this->now,$isUser,'n');
@@ -913,7 +914,9 @@ class NlLib extends TikiLib
 		$prefs['feature_autolinks'] = $o2;
 		
 		if (!empty($pageContent)) {
-			$pageContent = strip_tags($pageContent);
+			$pageContent = strip_tags($pageContent, '<p><tr><br>');
+			$pageContent = preg_replace(array('/<p.*?>/i','/<tr.*?>/i'), "", $pageContent);	// deal with stripped html from smarty
+			$pageContent = str_replace(array('</p>','</tr>','<br />'), "\n", $pageContent);	// add linefeeds
 			$pageContent = preg_replace('/[\\n\\r]/', "\n", $pageContent);	// in case there are MS lineends
 			$pageContent = preg_replace('/\\n\\n/', "\n", $pageContent);	// remove blank lines
 			$ary = explode("\n", $pageContent);
@@ -985,7 +988,7 @@ class NlLib extends TikiLib
 		$mail = new TikiMail();
 
 		// build the html
-		$beginHtml = '<body><div id="tiki-center" class="clearfix content"><div class="wiitext">';
+		$beginHtml = '<body><div id="tiki-center" class="clearfix content"><div class="wikitext">';
 		$endHtml = '</div></div></body>';
 		if (stristr($info['dataparsed'], '<body') === false) {
 			$html = "<html>$beginHtml" . $tikilib->parse_data($info['dataparsed'], array('absolute_links' => true, 'suppress_icons' => true)) . "$endHtml</html>";
@@ -1002,10 +1005,23 @@ class NlLib extends TikiLib
 		}
 
 		if (stristr($html, '<base') === false) {
-			if (stristr($html, '<header') === false) {
-				$html = str_ireplace('<html>', "<html><header><base href=\"$base_url\" /><style type=\"text/css\">" . $headerlib->get_all_css_content() . "</style></header>", $html);
+			if (stristr($html, '<head') === false) {
+				$news_cssfile = $tikilib->get_style_path($prefs['style'], '', 'newsletter.css');
+				$news_cssfile_option = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'newsletter.css');
+				$news_css = '';
+				if (!empty($news_cssfile)) {
+					$news_css .= $headerlib->minify_css($news_cssfile);
+				}
+				if (!empty($news_cssfile_option) && $news_cssfile_option !== $news_cssfile) {
+					$news_css .= $headerlib->minify_css($news_cssfile_option);
+				}
+				if (empty($news_css)) {
+					$news_css = $headerlib->get_all_css_content();
+				}
+				$news_head = "<html><head><base href=\"$base_url\" /><style type=\"text/css\">$news_css</style></head>";
+				$html = str_ireplace('<html>', $news_head, $html);
 			} else {
-				$html = str_ireplace('<header>', "<header><base href=\"$base_url\" />", $html);
+				$html = str_ireplace('<head>', "<head><base href=\"$base_url\" />", $html);
 			}
 		}
 

@@ -101,12 +101,12 @@ legend {
 }
 
 
-span.button a,
-span.button a:visited,
+.button a,
+.button a:visited,
 button,
 input[type="reset"],
 input[type="submit"],
-span.button input,
+.button input,
 .calbuttonBox a {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -114,12 +114,12 @@ span.button input,
 	border: 1px solid #000;
 }
 
-span.button a:hover,
+.button a:hover,
 .button a:hover,
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-span.button input:hover,
+.button input:hover,
 .calbuttonBox:hover {
 	color: #636363;
 }
@@ -205,12 +205,12 @@ h3.box-title {
 	overflow: hidden;
 }
 
-div.simplebox {
+.simplebox {
 	margin-left: 5px;
 	margin-right: 5px;
 }
 
-div.cbox {
+.cbox {
 	background: #e0e0e0;
 	margin-top: 4px;
 	margin-bottom: 0;
@@ -221,7 +221,7 @@ div.cbox {
 	font-size: 11px;
 }
 
-div.cbox-title {
+.cbox-title {
 	background: url(jalist/maincap.png);
 	border-bottom: 1px solid black;
 	font-size: 11px;
@@ -337,18 +337,16 @@ h1, .pagetitle {
 }
 
 
-body.wikitext, div.wikitext {
+body.cke_show_borders,
+.wikitext {
 	background:    white;
 	font-size:   11px;
 	border:   1px solid black;
 	padding: 1px;
 	margin: 5px 1px;
 }
-body.wikitext {
-	border : 0;
-}
 
-div.titlebar {
+.titlebar {
 	background: #EFEFEF;
 	color: #000;
 	border: 1px solid #fff;
@@ -367,7 +365,7 @@ div.titlebar {
 	color: #636363;
 }
 
-span.titleb {
+.titleb {
 
 }
 
@@ -375,19 +373,19 @@ span.titleb {
 
 }
 
-div.articletrailer {
+.articletrailer {
 
 }
 
-div.articlebody {
+.articlebody {
 
 }
 
-td.oddthumb {
+.oddthumb {
 
 }
 
-td.eventhumb,
+.eventhumb,
 .thumbnailcontener {
 
 }

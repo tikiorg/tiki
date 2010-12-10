@@ -28,6 +28,7 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 
 		return $ret;
 	}
+
 	function testShortMatch()
 	{
 		$matches = $this->doMatch( ' {img src=foo.png} ', 1 );
@@ -38,6 +39,18 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 		$this->assertEquals( null, $match->getBody() );
 		$this->assertEquals( 1, $match->getStart() );
 		$this->assertEquals( 18, $match->getEnd() );
+	}
+
+	function testShortLegacySyntax()
+	{
+		$matches = $this->doMatch( ' {IMG(src=foo.png)/} ', 1 );
+
+		$match = $matches[0];
+		$this->assertEquals( 'img', $match->getName() );
+		$this->assertEquals( 'src=foo.png', $match->getArguments() );
+		$this->assertEquals( null, $match->getBody() );
+		$this->assertEquals( 1, $match->getStart() );
+		$this->assertEquals( 20, $match->getEnd() );
 	}
 
 	function testFullMatch()
@@ -175,6 +188,32 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 		$this->assertEquals( '{c} {A()} Hello {A} {b}', $matches->getText() );
 	}
 
+	function testLegacyReplacement()
+	{
+		$string = '{c} {A()} {B()/} {A} {b}';
+		$matches = WikiParser_PluginMatcher::match( $string );
+		$this->assertEquals( 4, count($matches) );
+
+		$orig = $this->toArray( $matches );
+
+		$orig[2]->replaceWith( 'Hello' );
+
+		$this->assertEquals( '{c} {A()} Hello {A} {b}', $matches->getText() );
+	}
+
+	function testLegacyReplacementWithSpace()
+	{
+		$string = '{c} {A()} {B() /} {A} {b}';
+		$matches = WikiParser_PluginMatcher::match( $string );
+		$this->assertEquals( 4, count($matches) );
+
+		$orig = $this->toArray( $matches );
+
+		$orig[2]->replaceWith( 'Hello' );
+
+		$this->assertEquals( '{c} {A()} Hello {A} {b}', $matches->getText() );
+	}
+
 	function testLargerReplacement()
 	{
 		$string = '{c} {A()} {b} {A} {b}';
@@ -272,6 +311,51 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 		}
 	}
 
+	function testNestingWithoutSpaces()
+	{
+		$strings = " {A(a=1)}{A(a=2)}{a a=3}{A}{A} ";
+
+		$matches = WikiParser_PluginMatcher::match($strings);
+		$this->assertEquals(3, count($matches));
+
+		$replacements = array(
+			'~np~<div>~/np~{A(a=2)}{a a=3}{A}~np~</div>~/np~',
+			'~np~<div>~/np~{a a=3}~np~</div>~/np~',
+			'~np~<div>~/np~3~np~</div>~/np~',
+		);
+		foreach($matches as $match) {
+			$match->replaceWith(array_shift($replacements));
+		}
+
+		$this->assertEquals(0, count($matches));
+	}
+
+	function testIntegrityPreservedOnReplacement()
+	{
+		$strings = '{A(a=1)}{a a=2}{A(a=3)/}{A}';
+
+		$matches = WikiParser_PluginMatcher::match($strings);
+
+		$replacements = array(
+			'{a a=2}{A(a=3)/}{A(a=4)}Hello World{A}',
+			'0',
+			'1',
+			'2',
+		);
+		$obtained = array();
+		foreach($matches as $match) {
+			$obtained[] = $match->getArguments() . $match->getBody();
+			$match->replaceWith(array_shift($replacements));
+		}
+
+		$this->assertEquals('012', $matches->getText());
+		$this->assertEquals(array(
+			'a=1{a a=2}{A(a=3)/}',
+			'a=2',
+			'a=3',
+			'a=4Hello World',
+		), $obtained);
+	}
 /*
 	// TODO : Replacement re-find existing
 	// TODO : Replacement original vs generated

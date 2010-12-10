@@ -70,12 +70,10 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 			++$pos;
 
 			if( ! $match->findName( $end ) ) {
-				//die('NAME LOOKUP FAILED');
 				continue;
 			}
 
 			if( ! $match->findArguments( $end ) ) {
-				//die('ARG LOOKUP FAILED');
 				continue;
 			}
 
@@ -103,7 +101,7 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 						break;
 					}
 
-					$lookupStart = $candidate + 1;
+					$lookupStart = $candidate;
 				}
 			}
 		}
@@ -222,37 +220,42 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 		$sizeDiff = - ($end - $start - strlen( $string ) );
 		$this->text = substr_replace( $this->text, $string, $start, $end - $start ); 
 
-		unset($this->ends[$end]);
+		$this->ranges = array();
+		$this->findNoParseRanges(0, strlen($this->text));
+
 		$matches = $this->ends;
+		$toRemove = array($match);
+		$toAdd = array();
 
 		foreach( $matches as $key => $m ) {
 			if( $m->inside( $match ) ) {
-				$m->invalidate();
-				unset( $this->ends[$key] );
+				$toRemove[] = $m;
 			} elseif( $key > $end ) {
+				unset( $this->ends[$m->getEnd()] );
+				unset( $this->starts[$m->getStart()] );
 				$m->applyOffset( $sizeDiff );
+				$toAdd[] = $m;
 			}
 		}
 
-		$list = $this->ends;
-
-		$sub = $this->getSubMatcher( $start, $start + strlen( $string ) );
-		foreach( $sub as $m ) {
-			$list[] = $m;
+		foreach ($toRemove as $m) {
+			unset( $this->ends[$m->getEnd()] );
+			unset( $this->starts[$m->getStart()] );
+			$m->invalidate();
 		}
 
-		$this->ends = array();
-		$this->starts = array();
-
-		foreach( $list as $m ) {
+		foreach ($toAdd as $m) {
 			$this->ends[$m->getEnd()] = $m;
 			$this->starts[$m->getStart()] = $m;
 		}
 
+		$sub = $this->getSubMatcher( $start, $start + strlen( $string ) );
+		if ($sub->isComplete()) {
+			$this->appendSubMatcher($sub);
+		}
+
 		ksort( $this->ends );
 		ksort( $this->starts );
-
-		$match->invalidate();
 
 		if( $this->scanPosition == $start ) {
 			$this->scanPosition = $start - 1;
@@ -264,6 +267,7 @@ class WikiParser_PluginMatcher_Match
 {
 	const LONG = 1;
 	const SHORT = 2;
+	const LEGACY = 3;
 	const NAME_MAX_LENGTH = 50;
 
 	private $matchType = false;
@@ -343,18 +347,33 @@ class WikiParser_PluginMatcher_Match
 			$unescapedFound += $this->countUnescapedQuotes( $old, $pos );
 		}
 
-		if( $this->matchType == self::LONG && $this->matcher->findText( ')', $pos - 1, $limit ) !== $pos - 1 ) {
+		if ($this->matchType == self::LONG && $this->matcher->findText( '/', $pos - 1, $limit ) === $pos - 1 ) {
+			$this->matchType = self::LEGACY;
+			--$pos;
+		}
+
+		$seek = $pos;
+		while( ctype_space($this->matcher->getChunkFrom($seek-1, '1')) ) {
+			$seek--;
+		}
+
+		if( in_array($this->matchType, array(self::LONG, self::LEGACY)) && $this->matcher->findText( ')', $seek - 1, $limit ) !== $seek - 1 ) {
 			$this->invalidate();
 			return false;
 		}
 
-		$this->bodyStart = $pos + 1;
-
-		$arguments = trim( $this->matcher->getChunkFrom( $this->nameEnd, $pos - $this->nameEnd ), '()' );
+		$arguments = trim( $this->matcher->getChunkFrom( $this->nameEnd, $pos - $this->nameEnd ), '() ' );
 		$this->arguments = trim( $arguments );
 
-		if( $this->matchType == self::SHORT ) {
+		if ($this->matchType == self::LEGACY) {
+			++$pos;
+		}
+
+		$this->bodyStart = $pos + 1;
+
+		if( $this->matchType == self::SHORT || $this->matchType == self::LEGACY ) {
 			$this->end = $this->bodyStart;
+			$this->bodyStart = false;
 		}
 
 		return true;
@@ -435,9 +454,18 @@ class WikiParser_PluginMatcher_Match
 	{
 		$this->start += $offset;
 		$this->end += $offset;
-		$this->nameEnd = false;
-		$this->bodyStart = false;
-		$this->bodyEnd = false;
+
+		if ($this->nameEnd !== false) {
+			$this->nameEnd += $offset;
+		}
+
+		if ($this->bodyStart !== false) {
+			$this->bodyStart += $offset;
+		}
+
+		if ($this->bodyEnd !== false) {
+			$this->bodyEnd += $offset;
+		}
 	}
 
 	private function countUnescapedQuotes( $from, $to )
@@ -463,5 +491,11 @@ class WikiParser_PluginMatcher_Match
 	public function __toString()
 	{
 		return $this->matcher->getChunkFrom( $this->start, $this->end - $this->start );
+	}
+
+	public function debug($level = 'X')
+	{
+		echo "\nMatch [$level] {$this->name} ({$this->arguments}) = {$this->getBody()}\n";
+		echo "{$this->bodyStart}-{$this->bodyEnd} {$this->nameEnd} ({$this->matchType})\n";
 	}
 }

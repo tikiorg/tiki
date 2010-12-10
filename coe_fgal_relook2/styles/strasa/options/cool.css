@@ -29,7 +29,7 @@ input,
 textarea,
 option,
 select,
-body.wikitext {
+body.cke_show_borders {
 	background: #F3FCFE;
 	color: #000;
 }
@@ -54,12 +54,12 @@ input#search {
 }
 
 /* Links in buttons */
-span.button a,
-span.button a:visited,
+.button a,
+.button a:visited,
 button,
 input[type=reset],
 input[type=submit],
-span.button input,
+.button input,
 .calbuttonbox {
 	color: #4c4c4c;
 	font-weight: bold;
@@ -73,7 +73,7 @@ span.button input,
 	border: 1px solid #acacac;
 	background: #f5f5f5 url(cool/headerbg.jpg) repeat-x 0 100%}
 
-span.button a:hover,
+.button a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
@@ -88,8 +88,8 @@ button:active,
 input[type=reset]:active,
 input[type=submit]:active,
 .button input:active,
-span.highlight a:link,
-span.highlight a:visited  {
+.highlight a:link,
+.highlight a:visited  {
 	border-color: #223845 #41cbe7 #41cbe7 #223845;
 }
 
@@ -391,7 +391,7 @@ a.phplmselected:hover {
 
 /** Links in other menus **/
 
-div.separator {
+.separator {
 	border-top: 1px solid #bed8f1;
 }
 
@@ -409,8 +409,8 @@ a.linkmenu, .rsslink, .linkmenu:visited, .rsslink:visited {}
 	color: #000000;
 }
 
-div.option a:hover,
-div.option a:active {}
+.option a:hover,
+.option a:active {}
 
 a.linkmodule:hover {
 	color: #000000;
@@ -422,21 +422,21 @@ a.linkmodule:hover {
 	color: #000000;
 }
 
-div.adminanchors {
+.adminanchors {
 	background: #077aa7 !important;
 }
 
 /* New Help section */
 
-div.help_section_select {
+.help_section_select {
 	background: white;
 }
 
-div.help_sections {
+.help_sections {
 	background: white;
 }
 
-div.help_section {
+.help_section {
 	background: #F3FCFE;
 }
 
@@ -464,7 +464,7 @@ a.flipmodtitle:hover img {
 
 /** Other boxes **/
 
-div.cbox {
+.cbox {
 	border: 1px solid #acacac;
 }
 
@@ -494,7 +494,7 @@ div.cbox {
 }
 
 
-div.simplebox {
+.simplebox {
 	border: 1px solid #aaa;
 	background: #fff;
 }
@@ -504,8 +504,8 @@ div.simplebox {
 
 /***** Tables, Tabs and Lists ****/
 /** Tables **/
-table.normal, 
-table.admin {border: 1px solid #acacac}
+.normal, 
+.admin {border: 1px solid #acacac}
 
 tr.odd {
 	background: #f0f0f0;
@@ -539,7 +539,7 @@ td.third {}
 /* headings */
 
 th,
-table.normal td.heading {
+.normal td.heading {
 	color: black;
 	background: #f5f5f5 url(cool/headerbg.jpg) repeat-x 0 100%;
 }
@@ -677,16 +677,16 @@ a.pagetitle:hover {
 	color: #000;
 }
 
-table.wikitable {
+.wikitable {
 	border: 1px solid #A9A9A9;
 }
 
-td.wikicell {
+.wikicell {
 	border: 1px solid #a9a9a9;
 }
 
 /* editable wiki section */
-div.split {
+.split {
 	border: 1px dashed #696969;
 }
 
@@ -696,13 +696,13 @@ div.split {
 }
 
 /* Needed esp. for light-on-dark theme */
-div.toolbar {
+.toolbar {
 }
 
 /* Wiki plugins */
 /* Code plugin  */
 
-div.code {
+.code {
 	border: 1px dashed #a9a9a9;
 	background: #F5F5F5;
 }
@@ -720,12 +720,12 @@ div.code {
 
 /** Wiki tocs **/
 
-div.tocnav {
+.tocnav {
 	background: #EBEBEB;
 }
 
 /* TOC */
-ul.toc {
+.toc {
 	border-top: 1px dotted #a9a9a9;
 	border-bottom: 1px dotted #a9a9a9;
 }
@@ -764,19 +764,19 @@ ul.toc {
 }
 
 /***** Articles ****/
-div.articletopline,
-div.articlesubtitle {
+.articletopline,
+.articlesubtitle {
 	background: #f5f5f5;
 	color: #000}
 	
-div.articletitle h2 {
+.articletitle h2 {
 	background: #f5f5f5 url(cool/headerbg.jpg) repeat-x 0 100%;
 	color: #000;
 	padding: 10px 5px;
 	margin: 0}
 
-div.articletitle h2 a,
-div.articletitle h2 a:visited {
+.articletitle h2 a,
+.articletitle h2 a:visited {
 	color: #000;
 	text-decoration: none}
 
@@ -869,7 +869,7 @@ body.tiki_blogs .postbody-title,
 
 /* Help box*/
 
-div.commentsedithelp {
+.commentsedithelp {
 	background: #ffcfcf;
 	color: black;
 	border: 1px solid #ff0000;
@@ -881,11 +881,11 @@ div.commentsedithelp {
 
 /***** Image Galleries *****/
 
-table.galtable {
+.galtable {
 	border: 1px solid #696969;
 }
 
-div.thumbnailcontenerchecked div.thumbnail {
+.thumbnailcontenerchecked .thumbnail {
 	background-color: #f8f8ff;
 	border-color: #a9a9a9;
 }
@@ -896,7 +896,7 @@ div.thumbnailcontenerchecked div.thumbnail {
 
 
 /* also for categorize.tpl */
-div.multiselect {
+.multiselect {
 	border: 1px solid #696969;
 }
 
@@ -1070,7 +1070,7 @@ div.multiselect {
 }
 
 .caltable .calfocuson,
-.box-data td.fc a.today,
+.box-data .fc a.today,
 .box-data td a.today {
 	background: #D4D0C8;
 	border: solid 1px #696969;
@@ -1119,7 +1119,7 @@ div.multiselect {
 
 /*****  Polls  *****/
 
-td.pollr {
+.pollr {
 	color: black;
 }
 
@@ -1131,49 +1131,49 @@ td.pollr {
 
 /***** Directory *****/
 
-div.dircategs {
+.dircategs {
 	border: 1px solid #696969;
 }
 
 
 /***** Messages *****/
-td.prio1,
-td.prio2,
-td.prio3,
-td.prio4,
-td.prio5 {
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {
 	border: 1px solid #a9a9a9;
 }
 
-td.prio1 {
+.prio1 {
 	background: #F7F9CA;
 }
 
-td.prio2 {
+.prio2 {
 	background: #F7F9EA;
 }
 
-td.prio3 {
+.prio3 {
 	background: #F7F9FA;
 }
 
-td.prio4 {
+.prio4 {
 	background: #F7F9FD;
 }
 
-td.prio5 {
+.prio5 {
 	background: #F7F9FF;
 }
 
-div.messureadflag {
+.messureadflag {
 	background: #a9a9a9;
 }
 
-div.messureadhead {
+.messureadhead {
 	background: #dcdcdc;
 }
 
-div.messureadbody {
+.messureadbody {
 	background: #dcdcdc;
 }
 
@@ -1188,11 +1188,11 @@ div.messureadbody {
 }
 
 /***** Ajax *****/
-div#ajaxLoading {}
+#ajaxLoading {}
 
 /***** TikiSheet Default Style *****/
-table.default thead td,
-table.default tfoot td {
+.default thead td,
+.default tfoot td {
 	background: #223845;
 	color: #cce5ff;
 }

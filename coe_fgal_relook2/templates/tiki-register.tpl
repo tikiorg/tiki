@@ -74,7 +74,7 @@
 {elseif $email_valid eq 'n' and $allowRegister eq 'y'}
 	<label for="email">{icon _id=error style="vertical-align:middle" align="left"} {tr}Your email could not be validated; make sure you email is correct and click register below.{/tr}</label>
  		<form action="tiki-register.php" method="post">
-			{if $smarty.request.invit}<input type='hidden' name='invit' value='{$smarty.request.invit|escape}'/>{/if}
+			{if $smarty.request.invite}<input type='hidden' name='invite' value='{$smarty.request.invite|escape}'/>{/if}
 			<input type="text" name="email" id="email" value="{$smarty.post.email}"/>
 			<input type="hidden" name="name" value="{$smarty.post.name}"/>
 			<input type="hidden" name="pass" value="{$smarty.post.pass}"/>
@@ -88,13 +88,13 @@
 {else}
 	{if $allowRegister eq 'y'}
 
-		<fieldset><legend>{tr}Register as a new user{/tr}</legend>
+		<fieldset>{if !isset($userTrackerHasDescription)}<legend>{tr}Register as a new user{/tr}</legend>{/if}
 		
 		{if $userTrackerData}
 			{$userTrackerData}
 		{else}
 			<form action="tiki-register.php" method="post" name="RegForm">
-                        {if $smarty.request.invit}<input type='hidden' name='invit' value='{$smarty.request.invit|escape}'/>{/if}
+                        {if $smarty.request.invite}<input type='hidden' name='invite' value='{$smarty.request.invite|escape}'/>{/if}
 			<table class="formcolor">
 			{include file="register-form.tpl"}
 			{if $merged_prefs.feature_antibot eq 'y'}{include file='antibot.tpl' td_style='formcolor'}{/if}
@@ -102,13 +102,14 @@
 			<td>&nbsp;</td>
 			<td><input type="submit" name="register" value="{tr}Register{/tr}" /></td>
 			</tr>
+			</table>
 			</form>
 		{/if}
 		
 		</fieldset>
 		
 		{remarksbox type="note"  title="{tr}Note{/tr}"}
-			{tr}Make sure to whitelist this domain to prevent registration emails being canned by your spam filter!{/tr}
+			{tr 0=$prefs.sender_email|default:"{tr}this domain{/tr}"}If you use an email filter, be sure to add %0 to your accepted list{/tr}
 		{/remarksbox}
 	{/if}
 	
@@ -120,13 +121,12 @@
 				<p>
 					{tr}Associate OpenID with an existing Tikiwiki account{/tr}
 				</p>
-				{include file="modules/mod-login_box.tpl"}
-	{/if}
-	
-	{if $allowRegister eq 'y'}
+				{include file="modules/mod-login_box.tpl"} 
+		{if $allowRegister eq 'y'}
 			</td>
 		</tr>
 		</table>
+		{/if}
 	{/if}
 		
 {/if}

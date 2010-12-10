@@ -202,6 +202,18 @@ if (!empty($version)) { // filter out other versions
 					$mv = 3.0; // e.g. version= "Compatible with TikiWiki 3 releases." or "3+"
 					
 				}
+				if (strpos($m->version[0], ' 4 ') !== false || strpos($m->version[0], ' 4+') !== false) {
+					$mv = 4.0; // e.g. version= "Compatible with TikiWiki 4 releases." or "4+"
+					
+				}
+				if (strpos($m->version[0], ' 5 ') !== false || strpos($m->version[0], ' 5+') !== false) {
+					$mv = 5.0; // e.g. version= "Compatible with TikiWiki 5 releases." or "5+"
+					
+				}
+				if (strpos($m->version[0], ' 6 ') !== false || strpos($m->version[0], ' 6+') !== false) {
+					$mv = 6.0; // e.g. version= "Compatible with Tiki 6 releases." or "6+"
+					
+				}
 				if ($mv >= $v) {
 					$filtmod[$k] = $m;
 				}

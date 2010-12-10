@@ -394,6 +394,35 @@ abstract class Toolbar
 		return smarty_block_self_link($params, $content, $smarty);
 	} // }}}
 
+	protected function setupCKEditorTool($js, $name, $label = '', $icon = '') {
+		global $headerlib;
+		if (empty($label)) {
+			$label = $name;
+		}
+		$label = addcslashes($label, "'");
+		$headerlib->add_jq_onready(<<< JS
+if (typeof window.CKEDITOR !== "undefined") {
+	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
+	window.CKEDITOR.plugins.add( '{$name}', {
+		init : function( editor ) {
+			var command = editor.addCommand( '{$name}', new window.CKEDITOR.command( editor , {
+				modes: { wysiwyg:1 },
+				exec: function(elem, editor, data) {
+					{$js}
+				},
+				canUndo: false
+			}));
+			editor.ui.addButton( '{$name}', {
+				label : '{$label}',
+				command : '{$name}',
+				icon: editor.config._TikiRoot + '{$icon}'
+			});
+		}
+	});
+}
+JS
+		, 10);
+	}
 }
 
 class ToolbarSeparator extends Toolbar
@@ -764,7 +793,7 @@ class ToolbarPicker extends Toolbar
 			global $headerlib;
 			foreach( $rawList as $smiley ) {
 				$tra = htmlentities( tra($smiley), ENT_QUOTES, 'UTF-8' );
-				$list["(:$smiley:)"] = '<img src="' . $headerlib->convert_cdn('img/smiles/icon_' .$smiley . '.gif') . '" alt="' . $tra . '" title="' . $tra . '" border="0" width="15" height="15" />';
+				$list["(:$smiley:)"] = '<img src="' . $headerlib->convert_cdn('img/smiles/icon_' .$smiley . '.gif') . '" alt="' . $tra . '" title="' . $tra . '" width="15" height="15" />';
 			}
 			break;
 		case 'color':
@@ -918,16 +947,16 @@ class ToolbarDialog extends Toolbar
 		case 'tikilink':
 			$label = tra('Wiki Link');
 			$icon = tra('pics/icons/page_link.png');
-			$wysiwyg = 'tikilink';
+			$wysiwyg = '';	// cke link dialog now adapted for wiki links
 			$list = array('Wiki Link',
 						'<label for="tbWLinkDesc">Show this text</label>',
-						'<input type="text" id="tbWLinkDesc" class="ui-widget-content ui-corner-all" style="width: 100%" />',
+						'<input type="text" id="tbWLinkDesc" class="ui-widget-content ui-corner-all" style="width: 98%" />',
 						'<label for="tbWLinkURL">Link to this page</label>',
-						'<input type="text" id="tbWLinkPage" class="ui-widget-content ui-corner-all" style="width: 100%" />',
+						'<input type="text" id="tbWLinkPage" class="ui-widget-content ui-corner-all" style="width: 98%" />',
 						$prefs['wikiplugin_alink'] == 'y' ? '<label for="tbWLinkRel">Anchor:</label>' : '',
-						$prefs['wikiplugin_alink'] == 'y' ? '<input type="text" id="tbWLinkAnchor" class="ui-widget-content ui-corner-all" style="width: 100%" />' : '',
+						$prefs['wikiplugin_alink'] == 'y' ? '<input type="text" id="tbWLinkAnchor" class="ui-widget-content ui-corner-all" style="width: 98%" />' : '',
 						$prefs['feature_semantic'] == 'y' ? '<label for="tbWLinkRel">Semantic relation:</label>' : '',
-						$prefs['feature_semantic'] == 'y' ? '<input type="text" id="tbWLinkRel" class="ui-widget-content ui-corner-all" style="width: 100%" />' : '',
+						$prefs['feature_semantic'] == 'y' ? '<input type="text" id="tbWLinkRel" class="ui-widget-content ui-corner-all" style="width: 98%" />' : '',
 						'{"open": function () { dialogInternalLinkOpen(area_id); },
 						"buttons": { "Cancel": function() { dialogSharedClose(area_id,this); },'.
 									'"Insert": function() { dialogInternalLinkInsert(area_id,this); }}}'
@@ -940,11 +969,11 @@ class ToolbarDialog extends Toolbar
 			$icon = tra('pics/icons/world_link.png');
 			$list = array('External Link',
 						'<label for="tbLinkDesc">Show this text</label>',
-						'<input type="text" id="tbLinkDesc" class="ui-widget-content ui-corner-all" style="width: 100%" />',
+						'<input type="text" id="tbLinkDesc" class="ui-widget-content ui-corner-all" style="width: 98%" />',
 						'<label for="tbLinkURL">link to this URL</label>',
-						'<input type="text" id="tbLinkURL" class="ui-widget-content ui-corner-all" style="width: 100%" />',
+						'<input type="text" id="tbLinkURL" class="ui-widget-content ui-corner-all" style="width: 98%" />',
 						'<label for="tbLinkRel">Relation:</label>',
-						'<input type="text" id="tbLinkRel" class="ui-widget-content ui-corner-all" style="width: 100%" />',
+						'<input type="text" id="tbLinkRel" class="ui-widget-content ui-corner-all" style="width: 98%" />',
 						$prefs['cachepages'] == 'y' ? '<br /><label for="tbLinkNoCache" style="display:inline;">No cache:</label>' : '',
 						$prefs['cachepages'] == 'y' ? '<input type="checkbox" id="tbLinkNoCache" class="ui-widget-content ui-corner-all" />' : '',
 						'{"width": 300, "open": function () { dialogExternalLinkOpen( area_id ) },
@@ -1090,24 +1119,26 @@ class ToolbarDialog extends Toolbar
 			$headerlib->add_js( "window.dialogData[$this->index] = " . json_encode($this->list) . ";", 1 + $this->index );
 			$label = addcslashes($this->label, "'");
 			$headerlib->add_jq_onready(<<< JS
-window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
-window.CKEDITOR.plugins.add( '{$this->name}', {
-	init : function( editor ) {
-		var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
-			modes: { wysiwyg:1 },
-			exec: function(elem, editor, data) {
-				{$this->getSyntax( $areaId )};
-			},
-			canUndo: false
-		}));
-		editor.ui.addButton( '{$this->name}', {
-			label : '{$label}',
-			command : '{$this->name}',
-			icon: editor.config._TikiRoot + '{$this->icon}'
-		});
-
-	}
-});
+if (typeof window.CKEDITOR !== "undefined") {
+	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
+	window.CKEDITOR.plugins.add( '{$this->name}', {
+		init : function( editor ) {
+			var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
+				modes: { wysiwyg:1 },
+				exec: function(elem, editor, data) {
+					{$this->getSyntax( $areaId )};
+				},
+				canUndo: false
+			}));
+			editor.ui.addButton( '{$this->name}', {
+				label : '{$label}',
+				command : '{$this->name}',
+				icon: editor.config._TikiRoot + '{$this->icon}'
+			});
+	
+		}
+	});
+}
 JS
 , 10);		
 			
@@ -1189,25 +1220,27 @@ class ToolbarHelptool extends Toolbar
 		global $headerlib;
 		$label = addcslashes($this->label, "'");
 		$headerlib->add_jq_onready(<<< JS
-window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
-window.CKEDITOR.plugins.add( '{$name}', {
-	init : function( editor ) {
-		var command = editor.addCommand( '{$name}', new window.CKEDITOR.command( editor , {
-			modes: { wysiwyg:1 },
-			exec: function(elem, editor, data) {
-				openEditHelp();
-				return false;
-			},
-			canUndo: false
-		}));
-		editor.ui.addButton( '{$name}', {
-			label : '{$label}',
-			command : '{$name}',
-			icon: editor.config._TikiRoot + '{$this->icon}'
-		});
-
-	}
-});
+if (typeof window.CKEDITOR !== "undefined") {
+	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
+	window.CKEDITOR.plugins.add( '{$name}', {
+		init : function( editor ) {
+			var command = editor.addCommand( '{$name}', new window.CKEDITOR.command( editor , {
+				modes: { wysiwyg:1 },
+				exec: function(elem, editor, data) {
+					openEditHelp();
+					return false;
+				},
+				canUndo: false
+			}));
+			editor.ui.addButton( '{$name}', {
+				label : '{$label}',
+				command : '{$name}',
+				icon: editor.config._TikiRoot + '{$this->icon}'
+			});
+	
+		}
+	});
+}
 JS
 , 10);
 		return $name;
@@ -1222,7 +1255,7 @@ class ToolbarFileGallery extends Toolbar
 	{
 		$this->setLabel( tra('Choose or upload images') )
 			->setIcon( tra('pics/icons/pictures.png') )
-				->setWysiwygToken( 'tikiimage' )
+				->setWysiwygToken( '' )	/* disabling this by default for wysiwyg - make a custom tool with tikiimage as the wysiwyg token to override */
 					->setType('FileGallery')
 						->addRequiredPreference('feature_filegals_manager');
 	} // }}}
@@ -1322,34 +1355,11 @@ JS
 			$this->name = $this->wysiwyg;	// temp
 			$exec_js = str_replace('&amp;', '&', $this->getSyntax( $areaId ));	// odd?
 			
-			global $headerlib;
-			$label = addcslashes($this->label, "'");
-			$headerlib->add_jq_onready(<<< JS
-window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
-window.CKEDITOR.plugins.add( '{$this->name}', {
-	init : function( editor ) {
-		var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
-			modes: { wysiwyg:1 },
-			exec: function(elem, editor, data) {
-				{$exec_js}
-			},
-			canUndo: false
-		}));
-		editor.ui.addButton( '{$this->name}', {
-			label : '{$label}',
-			command : '{$this->name}',
-			icon: editor.config._TikiRoot + '{$this->icon}'
-		});
-
-	}
-});
-JS
-, 10);		
-			
+			$this->setupCKEditorTool($exec_js, $this->name, $this->label, $this->icon);
 		}
 		return $this->wysiwyg;
 	} // }}}
-	
+
 	function isAccessible() // {{{
 	{
 		return parent::isAccessible() && ! isset($_REQUEST['zoom']);
@@ -1384,24 +1394,26 @@ class ToolbarSwitchEditor extends Toolbar
 			global $headerlib;
 			$label = addcslashes($this->label, "'");
 			$headerlib->add_jq_onready(<<< JS
-window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
-window.CKEDITOR.plugins.add( '{$this->name}', {
-	init : function( editor ) {
-		var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
-			modes: { wysiwyg:1 },
-			exec: function(elem, editor, data) {
-				switchEditor('wiki', $('#$areaId').parents('form')[0]);
-			},
-			canUndo: false
-		}));
-		editor.ui.addButton( '{$this->name}', {
-			label : '{$label}',
-			command : '{$this->name}',
-			icon: editor.config._TikiRoot + '{$this->icon}'
-		});
-
-	}
-});
+if (typeof window.CKEDITOR !== "undefined") {
+	window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
+	window.CKEDITOR.plugins.add( '{$this->name}', {
+		init : function( editor ) {
+			var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
+				modes: { wysiwyg:1 },
+				exec: function(elem, editor, data) {
+					switchEditor('wiki', $('#$areaId').parents('form')[0]);
+				},
+				canUndo: false
+			}));
+			editor.ui.addButton( '{$this->name}', {
+				label : '{$label}',
+				command : '{$this->name}',
+				icon: editor.config._TikiRoot + '{$this->icon}'
+			});
+	
+		}
+	});
+}
 JS
 , 10);		
 			
@@ -1441,7 +1453,7 @@ class ToolbarWikiplugin extends Toolbar
 				$tag = new self;
 				$tag->setLabel( str_ireplace('wikiplugin_', '', $info['name'] ))
 					->setIcon( $icon )
-					->setWysiwygToken( self::getToken( $name ) )
+					->setWysiwygToken( $info['name'] )
 					->setPluginName( $name )
 					->setType('Wikiplugin');
 
@@ -1481,6 +1493,25 @@ class ToolbarWikiplugin extends Toolbar
 		return $this->getSelfLink('popup_plugin_form(\'' . $areaId . '\',\'' . $this->pluginName . '\')',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-plugin');
 	} // }}}
+	function getWysiwygToken( $areaId ) // {{{
+	{
+		if (!empty($this->wysiwyg)) {
+			if ($this->wysiwyg === 'Image') {	// cke's own image tool overrides this so set it up to use our filegal
+				global $headerlib,  $smarty, $prefs;
+				// can't do upload the cke way yet
+				//require_once $smarty->_get_plugin_filepath('function','filegal_manager_url');
+				//$url =  smarty_function_filegal_manager_url(array('area_id'=> 'fgal_picker'), $smarty);
+				//$headerlib->add_js('CKEDITOR.config.filebrowserUploadUrl = "'.$url.'"', 5);
+				$url = 'tiki-list_file_gallery.php?galleryId='.$prefs['home_file_gallery'].'&filegals_manager=fgal_picker';
+				$headerlib->add_js('if (typeof window.CKEDITOR !== "undefined") {window.CKEDITOR.config.filebrowserBrowseUrl = "'.$url.'"}', 5);
+			} else {
+				$js = "popup_plugin_form('{$areaId}','{$this->pluginName}');";
+				$this->setupCKEditorTool($js, $this->wysiwyg, $this->label, $this->icon);
+			}
+		}
+		return $this->wysiwyg;
+	} // }}}
+	
 }
 
 class ToolbarSheet extends Toolbar

@@ -74,6 +74,7 @@
 				{preference name=groupTracker}
 				{preference name=email_due}
 				{preference name=unsuccessful_logins}
+				{preference name=unsuccessful_logins_invalid}
 				{preference name=eponymousGroups}
 				{preference name=desactive_login_autocomplete}
 				{preference name=feature_challenge}
@@ -127,6 +128,10 @@
 				{preference name=feature_crypt_passwords}
 				{preference name=change_password}
 				{preference name=pass_chr_num}
+				{preference name=pass_chr_case}
+				{preference name=pass_chr_special}
+				{preference name=pass_repetition}
+				{preference name=pass_diff_username}
 				{preference name=min_pass_length}
 				{preference name=pass_due}
 			</fieldset>

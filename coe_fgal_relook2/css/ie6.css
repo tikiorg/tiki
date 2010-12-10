@@ -3,8 +3,8 @@
 	font-size: 1em;
 }
 
-span.button a:link,
-span.button a:visited {
+.button a:link,
+.button a:visited {
 	text-decoration: none;
 	border: 0;
 	padding: 0 4px;
@@ -24,7 +24,7 @@ span.button a:visited {
 	font-size: 11px;
 }
 
-div.upspantext {
+.upspantext {
 	position: absolute !important;
 }
 
@@ -87,14 +87,14 @@ img.flipmodimage {
 	padding-left: 1em;
 }
 
-table.normal, 
-table.admin {
+.normal, 
+.admin {
 	width: 97%;
 	font-size: 11px;
 }
 
-table.normal td,
-table.admin td {
+.normal td,
+.admin td {
 	font-size: 11px;
 }
 
@@ -120,7 +120,7 @@ table.admin td {
 	width: 90%;
 }
 
-div#tikihelp {
+#tikihelp {
 	position: absolute;
 }
 
@@ -129,7 +129,7 @@ div#tikihelp {
 .post .postbody {}
 .postbody table {}
 
-table.galtable {
+.galtable {
 	width: 97%;
 }
 

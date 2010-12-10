@@ -122,7 +122,7 @@ function userErrorHandler($errno, $errmsg, $filename, $linenum, $vars) {
 	$msg.= "<pre/><br />";
 	if ($tiki_p_map_edit == 'y') {
 		$msg.= '<a class="link" href="tiki-map_edit.php?mapfile=' . $mapfile . '&mode=editing">';
-		$msg.= '<img src="pics/icons/wrench.png" border="0" alt="' . tra("edit") . '" title="' . tra("edit") . '" width="16" height="16" />';
+		$msg.= '<img src="pics/icons/wrench.png" alt="' . tra("edit") . '" title="' . tra("edit") . '" width="16" height="16" />';
 		$msg.= '</a>';
 	}
 	$smarty->assign('msg', $msg);

@@ -20,6 +20,18 @@ require_once( 'tiki-filter-base.php' );
 require_once ( 'lib/smarty/libs/Smarty.class.php');
 require_once ('installer/installlib.php');
 
+class InstallerDatabaseErrorHandler implements TikiDb_ErrorHandler
+{
+	function handle(TikiDb $db, $query, $values, $result) {
+	}
+}
+
+include_once 'lib/adodb/adodb.inc.php';
+$dbTiki = ADONewConnection($db_tiki);
+$db = new TikiDb_Adodb($dbTiki);
+$db->setServerType($db_tiki);
+$db->setErrorHandler(new InstallerDatabaseErrorHandler);
+TikiDb::set($db);
 $dbTiki = false;
 $commands = array();
 @ini_set('magic_quotes_runtime',0);
@@ -98,9 +110,9 @@ function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tik
 		$filetowrite .= "// If you experience text encoding issues after updating (e.g. apostrophes etc showing up as strange characters) \n";
 		$filetowrite .= "// \$client_charset='latin1';\n";
 		$filetowrite .= "// \$client_charset='utf8';\n";
-		$filetowrite .= "// See http://tiki.org/ReleaseNotes5.0#Known_Issues and http://doc.tiki.org/UTF-8 for more info\n\n";
+		$filetowrite .= "// See http://tiki.org/ReleaseNotes5.0#Known_Issues and http://doc.tiki.org/Understanding+Encoding for more info\n\n";
 		$filetowrite .= "// If your php installation does not not have pdo extension\n";
-		$filetowrite .= "// \$api_tiki == 'adodb';\n";
+		$filetowrite .= "// \$api_tiki = 'adodb';\n";
 		fwrite($fw, $filetowrite);
 		fclose($fw);
 	}
@@ -700,7 +712,7 @@ if ($dbcon) {
 	if ($install_step == '6' && $has_tiki_db) {
 		update_preferences($dbTiki, $prefs);
 		$smarty->assign('admin_email', get_admin_email($dbTiki));
-		$smarty->assign('upgradefix', (empty($dbversion_tiki) || $dbversion_tiki[0] < 3) ? 'y' : 'n');
+		$smarty->assign('upgradefix', (empty($dbversion_tiki) || $dbversion_tiki[0] < 4) ? 'y' : 'n');
 	}
 	$smarty->assign('tikidb_is20',  has_tiki_db_20());
 }

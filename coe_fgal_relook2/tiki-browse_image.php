@@ -102,7 +102,7 @@ if (isset($_REQUEST["move_image"])) {
 	check_ticket('browse-image');
 	if ($tiki_p_admin_galleries != 'y' && (!$user || $user != $gal_info["user"])) {
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot move images from this gallery"));
+		$smarty->assign('msg', tra("You do not have permission to move images from this gallery"));
 		$smarty->display("error.tpl");
 		die;
 	}

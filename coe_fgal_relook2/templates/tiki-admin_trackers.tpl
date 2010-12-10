@@ -535,7 +535,7 @@
 						<legend>{tr}Notification{/tr}</legend>
 						{tr}Warn creator of an upcoming status change{/tr}{html_select_duration prefix='todo_notif'}{tr}before{/tr}<br />
 						<label>{tr}Mail subject text{/tr}<input type="text" name="todo_subject" /></label><br />
-						<label>{tr}Mail body ressource{/tr}<input type="text" name="todo_body" /></label><em>{tr}wiki:pageName for a wiki page or tplName.tpl for a template{/tr}</em>
+						<label>{tr}Mail body ressource{/tr}<input type="text" name="todo_body" /></label><em><br />{tr}wiki:pageName for a wiki page or tplName.tpl for a template{/tr}</em>
 					</fieldset>
 				</td>
 			</tr>
@@ -594,6 +594,9 @@ categories = {$catsdump}
 	</div>
 	
 	{if $trackerId}
+		<h2>Export for profile</h2>
+		{button href="tiki-admin_trackers.php?trackerId=$trackerId&exportTrackerProfile=y" _text="{tr}Export tracker{/tr}"}
+
 		{include file='tiki-export_tracker.tpl'}
 
 		<h2>{tr}Import CSV data{/tr}</h2>

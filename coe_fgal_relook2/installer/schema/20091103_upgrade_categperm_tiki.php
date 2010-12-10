@@ -71,7 +71,7 @@ $view[] = 'tiki_p_view_html_pages';
 $view[] = 'tiki_p_view_category';
 
 $query = 'SELECT * FROM `users_objectpermissions` WHERE `permName` = ?';
-$insert = 'INSERT into `users_objectpermissions` (`permName`, `groupName`, `objectType`, `objectId`) values (?,?,?,?)';
+$insert = 'INSERT IGNORE into `users_objectpermissions` (`permName`, `groupName`, `objectType`, `objectId`) values (?,?,?,?)';
 $test = 'SELECT COUNT(*) FROM `users_objectpermissions` WHERE `permName` = ? AND `groupName`=? AND `objectType`=? AND `objectId`=?';
 
 // replace the perm tiki_p_view_categorized with the adequate set of perms for the objects
@@ -95,18 +95,18 @@ while ($res = $result->fetchRow() ) {
 }
 
 //rename tiki_p_view_categories to tiki_p_view_category
-$query = 'UPDATE  `users_grouppermissions` SET `permName`=? WHERE `permName`=?';
+$query = 'UPDATE IGNORE  `users_grouppermissions` SET `permName`=? WHERE `permName`=?';
 $installer->query($query, array('tiki_p_view_category', 'tiki_p_view_categories'));
-$query = 'UPDATE  `users_objectpermissions` SET `permName`=? WHERE `permName`=?';
+$query = 'UPDATE IGNORE  `users_objectpermissions` SET `permName`=? WHERE `permName`=?';
 $installer->query($query, array('tiki_p_view_category', 'tiki_p_view_categories'));
-$query = 'UPDATE  `tiki_menu_options` SET `perm`=? WHERE `perm`=?';
+$query = 'UPDATE IGNORE  `tiki_menu_options` SET `perm`=? WHERE `perm`=?';
 $installer->query($query, array('tiki_p_view_category', 'tiki_p_view_categories'));
 
-$query = 'UPDATE  `users_grouppermissions` SET `permName`=? WHERE `permName`=?';
+$query = 'UPDATE IGNORE  `users_grouppermissions` SET `permName`=? WHERE `permName`=?';
 $installer->query($query, array('tiki_p_modify_object_categories', 'tiki_p_edit_categorized'));
-$query = 'UPDATE  `users_objectpermissions` SET `permName`=? WHERE `permName`=?';
+$query = 'UPDATE IGNORE  `users_objectpermissions` SET `permName`=? WHERE `permName`=?';
 $installer->query($query, array('tiki_p_modify_object_categories', 'tiki_p_edit_categorized'));
-$query = 'UPDATE  `tiki_menu_options` SET `perm`=? WHERE `perm`=?';
+$query = 'UPDATE IGNORE  `tiki_menu_options` SET `perm`=? WHERE `perm`=?';
 $installer->query($query, array('tiki_p_modify_object_categories', 'tiki_p_edit_categorized'));
 
 // FINALLY: remove tiki_p_view_categorized and tiki_p_edit_categorized

@@ -8,14 +8,16 @@
 function wikiplugin_archivebuilder_info() {
 	return array(
 		'name' => tra('Archive Builder'),
+		'documentation' => tra('PluginArchiveBuilder'),
 		'description' => tra('Builds a zip archive containing the specified data from tikiwiki.'),
 		'prefs' => array( 'wikiplugin_archivebuilder' ),
 		'body' => tra('Description of the archive content. Multiple handlers are available for content types. One per line. Ex: page-as-pdf:some-folder/foo.pdf:HomePage , tracker-attachments:target-folder/:3435'),
 		'params' => array(
 			'name' => array(
-				'name' => tra('Archive name'),
+				'name' => tra('Archive Name'),
 				'description' => tra('Upon download, the name of the file that will be provided.'),
 				'required' => true,
+				'default' => ''
 			),
 		),
 	);
@@ -50,7 +52,7 @@ function wikiplugin_archivebuilder( $data, $params ) {
 					$files[] = $name;
 				}
 			} else {
-				return tra('Incorrect param').' '.$handler;
+				return tra('Incorrect parameter').' '.$handler;
 			}
 		}
 

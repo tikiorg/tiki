@@ -48,13 +48,7 @@
 	
 	{if $use_find eq 'y'}
 		<div class="blogtools">
-			<form action="tiki-view_blog.php" method="get">
-				<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-				<input type="hidden" name="blogId" value="{$blogId|escape}" />
-				{tr}Find:{/tr} 
-				<input type="text" name="find" value="{$find|escape}" /> 
-				<input type="submit" name="search" value="{tr}Find{/tr}" />
-			</form>
+			{include file='find.tpl'}
 		</div>
 	{/if}
 {/if}

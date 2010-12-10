@@ -37,7 +37,7 @@ function auto_save_log($id, $referer = '', $action = '') {
  */
 function auto_save($id, $data, $referer = '') {
 //	auto_save_log($id, $referer, 'auto_save');
-	$result = file_put_contents(auto_save_name($id, $referer), rawurldecode($data));
+	$result = file_put_contents(auto_save_name($id, $referer), $data);
 	return $result;
 }
 

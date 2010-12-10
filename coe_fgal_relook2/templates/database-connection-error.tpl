@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -105,7 +104,7 @@
 {* Can be restored when we'll have a new http://branding.tiki.org/Badge
 			<p align="center">
 				<a target="_blank" href="http://www.tiki.org" title="Tiki Wiki CMS Groupware">
-				<img src="img/tiki/tikibutton2.png" alt="Tiki Wiki CMS Groupware" border="0" height="31" width="80"/>
+				<img src="img/tiki/tikibutton2.png" alt="Tiki Wiki CMS Groupware" height="31" width="80"/>
 				</a>
 			</p>
 *}

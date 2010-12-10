@@ -21,17 +21,13 @@ body {
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
 #header {text-align: left}
-div#middle {text-align: left}
+#middle {text-align: left}
 
 #c1c2 {
 	text-align: left;
 }
 	
 #col1 {background: url(snow/flakesptn3.jpg)}
-
-body.fullscreen #col1 {
-	margin-left: 30px !important;
-	margin-right: 30px !important}
 
 #c1c2 #wrapper #col1.marginleft {margin-left: 230px}
 #c1c2 #wrapper #col1.marginright {margin-right: 230px}
@@ -76,7 +72,9 @@ dt {font-weight: bold}
 
 h1, h2, h3, h4, h5 {
 	font-weight: bold;
-	color: #6c7b8c}
+	color: #6c7b8c;
+	line-height: 1.1;
+}
 	
 h1 {font-size: 1.7em}
 
@@ -110,10 +108,10 @@ form {color: black}
 legend {color: #000}
 
 
-span.button a,
-span.button a:visited,
+.button a,
+.button a:visited,
 button,
-span.button input,
+.button input,
 .submitbutton,
 .calbuttonBox a {
 	background: url(snow/pagetitle-bg.jpg) repeat-x;
@@ -134,9 +132,9 @@ input[type="submit"] {
 	padding: 2px 4px;
 /*	border: 1px solid #788596;*/}
 
-span.button a:hover,
+.button a:hover,
 button a:hover,
-span.button input:hover,
+.button input:hover,
 .submitbutton:hover,
 .calbuttonBox a:hover
 .button input:hover,
@@ -209,7 +207,7 @@ ul {
 #sitead.floatright {padding-right: 100px}
 #sitead.floatleft {padding-left: 100px}
 
-div#siteloginbar {
+#siteloginbar {
 	bottom: 2px;
 	right: 6px;
 	font-size: 95%}
@@ -423,7 +421,7 @@ div#siteloginbar {
 .box .mdkitem a {/*vertical menu subitems */
 	padding: 4px 2px 2px 8px}
 
-.box .mdksubframe div.mdkitem {
+.box .mdksubframe .mdkitem {
 	margin-left: 0;
 	padding-left: 0}
 
@@ -501,7 +499,8 @@ h3.box-title {
 	color: #393e51;
 	font-size: 120%;
 	overflow: hidden;
-	border-bottom: 1px solid #6c7b8c;	
+	border-bottom: 1px solid #6c7b8c;
+	line-height: normal;	
 }	
 	
 #col2 h3.box-title,
@@ -556,18 +555,18 @@ h3.box-title {
 	background: url(snow/boxbtm.jpg) no-repeat;
 	height: 54px}
 
-.halffloat div.box,
-.wikitext .halffloat div.box {
+.halffloat .box,
+.wikitext .halffloat .box {
 	width: 48%;
  }
 
-.thirdfloat div.box,
-.wikitext .thirdfloat div.box {
+.thirdfloat .box,
+.wikitext .thirdfloat .box {
 	width: 33%;
 }
 
-.quarterfloat div.box,
-.wikitext .quarterfloat div.box {
+.quarterfloat .box,
+.wikitext .quarterfloat .box {
 	width: 24%;
 }
 
@@ -585,28 +584,28 @@ h3.box-title {
 .rbox-title,
 .rbox-data {background: #e7f2f4}
 
-div.simplebox {
+.simplebox {
 	overflow: hidden;
 	border: 2px solid #a1adc7;
 	padding: 2px}
 	
-.quarterfloat div.box,
-.wikitext .quarterfloat div.box {
+.quarterfloat .box,
+.wikitext .quarterfloat .box {
 	width: 21.5%;	
 }
 
-.thirdfloat div.box,
-.wikitext .thirdfloat div.box {
+.thirdfloat .box,
+.wikitext .thirdfloat .box {
 	width: 30%;
 }
 
 /***** Tables, Tabs *****/
 /** Tables **/
 
-table.normal, 
-table.admin {border: solid 1px #909090}
+.normal, 
+.admin {border: solid 1px #909090}
 
-#tiki-center > table.normal {
+#tiki-center > .normal {
 	width: 98%;
 	margin-left: 6px}
 
@@ -627,7 +626,6 @@ tr.even {
 	border-collapse: collapse;
 	color: #393e51}
 	
-td.normal,
 .wikitable td,
 td.odd,
 td.even {
@@ -638,7 +636,7 @@ td.even {
 
 th,
 td.heading,
-table.normal td.heading,
+.normal td.heading,
 tr.diffheader,
 .caltable .days {
 	font-size: 1em;
@@ -650,9 +648,9 @@ tr.diffheader,
 	vertical-align: top}
 
 td.heading,
-td.bloglistheading {text-align: center}
+.bloglistheading {text-align: center}
 
-td.form {
+.form {
 	padding: 0.2em;
 	background: inherit;
 	color: #000}
@@ -709,7 +707,7 @@ td.form {
 	border-bottom: 1px solid #ddd !important;
 }*/
 
-table.admin div#content1 div.tabcontent div.cbox {background: transparent}
+.admin #content1 .tabcontent .cbox {background: transparent}
 
 
 
@@ -743,7 +741,7 @@ a.pagetitle:hover {
 * html h1 a.pagetitle,
 * html h1 a {margin-top: 6px}
 
-div.wikitopline {
+.wikitopline {
 	display: block;
 	position: relative;
 	/*top: -56px;
@@ -793,17 +791,17 @@ div.wikitopline {
 	letter-spacing: 1px;
 	background: url(snow/flakesptn.jpg) repeat-x}
 
-table.wikitable {
+.wikitable {
 	border: 1px solid #a9a9a9;
 	border-collapse: collapse}
  
-td.wikicell {
+.wikicell {
 	padding: 3px;
 	border: 1px solid #999;
 	border-collapse: collapse}
 
 .editdate {padding-bottom: 5px}
-div#page-bar {margin-top: 0}
+#page-bar {margin-top: 0}
 
 ul.floatleft {
 	display: block;
@@ -819,8 +817,8 @@ ul.floatleft li {
 
 .editdate ul.floatleft {margin-top: 8px}
  
-span.button2,
-div.button2,
+.button2,
+.button2,
 .button3 {
 	display: inline-block;
 	margin-right: 5px}
@@ -830,8 +828,8 @@ div.button2,
 	font-weight: normal}
 
 .linkbut:hover {}
-div.cache {}
-div.cachedpage {}
+.cache {}
+.cachedpage {}
 .wikicache, .wikicache:visited {}
 .wikicache:hover {}
 .wiki {}
@@ -841,19 +839,19 @@ div.cachedpage {}
 #wikihelp-tab table td {padding: 2px}
 textarea.wikiedit {}
 p.editdate {}
-div.wiki-edithelp {}
+.wiki-edithelp {}
 img.externallink {}
 
 /* Needed esp. for light-on-dark theme */
-div.quicktag {}
-div.quicktag img,
+.quicktag {}
+.quicktag img,
 #wikihelp-tab td img {}
-div#helptool {}
+#helptool {}
 
 /* Wiki plugins */
 
 /* Code plugin  */
-div.code {
+.code {
 	font-size: 90%;
 	padding: 3px;
 	border: 1px dashed #ccc;
@@ -883,17 +881,17 @@ div.code {
 	font-weight: bold}
 
 /* Quote plugin */
-div.quoteheader {
+.quoteheader {
 	margin-left: 20px}
 
-div.quotebody {
+.quotebody {
 	font-style: italic}
 
-table.wikiplugin-split {
+.wikiplugin-split {
 	border: 0}
 
 /** Wiki tocs **/
-div.tocnav {
+.tocnav {
 	background: #EBEBEB;
 	padding: 3px;
 	margin-bottom: 4px;
@@ -905,13 +903,13 @@ div.tocnav {
 .fancytoclevel {}
 li.toclevel {}
 
-ul.toc {
+.toc {
 	padding-left: 2em;
 	border-top: 1px dotted #999;
 	border-bottom: 1px dotted #999;
 	margin-bottom: 4px}
 
-ul.toc * {border: 0}
+.toc * {border: 0}
 
 
 /***** Articles ****/
@@ -921,15 +919,15 @@ body.tiki_cms #tiki-center > h1 {
 	font-size: 1.4em;
 	color: black}
 
-div.article {
+.article {
 	background: url(snow/pagetitle-bg.jpg) repeat-x;
 	margin-bottom: 40px;	}
 
-div.articletopline {
+.articletopline {
 	font-size: 90%;
 	font-style: italic}
 
-div.articletitle {
+.articletitle {
 	background: url(snow/pagetitle-bg.jpg) repeat-x;
 	color: #393e51;
 	margin-left: -3px;
@@ -937,7 +935,7 @@ div.articletitle {
 	text-indent: 18px;
 	min-height: 48px}
  
-div.articletitle h2 {
+.articletitle h2 {
 	display: block;
 	background: url(snow/pagetitle-bullet.gif) no-repeat;
 	background-position: 4px 0;
@@ -949,24 +947,24 @@ div.articletitle h2 {
 	
 /*
 
-html > body div.articletitle {
+html > body .articletitle {
 	text-indent: 38px}*/
 
-span.titleb {
+.titleb {
 	float: right;
 	font-size: 1.0em;
 	font-style: italic}
 
-div.articlesubtitle {
+.articlesubtitle {
 	font-size: 0.9em}
 
-div.articleheading {
+.articleheading {
 	margin-top: 6px;
 	padding: 20px 5px 6px}
 /* From han.css - Check ?? */.articleheading table {
 	width: auto}
 
-div.articleheadingtext {}
+.articleheadingtext {}
 
 img.topicimage,
 img.articleimagenofloat,
@@ -987,23 +985,23 @@ img.articleimage {
 	padding: 2px 0;
 	margin-bottom: 10px}
 
-div.articletrailer {}
+.articletrailer {}
 
-div.articletrailer .wikitopline {float: right} 
+.articletrailer .wikitopline {float: right} 
  
-div.articlebody {
+.articlebody {
 	margin-top: 6px;
 	padding: 20px 5px 6px
 }
  
-div.articlesource {
+.articlesource {
 	margin-top: 5px;
 	font-style: italic;
 	font-size: 90%}
 
 
 /***** Blogs *****/
-div.blogtitle {
+.blogtitle {
 	font-size: 1.3em;
 	font-weight: bold;
 	padding: 3px;
@@ -1011,7 +1009,7 @@ div.blogtitle {
 	font-weight: bold;
 	line-height: 80%}
 
-div.bloginfo {
+.bloginfo {
 	text-align: center;
 	padding: 3px;
 	line-height: 150%;
@@ -1021,7 +1019,7 @@ a.blogt:hover {
 	color: #FFF;
 	border-bottom: 1px dotted #FFF}
 
-div.posthead {background: url(snow/pagetitle-bg.jpg) repeat-x;
+.posthead {background: url(snow/pagetitle-bg.jpg) repeat-x;
 	min-height: 35px;
 	margin-top: 0;
 	margin-bottom: 0;
@@ -1041,7 +1039,7 @@ div.posthead {background: url(snow/pagetitle-bg.jpg) repeat-x;
 	font-weight: bolder;
 	padding-left: 6px}
 
-div.posthead h3 {
+.posthead h3 {
 	background: url(snow/pagetitle-bullet-sm.gif) no-repeat;
 	background-position: 4px 8px;
 	color: #393e51;
@@ -1050,13 +1048,13 @@ div.posthead h3 {
 	padding-top: 8px;
 	text-indent: 29px}
 
-div.postbody {
+.postbody {
 	margin-right: 8px;
 	margin-bottom: 1em}
 
 /***** Forums *****/
 
-table.commentinfo {background: #fff}
+.commentinfo {background: #fff}
 
 .post .postbody {border: solid 1px #6a6a6a}
 
@@ -1146,7 +1144,7 @@ table.commentinfo {background: #fff}
 input#comments-title {font-size: 1.1em; width: 300px}
 .subcomment {margin-left: 10px}
 
-div.commentsedithelp {
+.commentsedithelp {
 	background: #ffcfcf;
 	color: black;
 	border: 1px solid #ff0000;
@@ -1163,12 +1161,12 @@ div.commentsedithelp {
 /***** Quizzes *****/
 
 /***** Shoutbox *****/
-div.shoutboxmsg {
+.shoutboxmsg {
 	margin-bottom: 0;
 	padding: 4px;
 	padding-bottom: 1px}
 
-div.shoutboxmodmsg {
+.shoutboxmodmsg {
 	font-size: .95em;
 	margin: 0 5px 4px 5px;
 	padding-top: 5px;
@@ -1295,7 +1293,7 @@ Caltrack a:visited {color: #00BD02}
 #caltable td {padding: 0}
 
 #caltable .calfocuson,
-.box-data td.fc a.today,
+.box-data .fc a.today,
 .box-data td a.today {
 	background: #cde4f3;
 	border: 1px solid #d3e6f4;
@@ -1331,7 +1329,7 @@ Caltrack a:visited {color: #00BD02}
 	line-height: 1.3;
 }
 
-div#calscreen td.calfocuson {
+#calscreen .calfocuson {
 	background: #cde4f3;
 }
 

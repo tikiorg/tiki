@@ -17,22 +17,23 @@ function wikiplugin_jq_help() {
 
 function wikiplugin_jq_info() {
 	return array(
-		'name' => tra('JQuery'),
-		'documentation' => 'PluginJQ',
-		'description' => tra('Insert JQuery javascript code. Requires feature_jquery').tra(' (experimental - may change in future versions)'),
-		'prefs' => array( 'feature_jquery', 'wikiplugin_jq' ),
-		'body' => tra('JQuery Code'),
+		'name' => tra('jQuery'),
+		'documentation' => tra('PluginJQ'),
+		'description' => tra('Inserts JavaScript code. By default this is only executed after jQuery determines that the DOM is fully loaded.'),
+		'prefs' => array( 'wikiplugin_jq' ),
+		'body' => tra('JavaScript code'),
 		'validate' => 'all',
+		'filter' => 'none',
 		'params' => array(
 			'notonready' => array(
 				'required' => false,
-				'name' => tra('NotOnReady'),
+				'name' => tra('Not On Ready'),
 				'description' => tra("Do not execute on document ready (execute inline)"),
 			),
 			'nojquery' => array(
 				'required' => false,
-				'name' => tra('NoJQuery'),
-				'description' => tra('Optional markup for when feature_jquery is off'),
+				'name' => tra('No JavaScript'),
+				'description' => tra('Optional markup for when JavaScript is off'),
 			)
 		)
 	);
@@ -43,7 +44,7 @@ function wikiplugin_jq($data, $params) {
 	extract($params, EXTR_SKIP);
 	
 	$nojquery = isset($nojquery) ? $nojquery : tr('<!-- jq smarty plugin inactive: feature_jquery off -->');
-	if ($prefs['feature_jquery'] != 'y') { return $nojquery; }
+	if ($prefs['javascript_enabled'] != 'y') { return $nojquery; }
 	$notonready = isset($notonready) ? $notonready : false;
 	
 	if (!$notonready) {		

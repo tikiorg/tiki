@@ -15,7 +15,7 @@ function wikiplugin_redirect_help() {
 function wikiplugin_redirect_info() {
 	return array(
 		'name' => tra('Redirect'),
-		'documentation' => 'PluginRedirect',			
+		'documentation' => tra('PluginRedirect'),			
 		'description' => tra('Redirect the user to a wiki page or generic URL.'),
 		'prefs' => array( 'wikiplugin_redirect' ),
 		'validate' => 'arguments',
@@ -24,11 +24,13 @@ function wikiplugin_redirect_info() {
 				'required' => false,
 				'name' => tra('Page Name'),
 				'description' => tra('Wiki page name to redirect to.'),
+				'default' => '',
 			),
 			'url' => array(
 				'required' => false,
 				'name' => tra('URL'),
 				'description' => tra('Complete URL, internal or external.'),
+				'default' => '',
 			),
 		),
 	);

@@ -158,7 +158,16 @@ function prefs_payment_list() {
 			'dependencies' => array( 'payment_feature', 'feature_credits' ),
 			'separator' => ',',
 		),
-		
+		'payment_user_only_his_own' => array(
+			'name' => tra('User can only see his own outstanding payments'),
+			'description' => tra('Unless with administer payment permissions, a user can only see his own outstanding payments'),
+			'type' => 'flag', 
+		),
+		'payment_user_only_his_own_past' => array(
+			'name' => tra('User can only see his own past or cancelled payments'),
+			'description' => tra('Unless with administer payment permissions, a user can only see his own past or cancelled payments'),
+			'type' => 'flag',
+		), 
 	);
 }
 

@@ -23,19 +23,27 @@ function wikiplugin_catpath_help() {
 function wikiplugin_catpath_info() {
 	return array(
 		'name' => tra('Category Path'),
-		'documentation' => 'PluginCatPath',
-		'description' => tra("Insert the full category path for each category that this wiki page belongs to"),
+		'documentation' => tra('PluginCatPath'),
+		'description' => tra('Insert the full category path for each category that this wiki page belongs to'),
 		'prefs' => array( 'feature_categories', 'wikiplugin_catpath' ),
 		'params' => array(
 			'divider' => array(
 				'required' => false,
 				'name' => tra('Separator'),
 				'description' => tra('String used to separate the categories in the path. Default character is >.'),
+				'default' => '>',
 			),
 			'top' => array(
 				'required' => false,
-				'name' => tra('Display top category'),
-				'description' => tra('yes|no, default to no'),
+				'name' => tra('Display Top Category'),
+				'description' => tra('Show the top category as part of the path name (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'no',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				),
 			),
 		),
 	);

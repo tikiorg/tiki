@@ -42,6 +42,10 @@ if (isset($_REQUEST['which_date'])) {
 } else {
 	$which_date = '';
 }
+if ($tiki_p_admin == 'y' && !empty($_REQUEST['deletevote']) && !empty($_REQUEST['optionId'])) {
+	$polllib->delete_vote($_REQUEST['pollId'], $_REQUEST['user'], $_REQUEST['ip'], $_REQUEST['optionId']);
+}
+
 $pollIds = array();
 if (!empty($_REQUEST['pollId'])) {
 	$pollIds[] = $_REQUEST['pollId'];
@@ -69,36 +73,9 @@ foreach($pollIds as $pK => $pId) { // iterate each poll
 		$vote_from_date = $vote_to_date = 0;
 	}
 	$options = $polllib->list_poll_options($pId, $vote_from_date, $vote_to_date);
+	$polllib->options_percent($poll_info, $options);
 	$poll_info_arr[$pK] = $poll_info;
-	if ($vote_from_date != 0) {
-		$poll_info_arr[$pK]['votes'] = 0;
-		foreach($options as $option) {
-			$poll_info_arr[$pK]['votes']+= $option['votes'];
-		}
-	}
-	$temp_max = count($options);
-	$total = 0;
-	$isNum = true; // try to find if it is a numeric poll with a title like +1, -2, 1 point...
-	foreach($options as $i => $option) {
-		if ($option['votes'] == 0) {
-			$percent = 0;
-		} else {
-			$percent = number_format($option['votes'] * 100 / $poll_info_arr[$pK]['votes'], 2);
-			$options[$i]['percent'] = $percent;
-			if ($isNum) {
-				if (preg_match('/^([+-]?[0-9]+).*/', $option['title'], $matches)) {
-					$total+= $option['votes'] * $matches[1];
-				} else {
-					$isNum = false; // it is not a nunmeric poll
-					
-				}
-			}
-		}
-		$width = $percent * 200 / 100;
-		$options[$i]['width'] = $percent;
-	}
 	$poll_info_arr[$pK]['options'] = $options;
-	$poll_info_arr[$pK]['total'] = $total;
 } // end iterate each poll
 
 function scoresort($a, $b) {
@@ -140,6 +117,7 @@ if (isset($_REQUEST['scoresort']) || isset($_REQUEST['scoresort_desc'])) {
 	$sort_ok = usort($t_arr, 'scoresort');
 	if ($sort_ok) $poll_info_arr = $t_arr;
 }
+	
 if ($tiki_p_view_poll_voters == 'y' && !empty($_REQUEST['list']) && isset($_REQUEST['pollId'])) {
 	$smarty->assign_by_ref('list', $_REQUEST['list']);
 	if (empty($_REQUEST['sort_mode'])) {

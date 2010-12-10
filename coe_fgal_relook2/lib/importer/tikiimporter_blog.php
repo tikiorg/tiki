@@ -32,11 +32,6 @@ class TikiImporter_Blog extends TikiImporter
 {
 
 	/**
-	 * @see lib/importer/TikiImporter#importOptions
-	 */
-	static public $importOptions = array();
-
-	/**
 	 * Blog information extracted from the XML file (title, description, created etc)
 	 * @var array
 	 */
@@ -55,6 +50,18 @@ class TikiImporter_Blog extends TikiImporter
 	public $blogId = '';
 
 	/**
+	 * @see lib/importer/TikiImporter#importOptions()
+	 */
+	static public function importOptions()
+	{
+		$options = array(
+			array('name' => 'setAsHomePage', 'type' => 'checkbox', 'label' => tra('Set new blog as Tiki homepage')),
+		);
+		
+		return $options;
+	}
+	
+	/**
 	 * Main function that starts the importing proccess
 	 * 
 	 * Set the import options based on the options the user selected
@@ -65,22 +72,37 @@ class TikiImporter_Blog extends TikiImporter
 	 */
 	function import()
 	{
-		// child classes must implement those two methods
-		$this->validateInput();
+		$this->setupTiki();
+		
+		// child classes must implement this method
 		$parsedData = $this->parseData();
 
 		$importFeedback = $this->insertData($parsedData);
 
-		$this->saveAndDisplayLog("\nImportation completed!");
+		$this->saveAndDisplayLog("\n" . tra('Importation completed!'));
 
-		echo "\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>";
+		echo "\n\n<b>" . tra('<a href="tiki-importer.php">Click here</a> to finish the import process') . "</b>";
 		flush();
 
 		$_SESSION['tiki_importer_feedback'] = $importFeedback;
 		$_SESSION['tiki_importer_log'] = $this->log;
 		$_SESSION['tiki_importer_errors'] = $this->errors;
-   }
+	}
 
+	/**
+	 * This function change all the necessary Tiki preferences
+	 * in order to setup the site for the data that will be imported.
+	 * Also implemented by child classes.
+	 * 
+	 * @return void
+	 */
+	function setupTiki()
+	{
+		global $tikilib;
+		
+		$tikilib->set_preference('feature_blogs', 'y');
+	}
+	
 	/**
 	 * Insert the imported data into Tiki.
 	 * 
@@ -91,57 +113,261 @@ class TikiImporter_Blog extends TikiImporter
 	function insertData($parsedData)
 	{
 		$countData = array();
-		$countItems= 0;
 
-		$this->saveAndDisplayLog("\n" . count($parsedData) . " items (pages and posts) parsed. Starting to insert them into Tiki:\n");
+		$countPosts = count($parsedData['posts']);
+		$countPages = count($parsedData['pages']);
+		$countTags = count($parsedData['tags']);
+		$countCategories = count($parsedData['categories']);
+		
+		$this->saveAndDisplayLog("\n" . tra("Found $countPosts posts, $countPages pages, $countTags tags and $countCategories categories. Inserting them into Tiki:") . "\n");
 
-		$this->createBlog();
+		if (!empty($parsedData['posts'])) {
+			$this->createBlog();
+		}
 
 		if (!empty($parsedData)) {
-			foreach ($parsedData as $item) {
-				$methodName = 'insert' . ucfirst($item['type']);
-
-				if ($this->$methodName($item)) {
-					$countItems++;
-					$this->saveAndDisplayLog('Item ' . $item['name'] . " sucessfully imported\n");
-				} else {
-					$this->saveAndDisplayLog('Item ' . $item['name'] . " NOT imported (there was already a item with the same name)\n");
+			if (!empty($parsedData['tags'])) {
+				$this->createTags($parsedData['tags']);
+			}
+			
+			if (!empty($parsedData['categories'])) {
+				$this->createCategories($parsedData['categories']);
+			}
+			
+			$items = array_merge($parsedData['posts'], $parsedData['pages']);
+			
+			if (!empty($items)) {
+				//TODO: move this foreach to a function (insertItems())
+				foreach ($items as $item) {
+					$methodName = 'insert' . ucfirst($item['type']);
+	
+					if ($objId = $this->$methodName($item)) {
+						if ($item['type'] == 'page') {
+							$type = 'wiki page';
+							$msg = tra("Page \"${item['name']}\" sucessfully imported");
+						} else if ($item['type'] == 'post') {
+							$type = 'blog post';
+							$msg = tra("Post \"${item['name']}\" sucessfully imported");
+						}
+						
+						if (!empty($item['comments'])) {
+							$this->insertComments($objId, $type, $item['comments']);
+						}
+						
+						if (!empty($item['tags'])) {
+							$this->linkObjectWithTags($objId, $type, $item['tags']);
+						}
+						
+						if (!empty($item['categories'])) {
+							$this->linkObjectWithCategories($objId, $type, $item['categories']);
+						}
+						
+						$this->saveAndDisplayLog($msg . "\n");					
+					} else {
+						//TODO: improve feedback reporting the difference between the number of items found and items imported
+						if ($item['type'] == 'page') {
+							$countPages--;
+						} else {
+							$countPosts--;
+						}
+						
+						$this->saveAndDisplayLog(tra("Item \"${item['name']}\" NOT imported (there was already a item with the same name)") . "\n");
+					}
 				}
 			}
 		}
 
-		$countData['totalPages'] = count($parsedData);
-		$countData['importedPages'] = $countItems;
+		$countData['importedPages'] = $countPages;
+		$countData['importedPosts'] = $countPosts;
+		$countData['importedTags'] = $countTags;
+		$countData['importedCategories'] = $countCategories;
+		
 		return $countData;
 	}
 
 	/**
-	 * Create blog based on $this->blogInfo
+	 * Create blog based on $this->blogInfo and 
+	 * set new blog as Tiki home page if option selected.
 	 *
 	 * @return void
 	 */
 	function createBlog()
 	{
-		global $bloglib, $user;
+		global $bloglib, $user, $tikilib;
+		
 		//TODO: refactor replace_blog() to have default values
 		//TODO: blog user can be different that the user logged in the system
-		//TODO: interface to select blog options
-		//TODO: show error when not possible to create blog
-		$this->blogId = $bloglib->replace_blog($this->blogInfo['title'], $this->blogInfo['desc'], $user, 'y', 10, false, '', 'y', 'n', 'y', 'n', 'y', 'y', 'y', 'y', 'y', 'n', '', 'y', 5, 'n');
+		
+		if (isset($this->blogInfo['created'])) {
+			$created = $this->blogInfo['created'];
+		} else {
+			$created = $tikilib->now;
+		}
+		
+		$this->blogId = $bloglib->replace_blog($this->blogInfo['title'], $this->blogInfo['desc'], $user, 'y', 10, false,
+			'', 'y', 'n', 'y', 'n', 'y', 'y', 'y', 'y', 'y', 'n', '', 'y', 5, 'n', $created, $this->blogInfo['lastModif']);
+		
+		if (isset($_REQUEST['setAsHomePage']) && $_REQUEST['setAsHomePage'] == 'on') {
+			$tikilib->set_preference('home_blog', $this->blogId);
+			$tikilib->set_preference('tikiIndex', 'tiki-view_blog.php?blogId=' . $this->blogId);
+		}
 	}
 
+	/**
+	 * Create all existing tags for a blog. Tags here
+	 * are just created, not related yet with any object (post or page)
+	 * 
+	 * @param array $tags
+	 * @return void
+	 */
+	function createTags($tags)
+	{
+		global $freetaglib; require_once('lib/freetag/freetaglib.php');
+		foreach ($tags as $tag) {
+			$freetaglib->find_or_create_tag($tag);
+		}
+	}
+
+	/**
+	 * Link an object with its tags
+	 * 
+	 * @param int|string $objId
+	 * @param string $type
+	 * @param array $tags
+	 * @return void
+	 */
+	function linkObjectWithTags($objId, $type, $tags)
+	{
+		global $freetaglib; require_once('lib/freetag/freetaglib.php');
+		global $user;
+		
+		$freetaglib->_tag_object_array($user, $objId, $type, $tags);
+	}
+	
+	/**
+	 * Create all existing categories for a blog.
+	 * 
+	 * @param array $categories
+	 * @return void
+	 */
+	function createCategories($categories)
+	{
+		global $categlib; require_once('lib/categories/categlib.php');
+		
+		foreach ($categories as $categ) {
+			if (!empty($categ['parent'])) {
+				$categ['parentId'] = $categlib->get_category_id($categ['parent']); 
+			} else {
+				$categ['parentId'] = 0;
+			}
+			
+			$categlib->add_category($categ['parentId'], $categ['name'], $categ['description']);
+		}
+	}
+	
+	/**
+	 * Link an object with its categories
+	 * 
+	 * @param int|string $objId
+	 * @param string $type
+	 * @param array $categories
+	 * @return void
+	 */
+	function linkObjectWithCategories($objId, $type, $categories)
+	{
+		global $categlib; require_once('lib/categories/categlib.php');
+		
+		foreach ($categories as $categName) {
+			$categId = $categlib->get_category_id($categName);
+			
+			//$catObjId is the id on tiki_objects table and $objId the id on object own table
+			$catObjId = $categlib->get_object_id($type, $objId);
+			
+			// apparently this is needed only to create an entry on tiki_categorized_objects
+			$categlib->add_categorized_object($type, $objId, '', '', '');
+			
+			$categlib->categorize($catObjId, $categId);
+		}
+	}
+	
 	/**
 	 * Insert page into Tiki using its builtin methods
 	 *
 	 * @param array $page
-	 * @return bool true or false depending on whether was possible or not to create the new page
+	 * @return string|bool page name if was possible to create the new page or false
 	 */
 	function insertPage($page)
 	{
+		global $objectlib; require_once('lib/objectlib.php');
+		
 		$this->instantiateImporterWiki();
-		return $this->importerWiki->insertPage($page);
+		$pageName = $this->importerWiki->insertPage($page);
+		
+		// maybe this should go to TikiImporter_Wiki::insertPage()
+		if ($pageName) {
+			$objectlib->insert_object('wiki page', $pageName, '', $pageName, 'tiki-index.php?page=' . urlencode($pageName));
+		}
+		
+		return $pageName;
 	}
 
+	/**
+	 * Insert post into Tiki using its builtin methods
+	 *
+	 * @param array $post
+	 * @return int|bool post id if one was created or false
+	 */
+	function insertPost($post)
+	{
+		global $bloglib;
+		global $objectlib; require_once('lib/objectlib.php');
+		$postId = $bloglib->blog_post($this->blogId, $post['content'], $post['excerpt'], $post['author'], $post['name'], '', 'n', $post['created']);
+
+		if ($postId) {
+			$objectlib->insert_object('blog post', $postId, '', $post['name'], 'tiki-view_blog_post.php?postId=' . urlencode($postId));
+		}
+		
+		return $postId;
+	}
+	
+	/**
+	 * Insert comments for a wiki page or post
+	 * 
+	 * @param int|string $objId int for a post id or string for a wiki page name (used as id)
+	 * @param string $objType 'blog post' or 'wiki page'
+	 * @param array $comments
+	 * @return void
+	 */
+	function insertComments($objId, $objType, $comments)
+	{
+		global $commentslib; require_once('lib/comments/commentslib.php');
+		
+		if (!is_object($commentslib)) {
+			$commentslib = new Comments();
+		}
+		
+		$objRef = $objType . ':' . $objId;
+		
+		// not used but required by $commentslib->post_new_comment() as is passed by reference
+		$message_id = '';
+				
+		foreach ($comments as $comment) {
+			// set empty values for comments properties if they are not set
+			if (!isset($comment['author'])) {
+				$comment['author'] = '';
+			}
+			if (!isset($comment['author_email'])) {
+				$comment['author_email'] = '';
+			}
+			if (!isset($comment['author_url'])) {
+				$comment['author_url'] = '';
+			}
+
+			$commentslib->post_new_comment($objRef, 0, null, '', $comment['data'], $message_id, '', 'n', '', '', '',
+				$comment['author'], $comment['created'], $comment['author_email'], $comment['author_url']);
+		}
+	}
+	
 	/**
 	 * This function just create an instance of
 	 * TikiImporter_Wiki and set some default values
@@ -154,17 +380,5 @@ class TikiImporter_Blog extends TikiImporter
 		$this->importerWiki = new TikiImporter_Wiki;
 		$this->importerWiki->alreadyExistentPageName = 'appendPrefix';
 		$this->importerWiki->softwareName = $this->softwareName;
-	}
-
-	/**
-	 * Insert post into Tiki using its builtin methods
-	 *
-	 * @param array $post
-	 * @return bool true or false depending on whether was possible or not to create the new post
-	 */
-	function insertPost($post)
-	{
-		global $bloglib;
-		return $bloglib->blog_post($this->blogId, $post['content'], $post['excerpt'], $post['author'], $post['name'], '', 'n', $post['created']);	
-	}
+	}	
 }

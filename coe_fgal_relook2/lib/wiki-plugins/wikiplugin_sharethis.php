@@ -18,77 +18,119 @@ function wikiplugin_sharethis_help() {
 }
 function wikiplugin_sharethis_info() {
 	return array(
-		'name' => tra('sharethis'),
+		'name' => tra('Sharethis'),
 		'documentation' => 'PluginSharethis',
 		'description' => tra('Display a social networking tool.'),
 		'prefs' => array( 'wikiplugin_sharethis' ),
 		'params' => array(
 			'sendsvcs' => array(
 				'required' => false,
-				'name' => tra('Send services'),
+				'name' => tra('Send Services'),
 				'description' => tra('By default, email, aim and sms are available. Input one or two of the services separated by a | to limit the choice of send services.'),
+				'default' => '',	
+				'advanced' => true,		
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Aim'), 'value' => 'aim'), 
+					array('text' => tra('Aim $ Email'), 'value' => 'aim|email'), 
+					array('text' => tra('Aim $ Sms'), 'value' => 'aim|sms'), 
+					array('text' => tra('Email'), 'value' => 'email'), 
+					array('text' => tra('Email $ Sms'), 'value' => 'email|sms'), 
+				)
 			),
 			'style' => array(
 				'required' => false,
-				'name' => tra('Button style'),
-				'description' => tra('Horizontal, vertical or rotate.'),
+				'name' => tra('Button Style'),
+				'description' => tra('Set button style: horizontal, vertical or rotate.'),
+				'default' => '',			
 				'options' => array(
-					array('text' => tra('None'), 'value' => ''), 
+					array('text' => tra(''), 'value' => ''), 
 					array('text' => tra('Horizontal'), 'value' => 'horizontal'), 
 					array('text' => tra('Vertical'), 'value' => 'vertical'), 
-					array('text' => tra('Rotate'), 'value' => 'rotate'), 
-					),
+					array('text' => tra('Rotate'), 'value' => 'rotate')
+					)
 			),
 			'rotateimage' => array(
 				'required' => false,
-				'name' => tra('Rotate image'),
-				'description' => tra('A value of y will cause the button icon to rotate every 3 seconds between a few icons, cycling through twice before stopping.'),
+				'name' => tra('Rotate Image'),
+				'description' => tra('A value of y (Yes) will cause the button icon to rotate every 3 seconds between a few icons, cycling through twice before stopping.'),
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'multiple' => array(
 				'required' => false,
-				'name' => tra('Multiple icons'),
+				'name' => tra('Multiple Icons'),
 				'description' => tra('Enter list: email | facebook | twitter | sharethis, depending on which icons you\'d like.'),
+				'default' => '',
 			),
 			'postfirst' => array(
 				'required' => false,
-				'name' => tra('First post services shown'),
+				'name' => tra('First Services Shown'),
 				'description' => tra('Input a list of post services (like facebook, myspace, digg, etc.) separated by a | to customize the services that are shown in the opening panel of the widget.'),
+				'filter' => 'alpha',
+				'advanced' => true,		
+				'default' => '',
 			),
 			'buttontext' => array(
 				'required' => false,
-				'name' => tra('Button text'),
+				'name' => tra('Button Text'),
 				'description' => tra('Custom link text for the button.'),
+				'default' => '',
 			),
 			'headertitle' => array(
 				'required' => false,
-				'name' => tra('Header title'),
+				'name' => tra('Header Title'),
 				'description' => tra('Optional header title text for the widget.'),
+				'default' => '',
 			),
 			'headerbg' => array(
 				'required' => false,
-				'name' => tra('Header background'),
+				'name' => tra('Header Background'),
 				'description' => tra('HTML color code (not color name) for the background color for the header if an optional header title is used.'),
+				'advanced' => true,		
+				'default' => '',
 			),
 			'headertxtcolor' => array(
 				'required' => false,
-				'name' => tra('Header text color'),
+				'name' => tra('Header Text Color'),
 				'description' => tra('HTML color code (not color name) for the header text if an optional header title is used.'),
+				'advanced' => true,		
+				'default' => '',
 			),
 			'linkfg' => array(
 				'required' => false,
 				'name' => tra('Link text color for services'),
 				'description' => tra('HTML color code (not color name) for the link text for all send and post services shown in the widget'),
+				'advanced' => true,		
+				'default' => '',
 			),
 			'popup' => array(
 				'required' => false,
 				'name' => tra('Pop-up'),
 				'description' => tra('A value of true will cause the widget to show in a pop-up window.'),
+				'advanced' => true,		
+				'default' => '',		
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('True'), 'value' => 'true'), 
+				)
 			),
 			'embed' => array(
 				'required' => false,
-				'name' => tra('Embedded elements'),
+				'name' => tra('Embedded Elements'),
 				'description' => tra('A value of true will allow embedded elements (like flash) to be seen while iframe is loading.'),
-			),		)
+				'advanced' => true,		
+				'default' => '',		
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('True'), 'value' => 'true'), 
+				)
+			),
+		)
 	);
 }
 function wikiplugin_sharethis($data, $params) {

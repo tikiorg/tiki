@@ -38,6 +38,8 @@ if (!isset($_REQUEST["offset"])) {
 } else {
 	$offset = $_REQUEST["offset"];
 }
+$smarty->assign('offset', $offset);
+
 if (!empty($_REQUEST['categId'])) {
 	$categFilter = array($_REQUEST['categId']);
 	$smarty->assign('find_categId', $_REQUEST['categId']);
@@ -54,6 +56,8 @@ if ($prefs['feature_categories'] == 'y') {
 if (isset($_REQUEST["maxRecords"])) {
 	$maxRecords = $_REQUEST["maxRecords"];
 }
+$smarty->assign('maxRecords', $maxRecords);
+
 if (!isset($_REQUEST["paddingLength"])) {
 	$paddingLength = 50;
 } else {
@@ -80,8 +84,11 @@ if (isset($_REQUEST['search']) && $searchtext) {
 				$curpos = stripos($r["data"], $searchtext, $curpos + 1);
 			}
 			if ($curpos === false) {
-				break;
-			} 
+				$r["beforeSnippet"][] = tra('This match was not case sensitive');
+				$r["afterSnippet"][] = tra('This match was not case sensitive');
+				$r["searchreplace"][] = '0:0:0'; 
+				break;	
+			}
 			// can't use str_replace because it replaces all: we need to be more precise
 			$snippetStart = max(0, $curpos - $paddingLength);
 			$leftpartLength = $curpos - $snippetStart;

@@ -219,6 +219,9 @@
 					{if $prefs.feature_categories eq 'y' and $tiki_p_modify_object_categories eq 'y' and count($categories) gt 0}
 						{tab name="{tr}Categories{/tr}"}
 							{if $categIds}
+								{remarksbox type="note" title="{tr}Note:{/tr}"}
+								<strong>{tr}Categorization has been preset for this edit{/tr}</strong>
+								{/remarksbox}
 								{section name=o loop=$categIds}
 									<input type="hidden" name="cat_categories[]" value="{$categIds[o]}" />
 								{/section}

@@ -258,7 +258,7 @@
 			<p>{tr}Highly recommended for new installations. However, if you are upgrading or migrating a previous tiki database, you are recommended to uncheck this box{/tr}</p>
 			<input type="checkbox" name="force_utf8" id="force_utf8" value="y" checked="checked"/>
 			<label for="force_utf8">{tr}Always force connection to use UTF-8{/tr}</label>
-		<p><a href="http://doc.tiki.org/Understanding+Encoding">{tr}More information{/tr}</a></p>
+		<p><a href="http://doc.tiki.org/Understanding+Encoding" onclick="window.open(this.href); return false;">{tr}More information{/tr}</a></p>
 		</fieldset>
 		<div align="center" style="margin-top:1em;"><input type="submit" name="dbinfo" value=" {tr}Continue{/tr} " /></div>	 
 	</form>
@@ -288,7 +288,7 @@
 
 			<form method="post" action="">
 				<fieldset>
-					<legend>{tr}Experimental Conversion{/tr}</legend>
+					<legend>{tr}Character Set Conversion{/tr}</legend>
 					<p>{tr}Use at your own risk. If the data in the database currently contains improperly converted data, this may make matters worse. Suitable for new installations. Requires ALTER privilege on the database.{/tr}</p>
 					<p>
 						<input type="submit" name="convert_to_utf8" value="{tr}Convert database and tables to UTF-8{/tr}"/>
@@ -411,7 +411,7 @@
  <p>{tr}During an upgrade, it is normal to have SQL failures resulting with <strong>Table already exists</strong> messages.{/tr}</p>
 {assign var='patch' value=''} 
 {foreach from=$installer->failures item=item}
-{if $patch ne $item[2]}{if $patch ne ''}</textarea>{/if}<p><input type="checkbox" name="validPatches[]" value={$item[2]|escape} />{$item[2]|escape}</p>
+{if $patch ne $item[2]}{if $patch ne ''}</textarea>{/if}<p><input type="checkbox" name="validPatches[]" value="{$item[2]|escape}" id="ignore_{$item[2]|escape}" /><label for="ignore_{$item[2]|escape}">{$item[2]|escape}</label></p>
 <textarea rows="6" cols="80">{assign var='patch' value=$item[2]}{/if}
 {$item[0]}
 {$item[1]}
@@ -448,7 +448,7 @@
 	<p>{tr}Complete these fields to configure common, general settings for your site.{/tr} {tr}The information you enter here can be changed later.{/tr}</p>
 	<p>{tr}Refer to the <a href="http://doc.tiki.org/Admin+Panels" target="_blank">documentation</a> for complete information on these, and other, settings.{/tr}</p>
 	<br />
-	<fieldset><legend>{tr}General{/tr} <a href="http://doc.tiki.org/general+admin&amp;bl=y" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
+	<fieldset><legend>{tr}General{/tr} <a href="http://doc.tiki.org/general+admin" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
 <div style="padding:5px; clear:both"><label for="browsertitle">{tr}Browser title:{/tr}</label>
 		<div style="margin-left:1em"><input type="text" size="40" name="browsertitle" id="browsertitle" onclick="this.value='';" onfocus="origval=this.value;" onblur="if (this.value=='') this.value=origval;" value="{if $prefs.browsertitle eq ''}{tr}My Tiki{/tr}{else}{$prefs.browsertitle|escape}{/if}" />
 			<br /><em>{tr}This will appear in the browser title bar.{/tr}</em></div>
@@ -532,6 +532,7 @@
 				<li>{tr}Grant <em>tiki_p_admin</em> to the group, if missing{/tr}</li>
 				<li>{tr}Add the administrator account to the group, if missing{/tr}</li>
 			</ol>
+			<p><strong>{tr}To do so enter the name of the main admin account in the field below{/tr}</strong></p>
 			<p>Administrator account (optional): <input type="text" name="admin_account"/> <em>The default account is <strong>admin</strong></em></p>
 		</fieldset>
 	{/if}
@@ -570,8 +571,8 @@
 {/if}
 
 {if $tikidb_is20}
-		<span class="button"><a href="tiki-install.php?lockenter&amp;install_type={$install_type}">{tr}Enter Tiki and Lock Installer{/tr} ({tr}Recommended{/tr})</a></span>
-		<span class="button"><a href="tiki-install.php?nolockenter&amp;install_type={$install_type}">{tr}Enter Tiki Without Locking Installer{/tr}</a></span>
+		<span class="button"><a href="tiki-install.php?lockenter&amp;{if $multi}multi={$multi|escape}&amp;{/if}install_type={$install_type}">{tr}Enter Tiki and Lock Installer{/tr} ({tr}Recommended{/tr})</a></span>
+		<span class="button"><a href="tiki-install.php?nolockenter&amp;{if $multi}multi={$multi|escape}&amp;{/if}install_type={$install_type}">{tr}Enter Tiki Without Locking Installer{/tr}</a></span>
 {/if}
 
 </div>

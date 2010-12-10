@@ -40,10 +40,18 @@ FileETag none
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
+# Apache does not pass Authorization header to CGI scripts
+# Rewrite rules for passing authorisation in CGI or FGI mode
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule ^(.*) - [E=HTTP_AUTHORIZATION:%1]
+
+
 # If your Tiki is not at the root of the server (e.g. at http://example.com/tiki) 
 # You will need to uncomment and fix the RewriteBase value below to suit your installation.
 # RewriteBase   "/tiki"
-
+# And if you get errors like "The requested URL /absolutepath/tiki-index.php was not found on this server",
+# You may need to uncomment the following line.
+# RewriteBase   /
 
 #If your website is a checkout
 RewriteRule	^\.svn/	-	[F,L]
@@ -156,8 +164,17 @@ RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA
 # increase memory
 #php_value memory_limit 128M
 
+# In some cases you may see open_basedir warnings about Smarty accessing php files that it shouldn't
+# The following line (uncommented) will reset the include path to use only Tiki's files which will solve this in most cases
+#php_value include_path "." 
+
 # if you want to use the Web Server Auth
 #AuthType Basic
 #AuthName "Restricted Access"
 #AuthUserFile /etc/httpd/passwords
 #Require valid-user 
+
+<IfModule mod_dir.c>
+	DirectoryIndex tiki-index.php
+</IfModule>
+

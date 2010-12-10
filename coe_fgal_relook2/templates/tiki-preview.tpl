@@ -15,6 +15,7 @@ $("#preview_diff_style").change(function(){
 		editor_id: 'editwiki',
 		autoSaveId: escape(autoSaveId),
 		inPage: true,
+		{{if isset($smarty.request.hdr)}hdr: {$smarty.request.hdr},{/if}}
 		diff_style: $(this).val()
 	}, function(data) {
 		$("#autosave_preview .wikitext").html(data);

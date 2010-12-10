@@ -8,32 +8,33 @@
 function wikiplugin_invite_info() {
 	return array(
 		'name' => tra( 'Invite' ),
+		'documentation' => tra('PluginInvite'),
 		'description' => tra( 'Invite an email in groups.' ),
 		'prefs' => array( 'wikiplugin_invite' ),
 		'body' => tra('Confirmation message after posting form'),
 		'params' => array(
 			'including' => array(
 				'required' => false,
-				'name' => tra('Including group'),
-				'description' => tra('Group'),
+				'name' => tra('Including Group'),
+				'description' => tra('Will list only the groups that include this group'),
 			),
 			'defaultgroup' => array(
 				'required' => false,
-				'name' => tra('Default group'),
-				'description' => tra('Group'),
+				'name' => tra('Default Group'),
+				'description' => tra('Dropdown list will show this group by default'),
 			),
 			'itemId' => array(
 				'required' => false,
-				'name' => tra('Default group'),
-				'description' => tra('Group from the item group selector / creator field'),
+				'name' => tra('Item ID'),
+				'description' => tra('Dropdown list will show the group related to this item ID (in group selector or creator field) by default'),
 			),
 		)
 	);
 }
 function wikiplugin_invite( $data, $params) {
-	global $prefs, $tikilib, $userlib, $user, $smarty, $tiki_p_invite;
+	global $prefs, $tikilib, $userlib, $user, $smarty, $tiki_p_invite_to_my_groups;
 
-	if ($tiki_p_invite != 'y') {
+	if ($tiki_p_invite_to_my_groups != 'y') {
 		return;
 	}
 	$userGroups = $userlib->get_user_groups_inclusion($user);

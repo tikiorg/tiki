@@ -34,15 +34,13 @@
 									<img alt="{tr}Article image{/tr}" src="article_image.php?image_type=article&amp;id={$articleId}" />
 								{/if}
 							{/if}
-						{else}
+						{elseif $topicId ne ''}
 							<img alt="{tr}Topic image{/tr}" src="article_image.php?image_type=topic&amp;id={$topicId}" />
 						{/if}
-					{else}
+					{elseif $topicId ne ''}
 						<img alt="{tr}Topic image{/tr}" src="article_image.php?image_type=topic&amp;id={$topicId}" />
 					{/if}
-				</td>
-				<td valign="top">
-					<span class="articleheading">{$parsed_heading}</span>
+					<div class="articleheadingtext">{$parsed_heading}</div>
 				</td>
 			</tr>
 		</table>

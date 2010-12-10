@@ -8,27 +8,27 @@
 	{if !empty($error_msg)}
 		{remarksbox type='warning' title="{tr}Warning{/tr}" icon='error'}
 			{$error_msg}
-		{/remarksbox}	
+		{/remarksbox}
 	{/if}
 
 	{tabset name="admin_general"}
 		{tab name="{tr}General Preferences{/tr}"}
 			<fieldset>
 				<legend>{tr}Release Check{/tr}</legend>
-				<div class="adminoptionbox">{tr}Tiki version:{/tr} 
+				<div class="adminoptionbox">{tr}Tiki version:{/tr}
 					<strong>
 						{if !empty($lastup)}
 							{tr}Last update from SVN{/tr} ({$tiki_version}): {$lastup|tiki_long_datetime}
 								{if $svnrev}
 									- REV {$svnrev}
 								{/if}
-						{else} 
+						{else}
 							{$tiki_version}
 						{/if}
 					</strong>
 					{button href="tiki-install.php" _text="{tr}Reset or upgrade your database{/tr}"}
 				</div>
-	
+
 				<div class="adminoptionbox">
 					{preference name=feature_version_checks}
 					<div id="feature_version_checks_childcontainer">
@@ -102,17 +102,25 @@
 				<div class="adminoptionboxchild" id="use_proxy_childcontainer">
 					{preference name=proxy_host}
 					{preference name=proxy_port}
-				</div>			
-			</fieldset>		
+				</div>
+			</fieldset>
 
 			<fieldset>
 				<legend>{tr}Multi-domain{/tr}</legend>
 				{preference name=multidomain_active}
 				<div class="adminoptionboxchild" id="multidomain_active_childcontainer">
 					{preference name=multidomain_config}
-				</div>			
-			</fieldset>			
-		
+				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend>{tr}Site Terminal{/tr}</legend>
+				{preference name=site_terminal_active}
+				<div class="adminoptionboxchild" id="site_terminal_active_childcontainer">
+					{preference name=site_terminal_config}
+				</div>
+			</fieldset>
+
 			<fieldset>
 				<legend>{tr}Contact{/tr}</legend>
 				{preference name=feature_contact}
@@ -128,7 +136,7 @@
 				{preference name=feature_referer_stats}
 				{preference name=count_admin_pvs}
 			</fieldset>
-		
+
 			<fieldset>
 				<legend>{tr}Print{/tr}</legend>
 				{preference name=print_pdf_from_url}
@@ -156,6 +164,8 @@
 				<div class="adminoptionbox">
 					{preference name=feature_phplayers}
 					{preference name=feature_cssmenus}
+					{preference name=display_html_in_menus}
+					{preference name=feature_userlevels}
 					{preference name=feature_featuredLinks}
 					{preference name=feature_menusfolderstyle}
 					{preference name=menus_items_icons}
@@ -163,8 +173,8 @@
 						{preference name='menus_items_icons_path'}
 					</div>
 				</div>
-			</fieldset>	
-	
+			</fieldset>
+
 			<fieldset>
 				<legend>{tr}Home Page{/tr}</legend>
 				<div class="adminoptionbox">
@@ -173,7 +183,7 @@
 						{preference name=limitedGoGroupHome}
 					</div>
 				</div>
-				
+
 				{preference name=tikiIndex defaul=$prefs.site_tikiIndex}
 
 				{preference name=useUrlIndex}
@@ -201,7 +211,7 @@
 			<fieldset>
 				<legend>{tr}User{/tr}</legend>
 				{preference name='urlOnUsername'}
-			</fieldset>		
+			</fieldset>
 
 			<fieldset>
 				<legend>{tr}Site Access{/tr}</legend>
@@ -217,7 +227,7 @@
 				</div>
 			</fieldset>
 		{/tab}
-	
+
 		{tab name="{tr}Date and Time{/tr}"}
 			{preference name=server_timezone}
 			{preference name=users_prefs_display_timezone}
@@ -226,7 +236,7 @@
 
 			{preference name=short_date_format}
 			<em>{tr}Sample:{/tr} {$now|tiki_short_date}</em>
-		
+
 			{preference name=long_time_format}
 			<em>{tr}Sample:{/tr} {$now|tiki_long_time}</em>
 
@@ -235,8 +245,8 @@
 
 			{preference name=display_field_order}
 			{preference name=tiki_same_day_time_only}
-		
-			<div class="adminoptionbox">	
+
+			<div class="adminoptionbox">
 				{assign var="fcnlink" value="http://www.php.net/manual/en/function.strftime.php"}
 				<a class="link" target="strftime" href="{$fcnlink}">{tr}Date and Time Format Help{/tr}</a>{help url="Date+and+Time"}
 			</div>

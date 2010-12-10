@@ -12,12 +12,14 @@
 									iSearch=1
 									searchOrientation="horiz"}
 		{else}
-		{include file='tiki-searchindex.tpl'
-									where=$prefs.search_default_where
-									searchNoResults="false"
-									searchStyle="menu"
-									iSearch=2
-									searchOrientation="horiz"}
+			<form action="tiki-searchindex.php" method="get" id="search-form" class="findtable">
+				<label class="findtitle">
+					{tr}Find{/tr} <input id="highlight2" name="filter[content]" size="14" type="text" accesskey="s" value="{$words}" />
+				</label>
+				{jq}
+					$("#highlight2").tiki("autocomplete", "pagename");
+				{/jq}
+			</form>
 		{/if}
 		</div>
 	{/if}

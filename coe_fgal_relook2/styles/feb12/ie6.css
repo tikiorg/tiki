@@ -16,12 +16,12 @@ input[type=submit]:hover {
 	cursor: pointer;
 }
 
-span.button a,
-span.button a:visited {
+.button a,
+.button a:visited {
 	background: url(feb12/header.jpg) repeat-x 0 -2px;
 }
 
-span.button a:hover {
+.button a:hover {
 	color: #F5F5F5;
 	background: url(feb12/header.jpg) repeat-x 0 100%;
 }
@@ -70,11 +70,11 @@ span.button a:hover {
 	height: 1%;
 }
 
-div#tikihelp {
+#tikihelp {
 	position: absolute;
 }
 
-div.box {
+.box {
 	width: 200px;
 }
 
@@ -116,6 +116,6 @@ td {
 	font-size: 1em;
 }
 
-table.galtable {
+.galtable {
 	width: 97%;
 }

@@ -4,7 +4,11 @@
 	</div>
 	<fieldset>
 		<legend>{tr}Metrics Dashboard{/tr}</legend>
-		<p><a href="tiki-admin_metrics.php">{tr}Configure metrics{/tr}</a></p>
+
+	<div class="navbar">
+		{button href="tiki-admin_metrics.php" _text="{tr}Configure metrics{/tr}"}
+	</div>
+
   		{preference name=feature_metrics_dashboard}
 		<div class="adminoptionboxchild" id="feature_metrics_dashboard_childcontainer">
 			{preference name=metrics_pastresults label="{tr}Show past results{/tr}"}

@@ -83,13 +83,13 @@ if (!empty($_REQUEST['fileId'])) {
 	}
 	if (!((!empty($user) && ($user == $fileInfo['user'] || $user == $fileInfo['lockedby'])) || $tiki_p_edit_gallery_file == 'y')) { // must be the owner or the locker or have the perms
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you can edit this file"));
+		$smarty->assign('msg', tra("You do not have permission to edit this file"));
 		$smarty->display('error.tpl');
 		die;
 	}
 	if ($gal_info['backlinkPerms'] == 'y' && $filegallib->hasOnlyPrivateBacklinks($_REQUEST['fileId'])) {
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you can edit this file"));
+		$smarty->assign('msg', tra("You do not have permission to edit this file"));
 		$smarty->display('error.tpl');
 		die;
 	}		
@@ -515,7 +515,7 @@ if (empty($_REQUEST['fileId'])) {
 		$galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', $prefs['fgal_root_id'], false, true, false, false, false, true, false);
 		$cachelib->cacheItem($cacheName, serialize($galleries), $cacheType);
 	}
-	$galleries['data'] = Perms::filter(array('file gallery'), 'object', $galleries['data'], array('object'=>'id'), 'upload_files');
+	$galleries['data'] = Perms::filter(array('type' => 'file gallery'), 'object', $galleries['data'], array('object'=>'id'), 'upload_files');
 	$smarty->assign_by_ref('galleries', $galleries["data"]);
 }
 if ($prefs['fgal_limit_hits_per_file'] == 'y') {

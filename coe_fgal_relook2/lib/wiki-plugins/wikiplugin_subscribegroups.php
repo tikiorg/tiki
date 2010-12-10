@@ -14,53 +14,78 @@ function wikiplugin_subscribegroups_help() {
 function wikiplugin_subscribegroups_info() {
 	return array(
 		'name' => tra('Subscribe Groups'),
-		'documentation' => 'PluginSubscribeGroups',		
+		'documentation' => tra('PluginSubscribeGroups'),		
 		'description' => tra('Subscribe or unsubscribe to a group'),
 		'prefs' => array( 'wikiplugin_subscribegroups' ),
 		'params' => array(
 			'subscribe' => array(
 				'required' => false,
 				'name' => tra('Subscribe'),
-				'description' => tra('text'),
+				'description' => tra('Text shown in the dropdown box. Default: "Subscribe to a group"'),
+				'default' => '',
 			),
 			'showsubscribe' => array(
 				'required' => false, 
-				'name' => tra('Show subscribe box'),
-				'description' => 'y|n',
+				'name' => tra('Show Subscribe Box'),
+				'description' => tra('Show the subscribe drop down box (shown by default). Will not show if there are no other groups the user may register for.'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showdefault' => array(
 				'required' => false, 
-				'name' => tra('Show default setting and buttons'),
-				'description' => 'y|n',
+				'name' => tra('Show Default'),
+				'description' => tra('Shows which group is the user\'s default group (if any) and allows the user to change his default group.'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'showgroupdescription' => array(
 				'required' => false, 
-				'name' => tra('Show group description'),
-				'description' => 'y|n',
+				'name' => tra('Group Description'),
+				'description' => tra('Show the description of the group (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 			'groups' => array(
 				'required' => false,
 				'name' => tra('Groups'),
-				'description' => tra('Colon separated list of groups.'),
+				'description' => tra('Colon separated list of groups. By default the list of groups available to the user.'),
+				'default' => '',
 			),
 			'including' => array(
 				'required' => false,
-				'name' => tra('Including group'),
-				'description' => tra('Group'),
+				'name' => tra('Including Group'),
+				'description' => tra('All groups including this group will be listed'),
+				'default' => '',
 			),
 			'defaulturl' => array(
 				'required' => false,
-				'name' => tra('Url'),
-				'description' => tra('After changing default'),
-			),
-		),
+				'name' => tra('Default URL'),
+				'description' => tra('Page user will be directed to after clicking on icon to change default group'),
+				'default' => '',
+			)
+		)
 	);
 }
 
 function wikiplugin_subscribegroups($data, $params) {
 	global $tiki_p_subscribe_groups, $userlib, $user, $smarty;
 	if ($tiki_p_subscribe_groups != 'y' || empty($user)) {
-		return tra('Permission denied');
+		return tra('You do not have permission to subscribe to groups.');
 	}
 	extract ($params, EXTR_SKIP);
 
@@ -80,13 +105,13 @@ function wikiplugin_subscribegroups($data, $params) {
 	}
 	if ($group) {
 		if ($group == 'Anonymous' || $group == 'Registered') {
-			return tra('Incorrect param');
+			return tra('Incorrect parameter');
 		}
 		if (!($info = $userlib->get_group_info($group))) {
-			return tra('Incorrect param');
+			return tra('Incorrect parameter');
 		}
 		if ($info['userChoice'] != 'y') { // limit to userchoice
-			return tra('Permission denied');
+			return tra('You do not have permission to subscribe to groups');
 		}
 		if (!empty($groups) && !in_array($group, $groups)) {// limit the group to the groups params
 			$group = '';

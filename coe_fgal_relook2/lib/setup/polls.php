@@ -38,7 +38,7 @@ if ( isset($_REQUEST['pollVote']) && !empty($_REQUEST['polls_pollId']) ) {
 			}
 		}
 	}
-	if ( $ok && ! isset($_REQUEST['wikipoll']) && $tiki_p_view_poll_results == 'y') {
+	if ( $ok && ! isset($_REQUEST['wikipoll']) && $tiki_p_view_poll_results == 'y' && empty($_REQUEST['showresult'])) {
 		header ('location: tiki-poll_results.php?pollId='.$_REQUEST['polls_pollId']);
 		die;
 	}

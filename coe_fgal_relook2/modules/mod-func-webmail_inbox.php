@@ -97,7 +97,7 @@ function module_webmail_inbox( $mod_reference, $module_params ) {
 	
 	if ($tiki_p_use_webmail != 'y' && $tiki_p_use_group_webmail != 'y') {
 		$smarty->assign('tpl_module_title', tra('Webmail error'));
-		$smarty->assign('error', 'Permission denied to use this feature');
+		$smarty->assign('error', 'You do not have permission to use this feature');
 		return;
 	}
 	

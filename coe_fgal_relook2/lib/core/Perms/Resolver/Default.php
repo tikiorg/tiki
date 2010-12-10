@@ -23,4 +23,12 @@ class Perms_Resolver_Default implements Perms_Resolver
 	function check( $name, array $groups ) {
 		return $this->value;
 	}
+
+	function from() {
+		return 'system';
+	}
+
+	function applicableGroups() {
+		return array('Anonymous', 'Registered');
+	}
 }

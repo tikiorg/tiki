@@ -4,12 +4,12 @@
 
 {if $smarty.get.page != 'profiles'} {* We don't want on this page because it results in two search boxes *}
 <form method="post" action="">
-	{remarksbox type="note" title="{tr}Development Notice{/tr}"}
+	{*remarksbox type="note" title="{tr}Development Notice{/tr}"}
 		{tr}This search feature and the <a href="tiki-edit_perspective.php">perspectives GUI</a> need <a href="http://dev.tiki.org/Dynamic+Preferences">dev.tiki.org/Dynamic+Preferences</a>. If you search for something and it's not appearing, please help improve keywords/descriptions.{/tr}
-	{/remarksbox}
+	{/remarksbox*}
 	<p>
 		<label>{tr}Configuration search{/tr}: <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"/>
-		<input type="submit" value="{tr}Search{/tr}"/></label>
+		<input type="submit" value="{tr}Search{/tr}" {if $indexNeedsRebuilding} class="tips" title="{tr}Configuration search{/tr}|{tr}Note: The search index needs rebuilding, this will take a few minutes.{/tr}"{/if} /></label>
 	</p>
 </form>
 {if $lm_error}
@@ -26,7 +26,7 @@
 	</form>
 </fieldset>
 {elseif $lm_criteria}
-	{remarksbox type="warning" title="{tr}No results{/tr}"}{tr}No preferences were found for your search query.{/tr}{/remarksbox}
+	{remarksbox type="note" title="{tr}No results{/tr}" icon="magnifier"}{tr}No preferences were found for your search query.{/tr}{/remarksbox}
 {/if}
 {/if}
 

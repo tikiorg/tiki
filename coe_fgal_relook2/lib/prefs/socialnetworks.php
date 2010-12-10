@@ -42,6 +42,61 @@ function prefs_socialnetworks_list() {
 			'type' => 'text',
 			'size' => 60,
 		),
+		'socialnetworks_facebook_login' => array(
+			'name' => tra('Login using Facebook'),
+			'description' => tra('Allow users to login using Facebook'),
+			'keywords' => 'social networks',
+			'type' => 'flag',
+		),
+		'socialnetworks_facebook_autocreateuser' => array(
+			'name' => tra('Auto-create Tiki user'),
+			'description' => tra('Automatically create a Tiki user by the username of fb_xxxxxxxx for users logging in using Facebook if they do not yet have a Tiki account. If not, they will be asked to link or register a Tiki account'),
+			'keywords' => 'social networks',
+			'type' => 'flag',
+			'dependencies' => array(
+				'socialnetworks_facebook_login',
+			),
+		),
+		'socialnetworks_facebook_firstloginpopup' => array(
+			'name' => tra('Require Facebook users to enter local account info'),
+			'description' => tra('Require Facebook users to enter local account info, specifically email and local login name'),
+			'keywords' => 'social networks',
+			'type' => 'flag',
+			'dependencies' => array(
+				'socialnetworks_facebook_login',
+				'socialnetworks_facebook_autocreateuser',
+			),
+		),
+		'socialnetworks_facebook_offline_access' => array(
+			'name' => tra('Tiki can access Facebook at any time'),
+			'description' => tra('Even when user is not logged onto Facebook, Tiki can access it.'),
+			'keywords' => 'social networks',
+			'type' => 'flag',
+		),
+		'socialnetworks_facebook_publish_stream' => array(
+			'name' => tra('Tiki can post to Wall'),
+			'description' => tra('Tiki may post status messages, notes, photos, and videos to Facebook Wall'),
+			'keywords' => 'social networks',
+			'type' => 'flag',
+		),
+		'socialnetworks_facebook_manage_events' => array(
+			'name' => tra('Tiki can manage events'),
+			'description' => tra('Tiki may create and RSVP to Facebook events'),
+			'keywords' => 'social networks',
+			'type' => 'flag',
+		),
+		'socialnetworks_facebook_manage_pages' => array(
+			'name' => tra('Tiki can manage pages'),
+			'description' => tra('Tiki may manage user pages'),
+			'keywords' => 'social networks',
+			'type' => 'flag',
+		),
+		'socialnetworks_facebook_sms' => array(
+			'name' => tra('Tiki can SMS'),
+			'description' => tra('Tiki may SMS via Facebook'),
+			'keywords' => 'social networks',
+			'type' => 'flag',
+		),
 		'socialnetworks_bitly_login' => array(
 			'name' => tra('bit.ly Login'),
 			'description' => tra('Site wide login (username) for bit.ly'),

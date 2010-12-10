@@ -36,7 +36,7 @@ function prefs_user_list() {
 			'name' => tra('Display UserTracker information on the user information page'),
 			'description' => tra('Display UserTracker information on the user information page'),
 			'help' => 'User+Tracker',
-			'hint' => tra('Use the format: trackerId, fieldId1, fieldId2, ...'),
+			'hint' => tra('Input the user tracker ID then field IDs to be shown, all separated by commas. Example: 1,1,2,3,4 (user tracker ID 1 followed by field IDs 1-4)'),
 			'type' => 'text',
 			'size' => '50',
 			'dependencies' => array(

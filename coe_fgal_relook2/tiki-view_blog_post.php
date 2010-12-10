@@ -30,7 +30,7 @@ if (empty($_REQUEST["postId"])) {
 	$postId = $_REQUEST['postId'];
 }
 
-$post_info = $bloglib->get_post($postId, true);
+$post_info = $bloglib->get_post($postId);
 if (!$post_info) {
 	$smarty->assign('msg', tra("Post not found"));
 	$smarty->display("error.tpl");
@@ -55,12 +55,19 @@ if ($user && $user == $blog_data["user"]) {
 	$ownsblog = 'y';
 }
 
-if ($ownsblog == 'n' && $tiki_p_admin != 'y' && $post_info["priv"] == 'y') {
+if ($ownsblog == 'n' && $tiki_p_blog_admin != 'y' && $post_info["priv"] == 'y') {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied: you cannot view this blog post while it is marked as private"));
+	$smarty->assign('msg', tra("You do not have permission to view this blog post while it is marked as private"));
 	$smarty->display("error.tpl");
 	die;
 }
+if ($ownsblog == 'n' && $tiki_p_blog_admin != 'y' && $post_info['created'] > $tikilib->now) {
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra('Permission denied'));
+	$smarty->display("error.tpl");
+	die;
+}	
+$post_info['adjacent'] = $bloglib->_get_adjacent_posts($blogId, $post_info['created'], $tiki_p_blog_admin == 'y'? null: $tikilib->now, $user);
 
 if(isset($post_info['priv']) && ($post_info['priv'] == 'y')) {
 	$post_info['title'] .= ' (' . tra("private") . ')';
@@ -128,7 +135,7 @@ if ($prefs['feature_blogposts_comments'] == 'y') {
 		'sort_mode',
 		'blogId'
 	);
-	$comments_prefix_var = 'post:';
+	$comments_prefix_var = 'blog post:';
 	$comments_object_var = 'postId';
 	include_once ("comments.php");
 }

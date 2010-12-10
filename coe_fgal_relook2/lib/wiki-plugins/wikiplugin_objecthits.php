@@ -15,26 +15,30 @@ function wikiplugin_objecthits_help() {
 function wikiplugin_objecthits_info() {
 	return array(
 		'name' => tra('Object Hits'),
-		'documentation' => 'PluginObjectHits',			
-		'description' => tra("Displays object hit info by object and days"),
+		'documentation' => tra('PluginObjectHits'),			
+		'description' => tra('Displays object hit info by object and days'),
 		'prefs' => array( 'wikiplugin_objecthits' ),
 		'params' => array(
 			'object' => array(
-				'required' => true,
+				'required' => false,
 				'name' => tra( 'Object' ),
-				'description' => tra( 'Object ID' ),
+				'description' => tra( 'For a wiki page, the page name, for other object types: ID number + ? + object title' ),
+				'default' => '',
 			),
 			'type' => array(
-				'required' => true,
+				'required' => false,
 				'name' => tra('Type'),
-				'description' => tra('Object Type'),
+				'description' => tra('Object type, such as wiki, file gallery, file, article, etc. Default is "wiki".'),
+				'filter' => 'alpha',
+				'default' => 'wiki',
 			),
 			'days' => array(
 				'required' => false,
 				'name' => tra('Days'),
-				'description' => tra('?'),
-			),
-		),
+				'description' => tra('Show the number of hits over the past number of days indicated. Default is to show all hits.'),
+				'default' => 0,
+			)
+		)
 	);
 }
 

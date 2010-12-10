@@ -14,8 +14,8 @@
 
 {if $prefs.feature_intertiki eq 'y' and ($prefs.feature_intertiki_import_groups eq 'y' or $prefs.feature_intertiki_import_preferences eq 'y')}
 	{remarksbox type="warning" title="{tr}Warning{/tr}"}
-		{if $prefs.feature_intertiki_import_groups eq 'y'}{tr}Since this tiki site is in slave mode and import groups, the master groups will be automatically reimported at each login{/tr}{/if}
-		{if $prefs.feature_intertiki_import_preferences eq 'y'}{tr}Since this tiki site is in slave mode and import preferences, the master user preferences will be automatically reimported at each login{/tr}{/if}
+		{if $prefs.feature_intertiki_import_groups eq 'y'}{tr}Since this Tiki site is in slave mode and imports groups, the master groups will be automatically reimported at each login{/tr}{/if}
+		{if $prefs.feature_intertiki_import_preferences eq 'y'}{tr}Since this Tiki site is in slave mode and imports preferences, the master user preferences will be automatically reimported at each login{/tr}{/if}
 	{/remarksbox}
 {/if}
 
@@ -206,13 +206,13 @@
 							{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
 								<a class="link" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr}Change user preferences:{/tr} {$username}">{icon _id='wrench' alt="{tr}Change user preferences:{/tr} `$username`"}</a>
 							{/if}
-							{if $users[user].user eq $user or $users[user].user_information neq 'private'}
-								<a class="link" href="tiki-user_information.php?userId={$users[user].userId}" title="{tr}User Information:{/tr} {$username}">{icon _id='help' alt="{tr}User Information:{/tr} `$username`"}</a>
+							{if $users[user].user eq $user or $users[user].user_information neq 'private' or $tiki_p_admin eq 'y'}
+								<a class="link" href="tiki-user_information.php?userId={$users[user].userId}" title="{tr}User Information:{/tr} {$username}"{if $users[user].user_information eq 'private'} style="opacity:0.5;"{/if}>{icon _id='help' alt="{tr}User Information:{/tr} `$username`"}</a>
 							{/if}
 		
 							{if $users[user].user ne 'admin'}
 								<a class="link" href="{$smarty.server.PHP_SELF}?{query action=delete user=$users[user].user}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
-								{if $users[user].valid && $users[user].waiting eq 'a'}
+								{if $users[user].waiting eq 'a'}
 									<a class="link" href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr}Validate user:{/tr} {$users[user].user|username}">{icon _id='accept' alt="{tr}Validate user:{/tr} `$username`"}</a>
 								{/if}
 								{if $users[user].waiting eq 'u'}
@@ -221,6 +221,9 @@
 								{if $prefs.email_due > 0 and $users[user].waiting ne 'u' and $users[user].waiting ne 'a'}
 									<a class="link" href="tiki-adminusers.php?user={$users[user].user|escape:url}&amp;action=email_due" title="{tr}Invalid email{/tr}">{icon _id='email_cross' alt="{tr}Invalid email{/tr}"}</a>
 								{/if}
+							{/if}
+							{if !empty($users[user].openid_url)}
+								{self_link userId=$users[user].userId action='remove_openid' _title="{tr}Remove link with OpenID account{/tr}" _icon="img/icons/openid_remove"}{/self_link}
 							{/if}
 						</td>
 					</tr>
@@ -329,7 +332,7 @@
 		<form action="tiki-adminusers.php" method="post" enctype="multipart/form-data" name="RegForm" autocomplete="off">
 			<table class="formcolor">
 				<tr>
-					<td><label for="name">
+					<td><label for='login'>
 						{if $prefs.login_is_email eq 'y'}
 							{tr}Email:{/tr}
 						{else}
@@ -339,7 +342,7 @@
 					</td>
 					<td>
 						{if $userinfo.login neq 'admin'}
-							<input type="text" id="name" name="name" value="{$userinfo.login|escape}" />
+							<input type="text" id='login' name='login' value="{$userinfo.login|escape}" />
 							<br /> 
 							{if $prefs.login_is_email eq 'y'}
 								<em>{tr}Use the email as username{/tr}.</em>
@@ -357,7 +360,7 @@
 								{/if}
 							{/if}
 						{else}
-							<input type="hidden" name="name" value="{$userinfo.login|escape}" />{$userinfo.login}
+							<input type="hidden" name='login' value="{$userinfo.login|escape}" />{$userinfo.login}
 						{/if}
 					</td>
 				</tr>
@@ -385,12 +388,7 @@
 								<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
 							</div>
 							<br />
-							{if $prefs.min_pass_length > 1}
-								<em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em>. 
-							{/if}
-							{if $prefs.pass_chr_num eq 'y'}
-								<em>{tr}Password must contain both letters and numbers{/tr}</em>.
-							{/if}
+							{include file='password_help.tpl'}
 						</td>
 					</tr>
 					<tr>
@@ -477,7 +475,7 @@
 						{if $userinfo.userId}
 							<input type="hidden" name="user" value="{$userinfo.userId|escape}" />
 							<input type="hidden" name="edituser" value="1" />
-							<input type="submit" name="submit" value="{tr}Save{/tr}" />
+							<input type="submit" name="save" value="{tr}Save{/tr}" />
 						{else}
 							<input type="submit" name="newuser" value="{tr}Add{/tr}" />
 						{/if}
@@ -506,6 +504,7 @@
 	<h2>{tr}Batch upload (CSV file):{/tr}</h2>
 
 	<form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
+		{ticket}
 		<table class="formcolor">
 			<tr>
 				<td>
@@ -518,8 +517,6 @@
 					<input type="file" id="csvlist" name="csvlist"/>
 					<br />
 					<label><input type="radio" name="overwrite" value="y" checked="checked" />&nbsp;{tr}Overwrite{/tr}</label>
-					<br />
-					<label><input type="radio" name="overwrite" value="c"/>&nbsp;{tr}Overwrite but keep the previous login if the login exists in another case{/tr}</label>
 					<br />
 					<label><input type="radio" name="overwrite" value="n" />&nbsp;{tr}Don't overwrite{/tr}</label>
 					<br />

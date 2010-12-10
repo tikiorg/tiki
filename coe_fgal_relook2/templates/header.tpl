@@ -1,9 +1,17 @@
 {* $Id$ *}
-{if $base_url and $dir_level gt 0}
-	<base href="{$base_url|escape}" />
+{if $base_uri and ($dir_level gt 0 or $prefs.feature_html_head_base_tag eq 'y')}
+	<base href="{$base_uri|escape}" />
 {/if}
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Tiki Wiki CMS Groupware - http://Tiki.org" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="generator" content="Tiki Wiki CMS Groupware - http://tiki.org" />
+
+{* --- Canonical URL --- *}
+{if $prefs.feature_canonical_url eq 'y'}
+	{if $page neq ''} <link rel="canonical" href="{$page|sefurl}" /> {/if}
+{/if}	
+
 {if !empty($forum_info.name) & $prefs.metatag_threadtitle eq 'y'}
 	<meta name="keywords" content="{tr}Forum{/tr} {$forum_info.name|escape} {$thread_info.title|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if}" />
 {elseif isset($galleryId) && $galleryId ne '' & $prefs.metatag_imagetitle ne 'n'}
@@ -42,15 +50,13 @@
 {/if}
 
 {* --- tiki block --- *}
-<title>
-	{if $prefs.site_title_location eq 'before'}
-		{$prefs.browsertitle|tr_if|escape} : 
-	{/if}
+<title>{strip}
+	{if $prefs.site_title_location eq 'before'}{$prefs.browsertitle|tr_if|escape} {$prefs.site_nav_seper} {/if}
 	{if $prefs.feature_breadcrumbs eq 'y' && isset($trail)}
 		{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
 	{else}
-		{if !empty($headtitle)}
-			{$headtitle|tr_if|escape}
+		{if !empty($tracker_item_main_value)}
+			{$tracker_item_main_value|escape}
 		{elseif !empty($page)}
 			{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}
 				{$approvedPageName|escape}
@@ -61,7 +67,7 @@
 		{* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
 		{elseif !empty($arttitle)}
 			{$arttitle|escape}
-		{elseif !empty($title)}
+		{elseif !empty($title) and !is_array($title)}
 			{$title|escape}
 		{elseif !empty($thread_info.title)}
 			{$thread_info.title|escape}
@@ -70,17 +76,17 @@
 		{elseif !empty($categ_info.name)}
 			{$categ_info.name|escape}
 		{elseif !empty($userinfo.login)}
-			{$userinfo.login|escape}
-		{elseif !empty($tracker_item_main_value)}
-			{$tracker_item_main_value|escape}
+			{$userinfo.login|username}
 		{elseif !empty($tracker_info.name)}
 			{$tracker_info.name|escape}
+		{elseif !empty($gal_info.name)}
+			{$gal_info.name|escape}
+		{elseif !empty($headtitle)}
+			{$headtitle|tr_if|escape}{* use $headtitle last if feature specific title not found *}
 		{/if}
 	{/if}
-	{if $prefs.site_title_location eq 'after'}
-		: {$prefs.browsertitle|tr_if|escape}
-	{/if}
-</title>
+	{if $prefs.site_title_location eq 'after'} {$prefs.site_nav_seper} {$prefs.browsertitle|tr_if|escape}{/if}
+{/strip}</title>
 
 {if $prefs.site_favicon}
 	<link rel="icon" href="{$prefs.site_favicon|escape}" />
@@ -126,10 +132,14 @@
 	<link rel="alternate" type="application/rss+xml" title='{$prefs.feed_calendar_title|escape|default:"{tr}RSS Calendars{/tr}"}' href="tiki-calendars_rss.php?ver={$prefs.feed_default_version|escape:'url'}" />
 {/if}
 
-{if $prefs.feature_blogs eq 'y' and $prefs.feature_blog_sharethis eq "y"}
-	{if $prefs.blog_sharethis_publisher neq ""}
+{if ($prefs.feature_blogs eq 'y' and $prefs.feature_blog_sharethis eq "y") or ($prefs.feature_cms eq 'y' and $prefs.feature_cms_sharethis eq "y")}
+	{if $prefs.blog_sharethis_publisher neq "" and $prefs.article_sharethis_publisher neq ""}
 		<script type="text/javascript" src="http://w.sharethis.com/button/sharethis.js#publisher={$prefs.blog_sharethis_publisher}&amp;type=website&amp;buttonText=&amp;onmouseover=false&amp;send_services=aim"></script>
-	{else}
+	{elseif $prefs.blog_sharethis_publisher neq "" and $prefs.article_sharethis_publisher eq ""}
+		<script type="text/javascript" src="http://w.sharethis.com/button/sharethis.js#publisher={$prefs.blog_sharethis_publisher}&amp;type=website&amp;buttonText=&amp;onmouseover=false&amp;send_services=aim"></script>
+	{elseif $prefs.blog_sharethis_publisher eq "" and $prefs.article_sharethis_publisher neq ""}
+		<script type="text/javascript" src="http://w.sharethis.com/button/sharethis.js#publisher={$prefs.article_sharethis_publisher}&amp;type=website&amp;buttonText=&amp;onmouseover=false&amp;send_services=aim"></script>
+	{elseif $prefs.blog_sharethis_publisher eq "" and $prefs.article_sharethis_publisher eq ""}
 		<script type="text/javascript" src="http://w.sharethis.com/button/sharethis.js#type=website&amp;buttonText=&amp;onmouseover=false&amp;send_services=aim"></script>
 	{/if}
 {/if}

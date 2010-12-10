@@ -36,9 +36,9 @@
     <tr class="{cycle}">
       <td>{tr}User:{/tr}</td>
       <td>
-        {$userinfo.login|escape}
+        <strong>{$userinfo.login|escape}</strong>
         {if $prefs.login_is_email eq 'y' and $userinfo.login neq 'admin'} 
-          <i>({tr}Use the email as username{/tr})</i>
+          <em>({tr}Use the email as username{/tr})</em>
         {/if}
       </td>
     </tr>
@@ -49,11 +49,19 @@
       </td>
       <td>
         {if $prefs.auth_ldap_nameattr eq '' || $prefs.auth_method ne 'ldap'}
-          <input type="text" name="realName" value="{$user_prefs.realName|escape}" />{else}{$user_prefs.realName|escape}
+          <input type="text" name="realName" value="{$user_prefs.realName|escape}" style="width:20em;font-size:1.1em;" />{else}{$user_prefs.realName|escape}
         {/if}
       </td>
     </tr>
 
+    <tr class="{cycle}">
+      <td>{tr}Avatar:{/tr}</td>
+      <td>
+        {$avatar} 
+        <a href="tiki-pick_avatar.php{if $userwatch ne $user}?view_user={$userwatch}{/if}" class="link">{tr}Pick user Avatar{/tr}</a>
+      </td>
+    </tr>
+  
 	{if $prefs.feature_community_gender eq 'y'}
       <tr class="{cycle}"><td>{tr}Gender:{/tr}</td>
         <td>
@@ -83,32 +91,20 @@
       </td>
     </tr>
   
-    {if $prefs.feature_maps eq 'y' or $prefs.feature_gmap eq 'y'}
-      <tr class="{cycle}">
-        <td>{tr}Longitude (WGS84/decimal degrees):{/tr}</td>
-        <td>
-          <input type="text" name="lon" value="{$user_prefs.lon|escape}" />
-	  {if $prefs.feature_gmap eq 'y'}
-            <a href="tiki-gmap_locator.php?for=user{if $userinfo.login ne $user}&amp;view_user={$userinfo.login}{/if}">{tr}Use Google Map locator{/tr}</a>
-          {/if}
-        </td>
-      </tr>
-      <tr class="{cycle}">
-        <td>{tr}Latitude (WGS84/decimal degrees):{/tr}</td>
-        <td>
-          <input type="text" name="lat" value="{$user_prefs.lat|escape}" />
-        </td>
-      </tr>
-    {/if}
-
+    {if $prefs.feature_gmap eq 'y'}
     <tr class="{cycle}">
-      <td>{tr}Avatar:{/tr}</td>
+      <td>{tr}Location:{/tr}</td>
       <td>
-        {$avatar} 
-        <a href="tiki-pick_avatar.php{if $userwatch ne $user}?view_user={$userwatch}{/if}" class="link">{tr}Pick user Avatar{/tr}</a>
+        {if $prefs.ajax_xajax eq 'y' and !empty($user_prefs.lat)}
+          {wikiplugin _name="googlemap" type="user" setdefaultxyz="" locateitemtype="user" locateitemid="$userwatch" width="200" height="100" controls="n"}{/wikiplugin}
+        {/if}
+        <p>
+          {button href="tiki-gmap_locator.php" for="user" view_user=$userinfo.login|escape for="user" _text="{tr}Use Google Map locator{/tr}" _auto_args='view_user,for'}
+        </p>
       </td>
     </tr>
-  
+    {/if}
+
     <tr class="{cycle}">
       <td>{tr}URL:{/tr}</td>
       <td>
@@ -130,12 +126,23 @@
       </tr>
     {/if}
   
-    {if $prefs.userTracker eq 'y' && $usertrackerId}
-      <tr class="{cycle}">
-        <td>{tr}Your personal tracker information:{/tr}</td>
-        <td>
-	  <a class="link" href="tiki-view_tracker_item.php?view=+user">{tr}View extra information{/tr}</a>
-    {/if}
+	{if $prefs.userTracker eq 'y' && $usertrackerId}
+		{if $tiki_p_admin eq 'y' and !empty($userwatch) and $userwatch neq $user}
+			<tr class="{cycle}">
+				<td>{tr}User's personal tracker information:{/tr}</td>
+				<td>
+					<a class="link" href="tiki-view_tracker_item.php?trackerId={$usertrackerId}&user={$userwatch|escape:url}&view=+user">{tr}View extra information{/tr}</a>
+				</td>
+			</tr>
+		{else}
+			<tr class="{cycle}">
+				<td>{tr}Your personal tracker information:{/tr}</td>
+				<td>
+					<a class="link" href="tiki-view_tracker_item.php?view=+user">{tr}View extra information{/tr}</a>
+				</td>
+			</tr>
+		{/if}
+	{/if}
 
     {* Custom fields *}
     {section name=ir loop=$customfields}
@@ -148,16 +155,30 @@
         </tr>
       {/if}
     {/section}
-
-    <tr>
-      <th colspan="2">{tr}Preferences{/tr}</th>
+    <tr class="{cycle}">
+      <td>{tr}User information:{/tr}</td>
+      <td>
+        <select name="user_information">
+          <option value='private' {if $user_prefs.user_information eq 'private'}selected="selected"{/if}>{tr}Private{/tr}</option>
+          <option value='public' {if $user_prefs.user_information eq 'public'}selected="selected"{/if}>{tr}Public{/tr}</option>
+        </select>
+      </td>
     </tr>
-  
     <tr class="{cycle}">
       <td>{tr}Last login:{/tr}</td>
-      <td>{$userinfo.lastLogin|tiki_short_datetime}</td>
+      <td><span class="description">{$userinfo.lastLogin|tiki_long_datetime}</span></td>
     </tr>
   
+    <td colspan="2" class="input_submit_container"><input type="submit" name="new_prefs" value="{tr}Save changes{/tr}" /></td>
+  
+  </table>
+{/tab}
+{tab name="{tr}Preferences{/tr}"}
+  
+  <table class="normal">
+    <tr>
+      <th colspan="2">{tr}General settings{/tr}</th>
+    </tr>
     <tr class="{cycle}">
       <td>{tr}Is email public? (uses scrambling to prevent spam){/tr}</td>
       <td>
@@ -205,10 +226,8 @@
   
     {if $prefs.change_language eq 'y'}
       <tr class="{cycle}">
-        <td>{tr}Language:{/tr}</td>
+        <td>{tr}Preferred language:{/tr}</td>
         <td>
-          <br/>
-          {tr}Your preferred language:{/tr}
           <select name="language">
             {section name=ix loop=$languages}
               {if count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
@@ -276,17 +295,7 @@
         </select>
       </td>
     </tr>
-  
-    <tr class="{cycle}">
-      <td>{tr}User information:{/tr}</td>
-      <td>
-        <select name="user_information">
-          <option value='private' {if $user_prefs.user_information eq 'private'}selected="selected"{/if}>{tr}Private{/tr}</option>
-          <option value='public' {if $user_prefs.user_information eq 'public'}selected="selected"{/if}>{tr}Public{/tr}</option>
-        </select>
-      </td>
-    </tr>
-  
+
     {if $prefs.feature_community_mouseover eq 'y'}
       <tr class="{cycle}">
         <td>{tr}Display info tooltip on mouseover for every user who allows his/her information to be public{/tr}</td>
@@ -305,6 +314,27 @@
       </tr>
     {/if}
   
+    {if $prefs.feature_maps eq 'y' or $prefs.feature_gmap eq 'y'}
+      <tr class="{cycle}">
+        <td>{tr}Longitude:{/tr}</td>
+        <td>
+          <input type="text" name="lon" value="{$user_prefs.lon|escape}" /> <em>Use WGS84/decimal degrees</em>
+        </td>
+      </tr>
+      <tr class="{cycle}">
+        <td>{tr}Latitude:{/tr}</td>
+        <td>
+          <input type="text" name="lat" value="{$user_prefs.lat|escape}" /> <em>for longitude and latitude</em>
+        </td>
+      </tr>
+      <tr class="{cycle}">
+        <td>{tr}Map zoom:{/tr}</td>
+        <td>
+          <input type="text" name="zoom" value="{$user_prefs.zoom|escape}" />
+        </td>
+      </tr>
+    {/if}
+
     {if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
       <tr>
         <th colspan="2">{tr}User Messages{/tr}</th>
@@ -547,7 +577,7 @@
 	{/tab}
 {/if}
 
-{if $tiki_p_delete_account eq 'y'}
+{if $tiki_p_delete_account eq 'y' and $userinfo.login neq 'admin'}
 {tab name="{tr}Account Deletion{/tr}"}
 <form action="tiki-user_preferences.php" method="post" onsubmit='return confirm("{tr 0=$userwatch|escape}Are you really sure you want to delete the account %0?{/tr}");'>
 {if !empty($userwatch)}<input type="hidden" name="view_user" value="{$userwatch|escape}" />{/if}

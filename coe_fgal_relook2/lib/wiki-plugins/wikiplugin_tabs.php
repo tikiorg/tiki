@@ -23,20 +23,22 @@ function wikiplugin_tabs_help() {
 function wikiplugin_tabs_info() {
 	return array(
 		'name' => tra('Tabs'),
-		'documentation' => 'PluginTabs',			
-		'description' => tra('Provides tabs built using the smarty tabset block.'),
+		'documentation' => tra('PluginTabs'),			
+		'description' => tra('Display page content in a set of tabs'),
 		'prefs' => array( 'wikiplugin_tabs' ),
 		'body' => tra('Tabs content separated by /////'),
 		'params' => array(
 			'name' => array(
 				'required' => false,
-				'name' => tra('Tabset name'),
+				'name' => tra('Tabset Name'),
 				'description' => tra('Unique tabset name (if you want it to remember its last state). Ex: user_profile_tabs'),
+				'default' => '',
 			),
 			'tabs' => array(
 				'required' => true,
-				'name' => tra('Tab titles'),
+				'name' => tra('Tab Titles'),
 				'description' => tra('Pipe separated list of tab titles. Ex: tab 1|tab 2|tab 3'),
+				'default' => '',
 			),
 		),
 	);
@@ -59,6 +61,9 @@ function wikiplugin_tabs($data, $params) {
 	if (!empty($data)) {
 		$tabData = explode('/////', $data);
 		foreach ($tabData as &$d) {
+			if (strpos( $d, '</p>') === 0) {
+				$d = substr( 4, $d);
+			}
 			$d = '~np~' . $tikilib->parse_data($d) . '~/np~';
 		}
 	}

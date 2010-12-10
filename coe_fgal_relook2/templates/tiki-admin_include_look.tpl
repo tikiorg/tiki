@@ -23,7 +23,7 @@
 				{/if}
 				
 				{if $prefs.site_style != $a_style}
-					{remarksbox type="note" title="{tr}Note{/tr}}{tr}Theme not saved yet - click "Apply"{/tr}{/remarksbox}
+					{remarksbox type="note" title="{tr}Note{/tr}"}{tr}Theme not saved yet - click "Apply"{/tr}{/remarksbox}
 				{/if}	
 			</div>
 
@@ -81,6 +81,7 @@
 		{/tab}
 		
 		{tab name="{tr}General Layout options{/tr}"}
+			{preference name=feature_html_head_base_tag}
 			{preference name=feature_custom_html_head_content}
 			{preference name=feature_secondary_sitemenu_custom_code}
 			{preference name=feature_sitemycode}

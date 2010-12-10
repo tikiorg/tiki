@@ -19,6 +19,10 @@ class WikiParser_PluginArgumentParser
 			$name = trim( $name );
 			$value = '';
 
+			if (strlen($data) == $pos + 1) {
+				break;
+			}
+
 			// Consider =>
 			if( $data{$pos + 1} == '>' )
 				$pos++;

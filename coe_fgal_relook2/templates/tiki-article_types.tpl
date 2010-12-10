@@ -8,7 +8,7 @@
 
 <div class="wiki-edithelp" id="wiki-edithelp" style="display:none;">
 	<b>{tr}Article type{/tr}</b> - {tr}Shows up in the drop down list of article types{/tr}<br />
-	<b>{tr}Rate{/tr}</b> - {tr}Allow ratings by the author{/tr}<br />
+	<b>{tr}Author Rating{/tr}</b> - {tr}Allow ratings by the author{/tr}<br />
 	<b>{tr}Show before publish date{/tr}</b> - {tr}non-admins can view before the publish date{/tr}<br />
 	<b>{tr}Show after expire date{/tr}</b> - {tr}non-admins can view after the expire date{/tr}<br />
 	<b>{tr}Heading only{/tr}</b> - {tr}No article body, heading only{/tr}<br />
@@ -39,7 +39,7 @@
 	<table class="normal">
 		<tr>
 			<th>{tr}Articles{/tr}</th>
-			<th>{tr}Rate{/tr}</th>
+			<th>{tr}Author Rating{/tr}</th>
 			<th>{tr}Show before publish date{/tr}</th>
 			<th>{tr}Show after expire date{/tr}</th>
 			<th>{tr}Heading only{/tr}</th>

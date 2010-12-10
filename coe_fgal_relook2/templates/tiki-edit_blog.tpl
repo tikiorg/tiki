@@ -59,7 +59,7 @@
           <td><input type="checkbox" name="public" id="blogs-allow_others" {if $public eq 'y'}checked='checked'{/if}/></td>
         </tr>	
         <tr class="editblogform">
-          <td><label for="blogs-always_owner">{tr}If others post to blog, Author should always be Owner{/tr}</label></td>
+          <td><label for="blogs-always_owner">{tr}If others post to blog, author should always be owner{/tr}</label></td>
           <td><input type="checkbox" name="alwaysOwner" id="blogs-always_owner" {if $alwaysOwner eq 'y'}checked='checked'{/if}/></td>
         </tr>
         <tr class="editblogform">
@@ -136,18 +136,19 @@
 
         {if $prefs.feature_blog_heading eq 'y' and $tiki_p_edit_templates eq 'y'}
           <tr class="editblogform">
-            <td>
+            <td colspan="2">
               <label for="blogs-heading">{tr}Blog heading{/tr}</label>
             </td>
-            <td>
+					</tr>
+          <tr class="editblogform">
+            <td colspan="2">
               <textarea name="heading" id="blogs-heading" rows='10' cols='{$cols}'>{$heading|escape}</textarea>
             </td>
           </tr>
 
           {if strlen($heading) > 0 and $blogId > 0}
             <tr class="editblogform">
-              <td></td>
-              <td>
+              <td colspan="2">
                 {button href="#" _flip_id='blog_heading_preview' _class='link' _text="{tr}Heading preview{/tr}" _flip_default_open='n'}
                 <div id="blog_heading_preview" style="display: {if isset($smarty.session.tiki_cookie_jar.show_blog_heading_preview) and $smarty.session.tiki_cookie_jar.show_blog_heading_preview eq 'y'}block{else}none{/if};">
                   {eval var=$heading}
@@ -157,10 +158,12 @@
           {/if}
 
           <tr class="editblogform">
-            <td>
+            <td colspan="2">
               <label for="blogs-post-heading">{tr}Blog post heading{/tr}</label>
             </td>
-            <td>
+					</tr>
+          <tr class="editblogform">
+            <td colspan="2">
               <textarea name="post_heading" id="blogs-post_heading" rows='10' cols='{$cols}'>{$post_heading|escape}</textarea>
             </td>
           </tr>

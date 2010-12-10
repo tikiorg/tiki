@@ -41,8 +41,8 @@ function prefs_users_list() {
 			'name' => tra('Displayed time zone'),
 			'type' => 'radio',
 			'options' => array(
-				'Site' => tra('Use site default to show times'),
-				'Local' => tra('Detect user timezone (if browser allows). Otherwise use site default.'),
+				'Site' => tra('Always the site default time zone.'),
+				'Local' => tra('Use time zone set from user preferences, or the automatically detected time zone for anonymous (if browser allows). Site default is used as fallback.'),
 			),
 		),
 		'users_prefs_userbreadCrumb' => array(
@@ -106,6 +106,9 @@ function prefs_users_list() {
 		'users_prefs_mess_maxRecords' => array(
 			'name' => tra('Messages per page'),
 			'type' => 'list',
+			'dependencies' => array(
+				'feature_messages',
+			),
 			'options' => array(
 				'2' => tra('2'),
 				'5' => tra('5'),
@@ -133,6 +136,9 @@ function prefs_users_list() {
 		'users_prefs_minPrio' => array(
 			'name' => tra('Send me an email for messages with priority equal or greater than'),
 			'type' => 'list',
+			'dependencies' => array(
+				'feature_messages',
+			),
 			'options' => array(
 				'1' => tra('1'),
 				'2' => tra('2'),
@@ -145,6 +151,9 @@ function prefs_users_list() {
 		'users_prefs_mess_archiveAfter' => array(
 			'name' => tra('Auto-archive read messages after'),
 			'type' => 'list',
+			'dependencies' => array(
+				'feature_messages',
+			),
 			'options' => array(
 				'0' => tra('Never'),
 				'1' => tra('1'),
