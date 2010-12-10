@@ -60,9 +60,7 @@ class Tiki_Wsdl
 			foreach ($data['input']['parts'] as $parameter => $type) {
 				preg_match('/^(.*)\:(.*)\^?$/', $type, $matches);
 
-				if (count($matches) == 3) {
-					$typeDef = $wsdl->getTypeDef($matches[2], $matches[1]);
-
+				if (count($matches) == 3 && ($typeDef = $wsdl->getTypeDef($matches[2], $matches[1]))) {
 					if (isset($typeDef['elements'])) {
 						foreach ($typeDef['elements'] as $element) {
 							$parameters[] = $typeDef['name'] . ':' . $element['name'];
