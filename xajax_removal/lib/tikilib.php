@@ -510,9 +510,6 @@ class TikiLib extends TikiDb_Bridge
 					$res['perm']=($this->user_has_perm_on_object($res['user'],$object,'blog','tiki_p_read_blog') ||
 							$this->user_has_perm_on_object($res['user'],$object,'blog','tiki_p_admin_blog'));
 					break;
-				case 'map_changed':
-					$res['perm']=$this->user_has_perm_on_object($res['user'],$object,'map','tiki_p_map_view');
-					break;
 				case 'forum_post_topic':
 					$res['perm']=($this->user_has_perm_on_object($res['user'],$object,'forum','tiki_p_forum_read') ||
 							$this->user_has_perm_on_object($res['user'],$object,'forum','tiki_p_admin_forum'));
@@ -570,7 +567,6 @@ class TikiLib extends TikiDb_Bridge
 				case 'wiki_page_changed': $objectType="wiki page"; break;
 				case 'wiki_page_created': $objectType="wiki page"; break;
 				case 'blog_post': $objectType="blog"; break;
-				case 'map_changed': $objectType="map_changed"; break;
 				case 'forum_post_topic': $objectType="forum"; break;
 				case 'forum_post_thread': $objectType="forum"; break;
 				case 'file_gallery_changed': $objectType="file gallery"; break;

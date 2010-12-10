@@ -1081,17 +1081,6 @@ function get_default_prefs() {
 		'rss_mapfiles' => 'n',
 		'title_rss_mapfiles' => '',
 
-	
-		// maps
-		'feature_maps' => 'n',
-		'map_path' => '',
-		'default_map' => '',
-		'map_help' => 'MapsHelp',
-		'map_comments' => 'MapsComments',
-		'gdaltindex' => '',
-		'ogr2ogr' => '',
-		'mapzone' => '180',
-
 		// gmap
 		'feature_gmap' => 'n',
 		'gmap_defaultx' => '0',

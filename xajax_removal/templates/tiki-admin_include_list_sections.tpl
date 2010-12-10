@@ -69,10 +69,8 @@
 
 	{self_link page="directory" _class="admbox" _style="background-image: url('pics/large/gnome-fs-server48x48.png')" _selected="'`$prefs.feature_directory`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Directory{/tr}" title="{tr}Directory{/tr}{if $prefs.feature_directory ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Directory{/tr}</span>{/self_link}
 
-	{self_link page="maps" _class="admbox" _style="background-image: url('pics/large/maps48x48.png')" _selected="'`$prefs.feature_maps`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Maps{/tr}" title="{tr}Maps{/tr}{if $prefs.feature_maps ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Maps{/tr}</span>{/self_link}
-	
 	{self_link page="gmap" _ajax="n" _class="admbox" _style="background-image: url('pics/large/google_maps48x48.png')" _selected="'`$prefs.feature_gmap`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Google Maps{/tr}" title="{tr}Google Maps{/tr}{if $prefs.feature_gmap ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Google Maps{/tr}</span>{/self_link}
-{* Google map does not load on ajax page load - white screens *}
+{* Google map does not load on ajax page load - white screens - was fixed in 6.x? *}
 	{self_link page="copyright" _class="admbox" _style="background-image: url('pics/large/copyright48x48.png')" _selected="'`$prefs.feature_copyright`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Copyright{/tr}" title="{tr}Copyright{/tr}{if $prefs.feature_copyright ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Copyright{/tr}</span>{/self_link}
 
 	{self_link page="messages" _class="admbox" _style="background-image: url('pics/large/messages48x48.png')" _selected="'`$prefs.feature_messages`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Messages{/tr}" title="{tr}Messages{/tr}{if $prefs.feature_messages ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Messages{/tr}</span>{/self_link}

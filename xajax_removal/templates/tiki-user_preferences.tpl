@@ -314,7 +314,7 @@
       </tr>
     {/if}
   
-    {if $prefs.feature_maps eq 'y' or $prefs.feature_gmap eq 'y'}
+    {if $prefs.feature_gmap eq 'y'}
       <tr class="{cycle}">
         <td>{tr}Longitude:{/tr}</td>
         <td>

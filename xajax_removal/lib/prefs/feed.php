@@ -184,14 +184,6 @@ function prefs_feed_list() {
 				'feature_directory',
 			),
 		),
-		'feed_maps' => array(
-			'name' => tra('Maps'),
-			'description' => tra('RSS feed for maps'),
-			'type' => 'flag',
-			'dependencies' => array(
-				'feature_maps',
-			),
-		),
 		'feed_shoutbox' => array(
 			'name' => tra('Shoutbox'),
 			'description' => tra('RSS feed for shoutbox'),

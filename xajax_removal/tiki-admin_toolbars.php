@@ -33,7 +33,6 @@ if ($prefs['feature_articles'] == 'y') { $sections2['cms'] = tra('Articles'); }
 if ($prefs['feature_faqs'] == 'y') { $sections2['faqs'] = tra('FAQs'); }
 if ($prefs['feature_newsletters'] == 'y') { $sections2['newsletters'] = tra('Newsletters'); }
 if ($prefs['feature_forums'] == 'y') { $sections2['forums'] = tra('Forums'); }
-if ($prefs['feature_maps'] == 'y') { $sections2['maps'] = tra('Maps'); }
 if ($prefs['feature_sheet'] == 'y') { $sections2['sheet'] = tra('Spreadsheets'); }
 
 asort($sections2);

@@ -202,13 +202,6 @@ function prefs_feature_list() {
 			'help' => 'Shoutbox',
 			'type' => 'flag',
 		),
-		'feature_maps' => array(
-			'name' => tra('Maps'),
-			'description' => tra('Navigable, interactive maps with user-selectable layers'),
-			'help' => 'Maps',
-			'warning' => tra('Requires mapserver'),
-			'type' => 'flag',
-		),
 		'feature_gmap' => array(
 			'name' => tra('Google Maps'),
 			'description' => tra('Interactive use of Google Maps'),

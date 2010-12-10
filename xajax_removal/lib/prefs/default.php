@@ -16,11 +16,6 @@ function prefs_default_list() {
 				'iso-8859-1' => tra('iso-8859-1'),
 			),
 		),
-		'default_map' => array(
-			'name' => tra('default mapfile'),
-			'type' => 'text',
-			'size' => '50',
-		),
 		'default_wiki_diff_style' => array(
 			'name' => tra('Default diff style'),
 			'type' => 'list',

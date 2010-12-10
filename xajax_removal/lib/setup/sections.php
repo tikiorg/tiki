@@ -142,13 +142,6 @@ $sections = array(
 		'objectType' => 'calendar',
 		'itemObjectType' => 'event',
 	),
-	// tra('Map')
-	'maps' => array(
-		'feature' => 'feature_maps',
-		'key' => 'mapId',
-		'itemkey' => '',
-		'objectType' => 'map',
-	),
 	'gmaps' => array(
 		'feature' => 'feature_gmap',
 		'key' => '',
