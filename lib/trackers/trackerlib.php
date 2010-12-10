@@ -1231,6 +1231,31 @@ class TrackerLib extends TikiLib
 						}
 					}
 					break;
+				case 'W':
+					if (count($fopt['options_array']) >= 2) {
+						require_once 'lib/webservicelib.php';
+
+						if (!($webservice = Tiki_Webservice::getService($fopt['options_array'][0]))  ||
+							!($template = $webservice->getTemplate($fopt['options_array'][1]))) {
+							break;
+						}
+
+						$ws_params = array();
+						if ( isset( $fopt['options_array'][2] )) {
+							parse_str($fopt['options_array'][2], $ws_params);
+							foreach ($ws_params as $ws_param_name => $ws_param_value) {
+								foreach ($fields as $sub_field) {
+									if (strcmp($ws_param_value, '%' . $sub_field['name'] . '%') == 0) {
+										$ws_params[$ws_param_name] = $sub_field['value'];
+									}
+								}
+							}
+						}
+
+						$response = $webservice->performRequest( $ws_params );
+						$fields[$index]['value'] = $template->render( $response, 'tikiwiki' );
+					}
+					break;
 				default:
 					break;
 			}
@@ -3608,6 +3633,23 @@ class TrackerLib extends TikiLib
 				<dd><strong>[filter]</strong> LDAP Filter, without commas. %field_name% can be used, and will be replaced by the tracker field %field_name% current value.;
 				<dd><strong>[field]</strong> LDAP returned field;
 				<dd><strong>[dsn]</strong> DSN name in Tiki;
+				</dl>'));
+		$type['W'] = array(
+			'label'=>tra('webservice'),
+			'opt'=>true,
+			'options'=>array(
+				'service'=>array('type'=>'str','label'=>tra('Registred service name')),
+                                'template'=>array('type'=>'str','label'=>tra('Registred template name')),
+                                'params'=>array('type'=>'str','label'=>tra('Parameters')),
+			),
+			'help'=>tra('<dl>
+				<dt>Function: Displays the result of a webservice call
+				<dt>Usage: <strong>service,template,parameter</strong>
+				<dt>Example: list_books,book_template,order=name_desc&limit=10
+				<dt>Description:
+				<dd><strong>[service]</strong> The service name, from the Tiki webservice admin;
+				<dd><strong>[template]</strong> The template name;
+                                <dd><strong>[params]</strong> List of parameters, formated like a query. %field_name% can be used, and will be replaced by the tracker field %field_name% current value.
 				</dl>'));
 
 		return $type;
