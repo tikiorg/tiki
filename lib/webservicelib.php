@@ -5,6 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+require_once 'soap/soaplib.php';
+require_once 'soap/wsdllib.php';
+
 class Tiki_Webservice
 {
 	private $name;
