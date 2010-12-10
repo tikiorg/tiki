@@ -147,7 +147,7 @@ class Tiki_Webservice
 					if ( !empty($this->operation) ) {
 						$options = array( 'encoding' => 'UTF-8' );
 
-						if ( $prefs['use_proxy'] == 'y' ) {
+						if ( $prefs['use_proxy'] == 'y' && !strpos($built, 'localhost') ) {
 							$options['proxy_host'] = $prefs['proxy_host'];
 							$options['proxy_port'] = $prefs['proxy_port'];
 						}

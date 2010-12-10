@@ -27,9 +27,24 @@ class Tiki_Soap
 		}
 
 		$client = new Zend_Soap_Client( $wsdl, $options );
+		$soap_params = array();
+
+		foreach ($params as $param_name => $param_value) {
+			preg_match('/^(.*)\:(.*)$/', $param_name, $matches);
+
+			if (count($matches) == 3) {
+				if (!isset($soap_params[$matches[1]])) {
+					$soap_params[$matches[1]] = array();
+				}
+
+				$soap_params[$matches[1]][$matches[2]] = $param_value;
+			} else {
+				$soap_params[$param_name] = $param_value;
+			}
+		}
 
 		try {
-			$result = call_user_func_array(array($client, $operation), $params);
+			$result = call_user_func_array(array($client, $operation), $soap_params);
 
 		} catch (SoapFault $e) {
 			trigger_error($e->getMessage());
@@ -38,7 +53,10 @@ class Tiki_Soap
 
 		if (is_object($result)) {
 			$result_name = $operation . 'Result';
-			return $result->$result_name;
+
+			if (isset($result->$result_name)) {
+				return $result->$result_name;
+			}
 		}
 
 		return $result;
