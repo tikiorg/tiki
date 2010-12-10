@@ -16,5 +16,11 @@ function prefs_menus_list() {
 			'name' => tra('Default path for the icons'),
 			'type' => 'text',
 		),
+		'menus_item_names_raw' => array(
+			'name' => tra('Allow HTML in menu items (INSECURE)'),
+			'description' => tra('If enabled, treat menu item names as HTML item content and do not escape them (do not replace HTML special characters), allowing to use HTML in menu items to put images for example. Code must be valid. This allows menu item editors to put arbitrary HTML; only enable if you know what you are doing.'),
+			'help' => 'Menus',
+			'type' => 'flag',
+		),
 	);
 }
