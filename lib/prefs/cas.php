@@ -12,11 +12,6 @@ function prefs_cas_list() {
 				'type' => 'flag',
 				'perspective' => false,
 				),
-			'cas_create_user_tiki_ldap' => array(
-				'name' => tra('Use LDAP information when creating user in Tiki'),
-				'type' => 'flag',
-				'perspective' => false,
-				),
 			'cas_skip_admin' => array(
 				'name' => tra('Use Tiki authentication for Admin login'),
 				'type' => 'flag',

@@ -1105,6 +1105,8 @@ function get_default_prefs() {
 		// auth
 		'allowRegister' => 'n',
 		'eponymousGroups' => 'n',
+		'syncGroupsWithDirectory' => 'n',
+		'syncUsersWithDirectory' => 'n',
 		'useRegisterPasscode' => 'n',
 		'registerPasscode' => isset($tikilib) ? md5($tikilib->genPass()) : md5(mt_rand()),
 		'rememberme' => 'disabled',
@@ -1164,6 +1166,23 @@ function get_default_prefs() {
 		'auth_ldap_host' => '',
 		'auth_ldap_port' => '',
 		'auth_ldap_groupdescattr' => '',
+
+		'auth_ldap_group_external' => 'n',
+		'auth_ldap_group_host' => 'localhost',
+		'auth_ldap_group_port' => '389',
+		'auth_ldap_group_debug' => 'n',
+		'auth_ldap_group_ssl' => 'n',
+		'auth_ldap_group_starttls' => 'n',
+		'auth_ldap_group_type' => 'default',
+		'auth_ldap_group_scope' => 'sub',
+		'auth_ldap_group_version' => '3',
+		'auth_ldap_group_basedn' => '',
+		'auth_ldap_group_userdn' => '',
+		'auth_ldap_group_userattr' => 'uid',
+		'auth_ldap_group_corr_userattr' => 'uid',
+		'auth_ldap_group_useroc' => 'inetOrgPerson',
+		'auth_ldap_group_adminuser' => '',
+		'auth_ldap_group_adminpass' => '',
 		
 		'auth_phpbb_version' => 3,
 		'auth_phpbb_skip_admin' => 'y',
@@ -1819,7 +1838,6 @@ function get_default_prefs() {
 
 		// CAS
 		'cas_create_user_tiki' => 'n',
-		'cas_create_user_tiki_ldap' => 'n',
 		'cas_skip_admin' => 'n',
 		'cas_show_alternate_login' => 'y',
 		'cas_version' => '1.0',
