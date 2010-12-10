@@ -38,14 +38,6 @@ if( $prefs['feature_wiki_structure'] == 'y' ) {
 }
 include_once('lib/wiki/wikilib.php');
 include_once('lib/stats/statslib.php');
-if ($prefs['feature_ajax'] === 'y') {
-	if ($prefs['ajax_xajax'] === 'y') {
-		require_once ("lib/ajax/ajaxlib.php");
-		if ($prefs['feature_wiki_save_draft'] === 'y') {
-			require_once ("lib/wiki/wiki-ajax.php");
-		}
-	}
-}
 require_once ("lib/wiki/renderlib.php");
 
 $auto_query_args = array('page','no_bl','page_id','pagenum','page_ref_id','mode','sort_mode',

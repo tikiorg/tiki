@@ -95,7 +95,7 @@
     <tr class="{cycle}">
       <td>{tr}Location:{/tr}</td>
       <td>
-        {if $prefs.ajax_xajax eq 'y' and !empty($user_prefs.lat)}
+        {if 0 and $prefs.feature_ajax eq 'y' and !empty($user_prefs.lat)}{* AJAX_TODO *}
           {wikiplugin _name="googlemap" type="user" setdefaultxyz="" locateitemtype="user" locateitemid="$userwatch" width="200" height="100" controls="n"}{/wikiplugin}
         {/if}
         <p>

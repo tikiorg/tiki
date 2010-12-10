@@ -9,10 +9,6 @@ $section = 'mytiki';
 include_once ('tiki-setup.php');
 include_once('lib/reportslib.php');
 
-if ($prefs['ajax_xajax'] == "y") {
-	require_once ('lib/ajax/ajaxlib.php');
-}
-
 $access->check_user($user);
 $access->check_feature('feature_user_watches');
 
@@ -177,16 +173,6 @@ if ($prefs['feature_messages'] == 'y' && $tiki_p_messages == 'y') {
 $eok = $userlib->get_user_email($user);
 $smarty->assign('email_ok', empty($eok) ? 'n' : 'y');
 ask_ticket('user-watches');
-if ($prefs['ajax_xajax'] == "y") {
-	function user_watches_ajax() {
-		global $ajaxlib, $xajax;
-		$ajaxlib->registerTemplate("tiki-user_watches.tpl");
-		$ajaxlib->registerTemplate("tiki-my_tiki.tpl");
-		$ajaxlib->registerFunction("loadComponent");
-		$ajaxlib->processRequests();
-	}
-	user_watches_ajax();
-}
 $smarty->assign_by_ref('report_preferences', $reportslib->get_report_preferences_by_user($user));
 $smarty->assign('mid', 'tiki-user_watches.tpl');
 $smarty->display("tiki.tpl");

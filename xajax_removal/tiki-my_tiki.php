@@ -7,9 +7,6 @@
 
 $section = 'mytiki';
 require_once ('tiki-setup.php');
-if ($prefs['ajax_xajax'] == "y") {
-	require_once ('lib/ajax/ajaxlib.php');
-}
 include_once ('lib/wiki/wikilib.php');
 include_once ('lib/tasks/tasklib.php');
 $access->check_user($user);
@@ -117,15 +114,5 @@ if ($prefs['feature_articles'] == 'y') {
 	}
 }
 include_once ('tiki-section_options.php');
-if ($prefs['ajax_xajax'] == "y") {
-	function mytiki_ajax() {
-		global $ajaxlib, $xajax;
-		$ajaxlib->registerTemplate("tiki-my_tiki.tpl");
-		$ajaxlib->registerTemplate("user_profile_s.tpl");
-		$ajaxlib->registerFunction("loadComponent");
-		$ajaxlib->processRequests();
-	}
-	mytiki_ajax();
-}
 $smarty->assign('mid', 'tiki-my_tiki.tpl');
 $smarty->display("tiki.tpl");

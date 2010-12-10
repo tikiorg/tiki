@@ -5,12 +5,13 @@
 		<tr>
 			<td><label for="pass1">{tr}Password:{/tr}</label>{if $trackerEditFormId}&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;{/if}</td>
 			<td>
-				<input id='pass1' type="password" name="pass" onkeypress="regCapsLock(event)" onkeyup="{if $prefs.ajax_xajax neq 'y' && !$userTrackerData}runPassword(this.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');{elseif !$userTrackerData}check_pass();{/if}" />
+				<input id='pass1' type="password" name="pass" onkeypress="regCapsLock(event)"
+						onkeyup="{if 0 and $prefs.feature_ajax neq 'y' && !$userTrackerData}runPassword(this.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');{elseif !$userTrackerData}check_pass();{/if}" />
 				<div style="float:right;margin-left:5px;">
 					<div id="mypassword_text"></div>
 					<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
 				</div>
-				{if $prefs.ajax_xajax ne 'y'}
+				{if 0 and $prefs.feature_ajax ne 'y'}{* AJAX_TODO *}
 					{include file='password_help.tpl'}
 				{/if}
 			</td>

@@ -6,9 +6,6 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-if ($prefs['ajax_xajax'] == "y") {
-	require_once ('lib/ajax/ajaxlib.php');
-}
 if (empty($prefs['feature_jpgraph'])) {
 	$prefs['feature_jpgraph'] = 'n'; //optional package does not go througp prefs
 

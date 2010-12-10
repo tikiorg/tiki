@@ -8,8 +8,8 @@
 				{if $trackerEditFormId}&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;{/if}
 			</td>
 			<td>
-				<input type="text" id="email" name="email" {if $prefs.ajax_xajax eq 'y' && !$userTrackerData}onkeyup="return check_mail()" onblur="return check_mail()"{/if}/>
-				{if $prefs.ajax_xajax eq 'y'}
+				<input type="text" id="email" name="email" {if 0 and $prefs.feature_ajax eq 'y' && !$userTrackerData}onkeyup="return check_mail()" onblur="return check_mail()"{/if}/>
+				{if 0 and $prefs.feature_ajax eq 'y'}{* AJAX_TODO *}
 					<span id="ajax_msg_mail" style="vertical-align: middle;"></span>
 				{/if}
 				{if $prefs.validateUsers eq 'y' and $prefs.validateEmail ne 'y'}

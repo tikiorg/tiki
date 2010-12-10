@@ -214,12 +214,6 @@ if ($prefs['javascript_enabled'] != 'n') {
 	$headerlib->add_jsfile( 'lib/jquery_tiki/tiki-jquery.js' );
 	
 	if ( $prefs['feature_ajax'] === 'y' ) {
-		if ($prefs['ajax_xajax'] === 'y') {
-			$headerlib->add_jsfile('lib/ajax/tiki-ajax.js');
-			if ($prefs['feature_wiki_save_draft'] === 'y') {
-				$headerlib->add_jsfile('lib/wiki/wiki-ajax.js');
-			}
-		}
 		if ( $prefs['ajax_autosave'] === 'y' ) {
 			$headerlib->add_jsfile('lib/ajax/autosave.js');
 		}
