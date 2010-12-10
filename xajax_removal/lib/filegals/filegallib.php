@@ -1132,7 +1132,7 @@ class FileGalLib extends TikiLib
 		return $return;
 	}
 
-	// Get default phplayers tree for filegals
+	// Get default phplayers tree for filegals - not actually using phplayers for tiki7+
 	function getFilegalsTreePhplayers( $currentGalleryId = null ) {
 		return $this->getTreePhplayers( $this->getFilegalsIdsTree(), $currentGalleryId );
 	}

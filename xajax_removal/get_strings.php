@@ -164,7 +164,7 @@ function collect_files ($dir)
 				'htmlpurifier' === $file || 'adodb' === $file || 'smarty' === $file ||
 				'ezcomponents' === $file || 'phpcas' === $file || 
 				'jscalendar' === $file || 'pclzip' === $file || 'jquery' === $file ||
-				'phplayers' === $file || 'pear' === $file || 'ckeditor' === $file ||
+				'pear' === $file || 'ckeditor' === $file ||
 				'lang' === $file || 'templates_c' === $file || 'dump'  === $file || 
 				'temp' === $file || 'img' === $file || 'cache' === $file ||
 				'test' === $file) {

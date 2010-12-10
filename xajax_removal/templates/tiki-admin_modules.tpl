@@ -457,26 +457,6 @@
 									</td>
 								</tr>
 							{/if}							
-							{if $prefs.feature_phplayers eq "y"}
-								<tr>
-									<td>
-										<label for="list_phpmenus">{tr}PHP Layers menus:{/tr}</label>
-									</td>
-									<td>
-										<select name="phpmenus" id='list_phpmenus'>
-											{section name=ix loop=$menus}
-												<option value="{literal}{{/literal}phplayers id={$menus[ix].menuId}{literal}}{/literal}">{$menus[ix].name}</option>
-											{/section}
-										</select>
-									</td>
-									<td>
-										<a class="link" href="javascript:setUserModuleFromCombo('list_phpmenus', 'um_data');" title="{tr}Use phplayermenu{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
-									</td>
-									<td>
-										<a {popup text="Params:<br />id=<br />type=tree <i>or</i> phptree <i>or</i> plain <i>or</i> horiz <i>or</i> vert<br />file=<br />sectionLevel=" width=100 center=true}>{icon _id='help'}</a>
-									</td>
-								</tr>
-							{/if}
 						{/if}
 						{if $banners}
 							<tr>
@@ -531,15 +511,6 @@
 								<li>{literal}{menu id=X css=y type=vert}{/literal}</li>
 								<li>{literal}{menu id=X css=y type=horiz}{/literal}</li>
 							</ul>
-						{/if}
-						{if $prefs.feature_phplayers eq "y"}
-						{tr}To use a <a target="tikihelp" href="http://phplayersmenu.sourceforge.net/">PHP Layers menu</a>, use one of these syntaxes (Note: PHP Layers menus are being replaced by CSS menus and may have only basic styling in newer themes.):{/tr}
-						<ul>
-							<li>{literal}{phplayers id=X}{/literal}</li>
-							<li>{literal}{phplayers id=X type=horiz}{/literal}</li>
-							<li>{literal}{phplayers id=X type=vert}{/literal}</li>
-						</ul>
-						<br />
 						{/if}
 					{/remarksbox}
 				</td>
