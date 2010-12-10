@@ -191,7 +191,7 @@ FileGallery.upload = {
 		});
 	},
 	show: function(gallery, fm) {
-		jQuery("#tbFilegalManagerSub").dialog('open');
+		//jQuery("#tbFilegalManagerSub").dialog().dialog('open');
 		displayDialog('', 2, 'edit', 'tiki-upload_file.php?galleryId='+gallery+'&filegals_manager='+fm+'&fgspecial=1', 'Upload file');
 /*
 		this.dialog();

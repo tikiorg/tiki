@@ -1320,7 +1320,14 @@ function displayDialog( ignored, list, area_id, subUrl, subTitle ) {
 //	obj.zIndex = 10000;
 
 	if (subUrl) {
-		$(dialogDivSub).dialog('destroy').load(subUrl).dialog({
+		try {
+			if ($(dialogDivSub).dialog) {
+				$(dialogDivSub).dialog('destroy');
+			}
+		} catch( e ) {
+			// IE throws errors destroying a non-existant dialog
+		}
+		$(dialogDivSub).load(subUrl).dialog({
 			modal: true,
 			width: '700px',
 			autoOpen: true,

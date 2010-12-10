@@ -1037,12 +1037,12 @@ class ToolbarDialog extends Toolbar
 			$icon = tra('pics/icons/pictures.png');
 			$label = tra('Choose or upload images');
 			$tool_prefs[] = 'feature_filegals_manager';
-
-///			$headerlib->add_jsfile('lib/filegal/file_gallery.js');
+			global $headerlib;
+			$headerlib->add_jsfile('lib/filegals/file_gallery.js');
 			
 			$list = array(
 				tra('Quick upload and insert'),
-				'<script type="text/javascript" src="lib/filegals/file_gallery.js"></script><div id="tbFilegalManager" /><div id="tbFilegalManagerSub" />',
+				'<div id="tbFilegalManager" /><div id="tbFilegalManagerSub" />',
 				'FileGallery'
 			);
 
