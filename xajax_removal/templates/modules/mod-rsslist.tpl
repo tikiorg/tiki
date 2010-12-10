@@ -36,6 +36,12 @@
         </a>
         <br />
     {/if}
+    {if $prefs.feature_maps eq 'y' and $prefs.rss_mapfiles eq 'y' and $tiki_p_map_view eq 'y'}
+        <a class="linkmodule" title="{tr}Maps feed{/tr}" href="tiki-map_rss.php?ver={$prefs.feed_default_version}"><img src='pics/icons/feed.png' style='border: 0; vertical-align: text-bottom;' alt="{tr}Feed{/tr}" title="{tr}Feed{/tr}" width='16' height='16' />
+        {tr}Maps{/tr}
+        </a>
+        <br />
+    {/if}
     {if $prefs.feature_directory eq 'y' and $prefs.feed_directories eq 'y' and $tiki_p_view_directory eq 'y'}
         <a class="linkmodule" href="tiki-directories_rss.php?ver={$prefs.feed_default_version}"><img src='pics/icons/feed.png' style='border: 0; vertical-align: text-bottom;' alt="{tr}Feed{/tr}" title="{tr}Feed{/tr}" width='16' height='16' />
         {tr}Directories{/tr}

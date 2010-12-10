@@ -53,6 +53,10 @@
 				<a title="{tr}Forums RSS{/tr}" href="tiki-forums_rss.php?ver={$prefs.feed_default_version}">{icon style='vertical-align: text-bottom;' _id='feed' alt="{tr}RSS feed{/tr}"}</a>
 				<small>{tr}Forums{/tr}</small>
 		{/if}
+		{if $prefs.feature_maps eq 'y' and $prefs.rss_mapfiles eq 'y' and $tiki_p_map_view eq 'y'}
+				<a title="{tr}Maps RSS{/tr}" href="tiki-map_rss.php?ver={$prefs.feed_default_version}">{icon style='vertical-align: text-bottom;' _id='feed' alt="{tr}RSS feed{/tr}"}</a>
+				<small>{tr}Maps{/tr}</small>
+		{/if}
 		{if $prefs.feature_directory eq 'y' and $prefs.feed_directories eq 'y' and $tiki_p_view_directory eq 'y'}
 				<a href="tiki-directories_rss.php?ver={$prefs.feed_default_version}">{icon style='vertical-align: text-bottom;' _id='feed' alt="{tr}RSS feed{/tr}"}</a>
 				<small>{tr}Directories{/tr}</small>

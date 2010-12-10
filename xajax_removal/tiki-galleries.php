@@ -10,6 +10,7 @@ require_once ('tiki-setup.php');
 
 global $imagegallib; include_once ("lib/imagegals/imagegallib.php");
 global $categlib; include_once ('lib/categories/categlib.php');
+include_once ('lib/map/usermap.php');
 $access->check_feature('feature_galleries');
 
 if (isset($_REQUEST["find"])) {
@@ -330,6 +331,29 @@ if (isset($_REQUEST["removegal"])) {
 	$imagegallib->remove_gallery($_REQUEST["removegal"]);
 }
 $smarty->assign('category_needed', $category_needed);
+
+if ($prefs['feature_maps'] == 'y') {
+$map_error="";
+if (isset($_REQUEST["make_map"])) {
+		if ($_REQUEST["galleryId"] > 0) {
+			$info = $imagegallib->get_gallery_info($_REQUEST["galleryId"]);
+
+			if ($tiki_p_admin != 'y' || !$user || $info["user"] != $user) {
+				$smarty->assign('errortype', 401);
+				$smarty->assign('msg', tra("You do not have permission to make the map of this gallery"));
+				$smarty->display("error.tpl");
+				die;
+			}
+
+			$tdo = "gal.".strtr(trim($info["name"])," ","_");
+			if ($tikidomain) {
+				$tdo = "$tikidomain.".$tdo;
+			}
+			$map_error=$mapslib->makeimagemap($tdo,$_REQUEST["galleryId"]);
+		}
+}
+$smarty->assign('map_error', $map_error);
+}
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_asc';

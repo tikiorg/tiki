@@ -92,6 +92,10 @@
 {self_link page="directory" _class="icon tips" _title="{tr}Directory{/tr}|{tr}Settings and features for directory of links{/tr}"}{icon _id="pics/large/gnome-fs-server.png" alt="{tr}Directory{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 
+{if $prefs.feature_maps eq 'y'}
+{self_link page="maps" _class="icon tips" _title="{tr}Maps{/tr}|{tr}Settings and features for maps{/tr}"}{icon _id="pics/large/maps.png" alt="{tr}Maps{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+{/if}
+
 {if $prefs.feature_gmap eq 'y'}
 {self_link page="gmap" _class="icon tips" _title="{tr}Google Maps{/tr}|{tr}Defaults and API key for Google Maps{/tr}"}{icon _id="pics/large/google_maps.png" alt="{tr}Google Maps{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}

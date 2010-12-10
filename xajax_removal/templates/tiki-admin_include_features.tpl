@@ -45,6 +45,7 @@
 				{preference name=feature_directory}
 				{preference name=feature_quizzes}
 				{preference name=feature_shoutbox}
+				{preference name=feature_maps}
 				{preference name=feature_gmap}
 				{preference name=feature_live_support}
 				{preference name=feature_tell_a_friend}

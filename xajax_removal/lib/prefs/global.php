@@ -112,6 +112,29 @@ function prefs_global_list() {
 			'type' => 'text',
 			'size' => '30',
 		),
+		'gdaltindex' => array(
+			'name' => tra('Full path to gdaltindex'),
+			'type' => 'text',
+			'size' => '50',
+			'help' => 'Maps',
+			'perspective' => false,
+		),
+		'ogr2ogr' => array(
+			'name' => tra('Full path to ogr2ogr'),
+			'type' => 'text',
+			'size' => '50',
+			'help' => 'Maps',
+			'perspective' => false,
+		),
+		'mapzone' => array(
+			'name' => tra('Map Zone'),
+			'type' => 'list',
+			'help' => 'Maps',
+			'options' => array(
+				'180' => tra('[-180 180]'),
+				'360' => tra('[0 360]'),
+			),
+		),
 		'modallgroups' => array(
 			'name' => tra('Display modules to all groups always'),
 			'type' => 'flag',

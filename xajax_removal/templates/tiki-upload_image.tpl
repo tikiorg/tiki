@@ -82,6 +82,22 @@
 						{tr}or use filename{/tr}: <input type="checkbox" name="use_filename" />
 					</td>
 				</tr>
+				{if $prefs.feature_maps eq 'y' && $geogallery eq 'y'}
+					<tr>
+						<td>{tr}Latitude (WGS84/decimal degrees){/tr}:</td>
+						<td>
+							<input type="text" name="lat" value="{$lat|escape}" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							{tr}Longitude (WGS84/decimal degrees){/tr}:
+						</td>
+						<td>
+							<input type="text" name="lon" value="{$lon|escape}" />
+						</td>
+					</tr>
+				{/if}
 				<tr>
 					<td>{tr}Image Description{/tr}:</td>
 					<td>

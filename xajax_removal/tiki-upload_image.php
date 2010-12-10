@@ -171,6 +171,16 @@ if (isset($_REQUEST["upload"])) {
 	}
 	$lat = NULL;
 	$lon = NULL;
+	if ($prefs['feature_maps'] == 'y') {
+		if (isset($_REQUEST["lat"])) {
+			$lat = (float)$_REQUEST["lat"];
+			$smarty->assign('lat', $lat);
+		}
+		if (isset($_REQUEST["lon"])) {
+			$lon = (float)$_REQUEST["lon"];
+			$smarty->assign('lon', $lon);
+		}
+	}
 	if (isset($data)) {
 		if (!$up_thumb) {
 			if (function_exists("ImageCreateFromString") && (!strstr($type, "gif"))) {
@@ -293,6 +303,16 @@ for ($i = 0; $i < $temp_max; $i++) {
 	}
 }
 $smarty->assign_by_ref('galleries', $galleries["data"]);
+if ($prefs['feature_maps'] == 'y' && isset($_REQUEST["galleryId"])) {
+	$gal_info = $imagegallib->get_gallery($_REQUEST["galleryId"]);
+	if ($gal_info['geographic'] == 'y') {
+		$smarty->assign('geogallery', 'y');
+	} else {
+		$smarty->assign('geogallery', 'n');
+	}
+} else {
+	$smarty->assign('geogallery', 'n');
+}
 $cat_type = 'image';
 $cat_objid = '0';
 include_once ("categorize_list.php");
