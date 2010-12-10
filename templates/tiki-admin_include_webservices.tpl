@@ -24,15 +24,21 @@
 		<p id="ws_operation" style="display: none;">{tr}Operation:{/tr}<input type="text" name="operation" size="30" value="{$operation|escape}" /></p>
  		<p><input type="submit" name="parse" value="{tr}Lookup{/tr}"/></p>
 	{/if}
-	{if $url and $params|@count}
+	{if $url}
 		<h3>{tr}Parameters{/tr}</h3>
 		<table class="formcolor">
-			{foreach from=$params key=name item=value}
+			{if $params|@count}
+				{foreach from=$params key=name item=value}
+					<tr>
+						<td>{$name|escape}</td>
+						<td><input type="text" name="params[{$name|escape}]" value="{$value|escape}" /></td>
+					</tr>
+				{/foreach}
+			{else}
 				<tr>
-					<td>{$name|escape}</td>
-					<td><input type="text" name="params[{$name|escape}]" value="{$value|escape}" /></td>
+					<td colspan="2">{tr}{$url} requires no parameter.{/tr}</td>
 				</tr>
-			{/foreach}
+			{/if}
 			<tr>
 				<td colspan="2">
 					<input type="submit" name="test" value="{tr}Test Input{/tr}" />

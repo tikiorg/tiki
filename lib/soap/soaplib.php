@@ -22,13 +22,17 @@ class Tiki_Soap
 			return 'Extension SOAP not found';
 		}
 
-		$options['soap_version'] = SOAP_1_2;
+		if (!isset($options['soap_version'])) {
+			$options['soap_version'] = SOAP_1_1;
+		}
+
 		$client = new Zend_Soap_Client( $wsdl, $options );
 
 		try {
 			$result = call_user_func_array(array($client, $operation), $params);
 
 		} catch (SoapFault $e) {
+			trigger_error($e->getMessage());
 			return $e->getMessage();
 		}
 

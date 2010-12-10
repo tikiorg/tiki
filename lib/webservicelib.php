@@ -140,7 +140,7 @@ class Tiki_Webservice
 		$builtBody = $this->body;
 
 		$map = $this->getParameterMap( $params );
-
+			
 		if( $built ) {
 			switch( $this->wstype ) {
 				case 'SOAP':
