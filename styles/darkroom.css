@@ -117,7 +117,7 @@ textarea {
 input[type=text],
 input[type=password] {
 	border: solid 1px #aaa;
-	background: #292929;
+	background-color: #292929; /* use background-color here; background only shorthand property overrides the background image of .openid_url login field specified in styles/layout/design.css */
 	color: #f5f5f5;
 	font-size: 0.9em;
 	cursor: text;
