@@ -261,7 +261,7 @@ class OIntegrate_Response
 
 	function getTemplates( $supportedPairs = null ) // {{{
 	{
-		if( ! isset( $this->data['_template'] ) || ! is_array( $this->data['_template'] ) )
+		if( !is_array( $this->data ) || ! isset( $this->data['_template'] ) || ! is_array( $this->data['_template'] ) )
 			return array();
 
 		$templates = array();

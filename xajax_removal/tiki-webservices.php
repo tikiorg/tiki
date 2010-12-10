@@ -10,6 +10,24 @@ require_once 'tiki-setup.php';
 $access->check_feature('feature_webservices');
 
 /**
+ * Example of complex type
+ */
+class Tiki_ComplexType
+{
+	/**
+	 * Param 1
+	 * @var string
+	 */
+	var $param1;
+
+	/**
+	 * Param 2
+	 * @var string
+	 */
+	var $param2;
+}
+
+/**
  * Write your SOAP webservices as methods of this class, it will be automagically
  * added to the WSDL file.
  *
@@ -29,6 +47,17 @@ class Tiki_WebServices
 	function test($param2, $param1, $param3)
 	{
 		return 'test1 ' . $param1 . ' test2 ' . $param2 . ' test3 ' . $param3;
+	}
+
+	/**
+	 * Displays the Tiki_ComplexType data.
+	 *
+	 * @param Tiki_ComplexType $complex_param
+	 * @return string
+	 */
+	function test_complex(Tiki_ComplexType $complex_param)
+	{
+		return $complex_param->param1 . ' =====> ' . $complex_param->param2;
 	}
 }
 
