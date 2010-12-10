@@ -30,6 +30,75 @@ Version 6.1
 ------------------
 
 ----------------------------------------------
+r31322 | changi67 | 2010-12-09 21:42:45 +0100 (Thu, 09 Dec 2010) | 1 line
+
+[FIX] Don't display user that are already in the group - maybe a better way but that's mine
+----------------------------------------------
+r31319 | jonnybradley | 2010-12-09 19:35:32 +0100 (Thu, 09 Dec 2010) | 1 line
+
+[CSS] jqui: Add missing code plugin styling (common settings could be refactored into design.css after 6.1)
+----------------------------------------------
+r31318 | jonnybradley | 2010-12-09 18:40:13 +0100 (Thu, 09 Dec 2010) | 1 line
+
+[FIX] notice: Undefined index: ck_editor
+----------------------------------------------
+r31317 | jonnybradley | 2010-12-09 18:35:54 +0100 (Thu, 09 Dec 2010) | 1 line
+
+[DOC] Add a note in htaccess about resetting the include_path which solved a problem on one server with warnings about open_basedir access errors, and may fix other server setup problems too.
+----------------------------------------------
+r31316 | jonnybradley | 2010-12-09 16:31:03 +0100 (Thu, 09 Dec 2010) | 1 line
+
+[FIX] html_select_date: Simplify date formatting which was converting from timestamp to string to timestamp and back to string again, somehow resulting in the wrong day coming out when in non UTC timezones (thanks Luci)
+----------------------------------------------
+r31315 | chibaguy | 2010-12-09 14:35:09 +0100 (Thu, 09 Dec 2010) | 1 line
+
+[KIL] Previous commit wasn't quite right. Coelesce theme can use default tiki-site_header_login.tpl now.
+----------------------------------------------
+r31312 | chibaguy | 2010-12-09 12:12:10 +0100 (Thu, 09 Dec 2010) | 1 line
+
+[FIX] Heading line-height improvements, esp. to prevent text overlap on headings that wrap.
+----------------------------------------------
+r31311 | chibaguy | 2010-12-09 11:08:38 +0100 (Thu, 09 Dec 2010) | 1 line
+
+[FIX] Heading line-height and module title contrast.
+----------------------------------------------
+r31310 | chibaguy | 2010-12-09 11:04:16 +0100 (Thu, 09 Dec 2010) | 1 line
+
+[FIX] Line-height to prevent text overlap on headings that wrap. Padding on right column content to space modules away from page margin and make symmetrical re: left column.
+----------------------------------------------
+r31309 | chibaguy | 2010-12-09 10:30:43 +0100 (Thu, 09 Dec 2010) | 1 line
+
+[FIX] Site header search form was AWOL but now returned. 
+----------------------------------------------
+r31308 | luciash | 2010-12-09 07:39:38 +0100 (Thu, 09 Dec 2010) | 1 line
+
+[FIX] fix for Google Chrome autofill highlight (and other webkit browsers)
+----------------------------------------------
+r31307 | luciash | 2010-12-09 07:16:16 +0100 (Thu, 09 Dec 2010) | 1 line
+
+[FIX] OpenID Login width of the input field does not overflow behind the right margin edge of the box + little adjustment of the icon and input padding appearance
+----------------------------------------------
+r31306 | chibaguy | 2010-12-09 06:27:15 +0100 (Thu, 09 Dec 2010) | 1 line
+
+[FIX] Wrong column name in filter caused wide right margin when "show column only when modules" and no modules displaying.
+----------------------------------------------
+r31305 | ricks99 | 2010-12-09 03:00:59 +0100 (Thu, 09 Dec 2010) | 1 line
+
+[DOC]More accurate/clearer description of html menu option. Thanks jonnyb.
+----------------------------------------------
+r31297 | jonnybradley | 2010-12-08 17:56:17 +0100 (Wed, 08 Dec 2010) | 2 lines
+
+[FIX] Rollback r31200 (was fgals: Make the contents of galleries that are not "visible" also not visible to non-admin users)
+Revert to previous behaviour where "hidden" fgals are just not listed in the parent gal, although the contents can be listed and downloaded according to perms (thanks Luci and all for the pointers)
+----------------------------------------------
+r31296 | jonnybradley | 2010-12-08 17:51:12 +0100 (Wed, 08 Dec 2010) | 1 line
+
+[FIX] wysiwyg: tikilink dialog - Finally a good clean fix for cross browser text selection in ckeditor (i hope - thanks to Nielsdv on cksource.com/forums)
+----------------------------------------------
+r31294 | luciash | 2010-12-08 14:07:10 +0100 (Wed, 08 Dec 2010) | 1 line
+
+[MOD] Wiki page pagination: use .center class of the layout.css instead of inline style="text-align: center" attribute for the wiki pagination
+----------------------------------------------
 r31273 | changi67 | 2010-12-07 21:29:03 +0100 (Tue, 07 Dec 2010) | 1 line
 
 [bp/30546][MOD] Add option to stay on current page when switching perspective - for Torsten

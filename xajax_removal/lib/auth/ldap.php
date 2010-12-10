@@ -116,8 +116,8 @@ class TikiLdapLib
 		// only string checking fo these ones
 		foreach(array('basedn', 'username', 'password', 'userdn', 'useroc', 'userattr',
 				'fullnameattr', 'emailattr', 'groupdn', 'groupattr', 'groupoc', 'groupnameattr',
-				'groupdescattr', 'groupmemberattr', 'usergroupattr', 'groupgroupattr') as $n) {
-			if (isset($options[$n]) && !empty($options[$n]) && preg_match('#\s#', $options[$n])==0) {
+				'groupdescattr', 'groupmemberattr', 'usergroupattr', 'groupgroupattr', 'binddn', 'bindpw') as $n) {
+			if (isset($options[$n]) && !empty($options[$n])) {
 				$this->options[$n] = $options[$n];
 			}
 		}
@@ -144,6 +144,7 @@ class TikiLdapLib
 				case 'ol':
 				case 'full':
 				case 'plain':
+				case 'explicit':
 					$this->options['bind_type'] = $options['bind_type'];
 					break;
 				default:
@@ -173,7 +174,9 @@ class TikiLdapLib
 		}
 
 		// Set the bindnpw with the options['password']
-		$this->options['bindpw'] = $this->options['password'];
+		if ($this->options['bind_type'] != 'explicit') {
+			$this->options['bindpw'] = $this->options['password'];
+		}
 
 		$user = $this->options['username'];
 		switch ($this->options['bind_type']) {
@@ -203,6 +206,8 @@ class TikiLdapLib
 				// Anonymous binding
 				$this->options['binddn'] = '';
 				$this->options['bindpw'] = '';
+				break;
+			case 'explicit':
 				break;
 			default:
 				$this->add_log('ldap', 'Error: Invalid "bind_type" value "' . $this->options['bind_type'] . '".');
@@ -250,7 +255,7 @@ class TikiLdapLib
 
 		$userdn = $this->user_dn();
 		// ensure we have a connection to the ldap server
-		 if (!$this->bind()) {
+		if ($this->bind() != 'LDAP_SUCCESS') {
 			$this->add_log('ldap','Reuse of ldap connection failed: ' . $this->ldaplink->getMessage() . ' at line ' . __LINE__ . ' in ' . __FILE__);
 			return false;
 		}

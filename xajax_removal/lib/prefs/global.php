@@ -253,6 +253,16 @@ function prefs_global_list() {
 			'hint' => tra("The group will be named identical to the user's username"),
 			'help' => 'Groups',
 		),
+		'syncGroupsWithDirectory' => array(
+			'name' => tra('Synchronize Tiki groups with a directory'),
+			'type' => 'flag',
+			'hint' => tra('Define the directory within the "LDAP" tab'),
+		),
+		'syncUsersWithDirectory' => array(
+			'name' => tra('Synchronize Tiki users with a directory'),
+			'type' => 'flag',
+			'hint' => tra('Define the directory within the "LDAP" tab'),
+		),
 		'rememberme' => array(
 			'name' => tra('Remember me'),
 			'type' => 'list',

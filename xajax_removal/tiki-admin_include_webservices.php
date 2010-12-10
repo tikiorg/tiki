@@ -7,8 +7,6 @@
 
 require_once 'tiki-setup.php';
 require_once 'lib/ointegratelib.php';
-require_once 'lib/soap/wsdllib.php';
-require_once 'lib/soap/soaplib.php';
 require_once 'lib/webservicelib.php';
 //this script may only be included - so its better to die if called directly.
 if (basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__)) {
@@ -119,7 +117,7 @@ if (!isset($_REQUEST['parse']) && $response = $webservice->performRequest($_REQU
 	}
 }
 
-$headerlib->add_jsfile( 'lib/soap/tiki-admin_webservices.js', 'external' );
+$headerlib->add_jsfile( 'lib/soap/tiki-admin_webservices.js' );
 
 $smarty->assign('webservicesTypes', Tiki_Webservice::getTypes());
 $smarty->assign('webservices', Tiki_Webservice::getList());

@@ -162,9 +162,9 @@ class TikiDate
 		return (int)$this->date->format("W");
 	}
 
-	function setDate($date, $format = 'Y-m-d H:i:s') {
+	function setDate($date) {
 		if (is_numeric($date)) {
-			$this->date = new DateTime(date($format, $date));
+			$this->date = new DateTime(date('Y-m-d H:i:s', $date));
 		} else {
 			$this->date = new DateTime($date);
 		}
@@ -276,7 +276,7 @@ class TikiDate
 	// Checks that the string is either a timezone identifier or an abbreviation. display_timezone can be manually set to an identifier in preferences but will be an [uppercase] abbreviation if auto-detected by JavaScript.
 	static function TimezoneIsValidId($id) {
 		return array_key_exists( strtolower($id), DateTimeZone::listAbbreviations() ) ||
-			in_array($id, DateTimeZone::listAbbreviations());
+			in_array($id, DateTimeZone::listIdentifiers());
 	}
 	
 }

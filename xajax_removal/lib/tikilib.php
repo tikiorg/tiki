@@ -7635,7 +7635,7 @@ if( \$('#$id') ) {
 
 		$tikidate->setTZbyID('UTC');
 		try {
-			$tikidate->setDate($timestamp, $input_format);
+			$tikidate->setDate($timestamp);
 		} catch (Exception $e) {
 			return $e->getMessage();
 		}
