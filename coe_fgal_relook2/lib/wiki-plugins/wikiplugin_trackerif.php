@@ -37,6 +37,12 @@ function wikiplugin_trackerif_info()
 				'name' => tra('Test'),
 				'description' => tra('Test'),
 			),
+			'ignore' => array(
+				'required' => false,
+				'name' => tra('Ignore'),
+				'default' => 'y',
+				'description' => tra('Ignore test in edit mode'),
+			),
 		),
 	);
 }
@@ -46,6 +52,11 @@ function wikiplugin_trackerif($data, $params)
         global $trklib;
 
         if (!isset($_REQUEST['trackerId']) || !isset($_REQUEST['itemId'])) {
+		// Edit mode
+		if (!isset($params['ignore']) || $params['ignore'] == 'y') {
+			return $data;
+		}
+
                 return '';
         }
 

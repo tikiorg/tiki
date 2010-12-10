@@ -42,6 +42,14 @@ function wikiplugin_webservice_info() {
 				'description' => tra('Name of the argument to send the body as for services with complex input. Named service required for this to be useful.'),
 				'default' => '',
 			),
+			'params' => array(
+				'required' => false,
+				'safe' => true,
+				'name' => tra('Parameters'),
+				'description' => tra('Parameters formated like an query : param1=value1&param2=value2.'),
+				'default' => '',
+			),
+
 		),
 	);
 }
@@ -57,6 +65,11 @@ function wikiplugin_webservice( $data, $params ) {
 		$params[ $params['bodyname'] ] = $data;
 		unset($params['bodyname']);
 		$data = '';
+	}
+
+	if ( isset( $params['params'] )) {
+		parse_str($params['params'], $request_params);
+		$params = array_merge($params, $request_params);
 	}
 
 	if( ! empty( $data ) ) {
@@ -75,7 +88,7 @@ function wikiplugin_webservice( $data, $params ) {
 
 		if( ! empty( $templateFile ) )
 			return $response->render( 'smarty', 'tikiwiki', 'tikiwiki', $templateFile );
-	} elseif( isset($params['service']) && isset($params['template']) ) {
+	} elseif( isset($params['service']) && (isset($params['template']) || !empty( $templateFile ) )) {
 		require_once 'lib/webservicelib.php';
 
 		if( $service = Tiki_Webservice::getService( $params['service'] ) ) {

@@ -187,10 +187,18 @@
 		</div>
 	{/if}
 
-	{if $prefs.fgal_quota_show eq 'y' && $gal_info.quota}
+	{if $prefs.fgal_quota_show neq 'n' and $gal_info.quota}
 		<div style="float:right">
-			{capture name='use'}{math equation="round((100*x)/(1024*1024*y))" x=$gal_info.usedSize y=$gal_info.quota}{/capture}
-			{quotabar length='100' value='$smarty.capture.use'}
+			{capture name='use'}{math equation="round((100*x)/(1024*1024*y),2)" x=$gal_info.usedSize y=$gal_info.quota}{/capture}
+			
+			{if $prefs.fgal_quota_show neq 'y'}
+				<b>{$smarty.capture.use} %</b> {tr}space use on{/tr} <b>{$gal_info.quota} Mo</b>
+				<br />
+			{/if}
+			
+			{if $prefs.fgal_quota_show neq 'text_only'}
+				{quotabar length='100' value=`$smarty.capture.use`}
+			{/if}			
 		</div>
 	{/if}
 

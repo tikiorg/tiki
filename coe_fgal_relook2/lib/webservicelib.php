@@ -5,6 +5,10 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+require_once 'lib/ointegratelib.php';
+require_once 'soap/soaplib.php';
+require_once 'soap/wsdllib.php';
+
 class Tiki_Webservice
 {
 	private $name;
@@ -136,7 +140,7 @@ class Tiki_Webservice
 		$builtBody = $this->body;
 
 		$map = $this->getParameterMap( $params );
-
+			
 		if( $built ) {
 			switch( $this->wstype ) {
 				case 'SOAP':

@@ -514,6 +514,12 @@
 		{$field_value.value}
 	{/if}
 
+{* -------------------- Webservice -------------------- *}
+{elseif $field_value.type eq 'W'}
+	{if $field_value.value ne ''}
+                {$field_value.value}
+        {/if}
+
 {* -------------------- in group -------------------- *}
 {elseif $field_value.type eq 'N'}
 	{include file='tracker_item_field_value.tpl'}
