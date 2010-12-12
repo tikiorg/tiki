@@ -59,6 +59,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"])) {
 		case 'remove_pages':
 			// Now check permissions to remove the selected pages
 			$access->check_permission('tiki_p_remove');
+			$access->check_authenticity(tr('Are you sure you want to remove the %0 selected pages?', count($_REQUEST['checked'])));
 			foreach($_REQUEST["checked"] as $check) $tikilib->remove_all_versions($check);
 			break;
 
@@ -71,6 +72,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"])) {
 				if (! $perms->view ) {
 					$access->display_error($check, tra("You do not have permission to view this page."), '403');
 				}
+				$access->check_authenticity(tr('Are you sure you want to print the %0 selected pages?', count($_REQUEST['checked'])));
 				$page_info = $tikilib->get_page_info($check);
 				$page_info['parsed'] = $tikilib->parse_data($page_info['data']);
 				$page_info['h'] = 1;
@@ -96,6 +98,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"])) {
 
 		case 'unlock_pages':
 			$access->check_feature('feature_wiki_usrlock');
+			$access->check_authenticity(tr('Are you sure you want to unlock the %0 selected pages?', count($_REQUEST['checked'])));
 			global $wikilib;
 			include_once ('lib/wiki/wikilib.php');
 			foreach($_REQUEST["checked"] as $check) {
@@ -108,6 +111,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"])) {
 
 		case 'lock_pages':
 			$access->check_feature('feature_wiki_usrlock');
+			$access->check_authenticity(tr('Are you sure you want to lock the %0 selected pages?', count($_REQUEST['checked'])));
 			global $wikilib;
 			include_once ('lib/wiki/wikilib.php');
 			foreach($_REQUEST["checked"] as $check) {
@@ -121,6 +125,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"])) {
 
 		case 'zip':
 			if ($globalperms->admin == 'y') {
+				$access->check_authenticity(tr('Are you sure you want to download a zip of the %0 selected pages?', count($_REQUEST['checked'])));
 				include_once ('lib/wiki/xmllib.php');
 				$xmllib = new XmlLib;
 				$zipFile = 'dump/xml.zip';
