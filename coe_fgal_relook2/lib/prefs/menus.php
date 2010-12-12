@@ -17,8 +17,8 @@ function prefs_menus_list() {
 			'type' => 'text',
 		),
 		'menus_item_names_raw' => array(
-			'name' => tra('Allow HTML in menu items (Please note: this might be insecure if you allow more people to edit menus)'),
-			'description' => tra('If enabled, treat menu item names as HTML item content and do not escape them (do not replace HTML special characters), allowing to use HTML in menu items to put images for example. Code must be valid. This allows menu item editors to put arbitrary HTML; only enable if you know what you are doing.'),
+			'name' => tra('Allow HTML in link text and do not escape the url in menu items (Please note: this might be insecure if you allow more people to edit menus)'),
+			'description' => tra('If enabled, menu item names treated as HTML item content and they are not escaped (do not replace HTML special characters), this allows the use of HTML in menu items to insert images for example, and menu item urls are not escaped which allows the use of permissable href tags. Code must be valid. This allows menu item editors to put arbitrary HTML; only enable if you know what you are doing.'),
 			'help' => 'Menus',
 			'type' => 'flag',
 		),
