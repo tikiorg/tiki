@@ -3104,10 +3104,13 @@ class UsersLib extends TikiLib
 		$foo = parse_url($_SERVER['REQUEST_URI']);
 		$foo1 = str_replace(array('tiki-send_mail', 'tiki-register', 'tiki-remind_password', 'tiki-adminusers'), 'tiki-login_validate', $foo['path']);
 		$foo2 = str_replace(array('tiki-send_mail', 'tiki-register', 'tiki-remind_password', 'tiki-adminusers'), 'tiki-assignuser', $foo['path']);
+		$foo3 = str_replace(array('tiki-send_mail', 'tiki-register', 'tiki-remind_password', 'tiki-adminusers'), 'tiki-user_preferences', $foo['path']);
 		$machine = $tikilib->httpPrefix( true ) . $foo1;
 		$machine_assignuser = $tikilib->httpPrefix( true ) . $foo2;
+		$machine_userprefs = $tikilib->httpPrefix( true ) . $foo3;
 		$smarty->assign('mail_machine',$machine);
 		$smarty->assign('mail_machine_assignuser',$machine_assignuser);
+		$smarty->assign('mail_machine_userprefs',$machine_userprefs);
 		$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
 		$smarty->assign('mail_user', $name);
 		$smarty->assign('mail_apass', $apass);
@@ -3127,7 +3130,7 @@ class UsersLib extends TikiLib
 		} elseif ($prefs['validateRegistration'] == 'y' && empty($pass)) {
 			if (!empty($chosenGroup)) {
 				$smarty->assign_by_ref('chosenGroup', $chosenGroup);
-				if ($prefs['userTracker'] == 'y') {
+				if ($prefs['userTracker'] == 'y') {	// this cannot work here as the tracker item needs the user to be registered to be created first - FIXME catch 22
 					global $trklib; include_once('lib/trackers/trackerlib.php');
 					$re = $this->get_group_info(isset($chosenGroup)? $chosenGroup: 'Registered');
 					$fields = $trklib->list_tracker_fields($re['usersTrackerId'], 0, -1, 'position_asc', '', true, array('fieldId'=>explode(':',$re['registrationUsersFieldIds'])));
