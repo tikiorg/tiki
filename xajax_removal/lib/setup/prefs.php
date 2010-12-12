@@ -1554,7 +1554,7 @@ function get_default_prefs() {
 		'feature_obzip' => 'n',
 		'feature_perspective' => 'n', // If enabling by default, update further in this file
 		'feature_cssmenus' => 'y',
-		'display_html_in_menus' => 'n',
+		'menus_item_names_raw' => 'n',
 		'feature_projects' => 'n',
 		'feature_ranking' => 'n',
 		'feature_redirect_on_error' => 'n',

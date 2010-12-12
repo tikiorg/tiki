@@ -199,7 +199,7 @@ class StructLib extends TikiLib
 		if (!empty($parent_id) || $created || ! $this->page_is_in_structure($name)) { // if were not trying to add a duplicate structure head
 			$query = 'select `page_id` from `tiki_pages` where `pageName`=?';
 			$page_id = $this->getOne($query,array($name));
-			if (isset($after_ref_id)) {
+			if (!empty($after_ref_id)) {
 				$max = $this->getOne('select `pos` from `tiki_structures` where `page_ref_id`=?',array((int)$after_ref_id));
 			} else {
 				$max = 0;
@@ -211,7 +211,7 @@ class StructLib extends TikiLib
 					$query = 'update `tiki_structures` set `pos`=`pos`+1 where `pos`>? and `parent_id`=?';
 					$result = $this->query($query,array((int)$max, (int)$parent_id));
 				}
-			} else {
+			} else if (!$created) {
 				$max = $this->getOne('select max(`pos`) from `tiki_structures` where `parent_id`=?',array((int)$parent_id));
 			}
 			// 	
