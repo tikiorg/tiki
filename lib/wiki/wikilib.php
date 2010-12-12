@@ -132,12 +132,13 @@ class WikiLib extends TikiLib
 
 	// Returns a string containing all characters considered bad in page names
 	function get_badchars() {
-		return ":/?#[]@!$&'()*+,;=<>";
+		return "/?#[]@$&*+;=<>";
 	}
 	
 	// Returns a boolean indicating whether the given page name contains "bad characters"
+	// See http://dev.tiki.org/Bad+characters
 	function contains_badchars($name) {
-		return preg_match("/[:\/?#\[\]@!$&'()*+,;=<>]/", $name);		
+		return preg_match("/[\/?#\[\]@$&*+;=<>]/", $name);		
 	}
 
 	// This method renames a wiki page
