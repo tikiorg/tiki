@@ -13,6 +13,7 @@
 {$mail_machine}?user={$mail_user|escape:'url'}&pass={$mail_apass}
 
 {tr}Assign to a group:{/tr} {$mail_machine_assignuser}?assign_user={$mail_user|escape:'url'}
+{tr}View user's data:{/tr} {$mail_machine_userprefs}?view_user={$mail_user|escape:'url'}
 
 
 {tr}Best regards{/tr}
