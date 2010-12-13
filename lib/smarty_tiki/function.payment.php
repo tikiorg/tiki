@@ -27,8 +27,18 @@ function smarty_function_payment( $params, $smarty ) {
 			
 			//$access->check_authenticity( tr('Transfer currency? %0 %1?', $info['amount'], $info['currency'] ));
 			
+			// check currency matches
+			if (empty($params['registry'])) { $params['registry'] = $cclitelib->get_registry(); }
+			if (empty($info['currency'])) {
+				$info['currency'] = $cclitelib->get_currency($params['registry']);
+			} else {
+				if ($info['currency'] != substr($cclitelib->get_currency($params['registry']), 0, 3)) {
+					return tr('Currency in payment (%0) does not match the currency for that registry (%1).', $info['currency'], $cclitelib->get_currency($params['registry']) );
+				}
+			}
+			
 			// no notification callback in cclite yet, so have to assume true for now (pending checking in perform_trade)
-			$result = $cclitelib->pay_invoice($invoice, $info['amount'], $info['currency']);
+			$result = $cclitelib->pay_invoice($invoice, $info['amount'], $info['currency'], $params['registry']);
 			if ($result) {
 				// ccresults are set in smarty by the perform_trade behaviour
 				$smarty->assign('ccresult', $result);

@@ -18,7 +18,7 @@ function wikiplugin_trade_info() {
 			'price' => array(
 				'required' => true,
 				'name' => tra('Price'),
-				'description' => tr('Price.', $prefs['payment_currency']),
+				'description' => tr('Currency depends on the selected registry.'),
 				'filter' => 'text',
 				'default' => '',
 			),
@@ -82,7 +82,14 @@ function wikiplugin_trade( $data, $params, $offset ) {
 
 	$default = array( 'inputtitle'=>'', 'wanted' => 'n', 'action' => tra('Continue'), 'registry' => '', 'currency' => '' );
 	$params = array_merge( $default, $params );
-
+	
+	if (empty($params['registry'])) {
+		$params['registry'] = $cclitelib->get_registry();
+	}
+	if (empty($params['currency'])) {
+		$params['currency'] = $cclitelib->get_currency($params['registry']);
+	}
+	
 	$iPluginTrade++;
 	$smarty->assign('iPluginTrade', $iPluginTrade);
 	
@@ -121,14 +128,14 @@ function wikiplugin_trade( $data, $params, $offset ) {
 			$params['inputtitle'] = 'Request payment of %0 %1 to user %2 from %3';
 		}
 	}
-	$desc = tr($params['inputtitle'], number_format($params['price'], 2), $prefs['payment_currency'], $user, $params['other_user'] );
+	$desc = tr($params['inputtitle'], number_format($params['price'], 2), $params['currency'], $user, $params['other_user'] );
 	
 	if( ( !empty($info) && $info['waiting'] == null )) {
 
 		// user clicked "continue" (probably)
 		if( isset($_POST['wp_trade_offset']) && $_POST['wp_trade_offset'] == $offset ) {
 
-			$id = $paymentlib->request_payment( $desc, $params['price'], $prefs['payment_default_delay'] );
+			$id = $paymentlib->request_payment( $desc, $params['price'], $prefs['payment_default_delay'], null, $params['currency'] );
 
 			if (empty($user)) {
 				return '{REMARKSBOX(type=warning, title=Plugin Trade Error)}' .
@@ -144,7 +151,8 @@ function wikiplugin_trade( $data, $params, $offset ) {
 			return '^~np~' . smarty_function_payment( array( 'id' => $id ), $smarty ) . '~/np~^';
 		} else if ($prefs['payment_system'] == 'cclite' && isset($_POST['cclite_payment_amount']) && isset($_POST['invoice'])) {
 			require_once 'lib/smarty_tiki/function.payment.php';
-			return '^~np~' . smarty_function_payment( array( 'id' => $_POST['invoice'] ), $smarty ) . '~/np~^';
+			$params['id'] = $_POST['invoice'];
+			return '^~np~' . smarty_function_payment( $params, $smarty ) . '~/np~^';
 		}
 
 	} else if ($info['waiting'] != null) {
