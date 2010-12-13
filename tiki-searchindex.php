@@ -26,6 +26,9 @@ $smarty->assign('headtitle', tra('Search'));
 $access->check_feature('feature_search');
 $access->check_permission('tiki_p_search');
 
+ini_set('display_errors', true);
+error_reporting(E_ALL);
+
 $filter = isset($_REQUEST['filter']) ? $_REQUEST['filter'] : array();
 
 $query = $unifiedsearchlib->buildQuery($filter);
@@ -41,11 +44,11 @@ $plugin->setData(array(
 $plugin->setFields(array(
 	'title' => null,
 	'modification_date' => null,
-	'highlight' => null,
+	//'highlight' => null, // Disabled, not quite right
 ));
 
 $formatter = new Search_Formatter($plugin);
-$formatter->setDataSource($unifiedsearchlib->getDataSource());
+$formatter->setDataSource($unifiedsearchlib->getDataSource('formatting'));
 
 $wiki = $formatter->format($results);
 

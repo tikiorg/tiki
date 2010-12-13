@@ -45,7 +45,10 @@ function wikiplugin_redirect($data, $params, $offset, $options) {
 	if (!isset($url)) {$areturn += "REDIRECT plugin: No url specified!";}
 	if ((isset($_REQUEST['redirectpage']))) {
 		$areturn = "REDIRECT plugin: redirect loop detected!";
-	} else if (isset($options['print']) && $options['print'] == 'y') {
+	} elseif (isset($options['print']) && $options['print'] == 'y') {
+		$info = $tikilib->get_page_info(isset($page)?$page: $url);
+		return $tikilib->parse_data($info['data'], $options);
+	} elseif (isset($options['indexing']) && $options['indexing']) {
 		$info = $tikilib->get_page_info(isset($page)?$page: $url);
 		return $tikilib->parse_data($info['data'], $options);
 	} else {

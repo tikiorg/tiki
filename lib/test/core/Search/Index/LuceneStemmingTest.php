@@ -19,6 +19,7 @@ class Search_Index_LuceneStemmingTest extends PHPUnit_Framework_TestCase
 			'object_type' => $typeFactory->identifier('wiki page'),
 			'object_id' => $typeFactory->identifier('HomePage'),
 			'description' => $typeFactory->plaintext('a description for the pages éducation Case'),
+			'global' => $typeFactory->plaintext('a description for the pages éducation Case'),
 		));
 
 		$this->index = $index;

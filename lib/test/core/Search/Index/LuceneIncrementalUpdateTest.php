@@ -67,6 +67,7 @@ class Search_Index_LuceneIncrementalUpdateTest extends PHPUnit_Framework_TestCas
 			'object_type' => $typeFactory->identifier($type),
 			'object_id' => $typeFactory->identifier($id),
 			'data' => $typeFactory->wikitext($data),
+			'global' => $typeFactory->wikitext($data),
 		));
 	}
 }

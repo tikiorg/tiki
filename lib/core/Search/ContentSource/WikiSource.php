@@ -58,5 +58,15 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 			'view_permission',
 		);
 	}
+
+	function getGlobalFields()
+	{
+		return array(
+			'title',
+			'description',
+
+			'wiki_content',
+		);
+	}
 }
 

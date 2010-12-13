@@ -36,5 +36,10 @@ class Search_ContentSource_Static implements Search_ContentSource_Interface
 	{
 		return array_keys($this->typeMap);
 	}
+
+	function getGlobalFields()
+	{
+		return array_keys($this->typeMap);
+	}
 }
 

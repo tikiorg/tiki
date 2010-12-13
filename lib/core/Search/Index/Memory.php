@@ -32,6 +32,10 @@ class Search_Index_Memory implements Search_Index_Interface
 		return new Search_Type_Factory_Lucene;
 	}
 
+	function optimize()
+	{
+	}
+
 	/**
 	 * For test purposes.
 	 */

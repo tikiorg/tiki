@@ -25,6 +25,7 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 			'wiki_content' => $typeFactory->wikitext('Hello world!'),
 			'categories' => $typeFactory->multivalue(array(1, 2, 5, 6)),
 			'allowed_groups' => $typeFactory->multivalue(array('Project Lead', 'Editor', 'Admins')),
+			'global' => $typeFactory->plaintext('a description for the page Hello world!'),
 		));
 
 		$this->index = $index;

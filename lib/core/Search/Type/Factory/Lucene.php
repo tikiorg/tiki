@@ -4,7 +4,7 @@ class Search_Type_Factory_Lucene implements Search_Type_Factory_Interface
 {
 	function plaintext($value)
 	{
-		return new Search_Type_WikiText($value);
+		return new Search_Type_PlainText($value);
 	}
 
 	function wikitext($value)

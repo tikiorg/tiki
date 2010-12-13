@@ -55,5 +55,15 @@ class Search_ContentSource_BlogPostSource implements Search_ContentSource_Interf
 			'parent_object_type',
 		);
 	}
+
+	function getGlobalFields()
+	{
+		return array(
+			'title',
+
+			'blog_excerpt',
+			'blog_content',
+		);
+	}
 }
 
