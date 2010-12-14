@@ -61,11 +61,11 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface
 	function getGlobalFields()
 	{
 		return array(
-			'title',
-			'description',
+			'title' => true,
+			'description' => true,
 
-			'file_comment',
-			'file_content',
+			'file_comment' => false,
+			'file_content' => false,
 		);
 	}
 }

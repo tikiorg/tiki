@@ -17,7 +17,9 @@ class Search_GlobalSource_FreeTagSource implements Search_GlobalSource_Interface
 
 	function getGlobalFields()
 	{
-		return array('freetags_text');
+		return array(
+			'freetags_text' => false,
+		);
 	}
 
 	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())

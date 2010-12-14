@@ -79,22 +79,26 @@ class Search_Indexer
 				$base = array(
 					'object_type' => $typeFactory->identifier($objectType),
 					'object_id' => $typeFactory->identifier($objectId),
-					'global' => $typeFactory->plaintext($this->getGlobalContent($data, $globalFields)),
+					'contents' => $typeFactory->plaintext($this->getGlobalContent($data, $globalFields)),
 				);
 
-				$this->searchIndex->addDocument(array_merge($data, $base));
+				$this->searchIndex->addDocument(array_merge(array_filter($data), $base));
 			}
 		}
 	}
 
-	private function getGlobalContent(array $data, $globalFields) {
+	private function getGlobalContent(array & $data, $globalFields) {
 		$content = '';
 
-		foreach ($globalFields as $name) {
+		foreach ($globalFields as $name => $preserve) {
 			if (isset($data[$name])) {
 				$v = $data[$name]->getValue();
 				if (is_string($v)) {
 					$content .= $v . ' ';
+
+					if (! $preserve) {
+						$data[$name] = false;
+					}
 				}
 			}
 		}

@@ -65,12 +65,12 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 	function getGlobalFields()
 	{
 		return array(
-			'title',
-			'description',
+			'title' => true,
+			'description' => true,
 
-			'article_content',
-			'article_topline',
-			'article_subtitle',
+			'article_content' => false,
+			'article_topline' => false,
+			'article_subtitle' => false,
 		);
 	}
 }

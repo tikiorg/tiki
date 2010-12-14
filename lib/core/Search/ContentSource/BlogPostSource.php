@@ -59,10 +59,10 @@ class Search_ContentSource_BlogPostSource implements Search_ContentSource_Interf
 	function getGlobalFields()
 	{
 		return array(
-			'title',
+			'title' => true,
 
-			'blog_excerpt',
-			'blog_content',
+			'blog_excerpt' => false,
+			'blog_content' => false,
 		);
 	}
 }

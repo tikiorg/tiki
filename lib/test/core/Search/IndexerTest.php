@@ -175,7 +175,7 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 		$document = $index->getDocument(0);
 
 		$typeFactory = $index->getTypeFactory();
-		$this->assertEquals($typeFactory->plaintext('foobar baz Hello '), $document['global']);
+		$this->assertEquals($typeFactory->plaintext('foobar baz Hello '), $document['contents']);
 	}
 }
 

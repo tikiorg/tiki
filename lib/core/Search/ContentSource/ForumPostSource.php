@@ -66,9 +66,9 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 	function getGlobalFields()
 	{
 		return array(
-			'title',
+			'title' => true,
 
-			'post_content',
+			'post_content' => false,
 		);
 	}
 }

@@ -30,9 +30,9 @@ class Search_Query
 		$this->objectList->addPart(new Search_Expr_And(array($type, $objectId)));
 	}
 
-	function filterContent($query, $field = 'global')
+	function filterContent($query, $field = 'contents')
 	{
-		$this->addPart($query, 'wikitext', $field);
+		$this->addPart($query, 'plaintext', $field);
 	}
 
 	function filterType($type)

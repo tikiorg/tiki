@@ -201,6 +201,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 		switch (get_class($value)) {
 		case 'Search_Type_Whole':
 		case 'Search_Type_WikiText':
+		case 'Search_Type_PlainText':
 		case 'Search_Type_MultivalueText':
 			$parts = explode(' ', $value->getValue());
 			if (count($parts) === 1) {

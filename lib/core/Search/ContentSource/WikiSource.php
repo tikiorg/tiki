@@ -62,10 +62,10 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 	function getGlobalFields()
 	{
 		return array(
-			'title',
-			'description',
+			'title' => true,
+			'description' => true,
 
-			'wiki_content',
+			'wiki_content' => false,
 		);
 	}
 }
