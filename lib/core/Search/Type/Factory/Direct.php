@@ -9,7 +9,7 @@ class Search_Type_Factory_Direct implements Search_Type_Factory_Interface
 
 	function wikitext($value)
 	{
-		return new Search_Type_WikiText($value);
+		return new Search_Type_PlainText($value);
 	}
 
 	function timestamp($value)
