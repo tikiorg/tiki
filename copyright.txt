@@ -12,7 +12,7 @@ This is how we implement the Tiki Social Contract.
 http://tiki.org/Social+Contract
 
 List of members of the Community
-As of 2010-12-13, the community has:
+As of 2010-12-14, the community has:
   * 494 members on SourceForge.net,
   * 242 of those people who made at least one code commit
 
@@ -374,15 +374,15 @@ SF Role: Developer
 Nickname: changi67
 Name: Jean-FranÃ§ois  B.
 First Commit: 2009-04-23
-Last Commit: 2010-12-13
-Number of Commits: 446
+Last Commit: 2010-12-14
+Number of Commits: 453
 SF Role: Packager (.rpm, .deb etc)
 
 Nickname: chealer
 Name: Philippe Cloutier
 First Commit: 2003-09-27
-Last Commit: 2010-12-11
-Number of Commits: 902
+Last Commit: 2010-12-14
+Number of Commits: 903
 SF Role: Developer
 
 Nickname: chessy
@@ -1338,8 +1338,8 @@ Name: Louis-Martin Richard
 Nickname: lphuberdeau
 Name: Louis-Philippe Huberdeau
 First Commit: 2004-04-10
-Last Commit: 2010-12-08
-Number of Commits: 1834
+Last Commit: 2010-12-14
+Number of Commits: 1840
 SF Role: Developer
 
 Nickname: lrargerich
@@ -1876,8 +1876,8 @@ Number of Commits: 1
 
 Nickname: pkdille
 First Commit: 2007-03-14
-Last Commit: 2010-12-03
-Number of Commits: 1382
+Last Commit: 2010-12-14
+Number of Commits: 1383
 SF Role: Developer
 
 Nickname: plillevold
@@ -2139,8 +2139,8 @@ Number of Commits: 3
 Nickname: sampaioprimo
 Name: Rodrigo Sampaio Primo
 First Commit: 2005-10-17
-Last Commit: 2010-12-11
-Number of Commits: 573
+Last Commit: 2010-12-14
+Number of Commits: 575
 SF Role: Developer
 
 Nickname: scarle
@@ -2277,8 +2277,8 @@ SF Role: Developer
 Nickname: sylvieg
 Name: Sylvie Greverend
 First Commit: 2003-05-28
-Last Commit: 2010-12-07
-Number of Commits: 6254
+Last Commit: 2010-12-14
+Number of Commits: 6256
 SF Role: Developer
 
 Nickname: syracine
@@ -2470,8 +2470,8 @@ SF Role: Developer
 Nickname: xavidp
 Name: Xavier de Pedro
 First Commit: 2005-07-08
-Last Commit: 2010-12-13
-Number of Commits: 369
+Last Commit: 2010-12-14
+Number of Commits: 370
 SF Role: All-Hands Person
 
 Nickname: xbtheria
@@ -2515,7 +2515,7 @@ Number of Commits: 11
 SF Role: Translator (I18N/L10N)
 
 Nickname: zab-sv
-Name: Zab
+Name: Zabsv
 First Commit: 2009-09-29
 Last Commit: 2009-09-29
 Number of Commits: 1
