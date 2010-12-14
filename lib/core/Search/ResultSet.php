@@ -54,7 +54,6 @@ class Search_ResultSet extends ArrayObject
 			}
 
 			if (! empty($text)) {
-				$text = substr($text, 0, 240);
 				return $this->highlightHelper->filter($text);
 			}
 		}
