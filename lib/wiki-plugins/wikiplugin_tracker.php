@@ -1223,7 +1223,7 @@ function wikiplugin_tracker($data, $params)
 							$smarty->assign_by_ref('item', $item);
 						}
 						if (!empty($outputPretty) && in_array($f['fieldId'], $outputPretty)) {
-							$smarty->assign('f_'.$f['fieldId'], '<span id="track_'.$f['fieldId'].'" name="track_'.$f['fieldId'].'">'. $smarty->fetch('tracker_item_field_value.tpl'). '</span>');
+							$smarty->assign('f_'.$f['fieldId'], '<span class="outputPretty" id="track_'.$f['fieldId'].'" name="track_'.$f['fieldId'].'">'. $smarty->fetch('tracker_item_field_value.tpl'). '</span>');
 						} else {
 							$smarty->assign('f_'.$f['fieldId'], $smarty->fetch('tracker_item_field_input.tpl'));
 						}
