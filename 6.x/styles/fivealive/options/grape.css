@@ -1,0 +1,281 @@
+/* $Id$ 
+	Grape theme option for FiveAlive theme for
+	TikiWiki CMS/Groupware.
+*/
+
+#header-top {
+	background: url(grape/siteheader.png) no-repeat -250px 0
+}
+
+a,
+a:visited,
+tr.even a,
+tr.even a:visited,
+tr.odd a,
+tr.odd a:visited {
+	color: #8e286a;
+}
+
+a:active,
+a:hover,
+tr.even a:active,
+tr.even a:hover,
+tr.odd a:active,
+tr.odd a:hover {
+	color: #a02871;
+}
+
+fieldset {
+	border: 1px solid #8e286a;
+}
+
+hr {
+	color: #a82a76;
+	background: #a82a76;
+}
+
+#header {
+	background: url(grape/siteheadertile.png) 900px 0 no-repeat;
+}
+
+#sitetitle,
+#sitesubtitle {
+	text-shadow: #781437 3px 2px 0;
+}
+
+#footer .container {
+	border-top: 1px solid #a52873;
+	border-bottom: 1px solid #a52873;
+}
+
+#footer h3 {
+	border-bottom: 1px dotted #a52873;
+}
+
+#loadstats {
+	background: #a52873;
+	color: #511938;
+}
+
+#power a {
+	color: #a52873;
+}
+
+
+.button a,
+.button a:visited,
+button,
+input[type="reset"],
+input[type="submit"],
+.button input,
+.calbuttonBox a,
+#genPass .button a,
+#genPass .button a:visited,
+.daterow {
+	color: #fff;
+	background: #a82a76;
+	border-color: #a82a76 #69285c #69285c #a82a76;
+	font-weight: bold;
+}
+	
+.button a:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover,
+.calbuttonBox:hover,
+#genPass .button a:hover,
+.daterow:hover {
+	background: #9b286f;
+	border-color: #69285c #a82a76 #a82a76 #69285c;
+}
+
+.highlight,
+.button.highlight a,
+.calfocuson {
+	border: #e4afd3;
+	color: #8e286a;
+	background: #ddf4ef;
+}
+
+.button.highlight a {
+	background: #f4dded;
+	color: #8e286a;
+}
+
+.cssmenu_vert li ul a,
+.cssmenu_horiz li ul a,
+#header .cssmenu_horiz li ul a,
+#header .cssmenu_horiz li:hover ul a  {
+	background: #3b284a;
+}
+
+.cssmenu_vert li ul a:hover,
+.cssmenu_horiz li ul a:hover,
+#header .cssmenu_horiz li ul a:hover {
+	background: #972269;
+}
+
+#header .cssmenu_horiz li.selected a,
+.cssmenu_horiz li.selected a,
+.cssmenu_vert li.selected a {
+	color: #da65ab;
+}
+
+#header .cssmenu_horiz li.selected li a,
+.cssmenu_horiz li.selected li a,
+.cssmenu_vert li.selected li a {
+	font-style: normal;
+	color: #fff;
+}
+
+.cssmenu_vert .sf-sub-indicator {
+	background: url(grape/arrows-8e286a.png) no-repeat 10px 0;
+}
+
+select,
+input[type="text"],
+input[type="password"],
+input[type="file"],
+input#login-pass,
+textarea,
+.adminoptionbox option {
+	background: #f4dded;
+	border-color: #e4afd3 #faf1f8 #faf1f8 #e4afd3;
+}
+
+/*th a:link,
+th a:visited,
+td.heading a:link,
+td.heading a:visited,
+tr.diffheader a:link,
+tr.diffheader a:visited {
+	color: #fff
+}*/
+
+.titlebar,
+.rbox-title, 
+.rbox-data {
+	border: #a82a76;
+	background: #efcde5;
+	color: #8b1932;
+}
+
+.cbox {
+	background: #efcde5;
+	color: #8b1932;
+}
+
+.cbox-title {
+	border-bottom: 3px solid #a82a76;
+}
+
+.simplebox {
+	border: 2px solid #a82a76;
+}
+
+.adminanchors {
+	background: #a82a76;
+}
+
+.normal,
+.wikitable {
+	border: 2px solid #a82a76;
+}
+
+th,
+td.heading,
+tr.diffheader,
+.calHeading,
+.weeks {
+	background: #a82a76;
+	color: #f4dded;
+}
+
+.calodd,
+.caleven,
+.wikicell {
+	border: 2px solid #efcde5;
+}
+
+.odd,
+.calodd {
+	background: #faf1f8;
+}
+
+.even,
+.caleven {
+	background: #f4dded;
+}
+
+
+
+.tabmark {
+	border: 1px solid #a82a76;
+	background: #722860;
+	color: #fff;
+}
+
+#siteloginbar_popup .tabmark {
+	border-color: #696969;
+}
+
+.tabmark a {
+	color: #fff;
+}
+
+.tabinactive:hover,
+.tabactive {
+	border: 1px solid #a82a76;
+	background: #e9aad0;
+}
+
+.tabinactive:hover a,
+.tabactive a,
+.tabactive a:visited {
+	color: #69285c;	
+}
+
+.tabcontent,
+form.admin fieldset,
+#siteloginbar_popup .cssmenu_horiz ul li {
+	background: #e9aad0;
+}
+
+/* Quote plugin */
+.quoteheader {
+	border-bottom: 2px solid #efcde5;
+}
+
+.quotebody {
+	border-left: 8px solid #efcde5;
+}
+
+.postbody-title {
+	background: #97286e url(grape/siteheader.png) -550px -90px no-repeat;
+}
+
+.post .author,
+.dirsite {
+	background: #e4afd3;
+}
+
+/* cluptip tooltips */
+
+.cluetip-default {
+	background: #FBDCED;
+	color: #000;
+}
+
+.cluetip-default #cluetip-outer {
+	background: #FBDCED;
+}
+.cluetip-default h3#cluetip-title {
+	background: #722860;
+	color: #fff;
+}
+
+.cluetip-default #cluetip-title a {
+	color: #FBDCED;
+}
+  

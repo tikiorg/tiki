@@ -1,0 +1,521 @@
+/* $Id$
+	Troll Party theme option for Arcturus theme.
+	Tiki Wiki-CMS-Groupware.
+*/
+
+/* reset arcturus values */
+body,
+#middle,
+#c1c2 #col2,
+#c1c2 #wrapper #col1 #tiki-center,
+#col3,
+#tiki-top,
+.wikitext,
+.footerbgtrap,
+.box,
+h3.box-title,
+.separator,
+.option a:hover {
+	background: none;
+}
+
+h1, h2, h3, h4, h5 {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #aeaeae;
+}
+
+#secondary_site_menu li,
+#secondary_site_menu li a,
+#tiki-top .cssmenu_horiz li,
+#tiki-top .cssmenu_horiz li a {
+	background: none;
+}
+/* end reset */
+
+body {
+	font-size: 13px;
+	font-family: Helvetica, Verdana, Geneva, Arial, sans-serif;
+	background: #000;
+	color: #aeaeae;
+	margin: 0;
+}
+
+html>body {
+	font-size: 13px;
+}
+
+a,
+a:visited {
+	color: #dede98;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #fff;
+	background: #131333;
+}
+
+a:active {
+	color: #336699;
+	background: #000;
+}
+
+h1 {
+	24px;
+}
+
+h2 {
+	22px;
+}
+
+h3 {
+	19px
+}
+
+h4 {
+	16px;
+}
+
+h5 {
+	15px;
+}
+
+legend {
+	color: #aeaeae;
+}
+
+.button a,
+.button a:visited,
+button,
+input[type="reset"],
+input[type="submit"],
+.button input,
+.calbuttonBox a {
+	color: #b1b299;
+	background: #424242;
+	border: 1px solid #b1b299;
+	font-size: 12px;
+}
+
+.button a:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover,
+.calbuttonBox:hover {
+	color: #fff;
+	background: #000;
+	border: 1px solid #fff;
+	font-size: 12px;
+}
+
+select,
+input[type="text"],
+textarea,
+.adminoptionbox option {
+	color: #fff;
+	background: #122232;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	border: 1px solid #425262;
+}
+
+textarea {
+	font-family: "Courier New", Courier, monospace;
+	font-style: normal;
+	font-size: 14px;
+}
+
+.adminoptionbox option {
+	border: none;
+}
+
+input {
+	text-indent: 2px;
+}
+
+input[type=submit] {
+	color: #b1b299;
+	background: #424242;
+	border: 1px solid #b1b299;
+	text-indent: 0;
+}
+
+input[type=submit]:hover {
+	color: #fff;
+	background: #000;
+	border: 1px solid #fff;
+}
+
+#col2 {
+	width: 180px;
+	border-right: 1px solid #003388;
+}
+
+#col3 {
+	width: 180px;
+	border-left: 1px solid #003388;
+}
+
+#tiki-center {
+	border-left: 1px solid #003388;
+	border-right: 1px solid #003388;
+}
+
+.footerbgtrap {
+	border-top: 1px dashed #2255AA;
+}
+
+/** CSS (suckerfish) menus **/
+/* default and topbar dropdown typography (colors) and padding */
+.cssmenu_horiz li,
+.cssmenu_vert ul li,
+#tiki-top .cssmenu_horiz li:hover ul li,
+#tiki-top .cssmenu_horiz li:hover ul li a {
+	background: #000;
+}
+
+
+.cssmenu_vert a,
+.cssmenu_horiz a,
+.cssmenu_vert ul a,
+#tiki-top .cssmenu_horiz li ul li a,
+#tiki-top .cssmenu_horiz li:hover ul li a {
+	background: #000;
+	font-size: 14px;
+	color: #dede98;
+}
+
+.cssmenu_horiz a:hover,
+.cssmenu_vert a:hover,
+#tiki-top .cssmenu_horiz li ul li a:hover {
+	color: #fff;
+	background: #131333;
+}
+
+/* default backgrounds */
+.cssmenu_horiz li {
+	background: #000;
+}
+
+.cssmenu_horiz li ul li,
+.cssmenu_vert li ul li {
+	background: #121212;
+	border: 1px solid #003388;
+	border-top: 0;
+	margin-bottom: -1px
+}
+
+.cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #003388;
+}
+
+#tiki-top .cssmenu_horiz li a {
+	background: none;
+	border-right: 1px solid #003388;
+}
+
+#tiki-top .cssmenu_horiz ul li a {
+	color: #fff;
+	text-decoration: none;
+}
+
+/* special arrows and arrow top padding */
+.cssmenu_vert li a .sf-sub-indicator {
+	background: url(../../../lib/jquery/superfish/images/arrows-ffffff.png) no-repeat 0 0;
+}
+
+.separator {
+	margin-top: 4px;
+	margin-bottom: 2px;
+	padding-bottom: 2px;
+	border-bottom: 1px dashed #2255aa;
+}
+
+.separator {
+	color: #b1b299;
+	text-decoration: none;
+	font-size: 14px;
+}
+
+.separator:hover {
+	color: #fff;
+	text-decoration: none;
+}
+
+.option a,
+.separator a {
+	color: #dede98;
+	font-size: 14px;
+}
+
+.option a:hover,
+.separator a:hover {
+	color: #fff;
+}
+
+/**** Jquery ****/
+/**autocomplete **/
+.ac_even, .ac_odd {
+	color: #47C;
+}
+
+/**infinite carousel**/
+
+#carousel {
+        color: #122232;
+}
+
+#carousel a {
+        color: #122232;
+}
+
+/**** Boxes *****/
+
+.box {
+	padding-top: 3px;
+	margin-top: 13px;
+}
+
+h3.box-title {
+	border-bottom: 1px dashed #2255aa;
+	font-size: 90%;
+	font-weight: bold;
+	letter-spacing: 1px;
+	color: #4477cc;
+	padding-left: 6px;
+	padding-right: 6px;
+	margin-bottom: 1px
+	margin-top: 0;
+	text-align: left;
+}
+
+.box-data {
+	margin-left: 15px;
+	margin-right: 5px;
+}
+
+.cbox {
+	background: #333;
+	margin-top: 4px;
+	margin-bottom: 0;
+	padding-bottom: 10px;
+}
+
+.cbox-title {
+	border-bottom: 1px dashed #2255aa;
+	padding-left: 10px;
+	padding-right: 0;
+	margin-bottom: 0;
+}
+
+.cbox-data {
+	color: #aeaeae;
+	padding: 5px;
+}
+
+.simplebox {
+	background:#424242;
+	border: 1px solid #777750;
+	color: #aeaeae;
+	margin-bottom: 5px;
+	margin-top: 5px;
+	padding: 2px;
+}
+
+.rbox-title,
+.rbox-data {
+	background: none repeat scroll 0 0 #121212;
+	border: 1px dashed #2255aa;
+	color: #fff;
+}
+
+/***** Tables, Tabs and Lists ****/
+/** Tables **/
+.normal {
+	border: 1px solid #777750;
+}
+
+th,
+td.heading,
+tr.diffheader {
+	font-weight: bold;
+	padding-left: 2px;
+	padding-right: 5px;
+	border-bottom: 1px dashed #777750;
+	background: none;
+	color: #aeaeae;
+}
+
+tr.odd td,
+td.odd,
+li.odd {
+	background: #121212;
+	color: #aeaeae;
+}
+
+tr.even td,
+td.even,
+li.even {
+	background: #222;
+	color: #aeaeae;
+}
+
+tr.odd:hover,
+tr.even:hover {
+	background: #000;
+}
+
+.thumbnailcontener {
+	border: 1px dashed #2255aa;
+}
+
+.xdebug-error tr td {
+	color: #47C;
+}
+
+/** Tabs **/
+.tabs {
+	background: #000;
+	border: 1px solid #777750;
+}
+
+.tabmark {
+	background: #424242;
+	border: 1px solid #b1b299;
+}
+
+.tabmark a,
+.tabmark a:visited {
+	padding: 0.5em 1em;
+	color: #b1b299;
+	font-weight: normal;
+}
+
+.tabinactive:hover,
+.tabactive {
+	border-bottom-width: 0;
+	padding-bottom: 1px;
+	color: #fff;
+	background: #000;
+	border: 1px solid #fff;
+	font-weight: normal;
+}
+
+.tabactive a:hover,
+.tabinactive a:hover {
+	background: none;
+}
+
+.tabcontent {
+	background: #121212;
+	border: /*tabcontent_border*/ !important;
+	border-top: none !important;}
+
+.article h2,
+h1.pagetitle {
+	font-size: 24px;
+	font-weight: bold;
+	color: #aeaeae;
+}
+
+h1.pagetitle a,
+h1.pagetitle a:visited,
+h1.pagetitle a:hover,
+.article h2,
+h1 a.pagetitle,
+h1 a.pagetitle:visited,
+h1 a.pagetitle:hover {
+	text-decoration: none;
+	color: #aeaeae;
+}
+
+.articletitle h2 a,
+.articletitle h2 a:visited {
+	color: #aeaeae;
+	text-decoration: none;
+}
+
+.titlebar {
+	background:#222;
+	border-bottom: 1px solid #666;
+	color: #aaa;
+	font-weight:bold;
+	margin-top: 6px;
+	padding: 0 6px;
+}
+
+.wikitable {
+	border: 1px solid #2255aa;
+}
+
+.wikicell {
+	background: #121212;
+	color: #aeaeae;
+}
+
+.codecaption {
+	background: #424242;
+	border-color: #666666;
+	border-style: solid solid none;
+	border-width: 1px 1px 0;
+	bottom: -1ex;
+	font-size:smaller;
+	padding: 0.2ex 2ex;
+}
+
+.codelisting {
+	background: #222;
+	border: 1px solid #666;
+	font-family: "Courier New", Courier, monospace;
+	margin: 1ex 0;
+	padding: 2ex;
+}
+
+.editdate {
+	background: #121212;
+	color: #999;
+	font-size: smaller;
+	margin-top: 20px;
+	padding: 0 10px;
+	text-align: right;
+}
+
+a.admbox,
+a.admbox.off,
+a.admbox:visited {
+	background-color: #000;
+	border: 1px solid #dede98;
+	color: #dede98;
+	text-decoration: none;
+}
+
+a.admbox:hover,
+a.admbox:focus,
+a.admbox:active {
+	background-color: #000;
+	border: 1px solid #fff;
+	color: #fff;
+	text-decoration: underline;
+}
+
+.daterow {
+	color: #262626;
+}
+
+.caleven, .calodd {
+	color: black;
+}
+
+.calHeadingOn a, .calfocuson, .calfocuson a, .focus a {
+	color: #4477cc;
+}
+
+.Cal1 a {
+	color: #27408B;
+}
+
+.focus a:hover, .Cal1 a:hover {
+	color: white;
+}
+

@@ -1,0 +1,48 @@
+@CHARSET "UTF-8";
+
+/* Variation on darkroom.css */
+
+body { font-size: 65% !important; }
+html>body {font-size: 65% !important}
+*:first-child+html body {font-size: 62% !important;}
+
+h3.box-title {
+	font-size: 1.2em;
+	margin: 0;
+}
+
+.box a.flipmodtitle img {
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 0;
+	border: 1px solid transparent;
+	opacity: .4;
+}
+
+* html .box a.flipmodtitle img,
+.box:hover a.flipmodtitle img {
+	opacity: 1;
+}
+
+.box-data {
+	margin: .2em .8em .6em;
+	padding:2px;
+}
+
+
+.button a,
+.button a:visited { font-size: 0.9em; }
+
+#siteloginbar {
+	font-size: 1em;
+	bottom: 80px;
+}
+
+#siteloginbar.logged-in {
+	bottom: 100px;
+}
+
+ul.autocompleter-choices {
+	font-size: .7em;
+}
