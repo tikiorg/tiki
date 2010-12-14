@@ -46,7 +46,7 @@
 	{/remarksbox}
 {/if}
 
-<form method="post" action="{$smarty.server.REQUEST_URI}">
+<form method="post" action="{$smarty.server.REQUEST_URI|escape}">
 <input type="hidden" name="referer" value="{$referer|escape}" />
 <div style="float: left; margin-right: 10px;"><input type="submit" name="assign" value="{tr}Apply{/tr}" /></div>
 {if $isTop ne 'y' }
@@ -89,7 +89,7 @@
 					</td>
 					
 				{else}
-				<td><input id="group_watch{$i}"type="checkbox" name="checked[]" value="{$g|escape}"
+				<td><input id="group_watch{$i}" type="checkbox" name="checked[]" value="{$g|escape}"
 					{if in_array($g, $group_watches)} checked="checked"{/if} /></td>
 				<td><label for="group_watch{$i}">{$g|escape}</label></td>
 				{/if}
