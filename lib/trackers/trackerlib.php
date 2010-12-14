@@ -4078,7 +4078,7 @@ class TrackerLib extends TikiLib
 	}
 	/* get the fields from the pretty tracker template
 	* return a list of fieldIds */
-	function get_pretty_fieldIds($resource, $type='wiki') {
+	function get_pretty_fieldIds($resource, $type='wiki', &$outputPretty) {
 		global $tikilib, $smarty;
 		if ($type == 'wiki') {
 			$wiki_info = $tikilib->get_page_info($resource);
@@ -4090,7 +4090,11 @@ class TrackerLib extends TikiLib
 			$f = $smarty->_read_file($resource_name);
 		}
 		if (!empty($f)) {
-			preg_match_all('/\$f_([0-9]+)/', $f, $matches);
+			preg_match_all('/\$f_([0-9]+)(\|output)?/', $f, $matches);
+			foreach ($matches[2] as $i=>$val) {
+				if (!empty($val))
+					$outputPretty[] = $matches[1][$i];
+			}
 			return $matches[1];
 		}
 		return array();
