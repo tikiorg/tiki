@@ -30,6 +30,68 @@ Version 6.1
 ------------------
 
 ----------------------------------------------
+r31399 | pkdille | 2010-12-14 16:49:49 +0100 (Tue, 14 Dec 2010) | 1 line
+
+[FIX] 20081120_tiki_poll_structures_update_tiki.sql database update was not included in tiki.sql file
+----------------------------------------------
+r31393 | xavidp | 2010-12-14 03:22:34 +0100 (Tue, 14 Dec 2010) | 1 line
+
+[FIX]For some reason, smarty strips spaces of the button label if param "text "was used, but text show ok if using "_text". Fixed. Former fix by rodrigo_sampaio seemed not enough.
+----------------------------------------------
+r31392 | sylvieg | 2010-12-13 21:25:13 +0100 (Mon, 13 Dec 2010) | 1 line
+
+[FIX]tracker: IP does not seem to be a global anymore -> fix uniq for IP
+----------------------------------------------
+r31383 | Jyhem | 2010-12-13 16:39:13 +0100 (Mon, 13 Dec 2010) | 1 line
+
+[FIX] Allow valid email syntax 'display name <email>'
+----------------------------------------------
+r31382 | jonnybradley | 2010-12-13 16:27:13 +0100 (Mon, 13 Dec 2010) | 1 line
+
+[FIX] cclite payments: Use registry's defined currency if set, not the global pref and use correct registry for transaction on cclite server.
+----------------------------------------------
+r31378 | marclaporte | 2010-12-12 22:14:48 +0100 (Sun, 12 Dec 2010) | 1 line
+
+[bp/r30062] Wiki page name bad characters: remove current nominations - comma, colon, parentheses, apostrophe, exclamation mark. Ref: http://dev.tiki.org/Bad+characters
+----------------------------------------------
+r31377 | jonnybradley | 2010-12-12 21:03:57 +0100 (Sun, 12 Dec 2010) | 1 line
+
+[FIX] user registration: Actually a simple work around as the validation mail cannot send the user tracker info as the item hasn't been made yet, so add a link to the new user's pref page
+----------------------------------------------
+r31374 | jonnybradley | 2010-12-12 18:55:55 +0100 (Sun, 12 Dec 2010) | 1 line
+
+[FIX] listpages: Add confirmations to the multi select operations (thanks and condolences to Carsten)
+----------------------------------------------
+r31370 | jonnybradley | 2010-12-12 15:40:33 +0100 (Sun, 12 Dec 2010) | 1 line
+
+[FIX] structures: Ensure pos of new structures is 1 (thanks Geoff)
+----------------------------------------------
+r31369 | eromneg | 2010-12-12 00:34:24 +0100 (Sun, 12 Dec 2010) | 1 line
+
+[FIX] allow menu url fields to not be escaped by using the menus_item_names_raw pref in the same way as the name field is not escaped - admin screen label/description updated
+----------------------------------------------
+r31363 | chealer | 2010-12-11 00:17:39 +0100 (Sat, 11 Dec 2010) | 1 line
+
+[FIX] Upcoming events module: don't show cancelled events like all others. strike names as when viewing calendars. (Closes: #3708)
+----------------------------------------------
+r31356 | marclaporte | 2010-12-10 20:35:40 +0100 (Fri, 10 Dec 2010) | 1 line
+
+Relevant info added to the Security Admin Panel
+----------------------------------------------
+r31347 | luciash | 2010-12-10 15:33:48 +0100 (Fri, 10 Dec 2010) | 1 line
+
+menus: slightly polished translation string (no need to yell INSECURE there)
+----------------------------------------------
+r31346 | luciash | 2010-12-10 15:01:04 +0100 (Fri, 10 Dec 2010) | 1 line
+
+[FIX] darkroom theme: OpenID Login image visible now
+----------------------------------------------
+r31337 | chealer | 2010-12-10 04:17:43 +0100 (Fri, 10 Dec 2010) | 3 lines
+
+[SEC] Escape menu item names by default. Option menus_item_names_raw allows keeping the legacy behavior (replaces less clear preference).
+thanks Jonny Bradley, Gary Cunningham-Lee, Rick Sapir, Marc Laporte and Jean-Fran?\195?\167ois Bilger
+[SEC] HTML special characters escaping in menu item URLs and icon paths
+----------------------------------------------
 r31322 | changi67 | 2010-12-09 21:42:45 +0100 (Thu, 09 Dec 2010) | 1 line
 
 [FIX] Don't display user that are already in the group - maybe a better way but that's mine
