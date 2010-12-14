@@ -26,8 +26,8 @@ $smarty->assign('headtitle', tra('Search'));
 $access->check_feature('feature_search');
 $access->check_permission('tiki_p_search');
 
-ini_set('display_errors', true);
-error_reporting(E_ALL);
+//ini_set('display_errors', true);
+//error_reporting(E_ALL);
 
 $filter = isset($_REQUEST['filter']) ? $_REQUEST['filter'] : array();
 
@@ -44,7 +44,7 @@ $plugin->setData(array(
 $plugin->setFields(array(
 	'title' => null,
 	'modification_date' => null,
-	//'highlight' => null, // Disabled, not quite right
+	'highlight' => null,
 ));
 
 $formatter = new Search_Formatter($plugin);

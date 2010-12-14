@@ -45,6 +45,7 @@ class Search_ResultSet extends ArrayObject
 			foreach ($content as $key => $value) {
 				if ($key != 'object_type' // Skip internal values
 				 && $key != 'object_id'
+				 && $key != 'relevance'
 				 && ! empty($value) // Skip empty
 				 && ! is_array($value) // Skip arrays, multivalues fields are not human readable
 				 && ! preg_match('/^[\w-]+$/', $value)) { // Skip anything that looks like a single token
@@ -53,6 +54,7 @@ class Search_ResultSet extends ArrayObject
 			}
 
 			if (! empty($text)) {
+				$text = substr($text, 0, 240);
 				return $this->highlightHelper->filter($text);
 			}
 		}
