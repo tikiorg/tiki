@@ -30,6 +30,18 @@ Version 6.1
 ------------------
 
 ----------------------------------------------
+r31399 | pkdille | 2010-12-14 16:49:49 +0100 (Tue, 14 Dec 2010) | 1 line
+
+[FIX] 20081120_tiki_poll_structures_update_tiki.sql database update was not included in tiki.sql file
+----------------------------------------------
+r31393 | xavidp | 2010-12-14 03:22:34 +0100 (Tue, 14 Dec 2010) | 1 line
+
+[FIX]For some reason, smarty strips spaces of the button label if param "text "was used, but text show ok if using "_text". Fixed. Former fix by rodrigo_sampaio seemed not enough.
+----------------------------------------------
+r31392 | sylvieg | 2010-12-13 21:25:13 +0100 (Mon, 13 Dec 2010) | 1 line
+
+[FIX]tracker: IP does not seem to be a global anymore -> fix uniq for IP
+----------------------------------------------
 r31383 | Jyhem | 2010-12-13 16:39:13 +0100 (Mon, 13 Dec 2010) | 1 line
 
 [FIX] Allow valid email syntax 'display name <email>'
