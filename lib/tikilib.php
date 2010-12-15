@@ -5095,16 +5095,7 @@ if( \$('#$id') ) {
 		elseif( strpos( $val, 'reject' ) === 0 )
 			return 'rejected';
 		else {
-			global $tiki_p_plugin_approve, $tiki_p_plugin_preview, $tiki_p_plugin_autoapprove, $user;
-
-			if ( $tiki_p_plugin_approve == 'y' && $tiki_p_plugin_autoapprove == 'y' ) {
-				// Autoapprove the plugin
-				global $page;
-				$this->plugin_fingerprint_store( $fingerprint, 'accept' );
-				$this->invalidate_cache( $page );
-				return true;
-			}
-
+			global $tiki_p_plugin_approve, $tiki_p_plugin_preview, $user;
 			if( 
 				isset($_SERVER['REQUEST_METHOD'])
 				&& $_SERVER['REQUEST_METHOD'] == 'POST'
