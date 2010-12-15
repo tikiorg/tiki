@@ -16,6 +16,11 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 		return array('allowed_groups');
 	}
 
+	function getGlobalFields()
+	{
+		return array();
+	}
+
 	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
 	{
 		$groups = array();

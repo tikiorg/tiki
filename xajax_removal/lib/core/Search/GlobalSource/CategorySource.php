@@ -16,6 +16,11 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 		return array('categories', 'deep_categories');
 	}
 
+	function getGlobalFields()
+	{
+		return array();
+	}
+
 	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
 	{
 		$categories = $this->categlib->get_object_categories($objectType, $objectId, -1, false);

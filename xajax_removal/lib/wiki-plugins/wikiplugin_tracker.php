@@ -472,9 +472,9 @@ function wikiplugin_tracker($data, $params)
 				if (!empty($fields)) {
 					$outf = preg_split('/ *: */', $fields);$fields;
 				} elseif (!empty($wiki)) {
-					$outf = $trklib->get_pretty_fieldIds($wiki, 'wiki');
+					$outf = $trklib->get_pretty_fieldIds($wiki, 'wiki', $outputPretty);
 				} else {
-					$outf = $trklib->get_pretty_fieldIds($tpl, 'tpl');
+					$outf = $trklib->get_pretty_fieldIds($tpl, 'tpl', $outputPretty);
 				}
 				if (!empty($_REQUEST['autosavefields'])) {
 					$autosavefields = explode(':', $_REQUEST['autosavefields']);
@@ -737,7 +737,7 @@ function wikiplugin_tracker($data, $params)
 						// note that values will be raw - that is the limit of the capability of this feature for now
 						$newpageinfo = $tikilib->get_page_info($outputwiki);
 						$wikioutput = $newpageinfo["data"];
-						$newpagefields = $trklib->get_pretty_fieldIds($outputwiki, 'wiki');
+						$newpagefields = $trklib->get_pretty_fieldIds($outputwiki, 'wiki', $outputPretty);
 						foreach($newpagefields as $lf) {
 							$wikioutput = str_replace('{$f_' . $lf . '}', $trklib->get_item_value($trackerId, $rid, $lf), $wikioutput);
 						}
@@ -1222,7 +1222,11 @@ function wikiplugin_tracker($data, $params)
 						if (!empty($item)) {
 							$smarty->assign_by_ref('item', $item);
 						}
-						$smarty->assign('f_'.$f['fieldId'], $smarty->fetch('tracker_item_field_input.tpl'));
+						if (!empty($outputPretty) && in_array($f['fieldId'], $outputPretty)) {
+							$smarty->assign('f_'.$f['fieldId'], '<span class="outputPretty" id="track_'.$f['fieldId'].'" name="track_'.$f['fieldId'].'">'. $smarty->fetch('tracker_item_field_value.tpl'). '</span>');
+						} else {
+							$smarty->assign('f_'.$f['fieldId'], $smarty->fetch('tracker_item_field_input.tpl'));
+						}
 					} else {
 						if (in_array($f['fieldId'], $optional)) {
 							$f['name'] = "<i>".$f['name']."</i>";

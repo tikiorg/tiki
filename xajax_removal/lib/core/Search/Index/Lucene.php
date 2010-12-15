@@ -16,6 +16,10 @@ class Search_Index_Lucene implements Search_Index_Interface
 		} catch (Zend_Search_Lucene_Exception $e) {
 			$this->lucene = Zend_Search_Lucene::create($directory);
 		}
+
+		$this->lucene->setMaxBufferedDocs(100);
+		$this->lucene->setMaxMergeDocs(200);
+		$this->lucene->setMergeFactor(50);
 	}
 
 	function addDocument(array $data)
@@ -23,6 +27,11 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$document = $this->generateDocument($data);
 
 		$this->lucene->addDocument($document);
+	}
+
+	function optimize()
+	{
+		$this->lucene->optimize();
 	}
 
 	function invalidateMultiple(Search_Expr_Interface $expr)
@@ -189,13 +198,10 @@ class Search_Index_Lucene implements Search_Index_Interface
 		$value = $node->getValue($this->getTypeFactory());
 		$field = $node->getField();
 
-		if ($field === 'global') {
-			$field = null;
-		}
-
 		switch (get_class($value)) {
 		case 'Search_Type_Whole':
 		case 'Search_Type_WikiText':
+		case 'Search_Type_PlainText':
 		case 'Search_Type_MultivalueText':
 			$parts = explode(' ', $value->getValue());
 			if (count($parts) === 1) {
@@ -219,6 +225,7 @@ class Search_Index_Lucene_HighlightHelper implements Zend_Filter_Interface
 
 	function filter($content)
 	{
+		$content = substr($content, 0, 240);
 		return trim(strip_tags($this->query->highlightMatches($content), '<b>'));
 	}
 }

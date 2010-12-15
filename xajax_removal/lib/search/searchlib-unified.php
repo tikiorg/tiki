@@ -60,7 +60,7 @@ class UnifiedSearchLib
 		return $indexer;
 	}
 
-	private function addSources($aggregator)
+	private function addSources($aggregator, $mode = 'indexing')
 	{
 		global $prefs;
 
@@ -98,11 +98,13 @@ class UnifiedSearchLib
 			$aggregator->addGlobalSource(new Search_GlobalSource_FreeTagSource);
 		}
 
-		if ($prefs['rating_advanced'] == 'y') {
+		if ($prefs['rating_advanced'] == 'y' && $mode == 'indexing') {
 			$aggregator->addGlobalSource(new Search_GlobalSource_AdvancedRatingSource);
 		}
 
-		$aggregator->addGlobalSource(new Search_GlobalSource_PermissionSource(Perms::getInstance(), 'Admins'));
+		if ($mode == 'indexing') {
+			$aggregator->addGlobalSource(new Search_GlobalSource_PermissionSource(Perms::getInstance(), 'Admins'));
+		}
 	}
 
 	function getIndex()
@@ -116,10 +118,10 @@ class UnifiedSearchLib
 		}
 	}
 
-	function getDataSource()
+	function getDataSource($mode = 'indexing')
 	{
 		$dataSource = new Search_Formatter_DataSource_Declarative;
-		$this->addSources($dataSource);
+		$this->addSources($dataSource, $mode);
 
 		return $dataSource;
 	}

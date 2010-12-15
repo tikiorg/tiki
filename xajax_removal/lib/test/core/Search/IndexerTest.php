@@ -155,5 +155,27 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals('final', $doc2['data']);
 		`rm -Rf $edir`;
 	}
+
+	function testGlobalAssembly()
+	{
+		$contentSource = new Search_ContentSource_Static(array(
+			'HomePage' => array('title' => 'Hello'),
+		), array('title' => 'plaintext'));
+
+		$globalSource = new Search_GlobalSource_Static(array(
+			'wiki page:HomePage' => array('freetags_text' => 'foobar baz'),
+		), array('freetags_text' => 'plaintext'));
+
+		$index = new Search_Index_Memory;
+		$indexer = new Search_Indexer($index);
+		$indexer->addContentSource('wiki page', $contentSource);
+		$indexer->addGlobalSource($globalSource);
+		$indexer->rebuild();
+
+		$document = $index->getDocument(0);
+
+		$typeFactory = $index->getTypeFactory();
+		$this->assertEquals($typeFactory->plaintext('foobar baz Hello '), $document['contents']);
+	}
 }
 

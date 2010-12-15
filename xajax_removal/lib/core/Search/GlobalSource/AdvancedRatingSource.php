@@ -25,6 +25,11 @@ class Search_GlobalSource_AdvancedRatingSource implements Search_GlobalSource_In
 		return $this->fields;
 	}
 
+	function getGlobalFields()
+	{
+		return array();
+	}
+
 	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
 	{
 		$ratings = $this->ratinglib->obtain_ratings($objectType, $objectId);

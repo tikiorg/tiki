@@ -57,5 +57,16 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface
 			'parent_object_type',
 		);
 	}
+	
+	function getGlobalFields()
+	{
+		return array(
+			'title' => true,
+			'description' => true,
+
+			'file_comment' => false,
+			'file_content' => false,
+		);
+	}
 }
 

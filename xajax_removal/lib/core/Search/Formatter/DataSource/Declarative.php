@@ -35,26 +35,17 @@ class Search_Formatter_DataSource_Declarative implements Search_Formatter_DataSo
 
 	private function obtainFromContentSource($type, $object, & $missingFields)
 	{
-		$requiresHighlight = in_array('highlight', $missingFields);
-
 		if (isset($this->contentSources[$type])) {
 			$contentSource = $this->contentSources[$type];
+
+			if (in_array('highlight', $missingFields)) {
+				$missingFields = array_merge($missingFields, array_keys($contentSource->getGlobalFields()));
+			}
 
 			if ($this->sourceProvidesValue($contentSource, $missingFields)) {
 				$data = $contentSource->getDocument($object, new Search_Type_Factory_Direct);
 				
-				if (! $requiresHighlight) {
-					$data = array_intersect_key($data, array_combine($missingFields, $missingFields));
-				}
-
-				$missingFields = array_diff($missingFields, array_keys($data));
-
-				$raw = array();
-				foreach ($data as $key => $value) {
-					$raw[$key] = $value->getValue();
-				}
-
-				return $raw;
+				return $this->getRaw($data, $missingFields);
 			}
 		}
 
@@ -63,23 +54,14 @@ class Search_Formatter_DataSource_Declarative implements Search_Formatter_DataSo
 
 	private function obtainFromGlobalSource($globalSource, $type, $object, & $missingFields, $data)
 	{
-		$requiresHighlight = in_array('highlight', $missingFields);
+		if (in_array('highlight', $missingFields)) {
+			$missingFields = array_merge($missingFields, array_keys($globalSource->getGlobalFields()));
+		}
 
 		if ($this->sourceProvidesValue($globalSource, $missingFields)) {
 			$data = $globalSource->getData($type, $object, new Search_Type_Factory_Direct, $data);
 
-			if (! $requiresHighlight) {
-				$data = array_intersect_key($data, array_combine($missingFields, $missingFields));
-			}
-
-			$missingFields = array_diff($missingFields, array_keys($data));
-
-			$raw = array();
-			foreach ($data as $key => $value) {
-				$raw[$key] = $value->getValue();
-			}
-
-			return $raw;
+			return $this->getRaw($data, $missingFields);
 		}
 
 		return array();
@@ -87,7 +69,24 @@ class Search_Formatter_DataSource_Declarative implements Search_Formatter_DataSo
 
 	private function sourceProvidesValue($contentSource, $missingFields)
 	{
-		return in_array('highlight', $missingFields) || count(array_intersect($missingFields, $contentSource->getProvidedFields())) > 0;
+		return count(array_intersect($missingFields, $contentSource->getProvidedFields())) > 0;
+	}
+
+	private function getRaw($data, & $missingFields)
+	{
+		$data = array_intersect_key($data, array_combine($missingFields, $missingFields));
+
+		$missingFields = array_diff($missingFields, array_keys($data));
+
+		$raw = array();
+		foreach ($data as $key => $value) {
+			$value = $value->getValue();
+			if (! empty($value)) {
+				$raw[$key] = $value;
+			}
+		}
+
+		return $raw;
 	}
 }
 

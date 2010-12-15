@@ -85,9 +85,12 @@
 									{icon _id='arrow_right' _tag='input_image' name='movesel' alt="{tr}Move{/tr}" title="{tr}Move Selected Files{/tr}" style='vertical-align: middle;'}
 								{/if}
 							{/if}
-							
-							{if $tiki_p_admin_file_galleries eq 'y'}
+
+							{if $tiki_p_admin_file_galleries eq 'y' or $tiki_p_remove_files eq 'y'}
 								{icon _id='cross' _tag='input_image' _confirm="{tr}Are you sure you want to delete the selected files?{/tr}" name='delsel' alt="{tr}Delete{/tr}" style='vertical-align: middle;'}
+							{/if}
+
+							{if $tiki_p_admin_file_galleries eq 'y'}
 								{icon _id='arrow_refresh' _tag='input_image' _confirm="{tr}Are you sure you want to reset the default gallery list table settings?{/tr}" name='defaultsel' alt="{tr}Reset to default gallery list table settings{/tr}" style='vertical-align: middle;'}
 							{/if}
 							

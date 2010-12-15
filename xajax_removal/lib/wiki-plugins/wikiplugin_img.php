@@ -247,6 +247,12 @@ function wikiplugin_img_info() {
  function wikiplugin_img( $data, $params, $offset, $parseOptions='' ) {
 	 global $tikidomain, $prefs, $section, $smarty, $tikiroot;
 
+	 $getimagesize = 'getimagesize';
+
+	 if (isset($parseOptions['indexing']) && $parseOptions['indexing']) {
+	 	$getimagesize = 'wp_img_fakeimagesize';
+	 }
+
 	$imgdata = array();
 	
 	$imgdata['src'] = '';
@@ -651,12 +657,12 @@ function wikiplugin_img_info() {
 			$idesc = '';
 			$otherinfo = array();
 			if (!empty($dbinfo['data'])) {
-				getimagesize_raw($dbinfo['data'], false);  //images in databases, calls function in this program
+				getimagesize_raw($dbinfo['data'], false, $getimagesize);  //images in databases, calls function in this program
 			} else {
 				if (!empty($dbinfo['path'])) {
-					$imagesize = getimagesize(($basepath . $dbinfo['path']), $otherinfo);  //images in tiki directories
+					$imagesize = $getimagesize(($basepath . $dbinfo['path']), $otherinfo);  //images in tiki directories
 				} else {
-					$imagesize = getimagesize($src, $otherinfo);  //wiki_up and external images
+					$imagesize = $getimagesize($src, $otherinfo);  //wiki_up and external images
 				}
 				if (isset($otherinfo['APP13'])) { 
 					$iptc = iptcparse($otherinfo['APP13']); 
@@ -670,7 +676,7 @@ function wikiplugin_img_info() {
 				$imageObj = new Image($basepath . $dbinfo['path'], true);	
 			} elseif (strpos($src,'http://') !== false) {
 				//Image class doesn't seem to work well for external images - no height or width
-				$imagesize = getimagesize($src);
+				$imagesize = $getimagesize($src);
 			} else {
 				$imageObj = new Image($src, true);
 			}
@@ -1227,7 +1233,7 @@ function wikiplugin_img_info() {
 /////////////////////////////////////////Function for getting image data from raw file (no filename)////////////////////////////////
  ///Creates a temporary file name and path for a raw image stored in a tiki database since getimagesize needs one to work
 if (!function_exists('getimagesize_raw')) {
-	function getimagesize_raw($data, $thumb)
+	function getimagesize_raw($data, $thumb, $getimagesize)
 	{
         $cwd = getcwd(); #get current working directory
         $tempfile = tempnam("$cwd/tmp", "temp_image_");#create tempfile and return the path/name (make sure you have created tmp directory under $cwd
@@ -1236,16 +1242,21 @@ if (!function_exists('getimagesize_raw')) {
         fclose($temphandle);
 		global $imagesize, $otherinfo, $iptc, $imagesizet;
 		if ($thumb == false) {
-	        $imagesize = getimagesize($tempfile, $otherinfo); #get image params from the tempfile
+	        $imagesize = $getimagesize($tempfile, $otherinfo); #get image params from the tempfile
 			if (!empty($otherinfo['APP13'])) {
 				$iptc = iptcparse($otherinfo['APP13']);
 			} else {
 				$iptc = '';
 			}
 		} else {
-			$imagesizet = getimagesize($tempfile);
+			$imagesizet = $getimagesize($tempfile);
 		}
         unlink($tempfile); // this removes the tempfile
+	}
+
+	function wp_img_fakeimagesize()
+	{
+		return array(1, 1);
 	}
 }
  
