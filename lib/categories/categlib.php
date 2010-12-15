@@ -1864,7 +1864,7 @@ class CategLib extends ObjectLib
 	// generate category tree for use in various places (like categorize_list.php)
 	function generate_cat_tree($categories, $canchangeall = false, $forceincat = array()) {
 		global $smarty;
-		include_once ('lib/tree/categ_picker_tree.php');
+		include_once ('lib/tree/categ_browse_tree.php');
 		$tree_nodes = array();
 		$roots = $this->findRoots( $categories );
 		foreach ($categories as $c) {
@@ -1884,11 +1884,11 @@ class CategLib extends ObjectLib
 					'data' => $smarty->fetch( 'category_tree_entry.tpl' ),
 				);
 				if (in_array( $c['parentId'], $roots )) {
-					$tree_nodes[count($tree_nodes) - 1]['data'] = '<strong>'.$tree_nodes[count($tree_nodes) - 1]['data'].'</strong>';
+					$tree_nodes[count($tree_nodes) - 1]['data'] = $tree_nodes[count($tree_nodes) - 1]['data'];
 				}
 			}
 		}
-		$tm = new CatPickerTreeMaker("categorize");
+		$tm = new CatBrowseTreeMaker("categorize");
 		$res = '';
 		foreach( $roots as $root ) {
 			$res .= $tm->make_tree($root, $tree_nodes);
