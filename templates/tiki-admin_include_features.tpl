@@ -193,6 +193,7 @@
 					{preference name=feature_socialnetworks}
 					{preference name=feature_watershed}
 					{preference name=feature_file_galleries_save_draft}
+					{preference name=feature_file_galleries_templates}
 				</fieldset>
 
 				<fieldset>

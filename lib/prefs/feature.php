@@ -86,6 +86,13 @@ function prefs_feature_list() {
 			),
 			'type' => 'flag',
 		),
+		'feature_file_galleries_templates' => array(
+			'name' => tra('Configuration templates'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_file_galleries',
+                         ),
+		),
 		'feature_articles' => array(
 			'name' => tra('Articles'),
 			'description' => tra('Articles can be used for date-specific news and announcements. You can configure articles to automatically publish and expire at specific times or to require that submissions be approved before becoming "live."'),

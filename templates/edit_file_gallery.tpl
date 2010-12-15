@@ -32,6 +32,21 @@
 								{/if}
 							</td>
 						</tr>
+						{if $prefs.feature_file_galleries_templates eq 'y'}
+ 						<tr>
+ 							<td>
+								<label for="fgal_template">{tr}Template{/tr}:</label>
+							</td>
+							<td>
+								<select name="fgal_template" id="fgal_template">
+									<option value=""{if $templateId eq ""} selected="selected"{/if}>{tr}None{/tr}</option>
+									{foreach from=$all_templates key=key item=item}
+										<option value="{$item.id}"{if $gal_info.template eq $item.id} selected="selected"{/if}>{$item.label|escape}</option>
+									{/foreach}
+								</select>
+							</td>
+						</tr>
+						{/if}
 						<tr>
 							<td>
 								<label for="fgal_type">{tr}Type{/tr}:</label>

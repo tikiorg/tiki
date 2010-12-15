@@ -717,6 +717,7 @@ CREATE TABLE `tiki_file_galleries` (
   `galleryId` int(14) NOT NULL auto_increment,
   `name` varchar(80) NOT NULL default '',
   `type` varchar(20) NOT NULL default 'default',
+  `template` int(10) default NULL,
   `description` text,
   `created` int(14) default NULL,
   `visible` char(1) default NULL,

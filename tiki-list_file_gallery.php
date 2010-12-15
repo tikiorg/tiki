@@ -16,6 +16,11 @@ if ($prefs['feature_categories'] == 'y') {
 	include_once ('lib/categories/categlib.php');
 }
 
+if ($prefs['feature_file_galleries_templates'] == 'y') {
+	global $templateslib;
+	include_once ('lib/templates/templateslib.php');
+}
+
 if ($prefs['feature_groupalert'] == 'y') {
 	include_once ('lib/groupalert/groupalertlib.php');
 }
@@ -470,7 +475,23 @@ if (isset($_REQUEST['edit'])) {
 											'show_backlinks'		=> $_REQUEST['fgal_list_backlinks'],
 											'wiki_syntax'			=> $_REQUEST['wiki_syntax']
 										);
-		
+
+		if ($prefs['feature_file_galleries_templates'] == 'y' && isset($_REQUEST['fgal_template']) && !empty($_REQUEST['fgal_template'])) {
+			// Override with template parameters
+			require_once( 'lib/Horde/Yaml.php' );
+			require_once( 'lib/Horde/Yaml/Loader.php' );
+			require_once( 'lib/Horde/Yaml/Dumper.php' );
+			require_once( 'lib/Horde/Yaml/Node.php' );
+			require_once( 'lib/Horde/Yaml/Exception.php' );
+
+			$template = $templateslib->get_template($_REQUEST['fgal_template']);
+
+			if ($template) {
+				$gal_info = array_merge($gal_info, Horde_Yaml::load($template['content']));
+				$gal_info['template'] = $_REQUEST['fgal_template'];
+			}
+		}
+
 		if ($prefs['fgal_show_slideshow'] != 'y') {
 			$gal_info['show_slideshow'] = $old_gal_info['show_slideshow'];
 		}
@@ -922,6 +943,16 @@ if ($prefs['feature_user_watches'] == 'y') {
 	}
 }
 
+if ($prefs['feature_file_galleries_templates'] == 'y') {
+	$all_templates = $templateslib->list_templates('file_galleries', 0, -1, 'name_asc', '');
+	$templates = array();
+	foreach ($all_templates['data'] as $template) {
+		$templates[] = array('label' => $template['name'], 'id' => $template['templateId']);
+	}
+	sort($templates);
+	$smarty->assign_by_ref('all_templates', $templates);
+}
+
 if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || isset($_REQUEST['movesel_x'])) {
 	$all_galleries = $filegallib->getFileGalleriesData();
 	$gals = array();
@@ -1007,6 +1038,8 @@ $smarty->assign_by_ref('find_durations', $find_durations);
 $smarty->assign_by_ref('gal_info', $gal_info);
 
 $smarty->assign('view', isset($_REQUEST['view']) ? $_REQUEST['view'] : $fgal_options['default_view']['value']);
+
+$headerlib->add_jsfile('lib/filegals/tiki-list_file_gallery.js');
 
 // Display the template
 if (!empty($_REQUEST['filegals_manager'])) {
