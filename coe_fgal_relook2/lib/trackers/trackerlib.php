@@ -1205,6 +1205,7 @@ class TrackerLib extends TikiLib
 			switch ($field['type']) {
 				case 'P':
 					if (count($field['options_array']) == 3) {
+						global $adminlib, $ldaplib;
 						include_once ('lib/admin/adminlib.php');
 						include_once ('lib/ldap/ldaplib.php');
 
@@ -3774,7 +3775,7 @@ class TrackerLib extends TikiLib
 	}
 	/* look if a tracker has only one item per user and if an item has already being created for the user  or the IP*/
 	function get_user_item(&$trackerId, $trackerOptions, $userparam=null, $user= null, $status='') {
-		global $IP, $prefs;
+		global $prefs, $tikilib;
 		if (empty($user)) {
 			$user = $GLOBALS['user'];
 		}
@@ -3796,6 +3797,7 @@ class TrackerLib extends TikiLib
 			}
 		}
 		if ($fieldId = $this->get_field_id_from_type($trackerId, 'I', '1')) { // IP creator field
+			$IP = $tikilib->get_ip_address();
 			$items = $this->get_items_list($trackerId, $fieldId, $IP, $status);
 			if (!empty($items))
 				return $items[0];
@@ -4078,7 +4080,7 @@ class TrackerLib extends TikiLib
 	}
 	/* get the fields from the pretty tracker template
 	* return a list of fieldIds */
-	function get_pretty_fieldIds($resource, $type='wiki') {
+	function get_pretty_fieldIds($resource, $type='wiki', &$outputPretty) {
 		global $tikilib, $smarty;
 		if ($type == 'wiki') {
 			$wiki_info = $tikilib->get_page_info($resource);
@@ -4090,7 +4092,11 @@ class TrackerLib extends TikiLib
 			$f = $smarty->_read_file($resource_name);
 		}
 		if (!empty($f)) {
-			preg_match_all('/\$f_([0-9]+)/', $f, $matches);
+			preg_match_all('/\$f_([0-9]+)(\|output)?/', $f, $matches);
+			foreach ($matches[2] as $i=>$val) {
+				if (!empty($val))
+					$outputPretty[] = $matches[1][$i];
+			}
 			return $matches[1];
 		}
 		return array();

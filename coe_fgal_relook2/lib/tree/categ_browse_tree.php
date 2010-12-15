@@ -75,7 +75,7 @@ class CatBrowseTreeMaker extends TreeMaker
 
 	//
 	function node_flipper_code($nodeinfo) {
-		'';
+		return '';
 	}
 
 	//

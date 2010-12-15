@@ -61,5 +61,17 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 			'parent_object_type',
 		);
 	}
+
+	function getGlobalFields()
+	{
+		return array(
+			'title' => true,
+			'description' => true,
+
+			'article_content' => false,
+			'article_topline' => false,
+			'article_subtitle' => false,
+		);
+	}
 }
 

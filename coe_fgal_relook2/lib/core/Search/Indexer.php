@@ -6,6 +6,9 @@ class Search_Indexer
 	private $contentSources = array();
 	private $globalSources = array();
 
+	private $cacheGlobals = null;
+	private $cacheTypes = array();
+
 	function __construct(Search_Index_Interface $searchIndex)
 	{
 		$this->searchIndex = $searchIndex;
@@ -33,6 +36,8 @@ class Search_Indexer
 				$stat[$objectType] = empty($stat[$objectType])? 1: $stat[$objectType] + 1;
 			}
 		}
+		
+		$this->searchIndex->optimize();
 		return $stat;
 	}
 
@@ -58,7 +63,10 @@ class Search_Indexer
 	private function addDocument($objectType, $objectId)
 	{
 		$typeFactory = $this->searchIndex->getTypeFactory();
+
 		if (isset($this->contentSources[$objectType])) {
+			$globalFields = $this->getGlobalFields($objectType);
+
 			$contentSource = $this->contentSources[$objectType];
 
 			if (false !== $data = $contentSource->getDocument($objectId, $typeFactory)) {
@@ -71,11 +79,46 @@ class Search_Indexer
 				$base = array(
 					'object_type' => $typeFactory->identifier($objectType),
 					'object_id' => $typeFactory->identifier($objectId),
+					'contents' => $typeFactory->plaintext($this->getGlobalContent($data, $globalFields)),
 				);
 
-				$this->searchIndex->addDocument(array_merge($data, $base));
+				$this->searchIndex->addDocument(array_merge(array_filter($data), $base));
 			}
 		}
+	}
+
+	private function getGlobalContent(array & $data, $globalFields) {
+		$content = '';
+
+		foreach ($globalFields as $name => $preserve) {
+			if (isset($data[$name])) {
+				$v = $data[$name]->getValue();
+				if (is_string($v)) {
+					$content .= $v . ' ';
+
+					if (! $preserve) {
+						$data[$name] = false;
+					}
+				}
+			}
+		}
+
+		return $content;
+	}
+
+	private function getGlobalFields($objectType) {
+		if (is_null($this->cacheGlobals)) {
+			$this->cacheGlobals = array();
+			foreach ($this->globalSources as $source) {
+				$this->cacheGlobals = array_merge($this->cacheGlobals, $source->getGlobalFields());
+			}
+		}
+
+		if (! isset($this->cacheTypes[$objectType])) {
+			$this->cacheTypes[$objectType] = array_merge($this->cacheGlobals, $this->contentSources[$objectType]->getGlobalFields());
+		}
+
+		return $this->cacheTypes[$objectType];
 	}
 }
 

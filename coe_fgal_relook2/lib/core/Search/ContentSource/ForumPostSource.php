@@ -62,5 +62,14 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'parent_object_type',
 		);
 	}
+
+	function getGlobalFields()
+	{
+		return array(
+			'title' => true,
+
+			'post_content' => false,
+		);
+	}
 }
 

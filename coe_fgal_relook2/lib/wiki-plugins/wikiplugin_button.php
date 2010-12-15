@@ -27,7 +27,7 @@ function wikiplugin_button_info() {
 				'filter' => 'url',
 				'default' => '',
 			),
-			'text' => array(
+			'_text' => array(
 				'required' => false,
 				'name' => tra('Label'),
 				'description' => tra('Label for the button'),

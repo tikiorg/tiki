@@ -52,7 +52,7 @@
 {* --- tiki block --- *}
 <title>{strip}
 	{if $prefs.site_title_location eq 'before'}{$prefs.browsertitle|tr_if|escape} {$prefs.site_nav_seper} {/if}
-	{if $prefs.feature_breadcrumbs eq 'y' && isset($trail)}
+	{if ($prefs.feature_breadcrumbs eq 'y' && isset($trail)) or $prefs.site_title_breadcrumb eq "desc"}
 		{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
 	{else}
 		{if !empty($tracker_item_main_value)}

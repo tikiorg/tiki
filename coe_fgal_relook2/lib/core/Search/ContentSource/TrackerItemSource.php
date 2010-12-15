@@ -83,5 +83,22 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 
 		return $this->fields;
 	}
+
+	function getGlobalFields()
+	{
+		// Preserve individual tracker fields
+		return array_fill_keys(array_diff($this->getProvidedFields(), array(
+			'language',
+			'modification_date',
+			'contributors',
+
+			'tracker_status',
+			'tracker_id',
+
+			'parent_view_permission',
+			'parent_object_id',
+			'parent_object_type',
+		)), true);
+	}
 }
 

@@ -298,6 +298,18 @@ function wikiplugin_tracker_info()
 				'filter' => 'pagename',
 				'default' => '',
 			),
+			'formtag' => array(
+				'required' => false,
+				'name' => tra('Embed the tracker in a form tag'),
+				'description' => tra('If set to Yes, the tracker is contained in a <form> tag and has action buttons'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
 		),
 	);
 }
@@ -388,7 +400,19 @@ function wikiplugin_tracker($data, $params)
 		unset($_REQUEST['tr_reset']);
 	}
 	$smarty->assign('showmandatory',  empty($wiki) && empty($tpl)? 'n': $showmandatory); 
-	if (!empty($wiki)) $wiki = trim($wiki);
+	if (!empty($wiki)) {
+		if (preg_match('/^wiki:(.+)$/', $wiki, $wiki_matches)) {
+			$wiki = $wiki_matches[1];
+		}
+
+		$wiki = trim($wiki);
+	}
+
+	if (!isset($params['formtag'])) {
+		$params['formtag'] = 'y';
+	}
+
+	$fields_prefix = ($params['formtag'] == 'n') ? 'ins_' : 'track_';
 
 	if (isset($values)) {
 		if (!is_array($values)) {
@@ -472,9 +496,9 @@ function wikiplugin_tracker($data, $params)
 				if (!empty($fields)) {
 					$outf = preg_split('/ *: */', $fields);$fields;
 				} elseif (!empty($wiki)) {
-					$outf = $trklib->get_pretty_fieldIds($wiki, 'wiki');
+					$outf = $trklib->get_pretty_fieldIds($wiki, 'wiki', $outputPretty);
 				} else {
-					$outf = $trklib->get_pretty_fieldIds($tpl, 'tpl');
+					$outf = $trklib->get_pretty_fieldIds($tpl, 'tpl', $outputPretty);
 				}
 				if (!empty($_REQUEST['autosavefields'])) {
 					$autosavefields = explode(':', $_REQUEST['autosavefields']);
@@ -501,7 +525,7 @@ function wikiplugin_tracker($data, $params)
 				/* ------------------------------------- Recup all values from REQUEST -------------- */
 				foreach ($flds['data'] as $fl) {
 					// First convert track_xx to array (need to be up here before setting autosave fields)
-					$incomingTrackName = 'track_' . $fl["fieldId"];
+					$incomingTrackName = $fields_prefix . $fl["fieldId"];
 					if (isset($_REQUEST[$incomingTrackName])) {
 						$_REQUEST['track'][$fl["fieldId"]] = $_REQUEST[$incomingTrackName];
 					} else if (isset($_FILES[$incomingTrackName])) {	// also for uploaded files
@@ -581,7 +605,7 @@ function wikiplugin_tracker($data, $params)
 					} elseif (($flds['data'][$cpt]['type'] == 'C' || $flds['data'][$cpt]['type'] == 'e') && empty($_REQUEST['track'][$fl['fieldId']])) {
 						$_REQUEST['track'][$fl['fieldId']] = '';
 					} elseif ($flds['data'][$cpt]['type'] == 'f') {
-						$ins_id = 'track_'.$fl['fieldId'];
+						$ins_id = $fields_prefix . $fl['fieldId'];
 						if (isset($_REQUEST[$ins_id.'Day']) || isset($_REQUEST[$ins_id.'Hour'])) {
 							$_REQUEST['track'][$fl['fieldId']] = $trklib->build_date($_REQUEST, $flds['data'][$cpt], $ins_id);
 						} else {
@@ -737,7 +761,7 @@ function wikiplugin_tracker($data, $params)
 						// note that values will be raw - that is the limit of the capability of this feature for now
 						$newpageinfo = $tikilib->get_page_info($outputwiki);
 						$wikioutput = $newpageinfo["data"];
-						$newpagefields = $trklib->get_pretty_fieldIds($outputwiki, 'wiki');
+						$newpagefields = $trklib->get_pretty_fieldIds($outputwiki, 'wiki', $outputPretty);
 						foreach($newpagefields as $lf) {
 							$wikioutput = str_replace('{$f_' . $lf . '}', $trklib->get_item_value($trackerId, $rid, $lf), $wikioutput);
 						}
@@ -1024,14 +1048,16 @@ function wikiplugin_tracker($data, $params)
 					$customvalidation .= '} } } ';
 					$customvalidation .= '}, ';
 				}
-				$validationjs = $validatorslib->generateTrackerValidateJS( $flds['data'], "track_", $customvalidation, $customvalidation_m );
+				$validationjs = $validatorslib->generateTrackerValidateJS( $flds['data'], $fields_prefix, $customvalidation, $customvalidation_m );
 
 				$smarty->assign('validationjs', $validationjs);
 				$back .= $smarty->fetch('tracker_validator.tpl');
 			}
-			$back .= '<form name="editItemForm' . $iTRACKER . '" id="editItemForm' . $iTRACKER . '" enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').' action="'. $_SERVER['REQUEST_URI'] .'"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
-			$back .= '<input type="hidden" name="iTRACKER" value="'.$iTRACKER.'" />';
-			$back .= '<input type="hidden" name="refresh" value="1" />';
+			if ($params['formtag'] == 'y') {
+				$back .= '<form name="editItemForm' . $iTRACKER . '" id="editItemForm' . $iTRACKER . '" enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').' action="'. $_SERVER['REQUEST_URI'] .'"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
+				$back .= '<input type="hidden" name="iTRACKER" value="'.$iTRACKER.'" />';
+				$back .= '<input type="hidden" name="refresh" value="1" />';
+			}
 			if (isset($_REQUEST['page']))
 				$back.= '<input type="hidden" name="page" value="'.$_REQUEST["page"].'" />';
 			 // for registration
@@ -1079,7 +1105,7 @@ function wikiplugin_tracker($data, $params)
 			}
 			foreach ($flds['data'] as $i=>$f) { // collect additional infos
 				if (in_array($f['fieldId'], $outf)) {
-					$flds['data'][$i]['ins_id'] = ($f['type'] == 'e')?'ins_cat_'.$f['fieldId']: 'track_'.$f['fieldId'];
+					$flds['data'][$i]['ins_id'] = ($f['type'] == 'e')?'ins_cat_'.$f['fieldId']: $fields_prefix.$f['fieldId'];
 					if (($f['isHidden'] == 'c' || $f['isHidden'] == 'p') && !empty($itemId) && !isset($item['creator'])) {
 						$item['creator'] = $trklib->get_item_creator($trackerId, $itemId);
 					}
@@ -1222,7 +1248,11 @@ function wikiplugin_tracker($data, $params)
 						if (!empty($item)) {
 							$smarty->assign_by_ref('item', $item);
 						}
-						$smarty->assign('f_'.$f['fieldId'], $smarty->fetch('tracker_item_field_input.tpl'));
+						if (!empty($outputPretty) && in_array($f['fieldId'], $outputPretty)) {
+							$smarty->assign('f_'.$f['fieldId'], '<span class="outputPretty" id="track_'.$f['fieldId'].'" name="track_'.$f['fieldId'].'">'. $smarty->fetch('tracker_item_field_value.tpl'). '</span>');
+						} else {
+							$smarty->assign('f_'.$f['fieldId'], $smarty->fetch('tracker_item_field_input.tpl'));
+						}
 					} else {
 						if (in_array($f['fieldId'], $optional)) {
 							$f['name'] = "<i>".$f['name']."</i>";
@@ -1297,22 +1327,27 @@ function wikiplugin_tracker($data, $params)
 			} else {
 				$back .= '</div>';
 			}
-			$back .= '<div class="input_submit_container">';
-			
-			if (!empty($reset)) {
-				$back .= "<input class='button submit preview' type='reset' name='tr_reset' value='".tra($reset)."' />";
+
+			if ($params['formtag'] == 'y') {
+				$back .= '<div class="input_submit_container">';
+
+				if (!empty($reset)) {
+					$back .= "<input class='button submit preview' type='reset' name='tr_reset' value='".tra($reset)."' />";
+				}
+				if (!empty($preview)) {
+					$back .= "<input class='button submit preview' type='submit' name='tr_preview' value='".tra($preview)."' />";
+				}
+				foreach ($action as $key=>$act) {
+					$back .= "	<input class='button submit' type='submit' name='action$key' value='".tra($act)."' onclick='needToConfirm=false' />";
+				}
+				$back .= '</div>';
 			}
-			if (!empty($preview)) {
-				$back .= "<input class='button submit preview' type='submit' name='tr_preview' value='".tra($preview)."' />";
-			}
-			foreach ($action as $key=>$act) {
-				$back .= "	<input class='button submit' type='submit' name='action$key' value='".tra($act)."' onclick='needToConfirm=false' />";
-			}
-			$back .= '</div>';
 			if ($showmandatory == 'y' and $onemandatory) {
 				$back.= "<em class='mandatory_note'>".tra("Fields marked with a * are mandatory.")."</em>";
 			}
-			$back.= '</form>';
+			if ($params['formtag'] == 'y') {
+				$back.= '</form>';
+			}
 			if (!empty($js)) {
 				$back .= '<script type="text/javascript">'.$js.'</script>';
 			}

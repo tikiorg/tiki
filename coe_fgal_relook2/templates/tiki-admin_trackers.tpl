@@ -476,6 +476,12 @@
 				<br /><em>{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}</em></td>
 			</tr>
 
+			<tr>
+				<td>{tr}Wiki page to edit an item{/tr}</td>
+				<td><input type="text" name="editItemPretty" value="{$info.editItemPretty|escape}" />
+				<br /><em>{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}</em></td>
+			</tr>
+
 			{if !empty($info.todos)}
 				<tr>
 					<td>{tr}Status changes list{/tr}</td>

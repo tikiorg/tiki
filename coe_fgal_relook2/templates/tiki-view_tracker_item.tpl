@@ -235,6 +235,8 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;
 </td></tr>
 {/if}
 
+{if empty($tracker_info.editItemPretty)}
+
 {foreach from=$ins_fields key=ix item=cur_field}
 {if ($cur_field.isHidden eq 'n' or $tiki_p_admin_trackers eq 'y' or $cur_field.isHidden eq 'c') and (empty($cur_field.visibleBy) or in_array($default_group, $cur_field.visibleBy) or $tiki_p_admin_trackers eq 'y')  and ($cur_field.type ne 'A' or $tiki_p_attach_trackers eq 'y') and ($cur_field.type ne '*')}
 
@@ -513,6 +515,14 @@ or $cur_field.type eq 'i'}
 
 {/if}
 {/foreach}
+
+{else}
+<tr>
+	<td colspan="4">
+		{wikiplugin _name=tracker trackerId=$trackerId itemId=$itemId view=page wiki=$tracker_info.editItemPretty formtag='n'}{/wikiplugin}
+	</td>
+</tr>
+{/if}
 
 {if $groupforalert ne ''}
 

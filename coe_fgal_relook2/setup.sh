@@ -170,11 +170,6 @@ what to answer, just press enter to each question (to use default value)"
 
 	echo " done."
 
-	echo -n "Rebuilding search index..."
-	php -r "require_once 'tiki-setup.php'; require_once 'lib/search/searchlib-unified.php'; \$unifiedsearchlib->rebuild();"
-	chown -fR $AUSER:$AGROUP temp/unified-index/
-	chmod -fR u=rwX,go=rwX temp/unified-index/
-	echo " done."
 elif [ "$COMMAND" = 'open' ]; then
 	if [ "$USER" = 'root' ]; then
 		if [ -n "$OPT_AUSER" ]; then

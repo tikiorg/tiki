@@ -50,6 +50,15 @@ function wikiplugin_trackerif_info()
 function wikiplugin_trackerif($data, $params)
 {
         global $trklib;
+	$test = null;
+        $values = array();
+        $dataelse = '';
+
+	if (strpos($data,'{ELSE}')) {
+                // Else bloc when test does not pass
+		$dataelse = substr($data,strpos($data,'{ELSE}')+6);
+		$data = substr($data,0,strpos($data,'{ELSE}'));
+	}
 
         if (!isset($_REQUEST['trackerId']) || !isset($_REQUEST['itemId'])) {
 		// Edit mode
@@ -60,22 +69,12 @@ function wikiplugin_trackerif($data, $params)
                 return '';
         }
 
-        $test = null;
-        $values = array();
-        $dataelse = '';
-
         try {
                 // Parse test
                 $test = LDAPFilter::parse($params['test']);
         } catch (Exception $e) {
                 return $e->getMessage();
         }
-
-	if (strpos($data,'{ELSE}')) {
-                // Else bloc when test does not pass
-		$dataelse = substr($data,strpos($data,'{ELSE}')+6);
-		$data = substr($data,0,strpos($data,'{ELSE}'));
-	}
 
         $xfields = $trklib->list_tracker_fields($_REQUEST["trackerId"]);
 
@@ -115,7 +114,7 @@ function wikiplugin_trackerif_test(LDAPFilter $test, array $values) {
 
         } else if ($test->_filter != null) {
                 // a operator b
-                preg_match('/^\(([^!]+)(=|!=|<|<=|>|>=)(.+)\)$/', $test->_filter, $matches);
+                preg_match('/^\(\'?([^!\']*)\'?(=|!=|<|<=|>|>=)\'?([^\']*)\'?\)$/', $test->_filter, $matches);
 
                 if (count($matches) == 4) {
                         $_a = null;
@@ -125,14 +124,14 @@ function wikiplugin_trackerif_test(LDAPFilter $test, array $values) {
                                 // Retrieve the field f_*
                                 $_a = $values[$matches_f[1]];
                         } else {
-                                $_a = $matches[1];
+                                $_a = '';
                         }
 
                         if (preg_match('/f_([1-9]+)/', $matches[3], $matches_f) && isset($values[$matches_f[1]])) {
                                 // Retrieve the field f_*
                                 $_b = $values[$matches_f[1]];
                         } else {
-                                $_b = $matches[3];
+                                $_b = '';
                         }
 
                         switch ($matches[2]) {

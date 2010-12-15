@@ -10,7 +10,7 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 		$query->search($index);
 		
 		$expr = new Search_Expr_And(array(
-			new Search_Expr_Token('hello', 'wikitext', 'global'),
+			new Search_Expr_Token('hello', 'plaintext', 'contents'),
 		));
 
 		$this->assertEquals($expr, $index->getLastQuery());
@@ -25,8 +25,8 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 		
 		$expr = new Search_Expr_And(array(
 			new Search_Expr_Or(array(
-				new Search_Expr_Token('hello', 'wikitext', 'global'),
-				new Search_Expr_Token('world', 'wikitext', 'global'),
+				new Search_Expr_Token('hello', 'plaintext', 'contents'),
+				new Search_Expr_Token('world', 'plaintext', 'contents'),
 			)),
 		));
 
@@ -42,7 +42,7 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 		$query->search($index);
 		
 		$expr = new Search_Expr_And(array(
-			new Search_Expr_Token('hello', 'wikitext', 'global'),
+			new Search_Expr_Token('hello', 'plaintext', 'contents'),
 			new Search_Expr_Token('wiki page', 'identifier', 'object_type'),
 		));
 
