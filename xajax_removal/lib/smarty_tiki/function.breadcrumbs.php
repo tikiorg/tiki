@@ -13,6 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_function_breadcrumbs($params, &$smarty)
 {
+	global $prefs;
     extract($params);
 	
     if (empty($crumbs)) {
@@ -22,6 +23,9 @@ function smarty_function_breadcrumbs($params, &$smarty)
     if (empty($loc)) {
         $smarty->trigger_error("assign: missing 'loc' parameter");
         return;
+    }
+    if ($type === 'pagetitle' && $pref['site_title_breadcrumb'] === 'y') {
+    	$type = 'desc';
     }
     $text_to_display = '';
     switch ($type) {

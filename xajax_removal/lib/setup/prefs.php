@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -551,6 +551,7 @@ function get_default_prefs() {
 
 		// filegals
 		'feature_file_galleries' => 'y',
+		'feature_file_galleries_templates' => 'n',
 		'home_file_gallery' => 1,
 		'fgal_root_id' => 1,
 		'fgal_use_db' => 'y',
