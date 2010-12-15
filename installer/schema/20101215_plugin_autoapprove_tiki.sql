@@ -1,0 +1,1 @@
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_plugin_autoapprove', 'Auto approve plugin execution', 'editors', 'wiki', NULL, 'feature_wiki');
