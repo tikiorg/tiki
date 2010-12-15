@@ -246,11 +246,14 @@ class TikiLdapLib
 
 
 	// return information about user attributes
-	public function get_user_attributes()
+	public function get_user_attributes($force_reload = false)
 	{
+		if ($force_reload) {
+			unset($this->user_attributes);
+		}
 
-		if (!empty($this->user_attributes)) { //been there, done that
-			return($this->user_attributes);
+		if (!empty($this->user_attributes)) {
+			return $this->user_attributes;
 		}
 
 		$userdn = $this->user_dn();
@@ -263,7 +266,7 @@ class TikiLdapLib
 		// todo: only fetch needed attributes
 
 		$entry = $this->ldaplink->getEntry($userdn);
-		if (Net_LDAP2::isError($entry)) { // wrong userdn. So we have to search
+		if ($force_reload || Net_LDAP2::isError($entry)) { // wrong userdn. So we have to search
 			// prepare Search Filter
 			$filter = Net_LDAP2_Filter::create($this->options['userattr'], 'equals', $this->options['username']);
 			$searchoptions=array('scope' => $this->options['scope']);
@@ -292,14 +295,56 @@ class TikiLdapLib
 
 	} // End: public function get_user_attributes()
 
+	// Request all users attributes
+	public function get_all_users_attributes()
+	{
+		// ensure we have a connection to the ldap server
+		if ($this->bind() != 'LDAP_SUCCESS') {
+			$this->add_log('ldap','Reuse of ldap connection failed: '.$this->ldaplink->getMessage().' at line '.__LINE__.' in '.__FILE__);
+			return false;
+		}
 
+		// Prepare Search Filter
+		$filter=Net_LDAP2_Filter::create('objectclass','equals',$this->options['useroc']);
+		$searchoptions=array('scope' => $this->options['scope']);
+		$this->add_log('ldap','Searching for user information with filter: '.$filter->asString().' at line '.__LINE__.' in '.__FILE__);
 
+		$searchresult = $this->ldaplink->search($this->userbase_dn(),$filter,$searchoptions);
+
+		if (Net_LDAP2::isError($searchresult)) {
+			$this->add_log('ldap','Search failed: '.$searchresult->getMessage().' at line '.__LINE__.' in '.__FILE__);
+			return false;
+		}
+
+		if ($searchresult->count() < 1) {
+			$this->add_log('ldap','Error: Search returned '. $searchresult->count() .' entries'.' at line '.__LINE__.' in '.__FILE__);
+			return false;
+		}
+
+		$entries = $searchresult->entries();
+		$users_attributes = array();
+
+		foreach ($entries as $entry) {
+			$user_attributes = $entry->getValues();
+			$user_attributes['dn'] = $entry->dn();
+
+			if (Net_LDAP2::isError($user_attributes)) {
+				$this->add_log('ldap','Error fetching user attributes: '. $user_attributes->getMessage().' at line '.__LINE__.' in '.__FILE__);
+				return false;
+			}
+
+			$users_attributes[] = $user_attributes;
+		}
+
+		return ($users_attributes);
+
+	} // End: public function get_user_attributes()
 
 	// return dn of all groups a user belongs to
-	public function get_groups()
+	public function get_groups($force_reload = false)
 	{
-		if (empty($this->user_attributes))
-			$this->get_user_attributes();
+		$this->get_user_attributes($force_reload);
+
 		// ensure we have a connection to the ldap server
 		if (!$this->bind()) {
 			$this->add_log('ldap', 'Reuse of ldap connection failed: ' . $this->ldaplink->getMessage() . ' at line ' . __LINE__ . ' in ' . __FILE__);
@@ -312,6 +357,9 @@ class TikiLdapLib
 		if (!empty($this->options['groupmemberattr'])) {
 			// get membership from group information
 			if ($this->options['groupmemberisdn']) {
+				if ($this->user_attributes['dn'] == null) {
+					return false;
+				}
 				$filter2 = Net_LDAP2_Filter::create($this->options['groupmemberattr'], 'equals', $this->user_dn());
 			} else {
 				$filter2 = Net_LDAP2_Filter::create($this->options['groupmemberattr'], 'equals', $this->options['username']);
