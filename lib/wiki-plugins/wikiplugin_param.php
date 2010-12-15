@@ -7,35 +7,44 @@
 
 // Display wiki text if a parameter is set in URL
 // Usage:
-// {URLPARAM(name=>Date|Version)}wiki text{URLPARAM}
+// {PARAM(name=>Date|Version)}wiki text{PARAM}
 
-function wikiplugin_urlparam_help() {
+define('WIKIPLUGIN_PARAM_REQUEST', 'request');
+
+function wikiplugin_param_help() {
 	$help = tra("Display wiki text if all keys are existing URL parameters").":\n";
-	$help.= "~np~<br />{URLPARAM(name=>Date|Version)}wiki text{URLPARAM}<br />
-	{URLPARAM(name=>Date|Version)}wiki text{ELSE}alternate text when parameters do not exist{URLPARAM}~/np~";
+	$help.= "~np~<br />{param(name=>Date|Version)}wiki text{param}<br />
+	{PARAM(name=>Date|Version)}wiki text{ELSE}alternate text when parameters do not exist{PARAM}~/np~";
 	return $help;
 }
 
-function wikiplugin_urlparam_info() {
+function wikiplugin_param_info() {
 	return array(
-                'name' => tra('UrlParam'),
-		'documentation' => 'PluginUrlParam',
+                'name' => tra('Param'),
+		'documentation' => 'PluginParam',
 		'description' => tra('Display wiki text if URL param is set'),
-		'prefs' => array( 'wikiplugin_urlparam' ),
+		'prefs' => array( 'wikiplugin_param' ),
 		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed to users not matching the condition.'),
                 'params' => array(
 			'name' => array(
                             'required' => true,
                             'name' => tra('Name'),
-                            'description' => tra('Names of URL parameter required to display text')
+                            'description' => tra('Names of parameter required to display text')
+                        ),
+			'source' => array(
+                            'required' => false,
+                            'name' => tra('Source'),
+			    'default' => 'request',
+                            'description' => tra('Source where the parameter is checked. Possible values : request ...')
                         )
                 )
 	);
 }
 
-function wikiplugin_urlparam($data, $params) {
+function wikiplugin_param($data, $params) {
 	$dataelse = '';
         $names = array();
+	$test = true;
 
 	if (strpos($data,'{ELSE}')) {
 		$dataelse = substr($data,strpos($data,'{ELSE}')+6);
@@ -46,11 +55,17 @@ function wikiplugin_urlparam($data, $params) {
 		$names = explode('|', $params['name']);
 	}
 
+	if (!isset($params['source']) || empty($params['source'])) {
+		$params['source'] = WIKIPLUGIN_PARAM_REQUEST;
+	}
+
         foreach ($names as $name) {
-            if (!isset($_REQUEST[$name]) || empty($_REQUEST[$name])) {
-                return $dataelse;
-            }
+		switch ($params['source']) {
+			case WIKIPLUGIN_PARAM_REQUEST:
+				$test &= (isset($_REQUEST[$name]) && !empty($_REQUEST[$name]));
+				break;
+		}
         }
 
-	return $data;
+	return $test ? $data : $dataelse;
 }
