@@ -18,7 +18,6 @@ if( isset( $_SERVER['REQUEST_METHOD'] ) ) die;
 // Add the imported libraries located in lib/
 $thirdpartyLibs = array(
 	'\./lib/pear.*',
-	'\./lib/phplayers.*',
 	'\./lib/smarty.*',
 	'\./lib/adodb.*',
 	'\./lib/debug.*',
@@ -88,7 +87,6 @@ $safePaths = array(
 	'\./lib/wiki-plugins.*',
 	'\./lib/wiki-plugins-dist.*',
 	'\./lib/tree.*',
-	'\./lib/phplayers_tiki.*',
 );
 
 if( !file_exists( 'tiki-setup.php' ) )

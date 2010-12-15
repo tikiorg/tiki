@@ -132,7 +132,6 @@ if ($prefs['feature_wysiwyg'] == 'y') {
 	if (!isset($_SESSION['wysiwyg'])) $_SESSION['wysiwyg'] = 'n';
 	$smarty->assign_by_ref('wysiwyg', $_SESSION['wysiwyg']);
 }
-if ($prefs['feature_phplayers'] == 'y') require_once ('lib/setup/phplayers.php');
 
 if ($prefs['feature_antibot'] == 'y' && is_null($user)) {
 	require_once('lib/captcha/captchalib.php');
@@ -151,7 +150,6 @@ $smarty->assign('lock', false);
 $smarty->assign('edit_page', 'n');
 $smarty->assign('forum_mode', 'n');
 $smarty->assign('uses_tabs', 'n');
-$smarty->assign('uses_phplayers', 'n');
 $smarty->assign('wiki_extras', 'n');
 $smarty->assign('tikipath', $tikipath);
 $smarty->assign('tikiroot', $tikiroot);
@@ -328,12 +326,6 @@ if ($prefs['javascript_enabled'] != 'n') {
 	
 	if( ( $prefs['feature_jquery'] != 'y' || $prefs['feature_jquery_tablesorter'] != 'y' ) && $prefs['javascript_enabled'] == 'y' ) {
 		$headerlib->add_jsfile( 'lib/tiki-js-sorttable.js' );
-	}
-	
-	if( $prefs['feature_phplayers'] == 'y' ) {
-		$headerlib->add_jsfile( 'lib/phplayers/libjs/layersmenu-library.js' );
-		$headerlib->add_jsfile( 'lib/phplayers/libjs/layersmenu.js' );
-		$headerlib->add_jsfile( 'lib/phplayers/libjs/layerstreemenu-cookies.js' );
 	}
 	
 	if( $prefs['wikiplugin_flash'] == 'y' ) {

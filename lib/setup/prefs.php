@@ -1244,7 +1244,6 @@ function get_default_prefs() {
 		'feature_categories' => 'n',
 		'feature_categoryobjects' => 'n',
 		'feature_categorypath' => 'n',
-		'feature_category_use_phplayers' => 'n',
 		'categorypath_excluded' => '',
 		'categories_used_in_tpl' => 'n',
 		'category_jail' => array(),
@@ -1555,7 +1554,6 @@ function get_default_prefs() {
 		'feature_newsletters' => 'n',
 		'feature_obzip' => 'n',
 		'feature_perspective' => 'n', // If enabling by default, update further in this file
-		'feature_phplayers' => 'n',
 		'feature_cssmenus' => 'y',
 		'menus_item_names_raw' => 'n',
 		'feature_projects' => 'n',
