@@ -40,7 +40,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *	- zero_based_offset: Items addressed as zero-based (defaults to 'y'). If 'n' then "one based" offset used (1 to cant + 1)
  *		(jb tiki5: only fully tested without reloffset and step=1) 
  *	- show_numbers: Show/hide direct_pagination links, current and total numbers (Defaults to 'y')
- *  - _ajax : if set to 'n', will force disabling AJAX even if the ajax_xajax feature is enabled (defaults to 'y')
+ *  - _ajax : if set to 'n', will force disabling AJAX even if the ajax xajax feature is enabled (defaults to 'y')	AJAX_TODO
  */
 function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 	global $prefs;

@@ -152,6 +152,4 @@
 {self_link page="socialnetworks" _class="icon tips" _title="{tr}Social networks{/tr}|{tr}Configure social networks integration{/tr}"}{icon _id="pics/large/socialnetworks.png" alt="{tr}Social networks{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 
-{if $prefs.ajax_xajax eq 'y' and $prefs.feature_jquery_reflection eq 'y'}{jq}$('img.reflect').reflect({});{/jq}{/if}{* for ajax *}
-{if $prefs.ajax_xajax eq 'y' and $prefs.feature_jquery_tooltips eq 'y'}{jq}setUpClueTips();{/jq}{/if}
 <br class="clear" />

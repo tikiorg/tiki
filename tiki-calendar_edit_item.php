@@ -16,10 +16,6 @@ include_once ('lib/calendar/calrecurrence.php');
 if ($prefs['feature_groupalert'] == 'y') {
 	include_once ('lib/groupalert/groupalertlib.php');
 }
-if ($prefs['ajax_xajax'] == "y") {
-	require_once ('lib/ajax/ajaxlib.php');
-}
-
 $auto_query_args = array('calitemId');
 
 $daysnames = array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Satursday");
@@ -545,15 +541,6 @@ $smarty->assign('calendar', $calendar);
 $smarty->assign('calendarId', $calID);
 if (array_key_exists('CalendarViewGroups',$_SESSION) && count($_SESSION['CalendarViewGroups']) == 1)
 	$smarty->assign('calendarView',$_SESSION['CalendarViewGroups'][0]);
-if ($prefs['ajax_xajax'] == "y") {
-function edit_calendar_ajax() {
-    global $ajaxlib, $xajax;
-    $ajaxlib->registerTemplate("tiki-calendar_edit_item.tpl");
-    $ajaxlib->registerFunction("loadComponent");
-    $ajaxlib->processRequests();
-}
-edit_calendar_ajax();
-}
 
 #region reminder
 

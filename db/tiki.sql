@@ -1632,17 +1632,6 @@ CREATE TABLE `tiki_pages` (
   KEY `lastModif`(`lastModif`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
-DROP TABLE IF EXISTS `tiki_page_drafts`;
-CREATE TABLE `tiki_page_drafts` (
-  `user` varchar(200) default '',
-  `pageName` varchar(255) NOT NULL,
-  `data` mediumtext,
-  `description` varchar(200) default NULL,
-  `comment` varchar(200) default NULL,
-  `lastModif` int(14) default NULL,
-  PRIMARY KEY (`pageName`(120), `user`(120))
-) ENGINE=MyISAM;
-
 DROP TABLE IF EXISTS `tiki_pageviews`;
 CREATE TABLE `tiki_pageviews` (
   `day` int(14) NOT NULL default '0',

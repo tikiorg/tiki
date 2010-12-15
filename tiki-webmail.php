@@ -7,9 +7,6 @@
 
 $section = 'webmail';
 require_once ('tiki-setup.php');
-if ($prefs['ajax_xajax'] == 'y') {
-	require_once ('lib/ajax/ajaxlib.php');
-}
 include_once ('lib/webmail/webmaillib.php');
 include_once ('lib/webmail/contactlib.php');
 
@@ -21,23 +18,23 @@ require_once ('lib/mail/mimelib.php');
 include_once ('lib/webmail/class.rc4crypt.php');
 include_once ('lib/webmail/tikimaillib.php');
 
-function handleWebmailRedirect($inUrl) {		// TODO refactor into tikilib?
+function handleWebmailRedirect($inUrl) {		// AJAX_TODO
 	global $prefs;
 	
-	if ($prefs['ajax_xajax'] != 'y' || empty($_REQUEST['xjxfun'])) {
-		header ('location: tiki-webmail.php?'.$inUrl);
-		die();
-	} else {
-	    global $ajaxlib, $headerlib;
-//			$objResponse = new xajaxResponse('UTF-8');					// should be possible server-side, no?
-//			$objResponse->Redirect('tiki-webmail.php?'.$urlq);
-	    $headerlib->add_js('window.location.replace("tiki-webmail.php?'.$inUrl.'")');
-	    $ajaxlib->registerTemplate('tiki-webmail.tpl');
-//   	    $ajaxlib->registerTemplate('error.tpl');
-//	    $ajaxlib->registerFunction('loadComponent');
-		$ajaxlib->processRequests();
-		die();
-	}
+//	if ($prefs['ajax_xajax'] != 'y' || empty($_REQUEST['xjxfun'])) {
+//		header ('location: tiki-webmail.php?'.$inUrl);
+//		die();
+//	} else {
+//	    global $ajaxlib, $headerlib;
+////			$objResponse = new xajaxResponse('UTF-8');					// should be possible server-side, no?
+////			$objResponse->Redirect('tiki-webmail.php?'.$urlq);
+//	    $headerlib->add_js('window.location.replace("tiki-webmail.php?'.$inUrl.'")');
+//	    $ajaxlib->registerTemplate('tiki-webmail.tpl');
+////   	    $ajaxlib->registerTemplate('error.tpl');
+////	    $ajaxlib->registerFunction('loadComponent');
+//		$ajaxlib->processRequests();
+//		die();
+//	}
 	
 }
 
@@ -901,11 +898,5 @@ include_once ('tiki-mytiki_shared.php');
 include_once ('tiki-section_options.php');
 
 ask_ticket('webmail');
-if ($prefs['ajax_xajax'] == 'y') {
-    global $ajaxlib;
-    $ajaxlib->registerTemplate('tiki-webmail.tpl');
-    $ajaxlib->registerFunction('loadComponent');
-    $ajaxlib->processRequests();
-}
 $smarty->assign('mid', 'tiki-webmail.tpl');
 $smarty->display('tiki.tpl');

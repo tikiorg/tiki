@@ -74,8 +74,8 @@ if (isset($_REQUEST["get"])) {
 	$get=0;
 }
 /* additions for ajax (formerly shoutjax) */
-function processShout($formValues, $destDiv = 'mod-shoutbox') {
-	global $shoutboxlib, $user, $smarty, $prefs, $ajaxlib, $tiki_p_admin_shoutbox;
+function processShout($formValues, $destDiv = 'mod-shoutbox') {	// AJAX_TODO
+	global $shoutboxlib, $user, $smarty, $prefs, $tiki_p_admin_shoutbox;
 	$smarty->assign('tweet',$formValues['tweet']);
 	$smarty->assign('facebook',$formValues['facebook']);
 	if (array_key_exists('shout_msg', $formValues) && strlen($formValues['shout_msg']) > 2) {
@@ -91,19 +91,11 @@ function processShout($formValues, $destDiv = 'mod-shoutbox') {
 			$shoutboxlib->remove_shoutbox($formValues['shout_remove']);
 		}
 	}
-	$ajaxlib->registerTemplate('mod-shoutbox.tpl');
+	//$ajaxlib->registerTemplate('mod-shoutbox.tpl');
 	include ('lib/wiki-plugins/wikiplugin_module.php');
 	$data = wikiplugin_module('', Array('module' => 'shoutbox', 'max' => 10, 'np' => 0, 'nobox' => 'y', 'notitle' => 'y', 'tweet'=>$formValues['tweet']));
-	$objResponse = new xajaxResponse();
-	$objResponse->assign($destDiv, "innerHTML", $data);
-	return $objResponse;
-}
-if ($prefs['ajax_xajax'] == 'y') {
-	global $ajaxlib;
-	include_once ('lib/ajax/ajaxlib.php');
-	$ajaxlib->registerFunction('processShout');
-	$ajaxlib->registerTemplate('mod-shoutbox.tpl');
-	$ajaxlib->processRequests();
+	//$objResponse->assign($destDiv, "innerHTML", $data);
+	//return $objResponse;
 }
 /* end additions for ajax */
 $smarty->assign('find', $find);

@@ -6,9 +6,6 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-if ($prefs['ajax_xajax'] == "y") {
-	require_once ('lib/ajax/ajaxlib.php');
-}
 include_once ('lib/messu/messulib.php');
 include_once ('lib/userprefs/scrambleEmail.php');
 include_once ('lib/registration/registrationlib.php');
@@ -195,16 +192,6 @@ if ($prefs['user_tracker_infos']) {
 	$smarty->assign_by_ref('userItem', $items['data'][0]);
 }
 ask_ticket('user-information');
-if ($prefs['ajax_xajax'] == "y") {
-	function user_information_ajax() {
-		global $ajaxlib, $xajax;
-		$ajaxlib->registerTemplate("tiki-user_information.tpl");
-		$ajaxlib->registerTemplate("tiki-my_tiki.tpl");
-		$ajaxlib->registerFunction("loadComponent");
-		$ajaxlib->processRequests();
-	}
-	user_information_ajax();
-}
 // Get full user picture if it is set
 if ($prefs["user_store_file_gallery_picture"] == 'y') {
 	require_once ('lib/userprefs/userprefslib.php');

@@ -412,18 +412,6 @@ function prefs_feature_list() {
 			'help' => 'Wysiwyg',
 			'type' => 'flag',
 		),
-		'feature_wiki_save_draft' => array(
-			'name' => tra('Save draft'),
-			'warning' => tra('Experimental (Requires AJAX)'),
-			'dependencies' => array(
-				'feature_ajax',
-			),
-			'type' => 'flag',
-			'dependencies' => array(
-				'feature_ajax',
-				'ajax_xajax',
-      ),
-		),	
 		'feature_kaltura' => array(
 			'name' => tra('Kaltura'),
 			'description' => tra('Collaborative video editing'),

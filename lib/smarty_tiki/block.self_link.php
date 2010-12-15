@@ -20,7 +20,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * params are the same as smarty 'query' function + some special params starting with an underscore:
  *   _sort_field : name of the field used for sorting,
  *   _sort_arg : name of the URL argument that contains the field to use for sorting. Defaults to 'sort',
- *   _ajax : if set to 'n', will force disabling AJAX even if the ajax_xajax feature is enabled,
+ *   _ajax : if set to 'n', will force disabling AJAX even if the ajax xajax feature is enabled,	AJAX_TODO
  *   _tag : if set to 'n', will only return an URL, not the full A tag + text (AJAX and sorting features are not available in this case),
  *   _class : CSS class to use for the A tag
  *   _template : (see smarty query function 'template' param)
@@ -86,7 +86,6 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 			}
 
 			$params['_type'] = $default_type;
-			if ( $prefs['ajax_xajax'] === 'y' && $params['_ajax'] === 'y') { unset ($params['_anchor']); }
 			$ret = smarty_function_query($params, $smarty);
 		}
 
@@ -110,10 +109,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 							$ret,
 							$smarty,
 							false
-							);
-					if ($prefs['ajax_xajax'] === 'y' || empty($params['_onclick'])) {
-						unset($params['_onclick']);
-					}
+						);
 				} else {
 					$ret = 'href="'.$ret.'"';
 				}

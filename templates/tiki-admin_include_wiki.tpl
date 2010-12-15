@@ -49,7 +49,6 @@
 				{preference name=feature_warn_on_edit}
 				{preference name=warn_on_edit_time}
 				{preference name=feature_wiki_undo}
-				{preference name=feature_wiki_save_draft}
 				{preference name=feature_wiki_footnotes}
 				{preference name=feature_wiki_allowhtml}
 				{preference name=wiki_timeout_warning}
