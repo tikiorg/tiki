@@ -1205,6 +1205,7 @@ class TrackerLib extends TikiLib
 			switch ($field['type']) {
 				case 'P':
 					if (count($field['options_array']) == 3) {
+						global $adminlib, $ldaplib;
 						include_once ('lib/admin/adminlib.php');
 						include_once ('lib/ldap/ldaplib.php');
 
