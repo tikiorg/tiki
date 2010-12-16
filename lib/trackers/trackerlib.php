@@ -2949,7 +2949,7 @@ class TrackerLib extends TikiLib
 		$result = $this->query($query,$bindvars);
 
 		while ($res = $result->fetchRow()) {
-			$this->remove_tracker_item($itemId);
+			$this->remove_tracker_item($res['itemId']);
 		}
 
 		$query = "delete from `tiki_tracker_options` where `trackerId`=?";
