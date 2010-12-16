@@ -2949,16 +2949,8 @@ class TrackerLib extends TikiLib
 		$result = $this->query($query,$bindvars);
 
 		while ($res = $result->fetchRow()) {
-			$query2 = "delete from `tiki_tracker_item_fields` where `itemId`=?";
-			$result2 = $this->query($query2,array((int) $res["itemId"]));
-			$query2 = "delete from `tiki_tracker_item_comments` where `itemId`=?";
-			$result2 = $this->query($query2,array((int) $res["itemId"]));
-			$query2 = "delete from `tiki_tracker_item_attachments` where `itemId`=?";
-			$result2 = $this->query($query2,array((int) $res["itemId"]));
+			$this->remove_tracker_item($itemId);
 		}
-
-		$query = "delete from `tiki_tracker_items` where `trackerId`=?";
-		$result = $this->query($query,$bindvars);
 
 		$query = "delete from `tiki_tracker_options` where `trackerId`=?";
 		$result = $this->query($query,$bindvars);
