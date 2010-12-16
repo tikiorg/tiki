@@ -409,6 +409,7 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 
 		try {
 			$dbTiki = new PDO( "$driver:$db_hoststring;dbname=$dbname", $user, $pass );
+			$dbTiki->setAttribute( PDO::ATTR_EMULATE_PREPARES, true );
 			$db = new TikiDb_Pdo( $dbTiki );
 			$dbcon = true;
 		} catch ( PDOException $e ) {
