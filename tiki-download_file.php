@@ -176,6 +176,9 @@ if ( ! empty($info['path']) )  {
 			: $info['hash'];
 	} else {
 		// File missing or not readable
+		header("HTTP/1.0 404 Not Found");
+		header('Content-Type: text/plain');		
+		echo "Unable to access file: " . ($tiki_p_admin == 'y' ? $filepath : $info['path']);
 		die;
 	}
 } elseif ( ! empty($content) ) {
