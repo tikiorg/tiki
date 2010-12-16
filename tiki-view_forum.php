@@ -207,6 +207,11 @@ if (isset($_REQUEST['comments_postComment'])) {
 	$errors = array();
 	$feedbacks = array();
 	$threadId = $commentslib->post_in_forum($forum_info, $_REQUEST, $feedbacks, $errors);
+	if ($threadId && $prefs['feature_freetags'] == 'y') {
+		$cat_type = 'forum post';
+		$cat_objid = $threadId;
+		include_once ("freetag_apply.php");	
+	}
 	$smarty->assign_by_ref('errors', $errors);
 	$smarty->assign_by_ref('feedbacks', $feedbacks);
 }
