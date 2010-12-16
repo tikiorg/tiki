@@ -355,75 +355,6 @@ li#logout_link a {
 /****** Menus_links ******/
 /** CSS (suckerfish) menus **/
 
-/** PHP Layers Menus **/
-.horbar table {
-	width: auto;
-	text-align: left;
-	white-space: nowrap;
-}
-	
-.horbaritem a,
-.horbaritem a:link,
-.horbaritem a:visited {
-	white-space: nowrap;
-	display: block;
-}
-
-.mdksubmenu {
-	z-index: 999;
-	position: absolute;
-	left: 0;
-	top: 0;
-	visibility: hidden;
-}
-
-.mdksubmenu table {
-	width: auto;
-} 
-
-.mdksubframe { /*decorate*/
-	z-index: 1000;
-	position: relative;
-	display: block;
-}
-
-.mdkitem {
-	position: relative;
-	text-align: left;
-	white-space: nowrap;
-}
-	
-.mdkitem a {
-	position: relative;
-	display: block;
-}
-
-.mdkitem .mdkfwdarr {
-	position: absolute;
-	top: 5px;
-	right: 12px;
-} 
-
-.treemenudiv {
-	display: block;
-	white-space: nowrap;
-	overflow: hidden;
-}
-
-.imgs {
-	border: 0;
-	width: 16px;
-	height: 18px;
-}
-
-ul.tree {
-	list-style-type: none;
-}
-
-ul.tree li {
-	white-space: nowrap;
-}
-	
 /** Links in other menus **/
 
 .linkmenu,
@@ -505,32 +436,12 @@ ul.tree li {
 	padding: 0 !important;
 }
 
-/* Minimize PHPLayers Menus */
-.mdkverbar-with-icons .mdkitem {
-	background: none;
-}
 
-.mdkverbar-with-icons .mdkitem a {
-	padding: 0;
-	width: 175px;
-}
-
-.mdkverbar-with-icons .mdkitem img {
-	vertical-align: middle;
-}
-
-.minimize-modules-left #col2 .mdkverbar-with-icons .mdkitem,
 .minimize-modules-left #col2,
-.minimize-modules-right #col3 .mdkverbar-with-icons .mdkitem,
 .minimize-modules-right #col3 {
 	width: 60px !important;
 }
 
-.minimize-modules-left #col2 .mdkverbar-with-icons .mdkitem a,
-.minimize-modules-right #col3 .mdkverbar-with-icons .mdkitem a {
-	width: 50px !important;
-	overflow: hidden;
-}
 
 /* Minimize CSS Menus */
 .minimize-modules-left #col2 .cssmenu_vert,
