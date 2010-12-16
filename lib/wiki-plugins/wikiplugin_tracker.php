@@ -1047,6 +1047,23 @@ function wikiplugin_tracker($data, $params)
 					$customvalidation .= 'return $("#name").val(); ';
 					$customvalidation .= '} } } ';
 					$customvalidation .= '}, ';
+					if ($prefs['feature_antibot'] == 'y' && empty($user) && $prefs['recaptcha_enabled'] != 'y') {
+						// antibot validation   
+						$customvalidation .= '"captcha[input]": { ';
+						$customvalidation .= 'required: true, ';
+						$customvalidation .= 'remote: { ';
+						$customvalidation .= 'url: "validate-ajax.php", ';
+						$customvalidation .= 'type: "post", ';
+						$customvalidation .= 'data: { ';
+						$customvalidation .= 'validator: "captcha", ';
+						$customvalidation .= 'parameter: function() { ';
+						$customvalidation .= 'return $jq("#captchaId").val(); ';
+						$customvalidation .= '}, ';
+						$customvalidation .= 'input: function() { ';
+						$customvalidation .= 'return $jq("#antibotcode").val(); ';
+						$customvalidation .= '} } } ';
+						$customvalidation .= '}, ';
+					}
 				}
 				$validationjs = $validatorslib->generateTrackerValidateJS( $flds['data'], $fields_prefix, $customvalidation, $customvalidation_m );
 
