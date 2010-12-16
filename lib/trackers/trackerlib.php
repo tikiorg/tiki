@@ -2605,7 +2605,7 @@ class TrackerLib extends TikiLib
 			$currentCategId=$categlib->get_category_id("Tracker Item $itemId");
 			$categlib->remove_category($currentCategId);
 		}
-		$this->remove_object("tracker $trackerId", $itemId);
+		$this->remove_object("trackeritem", $itemId);
 		if (isset($options['autoCreateGroup']) && $options['autoCreateGroup'] == 'y') {
 			global $userlib;
 			$groupName = $this->groupName($options, $itemId, $groupInc);
