@@ -12,5 +12,11 @@ function validator_captcha($input, $parameter = '', $message = '') {
 		// now return errors
 		return $captchalib->getErrors();
 	}
+	// the following needed to keep session active for ajax checking 
+	$session = $captchalib->captcha->getSession();
+	$session->setExpirationHops(2, null, true);
+	$captchalib->captcha->setSession($session);
+	$captchalib->captcha->setKeepSession(false);
+	// now return ok
 	return true;
 }
