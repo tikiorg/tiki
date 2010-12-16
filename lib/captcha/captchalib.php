@@ -81,11 +81,13 @@ class Captcha
 	function generate() {
 		try {
 			$this->captcha->generate();
-			// the following needed to keep session active for ajax checking 
-			$session = $this->captcha->getSession();
-			$session->setExpirationHops(2, null, true);
-			$this->captcha->setSession($session);
-			$this->captcha->setKeepSession(false);
+			if ($this->type == 'default') {
+				// the following needed to keep session active for ajax checking 
+				$session = $this->captcha->getSession();
+				$session->setExpirationHops(2, null, true);
+				$this->captcha->setSession($session);
+				$this->captcha->setKeepSession(false);
+			}
 		} catch (Zend_Exception $e) {
 		}
 	}
