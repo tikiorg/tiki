@@ -118,6 +118,7 @@
 						<div>
 							{tr}Assign Permissions{/tr}
 							<select name="perms[]" multiple="multiple" size="5">
+								<option value="" />
 								{foreach from=$perms item=perm}
 									<option value="{$perm.permName|escape}">{$perm.permName|escape}</option>
 								{/foreach}

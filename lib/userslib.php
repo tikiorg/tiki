@@ -60,11 +60,13 @@ class UsersLib extends TikiLib
 		$result = $this->query($query, array($groupName, $permName,
 			$objectId), -1, -1, false);
 
-		$query = "insert into `users_objectpermissions`(`groupName`,
+		if (!empty($permName)) {
+			$query = "insert into `users_objectpermissions`(`groupName`,
 			`objectId`, `objectType`, `permName`)
 			values(?, ?, ?, ?)";
-		$result = $this->query($query, array($groupName, $objectId,
+			$result = $this->query($query, array($groupName, $objectId,
 			$objectType, $permName));
+		}
 		if ($objectType == 'file gallery') {
 			global $cachelib; require_once('lib/cache/cachelib.php');
 			$cachelib->empty_type_cache('fgals_perms_'.$objectId."_");
