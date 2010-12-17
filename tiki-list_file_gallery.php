@@ -169,8 +169,12 @@ if (isset($_REQUEST['permsel_x']) && $tiki_p_assign_perm_file_gallery == 'y') {
 if (isset($_REQUEST['permsel']) && $tiki_p_assign_perm_file_gallery == 'y' && isset($_REQUEST['subgal'])) {
 	check_ticket('fgal');
 	foreach($_REQUEST['subgal'] as $id) {
-		foreach($_REQUEST['groups'] as $group) {
-			foreach($_REQUEST['perms'] as $perm) {
+		foreach($_REQUEST['perms'] as $perm) {
+			if (empty($_REQUEST['groups']) && empty($perm)) {
+				$userlib->assign_object_permission('', $id, 'file gallery', '');
+				continue;
+			}
+			foreach($_REQUEST['groups'] as $group) {
 				$userlib->assign_object_permission($group, $id, 'file gallery', $perm);
 			}
 		}

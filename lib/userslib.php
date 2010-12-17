@@ -53,14 +53,19 @@ class UsersLib extends TikiLib
 	function assign_object_permission($groupName, $objectId, $objectType, $permName) {
 		$objectId = md5($objectType . strtolower($objectId));
 
-		$query = "delete from `users_objectpermissions`
-			where `groupName` = ? and
-			`permName` = ? and
-			`objectId` = ?";
-		$result = $this->query($query, array($groupName, $permName,
-			$objectId), -1, -1, false);
-
+		$query = "delete from `users_objectpermissions`	where `objectId` = ? and `objectType`=?";
+		$bindvars = array($objectId, $objectType);
+		if (!empty($groupName)) {
+			$query .= ' and `groupName` = ?';
+			$bindvars[] = $groupName;
+		}
 		if (!empty($permName)) {
+			$query .= ' and `permName` = ?';
+			$bindvars[] = $permName;
+		}
+		$result = $this->query($query, $bindvars);
+
+		if (!empty($permName) && !empty($groupName)) {
 			$query = "insert into `users_objectpermissions`(`groupName`,
 			`objectId`, `objectType`, `permName`)
 			values(?, ?, ?, ?)";
