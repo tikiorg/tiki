@@ -56,11 +56,11 @@ body {
 
 {jq notonready=true}
 function check_name() {
-	xajax.config.requestURI = "tiki-socialnetworks_firstlogin.php";
-	xajax_chkRegName(xajax.$('name').value);
+//	xajax.config.requestURI = "tiki-socialnetworks_firstlogin.php";
+//	xajax_chkRegName(xajax.$('name').value);
 }
 function check_mail() {
-	xajax.config.requestURI = "tiki-socialnetworks_firstlogin.php";
-	xajax_chkRegEmail(xajax.$('email').value);
+//	xajax.config.requestURI = "tiki-socialnetworks_firstlogin.php";
+//	xajax_chkRegEmail(xajax.$('email').value);
 }
 {/jq}
