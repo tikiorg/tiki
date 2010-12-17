@@ -54,8 +54,7 @@ function wikiplugin_article($data, $params) {
 	if (empty($Id)) {
 		global $artlib;	include_once('lib/articles/artlib.php');
 
-		$last = $artlib->list_articles(0,1);
-		$Id = $last['data'][0]["articleId"];
+		$Id = $artlib->get_most_recent_article_id();
 	}
 	if (!isset($Field)) {
 		$Field = 'heading';
