@@ -783,5 +783,14 @@ a.admbox.off {
 	-webkit-border-bottom-right-radius: 4px;
 }
 
+/* Quote plugin */
+.quoteheader {
+	background : url('images/quoteleft.gif') no-repeat;
+	padding-left:50px;
+	height:35px;
+}
 
+.quotebody {
+	padding-left:46px;
+}
 /* End of File */
