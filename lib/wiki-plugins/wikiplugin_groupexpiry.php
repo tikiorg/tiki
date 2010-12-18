@@ -14,13 +14,12 @@ function wikiplugin_groupexpiry_info() {
 	return array(
 		'name' => tra('Group Expiry'),
 		'documentation' => 'PluginGroupExpiry',
-		'description' => tra('Show the expiry date of the group membership of the current user'),
+		'description' => tra('Show the expiry date of a group membership of the current user'),
 		'prefs' => array( 'wikiplugin_groupexpiry' ),
 		'params' => array(
 			'group' => array(
 				'required' => true,
 				'name' => tra('Group Name'),
-				'description' => tra('As known in Tikiwiki'),
 			),
 		),
 	);

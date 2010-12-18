@@ -47,7 +47,7 @@ function wikiplugin_include_info() {
 	return array(
 		'name' => tra('Include'),
 		'documentation' => 'PluginInclude',
-		'description' => tra('Include content from another wiki page'),
+		'description' => tra('Include content from a wiki page'),
 		'prefs' => array('wikiplugin_include'),
 		'params' => array(
 			'page' => array(

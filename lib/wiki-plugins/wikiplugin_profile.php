@@ -8,7 +8,7 @@
 function wikiplugin_profile_info() {
 	return array(
 		'name' => tra('Profile application'),
-		'description' => tra('Adds a button for applying a profile.'),
+		'description' => tra('Add a button for applying a profile.'),
 		'documentation' => 'PluginProfile',
 		'prefs' => array( 'wikiplugin_profile' ),
 		'validate' => 'all',

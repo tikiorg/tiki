@@ -21,7 +21,7 @@ function wikiplugin_jq_info() {
 	return array(
 		'name' => tra('jQuery'),
 		'documentation' => 'PluginJQ',
-		'description' => tra('Add jQuery JavaScript code to a wiki page'),
+		'description' => tra('Add JavaScript code'),
 		'prefs' => array( 'wikiplugin_jq' ),
 		'body' => tra('JavaScript code'),
 		'validate' => 'all',

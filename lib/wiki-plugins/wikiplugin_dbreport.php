@@ -1443,7 +1443,7 @@ function wikiplugin_dbreport_info() {
 	return array(
 		'name' => tra('DBReport'),
 		'documentation' => 'PluginDBReport',
-		'description' => tra('Query a database and display results (only works with adodb, does not work with PDO)'),
+		'description' => tra('Query a database and display results (only works with ADOdb, does not work with PDO)'),
 		'prefs' => array('wikiplugin_dbreport'),
 		'body' => tra('report definition'),
 		'validate' => 'all',
