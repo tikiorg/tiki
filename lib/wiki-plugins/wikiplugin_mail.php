@@ -10,7 +10,7 @@ function wikiplugin_mail_info() {
 
 	return array(
 		'name' => tra('Mail'),
-		'documentation' => tra('PluginMail'),
+		'documentation' => 'PluginMail',
 		'description' => tra('Directly mail other users or groups'),
 		'validate' => 'all',
 		'params' => array(

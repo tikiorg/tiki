@@ -8,15 +8,15 @@
 define('SF_CACHE',48); # in hours
 
 function wikiplugin_sf_help() {
-	return tra('Creates a link to SourceForge tracker items (bugs, fetaure requests, patches and support requests') 
+	return tra('Creates a link to SourceForge tracker items (bugs, fetaure requests, patches and support requests) with the title of the item as the link text.') 
 			. ':<br />~np~{SF(groupid=> , trackerid=> , itemid=> , title=> )}{SF}~/np~';
 }
 
 function wikiplugin_sf_info() {
 	return array(
 		'name' => tra('SourceForge'),
-		'documentation' => tra('PluginSF'),		
-		'description' => tra('Creates a link to SourceForge tracker items (bugs, fetaure requests, patches and support requests) with the title of the item as the link text.'),
+		'documentation' => 'PluginSF',
+		'description' => tra('Creates a link to SourceForge tracker items'),
 		'prefs' => array( 'wikiplugin_sf' ),
 		'body' => tra('text'),
 		'params' => array(

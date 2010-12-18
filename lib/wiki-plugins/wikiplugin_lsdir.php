@@ -20,7 +20,7 @@ function wikiplugin_lsdir_help() {
 function wikiplugin_lsdir_info() {
 	return array(
 		'name' => tra('List Directory'),
-		'documentation' => tra('PluginLsDir'),	
+		'documentation' => 'PluginLsDir',
 		'description' => tra('Lists files in a directory'),
 		'prefs' => array( 'wikiplugin_lsdir' ),
 		'validate' => 'all',

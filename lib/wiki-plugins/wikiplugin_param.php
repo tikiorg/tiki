@@ -20,24 +20,24 @@ function wikiplugin_param_help() {
 
 function wikiplugin_param_info() {
 	return array(
-                'name' => tra('Param'),
+		'name' => tra('Param'),
 		'documentation' => 'PluginParam',
-		'description' => tra('Display wiki text if URL param is set'),
+		'description' => tra('Display content based on URL parameters'),
 		'prefs' => array( 'wikiplugin_param' ),
 		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed to users not matching the condition.'),
-                'params' => array(
+		'params' => array(
 			'name' => array(
-                            'required' => true,
-                            'name' => tra('Name'),
-                            'description' => tra('Names of parameter required to display text')
-                        ),
+				'required' => true,
+				'name' => tra('Name'),
+				'description' => tra('Names of parameter required to display text')
+			),
 			'source' => array(
-                            'required' => false,
-                            'name' => tra('Source'),
-			    'default' => 'request',
-                            'description' => tra('Source where the parameter is checked. Possible values : request ...')
-                        )
-                )
+				'required' => false,
+				'name' => tra('Source'),
+				'default' => 'request',
+				'description' => tra('Source where the parameter is checked. Possible values : request ...')
+			)
+		)
 	);
 }
 

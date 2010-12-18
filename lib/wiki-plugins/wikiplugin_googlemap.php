@@ -11,8 +11,8 @@ function wikiplugin_googlemap_help() {
 function wikiplugin_googlemap_info() {
 	return array(
 		'name' => tra('googlemap'),
-		'documentation' => tra('PluginGoogleMap'),
-		'description' => tra('Displays a Google map'),
+		'documentation' => 'PluginGoogleMap',
+		'description' => tra('Display a Google map'),
 		'prefs' => array( 'wikiplugin_googlemap' ),
 //		'validate' => 'all',
 		'params' => array(

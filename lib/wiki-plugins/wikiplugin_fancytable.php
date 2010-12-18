@@ -26,8 +26,8 @@ function wikiplugin_fancytable_help() {
 function wikiplugin_fancytable_info() {
 	return array(
 		'name' => tra('Fancy Table'),
-		'documentation' => tra('PluginFancyTable'),
-		'description' => tra('Displays the data using the Tikiwiki odd/even table style'),
+		'documentation' => 'PluginFancyTable',
+		'description' => tra('Create a formatted table'),
 		'prefs' => array('wikiplugin_fancytable'),
 		'body' => tra('Rows separated by >> in the header; for the table body, one row per line. Cells separated by | in both cases.'),
 		'params' => array(

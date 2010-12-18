@@ -16,8 +16,8 @@ function wikiplugin_banner_help() {
 function wikiplugin_banner_info() {
 	return array(
 		'name' => tra('Banner'),
-		'documentation' => tra('PluginBanner'),
-		'description' => tra('Insert a banner'),
+		'documentation' => 'PluginBanner',
+		'description' => tra('Add a banner to a wiki page'),
 		'prefs' => array('wikiplugin_banner'),
 		'params' => array(
 			'zone' => array(

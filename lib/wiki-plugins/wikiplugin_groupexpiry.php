@@ -13,8 +13,8 @@ function wikiplugin_groupexpiry_help() {
 function wikiplugin_groupexpiry_info() {
 	return array(
 		'name' => tra('Group Expiry'),
-		'documentation' => 'PluginGroupExpiry',		
-		'description' => tra('Shows the expiry date of the group membership of the current user'),
+		'documentation' => 'PluginGroupExpiry',
+		'description' => tra('Show the expiry date of the group membership of the current user'),
 		'prefs' => array( 'wikiplugin_groupexpiry' ),
 		'params' => array(
 			'group' => array(

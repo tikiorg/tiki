@@ -24,8 +24,8 @@ function wikiplugin_footnote_info()
 {
 	return array(
 		'name' => tra('Footnote'),
-		'documentation' => tra('PluginFootnote'),
-		'description' => tra('Inserts a superscripted footnote number next to text and takes in footnote as parameter.'),
+		'documentation' => 'PluginFootnote',
+		'description' => tra('Create automatically numbered footnotes (together with PluginFootnoteArea)'),
 		'prefs' => array('wikiplugin_footnote'),
 		'body' => tra('The footnote'),
 		'params' => array(

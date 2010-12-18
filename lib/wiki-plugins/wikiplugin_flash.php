@@ -11,8 +11,8 @@
 function wikiplugin_flash_info() {
 	return array(
 		'name' => tra('Flash video'),
-		'documentation' => tra('PluginFlash'),
-		'description' => tra('Displays a Flash (.swf) file in the wiki page'),
+		'documentation' => 'PluginFlash',
+		'description' => tra('Embed a video or audio file in a wiki page'),
 		'prefs' => array('wikiplugin_flash'),
 		'extraparams' => true,
 		'icon' => 'pics/icons/page_white_flash.png',

@@ -8,8 +8,8 @@
 function wikiplugin_content_info() {
 	return array(
 		'name' => tra( 'Dynamic Content' ),
-		'documentation' => tra('PluginContent'),		
-		'description' => tra( 'Includes content from the dynamic content system.' ),
+		'documentation' => 'PluginContent',
+		'description' => tra( 'Display content from dynamic content repository' ),
 		'prefs' => array( 'feature_dynamic_content', 'wikiplugin_content' ),
 		'filter' => 'text',
 		'params' => array(

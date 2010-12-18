@@ -15,11 +15,13 @@ function wikiplugin_jq_help() {
 	return tra("Insert JQuery javascript code.")."<br />~np~{JQ(nojquery='<p>You need JQuery for this!</p>')}".tra("jquery code e.g. \$(\"img\").click(function() {\n  \$(this).hide(\"slow\").show(\"fast\");\n});")."{JQ}~/np~";
 }
 
+//By default this is only executed after jQuery determines that the DOM is fully loaded.
+
 function wikiplugin_jq_info() {
 	return array(
 		'name' => tra('jQuery'),
-		'documentation' => tra('PluginJQ'),
-		'description' => tra('Inserts JavaScript code. By default this is only executed after jQuery determines that the DOM is fully loaded.'),
+		'documentation' => 'PluginJQ',
+		'description' => tra('Add jQuery JavaScript code to a wiki page'),
 		'prefs' => array( 'wikiplugin_jq' ),
 		'body' => tra('JavaScript code'),
 		'validate' => 'all',
@@ -28,7 +30,7 @@ function wikiplugin_jq_info() {
 			'notonready' => array(
 				'required' => false,
 				'name' => tra('Not On Ready'),
-				'description' => tra("Do not execute on document ready (execute inline)"),
+				'description' => tra('Do not execute on document ready (execute inline)'),
 			),
 			'nojquery' => array(
 				'required' => false,

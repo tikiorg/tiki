@@ -17,7 +17,7 @@ function wikiplugin_events_help() {
 function wikiplugin_events_info() {
 	return array(
 		'name' => tra('Events'),
-		'documentation' => tra('PluginEvents'),
+		'documentation' => 'PluginEvents',
 		'description' => tra('Display upcoming events from calendars'),
 		'prefs' => array( 'feature_calendar', 'wikiplugin_events' ),
 		'params' => array(

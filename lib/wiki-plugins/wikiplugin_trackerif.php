@@ -29,7 +29,8 @@ function wikiplugin_trackerif_info()
 {
 	return array(
 		'name' => tra('Trackerif'),
-		'description' => tra("Displays something after testing tracker fields"),
+		'documentation' => 'PluginTrackerif',
+		'description' => tra('Display content based on results of a tracker field test'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_tracker' ),
 		'params' => array(
 			'test' => array(

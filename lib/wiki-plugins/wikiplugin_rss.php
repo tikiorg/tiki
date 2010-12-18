@@ -13,8 +13,8 @@
 function wikiplugin_rss_info() {
 	return array(
 		'name' => tra('RSS Feed'),
-		'documentation' => tra('PluginRSS'),
-		'description' => tra('Inserts an RSS feed output.'),
+		'documentation' => 'PluginRSS',
+		'description' => tra('Display items from an RSS feed'),
 		'prefs' => array( 'wikiplugin_rss' ),
 		'icon' => 'pics/icons/rss.png',
 		'format' => 'html',
