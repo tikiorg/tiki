@@ -15,7 +15,7 @@ function wikiplugin_file_info()
 	$info = array(
 		'name' => tra( 'File' ),
 		'documentation' => 'PluginFile',
-		'description' => tra('Link to a file that\'s attached or in a file gallery or archive'),
+		'description' => tra('Link to a file that\'s attached or in a file gallery or archive. See PluginFiles for more functionality.'),
 		'prefs' => array( 'wikiplugin_file' ),
 		'body' => tra('Label for the link to the file (ignored if the file is a wiki attachment)'),
 		'icon' => 'pics/icons/file-manager.png',
