@@ -24,14 +24,14 @@
 
 
 function wikiplugin_aname_help() {
-        return tra("Creates an anchor in a wiki page. Use in conjunction with the ALINK plugin, which specifies a link to the anchor").":<br />~np~{ANAME()}anchorname{ANAME}~/np~";
+        return tra("Creates an anchor. Use in conjunction with the ALINK plugin, which specifies a link to the anchor").":<br />~np~{ANAME()}anchorname{ANAME}~/np~";
 }
 
 function wikiplugin_aname_info() {
 	return array(
 		'name' => tra('Anchor Name'),
 		'documentation' => 'PluginAname',
-		'description' => tra('Create an anchor into a wiki page that can be linked to'),
+		'description' => tra('Create an anchor that can be linked to'),
 		'prefs' => array('wikiplugin_aname'),
 		'body' => tra('The name of the anchor.'),
 		'params' => array(),
