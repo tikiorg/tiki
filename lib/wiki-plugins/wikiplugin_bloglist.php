@@ -17,7 +17,7 @@ function wikiplugin_bloglist_info() {
 	return array(
 		'name' => tra('Blog List'),
 		'documentation' => 'PluginBlogList',		
-		'description' => tra('Display posts from a site blog on a wiki page'),
+		'description' => tra('Display posts from a site blog'),
 		'prefs' => array( 'feature_blogs', 'wikiplugin_bloglist' ),
 		'params' => array(
 			'Id' => array(
