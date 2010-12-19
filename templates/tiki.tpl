@@ -163,6 +163,9 @@
 	{$headerlib->output_js_config()}
 	{$headerlib->output_js_files()}
 	{$headerlib->output_js()}
+	<!--[if lt IE 9]>{* according to http://remysharp.com/2009/01/07/html5-enabling-script/ *}
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
 {/if}
 	</body>
 </html>
