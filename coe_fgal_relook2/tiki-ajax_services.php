@@ -8,9 +8,8 @@
 // To contain data services for ajax calls (autocomplete calls sa far)
 
 require_once ('tiki-setup.php');
-//require_once ('lib/ajax/ajaxlib.php');
 
-$access->check_feature( array( 'feature_jquery', 'feature_jquery_autocomplete' ) );
+$access->check_feature( array( 'feature_ajax', 'feature_jquery_autocomplete' ) );
 
 if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 	$sep = '|';

@@ -71,8 +71,8 @@
 							<div id="mypassword_text"></div>
 							<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
 						</div>
-  <input type="password" name="pass" id="pass1" onkeypress="regCapsLock(event)" onkeyup="runPassword(this.value, 'mypassword');{if $prefs.ajax_xajax eq 'y'}check_pass();{/if}" />
-	{if $prefs.ajax_xajax ne 'y'}
+  <input type="password" name="pass" id="pass1" onkeypress="regCapsLock(event)" onkeyup="runPassword(this.value, 'mypassword');{if 0 and $prefs.feature_ajax eq 'y'}check_pass();{/if}" />
+	{if 1 || $prefs.feature_ajax ne 'y'}{* AJAX_TODO *}
 		{include file='password_help.tpl'}
 	{/if}
   

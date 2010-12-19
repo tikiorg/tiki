@@ -78,8 +78,6 @@
 				{preference name=feature_ajax}
 				<div class="adminoptionboxchild half_width" id="feature_ajax_childcontainer">
 					{preference name=ajax_autosave}
-					{preference name=feature_wiki_save_draft}
-					{preference name=ajax_xajax}
 				</div>
 			</fieldset>
 			<fieldset class="admin featurelist">
@@ -193,6 +191,7 @@
 					{preference name=feature_socialnetworks}
 					{preference name=feature_watershed}
 					{preference name=feature_file_galleries_save_draft}
+					{preference name=feature_file_galleries_templates}
 				</fieldset>
 
 				<fieldset>

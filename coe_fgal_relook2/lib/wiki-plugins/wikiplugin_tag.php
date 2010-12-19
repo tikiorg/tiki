@@ -16,11 +16,12 @@ function wikiplugin_tag_help() {
 function wikiplugin_tag_info() {
 	return array(
 		'name' => tra('Tag'),
-		'documentation' => tra('PluginTag'),
-		'description' => tra('Displays the text between an html tag'),
+		'documentation' => 'PluginTag',
+		'description' => tra('Apply an HTML tag to content'),
 		'prefs' => array( 'wikiplugin_tag' ),
 		'validate' => 'all',
 		'body' => tra('text'),
+		'icon' => 'pics/icons/script_code_red.png',
 		'params' => array(
 			'tag' => array(
 				'required' => false,

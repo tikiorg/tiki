@@ -95,28 +95,17 @@ function module_categories( $mod_reference, &$module_params ) {
 	else
 		$style = 'tree';
 		
-	if ($prefs['feature_phplayers'] == 'y') {
-		global $tikiphplayers; include_once('lib/phplayers_tiki/tiki-phplayers.php');
-		$urlEnd .= "\n";
-		if ($categId != 0 && $name != "") {
-			list($itall, $count) = $tikiphplayers->mkCatEntry($categId, "..", "", $categories, $urlEnd);
-			$itall = '.|'.$name.'|tiki-browse_categories.php?parentId='.$categId.$urlEnd.$itall;
-		} else {
-			list($itall, $count) = $tikiphplayers->mkCatEntry($categId, ".", "", $categories, $urlEnd);
-		}
-		$smarty->assign('tree', $tikiphplayers->mkmenu($itall, $name, $style));
-	} else {
-		include_once ('lib/tree/categ_browse_tree.php');
-		$tree_nodes = array();
-		foreach ($categories as $cat) {
-			$tree_nodes[] = array(
-				"id" => $cat["categId"],
-				"parent" => $cat["parentId"],
-				"data" => '<a class="catname" href="tiki-browse_categories.php?parentId=' . $cat["categId"] .$urlEnd.'">' . $cat["name"] . '</a><br />'
-			);
-		}
-		$tm = new CatBrowseTreeMaker("mod_categ");
-		$res = $tm->make_tree($categId, $tree_nodes);
-		$smarty->assign('tree', $res);
+	include_once ('lib/tree/categ_browse_tree.php');
+	$tree_nodes = array();
+	foreach ($categories as $cat) {
+		$tree_nodes[] = array(
+			"id" => $cat["categId"],
+			"parent" => $cat["parentId"],
+			"data" => '<a class="catname" href="tiki-browse_categories.php?parentId=' . $cat["categId"] .$urlEnd.'">' . $cat["name"] . '</a><br />'
+		);
 	}
+	$tm = new CatBrowseTreeMaker("mod_categ");
+	$res = $tm->make_tree($categId, $tree_nodes);
+	$smarty->assign('tree', $res);
+
 }

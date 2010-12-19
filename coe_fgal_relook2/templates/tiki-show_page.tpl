@@ -128,7 +128,7 @@
 	{/section}
 {/if}
 
-<div id="top" class="wikitext clearfix{if $prefs.feature_page_title neq 'y'} nopagetitle{/if}">
+<article id="top" class="wikitext clearfix{if $prefs.feature_page_title neq 'y'} nopagetitle{/if}">
 	{if !$hide_page_header}
 		{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0]) and $prefs.freetags_show_middle eq 'y'}
 			{include file='freetag_list.tpl'}
@@ -202,7 +202,7 @@
 			<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$last_page}">{icon _id='resultset_last' alt="{tr}Last page{/tr}"}</a>
 		</div>
 	{/if}
-</div> {* End of main wiki page *}
+</article> {* End of main wiki page *}
 
 {if $has_footnote eq 'y'}
 	<div class="wikitext" id="wikifootnote">{$footnote}</div>

@@ -450,11 +450,6 @@ class TikiAccessLib extends TikiLib
 		return $types;
 	}
 
-	function is_xajax_request() {
-		global $prefs;
-		return ( $prefs['ajax_xajax'] === 'y' && isset($_POST['xajaxargs']) );
-	}
-
 	function is_machine_request() {
 		foreach( $this->get_accept_types() as $name => $full ) {
 			switch( $name ) {

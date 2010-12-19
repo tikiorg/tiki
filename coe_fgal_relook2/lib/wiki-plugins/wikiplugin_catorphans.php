@@ -24,9 +24,10 @@ function wikiplugin_catorphans_help() {
 function wikiplugin_catorphans_info() {
 	return array(
 		'name' => tra('Category Orphans'),
-		'documentation' => tra('PluginCatOrphans'),
-		'description' => tra('Display wiki pages that have not been categorized'),
+		'documentation' => 'PluginCatOrphans',
+		'description' => tra('List objects that are not categorized'),
 		'prefs' => array( 'feature_categories', 'wikiplugin_catorphans' ),
+		'icon' => 'pics/icons/sitemap_color.png',
 		'params' => array(
 			'objects' => array(
 				'required' => false,

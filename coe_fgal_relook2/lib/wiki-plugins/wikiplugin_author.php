@@ -10,10 +10,11 @@ function wikiplugin_author_help() {
 function wikiplugin_author_info() {
 	return array(
 		'name' => tra('Author'),
-		'documentation' => tra('PluginAuthor'),
-		'description' => tra('Color codes parts of the page like \'Track changes\' in Office programs.'),
+		'documentation' => 'PluginAuthor',
+		'description' => tra('View author contributions to a wiki page'),
 		'prefs' => array('wikiplugin_author'),
 		'body' => tra('text'),
+		'icon' => 'pics/icons/text_signature.png',
 		'params' => array(
 			'author' => array(
 				'required' => true,

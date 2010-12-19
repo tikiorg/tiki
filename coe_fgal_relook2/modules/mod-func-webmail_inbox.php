@@ -15,7 +15,7 @@ function module_webmail_inbox_info() {
 	return array(
 		'name' => tra('Webmail Inbox'),
 		'description' => tra('Displays Webmail Inbox.'),
-		'prefs' => array('feature_webmail', 'ajax_xajax'),
+		'prefs' => array('feature_webmail', 'feature_ajax'),
 		'params' => array(
 			'accountid' => array(
 				'name' => tra('Account Id'),

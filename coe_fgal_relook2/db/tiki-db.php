@@ -123,7 +123,7 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 {
 	function handle( TikiDb $db, $query, $values, $result ) // {{{
 	{
-		global $smarty, $prefs, $ajaxlib;
+		global $smarty, $prefs;
 
 		$msg = $db->getErrorMessage();
 		$q=$query;
@@ -169,22 +169,6 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 			$smarty->assign( 'requires_update', $installer->requiresUpdate() );
 
 			header("Cache-Control: no-cache, pre-check=0, post-check=0");
-
-			if ($prefs['ajax_xajax'] === 'y') {
-				global $ajaxlib;
-				include_once('lib/ajax/xajax/xajax_core/xajaxAIO.inc.php');
-				if ($ajaxlib && $ajaxlib->canProcessRequest()) {
-					// this was a xajax request -> return a xajax answer
-					$page = $smarty->fetch( 'database-connection-error.tpl' );
-					$objResponse = new xajaxResponse();
-					$page=addslashes(str_replace(array("\n", "\r"), array(' ', ' '), $page));
-					$objResponse->script("bugwin=window.open('', 'tikierror', 'width=760,height=500,scrollbars=1,resizable=1');".
-							"bugwin.document.write('$page');");
-					echo $objResponse->getOutput();
-					$this->log($msg.' - '.$q);
-					die();
-				}
-			}
 
 			$smarty->display('database-connection-error.tpl');
 			unset($_SESSION['fatal_error']);

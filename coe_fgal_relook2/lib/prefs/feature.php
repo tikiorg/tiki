@@ -86,6 +86,13 @@ function prefs_feature_list() {
 			),
 			'type' => 'flag',
 		),
+		'feature_file_galleries_templates' => array(
+			'name' => tra('Configuration templates'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_file_galleries',
+                         ),
+		),
 		'feature_articles' => array(
 			'name' => tra('Articles'),
 			'description' => tra('Articles can be used for date-specific news and announcements. You can configure articles to automatically publish and expire at specific times or to require that submissions be approved before becoming "live."'),
@@ -296,13 +303,6 @@ function prefs_feature_list() {
 			'help' => 'JS+Calendar',
 			'type' => 'flag',
 		),
-		'feature_phplayers' => array(
-			'name' => tra('PHPLayers'),
-			'description' => tra('PhpLayers Dynamic menus.'),
-			'help' => 'http://themes.tiki.org/PhpLayersMenu',
-			'type' => 'flag',
-			'warning' => tra('Will eventually be removed from Tiki. Use CSS menus instead.'),
-		),
 		'feature_htmlpurifier_output' => array(
 			'name' => tra('Output should be HTML Purified'),
 			'description' => tra('This enables HTML Purifier on outputs to filter potential remaining security problems like XSS.'),
@@ -405,18 +405,6 @@ function prefs_feature_list() {
 			'help' => 'Wysiwyg',
 			'type' => 'flag',
 		),
-		'feature_wiki_save_draft' => array(
-			'name' => tra('Save draft'),
-			'warning' => tra('Experimental (Requires AJAX)'),
-			'dependencies' => array(
-				'feature_ajax',
-			),
-			'type' => 'flag',
-			'dependencies' => array(
-				'feature_ajax',
-				'ajax_xajax',
-      ),
-		),	
 		'feature_kaltura' => array(
 			'name' => tra('Kaltura'),
 			'description' => tra('Collaborative video editing'),
@@ -899,13 +887,6 @@ function prefs_feature_list() {
 			'description' => tra('Show objects sharing the same category, below wiki pages'),
 			'type' => 'flag',
 		),
-		'feature_category_use_phplayers' => array(
-			'name' => tra('Use PHPLayers for category browser'),
-			'type' => 'flag',
-			'dependencies' => array(
-				'feature_phplayers',
-			),
-		),
 		'feature_search_show_forbidden_cat' => array(
 			'name' => tra('Ignore category viewing restrictions'),
 			'hint' => tra('Will improve performance, but may show forbidden results'),
@@ -1177,12 +1158,11 @@ function prefs_feature_list() {
 		),
 		'feature_topbar_id_menu' => array(
 			'name' => tra('Menu ID'),
-			'hint' => tra('Needs either CSS Menus or PHPLayers'),
+			'hint' => tra('Needs CSS Menus'),
 			'type' => 'text',
 			'size' => '5',
 			'dependencies' => array(
 				'feature_cssmenus',
-				'feature_phplayers',
 			),
 		),
 		'feature_top_bar' => array(

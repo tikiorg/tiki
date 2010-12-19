@@ -13,11 +13,12 @@ function wikiplugin_tracker_info()
 {
 	return array(
 		'name' => tra('Tracker'),
-		'documentation' => tra('PluginTracker'),
-		'description' => tra("Displays an input form for tracker submit"),
+		'documentation' => 'PluginTracker',
+		'description' => tra('Create a form in a wiki page to populate a tracker'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_tracker' ),
 		'body' => tra('Confirmation message after posting form'),
 		'icon' => 'pics/icons/database.png',
+		'icon' => 'pics/icons/application_form.png',
 		'params' => array(
 			'trackerId' => array(
 				'required' => true,
@@ -1047,6 +1048,23 @@ function wikiplugin_tracker($data, $params)
 					$customvalidation .= 'return $("#name").val(); ';
 					$customvalidation .= '} } } ';
 					$customvalidation .= '}, ';
+					if ($prefs['feature_antibot'] == 'y' && empty($user) && $prefs['recaptcha_enabled'] != 'y') {
+						// antibot validation   
+						$customvalidation .= '"captcha[input]": { ';
+						$customvalidation .= 'required: true, ';
+						$customvalidation .= 'remote: { ';
+						$customvalidation .= 'url: "validate-ajax.php", ';
+						$customvalidation .= 'type: "post", ';
+						$customvalidation .= 'data: { ';
+						$customvalidation .= 'validator: "captcha", ';
+						$customvalidation .= 'parameter: function() { ';
+						$customvalidation .= 'return $jq("#captchaId").val(); ';
+						$customvalidation .= '}, ';
+						$customvalidation .= 'input: function() { ';
+						$customvalidation .= 'return $jq("#antibotcode").val(); ';
+						$customvalidation .= '} } } ';
+						$customvalidation .= '}, ';
+					}
 				}
 				$validationjs = $validatorslib->generateTrackerValidateJS( $flds['data'], $fields_prefix, $customvalidation, $customvalidation_m );
 

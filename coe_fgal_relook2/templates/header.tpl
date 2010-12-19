@@ -52,7 +52,7 @@
 {* --- tiki block --- *}
 <title>{strip}
 	{if $prefs.site_title_location eq 'before'}{$prefs.browsertitle|tr_if|escape} {$prefs.site_nav_seper} {/if}
-	{if ($prefs.feature_breadcrumbs eq 'y' && isset($trail)) or $prefs.site_title_breadcrumb eq "desc"}
+	{if ($prefs.feature_breadcrumbs eq 'y' or $prefs.site_title_breadcrumb eq "desc") && isset($trail)}
 		{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
 	{else}
 		{if !empty($tracker_item_main_value)}
@@ -90,11 +90,6 @@
 
 {if $prefs.site_favicon}
 	<link rel="icon" href="{$prefs.site_favicon|escape}" />
-{/if}
-
-{* --- phplayers block --- *}
-{if $prefs.feature_phplayers eq 'y' and isset($phplayers_headers)}
-	{$phplayers_headers}
 {/if}
 
 {* --- universaleditbutton.org --- *}

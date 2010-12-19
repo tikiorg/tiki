@@ -7,29 +7,30 @@
 
 function wikiplugin_colorbox_info() {
 	return array(
-		'name' => tra('colorbox'),
-		'documentation' => tra('PluginColorBox'),
-		'description' => tra('Display all the images of a file gallery in a colorbox popup'),
+		'name' => tra('Colorbox'),
+		'documentation' => 'PluginColorBox',
+		'description' => tra('Display a gallery of images in a popup slideshow'),
 		'prefs' => array( 'feature_file_galleries', 'feature_shadowbox', 'wikiplugin_colorbox' ),
 		'introduced' => 5,
+		'icon' => 'pics/icons/pictures.png',
 		'params' => array(
 			'fgalId' => array(
 				'required' => false,
 				'name' => tra('File Gallery ID'),
 				'description' => tra('ID number of the file gallery that contains the images to be displayed'),
 				'filter' => 'digits',
-    			'accepted' => 'ID',
+				'accepted' => 'ID',
 				'default' => '',
-    			'since' => '5.0'
+				'since' => '5.0'
 				),
 			'galId' => array(
 				'required' => false,
 				'name' => tra('Image Gallery ID'),
 				'description' => tra('ID number of the image gallery that contains the images to be displayed'),
 				'filter' => 'digits',
-    			'accepted' => 'ID',
+				'accepted' => 'ID',
 				'default' => '',
-    			'since' => '5.0'
+				'since' => '5.0'
 				),
 			'fileId' => array(
 				'required' => false,
@@ -37,16 +38,16 @@ function wikiplugin_colorbox_info() {
 				'description' => tra('Filter on fileIds in a file gallery to only show those images. Separate each fileId with \':\''),
 				'filter' => 'digits',
 				'separator' => ':',
-    			'accepted' => 'ID separated with :',
+				'accepted' => 'ID separated with :',
 				'default' => '',
-    			'since' => '6.0'
+				'since' => '6.0'
 				),
 			'thumb' => array(
 				'required' => false,
 				'name' => tra('Thumb'),
 				'description' => tra('Display as a thumbnail (y) or full size (n)'),
 				'filter' => 'alpha',
-    			'accepted' => 'y or n',
+				'accepted' => 'y or n',
 				'default' => 'y',
 				'since' => '5.0',
 				'options' => array(
@@ -60,16 +61,16 @@ function wikiplugin_colorbox_info() {
 				'name' => tra('Sort Mode'),
 				'description' => tra('Sort by database table field name, ascending or descending. Examples: fileId_asc or name_desc.'),
 				'filter' => 'word',
-    			'accepted' => 'fieldname_asc or fieldname_desc with actual table field name in place of \'fieldname\'.',
+				'accepted' => 'fieldname_asc or fieldname_desc with actual table field name in place of \'fieldname\'.',
 				'default' => 'created_desc',
-    			'since' => '5.0'
+				'since' => '5.0'
 				),
 			'showtitle' => array(
 				'required' => false,
 				'name' => tra('Show File Title'),
 				'description' => tra('Show file title'),
 				'filter' => 'alpha',
-    			'accepted' => 'y or n',
+				'accepted' => 'y or n',
 				'default' => 'n',
 				'since' => '5.0',
 				'options' => array(
@@ -83,7 +84,7 @@ function wikiplugin_colorbox_info() {
 				'name' => tra('Show File Name'),
 				'description' => tra('Show file name'),
 				'filter' => 'alpha',
-    			'accepted' => 'y or n',
+				'accepted' => 'y or n',
 				'default' => 'n',
 				'since' => '5.0',
 				'options' => array(
@@ -97,7 +98,7 @@ function wikiplugin_colorbox_info() {
 				'name' => tra('Show All Thumbs'),
 				'description' => tra('Show thumbnails of all the images in the gallery'),
 				'filter' => 'alpha',
-    			'accepted' => 'y or n',
+				'accepted' => 'y or n',
 				'default' => 'n',
 				'since' => '5.0',
 				'options' => array(
@@ -111,7 +112,7 @@ function wikiplugin_colorbox_info() {
 				'name' => tra('Parse Descriptions'),
 				'description' => tra('Wiki parse the file descriptions'),
 				'filter' => 'alpha',
-    			'accepted' => 'y or n',
+				'accepted' => 'y or n',
 				'default' => 'n',
 				'since' => '5.0',
 				'options' => array(

@@ -12,11 +12,12 @@ function wikiplugin_sql_help() {
 function wikiplugin_sql_info() {
 	return array(
 		'name' => tra('SQL'),
-		'documentation' => tra('PluginSQL'),
-		'description' => tra('Run an SQL query on a database'),
+		'documentation' => 'PluginSQL',
+		'description' => tra('Query a MySQL database and display the results'),
 		'prefs' => array( 'wikiplugin_sql' ),
 		'body' => tra('The SQL query goes in the body. Example: SELECT column1, column2 FROM table'),
 		'validate' => 'all',
+		'icon' => 'pics/icons/database_table.png',
 		'params' => array(
 			'db' => array(
 				'required' => true,

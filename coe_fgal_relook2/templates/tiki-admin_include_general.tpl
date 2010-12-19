@@ -162,7 +162,6 @@
 				<legend>{tr}Menus{/tr}</legend>
 				<em>{tr}Create and edit menus {/tr}</em><a href="tiki-admin_menus.php"><em>{tr}here{/tr}</em></a>
 				<div class="adminoptionbox">
-					{preference name=feature_phplayers}
 					{preference name=feature_cssmenus}
 					{preference name=menus_item_names_raw}
 					{preference name=feature_userlevels}

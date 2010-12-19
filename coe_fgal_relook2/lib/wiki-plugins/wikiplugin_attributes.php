@@ -5,15 +5,18 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+//Allows for generic attributes to be assigned to the current object. 
+//Attributes are provided as parameters. For tiki.geo.lat, {attributes tiki_geo_lat=...}. Removing the plugin or values in it will not remove the attributes.
 
 function wikiplugin_attributes_info() {
 	return array(
 		'name' => tra('Attributes'),
-		'documentation' => tra('PluginAttributes'),			
-		'description' => tra('Allows for generic attributes to be assigned to the current object. Attributes are provided as parameters. For tiki.geo.lat, {attributes tiki_geo_lat=...}. Removing the plugin or values in it will not remove the attributes.'),
+		'documentation' => 'PluginAttributes',
+		'description' => tra('Assign generic attributes to the current object'),
 		'prefs' => array( 'wikiplugin_attributes' ),
 		'extraparams' => true,
 		'defaultfilter' => 'text',
+		'icon' => 'pics/icons/page_gear.png',
 		'params' => array(
 		),
 	);

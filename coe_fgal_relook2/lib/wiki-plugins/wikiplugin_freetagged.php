@@ -16,15 +16,16 @@ function wikiplugin_freetagged_help() {
 
 function wikiplugin_freetagged_info() {
 	return array(
-    	'name' => tra('Freetagged'),
-    	'documentation' => tra('PluginFreetagged'),
-    	'description' => tra('Find similarly tagged objects'),
-    	'prefs' => array( 'wikiplugin_freetagged' ),
-    	'params' => array(
-    		'tags' => array(
-    			'required' => false,
-    			'name' => tra('Tags to find similar to'),
-    			'description' => tra('Leave blank to use the object\'s own tags.'),
+		'name' => tra('Freetagged'),
+		'documentation' => 'PluginFreetagged',
+		'description' => tra('List similarly tagged objects'),
+		'prefs' => array( 'wikiplugin_freetagged' ),
+		'icon' => 'pics/icons/tag_blue.png',
+		'params' => array(
+			'tags' => array(
+				'required' => false,
+				'name' => tra('Tags to find similar to'),
+				'description' => tra('Leave blank to use the object\'s own tags.'),
 				'filter' => 'text',
 				'default' => ''
 			),

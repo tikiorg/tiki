@@ -17,8 +17,8 @@ function wikiplugin_files_help() {
 function wikiplugin_files_info() {
 	return array(
 		'name' => tra('Files'),
-		'documentation' => tra('PluginFiles'),
-		'description' => tra('Displays a list of files from a file gallery'),
+		'documentation' => 'PluginFiles',
+		'description' => tra('List files in a gallery or category'),
 		'prefs' => array( 'feature_file_galleries', 'wikiplugin_files' ),
 		'body' => tra('Title'),
 		'icon' => 'pics/large/file-manager.png',

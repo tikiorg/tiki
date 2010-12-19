@@ -12,9 +12,10 @@ function wikiplugin_topfriends_help() {
 function wikiplugin_topfriends_info() {
 	return array(
 		'name' => tra('Top Friends'),
-		'documentation' => tra('PluginTopFriends'),
+		'documentation' => 'PluginTopFriends',
 		'description' => tra('List top-scoring users.'),
 		'prefs' => array( 'feature_friends', 'wikiplugin_topfriends' ),
+		'icon' => 'pics/icons/star.png',
 		'params' => array(
 			'limit' => array(
 				'required' => false,

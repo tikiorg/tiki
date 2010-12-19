@@ -394,15 +394,6 @@ a.flip:hover {
 	margin: 1px;
 }
 
-/* do not apply it on phplm tree in categories */
-#tiki-center .phplmnormal div {
-	padding: 0;
-}
-
-#tiki-center .phplmnormal img {
-	margin: 0;
-}
-
 #c1c2 #col2 {
 	width: 214px;
 	overflow: visible;
@@ -448,112 +439,6 @@ a.flip:hover {
 }
 	
 /****** Menus ******/
-.horbar {
-	float: left;
-}
-
-.horbaritem a {
-	padding: 6px 6px;
-	text-decoration: none;
-	font: .9em Verdana, Helvetica, Arial, Sans-Serif;
-	border-right: 1px solid #aaa;
-}
-
-.horbaritem a:hover {
-	text-decoration: none;
-	background: #fff;
-}
-
-.horbaritem img {
-	vertical-align: middle;
-}
-
-/* contains mdksubframe div */
-.mdksubmenu {
-	background: transparent;
-}
-
-.mdksubframe {
-	left: -1px;
-	top: 1px;
-	display: block;
-	border: 1px solid #d3d3d3;
-	border-top: none;
-	background: #fff;
-}
-
-.mdkitem {
-	border-top: 1px solid #dedede;
-}
-
-.mdkitem a {
-	padding: 2px 5px;
-	font-weight: normal;
-	font-size: .9em;
-}
-
-.mdkitem a:link {
-	font-weight: normal;
-	text-decoration: none;
-}
-
-.mdkitem a:visited {
-	text-decoration: none;
-}
-
-.mdkitem a:hover {
-	text-decoration: none;
-}
-
-/* Tree menu (also on Browse Categories */
-.treemenudiv {
-	background: #fff;
-}
-
-.phplmnormal,
-a.phplmnormal:hover,
-a.phplm:link,
-a.phplm:visited,
-a.phplm:hover,
-a.phplm:active {
-	font-family: Georgia, serif;
-	color: #005faa;
-	text-decoration: none;
-	font-weight: normal;
-}
-
-a.phplm:visited {
-	color: #005faa;
-}
-
-a.phplm:hover {
-	color: #005faa;
-	text-decoration: underline;
-	background: none;
-}
-
-a.phplm:active {
-	color: #005faa;
-	font-weight: normal;
-}
-
-a.phplmselected:link,
-a.phplmselected:visited,
-a.phplmselected:hover,
-a.phplmselected:active {
-	font: 100% Georgia, serif;
-	color: #005faa;
-	text-decoration: none;
-	font-weight: normal;
-	background: none;
-	font-style: italic;
-}
-
-a.phplmselected:hover {
-	color: #005faa;
-	text-decoration: underline;
-}
-
 /** CSS (suckerfish) menus **/
 .cssmenu_horiz ul,
 .cssmenu_vert ul {

@@ -4,10 +4,12 @@ function wikiplugin_list_info()
 {
 	return array(
 		'name' => tra('List'),
-		'description' => tra('Pull object lists from the search index based on various search criterias and formatting rules.'),
+		'documentation' => 'PluginList',
+		'description' => tra('Pull object lists from the search index based on various search criteria and formatting rules'),
 		'prefs' => array('wikiplugin_list'),
 		'body' => tra('List configuration information'),
 		'filter' => 'wikicontent',
+		'icon' => 'pics/icons/text_list_bullets.png',
 		'params' => array(
 		),
 	);

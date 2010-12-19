@@ -8,9 +8,10 @@
 function wikiplugin_googleanalytics_info() {
 	return array(
 		'name' => tra('Google Analytics'),
-		'documentation' => tra('PluginGoogleAnalytics'),	
-		'description' => tra('Add the tracking code for Google Analytics.'),
+		'documentation' => 'PluginGoogleAnalytics',
+		'description' => tra('Add the tracking code for Google Analytics'),
 		'prefs' => array( 'wikiplugin_googleanalytics' ),
+		'icon' => 'pics/icons/chart_line.png',
 		'params' => array(
 			'account' => array(
 				'required' => true,

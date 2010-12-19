@@ -398,6 +398,7 @@ class FileGalLib extends TikiLib
 			'show_slideshow' => $prefs['fgal_show_slideshow'],
 			'wiki_syntax' => '',
 			'default_view' => $prefs['fgal_default_view'],
+			'template' => null,
 		);
 	}
 	function replace_file_gallery($fgal_info) {
@@ -424,7 +425,7 @@ class FileGalLib extends TikiLib
 			`show_last_user`=?, `show_comment`=?, `show_files`=?, `show_explorer`=?,
 			`show_path`=?, `show_slideshow`=?, `default_view`=?, `quota`=?,
 			`image_max_size_x`=?, `image_max_size_y`=?,
-			`backlinkPerms`=?, `show_backlinks`=?, `wiki_syntax`=? where `galleryId`=?";
+			`backlinkPerms`=?, `show_backlinks`=?, `wiki_syntax`=?, `template`=? where `galleryId`=?";
 
 			$bindvars=array(trim($fgal_info['name']), (int) $fgal_info['maxRows'],
 			$fgal_info['description'], (int) $this->now, $fgal_info['public'],
@@ -442,7 +443,8 @@ class FileGalLib extends TikiLib
 			$fgal_info['show_path'], $fgal_info['show_slideshow'],
 			$fgal_info['default_view'], $fgal_info['quota'],
 			(int)$fgal_info['image_max_size_x'], (int)$fgal_info['image_max_size_y'],
-			$fgal_info['backlinkPerms'], $fgal_info['show_backlinks'], $fgal_info['wiki_syntax'], (int)$fgal_info['galleryId']);
+			$fgal_info['backlinkPerms'], $fgal_info['show_backlinks'], $fgal_info['wiki_syntax'],
+			$fgal_info['template'], (int)$fgal_info['galleryId']);
 
 			$result = $this->query($query,$bindvars);
 
@@ -461,8 +463,8 @@ class FileGalLib extends TikiLib
 			`archives`, `sort_mode`, `show_modified`, `show_creator`, `show_author`,
 			`subgal_conf`, `show_last_user`, `show_comment`, `show_files`,
 			`show_explorer`, `show_path`, `show_slideshow`, `default_view`, `quota`,
-			`image_max_size_x`, `image_max_size_y`, `backlinkPerms`, `show_backlinks`, `wiki_syntax`)
-			values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			`image_max_size_x`, `image_max_size_y`, `backlinkPerms`, `show_backlinks`, `wiki_syntax`, `template`)
+			values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			$bindvars=array($fgal_info['name'], $fgal_info['description'], (int)
 			$this->now, $fgal_info['user'], (int) $this->now, (int)
@@ -480,7 +482,8 @@ class FileGalLib extends TikiLib
 			$fgal_info['show_slideshow'], $fgal_info['default_view'],
 			$fgal_info['quota'],
 			(int)$fgal_info['image_max_size_x'], (int)$fgal_info['image_max_size_y'],
-			$fgal_info['backlinkPerms'], $fgal_info['show_backlinks'], $fgal_info['wiki_syntax']);
+			$fgal_info['backlinkPerms'], $fgal_info['show_backlinks'], $fgal_info['wiki_syntax'],
+			$fgal_info['template']);
 
 			$result = $this->query($query,$bindvars);
 			$galleryId = $this->getOne("select max(`galleryId`) from
@@ -1132,7 +1135,7 @@ class FileGalLib extends TikiLib
 		return $return;
 	}
 
-	// Get default phplayers tree for filegals
+	// Get default phplayers tree for filegals - not actually using phplayers for tiki7+
 	function getFilegalsTreePhplayers( $currentGalleryId = null ) {
 		return $this->getTreePhplayers( $this->getFilegalsIdsTree(), $currentGalleryId );
 	}

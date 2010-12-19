@@ -8,10 +8,10 @@
 function wikiplugin_listpages_info() {
 	return array(
 		'name' => tra('List Pages'),
-		'documentation' => tra('PluginListpages'),
-		'description' => tra('List wiki pages.'),
+		'documentation' => 'PluginListpages',
+		'description' => tra('List pages based on various criteria'),
 		'prefs' => array('wikiplugin_listpages'),
-		'icon' => 'pics/icons/page_white_stack.png',
+		'icon' => 'pics/icons/page_find.png',
 		'params' => array(
 			'offset' => array(
 				'required' => false,

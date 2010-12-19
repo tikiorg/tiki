@@ -109,25 +109,21 @@ class HistLib extends TikiLib
 		return true;
 	}
 
-	// Used to see a specific version of the page
+        // Used to see a specific version of the page
 	function get_view_date($date_str) {
+		global $tikilib;
+
 		if (!$date_str) {
 			// Date is undefined
 			throw new Exception();
 		}
 
 		$view_date = $date_str;
+		$tsp = explode('-', $date_str);
 
-		if (strpos($date_str, '-')) {
+		if (count($tsp) == 3) {
 			// Date in YYYY-MM-DD format
-			$tsp = strptime($date_str, '%Y-%m-%d');
-
-			if (!$tsp) {
-				// Wrong date format
-				throw new Exception();
-			}
-
-			$view_date = mktime(23, 59, 59, $tsp['tm_mon'] + 1, $tsp['tm_mday'], $tsp['tm_year'] + 1900);
+			$view_date = $tikilib->make_time(23, 59, 59, $tsp[1] + 1, $tsp[2], $tsp[0] + 1900);
 		}
 
 		return $view_date;

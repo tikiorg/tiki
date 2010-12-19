@@ -97,7 +97,7 @@
 							{icon _id='pics/icons/mime/zip.png' _tag='input_image' name='zipsel' alt="{tr}Download the zip{/tr}" style='vertical-align: middle;'}
 							
 							{if $tiki_p_assign_perm_file_gallery eq 'y'}
-								{icon _id='key' _tag='input_image' name='permsel' alt="{tr}Assign Permissions{/tr}" title="{tr}Assign Permissions{/tr}" style='vertical-align: middle;'}
+								{icon _id='key' _tag='input_image' name='permsel' alt="{tr}Assign permissions to file galleries{/tr}" title="{tr}Assign permissions to file galleries{/tr}" style='vertical-align: middle;'}
 							{/if}
 						
 						</div>
@@ -116,8 +116,9 @@
 					</div>
 					{if $perms}
 						<div>
-							{tr}Assign Permissions{/tr}
+							{tr}Assign permissions to file galleries{/tr}
 							<select name="perms[]" multiple="multiple" size="5">
+								<option value="" />
 								{foreach from=$perms item=perm}
 									<option value="{$perm.permName|escape}">{$perm.permName|escape}</option>
 								{/foreach}

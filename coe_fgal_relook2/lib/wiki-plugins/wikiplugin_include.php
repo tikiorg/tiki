@@ -46,9 +46,10 @@ function wikiplugin_include_help() {
 function wikiplugin_include_info() {
 	return array(
 		'name' => tra('Include'),
-		'documentation' => tra('PluginInclude'),
-		'description' => tra('Include a page\'s content.'),
+		'documentation' => 'PluginInclude',
+		'description' => tra('Include content from a wiki page'),
 		'prefs' => array('wikiplugin_include'),
+		'icon' => 'pics/icons/page_copy.png',
 		'params' => array(
 			'page' => array(
 				'required' => true,

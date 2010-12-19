@@ -4492,15 +4492,6 @@ class TikiLib extends TikiDb_Bridge
 			}
 
 			$this->cache_page_info[$pageNameEncode] = $row;
-
-			global $user, $prefs;
-			if ( $user && $prefs['feature_wiki_save_draft'] == 'y' ) {
-				$query = "select * from `tiki_page_drafts` where `user`=? and `pageName`=?";
-				$result = $this->query($query, array($user, $pageName));
-				if ( $result->numRows() ) {
-					$this->cache_page_info[$pageNameEncode]['draft'] = $result->fetchRow();
-				}
-			}
 			return $this->cache_page_info[$pageNameEncode];
 		}
 	}
@@ -7411,9 +7402,6 @@ if( \$('#$id') ) {
 				$diff = diff2($old["data"] , $edit_data, "unidiff");
 				sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, $diff, $edit_minor, $hash['contributions'], 0, 0, $lang);
 			}
-
-			$query = "delete from `tiki_page_drafts` where `user`=? and `pageName`=?";
-			$this->query($query, array($GLOBALS['user'], $pageName));
 
 			if ($prefs['feature_score'] == 'y') {
 				$this->score_event($user, 'wiki_edit');

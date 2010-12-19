@@ -8,10 +8,11 @@
 function wikiplugin_subscribenewsletter_info() {
 	return array(
 		'name' => tra('Subscribe newsletter'),
-		'documentation' => tra('PluginSubscribeNewsletter'),
-		'description' => tra('A button to subscribe to a newsletter available for a user if not already in'),
+		'documentation' => 'PluginSubscribeNewsletter',
+		'description' => tra('Allow users to subscribe to a newsletter'),
 		'prefs' => array('feature_newsletters', 'wikiplugin_subscribenewsletter'),
 		'body' => tra('Invitation message'),
+		'icon' => 'pics/icons/newspaper_add.png',
 		'params' => array(
 			'nlId' => array(
 				'required' => true,

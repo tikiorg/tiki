@@ -14,10 +14,11 @@ function wikiplugin_cclite_info() {
 
 	return array(
 		'name' => tra('Cclite'),
-		'documentation' => tra('PluginCclite'),
+		'documentation' => 'PluginCclite',
 		'description' => tra('General purpose cclite utility plugin'),
 //		'validate' => '',
 		'prefs' => array( 'wikiplugin_cclite', 'payment_feature' ),
+		'icon' => 'pics/icons/money.png',
 		'params' => array(
 			'mode' => array(
 				'required' => false,

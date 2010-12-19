@@ -14,11 +14,12 @@ function wikiplugin_ftp_help() {
 function wikiplugin_ftp_info() {
 	return array(
 		'name' => tra('FTP'),
-		'documentation' => tra('PluginFTP'),
-		'description' => tra('Download box for a file on an FTP server.'),
+		'documentation' => 'PluginFTP',
+		'description' => tra('Create a button for downloading a file from an FTP server'),
 		'prefs' => array( 'wikiplugin_ftp' ),
 		'validate' => 'all',
 		'body' => tra('file name'),
+		'icon' => 'pics/icons/application_put.png',
 		'params' => array(
 			'server' => array(
 				'required' => true,

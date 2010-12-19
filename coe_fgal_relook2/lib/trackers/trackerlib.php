@@ -2605,7 +2605,7 @@ class TrackerLib extends TikiLib
 			$currentCategId=$categlib->get_category_id("Tracker Item $itemId");
 			$categlib->remove_category($currentCategId);
 		}
-		$this->remove_object("tracker $trackerId", $itemId);
+		$this->remove_object("trackeritem", $itemId);
 		if (isset($options['autoCreateGroup']) && $options['autoCreateGroup'] == 'y') {
 			global $userlib;
 			$groupName = $this->groupName($options, $itemId, $groupInc);
@@ -2949,16 +2949,8 @@ class TrackerLib extends TikiLib
 		$result = $this->query($query,$bindvars);
 
 		while ($res = $result->fetchRow()) {
-			$query2 = "delete from `tiki_tracker_item_fields` where `itemId`=?";
-			$result2 = $this->query($query2,array((int) $res["itemId"]));
-			$query2 = "delete from `tiki_tracker_item_comments` where `itemId`=?";
-			$result2 = $this->query($query2,array((int) $res["itemId"]));
-			$query2 = "delete from `tiki_tracker_item_attachments` where `itemId`=?";
-			$result2 = $this->query($query2,array((int) $res["itemId"]));
+			$this->remove_tracker_item($res['itemId']);
 		}
-
-		$query = "delete from `tiki_tracker_items` where `trackerId`=?";
-		$result = $this->query($query,$bindvars);
 
 		$query = "delete from `tiki_tracker_options` where `trackerId`=?";
 		$result = $this->query($query,$bindvars);

@@ -11,13 +11,13 @@
 function wikiplugin_html_info() {
 	return array(
 		'name' => tra('HTML'),
-		'documentation' => tra('PluginHTML'),
-		'description' => tra('Include literal HTML in a Wiki page'),
+		'documentation' => 'PluginHTML',
+		'description' => tra('Add HTML to a page'),
 		'prefs' => array('wikiplugin_html'),
 		'body' => tra('HTML code'),
 		'validate' => 'all',
 		'filter' => 'rawhtml_unsafe',
-		'icon' => 'pics/icons/html.png',
+		'icon' => 'pics/icons/mime/html.png',
 		'params' => array(
 			'wiki' => array(
 				'required' => false,

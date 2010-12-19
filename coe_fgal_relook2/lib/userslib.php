@@ -53,18 +53,25 @@ class UsersLib extends TikiLib
 	function assign_object_permission($groupName, $objectId, $objectType, $permName) {
 		$objectId = md5($objectType . strtolower($objectId));
 
-		$query = "delete from `users_objectpermissions`
-			where `groupName` = ? and
-			`permName` = ? and
-			`objectId` = ?";
-		$result = $this->query($query, array($groupName, $permName,
-			$objectId), -1, -1, false);
+		$query = "delete from `users_objectpermissions`	where `objectId` = ? and `objectType`=?";
+		$bindvars = array($objectId, $objectType);
+		if (!empty($groupName)) {
+			$query .= ' and `groupName` = ?';
+			$bindvars[] = $groupName;
+		}
+		if (!empty($permName)) {
+			$query .= ' and `permName` = ?';
+			$bindvars[] = $permName;
+		}
+		$result = $this->query($query, $bindvars);
 
-		$query = "insert into `users_objectpermissions`(`groupName`,
+		if (!empty($permName) && !empty($groupName)) {
+			$query = "insert into `users_objectpermissions`(`groupName`,
 			`objectId`, `objectType`, `permName`)
 			values(?, ?, ?, ?)";
-		$result = $this->query($query, array($groupName, $objectId,
+			$result = $this->query($query, array($groupName, $objectId,
 			$objectType, $permName));
+		}
 		if ($objectType == 'file gallery') {
 			global $cachelib; require_once('lib/cache/cachelib.php');
 			$cachelib->empty_type_cache('fgals_perms_'.$objectId."_");
@@ -975,16 +982,104 @@ class UsersLib extends TikiLib
 		$result = $this->query($query, array('','',$user));
 	}
 
-	// called after create user or login from ldap
-	function ldap_sync_user_and_groups($user,$pass) {
+	// synchronize all users with ldap directory
+	function ldap_sync_all_users() {
+		global $prefs;
+		global $logslib;
+
+		if ($prefs['syncUsersWithDirectory'] != 'y') {
+			return false;
+		}
+
+		require_once('auth/ldap.php');
+		if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Syncing all users with ldap');
+		$bind_type = 'default';
+
+		switch ($prefs['auth_ldap_type']) {
+			// Must be anonymous or admin
+			case 'default':
+				break;
+			default:
+				if (!empty($prefs['auth_ldap_adminuser'])) {
+					$bind_type = 'explicit';
+					break;
+				}
+
+				return false;
+		}
+
+		$ldap_options = array(	'host' => $prefs['auth_ldap_host'],
+					'port' => $prefs['auth_ldap_port'],
+					'version' => $prefs['auth_ldap_version'],
+					'starttls' => $prefs['auth_ldap_starttls'],
+					'ssl' => $prefs['auth_ldap_ssl'],
+					'basedn' => $prefs['auth_ldap_basedn'],
+					'scope' => $prefs['auth_ldap_scope'],
+					'bind_type' => $bind_type,
+					'binddn' => $prefs['auth_ldap_adminuser'],
+					'bindpw' => $prefs['auth_ldap_adminpass'],
+					'userdn' => $prefs['auth_ldap_userdn'],
+					'useroc' => $prefs['auth_ldap_useroc'],
+					'userattr' => $prefs['auth_ldap_userattr'],
+					'fullnameattr' => $prefs['auth_ldap_nameattr'],
+					'emailattr' => $prefs['auth_ldap_emailattr'],
+					'countryattr' => $prefs['auth_ldap_countryattr'],
+					'groupdn' => $prefs['auth_ldap_groupdn'],
+					'groupattr' => $prefs['auth_ldap_groupattr'],
+					'groupoc' => $prefs['auth_ldap_groupoc'],
+					'groupnameattr' => $prefs['auth_ldap_groupnameatr'],
+					'groupdescattr' => $prefs['auth_ldap_groupdescatr'],
+					'groupmemberattr' => $prefs['auth_ldap_memberattr'],
+					'groupmemberisdn' => $prefs['auth_ldap_memberisdn'],
+					'usergroupattr' => $prefs['auth_ldap_usergroupattr'],
+					'groupgroupattr' => $prefs['auth_ldap_groupgroupattr'],
+					'debug' => $prefs['auth_ldap_debug']
+		);
+
+		$user_ldap = new TikiLdapLib($ldap_options);
+
+		if (!($users_attributes = $user_ldap->get_all_users_attributes())) {
+			return false;
+		}
+
+		foreach ($users_attributes as $user_attributes) {
+			$user = $user_attributes[$prefs['auth_ldap_userattr']];
+			$this->add_user($user, '', $user);
+
+			if ($prefs['auth_method'] == 'ldap') {
+				$this->disable_tiki_auth($user);
+			}
+
+			$this->ldap_sync_user_data($user, $user_attributes);
+		}
+	}
+
+	// synchronize all groups with ldap directory
+	function ldap_sync_all_groups() {
+		global $prefs;
+		global $logslib;
+
+		if ($prefs['syncGroupsWithDirectory'] != 'y') {
+			return false;
+		}
+
+		$users = $this->list_all_users();
+
+		foreach ($users as $user) {
+			$this->ldap_sync_groups($user, null);
+		}
+	}
+
+	// Sync Tiki user with ldap directory
+	function ldap_sync_user($user, $pass) {
+		if ( $user == 'admin' ) return true;
+
 		global $prefs;
 		global $logslib;
 		$ret=true;
 		$this->init_ldap($user, $pass);
 
-		if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Syncing user and group with ldap');
-		$userattributes=$this->ldap->get_user_attributes();
-		//$user=$userattributes[$prefs['auth_ldap_userattr']];
+		if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Syncing user with ldap');
 
 		// sync user information
 		if ($prefs['auth_method'] == 'ldap') {
@@ -992,66 +1087,97 @@ class UsersLib extends TikiLib
 		}
 
 		if ($prefs['syncUsersWithDirectory'] == 'y') {
-			$u=array('login'=>$user);
-			if(isset($userattributes[$prefs['auth_ldap_nameattr']])) {
-				$u['realName']=$userattributes[$prefs['auth_ldap_nameattr']];
-			}
-
-			if(isset($userattributes[$prefs['auth_ldap_emailattr']])) {
-				$u['email']=$userattributes[$prefs['auth_ldap_emailattr']];
-			}
-
-			if(isset($userattributes[$prefs['auth_ldap_countryattr']])) {
-				$u['country']=$userattributes[$prefs['auth_ldap_countryattr']];
-			}
-
-			if(count($u)>1) {
-				$this->set_user_fields($u);
-			}
+			$this->ldap_sync_user_data($user, $this->ldap->get_user_attributes());
 		}
 
-		if ($prefs['syncGroupsWithDirectory'] == 'y') {
+		return $ret;
+	}
+
+	// Sync ldap data (name, email, country)
+	function ldap_sync_user_data($user, $attributes) {
+		global $prefs;
+
+		$u = array('login' => $user);
+
+		if (isset($attributes[$prefs['auth_ldap_nameattr']])) {
+			$u['realName'] = $attributes[$prefs['auth_ldap_nameattr']];
+		}
+
+		if (isset($attributes[$prefs['auth_ldap_emailattr']])) {
+			$u['email'] = $attributes[$prefs['auth_ldap_emailattr']];
+		}
+
+		if (isset($attributes[$prefs['auth_ldap_countryattr']])) {
+			$u['country'] = $attributes[$prefs['auth_ldap_countryattr']];
+		}
+
+		if (count($u) > 1) {
+			$this->set_user_fields($u);
+		}
+	}
+
+	// Sync Tiki groups with ldap directory
+	function ldap_sync_groups($user, $pass) {
+		if ( $user == 'admin' ) return true;
+
+		global $prefs;
+		global $logslib;
+		static $ldap_group_options = array();
+		static $ext_dir = null;
+		$ret = true;
+
+		$this->init_ldap($user, $pass);
+		$this->ldap->setOption('username', $user);
+		$this->ldap->setOption('password', $pass);
+
+		if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Syncing group with ldap');
+		$userattributes=$this->ldap->get_user_attributes(true);
+
+		if ($prefs['syncGroupsWithDirectory'] == 'y' && $userattributes[$prefs['auth_ldap_group_corr_userattr']] != null) {
 			// sync external group information of user
 			$ldapgroups = array();
 
 			if ($prefs['auth_ldap_group_external'] == 'y') {
 				// External directory for groups
-				$ldap_options=array('host' => $prefs['auth_ldap_group_host'],
-						'port' => $prefs['auth_ldap_group_port'],
-						'version' => $prefs['auth_ldap_group_version'],
-						'starttls' => $prefs['auth_ldap_group_starttls'],
-						'ssl' => $prefs['auth_ldap_group_ssl'],
-						'basedn' => $prefs['auth_ldap_group_basedn'],
-						'scope' => $prefs['auth_ldap_group_scope'],
-						'userdn' => $prefs['auth_ldap_group_userdn'],
-						'useroc' => $prefs['auth_ldap_group_useroc'],
-						'userattr' => $prefs['auth_ldap_group_userattr'],
-						'username' => $userattributes[$prefs['auth_ldap_group_corr_userattr']],
-						'groupdn' => $prefs['auth_ldap_groupdn'],
-						'groupattr' => $prefs['auth_ldap_groupattr'],
-						'groupoc' => $prefs['auth_ldap_groupoc'],
-						'groupnameattr' => $prefs['auth_ldap_groupnameatr'],
-						'groupdescattr' => $prefs['auth_ldap_groupdescatr'],
-						'groupmemberattr' => $prefs['auth_ldap_memberattr'],
-						'groupmemberisdn' => $prefs['auth_ldap_memberisdn'],
-						'usergroupattr' => $prefs['auth_ldap_usergroupattr'],
-						'groupgroupattr' => $prefs['auth_ldap_groupgroupattr'],
-						'debug' => $prefs['auth_ldap_group_debug']
-				);
+				if (!isset($ext_dir)) {
+					$ldap_group_options=array('host' => $prefs['auth_ldap_group_host'],
+							'port' => $prefs['auth_ldap_group_port'],
+							'version' => $prefs['auth_ldap_group_version'],
+							'starttls' => $prefs['auth_ldap_group_starttls'],
+							'ssl' => $prefs['auth_ldap_group_ssl'],
+							'basedn' => $prefs['auth_ldap_group_basedn'],
+							'scope' => $prefs['auth_ldap_group_scope'],
+							'userdn' => $prefs['auth_ldap_group_userdn'],
+							'useroc' => $prefs['auth_ldap_group_useroc'],
+							'userattr' => $prefs['auth_ldap_group_userattr'],
+							'username' => $userattributes[$prefs['auth_ldap_group_corr_userattr']],
+							'groupdn' => $prefs['auth_ldap_groupdn'],
+							'groupattr' => $prefs['auth_ldap_groupattr'],
+							'groupoc' => $prefs['auth_ldap_groupoc'],
+							'groupnameattr' => $prefs['auth_ldap_groupnameatr'],
+							'groupdescattr' => $prefs['auth_ldap_groupdescatr'],
+							'groupmemberattr' => $prefs['auth_ldap_memberattr'],
+							'groupmemberisdn' => $prefs['auth_ldap_memberisdn'],
+							'usergroupattr' => $prefs['auth_ldap_usergroupattr'],
+							'groupgroupattr' => $prefs['auth_ldap_groupgroupattr'],
+							'debug' => $prefs['auth_ldap_group_debug']
+					);
 
-				if (empty($prefs['auth_ldap_group_adminuser'])) {
-					// Anonymous
-					$ldap_options['bind_type'] = 'default';
-				} else {
-					// Explicit
-					$ldap_options['bind_type'] = 'explicit';
-					$ldap_options['binddn'] = $prefs['auth_ldap_group_adminuser'];
-					$ldap_options['bindpw'] =  $prefs['auth_ldap_group_adminpass'];
+					if (empty($prefs['auth_ldap_group_adminuser'])) {
+						// Anonymous
+						$ldap_group_options['bind_type'] = 'default';
+					} else {
+						// Explicit
+						$ldap_group_options['bind_type'] = 'explicit';
+						$ldap_group_options['binddn'] = $prefs['auth_ldap_group_adminuser'];
+						$ldap_group_options['bindpw'] =  $prefs['auth_ldap_group_adminpass'];
+					}
+
+					$ext_dir = new TikiLdapLib($ldap_group_options);
 				}
 
-				$ext_dir = new TikiLdapLib($ldap_options);
-				$ldapgroups = $ext_dir->get_groups();
-				unset($ext_dir);
+				$ext_dir->setOption('username', $userattributes[$prefs['auth_ldap_group_corr_userattr']]);
+				$ldapgroups = $ext_dir->get_groups(true);
 
 			} else {
 				if (!empty($prefs['auth_ldap_adminuser'])) {
@@ -1061,7 +1187,7 @@ class UsersLib extends TikiLib
 					$this->ldap->bind(true);
 				}
 
-				$ldapgroups = $this->ldap->get_groups();
+				$ldapgroups = $this->ldap->get_groups(true);
 
 				if (!empty($prefs['auth_ldap_adminuser'])) {
 					$this->ldap->setOption('bind_type', $prefs['auth_ldap_type']);
@@ -1069,46 +1195,67 @@ class UsersLib extends TikiLib
 				}
 			}
 
-			$ldapgroups_simple=array();
-			$tikigroups=$this->get_user_groups($user);
-			foreach($ldapgroups as $group) {
-				$gname=$group[$prefs['auth_ldap_groupattr']];
-				$ldapgroups_simple[]=$gname; // needed later
-				if($this->group_exists($gname) && !$this->group_is_external($gname)) { // group exists
-					//check if we need to sync group information
-					if(isset($group[$prefs['auth_ldap_groupdescattr']])) {
-						$ginfo=$this->get_group_info($gname);
-						if($group[$prefs['auth_ldap_groupdescattr']] != $ginfo['groupDesc']) {
-							$this->set_group_description($gname,$group[$prefs['auth_ldap_groupdescattr']]);
-						}
-					}
+			$this->ldap_sync_group_data($user, $ldapgroups);
+		}
 
-				} else if(!$this->group_exists($gname)){ // create group
-					if(isset($group[$prefs['auth_ldap_groupdescattr']])) {
-						$gdesc=$group[$prefs['auth_ldap_groupdescattr']];
-					} else {
-						$gdesc='';
+		return $ret;
+	}
+
+	// Sync Tiki groups with LDAP groups data
+	function ldap_sync_group_data($user, $ldapgroups) {
+		global $prefs;
+		global $logslib;
+
+		if (!count($ldapgroups)) {
+			return;
+		}
+
+		$ldapgroups_simple=array();
+		$tikigroups=$this->get_user_groups($user);
+		foreach($ldapgroups as $group) {
+			$gname=$group[$prefs['auth_ldap_groupattr']];
+			$ldapgroups_simple[]=$gname; // needed later
+			if($this->group_exists($gname) && !$this->group_is_external($gname)) { // group exists
+				//check if we need to sync group information
+				if(isset($group[$prefs['auth_ldap_groupdescattr']])) {
+					$ginfo=$this->get_group_info($gname);
+					if($group[$prefs['auth_ldap_groupdescattr']] != $ginfo['groupDesc']) {
+						$this->set_group_description($gname,$group[$prefs['auth_ldap_groupdescattr']]);
 					}
-					$logslib->add_log('ldap','Creating external group '.$gname);
-					$this->add_group($gname,$gdesc,'',0,0,'','',0,'',0,0,'y');
 				}
 
-				// add user
-				if(!in_array($gname,$tikigroups)) {
-					$logslib->add_log('ldap','Adding user '.$user.' to external group '.$gname);
-					$this->assign_user_to_group($user,$gname);
+			} else if(!$this->group_exists($gname)){ // create group
+				if(isset($group[$prefs['auth_ldap_groupdescattr']])) {
+					$gdesc=$group[$prefs['auth_ldap_groupdescattr']];
+				} else {
+					$gdesc='';
 				}
+				$logslib->add_log('ldap','Creating external group '.$gname);
+				$this->add_group($gname,$gdesc,'',0,0,'','',0,'',0,0,'y');
 			}
 
-			// now clean up group membership if user has been unassigned from a group in ldap
-			$extgroups=$this->get_user_external_groups($user);
-			foreach($extgroups as $eg) {
-				if(!in_array($eg,$ldapgroups_simple)) {
-					$logslib->add_log('ldap','Removing user '.$user.' from external group '.$eg);
-					$this->remove_user_from_group($user, $eg);
-				}
+			// add user
+			if(!in_array($gname,$tikigroups)) {
+				$logslib->add_log('ldap','Adding user '.$user.' to external group '.$gname);
+				$this->assign_user_to_group($user,$gname);
 			}
 		}
+
+		// now clean up group membership if user has been unassigned from a group in ldap
+		$extgroups=$this->get_user_external_groups($user);
+		foreach($extgroups as $eg) {
+			if(!in_array($eg,$ldapgroups_simple)) {
+				$logslib->add_log('ldap','Removing user '.$user.' from external group '.$eg);
+				$this->remove_user_from_group($user, $eg);
+			}
+		}
+	}
+
+	// called after create user or login from ldap
+	function ldap_sync_user_and_groups($user,$pass) {
+		$ret = true;
+		$ret &= $this->ldap_sync_user($user, $pass);
+		$ret &= $this->ldap_sync_groups($user, $pass);
 
 		// Invalidate cache
 		global $cachelib;
@@ -1720,7 +1867,6 @@ class UsersLib extends TikiLib
 			$this->query("update `tiki_private_messages` set `toNickname`=? where `toNickname`=?", array($to,$from));
 			$this->query("update `tiki_pages` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_pages` set `creator`=? where `creator`=?", array($to,$from));
-			$this->query("update `tiki_page_drafts` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_page_footnotes` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_newsletters` set `author`=? where `author`=?", array($to,$from));
 			$this->query("update `tiki_minical_events` set `user`=? where `user`=?", array($to,$from));

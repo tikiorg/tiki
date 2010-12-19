@@ -27,9 +27,10 @@ function wikiplugin_category_help() {
 function wikiplugin_category_info() {
 	return array(
 		'name' => tra('Category'),
-		'documentation' => tra('PluginCategory'),
-		'description' => tra('Insert list of items with the current/given category in the wiki page'),
+		'documentation' => 'PluginCategory',
+		'description' => tra('List categories and objects assigned to them'),
 		'prefs' => array( 'feature_categories', 'wikiplugin_category' ),
+		'icon' => 'pics/icons/sitemap_color.png',
 		'params' => array(
 			'id' => array(
 				'required' => false,

@@ -38,6 +38,11 @@
 					{tr}Wiki{/tr}</label>
 					<br />
 				{/if}
+				{if $prefs.feature_file_galleries_templates eq 'y'}
+					<label><input type="checkbox" name="section_file_galleries" {if $info.section_file_galleries eq 'y'}checked="checked"{/if} />
+					{tr}File Galleries{/tr}</label>
+					<br />
+				{/if}
 				{if $prefs.feature_newsletters eq 'y'}
 					<label><input type="checkbox" name="section_newsletters" {if $info.section_newsletters eq 'y'}checked="checked"{/if} />
 					{tr}Newsletters{/tr}</label>
@@ -53,7 +58,7 @@
 					{tr}HTML Pages{/tr}</label>
 					<br />
 				{/if}
-				{if ($prefs.feature_cms_templates ne 'y') and ($prefs.feature_wiki_templates ne 'y') and ($prefs.feature_newsletters ne 'y') and ($prefs.feature_events ne 'y') and ($prefs.feature_html_pages ne 'y')}
+				{if ($prefs.feature_cms_templates ne 'y') and ($prefs.feature_wiki_templates ne 'y') and ($prefs.feature_file_galleries_templates ne 'y') and ($prefs.feature_newsletters ne 'y') and ($prefs.feature_events ne 'y') and ($prefs.feature_html_pages ne 'y')}
 					{tr}No features are configured to use templates.{/tr}
 				{/if}
 			</td>

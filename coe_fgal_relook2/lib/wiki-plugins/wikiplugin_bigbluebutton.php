@@ -3,10 +3,11 @@
 function wikiplugin_bigbluebutton_info() {
 	return array(
 		'name' => tra('BigBlueButton'),
-		'documentation' => tra('PluginBigBlueButton'),
-		'description' => tra('Allows to join a BigBlueButton meeting.'),
+		'documentation' => 'PluginBigBlueButton',
+		'description' => tra('Starts a video/audio/chat/presentation session using BigBlueButton'),
 		'format' => 'html',
 		'prefs' => array( 'wikiplugin_bigbluebutton', 'bigbluebutton_feature' ),
+		'icon' => 'pics/icons/webcam.png',
 		'params' => array(
 			'name' => array(
 				'required' => true,

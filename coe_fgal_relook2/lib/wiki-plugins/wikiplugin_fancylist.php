@@ -12,10 +12,11 @@ function wikiplugin_fancylist_help() {
 function wikiplugin_fancylist_info() {
 	return array(
 		'name' => tra('Fancy List'),
-		'documentation' => tra('PluginFancyList'),		
-		'description' => tra('Creates a fancy-looking list'),
+		'documentation' => 'PluginFancyList',
+		'description' => tra('Create a fancy-looking list'),
 		'prefs' => array('wikiplugin_fancylist'),
 		'body' => tra('One item per line starting with anything followed by ")".'),
+		'icon' => 'pics/icons/text_list_bullets.png',
 		'params' => array(
 		 	'div' => array(
 			 	'required' => false,

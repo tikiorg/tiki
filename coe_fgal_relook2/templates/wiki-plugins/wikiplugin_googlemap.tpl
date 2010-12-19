@@ -61,14 +61,14 @@ function showAddress{$gmapname|escape}(address) {literal}{{/literal}
   {literal}}{/literal}
 {literal}}{/literal}
 
-function saveGmapDefaultxyz{$gmapname|escape}() {literal}{{/literal}
-	xajax.config.requestURI = '{$smarty.server.REQUEST_URI}';
-	xajax_saveGmapDefaultxyz('gmap{$gmapname|escape}_ajax_msg', gmap{$gmapname|escape}map.getCenter().x, gmap{$gmapname|escape}map.getCenter().y, gmap{$gmapname|escape}map.getZoom());
+function saveGmapDefaultxyz{$gmapname|escape}() {literal}{{/literal}	// AJAX_TODO
+//	xajax.config.requestURI = '{$smarty.server.REQUEST_URI}';
+//	xajax_saveGmapDefaultxyz('gmap{$gmapname|escape}_ajax_msg', gmap{$gmapname|escape}map.getCenter().x, gmap{$gmapname|escape}map.getCenter().y, gmap{$gmapname|escape}map.getZoom());
 {literal}}{/literal}
 
 function saveGmapUser{$gmapname|escape}() {literal}{{/literal}
-	xajax.config.requestURI = '{$smarty.server.REQUEST_URI}';
-	xajax_saveGmapUser('gmap{$gmapname|escape}_ajax_msg', document.getElementById('{$gmapname|escape}pointx').value, document.getElementById('{$gmapname|escape}pointy').value, document.getElementById('{$gmapname|escape}pointz').value, '{$gmapitem}');
+//	xajax.config.requestURI = '{$smarty.server.REQUEST_URI}';
+//	xajax_saveGmapUser('gmap{$gmapname|escape}_ajax_msg', document.getElementById('{$gmapname|escape}pointx').value, document.getElementById('{$gmapname|escape}pointy').value, document.getElementById('{$gmapname|escape}pointz').value, '{$gmapitem}');
 {literal}}{/literal}
 
 function updateGmapInput{$gmapname|escape}() {ldelim}
@@ -81,8 +81,8 @@ function updateGmapInput{$gmapname|escape}() {ldelim}
 function saveGmapItem{$gmapname|escape}() {literal}{{/literal}
 	updateGmapInput{$gmapname|escape}();
 	{if $gmapitem}
-	xajax.config.requestURI = '{$smarty.server.REQUEST_URI}';
-	xajax_saveGmapItem('gmap{$gmapname|escape}_ajax_msg', document.getElementById('{$gmapname|escape}pointx').value, document.getElementById('{$gmapname|escape}pointy').value, document.getElementById('{$gmapname|escape}pointz').value, '{$gmapitemtype}', '{$gmapitem}', '{$gmaptrackerfieldid}');
+//	xajax.config.requestURI = '{$smarty.server.REQUEST_URI}';
+//	xajax_saveGmapItem('gmap{$gmapname|escape}_ajax_msg', document.getElementById('{$gmapname|escape}pointx').value, document.getElementById('{$gmapname|escape}pointy').value, document.getElementById('{$gmapname|escape}pointz').value, '{$gmapitemtype}', '{$gmapitem}', '{$gmaptrackerfieldid}');
 	{/if}
 {literal}}{/literal}
 

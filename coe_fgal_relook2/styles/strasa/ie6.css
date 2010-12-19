@@ -34,21 +34,6 @@ body {
 	font-size: 1em;
 }
 
-.horbar {
-	top: 10px;
-	left: auto;
-	right: 40px;
-}
-
-.horbaritem a {
-	font-size: 1em;
-	border-color: #224a5f;
-}
-
-.mdksubmenu {
-	margin-top: 0;
-}
-
 .clearfix {
 	height: 1%;
 }

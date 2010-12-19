@@ -10,11 +10,12 @@ function wikiplugin_mediaplayer_help() {
 }
 function wikiplugin_mediaplayer_info() {
 	return array(
-		'name' => tra('Mediaplayer'),
-		'documentation' => tra('PluginMediaplayer'),
-		'description' => tra('Simple mp3 or flv Player'),
+		'name' => tra('Media Player'),
+		'documentation' => 'PluginMediaplayer',
+		'description' => tra('Add a media player to a page'),
 		'extraparams' =>true,
 		'prefs' => array( 'wikiplugin_mediaplayer' ),
+		'icon' => 'pics/icons/mime/avi.png',
 		'params' => array(
 			'fullscreen' => array(
 				'required' => false,

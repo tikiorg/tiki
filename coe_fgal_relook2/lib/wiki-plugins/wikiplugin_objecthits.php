@@ -15,9 +15,10 @@ function wikiplugin_objecthits_help() {
 function wikiplugin_objecthits_info() {
 	return array(
 		'name' => tra('Object Hits'),
-		'documentation' => tra('PluginObjectHits'),			
-		'description' => tra('Displays object hit info by object and days'),
+		'documentation' => 'PluginObjectHits',
+		'description' => tra('Display the number of hits for certain objects'),
 		'prefs' => array( 'wikiplugin_objecthits' ),
+		'icon' => 'pics/icons/calculator.png',
 		'params' => array(
 			'object' => array(
 				'required' => false,

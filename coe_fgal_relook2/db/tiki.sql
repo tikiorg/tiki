@@ -717,6 +717,7 @@ CREATE TABLE `tiki_file_galleries` (
   `galleryId` int(14) NOT NULL auto_increment,
   `name` varchar(80) NOT NULL default '',
   `type` varchar(20) NOT NULL default 'default',
+  `template` int(10) default NULL,
   `description` text,
   `created` int(14) default NULL,
   `visible` char(1) default NULL,
@@ -1630,17 +1631,6 @@ CREATE TABLE `tiki_pages` (
   FULLTEXT KEY `ft` (`pageName`,`description`,`data`),
   KEY `lastModif`(`lastModif`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
-
-DROP TABLE IF EXISTS `tiki_page_drafts`;
-CREATE TABLE `tiki_page_drafts` (
-  `user` varchar(200) default '',
-  `pageName` varchar(255) NOT NULL,
-  `data` mediumtext,
-  `description` varchar(200) default NULL,
-  `comment` varchar(200) default NULL,
-  `lastModif` int(14) default NULL,
-  PRIMARY KEY (`pageName`(120), `user`(120))
-) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_pageviews`;
 CREATE TABLE `tiki_pageviews` (

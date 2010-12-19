@@ -22,9 +22,10 @@ function wikiplugin_articles_info()
 {
 	return array(
 		'name' => tra('Article List'),
-		'documentation' => tra('PluginArticles'),
-		'description' => tra('Inserts a list of articles in the page.'),
+		'documentation' => 'PluginArticles',
+		'description' => tra('Display multiple articles'),
 		'prefs' => array( 'feature_articles', 'wikiplugin_articles' ),
+		'icon' => 'pics/icons/table_multiple.png',
 		'params' => array(
 			'usePagination' => array(
 				'required' => false,

@@ -11,11 +11,12 @@ function wikiplugin_kaltura_help() {
 
 function wikiplugin_kaltura_info() {
 	return array(
-		'name' => tra('Kaltura video'),
-		'documentation' => tra('PluginKaltura'),
-		'description' => tra('Displays a KALTURA video on the wiki page'),
+		'name' => tra('Kaltura Video'),
+		'documentation' => 'PluginKaltura',
+		'description' => tra('Display a video created through the Kaltura feature'),
 		'prefs' => array('wikiplugin_kaltura'),
 		'extraparams' => true,
+		'icon' => 'pics/icons/film_edit.png',
 		'params' => array(
 			'id' => array(
 				'required' => true,

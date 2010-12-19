@@ -18,11 +18,12 @@ function wikiplugin_googledoc_help() {
 function wikiplugin_googledoc_info() {
 	return array(
 		'name' => tra('Google Doc'),
-		'documentation' => tra('PluginGoogleDoc'),
-		'description' => tra('Displays a Google document'),
+		'documentation' => 'PluginGoogleDoc',
+		'description' => tra('Display a Google document'),
 		'prefs' => array( 'wikiplugin_googledoc' ),
 		'body' => tra('Leave this empty.'),
 //		'validate' => 'all',
+		'icon' => 'pics/icons/google.png',
 		'params' => array(
 			'type' => array(
 				'safe' => true,

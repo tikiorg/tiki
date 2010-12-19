@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -103,7 +103,6 @@ function get_default_prefs() {
 		'feature_wiki_userpage_prefix' => 'User:',
 		'feature_wiki_usrlock' => 'n',
 		'feature_wiki_feedback_polls' => array(),
-		'feature_wiki_save_draft' => 'n',
 		'feature_wikiwords' => 'n',
 		'feature_wikiwords_usedash' => 'y',
 		'feature_wiki_pagealias' => 'y',
@@ -552,6 +551,7 @@ function get_default_prefs() {
 
 		// filegals
 		'feature_file_galleries' => 'y',
+		'feature_file_galleries_templates' => 'n',
 		'home_file_gallery' => 1,
 		'fgal_root_id' => 1,
 		'fgal_use_db' => 'y',
@@ -1244,7 +1244,6 @@ function get_default_prefs() {
 		'feature_categories' => 'n',
 		'feature_categoryobjects' => 'n',
 		'feature_categorypath' => 'n',
-		'feature_category_use_phplayers' => 'n',
 		'categorypath_excluded' => '',
 		'categories_used_in_tpl' => 'n',
 		'category_jail' => array(),
@@ -1518,7 +1517,6 @@ function get_default_prefs() {
 		'feature_htmlpurifier_output' => 'n',
 		'feature_ajax' => 'y',
 		'ajax_autosave' => 'y',
-		'ajax_xajax' => 'n',
 		'feature_antibot' => 'y',
 		'feature_banners' => 'n',
 		'feature_banning' => 'n',
@@ -1556,7 +1554,6 @@ function get_default_prefs() {
 		'feature_newsletters' => 'n',
 		'feature_obzip' => 'n',
 		'feature_perspective' => 'n', // If enabling by default, update further in this file
-		'feature_phplayers' => 'n',
 		'feature_cssmenus' => 'y',
 		'menus_item_names_raw' => 'n',
 		'feature_projects' => 'n',

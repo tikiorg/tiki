@@ -2,39 +2,39 @@
 {if $tiki_p_view_shoutbox eq 'y'}
   {tikimodule title=$tpl_module_title name="shoutbox" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
     {if $tiki_p_post_shoutbox eq 'y'}
-      {if $prefs.ajax_xajax eq 'y'}{literal}
+      {if 0 and $prefs.feature_ajax eq 'y'}{literal}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
-	function submitShout() {
-		var fm = xajax.$('shout_form');
-		if ((verifyForm(fm) && xajax.$('shout_msg').value.length > 2) || 
-				xajax.$('shout_remove').value || xajax.$('shout_edit').value) {
-			xajax.$('shout_send').disabled=true;
-			xajax.$('shout_send').value="{/literal}{$waittext}{literal}";
-			xajax.config.requestURI = "tiki-shoutbox.php";
-			xajax_processShout(xajax.getFormValues(fm), "{/literal}mod-shoutbox{$module_position}{$module_ord}{literal}");
-			return false;
-		} else {
-			return true;
-		}
+	function submitShout() {	// AJAX_TODO
+//		var fm = xajax.$('shout_form');
+//		if ((verifyForm(fm) && xajax.$('shout_msg').value.length > 2) || 
+//				xajax.$('shout_remove').value || xajax.$('shout_edit').value) {
+//			xajax.$('shout_send').disabled=true;
+//			xajax.$('shout_send').value="{/literal}{$waittext}{literal}";
+//			xajax.config.requestURI = "tiki-shoutbox.php";
+//			xajax_processShout(xajax.getFormValues(fm), "{/literal}mod-shoutbox{$module_position}{$module_ord}{literal}");
+//			return false;
+//		} else {
+//			return true;
+//		}
 	}
-	function removeShout(inId) {
-		if (confirm("{/literal}{tr}Are you sure you want to delete this shout?{/tr}{literal}")) {
-			xajax.$('shout_remove').value = inId;
-			return submitShout();
-		} else {
-			return true;
-		}
+	function removeShout(inId) {		// AJAX_TODO
+//		if (confirm("{/literal}{tr}Are you sure you want to delete this shout?{/tr}{literal}")) {
+//			xajax.$('shout_remove').value = inId;
+//			return submitShout();
+//		} else {
+//			return true;
+//		}
 	}
 	function editShout(inId) {
-		xajax.$('shout_edit').value = inId;
-		return submitShout();
+//		xajax.$('shout_edit').value = inId;
+//		return submitShout();
 	}
 //--><!]]>
 </script>
       {/literal}{/if}
       {js_maxlength textarea=shout_msg maxlength=255}
-      {if $prefs.ajax_xajax neq 'y'}<form action="{$shout_ownurl}" method="post" onsubmit="return verifyForm(this);" id="shout_form">{else}
+      {if 1 || $prefs.feature_ajax neq 'y'}<form action="{$shout_ownurl}" method="post" onsubmit="return verifyForm(this);" id="shout_form">{else}
       <form action="javascript:void(null);" onsubmit="return submitShout();" id="shout_form" name="shout_form">
       <input type="hidden" id="shout_remove" name="shout_remove" value="0" />
       <input type="hidden" id="shout_edit" name="shout_edit" value="0" />{/if}
@@ -71,7 +71,7 @@
         {/if}
         {$shout_msgs[ix].message}
         {if $tiki_p_admin_shoutbox eq 'y' || $user == $shout_msgs[ix].user }
-          {if $prefs.ajax_xajax eq 'y'}
+          {if 0 and $prefs.feature_ajax eq 'y'}
             [<a onclick="removeShout({$shout_msgs[ix].msgId});return false" href="#" class="linkmodule tips" title="|{tr}Delete this shout{/tr}">x</a>|<a href="tiki-shoutbox.php?msgId={$shout_msgs[ix].msgId}" class="linkmodule tips" title="|{tr}Edit this shout{/tr}">e</a>]
           {else}
             [<a href="{$shout_ownurl}shout_remove={$shout_msgs[ix].msgId}" class="linkmodule">x</a>|<a href="tiki-shoutbox.php?msgId={$shout_msgs[ix].msgId}" class="linkmodule">e</a>]

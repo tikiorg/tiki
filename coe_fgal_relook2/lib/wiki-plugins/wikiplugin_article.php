@@ -23,9 +23,10 @@ function wikiplugin_article_help() {
 function wikiplugin_article_info() {
 	return array(
 		'name' => tra('Article'),
-		'documentation' => tra('PluginArticle'),
-		'description' => tra('Includes an article\'s content within the page.'),
+		'documentation' => 'PluginArticle',
+		'description' => tra('Display a field of an article'),
 		'prefs' => array( 'feature_articles', 'wikiplugin_article' ),
+		'icon' => 'pics/icons/layout_content.png',
 		'params' => array(
 			'Field' => array(
 				'required' => false,
@@ -54,8 +55,7 @@ function wikiplugin_article($data, $params) {
 	if (empty($Id)) {
 		global $artlib;	include_once('lib/articles/artlib.php');
 
-		$last = $artlib->list_articles(0,1);
-		$Id = $last['data'][0]["articleId"];
+		$Id = $artlib->get_most_recent_article_id();
 	}
 	if (!isset($Field)) {
 		$Field = 'heading';

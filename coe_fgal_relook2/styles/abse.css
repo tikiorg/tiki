@@ -354,64 +354,6 @@ body.cke_show_borders {
 a .sf-sub-indicator {
 	top: .3em;
 }
-/* PHP Layers menus */
-.horbar {margin-left: 10px}
-
-.horbaritem a,
-.horbaritem a:visited {text-decoration: none}
-
-.horbaritem a:hover {
-	text-decoration: none;
-	background: #010101 url(abse/menubg.jpg) repeat-y}
-
-.mdkverbar {margin: 0}
-.mdksubmenu {width: 180px}
-
-.mdksubframe  {
-	background: #010101 url(abse/menubg.jpg) repeat-y;
-	width: 180px}
-
-.mdkitem a {
-	padding: 2px 5px;
-	color: #fff;
-	text-decoration: none}
-
-.mdkitem a:link,
-.mdkitem a:visited {text-decoration: none}
-
-.mdkitem a:hover {
-	background: #010101 url(abse/menubg.jpg) repeat-y;
-	color: #ccccff}
-
-.phplmnormal,
-a.phplmnormal:hover,
-a.phplm:link,
-a.phplm:visited,
-a.phplm:hover,
-a.phplm:active {
-	font-size: 10px;
-	background: #586858;
-	color: #fff;
-	text-decoration: none}
-
-.phplmnormal {
-	background: #586858;
-	border: 1px solid #aaa}
-	
-a.phplm:hover {
-	color: #ccccff;
-	background: #586858}
-
-a.phplmselected:link,
-a.phplmselected:visited,
-a.phplmselected:hover,
-a.phplmselected:active {
-	font-size: 10px;
-	background: 0;
-	color: #fff;
-	text-decoration: none}
-
-a.phplmselected:hover {background: 0}
 
 /** Links in other menus **/
 .separator, .separatorline {

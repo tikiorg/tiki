@@ -7,9 +7,6 @@
 
 $section = 'mytiki';
 require_once ('tiki-setup.php');
-if ($prefs['ajax_xajax'] == "y") {
-	require_once ('lib/ajax/ajaxlib.php');
-}
 include_once ('lib/userfiles/userfileslib.php');
 
 $access->check_feature('feature_userfiles', '', 'community');
@@ -110,15 +107,5 @@ $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 $smarty->assign_by_ref('channels', $channels["data"]);
 include_once ('tiki-mytiki_shared.php');
 ask_ticket('user-files');
-if ($prefs['ajax_xajax'] == "y") {
-	function user_files_ajax() {
-		global $ajaxlib, $xajax;
-		$ajaxlib->registerTemplate("tiki-userfiles.tpl");
-		$ajaxlib->registerTemplate("tiki-my_tiki.tpl");
-		$ajaxlib->registerFunction("loadComponent");
-		$ajaxlib->processRequests();
-	}
-	user_files_ajax();
-}
 $smarty->assign('mid', 'tiki-userfiles.tpl');
 $smarty->display("tiki.tpl");

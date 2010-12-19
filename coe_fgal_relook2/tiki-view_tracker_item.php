@@ -1206,10 +1206,6 @@ if (isset($_REQUEST['status'])) $smarty->assign_by_ref('status', $_REQUEST['stat
 include_once ('tiki-section_options.php');
 $smarty->assign('uses_tabs', 'y');
 ask_ticket('view-trackers-items');
-if ($prefs['ajax_xajax'] == 'y') {
-	require_once ("lib/ajax/ajaxlib.php");
-	$ajaxlib->registerTemplate('tiki-view_tracker_item.tpl');
-}
 global $logslib; include_once('lib/logs/logslib.php');
 $logslib->add_action('Viewed', $_REQUEST['itemId'], 'trackeritem');
 

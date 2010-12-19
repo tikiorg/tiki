@@ -14,10 +14,11 @@ function wikiplugin_tr_help() {
 function wikiplugin_tr_info() {
 	return array(
 		'name' => tra('Translate'),
-		'documentation' => tra('PluginTR'),
-		'description' => tra('Translate a string using Tiki translation table.'),
+		'documentation' => 'PluginTR',
+		'description' => tra('Translate text to the user language'),
 		'prefs' => array( 'wikiplugin_tr' ),
 		'body' => tra('string'),
+		'icon' => 'pics/icons/page_translate_to.png',
 		'params' => array(
 		),
 	);

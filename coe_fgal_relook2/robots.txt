@@ -63,6 +63,7 @@ Disallow: /tiki-slideshow2.php
 Disallow: /tiki-tell_a_friend.php
 Disallow: /tiki-user_information.php
 Disallow: /tiki-view_cache.php
+Disallow: /tiki-index_raw.php
 
 # Disallow mobile
 Disallow: /tiki-*.php?*mode=mobile*

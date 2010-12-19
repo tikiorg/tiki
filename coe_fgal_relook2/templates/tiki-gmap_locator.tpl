@@ -1,12 +1,12 @@
 {if $prefs.feature_gmap eq 'y'}
 
-{if $prefs.ajax_xajax eq 'y'}
+{if 0 and $prefs.feature_ajax eq 'y'}{* AJAX_TODO *}
 {* Ajax version using new plugin *}
 {title help="gmap"}{tr}Google Map Locator{/tr} - {$userwatch}{/title}
 <p>{button _script="tiki-user_preferences.php"  view_user=$smarty.request.view_user|escape _text="{tr}Back to preferences{/tr}"}</p>
 {wikiplugin _name="googlemap" type="locator" setdefaultxyz="y" locateitemtype="user" locateitemid="$userwatch"}{/wikiplugin}
 {else}
-{* Old non-ajax version which can be removed once Ajax becomes always on *}
+{* Old non-ajax version which can be removed once Ajax becomes always on (and this has been converted to not use xajax - jb dec 2010 *}
 {title help="gmap"}{tr}Google Map Locator{/tr}{/title}
 {if $watch}({$watch}){/if}
 
