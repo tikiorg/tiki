@@ -2002,6 +2002,12 @@ ul.freetagged li {
 	font-style: italic;
 }
 
+/* tree browser */
+
+.tree {
+	list-style: none;
+}
+
 .thumbnailcontener {
 	border: solid 1px #d3d3d3;
 	margin: 1px;
