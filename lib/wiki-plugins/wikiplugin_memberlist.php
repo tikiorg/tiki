@@ -12,6 +12,7 @@ function wikiplugin_memberlist_info() {
 		'description' => tra('List and allow editing of group members'),
 		'prefs' => array( 'wikiplugin_memberlist' ),
 		'filter' => 'wikicontent',
+		'icon' => 'pics/icons/group_gear.png',
 		'params' => array(
 			'groups' => array(
 				'required' => true,

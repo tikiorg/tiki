@@ -23,10 +23,11 @@ function wikiplugin_randominclude_help() {
 
 function wikiplugin_randominclude_info() {
 	return array(
-		'name' => tra('RandomInclude'),
+		'name' => tra('Random Include'),
 		'documentation' => 'PluginRandomInclude',
 		'description' => tra('Include a random page\'s content.'),
 		'prefs' => array('wikiplugin_randominclude'),
+		'icon' => 'pics/icons/page_copy.png',
 		'params' => array(),
 	);
 }

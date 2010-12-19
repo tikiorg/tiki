@@ -20,6 +20,7 @@ function wikiplugin_lang_info() {
 		'description' => tra('Vary text based on the page language'),
 		'prefs' => array( 'feature_multilingual', 'wikiplugin_lang' ),
 		'body' => tra('text'),
+		'icon' => 'pics/icons/flag_blue.png',
 		'params' => array(
 			'lang' => array(
 				'required' => false,

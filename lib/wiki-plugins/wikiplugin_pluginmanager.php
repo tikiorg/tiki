@@ -316,6 +316,7 @@ function wikiplugin_pluginmanager_info() {
     	'description' => tra('List wiki plugin or module information for the site'),
     	'prefs' => array( 'wikiplugin_pluginmanager' ),
     	'introduced' => 3,
+		'icon' => 'pics/icons/plugin_link.png',
     	'params' => array(
     		'info' => array(
     			'required' => false,

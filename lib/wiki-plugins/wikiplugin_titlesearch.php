@@ -34,6 +34,7 @@ function wikiplugin_titlesearch_help() {
     		'documentation' => 'PluginTitleSearch',
     		'description' => tra('Search page titles'),
     		'prefs' => array( 'feature_wiki', 'wikiplugin_titlesearch' ),
+			'icon' => 'pics/icons/page_find.png',
     		'params' => array(
     			'search' => array(
     				'required' => true,

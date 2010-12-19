@@ -53,6 +53,7 @@ function wikiplugin_attach_info() {
 		'description' => tra('Displays an attachment or a list of them'),
 		'prefs' => array( 'feature_wiki_attachments', 'wikiplugin_attach' ),
 		'body' => tra("Comment"),
+		'icon' => 'pics/icons/attach.png',
 		'params' => array(
 			'name' => array(
 				'required' => false,

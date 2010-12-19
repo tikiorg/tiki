@@ -18,6 +18,7 @@ function wikiplugin_agentinfo_info() {
 		'documentation' => 'PluginAgentinfo',
 		'description' => tra( 'Show user\'s browser and server information' ),
 		'prefs' => array('wikiplugin_agentinfo'),
+		'icon' => 'pics/icons/computer.png',
 		'params' => array(
 			'info' => array(
 				'required' => false,

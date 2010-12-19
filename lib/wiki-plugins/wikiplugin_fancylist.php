@@ -16,6 +16,7 @@ function wikiplugin_fancylist_info() {
 		'description' => tra('Create a fancy-looking list'),
 		'prefs' => array('wikiplugin_fancylist'),
 		'body' => tra('One item per line starting with anything followed by ")".'),
+		'icon' => 'pics/icons/text_list_bullets.png',
 		'params' => array(
 		 	'div' => array(
 			 	'required' => false,

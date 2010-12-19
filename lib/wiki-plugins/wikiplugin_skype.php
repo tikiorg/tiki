@@ -39,6 +39,7 @@ function wikiplugin_skype_info() {
 		'description' => tra('Call or chat with a Skype user'),
 		'prefs' => array( 'wikiplugin_skype' ),
 		'body' => tra('Name or number to call or chat with.'),
+		'icon' => 'pics/icons/skype.png',
 		'params' => array(
 			'action' => array(
 				'required' => false,

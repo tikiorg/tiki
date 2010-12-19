@@ -23,6 +23,7 @@ function wikiplugin_js_info() {
 			'body' => tra('javascript code'),
 			'validate' => 'all',
 			'filter' => 'rawhtml_unsafe',
+			'icon' => 'pics/icons/script_code_red.png',
 			'params' => array(
 				'file' => array(
 					'required' => false,

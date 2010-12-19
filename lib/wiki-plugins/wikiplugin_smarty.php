@@ -19,6 +19,7 @@ function wikiplugin_smarty_info() {
 		'prefs' => array('wikiplugin_smarty'),
 		'validate' => 'all',
 		'extraparams' => true,
+		'icon' => 'pics/icons/task_submitted.png',
 		'params' => array(
 			'name' => array(
 				'required' => false,

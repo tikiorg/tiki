@@ -30,6 +30,7 @@ function wikiplugin_category_info() {
 		'documentation' => 'PluginCategory',
 		'description' => tra('List categories and objects assigned to them'),
 		'prefs' => array( 'feature_categories', 'wikiplugin_category' ),
+		'icon' => 'pics/icons/sitemap_color.png',
 		'params' => array(
 			'id' => array(
 				'required' => false,

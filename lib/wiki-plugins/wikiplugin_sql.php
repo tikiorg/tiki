@@ -17,6 +17,7 @@ function wikiplugin_sql_info() {
 		'prefs' => array( 'wikiplugin_sql' ),
 		'body' => tra('The SQL query goes in the body. Example: SELECT column1, column2 FROM table'),
 		'validate' => 'all',
+		'icon' => 'pics/icons/database_table.png',
 		'params' => array(
 			'db' => array(
 				'required' => true,

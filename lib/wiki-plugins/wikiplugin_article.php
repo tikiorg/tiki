@@ -26,6 +26,7 @@ function wikiplugin_article_info() {
 		'documentation' => 'PluginArticle',
 		'description' => tra('Display a field of an article'),
 		'prefs' => array( 'feature_articles', 'wikiplugin_article' ),
+		'icon' => 'pics/icons/layout_content.png',
 		'params' => array(
 			'Field' => array(
 				'required' => false,

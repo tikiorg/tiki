@@ -35,6 +35,7 @@ function wikiplugin_versions_info()
 		'description' => tra('Create tabs for showing alternate versions of content'),
 		'prefs' => array( 'wikiplugin_versions' ),
 		'body' => tra('Block of text separated by ---(version x)--- markers. Text before the first marker is used by default.'),
+		'icon' => 'pics/icons/tab_edit.png',
 		'params' => array(
 			'nav' => array(
 				'required' => false,

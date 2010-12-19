@@ -11,6 +11,7 @@ function wikiplugin_groupstat_info() {
 		'documentation' => 'PluginGroupStat',
 		'description' => tra('Show the distribution of users among groups'),
 		'body' => tra('Title'),
+		'icon' => 'pics/icons/calculator.png',
 		'params' => array(
 			'groups' => array(
 				'required' => false,

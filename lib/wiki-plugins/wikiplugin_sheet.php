@@ -31,6 +31,7 @@ function wikiplugin_sheet_info() {
 		'description' => tra('Display data from a TikiSheet'),
 		'prefs' => array( 'wikiplugin_sheet', 'feature_sheet' ),
 		'body' => tra('Sheet Heading'),
+		'icon' => 'pics/icons/sheet_get_range.png',
 		'params' => array(
 			'id' => array(
 				'required' => false,

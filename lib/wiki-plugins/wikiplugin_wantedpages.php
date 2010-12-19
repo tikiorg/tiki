@@ -48,6 +48,7 @@ function wikiplugin_wantedpages_info() {
 		'description' => tra('Show location of links to pages not yet created'),
 		'prefs' => array( 'wikiplugin_wantedpages' ),
 		'body' => tra('Custom level regex. A custom filter for wanted pages to be listed (only used when level=>custom). Possible values: a valid regex-expression (PCRE).'),
+		'icon' => 'pics/icons/page_white_find.png',
 		'params' => array(
 			'ignore' => array(
 				'required' => false,

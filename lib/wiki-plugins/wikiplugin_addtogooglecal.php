@@ -10,11 +10,12 @@ function wikiplugin_addtogooglecal_help() {
 
 function wikiplugin_addtogooglecal_info() {
 	return array(
-		'name' => tra('Add Event to Google Calendar'),
+		'name' => tra('Add to Google Calendar'),
 		'documentation' => 'PluginAddToGoogleCal',
 		'description' => tra('Add a calendar item to a Google calendar'),
 		'prefs' => array('wikiplugin_addtogooglecal'),
 		'introduced' => 6,
+		'icon' => 'pics/icons/calendar_add.png',
 		'params' => array(
 			'calitemid' => array(
 				'required' => true,

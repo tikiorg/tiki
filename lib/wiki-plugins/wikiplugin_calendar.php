@@ -11,6 +11,7 @@ function wikiplugin_calendar_info() {
 		'documentation' => 'PluginCalendar',
 		'description' => tra('Display a calendar and its events'),
 		'prefs' => array( 'feature_calendar', 'wikiplugin_calendar' ),
+		'icon' => 'pics/icons/calendar.png',
 		'params' => array(
 			'calIds' => array(
 				'name' => tra('Calendar IDs'),

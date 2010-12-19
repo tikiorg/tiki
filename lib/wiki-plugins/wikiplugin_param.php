@@ -25,6 +25,7 @@ function wikiplugin_param_info() {
 		'description' => tra('Display content based on URL parameters'),
 		'prefs' => array( 'wikiplugin_param' ),
 		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed to users not matching the condition.'),
+		'icon' => 'pics/icons/page_gear.png',
 		'params' => array(
 			'name' => array(
 				'required' => true,

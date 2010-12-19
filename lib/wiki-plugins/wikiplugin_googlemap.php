@@ -10,11 +10,12 @@ function wikiplugin_googlemap_help() {
 
 function wikiplugin_googlemap_info() {
 	return array(
-		'name' => tra('googlemap'),
+		'name' => tra('Google Map'),
 		'documentation' => 'PluginGoogleMap',
 		'description' => tra('Display a Google map'),
 		'prefs' => array( 'wikiplugin_googlemap' ),
 //		'validate' => 'all',
+		'icon' => 'pics/icons/google.png',
 		'params' => array(
 			'type' => array(
 				'safe' => true,

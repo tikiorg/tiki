@@ -16,6 +16,7 @@ function wikiplugin_attributes_info() {
 		'prefs' => array( 'wikiplugin_attributes' ),
 		'extraparams' => true,
 		'defaultfilter' => 'text',
+		'icon' => 'pics/icons/page_gear.png',
 		'params' => array(
 		),
 	);

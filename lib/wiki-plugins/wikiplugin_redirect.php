@@ -19,6 +19,7 @@ function wikiplugin_redirect_info() {
 		'description' => tra('Redirect to another page'),
 		'prefs' => array( 'wikiplugin_redirect' ),
 		'validate' => 'arguments',
+		'icon' => 'pics/icons/arrow_right.png',
 		'params' => array(
 			'page' => array(
 				'required' => false,

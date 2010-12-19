@@ -30,6 +30,7 @@ function wikiplugin_fancytable_info() {
 		'description' => tra('Create a formatted table'),
 		'prefs' => array('wikiplugin_fancytable'),
 		'body' => tra('Rows separated by >> in the header; for the table body, one row per line. Cells separated by | in both cases.'),
+		'icon' => 'pics/icons/table.png',
 		'params' => array(
 			'head' => array(
 				'required' => false,

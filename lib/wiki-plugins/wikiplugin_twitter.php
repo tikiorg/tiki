@@ -12,6 +12,7 @@ function wikiplugin_twitter_info() {
 		'description' => tra('Include a tweet'),
 		'prefs' => array('wikiplugin_twitter'),
 		'body' => '',
+		'icon' => 'pics/icons/twitter.png',
 		'params' => array(
 			'tweet' => array(
 				'required' => true,

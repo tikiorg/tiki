@@ -12,6 +12,7 @@ function wikiplugin_invite_info() {
 		'description' => tra('Invite a user to join your groups'),
 		'prefs' => array( 'wikiplugin_invite' ),
 		'body' => tra('Confirmation message after posting form'),
+		'icon' => 'pics/icons/group.png',
 		'params' => array(
 			'including' => array(
 				'required' => false,

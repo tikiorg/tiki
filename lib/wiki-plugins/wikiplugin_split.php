@@ -31,6 +31,7 @@ function wikiplugin_split_info()
 		'description' => tra('Easily arrange content on a page into rows and columns'),
 		'prefs' => array( 'wikiplugin_split' ),
 		'filter' => 'wikicontent',
+		'icon' => 'pics/icons/table.png',
 		'params' => array(
 			'joincols' => array(
 				'required' => false,

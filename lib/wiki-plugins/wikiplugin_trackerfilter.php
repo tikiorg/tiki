@@ -93,6 +93,7 @@ return array(
 		'description' => tra('Create a form to filter tracker fields'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerfilter' ),
 		'body' => tra('notice'),
+		'icon' => 'pics/icons/application_form_magnify.png',
 		'params' => $params,
 		'extraparams' => true,
 );

@@ -26,6 +26,7 @@ function wikiplugin_catpath_info() {
 		'documentation' => 'PluginCatPath',
 		'description' => tra('Show the full category path for a wiki page'),
 		'prefs' => array( 'feature_categories', 'wikiplugin_catpath' ),
+		'icon' => 'pics/icons/sitemap_color.png',
 		'params' => array(
 			'divider' => array(
 				'required' => false,

@@ -7,12 +7,13 @@
 
 function wikiplugin_addtocart_info() {
 	return array(
-		'name' => tra('Add to cart'),
+		'name' => tra('Add to Cart'),
 		'documentation' => 'PluginAddToCart',
 		'description' => tra(' Display a button for adding items to the shopping cart'),
 		'prefs' => array( 'wikiplugin_addtocart', 'payment_feature' ),
 		'filter' => 'wikicontent',
 		'format' => 'html',
+		'icon' => 'pics/icons/cart_add.png',
 		'params' => array(
 			'code' => array(
 				'required' => true,

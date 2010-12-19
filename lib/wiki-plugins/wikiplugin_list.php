@@ -9,6 +9,7 @@ function wikiplugin_list_info()
 		'prefs' => array('wikiplugin_list'),
 		'body' => tra('List configuration information'),
 		'filter' => 'wikicontent',
+		'icon' => 'pics/icons/text_list_bullets.png',
 		'params' => array(
 		),
 	);

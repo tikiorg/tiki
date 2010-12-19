@@ -22,6 +22,7 @@ function wikiplugin_translated_info() {
 		'description' => tra('Create multi-lingual links'),
 		'prefs' => array( 'feature_multilingual', 'wikiplugin_translated' ),
 		'body' => tra('[url] or ((wikiname)) or ((inter:interwiki)) (use wiki syntax)'),
+		'icon' => 'pics/icons/world_link.png',
 		'params' => array(
 			'lang' => array(
 				'required' => true,

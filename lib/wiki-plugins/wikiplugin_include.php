@@ -49,6 +49,7 @@ function wikiplugin_include_info() {
 		'documentation' => 'PluginInclude',
 		'description' => tra('Include content from a wiki page'),
 		'prefs' => array('wikiplugin_include'),
+		'icon' => 'pics/icons/page_copy.png',
 		'params' => array(
 			'page' => array(
 				'required' => true,

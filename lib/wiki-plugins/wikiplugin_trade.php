@@ -14,6 +14,7 @@ function wikiplugin_trade_info() {
 		'description' => tra('Send or receive payments from one member to another. (for cclite only so far, experimental)'),
 		'validate' => 'all',
 		'prefs' => array( 'wikiplugin_trade', 'payment_feature' ),
+		'icon' => 'pics/icons/money.png',
 		'params' => array(
 			'price' => array(
 				'required' => true,

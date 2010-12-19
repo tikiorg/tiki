@@ -26,6 +26,7 @@ function wikiplugin_jq_info() {
 		'body' => tra('JavaScript code'),
 		'validate' => 'all',
 		'filter' => 'none',
+		'icon' => 'pics/icons/script_code_red.png',
 		'params' => array(
 			'notonready' => array(
 				'required' => false,

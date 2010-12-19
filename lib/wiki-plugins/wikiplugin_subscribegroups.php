@@ -17,6 +17,7 @@ function wikiplugin_subscribegroups_info() {
 		'documentation' => 'PluginSubscribeGroups',
 		'description' => tra('Allow users to subscribe to a list of groups'),
 		'prefs' => array( 'wikiplugin_subscribegroups' ),
+		'icon' => 'pics/icons/group_add.png',
 		'params' => array(
 			'subscribe' => array(
 				'required' => false,

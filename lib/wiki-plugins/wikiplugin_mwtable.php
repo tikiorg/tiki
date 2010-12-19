@@ -83,12 +83,13 @@ function wikiplugin_mwtable_help() {
 
 function wikiplugin_mwtable_info() {
 	return array(
-		'name' => tra('MWTable'),
+		'name' => tra('Media Wiki Table'),
 		'documentation' => 'PluginMWTable',
 		'description' => tra('Display a table using MediaWiki syntax (experimental - may change in future versions)'),
 		'prefs' => array( 'wikiplugin_mwtable' ),
 		'body' => tra('URL'),
 		'validate' => 'all',
+		'icon' => 'pics/icons/table.png',
 		'params' => array(
 			'fancy' => array(
 				'safe' => true,

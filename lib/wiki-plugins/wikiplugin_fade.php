@@ -14,6 +14,7 @@ function wikiplugin_fade_info()
 		'prefs' => array('wikiplugin_fade'),
 		'body' => tra('Wiki syntax containing the text to display.'),
 		'filter' => 'wikicontent',
+		'icon' => 'pics/icons/wand.png',
 		'params' => array(
 			'label' => array(
 				'required' => true,

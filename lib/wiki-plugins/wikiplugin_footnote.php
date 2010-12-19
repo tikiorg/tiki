@@ -28,6 +28,7 @@ function wikiplugin_footnote_info()
 		'description' => tra('Create automatically numbered footnotes (together with PluginFootnoteArea)'),
 		'prefs' => array('wikiplugin_footnote'),
 		'body' => tra('The footnote'),
+		'icon' => 'pics/icons/text_horizontalrule.png',
 		'params' => array(
 			'sameas' => array(
 				'required' => false,

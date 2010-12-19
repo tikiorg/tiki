@@ -7,11 +7,12 @@
 
 function wikiplugin_colorbox_info() {
 	return array(
-		'name' => tra('colorbox'),
+		'name' => tra('Colorbox'),
 		'documentation' => 'PluginColorBox',
 		'description' => tra('Display a gallery of images in a popup slideshow'),
 		'prefs' => array( 'feature_file_galleries', 'feature_shadowbox', 'wikiplugin_colorbox' ),
 		'introduced' => 5,
+		'icon' => 'pics/icons/pictures.png',
 		'params' => array(
 			'fgalId' => array(
 				'required' => false,

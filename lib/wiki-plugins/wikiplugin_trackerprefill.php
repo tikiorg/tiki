@@ -17,6 +17,7 @@ function wikiplugin_trackerprefill_info() {
 		'documentation' => 'PluginTrackerPrefill',
 		'description' => tra('Create a button to prefill tracker fields'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerprefill' ),
+		'icon' => 'pics/icons/application_form.png',
 		'params' => array(
 			'page' => array(
 				'required' => true,

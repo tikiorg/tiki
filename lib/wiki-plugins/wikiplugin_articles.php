@@ -25,6 +25,7 @@ function wikiplugin_articles_info()
 		'documentation' => 'PluginArticles',
 		'description' => tra('Display multiple articles'),
 		'prefs' => array( 'feature_articles', 'wikiplugin_articles' ),
+		'icon' => 'pics/icons/table_multiple.png',
 		'params' => array(
 			'usePagination' => array(
 				'required' => false,

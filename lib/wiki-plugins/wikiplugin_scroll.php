@@ -30,6 +30,7 @@ function wikiplugin_scroll_info() {
 		'description' => tra('Show animated text that scrolls up or down'),
 		'prefs' => array('wikiplugin_scroll'),
 		'body' => tra('text'),
+		'icon' => 'pics/icons/script.png',
 		'params' => array(
 			'width' => array(
 				'required' => true,

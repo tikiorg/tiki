@@ -32,6 +32,7 @@ function wikiplugin_mono_info() {
 		'description' => tra('Display text in a monospace font'),
 		'prefs' => array( 'wikiplugin_mono' ),
 		'body' => tra('text'),
+		'icon' => 'pics/icons/font.png',
 		'params' => array(
 			'font' => array(
 				'required' => false,

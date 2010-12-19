@@ -22,6 +22,7 @@ function wikiplugin_subscribegroup_info() {
 		'description' => tra('Allow users to subscribe to a group'),
 		'prefs' => array( 'wikiplugin_subscribegroup' ),
 		'body' => tra('text displyed before the button'),
+		'icon' => 'pics/icons/group_add.png',
 		'params' => array(
 			'group' => array(
 				'required' => true,

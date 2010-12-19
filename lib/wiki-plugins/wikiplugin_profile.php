@@ -7,12 +7,13 @@
 
 function wikiplugin_profile_info() {
 	return array(
-		'name' => tra('Profile application'),
+		'name' => tra('Profile Application'),
 		'description' => tra('Add a button for applying a profile.'),
 		'documentation' => 'PluginProfile',
 		'prefs' => array( 'wikiplugin_profile' ),
 		'validate' => 'all',
 		'inline' => true,
+		'icon' => 'pics/icons/database_lightning.png',
 		'params' => array(
 			'domain' => array(
 				'required' => false,

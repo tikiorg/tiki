@@ -11,6 +11,7 @@ function wikiplugin_stat_info() {
 		'documentation' => 'PluginStat',
 		'description' => tra('Show various statistics for an object'),
 		'prefs' => array('wikiplugin_stat'),
+		'icon' => 'pics/icons/calculator.png',
 		'params' => array(
 			'type' => array(
 				'required' => true,

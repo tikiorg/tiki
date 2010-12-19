@@ -36,6 +36,7 @@ function wikiplugin_remarksbox_info() {
 		'description' => tra('Displays a comment, tip, note or warning box'),
 		'prefs' => array( 'wikiplugin_remarksbox' ),
 		'body' => tra('remarks text'),
+		'icon' => 'pics/icons/comment_add.png',
 		'params' => array(
 			'type' => array(
 				'required' => true,

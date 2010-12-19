@@ -12,6 +12,7 @@ function wikiplugin_toc_info()
 		'documentation' => 'PluginTOC',
 		'description' => tra('Display a table of contents of pages or sub-pages'),
 		'prefs' => array( 'wikiplugin_toc', 'feature_wiki_structure' ),
+		'icon' => 'pics/icons/text_list_numbers.png',
 		'params' => array(
 			'maxdepth' => array(
 				'name' => tra('Maximum Depth'),

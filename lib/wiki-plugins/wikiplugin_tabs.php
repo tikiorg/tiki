@@ -27,6 +27,7 @@ function wikiplugin_tabs_info() {
 		'description' => tra('Arrange content in tabs'),
 		'prefs' => array( 'wikiplugin_tabs' ),
 		'body' => tra('Tabs content separated by /////'),
+		'icon' => 'pics/icons/tab_edit.png',
 		'params' => array(
 			'name' => array(
 				'required' => false,

@@ -18,6 +18,7 @@ function wikiplugin_tr_info() {
 		'description' => tra('Translate text to the user language'),
 		'prefs' => array( 'wikiplugin_tr' ),
 		'body' => tra('string'),
+		'icon' => 'pics/icons/page_translate_to.png',
 		'params' => array(
 		),
 	);

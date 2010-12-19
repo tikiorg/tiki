@@ -10,12 +10,12 @@
 
 function wikiplugin_flash_info() {
 	return array(
-		'name' => tra('Flash video'),
+		'name' => tra('Flash Video'),
 		'documentation' => 'PluginFlash',
 		'description' => tra('Embed a video or audio file'),
 		'prefs' => array('wikiplugin_flash'),
 		'extraparams' => true,
-		'icon' => 'pics/icons/page_white_flash.png',
+		'icon' => 'pics/icons/mime/swf.png',
 		'params' => array(
 			'type' => array(
 				'required' => true,

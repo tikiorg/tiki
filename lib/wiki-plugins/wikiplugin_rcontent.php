@@ -11,6 +11,7 @@ function wikiplugin_rcontent_info() {
 		'documentation' => 'PluginRcontent',
 		'description' => tra( 'Display pre-programmed changing content' ),
 		'prefs' => array( 'feature_dynamic_content', 'wikiplugin_rcontent' ),
+		'icon' => 'pics/icons/database_table.png',
 		'params' => array(
 			'id' => array(
 				'required' => true,

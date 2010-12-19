@@ -19,6 +19,7 @@ function wikiplugin_ftp_info() {
 		'prefs' => array( 'wikiplugin_ftp' ),
 		'validate' => 'all',
 		'body' => tra('file name'),
+		'icon' => 'pics/icons/application_put.png',
 		'params' => array(
 			'server' => array(
 				'required' => true,
