@@ -37,7 +37,7 @@
 			{/if}
 					<header class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 						{* Site header section *}
-						<div class="content clearfix modules">
+						<div class="content clearfix modules" id="header-top">
 							{section name=homeix loop=$top_modules}
 								{$top_modules[homeix].data}
 							{/section}

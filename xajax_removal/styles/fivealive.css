@@ -38,7 +38,7 @@ body.fixed_width #fixedwidth {
 }
 
 #header {
-	background: url(fivealive/options/blueberry/headertile.png) 900px 0 no-repeat;
+	background: url(fivealive/options/blueberry/headertile.png) 0 0 no-repeat;
 }
 
 /*#header-top,*/
@@ -53,10 +53,6 @@ body.fixed_width #fixedwidth {
 }
 
 #header-top {
-/*	display: table;*/
-	margin: auto;
-	margin-top: 0;
-	margin-bottom: 0;
 	width: 990px;
 	background: transparent;
 }
