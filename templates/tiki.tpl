@@ -35,12 +35,12 @@
 			{if $prefs.feature_layoutshadows eq 'y'}
 				<div id="header-shadow">{eval var=$prefs.header_shadow_start}
 			{/if}
-					<div class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+					<header class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 		{* Site header section *}
 				<div class="clearfix" id="siteheader">
 		{include file='tiki-site_header.tpl'}
 				</div>
-			</div>{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.header_shadow_end}</div>{/if}
+			</header>{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.header_shadow_end}</div>{/if}
 {/if}
 
 			{if $prefs.feature_layoutshadows eq 'y'}<div id="middle-shadow">{eval var=$prefs.middle_shadow_start}{/if}<div class="clearfix" id="middle">
@@ -95,20 +95,20 @@
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 					<hr class="hidden" />{* for semantic separation of center and side columns *}
 	{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}
-					<div id="col2"{if $prefs.feature_left_column eq 'user'} style="display:{if isset($cookie.show_col2) and $cookie.show_col2 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+					<aside id="col2"{if $prefs.feature_left_column eq 'user'} style="display:{if isset($cookie.show_col2) and $cookie.show_col2 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 						<h2 class="hidden">Sidebar</h2>
 						<div class="content">
 		{section name=homeix loop=$left_modules}
 			{$left_modules[homeix].data}
 		{/section}
 						</div>
-					</div>
+					</aside>
 	{/if}
 {/if}
 				</div>{* -- END of c1c2 -- *}
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 	{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n')}
-				<div class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_col3) and $cookie.show_col3 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+				<aside class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_col3) and $cookie.show_col3 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 					<h2 class="hidden">Sidebar</h2>
 					<div class="content">
 		{if $module_pref_errors}
@@ -126,7 +126,7 @@
 			{$right_modules[homeix].data}
 		{/section}
 					</div>
-				</div>
+				</aside>
 				<br style="clear:both" />
 	{/if}
 {/if}
@@ -135,13 +135,13 @@
 
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 	{if $prefs.feature_bot_bar eq 'y'}
-			{if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}<div id="footer">
+			{if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}<footer id="footer">
 				<div class="footerbgtrap">
 					<div class="content"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 		{include file='tiki-bot_bar.tpl'}
 					</div>
 				</div>
-			</div>{* -- END of footer -- *}{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.footer_shadow_end}</div>{/if}
+			</footer>{* -- END of footer -- *}{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.footer_shadow_end}</div>{/if}
 	{/if}
 {/if}
 

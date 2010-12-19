@@ -22,6 +22,11 @@ html[dir=ltr]>body {
 	width: auto;
 }
 
+/* Make HTML 5 elements display block-level */  
+header, nav, article, footer, address {  
+    display: block;  
+} 
+
 /* general #fixedwidth wrapper when fixed width is off */
 #fixedwidth {
 	display: table;
