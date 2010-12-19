@@ -349,6 +349,31 @@ $left = $tikilib->get_assigned_modules('l');
 $right = $tikilib->get_assigned_modules('r');
 $smarty->assign_by_ref('left', $left);
 $smarty->assign_by_ref('right', $right);
+$top = $tikilib->get_assigned_modules('t');
+$bottom = $tikilib->get_assigned_modules('b');
+$smarty->assign_by_ref('top', $top);
+$smarty->assign_by_ref('bottom', $bottom);
+$headerlib->add_css('.module:hover {
+	cursor: move;
+	background-color: #ffa;
+}');
+$headerlib->add_jq_onready('$(".modules").sortable({
+		connectWith: ".modules",
+		items: "div.module",
+		forcePlaceholderSize: true,
+		forceHelperSize: true,
+		placeholder: "toolbars-placeholder",
+		stop: function (event, ui) {
+			
+		},
+		start: function (event, ui) {
+			
+		},
+		receive: function(event, ui) {
+			
+		}
+	});');
+
 $sameurl_elements = array(
     'offset',
     'sort_mode',

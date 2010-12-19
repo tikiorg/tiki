@@ -26,8 +26,10 @@ if ($tiki_p_admin != 'y') {
 // additional module zones added to this array will be exposed to tiki.tpl
 // TODO change modules user interface to enable additional zones
 $module_zones = array(
+	't' => 'top_modules',
 	'l' => 'left_modules',
 	'r' => 'right_modules',
+	'b' => 'bottom_modules',
 );
 
 $modules = $modlib->get_modules_for_user( $user, $module_zones );

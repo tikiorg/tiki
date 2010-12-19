@@ -36,10 +36,15 @@
 				<div id="header-shadow">{eval var=$prefs.header_shadow_start}
 			{/if}
 					<header class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
-		{* Site header section *}
-				<div class="clearfix" id="siteheader">
+						{* Site header section *}
+						<div class="content clearfix modules">
+							{section name=homeix loop=$top_modules}
+								{$top_modules[homeix].data}
+							{/section}
+						</div>
+				{*<div class="clearfix" id="siteheader">
 		{include file='tiki-site_header.tpl'}
-				</div>
+				</div>TODO remove *}
 			</header>{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.header_shadow_end}</div>{/if}
 {/if}
 
@@ -97,7 +102,7 @@
 	{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}
 					<aside id="col2"{if $prefs.feature_left_column eq 'user'} style="display:{if isset($cookie.show_col2) and $cookie.show_col2 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 						<h2 class="hidden">Sidebar</h2>
-						<div class="content">
+						<div class="content modules">
 		{section name=homeix loop=$left_modules}
 			{$left_modules[homeix].data}
 		{/section}
@@ -110,7 +115,7 @@
 	{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n')}
 				<aside class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_col3) and $cookie.show_col3 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 					<h2 class="hidden">Sidebar</h2>
-					<div class="content">
+					<div class="content modules">
 		{if $module_pref_errors}
 			{remarksbox type="warning" title="{tr}Module errors{/tr}"}
 				{tr}The following modules could not be loaded{/tr}

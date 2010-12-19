@@ -2,7 +2,7 @@
 {* Module layout with controls *}
 {if $module_nobox neq 'y'}
 {if $prefs.feature_layoutshadows eq 'y'}<div class="box-shadow">{$prefs.box_shadow_start}{/if}
-	<div class="box box-{$module_name|escape}{if $module_type eq 'cssmenu'} cssmenubox{/if}"{if $module_params.overflow == 'y'} style="overflow:visible !important"{/if}>
+	<div class="box box-{$module_name|escape}{if $module_type eq 'cssmenu'} cssmenubox{/if} module"{if $module_params.overflow == 'y'} style="overflow:visible !important"{/if}>
 	{if $module_decorations ne 'n'}
 		<h3 class="box-title clearfix"{if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
 		{if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
@@ -63,20 +63,19 @@
 		{/if}
 		<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]--></h3>
 	{/if}
-		<div id="mod-{$module_name|cat:$module_position|cat:$module_ord|escape}" style="display: {if !isset($module_display) or $module_display}block{else}none{/if}" class="clearfix box-data">
+		<div id="mod-{$module_name|cat:$module_position|cat:$module_ord|escape}" style="display: {if !isset($module_display) or $module_display}block{else}none{/if};{$module_style}" class="clearfix box-data">
+{else}
+		<div id="mod-{$module_name|cat:$module_position|cat:$module_ord|escape}" style="{$module_style}" class="module">
 {/if}
 {$module_content}
 {$module_error}
 {if $module_nobox neq 'y'}
-{if $module_flip eq 'y'}
-{*jq}
-				setsectionstate('mod-{{$module_name|cat:$module_position|cat:$module_ord|escape}}','{{$module_dstate}}', 'module.png');
-{/jq*}
-{/if}
 		</div>
 		<div class="box-footer">
 
 		</div>
 	</div>
 {if $prefs.feature_layoutshadows eq 'y'}{$prefs.box_shadow_end}</div>{/if}
+{else}
+	</div>
 {/if}

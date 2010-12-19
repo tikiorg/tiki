@@ -33,7 +33,46 @@
 		</legend>
 	{/if}
 	<h2>{tr}Assigned Modules{/tr}</h2>
-	<a name="leftmod"></a>
+	<a name="topmod"></a>
+	<table class="normal">
+		<caption>{tr}Top Modules{/tr}</caption>
+		<tr>
+			<th>{tr}Name{/tr}</th>
+			<th>{tr}Order{/tr}</th>
+			<th>{tr}Cache{/tr}</th>
+			<th>{tr}Rows{/tr}</th>
+			<th>{tr}Parameters{/tr}</th>
+			<th>{tr}Groups{/tr}</th>
+			<th>{tr}Action{/tr}</th>
+		</tr>
+		{cycle print=false values="even,odd"}
+		{section name=user loop=$top}
+			<tr class="{cycle}">
+				<td>{$top[user].name|escape}</td>
+				<td>{$top[user].ord}</td>
+				<td>{$top[user].cache_time}</td>
+				<td>{$top[user].rows}</td>
+				<td style="max-width: 40em; white-space: normal;">{$top[user].params|stringfix:"&":"<br />"}</td>
+				<td>{$top[user].module_groups}</td>
+				<td>
+					<a class="link" href="tiki-admin_modules.php?edit_assign={$top[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+					{if $top[0].moduleId ne $top[user].moduleId}
+						<a class="link" href="tiki-admin_modules.php?modup={$top[user].moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
+					{/if}
+					{if !$smarty.section.user.last and $top[user.index_next].moduleId}
+						<a class="link" href="tiki-admin_modules.php?moddown={$top[user].moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
+					{/if}
+					<a class="link" href="tiki-admin_modules.php?unassign={$top[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
+				</td>
+			</tr>
+		{sectionelse}
+			<tr>
+				<td colspan="7"><b>{tr}No records found{/tr}</b></td>
+			</tr>
+		{/section}
+	</table>
+	<br />
+	<br />	<a name="leftmod"></a>
 	<table class="normal">
 		<caption>{tr}Left Modules{/tr}</caption>
 		<tr>
@@ -114,6 +153,46 @@
 		{/section}
 	</table>
 	<br/>
+	<br />
+	<a name="bottommod"></a>
+	<table class="normal">
+		<caption>{tr}Bottom Modules{/tr}</caption>
+		<tr>
+			<th>{tr}Name{/tr}</th>
+			<th>{tr}Order{/tr}</th>
+			<th>{tr}Cache{/tr}</th>
+			<th>{tr}Rows{/tr}</th>
+			<th>{tr}Parameters{/tr}</th>
+			<th>{tr}Groups{/tr}</th>
+			<th>{tr}Action{/tr}</th>
+		</tr>
+		{cycle print=false values="even,odd"}
+		{section name=user loop=$bottom}
+			<tr class="{cycle}">
+				<td>{$bottom[user].name|escape}</td>
+				<td>{$bottom[user].ord}</td>
+				<td>{$bottom[user].cache_time}</td>
+				<td>{$bottom[user].rows}</td>
+				<td style="max-width: 40em; white-space: normal;">{$bottom[user].params|stringfix:"&":"<br />"}</td>
+				<td>{$bottom[user].module_groups}</td>
+				<td>
+					<a class="link" href="tiki-admin_modules.php?edit_assign={$bottom[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+					{if $bottom[0].moduleId ne $bottom[user].moduleId}
+						<a class="link" href="tiki-admin_modules.php?modup={$bottom[user].moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
+					{/if}
+					{if !$smarty.section.user.last and $bottom[user.index_next].moduleId}
+						<a class="link" href="tiki-admin_modules.php?moddown={$bottom[user].moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
+					{/if}
+					<a class="link" href="tiki-admin_modules.php?unassign={$bottom[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
+				</td>
+			</tr>
+		{sectionelse}
+			<tr>
+				<td colspan="7"><b>{tr}No records found{/tr}</b></td>
+			</tr>
+		{/section}
+	</table>
+	<br />
 	<a name="assign"></a>
 	{if $assign_name eq ''}
 		<h2>{tr}Assign new module{/tr}</h2>
@@ -151,8 +230,10 @@
 				<td><label for="assign_position">{tr}Position{/tr}</label></td>
 				<td>
 					<select id="assign_position" name="assign_position">
+						<option value="t" {if $assign_position eq 'l'}selected="selected"{/if}>{tr}Top{/tr}</option>
 						<option value="l" {if $assign_position eq 'l'}selected="selected"{/if}>{tr}Left{/tr}</option>
 						<option value="r" {if $assign_position eq 'r'}selected="selected"{/if}>{tr}Right{/tr}</option>
+						<option value="b" {if $assign_position eq 'l'}selected="selected"{/if}>{tr}Bottom{/tr}</option>
 					</select>
 				</td>
 			</tr>

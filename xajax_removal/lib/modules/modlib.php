@@ -524,6 +524,10 @@ class ModLib extends TikiLib
 				'description' => tra('Users can shade module.'),
 				'filter' => 'alpha',
 			),
+			'style' => array(
+				'name' => tra('Style'),
+				'description' => tra('CSS styling for positioning the module.'),
+			),
 		) );
 
 		// Parameters common to several modules, but not all
@@ -573,7 +577,8 @@ class ModLib extends TikiLib
 				$smarty->assign('tpl_module_title', tra( $info['name'] ) );
 
 			$smarty->assign('nonums', isset( $module_params['nonums'] ) ? $module_params['nonums'] : "n" );
-
+			$smarty->assign('module_style', !empty( $module_params['style'] ) ? $module_params['style'] : '');
+			
 			if( $info['type'] == 'include' ) {
 				$phpfile = 'modules/mod-' . $mod_reference['name'] . '.php';
 
