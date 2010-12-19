@@ -64,7 +64,9 @@ class CatBrowseTreeMaker extends TreeMaker
 	}
 	
 	function node_start_code_flip($nodeinfo) {
-		return "\t" . '<li class="treenode withflip">';
+		static $count = 0;
+		++$count;
+		return "\t" . '<li class="treenode withflip ' . (($count % 2) ? 'odd' : 'even') . '">';
 	}
 
 	function node_start_code($nodeinfo) {

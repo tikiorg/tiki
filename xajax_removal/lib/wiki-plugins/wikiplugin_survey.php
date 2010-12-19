@@ -21,10 +21,11 @@ function wikiplugin_survey_help() {
 function wikiplugin_survey_info() {
 	return array(
 		'name' => tra('Survey'),
-		'documentation' => tra('PluginSurvey'),		
-		'description' => tra('Displays a survey'),
+		'documentation' => 'PluginSurvey',
+		'description' => tra('Display a survey'),
 		'prefs' => array( 'feature_surveys', 'wikiplugin_survey' ),
 		'body' => '',
+		'icon' => 'pics/icons/green_question.png',
 		'params' => array(
 			'id' => array(
 				'required' => true,

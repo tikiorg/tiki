@@ -23,9 +23,10 @@ function wikiplugin_catpath_help() {
 function wikiplugin_catpath_info() {
 	return array(
 		'name' => tra('Category Path'),
-		'documentation' => tra('PluginCatPath'),
-		'description' => tra('Insert the full category path for each category that this wiki page belongs to'),
+		'documentation' => 'PluginCatPath',
+		'description' => tra('Show the full category path for a wiki page'),
 		'prefs' => array( 'feature_categories', 'wikiplugin_catpath' ),
+		'icon' => 'pics/icons/sitemap_color.png',
 		'params' => array(
 			'divider' => array(
 				'required' => false,

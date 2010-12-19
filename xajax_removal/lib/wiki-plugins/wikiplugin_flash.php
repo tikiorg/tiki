@@ -10,12 +10,12 @@
 
 function wikiplugin_flash_info() {
 	return array(
-		'name' => tra('Flash video'),
-		'documentation' => tra('PluginFlash'),
-		'description' => tra('Displays a Flash (.swf) file in the wiki page'),
+		'name' => tra('Flash Video'),
+		'documentation' => 'PluginFlash',
+		'description' => tra('Embed a video or audio file'),
 		'prefs' => array('wikiplugin_flash'),
 		'extraparams' => true,
-		'icon' => 'pics/icons/page_white_flash.png',
+		'icon' => 'pics/icons/mime/swf.png',
 		'params' => array(
 			'type' => array(
 				'required' => true,
@@ -47,22 +47,22 @@ function wikiplugin_flash_info() {
 			),
 			'youtube' => array(
 				'required' => true,
-				'name' => tra('Youtube URL'),
-				'description' => tra('Entire URL to the YouTube video. Example: http://www.youtube.com/watch?v=1i2ZnU4iR24'),
+				'name' => tra('YouTube URL'),
+				'description' => tra('Entire URL to the YouTube video.') . ' ' . tra('Example:') . ' http://www.youtube.com/watch?v=1i2ZnU4iR24',
 				'parent' => array('name' => 'type', 'value' => 'youtube'),
 				'default' => '',
 			),
 			'vimeo' => array(
 				'required' => true,
 				'name' => tra('Vimeo URL'),
-				'description' => tra('Entire URL to the Vimeo video. Example: http://vimeo.com/3319966'),
+				'description' => tra('Entire URL to the Vimeo video.') . ' ' . tra('Example:') . ' http://vimeo.com/3319966',
 				'parent' => array('name' => 'type', 'value' => 'vimeo'),
 				'default' => '',
 			),
 			'bliptv' => array(
 				'required' => true,
 				'name' => tra('Blip.tv URL'),
-				'description' => tra('Blip.tv embed URL. Example: http://blip.tv/play/AYGd_GAC'),
+				'description' => tra('Blip.tv embed URL.') . ' ' . tra('Example:') . ' http://blip.tv/play/AYGd_GAC',
 				'parent' => array('name' => 'type', 'value' => 'bliptv'),
 				'default' => '',
 			),

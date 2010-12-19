@@ -70,7 +70,7 @@ if ($dir_level > 0) {
 if ( substr($tikiroot,-1,1) != '/' ) $tikiroot .= '/';
 if ( substr($tikipath,-1,1) != '/' ) $tikipath .= '/';
 
-// Add global filter for xajax and cookie
+// Add global filter for xajax and cookie	// AJAX_TODO?
 global $inputConfiguration;
 if ( empty($inputConfiguration) ) {
 	$inputConfiguration = array();

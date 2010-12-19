@@ -295,18 +295,6 @@ a .sf-sub-indicator {
 	background: url(matrix/arrows-00e000.png) no-repeat 0 0;
 }
 
-.phplmnormal a {
-	color: #00e000 !important;
-}
-
-.phplmnormal a:hover {
-	background: none;
-}
-
-.phplmnormal {
-	background: url(matrix/ltgreen.png);
-}
-
 .separator {
 	background: #404040;
 	color:#00e000;

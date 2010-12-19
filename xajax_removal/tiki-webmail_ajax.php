@@ -7,7 +7,6 @@
 
 global $headerlib, $ajaxlib, $access;
 require_once ('tiki-setup.php');
-require_once('lib/ajax/ajaxlib.php');
 
 $access->check_feature( array('feature_webmail', 'feature_ajax', 'ajax_todo_placeholder' ) );	// AJAX_TODO
 $access->check_permission_either( array('tiki_p_use_webmail', 'tiki_p_use_group_webmail') );

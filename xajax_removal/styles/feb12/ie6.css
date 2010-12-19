@@ -46,16 +46,6 @@ input[type=submit]:hover {
 	font-size: 1em;
 }
 
-.horbaritem a,
-.horbaritem a:link,
-.horbaritem a:visited {
-	font-size: 1.3em;
-}
-
-.mdksubmenu {
-	margin-top: 0;
-}
-
 .box-data table {
 	width: 95%;
 }

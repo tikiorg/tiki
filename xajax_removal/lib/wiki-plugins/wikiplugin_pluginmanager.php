@@ -312,10 +312,11 @@ class WikiPluginPluginManager extends PluginsLib
 function wikiplugin_pluginmanager_info() {
     return array(
     	'name' => tra('Plugin Manager'),
-    	'documentation' => tra('PluginPluginManager'),
-    	'description' => tra('Displays a list of plugins or modules available in this wiki.'),
+    	'documentation' => 'PluginPluginManager',
+    	'description' => tra('List wiki plugin or module information for the site'),
     	'prefs' => array( 'wikiplugin_pluginmanager' ),
     	'introduced' => 3,
+		'icon' => 'pics/icons/plugin_link.png',
     	'params' => array(
     		'info' => array(
     			'required' => false,

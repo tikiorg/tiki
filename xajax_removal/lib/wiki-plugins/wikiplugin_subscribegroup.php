@@ -18,10 +18,11 @@ function wikiplugin_subscribegroup_help() {
 function wikiplugin_subscribegroup_info() {
 	return array(
 		'name' => tra('Subscribe Group'),
-		'documentation' => tra('PluginSubscribeGroup'),		
-		'description' => tra('Subscribe or unsubscribe to a group'),
+		'documentation' => 'PluginSubscribeGroup',
+		'description' => tra('Allow users to subscribe to a group'),
 		'prefs' => array( 'wikiplugin_subscribegroup' ),
 		'body' => tra('text displyed before the button'),
+		'icon' => 'pics/icons/group_add.png',
 		'params' => array(
 			'group' => array(
 				'required' => true,

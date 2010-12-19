@@ -34,7 +34,6 @@ $thirdpartyLibs = array(
 	'\./lib/feedcreator.*',
 	'\./lib/sheet.*',
 	'\./lib/Horde/Yaml.*',
-	'\./lib/ajax/xajax/.*',
 	'\./lib/core/DeclFilter.*',
 	'\./lib/core/JitFilter.*',
 	'\./lib/core/Multilingual.*',

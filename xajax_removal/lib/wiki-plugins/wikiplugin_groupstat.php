@@ -8,9 +8,10 @@
 function wikiplugin_groupstat_info() {
 	return array(
 		'name' => tra('Group Stats'),
-		'documentation' => tra('PluginGroupStat'),
-		'description' => tra('Displays the percentage of total users that are members of groups'),
+		'documentation' => 'PluginGroupStat',
+		'description' => tra('Show the distribution of users among groups'),
 		'body' => tra('Title'),
+		'icon' => 'pics/icons/calculator.png',
 		'params' => array(
 			'groups' => array(
 				'required' => false,

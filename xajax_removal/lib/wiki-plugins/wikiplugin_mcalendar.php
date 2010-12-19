@@ -158,10 +158,11 @@ function wikiplugin_mcalendar_help() {
 
 function wikiplugin_mcalendar_info() {
 	return array(
-		'name' => tra( 'Mayan Calendars Info' ),
-		'documentation' => tra('PluginMCalendarInfo'),
-		'description' => tra( 'Convert date from Gregorian to Mayan Calendars: Tzolkin, Haab, Long Count.' ),
+		'name' => tra( 'Mayan Calendars' ),
+		'documentation' => 'PluginMCalendarInfo',
+		'description' => tra('Convert a Gregorian date to a Mayan calendar date'),
 		'prefs' => array('wikiplugin_mcalendar'),
+		'icon' => 'pics/icons/calendar.png',
 		'params' => array(
 			'template' => array(
 				'required' => false,

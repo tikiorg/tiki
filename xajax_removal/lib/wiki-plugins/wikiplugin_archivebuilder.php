@@ -8,10 +8,11 @@
 function wikiplugin_archivebuilder_info() {
 	return array(
 		'name' => tra('Archive Builder'),
-		'documentation' => tra('PluginArchiveBuilder'),
-		'description' => tra('Builds a zip archive containing the specified data from tikiwiki.'),
+		'documentation' => 'PluginArchiveBuilder',
+		'description' => tra('Build a zip archive that can be downloaded'),
 		'prefs' => array( 'wikiplugin_archivebuilder' ),
 		'body' => tra('Description of the archive content. Multiple handlers are available for content types. One per line. Ex: page-as-pdf:some-folder/foo.pdf:HomePage , tracker-attachments:target-folder/:3435'),
+		'icon' => 'pics/icons/mime/zip.png',
 		'params' => array(
 			'name' => array(
 				'name' => tra('Archive Name'),

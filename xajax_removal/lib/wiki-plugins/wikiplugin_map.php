@@ -18,8 +18,8 @@ function wikiplugin_map_help() {
 function wikiplugin_map_info() {
 	return array(
 		'name' => tra('Map'),
-		'documentation' => tra('PluginMap'),	
-		'description' => tra('Displays a map'),
+		'documentation' => 'PluginMap',
+		'description' => tra('Display a map created using the Maps feature'),
 		'prefs' => array( 'feature_maps', 'wikiplugin_map' ),
 		'icon' => 'pics/icons/map.png',
 		'params' => array(

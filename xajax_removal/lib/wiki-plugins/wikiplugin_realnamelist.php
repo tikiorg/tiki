@@ -22,11 +22,12 @@ function wikiplugin_realnamelist_help() {
 
 function wikiplugin_realnamelist_info() {
 	return array(
-		'name' => tra('User List (showing Real Name)'),
-		'documentation' => tra('PluginRealNameList'),
-		'description' => tra("Displays a list of registered users showing their Real Names").tra(' (experimental, should be merged with UserList in Tiki5)'),		
+		'name' => tra('User List with Real Names)'),
+		'documentation' => 'PluginRealNameList',
+		'description' => tra('Show user real names for members of a group').tra(' (experimental, should be merged with UserList)'),
 		'prefs' => array( 'wikiplugin_realnamelist' ),
 		'body' => tra('Group name - only users belonging to a group or groups with group names containing this text will be included in the list. If empty all site users will be included.'),
+		'icon' => 'pics/icons/group.png',
 		'params' => array(
 			'sep' => array(
 				'required' => false,

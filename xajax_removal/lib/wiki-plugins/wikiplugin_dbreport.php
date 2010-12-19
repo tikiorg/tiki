@@ -1441,12 +1441,13 @@ function wikiplugin_dbreport_help() {
 
 function wikiplugin_dbreport_info() {
 	return array(
-		'name' => tra('DBReport'),
-		'documentation' => tra('PluginDBReport'),
-		'description' => tra('Run a database report. This plugin only works with adodb. It does not work with PDO.'),
+		'name' => tra('DB Report'),
+		'documentation' => 'PluginDBReport',
+		'description' => tra('Query a database and display results (only works with ADOdb, does not work with PDO)'),
 		'prefs' => array('wikiplugin_dbreport'),
 		'body' => tra('report definition'),
 		'validate' => 'all',
+		'icon' => 'pics/icons/database_table.png',
 		'params' => array(
 			'dsn' => array(
 				'required' => false,

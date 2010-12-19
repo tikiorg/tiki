@@ -14,11 +14,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function wikiplugin_button_info() {
 	return array(
 		'name' => tra('Button'),
-		'documentation' => tra('PluginButton'),			
-		'description' => tra('Produces a link with the shape of a button, reusing the button smarty function and requiring no validation of that plugin'),
+		'documentation' => 'PluginButton',
+		'description' => tra('Add a link formatted as a button'),
 		'prefs' => array('wikiplugin_button'),
 		'validate' => 'none',
 		'extraparams' => false,
+		'icon' => 'pics/icons/control_play_blue.png',
 		'params' => array(
 			'href' => array(
 				'required' => true,

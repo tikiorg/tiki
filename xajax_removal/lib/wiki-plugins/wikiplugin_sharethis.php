@@ -18,10 +18,11 @@ function wikiplugin_sharethis_help() {
 }
 function wikiplugin_sharethis_info() {
 	return array(
-		'name' => tra('Sharethis'),
+		'name' => tra('ShareThis'),
 		'documentation' => 'PluginSharethis',
-		'description' => tra('Display a social networking tool.'),
+		'description' => tra('Add a ShareThis button'),
 		'prefs' => array( 'wikiplugin_sharethis' ),
+		'icon' => 'pics/icons/sharethis.png',
 		'params' => array(
 			'sendsvcs' => array(
 				'required' => false,

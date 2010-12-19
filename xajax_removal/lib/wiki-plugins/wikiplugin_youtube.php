@@ -7,7 +7,7 @@
 
 function wikiplugin_youtube_info() {
 	return array(
-		'name' => tra('Youtube'),
+		'name' => tra('YouTube'),
 		'documentation' => 'PluginYouTube',
 		'description' => tra('Display a YouTube video'),
 		'prefs' => array( 'wikiplugin_youtube' ),

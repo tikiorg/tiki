@@ -207,7 +207,7 @@ function nd() {
 	$("#cluetip").hide();
 }
 
-// ajax loading fns moved from tiki-ajax.js as not only used with xajax
+// ajax loading indicator
 
 function ajaxLoadingShow(destName) {
 	var $dest, $loading, pos, x, y, w, h;
@@ -708,7 +708,7 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
     }
     
     var form = build_plugin_form(type, index, pageName, pluginArgs, bodyContent);
-    $(form).find('tr input[type=submit]').remove();
+    var $form = $(form).find('tr input[type=submit]').remove();
     
     container.append(form);
     document.body.appendChild(container[0]);
@@ -810,9 +810,20 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
 
 			var ta = $('#' + area_id);
 			if (ta) { ta.focus(); }
+		},
+		onChange: function() {
+			alert('t');
 		}
 	}).dialog('option', 'buttons', btns).dialog("open");
-   
+	
+	
+	//This allows users to create plugin snippets for any plugin using the jQuery event 'plugin_#type#_ready' for document
+	$(document).trigger({
+		type: 'plugin_' + type + '_ready',
+		container: container,
+		arguments: arguments,
+		btns: btns
+	});
 }
 
 /*
@@ -1840,9 +1851,9 @@ function dialogReplaceReplace( area_id ) {
 				.addClass('done')
 				.each(function () {
 					if ($('ul:first', this).hide().length) {
-						$(this).prepend('<span class="flipper ui-icon ui-icon-plus" style="float: left;"/>');
+						$(this).prepend('<span class="flipper ui-icon ui-icon-triangle-1-e" style="float: left;"/>');
 					} else {
-						$(this).prepend('<span class="ui-icon ui-icon-triangle-1-e" style="float: left;"/>');
+						$(this).prepend('<span style="float:left;width:16px;height:16px;"/>');
 					}
 				});
 
@@ -1852,10 +1863,10 @@ function dialogReplaceReplace( area_id ) {
 				.click(function () {
 					var body = $(this).parent().find('ul:first');
 					if ('block' === body.css('display')) {
-						$(this).removeClass('ui-icon-minus').addClass('ui-icon-plus');
+						$(this).removeClass('ui-icon-triangle-1-s').addClass('ui-icon-triangle-1-e');
 						body.hide('fast');
 					} else {
-						$(this).removeClass('ui-icon-plus').addClass('ui-icon-minus');
+						$(this).removeClass('ui-icon-triangle-1-e').addClass('ui-icon-triangle-1-s');
 						body.show('fast');
 					}
 				});

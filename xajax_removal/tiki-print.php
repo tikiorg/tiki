@@ -29,6 +29,8 @@ if (!($info = $tikilib->get_page_info($page))) {
 	$smarty->display('error.tpl');
 	die;
 }
+$smarty->assign('page_id', $info['page_id']);
+
 // Now check permissions to access this page
 $tikilib->get_perm_object($page, 'wiki page', $info);
 $access->check_permission('tiki_p_view');

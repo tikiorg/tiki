@@ -7,6 +7,7 @@ function wikiplugin_watershed_info() {
 		'description' => tra('Viewer for UStream Watershed Embed.'),
 		'format' => 'html',
 		'prefs' => array( 'wikiplugin_watershed', 'feature_watershed' ),
+		'icon' => 'pics/icons/transmit_blue.png',
 		'params' => array(
 			'type' => array(
 				'required' => false,
@@ -14,13 +15,14 @@ function wikiplugin_watershed_info() {
 				'description' => tra('Specify archive, broadcaster, chat or viewer'),
 				'filter' => 'text',
 				'default' => 'viewer',
-    			'options' => array(
+				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Archive'), 'value' => 'archive'), 
 					array('text' => tra('Broadcaster'), 'value' => 'broadcaster'), 
 					array('text' => tra('Chat'), 'value' => 'chat'), 
 					array('text' => tra('Viewer'), 'value' => 'viewer'), 
-					),  				
+				)
+					
 			),
 			'channelCode' => array(
 				'required' => true,

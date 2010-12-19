@@ -5,14 +5,18 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+//Includes the content of a wiki page and replaces values in the body of the included page. 
+//All additional parameters will be replaced. For example %%%title%%% will be replaced with the parameter title in the plugin.
+
 function wikiplugin_transclude_info() {
 	return array(
-		'name' => tra('Transclusion'),
-		'documentation' => tra('PluginTransclusion'),
-		'description' => tra('Includes the content of a wiki page and replaces values in the body of the included page. All additional parameters will be replaced. For example %%%title%%% will be replaced with the parameter title in the plugin.'),
+		'name' => tra('Transclude'),
+		'documentation' => tra('PluginTransclude'),
+		'description' => tra('Include the content of another page with certain changes'),
 		'prefs' => array('wikiplugin_transclude', 'feature_wiki'),
 		'extraparams' => true,
 		'defaultfilter' => 'text',
+		'icon' => 'pics/icons/page_copy.png',
 		'params' => array(
 			'page' => array(
 				'required' => true,

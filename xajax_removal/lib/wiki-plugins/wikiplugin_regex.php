@@ -22,11 +22,12 @@ return tra("Takes regex expressions and parses the content between the REGEX tag
 function wikiplugin_regex_info() {
 	return array(
 		'name' => tra('Regular Expression'),
-		'documentation' => tra('PluginRegex'),
-		'validate' => 'all',		
-		'description' => tra('Takes regex expressions and parses the content between REGEX tags and replaces the text.'),
+		'documentation' => 'PluginRegex',
+		'validate' => 'all',
+		'description' => tra('Perform a regular expression search and replace'),
 		'prefs' => array( 'wikiplugin_regex' ),
 		'body' => tra('Each line of content is evaluated separately'),
+		'icon' => 'pics/icons/text_replace.png',
 		'params' => array(
 			'pageName' => array(
 				'required' => true,

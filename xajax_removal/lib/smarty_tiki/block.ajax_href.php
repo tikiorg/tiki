@@ -18,7 +18,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * 
  * 	template	-	template to load (e.g. tiki-admin.tpl)
  * 	htmlelement	-	destination div (usually) to load request into
- * 	function	-	xajax registered function to call - default: loadComponent
+ * 	function	-	xajax registered function to call - default: loadComponent	// AJAX_TODO?
  * 	scrollTo	-	x,y coords to scroll to on click (e.g. "0,0")
  * 	_onclick	-	extra JS to run first onclick
  */

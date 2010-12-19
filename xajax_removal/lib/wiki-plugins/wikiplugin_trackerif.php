@@ -28,9 +28,11 @@ require_once('lib/trackers/trackerlib.php');
 function wikiplugin_trackerif_info()
 {
 	return array(
-		'name' => tra('Trackerif'),
-		'description' => tra("Displays something after testing tracker fields"),
+		'name' => tra('Tracker If'),
+		'documentation' => 'PluginTrackerif',
+		'description' => tra('Display content based on results of a tracker field test'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_tracker' ),
+		'icon' => 'pics/icons/database_table.png',
 		'params' => array(
 			'test' => array(
 				'required' => true,

@@ -15,9 +15,10 @@ function wikiplugin_lastmod_help() {
 function wikiplugin_lastmod_info() {
 	return array(
 		'name' => tra('Last Modification'),
-		'documentation' => tra('PluginLastMod'),			
-		'description' => tra('The Last Mod plugin displays the last modification time of the named wiki page, or the current page if no name given'),
+		'documentation' => 'PluginLastMod',
+		'description' => tra('Show the last modification date for a page'),
 		'prefs' => array('feature_wiki', 'wikiplugin_lastmod'),
+		'icon' => 'pics/icons/date_edit.png',
 		'params' => array(
 			'page' => array(
 				'required' => false,

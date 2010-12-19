@@ -412,96 +412,6 @@ hr {
 	background: url(business/arrows-467aa7.png) no-repeat;
 }
 
-/** PHP Layers Menus **/
-
-.horbar table {
-	margin-left: 48px;
-}
-
-.horbaritem a,
-.horbaritem a:link,
-.horbaritem a:visited {
-	text-decoration: none;
-	text-transform: uppercase;
-	font-size: .8em;
-	font-weight: bold;
-	color: #fff !important;
-	border-left: 1px solid #3676c4;
-	border-right: 1px solid #1957aa;
-	margin: 0;
-	padding: 13px 12px;
-}
-
-* html .horbaritem a,
-* html .horbaritem a:link,
-* html .horbaritem a:visited {
-	padding-top: 7px;
-	padding-bottom: 7px;
-}
-
-.horbaritem a:hover {
-	color: #fff;
-	background: url(business/nav_h.gif);
-	text-decoration: none;
-}
-
-.mdksubmenu {
-	background: #fff;
-}
-
-.mdkverbar .mdksubframe {
-	background: #fff;
-}
-
-.mdkitem a,
-.mdkitem a:visited {
-	color: #fff;
-	background: url(business/nav.gif) repeat-x;
-	border-bottom: none;
-	font-weight: bold;
-	text-decoration: none;
-	font-size: 11px;
-	padding: 4px 6px;
-}
-
-.mdkitem a:hover {
-	background: url(business/nav_h.gif) repeat-x 0 0;
-}
-
-.phplmnormal,
-a.phplmnormal:hover,
-a.phplm:link,
-a.phplm:visited,
-a.phplm:hover,
-a.phplm:active {
-	font: 100% Verdana, Tahoma, Arial, sans-serif;
-	color: #0082e0;
-	text-decoration: underline;
-	font-weight: normal;
-}
-
-a.phplm:visited {
-	color: #0082e0;
-}
-
-a.phplm:hover,
-a.phplm:active {
-	color: #0082e0;
-}
-
-a.phplmselected:link,
-a.phplmselected:visited,
-a.phplmselected:hover,
-a.phplmselected:active {
-	font: 100% Verdana, Tahoma, Arial, sans-serif;
-	color: #0082e0;
-	text-decoration: underline;
-	font-weight: normal;
-}
-
-a.phplmselected:hover {
-	color: #000;
-}
 
 /** Links in other menus **/
 .separator,
@@ -920,6 +830,16 @@ a.admbox:hover {
 	text-decoration: none;
 }
 
+/* Quote plugin */
+.quoteheader {
+	background : url('images/quoteleft.gif') no-repeat;
+	padding-left:50px;
+	height:35px;
+}
+
+.quotebody {
+	padding-left:46px;
+}
 /***** Ajax, jquery. etc. *****/
 /***** Ajax *****/
 /***** New (unsorted) *****/

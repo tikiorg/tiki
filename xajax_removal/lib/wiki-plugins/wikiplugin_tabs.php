@@ -23,10 +23,11 @@ function wikiplugin_tabs_help() {
 function wikiplugin_tabs_info() {
 	return array(
 		'name' => tra('Tabs'),
-		'documentation' => tra('PluginTabs'),			
-		'description' => tra('Display page content in a set of tabs'),
+		'documentation' => 'PluginTabs',
+		'description' => tra('Arrange content in tabs'),
 		'prefs' => array( 'wikiplugin_tabs' ),
 		'body' => tra('Tabs content separated by /////'),
+		'icon' => 'pics/icons/tab_edit.png',
 		'params' => array(
 			'name' => array(
 				'required' => false,

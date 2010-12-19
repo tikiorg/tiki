@@ -16,10 +16,11 @@ function wikiplugin_lang_help() {
 function wikiplugin_lang_info() {
 	return array(
 		'name' => tra('Language'),
-		'documentation' => tra('PluginLang'),
-		'description' => tra('Displays the text only if the language matches'),
+		'documentation' => 'PluginLang',
+		'description' => tra('Vary text based on the page language'),
 		'prefs' => array( 'feature_multilingual', 'wikiplugin_lang' ),
 		'body' => tra('text'),
+		'icon' => 'pics/icons/flag_blue.png',
 		'params' => array(
 			'lang' => array(
 				'required' => false,
