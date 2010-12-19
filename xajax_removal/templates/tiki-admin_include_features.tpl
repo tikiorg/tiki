@@ -205,7 +205,6 @@
 					{preference name=feature_friends}
 					{preference name=feature_intertiki}
 					{preference name=feature_mailin}
-					{preference name=feature_mobile}
 					{preference name=feature_morcego}
 				</fieldset>
 

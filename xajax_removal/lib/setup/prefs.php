@@ -1544,7 +1544,6 @@ function get_default_prefs() {
 		'feature_live_support' => 'n',
 		'feature_mailin' => 'n',
 		'feature_menusfolderstyle' => 'y',
-		'feature_mobile' => 'n',
 		'feature_modulecontrols' => 'n',
 		'feature_morcego' => 'n',
 		'feature_multilingual' => 'n',

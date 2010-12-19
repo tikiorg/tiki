@@ -473,10 +473,6 @@ if ($prefs['feature_freetags'] == 'y') {
 }
 
 $defaultRows = $prefs['default_rows_textarea_forum'];
-if ($prefs['feature_mobile'] == 'y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
-	include_once ("lib/hawhaw/hawtikilib.php");
-	HAWTIKI_view_forum($forum_info['name'], $comments_coms, $tiki_p_forum_read, $comments_offset, $comments_maxRecords, $comments_cant);
-}
 
 if ($prefs['feature_contribution'] == 'y') {
 	$contributionItemId = $_REQUEST['comments_threadId'];

@@ -66,10 +66,6 @@ for ($i = 0; $i < $temp_max; $i++) {
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 $smarty->assign_by_ref('cant', $listpages["cant"]);
 include_once ('tiki-section_options.php');
-if ($prefs['feature_mobile'] == 'y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
-	include_once ("lib/hawhaw/hawtikilib.php");
-	HAWTIKI_list_blogs($listpages, $tiki_p_read_blog);
-}
 ask_ticket('list-blogs');
 // Display the template
 $smarty->assign('mid', 'tiki-list_blogs.tpl');

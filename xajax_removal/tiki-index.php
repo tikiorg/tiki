@@ -506,13 +506,6 @@ if ($prefs['feature_user_watches'] == 'y') {
 
 $sameurl_elements=Array('pageName','page');
 
-if ($prefs['feature_mobile'] == 'y') {
-	if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
-	include_once('lib/hawhaw/hawtikilib.php');
-	HAWTIKI_index($info);
-	}
-}
-
 ask_ticket('index');
 
 //add a hit
