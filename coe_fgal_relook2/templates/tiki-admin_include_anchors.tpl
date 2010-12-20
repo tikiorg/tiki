@@ -121,7 +121,7 @@
 {/if}
 
 {if $prefs.feature_banners eq 'y'}
-{self_link page="ads" _class="icon tips" _title="{tr}Site Ads and Banners{/tr}|{tr}{/tr}"}{icon _id="pics/large/ads.png" alt="{tr}Site Ads and Banners{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+{self_link page="ads" _class="icon tips" _title="{tr}Site Ads and Banners{/tr}|{tr}Banners are a common way to display advertisements and notices on a Web page.{/tr}"}{icon _id="pics/large/ads.png" alt="{tr}Site Ads and Banners{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 
 {if $prefs.feature_intertiki eq 'y'}
