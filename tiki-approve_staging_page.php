@@ -169,6 +169,11 @@ if ($prefs['feature_freetags'] == 'y' && ($prefs['wikiapproval_update_freetags']
 	$freetaglib->update_tags($user, $page, 'wiki page', $taglist);
 }
 
+//delete staging page
+if ($prefs['wikiapproval_delete_staging'] == 'y') {
+	$tikilib->remove_all_versions($staging_page);
+}
+
 // OK, done
 
 include_once ('tiki-section_options.php');
