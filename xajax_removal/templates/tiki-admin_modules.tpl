@@ -8,6 +8,7 @@
 	{if $tiki_p_edit_menu eq 'y'}
 		{button href="tiki-admin_menus.php" _text="{tr}Admin Menus{/tr}"}
 	{/if}
+	{button save_modules="y" _text="{tr}Save{/tr}" _style="display:none;" _id="save_modules" _ajax="n"}
 </div>
 
 {if !empty($missing_params)}
@@ -205,7 +206,8 @@
 		{$preview_data}
 	{/if}
 	<form method="post" action="tiki-admin_modules.php{if (empty($assign_name))}#assign{/if}">
-	{* on the initial selection of a new module, reload the page to the #assign anchor *}
+		{* on the initial selection of a new module, reload the page to the #assign anchor *}
+		<input id="form-field" type="hidden" name="pref" value=""/>
 		{if !empty($info.moduleId)}
 			<input type="hidden" name="moduleId" value="{$info.moduleId}" />
 		{elseif !empty($moduleId)}

@@ -364,15 +364,35 @@ $headerlib->add_jq_onready('$(".modules").sortable({
 		forceHelperSize: true,
 		placeholder: "toolbars-placeholder",
 		stop: function (event, ui) {
-			
+			$("#save_modules *").show();
 		},
 		start: function (event, ui) {
 			
 		},
 		receive: function(event, ui) {
-			
+			$("#save_modules").show();
 		}
-	});');
+	});
+	$("#save_modules a").click(function(evt) {
+		// save module order
+		var ser, text;
+		debugger;
+		ser = $(".module").map(function (){				/* do this on everything of class "row" */
+			return $(this).children().map(function (){	/* do this on each child node */
+				text = "";
+				text += $(this).attr("id");
+				return text;
+			}).get().join(",").replace(",|", "|");			/* put commas inbetween */
+		});
+		if (typeof(ser) === "object" && ser.length > 1) {
+			ser = $.makeArray(ser).join("/");			// row separators
+		} else {
+			ser = ser[0];
+		}
+		$("#form-field").val(ser.replace(",,", ",")).parents("form")[0].submit();
+		return false;
+	});
+');
 
 $sameurl_elements = array(
     'offset',
