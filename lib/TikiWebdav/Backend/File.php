@@ -262,7 +262,10 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				|| substr($path, -1, 1) == '/'
 				|| ( $objectId = $filegallib->get_objectid_from_virtual_path( dirname( $path ) ) ) === false
 				|| $objectId['type'] != 'filegal'
-			 ) return false;
+			 ) {
+				print_debug("createResource:  failed\n");	
+				return false;
+		}
 
 		$name = basename( $path );
 		if ( empty($content) ) $content = '';
@@ -275,8 +278,10 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 			}
 			while ( file_exists( $this->root . '/' . $fhash ) );
 
-			if ( @file_put_contents( $this->root . '/' . $fhash, $content ) === false )
+			if ( @file_put_contents( $this->root . '/' . $fhash, $content ) === false ) {
+				print_debug("createResource: ". $this->root . '/' . $fhash ." failed\n");	
 				return false;
+			}
 		} else {
 			$fhash = '';
 		}
@@ -327,7 +332,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		$fileInfo = $filegallib->get_file_info($objectId['id'], false, false);
 		$filegalInfo = $filegallib->get_file_gallery_info($fileInfo['galleryId']);
 
-		if ( $prefs['fgal_use_db'] === 'n' && empty($fileInfo['path']) && @file_put_contents( $this->root . '/' . $fhash, $content ) === false ) {
+		if ( $prefs['fgal_use_db'] === 'n' && @file_put_contents( $this->root . '/' . $fhash, $content ) === false ) {
 			return false;
 		}
 
