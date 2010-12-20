@@ -315,9 +315,9 @@
 	</table>
 	
 	<div align="center">
-		<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />
-		<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />
-		{if $articleId}<input type="submit" class="wikiaction tips" title="{tr}Cancel{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}" />{/if}
+		<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm = false;"/>
+		<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" onclick="needToConfirm = false;"/>
+		{if $articleId}<input type="submit" class="wikiaction tips" title="{tr}Cancel{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm = false;" />{/if}
 	</div>
 </form>
 
