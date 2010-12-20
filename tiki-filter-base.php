@@ -56,10 +56,10 @@ if(isset($_SERVER['REQUEST_URI']))
 // Usually, PHP_SELF also differs from REQUEST_URI in that PHP_SELF is URL decoded and REQUEST_URI is exactly what the client sent
 $unallowed_uri_chars = array_merge($unallowed_uri_chars, array('#', '[', ']'));
 $unallowed_uri_chars_encoded = array_merge($unallowed_uri_chars_encoded, array_map('urlencode', array('#', '[', ']')));
-$_SERVER['PHP_SELF'] = str_replace($unallowed_uri_chars, $unallowed_uri_chars_encoded, $_SERVER['PHP_SELF']);
+$_SERVER['SCRIPT_NAME'] = str_replace($unallowed_uri_chars, $unallowed_uri_chars_encoded, $_SERVER['SCRIPT_NAME']);
 
 // Note: need to susbsitute \ for / for windows.
-$tikiroot = str_replace('\\','/',dirname($_SERVER['PHP_SELF']));
+$tikiroot = str_replace('\\','/',dirname($_SERVER['SCRIPT_NAME']));
 $tikipath = dirname($tiki_script_filename);
 $tikiroot_relative = '';
 

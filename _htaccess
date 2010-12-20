@@ -41,6 +41,12 @@ FileETag none
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
+# Apache does not pass Authorization header to CGI scripts
+# Rewrite rules for passing authorisation in CGI or FGI mode
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule ^(.*) - [E=HTTP_AUTHORIZATION:%1]
+
+
 # If your Tiki is not at the root of the server (e.g. at http://example.com/tiki) 
 # You will need to uncomment and fix the RewriteBase value below to suit your installation.
 # RewriteBase   "/tiki"

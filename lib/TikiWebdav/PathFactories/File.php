@@ -11,23 +11,12 @@ class TikiWebdav_PathFactories_File implements ezcWebdavPathFactory
 	protected $baseUriLength = 0;
 	protected $collectionPathes = array();
 
-	public function __construct()
-	{
-		global $base_url;
-		if ( ( $pos = strpos($base_url, 'tiki-webdav.php/') ) !== false ) {
-			$this->baseUri = substr($base_url, 0, strpos($base_url, 'tiki-webdav.php') + 15);
-		} else {
-			$this->baseUri = $base_url . 'tiki-webdav.php';
-		}
-		$this->baseUriLength = strlen($this->baseUri);
-	}
-
 	public function parseUriToPath( $uri )
 	{
 		global $tikilib;
 		global $filegallib; require_once('lib/filegals/filegallib.php');
 
-		$requestPath = rawurldecode(substr( trim( $uri ), $this->baseUriLength )) ;
+		$requestPath = rawurldecode( trim( $uri ) ) ;
 
 		if ( empty($requestPath) )
 		{
@@ -59,10 +48,10 @@ class TikiWebdav_PathFactories_File implements ezcWebdavPathFactory
 
 	public function generateUriFromPath( $path )
 	{
-		global $tikilib;
+		global $tikilib, $base_url;
 		global $filegallib; require_once('lib/filegals/filegallib.php');
 
-		$result = $this->baseUri . implode( '/', array_map( 'rawurlencode', explode( '/', $path ) ) );
+		$result = $base_url . 'tiki-webdav.php' . implode( '/', array_map( 'rawurlencode', explode( '/', $path ) ) );
 
 		print_debug("generateUriFromPath($path): $result\n");
 		return $result;
