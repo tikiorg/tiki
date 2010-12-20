@@ -118,10 +118,10 @@ var FileGallery = {
 		jQuery("#fg-tab-"+name).show();
 	},
 	createGallery: function(url) {
-		displayDialog('',2,'edit',url, 'Create Gallery');
+		displayDialog('',2,'edit',url, tr('Create Gallery'));
 	},
 	editGallery: function(url) {
-		displayDialog('',2,'edit',url, 'Edit Gallery');
+		displayDialog('',2,'edit',url, tr('Edit Gallery'));
 	},
 	saveGallery: function() {
 		var params = jQuery("#fg-folder-form").serialize();

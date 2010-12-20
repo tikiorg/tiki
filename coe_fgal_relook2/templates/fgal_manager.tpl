@@ -52,7 +52,7 @@
 				{if $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y'}
 					<a class="fg-toolbar-icon" onclick="FileGallery.editGallery('tiki-list_file_gallery.php?edit_mode=1&parentId={$galleryId}&galleryId={$galleryId}&filegals_manager={$filegals_manager}')"><img src="images/file_gallery/icon-edit-folder.gif" border="0" alt="{tr}Edit gallery{/tr}" title="{tr}Edit gallery{/tr}"/></a>
 					<!--a class="fg-toolbar-icon"><img src="images/file_gallery/icon-delete-folder.gif" border="0"/></a-->
-					<a class="fg-toolbar-icon" onclick="FileGallery.editGallery('tiki-list_file_gallery.php?edit_mode=1&parentId={$galleryId}&galleryId=0&filegals_manager={$filegals_manager}')"><img src="images/file_gallery/icon-create-folder.gif" border="0" alt="{tr}Create gallery{/tr}" title="{tr}Create gallery{/tr}"/></a>
+					<a class="fg-toolbar-icon" onclick="FileGallery.createGallery('tiki-list_file_gallery.php?edit_mode=1&parentId={$galleryId}&galleryId=0&filegals_manager={$filegals_manager}')"><img src="images/file_gallery/icon-create-folder.gif" border="0" alt="{tr}Create gallery{/tr}" title="{tr}Create gallery{/tr}"/></a>
 				{/if}
 			</div>
 			<div class="fg-toolbar-right">
