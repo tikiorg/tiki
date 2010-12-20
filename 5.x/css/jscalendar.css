@@ -11,7 +11,3 @@
 .daterow:active {
 	border : 1px inset #ddd;
 }
-
-.calendar {
-	z-index: 6;
-}
