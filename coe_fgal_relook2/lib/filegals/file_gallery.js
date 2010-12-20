@@ -39,7 +39,7 @@ var FileGallery = {
 			data = this.form(form);
 
 		jQuery('#tbFilegalManager').load(url, data, function() {
-			$('.fg-galleries-list a.fgalname, a.fgalgal, a.fgalaction').click( function(e) {
+			$('.fg-galleries-list a.fgalname, a.fgalgal, a.fgalaction, .fg-pager a.prevnext').click( function(e) {
 				e.preventDefault();
 				FileGallery.open(this.href, area_id, dialogDiv);
 				return false;
