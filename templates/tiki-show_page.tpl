@@ -23,9 +23,7 @@
 					<input type="hidden" name="page" value="{$page|escape}" />
 					<div class="notif-pad-2">
 						<div class="notif-row">
-							<input type="radio" name="action" value="approve" id="staging_approve" />
-							&nbsp;
-							<label for="staging_approve">{tr}Approve changes{/tr}</label>
+							{tr}Approve changes{/tr}
 							<input type="submit" name="staging_action" value="{tr}Submit{/tr}"/>
 						</div>
 					</div>
