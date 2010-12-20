@@ -1,4 +1,5 @@
 {* $Id$ *}
+{* [mod] trebly:B01219:->subcomment span all *}
 {title help="Blogs" admpage="blogs"}{tr}Blogs{/tr}{/title}
 
 {if $tiki_p_create_blogs eq 'y'}
@@ -63,9 +64,9 @@
 		{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }
 			</a>
 		{/if}
-		{if $prefs.blog_list_description eq 'y'}
+  {*	{if $prefs.blog_list_description eq 'y'}
 			<div class="subcomment">{$listpages[changes].description|escape|nl2br}</div>
-		{/if}
+		{/if} *}
 	</td>
 {/if}
 {if $prefs.blog_list_created eq 'y'}
@@ -124,6 +125,14 @@
 	
 </td>
 </tr>
+{* add trebly ### *}
+{if $prefs.blog_list_description eq 'y'}
+  <tr>
+  <td colspan="{$numbercol}">
+  	<div class="subcomment_lblogs">{$listpages[changes].description|escape|nl2br}</div>
+  </td>
+  </tr>	
+{/if}
 {sectionelse}
 <tr><td class="odd" colspan="{$numbercol}"><strong>{tr}No records found.{/tr}</strong></td></tr>
 {/section}
