@@ -1405,7 +1405,7 @@ textarea.tshoutbox{
 /* jquery validation */
 
 label.error {
-	background : url('pics/icons/error.png') no-repeat;
+	background : url('../../pics/icons/error.png') no-repeat;
 	color:red;
 	padding-left:20px;
 }
