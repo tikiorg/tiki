@@ -2,6 +2,8 @@
 -- Database : tikiwiki
 -- --------------------------------------------------------
 
+ALTER DATABASE DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 DROP TABLE IF EXISTS `messu_messages`;
 CREATE TABLE `messu_messages` (
   `msgId` int(14) NOT NULL auto_increment,
