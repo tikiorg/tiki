@@ -18,6 +18,162 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 5.4
+<http://tikiwiki.org/ReleaseNotes54>
+------------------
+
+----------------------------------------------
+r31536 | pkdille | 2010-12-20 22:14:00 +0100 (Mon, 20 Dec 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r30423 | marclaporte | 2010-10-30 21:17:07 +0200 (Sat, 30 Oct 2010) | 1 line
+[bp/r30106] [DB] Set correct utf8 charset and collation on clean install
+
+
+----------------------------------------------
+r31535 | pkdille | 2010-12-20 22:12:34 +0100 (Mon, 20 Dec 2010) | 8 lines
+
+[QT] Quality Team Backport
+
+r30334 | chealer | 2010-10-27 04:22:45 +0200 (Wed, 27 Oct 2010) | 4 lines
+backport r29945 and r30157
+[FIX]article: do not need to confirm on preview ans save
+[FIX] articles: missing needToConfirm=false on cancel button
+
+
+----------------------------------------------
+r31534 | pkdille | 2010-12-20 22:11:51 +0100 (Mon, 20 Dec 2010) | 1 line
+
+[QT] Rollback rejected proposition 30029 - replaced by r30334
+----------------------------------------------
+r31532 | pkdille | 2010-12-20 22:02:00 +0100 (Mon, 20 Dec 2010) | 30 lines
+
+[QT] Quality Team Backport
+
+r30275 | sept_7 | 2010-10-25 15:09:47 +0200 (Mon, 25 Oct 2010) | 33 lines
+[FIX/bp 30171] WebDAV : fix an authentication pb with apache when PHP is used
+in FCGI or CGI mode.
+Extra documentation :
+If Apache is calling PHP in CGI mode, authentication HTTP Headers are not
+set.
+In this case, you have to add the following lines inside your Apache
+VirtualHost config :
+   RewriteEngine on
+   RewriteCond %{HTTP:Authorization} ^(.*)
+   RewriteRule ^(.*) - [E=HTTP_AUTHORIZATION:%1]
+Thanx to Changi that points me to a fix by Nyloth (I suppose ;) )
+Now this rules are in _htaccess
+[FIX/bp 30201] WebDAV and HTTP(S) authentication with Apache in CGI or FCGI
+mode
+[FIX/ bp 30212] WebDAV : Workaroung tiki-webdav always
+assumes we are always in HTTP mode and ignore HTTPS mode :( 
+[FIX/bp 30264] Use SCRIPT_NAME instead of PHP_SELF : homogenize use of
+SCRIPT_NAME in tiki-filter-base.php as it is used all over this script and
+PHP_SELF is used only twice... 
+[FIX/bp 30265] WebDAV : Simplify path handling in WebDAV, revert 30212 as the
+handling was suspicious from the start, it was not an ezcomponent bug, 
+IMPORTANT NOTE : needs 30264 to work 
+[ENH/bp 30266] WebDAV : better message for webdav link in file gallery
+All [FIX] patches are required to fix the different pb with WebDAV, 
+that's why I submit them in batch...
+
+
+----------------------------------------------
+r31531 | pkdille | 2010-12-20 22:01:31 +0100 (Mon, 20 Dec 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r30227 | chealer | 2010-10-22 21:00:30 +0200 (Fri, 22 Oct 2010) | 2 lines
+[bp/r28388][FIX] html_select_date: day shown is the one in UTC timezone, showing October 1st instead of September 30th past 20:00 in ET
+
+
+----------------------------------------------
+r31530 | pkdille | 2010-12-20 22:01:02 +0100 (Mon, 20 Dec 2010) | 7 lines
+
+[QT] Quality Team Backport
+
+r30166 | sept_7 | 2010-10-21 12:55:46 +0200 (Thu, 21 Oct 2010) | 3 lines
+[FIX/bp30165] WebDAV fix suspicious test that prevented files to be written to
+disk when FS storage was used. Thanx LPH for spotting this. Extra add some more debug messages.
+
+
+----------------------------------------------
+r31529 | pkdille | 2010-12-20 22:00:36 +0100 (Mon, 20 Dec 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r30033 | xavidp | 2010-10-15 12:56:34 +0200 (Fri, 15 Oct 2010) | 1 line
+[FIX][bp/r30030]Usability fix: after sending a message to multiple users, you see their names separated by commas for some reason, while the right syntax to have multiple usernames in the required fields is by separating them with semicolon instead. Tip added with that info.
+
+
+----------------------------------------------
+r31527 | pkdille | 2010-12-20 21:55:24 +0100 (Mon, 20 Dec 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29981 | xavidp | 2010-10-13 15:00:31 +0200 (Wed, 13 Oct 2010) | 1 line
+[FIX][bp/r29980]Tip added about a param needed in some servers for rewrite rules to work, even if not in subdirectories. Took many hours to fix that issue in one of those servers without this tip. The other similar tip previously in 6.x has been added/backported to 5.x. also
+
+
+----------------------------------------------
+r31526 | pkdille | 2010-12-20 21:54:52 +0100 (Mon, 20 Dec 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29973 | chealer | 2010-10-13 02:22:44 +0200 (Wed, 13 Oct 2010) | 2 lines
+[bp/r29917][FIX] Admin users: CSRF check done when just visualizing a user
+
+
+----------------------------------------------
+r31525 | pkdille | 2010-12-20 21:54:15 +0100 (Mon, 20 Dec 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29949 | chealer | 2010-10-11 22:08:30 +0200 (Mon, 11 Oct 2010) | 1 line
+[bp/r29918][FIX] Admin Users: User edition CSRF confirmation screen broken with JS error "document.forms.confirm.submit is not a function"
+
+
+----------------------------------------------
+r31524 | pkdille | 2010-12-20 21:53:42 +0100 (Mon, 20 Dec 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29810 | changi67 | 2010-10-05 21:18:34 +0200 (Tue, 05 Oct 2010) | 1 line
+[bp/29808] [FIX] Release script is broken because  is not set when you don't have a db/local.php
+
+
+----------------------------------------------
+r31523 | pkdille | 2010-12-20 21:53:22 +0100 (Mon, 20 Dec 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29737 | nkoth | 2010-09-29 22:02:19 +0200 (Wed, 29 Sep 2010) | 1 line
+[bp/r29736][FIX] forum: avoid this variable may not be empty: $_POST['...'] once and for all for various different cases
+
+
+----------------------------------------------
+r31522 | pkdille | 2010-12-20 21:52:22 +0100 (Mon, 20 Dec 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29727 | chealer | 2010-09-29 18:16:40 +0200 (Wed, 29 Sep 2010) | 1 line
+[FIX] update version number
+
+
+----------------------------------------------
+r30164 | chealer | 2010-10-21 04:24:33 +0200 (Thu, 21 Oct 2010) | 1 line
+
+[bp/r30163][FIX] Group theme
+----------------------------------------------
+r30029 | Gregmartin | 2010-10-15 04:39:54 +0200 (Fri, 15 Oct 2010) | 1 line
+
+removes prompt warning user that data will be lost if they navigate off the page that is received when clicking save or preview
+----------------------------------------------
+r29921 | marclaporte | 2010-10-09 21:12:24 +0200 (Sat, 09 Oct 2010) | 1 line
+
+delete useless files
+----------------------------------------------
 Version 5.3
 <http://tikiwiki.org/ReleaseNotes53>
 ------------------
