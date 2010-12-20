@@ -1,8 +1,8 @@
 .fg-upload-close { display: none; }
 .fg-dialog .fg-upload-close, .fg-upload .fg-upload-close, .fg-folder-dialog .fg-upload-close, .fg-insert .fg-upload-close { display: block !important; }
 
-/*
 .fg-dialog a { cursor: pointer; }
+/*
 .fg-dialog { position: relative; border: 1px solid #999999; width: 700px; height: 633px; font-family: Arial; background: white; }
 .fg-dialog h1 { position: absolute; left: 14px; top: 8px; font-size: 14px; font-weight: bold; text-transform: uppercase; color: #525252; }
 */

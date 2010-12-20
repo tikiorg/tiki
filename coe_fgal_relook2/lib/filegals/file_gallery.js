@@ -117,9 +117,11 @@ var FileGallery = {
 		jQuery(".fg-tab").hide();
 		jQuery("#fg-tab-"+name).show();
 	},
+	createGallery: function(url) {
+		displayDialog('',2,'edit',url, 'Create Gallery');
+	},
 	editGallery: function(url) {
-		jQuery("#tbFilegalManagerSub").dialog('open');
-		displayDialog('',2,'edit',url);
+		displayDialog('',2,'edit',url, 'Edit Gallery');
 	},
 	saveGallery: function() {
 		var params = jQuery("#fg-folder-form").serialize();
@@ -192,7 +194,7 @@ FileGallery.upload = {
 	},
 	show: function(gallery, fm) {
 		//jQuery("#tbFilegalManagerSub").dialog().dialog('open');
-		displayDialog('', 2, 'edit', 'tiki-upload_file.php?galleryId='+gallery+'&filegals_manager='+fm+'&fgspecial=1', 'Upload file');
+		displayDialog('', 2, 'edit', 'tiki-upload_file.php?galleryId='+gallery+'&filegals_manager='+fm, 'Upload file');
 /*
 		this.dialog();
 		jQuery("#fg-jquery-upload-dialog").load("tiki-upload_file.php?galleryId="+gallery+"&filegals_manager="+fm+"&fgspecial=1", function() {
