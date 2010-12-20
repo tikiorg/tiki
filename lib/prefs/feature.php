@@ -1833,5 +1833,10 @@ function prefs_feature_list() {
 			'help' => 'Accounting',
 			'type' => 'flag',
 		),
+		'feature_syntax_highlighter' => array(
+			'name' => tra('Syntax Highlighter (codemirror)'),
+			'type' => 'flag',
+			'description' => tra('Enables syntax highlighting with the use of codemirror'),
+		),
 	);
 }
