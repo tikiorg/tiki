@@ -1723,7 +1723,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	}
 
 	// Override default prefs with values specified in database
-	$modified = $tikilib->get_db_preferences();
+	$modified = isset($tikilib) ? $tikilib->get_db_preferences() : "";
 
 	// Unserialize serialized preferences
 	if ( isset($_SESSION['serialized_prefs']) && is_array($_SESSION['serialized_prefs']) ) {
