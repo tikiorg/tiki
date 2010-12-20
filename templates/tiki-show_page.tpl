@@ -26,31 +26,6 @@
 							<input type="radio" name="action" value="approve" id="staging_approve" />
 							&nbsp;
 							<label for="staging_approve">{tr}Approve changes{/tr}</label>
-							<div class="notif-pad-3" id="staging_approve_details">
-								{if empty($pageLang) || ($pageLang == 'en') || ($pageLang =='en-US')}
-								<input type="checkbox" name="outofdate" value="1" id="staging_outofdate">
-								&nbsp;
-								<label for="staging_outofdate">{tr}Mark other translations as out of date{/tr}</label>
-								{if !empty($outofdate_desc)}
-									<div class="notif-highlight" id="staging_outofdate_details">{$outofdate_desc|escape}</div>
-								{/if}
-							{/if}
-							    <div class="notif-pad-2">
-								<label for="approve_summary">{tr}Feedback to the author (optional):{/tr}</label>
-								<br/>
-								<textarea id="approve_summary" name="approve_comment" rows="3" cols="50"></textarea>
-								</div>
-							</div>
-							<div class="notif-row">
-								<input type="radio" name="action" value="reject" id="staging_reject" />
-								&nbsp;
-								<label for="staging_reject">{tr}Reject changes{/tr}</label>
-								<div class="notif-pad-3" id="staging_reject_details">
-									<label for="reject_summary">{tr}Reason for rejecting (will be e-mailed to editor):{/tr}</label>
-									<br/>
-									<textarea id="reject_summary" name="reject_comment" rows="3" cols="50"></textarea>
-								</div>
-							</div>
 							<input type="submit" name="staging_action" value="{tr}Submit{/tr}"/>
 						</div>
 					</div>
