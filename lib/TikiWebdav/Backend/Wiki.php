@@ -429,7 +429,7 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 
 	protected function getCollectionMembers( $path )
 	{
-		global $tikilib;
+		global $tikilib, $user;
 
 		print_debug("getCollectionMembers " .$path . "\n");
 
@@ -440,10 +440,12 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 			return $contents;
 		}
 
+		$groups = $tikilib->get_user_groups( $user );
+		$perms = Perms::getInstance();
+		$perms->setGroups( $groups );
 		$pages = $tikilib->list_pages();
-		$filtered = Perms::filter( array( 'type' => 'wiki page' ), 'object', $pages['data'], array( 'object' => 'pageName' ), 'view' );
 
-		foreach ($filtered as $page) {
+		foreach ($pages['data'] as $page) {
 			$contents[] = new ezcWebdavResource( $path . $page['pageName'] );
 		}
 
