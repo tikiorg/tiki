@@ -808,7 +808,7 @@ class UsersLib extends TikiLib
 	}
 
 	function check_cas_authentication($user_cookie_site) {
-		global $prefs, $base_url, $webdav_access;
+		global $tikilib, $prefs, $base_url, $webdav_access;
 
 		if ( isset($webdav_access) && $webdav_access === true ) {
 			return true;
@@ -843,12 +843,12 @@ class UsersLib extends TikiLib
 			&& $_SESSION[$user_cookie_site] != 'admin'
 			&& empty($_POST)
 			&& $prefs['cas_authentication_timeout']
-			&& time() - $_SESSION['cas_validation_time'] > $prefs['cas_authentication_timeout']
+			&& $tikilib->now - $_SESSION['cas_validation_time'] > $prefs['cas_authentication_timeout']
 		) {
 			unset($_SESSION["$user_cookie_site"]);
 			unset($_SESSION['phpCAS']['user']);
 
-			$_SESSION['cas_validation_time'] = time();
+			$_SESSION['cas_validation_time'] = $tikilib->now;
 			$cas_user = '';
 
 			// phpCAS will always redirect to CAS validate URL
@@ -899,7 +899,7 @@ class UsersLib extends TikiLib
 		} else {
 			$auth = phpCAS::forceAuthentication();
 		}
-		$_SESSION['cas_validation_time'] = time();
+		$_SESSION['cas_validation_time'] = $tikilib->now;
 
 		// at this step, the user has been authenticated by the CAS server
 		// and the user's login name can be read with phpCAS::getUser().
@@ -1402,20 +1402,29 @@ class UsersLib extends TikiLib
 
 	// ldap sync
 	function sync_and_update_lastlogin($user, $password) {
-		global $prefs;
-		$ret = true;
+		global $prefs, $tikilib;
+		$current = $this->getOne("select `currentLogin` from `users_users` where `login`= ?", array($user));
+		$ret = $this->update_lastlogin($user, $current);
 
-		if ($prefs['syncGroupsWithDirectory'] == 'y' || $prefs['syncUsersWithDirectory'] == 'y') {
+		if (is_null($current)) {
+			// First time
+			$current = 0;
+		}
+
+		// A LDAP synchronisation is not done in the 1st minute after login
+		if ( $tikilib->now - $current >= 60 && ( $prefs['syncGroupsWithDirectory'] == 'y' || $prefs['syncUsersWithDirectory'] == 'y' ) ) {
 			$ret &= $this->ldap_sync_user_and_groups($user, $pass);
 		}
 
-		return $ret & $this->update_lastlogin($user);
+		return $ret;
 	}
 
 	// update the lastlogin status on this user
-	function update_lastlogin($user) {
+	function update_lastlogin($user, $current = null) {
 		// Check
-		$current = $this->getOne("select `currentLogin` from `users_users` where `login`= ?", array($user));
+		if (is_null($current)) {
+			$current = $this->getOne("select `currentLogin` from `users_users` where `login`= ?", array($user));
+		}
 
 		if (is_null($current)) {
 			// First time
@@ -2744,7 +2753,7 @@ class UsersLib extends TikiLib
 		{
 			$hash = '';
 			if (!isset($prefs['validateRegistration']) || $prefs['validateRegistration'] != 'y')
-				$lastLogin = time();
+				$lastLogin = $tikilib->now;
 		}
 
 		if ( $prefs['feature_clear_passwords'] == 'n' ) {
@@ -3657,7 +3666,7 @@ class UsersLib extends TikiLib
 	}
 	function update_expired_groups() {
 		global $tikilib;
-		$query = 'SELECT uu.* FROM `users_usergroups` uu, `users_groups` ug WHERE ( uu.`groupName`= ug.`groupName` AND ug.`expireAfter` > ? AND uu.`created` IS NOT NULL AND uu.`expire` is NULL AND uu.`created` + ug.`expireAfter`*24*60*60 < ?) OR (ug.`expireAfter` = ? AND uu.`expire` < ?)';
+		$query = 'SELECT uu.* FROM `users_usergroups` uu LEFT JOIN `users_groups` ug ON (uu.`groupName`= ug.`groupName`) WHERE ( ug.`expireAfter` > ? AND uu.`created` IS NOT NULL AND uu.`expire` is NULL AND uu.`created` + ug.`expireAfter`*24*60*60 < ?) OR (ug.`expireAfter` = ? AND uu.`expire` < ?)';
 		$result = $this->query($query, array(0, $tikilib->now, 0, $tikilib->now ));
 		$query = 'DELETE FROM `users_usergroups` WHERE `groupName`=? AND `userId`=?';
 		while ($res = $result->fetchrow()) {
