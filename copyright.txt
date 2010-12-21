@@ -12,9 +12,9 @@ This is how we implement the Tiki Social Contract.
 http://tikiwiki.org/Social+Contract
 
 List of members of the Community
-As of 2010-12-20, the community has:
+As of 2010-12-21, the community has:
   * 494 members on SourceForge.net,
-  * 242 of those people who made at least one code commit
+  * 243 of those people who made at least one code commit
 
 This list is automatically generated and alphabetically sorted
 from subversion repository by the following script:
@@ -381,8 +381,8 @@ SF Role: Packager (.rpm, .deb etc)
 Nickname: chealer
 Name: Philippe Cloutier
 First Commit: 2003-09-27
-Last Commit: 2010-12-19
-Number of Commits: 914
+Last Commit: 2010-12-21
+Number of Commits: 915
 SF Role: Developer
 
 Nickname: chessy
@@ -1119,8 +1119,8 @@ SF Role: Developer
 Nickname: jonnybradley
 Name: jonny Bradley
 First Commit: 2007-08-15
-Last Commit: 2010-12-20
-Number of Commits: 2823
+Last Commit: 2010-12-21
+Number of Commits: 2825
 SF Role: Developer
 
 Nickname: jorgercosta
@@ -1212,8 +1212,8 @@ Name: Kimberly Fink
 Nickname: killianebel
 Name: Killian EBEL
 First Commit: 2010-12-07
-Last Commit: 2010-12-15
-Number of Commits: 33
+Last Commit: 2010-12-21
+Number of Commits: 39
 
 Nickname: kissaki
 Name: Kissaki
@@ -1708,8 +1708,8 @@ Number of Commits: 3
 Nickname: nkoth
 Name: Nelson
 First Commit: 2007-05-17
-Last Commit: 2010-12-20
-Number of Commits: 823
+Last Commit: 2010-12-21
+Number of Commits: 830
 SF Role: Developer
 
 Nickname: normandaoust
@@ -1732,8 +1732,8 @@ SF Role: Developer
 Nickname: nyloth
 Name: Patrice W.
 First Commit: 2006-11-09
-Last Commit: 2010-12-20
-Number of Commits: 1762
+Last Commit: 2010-12-21
+Number of Commits: 1765
 SF Role: Developer
 
 Nickname: obnoxxx
@@ -1876,8 +1876,8 @@ Number of Commits: 1
 
 Nickname: pkdille
 First Commit: 2007-03-14
-Last Commit: 2010-12-20
-Number of Commits: 1401
+Last Commit: 2010-12-21
+Number of Commits: 1412
 SF Role: Developer
 
 Nickname: plillevold
@@ -2369,6 +2369,9 @@ SF Role: Developer
 
 Nickname: trebly
 Name: Trebly
+First Commit: 2010-12-20
+Last Commit: 2010-12-21
+Number of Commits: 3
 
 Nickname: troworld
 First Commit: 2004-05-08
