@@ -38,6 +38,9 @@ if (!isset($_REQUEST["source"])) {
 	$access->check_permission('tiki_p_wiki_view_source');
 }
 $info = $tikilib->get_page_info($page);
+$pageRenderer = new WikiRenderer( $info, $user);
+$pageRenderer->setupStaging();
+
 $smarty->assign_by_ref('info', $info);
 // If the page doesn't exist then display an error
 //check_page_exits($page);

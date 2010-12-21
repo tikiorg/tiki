@@ -14,6 +14,8 @@
 	{/if}
 </div>
 
+{include file=tiki-wiki_staging.tpl}
+
 {if $preview}
 	<h2>{tr}Preview of version:{/tr} {$preview}
 		{if $info.version eq $preview}<small><small>{tr}(current){/tr}</small></small>{/if}
