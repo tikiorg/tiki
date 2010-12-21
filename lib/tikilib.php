@@ -3631,6 +3631,10 @@ class TikiLib extends TikiDb_Bridge
 						$bindvars[] = $lg;
 					}
 					$tmp_mid[] = "($translationOrphan_mid)";
+					if (sizeof($val) == 1) {
+						$tmp_mid[] = " tp.`lang` != ? OR tp.`lang` IS NULL ";
+						$bindvars[] = $val[0];
+					}
 				}
 			}
 			if (!empty($tmp_mid)) {
