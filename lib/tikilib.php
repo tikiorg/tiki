@@ -3542,20 +3542,20 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		if (is_array($find)) { // you can use an array of pages
-			$mid = " where `pageName` IN (".implode(',',array_fill(0,count($find),'?')).")";
+			$mid = " where LOWER(`pageName`) IN (".implode(',',array_fill(0,count($find),'LOWER(?)')).")";
 			$bindvars = $find;
 		} elseif (is_string($find) && !empty($find)) { // or a string
 			if (!$exact_match && $find) {
 				$find = preg_replace("/([^\s]+)/","%\\1%",$find);
 				$f = preg_split("/[\s]+/",$find,-1,PREG_SPLIT_NO_EMPTY);
 				if (empty($f)) {//look for space...
-					$mid = " where `pageName` like '%$find%'";
+					$mid = " where LOWER(`pageName`) like LOWER('%$find%')";
 				} else {
-					$mid = " where `pageName` like ".implode(' or `pageName` like ',array_fill(0,count($f),'?'));
+					$mid = " where LOWER(`pageName`) like ".implode(' or LOWER(`pageName`) like ',array_fill(0,count($f),'LOWER(?)'));
 					$bindvars = $f;
 				}
 			} else {
-				$mid = " where `pageName` like ? ";
+				$mid = " where LOWER(`pageName`) like LOWER(?) ";
 				$bindvars = array($find);
 			}
 		} else {
