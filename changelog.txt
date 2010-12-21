@@ -23,6 +23,44 @@ Version 5.4
 ------------------
 
 ----------------------------------------------
+r31571 | pkdille | 2010-12-21 16:32:43 +0100 (Tue, 21 Dec 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r30638 | chealer | 2010-11-11 06:34:43 +0100 (Thu, 11 Nov 2010) | 1 line
+[bp/r30181+30182][FIX] admin users: Fix import users from CSV file and added messages to all calls to check_authenticity()
+
+
+----------------------------------------------
+r31570 | pkdille | 2010-12-21 16:32:24 +0100 (Tue, 21 Dec 2010) | 8 lines
+
+[QT] Quality Team Backport
+
+r30522 | chealer | 2010-11-04 17:08:00 +0100 (Thu, 04 Nov 2010) | 4 lines
+[bp/r30000][FIX] PDO: uploading a file to a file gallery and recovering it breaks its non-ASCII characters when client_charset and character_set_database differ (often making applications report the file as corrupted), and operations on BLOBs in general
+partially reverts r27399. Ref: http://sourceforge.net/mailarchive/message.php?msg_name=4CAAAFFD.6040103%40gmail.com
+This might have the opposite effect for BLOBs populated in Tiki 5; please report if this happens
+
+
+----------------------------------------------
+r31569 | pkdille | 2010-12-21 16:32:04 +0100 (Tue, 21 Dec 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r30485 | chealer | 2010-11-02 21:32:46 +0100 (Tue, 02 Nov 2010) | 1 line
+[bp/r28443] [FIX] Date range selector not taking into account Day and also not including the whole of "To" Day
+
+
+----------------------------------------------
+r31568 | pkdille | 2010-12-21 16:31:44 +0100 (Tue, 21 Dec 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r30450 | chealer | 2010-11-01 17:05:17 +0100 (Mon, 01 Nov 2010) | 1 line
+[FIX] Find date selector (List Articles): remove label spanning 3 input fields, causing clicks on any field to move focus to the first field, and the selectors to be largely unusable.
+
+
+----------------------------------------------
 r31536 | pkdille | 2010-12-20 22:14:00 +0100 (Mon, 20 Dec 2010) | 6 lines
 
 [QT] Quality Team Backport
