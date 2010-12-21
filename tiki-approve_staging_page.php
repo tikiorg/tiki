@@ -50,27 +50,27 @@ if ($prefs['wikiapproval_approved_category'] == 0 && $tiki_p_edit != 'y' || $pre
 $staging_page = $page;
 $page = $tikilib->get_approved_page($page);
 
-// If approved page does not exist, then create it first
-if ($page && !$tikilib->page_exists($page)) {
-	$tikilib->create_page($page, 0, '', $tikilib->now, 'Staging creation');
-}
-
 // If either page doesn't exist then display an error
-if (!$tikilib->page_exists($page) || !$tikilib->page_exists($staging_page)) { 
-	$smarty->assign('msg', tra("Either staging or approved page cannot be found"));
+if (!$tikilib->page_exists($staging_page)) { 
+	$smarty->assign('msg', tra("Staging page cannot be found"));
 
 	$smarty->display("error.tpl");
 	die;
+}
+
+// get staging page info
+
+$staging_info = $tikilib->get_page_info($staging_page);
+
+// If approved page does not exist, then create it first
+if ($page && !$tikilib->page_exists($page)) {
+	$tikilib->create_page($page, 0, '', $staging_info['lastModif'] - 1, 'Staging creation');
 }
 
 // Check approved page edit permissions
 $info = $tikilib->get_page_info($page);
 $tikilib->get_perm_object($page, 'wiki page', $info, true);
 $access->check_permission('tiki_p_edit');
-
-// get staging page info
-
-$staging_info = $tikilib->get_page_info($staging_page);
 
 if ( $staging_info['lastModif'] < $info['lastModif'] ) { 
 	$smarty->assign('msg', tra("Approved page was last saved after most recent staging edit"));
