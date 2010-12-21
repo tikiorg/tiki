@@ -192,6 +192,7 @@
 					{preference name=feature_watershed}
 					{preference name=feature_file_galleries_save_draft}
 					{preference name=feature_file_galleries_templates}
+					{preference name=feature_syntax_highlighter}
 				</fieldset>
 
 				<fieldset>
