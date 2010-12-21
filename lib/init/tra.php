@@ -4,6 +4,7 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
+// [FIX] Trebly:B00624-01
 
 /** translate a English string
  * @param $content - English string
@@ -102,10 +103,13 @@ function tra_impl($content, $lg='', $no_interactive = false, $args = array()) {
 
 	if (isset($prefs['record_untranslated']) && $prefs['record_untranslated'] == 'y' && !empty($content) && $lg != 'en') {
 		$query = 'select `id` from `tiki_untranslated` where `source`=? and `lang`=?';
-		if (!$tikilib->getOne($query, array($content,$lg))) {
-			$query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
-			$tikilib->query($query, array($content,$lg),-1,-1,false);
-		}
+				// ### Trebly:B00624-01:added test on tikilib existence : on the first launch of tra tikilib is not yet set  
+        if (isset($tikilib)) {     
+      		if (!$tikilib->getOne($query, array($content,$lg))) {
+      			$query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
+      			$tikilib->query($query, array($content,$lg),-1,-1,false);
+      		}
+      	}	
 	}
 
 	return tr_replace( $content, $args );
