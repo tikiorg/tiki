@@ -75,10 +75,6 @@ if (isset($_REQUEST['history_pagesize']) && $paginate) {
 }
 $smarty->assign('history_pagesize', $history_pagesize);
 
-if (!isset($_REQUEST['compare'])) {
-	$_REQUEST['diff_style'] = '';
-}
-
 // fetch page history, but omit the actual page content (to save memory)
 $history = $histlib->get_page_history($page, false, $history_offset, $paginate ? $history_pagesize : -1);
 $smarty->assign('history_cant', $histlib->get_nb_history($page));
