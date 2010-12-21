@@ -297,10 +297,7 @@ if (isset($_SESSION['feedbacks'])) {
 }
 $defaultRows = $prefs['default_rows_textarea_forumthread'];
 $smarty->assign('forum_mode', 'y');
-if ($prefs['feature_mobile'] == 'y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
-	include_once ("lib/hawhaw/hawtikilib.php");
-	HAWTIKI_view_forum_thread($forum_info['name'], $thread_info, $tiki_p_forum_read);
-}
+
 if ($prefs['feature_actionlog'] == 'y') {
 	$logslib->add_action('Viewed', $_REQUEST['forumId'], 'forum', 'comments_parentId=' . $comments_parentId);
 }

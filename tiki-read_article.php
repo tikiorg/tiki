@@ -209,10 +209,7 @@ if ($prefs['feature_theme_control'] == 'y') {
 	$cat_objid = $_REQUEST["articleId"];
 	include ('tiki-tc.php');
 }
-if ($prefs['feature_mobile'] == 'y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
-	include_once ("lib/hawhaw/hawtikilib.php");
-	HAWTIKI_read_article($article_data, $pages);
-}
+
 if ($prefs['feature_multilingual'] == 'y' && $article_data['lang']) {
 	include_once ("lib/multilingual/multilinguallib.php");
 	$trads = $multilinguallib->getTranslations('article', $article_data['articleId'], $article_data["title"], $article_data['lang']);

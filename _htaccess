@@ -107,8 +107,6 @@ RewriteRule ^quizzes$              tiki-list_quizzes.php                    [L]
 RewriteRule ^stats$                tiki-stats.php                           [L]
 RewriteRule ^surveys$              tiki-list_surveys.php                    [L]
 RewriteRule ^trackers$             tiki-list_trackers.php                   [L]
-RewriteRule ^mobile$               tiki-mobile.php                          [L]
-RewriteRule ^wml$                  tiki-mobile.php                          [L]
 RewriteRule ^sheets$               tiki-sheets.php                          [L]
 
 # access any object by its numeric identifier

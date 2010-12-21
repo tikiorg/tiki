@@ -28,7 +28,6 @@ $thirdpartyLibs = array(
 	'\./lib/core/Zend.*',
 	'\./lib/htmlparser/,*',
 	'\./lib/htmlpurifier/,*',
-	'\./lib/hawhaw.*',
 	'\./lib/ical.*',
 	'\./lib/images.*',
 	'\./lib/feedcreator.*',

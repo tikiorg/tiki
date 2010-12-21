@@ -154,7 +154,6 @@ if $pagetop_msg}
 	{if $prefs.feature_theme_control eq 'y'} <a href="tiki-theme_control.php">{tr}Theme Control{/tr}</a> {/if}
 	{if $prefs.feature_edit_templates eq 'y'} <a href="tiki-edit_templates.php">{tr}Edit Templates{/tr}</a> {/if}
 	{if $prefs.feature_editcss eq 'y'} <a href="tiki-edit_css.php">{tr}Edit CSS{/tr}</a> {/if}
-	{if $prefs.feature_mobile eq 'y'} <a href="tiki-mobile.php">{tr}Mobile{/tr}</a> {/if}
 	<hr />
 
 	{tr}Text area features{/tr} ({tr}features you can use in all text areas, like wiki pages, blogs, articles, forums, etc{/tr}):<br />

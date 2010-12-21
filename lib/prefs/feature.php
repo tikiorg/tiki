@@ -349,12 +349,6 @@ function prefs_feature_list() {
 			'help' => 'Ajax',
 			'type' => 'flag',
 		),
-		'feature_mobile' => array(
-			'name' => tra('Mobile'),
-			'description' => tra('Outputs a WAP and VoiceXML version.'),
-			'help' => 'http://mobile.tiki.org',
-			'type' => 'flag',
-		),
 		'feature_morcego' => array(
 			'name' => tra('Morcego 3D browser'),
 			'description' => tra('Visualize relationships between wiki pages, in a 3D applet'),
