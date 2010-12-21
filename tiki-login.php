@@ -435,12 +435,7 @@ if ($isvalid) {
 		$url = str_replace('http://', 'https://', $url);
 	}
 	if (defined('SID') && SID != '')
-		$url.= ((strpos($url, '?') === false) ? '?' : '&') . SID;
-	if ( isset($_SESSION['cas_redirect']) ) {
-		$url = $_SESSION['cas_redirect'];
-		unset($_SESSION['cas_redirect']);
-		$_SESSION[$user_cookie_site] = $user;
-	} 
+		$url.= ((strpos($url, '?') === false) ? '?' : '&') . SID; 
 
 	header('Location: ' . $url);
 	exit;

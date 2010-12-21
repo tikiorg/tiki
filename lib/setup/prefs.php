@@ -1834,6 +1834,7 @@ function get_default_prefs() {
 
 		// CAS
 		'cas_create_user_tiki' => 'n',
+		'cas_autologin' => 'n',
 		'cas_skip_admin' => 'n',
 		'cas_show_alternate_login' => 'y',
 		'cas_version' => '1.0',

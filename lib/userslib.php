@@ -269,8 +269,6 @@ class UsersLib extends TikiLib
 		if (SID) $url.= '?' . SID;
 
 		if ( $prefs['auth_method'] === 'cas' && $user !== 'admin' && $user !== '' && $prefs['cas_force_logout'] === 'y' ) {
-			require_once ('lib/phpcas/CAS.php');
-			phpCAS::client($prefs['cas_version'], '' . $prefs['cas_hostname'], (int)$prefs['cas_port'], '' . $prefs['cas_path'], false);
 			phpCAS::logoutWithRedirectServiceAndUrl($url,$url);
 		}
 		unset($_SESSION[$user_cookie_site]);
@@ -809,9 +807,59 @@ class UsersLib extends TikiLib
 		}
 	}
 
-	// validate the user through CAS
-        function validate_user_cas(&$user, $checkOnly = false) {
-		global $tikilib, $prefs, $base_url;
+	function check_cas_authentication($user_cookie_site) {
+		global $prefs, $base_url, $webdav_access;
+
+		if ( isset($webdav_access) && $webdav_access === true ) {
+			return true;
+		}
+
+		// just make sure we're supposed to be here
+		if ( !$this->_init_cas_client() ) {
+			return false;
+		}
+
+		if ( !empty($_SESSION['phpCAS']['user']) ) {
+			$_SESSION[$user_cookie_site] = $_SESSION['phpCAS']['user'];
+		}
+
+		if (isset($_REQUEST['ticket']) && empty($_SESSION[$user_cookie_site])) {
+			$cas_user = '';
+			$this->validate_user_cas($cas_user, true);
+			die();
+		}
+
+		// Check for CAS (re-)validation
+		//  Only if :
+		//   - using CAS auth method
+		//   - not calling tiki-login.php nor tiki-logout.php
+		//   - not using 'admin' user
+		//   - either the request is not a POST ( which does not keep its params with CAS redirections ) or the CAS validation timed out
+		//
+		if (php_sapi_name() !== 'cli'
+			&& (isset($_SESSION[$user_cookie_site]) || $prefs['cas_autologin'] == 'y')
+			&& basename($_SERVER["SCRIPT_NAME"]) != 'tiki-login.php'
+			&& basename($_SERVER["SCRIPT_NAME"]) != 'tiki-logout.php'
+			&& $_SESSION[$user_cookie_site] != 'admin'
+			&& empty($_POST)
+			&& $prefs['cas_authentication_timeout']
+			&& time() - $_SESSION['cas_validation_time'] > $prefs['cas_authentication_timeout']
+		) {
+			unset($_SESSION["$user_cookie_site"]);
+			unset($_SESSION['phpCAS']['user']);
+
+			$_SESSION['cas_validation_time'] = time();
+			$cas_user = '';
+
+			// phpCAS will always redirect to CAS validate URL
+			$this->validate_user_cas($cas_user, true);
+
+			die();
+		}
+	}
+
+	function _init_cas_client() {
+		global $prefs;
 
 		// just make sure we're supposed to be here
 		if ($prefs['auth_method'] != 'cas') {
@@ -824,21 +872,29 @@ class UsersLib extends TikiLib
 		// initialize phpCAS
 		if ( !isset($GLOBALS['PHPCAS_CLIENT']) ) {
 			phpCAS::client($prefs['cas_version'], ''.$prefs['cas_hostname'], (int) $prefs['cas_port'], ''.$prefs['cas_path'], false);
-			//phpCAS::setPGTStorageFile('xml',session_save_path());
-			//phpCAS::setPGTStorageFile('plain','/tmp/phpcas_tickets');
 		}
-		// Redirect to this URL after authentication
 
-		if ( !empty($prefs['cas_extra_param']) ) {
+		return true;
+	}
+
+	// validate the user through CAS
+        function validate_user_cas(&$user, $checkOnly = false) {
+		global $tikilib, $prefs, $base_url;
+
+		// just make sure we're supposed to be here
+		if (!$this->_init_cas_client()) {
+			return false;
+		}
+
+		// Redirect to this URL after authentication
+		if ( !empty($prefs['cas_extra_param']) && basename($_SERVER["SCRIPT_NAME"]) == 'tiki-login.php' ) {
 			phpCAS::setFixedServiceURL( $base_url . 'tiki-login.php?cas=y&' . $prefs['cas_extra_param'] );
 		}
 
 		// check CAS authentication
 		phpCAS::setNoCasServerValidation();
-		if ( isset($_SESSION['cas_redirect']) || $checkOnly ) {
-			if ( ! $checkOnly ) {
-				unset($_SESSION['phpCAS']['auth_checked']);
-			}
+		if ( $checkOnly ) {
+			unset($_SESSION['phpCAS']['auth_checked']);
 			$auth = phpCAS::checkAuthentication();
 		} else {
 			$auth = phpCAS::forceAuthentication();
@@ -847,26 +903,10 @@ class UsersLib extends TikiLib
 
 		// at this step, the user has been authenticated by the CAS server
 		// and the user's login name can be read with phpCAS::getUser().
-
-		if ( $auth ) {
-			$user = phpCAS::getUser();
-		} elseif ( isset($_SESSION['cas_redirect']) ) {
-			// If the user has logged out from the CAS server
-			// continue as Anonymous
-			$user = null;
-			$cookie_site = preg_replace('/[^a-zA-Z0-9]/', '', $prefs['cookie_name']);
-			$user_cookie_site = 'tiki-user-' . $cookie_site;
-			$_SESSION[$user_cookie_site] = null;
-			header('Location: '.$_SESSION['cas_redirect']);
-			unset($_SESSION['cas_redirect']);
-			die();
-		} else {
-			$user = null;
-		}
-
-		if ( isset($user) ) {
+		if ( $auth && ($user = phpCAS::getUser()) ) {
 			return USER_VALID;
 		} else {
+			$user = null;
 			return PASSWORD_INCORRECT;
 		}
 	}
