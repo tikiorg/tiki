@@ -517,7 +517,7 @@ class WikiRenderer
 		$this->smartyassign('trail', $crumbs);
 	} // }}}
 
-	private function setupStaging() // {{{
+	function setupStaging() // {{{
 	{
 		global $prefs, $tikilib, $categlib, $histlib, $tiki_p_edit;
 
