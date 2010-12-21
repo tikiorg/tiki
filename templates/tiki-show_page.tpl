@@ -15,7 +15,7 @@
 		{if $canApproveStaging == 'y'}
 			<div class="notif-pad">
 				{if $lastSyncVersion}
-					<a class="link" href="tiki-pagehistory.php?page={$page|escape:'url'}&amp;diff2={$lastSyncVersion}&amp;diff_style=sidediff">{tr}View changes since last approval.{/tr}</a>
+					<a class="link" href="tiki-pagehistory.php?page={$page|escape:'url'}&amp;diff2={$lastSyncVersion}&amp;diff_style=sidediff&amp;compare=Compare">{tr}View changes since last approval.{/tr}</a>
 				{else}
 					{tr}Viewing of changes since last approval is possible only after first approval.{/tr}
 				{/if}
