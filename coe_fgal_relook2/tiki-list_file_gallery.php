@@ -1044,9 +1044,10 @@ $headerlib->add_jsfile('lib/filegals/tiki-list_file_gallery.js');
 
 // Display the template
 if (!empty($_REQUEST['filegals_manager'])) {
+	$headerlib->add_jsfile( 'lib/filegals/file_gallery.js', 50 );
+//	$headerlib->add_cssfile( 'lib/filegals/file_gallery.css', 10 );
 	$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
 	$smarty->display('fgal_manager.tpl');
-	///$smarty->display('tiki_full.tpl');
 } else {
 	$smarty->display('tiki.tpl');
 }

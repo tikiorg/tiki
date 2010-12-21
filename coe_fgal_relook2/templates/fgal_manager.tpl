@@ -9,9 +9,6 @@
 	{include file='edit_file_gallery.tpl'}
 {else}
 
-
-<script type="text/javascript" src="lib/filegals/file_gallery.js"></script> {* FIXME *}
-<script> FileGallery.dialogmode = false; </script> {* FIXME *}
 <div id="fg-jquery-upload-dialog"></div>
 <div id="fg-jquery-gallery-dialog"></div>
 
