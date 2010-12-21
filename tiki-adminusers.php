@@ -25,39 +25,47 @@ function discardUser($u, $reason) {
 }
 function batchImportUsers() {
 	global $userlib, $smarty, $logslib, $tiki_p_admin, $user, $prefs, $userGroups, $tikilib;
-	$fname = $_FILES['csvlist']['tmp_name'];
-	$fhandle = fopen($fname, "r");
-	$fields = fgetcsv($fhandle, 1000);
-	if (!$fields[0]) {
-		$smarty->assign('msg', tra("The file is not a CSV file or has not a correct syntax"));
-		$smarty->display("error.tpl");
-		die;
-	}
-	if (!in_array('login', $fields) || !in_array('email', $fields) || !in_array('password', $fields)) {
-		$smarty->assign('msg', tra("The file does not have the required header:") . " login, email, password");
-		$smarty->display("error.tpl");
-		die;
-	}
-	while (!feof($fhandle)) {
-		$data = fgetcsv($fhandle, 1000);
-		if (empty($data)) continue;
-		$temp_max = count($fields);
-		for ($i = 0; $i < $temp_max; $i++) {
-			if ($fields[$i] == "login" && function_exists("mb_detect_encoding") && mb_detect_encoding($data[$i], "ASCII, UTF-8, ISO-8859-1") == "ISO-8859-1") {
-				$data[$i] = utf8_encode($data[$i]);
-			}
-			@$ar[$fields[$i]] = $data[$i];
+	if (isset($_SESSION['users_to_import_temp'])) {
+		$userrecs = unserialize($_SESSION['users_to_import_temp']);
+		unset($_SESSION['users_to_import_temp']);
+	} else {
+		$fname = $_FILES['csvlist']['tmp_name'];
+		$fhandle = fopen($fname, "r");
+		$fields = fgetcsv($fhandle, 1000);
+		if (!$fields[0]) {
+			$smarty->assign('msg', tra("The file is not a CSV file or has not a correct syntax"));
+			$smarty->display("error.tpl");
+			die;
 		}
-		$userrecs[] = $ar;
+		if (!in_array('login', $fields) || !in_array('email', $fields) || !in_array('password', $fields)) {
+			$smarty->assign('msg', tra("The file does not have the required header:") . " login, email, password");
+			$smarty->display("error.tpl");
+			die;
+		}
+		while (!feof($fhandle)) {
+			$data = fgetcsv($fhandle, 1000);
+			if (empty($data)) continue;
+			$temp_max = count($fields);
+			for ($i = 0; $i < $temp_max; $i++) {
+				if ($fields[$i] == "login" && function_exists("mb_detect_encoding") && mb_detect_encoding($data[$i], "ASCII, UTF-8, ISO-8859-1") == "ISO-8859-1") {
+					$data[$i] = utf8_encode($data[$i]);
+				}
+				@$ar[$fields[$i]] = $data[$i];
+			}
+			$userrecs[] = $ar;
+		}
+		fclose($fhandle);
+		$_SESSION['users_to_import_temp'] = serialize($userrecs);	// pop the data into session while auth check
 	}
-	fclose($fhandle);
+	global $access;
+	$access->check_authenticity(tra('Do you really want to import users from this file?'));
+	
 	if (empty($userrecs) or !is_array($userrecs)) {
 		$smarty->assign('msg', tra("No records were found. Check the file please!"));
 		$smarty->display("error.tpl");
 		die;
     }
-
-    // wheter to force password change on first login or not
+	// wheter to force password change on first login or not
     $pass_first_login = (isset($_REQUEST['forcePasswordChange']) && $_REQUEST['forcePasswordChange'] == 'on');
 
 	$added = 0;
@@ -173,14 +181,13 @@ $auto_query_args = array(
 	'filterGroup'
 );
 if (!isset($cookietab)) { $cookietab = '1'; }
-if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name'])) {
-	$access->check_authenticity();
+if (isset($_REQUEST['batch']) && (is_uploaded_file($_FILES['csvlist']['tmp_name']) || isset($_SESSION['users_to_import_temp']))) {
 	batchImportUsers();
 	// Process the form to add a user here
 	
 } elseif (isset($_REQUEST["newuser"])) {
         $AddUser= true;;
-	$access->check_authenticity();
+	$access->check_authenticity(tra('Are you sure you want to add this new user?'));
         // if email validation set check if email addr is set   
 	if ($prefs["login_is_email"] != 'y' && isset($_REQUEST['need_email_validation']) &&
 		 empty($_REQUEST['email'])) {
@@ -267,7 +274,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	}
 } elseif (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'delete' && isset($_REQUEST["user"]) && $_REQUEST["user"] != 'admin') {
-		$access->check_authenticity();
+		$access->check_authenticity(tra('Are you sure you want to delete this user?'));
 		$userlib->remove_user($_REQUEST["user"]);
 		$tikifeedback = array();
 		$tikifeedback[] = array(
@@ -283,7 +290,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			$smarty->display('error.tpl');
 			die;
 		}
-		$access->check_authenticity();
+		$access->check_authenticity(tra('Are you sure you want to remove this user from this group?'));
 		$userlib->remove_user_from_group($_REQUEST["user"], $_REQUEST["group"]);
 		$tikifeedback[] = array(
 			'num' => 0,
@@ -291,7 +298,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 		);
 	}
 	if ($_REQUEST['action'] == 'email_due' && isset($_REQUEST['user'])) {
-		$access->check_authenticity();
+		$access->check_authenticity(tra('Are you sure you want to reset email due for this user?'));
 		$userlib->reset_email_due($_REQUEST['user']);
 	}
 	$_REQUEST["user"] = '';
@@ -300,7 +307,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	}
 } elseif (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
 	if ($_REQUEST['submit_mult'] == 'remove_users' || $_REQUEST['submit_mult'] == 'remove_users_with_page') {
-		$access->check_authenticity();
+		$access->check_authenticity(tra('Are you sure you want to delete these users?'));
 		foreach($_REQUEST["checked"] as $deleteuser) if ($deleteuser != 'admin') {
 			$userlib->remove_user($deleteuser);
 			$logslib->add_log('users', sprintf(tra("Deleted account %s") , $deleteuser));
@@ -330,7 +337,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 		$logslib->add_log('adminusers', '', $tikifeedback[0]['msg']);
 	}
 } elseif (!empty($_REQUEST['group_management']) && $_REQUEST['group_management'] == 'add') {
-	$access->check_authenticity();
+	$access->check_authenticity(tra('Are you sure you want to add this user to these groups?'));
 	if (!empty($_REQUEST["checked_groups"]) && !empty($_REQUEST["checked"])) {
 		foreach($_REQUEST['checked'] as $assign_user) {
 			foreach($_REQUEST["checked_groups"] as $group) {
@@ -348,7 +355,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 		$logslib->add_log('adminusers', '', $tikifeedback[0]['msg']);
 	}
 } elseif (!empty($_REQUEST['group_management']) && $_REQUEST['group_management'] == 'remove') {
-	$access->check_authenticity();
+	$access->check_authenticity(tra('Are you sure you want to remove this user from these groups?'));
 	if (!empty($_REQUEST["checked_groups"]) && !empty($_REQUEST["checked"])) {
 		foreach($_REQUEST['checked'] as $assign_user) {
 			foreach($_REQUEST["checked_groups"] as $group) {
@@ -366,7 +373,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 		$logslib->add_log('adminusers', '', $tikifeedback[0]['msg']);
 	}
 } elseif (!empty($_REQUEST['set_default_groups']) && $_REQUEST['set_default_groups'] == 'y') {
-	$access->check_authenticity();
+	$access->check_authenticity(tra('Are you sure you want to set the default groups for these users?'));
 	if (!empty($_REQUEST["checked_group"]) && !empty($_REQUEST["checked"])) {
 		foreach($_REQUEST['checked'] as $assign_user) {
 			$group = $_REQUEST["checked_group"];
@@ -383,7 +390,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 		$logslib->add_log('adminusers', '', $tikifeedback[0]['msg']);
 	}
 } elseif (!empty($_REQUEST['emailChecked']) && $_REQUEST['emailChecked'] == 'y' && !empty($_REQUEST['checked'])) {
-	$access->check_authenticity();
+	$access->check_authenticity(tra('Are you sure you want to send a wiki page as an email to these users?'));
 	if (empty($_REQUEST['wikiTpl']) || !($info = $tikilib->get_page_info($_REQUEST['wikiTpl']))) {
 		$smarty->assign('msg', tra('Page cannot be found'));
 		$smarty->display('error.tpl');
