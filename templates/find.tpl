@@ -104,14 +104,14 @@
 
 {if $find_show_date_range eq 'y'}
 	<div id="date_range_find">
-		<label class="findDateFrom">
+		<span class="findDateFrom">
 			{tr}From{/tr}
 			{html_select_date time="2009-01-01" prefix="find_from_" start_year="-2" end_year="+2" month_format="%m" field_order=$prefs.display_field_order}
-		</label>
-		<label class="findDateTo">
+		</span>
+		<span class="findDateTo">
 			{tr}to{/tr}
 			{html_select_date prefix="find_to_" start_year="-2" end_year="+2" month_format="%m" field_order=$prefs.display_field_order}
-		</label>
+		</span>
 	</div>
 {/if}
 

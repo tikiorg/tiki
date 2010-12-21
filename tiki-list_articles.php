@@ -64,14 +64,14 @@ if (($tiki_p_admin == 'y') || ($tiki_p_admin_cms == 'y')) {
 	$date_max = $tikilib->now;
 }
 if (isset($_REQUEST["find_from_Month"]) && isset($_REQUEST["find_from_Day"]) && isset($_REQUEST["find_from_Year"])) {
-	$date_min = $tikilib->make_time(0, 0, 0, $_REQUEST["find_from_Month"], $_REQUEST["find_from_Month"], $_REQUEST["find_from_Year"]);
+	$date_min = $tikilib->make_time(0, 0, 0, $_REQUEST["find_from_Month"], $_REQUEST["find_from_Day"], $_REQUEST["find_from_Year"]);
 	$smarty->assign('find_date_from', $date_min);
 } else {
 	$date_min = 0;
 	$smarty->assign('find_date_from', $tikilib->now - 365*24*3600);
 }
 if (isset($_REQUEST["find_to_Month"]) && isset($_REQUEST["find_to_Day"]) && isset($_REQUEST["find_to_Year"])) {
-	$t_date_max = $tikilib->make_time(0, 0, 0, $_REQUEST["find_to_Month"], $_REQUEST["find_to_Month"], $_REQUEST["find_to_Year"]);
+	$t_date_max = $tikilib->make_time(23, 59, 59, $_REQUEST["find_to_Month"], $_REQUEST["find_to_Day"], $_REQUEST["find_to_Year"]);
 	if ($t_date_max < $date_max || $date_max == '') {
 		$date_max = $t_date_max;
 		$visible_only = 'y';
