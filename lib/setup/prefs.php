@@ -499,6 +499,9 @@ function get_default_prefs() {
 		'wikiplugininline_youtube' => 'n',
 		'wikiplugininline_author' => 'n',
 
+		// wikiplugin preferences
+		'wikipluginprefs_pending_notification' => 'n',
+	
 		// webservices
 		'webservice_consume_defaultcache' => 300, // 5 min
 		'feature_webservices' => 'n',

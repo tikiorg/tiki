@@ -5071,6 +5071,15 @@ if( \$('#$id') ) {
 		return false;
 	}
 
+	/**
+	 * Check if possible to execute a plugin
+	 * 
+	 * @param string $name
+	 * @param string $data
+	 * @param array $args
+	 * @param bool $dont_modify
+	 * @return bool|string Boolean true if can execute, string 'rejected' if can't execute and plugin fingerprint if pending
+	 */
 	function plugin_can_execute( $name, $data = '', $args = array(), $dont_modify = false ) {
 		global $prefs;
 
@@ -7430,28 +7439,49 @@ if( \$('#$id') ) {
 		}
 
 		if( isset( $data['content'] ) ) {
-			$this->apply_plugin_save_handlers( $context, $data );
+			$this->plugin_post_save_actions( $context, $data );
 		}
 	}
 
-	private function apply_plugin_save_handlers( $context, $data ) {
+	/**
+	 * Foreach plugin used in a object content call its save handler,
+	 * if one exist, and send email notifications when it has pending
+	 * status, if preference is enabled.
+	 *  
+	 * A plugin save handler is a function defined on the plugin file
+	 * with the following format: wikiplugin_$pluginName_save()
+	 * 
+	 * @param array $context object type and id
+	 * @param array $data
+	 * @return void
+	 */
+	private function plugin_post_save_actions( $context, $data ) {
 		require_once 'WikiParser/PluginMatcher.php';
 		require_once 'WikiParser/PluginArgumentParser.php';
+		global $prefs;
 
 		$argumentParser = new WikiParser_PluginArgumentParser;
 
 		$matches = WikiParser_PluginMatcher::match( $data['content'] );
 
 		foreach( $matches as $match ) {
-			$implementation = $match->getName();
+			$plugin_name = $match->getName();
 			$body = $match->getBody();
 			$arguments = $argumentParser->parse( $match->getArguments() );
 
 			$dummy_output = '';
-			if( $this->plugin_enabled( $implementation, $dummy_output ) ) {
-				$this->plugin_find_implementation( $implementation, $body, $arguments );
+			if( $this->plugin_enabled( $plugin_name, $dummy_output ) ) {
+				$status = $this->plugin_can_execute($plugin_name, $body, $arguments, true);
 
-				$func_name = 'wikiplugin_' . $implementation . '_save';
+				// when plugin status is pending, $status equals plugin fingerprint
+				if ($prefs['wikipluginprefs_pending_notification'] == 'y' && $status !== true && $status != 'rejected') {
+					//TODO: create preference to enable and disable notifications
+					$this->plugin_pending_notification($plugin_name, $context);
+				}
+				
+				$this->plugin_find_implementation( $plugin_name, $body, $arguments );
+
+				$func_name = 'wikiplugin_' . $plugin_name . '_save';
 
 				if( function_exists( $func_name ) ) {
 					$func_name( $context, $body, $arguments );
@@ -7460,6 +7490,51 @@ if( \$('#$id') ) {
 		}
 	}
 
+	/**
+	 * Send notification by email that a plugin is waiting to be
+	 * approved to everyone with permission to approve it.
+	 * 
+	 * @param string $plugin_name
+	 * @param array $context object type and id
+	 * @return void
+	 */
+	private function plugin_pending_notification($plugin_name, $context) {
+		require_once('lib/webmail/tikimaillib.php');
+		global $userlib, $prefs, $objectlib, $base_url;
+		
+		$object = $objectlib->get_object($context['type'], $context['object']);
+		
+		$mail = new TikiMail(null, $prefs['sender_email']);
+		$mail->setSubject(tra("Plugin $plugin_name pending approval"));
+		$mail->setHtml(tra("Plugin $plugin_name is pending approval on <a href='$base_url{$object['href']}'>{$object['name']}</a>"));
+		
+		$allGroups = $userlib->get_groups();
+		$accessor = Perms::get($context);
+		
+		// list of groups with permission to approve plugin on this object
+		$groups = array();
+		
+		foreach ($allGroups['data'] as $group) {
+			$accessor->setGroups(array($group['groupName']));
+			if ($accessor->plugin_approve) {
+				$groups[] = $group['groupName'];
+			}
+		}
+
+		$recipients = array();
+		
+		foreach ($groups as $group) {
+			$recipients = array_merge($recipients, $userlib->get_group_users($group, 0, -1, 'email'));
+		}
+		
+		$recipients = array_filter($recipients);
+		$recipients = array_unique($recipients);
+
+		$mail->setBcc(join(', ', $recipients));
+		
+		$mail->send();
+	}
+	
 	private function plugin_find_implementation( & $implementation, & $data, & $args ) {
 		if( $info = $this->plugin_alias_info( $implementation ) ) {
 			$implementation = $info['implementation'];

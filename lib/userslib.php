@@ -2149,6 +2149,17 @@ class UsersLib extends TikiLib
 		return $ret;
 	}
 
+	/**
+	 * Return information about users that belong to a 
+	 * specific group
+	 * 
+	 * @param string $group group name
+	 * @param int $offset
+	 * @param int $max
+	 * @param string $what which user fields to retrieve
+	 * @param string $sort_mode
+	 * @return array list of users
+	 */
 	function get_group_users($group, $offset = 0, $max=-1, $what='login', $sort_mode='login_asc') {
 		global $prefs;
 		$w = $what=='*'? 'uu.*, ug.`created`, ug.`expire` ': "uu.`$what`"; 
