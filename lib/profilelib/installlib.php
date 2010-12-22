@@ -254,7 +254,7 @@ class Tiki_Profile_Installer
 		return true;
 	} // }}}
 
-	private function getInstallHandler( Tiki_Profile_Object $object ) // {{{
+	public function getInstallHandler( Tiki_Profile_Object $object ) // {{{
 	{
 		$type = $object->getType();
 		if( array_key_exists( $type, $this->handlers ) )

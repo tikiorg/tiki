@@ -482,16 +482,10 @@ if (isset($_REQUEST['edit'])) {
 
 		if ($prefs['feature_file_galleries_templates'] == 'y' && isset($_REQUEST['fgal_template']) && !empty($_REQUEST['fgal_template'])) {
 			// Override with template parameters
-			require_once( 'lib/Horde/Yaml.php' );
-			require_once( 'lib/Horde/Yaml/Loader.php' );
-			require_once( 'lib/Horde/Yaml/Dumper.php' );
-			require_once( 'lib/Horde/Yaml/Node.php' );
-			require_once( 'lib/Horde/Yaml/Exception.php' );
-
-			$template = $templateslib->get_template($_REQUEST['fgal_template']);
+			$template = $templateslib->get_parsed_template($_REQUEST['fgal_template']);
 
 			if ($template) {
-				$gal_info = array_merge($gal_info, Horde_Yaml::load($template['content']));
+				$gal_info = array_merge($gal_info, $template['content']);
 				$gal_info['template'] = $_REQUEST['fgal_template'];
 			}
 		}
