@@ -141,6 +141,11 @@ if ($prefs['feature_credits'] == 'y') {
 	require_once('lib/setup/credits.php');
 }
 
+if ($prefs['feature_syntax_highlighter'] == 'y') {
+	require_once('lib/codemirror_tiki/codemirror_tiki.php');
+	tiki_syntax_highlighter_base();
+}
+
 $smarty->assign_by_ref('phpErrors', $phpErrors);
 $smarty->assign_by_ref('num_queries', $num_queries);
 $smarty->assign_by_ref('elapsed_in_db', $elapsed_in_db);
