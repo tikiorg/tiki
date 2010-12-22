@@ -462,6 +462,7 @@ class WikiRenderer
 	private function setupCategories() // {{{
 	{
 		global $prefs, $categlib;
+		require_once 'lib/categories/categlib.php';
 
 		$cats = array();
 		if ($prefs['feature_categories'] == 'y' && $categlib->is_categorized('wiki page',$this->page)) {
