@@ -516,6 +516,10 @@ small.date {
 /** CSS (suckerfish) menus **/
 
 /* typography, colors */
+.box {
+	overflow: visible;
+}
+
 .cssmenu_horiz li a {
 	padding: 6px 1em;
 	font-weight: bold;
