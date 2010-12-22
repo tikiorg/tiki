@@ -188,6 +188,14 @@ function wikiplugin_articles_info()
 				'description' => tra('Whether to show the buttons and links to do actions on each article (for the actions you have permission to do') . ' (y|n)',
 				'filter' => 'alpha',
 			),
+			'translationOrphan' => array(
+				'required' => false,
+				'name' => tra('No translation'),
+				'description' => tra('User or pipe separated list of two letter language codes for additional languages to display. List pages with no language or with a missing translation in one of the language'),
+				'filter' => 'alpha',
+				'separator' => '|',
+				'default' => ''
+			),
 		),
 	);
 }
@@ -196,10 +204,11 @@ function wikiplugin_articles($data, $params)
 {
 	global $smarty, $tikilib, $prefs, $tiki_p_read_article, $tiki_p_articles_read_heading, $dbTiki, $pageLang;
 	global $artlib; require_once 'lib/articles/artlib.php';
-	$default = array('max' => -1, 'start' => 0, 'usePagination' => 'n', 'topicId' => '', 'topic' => '', 'sort' => 'publishDate_desc', 'type' => '', 'lang' => '', 'quiet' => 'n', 'categId' => '', 'largefirstimage' => 'n', 'urlparam' => '');
+	$default = array('max' => -1, 'start' => 0, 'usePagination' => 'n', 'topicId' => '', 'topic' => '', 'sort' => 'publishDate_desc', 'type' => '', 'lang' => '', 'quiet' => 'n', 'categId' => '', 'largefirstimage' => 'n', 'urlparam' => '', 'translationOrphan' => '', 'showtable' => 'n');
 	$params = array_merge($default, $params);
 
 	extract($params, EXTR_SKIP);
+	$filter = '';
 	if (($prefs['feature_articles'] !=  'y') || (($tiki_p_read_article != 'y') && ($tiki_p_articles_read_heading != 'y'))) {
 		//	the feature is disabled or the user can't read articles, not even article headings
 		return("");
@@ -239,12 +248,16 @@ function wikiplugin_articles($data, $params)
 	}
 	$smarty->assign('largefirstimage', $largefirstimage);
 	if (!isset($overrideDates))	$overrideDates = 'n';
+
+	if (!empty($translationOrphan)) {
+		$filter['translationOrphan'] = $translationOrphan;
+	}
 	
 	include_once("lib/comments/commentslib.php");
 	$commentslib = new Comments($dbTiki);
 	
-	$listpages = $artlib->list_articles($start, $max, $sort, '', $dateStartTS, $dateEndTS, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang, '', '', ($overrideDates == 'y'), 'y');
- 	if ($prefs['feature_multilingual'] == 'y') {
+	$listpages = $artlib->list_articles($start, $max, $sort, '', $dateStartTS, $dateEndTS, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang, '', '', ($overrideDates == 'y'), 'y', $filter);
+ 	if ($prefs['feature_multilingual'] == 'y' && empty($translationOrphan)) {
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
 		$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data'], $pageLang);

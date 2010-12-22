@@ -1136,18 +1136,30 @@ class ArtLib extends TikiLib
 												, $max_rating = ''
 												, $override_dates = false
 												, $ispublished = ''
+												, $filter = ''
 												)
 		{
 
 		global $userlib, $user, $prefs;
 
-		$mid = '';
+		$mid = $join = '';
 		$bindvars = array();
 		$fromSql = '';
 
+		if (!empty($filter)) {
+			foreach ($filter as $typeF=>$val) {
+				if ($typeF == 'translationOrphan') {
+					global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
+					$multilinguallib->sqlTranslationOrphan('article', '`tiki_articles`', 'articleId', $val, $join, $mid, $bindvars);
+					$mid = ' where '.$mid;
+				}
+			}
+		}
+
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			$mid = ' where (`title` like ? or `heading` like ? or `body` like ?) ';
+			if (empty($mid)) $mid = ' where ';
+			$mid .= ' (`title` like ? or `heading` like ? or `body` like ?) ';
 			$bindvars = array($findesc, $findesc, $findesc);
 		}
 
@@ -1319,10 +1331,11 @@ class ArtLib extends TikiLib
 			`tiki_article_types`.`creator_edit`
 				from `tiki_articles`
 				$fromSql
+				$join
 				$mid $mid2 order by " . $this->convertSortMode($sort_mode);
 
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
-		$query_cant = "select distinct count(*) from `tiki_articles` $fromSql $mid $mid2";
+		$query_cant = "select distinct count(*) from `tiki_articles` $fromSql $join $mid $mid2";
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {

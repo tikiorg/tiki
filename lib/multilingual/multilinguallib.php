@@ -927,7 +927,21 @@ class MultilingualLib extends TikiLib
 			"   WHERE (`page_id`, `language`) = (?, ?)";	
 		$results = $this->query($query, array($page_id, $language));
 	}
-
+	function sqlTranslationOrphan($objectType, $sqlObjectId, $columnObjectId, $langs, &$join, &$mid, &$bindvars) {
+		$join .= " left join `tiki_translated_objects` tro on (tro.`type` = '$objectType' AND tro.`objId` = $sqlObjectId.`$columnObjectId`) ";
+		$translationOrphan_mid = " tro.`traId` IS NULL OR $sqlObjectId.`lang`IS NULL ";
+		foreach ($langs as $i=>$lg) {
+			$join .= " left join `tiki_translated_objects` tro_$i on (tro_$i.`traId` = tro.`traId` AND tro_$i.`lang`=?) ";
+			$translationOrphan_mid .= " OR tro_$i.`traId` IS NULL ";
+			$bindvars[] = $lg;
+		}
+		if (!empty($mid)) $mid .= ' AND ';
+		$mid .= "($translationOrphan_mid)";
+		if (sizeof($langs) == 1) {
+			$mid .= " AND ($sqlObjectId.`lang` != ? OR $sqlObjectId.`lang` IS NULL) ";
+			$bindvars[] = $langs[0];
+		}
+	}
 
 
 }
