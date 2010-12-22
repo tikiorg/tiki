@@ -31,7 +31,7 @@ function prefs_wikiapproval_list() {
 	$staging_groups['-1'] = tra('None');
 
 	foreach ($all_groups as $group) {
-		$staging_groups[] = $group;
+		$staging_groups[$group] = $group;
 	}
 	
 	return array(
