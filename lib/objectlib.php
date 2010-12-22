@@ -170,7 +170,7 @@ class ObjectLib extends TikiLib
 	
 	function get_object($type, $itemId) {
 		$query = 'select * from `tiki_objects` where `itemId`=?  and `type`=?';
-		$result = $this->query($query,array((int) $itemId, $type));
+		$result = $this->query($query,array($itemId, $type));
 		return $result->fetchRow();
 	}
 
