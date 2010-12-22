@@ -16,6 +16,7 @@ class TikiLib_WikiParserTest extends PHPUnit_Framework_TestCase
 		global $prefs;
 		$prefs['feature_page_title'] = 'y';
 		$prefs['feature_wiki_paragraph_formatting'] = 'n';
+		$prefs['pass_chr_special'] = 'n';
 		$o = new TikiLib;
 		$this->assertEquals($output, $o->parse_data($input, $options));
 	}
