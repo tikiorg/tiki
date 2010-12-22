@@ -141,6 +141,29 @@ class WikiLib extends TikiLib
 		return preg_match("/[\/?#\[\]@$&+;=<>]/", $name);		
 	}
 
+	/**
+	 * Duplicate an existing page
+	 *
+	 * @param string $name
+	 * @param string $copyName
+	 * @return bool
+	 */
+	function wiki_duplicate_page($name, $copyName = null) {
+		global $tikilib;
+
+		$info = $tikilib->get_page_info($name);
+
+		if (!$info) {
+			return false;
+		}
+
+		if (!$copyName) {
+			$copyName = $name . ' (' . $tikilib->now . ')';
+		}
+
+		return $tikilib->create_page($copyName, 0, $info['data'], $tikilib->now, $info['comment'], $info['user'], $info['ip'], $info['description'], $info['lang'], $info['is_html']);
+	}
+
 	// This method renames a wiki page
 	// If you think this is easy you are very very wrong
 	function wiki_rename_page($oldName, $newName) {

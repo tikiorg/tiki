@@ -308,6 +308,7 @@
 			<td>
 				{if $listpages[changes].perms.tiki_p_edit eq 'y'}
 					<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{icon _id='page_edit'}</a>
+					<a class="link" href="tiki-copypage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last">{icon _id='page_copy' alt="{tr}Copy{/tr}"}</a>
 				{/if}
 
 				{if $prefs.feature_history eq 'y' and $listpages[changes].perms.tiki_p_wiki_view_history eq 'y'}
