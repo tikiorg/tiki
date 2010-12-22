@@ -1,1 +1,0 @@
-{$categoryName} ({$categoryLocal}/{$categoryTotal}){* $categoryName, $categoryLocal, $categoryTotal - cerefull don't put space or | in the text*}

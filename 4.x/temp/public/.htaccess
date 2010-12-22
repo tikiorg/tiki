@@ -1,8 +1,0 @@
-<FilesMatch ".*">
-	order deny,allow
-	deny from all
-</FilesMatch>
-<FilesMatch "\.js">
-	order deny,allow
-	allow from all
-</FilesMatch>
