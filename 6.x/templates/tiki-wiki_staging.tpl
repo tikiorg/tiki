@@ -33,3 +33,9 @@
 		{tr}This is a new staging page that has not been approved before. Edit and manually move it to the category for approved pages to approve it for the first time.{/tr}
 	</div>
 {/if}
+
+{if $canEditStaging eq 'y' and $hasStaging eq 'y'}
+	<div class="tocnav">
+	  {tr}There is a staging page (not yet approved) for this page.{/tr}
+	 </div>
+{/if}
