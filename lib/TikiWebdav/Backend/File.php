@@ -172,62 +172,6 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		$this->unlock();
 	}
 
-	protected function getMimeType( $path, $filename = '' )
-	{
-		// Check if extension pecl/fileinfo is usable.
-		if ( $this->options->useMimeExts && ezcBaseFeatures::hasExtensionSupport( 'fileinfo' ) )
-		{
-			$fInfo = new fInfo( FILEINFO_MIME );
-			$mimeType = $fInfo->file( $this->root . $path );
-
-			// The documentation tells to do this, but it does not work with a
-			// current version of pecl/fileinfo
-			// $fInfo->close();
-
-			return $mimeType;
-		}
-
-		// Check if extension ext/mime-magic is usable.
-		if ( $this->options->useMimeExts && 
-				ezcBaseFeatures::hasExtensionSupport( 'mime_magic' ) &&
-				( $mimeType = mime_content_type( $this->root . $path ) ) !== false )
-		{
-			return $mimeType;
-		}
-
-		// Check if some browser submitted mime type is available.
-		/* FIXME
-			 $storage = $this->getPropertyStorage( $path );
-			 $properties = $storage->getAllProperties();
-
-			 if ( isset( $properties['DAV:']['getcontenttype'] ) )
-			 {
-			 return $properties['DAV:']['getcontenttype']->mime;
-			 }
-		 */
-		// Try to detect mimetype from the file extension
-		if ( ! empty( $filename ) && ( $pos = strrpos( $filename, '.' ) ) !== false )
-		{
-			include_once ("lib/mime/mimetypes.php");
-
-			$ext = substr( $filename, $pos + 1 );
-
-			if ( ! empty( $mimetypes[$ext] ) )
-			{
-				return $mimetypes[$ext];
-			}
-		}
-
-		if (isset($mimetypes[$ext])) {
-			return $mimetypes[$ext];
-		} else {
-			return $defaultmime;
-		}
-
-		// Default to 'application/octet-stream' if no mimetype has been detected
-		return 'application/octet-stream';
-	}
-
 	protected function createCollection( $path )
 	{
 		global $user, $tikilib;
@@ -325,11 +269,15 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				$fhash = md5( uniqid( $fhash ) );
 			}
 			while ( file_exists( $this->root . '/' . $fhash ) );
+
+			$mime = tiki_get_mime($this->root . '/' . $fhash, 'application/octet-stream', $name);
 		} else {
 			$fhash = '';
+			$mime = ($objectId['type'] != 'file') ? 'inode/directory' : tiki_get_mime_from_content($content);
 		}
 
 		print_debug("setResourceContents : $path/$fhash \n");
+
 		$fileInfo = $filegallib->get_file_info($objectId['id'], false, false);
 		$filegalInfo = $filegallib->get_file_gallery_info($fileInfo['galleryId']);
 
@@ -344,8 +292,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				$fileInfo['filename'],
 				$content,
 				@strlen( $content ),
-				///			empty($this->requestMimeType) ? $fileInfo['filetype'] : $this->requestMimeType,
-				$this->getMimeType( '/' . $fhash, $name ),
+				$mime,
 				$user,
 				$fhash,
 				'',
