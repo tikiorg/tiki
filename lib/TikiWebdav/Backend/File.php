@@ -1097,7 +1097,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 							$newPath,
 							'',
 							$filegallib->get_file_gallery_info( $infos['source']['parentId'] ),
-							true,
+							false,
 							$infos['source']['infos']['author'],
 							$infos['source']['infos']['created'],
 							$infos['source']['infos']['lockedby']
