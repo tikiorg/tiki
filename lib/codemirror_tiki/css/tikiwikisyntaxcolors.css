@@ -79,6 +79,13 @@ span.tw-header3 {
 	font-size: 1.1em;
 	font-weight: bold;
 }
+span.tw-header4 {
+	font-weight: bold;
+
+}
+span.tw-header5 {
+	font-weight: bold;
+}
 span.tw-listitem {
 	padding-left: 10px;
 	color: green;

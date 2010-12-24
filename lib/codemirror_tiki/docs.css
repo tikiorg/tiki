@@ -1,4 +1,4 @@
-pre {
+pre,.editbox {
   font-family: Courier New, monospaced;
   background-color: #eee;
   -moz-border-radius: 6px;
@@ -81,5 +81,6 @@ pre.code {
 .clear { display: block; }
 /* close commented backslash hack */
 .CodeMirror-wrapping {
-  background-color: #F8F8F8;
+	background-color: #F8F8F8;
+	border: 1px solid gray;
 } 
