@@ -5,28 +5,30 @@ function tiki_syntax_highlighter_base() {
 	
 	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {
 		$headerlib->add_cssfile( 'lib/codemirror_tiki/docs.css' );
-		$headerlib->add_jsfile( 'lib/codemirror_tiki/js/codemirror.js' );
-		
+		$headerlib->add_jsfile( 'lib/codemirror/js/codemirror.js' );		
+
 		$headerlib->add_js("
 			var editwiki = $('#editwiki');
 				
 			//ensure that codemirror is running, if so run
-			if (CodeMirror && editwiki[0]) {
-				var editor = CodeMirror.fromTextArea(editwiki[0], {
-					height: '350px',
-					parserfile: ['parsetikisyntax.js'],
-					stylesheet: ['lib/codemirror_tiki/css/tikiwikisyntaxcolors.css'],
-					path: 'lib/codemirror_tiki/js/',
-					onChange: function() {
-						//Setup codemirror to send the text back to the textarea
-						editwiki.val(editor.getCode());
-					}
-				});
-				
-				editwiki
-					.change(function() {
-						editor.setCode(editwiki.val());
+			if (CodeMirror) {			
+				if (editwiki[0]) {
+					var editor = CodeMirror.fromTextArea(editwiki[0], {
+						height: '350px',
+						path: 'lib/codemirror/js/',
+						parserfile: ['../../codemirror_tiki/js/parsetikisyntax.js'],
+						stylesheet: ['lib/codemirror_tiki/css/tikiwikisyntaxcolors.css'],
+						onChange: function() {
+							//Setup codemirror to send the text back to the textarea
+							editwiki.val(editor.getCode());
+						}
 					});
+				
+					editwiki
+						.change(function() {
+							editor.setCode(editwiki.val());
+						});
+				}
 			}
 		");
 	}
@@ -36,7 +38,7 @@ function tiki_syntax_highlighter_code() {
 	global $headerlib, $prefs;
 	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {
 		$headerlib->add_cssfile( 'lib/codemirror_tiki/docs.css' );
-		$headerlib->add_jsfile( 'lib/codemirror_tiki/js/codemirror.js' );
+		$headerlib->add_jsfile( 'lib/codemirror/js/codemirror.js' );
 		
 		$headerlib->add_js("
 			$(document)
@@ -48,13 +50,12 @@ function tiki_syntax_highlighter_code() {
 						var editor = CodeMirror.fromTextArea(code[0], {
 							height: '350px',
 							parserfile: ['parsexml.js', 'parsecss.js', 'tokenizejavascript.js', 'parsejavascript.js', 'parsehtmlmixed.js'],
-							stylesheet: ['lib/codemirror_tiki/css/xmlcolors.css', 'lib/codemirror_tiki/css/jscolors.css', 'lib/codemirror_tiki/css/csscolors.css'],
-							path: 'lib/codemirror_tiki/js/',
+							stylesheet: ['lib/codemirror/css/xmlcolors.css', 'lib/codemirror/css/jscolors.css', 'lib/codemirror/css/csscolors.css'],
+							path: 'lib/codemirror/js/',
 							onChange: function() {
 								//Setup codemirror to send the text back to the textarea
 								code.val(editor.getCode());
-							},
-							lineNumbers: true
+							}
 						});
 					}
 				});
@@ -66,7 +67,7 @@ function tiki_syntax_highlighter_r() {
 	global $headerlib, $prefs;
 	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {
 		$headerlib->add_cssfile( 'lib/codemirror_tiki/docs.css' );
-		$headerlib->add_jsfile( 'lib/codemirror_tiki/js/codemirror.js' );
+		$headerlib->add_jsfile( 'lib/codemirror/js/codemirror.js' );
 	
 		$headerlib->add_js("
 			$(document)
@@ -77,9 +78,9 @@ function tiki_syntax_highlighter_r() {
 					if (CodeMirror && r[0]) {
 						var editor = CodeMirror.fromTextArea(r[0], {
 							height: '350px',
-							parserfile: ['parsersplus.js'],
+							parserfile: ['../../codemirror_tiki/js/parsersplus.js'],
 							stylesheet: ['lib/codemirror_tiki/css/rspluscolors.css'],
-							path: 'lib/codemirror_tiki/js/',
+							path: 'lib/codemirror/js/',
 							onChange: function() {
 								//Setup codemirror to send the text back to the textarea
 								r.val(editor.getCode());
@@ -108,9 +109,9 @@ function tiki_syntax_highlighter_rr() {
 					if (CodeMirror) {
 						var editor = CodeMirror.fromTextArea('rr', {
 							height: '350px',
-							parserfile: ['parsersplus.js'],
+							parserfile: ['../../codemirror_tiki/js/parsersplus.js'],
 							stylesheet: ['lib/codemirror_tiki/css/rspluscolors.css'],
-							path: 'lib/codemirror_tiki/js/',
+							path: 'lib/codemirror/js/',
 							onChange: function() {
 								//Setup codemirror to send the text back to the textarea
 								rr.val(editor.getCode());
