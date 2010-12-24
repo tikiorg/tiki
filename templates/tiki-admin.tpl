@@ -8,8 +8,8 @@
 		{tr}This search feature and the <a href="tiki-edit_perspective.php">perspectives GUI</a> need <a href="http://dev.tiki.org/Dynamic+Preferences">dev.tiki.org/Dynamic+Preferences</a>. If you search for something and it's not appearing, please help improve keywords/descriptions.{/tr}
 	{/remarksbox*}
 	<p>
-		<label>{tr}Configuration search{/tr}: <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"/>
-		<input type="submit" value="{tr}Search{/tr}" {if $indexNeedsRebuilding} class="tips" title="{tr}Configuration search{/tr}|{tr}Note: The search index needs rebuilding, this will take a few minutes.{/tr}"{/if} /></label>
+		<label>{tr}Configuration search{/tr}: <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"/></label>
+		<input type="submit" value="{tr}Search{/tr}" {if $indexNeedsRebuilding} class="tips" title="{tr}Configuration search{/tr}|{tr}Note: The search index needs rebuilding, this will take a few minutes.{/tr}"{/if} />
 	</p>
 </form>
 {if $lm_error}
