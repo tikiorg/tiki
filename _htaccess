@@ -30,7 +30,7 @@
 #</IfModule>
 
 
-# Using ETags will lower the YSlow scores
+# Using ETags will improve the YSlow scores
 FileETag none
 
 <IfModule deflate_module>
@@ -74,6 +74,8 @@ RewriteRule (.*) - [L]
 # AddType application/x-httpd-php5 .php
 # AddHandler application/x-httpd-php5 .php
  
+# Permanent redirect: Add instructions as below. This is useful if you were using another Web application or static HTML and you want to avoid broken links
+# Redirect 301 /oldpage.html /tiki-index.php?page=newpage
  
 # direct one-word access
 RewriteRule ^(img\/trackers\/.*)   $1                                       [L]
