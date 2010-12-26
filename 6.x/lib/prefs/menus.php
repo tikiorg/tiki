@@ -16,10 +16,19 @@ function prefs_menus_list() {
 			'name' => tra('Default path for the icons'),
 			'type' => 'text',
 		),
-		'menus_item_names_raw' => array(
-			'name' => tra('Allow HTML in link text and do not escape the url in menu items (Please note: this might be insecure if you allow more people to edit menus)'),
-			'description' => tra('If enabled, menu item names treated as HTML item content and they are not escaped (do not replace HTML special characters), this allows the use of HTML in menu items to insert images for example, and menu item urls are not escaped which allows the use of permissable href tags. Code must be valid. This allows menu item editors to put arbitrary HTML; only enable if you know what you are doing.'),
+		'menus_item_names_raw_teaser' => array(
+			'name' => tra('Allow HTML in menu option names and URLs'),
+			'description' => tra('If enabled, menu option names and URL-s are treated as HTML content and they are not escaped (no replacement of HTML special characters). This allows the use of HTML to insert images for example. Code must be valid. This allows menu item editors to put arbitrary HTML; only enable if you know what you are doing.'),
 			'help' => 'Menus',
+			'type' => 'flag',
+		),
+		'menus_item_names_raw' => array(
+			'name' => tra('REALLY allow HTML (INSECURE)'),
+			'description' => tra('This needs to be checked for the parent preference to be actually enabled. This allows menu item editors to put arbitrary HTML, which could allow session hijacking; only enable if you know what you are doing.'),
+			'help' => 'Menus',
+			'dependencies' => array(
+				'menus_item_names_raw_teaser',
+			),
 			'type' => 'flag',
 		),
 	);

@@ -156,7 +156,10 @@
 				<div class="adminoptionbox">
 					{preference name=feature_phplayers}
 					{preference name=feature_cssmenus}
-					{preference name=menus_item_names_raw}
+					{preference name=menus_item_names_raw_teaser}
+					<div class="adminoptionboxchild" id="menus_item_names_raw_teaser_childcontainer">
+						{preference name=menus_item_names_raw}
+					</div>
 					{preference name=feature_userlevels}
 					{preference name=feature_featuredLinks}
 					{preference name=feature_menusfolderstyle}
