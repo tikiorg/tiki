@@ -8,11 +8,7 @@
 <meta name="generator" content="Tiki Wiki CMS Groupware - http://tiki.org" />
 
 {* --- Canonical URL --- *}
-{if $prefs.feature_canonical_url eq 'y'}
-	{if $page neq ''} <link rel="canonical" href="{$page|sefurl}" /> {/if}
-	{if $itemId neq ''} <link rel="canonical" href="tiki-view_tracker_item.php?itemId={$itemId}" /> {/if}
-	{if $comments_parentId neq ''} <link rel="canonical" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}" /> {/if}
-{/if}	
+{include file='canonical.tpl'}	
 
 {if !empty($forum_info.name) & $prefs.metatag_threadtitle eq 'y'}
 	<meta name="keywords" content="{tr}Forum{/tr} {$forum_info.name|escape} {$thread_info.title|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if}" />
