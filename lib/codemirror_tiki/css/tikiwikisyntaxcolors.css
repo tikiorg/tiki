@@ -103,6 +103,10 @@ span.tw-plugin-attributes {
 	color: #333366;
 }
 
+span.tw-plugin-attribute-parentheses {
+	color: #CC66CC;
+}
+
 span.tw-plugin-attribute-value {
 	color: #FF0033;
 }
