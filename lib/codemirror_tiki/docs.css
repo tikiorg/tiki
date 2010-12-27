@@ -83,4 +83,5 @@ pre.code {
 .CodeMirror-wrapping {
 	background-color: #F8F8F8;
 	border: 1px solid gray;
+	cursor: text;
 } 
