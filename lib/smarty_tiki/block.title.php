@@ -15,7 +15,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * smarty_block_title : add a title to a template.
  *
  * params: 
- *    help: name of the doc page on doc.tw.org
+ *    help: name of the doc page on doc.tiki.org
  *    admpage: admin panel name
  *    url: link on the title
  *
@@ -40,7 +40,7 @@ function smarty_block_title($params, $content, &$smarty, $repeat) {
   $html .= '<a class="pagetitle" href="' . $params['url'] . '">' . $content . "</a>\n";
   
   if ( $prefs['feature_help'] == 'y' && $prefs['helpurl'] != '' && $params['help'] != '' ) {
-    $html .= '<a href="' . $prefs['helpurl'] . $params['help'] . '" class="titletips" title="' . tra('Help page:') . ' ' . $content . '">'
+    $html .= '<a href="' . $prefs['helpurl'] . rawurlencode($params['help']) . '" class="titletips" title="' . tra('Help page:') . ' ' . $content . '">'
           . smarty_function_icon(array('_id' => 'help') , $smarty)
           . "</a>\n";
   }
