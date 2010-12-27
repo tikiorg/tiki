@@ -65,7 +65,7 @@ span.tw-titlebar {
 }
 span.tw-deleted {
 	text-decoration: line-through;
-	color: #303030;
+	color: #999999;
 }
 span.tw-header1 {
 	font-size: 1.3em;
@@ -100,7 +100,7 @@ span.tw-plugin-container {
 }
 
 span.tw-plugin-attributes {
-	color: #333366;
+	color: #000066;
 }
 
 span.tw-plugin-attribute-parentheses {
