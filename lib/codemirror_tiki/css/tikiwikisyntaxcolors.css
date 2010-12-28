@@ -116,3 +116,7 @@ span.tw-box {
 	border-width: 1px;
 	border-color: black;
 }
+
+span.tw-underline {
+	text-decoration: underline;
+}

@@ -10,12 +10,11 @@ function tiki_syntax_highlighter_base() {
 		$headerlib->add_js("
 			var startCodeMirror = function() {
 				var editwiki = $('#editwiki');
-				
 				//ensure that codemirror is running and CKEditor isn't, if so run
 				if (window.CKEDITOR) return false;
 				if (!editwiki[0]) return false;
 				if (!CodeMirror) return false;
-
+				
 				var editor = CodeMirror.fromTextArea(editwiki[0], {
 					height: '350px',
 					path: 'lib/codemirror/js/',
@@ -26,11 +25,8 @@ function tiki_syntax_highlighter_base() {
 						editwiki.val(editor.getCode());
 					}
 				});
-
-				editwiki
-					.change(function() {
-						editor.setCode(editwiki.val());
-					});
+				
+				addCodeMirrorEditorRelation(editor, editwiki);
 			};
 			startCodeMirror();
 		");
@@ -46,7 +42,7 @@ function tiki_syntax_highlighter_code() {
 		$headerlib->add_js("
 			$(document)
 				.bind('plugin_code_ready', function(args) {
-					var code = args.container.find('textarea:first');
+					var code = args.container.find('textarea:first').addClass('codeMirror');
 					//ensure that codemirror is running and CKEditor isn't, if so run
 					if (window.CKEDITOR) return false;
 					if (!code[0]) return false;
@@ -76,7 +72,7 @@ function tiki_syntax_highlighter_r() {
 		$headerlib->add_js("
 			$(document)
 				.bind('plugin_r_ready', function(args) {
-					var r = args.container.find('textarea:first');
+					var r = args.container.find('textarea:first').addClass('codeMirror');
 				
 					//ensure that codemirror is running and CKEditor isn't, if so run
 					if (window.CKEDITOR) return false;
@@ -108,7 +104,7 @@ function tiki_syntax_highlighter_rr() {
 		$headerlib->add_js("
 			$(document)
 				.bind('plugin_rr_ready', function(args) {
-					var rr = args.container.find('textarea:first');
+					var rr = args.container.find('textarea:first').addClass('codeMirror');
 				
 					//ensure that codemirror is running and CKEditor isn't, if so run
 					if (window.CKEDITOR) return false;

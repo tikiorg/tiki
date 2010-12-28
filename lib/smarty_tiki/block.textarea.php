@@ -353,7 +353,7 @@ function switchEditor(mode, form) {
 			$js_editconfirm .= "
 var hiddenParents = \$('#$as_id').parents('fieldset:hidden:last');
 if (hiddenParents.length) { hiddenParents.show(); }
-\$('#$as_id').resizable( { minWidth: \$('#$as_id').width(), minHeight: 50 });
+\$('#$as_id').not('.codeMirror').resizable( { minWidth: \$('#$as_id').width(), minHeight: 50 });
 if (hiddenParents.length) { hiddenParents.hide(); }
 ";
 		}
