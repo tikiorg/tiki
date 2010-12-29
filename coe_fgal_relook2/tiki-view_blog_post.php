@@ -147,10 +147,6 @@ if ($user && $prefs['feature_notepad'] == 'y' && $tiki_p_notepad == 'y' && isset
 	check_ticket('view-blog-post');
 	$tikilib->replace_note($user, 0, $post_info['title'] ? $post_info['title'] : $tikilib->date_format("%d/%m/%Y [%H:%M]", $post_info['created']) , $post_info['data']);
 }
-if ($prefs['feature_mobile'] == 'y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
-	include_once ("lib/hawhaw/hawtikilib.php");
-	HAWTIKI_view_blog_post($post_info);
-}
 
 ask_ticket('view-blog-post');
 // Display the template

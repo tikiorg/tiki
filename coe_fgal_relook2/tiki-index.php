@@ -162,7 +162,7 @@ if ( function_exists('utf8_encode') ) {
 }
 
 
-if (!$info) {
+if (!$info  || isset($_REQUEST['date']) || isset($_REQUEST['version'])) {
         if ($prefs['feature_wiki_use_date'] == 'y' && isset($_REQUEST['date'])) {
             // Date is required
             include_once ('lib/wiki/histlib.php');
@@ -505,13 +505,6 @@ if ($prefs['feature_user_watches'] == 'y') {
 }
 
 $sameurl_elements=Array('pageName','page');
-
-if ($prefs['feature_mobile'] == 'y') {
-	if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
-	include_once('lib/hawhaw/hawtikilib.php');
-	HAWTIKI_index($info);
-	}
-}
 
 ask_ticket('index');
 

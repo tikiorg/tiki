@@ -37,7 +37,6 @@ $crumbs[] = new Breadcrumb($prefs['browsertitle'], '', $prefs['tikiIndex']);
 if ($prefs['site_closed'] == 'y') require_once ('lib/setup/site_closed.php');
 require_once ('lib/setup/error_reporting.php');
 if ($prefs['feature_bot_bar_debug'] == 'y' || $prefs['use_load_threshold'] == 'y') require_once ('lib/setup/load_threshold.php');
-require_once ('lib/setup/absolute_urls.php');
 if (($prefs['feature_wysiwyg'] != 'n' && $prefs['feature_wysiwyg'] != 'y') || $prefs['case_patched'] == 'n') require_once ('lib/setup/patches.php');
 require_once ('lib/setup/sections.php');
 require_once ('lib/headerlib.php');
@@ -140,6 +139,11 @@ if ($prefs['feature_antibot'] == 'y' && is_null($user)) {
 
 if ($prefs['feature_credits'] == 'y') {
 	require_once('lib/setup/credits.php');
+}
+
+if ($prefs['feature_syntax_highlighter'] == 'y') {
+	require_once('lib/codemirror_tiki/codemirror_tiki.php');
+	tiki_syntax_highlighter_base();
 }
 
 $smarty->assign_by_ref('phpErrors', $phpErrors);

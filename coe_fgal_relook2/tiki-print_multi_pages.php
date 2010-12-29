@@ -101,7 +101,8 @@ if (isset($_REQUEST['display']) && $_REQUEST['display'] == 'pdf') {
 		die;
 	}
 
-	header("Cache-Control: public");
+	header('Cache-Control: private, must-revalidate');
+	header('Pragma: private');
 	header("Content-Description: File Transfer");
 	header('Content-disposition: attachment; filename="'. $pdfname . '.pdf"');
 	header("Content-Type: application/pdf");
