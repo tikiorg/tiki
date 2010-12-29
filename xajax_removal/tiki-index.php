@@ -162,7 +162,7 @@ if ( function_exists('utf8_encode') ) {
 }
 
 
-if (!$info) {
+if (!$info  || isset($_REQUEST['date']) || isset($_REQUEST['version'])) {
         if ($prefs['feature_wiki_use_date'] == 'y' && isset($_REQUEST['date'])) {
             // Date is required
             include_once ('lib/wiki/histlib.php');

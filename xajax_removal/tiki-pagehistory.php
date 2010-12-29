@@ -9,6 +9,7 @@ $section = 'wiki page';
 $section_class = "tiki_wiki_page manage";	// This will be body class instead of $section
 require_once ('tiki-setup.php');
 include_once ('lib/wiki/histlib.php');
+require_once ('lib/wiki/renderlib.php');
 
 $access->check_feature('feature_wiki');
 
@@ -38,6 +39,14 @@ if (!isset($_REQUEST["source"])) {
 	$access->check_permission('tiki_p_wiki_view_source');
 }
 $info = $tikilib->get_page_info($page);
+if (empty($info)) {
+	$smarty->assign('msg', tra('No page indicated'));
+	$smarty->display('error.tpl');
+	die;
+}
+$pageRenderer = new WikiRenderer( $info, $user);
+$pageRenderer->setupStaging();
+
 $smarty->assign_by_ref('info', $info);
 // If the page doesn't exist then display an error
 //check_page_exits($page);
@@ -74,10 +83,6 @@ if (isset($_REQUEST['history_pagesize']) && $paginate) {
 	$history_pagesize = $prefs['maxRecords'];
 }
 $smarty->assign('history_pagesize', $history_pagesize);
-
-if (!isset($_REQUEST['compare'])) {
-	$_REQUEST['diff_style'] = '';
-}
 
 // fetch page history, but omit the actual page content (to save memory)
 $history = $histlib->get_page_history($page, false, $history_offset, $paginate ? $history_pagesize : -1);

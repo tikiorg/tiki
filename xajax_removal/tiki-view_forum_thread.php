@@ -337,7 +337,8 @@ if (isset($_REQUEST['display'])) {
 		$generator = new PdfGenerator();
 		$pdf = $generator->getPdf( 'tiki-view_forum_thread.php', array('display' => 'print', 'comments_parentId' => $_REQUEST['comments_parentId'], 'forumId' => $_REQUEST['forumId']) );
 
-		header("Cache-Control: public");
+		header('Cache-Control: private, must-revalidate');
+		header('Pragma: private');
 		header("Content-Description: File Transfer");
 		header('Content-disposition: attachment; filename="'. $thread_info['title'] . '.pdf"');
 		header("Content-Type: application/pdf");

@@ -12,6 +12,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
 
 $langmapping = array(
     'ar' => array ( 'العربية', tra("Arabic") ),
+    'bg' => array(  'български език',      tra("Bulgarian")       ),
     'ca' => array(  'Català',      tra("Catalan")       ),
     'cn' => array(  '中文(簡体字)',      tra("Simplified Chinese")        ),
 	'cs' => array(  'Česky',      tra("Czech")        ),
