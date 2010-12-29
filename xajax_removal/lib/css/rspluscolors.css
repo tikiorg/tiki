@@ -1,0 +1,58 @@
+html {
+  cursor: text;
+}
+
+.editbox {
+  padding: .4em;
+  margin: 0;
+  font-family: monospace;
+  font-size: 10pt;
+  line-height: 1.1em;
+  color: black;
+}
+
+pre.code, .editbox {
+  color: #666666;
+}
+
+.editbox p {
+  margin: 0;
+}
+
+span.rsplus-delimiter, span.rsplus-special {
+  color: #666666;
+}
+
+span.rsplus-operator {
+  color: #666666;
+}
+
+span.rsplus-error {
+  background-color: #660000;
+  color: #ffffff;
+}
+
+span.rsplus-keyword {
+  color: #770088;
+  font-weight: bold;
+}
+
+span.rsplus-literal {
+  color: #ff0000;
+}
+
+span.rsplus-identifier, span.rsplus-func  {
+  color: black;
+}
+
+span.rsplus-type, span.rsplus-decorator {
+  color: #0000ff;
+}
+
+span.rsplus-comment {
+  color: #228B22;
+}
+
+span.rsplus-string, span.rsplus-bytes, span.rsplus-raw, span.rsplus-unicode {
+  color: #ff0000;
+}
