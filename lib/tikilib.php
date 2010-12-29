@@ -7523,7 +7523,7 @@ if( \$('#$id') ) {
 
 		$mail->setBcc(join(', ', $recipients));
 		
-		$mail->send();
+		$mail->send(array($prefs['sender_email']));
 	}
 	
 	private function plugin_find_implementation( & $implementation, & $data, & $args ) {
