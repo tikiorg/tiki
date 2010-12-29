@@ -30,7 +30,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * @param html|htmlall|url|quotes|hex|hexentity|javascript
  * @return string
  */
-function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'ISO-8859-1')
+function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'UTF-8')
 {
     switch ($esc_type) {
         case 'html':
