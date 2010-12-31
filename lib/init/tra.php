@@ -51,7 +51,7 @@ function init_language( $lg ) {
 		global ${"lang_$lg"};
 
 		$lang = array();
-		include_once("lang/$lg/language.php");
+		include("lang/$lg/language.php");
 		if (is_file("lang/$lg/custom.php")) {
 			include_once("lang/$lg/custom.php");
 		}
