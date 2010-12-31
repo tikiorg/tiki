@@ -91,14 +91,11 @@ function tra_impl($content, $lg='', $no_interactive = false, $args = array()) {
 		//   then it will try to translate 'Login' and ':' separately).
 		// This should avoid duplicated strings like 'Login' and 'Login:' that were needed before
 		//   (because there is no space before ':' in english, but there is one in others like french)
-		$punctuations = array(':', '!', ';', '.', ',', '?'); // Modify get_strings.php accordingly
-		$content_length = strlen($content);
-		foreach ( $punctuations as $p ) {
-			if ( $content[$content_length - 1] == $p ) {
-				$new_content = substr($content, 0, $content_length - 1);
-				if ( isset(${"lang_$lg"}[$new_content]) ) {
-					return tr_replace( ${"lang_$lg"}[$new_content].( isset(${"lang_$lg"}[$p]) ? ${"lang_$lg"}[$p] : $p ), $args );
-				}
+		$lastCharacter = $content[strlen($content) - 1];
+		if (in_array($lastCharacter, array(':', '!', ';', '.', ',', '?'))) { // Modify get_strings.php accordingly
+			$new_content = substr($content, 0, -1);
+			if ( isset(${"lang_$lg"}[$new_content]) ) {
+				return tr_replace( ${"lang_$lg"}[$new_content].( isset(${"lang_$lg"}[$lastCharacter]) ? ${"lang_$lg"}[$lastCharacter] : $lastCharacter ), $args );
 			}
 		}
 	}
