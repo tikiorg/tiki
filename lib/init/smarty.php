@@ -180,15 +180,10 @@ class Smarty_Tikiwiki extends Smarty
 		if (!$isCompiled) {
 			$lgSave = $prefs['language'];
 			$prefs['language'] = $lg;
-			include('lang/'.$prefs['language'].'/language.php');
-				// the language file needs to be included again:
-				// the file could have been included before: prefilter.tr using include_once will not reload the file
-				// but the $lang can be from another language
 		}
 		$res = parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_display);
 		if (!$isCompiled) {
 			$prefs['language'] = $lgSave;
-			include ('lang/'.$prefs['language'].'/language.php');
 		}
 
 		return preg_replace("/^[ \t]*/", '', $res);
