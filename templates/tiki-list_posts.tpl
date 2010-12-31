@@ -35,10 +35,10 @@
 	{cycle values="odd,even" print=false}
 	{section name=changes loop=$posts}
 		<tr class="{cycle}">
-			<td><a class="link" href="tiki-view_blog_post.php?postId={$posts[changes].postId}">{$posts[changes].title}</a></td>
+			<td><a class="link" href="tiki-view_blog_post.php?postId={$posts[changes].postId}">{$posts[changes].title|escape}</a></td>
 			{if !isset($blogId)}
 				<td>
-					<a class="blogname" href="tiki-edit_blog.php?blogId={$posts[changes].blogId}" title="{$posts[changes].blogTitle}">{$posts[changes].blogTitle|truncate:$prefs.blog_list_title_len:"...":true|escape}</a>
+					<a class="blogname" href="tiki-edit_blog.php?blogId={$posts[changes].blogId}" title="{$posts[changes].blogTitle|escape}">{$posts[changes].blogTitle|truncate:$prefs.blog_list_title_len:"...":true|escape}</a>
 				</td>
 			{/if}
 			<td>&nbsp;{$posts[changes].created|tiki_short_date}&nbsp;</td>
