@@ -3836,6 +3836,7 @@ CREATE TABLE `tiki_credits_types` (
 -- --------------------------------------------------------
 -- Calendar reminder table
 -- --------------------------------------------------------
+DROP TABLE IF EXISTS custom_calendar_reminder;
 CREATE TABLE custom_calendar_reminder
 (
     reminder_id INT NOT NULL AUTO_INCREMENT,
