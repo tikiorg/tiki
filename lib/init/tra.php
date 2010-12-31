@@ -77,39 +77,38 @@ function init_language( $lg ) {
 function tra_impl($content, $lg='', $no_interactive = false, $args = array()) {
 	global $prefs, $tikilib;
 
-	if ($content != '') {
-		global $lang;
-		global ${"lang_$lg"};
-		if ($lg and isset(${"lang_$lg"}[$content])) {
-			return tr_replace( ${"lang_$lg"}[$content], $args );
-		} else {
-			// If no translation has been found and if the string ends with a punctuation,
-			//   try to translate punctuation separately (e.g. if the content is 'Login:' or 'Login :',
-			//   then it will try to translate 'Login' and ':' separately).
-			// This should avoid duplicated strings like 'Login' and 'Login:' that were needed before
-			//   (because there is no space before ':' in english, but there is one in others like french)
-			$punctuations = array(':', '!', ';', '.', ',', '?'); // Modify get_strings.php accordingly
-			$content_length = strlen($content);
-			foreach ( $punctuations as $p ) {
-				if ( $content[$content_length - 1] == $p ) {
-					$new_content = substr($content, 0, $content_length - 1);
-					if ( isset(${"lang_$lg"}[$new_content]) ) {
-						return tr_replace( ${"lang_$lg"}[$new_content].( isset(${"lang_$lg"}[$p]) ? ${"lang_$lg"}[$p] : $p ), $args );
-					}
+	if (empty($content)) {
+		return '';
+	}
+	
+	global ${"lang_$lg"};
+	
+	if ($lg and isset(${"lang_$lg"}[$content])) {
+		return tr_replace( ${"lang_$lg"}[$content], $args );
+	} else {
+		// If no translation has been found and if the string ends with a punctuation,
+		//   try to translate punctuation separately (e.g. if the content is 'Login:' or 'Login :',
+		//   then it will try to translate 'Login' and ':' separately).
+		// This should avoid duplicated strings like 'Login' and 'Login:' that were needed before
+		//   (because there is no space before ':' in english, but there is one in others like french)
+		$punctuations = array(':', '!', ';', '.', ',', '?'); // Modify get_strings.php accordingly
+		$content_length = strlen($content);
+		foreach ( $punctuations as $p ) {
+			if ( $content[$content_length - 1] == $p ) {
+				$new_content = substr($content, 0, $content_length - 1);
+				if ( isset(${"lang_$lg"}[$new_content]) ) {
+					return tr_replace( ${"lang_$lg"}[$new_content].( isset(${"lang_$lg"}[$p]) ? ${"lang_$lg"}[$p] : $p ), $args );
 				}
 			}
 		}
 	}
 
-	if (isset($prefs['record_untranslated']) && $prefs['record_untranslated'] == 'y' && !empty($content) && $lg != 'en') {
+	if (isset($prefs['record_untranslated']) && $prefs['record_untranslated'] == 'y' && $lg != 'en' && isset($tikilib)) { // ### Trebly:B00624-01:added test on tikilib existence : on the first launch of tra tikilib is not yet set
 		$query = 'select `id` from `tiki_untranslated` where `source`=? and `lang`=?';
-				// ### Trebly:B00624-01:added test on tikilib existence : on the first launch of tra tikilib is not yet set  
-        if (isset($tikilib)) {     
-      		if (!$tikilib->getOne($query, array($content,$lg))) {
-      			$query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
-      			$tikilib->query($query, array($content,$lg),-1,-1,false);
-      		}
-      	}	
+      	if (!$tikilib->getOne($query, array($content,$lg))) {
+      		$query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
+      		$tikilib->query($query, array($content,$lg),-1,-1,false);
+      	}
 	}
 
 	return tr_replace( $content, $args );
