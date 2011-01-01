@@ -1524,7 +1524,14 @@ CREATE TABLE `tiki_modules` (
   KEY `namePosOrdParam` (`name`(100), `position`, `ord`, `params`(140))
 ) ENGINE=MyISAM;
 
-INSERT INTO tiki_modules (name,position,ord,cache_time,params,groups) VALUES ('Application Menu','l',30,0,'flip=y','a:1:{i:0;s:10:"Registered";}');
+INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES
+	('Application Menu','l',30,7200,'flip=y','a:1:{i:0;s:10:"Registered";}'),
+	('logo','t',1,7200,'nobox=y&notitle=n&style=float%3Aleft%3B','a:1:{i:0;s:9:"Anonymous";}'),
+	('login_box','t',2,0,'mode=header&nobox=y&style=float%3Aright%3B','a:1:{i:0;s:9:"Anonymous";}'),
+	('search','t',6,7200,'nobox=y&style=float%3Aright%3Bclear%3Aright%3B','a:1:{i:0;s:9:"Anonymous";}'),
+	('quickadmin','t',3,7200,'nobox=y&style=float%3Aleft%3Bmargin%3A0+5em%3B','a:1:{i:0;s:6:"Admins";}'),
+	('menu','t',5,7200,'id=43&type=horiz&css=y&nobox=y&style=clear%3Aboth%3B','a:1:{i:0;s:9:"Anonymous";}'),
+	('breadcrumbs','t',6,0,'nobox=y','a:1:{i:0;s:9:"Anonymous";}');
 
 DROP TABLE IF EXISTS `tiki_newsletter_subscriptions`;
 CREATE TABLE `tiki_newsletter_subscriptions` (
@@ -1664,7 +1671,7 @@ CREATE TABLE `tiki_polls` (
   `active` char(1) default NULL,
   `publishDate` int(14) default NULL,
   `voteConsiderationSpan` int(4) default 0,
-	`anonym` ENUM( 'a', 'u', 'i', 'c' ) NOT NULL DEFAULT 'u',
+    `anonym` ENUM( 'a', 'u', 'i', 'c' ) NOT NULL DEFAULT 'u',
   PRIMARY KEY (`pollId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 ALTER TABLE tiki_polls ADD INDEX tiki_poll_lookup ( active , title );
