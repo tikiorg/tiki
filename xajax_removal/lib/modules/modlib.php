@@ -528,6 +528,10 @@ class ModLib extends TikiLib
 				'name' => tra('Style'),
 				'description' => tra('CSS styling for positioning the module.'),
 			),
+			'class' => array(
+				'name' => tra('Class'),
+				'description' => tra('Custom CSS class.'),
+			),
 		) );
 
 		// Parameters common to several modules, but not all

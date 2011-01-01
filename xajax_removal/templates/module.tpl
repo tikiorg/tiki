@@ -63,9 +63,9 @@
 		{/if}
 		<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]--></h3>
 	{/if}
-		<div id="mod-{$module_name|cat:$module_position|cat:$module_ord|escape}" style="display: {if !isset($module_display) or $module_display}block{else}none{/if};{$module_style}" class="clearfix box-data">
+		<div id="mod-{$module_name|cat:$module_position|cat:$module_ord|escape}" style="display: {if !isset($module_display) or $module_display}block{else}none{/if};{$module_style}" class="clearfix box-data{if !empty($module_params.class)} {$module_params.class}{/if}">
 {else}
-		<div id="module_{$moduleId}" style="{$module_style}" class="module">
+		<div id="module_{$moduleId}" style="{$module_style}" class="module{if !empty($module_params.class)} {$module_params.class}{/if}">
 {/if}
 {$module_content}
 {$module_error}
