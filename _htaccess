@@ -106,10 +106,11 @@ RewriteRule ^register$             tiki-register.php                        [L]
 RewriteRule ^my$                   tiki-my_tiki.php                         [L]
 RewriteRule ^newsletters$          tiki-newsletters.php                     [L]
 RewriteRule ^quizzes$              tiki-list_quizzes.php                    [L]
+RewriteRule ^sheets$               tiki-sheets.php                          [L]
 RewriteRule ^stats$                tiki-stats.php                           [L]
 RewriteRule ^surveys$              tiki-list_surveys.php                    [L]
 RewriteRule ^trackers$             tiki-list_trackers.php                   [L]
-RewriteRule ^sheets$               tiki-sheets.php                          [L]
+RewriteRule ^users$                tiki-list_users.php                      [L]
 
 # access any object by its numeric identifier
 RewriteRule ^article([0-9]+)\-.*(&comzone=.*)$  article$1$2
