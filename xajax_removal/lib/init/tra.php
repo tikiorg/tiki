@@ -4,6 +4,7 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
+// [FIX] Trebly:B00624-01
 
 /** translate a English string
  * @param $content - English string
@@ -50,7 +51,7 @@ function init_language( $lg ) {
 		global ${"lang_$lg"};
 
 		$lang = array();
-		include_once("lang/$lg/language.php");
+		include("lang/$lg/language.php");
 		if (is_file("lang/$lg/custom.php")) {
 			include_once("lang/$lg/custom.php");
 		}
@@ -76,36 +77,35 @@ function init_language( $lg ) {
 function tra_impl($content, $lg='', $no_interactive = false, $args = array()) {
 	global $prefs, $tikilib;
 
-	if ($content != '') {
-		global $lang;
-		global ${"lang_$lg"};
-		if ($lg and isset(${"lang_$lg"}[$content])) {
-			return tr_replace( ${"lang_$lg"}[$content], $args );
-		} else {
-			// If no translation has been found and if the string ends with a punctuation,
-			//   try to translate punctuation separately (e.g. if the content is 'Login:' or 'Login :',
-			//   then it will try to translate 'Login' and ':' separately).
-			// This should avoid duplicated strings like 'Login' and 'Login:' that were needed before
-			//   (because there is no space before ':' in english, but there is one in others like french)
-			$punctuations = array(':', '!', ';', '.', ',', '?'); // Modify get_strings.php accordingly
-			$content_length = strlen($content);
-			foreach ( $punctuations as $p ) {
-				if ( $content[$content_length - 1] == $p ) {
-					$new_content = substr($content, 0, $content_length - 1);
-					if ( isset(${"lang_$lg"}[$new_content]) ) {
-						return tr_replace( ${"lang_$lg"}[$new_content].( isset(${"lang_$lg"}[$p]) ? ${"lang_$lg"}[$p] : $p ), $args );
-					}
-				}
+	if (empty($content)) {
+		return '';
+	}
+	
+	global ${"lang_$lg"};
+	
+	if ($lg and isset(${"lang_$lg"}[$content])) {
+		return tr_replace( ${"lang_$lg"}[$content], $args );
+	} else {
+		// If no translation has been found and if the string ends with a punctuation,
+		//   try to translate punctuation separately (e.g. if the content is 'Login:' or 'Login :',
+		//   then it will try to translate 'Login' and ':' separately).
+		// This should avoid duplicated strings like 'Login' and 'Login:' that were needed before
+		//   (because there is no space before ':' in english, but there is one in others like french)
+		$lastCharacter = $content[strlen($content) - 1];
+		if (in_array($lastCharacter, array(':', '!', ';', '.', ',', '?'))) { // Modify get_strings.php accordingly
+			$new_content = substr($content, 0, -1);
+			if ( isset(${"lang_$lg"}[$new_content]) ) {
+				return tr_replace( ${"lang_$lg"}[$new_content].( isset(${"lang_$lg"}[$lastCharacter]) ? ${"lang_$lg"}[$lastCharacter] : $lastCharacter ), $args );
 			}
 		}
 	}
 
-	if (isset($prefs['record_untranslated']) && $prefs['record_untranslated'] == 'y' && !empty($content) && $lg != 'en') {
+	if (isset($prefs['record_untranslated']) && $prefs['record_untranslated'] == 'y' && $lg != 'en' && isset($tikilib)) { // ### Trebly:B00624-01:added test on tikilib existence : on the first launch of tra tikilib is not yet set
 		$query = 'select `id` from `tiki_untranslated` where `source`=? and `lang`=?';
-		if (!$tikilib->getOne($query, array($content,$lg))) {
-			$query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
-			$tikilib->query($query, array($content,$lg),-1,-1,false);
-		}
+      	if (!$tikilib->getOne($query, array($content,$lg))) {
+      		$query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
+      		$tikilib->query($query, array($content,$lg),-1,-1,false);
+      	}
 	}
 
 	return tr_replace( $content, $args );

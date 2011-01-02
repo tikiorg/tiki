@@ -100,7 +100,7 @@ function capLock(e){
 				{else}{$error_login|escape}{/if}
 			{/remarksbox}
 		  {/if}
-            <div><label for="login-user">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if}:</label><br />
+            <div><label for="login-user">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username:{/tr}{/if}</label><br />
 		{if $loginuser eq ''}
               <input type="text" name="user" id="login-user" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" {if !empty($error_login)} value="{$error_user|escape}"{/if} />
 	  <script type="text/javascript">document.getElementById('login-user').focus();</script>

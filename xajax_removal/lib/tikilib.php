@@ -3542,20 +3542,20 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		if (is_array($find)) { // you can use an array of pages
-			$mid = " where `pageName` IN (".implode(',',array_fill(0,count($find),'?')).")";
+			$mid = " where LOWER(`pageName`) IN (".implode(',',array_fill(0,count($find),'LOWER(?)')).")";
 			$bindvars = $find;
 		} elseif (is_string($find) && !empty($find)) { // or a string
 			if (!$exact_match && $find) {
 				$find = preg_replace("/([^\s]+)/","%\\1%",$find);
 				$f = preg_split("/[\s]+/",$find,-1,PREG_SPLIT_NO_EMPTY);
 				if (empty($f)) {//look for space...
-					$mid = " where `pageName` like '%$find%'";
+					$mid = " where LOWER(`pageName`) like LOWER('%$find%')";
 				} else {
-					$mid = " where `pageName` like ".implode(' or `pageName` like ',array_fill(0,count($f),'?'));
+					$mid = " where LOWER(`pageName`) like ".implode(' or LOWER(`pageName`) like ',array_fill(0,count($f),'LOWER(?)'));
 					$bindvars = $f;
 				}
 			} else {
-				$mid = " where `pageName` like ? ";
+				$mid = " where LOWER(`pageName`) like LOWER(?) ";
 				$bindvars = array($find);
 			}
 		} else {
@@ -3623,14 +3623,9 @@ class TikiLib extends TikiDb_Bridge
 					$join_tables .= " left join `tiki_structures` as tss on (tss.`page_id` = tp.`page_id`) ";
 					$tmp_mid[] = "(tss.`page_ref_id` is null)";
 				} elseif ($type == 'translationOrphan') {
-					$join_tables .= " left join `tiki_translated_objects` tro on (tro.`type` = 'wiki page' AND tro.`objId` = tp.`page_id`) ";
-					$translationOrphan_mid = " tro.`traId` IS NULL OR tp.`lang`IS NULL ";
-					foreach ($val as $i=>$lg) {
-						$join_tables .= " left join `tiki_translated_objects` tro_$i on (tro_$i.`traId` = tro.`traId` AND tro_$i.`lang`=?) ";
-						$translationOrphan_mid .= " OR tro_$i.`traId` IS NULL ";
-						$bindvars[] = $lg;
-					}
-					$tmp_mid[] = "($translationOrphan_mid)";
+					global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
+					$multilinguallib->sqlTranslationOrphan('wiki page', 'tp', 'page_id', $val, $join_tables, $midto, $bindvars);
+					$tmp_mid[] = $midto;
 				}
 			}
 			if (!empty($tmp_mid)) {
@@ -5067,6 +5062,15 @@ if( \$('#$id') ) {
 		return false;
 	}
 
+	/**
+	 * Check if possible to execute a plugin
+	 * 
+	 * @param string $name
+	 * @param string $data
+	 * @param array $args
+	 * @param bool $dont_modify
+	 * @return bool|string Boolean true if can execute, string 'rejected' if can't execute and plugin fingerprint if pending
+	 */
 	function plugin_can_execute( $name, $data = '', $args = array(), $dont_modify = false ) {
 		global $prefs;
 
@@ -7426,28 +7430,49 @@ if( \$('#$id') ) {
 		}
 
 		if( isset( $data['content'] ) ) {
-			$this->apply_plugin_save_handlers( $context, $data );
+			$this->plugin_post_save_actions( $context, $data );
 		}
 	}
 
-	private function apply_plugin_save_handlers( $context, $data ) {
+	/**
+	 * Foreach plugin used in a object content call its save handler,
+	 * if one exist, and send email notifications when it has pending
+	 * status, if preference is enabled.
+	 *  
+	 * A plugin save handler is a function defined on the plugin file
+	 * with the following format: wikiplugin_$pluginName_save()
+	 * 
+	 * @param array $context object type and id
+	 * @param array $data
+	 * @return void
+	 */
+	private function plugin_post_save_actions( $context, $data ) {
 		require_once 'WikiParser/PluginMatcher.php';
 		require_once 'WikiParser/PluginArgumentParser.php';
+		global $prefs;
 
 		$argumentParser = new WikiParser_PluginArgumentParser;
 
 		$matches = WikiParser_PluginMatcher::match( $data['content'] );
 
 		foreach( $matches as $match ) {
-			$implementation = $match->getName();
+			$plugin_name = $match->getName();
 			$body = $match->getBody();
 			$arguments = $argumentParser->parse( $match->getArguments() );
 
 			$dummy_output = '';
-			if( $this->plugin_enabled( $implementation, $dummy_output ) ) {
-				$this->plugin_find_implementation( $implementation, $body, $arguments );
+			if( $this->plugin_enabled( $plugin_name, $dummy_output ) ) {
+				$status = $this->plugin_can_execute($plugin_name, $body, $arguments, true);
 
-				$func_name = 'wikiplugin_' . $implementation . '_save';
+				// when plugin status is pending, $status equals plugin fingerprint
+				if ($prefs['wikipluginprefs_pending_notification'] == 'y' && $status !== true && $status != 'rejected') {
+					//TODO: create preference to enable and disable notifications
+					$this->plugin_pending_notification($plugin_name, $context);
+				}
+				
+				$this->plugin_find_implementation( $plugin_name, $body, $arguments );
+
+				$func_name = 'wikiplugin_' . $plugin_name . '_save';
 
 				if( function_exists( $func_name ) ) {
 					$func_name( $context, $body, $arguments );
@@ -7456,6 +7481,51 @@ if( \$('#$id') ) {
 		}
 	}
 
+	/**
+	 * Send notification by email that a plugin is waiting to be
+	 * approved to everyone with permission to approve it.
+	 * 
+	 * @param string $plugin_name
+	 * @param array $context object type and id
+	 * @return void
+	 */
+	private function plugin_pending_notification($plugin_name, $context) {
+		require_once('lib/webmail/tikimaillib.php');
+		global $userlib, $prefs, $objectlib, $base_url;
+		
+		$object = $objectlib->get_object($context['type'], $context['object']);
+		
+		$mail = new TikiMail(null, $prefs['sender_email']);
+		$mail->setSubject(tra("Plugin $plugin_name pending approval"));
+		$mail->setHtml(tra("Plugin $plugin_name is pending approval on <a href='$base_url{$object['href']}'>{$object['name']}</a>"));
+		
+		$allGroups = $userlib->get_groups();
+		$accessor = Perms::get($context);
+		
+		// list of groups with permission to approve plugin on this object
+		$groups = array();
+		
+		foreach ($allGroups['data'] as $group) {
+			$accessor->setGroups(array($group['groupName']));
+			if ($accessor->plugin_approve) {
+				$groups[] = $group['groupName'];
+			}
+		}
+
+		$recipients = array();
+		
+		foreach ($groups as $group) {
+			$recipients = array_merge($recipients, $userlib->get_group_users($group, 0, -1, 'email'));
+		}
+		
+		$recipients = array_filter($recipients);
+		$recipients = array_unique($recipients);
+
+		$mail->setBcc(join(', ', $recipients));
+		
+		$mail->send(array($prefs['sender_email']));
+	}
+	
 	private function plugin_find_implementation( & $implementation, & $data, & $args ) {
 		if( $info = $this->plugin_alias_info( $implementation ) ) {
 			$implementation = $info['implementation'];
