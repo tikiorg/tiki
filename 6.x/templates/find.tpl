@@ -40,7 +40,7 @@
 		{else}
 			{tr}{$whatlabel}{/tr}
 		{/if}
-		<input type="text" name="find" value="{$find|escape}" />
+		<input type="text" name="find" id ="find" value="{$find|escape}" />
 	</label>
 
 {if isset($exact_match)}
