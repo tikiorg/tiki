@@ -13,7 +13,7 @@
 {/if}</p>
 
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=textarea" target="tikihelp" class="tikihelp">Activate/deactivate plugins</a>
+<a href="tiki-admin.php?page=textarea" target="tikihelp" class="tikihelp">{tr}Activate/deactivate plugins{/tr}</a>
 {/if}
 
 {listfilter selectors='#plugins_help_table tr'} 
