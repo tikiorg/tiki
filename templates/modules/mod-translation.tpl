@@ -15,9 +15,9 @@
 			{if $mod_translation_better_known or $mod_translation_better_other}
 				<div>			
 					{if $from_edit_page ne 'y'}
-						<b>{tr}Incoming{/tr}:</b>
+						<b>{tr}Incoming:{/tr}</b>
 					{else}
-						{tr}To <strong>continue translating</strong>, select the language to translate from{/tr}:
+						{tr}To <strong>continue translating</strong>, select the language to translate from:{/tr}
 					{/if}			
 					{if $mod_translation_better_known}
 						<ul>
@@ -73,7 +73,7 @@
 			
 			{if $mod_translation_worst_known or $mod_translation_worst_other}
 				<div>			
-					<b>{tr}Outgoing{/tr}:</b>
+					<b>{tr}Outgoing:{/tr}</b>
 					{if $mod_translation_worst_known}
 					<ul>
 						{foreach item=worst from=$mod_translation_worst_known}
