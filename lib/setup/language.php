@@ -52,3 +52,7 @@ if (empty($prefs['language'])) {
 	$prefs['language'] = $prefs['site_language'];
 }
 
+if ($prefs['feature_multilingual'] == 'y' && $prefs['change_language'] == 'n') {
+	$prefs['language'] = $_SESSION['s_prefs']['language'];
+}
+
