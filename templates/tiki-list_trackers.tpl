@@ -11,7 +11,7 @@
 {if ($channels) or ($find)}
 	{include file='find.tpl'}
 	{if ($find) and ($channels)}
-		<p>{tr}Found{/tr} {$channels|@count} {tr}trackers{/tr}:</p>
+		<p>{tr}Found{/tr} {$channels|@count} {tr}trackers:{/tr}</p>
 	{/if}
 {/if}
 <!-- beginning of table -->
@@ -39,7 +39,7 @@
 			</tr>
 		{/if}
 	{sectionelse}
-		<tr><td colspan="5" class="odd"><strong>{tr}No records found{/tr}{if $find} {tr}with{/tr}: {$find}{/if}.</strong></td></tr>
+		<tr><td colspan="5" class="odd"><strong>{tr}No records found{/tr}{if $find} {tr}with:{/tr} {$find}{/if}.</strong></td></tr>
 	{/section}
 </table>
 <!-- Beginning of the prev/next advance buttons found at bottom of page -->

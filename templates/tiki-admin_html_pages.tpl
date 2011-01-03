@@ -23,7 +23,7 @@
 	<input type="hidden" name="pageName" value="{$pageName|escape}" />
 	<table class="formcolor">
 		<tr>
-			<td style="width:150px;">{tr}Page name{/tr}:</td>
+			<td style="width:150px;">{tr}Page name:{/tr}</td>
 			<td>
 				<input type="text" maxlength="255" size="40" name="pageName" value="{$info.pageName|escape}" />
 			</td>
@@ -31,7 +31,7 @@
 
 		{if $tiki_p_use_content_templates eq 'y'}
 			<tr>
-				<td>{tr}Apply template{/tr}:</td>
+				<td>{tr}Apply template:{/tr}</td>
 				<td>
 					<select name="templateId"{if !$templates} disabled="disabled"{/if} onchange="javascript:document.getElementById('editpageform').submit();">
 						<option value="0">{tr}none{/tr}</option>
@@ -44,7 +44,7 @@
 		{/if}
 
 		<tr>
-			<td>{tr}Type{/tr}:</td>
+			<td>{tr}Type:{/tr}</td>
 			<td>
 				<select name="type">
 					<option value='d'{if $info.type eq 'd'} selected="selected"{/if}>{tr}Dynamic{/tr}</option>
@@ -53,7 +53,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td>{tr}Refresh rate (if dynamic){/tr}:</td>
+			<td>{tr}Refresh rate (if dynamic):{/tr}</td>
 			<td>
 				<input type="text" size="5" name="refresh" value="{$info.refresh|escape}" /> {tr}seconds{/tr}
 			</td>
@@ -61,7 +61,7 @@
 
 		<tr>
 			<td>
-				{tr}Content{/tr}:
+				{tr}Content:{/tr}
 			</td>
 			<td>
 				<textarea name="content" id="htmlcode" rows="25" style="width:95%;">{$info.content|escape}</textarea>

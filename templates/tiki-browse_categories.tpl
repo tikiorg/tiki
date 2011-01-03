@@ -13,7 +13,7 @@
 </div>
 
 <div class="navbar">
-	{tr}Browse in{/tr}:
+	{tr}Browse in:{/tr}
 	
 	<span class="button">
 		<a {if $type eq ''} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep}&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}All{/tr}</a>
@@ -126,7 +126,7 @@
 <br /><br />
 
 {if $path}
-	<div class="treetitle">{tr}Current category{/tr}:
+	<div class="treetitle">{tr}Current category:{/tr}
 		<a href="tiki-browse_categories.php?parentId=0&amp;deep={$deep|escape:"url"}&amp;type={$type|escape:"url"}" class="categpath">{tr}Top{/tr}</a>
 		{section name=x loop=$path}
 			&nbsp;{$prefs.site_crumb_seper}&nbsp;

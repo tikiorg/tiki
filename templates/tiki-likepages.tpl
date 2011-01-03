@@ -1,4 +1,4 @@
-<h2>{tr}Pages like{/tr}:
+<h2>{tr}Pages like:{/tr}
 
 {if $page_exists eq 'n'}
 '{$page}'

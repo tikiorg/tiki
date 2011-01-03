@@ -90,19 +90,19 @@
           <a href="{$item.galleryId|sefurl:gallery}"><img alt="{tr}subgallery{/tr} {$item.name}" class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" /></a>
 	  <br />
 	  <small class="caption">
-		{tr}Subgallery{/tr}: 
+		{tr}Subgallery:{/tr} 
 			{if $showname=='y' || $showfilename=='y'}{$item.name}<br />{/if}
-			{if $showimageid=='y'}{tr}ID{/tr}: {$item.galleryId}<br />{/if}
+			{if $showimageid=='y'}{tr}ID:{/tr} {$item.galleryId}<br />{/if}
 			{if $showcategories=='y'}
-				{tr}Categories{/tr}:
+				{tr}Categories:{/tr}
                        		{section name=categ loop=item.categories}
                         		<li>{$item.categories[categ]}</li>
                 		{/section}
                 		</ul><br />
 			{/if}
 			{if $showdescription=='y'}{$item.description}<br />{/if}
-			{if $showcreated=='y'}{tr}Created{/tr}: {$item.created|tiki_short_date}<br />{/if}
-			{if $showuser=='y'}{tr}User{/tr}: {$item.user|userlink}<br />{/if}
+			{if $showcreated=='y'}{tr}Created:{/tr} {$item.created|tiki_short_date}<br />{/if}
+			{if $showuser=='y'}{tr}User:{/tr} {$item.user|userlink}<br />{/if}
 			{if $showxysize=='y' || $showfilesize=='y'}({$item.images} Images){/if}
 			{if $showhits=='y'}[{$item.hits} {if $item.hits == 1}{tr}Hit{/tr}{else}{tr}Hits{/tr}{/if}]<br />{/if}
                         </small>
@@ -127,10 +127,10 @@
 	  <small class="caption">
 	  {if $prefs.gal_image_mouseover neq 'only'}
 		{if $showname=='y'}{$item.name}<br />{/if}
-		{if $showfilename=='y'}{tr}Filename{/tr}: {$item.filename}<br />{/if}
-		{if $showimageid=='y'}{tr}ID{/tr}: {$item.imageId}<br />{/if}
+		{if $showfilename=='y'}{tr}Filename:{/tr} {$item.filename}<br />{/if}
+		{if $showimageid=='y'}{tr}ID:{/tr} {$item.imageId}<br />{/if}
 		{if $showcategories=='y'}
-		    	{tr}Categories{/tr}:
+		    	{tr}Categories:{/tr}
                         <ul class='categories'>
                         {section name=categ loop=$item.categories}
                         	<li>{$item.categories[categ]}</li>
@@ -138,8 +138,8 @@
                         </ul><br />
                 {/if}
 		{if $showdescription=='y'}{$item.description}<br />{/if}
-		{if $showcreated=='y'}{tr}Created{/tr}: {$item.created|tiki_short_date}<br />{/if}
-		{if $showuser=='y'}{tr}User{/tr}: {$item.user|userlink}<br />{/if}
+		{if $showcreated=='y'}{tr}Created:{/tr} {$item.created|tiki_short_date}<br />{/if}
+		{if $showuser=='y'}{tr}User:{/tr} {$item.user|userlink}<br />{/if}
 		{if $showxysize=='y'}({$item.xsize}x{$item.ysize}){/if}
 		{if $showfilesize=='y'}({$item.filesize} Bytes){/if}
 		{if $showhits=='y'}[{$item.hits} {if $item.hits == 1}{tr}Hit{/tr}{else}{tr}Hits{/tr}{/if}]{/if}
@@ -194,7 +194,7 @@
 <table class="normal noslideshow">
 	<tr>
 		<td class="even" colspan="2" style="border:0px; font-size:x-small">
-			{tr}You can view this gallery's configured image (first, random, etc.) in your browser using{/tr}:
+			{tr}You can view this gallery's configured image (first, random, etc.) in your browser using:{/tr}
 		</td>
 	<tr>
 		<td width="6px" style="border:0px">
@@ -207,7 +207,7 @@
 	</tr>
 	<tr>
 		<td class="even" style="border-bottom:0px; font-size:x-small" colspan="2">
-			{tr}You can include the gallery's image in an HTML page using{/tr}:
+			{tr}You can include the gallery's image in an HTML page using:{/tr}
 		</td>
 	</tr>
 	<tr>
@@ -220,7 +220,7 @@
 	</tr>
 	<tr>
   		<td class="even" style="border-bottom:0px; font-size:x-small" colspan="2">
-			{tr}You can include the image in a tiki page using{/tr}:
+			{tr}You can include the image in a tiki page using:{/tr}
 		</td>
 	<tr>
 		<td width="6px" style="border:0px">

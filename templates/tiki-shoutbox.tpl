@@ -32,7 +32,7 @@
 		<input type="hidden" name="msgId" value="{$msgId|escape}" />
 		<table class="formcolor">
 			<tr>
-				<td>{tr}Message{/tr}:</td>
+				<td>{tr}Message:{/tr}</td>
 				<td>
 					<textarea rows="4" cols="60" name="message">{$message|escape}</textarea>
 					{if $prefs.feature_socialnetworks eq 'y' && $user neq ''}

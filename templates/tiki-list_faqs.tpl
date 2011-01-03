@@ -73,7 +73,7 @@
 		<table class="formcolor">
 			<tr>
 				<td>
-					{tr}Title{/tr}:
+					{tr}Title:{/tr}
 				</td>
 				<td>
 					<input type="text" name="title" value="{$title|escape}" />
@@ -81,7 +81,7 @@
 			</tr>
 			<tr>
 				<td>
-					{tr}Description{/tr}:
+					{tr}Description:{/tr}
 				</td>
 				<td>
 					<textarea name="description" rows="4" cols="40">{$description|escape}</textarea>
@@ -90,7 +90,7 @@
 			{include file='categorize.tpl'}
 			<tr>
 				<td>
-					{tr}Users can suggest questions{/tr}:
+					{tr}Users can suggest questions:{/tr}
 				</td>
 				<td>
 					<input type="checkbox" name="canSuggest" {if $canSuggest eq 'y'}checked="checked"{/if} />

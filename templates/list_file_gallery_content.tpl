@@ -281,7 +281,7 @@
 					{elseif $propname eq 'lockedby' and $propval neq ''}
 						{if $gal_info.show_lockedby eq 'i' or $gal_info.show_lockedby eq 'a'}
 							{assign var=propval value=$propval|username}
-							{capture assign=propval}{icon _id='lock_gray' class='' alt="{tr}Locked by{/tr}: "|cat:$propval}{/capture}
+							{capture assign=propval}{icon _id='lock_gray' class='' alt="{tr}Locked by:{/tr} "|cat:$propval}{/capture}
 						{else}
 							{assign var=propval value=$propval|userlink}
 						{/if}

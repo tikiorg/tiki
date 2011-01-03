@@ -103,14 +103,14 @@
 			<div class="adminoptionboxchild" id="feature_dump_childcontainer">
 				<div class="adminoptionbox">
 					<div class="adminoptionlabel">
-						<label for="tagname">{tr}Tag for current wiki{/tr}:</label>
+						<label for="tagname">{tr}Tag for current wiki:{/tr}</label>
 						<input maxlength="20" size="20" type="text" name="tagname" id="tagname" />
 						<input type="submit" name="createtag" value="{tr}Create{/tr}" />
 					</div>
 				</div>
 				<div class="adminoptionbox">
 					<div class="adminoptionlabel">
-						<label for="restoretag">{tr}Restore wiki to tag{/tr}:</label>
+						<label for="restoretag">{tr}Restore wiki to tag:{/tr}</label>
 						<select name="tagname" id="restoretag"{if $tags|@count eq '0'} disabled="disabled"{/if}>
 							{section name=sel loop=$tags}
 								<option value="{$tags[sel]|escape}">{$tags[sel]}</option>
@@ -123,7 +123,7 @@
 				</div>
 				<div class="adminoptionbox">
 					<div class="adminoptionlabel">
-						<label for="removetag">{tr}Remove a tag{/tr}:</label> 
+						<label for="removetag">{tr}Remove a tag:{/tr}</label> 
 						<select name="tagname" id="removetag"{if $tags|@count eq '0'} disabled="disabled"{/if}>
 							{section name=sel loop=$tags}
 								<option value="{$tags[sel]|escape}">{$tags[sel]}</option>
@@ -308,7 +308,7 @@
 			<fieldset>
 				<legend>{tr}Configuration{/tr}</legend>
 				<div class="adminoptionbox">
-					{tr}Select which items to display when listing pages{/tr}:
+					{tr}Select which items to display when listing pages:{/tr}
 				</div>
 				{preference name=wiki_list_sortorder}
 				<div class="adminoptionboxchild">

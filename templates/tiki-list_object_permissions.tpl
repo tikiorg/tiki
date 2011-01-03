@@ -14,7 +14,7 @@
 		<li><a href="#tabs-3">{tr}category permissions{/tr} ({$content.category|@count})</a></li>
 	</ul-->
 
-	<h3>{tr}{$type|ucfirst}{/tr}: {tr}global permissions{/tr}</h3>
+	<h3>{tr}{$type|ucfirst}:{/tr} {tr}global permissions{/tr}</h3>
 	<div id="tabs-1">
 	{remarksbox}{tr}If an object is not listed in the section below, then only the global perms are on{/tr}{/remarksbox}
 	<table class="normal">
@@ -25,7 +25,7 @@
 	{/foreach}
 	</table>
 	</div>
-	<h3>{tr}{$type|ucfirst}{/tr}: {tr}object permissions{/tr} ({$content.objects|@count})</h3>
+	<h3>{tr}{$type|ucfirst}:{/tr} {tr}object permissions{/tr} ({$content.objects|@count})</h3>
 	<div id="tabs-2">
 	{remarksbox}{tr}If an object is not listed in this section, then only the global perms are on{/tr}{/remarksbox}
 	<table class="normal">
@@ -51,7 +51,7 @@
 	{/foreach}
 	</table>
 	</div>
-	<h3>{tr}{$type|ucfirst}{/tr}: {tr}category permissions{/tr} ({$content.category|@count})</h3>
+	<h3>{tr}{$type|ucfirst}:{/tr} {tr}category permissions{/tr} ({$content.category|@count})</h3>
 	<div id="tabs-3">
 	{remarksbox}{tr}If an object is not listed in this section, then only the global perms are on{/tr}{/remarksbox}
 	<table class="normal">
@@ -65,7 +65,7 @@
 					<td>{$special.perm|escape}</td>
 					<td>
 						{if !empty($special.objectId)}
-							<a href="tiki-objectpermissions.php?objectId={$special.objectId}&amp;objectType={$special.objectType}&amp;objectName={$special.objectName|escape}">{tr}{$special.reason|escape}{/tr}: {$special.objectName}</a>
+							<a href="tiki-objectpermissions.php?objectId={$special.objectId}&amp;objectType={$special.objectType}&amp;objectName={$special.objectName|escape}">{tr}{$special.reason|escape}:{/tr} {$special.objectName}</a>
 						{else}
 							{tr}{$special.reason|escape}: {$special.objectName}{/tr}
 						{/if}

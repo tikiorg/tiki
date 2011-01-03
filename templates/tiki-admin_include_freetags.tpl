@@ -20,7 +20,7 @@
 
 				<div class="adminoptionbox">
 					<div class="adminoptionlabel">
-						<label for="freetags_cloud_colors">{tr}Random tag cloud colors{/tr}:</label>
+						<label for="freetags_cloud_colors">{tr}Random tag cloud colors:{/tr}</label>
 						<input type="text" name="freetags_cloud_colors" id="freetags_cloud_colors" value="{foreach from=$prefs.freetags_cloud_colors item=color name=colors}{$color}{if !$smarty.foreach.colors.last},{/if}{/foreach}" />
 						<br />
 						<em>{tr}Separate colors with a comma (,){/tr}.</em>

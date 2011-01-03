@@ -28,7 +28,7 @@
 {/if}
 {if $tiki_p_view_poll_results == 'y' and $showresult ne 'always' and $showresult ne 'voted'}
 	<a class="linkmodule" href="tiki-poll_results.php?pollId={$menu_info.pollId}">{tr}View Results{/tr}</a><br />
-   ({tr}Votes{/tr}: {$menu_info.votes})
+   ({tr}Votes:{/tr} {$menu_info.votes})
 {/if}
 </div>
 {if $prefs.feature_poll_comments and $comments_cant and !isset($module_params)}

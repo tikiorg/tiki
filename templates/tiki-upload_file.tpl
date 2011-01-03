@@ -58,9 +58,9 @@
 {if count($uploads) > 0}
 	<h2>
 	{if count($uploads) eq 1}
-		{tr}The following file was successfully uploaded{/tr}:
+		{tr}The following file was successfully uploaded:{/tr}
 	{else}
-		{tr}The following files have been successfully uploaded{/tr}:
+		{tr}The following files have been successfully uploaded:{/tr}
 	{/if}
 	</h2>
 
@@ -78,13 +78,13 @@
 				{/if}
 				{button href="#" _flip_id="uploadinfos`$uploads[ix].fileId`" _text="{tr}Additional Info{/tr}"}
 				<div style="{if $prefs.javascript_enabled eq 'y'}display:none;{/if}" id="uploadinfos{$uploads[ix].fileId}">
-					{tr}You can download this file using{/tr}: <div class="code"><a class="link" href="{$uploads[ix].dllink}">{$uploads[ix].fileId|sefurl:file}</a></div>
-					{tr}You can link to the file from a Wiki page using{/tr}: <div class="code">[{$uploads[ix].fileId|sefurl:file}|{$uploads[ix].name} ({$uploads[ix].size|kbsize})]</div>
-					{tr}You can display an image in a Wiki page using{/tr}: <div class="code">&#x7b;img src="{$uploads[ix].fileId|sefurl:preview}" link="{$uploads[ix].fileId|sefurl:file}" alt="{$uploads[ix].name} ({$uploads[ix].size|kbsize})"}</div>
+					{tr}You can download this file using:{/tr} <div class="code"><a class="link" href="{$uploads[ix].dllink}">{$uploads[ix].fileId|sefurl:file}</a></div>
+					{tr}You can link to the file from a Wiki page using:{/tr} <div class="code">[{$uploads[ix].fileId|sefurl:file}|{$uploads[ix].name} ({$uploads[ix].size|kbsize})]</div>
+					{tr}You can display an image in a Wiki page using:{/tr} <div class="code">&#x7b;img src="{$uploads[ix].fileId|sefurl:preview}" link="{$uploads[ix].fileId|sefurl:file}" alt="{$uploads[ix].name} ({$uploads[ix].size|kbsize})"}</div>
 					{if $prefs.feature_shadowbox eq 'y'}
-						{tr}Or using as a thumbnail with ShadowBox{/tr}: <div class="code">&#x7b;img src="{$uploads[ix].fileId|sefurl:thumbnail}" link="{$uploads[ix].fileId|sefurl:preview}" rel="shadowbox[gallery];type=img" alt="{$name} ({$uploads[ix].size|kbsize})"}</div>
+						{tr}Or using as a thumbnail with ShadowBox:{/tr} <div class="code">&#x7b;img src="{$uploads[ix].fileId|sefurl:thumbnail}" link="{$uploads[ix].fileId|sefurl:preview}" rel="shadowbox[gallery];type=img" alt="{$name} ({$uploads[ix].size|kbsize})"}</div>
 					{/if}
-					{tr}You can link to the file from an HTML page using{/tr}: <div class="code">&lt;a href="{$uploads[ix].dllink}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize})&lt;/a&gt;</div>
+					{tr}You can link to the file from an HTML page using:{/tr} <div class="code">&lt;a href="{$uploads[ix].dllink}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize})&lt;/a&gt;</div>
 				</div>
 			</td>
 		</tr>
@@ -152,7 +152,7 @@
 	<table width="100%">
 	{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
 		<tr><td>
-			<label for="isbatch">{tr}Unzip zip files{/tr}:</label>
+			<label for="isbatch">{tr}Unzip zip files:{/tr}</label>
 		</td><td width="80%">
 			<input type="checkbox" id="isbatch" name="isbatch[]" />
 		</td></tr>
@@ -160,7 +160,7 @@
 
 	{if $prefs.fgal_delete_after eq 'y'}
 		<tr><td>
-			<label for="deleteAfter">{tr}File can be deleted after{/tr}:</label>
+			<label for="deleteAfter">{tr}File can be deleted after:{/tr}</label>
 		</td><td width="80%">
 			{if $editFileId}
 				{html_select_duration prefix='deleteAfter' default_value=$fileInfo.deleteAfter}

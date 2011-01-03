@@ -19,34 +19,34 @@
 	<form action="tiki-admin.php?page=gal" method="post">
 		<table class="admin">
 			<tr>
-				<td><label>{tr}Rankings{/tr}:</label></td>
+				<td><label>{tr}Rankings:{/tr}</label></td>
 				<td>
 					<input type="checkbox" name="feature_gal_rankings" {if $prefs.feature_gal_rankings eq 'y'}checked="checked"{/if}/>
 				</td>
 			</tr>
 			<tr>
-				<td><label>{tr}Comments{/tr}:</label></td>
+				<td><label>{tr}Comments:{/tr}</label></td>
 				<td>
 					<input type="checkbox" name="feature_image_galleries_comments" {if $prefs.feature_image_galleries_comments eq 'y'}checked="checked"{/if}/>
 				</td>
 			</tr>
 			<tr>
-				<td><label>{tr}Uses Slideshow{/tr}:</label></td>
+				<td><label>{tr}Uses Slideshow:{/tr}</label></td>
 					<td>
 						<input type="checkbox" name="feature_gal_slideshow" {if $prefs.feature_gal_slideshow eq 'y'}checked="checked"{/if}/>
 					</td>
 				</tr>
 				<tr>
-					<td><label>{tr}Use database to store images{/tr}:</label></td>
+					<td><label>{tr}Use database to store images:{/tr}</label></td>
 					<td>
 						<input type="radio" name="gal_use_db" value="y" {if $prefs.gal_use_db eq 'y'}checked="checked"{/if}/>
 					</td>
 				</tr>
 				<tr>
-					<td><label>{tr}Use a directory to store images{/tr}:</label></td>
+					<td><label>{tr}Use a directory to store images:{/tr}</label></td>
 					<td>
 						<input type="radio" name="gal_use_db" value="n" {if $prefs.gal_use_db eq 'n'}checked="checked"{/if}/>
-						<label>{tr}Directory path{/tr}:</label>
+						<label>{tr}Directory path:{/tr}</label>
 						<br />
 						<input type="text" name="gal_use_dir" value="{$prefs.gal_use_dir|escape}" size="50" />
 						<br />
@@ -54,7 +54,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td><label>{tr}Library to use for processing images{/tr}:</label></td>
+					<td><label>{tr}Library to use for processing images:{/tr}</label></td>
 					<td>
 						<input type="radio" name="gal_use_lib" value="gd" {if $prefs.gal_use_lib ne 'imagick'}checked="checked"{/if}/>GD: {$gdlib}
 					</td>
@@ -66,13 +66,13 @@
 					</td>
 				</tr>
 				<tr>
-					<td><label>{tr}Uploaded image names must match regex{/tr}:</label></td>
+					<td><label>{tr}Uploaded image names must match regex:{/tr}</label></td>
 					<td>
 						<input type="text" name="gal_match_regex" value="{$prefs.gal_match_regex|escape}"/>
 					</td>
 				</tr>
 				<tr>
-					<td><label>{tr}Uploaded image names cannot match regex{/tr}:</label></td>
+					<td><label>{tr}Uploaded image names cannot match regex:{/tr}</label></td>
 					<td>
 						<input type="text" name="gal_nmatch_regex" value="{$prefs.gal_nmatch_regex|escape}"/>
 					</td>
@@ -84,14 +84,14 @@
 				</td>
 			</tr>
 			<tr>
-				<td><label>{tr}Enable directory batch loading{/tr}:</label></td>
+				<td><label>{tr}Enable directory batch loading:{/tr}</label></td>
 				<td>
 					<input type="checkbox" name="feature_gal_batch" {if $prefs.feature_gal_batch eq 'y'}checked="checked"{/if}/>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<label>{tr}Batch loading directory{/tr}:</label>
+					<label>{tr}Batch loading directory:{/tr}</label>
 				</td>
 				<td>
 					<input type="text" name="gal_batch_dir" value="{$prefs.gal_batch_dir|escape}" size="50" />
@@ -99,7 +99,7 @@
 			</tr>
 			{if $prefs.feature_categories eq 'y'}
 				<tr>
-					<td>{tr}Force and limit categorization to within subtree of{/tr}:</td>
+					<td>{tr}Force and limit categorization to within subtree of:{/tr}</td>
 					<td>
 						<select name="feature_image_gallery_mandatory_category">
 							<option value="-1" {if $prefs.feature_image_gallery_mandatory_category eq -1 or $prefs.feature_image_gallery_mandatory_category eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
@@ -112,7 +112,7 @@
 				</tr>
 			{/if}
 			<tr>
-				<td><label>{tr}Display image information in a mouseover box{/tr}:</label></td>
+				<td><label>{tr}Display image information in a mouseover box:{/tr}</label></td>
 				<td>
 					<input type="radio" name="gal_image_mouseover" value="n" {if $prefs.gal_image_mouseover eq 'n'}checked="checked"{/if}/>{tr}No{/tr}
 					<input type="radio" name="gal_image_mouseover" value="y" {if $prefs.gal_image_mouseover eq 'y'}checked="checked"{/if}/>{tr}Yes{/tr}
@@ -128,33 +128,33 @@
 				</td>
 			</tr>
 			<tr>
-				<td>{tr}Max Rows per page{/tr}:</td>
+				<td>{tr}Max Rows per page:{/tr}</td>
 				<td>
 					<input type="text" name="maxRows" value="{$maxRows|escape}" /><i>{tr}Default:{/tr} {if !empty($prefs.maxRowsGalleries)}{$prefs.maxRowsGalleries}{else}10{/if}</i>
 				</td>
 			</tr>
 			<tr>
-				<td>{tr}Images per row{/tr}:</td>
+				<td>{tr}Images per row:{/tr}</td>
 				<td>
 					<input type="text" name="rowImages" value="{$rowImages|escape}" /><i>{tr}Default:{/tr} {if !empty($prefs.rowImagesGalleries)}{$prefs.rowImagesGalleries}{else}6{/if}</i>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					{tr}Thumbnails size X{/tr}:
+					{tr}Thumbnails size X:{/tr}
 				</td>
 				<td>
 					<input type="text" name="thumbSizeX" value="{$thumbSizeX|escape}" /><i>{tr}Pixels Default:{/tr} {if !empty($prefs.thumbSizeXGalleries)}{$prefs.thumbSizeXGalleries}{else}80{/if}</i>
 				</td>
 			</tr>
 			<tr>
-				<td>{tr}Thumbnails size Y{/tr}:</td>
+				<td>{tr}Thumbnails size Y:{/tr}</td>
 				<td>
 					<input type="text" name="thumbSizeY" value="{$thumbSizeY|escape}" /><i>{tr}Pixels Default:{/tr} {if !empty($prefs.thumbSizeYGalleries)}{$prefs.thumbSizeYGalleries}{else}80{/if}</i>
 				</td>
 			</tr>
 			<tr>
-				<td>{tr}Default scale size{/tr}:</td>
+				<td>{tr}Default scale size:{/tr}</td>
 				<td>
 					<input type="text" name="scaleSize" size="4" value="{$scaleSize|escape}" />{tr}pixels{/tr}
 				</td>
@@ -278,7 +278,7 @@
 	<form method="post" action="tiki-admin.php?page=gal">
 		<table class="admin">
 			<tr>
-				<td><label>{tr}Default number of comments per page{/tr}: </label></td>
+				<td><label>{tr}Default number of comments per page:{/tr} </label></td>
 				<td>
 					<input size="5" type="text" name="image_galleries_comments_per_page" value="{$prefs.image_galleries_comments_per_page|escape}" />
 				</td>

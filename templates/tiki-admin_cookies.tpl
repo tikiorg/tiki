@@ -9,7 +9,7 @@
 	<input type="hidden" name="cookieId" value="{$cookieId|escape}" />
 	<table class="formcolor">
 		<tr>
-			<td>{tr}Cookie{/tr}:</td>
+			<td>{tr}Cookie:{/tr}</td>
 			<td>
 				<input type="text" maxlength="255" size="40" name="cookie" value="{$cookie|escape}" />
 			</td>

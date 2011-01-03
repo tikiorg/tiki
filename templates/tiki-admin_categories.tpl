@@ -11,7 +11,7 @@
 {/if}
 
 <div class="tree" id="top">
-	<div class="treetitle">{tr}Current category{/tr}: 
+	<div class="treetitle">{tr}Current category:{/tr} 
 		<a href="tiki-admin_categories.php?parentId=0" class="categpath">{tr}Top{/tr}</a>
 		{section name=x loop=$path}
 			&nbsp;::&nbsp;
@@ -76,7 +76,7 @@
 			<input type="hidden" name="categId" value="{$categId|escape}" />
 			<table class="formcolor">
 				<tr>
-					<td>{tr}Parent{/tr}:</td>
+					<td>{tr}Parent:{/tr}</td>
 					<td>
 						<select name="parentId">
 							<option value="0">{tr}Top{/tr}</option>
@@ -87,11 +87,11 @@
 					</td>
 				</tr>
 				<tr>
-					<td>{tr}Name{/tr}:</td>
+					<td>{tr}Name:{/tr}</td>
 					<td><input type="text" size="40" name="name" value="{$name|escape}" /></td>
 				</tr>
 				<tr>
-					<td>{tr}Description{/tr}:</td>
+					<td>{tr}Description:{/tr}</td>
 					<td><textarea rows="2" cols="40" name="description">{$description|escape}</textarea></td>
 				</tr>
 				<tr>

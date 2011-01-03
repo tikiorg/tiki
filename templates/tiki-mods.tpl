@@ -276,11 +276,11 @@ function update_button_install() {
 											{if $more->devurl}Development : <br />{foreach key=ku item=iu from=$more->devurl}<a href="{$iu}">{$iu}</a><br />{/foreach}{/if}
 											{if $more->help}{$more.help}<br />{/if}
 											{if $more->help}{$more.help}<br />{/if}
-											{if $more->author}{tr}Author{/tr}: {$more->author[0]}<br />{/if}
-											{if $more->licence}{tr}licence{/tr}: {$more->licence}<br />{/if}
+											{if $more->author}{tr}Author:{/tr} {$more->author[0]}<br />{/if}
+											{if $more->licence}{tr}licence:{/tr} {$more->licence}<br />{/if}
 											
-											{tr}Last Modification{/tr}: {$more->lastmodif}<br />
-											{tr}by{/tr}: {$more->contributor[0]}<br />
+											{tr}Last Modification:{/tr} {$more->lastmodif}<br />
+											{tr}by:{/tr} {$more->contributor[0]}<br />
 										</div>
 									</td><td>
 										{foreach key=kk item=ii from=$more->files}

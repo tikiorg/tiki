@@ -16,7 +16,7 @@
       <table class="admin">
         <tr>
           <td>
-            {tr}Use database to store files{/tr}:
+            {tr}Use database to store files:{/tr}
           </td>
           <td>
             <input type="radio" name="t_use_db" value="y" {if $prefs.t_use_db eq 'y'}checked="checked"{/if}/>
@@ -25,9 +25,9 @@
 
         <tr>
           <td>
-            {tr}Use a directory to store files{/tr}:</td>
+            {tr}Use a directory to store files:{/tr}</td>
           <td>
-            <input type="radio" name="t_use_db" value="n" {if $prefs.t_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:
+            <input type="radio" name="t_use_db" value="n" {if $prefs.t_use_db eq 'n'}checked="checked"{/if}/> {tr}Path:{/tr}
             <br />
             <input type="text" name="t_use_dir" value="{$prefs.t_use_dir|escape}" size="50" /> 
           </td>

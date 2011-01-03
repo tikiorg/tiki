@@ -75,7 +75,7 @@
 <form  enctype="multipart/form-data"  action="tiki-minical_prefs.php" method="post">
 	<table class="formcolor">
 		<tr>
-			<td>{tr}Upload file{/tr}:</td>
+			<td>{tr}Upload file:{/tr}</td>
 			<td><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" />
 				<input size="16" name="userfile1" type="file" /><input type="submit" name="import" value="{tr}import{/tr}" />
 			</td>
@@ -87,13 +87,13 @@
 <form  enctype="multipart/form-data"  action="tiki-minical_prefs.php" method="post">
 	<table class="normal">
 		<tr>
-			<td>{tr}Name{/tr}:</td><td><input type="text" name="name" /></td>
+			<td>{tr}Name:{/tr}</td><td><input type="text" name="name" /></td>
 		</tr>
 		<tr>
-			<td>{tr}Upload file{/tr}:</td><td><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile1" type="file" /></td>
+			<td>{tr}Upload file:{/tr}</td><td><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile1" type="file" /></td>
 		</tr>
 		<tr>
-			<td>{tr}Or enter path or URL{/tr}:</td><td><input type="text" name="path" /></td>
+			<td>{tr}Or enter path or URL:{/tr}</td><td><input type="text" name="path" /></td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>

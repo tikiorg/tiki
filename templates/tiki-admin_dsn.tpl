@@ -9,13 +9,13 @@
 	<input type="hidden" name="dsnId" value="{$dsnId|escape}" />
 	<table class="formcolor">
 		<tr>
-		<td>{tr}Name{/tr}:</td>
+		<td>{tr}Name:{/tr}</td>
 		 <td>
 			<input type="text" maxlength="255" size="10" name="name" value="{$info.name|escape}" />
 			</td>
 		</tr>
 		<tr>
-			<td>{tr}DSN{/tr}:</td>
+			<td>{tr}DSN:{/tr}</td>
 			<td>
 				<input type="text" maxlength="255" size="40" name="dsn" value="{$info.dsn|escape}" />
 			</td>

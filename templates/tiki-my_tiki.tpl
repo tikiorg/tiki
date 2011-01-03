@@ -32,7 +32,7 @@
             {section name=ix loop=$user_pages}
               <tr class="{cycle}">
                 <td>
-                  <a class="link" title="{tr}View{/tr}: {$user_pages[ix].pageName}" href="tiki-index.php?page={$user_pages[ix].pageName|escape:"url"}">{$user_pages[ix].pageName|truncate:40:"(...)"}</a>
+                  <a class="link" title="{tr}View:{/tr} {$user_pages[ix].pageName}" href="tiki-index.php?page={$user_pages[ix].pageName|escape:"url"}">{$user_pages[ix].pageName|truncate:40:"(...)"}</a>
                 </td>
                 <td style="text-align:center;">
                   {if $userwatch eq $user_pages[ix].creator}{tr}y{/tr}{else}&nbsp;{/if}
@@ -45,7 +45,7 @@
                 </td>
                 <td style="text-align:center;" width="50px">
                   <a class="link" href="tiki-editpage.php?page={$user_pages[ix].pageName|escape:"url"}">
-                    {icon _id='page_edit' title="{tr}Edit{/tr}: `$user_pages[ix].pageName`"}
+                    {icon _id='page_edit' title="{tr}Edit:{/tr} `$user_pages[ix].pageName`"}
                   </a>
                 </td>
               </tr>

@@ -25,11 +25,11 @@
 			<th colspan="2" class="highlight">{tr}Subscription confirmed!{/tr}</th>
 		</tr>
 		<tr>
-			<td class="even">{tr}Name{/tr}:</td>
+			<td class="even">{tr}Name:{/tr}</td>
 			<td class="even">{$nl_info.name|escape}</td>
 		</tr>
 		<tr>
-			<td class="even">{tr}Description{/tr}:</td>
+			<td class="even">{tr}Description:{/tr}</td>
 			<td class="even">{$nl_info.description|escape|nl2br}</td>
 		</tr>
 	</table>
@@ -47,11 +47,11 @@
 		<input type="hidden" name="nlId" value="{$nlId|escape}" />
 		<table class="normal">
 			<tr>
-				<td class="even">{tr}Name{/tr}:</td>
+				<td class="even">{tr}Name:{/tr}</td>
 				<td class="even"><strong>{$nl_info.name|escape}</strong></td>
 			</tr>
 			<tr>
-				<td class="even">{tr}Description{/tr}:</td>
+				<td class="even">{tr}Description:{/tr}</td>
 				<td class="even">{$nl_info.description|escape|nl2br}</td>
 			</tr>
 			{if ($nl_info.allowUserSub eq 'y') or ($tiki_p_admin_newsletters eq 'y')}

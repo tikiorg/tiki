@@ -8,7 +8,7 @@
 		{tr}This search feature and the <a href="tiki-edit_perspective.php">perspectives GUI</a> need <a href="http://dev.tiki.org/Dynamic+Preferences">dev.tiki.org/Dynamic+Preferences</a>. If you search for something and it's not appearing, please help improve keywords/descriptions.{/tr}
 	{/remarksbox*}
 	<p>
-		<label>{tr}Configuration search{/tr}: <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"/></label>
+		<label>{tr}Configuration search:{/tr} <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"/></label>
 		<input type="submit" value="{tr}Search{/tr}" {if $indexNeedsRebuilding} class="tips" title="{tr}Configuration search{/tr}|{tr}Note: The search index needs rebuilding, this will take a few minutes.{/tr}"{/if} />
 	</p>
 </form>
@@ -105,7 +105,7 @@ if $pagetop_msg}
 <br style="clear:both" />
 {remarksbox type="tip" title="{tr}Crosslinks to other features and settings{/tr}"}
 
-	{tr}Other sections{/tr}:<br />
+	{tr}Other sections:{/tr}<br />
 	{if $prefs.feature_sheet eq 'y'} <a href="tiki-sheets.php">{tr}Spreadsheet{/tr}</a> {/if}
 	{if $prefs.feature_newsletters eq 'y'} <a href="tiki-admin_newsletters.php">{tr}Newsletters{/tr}</a> {/if}
 	{if $prefs.feature_surveys eq 'y'} <a href="tiki-admin_surveys.php">{tr}Surveys{/tr}</a> {/if}
@@ -122,7 +122,7 @@ if $pagetop_msg}
 	{if $prefs.feature_contact eq 'y'} <a href="tiki-contact.php">{tr}Contact Us{/tr}</a> {/if}
 	<hr />
 
-	{tr}Administration features{/tr}:<br />
+	{tr}Administration features:{/tr}<br />
 	<a href="tiki-adminusers.php">{tr}Users{/tr}</a> 
 	<a href="tiki-admingroups.php">{tr}Groups{/tr}</a> 
 	<a href="tiki-admin_security.php">{tr}Security{/tr}</a> 
@@ -143,7 +143,7 @@ if $pagetop_msg}
 	{if $prefs.feature_perspective eq 'y'}<a href="tiki-edit_perspective.php">{tr}Perspectives{/tr}</a>{/if}
 	<hr />
 
-	{tr}Navigation features{/tr}:<br />
+	{tr}Navigation features:{/tr}<br />
 	<a href="tiki-admin_menus.php">{tr}Menus{/tr}</a> 
 	<a href="tiki-admin_modules.php">{tr}Modules{/tr}</a>
 	{if $prefs.feature_categories eq 'y'} <a href="tiki-admin_categories.php">{tr}Categories{/tr}</a> {/if}
@@ -168,7 +168,7 @@ if $pagetop_msg}
 	{if $prefs.feature_mailin eq 'y'}<a href="tiki-admin_mailin.php">{tr}Mail-in{/tr}</a> {/if}
 	<hr />
 
-	{tr}Stats &amp; banners{/tr}:<br />
+	{tr}Stats &amp; banners:{/tr}<br />
 	{if $prefs.feature_stats eq 'y'} <a href="tiki-stats.php">{tr}Stats{/tr}</a> {/if}
 	{if $prefs.feature_referer_stats eq 'y'} <a href="tiki-referer_stats.php">{tr}Referer Stats{/tr}</a> {/if}
 	{if $prefs.feature_search eq 'y' and $prefs.feature_search_stats eq 'y'} <a href="tiki-search_stats.php">{tr}Search Stats{/tr}</a>  {/if}

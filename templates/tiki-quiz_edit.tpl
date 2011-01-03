@@ -4,7 +4,7 @@
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
 {* Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details. *}
 
-{title help="Quiz"}{tr}Edit quiz{/tr}: {$quiz->name}{/title}
+{title help="Quiz"}{tr}Edit quiz:{/tr} {$quiz->name}{/title}
 
 <div class="navbar">
 	{button href="tiki-list_quizzes.php" _text="{tr}List Quizzes{/tr}"}
@@ -34,7 +34,7 @@
 						</tr>
 						{if $quiz->taken eq 'y'}
 							<tr>
-								<td colspan=2>{tr}Current Version{/tr}: {$quiz->version}{if $quiz->id eq 0}, Author: {$quiz->authorLogin}, Date: {$quiz->timestamp|tiki_long_datetime}{/if}
+								<td colspan=2>{tr}Current Version:{/tr} {$quiz->version}{if $quiz->id eq 0}, Author: {$quiz->authorLogin}, Date: {$quiz->timestamp|tiki_long_datetime}{/if}
 								</td>
 							</tr>
 							{foreach from=$quiz->history item=history}

@@ -30,7 +30,7 @@
 	{if $tiki_p_perspective_create eq 'y'}
 		{tab name="{tr}Create{/tr}"}
 			<form method="post" action="tiki-edit_perspective.php">
-				<p>{tr}Name{/tr}: <input type="text" name="name"/> <input type="submit" name="create" value="{tr}Create{/tr}"/></p>
+				<p>{tr}Name:{/tr} <input type="text" name="name"/> <input type="submit" name="create" value="{tr}Create{/tr}"/></p>
 			</form>
 		{/tab}
 	{/if}
@@ -38,12 +38,12 @@
 		{tab name="{tr}Edit{/tr}"}
 			<form method="post" action="tiki-edit_perspective.php">
 				<p>
-					{tr}Name{/tr}:
+					{tr}Name:{/tr}
 					<input type="text" name="name" value="{$perspective_info.name|escape}"/>
 					<input type="hidden" name="id" value="{$perspective_info.perspectiveId|escape}"/>
 				</p>
 				<fieldset id="preferences" class="dropzone" style="text-align: left;">
-					<p>{tr}Configurations{/tr}:</p>
+					<p>{tr}Configurations:{/tr}</p>
 					{foreach from=$perspective_info.preferences key=name item=val}
 						{preference name=$name source=$perspective_info.preferences}
 					{/foreach}

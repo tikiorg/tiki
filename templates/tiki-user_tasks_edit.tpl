@@ -70,17 +70,17 @@
 		{if ($info.task_version > 0) } 
 		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version-1}">{icon _id='resultset_previous' align="middle"}</a>
   		{/if}
-		{tr}Version{/tr}: <b>{$info.task_version+1}</b>
+		{tr}Version:{/tr} <b>{$info.task_version+1}</b>
 		{if $info.task_version < $info.last_version } 
 		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version+1}">{icon _id='resultset_next' align="middle"}</a>
   		{/if}
 		
 		&nbsp;&nbsp; 
 		
-		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.last_version}">{tr}Last Version{/tr}: {$info.last_version+1}</a>
+		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.last_version}">{tr}Last Version:{/tr} {$info.last_version+1}</a>
 	</td>
 	<td colspan="2">
-		<div align="right">{tr}taskId{/tr}:
+		<div align="right">{tr}taskId:{/tr}
 		<b>{$info.taskId|escape}</b>
 		</div>
 	</td>

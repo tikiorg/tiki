@@ -25,14 +25,14 @@
 	</td>
 </tr>
 <tr>
-	<td><label for="banning-userregex">{tr}Username regex matching{/tr}:</label></td>
+	<td><label for="banning-userregex">{tr}Username regex matching:{/tr}</label></td>
 	<td>
 		<input type="radio" name="mode" value="user" {if $info.mode eq 'user'}checked="checked"{/if} />
 		<input type="text" name="userreg" id="banning-userregex" value="{$info.user|escape}" />
 	</td>
 </tr>
 <tr>
-	<td><label for="banning-ipregex">{tr}IP regex matching{/tr}:</label></td>
+	<td><label for="banning-ipregex">{tr}IP regex matching:{/tr}</label></td>
 	<td>
 		<input type="radio" name="mode" value="ip" {if $info.mode eq 'ip'}checked="checked"{/if} />
 		<input type="text" name="ip1" id="banning-ipregex" value="{$info.ip1|escape}" size="3" />.
@@ -42,7 +42,7 @@
 	</td>
 </tr>
 <tr>
-	<td>{tr}Banned from sections{/tr}:</td>
+	<td>{tr}Banned from sections:{/tr}</td>
 	<td>
 		<div class="toggle">
 			<input type="checkbox" name="checkall" onclick="CheckAll();" />
@@ -97,10 +97,10 @@
 <form method="post" action="tiki-admin_banning.php">
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<label for="banning-find">{tr}Find{/tr}:</label><input type="text" name="find" id="banning-find" value="{$find|escape}" />
+<label for="banning-find">{tr}Find:{/tr}</label><input type="text" name="find" id="banning-find" value="{$find|escape}" />
 </form>
 {/if}
-<h2>{tr}Rules{/tr}:</h2>
+<h2>{tr}Rules:{/tr}</h2>
 <form method="post" action="tiki-admin_banning.php">
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="find" value="{$find|escape}" />

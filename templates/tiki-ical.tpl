@@ -8,7 +8,7 @@
 		<option value="{$lc.calendarId}">{$lc.name}</option>
 	{/foreach}
     </select>
-   <br />{tr}From{/tr}:  
+   <br />{tr}From:{/tr}  
    <input type="hidden" name="tstart" id="tstart" value="{$tstart|escape}" />
    <span id="tstartl" class="daterow" style="padding:0; margin:0">Click</span>
 {jq}

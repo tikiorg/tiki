@@ -142,7 +142,7 @@
 <input type="hidden" name="commentId" value="{$commentId|escape}" />
 <table class="formcolor">
 <tr><td>{tr}Title:{/tr}</td><td><input type="text" name="comment_title" value="{$comment_title|escape}"/></td></tr>
-<tr><td>{tr}Comment{/tr}:</td>
+<tr><td>{tr}Comment:{/tr}</td>
 <td><textarea rows="{if empty($rows)}4{else}{$rows}{/if}" cols="{if empty($cols)}50{else}{$cols}{/if}" name="comment_data" id="comment_data">{$comment_data|escape}</textarea>
 </td></tr>
 {if !$user and $prefs.feature_antibot eq 'y'}
@@ -160,7 +160,7 @@
   {if $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>|&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}"
 title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;]{/if}
 <br />
-<small>{tr}posted on{/tr}: {$comments[ix].posted|tiki_short_datetime}</small><br />
+<small>{tr}posted on:{/tr} {$comments[ix].posted|tiki_short_datetime}</small><br />
 {$comments[ix].parsed}
 <hr />
 </div>

@@ -15,7 +15,7 @@
 	<br />
 	{tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}. {if $prefs.wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion}){/if}
 {elseif $wiki_authors_style eq 'collaborative'}
-	{tr}Contributors to this page{/tr}: {$lastUser|userlink}
+	{tr}Contributors to this page:{/tr} {$lastUser|userlink}
 	{section name=author loop=$contributors}
 		{if !$smarty.section.author.last}
 			,

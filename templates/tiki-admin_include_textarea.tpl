@@ -60,7 +60,7 @@
 				{preference name=feature_wiki_ext_rel_nofollow}
 				{preference name=popupLinks}
 				{remarksbox type='tip' title="{tr}Tip{/tr}"}
-					<em>{tr}External links will be identified with{/tr}: </em><img class="externallink" src="img/icons/external_link.gif" alt=" (external link)" />.
+					<em>{tr}External links will be identified with:{/tr} </em><img class="externallink" src="img/icons/external_link.gif" alt=" (external link)" />.
 				{/remarksbox}
 			</fieldset>
 		{/tab}
@@ -216,7 +216,7 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 		
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">
-					<label for="plugin_alias">{tr}Plugin Name{/tr}:</label>
+					<label for="plugin_alias">{tr}Plugin Name:{/tr}</label>
 					{if $plugin_admin}
 						<input type="hidden" name="plugin_alias" id="plugin_alias" value="{$plugin_admin.plugin_name|escape}"/>
 						<strong>{$plugin_admin.plugin_name|escape}</strong>
@@ -227,7 +227,7 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 			</div>
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">
-					<label for="implementation">{tr}Base Plugin{/tr}:</label>
+					<label for="implementation">{tr}Base Plugin:{/tr}</label>
 					<select name="implementation" id="implementation">
 						{foreach from=$plugins_real item=base}
 							<option value="{$base|escape}" {if isset($plugin_admin.implementation) and $plugin_admin.implementation eq $base}selected="selected"{/if}>{$base|escape}</option>
@@ -236,22 +236,22 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 				</div>
 			</div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="plugin_name">{tr}Name{/tr}:</label> <input type="text" name="name" id="plugin_name" value="{$plugin_admin.description.name|escape}"/>
+					<label for="plugin_name">{tr}Name:{/tr}</label> <input type="text" name="name" id="plugin_name" value="{$plugin_admin.description.name|escape}"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="plugin_description">{tr}Description{/tr}:</label> <input type="text" name="description" id="plugin_description" value="{$plugin_admin.description.description|escape}" class="width_40em"/>
+					<label for="plugin_description">{tr}Description:{/tr}</label> <input type="text" name="description" id="plugin_description" value="{$plugin_admin.description.description|escape}" class="width_40em"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="plugin_body">{tr}Body Label{/tr}:</label> <input type="text" name="body" id="plugin_body" value="{$plugin_admin.description.body|escape}"/>
+					<label for="plugin_body">{tr}Body Label:{/tr}</label> <input type="text" name="body" id="plugin_body" value="{$plugin_admin.description.body|escape}"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="plugin_deps">{tr}Dependencies{/tr}:</label> <input type="text" name="prefs" id="plugin_deps" value="{if !empty($plugin_admin.description.prefs)}{','|implode:$plugin_admin.description.prefs}{/if}"/>
+					<label for="plugin_deps">{tr}Dependencies:{/tr}</label> <input type="text" name="prefs" id="plugin_deps" value="{if !empty($plugin_admin.description.prefs)}{','|implode:$plugin_admin.description.prefs}{/if}"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="filter">{tr}Filter{/tr}:</label> <input type="text" id="filter" name="filter" value="{$plugin_admin.description.filter|default:'xss'|escape}"/>
+					<label for="filter">{tr}Filter:{/tr}</label> <input type="text" id="filter" name="filter" value="{$plugin_admin.description.filter|default:'xss'|escape}"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="validate">{tr}Validation{/tr}:</label>
+					<label for="validate">{tr}Validation:{/tr}</label>
 					<select name="validate" id="validate">
 						{foreach from=','|explode:'none,all,body,arguments' item=val}
 							<option value="{$val|escape}" {if $plugin_admin.description.validate eq $val}selected="selected"{/if}>{$val|escape}</option>
@@ -259,7 +259,7 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 					</select>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="inline">{tr}Inline (No Plugin Edit UI){/tr}:</label> <input type="checkbox" id="inline" name="inline" value="1" {if $plugin_admin.description.inline}checked="checked"{/if}/>
+					<label for="inline">{tr}Inline (No Plugin Edit UI):{/tr}</label> <input type="checkbox" id="inline" name="inline" value="1" {if $plugin_admin.description.inline}checked="checked"{/if}/>
 			</div></div>
 		</fieldset>
 		<fieldset id="pluginalias_simple_args">
@@ -275,17 +275,17 @@ $('#pluginalias_simple_new').hide();
 				{if ! $value|is_array}
 					<div class="admingroup adminoptionbox">
 						<div class="adminoptionlabel">
-							<label for="sparams_{$token|escape}_token">{tr}Argument{/tr}:</label> <input type="text" name="sparams[{$token|escape}][token]" id="sparams_{$token|escape}_token" value="{$token|escape}"/>
-							<label for="sparams_{$token|escape}_default" style="float:none;display:inline">{tr}Default{/tr}:</label> <input type="text" name="sparams[{$token|escape}][default]" id="sparams_{$token|escape}_default" value="{$value|escape}"/>
+							<label for="sparams_{$token|escape}_token">{tr}Argument:{/tr}</label> <input type="text" name="sparams[{$token|escape}][token]" id="sparams_{$token|escape}_token" value="{$token|escape}"/>
+							<label for="sparams_{$token|escape}_default" style="float:none;display:inline">{tr}Default:{/tr}</label> <input type="text" name="sparams[{$token|escape}][default]" id="sparams_{$token|escape}_default" value="{$value|escape}"/>
 						</div>
 					</div>
 				{/if}
 			{/foreach}
 			<div class="admingroup adminoptionbox hidefirst" id="pluginalias_simple_new">
 				<div class="adminoptionlabel">
-					<label for="sparams__NEW__token">{tr}New Argument{/tr}:</label>
+					<label for="sparams__NEW__token">{tr}New Argument:{/tr}</label>
 					<input type="text" name="sparams[__NEW__][token]" id="sparams__NEW__token" value=""/>
-					<label for="sparams__NEW__default" style="float:none;display:inline">{tr}Default{/tr}:</label>
+					<label for="sparams__NEW__default" style="float:none;display:inline">{tr}Default:{/tr}</label>
 					<input type="text" name="sparams[__NEW__][default]" id="sparams__NEW__default" value=""/>
 				</div>
 			</div>
@@ -301,19 +301,19 @@ $('#pluginalias_simple_new').hide();
 					</div>
 					<div class="adminnestedbox q234">
 						<div class="adminoptionlabel">
-							<label for="input[{$token|escape}][name]">{tr}Name{/tr}:</label> <input type="text" name="input[{$token|escape}][name]" value="{$detail.name|escape}"/>
+							<label for="input[{$token|escape}][name]">{tr}Name:{/tr}</label> <input type="text" name="input[{$token|escape}][name]" value="{$detail.name|escape}"/>
 						</div>
 						<div class="adminoptionlabel">
-							<label for="input[{$token|escape}][description]">{tr}Description{/tr}:</label> <input type="text" name="input[{$token|escape}][description]" value="{$detail.description|escape}" class="width_30em"/>
+							<label for="input[{$token|escape}][description]">{tr}Description:{/tr}</label> <input type="text" name="input[{$token|escape}][description]" value="{$detail.description|escape}" class="width_30em"/>
 						</div>
 						<div class="adminoptionlabel">
-							<label for="input[{$token|escape}][required]">{tr}Required{/tr}:</label> <input type="checkbox" name="input[{$token|escape}][required]" value="y"{if $detail.required} checked="checked"{/if}/>
+							<label for="input[{$token|escape}][required]">{tr}Required:{/tr}</label> <input type="checkbox" name="input[{$token|escape}][required]" value="y"{if $detail.required} checked="checked"{/if}/>
 						</div>
 						<div class="adminoptionlabel">
-							<label for="input[{$token|escape}][safe]">{tr}Safe{/tr}:</label> <input type="checkbox" name="input[{$token|escape}][safe]" value="y"{if $detail.safe} checked="checked"{/if}/>
+							<label for="input[{$token|escape}][safe]">{tr}Safe:{/tr}</label> <input type="checkbox" name="input[{$token|escape}][safe]" value="y"{if $detail.safe} checked="checked"{/if}/>
 						</div>
 						<div class="adminoptionlabel">
-							<label for="input[{$token|escape}][filter]">{tr}Filter{/tr}:</label> <input type="text" name="input[{$token|escape}][filter]" value="{$detail.filter|default:xss|escape}"/>
+							<label for="input[{$token|escape}][filter]">{tr}Filter:{/tr}</label> <input type="text" name="input[{$token|escape}][filter]" value="{$detail.filter|default:xss|escape}"/>
 						</div>
 					</div>
 				</div>
@@ -324,12 +324,12 @@ $('#pluginalias_simple_new').hide();
 
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">
-					<label for="ignorebody">{tr}Ignore User Input{/tr}:</label> <input type="checkbox" name="ignorebody" id="ignorebody" value="y" {if $plugin_admin.body.input eq 'ignore'}checked="checked"{/if}/>
+					<label for="ignorebody">{tr}Ignore User Input:{/tr}</label> <input type="checkbox" name="ignorebody" id="ignorebody" value="y" {if $plugin_admin.body.input eq 'ignore'}checked="checked"{/if}/>
 				</div>
 			</div>
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">
-					<label for="defaultbody">{tr}Default Content{/tr}:</label>
+					<label for="defaultbody">{tr}Default Content:{/tr}</label>
 					<textarea cols="60" rows="12" id="defaultbody" name="defaultbody">{$plugin_admin.body.default|escape}</textarea>
 				</div>
 				<div class="q1">&nbsp;</div>
@@ -345,7 +345,7 @@ $('#pluginalias_simple_new').hide();
 								</div>
 								<div class="q234">
 									<div class="adminoptionlabel">
-										<label for="bodyparam[{$token|escape}][encoding]">{tr}Encoding{/tr}:</label>
+										<label for="bodyparam[{$token|escape}][encoding]">{tr}Encoding:{/tr}</label>
 										<select name="bodyparam[{$token|escape}][encoding]">
 											{foreach from=','|explode:'none,html,url' item=val}
 												<option value="{$val|escape}" {if $detail.encoding eq $val}selected="selected"{/if}>{$val|escape}</option>
@@ -353,10 +353,10 @@ $('#pluginalias_simple_new').hide();
 										</select>
 									</div>
 									<div class="adminoptionlabel">
-										<label for="bodyparam[{$token|escape}][input]">{tr}Argument Source (if different){/tr}:</label> <input type="text" name="bodyparam[{$token|escape}][input]" value="{$detail.input|escape}"/>
+										<label for="bodyparam[{$token|escape}][input]">{tr}Argument Source (if different):{/tr}</label> <input type="text" name="bodyparam[{$token|escape}][input]" value="{$detail.input|escape}"/>
 									</div>
 									<div class="adminoptionlabel">
-										<label for="bodyparam[{$token|escape}][default]">{tr}Default Value{/tr}:</label> <input type="text" name="bodyparam[{$token|escape}][default]" value="{$detail.default|escape}"/>
+										<label for="bodyparam[{$token|escape}][default]">{tr}Default Value:{/tr}</label> <input type="text" name="bodyparam[{$token|escape}][default]" value="{$detail.default|escape}"/>
 									</div>
 								</div>
 							</div>
@@ -378,7 +378,7 @@ $('#pluginalias_simple_new').hide();
 						</div>
 						<div class="q234">
 							<div class="adminoptionlabel">
-								<label for="cparams[{$token|escape}][pattern]">{tr}Pattern{/tr}:</label> <input type="text" name="cparams[{$token|escape}][pattern]" value="{$detail.pattern|escape}"/>
+								<label for="cparams[{$token|escape}][pattern]">{tr}Pattern:{/tr}</label> <input type="text" name="cparams[{$token|escape}][pattern]" value="{$detail.pattern|escape}"/>
 							</div>
 							<fieldset class="stayopen">
 								<legend>{tr}Parameters{/tr}{icon _id="omodule"} {icon _id="add" id="pluginalias_composed_addparam"}</legend>
@@ -390,7 +390,7 @@ $('#pluginalias_simple_new').hide();
 										</div>
 										<div class="q234">
 											<div class="adminoptionlabel">
-												<label for="cparams[{$token|escape}][pattern]">{tr}Encoding{/tr}:</label>
+												<label for="cparams[{$token|escape}][pattern]">{tr}Encoding:{/tr}</label>
 												<select name="cparams[{$token|escape}][params][{$t|escape}][encoding]">
 													{foreach from=','|explode:'none,html,url' item=val}
 														<option value="{$val|escape}" {if $d.encoding eq $val}selected="selected"{/if}>{$val|escape}</option>
@@ -398,10 +398,10 @@ $('#pluginalias_simple_new').hide();
 												</select>
 											</div>
 											<div class="adminoptionlabel">
-												<label for="cparams[{$token|escape}][params][{$t|escape}][input]">{tr}Argument Source (if different){/tr}:</label> <input type="text" name="cparams[{$token|escape}][params][{$t|escape}][input]" value="{$d.input|escape}"/>
+												<label for="cparams[{$token|escape}][params][{$t|escape}][input]">{tr}Argument Source (if different):{/tr}</label> <input type="text" name="cparams[{$token|escape}][params][{$t|escape}][input]" value="{$d.input|escape}"/>
 											</div>
 											<div class="adminoptionlabel">
-												<label for="cparams[{$token|escape}][params][{$t|escape}][input]">{tr}Default Value{/tr}:</label> <input type="text" name="cparams[{$token|escape}][params][{$t|escape}][default]" value="{$d.default|escape}"/>
+												<label for="cparams[{$token|escape}][params][{$t|escape}][input]">{tr}Default Value:{/tr}</label> <input type="text" name="cparams[{$token|escape}][params][{$t|escape}][default]" value="{$d.default|escape}"/>
 											</div>
 										</div>
 									</div>

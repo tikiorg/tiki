@@ -43,7 +43,7 @@
 			</div>
 			{if $listpages[ix].use_ratings eq 'y'}
 				<div class="articleheading">
-					{tr}Rating{/tr}: 
+					{tr}Rating:{/tr} 
 					{repeat count=$listpages[ix].rating}
 						{icon _id='star' alt="{tr}star{/tr}"}
 					{/repeat}

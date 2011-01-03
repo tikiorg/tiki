@@ -93,7 +93,7 @@
 	</tbody>
 </table>
 <div>
-{tr}Show the following languages{/tr}:
+{tr}Show the following languages:{/tr}
 <select multiple="multiple" name="additional_languages[]">
 {foreach item=lang from=$fullLanguageList}
 	<option value="{$lang.value}"{if in_array($lang.value, $languageList)} selected="selected"{/if}>{$lang.name}</option>

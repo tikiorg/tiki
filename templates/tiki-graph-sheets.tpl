@@ -112,12 +112,12 @@ function _renValRad( name )
 <input type="hidden" name="height" value="{$im_height}"/>
 <table class="formcolor">
 	<tr>
-		<td>{tr}Title{/tr}:</td>
+		<td>{tr}Title:{/tr}</td>
 		<td><input type="text" name="title" value="{$title}" onchange="renderWikiPlugin()"/></td>
 	</tr>
 {if $showgridparam}
 	<tr>
-		<td>{tr}Independant Scale{/tr}:</td>
+		<td>{tr}Independant Scale:{/tr}</td>
 		<td>
 			<input type="radio" name="independant" value="horizontal" id="ind_ori_hori" checked="checked" onchange="renderWikiPlugin()" />
 			<label for="ind_ori_hori">{tr}Horizontal{/tr}</label>
@@ -126,7 +126,7 @@ function _renValRad( name )
 		</td>
 	</tr>
 	<tr>
-		<td>{tr}Horizontal Scale{/tr}:</td>
+		<td>{tr}Horizontal Scale:{/tr}</td>
 		<td>
 			<input type="radio" name="horizontal" value="bottom" id="hori_pos_bottom" checked="checked" onchange="renderWikiPlugin()" />
 			<label for="hori_pos_bottom">{tr}Bottom{/tr}</label>
@@ -135,7 +135,7 @@ function _renValRad( name )
 		</td>
 	</tr>
 	<tr>
-		<td>{tr}Vertical Scale{/tr}:</td>
+		<td>{tr}Vertical Scale:{/tr}</td>
 		<td>
 			<input type="radio" name="vertical" value="left" id="verti_pos_left" checked="checked" onchange="renderWikiPlugin()" />
 			<label for="verti_pos_left">{tr}Left{/tr}</label>
@@ -145,7 +145,7 @@ function _renValRad( name )
 	</tr>
 {/if}
 	<tr>
-		<td colspan="2">{tr}Series{/tr}:</td>
+		<td colspan="2">{tr}Series:{/tr}</td>
 	</tr>
 {section name=i loop=$series}
 	<tr>

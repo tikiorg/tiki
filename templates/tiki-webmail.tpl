@@ -72,10 +72,10 @@
 								{/if}
 							</td>
 							<td>
-								{if !empty($accounts[ix].imap)}{tr}IMAP{/tr}: {$accounts[ix].imap} ({$accounts[ix].port})
-								{elseif !empty($accounts[ix].mbox)}{tr}Mbox{/tr}: {$accounts[ix].mbox}
-								{elseif !empty($accounts[ix].maildir)}{tr}Maildir{/tr}: {$accounts[ix].maildir}
-								{elseif !empty($accounts[ix].pop)}{tr}POP3{/tr}: {$accounts[ix].pop} ({$accounts[ix].port}){/if}
+								{if !empty($accounts[ix].imap)}{tr}IMAP:{/tr} {$accounts[ix].imap} ({$accounts[ix].port})
+								{elseif !empty($accounts[ix].mbox)}{tr}Mbox:{/tr} {$accounts[ix].mbox}
+								{elseif !empty($accounts[ix].maildir)}{tr}Maildir:{/tr} {$accounts[ix].maildir}
+								{elseif !empty($accounts[ix].pop)}{tr}POP3:{/tr} {$accounts[ix].pop} ({$accounts[ix].port}){/if}
 							</td>
 							<td>
 								{$accounts[ix].username}
@@ -126,10 +126,10 @@
 									{/if}
 								</td>
 								<td>
-									{if !empty($pubAccounts[ixp].imap)}{tr}IMAP{/tr}: {$pubAccounts[ixp].imap} ({$pubAccounts[ixp].port})
-									{elseif !empty($pubAccounts[ixp].mbox)}{tr}Mbox{/tr}: {$pubAccounts[ixp].mbox}
-									{elseif !empty($pubAccounts[ixp].maildir)}{tr}Maildir{/tr}: {$pubAccounts[ixp].maildir}
-									{elseif !empty($pubAccounts[ixp].pop)}{tr}POP3{/tr}: {$pubAccounts[ixp].pop} ({$pubAccounts[ixp].port}){/if}
+									{if !empty($pubAccounts[ixp].imap)}{tr}IMAP:{/tr} {$pubAccounts[ixp].imap} ({$pubAccounts[ixp].port})
+									{elseif !empty($pubAccounts[ixp].mbox)}{tr}Mbox:{/tr} {$pubAccounts[ixp].mbox}
+									{elseif !empty($pubAccounts[ixp].maildir)}{tr}Maildir:{/tr} {$pubAccounts[ixp].maildir}
+									{elseif !empty($pubAccounts[ixp].pop)}{tr}POP3:{/tr} {$pubAccounts[ixp].pop} ({$pubAccounts[ixp].port}){/if}
 								</td>
 								<td>{$pubAccounts[ixp].username}</td>
 								<td>
@@ -509,14 +509,14 @@
 			{assign var='wmclass' value='webmail_message'}
 		{/if}
 		<div>
-			{button _flip_id=$wmid _text="{tr}Part{/tr}: "|cat:$bodies[ix].contentType _flip_default_open=$wmopen}
+			{button _flip_id=$wmid _text="{tr}Part:{/tr} "|cat:$bodies[ix].contentType _flip_default_open=$wmopen}
 		</div>
 		<div id="{$wmid}" class="{$wmclass}" {if $wmopen eq 'n'}style="display:none"{/if}>
 {$bodies[ix].body}
 		</div>
 	{/section}
 	<div>
-		{button _flip_id='webmail_message_source_'|cat:$msgid _text="{tr}Source{/tr}: " _flip_default_open='n'}
+		{button _flip_id='webmail_message_source_'|cat:$msgid _text="{tr}Source:{/tr} " _flip_default_open='n'}
 	</div>
 	<div id="webmail_message_source_{$msgid}" class="webmail_message webmail_mono" style="display:none">
 {$allbodies|nl2br}

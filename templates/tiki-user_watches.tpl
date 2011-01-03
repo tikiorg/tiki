@@ -57,7 +57,7 @@
 	<form action="tiki-user_watches.php" method="post">
 	<table class="formcolor">
 	<tr>
-		<td>{tr}Event{/tr}:</td>
+		<td>{tr}Event:{/tr}</td>
 		<td>
 			<select name="event" id="type_selector">
 				<option>{tr}Select event type{/tr}</option>
@@ -181,14 +181,14 @@
 				{/if}
 				({$w.event})
 			</td>
-			<td><a class="link" href="{$w.url}">{tr}{$w.type}{/tr}: {$w.title}</a></td>
+			<td><a class="link" href="{$w.url}">{tr}{$w.type}:{/tr} {$w.title}</a></td>
 		</tr>
 	{foreachelse}
 		<tr><td class="odd" colspan="2">{tr}No records found.{/tr}</td></tr>
 	{/foreach}
 </table>
 {if $watches}
-	{tr}Perform action with checked{/tr}: <input type="submit" name="delete" value=" {tr}Delete{/tr} ">
+	{tr}Perform action with checked:{/tr} <input type="submit" name="delete" value=" {tr}Delete{/tr} ">
 {/if}
 </form>
 {/tab}

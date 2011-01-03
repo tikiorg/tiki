@@ -15,7 +15,7 @@
 			<table class="formcolor">
 				<tbody>
 					<tr>
-						<td style="padding-right: 25px;">{tr}Keywords{/tr}:</td>
+						<td style="padding-right: 25px;">{tr}Keywords:{/tr}</td>
 						<td><input name="new_keywords" size="65" value="{$edit_keywords|escape}"/></td>
 					</tr>
 					<tr>

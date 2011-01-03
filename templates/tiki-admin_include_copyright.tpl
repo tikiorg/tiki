@@ -14,7 +14,7 @@
 		{preference name=wikiSubmitNotice}
 
 		<div class="adminoptionbox">
-			<div class="adminoptionlabel">{tr}Enable copyright management for{/tr}:</div>
+			<div class="adminoptionlabel">{tr}Enable copyright management for:{/tr}</div>
 			<div class="adminoptionboxchild">
 				{preference name=wiki_feature_copyrights}
 				{preference name=articles_feature_copyrights}

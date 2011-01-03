@@ -27,11 +27,11 @@ window.parent.location = 'tiki-index.php';
 <form action="tiki-socialnetworks_firstlogin.php" method="post" name="RegForm2">
 <table class="formcolor">
 <tr>
-<td>{tr}Login{/tr}:</td>
+<td>{tr}Login:{/tr}</td>
 <td><input type="text" name="userlogin" /> </td>
 </tr>
 <tr>
-<td>{tr}Password{/tr}:</td>
+<td>{tr}Password:{/tr}</td>
 <td><input type="password" name="userpass" /> </td>
 </tr>
 <tr>

@@ -84,9 +84,9 @@
 			<table class="formcolor">
 				<tr>
 					<td>
-						<label for="attach-upload">{tr}Upload file{/tr}:</label><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
+						<label for="attach-upload">{tr}Upload file:{/tr}</label><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 						<input size="16 " name="userfile1" type="file" id="attach-upload" />
-						<label for="attach-comment">{tr}Comment{/tr}:</label><input type="text" name="attach_comment" maxlength="250" id="attach-comment" />
+						<label for="attach-comment">{tr}Comment:{/tr}</label><input type="text" name="attach_comment" maxlength="250" id="attach-comment" />
 						<input type="submit" name="attach" value="{tr}Attach{/tr}"/>
 					</td>
 				</tr>

@@ -49,7 +49,7 @@
 				</tr>
 				<tr>
 					<td>
-						{tr}Intertiki shared cookie for sliding auth under same domain{/tr}:
+						{tr}Intertiki shared cookie for sliding auth under same domain:{/tr}
 					</td>
 					<td>
 						<input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if}/>
@@ -123,14 +123,14 @@
 				<table class="admin">
 					<tr>
 						<td>
-							{tr}Intertiki shared cookie for sliding auth under same domain{/tr}:</td>
+							{tr}Intertiki shared cookie for sliding auth under same domain:{/tr}</td>
 						<td>
 							<input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if}/>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							{tr}Intertiki Server enabled{/tr}:
+							{tr}Intertiki Server enabled:{/tr}
 						</td>
 						<td>
 							<input type="checkbox" name="feature_intertiki_server" {if $prefs.feature_intertiki_server eq 'y'}checked="checked"{/if}/>
@@ -138,7 +138,7 @@
 					</tr>
 					<tr>
 						<td>
-							{tr}Access Log file{/tr}:
+							{tr}Access Log file:{/tr}
 						</td>
 						<td>
 							<input type="text" name="intertiki_logfile" value="{$prefs.intertiki_logfile}" size="42" />
@@ -146,7 +146,7 @@
 					</tr>
 					<tr>
 						<td>
-							{tr}Errors Log file{/tr}:
+							{tr}Errors Log file:{/tr}
 						</td>
 						<td>
 							<input type="text" name="intertiki_errfile" value="{$prefs.intertiki_errfile}" size="42" />
@@ -189,7 +189,7 @@
 									{/foreach}
 								{/if}
 								<tr class="formrow">
-									<td>{tr}New{/tr}:</td>
+									<td>{tr}New:{/tr}</td>
 									<td><input type="text" name="newhost[name]" value="" size="12" /></td>
 									<td><input type="text" name="newhost[key]" value="" size="32" /></td>
 									<td><input type="text" name="newhost[ip]" value="" size="12" /></td>

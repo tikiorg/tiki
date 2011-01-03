@@ -24,7 +24,7 @@
 		<form class="forms" name="loginbox" action="{if $prefs.https_login eq 'encouraged' || $prefs.https_login eq 'required' || $prefs.https_login eq 'force_nocheck'}{$base_url_https}{/if}{$prefs.login_url}" method="post" {if $prefs.feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
 			<div class="sl-login"><label for="sl-login-user">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if}:</label>
 			<input type="text" name="user" id="sl-login-user" /></div>
-			<div class="sl-login"><label for="sl-login-pass">{tr}Password{/tr}:</label>
+			<div class="sl-login"><label for="sl-login-pass">{tr}Password:{/tr}</label>
 			<input type="password" name="pass" id="sl-login-pass" size="10" /></div>
 			<input class="wikiaction" type="submit" name="login" value="{tr}Log in{/tr}" />
 			<div>

@@ -5,14 +5,14 @@
 	<input type="hidden" name="extwikiId" value="{$extwikiId|escape}" />
 	<table class="formcolor">
 		<tr>
-			<td>{tr}Name{/tr}:</td>
+			<td>{tr}Name:{/tr}</td>
 			<td>
 				<input type="text" maxlength="255" size="10" name="name" value="{$info.name|escape}" />
 			</td>
 		</tr>
 		<tr>
 			<td>
-				{tr}URL (use $page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=$page){/tr}:
+				{tr}URL (use $page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=$page):{/tr}
 			</td>
 			<td>
 				<input type="text" maxlength="255" size="40" name="extwiki" value="{$info.extwiki|escape}" />

@@ -25,7 +25,7 @@
 					<div class="highlight" style="margin-left:30px;">
 						{tr}Output compression is active.{/tr}
 						<br />
-						{tr}Compression is handled by{/tr}: {$gzip_handler}.
+						{tr}Compression is handled by:{/tr} {$gzip_handler}.
 					</div>
 				{/if}
 			</div>

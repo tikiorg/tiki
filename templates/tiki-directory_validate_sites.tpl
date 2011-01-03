@@ -38,7 +38,7 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'sites[{$items[user].siteId
     </tr>
     <tr class="{cycle}">
       <td>&nbsp;</td>
-      <td colspan="5"><i>{tr}Directory Categories{/tr}:{assign var=fsfs value=1}
+      <td colspan="5"><i>{tr}Directory Categories:{/tr}{assign var=fsfs value=1}
         {section name=ii loop=$items[user].cats}
         {if $fsfs}{assign var=fsfs value=0}{else}, {/if}
         {$items[user].cats[ii].path}

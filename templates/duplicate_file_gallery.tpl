@@ -5,7 +5,7 @@
 		<table class="formcolor">
 			<tr>
 				<td>
-					<label for="name">{tr}Name{/tr}:</label>
+					<label for="name">{tr}Name:{/tr}</label>
 				</td>
 				<td>
 					<input type="text" size="50" id="name" name="name" value="{$name|escape}" />
@@ -13,7 +13,7 @@
 			</tr>
 			<tr>
 				<td>
-					<label for="description">{tr}Description{/tr}:</label>
+					<label for="description">{tr}Description:{/tr}</label>
 				</td>
 				<td>
 					<textarea id="description" name="description" rows="4" cols="40">{$description|escape}</textarea>
@@ -21,7 +21,7 @@
 			</tr>
 			<tr>
 				<td>
-					<label for="galleryId">{tr}File gallery{/tr}:</label>
+					<label for="galleryId">{tr}File gallery:{/tr}</label>
 				</td>
 				<td>
 					<select id="galleryId" name="galleryId"{if $all_galleries|@count eq '0'} disabled="disabled"{/if}>
@@ -35,7 +35,7 @@
 			</tr>
 			<tr>
 				<td>
-					<label for="dupCateg">{tr}Duplicate categories{/tr}:</label>
+					<label for="dupCateg">{tr}Duplicate categories:{/tr}</label>
 				</td>
 				<td>
 					<input type="checkbox" id="dupCateg" name="dupCateg" />
@@ -43,7 +43,7 @@
 			</tr>
 			<tr>
 				<td>
-					<label for="dupPerms">{tr}Duplicate permissions{/tr}:</label>
+					<label for="dupPerms">{tr}Duplicate permissions:{/tr}</label>
 				</td>
 				<td>
 					<input type="checkbox" id="dupPerms" name="dupPerms" />

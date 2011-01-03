@@ -97,21 +97,21 @@
 {if $popup eq ""}
 	<br /><br />
 	<table class="normal noslideshow">
-		<tr><td class="odd">{tr}Image Name{/tr}:</td><td class="odd">{$name}</td></tr>
-		<tr><td class="even">{tr}Created{/tr}:</td><td class="even">{$created|tiki_long_datetime}</td></tr>
-		<tr><td class="odd">{tr}Image size{/tr}:</td><td class="odd">{$xsize}x{$ysize}</td></tr>
-		<tr><td class="even">{tr}Image Scale{/tr}:</td><td class="even">{if $resultscale}{$xsize_scaled}x{$ysize_scaled}{else}{tr}Original Size{/tr}{/if}</td></tr>
-		<tr><td class="odd">{tr}Hits{/tr}:</td><td class="odd">{$hits}</td></tr>
-		<tr><td class="even">{tr}Description{/tr}:</td><td class="even">{$description}</td></tr>
+		<tr><td class="odd">{tr}Image Name:{/tr}</td><td class="odd">{$name}</td></tr>
+		<tr><td class="even">{tr}Created:{/tr}</td><td class="even">{$created|tiki_long_datetime}</td></tr>
+		<tr><td class="odd">{tr}Image size:{/tr}</td><td class="odd">{$xsize}x{$ysize}</td></tr>
+		<tr><td class="even">{tr}Image Scale:{/tr}</td><td class="even">{if $resultscale}{$xsize_scaled}x{$ysize_scaled}{else}{tr}Original Size{/tr}{/if}</td></tr>
+		<tr><td class="odd">{tr}Hits:{/tr}</td><td class="odd">{$hits}</td></tr>
+		<tr><td class="even">{tr}Description:{/tr}</td><td class="even">{$description}</td></tr>
 		{if $prefs.feature_maps eq 'y' and $gal_info.geographic eq 'y'}
-	  		<tr><td class="odd">{tr}Latitude (WGS84/decimal degrees){/tr}:</td><td class="odd">{$lat|escape}</td></tr>
-	  		<tr><td class="even">{tr}Longitude (WGS84/decimal degrees){/tr}:</td><td class="even">{$lon|escape}</td></tr>
+	  		<tr><td class="odd">{tr}Latitude (WGS84/decimal degrees):{/tr}</td><td class="odd">{$lat|escape}</td></tr>
+	  		<tr><td class="even">{tr}Longitude (WGS84/decimal degrees):{/tr}</td><td class="even">{$lon|escape}</td></tr>
 	  	{/if}
-		<tr><td class="odd">{tr}Author{/tr}:</td><td class="odd">{$image_user|userlink}</td></tr>
+		<tr><td class="odd">{tr}Author:{/tr}</td><td class="odd">{$image_user|userlink}</td></tr>
 		{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
 		<tr>
 			<td class="even">
-				{tr}Move image{/tr}:
+				{tr}Move image:{/tr}
 			</td>
 			<td class="odd">
 				<form action="tiki-browse_image.php" method="post">
@@ -135,7 +135,7 @@
 	<table class="normal noslideshow" style="font-size:small">
 		<tr>
 			<td class="even" style="border-bottom:0px" colspan="2">
-				{tr}Include the image in a tiki page using the following syntax{/tr}:
+				{tr}Include the image in a tiki page using the following syntax:{/tr}
 			</td>
 		</tr>
 		<tr>
@@ -155,7 +155,7 @@
 		</tr>
 		<tr>
 			<td class="even" style="border-bottom:0px" colspan="2">
-				{tr}To include the image in an HTML page{/tr}:
+				{tr}To include the image in an HTML page:{/tr}
 		    </td>
 		</tr>
 		<tr>
@@ -175,7 +175,7 @@
 		</tr>
 		<tr>
 		  	<td class="even" style="border-bottom:0px" colspan="2">
-		    	{tr}To link to this page from another tiki page{/tr}:
+		    	{tr}To link to this page from another tiki page:{/tr}
 		    </td>
 		</tr>
 		<tr>

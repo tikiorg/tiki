@@ -51,7 +51,7 @@
 			{preference name=blog_list_order}
 
 			<fieldset>
-				<legend>{tr}Select which items to display when listing blogs{/tr}:</legend>
+				<legend>{tr}Select which items to display when listing blogs:{/tr}</legend>
 				{preference name=blog_list_title}
 				<div class="adminoptionboxchild" id="blog_list_title_childcontainer">
 					{preference name=blog_list_title_len}

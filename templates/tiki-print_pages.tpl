@@ -60,7 +60,7 @@
 <table class="formcolor">
 	<tr>
 		<td width="40%">
-			<h2>{tr}Available Pages{/tr}:</h2>
+			<h2>{tr}Available Pages:{/tr}</h2>
     <select name="pageName[]" multiple="multiple" size="5" style="width:99%" title="{tr}Available Pages{/tr}">
       {section name=ix loop=$pages}
         {if !in_array($pages[ix].pageName,$printpages)}{* don't show the page as available,if it is already selected *}
@@ -87,7 +87,7 @@
 			
 		</td>
 		<td width="40%">
-			<h2>{tr}Selected Pages{/tr}:</h2>
+			<h2>{tr}Selected Pages:{/tr}</h2>
 		<select name="selectedpages[]" size="15" multiple="multiple" style="width:99%" title="{tr}Selected Pages{/tr}">
 {section name=ix loop=$printpages}
 			<option value="{$smarty.section.ix.index}">{$printpages[ix]}</option>
@@ -123,7 +123,7 @@
   <tbody>
 	<tr>
 		<td>
-    <h2>{tr}Add Pages from Structures{/tr}:</h2>
+    <h2>{tr}Add Pages from Structures:{/tr}</h2>
     <select name="structureId" size="5" style="width:99%" border="1">
       {section name=ix loop=$structures}
         {if !in_array($structures[ix].page_ref_id,$printstructures)}

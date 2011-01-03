@@ -90,24 +90,24 @@
 		<form action="tiki-sheets.php" method="post">
 			<input type="hidden" name="sheetId" value="{$sheetId|escape}" />
 			<table class="formcolor">
-				<tr><td>{tr}Title{/tr}:</td><td><input type="text" name="title" value="{$title|escape}"/></td></tr>
-				<tr><td>{tr}Description{/tr}:</td><td><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
-				<tr><td>{tr}Class Name{/tr}:</td><td><input type="text" name="className" value="{$className|escape}"/></td></tr>
-				<tr><td>{tr}Header Rows{/tr}:</td><td><input type="text" name="headerRow" value="{$headerRow|escape}"/></td></tr>
-				<tr><td>{tr}Footer Rows{/tr}:</td><td><input type="text" name="footerRow" value="{$footerRow|escape}"/></td></tr>
+				<tr><td>{tr}Title:{/tr}</td><td><input type="text" name="title" value="{$title|escape}"/></td></tr>
+				<tr><td>{tr}Description:{/tr}</td><td><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
+				<tr><td>{tr}Class Name:{/tr}</td><td><input type="text" name="className" value="{$className|escape}"/></td></tr>
+				<tr><td>{tr}Header Rows:{/tr}</td><td><input type="text" name="headerRow" value="{$headerRow|escape}"/></td></tr>
+				<tr><td>{tr}Footer Rows:{/tr}</td><td><input type="text" name="footerRow" value="{$footerRow|escape}"/></td></tr>
 				<tr>
-					<td>{tr}Wiki Parse Values{/tr}:</td><td>
+					<td>{tr}Wiki Parse Values:{/tr}</td><td>
 						<input type="checkbox" name="parseValues"{if $parseValues eq 'y'} checked="checked"{/if}/>
 					</td>
 				</tr>
 				{include file='categorize.tpl'}
 				<tr>
-					<td>{tr}Creator{/tr}:</td><td>
+					<td>{tr}Creator:{/tr}</td><td>
 						{user_selector name="creator" editable=$tiki_p_admin_sheet}
 					</td>
 				</tr>
 				<tr>
-					<td>{tr}Parent SheetId{/tr}:</td>
+					<td>{tr}Parent SheetId:{/tr}</td>
 					<td>
 						<select name="parentSheetId">
 							<option value="">{tr}None{/tr}</option>
@@ -126,7 +126,7 @@
 		
 	{if $sheetId > 0}
 		<div class="wikitext">
-			{tr}You can access the sheet using the following URL{/tr}: <a class="gallink" href="{$url}?sheetId={$sheetId}">{$url}?sheetId={$sheetId}</a>
+			{tr}You can access the sheet using the following URL:{/tr} <a class="gallink" href="{$url}?sheetId={$sheetId}">{$url}?sheetId={$sheetId}</a>
 		</div>
 	{/if}
 	{/tab}

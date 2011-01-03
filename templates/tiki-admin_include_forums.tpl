@@ -57,7 +57,7 @@
 		{tab name="{tr}Forums Listing{/tr}"}
 			<input type="hidden" name="forumlistprefs" />
 			{preference name=forums_ordering}
-			{tr}Select which items to display when listing forums{/tr}:
+			{tr}Select which items to display when listing forums:{/tr}
 			{preference name=forum_list_topics}
 			{preference name=forum_list_posts}
 			{preference name=forum_list_ppd}

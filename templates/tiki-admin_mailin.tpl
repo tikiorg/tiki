@@ -28,7 +28,7 @@
 {/if}
 <br />
 
-<a name="add" ></a><h2>{if $accountId eq 0}{tr}Add new Mail-in account{/tr}{else}{tr}Edit Mail-in account{/tr}: <i>{$info.account}</i>{/if}</h2>
+<a name="add" ></a><h2>{if $accountId eq 0}{tr}Add new Mail-in account{/tr}{else}{tr}Edit Mail-in account:{/tr} <i>{$info.account}</i>{/if}</h2>
 <form action="tiki-admin_mailin.php" method="post">
   <input type="hidden" name="accountId" value="{$accountId|escape}" />
   <table class="formcolor">

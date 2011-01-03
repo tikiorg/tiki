@@ -1,6 +1,6 @@
 {title}{tr}Admin HTML Page Dynamic Zones{/tr}{/title}
 
-<h2>{tr}Page{/tr}: {$pageName}</h2>
+<h2>{tr}Page:{/tr} {$pageName}</h2>
 
 <div class="navbar">
 	{button href="tiki-admin_html_pages.php" _text="{tr}Admin HTML pages{/tr}"}
@@ -16,11 +16,11 @@
 		<input type="hidden" name="zone" value="{$zone|escape}" />
 		<table class="formcolor">
 			<tr>
-				<td>{tr}Zone{/tr}:</td>
+				<td>{tr}Zone:{/tr}</td>
 				<td>{$zone}</td>
 			</tr>
 			<tr>
-				<td>{tr}Content{/tr}:</td>
+				<td>{tr}Content:{/tr}</td>
 				<td>
 					{if $type eq 'ta'}
 						<textarea rows="5" cols="60" name="content">{$content|escape}</textarea>

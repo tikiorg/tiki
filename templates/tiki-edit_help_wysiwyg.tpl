@@ -8,7 +8,7 @@
 <div class="help_section">
 {if $prefs.feature_help eq 'y'} 
 <p>{tr}For more information, please see{/tr}
-	<a href="{$prefs.helpurl}Wysiwyg+Editor" target="tikihelp" class="tikihelp" title="{tr}Wysiwyg Editor{/tr}: {tr}More help on wysiwyg editing{/tr}">
+	<a href="{$prefs.helpurl}Wysiwyg+Editor" target="tikihelp" class="tikihelp" title="{tr}Wysiwyg Editor:{/tr} {tr}More help on wysiwyg editing{/tr}">
 		{tr}Wysiwyg Editor{/tr} {icon _id='help' style="vertical-align:middle"}
 	</a>
 </p>

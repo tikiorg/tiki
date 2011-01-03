@@ -25,7 +25,7 @@
 	<input type="hidden" name="pId" value="{$pId|escape}" />
 	<table class="formcolor">
 		<tr>
-			<td>{tr}Content Type{/tr}:</td>
+			<td>{tr}Content Type:{/tr}</td>
 			<td>
 				<select name="content_type" class="type-selector">
 					<option value="static"{if $info.content_type eq 'static'} selected="selected"{/if}>{tr}Text area{/tr}</option>
@@ -35,21 +35,21 @@
 		</tr>
 		
 		<tr class="type-cond for-page">
-			<td>{tr}Page Name{/tr}:</td>
+			<td>{tr}Page Name:{/tr}</td>
 			<td>
 				<input type="text" name="page_name" value="{$info.page_name|escape}"/>
 			</td>
 		</tr>
 
 		<tr class="type-cond for-static">
-			<td>{tr}Content{/tr}:</td>
+			<td>{tr}Content:{/tr}</td>
 			<td>
 				<textarea rows="5" cols="40" name="data">{$info.data|escape}</textarea>
 			</td>
 		</tr>
 
 		<tr>
-			<td>{tr}Publishing date{/tr}:</td>
+			<td>{tr}Publishing date:{/tr}</td>
 			<td>
 				{html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order} {tr}at{/tr} {html_select_time time=$publishDate display_seconds=false}</td>
 		</tr>

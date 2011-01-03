@@ -13,7 +13,7 @@
 				<form method='post' action='tiki-user_contacts_prefs.php'>
 					<table class="formcolor">
 						<tr>
-							<td>{tr}Default View{/tr}:</td>
+							<td>{tr}Default View:{/tr}</td>
 							<td>
 								<input type='radio' name='user_contacts_default_view' value='list' {if $user_contacts_default_view eq 'list'}checked="checked"{/if}/>
 								{tr}List View{/tr}
@@ -80,7 +80,7 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								{tr}Add{/tr}: <input type='text' name='ext_add' /> <input type='submit' name='add_fields' value="{tr}Add{/tr}" />
+								{tr}Add:{/tr} <input type='text' name='ext_add' /> <input type='submit' name='add_fields' value="{tr}Add{/tr}" />
 							</td>
 						</tr>
 					</table>

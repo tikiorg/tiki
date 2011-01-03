@@ -439,7 +439,7 @@
 					</tr>
 				{/foreach}
 			</table>
-			{tr}Total number of users{/tr}: {$smarty.foreach.userActions.total}
+			{tr}Total number of users:{/tr} {$smarty.foreach.userActions.total}
 		{/if}
 
 		{if $objectActions|@count ne 0}
@@ -463,7 +463,7 @@
 					</tr>
 				{/foreach}
 			</table>
-			{tr}Total number of objects{/tr}: {$smarty.foreach.objectActions.total}
+			{tr}Total number of objects:{/tr} {$smarty.foreach.objectActions.total}
 		{/if}
 
 		{if $showCateg eq 'y' and $tiki_p_admin eq 'y'}

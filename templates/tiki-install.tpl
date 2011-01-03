@@ -586,7 +586,7 @@
 				<p>{tr}We can try to fix it, but <strong>make sure you have backups, and can restore them</strong>.{/tr}</p>
 				{if $client_charset_in_file eq 'utf8'}
 					<p>
-						{tr}Previous table encoding{/tr}:
+						{tr}Previous table encoding:{/tr}
 						<select name="previous_encoding" id="previous_encoding">
 							<option value="">{tr}Please select{/tr}</option>
 							<option value="armscii8" title="Armenian, Binary">armscii8</option>

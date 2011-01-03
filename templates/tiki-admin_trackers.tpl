@@ -21,7 +21,7 @@
 	{if ($channels) or ($find)}
 		{include file='find.tpl' filters=''}
 		{if ($find) and ($channels)}
-			<p>{tr}Found{/tr} {$channels|@count} {tr}trackers{/tr}:</p>
+			<p>{tr}Found{/tr} {$channels|@count} {tr}trackers:{/tr}</p>
 		{/if}
 	{/if}
 
@@ -67,7 +67,7 @@
 			</tr>
 		{sectionelse}
 			<tr class="odd">
-				<td colspan="7"><strong>{tr}No records found{/tr}{if $find} {tr}with{/tr}: {$find}{/if}.</strong></td>
+				<td colspan="7"><strong>{tr}No records found{/tr}{if $find} {tr}with:{/tr} {$find}{/if}.</strong></td>
 			</tr>
 		{/section}
 	</table>
@@ -91,14 +91,14 @@
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 		<table class="formcolor">
 			<tr>
-				<td>{tr}Name{/tr}:</td>
+				<td>{tr}Name:{/tr}</td>
 				<td>
 					<input type="text" name="name" value="{$name|escape}" />
 				</td>
 			</tr>
 
 			<tr>
-				<td>{tr}Description{/tr}:</td>
+				<td>{tr}Description:{/tr}</td>
 				<td>
 					{tr}Description text is wiki-parsed:{/tr} 
 					<input type="checkbox" name="descriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} onclick="toggleBlock('trackerDesc');" />

@@ -26,7 +26,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td>{tr}Use in{/tr}:</td>
+			<td>{tr}Use in:{/tr}</td>
 			<td>
 				{if $prefs.feature_cms_templates eq 'y'}
 					<input type="checkbox" name="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if} /> 
@@ -65,7 +65,7 @@
 		</tr>
 
 		<tr>
-			<td>{tr}Template Type{/tr}:</td>
+			<td>{tr}Template Type:{/tr}</td>
 			<td>
 				<select name="template_type" class="type-selector">
 					<option value="static"{if $info.template_type eq 'static'} selected="selected"{/if}>{tr}Text area{/tr}</option>
@@ -75,7 +75,7 @@
 		</tr>
 		
 		<tr class="type-cond for-page">
-			<td>{tr}Page Name{/tr}:</td>
+			<td>{tr}Page Name:{/tr}</td>
 			<td>
 				<input type="text" name="page_name" value="{$info.page_name}"/>
 			</td>
@@ -83,7 +83,7 @@
 
 		<tr class="type-cond for-static">
 			<td colspan="2">
-				<label for="editwiki">{tr}Template{/tr}:</label>
+				<label for="editwiki">{tr}Template:{/tr}</label>
 			</td>
 		</tr>
 		<tr class="type-cond for-static">

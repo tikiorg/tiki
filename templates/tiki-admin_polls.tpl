@@ -19,11 +19,11 @@
 			<input type="hidden" name="pollId" value="{$pollId|escape}" />
 			<table class="formcolor">
 				<tr>
-					<td>{tr}Title{/tr}:</td>
+					<td>{tr}Title:{/tr}</td>
 					<td><input type="text" name="title" value="{$info.title|escape}" /></td>
 				</tr>
 				<tr>
-					<td>{tr}Active{/tr}:</td>
+					<td>{tr}Active:{/tr}</td>
 					<td>
 						<select name="active">
 							<option value='a' {if $info.active eq 'a'}selected="selected"{/if}>{tr}active{/tr}</option>
@@ -59,7 +59,7 @@
 				</tr>
 				{include file='categorize.tpl'}
 				<tr>
-					<td>{tr}PublishDate{/tr}:</td>
+					<td>{tr}PublishDate:{/tr}</td>
 					<td>
 						{html_select_date time=$info.publishDate end_year="+1" field_order=$prefs.display_field_order} {tr}at{/tr} {html_select_time time=$info.publishDate display_seconds=false}
 					</td>

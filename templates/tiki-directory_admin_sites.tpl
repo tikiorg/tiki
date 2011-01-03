@@ -3,7 +3,7 @@
 {title help="Directory" url="tiki-directory_admin_sites.php?parent=$parent"}{tr}Admin sites{/tr}{/title}
 
 {include file='tiki-directory_admin_bar.tpl'}
-<h2>{tr}Parent directory category{/tr}:</h2>
+<h2>{tr}Parent directory category:{/tr}</h2>
 <form name="path" method="post" action="tiki-directory_admin_sites.php">
   <select name="parent" onchange="javascript:path.submit();">
     <option value="0" {if $parent eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
@@ -24,19 +24,19 @@
   <input type="hidden" name="siteId" value="{$siteId|escape}" />
   <table class="formcolor">
     <tr>
-      <td>{tr}Name{/tr}:</td>
+      <td>{tr}Name:{/tr}</td>
       <td><input type="text" name="name" value="{$info.name|escape}" /></td>
     </tr>
     <tr>
-      <td>{tr}Description{/tr}:</td>
+      <td>{tr}Description:{/tr}</td>
       <td><textarea rows="5" cols="60" name="description">{$info.description|escape}</textarea></td>
     </tr>
     <tr>
-      <td>{tr}URL{/tr}:</td>
+      <td>{tr}URL:{/tr}</td>
       <td><input type="text" name="url" value="{$info.url|escape}" /></td>
     </tr>
     <tr>
-      <td>{tr}Directory Categories{/tr}:</td>
+      <td>{tr}Directory Categories:{/tr}</td>
       <td><select name="siteCats[]" multiple="multiple" size="4">
           
 			    {section name=ix loop=$categs}
@@ -52,7 +52,7 @@
     </tr>
     {if $prefs.directory_country_flag eq 'y'}
     <tr>
-      <td>{tr}Country{/tr}:</td>
+      <td>{tr}Country:{/tr}</td>
       <td><select name="country">
           
 						{section name=ux loop=$countries}
@@ -66,7 +66,7 @@
     </tr>
     {/if}
     <tr>
-      <td>{tr}Is valid{/tr}:</td>
+      <td>{tr}Is valid:{/tr}</td>
       <td><input name="isValid" type="checkbox" {if $info.isValid eq 'y'}checked="checked"{/if} /></td>
     </tr>
     <tr>
@@ -106,7 +106,7 @@
     </tr>
     <tr class="{cycle}">
       <td>&nbsp;</td>
-      <td colspan="6"><i> {tr}Directory Categories{/tr}:{assign var=fsfs value=1}
+      <td colspan="6"><i> {tr}Directory Categories:{/tr}{assign var=fsfs value=1}
         {section name=ii loop=$items[user].cats}
         {if $fsfs}{assign var=fsfs value=0}{else}, {/if}
         {$items[user].cats[ii].path|escape}
