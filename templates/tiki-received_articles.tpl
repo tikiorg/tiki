@@ -197,12 +197,12 @@
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
 				<td>{$channels[user].receivedArticleId}</td>
-				<td>{$channels[user].title}
+				<td>{$channels[user].title|escape}
 					{if $channels[user].type eq 'Review'}(r){/if}
 				</td>
 				<td>{$channels[user].receivedDate|tiki_short_datetime}</td>
 				<td>{$channels[user].receivedFromSite}</td>
-				<td>{$channels[user].receivedFromUser}</td>
+				<td>{$channels[user].receivedFromUser|escape}</td>
 				<td>
 					<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedArticleId={$channels[user].receivedArticleId}">{icon _id='page_edit'}</a> 
 					&nbsp;
