@@ -157,10 +157,6 @@ class ObjectLib extends TikiLib
 				global $user;
 				$tikilib->update_page($object, $data, tra('section edit'), $user, $tikilib->get_ip_address());
 				break;
-			case 'article':
-				global $artlib; include_once('lib/articles/artlib.php');
-				$artlib->replace_article();
-				break;
 		}
 	}
 	function delete_object($type, $itemId) {
