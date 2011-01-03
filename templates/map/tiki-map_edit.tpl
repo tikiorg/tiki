@@ -2,9 +2,9 @@
 
 <a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br />
 <a href="http://www.mapserver.org/mapfile/reference.html">http://www.mapserver.org/mapfile/reference.html</a><br /><br />
-{if $mapfile}<h2>{tr}Mapfile{/tr}: {$mapfile}</h2>{/if}
+{if $mapfile}<h2>{tr}Mapfile:{/tr} {$mapfile}</h2>{/if}
 {if $mode eq 'listing'}
-<h3>{tr}Available mapfiles{/tr}:</h3>
+<h3>{tr}Available mapfiles:{/tr}</h3>
 <table class="normal">
 <tr>
 <th>{tr}Mapfile{/tr}</th>
@@ -122,7 +122,7 @@
   <tr>
   	<td class="even">
   	<small>
-    {tr}You can view this map in your browser using{/tr}: <a class="maplink" href="{$url_browse}?mapfile={$mapfile}">{$url_browse}?mapfile={$mapfile}</a><br />
+    {tr}You can view this map in your browser using:{/tr} <a class="maplink" href="{$url_browse}?mapfile={$mapfile}">{$url_browse}?mapfile={$mapfile}</a><br />
     </small>
     </td>
   </tr>

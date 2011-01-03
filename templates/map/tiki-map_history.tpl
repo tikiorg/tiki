@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-map_history.php?mapfile={$mapfile}">{tr}Mapfile History{/tr}</a> {tr}of{/tr}<a class="pagetitle" href="tiki-map_edit.php?mapfile={$mapfile}&mode=editing"> {$mapfile}</a><br />
 {if $preview}
-<h2>{tr}Version{/tr}: {$preview}</h2>
+<h2>{tr}Version:{/tr} {$preview}</h2>
 <div  class="wikitext">{$previewd}</div>
 {/if}
 

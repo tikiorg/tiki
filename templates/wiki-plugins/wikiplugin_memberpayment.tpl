@@ -17,11 +17,11 @@
 	<p>
 		<input type="hidden" name="wp_member_offset" value="{$wp_member_offset|escape}"/>
 		{if $wp_member_currentuser ne 'y'}
-			{tr}Users{/tr}: <input type="text" id="user{$wp_member_offset|escape}" name="wp_member_users" value="{$user|escape}"/> ({tr}separated by |{/tr})
+			{tr}Users:{/tr} <input type="text" id="user{$wp_member_offset|escape}" name="wp_member_users" value="{$user|escape}"/> ({tr}separated by |{/tr})
 		{/if}
 	</p>
 	<p>
-		{tr}Number of periods{/tr}:
+		{tr}Number of periods:{/tr}
 		<input type="text" name="wp_member_periods" value="1"/>
 		<input type="submit" value="{tr}Continue{/tr}"/>
 	</p>
