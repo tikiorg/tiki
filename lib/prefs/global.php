@@ -175,7 +175,7 @@ function prefs_global_list() {
 		),
 		'sitemycode' => array(
 			'name' => tra('Custom Site Header Content'),
-			'hint' => tra ('Example:') . ' ' .  "{if \$user neq ''}<div align=\"right\" style=\"float: right; font-size: 10px\">{tr}logged as{/tr}: {\$user}</div>{/if}",
+			'hint' => tra ('Example:') . ' ' .  "{if \$user neq ''}<div align=\"right\" style=\"float: right; font-size: 10px\">{tr}logged as:{/tr} {\$user}</div>{/if}",
 			'type' => 'textarea',
 			'size' => '6',
 		),
