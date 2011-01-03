@@ -1862,7 +1862,7 @@ class TikiLib extends TikiDb_Bridge
 		foreach ( $result as $res ) {
 			$res['canonic'] = $res['url'];
 			if (preg_match('|^\(\((.+?)\)\)$|', $res['url'], $matches)) {
-				$res['url'] = 'tiki-index.php?page='.$matches[1];
+				$res['url'] = 'tiki-index.php?page=' . rawurlencode($matches[1]);
 				$res['sefurl'] = $wikilib->sefurl($matches[1]);
 				$perms = Perms::get(array('type'=>'wiki page', 'object'=>$matches[1]));
 				if (!$perms->view && !$perms->wiki_view_ref) {

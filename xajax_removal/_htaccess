@@ -104,10 +104,11 @@ RewriteRule ^register$             tiki-register.php                        [L]
 RewriteRule ^my$                   tiki-my_tiki.php                         [L]
 RewriteRule ^newsletters$          tiki-newsletters.php                     [L]
 RewriteRule ^quizzes$              tiki-list_quizzes.php                    [L]
+RewriteRule ^sheets$               tiki-sheets.php                          [L]
 RewriteRule ^stats$                tiki-stats.php                           [L]
 RewriteRule ^surveys$              tiki-list_surveys.php                    [L]
 RewriteRule ^trackers$             tiki-list_trackers.php                   [L]
-RewriteRule ^sheets$               tiki-sheets.php                          [L]
+RewriteRule ^users$                tiki-list_users.php                      [L]
 
 # access any object by its numeric identifier
 RewriteRule ^article([0-9]+)\-.*(&comzone=.*)$  article$1$2
@@ -132,7 +133,7 @@ RewriteRule ^gallery([0-9]+)(.*)   tiki-browse_gallery.php?galleryId=$1$2   [QSA
 RewriteRule ^img([0-9]+)(.*)       show_image.php?id=$1$2                   [QSA,L]
 RewriteRule ^image([0-9]+)(.*)     show_image.php?id=$1$2                   [QSA,L]
 RewriteRule ^imagescale([0-9]+)/([0-9]+)(.*) show_image.php?id=$1&scalesize=$2$3  [QSA,L]
-RewriteRule ^newsletter([0-9]+)(.*) tiki-newsletters.php?nlId=$1$2          [QSA,L]
+RewriteRule ^newsletter([0-9]+)(.*) tiki-newsletters.php?nlId=$1$2&info=1    [QSA,L]
 RewriteRule ^quiz([0-9]+)(.*)      tiki-take_quiz.php?quizId=$1$2           [QSA,L]
 RewriteRule ^survey([0-9]+)(.*)    tiki-take_survey.php?surveyId=$1$2       [QSA,L]
 RewriteRule ^tracker([0-9]+)(.*)   tiki-view_tracker.php?trackerId=$1$2     [QSA,L]
