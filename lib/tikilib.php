@@ -4354,6 +4354,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`version_minor`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`, `wysiwyg`, `wiki_authors_style` $mid) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? $midvar)";
 		$result = $this->query($query, $bindvars);
+		$this->replicate_page_to_history($name);
 
 		$page_id = $this->get_page_id_from_name( $name );
 
@@ -4414,6 +4415,21 @@ class TikiLib extends TikiDb_Bridge
 		}
 		
 		return true;
+	}
+
+	private function replicate_page_to_history($pageName) {
+		if (strtolower($pageName) == 'sandbox') {
+			return false;
+		}
+
+		$query = "INSERT INTO `tiki_history`(`pageName`, `version`, `version_minor`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`,`is_html`)
+			SELECT `pageName`, `version`, `version_minor`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`,`is_html`
+			FROM tiki_pages
+			WHERE pageName = ?
+			LIMIT 1";
+
+		$this->query($query, array($pageName));
+		return $this->lastInsertId();
 	}
 
 	function get_user_pages($user, $max, $who='user') {
@@ -7251,8 +7267,8 @@ if( \$('#$id') ) {
 		// them both is right.
 		$old_version = max(
 				$info["version"],
-				$histlib->get_page_latest_version($pageName) + 1
-				);
+				$histlib->get_page_latest_version($pageName)
+			);
 
 		$lastModif = $info["lastModif"];
 		$user = $info["user"];
@@ -7336,6 +7352,7 @@ if( \$('#$id') ) {
 		$bindvars[] = $pageName;
 		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `version_minor`=?, `user`=?, `ip`=?, `page_size`=?, `is_html`=?, `wysiwyg`=?, `wiki_authors_style`=?  $mid where `pageName`=?";
 		$result = $this->query($query,$bindvars);
+		$this->replicate_page_to_history($pageName);
 
 		// Parse edit_data updating the list of links from this page
 		$this->clear_links($pageName);
@@ -7366,11 +7383,6 @@ if( \$('#$id') ) {
 		// This if no longer checks for minor-ness of the change; sendWikiEmailNotification does that.
 		if( $willDoHistory ) {
 			if (strtolower($pageName) != 'sandbox') {
-				$query = "insert into `tiki_history`(`pageName`, `version`, `version_minor`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`,`is_html`)
-					values(?,?,?,?,?,?,?,?,?,?)";
-# echo "<pre>";print_r(get_defined_vars());echo "</pre>";die();
-				$result = $this->query($query,array($pageName,(int) $old_version, (int) $minor, (int) $lastModif,$user,$ip,$comment,$data,$description,(int)$info['is_html']));
-
 				if ($prefs['feature_contribution'] == 'y') {// transfer page contributions to the history
 					global $contributionlib; include_once('lib/contribution/contributionlib.php');
 					$query = 'select max(`historyId`) from `tiki_history`where `pageName`=? and `version`=?';

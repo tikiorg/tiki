@@ -103,7 +103,7 @@ class WikiRenderer
 			}
 		}
 		return $objectperms;
-	} // }}
+	} // }}}
 	
 	function restoreAll() // {{{
 	{
