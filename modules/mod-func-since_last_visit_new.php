@@ -407,7 +407,7 @@ function module_since_last_visit_new($mod_reference, $params = null)
 		$count = 0;
 		$slvn_tmp_href = $userlib->user_has_permission($user, "tiki_p_admin") ? "tiki-assignuser.php?assign_user=" : "tiki-user_information.php?view_user=";
 		while ($res = $result->fetchRow()) {
-			$ret["items"]["users"]["list"][$count]["href"]  = $slvn_tmp_href . $res["login"];
+			$ret["items"]["users"]["list"][$count]["href"]  = $slvn_tmp_href . rawurlencode($res["login"]);
 			$ret["items"]["users"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["registrationDate"]);
 			$ret["items"]["users"]["list"][$count]["label"] = $res["login"]; 
 			$count++;
