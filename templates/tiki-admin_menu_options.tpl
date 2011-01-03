@@ -322,7 +322,7 @@
 								<a href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" title="{tr}Edit{/tr}">{if $prefs.menus_item_names_raw eq 'y'}{$channels[user].name|escape}{else}{$channels[user].name}{/if}</a>
 								<div style="margin-left:10px;">
 									{if $channels[user].url}
-										{tr}URL:{/tr} <a href="{if $prefs.menus_item_names_raw eq 'n'}{$channels[user].url|escape}{else}{$channels[user].url}{/if}" class="link" target="_new" title="{$channels[user].canonic}">{$channels[user].canonic|truncate:40:' ...'}</a>
+										{tr}URL:{/tr} <a href="{if $prefs.menus_item_names_raw eq 'n'}{$channels[user].url|escape}{else}{$channels[user].url}{/if}" class="link" target="_blank" title="{$channels[user].canonic|escape}">{$channels[user].canonic|truncate:40:' ...'|escape}</a>
 									{/if}
 									{if $channels[user].section}<br />{tr}Sections:{/tr} {$channels[user].section}{/if}
 									{if $channels[user].perm}<br />{tr}Permissions:{/tr} {$channels[user].perm}{/if}
