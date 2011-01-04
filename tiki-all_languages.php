@@ -28,6 +28,7 @@ $unordered = array();
 $excluded = array();
 
 $page = $_REQUEST['page'];
+$smarty->assign_by_ref('page', $page);
 
 // If the page doesn't exist then display an error
 if(empty($requested)) {
