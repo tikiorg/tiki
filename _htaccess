@@ -54,7 +54,7 @@ RewriteRule ^(.*) - [E=HTTP_AUTHORIZATION:%1]
 # RewriteBase   /
 
 #If your website is a checkout
-RewriteRule	^\.svn/	-	[F,L]
+RewriteRule	.*/\.svn/.*	-	[F,L]
 
 # If the URL points to a file then do nothing
 RewriteCond %{REQUEST_FILENAME} -s [OR]
