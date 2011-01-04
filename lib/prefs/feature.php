@@ -1547,10 +1547,12 @@ function prefs_feature_list() {
 		),
 		'feature_wiki_userpage' => array(
 			'name' => tra("User's page"),
+			'description' => tra('A personal page for the user to manage.'),
 			'type' => 'flag',
 		),
 		'feature_wiki_userpage_prefix' => array(
 			'name' => tra('UserPage prefix'),
+			'description' => tra('All user pages share a common prefix. The concatenation of the prefix and the username will generate the page name. The prefix cannot be empty.'),
 			'type' => 'text',
 			'size' => '40',
 		),
