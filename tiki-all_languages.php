@@ -107,6 +107,7 @@ foreach( array_reverse( $pages ) as $id => $info )
 
 $contents = array_reverse( $contents );
 
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign( 'side_by_side', $show_langs_side_by_side );
 $smarty->assign( 'excluded', $excluded );
 $smarty->assign( 'content', $contents);
