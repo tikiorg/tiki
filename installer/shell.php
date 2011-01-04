@@ -16,7 +16,7 @@ if( isset( $_SERVER['argv'][1] ) && $_SERVER['argv'][1] != 'install' && $_SERVER
 
 require_once('lib/init/initlib.php');
 require_once('lib/setup/tikisetup.class.php');
-require_once('tiki-setup_base.php');
+require_once('db/tiki-db.php');
 require_once('installer/installlib.php');
 include $local_php;
 
