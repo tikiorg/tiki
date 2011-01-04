@@ -1606,6 +1606,7 @@ function get_default_prefs() {
 		'session_lifetime' => 0,
 		'session_silent' => 'n',
 		'session_cookie_name' => session_name(),
+		'session_protected' => 'n',
 		'shoutbox_autolink' => 'n',
 		'show_comzone' => 'n',
 		'tikiIndex' => 'tiki-index.php',
