@@ -197,6 +197,9 @@ function get_default_prefs() {
 		'wiki_likepages_samelang_only' => 'n',
 		'wiki_mandatory_edit_summary' => 'n',
 
+		'flaggedrev_approval' => 'n',
+		'flaggedrev_approval_categories' => '',
+
 		'wikiplugin_addtocart' => 'n',
 		'wikiplugin_addtogooglecal' => 'n',
 		'wikiplugin_agentinfo' => 'n',

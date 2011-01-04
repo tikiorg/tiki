@@ -9,6 +9,7 @@
 	{/if}
 
 {include file=tiki-wiki_staging.tpl}
+{include file=tiki-flaggedrev_approval_header.tpl}
 
 {/if} {*hide_page_header*}
 

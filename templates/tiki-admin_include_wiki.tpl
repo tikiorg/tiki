@@ -296,6 +296,18 @@
 			</div>
 	{/tab}
 
+	{tab name="{tr}Flagged Revision{/tr}"}
+		<fieldset>
+			<legend>{tr}Revision Approval{/tr}</legend>
+
+			{preference name=flaggedrev_approval}
+
+			<div id="flaggedrev_approval_childcontainer">
+				{preference name=flaggedrev_approval_categories}
+			</div>
+		</fieldset>
+	{/tab}
+
 	{tab name="{tr}Page Listings{/tr}"}
 		<input type="hidden" name="wikilistprefs" />	  
 		{preference name=feature_listPages}

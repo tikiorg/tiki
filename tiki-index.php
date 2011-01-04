@@ -298,8 +298,12 @@ $page = $info['pageName'];
 //	$translatedWikiMarkup = generate_machine_translated_markup($info, $_REQUEST['machine_translate_to_lang']);
 //} 
 
-$pageRenderer = new WikiRenderer( $info, $user, $info['data'] );
+$pageRenderer = new WikiRenderer( $info, $user );
 $objectperms = $pageRenderer->applyPermissions();
+
+if ($prefs['flaggedrev_approval'] == 'y' && isset($_REQUEST['latest']) && $objectperms->wiki_view_latest) {
+	$pageRenderer->forceLatest();
+}
 
 if ($prefs['feature_wiki_comments'] == 'y' and $objectperms->wiki_view_comments ) {
     $comments_per_page = $prefs['wiki_comments_per_page'];

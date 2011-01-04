@@ -338,6 +338,32 @@ class WikiRenderer
 
 		$this->smartyassign('cached_page','n');
 
+		if ($prefs['flaggedrev_approval'] == 'y') {
+			global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
+
+			if ($flaggedrevisionlib->page_requires_approval($this->page)) {
+				$this->smartyassign('revision_approval', true);
+
+				if ($version_info = $flaggedrevisionlib->get_version_with($this->page, 'moderation', 'OK')) {
+					$this->smartyassign('revision_approved', $version_info['version']);
+					if (empty($this->content_to_render)) {
+						$this->smartyassign('revision_displayed', $version_info['version']);
+						$this->content_to_render = $version_info['data'];
+					} else {
+						$this->smartyassign('revision_displayed', $this->info['version']);
+					}
+				} else {
+					$this->smartyassign('revision_approved', null);
+					if (empty($this->content_to_render)) {
+						$this->smartyassign('revision_displayed', null);
+						$this->content_to_render = '^' . tra('There are no approved versions of this page.', $this->info['lang']) . '^';
+					} else {
+						$this->smartyassign('revision_displayed', $this->info['version']);
+					}
+				}
+			}
+		}
+
 		if ($this->content_to_render == '') {
 			$pdata = $wikilib->get_parse($this->page, $canBeRefreshed);
 
@@ -621,5 +647,10 @@ class WikiRenderer
 	function setInfo( $name, $value ) // {{{
 	{
 		$this->info[$name] = $value;
+	} // }}}
+
+	function forceLatest() // {{{
+	{
+		$this->content_to_render = $this->info['data'];
 	} // }}}
 }
