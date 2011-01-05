@@ -23,16 +23,16 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listusers}
-<tr>
-  <td class="odd">&nbsp;{$listusers[changes].login|userlink}&nbsp;</td>
+<tr class="{cycle}">
+  <td>&nbsp;{$listusers[changes].login|userlink}&nbsp;</td>
 {if $prefs.feature_community_list_name eq 'y' and $prefs.user_show_realnames neq 'y'}
-  <td class="odd">&nbsp;{$listusers[changes].realName}&nbsp;</td>
+  <td>&nbsp;{$listusers[changes].realName}&nbsp;</td>
 {/if}
 {if $prefs.feature_score eq 'y'}{if $prefs.feature_community_list_score eq 'y'}
-  <td class="odd">&nbsp;{$listusers[changes].score}&nbsp;</td>
+  <td>&nbsp;{$listusers[changes].score}&nbsp;</td>
 {/if}{/if}
 {if $prefs.feature_community_list_country eq 'y'}
-	<td class="odd">
+	<td>
 	{if $listuserscountry[changes] == "None" || $listuserscountry[changes] == "Other" || $listuserscountry[changes] == ""}
   {html_image file='img/flags/Other.gif' hspace='4' vspace='1' alt="{tr}Flag{/tr}" title="{tr}Flag{/tr}"}
   {else}
@@ -42,13 +42,13 @@
 	&nbsp;</td>
 {/if}
 {if $prefs.feature_community_list_distance eq 'y'}
-	<td class="odd">&nbsp;{$listdistance[changes]}&nbsp;</td>
+	<td>&nbsp;{$listdistance[changes]}&nbsp;</td>
 {/if}
 </tr>
 {sectionelse}
-<tr><td colspan="6">
-<b>{tr}No records found{/tr}</b>
-</td></tr>
+<tr>
+	<td colspan="6"><b>{tr}No records found{/tr}</b></td>
+</tr>
 {/section}
 </table>
 
