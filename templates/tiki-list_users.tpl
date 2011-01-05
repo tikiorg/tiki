@@ -13,9 +13,9 @@
 		{if $prefs.feature_community_list_name eq 'y' and $prefs.user_show_realnames neq 'y'}
 			<th><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;find={$find}&amp;sort_mode={if $sort_mode eq 'pref:realName_desc'}pref:realName_asc{else}pref:realName_desc{/if}" style="color: White;">{tr}Real Name{/tr}</a>&nbsp;</th>
 		{/if}
-		{if $prefs.feature_score eq 'y'}{if $prefs.feature_community_list_score eq 'y'}
+		{if $prefs.feature_score eq 'y' and $prefs.feature_community_list_score eq 'y'}
 			<th><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;find={$find}&amp;sort_mode={if $sort_mode eq 'score_desc'}score_asc{else}score_desc{/if}" style="color: White;">{tr}Score{/tr}</a>&nbsp;</th>
-	{/if}{/if}
+		{/if}
 		{if $prefs.feature_community_list_country eq 'y'}
 			<th><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;find={$find}&amp;sort_mode={if $sort_mode eq 'pref:country_desc'}pref:country_asc{else}pref:country_desc{/if}" style="color: White;">{tr}Country{/tr}</a>&nbsp;</th>
 		{/if}
@@ -28,9 +28,9 @@
 			{if $prefs.feature_community_list_name eq 'y' and $prefs.user_show_realnames neq 'y'}
 				<td>&nbsp;{$listusers[changes].realName}&nbsp;</td>
 			{/if}
-			{if $prefs.feature_score eq 'y'}{if $prefs.feature_community_list_score eq 'y'}
+			{if $prefs.feature_score eq 'y' and $prefs.feature_community_list_score eq 'y'}
 				<td>&nbsp;{$listusers[changes].score}&nbsp;</td>
-			{/if}{/if}
+			{/if}
 			{if $prefs.feature_community_list_country eq 'y'}
 				<td>
 					{if $listuserscountry[changes] == "None" || $listuserscountry[changes] == "Other" || $listuserscountry[changes] == ""}
@@ -46,7 +46,7 @@
 		</tr>
 	{sectionelse}
 		<tr>
-			<td colspan="6"><b>{tr}No records found{/tr}</b></td>
+			<td colspan="5"><b>{tr}No records found{/tr}</b></td>
 		</tr>
 	{/section}
 </table>
