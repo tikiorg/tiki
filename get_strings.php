@@ -612,7 +612,11 @@ foreach ($languages as $ksel => $sel) {
 				$word_last_char = $word[$word_length - 1];
 				if ( in_array($word_last_char, $punctuations) ) {
 					$word = substr($word, 0, $word_length - 1);
-					if ( isset($lang[$word]) ) continue;
+					if ( isset($lang[$word]) ) {
+	               $translated[$word] = $lang[$word];
+	               unset ($unused[$word]);
+	               continue;
+					}
 				}
 
 				if (!isset ($to_translate[$word])) {
