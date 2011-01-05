@@ -22,9 +22,7 @@
 	{* ----------------------- tab with list --------------------------------------- *}
 	<h2>{tr}List of existing groups{/tr}</h2>
 
-	{if $cant_pages > $maxRecords }
-		{include file='find.tpl' find_show_num_rows='y'}
-	{/if}	
+	{include file='find.tpl' find_show_num_rows='y'}
 
 	{if $cant_pages > $maxRecords or !empty($initial) or !empty($find)}
 		{initials_filter_links}
