@@ -30,6 +30,12 @@ if (empty($_REQUEST['forumId'])) {
 	}
 	$_REQUEST['forumId'] = $thread_info['object'];
 }
+$forum_info = $commentslib->get_forum($_REQUEST["forumId"]);
+if (empty($forum_info)) {
+		$smarty->assign('msg', tra('Incorrect thread'));
+		$smarty->display('error.tpl');
+		die;
+}
 
 require_once 'lib/cache/pagecache.php';
 $pageCache = Tiki_PageCache::create()
@@ -49,10 +55,10 @@ if ($prefs['feature_categories'] == 'y') {
 	global $categlib; include_once ('lib/categories/categlib.php');
 }
 if (!isset($_REQUEST['topics_offset'])) {
-	$_REQUEST['topics_offset'] = 1;
+	$_REQUEST['topics_offset'] = 0;
 }
 if (!isset($_REQUEST['topics_sort_mode']) || empty($_REQUEST['topics_sort_mode'])) {
-	$_REQUEST['topics_sort_mode'] = 'commentDate_desc';
+	$_REQUEST['topics_sort_mode'] = $forum_info['topicOrdering'];
 } else {
 	$smarty->assign('topics_sort_mode_param', '&amp;topics_sort_mode=' . $_REQUEST['topics_sort_mode']);
 }
@@ -95,7 +101,6 @@ if (isset($_REQUEST['lock'])) {
 }
 $commentslib->comment_add_hit($_REQUEST["comments_parentId"]);
 $commentslib->mark_comment($user, $_REQUEST['forumId'], $_REQUEST["comments_parentId"]);
-$forum_info = $commentslib->get_forum($_REQUEST["forumId"]);
 
 $tikilib->get_perm_object( $_REQUEST["forumId"], 'forum' );
 
@@ -125,13 +130,16 @@ $smarty->assign('topics_next_offset', $_REQUEST['topics_offset'] + 1);
 $smarty->assign('topics_prev_offset', $_REQUEST['topics_offset'] - 1);
 
 $threads = $commentslib->get_forum_topics($_REQUEST['forumId'], $_REQUEST['topics_offset'] - 1, 3, $_REQUEST["topics_sort_mode"]);
-if (count($threads) == 3) {
+if ($threads[0]['threadId'] == $_REQUEST['comments_parentId'] && count($threads) >= 1) {
+	$next_thread = $threads[1];
+	$smarty->assign('next_topic', $next_thread['threadId']);
+} elseif (count($threads) >= 2 && $threads[1]['threadId'] == $_REQUEST['comments_parentId']) {
 	$next_thread = $threads[2];
 	$smarty->assign('next_topic', $next_thread['threadId']);
 } else {
 	$smarty->assign('next_topic', false);
 }
-if (count($threads)) {
+if ($threads[0]['threadId'] != $_REQUEST['comments_parentId']) {
 	$prev_thread = $threads[0];
 	$smarty->assign('prev_topic', $prev_thread['threadId']);
 } else {
