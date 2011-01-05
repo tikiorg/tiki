@@ -592,6 +592,16 @@ td.form {
 	padding: 0.2em;
 }
 
+td.integer {
+	text-align: right;
+}
+td.date {
+	text-align: center;
+}
+td.action {
+	white-space: nowrap;
+}
+
 caption {
 	font-weight: bold;
 }
