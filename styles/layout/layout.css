@@ -1082,6 +1082,12 @@ tr.diffheader {
 #tiki-center .versioncontent {
 	padding: 1em;
 }
+
+/* wikiplugin tracker */
+table.wikiplugin_tracker td {
+	vertical-align: middle;
+	padding-bottom:1.2em;
+}
 	
 /* wikiplugin edit */
 .wikiplugin_edit textarea {
