@@ -24,12 +24,12 @@
 	{cycle values="odd,even" print=false}
 	{section name=changes loop=$listusers}
 		<tr class="{cycle}">
-			<td>&nbsp;{$listusers[changes].login|userlink}&nbsp;</td>
+			<td class="username">&nbsp;{$listusers[changes].login|userlink}&nbsp;</td>
 			{if $prefs.feature_community_list_name eq 'y' and $prefs.user_show_realnames neq 'y'}
 				<td>&nbsp;{$listusers[changes].realName}&nbsp;</td>
 			{/if}
 			{if $prefs.feature_score eq 'y' and $prefs.feature_community_list_score eq 'y'}
-				<td>&nbsp;{$listusers[changes].score}&nbsp;</td>
+				<td class="integer">&nbsp;{$listusers[changes].score}&nbsp;</td>
 			{/if}
 			{if $prefs.feature_community_list_country eq 'y'}
 				<td>
@@ -41,12 +41,12 @@
 				</td>
 			{/if}
 			{if $prefs.feature_community_list_distance eq 'y'}
-				<td>&nbsp;{$listdistance[changes]}&nbsp;</td>
+				<td class="integer">&nbsp;{$listdistance[changes]}&nbsp;</td>
 			{/if}
 		</tr>
 	{sectionelse}
 		<tr>
-			<td colspan="5"><b>{tr}No records found{/tr}</b></td>
+			<td class="norecords" colspan="5">{tr}No records found{/tr}</td>
 		</tr>
 	{/section}
 </table>
