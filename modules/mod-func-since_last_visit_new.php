@@ -444,7 +444,7 @@ function module_since_last_visit_new($mod_reference, $params = null)
 
 				$ret["items"]["trackers"]["tid"][$res['trackerId']]["label"] = tra('in') . ' ' . tra($tracker_name[$res["trackerId"]]);
 				$ret["items"]["trackers"]["tid"][$res['trackerId']]["cname"] = "slvn_tracker" . $res["trackerId"] . "_menu";
-				$ret["items"]["trackers"]["tid"][$res['trackerId']]["list"][$counta[$res['trackerId']]]["href"]  = "tiki-view_tracker_item.php?itemId=" . $res["itemId"];
+				$ret['items']['trackers']['tid'][$res['trackerId']]['list'][$counta[$res['trackerId']]]['href']  = filter_out_sefurl('tiki-view_tracker_item.php?itemId=' . $res['itemId'], $smarty, 'trackeritem');
 				$ret["items"]["trackers"]["tid"][$res['trackerId']]["list"][$counta[$res['trackerId']]]["title"] = $tikilib->get_short_datetime($res["created"]);
 	   
 				// routine to verify field in tracker that's used as label
