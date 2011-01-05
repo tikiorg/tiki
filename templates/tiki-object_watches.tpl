@@ -1,5 +1,6 @@
 {* $Id$ *}
-{title help="Mail notifications"}{tr}Object Watches:{/tr} {$smarty.request.objectName|escape}{/title}
+{capture}{if isset($smarty.request.objectName)}{tr}Object Watches:{/tr} {$smarty.request.objectName|escape}{else}{tr}Object Watches{/tr}{/if}{/capture}
+{title help="Mail notifications"}{$smarty.capture.default}{/title}
 
 {if isset($referer)}
 	<div class="navbar">
@@ -11,7 +12,7 @@
 	{remarksbox type="feedback"}
 	{if !empty($addedGroups) || !empty($deletedGroups)}
 		<div style="float:left;clear:both;">
-			{tr}Changes to groups watching this {$objectType}:{/tr}
+			{tr}Changes to groups watching:{/tr}
 			<ul>
 			{if !empty($addedGroups)}
 				{foreach from=$addedGroups item=g}<li>{$g|escape}&nbsp;&nbsp;<em>added</em></li>{/foreach}
@@ -50,7 +51,7 @@
 <input type="hidden" name="referer" value="{$referer|escape}" />
 <div style="float: left; margin-right: 10px;"><input type="submit" name="assign" value="{tr}Apply{/tr}" /></div>
 {if $isTop ne 'y' }
-	<p>{tr}Groups watching this {$objectType}:{/tr} {$group_watches|@count}</p>
+	<p>{tr}Groups watching:{/tr} {$group_watches|@count}</p>
 {else}
 	<p>&nbsp;</p>
 {/if}
@@ -97,5 +98,5 @@
 		{/if}
 	{/foreach}
 </table>
-	<p></p><div style="float: left; margin-right: 10px;"><input type="submit" name="assign" value="{tr}Apply{/tr}" /></div></p>
+	<p><div style="float: left; margin-right: 10px;"><input type="submit" name="assign" value="{tr}Apply{/tr}" /></div></p>
 </form>

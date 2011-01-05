@@ -285,8 +285,8 @@ class TikiLib extends TikiDb_Bridge
 
 
 	/*shared*/
-	function add_user_watch($user, $event, $object, $type, $title, $url, $email='') {
-
+	function add_user_watch($user, $event, $object, $type = NULL, $title = NULL, $url = NULL, $email = NULL) {
+		// Allow a warning when the watch won't be effective
 		if (empty($email)) {
 			global $userlib;
 			$email = $userlib->get_user_email($user);
@@ -294,6 +294,7 @@ class TikiLib extends TikiDb_Bridge
 				return false;
 			}
 		}
+		
 		$this->remove_user_watch( $user, $event, $object, $type );
 		$query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`type`,`title`,`url`) ";
 		$query.= "values(?,?,?,?,?,?,?)";
@@ -301,7 +302,7 @@ class TikiLib extends TikiDb_Bridge
 		return true;
 	}
 
-	function add_group_watch($group, $event, $object, $type, $title, $url) {
+	function add_group_watch($group, $event, $object, $type = NULL, $title = NULL, $url = NULL) {
 		
 		if ($type == 'Category' && $object == 0) {
 			return false;
@@ -347,13 +348,23 @@ class TikiLib extends TikiDb_Bridge
 
 	/*shared*/
 	function remove_user_watch($user, $event, $object, $type = 'wiki page') {
-		$query = "delete from `tiki_user_watches` where binary `user`=? and `event`=? and `object`=? and `type` = ?";
-		$this->query($query,array($user,$event,$object,$type));
+		$query = "delete from `tiki_user_watches` where binary `user`=? and `event`=? and `object`=?";
+		$bindvars = array($user,$event,$object);
+		if (isset($type)) {
+			$query .= " and `type` = ?";
+			$bindvars[] = $type;
+		}
+		$this->query($query, $bindvars);
 	}
 
 	function remove_group_watch($group, $event, $object, $type = 'wiki page') {
-		$query = "delete from `tiki_group_watches` where binary `group`=? and `event`=? and `object`=? and `type` = ?";
-		$this->query($query,array($group,$event,$object,$type));
+		$query = "delete from `tiki_group_watches` where binary `group`=? and `event`=? and `object`=?";
+		$bindvars = array($group,$event,$object);
+		if (isset($type)) {
+			$query .= " and `type`=?";
+			$bindvars[] = $type;
+		}
+		$this->query($query, $bindvars);
 	}
 
 	/*shared*/
@@ -381,10 +392,15 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	/*shared*/
-	function user_watches($user, $event, $object, $type) {
+	function user_watches($user, $event, $object, $type = NULL) {
 		if (is_array($event)) {
-			$query = "select `event` from `tiki_user_watches` where `user`=? and `object`=? and `type`=? and `event` in (".implode(',',array_fill(0, count($event),'?')).")";
-			$result = $this->fetchAll($query, array_merge(array($user,$object,$type),$event));
+			$query = "select `event` from `tiki_user_watches` where `user`=? and `object`=? and `event` in (".implode(',',array_fill(0, count($event),'?')).")";
+			$bindvars = array_merge(array($user, $object), $event);
+			if ($type) {
+				$query .= " and `type`=?";
+				$bindvars[] = $type;
+			}
+			$result = $this->fetchAll($query, $bindvars);
 			if ( count($result) === 0 ) {
 				return false;
 			}
@@ -394,14 +410,24 @@ class TikiLib extends TikiDb_Bridge
 			}
 			return $ret;
 		} else {
-			$query = "select count(*) from `tiki_user_watches` where `user`=? and `object`=? and `type`=? and `event`=? ";
-			return $this->getOne($query,array($user,$object,$type,$event));
+			$query = "select count(*) from `tiki_user_watches` where `user`=? and `object`=? and `event`=?";
+			$bindvars = array($user, $object, $event);
+			if ($type) {
+				$query .= " and `type`=?";
+				$bindvars[] = $type;
+			}
+			return $this->getOne($query, $bindvars);
 		}
 	}
 
-	function get_groups_watching( $type, $object, $event ) {
-		$result = $this->fetchAll( 'SELECT `group` FROM `tiki_group_watches` WHERE `object` = ? AND `type` = ? AND `event` = ?',
-			array( $object, $type, $event ) );
+	function get_groups_watching( $object, $event, $type = NULL ) {
+		$query = 'SELECT `group` FROM `tiki_group_watches` WHERE `object` = ? AND `event` = ?';
+		$bindvars = array( $object, $event);
+		if ($type) {
+			$query .= ' AND `type` = ?';
+			$bindvars[]= $type;
+		}
+		$result = $this->fetchAll( $query, $bindvars );
 
 		$groups = array();
 		foreach( $result as $row ) {
@@ -422,7 +448,7 @@ class TikiLib extends TikiDb_Bridge
 
 	/*shared*/
 	function get_event_watches($event, $object, $info=null) {
-		global $prefs, $dbTiki;
+		global $prefs;
 		$ret = array();
 
 		$where = array();
@@ -463,7 +489,13 @@ class TikiLib extends TikiDb_Bridge
 			$forumId = $info['forumId'];
 			$bindvars[] = $forumId;
 		} else {
-			$mid = "`event`=? and `object`=?";
+			$extraEvents = "";
+			if (substr_count($event, 'article_')) {
+				$extraEvents = " or `event`='article_*'";
+			} elseif ($event == 'wiki_comment_changes') {
+				$extraEvents = " or `event`='wiki_page_changed'";
+			}
+			$mid = "(`event`=?$extraEvents) and (`object`=? or `object`='*')";
 			$bindvars[] = $event;
 			$bindvars[] = $object;
 		}
@@ -494,6 +526,9 @@ class TikiLib extends TikiDb_Bridge
 		if ( count($result) > 0 ) {
 
 			foreach ( $result as $res ) {
+				if (empty($res['language'])) {
+					$res['language'] = $this->get_preference('site_language');
+				}
 				switch($event) {
 				case 'wiki_page_changed':
 				case 'wiki_page_created':
@@ -531,9 +566,9 @@ class TikiLib extends TikiDb_Bridge
 				case 'topic_article_edited':
 				case 'article_deleted':
 				case 'topic_article_deleted':
-					global $userlib, $topicId;
+					global $userlib;
 					$res['perm']= ($userlib->user_has_permission($res['user'],'tiki_p_read_article') &&
-							(empty($topicId) || $this->user_has_perm_on_object($res['user'],$topicId,'topic','tiki_p_topic_read')));
+							(empty($object) || $this->user_has_perm_on_object($res['user'], $object,'topic','tiki_p_topic_read')));
 					break;
 				case 'calendar_changed':
 					$res['perm']= $this->user_has_perm_on_object($res['user'],$object,'calendar','tiki_p_view_calendar');
@@ -548,6 +583,14 @@ class TikiLib extends TikiDb_Bridge
 				case 'fgal_quota_exceeded':
 					global $tiki_p_admin_file_galleries;
 					$res['perm'] = ($tiki_p_admin_file_galleries == 'y');
+					break;
+				case 'article_commented':
+				case 'wiki_comment_changes':
+					$res['perm'] = $this->user_has_perm_on_object($res['user'],$object,'comments','tiki_p_read_comments');
+					break;
+				case 'user_registers':
+					global $userlib;
+					$res['perm'] = $userlib->user_has_permission($res['user'], 'tiki_p_admin');
 					break;
 				default:
 					// for security we deny all others.

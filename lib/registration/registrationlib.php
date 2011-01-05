@@ -347,13 +347,12 @@ class RegistrationLib extends TikiLib
 											  $registration[$customfields[$custpref]['prefName']]);
 		}
 
-		$emails = $notificationlib->get_mail_events('user_registers', '*');
-		if (count($emails)) {
+		$watches = $tikilib->get_event_watches('user_registers', '*');
+		if (count($watches)) {
 			require_once ("lib/notifications/notificationemaillib.php");
 			$smarty->assign('mail_user', $registration['name']);
-			$smarty->assign('mail_date', $tikilib->now);
 			$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
-			sendEmailNotification($emails, "email", "new_user_notification_subject.tpl", null, "new_user_notification.tpl");
+			sendEmailNotification($watches, null, "new_user_notification_subject.tpl", null, "new_user_notification.tpl");
 		}
 
 		return $result;

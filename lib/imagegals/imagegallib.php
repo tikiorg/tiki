@@ -884,11 +884,7 @@ class ImageGalsLib extends TikiLib
 			include_once('lib/notifications/notificationemaillib.php');
 			$smarty->assign_by_ref('galleryId', $galleryId);
 			$smarty->assign_by_ref('galleryName', $galleryName);
-			$smarty->assign_by_ref('mail_date', date('U'));
 			$smarty->assign_by_ref('author', $user);
-			$foo = parse_url($_SERVER["REQUEST_URI"]);
-			$machine = $tikilib->httpPrefix( true ). dirname( $foo["path"] );
-			$smarty->assign_by_ref('mail_machine', $machine);
 			$smarty->assign_by_ref('fname', $name);
 			$smarty->assign_by_ref('filename', $filename);
 			$smarty->assign_by_ref('description', $description);

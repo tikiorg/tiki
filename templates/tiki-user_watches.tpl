@@ -19,7 +19,7 @@
 			{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use reports to summarise notifications about objects you are watching.{/tr}{/remarksbox}
 		{/if}
 		
-		<form action="tiki-user_reports.php" method="post" id='formi'>
+		<form action="tiki-user_reports.php" method="post">
 			<input type="hidden" name="report_preferences" value="true"/>
 			<p><input type="checkbox" name="use_daily_reports" value="true" {if $report_preferences != false}checked{/if}/> {tr}Use reports{/tr}</p>
 		
@@ -33,18 +33,18 @@
 			</p>
 			
 			<div style="float:left; margin-right: 50px;">
-			    <input type="radio" name="view" value="short" {if $report_preferences.view eq "short"}checked{/if}> {tr}Short report{/tr}<br>
-		    	<input type="radio" name="view" value="detailed" {if $report_preferences.view eq "detailed" OR $report_preferences eq false}checked{/if}> {tr}Detailed report{/tr}<br>
+			    <input type="radio" name="view" value="short"{if $report_preferences.view eq "short"} checked="checked"{/if} /> {tr}Short report{/tr}<br />
+		    	<input type="radio" name="view" value="detailed"{if $report_preferences.view eq "detailed" OR $report_preferences eq false}checked="checked"{/if} /> {tr}Detailed report{/tr}<br />
 			</div>
 			<div style="float:left; margin-right: 50px;">
-			    <input type="radio" name="type" value="html" {if $report_preferences.type eq "html" OR $report_preferences eq false}checked{/if}> {tr}HTML-Email{/tr}<br>
-		    	<input type="radio" name="type" value="plain" {if $report_preferences.type eq "plain"}checked{/if}> {tr}Plain text{/tr}<br>
+			    <input type="radio" name="type" value="html"{if $report_preferences.type eq "html" OR $report_preferences eq false} checked="checked"{/if} /> {tr}HTML-Email{/tr}<br />
+		    	<input type="radio" name="type" value="plain"{if $report_preferences.type eq "plain"} checked="checked"{/if} /> {tr}Plain text{/tr}<br />
 		    </div>
 			<div>
-				<input type="checkbox" name="always_email" value="1" {if $report_preferences.always_email eq 1 OR $report_preferences eq false}checked{/if}/> {tr}Send me an email also if nothing happened{/tr}
+				<input type="checkbox" name="always_email" value="1"{if $report_preferences.always_email eq 1 OR $report_preferences eq false} checked="checked"{/if}/> {tr}Send me an email also if nothing happened{/tr}
 			</div>
 			
-			<p><input type="submit" name="submit" value=" {tr}Apply{/tr} "></p>
+			<p><input type="submit" name="submit" value=" {tr}Apply{/tr} " /></p>
 		</form>
 	{/tab}
 	{/if}
@@ -61,8 +61,8 @@
 		<td>
 			<select name="event" id="type_selector">
 				<option>{tr}Select event type{/tr}</option>
-				{foreach key=event item=label from=$add_options}
-					<option value="{$event|escape}">{$label|escape}</option>
+				{foreach key=event item=type from=$add_options}
+					<option value="{$event|escape}">{$type.label|escape}</option>
 				{/foreach}
 			</select>
 		</td>
@@ -118,27 +118,25 @@
 <form action="tiki-user_watches.php" method="post" id='formi'>
 {tr}Show:{/tr}<select name="event" onchange="javascript:document.getElementById('formi').submit();">
 <option value=""{if $smarty.request.event eq ''} selected="selected"{/if}>{tr}All watched events{/tr}</option>
-{section name=ix loop=$events}
-<option value="{$events[ix]|escape}" {if $events[ix] eq $smarty.request.event}selected="selected"{/if}>
-	{if $events[ix] eq 'article_submitted'}
-		{tr}A user submits an article{/tr}
-	{elseif $events[ix] eq 'article_edited'}
-		{tr}A user edited an article{/tr}
-	{elseif $events[ix] eq 'article_deleted'}
-		{tr}A user deleted an article{/tr}
-	{elseif $events[ix] eq 'blog_post'}
+{foreach from=$events key=name item=description}
+<option value="{$name|escape}"{if $name eq $smarty.request.event} selected="selected"{/if}>
+	{if $name eq 'blog_post'}
 		{tr}A user submits a blog post{/tr}
-	{elseif $events[ix] eq 'forum_post_thread'}
+	{elseif $name eq 'forum_post_thread'}
 		{tr}A user posts a forum thread{/tr}
-	{elseif $events[ix] eq 'forum_post_topic'}
+	{elseif $name eq 'forum_post_topic'}
 		{tr}A user posts a forum topic{/tr}
-	{elseif $events[ix] eq 'wiki_page_changed'}
-		{tr}A user edited a wiki page{/tr}
-	{elseif $events[ix] eq 'wiki_page_in_lang_created'}
-		{tr}A user created a wiki page in a language{/tr}
-	{else}{$events[ix]}{/if}
+	{elseif $name eq 'wiki_page_changed'}
+		{if $prefs.wiki_watch_comments eq 'y'}
+			{tr}A user edited or commented on a wiki page{/tr}
+		{else}
+			{tr}A user edited a wiki page{/tr}
+		{/if}
+	{else}
+		{$description}
+	{/if}
 </option>
-{/section}
+{/foreach}
 </select>
 </form>
 <br />
@@ -160,35 +158,31 @@
 				</td>
 			{/if}
 			<td>
-				{if $w.event eq 'article_submitted'}
-					{tr}A user submits an article{/tr}
-				{elseif $w.event eq 'article_edited'}
-					{tr}A user edits an article{/tr}
-				{elseif $w.event eq 'article_deleted'}
-					{tr}A user deletes an article{/tr}
-				{elseif $w.event eq 'blog_post'}
+				{if $w.event eq 'blog_post'}
 					{tr}A user submits a blog post{/tr}
 				{elseif $w.event eq 'forum_post_thread'}
 					{tr}A user posts a forum thread{/tr}
 				{elseif $w.event eq 'forum_post_topic'}
 					{tr}A user posts a forum topic{/tr}
 				{elseif $w.event eq 'wiki_page_changed'}
-					{tr}A user edited a wiki page{/tr}
-				{elseif $w.event eq 'wiki_page_in_lang_created'}
-					{tr}A user created a wiki page in a language{/tr}
-				{elseif $w.event eq 'category_changed_in_lang'}
-					{tr}Category change in a language{/tr}
+					{if $prefs.wiki_watch_comments eq 'y'}
+						{tr}A user edited or commented on a wiki page{/tr}
+					{else}
+						{tr}A user edited a wiki page{/tr}
+					{/if}
+				{elseif isset($w.label)}
+				{$w.label}
 				{/if}
 				({$w.event})
 			</td>
-			<td><a class="link" href="{$w.url}">{tr}{$w.type}:{/tr} {$w.title}</a></td>
+			<td><a class="link" href="{$w.url}">{tr}{$w.type}:{/tr} {$w.title|escape}</a></td>
 		</tr>
 	{foreachelse}
 		<tr><td class="odd" colspan="2">{tr}No records found.{/tr}</td></tr>
 	{/foreach}
 </table>
 {if $watches}
-	{tr}Perform action with checked:{/tr} <input type="submit" name="delete" value=" {tr}Delete{/tr} ">
+	{tr}Perform action with checked:{/tr} <input type="submit" name="delete" value="{tr}Delete{/tr}" />
 {/if}
 </form>
 {/tab}

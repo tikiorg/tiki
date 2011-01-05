@@ -29,19 +29,38 @@
 			</td>
 		</tr> 
 		<tr>
+			<td><label for="destination">{tr}Destination:{/tr}</label></td>
+			<td>
+				<select id="destination" name="destination">
+					<option value="login" selected="selected">{tr}User{/tr}</option>
+					<option value="email">{tr}Email{/tr}</option>
+				</select>
+				{jq}
+				$("select[name='destination']").change(function () {
+					$("#loginrow").hide();
+					$("#emailrow").hide();
+					$("input[name='login']").attr("disabled","disabled");
+					$("input[name='email']").attr("disabled","disabled");
+					$("#" + $("select[name='destination']").val() + "row").show();
+					$("input[name='" + $("select[name='destination']").val() + "']").focus();
+					$("input[name='" + $("select[name='destination']").val() + "']").removeAttr("disabled");
+				}
+				);
+				{/jq}
+			</td>
+		</tr>
+		<tr id="loginrow">
 			<td><label for="flogin">{tr}User:{/tr}</label></td>
 			<td>
 				<input type="text" id="flogin" name="login" />
 				{jq}$("#flogin").tiki("autocomplete", "username"){/jq}
+				<a href="#" onclick="javascript:document.getElementById('flogin').value='{$user}'" class="link">{tr}Myself{/tr}</a>
 			</td>
 		</tr>
-		<tr>
+		<tr id="emailrow" style="display:none">
 			<td><label for="femail">{tr}Email:{/tr}</label></td>        
 			<td>
 				<input type="text" id='femail' name="email" />
-				{if $admin_mail neq ''}
-					<a href="#" onclick="javascript:document.getElementById('femail').value='{$admin_mail}';document.getElementById('flogin').value='admin'" class="link">{tr}Preload Admin Account{/tr}</a>
-				{/if}
 			</td>
 		</tr> 
 		<tr>

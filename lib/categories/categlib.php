@@ -1438,7 +1438,7 @@ class CategLib extends ObjectLib
 		}		
 	}
 	
-	function group_watch_category_and_descendants($group, $categId, $categName, $top = true) {
+	function group_watch_category_and_descendants($group, $categId, $categName = NULL, $top = true) {
 		global $tikilib, $descendants; 
 		
 		if ($categId != 0 && $top == true) {
