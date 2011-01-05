@@ -10,11 +10,22 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/trackers/trackerlib.php');
 
-if (!isset($_REQUEST["attId"])) {
+if (empty($_REQUEST['attId']) && !empty($_REQUEST['itemId']) && !empty($_REQUEST['fieldId'])) {
+	$_REQUEST['attId'] = $trklib->get_item_value(0, $_REQUEST['itemId'], $_REQUEST['fieldId']);
+}
+
+if (empty($_REQUEST['attId'])) {
+	$smarty->assign('msg', tra('Incorrect param'));
+	$smarty->display('error.tpl');
 	die;
 }
 
-$info = $trklib->get_item_attachment($_REQUEST["attId"]);
+$info = $trklib->get_item_attachment($_REQUEST['attId']);
+if (empty($info)) {
+	$smarty->assign('msg', tra('Incorrect param'));
+	$smarty->display('error.tpl');
+	die;
+}
 $itemInfo = $trklib->get_tracker_item($info["itemId"]);
 $itemUser = $trklib->get_item_creator($itemInfo['trackerId'], $itemInfo['itemId']);
 
