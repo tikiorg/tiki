@@ -390,7 +390,7 @@ class CategLib extends ObjectLib
 		$cachelib->invalidate("allcategs");
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
-			global $objectlib; include_once('lib/objectlib/php');
+			global $objectlib; include_once('lib/objectlib.php');
 			$info = $objectlib->get_object_via_objectid($catObjectId);
 			$logslib->add_action('Categorized', $info['itemId'], $info['type'], "categId=$categId");
 		}
