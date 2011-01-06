@@ -29,7 +29,7 @@
 							</div>
 						</div>
 			
-						{if $user_picture_id}
+						{if isset($user_picture_id)}
 						<div class="userpicture">
 							{wikiplugin _name="img" fileId="$user_picture_id"}{/wikiplugin}
 						</div>
@@ -89,7 +89,7 @@
 			{if $homePage}
 								<div class="clearfix {cycle}">
 									<div class="floatleft">{tr}Homepage:{/tr}</div>
-									<div class="floatright">{if $homePage ne ""}<a href="{$homePage}" class="link" title="{tr}Users HomePage{/tr}">{$homePage}</a>{/if}</div>
+									<div class="floatright"><a href="{$homePage|escape}" class="link" title="{tr}User's homepage{/tr}">{$homePage|escape}</a></div>
 								</div>
 			{/if}
 			{if $prefs.feature_score eq 'y'}
