@@ -86,7 +86,7 @@
 									<div class="floatright">{$user_language}</div>
 								</div>
 			{/if}
-			{if $homepage}
+			{if $homePage}
 								<div class="clearfix {cycle}">
 									<div class="floatleft">{tr}Homepage:{/tr}</div>
 									<div class="floatright">{if $homePage ne ""}<a href="{$homePage}" class="link" title="{tr}Users HomePage{/tr}">{$homePage}</a>{/if}</div>
