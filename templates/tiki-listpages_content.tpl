@@ -5,7 +5,11 @@
 {/if}
 
 {if $tiki_p_remove eq 'y' or $prefs.feature_wiki_multiprint eq 'y'}
-	{assign var='checkboxes_on' value='y'}
+	{if $checkboxes_on eq 'n'}
+		{assign var='checkboxes_on' value='n'}
+	{else}
+		{assign var='checkboxes_on' value='y'}
+	{/if}
 {else}
 	{assign var='checkboxes_on' value='n'}
 {/if}
