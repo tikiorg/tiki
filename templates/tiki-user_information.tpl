@@ -60,7 +60,7 @@
 			{if $email_isPublic neq 'n' and $userinfo.email neq ''}
 								<div class="clearfix {cycle}">
 									<div class="floatleft">{tr}Email:{/tr}</div>
-									<div class="floatright">{mailto address=$userinfo.email encode="javascript"}</div>
+									<div class="floatright">{mailto address=$userinfo.email text=$scrambledEmail encode="javascript"}</div>
 								</div>
 			{elseif $email_isPublic eq 'n' and $userinfo.email neq '' and $tiki_p_admin eq 'y'}
 								<div class="clearfix {cycle}">
