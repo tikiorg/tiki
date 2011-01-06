@@ -109,13 +109,13 @@
 				{/if}
 			</td>
 			{if $prefs.forum_list_topics eq 'y'}
-				<td style="text-align:right;">{$channels[user].threads}</td>
+				<td class="integer">{$channels[user].threads}</td>
 			{/if}
 			{if $prefs.forum_list_posts eq 'y'}
-				<td style="text-align:right;">{$channels[user].comments}</td>
+				<td class="integer">{$channels[user].comments}</td>
 			{/if}
 			{if $prefs.forum_list_ppd eq 'y'}
-				<td style="text-align:right;">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
+				<td class="integer">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
 			{/if}
 			{if $prefs.forum_list_lastpost eq 'y'}	
 				<td>
@@ -127,10 +127,10 @@
 				</td>
 			{/if}
 			{if $prefs.forum_list_visits eq 'y'}
-				<td style="text-align:right;">{$channels[user].hits}</td>
+				<td class="integer">{$channels[user].hits}</td>
 			{/if}	
 
-			<td style="text-align:right;">
+			<td class="action">
 				<a class="admlink" title="{tr}View{/tr}" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{icon _id='table' alt="{tr}View{/tr}"}</a>
 				{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
 					<a class="admlink" title="{tr}Configure Forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}&amp;cookietab=2">{icon _id='page_edit'}</a>

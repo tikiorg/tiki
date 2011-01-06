@@ -48,19 +48,19 @@
 	{cycle values="odd,even" print=false}
 	{section name=changes loop=$lastchanges}
 		<tr class="{cycle}">
-			<td>{$lastchanges[changes].lastModif|tiki_short_datetime}</td>
+			<td class="date">{$lastchanges[changes].lastModif|tiki_short_datetime}</td>
 			<td>
 				<a href="{$lastchanges[changes].pageName|sefurl}" class="tablename" title="{$lastchanges[changes].pageName|escape}">
 					{$lastchanges[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true|escape}
 				</a> 
 			</td>
 			<td>{tr}{$lastchanges[changes].action|escape}{/tr}</td>
-			<td>{$lastchanges[changes].user|userlink}</td>
+			<td class="username">{$lastchanges[changes].user|userlink}</td>
 			{if $prefs.feature_wiki_history_ip ne 'n'}
 				<td>{$lastchanges[changes].ip}</td>
 			{/if}
 			<td>{$lastchanges[changes].comment|escape}</td>
-			<td>
+			<td class="action">
 				{if $tiki_p_wiki_view_history eq 'y'} 
 					{if $lastchanges[changes].version}
 						<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}'>{icon _id='page_white_stack' alt="{tr}History{/tr}"}</a>{tr}v{/tr}{$lastchanges[changes].version}

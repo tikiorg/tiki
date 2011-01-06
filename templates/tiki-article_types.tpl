@@ -54,35 +54,35 @@
 				<input type="hidden" name="type_array[{$types[user].type|escape}]" />
 				<tr class="{cycle}">
 					{*get_strings {tr}Article{/tr}{tr}Review{/tr}{tr}Event{/tr}{tr}Classified{/tr} *}
-					<td>{$types[user].article_cnt}</td>
-					<td>
+					<td class="integer">{$types[user].article_cnt}</td>
+					<td class="checkbox">
 						<input type="checkbox" name="use_ratings[{$types[user].type|escape}]" {if $types[user].use_ratings eq 'y'}checked="checked"{/if} />
 					</td>
-					<td>
+					<td class="checkbox">
 						<input type="checkbox" name="show_pre_publ[{$types[user].type|escape}]" {if $types[user].show_pre_publ eq 'y'}checked="checked"{/if} />
 					</td>
-					<td>
+					<td class="checkbox">
 						<input type="checkbox" name="show_post_expire[{$types[user].type|escape}]" {if $types[user].show_post_expire eq 'y'}checked="checked"{/if} />
 					</td>
-					<td>
+					<td class="checkbox">
 						<input type="checkbox" name="heading_only[{$types[user].type|escape}]" {if $types[user].heading_only eq 'y'}checked="checked"{/if} />
 					</td>
-					<td>
+					<td class="checkbox">
 						<input type="checkbox" name="allow_comments[{$types[user].type|escape}]" {if $types[user].allow_comments eq 'y'}checked="checked"{/if} />
 					</td>
-					<td>
+					<td class="checkbox">
 						<input type="checkbox" name="comment_can_rate_article[{$types[user].type|escape}]" {if $types[user].comment_can_rate_article eq 'y'}checked="checked"{/if} />
 					</td>
-					<td>
+					<td class="checkbox">
 						<input type="checkbox" name="show_image[{$types[user].type|escape}]" {if $types[user].show_image eq 'y'}checked="checked"{/if} />
 					</td>
-					<td>
+					<td class="checkbox">
 						<input type="checkbox" name="show_avatar[{$types[user].type|escape}]" {if $types[user].show_avatar eq 'y'}checked="checked"{/if} />
 					</td>
-					<td>
+					<td class="checkbox">
 						<input type="checkbox" name="show_author[{$types[user].type|escape}]" {if $types[user].show_author eq 'y'}checked="checked"{/if} />
 					</td>
-					<td>
+					<td class="checkbox">
 						<input type="checkbox" name="show_pubdate[{$types[user].type|escape}]" {if $types[user].show_pubdate eq 'y'}checked="checked"{/if} />
 					</td>
 				</tr>
@@ -99,34 +99,34 @@
 					<th colspan="2">{tr}Action{/tr}</th>
 				</tr>
 				<tr class="{cycle}">
-					<td>
+					<td class="checkbox">
 						<input type="checkbox" name="show_expdate[{$types[user].type|escape}]" {if $types[user].show_expdate eq 'y'}checked="checked"{/if} />
 					</td>
-					<td>
+					<td class="checkbox">
 						<input type="checkbox" name="show_reads[{$types[user].type|escape}]" {if $types[user].show_reads eq 'y'}checked="checked"{/if} />
 					</td>
-					<td>
+					<td class="checkbox">
 						<input type="checkbox" name="show_size[{$types[user].type|escape}]" {if $types[user].show_size eq 'y'}checked="checked"{/if} />
 					</td>
-					<td>
+					<td class="checkbox">
 						<input type="checkbox" name="show_topline[{$types[user].type|escape}]" {if $types[user].show_topline eq 'y'}checked="checked"{/if} />
 					</td>
-					<td>
+					<td class="checkbox">
 						<input type="checkbox" name="show_subtitle[{$types[user].type|escape}]" {if $types[user].show_subtitle eq 'y'}checked="checked"{/if} />
 					</td>
-					<td>
+					<td class="checkbox">
 						<input type="checkbox" name="show_linkto[{$types[user].type|escape}]" {if $types[user].show_linkto eq 'y'}checked="checked"{/if} />
 					</td>
-					<td>
+					<td class="checkbox">
 						<input type="checkbox" name="show_image_caption[{$types[user].type|escape}]" {if $types[user].show_image_caption eq 'y'}checked="checked"{/if} />
 					</td>
-					<td>
+					<td class="checkbox">
 						<input type="checkbox" name="show_lang[{$types[user].type|escape}]" {if $types[user].show_lang eq 'y'}checked="checked"{/if} />
 					</td>
-					<td>
+					<td class="checkbox">
 						<input type="checkbox" name="creator_edit[{$types[user].type|escape}]" {if $types[user].creator_edit eq 'y'}checked="checked"{/if} />
 					</td>
-					<td colspan="2">
+					<td class="action" colspan="2">
 						<center>
 							{if $types[user].article_cnt eq 0}
 								<a class="link" href="tiki-article_types.php?remove_type={$types[user].type|escape:url}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
@@ -147,7 +147,7 @@
 				{foreach from=$types[user].attributes item=att key=attname}
 					<tr class="{cycle}">
 						<td>{$attname|escape}</td>
-						<td>
+						<td class="action">
 							<a class="link" href="tiki-article_types.php?att_type={$types[user].type|escape:url}&att_remove={$att.relationId|escape:url}">
 								{icon _id='cross' alt="{tr}Remove{/tr}"}
 							</a>

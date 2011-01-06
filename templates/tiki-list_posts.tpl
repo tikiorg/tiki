@@ -41,10 +41,10 @@
 					<a class="blogname" href="tiki-list_posts.php?blogId={$posts[changes].blogId}" title="{$posts[changes].blogTitle|escape}">{$posts[changes].blogTitle|truncate:$prefs.blog_list_title_len:"...":true|escape}</a>
 				</td>
 			{/if}
-			<td>&nbsp;{$posts[changes].created|tiki_short_date}&nbsp;</td>
-			<td>&nbsp;{$posts[changes].size}&nbsp;</td>
+			<td class="date">&nbsp;{$posts[changes].created|tiki_short_date}&nbsp;</td>
+			<td class="integer">&nbsp;{$posts[changes].size}&nbsp;</td>
 			<td>&nbsp;{$posts[changes].user}&nbsp;</td>
-			<td>
+			<td class="action">
 				<a class="link" href="tiki-blog_post.php?blogId={$posts[changes].blogId}&postId={$posts[changes].postId}">{icon _id='page_edit'}</a>
 				<a class="link" href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$posts[changes].postId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 			</td>

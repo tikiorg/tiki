@@ -76,7 +76,7 @@
 				{section loop=$channels name=ix}
 					<tr class="{cycle}">
 						{if $tiki_p_admin eq 'y'}
-							<td>
+							<td class="checkbox">
 								<input type="checkbox" name="action[]" value='{$channels[ix].page_ref_id}' style="border:1px;font-size:80%;" />
 							</td>
 						{/if}
@@ -88,7 +88,7 @@
 								{/if}
 							</a>
 						</td>
-						<td>
+						<td class="action">
 							<a class="tablename" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title="{tr}View structure{/tr}">{icon _id='information' alt="{tr}View structure{/tr}"}</a>
 							<a class='link' href='{sefurl page=$channels[ix].pageName structure=$channels[ix].pageName page_ref_id=$channels[ix].page_ref_id}' title="{tr}View page{/tr}">{icon _id='magnifier' alt="{tr}View page{/tr}"}</a>
 

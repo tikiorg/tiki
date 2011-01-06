@@ -33,9 +33,9 @@
 				{else}
 					<td>{$channels[user].description|escape|nl2br}</td>
 				{/if}
-				<td>{$channels[user].created|tiki_short_datetime}</td>
-				<td>{$channels[user].lastModif|tiki_short_datetime}</td>
-				<td style="text-align:right;">{$channels[user].items}</td>
+				<td class="date">{$channels[user].created|tiki_short_datetime}</td>
+				<td class="date">{$channels[user].lastModif|tiki_short_datetime}</td>
+				<td class="integer">{$channels[user].items}</td>
 			</tr>
 		{/if}
 	{sectionelse}

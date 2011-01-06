@@ -164,13 +164,13 @@
 
 	<tr class="{cycle}">
 		{if $checkboxes_on eq 'y'}
-			<td>
+			<td class="checkbox">
 				<input type="checkbox" name="checked[]" value="{$listpages[changes].pageName|escape}"/>
 			</td>
 		{/if}
 
 		{if $prefs.wiki_list_id eq 'y'}
-			<td>
+			<td class="integer">
 				<a href="{$listpages[changes].pageName|sefurl}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].pageName|escape}">{$listpages[changes].page_id}</a>
 			</td>
 		{/if}
@@ -202,13 +202,13 @@
 		{/foreach}
 
 		{if $prefs.wiki_list_hits eq 'y'}	
-			<td style="text-align:right;">
+			<td class="integer">
 				{$listpages[changes].hits}
 			</td>
 		{/if}
 
 		{if $prefs.wiki_list_lastmodif eq 'y' or $prefs.wiki_list_comment eq 'y'}
-			<td>
+			<td class="date">
 				{if $prefs.wiki_list_lastmodif eq 'y'}
 					<div>{$listpages[changes].lastModif|tiki_short_datetime}</div>
 				{/if}
@@ -221,25 +221,25 @@
 		{/if}
 
 		{if $prefs.wiki_list_creator eq 'y'}
-			<td>
+			<td class="username">
 				{$listpages[changes].creator|userlink}
 			</td>
 		{/if}
 
 		{if $prefs.wiki_list_user eq 'y'}
-			<td>
+			<td class="username">
 				{$listpages[changes].user|userlink}
 			</td>
 		{/if}
 
 		{if $prefs.wiki_list_lastver eq 'y'}
-			<td style="text-align:right;">
+			<td class="integer">
 				{$listpages[changes].version}
 			</td>
 		{/if}
 
 		{if $prefs.wiki_list_status eq 'y'}
-			<td style="text-align:center;">
+			<td class="icon">
 				{if $listpages[changes].flag eq 'locked'}
 					{icon _id='lock' alt="{tr}Locked{/tr}"}
 				{else}
@@ -250,38 +250,38 @@
 
 		{if $prefs.wiki_list_versions eq 'y'}
 			{if $prefs.feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
-				<td style="text-align:right;">
+				<td class="integer">
 					<a class="link" href="tiki-pagehistory.php?page={$listpages[changes].pageName|escape:"url"}">
 						{$listpages[changes].versions}
 					</a>
 				</td>
 			{else}
-				<td style="text-align:right;">
+				<td class="integer">
 					{$listpages[changes].versions}
 				</td>
 			{/if}
 		{/if}
 
 		{if $prefs.wiki_list_links eq 'y'}
-			<td style="text-align:right;">
+			<td class="integer">
 				{$listpages[changes].links}
 			</td>
 		{/if}
 
 		{if $prefs.wiki_list_backlinks eq 'y'}
 			{if $prefs.feature_backlinks eq 'y'}
-				<td style="text-align:right;">
+				<td class="integer">
 					<a class="link" href="tiki-backlinks.php?page={$listpages[changes].pageName|escape:"url"}">
 						{$listpages[changes].backlinks}
 					</a>
 				</td>
 			{else}
-				<td style="text-align:right;">{$listpages[changes].backlinks}</td>
+				<td class="integer">{$listpages[changes].backlinks}</td>
 			{/if}
 		{/if}
 
 		{if $prefs.wiki_list_size eq 'y'}
-			<td style="text-align:right;">{$listpages[changes].len|kbsize}</td>
+			<td class="integer">{$listpages[changes].len|kbsize}</td>
 		{/if}
 
 		{if $prefs.wiki_list_language eq 'y'}
@@ -309,7 +309,7 @@
 		{/if}
 
 		{if $show_actions eq 'y'}
-			<td>
+			<td class="action">
 				{if $listpages[changes].perms.tiki_p_edit eq 'y'}
 					<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{icon _id='page_edit'}</a>
 					<a class="link" href="tiki-copypage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last">{icon _id='page_copy' alt="{tr}Copy{/tr}"}</a>
@@ -330,7 +330,6 @@
 				{/if}
 			</td>
 		{/if}
-
 		{cycle print=false}
 		</tr>
 	{sectionelse}
