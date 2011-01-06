@@ -199,7 +199,7 @@
 				{section name=ix loop=$user_pages}
 				<div>
 					<div class="{cycle}">
-						<a class="link" title="{tr}View:{/tr} {$user_pages[ix].pageName}" href="tiki-index.php?page={$user_pages[ix].pageName|escape:"url"}">{$user_pages[ix].pageName|truncate:40:"(...)"}</a>
+						<a class="link" title="{tr}View:{/tr} {$user_pages[ix].pageName|escape}" href="tiki-index.php?page={$user_pages[ix].pageName|escape:"url"}">{$user_pages[ix].pageName|truncate:40:"(...)"|escape}</a>
 					</div>
 				</div>
 				{/section}
