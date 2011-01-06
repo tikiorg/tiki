@@ -644,16 +644,16 @@
 			{foreach from=$action_log_conf_selected item=actionlog}
 				<tr class="{cycle}">
 					{if $tiki_p_admin eq 'y'}
-						<td>
+						<td class="checkbox">
 							<input type="checkbox" name="{$actionlog.code}" {if $actionlog.status eq 'y' or $actionlog.status eq 'v'}checked="checked"{/if} />
 						</td>
 					{/if}
 					{if $tiki_p_admin eq 'y' or $actionlog.status eq 'y' or $actionlog.status eq 'v'}
-						<td>
+						<td class="checkbox">
 							<input type="checkbox" name="v_{$actionlog.code}" {if $actionlog.status eq 'v'}checked="checked"{/if} />
 						</td>
-						<td>{tr}{$actionlog.action}{/tr}</td>
-						<td>{tr}{$actionlog.objectType}{/tr}</td>
+						<td class="text">{tr}{$actionlog.action}{/tr}</td>
+						<td class="text">{tr}{$actionlog.objectType}{/tr}</td>
 					{/if}
 				</tr>
 			{/foreach}
