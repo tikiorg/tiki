@@ -45,10 +45,10 @@
 			{/if}
 								
 			{cycle values="even,odd" print=false}
-			{if $realName }
+			{if $realName}
 								<div class="clearfix {cycle}">
 									<div class="floatleft">{tr}Real Name:{/tr}</div>
-									<div class="floatright">{$realName}</div>
+									<div class="floatright">{$realName|escape}</div>
 								</div>
 			{/if}
 			{if $prefs.feature_community_gender eq 'y' and $gender neq 'Hidden' and $gender}
