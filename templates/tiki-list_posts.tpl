@@ -15,7 +15,7 @@
 <table class="normal">
 	<tr>
 		<th>
-			<a href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&{/if}offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_asc'}title_desc{else}title_asc{/if}">
+			<a href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&amp;{/if}offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_asc'}title_desc{else}title_asc{/if}">
 				{tr}Post Title{/tr}
 			</a>
 		</th>
@@ -23,11 +23,11 @@
 			<th>{tr}Blog Title{/tr}</th>
 		{/if}
 		<th>
-			<a href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&{/if}offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a>
+			<a href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&amp;{/if}offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a>
 		</th>
 		<th>{tr}Size{/tr}</th>
 		<th>
-			<a href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&{/if}offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}Author{/tr}</a>
+			<a href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&amp;{/if}offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}Author{/tr}</a>
 		</th>
 		<th>{tr}Actions{/tr}</th>
 	</tr>
@@ -46,7 +46,7 @@
 			<td>&nbsp;{$posts[changes].user}&nbsp;</td>
 			<td>
 				<a class="link" href="tiki-blog_post.php?blogId={$posts[changes].blogId}&postId={$posts[changes].postId}">{icon _id='page_edit'}</a>
-				<a class="link" href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$posts[changes].postId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+				<a class="link" href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$posts[changes].postId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 			</td>
 		</tr>
 	{sectionelse}
