@@ -204,7 +204,7 @@
 							<select name="groupfield">
 								<option value="0">{tr}choose a field ...{/tr}</option>
 								{section name=ix loop=$groupFields}
-									<option value="{$groupFields[ix].fieldId}"{if $groupFields[ix].fieldId eq $groupfieldid} selected="selected"{/if}>{$groupFields[ix].name}</option>
+									<option value="{$groupFields[ix].fieldId}"{if $groupFields[ix].fieldId eq $groupfieldid} selected="selected"{/if}>{$groupFields[ix].name|escape}</option>
 								{/section}
 							</select>
 						{/if}
@@ -225,7 +225,7 @@
 						<select name="userstracker">
 							<option value="0">{tr}choose a users tracker ...{/tr}</option>
 							{foreach key=tid item=tit from=$trackers}
-								<option value="{$tid}"{if $tid eq $userstrackerid} {assign var="ugr" value="$tit"}selected="selected"{/if}>{$tit}</option>
+								<option value="{$tid}"{if $tid eq $userstrackerid} {assign var="ugr" value="$tit"}selected="selected"{/if}>{$tit|escape}</option>
 							{/foreach}
 						</select>
 						{if $userstrackerid}
@@ -233,7 +233,7 @@
 							<select name="usersfield">
 								<option value="0">{tr}choose a field ...{/tr}</option>
 								{section name=ix loop=$usersFields}
-									<option value="{$usersFields[ix].fieldId}"{if $usersFields[ix].fieldId eq $usersfieldid} selected="selected"{/if}>{$usersFields[ix].fieldId} - {$usersFields[ix].name}</option>
+									<option value="{$usersFields[ix].fieldId}"{if $usersFields[ix].fieldId eq $usersfieldid} selected="selected"{/if}>{$usersFields[ix].fieldId} - {$usersFields[ix].name|escape}</option>
 								{/section}
 							</select>
 						{/if}
