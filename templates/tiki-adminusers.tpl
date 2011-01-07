@@ -418,7 +418,7 @@
 							<span id="genPass">{button href="#" _onclick="genPass('genepass');runPassword(document.RegForm.genepass.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');return false;" _text="{tr}Generate a password{/tr}"}</div>
 						</td></tr>
 					{/if}
-					{if $userinfo.login neq 'admin'}
+					{if $userinfo.login neq 'admin' && $prefs.change_password neq 'n'}
 						<tr>
 							<td>&nbsp;</td>
 							<td>
@@ -524,8 +524,10 @@
                     <br />
 					<label>{tr}Create groups:{/tr} <input type="checkbox" name="createGroup" /></label>
                     <br />
+					{if $prefs.change_password neq 'n'}
                      <label>{tr}User must change password at first login:{/tr} <input type="checkbox" name="forcePasswordChange" /></label>
 					<br />
+					{/if}
                     <label>{tr}Send an email to the user in order to allow him to validate his account.{/tr} <input type="checkbox" name="notification" /></label>
 				</td>
 			</tr>
