@@ -1870,6 +1870,8 @@ function get_default_prefs() {
 	
 		// Syntax Highlighter
 		'feature_syntax_highlighter' => 'y',
+
+		'feature_accounting' => 'n',
 	);
 
 	// Special default values
