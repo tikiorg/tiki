@@ -196,7 +196,7 @@ class WikiRenderer
 		global $prefs, $wikilib;
 
 		if( $prefs['wiki_authors_style'] != 'classic' ) {
-			$contributors = $wikilib->get_contributors($this->page, $this->info['user'], false);
+			$contributors = $wikilib->get_contributors($this->page, $this->info['user']);
 			$this->smartyassign('contributors',$contributors);
 		}
 	} // }}}

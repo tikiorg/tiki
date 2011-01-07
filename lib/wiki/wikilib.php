@@ -65,7 +65,7 @@ class WikiLib extends TikiLib
 	 *  Get the contributors for page
 	 *  the returned array does not contain the user $last (usually the current or last user)
 	 */
-	function get_contributors($page, $last='', $versions=true) {
+	function get_contributors($page, $last='') {
 		static $cache_page_contributors;
 		if ($cache_page_contributors['page'] == $page) {
 			if (empty($last)) {
@@ -79,14 +79,8 @@ class WikiLib extends TikiLib
 			}
 			return $ret;
 		}
-		if ($versions) {
-			$ustring = ',`version`';
-			$vstring = '`version`,`user`';
-		} else {
-			$ustring = '';
-			$vstring = '`user`';
-		}
-		$query = "select DISTINCT `user`$ustring from `tiki_history` where `pageName`=? order by $vstring desc";
+
+		$query = "select `user` from `tiki_history` where `pageName`=? group by `user` order by MAX(`version`) desc";
 		$result = $this->query($query,array($page));
 		$cache_page_contributors = array();
 		$cache_page_contributors['contributors'] = array();
