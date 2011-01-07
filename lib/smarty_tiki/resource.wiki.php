@@ -34,16 +34,16 @@ function smarty_resource_wiki_source($page, &$tpl_source, &$smarty) {
 	}
 
 	// Put the wiki result between {literal} smarty tags, in order to avoid the content to be parsed as smarty syntax
-	//   (except for variables like {$something} because pretty trackers relies on this !)
-  //
+	//   (except for variables like {$something} or with modifiers like this {$something|modifier:"arg"} because pretty trackers relies on this !)
+	//
 	// This is both for security and stability reasons :
 	//   - users should not access every functions of smarty
 	//   - a content like 'Show a {WHITEPAGE} now' would try to interpret {WHITEPAGE} as a smarty plugin, which fails in a white page / error
 	//
 	$tpl_source = '{literal}'
 		. preg_replace(
-			'/(\{\$[a-zA-Z0-9_.>:-]+\})/',
-			'{/literal}\\1{literal}',
+			'/(\{\$[a-zA-Z0-9_.>:-]+(\|(([a-zA-Z0-9_.:-])|"[^"\}]*")+)*\})/',
+			'{/literal}$0{literal}',
 			$tikilib->parse_data($info['data'], array('is_html' => $info['is_html'], 'print'=>'y', 'inside_pretty' => true) )
 		)
 		. '{/literal}';
