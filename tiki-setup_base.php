@@ -125,7 +125,10 @@ if (isset($_GET[session_name()]) && $tikilib->get_ip_address() == '127.0.0.1') {
 	session_id($_GET[session_name()]);
 }
 
-$start_session = $prefs['session_silent'] != 'y' or isset( $_COOKIE[session_name()] );
+$start_session = true;
+if ( $prefs['session_silent'] == 'y' && empty($_COOKIE[session_name()]) ) {
+	$start_session = false;
+}
 
 // If called from the CDN, refuse to execute anything
 $cdn_pref = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? $prefs['tiki_cdn_ssl'] : $prefs['tiki_cdn'];
