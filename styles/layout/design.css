@@ -601,6 +601,13 @@ td.date {
 td.action {
 	white-space: nowrap;
 }
+td.norecords {
+	text-align: left;
+	font-weight: bold;
+}
+td.id {
+	text-align: center;
+}
 
 caption {
 	font-weight: bold;
