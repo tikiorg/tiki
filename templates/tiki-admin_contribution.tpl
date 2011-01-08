@@ -32,7 +32,7 @@
 <h2>{tr}Settings{/tr}</h2>
 <form action="tiki-admin_contribution.php?page=features" method="post">
 	{cycle print=false values="even,odd"}
-	<table class="normal">
+	<table class="formcolor">
 		<tr class="{cycle}">
 			<td>
 				<input type="checkbox" name="feature_contribution_mandatory" {if $prefs.feature_contribution_mandatory eq 'y'}checked="checked"{/if}/>
