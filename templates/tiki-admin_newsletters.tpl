@@ -30,17 +30,17 @@
 	{cycle values="odd,even" print=false}
 	{section name=user loop=$channels}
 		<tr class="{cycle}">
-			<td>{self_link cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId _title="{tr}Edit{/tr}"}{$channels[user].nlId}{/self_link}</td>
-			<td>
+			<td class="id">{self_link cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId _title="{tr}Edit{/tr}"}{$channels[user].nlId}{/self_link}</td>
+			<td class="text">
 				{self_link cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId _title="{tr}Edit{/tr}"}{$channels[user].name|escape}{/self_link}
 				<div class="subcomment">{$channels[user].description|escape|nl2br}</div>
 			</td>
-			<td>{$channels[user].author}</td>
-			<td>{$channels[user].users} ({$channels[user].confirmed})</td>
-			<td>{$channels[user].editions}</td>
-			<td>{$channels[user].drafts}</td>
-			<td>{$channels[user].lastSent|tiki_short_datetime}</td>
-			<td>
+			<td class="username">{$channels[user].author}</td>
+			<td class="integer">{$channels[user].users} ({$channels[user].confirmed})</td>
+			<td class="integer">{$channels[user].editions}</td>
+			<td class="integer">{$channels[user].drafts}</td>
+			<td class="date">{$channels[user].lastSent|tiki_short_datetime}</td>
+			<td class="action">
 				<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$channels[user].nlId}" title="{tr}Assign Permissions{/tr}">
 					<img width="16" height="16" alt="{tr}Assign Permissions{/tr}" src="pics/icons/key{if $channels[user].individual eq 'y'}_active{/if}.png" />
 				</a>

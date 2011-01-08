@@ -99,10 +99,10 @@
 	{cycle values="odd,even" print=false}
 	{section name=user loop=$channels}
 		<tr class="{cycle}">
-			<td>{$channels[user].pageName}</td>
-			<td>{$channels[user].type} {if $channels[user].type eq 'd'}({$channels[user].refresh} secs){/if}</td>
-			<td>{$channels[user].created|tiki_short_datetime}</td>
-			<td>
+			<td class="text">{$channels[user].pageName}</td>
+			<td class="text">{$channels[user].type} {if $channels[user].type eq 'd'}({$channels[user].refresh} secs){/if}</td>
+			<td class="date">{$channels[user].created|tiki_short_datetime}</td>
+			<td class="action">
 				<a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 
 				<a class="link" href="tiki-page.php?pageName={$channels[user].pageName|escape:"url"}" title="View">{icon _id='monitor' alt="{tr}View{/tr}"}</a>
@@ -113,9 +113,7 @@
 			</td>
 		</tr>
 	{sectionelse}
-	<tr>
-		<td colspan="4" class="odd">{tr}No records found{/tr}</td>
-	</tr>
+		<tr class="even"><td colspan="4" class="norecords">{tr}No records found{/tr}</td></tr>
 	{/section}
 </table>
 

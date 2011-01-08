@@ -228,20 +228,20 @@
 				{cycle values="even,odd" print=false}
 				{foreach from=$actionlogs item=actionlog}
 					<tr class="{cycle}">
-						<td>
+						<td class="username">
 							{if $actionlog.user}{$actionlog.user}{else}{tr}Anonymous{/tr}{/if}
 						</td>
-						<td>
+						<td class="date">
 							{$actionlog.lastModif|tiki_short_datetime}
 						</td>
-						<td>
+						<td class="text">
 							{tr}{$actionlog.action}{/tr}
 							{if $actionlog.action eq 'Categorized' || $actionlog.action eq 'Uncategorized'}/{$actionlog.comment|replace:"categId=":""}{/if}
 						</td>
-						<td>
+						<td class="text">
 							{tr}{$actionlog.objectType}{/tr}
 						</td>
-						<td>
+						<td class="text">
 							{if $actionlog.link}
 								<a href="{$actionlog.link}" target="_blank" title="{tr}View{/tr}">{$actionlog.object|escape}</a>
 							{else}
@@ -276,7 +276,7 @@
 							{/if}
 						{/if}
 						{if $tiki_p_admin eq 'y' and ($prefs.feature_contribution eq 'y' or $prefs.feature_categories eq 'y')}
-							<td>
+							<td class="action">
 								{if $actionlog.actionId}
 									<a class="link" href="tiki-admin_actionlog.php?actionId={$actionlog.actionId}&amp;startDate={$startDate}&amp;endDate={$endDate}#action" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 									{self_link _class='link' remove='y' actionId=$actionlog.actionId _icon='cross' _title="{tr}Remove{/tr}"}{/self_link}
@@ -431,9 +431,9 @@
 				{cycle values="even,odd" print=false}
 				{foreach item=stat from=$userActions name=userActions}
 					<tr class="{cycle}">
-						<td>{$stat.user}</td>
+						<td class="username">{$stat.user}</td>
 						{foreach key=a item=nb from=$stat}
-							{if $a ne 'user'}<td>{$nb}</td>{/if}
+							{if $a ne 'user'}<td class="integer">{$nb}</td>{/if}
 						{/foreach}
 					</tr>
 				{/foreach}
@@ -453,11 +453,11 @@
 				{cycle values="even,odd" print=false}
 				{foreach item=stat from=$objectActions name=objectActions}
 					<tr class="{cycle}">
-						<td>
+						<td class="text">
 							{if $stat.link}<a href="{$stat.link}" target="_blank" title="{tr}View{/tr}">{$stat.object|escape}</a>{else}{$stat.object|escape}{/if}
 						</td>
 						{foreach key=a item=nb from=$stat}
-							{if $a ne 'object' and $a ne 'link'}<td>{$nb}</td>{/if}
+							{if $a ne 'object' and $a ne 'link'}<td class="integer">{$nb}</td>{/if}
 						{/foreach}
 					</tr>
 				{/foreach}
@@ -476,9 +476,9 @@
 				</tr>
 				{foreach key=categId item=stat from=$statCateg}
 					<tr class="{cycle}">
-						<td>{$stat.category}</td>
+						<td class="text">{$stat.category}</td>
 						{foreach key=a item=nb from=$statCateg[$categId]}
-							{if $a ne 'category'}<td>{$nb}</td>{/if}
+							{if $a ne 'category'}<td class="integer">{$nb}</td>{/if}
 						{/foreach}
 						<!-- {cycle} -->
 					</tr>
@@ -498,11 +498,11 @@
 				</tr>
 				{foreach key=categUser item=stat from=$statUserCateg}
 					<tr class="{cycle}">
-						<td>{$stat.category}</td>
-						<td>{$stat.user}</td>
+						<td class="text">{$stat.category}</td>
+						<td class="username">{$stat.user}</td>
 						{foreach key=a item=nb from=$stat}
 							{if $a ne 'category' and $a ne 'user'}
-								<td>{$nb}</td>
+								<td class="integer">{$nb}</td>
 							{/if}
 						{/foreach}
 					</tr>
@@ -528,10 +528,10 @@
 				{foreach from=$groupContributions key=group item=contributions}
 					{foreach from=$contributions key=contribution item=stat}
 						<tr class="{cycle}">
-							<td>{$group}</td>
-							<td>{$contribution}</td>
-							<td>{$stat.add}</td>
-							<td>{$stat.del}</td>
+							<td class="text">{$group}</td>
+							<td class="text">{$contribution}</td>
+							<td class="integer">{$stat.add}</td>
+							<td class="integer">{$stat.del}</td>
 						</tr>
 					{/foreach}
 				{/foreach}
@@ -550,10 +550,10 @@
 				{foreach from=$userContributions key=user item=contributions}
 					{foreach from=$contributions key=contribution item=stat}
 						<tr class="{cycle}">
-							<td>{$user}</td>
-							<td>{$stat.name}</td>
-							<td>{$stat.stat.add}</td>
-							<td>{$stat.stat.del}</td>
+							<td class="username">{$user}</td>
+							<td class="text">{$stat.name}</td>
+							<td class="integer">{$stat.stat.add}</td>
+							<td class="integer">{$stat.stat.del}</td>
 						</tr>
 					{/foreach}
 				{/foreach}

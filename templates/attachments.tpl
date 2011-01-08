@@ -50,8 +50,8 @@
 			{section name=ix loop=$atts}
 				<tr class="{cycle}">
 					<td>{$smarty.section.ix.index_next}</td>
-					<td>{$atts[ix].attId}</td>
-					<td>
+					<td class="id">{$atts[ix].attId}</td>
+					<td class="text">
 						{$atts[ix].filename|iconify}
 						<a class="tablename" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}&amp;page={$page|escape:"url"}&amp;download=y">{$atts[ix].filename}</a>
 					</td>
@@ -63,12 +63,12 @@
 							<a title="{tr}Delete{/tr}" class="link" href="tiki-index.php?page={$page|escape:"url"}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}{if !empty($sort_mode)}&amp;sort_mode={$sort_mode}{/if}"{if !empty($target)} target="{$target}"{/if}>{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 						{/if}
 					</td>
-					<td><small>{$atts[ix].comment|escape}</small></td>
-					<td>
+					<td class="text"><small>{$atts[ix].comment|escape}</small></td>
+					<td class="date">
 						<small>{$atts[ix].created|tiki_short_datetime}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user|userlink}{/if}</small>
 					</td>
-					<td style="text-align:right;">{$atts[ix].filesize|kbsize}</td>
-					<td style="text-align:right;">{$atts[ix].hits}</td>
+					<td class="integer">{$atts[ix].filesize|kbsize}</td>
+					<td class="integer">{$atts[ix].hits}</td>
 				</tr>
 			{/section}
 		</table>

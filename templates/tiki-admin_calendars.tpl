@@ -18,7 +18,6 @@
 	{tab name="{tr}List of Calendars{/tr}"}
 		<h2>{tr}List of Calendars{/tr}</h2>
 
-		{if count($calendars) gt 0}
 			{include file='find.tpl'}
 			<table class="normal">
 				<tr>
@@ -50,36 +49,36 @@
 					<th>
 						<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'personal_desc'}personal_asc{else}personal_desc{/if}">{tr}Perso{/tr}</a>
 					</th>
-					<th>&nbsp;</th>
-					<th>&nbsp;</th>
+					<th>{tr}Perms{/tr}</th>
+					<th>{tr}Action{/tr}</th>
 				</tr>
 				{cycle values="odd,even" print=false}
 				{foreach key=id item=cal from=$calendars}
 					<tr class="{cycle}">
-						<td>{$id}</td>
-						<td>
+						<td class="id">{$id}</td>
+						<td class="text">
 							<a class="tablename" href="tiki-admin_calendars.php?calendarId={$id}" title="{tr}Edit{/tr}">{$cal.name|escape}</a>
 							{if $cal.show_calname eq 'y'} {icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}
 						</td>
-						<td>
+						<td class="text">
 							{$cal.customlocations|yesno}{if $cal.show_location eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}
 						</td>
-						<td>
+						<td class="text">
 							{$cal.customparticipants|yesno}{if $cal.show_participants eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}
 						</td>
-						<td>
+						<td class="text">
 							{$cal.customcategories|yesno}{if $cal.show_category eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}
 						</td>
-						<td>
+						<td class="text">
 							{$cal.customlanguages|yesno}{if $cal.show_language eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}
 						</td>
-						<td>
+						<td class="text">
 							{$cal.customurl|yesno}{if $cal.show_url eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}
 						</td>
-						<td>{$cal.custompriorities|yesno}</td>
-						<td>{$cal.customsubscription|yesno}</td>
-						<td>{$cal.personal|yesno}</td>
-						<td>
+						<td class="text">{$cal.custompriorities|yesno}</td>
+						<td class="text">{$cal.customsubscription|yesno}</td>
+						<td class="text">{$cal.personal|yesno}</td>
+						<td class="text">
 							<a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$cal.name|escape:"url"}&amp;objectType=calendar&amp;permType=calendar&amp;objectId={$id}">{if $cal.individual gt 0}{icon _id='key_active' alt="{tr}Permissions{/tr}"}</a>&nbsp;{$cal.individual}{else}{icon _id='key' alt="{tr}Permissions{/tr}"}</a>{/if}
 						</td>
 						<td>
@@ -89,14 +88,12 @@
 							<a title="{tr}Add Event{/tr}" class="link" href="tiki-calendar_edit_item.php?calendarId={$id}">{icon _id='add' alt="{tr}Add Event{/tr}"}</a>
 						</td>
 					</tr>
+				{foreachelse}
+					<tr class="even"><td class="norecords" colspan="12">No records found</td></tr>
 				{/foreach}
 			</table>
 
 			{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
-
-		{else}
-			<b>{tr}No records found{/tr}</b>
-		{/if}
 	{/tab}
 
 	{tab name="{tr}Create / Edit Calendar{/tr}"}

@@ -46,24 +46,24 @@
 		{cycle values="even,odd" print=false}
 		{section name=user loop=$users}
 			<tr class="{cycle}">
-				<td style="width: 20px;">
+				<td class="icon">
 					<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 				</td>
-				<td>{$users[user].id|escape}</td>
-				<td>
+				<td class="id">{$users[user].id|escape}</td>
+				<td class="text">
 					<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" title="{tr}Edit{/tr}">{$users[user].groupName|escape}</a>
 				</td>
-				<td>{tr}{$users[user].groupDesc|escape|nl2br}{/tr}</td>
-				<td>
+				<td class="text">{tr}{$users[user].groupDesc|escape|nl2br}{/tr}</td>
+				<td class="text">
 					{section name=ix loop=$users[user].included}
 						{$users[user].included[ix]|escape}<br />
 					{/section}
 				</td>
-				<td>{tr}{$users[user].userChoice}{/tr}</td>
-				<td>
+				<td class="text">{tr}{$users[user].userChoice}{/tr}</td>
+				<td class="text">
 					<a class="link" href="tiki-objectpermissions.php?group={$users[user].groupName|escape:"url"}" title="{tr}Permissions{/tr}">{icon _id='key' alt="{tr}Permissions{/tr}"} {$users[user].permcant}</a>
 				</td>
-				<td style="width: 20px;">
+				<td class="action">
 					{if $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered' and $users[user].groupName ne 'Admins'}
 						<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 					{/if}
@@ -323,10 +323,10 @@
 			<tr>
 				{foreach from=$memberslist item=member}
 					<tr class="{cycle}">
-					<td>{$member.login|userlink}</td>
-					<td>{$member.created|tiki_short_datetime}</td>
-					<td>{if !empty($member.expire)}{$member.expire|tiki_short_datetime}{/if}</td>
-					<td>
+					<td class="username">{$member.login|userlink}</td>
+					<td class="date">{$member.created|tiki_short_datetime}</td>
+					<td class="date">{if !empty($member.expire)}{$member.expire|tiki_short_datetime}{/if}</td>
+					<td class="action">
 						<a href="tiki-adminusers.php?user={$member.login|escape:"url"}&amp;action=removegroup&amp;group={$groupname|escape:url}" class="link" title="{tr}Remove from Group{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 						<a href="tiki-adminusers.php?user={$member.userId|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" class="link" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 					</td>

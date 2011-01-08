@@ -141,13 +141,13 @@
 			{cycle values="even,odd" print=false}
 			{section name=ix loop=$objects}
 				<tr class="{cycle}">
-					<td>
+					<td class="icon">
 						<a href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}" title="{tr}Remove from this Category{/tr}">{icon _id='link_delete' alt="{tr}Remove from this Category{/tr}"}</a>
 					</td>
-					<td>
+					<td class="text">
 						<a href="{$objects[ix].href}" title="{$objects[ix].name}">{$objects[ix].name|truncate:80:"(...)":true|escape}</a>
 					</td>
-					<td>{tr}{$objects[ix].type}{/tr}</td>
+					<td class="text">{tr}{$objects[ix].type}{/tr}</td>
 				</tr>
 			{sectionelse}
 				<tr class="even">

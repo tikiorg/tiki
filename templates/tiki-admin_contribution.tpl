@@ -123,16 +123,14 @@
 	{cycle print=false values="even,odd"}
 	{section name=ix loop=$contributions}
 		<tr class="{cycle}">
-			<td>{$contributions[ix].name}</td>
-			<td>{$contributions[ix].description|truncate|escape}</td>
-			<td>
+			<td class="text">{$contributions[ix].name}</td>
+			<td class="text">{$contributions[ix].description|truncate|escape}</td>
+			<td class="action">
 				<a class="link" href="tiki-admin_contribution.php?contributionId={$contributions[ix].contributionId}">{icon _id='shape_square_edit'}</a> &nbsp;
 				<a class="link" href="tiki-admin_contribution.php?remove={$contributions[ix].contributionId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 			</td>
 		</tr>
 	{sectionelse}
-		<tr>
-			<td colspan="3" class="odd">{tr}No records found{/tr}</td>
-		</tr>
+		<tr class="even"><td colspan="3" class="norecords">{tr}No records found{/tr}</td></tr>
 	{/section}
 </table>

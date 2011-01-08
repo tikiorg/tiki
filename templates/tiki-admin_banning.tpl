@@ -117,32 +117,32 @@
 		{cycle values="odd,even" print=false}
 		{section name=user loop=$items}
 			<tr class="{cycle}">
-				<td>
+				<td class="checkbox">
 					<input type="checkbox" name="delsec[{$items[user].banId}]" />
 				</td>
-				<td>
+				<td class="text">
 					<a href="tiki-admin_banning.php?banId={$items[user].banId}" class="link">{$items[user].title|escape}</a>
 				</td>
-				<td style="text-align:right;">
+				<td class="text">
 					{if $items[user].mode eq 'user'}
 						{$items[user].user|escape}
 					{else}
 						{$items[user].ip1}.{$items[user].ip2}.{$items[user].ip3}.{$items[user].ip4}
 					{/if}
 				</td>
-				<td style="text-align:right;">
+				<td class="text">
 					{section name=ix loop=$items[user].sections}
 						{$items[user].sections[ix].section}{if not $smarty.section.ix.last},{/if}
 					{/section}
 				</td>
-				<td>
+				<td class="action">
 					&nbsp;&nbsp;<a title="{tr}Delete{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link">
 						{icon _id='cross' alt="{tr}Delete{/tr}"}
 					</a>&nbsp;&nbsp;
 				</td>
 			</tr>
 		{sectionelse}
-			<tr><td colspan="5" class="odd">{tr}No records found{/tr}</td></tr>
+			<tr><td colspan="5" class="norecords">{tr}No records found{/tr}</td></tr>
 		{/section}
 	</table>
 </form>
