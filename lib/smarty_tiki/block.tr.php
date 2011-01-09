@@ -14,6 +14,8 @@
  * Purpose:  translate a block of text
  * -------------------------------------------------------------
  */
+
+// Note that the tr *prefilter* deals with most of the apparent calls to the tr block at compile time, leaving only a few Smarty translations reach this block.
  
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
