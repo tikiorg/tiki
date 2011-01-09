@@ -142,6 +142,8 @@
 				<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$channels[user].nlId|urlencode}&amp;{if $channels[user].isUser eq "y"}subuser{else}email{/if}={$channels[user].email|escape:"url"}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 			</td>
 		</tr>
+	{sectionelse}
+		<tr class="even"><td class="norecords" colspan="5">{tr}No records found.{/tr}</td></tr>
 	{/section}
 </table>
 
