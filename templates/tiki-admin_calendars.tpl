@@ -81,7 +81,7 @@
 						<td class="text">
 							<a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$cal.name|escape:"url"}&amp;objectType=calendar&amp;permType=calendar&amp;objectId={$id}">{if $cal.individual gt 0}{icon _id='key_active' alt="{tr}Permissions{/tr}"}</a>&nbsp;{$cal.individual}{else}{icon _id='key' alt="{tr}Permissions{/tr}"}</a>{/if}
 						</td>
-						<td>
+						<td class="action">
 							<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}">{icon _id='page_edit'}</a>
 							<a title="{tr}View Calendar{/tr}" class="link" href="tiki-calendar.php?calIds[]={$id}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 							<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}&amp;calendarId={$id}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
@@ -89,7 +89,7 @@
 						</td>
 					</tr>
 				{foreachelse}
-					<tr class="even"><td class="norecords" colspan="12">No records found</td></tr>
+					<tr class="even"><td class="norecords" colspan="12">{tr}No records found.{/tr}</td></tr>
 				{/foreach}
 			</table>
 

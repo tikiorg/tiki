@@ -67,7 +67,7 @@
 <h2>{tr}Available Repositories{/tr}</h2>
 
 {* Table with list of repositories *}
-<table class="normal" id="integrator-repositories">
+<table class="normal" border=1 id="integrator-repositories">
   <tr>
     <th rowspan="2">{tr}Name{/tr}</th>
     <th>{tr}Path{/tr}</th>
@@ -80,15 +80,15 @@
   {cycle values="odd,even" print=false}
   {section name=rep loop=$repositories}
     <tr class="{cycle}">
-      <td{if (strlen($repositories[rep].description) > 0)} rowspan="2"{/if}>
+      <td class="text"{if (strlen($repositories[rep].description) > 0)} rowspan="2"{/if}>
         <a href="tiki-admin_integrator_rules.php?repID={$repositories[rep].repID|escape}" title="{tr}Edit rules{/tr}">
           {$repositories[rep].name}
         </a>
       </td>
-      <td>{$repositories[rep].path}</td>
-      <td>{$repositories[rep].start_page}</td>
-      <td>{$repositories[rep].css_file}</td>
-      <td>
+      <td class="text">{$repositories[rep].path}</td>
+      <td class="text">{$repositories[rep].start_page}</td>
+      <td class="text">{$repositories[rep].css_file}</td>
+      <td class="action">
         <a href="tiki-admin_integrator.php?action=edit&amp;repID={$repositories[rep].repID|escape}" title="{tr}Edit{/tr}">
             {icon _id='wrench' alt="{tr}Edit{/tr}"}
         </a>
@@ -99,7 +99,7 @@
     {* Show description as colspaned row if it is not an empty *}
     {if (strlen($repositories[rep].description) > 0)}
     </tr><tr class="{cycle}">
-      <td colspan="4">{$repositories[rep].description}</td>
+      <td class="text" colspan="4">{$repositories[rep].description}</td>
     {/if}
     </tr>
   {/section}
