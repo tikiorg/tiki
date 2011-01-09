@@ -42,7 +42,11 @@
 			<td class="date">{$channels[user].lastSent|tiki_short_datetime}</td>
 			<td class="action">
 				<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$channels[user].nlId}" title="{tr}Assign Permissions{/tr}">
-					<img width="16" height="16" alt="{tr}Assign Permissions{/tr}" src="pics/icons/key{if $channels[user].individual eq 'y'}_active{/if}.png" />
+					{if $channels[user].individual eq 'y'}
+						{icon _id='key_active' alt="{tr}Assign Permissions{/tr}"}
+					{else}
+						{icon _id='key' alt="{tr}Assign Permissions{/tr}"}
+					{/if}
 				</a>
 				{self_link _icon='page_edit' cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId}{tr}Edit{/tr}{/self_link}
 				<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$channels[user].nlId}" title="{tr}Subscriptions{/tr}">{icon _id='group' alt="{tr}Subscriptions{/tr}"}</a>
