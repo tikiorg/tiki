@@ -20,17 +20,17 @@
 {/if}
 
 {if $confirm eq 'y'}
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
 			<th colspan="2" class="highlight">{tr}Subscription confirmed!{/tr}</th>
 		</tr>
 		<tr>
-			<td class="even">{tr}Name:{/tr}</td>
-			<td class="even">{$nl_info.name|escape}</td>
+			<td>{tr}Name:{/tr}</td>
+			<td>{$nl_info.name|escape}</td>
 		</tr>
 		<tr>
-			<td class="even">{tr}Description:{/tr}</td>
-			<td class="even">{$nl_info.description|escape|nl2br}</td>
+			<td>{tr}Description:{/tr}</td>
+			<td>{$nl_info.description|escape|nl2br}</td>
 		</tr>
 	</table>
 	<br />
