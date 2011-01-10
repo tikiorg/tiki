@@ -1,1 +1,0 @@
-{if $new_topic}{tr}New forum topic in <{$mail_forum|truncate:20:"..."}> by {$mail_author}:{/tr}{else}	{tr}New forum post in <{$mail_forum|truncate:20:"..."}> by {$mail_author}:{/tr}{/if} {$mail_title|truncate:20:"..."}
