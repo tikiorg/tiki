@@ -137,6 +137,10 @@
 	{/if}
 {/if}
 
+<!--[if lt IE 9]>{* according to http://remysharp.com/2009/01/07/html5-enabling-script/ *}
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
 {if $headerlib}		{$headerlib->output_headers()}{/if}
 
 {if $prefs.feature_custom_html_head_content}
