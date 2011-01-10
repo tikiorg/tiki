@@ -219,6 +219,9 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 			} else if (isset($_REQUEST["articleId"])) {
 				global $notificationemaillib; require_once('lib/notifications/notificationemaillib.php');
 				sendCommentNotification('article', $_REQUEST['articleId'], $_REQUEST['comments_title'], $_REQUEST['comments_data']);
+			} elseif (isset($_REQUEST['itemId'])) {
+				global $notificationemaillib; require_once('lib/notifications/notificationemaillib.php');
+				sendCommentNotification('trackeritem', $_REQUEST['itemId'], $_REQUEST['comments_title'], $_REQUEST['comments_data']);
 			}
 		}
 	}
