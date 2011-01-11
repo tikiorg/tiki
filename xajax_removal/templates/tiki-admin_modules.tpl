@@ -207,7 +207,7 @@
 	{/if}
 	<form method="post" action="tiki-admin_modules.php{if (empty($assign_name))}#assign{/if}">
 		{* on the initial selection of a new module, reload the page to the #assign anchor *}
-		<input id="form-field" type="hidden" name="pref" value=""/>
+		<input id="module-order" type="hidden" name="module-order" value=""/>
 		{if !empty($info.moduleId)}
 			<input type="hidden" name="moduleId" value="{$info.moduleId}" />
 		{elseif !empty($moduleId)}

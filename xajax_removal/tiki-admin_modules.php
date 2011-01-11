@@ -116,6 +116,12 @@ if (!empty($_REQUEST['modright'])) {
     check_ticket('admin-modules');
     $modlib->module_right($_REQUEST['modright']);
 }
+if (!empty($_REQUEST['module-order'])) {
+    check_ticket('admin-modules');
+    $module_order = json_decode($_REQUEST['module-order']);
+    $modlib->reorder_modules($module_order);
+}
+
 /* Edit or delete a user module */
 if (isset($_REQUEST["um_update"])) {
     if (empty($_REQUEST["um_name"])) {
@@ -357,42 +363,7 @@ $headerlib->add_css('.module:hover {
 	cursor: move;
 	background-color: #ffa;
 }');
-$headerlib->add_jq_onready('$(".modules").sortable({
-		connectWith: ".modules",
-		items: "div.module",
-		forcePlaceholderSize: true,
-		forceHelperSize: true,
-		placeholder: "toolbars-placeholder",
-		stop: function (event, ui) {
-			$("#save_modules *").show();
-		},
-		start: function (event, ui) {
-			
-		},
-		receive: function(event, ui) {
-			$("#save_modules").show();
-		}
-	});
-	$("#save_modules a").click(function(evt) {
-		// save module order
-		var ser, text;
-		debugger;
-		ser = $(".module").map(function (){				/* do this on everything of class "row" */
-			return $(this).children().map(function (){	/* do this on each child node */
-				text = "";
-				text += $(this).attr("id");
-				return text;
-			}).get().join(",").replace(",|", "|");			/* put commas inbetween */
-		});
-		if (typeof(ser) === "object" && ser.length > 1) {
-			ser = $.makeArray(ser).join("/");			// row separators
-		} else {
-			ser = ser[0];
-		}
-		$("#form-field").val(ser.replace(",,", ",")).parents("form")[0].submit();
-		return false;
-	});
-');
+$headerlib->add_jsfile('lib/modules/tiki-admin_modules.js');
 
 $sameurl_elements = array(
     'offset',

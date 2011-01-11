@@ -123,6 +123,19 @@ class ModLib extends TikiLib
 		$result = $this->query($query,array($moduleId));
 		return true;
 	}
+	
+	function reorder_modules($module_order) {
+		$section_map = array('modules_top' => 't', 'modules_left' => 'l', 'modules_right' => 'r', 'modules_bottom' => 'b', 'modules_pagetop' => 't2', 'modules_pagebottom' => 'b2' );
+		foreach ($module_order as $section => $contents) {
+    		$section = $section_map[$section];
+    		foreach ($contents as $index => $module) {
+    			$i = $index;
+    			$m = preg_match('_\d+$', $module);
+    			$m = $m[0];
+    		}
+    	}
+		
+	}
 
 	function get_all_modules() {
 		$user_modules = $this->list_user_modules();
