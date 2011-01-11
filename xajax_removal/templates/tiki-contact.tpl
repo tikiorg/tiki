@@ -11,7 +11,7 @@
 			<input type="hidden" name="to" value="{$prefs.contact_user|escape}" />
 			<table class="formcolor">
 				<tr>
-					<td>{tr}Priority{/tr}:</td>
+					<td>{tr}Priority:{/tr}</td>
 					<td style="width:99%">
 						<select name="priority">
 							<option value="1" {if $priority eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
@@ -25,20 +25,20 @@
 				
 				{if $user eq ''}
 				<tr>
-					<td>{tr}From{/tr}:</td>
+					<td>{tr}From:{/tr}</td>
 					<td>
 						<input type="text" name="from" value="{$from}" maxlength="255" style="width:25%" />
 					</td>
 				</tr>
 				{/if}
 				<tr>
-					<td>{tr}Subject{/tr}:</td>
+					<td>{tr}Subject:{/tr}</td>
 					<td>
 						<input type="text" name="subject" value="{$subject}" maxlength="255" style="width:99%" />
 					</td>
 				</tr>
 				<tr>
-					<td>{tr}Message{/tr}:</td>
+					<td>{tr}Message:{/tr}</td>
 					<td>
 						{textarea rows="20" name="body" cols="80" _simple='y'}{$body}{/textarea}
 					</td>
@@ -58,7 +58,7 @@
 	
 	{if strlen($email)>0}
 		<h2>{tr}Contact us by email{/tr}</h2>
-		{tr}Click here to send us an email{/tr}: {mailto text="$email" address="$email0" encode="javascript" extra='class="link"'}
+		{tr}Click here to send us an email:{/tr} {mailto text="$email" address="$email0" encode="javascript" extra='class="link"'}
 	{else}
 		<p><a class="link" href="tiki-contact.php">{tr}Send another message{/tr}</a></p>
 	{/if}

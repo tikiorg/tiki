@@ -21,13 +21,13 @@
 {/if}
 <br /><br />
 <form action="messu-sent.php" method="get">
-	<label for="mess-mailmessages">{tr}Messages{/tr}:</label>
+	<label for="mess-mailmessages">{tr}Messages:{/tr}</label>
 	<select name="flags" id="mess-mailmessages">
 		<option value="isReplied_y" {if $flag eq 'isRead' and $flagval eq 'y'}selected="selected"{/if}>{tr}Replied{/tr}</option>
 		<option value="isReplied_n" {if $flag eq 'isRead' and $flagval eq 'n'}selected="selected"{/if}>{tr}Not replied{/tr}</option>
 		<option value="" {if $flag eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
 	</select>
-	<label for="mess-mailprio">{tr}Priority{/tr}:</label>
+	<label for="mess-mailprio">{tr}Priority:{/tr}</label>
 	<select name="priority" id="mess-mailprio">
 		<option value="" {if $priority eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
 		<option value="1" {if $priority eq 1}selected="selected"{/if}>{tr}1{/tr}</option>
@@ -36,7 +36,7 @@
 		<option value="4" {if $priority eq 4}selected="selected"{/if}>{tr}4{/tr}</option>
 		<option value="5" {if $priority eq 5}selected="selected"{/if}>{tr}5{/tr}</option>
 	</select>
-	<label for="mess-mailcont">{tr}Containing{/tr}:</label>
+	<label for="mess-mailcont">{tr}Containing:{/tr}</label>
 	<input type="text" name="find" id="mess-mailcont" value="{$find|escape}" />
 	<input type="submit" name="filter" value="{tr}Filter{/tr}" />
 </form>

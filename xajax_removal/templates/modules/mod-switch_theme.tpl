@@ -1,7 +1,7 @@
 {* $Id$ *}
 {if empty($group_style)}
 {if !isset($tpl_module_title)}
-	{capture assign=tpl_module_title}{tr}Theme{/tr}: <em>{$style|replace:'.css':''|truncate:15|ucwords}</em>{/capture}
+	{capture assign=tpl_module_title}{tr}Theme:{/tr} <em>{$style|replace:'.css':''|truncate:15|ucwords}</em>{/capture}
 {/if}
 {tikimodule error=$module_params.error title=$tpl_module_title name="switch_theme" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	<form method="get" action="tiki-switch_theme.php"{if !empty($tc_theme)} class="disabled"{/if}>

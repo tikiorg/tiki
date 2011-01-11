@@ -8,7 +8,7 @@
 {/if}
 
 {if $prefs.feature_wiki_pageid eq 'y' and $print_page ne 'y'}
-			<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
+			<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id:{/tr} {$page_id}</a></small>
 {/if}
 
 {breadcrumbs type="desc" loc="page" crumbs=$crumbs}

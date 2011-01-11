@@ -28,7 +28,7 @@
   		<div style="float: left;">
 {if $struct_editable eq 'y'}
     <form action="tiki-editpage.php" method="post">
-    	<div class="form>
+    	<div class="form">
 			<input type="hidden" name="current_page_id" value="{$page_info.page_ref_id}" />
 			<input type="text" id="structure_add_page" name="page" />
 			{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}

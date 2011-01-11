@@ -9,7 +9,7 @@
 	<input type="hidden" name="cookieId" value="{$cookieId|escape}" />
 	<table class="formcolor">
 		<tr>
-			<td>{tr}Cookie{/tr}:</td>
+			<td>{tr}Cookie:{/tr}</td>
 			<td>
 				<input type="text" maxlength="255" size="40" name="cookie" value="{$cookie|escape}" />
 			</td>
@@ -68,9 +68,9 @@
 	{cycle values="odd,even" print=false advance=false}
 	{section name=user loop=$channels}
 		<tr class="{cycle}">
-			<td>{$channels[user].cookieId}</td>
-			<td>{$channels[user].cookie|escape}</td>
-			<td>
+			<td class="id">{$channels[user].cookieId}</td>
+			<td class="text">{$channels[user].cookie|escape}</td>
+			<td class="action">
 				&nbsp;&nbsp;
 				<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}">{icon _id='page_edit'}</a>
 				&nbsp;
@@ -78,8 +78,8 @@
 			</td>
 		</tr>
 	{sectionelse}
-		<tr>
-			<td colspan="3" class="odd">{tr}No records found{/tr}</td>
+		<tr class="even">
+			<td colspan="3" class="norecords">{tr}No records found.{/tr}</td>
 		</tr>
 	{/section}
 </table>

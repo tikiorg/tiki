@@ -65,7 +65,7 @@ class WikiLib extends TikiLib
 	 *  Get the contributors for page
 	 *  the returned array does not contain the user $last (usually the current or last user)
 	 */
-	function get_contributors($page, $last='', $versions=true) {
+	function get_contributors($page, $last='') {
 		static $cache_page_contributors;
 		if ($cache_page_contributors['page'] == $page) {
 			if (empty($last)) {
@@ -79,14 +79,8 @@ class WikiLib extends TikiLib
 			}
 			return $ret;
 		}
-		if ($versions) {
-			$ustring = ',`version`';
-			$vstring = '`version`,`user`';
-		} else {
-			$ustring = '';
-			$vstring = '`user`';
-		}
-		$query = "select DISTINCT `user`$ustring from `tiki_history` where `pageName`=? order by $vstring desc";
+
+		$query = "select `user` from `tiki_history` where `pageName`=? group by `user` order by MAX(`version`) desc";
 		$result = $this->query($query,array($page));
 		$cache_page_contributors = array();
 		$cache_page_contributors['contributors'] = array();
@@ -305,16 +299,7 @@ class WikiLib extends TikiLib
 				$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 				$smarty->assign('mail_oldname', $oldName);
 				$smarty->assign('mail_newname', $newName);
-				$smarty->assign('mail_date', $this->now);
 				$smarty->assign('mail_user', $user);
-				$smarty->assign('watchId', $nots['watchId']);
-				$foo = parse_url($_SERVER["REQUEST_URI"]);
-				$machine = $tikilib->httpPrefix( true ). $foo["path"];
-				$smarty->assign('mail_machine', $machine);
-				$parts = explode('/', $foo['path']);
-				if (count($parts) > 1)
-					unset ($parts[count($parts) - 1]);
-				$smarty->assign('mail_machine_raw', $tikilib->httpPrefix( true ). implode('/', $parts));
 				sendEmailNotification($nots, "watch", "user_watch_wiki_page_renamed_subject.tpl", $_SERVER["SERVER_NAME"], "user_watch_wiki_page_renamed.tpl");
 			}
 		}

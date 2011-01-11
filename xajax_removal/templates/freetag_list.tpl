@@ -1,5 +1,5 @@
 {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0])}
-	<div class="freetaglist">{tr}Tags{/tr}: 
+	<div class="freetaglist">{tr}Tags:{/tr} 
 		{foreach from=$freetags.data item=taginfo}
 			{capture name=tagurl}{if (strstr($taginfo.tag, ' '))}"{$taginfo.tag}"{else}{$taginfo.tag}{/if}{/capture}
 			{if isset($links_inactive) and $links_inactive eq 'y'}

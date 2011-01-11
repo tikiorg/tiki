@@ -390,7 +390,7 @@ class CategLib extends ObjectLib
 		$cachelib->invalidate("allcategs");
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
-			global $objectlib; include_once('lib/objectlib/php');
+			global $objectlib; include_once('lib/objectlib.php');
 			$info = $objectlib->get_object_via_objectid($catObjectId);
 			$logslib->add_action('Categorized', $info['itemId'], $info['type'], "categId=$categId");
 		}
@@ -768,7 +768,7 @@ class CategLib extends ObjectLib
 			$info = $trklib->get_tracker_item($itemId);
 			$href = "tiki-view_tracker_item.php?itemId=$itemId&trackerId=".$info['trackerId'];
 			$name = $trklib->get_isMain_value($info['trackerId'], $itemId);
-			$catObjectId = $this->add_categorized_object('trackeritem', $trackeritem, '',$name , $href);
+			$catObjectId = $this->add_categorized_object('trackeritem', $itemId, '',$name , $href);
 		}
 
 		$this->categorize($catObjectId, $categId);
@@ -1438,7 +1438,7 @@ class CategLib extends ObjectLib
 		}		
 	}
 	
-	function group_watch_category_and_descendants($group, $categId, $categName, $top = true) {
+	function group_watch_category_and_descendants($group, $categId, $categName = NULL, $top = true) {
 		global $tikilib, $descendants; 
 		
 		if ($categId != 0 && $top == true) {

@@ -68,13 +68,13 @@
 		  <input type="hidden" name="contentId" value="{$contentId|escape}" />
 		  <table class="formcolor">
 		    <tr>
-		      <td>{tr}Label{/tr}:</td>
+		      <td>{tr}Label:{/tr}</td>
 		      <td>
 		        <input type="text" name="contentLabel" style="width:40%" value="{$contentLabel|escape}" />
 		      </td>
 		    </tr>
 		    <tr>
-		      <td>{tr}Description{/tr}:</td>
+		      <td>{tr}Description:{/tr}</td>
 		      <td>
 		        <textarea rows="5" cols="40" name="description" style="width:95%">{$description|escape}</textarea>
 		      </td>

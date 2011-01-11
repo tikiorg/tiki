@@ -21,13 +21,13 @@
 		<table class="formcolor">
 			{if $prefs.login_is_email ne 'y'}
 				<tr>
-					<td><label for="name">{tr}Username{/tr}:</label></td>
+					<td><label for="name">{tr}Username:{/tr}</label></td>
 					<td><input type="text" name="name" id="name" /></td>
 				</tr>
 				<tr><td colspan="2">{tr}or{/tr}</td></tr>
 			{/if}
 			<tr>
-				<td><label for="email">{tr}Email{/tr}:</label></td>
+				<td><label for="email">{tr}Email:{/tr}</label></td>
 				<td>{if $prefs.login_is_email ne 'y'}<input type="text" name="email" id="email" />{else}<input type="text" name="name" />{/if}</td>
 			</tr>
 			<tr>

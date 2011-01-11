@@ -5,14 +5,14 @@
 	<input type="hidden" name="extwikiId" value="{$extwikiId|escape}" />
 	<table class="formcolor">
 		<tr>
-			<td>{tr}Name{/tr}:</td>
+			<td>{tr}Name:{/tr}</td>
 			<td>
 				<input type="text" maxlength="255" size="10" name="name" value="{$info.name|escape}" />
 			</td>
 		</tr>
 		<tr>
 			<td>
-				{tr}URL (use $page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=$page){/tr}:
+				{tr}URL (use $page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=$page):{/tr}
 			</td>
 			<td>
 				<input type="text" maxlength="255" size="40" name="extwiki" value="{$info.extwiki|escape}" />
@@ -42,9 +42,9 @@
 	{cycle values="odd,even" print=false}
 	{section name=user loop=$channels}
 		<tr class="{cycle}">
-			<td>{$channels[user].name}</td>
-			<td>{$channels[user].extwiki}</td>
-			<td>
+			<td class="text">{$channels[user].name}</td>
+			<td class="text">{$channels[user].extwiki}</td>
+			<td class="action">
 				&nbsp;&nbsp;
 				<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_external_wikis.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;extwikiId={$channels[user].extwikiId}">{icon _id='page_edit'}</a>
 				&nbsp;
@@ -52,9 +52,7 @@
 			</td>
 		</tr>
 	{sectionelse}
-		<tr>
-			<td class="odd" colspan="3">{tr}No records found{/tr}</td>
-		</tr>
+		<tr class="even"><td class="norecords" colspan="3">{tr}No records found{/tr}</td></tr>
 	{/section}
 </table>
 

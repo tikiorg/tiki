@@ -1,10 +1,10 @@
 <?php
 // (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-  
+
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== FALSE) {
   header('location: index.php');
@@ -92,9 +92,9 @@ class Smarty_Tikiwiki extends Smarty
 					$str = ucwords(trim(str_replace('_', ' ', $str)));
 					$this->assign('headtitle', tra('Admin ' . $str));
 					// get_strings tra('Admin Calendar') tra('Admin Actionlog') tra('Admin Banners') tra('Admin Calendars') tra('Admin Categories') tra('Admin Content Templates')
-					//			tra('Admin Contribution') tra('Admin Cookies') tra('Admin Dsn') tra('Admin External Wikis') tra('Admin Forums') tra('Admin Hotwords') tra('Admin Html Page Content') 
+					//			tra('Admin Contribution') tra('Admin Cookies') tra('Admin Dsn') tra('Admin External Wikis') tra('Admin Forums') tra('Admin Hotwords') tra('Admin Html Page Content')
 					//			tra('Admin Html Pages') tra('Admin Integrator Rules') tra('Admin Integrator') tra('Admin Keywords') tra('Admin Layout') tra('Admin Links') tra('Admin Mailin')
-					//			tra('Admin Menu Options') tra('Admin Menus') tra('Admin Metrics') tra('Admin Modules') tra('Admin Newsletter Subscriptions') tra('Admin Newsletters') tra('Admin Notifications') 
+					//			tra('Admin Menu Options') tra('Admin Menus') tra('Admin Metrics') tra('Admin Modules') tra('Admin Newsletter Subscriptions') tra('Admin Newsletters') tra('Admin Notifications')
 					//			tra('Admin Poll Options') tra('Admin Polls') tra('Admin Rssmodules') tra('Admin Security') tra('Admin Shoutbox Words') tra('Admin Structures') tra('Admin Survey Questions')
 					//			tra('Admin Surveys') tra('Admin System') tra('Admin Toolbars') tra('Admin Topics') tra('Admin Tracker Fields') tra('Admin Trackers')
 				} else if (strpos($script_name, 'tiki-list') === 0) {
@@ -116,7 +116,7 @@ class Smarty_Tikiwiki extends Smarty
 					$this->assign('headtitle', tra($str));	// for files where no title has been set or can be reliably calculated - translators: please add comments here as you find them
 				}
 			}
-			
+
 			// Enable Template Zoom
 			if ( $prefs['feature_template_zoom'] == 'y' && isset($zoom_templates) ) {
 				if ( ! isset($_REQUEST['zoom']) && isset($_REQUEST['zoom_value']) && isset($_REQUEST['zoom_x']) && isset($_REQUEST['zoom_y']) ) {
@@ -162,7 +162,7 @@ class Smarty_Tikiwiki extends Smarty
 	/* fetch in a specific language  without theme consideration */
 	function fetchLang($lg, $_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false)  {
 		global $prefs, $lang, $style_base, $tikidomain;
-		
+
                 if (isset($prefs['style']) && isset($style_base)) {
 			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/$_smarty_tpl_file")) {
 				$_smarty_tpl_file = "$tikidomain/styles/$style_base/$_smarty_tpl_file";
@@ -221,7 +221,7 @@ class Smarty_Tikiwiki extends Smarty
 		return parent::clear_cache($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_exp_time);
 	}
 	function display($resource_name, $cache_id=null, $compile_id = null, $content_type = 'text/html; charset=utf-8') {
-		
+
 		global $prefs;
 		if ( !empty($prefs['feature_htmlpurifier_output']) and $prefs['feature_htmlpurifier_output'] == 'y' ) {
 			static $loaded = false;
@@ -229,8 +229,6 @@ class Smarty_Tikiwiki extends Smarty
 			if (!$loaded) {
 				require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 				$config = getHTMLPurifierTikiConfig();
-				$config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
-				$config->set('HTML.TidyLevel', 'light');
 				$purifier = new HTMLPurifier($config);
 				$loaded = true;
 			}
@@ -248,7 +246,7 @@ class Smarty_Tikiwiki extends Smarty
 		if ( !empty($prefs['feature_htmlpurifier_output']) and $prefs['feature_htmlpurifier_output'] == 'y' ) {
 			return $purifier->purify(parent::display($resource_name, $cache_id, $compile_id));
 		} else {
-			return parent::display($resource_name, $cache_id, $compile_id); 
+			return parent::display($resource_name, $cache_id, $compile_id);
 		}
 	}
 	// Returns the file name associated to the template name

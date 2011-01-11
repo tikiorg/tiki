@@ -23,12 +23,18 @@
 	<br />
 {/if}
 
-<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name|escape}</a>{if $thread_info.topic.threadId} {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$thread_info.topic.threadId}">{$thread_info.topic.title}</a>{/if} {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$smarty.request.comments_parentId}">{$thread_info.title|escape}</a>
+<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> 
+{$prefs.site_crumb_seper} 
+<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name|escape}</a>{if $thread_info.topic.threadId} 
+{$prefs.site_crumb_seper} 
+<a class="link" href="tiki-view_forum_thread.php?comments_parentId={$thread_info.topic.threadId}{if $smarty.request.topics_offset}&amp;topics_offset={$smarty.request.topics_offset}{/if}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}">{$thread_info.topic.title}</a>{/if} 
+{$prefs.site_crumb_seper} 
+<a class="link" href="tiki-view_forum_thread.php?comments_parentId={$smarty.request.comments_parentId}{if $smarty.request.topics_offset}&amp;topics_offset={$smarty.request.topics_offset}{/if}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}">{$thread_info.title|escape}</a>
 
 <div style="text-align: right; margin-bottom: 15px;">
 	<span>
-	{if ($prev_topic and $prev_topic ne $comments_parentId) or $next_topic}[{if $prev_topic and $prev_topic ne $comments_parentId}<a href="tiki-view_forum_thread.php?forumId={$forumId}&amp;comments_parentId={$prev_topic}&amp;topics_offset={$topics_prev_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}{$comments_per_page_param}{$thread_style_param}{$thread_sort_mode_param}{$comments_threshold_param}" class="link">{tr}prev topic{/tr}</a>{if $next_topic} | {/if}{/if}
-	{if $next_topic}<a href="tiki-view_forum_thread.php?forumId={$forumId}&amp;comments_parentId={$next_topic}&amp;topics_offset={$topics_next_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}{$comments_per_page_param}{$thread_style_param}{$thread_sort_mode_param}{$comments_threshold_param}" class="link">{tr}next topic{/tr}</a>{/if}]{/if}
+	{if ($prev_topic and $prev_topic ne $comments_parentId) or $next_topic}[{if $prev_topic and $prev_topic ne $comments_parentId}<a href="tiki-view_forum_thread.php?comments_parentId={$prev_topic}&amp;topics_offset={$topics_prev_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}{$comments_per_page_param}{$thread_style_param}{$thread_sort_mode_param}{$comments_threshold_param}" class="link">{tr}prev topic{/tr}</a>{if $next_topic} | {/if}{/if}
+	{if $next_topic}<a href="tiki-view_forum_thread.php?comments_parentId={$next_topic}&amp;topics_offset={$topics_next_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}{$comments_per_page_param}{$thread_style_param}{$thread_sort_mode_param}{$comments_threshold_param}" class="link">{tr}next topic{/tr}</a>{/if}]{/if}
 	</span>
 	<span style="margin-left:10px;">
 		{if $pdf_export eq 'y'}<a href="{$smarty.server.PHP_SELF}?{query display="pdf"}" title="{tr}PDF{/tr}">{icon _id='page_white_acrobat' alt="{tr}PDF{/tr}"}</a>{/if}
@@ -86,7 +92,7 @@
 			<input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />    
 			<input type="hidden" name="forumId" value="{$forumId|escape}" />
 
-			<small>{tr}Show posts{/tr}:</small>
+			<small>{tr}Show posts:{/tr}</small>
 			<select name="time_control" onchange="javascript:document.getElementById('time_control').submit();">
 				<option value="" {if $smarty.request.time_control eq ''}selected="selected"{/if}>{tr}All posts{/tr}</option>
 				<option value="3600" {if $smarty.request.time_control eq 3600}selected="selected"{/if}>{tr}Last hour{/tr}</option>
@@ -99,7 +105,7 @@
 	<td style="text-align:right;">
 		{if $prefs.feature_forum_quickjump eq 'y' && $all_forums|@count > 1}
 		<form id='quick' method="get" action="tiki-view_forum.php">
-			<small>{tr}Jump to forum{/tr}:</small>
+			<small>{tr}Jump to forum:{/tr}</small>
 			<select name="forumId" onchange="javascript:document.getElementById('quick').submit();">
 				{section name=ix loop=$all_forums}
 				<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>

@@ -96,7 +96,7 @@
 									<p>
 									{foreach from=$module_pref_errors key=index item=pref_error}
 									<b>{$pref_error.mod_name}:</b><br>
-									{tr}Preference was not set{/tr}: '{$pref_error.pref_name}'<br>
+									{tr}Preference was not set:{/tr} '{$pref_error.pref_name}'<br>
 									{/foreach}
 								{/remarksbox}
 							{/if}

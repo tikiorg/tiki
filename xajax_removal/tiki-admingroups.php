@@ -124,12 +124,12 @@ if (isset($_REQUEST['clean'])) {
 	$cachelib->invalidate('grouplist');
 	$cachelib->invalidate('groupIdlist');
 }
-if (!isset($_REQUEST["numrows"])) {
+if (!isset($_REQUEST['maxRecords'])) {
 	$numrows = $maxRecords;
 } else {
-	$numrows = $_REQUEST["numrows"];
+	$numrows = $_REQUEST['maxRecords'];
 }
-$smarty->assign_by_ref('numrows', $numrows);
+$smarty->assign_by_ref('maxRecords', $numrows);
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'groupName_asc';
 } else {

@@ -20,17 +20,17 @@
 {/if}
 
 {if $confirm eq 'y'}
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
 			<th colspan="2" class="highlight">{tr}Subscription confirmed!{/tr}</th>
 		</tr>
 		<tr>
-			<td class="even">{tr}Name{/tr}:</td>
-			<td class="even">{$nl_info.name|escape}</td>
+			<td>{tr}Name:{/tr}</td>
+			<td>{$nl_info.name|escape}</td>
 		</tr>
 		<tr>
-			<td class="even">{tr}Description{/tr}:</td>
-			<td class="even">{$nl_info.description|escape|nl2br}</td>
+			<td>{tr}Description:{/tr}</td>
+			<td>{$nl_info.description|escape|nl2br}</td>
 		</tr>
 	</table>
 	<br />
@@ -47,11 +47,11 @@
 		<input type="hidden" name="nlId" value="{$nlId|escape}" />
 		<table class="normal">
 			<tr>
-				<td class="even">{tr}Name{/tr}:</td>
+				<td class="even">{tr}Name:{/tr}</td>
 				<td class="even"><strong>{$nl_info.name|escape}</strong></td>
 			</tr>
 			<tr>
-				<td class="even">{tr}Description{/tr}:</td>
+				<td class="even">{tr}Description:{/tr}</td>
 				<td class="even">{$nl_info.description|escape|nl2br}</td>
 			</tr>
 			{if ($nl_info.allowUserSub eq 'y') or ($tiki_p_admin_newsletters eq 'y')}
@@ -93,11 +93,11 @@
 		{section name=user loop=$channels}
 			{if $channels[user].tiki_p_subscribe_newsletters eq 'y'}
 				<tr class="{cycle}">
-					<td>
+					<td class="text">
 						<a class="tablename" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1" title="{tr}Subscribe to Newsletter{/tr}">{$channels[user].name|escape}</a>
 						<div class="subcomment">{$channels[user].description|escape|nl2br}</div>
 					</td>
-					<td>
+					<td class="action">
 						{if $channels[user].tiki_p_subscribe_newsletters eq 'y'}
 							<a class="link" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1" title="{tr}Subscribe to Newsletter{/tr}">{icon _id='newspaper_add' alt="{tr}Subscribe to Newsletter{/tr}"}</a>
 						{/if}
@@ -112,7 +112,7 @@
 				</tr>
 			{/if}
 		{sectionelse}
-			<tr><td class="odd" colspan="2"><strong>{tr}No records found.{/tr}</strong></td></tr>
+			<tr><td class="norecords" colspan="2">{tr}No records found.{/tr}</td></tr>
 		{/section}
 	</table>
 

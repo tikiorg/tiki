@@ -4,7 +4,7 @@
 <a href="{$prefs.helpurl}File+Galleries" target="tikihelp" class="tikihelp" title="{tr}File Galleries{/tr}">{icon _id='help'}</a>
 {/if}
 {if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-file_galleries.tpl{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}File Galleries tpl{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-file_galleries.tpl{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}" target="tikihelp" class="tikihelp" title="{tr}View tpl:{/tr} {tr}File Galleries tpl{/tr}">
 {icon _id='shape_square_edit' alt="{tr}Edit template{/tr}"}</a>
 {/if}
 {if $tiki_p_admin eq 'y' and $filegals_manager eq ''}
@@ -36,7 +36,7 @@
 {if $galleryId>0}
   {if $edited eq 'y'}
   <div class="wikitext">
-    {tr}You can access the file gallery using the following URL{/tr}: <a class="fgallink" href="{$url}?galleryId={$galleryId}">{$url}?galleryId={$galleryId}</a>
+    {tr}You can access the file gallery using the following URL:{/tr} <a class="fgallink" href="{$url}?galleryId={$galleryId}">{$url}?galleryId={$galleryId}</a>
   </div>
   {/if}
 {/if}

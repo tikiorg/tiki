@@ -19,7 +19,7 @@
 					<table class="formcolor">
 						<tr>
 							<td>
-								<label for="name">{tr}Name{/tr}:</label>
+								<label for="name">{tr}Name:{/tr}</label>
 							</td>
 							<td>
 								{if $galleryId eq $prefs.fgal_root_id}
@@ -35,7 +35,7 @@
 						{if $prefs.feature_file_galleries_templates eq 'y'}
  						<tr>
  							<td>
-								<label for="fgal_template">{tr}Template{/tr}:</label>
+								<label for="fgal_template">{tr}Template:{/tr}</label>
 							</td>
 							<td>
 								<select name="fgal_template" id="fgal_template">
@@ -49,7 +49,7 @@
 						{/if}
 						<tr>
 							<td>
-								<label for="fgal_type">{tr}Type{/tr}:</label>
+								<label for="fgal_type">{tr}Type:{/tr}</label>
 							</td>
 							<td>
 								{if $galleryId eq $prefs.fgal_root_id}
@@ -66,7 +66,7 @@
 						</tr>
 						<tr>
 							<td>
-								<label for="description">{tr}Description{/tr}:</label>
+								<label for="description">{tr}Description:{/tr}</label>
 							</td>
 							<td>
 								<textarea rows="5" cols="40" id="description" name="description" style="width:100%">{$gal_info.description|escape}</textarea>
@@ -111,7 +111,7 @@
 						</tr>
 						<tr>
 							<td>
-								<label for="archives">{tr}Maximum number of archives for each file{/tr}:</label>
+								<label for="archives">{tr}Maximum number of archives for each file:{/tr}</label>
 							</td>
 							<td>
 								<input size="5" type="text" id="archives" name="archives" value="{$gal_info.archives|escape}" />
@@ -122,7 +122,7 @@
 						</tr>
 						<tr>
 							<td>
-								<label for="parentId">{tr}Parent gallery{/tr}:</label>
+								<label for="parentId">{tr}Parent gallery:{/tr}</label>
 							</td>
 							<td>
 								<select name="parentId" id="parentId">
@@ -141,7 +141,7 @@
 
 						{if $tiki_p_admin eq 'y' or $tiki_p_admin_file_galleries eq 'y'}
 							<tr>
-								<td><label for="user">{tr}Owner of the gallery{/tr}:</label></td>
+								<td><label for="user">{tr}Owner of the gallery:{/tr}</label></td>
 								<td>
 									{user_selector user=$creator id='user'}
 								</td>
@@ -188,7 +188,7 @@
 
 						<tr>
 							<td>
-								{tr}Maximum width for images in gallery{/tr}:
+								{tr}Maximum width for images in gallery:{/tr}
 							</td>
 							<td>
 								<input size="5" type="text" name="image_max_size_x" value="{$gal_info.image_max_size_x|escape}" /> px
@@ -198,7 +198,7 @@
 						</tr>
 						<tr>
 							<td>
-								{tr}Maximum height for images in gallery{/tr}:
+								{tr}Maximum height for images in gallery:{/tr}
 							</td>
 							<td>
 								<input size="5" type="text" name="image_max_size_y" value="{$gal_info.image_max_size_y|escape}" /> px
@@ -208,7 +208,7 @@
 						</tr>
 						<tr>
 							<td>
-								{tr}Wiki markup to enter when image selected from "file gallery manager"{/tr}:
+								{tr}Wiki markup to enter when image selected from "file gallery manager":{/tr}
 							</td>
 							<td>
 								<input size="80" type="text" name="wiki_syntax" value="{$gal_info.wiki_syntax|escape}" />
@@ -227,7 +227,7 @@
 				{tab name="{tr}Display Properties{/tr}"}
 					<table class="formcolor">
 						<tr>
-							<td><label for="sortorder">{tr}Default sort order{/tr}:</label></td>
+							<td><label for="sortorder">{tr}Default sort order:{/tr}</label></td>
 							<td>
 								<select name="sortorder" id="sortorder">
 									{foreach from=$options_sortorder key=key item=item}
@@ -244,20 +244,20 @@
 						</tr>
 						<tr>
 							<td>
-								<label for="max_desc">{tr}Max description display size{/tr}:</label>
+								<label for="max_desc">{tr}Max description display size:{/tr}</label>
 							</td>
 							<td>
 								<input type="text" id="max_desc" name="max_desc" value="{$max_desc|escape}" />
 							</td>
 							<td>
-								<label for="maxRows">{tr}Max rows per page{/tr}:</label>
+								<label for="maxRows">{tr}Max rows per page:{/tr}</label>
 							</td>
 							<td>
 								<input type="text" id="maxRows" name="maxRows" value="{$maxRows|escape}" />
 							</td>
 						</tr>
 						<tr
-							<td colspan="2">{tr}Select which items to display when listing galleries{/tr}:
+							<td colspan="2">{tr}Select which items to display when listing galleries:{/tr}
 								<table>
 									{include file='fgal_listing_conf.tpl'}
 								</table>

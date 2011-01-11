@@ -11,7 +11,7 @@
 	<form name="toolbars" method="post" action="tiki-admin_toolbars.php" onsubmit="return saveRows()">
 		<div>
 			<div class="adminoptionbox">
-				<div class="adminoptionlabel"><label for="section">{tr}Section{/tr}:</label>
+				<div class="adminoptionlabel"><label for="section">{tr}Section:{/tr}</label>
 				<select id="section" name="section" onchange="javascript:toolbars_autoreload()">
 					{foreach from=$sections item=name key=skey}
 						<option value="{$skey}"{if $skey eq $loaded} selected="selected"{/if}>{$name|escape}</option>
@@ -82,17 +82,17 @@
 			<form name="toolbar_edit_form" method="post" action="tiki-admin_toolbars.php">
 				<h2>{tr}Edit tool{/tr}</h2>
 				<fieldset>
-					<label for="tool_name">{tr}Name{/tr}:<small class="dialog_tips error">&nbsp;</small></label>
+					<label for="tool_name">{tr}Name:{/tr}<small class="dialog_tips error">&nbsp;</small></label>
 					<input type="text" name="tool_name" id="tool_name" class="text ui-widget-content ui-corner-all" />
-					<label for="tool_label">{tr}Label{/tr}:<small class="dialog_tips error">&nbsp;</small></label><small class="dialog_tips error">&nbsp;</small>
+					<label for="tool_label">{tr}Label:{/tr}<small class="dialog_tips error">&nbsp;</small></label><small class="dialog_tips error">&nbsp;</small>
 					<input type="text" name="tool_label" id="tool_label" class="text ui-widget-content ui-corner-all" />
-					<label for="tool_icon">{tr}Icon{/tr}:</label>
+					<label for="tool_icon">{tr}Icon:{/tr}</label>
 					<input type="text" name="tool_icon" id="tool_icon" class="text ui-widget-content ui-corner-all" />
-					<label for="tool_token">{tr}Wysiwyg Token{/tr}:</label>
+					<label for="tool_token">{tr}Wysiwyg Token:{/tr}</label>
 					<input type="text" name="tool_token" id="tool_token" class="text ui-widget-content ui-corner-all" />
-					<label for="tool_syntax">{tr}Syntax{/tr}:</label>
+					<label for="tool_syntax">{tr}Syntax:{/tr}</label>
 					<input type="text" name="tool_syntax" id="tool_syntax" class="text ui-widget-content ui-corner-all" />
-					<label for="tool_type">{tr}Type{/tr}:</label>
+					<label for="tool_type">{tr}Type:{/tr}</label>
 					<select name="tool_type" id="tool_type" class="select ui-widget-content ui-corner-all">
 						<option value="Inline">Inline</option>
 						<option value="Block">Block</option>
@@ -106,7 +106,7 @@
 						<option value="FileGallery">FileGallery</option>
 						<option value="Wikiplugin">Wikiplugin</option>
 					</select>
-					<label for="tool_plugin">{tr}Plugin name{/tr}:</label>
+					<label for="tool_plugin">{tr}Plugin name:{/tr}</label>
 					<select name="tool_plugin" id="tool_plugin" class="select ui-widget-content ui-corner-all" style="margin-bottom:0.5em">
 						<option value="">{tr}None{/tr}</option>
 						{foreach from=$plugins key=plugin item=info}

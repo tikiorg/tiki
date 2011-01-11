@@ -3,7 +3,7 @@
 <input type="hidden" name="quizId" value="{$quizId|escape}" />
 <input id='timeleft' name="timeleft" type="hidden" value={$quiz_info.timeLimitsec} /><br />
 {if $quiz_info.timeLimited eq 'y'}
-{tr}Time Left{/tr}:<input id='minleft' name="minleft" type="text" size="3" value=0 />:<input size="3" id='secleft' name="secleft" type="text" value=0 />
+{tr}Time Left:{/tr}<input id='minleft' name="minleft" type="text" size="3" value=0 />:<input size="3" id='secleft' name="secleft" type="text" value=0 />
 {/if}
 
 {if $ans eq 'n'}
@@ -47,7 +47,7 @@ Supporting Documentation: <input name="question_upload_{$questions[ix].questionI
 <input type="submit" value="{tr}Send Answers{/tr}" name="ans" />
 {/if}
 {if $ans eq 'y'}
-{tr}Result{/tr}:
+{tr}Result:{/tr}
 <div class="quizanswer">
 {if $result.answer}
 {$result.answer|escape|nl2br}

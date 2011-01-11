@@ -13,59 +13,59 @@
 <div class="simplebox">
 <table>
 <tr>
-  <td>{tr}Client{/tr}:</td>
+  <td>{tr}Client:{/tr}</td>
   <td>{$client}</td>
 </tr>
 <tr>
-  <td>{tr}URL{/tr}:</td>
+  <td>{tr}URL:{/tr}</td>
   <td>{$url}</td>
 </tr>
 <tr>
-  <td>{tr}Zone{/tr}:</td>
+  <td>{tr}Zone:{/tr}</td>
   <td>{$zone}</td>
 </tr>
 <tr>
-  <td>{tr}Created{/tr}:</td>
+  <td>{tr}Created:{/tr}</td>
   <td>{$created|tiki_short_date}</td>
 </tr>
 <tr>
-  <td>{tr}Max Impressions{/tr}:</td>
+  <td>{tr}Max Impressions:{/tr}</td>
   <td>{$maxImpressions}</td>
 </tr>    
 <tr>
-  <td>{tr}Impressions{/tr}:</td>
+  <td>{tr}Impressions:{/tr}</td>
   <td>{$impressions}</td>
 </tr>
 <tr>
-  <td>{tr}Max Clicks{/tr}:</td>
+  <td>{tr}Max Clicks:{/tr}</td>
   <td>{$maxClicks}</td>
 </tr>    
 
 <tr>
-  <td>{tr}Clicks{/tr}:</td>
+  <td>{tr}Clicks:{/tr}</td>
   <td>{$clicks}</td>
 </tr>
 <tr>
-  <td>{tr}Click ratio{/tr}:</td>
+  <td>{tr}Click ratio:{/tr}</td>
   <td>{$ctr|@truncate:'7':"%":"true"}</td>
 </tr>
 <tr>
-  <td>{tr}Method{/tr}:</td>
+  <td>{tr}Method:{/tr}</td>
   <td>{$use}</td>
 </tr>
 {if $useDates eq 'y'}
 <tr>
-  <td>{tr}Use dates{/tr}:</td>
-  <td>{tr}From{/tr}: {$fromDate|tiki_short_date} {tr}to{/tr}: {$toDate|tiki_short_date}
+  <td>{tr}Use dates:{/tr}</td>
+  <td>{tr}From:{/tr} {$fromDate|tiki_short_date} {tr}to:{/tr} {$toDate|tiki_short_date}
   </td>
 </tr>
 {/if}
 <tr>
-  <td>{tr}Hours{/tr}:</td>
-  <td>{tr}From{/tr}: {$fromTime_h}:{$fromTime_m} {tr}to{/tr}: {$toTime_h}:{$toTime_m}</td>
+  <td>{tr}Hours:{/tr}</td>
+  <td>{tr}From:{/tr} {$fromTime_h}:{$fromTime_m} {tr}to:{/tr} {$toTime_h}:{$toTime_m}</td>
 </tr>
 <tr>
-  <td>{tr}Weekdays{/tr}:</td>
+  <td>{tr}Weekdays:{/tr}</td>
   <td>
     {if $Dmon eq 'y'} {tr}mon{/tr} {/if}
     {if $Dtue eq 'y'} {tr}tue{/tr} {/if}

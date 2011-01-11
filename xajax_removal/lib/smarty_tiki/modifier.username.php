@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_modifier_username($user, $login_fallback = true, $check_user_show_realnames = true, $html_encoding = true) {
 	global $userlib, $prefs;
 
-	$return = $userlib->clean_user($user, $check_user_show_realnames, $login_fallback);
+	$return = $userlib->clean_user($user, ! $check_user_show_realnames, $login_fallback);
 	
 	if ($html_encoding) $return = htmlspecialchars($return);
 	return $return;

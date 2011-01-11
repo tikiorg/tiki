@@ -86,11 +86,11 @@ function smarty_function_interactivetranslation($params, &$smarty) {
 		var alt = \$(this).attr('alt');
 		var title = \$(this).attr('title');
 		var applicable = \$(data).filter( function( k ) {
-			var textToSearchFor = $('<span>' + this[1] + '</span>').text();
-			return ( text && text.length && text.indexOf( textToSearchFor ) != -1 )
+			var textToSearchFor = $('<span>' + this[1] + '</span>').text(); // The spans just make sure this calls jQuery( html ) instead of another jQuery constructor. text() will strip them.
+			return textToSearchFor.length && (( text && text.length && text.indexOf( textToSearchFor ) != -1 )
 				|| ( val && val.length && val.indexOf( textToSearchFor ) != -1 )
 				|| ( alt && alt.length && alt.indexOf( textToSearchFor ) != -1 )
-				|| ( title && title.length && title.indexOf( textToSearchFor ) != -1 );
+				|| ( title && title.length && title.indexOf( textToSearchFor ) != -1 ));
 		} );
 		if (applicable.length === 0) {
 			applicable = \$([[ text, "", true ]]);

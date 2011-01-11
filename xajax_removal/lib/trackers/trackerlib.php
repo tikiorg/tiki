@@ -1872,10 +1872,8 @@ class TrackerLib extends TikiLib
 						$smarty->assign('mail_data', $the_data);
 						if (isset($watcher['action']))
 							$smarty->assign('mail_action', $watcher['action']);
-
-
+						$smarty->assign('mail_to_user', $watcher['user']);
 						$mail_data = $smarty->fetchLang($watcher['language'], 'mail/tracker_changed_notification.tpl');
-
 						$mail = new TikiMail($watcher['user']);
 						$mail->setSubject($smarty->fetchLang($watcher['language'], 'mail/tracker_changed_notification_subject.tpl'));
 						$mail->setText($mail_data);

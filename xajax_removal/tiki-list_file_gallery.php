@@ -958,7 +958,7 @@ if ($prefs['feature_file_galleries_templates'] == 'y') {
 	$smarty->assign_by_ref('all_templates', $templates);
 }
 
-if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || isset($_REQUEST['movesel_x'])) {
+if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || isset($_REQUEST['movesel_x']) || isset($_REQUEST["edit_mode"])) {
 	$all_galleries = $filegallib->getFileGalleriesData();
 	$gals = array();
 	foreach ($all_galleries['data'] as $gal) {

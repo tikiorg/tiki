@@ -1,17 +1,17 @@
-{tr}A category was updated{/tr}:
+{tr}A category was updated:{/tr}
 
-{tr}Updated by{/tr}: {$author|username}
-{tr}Date{/tr}: {$mail_date|tiki_short_datetime}
+{tr}Updated by:{/tr} {$author|username}
+{tr}Date:{/tr} {$mail_date|tiki_short_datetime}
 
-{tr}Old{/tr}:
-{tr}Name{/tr}: {$oldCategoryName}
-{tr}Path{/tr}: {$oldCategoryPath}
-{tr}Description{/tr}: {$oldDescription}
+{tr}Old:{/tr}
+{tr}Name:{/tr} {$oldCategoryName}
+{tr}Path:{/tr} {$oldCategoryPath}
+{tr}Description:{/tr} {$oldDescription}
 
-{tr}New{/tr}:
-{tr}Name{/tr}: {$categoryName}
-{tr}Path{/tr}: {$categoryPath}
-{tr}Description{/tr}: {$description}
+{tr}New:{/tr}
+{tr}Name:{/tr} {$categoryName}
+{tr}Path:{/tr} {$categoryPath}
+{tr}Description:{/tr} {$description}
 
 
 {$mail_machine}/tiki-browse_categories.php?parentId={$categoryId}

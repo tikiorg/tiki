@@ -169,25 +169,23 @@ class LogsLib extends TikiLib
 				$categs = $categlib->get_object_categories($objectType, $object);
 			}
 		}
+		$actions = array();
 		if ($logObject && !$logCateg) {
 			$query = "insert into `tiki_actionlog` (`action`, `object`, `lastModif`, `user`, `ip`, `comment`, `objectType`, `client`) values(?,?,?,?,?,?,?,?)";
 			$this->query($query, array($action, $object, (int)$date, $who, $ip, $param, $objectType, $client));
+			$actions[] = $this->lastInsertId();
 		} elseif ($logObject) {
 			if (count($categs) > 0) {
 				foreach ($categs as $categ) {
 					$query = "insert into `tiki_actionlog` (`action`, `object`, `lastModif`, `user`, `ip`, `comment`, `objectType`, `categId`, `client`) values(?,?,?,?,?,?,?,?,?)";
 					$this->query($query, array($action, $object, (int)$date, $who, $ip, $param, $objectType, $categ, $client));
+					$actions[] = $this->lastInsertId();
 				}
 			} else {
 				$query = "insert into `tiki_actionlog` (`action`, `object`, `lastModif`, `user`, `ip`, `comment`, `objectType`, `client`) values(?,?,?,?,?,?,?,?)";
 				$this->query($query, array($action, $object, (int)$date, $who, $ip, $param, $objectType, $client));
+				$actions[] = $this->lastInsertId();
 			}
-		}
-		$query = "select `actionId` from `tiki_actionlog` where `action`=? and `object`=? and `lastModif`=? and `user`=? and `ip`=?";
-		$result = $this->query($query, array($action, $object, (int)$date, $who, $ip));
-		$actions = array();
-		while ($res = $result->fetchRow()) {
-			$actions[] = $res['actionId'];
 		}
 		if (!empty($contributions)) {
 			foreach ($actions as $a) {

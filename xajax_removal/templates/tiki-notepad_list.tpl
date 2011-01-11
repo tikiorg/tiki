@@ -79,7 +79,7 @@
 <form enctype="multipart/form-data" action="tiki-notepad_list.php" method="post">
 	<table class="formcolor">
 		<tr>
-			<td>{tr}Upload file{/tr}:</td>
+			<td>{tr}Upload file:{/tr}</td>
 			<td>
 				<input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" />
 				<input size="16" name="userfile1" type="file" />

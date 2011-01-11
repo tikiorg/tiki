@@ -35,7 +35,7 @@
 </table>
 
 <br />
-{tr}Answer{/tr}:
+{tr}Answer:{/tr}
 
 <div class="quizanswer">{$result.answer}</div>
 

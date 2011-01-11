@@ -197,6 +197,9 @@ function get_default_prefs() {
 		'wiki_likepages_samelang_only' => 'n',
 		'wiki_mandatory_edit_summary' => 'n',
 
+		'flaggedrev_approval' => 'n',
+		'flaggedrev_approval_categories' => '',
+
 		'wikiplugin_addtocart' => 'n',
 		'wikiplugin_addtogooglecal' => 'n',
 		'wikiplugin_agentinfo' => 'n',
@@ -1599,6 +1602,7 @@ function get_default_prefs() {
 		'session_lifetime' => 0,
 		'session_silent' => 'n',
 		'session_cookie_name' => session_name(),
+		'session_protected' => 'n',
 		'shoutbox_autolink' => 'n',
 		'show_comzone' => 'n',
 		'tikiIndex' => 'tiki-index.php',
@@ -1861,6 +1865,8 @@ function get_default_prefs() {
 	
 		// Syntax Highlighter
 		'feature_syntax_highlighter' => 'y',
+
+		'feature_accounting' => 'n',
 	);
 
 	// Special default values

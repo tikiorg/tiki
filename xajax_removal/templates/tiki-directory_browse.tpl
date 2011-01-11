@@ -25,7 +25,7 @@
 <div class="findtable">
   <form action="tiki-directory_search.php" method="post">
     <input type="hidden" name="parent" value="{$parent|escape}" />
-    {tr}Find{/tr}:
+    {tr}Find:{/tr}
     <select name="how">
       <option value="or">{tr}any{/tr}</option>
       <option value="and">{tr}All{/tr}</option>
@@ -84,7 +84,7 @@
   <div class="findtable">
   <form method="post" action="tiki-directory_browse.php">
     <input type="hidden" name="parent" value="{$parent|escape}" />
-    {tr}Sort by{/tr}:&nbsp;
+    {tr}Sort by:{/tr}&nbsp;
     <select name="sort_mode">
       <option value="name_desc" {if $sort_mode eq 'name_desc'}selected="selected"{/if}>{tr}Name (desc){/tr}</option>
       <option value="name_asc" {if $sort_mode eq 'name_asc'}selected="selected"{/if}>{tr}Name (asc){/tr}</option>
@@ -106,12 +106,12 @@
     (<a  class="dirsitelink" href="tiki-view_cache.php?url={$items[ix].url}" target="_blank">{tr}Cache{/tr}</a>)
     {/if}
     <div class="description">{$items[ix].description}</div>
-    {assign var=fsfs value=1} <span class="dirsitecats"> {tr}Directory Categories{/tr}:
+    {assign var=fsfs value=1} <span class="dirsitecats"> {tr}Directory Categories:{/tr}
     {section name=ii loop=$items[ix].cats}
     {if $fsfs}
     {assign var=fsfs value=0}{else},&nbsp;
     {/if} <a class="dirsublink" href="tiki-directory_browse.php?parent={$items[ix].cats[ii].categId}">{$items[ix].cats[ii].path|escape}</a> {/section} </span> <br />
-    <span class="dirsitetrail"> {tr}Added{/tr}: {$items[ix].created|tiki_short_date} {tr}Last updated{/tr}: {$items[ix].lastModif|tiki_short_date} {tr}Hits{/tr}: {$items[ix].hits} </span> </div>
+    <span class="dirsitetrail"> {tr}Added:{/tr} {$items[ix].created|tiki_short_date} {tr}Last updated:{/tr} {$items[ix].lastModif|tiki_short_date} {tr}Hits:{/tr} {$items[ix].hits} </span> </div>
   {/section} </div>
 {pagination_links cant=$cant_pages step=$prefs.directory_links_per_page offset=$offset}{/pagination_links}
 {elseif !empty($parent)}

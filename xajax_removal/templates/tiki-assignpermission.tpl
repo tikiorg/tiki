@@ -20,15 +20,15 @@
 <h2>{tr}Group Information{/tr}</h2>
 <table class="normal" id="groupinformation">
 	<tr>
-		<td class="even">{tr}Name{/tr}:</td>
+		<td class="even">{tr}Name:{/tr}</td>
 		<td class="odd" colspan="2">{$group_info.groupName|escape}</td>
 	</tr>
 	<tr>
-		<td class="even">{tr}Desc{/tr}:</td>
+		<td class="even">{tr}Desc:{/tr}</td>
 		<td class="odd" colspan="2">{$group_info.groupDesc|escape}</td>
 	</tr>
 	<tr>
-		<td class="even" style="vertical-align:top;">{tr}Permissions{/tr}:</td>
+		<td class="even" style="vertical-align:top;">{tr}Permissions:{/tr}</td>
 		<td class="odd">
 			{section name=grp loop=$group_info.perms}
 				{$group_info.perms[grp]}
@@ -129,7 +129,7 @@
 </form>
 <br/>
 {remarksbox type="warning" title="{tr}Advanced feature{/tr}"}
-	{tr}Level configuration{/tr}:
+	{tr}Level configuration:{/tr}
 	{if $advanced_features ne 'y'}
 		<a href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group|escape:url}&amp;sort_mode={$sort_mode}&amp;advanced_features=y">{tr}Show{/tr}</a>
 	{else}
@@ -140,7 +140,7 @@
 		<form method="post" action="tiki-assignpermission.php">
 			<input type="hidden" name="group" value="{$group|escape}" />
 			<input type="hidden" name="type" value="{$type|escape}" />
-			{tr}Create level{/tr}: <input type="text" name="level" />
+			{tr}Create level:{/tr} <input type="text" name="level" />
 			<input type="submit" name="createlevel" value="{tr}Create{/tr}" />
 		</form>
 		<br />
@@ -152,7 +152,7 @@
 				<option value="assign">{tr}Assign{/tr}</option>
 				<option value="remove">{tr}Remove{/tr}</option>
 			</select>
-			{tr}all permissions in level{/tr}: 
+			{tr}all permissions in level:{/tr} 
 			<select name="level[]" multiple="multiple" size="5">
 				{html_options output=$levels values=$levels selected=$perms[user].level}
 			</select>

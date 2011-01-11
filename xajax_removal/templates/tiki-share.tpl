@@ -6,7 +6,7 @@
 {if isset($sent)}
 	<div class="simplebox highlight">
 		{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle" align="left"}
-		{tr}Page shared{/tr}:<br />
+		{tr}Page shared:{/tr}<br />
 		{if isset($emailSent)}
 			<div>
 				{tr}The link was sent via e-Mail to the following addresses:{/tr} {$addresses|escape}

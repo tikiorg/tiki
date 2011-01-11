@@ -29,7 +29,7 @@
 							</div>
 						</div>
 			
-						{if $user_picture_id}
+						{if isset($user_picture_id)}
 						<div class="userpicture">
 							{wikiplugin _name="img" fileId="$user_picture_id"}{/wikiplugin}
 						</div>
@@ -45,62 +45,62 @@
 			{/if}
 								
 			{cycle values="even,odd" print=false}
-			{if $realName }
+			{if $realName}
 								<div class="clearfix {cycle}">
-									<div class="floatleft">{tr}Real Name{/tr}:</div>
-									<div class="floatright">{$realName}</div>
+									<div class="floatleft">{tr}Real Name:{/tr}</div>
+									<div class="floatright">{$realName|escape}</div>
 								</div>
 			{/if}
 			{if $prefs.feature_community_gender eq 'y' and $gender neq 'Hidden' and $gender}
 								<div class="clearfix {cycle}">
-									<div class="floatleft">{tr}Gender{/tr}:</div>
+									<div class="floatleft">{tr}Gender:{/tr}</div>
 									<div class="floatright">{tr}{$gender}{/tr}</div>
 								</div>
 			{/if}
 			{if $email_isPublic neq 'n' and $userinfo.email neq ''}
 								<div class="clearfix {cycle}">
-									<div class="floatleft">{tr}Email{/tr}:</div>
-									<div class="floatright">{mailto address=$userinfo.email encode="javascript"}</div>
+									<div class="floatleft">{tr}Email:{/tr}</div>
+									<div class="floatright">{mailto address=$userinfo.email text=$scrambledEmail encode="javascript"}</div>
 								</div>
 			{elseif $email_isPublic eq 'n' and $userinfo.email neq '' and $tiki_p_admin eq 'y'}
 								<div class="clearfix {cycle}">
-									<div class="floatleft">{tr}Email{/tr}:</div>
+									<div class="floatleft">{tr}Email:{/tr}</div>
 									<div class="floatright">{mailto address=$userinfo.email encode="javascript"} <i>{tr}(non public){/tr}</i></div>
 								</div>
 			{/if}
 			{if !empty($country) and $country != 'Other'}
 								<div class="clearfix {cycle}">
-									<div class="floatleft">{tr}Country{/tr}:</div>
+									<div class="floatleft">{tr}Country:{/tr}</div>
 									<div class="floatright">{$userinfo.login|countryflag} {tr}{$country|stringfix}{/tr}</div>
 								</div>
 			{/if}
 			{if $prefs.change_theme ne 'n'}
 								<div class="clearfix {cycle}">
-									<div class="floatleft">{tr}Theme{/tr}:</div>
+									<div class="floatleft">{tr}Theme:{/tr}</div>
 									<div class="floatright">{$user_style}</div>
 								</div>
 			{/if}
 			{if $prefs.change_language eq 'y'}
 								<div class="clearfix {cycle}">
-									<div class="floatleft">{tr}Language{/tr}:</div>
+									<div class="floatleft">{tr}Language:{/tr}</div>
 									<div class="floatright">{$user_language}</div>
 								</div>
 			{/if}
-			{if $homepage}
+			{if $homePage}
 								<div class="clearfix {cycle}">
-									<div class="floatleft">{tr}Homepage{/tr}:</div>
-									<div class="floatright">{if $homePage ne ""}<a href="{$homePage}" class="link" title="{tr}Users HomePage{/tr}">{$homePage}</a>{/if}</div>
+									<div class="floatleft">{tr}Homepage:{/tr}</div>
+									<div class="floatright"><a href="{$homePage|escape}" class="link" title="{tr}User's homepage{/tr}">{$homePage|escape}</a></div>
 								</div>
 			{/if}
 			{if $prefs.feature_score eq 'y'}
 								<div class="clearfix {cycle}">
-									<div class="floatleft">{tr}Score{/tr}:</div>
+									<div class="floatleft">{tr}Score:{/tr}</div>
 									<div class="floatright">{$userinfo.score|star}{$userinfo.score}</div>
 								</div>
 			{/if}
 			{if $prefs.feature_wiki eq 'y' && $prefs.feature_wiki_userpage eq 'y' && ($userPage_exists or $user == $userinfo.login)}
 								<div class="clearfix {cycle}">
-									<div class="floatleft">{tr}Personal Wiki Page{/tr}:</div>
+									<div class="floatleft">{tr}Personal Wiki Page:{/tr}</div>
 									<div class="floatright">
 				{if $userPage_exists}
 										<a class="link" href="tiki-index.php?page={$prefs.feature_wiki_userpage_prefix|escape:'url'}{$userinfo.login|escape:'url'}">{$prefs.feature_wiki_userpage_prefix}{$userinfo.login}</a>
@@ -112,7 +112,7 @@
 			{/if}
 			
 								<div class="clearfix {cycle}">
-									<div class="floatleft">{tr}Last login{/tr}:</div>
+									<div class="floatleft">{tr}Last login:{/tr}</div>
 									<div class="floatright">{$userinfo.lastLogin|tiki_short_datetime}</div>
 								</div>
 			
@@ -121,7 +121,7 @@
 				{cycle values="even,odd" print=false}
 				{if $customfields[ir].show}
 								<div class="clearfix {cycle}">
-									<div class="floatleft">{tr}{$customfields[ir].label}{/tr}:</div>
+									<div class="floatleft">{tr}{$customfields[ir].label}:{/tr}</div>
 									<div class="floatright">{$customfields[ir].value}</div>
 								</div>
 				{/if}
@@ -173,7 +173,7 @@
 			{foreach item=itemField from=$userItem.field_values}
 				{if $itemField.value ne '' or !empty($itemField.categs) or !empty($itemField.links)}
 		<div class="clearfix {cycle}">
-			<div class="floatleft" style="width: 25%">{tr}{$itemField.name}{/tr}:</div>
+			<div class="floatleft" style="width: 25%">{tr}{$itemField.name}:{/tr}</div>
 			<div class="floatright" style="width: 75%">{include file="tracker_item_field_value.tpl" field_value=$itemField item=$itemField}</div>
 		</div>
 				{/if}
@@ -199,7 +199,7 @@
 				{section name=ix loop=$user_pages}
 				<div>
 					<div class="{cycle}">
-						<a class="link" title="{tr}View{/tr}: {$user_pages[ix].pageName}" href="tiki-index.php?page={$user_pages[ix].pageName|escape:"url"}">{$user_pages[ix].pageName|truncate:40:"(...)"}</a>
+						<a class="link" title="{tr}View:{/tr} {$user_pages[ix].pageName|escape}" href="tiki-index.php?page={$user_pages[ix].pageName|escape:"url"}">{$user_pages[ix].pageName|truncate:40:"(...)"|escape}</a>
 					</div>
 				</div>
 				{/section}
@@ -341,12 +341,12 @@
 						<input type="checkbox" name="replytome" id="replytome" />
 						<label for="replytome">
 							{tr}Reply-to my email{/tr}
-							{help url="User+Information" desc="{tr}Reply-to my email{/tr}:{tr}The user will be able to reply to you directly via email.{/tr}"}
+							{help url="User+Information" desc="{tr}Reply-to my email:{/tr}{tr}The user will be able to reply to you directly via email.{/tr}"}
 						</label>
 						<input type="checkbox" name="bccme" id="bccme" />
 						<label for="bccme">
 							{tr}Send me a copy{/tr}
-							{help url="User+Information" desc="{tr}Send me a copy{/tr}:{tr}You will be sent a copy of this email.{/tr}"}
+							{help url="User+Information" desc="{tr}Send me a copy:{/tr}{tr}You will be sent a copy of this email.{/tr}"}
 						</label>
 						
 					</div>

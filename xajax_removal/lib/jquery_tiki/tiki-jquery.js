@@ -114,7 +114,7 @@ function hideJQ(selector, effect, speed, dir) {
 // override overlib
 function convertOverlib(element, tip, params) {	// process modified overlib event fn to cluetip from {popup} smarty func
 	
-	if (element.processed || typeof $(element).cluetip != "function") { return false; }
+	if ($(element).data('processed') || typeof $(element).cluetip != "function") { return false; }
 	if (typeof params == "undefined") { params = []; }
 	
 	var options = {};
@@ -187,8 +187,8 @@ function convertOverlib(element, tip, params) {	// process modified overlib even
 	
 	prefix = "|";
 	$(element).attr('title', prefix + tip);
-	
-	element.processed = true;
+
+	$(element).data('processed', true);	
 	
 	//options.sticky = true; //useful for css work
 	$(element).cluetip(options);
@@ -1143,7 +1143,7 @@ $.fn.tiki = function(func, type, options) {
 				inlineMenu.find('.qt-picker').attr('instance', I);
 				
 				opts = $.extend({
-							urlMenu: 		"lib/jquery_tiki/jquery.sheet/menu.html",	/* not working currently due to missing menu plugin */
+							urlMenu:"lib/jquery_tiki/jquery.sheet/menu.html",
 							urlGet: "",
 							buildSheet: true,
 							autoFiller: true,

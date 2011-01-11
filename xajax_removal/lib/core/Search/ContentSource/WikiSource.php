@@ -24,7 +24,7 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 
 		$info = $this->tikilib->get_page_info($objectId, true, true);
 
-		$contributors = $wikilib->get_contributors($objectId, $info['user'], false);
+		$contributors = $wikilib->get_contributors($objectId, $info['user']);
 		if (! in_array($info['user'], $contributors)) {
 			$contributors[] = $info['user'];
 		}

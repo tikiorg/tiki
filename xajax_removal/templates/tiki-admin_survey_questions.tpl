@@ -14,10 +14,10 @@
 	<input type="hidden" name="surveyId" value="{$surveyId|escape}" />
 	<input type="hidden" name="questionId" value="{$questionId|escape}" />
 	<table class="formcolor">
-		<tr><td>{tr}Question{/tr}:</td><td><textarea name="question" rows="5" cols="40">{$info.question|escape}</textarea></td></tr>
-		<tr><td>{tr}Position{/tr}:</td><td><select name="position">{html_options values=$positions output=$positions selected=$info.position}</select></td></tr>
+		<tr><td>{tr}Question:{/tr}</td><td><textarea name="question" rows="5" cols="40">{$info.question|escape}</textarea></td></tr>
+		<tr><td>{tr}Position:{/tr}</td><td><select name="position">{html_options values=$positions output=$positions selected=$info.position}</select></td></tr>
 		<tr>
-			<td>{tr}Type{/tr}:</td>
+			<td>{tr}Type:{/tr}</td>
 			<td>
 				<select name="type">
 					<option value='c' {if $info.type eq 'c'}selected=selected{/if}>{tr}One choice{/tr}</option>
@@ -48,7 +48,7 @@
 				{/remarksbox}
 			</td>
 		</tr>
-		<tr><td>{tr}Options (if apply){/tr}:</td><td><input type="text" name="options" value="{$info.options|escape}" size="80" /></td></tr>
+		<tr><td>{tr}Options (if apply):{/tr}</td><td><input type="text" name="options" value="{$info.options|escape}" size="80" /></td></tr>
 		<tr><td >&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 	</table>
 </form>

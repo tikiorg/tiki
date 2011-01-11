@@ -12,15 +12,15 @@
 				</td>
 			</tr>
 			<tr>
-				<td>{tr}Use database to store userfiles{/tr}:</td>
+				<td>{tr}Use database to store userfiles:{/tr}</td>
 				<td>
 					<input type="radio" name="uf_use_db" value="y" {if $prefs.uf_use_db eq 'y'}checked="checked"{/if}/>
 				</td>
 			</tr>
 			<tr>
-				<td>{tr}Use a directory to store userfiles{/tr}:</td>
+				<td>{tr}Use a directory to store userfiles:{/tr}</td>
 				<td>
-					<input type="radio" name="uf_use_db" value="n" {if $prefs.uf_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:
+					<input type="radio" name="uf_use_db" value="n" {if $prefs.uf_use_db eq 'n'}checked="checked"{/if}/> {tr}Path:{/tr}
 					<br />
 					<input type="text" name="uf_use_dir" value="{$prefs.uf_use_dir|escape}" size="50" />
 				</td>

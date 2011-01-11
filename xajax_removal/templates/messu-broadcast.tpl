@@ -35,7 +35,7 @@
 		<table class="formcolor" >
 			<tr>
 				<td>
-					<label for="broadcast-group">{tr}Group{/tr}:</label>
+					<label for="broadcast-group">{tr}Group:{/tr}</label>
 				</td>
 				<td>
 					<select name="groupbr" id="broadcast-group">
@@ -53,7 +53,7 @@
 			</tr>
 			<tr>
 				<td>
-					<label for="broadcast-priority">{tr}Priority{/tr}:</label>
+					<label for="broadcast-priority">{tr}Priority:{/tr}</label>
 				</td>
 				<td>
 					<select name="priority" id="broadcast-priority">
@@ -68,7 +68,7 @@
 			</tr>
 			<tr>
 				<td>
-					<label for="broadcast-subject">{tr}Subject{/tr}:</label>
+					<label for="broadcast-subject">{tr}Subject:{/tr}</label>
 				</td>
 				<td>
 					<input type="text" name="subject" id="broadcast-subject" value="{$subject|escape}" size="80" maxlength="255"/>

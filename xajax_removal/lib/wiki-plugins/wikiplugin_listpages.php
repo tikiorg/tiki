@@ -163,6 +163,12 @@ function wikiplugin_listpages_info() {
 				'name' => tra('Length'),
 				'description' => tra('Number of characters to display'),
 				'default' => '',
+			),
+			'showCheckbox' => array(
+				'required' => false,
+				'name' => tra('Show checkboxes'),
+				'description' => 'y|n',
+				'default' => 'y',
 			)
 		)
 	);
@@ -184,7 +190,7 @@ function wikiplugin_listpages($data, $params) {
 		// the feature is disabled or the user can't read wiki pages
 		return '';
 	}
-	$default = array('offset'=>0, 'max'=>-1, 'sort'=>'pageName_asc', 'find'=>'', 'start'=>'', 'end'=>'', 'length'=>-1, 'translations'=>null, 'translationOrphan'=>null);
+	$default = array('offset'=>0, 'max'=>-1, 'sort'=>'pageName_asc', 'find'=>'', 'start'=>'', 'end'=>'', 'length'=>-1, 'translations'=>null, 'translationOrphan'=>null, 'showCheckbox' => 'y');
 	$params = array_merge($default, $params);
 	extract($params,EXTR_SKIP);
 	$filter = array();
@@ -255,6 +261,7 @@ function wikiplugin_listpages($data, $params) {
 	}
 
 	$smarty->assign_by_ref('listpages', $listpages['data']);
+	$smarty->assign_by_ref('checkboxes_on', $showCheckbox);
 	if (!empty($showPageAlias) && $showPageAlias == 'y')
 		$smarty->assign_by_ref('showPageAlias', $showPageAlias);
 	if (isset($showNameOnly) && $showNameOnly == 'y') {

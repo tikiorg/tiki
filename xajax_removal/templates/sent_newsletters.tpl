@@ -24,20 +24,20 @@
 		{cycle values="odd,even" print=false}
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
-				<td>{$channels[user].name|escape}</td>
-				<td>{$channels[user].subject|escape}</td>
+				<td class="text">{$channels[user].name|escape}</td>
+				<td class="text">{$channels[user].subject|escape}</td>
 				{if $view_editions eq 'y'}
 					<td>{$channels[user].users}</td>
 					<td>{$channels[user].sent|tiki_short_datetime}</td>
 				{/if}
-				<td>
+				<td class="integer">
 					{if $channels[user].nbErrors > 0}
 						<a href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}&amp;error={$channels[user].editionId}">{$channels[user].nbErrors}</a>
 					{else}
 						0
 					{/if}
 				</td>
-				<td>
+				<td class="action">
 					{if $url == "tiki-newsletter_archives.php"}
 						<a class="link" href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 					{/if}
@@ -60,7 +60,7 @@
 		{if $prev_offset >= 0}
 			[<a class="prevnext" href="{$url}?nlId={$nlId}&amp;{$cur}_offset={$prev_offset}&amp;{$bak}_offset={$offset_bak}&amp;{$cur}_sort_mode={$sort_mode}&amp;{$bak}_sort_mode={$sort_mode_bak}&amp;cookietab={$tab}">{tr}Prev{/tr}</a>]&nbsp;
 			{/if}
-		{tr}Page{/tr}: {$actual_page}/{$cant_pages}
+		{tr}Page:{/tr} {$actual_page}/{$cant_pages}
 		{if $next_offset >= 0}
 			&nbsp;[<a class="prevnext" href="{$url}?nlId={$nlId}&amp;{$cur}_offset={$next_offset}&amp;{$bak}_offset={$offset_bak}&amp;{$cur}_sort_mode={$sort_mode}&amp;{$bak}_sort_mode={$sort_mode_bak}&amp;cookietab={$tab}">{tr}Next{/tr}</a>]
 	{/if}

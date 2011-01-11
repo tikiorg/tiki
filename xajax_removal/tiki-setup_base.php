@@ -45,6 +45,7 @@ $needed_prefs = array(
 	'session_storage' => 'default',
 	'session_silent' => 'n',
 	'session_cookie_name' => session_name(),
+	'session_protected' => 'n',
 	'tiki_cdn' => '',
 	'tiki_cdn_ssl' => '',
 	'language' => 'en',
@@ -64,6 +65,11 @@ $tikilib->get_preferences($needed_prefs, true, true);
 if (!isset($prefs['lastUpdatePrefs']) || $prefs['lastUpdatePrefs'] == - 1) {
 	$tikilib->query('delete from `tiki_preferences` where `name`=?', array('lastUpdatePrefs'));
 	$tikilib->query('insert into `tiki_preferences`(`name`,`value`) values(?,?)', array('lastUpdatePrefs', 1));
+}
+
+if ($prefs['session_protected'] == 'y' && ! isset($_SERVER['HTTPS'])) {
+	header("Location: https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}");
+	exit;
 }
 
 global $cachelib;
@@ -119,7 +125,10 @@ if (isset($_GET[session_name()]) && $tikilib->get_ip_address() == '127.0.0.1') {
 	session_id($_GET[session_name()]);
 }
 
-$start_session = $prefs['session_silent'] != 'y' or isset( $_COOKIE[session_name()] );
+$start_session = true;
+if ( $prefs['session_silent'] == 'y' && empty($_COOKIE[session_name()]) ) {
+	$start_session = false;
+}
 
 // If called from the CDN, refuse to execute anything
 $cdn_pref = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? $prefs['tiki_cdn_ssl'] : $prefs['tiki_cdn'];

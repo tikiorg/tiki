@@ -13,20 +13,20 @@
 			{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle" align="left"} {tr}The following site was added, but may require validation by the admin before appearing on the lists.{/tr}
 		<table class="formcolor">
 			<tr>
-				<td>{tr}Name{/tr}:</td>
+				<td>{tr}Name:{/tr}</td>
 				<td>{$info.name}</td>
 			</tr>
 			<tr>
-				<td>{tr}Description{/tr}:</td>
+				<td>{tr}Description:{/tr}</td>
 				<td>{$info.description}</td>
 			</tr>
 			<tr>
-				<td>{tr}URL{/tr}:</td>
+				<td>{tr}URL:{/tr}</td>
 				<td>{$info.url}</td>
 			</tr>
 			{if $prefs.directory_country_flag eq 'y'}
 				<tr>
-					<td>{tr}Country{/tr}:</td>
+					<td>{tr}Country:{/tr}</td>
 					<td>{$info.country}</td>
 				</tr>
 			{/if}
@@ -43,7 +43,7 @@
 			<input type="hidden" name="siteId" value="{$siteId|escape}" />
 			<table class="formcolor">
 				<tr>
-					<td><label for="name">{tr}Name{/tr}:</label></td>
+					<td><label for="name">{tr}Name:{/tr}</label></td>
 					<td><input type="text" id="name" name="name" value="{$info.name|escape}" /></td>
 				</tr>
 				<tr>
@@ -71,7 +71,7 @@
 				</tr>
 				{if $prefs.directory_country_flag eq 'y'}
 					<tr>
-						<td><label for="country">{tr}Country{/tr}:</label></td>
+						<td><label for="country">{tr}Country:{/tr}</label></td>
 						<td>
 							<select id="country" name="country">
       	    				{section name=ux loop=$countries}

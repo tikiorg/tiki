@@ -39,8 +39,8 @@
 		{cycle values="odd,even" print=false}
 		{section name=ix loop=$groups_g}
 			<tr class="{cycle}">
-				<td>{$groups_g[ix].groupName|escape}</td>
-				<td>
+				<td class="text">{$groups_g[ix].groupName|escape}</td>
+				<td class="action">
 					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$groups_g[ix].nlId|urlencode}&amp;group={$groups_g[ix].groupName|urlencode}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 				</td>
 			</tr>
@@ -61,10 +61,10 @@
 		{cycle values="odd,even" print=false}
 		{foreach key=incId item=incName from=$included_n}
 			<tr class="{cycle}">
-				<td>
+				<td class="text">
 					<a href="tiki-admin_newsletter_subscriptions.php?nlId={$incId|urlencode}">{$incName|escape}</a>
 				</td>
-				<td>
+				<td class="action">
 					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$nlId|urlencode}&amp;included={$incId|urlencode}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 				</td>
 			</tr>
@@ -85,10 +85,10 @@
 		{cycle values="odd,even" print=false}
 		{section name=ix loop=$pages}
 			<tr class="{cycle}">
-				<td><a href="{$pages[ix].wikiPageName|sefurl}">{$pages[ix].wikiPageName|escape}</a></td>
-				<td>{$pages[ix].validateAddrs|escape}</td>
-				<td>{$pages[ix].addToList|escape}</td>
-				<td>
+				<td class="text"><a href="{$pages[ix].wikiPageName|sefurl}">{$pages[ix].wikiPageName|escape}</a></td>
+				<td class="text">{$pages[ix].validateAddrs|escape}</td>
+				<td class="text">{$pages[ix].addToList|escape}</td>
+				<td class="action">
 					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;remove={$pages[ix].nlId|urlencode}&amp;page={$pages[ix].wikiPageName|urlencode}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 				</td>
 			</tr>
@@ -120,28 +120,30 @@
 	{cycle values="odd,even" print=false}
 	{section name=user loop=$channels}
 		<tr class="{cycle}">
-			<td style="text-align:center">
+			<td class="checkbox">
 				<input type="checkbox" name="checked[]" value="{$channels[user].code}" {if $smarty.request.checked and in_array($channels[user].code, $smarty.request.checked) }checked="checked"{/if} />
 			</td>
-			<td>
+			<td class="username">
 				{if $channels[user].isUser == "y"}
 					{$channels[user].email|userlink}
 				{else}
 					{$channels[user].email|escape}
 				{/if}
 			</td>
-			<td>
+			<td class="text">
 				{if $channels[user].valid == "n"}
 					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;valid={$channels[user].nlId|urlencode}&amp;{if $channels[user].isUser eq "y"}user{else}email{/if}={$channels[user].email|escape:"url"}" title="{tr}Valid{/tr}">{tr}No{/tr}</a>
 				{else}
 					{tr}Yes{/tr}
 				{/if}
 			</td>
-			<td>{$channels[user].subscribed|tiki_short_datetime}</td>
-			<td>
+			<td class="date">{$channels[user].subscribed|tiki_short_datetime}</td>
+			<td class="action">
 				<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$channels[user].nlId|urlencode}&amp;{if $channels[user].isUser eq "y"}subuser{else}email{/if}={$channels[user].email|escape:"url"}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 			</td>
 		</tr>
+	{sectionelse}
+		<tr class="even"><td class="norecords" colspan="5">{tr}No records found.{/tr}</td></tr>
 	{/section}
 </table>
 

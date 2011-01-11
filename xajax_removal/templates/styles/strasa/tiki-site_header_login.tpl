@@ -27,7 +27,7 @@
 			{/if}	
 			<label for="sl-login-user">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if}:</label>
 			<input type="text" name="user" id="sl-login-user" />
-			<label for="sl-login-pass">{tr}Password{/tr}:</label>
+			<label for="sl-login-pass">{tr}Password:{/tr}</label>
 			<input type="password" name="pass" id="sl-login-pass" size="10" />
 			<input class="wikiaction" type="submit" name="login" value="{tr}Login{/tr}" />
 			{*<div>*}

@@ -11,7 +11,7 @@
 {/if}
 
 <div class="tree" id="top">
-	<div class="treetitle">{tr}Current category{/tr}: 
+	<div class="treetitle">{tr}Current category:{/tr} 
 		<a href="tiki-admin_categories.php?parentId=0" class="categpath">{tr}Top{/tr}</a>
 		{section name=x loop=$path}
 			&nbsp;::&nbsp;
@@ -76,7 +76,7 @@
 			<input type="hidden" name="categId" value="{$categId|escape}" />
 			<table class="formcolor">
 				<tr>
-					<td>{tr}Parent{/tr}:</td>
+					<td>{tr}Parent:{/tr}</td>
 					<td>
 						<select name="parentId">
 							<option value="0">{tr}Top{/tr}</option>
@@ -87,11 +87,11 @@
 					</td>
 				</tr>
 				<tr>
-					<td>{tr}Name{/tr}:</td>
+					<td>{tr}Name:{/tr}</td>
 					<td><input type="text" size="40" name="name" value="{$name|escape}" /></td>
 				</tr>
 				<tr>
-					<td>{tr}Description{/tr}:</td>
+					<td>{tr}Description:{/tr}</td>
 					<td><textarea rows="2" cols="40" name="description">{$description|escape}</textarea></td>
 				</tr>
 				<tr>
@@ -138,19 +138,20 @@
 					<a href="tiki-admin_categories.php?parentId={$parentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}#objects">{tr}Type{/tr}</a>
 				</th>
 			</tr>
+			{cycle values="even,odd" print=false}
 			{section name=ix loop=$objects}
-				<tr>
-					<td class="even">
+				<tr class="{cycle}">
+					<td class="icon">
 						<a href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}" title="{tr}Remove from this Category{/tr}">{icon _id='link_delete' alt="{tr}Remove from this Category{/tr}"}</a>
 					</td>
-					<td class="even">
+					<td class="text">
 						<a href="{$objects[ix].href}" title="{$objects[ix].name}">{$objects[ix].name|truncate:80:"(...)":true|escape}</a>
 					</td>
-					<td class="even">{tr}{$objects[ix].type}{/tr}</td>
+					<td class="text">{tr}{$objects[ix].type}{/tr}</td>
 				</tr>
 			{sectionelse}
-				<tr>
-					<td class="even" colspan="3"><strong>{tr}No records found.{/tr}</strong></td>
+				<tr class="even">
+					<td class="norecords" colspan="3">{tr}No records found.{/tr}</td>
 				</tr>
 			{/section}
 		</table>

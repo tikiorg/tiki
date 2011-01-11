@@ -203,7 +203,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 
 {if $tiki_p_admin_trackers eq 'y'}
 <div style="text-align:left">
-{tr}Perform action with checked{/tr}:
+{tr}Perform action with checked:{/tr}
 <select name="batchaction">
 <option value="">{tr}...{/tr}</option>
 <option value="delete">{tr}Delete{/tr}</option>

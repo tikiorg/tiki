@@ -105,7 +105,7 @@ $smarty->assign('user_information', $user_information);
 $userinfo = $userlib->get_user_info($userwatch);
 $email_isPublic = $tikilib->get_user_preference($userwatch, 'email is public', 'n');
 if ($email_isPublic != 'n') {
-	$userinfo['email'] = scrambleEmail($userinfo['email'], $email_isPublic);
+	$smarty->assign('scrambledEmail', scrambleEmail($userinfo['email'], $email_isPublic));
 }
 $smarty->assign_by_ref('userinfo', $userinfo);
 $smarty->assign_by_ref('email_isPublic', $email_isPublic);

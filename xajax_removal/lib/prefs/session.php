@@ -40,5 +40,11 @@ function prefs_session_list() {
 			'perspective' => false,
 			'size' => 10,
 		),
+		'session_protected' => array(
+			'name' => tra('Protect all sessions'),
+			'description' => tra('Always redirect to HTTPS to prevent session hijack through network sniffing.'),
+			'type' => 'flag',
+			'perspective' => false,
+		),
 	);
 }

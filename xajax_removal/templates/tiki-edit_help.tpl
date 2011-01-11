@@ -9,11 +9,11 @@
 <div class="help_section">
 {if $prefs.feature_help eq 'y'} 
 <p>{tr}For more information, please see{/tr}
-	<a href="{$prefs.helpurl}Wiki+Page+Editor" target="tikihelp" class="tikihelp" title="{tr}Wiki Page Editor{/tr}: {tr}More help on editing wiki pages{/tr}">
+	<a href="{$prefs.helpurl}Wiki+Page+Editor" target="tikihelp" class="tikihelp" title="{tr}Wiki Page Editor:{/tr} {tr}More help on editing wiki pages{/tr}">
 		{tr}Wiki Page Editor{/tr} {icon _id='help' style="vertical-align:middle"}
 	</a>
 	{tr}and{/tr}
-	<a href="{$prefs.helpurl}Wiki+Syntax" target="tikihelp" class="tikihelp" title="{tr}Wiki Syntax{/tr}: {tr}The syntax system used for creating pages in Tiki{/tr}">
+	<a href="{$prefs.helpurl}Wiki+Syntax" target="tikihelp" class="tikihelp" title="{tr}Wiki Syntax:{/tr} {tr}The syntax system used for creating pages in Tiki{/tr}">
 		{tr}Wiki Syntax{/tr} {icon _id='help' style="vertical-align:middle"}
 	</a>
 </p>
@@ -42,7 +42,7 @@
 
 <tr class="{cycle}"><td><img src='pics/icons/page.png' alt='' /> <strong>{tr}Horizontal rule{/tr}</strong> &nbsp;&nbsp;&nbsp; -<em></em>-<em></em>-<em></em>- </td></tr>
 <tr class="{cycle}"><td><img src='pics/icons/box.png' alt='' /> <strong>{tr}Text box{/tr}</strong> &nbsp;&nbsp;&nbsp; ^{tr}Box content{/tr}^</td></tr>
-<tr class="{cycle}"><td><img src='pics/icons/text_align_center.png' alt='' /> <strong>{tr}Centered text{/tr}</strong> &nbsp;&nbsp;&nbsp; ::{tr}text{/tr}::</td></tr>
+<tr class="{cycle}"><td><img src='pics/icons/text_align_center.png' alt='' /> <strong>{tr}Centered text{/tr}</strong> &nbsp;&nbsp;&nbsp; ::{tr}text::{/tr}</td></tr>
 
 {/if}{* wysiwyg *}
 <tr class="{cycle}"><td><strong><img src='pics/icons/database_gear.png' alt='' /> {tr}Dynamic variables{/tr}</strong> <br/> %{tr}Name{/tr}% {tr}Inserts an editable variable{/tr}</td></tr>
@@ -60,7 +60,7 @@
 
 {if $wysiwyg ne 'y' or ($wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
 
-<tr class="{cycle}"><td><img src='pics/icons/text_list_bullets.png' alt='' /> <img src='pics/icons/text_list_numbers.png' alt='' /> <strong>{tr}Lists{/tr}</strong> <br/> * {tr}for bullet lists{/tr}, # {tr}for numbered lists{/tr}, ;{tr}Word{/tr}:{tr}definition{/tr} {tr}for definiton lists{/tr}</td></tr>
+<tr class="{cycle}"><td><img src='pics/icons/text_list_bullets.png' alt='' /> <img src='pics/icons/text_list_numbers.png' alt='' /> <strong>{tr}Lists{/tr}</strong> <br/> * {tr}for bullet lists{/tr}, # {tr}for numbered lists{/tr}, ;{tr}Word:{/tr}{tr}definition{/tr} {tr}for definiton lists{/tr}</td></tr>
 <tr class="{cycle}"><td><strong>{tr}Indentation{/tr}</strong> <br/>+, ++ {tr}Creates an indentation for each plus (useful in list to continue at the same level){/tr}</td></tr>
 {if $prefs.feature_wiki_tables eq 'new'}
 <tr class="{cycle}"><td><img src='pics/icons/table.png' alt='' /> <strong>{tr}Tables{/tr}</strong> <br/> || {tr}row{/tr}1-{tr}col{/tr}1 | {tr}row{/tr}1-{tr}col{/tr}2 | {tr}row{/tr}1-{tr}col{/tr}3<br />{tr}row{/tr}2-{tr}col{/tr}1 | {tr}row{/tr}2-{tr}col{/tr}2 | {tr}row{/tr}2-{tr}col{/tr}3 ||</td></tr>

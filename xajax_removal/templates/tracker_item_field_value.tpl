@@ -347,11 +347,11 @@
 	{else}
 		{capture name=stat}
 			{if empty($field_value.numvotes)}
-				{tr}Number of votes{/tr}: 0
+				{tr}Number of votes:{/tr} 0
 			{else}
-				{tr}Number of votes{/tr}: {$field_value.numvotes|default:"0"}, {tr}Average{/tr}: {$field_value.voteavg|default:"0"}
+				{tr}Number of votes:{/tr} {$field_value.numvotes|default:"0"}, {tr}Average:{/tr} {$field_value.voteavg|default:"0"}
 				{if $tiki_p_tracker_vote_ratings eq 'y'}
-					, {if isset($field_value.my_rate) && $field_value.my_rate !== false}{tr}Your rating{/tr}: {$field_value.my_rate}{else}{tr}You did not vote yet{/tr}{/if}
+					, {if isset($field_value.my_rate) && $field_value.my_rate !== false}{tr}Your rating:{/tr} {$field_value.my_rate}{else}{tr}You did not vote yet{/tr}{/if}
 				{/if}
 			{/if}
 		{/capture}

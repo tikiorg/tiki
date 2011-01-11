@@ -27,13 +27,13 @@
 	<br />
 {/if}
 <label>
-	<input type="radio" name="which_date" value="between"{if $which_date eq 'between'} checked="checked"{/if} />{tr}Vote range displayed{/tr}: 
+	<input type="radio" name="which_date" value="between"{if $which_date eq 'between'} checked="checked"{/if} />{tr}Vote range displayed:{/tr} 
 </label>
 <label>
-	{tr}Start{/tr}: {html_select_date prefix="from_" time="$vote_from_date" start_year="$start_year"}
+	{tr}Start:{/tr} {html_select_date prefix="from_" time="$vote_from_date" start_year="$start_year"}
 </label>
 <label>
-	{tr}End{/tr}: {html_select_date prefix="to_" time="$vote_to_date" start_year="$start_year"}
+	{tr}End:{/tr} {html_select_date prefix="to_" time="$vote_to_date" start_year="$start_year"}
 </label>
 <br />
 {if empty($pollId) or $poll_info.voteConsiderationSpan > 0}

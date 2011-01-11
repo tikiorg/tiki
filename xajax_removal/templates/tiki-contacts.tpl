@@ -21,12 +21,12 @@
 	<table class="formcolor">
 		<tbody id='tbody_editcontact'>
 			<tr>
-				<td>{tr}First Name{/tr}:</td>
+				<td>{tr}First Name:{/tr}</td>
 				<td>
 					<input type="text" maxlength="80" size="20" name="firstName" value="{$info.firstName|escape}" />
 				</td>
 				<td rowspan="5">
-					{tr}Publish this contact to groups{/tr}:<br />
+					{tr}Publish this contact to groups:{/tr}<br />
 					<select multiple="multiple" name="groups[]" size="6">
 						<option value=""></option>
 						{foreach item=group from=$groups}
@@ -36,19 +36,19 @@
 				</td>
 			</tr>
 			<tr>
-				<td>{tr}Last Name{/tr}:</td>
+				<td>{tr}Last Name:{/tr}</td>
 				<td>
 					<input type="text" maxlength="80" size="20" name="lastName" value="{$info.lastName|escape}" />
 				</td>
 			</tr>
 			<tr>
-				<td>{tr}Email{/tr}:</td>
+				<td>{tr}Email:{/tr}</td>
 				<td>
 					<input type="text" maxlength="80" size="20" name="email" value="{$info.email|escape}" />
 				</td>
 			</tr>
 			<tr>
-				<td>{tr}Nickname{/tr}:</td>
+				<td>{tr}Nickname:{/tr}</td>
 				<td>
 					<input type="text" maxlength="80" size="20" name="nickname" value="{$info.nickname|escape}" />
 				</td>
@@ -185,7 +185,7 @@
 		[<a class="prevnext" href="tiki-contacts.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]
 		&nbsp;
 	{/if}
-	{tr}Page{/tr}: {$actual_page}/{$cant_pages}
+	{tr}Page:{/tr} {$actual_page}/{$cant_pages}
 	{if $next_offset >= 0}
 		&nbsp;
 		[<a class="prevnext" href="tiki-contacts.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]

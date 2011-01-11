@@ -11,7 +11,7 @@
 		<legend>{tr}General settings{/tr}{help url="Calendar+Admin"}</legend>
 		<div class="adminoptionbox">
 			<div class="adminoptionlabel">
-				{tr}Default calendars to display{/tr}:
+				{tr}Default calendars to display:{/tr}
 				{if $rawcals|@count ge '1'}
 					<div class="adminoptionlabel">
 						<input type="radio" id="feature_default_calendars1" name="feature_default_calendars" value="n" {if $prefs.feature_default_calendars neq 'y'}checked="checked"{/if} onclick="flip('default_calendars');" />
