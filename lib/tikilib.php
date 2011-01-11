@@ -4926,8 +4926,18 @@ if( \$('#$id') ) {
 			$data = substr($data, 0, $start) . $key . substr($data, $end + 5);
 		}
 
-		// TODO : Handle ~pp~
-	}
+		// ~pp~
+		while (false !== $start = strpos($data, '~pp~')) {
+			$end = strpos($data, '~/pp~', $start);
+			$content = substr($data, $start + 4, $end - $start - 4);
+
+			// ~pp~ type "plugins"
+			$key = "§".md5($this->genPass())."§";
+			$noparsed["key"][] = preg_quote($key);
+			$noparsed["data"][] = '<pre>'.$content.'</pre>';
+
+			$data = substr($data, 0, $start) . $key . substr($data, $end + 5);
+		}	}
 
 	function plugin_get_list( $includeReal = true, $includeAlias = true ) {
 		$real = array();
