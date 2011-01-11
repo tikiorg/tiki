@@ -9,7 +9,7 @@
 		{if $contributor.realName}<br />{$contributor.realName|escape}{/if}
 		{if isset($contributor.country)}<br />{$contributor.login|countryflag} {tr}{$contributor.country|stringfix}{/tr}{/if}
 		{if isset($contributor.email)}<br />{mailto address=$contributor.email text=$contributor.scrambledEmail encode="javascript"}{/if}
-		{if $contributor.homePage}<br /><a href="{$contributor.homePage|escape}" class="link">{tr}Homepage{/tr}</a>{/if}
+		{if $contributor.homePage}<br /><a href="{$contributor.homePage|escape}" class="link" target="_blank">{tr}Homepage{/tr}</a>{/if}
 	</div>
 	{/foreach}
 	{if isset($hiddenContributors)}
