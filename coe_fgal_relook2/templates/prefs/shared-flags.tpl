@@ -8,7 +8,7 @@
 	</span>
 {/if}
 {if $p.warning}
-	<a href="" target="tikihelp" class="tikihelp" title="{tr}Warning{/tr}: {$p.warning|escape}">
+	<a href="" target="tikihelp" class="tikihelp" title="{tr}Warning:{/tr} {$p.warning|escape}">
 		{icon _id=error alt=''}
 	</a>
 {/if}

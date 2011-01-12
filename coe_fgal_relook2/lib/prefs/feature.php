@@ -689,7 +689,7 @@ function prefs_feature_list() {
 		),
 		'feature_babelfish_logo' => array(
 			'name' => tra('Translation icons'),
-			'description' => tra('Show clickable icons to translate the page to another language using Babelfish website.'),
+			'description' => tra('Show clickable icons to translate the page to another language using Babel Fish website.'),
 			'type' => 'flag',
 		),
 		'feature_smileys' => array(
@@ -1155,6 +1155,7 @@ function prefs_feature_list() {
 			'name' => tra('Secondary site menu custom code'),
 			'type' => 'textarea',
 			'size' => '2',
+			'hint' => tra('Example:') . "  {if \$prefs.language eq \"fr\"} <a href=\"tiki-switch_lang.php?language=en\">-English-</a> {else} <a href=\"tiki-switch_lang.php?language=fr\">-Français-</a>{/if}",
 		),
 		'feature_topbar_id_menu' => array(
 			'name' => tra('Menu ID'),
@@ -1553,10 +1554,12 @@ function prefs_feature_list() {
 		),
 		'feature_wiki_userpage' => array(
 			'name' => tra("User's page"),
+			'description' => tra('A personal page for the user to manage.'),
 			'type' => 'flag',
 		),
 		'feature_wiki_userpage_prefix' => array(
 			'name' => tra('UserPage prefix'),
+			'description' => tra('All user pages share a common prefix. The concatenation of the prefix and the username will generate the page name. The prefix cannot be empty.'),
 			'type' => 'text',
 			'size' => '40',
 		),

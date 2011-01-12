@@ -93,7 +93,7 @@
 				<hr />
 				<div class="floatleft">
 					<div class="adminoptionbox">
-						<em>{tr}Experimental{/tr}:</em> {icon _id=bug_error}
+						<em>{tr}Experimental:{/tr}</em> {icon _id=bug_error}
 					</div>
 					<div class="adminoptionboxchild">	
 						{preference name=feature_jquery_carousel}

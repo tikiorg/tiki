@@ -687,7 +687,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {if $tiki_p_calendar_add_guest_particip eq 'y'}
 	<form action="tiki-calendar_edit_item.php" method="post">
 	<input type ="hidden" name="viewcalitemId" value="{$id}" />
-	<input type="text" name="guests" />{help desc="{tr}Format{/tr}: {tr}Participant names separated by comma{/tr}" url='calendar'}
+	<input type="text" name="guests" />{help desc="{tr}Format:{/tr} {tr}Participant names separated by comma{/tr}" url='calendar'}
 	<input type="submit" name="add_guest" value="Add guests" />
 	</form>
 {/if}

@@ -104,7 +104,7 @@
 						
 						{if $smarty.request.movesel_x and !isset($file_info)}
 							<div>
-								{tr}Move to{/tr}:
+								{tr}Move to:{/tr}
 								<select name="moveto">
 									{section name=ix loop=$all_galleries}
 										<option value="{$all_galleries[ix].id}">{$all_galleries[ix].label|escape}</option>

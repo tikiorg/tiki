@@ -87,7 +87,7 @@
 	<table class="formcolor">
 		<tr>
 			<td>
-				<label for="quiz-name">{tr}Name{/tr}:</label>
+				<label for="quiz-name">{tr}Name:{/tr}</label>
 			</td>
 			<td>
 				<input type="text" size ="80" name="name" id="quiz-name" value="{$name|escape}" />
@@ -95,7 +95,7 @@
 		</tr>
 		<tr>
 			<td>
-				<label for="quiz-desc">{tr}Description{/tr}:</label>
+				<label for="quiz-desc">{tr}Description:{/tr}</label>
 			</td>
 			<td>
 				<textarea name="description" id="quiz-desc" rows="4" cols="75">{$description|escape}</textarea>

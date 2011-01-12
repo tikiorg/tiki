@@ -69,31 +69,31 @@
 	</td>
 {/if}
 {if $prefs.blog_list_created eq 'y'}
-	<td>&nbsp;{$listpages[changes].created|tiki_short_date}&nbsp;</td><!--tiki_date_format:"%b %d" -->
+	<td class="date">&nbsp;{$listpages[changes].created|tiki_short_date}&nbsp;</td><!--tiki_date_format:"%b %d" -->
 {/if}
 {if $prefs.blog_list_lastmodif eq 'y'}
-	<td>&nbsp;{$listpages[changes].lastModif|tiki_short_datetime}&nbsp;</td><!--tiki_date_format:"%d of %b [%H:%M]"-->
+	<td class="date">&nbsp;{$listpages[changes].lastModif|tiki_short_datetime}&nbsp;</td><!--tiki_date_format:"%d of %b [%H:%M]"-->
 {/if}
 {if $prefs.blog_list_user ne 'disabled'}
 {if $prefs.blog_list_user eq 'link'}
-	<td>&nbsp;{$listpages[changes].user|userlink}&nbsp;</td>
+	<td class="username">&nbsp;{$listpages[changes].user|userlink}&nbsp;</td>
 {elseif $prefs.blog_list_user eq 'avatar'}
 	<td>&nbsp;{$listpages[changes].user|avatarize}&nbsp;<br />
 	&nbsp;{$listpages[changes].user|userlink}&nbsp;</td>
 {else}
-	<td>&nbsp;{$listpages[changes].user|escape}&nbsp;</td>
+	<td class="username">&nbsp;{$listpages[changes].user|escape}&nbsp;</td>
 {/if}
 {/if}
 {if $prefs.blog_list_posts eq 'y'}
-	<td style="text-align:right;">&nbsp;{$listpages[changes].posts}&nbsp;</td>
+	<td class="integer">&nbsp;{$listpages[changes].posts}&nbsp;</td>
 {/if}
 {if $prefs.blog_list_visits eq 'y'}
-	<td style="text-align:right;">&nbsp;{$listpages[changes].hits}&nbsp;</td>
+	<td class="integer">&nbsp;{$listpages[changes].hits}&nbsp;</td>
 {/if}
 {if $prefs.blog_list_activity eq 'y'}	
-	<td style="text-align:right;">&nbsp;{$listpages[changes].activity}&nbsp;</td>
+	<td class="integer">&nbsp;{$listpages[changes].activity}&nbsp;</td>
 {/if}
-<td nowrap="nowrap">
+<td class="action">
 	{if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y')}
 		{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_blog_create_blog eq 'y' ) }
 			<a class="icon" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}">{icon _id='page_edit'}</a>

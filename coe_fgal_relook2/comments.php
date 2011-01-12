@@ -211,58 +211,17 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 			die;
 		}
 	} else {
-		$threadId =  $commentslib->post_in_object($comments_objectId, $_REQUEST, $feedbacks, $errors);
-		if ((!empty($threadId) && empty($errors) && $prefs['feature_user_watches'] == 'y') && ($prefs['wiki_watch_comments'] == 'y') && (isset($_REQUEST["page"]))) {
-			include_once ('lib/webmail/tikimaillib.php');
-			$nots = $commentslib->get_event_watches('wiki_page_changed', $_REQUEST["page"]);
-			$isBuilt = false;
-			global $notificationlib; include_once("lib/notifications/notificationlib.php");
-			$emails = $notificationlib->get_mail_events('wiki_comment_changes', $_REQUEST["page"]);
-			foreach ($emails as $email) {
-				$already = false;
-				foreach ($nots as $not) {
-					if ($not['email'] == $email) {
-						$already = true;
-						break;
-					}
-				}
-				if (!$already)
-					$nots[] = array("user"=>"", "hash"=>"", "email"=>$email);
-			}
-			foreach ($nots as $not) {
-				if ($prefs['wiki_watch_editor'] != 'y' && $not['user'] == $user) {
-					continue;
-				}
-				if (!$isBuilt) {
-					$isBuilt = true;
-					$smarty->assign('mail_page', $_REQUEST["page"]);
-					$smarty->assign('mail_date', date("U"));
-					$smarty->assign('mail_user', $user);
-					$smarty->assign('mail_title', $_REQUEST["comments_title"]);
-					$smarty->assign('mail_comment', $_REQUEST["comments_data"]);
-					$smarty->assign('watchId', $not['watchId']);
-					$foo = parse_url($_SERVER["REQUEST_URI"]);
-					$machine = $tikilib->httpPrefix( true ). dirname( $foo["path"] );
-					$smarty->assign('mail_machine', $machine);
-					$parts = explode('/', $foo['path']);
-
-					if (count($parts) > 1)
-						unset ($parts[count($parts) - 1]);
-
-					$smarty->assign('mail_machine_raw', $tikilib->httpPrefix( true ). implode('/', $parts));
-					// TODO: mail_machine_site may be required for some sef url with rewrite to sub-directory. To refine. (nkoth)  
-					$smarty->assign('mail_machine_site', $tikilib->httpPrefix( true ));
-					$mail = new TikiMail();
-				}
-				global $prefs;// TODO: optimise by grouping user by language
-				$languageEmail = $tikilib->get_user_preference($not['user'], "language", $prefs['site_language']);
-				$mail->setUser($not['user']);
-				$mail_data = $smarty->fetchLang($languageEmail, 'mail/user_watch_wiki_page_comment_subject.tpl');
-				$mail->setSubject(sprintf($mail_data, $_REQUEST["page"]));
-				$mail_data = $smarty->fetchLang($languageEmail, 'mail/user_watch_wiki_page_comment.tpl');
-				$mail->setText($mail_data);
-				$mail->buildMessage();
-				$mail->send(array($not['email']));
+		$threadId = $commentslib->post_in_object($comments_objectId, $_REQUEST, $feedbacks, $errors);
+		if (!empty($threadId) && empty($errors) && $prefs['feature_user_watches'] == 'y') {
+			if ($prefs['wiki_watch_comments'] == 'y' && isset($_REQUEST["page"])) {
+				global $notificationemaillib; require_once('lib/notifications/notificationemaillib.php');
+				sendCommentNotification('wiki', $_REQUEST['page'], $_REQUEST['comments_title'], $_REQUEST['comments_data']);
+			} else if (isset($_REQUEST["articleId"])) {
+				global $notificationemaillib; require_once('lib/notifications/notificationemaillib.php');
+				sendCommentNotification('article', $_REQUEST['articleId'], $_REQUEST['comments_title'], $_REQUEST['comments_data']);
+			} elseif (isset($_REQUEST['itemId'])) {
+				global $notificationemaillib; require_once('lib/notifications/notificationemaillib.php');
+				sendCommentNotification('trackeritem', $_REQUEST['itemId'], $_REQUEST['comments_title'], $_REQUEST['comments_data']);
 			}
 		}
 	}

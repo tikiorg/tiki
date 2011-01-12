@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: get_strings.php 29899 2010-10-08 00:26:31Z sept_7 $
+// $Id$
 // Parameters:
 
 // lang=xx    : only translates language 'xx',
@@ -369,7 +369,7 @@ $lang=Array(
 "external link" => "lien externe",
 "External links will be identifed with an icon. Use the ../img/icons/external_link.gif image to customize the icon" => "External links will be identifed with an icon. Use the ../img/icons/external_link.gif image to customize the icon",
 "External wikis" => "Wikis externes",
-"Extra Parameter to pass to the CAS Server" => "Paramêtre supplémentaire à fournir au serveur CAS",
+"Extra Parameter to pass to the CAS Server" => "Paramètre supplémentaire à fournir au serveur CAS",
 "Extra Stuff &amp; Fun" => "Spécial &amp; Fun",
 "Failed to write file to disk" => "Failed to write file to disk",
 "Faq Stats" => "Statistiques sur les FAQs",
@@ -9666,7 +9666,7 @@ $lang=Array(
 "Task" => "Tâche",
 "Priority" => "Priorité",
 "Friend" => "Ami",
-"Last seen on" => "Dernièrement vu le",
+"Last seen on" => "Vu pour la dernière fois le",
 "(idle for %s seconds)" => "(aucune activité depuis %s secondes)",
 "User information - Click for more info" => "Info. utilisateur - Cliquer pour en savoir plus",
 " seconds" => " secondes",
@@ -10920,7 +10920,8 @@ $lang=Array(
 "The changes in this version follow below, followed after by the current full page text." => "Ci-dessous, les changements de cette version suivis du texte complet de la page.",
 "-Lines: {\$oldd} changed to +Lines: {\$newd}" => "-Lignes: {\$oldd} changées en +Lignes: {\$newd}",
 "The new page content follows below." => "Ci-dessous, le nouveau contenu de la page.",
-"Wiki page %s was commented on by" => "La page Wiki %s a été commentée par",
+"The Wiki page {\$mail_objectname} was commented on by" => "La page {\$mail_objectname} a été commentée par",
+"The article {\$mail_objectname} was commented on by" => "L'article {\$mail_objectname} a été commenté par",
 "an anonymous user" => "un utilisateur anonyme",
 "Wiki page renamed" => "Page Wiki renommée",
 "Old name" => "Ancien nom",
@@ -11793,7 +11794,7 @@ $lang=Array(
 "Dependencies" => "Dépendances",
 "Inline (No Plugin Edit UI)" => "Inline (sans interface d'édition)",
 "New Argument" => "Nouveau argument",
-"Plugin Parameter Documentation" => "Documentation des paramêtres du plugin",
+"Plugin Parameter Documentation" => "Documentation des paramètres du plugin",
 "Required" => "Requis",
 "Safe" => "Prudent",
 "Plugin Body" => "Corps du plugin",

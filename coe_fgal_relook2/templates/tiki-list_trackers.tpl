@@ -11,7 +11,7 @@
 {if ($channels) or ($find)}
 	{include file='find.tpl'}
 	{if ($find) and ($channels)}
-		<p>{tr}Found{/tr} {$channels|@count} {tr}trackers{/tr}:</p>
+		<p>{tr}Found{/tr} {$channels|@count} {tr}trackers:{/tr}</p>
 	{/if}
 {/if}
 <!-- beginning of table -->
@@ -33,13 +33,13 @@
 				{else}
 					<td>{$channels[user].description|escape|nl2br}</td>
 				{/if}
-				<td>{$channels[user].created|tiki_short_datetime}</td>
-				<td>{$channels[user].lastModif|tiki_short_datetime}</td>
-				<td style="text-align:right;">{$channels[user].items}</td>
+				<td class="date">{$channels[user].created|tiki_short_datetime}</td>
+				<td class="date">{$channels[user].lastModif|tiki_short_datetime}</td>
+				<td class="integer">{$channels[user].items}</td>
 			</tr>
 		{/if}
 	{sectionelse}
-		<tr><td colspan="5" class="odd"><strong>{tr}No records found{/tr}{if $find} {tr}with{/tr}: {$find}{/if}.</strong></td></tr>
+		<tr><td colspan="5" class="odd"><strong>{tr}No records found{/tr}{if $find} {tr}with:{/tr} {$find}{/if}.</strong></td></tr>
 	{/section}
 </table>
 <!-- Beginning of the prev/next advance buttons found at bottom of page -->

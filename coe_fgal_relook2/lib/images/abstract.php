@@ -19,7 +19,7 @@ class ImageAbstract
 	function __construct($image, $isfile = false) {
 		if ( ! empty($image) || $this->filename !== null ) {
 			if ( is_readable( $this->filename ) && function_exists('exif_thumbnail') && in_array(image_type_to_mime_type(exif_imagetype($this->filename)), array('image/jpeg', 'image/tiff'))) {
-				$this->thumb = exif_thumbnail($this->filename, $this->width, $this->height);
+				$this->thumb = @exif_thumbnail($this->filename, $this->width, $this->height);
 				if (trim($this->thumb) == "") $this->thumb = NULL;
 			}
 			$this->classname = get_class($this);

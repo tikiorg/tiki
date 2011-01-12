@@ -4,7 +4,7 @@
 
 <form method="get" action="tiki-admin_credits.php">
 	<p>
-		{tr}Username{/tr}:
+		{tr}Username:{/tr}
 		<input type="text" name="userfilter" value="{$userfilter|escape}"/>
 		<input type="submit" value="{tr}Search{/tr}"/>
 	</p>

@@ -16,7 +16,7 @@
       <table class="admin">
         <tr>
           <td>
-            {tr}Use database to store files{/tr}:
+            {tr}Use database to store files:{/tr}
           </td>
           <td>
             <input type="radio" name="t_use_db" value="y" {if $prefs.t_use_db eq 'y'}checked="checked"{/if}/>
@@ -25,9 +25,9 @@
 
         <tr>
           <td>
-            {tr}Use a directory to store files{/tr}:</td>
+            {tr}Use a directory to store files:{/tr}</td>
           <td>
-            <input type="radio" name="t_use_db" value="n" {if $prefs.t_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:
+            <input type="radio" name="t_use_db" value="n" {if $prefs.t_use_db eq 'n'}checked="checked"{/if}/> {tr}Path:{/tr}
             <br />
             <input type="text" name="t_use_dir" value="{$prefs.t_use_dir|escape}" size="50" /> 
           </td>
@@ -85,21 +85,21 @@
         
         {section name=x loop=$attachements}
         <tr class={cycle}>
-          <td><a href="tiki-download_item_attachment.php?attId={$attachements[x].attId}" title="{tr}Download{/tr}">{$attachements[x].attId}</a></td>
-          <td>{$attachements[x].user}</td>
-          <td>{$attachements[x].filename}</td>
-          <td>{$attachements[x].filesize|kbsize}</td>
-          <td>{$attachements[x].filetype}</td>
-          <td>{$attachements[x].hits}</td>
-          <td>{$attachements[x].itemId}</td>
-          <td>{if $attachements[x].path}file{else}db{/if}</td>
-          <td>{$attachements[x].created|tiki_short_date}</td>
-          <td>
+          <td class="id"><a href="tiki-download_item_attachment.php?attId={$attachements[x].attId}" title="{tr}Download{/tr}">{$attachements[x].attId}</a></td>
+          <td class="username">{$attachements[x].user}</td>
+          <td class="text">{$attachements[x].filename}</td>
+          <td class="integer">{$attachements[x].filesize|kbsize}</td>
+          <td class="text">{$attachements[x].filetype}</td>
+          <td class="integer">{$attachements[x].hits}</td>
+          <td class="integer">{$attachements[x].itemId}</td>
+          <td class="text">{if $attachements[x].path}file{else}db{/if}</td>
+          <td class="date">{$attachements[x].created|tiki_short_date}</td>
+          <td class="action">
             <a href="tiki-admin.php?page=trackers&amp;attId={$attachements[x].attId}&amp;action={if $attachements[x].path}move2db{else}move2file{/if}">{icon _id='arrow_refresh' title="{tr}Switch storage{/tr}"}</a>
           </td>
         </tr>
 {sectionelse}
-	<tr class="odd"><td colspan="10">{tr}No records{/tr}</td></tr>
+	<tr class="even"><td colspan="10" class="norecords">{tr}No records found.{/tr}</td></tr>
         {/section}
       </table>
       

@@ -22,19 +22,19 @@
 		<input type="hidden" name="receivedPageId" value="{$receivedPageId|escape}" />
 		<table class="formcolor">
 			<tr>
-				<td>{tr}Name{/tr}:</td>
+				<td>{tr}Name:{/tr}</td>
 				<td>
 					<input type="text" name="pageName" value="{$pageName|escape}" />
 				</td>
 			</tr>
 			<tr>
-				<td>{tr}Data{/tr}:</td>
+				<td>{tr}Data:{/tr}</td>
 				<td>
 					<textarea name="data" rows="10" cols="60">{$data|escape}</textarea>
 				</td>
 			</tr>
 			<tr>
-				<td>{tr}Comment{/tr}:</td>
+				<td>{tr}Comment:{/tr}</td>
 				<td>
 					<input type="text" name="comment" value="{$comment|escape}" />
 				</td>

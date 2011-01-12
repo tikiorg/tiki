@@ -73,7 +73,7 @@ $smarty->assign('paginate', $paginate);
 if (isset($_REQUEST['history_offset']) && $paginate) {
 	$history_offset = $_REQUEST['history_offset'];
 } else {
-	$history_offset = 0;
+	$history_offset = 1;
 }
 $smarty->assign('history_offset', $history_offset);
 
@@ -86,7 +86,7 @@ $smarty->assign('history_pagesize', $history_pagesize);
 
 // fetch page history, but omit the actual page content (to save memory)
 $history = $histlib->get_page_history($page, false, $history_offset, $paginate ? $history_pagesize : -1);
-$smarty->assign('history_cant', $histlib->get_nb_history($page));
+$smarty->assign('history_cant', $histlib->get_nb_history($page) - 1);
 
 if (!isset($_REQUEST['show_all_versions'])) {
 	$_REQUEST['show_all_versions'] = "y";

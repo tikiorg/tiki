@@ -32,23 +32,23 @@
 					</fieldset>
 				{/if}
 				<fieldset>
-					<label for="description">{tr}Description{/tr}:</label>
+					<label for="description">{tr}Description:{/tr}</label>
 					<input type="text" id="description" name="description"/>
 				</fieldset>
 
 				<fieldset>
-					<label for="detail">{tr}Detail{/tr}:</label>
+					<label for="detail">{tr}Detail:{/tr}</label>
 					<textarea id="detail" name="detail" style="width: 100%;" rows="10"></textarea>
 				</fieldset>
 
 				<fieldset>
-					<label for="amount">{tr}Amount{/tr}:</label>
+					<label for="amount">{tr}Amount:{/tr}</label>
 					<input type="text" id="amount" name="amount" class="right"/>
 					{$prefs.payment_currency|escape}
 				</fieldset>
 
 				<fieldset>
-					<label for="payable">{tr}Payable within{/tr}:</label>
+					<label for="payable">{tr}Payable within:{/tr}</label>
 					<input type="text" id="payable" class="right" name="payable" value="{$prefs.payment_default_delay|escape}"/>
 					{tr}days{/tr}
 				</fieldset>

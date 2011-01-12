@@ -150,19 +150,10 @@ class ArtLib extends TikiLib
 				$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
 				$smarty->assign('mail_title', 'articleId=' . $articleId);
 				$smarty->assign('mail_postid', $articleId);
-				$smarty->assign('mail_date', $this->now);
 				$smarty->assign('mail_user', $user);
 				$smarty->assign('mail_data', $article_data['heading'] . "\n----------------------\n");
 				$smarty->assign('mail_heading', $heading);
 				$smarty->assign('mail_body', $body);
-				$foo = parse_url($_SERVER['REQUEST_URI']);
-				$machine = $tikilib->httpPrefix( true ). $foo['path'];
-				$smarty->assign('mail_machine', $machine);
-				$parts = explode('/', $foo['path']);
-				if (count($parts) > 1) {
-					unset ($parts[count($parts) - 1]);
-				}
-				$smarty->assign('mail_machine_raw', $tikilib->httpPrefix( true ) . implode('/', $parts));
 				sendEmailNotification($nots, 'watch', 'user_watch_article_post_subject.tpl', $_SERVER['SERVER_NAME'], 'user_watch_article_post.tpl');
 			}
 
@@ -332,8 +323,6 @@ class ArtLib extends TikiLib
 		}
 
 		if ($tiki_p_autoapprove_submission != 'y') {
-			#workaround to "pass" $topicId to get_event_watches
-			$GLOBALS['topicId'] = $topicId;
 			$emails = $tikilib->get_event_watches('article_submitted', '*');
 			$emails2 = $tikilib->get_event_watches('topic_article_created', $topicId);
 			$emails3 = array();
@@ -349,15 +338,11 @@ class ArtLib extends TikiLib
 			}
 			if (count($emails)) {
 				include_once('lib/notifications/notificationemaillib.php');
-				$foo = parse_url($_SERVER['REQUEST_URI']);
-				$machine = $tikilib->httpPrefix( true ). $foo['path'];
 				$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
 				$smarty->assign('mail_user', $user);
 				$smarty->assign('mail_title', $title);
 				$smarty->assign('mail_heading', $heading);
 				$smarty->assign('mail_body', $body);
-				$smarty->assign('mail_date', $this->now);
-				$smarty->assign('mail_machine', $machine);
 				$smarty->assign('mail_subId', $id);
 				sendEmailNotification($emails, 'watch', 'submission_notification_subject.tpl', $_SERVER['SERVER_NAME'], 'submission_notification.tpl');
 			}
@@ -516,8 +501,6 @@ class ArtLib extends TikiLib
 			if ($prefs['feature_score'] == 'y') {
 				$this->score_event($user, 'article_new');
 			}
-			// workaround to "pass" $topicId to get_event_watches
-			$GLOBALS["topicId"] = $topicId;
 			$event = 'article_submitted';
 			$nots = $tikilib->get_event_watches('article_submitted', '*');
 			$nots2 = $tikilib->get_event_watches('topic_article_created', $topicId);
@@ -535,7 +518,7 @@ class ArtLib extends TikiLib
 		if (is_array($emails) && (empty ($from) || $from == $prefs['sender_email'])) {
 			foreach ($emails as $n) {
 				if (!in_array($n, $nots3))
-					$nots[] = array('email' => $n);
+					$nots[] = array('email' => $n, 'language' => $prefs['site_language']);
 			}
 		}
 		if (!isset($_SERVER['SERVER_NAME'])) {
@@ -559,24 +542,15 @@ class ArtLib extends TikiLib
 			$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
 			$smarty->assign('mail_title', $title);
 			$smarty->assign('mail_postid', $articleId);
-			$smarty->assign('mail_date', $this->now);
 			$smarty->assign('mail_user', $user);
 			$smarty->assign('mail_data', $heading."\n----------------------\n" . $body);
 			$smarty->assign('mail_heading', $heading);
 			$smarty->assign('mail_body', $body);
-			$foo = parse_url($_SERVER['REQUEST_URI']);
-			$machine = $tikilib->httpPrefix( true ). $foo['path'];
-			$smarty->assign('mail_machine', $machine);
-			$parts = explode('/', $foo['path']);
-			if (count($parts) > 1) {
-				unset ($parts[count($parts) - 1]);
-			}
-			$smarty->assign('mail_machine_raw', $tikilib->httpPrefix( true ). implode('/', $parts));
 			sendEmailNotification($nots, 'watch', 'user_watch_article_post_subject.tpl', $_SERVER['SERVER_NAME'], 'user_watch_article_post.tpl');
 			if (is_array($emails) && !empty($from) && $from != $prefs['sender_email']) {
 				$nots = array();
 				foreach ($emails as $n) {
-					$nots[] = array('email' => $n);
+					$nots[] = array('email' => $n, 'language' => $prefs['site_language']);
 				}	
 				sendEmailNotification($nots, 'watch', 'user_watch_article_post_subject.tpl', $_SERVER['SERVER_NAME'], 'user_watch_article_post.tpl', $from);
 			}

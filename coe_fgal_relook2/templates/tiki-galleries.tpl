@@ -29,8 +29,8 @@
 			<form action="tiki-galleries.php" method="post" id="gal-edit-form">
 				<input type="hidden" name="galleryId" value="{$galleryId|escape}" />
 				<table class="formcolor">
-					<tr><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}"/></td></tr>
-					<tr><td>{tr}Description{/tr}:</td><td><textarea   rows="{$rows}" cols="{$cols}" name="description" id="gal-desc">{$description|escape}</textarea></td></tr>
+					<tr><td>{tr}Name:{/tr}</td><td><input type="text" name="name" value="{$name|escape}"/></td></tr>
+					<tr><td>{tr}Description:{/tr}</td><td><textarea   rows="{$rows}" cols="{$cols}" name="description" id="gal-desc">{$description|escape}</textarea></td></tr>
 					{if $tiki_p_admin_galleries eq 'y'}
 						<tr><td>{tr}Gallery is visible to non-admin users?{/tr}</td><td><input type="checkbox" name="visible" {if $visible eq 'y'}checked="checked"{/if} /></td></tr>
 						{* If a user can create a gallery, but doesn't have tiki_p_admin_galleries the new gallery needs to be visible. *}
@@ -38,32 +38,32 @@
 						<input type="hidden" name="visible" value="on" />
 					{/if}
 					{if $prefs.feature_maps eq 'y'}
-						<tr><td>{tr}Geographic{/tr}:</td><td><input type="checkbox" name="geographic" {if $geographic eq 'y'}checked="checked"{/if} /></td></tr>
+						<tr><td>{tr}Geographic:{/tr}</td><td><input type="checkbox" name="geographic" {if $geographic eq 'y'}checked="checked"{/if} /></td></tr>
 					{/if}
 					{if $prefs.preset_galleries_info ne 'y'}
 						<tr>
-							<td>{tr}Max Rows per page{/tr}:</td>
+							<td>{tr}Max Rows per page:{/tr}</td>
 							<td>
 								<input type="text" name="maxRows"{if !empty($maxRows)} value="{$maxRows|escape}"{/if} />
 								<i>{tr}Default:{/tr} {if !empty($prefs.maxRowsGalleries)}{$prefs.maxRowsGalleries}{else}10{/if}</i>
 							</td>
 						</tr>
 						<tr>
-							<td>{tr}Images per row{/tr}:</td>
+							<td>{tr}Images per row:{/tr}</td>
 							<td>
 								<input type="text" name="rowImages"{if !empty($rowImages)} value="{$rowImages|escape}"{/if} />
 								<i>{tr}Default:{/tr} {if !empty($prefs.rowImagesGalleries)}{$prefs.rowImagesGalleries}{else}6{/if}</i>
 							</td>
 						</tr>
 						<tr>
-							<td>{tr}Thumbnails size X{/tr}:</td>
+							<td>{tr}Thumbnails size X:{/tr}</td>
 							<td>
 								<input type="text" name="thumbSizeX"{if !empty($thumbSizeX)} value="{$thumbSizeX|escape}"{/if} />
 								<i>{tr}Default:{/tr} {if !empty($prefs.thumbSizeXGalleries)}{$prefs.thumbSizeXGalleries}{else}80{/if}</i>
 							</td>
 						</tr>
 						<tr>
-							<td>{tr}Thumbnails size Y{/tr}:</td>
+							<td>{tr}Thumbnails size Y:{/tr}</td>
 							<td>
 								<input type="text" name="thumbSizeY"{if !empty($thumbSizeY)} value="{$thumbSizeY|escape}"{/if} />
 								<i>{tr}Default:{/tr} {if !empty($prefs.thumbSizeYGalleries)}{$prefs.thumbSizeYGalleries}{else}80{/if}</i>
@@ -71,7 +71,7 @@
 						</tr>
 					{/if}
 					<tr>
-						<td>{tr}Default sort order{/tr}:</td>
+						<td>{tr}Default sort order:{/tr}</td>
 						<td>
 							<select name="sortorder">
 								{foreach from=$options_sortorder key=key item=item}
@@ -83,7 +83,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td>{tr}Fields to show during browsing the gallery{/tr}:</td>
+						<td>{tr}Fields to show during browsing the gallery:{/tr}</td>
 						<td>
 							<input type="checkbox" name="showname" value="y" {if $showname=='y'}checked="checked"{/if} />{tr}Name{/tr}<br />
 							<input type="checkbox" name="showimageid" value="y" {if $showimageid=='y'}checked="checked"{/if} />{tr}Image ID{/tr}<br />
@@ -98,7 +98,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td>{tr}Gallery Image{/tr}:</td>
+						<td>{tr}Gallery Image:{/tr}</td>
 						<td>
 							<select name="galleryimage">
 								{foreach from=$options_galleryimage key=key item=item}
@@ -108,7 +108,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td>{tr}Parent gallery{/tr}:</td>
+						<td>{tr}Parent gallery:{/tr}</td>
 						<td>
 							<select name="parentgallery">
 								<option value="-1" {if $parentgallery == -1} selected="selected"{/if}>{tr}none{/tr}</option>
@@ -120,14 +120,14 @@
 					</tr>
 					{if $prefs.preset_galleries_info ne 'y'}
 						<tr>
-							<td>{tr}Available scales{/tr}:</td>
+							<td>{tr}Available scales:{/tr}</td>
 							<td>
 								{tr}Global default{/tr} {$prefs.scaleSizeGalleries}x{$prefs.scaleSizeGalleries} ({tr}Bounding box{/tr}) 
 								<input type="radio" name="defaultscale" value="{$prefs.scaleSizeGalleries}" {if $defaultscale==$prefs.scaleSizeGalleries}checked="checked"{/if} />
 								{tr}default scale{/tr}<br />
 								{section  name=scales loop=$scaleinfo}
 									{if $scaleinfo[scales].scale ne $prefs.scaleSizeGalleries}
-										{tr}Remove{/tr}:<input type="checkbox" name="removescale_{$scaleinfo[scales].scale|escape}" />
+										{tr}Remove:{/tr}<input type="checkbox" name="removescale_{$scaleinfo[scales].scale|escape}" />
 										{$scaleinfo[scales].scale}x{$scaleinfo[scales].scale} ({tr}Bounding box{/tr}) 
 										<input type="radio" name="defaultscale" value="{$scaleinfo[scales].scale}" {if $defaultscale==$scaleinfo[scales].scale}checked="checked"{/if} />
 										{tr}default scale{/tr}<br />
@@ -138,12 +138,12 @@
 								{tr}Original image is default scale{/tr}<input type="radio" name="defaultscale" value="o" {if $defaultscale=='o'}checked="checked"{/if} />
 							</td>
 						</tr>
-						<tr><td>{tr}Add scaled images with bounding box of square size{/tr}:</td><td><input type="text" name="scaleSize" />{tr}pixels{/tr}</td></tr>
+						<tr><td>{tr}Add scaled images with bounding box of square size:{/tr}</td><td><input type="text" name="scaleSize" />{tr}pixels{/tr}</td></tr>
 					{/if}
-					<tr><td>{tr}Owner of the gallery{/tr}:</td><td><input type="text" name="owner" value="{$owner|escape}"/></td></tr>
+					<tr><td>{tr}Owner of the gallery:{/tr}</td><td><input type="text" name="owner" value="{$owner|escape}"/></td></tr>
 					{include file='categorize.tpl'}
 					{include file='freetag.tpl'}
-					<tr><td>{tr}Other users can upload images to this gallery{/tr}:</td><td><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
+					<tr><td>{tr}Other users can upload images to this gallery:{/tr}</td><td><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
 					<tr><td>&nbsp;</td><td><input type="submit" value="{tr}Save{/tr}" name="edit" /></td></tr>
 				</table>
 			</form>
@@ -154,7 +154,7 @@
 {if $galleryId > 0}
 	{if $edited eq 'y'}
 		<div class="wikitext">
-			{tr}You can access the gallery using the following URL{/tr}: <a class="gallink" href="{$url}?galleryId={$galleryId}">{$url}?galleryId={$galleryId}</a>
+			{tr}You can access the gallery using the following URL:{/tr} <a class="gallink" href="{$url}?galleryId={$galleryId}">{$url}?galleryId={$galleryId}</a>
 		</div>
 	{/if}
 {/if}

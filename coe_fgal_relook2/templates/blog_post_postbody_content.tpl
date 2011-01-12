@@ -19,7 +19,7 @@
 			<div align="center">
 				<a href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$post_info.first_page}">{icon _id='resultset_first' alt="{tr}First page{/tr}"}</a>
 				<a href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$post_info.prev_page}">{icon _id='resultset_previous' alt="{tr}Previous page{/tr}"}</a>
-				<small>{tr}page{/tr}:{$post_info.pagenum}/{$post_info.pages}</small>
+				<small>{tr}page:{/tr}{$post_info.pagenum}/{$post_info.pages}</small>
 				<a href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$post_info.next_page}">{icon _id='resultset_next' alt="{tr}Next page{/tr}"}</a>
 				<a href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$post_info.last_page}">{icon _id='resultset_last' alt="{tr}Last page{/tr}"}</a>
 			</div>

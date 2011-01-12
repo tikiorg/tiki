@@ -18,7 +18,7 @@
 				<input type="hidden" name="maxRecords" value="{$maxRecords}" />
 			{/if}
 			<div class="adminoptionbox">
-				<label for="edit_language">{tr}Select the language to edit{/tr}:</label>
+				<label for="edit_language">{tr}Select the language to edit:{/tr}</label>
 				<select id="edit_language" class="translation_action"name="edit_language">
 					{section name=ix loop=$languages}
 						<option value="{$languages[ix].value|escape}" {if $edit_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
@@ -54,12 +54,12 @@
 			{/if}
 			{if $action eq 'add_tran_sw'}
 				<div class="simplebox">
-					<h4>{tr}Add a translation{/tr}:</h4>
+					<h4>{tr}Add a translation:{/tr}</h4>
 					<table class="formcolor">
 						<tr>
-							<td>{tr}Original{/tr}:</td>
+							<td>{tr}Original:{/tr}</td>
 							<td><input name="add_tran_source" size=20 maxlength=255></td>
-							<td>{tr}Translation{/tr}:</td>
+							<td>{tr}Translation:{/tr}</td>
 							<td><input name="add_tran_tran" size=20 maxlength=255></td>
 							<td align="center"><input type="submit" name="add_tran" value="{tr}Add{/tr}" /></td>
 						</tr>
@@ -153,7 +153,7 @@
 				{/remarksbox}
 			{else}
 				<div class="adminoptionbox">
-					<label for="exp_language">{tr}Select the language to Export{/tr}:</label>
+					<label for="exp_language">{tr}Select the language to Export:{/tr}</label>
 					<select id="exp_language" name="exp_language">
 						{section name=ix loop=$db_languages}
 							<option value="{$db_languages[ix].value|escape}"

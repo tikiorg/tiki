@@ -17,7 +17,7 @@
   </p>
   {elseif isset($prefs.wiki_authors_style) &&  $prefs.wiki_authors_style eq 'collaborative'}
   <p class="editdate">
-    {tr}Contributors to this page{/tr}: {$lastUser}
+    {tr}Contributors to this page:{/tr} {$lastUser}
     {section name=author loop=$contributors}
     {if !$smarty.section.author.last},
     {else} {tr}and{/tr}
@@ -29,8 +29,8 @@
   {elseif isset($prefs.wiki_authors_style) &&  $prefs.wiki_authors_style eq 'none'}
   {else}
   <p class="editdate">
-    {tr}Created by{/tr}: {$creator}
-    {tr}Last Modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
+    {tr}Created by:{/tr} {$creator}
+    {tr}Last Modification:{/tr} {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
   </p>
   {/if}
 

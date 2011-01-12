@@ -68,6 +68,7 @@
 			{tr}This is a new staging page that has not been approved before. Edit and manually move it to the category for approved pages to approve it for the first time.{/tr}
 		</div>
 	{/if}
+{include file=tiki-flaggedrev_approval_header.tpl}
 
 {/if} {*hide_page_header*}
 

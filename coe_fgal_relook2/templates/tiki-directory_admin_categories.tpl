@@ -3,7 +3,7 @@
 {* Display the title using parent *}
 {include file='tiki-directory_admin_bar.tpl'}
 {* Navigation bar to admin, admin related, etc *}
-<h2>{tr}Parent directory category{/tr}:</h2>
+<h2>{tr}Parent directory category:{/tr}</h2>
 {* Display the path adding manually the top category id=0 *}
 <form name="path" method="post" action="tiki-directory_admin_categories.php">
   <select name="parent" onchange="javascript:path.submit();">
@@ -22,22 +22,22 @@
 {if $categId eq 0}
 <h2>{tr}Add a directory category{/tr}</h2>
 {else}
-<h2>{tr}Edit this directory category{/tr}: {$info.name}</h2>
+<h2>{tr}Edit this directory category:{/tr} {$info.name}</h2>
 <a href="tiki-directory_admin_categories.php">{tr}Add a Directory Category{/tr}</a> {/if}
 <form action="tiki-directory_admin_categories.php" method="post">
   <input type="hidden" name="parent" value="{$parent|escape}" />
   <input type="hidden" name="categId" value="{$categId|escape}" />
   <table class="formcolor">
     <tr>
-      <td>{tr}Name{/tr}:</td>
+      <td>{tr}Name:{/tr}</td>
       <td><input type="text" name="name" value="{$info.name|escape}" />
     </tr>
     <tr>
-      <td>{tr}Description{/tr}:</td>
+      <td>{tr}Description:{/tr}</td>
       <td><textarea rows="5" cols="60" name="description">{$info.description|escape}</textarea></td>
     </tr>
     <tr>
-      <td>{tr}Children type{/tr}:</td>
+      <td>{tr}Children type:{/tr}</td>
       <td><select name="childrenType">
           <option value='c' {if $info.childrenType eq 'c'}selected="selected"{/if}>{tr}Most visited directory sub-categories{/tr}</option>
           <option value='d' {if $info.childrenType eq 'd'}selected="selected"{/if}>{tr}Directory Category description{/tr}</option>
@@ -46,7 +46,7 @@
       </td>
     </tr>
     <tr>
-      <td>{tr}Maximum number of children to show{/tr}:</td>
+      <td>{tr}Maximum number of children to show:{/tr}</td>
       <td><select name="viewableChildren">
           <option value="0" {if $info.viewableChildren eq 0}selected="selected"{/if}>{tr}none{/tr}</option>
           <option value="1" {if $info.viewableChildren eq 1}selected="selected"{/if}>1</option>
@@ -58,15 +58,15 @@
       </td>
     </tr>
     <tr>
-      <td>{tr}Allow sites in this directory category{/tr}:</td>
+      <td>{tr}Allow sites in this directory category:{/tr}</td>
       <td><input name="allowSites" type="checkbox" {if $info.allowSites eq 'y'}checked="checked"{/if} /></td>
     </tr>
     <tr>
-      <td>{tr}Show number of sites in this directory category{/tr}:</td>
+      <td>{tr}Show number of sites in this directory category:{/tr}</td>
       <td><input name="showCount" type="checkbox" {if $info.showCount eq 'y'}checked="checked"{/if} /></td>
     </tr>
     <tr>
-      <td>{tr}Editor group{/tr}:</td>
+      <td>{tr}Editor group:{/tr}</td>
       <td><select name="editorGroup">
           <option value="">{tr}None{/tr}</option>
           

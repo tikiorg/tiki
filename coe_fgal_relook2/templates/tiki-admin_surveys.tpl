@@ -86,11 +86,11 @@
 	<input type="hidden" name="surveyId" value="{$info.surveyId|escape}" />
 	<table class="formcolor">
 		<tr>
-			<td>{tr}Name{/tr}:</td>
+			<td>{tr}Name:{/tr}</td>
 			<td><input type="text" name="name" size="80" value="{$info.name|escape}" /></td>
 		</tr>
 		<tr>
-			<td>{tr}Description{/tr}:</td>
+			<td>{tr}Description:{/tr}</td>
 			<td>{textarea name="description" rows="6" cols="80" _toolbars='y' _zoom='n' _simple='y' comments='y'}{$info.description}{/textarea}</td>
 		</tr>
 		{include file='categorize.tpl'}

@@ -61,7 +61,7 @@
 				<td valign="top">
 				{capture name=imgTitle}{if $show_image_caption eq 'y' and $image_caption}{$image_caption|escape}{elseif $topicName}{tr}{$topicName}{/tr}{/if}{/capture}
 				{if $topicId}
-					<a href="tiki-view_articles.php?topic={$topicId}" title="{if $show_image_caption and $image_caption}{$image_caption|escape}{else}{tr}List all articles of this same topic{/tr}: {tr}{$topicName}{/tr}{/if}">
+					<a href="tiki-view_articles.php?topic={$topicId}" title="{if $show_image_caption and $image_caption}{$image_caption|escape}{else}{tr}List all articles of this same topic:{/tr} {tr}{$topicName}{/tr}{/if}">
 				{/if}
 				{if $prefs.art_header_text_pos eq 'below' && $list_image_x > 0}
 					{assign var="big_image" value=y}
@@ -108,7 +108,7 @@
 					{if $article_attributes}
 						<div class="articleattributes">
 							{foreach from=$article_attributes key=attname item=attvalue}
-							{tr}{$attname|escape}{/tr}: {$attvalue|escape}<br />
+							{tr}{$attname|escape}:{/tr} {$attvalue|escape}<br />
 							{/foreach}
 						</div>
 					{/if}

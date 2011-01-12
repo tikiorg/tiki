@@ -349,6 +349,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
      */
     function extractRevision(DOMElement $revision)
     {
+        global $prefs;
         $data = array();
         $data['minor'] = false;
         $data['comment'] = '';
@@ -368,6 +369,9 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
                         throw new ImporterParserException($text->message);
                     } else {
                         $data['data'] = $text;
+                        if ($prefs['feature_categories'] == 'y') {
+                            $this->extractCategories($data);
+                        }
                     }
                     break;
                 case 'timestamp':
@@ -385,6 +389,18 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 
         return $data;
     }
+
+	/** 
+	 * Extracts the categories from the page data
+	 **/
+	function extractCategories(&$data) {
+		if (preg_match_all('/(\(\(Category:(\s*[^\)]+\s*)\)\)\s*)/', $data['data'], $matches)) {
+			foreach ($matches[1] as $match) {
+				$data['data'] = str_replace($match, '', $data['data']);
+			}
+			$data['categories'] = $matches[2]; 
+		}
+	}
 
     /**
      * Parse an DOM representation of a Mediawiki page revision contributor and return

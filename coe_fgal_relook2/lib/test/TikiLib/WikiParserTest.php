@@ -93,6 +93,7 @@ class TikiLib_WikiParserTest extends PHPUnit_Framework_TestCase
 			array("# foo\n+ Continuation1\n+Continuation2\n# bar\n", "<ol><li> foo\n<br /> Continuation1\n<br />Continuation2\n</li><li> bar\n</li></ol><br />\n"), // Numbered list with continuation
 
 			array("||r1c1|r1c2\nr2c1|r2c2||", '<table class="wikitable"><tr><td class="wikicell" >r1c1</td><td class="wikicell" >r1c2</td></tr><tr><td class="wikicell" >r2c1</td><td class="wikicell" >r2c2</td></tr></table><br />' . "\n"),
+			array("~pp~foo~/pp~", "<pre>foo</pre><br />\n"),
 		);
 	}
 }

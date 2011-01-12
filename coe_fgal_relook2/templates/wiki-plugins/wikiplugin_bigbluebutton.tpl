@@ -12,7 +12,7 @@
 
 	{if ! $user }
 		<div>
-			{tr}Name{/tr}: 
+			{tr}Name:{/tr} 
 			<input type="text" name="bbb_name"/>
 			<input type="submit" value="{tr}Join{/tr}"/>
 		</div>

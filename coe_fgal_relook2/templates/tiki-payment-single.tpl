@@ -4,7 +4,7 @@
 	{else} 
 		<h2>{$payment_info.description|escape}</h2>
 	{/if}
-	<p>{tr}Status{/tr}: <strong>{$payment_info.state|escape}</strong></p>
+	<p>{tr}Status:{/tr} <strong>{$payment_info.state|escape}</strong></p>
 	{if $payment_info.fullview and !empty($payment_detail)}
 		<div class="clearfix wikitext">
 			{$payment_detail}
@@ -12,10 +12,10 @@
 	{/if}
 	<p>
 		{if $payment_info.state eq 'past'}
-			{tr}Paid amount{/tr}: {$payment_info.amount_original|escape} {$payment_info.currency|escape}<br />
+			{tr}Paid amount:{/tr} {$payment_info.amount_original|escape} {$payment_info.currency|escape}<br />
 		{else}
-			{tr}Initial amount{/tr}: {$payment_info.amount_original|escape} {$payment_info.currency|escape}<br />
-			{tr}Amount remaining{/tr}: <strong>{$payment_info.amount_remaining|escape} {$payment_info.currency|escape}</strong><br />
+			{tr}Initial amount:{/tr} {$payment_info.amount_original|escape} {$payment_info.currency|escape}<br />
+			{tr}Amount remaining:{/tr} <strong>{$payment_info.amount_remaining|escape} {$payment_info.currency|escape}</strong><br />
 			{tr 0=$payment_info.request_date|tiki_short_date 1=$payment_info.due_date|tiki_short_date}Payment request was sent on %0 and is due by %1.{/tr}<br />
 		{/if}
 		{if ( $payment_info.state eq 'outstanding' || $payment_info.state eq 'overdue' )}

@@ -14,7 +14,7 @@
 	{button href="tiki-edit_quiz.php" _text="{tr}Admin Quizzes{/tr}"}
 </div>
 
-<h2>{tr}Create/edit questions for quiz{/tr}: <a href="tiki-edit_quiz.php?quizId={$quiz_info.quizId}" >{$quiz_info.name|escape}</a></h2>
+<h2>{tr}Create/edit questions for quiz:{/tr} <a href="tiki-edit_quiz.php?quizId={$quiz_info.quizId}" >{$quiz_info.name|escape}</a></h2>
 
 <form action="tiki-edit_quiz_questions.php" method="post">
 	<input type="hidden" name="quizId" value="{$quizId|escape}" />
@@ -22,20 +22,20 @@
 
 	<table class="formcolor">
 		<tr>
-			<td>{tr}Question{/tr}:</td>
+			<td>{tr}Question:{/tr}</td>
 			<td>
 				<textarea name="question" rows="5" cols="80">{$question|escape}</textarea>
 			</td>
 		</tr>
 		<tr>
-			<td>{tr}Position{/tr}:</td>
+			<td>{tr}Position:{/tr}</td>
 			<td>
 				<select name="position">{html_options values=$positions output=$positions selected=$position}</select>
 			</td>
 		</tr>
 
 		<tr>
-			<td>{tr}Question Type{/tr}:</td>
+			<td>{tr}Question Type:{/tr}</td>
 			<td>
 				<select name="questionType">{html_options options=$questionTypes selected=$type}</select>
 			</td>

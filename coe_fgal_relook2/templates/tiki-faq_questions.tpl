@@ -1,4 +1,4 @@
-{title}{tr}Admin FAQ{/tr}: {$faq_info.title|escape}{/title}
+{title}{tr}Admin FAQ:{/tr} {$faq_info.title|escape}{/title}
 
 <div class="navbar">
 	{button href="tiki-list_faqs.php" _text="{tr}List FAQs{/tr}"}
@@ -16,14 +16,14 @@
 {* begin table *}
 <table class="formcolor">
   <tr>
-    <td>{tr}Question{/tr}:</td>
+    <td>{tr}Question:{/tr}</td>
     <td >
       <textarea type="text" rows="2" cols="80" name="question">{$question|escape}</textarea>
     </td>
   </tr>
 
   <tr>
-    <td>{tr}Answer{/tr}:
+    <td>{tr}Answer:{/tr}
     </td>
     <td >
       {toolbars area_id="faqans"}
@@ -57,7 +57,7 @@
 </td>
 </tr>
 <tr>
-<td>{tr}Question{/tr}:</td>
+<td>{tr}Question:{/tr}</td>
 <td >
 <select name="usequestionId">
 {section name=ix loop=$allq}

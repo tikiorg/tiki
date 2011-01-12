@@ -109,7 +109,7 @@
 			<input type="hidden" name="filegallistprefs" />
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">
-					<label for="fgal_sortorder">{tr}Default sort order{/tr}:</label>
+					<label for="fgal_sortorder">{tr}Default sort order:{/tr}</label>
 					<select name="fgal_sortorder" id="fgal_sortorder">
 						{foreach from=$options_sortorder key=key item=item}
 							<option value="{$item|escape}" {if $fgal_sortorder == $item} selected="selected"{/if}>{$key}</option>

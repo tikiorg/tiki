@@ -40,7 +40,7 @@
 		{else}
 			{tr}{$whatlabel}{/tr}
 		{/if}
-		<input type="text" name="find" value="{$find|escape}" />
+		<input type="text" name="find" id="find" value="{$find|escape}" />
 	</label>
 
 {if isset($exact_match)}
@@ -62,7 +62,7 @@
 		<option value='' {if $find_type eq ''}selected="selected"{/if}>{tr}any type{/tr}</option>
 		{section name=t loop=$types}
 			<option value="{$types[t].type|escape}" {if $find_type eq $types[t].type}selected="selected"{/if}>
-				{capture}{tr}{$types[t].type}{/tr}{/capture}{$smarty.capture.default|escape}
+				{$types[t].type|tr_if|escape}
 			</option>
 		{/section}
 	</select>
@@ -70,10 +70,10 @@
 
 {if !empty($topics)}
 	<select name="topic" class="findtopics">
-		<option value='' {if $find_topic eq ''}selected="selected"{/if}>{tr}all topic{/tr}</option>
+		<option value='' {if $find_topic eq ''}selected="selected"{/if}>{tr}any topic{/tr}</option>
 		{section name=ix loop=$topics}
 			<option value="{$topics[ix].topicId|escape}" {if $find_topic eq $topics[ix].topicId}selected="selected"{/if}>
-				{capture}{tr}{$topics[ix].name}{/tr}{/capture}{$smarty.capture.default|escape}
+				{$topics[ix].name|tr_if|escape}
 			</option>
 		{/section}
 	</select>
@@ -86,7 +86,7 @@
 		{section name=ix loop=$languages}
 			{if !is_array($prefs.available_languages) || count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
 			<option value="{$languages[ix].value|escape}" {if $find_lang eq $languages[ix].value}selected="selected"{/if}>
-				{tr}{$languages[ix].name}{/tr}
+				{$languages[ix].name}
 			</option>
 			{/if}
 		{/section}
@@ -98,7 +98,7 @@
 		{section name=ix loop=$languages}
 			{if !is_array($prefs.available_languages) || count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
 				<option value="{$languages[ix].value|escape}" {if $find_langOrphan eq $languages[ix].value}selected="selected"{/if}>
-					{tr}{$languages[ix].name}{/tr}
+					{$languages[ix].name}
 				</option>
 			{/if}
 		{/section}
@@ -128,7 +128,7 @@
 			<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
 			{section name=ix loop=$categories}
 				<option value="{$categories[ix].categId|escape}" {if $find_categId eq $categories[ix].categId}selected="selected"{/if}>
-					{capture}{tr}{$categories[ix].categpath}{/tr}{/capture}{$smarty.capture.default|escape}
+					{$categories[ix].categpath|tr_if|escape}
 				</option>
 			{/section}
 		</select>

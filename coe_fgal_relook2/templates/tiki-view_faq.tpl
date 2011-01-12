@@ -79,14 +79,14 @@
 			<input type="hidden" name="faqId" value="{$faqId|escape}" />
 			<table class="formcolor">
 				<tr>
-					<td>{tr}Question{/tr}:</td>
+					<td>{tr}Question:{/tr}</td>
 					<td>
 						<textarea rows="2" cols="80" name="suggested_question" style="width:95%;">{if $pendingquestion}{$pendingquestion}{/if}</textarea>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						{tr}Answer{/tr}:
+						{tr}Answer:{/tr}
 					</td>
 					<td>
 						<textarea rows="2" cols="80" name="suggested_answer" style="width:95%;">{if $pendinganswer}{$pendinganswer}{/if}</textarea>

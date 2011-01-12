@@ -3,7 +3,7 @@
 {* Display the title using parent *}
 {include file='tiki-directory_admin_bar.tpl'}
 {* Navigation bar to admin, admin related, etc *}
-<h2>{tr}Parent directory category{/tr}:</h2>
+<h2>{tr}Parent directory category:{/tr}</h2>
 {* Display the path adding manually the top category id=0 *}
 <form name="path" method="post" action="tiki-directory_admin_related.php">
   <select name="parent" onchange="javascript:path.submit();">
@@ -23,7 +23,7 @@
   <input type="hidden" name="parent" value="{$parent|escape}" />
   <table class="formcolor">
     <tr>
-      <td>{tr}Directory Category{/tr}:</td>
+      <td>{tr}Directory Category:{/tr}</td>
       <td><select name="categId">
           
     {section name=ix loop=$categs}
@@ -36,7 +36,7 @@
       </td>
     </tr>
     <tr>
-      <td>{tr}Mutual{/tr}:</td>
+      <td>{tr}Mutual:{/tr}</td>
       <td><input type="checkbox" name="mutual" /></td>
     </tr>
     <tr>

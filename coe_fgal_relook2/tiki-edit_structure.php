@@ -217,7 +217,7 @@ if (!empty($_REQUEST['categId'])) {
 }
 	
 // Get all wiki pages for the dropdown menu
-$listpages = $tikilib->list_pages(0, -1, 'pageName_asc', $find_objects, '', true, true, false, false, $filter);
+$listpages = $tikilib->list_pages(0, -1, 'pageName_asc', $find_objects, '', false, true, false, false, $filter);
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 
 $structures = $structlib->list_structures(0, -1, 'pageName_asc');

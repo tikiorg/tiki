@@ -224,7 +224,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 	$registeredIndexes = array();
 	foreach ($weekdays as $w) {
 		$leday = array();
-		if ($calendarViewMode == 'day') {
+		if ($calendarViewMode['casedefault'] == 'day') {
 			$dday = $daystart;
 		} else {
 			$dday = $curtikidate->getTime();
@@ -238,7 +238,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 
 		$cell[$i][$w]['day'] = $dday;
 
-		if ($calendarViewMode == 'day' or ($dday>=$daystart && $dday<=$dayend)) {
+		if ($calendarViewMode['casedefault'] == 'day' or ($dday>=$daystart && $dday<=$dayend)) {
 			if (!$firstDay) {
 				$firstDay = true;
 				$smarty->assign('currMonth',$dday);
@@ -255,10 +255,10 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 
 			foreach ($listevents["$dday"] as $le) {
 				$nbDaysLeftThisWeek = min(ceil(($le['endTimeStamp'] - $dday)/86400),(7-$w));
-				if ($calendarViewMode == 'month') {
+				if ($calendarViewMode['casedefault'] == 'month') {
 					$endOfCurrentMonth = $tikilib->make_time(23,59,59,TikiLib::date_format('m',$dday) + 1,0,TikiLib::date_format2('Y',$dday));
 					$nbDaysLeftThisWeek = min(ceil(($endOfCurrentMonth - $dday)/86400),$nbDaysLeftThisWeek);
-				} elseif ($calendarViewMode == 'year') {
+				} elseif ($calendarViewMode['casedefault'] == 'year') {
 					$endOfCurrentYear = $tikilib->make_time(23,59,59,12,31,TikiLib::date_format2('Y',$dday));
 					$nbDaysLeftThisWeek = min(ceil(($endOfCurrentYear - $dday)/86400),$nbDaysLeftThisWeek);
 				}
@@ -365,7 +365,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 	}
 }
 
-$smarty->assign('calendarViewMode',$calendarViewMode);
+$smarty->assign('calendarViewMode',$calendarViewMode['casedefault']);
 
 $verticalOffset = array();
 foreach($cell as $w=>$weeks) {
@@ -413,7 +413,7 @@ $hrows = array();
 $hours = array();
 $concurrencies = array();
 $arows = array();
-if ($calendarViewMode == 'day') {
+if ($calendarViewMode['casedefault'] == 'day') {
 	$hours = range($minHourOfDay,$maxHourOfDay);
 	$eventHoraires = array();
 	if (!empty($cell[0]["{$weekdays[0]}"]['items'])) {
@@ -524,7 +524,7 @@ if ($calendarViewMode == 'day') {
 		}
 	}
 
-} else if($calendarViewMode == 'week') {
+} else if($calendarViewMode['casedefault'] == 'week') {
 	$viewWeekDays = array();
 	for ($i=0 ; $i < 7 ; $i++)
 		$viewWeekDays[$i] = $viewstart + 86400*$i;

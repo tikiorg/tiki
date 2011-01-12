@@ -12,4 +12,4 @@
 {/if}
 {$report_body}
 
-{if $mail_contributions}{tr}Contribution{/tr}: {$mail_contributions}{/if}
+{if $mail_contributions}{tr}Contribution:{/tr} {$mail_contributions}{/if}

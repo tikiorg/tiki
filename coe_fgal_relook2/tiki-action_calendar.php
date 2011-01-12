@@ -39,7 +39,7 @@ foreach ( $tc_infos as $tc_key => $tc_val ) {
 
 $hrows = array();
 $hours = array();
-if ($calendarViewMode == 'day') {
+if ($calendarViewMode['casedefault'] == 'day') {
 	$hours = array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23);
 	foreach ($tc_infos['cell'][0]["{$tc_infos['weekdays'][0]}"]['items'] as $dayitems) {
 		$rawhour = intval(substr($dayitems['time'],0,2));
@@ -57,7 +57,7 @@ $smarty->assign('var', '');
 $smarty->assign('daformat2', $tikilib->get_long_date_format());
 $smarty->assign('myurl', $myurl);
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-$smarty->assign('calendarViewMode',$calendarViewMode);
+$smarty->assign('calendarViewMode',$calendarViewMode['casedefault']);
 $smarty->assign('calendar_type', 'tiki_actions');
 
 $smarty->assign('mid', 'tiki-action_calendar.tpl');

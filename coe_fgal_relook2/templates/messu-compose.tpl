@@ -34,7 +34,7 @@
 			<tr>
 				<td>
 					<label for="mess-composeto">{tr}To:{/tr}</label>
-					{help url="Inter-User+Messages#Composing_messages" desc="{tr}To{/tr}:{tr}Multiple addresses can be separated with semicolons (\";\"){/tr}"}
+					{help url="Inter-User+Messages#Composing_messages" desc="{tr}To:{/tr}{tr}Multiple addresses can be separated with semicolons (\";\"){/tr}"}
 				</td>
 				<td>
 					<input type="text" name="to" id="mess-composeto" value="{$to|escape}" class="username" size="80" />
@@ -45,7 +45,7 @@
 			<tr>
 				<td>
 					<label for="mess-composecc">{tr}CC:{/tr}</label>
-					{help url="Inter-User+Messages#Composing_messages" desc="{tr}CC{/tr}:{tr}Multiple addresses can be separated with semicolons (\";\"){/tr}"}
+					{help url="Inter-User+Messages#Composing_messages" desc="{tr}CC:{/tr}{tr}Multiple addresses can be separated with semicolons (\";\"){/tr}"}
 				</td>
 				<td>
 					<input type="text" name="cc" id="mess-composecc" value="{$cc|escape}" class="username" size="80" />
@@ -54,7 +54,7 @@
 			<tr>
 				<td>
 					<label for="mess-composebcc">{tr}BCC:{/tr}</label>
-					{help url="Inter-User+Messages#Composing_messages" desc="{tr}BCC{/tr}:{tr}Multiple addresses can be separated with semicolons (\";\"){/tr}"}
+					{help url="Inter-User+Messages#Composing_messages" desc="{tr}BCC:{/tr}{tr}Multiple addresses can be separated with semicolons (\";\"){/tr}"}
 				</td>
 				<td>
 					<input type="text" name="bcc" id="mess-composebcc" value="{$bcc|escape}" class="username" size="80" />
@@ -95,12 +95,12 @@
 					<input type="checkbox" name="replytome" id="replytome" />
 					<label for="replytome">
 						{tr}Reply-to my email{/tr}
-						{help url="User+Information" desc="{tr}Reply-to my email{/tr}:{tr}The user will be able to reply to you directly via email.{/tr}"}
+						{help url="User+Information" desc="{tr}Reply-to my email:{/tr}{tr}The user will be able to reply to you directly via email.{/tr}"}
 					</label>
 					<input type="checkbox" name="bccme" id="bccme" />
 					<label for="bccme">
 						{tr}Send me a copy{/tr}
-						{help url="User+Information" desc="{tr}Send me a copy{/tr}:{tr}You will be sent a copy of this email.{/tr}"}
+						{help url="User+Information" desc="{tr}Send me a copy:{/tr}{tr}You will be sent a copy of this email.{/tr}"}
 					</label>
 				</td>
 			</tr>

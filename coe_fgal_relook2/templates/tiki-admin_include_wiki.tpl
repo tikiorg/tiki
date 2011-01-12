@@ -103,14 +103,14 @@
 			<div class="adminoptionboxchild" id="feature_dump_childcontainer">
 				<div class="adminoptionbox">
 					<div class="adminoptionlabel">
-						<label for="tagname">{tr}Tag for current wiki{/tr}:</label>
+						<label for="tagname">{tr}Tag for current wiki:{/tr}</label>
 						<input maxlength="20" size="20" type="text" name="tagname" id="tagname" />
 						<input type="submit" name="createtag" value="{tr}Create{/tr}" />
 					</div>
 				</div>
 				<div class="adminoptionbox">
 					<div class="adminoptionlabel">
-						<label for="restoretag">{tr}Restore wiki to tag{/tr}:</label>
+						<label for="restoretag">{tr}Restore wiki to tag:{/tr}</label>
 						<select name="tagname" id="restoretag"{if $tags|@count eq '0'} disabled="disabled"{/if}>
 							{section name=sel loop=$tags}
 								<option value="{$tags[sel]|escape}">{$tags[sel]}</option>
@@ -123,7 +123,7 @@
 				</div>
 				<div class="adminoptionbox">
 					<div class="adminoptionlabel">
-						<label for="removetag">{tr}Remove a tag{/tr}:</label> 
+						<label for="removetag">{tr}Remove a tag:{/tr}</label> 
 						<select name="tagname" id="removetag"{if $tags|@count eq '0'} disabled="disabled"{/if}>
 							{section name=sel loop=$tags}
 								<option value="{$tags[sel]|escape}">{$tags[sel]}</option>
@@ -296,6 +296,18 @@
 			</div>
 	{/tab}
 
+	{tab name="{tr}Flagged Revision{/tr}"}
+		<fieldset>
+			<legend>{tr}Revision Approval{/tr}</legend>
+
+			{preference name=flaggedrev_approval}
+
+			<div id="flaggedrev_approval_childcontainer">
+				{preference name=flaggedrev_approval_categories}
+			</div>
+		</fieldset>
+	{/tab}
+
 	{tab name="{tr}Page Listings{/tr}"}
 		<input type="hidden" name="wikilistprefs" />	  
 		{preference name=feature_listPages}
@@ -308,7 +320,7 @@
 			<fieldset>
 				<legend>{tr}Configuration{/tr}</legend>
 				<div class="adminoptionbox">
-					{tr}Select which items to display when listing pages{/tr}:
+					{tr}Select which items to display when listing pages:{/tr}
 				</div>
 				{preference name=wiki_list_sortorder}
 				<div class="adminoptionboxchild">

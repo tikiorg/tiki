@@ -15,6 +15,10 @@ if (version_compare(PHP_VERSION, '5.1.0', '<')) {
 	header('location: tiki-install.php');
 	exit;
 }
+
+// Be sure that the user is not already defined by PHP on hosts that still have the php.ini config "register_globals = On"
+unset($user);
+
 require_once 'lib/setup/third_party.php';
 require_once 'tiki-filter-base.php';
 // Enable Versioning
@@ -261,22 +265,17 @@ if ($prefs['javascript_enabled'] != 'n') {
 		$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/jquery.sheet.css' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.js' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.advancedfn.js' );
-		$headerlib->add_jsfile( 'lib/jquery/jquery.json-2.2.js' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.financefn.js' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/parser.js' );
 		
 		if( strpos($_SERVER['SCRIPT_NAME'], 'tiki-history_sheets.php') !== false ) {
 			$headerlib->add_jsfile( 'lib/sheet/tiki-history_sheets.js' );
 		}
 		
 		// plugins
-		$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/plugins/menu.css' );
-		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/mbMenu.min.js' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/jquery.scrollTo-min.js' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/raphael-min.js', 'external' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.raphael-min.js', 'external' );
-		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.pie-min.js', 'external' );
-		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.line-min.js', 'external' );
-		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.dot-min.js', 'external' );
-		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.bar-min.js', 'external' );
 	}
 	if( $prefs['feature_jquery_media'] == 'y' ) {
 		$headerlib->add_jsfile( 'lib/jquery/jquery.media.js');

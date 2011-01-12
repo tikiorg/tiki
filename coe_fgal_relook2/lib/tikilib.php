@@ -285,8 +285,8 @@ class TikiLib extends TikiDb_Bridge
 
 
 	/*shared*/
-	function add_user_watch($user, $event, $object, $type, $title, $url, $email='') {
-
+	function add_user_watch($user, $event, $object, $type = NULL, $title = NULL, $url = NULL, $email = NULL) {
+		// Allow a warning when the watch won't be effective
 		if (empty($email)) {
 			global $userlib;
 			$email = $userlib->get_user_email($user);
@@ -294,6 +294,7 @@ class TikiLib extends TikiDb_Bridge
 				return false;
 			}
 		}
+		
 		$this->remove_user_watch( $user, $event, $object, $type );
 		$query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`type`,`title`,`url`) ";
 		$query.= "values(?,?,?,?,?,?,?)";
@@ -301,7 +302,7 @@ class TikiLib extends TikiDb_Bridge
 		return true;
 	}
 
-	function add_group_watch($group, $event, $object, $type, $title, $url) {
+	function add_group_watch($group, $event, $object, $type = NULL, $title = NULL, $url = NULL) {
 		
 		if ($type == 'Category' && $object == 0) {
 			return false;
@@ -347,13 +348,23 @@ class TikiLib extends TikiDb_Bridge
 
 	/*shared*/
 	function remove_user_watch($user, $event, $object, $type = 'wiki page') {
-		$query = "delete from `tiki_user_watches` where binary `user`=? and `event`=? and `object`=? and `type` = ?";
-		$this->query($query,array($user,$event,$object,$type));
+		$query = "delete from `tiki_user_watches` where binary `user`=? and `event`=? and `object`=?";
+		$bindvars = array($user,$event,$object);
+		if (isset($type)) {
+			$query .= " and `type` = ?";
+			$bindvars[] = $type;
+		}
+		$this->query($query, $bindvars);
 	}
 
 	function remove_group_watch($group, $event, $object, $type = 'wiki page') {
-		$query = "delete from `tiki_group_watches` where binary `group`=? and `event`=? and `object`=? and `type` = ?";
-		$this->query($query,array($group,$event,$object,$type));
+		$query = "delete from `tiki_group_watches` where binary `group`=? and `event`=? and `object`=?";
+		$bindvars = array($group,$event,$object);
+		if (isset($type)) {
+			$query .= " and `type`=?";
+			$bindvars[] = $type;
+		}
+		$this->query($query, $bindvars);
 	}
 
 	/*shared*/
@@ -381,10 +392,15 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	/*shared*/
-	function user_watches($user, $event, $object, $type) {
+	function user_watches($user, $event, $object, $type = NULL) {
 		if (is_array($event)) {
-			$query = "select `event` from `tiki_user_watches` where `user`=? and `object`=? and `type`=? and `event` in (".implode(',',array_fill(0, count($event),'?')).")";
-			$result = $this->fetchAll($query, array_merge(array($user,$object,$type),$event));
+			$query = "select `event` from `tiki_user_watches` where `user`=? and `object`=? and `event` in (".implode(',',array_fill(0, count($event),'?')).")";
+			$bindvars = array_merge(array($user, $object), $event);
+			if ($type) {
+				$query .= " and `type`=?";
+				$bindvars[] = $type;
+			}
+			$result = $this->fetchAll($query, $bindvars);
 			if ( count($result) === 0 ) {
 				return false;
 			}
@@ -394,14 +410,24 @@ class TikiLib extends TikiDb_Bridge
 			}
 			return $ret;
 		} else {
-			$query = "select count(*) from `tiki_user_watches` where `user`=? and `object`=? and `type`=? and `event`=? ";
-			return $this->getOne($query,array($user,$object,$type,$event));
+			$query = "select count(*) from `tiki_user_watches` where `user`=? and `object`=? and `event`=?";
+			$bindvars = array($user, $object, $event);
+			if ($type) {
+				$query .= " and `type`=?";
+				$bindvars[] = $type;
+			}
+			return $this->getOne($query, $bindvars);
 		}
 	}
 
-	function get_groups_watching( $type, $object, $event ) {
-		$result = $this->fetchAll( 'SELECT `group` FROM `tiki_group_watches` WHERE `object` = ? AND `type` = ? AND `event` = ?',
-			array( $object, $type, $event ) );
+	function get_groups_watching( $object, $event, $type = NULL ) {
+		$query = 'SELECT `group` FROM `tiki_group_watches` WHERE `object` = ? AND `event` = ?';
+		$bindvars = array( $object, $event);
+		if ($type) {
+			$query .= ' AND `type` = ?';
+			$bindvars[]= $type;
+		}
+		$result = $this->fetchAll( $query, $bindvars );
 
 		$groups = array();
 		foreach( $result as $row ) {
@@ -422,7 +448,7 @@ class TikiLib extends TikiDb_Bridge
 
 	/*shared*/
 	function get_event_watches($event, $object, $info=null) {
-		global $prefs, $dbTiki;
+		global $prefs;
 		$ret = array();
 
 		$where = array();
@@ -463,7 +489,13 @@ class TikiLib extends TikiDb_Bridge
 			$forumId = $info['forumId'];
 			$bindvars[] = $forumId;
 		} else {
-			$mid = "`event`=? and `object`=?";
+			$extraEvents = "";
+			if (substr_count($event, 'article_')) {
+				$extraEvents = " or `event`='article_*'";
+			} elseif ($event == 'wiki_comment_changes') {
+				$extraEvents = " or `event`='wiki_page_changed'";
+			}
+			$mid = "(`event`=?$extraEvents) and (`object`=? or `object`='*')";
 			$bindvars[] = $event;
 			$bindvars[] = $object;
 		}
@@ -494,6 +526,9 @@ class TikiLib extends TikiDb_Bridge
 		if ( count($result) > 0 ) {
 
 			foreach ( $result as $res ) {
+				if (empty($res['language'])) {
+					$res['language'] = $this->get_preference('site_language');
+				}
 				switch($event) {
 				case 'wiki_page_changed':
 				case 'wiki_page_created':
@@ -531,9 +566,9 @@ class TikiLib extends TikiDb_Bridge
 				case 'topic_article_edited':
 				case 'article_deleted':
 				case 'topic_article_deleted':
-					global $userlib, $topicId;
+					global $userlib;
 					$res['perm']= ($userlib->user_has_permission($res['user'],'tiki_p_read_article') &&
-							(empty($topicId) || $this->user_has_perm_on_object($res['user'],$topicId,'topic','tiki_p_topic_read')));
+							(empty($object) || $this->user_has_perm_on_object($res['user'], $object,'topic','tiki_p_topic_read')));
 					break;
 				case 'calendar_changed':
 					$res['perm']= $this->user_has_perm_on_object($res['user'],$object,'calendar','tiki_p_view_calendar');
@@ -548,6 +583,14 @@ class TikiLib extends TikiDb_Bridge
 				case 'fgal_quota_exceeded':
 					global $tiki_p_admin_file_galleries;
 					$res['perm'] = ($tiki_p_admin_file_galleries == 'y');
+					break;
+				case 'article_commented':
+				case 'wiki_comment_changes':
+					$res['perm'] = $this->user_has_perm_on_object($res['user'],$object,'comments','tiki_p_read_comments');
+					break;
+				case 'user_registers':
+					global $userlib;
+					$res['perm'] = $userlib->user_has_permission($res['user'], 'tiki_p_admin');
 					break;
 				default:
 					// for security we deny all others.
@@ -1862,7 +1905,7 @@ class TikiLib extends TikiDb_Bridge
 		foreach ( $result as $res ) {
 			$res['canonic'] = $res['url'];
 			if (preg_match('|^\(\((.+?)\)\)$|', $res['url'], $matches)) {
-				$res['url'] = 'tiki-index.php?page='.$matches[1];
+				$res['url'] = 'tiki-index.php?page=' . rawurlencode($matches[1]);
 				$res['sefurl'] = $wikilib->sefurl($matches[1]);
 				$perms = Perms::get(array('type'=>'wiki page', 'object'=>$matches[1]));
 				if (!$perms->view && !$perms->wiki_view_ref) {
@@ -3542,20 +3585,20 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		if (is_array($find)) { // you can use an array of pages
-			$mid = " where `pageName` IN (".implode(',',array_fill(0,count($find),'?')).")";
+			$mid = " where LOWER(`pageName`) IN (".implode(',',array_fill(0,count($find),'LOWER(?)')).")";
 			$bindvars = $find;
 		} elseif (is_string($find) && !empty($find)) { // or a string
 			if (!$exact_match && $find) {
 				$find = preg_replace("/([^\s]+)/","%\\1%",$find);
 				$f = preg_split("/[\s]+/",$find,-1,PREG_SPLIT_NO_EMPTY);
 				if (empty($f)) {//look for space...
-					$mid = " where `pageName` like '%$find%'";
+					$mid = " where LOWER(`pageName`) like LOWER('%$find%')";
 				} else {
-					$mid = " where `pageName` like ".implode(' or `pageName` like ',array_fill(0,count($f),'?'));
+					$mid = " where LOWER(`pageName`) like ".implode(' or LOWER(`pageName`) like ',array_fill(0,count($f),'LOWER(?)'));
 					$bindvars = $f;
 				}
 			} else {
-				$mid = " where `pageName` like ? ";
+				$mid = " where LOWER(`pageName`) like LOWER(?) ";
 				$bindvars = array($find);
 			}
 		} else {
@@ -3623,14 +3666,9 @@ class TikiLib extends TikiDb_Bridge
 					$join_tables .= " left join `tiki_structures` as tss on (tss.`page_id` = tp.`page_id`) ";
 					$tmp_mid[] = "(tss.`page_ref_id` is null)";
 				} elseif ($type == 'translationOrphan') {
-					$join_tables .= " left join `tiki_translated_objects` tro on (tro.`type` = 'wiki page' AND tro.`objId` = tp.`page_id`) ";
-					$translationOrphan_mid = " tro.`traId` IS NULL OR tp.`lang`IS NULL ";
-					foreach ($val as $i=>$lg) {
-						$join_tables .= " left join `tiki_translated_objects` tro_$i on (tro_$i.`traId` = tro.`traId` AND tro_$i.`lang`=?) ";
-						$translationOrphan_mid .= " OR tro_$i.`traId` IS NULL ";
-						$bindvars[] = $lg;
-					}
-					$tmp_mid[] = "($translationOrphan_mid)";
+					global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
+					$multilinguallib->sqlTranslationOrphan('wiki page', 'tp', 'page_id', $val, $join_tables, $midto, $bindvars);
+					$tmp_mid[] = $midto;
 				}
 			}
 			if (!empty($tmp_mid)) {
@@ -3802,9 +3840,12 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 
-		$ret2 = $this->get_local_perms($user, $objectId, $objectType, $info, true);
-		if ($ret2) {
-			$ret = $ret2;
+		// Skip those 'local' permissions for admin users and when global is not requested.
+		if ($global && ! Perms::get()->admin) {
+			$ret2 = $this->get_local_perms($user, $objectId, $objectType, $info, true);
+			if ($ret2) {
+				$ret = $ret2;
+			}
 		}
 		
 		return $ret;
@@ -3897,7 +3938,8 @@ class TikiLib extends TikiDb_Bridge
 					}
 					return $ret;
 				}
-				if ($prefs['feature_wiki_userpage'] == 'y' && !empty($user) && strcasecmp($prefs['feature_wiki_userpage_prefix'], substr($objectId, 0, strlen($prefs['feature_wiki_userpage_prefix']))) == 0) {
+				// Enabling userpage is not enough, the prefix must be present, otherwise, permissions will be messed-up on new page creation
+				if ($prefs['feature_wiki_userpage'] == 'y' && !empty($prefs['feature_wiki_userpage_prefix']) && !empty($user) && strcasecmp($prefs['feature_wiki_userpage_prefix'], substr($objectId, 0, strlen($prefs['feature_wiki_userpage_prefix']))) == 0) {
 					if (strcasecmp($objectId, $prefs['feature_wiki_userpage_prefix'].$user) == 0) { //can edit his page
 						if (!$global) {
 							$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
@@ -4359,6 +4401,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`version_minor`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`, `wysiwyg`, `wiki_authors_style` $mid) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? $midvar)";
 		$result = $this->query($query, $bindvars);
+		$this->replicate_page_to_history($name);
 
 		$page_id = $this->get_page_id_from_name( $name );
 
@@ -4419,6 +4462,21 @@ class TikiLib extends TikiDb_Bridge
 		}
 		
 		return true;
+	}
+
+	private function replicate_page_to_history($pageName) {
+		if (strtolower($pageName) == 'sandbox') {
+			return false;
+		}
+
+		$query = "INSERT IGNORE INTO `tiki_history`(`pageName`, `version`, `version_minor`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`,`is_html`)
+			SELECT `pageName`, `version`, `version_minor`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`,`is_html`
+			FROM tiki_pages
+			WHERE pageName = ?
+			LIMIT 1";
+
+		$this->query($query, array($pageName));
+		return $this->lastInsertId();
 	}
 
 	function get_user_pages($user, $max, $who='user') {
@@ -4868,8 +4926,18 @@ if( \$('#$id') ) {
 			$data = substr($data, 0, $start) . $key . substr($data, $end + 5);
 		}
 
-		// TODO : Handle ~pp~
-	}
+		// ~pp~
+		while (false !== $start = strpos($data, '~pp~')) {
+			$end = strpos($data, '~/pp~', $start);
+			$content = substr($data, $start + 4, $end - $start - 4);
+
+			// ~pp~ type "plugins"
+			$key = "§".md5($this->genPass())."§";
+			$noparsed["key"][] = preg_quote($key);
+			$noparsed["data"][] = '<pre>'.$content.'</pre>';
+
+			$data = substr($data, 0, $start) . $key . substr($data, $end + 5);
+		}	}
 
 	function plugin_get_list( $includeReal = true, $includeAlias = true ) {
 		$real = array();
@@ -5067,6 +5135,15 @@ if( \$('#$id') ) {
 		return false;
 	}
 
+	/**
+	 * Check if possible to execute a plugin
+	 * 
+	 * @param string $name
+	 * @param string $data
+	 * @param array $args
+	 * @param bool $dont_modify
+	 * @return bool|string Boolean true if can execute, string 'rejected' if can't execute and plugin fingerprint if pending
+	 */
 	function plugin_can_execute( $name, $data = '', $args = array(), $dont_modify = false ) {
 		global $prefs;
 
@@ -7247,8 +7324,8 @@ if( \$('#$id') ) {
 		// them both is right.
 		$old_version = max(
 				$info["version"],
-				$histlib->get_page_latest_version($pageName) + 1
-				);
+				$histlib->get_page_latest_version($pageName)
+			);
 
 		$lastModif = $info["lastModif"];
 		$user = $info["user"];
@@ -7332,6 +7409,7 @@ if( \$('#$id') ) {
 		$bindvars[] = $pageName;
 		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `version_minor`=?, `user`=?, `ip`=?, `page_size`=?, `is_html`=?, `wysiwyg`=?, `wiki_authors_style`=?  $mid where `pageName`=?";
 		$result = $this->query($query,$bindvars);
+		$this->replicate_page_to_history($pageName);
 
 		// Parse edit_data updating the list of links from this page
 		$this->clear_links($pageName);
@@ -7362,11 +7440,6 @@ if( \$('#$id') ) {
 		// This if no longer checks for minor-ness of the change; sendWikiEmailNotification does that.
 		if( $willDoHistory ) {
 			if (strtolower($pageName) != 'sandbox') {
-				$query = "insert into `tiki_history`(`pageName`, `version`, `version_minor`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`,`is_html`)
-					values(?,?,?,?,?,?,?,?,?,?)";
-# echo "<pre>";print_r(get_defined_vars());echo "</pre>";die();
-				$result = $this->query($query,array($pageName,(int) $old_version, (int) $minor, (int) $lastModif,$user,$ip,$comment,$data,$description,(int)$info['is_html']));
-
 				if ($prefs['feature_contribution'] == 'y') {// transfer page contributions to the history
 					global $contributionlib; include_once('lib/contribution/contributionlib.php');
 					$query = 'select max(`historyId`) from `tiki_history`where `pageName`=? and `version`=?';
@@ -7426,28 +7499,49 @@ if( \$('#$id') ) {
 		}
 
 		if( isset( $data['content'] ) ) {
-			$this->apply_plugin_save_handlers( $context, $data );
+			$this->plugin_post_save_actions( $context, $data );
 		}
 	}
 
-	private function apply_plugin_save_handlers( $context, $data ) {
+	/**
+	 * Foreach plugin used in a object content call its save handler,
+	 * if one exist, and send email notifications when it has pending
+	 * status, if preference is enabled.
+	 *  
+	 * A plugin save handler is a function defined on the plugin file
+	 * with the following format: wikiplugin_$pluginName_save()
+	 * 
+	 * @param array $context object type and id
+	 * @param array $data
+	 * @return void
+	 */
+	private function plugin_post_save_actions( $context, $data ) {
 		require_once 'WikiParser/PluginMatcher.php';
 		require_once 'WikiParser/PluginArgumentParser.php';
+		global $prefs;
 
 		$argumentParser = new WikiParser_PluginArgumentParser;
 
 		$matches = WikiParser_PluginMatcher::match( $data['content'] );
 
 		foreach( $matches as $match ) {
-			$implementation = $match->getName();
+			$plugin_name = $match->getName();
 			$body = $match->getBody();
 			$arguments = $argumentParser->parse( $match->getArguments() );
 
 			$dummy_output = '';
-			if( $this->plugin_enabled( $implementation, $dummy_output ) ) {
-				$this->plugin_find_implementation( $implementation, $body, $arguments );
+			if( $this->plugin_enabled( $plugin_name, $dummy_output ) ) {
+				$status = $this->plugin_can_execute($plugin_name, $body, $arguments, true);
 
-				$func_name = 'wikiplugin_' . $implementation . '_save';
+				// when plugin status is pending, $status equals plugin fingerprint
+				if ($prefs['wikipluginprefs_pending_notification'] == 'y' && $status !== true && $status != 'rejected') {
+					//TODO: create preference to enable and disable notifications
+					$this->plugin_pending_notification($plugin_name, $context);
+				}
+				
+				$this->plugin_find_implementation( $plugin_name, $body, $arguments );
+
+				$func_name = 'wikiplugin_' . $plugin_name . '_save';
 
 				if( function_exists( $func_name ) ) {
 					$func_name( $context, $body, $arguments );
@@ -7456,6 +7550,51 @@ if( \$('#$id') ) {
 		}
 	}
 
+	/**
+	 * Send notification by email that a plugin is waiting to be
+	 * approved to everyone with permission to approve it.
+	 * 
+	 * @param string $plugin_name
+	 * @param array $context object type and id
+	 * @return void
+	 */
+	private function plugin_pending_notification($plugin_name, $context) {
+		require_once('lib/webmail/tikimaillib.php');
+		global $userlib, $prefs, $objectlib, $base_url;
+		
+		$object = $objectlib->get_object($context['type'], $context['object']);
+		
+		$mail = new TikiMail(null, $prefs['sender_email']);
+		$mail->setSubject(tra("Plugin $plugin_name pending approval"));
+		$mail->setHtml(tra("Plugin $plugin_name is pending approval on <a href='$base_url{$object['href']}'>{$object['name']}</a>"));
+		
+		$allGroups = $userlib->get_groups();
+		$accessor = Perms::get($context);
+		
+		// list of groups with permission to approve plugin on this object
+		$groups = array();
+		
+		foreach ($allGroups['data'] as $group) {
+			$accessor->setGroups(array($group['groupName']));
+			if ($accessor->plugin_approve) {
+				$groups[] = $group['groupName'];
+			}
+		}
+
+		$recipients = array();
+		
+		foreach ($groups as $group) {
+			$recipients = array_merge($recipients, $userlib->get_group_users($group, 0, -1, 'email'));
+		}
+		
+		$recipients = array_filter($recipients);
+		$recipients = array_unique($recipients);
+
+		$mail->setBcc(join(', ', $recipients));
+		
+		$mail->send(array($prefs['sender_email']));
+	}
+	
 	private function plugin_find_implementation( & $implementation, & $data, & $args ) {
 		if( $info = $this->plugin_alias_info( $implementation ) ) {
 			$implementation = $info['implementation'];

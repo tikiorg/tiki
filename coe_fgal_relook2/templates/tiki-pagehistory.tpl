@@ -130,7 +130,7 @@ $("#toggle_diffs a").click(function(){
 					{/if}
 				</tr>
 				<tr>
-					{if $history_offset eq 0}
+					{if $history_offset eq 1}
 						{if $tiki_p_remove eq 'y'}
 							<td class="odd">&nbsp;</td>
 						{/if}

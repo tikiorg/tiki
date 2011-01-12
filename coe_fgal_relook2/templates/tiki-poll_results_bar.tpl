@@ -21,7 +21,7 @@
 </table>
 <br />
 {if $showtotal ne 'n'}
-{tr}Total{/tr}: {$poll_info.votes} {tr}votes{/tr}<br /><br />
+{tr}Total:{/tr} {$poll_info.votes} {tr}votes{/tr}<br /><br />
 {/if}
 {if isset($poll_info.total) and $poll_info.total > 0}
 	{tr}Average:{/tr} {math equation="x/y" x=$poll_info.total y=$poll_info.votes format="%.2f"}

@@ -850,13 +850,14 @@ if (isset($_GET['slideshow'])) {
 		} else {
 			$syntax = '';
 		}
+		$with_archive = ( isset($gal_info[archives]) && $gal_info[archives] == '-1') ? false : true;
 		// Get list of files in the gallery
 		$files = $tikilib->get_files( $_REQUEST['offset']
 																, $_REQUEST['maxRecords']
 																, $_REQUEST['sort_mode']
 																, $_REQUEST['find']
 																, $_REQUEST['galleryId']
-																, true
+																, $with_archive
 																, $with_subgals
 																, true
 																, true
@@ -957,7 +958,7 @@ if ($prefs['feature_file_galleries_templates'] == 'y') {
 	$smarty->assign_by_ref('all_templates', $templates);
 }
 
-if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || isset($_REQUEST['movesel_x'])) {
+if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || isset($_REQUEST['movesel_x']) || isset($_REQUEST["edit_mode"])) {
 	$all_galleries = $filegallib->getFileGalleriesData();
 	$gals = array();
 	foreach ($all_galleries['data'] as $gal) {

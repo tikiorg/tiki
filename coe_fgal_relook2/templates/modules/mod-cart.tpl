@@ -27,7 +27,7 @@
 		</tr>
 	</table>
 	</form>
-	<p>{tr}Total{/tr}: <strong>{$cart_total|escape} {$prefs.payment_currency|escape}</strong></p>
+	<p>{tr}Total:{/tr} <strong>{$cart_total|escape} {$prefs.payment_currency|escape}</strong></p>
 	<form method="post" action="">
 		<p><input type="submit" name="checkout" value="{tr}Check-out{/tr}"/></p>
 	</form>

@@ -43,7 +43,7 @@
 				{preference name=feature_search}
 
 			<div class="adminoptionboxchild" id="feature_search_childcontainer">				
-					{tr}Specify the Tiki search settings{/tr}:
+					{tr}Specify the Tiki search settings:{/tr}
 					
 					{preference name=search_refresh_index_mode}
 					{preference name=search_refresh_rate}
@@ -53,7 +53,7 @@
 					{preference name=search_lru_purge_rate}
 					{preference name=search_lru_length}
 
-					<em>{tr}The Tiki search indexes must be refreshed if you turn the Tiki search on{/tr}:</em>
+					<em>{tr}The Tiki search indexes must be refreshed if you turn the Tiki search on:{/tr}</em>
 					{if $refresh_index_all_now neq 'y'}
 						<br />
 						<a href="tiki-admin.php?page=search&amp;refresh_index_all_now=y" class="button" title="{tr}Refresh all search index now{/tr}">{tr}Refresh all search index now{/tr}</a>
@@ -95,10 +95,10 @@
 		{tab name="{tr}Search Results{/tr}"}
 			{preference name=search_default_interface_language}
 			{preference name=search_default_where}
-			{tr}Select the items to display on the search results page{/tr}:
+			{tr}Select the items to display on the search results page:{/tr}
 			{preference name=feature_search_show_object_filter}
 			{preference name=feature_search_show_search_box}
-			{tr}Select the information to display for each result{/tr}:
+			{tr}Select the information to display for each result:{/tr}
 			{preference name=feature_search_show_visit_count}
 			{preference name=feature_search_show_pertinence}
 			{preference name=feature_search_show_object_type}

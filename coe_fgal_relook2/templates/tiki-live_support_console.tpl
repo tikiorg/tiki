@@ -20,8 +20,8 @@
   	<input type="hidden" id="status" value="online" />
 	<table class="normal" >
 		<tr>
-			<th>{tr}Operator{/tr}: {$user}</th>
-			<th>{tr}Status{/tr}: <b>{tr}{$status}{/tr}</b></th>
+			<th>{tr}Operator:{/tr} {$user}</th>
+			<th>{tr}Status:{/tr} <b>{tr}{$status}{/tr}</b></th>
 			<th style="text-align:right;">    
 				{if $status eq 'offline'}
     				<a href="tiki-live_support_console.php?status=online">{tr}be online{/tr}</a>

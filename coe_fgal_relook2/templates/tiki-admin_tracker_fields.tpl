@@ -102,7 +102,7 @@
 				{/section}
 			</table>
 			<div style="text-align:right">
-				{tr}Perform action with checked{/tr}:
+				{tr}Perform action with checked:{/tr}
 				<select name="batchaction">
 					<option value="">{tr}...{/tr}</option>
 					<option value="delete">{tr}Delete{/tr}</option>
@@ -132,9 +132,9 @@
 			<input type="hidden" name="fieldId" value="{$fieldId|escape}" />
 			<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 			<table class="formcolor">
-				<tr><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
+				<tr><td>{tr}Name:{/tr}</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
 				<tr>
-					<td>{tr}Type{/tr}:
+					<td>{tr}Type:{/tr}
 						{assign var=fld value="z"}
 						{foreach key=fk item=fi from=$field_types name=foreachname}
 							{if $fi.help}
@@ -183,7 +183,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>{tr}Validation{/tr}:</td>
+					<td>{tr}Validation:{/tr}</td>
 					<td>
 						<select name="validation">
 							<option value="" {if $validation eq ''} selected="selected"{/if}>{tr}None{/tr}</option>
@@ -193,9 +193,9 @@
 						</select>
 					</td>
 				</tr>
-				<tr><td>{tr}Validation parameter{/tr}:</td><td><input type="text" size="30" name="validationParam" value="{$validationParam}" /></td></tr>
-				<tr><td>{tr}Validation error message{/tr}:</td><td><input type="text" size="40" name="validationMessage" value="{$validationMessage}" /></td></tr>
-				<tr><td>{tr}Order{/tr}:</td><td><input type="text" size="5" name="position" value="{$position}" /></td></tr>
+				<tr><td>{tr}Validation parameter:{/tr}</td><td><input type="text" size="30" name="validationParam" value="{$validationParam}" /></td></tr>
+				<tr><td>{tr}Validation error message:{/tr}</td><td><input type="text" size="40" name="validationMessage" value="{$validationMessage}" /></td></tr>
+				<tr><td>{tr}Order:{/tr}</td><td><input type="text" size="5" name="position" value="{$position}" /></td></tr>
 				<tr><td>{tr}Field is mandatory?{/tr}</td><td><input type="checkbox" name="isMandatory" {if $isMandatory eq 'y'}checked="checked"{/if} /></td></tr>
 				<tr>
 					<td>{tr}Is column visible when listing tracker items?{/tr}</td>
@@ -209,7 +209,7 @@
 					<td><input type="checkbox" name="isMain" {if empty($fieldId) ||$isMain eq 'y'}checked="checked"{/if} /></td>
 				</tr>
 				<tr id='multilabelRow'{if $type neq 'a' && $type neq 't' && $type neq 'o' && $type neq '' && $type neq 'C'} style="display:none;"{/if}>
-					<td>{tr}Multilingual content{/tr}:</td><td><input type="checkbox" name="isMultilingual" {if $isMultilingual eq 'y'}checked="checked"{/if} /></td>
+					<td>{tr}Multilingual content:{/tr}</td><td><input type="checkbox" name="isMultilingual" {if $isMultilingual eq 'y'}checked="checked"{/if} /></td>
 				</tr>
 				<tr>
 					<td>{tr}Column is searchable?{/tr}</td>
@@ -245,7 +245,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>{tr}Description{/tr}:</td>
+					<td>{tr}Description:{/tr}</td>
 					<td>
 						<div id='zDescription' {if $type eq 'S'}style="display:none;"{else}style="display:block;"{/if}style="display:block;" >
 						{if $type ne 'S'}

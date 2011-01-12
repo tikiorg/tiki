@@ -78,7 +78,7 @@
 				<legend>{tr}Import CSV file{/tr}</legend>
 				<div class="adminoptionbox">
 					<div class="adminoptionlabel">
-						<label for="csvlist">{tr}Batch upload (CSV file){/tr}:</label>
+						<label for="csvlist">{tr}Batch upload (CSV file):{/tr}</label>
 						<input type="file" name="csvlist" id="csvlist" /> 
 						<br />
 						<em>{tr}File format: title,authorName,heading,body,lang,user{/tr}....</em>
@@ -94,7 +94,7 @@
 			<fieldset>
 				<legend>{tr}List Articles{/tr}</legend>
 				<div class="adminoptionbox">
-					{tr}Select which items to display when listing articles{/tr}: 	  
+					{tr}Select which items to display when listing articles:{/tr} 	  
 					<a class="rbox-link" href="tiki-list_articles.php">tiki-list_articles.php</a>
 				</div>
 				<input type="hidden" name="artlist" />

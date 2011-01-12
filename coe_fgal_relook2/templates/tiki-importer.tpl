@@ -16,7 +16,7 @@
     {/remarksbox}
        
     <br />
-    <label for="importerClassName">{tr}Select the software to import from{/tr}:</label>
+    <label for="importerClassName">{tr}Select the software to import from:{/tr}</label>
     <form method="post" name="chooseSoftware" action="tiki-importer.php">
         <select name="importerClassName" id="importerClassName">
             <option value=""></option>
@@ -34,7 +34,7 @@
             {if $option.type eq 'checkbox'}
                 <input type="checkbox" name="{$option.name}" id="{$option.name}"/><label for="{$option.name}">{tr}{$option.label}{/tr}</label><br />
             {elseif $option.type eq 'text'}
-                <label>{tr}{$option.label}{/tr}: <input type="text" name="{$option.name}" {if isset($option.value)}value="{$option.value}"{/if}/></label><br />
+                <label>{tr}{$option.label}:{/tr} <input type="text" name="{$option.name}" {if isset($option.value)}value="{$option.value}"{/if}/></label><br />
             {elseif $option.type eq 'select'}
 		        <label for="{$option.name}">{tr}{$option.label}{/tr}</label><br />
 		        <select id="{$option.name}" name="{$option.name}">

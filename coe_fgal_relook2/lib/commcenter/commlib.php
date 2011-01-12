@@ -63,9 +63,10 @@ class CommLib extends TikiLib
 	}
 
 	function accept_article($receivedArticleId, $topic) {
+		global $artlib; require_once 'lib/articles/artlib.php';
 		$info = $this->get_received_article($receivedArticleId);
 
-		$this->replace_article($info["title"], $info["authorName"],
+		$artlib->replace_article($info["title"], $info["authorName"],
 			$topic, $info["useImage"], $info["image_name"], $info["image_size"], $info["image_type"], $info["image_data"],
 			$info["heading"], $info["body"], $info["publishDate"], $info["expireDate"], $info["author"],
 			0, $info["image_x"], $info["image_y"], $info["type"], $info["rating"]);
@@ -162,7 +163,7 @@ class CommLib extends TikiLib
 		$result = $this->query($query,array($title,$site,$user));
 		$query = "insert into `tiki_received_articles`(`receivedDate`,`receivedFromSite`,`receivedFromUser`,`title`,`authorName`,`size`, ";
 		$query.= " `useImage`,`image_name`,`image_type`,`image_size`,`image_x`,`image_y`,`image_data`,`publishDate`,`expireDate`,`created`,`heading`,`body`,`hash`,`author`,`type`,`rating`) ";
-    $query.= " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    $query.= " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		$result = $this->query($query,array((int)$this->now,$site,$user,$title,$authorName,(int)$size,$use_image,$image_name,$image_type,$image_size,
 		                              $image_x,$image_y,$image_data,(int)$publishDate,(int)$expireDate,(int)$created,$heading,$body,$hash,$author,$type,(int)$rating));
 	}

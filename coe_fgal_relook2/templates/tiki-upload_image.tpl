@@ -45,19 +45,19 @@
 
 {if $show eq 'y'}
 	<h2>{tr}Upload successful!{/tr}</h2>
-	<h3>{tr}The following image was successfully uploaded{/tr}:</h3>
+	<h3>{tr}The following image was successfully uploaded:{/tr}</h3>
 	<div align="center">
 		<img src="show_image.php?id={$imageId}" alt="{tr}Image ID{/tr}" />
 		<br />
-		<b>{tr}Thumbnail{/tr}:</b>
+		<b>{tr}Thumbnail:{/tr}</b>
 		<br />
 		<img src="show_image.php?id={$imageId}&amp;thumb=1" alt="{tr}Image ID thumb{/tr}" />
 		<br /><br />
 		<div class="wikitext">
-			{tr}You can view this image in your browser using{/tr}:&nbsp;
+			{tr}You can view this image in your browser using:{/tr}&nbsp;
 			<a class="link" href="{$url_browse}?imageId={$imageId}">{$url_browse}?imageId={$imageId}</a>
 			<br /><br />
-			{tr}You can include the image in an Wiki page using{/tr}:&nbsp;
+			{tr}You can include the image in an Wiki page using:{/tr}&nbsp;
 			<form>
 				<textarea rows="3" cols="60" style="width: 90%">
 					{literal}{{/literal}img id={$imageId}{literal}}{/literal}
@@ -75,23 +75,23 @@
 		<form enctype="multipart/form-data" action="tiki-upload_image.php" method="post">
 			<table class="formcolor">
 				<tr>
-					<td>{tr}Image Name{/tr}:</td>
+					<td>{tr}Image Name:{/tr}</td>
 					<td>
 						<input type="text" size ="50" name="name" />
 						<br />
-						{tr}or use filename{/tr}: <input type="checkbox" name="use_filename" />
+						{tr}or use filename:{/tr} <input type="checkbox" name="use_filename" />
 					</td>
 				</tr>
 				{if $prefs.feature_maps eq 'y' && $geogallery eq 'y'}
 					<tr>
-						<td>{tr}Latitude (WGS84/decimal degrees){/tr}:</td>
+						<td>{tr}Latitude (WGS84/decimal degrees):{/tr}</td>
 						<td>
 							<input type="text" name="lat" value="{$lat|escape}" />
 						</td>
 					</tr>
 					<tr>
 						<td>
-							{tr}Longitude (WGS84/decimal degrees){/tr}:
+							{tr}Longitude (WGS84/decimal degrees):{/tr}
 						</td>
 						<td>
 							<input type="text" name="lon" value="{$lon|escape}" />
@@ -99,14 +99,14 @@
 					</tr>
 				{/if}
 				<tr>
-					<td>{tr}Image Description{/tr}:</td>
+					<td>{tr}Image Description:{/tr}</td>
 					<td>
 						<textarea rows="5" cols="50" name="description"></textarea>
 					</td>
 				</tr>
 				{if $tiki_p_list_image_galleries eq 'y'}
 					<tr>
-						<td>{tr}Gallery{/tr}:</td>
+						<td>{tr}Gallery:{/tr}</td>
 						<td>
 							<select name="galleryId">
 								{section name=idx loop=$galleries}
@@ -133,20 +133,20 @@
 					</td>
 				</tr>
 				<tr>
-					<td>{tr}Upload From Disk{/tr} / {tr}Batch Upload{/tr}:</td>
+					<td>{tr}Upload From Disk{/tr} / {tr}Batch Upload:{/tr}</td>
 					<td>
 						<input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
 						<input size="50" name="userfile1" type="file" />
 					</td>
 				</tr>
 				<tr>
-					<td>{tr}Thumbnail (optional, overrides automatic thumbnail generation){/tr}:</td>
+					<td>{tr}Thumbnail (optional, overrides automatic thumbnail generation):{/tr}</td>
 					<td>
 						<input name="userfile2" size ="50" type="file" />
 					</td>
 				</tr>
 				<tr>
-					<td>{tr}Upload From Disk{/tr}:</td>
+					<td>{tr}Upload From Disk:{/tr}</td>
 					<td>
 						<input name="userfile3" type="file" />
 						<input name="userfile4" type="file" />

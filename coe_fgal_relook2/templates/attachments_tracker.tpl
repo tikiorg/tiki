@@ -9,7 +9,7 @@
 		<table class="formcolor">
 			<tr>
 				<td>{tr}Upload file{/tr}</td>
-				<td>{if $attach_file}{tr}Edit{/tr}: {/if}<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /><input name="userfile1" type="file"  />{if $attach_file}<br />{$attach_file|escape}{/if}</td>
+				<td>{if $attach_file}{tr}Edit:{/tr} {/if}<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /><input name="userfile1" type="file"  />{if $attach_file}<br />{$attach_file|escape}{/if}</td>
 			</tr>
 			<tr>
 				<td>{tr}Comment{/tr}</td>

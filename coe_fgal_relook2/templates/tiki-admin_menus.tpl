@@ -66,7 +66,7 @@
 			<table class="formcolor">
 				<tr>
 					<td>
-						<label for="menus_name">{tr}Name{/tr}:</label>
+						<label for="menus_name">{tr}Name:{/tr}</label>
 					</td>
 					<td>
 						<input type="text" name="name" id="menus_name" value="{$info.name|escape}" style="width:95%" />
@@ -74,14 +74,14 @@
 				</tr>
 				<tr>
 					<td>
-						<label for="menus_desc">{tr}Description{/tr}:</label>
+						<label for="menus_desc">{tr}Description:{/tr}</label>
 					</td>
 					<td>
 						<textarea name="description" id="menus_desc" rows="4" cols="40" style="width:95%">{$info.description|escape}</textarea>
 					</td>
 				</tr>
 				<tr>
-					<td><label for="menus_type">{tr}Type{/tr}:</label></td>
+					<td><label for="menus_type">{tr}Type:{/tr}</label></td>
 					<td>
 						<select name="type" id="menus_type">
 							<option value="d" {if $info.type eq 'd'}selected="selected"{/if}>{tr}dynamic collapsed{/tr} (d)</option>

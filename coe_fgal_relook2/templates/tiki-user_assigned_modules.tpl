@@ -94,7 +94,7 @@
 		<h2>{tr}Assign module{/tr}</h2>
 		<table class="formcolor">
 			<tr>
-				<td>{tr}Module{/tr}:</td>
+				<td>{tr}Module:{/tr}</td>
 				<td>
 					<select name="module">
 						{section name=ix loop=$assignables}
@@ -104,7 +104,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>{tr}Column{/tr}:</td>
+				<td>{tr}Column:{/tr}</td>
 				<td>
 					<select name="position">
 						{if $prefs.feature_left_column ne 'n'}<option value="l">{tr}Left{/tr}</option>{/if}
@@ -113,7 +113,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>{tr}Order{/tr}:</td>
+				<td>{tr}Order:{/tr}</td>
 				<td>
 					<select name="order">
 						{section name=ix loop=$orders}

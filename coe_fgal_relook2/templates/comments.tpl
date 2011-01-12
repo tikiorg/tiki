@@ -142,7 +142,7 @@
 					{if $comments_cant > $prefs.forum_thread_user_settings_threshold}
 						<div class="actions">
 							<span class="action">
-								<label for="comments-maxcomm">{tr}Messages{/tr}:</label>
+								<label for="comments-maxcomm">{tr}Messages:{/tr}</label>
 								<select name="comments_per_page" id="comments-maxcomm">
 									<option value="10" {if $comments_per_page eq 10 }selected="selected"{/if}>10</option>
 									<option value="20" {if $comments_per_page eq 20 }selected="selected"{/if}>20</option>
@@ -151,7 +151,7 @@
 								</select>
 								
 								{if $forum_mode neq 'y' or $forum_info.is_flat neq 'y' }
-									<label for="comments-style">{tr}Style{/tr}:</label>
+									<label for="comments-style">{tr}Style:{/tr}</label>
 									<select name="thread_style" id="comments-style">
 										<option value="commentStyle_plain" {if $thread_style eq 'commentStyle_plain'}selected="selected"{/if}>{tr}Plain{/tr}</option>
 										<option value="commentStyle_threaded" {if $thread_style eq 'commentStyle_threaded'}selected="selected"{/if}>{tr}Threaded{/tr}</option>
@@ -159,7 +159,7 @@
 									</select>
 								{/if}
 
-								<label for="comments-sort">{tr}Sort{/tr}:</label>
+								<label for="comments-sort">{tr}Sort:{/tr}</label>
 								<select name="thread_sort_mode" id="comments-sort">
 									<option value="commentDate_desc" {if $thread_sort_mode eq 'commentDate_desc'}selected="selected"{/if}>{tr}Newest first{/tr}</option>
 									<option value="commentDate_asc" {if $thread_sort_mode eq 'commentDate_asc'}selected="selected"{/if}>{tr}Oldest first{/tr}</option>
@@ -171,7 +171,7 @@
 								</select>
 
 								{if ($forum_mode eq 'y' and $forum_info.vote_threads eq 'y') or $forum_mode neq 'y'}
-									<label for="comments-thresh">{tr}Threshold{/tr}:</label>
+									<label for="comments-thresh">{tr}Threshold:{/tr}</label>
 									<select name="comments_threshold" id="comments-thresh">
 										<option value="0" {if $comments_threshold eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
 										<option value="0.01" {if $comments_threshold eq '0.01'}selected="selected"{/if}>0</option>
@@ -182,7 +182,7 @@
 									</select>
 								{/if}
 
-								<label for="comments-search">{tr}Search{/tr}:</label>
+								<label for="comments-search">{tr}Search:{/tr}</label>
 								<input type="text" size="7" name="comments_commentFind" id="comments-search" value="{$comments_commentFind|escape}" />
 
 								<input type="submit" name="comments_setOptions" value="{tr}Set{/tr}" />
@@ -218,7 +218,7 @@
 						[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$comments_prev_offset}{$thread_sort_mode_param}&amp;comments_per_page={$comments_per_page}&amp;thread_style={$thread_style}">{tr}Prev{/tr}</a>]&nbsp;
 					{/if}
 
-					{tr}Page{/tr}: {$comments_actual_page}/{$comments_cant_pages}
+					{tr}Page:{/tr} {$comments_actual_page}/{$comments_cant_pages}
 
 					{if $comments_next_offset >= 0 && $display eq ''}
 						&nbsp;[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$comments_next_offset}{$thread_sort_mode_param}&amp;comments_per_page={$comments_per_page}&amp;thread_style={$thread_style}">{tr}Next{/tr}</a>]

@@ -106,7 +106,7 @@
     {/if}
 
     <tr class="{cycle}">
-      <td>{tr}URL:{/tr}</td>
+      <td>{tr}Homepage URL:{/tr}</td>
       <td>
         <input type="text" size="40" name="homePage" value="{$user_prefs.homePage|escape}" />
       </td>

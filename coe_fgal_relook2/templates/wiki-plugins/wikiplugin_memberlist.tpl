@@ -5,7 +5,7 @@
 			<div class="group">
 				<h2>{$groupName|escape}</h2>
 				{if $groupData.members}
-				{if $groupData.can_remove}{tr}Check to remove{/tr}:{/if}
+				{if $groupData.can_remove}{tr}Check to remove:{/tr}{/if}
 					<ul>
 						{foreach from=$groupData.members item=memberName}
 							<li>
@@ -29,7 +29,7 @@
 					</ul>
 				{/if}
 				{if $groupData.can_add}
-					<p>{tr}Add{/tr}: <input type="text" name="add[{$groupName|escape}]" class="username-input"/> (comma separated)</p>
+					<p>{tr}Add:{/tr} <input type="text" name="add[{$groupName|escape}]" class="username-input"/> (comma separated)</p>
 				{/if}
 				{if $groupData.can_join}
 					<p>

@@ -77,12 +77,12 @@ function module_calendar_new( $mod_reference, $module_params ) {
 
 	if (isset($_REQUEST['viewmode'])) $save_viewmode = $_REQUEST['viewmode'];
 	if (!empty($module_params['viewmode']))
-		$calendarViewMode = $module_params['viewmode'];
+		$calendarViewMode['casedefault'] = $module_params['viewmode'];
 
 	if (isset($_REQUEST['todate'])) $save_todate = $_REQUEST['todate'];
 
 	if (isset($module_params['month_delta'])) {
-		$calendarViewMode = 'month';
+		$calendarViewMode['casedefault'] = 'month';
 		list($focus_day, $focus_month, $focus_year) = array(
 			TikiLib::date_format("%d", $focusdate),
 			TikiLib::date_format("%m", $focusdate),
@@ -143,7 +143,7 @@ function module_calendar_new( $mod_reference, $module_params ) {
 		$smarty->assign('show_calendar_module', 'y');
 		$smarty->assign_by_ref('viewmodelink', $module_params['viewmodelink']);
 		$smarty->assign_by_ref('linkall', $module_params['linkall']);
-		$smarty->assign('calendarViewMode', $calendarViewMode);
+		$smarty->assign('calendarViewMode', $calendarViewMode['casedefault']);
 
 		if ( isset($save_todate) ) {
 			$_REQUEST['todate'] = $save_todate;

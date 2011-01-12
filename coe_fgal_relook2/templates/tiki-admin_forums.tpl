@@ -64,13 +64,13 @@
 				<td>
 					<a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}View{/tr}">{$channels[user].name|escape}</a>
 				</td>
-				<td style="text-align:right;">{$channels[user].threads}</td>
-				<td style="text-align:right;">{$channels[user].comments}</td>
-				<td style="text-align:right;">{$channels[user].users}</td>
-				<td style="text-align:right;">{$channels[user].age}</td>
-				<td style="text-align:right;">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
-				<td style="text-align:right;">{$channels[user].hits}</td>
-				<td style="text-align:right;">
+				<td class="integer">{$channels[user].threads}</td>
+				<td class="integer">{$channels[user].comments}</td>
+				<td class="integer">{$channels[user].users}</td>
+				<td class="integer">{$channels[user].age}</td>
+				<td class="integer">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
+				<td class="integer">{$channels[user].hits}</td>
+				<td class="action">
 					<a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}View{/tr}">{icon _id='table' alt="{tr}View{/tr}"}</a>
 
 {if $tiki_p_forum_lock eq 'y'}
