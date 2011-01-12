@@ -1959,7 +1959,8 @@ function initialize_prefs() {
 	}
 
 	// Disabled by default so it has to be modified
-	if( isset($modified['feature_perspective']) && $modified['feature_perspective'] == 'y' ) {
+	global $in_installer, $section;	// but not if called during installer
+	if( isset($modified['feature_perspective']) && $modified['feature_perspective'] == 'y' && empty($in_installer) ) {
 		if( ! isset( $section ) || $section != 'admin' ) {
 			require_once 'lib/perspectivelib.php';
 			if( $persp = $perspectivelib->get_current_perspective( $modified ) ) {
