@@ -88,6 +88,23 @@ $smarty->assign('history_pagesize', $history_pagesize);
 $history = $histlib->get_page_history($page, false, $history_offset, $paginate ? $history_pagesize : -1);
 $smarty->assign('history_cant', $histlib->get_nb_history($page) - 1);
 
+if ($prefs['flaggedrev_approval'] == 'y') {
+	global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
+
+	if ($tiki_p_wiki_view_latest != 'y' && $flaggedrevisionlib->page_requires_approval($page)) {
+		$approved_versions = $flaggedrevisionlib->get_versions_with($page, 'moderation', 'OK');
+		$new_history = array();
+
+		foreach ($history as $version) {
+			if (in_array($version['version'], $approved_versions)) {
+				$new_history[] = $version;
+			}
+		}
+
+		$history = $new_history;
+	}
+}
+
 if (!isset($_REQUEST['show_all_versions'])) {
 	$_REQUEST['show_all_versions'] = "y";
 }
