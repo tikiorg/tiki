@@ -21,6 +21,7 @@ $(".modules").sortable({
 		$("#save_modules").show();
 	}
 });
+$(".module").dblclick(function () { showModuleEditForm(this); });
 
 $("#save_modules a").click(function(evt) {
 	// save module order
@@ -33,3 +34,12 @@ $("#save_modules a").click(function(evt) {
 	$("#module-order").val($.toJSON(ser)).parents("form")[0].submit();
 	return false;
 });
+
+// show edit form dialogue
+showModuleEditForm = function(item) {
+
+	if (item) {
+		alert("module edit form - TODO");
+	}
+//	$('#module_edit_div').dialog('open');
+};

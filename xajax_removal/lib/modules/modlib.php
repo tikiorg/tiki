@@ -18,6 +18,15 @@ class ModLib extends TikiLib
 
 	public $pref_errors = array();
 	
+	// additional module zones added to this array will be exposed to tiki.tpl
+	// TODO change modules user interface to enable additional zones
+	public $module_zones = array(
+		't' => 'top_modules',
+		'l' => 'left_modules',
+		'r' => 'right_modules',
+		'b' => 'bottom_modules',
+	);
+
 	function replace_user_module($name, $title, $data, $parse=NULL) {
 		if ((!empty($name)) && (!empty($data))) {
 			$query = "delete from `tiki_user_modules` where `name`=?";
@@ -125,16 +134,28 @@ class ModLib extends TikiLib
 	}
 	
 	function reorder_modules($module_order) {
+		global $user;
+		$all_modules = $this->get_modules_for_user($user, $this->module_zones);
 		$section_map = array('modules_top' => 't', 'modules_left' => 'l', 'modules_right' => 'r', 'modules_bottom' => 'b', 'modules_pagetop' => 't2', 'modules_pagebottom' => 'b2' );
-		foreach ($module_order as $section => $contents) {
-    		$section = $section_map[$section];
+		$bindvars = array();
+		$query = '';
+		foreach ($module_order as $zone => $contents) {
+    		$section_initial = $section_map[$zone];
     		foreach ($contents as $index => $module) {
     			$i = $index;
-    			$m = preg_match('_\d+$', $module);
-    			$m = $m[0];
+    			preg_match('/\d+$/', $module, $m);
+    			if (count($m)) {
+    				$m = $m[0];
+	    			if ($all_modules[$zone][$index]['moduleId'] != $m || $all_modules[$zone][$index]['ord'] != $index + 1) {
+	    				$query .= 'UPDATE `tiki_modules` SET `ord`=? WHERE `moduleId`=?;';
+						$bindvars[] = (int) $index + 1;
+						$bindvars[] = (int) $m;
+	    			}
+    			}
     		}
     	}
-		
+
+		$result = $this->query($query, $bindvars);
 	}
 
 	function get_all_modules() {
@@ -251,7 +272,10 @@ class ModLib extends TikiLib
 		return $pass;
 	}
 
-	function get_modules_for_user( $user, array $module_zones ) {
+	function get_modules_for_user( $user, array $module_zones = array()) {
+		if (empty($module_zones)) {
+			$module_zones = $this->module_zones;
+		}
 		$list = $this->get_raw_module_list_for_user( $user, $module_zones );
 
 		foreach( $list as & $partial ) {

@@ -364,6 +364,7 @@ $headerlib->add_css('.module:hover {
 	background-color: #ffa;
 }');
 $headerlib->add_jsfile('lib/modules/tiki-admin_modules.js');
+$headerlib->add_jsfile('lib/jquery/jquery.json-2.2.js');
 
 $sameurl_elements = array(
     'offset',
