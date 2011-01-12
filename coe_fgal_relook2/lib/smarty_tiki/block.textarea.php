@@ -231,7 +231,9 @@ function CKeditor_OnComplete() {
 	} else {		// end of if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n')
 		
 		// setup for wiki editor
-		
+
+		$headerlib->add_jsfile('lib/filegals/file_gallery.js');
+
 		$textarea_attributes = '';
 		foreach ( $params as $k => $v ) {
 			if ( $k == 'id' || $k == 'name' || $k == 'class' || $k == '_toolbars' ) {

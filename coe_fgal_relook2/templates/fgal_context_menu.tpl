@@ -2,19 +2,19 @@
 
 {if $files[changes].isgal eq 1}
 	{if $files[changes].perms.tiki_p_view_file_gallery eq 'y'}
-		{self_link _icon='folder_go' _menu_text=$menu_text _menu_icon=$menu_icon galleryId=$files[changes].id}{tr}Go to{/tr}{/self_link}
+		{self_link _icon='folder_go' _menu_text=$menu_text _menu_icon=$menu_icon galleryId=$files[changes].id _onclick="FileGallery.open(this.href + '&filegals_manager={$filegals_manager|escape}', {$filegals_manager|escape}, dialogDiv);"}{tr}Go to{/tr}{/self_link}
 	{/if}
 
 	{if $files[changes].perms.tiki_p_create_file_galleries eq 'y'}
-		{self_link _icon='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon edit_mode=1 galleryId=$files[changes].id}{tr}Properties{/tr}{/self_link}
+		{self_link _icon='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon edit_mode=1 galleryId=$files[changes].id _onclick="FileGallery.open(this.href + '&filegals_manager={$filegals_manager|escape}', {$filegals_manager|escape}, dialogDiv);"}{tr}Properties{/tr}{/self_link}
 	{/if}
 
 	{if $files[changes].perms.tiki_p_upload_files eq 'y' and ( $files[changes].perms.tiki_p_admin_file_galleries eq 'y' or ($user and $files[changes].user eq $user) or $files[changes].public eq 'y' ) }
-		<a href="tiki-upload_file.php?galleryId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='upload'}</a>
+		<a href="tiki-upload_file.php?galleryId={$files[changes].id}"{if $filegals_manager neq ''} onclick="FileGallery.open(this.href + '&filegals_manager={$filegals_manager|escape}', {$filegals_manager|escape}, dialogDiv);"{/if}>{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='upload'}</a>
 	{/if}
 
 	{if $files[changes].perms.tiki_p_assign_perm_file_gallery eq 'y'}
-            <a href="tiki-objectpermissions.php?objectName={$files[changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">
+            <a href="tiki-objectpermissions.php?objectName={$files[changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}"{if $filegals_manager neq ''} onclick="FileGallery.open(this.href + '&filegals_manager={$filegals_manager|escape}', {$filegals_manager|escape}, dialogDiv);"{/if}>
             {if $files[changes].public neq 'y'}
 							{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='key_private' alt="{tr}Private Gallery{/tr}"}
             {elseif $files[changes].perms.has_special_perm eq 'y'}
@@ -34,12 +34,12 @@
 		{self_link _icon='cross' _menu_text=$menu_text _menu_icon=$menu_icon removegal=$files[changes].id}{tr}Delete{/tr}{/self_link}
 	{/if}
 {else}
-	{if $prefs.javascript_enabled eq 'y'}
+	{if $prefs.javascript_enabled eq 'y' && $filegals_manager eq ''}
 		{if $menu_text eq 'y' or $menu_icon eq 'y'}
 			{* This form tag is needed when placed in a popup box through the popup function.
 			If placed in a column, there is already a form tag around the whole table *}
 
-			<form class="upform" name="form{$files[changes].fileId}" method="post" action="tiki-list_file_gallery.php?galleryId={$gal_info.galleryId}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}{if $prefs.fgal_asynchronous_indexing eq 'y'}&amp;fast{/if}" enctype="multipart/form-data">
+			<form class="upform" name="form{$files[changes].fileId}" method="post" action="tiki-list_file_gallery.php?galleryId={$gal_info.galleryId}{if $prefs.fgal_asynchronous_indexing eq 'y'}&amp;fast{/if}" enctype="multipart/form-data">
 
 		{/if}
 		{if $menu_text neq 'y'}
@@ -50,7 +50,7 @@
 	{/if}
 
 	{if $files[changes].type|truncate:6:'':true eq 'image/' }
-		<a href="{$files[changes].id|sefurl:display}">
+		<a href="{$files[changes].id|sefurl:display}" target="_new">
 		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 		</a>
 	{/if}
@@ -74,7 +74,7 @@
 	{if $gal_info.archives gt -1}
 		{if $files[changes].nbArchives gt 0}
 			{assign var=nb_archives value=$files[changes].nbArchives}
-			<a href="tiki-file_archives.php?fileId={$files[changes].fileId}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_multiple' alt="{tr}Archives{/tr} ($nb_archives)"}</a>
+			<a href="tiki-file_archives.php?fileId={$files[changes].fileId}"{if $filegals_manager neq ''} target="_new"{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_multiple' alt="{tr}Archives{/tr} ($nb_archives)"}</a>
 		{else}
 			{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_multiple_gray' alt="{tr}Archives{/tr}"}
 		{/if}
@@ -122,7 +122,7 @@
 				
 			{/if}
 
-			<a href="tiki-upload_file.php?galleryId={$files[changes].galleryId}&amp;fileId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='page_edit' alt="{tr}Properties{/tr}"}</a>
+			<a href="tiki-upload_file.php?galleryId={$files[changes].galleryId}&amp;fileId={$files[changes].id}" onclick="FileGallery.open(this.href + '&filegals_manager={$filegals_manager|escape}', {$filegals_manager|escape}, dialogDiv);">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='page_edit' alt="{tr}Properties{/tr}"}</a>
 			{/if}
 
 			{if $gal_info.lockable eq 'y' and $files[changes].isgal neq 1}
@@ -165,7 +165,7 @@
 
 	{if $files[changes].perms.tiki_p_admin_file_galleries eq 'y'
 		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or ($files[changes].perms.tiki_p_edit_gallery_file eq 'y' and $files[changes].perms.tiki_p_remove_file eq 'y'))) }
-			{self_link _icon='cross' _menu_text=$menu_text _menu_icon=$menu_icon remove=$files[changes].fileId galleryId=$files[changes].galleryId}{tr}Delete{/tr}{/self_link}
+			{self_link _icon='cross' _menu_text=$menu_text _menu_icon=$menu_icon remove=$files[changes].fileId galleryId=$files[changes].galleryId _onclick="FileGallery.open(this.href + '&filegals_manager={$filegals_manager|escape}', {$filegals_manager|escape}, dialogDiv);"}{tr}Delete{/tr}{/self_link}
 	{/if}
 
 	{if $prefs.javascript_enabled eq 'y'}

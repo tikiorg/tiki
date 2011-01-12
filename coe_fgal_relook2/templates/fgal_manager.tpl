@@ -57,7 +57,6 @@
 			</div>
 		</div>
 		<div class="fg-galleries-list">
-			<h3>{tr}File galleries{/tr}</h3>
 			{include file='file_galleries.tpl'}
 		</div>
 	</div>

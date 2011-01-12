@@ -1084,23 +1084,6 @@ browser();
 //This was added to allow wiki3d to change url on tiki's window
 window.name = 'tiki';
 
-var fgals_window = null;
-
-function openFgalsWindow(filegal_manager_url, reload) {
-	if(fgals_window && typeof fgals_window.document != "undefined" && typeof fgals_window.document != "unknown" && !fgals_window.closed) {
-		if (reload) {
-			fgals_window.location.replace(filegal_manager_url);
-		}
-		fgals_window.focus();
-	} else {
-/*		fgals_window=window.open(filegal_manager_url,'_blank','menubar=1,scrollbars=1,resizable=1,height=500,width=800,left=50,top=50'); */
-		alert('test');
-	}
-	$(window).unload(function(){	// tidy
-		fgals_window.close();
-	});
-}
-
 /* Count the number of words (spearated with space) */
 function wordCount(maxSize, source, cpt, message) {
 	var formcontent = source.value;
@@ -1412,12 +1395,21 @@ function build_plugin_form_row(row, name, label_name, requiredOrSpecial, value, 
 		icon = document.createElement( 'img' );
 		icon.src = 'pics/icons/image.png';
 		input.id = paramDef.area ? paramDef.area : 'fgal_picker';
-		icon.onclick = function() {openFgalsWindowArea(paramDef.area ? paramDef.area :'fgal_picker');};
+		icon.onclick = function() {
+			var dialogId = window.dialogData.length - 1;
+			window.dialogData[ dialogId ] = [ tr('Quick upload and insert'), '<div id="tbFilegalManager" /><div id="tbFilegalManagerSub" />', 'FileGallery' ];
+			displayDialog( null, dialogId, input.id );
+		};
+
 		field.appendChild( icon );
 	} else if (paramDef && paramDef.type == 'fileId') {
 		var help = document.createElement( 'span' );
 		input.id = paramDef.area ? paramDef.area : 'fgal_picker';
-		help.onclick = function() {openFgalsWindowArea(paramDef.area ? paramDef.area :'fgal_picker');};
+		help.onclick = function() {
+			var dialogId = window.dialogData.length - 1;
+			window.dialogData[ dialogId ] = [ tr('Quick upload and insert'), '<div id="tbFilegalManager" /><div id="tbFilegalManagerSub" />', 'FileGallery' ];
+			displayDialog( null, dialogId, input.id );
+		};
 		help.innerHTML = " <a href='#'>" + tr('Pick a file.') + "</a>";
 		field.appendChild( help );
 	}
@@ -1442,11 +1434,6 @@ function build_plugin_form_row(row, name, label_name, requiredOrSpecial, value, 
 	}
 
 }
-
-function openFgalsWindowArea(area) {
-	openFgalsWindow('tiki-list_file_gallery.php?filegals_manager='+area, true);	// reload
-}
-
 
 //Password strength
 //Based from code by:
