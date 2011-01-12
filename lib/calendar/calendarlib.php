@@ -910,7 +910,7 @@ $request_year, $dayend, $myurl;
 				if ( $group_by == 'day' ) {
 					$key = 0;
 				}
-				if ( $calendarViewMode == 'day' ) {
+				if ( $calendarViewMode['casedefault'] == 'day' ) {
 					$dday = $daystart;
 				} else {
 					$dday = $curtikidate->getTime();
@@ -918,7 +918,7 @@ $request_year, $dayend, $myurl;
 				}
 				$cell[$i][$w]['day'] = $dday;
 	
-				if ( $calendarViewMode == 'day' or ( $dday >= $daystart && $dday <= $dayend ) ) {
+				if ( $calendarViewMode['casedefault'] == 'day' or ( $dday >= $daystart && $dday <= $dayend ) ) {
 					$cell[$i][$w]['focus'] = true;
 				} else {
 					$cell[$i][$w]['focus'] = false;
