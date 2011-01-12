@@ -298,4 +298,12 @@ a.admbox.off img {
 	min-height: 10em;
 }
 
+.module-placeholder {
+	width: 200px;
+	height: 200px;
+	list-style-type: none;
+	background-color: #ff0;
+}
+
+
 /* end from ui-revamp branch */

@@ -36,6 +36,8 @@ if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y') {
 $access->check_permission(array('tiki_p_admin_modules'));
 $auto_query_args = array();
 
+$access->check_feature( array('feature_jquery_ui') );
+
 // Values for the user_module edit/create form
 $smarty->assign('um_name', '');
 $smarty->assign('um_title', '');
@@ -363,6 +365,7 @@ $headerlib->add_css('.module:hover {
 	cursor: move;
 	background-color: #ffa;
 }');
+$headerlib->add_cssfile('css/admin.css');
 $headerlib->add_jsfile('lib/modules/tiki-admin_modules.js');
 $headerlib->add_jsfile('lib/jquery/jquery.json-2.2.js');
 
@@ -375,5 +378,10 @@ $sameurl_elements = array(
 ask_ticket('admin-modules');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-$smarty->assign('mid', 'tiki-admin_modules.tpl');
-$smarty->display("tiki.tpl");
+
+if (!empty($_REQUEST['edit_module'])) {	// pick up ajax calls
+	$smarty->display("admin_modules_form.tpl");
+} else {
+	$smarty->assign('mid', 'tiki-admin_modules.tpl');
+	$smarty->display("tiki.tpl");
+}
