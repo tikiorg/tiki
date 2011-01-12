@@ -25,6 +25,8 @@ $inputConfiguration = array(
 		'watch_action' => 'word',
 		'watch_event' => 'word',
 		//'watch_object' => 'word', TODO
+		'approve' => 'text',
+		'revision' => 'digits',
 	) ),
 );
 
@@ -297,6 +299,19 @@ $page = $info['pageName'];
 //if (isset($_REQUEST['machine_translate_to_lang'])) {
 //	$translatedWikiMarkup = generate_machine_translated_markup($info, $_REQUEST['machine_translate_to_lang']);
 //} 
+
+if (isset($_REQUEST['approve'], $_REQUEST['revision']) && $_REQUEST['revision'] <= $info['version']) {
+	global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
+
+	if ($flaggedrevisionlib->page_requires_approval($page)) {
+		$perms = Perms::get('wiki page', $page);
+
+		if ($perms->wiki_approve) {
+			$flaggedrevisionlib->flag_revision($page, $_REQUEST['revision'], 'moderation', 'OK');
+		}
+	}
+	$access->redirect($wikilib->sefurl($page));
+}
 
 $pageRenderer = new WikiRenderer( $info, $user );
 $objectperms = $pageRenderer->applyPermissions();

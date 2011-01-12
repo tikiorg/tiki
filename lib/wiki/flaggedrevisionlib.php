@@ -26,12 +26,12 @@ class FlaggedRevisionLib extends TikiDb_Bridge
 
 	function get_version_with($pageName, $flag, $value)
 	{
-		$result = $this->fetchAll('SELECT th.* FROM `tiki_history` th INNER JOIN `tiki_object_attributes` toa ON toa.`itemId` = `historyId` AND toa.`type` = ? WHERE toa.attribute = ? AND toa.value = ? AND th.pageName = ?', array(
+		$result = $this->fetchAll('SELECT th.* FROM `tiki_history` th INNER JOIN `tiki_object_attributes` toa ON toa.`itemId` = `historyId` AND toa.`type` = ? WHERE toa.attribute = ? AND toa.value = ? AND th.pageName = ? ORDER BY `th`.`version` DESC', array(
 			'wiki history',
 			$this->get_attribute_for_flag($flag),
 			$value,
 			$pageName,
-		));
+		), 1);
 
 		$first = reset($result);
 		return $first;
