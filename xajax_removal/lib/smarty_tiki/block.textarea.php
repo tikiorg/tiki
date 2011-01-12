@@ -249,7 +249,7 @@ function CKeditor_OnComplete() {
 		}
 		
 		$smarty->assign_by_ref('pagedata', htmlspecialchars($content));
-		$smarty->assign('comments', isset($params['comments']) ? $params['comments'] : 'n');
+		$smarty->assign('comments', isset($params['comments']) ? $params['comments'] : $params['_simple'] === 'y' ? 'y' : 'n');
 		$smarty->assign('switcheditor', isset($params['switcheditor']) ? $params['switcheditor'] : 'n');
 		$smarty->assign('toolbar_section', $params['section']);
 		$html .= $smarty->fetch('wiki_edit.tpl');

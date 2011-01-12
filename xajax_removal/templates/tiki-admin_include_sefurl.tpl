@@ -9,13 +9,17 @@
 		<input type="submit" name="save" value="{tr}Change preferences{/tr}" />
 	</div>
 	<fieldset class="admin">
-		{if $needtowarn}
+		{if $htaccess eq 'missing'}
 		{remarksbox type="warning" title="{tr}Warning{/tr}"}	
 		{tr}SEFURL will not work unless Tiki specific directives are deployed to the .htaccess file.{/tr}	
 		{tr}To enable this file, simply rename the <strong>_htaccess</strong> file (located in the main directory of your Tiki installation) to <strong>.htaccess</strong>.{/tr}
 		{tr}If you need to keep an existing (non Tiki) .htaccess file, just add Tiki directives to it.{/tr}
 		{tr}When you upgrade (ex.: from Tiki4 to Tiki5), make sure to use the new _htaccess file.{/tr}
-
+		{/remarksbox}
+		{elseif $htaccess eq 'outdated'}
+		{remarksbox type="warning" title="{tr}Warning{/tr}"}	
+		{tr}.htaccess file is out of date. SEFURL may not work completely or incorrectly if Tiki htaccess directives are not current.{/tr}	
+		{tr}To update this file, if it was not customized, overwrite the <strong>.htaccess</strong> file (located in the main directory of your Tiki installation) with <strong>_htaccess</strong>.{/tr}
 		{/remarksbox}
 		{/if}
 		<legend>{tr}Settings{/tr}</legend>

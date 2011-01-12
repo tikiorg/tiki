@@ -1231,8 +1231,8 @@ function wikiplugin_trackerlist($data, $params) {
 					$focus = $calendarlib->focusNext($focus, str_replace('+', '', $calendardelta));
 				}
 			}
-			$calendarlib->focusStartEnd($focus, $calendarviewmode, $calendarbeginmonth, $startPeriod, $startNextPeriod);
-			$cell = $calendarlib->getTableViewCells($startPeriod, $startNextPeriod, $calendarviewmode, $calendarlib->firstDayofWeek($user));
+			$calendarlib->focusStartEnd($focus, $calendarViewMode['casedefault'], $calendarbeginmonth, $startPeriod, $startNextPeriod);
+			$cell = $calendarlib->getTableViewCells($startPeriod, $startNextPeriod, $calendarViewMode['casedefault'], $calendarlib->firstDayofWeek($user));
 			$filterfield[] = $calendarfielddate[0];
 			$filtervalue[] = '';
 			$exactvalue[] = array('>=' => $startPeriod['date']);
@@ -1369,12 +1369,12 @@ function wikiplugin_trackerlist($data, $params) {
 				$smarty->assign('module_params', array('viewmode'=>'n', 'showaction'=>'n', 'notitle'=>empty($calendartitle)?'y':'n', 'title'=>$calendartitle, 'viewnavbar' => $calendarviewnavbar, 'decorations'=> empty($calendartitle)?'n':'y'));
 				$smarty->assign('tpl_module_title', tra($calendartitle));
 				$smarty->assign('now', $tikilib->now);
-				$smarty->assign('calendarViewMode', $calendarviewmode);
-				$smarty->assign('viewmodelink', $calendarviewmode);
-				$smarty->assign('viewmode', $calendarviewmode);
-				$focus_prev = $calendarlib->focusPrevious($focus, $calendarviewmode);
+				$smarty->assign('calendarViewMode', $calendarViewMode['casedefault']);
+				$smarty->assign('viewmodelink', $calendarViewMode['casedefault']);
+				$smarty->assign('viewmode', $calendarViewMode['casedefault']);
+				$focus_prev = $calendarlib->focusPrevious($focus, $calendarViewMode['casedefault']);
 				$smarty->assign('focus_prev', $focus_prev['date']);
-				$focus_next = $calendarlib->focusNext($focus, $calendarviewmode);
+				$focus_next = $calendarlib->focusNext($focus, $calendarViewMode['casedefault']);
 				$smarty->assign('focus_next', $focus_next['date']);
 				$smarty->assign('daystart', $startPeriod['date']);
 				$dayend =  $calendarlib->infoDate($startNextPeriod['date']-1);

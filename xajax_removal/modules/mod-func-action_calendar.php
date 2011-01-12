@@ -34,7 +34,7 @@ function module_action_calendar( $mod_reference, &$module_params ) {
 		global $headerlib; $headerlib->add_cssfile('css/calendar.css',20);
 		global $calendarViewMode;
 	
-		$calendarViewMode = 'month';
+		$calendarViewMode['casedefault'] = 'month';
 		$group_by = 'day';
 	
 		include('tiki-calendar_setup.php');
