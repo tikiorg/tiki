@@ -24,16 +24,35 @@ if ($tiki_p_admin != 'y') {
 	}
 }
 
-if (isset($_REQUEST["articleId"])) {
-	$articleId = $_REQUEST["articleId"];
+if (!empty($_REQUEST['articleId'])) {
+	$articleId = $_REQUEST['articleId'];
+	$article_data = $artlib->get_article($_REQUEST['articleId']);
+	if ($article_data === false) {
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra('Permission denied'));
+		$smarty->display('error.tpl');
+		die;
+	}
+
+	if (!$article_data) {
+		$smarty->assign('msg', tra("Article not found"));
+		$smarty->display("error.tpl");
+		die;
+	}
 } else {
 	$articleId = 0;
 }
 
-if (isset($_REQUEST['cancel_edit']) && $articleId) {
-	header ("location: tiki-read_article.php?articleId=$articleId");
+if (isset($_REQUEST['cancel_edit'])) {
+	if (empty($articleId)) {
+		header('localtion: tiki-view_articles.php');
+		die;
+	}
+	include_once('tiki-sefurl.php');
+	header ('location: '.filter_out_sefurl("tiki-read_article.php?articleId=$articleId", $smarty, 'article', $artice_data['title']));
 	die;
 }
+
 // We need separate numbering of previews, since we access preview images by this number
 if (isset($_REQUEST["previewId"])) {
 	$previewId = $_REQUEST["previewId"];
@@ -89,19 +108,6 @@ $smarty->assign('ispublished', '');
 // GGG - You have to check for the actual value of the articleId because it
 //  will be 0 when you select preview while creating a new article.
 if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
-	$article_data = $artlib->get_article($_REQUEST["articleId"]);
-	if ($article_data === false) {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra('Permission denied'));
-		$smarty->display('error.tpl');
-		die;
-	}
-
-	if (!$article_data) {
-		$smarty->assign('msg', tra("Article not found"));
-		$smarty->display("error.tpl");
-		die;
-	}
 
 		$cat_lang = $article_data["lang"];
 	$publishDate = $article_data["publishDate"];
@@ -406,8 +412,8 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 		$ispublished = 'y';
 	else
 		$ispublished = 'n';
-		
-	$artid = $artlib->replace_article(strip_tags($_REQUEST["title"], '<a><pre><p><img><hr><b><i>')
+	$_REQUEST['title'] = strip_tags($_REQUEST["title"], '<a><pre><p><img><hr><b><i>');
+	$artid = $artlib->replace_article($_REQUEST['title']
 																	, $_REQUEST["authorName"]
 																		, $_REQUEST["topicId"]
 																		, $useImage
@@ -436,7 +442,6 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 																		, $_REQUEST['list_image_x']
 																		, $ispublished
 																		);
-
 	$cat_type = 'article';
 	$cat_objid = $artid;
 	$cat_desc = substr($_REQUEST["heading"], 0, 200);
@@ -465,7 +470,8 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 	// Remove preview cache because it won't be used any more
 	@$artlib->delete_image_cache("preview",$previewId);
 
-	header ("location: tiki-read_article.php?articleId=$artid");
+	include_once('tiki-sefurl.php');
+	header ('location: '.	filter_out_sefurl("tiki-read_article.php?articleId=$artid", $smarty, 'article', $_REQUEST['title']));
 }
 $smarty->assign_by_ref('errors', $errors);
 
