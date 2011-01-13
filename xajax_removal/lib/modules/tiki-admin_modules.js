@@ -30,7 +30,11 @@ $("#module_list").sortable({
 	forceHelperSize: true,
 	placeholder: "module-placeholder",
 	stop: function (event, ui) {
-		$("#save_modules *").show("fast");
+		//$("#save_modules *").show("fast");
+		var dropped = $("tr:first", ".modules");
+		var zone = dropped.parents(".modules");
+		var ord = $.inArray(dropped[0], zone.children());
+		showModuleEditForm( false, { modName: $("td:first", ui.item).text(), modPos: zone.attr("id").substring(0, 1), modOrd: ord + 1 });
 	},
 	start: function (event, ui) {
 		
@@ -53,7 +57,7 @@ $("#save_modules a").click(function(evt) {
 });
 
 // show edit form dialogue
-showModuleEditForm = function(item) {
+showModuleEditForm = function(item, options) {
 	var modId, modName, modPos, modOrd;
 	if (item) {
 		//alert("module edit form - TODO");
@@ -65,27 +69,35 @@ showModuleEditForm = function(item) {
 		if (modId) {
 			modId = modId[0];
 			var id = $("div:first", item).attr("id");
-//			modPos = id.match(/.\d+$/);
-//			if (modPos) {
-//				modOrd = modPos[0].substring( 1, modPos[0].length);
-//				modPos = modPos[0].substring( 0, 1);
-//			}
+		//			modPos = id.match(/.\d+$/);
+		//			if (modPos) {
+		//				modOrd = modPos[0].substring( 1, modPos[0].length);
+		//				modPos = modPos[0].substring( 0, 1);
+		//			}
 		}
+	} else { // new module assignment
+		modName = options.modName;
+		modPos = options.modPos;
+		modOrd = options.modOrd;
 	}
+	
 	if ($("#module_edit_div").length === 0) {
 		$("body").append($("<div id='module_edit_div'><form action='#' method='post'><table></table></form></div>"));
 		$("#module_edit_div form").append($("<input type='hidden' name='assign' value='popup' />" +
 											"<input type='hidden' name='assign_name' value='" + modName + "' />" +
 											"<input type='hidden' name='moduleId' value='" + modId + "' />"));
 	}
-	$.post("tiki-admin_modules.php", {
-			edit_module: true,
-			edit_assign: modId,
-			assign_name: modName
-//			moduleId: modId,
-//			assign_position: modPos,
-//			assign_order: modOrd
-		}, function(data) {
+	var postData = {
+		edit_module: true,
+		assign_name: modName
+	};
+	if (item) {
+		postData.edit_assign = modId;
+	} else {
+		postData.preview = true;
+	}
+	
+	$.post("tiki-admin_modules.php", postData, function(data) {
 			$('#module_edit_div table').html(data);
 			$('#module_edit_div').dialog("option", "width", 500)
 					.dialog("option", "height", 500)
