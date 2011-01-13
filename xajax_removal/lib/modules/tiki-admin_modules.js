@@ -32,9 +32,16 @@ $("#module_list").sortable({
 	stop: function (event, ui) {
 		//$("#save_modules *").show("fast");
 		var dropped = $("tr:first", ".modules");
-		var zone = dropped.parents(".modules");
-		var ord = $.inArray(dropped[0], zone.children());
-		showModuleEditForm( false, { modName: $("td:first", ui.item).text(), modPos: zone.attr("id").substring(0, 1), modOrd: ord + 1 });
+		if (dropped.length) {
+			var zone = dropped.parents(".modules:first");	// odd? more than one?
+			var ord = $.inArray(dropped[0], zone.children());
+			var zoneStr = zone.attr("id").substring(0, 1);
+			var options =  { modName: $.trim($("td:first", ui.item).text()), modPos: zoneStr, modOrd: ord + 1 };
+			if (zoneStr === "t") {
+				options.nobox = true;
+			}
+			showModuleEditForm( false,options);
+		}
 	},
 	start: function (event, ui) {
 		
@@ -58,7 +65,7 @@ $("#save_modules a").click(function(evt) {
 
 // show edit form dialogue
 showModuleEditForm = function(item, options) {
-	var modId, modName, modPos, modOrd;
+	var modId = 0, modName, modPos = "", modOrd = 0;
 	if (item) {
 		//alert("module edit form - TODO");
 		modName = $(item).attr("class").match(/box-\S+/);
@@ -69,11 +76,11 @@ showModuleEditForm = function(item, options) {
 		if (modId) {
 			modId = modId[0];
 			var id = $("div:first", item).attr("id");
-		//			modPos = id.match(/.\d+$/);
-		//			if (modPos) {
-		//				modOrd = modPos[0].substring( 1, modPos[0].length);
-		//				modPos = modPos[0].substring( 0, 1);
-		//			}
+			modPos = id.match(/.\d+$/);
+			if (modPos) {
+				modOrd = modPos[0].substring( 1, modPos[0].length);
+				modPos = modPos[0].substring( 0, 1);
+			}
 		}
 	} else { // new module assignment
 		modName = options.modName;
@@ -89,7 +96,10 @@ showModuleEditForm = function(item, options) {
 	}
 	var postData = {
 		edit_module: true,
-		assign_name: modName
+		assign_name: modName,
+		moduleId: modId,
+		assign_position: modPos,
+		assign_order: modOrd
 	};
 	if (item) {
 		postData.edit_assign = modId;
@@ -103,6 +113,9 @@ showModuleEditForm = function(item, options) {
 					.dialog("option", "height", 500)
 					.dialog( "option", "position", 'center' )
 					.find("table input[type='submit']").hide();
+			if (options && options.nobox) {
+				$('input[name*=nobox]').val("y")
+			}
 			ajaxLoadingHide();
 		},
 	"html");

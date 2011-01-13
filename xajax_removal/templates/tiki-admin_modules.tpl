@@ -504,16 +504,18 @@
 {/tab}
 
 {tab name="{tr}All Modules{/tr}"}
-	<table class="formcolor" id="module_list">
-		{foreach key=name item=info from=$all_modules_info}
-			<tr>
-				<td>{$name}</td>
-				<td>
-					{$info.name}
-				</td>
-			</tr>
-		{/foreach}
-	</table>
+	<div style="height:400px;overflow:auto;">
+		<table class="formcolor" id="module_list">
+			{foreach key=name item=info from=$all_modules_info}
+				<tr>
+					<td>{$name}</td>
+					<td>
+						{$info.name}
+					</td>
+				</tr>
+			{/foreach}
+		</table>
+	</div>
 {/tab}
 
 {/tabset}

@@ -7,7 +7,7 @@
 						<option value="t" {if $assign_position eq 'l'}selected="selected"{/if}>{tr}Top{/tr}</option>
 						<option value="l" {if $assign_position eq 'l'}selected="selected"{/if}>{tr}Left{/tr}</option>
 						<option value="r" {if $assign_position eq 'r'}selected="selected"{/if}>{tr}Right{/tr}</option>
-						<option value="b" {if $assign_position eq 'l'}selected="selected"{/if}>{tr}Bottom{/tr}</option>
+						<option value="b" {if $assign_position eq 'b'}selected="selected"{/if}>{tr}Bottom{/tr}</option>
 					</select>
 				</td>
 			</tr>
