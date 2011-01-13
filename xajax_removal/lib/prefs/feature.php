@@ -28,6 +28,7 @@ function prefs_feature_list() {
 	return array(
 		'feature_blog_mandatory_category' => array(
 			'name' => tra('Force and limit categorization to within subtree of'),
+			'description' => tra('If you get an error message indicating a mandatory category is required when editing a blog post, this is the option to blame. Set it to None.'),
 			'type' => 'list',
 			'options' => $catree,
 			'dependencies' => array(
@@ -1594,6 +1595,7 @@ function prefs_feature_list() {
 		),
 		'feature_wiki_mandatory_category' => array(
 			'name' => tra('Force and limit categorization to within subtree of'),
+			'description' => tra('If you get an error message indicating a mandatory category is required when editing a wiki page, this is the option to blame. Set it to None.'),
 			'type' => 'list',
 			'options' => $catree,
 			'dependencies' => array(

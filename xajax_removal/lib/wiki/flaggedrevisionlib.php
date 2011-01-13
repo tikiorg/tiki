@@ -26,15 +26,38 @@ class FlaggedRevisionLib extends TikiDb_Bridge
 
 	function get_version_with($pageName, $flag, $value)
 	{
-		$result = $this->fetchAll('SELECT th.* FROM `tiki_history` th INNER JOIN `tiki_object_attributes` toa ON toa.`itemId` = `historyId` AND toa.`type` = ? WHERE toa.attribute = ? AND toa.value = ? AND th.pageName = ?', array(
+		$this->get_version_query($pageName, $flag, $value, $query, $bindvars);
+
+		$result = $this->fetchAll($query, $bindvars, 1);
+
+		$first = reset($result);
+		return $first;
+	}
+
+	function get_versions_with($pageName, $flag, $value)
+	{
+		$this->get_version_query($pageName, $flag, $value, $query, $bindvars, 'version');
+		$result = $this->fetchAll($query, $bindvars);
+
+		$versions = array();
+		foreach ($result as $row) {
+			$versions[] = $row['version'];
+		}
+
+		return $versions;
+	}
+
+	private function get_version_query($pageName, $flag, $value, & $query, & $bindvars, $fields = 'th.*')
+	{
+		// NOTE : These are out variables
+		$query = 'SELECT ' . $fields . ' FROM `tiki_history` th INNER JOIN `tiki_object_attributes` toa ON toa.`itemId` = `historyId` AND toa.`type` = ? WHERE toa.attribute = ? AND toa.value = ? AND th.pageName = ? ORDER BY `th`.`version` DESC';
+
+		$bindvars = array(
 			'wiki history',
 			$this->get_attribute_for_flag($flag),
 			$value,
 			$pageName,
-		));
-
-		$first = reset($result);
-		return $first;
+		);
 	}
 
 	function page_requires_approval($pageName)

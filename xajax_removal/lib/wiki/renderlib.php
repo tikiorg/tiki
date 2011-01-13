@@ -61,8 +61,6 @@ class WikiRenderer
 		$permDescs = $userlib->get_permissions( 0, -1, 'permName_desc', '', 'wiki' );
 		$objectperms = Perms::get( array( 'type' => 'wiki page', 'object' => $this->page ) );
 
-		$objectperms = $this->applyLocalPerms($objectperms, $permDescs);
-		
 		foreach( $permDescs['data'] as $name ) {
 			$name = $name['permName'];
 			$this->setGlobal( $name, $objectperms->$name ? 'y' : 'n' );
@@ -75,36 +73,6 @@ class WikiRenderer
 		return $objectperms;
 	} // }}}
 
-	function applyLocalPerms($objectperms, $permDescs) // {{{
-	{
-		// This function is a kludge until a better more generic solution is found for "user specific" checking perms
-		global $prefs;
-		if ( $prefs['wiki_creator_admin'] == 'y' && !empty($this->user) && $this->info['creator'] == $this->user ) {
-			// to give all perms
-			foreach( $permDescs['data'] as $name ) {
-				$name = $name["permName"];
-				$shortname = str_replace('tiki_p_', '', $name);
-				$objectperms->$name = 1;
-				$objectperms->$shortname = 1;
-			}
-		}
-		if ($prefs['feature_wiki_userpage'] == 'y' && !empty($this->user) && strcasecmp($prefs['feature_wiki_userpage_prefix'], substr($this->page, 0, strlen($prefs['feature_wiki_userpage_prefix']))) == 0) {
-			if (strcasecmp($this->page, $prefs['feature_wiki_userpage_prefix'].$this->user) == 0) {
-				// user can edit his page
-				// to give view and edit perms
-				$objectperms->view = 1;
-				$objectperms->tiki_p_view = 1;
-				$objectperms->edit = 1;
-				$objectperms->tiki_p_edit = 1;
-			} else {
-				// user cannot edit
-				$objectperms->edit = 0;
-				$objectperms->tiki_p_edit = 0;
-			}
-		}
-		return $objectperms;
-	} // }}}
-	
 	function restoreAll() // {{{
 	{
 		global $smarty, $prefs;

@@ -384,7 +384,7 @@
 {elseif $field_value.type eq 'R'}
 	{section name=jx loop=$field_value.options_array}
 		{if $smarty.section.jx.first}
-			{if $field_value.options_array[jx] eq '<br>' or $field_value.options_array[jx] eq '<br />'}
+			{if $field_value.options_array[jx] eq '<br />' or $field_value.options_array[jx] eq '<br />'}
 				{assign var=sepR value='<br />'}
 			{else}
 				{assign var=sepR value=' '}

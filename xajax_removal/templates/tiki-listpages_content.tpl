@@ -335,7 +335,7 @@
 		<tr>
 			<td colspan="{$cntcol}" class="odd">
 				<b>{tr}No pages found{/tr}{if $find ne ''} {tr}with{/tr} &quot;{$find|escape}&quot;{/if}{if $initial ne ''}{tr} {if $find ne ''}and {/if}starting with{/tr} &quot;{$initial}&quot;{/if}.</b>
-				{if $aliases_were_found == 'y'}<br><b>{tr}However, some page aliases fitting the query were found (see Aliases section above).{/tr}</b>{/if}
+				{if $aliases_were_found == 'y'}<br /><b>{tr}However, some page aliases fitting the query were found (see Aliases section above).{/tr}</b>{/if}
 			</td>
 		</tr>
 	{/section}
