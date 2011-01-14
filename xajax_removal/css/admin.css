@@ -299,11 +299,20 @@ a.admbox.off img {
 }
 
 .module-placeholder {
-	width: 200px;
-	height: 200px;
+	width: 160px;
+	height: 160px;
 	list-style-type: none;
-	background-color: #ff0;
+	background-color: #ff8;
+	border: #884 2px solid;
+	margin: 10px;
+	padding: 10px;
 }
 
+#module_list li {
+	list-style-image: url("../pics/icons/module.png");
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+}
 
 /* end from ui-revamp branch */

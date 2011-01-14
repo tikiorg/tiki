@@ -505,17 +505,14 @@
 
 {tab name="{tr}All Modules{/tr}"}
 	<div style="height:400px;overflow:auto;">
-		{listfilter selectors='#module_list tr'}
-		<table class="formcolor" id="module_list">
+		{listfilter selectors='#module_list li'}
+		<ul id="module_list">
 			{foreach key=name item=info from=$all_modules_info}
-				<tr>
-					<td>{$name}</td>
-					<td>
-						{$info.name}
-					</td>
-				</tr>
+				<li>
+				{$info.name} <em>({$name})</em>
+				</li>
 			{/foreach}
-		</table>
+		</ul>
 	</div>
 {/tab}
 

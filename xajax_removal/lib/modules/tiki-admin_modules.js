@@ -9,8 +9,13 @@ var dragZonesSelector = "#top_modules, #bottom_modules";
 $(dragZonesSelector).droppable({});
 $(".module", dragZonesSelector).each(function() {
 	if ($(this).css("position") === "absolute") {
+		var el = this;
 		$(this).draggable({
-			connectToSortable: ".modules"
+			connectToSortable: ".modules",
+			revert: "invalid",
+			stop: function (event, ui) {
+				$("#save_modules a").show("fast").attr("dragged", $(el).attr("id"));
+			}
 		}).mouseover(function(event, ui) {	// sortable gets muddled when dragging so disable it
 				$(dragZonesSelector).sortable("option", "disabled", true);
 		}).mouseout(function(event, ui) {
@@ -26,73 +31,91 @@ $(".modules").sortable( {
 	forceHelperSize: true,
 	placeholder: "module-placeholder",
 	stop: function (event, ui) {
-		$("#save_modules *").show("fast");
+		$("#save_modules a").show("fast").attr("sortable", $(this).attr("id"));
 	},
 	start: function (event, ui) {
 		
 	},
 	receive: function(event, ui) {
-		$("#save_modules").show();
+		//$("#save_modules a").show("fast");
+		
+		// check for list items arriving
+		var dropped = $("> li", this);
+		if (dropped.length) {
+			var zone = $(this);	//dropped.parents(".modules:first");	// odd? more than one?
+			if (zone && zone.attr("id") && zone.attr("id").match(/modules/)) {
+				var ord = $.inArray(dropped[0], zone.children());
+				var zoneStr = zone.attr("id").substring(0, 1);
+				var name = dropped.text().match(/\((.*?)\)$/);
+				if (name) {
+					name = name[1];
+				}
+				var options = {
+					modName: name,
+					modPos: zoneStr,
+					modOrd: ord,
+					dropped: dropped
+				};
+				if (zoneStr === "t" || zoneStr === "b") {
+					options.nobox = true;
+				}
+				dropped.addClass("module-placeholder");
+				showModuleEditForm(false, options);
+			}
+			
+		}
 	}
 });
 
 // disable all links in modules apart from app menu
-$(".module:not(.box-ApplicationMenu)").dblclick(function () { showModuleEditForm(this); })
-	.find("a, input").click( function (event) {
-		event.stopImmediatePropagation();
-		return false;
-	});
+$(".module:not(.box-ApplicationMenu)").find("a:not(.flipmodtitle), input").click( function (event) {
+	event.stopImmediatePropagation();
+	return false;
+});
 
+// set dbl click form action
+$(".module").dblclick(function () { showModuleEditForm(this); });
 
 // source list of all modules
-$("#module_list").sortable({
-	connectWith: ".modules",
-	items: "tr",
-	forcePlaceholderSize: true,
-	forceHelperSize: true,
-	placeholder: "module-placeholder",
+$("#module_list li").draggable({
+	connectToSortable: ".modules",
 	helper: "clone",
-	revert: true,
+	revert: "invalid",
+	start: function (event, ui) {	// stop flashing while dragging
+		$(document.body).css("user-select", "none");
+		$(document.body).css("-webkit-user-select", "none");
+		$(document.body).css("-moz-user-select", "none");
+	},
 	stop: function (event, ui) {
-		//$("#save_modules *").show("fast");
-		var dropped = $("tr:first", ".modules");
-		if (dropped.length) {
-			var zone = dropped.parents(".modules:first");	// odd? more than one?
-			var ord = $.inArray(dropped[0], zone.children());
-			var zoneStr = zone.attr("id").substring(0, 1);
-			var options =  { modName: $.trim($("td:first", ui.item).text()), modPos: zoneStr, modOrd: ord + 1 };
-			if (zoneStr === "t" || zoneStr === "b") {
-				options.nobox = true;
-			}
-			showModuleEditForm( false,options);
-		}
-	},
-	start: function (event, ui) {
-		
-	},
-	receive: function(event, ui) {
-		$("#save_modules").show();
+		$(document.body).css("user-select", "");
+		$(document.body).css("-webkit-user-select", "");
+		$(document.body).css("-moz-user-select", "");
 	}
 });
 
 $("#save_modules a").click(function(evt) {
-	// save module order
-	var ser = {};
-	$(".modules").each(function (){				/* do this on everything of class "modules" */
-		ser[$(this).attr("id")] = $(this).find(".module").map(function (){	/* do this on each child module */
-			return $(this).attr("id");
-		}).get();
-	});
-	$("#module-order").val($.toJSON(ser)).parents("form")[0].submit();
+	if ($(this).attr("sortable")) {
+		// save module order
+		var ser = {};
+		$(".modules").each(function() { /* do this on everything of class "modules" */
+			ser[$(this).attr("id")] = $(this).find(".module").map(function() { /* do this on each child module */
+				return $(this).attr("id");
+			}).get();
+		});
+		$("#module-order").val($.toJSON(ser)).parents("form")[0].submit();
+	} else if ($(this).attr("dragged")) {
+		$("#" + $(this).attr("dragged")).dblclick();
+		$(this).attr("dragged", "");
+	}
 	return false;
 });
 
 // show edit form dialogue
 showModuleEditForm = function(item, options) {
-	var modId = 0, modName, modPos = "", modOrd = 0, modStyle = "";
+	var modId = 0, modName, modPos = "", modOrd = 0, modStyle = "", dropped = null;
 	if (item) {
 		//alert("module edit form - TODO");
-		modName = $(item).attr("class").match(/box-\S+/);
+		modName = $(item).attr("class").match(/box-[\S_]+/);
 		if (modName) {
 			modName = modName[0].substring(4);
 		}
@@ -116,6 +139,7 @@ showModuleEditForm = function(item, options) {
 		modName = options.modName;
 		modPos = options.modPos;
 		modOrd = options.modOrd;
+		dropped = options.dropped;
 	}
 	
 	if ($("#module_edit_div").length === 0) {
@@ -165,6 +189,9 @@ showModuleEditForm = function(item, options) {
 		buttons: {
 			Cancel: function () {
 				$(this).dialog('close');
+				if (dropped) {
+					dropped.remove();
+				}
 			},
 			'Save': function() {
 				var bValid = true;
