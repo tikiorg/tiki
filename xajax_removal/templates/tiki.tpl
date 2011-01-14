@@ -143,7 +143,10 @@
 			{if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}<footer id="footer">
 				<div class="footerbgtrap">
 					<div id="bottom_modules" class="content modules"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
-		{include file='tiki-bot_bar.tpl'}
+						{section name=homeix loop=$bottom_modules}
+							{$bottom_modules[homeix].data}
+						{/section}
+						{include file='tiki-bot_bar.tpl'}
 					</div>
 				</div>
 			</footer>{* -- END of footer -- *}{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.footer_shadow_end}</div>{/if}
