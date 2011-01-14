@@ -4,8 +4,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: $
 
+$(".module", "#top_modules").each(function() {
+	if ($(this).css("position") === "absolute" || $(this).css("position") === "static") {
+		$(this).draggable({ connectToSortable: ".modules" });
+	}
+});
 
-$(".modules").sortable({
+$(".modules:not(#top_modules)").sortable( {	//:not(#top_modules)
 	connectWith: ".modules",
 	items: "div.module",
 	forcePlaceholderSize: true,
@@ -37,7 +42,7 @@ $("#module_list").sortable({
 			var ord = $.inArray(dropped[0], zone.children());
 			var zoneStr = zone.attr("id").substring(0, 1);
 			var options =  { modName: $.trim($("td:first", ui.item).text()), modPos: zoneStr, modOrd: ord + 1 };
-			if (zoneStr === "t") {
+			if (zoneStr === "t" || zoneStr === "b") {
 				options.nobox = true;
 			}
 			showModuleEditForm( false,options);
@@ -65,7 +70,7 @@ $("#save_modules a").click(function(evt) {
 
 // show edit form dialogue
 showModuleEditForm = function(item, options) {
-	var modId = 0, modName, modPos = "", modOrd = 0;
+	var modId = 0, modName, modPos = "", modOrd = 0, modStyle = "";
 	if (item) {
 		//alert("module edit form - TODO");
 		modName = $(item).attr("class").match(/box-\S+/);
@@ -80,6 +85,10 @@ showModuleEditForm = function(item, options) {
 			if (modPos) {
 				modOrd = modPos[0].substring( 1, modPos[0].length);
 				modPos = modPos[0].substring( 0, 1);
+			}
+			modStyle = $(item).attr("style");
+			if (modStyle && !modStyle.match("absolute")) {
+				modStyle = "";	// use style from object if draggable
 			}
 		}
 	} else { // new module assignment
@@ -99,12 +108,14 @@ showModuleEditForm = function(item, options) {
 		assign_name: modName,
 		moduleId: modId,
 		assign_position: modPos,
-		assign_order: modOrd
+		assign_order: modOrd,
+		preview: true
 	};
 	if (item) {
 		postData.edit_assign = modId;
+		postData.assign_params = { style: modStyle };
 	} else {
-		postData.preview = true;
+//		postData.preview = true;
 	}
 	
 	$.post("tiki-admin_modules.php", postData, function(data) {
