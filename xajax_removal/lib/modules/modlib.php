@@ -136,7 +136,7 @@ class ModLib extends TikiLib
 	function reorder_modules($module_order) {
 		global $user;
 		$all_modules = $this->get_modules_for_user($user, $this->module_zones);
-		$section_map = array('modules_top' => 't', 'modules_left' => 'l', 'modules_right' => 'r', 'modules_bottom' => 'b', 'modules_pagetop' => 't2', 'modules_pagebottom' => 'b2' );
+		$section_map = array('top_modules' => 't', 'left_modules' => 'l', 'right_modules' => 'r', 'bottom_modules' => 'b', 'pagetop_modules' => '1', 'pagebottom_modules' => '2' );
 		$bindvars = array();
 		$query = '';
 		foreach ($module_order as $zone => $contents) {
@@ -145,10 +145,12 @@ class ModLib extends TikiLib
     			$i = $index;
     			preg_match('/\d+$/', $module, $m);
     			if (count($m)) {
-    				$m = $m[0];
-	    			if ($all_modules[$zone][$index]['moduleId'] != $m || $all_modules[$zone][$index]['ord'] != $index + 1) {
-	    				$query .= 'UPDATE `tiki_modules` SET `ord`=? WHERE `moduleId`=?;';
+    				$m = (int) $m[0];
+    				//$module_order->$zone[$index] = $m;	// store as into for next bit
+	    			if ($all_modules[$zone][$index]['moduleId'] != $m || ($all_modules[$zone][$index]['ord'] != $index + 1 || $all_modules[$zone][$index]['position'] != $section_initial)) {
+	    				$query .= 'UPDATE `tiki_modules` SET `ord`=?, `position`=? WHERE `moduleId`=?;';
 						$bindvars[] = (int) $index + 1;
+						$bindvars[] = $section_initial;
 						$bindvars[] = (int) $m;
 	    			}
     			}

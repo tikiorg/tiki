@@ -505,6 +505,7 @@
 
 {tab name="{tr}All Modules{/tr}"}
 	<div style="height:400px;overflow:auto;">
+		{listfilter selectors='#module_list tr'}
 		<table class="formcolor" id="module_list">
 			{foreach key=name item=info from=$all_modules_info}
 				<tr>

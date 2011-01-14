@@ -4,15 +4,24 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: $
 
-$(".module", "#top_modules").each(function() {
-	if ($(this).css("position") === "absolute" || $(this).css("position") === "static") {
-		$(this).draggable({ connectToSortable: ".modules" });
+// drag & drop ones first
+var dragZonesSelector = "#top_modules, #bottom_modules";
+$(dragZonesSelector).droppable({});
+$(".module", dragZonesSelector).each(function() {
+	if ($(this).css("position") === "absolute") {
+		$(this).draggable({
+			connectToSortable: ".modules"
+		}).mouseover(function(event, ui) {	// sortable gets muddled when dragging so disable it
+				$(dragZonesSelector).sortable("option", "disabled", true);
+		}).mouseout(function(event, ui) {
+				$(dragZonesSelector).sortable("option", "disabled", false);
+		});
 	}
 });
 
-$(".modules:not(#top_modules)").sortable( {	//:not(#top_modules)
+$(".modules").sortable( {
 	connectWith: ".modules",
-	items: "div.module",
+	items: ".module:not('.ui-draggable')",
 	forcePlaceholderSize: true,
 	forceHelperSize: true,
 	placeholder: "module-placeholder",
@@ -26,14 +35,24 @@ $(".modules:not(#top_modules)").sortable( {	//:not(#top_modules)
 		$("#save_modules").show();
 	}
 });
-$(".module").dblclick(function () { showModuleEditForm(this); });
 
+// disable all links in modules apart from app menu
+$(".module:not(.box-ApplicationMenu)").dblclick(function () { showModuleEditForm(this); })
+	.find("a, input").click( function (event) {
+		event.stopImmediatePropagation();
+		return false;
+	});
+
+
+// source list of all modules
 $("#module_list").sortable({
 	connectWith: ".modules",
 	items: "tr",
 	forcePlaceholderSize: true,
 	forceHelperSize: true,
 	placeholder: "module-placeholder",
+	helper: "clone",
+	revert: true,
 	stop: function (event, ui) {
 		//$("#save_modules *").show("fast");
 		var dropped = $("tr:first", ".modules");
@@ -81,10 +100,12 @@ showModuleEditForm = function(item, options) {
 		if (modId) {
 			modId = modId[0];
 			var id = $("div:first", item).attr("id");
-			modPos = id.match(/.\d+$/);
-			if (modPos) {
-				modOrd = modPos[0].substring( 1, modPos[0].length);
-				modPos = modPos[0].substring( 0, 1);
+			if (id) {
+				modPos = id.match(/.\d+$/);
+				if (modPos) {
+					modOrd = modPos[0].substring(1, modPos[0].length);
+					modPos = modPos[0].substring(0, 1);
+				}
 			}
 			modStyle = $(item).attr("style");
 			if (modStyle && !modStyle.match("absolute")) {
@@ -108,14 +129,14 @@ showModuleEditForm = function(item, options) {
 		assign_name: modName,
 		moduleId: modId,
 		assign_position: modPos,
-		assign_order: modOrd,
-		preview: true
+		assign_order: modOrd
+		//preview: true
 	};
 	if (item) {
 		postData.edit_assign = modId;
-		postData.assign_params = { style: modStyle };
+		//postData.assign_params = { style: modStyle };
 	} else {
-//		postData.preview = true;
+		postData.preview = true;
 	}
 	
 	$.post("tiki-admin_modules.php", postData, function(data) {
@@ -125,7 +146,11 @@ showModuleEditForm = function(item, options) {
 					.dialog( "option", "position", 'center' )
 					.find("table input[type='submit']").hide();
 			if (options && options.nobox) {
-				$('input[name*=nobox]').val("y")
+				$('input[name*=nobox]').val("y");
+			}
+			if (modStyle) {
+				// preload style field with style if position:absolute (unnecessary spaces removed)
+				$('input[name*=style]').val(modStyle.replace(/\:\s*/g, ":").replace(/\;\s*/g, ";"));
 			}
 			ajaxLoadingHide();
 		},
