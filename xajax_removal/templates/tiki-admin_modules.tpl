@@ -12,20 +12,31 @@
 </div>
 
 {if !empty($missing_params)}
-<div class="simplebox highlight">
-	{tr}The following required parameters are missing:{/tr}
-	<br/>
-	{section name=ix loop=$missing_params}
-		{$missing_params[ix]}
-		{if !$smarty.section.ix.last},&nbsp;{/if}
-	{/section}
-</div>
-<br />
+	{remarksbox type="warning" title="{tr}Modules Parameters{/tr}"}
+		{tr}The following required parameters are missing:{/tr}<br/>
+		{section name=ix loop=$missing_params}
+			{$missing_params[ix]}
+			{if !$smarty.section.ix.last},&nbsp;{/if}
+		{/section}
+	{/remarksbox}
 {/if}
+
+{remarksbox type="note" title="{tr}Modules Revamp{/tr}" icon="bricks"}
+	<em>{tr}Experimental. This feature is still under development{/tr}</em><br />
+	<ul>
+		<li>{tr}Drag the modules around to re-order then click save when ready{/tr}</li>
+		<li>{tr}Double click them to edit{/tr}</li>
+		<li>{tr}Modules with "position: absolute" in their style can be dragged in to position{/tr}</li>
+		<li>{tr}New modules can be dragged from the "All Modules" tab{/tr}</li>
+	</ul>
+{/remarksbox}
 
 {tabset name='tabs_adminmodules'}
 
 {tab name="{tr}Assigned modules{/tr}"}
+	{remarksbox type="note" title="{tr}Modules Revamp{/tr}" icon="bricks"}
+		<em>{tr}This tab remains for legacy purposes to allow editing "the old way"{/tr}</em>
+	{/remarksbox}
 	{if $prefs.feature_tabs neq 'y'}
 		<legend class="heading">
 			<span>
@@ -53,7 +64,7 @@
 				<td>{$top[user].ord}</td>
 				<td>{$top[user].cache_time}</td>
 				<td>{$top[user].rows}</td>
-				<td style="max-width: 40em; white-space: normal;">{$top[user].params|stringfix:"&":"<br />"}</td>
+				<td style="max-width: 40em; white-space: normal;font-size:smaller;">{$top[user].params|stringfix:"&":"<br />"}</td>
 				<td>{$top[user].module_groups}</td>
 				<td>
 					<a class="link" href="tiki-admin_modules.php?edit_assign={$top[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
@@ -92,7 +103,7 @@
 				<td>{$left[user].ord}</td>
 				<td>{$left[user].cache_time}</td>
 				<td>{$left[user].rows}</td>
-				<td style="max-width: 40em; white-space: normal;">{$left[user].params|stringfix:"&":"<br />"}</td>
+				<td style="max-width: 40em; white-space: normal;font-size:smaller;">{$left[user].params|stringfix:"&":"<br />"}</td>
 				<td>{$left[user].module_groups}</td>
 				<td>
 					<a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
@@ -133,7 +144,7 @@
 				<td>{$right[user].ord}</td>
 				<td>{$right[user].cache_time}</td>
 				<td>{$right[user].rows}</td>
-				<td>{$right[user].params|stringfix:"&":"<br />"}</td>
+				<td style="max-width: 40em; white-space: normal;font-size:smaller;">{$right[user].params|stringfix:"&":"<br />"}</td>
 				<td>{$right[user].module_groups}</td>
 				<td>
 					<a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
@@ -174,7 +185,7 @@
 				<td>{$bottom[user].ord}</td>
 				<td>{$bottom[user].cache_time}</td>
 				<td>{$bottom[user].rows}</td>
-				<td style="max-width: 40em; white-space: normal;">{$bottom[user].params|stringfix:"&":"<br />"}</td>
+				<td style="max-width: 40em; white-space: normal;font-size:smaller;">{$bottom[user].params|stringfix:"&":"<br />"}</td>
 				<td>{$bottom[user].module_groups}</td>
 				<td>
 					<a class="link" href="tiki-admin_modules.php?edit_assign={$bottom[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
