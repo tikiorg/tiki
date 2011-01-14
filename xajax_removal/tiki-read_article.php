@@ -17,6 +17,7 @@ if (!isset($_REQUEST["articleId"])) {
 $article_data = $artlib->get_article($_REQUEST["articleId"]);
 $tikilib->get_perm_object($_REQUEST['articleId'], 'article');
 if ($article_data === false) {
+	if (!$user) $_SESSION['loginfrom'] = $_SERVER['REQUEST_URI'];
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('Permission denied'));
 	$smarty->display('error.tpl');
