@@ -41,7 +41,7 @@ function upgrade_20101230_create_top_modules_tiki( $installer ) {
 		if ($prefs['feature_sitemenu'] === 'y') {
 			$menuId = $installer->getOne( "SELECT `value` FROM `tiki_preferences` WHERE `name` = 'feature_topbar_id_menu'");
 			$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-									"('menu','t',5,7200,'id=$menuId&type=horiz&css=y&nobox=y&style=clear%3Aboth%3B&class=main-menu','a:1:{i:0;s:9:\"Anonymous\";}');");
+									"('menu','t',5,7200,'id=$menuId&type=horiz&menu_id=tiki-top&menu_class=clearfix&nobox=y&style=float%3Aleft%3Bclear%3Aboth%3Bwidth%3A100%25%3B','a:1:{i:0;s:9:\"Anonymous\";}');");
 		}
 		// add site search
 		if($prefs['feature_sitesearch'] === 'y' ) {

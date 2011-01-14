@@ -27,9 +27,11 @@ $(".module", dragZonesSelector).each(function() {
 $(".modules").sortable( {
 	connectWith: ".modules",
 	items: ".module:not('.ui-draggable')",
-	forcePlaceholderSize: true,
-	forceHelperSize: true,
+//	forcePlaceholderSize: true,
+//	forceHelperSize: true,
+//	helper: "original",
 	placeholder: "module-placeholder",
+	revert: 200,
 	stop: function (event, ui) {
 		$("#save_modules a").show("fast").attr("sortable", $(this).attr("id"));
 	},
@@ -37,7 +39,6 @@ $(".modules").sortable( {
 		
 	},
 	receive: function(event, ui) {
-		//$("#save_modules a").show("fast");
 		
 		// check for list items arriving
 		var dropped = $("> li", this);

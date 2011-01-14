@@ -300,7 +300,7 @@ a.admbox.off img {
 
 .module-placeholder {
 	width: 160px;
-	height: 160px;
+	minHeight: 40px;
 	list-style-type: none;
 	background-color: #ff8;
 	border: #884 2px solid;
