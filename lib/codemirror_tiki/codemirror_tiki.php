@@ -1,5 +1,4 @@
 <?php
-
 function tiki_syntax_highlighter_base() {
 	global $headerlib, $prefs;
 	
