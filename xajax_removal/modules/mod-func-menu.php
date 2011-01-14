@@ -32,10 +32,17 @@ function module_menu_info() {
 				'description' => tra('Use CSS Superfish menu. y|n (default y)'),
 				'filter' => 'alpha',
 			),
+			'menu_id' => array(
+				'name' => tra('Menu #id'),
+				'description' => tra('Id of the menu in the DOM'),
+			),
+			'menu_class' => array(
+				'name' => tra('Menu CSS class'),
+				'description' => tra('Class of the menu container'),
+			),
 		)
 	);
 }
 
-function module_menu( $mod_reference, &$module_params ) {
-	$module_params['css'] = empty($module_params['css']) ? 'y' : $module_params['css'];
+function module_menu( $mod_reference, $module_params ) {
 }
