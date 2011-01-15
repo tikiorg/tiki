@@ -33,9 +33,7 @@
 		</tr>
 	{/foreach}
 	{if !$phpsettings}
-		<tr>
-			<td colspan="4" class="odd">{tr}No records found.{/tr}</td>
-		</tr>
+         {norecords _colspan="4"}
 	{/if}
 </table>
 
@@ -99,9 +97,7 @@
 		</tr>
 	{/foreach}
 	{if !$tikisettings}
-		<tr>
-			<td colspan="4" class="odd">{tr}No records found.{/tr}</td>
-		</tr>
+		{norecords _colspan="4"}
 	{/if}
 </table>
 

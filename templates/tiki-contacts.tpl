@@ -173,9 +173,7 @@
 				</tr>
 			{/section}
 		{else}
-			<tr class="odd">
-				<td colspan="{$numbercol}"><strong>{tr}No records found.{/tr}</strong></td>
-			</tr>
+			{norecords _colspan="$numbercol"}
 		{/if}
 	{/foreach}
 </table>

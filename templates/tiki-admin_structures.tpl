@@ -115,9 +115,7 @@
 						</td>
 					</tr>
 				{sectionelse}
-					<tr>
-						<td colspan="{if $tiki_p_admin eq 'y'}3{else}2{/if}" class="odd">{tr}No records found.{/tr}<td>
-					</tr>
+					{if $tiki_p_admin eq 'y'}{norecords _colspan="3}{else}{norecords _colspan="2"}{/if}
 				{/section}
 			</table>
 

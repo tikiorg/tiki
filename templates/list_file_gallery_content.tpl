@@ -333,11 +333,7 @@
 		</tr>
 	{/if}
 	{sectionelse}
-		<tr>
-			<td colspan="{$nbCols}">
-				<b>{tr}No records found{/tr}</b>
-			</td>
-		</tr>
+		{norecords _colspan="$nbCols"}
 	{/section}
 
 	{if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y' and $prefs.javascript_enabled eq 'y'}

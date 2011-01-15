@@ -188,9 +188,11 @@
 							{/if}
 						</tr>
 					{sectionelse}
-						<tr>
-							<td colspan="{if $deep eq 'on'}3{else}2{/if}" class="odd">{tr}No records found{/tr}</td>
-						</tr>
+						{if $deep eq 'on'}
+							{norecords _colspan="3}
+						{else}
+							{norecords _colspan="2"}
+						{/if}
 					{/section}
 				</table>
 				<br />

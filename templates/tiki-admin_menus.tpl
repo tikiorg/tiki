@@ -45,9 +45,7 @@
 					</td>
 				</tr>
 			{sectionelse}
-				<tr>
-					<td class="odd" colspan="5">No records found.</td>
-				</tr>
+				{norecords _colspan="5"}
 			{/section}
 		</table>
 		{pagination_links cant=$cant step=$maxRecords offset=$offset }{/pagination_links} 
