@@ -67,9 +67,23 @@ $(".modules").sortable( {
 		}
 	}
 });
+$("span.moduleflip").each( function() {
+	var $edit = $('<a title="Edit module" href="#"><img src="pics/icons/page_gear.png" alt="[edit]" width="16" height="16" style="position:absolute;right:18px"></a>')
+		.click( function() {
+			$(this).parents(".module:first").dblclick();
+		});
+	var $unassign = $('<a title="Unassign module" href="#"><img src="pics/icons/cross.png" alt="[unassign]" width="16" height="16" style="position:absolute;right:36px"></a>')
+		.click( function() {
+			var id = $(this).parents(".module:first").attr("id").match(/\d+$/);
+			if (id) {
+				moduleUnassign( id );
+			}
+		});
+	$(this).prepend($edit, $unassign);
+});
 
 // disable all links in modules apart from app menu
-$(".module:not(.box-ApplicationMenu)").find("a:not(.flipmodtitle), input").click( function (event) {
+$(".module:not(.box-ApplicationMenu)").find("a:not(.moduleflip a), input").click( function (event) {
 	event.stopImmediatePropagation();
 	return false;
 });
@@ -100,7 +114,7 @@ $("#save_modules a").click(function(evt) {
 		var ser = {};
 		$(".modules").each(function() { /* do this on everything of class "modules" */
 			ser[$(this).attr("id")] = $(this).find(".module").map(function() { /* do this on each child module */
-				return $(this).attr("id");
+				return $(this).attr("id").match(/\d+$/)[0];	// dare to do it in one go
 			}).get();
 		});
 		$("#module-order").val($.toJSON(ser)).parents("form")[0].submit();
@@ -115,8 +129,7 @@ $("#save_modules a").click(function(evt) {
 showModuleEditForm = function(item, options) {
 	var modId = 0, modName, modPos = "", modOrd = 0, modStyle = "", dropped = null;
 	if (item) {
-		//alert("module edit form - TODO");
-		modName = $(item).attr("class").match(/box-[\S_]+/);
+		modName = $(item).attr("class").match(/box-[\S_-]+/);
 		if (modName) {
 			modName = modName[0].substring(4);
 		}
@@ -205,9 +218,7 @@ showModuleEditForm = function(item, options) {
 				}
 			},
 			Delete: function () {
-				if (confirm(tr("Are you sure you want to unassign this module?") + " (" + modName + ")")) {
-					window.location.replace("tiki-admin_modules.php?unassign=" + modId);
-				}
+				moduleUnassign( modId );
 				$(this).dialog('close');
 			}
 		},
@@ -218,4 +229,13 @@ showModuleEditForm = function(item, options) {
 	 ajaxLoadingShow('module_edit_div');
 };
 
+moduleUnassign = function(modId) {
+	var modName = $("#module_" + modId).attr("class").match(/box-[\S_-]+/);	// TODO REFACTOR
+	if (modName) {
+		modName = modName[0].substring(4);
+	}
+	if (confirm(tr("Are you sure you want to unassign this module?") + " (" + modName + ")")) {
+		window.location.replace("tiki-admin_modules.php?unassign=" + modId);
+	}
+};
 
