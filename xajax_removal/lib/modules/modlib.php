@@ -133,31 +133,40 @@ class ModLib extends TikiLib
 		return true;
 	}
 	
-	function reorder_modules($module_order) {
+	/**
+	 * Reset all module ord's according to supplied array or by displayed order 
+	 * @param array $module_order[zone][moduleId] (optional)
+	 */
+	function reorder_modules($module_order = array()) {
 		global $user;
 		$all_modules = $this->get_modules_for_user($user, $this->module_zones);
+		if (empty($module_order)) {	// rewrite module order as displayed
+			foreach ($all_modules as $zone => $contents) {
+				$module_order[$zone] = array();
+	    		foreach ($contents as $index => $module) {
+	    			$module_order[$zone][$index] = (int) $module['moduleId'];
+	    		}
+	    	}
+		}
 		$section_map = array('top_modules' => 't', 'left_modules' => 'l', 'right_modules' => 'r', 'bottom_modules' => 'b', 'pagetop_modules' => '1', 'pagebottom_modules' => '2' );
 		$bindvars = array();
 		$query = '';
 		foreach ($module_order as $zone => $contents) {
     		$section_initial = $section_map[$zone];
-    		foreach ($contents as $index => $module) {
-    			$i = $index;
-    			preg_match('/\d+$/', $module, $m);
-    			if (count($m)) {
-    				$m = (int) $m[0];
-    				//$module_order->$zone[$index] = $m;	// store as into for next bit
-	    			if ($all_modules[$zone][$index]['moduleId'] != $m || ($all_modules[$zone][$index]['ord'] != $index + 1 || $all_modules[$zone][$index]['position'] != $section_initial)) {
+    		foreach ($contents as $index => $moduleId) {
+    			if ($moduleId) {
+	    			if ($all_modules[$zone][$index]['moduleId'] != $moduleId || ($all_modules[$zone][$index]['ord'] != $index + 1 || $all_modules[$zone][$index]['position'] != $section_initial)) {
 	    				$query .= 'UPDATE `tiki_modules` SET `ord`=?, `position`=? WHERE `moduleId`=?;';
-						$bindvars[] = (int) $index + 1;
+						$bindvars[] = $index + 1;
 						$bindvars[] = $section_initial;
-						$bindvars[] = (int) $m;
+						$bindvars[] = $moduleId;
 	    			}
     			}
     		}
     	}
-
-		$result = $this->query($query, $bindvars);
+		if ($query) {
+			$result = $this->query($query, $bindvars);
+		}
 	}
 
 	function get_all_modules() {

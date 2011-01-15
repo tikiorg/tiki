@@ -260,6 +260,7 @@ if (isset($_REQUEST["assign"])) {
 	if (empty($missing_params)) {
 		$modlib->assign_module(isset($_REQUEST['moduleId']) ? $_REQUEST['moduleId'] : 0, $_REQUEST["assign_name"], '', $_REQUEST["assign_position"], $_REQUEST["assign_order"], $_REQUEST["assign_cache"], $module_rows, serialize($module_groups) , $_REQUEST["assign_params"], $_REQUEST["assign_type"]);
 		$logslib->add_log('adminmodules', 'assigned module ' . $_REQUEST["assign_name"]);
+		$modlib->reorder_modules();
 		header("location: tiki-admin_modules.php");
 	} else {
 		$modlib->dispatchValues( $_REQUEST['assign_params'], $modinfo['params'] );
