@@ -60,26 +60,6 @@ class CalendarLib extends TikiLib
 		return $retval;
 	}
 
-	// give out an array with Ids viewable by $user
-	function list_user_calIds() {
-		global $user;
-		if ($user) {
-			global $userlib;
-			//$groups = $userlib->get_user_groups($user);
-			// need to add something
-			$query = "select `calendarId` from `tiki_calendars` where `user`=? or `personal`='n'";
-			$bindvars=array($user);
-		} else {
-			$query = "select `calendarId` from `tiki_calendars`";
-			$bindvars=array();
-		}
-		$result = $this->query($query,$bindvars);
-		$res = array();
-		while ($r = $result->fetchRow()) {
-			$res[] = $r['calendarId'];
-		}
-		return $res;
-	}
 	function get_calendarId_from_name($name) {
 		$query = 'select `calendarId` from `tiki_calendars` where `name`=?';
 		return $this->getOne($query, array($name));
