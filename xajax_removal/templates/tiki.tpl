@@ -146,7 +146,9 @@
 						{section name=homeix loop=$bottom_modules}
 							{$bottom_modules[homeix].data}
 						{/section}
-						{include file='tiki-bot_bar.tpl'}
+						{* modules revamp temp fix for feature_bot_logo - TODO migrate to user modules *}
+						{if $prefs.feature_bot_logo eq 'y'}<div id="custom_site_footer">{eval var=$prefs.bot_logo_code}</div>{/if}
+						{* include file='tiki-bot_bar.tpl' *}
 					</div>
 				</div>
 			</footer>{* -- END of footer -- *}{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.footer_shadow_end}</div>{/if}

@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: mod-func-login_box.php 26808 2010-04-28 12:30:41Z jonnybradley $
+// $Id$
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -11,14 +11,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function module_breadcrumbs_info() {
+function module_loadstats_info() {
 	return array(
-		'name' => tra('Breadcrumbs'),
-		'description' => tra('A hierarchy of where you are. Ex.: Home > Section1 > Subsection C.'),
-		'prefs' => array('feature_breadcrumbs'),
+		'name' => tra('Server Load'),
+		'description' => tra('Report of server resources used'),
 		'params' => array(),
 	);
 }
 
-function module_breadcrumbs( $mod_reference, $module_params ) {
+function module__loadstats( $mod_reference, $module_params ) {
 }

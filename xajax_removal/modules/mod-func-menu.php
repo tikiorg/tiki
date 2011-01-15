@@ -15,7 +15,6 @@ function module_menu_info() {
 	return array(
 		'name' => tra('Menu'),
 		'description' => tra('Horizonatal or vertical menu.'),
-		'prefs' => array(),
 		'params' => array(
 			'id' => array(
 				'name' => tra('Menu Id'),
@@ -33,11 +32,11 @@ function module_menu_info() {
 				'filter' => 'alpha',
 			),
 			'menu_id' => array(
-				'name' => tra('Menu #id'),
+				'name' => tra('DOM #id'),
 				'description' => tra('Id of the menu in the DOM'),
 			),
 			'menu_class' => array(
-				'name' => tra('Menu CSS class'),
+				'name' => tra('CSS class'),
 				'description' => tra('Class of the menu container'),
 			),
 		)
