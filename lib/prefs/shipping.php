@@ -25,7 +25,7 @@ function prefs_shipping_list() {
 			'name' => tra('FedEx Password'),
 			'type' => 'text',
 			'size' => 25,
-			'filter' => 'htmlraw_unsafe',
+			'filter' => 'rawhtml_unsafe',
 		),
 		'shipping_fedex_meter' => array(
 			'name' => tra('FedEx Meter Number'),
