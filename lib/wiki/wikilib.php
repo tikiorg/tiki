@@ -80,7 +80,9 @@ class WikiLib extends TikiLib
 			return $ret;
 		}
 
-		$query = "select `user` from `tiki_history` where `pageName`=? group by `user` order by MAX(`version`) desc";
+		$query = "select `user`, MAX(`version`) as `vsn` from `tiki_history` where `pageName`='HomePage' group by `user` order by `vsn` desc";
+		// jb fixed 110115 - please check intended behaviour remains
+		// was: $query =  "select `user` from `tiki_history` where `pageName`=? group by `user` order by MAX(`version`) desc";
 		$result = $this->query($query,array($page));
 		$cache_page_contributors = array();
 		$cache_page_contributors['contributors'] = array();
