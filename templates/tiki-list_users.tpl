@@ -45,9 +45,7 @@
 			{/if}
 		</tr>
 	{sectionelse}
-		<tr>
-			<td class="norecords" colspan="5">{tr}No records found{/tr}</td>
-		</tr>
+		{norecords _colspan="5"}
 	{/section}
 </table>
 

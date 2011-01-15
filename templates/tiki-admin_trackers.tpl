@@ -67,7 +67,7 @@
 			</tr>
 		{sectionelse}
 			{if $find}
-				{norecords _colspan="7" _text="No records found with:"}
+				{norecords _colspan="7" _text="No records found with: $find"}
 			{else}
 				{norecords _colspan="7}
 			{/if}

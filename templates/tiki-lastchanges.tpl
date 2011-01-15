@@ -80,9 +80,7 @@
 			</td>
 		</tr>
 	{sectionelse}
-		<tr>
-			<td class="even" colspan="7"><b>{tr}No records found{/tr}</b></td>
-		</tr>
+		{norecords _colspan="7"}
 	{/section}
 </table>
 

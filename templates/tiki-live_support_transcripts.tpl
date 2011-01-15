@@ -54,7 +54,7 @@
 <td style="text-align:right;"><a class="link" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;filter_user={$filter_user}&amp;filter_operator={$filter_operator}&amp;view={$items[ix].reqId}">{$items[ix].msgs}<a>&nbsp;</td>
 </tr>
 {sectionelse}
-<tr><td class="odd" colspan="5">{tr}No records found{/tr}</td></tr>
+	{norecords _colspan="5"}
 {/section}
 </table>
 

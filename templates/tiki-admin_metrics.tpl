@@ -61,9 +61,7 @@
 			</tr>
 		{/foreach}
 	{else}
-		<tr>
-			<td colspan="3" class="odd"><b>{tr}No records found{/tr}</b></td>
-		</tr>
+		{norecords _colspan="3"}
 	{/if}
 </table>
 <br/>
@@ -88,9 +86,7 @@
 			</tr>
 		{/foreach}
 	{else}
-		<tr>
-			<td colspan="3" class="odd"><b>{tr}No records found{/tr}</b></td>
-		</tr>
+		{norecords _colspan="3"}
 	{/if}
 </table>
 <br/>

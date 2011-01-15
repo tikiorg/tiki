@@ -116,9 +116,7 @@
 	{if $tiki_p_admin eq 'y'}<td>{self_link deletevote=1 user=$list_votes[ix].user ip=$list_votes[ix].ip optionId=$list_votes[ix].optionId}{icon _id=cross}{/self_link}</td>{/if}
 </tr>
 {sectionelse}
-<tr>
-	<td colspan="4">{tr}No records found{/tr}</td>
-</tr>
+	{norecords _colspan="4"}
 {/section}
 </table>
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset }{/pagination_links}
