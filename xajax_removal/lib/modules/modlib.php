@@ -644,8 +644,10 @@ class ModLib extends TikiLib
 			$smarty->assign('module_ord', $mod_reference['ord']);
 			$smarty->assign('module_position', $mod_reference['position']);
 			$smarty->assign('moduleId', $mod_reference['moduleId']);
-			if( isset( $module_params['title'] ) )
+			if( isset( $module_params['title'] ) ) {
 				$smarty->assign('tpl_module_title', tra( $module_params['title'] ) );
+			}
+			$smarty->assign('tpl_module_name', $mod_reference['name'] );
 
 			$template = 'modules/mod-' . $mod_reference['name'] . '.tpl';
 
