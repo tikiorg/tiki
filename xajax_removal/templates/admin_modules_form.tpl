@@ -1,6 +1,11 @@
 {* $Id$ *}
 {* include file for module edit form - to be called by ajax *}
 			<tr>
+				<td colspan="2">
+					<span class="description">{$assign_info.description}</span>
+				</td>
+			</tr>
+			<tr>
 				<td><label for="assign_position">{tr}Position{/tr}</label></td>
 				<td>
 					<select id="assign_position" name="assign_position">
