@@ -36,9 +36,7 @@
 			</tr>
 		{/foreach}
 	{else}
-		<tr>
-			<td colspan="5" class="odd"><b>{tr}No records found{/tr}</b></td>
-		</tr>
+		{norecords _colspan="5"}
 	{/if}
 </table>
 <br />

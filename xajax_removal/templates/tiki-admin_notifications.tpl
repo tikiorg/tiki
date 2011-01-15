@@ -120,7 +120,7 @@
 				<td><a class="link" href="{$smarty.server.PHP_SELF}?{query removeevent=$channels[user].watchId removetype=$channels[user].watchtype}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a></td>
 			</tr>
 		{sectionelse}
-			<tr class="odd"><td colspan="6"><b>{tr}No records found.{/tr}</b></td></tr>
+         {norecords _colspan="6"}
 		{/section}
 	</table>
 	{if $channels}

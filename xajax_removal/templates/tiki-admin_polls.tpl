@@ -140,9 +140,7 @@
 					</td>
 				</tr>
 			{sectionelse}
-				<tr>
-					<td colspan="{$numbercol}" class="odd">{tr}No records found{/tr}</td>
-				</tr>
+	         {norecords _colspan="$numbercol"}
 			{/section}
 		</table>
 		{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset }{/pagination_links}

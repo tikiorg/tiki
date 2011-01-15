@@ -71,8 +71,6 @@
 			</td>
 		</tr>
 	{sectionelse}
-		<tr>
-			<td colspan="{if $prefs.feature_submissions eq 'y'}7{else}6{/if}" class="odd">{tr}No records found{/tr}</td>
-		</tr>
+		{if $prefs.feature_submissions eq 'y'}{norecords _colspan="7"}{else}{norecords _colspan="6"}{/if}
 	{/section}
 </table>

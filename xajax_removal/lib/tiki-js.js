@@ -319,7 +319,9 @@ function replaceLimon(vec) {
 function setSelectionRange(textarea, selectionStart, selectionEnd) {
 	if (typeof textarea.setSelectionRange != 'undefined') {
 		textarea.focus();
-		textarea.setSelectionRange(selectionStart, selectionEnd);
+		
+		if (!$(textarea).hasClass('codeMirror'))
+			textarea.setSelectionRange(selectionStart, selectionEnd);
 	} else if (document.selection.createRange) {	// IE
 		var val = textarea.value, c = 0;
 		var isWin = val.indexOf("\r") > -1;
@@ -355,6 +357,11 @@ function setSelectionRange(textarea, selectionStart, selectionEnd) {
 }
 
 function getTASelection( textarea ) {
+	var $textareaEditor = getCodeMirrorFromInput($(textarea));
+	if ($textareaEditor) {
+		return $textareaEditor.selection();
+	}
+	
 	var ta_id = $(textarea).attr("id"), r, cked;
 	if ($('#cke_contents_' + ta_id).length !== 0) {
 		// get selection from ckeditor
@@ -387,6 +394,12 @@ function setCaretToPos (textarea, pos) {
 }
 
 function getCaretPos (textarea) {
+	var $textareaEditor = getCodeMirrorFromInput($(textarea));
+	if ($textareaEditor) {
+		var endPoint = $textareaEditor.cursorCoords();
+		return (endPoint.x ? endPoint.x : 0);
+	}
+	
 	if (typeof textarea.selectionEnd != 'undefined') {
 		return textarea.selectionEnd;
 	} else if ( document.selection ) {
@@ -411,6 +424,7 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 	
 	// inserts given text at selection or cursor position
 	var $textarea = $('#' + elementId);
+	var $textareaEditor = getCodeMirrorFromInput($textarea);
 	var toBeReplaced = /text|page|area_id/g; //substrings in replaceString to be replaced by the selection if a selection was done
 	var hiddenParents = $textarea.parents('fieldset:hidden:last');
 	if (hiddenParents.length) { hiddenParents.show(); }
@@ -486,14 +500,16 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 		}
 		return;
 	}
+	
 	if (!$textarea.length && elementId === "fgal_picker") {	// ckeditor file browser
 		$(".cke_dialog_contents").find("input:first").val(replaceString);
 		return;
 	}
 
-	$textarea[0].focus();
+	($textareaEditor ? $textareaEditor : $textarea).focus();
+	
 	var val = $textarea.val();
-	var selection = $textarea.selection();
+	var selection = ( $textareaEditor ? $textareaEditor : $textarea ).selection();
 
 	var selectionStart = selection.start;
 	var selectionEnd = selection.end;
@@ -520,7 +536,7 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 		}
 	}
 
-	if (selectionStart != selectionEnd) { // has there been a selection
+	if ((selectionStart != selectionEnd) && !$textareaEditor) { // has there been a selection
 		var newString = '';
 		if( perLine ) {
 			var lines = val.substring(selectionStart, selectionEnd).split("\n");
@@ -541,11 +557,50 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 				newString = replaceString + '\n' + val.substring(selectionStart, selectionEnd);
 			}
 		}
+		
 		$textarea.val(val.substring(0, selectionStart)
 						+ newString
 						+ val.substring(selectionEnd)
 					);
 		setSelectionRange($textarea[0], selectionStart, selectionStart + newString.length);
+		
+	} else if ($textareaEditor) {
+		var handle = $textareaEditor.cursorLine();
+		var cursor = $textareaEditor.cursorPosition();
+		
+		if (blockLevel) {
+			selection = $textareaEditor.lineContent(handle);
+		}
+		
+		var newString = '';
+		
+		if( perLine ) {
+			var lines = selection.split("\n");
+			for( k = 0; lines.length > k; ++k ) {
+				if( lines[k].length !== 0 ) {
+					newString += replaceString.replace(toBeReplaced, lines[k]);
+				}
+				if( k != lines.length - 1 ) {
+					newString += "\n";
+				}
+			}
+		} else {
+			if (replaceSelection) {
+				newString = replaceString;
+			} else if (replaceString.match(toBeReplaced)) {
+				newString = replaceString.replace(toBeReplaced, selection);
+			} else {
+				newString = replaceString + '\n' + selection;
+			}
+		}
+		
+		if (blockLevel) {
+			$textareaEditor.setLineContent(handle, newString);
+		} else if (handle) {
+			$textareaEditor.replaceSelection(newString);
+		} else {
+			$textareaEditor.insertIntoLine($textareaEditor.lastLine(), 'end', newString);
+		}
 	} else { // insert at caret
 		$textarea.val(val.substring(0, selectionStart)
 						+ replaceString
@@ -1759,3 +1814,22 @@ function checkbox_list_check_all(form,list,checking) {
   }
 }
 
+//An effective way of intereacting with a codemirror editor
+function addCodeMirrorEditorRelation(editor, $input) {
+	window.codeMirrorEditor = (window.codeMirrorEditor ? window.codeMirrorEditor : []);
+	window.codeMirrorEditor.push(editor);
+	
+	$input
+		.attr('codeMirrorRelationship', window.codeMirrorEditor.length - 1)
+		.addClass('codeMirror');
+}
+
+function getCodeMirrorFromInput($input) {
+	if (!window.codeMirrorEditor) return false;
+	var relationship = parseInt($input.attr('codeMirrorRelationship'));
+	if (window.codeMirrorEditor[relationship]) {
+		return window.codeMirrorEditor[relationship];
+	} else {
+		return false;
+	}
+}

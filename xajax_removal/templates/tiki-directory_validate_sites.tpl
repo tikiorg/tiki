@@ -45,9 +45,7 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'sites[{$items[user].siteId
         {/section}</i> </td>
     </tr>
     {sectionelse}
-    <tr>
-      <td class="odd" colspan="6">{tr}No records found.{/tr}</td>
-    </tr>
+		{norecords _colspan="6"}
     {/section}
   </table>
   {if $items} <br />
