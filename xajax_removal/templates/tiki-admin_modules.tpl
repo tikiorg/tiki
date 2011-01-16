@@ -409,7 +409,7 @@
 								<td>
 									<select name="menus" id='list_menus'>
 										{section name=ix loop=$menus}
-											<option value="{literal}{{/literal}menu id={$menus[ix].menuId}{literal}}{/literal}">{$menus[ix].name|escape}</option>
+											<option value="{literal}{{/literal}menu id={$menus[ix].menuId} css=n{literal}}{/literal}">{$menus[ix].name|escape}</option>
 										{/section}
 									</select>
 								</td>
@@ -428,7 +428,7 @@
 									<td>
 										<select name="cssmenus" id='list_cssmenus'>
 											{section name=ix loop=$menus}
-												<option value="{literal}{{/literal}menu id={$menus[ix].menuId} css=y type= {literal}}{/literal}">{$menus[ix].name}</option>
+												<option value="{literal}{{/literal}menu id={$menus[ix].menuId} type= {literal}}{/literal}">{$menus[ix].name}</option>
 											{/section}
 										</select>
 									</td>
@@ -484,17 +484,17 @@
 					</table>
 					{pagination_links cant=$maximum step=$maxRecords offset=$offset }{/pagination_links}
 					{remarksbox type="tip" title="{tr}Tip{/tr}"}
-							{tr}To use a default Tiki menu:{/tr}
-							<ul>
-								<li>{literal}{menu id=X}{/literal}</li>
-							</ul>
 						{if $prefs.feature_cssmenus eq 'y'}
 							{tr}To use a <a target="tikihelp" href="http://users.tpg.com.au/j_birch/plugins/superfish/">CSS (Superfish) menu</a>, use one of these syntaxes:{/tr}
 							<ul>
-								<li>{literal}{menu id=X css=y type=vert}{/literal}</li>
-								<li>{literal}{menu id=X css=y type=horiz}{/literal}</li>
+								<li>{literal}{menu id=X type=vert}{/literal}</li>
+								<li>{literal}{menu id=X type=horiz}{/literal}</li>
 							</ul>
 						{/if}
+							{tr}To use a default Tiki menu:{/tr}
+							<ul>
+								<li>{literal}{menu id=X  css=n}{/literal}</li>
+							</ul>
 					{/remarksbox}
 				</td>
 			</tr>

@@ -700,7 +700,7 @@ class ModLib extends TikiLib
 		$info = $tikilib->get_user_module( $name );
 		if (!empty($info)) {
 			// test if we have a menu
-			if (strpos($info['data'],'{menu ') === 0 and strpos($info['data'],"css=y")) {
+			if (strpos($info['data'],'{menu ') === 0 and strpos($info['data'],"css=n") === false) {
 				$smarty->assign('module_type','cssmenu');
 			}
 
