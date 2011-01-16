@@ -2,21 +2,21 @@
 {* Module layout with controls *}
 {if $module_nobox neq 'y'}
 {if $prefs.feature_layoutshadows eq 'y'}<div class="box-shadow">{$prefs.box_shadow_start}{/if}
-	<div id="module_{$moduleId}" class="box box-{$module_name|escape}{if $module_type eq 'cssmenu'} cssmenubox{/if} module"{if $module_params.overflow == 'y'} style="overflow:visible !important"{/if}>
+	<div id="module_{$moduleId}" class="box box-{$module_name}{if $module_type eq 'cssmenu'} cssmenubox{/if} module"{if !empty($tpl_module_style)} style="{$tpl_module_style}{/if}">
 	{if $module_decorations ne 'n'}
 		<h3 class="box-title clearfix"{if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
 		{if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
 			<span class="modcontrols">
-			<a title="{tr}Move module up{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name|escape}">
+			<a title="{tr}Move module up{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name}">
 				{icon _id="resultset_up" alt="[{tr}Up{/tr}]"}
 			</a>
-			<a title="{tr}Move module down{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_down={$module_name|escape}">
+			<a title="{tr}Move module down{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_down={$module_name}">
 				{icon _id="resultset_down" alt="[{tr}Down{/tr}]"}
 			</a>
-			<a title="{tr}Move module to opposite side{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_move={$module_name|escape}">
+			<a title="{tr}Move module to opposite side{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_move={$module_name}">
 				{icon _id="arrow_right-left" alt="[{tr}opp side{/tr}]"}
 			</a>
-			<a title="{tr}Unassign this module{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_unassign={$module_name|escape}" onclick='return confirmTheLink(this,"{tr}Are you sure you want to unassign this module?{/tr}")'>
+			<a title="{tr}Unassign this module{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_unassign={$module_name}" onclick='return confirmTheLink(this,"{tr}Are you sure you want to unassign this module?{/tr}")'>
 				{icon _id="cross" alt="[{tr}Remove{/tr}]"}
 			 </a>
 			</span>
@@ -65,7 +65,7 @@
 	{/if}
 		<div id="mod-{$module_name|cat:$module_position|cat:$module_ord|escape}" style="display: {if !isset($module_display) or $module_display}block{else}none{/if};{$module_params.style}" class="clearfix box-data{if !empty($module_params.class)} {$module_params.class}{/if}">
 {else}{* $module_nobox eq 'y' *}
-		<div id="module_{$moduleId}" style="{$module_params.style}" class="module{if !empty($module_params.class)} {$module_params.class}{/if} box-{$module_name|escape}">
+		<div id="module_{$moduleId}" style="{$module_params.style}{$tpl_module_style}" class="module{if !empty($module_params.class)} {$module_params.class}{/if} box-{$module_name}">
 {/if}
 {$module_content}
 {$module_error}

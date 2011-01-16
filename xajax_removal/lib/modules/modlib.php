@@ -246,7 +246,8 @@ class ModLib extends TikiLib
 			$user_groups = array( 'Anonymous' );
 		}
 		$pass = 'y';
-		if ($tiki_p_admin == 'y' && $prefs['modhideanonadmin'] == 'y' && $module_info['groups'] == serialize(array('Anonymous'))) {
+		if ($tiki_p_admin == 'y' && $prefs['modhideanonadmin'] == 'y' && $module_info['groups'] == serialize(array('Anonymous')) &&
+				strpos($_SERVER["SCRIPT_NAME"], 'tiki-admin_modules.php') === false) {
 			$pass = 'n';
 		} elseif ($tiki_p_admin != 'y' && $prefs['modallgroups'] != 'y') {
 			if ($module_info['groups']) {
@@ -625,8 +626,10 @@ class ModLib extends TikiLib
 		$cachefile = $this->get_cache_file( $mod_reference, $info );
 
 		global $smarty, $tikilib, $user;
+		
+		$module_admin_mode = strpos($_SERVER["SCRIPT_NAME"], 'tiki-admin_modules.php') !== false;
 
-		if( ! $cachefile || $this->require_cache_build( $mod_reference, $cachefile ) ) {
+		if( ! $cachefile || $this->require_cache_build( $mod_reference, $cachefile ) || $module_admin_mode ) {
 			if ( $info['type'] == "function") // Use the module name as default module title. This can be overriden later. A module can opt-out of this in favor of a dynamic default title set in the TPL using clear_assign in the main module function. It can also be overwritten in the main module function.
 				$smarty->assign('tpl_module_title', tra( $info['name'] ) );
 
@@ -659,7 +662,17 @@ class ModLib extends TikiLib
 				$smarty->assign('tpl_module_title', tra( $module_params['title'] ) );
 			}
 			$smarty->assign('tpl_module_name', $mod_reference['name'] );
-
+			
+			global $tiki_p_admin, $prefs;
+			$tpl_module_style = '';
+			if ($tiki_p_admin == 'y' && $prefs['modhideanonadmin'] == 'y' && (empty($mod_reference['groups']) || $mod_reference['groups'] == serialize(array('Anonymous'))) && $module_admin_mode) {
+				$tpl_module_style .= 'opacity: 0.5;';
+			}
+			if ($module_params['overflow'] === 'y') {
+				$tpl_module_style .= 'overflow:visible !important;';
+			}
+			$smarty->assign('tpl_module_style', $tpl_module_style );
+			
 			$template = 'modules/mod-' . $mod_reference['name'] . '.tpl';
 
 			if (file_exists('templates/'.$template)) {
@@ -670,7 +683,7 @@ class ModLib extends TikiLib
 			$smarty->clear_assign('module_params'); // ensure params not available outside current module
 			$smarty->clear_assign('tpl_module_title');
 
-			if (!empty($cachefile)) {
+			if (!empty($cachefile) && !$module_admin_mode) {
 				file_put_contents( $cachefile, $data );
 			}
 		} else {

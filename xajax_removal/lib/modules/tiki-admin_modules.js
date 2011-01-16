@@ -68,11 +68,11 @@ $(".modules").sortable( {
 	}
 });
 $("span.moduleflip").each( function() {
-	var $edit = $('<a title="Edit module" href="#"><img src="pics/icons/page_gear.png" alt="[edit]" width="16" height="16" style="position:absolute;right:18px"></a>')
+	var $edit = $('<a title="Edit module" href="#"><img src="pics/icons/page_gear.png" alt="[edit]" width="16" height="16" style="position:absolute;right:18px;opacity:0.75;"></a>')
 		.click( function() {
 			$(this).parents(".module:first").dblclick();
 		});
-	var $unassign = $('<a title="Unassign module" href="#"><img src="pics/icons/cross.png" alt="[unassign]" width="16" height="16" style="position:absolute;right:36px"></a>')
+	var $unassign = $('<a title="Unassign module" href="#"><img src="pics/icons/cross.png" alt="[unassign]" width="16" height="16" style="position:absolute;right:36px;opacity:0.75;"></a>')
 		.click( function() {
 			var id = $(this).parents(".module:first").attr("id").match(/\d+$/);
 			if (id) {
@@ -159,9 +159,12 @@ showModuleEditForm = function(item, options) {
 	if ($("#module_edit_div").length === 0) {
 		$("body").append($("<div id='module_edit_div'><form action='#' method='post'><table></table></form></div>"));
 		$("#module_edit_div form").append($("<input type='hidden' name='assign' value='popup' />" +
-											"<input type='hidden' name='assign_name' value='" + modName + "' />" +
-											"<input type='hidden' name='moduleId' value='" + modId + "' />"));
+											"<input type='hidden' name='assign_name' value='' />" +
+											"<input type='hidden' name='moduleId' value='' />"));
 	}
+	$("#module_edit_div input[name=assign_name]").val(modName);
+	$("#module_edit_div input[name=moduleId]").val(modId);
+	
 	var postData = {
 		edit_module: true,
 		assign_name: modName,
@@ -179,7 +182,7 @@ showModuleEditForm = function(item, options) {
 	
 	$.post("tiki-admin_modules.php", postData, function(data) {
 			$('#module_edit_div table').html(data);
-			$('#module_edit_div').dialog("option", "width", 500)
+			$('#module_edit_div').dialog("option", "width", 580)
 					.dialog("option", "height", 500)
 					.dialog( "option", "position", 'center' )
 					.find("table input[type='submit']").hide();
@@ -196,10 +199,10 @@ showModuleEditForm = function(item, options) {
 	
 	$('#module_edit_div').dialog({
 		bgiframe: true,
-		width: 500,
+		width: 580,
 		height: 500,
 		modal: true,
-		title: tr("Edit module:") + " " + modName,
+		title: tr("Edit module:") + " " + unescape(modName).replace("+"," "),
 		buttons: {
 			Cancel: function () {
 				$(this).dialog('close');
