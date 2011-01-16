@@ -25,6 +25,8 @@ class ModLib extends TikiLib
 		'l' => 'left_modules',
 		'r' => 'right_modules',
 		'b' => 'bottom_modules',
+		'p' => 'pagetop_modules',
+		'q' => 'pagebottom_modules',
 	);
 
 	function replace_user_module($name, $title, $data, $parse=NULL) {
@@ -148,7 +150,7 @@ class ModLib extends TikiLib
 	    		}
 	    	}
 		}
-		$section_map = array('top_modules' => 't', 'left_modules' => 'l', 'right_modules' => 'r', 'bottom_modules' => 'b', 'pagetop_modules' => '1', 'pagebottom_modules' => '2' );
+		$section_map = array_flip($this->module_zones);
 		$bindvars = array();
 		$query = '';
 		foreach ($module_order as $zone => $contents) {
@@ -630,6 +632,12 @@ class ModLib extends TikiLib
 		$module_admin_mode = strpos($_SERVER["SCRIPT_NAME"], 'tiki-admin_modules.php') !== false;
 
 		if( ! $cachefile || $this->require_cache_build( $mod_reference, $cachefile ) || $module_admin_mode ) {
+			
+			if ($module_admin_mode) {
+				require_once ('lib/setup/timer.class.php');
+				$timer = new timer('module');
+				$timer->start('module');
+			}
 			if ( $info['type'] == "function") // Use the module name as default module title. This can be overriden later. A module can opt-out of this in favor of a dynamic default title set in the TPL using clear_assign in the main module function. It can also be overwritten in the main module function.
 				$smarty->assign('tpl_module_title', tra( $info['name'] ) );
 
@@ -682,7 +690,14 @@ class ModLib extends TikiLib
 			}
 			$smarty->clear_assign('module_params'); // ensure params not available outside current module
 			$smarty->clear_assign('tpl_module_title');
-
+			$smarty->clear_assign('tpl_module_name');
+			$smarty->clear_assign('tpl_module_style');
+			
+			if ($module_admin_mode && $timer) {
+				$elapsed = $timer->stop('module');
+				$data = str_replace(' class="', ' title="Time ' . $elapsed . '"  class="' , $data);
+			}
+						
 			if (!empty($cachefile) && !$module_admin_mode) {
 				file_put_contents( $cachefile, $data );
 			}

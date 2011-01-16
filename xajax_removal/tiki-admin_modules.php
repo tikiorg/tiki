@@ -362,6 +362,10 @@ $top = $tikilib->get_assigned_modules('t');
 $bottom = $tikilib->get_assigned_modules('b');
 $smarty->assign_by_ref('top', $top);
 $smarty->assign_by_ref('bottom', $bottom);
+$pagetop = $tikilib->get_assigned_modules('p');
+$pagebottom = $tikilib->get_assigned_modules('q');
+$smarty->assign_by_ref('pagetop', $pagetop);
+$smarty->assign_by_ref('pagebottom', $pagebottom);
 $headerlib->add_css('.module:hover {
 	cursor: move;
 	background-color: #ffa;

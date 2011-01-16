@@ -5,7 +5,7 @@
 // $Id: $
 
 // drag & drop ones first
-var dragZonesSelector = "#top_modules, #bottom_modules";
+var dragZonesSelector = "#top_modules, #bottom_modules, #pagetop_modules, #pagebottom_modules";
 $(dragZonesSelector).droppable({});
 $(".module", dragZonesSelector).each(function() {
 	if ($(this).css("position") === "absolute") {

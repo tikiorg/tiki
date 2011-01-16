@@ -69,6 +69,13 @@
 								<br style="clear:both" />
 							</div>
 	{/if}
+	{if $prefs.modules_pagetop eq 'fixed' or ($prefs.modules_pagetop ne 'n' && $pagetop_modules|@count > 0)}
+		<div class="content clearfix modules" id="pagetop_modules">
+			{section name=homeix loop=$pagetop_modules}
+				{$pagetop_modules[homeix].data}
+			{/section}
+		</div>
+	{/if}
 {/if}
 
 {if $prefs.feature_share eq 'y' && $tiki_p_share eq 'y' and (!isset($edit_page) or $edit_page ne 'y' and $prefs.feature_site_send_link ne 'y')}
@@ -92,6 +99,13 @@
 <div id="role_main">
 {$mid_data}  {* You can modify mid_data using tiki-show_page.tpl *}
 </div>
+							{if $prefs.modules_pagebottom eq 'fixed' or ($prefs.modules_pagebottom ne 'n' && $pagebottom_modules|@count > 0)}
+								<div class="content clearfix modules" id="pagebottom_modules">
+									{section name=homeix loop=$pagebottom_modules}
+										{$pagebottom_modules[homeix].data}
+									{/section}
+								</div>
+							{/if}
 {show_help}
 							</div>{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
 						</div>
