@@ -91,25 +91,25 @@
 		{cycle print=false values="even,odd"}
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
-				<td>
+				<td class="checkbox">
 					<input type="checkbox" name="checked[]" value="{$channels[user].watchtype}{$channels[user].watchId|escape}" {if $smarty.request.checked and in_array($channels[user].watchId,$smarty.request.checked)}checked="checked"{/if} />
 				</td>
-				<td>{$channels[user].event}</td>
-				<td>
+				<td class="text">{$channels[user].event}</td>
+				<td class="text">
 					{if $channels[user].url}
 						<a href="{$channels[user].url}" title="{$channels[user].title|escape}">{$channels[user].object|escape}</a>
 					{else}
 						{$channels[user].object|escape}
 					{/if}
 					</td>
-				<td>
+				<td class="email">
 					{if $channels[user].watchtype eq 'user'}
 						{$channels[user].email}
 					{else}
 						<em>{tr}Multiple{/tr}</em>
 					{/if}
 				</td>
-				<td>
+				<td class="text">
 					{if $channels[user].watchtype eq 'group'}
 						{icon _id='group'}
 					{else}
@@ -117,7 +117,9 @@
 					{/if}
 					{$channels[user].user|escape}
 				</td>
-				<td><a class="link" href="{$smarty.server.PHP_SELF}?{query removeevent=$channels[user].watchId removetype=$channels[user].watchtype}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a></td>
+				<td class="action">
+					<a class="link" href="{$smarty.server.PHP_SELF}?{query removeevent=$channels[user].watchId removetype=$channels[user].watchtype}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+				</td>
 			</tr>
 		{sectionelse}
          {norecords _colspan=6}

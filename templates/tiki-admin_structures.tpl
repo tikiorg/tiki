@@ -80,7 +80,7 @@
 								<input type="checkbox" name="action[]" value='{$channels[ix].page_ref_id}' style="border:1px;font-size:80%;" />
 							</td>
 						{/if}
-						<td>
+						<td class="text">
 							<a class="tablename" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title="{tr}Edit structure{/tr}">
 								{$channels[ix].pageName}
 								{if $channels[ix].page_alias}

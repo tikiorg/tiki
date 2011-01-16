@@ -13,12 +13,12 @@
   {cycle values="even,odd" print=false}
   {section name=ix loop=$accounts}
     <tr class="{cycle}">
-      <td align="middle">
-        <a href="tiki-admin_mailin.php?accountId={$accounts[ix].accountId}#add">{icon _id='page_edit'}</a> &nbsp;
+      <td class="action">
+        <a href="tiki-admin_mailin.php?accountId={$accounts[ix].accountId}#add">{icon _id='page_edit'}</a>
         <a href="tiki-admin_mailin.php?remove={$accounts[ix].accountId}" >{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
       </td>
-      <td>{$accounts[ix].account}</td>
-      <td>{tr}{$accounts[ix].type}{/tr}</td>
+      <td class="text">{$accounts[ix].account}</td>
+      <td class="text">{tr}{$accounts[ix].type}{/tr}</td>
     </tr>
   {/section}
 </table>

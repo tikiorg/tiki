@@ -68,16 +68,18 @@
 	{cycle print=false values="odd,even"}
 	{section name=user loop=$channels}
 		<tr class="{cycle}">
-			<td>{$channels[user].questionId}</td>
-			<td>{$channels[user].position}</td>
-			<td>{$channels[user].question|escape|nl2br}</td>
-			<td>{$channels[user].type}</td>
-			<td>{$channels[user].options}</td>
-			<td>
+			<td class="id">{$channels[user].questionId}</td>
+			<td class="integer">{$channels[user].position}</td>
+			<td class="text">{$channels[user].question|escape|nl2br}</td>
+			<td class="text">{$channels[user].type}</td>
+			<td class="text">{$channels[user].options}</td>
+			<td class="action">
 				{self_link _icon='page_edit' questionId=$channels[user].questionId}{tr}Edit{/tr}{/self_link}
 				{self_link _icon='cross' remove=$channels[user].questionId}{tr}Delete{/tr}{/self_link}
 			</td>
 		</tr>
+	{sectionelse}
+		{norecords _colspan=6}
 	{/section}
 </table>
 
