@@ -189,9 +189,9 @@
 						</tr>
 					{sectionelse}
 						{if $deep eq 'on'}
-							{norecords _colspan="3}
+							{norecords _colspan=3}
 						{else}
-							{norecords _colspan="2"}
+							{norecords _colspan=2}
 						{/if}
 					{/section}
 				</table>

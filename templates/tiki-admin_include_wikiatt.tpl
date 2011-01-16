@@ -52,7 +52,7 @@
 						</td>
 					</tr>
 				{sectionelse}
-					{norecords _colspan="9"}
+					{norecords _colspan=9}
 				{/section}
 			</table>
 

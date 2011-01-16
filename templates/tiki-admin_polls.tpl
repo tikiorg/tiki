@@ -140,7 +140,7 @@
 					</td>
 				</tr>
 			{sectionelse}
-	         {norecords _colspan="$numbercol"}
+	         {norecords _colspan=$numbercol}
 			{/section}
 		</table>
 		{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset }{/pagination_links}

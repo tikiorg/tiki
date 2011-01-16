@@ -67,7 +67,7 @@
 				</td>
 			</tr>
 		{sectionelse}
-			{norecords _colspan="7"}
+			{norecords _colspan=7}
 		{/section}
 	</table>
 	<br />
@@ -106,7 +106,7 @@
 				</td>
 			</tr>
 		{sectionelse}
-         {norecords _colspan="7"}
+         {norecords _colspan=7}
 		{/section}
 	</table>
 	<br/>
@@ -286,7 +286,7 @@
 				</td>
 			</tr>
 		{sectionelse}
-         {norecords _colspan="3"}
+         {norecords _colspan=3}
 		{/section}
 	</table>
 	<br />

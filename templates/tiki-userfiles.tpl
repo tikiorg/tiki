@@ -41,7 +41,7 @@
 				<td style="text-align:right;">{$channels[user].filesize|kbsize}</td>
 			</tr>
 		{sectionelse}
-			{norecords _colspan="4"}
+			{norecords _colspan=4}
 		{/section}
 	</table>
 	{if $channels|@count ge '1'}

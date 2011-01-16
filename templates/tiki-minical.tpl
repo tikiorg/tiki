@@ -33,7 +33,7 @@
 						</td>
 					</tr>
 				{sectionelse}
-					{norecords _colspan="1"}
+					{norecords}
 				{/section}	
 			</table>
 		</td>

@@ -178,7 +178,7 @@
 			<td><a class="link" href="{$w.url}">{tr}{$w.type}:{/tr} {$w.title|escape}</a></td>
 		</tr>
 	{foreachelse}
-		{norecords _colspan="2"}
+		{norecords _colspan=2}
 	{/foreach}
 </table>
 {if $watches}

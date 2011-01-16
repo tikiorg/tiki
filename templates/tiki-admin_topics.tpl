@@ -71,6 +71,6 @@
 			</td>
 		</tr>
 	{sectionelse}
-		{if $prefs.feature_submissions eq 'y'}{norecords _colspan="7"}{else}{norecords _colspan="6"}{/if}
+		{if $prefs.feature_submissions eq 'y'}{norecords _colspan=7}{else}{norecords _colspan=6}{/if}
 	{/section}
 </table>

@@ -150,7 +150,7 @@
 					<td class="text">{tr}{$objects[ix].type}{/tr}</td>
 				</tr>
 			{sectionelse}
-				{norecords _colspan="3"}
+				{norecords _colspan=3}
 			{/section}
 		</table>
 

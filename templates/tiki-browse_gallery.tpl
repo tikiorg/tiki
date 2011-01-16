@@ -168,7 +168,7 @@
          {/if}
         {/foreach}
         {else}
-				{norecords _colspan="6"}
+				{norecords _colspan=6}
         {/if}
     </table>
   </div>

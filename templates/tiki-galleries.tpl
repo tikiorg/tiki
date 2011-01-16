@@ -296,7 +296,7 @@
 				{/if}
 			{/if}
 		{sectionelse}
-			{norecords _colspan="9"}
+			{norecords _colspan=9}
 		{/section}
 	</table>
 	{if $prefs.feature_maps eq 'y'}{$map_error}{/if}

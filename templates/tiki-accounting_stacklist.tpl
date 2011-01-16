@@ -39,6 +39,6 @@
  </tr>
 {/section}
 {foreachelse}
-	{norecords _colspan="9"}
+	{norecords _colspan=9}
 {/foreach}
 </table>

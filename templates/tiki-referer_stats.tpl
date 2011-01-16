@@ -26,7 +26,7 @@
       <td>{$channels[user].last|tiki_short_datetime}</td>
     </tr>
   {sectionelse}
-		{norecords _colspan="3"}
+		{norecords _colspan=3}
   {/section}
 </table>
 

@@ -36,7 +36,7 @@
 			</tr>
 		{/foreach}
 	{else}
-		{norecords _colspan="5"}
+		{norecords _colspan=5}
 	{/if}
 </table>
 <br />
@@ -61,7 +61,7 @@
 			</tr>
 		{/foreach}
 	{else}
-		{norecords _colspan="3"}
+		{norecords _colspan=3}
 	{/if}
 </table>
 <br/>
@@ -86,7 +86,7 @@
 			</tr>
 		{/foreach}
 	{else}
-		{norecords _colspan="3"}
+		{norecords _colspan=3}
 	{/if}
 </table>
 <br/>

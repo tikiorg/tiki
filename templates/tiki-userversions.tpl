@@ -26,7 +26,7 @@
 <td id="{cycle}">&nbsp;<a href="tiki-userversions.php?ruser={$ruser}&amp;page={$history[hist].pageName|escape:"url"}&amp;preview=1&amp;version={$history[hist].version}">{tr}View{/tr}</a>&nbsp;</td>
 </tr>
 {sectionelse}
-	{norecords _colspan="6"}
+	{norecords _colspan=6}
 {/section}
 </table>
 </div>

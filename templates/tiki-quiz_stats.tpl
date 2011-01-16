@@ -37,7 +37,7 @@
 			</tr>
 		{/if}
 	{sectionelse}
-		{norecords _colspan="4"}
+		{norecords _colspan=4}
 	{/section}
 </table>
 

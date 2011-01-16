@@ -33,7 +33,7 @@
       {/section}</i> </td>
   </tr>
   {sectionelse}
-	{norecords _colspan="4"}
+	{norecords _colspan=4}
   {/section}
 </table>
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links} 

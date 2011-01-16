@@ -46,7 +46,7 @@
 			{/if}
 		</tr>
 	{sectionelse}
-		{if $tiki_p_admin_faqs eq 'y'}{norecords _colspan="5"}{else}{norecords _colspan="4"}{/if}
+		{if $tiki_p_admin_faqs eq 'y'}{norecords _colspan=5}{else}{norecords _colspan=4}{/if}
 	{/section}
 </table>
 

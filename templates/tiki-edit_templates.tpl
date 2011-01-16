@@ -25,7 +25,7 @@
     <td><a class="link" href="tiki-edit_templates.php?template={$files[user]}">{$files[user]}</a></td>
   </tr>
 {sectionelse}
-	{norecords _colspan="1"}
+	{norecords _colspan=1}
 {/section}
 </table>
 {/if}

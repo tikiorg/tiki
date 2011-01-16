@@ -116,7 +116,7 @@
 								</td>
 							</tr>
 						{foreachelse}
-							{norecords _colspan="3"}
+							{norecords _colspan=3}
 						{/foreach}
 						<tr>
 							<td colspan="3">

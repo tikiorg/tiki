@@ -33,7 +33,7 @@
 		</tr>
 	{/foreach}
 	{if !$phpsettings}
-         {norecords _colspan="4"}
+         {norecords _colspan=4}
 	{/if}
 </table>
 
@@ -97,7 +97,7 @@
 		</tr>
 	{/foreach}
 	{if !$tikisettings}
-		{norecords _colspan="4"}
+		{norecords _colspan=4}
 	{/if}
 </table>
 

@@ -348,7 +348,7 @@
 							</td>
 						</tr>
 					{sectionelse}
-						{norecords _colspan="$numbercol"}
+						{norecords _colspan=$numbercol}
 					{/section}
 				</table>
 				
