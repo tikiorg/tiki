@@ -28,7 +28,7 @@ function upgrade_20101230_create_top_modules_tiki( $installer ) {
 	// add site logo
 	if( $prefs['feature_sitelogo'] === 'y' ) {
 		$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-								"('logo','t',1,7200,'nobox=y&notitle=n&style=float%3Aleft%3B','a:1:{i:0;s:9:\"Anonymous\";}');");
+								"('logo','t',1,7200,'nobox=y&style=float%3Aleft%3Bmargin%3A0+5em%3B','a:1:{i:0;s:9:\"Anonymous\";}');");
 	}
 	// add site login
 	if( $prefs['feature_site_login'] === 'y' ) {
