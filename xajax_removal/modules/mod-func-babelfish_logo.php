@@ -20,4 +20,7 @@ function module_babelfish_logo_info() {
 }
 
 function module_babelfish_logo( $mod_reference, $module_params ) {
+	global $smarty, $prefs;
+	require_once('lib/Babelfish.php');
+	$smarty->assign('babelfish_links', Babelfish::links($prefs['language']));
 }
