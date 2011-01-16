@@ -254,27 +254,29 @@ class ModLib extends TikiLib
 			} else {
 				$module_groups = array();
 			}
-			$pass = 'n';
-			if ($prefs['modseparateanon'] !== 'y') {
-				foreach ($module_groups as $mod_group) {
-					if (in_array($mod_group, $user_groups)) {
-						$pass = 'y';
-						break; 
-					}
-				}
-			} else {
-				if(!$user) { 
-					if (in_array('Anonymous', $module_groups)) {
-						$pass = 'y';
-					}
-				} else { 
+			if (!empty($module_groups)) {	// if no groups are set show to all users (modules revamp [MOD] in Tiki 7)
+				$pass = 'n';
+				if ($prefs['modseparateanon'] !== 'y') {
 					foreach ($module_groups as $mod_group) {
-						if ($mod_group === 'Anonymous') { 
-							continue; 
-						}
 						if (in_array($mod_group, $user_groups)) {
 							$pass = 'y';
-							break;
+							break; 
+						}
+					}
+				} else {
+					if(!$user) { 
+						if (in_array('Anonymous', $module_groups)) {
+							$pass = 'y';
+						}
+					} else { 
+						foreach ($module_groups as $mod_group) {
+							if ($mod_group === 'Anonymous') { 
+								continue; 
+							}
+							if (in_array($mod_group, $user_groups)) {
+								$pass = 'y';
+								break;
+							}
 						}
 					}
 				}
