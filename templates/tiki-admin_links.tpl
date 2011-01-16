@@ -22,10 +22,10 @@
 			<td class="text">{$links[user].url}</td>
 			<td class="text">{$links[user].title|escape}</td>
 			<td class="integer">{$links[user].hits}</td>
-			<td class="">{$links[user].position}</td>
-			<td class="">{$links[user].type}</td>
+			<td class="id">{$links[user].position}</td>
+			<td class="text">{$links[user].type}</td>
 			<td class="action">
-				<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_links.php?editurl={$links[user].url|escape:"url"}">{icon _id='page_edit'}</a> &nbsp;
+				<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_links.php?editurl={$links[user].url|escape:"url"}">{icon _id='page_edit'}</a>
 				<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_links.php?remove={$links[user].url|escape:"url"}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 			</td>
 		</tr>
