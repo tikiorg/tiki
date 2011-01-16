@@ -115,7 +115,7 @@
 						</td>
 					</tr>
 				{sectionelse}
-					{if $tiki_p_admin eq 'y'}{norecords _colspan="3}{else}{norecords _colspan="2"}{/if}
+					{if $tiki_p_admin eq 'y'}{norecords _colspan=3}{else}{norecords _colspan=2}{/if}
 				{/section}
 			</table>
 

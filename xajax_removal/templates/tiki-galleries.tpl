@@ -296,11 +296,7 @@
 				{/if}
 			{/if}
 		{sectionelse}
-			<tr>
-				<td class="odd" colspan="9">
-					{tr}No records found{/tr}
-				</td>
-			</tr>
+			{norecords _colspan=9}
 		{/section}
 	</table>
 	{if $prefs.feature_maps eq 'y'}{$map_error}{/if}

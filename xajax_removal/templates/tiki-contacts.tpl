@@ -173,7 +173,7 @@
 				</tr>
 			{/section}
 		{else}
-			{norecords _colspan="$numbercol"}
+			{norecords _colspan=$numbercol}
 		{/if}
 	{/foreach}
 </table>

@@ -26,7 +26,7 @@
 				</td>
 			</tr>
 		{sectionelse}
-			<tr><td colspan="2" class="odd">{tr}No records found.{/tr}</td></tr>
+			{norecords _colspan=2}
 		{/section}
 	</table>
 
@@ -58,7 +58,7 @@
 			</td>
 		</tr>
 	{sectionelse}
-		<tr><td colspan="3" class="odd">{tr}No records found.{/tr}</td></tr>
+		{norecords _colspan=3}
 	{/section}
 </table>
 <br />

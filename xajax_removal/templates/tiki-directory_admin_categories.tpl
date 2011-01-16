@@ -112,7 +112,7 @@
     <td><a class="link" href="tiki-directory_admin_related.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;categId={$items[user].categId}"><img src='img/icons2/admin_move.gif' alt="{tr}relate{/tr}" title="{tr}relate{/tr}" /></a> <a class="link" href="tiki-directory_admin_categories.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;parent={$parent}&amp;categId={$items[user].categId}">{icon _id='page_edit'}</a> <a class="link" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].categId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a> </td>
   </tr>
   {sectionelse}
-		{norecords _colspan="7"}
+		{norecords _colspan=7}
   {/section}
 </table>
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links} 

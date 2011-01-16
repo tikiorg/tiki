@@ -210,9 +210,7 @@
 				</td>
 			</tr>
 		{sectionelse}
-			<tr>
-				<td class="odd" colspan="6">{tr}No records.{/tr}</td>
-			</tr>
+			{norecords _colspan=6}
 		{/section}
 	</table>
 

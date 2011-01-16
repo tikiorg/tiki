@@ -37,9 +37,7 @@
 				</td>
 			</tr>
 		{sectionelse}
-			<tr>
-				<td colspan="3">{tr}No records{/tr}</td>
-			</tr>
+			{norecords _colspan=3}
 		{/section}
 	</table>
 {/section}

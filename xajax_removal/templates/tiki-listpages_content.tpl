@@ -332,12 +332,18 @@
 		{cycle print=false}
 		</tr>
 	{sectionelse}
-		<tr>
-			<td colspan="{$cntcol}" class="odd">
-				<b>{tr}No pages found{/tr}{if $find ne ''} {tr}with{/tr} &quot;{$find|escape}&quot;{/if}{if $initial ne ''}{tr} {if $find ne ''}and {/if}starting with{/tr} &quot;{$initial}&quot;{/if}.</b>
-				{if $aliases_were_found == 'y'}<br /><b>{tr}However, some page aliases fitting the query were found (see Aliases section above).{/tr}</b>{/if}
-			</td>
-		</tr>
+		{capture assign='find_htmlescaped'}{$find|escape}{/capture}
+		{if $find ne ''}	
+			{norecords _colspan=$cntcol _text="No pages found with: &quot;$find_htmlescaped&quot;."}
+		{elseif $find ne '' && $initial ne ''}
+			{norecords _colspan=$cntcol _text="No pages found with: &quot;$find_htmlescaped&quot; and starting with &quot; $initial &quote;."}
+		{elseif $find ne '' && $aliases_were_found == 'y'}
+			{norecords _colspan=$cntcol _text="No pages found with: &quot;$find_htmlescaped&dquot;. <br/>However, some page aliases fitting the query were found (see Aliases section above)."}
+		{elseif $find ne '' && $initial ne '' && $aliases_were_found == 'y'}
+			{norecords _colspan=$cntcol _text="No pages found with: &quot;$find_htmlescaped&quot;and starting with &quot; $initial &quote;. <br/>However, some page aliases fitting the query were found (see Aliases section above)."}
+		{else}
+			{norecords _colspan=$cntcol _text="No pages found."}
+		{/if}
 	{/section}
 </table>
 

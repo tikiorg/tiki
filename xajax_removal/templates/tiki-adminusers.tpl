@@ -229,7 +229,7 @@
 					</tr>
 				{/if}
 			{sectionelse}
-				{norecords _colspan="8"}
+				{norecords _colspan=8}
 			{/section}
 		
 			<tr>

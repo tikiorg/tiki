@@ -114,9 +114,9 @@
     </tr>
     {sectionelse}
 		{if $prefs.directory_country_flag eq 'y'}
-			{norecords _colspan="7"}
+			{norecords _colspan=7}
 		{else}
-			{norecords _colspan="6"}
+			{norecords _colspan=6}
 		{/if}
     {/section}
   </table>
