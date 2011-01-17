@@ -199,9 +199,6 @@ if( $prefs['feature_cssmenus'] == 'y' ) {
 if( $prefs['feature_bidi'] == 'y' ) {
 	$headerlib->add_cssfile( 'styles/BiDi/BiDi.css' );
 }
-if( $prefs['feature_fixed_width'] == 'y' ) {
-	$headerlib->add_cssfile( 'styles/layout/fixed_width.css' );
-}
 
 if ($prefs['javascript_enabled'] != 'n') {
 
