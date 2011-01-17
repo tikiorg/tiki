@@ -413,6 +413,7 @@ class CategLib extends ObjectLib
 	    return array('wiki page' => 'tiki_p_view',
 			 'wiki' => 'tiki_p_view',
 			 'forum' => 'tiki_p_forum_read',
+	    	 'forum post' => 'tiki_p_forum_read',
 			 'image gallery' => 'tiki_p_view_image_gallery',
 			 'file gallery' => 'tiki_p_view_file_gallery',
 			 'tracker' => 'tiki_p_view_trackers',
