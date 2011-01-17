@@ -44,4 +44,6 @@ function module_menu_info() {
 }
 
 function module_menu( $mod_reference, $module_params ) {
+	global $smarty;
+	$smarty->assign('module_type', empty($module_params['css']) || $module_params['css'] === 'y' ? 'cssmenu' : 'menu');
 }
