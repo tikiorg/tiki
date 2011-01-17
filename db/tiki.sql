@@ -1525,13 +1525,10 @@ CREATE TABLE `tiki_modules` (
 ) ENGINE=MyISAM;
 
 INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES
-	('Application Menu','l',30,7200,'flip=y','a:1:{i:0;s:10:"Registered";}'),
+	('menu','l',1,7200,'id=42&flip=y','a:1:{i:0;s:10:"Registered";}'),
 	('logo','t',1,7200,'nobox=y&style=float%3Aleft%3Bmargin%3A0+5em%3B','a:0:{}'),
 	('login_box','t',2,0,'mode=header&nobox=y&style=float%3Aright%3B','a:0:{}'),
-	('search','t',6,7200,'nobox=y&style=float%3Aright%3Bclear%3Aright%3B','a:0:{}'),
 	('quickadmin','t',3,7200,'nobox=y&style=float%3Aleft%3Bmargin%3A0+5em%3B','a:1:{i:0;s:6:"Admins";}'),
-	('menu','t',5,7200,'id=43&type=horiz&menu_id=tiki-top&menu_class=clearfix&nobox=y&style=float%3Aleft%3Bclear%3Aboth%3Bwidth%3A100%25%3B','a:0:{}'),
-	('breadcrumbs','t',6,0,'nobox=y','a:0:{}'),
 	('rsslist','b',1,7200,'nobox=y','a:0:{}'),
 	('poweredby','b',2,7200,'nobox=y&icons=n&version=n','a:0:{}');
 
