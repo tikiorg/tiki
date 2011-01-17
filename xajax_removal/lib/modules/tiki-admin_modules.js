@@ -83,7 +83,7 @@ $("span.moduleflip").each( function() {
 });
 
 // disable all links in modules apart from app menu
-$(".module:not(.box-ApplicationMenu)").find("a:not(.moduleflip a), input").click( function (event) {
+$(".module:not(.cssmenubox)").find("a:not(.moduleflip a), input").click( function (event) {
 	event.stopImmediatePropagation();
 	return false;
 });

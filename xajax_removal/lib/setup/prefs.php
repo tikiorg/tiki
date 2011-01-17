@@ -1359,6 +1359,12 @@ function get_default_prefs() {
 		'feature_fixed_width' => 'y',
 		'feature_html_head_base_tag' => 'n',
 
+		// Modules
+		'module_zones_top' => 'y',
+		'module_zones_pagetop' => 'y',
+		'module_zones_pagebottom' => 'y',
+		'module_zones_bottom' => 'y',
+		
 		// layout
 		'feature_left_column' => 'y',
 		'feature_right_column' => 'y',
