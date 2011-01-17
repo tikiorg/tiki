@@ -27,8 +27,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function upgrade_20110115_create_bottom_modules_tiki( $installer ) {
 	
 	// set up prefs array only
+	global $prefs, $user_overrider_prefs;
 	include_once 'lib/setup/prefs.php';
-	global $prefs;
 	
 	// add site report
 	if( $prefs['feature_site_report'] === 'y' || ($prefs['feature_site_send_link'] === 'y' && $prefs['feature_tell_a_friend'] === 'y') ) {

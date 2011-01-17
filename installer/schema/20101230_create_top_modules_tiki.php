@@ -22,8 +22,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function upgrade_20101230_create_top_modules_tiki( $installer ) {
 	
 	// set up prefs array only
+	global $prefs, $user_overrider_prefs;
 	include_once 'lib/setup/prefs.php';
-	global $prefs;
 	
 	// add site logo
 	if( $prefs['feature_sitelogo'] === 'y' ) {
