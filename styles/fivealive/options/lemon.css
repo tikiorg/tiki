@@ -37,6 +37,10 @@ hr {
 	background-image: url(lemon/siteheadertile.png);
 }
 
+#top_modules {
+	background: url(lemon/siteheader.jpg) 0 0 no-repeat;
+}
+
 #sitetitle,
 #sitesubtitle {
 	text-shadow: #c85a28 3px 2px 0;

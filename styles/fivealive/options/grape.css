@@ -38,6 +38,10 @@ hr {
 	background-image: url(grape/siteheadertile.png);
 }
 
+#top_modules {
+	background: url(grape/siteheader.jpg) 0 0 no-repeat;
+}
+
 #sitetitle,
 #sitesubtitle {
 	text-shadow: #781437 3px 2px 0;

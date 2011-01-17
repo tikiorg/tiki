@@ -41,6 +41,10 @@ body.fixed_width #fixedwidth {
 	background: url(fivealive/options/blueberry/headertile.png) 0 0 no-repeat;
 }
 
+#top_modules {
+	background: url(fivealive/options/blueberry/siteheader.jpg) 0 0 no-repeat;
+}
+
 /*#header-top,*/
 #tiki-top .wrapper,
 #middle {

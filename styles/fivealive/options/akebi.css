@@ -38,6 +38,10 @@ hr {
 	background-image: url(akebi/siteheadertile.jpg);
 }
 
+#top_modules {
+	background: url(akebi/siteheader.jpg) 0 0 no-repeat;
+}
+
 #sitetitle,
 #sitesubtitle {
 	text-shadow: #005064 3px 2px 0;

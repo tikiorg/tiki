@@ -38,6 +38,10 @@ hr {
 	background-image: url(watermelon/siteheadertile.png);
 }
 
+#top_modules {
+	background: url(watermelon/siteheader.jpg) 0 0 no-repeat;
+}
+
 #sitetitle,
 #sitesubtitle {
 	text-shadow: #8b1932 3px 2px 0;

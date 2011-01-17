@@ -38,6 +38,10 @@ hr {
 	background-image: url(kiwi/siteheadertile.png);
 }
 
+#top_modules {
+	background: url(kiwi/siteheader.jpg) 0 0 no-repeat;
+}
+
 #sitetitle,
 #sitesubtitle {
 	text-shadow: #648637 3px 2px 0;

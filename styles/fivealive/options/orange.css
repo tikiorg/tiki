@@ -37,6 +37,10 @@ hr {
 	background-image: url(orange/siteheadertile.png);
 }
 
+#top_modules {
+	background: url(orange/siteheader.jpg) 0 0 no-repeat;
+}
+
 #sitetitle,
 #sitesubtitle {
 	text-shadow: #942f20 3px 2px 0;
