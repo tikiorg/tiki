@@ -52,7 +52,7 @@ function module_action_calendar( $mod_reference, &$module_params ) {
 				$smarty->assign($tc_key, $tc_val);
 		}
 	
-		$smarty->assign('name', 'tiki_calendar');
+		$smarty->assign('name', 'action_calendar');
 	
 		$smarty->assign('daformat2', $tikilib->get_long_date_format());
 		$smarty->assign('var', '');

@@ -40,15 +40,12 @@ function smarty_function_menu($params, &$smarty)
 		$menu_cookie = 'y';
 	}
 	$smarty->assign_by_ref('menu_cookie', $menu_cookie);
-	if (isset($css) and $prefs['feature_cssmenus'] == 'y') {
+	if ($css !== 'n' && $prefs['feature_cssmenus'] == 'y') {
 		static $idCssmenu = 0;
-		if (isset($type) && ($type == 'vert' || $type == 'horiz')) {
-			$css = "cssmenu_$type.css";
-		} else {
-			$css = 'cssmenu.css';
-			$type = '';
+		if (empty($type)) {
+			$type = 'vert';
 		}
-		//$headerlib->add_cssfile("css/$css", 50); too late to do that(must be done in header)
+		$css = "cssmenu_$type.css";
 		$headerlib->add_jsfile('lib/menubuilder/menu.js');
 		$tpl = 'tiki-user_cssmenu.tpl';
 		$smarty->assign('menu_type', $type);

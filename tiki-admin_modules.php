@@ -36,6 +36,8 @@ if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y') {
 $access->check_permission(array('tiki_p_admin_modules'));
 $auto_query_args = array();
 
+$access->check_feature( array('feature_jquery_ui') );
+
 // Values for the user_module edit/create form
 $smarty->assign('um_name', '');
 $smarty->assign('um_title', '');
@@ -116,6 +118,12 @@ if (!empty($_REQUEST['modright'])) {
     check_ticket('admin-modules');
     $modlib->module_right($_REQUEST['modright']);
 }
+if (!empty($_REQUEST['module-order'])) {
+    check_ticket('admin-modules');
+    $module_order = json_decode($_REQUEST['module-order']);
+    $modlib->reorder_modules($module_order);
+}
+
 /* Edit or delete a user module */
 if (isset($_REQUEST["um_update"])) {
     if (empty($_REQUEST["um_name"])) {
@@ -252,6 +260,7 @@ if (isset($_REQUEST["assign"])) {
 	if (empty($missing_params)) {
 		$modlib->assign_module(isset($_REQUEST['moduleId']) ? $_REQUEST['moduleId'] : 0, $_REQUEST["assign_name"], '', $_REQUEST["assign_position"], $_REQUEST["assign_order"], $_REQUEST["assign_cache"], $module_rows, serialize($module_groups) , $_REQUEST["assign_params"], $_REQUEST["assign_type"]);
 		$logslib->add_log('adminmodules', 'assigned module ' . $_REQUEST["assign_name"]);
+		$modlib->reorder_modules();
 		header("location: tiki-admin_modules.php");
 	} else {
 		$modlib->dispatchValues( $_REQUEST['assign_params'], $modinfo['params'] );
@@ -349,6 +358,22 @@ $left = $tikilib->get_assigned_modules('l');
 $right = $tikilib->get_assigned_modules('r');
 $smarty->assign_by_ref('left', $left);
 $smarty->assign_by_ref('right', $right);
+$top = $tikilib->get_assigned_modules('t');
+$bottom = $tikilib->get_assigned_modules('b');
+$smarty->assign_by_ref('top', $top);
+$smarty->assign_by_ref('bottom', $bottom);
+$pagetop = $tikilib->get_assigned_modules('p');
+$pagebottom = $tikilib->get_assigned_modules('q');
+$smarty->assign_by_ref('pagetop', $pagetop);
+$smarty->assign_by_ref('pagebottom', $pagebottom);
+$headerlib->add_css('.module:hover {
+	cursor: move;
+	background-color: #ffa;
+}');
+$headerlib->add_cssfile('css/admin.css');
+$headerlib->add_jsfile('lib/modules/tiki-admin_modules.js');
+$headerlib->add_jsfile('lib/jquery/jquery.json-2.2.js');
+
 $sameurl_elements = array(
     'offset',
     'sort_mode',
@@ -358,5 +383,10 @@ $sameurl_elements = array(
 ask_ticket('admin-modules');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-$smarty->assign('mid', 'tiki-admin_modules.tpl');
-$smarty->display("tiki.tpl");
+
+if (!empty($_REQUEST['edit_module'])) {	// pick up ajax calls
+	$smarty->display("admin_modules_form.tpl");
+} else {
+	$smarty->assign('mid', 'tiki-admin_modules.tpl');
+	$smarty->display("tiki.tpl");
+}

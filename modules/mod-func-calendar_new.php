@@ -135,7 +135,7 @@ function module_calendar_new( $mod_reference, $module_params ) {
 			$smarty->assign($tc_key, $tc_val);
 		}
 
-		$smarty->assign('name', 'calendar');
+		$smarty->assign('name', 'calendar_new');
 
 		$smarty->assign('daformat2', $tikilib->get_long_date_format());
 		$smarty->assign('var', '');

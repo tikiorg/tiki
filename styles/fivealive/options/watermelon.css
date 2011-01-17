@@ -35,7 +35,7 @@ hr {
 }
 
 #header {
-	background: url(watermelon/siteheadertile.png) 900px 0 no-repeat;
+	background-image: url(watermelon/siteheadertile.png);
 }
 
 #sitetitle,

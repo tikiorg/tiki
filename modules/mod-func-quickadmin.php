@@ -11,17 +11,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function module_login_box_info() {
+function module_quickadmin_info() {
 	return array(
-		'name' => tra('Login'),
-		'description' => tra('Login box'),
+		'name' => tra('Quick Admin'),
+		'description' => tra('Some helpful tools for admins.'),
 		'prefs' => array(),
 		'params' => array(
-			'input_size' => array(
-				'name' => tra('Input size'),
-				'description' => tra('Number of characters for username and password input fields.'),
-				'filter' => 'int'
-			),
 			'mode' => array(
 				'name' => tra('Mode'),
 				'description' => tra('Display mode: module or header. Leave empty for module mode'),
@@ -30,7 +25,6 @@ function module_login_box_info() {
 	);
 }
 
-function module_login_box( $mod_reference, $module_params ) {
-	global $smarty;
-	$smarty->assign('registration', 'n');
+function module_quickadmin( $mod_reference, $module_params ) {
+	
 }

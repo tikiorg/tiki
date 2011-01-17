@@ -299,3 +299,21 @@ a.admbox.off img {
 }
 
 /* end from ui-revamp branch */
+
+.module-placeholder {
+	width: 160px;
+	minHeight: 40px;
+	list-style-type: none;
+	background-color: #ff8;
+	border: #884 2px solid;
+	margin: 10px;
+	padding: 10px;
+}
+
+#module_list li {
+	list-style-image: url("../pics/icons/module.png");
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+}
+

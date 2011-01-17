@@ -35,7 +35,7 @@ hr {
 }
 
 #header {
-	background: url(kiwi/siteheadertile.png) 900px 0 no-repeat;
+	background-image: url(kiwi/siteheadertile.png);
 }
 
 #sitetitle,

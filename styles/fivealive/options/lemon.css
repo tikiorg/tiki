@@ -34,7 +34,7 @@ hr {
 }
 
 #header {
-	background: url(lemon/siteheadertile.png) 900px 0 no-repeat;
+	background-image: url(lemon/siteheadertile.png);
 }
 
 #sitetitle,

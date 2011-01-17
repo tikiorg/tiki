@@ -35,7 +35,7 @@ hr {
 }
 
 #header {
-	background: url(akebi/siteheadertile.jpg) 900px 0 no-repeat;
+	background-image: url(akebi/siteheadertile.jpg);
 }
 
 #sitetitle,

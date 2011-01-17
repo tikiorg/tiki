@@ -12,25 +12,29 @@ function capLock(e){
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Log in{/tr}"}{/if}{* Left for performance, since tiki-login_scr.php includes this template directly. *}
 {tikimodule error=$module_params.error title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
     {if $user}
-      <div>{tr}Logged in as:{/tr} <span style="white-space: nowrap">{$user|userlink}</span></div>
-      <div style="text-align: center;">
+    	{if empty($module_params.mode) or $module_params.mode eq "module"}
+	    	<div>{tr}Logged in as:{/tr} <span style="white-space: nowrap">{$user|userlink}</span></div>
+			<div style="text-align: center;">
 				{button href="tiki-logout.php" _text="{tr}Log out{/tr}"}
 			</div>
-      {if $tiki_p_admin eq 'y'}
-        <form action="{if $prefs.https_login eq 'encouraged' || $prefs.https_login eq 'required' || $prefs.https_login eq 'force_nocheck'}{$base_url_https}{/if}{$prefs.login_url}" method="post"{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
-         <fieldset>
-          <legend>{tr}Switch User{/tr}</legend>
-          <label for="login-switchuser">{tr}Username:{/tr}</label>
-          <input type="hidden" name="su" value="1" />
-		  {if $prefs.feature_help eq 'y'}
-			{help url="Switch+User" desc="{tr}Help{/tr}" desc="{tr}Switch User:{/tr}{tr}Enter user name and click 'Switch'.<br />Useful for testing permissions.{/tr}"}
-		  {/if}
-          <input type="text" name="username" id="login-switchuser" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
-          <div style="text-align: center"><button type="submit" name="actsu">{tr}Switch{/tr}</button></div>
-		  {jq}$("#login-switchuser").tiki("autocomplete", "username"){/jq}
-         </fieldset>
-        </form>
-      {/if}
+		    {if $tiki_p_admin eq 'y'}
+		    	<form action="{if $prefs.https_login eq 'encouraged' || $prefs.https_login eq 'required' || $prefs.https_login eq 'force_nocheck'}{$base_url_https}{/if}{$prefs.login_url}" method="post"{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
+		         <fieldset>
+		          <legend>{tr}Switch User{/tr}</legend>
+		          <label for="login-switchuser">{tr}Username:{/tr}</label>
+		          <input type="hidden" name="su" value="1" />
+				  {if $prefs.feature_help eq 'y'}
+					{help url="Switch+User" desc="{tr}Help{/tr}" desc="{tr}Switch User:{/tr}{tr}Enter user name and click 'Switch'.<br />Useful for testing permissions.{/tr}"}
+				  {/if}
+		          <input type="text" name="username" id="login-switchuser" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
+		          <div style="text-align: center"><button type="submit" name="actsu">{tr}Switch{/tr}</button></div>
+				  {jq}$("#login-switchuser").tiki("autocomplete", "username"){/jq}
+		         </fieldset>
+		        </form>
+			{/if}
+		{elseif $module_params.mode eq "header"}
+			<span style="white-space: nowrap">{$user|userlink}</span> | <a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>
+		{/if}
 	  {if $prefs.auth_method eq 'openid' and $openid_userlist|@count gt 1}
         <form method="get" action="tiki-login_openid.php">
 		  <fieldset>

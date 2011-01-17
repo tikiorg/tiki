@@ -126,6 +126,11 @@
 			{preference name=feature_left_column}
 			{preference name=feature_right_column}
 		
+			{preference name=module_zones_top}
+			{preference name=module_zones_pagetop}
+			{preference name=module_zones_pagebottom}
+			{preference name=module_zones_bottom}
+		
 			{preference name=feature_breadcrumbs}
 			<div class="adminoptionboxchild" id="feature_breadcrumbs_childcontainer">
 				{preference name=feature_siteloclabel}

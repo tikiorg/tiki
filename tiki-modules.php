@@ -23,14 +23,7 @@ if ($tiki_p_admin != 'y') {
 	$user_groups = array();
 }
 
-// additional module zones added to this array will be exposed to tiki.tpl
-// TODO change modules user interface to enable additional zones
-$module_zones = array(
-	'l' => 'left_modules',
-	'r' => 'right_modules',
-);
-
-$modules = $modlib->get_modules_for_user( $user, $module_zones );
+$modules = $modlib->get_modules_for_user( $user );
 record_module_loading_errors();
 
 $show_columns = array_fill_keys( array_keys( $modules ), 'n' );
