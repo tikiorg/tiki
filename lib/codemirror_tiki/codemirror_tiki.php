@@ -9,6 +9,7 @@ function tiki_syntax_highlighter_base() {
 		$headerlib->add_js("
 			$(function() {
 				var editwiki = $('#editwiki');
+				var toolbar = $('#editwiki_toolbar');
 				//ensure that codemirror is running and CKEditor isn't, if so run
 				if (window.CKEDITOR) return false;
 				if (!editwiki.length) return false;
@@ -25,6 +26,11 @@ function tiki_syntax_highlighter_base() {
 					}
 				});
 					
+				toolbar
+					.css('width', '100%')
+					.nextAll()
+					.css('width', '100%');
+				
 				addCodeMirrorEditorRelation(editor, editwiki);
 			});
 		");
