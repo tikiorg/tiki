@@ -25,6 +25,8 @@ function smarty_function_menu($params, &$smarty)
 {
 	global $tikilib, $user, $headerlib, $prefs;
 	global $menulib; include_once('lib/menubuilder/menulib.php');
+	$default = array('css' => 'y');
+	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
 
 	if (empty($link_on_section) || $link_on_section == 'y') {
