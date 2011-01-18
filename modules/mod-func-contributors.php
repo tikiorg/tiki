@@ -22,13 +22,14 @@ function module_contributors_info() {
 
 // Hides contributors past the fifth until a link is clicked
 function module_contributors( $mod_reference, $module_params ) {
-	global $smarty, $userlib, $wikilib, $tikilib;
+	global $smarty, $userlib, $wikilib, $tikilib, $headerlib;
 	$currentObject = current_object();
 	if ($currentObject['type'] == 'wiki page') {
 		$objectperms = Perms::get( array( 'type' => 'wiki page', 'object' => $currentObject['object'] ) );
 		if ($objectperms->view) {
 			$contributors = $wikilib->get_contributors($currentObject['object']);
 			$contributors_details = array();
+			$headerlib->add_css('div.contributors div br {clear: both;}'); // Avoid avatar conflicts with lines below
 			foreach ($contributors as $contributor) {
 				$details = array('login' => $contributor);
 				$details['realName'] = $userlib->get_user_preference($contributor, 'realName');
@@ -43,6 +44,7 @@ function module_contributors( $mod_reference, $module_params ) {
 					$details['scrambledEmail'] = scrambleEmail($details['email'], $email_isPublic);
 				}
 				$details['homePage'] = $tikilib->get_user_preference($contributor, 'homePage');
+				$details['avatar'] = $tikilib->get_user_avatar($contributor);
 				$contributors_details[] = $details;
 			}
 			$smarty->assign_by_ref('contributors_details', $contributors_details);
