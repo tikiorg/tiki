@@ -20,9 +20,10 @@ class Search_Formatter_DataSource_Declarative implements Search_Formatter_DataSo
 		foreach ($list as & $entry) {
 			$type = $entry['object_type'];
 			$object = $entry['object_id'];
+			$hash = isset($entry['hash']) ? $entry['hash'] : null;
 			$missingFields = $fields;
 			
-			$entry = array_merge($entry, $this->obtainFromContentSource($type, $object, $missingFields));
+			$entry = array_merge($entry, $this->obtainFromContentSource($type, $object, $hash, $missingFields));
 
 			$initial = $entry;
 			foreach ($this->globalSources as $globalSource) {
@@ -33,7 +34,7 @@ class Search_Formatter_DataSource_Declarative implements Search_Formatter_DataSo
 		return $list;
 	}
 
-	private function obtainFromContentSource($type, $object, & $missingFields)
+	private function obtainFromContentSource($type, $object, $hash, & $missingFields)
 	{
 		if (isset($this->contentSources[$type])) {
 			$contentSource = $this->contentSources[$type];
@@ -44,8 +45,22 @@ class Search_Formatter_DataSource_Declarative implements Search_Formatter_DataSo
 
 			if ($this->sourceProvidesValue($contentSource, $missingFields)) {
 				$data = $contentSource->getDocument($object, new Search_Type_Factory_Direct);
-				
-				return $this->getRaw($data, $missingFields);
+				$used = $data;
+
+				if (is_int(key($data)) && ! is_null($hash)) {
+					$used = reset($data);
+
+					foreach ($data as $entry) {
+						if (isset($entry['hash']) && $entry['hash']->getValue() == $hash) {
+							$used = $entry;
+							break;
+						}
+					}
+				} elseif (is_int(key($data))) {
+					$used = reset($data);
+				}
+
+				return $this->getRaw($used, $missingFields);
 			}
 		}
 

@@ -20,6 +20,7 @@ function smarty_function_object_link( $params, $smarty ) {
 	$type = $params['type'];
 	$object = $params['id'];
 	$title = isset( $params['title'] ) ? $params['title'] : null;
+	$url = isset( $params['url'] ) ? $params['url'] : null;
 
 	switch( $type ) {
 	case 'wiki page':
@@ -47,10 +48,10 @@ function smarty_function_object_link( $params, $smarty ) {
 		break;
 	}
 
-	return $function( $smarty, $object, $title, $type );
+	return $function( $smarty, $object, $title, $type, $url );
 }
 
-function smarty_function_object_link_default( $smarty, $object, $title = null, $type = 'wiki' ) {
+function smarty_function_object_link_default( $smarty, $object, $title = null, $type = 'wiki', $url = null ) {
 	require_once 'lib/smarty_tiki/modifier.sefurl.php';
 
 	if (! function_exists('smarty_modifier_escape')) {
@@ -58,7 +59,12 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 	}
 
 	$escapedPage = smarty_modifier_escape( $title ? $title : tra('No title specified') );
-	$escapedHref = smarty_modifier_escape( smarty_modifier_sefurl( $object, $type ) );
+
+	if ($url) {
+		$escapedHref = smarty_modifier_escape( $url );
+	} else {
+		$escapedHref = smarty_modifier_escape( smarty_modifier_sefurl( $object, $type ) );
+	}
 
 	return '<a href="' . $escapedHref . '">' . $escapedPage . '</a>';
 }

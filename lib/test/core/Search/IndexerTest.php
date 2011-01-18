@@ -170,12 +170,34 @@ class Search_IndexerTest extends PHPUnit_Framework_TestCase
 		$indexer = new Search_Indexer($index);
 		$indexer->addContentSource('wiki page', $contentSource);
 		$indexer->addGlobalSource($globalSource);
-		$indexer->rebuild();
+		$stats = $indexer->rebuild();
 
 		$document = $index->getDocument(0);
 
 		$typeFactory = $index->getTypeFactory();
 		$this->assertEquals($typeFactory->plaintext('foobar baz Hello '), $document['contents']);
+		$this->assertEquals(array('wiki page' => 1), $stats);
+	}
+
+	function testContentSourceWithMultipleResults()
+	{
+		$contentSource = new Search_ContentSource_Static(array(
+			'HomePage' => array(
+				array('title' => 'Hello'),
+				array('title' => 'Hello (latest)'),
+			),
+		), array('title' => 'plaintext'));
+
+		$index = new Search_Index_Memory;
+		$indexer = new Search_Indexer($index);
+		$indexer->addContentSource('wiki page', $contentSource);
+		$stats = $indexer->rebuild();
+
+		$document = $index->getDocument(1);
+
+		$typeFactory = $index->getTypeFactory();
+		$this->assertEquals($typeFactory->plaintext('Hello (latest)'), $document['title']);
+		$this->assertEquals(array('wiki page' => 2), $stats);
 	}
 }
 

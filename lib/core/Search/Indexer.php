@@ -29,11 +29,11 @@ class Search_Indexer
 	 */
 	function rebuild()
 	{
-		$stat = array();
+		$stat = array_fill_keys(array_keys($this->contentSources), 0);
+
 		foreach ($this->contentSources as $objectType => $contentSource) {
 			foreach ($contentSource->getDocuments() as $objectId) {
-				$this->addDocument($objectType, $objectId);
-				$stat[$objectType] = empty($stat[$objectType])? 1: $stat[$objectType] + 1;
+				$stat[$objectType] += $this->addDocument($objectType, $objectId);
 			}
 		}
 		
@@ -70,24 +70,40 @@ class Search_Indexer
 			$contentSource = $this->contentSources[$objectType];
 
 			if (false !== $data = $contentSource->getDocument($objectId, $typeFactory)) {
-				$initialData = $data;
-
-				foreach ($this->globalSources as $globalSource) {
-					$data = array_merge($data, $globalSource->getData($objectType, $objectId, $typeFactory, $initialData));
+				if (! is_int(key($data))) {
+					$data = array($data);
 				}
 
-				$base = array(
-					'object_type' => $typeFactory->identifier($objectType),
-					'object_id' => $typeFactory->identifier($objectId),
-					'contents' => $typeFactory->plaintext($this->getGlobalContent($data, $globalFields)),
-				);
+				foreach ($data as $entry) {
+					$this->addDocumentFromContentData($objectType, $objectId, $entry, $typeFactory, $globalFields);
+				}
 
-				$this->searchIndex->addDocument(array_merge(array_filter($data), $base));
+				return count($data);
 			}
 		}
+
+		return 0;
 	}
 
-	private function getGlobalContent(array & $data, $globalFields) {
+	private function addDocumentFromContentData($objectType, $objectId, $data, $typeFactory, $globalFields)
+	{
+		$initialData = $data;
+
+		foreach ($this->globalSources as $globalSource) {
+			$data = array_merge($data, $globalSource->getData($objectType, $objectId, $typeFactory, $initialData));
+		}
+
+		$base = array(
+			'object_type' => $typeFactory->identifier($objectType),
+			'object_id' => $typeFactory->identifier($objectId),
+			'contents' => $typeFactory->plaintext($this->getGlobalContent($data, $globalFields)),
+		);
+
+		$this->searchIndex->addDocument(array_merge(array_filter($data), $base));
+	}
+
+	private function getGlobalContent(array & $data, $globalFields)
+	{
 		$content = '';
 
 		foreach ($globalFields as $name => $preserve) {

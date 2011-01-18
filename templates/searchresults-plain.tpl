@@ -2,7 +2,7 @@
 	{foreach item=result from=$results}
 	<li>
 		<strong>
-		{object_link type=$result.object_type id=$result.object_id title=$result.title}
+		{object_link type=$result.object_type id=$result.object_id title=$result.title url=$result.url}
 
 		{if $prefs.feature_search_show_object_type eq 'y'}
 			(<span class="objecttype">{$result.object_type|escape}</span>)

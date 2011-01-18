@@ -13,6 +13,10 @@ class Search_Formatter_ValueFormatter_Objectlink implements Search_Formatter_Val
 			'title' => $value,
 		);
 
+		if (isset($entry['url'])) {
+			$params['url'] = $entry['url'];
+		}
+
 		return '~np~' . smarty_function_object_link($params, $smarty) . '~/np~';
 	}
 }
