@@ -8,8 +8,8 @@
 function wikiplugin_webservice_info() {
 	return array(
 		'name' => tra('Web Service'),
-		'documentation' => 'PluginWebservice',		
-		'description' => tra('Obtains and display remote information exposed in JSON or YAML. The plugin can be used to display registered or unregistered services. Registered services may use more parameters not defined in this interface.'),
+		'documentation' => 'PluginWebservice',
+		'description' => tra('Display remote information exposed in JSON or YAML.'),
 		'prefs' => array( 'wikiplugin_webservice' ),
 		'body' => tra('Template to apply to the data provided. Template format uses smarty templating engine using double brackets as delimiter. Output must provide wiki syntax. Body can be sent to a parameter instead by using the bodyname parameter.'),
 		'validate' => 'all',

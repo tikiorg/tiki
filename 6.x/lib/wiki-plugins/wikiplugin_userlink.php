@@ -14,18 +14,18 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function wikiplugin_userlink_info() {
 	return array(
 		'name' => tra('Userlink function'),
-		'documentation' => tra('PluginUserlink'),			
-		'description' => tra('Makes a link to the user information page'),
+		'documentation' => 'PluginUserlink',
+		'description' => tra('Display a link to a user\'s information page'),
 		'prefs' => array('wikiplugin_userlink'),
 		'params' => array( 
-                        'user' => array(
-                                'required' => false,
-                                'name' => tra('User account name'),
-                                'description' => tra('User account name (which can be an email address)'),
-                                'filter' => 'xss',
-                        ),
-                ),
-
+			'user' => array(
+				'required' => false,
+				'name' => tra('User Name'),
+				'description' => tra('User account name (which can be an email address)'),
+				'filter' => 'xss',
+				'default' => ''
+			),
+		),
 	);
 }
 

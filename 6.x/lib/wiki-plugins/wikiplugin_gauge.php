@@ -30,8 +30,8 @@ function wikiplugin_gauge_help() {
 function wikiplugin_gauge_info() {
 	return array(
 		'name' => tra('Gauge'),
-		'documentation' => tra('PluginGauge'),
-		'description' => tra('Displays a graphical gauge'),
+		'documentation' => 'PluginGauge',
+		'description' => tra('Display a horizontal bar gauge'),
 		'prefs' => array('wikiplugin_gauge'),
 		'body' => tra('description'),
 		'params' => array(

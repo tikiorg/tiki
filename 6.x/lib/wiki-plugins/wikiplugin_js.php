@@ -17,8 +17,8 @@ function wikiplugin_js_help() {
 function wikiplugin_js_info() {
 		return array(
 			'name' => tra('Javascript'),
-			'documentation' => tra('PluginJS'),
-			'description' => tra('Insert a javascript file and/or some javascript code.'),
+			'documentation' => 'PluginJS',
+			'description' => tra('Add JavaScript code to a wiki page'),
 			'prefs' => array( 'wikiplugin_js' ),
 			'body' => tra('javascript code'),
 			'validate' => 'all',

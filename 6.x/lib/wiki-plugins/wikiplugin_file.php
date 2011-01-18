@@ -10,8 +10,8 @@ function wikiplugin_file_info()
 	global $prefs;
 	$info = array(
 		'name' => tra( 'File' ),
-		'documentation' => tra('PluginFile'),
-		'description' => tra('Displays a link to a file (either from the file gallery or an attachment to a wiki page) and can display an image attachment. For more than one file from file galleries, or more optional information shown from the files, use the plugin FILES instead'),
+		'documentation' => 'PluginFile',
+		'description' => tra('Link to a file that\'s attached or in a gallery or archive'),
 		'prefs' => array( 'wikiplugin_file' ),
 		'body' => tra('Label for the link to the file'),
 		'icon' => 'pics/icons/file-manager.png',

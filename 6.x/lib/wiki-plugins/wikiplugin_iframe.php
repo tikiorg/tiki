@@ -25,8 +25,8 @@ function wikiplugin_iframe_help() {
 function wikiplugin_iframe_info() {
 	return array(
 		'name' => tra('Iframe'),
-		'documentation' => tra('PluginIframe'),
-		'description' => tra('Displays an iframe'),
+		'documentation' => 'PluginIframe',
+		'description' => tra('Include another web page in a wiki page within a frame'),
 		'prefs' => array( 'wikiplugin_iframe' ),
 		'body' => tra('URL'),
 		'validate' => 'all',

@@ -10,8 +10,8 @@ function wikiplugin_datachannel_info()
 	global $prefs;
 	return array(
 		'name' => tra('Data Channel'),
-		'documentation' => tra('PluginDataChannel'),
-		'description' => tra('Displays a form to trigger data channels.'),
+		'documentation' => 'PluginDataChannel',
+		'description' => tra('Display a form to access data channels.'),
 		'prefs' => array('wikiplugin_datachannel'),
 		'body' => tra('List of fields to display. One field per line. Comma delimited: fieldname,label') . '<br /><br />' .
 					tra('To use values from other forms on the same page as parameters for the data-channel use "fieldname, external=fieldid".') . ' ' .

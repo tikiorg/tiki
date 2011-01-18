@@ -14,8 +14,8 @@ function wikiplugin_code_help() {
 function wikiplugin_code_info() {
 	return array(
 		'name' => tra('Code'),
-		'documentation' => tra('PluginCode'),
-		'description' => tra('Displays a snippet of code'),
+		'documentation' => 'PluginCode',
+		'description' => tra('Display code syntax with line numbers and color highlights'),
 		'prefs' => array('wikiplugin_code'),
 		'body' => tra('Code'),
 		'icon' => 'pics/icons/page_white_code.png',

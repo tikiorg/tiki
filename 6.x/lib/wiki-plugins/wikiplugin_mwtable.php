@@ -84,8 +84,8 @@ function wikiplugin_mwtable_help() {
 function wikiplugin_mwtable_info() {
 	return array(
 		'name' => tra('MWTable'),
-		'documentation' => tra('PluginMWTable'),
-		'description' => tra('Displays a table using MediaWiki syntax (experimental - may change in future versions)'),
+		'documentation' => 'PluginMWTable',
+		'description' => tra('Display a table using MediaWiki syntax (experimental - may change in future versions)'),
 		'prefs' => array( 'wikiplugin_mwtable' ),
 		'body' => tra('URL'),
 		'validate' => 'all',

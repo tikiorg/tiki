@@ -89,8 +89,8 @@ function wikiplugin_trackerfilter_info() {
 
 return array(
 		'name' => tra('Tracker Filter'),
-		'documentation' => tra('PluginTrackerFilter'),
-		'description' => tra('Filters the items of a tracker, fields are indicated with numeric ids.'),
+		'documentation' => 'PluginTrackerFilter',
+		'description' => tra('Create a form to filter tracker fields'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerfilter' ),
 		'body' => tra('notice'),
 		'params' => $params,

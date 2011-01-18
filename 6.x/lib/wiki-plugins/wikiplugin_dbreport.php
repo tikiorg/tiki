@@ -1442,8 +1442,8 @@ function wikiplugin_dbreport_help() {
 function wikiplugin_dbreport_info() {
 	return array(
 		'name' => tra('DBReport'),
-		'documentation' => tra('PluginDBReport'),
-		'description' => tra('Run a database report. This plugin only works with adodb. It does not work with PDO.'),
+		'documentation' => 'PluginDBReport',
+		'description' => tra('Query a database and display results (only works with adodb, does not work with PDO)'),
 		'prefs' => array('wikiplugin_dbreport'),
 		'body' => tra('report definition'),
 		'validate' => 'all',

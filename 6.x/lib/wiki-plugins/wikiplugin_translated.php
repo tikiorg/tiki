@@ -18,8 +18,8 @@ function wikiplugin_translated_help() {
 function wikiplugin_translated_info() {
 	return array(
 		'name' => tra('Translated'),
-		'documentation' => tra('PluginTranslated'),
-		'description' => tra('Links to a translated content'),
+		'documentation' => 'PluginTranslated',
+		'description' => tra('Create multi-lingual links'),
 		'prefs' => array( 'feature_multilingual', 'wikiplugin_translated' ),
 		'body' => tra('[url] or ((wikiname)) or ((inter:interwiki)) (use wiki syntax)'),
 		'params' => array(

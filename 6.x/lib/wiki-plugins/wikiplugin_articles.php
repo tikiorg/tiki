@@ -22,8 +22,8 @@ function wikiplugin_articles_info()
 {
 	return array(
 		'name' => tra('Article List'),
-		'documentation' => tra('PluginArticles'),
-		'description' => tra('Inserts a list of articles in the page.'),
+		'documentation' => 'PluginArticles',
+		'description' => tra('Display multiple articles in a wiki page'),
 		'prefs' => array( 'feature_articles', 'wikiplugin_articles' ),
 		'params' => array(
 			'usePagination' => array(

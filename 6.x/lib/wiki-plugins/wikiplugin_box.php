@@ -21,8 +21,8 @@ function wikiplugin_box_help() {
 function wikiplugin_box_info() {
 	return array(
 		'name' => tra('Box'),
-		'documentation' => tra('PluginBox'),
-		'description' => tra('Insert theme-styled box on wiki page'),
+		'documentation' => 'PluginBox',
+		'description' => tra('Creates a formatted box with a title bar'),
 		'prefs' => array('wikiplugin_box'),
 		'body' => tra('text'),
 		'params' => array(

@@ -14,8 +14,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function wikiplugin_smarty_info() {
 	return array(
 		'name' => tra('Smarty function'),
-		'documentation' => tra('PluginSmarty'),			
-		'description' => tra('Provides access to the tiki smarty functions like button.'),
+		'documentation' => 'PluginSmarty',
+		'description' => tra('Insert a Smarty function'),
 		'prefs' => array('wikiplugin_smarty'),
 		'validate' => 'all',
 		'extraparams' => true,

@@ -32,7 +32,7 @@ function wikiplugin_remarksbox_help() {
 function wikiplugin_remarksbox_info() {
 	return array(
 		'name' => tra('Remarks Box'),
-		'documentation' => tra('PluginRemarksBox'),		
+		'documentation' => 'PluginRemarksBox',
 		'description' => tra('Displays a comment, tip, note or warning box'),
 		'prefs' => array( 'wikiplugin_remarksbox' ),
 		'body' => tra('remarks text'),

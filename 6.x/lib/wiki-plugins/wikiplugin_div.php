@@ -8,8 +8,8 @@
 function wikiplugin_div_info() {
 	return array(
 		'name' => tra('Div'),
-		'documentation' => tra('PluginDiv'),
-		'description' => tra('Insert a division block, span, blockquote or other text formatting on wiki page.'),
+		'documentation' => 'PluginDiv',
+		'description' => tra('Defines and formats sections of a page or text'),
 		'prefs' => array('wikiplugin_div'),
 		'body' => tra('text'),
 		'params' => array(
