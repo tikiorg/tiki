@@ -6,6 +6,7 @@
 	does not support display:table, minimal HTML tables are needed for
 	graphic treatment and column integrity. For more information, please visit
 	http://themes.tiki.org or http://zukakakina.com.
+	Adapted for Tiki 7.x
 */
 
 /* Import the default layout properties files: */
@@ -227,9 +228,9 @@ tt {font-size: 1.2em}
 /***** Site Header & Identity *****/
 #header {position: static}
 	
-#header-top {
+#top_modules {
 	min-height: 140px;
-	background: url(eatlon/banner.gif) no-repeat 100% 100%}
+	background: url(eatlon/banner.gif) no-repeat 100% 5px}
 
 #sioptions  {padding: 1em}
 
@@ -281,7 +282,7 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 	height: 78px;
 	min-height: 78px !important}
 
-#tiki-top .wrapper {
+#tiki-top .role_navigation {
 	height: 78px;
 	min-height: 78px;
 	background: url(eatlon/menu_bg.png) no-repeat;
