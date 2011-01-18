@@ -351,10 +351,19 @@ function switchEditor(mode, form) {
 		
 		if ( $prefs['feature_jquery_ui'] == 'y' && $params['_wysiwyg'] != 'y') {	// show hidden parent before applying resizable
 			$js_editconfirm .= "
-var hiddenParents = \$('#$as_id').parents('fieldset:hidden:last');
-if (hiddenParents.length) { hiddenParents.show(); }
-\$('#$as_id').not('.codeMirror').resizable( { minWidth: \$('#$as_id').width(), minHeight: 50 });
-if (hiddenParents.length) { hiddenParents.hide(); }
+	var hiddenParents = \$('#$as_id').parents('fieldset:hidden:last');
+	
+	if (hiddenParents.length) { hiddenParents.show(); }
+	
+	if (!CodeMirror) { //so as not to conflict with CodeMirror resize
+		\$('#$as_id')
+			.resizable( {
+				minWidth: \$('#$as_id').width(),
+				minHeight: 50
+		});
+	}
+	
+	if (hiddenParents.length) { hiddenParents.hide(); }
 ";
 		}
 			

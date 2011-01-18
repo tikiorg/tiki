@@ -91,7 +91,7 @@ pre.code {
 	height: 100%;
 	position: absolute;
 	top: 0px ! important;
-	left: 5px ! important;
+	left: 0px ! important;
 	z-index: 99999;
 	position: fixed;
 	top: expression(eval(document.body.scrollTop + 15) + "px");
