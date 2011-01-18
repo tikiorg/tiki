@@ -111,6 +111,7 @@ RewriteRule ^stats$                tiki-stats.php                           [L]
 RewriteRule ^surveys$              tiki-list_surveys.php                    [L]
 RewriteRule ^trackers$             tiki-list_trackers.php                   [L]
 RewriteRule ^users$                tiki-list_users.php                      [L]
+RewriteRule ^userinfo$          tiki-view_tracker_item.php?view=+user&cookietab=2 [L]
 
 # access any object by its numeric identifier
 RewriteRule ^article([0-9]+)\-.*(&comzone=.*)$  article$1$2
