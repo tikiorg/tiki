@@ -71,9 +71,13 @@ if ($objectperms->edit_sheet && $_REQUEST['parse'] == 'edit') {	// edit button c
 		}
 		
 		setTimeout (function () {
-			$("div.tiki_sheet").tiki("sheet", "",{
-				editable:false
+			$.extend($.sheet.tikiOptions, {
+				editable: false
 			});
+			
+			$("div.tiki_sheet").sheet($.sheet.tikiOptions);
+			$.sheet.after();
+			
 		}, 500);
 	', 500);
 }
@@ -192,75 +196,82 @@ if ($_REQUEST['parse'] == 'y') {
 } else {
 	$smarty->assign('editReload', false);
 	$headerlib->add_jq_onready('
-$("#edit_button").click( function () {
-	var $a = $(this).find("a");
-	if ($a.text() != editSheetButtonLabel2) {
-
-		/*if ($.sheet.instance && $.sheet.instance.length > 0) {
-			$.sheet.instance = [];
-		}*/
+		$("#edit_button").click( function () {
+			var $a = $(this).find("a");
+			if ($a.text() != editSheetButtonLabel2) {
 		
-		
-		$("div.tiki_sheet").tiki("sheet", "", {urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"});
-
-		$a.attr("temp", $a.text());
-		$a.text(editSheetButtonLabel2);
-		$("#edit_button").parent().find(".button:not(#edit_button), .rbox").hide();
-		$("#save_button").show();
-		if (typeof ajaxLoadingHide == "function") {
-			ajaxLoadingHide();
-		}
-	} else {
-		var isDirty = false;
-		$($.sheet.instance).each( function(i){
-			if (this.isDirty) {
-				isDirty = true;
+				/*if ($.sheet.instance && $.sheet.instance.length > 0) {
+					$.sheet.instance = [];
+				}*/
+				
+				$.sheet.tikiOptions = $.extend($.sheet.tikiOptions, {
+					urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"
+				});
+				
+				$("div.tiki_sheet")
+					.sheet($.sheet.tikiOptions);
+				
+				$.sheet.after();
+				
+				$a.attr("temp", $a.text());
+				$a.text(editSheetButtonLabel2);
+				$("#edit_button").parent().find(".button:not(#edit_button), .rbox").hide();
+				$("#save_button").show();
+				if (typeof ajaxLoadingHide == "function") {
+					ajaxLoadingHide();
+				}
+			} else {
+				var isDirty = false;
+				$($.sheet.instance).each( function(i){
+					if (this.isDirty) {
+						isDirty = true;
+					}
+				});
+				
+				if (!isDirty ? true : confirm("Are you sure you want to finish editing?  All unsaved changes will be lost.")) {
+					window.location.replace(window.location.href.replace("parse=edit", "parse=y"));
+				}
 			}
+			return false;
 		});
 		
-		if (!isDirty ? true : confirm("Are you sure you want to finish editing?  All unsaved changes will be lost.")) {
-			window.location.replace(window.location.href.replace("parse=edit", "parse=y"));
+		$("#save_button").click( function () {
+			$($.sheet.instance).each( function(i){
+				$.sheet.instance[i].evt.cellEditDone();
+			});
+			
+			$.sheet.saveSheet(true);
+			return false;
+		}).hide();
+		
+		window.toggleFullScreen = function(areaname) {
+			$.sheet.instance[$.sheet.instance.length - 1].toggleFullScreen();
 		}
-	}
-	return false;
-});
-$("#save_button").click( function () {
-	$($.sheet.instance).each( function(i){
-		$.sheet.instance[i].evt.cellEditDone();
-	});
-	$.sheet.saveSheet(true);
-	
-	return false;
-}).hide();
-
-window.toggleFullScreen = function(areaname) {
-	$.sheet.instance[$.sheet.instance.length - 1].toggleFullScreen();
-}
-
-window.showFeedback = function(message, delay, redirect) {
-	if (typeof delay == "undefined") { delay = 5000; }
-	if (typeof redirect == "undefined") { redirect = false; }
-	$fbsp = $("#feedback span");
-	$fbsp.html(message).show();
-	window.setTimeout( function () { $fbsp.fadeOut("slow", function () { $fbsp.html("&nbsp;"); }); }, delay);
-	// if called from save button via saveSheet:success, then exit edit page mode
-	if (redirect) {
-		window.setTimeout( function () { $fbsp.html("Redirecting...").show(); }, 1000);
-		window.setTimeout( function () { window.location.replace(window.location.href.replace("parse=edit", "parse=y")); }, 1500);
-	}
-};
-
-window.setEditable = function(isEditable) {
-	$.sheet.instance[0].s.editable = isEditable;
-	if (isEditable) {
-		$("#save_button").show();
-		//$("#edit_button a").click( function () { window.location.replace(window.location.href); return false; } );
-	} else {
-		setTimeout( function(){ $("#jSheetControls").hide(); }, 200);
-		$("#save_button").hide();
-		$("#edit_button a").click( function () { window.location.replace(window.location.href); return false; } );
-	}
-};
+		
+		window.showFeedback = function(message, delay, redirect) {
+			if (typeof delay == "undefined") { delay = 5000; }
+			if (typeof redirect == "undefined") { redirect = false; }
+			$fbsp = $("#feedback span");
+			$fbsp.html(message).show();
+			window.setTimeout( function () { $fbsp.fadeOut("slow", function () { $fbsp.html("&nbsp;"); }); }, delay);
+			// if called from save button via saveSheet:success, then exit edit page mode
+			if (redirect) {
+				window.setTimeout( function () { $fbsp.html("Redirecting...").show(); }, 1000);
+				window.setTimeout( function () { window.location.replace(window.location.href.replace("parse=edit", "parse=y")); }, 1500);
+			}
+		};
+		
+		window.setEditable = function(isEditable) {
+			$.sheet.instance[0].s.editable = isEditable;
+			if (isEditable) {
+				$("#save_button").show();
+				//$("#edit_button a").click( function () { window.location.replace(window.location.href); return false; } );
+			} else {
+				setTimeout( function(){ $("#jSheetControls").hide(); }, 200);
+				$("#save_button").hide();
+				$("#edit_button a").click( function () { window.location.replace(window.location.href); return false; } );
+			}
+		};
 ');
 }
 
