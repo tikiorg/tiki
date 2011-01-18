@@ -505,6 +505,14 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 			$url .= '&no_bl=y';
 		}
 
+
+		if ($tiki_p_wiki_approve == 'y' && $prefs['flaggedrev_approval'] == 'y') {
+			global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
+
+			if ($flaggedrevisionlib->page_requires_approval($page)) {
+				$url .= '&latest=1';
+			}
+		}
 		if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying before second call to header(), so we can see traces. Forwarding to: '$url'");
 		header("location: $url");
 		die;
@@ -1148,6 +1156,15 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 	if ($prefs['feature_multilingual'] === 'y' && $prefs['feature_best_language'] === 'y' && isset($info['lang']) && $info['lang'] !== $prefs['language']) {
 		$url .= '&no_bl=y';
 	}
+
+	if ($tiki_p_wiki_approve == 'y' && $prefs['flaggedrev_approval'] == 'y') {
+		global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
+
+		if ($flaggedrevisionlib->page_requires_approval($page)) {
+			$url .= '&latest=1';
+		}
+	}
+
 	$_SESSION['saved_msg'] = $_REQUEST["page"];
 
 	if (!empty($_REQUEST['hdr'])) {
