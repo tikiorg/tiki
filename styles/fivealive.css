@@ -559,6 +559,18 @@ select {
 	background-color: #fff;
 }
 
+/* new modules revamp login */
+
+.siteloginbar {
+	background-color: #D6F3FA;
+	padding: 0 1em;
+}
+
+.siteloginbar input[type="text"],
+.siteloginbar input[type="password"] {
+	background: #fff;
+}
+
 /*** CSS menus shadows for all but IE6 ***/
 ul.sf-shadow ul {
 	-moz-border-radius-bottomleft: 16px;

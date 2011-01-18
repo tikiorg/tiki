@@ -11,6 +11,7 @@ function capLock(e){
 {/jq}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Log in{/tr}"}{/if}{* Left for performance, since tiki-login_scr.php includes this template directly. *}
 {tikimodule error=$module_params.error title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+{if $module_params.mode eq "header"}<div class="siteloginbar{if $user} logged-in{/if}">{/if}
     {if $user}
     	{if empty($module_params.mode) or $module_params.mode eq "module"}
 	    	<div>{tr}Logged in as:{/tr} <span style="white-space: nowrap">{$user|userlink}</span></div>
@@ -91,8 +92,8 @@ function capLock(e){
      <input type="hidden" name="response" value="" />
      {/if}
 	 {if !empty($urllogin)}<input type="hidden" name="url" value="{$urllogin|escape}" />{/if}
-        <fieldset>
-          <legend>{tr}Log in as{/tr}&hellip;</legend>
+        {if $module_params.nobox neq 'y'}<fieldset>
+          <legend>{tr}Log in as{/tr}&hellip;</legend>{/if}
 		  {if !empty($error_login)}
 			{remarksbox type='errors' title="{tr}Error{/tr}"}
 				{if $error_login == -5 {*USER_NOT_FOUND (define does not work on old php)*}}{tr}Invalid username{/tr}
@@ -100,7 +101,7 @@ function capLock(e){
 				{else}{$error_login|escape}{/if}
 			{/remarksbox}
 		  {/if}
-            <div><label for="login-user">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username:{/tr}{/if}</label><br />
+            <div><label for="login-user">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username:{/tr}{/if}</label>
 		{if $loginuser eq ''}
               <input type="text" name="user" id="login-user" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" {if !empty($error_login)} value="{$error_user|escape}"{/if} />
 	  <script type="text/javascript">document.getElementById('login-user').focus();</script>
@@ -109,12 +110,12 @@ function capLock(e){
 		{/if}</div>
 		<script type="text/javascript">document.getElementById('login-user').focus();</script>
           {if $prefs.feature_challenge eq 'y'} <!-- quick hack to make challenge/response work until 1.8 tiki auth overhaul -->
-          <div><label for="login-email">{tr}eMail:{/tr}</label><br />
+          <div><label for="login-email">{tr}eMail:{/tr}</label>
           <input type="text" name="email" id="login-email" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" /></div>
           {/if}
-          <div><label for="login-pass">{tr}Password:{/tr}</label><br />
+          <div><label for="login-pass">{tr}Password:{/tr}</label>
           <input onkeypress="capLock(event)" type="password" name="pass" id="login-pass" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
-		  <div id="divCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
+		  <div id="divCapson" style="visibility:hidden;display:none;">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
 		  </div>
           {if $prefs.rememberme ne 'disabled'}
             {if $prefs.rememberme eq 'always'}
@@ -125,7 +126,7 @@ function capLock(e){
             {/if}
           {/if}
           <div style="text-align: center"><input class="button submit" type="submit" name="login" value="{tr}Log in{/tr}" /></div>
-       </fieldset>
+       {if $module_params.nobox neq 'y'}</fieldset>{/if}
           
           {if $prefs.forgotPass eq 'y' and $prefs.allowRegister eq 'y' and $prefs.change_password eq 'y'}
             <div>[&nbsp;<a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a> | <a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a>&nbsp;]</div>
@@ -179,4 +180,5 @@ function capLock(e){
 	{if $prefs.socialnetworks_facebook_login eq 'y'}
 		<div style="text-align: center"><a href="tiki-socialnetworks.php?request_facebook=true"><img src="http://developers.facebook.com/images/devsite/login-button.png" /></a></div>
 	{/if}
+{if $module_params.mode eq "header"}</div>{/if}
 {/tikimodule}

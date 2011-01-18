@@ -399,15 +399,22 @@ label {
 }
 
 .siteloginbar {
-	float: right;
+	position: absolute;
 	top: 152px;
+	right: -30px;
 	height: 24px;
+	width: 540px;
 	line-height: 24px;
 	padding-left: 60px;
 	color: #fff;
 	background: #fff url(strasa/login.jpg) 0 0 no-repeat;
 }
 
+.logged-in {
+	width: 120px;
+}
+
+.siteloginbar label,
 .siteloginbar a,
 .siteloginbar a:visited,
 .siteloginbar a:hover {
@@ -415,8 +422,8 @@ label {
 	text-decoration: none;
 }
 
-#sl-login-user,
-#sl-login-pass {
+.siteloginbar input[type="text"],
+.siteloginbar input[type="password"] {
 	background: transparent; /*#1b98c6*/
 	color: #fff;
 	border: solid 1px #fff;
