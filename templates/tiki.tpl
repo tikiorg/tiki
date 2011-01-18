@@ -34,19 +34,21 @@
 		{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y') }
 			{if $prefs.module_zones_top eq 'fixed' or ($prefs.module_zones_top ne 'n' && $top_modules|@count > 0)}
 				{if $prefs.feature_layoutshadows eq 'y'}<div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}
-				<header class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
-					{* Site header section *}
-					<div class="content clearfix modules" id="top_modules">
-						{section name=homeix loop=$top_modules}
-							{$top_modules[homeix].data}
-						{/section}
-					</div>
-				</header>
+				<div id="header_outer">
+					<header class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+						{* Site header section *}
+						<div class="content clearfix modules fixedwidth" id="top_modules">
+							{section name=homeix loop=$top_modules}
+								{$top_modules[homeix].data}
+							{/section}
+						</div>
+					</header>
+				</div>
 				{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.header_shadow_end}</div>{/if}
 			{/if}
 		{/if}
 
-			{if $prefs.feature_layoutshadows eq 'y'}<div id="middle-shadow">{eval var=$prefs.middle_shadow_start}{/if}<div class="clearfix" id="middle">
+			{if $prefs.feature_layoutshadows eq 'y'}<div id="middle-shadow">{eval var=$prefs.middle_shadow_start}{/if}<div class="clearfix fixedwidth" id="middle">
 				<div class="clearfix {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}nofullscreen{else}fullscreen{/if}" id="c1c2">
 					<div class="clearfix" id="wrapper">
 						<div id="col1" class="{if $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}marginleft{/if}{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n')} marginright{/if}"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
@@ -155,7 +157,7 @@
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}
 						<footer id="footer">
 							<div class="footerbgtrap">
-								<div id="bottom_modules" class="content modules"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+								<div id="bottom_modules" class="content modules fixedwidth"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 									{section name=homeix loop=$bottom_modules}
 										{$bottom_modules[homeix].data}
 									{/section}

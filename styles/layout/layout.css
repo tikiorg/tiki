@@ -27,24 +27,22 @@ header, nav, article, footer, address {
     display: block;  
 } 
 
-/* general #fixedwidth wrapper when fixed width is off */
-#fixedwidth {
+/* general .fixedwidth wrapper when fixed width is off */
+.fixedwidth {
 	display: table;
-	margin: auto;
-	margin-top: 0;
-	margin-bottom: 0;
+	margin: 0 auto;
 	width: 100%;
 }
 
 /* when fixed width is set to on */
-.fixed_width #fixedwidth {
+.fixed_width .fixedwidth {
 	width: 990px;
 }
 .fixed_width #main {
 	margin-top: 18px;
 	margin-bottom: 5px;
 }
-.fixed_width #fixedwidth[id] {
+.fixed_width .fixedwidth[id] {
 	height: auto;
 }
 
@@ -53,7 +51,8 @@ header, nav, article, footer, address {
 }
 
 .fullscreen #c1c2 #wrapper #col1.marginright {
-	margin-right: 30px}	
+	margin-right: 30px;
+}	
 
 .button {
 	display: inline-block;
@@ -780,6 +779,11 @@ a.toolbar {			/* each tool button */
 
 /***** Boxes *****/
 /** Modules **/
+
+.modules {
+	position: relative;
+}
+
 .box {
 	overflow: hidden;
 }

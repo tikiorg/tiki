@@ -16,6 +16,10 @@ if ( isset($_SESSION['try_style']) ) {
 	$prefs['style_option'] = $prefs['site_style_option'];
 }
 
+if ($prefs['feature_fixed_width'] === 'y') {
+	$headerlib->add_css('.fixed_width .fixedwidth { width:' . (!empty($prefs['layout_fixed_width']) ? $prefs['layout_fixed_width'] : '990px') . '; }');
+}
+
 if ( $prefs['useGroupTheme'] == 'y' && $group_style = $userlib->get_user_group_theme()) {
 	$prefs['style'] = $group_style;
 	$smarty->assign_by_ref('group_style', $group_style);

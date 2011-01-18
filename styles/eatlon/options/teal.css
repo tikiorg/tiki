@@ -27,7 +27,7 @@ html>body {font-size: 76% !important}
 body.fullscreen {padding: 3em}
 
 /* next two: fixed-width: 960px */
-body.fixed_width #fixedwidth {
+body.fixed_width .fixedwidth {
 	margin-bottom: 20px;
 	width: 900px !important;
 	background: #fff;
