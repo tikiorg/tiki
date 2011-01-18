@@ -27,7 +27,7 @@ require_once( "lib/encoding/lib-encoding.php" );
 include_once 'lib/diff/Diff.php';
 include_once 'lib/diff/Renderer.php';
 // Constants {{{1
-
+	
 /*
 DATA:
 End values will be preserved.
@@ -2283,6 +2283,30 @@ class SheetLib extends TikiLib
 		}
 	}
 	
+	function setupJQuerySheet() {
+		global $headerlib;
+		if (!$this->setupJQuerySheetFiles) {
+			$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/jquery.sheet.css' );
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.js' );
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.advancedfn.js' );
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.financefn.js' );
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/parser.js' );
+			
+			// plugins
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/jquery.scrollTo-min.js' );
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/raphael-min.js', 'external' );
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.raphael-min.js', 'external' );
+			$this->setupJQuerySheetFiles = true;
+		}
+	}
+	
+	function setupJQuerySheetHistory() {
+		global $headerlib;
+		if (!$this->setupJQuerySheetHistoryFiles) {
+			$headerlib->add_jsfile( 'lib/sheet/tiki-history_sheets.js' );
+			$this->setupJQuerySheetHistoryFiles = true;
+		}
+	}
 } // }}}1
 $sheetlib = new SheetLib;
 

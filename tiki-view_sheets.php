@@ -20,6 +20,9 @@ $auto_query_args = array(
 $access->check_feature('feature_sheet');
 
 $info = $sheetlib->get_sheet_info($_REQUEST['sheetId']);
+
+$sheetlib->setupJQuerySheet();
+
 if (empty($info)) {
 	$smarty->assign('Incorrect parameter');
 	$smarty->display('error.tpl');

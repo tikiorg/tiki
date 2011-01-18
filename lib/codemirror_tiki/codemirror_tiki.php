@@ -7,13 +7,13 @@ function tiki_syntax_highlighter_base() {
 		$headerlib->add_jsfile( 'lib/codemirror/js/codemirror.js' );		
 
 		$headerlib->add_js("
-			var startCodeMirror = function() {
+			$(document).ready(function() {
 				var editwiki = $('#editwiki');
 				//ensure that codemirror is running and CKEditor isn't, if so run
 				if (window.CKEDITOR) return false;
-				if (!editwiki[0]) return false;
-				if (!CodeMirror) return false;
-				
+				if (!editwiki.length) return false;
+				if (!window.CodeMirror) return false;
+					
 				var editor = CodeMirror.fromTextArea(editwiki[0], {
 					height: '350px',
 					path: 'lib/codemirror/js/',
@@ -24,10 +24,9 @@ function tiki_syntax_highlighter_base() {
 						editwiki.val(editor.getCode());
 					}
 				});
-				
+					
 				addCodeMirrorEditorRelation(editor, editwiki);
-			};
-			startCodeMirror();
+			});
 		");
 	}
 }
@@ -55,8 +54,11 @@ function tiki_syntax_highlighter_code() {
 						onChange: function() {
 							//Setup codemirror to send the text back to the textarea
 							code.val(editor.getCode());
-						}
+						},
+						lineNumbers: true
 					});
+					
+					addCodeMirrorEditorRelation(editor, code);
 				});
 		");
 	}
@@ -89,6 +91,8 @@ function tiki_syntax_highlighter_r() {
 						},
 						lineNumbers: true
 					});
+					
+					addCodeMirrorEditorRelation(editor, r);
 				});
 		");
 	}
@@ -121,6 +125,8 @@ function tiki_syntax_highlighter_rr() {
 						},
 						lineNumbers: true
 					});
+					
+					addCodeMirrorEditorRelation(editor, rr);
 				});
 		");
 	}
