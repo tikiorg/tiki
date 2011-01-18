@@ -676,7 +676,7 @@ class ModLib extends TikiLib
 			if ($tiki_p_admin == 'y' && $prefs['modhideanonadmin'] == 'y' && (empty($mod_reference['groups']) || $mod_reference['groups'] == serialize(array('Anonymous'))) && $module_admin_mode) {
 				$tpl_module_style .= 'opacity: 0.5;';
 			}
-			if ($module_params['overflow'] === 'y') {
+			if (isset($module_params['overflow']) && $module_params['overflow'] === 'y') {
 				$tpl_module_style .= 'overflow:visible !important;';
 			}
 			$smarty->assign('tpl_module_style', $tpl_module_style );
