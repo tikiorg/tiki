@@ -118,7 +118,7 @@ function doChallengeResponse() {
 				{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}
 			</div>
 		</div>
-		{if $prefs.rememberme ne 'disabled'}
+		{if $prefs.rememberme ne 'disabled' and !empty($module_params.remember) and $module_params.remember neq 'n'}
 			{if $prefs.rememberme eq 'always'}
 				<input type="hidden" name="rme" id="login-remember-module-input" value="on" />
 			{else}
@@ -133,23 +133,18 @@ function doChallengeResponse() {
 			</fieldset>
 		{/if}
 		
-		{if $prefs.forgotPass eq 'y' and $prefs.allowRegister eq 'y' and $prefs.change_password eq 'y'}
+		{if $module_params.show_forgot eq 'y' or $module_params.show_register eq 'y'}
 			<div>
-				[&nbsp;<a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a> |
-				<a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a>&nbsp;]
+				[&nbsp;{strip}
+				{if $module_params.show_register eq 'y'}
+					<a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a>
+				{/if}
+				{if $module_params.show_forgot eq 'y'}
+					&nbsp;|&nbsp;<a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a>
+				{/if}
+				{/strip}&nbsp;]
 			</div>
-		{/if}
-		{if $prefs.forgotPass eq 'y' and $prefs.allowRegister ne 'y' and $prefs.change_password eq 'y'}
-			<div>
-				<a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a>
-			</div>
-		{/if}
-		{if ($prefs.forgotPass ne 'y' or $prefs.change_password ne 'y') and $prefs.allowRegister eq 'y'}
-			<div>
-				<a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a>
-			</div>
-		{/if}
-		{if ($prefs.forgotPass ne 'y' or $prefs.change_password ne 'y') and $prefs.allowRegister ne 'y'}
+		{else}
 			&nbsp;
 		{/if}
 		{if $prefs.feature_switch_ssl_mode eq 'y' && ($prefs.https_login eq 'allowed' || $prefs.https_login eq 'encouraged')}

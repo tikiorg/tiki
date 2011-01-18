@@ -24,13 +24,39 @@ function module_login_box_info() {
 			),
 			'mode' => array(
 				'name' => tra('Mode'),
-				'description' => tra('Display mode: module or header. Leave empty for module mode'),
+				'description' => tra('Display mode: module, header or popup. Leave empty for module mode'),
+			),
+			'register' => array(
+				'name' => tra('Show Register'),
+				'description' => tra('Show the register link') . ' (y/n)',
+				'filter' => 'alpha',
+			),
+			'forgot' => array(
+				'name' => tra('Show I Forgot'),
+				'description' => tra('Show the "I forgot my password" link') . ' (y/n)',
+				'filter' => 'alpha',
+			),
+			'remember' => array(
+				'name' => tra('Show Remember me'),
+				'description' => tra('Show the "Remember me" checkbox') . ' (y/n)',
+				'filter' => 'alpha',
 			),
 		)
 	);
 }
 
-function module_login_box( $mod_reference, $module_params ) {
-	global $smarty;
-	$smarty->assign('registration', 'n');
+function module_login_box( $mod_reference, &$module_params ) {
+	global $smarty, $prefs;
+	$smarty->assign('registration', 'n');	// stops the openid form appearing in the module, only on tiki-login_scr.php
+	
+	if ($prefs['allowRegister'] === 'y' && (empty($module_params['register']) || $module_params['register'] === 'y')) {
+		$module_params['show_register'] = 'y';
+	} else {
+		$module_params['show_register'] = 'n';
+	}
+	if ($prefs['forgotPass'] === 'y' && $prefs['change_password'] === 'y' && (empty($module_params['forgot']) || $module_params['forgot'] === 'y')) {
+		$module_params['show_forgot'] = 'y';
+	} else {
+		$module_params['show_forgot'] = 'n';
+	}
 }
