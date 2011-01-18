@@ -1,6 +1,7 @@
-/* Strasa theme for Tiki 5.x, original design by Patrick Allard, released under LGPL license.
-   For more information, visit http://themes.tiki.org
-   $Id$ */
+/*	Strasa theme for Tiki, original design by Patrick Allard, released under LGPL license.
+	For more information, visit http://themes.tiki.org
+	Adapted for Tiki 7.x
+	$Id$ */
 
 /* Import *lite as the base: */
 @import url("lite/lite.css");
@@ -352,7 +353,7 @@ label {
 }
 
 /* Site Header & Identity */
-#header-top {
+#header {
 	color: #fff;
 	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
 }
@@ -397,9 +398,9 @@ label {
 	margin-right: 120px;
 }
 
-#siteloginbar {
-	position: static;
+.siteloginbar {
 	float: right;
+	top: 152px;
 	height: 24px;
 	line-height: 24px;
 	padding-left: 60px;
@@ -407,9 +408,9 @@ label {
 	background: #fff url(strasa/login.jpg) 0 0 no-repeat;
 }
 
-#siteloginbar a,
-#siteloginbar a:visited,
-#siteloginbar a:hover {
+.siteloginbar a,
+.siteloginbar a:visited,
+.siteloginbar a:hover {
 	color: #fff;
 	text-decoration: none;
 }
@@ -422,19 +423,19 @@ label {
 	width: 8em !important;
 }
 
-#siteloginbar #pass {
+.siteloginbar #pass {
 	float: right;
 	padding-left: 5px;
 }
 
-#siteloginbar .rme,
-#siteloginbar .pass {
+.siteloginbar .rme,
+.siteloginbar .pass {
 	display: inline;
 	margin-left: 1em;
 	padding-right: 10px;
 }
 
-#siteloginbar .register {
+.siteloginbar .register {
 	float: right;
 	height: 24px !important;
 	line-height: 22px;
@@ -445,7 +446,7 @@ label {
 	background: url(strasa/register.jpg) no-repeat;
 }
 
-#siteloginbar input.wikiaction {
+.siteloginbar input.wikiaction {
 	border: 0;
 	margin-left: .7em;
 	color: #5ae0ff;
