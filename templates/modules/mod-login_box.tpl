@@ -1,12 +1,13 @@
 {* $Id$ *}
 {jq notonready=true}
-function capLock(e){
-	kc = e.keyCode?e.keyCode:e.which;
-	sk = e.shiftKey?e.shiftKey:((kc == 16)?true:false);
-	if(((kc >= 65 && kc <= 90) && !sk)||((kc >= 97 && kc <= 122) && sk))
-		document.getElementById('divCapson').style.visibility = 'visible';
-	else
-		document.getElementById('divCapson').style.visibility = 'hidden';
+function capLock(e, el){
+	kc = e.keyCode ? e.keyCode : e.which;
+	sk = e.shiftKey ? e.shiftKey : (kc == 16 ? true : false);
+	if ((kc >= 65 && kc <= 90 && !sk) || (kc >= 97 && kc <= 122 && sk)) {
+		$('.divCapson', $(el).parents('div:first')).show();
+	} else {
+		$('.divCapson', $(el).parents('div:first')).hide();
+	}
 }
 {/jq}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Log in{/tr}"}{/if}{* Left for performance, since tiki-login_scr.php includes this template directly. *}
@@ -66,29 +67,19 @@ function capLock(e){
 				{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}> 
 		{if $prefs.feature_challenge eq 'y'}
 			<script type='text/javascript' src="lib/md5.js"></script>
-			{literal}
-				<script type='text/javascript'><!--
+			{jq notonready=true}
 function doChallengeResponse() {
 	hashstr = document.loginbox.user.value +
-	document.loginbox.pass.value +
-	document.loginbox.email.value;
+				document.loginbox.pass.value +
+				document.loginbox.email.value;
 	str = document.loginbox.user.value + 
-	MD5(hashstr) +
-	document.loginbox.challenge.value;
+			MD5(hashstr) + document.loginbox.challenge.value;
 	document.loginbox.response.value = MD5(str);
 	document.loginbox.pass.value='';
-	/*
-	document.login.password.value = "";
-	document.logintrue.username.value = document.login.username.value;
-	document.logintrue.response.value = MD5(str);
-	document.logintrue.submit();
-	*/
 	document.loginbox.submit();
 	return false;
 }
-// -->
-				</script>
-			{/literal}
+			{/jq}
 			<input type="hidden" name="challenge" value="{$challenge|escape}" />
 			<input type="hidden" name="response" value="" />
 		{/if}
@@ -122,8 +113,10 @@ function doChallengeResponse() {
 		{/if}
 		<div>
 			<label for="login-pass">{tr}Password:{/tr}</label>
-			<input onkeypress="capLock(event)" type="password" name="pass" id="login-pass" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
-			<div id="divCapson" style="visibility:hidden;display:none;">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
+			<input onkeypress="capLock(event, this)" type="password" name="pass" id="login-pass" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
+			<div class="divCapson" style="display:none;">
+				{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}
+			</div>
 		</div>
 		{if $prefs.rememberme ne 'disabled'}
 			{if $prefs.rememberme eq 'always'}
