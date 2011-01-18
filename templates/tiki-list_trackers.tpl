@@ -39,7 +39,7 @@
 			</tr>
 		{/if}
 	{sectionelse}
-		{if $find}{norecords _colspan=5 _text="No records found with: $find"}{else}{norecords _colspan=5}
+		{if $find}{norecords _colspan=5 _text="No records found with: $find"}{else}{norecords _colspan=5}{/if}
 	{/section}
 </table>
 
