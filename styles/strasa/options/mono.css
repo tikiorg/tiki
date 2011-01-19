@@ -68,7 +68,7 @@ input[type=reset],
 input[type=submit],
 .button input,
 .calbuttonBox,
-#siteloginbar input.wikiaction {
+.siteloginbar input.wikiaction {
 	color: #fff;
 	background: #565656;
 	border-color: #878787 #343434 #343434 #878787;
@@ -85,8 +85,8 @@ button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
 .button input:hover,
-.calbuttonBox:hover,
-#siteloginbar input.wikiaction:hover {
+.calbutt:hover,
+.siteloginbar input.wikiaction:hover {
 	background-color: #333333;
 	color: #fff;
 }
@@ -166,22 +166,22 @@ ul.jumplinks a:active {
 }
 
 /* Site Header & Identity */
-#header-top {
+#header_fixedwidth {
 	color: #fff;
 	background: #444 url(mono/headerbg.jpg) repeat-x 0 100%;
 
 }
 
-#siteloginbar {
+.siteloginbar {
 	background: url('mono/login.jpg') 0 0 no-repeat;
 }
 
-* html #siteloginbar {
+* html .siteloginbar {
 	text-align: right;
 	width: 100%;
 	background: #fff url(mono/loginlong.jpg) 0 0 no-repeat}
 
-#siteloginbar .register {
+.siteloginbar .register {
 	background: url('mono/register.jpg') no-repeat;
 }
 

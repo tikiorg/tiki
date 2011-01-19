@@ -274,13 +274,13 @@ label {
 
 #footer {
 	text-align: center;
-	font-size: .9em;
-	color: #999;
-	background: #2e3035;
 }
 
 .footerbgtrap {
 	height: 20%;
+	font-size: .9em;
+	color: #999;
+	background: #2e3035;
 }
 
 /* Theme-specific custom footer code */
@@ -353,7 +353,7 @@ label {
 }
 
 /* Site Header & Identity */
-#header {
+#header_fixedwidth {
 	color: #fff;
 	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
 }
@@ -2128,8 +2128,16 @@ body.fixed_width #col3 .content {
 	margin-right: 0;
 }
 
-body.fixed_width #main[id] {border:1px solid #2E3035; margin-top: 18px; margin-bottom: 5px;}
+body.fixed_width #outer_wrapper {
+	border: 1px solid #2E3035;
+	/*margin-top: 18px;
+	margin-bottom: 5px;*/
+}
 
-
+/* can't seem to get the border working - jb
+body.fixed_width #main {
+	border: 1px solid #2E3035;
+	margin-top: 0;
+}*/
 
 /* end of file */

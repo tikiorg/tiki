@@ -160,24 +160,24 @@ ul.jumplinks a:active {
 /*** Error page ***/
 
 /* Site Header & Identity */
-#header-top {
+#header_fixedwidth {
 	background: #f5f5f5 url(cool/headerbg.jpg) repeat-x 0 100%;
 }
 
-#siteloginbar {
+.siteloginbar {
 	background: url(cool/login.jpg) 0 0 no-repeat;
 }
 
-* html #siteloginbar {
+* html .siteloginbar {
 	text-align: right;
 	width: 100%;
 	background: #fff url(cool/loginlong.jpg) 0 0 no-repeat}
 
-#siteloginbar .register {
+.siteloginbar .register {
 	background: url(cool/register.jpg) no-repeat;
 }
 
-#siteloginbar input.wikiaction {
+.siteloginbar input.wikiaction {
 	background: #204c65;
 }
 

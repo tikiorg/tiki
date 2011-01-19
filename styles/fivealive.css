@@ -37,20 +37,26 @@ body.filegal_popup {
 body.fixed_width .fixedwidth {
 }
 
-#header_outer {
+#header_outer {		/* whole width div containing the header strip */
 	background: url(fivealive/options/blueberry/headertile.png) 0 0 no-repeat;
 	height: 220px;
 }
 
-#header {
+#header_container {	/* 2nd whole width div for background image tricks */
+	background: transparent url('fivealive/topbar.jpg') 0 170px repeat-x;
+}
+
+#header {			/* main whole width div */
 	background: url(fivealive/header_left.png) 0 0 no-repeat;
 	height: 220px;
-	width: 990px;
-	margin: 0 auto;
 }
 	
-#top_modules {
+#header_fixedwidth {	/* inner <header> element that gets .fixedwidth class applied */
 	background: url(fivealive/options/blueberry/siteheader.jpg) 0 0 no-repeat;
+	height: 220px;
+}
+
+#top_modules {		/* inner div that contains the modules */
 	height: 220px;
 }
 

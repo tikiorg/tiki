@@ -31,7 +31,7 @@ body.cke_show_borders {
 }
 
 body.fixed_width {
-	background: #474747 url(darkroom/474747_5e5e5e_40.png);
+	background-color: transparent;
 }
 
 a,
@@ -234,16 +234,17 @@ ol {
 #main {
 	margin: 0;
 	font-size: 1em;
-	background: #0c0c0c;
 }
 
-#header {
+#header_fixedwidth {
 	text-align: left;
+	background: #0c0c0c;
 }
 
 #middle {
 	text-align: left;
 	font-size: 1.2em;
+	background: #0c0c0c;
 }
 
 #c1c2 {
@@ -281,7 +282,7 @@ ol {
 	padding: 3px;
 }
 
-#footer {
+.footerbgtrap {
 	text-align: center;
 	background: #474747;
 	color: inherit;
@@ -303,7 +304,7 @@ ol {
 }
 
 /* Site Header & Identity */
-#header-top {
+#header_fixedwidth {
 	height: auto;
 	min-height: 50px;
 	padding-top: 2px;
@@ -362,16 +363,16 @@ ol {
 	font-size: 1.6em;
 }
 
-#siteloginbar,
-#siteloginbar_popup {
+.siteloginbar,
+.siteloginbar_popup {
 	bottom: 2px;
 }
 
-#siteloginbar * {
+.siteloginbar * {
 	padding: 2px;
 }
 
-#siteloginbar.logged-in {
+.siteloginbar.logged-in {
 	bottom: 2px;
 }
 
@@ -380,11 +381,11 @@ input[id="sl-login-pass"] {
 	font-size: 1.1em;
 }
 
-#siteloginbar_popup ul.cssmenu_horiz li ul {
+.siteloginbar_popup ul.cssmenu_horiz li ul {
 	margin-top: -6px;
 }
 
-#siteloginbar_popup .tabcontent {
+.siteloginbar_popup .tabcontent {
 	margin: 0;
 }
 
