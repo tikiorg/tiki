@@ -165,17 +165,17 @@ img {
 	display: inline;
 }
 
-#siteloginbar #register,
-#siteloginbar #pass {
+.siteloginbar #register,
+.siteloginbar #pass {
 	float: right;
 	padding-left: 5px;
 }
 	
-#siteloginbar * {
+.siteloginbar * {
 	white-space: nowrap;
 }
 
-#siteloginbar form {
+.siteloginbar form {
 	padding-right: 0;
 }
 
@@ -186,19 +186,19 @@ img {
 	right: 10px;
 }
 
-#siteloginbar_popup {
-	bottom: 0;
+.siteloginbar_popup {
+/*	bottom: 0;
 	position: absolute;
-	right: 4em;
+	right: 4em;*/
 }
 
-#siteloginbar_popup .tabcontent fieldset {
+.siteloginbar_popup .tabcontent fieldset {
 	margin: 0;
 	margin-left: -4px;
 	border: none;
 }
 
-#siteloginbar_popup h1 {
+.siteloginbar_popup h1 {
 	font-size: 1em;
 	font-weight: normal;
 	margin: auto;
@@ -213,19 +213,19 @@ li#register_link {
 	padding-right: 26px !important;
 }
 
-#siteloginbar_popup .cssmenu_horiz #register_link ul {
+.siteloginbar_popup .cssmenu_horiz #register_link ul {
 	margin-left: -5.5em;
 }
 
-#siteloginbar_popup .cssmenu_horiz #login_link ul {
+.siteloginbar_popup .cssmenu_horiz #login_link ul {
 	margin-left: -9em;
 }
 
-#siteloginbar_popup .cssmenu_horiz #logout_link ul {
+.siteloginbar_popup .cssmenu_horiz #logout_link ul {
 	margin-left: -2.5em;
 }
 
-#siteloginbar_popup #siteloginbar {
+.siteloginbar_popup .siteloginbar {
 	bottom: auto;
 	font-size: inherit;
 	position: static;
@@ -233,23 +233,23 @@ li#register_link {
 	text-align: left;
 }
 
-#siteloginbar_popup #siteloginbar * {
+.siteloginbar_popup .siteloginbar * {
 	white-space: normal;
 }
 
-#siteloginbar_popup .cssmenu_horiz ul li {
+.siteloginbar_popup .cssmenu_horiz ul li {
 	width: 100%;
 	font-size: inherit;
 }
 
-#siteloginbar_popup form {
+.siteloginbar_popup form {
 	text-align: left;
 	width: auto;
 	white-space: normal !important;
 }
 
-#siteloginbar_popup .sl-login,
-#siteloginbar_popup .pass {
+.siteloginbar_popup .sl-login,
+.siteloginbar_popup .pass {
 	display: block;
 	width: auto;
 	margin-bottom: 4px;
@@ -268,53 +268,53 @@ li#logout_link a {
 }
 
 /* from r27359 */
-#siteloginbar_popup #logout_link .cbox {
+.siteloginbar_popup #logout_link .cbox {
 	text-align: center;
 }
 
-#siteloginbar_popup .cssmenu_horiz div {
+.siteloginbar_popup .cssmenu_horiz div {
 	
 }
 
-#siteloginbar_popup .cssmenu_horiz div a {
+.siteloginbar_popup .cssmenu_horiz div a {
 	display: inline;
 }
 
-#siteloginbar_popup .cbox {
+.siteloginbar_popup .cbox {
 	padding: 10px;
 	margin: 2px 2px 3px 1px;
 }
 
-#siteloginbar_popup .cbox * {
+.siteloginbar_popup .cbox * {
 	line-height: 14px;
 	margin: 2px;
 }
 
-#siteloginbar_popup .cbox label {
+.siteloginbar_popup .cbox label {
 	clear: both; float: left;
 }
 
-#siteloginbar_popup .cbox div {
+.siteloginbar_popup .cbox div {
 	clear: both;
 }
 
-#siteloginbar_popup #sl-login-user,
-#siteloginbar_popup #sl-login-pass {
+.siteloginbar_popup #sl-login-user,
+.siteloginbar_popup #sl-login-pass {
 	float: right;
 	width: 60%;
 }
 
-#siteloginbar_popup .rme {
+.siteloginbar_popup .rme {
 	display: block;
 	padding: 5px 0;
 	text-align: right;
 }
 
-#siteloginbar_popup .pass {
+.siteloginbar_popup .pass {
 	display: inline;
 }
 
-#siteloginbar_popup .pass a {
+.siteloginbar_popup .pass a {
 	float: left;
 	margin: 0;
 	padding: 0;
@@ -322,14 +322,14 @@ li#logout_link a {
 	width: 30%;
 }
 
-#siteloginbar_popup .register a {
+.siteloginbar_popup .register a {
 	float: right;
 	margin: 0;
 	padding: 0;
 	text-align: center;
 	width: 30%;
 }
-#siteloginbar_popup .wikiaction {
+.siteloginbar_popup .wikiaction {
 	clear: both;
 	float: right;
 }

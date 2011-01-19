@@ -527,19 +527,28 @@ select {
 
 /* Sitelogin Popup */
 
-#siteloginbar_popup,
 #header .box-login_box {
 	position: absolute;
 	right: 10px;
-	top: 30px;
+	bottom: 0;
+	width: 10em;
+	height: 26px;
+	line-height: 26px;
+	z-index: 1;
 }
 
-#siteloginbar_popup fieldset {
+/*.siteloginbar_popup {
+	position: inherit;
+	right: auto;
+	bottom: auto;
+}*/
+
+.siteloginbar_popup fieldset {
 	border: none;
 	margin: 0; padding: 0;
 }
 
-#siteloginbar_popup .tabmark {
+.siteloginbar_popup .tabmark {
 	border: 1px solid #696969;
 	border-bottom: 0;
 	border-top-left-radius: 5px;
@@ -550,19 +559,24 @@ select {
 	-moz-border-radius-topright: 5px;
 }
 
-#siteloginbar_popup .cssmenu_horiz #register_link {
+.siteloginbar_popup .cssmenu_horiz #register_link {
 	background-color: #969696;
 }
 
-#siteloginbar_popup .cssmenu_horiz #login_link,
-#siteloginbar_popup .cssmenu_horiz #logout_link {
+.siteloginbar_popup .cssmenu_horiz #login_link,
+.siteloginbar_popup .cssmenu_horiz #logout_link {
 	background-color: #070707;
 }
 
-#siteloginbar_popup .cbox {
+.siteloginbar_popup .cbox {
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	color: #2098CD;
+}
+
+#header .siteloginbar_popup .cbox a {
+	color: #2098CD !important;
 }
 
 #sl-login-user, #sl-login-pass {
@@ -601,28 +615,28 @@ a.login_link {
 	text-transform: uppercase;
 	margin-bottom: -1px !important;
 }
-#siteloginbar_popup .cssmenu_horiz ul {
+.siteloginbar_popup .cssmenu_horiz ul {
 	margin-top: -5px;
 }
-#siteloginbar_popup .cssmenu_horiz #register_link ul {
+.siteloginbar_popup .cssmenu_horiz #register_link ul {
 	margin-left: -4em;
 }
 
-#siteloginbar_popup .cssmenu_horiz #login_link ul {
+.siteloginbar_popup .cssmenu_horiz #login_link ul {
 	margin-left: -10.5em;
 	width: 18em !important; /* to override the hardcoded in-line style width 17.5em */
 }
 
-#siteloginbar_popup .cssmenu_horiz #logout_link ul {
+.siteloginbar_popup .cssmenu_horiz #logout_link ul {
 	margin-left: -10.7em;
 	width: 20em !important; /* to override the hardcoded in-line style width */
 }
 
-#siteloginbar_popup .tabmark .tabcontent {
+.siteloginbar_popup .tabmark .tabcontent {
 	color: #000;
 }
 
-#siteloginbar_popup .tabmark ul li a,
+.siteloginbar_popup .tabmark ul li a,
 li.login_link ul li a {
 	background: none !important;
 	color: #1174a5;

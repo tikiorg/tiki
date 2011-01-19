@@ -36,6 +36,18 @@ function capLock(e, el){
 			{/if}
 		{elseif $module_params.mode eq "header"}
 			<span style="white-space: nowrap">{$user|userlink}</span> | <a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>
+		{elseif $module_params.mode eq "popup"}
+			<div class="siteloginbar_popup">
+				<ul class="clearfix cssmenu_horiz">
+					<li class="tabmark" id="logout_link"><a href="tiki-logout.php" class="login_link">Log out</a>
+						<ul>
+							<li>
+								<div class="cbox">{$user|userlink} | <a href="tiki-logout.php" title="Log out">Log out</a></div>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
 		{/if}
 		{if $prefs.auth_method eq 'openid' and $openid_userlist|@count gt 1}
 		<form method="get" action="tiki-login_openid.php">
@@ -84,6 +96,14 @@ function doChallengeResponse() {
 			<input type="hidden" name="response" value="" />
 		{/if}
 		{if !empty($urllogin)}<input type="hidden" name="url" value="{$urllogin|escape}" />{/if}
+		{if $module_params.mode eq "popup"}
+			<div class="siteloginbar_popup">
+				<ul class="clearfix cssmenu_horiz">
+					<li class="tabmark" id="logout_link"><a href="tiki-logout.php" class="login_link">Log in</a>
+						<ul>
+							<li>
+								<div class="cbox">
+		{/if}
 		{if $module_params.nobox neq 'y'}
 			<fieldset>
 				<legend>{tr}Log in as{/tr}&hellip;</legend>
@@ -163,6 +183,14 @@ function doChallengeResponse() {
 		<input type="hidden" name="stay_in_ssl_mode_present" value="y" />
 		{if $prefs.feature_show_stay_in_ssl_mode neq 'y' || $show_stay_in_ssl_mode neq 'y'}
 			<input type="hidden" name="stay_in_ssl_mode" value="{$stay_in_ssl_mode|escape}" />
+		{/if}
+		{if $module_params.mode eq "popup"}
+								</div>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
 		{/if}
 		
 		{if $use_intertiki_auth eq 'y'}
