@@ -27,9 +27,14 @@ header, nav, article, footer, address {
     display: block;  
 } 
 
+/* lite.css needs the centre section to be
+ * display:table to avoid overlapping columns */
+#middle {
+	display: table;
+}
+
 /* general .fixedwidth wrapper when fixed width is off */
 .fixedwidth {
-	display: table;
 	margin: 0 auto;
 	width: 100%;
 }
