@@ -94,6 +94,9 @@ if ($prefs['flaggedrev_approval'] == 'y') {
 	if ($flaggedrevisionlib->page_requires_approval($page)) {
 		$smarty->assign('flaggedrev_approval', true);
 		$approved_versions = $flaggedrevisionlib->get_versions_with($page, 'moderation', 'OK');
+
+		$info['approved'] = in_array($info['version'], $approved_versions);
+
 		$new_history = array();
 
 		foreach ($history as $version) {

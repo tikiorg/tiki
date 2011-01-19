@@ -138,6 +138,8 @@ $("#toggle_diffs a").click(function(){
 							{if $tiki_p_wiki_view_author ne 'n'}{tr 0=$info.user|userlink}by %0{/tr}{/if}
 							{if $prefs.feature_wiki_history_ip ne 'n'}{tr 0=$info.ip}from %0{/tr}{/if}
 
+							{if $flaggedrev_approval and $tiki_p_wiki_view_latest eq 'y' and $info.approved}<strong>({tr}approved{/tr})</strong>{/if}
+
 							{if $info.comment}<div>{$info.comment|escape}</div>{/if}
 
 							{if $translation_sources[$info.version]}
