@@ -42,6 +42,7 @@ Disallow: /tiki-backlinks.php
 Disallow: /tiki-browse_categories.php
 Disallow: /tiki-calendar.php
 Disallow: /tiki-editpage.php
+Disallow: /tiki-edit_translation.php
 Disallow: /tiki-index.php?page=SandBox
 Disallow: /tiki-install.php
 Disallow: /tiki-lastchanges.php
