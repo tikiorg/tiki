@@ -1912,6 +1912,10 @@ ul.freetagged li {
 	text-align: right;
 }
 
+.left {
+	text-align: left;
+}
+
 /* admin boxes etc (.admbox) now defined in css/admin.css */
 
 /***** Ajax, jquery. etc. *****/

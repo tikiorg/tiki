@@ -91,12 +91,14 @@ $smarty->assign('history_cant', $histlib->get_nb_history($page) - 1);
 if ($prefs['flaggedrev_approval'] == 'y') {
 	global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
 
-	if ($tiki_p_wiki_view_latest != 'y' && $flaggedrevisionlib->page_requires_approval($page)) {
+	if ($flaggedrevisionlib->page_requires_approval($page)) {
+		$smarty->assign('flaggedrev_approval', true);
 		$approved_versions = $flaggedrevisionlib->get_versions_with($page, 'moderation', 'OK');
 		$new_history = array();
 
 		foreach ($history as $version) {
-			if (in_array($version['version'], $approved_versions)) {
+			$version['approved'] = in_array($version['version'], $approved_versions);
+			if ($tiki_p_wiki_view_latest == 'y' || $version['approved']) {
 				$new_history[] = $version;
 			}
 		}
