@@ -39,30 +39,35 @@ body.fixed_width .fixedwidth {
 
 #header_outer {
 	background: url(fivealive/options/blueberry/headertile.png) 0 0 no-repeat;
-	height: 203px;
-	overflow: none;
+	height: 220px;
 }
 
 #header {
 	background: url(fivealive/header_left.png) 0 0 no-repeat;
+	height: 220px;
+	width: 990px;
+	margin: 0 auto;
 }
-
+	
 #top_modules {
 	background: url(fivealive/options/blueberry/siteheader.jpg) 0 0 no-repeat;
+	height: 220px;
 }
 
-/*#header-top,*/
-#tiki-top .wrapper,
+#tiki-top {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+
+#header .box-search {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+}
+
 #middle {
 	display: table;
-	margin: auto;
-	margin-top: 0;
-	margin-bottom: 0;
-	background: transparent;
-}
-
-#header-top {
-/*	display: table;*/
 	margin: auto;
 	margin-top: 0;
 	margin-bottom: 0;
@@ -516,8 +521,11 @@ select {
 
 /* Sitelogin Popup */
 
-#siteloginbar_popup {
+#siteloginbar_popup,
+#header .box-login_box {
+	position: absolute;
 	right: 10px;
+	top: 30px;
 }
 
 #siteloginbar_popup fieldset {
