@@ -176,4 +176,6 @@
 {if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categoryobjects eq 'y'}
 	{$display_catobjects}
 {/if}
-
+{if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.category_morelikethis_algorithm ne ''}
+	{include file='category_related_objects.tpl'}
+{/if}

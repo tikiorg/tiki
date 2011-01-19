@@ -59,6 +59,31 @@ function prefs_category_list() {
 			'description' => tra('When automatically geocoding items based on category name, use randomly approximated location instead of precise location'),
 			'type' => 'flag',		
 		),
+		'category_morelikethis_algorithm' => array(
+			'name' => tra('"More Like This" algorithm for categories'),
+			'type' => 'list',
+			'options' => array(
+							   '' => '',
+				'basic' => tra('Basic'),
+				'weighted' => tra('Weighted'),
+			),
+		),
+		'category_morelikethis_mincommon' => array(
+			'name' => tra('Minimum amount of categories in common'),
+			'type' => 'list',
+			'options' => array(
+				'1' => tra('1'),
+				'2' => tra('2'),
+				'3' => tra('3'),
+				'4' => tra('4'),
+				'5' => tra('5'),
+				'6' => tra('6'),
+				'7' => tra('7'),
+				'8' => tra('8'),
+				'9' => tra('9'),
+				'10' => tra('10'),
+			),
+		),
 	);
 }
 

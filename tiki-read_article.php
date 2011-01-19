@@ -201,6 +201,11 @@ if (isset($is_categorized) && $is_categorized) {
 			$smarty->assign('display_catobjects', $display_catobjects);
 		}
 	}
+	if ($prefs['feature_categories'] == 'y' && $prefs['category_morelikethis_algorithm'] != '') {
+		global $freetaglib; include_once('lib/freetag/freetaglib.php');
+		$category_related_objects = $freetaglib->get_similar('article', $_REQUEST['articleId'], $prefs['maxRecords'], null, 'category');
+		$smarty->assign_by_ref('category_related_objects', $category_related_objects);
+	}
 } else {
 	$smarty->assign('is_categorized', 'n');
 }

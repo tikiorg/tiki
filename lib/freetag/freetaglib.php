@@ -1178,9 +1178,21 @@ class FreetagLib extends ObjectLib
 	 * Once you have enough tags, the results are quite good. It is very organic
 	 * as tagging is human-technology.
 	 */
-	function get_similar( $type, $objectId, $maxResults = 10, $targetType = null )
+	function get_similar( $type, $objectId, $maxResults = 10, $targetType = null, $with = 'freetag' )
 	{
-		$algorithm = $this->get_preference('morelikethis_algorithm', 'basic');
+		if ($with == 'category') {
+			$algorithm = $this->get_preference('category_morelikethis_algorithm', 'basic');
+			$minCommon = (int) $this->get_preference( 'category_morelikethis_mincommon', 2 );
+			$table = 'tiki_category_objects';
+			$column = 'categId';
+			$objectColumn = 'catObjectId';
+		} else {
+			$algorithm = $this->get_preference('morelikethis_algorithm', 'basic');
+			$minCommon = (int) $this->get_preference( 'morelikethis_basic_mincommon', 2 );
+			$table = 'tiki_freetagged_objects';
+			$column = 'tagId';
+			$objectColumn = 'objectId';
+		}
 
 		if ( is_null( $targetType ) ) {
 			$targetType = $type;
@@ -1212,15 +1224,14 @@ class FreetagLib extends ObjectLib
 		switch( $algorithm )
 		{
 		case 'basic': // {{{
-			$minCommon = (int) $this->get_preference( 'morelikethis_basic_mincommon', 2 );
-
-			$query = 'SELECT ob.name, ob.href, COUNT(DISTINCT fb.tagId) cnt'
-							. ' FROM tiki_objects oa'
-							. ' INNER JOIN tiki_freetagged_objects fa ON oa.objectId = fa.objectId'
-							. ' INNER JOIN tiki_freetagged_objects fb USING(tagId)'
-							. ' INNER JOIN tiki_objects ob ON ob.objectId = fb.objectId ' . $join_tiki_pages
+			$query = "SELECT ob.`name`, ob.`href`, COUNT(DISTINCT fb.`$column`) cnt"
+							. ' FROM `tiki_objects` oa'
+							. " INNER JOIN `$table` fa ON oa.`objectId` = fa.`$objectColumn`"
+							. " INNER JOIN $table fb USING(`$column`)"
+							. " INNER JOIN `tiki_objects` ob ON ob.`objectId` = fb.`$objectColumn` "
+							. $join_tiki_pages
 							. ' WHERE ' . $mid
-							. ' GROUP BY ob.itemId'
+							. ' GROUP BY ob.`itemId`'
 							. ' HAVING cnt >= ?'
 							. ' ORDER BY cnt DESC, RAND()'
 							;
@@ -1228,22 +1239,20 @@ class FreetagLib extends ObjectLib
 		// }}}
 
 		case 'weighted': // {{{
-			$minCommon = (int) $this->get_preference( 'morelikethis_basic_mincommon', 2 );
-
-			$query = 'SELECT'
-							. ' ob.name, ob.href, COUNT(DISTINCT fc.objectId) sort_cnt, COUNT(DISTINCT fb.tagId) having_cnt'
-							. ' FROM tiki_objects oa'
-								. ' INNER JOIN tiki_freetagged_objects fa ON oa.objectId = fa.objectId'
-								. ' INNER JOIN tiki_freetagged_objects fb USING(tagId)'
-								. ' INNER JOIN tiki_objects ob ON ob.objectId = fb.objectId'
-								. ' INNER JOIN tiki_freetagged_objects fc ON fb.tagId = fc.tagId '
+			$query = "SELECT ob.`name`, ob.`href`, COUNT(DISTINCT fc.`$objectColumn`) sort_cnt, COUNT(DISTINCT fb.`$column`) having_cnt"
+							. ' FROM `tiki_objects` oa'
+							. " INNER JOIN $table fa ON oa.`objectId` = fa.`$objectColumn`"
+							. " INNER JOIN $table fb USING(`$column`)"
+							. " INNER JOIN `tiki_objects` ob ON ob.`objectId` = fb.`$objectColumn`"
+							. " INNER JOIN $table fc ON fb.`$column` = fc.`$column` "
 							. $join_tiki_pages
 							. ' WHERE ' . $mid
-							. ' GROUP BY ob.itemId'
+							. ' GROUP BY ob.`itemId`'
 							. ' HAVING having_cnt >= ?'
 							. ' ORDER BY sort_cnt DESC, RAND()'
 							;
 			// Sort based on the global popularity of all tags in common
+			break;
 		// }}}
 		}
 

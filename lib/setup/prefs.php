@@ -1263,6 +1263,8 @@ function get_default_prefs() {
 		'expanded_category_jail' => '',
 		'expanded_category_jail_key' => '',
 		'ws_container' => 0,
+		'category_morelikethis_algorithm' => '',
+		'category_morelikethis_mincommon' => 2, 
 
 		// html pages
 		'feature_html_pages' => 'n',
