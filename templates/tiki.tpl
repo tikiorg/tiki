@@ -26,7 +26,7 @@
 {if $prefs.feature_ajax eq 'y'}
 	{include file='tiki-ajax_header.tpl'}
 {/if}
-	<div id="fixedwidth"> {* enables fixed-width layouts *}
+	<div id="outer_wrapper"> {* used to be  id="fixedwidth" *}
 		{if $prefs.feature_layoutshadows eq 'y'}
 			<div id="main-shadow">{eval var=$prefs.main_shadow_start}
 		{/if}
@@ -35,14 +35,17 @@
 			{if $prefs.module_zones_top eq 'fixed' or ($prefs.module_zones_top ne 'n' && $top_modules|@count > 0)}
 				{if $prefs.feature_layoutshadows eq 'y'}<div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}
 				<div id="header_outer">
-					<header class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
-						{* Site header section *}
-						<div class="content clearfix modules fixedwidth" id="top_modules">
-							{section name=homeix loop=$top_modules}
-								{$top_modules[homeix].data}
-							{/section}
-						</div>
-					</header>
+					<div id="header_container">
+						<header class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+							<div id="header_fixedwidth" class="clearfix fixedwidth">
+								<div class="content clearfix modules" id="top_modules">
+									{section name=homeix loop=$top_modules}
+										{$top_modules[homeix].data}
+									{/section}
+								</div>
+							</div>
+						</header>
+					</div>
 				</div>
 				{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.header_shadow_end}</div>{/if}
 			{/if}
@@ -156,8 +159,8 @@
 				{if $prefs.module_zones_bottom eq 'fixed' or ($prefs.module_zones_bottom ne 'n' && $bottom_modules|@count > 0)}{* previously if $prefs.feature_bot_bar eq 'y' *}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}
 						<footer id="footer">
-							<div class="footerbgtrap">
-								<div id="bottom_modules" class="content modules fixedwidth"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+							<div class="footerbgtrap fixedwidth">
+								<div id="bottom_modules" class="content modules"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 									{section name=homeix loop=$bottom_modules}
 										{$bottom_modules[homeix].data}
 									{/section}
