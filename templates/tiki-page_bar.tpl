@@ -27,7 +27,11 @@
 				{else}
 					{assign var=thisPageClass value=''}
 				{/if}
-				{button href="tiki-editpage.php?page="|cat:$thisPageName|cat:$thisPageRefId _class=$thisPageClass _text="{tr}Edit this page{/tr}"}
+				{if $prefs.flaggedrev_approval neq 'y' or ! $revision_approval or $lastVersion eq $revision_displayed}
+					{button href="tiki-editpage.php?page="|cat:$thisPageName|cat:$thisPageRefId _class=$thisPageClass _text="{tr}Edit this page{/tr}"}
+				{elseif $tiki_p_wiki_view_latest eq 'y'}
+					<span class="button">{self_link latest=1}{tr}View latest version before editing{/tr}{/self_link}</span>
+				{/if}
 			{/if}
 
 			{if $prefs.feature_source eq 'y' and $tiki_p_wiki_view_source eq 'y'}
