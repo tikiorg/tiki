@@ -34,6 +34,25 @@
 			{/if}
 		{/if}
 	</div>
+	{if $flaggedrev_approval and $tiki_p_wiki_approve eq 'y'}
+		{remarksbox type=comment title="{tr}Content Approval{/tr}"}
+			<form method="post" action="tiki-pagehistory.php?page={$page|escape:'url'}&amp;preview={$preview|escape:'url'}">
+				{if $flaggedrev_preview_approved}
+					<p>{tr}This revision is currently marked as approved.{/tr}<p>
+					<div class="submit">
+						<input type="hidden" name="unapprove" value="{$preview|escape}"/>
+						<input type="submit" name="flaggedrev" value="{tr}Remove Approval{/tr}"/>
+					</div>
+				{else}
+					<p>{tr}This revision has not been approved.{/tr}<p>
+					<div class="submit">
+						<input type="hidden" name="approve" value="{$preview|escape}"/>
+						<input type="submit" name="flaggedrev" value="{tr}Approve Revision{/tr}"/>
+					</div>
+				{/if}
+			</form>
+		{/remarksbox}
+	{/if}
 	<div class="wikitext">{$previewd}</div>
 {/if}
 
