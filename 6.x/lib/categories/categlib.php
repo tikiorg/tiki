@@ -497,8 +497,13 @@ class CategLib extends ObjectLib
 			$where .= " AND (`name` LIKE ? OR `description` LIKE ?)";
 		} 
 		if (!empty($type)) {
-			$where .= ' AND `type` =? ';
-			$bindWhere[] = $type;
+			if (array($type)) {
+				$where .= ' AND `type` in ('.implode(',',array_fill(0,count($type),'?')).')';
+				$bindWhere = array_merge($bindWhere, $type);
+			} else {
+				$where .= ' AND `type` =? ';
+				$bindWhere[] = $type;
+			}
 		}
 
 		global $user;
@@ -1144,7 +1149,7 @@ class CategLib extends ObjectLib
     
     //Moved from tikilib.php
     function get_categoryobjects($catids,$types="*",$sort='created_desc',$split=true,$sub=false,$and=false, $maxRecords = 500) {
-			global $smarty, $prefs;
+		global $smarty, $prefs;
 
 		$typetokens = array(
 			"article" => "article",
@@ -1213,7 +1218,7 @@ class CategLib extends ObjectLib
 		foreach ($catids as $id) {
 			$titles["$id"] = $this->get_category_name($id);
 			$objectcat = array();
-			$objectcat = $this->list_category_objects($id, $offset, $maxRecords, $sort, '', $find, $sub);
+			$objectcat = $this->list_category_objects($id, $offset, $and? -1: $maxRecord, $sort, $types == '*'? '': $typesallowed, $find, $sub);
 
 			$acats = $andcat = array();
 			foreach ($objectcat["data"] as $obj) {
