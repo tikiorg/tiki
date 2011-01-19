@@ -6,3 +6,4 @@
 {$url_for_friend|replace:' ':'+'}
 
 {$name|username}
+{$email}
