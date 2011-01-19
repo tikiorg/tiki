@@ -168,6 +168,7 @@ if (isset($_REQUEST['send'])) {
 		$_REQUEST['do_email']=1;
 	}
 	if (isset ($_REQUEST['do_email']) and $_REQUEST['do_email']==1) {
+		$emailSent = sendMail($_REQUEST['email'], $_REQUEST['addresses'], $subject);
 		$smarty->assign_by_ref('email', $_REQUEST['email']);
 		if (!empty($_REQUEST['addresses'])) {
 			$smarty->assign('addresses', $_REQUEST['addresses']);
@@ -175,7 +176,6 @@ if (isset($_REQUEST['send'])) {
 		if (!empty($_REQUEST['name'])) {
 			$smarty->assign('name', $_REQUEST['name']);
 		}
-		$emailSent = sendMail($_REQUEST['email'], $_REQUEST['addresses'], $subject);
 		$smarty->assign('emailSent', $emailSent);
 		$ok = $ok && $emailSent;
 	} // do_email
@@ -282,7 +282,7 @@ function checkAddresses($recipients) {
  * @return bool						true on success / false if the supplied parameters were incorrect/missing or an error occurred sending the mail
  */
 function sendMail($sender, $recipients, $subject) {
-	global $errors, $prefs, $smarty, $user, $userlib;
+	global $errors, $prefs, $smarty;
 	global $registrationlib; include_once ('lib/registration/registrationlib.php');
 	
 	if (empty($sender)) {
@@ -308,11 +308,9 @@ function sendMail($sender, $recipients, $subject) {
 	include_once ('lib/webmail/tikimaillib.php');
 	$mail = new TikiMail();
 	$smarty->assign_by_ref('mail_site', $_SERVER['SERVER_NAME']);
-	if (!empty($user) && $from == $userlib->get_user_email($user)) {
-		$mail->setFrom($from);
-		$mail->setHeader("Return-Path", "<$from>");
-		$mail->setHeader("Reply-To", "<$from>");
-	}
+	$mail->setFrom($from);
+	$mail->setHeader("Return-Path", "<$from>");
+	$mail->setHeader("Reply-To", "<$from>");
 
 	$txt = $smarty->fetch('mail/share.tpl');
 	$mail->setSubject($subject);
