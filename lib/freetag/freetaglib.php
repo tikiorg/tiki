@@ -1180,6 +1180,7 @@ class FreetagLib extends ObjectLib
 	 */
 	function get_similar( $type, $objectId, $maxResults = 10, $targetType = null, $with = 'freetag' )
 	{
+		global $prefs;
 		if ($with == 'category') {
 			$algorithm = $this->get_preference('category_morelikethis_algorithm', 'basic');
 			$minCommon = (int) $this->get_preference( 'category_morelikethis_mincommon', 2 );
@@ -1211,12 +1212,12 @@ class FreetagLib extends ObjectLib
 			$bindvals[] = $prefs['wikiapproval_prefix'] . '%';
 		}
 
-		if ($this->multilingual && $type == 'wiki page' && $targetType == 'wiki page') {
+		if ($prefs['feature_multilingual'] == 'y' && $type == 'wiki page' && $targetType == 'wiki page') {
 			// make sure only same lang pages are selected
-			$mid .= ' AND pb.`lang` = pa.`lang`';
-			$join_tiki_pages = 'INNER JOIN tiki_pages pa ON pa.pageName = oa.itemId'
-												. ' INNER JOIN tiki_pages pb ON pb.pageName = ob.itemId'
-												;
+			$mid .= ' AND (pb.`lang` = pa.`lang` OR pa.`lang` IS NULL OR pb.`lang` IS NULL) ';
+			$join_tiki_pages = 'INNER JOIN `tiki_pages` pa ON pa.`pageName` = oa.itemId'
+							. ' INNER JOIN `tiki_pages` pb ON pb.`pageName` = ob.`itemId`'
+							;
 		} else {
 			$join_tiki_pages = '';
 		}
