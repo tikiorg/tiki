@@ -2292,17 +2292,20 @@ class SheetLib extends TikiLib
 			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.financefn.js' );
 			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/parser.js' );
 			
+			//json support
+			$headerlib->add_jsfile('lib/jquery/jquery.json-2.2.js');
+			
 			// plugins
 			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/jquery.scrollTo-min.js' );
 			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/raphael-min.js', 'external' );
 			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.raphael-min.js', 'external' );
 			$headerlib->add_jq_onready( '
 				// override saveSheet on jQuery.sheet for tiki specific export
-				$.sheet.saveSheet = function( redirect ) {
+				$.sheet.saveSheet = function( url, redirect ) {
 					$( $.sheet.instance ).each( function( i ){
 						if (typeof redirect === "undefined") { redirect = false; }
 						// not set to 0 by default in case AJAX has caused a spurious one to appear
-			
+
 						this.evt.cellEditDone();
 						
 						var s = $.sheet.exportSheet(this);
@@ -2310,10 +2313,10 @@ class SheetLib extends TikiLib
 						s = "s=" + $.toJSON(s)	// convert to JSON
 							.replace(/\+/g,"%2B")	// replace +s with 0x2B hex value
 							.replace(/\&/g,"%26");	// and replace &s with 0x26
-						
+							
 						var setDirty = this.setDirty;
 						$.ajax({
-							url: this.s.urlSave,
+							url: url,
 							type: "POST",
 							data: s,
 							//contentType: "application/json; charset=utf-8",
@@ -2413,21 +2416,13 @@ class SheetLib extends TikiLib
 					});
 					return documents;
 				};
-				
-				//ensure that sheet instance exists, otherwise problems getting current instance number;
-				var I = 0;
-				if ( $.sheet.instance ) {
-					I = $.sheet.instance.length; //we use length here because we havent yet created sheet, it will append 1 to this number thus making this the effective instance number
-				} else {
-					$.sheet.instance = [];
-				}				
-				
-				var inlineMenu =  $("#sheetTools").html();
-				inlineMenu = jQuery(
-							(inlineMenu ? inlineMenu : "").replace(/sheetInstance/g, "jQuery.sheet.instance[" + I + "]")
+
+				inlineMenu = $(
+					($("#sheetTools").html() + "")
+						.replace(/sheetInstance/g, "$.sheet.instance[" + $.sheet.I() + "]")
 				);
 				
-				inlineMenu.find(".qt-picker").attr("instance", I);
+				inlineMenu.find(".qt-picker").attr("instance", $.sheet.I());
 				
 				$.sheet.tikiOptions =  {
 						urlMenu:"lib/jquery_tiki/jquery.sheet/menu.html",
@@ -2446,7 +2441,6 @@ class SheetLib extends TikiLib
 		 				}
 		 			}
 				};
-				
 			' );
 			$this->setupJQuerySheetFiles = true;
 		}

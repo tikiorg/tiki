@@ -198,28 +198,16 @@ if ($_REQUEST['parse'] == 'y') {
 	$headerlib->add_jq_onready('
 		$("#edit_button").click( function () {
 			var $a = $(this).find("a");
-			if ($a.text() != editSheetButtonLabel2) {
-		
-				/*if ($.sheet.instance && $.sheet.instance.length > 0) {
-					$.sheet.instance = [];
-				}*/
-				
-				$.sheet.tikiOptions = $.extend($.sheet.tikiOptions, {
-					urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"
-				});
-				
+			if ($a.text() != editSheetButtonLabel2) {				
 				$("div.tiki_sheet")
 					.sheet($.sheet.tikiOptions);
-				
-				$.sheet.after();
 				
 				$a.attr("temp", $a.text());
 				$a.text(editSheetButtonLabel2);
 				$("#edit_button").parent().find(".button:not(#edit_button), .rbox").hide();
 				$("#save_button").show();
-				if (typeof ajaxLoadingHide == "function") {
-					ajaxLoadingHide();
-				}
+				
+				$.sheet.after();
 			} else {
 				var isDirty = false;
 				$($.sheet.instance).each( function(i){
@@ -237,15 +225,16 @@ if ($_REQUEST['parse'] == 'y') {
 		
 		$("#save_button").click( function () {
 			$($.sheet.instance).each( function(i){
-				$.sheet.instance[i].evt.cellEditDone();
+				this.evt.cellEditDone();
 			});
 			
-			$.sheet.saveSheet(true);
+			$.sheet.saveSheet("tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'", true);
+			
 			return false;
 		}).hide();
 		
 		window.toggleFullScreen = function(areaname) {
-			$.sheet.instance[$.sheet.instance.length - 1].toggleFullScreen();
+			$.sheet.instance[$.sheet.I()].toggleFullScreen();
 		}
 		
 		window.showFeedback = function(message, delay, redirect) {
