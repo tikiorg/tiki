@@ -130,3 +130,20 @@ if (isset($_REQUEST["looksetup"])) {
 		}
 	}
 }
+
+/* Theme generator for Tiki 7+ */
+
+if ($prefs['feature_themegenerator'] === 'y') {
+	include_once 'lib/themegenlib.php';
+	
+	
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		
+		if (!empty($_REQUEST['tg_edit_theme']) && $_REQUEST['tg_edit_theme'] === tra('New')) {
+			$tg_edit_theme = $_REQUEST['tg_edit_theme'];
+		}
+	}
+	
+	$themegenlib->setupEditor();
+}
+

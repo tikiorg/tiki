@@ -239,6 +239,45 @@
 
 		{tab name="{tr}Custom CSS{/tr}"}
 			<fieldset>
+				<legend>{tr}Theme Generator{/tr}</legend>
+				{preference name="feature_themegenerator"}
+				<div class="adminoptionboxchild" id="feature_themegenerator_childcontainer">
+					<div class="adminoptionbox">			
+						{preference name="themegenerator_theme"}
+						<div  class="adminoptionboxchild">
+							<input type="text" name="tg_edit_theme_name" value="{$tg_edit_theme_name|escape}" />
+							<input type="submit" name="tg_edit_theme" value="{if empty($tg_edit_theme_name)}{tr}New{/tr}{else}{tr}Edit{/tr}{/if}" />
+						</div>
+					</div>
+					<div class="adminoptionbox">			
+						<label for="tg_css_file">Editing: </label>
+						<select id="tg_css_file">
+							{foreach from=$tg_css_files item=val key=key}
+								<option value="{$key}"{if $key eq $tg_css_file} selected="selected"{/if}>{$val}</option>
+							{/foreach}
+						</select>
+					</div>
+					<div class="adminoptionbox">			
+						<label for="tg_fg_colors">{tr}Foreground Colors:{/tr}</label>
+						<ul id="tg_fg_colors" class="color_swatches clearfix">
+							{foreach from=$tg_fore_colors item=color}
+								<li class="colorItem">
+									 <div class="colorSelector">
+									 	<div style="background-color:{$color};">&nbsp;</div>
+									 </div>
+									 <span class="colorLabel">
+										{$color}
+									</span>
+									<input type="hidden" name="tg_fg_swaps[{$color}]" value="{$color}" />
+								</li>
+							{/foreach}
+						</ul>
+					</div>
+				</div>
+				{jq}$(".colorItem").tiki("colorpicker", "", { colorLabel: ".colorLabel", colorSelector: ".colorSelector > div", colorInput: "input" }){/jq}
+			</fieldset>
+				
+			<fieldset>
 				<legend>{tr}Custom CSS{/tr}</legend>
 				<div class="adminoptionboxchild">
 					{self_link _onclick="toggle_brosho();return false;" _ajax="n"}{icon _id="bricks"}{tr}Experimental: CSS assistant (work in progress - click the x to remove){/tr}{/self_link}

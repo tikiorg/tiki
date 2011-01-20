@@ -292,13 +292,15 @@ a.admbox.off img {
 	text-align: right;
 }
 
+/* end from ui-revamp branch */
+
+/* tiki 7 modules revamp */
+
 .assigned_modules {
 	padding: 1em 2em 1em 0;
 	width: 40%;
 	min-height: 10em;
 }
-
-/* end from ui-revamp branch */
 
 .module-placeholder {
 	width: 160px;
@@ -317,3 +319,28 @@ a.admbox.off img {
 	-moz-user-select: none;
 }
 
+/* end modules revamp */
+
+/* tiki 7 theme generator */
+
+ul.color_swatches {
+	list-style: none;
+	line-height: 40px;
+	background-color: #aaa;
+	padding: 1em;
+}
+
+ul.color_swatches > li {
+	width: 10em;
+	float: left;
+	background-color: #aaa;
+}
+
+ul.color_swatches > li > div {
+/*	width: 16px;
+	height: 16px;*/
+	float:left;
+	margin: 3px 6px 0px 0px;
+}
+
+/* end theme generator */

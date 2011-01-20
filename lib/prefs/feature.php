@@ -1838,5 +1838,11 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'description' => tra('Enables syntax highlighting with the use of codemirror'),
 		),
+		'feature_themegenerator' => array(
+			'name' => tra('Theme Generator'),
+			'type' => 'flag',
+			'warning' => tra('Experimental. This feature is still under development.'),
+			'description' => tra(''),
+		),
 	);
 }

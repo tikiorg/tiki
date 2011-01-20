@@ -1408,6 +1408,8 @@ function get_default_prefs() {
 		'feature_custom_center_column_header' => '',
 		'header_custom_css' => '',
 		'header_custom_js' => '',
+		'feature_theme_generator' => 'n',
+		'themegenerator_theme' => '',
 
 		// mods
 		'feature_mods_provider' => 'n',
