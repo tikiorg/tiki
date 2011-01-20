@@ -2301,7 +2301,7 @@ class SheetLib extends TikiLib
 			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.raphael-min.js', 'external' );
 			$headerlib->add_jq_onready( '
 				// override saveSheet on jQuery.sheet for tiki specific export
-				$.sheet.saveSheet = function( url, redirect ) {
+				$.sheet.saveSheet = function( url, redirect, fn ) {
 					$( $.sheet.instance ).each( function( i ){
 						if (typeof redirect === "undefined") { redirect = false; }
 						// not set to 0 by default in case AJAX has caused a spurious one to appear
@@ -2324,6 +2324,11 @@ class SheetLib extends TikiLib
 							beforeSend: function() { window.showFeedback("Saving", 10000); }, 
 							success: function(data) {
 								setDirty(false);
+								if (fn) {
+									if($.isFunction(fn)) {
+										fn();
+									}
+								}
 								window.showFeedback(data, 2000, redirect);
 							}
 						});
@@ -2433,17 +2438,42 @@ class SheetLib extends TikiLib
 						colMargin: 20, //beefed up colMargin because the default size was too small for font
 						height: $(window).height() * 0.8
 				};
-			
-				$.sheet.after = function(o) {
-					window.toggleFullScreen = function(areaname) {
-						o.sheetInstance.toggleFullScreen();
-					};
 					
-					if (jqueryTiki.ui) {
-		 				if (typeof ajaxLoadingShow === "function") {
-		 					ajaxLoadingHide();
-		 				}
-		 			}
+				$.sheet.manageState = function(tikiSheet, toggleEdit, parse) {
+					if (toggleEdit) {
+						$.get("tiki-view_sheets.php?sheetId=" + tikiSheet.id + "&sheetonly=y&parse=" + parse, function (o) {
+							tikiSheet.sheetInstance.saveSheet = function(){};
+							tikiSheet.sheetInstance.toggleState(o);
+							$.sheet.manageState(tikiSheet);
+						});
+					} else {
+						if (tikiSheet.sheetInstance.s.editable) {
+							$("#jSheetControls").show();
+							$("#saveState").show();
+							$("#editState").hide();
+						} else {
+							$("#jSheetControls").hide();
+							$("#saveState").hide();
+							$("#editState").show();
+						}
+					}
+				};
+				
+				window.toggleFullScreen = function(areaname) {
+					tikiSheet.sheetInstance.toggleFullScreen();
+				};
+				
+				window.showFeedback = function(message, delay, redirect) {
+					if (typeof delay == "undefined") { delay = 5000; }
+					if (typeof redirect == "undefined") { redirect = false; }
+					$fbsp = $("#feedback span");
+					$fbsp.html(message).show();
+					window.setTimeout( function () { $fbsp.fadeOut("slow", function () { $fbsp.html("&nbsp;"); }); }, delay);
+					// if called from save button via saveSheet:success, then exit edit page mode
+					if (redirect) {
+						window.setTimeout( function () { $fbsp.html("Redirecting...").show(); }, 1000);
+						window.setTimeout( function () { window.location.replace(window.location.href.replace("parse=edit", "parse=y")); }, 1500);
+					}
 				};
 			' );
 			$this->setupJQuerySheetFiles = true;
