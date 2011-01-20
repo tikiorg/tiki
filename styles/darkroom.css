@@ -241,6 +241,10 @@ ol {
 	background: #0c0c0c;
 }
 
+#top_modules {
+	min-height: 130px;
+}
+
 #middle {
 	text-align: left;
 	font-size: 1.2em;
@@ -390,14 +394,25 @@ input[id="sl-login-pass"] {
 }
 
 #tiki-top {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 	border-top: 1px solid #818181;
 	height: 34px;
 	background: url(darkroom/button.png) repeat-x;
 }
 
-#sitesearchbar {
-	margin-right: 10px;
-	padding-right: 0;
+#header .box-search {
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	z-index: 2;
+}
+
+#header .box-login_box {
+	position: absolute;
+	right: 10px;
+	bottom: 45px;
 }
 
 /* centercolumn */
