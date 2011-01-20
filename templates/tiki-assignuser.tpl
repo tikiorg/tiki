@@ -19,11 +19,11 @@
 {/if}
   
 <h2>{tr}User Information{/tr}</h2>
-<table class="normal">
-	<tr><td class="even">{tr}Login:{/tr}</td><td class="odd">{$user_info.login|escape}</td></tr>
-	<tr><td class="even">{tr}Email:{/tr}</td><td class="odd">{$user_info.email}</td></tr>
+<table class="formcolor">
+	<tr><td>{tr}Login:{/tr}</td><td>{$user_info.login|escape}</td></tr>
+	<tr><td>{tr}Email:{/tr}</td><td>{$user_info.email}</td></tr>
 	<tr>
-		<td class="even">{tr}Groups:{/tr}</td><td class="odd">
+		<td>{tr}Groups:{/tr}</td><td>
 			{foreach from=$user_info.groups item=what key=grp}
 				{if $what eq 'included'}<i>{/if}{$grp|escape}{if $what eq 'included'}</i>{/if}
 				{if $grp != "Anonymous" && $grp != "Registered"}
@@ -34,7 +34,8 @@
 	</tr>
 	<form method="post" action="tiki-assignuser.php{if $assign_user}?assign_user={$assign_user}{/if}">
 		<tr>
-			<td class="even">{tr}Default Group:{/tr}</td><td class="odd">
+			<td>{tr}Default Group:{/tr}</td>
+			<td>
 				<select name="defaultgroup">
 					<option value=""></option>
 					{foreach from=$user_info.groups key=name item=included}
