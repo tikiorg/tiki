@@ -130,14 +130,18 @@ input[type=password] {
 	width: 110px;
 }
 
-	
-input#search {
+#header .box-search {
+	position: absolute;
+	top: 45px;
+	right: 20px;
+}
+#header .box-search input.ac_input {
 	background: #E7F8FD;
 	border: 1px solid #3CF;
 	color: #517298;
-	height: 16px;
+/*	height: 16px;
 	margin-right: 10px;
-	width: 160px;
+	width: 160px;*/
 }
 
 input#comments-title {
@@ -358,6 +362,10 @@ label {
 	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
 }
 
+#top_modules {
+	min-height: 121px;
+}
+
 #siteheader {
 	background: #fff;
 }
@@ -400,12 +408,13 @@ label {
 
 .siteloginbar {
 	position: absolute;
-	top: 152px;
-	right: -30px;
+	bottom: -24px;
+	right: 0;
 	height: 24px;
-	width: 540px;
+	/*width: 600px;*/
 	line-height: 24px;
 	padding-left: 60px;
+	padding-right: 10px;
 	color: #fff;
 	background: #fff url(strasa/login.jpg) 0 0 no-repeat;
 }
