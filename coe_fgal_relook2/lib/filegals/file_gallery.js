@@ -29,24 +29,24 @@ var FileGallery = {
 		});
 		return data;
 	},
-	open: function(url, area_id, dialogDiv) {
+	open: function(url, area_id, subLevel) {
 		this.dialogmode = true; /* FIXME */
 		post = null;
 		form = null;
 
 		var data = post ? post : '';
-		if (form)
-			data = this.form(form);
+		if (form) data = this.form(form);
+		if (!subLevel) subLevel = 1;
 
-		jQuery('#tbFilegalManager').load(url, data, function() {
+		displayDialog( null, null, area_id, url + '&filegals_manager=' + area_id, tr('Quick upload and insert'), subLevel, function() {
 			$('.fg-galleries-list a.fgalname, a.fgalgal, a.fgalaction, .fg-pager a.prevnext').click( function(e) {
 				e.preventDefault();
-				FileGallery.open(this.href, area_id, dialogDiv);
+				FileGallery.open(this.href, area_id, subLevel + 1);
 				return false;
 			});
 			$('a.fgalfile').click( function(e) {
 				e.preventDefault();
-				dialogSharedClose( area_id, dialogDiv );
+				dialogSharedClose( area_id, subLevel + 1 );
 				return false;
 			});
 		});

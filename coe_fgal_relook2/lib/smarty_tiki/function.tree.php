@@ -38,7 +38,10 @@ function smarty_function_tree($params, &$smarty) {
 			array(
 				'id' => $params['data']['id'],
 				'parent' => 0,
-				'data' => '<a class="fgalname" href="' . $link . '">' . $icon . htmlspecialchars($name) .'</a>', 
+				'data' => '<a class="fgalname" ' . ( empty( $_REQUEST['filegals_manager'] )
+						? 'href="' . $link . '"'
+						: 'onclick="FileGallery.open(\'' . $link . '\',\'' . $_REQUEST['filegals_manager'] . '\');return false"'
+					) . '>' . $icon . htmlspecialchars($name) . '</a>',
 			)
 		);
 		$root_id = $params['data']['id'];
@@ -51,7 +54,9 @@ function smarty_function_tree($params, &$smarty) {
 			$tree_nodes[] = array(
 				'id' => $d['id'],
 				'parent' => $d['parentId'],
-				'data' => smarty_block_self_link($link_params, $icon . htmlspecialchars($d['name']), $smarty), 
+				'data' => empty( $_REQUEST['filegals_manager'] )
+					? smarty_block_self_link($link_params, $icon . htmlspecialchars($d['name']), $smarty)
+					: '<a class="fgalname" onclick="FileGallery.open(\'' . $link . '?' . $link_var . '=' . $d[$link_id] . '\',\'' . $_REQUEST['filegals_manager'] . '\');return false">' . $icon . htmlspecialchars($d['name']) . '</a>', 
 			);
 		}
 		$tm = new CatBrowseTreeMaker('categ');

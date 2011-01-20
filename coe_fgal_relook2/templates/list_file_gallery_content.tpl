@@ -233,11 +233,15 @@
 					{capture assign=link}
 						{strip}
 							{if $files[changes].isgal eq 1}
-								href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}"
+								{if $filegals_manager neq ''}
+									onclick="FileGallery.open('tiki-list_file_gallery.php?galleryId={$files[changes].id}','{$filegals_manager}');return false;"
+								{else}
+									href="tiki-list_file_gallery.php?galleryId={$files[changes].id}"
+								{/if}
 							{else}
 		
 								{if $filegals_manager neq ''}
-									href="#" onclick="insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
+									onclick="insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');dialogSharedClose('{$filegals_manager}');return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
 		
 								{elseif $files[changes].perms.tiki_p_download_files eq 'y'}
 									{if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}

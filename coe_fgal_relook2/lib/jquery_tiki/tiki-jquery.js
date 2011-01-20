@@ -1164,29 +1164,20 @@ $.fn.tiki = function(func, type, options) {
 // shared
 
 window.dialogData = [];
-var dialogDiv;
-var dialogDivSub;
+var dialogDivs = [];
 
-function displayDialog( ignored, list, area_id, subUrl, subTitle ) {
-	var i, item, el, obj, tit = "";
+function displayDialog( ignored, list, area_id, url, title, subLevel, onOpenFunction ) {
+	var i, item, el, obj, tit = "", dialogDiv = null;
 
-	$is_cked =  $('#cke_contents_' + area_id).length !== 0;
+	$is_cked = $('#cke_contents_' + area_id).length !== 0;
 
-	if (subUrl) {
-		if (!dialogDivSub) {
-			dialogDivSub = document.createElement('div');
-			document.body.appendChild( dialogDivSub );
-		}
-		$(dialogDivSub).empty();
-	} else {
-		if (!dialogDiv) {
-			dialogDiv = document.createElement('div');
-			document.body.appendChild( dialogDiv );
-		}
-		$(dialogDiv).empty();
-	}
+	if (!subLevel) { subLevel = 0; }
+	if (dialogDivs.length <= subLevel) { dialogDivs[subLevel] = document.createElement('div'); }
+	dialogDiv = dialogDivs[subLevel];
+	document.body.appendChild( dialogDiv );
+	$(dialogDiv).empty();
 
-	if ( ! subUrl ) {	
+	if ( ! url ) {
 		for( i = 0; i < window.dialogData[list].length; i++ ) {
 			item = window.dialogData[list][i];
 			if (item.indexOf("<") === 0) {	// form element
@@ -1199,16 +1190,10 @@ function displayDialog( ignored, list, area_id, subUrl, subTitle ) {
 				} catch (e) {
 					alert(e.name + ' - ' + e.message);
 				}
-			} else if (item.indexOf("FileGallery") === 0) {
-				obj = ({"width": 700, "modal": true, "open": function() {
-					FileGallery.open("tiki-list_file_gallery.php?filegals_manager=" + area_id, area_id, dialogDiv);
-				}});
 			} else if (item.length > 0) {
-				tit = item;
+				title = item;
 			}
 		}
-	} else {
-		tit = subTitle;
 	}
 	
 	// Selection will be unavailable after context menu shows up - in IE, lock it now.
@@ -1223,28 +1208,28 @@ function displayDialog( ignored, list, area_id, subUrl, subTitle ) {
 //	obj.bgiframe = true; ///FIXME
 	obj.autoOpen = false;
 //	obj.stack = true; ///FIXME
-//	obj.zIndex = 10000;
 
-	if (subUrl) {
+	if (url) {
 		try {
-			if ($(dialogDivSub).dialog) {
-				$(dialogDivSub).dialog('destroy');
+			if ($(dialogDiv).dialog) {
+				$(dialogDiv).dialog('destroy');
 			}
 		} catch( e ) {
 			// IE throws errors destroying a non-existant dialog
 		}
-		$(dialogDivSub).load(subUrl).dialog({
+		$(dialogDiv).load(url).dialog({
 			modal: true,
 			width: '700px',
 			autoOpen: true,
 			height: 400,
 			stack: true,
-			title: tit
+			title: title,
+			open: onOpenFunction
 		});
 	} else {
 		obj.modal = true;
 		obj.width = '700px';
-		obj.title = tit;
+		obj.title = title;
 		try {
 			if ($(dialogDiv).dialog) {
 				$(dialogDiv).dialog('destroy');
@@ -1404,7 +1389,13 @@ function dialogSelectElement( area_id, elementStart, elementEnd ) {
 
 
 function dialogSharedClose( area_id, dialog ) {
-	$(dialog).dialog("close");
+	if ( dialog ) {
+		$(dialog).dialog("close");
+	} else {
+		for (var i = dialogDivs.length - 1; i >= 0; i--) {
+			$(dialogDivs[i]).dialog("close");
+		}
+	}
 }
 
 // Internal Link

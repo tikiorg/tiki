@@ -79,7 +79,7 @@
 			</div>
 		</div>
 		<div class="fg-files-buttons">
-			<a class="fg-files-button-mode fgalaction" href="{$altmode}">
+			<a class="fg-files-button-mode fgalaction" onclick="FileGallery.open('{$altmode}','{$filegals_manager|escape}')">
 				{if $view eq 'browse'}
 					{tr}List files{/tr}
 				{else}

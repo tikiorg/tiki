@@ -1451,9 +1451,7 @@ function build_plugin_form_row(row, name, label_name, requiredOrSpecial, value, 
 		icon.src = 'pics/icons/image.png';
 		input.id = paramDef.area ? paramDef.area : 'fgal_picker';
 		icon.onclick = function() {
-			var dialogId = window.dialogData.length - 1;
-			window.dialogData[ dialogId ] = [ tr('Quick upload and insert'), '<div id="tbFilegalManager" /><div id="tbFilegalManagerSub" />', 'FileGallery' ];
-			displayDialog( null, dialogId, input.id );
+			FileGallery.open("tiki-list_file_gallery.php?filegals_manager=" + input.id, input.id, 1);
 		};
 
 		field.appendChild( icon );
@@ -1461,9 +1459,18 @@ function build_plugin_form_row(row, name, label_name, requiredOrSpecial, value, 
 		var help = document.createElement( 'span' );
 		input.id = paramDef.area ? paramDef.area : 'fgal_picker';
 		help.onclick = function() {
-			var dialogId = window.dialogData.length - 1;
-			window.dialogData[ dialogId ] = [ tr('Quick upload and insert'), '<div id="tbFilegalManager" /><div id="tbFilegalManagerSub" />', 'FileGallery' ];
-			displayDialog( null, dialogId, input.id );
+			displayDialog( null, null, input.id, "tiki-list_file_gallery.php?filegals_manager=" + input.id, tr('Quick upload and insert'), 1, function() {
+				$('.fg-galleries-list a.fgalname, a.fgalgal, a.fgalaction, .fg-pager a.prevnext').click( function(e) {
+					e.preventDefault();
+					FileGallery.open(this.href, input.id, dialogDiv);
+					return false;
+				});
+				$('a.fgalfile').click( function(e) {
+					e.preventDefault();
+					dialogSharedClose( input.id, dialogDiv );
+					return false;
+				});
+			});
 		};
 		help.innerHTML = " <a href='#'>" + tr('Pick a file.') + "</a>";
 		field.appendChild( help );
