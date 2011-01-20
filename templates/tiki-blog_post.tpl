@@ -44,7 +44,7 @@
 	<input type="hidden" name="postId" value="{$postId|escape}" />
 
 	<fieldset class="tabcontent">
-		<table class="normal">
+		<table class="formcolor">
 			{if $blogs|@count gt 1 and ( !isset($blogId) or $blogId eq 0 )}
 				<tr>
 					<td class="editblogform">{tr}Blog{/tr}</td>
@@ -141,4 +141,3 @@
 	<input type="hidden" name="referer" value="{$referer|escape}" />
 	<input type="submit" name="cancel" onclick='document.location="{$referer|escape:'html'}";needToConfirm=false;return false;' value="{tr}Cancel{/tr}"/>
 </form>
-<br />
