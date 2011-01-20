@@ -159,14 +159,16 @@
 				{if $prefs.module_zones_bottom eq 'fixed' or ($prefs.module_zones_bottom ne 'n' && $bottom_modules|@count > 0)}{* previously if $prefs.feature_bot_bar eq 'y' *}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}
 						<footer id="footer">
-							<div class="footerbgtrap fixedwidth">
-								<div id="bottom_modules" class="content modules"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
-									{section name=homeix loop=$bottom_modules}
-										{$bottom_modules[homeix].data}
-									{/section}
-									{* modules revamp temp fix for feature_bot_logo - TODO migrate to user modules *}
-									{if $prefs.feature_bot_logo eq 'y'}<div id="custom_site_footer">{eval var=$prefs.bot_logo_code}</div>{/if}
-									{* include file='tiki-bot_bar.tpl' *}
+							<div class="footer_liner">
+								<div class="footerbgtrap fixedwidth">
+									<div id="bottom_modules" class="content modules"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+										{section name=homeix loop=$bottom_modules}
+											{$bottom_modules[homeix].data}
+										{/section}
+										{* modules revamp temp fix for feature_bot_logo - TODO migrate to user modules *}
+										{if $prefs.feature_bot_logo eq 'y'}<div id="custom_site_footer">{eval var=$prefs.bot_logo_code}</div>{/if}
+										{* include file='tiki-bot_bar.tpl' *}
+									</div>
 								</div>
 							</div>
 						</footer>{* -- END of footer -- *}{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.footer_shadow_end}</div>{/if}
