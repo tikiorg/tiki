@@ -260,7 +260,9 @@ body.cke_show_borders {
 	margin-top: -12px;
 }
 
-#sitetitles {padding-left: 20px}
+#sitetitles {
+	padding-left: 20px;
+	margin-bottom: 14px;}
 
 #sitetitle {
 	font-size: 2.4em;
@@ -273,9 +275,17 @@ body.cke_show_borders {
 	font-size: 1em;
 	padding-left: 3em}
 
-#sitesearchbar {
+#header .box-login_box,
+#header .box-search {
+	float: right;
 	margin-right: 10px;
-	font-size: 90%}
+	font-size: 90%;
+}
+	
+#tiki-top {
+	width: 100%;
+	clear: both;
+}
 	
 #tiki-top form.findtable {
 	vertical-align: bottom;

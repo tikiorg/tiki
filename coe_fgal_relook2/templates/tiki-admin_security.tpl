@@ -15,9 +15,9 @@
 	{cycle values="even,odd" print=false}
 	{foreach from=$phpsettings key=key item=item}
 		<tr class="{cycle}">
-			<td>{$key}</td>
-			<td>{$item.setting}</td>
-			<td>
+			<td class="text">{$key}</td>
+			<td class="text">{$item.setting}</td>
+			<td class="text">
 				{if $item.risk eq 'safe'}
 					{icon _id=accept alt="$item.risk" style="vertical-align:middle"}
 				{elseif $item.risk eq 'risky'}
@@ -29,13 +29,11 @@
 				{/if}
 				{$item.risk}
 			</td>
-			<td>{$item.message}</td>
+			<td class="text">{$item.message}</td>
 		</tr>
 	{/foreach}
 	{if !$phpsettings}
-		<tr>
-			<td colspan="4" class="odd">{tr}No records found.{/tr}</td>
-		</tr>
+         {norecords _colspan=4}
 	{/if}
 </table>
 
@@ -48,9 +46,9 @@
 	</tr>
 	{foreach from=$phpfunctions key=key item=item}
 		<tr class="{cycle}">
-			<td>{$key}</td>
-			<td>{$item.setting}</td>
-			<td>
+			<td class="text">{$key}</td>
+			<td class="text">{$item.setting}</td>
+			<td class="text">
 				{if $item.risk eq 'safe'}
 					{icon _id=accept alt="$item.risk" style="vertical-align:middle"}
 				{elseif $item.risk eq 'risky'}
@@ -81,9 +79,9 @@
 	{cycle values="even,odd" print=false}
 	{foreach from=$tikisettings key=key item=item}
 		<tr class="{cycle}">
-			<td>{$key}</td>
-			<td>{$item.setting}</td>
-			<td>
+			<td class="text">{$key}</td>
+			<td class="text">{$item.setting}</td>
+			<td class="text">
 				{if $item.risk eq 'safe'}
 					{icon _id=accept alt="$item.risk" style="vertical-align:middle"}
 				{elseif $item.risk eq 'risky'}
@@ -95,13 +93,11 @@
 				{/if}
 				{$item.risk}
 			</td>
-			<td>{$item.message}</td>
+			<td class="text">{$item.message}</td>
 		</tr>
 	{/foreach}
 	{if !$tikisettings}
-		<tr>
-			<td colspan="4" class="odd">{tr}No records found.{/tr}</td>
-		</tr>
+		{norecords _colspan=4}
 	{/if}
 </table>
 
@@ -128,8 +124,8 @@
 		</tr>
 		{foreach from=$tikifiles key=key item=item}
 			<tr class="{cycle}">
-				<td>{$key}</td>
-				<td>{$item}</td>
+				<td class="text">{$key}</td>
+				<td class="text">{$item}</td>
 			</tr>
 		{/foreach}
 	</table>
@@ -179,22 +175,22 @@
 		{cycle values="even,odd" print=false}
 		{foreach from=$suid key=key item=item}
 			<tr class="{cycle}">
-				<td>{$key}</td>
-				<td>{$item.t}</td>
-				<td>{$item.u}</td>
-				<td>{$item.g}</td>
-				<td>{$item.suid|truex}</td>
-				<td>{$item.sgid|truex}</td>
-				<td>{$item.sticky|truex}</td>
-				<td>{$item.ur|truex}</td>
-				<td>{$item.uw|truex}</td>
-				<td>{$item.ux|truex}</td>
-				<td>{$item.gr|truex}</td>
-				<td>{$item.gw|truex}</td>
-				<td>{$item.gx|truex}</td>
-				<td>{$item.or|truex}</td>
-				<td>{$item.ow|truex}</td>
-				<td>{$item.ox|truex}</td>
+				<td class="text">{$key}</td>
+				<td class="text">{$item.t}</td>
+				<td class="text">{$item.u}</td>
+				<td class="text">{$item.g}</td>
+				<td class="text">{$item.suid|truex}</td>
+				<td class="text">{$item.sgid|truex}</td>
+				<td class="text">{$item.sticky|truex}</td>
+				<td class="text">{$item.ur|truex}</td>
+				<td class="text">{$item.uw|truex}</td>
+				<td class="text">{$item.ux|truex}</td>
+				<td class="text">{$item.gr|truex}</td>
+				<td class="text">{$item.gw|truex}</td>
+				<td class="text">{$item.gx|truex}</td>
+				<td class="text">{$item.or|truex}</td>
+				<td class="text">{$item.ow|truex}</td>
+				<td class="text">{$item.ox|truex}</td>
 			</tr>
 		{/foreach}
 
@@ -203,22 +199,22 @@
 		</tr>
 		{foreach from=$worldwritable key=key item=item}
 			<tr class="{cycle}">
-				<td>{$key}</td>
-				<td>{$item.t}</td>
-				<td>{$item.u}</td>
-				<td>{$item.g}</td>
-				<td>{$item.suid|truex}</td>
-				<td>{$item.sgid|truex}</td>
-				<td>{$item.sticky|truex}</td>
-				<td>{$item.ur|truex}</td>
-				<td>{$item.uw|truex}</td>
-				<td>{$item.ux|truex}</td>
-				<td>{$item.gr|truex}</td>
-				<td>{$item.gw|truex}</td>
-				<td>{$item.gx|truex}</td>
-				<td>{$item.or|truex}</td>
-				<td>{$item.ow|truex}</td>
-				<td>{$item.ox|truex}</td>
+				<td class="text">{$key}</td>
+				<td class="text">{$item.t}</td>
+				<td class="text">{$item.u}</td>
+				<td class="text">{$item.g}</td>
+				<td class="text">{$item.suid|truex}</td>
+				<td class="text">{$item.sgid|truex}</td>
+				<td class="text">{$item.sticky|truex}</td>
+				<td class="text">{$item.ur|truex}</td>
+				<td class="text">{$item.uw|truex}</td>
+				<td class="text">{$item.ux|truex}</td>
+				<td class="text">{$item.gr|truex}</td>
+				<td class="text">{$item.gw|truex}</td>
+				<td class="text">{$item.gx|truex}</td>
+				<td class="text">{$item.or|truex}</td>
+				<td class="text">{$item.ow|truex}</td>
+				<td class="text">{$item.ox|truex}</td>
 			</tr>
 		{/foreach}
 
@@ -227,22 +223,22 @@
 		</tr>
 		{foreach from=$apachewritable key=key item=item}
 			<tr class="{cycle}">
-				<td>{$key}</td>
-				<td>{$item.t}</td>
-				<td>{$item.u}</td>
-				<td>{$item.g}</td>
-				<td>{$item.suid|truex}</td>
-				<td>{$item.sgid|truex}</td>
-				<td>{$item.sticky|truex}</td>
-				<td>{$item.ur|truex}</td>
-				<td>{$item.uw|truex}</td>
-				<td>{$item.ux|truex}</td>
-				<td>{$item.gr|truex}</td>
-				<td>{$item.gw|truex}</td>
-				<td>{$item.gx|truex}</td>
-				<td>{$item.or|truex}</td>
-				<td>{$item.ow|truex}</td>
-				<td>{$item.ox|truex}</td>
+				<td class="text">{$key}</td>
+				<td class="text">{$item.t}</td>
+				<td class="text">{$item.u}</td>
+				<td class="text">{$item.g}</td>
+				<td class="text">{$item.suid|truex}</td>
+				<td class="text">{$item.sgid|truex}</td>
+				<td class="text">{$item.sticky|truex}</td>
+				<td class="text">{$item.ur|truex}</td>
+				<td class="text">{$item.uw|truex}</td>
+				<td class="text">{$item.ux|truex}</td>
+				<td class="text">{$item.gr|truex}</td>
+				<td class="text">{$item.gw|truex}</td>
+				<td class="text">{$item.gx|truex}</td>
+				<td class="text">{$item.or|truex}</td>
+				<td class="text">{$item.ow|truex}</td>
+				<td class="text">{$item.ox|truex}</td>
 			</tr>
 		{/foreach}
 
@@ -251,22 +247,22 @@
 		</tr>
 		{foreach from=$strangeinode key=key item=item}
 			<tr class="{cycle}">
-				<td>{$key}</td>
-				<td>{$item.t}</td>
-				<td>{$item.u}</td>
-				<td>{$item.g}</td>
-				<td>{$item.suid|truex}</td>
-				<td>{$item.sgid|truex}</td>
-				<td>{$item.sticky|truex}</td>
-				<td>{$item.ur|truex}</td>
-				<td>{$item.uw|truex}</td>
-				<td>{$item.ux|truex}</td>
-				<td>{$item.gr|truex}</td>
-				<td>{$item.gw|truex}</td>
-				<td>{$item.gx|truex}</td>
-				<td>{$item.or|truex}</td>
-				<td>{$item.ow|truex}</td>
-				<td>{$item.ox|truex}</td>
+				<td class="text">{$key}</td>
+				<td class="text">{$item.t}</td>
+				<td class="text">{$item.u}</td>
+				<td class="text">{$item.g}</td>
+				<td class="text">{$item.suid|truex}</td>
+				<td class="text">{$item.sgid|truex}</td>
+				<td class="text">{$item.sticky|truex}</td>
+				<td class="text">{$item.ur|truex}</td>
+				<td class="text">{$item.uw|truex}</td>
+				<td class="text">{$item.ux|truex}</td>
+				<td class="text">{$item.gr|truex}</td>
+				<td class="text">{$item.gw|truex}</td>
+				<td class="text">{$item.gx|truex}</td>
+				<td class="text">{$item.or|truex}</td>
+				<td class="text">{$item.ow|truex}</td>
+				<td class="text">{$item.ox|truex}</td>
 			</tr>
 		{/foreach}
 
@@ -275,22 +271,22 @@
 		</tr>
 		{foreach from=$executable key=key item=item}
 			<tr class="{cycle}">
-				<td>{$key}</td>
-				<td>{$item.t}</td>
-				<td>{$item.u}</td>
-				<td>{$item.g}</td>
-				<td>{$item.suid|truex}</td>
-				<td>{$item.sgid|truex}</td>
-				<td>{$item.sticky|truex}</td>
-				<td>{$item.ur|truex}</td>
-				<td>{$item.uw|truex}</td>
-				<td>{$item.ux|truex}</td>
-				<td>{$item.gr|truex}</td>
-				<td>{$item.gw|truex}</td>
-				<td>{$item.gx|truex}</td>
-				<td>{$item.or|truex}</td>
-				<td>{$item.ow|truex}</td>
-				<td>{$item.ox|truex}</td>
+				<td class="text">{$key}</td>
+				<td class="text">{$item.t}</td>
+				<td class="text">{$item.u}</td>
+				<td class="text">{$item.g}</td>
+				<td class="text">{$item.suid|truex}</td>
+				<td class="text">{$item.sgid|truex}</td>
+				<td class="text">{$item.sticky|truex}</td>
+				<td class="text">{$item.ur|truex}</td>
+				<td class="text">{$item.uw|truex}</td>
+				<td class="text">{$item.ux|truex}</td>
+				<td class="text">{$item.gr|truex}</td>
+				<td class="text">{$item.gw|truex}</td>
+				<td class="text">{$item.gx|truex}</td>
+				<td class="text">{$item.or|truex}</td>
+				<td class="text">{$item.ow|truex}</td>
+				<td class="text">{$item.ox|truex}</td>
 			</tr>
 		{/foreach}
 	</table>

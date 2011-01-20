@@ -1242,7 +1242,12 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 		if( ! $modlib ) require_once 'lib/modules/modlib.php';
 
 		$data = $this->getData();
-		$data['position'] = ($data['position'] == 'left') ? 'l' : 'r';
+		
+		include_once 'lib/modules/modlib.php';	// use zones from modlib
+		$module_zones = $modlib->module_zones;
+		$module_zones = array_map(array($this, 'processModuleZones'), $module_zones);
+		$module_zones = array_flip( $module_zones );
+		$data['position'] = $module_zones[$data['position']];
 
 		$this->replaceReferences( $data );
 
@@ -1260,6 +1265,10 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
                 }
 
 		return $modlib->assign_module( 0, $data['name'], null, $data['position'], $data['order'], $data['cache'], $data['rows'], $data['groups'], $data['params'] );
+	}
+	
+	private function processModuleZones( $zone_id ) {
+		return str_replace( '_modules', '', $zone_id);
 	}
 } // }}}
 

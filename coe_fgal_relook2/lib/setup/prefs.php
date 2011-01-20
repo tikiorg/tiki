@@ -1260,6 +1260,8 @@ function get_default_prefs() {
 		'expanded_category_jail' => '',
 		'expanded_category_jail_key' => '',
 		'ws_container' => 0,
+		'category_morelikethis_algorithm' => '',
+		'category_morelikethis_mincommon' => 2, 
 
 		// html pages
 		'feature_html_pages' => 'n',
@@ -1359,6 +1361,12 @@ function get_default_prefs() {
 		'feature_fixed_width' => 'y',
 		'feature_html_head_base_tag' => 'n',
 
+		// Modules
+		'module_zones_top' => 'y',
+		'module_zones_pagetop' => 'y',
+		'module_zones_pagebottom' => 'y',
+		'module_zones_bottom' => 'y',
+		
 		// layout
 		'feature_left_column' => 'y',
 		'feature_right_column' => 'y',

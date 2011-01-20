@@ -113,9 +113,11 @@
         {/section} </i> </td>
     </tr>
     {sectionelse}
-    <tr>
-      <td class="odd" colspan="{if $prefs.directory_country_flag eq 'y'}7{else}6{/if}"> {tr}No records found.{/tr} </td>
-    </tr>
+		{if $prefs.directory_country_flag eq 'y'}
+			{norecords _colspan=7}
+		{else}
+			{norecords _colspan=6}
+		{/if}
     {/section}
   </table>
   {if $items}

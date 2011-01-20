@@ -65,9 +65,7 @@
   <td class="userlist{cycle advance=true}"><a class="userlistlogin{cycle advance=false}" href="?break={$listpages[changes].login}">{icon _id='cross' alt="{tr}break friendship{/tr}"}</a></td>
 </tr>
 {sectionelse}
-<tr><td colspan="6" class="odd">
-{tr}No records found{/tr}
-</td></tr>
+	{norecords _colspan=6}
 {/section}
 </table>
 

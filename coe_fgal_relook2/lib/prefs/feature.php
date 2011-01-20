@@ -238,6 +238,7 @@ function prefs_feature_list() {
 		'feature_share' => array(
 			'name' => tra('Share'),
 			'description' => tra('Add a "Share" link in all pages to send it via e-mail, Twitter, Facebook, message or forums'),
+			'warning' => tra('be careful when allowing to anonymous to activate the antibot feature.'),
 			'help' => 'Share',
 			'type' => 'flag',
 		),

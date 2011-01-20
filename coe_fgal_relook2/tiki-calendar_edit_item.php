@@ -43,14 +43,14 @@ foreach ($rawcals["data"] as $cal_data) {
   $cal_id = $cal_data['calendarId'];
   $calperms = Perms::get( array( 'type' => 'calendar', 'object' => $cal_id ) );
   if ($cal_data["personal"] == "y") {
-    if ($user && $user == $cal_data["user"]) {
+    if ($user) {
       $cal_data["tiki_p_view_calendar"] = 'y';
     	$cal_data["tiki_p_view_events"] = 'y';
       $cal_data["tiki_p_add_events"] = 'y';
       $cal_data["tiki_p_change_events"] = 'y';
     } else {
       $cal_data["tiki_p_view_calendar"] = 'n';
-    	$cal_data["tiki_p_view_events"] = 'n';
+    	$cal_data["tiki_p_view_events"] = 'y';
       $cal_data["tiki_p_add_events"] = 'n';
       $cal_data["tiki_p_change_events"] = 'n';
     }

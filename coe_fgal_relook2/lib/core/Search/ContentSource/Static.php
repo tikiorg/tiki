@@ -24,7 +24,22 @@ class Search_ContentSource_Static implements Search_ContentSource_Interface
 
 		$out = array();
 
-		foreach( $this->data[$objectId] as $key => $value) {
+		if (is_int(key($this->data[$objectId]))) {
+			foreach ($this->data[$objectId] as $entry) {
+				$out[] = $this->mapData($entry, $typeFactory);
+			}
+		} else {
+			$out = $this->mapData($this->data[$objectId], $typeFactory);
+		}
+
+		return $out;
+	}
+
+	private function mapData($data, $typeFactory)
+	{
+		$out = array();
+
+		foreach ($data as $key => $value) {
 			$type = $this->typeMap[$key];
 			$out[$key] = $typeFactory->$type($value);
 		}

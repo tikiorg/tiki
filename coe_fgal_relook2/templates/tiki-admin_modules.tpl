@@ -8,23 +8,40 @@
 	{if $tiki_p_edit_menu eq 'y'}
 		{button href="tiki-admin_menus.php" _text="{tr}Admin Menus{/tr}"}
 	{/if}
+	{button save_modules="y" _text="{tr}Save{/tr}" _style="display:none;" _id="save_modules" _ajax="n"}
 </div>
 
 {if !empty($missing_params)}
-<div class="simplebox highlight">
-	{tr}The following required parameters are missing:{/tr}
-	<br/>
-	{section name=ix loop=$missing_params}
-		{$missing_params[ix]}
-		{if !$smarty.section.ix.last},&nbsp;{/if}
-	{/section}
-</div>
-<br />
+	{remarksbox type="warning" title="{tr}Modules Parameters{/tr}"}
+		{tr}The following required parameters are missing:{/tr}<br/>
+		{section name=ix loop=$missing_params}
+			{$missing_params[ix]}
+			{if !$smarty.section.ix.last},&nbsp;{/if}
+		{/section}
+	{/remarksbox}
 {/if}
+
+{remarksbox type="note" title="{tr}Modules Revamp{/tr}" icon="bricks"}
+	<em>{tr}Experimental. This feature is still under development{/tr}</em><br />
+	<ul>
+		<li>{tr}Drag the modules around to re-order then click save when ready{/tr}</li>
+		<li>{tr}Double click them to edit{/tr}</li>
+		<li>{tr}Modules with "position: absolute" in their style can be dragged in to position{/tr}</li>
+		<li>{tr}New modules can be dragged from the "All Modules" tab{/tr}</li>
+	</ul>
+	<p>
+		<strong>{tr}Note:{/tr}</strong> {tr}Links and buttons in modules, apart from the Application Menu, have been deliberately disabled on this page to make drag and drop more reliable. Click here to return <a href="./">HOME</a>{/tr}<br />
+		<strong><em>{tr}More info here{/tr}</em></strong> {icon _id="help" link="http://dev.tiki.org/Modules+Revamp"}
+	</p>
+	
+{/remarksbox}
 
 {tabset name='tabs_adminmodules'}
 
-{tab name="{tr}Assign/Edit modules{/tr}"}
+{tab name="{tr}Assigned modules{/tr}"}
+	{remarksbox type="note" title="{tr}Modules Revamp{/tr}" icon="bricks"}
+		<em>{tr}This tab remains for legacy purposes to allow editing "the old way"{/tr}</em>
+	{/remarksbox}
 	{if $prefs.feature_tabs neq 'y'}
 		<legend class="heading">
 			<span>
@@ -33,7 +50,83 @@
 		</legend>
 	{/if}
 	<h2>{tr}Assigned Modules{/tr}</h2>
-	<a name="leftmod"></a>
+	<a name="topmod"></a>
+	<table class="normal">
+		<caption>{tr}Top Modules{/tr}</caption>
+		<tr>
+			<th>{tr}Name{/tr}</th>
+			<th>{tr}Order{/tr}</th>
+			<th>{tr}Cache{/tr}</th>
+			<th>{tr}Rows{/tr}</th>
+			<th>{tr}Parameters{/tr}</th>
+			<th>{tr}Groups{/tr}</th>
+			<th>{tr}Action{/tr}</th>
+		</tr>
+		{cycle print=false values="even,odd"}
+		{section name=user loop=$top}
+			<tr class="{cycle}">
+				<td>{$top[user].name|escape}</td>
+				<td>{$top[user].ord}</td>
+				<td>{$top[user].cache_time}</td>
+				<td>{$top[user].rows}</td>
+				<td style="max-width: 40em; white-space: normal;font-size:smaller;">{$top[user].params|stringfix:"&":"<br />"}</td>
+				<td>{$top[user].module_groups}</td>
+				<td>
+					<a class="link" href="tiki-admin_modules.php?edit_assign={$top[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+					{if $top[0].moduleId ne $top[user].moduleId}
+						<a class="link" href="tiki-admin_modules.php?modup={$top[user].moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
+					{/if}
+					{if !$smarty.section.user.last and $top[user.index_next].moduleId}
+						<a class="link" href="tiki-admin_modules.php?moddown={$top[user].moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
+					{/if}
+					<a class="link" href="tiki-admin_modules.php?unassign={$top[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
+				</td>
+			</tr>
+		{sectionelse}
+			{norecords _colspan=7}
+		{/section}
+	</table>
+	<br />
+
+	<a name="pagetopmod"></a>
+	<table class="normal">
+		<caption>{tr}Page Top Modules{/tr}</caption>
+		<tr>
+			<th>{tr}Name{/tr}</th>
+			<th>{tr}Order{/tr}</th>
+			<th>{tr}Cache{/tr}</th>
+			<th>{tr}Rows{/tr}</th>
+			<th>{tr}Parameters{/tr}</th>
+			<th>{tr}Groups{/tr}</th>
+			<th>{tr}Action{/tr}</th>
+		</tr>
+		{cycle print=false values="even,odd"}
+		{section name=user loop=$pagetop}
+			<tr class="{cycle}">
+				<td>{$pagetop[user].name|escape}</td>
+				<td>{$pagetop[user].ord}</td>
+				<td>{$pagetop[user].cache_time}</td>
+				<td>{$pagetop[user].rows}</td>
+				<td style="max-width: 40em; white-space: normal;font-size:smaller;">{$pagetop[user].params|stringfix:"&":"<br />"}</td>
+				<td>{$pagetop[user].module_groups}</td>
+				<td>
+					<a class="link" href="tiki-admin_modules.php?edit_assign={$pagetop[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+					{if $pagetop[0].moduleId ne $pagetop[user].moduleId}
+						<a class="link" href="tiki-admin_modules.php?modup={$pagetop[user].moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
+					{/if}
+					{if !$smarty.section.user.last and $pagetop[user.index_next].moduleId}
+						<a class="link" href="tiki-admin_modules.php?moddown={$pagetop[user].moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
+					{/if}
+					<a class="link" href="tiki-admin_modules.php?unassign={$pagetop[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
+				</td>
+			</tr>
+		{sectionelse}
+			{norecords _colspan=7}
+		{/section}
+	</table>
+	<br />
+
+	<br />	<a name="leftmod"></a>
 	<table class="normal">
 		<caption>{tr}Left Modules{/tr}</caption>
 		<tr>
@@ -48,13 +141,13 @@
 		{cycle print=false values="even,odd"}
 		{section name=user loop=$left}
 			<tr class="{cycle}">
-				<td>{$left[user].name|escape}</td>
-				<td>{$left[user].ord}</td>
-				<td>{$left[user].cache_time}</td>
-				<td>{$left[user].rows}</td>
-				<td style="max-width: 40em; white-space: normal;">{$left[user].params|stringfix:"&":"<br />"}</td>
-				<td>{$left[user].module_groups}</td>
-				<td>
+				<td class="text">{$left[user].name|escape}</td>
+				<td class="integer">{$left[user].ord}</td>
+				<td class="integer">{$left[user].cache_time}</td>
+				<td class="integer">{$left[user].rows}</td>
+				<td class="text">{$left[user].params|stringfix:"&":"<br />"}</td>
+				<td class="text">{$left[user].module_groups}</td>
+				<td class="action">
 					<a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 					{if $left[0].moduleId ne $left[user].moduleId}
 						<a class="link" href="tiki-admin_modules.php?modup={$left[user].moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
@@ -67,9 +160,7 @@
 				</td>
 			</tr>
 		{sectionelse}
-			<tr>
-				<td colspan="7"><b>{tr}No records found{/tr}</b></td>
-			</tr>
+			{norecords _colspan=7}
 		{/section}
 	</table>
 	<br />
@@ -89,13 +180,13 @@
 		{cycle print=false values="even,odd"}
 		{section name=user loop=$right}
 			<tr class="{cycle}">
-				<td>{$right[user].name|escape}</td>
-				<td>{$right[user].ord}</td>
-				<td>{$right[user].cache_time}</td>
-				<td>{$right[user].rows}</td>
-				<td>{$right[user].params|stringfix:"&":"<br />"}</td>
-				<td>{$right[user].module_groups}</td>
-				<td>
+				<td class="text">{$right[user].name|escape}</td>
+				<td class="integer">{$right[user].ord}</td>
+				<td class="integer">{$right[user].cache_time}</td>
+				<td class="integer">{$right[user].rows}</td>
+				<td class="text">{$right[user].params|stringfix:"&":"<br />"}</td>
+				<td class="text">{$right[user].module_groups}</td>
+				<td class="action">
 					<a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 					{if $right[0].moduleId ne $right[user].moduleId}
 						<a class="link" href="tiki-admin_modules.php?modup={$right[user].moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
@@ -108,12 +199,88 @@
 				</td>
 			</tr>
 		{sectionelse}
-			<tr>
-				<td colspan="7"><b>{tr}No records found{/tr}</b></td>
-			</tr>
+         {norecords _colspan=7}
 		{/section}
 	</table>
 	<br/>
+	<br />
+
+	<a name="pagebottommod"></a>
+	<table class="normal">
+		<caption>{tr}Page Bottom Modules{/tr}</caption>
+		<tr>
+			<th>{tr}Name{/tr}</th>
+			<th>{tr}Order{/tr}</th>
+			<th>{tr}Cache{/tr}</th>
+			<th>{tr}Rows{/tr}</th>
+			<th>{tr}Parameters{/tr}</th>
+			<th>{tr}Groups{/tr}</th>
+			<th>{tr}Action{/tr}</th>
+		</tr>
+		{cycle print=false values="even,odd"}
+		{section name=user loop=$pagebottom}
+			<tr class="{cycle}">
+				<td>{$pagebottom[user].name|escape}</td>
+				<td>{$pagebottom[user].ord}</td>
+				<td>{$pagebottom[user].cache_time}</td>
+				<td>{$pagebottom[user].rows}</td>
+				<td style="max-width: 40em; white-space: normal;font-size:smaller;">{$pagebottom[user].params|stringfix:"&":"<br />"}</td>
+				<td>{$pagebottom[user].module_groups}</td>
+				<td>
+					<a class="link" href="tiki-admin_modules.php?edit_assign={$pagebottom[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+					{if $pagebottom[0].moduleId ne $pagebottom[user].moduleId}
+						<a class="link" href="tiki-admin_modules.php?modup={$pagebottom[user].moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
+					{/if}
+					{if !$smarty.section.user.last and $pagebottom[user.index_next].moduleId}
+						<a class="link" href="tiki-admin_modules.php?moddown={$pagebottom[user].moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
+					{/if}
+					<a class="link" href="tiki-admin_modules.php?unassign={$pagebottom[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
+				</td>
+			</tr>
+		{sectionelse}
+			{norecords _colspan=7}
+		{/section}
+	</table>
+	<br />
+
+	<a name="bottommod"></a>
+	<table class="normal">
+		<caption>{tr}Bottom Modules{/tr}</caption>
+		<tr>
+			<th>{tr}Name{/tr}</th>
+			<th>{tr}Order{/tr}</th>
+			<th>{tr}Cache{/tr}</th>
+			<th>{tr}Rows{/tr}</th>
+			<th>{tr}Parameters{/tr}</th>
+			<th>{tr}Groups{/tr}</th>
+			<th>{tr}Action{/tr}</th>
+		</tr>
+		{cycle print=false values="even,odd"}
+		{section name=user loop=$bottom}
+			<tr class="{cycle}">
+				<td>{$bottom[user].name|escape}</td>
+				<td>{$bottom[user].ord}</td>
+				<td>{$bottom[user].cache_time}</td>
+				<td>{$bottom[user].rows}</td>
+				<td style="max-width: 40em; white-space: normal;font-size:smaller;">{$bottom[user].params|stringfix:"&":"<br />"}</td>
+				<td>{$bottom[user].module_groups}</td>
+				<td>
+					<a class="link" href="tiki-admin_modules.php?edit_assign={$bottom[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+					{if $bottom[0].moduleId ne $bottom[user].moduleId}
+						<a class="link" href="tiki-admin_modules.php?modup={$bottom[user].moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
+					{/if}
+					{if !$smarty.section.user.last and $bottom[user.index_next].moduleId}
+						<a class="link" href="tiki-admin_modules.php?moddown={$bottom[user].moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
+					{/if}
+					<a class="link" href="tiki-admin_modules.php?unassign={$bottom[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
+				</td>
+			</tr>
+		{sectionelse}
+			{norecords _colspan=7}
+		{/section}
+	</table>
+	<br />
+
 	<a name="assign"></a>
 	{if $assign_name eq ''}
 		<h2>{tr}Assign new module{/tr}</h2>
@@ -125,8 +292,9 @@
 		<h3>{tr}Preview{/tr}</h3>
 		{$preview_data}
 	{/if}
-	<form method="post" action="tiki-admin_modules.php{if (empty($assign_name))}#assign{/if}">
-	{* on the initial selection of a new module, reload the page to the #assign anchor *}
+	<form method="post" action="tiki-admin_modules.php{if (0 and empty($assign_name))}#assign{/if}">
+		{* on the initial selection of a new module, reload the page to the #assign anchor *}
+		<input id="module-order" type="hidden" name="module-order" value=""/>
 		{if !empty($info.moduleId)}
 			<input type="hidden" name="moduleId" value="{$info.moduleId}" />
 		{elseif !empty($moduleId)}
@@ -147,111 +315,7 @@
 
 {if !empty($assign_name)}
 {* because changing the module name willl auto-submit the form, no reason to display these fields until a module is selected *}
-			<tr>
-				<td><label for="assign_position">{tr}Position{/tr}</label></td>
-				<td>
-					<select id="assign_position" name="assign_position">
-						<option value="l" {if $assign_position eq 'l'}selected="selected"{/if}>{tr}Left{/tr}</option>
-						<option value="r" {if $assign_position eq 'r'}selected="selected"{/if}>{tr}Right{/tr}</option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td><label for="assign_order">{tr}Order{/tr}</label></td>
-				<td>
-					<select id="assign_order" name="assign_order">
-						{section name=ix loop=$orders}
-							<option value="{$orders[ix]|escape}" {if $assign_order eq $orders[ix]}selected="selected"{/if}>{$orders[ix]}</option>
-						{/section}
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td><label for="assign_cache">{tr}Cache Time{/tr} ({tr}secs{/tr})</label></td>
-				<td>
-					<input type="text" id="assign_cache" name="assign_cache" value="{$assign_cache|escape}" />
-				</td>
-			</tr>
-			{if !isset($assign_info.type) or $assign_info.type neq 'function'}
-				<tr>
-						<td><label for="assign_rows">{tr}Rows{/tr}</label></td>
-						<td>
-								<input type="text" id="assign_rows" name="assign_rows" value="{$assign_rows|escape}" />
-						</td>
-				</tr>
-			{/if}
-			{if isset($assign_info.type) and $assign_info.type eq 'function'}
-				{foreach from=$assign_info.params key=name item=param}
-					<tr>
-						<td><label for="assign_params[{$name|escape}]">{$param.name|escape}{if $param.required} <span class="attention">({tr}required{/tr})</span>{/if}</label></td>
-						<td>
-							<input type="text" id="assign_params[{$name|escape}]" name="assign_params[{$name|escape}]" value="{$param.value|escape}"/>
-							<div class="description">
-								{$param.description}
-								{if !empty($param.default)} - {tr}Default:{/tr} {$param.default|escape}{/if}
-							</div>
-						</td>
-					</tr>
-				{/foreach}
-			{else}
-				<tr>
-					<td>
-						<a {popup text="{tr}Params: specific params to the module and/or general params ('lang', 'flip', 'title', 'decorations', 'section', 'overflow', 'page', 'nobox', 'bgcolor', 'color', 'theme', 'notitle', 'nopage'). Separator between params:'&amp;'. E.g. maxlen=15&amp;nonums=y.{/tr}" width=200 center=true}><label for="assign_params">{tr}Parameters{/tr}</label></a>
-					</td>
-					<td>
-						<textarea id="assign_params" name="assign_params" rows="1" cols="60" >{$assign_params|escape}</textarea>
-						{help url="Module+Parameters"}
-					</td>
-				</tr>
-			{/if}
-			<tr>
-				<td><label for="groups">{tr}Groups{/tr}</label></td>
-				<td>
-					{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
-					<select multiple="multiple" id="groups" name="groups[]">
-						{section name=ix loop=$groups}
-							<option value="{$groups[ix].groupName|escape}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName|escape}</option>
-						{/section}
-					</select>
-					{if $prefs.modallgroups eq 'y'}
-						<div class="simplebox">
-							{icon _id=information style="vertical-align:middle;float:left"} {tr}The{/tr} <a class="rbox-link" href="tiki-admin.php?page=module">{tr}Display Modules to All Groups{/tr}</a> {tr}setting will override your selection of specific groups.{/tr}
-						</div>
-						<br />
-					{/if}
-				</td>
-			</tr>
-			{if $prefs.user_assigned_modules eq 'y'}
-				<tr>
-					<td>{tr}Visibility{/tr}</td>
-					<td>
-						<select name="assign_type">
-							<option value="D" {if $assign_type eq 'D'}selected="selected"{/if}>
-								{tr}Displayed now for all eligible users even with personal assigned modules{/tr}
-							</option>
-							<option value="d" {if $assign_type eq 'd'}selected="selected"{/if}>
-								{tr}Displayed for the eligible users with no personal assigned modules{/tr}
-							</option>
-							<option value="P" {if $assign_type eq 'P'}selected="selected"{/if}>
-								{tr}Displayed now, can't be unassigned{/tr}
-							</option>
-							<option value="h" {if $assign_type eq 'h'}selected="selected"{/if}>
-								{tr}Not displayed until a user chooses it{/tr}
-							</option>
-						</select>
-						<div class="simplebox">
-							{icon _id=information style="vertical-align:middle;float:left;"}{tr}Because <a class="rbox-link" href="tiki-admin.php?page=module">Users can Configure Modules</a>, select either{/tr} &quot;{tr}Displayed now for all eligible users even with personal assigned modules{/tr}&quot; {tr}or{/tr} &quot;{tr}Displayed now, can't be unassigned{/tr}&quot; {tr}to make sure users will notice any newly assigned modules.{/tr}
-						</div>
-					</td>
-				</tr>
-			{/if}
-			<tr>
-				<td>&nbsp;</td>
-				<td>
-					<input type="submit" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
-					<input type="submit" name="assign" value="{tr}Assign{/tr}" onclick="needToConfirm=false;" />
-				</td>
-			</tr>
+	{include file='admin_modules_form.tpl'}
 {else}
 			<tr>
 				<td>&nbsp;</td>
@@ -281,18 +345,16 @@
 		{cycle print=false values="even,odd"}
 		{section name=user loop=$user_modules}
 			<tr class="{cycle}">
-				<td>{$user_modules[user].name|escape}</td>
-				<td>{$user_modules[user].title|escape}</td>
-				<td>
+				<td class="text">{$user_modules[user].name|escape}</td>
+				<td class="text">{$user_modules[user].title|escape}</td>
+				<td class="action">
 					<a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}&amp;cookietab=2#editcreate" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 					<a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name|escape:'url'}&amp;cookietab=1#assign" title="{tr}Assign{/tr}">{icon _id='add' alt="{tr}Assign{/tr}"}</a>
 					<a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name|escape:'url'}&amp;cookietab=2" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 				</td>
 			</tr>
 		{sectionelse}
-			<tr>
-				<td colspan="3" class="odd"><b>{tr}No records found{/tr}</b></td>
-			</tr>
+         {norecords _colspan=3}
 		{/section}
 	</table>
 	<br />
@@ -426,7 +488,7 @@
 								<td>
 									<select name="menus" id='list_menus'>
 										{section name=ix loop=$menus}
-											<option value="{literal}{{/literal}menu id={$menus[ix].menuId}{literal}}{/literal}">{$menus[ix].name|escape}</option>
+											<option value="{literal}{{/literal}menu id={$menus[ix].menuId} css=n{literal}}{/literal}">{$menus[ix].name|escape}</option>
 										{/section}
 									</select>
 								</td>
@@ -445,7 +507,7 @@
 									<td>
 										<select name="cssmenus" id='list_cssmenus'>
 											{section name=ix loop=$menus}
-												<option value="{literal}{{/literal}menu id={$menus[ix].menuId} css=y type= {literal}}{/literal}">{$menus[ix].name}</option>
+												<option value="{literal}{{/literal}menu id={$menus[ix].menuId} type= {literal}}{/literal}">{$menus[ix].name}</option>
 											{/section}
 										</select>
 									</td>
@@ -501,17 +563,17 @@
 					</table>
 					{pagination_links cant=$maximum step=$maxRecords offset=$offset }{/pagination_links}
 					{remarksbox type="tip" title="{tr}Tip{/tr}"}
-							{tr}To use a default Tiki menu:{/tr}
-							<ul>
-								<li>{literal}{menu id=X}{/literal}</li>
-							</ul>
 						{if $prefs.feature_cssmenus eq 'y'}
 							{tr}To use a <a target="tikihelp" href="http://users.tpg.com.au/j_birch/plugins/superfish/">CSS (Superfish) menu</a>, use one of these syntaxes:{/tr}
 							<ul>
-								<li>{literal}{menu id=X css=y type=vert}{/literal}</li>
-								<li>{literal}{menu id=X css=y type=horiz}{/literal}</li>
+								<li>{literal}{menu id=X type=vert}{/literal}</li>
+								<li>{literal}{menu id=X type=horiz}{/literal}</li>
 							</ul>
 						{/if}
+							{tr}To use a default Tiki menu:{/tr}
+							<ul>
+								<li>{literal}{menu id=X  css=n}{/literal}</li>
+							</ul>
 					{/remarksbox}
 				</td>
 			</tr>
@@ -524,6 +586,19 @@
 			</tr>
 		</table>
 	</form>
+{/tab}
+
+{tab name="{tr}All Modules{/tr}"}
+	<div style="height:400px;overflow:auto;">
+		{listfilter selectors='#module_list li'}
+		<ul id="module_list">
+			{foreach key=name item=info from=$all_modules_info}
+				<li>
+				{$info.name} <em>({$name})</em>
+				</li>
+			{/foreach}
+		</ul>
+	</div>
 {/tab}
 
 {/tabset}

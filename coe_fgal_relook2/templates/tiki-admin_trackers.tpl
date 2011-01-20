@@ -66,9 +66,11 @@
 				</td>
 			</tr>
 		{sectionelse}
-			<tr class="odd">
-				<td colspan="7"><strong>{tr}No records found{/tr}{if $find} {tr}with:{/tr} {$find}{/if}.</strong></td>
-			</tr>
+			{if $find}
+				{norecords _colspan=7 _text="No records found with: $find"}
+			{else}
+				{norecords _colspan=7}
+			{/if}
 		{/section}
 	</table>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}

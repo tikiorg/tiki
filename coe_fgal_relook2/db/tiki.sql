@@ -1524,7 +1524,13 @@ CREATE TABLE `tiki_modules` (
   KEY `namePosOrdParam` (`name`(100), `position`, `ord`, `params`(140))
 ) ENGINE=MyISAM;
 
-INSERT INTO tiki_modules (name,position,ord,cache_time,params,groups) VALUES ('Application Menu','l',30,0,'flip=y','a:1:{i:0;s:10:"Registered";}');
+INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES
+	('menu','l',1,7200,'id=42&flip=y','a:1:{i:0;s:10:"Registered";}'),
+	('logo','t',1,7200,'nobox=y&style=float%3Aleft%3Bmargin%3A0+30px%3B','a:0:{}'),
+	('login_box','t',2,0,'mode=header&nobox=y&style=position%3Aabsolute%3Bright%3A30px%3Btop%3A5px%3B','a:0:{}'),
+	('quickadmin','t',3,7200,'nobox=y&style=position%3A+absolute%3B+right%3A+200px%3B','a:1:{i:0;s:6:"Admins";}'),
+	('rsslist','b',1,7200,'nobox=y','a:0:{}'),
+	('poweredby','b',2,7200,'nobox=y&icons=n&version=n','a:0:{}');
 
 DROP TABLE IF EXISTS `tiki_newsletter_subscriptions`;
 CREATE TABLE `tiki_newsletter_subscriptions` (
@@ -2840,6 +2846,9 @@ INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_modify_tracker_items', 'Can change tracker items', 'registered', 'trackers', NULL, 'feature_trackers');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_modify_tracker_items_pending', 'Can change pending tracker items', 'registered', 'trackers', NULL, 'feature_trackers');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_modify_tracker_items_closed', 'Can change closed tracker items', 'registered', 'trackers', NULL, 'feature_trackers');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_remove_tracker_items', 'Can remove tracker items', 'registered', 'trackers', NULL, 'feature_trackers');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_remove_tracker_items_pending', 'Can remove pending tracker items', 'registered', 'trackers', NULL, 'feature_trackers');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_remove_tracker_items_closed', 'Can remove closed tracker items', 'registered', 'trackers', NULL, 'feature_trackers');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_tracker_view_ratings', 'Can view rating result for tracker items', 'basic', 'trackers', NULL, 'feature_trackers');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_tracker_vote_ratings', 'Can vote a rating for tracker items', 'registered', 'trackers', NULL, 'feature_trackers');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_tracker_revote_ratings', 'Can re-vote a rating for tracker items', 'registered', 'trackers', NULL, 'feature_trackers');

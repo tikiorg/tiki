@@ -308,6 +308,9 @@ if (isset($_REQUEST['approve'], $_REQUEST['revision']) && $_REQUEST['revision'] 
 
 		if ($perms->wiki_approve) {
 			$flaggedrevisionlib->flag_revision($page, $_REQUEST['revision'], 'moderation', 'OK');
+
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('pages', $page);
 		}
 	}
 	$access->redirect($wikilib->sefurl($page));

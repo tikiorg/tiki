@@ -57,6 +57,11 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 
 		$pos = $start;
 		while( false !== $pos = strpos( $this->text, '{', $pos ) ) {
+			// Shortcut {$var} syntax
+			if (substr($this->text, $pos + 1, 1) === '$') {
+				return;
+			}
+
 			if( $pos >= $end ) {
 				return;
 			}
@@ -81,7 +86,6 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 				// End already reached
 				$this->recordMatch( $match );
 				$pos = $match->getEnd();
-
 			} else {
 
 				++$this->leftOpen;

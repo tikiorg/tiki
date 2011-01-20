@@ -31,7 +31,7 @@ body.cke_show_borders {
 }
 
 body.fixed_width {
-	background: #474747 url(darkroom/474747_5e5e5e_40.png);
+	background-color: transparent;
 }
 
 a,
@@ -234,16 +234,21 @@ ol {
 #main {
 	margin: 0;
 	font-size: 1em;
+}
+
+#header_fixedwidth {
+	text-align: left;
 	background: #0c0c0c;
 }
 
-#header {
-	text-align: left;
+#top_modules {
+	min-height: 130px;
 }
 
 #middle {
 	text-align: left;
 	font-size: 1.2em;
+	background: #0c0c0c;
 }
 
 #c1c2 {
@@ -281,7 +286,7 @@ ol {
 	padding: 3px;
 }
 
-#footer {
+.footerbgtrap {
 	text-align: center;
 	background: #474747;
 	color: inherit;
@@ -303,7 +308,7 @@ ol {
 }
 
 /* Site Header & Identity */
-#header-top {
+#header_fixedwidth {
 	height: auto;
 	min-height: 50px;
 	padding-top: 2px;
@@ -362,16 +367,16 @@ ol {
 	font-size: 1.6em;
 }
 
-#siteloginbar,
-#siteloginbar_popup {
+.siteloginbar,
+.siteloginbar_popup {
 	bottom: 2px;
 }
 
-#siteloginbar * {
+.siteloginbar * {
 	padding: 2px;
 }
 
-#siteloginbar.logged-in {
+.siteloginbar.logged-in {
 	bottom: 2px;
 }
 
@@ -380,23 +385,34 @@ input[id="sl-login-pass"] {
 	font-size: 1.1em;
 }
 
-#siteloginbar_popup ul.cssmenu_horiz li ul {
+.siteloginbar_popup ul.cssmenu_horiz li ul {
 	margin-top: -6px;
 }
 
-#siteloginbar_popup .tabcontent {
+.siteloginbar_popup .tabcontent {
 	margin: 0;
 }
 
 #tiki-top {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 	border-top: 1px solid #818181;
 	height: 34px;
 	background: url(darkroom/button.png) repeat-x;
 }
 
-#sitesearchbar {
-	margin-right: 10px;
-	padding-right: 0;
+#header .box-search {
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	z-index: 2;
+}
+
+#header .box-login_box {
+	position: absolute;
+	right: 10px;
+	bottom: 45px;
 }
 
 /* centercolumn */

@@ -41,17 +41,17 @@
 	{section name=user loop=$topics}
 		<tr class="{cycle}">
 			<td class="integer">{$topics[user].topicId}</td>
-			<td>
+			<td class="text">
 				<a class="link" href="tiki-view_articles.php?topic={$topics[user].topicId}">{$topics[user].name|escape}</a>
 			</td>
-			<td>
+			<td class="text">
 				{if $topics[user].image_size}
 					<img alt="{tr}topic image{/tr}" src="article_image.php?image_type=topic&amp;id={$topics[user].topicId}&amp;reload=1" />
 				{else}
 					&nbsp;
 				{/if}
 			</td>
-			<td>{$topics[user].active}</td>
+			<td class="text">{$topics[user].active}</td>
 			<td class="integer">{$topics[user].arts}</td>
 			{if $prefs.feature_submissions eq 'y'}<td>{$topics[user].subs}</td>{/if}
 			<td class="action">
@@ -71,8 +71,6 @@
 			</td>
 		</tr>
 	{sectionelse}
-		<tr>
-			<td colspan="{if $prefs.feature_submissions eq 'y'}7{else}6{/if}" class="odd">{tr}No records found{/tr}</td>
-		</tr>
+		{if $prefs.feature_submissions eq 'y'}{norecords _colspan=7}{else}{norecords _colspan=6}{/if}
 	{/section}
 </table>

@@ -39,8 +39,8 @@
 			</tr>
 		{/if}
 	{sectionelse}
-		<tr><td colspan="5" class="odd"><strong>{tr}No records found{/tr}{if $find} {tr}with:{/tr} {$find}{/if}.</strong></td></tr>
+		{if $find}{norecords _colspan=5 _text="No records found with: $find"}{else}{norecords _colspan=5}{/if}
 	{/section}
 </table>
-<!-- Beginning of the prev/next advance buttons found at bottom of page -->
+
 {pagination_links cant=$channels_cant step=$prefs.maxRecords offset=$offset}{/pagination_links}

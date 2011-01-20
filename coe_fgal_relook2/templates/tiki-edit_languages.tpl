@@ -116,7 +116,7 @@
 								</td>
 							</tr>
 						{foreachelse}
-							<tr><td align="center"><h4>{tr}No records found.{/tr}</h4></td></tr>
+							{norecords _colspan=3}
 						{/foreach}
 						<tr>
 							<td colspan="3">

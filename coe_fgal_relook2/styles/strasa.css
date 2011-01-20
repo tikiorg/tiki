@@ -1,6 +1,7 @@
-/* Strasa theme for Tiki 5.x, original design by Patrick Allard, released under LGPL license.
-   For more information, visit http://themes.tiki.org
-   $Id$ */
+/*	Strasa theme for Tiki, original design by Patrick Allard, released under LGPL license.
+	For more information, visit http://themes.tiki.org
+	Adapted for Tiki 7.x
+	$Id$ */
 
 /* Import *lite as the base: */
 @import url("lite/lite.css");
@@ -129,14 +130,18 @@ input[type=password] {
 	width: 110px;
 }
 
-	
-input#search {
+#header .box-search {
+	position: absolute;
+	top: 45px;
+	right: 20px;
+}
+#header .box-search input.ac_input {
 	background: #E7F8FD;
 	border: 1px solid #3CF;
 	color: #517298;
-	height: 16px;
+/*	height: 16px;
 	margin-right: 10px;
-	width: 160px;
+	width: 160px;*/
 }
 
 input#comments-title {
@@ -273,13 +278,13 @@ label {
 
 #footer {
 	text-align: center;
-	font-size: .9em;
-	color: #999;
-	background: #2e3035;
 }
 
 .footerbgtrap {
 	height: 20%;
+	font-size: .9em;
+	color: #999;
+	background: #2e3035;
 }
 
 /* Theme-specific custom footer code */
@@ -352,9 +357,13 @@ label {
 }
 
 /* Site Header & Identity */
-#header-top {
+#header_fixedwidth {
 	color: #fff;
 	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
+}
+
+#top_modules {
+	min-height: 121px;
 }
 
 #siteheader {
@@ -397,44 +406,52 @@ label {
 	margin-right: 120px;
 }
 
-#siteloginbar {
-	position: static;
-	float: right;
+.siteloginbar {
+	position: absolute;
+	bottom: -24px;
+	right: 0;
 	height: 24px;
+	/*width: 600px;*/
 	line-height: 24px;
 	padding-left: 60px;
+	padding-right: 10px;
 	color: #fff;
 	background: #fff url(strasa/login.jpg) 0 0 no-repeat;
 }
 
-#siteloginbar a,
-#siteloginbar a:visited,
-#siteloginbar a:hover {
+.logged-in {
+	width: 120px;
+}
+
+.siteloginbar label,
+.siteloginbar a,
+.siteloginbar a:visited,
+.siteloginbar a:hover {
 	color: #fff;
 	text-decoration: none;
 }
 
-#sl-login-user,
-#sl-login-pass {
+.siteloginbar input[type="text"],
+.siteloginbar input[type="password"] {
 	background: transparent; /*#1b98c6*/
 	color: #fff;
 	border: solid 1px #fff;
 	width: 8em !important;
 }
 
-#siteloginbar #pass {
+.siteloginbar #pass {
 	float: right;
 	padding-left: 5px;
 }
 
-#siteloginbar .rme,
-#siteloginbar .pass {
+.siteloginbar .rme,
+.siteloginbar .pass {
 	display: inline;
 	margin-left: 1em;
 	padding-right: 10px;
 }
 
-#siteloginbar .register {
+.siteloginbar .register {
 	float: right;
 	height: 24px !important;
 	line-height: 22px;
@@ -445,7 +462,7 @@ label {
 	background: url(strasa/register.jpg) no-repeat;
 }
 
-#siteloginbar input.wikiaction {
+.siteloginbar input.wikiaction {
 	border: 0;
 	margin-left: .7em;
 	color: #5ae0ff;
@@ -2120,8 +2137,16 @@ body.fixed_width #col3 .content {
 	margin-right: 0;
 }
 
-body.fixed_width #main[id] {border:1px solid #2E3035; margin-top: 18px; margin-bottom: 5px;}
+body.fixed_width #outer_wrapper {
+	border: 1px solid #2E3035;
+	/*margin-top: 18px;
+	margin-bottom: 5px;*/
+}
 
-
+/* can't seem to get the border working - jb
+body.fixed_width #main {
+	border: 1px solid #2E3035;
+	margin-top: 0;
+}*/
 
 /* end of file */

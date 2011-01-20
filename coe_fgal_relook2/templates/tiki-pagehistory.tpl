@@ -32,6 +32,25 @@
 			{/if}
 		{/if}
 	</div>
+	{if $flaggedrev_approval and $tiki_p_wiki_approve eq 'y'}
+		{remarksbox type=comment title="{tr}Content Approval{/tr}"}
+			<form method="post" action="tiki-pagehistory.php?page={$page|escape:'url'}&amp;preview={$preview|escape:'url'}">
+				{if $flaggedrev_preview_approved}
+					<p>{tr}This revision is currently marked as approved.{/tr}<p>
+					<div class="submit">
+						<input type="hidden" name="unapprove" value="{$preview|escape}"/>
+						<input type="submit" name="flaggedrev" value="{tr}Remove Approval{/tr}"/>
+					</div>
+				{else}
+					<p>{tr}This revision has not been approved.{/tr}<p>
+					<div class="submit">
+						<input type="hidden" name="approve" value="{$preview|escape}"/>
+						<input type="submit" name="flaggedrev" value="{tr}Approve Revision{/tr}"/>
+					</div>
+				{/if}
+			</form>
+		{/remarksbox}
+	{/if}
 	<div class="wikitext">{$previewd}</div>
 {/if}
 
@@ -114,10 +133,7 @@ $("#toggle_diffs a").click(function(){
 			<table class="normal">
 				<tr>
 					{if $tiki_p_remove eq 'y'}<th><input type="submit" name="delete" value="{tr}Del{/tr}" /></th>{/if}
-					<th>{tr}Date{/tr}</th>
-					{if $tiki_p_wiki_view_author ne 'n'}<th>{tr}User{/tr}</th>{/if}
-					{if $prefs.feature_wiki_history_ip ne 'n'}<th>{tr}IP{/tr}</th>{/if}
-					<th>{tr}Edit Comment{/tr}</th>
+					<th>{tr}Information{/tr}</th>
 					{if $prefs.feature_contribution eq 'y'}<th>{tr}Contribution{/tr}</th>{/if}
 					{if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}<th>{tr}Contributors{/tr}</th>{/if}
 					<th>{tr}Version{/tr}</th>
@@ -129,16 +145,20 @@ $("#toggle_diffs a").click(function(){
 						</th>
 					{/if}
 				</tr>
-				<tr>
+				<tr class="odd">
 					{if $history_offset eq 1}
 						{if $tiki_p_remove eq 'y'}
-							<td class="odd">&nbsp;</td>
+							<td>&nbsp;</td>
 						{/if}
-						<td class="odd">{$info.lastModif|tiki_short_datetime}</td>
-						{if $tiki_p_wiki_view_author ne 'n'}<td class="odd">{$info.user|userlink}</td>{/if}
-						{if $prefs.feature_wiki_history_ip ne 'n'}<td class="odd">{$info.ip}</td>{/if}
-						<td class="odd">
-							{if $info.comment}{$info.comment|escape}{else}&nbsp;{/if}
+						<td class="left">
+							{$info.lastModif|tiki_short_datetime}
+							{if $tiki_p_wiki_view_author ne 'n'}{tr 0=$info.user|userlink}by %0{/tr}{/if}
+							{if $prefs.feature_wiki_history_ip ne 'n'}{tr 0=$info.ip}from %0{/tr}{/if}
+
+							{if $flaggedrev_approval and $tiki_p_wiki_view_latest eq 'y' and $info.approved}<strong>({tr}approved{/tr})</strong>{/if}
+
+							{if $info.comment}<div>{$info.comment|escape}</div>{/if}
+
 							{if $translation_sources[$info.version]}
 								{foreach item=source from=$translation_sources[$info.version]}
 									<div>
@@ -155,25 +175,25 @@ $("#toggle_diffs a").click(function(){
 							{/if}
 						</td>
 						{if $prefs.feature_contribution eq 'y'}
-							<td class="odd">{section name=ix loop=$contributions}{if !$smarty.section.ix.first},{/if}{$contributions[ix].name|escape}{/section}</td>
+							<td>{section name=ix loop=$contributions}{if !$smarty.section.ix.first},{/if}{$contributions[ix].name|escape}{/section}</td>
 						{/if}
 						{if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}
-							<td class="odd">
+							<td>
 								{section name=ix loop=$contributors}{if !$smarty.section.ix.first},{/if}{$contributors[ix].login|username}{/section}
 							</td>
 						{/if}
-						<td class="odd button_container">{if $current eq $info.version}<strong>{/if}{$info.version}<br />{tr}Current{/tr}{if $current eq $info.version}</strong>{/if}</td>
-						<td class="odd button_container">{if $current eq $info.version and $info.is_html eq "1"}{icon _id="html"}{/if}</td>
-						<td class="odd button_container">{self_link page=$page preview=$info.version _title="{tr}View{/tr}"}v{/self_link}
+						<td class="button_container">{if $current eq $info.version}<strong>{/if}{$info.version}<br />{tr}Current{/tr}{if $current eq $info.version}</strong>{/if}</td>
+						<td class="button_container">{if $current eq $info.version and $info.is_html eq "1"}{icon _id="html"}{/if}</td>
+						<td class="button_container">{self_link page=$page preview=$info.version _title="{tr}View{/tr}"}v{/self_link}
 						{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
 							&nbsp;{self_link page=$page source=$info.version _title="{tr}Source{/tr}"}s{/self_link}
 						{/if}
 						</td>
 						{if $prefs.default_wiki_diff_style ne "old" and $history}
-							<td class="odd button_container">
+							<td class="button_container">
 								<input type="radio" name="oldver" value="0" title="{tr}Compare{/tr}" {if $old.version == $info.version}checked="checked"{/if} />
 							</td>
-							<td class="odd button_container">
+							<td class="button_container">
 								<input type="radio" name="newver" value="0" title="{tr}Compare{/tr}" {if $new.version == $info.version or !$smarty.request.diff_style}checked="checked"{/if} />
 							</td>
 						{/if}
@@ -185,11 +205,15 @@ $("#toggle_diffs a").click(function(){
 						{if $tiki_p_remove eq 'y'}
 							<td class="button_container"><input type="checkbox" name="hist[{$element.version}]" /></td>
 						{/if}
-						<td>{$element.lastModif|tiki_short_datetime}</td>
-						{if $tiki_p_wiki_view_author ne 'n'}<td>{$element.user|userlink}</td>{/if}
-						{if $prefs.feature_wiki_history_ip ne 'n'}<td>{$element.ip}</td>{/if}
-						<td>
-							{if $element.comment}{$element.comment|escape}{else}&nbsp;{/if}
+						<td class="left">
+							{$element.lastModif|tiki_short_datetime}
+							{if $tiki_p_wiki_view_author ne 'n'}{tr 0=$element.user|userlink}by %0{/tr}{/if}
+							{if $prefs.feature_wiki_history_ip ne 'n'}{tr 0=$element.ip}from %0{/tr}{/if}
+
+							{if $element.comment}<div>{$element.comment|escape}</div>{/if}
+
+							{if $flaggedrev_approval and $tiki_p_wiki_view_latest eq 'y' and $element.approved}<strong>({tr}approved{/tr})</strong>{/if}
+
 							{if $translation_sources[$element.version]}
 								{foreach item=source from=$translation_sources[$element.version]}
 								<div>

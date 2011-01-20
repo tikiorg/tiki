@@ -1,5 +1,5 @@
 {* $Id$ *}
-{strip}
+{compact}
 {if $tiki_p_search eq 'y'}
 {tikimodule error=$module_error title=$tpl_module_title name="search" flip=$smod_params.flip decorations=$smod_params.decorations nobox=$smod_params.nobox notitle=$smod_params.notitle}
 {if $smod_params.tiki_search neq 'none'}
@@ -86,4 +86,4 @@ $("#search_mod_input_{{$search_mod_usage_counter}}").tiki("autocomplete", "pagen
 {/if}
 {/tikimodule}
 {/if}
-{/strip}
+{/compact}

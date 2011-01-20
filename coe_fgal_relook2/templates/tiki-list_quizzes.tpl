@@ -64,7 +64,7 @@
       	</tr>
 		{/if}
 	{sectionelse}
-		<tr><td class="norecords" colspan="{$numbercol}"><strong>{tr}No records found.{/tr}</strong></td></tr>
+		{norecords _colspan=$numbercol}
 	{/section}
 </table>
 

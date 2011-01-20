@@ -474,125 +474,7 @@ $(document).ready( function() { // JQuery's DOM is ready event - before onload
 		
 	}	// end if (jqueryTiki.colorbox)
 	
-	if (jqueryTiki.sheet) {
-		
-		// override saveSheet on jQuery.sheet for tiki specific export
-		$.sheet.saveSheet = function( redirect ) {
-			$( $.sheet.instance ).each( function( i ){
-				if (typeof redirect === 'undefined') { redirect = false; }
-				// not set to 0 by default in case AJAX has caused a spurious one to appear
 	
-				this.evt.cellEditDone();
-				
-				var s = $.sheet.get_sheet_json(this);
-				
-				s = "s=" + $.toJSON(s)	// convert to JSON
-					.replace(/\+/g,"%2B")	// replace +'s with 0x2B hex value
-					.replace(/\&/g,"%26");	// and replace &'s with 0x26
-				
-				var setDirty = this.setDirty;
-				$.ajax({
-					url: this.s.urlSave,
-					type: "POST",
-					data: s,
-					//contentType: "application/json; charset=utf-8",
-					dataType: 'html',
-					beforeSend: function() { window.showFeedback("Saving", 10000); }, 
-					success: function(data) {
-						setDirty(false);
-						window.showFeedback(data, 2000, redirect);
-					}
-				});
-			});
-		};
-		
-		$.sheet.get_sheet_json = function(sheetInstance) {	// diverged from jQuery.sheet 1.1 / Tiki 6
-			var sheetClone = sheetInstance.sheetDecorateRemove(true);
-			var documents = []; //documents
-			
-			$(sheetClone).each(function() {
-				var document = {}; //document
-				document.metadata = {};
-				document.data = {};
-				
-				//This preserves the width for postback, very important for styles
-				//<DO_NOT_REMOVE>
-				var table = $(this);
-				var trFirst = table.find('tr:first');
-				table.find('col').each(function(i){
-					//because css isn't always set correctly, we need to check the width attribute as well
-					//we also sanitize width string here
-					var w = parseInt((jQuery(this).css('width') + '').replace('px',''), 10);
-					var w2 = parseInt((jQuery(this).attr('width') + '').replace('px',''), 10);
-					
-					w = (w > w2 ? w : w2);
-					
-					trFirst.find('td').eq(i)
-						.css('width', w + 'px')
-						.attr('width', w);
-				});
-				//</DO_NOT_REMOVE>
-				
-				var trs = table.find('tr');
-				var rowCount = trs.length;
-				var colCount = 0;
-				var col_widths = '';
-				
-				trs.each(function(i) {
-					var tr = $(this);
-					var tds = tr.find('td');
-					colCount = tds.length;
-					
-					document.data['r' + i] = {};
-					
-					var h = tr.css('height');
-					document.data['r' + i].height = (h ? h : tr.attr('height'));
-					
-					tds.each(function(j) {
-						var td = jQuery(this);
-						var colSpan = td.attr('colspan');
-						colSpan = (colSpan > 1 ? colSpan : null);
-
-						document.data['r' + i]['c' + j] = {
-							value: td.html(),
-							formula: td.attr('formula'),
-							stl: td.attr('style'),
-							colspan: colSpan,
-							cl: td.attr('class')
-						};
-						
-						var sp = td.attr('colSpan');
-						if (sp > 1) {
-							doc.data['r' + i]['c' + j].width = sp;
-						}
-						sp = td.attr('rowSpan');	// TODO in .sheet
-						if (sp > 1) {
-							doc.data['r' + i]['c' + j].height = sp;
-						}
-					});
-				});
-					
-				var id = table.attr('rel');
-				id = id ? id.match(/sheetId(\d+)/) : null;
-				id = id && id.length > 0 ? id[1] : 0;
-
-				document.metadata = {
-					"columns": parseInt(colCount, 10), //length is 1 based, index is 0 based
-					"rows": parseInt(rowCount, 10), //length is 1 based, index is 0 based
-					"title": table.attr('title'),
-					"col_widths": {},
-					"sheetId": id
-				};
-				
-				table.find('colgroup').children().each(function(i) {
-					document.metadata.col_widths['c' + i] = ($(this).attr('width') + '').replace('px', '');
-				});
-				
-				documents.push(document); //append to documents
-			});
-			return documents;
-		};	
-	}	// end sheet
 	
 	// moved from tiki-list_file_gallery.tpl in tiki 6
 	checkClose = function() {
@@ -750,9 +632,9 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
             
             // check if fields that are required and visible are not empty
             if (meta.params[param].required) {
-            	if (val == '' && $(form.elements[i]).is(':visible')) {
+            	if (val === '' && $(form.elements[i]).is(':visible')) {
 	            	$(form.elements[i]).css('border-color', 'red');
-	            	if ($(form.elements[i]).next('.required_param').length == 0) {
+	            	if ($(form.elements[i]).next('.required_param').length === 0) {
 	            		$(form.elements[i]).after('<div class="required_param" style="font-size: x-small; color: red;">(required)</div>');
 	            	}
 	            	emptyRequiredParam = true;
@@ -772,7 +654,7 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
         	return false;
         }
        
-		var blob
+		var blob;
 		if (typeof form.content != 'undefined' && form.content.value.length > 0) {
 			blob = '{' + type.toUpperCase() + '(' + params.join(' ') + ')}' + form.content.value + '{' + type.toUpperCase() + '}';
 		} else {
@@ -880,63 +762,124 @@ $(document).ready(function() {	// if in translation-diff-mode go fullscreen auto
 
 function toggleFullScreen(area_id) {
 	var $ta = $("#" + area_id);
+	
+	//codemirror interation and preservation
+	var textareaEditor = getCodeMirrorFromInput($ta);
+	if (textareaEditor) {
+		var toolbar = $('#' + area_id + '_toolbar');
+		//the variables to be used
+		var parentId, code, codeMirrorContainer;
+		var $window = $(window);
+		
+		if ($ta.hasClass('fullscreen')) {
+			$ta.removeClass('fullscreen');
+			$('body').removeClass('noScroll');
+			
+			codeMirrorContainer = $('#codemirrorContainer_' + area_id);
+			parentId = codeMirrorContainer.attr('parentId');
+			
+			$('#' + parentId)
+				.prepend($ta)
+				.prepend(toolbar);
+
+			code = textareaEditor.getCode();
+			removeCodeMirrorEditorRelation($ta);
+			
+			//kill old editor
+			codeMirrorContainer.remove();
+			
+			//make sure new one has last edited code.
+			textareaEditor = getCodeMirrorFromInput($ta);
+			textareaEditor.setCode(code);
+		} else {
+			$ta.addClass('fullscreen');
+			$('body').addClass('noScroll');
+			parentId = $ta.parent().attr('id');
+			
+			codeMirrorContainer = $('<div id="codemirrorContainer_' + area_id + '" class="' + area_id + ' CodeMirror-fullscreen" parentId="' + parentId + '"  />')
+				.appendTo('form')
+				.append(toolbar)
+				.append($ta);
+			
+			var toolbarHeight = (toolbar.height() + 5);
+			var newEditor = CodeMirror.fromTextArea($ta[0], {
+				height: ($window.height() - toolbarHeight) + 'px',
+				width: $window.width() + 'px',
+				path: 'lib/codemirror/js/',
+				parserfile: ['../../codemirror_tiki/js/parsetikisyntax.js'],
+				stylesheet: ['lib/codemirror_tiki/css/tikiwikisyntaxcolors.css'],
+				onChange: function() {
+					//Setup codemirror to send the text back to the textarea
+					$ta.val(newEditor.getCode());
+				}
+			});
+			
+			addCodeMirrorEditorRelation(newEditor, $ta, true);
+			
+			$codeMirrorEditorObject = codeMirrorContainer.find('div.CodeMirror-wrapping');
+			$window.resize(function() {
+				if (codeMirrorContainer) {
+					$codeMirrorEditorObject
+						.height(($window.height() - toolbarHeight))
+						.width($window.width());
+				}
+			});
+		}
+		return false;
+	}
+	
 	var $diff = $("#diff_outer"), $edit_form, $edit_form_innards;	// vars for translation diff elements if present
 
-	if (fullScreenState[area_id]) {	// leave full screen - fullScreenState[area_id] contains info about previous page DOM state when fullscreen
+	if (fullScreenState[area_id]) { // leave full screen - fullScreenState[area_id] contains info about previous page DOM state when fullscreen
 		if ($diff.length) {
 			$("#fs_grippy_" + area_id).remove();
 			$diff.css("float", fullScreenState[area_id]["diff"]["float"]).width(fullScreenState[area_id]["diff"]["width"]).height(fullScreenState[area_id]["diff"]["height"]);
-			$("#diff_history").height(fullScreenState[area_id]["diff_history"]["height"])
-								.width(fullScreenState[area_id]["diff_history"]["width"]);
-			for(var i = 0; i < fullScreenState[area_id]["edit_form_innards"].length; i++) {
-				$(fullScreenState[area_id]["edit_form_innards"][i]["el"])
-						.css("left", fullScreenState[area_id]["edit_form_innards"][i]["left"])
-						.width(fullScreenState[area_id]["edit_form_innards"][i]["width"])
-						.height(fullScreenState[area_id]["edit_form_innards"][i]["height"]);
-			}	
-			$edit_form = $(fullScreenState[area_id]["edit_form"]["el"]);	// hmmm?
-			$edit_form.css("position", fullScreenState[area_id]["edit_form"]["position"])
-						.css("left", fullScreenState[area_id]["edit_form"]["left"])
-						.width(fullScreenState[area_id]["edit_form"]["width"]).height(fullScreenState[area_id]["edit_form"]["height"]);
+			$("#diff_history").height(fullScreenState[area_id]["diff_history"]["height"]).width(fullScreenState[area_id]["diff_history"]["width"]);
+			for (var i = 0; i < fullScreenState[area_id]["edit_form_innards"].length; i++) {
+				$(fullScreenState[area_id]["edit_form_innards"][i]["el"]).css("left", fullScreenState[area_id]["edit_form_innards"][i]["left"]).width(fullScreenState[area_id]["edit_form_innards"][i]["width"]).height(fullScreenState[area_id]["edit_form_innards"][i]["height"]);
+			}
+			$edit_form = $(fullScreenState[area_id]["edit_form"]["el"]); // hmmm?
+			$edit_form.css("position", fullScreenState[area_id]["edit_form"]["position"]).css("left", fullScreenState[area_id]["edit_form"]["left"]).width(fullScreenState[area_id]["edit_form"]["width"]).height(fullScreenState[area_id]["edit_form"]["height"]);
 		}
 		$ta.css("float", fullScreenState[area_id]["ta"]["float"]).width(fullScreenState[area_id]["ta"]["width"]).height(fullScreenState[area_id]["ta"]["height"]);
-		$ta.resizable({minWidth: fullScreenState[area_id]["resizable"]["minWidth"], minHeight: fullScreenState[area_id]["resizable"]["minHeight"]});
+	
+		if ($ta.resizable) {
+			$ta.resizable({
+				minWidth: fullScreenState[area_id]["resizable"]["minWidth"],
+				minHeight: fullScreenState[area_id]["resizable"]["minHeight"]
+			});
+		}
 		
-		for(i = 0; i < fullScreenState[area_id]["hidden"].length; i++) {
+		for (i = 0; i < fullScreenState[area_id]["hidden"].length; i++) {
 			fullScreenState[area_id]["hidden"][i].show();
 		}
 		
 		for (i = 0; i < fullScreenState[area_id]["changed"].length; i++) {
 			var $el = $(fullScreenState[area_id]["changed"][i]["el"]);
-			$el.css("margin-left", fullScreenState[area_id]["changed"][i]["margin-left"])
-				.css("margin-right", fullScreenState[area_id]["changed"][i]["margin-right"])
-				.css("margin-top", fullScreenState[area_id]["changed"][i]["margin-top"])
-				.css("margin-bottom", fullScreenState[area_id]["changed"][i]["margin-bottom"])
-				.css("padding-left", fullScreenState[area_id]["changed"][i]["padding-left"])
-				.css("padding-right", fullScreenState[area_id]["changed"][i]["padding-right"])
-				.css("padding-top", fullScreenState[area_id]["changed"][i]["padding-top"])
-				.css("padding-bottom", fullScreenState[area_id]["changed"][i]["padding-bottom"])
-				.width(fullScreenState[area_id]["changed"][i]["width"])
-				.height(fullScreenState[area_id]["changed"][i]["height"]);
+			$el.css("margin-left", fullScreenState[area_id]["changed"][i]["margin-left"]).css("margin-right", fullScreenState[area_id]["changed"][i]["margin-right"]).css("margin-top", fullScreenState[area_id]["changed"][i]["margin-top"]).css("margin-bottom", fullScreenState[area_id]["changed"][i]["margin-bottom"]).css("padding-left", fullScreenState[area_id]["changed"][i]["padding-left"]).css("padding-right", fullScreenState[area_id]["changed"][i]["padding-right"]).css("padding-top", fullScreenState[area_id]["changed"][i]["padding-top"]).css("padding-bottom", fullScreenState[area_id]["changed"][i]["padding-bottom"]).width(fullScreenState[area_id]["changed"][i]["width"]).height(fullScreenState[area_id]["changed"][i]["height"]);
 		}
 		
 		$(".fs_clones").remove();
-		$(document.documentElement).css("overflow","auto");
+		$(document.documentElement).css("overflow", "auto");
 		
 		fullScreenState[area_id] = false;
 		
-	} else {		// go full screen
+	}
+	else { // go full screen
 		$(window).scrollTop(0);
-		$(document.documentElement).css("overflow","hidden");
+		$(document.documentElement).css("overflow", "hidden");
 		
 		fullScreenState[area_id] = [];
 		fullScreenState[area_id]["hidden"] = [];
 		fullScreenState[area_id]["changed"] = [];
 		fullScreenState[area_id]["resizable"] = [];
-		fullScreenState[area_id]["resizable"]["minWidth"] = $ta.resizable("option", "minWidth");
-		fullScreenState[area_id]["resizable"]["minHeight"] = $ta.resizable("option", "minHeight");
+		if ($ta.resizable) {
+			fullScreenState[area_id]["resizable"]["minWidth"] = $ta.resizable("option", "minWidth");
+			fullScreenState[area_id]["resizable"]["minHeight"] = $ta.resizable("option", "minHeight");
 		
-		$ta.resizable("destroy");
+			$ta.resizable("destroy");
+		}
+		
 		var h = $(window).height();
 		var w = $(window).width();
 		
@@ -1119,54 +1062,6 @@ $.fn.tiki = function(func, type, options) {
 						$(".ac_results").hide();	// hide the drop down if input clicked on again
 					});
 		
-				});
-			}
-			break;
-
-		case "sheet":
-			if (jqueryTiki.sheet) {
-				options = options || {};	// some default options for sheets in tiki
-				
-				//ensure that sheet instance exists, otherwise problems getting current instance number;
-				var I = 0;
-				if ( $.sheet.instance ) {
-					I = $.sheet.instance.length; //we use length here because we haven't yet created sheet, it will append 1 to this number thus making this the effective instance number
-				} else {
-					$.sheet.instance = [];
-				}				
-				
-				var inlineMenu =  $("#sheetTools").html();
-				inlineMenu = jQuery(
-							(inlineMenu ? inlineMenu : "").replace(/sheetInstance/g, "jQuery.sheet.instance[" + I + "]")
-				);
-				
-				inlineMenu.find('.qt-picker').attr('instance', I);
-				
-				opts = $.extend({
-							urlMenu:"lib/jquery_tiki/jquery.sheet/menu.html",
-							urlGet: "",
-							buildSheet: true,
-							autoFiller: true,
-							inlineMenu: inlineMenu,
-							colMargin: 20, //beefed up colMargin because the default size was too small for font
-							height: $(window).height() * 0.8
-				}, options);
-				
-		 		return this.each(function() {
-					var sh;
-		 			if (jqueryTiki.ui) {
-						if ($(this).attr('style') && $(this).attr('style').toLowerCase().indexOf('height') > -1) {
-							$(this).height($(this).find("table:first").height() + 6); //a little extra padding?
-						} else {
-							$(this).height($(this).height() + 0);
-						}
-		 				sh = $(this).sheet(opts);
-		 				if (typeof ajaxLoadingShow === 'function') {
-		 					ajaxLoadingHide();
-		 				}
-		 			} else {
-		 				sh = $(this).sheet(opts);
-		 			}
 				});
 			}
 			break;
@@ -1375,6 +1270,14 @@ function displayPicker( closeTo, list, area_id, isSheet, styleType ) {
 	}
 	textarea = $('#' +  area_id);
 	
+	//codemirror interation and preservation
+	var textareaEditor = getCodeMirrorFromInput(textarea);
+	var cursor, handle;
+	if (textareaEditor) {
+		cursor = textareaEditor.cursorPosition();
+		handle = textareaEditor.cursorLine();
+	}
+	
 	pickerDiv = document.createElement('div');
 	document.body.appendChild( pickerDiv );
 
@@ -1405,26 +1308,48 @@ function displayPicker( closeTo, list, area_id, isSheet, styleType ) {
 			};
 		} else {
 			link.onclick = function() {
-				insertAt( area_id, ins );
-		
-				textarea = $('#' +  area_id);	
-				// quick fix for Firefox 3.5 losing selection on changes to popup
-				if (typeof textarea.selectionStart != 'undefined') {
-					var tempSelectionStart = textarea.selectionStart;
-					var tempSelectionEnd = textarea.selectionEnd;	
+				if (textareaEditor) { //codemirror behavior
+					var newCursor = textareaEditor.cursorPosition(); //it could have possibly change, just double check
+					if (newCursor.character != cursor.character) {
+						cursor = newCursor;
+						handle = textareaEditor.cursorLine();
+					}
+					
+					if (!handle && !cursor.character) { //if a handle doesn't exist, just add it to the end of codemirror
+						handle = textareaEditor.lastLine();
+					}
+					
+					if (cursor.character) {
+						textareaEditor.insertIntoLine(handle, cursor.character, ins);
+					}
+					else {
+						textareaEditor.insertIntoLine(handle, 'end', ins);
+					}
+					
+					$('div.toolbars-picker').remove();
+					pickerDiv = false;
 				}
-	
-				$('div.toolbars-picker').remove();
-				pickerDiv = false;
-	
-				// quick fix for Firefox 3.5 losing selection on changes to popup
-	        	if (typeof textarea.selectionStart != 'undefined' && textarea.selectionStart != tempSelectionStart) {
-	                textarea.selectionStart = tempSelectionStart;
-	     		}
-				if (typeof textarea.selectionEnd != 'undefined' && textarea.selectionEnd != tempSelectionEnd) {
-	            	textarea.selectionEnd = tempSelectionEnd;
-	       		}
-	
+				else { //normal behavior
+					insertAt(area_id, ins);
+					
+					textarea = $('#' + area_id);
+					// quick fix for Firefox 3.5 losing selection on changes to popup
+					if (typeof textarea.selectionStart != 'undefined') {
+						var tempSelectionStart = textarea.selectionStart;
+						var tempSelectionEnd = textarea.selectionEnd;
+					}
+					
+					$('div.toolbars-picker').remove();
+					pickerDiv = false;
+					
+					// quick fix for Firefox 3.5 losing selection on changes to popup
+					if (typeof textarea.selectionStart != 'undefined' && textarea.selectionStart != tempSelectionStart) {
+						textarea.selectionStart = tempSelectionStart;
+					}
+					if (typeof textarea.selectionEnd != 'undefined' && textarea.selectionEnd != tempSelectionEnd) {
+						textarea.selectionEnd = tempSelectionEnd;
+					}
+				}
 				return false;
 			};
 		}
@@ -1438,6 +1363,8 @@ function displayPicker( closeTo, list, area_id, isSheet, styleType ) {
 		prepareLink( link, i, chr );
 		pickerDiv.appendChild( link );
 	}
+	
+	return false;
 }
 
 
@@ -1728,32 +1655,46 @@ function dialogFindOpen(area_id) {
 }
 
 function dialogFindFind( area_id ) {
+	var ta = $('#' + area_id);
+	var findInput = $("#tbFindSearch").removeClass("ui-state-error");
 	
-	var s, opt, ta, str, re, p = 0, m;
-	s = $("#tbFindSearch").removeClass("ui-state-error").val();
-	opt = "";
-	if ($("#tbFindCase").attr("checked")) {
-		opt += "i";
+	var $textareaEditor = getCodeMirrorFromInput(ta); //codemirror functionality
+	if ($textareaEditor) {
+		var cursor = $textareaEditor.getSearchCursor(findInput.val(), true, true);
+		if (cursor.findNext()) {
+			cursor.select();
+		}
+		else {
+			findInput.addClass("ui-state-error");
+		}
 	}
-	ta = $('#' + area_id);
-	str = ta.val();
-	re = new RegExp(s,opt);
-	p = getCaretPos(ta[0]);
-	if (p && p < str.length) {
-		m = re.exec(str.substring(p));
-	} else {
-		p = 0;
+	else { //standard functionality
+		var s, opt, str, re, p = 0, m;
+		s = findInput.val();
+		opt = "";
+		if ($("#tbFindCase").attr("checked")) {
+			opt += "i";
+		}
+		str = ta.val();
+		re = new RegExp(s, opt);
+		p = getCaretPos(ta[0]);
+		if (p && p < str.length) {
+			m = re.exec(str.substring(p));
+		}
+		else {
+			p = 0;
+		}
+		if (!m) {
+			m = re.exec(str);
+			p = 0;
+		}
+		if (m) {
+			setSelectionRange(ta[0], m.index + p, m.index + s.length + p);
+		}
+		else {
+			findInput.addClass("ui-state-error");
+		}
 	}
-	if (!m) {
-		m = re.exec(str);
-		p = 0;
-	}
-	if (m) {
-		setSelectionRange(ta[0], m.index + p, m.index + s.length + p);
-	} else {
-		$("#tbFindSearch").addClass("ui-state-error");
-	}
-
 }
 
 // Replace
@@ -1766,8 +1707,8 @@ function dialogReplaceOpen(area_id) {
 }
 
 function dialogReplaceReplace( area_id ) {
-	
-	var s = $("#tbReplaceSearch").val();
+	var findInput = $("#tbReplaceSearch").removeClass("ui-state-error");
+	var s = findInput.val();
 	var r = $("#tbReplaceReplace").val();
 	var opt = "";
 	if ($("#tbReplaceAll").attr("checked")) {
@@ -1776,9 +1717,29 @@ function dialogReplaceReplace( area_id ) {
 	if ($("#tbReplaceCase").attr("checked")) {
 		opt += "i";
 	}
-	var str = $('#' + area_id).val();
+	var ta = $('#' + area_id);
+	var str = ta.val();
 	var re = new RegExp(s,opt);
-	$('#' + area_id).val(str.replace(re,r));
+	
+	var $textareaEditor = getCodeMirrorFromInput(ta); //codemirror functionality
+	if ($textareaEditor) {
+		var cursorHandle = $textareaEditor.cursorLine();
+		$textareaEditor.jumpToLine($textareaEditor.firstLine());
+		var cursor = $textareaEditor.getSearchCursor(findInput.val(), true, true);
+		var found = false;
+		while (cursor.findNext()) {
+			cursor.select();
+			$textareaEditor.replaceSelection(r);
+			found = true;
+		}
+		if (!found) {
+			findInput.addClass("ui-state-error");
+		}
+		$textareaEditor.jumpToLine($textareaEditor.firstLine());
+	}
+	else { //standard functionality
+		ta.val(str.replace(re, r));
+	}
 
 }
 

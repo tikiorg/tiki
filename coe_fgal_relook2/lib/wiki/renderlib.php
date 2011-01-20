@@ -463,6 +463,11 @@ class WikiRenderer
 			if ($prefs['feature_categoryobjects'] == 'y' || $prefs['feature_categorypath'] == 'y') {
 				$cats = $categlib->get_object_categories('wiki page',$this->page);
 			}
+			if ($prefs['category_morelikethis_algorithm'] != '') {
+				global $freetaglib; include_once('lib/freetag/freetaglib.php');
+				$category_related_objects = $freetaglib->get_similar('wiki page', $this->page, $prefs['maxRecords'], null, 'category');
+				$this->smartyassign('category_related_objects', $category_related_objects);
+			}
 			if ($prefs['feature_categorypath'] == 'y') {	
 				$display_catpath = $categlib->get_categorypath($cats);
 				$this->smartyassign('display_catpath',$display_catpath);

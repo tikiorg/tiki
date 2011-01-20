@@ -5,7 +5,7 @@
 		<th><a href="{$myurl}?sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>
 		<th>{tr}Action{/tr}</th>
 	</tr>
-	{if $listevents|@count eq 0}<tr><td colspan="4">{tr}No records found{/tr}</td></tr>{/if}
+	{if $listevents|@count eq 0}{norecords _colspan=4}{/if}
 	{cycle values="odd,even" print=false}
 	{foreach from=$listevents item=event}
 		{assign var=calendarId value=$event.calendarId}

@@ -16,6 +16,9 @@ $auto_query_args = array(
 );
 $access->check_feature('feature_sheet');
 
+$sheetlib->setupJQuerySheet();
+$sheetlib->setupJQuerySheetHistory();
+
 $info = $sheetlib->get_sheet_info( $_REQUEST['sheetId'] );
 if (empty($info)) {
 	$smarty->assign('Incorrect parameter');

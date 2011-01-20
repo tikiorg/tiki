@@ -388,6 +388,21 @@ function fix_admin_account( $account ) {
 	}
 }
 
+/* possible error after upgrade 4 */
+function fix_disable_accounts() {
+	global $installer;
+	$installer->query('update `users_users` set `waiting`=NULL where `waiting` = ? and `valid` is NULL', array('a'));
+}
+function list_disable_accounts() {
+	global $installer;
+	$result = $installer->query('select `login` from `users_users` where `waiting` = ? and `valid` is NULL', array('a'));
+	$ret = array();
+	while ($res = $result->fetchRow()) {
+		$ret[] = $res['login'];
+	}
+	return $ret;
+}
+
 function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_charset, &$dbTiki ) {
 	global $tikifeedback;
 	$dbcon = false;
@@ -931,6 +946,10 @@ if ( isset($_REQUEST['general_settings']) && $_REQUEST['general_settings'] == 'y
 	if( isset( $_REQUEST['admin_account'] ) && ! empty( $_REQUEST['admin_account'] ) ) {
 		fix_admin_account( $_REQUEST['admin_account'] );
 	}
+	if (isset($_REQUEST['fix_disable_accounts']) && $_REQUEST['fix_disable_accounts'] == 'on') {
+		$ret = fix_disable_accounts();
+	}
+	
 }
 
 
@@ -1004,6 +1023,9 @@ if( $install_step == '4' ) {
 	}
 	$smarty->assign( 'database_charset', $value );
 	
+}
+if ($install_step == '6') {
+	$smarty->assign('disableAccounts', list_disable_accounts());
 }
 
 $mid_data = $smarty->fetch('tiki-install.tpl');

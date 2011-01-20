@@ -89,7 +89,7 @@
 						</td>
 					</tr>
 				{foreachelse}
-					<tr class="even"><td class="norecords" colspan="12">{tr}No records found.{/tr}</td></tr>
+					{norecords _colspan=12}
 				{/foreach}
 			</table>
 

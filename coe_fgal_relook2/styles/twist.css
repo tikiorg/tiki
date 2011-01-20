@@ -17,7 +17,7 @@ body {
 	font: 76%/1.4em black Verdana, Geneva, Arial, Helvetica, sans-serif}
 
 /* next two: fixed-width: 800px */
-body.fixed_width #fixedwidth {
+body.fixed_width .fixedwidth {
 	margin-bottom: 20px;
 	width: 800px !important;
 	background: #fff;

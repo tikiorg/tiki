@@ -37,9 +37,7 @@
 			</tr>
 		{/if}
 	{sectionelse}
-		<tr class="{cycle}">
-			<td colspan="4">{tr}No records{/tr}</td>
-		</tr>
+		{norecords _colspan=4}
 	{/section}
 </table>
 

@@ -55,11 +55,7 @@
 
 </tr>
 {sectionelse}
-<tr class="{cycle}">
-	<td colspan="2">
-	{tr}No records to display{/tr}
-	</td>
-</tr>	
+	{norecords _colspan=2}
 {/section}
 </table>
 {if $items}

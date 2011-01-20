@@ -114,7 +114,7 @@
 						{/foreach}
 					</ul>
 					{/if}
-				</div><br>
+				</div><br />
 			{/if}
 		
 	{/tikimodule}

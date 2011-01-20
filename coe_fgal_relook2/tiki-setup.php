@@ -199,9 +199,6 @@ if( $prefs['feature_cssmenus'] == 'y' ) {
 if( $prefs['feature_bidi'] == 'y' ) {
 	$headerlib->add_cssfile( 'styles/BiDi/BiDi.css' );
 }
-if( $prefs['feature_fixed_width'] == 'y' ) {
-	$headerlib->add_cssfile( 'styles/layout/fixed_width.css' );
-}
 
 if ($prefs['javascript_enabled'] != 'n') {
 
@@ -260,22 +257,6 @@ if ($prefs['javascript_enabled'] != 'n') {
 	}
 	if( $prefs['feature_jquery_reflection'] == 'y' ) {
 		$headerlib->add_jsfile( 'lib/jquery/reflection-jquery/js/reflection.js' );
-	}
-	if( $prefs['feature_sheet'] == 'y' ) {	// TODO once refactored these files only need to be included when on a page using them
-		$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/jquery.sheet.css' );
-		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.js' );
-		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.advancedfn.js' );
-		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.financefn.js' );
-		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/parser.js' );
-		
-		if( strpos($_SERVER['SCRIPT_NAME'], 'tiki-history_sheets.php') !== false ) {
-			$headerlib->add_jsfile( 'lib/sheet/tiki-history_sheets.js' );
-		}
-		
-		// plugins
-		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/jquery.scrollTo-min.js' );
-		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/raphael-min.js', 'external' );
-		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.raphael-min.js', 'external' );
 	}
 	if( $prefs['feature_jquery_media'] == 'y' ) {
 		$headerlib->add_jsfile( 'lib/jquery/jquery.media.js');

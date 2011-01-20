@@ -12,21 +12,12 @@ include_once ('lib/userprefs/scrambleEmail.php');
 
 // This feature needs both 'feature_contact' and 'feature_messages' to work
 $access->check_feature(array('feature_contact', 'feature_messages'));
-if($user == ''){
-	$access->check_feature('contact_anon');
-}
 
 $auto_query_args = array();
 
-$smarty->assign('mid', 'tiki-contact.tpl');
-
-$email = $userlib->get_user_email($prefs['contact_user']);
-if ($email == '') $email = $userlib->get_admin_email();
-$smarty->assign('email0', $email);
-$email = scrambleEmail($email, $tikilib->get_user_preference('admin', "email is public"));
-$smarty->assign('email', $email);
-
-if ($user == '' and $prefs['contact_anon'] == 'y') {
+if ($user == '') {
+	$access->check_feature('contact_anon');
+	
 	$smarty->assign('sent', 0);
 	if (isset($_REQUEST['send'])) {
 		check_ticket('contact');
@@ -64,10 +55,8 @@ if ($user == '' and $prefs['contact_anon'] == 'y') {
 		$message = tra('Message sent to'). ': ' . $prefs['contact_user'] . '<br />';
 		$smarty->assign('message', $message);
 	}
-}
-
-
-if ($user and $prefs['feature_messages'] == 'y' and $tiki_p_messages == 'y') {
+} else {
+	$access->check_permission('tiki_p_messages');
 	$smarty->assign('sent', 0);
 
 	if (isset($_REQUEST['send'])) {
@@ -93,7 +82,14 @@ if ($user and $prefs['feature_messages'] == 'y' and $tiki_p_messages == 'y') {
 	}
 }
 
+$email = $userlib->get_user_email($prefs['contact_user']);
+if ($email == '') $email = $userlib->get_admin_email();
+$smarty->assign('email0', $email);
+$email = scrambleEmail($email, $tikilib->get_user_preference('admin', "email is public"));
+$smarty->assign('email', $email);
+
 $smarty->assign('priority', 3);
 ask_ticket('contact');
 
+$smarty->assign('mid', 'tiki-contact.tpl');
 $smarty->display("tiki.tpl");

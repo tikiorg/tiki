@@ -168,9 +168,7 @@
          {/if}
         {/foreach}
         {else}
-          <tr><td colspan="6">
-            <p class="norecords">{tr}No records found{/tr}</p>
-          </td></tr>
+				{norecords _colspan=6}
         {/if}
     </table>
   </div>

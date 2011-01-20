@@ -26,24 +26,32 @@
 {if $prefs.feature_ajax eq 'y'}
 	{include file='tiki-ajax_header.tpl'}
 {/if}
-	<div id="fixedwidth"> {* enables fixed-width layouts *}
+	<div id="outer_wrapper"> {* used to be  id="fixedwidth" *}
 		{if $prefs.feature_layoutshadows eq 'y'}
 			<div id="main-shadow">{eval var=$prefs.main_shadow_start}
 		{/if}
 	<div id="main">
 		{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y') }
-			{if $prefs.feature_layoutshadows eq 'y'}
-				<div id="header-shadow">{eval var=$prefs.header_shadow_start}
-			{/if}
-					<header class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
-		{* Site header section *}
-				<div class="clearfix" id="siteheader">
-		{include file='tiki-site_header.tpl'}
+			{if $prefs.module_zones_top eq 'fixed' or ($prefs.module_zones_top ne 'n' && $top_modules|@count > 0)}
+				{if $prefs.feature_layoutshadows eq 'y'}<div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}
+				<div id="header_outer">
+					<div id="header_container">
+						<header class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+							<div id="header_fixedwidth" class="clearfix fixedwidth">
+								<div class="content clearfix modules" id="top_modules">
+									{section name=homeix loop=$top_modules}
+										{$top_modules[homeix].data}
+									{/section}
+								</div>
+							</div>
+						</header>
+					</div>
 				</div>
-			</header>{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.header_shadow_end}</div>{/if}
-{/if}
+				{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.header_shadow_end}</div>{/if}
+			{/if}
+		{/if}
 
-			{if $prefs.feature_layoutshadows eq 'y'}<div id="middle-shadow">{eval var=$prefs.middle_shadow_start}{/if}<div class="clearfix" id="middle">
+			{if $prefs.feature_layoutshadows eq 'y'}<div id="middle-shadow">{eval var=$prefs.middle_shadow_start}{/if}<div class="clearfix fixedwidth" id="middle">
 				<div class="clearfix {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}nofullscreen{else}fullscreen{/if}" id="c1c2">
 					<div class="clearfix" id="wrapper">
 						<div id="col1" class="{if $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}marginleft{/if}{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n')} marginright{/if}"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
@@ -63,6 +71,13 @@
 		{/if}
 								<br style="clear:both" />
 							</div>
+	{/if}
+	{if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && $pagetop_modules|@count > 0)}
+		<div class="content clearfix modules" id="pagetop_modules">
+			{section name=homeix loop=$pagetop_modules}
+				{$pagetop_modules[homeix].data}
+			{/section}
+		</div>
 	{/if}
 {/if}
 
@@ -87,6 +102,13 @@
 <div id="role_main">
 {$mid_data}  {* You can modify mid_data using tiki-show_page.tpl *}
 </div>
+							{if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && $pagebottom_modules|@count > 0)}
+								<div class="content clearfix modules" id="pagebottom_modules">
+									{section name=homeix loop=$pagebottom_modules}
+										{$pagebottom_modules[homeix].data}
+									{/section}
+								</div>
+							{/if}
 {show_help}
 							</div>{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
 						</div>
@@ -97,7 +119,7 @@
 	{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}
 					<aside id="col2"{if $prefs.feature_left_column eq 'user'} style="display:{if isset($cookie.show_col2) and $cookie.show_col2 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 						<h2 class="hidden">Sidebar</h2>
-						<div class="content">
+						<div id="left_modules" class="content modules">
 		{section name=homeix loop=$left_modules}
 			{$left_modules[homeix].data}
 		{/section}
@@ -110,7 +132,7 @@
 	{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n')}
 				<aside class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_col3) and $cookie.show_col3 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 					<h2 class="hidden">Sidebar</h2>
-					<div class="content">
+					<div id="right_modules" class="content modules">
 		{if $module_pref_errors}
 			{remarksbox type="warning" title="{tr}Module errors{/tr}"}
 				{tr}The following modules could not be loaded{/tr}
@@ -133,17 +155,25 @@
 		<!--[if IE 7]><br style="clear:both; height: 0" /><![endif]-->
 			</div>{* -- END of middle -- *}{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.middle_shadow_end}</div>{/if}
 
-{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
-	{if $prefs.feature_bot_bar eq 'y'}
-			{if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}<footer id="footer">
-				<div class="footerbgtrap">
-					<div class="content"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
-		{include file='tiki-bot_bar.tpl'}
-					</div>
-				</div>
-			</footer>{* -- END of footer -- *}{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.footer_shadow_end}</div>{/if}
-	{/if}
-{/if}
+			{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
+				{if $prefs.module_zones_bottom eq 'fixed' or ($prefs.module_zones_bottom ne 'n' && $bottom_modules|@count > 0)}{* previously if $prefs.feature_bot_bar eq 'y' *}
+						{if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}
+						<footer id="footer">
+							<div class="footer_liner">
+								<div class="footerbgtrap fixedwidth">
+									<div id="bottom_modules" class="content modules"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+										{section name=homeix loop=$bottom_modules}
+											{$bottom_modules[homeix].data}
+										{/section}
+										{* modules revamp temp fix for feature_bot_logo - TODO migrate to user modules *}
+										{if $prefs.feature_bot_logo eq 'y'}<div id="custom_site_footer">{eval var=$prefs.bot_logo_code}</div>{/if}
+										{* include file='tiki-bot_bar.tpl' *}
+									</div>
+								</div>
+							</div>
+						</footer>{* -- END of footer -- *}{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.footer_shadow_end}</div>{/if}
+				{/if}
+			{/if}
 
 		</div>{* -- END of main -- *}{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.main_shadow_end}</div>{/if}
 	</div> {* -- END of fixedwidth -- *}

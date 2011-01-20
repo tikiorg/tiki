@@ -47,6 +47,27 @@ if (empty($info)) {
 $pageRenderer = new WikiRenderer( $info, $user);
 $pageRenderer->setupStaging();
 
+if (isset($_REQUEST['preview'], $_REQUEST['flaggedrev'], $_REQUEST['page']) && $prefs['flaggedrev_approval'] == 'y' && $tiki_p_wiki_approve == 'y') {
+	$targetFlag = null;
+
+	if (isset($_REQUEST['approve'])) {
+		$targetFlag = 'OK';
+		$targetVersion = (int) $_REQUEST['approve'];
+	} elseif (isset($_REQUEST['unapprove'])) {
+		$targetFlag = 'REJECT';
+		$targetVersion = (int) $_REQUEST['unapprove'];
+	}
+
+	if ($targetFlag) {
+		global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
+
+		$flaggedrevisionlib->flag_revision($info['pageName'], $targetVersion, 'moderation', $targetFlag);
+
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('pages', $page);
+	}
+}
+
 $smarty->assign_by_ref('info', $info);
 // If the page doesn't exist then display an error
 //check_page_exits($page);
@@ -91,12 +112,18 @@ $smarty->assign('history_cant', $histlib->get_nb_history($page) - 1);
 if ($prefs['flaggedrev_approval'] == 'y') {
 	global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
 
-	if ($tiki_p_wiki_view_latest != 'y' && $flaggedrevisionlib->page_requires_approval($page)) {
+	if ($flaggedrevisionlib->page_requires_approval($page)) {
 		$approved_versions = $flaggedrevisionlib->get_versions_with($page, 'moderation', 'OK');
+
+		$smarty->assign('flaggedrev_approval', true);
+
+		$info['approved'] = in_array($info['version'], $approved_versions);
+
 		$new_history = array();
 
 		foreach ($history as $version) {
-			if (in_array($version['version'], $approved_versions)) {
+			$version['approved'] = in_array($version['version'], $approved_versions);
+			if ($tiki_p_wiki_view_latest == 'y' || $version['approved']) {
 				$new_history[] = $version;
 			}
 		}
@@ -284,16 +311,18 @@ if (isset($preview)) {
 	}
 	if ($preview == $info["version"] || $preview == 0) {
 		$previewd = $tikilib->parse_data($info["data"], array('preview_mode' => true));
-		$smarty->assign_by_ref('previewd', $previewd);
+		$smarty->assign('previewd', $previewd);
 		$smarty->assign('preview', $info['version']);
 	} else {
 		$version = $histlib->get_version($page, $preview);
 		if ($version) {
 			$previewd = $tikilib->parse_data($version["data"], array('preview_mode' => true));
-			$smarty->assign_by_ref('previewd', $previewd);
+			$smarty->assign('previewd', $previewd);
 			$smarty->assign('preview', $preview);
 		}
 	}
+
+	$smarty->assign('flaggedrev_preview_approved', isset($approved_versions) && in_array($preview, $approved_versions));
 }
 if (isset($preview)) {
 	$smarty->assign('current', $preview);

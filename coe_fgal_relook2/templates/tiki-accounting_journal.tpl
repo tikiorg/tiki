@@ -36,7 +36,7 @@
  </tr>
 {/section}
 {foreachelse}
-<tr><td colspan="9">{tr}No records{/tr}</td></tr>
+	{norecords _colspan=9}
 {/foreach}
 {if isset($totals)}
  <tr>

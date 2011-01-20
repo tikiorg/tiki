@@ -94,9 +94,7 @@
 				</td>
 			</tr>
 		{sectionelse}
-			<tr>
-				<td class="odd" colspan="{$numbercol}">{tr}No records found.{/tr}</td>
-			</tr>
+			{norecords _colspan=$numbercol}
 		{/section}
 	</table>
 	

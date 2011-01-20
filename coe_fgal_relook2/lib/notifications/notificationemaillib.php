@@ -578,7 +578,7 @@ function sendStructureEmailNotification($params) {
  * @param $title Comment title
  * @param $content Comment content
  */
-function sendCommentNotification($type, $id, $title, $content) {
+function sendCommentNotification($type, $id, $title, $content, $commentId=null) {
 	global $user, $tikilib, $smarty, $prefs;
 	if ($type == 'wiki') {
 		$event = 'wiki_comment_changes';
@@ -588,6 +588,10 @@ function sendCommentNotification($type, $id, $title, $content) {
 		throw new Exception('Unknown type');
 	}
 	$watches = $tikilib->get_event_watches($event, $id);
+	$watches2 = $tikilib->get_event_watches('comment_post', $commentId);
+	if (!empty($watches2)) {
+		$watches = array_merge($watches, $watches2);
+	}
 	if (count($watches)) {
 		if ($type == 'wiki') {
 			$smarty->assign('mail_objectname', $id);

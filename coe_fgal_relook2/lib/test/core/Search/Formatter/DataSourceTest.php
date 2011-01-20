@@ -98,5 +98,28 @@ class Search_Formatter_DataSourceTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals($out, $source->getInformation($in, array('object_id', 'description', 'categories', 'allowed_groups')));
 	}
+
+	function testSourceFindsEntryWithMultipleSourceResults()
+	{
+		$wikiSource = new Search_ContentSource_Static(array(
+			'Test' => array(
+				array('title' => 'Test', 'hash' => '3'),
+				array('title' => 'Test (latest)', 'hash' => '4'),
+			),
+		), array('title' => 'sortable', 'hash' => 'identifier'));
+
+		$source = new Search_Formatter_DataSource_Declarative;
+		$source->addContentSource('wiki page', $wikiSource);
+
+		$in = new Search_ResultSet(array(
+			array('object_type' => 'wiki page', 'object_id' => 'Test', 'hash' => '4'),
+		), 11, 10, 10);
+
+		$out = new Search_ResultSet(array(
+			array('object_type' => 'wiki page', 'object_id' => 'Test', 'title' => 'Test (latest)', 'hash' => '4'),
+		), 11, 10, 10);
+
+		$this->assertEquals($out, $source->getInformation($in, array('object_id', 'hash', 'title')));
+	}
 }
 

@@ -17,6 +17,7 @@ if (!isset($_REQUEST["articleId"])) {
 $article_data = $artlib->get_article($_REQUEST["articleId"]);
 $tikilib->get_perm_object($_REQUEST['articleId'], 'article');
 if ($article_data === false) {
+	if (!$user) $_SESSION['loginfrom'] = $_SERVER['REQUEST_URI'];
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('Permission denied'));
 	$smarty->display('error.tpl');
@@ -199,6 +200,11 @@ if (isset($is_categorized) && $is_categorized) {
 			$display_catobjects = $categlib->get_categoryobjects($catids);
 			$smarty->assign('display_catobjects', $display_catobjects);
 		}
+	}
+	if ($prefs['feature_categories'] == 'y' && $prefs['category_morelikethis_algorithm'] != '') {
+		global $freetaglib; include_once('lib/freetag/freetaglib.php');
+		$category_related_objects = $freetaglib->get_similar('article', $_REQUEST['articleId'], $prefs['maxRecords'], null, 'category');
+		$smarty->assign_by_ref('category_related_objects', $category_related_objects);
 	}
 } else {
 	$smarty->assign('is_categorized', 'n');

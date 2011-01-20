@@ -1,5 +1,6 @@
 /* $Id$
-	FiveAlive theme (fivealive.css) for TikiWiki CMS/Groupware.
+	FiveAlive theme (fivealive.css) for Tiki Wiki CMS/Groupware.
+	Adapted for Tiki 7.x
 	Visit http://themes.tiki.org for more information.
 	*
 */
@@ -33,31 +34,50 @@ body.filegal_popup {
 
 /*#fixedwidth*/
 
-body.fixed_width #fixedwidth {
+body.fixed_width .fixedwidth {
+}
+
+#header_outer {		/* whole width div containing the header strip */
+	background: url(fivealive/options/blueberry/headertile.png) 0 0 no-repeat;
+/*	height: 220px;*/
+}
+
+#header_container {	/* 2nd whole width div for background image tricks */
+	background: transparent url('fivealive/topbar.jpg') 0 100% repeat-x;
+}
+
+#header {			/* main whole width div */
+	background: url(fivealive/header_left.png) 0 100% no-repeat;
+/*	height: 220px;*/
+}
+	
+#header_fixedwidth {	/* inner <header> element that gets .fixedwidth class applied */
+	background: url(fivealive/options/blueberry/siteheader.jpg) 0 0 no-repeat;
+/*	height: 220px;*/
+}
+
+#top_modules {		/* inner div that contains the modules */
+	height: 220px;
+}
+
+#tiki-top {
+	position: absolute;
+	bottom: 0;
 	width: 100%;
 }
 
-#header {
-	background: url(fivealive/options/blueberry/headertile.png) 900px 0 no-repeat;
+#header .box-search {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	z-index: 1;
 }
 
-/*#header-top,*/
-#tiki-top .wrapper,
 #middle {
 	display: table;
 	margin: auto;
 	margin-top: 0;
 	margin-bottom: 0;
-	width: 990px;
-	background: transparent;
-}
-
-#header-top {
-/*	display: table;*/
-	margin: auto;
-	margin-top: 0;
-	margin-bottom: 0;
-	width: 990px;
 	background: transparent;
 }
 
@@ -119,8 +139,11 @@ body.fixed_width #fixedwidth {
 	width: 100%;
 }
 
-.footerbgtrap {
-
+.footer_liner {
+	border-top: 1px solid #28aae1;
+	border-bottom: 1px solid #28aae1;
+	margin-bottom: 2px;
+	padding-bottom: 2px;
 }
 
 #custom_site_footer,
@@ -130,7 +153,7 @@ body.fixed_width #fixedwidth {
 #loadstats small {
 	text-align: left !important;
 	margin: auto;
-	width: 980px;
+	width: 90%;
 	display: block;
 }
 
@@ -508,16 +531,28 @@ select {
 
 /* Sitelogin Popup */
 
-#siteloginbar_popup {
+#header .box-login_box {
+	position: absolute;
 	right: 10px;
+	bottom: 50px;
+	width: 10em;
+	height: 26px;
+	line-height: 26px;
+	z-index: 1;
 }
 
-#siteloginbar_popup fieldset {
+/*.siteloginbar_popup {
+	position: inherit;
+	right: auto;
+	bottom: auto;
+}*/
+
+.siteloginbar_popup fieldset {
 	border: none;
 	margin: 0; padding: 0;
 }
 
-#siteloginbar_popup .tabmark {
+.siteloginbar_popup .tabmark {
 	border: 1px solid #696969;
 	border-bottom: 0;
 	border-top-left-radius: 5px;
@@ -528,19 +563,24 @@ select {
 	-moz-border-radius-topright: 5px;
 }
 
-#siteloginbar_popup .cssmenu_horiz #register_link {
+.siteloginbar_popup .cssmenu_horiz #register_link {
 	background-color: #969696;
 }
 
-#siteloginbar_popup .cssmenu_horiz #login_link,
-#siteloginbar_popup .cssmenu_horiz #logout_link {
+.siteloginbar_popup .cssmenu_horiz #login_link,
+.siteloginbar_popup .cssmenu_horiz #logout_link {
 	background-color: #070707;
 }
 
-#siteloginbar_popup .cbox {
+.siteloginbar_popup .cbox {
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	color: #2098CD;
+}
+
+#header .siteloginbar_popup .cbox a {
+	color: #2098CD !important;
 }
 
 #sl-login-user, #sl-login-pass {
@@ -549,6 +589,18 @@ select {
 
 #sl-openid {
 	background-color: #fff;
+}
+
+/* new modules revamp login */
+
+.siteloginbar {
+	background-color: #D6F3FA;
+	padding: 0 1em;
+}
+
+.siteloginbar input[type="text"],
+.siteloginbar input[type="password"] {
+	background: #fff;
 }
 
 /*** CSS menus shadows for all but IE6 ***/
@@ -567,28 +619,28 @@ a.login_link {
 	text-transform: uppercase;
 	margin-bottom: -1px !important;
 }
-#siteloginbar_popup .cssmenu_horiz ul {
+.siteloginbar_popup .cssmenu_horiz ul {
 	margin-top: -5px;
 }
-#siteloginbar_popup .cssmenu_horiz #register_link ul {
+.siteloginbar_popup .cssmenu_horiz #register_link ul {
 	margin-left: -4em;
 }
 
-#siteloginbar_popup .cssmenu_horiz #login_link ul {
+.siteloginbar_popup .cssmenu_horiz #login_link ul {
 	margin-left: -10.5em;
 	width: 18em !important; /* to override the hardcoded in-line style width 17.5em */
 }
 
-#siteloginbar_popup .cssmenu_horiz #logout_link ul {
+.siteloginbar_popup .cssmenu_horiz #logout_link ul {
 	margin-left: -10.7em;
 	width: 20em !important; /* to override the hardcoded in-line style width */
 }
 
-#siteloginbar_popup .tabmark .tabcontent {
+.siteloginbar_popup .tabmark .tabcontent {
 	color: #000;
 }
 
-#siteloginbar_popup .tabmark ul li a,
+.siteloginbar_popup .tabmark ul li a,
 li.login_link ul li a {
 	background: none !important;
 	color: #1174a5;

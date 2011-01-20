@@ -142,7 +142,7 @@
 				</td>
 			</tr>
 		{sectionelse}
-			<tr><td colspan="5" class="norecords">{tr}No records found{/tr}</td></tr>
+				{norecords _colspan=5}
 		{/section}
 	</table>
 </form>
