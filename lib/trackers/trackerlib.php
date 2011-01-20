@@ -3391,9 +3391,13 @@ class TrackerLib extends TikiLib
 				</dl>'));
 		$type['h'] = array(
 			'label'=>tra('header'),
-			'opt'=>false,
+			'opt'=>true,
 			'help'=>tra('<dl>
-				<dt>Function: will display trhe field name as a html header h2;
+				<dt>Function: will display the field name as a html header h2;
+				<dt>Usage: <strong>level</strong>
+				<dt>Example: 2
+				<dt>Description:
+				<dd><strong>[level]</strong> level of the html header (default 2)
 				</dl>'));
 		$type['S'] = array(
 			'label'=>tra('static text'),
