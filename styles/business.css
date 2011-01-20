@@ -19,7 +19,7 @@ body {
 also styling of page layout divs) *****/
 
 #middle {
-	padding: 40px;
+	padding: 40px 0;
 }
 
 #c1c2 {
@@ -61,7 +61,11 @@ also styling of page layout divs) *****/
 
 #footer {
 	background: url(business/footer.gif) repeat-x;
+}
+
+.footer_liner {
 	padding: 10px 7px 0;
+	text-align: center;
 }
 
 /***** XHTML Elements (other than body tag) ******/
@@ -176,7 +180,14 @@ hr {
 
 /***** Site Header & Identity *****/
 #header {
+	min-height: 114px;
+	position: relative;
+}
+
+#header_fixedwidth {
+	background: #003371 url(business/header.png) repeat-x bottom;
 	color: #91bef5;
+	padding: 0;
 }
 
 #header a,
@@ -184,19 +195,8 @@ hr {
 	color: #91bef5;
 }
 
-#header-top {
-	min-height: 72px;
-	position: relative;
-	background: #003371 url(business/header.png) repeat-x bottom;
-}
-
-	
-* html #header-top {
-	height: 72px;
-}
-
-#siteheader {
-	margin: 0;
+#top_modules {
+	min-height: 130px;
 }
 
 #sitetitle,
@@ -230,31 +230,35 @@ hr {
 
 #tiki-top {
 	background: #003371 url(business/header.png) repeat-x 0 0;
-	position: relative;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 }
 
-#sitesearchbar {
+#header .box-search {
 	height: 59px;
-	float: right;
+	position: absolute;
+	right: 0;
+	bottom: -10px;
 	padding-right: 4px;
 	text-align: right;
 	display: block;
 	margin: 0;
 	margin-top: -10px;
-	margin-right: 0 !important;
+	margin-right: 0 !importan
+	;
 	background: url(business/magnify.png) no-repeat 0 -1px;
 	padding-left: 29px;
 	color: #fff;
-	position: relative;
 	z-index: 2;
 }
 
-#tiki-top #sitesearchbar form.findtable {
+#header .box-search form {
 	margin-top: 16px;
 	margin-left: -2px;
 }
 
-#tiki-top #sitesearchbar form input {
+#header .box-search form input {
 	border: none !important;
 }
 
@@ -267,8 +271,10 @@ hr {
 	background: url(business/input.gif) repeat-x;
 }
 
-#siteloginbar {
+#header .box-login_box {
+	position: absolute;
 	right: 10px;
+	bottom: 45px;
 }
 
 #siteloginbar_popup .tabmark {
