@@ -1859,3 +1859,4 @@ function getCodeMirrorFromInput($input) {
 		}
 	}
 	return false;
+}
