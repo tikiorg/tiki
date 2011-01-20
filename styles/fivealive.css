@@ -39,21 +39,21 @@ body.fixed_width .fixedwidth {
 
 #header_outer {		/* whole width div containing the header strip */
 	background: url(fivealive/options/blueberry/headertile.png) 0 0 no-repeat;
-	height: 220px;
+/*	height: 220px;*/
 }
 
 #header_container {	/* 2nd whole width div for background image tricks */
-	background: transparent url('fivealive/topbar.jpg') 0 170px repeat-x;
+	background: transparent url('fivealive/topbar.jpg') 0 100% repeat-x;
 }
 
 #header {			/* main whole width div */
-	background: url(fivealive/header_left.png) 0 0 no-repeat;
-	height: 220px;
+	background: url(fivealive/header_left.png) 0 100% no-repeat;
+/*	height: 220px;*/
 }
 	
 #header_fixedwidth {	/* inner <header> element that gets .fixedwidth class applied */
 	background: url(fivealive/options/blueberry/siteheader.jpg) 0 0 no-repeat;
-	height: 220px;
+/*	height: 220px;*/
 }
 
 #top_modules {		/* inner div that contains the modules */
@@ -530,7 +530,7 @@ select {
 #header .box-login_box {
 	position: absolute;
 	right: 10px;
-	bottom: 0;
+	bottom: 50px;
 	width: 10em;
 	height: 26px;
 	line-height: 26px;
