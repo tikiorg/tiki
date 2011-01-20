@@ -18,18 +18,18 @@
 {/remarksbox}
 
 <h2>{tr}Group Information{/tr}</h2>
-<table class="normal" id="groupinformation">
+<table class="formcolor" id="groupinformation">
 	<tr>
-		<td class="even">{tr}Name:{/tr}</td>
-		<td class="odd" colspan="2">{$group_info.groupName|escape}</td>
+		<td>{tr}Name:{/tr}</td>
+		<td>{$group_info.groupName|escape}</td>
 	</tr>
 	<tr>
-		<td class="even">{tr}Desc:{/tr}</td>
-		<td class="odd" colspan="2">{$group_info.groupDesc|escape}</td>
+		<td>{tr}Description:{/tr}</td>
+		<td>{$group_info.groupDesc|escape}</td>
 	</tr>
 	<tr>
-		<td class="even" style="vertical-align:top;">{tr}Permissions:{/tr}</td>
-		<td class="odd">
+		<td style="vertical-align:top;">{tr}Permissions:{/tr}</td>
+		<td>
 			{section name=grp loop=$group_info.perms}
 				{$group_info.perms[grp]}
 				{if $group_info.perms[grp] != "Anonymous"}
