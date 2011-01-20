@@ -29,7 +29,11 @@
 		<li>{tr}Modules with "position: absolute" in their style can be dragged in to position{/tr}</li>
 		<li>{tr}New modules can be dragged from the "All Modules" tab{/tr}</li>
 	</ul>
-	<p>{tr}More info here{/tr} {icon _id="help" link="http://dev.tiki.org/Modules+Revamp"}</p>
+	<p>
+		<strong>{tr}Note:{/tr}</strong> {tr}Links and buttons in modules, apart from the Application Menu, have been deliberately disabled on this page to make drag and drop more reliable. Click here to return <a href="./">HOME</a>{/tr}<br />
+		<strong><em>{tr}More info here{/tr}</em></strong> {icon _id="help" link="http://dev.tiki.org/Modules+Revamp"}
+	</p>
+	
 {/remarksbox}
 
 {tabset name='tabs_adminmodules'}

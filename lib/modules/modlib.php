@@ -695,7 +695,7 @@ class ModLib extends TikiLib
 			
 			if ($module_admin_mode && $timer) {
 				$elapsed = $timer->stop('module');
-				$data = str_replace(' class="', ' title="Module Execution Time ' . $elapsed . '"  class="' , $data);
+				$data = preg_replace('/div class="/', 'div title="Module Execution Time ' . $elapsed . '"  class="' , $data);
 			}
 						
 			if (!empty($cachefile) && !$module_admin_mode) {
