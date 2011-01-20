@@ -75,8 +75,9 @@ if ($objectperms->edit_sheet && $_REQUEST['parse'] == 'edit') {	// edit button c
 				editable: false
 			});
 			
-			$("div.tiki_sheet").sheet($.sheet.tikiOptions);
-			$.sheet.after();
+			$.sheet.after(
+				$("div.tiki_sheet").sheet($.sheet.tikiOptions)
+			);
 			
 		}, 500);
 	', 500);
@@ -199,15 +200,15 @@ if ($_REQUEST['parse'] == 'y') {
 		$("#edit_button").click( function () {
 			var $a = $(this).find("a");
 			if ($a.text() != editSheetButtonLabel2) {				
-				$("div.tiki_sheet")
-					.sheet($.sheet.tikiOptions);
+				$.sheet.after(
+					$("div.tiki_sheet")
+						.sheet($.sheet.tikiOptions)
+				);
 				
 				$a.attr("temp", $a.text());
 				$a.text(editSheetButtonLabel2);
 				$("#edit_button").parent().find(".button:not(#edit_button), .rbox").hide();
 				$("#save_button").show();
-				
-				$.sheet.after();
 			} else {
 				var isDirty = false;
 				$($.sheet.instance).each( function(i){
@@ -232,10 +233,6 @@ if ($_REQUEST['parse'] == 'y') {
 			
 			return false;
 		}).hide();
-		
-		window.toggleFullScreen = function(areaname) {
-			$.sheet.instance[$.sheet.I()].toggleFullScreen();
-		}
 		
 		window.showFeedback = function(message, delay, redirect) {
 			if (typeof delay == "undefined") { delay = 5000; }

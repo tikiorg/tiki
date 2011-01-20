@@ -2434,7 +2434,11 @@ class SheetLib extends TikiLib
 						height: $(window).height() * 0.8
 				};
 			
-				$.sheet.after = function() {
+				$.sheet.after = function(o) {
+					window.toggleFullScreen = function(areaname) {
+						o.sheetInstance.toggleFullScreen();
+					};
+					
 					if (jqueryTiki.ui) {
 		 				if (typeof ajaxLoadingShow === "function") {
 		 					ajaxLoadingHide();
