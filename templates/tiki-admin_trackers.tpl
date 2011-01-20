@@ -38,21 +38,21 @@
 		{cycle values="odd,even" print=false}
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
-				<td>
+				<td class="id">
 					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;show=mod" title="{tr}Edit{/tr}">{$channels[user].trackerId}</a>
 				</td>
-				<td>
+				<td class="text">
 					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;show=mod" title="{tr}Edit{/tr}">{$channels[user].name|escape}</a>
 				</td>
 				{if $channels[user].descriptionIsParsed eq 'y' }
-					<td>{wiki}{$channels[user].description}{/wiki}</td>
+					<td class="text">{wiki}{$channels[user].description}{/wiki}</td>
 				{else}
-					<td>{$channels[user].description|escape|nl2br}</td>
+					<td class="text">{$channels[user].description|escape|nl2br}</td>
 				{/if}
-				<td>{$channels[user].created|tiki_short_date}</td>
-				<td>{$channels[user].lastModif|tiki_short_date}</td>
-				<td style="text-align:right;" >{$channels[user].items}</td>
-				<td class="auto">
+				<td class="date">{$channels[user].created|tiki_short_date}</td>
+				<td class="date">{$channels[user].lastModif|tiki_short_date}</td>
+				<td class="integer">{$channels[user].items}</td>
+				<td class="action">
 					<a title="{tr}Edit{/tr}" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;show=mod">{icon _id='page_edit'}</a>
 					<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 					<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$channels[user].trackerId}">{icon _id='table' alt="{tr}Fields{/tr}"}</a>
@@ -61,7 +61,6 @@
 					{else}
 						<a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}">{icon _id='key' alt="{tr}Permissions{/tr}"}</a>
 					{/if}
-					&nbsp;
 					<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].trackerId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 				</td>
 			</tr>

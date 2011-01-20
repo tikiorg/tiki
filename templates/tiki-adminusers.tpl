@@ -40,9 +40,9 @@
 					<th>{tr}Reason{/tr}</th>
 				</tr>
 				{section name=reject loop=$discardlist}
-					<tr>
-						<td class="odd">{$discardlist[reject].login}</td>
-						<td class="odd">{$discardlist[reject].reason}</td>
+					<tr class="odd">
+						<td class="username">{$discardlist[reject].login}</td>
+						<td class="text">{$discardlist[reject].reason}</td>
 					</tr>
 				{/section}
 			</table>
@@ -134,13 +134,13 @@
 				{if $users[user].editable}
 					{capture assign=username}{$users[user].user|escape}{/capture}
 					<tr class="{cycle}">
-						<td>
+						<td class="checkbox">
 							{if $users[user].user ne 'admin'}
 								<input type="checkbox" name="checked[]" value="{$users[user].user|escape}" {if $users[user].checked eq 'y'}checked="checked" {/if}/>
 							{/if}
 						</td>
 	
-						<td>
+						<td class="username">
 							{capture name=username}{$users[user].user|username}{/capture}
 							<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit Account Settings:{/tr} {$smarty.capture.username}">
 							   {$users[user].user|escape}
@@ -153,12 +153,12 @@
 						</td>
 	
 						{if $prefs.login_is_email ne 'y'}
-							<td>{$users[user].email}</td>
+							<td class="email">{$users[user].email}</td>
 						{/if}
 						{if $prefs.auth_method eq 'openid'}
-							<td>{$users[user].openid_url|default:"{tr}N{/tr}"}</td>
+							<td class="text">{$users[user].openid_url|default:"{tr}N{/tr}"}</td>
 						{/if}	
-						<td>
+						<td class="text">
 							{if $users[user].currentLogin eq ''}
 								{tr}Never{/tr} <em>({tr}Registered{/tr} {$users[user].age|duration_short} {tr}ago{/tr})</em>
 							{else}
@@ -171,11 +171,11 @@
 							{/if}
 						</td>
 	
-						<td>
+						<td class="icon">
 							<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign to group{/tr}">{icon _id='group_key' alt="{tr}Assign{/tr} `$username` {tr}to groups{/tr} "}</a>
 						</td>
 	
-						<td>
+						<td class="text">
 							{foreach from=$users[user].groups key=grs item=what name=gr}
 								<div style="white-space:nowrap">
 									{if $grs != "Anonymous" and ($tiki_p_admin eq 'y' || in_array($grs, $all_groups))}
@@ -201,7 +201,7 @@
 							{/foreach}
 						</td>
 	
-						<td>
+						<td class="action">
 							{self_link _class="link" user=`$users[user].userId` _icon="page_edit" _title="{tr}Edit Account Settings:{/tr} `$username`"}{/self_link}
 							{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
 								<a class="link" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr}Change user preferences:{/tr} {$username}">{icon _id='wrench' alt="{tr}Change user preferences:{/tr} `$username`"}</a>

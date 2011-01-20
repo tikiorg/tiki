@@ -123,11 +123,11 @@
 			<tbody>
 				{foreach from=$transitions item=trans}
 					<tr>
-						<td>{$trans.name|escape}</td>
-						<td>{$trans.from_label|escape} {if $trans.preserve} - <em>{tr}preserved{/tr}</em>{/if}</td>
-						<td>{$trans.to_label|escape}</td>
-						<td>{self_link transitionId=$trans.transitionId action=edit cookietab=4}{$trans.guards|@count|escape}{/self_link}</td>
-						<td>
+						<td class="text">{$trans.name|escape}</td>
+						<td class="text">{$trans.from_label|escape} {if $trans.preserve} - <em>{tr}preserved{/tr}</em>{/if}</td>
+						<td class="text">{$trans.to_label|escape}</td>
+						<td class="integer">{self_link transitionId=$trans.transitionId action=edit cookietab=4}{$trans.guards|@count|escape}{/self_link}</td>
+						<td class="action">
 							{self_link transitionId=$trans.transitionId action=edit cookietab=3}{icon _id=page_edit alt="{tr}Edit{/tr}"}{/self_link}
 							{self_link transitionId=$trans.transitionId action=remove}{icon _id=cross alt="{tr}Remove{/tr}"}{/self_link}
 							<a class="link" href="tiki-objectpermissions.php?objectName={$trans.name|escape:url}&amp;objectType=transition&amp;permType=transition&amp;objectId={$trans.transitionId|escape:"url"}">

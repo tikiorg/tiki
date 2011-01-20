@@ -66,7 +66,7 @@
 	{section name=user loop=$users}
 		{if $users[user].groupName != 'Anonymous'}
 			<tr class="{cycle}">
-				<td>
+				<td class="text">
 					{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
 						<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit{/tr}">
 					{/if}
@@ -75,8 +75,8 @@
 						</a>
 					{/if}
 				</td>
-				<td>{tr}{$users[user].groupDesc|escape}{/tr}</td>
-				<td>
+				<td class="text">{tr}{$users[user].groupDesc|escape}{/tr}</td>
+				<td class="action">
 					{if $users[user].what ne 'real'}
 						<a class="link" href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}&amp;action=assign&amp;group={$users[user].groupName|escape:url}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}" title="{tr}Assign User to Group{/tr}">{icon _id='add' alt="{tr}Assign{/tr}"}</a>
 					{elseif $users[user].groupName ne "Registered"}
