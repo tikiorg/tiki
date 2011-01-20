@@ -1533,7 +1533,7 @@ class FileGalLib extends TikiLib
 			$query = 'select `fileId` from `tiki_files` where `path` != ?';
 			$msg = tra('Number of files transferred to the database:');
 		} else {
-			$query = 'select `fileId` from `tiki_files` where `path` = ?';
+			$query = 'select `fileId` from `tiki_files` where `path` = ? or `path` is null';
 			$msg = tra('Number of files transferred to the file system:');
 		}
 		$result = $this->query($query, array(''));
