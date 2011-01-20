@@ -3,10 +3,6 @@
 	TikiWiki CMS/Groupware.
 */
 
-#header-top {
-	background: url(orange/siteheader.png) no-repeat -250px 0
-}
-
 a,
 a:visited,tr.even a:link,
 tr.even a:visited,
@@ -33,12 +29,12 @@ hr {
 	color: #e7713e;
 }
 
-#header {
-	background-image: url(orange/siteheadertile.png);
+#header_outer {
+	background: url(orange/siteheadertile.png) 0 0 no-repeat;
 }
 
-#top_modules {
-	background: url(orange/siteheader.jpg) 0 0 no-repeat;
+#header_fixedwidth {
+	background: url(orange/siteheader.png) -250px 0 no-repeat;
 }
 
 #sitetitle,
@@ -46,7 +42,7 @@ hr {
 	text-shadow: #942f20 3px 2px 0;
 }
 
-#footer .container {
+#footer_liner {
 	border-top: 1px solid #f06423;
 	border-bottom: 1px solid #f06423;
 }

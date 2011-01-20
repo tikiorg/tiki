@@ -139,8 +139,11 @@ body.fixed_width .fixedwidth {
 	width: 100%;
 }
 
-.footerbgtrap {
-
+.footer_liner {
+	border-top: 1px solid #28aae1;
+	border-bottom: 1px solid #28aae1;
+	margin-bottom: 2px;
+	padding-bottom: 2px;
 }
 
 #custom_site_footer,
