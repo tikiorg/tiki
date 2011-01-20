@@ -16,27 +16,31 @@ table {
 
 /* This div encloses the whole Tiki application */
 DIV#tiki-main {
-	direction: rtl !important
+	direction: rtl !important;
+}
+
+DIV#main {
+	text-align: right;
 }
 
 /* This div encloses the "clean" Tiki screens */
 DIV#tiki-clean {
-	direction: rtl !important
+	direction: rtl !important;
 }
 
 /* When modules display a list of items each item is enclosed in a cell with the following style */
 TD.module {
-	text-align: right !important
+	text-align: right !important;
 }
 
 /* Cells in forms without background color (inside a div for example) */
 TD.form {
-	text-align: right !important
+	text-align: right !important;
 }
 
 /* Cells in forms using a background color */
 TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform {
-	text-align: right !important
+	text-align: right !important;
 }
 
 /* Odd rows in several listings */
@@ -52,7 +56,7 @@ TD.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.ga
 	td.listartreadsodd, td.listarthasimageodd, td.listartuseimageodd, td.listartactionsodd, td.listartsizeodd, td.forumstableodd,
 	td.forumstableinfoodd, td.topictitleodd, td.topicrepliesodd, td.topicreadsodd, td.topicscoreodd, td.topiclastpostodd,
 	td.topicauthorodd {
-	text-align: right !important
+	text-align: right !important;
 }
 
 /* Even rows in several listings */
@@ -72,17 +76,17 @@ TD.even, td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven, t
 }
 
 TD.third {
-	text-align: right !important
+	text-align: right !important;
 }
 
 /* Browsing an image */
 td.imageinfo {
-	text-align: right !important
+	text-align: right !important;
 }
 
 /* Inside chat */
 td.tdchatform {
-	text-align: right !important
+	text-align: right !important;
 }
 .tellafriend,
 .share {text-align:right;}
