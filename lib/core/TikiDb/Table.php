@@ -12,20 +12,20 @@ class TikiDb_Table
 	}
 
 	/**
-	 * Inserts a row in the table by building the SQL query from an array of parameters.
+	 * Inserts a row in the table by building the SQL query from an array of values.
 	 * The target table is defined by the instance. Argument names are not validated
 	 * against the schema. This is only a helper method to improve code readability.
 	 *
-	 * @param $parameters array Key-value pairs to insert.
+	 * @param $values array Key-value pairs to insert.
 	 */
-	function insert(array $parameters)
+	function insert(array $values)
 	{
-		$fieldDefinition = implode(', ', array_map(array($this, 'escapeIdentifier'), array_keys($parameters)));
-		$fieldPlaceholders = rtrim(str_repeat('?, ', count($parameters)), ' ,');
+		$fieldDefinition = implode(', ', array_map(array($this, 'escapeIdentifier'), array_keys($values)));
+		$fieldPlaceholders = rtrim(str_repeat('?, ', count($values)), ' ,');
 
 		$query = "INSERT INTO {$this->escapeIdentifier($this->tableName)} ($fieldDefinition) VALUES ($fieldPlaceholders)";
 
-		$this->db->query($query, array_values($parameters));
+		$this->db->query($query, array_values($values));
 
 		return $this->db->lastInsertId();
 	}
@@ -40,6 +40,25 @@ class TikiDb_Table
 
 		$this->db->query($query, array_values($conditions));
 	}
+
+	/**
+	 * Builds and performs and SQL update query on the table defined by the instance.
+	 * This query will update a single record.
+	 */
+	function update(array $values, array $conditions)
+	{
+		$query = $this->buildUpdate($values, $conditions) . ' LIMIT 1';
+
+		$this->db->query($query, array_merge(array_values($values), array_values($conditions)));
+	}
+
+	function updateMultiple(array $values, array $conditions)
+	{
+		$query = $this->buildUpdate($values, $conditions);
+
+		$this->db->query($query, array_merge(array_values($values), array_values($conditions)));
+	}
+
 
 	/**
 	 * Deletes a multiple records from the table matching the provided conditions.
@@ -57,7 +76,15 @@ class TikiDb_Table
 
 	private function buildDelete(array $conditions)
 	{
-		$query = "DELETE FROM {$this->escapeIdentifier($this->tableName)} WHERE 1=1";
+		$query = "DELETE FROM {$this->escapeIdentifier($this->tableName)}";
+		$query .= $this->buildConditions($conditions);
+
+		return $query;
+	}
+
+	private function buildConditions(array $conditions)
+	{ 
+		$query = " WHERE 1=1";
 
 		foreach ($conditions as $key => $value) {
 			$field = $this->escapeIdentifier($key);
@@ -67,6 +94,20 @@ class TikiDb_Table
 				$query .= " AND $field = ?";
 			}
 		}
+
+		return $query;
+	}
+
+	private function buildUpdate(array $values, array $conditions)
+	{
+		$query = "UPDATE {$this->escapeIdentifier($this->tableName)} SET ";
+
+		foreach ($values as $key => $value) {
+			$field = $this->escapeIdentifier($key);
+			$query .= "$field = ?, ";
+		}
+
+		$query = rtrim($query, ' ,') . $this->buildConditions($conditions);
 
 		return $query;
 	}

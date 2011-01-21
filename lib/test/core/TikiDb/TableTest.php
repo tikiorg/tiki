@@ -117,5 +117,45 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 			'lang' => '',
 		));
 	}
+
+	function testUpdate()
+	{
+		$mock = $this->getMock('TikiDb');
+
+		$query = 'UPDATE `my_table` SET `title` = ?, `description` = ? WHERE 1=1 AND `objectType` = ? AND `objectId` = ? LIMIT 1';
+
+		$mock->expects($this->once())
+			->method('query')
+			->with($this->equalTo($query), $this->equalTo(array('hello world', 'foobar', 'wiki page', 'HomePage')));
+
+		$table = new TikiDb_Table($mock, 'my_table');
+		$table->update(array(
+			'title' => 'hello world',
+			'description' => 'foobar',
+		), array(
+			'objectType' => 'wiki page',
+			'objectId' => 'HomePage',
+		));
+	}
+
+	function testUpdateMultiple()
+	{
+		$mock = $this->getMock('TikiDb');
+
+		$query = 'UPDATE `my_table` SET `title` = ?, `description` = ? WHERE 1=1 AND `objectType` = ? AND `objectId` = ?';
+
+		$mock->expects($this->once())
+			->method('query')
+			->with($this->equalTo($query), $this->equalTo(array('hello world', 'foobar', 'wiki page', 'HomePage')));
+
+		$table = new TikiDb_Table($mock, 'my_table');
+		$table->updateMultiple(array(
+			'title' => 'hello world',
+			'description' => 'foobar',
+		), array(
+			'objectType' => 'wiki page',
+			'objectId' => 'HomePage',
+		));
+	}
 }
 

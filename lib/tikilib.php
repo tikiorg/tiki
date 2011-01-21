@@ -246,20 +246,23 @@ class TikiLib extends TikiDb_Bridge
 	function replace_note($user, $noteId, $name, $data, $parse_mode = null) {
 		$size = strlen($data);
 
+		$queryData = array(
+			'user' => $user,
+			'name' => $name,
+			'data' => $data,
+			'created' => $this->now,
+			'lastModif' => $this->now,
+			'size' => (int) $size,
+			'parse_mode' => $parse_mode,
+		);
+
+		$userNotes = $this->table('tiki_user_notes');
 		if ($noteId) {
-			$query = "update `tiki_user_notes` set `name` = ?, `data` = ?, `size` = ?, `lastModif` = ?, `parse_mode` = ?  where `user`=? and `noteId`=?";
-			$this->query($query,array($name,$data,(int)$size,(int)$this->now,$parse_mode,$user,(int)$noteId));
-		} else {
-			$userNotes = $this->table('tiki_user_notes');
-			$noteId = $userNotes->insert(array(
-				'user' => $user,
-				'name' => $name,
-				'data' => $data,
-				'created' => $this->now,
-				'lastModif' => $this->now,
-				'size' => (int) $size,
-				'parse_mode' => $parse_mode,
+			$userNotes->update($queryData, array(
+				'noteId' => (int) $noteId,
 			));
+		} else {
+			$noteId = $userNotes->insert($queryData);
 		}
 
 		return $noteId;
@@ -1699,13 +1702,18 @@ class TikiLib extends TikiDb_Bridge
 		// Now calculate the loop
 		$pages = array();
 
+		$pagesTable = $this->table('tiki_pages');
+
 		foreach ($ret as $page) {
 			$val = 1 / count($ret);
 
 			$pages[$page] = $val;
-			// Fixed query.  -rlpowell
-			$query = "update `tiki_pages` set `pageRank`=? where `pageName`= ?";
-			$result = $this->query($query, array((int)$val, $page) );
+
+			$pagesTable->update(array(
+				'pageRank' => (int) $val
+			), array(
+				'pageName' => $page,
+			));
 		}
 
 		for ($i = 0; $i < $loops; $i++) {
@@ -1732,11 +1740,12 @@ class TikiLib extends TikiDb_Bridge
 
 				$val = (1 - 0.85) + 0.85 * $sum;
 				$pages[$pagename] = $val;
-				// Fixed query.  -rlpowell
-				$query = "update `tiki_pages` set `pageRank`=? where `pageName`=?";
-				$result = $this->query($query, array((int)$val, $pagename) );
 
-				// Update
+				$pagesTable->update(array(
+					'pageRank' => (int) $val
+				), array(
+					'pageName' => $pagename,
+				));
 			}
 		}
 		arsort ($pages);
@@ -2672,8 +2681,11 @@ class TikiLib extends TikiDb_Bridge
 			$query = 'update `tiki_files` set `hits`=`hits`+1, `lastDownload`=? where `fileId`=?';
 			$this->query($query,array($this->now, (int) $id));
 		} else {
-			$query = 'update `tiki_files` set `lastDownload`=? where `fileId`=?';
-			$this->query($query,array($this->now, (int) $id));
+			$this->table('tiki_files')->update(array(
+				'lastDownload' => $this->now,
+			), array(
+				'fileId' => (int) $id,
+			));
 		}			
 
 		if ($prefs['feature_score'] == 'y') {
@@ -3340,10 +3352,13 @@ class TikiLib extends TikiDb_Bridge
 
 		$url = $this->getOne($query, array( $cacheId ) );
 		$data = $this->httprequest($url);
-		$query = "update `tiki_link_cache`
-			set `data`=?, `refresh`=?
-			where `cacheId`=? ";
-		$result = $this->query($query, array( $data, $this->now, $cacheId) );
+
+		$this->table('tiki_link_cache')->update(array(
+			'data' => $data,
+			'refresh' => $this->now,
+		), array(
+			'cacheId' => $cacheId,
+		));
 		return true;
 	}
 
@@ -3386,8 +3401,9 @@ class TikiLib extends TikiDb_Bridge
 			//echo '<br />Not cached:'.$url.'/'.strlen($res['data']);
 			$res['refresh'] = $now;
 			if ($cachetime > 0) {
+				$linkCache = $this->table('tiki_link_cache');
+
 				if (empty($res['cacheId'])) {
-					$linkCache = $this->table('tiki_link_cache');
 					$linkCache->insert(array(
 						'url' => $url,
 						'data' => $res['data'],
@@ -3397,8 +3413,12 @@ class TikiLib extends TikiDb_Bridge
 					$result = $this->query($query, $url);
 					$res = $result->fetchRow();
 				} else {
-					$query = 'update `tiki_link_cache` set `data`=?, `refresh`=? where `cacheId`=?';
-					$this->query($query, array($res['data'], $res['refresh'], $res['cacheId']));
+					$linkCache->update(array(
+						'data' => $res['data'],
+						'refresh' => $res['refresh'],
+					), array(
+						'cacheId' => $res['cacheId'],
+					));
 				}
 			}
 		} else {
@@ -3522,8 +3542,11 @@ class TikiLib extends TikiDb_Bridge
 		global $logslib; include_once('lib/logs/logslib.php');
 		$logslib->add_action('Removed', $page, 'wiki page', $params);
 		//get_strings tra("Removed");
-		$query = "update `users_groups` set `groupHome`=? where `groupHome`=?";
-		$this->query($query, array(NULL, $page));
+		$this->table('users_groups')->updateMultiple(array(
+			'groupHome' => null,
+		), array(
+			'groupHome' => $page,
+		));
 
 		$this->table('tiki_theme_control_objects')->deleteMultiple(array(
 			'name' => $page,
@@ -7444,8 +7467,11 @@ if( \$('#$id') ) {
 
 	function invalidate_cache($page) {
 		unset( $this->cache_page_info[urlencode($page)] );
-		$query = "update `tiki_pages` set `cache_timestamp`=? where `pageName`=?";
-		$this->query($query, array(0,$page) );
+		$this->table('tiki_pages')->update(array(
+			'cache_timestamp' => 0,
+		), array(
+			'pageName' => $page,
+		));
 
 		require_once 'lib/cache/pagecache.php';
 		$pageCache = Tiki_PageCache::create()
@@ -7522,35 +7548,42 @@ if( \$('#$id') ) {
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$edit_data = HTMLPurifier($edit_data);
 		}
-		$mid = '';
 
 		if( is_null( $saveLastModif ) ) {
 			$saveLastModif = $this->now;
 		}
 
-		$bindvars = array($edit_description,$edit_data,$edit_comment,(int) $saveLastModif,$version,$edit_minor,$edit_user,$edit_ip,(int)strlen($data),$html,$wysiwyg, $wiki_authors_style);
+		$queryData = array(
+			'description' => $edit_description,
+			'data' => $edit_data,
+			'comment' => $edit_comment,
+			'lastModif' => (int) $saveLastModif,
+			'version' => $version,
+			'version_minor' => $edit_minor,
+			'user' => $edit_user,
+			'ip' => $edit_ip,
+			'page_size' => strlen($data),
+			'is_html' => $html,
+			'wysiwyg' => $wysiwyg,
+			'wiki_authors_style' => $wiki_authors_style,
+		);
 		if ($lang) {
-			$mid .= ', `lang`=? ';
-			$bindvars[] = $lang;
+			$queryData['lang'] = $lang;
 		}
 		if ($hash !== null) {
 			if (!empty($hash['lock_it']) && ($hash['lock_it'] == 'y' || $hash['lock_it'] == 'on')) {
-				$mid .= ', `flag`=?, `lockedby`=? ';
-				$bindvars[] = 'L';
-				$bindvars[] = $user;
+				$queryData['flag'] = 'L';
+				$queryData['lockedby'] = $user;
 			} else if (empty($hash['lock_it']) || $hash['lock_it'] == 'n') {
-				$mid .= ', `flag`=?, `lockedby`=? ';
-				$bindvars[] = '';
-				$bindvars[] = '';
+				$queryData['flag'] = '';
+				$queryData['lockedby'] = '';
 			}
 		}
 		if ($prefs['wiki_comments_allow_per_page'] != 'n') {
 			if (!empty($hash['comments_enabled']) && $hash['comments_enabled'] == 'y') {
-				$mid .= ', `comments_enabled`=? ';
-				$bindvars[] = 'y';
+				$queryData['comments_enabled'] = 'y';
 			} else if (empty($hash['comments_enabled']) || $hash['comments_enabled'] == 'n') {
-				$mid .= ', `comments_enabled`=? ';
-				$bindvars[] = 'n';
+				$queryData['comments_enabled'] = 'n';
 			}
 		}
 		if (empty($hash['contributions'])) {
@@ -7564,9 +7597,10 @@ if( \$('#$id') ) {
 				$hash2[] = $hash3;
 			}
 		}
-		$bindvars[] = $pageName;
-		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `version_minor`=?, `user`=?, `ip`=?, `page_size`=?, `is_html`=?, `wysiwyg`=?, `wiki_authors_style`=?  $mid where `pageName`=?";
-		$result = $this->query($query,$bindvars);
+
+		$this->table('tiki_pages')->update($queryData, array(
+			'pageName' => $pageName,
+		));
 		$this->replicate_page_to_history($pageName);
 
 		// Parse edit_data updating the list of links from this page
@@ -7618,8 +7652,12 @@ if( \$('#$id') ) {
 
 			if ($prefs['feature_multilingual'] == 'y' && $lang ) {
 				// Need to update the translated objects table when an object's language changes.
-				$this->query( "UPDATE `tiki_translated_objects` SET `lang` = ? WHERE `objId` = ? AND `type` = 'wiki page'",
-						array( $lang, $info['page_id'] ) );
+				$this->table('tiki_translated_objects')->update(array(
+					'lang' => $lang,
+				), array(
+					'type' => 'wiki page',
+					'objId' => $info['page_id'],
+				));
 			}
 
 			if ($prefs['wiki_watch_minor'] != 'n' || !$edit_minor) {
@@ -7829,13 +7867,21 @@ if( \$('#$id') ) {
 		$info = $this->get_page_info($pageName);
 
 		if ($version >= $info["version"]) {
-			if ($lang) { // not sure it is necessary
-				$query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=?,`lang`=?  where `pageName`=?";
-				$result = $this->query($query, array($edit_data, $edit_comment, (int) $this->now, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($edit_data), $lang, $pageName));
-			} else {
-				$query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=? where `pageName`=?";
-				$result = $this->query($query, array($edit_data, $edit_comment, (int) $this->now, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($edit_data), $pageName));
-			}
+			$modifications = array(
+				'data' => $edit_data,
+				'comment' => $edit_comment,
+				'lastModif' => $this->now,
+				'version' => (int) $version,
+				'user' => $edit_user,
+				'ip' => $edit_ip,
+				'description' => $description,
+				'page_size' => strlen($edit_data),
+				'lang' => $lang,
+			);
+			$this->table('tiki_pages')->update($modifications, array(
+				'pageName' => $pageName,
+			));
+
 			// Parse edit_data updating the list of links from this page
 			$this->clear_links($pageName);
 
@@ -8790,22 +8836,27 @@ JS;
 		global $prefs;
 
 		// comments
-		$query = "update `tiki_comments` set `object`=? where `object`=? AND `objectType` = ?";
-		$this->query($query, array( $new, $old, $type ) );
+		$this->table('tiki_comments')->updateMultiple(array('object' => $new), array(
+			'object' => $old,
+			'objectType' => $type,
+		));
 
 		// Move email notifications
 		$oldId = str_replace( $type, ' ', '' ) . $old;
 		$newId = str_replace( $type, ' ', '' ) . $new;
-		$query = "update `tiki_user_watches` set `object`=? where `object`=?";
-		$this->query($query, array( $newId, $oldId ) );
-		$query = "update `tiki_group_watches` set `object`=? where `object`=?";
-		$this->query($query, array( $newId, $oldId ) );
+		$this->table('tiki_user_watches')->updateMultiple(array('object' => $newId), array(
+			'object' => $oldId,
+		));
+		$this->table('tiki_group_watches')->updateMultiple(array('object' => $newId), array(
+			'object' => $oldId,
+		));
 
 		// theme_control_objects(objId,name)
 		$oldId = md5($type . $old);
 		$newId = md5($type . $new);
-		$query = "update `tiki_theme_control_objects` set `objId`=?, `name`=? where `objId`=?";
-		$this->query($query, array( $newId, $new, $oldId ) );
+		$this->table('tiki_theme_control_objects')->updateMultiple(array('objId' => $newId, 'name' => $new), array(
+			'objId' => $oldId,
+		));
 
 		// polls
 		if ($prefs['feature_polls'] == 'y') {
@@ -8816,8 +8867,10 @@ JS;
 		// Move custom permissions
 		$oldId = md5($type . strtolower($old));
 		$newId = md5($type . strtolower($new));
-		$query = "update `users_objectpermissions` set `objectId`=? where `objectId`=? AND `objectType` = ?";
-		$this->query($query, array( $newId, $oldId, $type ) );
+		$this->table('users_objectpermissions')->updateMultiple(array('objectId' => $newId), array(
+			'objectId' => $oldId,
+			'objectType' => $type,
+		));
 
 		// Logs
 		if ($prefs['feature_actionlog'] == 'y') {
@@ -8827,12 +8880,18 @@ JS;
 		}
 
 		// Attributes
-		$query = "update `tiki_object_attributes` set `itemId`=? where `itemId`=? AND type=?";
-		$this->query($query, array( $new, $old, $type) );
-		$query = "update `tiki_object_relations` set `source_itemId`=? where `source_itemId`=? AND source_type=?";
-		$this->query($query, array( $new, $old, $type) );
-		$query = "update `tiki_object_relations` set `target_itemId`=? where `target_itemId`=? AND target_type=?";
-		$this->query($query, array( $new, $old, $type) );
+		$this->table('tiki_object_attributes')->updateMultiple(array('itemId' => $new), array(
+			'itemId' => $old,
+			'type' => $type,
+		));
+		$this->table('tiki_object_relations')->updateMultiple(array('source_itemId' => $new), array(
+			'source_itemId' => $old,
+			'source_type' => $type,
+		));
+		$this->table('tiki_object_relations')->updateMultiple(array('target_itemId' => $new), array(
+			'target_itemId' => $old,
+			'target_type' => $type,
+		));
 
 		global $menulib; include_once('lib/menubuilder/menulib.php');
 		$menulib->rename_wiki_page($old, $new);
