@@ -1486,7 +1486,7 @@ class ToolbarSheet extends Toolbar
 			case 'sheetrefresh':
 				$label = tra('Refresh Calculations');
 				$icon = tra('pics/icons/arrow_refresh.png');
-				$syntax = 'sheetInstance.calc(sheetInstance.obj.tableBody());';
+				$syntax = 'sheetInstance.calc();';
 				break;
 			case 'sheetclose':
 				$label = tra('Finish Editing');
