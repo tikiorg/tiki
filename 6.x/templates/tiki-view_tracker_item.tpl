@@ -1,7 +1,7 @@
 {* $Id$ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 
-{title help="trackers"}{tr}Tracker Item:{/tr} {$tracker_info.name|escape}{/title}
+{title help="trackers"}{$tracker_info.name|escape}{/title}
 
 {* --------- navigation ------ *}
 <div class="navbar">
