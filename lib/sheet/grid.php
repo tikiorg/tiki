@@ -2300,9 +2300,6 @@ class SheetLib extends TikiLib
 			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/jquery.scrollTo-min.js' );
 			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/raphael-min.js', 'external' );
 			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.raphael-min.js', 'external' );
-			$headerlib->add_jq_onready( '
-				
-			' );
 			$this->setupJQuerySheetFiles = true;
 		}
 	}

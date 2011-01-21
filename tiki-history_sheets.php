@@ -81,6 +81,7 @@ if ( count($sheetIndexes) > 1 ) {
 	//$smarty->assign('paginate', $paginate);
 	$smarty->assign( 'grid_content', diffSheetsAsHTML($_REQUEST["sheetId"], $dates) );
 	
+	$cookietab = 1;
 	$headerlib->add_jq_onready("
 		$.sheet.tikiOptions = $.extend($.sheet.tikiOptions, {
 			editable: false,
