@@ -131,6 +131,7 @@ if ($prefs['feature_themegenerator'] === 'y') {
 			$themegenlib->deleteCurrentTheme();
 		} else if (!empty($_REQUEST['tg_fg_swaps']) && !empty($_REQUEST['tg_css_file'])) {
 			$themegenlib->updateCurrentTheme($_REQUEST['tg_css_file'], $_REQUEST['tg_fg_swaps'], 'fgcolors');
+			$themegenlib->updateCurrentTheme($_REQUEST['tg_css_file'], $_REQUEST['tg_bg_swaps'], 'bgcolors');
 		} else {
 			$reload = false;
 		}
@@ -150,7 +151,7 @@ if (isset($_REQUEST["looksetup"])) {
 
 if ($reload) {
 		$location = 'location: tiki-admin.php?page=look';
-		if ($prefs['feature_tabs'] == 'y' && isset($_COOKIE['tab'])) {
+		if ($prefs['feature_tabs'] == 'y' && isset($_COOKIE['tab']) && $_COOKIE['tab'] > 1) {
 			$location.= "&cookietab=" . $_COOKIE['tab'];
 		}
 		header($location);

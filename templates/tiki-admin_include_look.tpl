@@ -281,6 +281,20 @@
 								</li>
 							{/foreach}
 						</ul>
+						<label for="tg_bg_colors">{tr}Background Colors:{/tr}</label>
+						<ul id="tg_bg_colors" class="color_swatches clearfix">
+							{foreach from=$tg_back_colors item=color}
+								<li class="colorItem">
+									 <div class="colorSelector">
+									 	<div style="background-color:{$color.new};">&nbsp;</div>
+									 </div>
+									 <span class="colorLabel">
+										{$color.new}
+									</span>
+									<input type="hidden" name="tg_bg_swaps[{$color.old}]" value="{$color.new}" />
+								</li>
+							{/foreach}
+						</ul>
 					</div>
 				</div>
 				{jq}$(".colorItem").tiki("colorpicker", "", { colorLabel: ".colorLabel", colorSelector: ".colorSelector > div", colorInput: "input" }){/jq}

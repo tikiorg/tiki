@@ -604,7 +604,37 @@ class HeaderLib
 				}
 			}
 		}
+		$files = $this->process_themegen_files($files);
 
+		return $files;
+	}
+	
+	private function process_themegen_files($files) {
+		global $prefs, $tikidomainslash;
+		
+		if ($prefs['feature_themegenerator'] === 'y' && !empty($prefs['themegenerator_theme'])) {
+			global $themegenlib; include_once 'lib/themegenlib.php';
+			
+			$data = $themegenlib->getCurrentTheme()->getData();
+			$themename = $themegenlib->getCurrentTheme()->getName();
+			if (count($data['files'])) {
+				foreach ($data['files'] as $file => $swaps) {
+					$i = array_search($file, $files['screen']);
+					if ($i !== false) {
+						$css = $themegenlib->processCSSFile($file, $swaps);
+					
+						$hash = md5( $file );
+						$target = 'temp/public/'.$tikidomainslash;
+						$ofile = $target . "themegen_{$themename}_$hash.css";
+						
+						file_put_contents( $ofile, $css );
+						chmod($ofile, 0644);
+						
+						$files['screen'][$i] = $ofile;
+					}
+				}
+			}
+		}
 		return $files;
 	}
 }

@@ -24,8 +24,6 @@ class ThemeGenLib
 			$t = '';
 		}
 		$this->currentTheme = new ThemeGenTheme($t);
-		
-		return true;
 	}
 	
 	public function setupEditor() {
@@ -52,35 +50,20 @@ class ThemeGenLib
 		}
 		$mincss .= $headerlib->minify_css( $css_file );	// clean out comments etc
 		
-		$num = preg_match_all('/[^-]color:([^\};!]*?)[;\}!]/', $mincss, $matches);
+		$num = preg_match_all( '/[^-]color:([^\};!]*?)[;\}!]/i', $mincss, $matches );
 		if ($num) {
-			$colors = $matches[1];
-			$colors = array_map('trim', $colors);
-			$colors = array_unique($colors);
-			$colors = array_filter($colors);
-			sort($colors);
-			//$data = $this->currentTheme->loadPref();
-			$colors2 = array();
-			foreach ($colors as $color) {
-				$colors2[$color] = array();
-				$colors2[$color]['old'] = $color;
-				if (isset($data['files'][$css_file]['fgcolors'][$color])) {
-					$colors2[$color]['new'] = $data['files'][$css_file]['fgcolors'][$color];
-				} else {
-					$colors2[$color]['new'] = $color;
-				}
-			}
+			$colors = $this->currentTheme->processMatches( $matches[1], $css_file, 'fgcolors' );
 		} else {
-			$colors2 = array();
+			$colors = array();
+		}
+		$num = preg_match_all('/background(?:-color)?:.*?(#[0-9A-F]{3,6})[\s;\}\!]/i', $mincss, $matches);
+		if ($num) {
+			$bgcolors = $this->currentTheme->processMatches( $matches[1], $css_file, 'bgcolors' );
+		} else {
+			$bgcolors = array();
 		}		
-		preg_match_all('/background-color:([^\};\!]*?)[;\}\!]/', $mincss, $matches);
-		$bgcolors = $matches[1];
-		$bgcolors = array_map('trim', $bgcolors);
-		$bgcolors = array_unique($matches[1]);
-		$bgcolors = array_filter($bgcolors);
-		sort($bgcolors);
-		
-		$smarty->assign_by_ref('tg_fore_colors', $colors2);
+				
+		$smarty->assign_by_ref('tg_fore_colors', $colors);
 		$smarty->assign_by_ref('tg_back_colors', $bgcolors);
 		
 		$smarty->assign_by_ref('tg_css_files', $this->setupCSSFiles());
@@ -110,6 +93,22 @@ class ThemeGenLib
 		
 		return $css_files;
 		
+	}
+	
+	public function processCSSFile($file, $swaps) {
+		global $headerlib;
+		
+		$css = $headerlib->minify_css( $file );
+		
+		foreach ($swaps['fgcolors'] as $old => $new) {
+			$css = preg_replace('/([^-]color:\s*)' . $old . '/Umis', '$1' . $new, $css);
+		}
+		
+		foreach ($swaps['bgcolors'] as $old => $new) {
+			$css = preg_replace('/(background(?:-color)?:\s*)' . $old . '/Umis', '$1' . $new, $css);
+		}
+		
+		return $css;
 	}
 	
 	public function saveNewTheme($name) {
@@ -171,6 +170,29 @@ class ThemeGenTheme extends SerializedList
 			}
 		}
 	}
+	
+	public function processMatches($matches, $css_file, $type) {
+		$processed = array();
+		if (is_array( $matches )) {
+			$matches = array_map('trim', $matches);
+			$matches = array_map('strtolower', $matches);
+			$matches = array_unique($matches);
+			$matches = array_filter($matches);
+			sort($matches);
+			//$data = $this->currentTheme->loadPref();
+			foreach ($matches as $color) {
+				$processed[$color] = array();
+				$processed[$color]['old'] = $color;
+				if (isset($this->data['files'][$css_file][$type][$color])) {
+					$processed[$color]['new'] = $this->data['files'][$css_file][$type][$color];
+				} else {
+					$processed[$color]['new'] = $color;
+				}
+			}
+		}
+		return $processed;
+	}
+	
 	
 }
 

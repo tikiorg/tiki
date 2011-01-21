@@ -24,6 +24,12 @@ abstract class SerializedList
 	protected $data;
 	protected $prefPrefix;
 	
+	/**
+	 * Constructor
+	 * poss add the prefPrefix and data init as params
+	 * also getting a named item should be a separate step?
+	 * @param string $name
+	 */
 	public function __construct($name) {
 		global $tikilib, $prefs;
 		
@@ -43,6 +49,10 @@ abstract class SerializedList
 	
 	public function getData() {
 		return $this->data;
+	}
+	
+	public function getName() {
+		return $this->name;
 	}
 	
 	public function getPrefName() {
