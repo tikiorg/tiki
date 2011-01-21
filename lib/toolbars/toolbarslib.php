@@ -1491,7 +1491,7 @@ class ToolbarSheet extends Toolbar
 			case 'sheetclose':
 				$label = tra('Finish Editing');
 				$icon = tra('pics/icons/close.png');
-				$syntax = '$("#edit_button").click();';	// temporary workaround TODO properly
+				$syntax = '$.sheet.manageState(sheetInstance.obj.parent(), true);';	// temporary workaround TODO properly
 				break;
 			case 'bold':
 				$label = tra('Bold');

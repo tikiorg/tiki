@@ -25,14 +25,18 @@
 								{$grid_content[$smarty.section.date.index]}
 							</div>
 							
-							{button href="tiki-view_sheets.php?sheetId=$sheetId&readdate=`$history[$smarty.section.date.index].stamp`&parse=edit" class="edit_button" _text="{tr}Edit{/tr}" _htmlelement="role_main" sheetId="$sheetId" _class="" parse="edit" editSheet="y" _auto_args="*" _title="{tr}Edit{/tr}"}
+							<div style="text-align: center;">
+								{button href="tiki-view_sheets.php?sheetId=$sheetId&readdate=`$history[$smarty.section.date.index].stamp`&parse=y" class="view_button" _text="{tr}View{/tr}" _htmlelement="role_main" _title="{tr}View{/tr}"}
+								{button href="tiki-view_sheets.php?sheetId=$sheetId&readdate=`$history[$smarty.section.date.index].stamp`&parse=edit" class="edit_button" _text="{tr}Edit{/tr}" _htmlelement="role_main" _title="{tr}Edit{/tr}"}
+								{button href="tiki-view_sheets.php?sheetId=$sheetId&readdate=`$history[$smarty.section.date.index].stamp`&parse=clone" class="clone_button" _text="{tr}Clone{/tr}" _htmlelement="role_main" _title="{tr}Clone{/tr}"}
+								{button href="tiki-view_sheets.php?sheetId=$sheetId&readdate=`$history[$smarty.section.date.index].stamp`&parse=rollback" class="rollback_button" _text="{tr}Rollback{/tr}" _htmlelement="role_main" _title="{tr}Rollback{/tr}"}
+							</div>
 						</td>
 					{/section}
 				</tr>
 			</table>
 			
-			<div class="navbar">
-				{button href="tiki-history_sheets.php?sheetId=$sheetId" _text="{tr}Back{/tr}"}
+			<div class="navbar" style="text-align: center;">
 				{button _id="go_fullscreen" _text="{tr}Full Screen{/tr}"}
 			</div>
 		{/tab}
@@ -63,8 +67,11 @@
 			    	<td style="vertical-align: middle; text-align: center;">
 					   	<input type="radio" name="compareSheet2" class="compareSheet2" value="{$history[revision_date].index}" onclick="compareSheetClick(this);" />
 			    	</td>
-		    		<td>
-		    			<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$history[revision_date].stamp}">View</a>
+		    		<td style="text-align: center;">
+		    			<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$history[revision_date].stamp}&parse=y" title="{tr}View Spreadsheet{/tr}">{tr}View{/tr}</a> |
+		    			<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$history[revision_date].stamp}&parse=edit" title="{tr}Edit Spreadsheet{/tr}">{tr}Edit{/tr}</a> |
+		    			<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$history[revision_date].stamp}&parse=clone" title="{tr}Clone Spreadsheet{/tr}">{tr}Clone{/tr}</a> |
+		    			<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$history[revision_date].stamp}&parse=rollback" title="{tr}Roll Back Spreadsheet{/tr}">{tr}Roll-Back{/tr}</a>
 		    		</td>
 		    	</tr>
 			{/section}
