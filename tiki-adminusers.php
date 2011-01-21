@@ -247,7 +247,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			if ($userlib->add_user($_REQUEST['login'], $newPass , $_REQUEST['email'], $pass_first_login ? $newPass : '', $pass_first_login, $apass, NULL, ($send_validation_email?'u':NULL))) {
 				$tikifeedback[] = array(
 					'num' => 0,
-					'mes' => sprintf(tra("New %s created with %s %s.") , tra("user") , tra("username") , $_REQUEST['login'])
+					'mes' => sprintf(tra("New user created with username %s.") , $_REQUEST['login'])
 				);
 				if ($send_validation_email) {
 					// No need to send credentials in mail if the user is forced to choose a new password after validation
