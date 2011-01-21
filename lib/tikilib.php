@@ -352,8 +352,9 @@ class TikiLib extends TikiDb_Bridge
 	function remove_user_watch_by_id($id) {
 		global $tiki_p_admin_notifications, $user;
 		if ( $tiki_p_admin_notifications === 'y' or $user === $this->get_user_notification($id) ) {
-			$query = "delete from `tiki_user_watches` where `watchId`=?";
-			$this->query($query, array($id));
+			$this->table('tiki_user_watches')->delete(array(
+				'watchId' => (int) $id,
+			));
 
 			return true;
 		}
@@ -362,29 +363,36 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function remove_group_watch_by_id($id) {
-		$query = "delete from `tiki_group_watches` where `watchId`=?";
-		$this->query($query,array($id));
+		$this->table('tiki_group_watches')->delete(array(
+			'watchId' => (int) $id,
+		));
 	}
 
 	/*shared*/
 	function remove_user_watch($user, $event, $object, $type = 'wiki page') {
-		$query = "delete from `tiki_user_watches` where binary `user`=? and `event`=? and `object`=?";
-		$bindvars = array($user,$event,$object);
+		$conditions = array(
+			'user' => $user,
+			'event' => $event,
+			'object' => $object,
+		);
 		if (isset($type)) {
-			$query .= " and `type` = ?";
-			$bindvars[] = $type;
+			$conditions['type'] = $type;
 		}
-		$this->query($query, $bindvars);
+
+		$this->table('tiki_user_watches')->deleteMultiple($conditions);
 	}
 
 	function remove_group_watch($group, $event, $object, $type = 'wiki page') {
-		$query = "delete from `tiki_group_watches` where binary `group`=? and `event`=? and `object`=?";
-		$bindvars = array($group,$event,$object);
+		$conditions = array(
+			'group' => $group,
+			'event' => $event,
+			'object' => $object,
+		);
 		if (isset($type)) {
-			$query .= " and `type`=?";
-			$bindvars[] = $type;
+			$conditions['type'] = $type;
 		}
-		$this->query($query, $bindvars);
+
+		$this->table('tiki_group_watches')->deleteMultiple($conditions);
 	}
 
 	/*shared*/
@@ -849,9 +857,10 @@ class TikiLib extends TikiDb_Bridge
 			$maxPoints = $this->getOne("select max(`maxPoints`) from `tiki_user_quizzes` where `quizId`=?",array((int)$quizId));
 			$avgavg = ($maxPoints != 0) ? $avgpoints / $maxPoints * 100 : 0.0;
 			$avgtime = $this->getOne("select avg(`timeTaken`) from `tiki_user_quizzes` where `quizId`=?",array((int)$quizId));
-			$querydel = "delete from `tiki_quiz_stats_sum` where `quizId`=?";
-			$resultdel = $this->query($querydel,array((int)$quizId),-1,-1,false);
 
+			$quizStatsSum->delete(array(
+				'quizId' => (int) $quizId,
+			));
 			$quizStatsSum->insert(array(
 				'quizId' => (int) $quizId,
 				'quizName' => $quizName,
@@ -1169,10 +1178,12 @@ class TikiLib extends TikiDb_Bridge
 			if ($this->getOne($query, $bindvars)) {
 				return true;
 			}
-			$query = "delete from `tiki_users_score` where `user`=? and `event_id`=?";
-			$this->query($query, array($user, $event_id));
 
 			$usersScore = $this->table('tiki_users_score');
+			$usersScore->delete(array(
+				'user' => $user,
+				'event_id' => $event_id,
+			));
 			$usersScore->insert(array(
 				'user' => $user,
 				'event_id' => $event_id,
@@ -1819,12 +1830,15 @@ class TikiLib extends TikiDb_Bridge
 		}
 		// Remove individual permissions for this object if they exist
 		$object = $type . $id;
-		$query = "delete from `users_objectpermissions` where `objectId`=? and `objectType`=?";
-		$result = $this->query($query,array(md5($object),$type));
+		$this->table('users_objectpermissions')->deleteMultiple(array(
+			'objectId' => md5($object),
+			'objectType' => $type,
+		));
 		// remove links from this object to pages
 		$linkhandle = "objectlink:$type:$id";
-		$query = "delete from `tiki_links` where `fromPage` = ?";
-		$result = $this->query($query, array( $linkhandle ) );
+		$this->table('tiki_links')->deleteMultiple(array(
+			'fromPage' => $linkhandle,
+		));
 		// remove fgal backlinks
 		if ( $prefs['feature_file_galleries'] == 'y') {
 			global $filegallib; require_once 'lib/filegals/filegallib.php';
@@ -1833,12 +1847,21 @@ class TikiLib extends TikiDb_Bridge
 		// remove object
 		$objectlib->delete_object($type, $id);
 
-		$query = "delete from `tiki_object_attributes` where `type`=? and `itemId`=?";
-		$this->query($query,array($type, $id));
-		$query = "delete from `tiki_object_relations` where `source_type`=? and `source_itemId`=?";
-		$this->query($query,array($type, $id));
-		$query = "delete from `tiki_object_relations` where `target_type`=? and `target_itemId`=?";
-		$this->query($query,array($type, $id));
+		$objectAttributes = $this->table('tiki_object_attributes');
+		$objectAttributes->deleteMultiple(array(
+			'type' => $type,
+			'itemId' => $id,
+		));
+
+		$objectRelations = $this->table('tiki_object_relations');
+		$objectRelations->deleteMultiple(array(
+			'source_type' => $type,
+			'source_itemId' => $id,
+		));
+		$objectRelations->deleteMultiple(array(
+			'target_type' => $type,
+			'target_itemId' => $id,
+		));
 
 		return true;
 	}
@@ -2122,8 +2145,10 @@ class TikiLib extends TikiDb_Bridge
 		setcookie(md5("tiki_wiki_poll_$id"), $ip, time()+60*60*24*300);
 		if (!$user) {
 			if ($prefs['ip_can_be_checked'] == 'y') {
-				$query = 'delete from `tiki_user_votings` where `ip`=? and `id`=?';
-				$result = $this->query($query, array($ip, $id));
+				$userVotings->delete(array(
+					'ip' => $ip,
+					'id' => $id,
+				));
 				if ( $optionId !== false && $optionId != 'NULL' ) {
 					$userVotings->insert(array(
 						'user' => '',
@@ -2146,11 +2171,19 @@ class TikiLib extends TikiDb_Bridge
 			}
 		} else {
 			if ($prefs['ip_can_be_checked'] == 'y') {
-				$query = 'delete from `tiki_user_votings` where (`user`=? or `ip`=?)and `id`=?';
-				$this->query($query, array($user, $ip, $id));
+				$userVotings->delete(array(
+					'user' => $ip,
+					'id' => $id,
+				));
+				$userVotings->delete(array(
+					'ip' => $ip,
+					'id' => $id,
+				));
 			} else {
-				$query = 'delete from `tiki_user_votings` where `user`=? and `id`=?';
-				$this->query($query, array($user, (string)$id));
+				$userVotings->delete(array(
+					'user' => $ip,
+					'id' => $id,
+				));
 			}
 			if ( $optionId !== false  && $optionId != 'NULL' ) {
 				$userVotings->insert(array(
@@ -2805,11 +2838,11 @@ class TikiLib extends TikiDb_Bridge
 			$user = 'anonymous';
 		}
 
-		//  $cant=$this->getOne("select count(*) from `tiki_semaphores` where `semName`='$semName'");
-		$query = "delete from `tiki_semaphores` where `semName`=? and `objectType`=?";
-		$this->query($query,array($semName, $objectType));
-
 		$semaphores = $this->table('tiki_semaphores');
+		$semaphores->delete(array(
+			'semName' => $semName,
+			'objectType' => $objectType,
+		));
 		$semaphores->insert(array(
 			'semName' => $semName,
 			'timestamp' => $this->now,
@@ -2820,8 +2853,12 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function semaphore_unset($semName, $lock, $objectType='wiki page') {
-		$query = "delete from `tiki_semaphores` where `semName`=? and `timestamp`=? and `objectType`=?";
-		$result = $this->query($query,array($semName,(int)$lock, $objectType));
+		$semaphores = $this->table('tiki_semaphores');
+		$semaphores->delete(array(
+			'semName' => $semName,
+			'timestamp' => (int) $lock,
+			'objectType' => $objectType,
+		));
 	}
 
 	// Hot words methods ////
@@ -3311,9 +3348,11 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function remove_cache($cacheId) {
-		$query = "delete from `tiki_link_cache` where `cacheId`=?";
+		$linkCache = $this->table('tiki_link_cache');
+		$linkCache->delete(array(
+			'cacheId' => $cacheId,
+		));
 
-		$result = $this->query($query, array( $cacheId ) );
 		return true;
 	}
 
@@ -3466,30 +3505,41 @@ class TikiLib extends TikiDb_Bridge
 		foreach ( $result as $res ) {
 			$this->remove_from_structure($res["page_ref_id"]);
 		}
-		$query = "delete from `tiki_pages` where `pageName` = ?";
-		$result = $this->query($query, array( $page ) );
+
+		$this->table('tiki_pages')->delete(array(
+			'pageName' => $page,
+		));
 		if ($prefs['feature_contribution'] == 'y') {
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
 			$contributionlib->remove_page($page);
 		}
-		$query = "delete from `tiki_history` where `pageName` = ?";
-		$result = $this->query($query, array( $page ) );
-		$query = "delete from `tiki_links` where `fromPage` = ?";
-		$result = $this->query($query, array( $page ) );
+		$this->table('tiki_history')->deleteMultiple(array(
+			'pageName' => $page,
+		));
+		$this->table('tiki_links')->deleteMultiple(array(
+			'fromPage' => $page,
+		));
 		global $logslib; include_once('lib/logs/logslib.php');
 		$logslib->add_action('Removed', $page, 'wiki page', $params);
 		//get_strings tra("Removed");
 		$query = "update `users_groups` set `groupHome`=? where `groupHome`=?";
 		$this->query($query, array(NULL, $page));
-		$query = 'delete from `tiki_theme_control_objects` where `name`=? and `type`=?';
-		$this->query($query, array($page, 'wiki page'));
+
+		$this->table('tiki_theme_control_objects')->deleteMultiple(array(
+			'name' => $page,
+			'type' => 'wiki page',
+		));
 
 		$this->remove_object('wiki page', $page);
 
-		$query = "delete from `tiki_user_watches` where `event`=? and `object`=?";
-		$this->query($query,array('wiki_page_changed', $page));
-		$query = "delete from `tiki_group_watches` where `event`=? and `object`=?";
-		$this->query($query,array('wiki_page_changed', $page));
+		$this->table('tiki_user_watches')->deleteMultiple(array(
+			'event' => 'wiki_page_changed',
+			'object' => $page,
+		));
+		$this->table('tiki_group_watches')->deleteMultiple(array(
+			'event' => 'wiki_page_changed',
+			'object' => $page,
+		));
 
 		$atts = $wikilib->list_wiki_attachments($page, 0, -1, 'created_desc', '');
 		foreach ($atts["data"] as $at) {
@@ -3517,8 +3567,9 @@ class TikiLib extends TikiDb_Bridge
 		$page_info = $structlib->s_get_page_info($page_ref_id);
 		$query = "update `tiki_structures` set `pos`=`pos`-1 where `pos`>? and `parent_id`=?";
 		$this->query($query ,array((int)$page_info['pos'], (int)$page_info['parent_id']));
-		$query = "delete from `tiki_structures` where `page_ref_id`=?";
-		$result = $this->query($query, array( $page_ref_id ) );
+		$this->table('tiki_structures')->delete(array(
+			'page_ref_id' => $page_ref_id,
+		));
 		return true;
 	}
 
@@ -4151,8 +4202,9 @@ class TikiLib extends TikiDb_Bridge
 
 	function delete_preference($name) {
 		global $prefs;
-		$query = "delete from `tiki_preferences` where `name`=?";
-		$this->query($query,array($name));
+		$this->table('tiki_preferences')->delete(array(
+			'name' => $name,
+		));
 		$this->set_lastUpdatePrefs();
 	}
 
@@ -4167,10 +4219,10 @@ class TikiLib extends TikiDb_Bridge
 
 		$this->set_lastUpdatePrefs();
 
-		$query = "delete from `tiki_preferences` where `name`=?";
-		$result = $this->query($query,array($name),-1,-1,false);
-
 		$preferences = $this->table('preferences');
+		$preferences->delete(array(
+			'name' => $name,
+		));
 		$preferences->insert(array(
 			'name' => $name,
 			'value' => is_array($value) ? serialize($value) : $value,
@@ -4339,11 +4391,10 @@ class TikiLib extends TikiDb_Bridge
 
 		if (!empty($my_user)) {
 			$userPreferences = $this->table('tiki_user_preferences');
-
-			$query = "delete from `tiki_user_preferences` where `user`=? and `prefName`=?";
-			$bindvars=array($my_user,$name);
-			$result = $this->query($query, $bindvars, -1,-1,false);
-
+			$userPreferences->delete(array(
+				'user' => $my_user,
+				'prefName' => $name,
+			));
 			$userPreferences->insert(array(
 				'user' => $my_user,
 				'prefName' => $name,
@@ -4361,10 +4412,10 @@ class TikiLib extends TikiDb_Bridge
 		require_once("lib/cache/cachelib.php");
 		$cachelib->invalidate('user_details_'.$my_user);
 
-		$query = "delete from `tiki_user_preferences` where `user`=?";
-		$result = $this->query($query, array($my_user), -1,-1,false);
-
 		$userPreferences = $this->table('tiki_user_preferences');
+		$userPreferences->deleteMultiple(array(
+			'user' => $my_user,
+		));
 
 		foreach ($preferences as $prefName => $value) {
 			$userPreferences->insert(array(
@@ -5732,20 +5783,11 @@ if( \$('#$id') ) {
 	//Updates a dynamic variable found in some object
 	/*Shared*/
 	function update_dynamic_variable($name,$value, $lang = null) {
-		$bindvals = array();
-
-		$mid = "where `name`=?";
-		$bindvals[] = $name;
-		if ($lang) {
-			$mid .= " and `lang`=?";
-			$bindvals[] = $lang;
-		} else {
-			$mid .= " and `lang` IS NULL";
-		}
-		$query = "delete from `tiki_dynamic_variables` $mid";
-		$this->query( $query, $bindvals );
-
 		$dynamicVariables = $this->table('tiki_dynamic_variables');
+		$dynamicVariables->delete(array(
+			'name' => $name,
+			'lang' => $lang,
+		));
 		$dynamicVariables->insert(array(
 			'name' => $name,
 			'data' => $value,
@@ -7379,8 +7421,9 @@ if( \$('#$id') ) {
 	}
 
 	function clear_links($page) {
-		$query = "delete from `tiki_links` where `fromPage`=?";
-		$result = $this->query($query, array($page));
+		$this->table('tiki_links')->deleteMultiple(array(
+			'fromPage' => $page,
+		));
 
 		$query = "delete from `tiki_object_relations` where `source_type` = 'wiki page' AND `source_itemId`=? AND `target_type` = 'wiki page' AND `relation` LIKE 'tiki.link.%'";
 		$result = $this->query($query, array($page));
@@ -7765,9 +7808,11 @@ if( \$('#$id') ) {
 		if (!$this->page_exists($pageName))
 			return false;
 
-		$query = "delete from `tiki_history` where `pageName`=? and `version`=?";
-		$result = $this->query($query, array($pageName,(int) $version));
 		$history = $this->table('tiki_history');
+		$history->delete(array(
+			'pageName' => $pageName,
+			'version' => (int) $version,
+		));
 		$history->insert(array(
 			'pageName' => $pageName,
 			'version' => (int) $version,
