@@ -4242,7 +4242,7 @@ class TikiLib extends TikiDb_Bridge
 
 		$this->set_lastUpdatePrefs();
 
-		$preferences = $this->table('preferences');
+		$preferences = $this->table('tiki_preferences');
 		$preferences->delete(array(
 			'name' => $name,
 		));
