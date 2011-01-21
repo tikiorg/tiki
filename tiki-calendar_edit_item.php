@@ -121,7 +121,7 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 	}
 
     $save['allday'] = (isset($_REQUEST['allday']) && $_REQUEST['allday'] == 'true') ? 1 : 0;
-	if ($_REQUEST['allday'] == 'true') {
+	if (isset($_REQUEST['allday']) && $_REQUEST['allday'] == 'true') {
 		$save['start'] = TikiLib::make_time(
 			0,
 			0,
