@@ -5229,8 +5229,15 @@ if( \$('#$id') ) {
 				$user = tra('Anonymous');
 			}
 			$this->query( "DELETE FROM `tiki_plugin_security` WHERE `fingerprint` = ?", array( $fp ) );
-			$this->query( "INSERT INTO `tiki_plugin_security` (`fingerprint`, `status`, `added_by`, `last_objectType`, `last_objectId`) VALUES(?, ?, ?, ?, ?)",
-				array( $fp, 'pending', $user, $objectType, $objectId ) );
+
+			$pluginSecurity = $this->table('tiki_plugin_security');
+			$pluginSecurity->insert(array(
+				'fingerprint' => $fp,
+				'status' => 'pending',
+				'added_by' => $user,
+				'last_objectType' => $objectType,
+				'last_objectId' => $objectId,
+			));
 		}
 
 		return '';
@@ -5247,8 +5254,15 @@ if( \$('#$id') ) {
 		}
 
 		$this->query( "DELETE FROM `tiki_plugin_security` WHERE `fingerprint` = ?", array( $fp ) );
-		$this->query( "INSERT INTO `tiki_plugin_security` (`fingerprint`, `status`, `approval_by`, `last_objectType`, `last_objectId`) VALUES(?, ?, ?, ?, ?)",
-				array( $fp, $type, $user, $objectType, $objectId ) );
+
+		$pluginSecurity = $this->table('tiki_plugin_security');
+		$pluginSecurity->insert(array(
+			'fingerprint' => $fp,
+			'status' => $type,
+			'added_by' => $user,
+			'last_objectType' => $objectType,
+			'last_objectId' => $objectId,
+		));
 	}
 
 	function plugin_clear_fingerprint( $fp ) {
@@ -5637,8 +5651,13 @@ if( \$('#$id') ) {
 		}
 		$query = "delete from `tiki_dynamic_variables` $mid";
 		$this->query( $query, $bindvals );
-		$query = "insert into `tiki_dynamic_variables`(`name`,`data`,`lang`) values(?,?,?)";
-		$this->query($query,array($name,$value,$lang));
+
+		$dynamicVariables = $this->table('tiki_dynamic_variables');
+		$dynamicVariables->insert(array(
+			'name' => $name,
+			'data' => $value,
+			'lang' => $lang,
+		));
 		return true;
 	}
 
@@ -7275,8 +7294,11 @@ if( \$('#$id') ) {
 	}
 
 	function replace_link($pageFrom, $pageTo, $types = array()) {
-		$query = "insert ignore into `tiki_links`(`fromPage`,`toPage`) values(?, ?)";
-		$result = $this->query($query, array($pageFrom,$pageTo));
+		$links = $this->table('tiki_links');
+		$links->insert(array(
+			'fromPage' => $pageFrom,
+			'toPage' => $pageTo,
+		));
 
 		global $relationlib; require_once 'lib/attributes/relationlib.php';
 		foreach( $types as $type ) {
@@ -7652,9 +7674,17 @@ if( \$('#$id') ) {
 
 		$query = "delete from `tiki_history` where `pageName`=? and `version`=?";
 		$result = $this->query($query, array($pageName,(int) $version));
-		$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`,`description`) values(?,?,?, ?,?,?, ?,?)";
-		$result = $this->query($query, array($pageName,(int) $version, (int) $lastModif, $edit_user, $edit_ip, $edit_comment, $edit_data, $description)
-				);
+		$history = $this->table('tiki_history');
+		$history->insert(array(
+			'pageName' => $pageName,
+			'version' => (int) $version,
+			'lastModif' => (int) $lastModif,
+			'user' => $edit_user,
+			'ip' => $edit_ip,
+			'comment' => $edit_comment,
+			'data' => $edit_data,
+			'description' => $description,
+		));
 
 		//print("version: $version<br />");
 		// Get this page information
