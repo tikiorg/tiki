@@ -62,9 +62,16 @@ class ThemeGenLib
 		} else {
 			$bgcolors = array();
 		}		
-				
+		$num = preg_match_all('/border(?:-.*?)?:.*?(#[0-9A-F]{3,6})[\s;\}\!]/i', $mincss, $matches);
+		if ($num) {
+			$bordercolors = $this->currentTheme->processMatches( $matches[1], $css_file, 'bordercolors' );
+		} else {
+			$bordercolors = array();
+		}		
+		
 		$smarty->assign_by_ref('tg_fore_colors', $colors);
 		$smarty->assign_by_ref('tg_back_colors', $bgcolors);
+		$smarty->assign_by_ref('tg_border_colors', $bordercolors);
 		
 		$smarty->assign_by_ref('tg_css_files', $this->setupCSSFiles());
 		$smarty->assign_by_ref('tg_css_file', $css_file);
@@ -106,6 +113,10 @@ class ThemeGenLib
 		
 		foreach ($swaps['bgcolors'] as $old => $new) {
 			$css = preg_replace('/(background(?:-color)?:\s*)' . $old . '/Umis', '$1' . $new, $css);
+		}
+		
+		foreach ($swaps['bordercolors'] as $old => $new) {
+			$css = preg_replace('/(border(?:-.*?)?:\s*)' . $old . '/Umis', '$1' . $new, $css);
 		}
 		
 		return $css;

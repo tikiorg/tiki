@@ -323,24 +323,41 @@ a.admbox.off img {
 
 /* tiki 7 theme generator */
 
-ul.color_swatches {
+.color_swatches {
 	list-style: none;
 	line-height: 40px;
 	background-color: #aaa;
+	color: #666;
 	padding: 1em;
 }
 
-ul.color_swatches > li {
+.color_swatches > li {
 	width: 10em;
 	float: left;
 	background-color: #aaa;
+	border: 2px solid #aaa;
+	margin: 1px;
 }
 
-ul.color_swatches > li > div {
+.color_swatches > li > div {
 /*	width: 16px;
 	height: 16px;*/
 	float:left;
 	margin: 3px 6px 0px 0px;
+}
+
+.color_swatches .changed {
+	font-style: italic;
+	color: #333;
+}
+
+.color_swatches .selected {
+	border: 2px solid #ddd;
+}
+
+.color_swatches input[type=checkbox] {
+	float: right;
+	margin: 12px 5px;
 }
 
 /* end theme generator */
