@@ -25,7 +25,7 @@
 		{/if}
 		
 			<label class="findtitle">
-				{tr}Find{/tr} <input id="highlight{$iSearch}" name="words" style="width:300px" type="text" accesskey="s" value="{$words|escape}" />
+				{tr}Search{/tr} <input id="highlight{$iSearch}" name="words" style="width:300px" type="text" accesskey="s" value="{$words|escape}" />
 			</label>
 			{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $prefs.search_autocomplete eq 'y'}
 				{jq}

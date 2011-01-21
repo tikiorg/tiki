@@ -14,7 +14,7 @@
 		{else}
 			<form action="tiki-searchindex.php" method="get" id="search-form" class="findtable">
 				<label class="findtitle">
-					{tr}Find{/tr} <input id="highlight2" name="filter[content]" size="14" type="text" accesskey="s" value="{$words}" />
+					{tr}Search{/tr} <input id="highlight2" name="filter[content]" size="14" type="text" accesskey="s" value="{$words}" />
 				</label>
 				{jq}
 					$("#highlight2").tiki("autocomplete", "pagename");
