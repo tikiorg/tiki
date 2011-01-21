@@ -1577,6 +1577,9 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'help' => 'Wiki+Page+Staging+and+Approval',
 			'perspective' => false,
+                        'dependencies' => array (
+                                'feature_categories'
+                        ),
 			'warning' => tra('This feature is experimental'),
 			'description' => tra('Allows wiki pages to be staged (drafted) before they are approved (published)'),
 		),
@@ -1783,8 +1786,7 @@ function prefs_feature_list() {
 		'feature_fixed_width' => array(
 			'name' => tra('Fixed width'),
 			'type' => 'flag',
-			'description' => tra('Constrains the site display to 990px wide.'),
-			'warning' => tra('You can modify at styles/layout/layout.css - selector #fixedwidth'),
+			'description' => tra('Constrains the width of the site.'),
 		),
 		'feature_socialnetworks' => array(
 			'name' => tra('Social networks'),
