@@ -3283,6 +3283,7 @@ class TrackerLib extends TikiLib
 				<dd><strong>[endyear]</strong> allows you to specify a custom end year in the date range (eg. 2020), default is 4 years from now;
 				<dd><strong>[blankdate]</strong> when set to "blank" will default the initial date field to an empty date, and allow selection of empty dates;
 				<dd>blankdate is overridden if the field isMandatory;
+				<dd>when set to "empty" will allow selection of empty date but default to current date
 				<dd>multiple options must appear in the order specified, separated by commas.
 				<dt>Example: "d,2000,2009,blank"
 				<dd>sets a date only field from 2000 through 2009, allowing blank dates.
@@ -3334,7 +3335,7 @@ class TrackerLib extends TikiLib
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: will display the field name as a html header h2;
-				<dt>Usage: <strong>level</strong>
+				<dt>Usage: <strong>level/strong>
 				<dt>Example: 2
 				<dt>Description:
 				<dd><strong>[level]</strong> level of the html header (default 2)
