@@ -171,9 +171,9 @@ class ThemeGenTheme extends SerializedList
 		}
 		
 		foreach($swaps as $type => $swaps2) {
-			if (!isset($this->data['files'][$css_file][$type])) {
+//			if (!isset($this->data['files'][$css_file][$type])) {
 				$this->data['files'][$css_file][$type] = array();
-			}
+//			}
 		
 			foreach ($swaps2 as $kswap => $swap) {
 				if ($kswap !== $swap) {

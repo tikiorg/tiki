@@ -332,6 +332,7 @@ a.admbox.off img {
 }
 
 .color_swatches > li {
+	position: relative;
 	width: 10em;
 	float: left;
 	background-color: #aaa;
@@ -339,9 +340,7 @@ a.admbox.off img {
 	margin: 1px;
 }
 
-.color_swatches > li > div {
-/*	width: 16px;
-	height: 16px;*/
+.color_swatches > li > div > * {
 	float:left;
 	margin: 3px 6px 0px 0px;
 }
@@ -352,12 +351,13 @@ a.admbox.off img {
 }
 
 .color_swatches .selected {
-	border: 2px solid #ddd;
+	border: 2px solid #bbb;
 }
 
 .color_swatches input[type=checkbox] {
-	float: right;
-	margin: 12px 5px;
+	position: absolute;
+	right: 5px;
+	top: 12px;
 }
 
 /* end theme generator */
