@@ -92,7 +92,7 @@
 
 {* -------------------- empty field -------------------- *}
 {elseif empty($field_value.value) and $field_value.value != '0' and $field_value.type ne 'U' and $field_value.type ne '*' and $field_value.type ne 's' 
-	and $field_value.type ne 'q' and $field_value.type ne 'n' and $field_value.type ne 'C'}
+	and $field_value.type ne 'q' and $field_value.type ne 'n' and $field_value.type ne 'C' and $field_value.type ne 'h'}
 	{if $list_mode ne 'csv' and $is_link eq 'y'}&nbsp;{/if} {* to have something to click on *}
 
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *}
@@ -402,7 +402,11 @@
 
 {* -------------------- header ------------------------- *}
 {elseif $field_value.type eq 'h'}
-	<h2>{$field_value.value}</h2>
+	{if !empty($field_value.options_array[0]) && $field_value.options_array[0] > 0}
+		<h{$field_value.options_array[0]}>{$field_value.name|escape}</h{$field_value.options_array[0]}>
+	{else}
+		<h2>{$field_value.name|escape}</h2>
+	{/if}
 
 {* -------------------- subscription -------------------- *}
 {elseif $field_value.type eq 'U'}

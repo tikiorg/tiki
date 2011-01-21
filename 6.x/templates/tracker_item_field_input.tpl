@@ -507,6 +507,11 @@
 {* -------------------- in group -------------------- *}
 {elseif $field_value.type eq 'N'}
 	{include file='tracker_item_field_value.tpl'}
+
+{* -------------------- header ------------------------- *}
+{elseif $field_value.type eq 'h'}
+	{include file='tracker_item_field_value.tpl'}
+
 {/if}
 
 {if $field_value.isMandatory eq 'y' and $showmandatory eq 'y'}
