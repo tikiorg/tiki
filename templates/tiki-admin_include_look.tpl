@@ -277,7 +277,7 @@
 									 <span class="colorLabel">
 										{$color.new}
 									</span>
-									<input type="hidden" name="tg_fg_swaps[{$color.old}]" value="{$color.new}" />
+									<input type="hidden" name="tg_swaps[fgcolors][{$color.old}]" value="{$color.new}" />
 								</li>
 							{/foreach}
 						</ul>
@@ -291,7 +291,7 @@
 									 <span class="colorLabel">
 										{$color.new}
 									</span>
-									<input type="hidden" name="tg_bg_swaps[{$color.old}]" value="{$color.new}" />
+									<input type="hidden" name="tg_swaps[bgcolors][{$color.old}]" value="{$color.new}" />
 								</li>
 							{/foreach}
 						</ul>

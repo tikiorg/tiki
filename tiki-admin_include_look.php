@@ -129,9 +129,8 @@ if ($prefs['feature_themegenerator'] === 'y') {
 			$themegenlib->saveNewTheme($tg_edit_theme_name);
 		} else if (!empty($_REQUEST['tg_delete_theme'])) {
 			$themegenlib->deleteCurrentTheme();
-		} else if (!empty($_REQUEST['tg_fg_swaps']) && !empty($_REQUEST['tg_css_file'])) {
-			$themegenlib->updateCurrentTheme($_REQUEST['tg_css_file'], $_REQUEST['tg_fg_swaps'], 'fgcolors');
-			$themegenlib->updateCurrentTheme($_REQUEST['tg_css_file'], $_REQUEST['tg_bg_swaps'], 'bgcolors');
+		} else if (!empty($_REQUEST['tg_swaps']) && !empty($_REQUEST['tg_css_file'])) {
+			$themegenlib->updateCurrentTheme($_REQUEST['tg_css_file'], $_REQUEST['tg_swaps']);
 		} else {
 			$reload = false;
 		}

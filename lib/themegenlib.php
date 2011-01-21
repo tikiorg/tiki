@@ -116,8 +116,8 @@ class ThemeGenLib
 		$this->currentTheme->savePref();
 	}
 	
-	public function updateCurrentTheme($css_file, $swaps, $type) {
-		$this->currentTheme->setData(array($swaps, $css_file, $type));
+	public function updateCurrentTheme($css_file, $swaps) {
+		$this->currentTheme->setData(array($swaps, $css_file));
 		$this->currentTheme->savePref();
 	}
 	
@@ -142,8 +142,6 @@ class ThemeGenTheme extends SerializedList
 	public function ThemeGenTheme($name) {
 
 		parent::__construct($name);
-		$this->data = array( 'files' => array() );
-		
 	}
 	
 	public function initData() {
@@ -155,18 +153,21 @@ class ThemeGenTheme extends SerializedList
 	}
 	
 	public function setData($params) {
-		list($swaps, $css_file, $type) = $params;
+		list($swaps, $css_file) = $params;
 		
 		if (!isset($this->data['files'][$css_file])) {
 			$this->data['files'][$css_file] = array();
 		}
-		if (!isset($this->data['files'][$css_file][$type])) {
-			$this->data['files'][$css_file][$type] = array();
-		}
 		
-		foreach ($swaps as $kswap => $swap) {
-			if ($kswap !== $swap) {
-				$this->data['files'][$css_file][$type][$kswap] = $swap;
+		foreach($swaps as $type => $swaps2) {
+			if (!isset($this->data['files'][$css_file][$type])) {
+				$this->data['files'][$css_file][$type] = array();
+			}
+		
+			foreach ($swaps2 as $kswap => $swap) {
+				if ($kswap !== $swap) {
+					$this->data['files'][$css_file][$type][$kswap] = $swap;
+				}
 			}
 		}
 	}
