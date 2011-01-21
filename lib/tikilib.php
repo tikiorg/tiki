@@ -250,9 +250,16 @@ class TikiLib extends TikiDb_Bridge
 			$query = "update `tiki_user_notes` set `name` = ?, `data` = ?, `size` = ?, `lastModif` = ?, `parse_mode` = ?  where `user`=? and `noteId`=?";
 			$this->query($query,array($name,$data,(int)$size,(int)$this->now,$parse_mode,$user,(int)$noteId));
 		} else {
-			$query = "insert into `tiki_user_notes`(`user`,`name`,`data`,`created`,`lastModif`,`size`,`parse_mode`) values(?,?,?,?,?,?,?)";
-			$this->query($query,array($user,$name,$data,(int)$this->now,(int)$this->now,(int)$size,$parse_mode));
-			$noteId = $this->getOne( "select max(`noteId`) from `tiki_user_notes` where `user`=? and `name`=? and `created`=?",array($user,$name,(int)$this->now));
+			$userNotes = $this->table('tiki_user_notes');
+			$noteId = $userNotes->insert(array(
+				'user' => $user,
+				'name' => $name,
+				'data' => $data,
+				'created' => $this->now,
+				'lastModif' => $this->now,
+				'size' => (int) $size,
+				'parse_mode' => $parse_mode,
+			));
 		}
 
 		return $noteId;
@@ -296,9 +303,17 @@ class TikiLib extends TikiDb_Bridge
 		}
 		
 		$this->remove_user_watch( $user, $event, $object, $type );
-		$query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`type`,`title`,`url`) ";
-		$query.= "values(?,?,?,?,?,?,?)";
-		$this->query($query,array($user,$event,$object,$email,$type,$title,$url));
+
+		$userWatches = $this->table('tiki_user_watches');
+		$userWatches->insert(array(
+			'user' => $user,
+			'event' => $event,
+			'object' => $object,
+			'email' => $email,
+			'type' => $type,
+			'title' => $title,
+			'url' => $url,
+		));
 		return true;
 	}
 
@@ -308,9 +323,14 @@ class TikiLib extends TikiDb_Bridge
 			return false;
 		} else {
 			$this->remove_group_watch( $group, $event, $object, $type );
-			$query = "insert into `tiki_group_watches`(`group`,`event`,`object`,`type`,`title`,`url`) ";
-			$query.= "values(?,?,?,?,?,?)";
-			$this->query($query,array($group,$event,$object,$type,$title,$url));
+			$groupWatches = $this->table(array(
+				'group' => $group,
+				'event' => $event,
+				'object' => $object,
+				'type' => $type,
+				'title' => $title,
+				'url' => $url,
+			));
 			return true;
 		}
 	}
@@ -818,6 +838,8 @@ class TikiLib extends TikiDb_Bridge
 
 		$result = $this->fetchAll($query,array());
 
+		$quizStatsSum = $this->table('tiki_quiz_stats_sum');
+
 		foreach ( $result as $res ) {
 			$quizId = $res["quizId"];
 
@@ -829,9 +851,15 @@ class TikiLib extends TikiDb_Bridge
 			$avgtime = $this->getOne("select avg(`timeTaken`) from `tiki_user_quizzes` where `quizId`=?",array((int)$quizId));
 			$querydel = "delete from `tiki_quiz_stats_sum` where `quizId`=?";
 			$resultdel = $this->query($querydel,array((int)$quizId),-1,-1,false);
-			$query2 = "insert into `tiki_quiz_stats_sum`(`quizId`,`quizName`,`timesTaken`,`avgpoints`,`avgtime`,`avgavg`)
-				values(?,?,?,?,?,?)";
-			$result2 = $this->query($query2,array((int)$quizId,$quizName,(int)$timesTaken,(float)$avgpoints,$avgtime,$avgavg));
+
+			$quizStatsSum->insert(array(
+				'quizId' => (int) $quizId,
+				'quizName' => $quizName,
+				'timesTaken' => (int) $timesTaken,
+				'avgpoints' => (float) $avgpoints,
+				'avgtime' => $avgtime,
+				'avgavg' => $avgavg,
+			));
 		}
 	}
 
@@ -1144,8 +1172,12 @@ class TikiLib extends TikiDb_Bridge
 			$query = "delete from `tiki_users_score` where `user`=? and `event_id`=?";
 			$this->query($query, array($user, $event_id));
 
-			$query = "insert into `tiki_users_score` (`user`, `event_id`, `expire`) values (?, ?, ?)";
-			$this->query($query, array($user, $event_id, time() + ($expire*60)));
+			$usersScore = $this->table('tiki_users_score');
+			$usersScore->insert(array(
+				'user' => $user,
+				'event_id' => $event_id,
+				'expire' => time() + ($expire * 60),
+			));
 		}
 		// Perform check to make sure score does not go below 0 with negative scores
 		if( $prefs['fgal_prevent_negative_score'] == 'y' && strpos( $event_type, 'fgallery' ) === 0 ) {
@@ -1278,10 +1310,15 @@ class TikiLib extends TikiDb_Bridge
 
 		if ($cant) {
 			$query = "update `tiki_referer_stats` set `hits`=`hits`+1,`last`=? where `referer`=?";
+			$this->query($query,array((int)$this->now,$referer));
 		} else {
-			$query = "insert into `tiki_referer_stats`(`last`,`referer`,`hits`) values(?,?,1)";
+			$refererStats = $this->table('tiki_referer_stats');
+			$refererStats->insert(array(
+				'last' => $this->now,
+				'referer' => $referer,
+				'hits' => 1,
+			));
 		}
-		$result = $this->query($query,array((int)$this->now,$referer));
 	}
 
 	// File attachments functions for the wiki ////
@@ -1415,10 +1452,14 @@ class TikiLib extends TikiDb_Bridge
 
 		if ($cant) {
 			$query = "update `tiki_pageviews` set `pageviews`=`pageviews`+1 where `day`=?";
+			$this->query($query,array((int)$dayzero),-1,-1,false);
 		} else {
-			$query = "insert into `tiki_pageviews`(`day`,`pageviews`) values(?,1)";
+			$pageviews = $this->table('tiki_pageviews');
+			$pageviews->insert(array(
+				'day' => (int) $dayzero,
+				'pageviews' => 1,
+			));
 		}
-		$result = $this->query($query,array((int)$dayzero),-1,-1,false);
 	}
 
 	function get_usage_chart_data() {
@@ -2074,6 +2115,8 @@ class TikiLib extends TikiDb_Bridge
 			return false;
 		}
 
+		$userVotings = $this->table('tiki_user_votings');
+
 		$ip = $this->get_ip_address();
 		$_SESSION['votes'][] = $id;
 		setcookie(md5("tiki_wiki_poll_$id"), $ip, time()+60*60*24*300);
@@ -2082,14 +2125,24 @@ class TikiLib extends TikiDb_Bridge
 				$query = 'delete from `tiki_user_votings` where `ip`=? and `id`=?';
 				$result = $this->query($query, array($ip, $id));
 				if ( $optionId !== false && $optionId != 'NULL' ) {
-					$query = 'insert into `tiki_user_votings` (`user`, `ip`,`id`,`optionId`, `time`) values(?,?,?,?,?)';
-					$result = $this->query($query, array('', $ip, (string)$id, (int)$optionId, (int)$this->now));
+					$userVotings->insert(array(
+						'user' => '',
+						'ip' => $ip,
+						'id' => (string) $id,
+						'optionId' => (int) $optionId,
+						'time' => $this->now,
+					));
 				}
 			} elseif (isset($_COOKIE[md5("tiki_wiki_poll_$id")])) {
 				return false;
 			} elseif ($optionId !== false && $optionId != 'NULL' ) {
-				$query = 'insert into `tiki_user_votings` (`user`, `ip`,`id`,`optionId`, `time`) values(?,?,?,?,?)';
-				$result = $this->query($query, array('', $ip, (string)$id, (int)$optionId, (int)$this->now));
+				$userVotings->insert(array(
+					'user' => '',
+					'ip' => $ip,
+					'id' => (string) $id,
+					'optionId' => (int) $optionId,
+					'time' => $this->now,
+				));
 			}
 		} else {
 			if ($prefs['ip_can_be_checked'] == 'y') {
@@ -2100,8 +2153,13 @@ class TikiLib extends TikiDb_Bridge
 				$this->query($query, array($user, (string)$id));
 			}
 			if ( $optionId !== false  && $optionId != 'NULL' ) {
-				$query = 'insert into `tiki_user_votings` (`user`,`ip`, `id`,`optionId`, `time`) values(?,?,?,?,?)';
-				$result = $this->query($query, array($user, $ip, (string)$id, (int)$optionId, (int)$this->now));
+				$userVotings->insert(array(
+					'user' => $user,
+					'ip' => $ip,
+					'id' => (string) $id,
+					'optionId' => (int) $optionId,
+					'time' => $this->now,
+				));
 			}
 		}
 
@@ -2750,8 +2808,14 @@ class TikiLib extends TikiDb_Bridge
 		//  $cant=$this->getOne("select count(*) from `tiki_semaphores` where `semName`='$semName'");
 		$query = "delete from `tiki_semaphores` where `semName`=? and `objectType`=?";
 		$this->query($query,array($semName, $objectType));
-		$query = "insert into `tiki_semaphores`(`semName`,`timestamp`,`user`, `objectType`) values(?,?,?,?)";
-		$result = $this->query($query,array($semName,(int)$this->now,$user,$objectType));
+
+		$semaphores = $this->table('tiki_semaphores');
+		$semaphores->insert(array(
+			'semName' => $semName,
+			'timestamp' => $this->now,
+			'user' => $user,
+			'objectType' => $objectType,
+		));
 		return $this->now;
 	}
 
@@ -2988,8 +3052,14 @@ class TikiLib extends TikiDb_Bridge
 			$bindvars[] = $user;
 		}
 		$this->query($query, $bindvars, -1, -1, false);
-		$query = "insert into `tiki_sessions`(`sessionId`,`timestamp`,`user`,`tikihost`) values(?,?,?,?)";
-		$result = $this->query($query, array($this->sessionId, (int)$this->now, $user,isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST']:'localhost'), -1, -1, false );
+
+		$sessions = $this->table('tiki_sessions');
+		$sessions->insert(array(
+			'sessionId' => $this->sessionId,
+			'timestamp' => $this->now,
+			'user' => $user,
+			'tikihost' => isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost',
+		));
 		if ($prefs['session_storage'] == 'db') {
 			// clean up adodb sessions as well in case adodb session garbage collection not working
 			$query = "delete from `sessions` where `expiry`<?";
@@ -3278,8 +3348,13 @@ class TikiLib extends TikiDb_Bridge
 			$res['refresh'] = $now;
 			if ($cachetime > 0) {
 				if (empty($res['cacheId'])) {
-					$query2 = 'insert into `tiki_link_cache` (`url`,`data`,`refresh`) values(?,?,?)';
-					$this->query($query2, array($url, $res['data'], $res['refresh']));
+					$linkCache = $this->table('tiki_link_cache');
+					$linkCache->insert(array(
+						'url' => $url,
+						'data' => $res['data'],
+						'refresh' => $res['refresh'],
+					));
+
 					$result = $this->query($query, $url);
 					$res = $result->fetchRow();
 				} else {
@@ -3348,9 +3423,13 @@ class TikiLib extends TikiDb_Bridge
 		// will be empty.  -rlpowell
 		if ($data)
 		{
-			$query = "insert into `tiki_link_cache`(`url`,`data`,`refresh`) values(?,?,?)";
-			$result = $this->queryError($query, $error, array($url,$data,$this->now) );
-			return !isset($error);
+			$linkCache = $this->table('tiki_link_cache');
+			$linkCache->insert(array(
+				'url' => $url,
+				'data' => $data,
+				'refresh' => $this->now,
+			));
+			return true;
 		}
 		else return false;
 	}
@@ -4090,12 +4169,13 @@ class TikiLib extends TikiDb_Bridge
 
 		$query = "delete from `tiki_preferences` where `name`=?";
 		$result = $this->query($query,array($name),-1,-1,false);
-		$query = "insert into `tiki_preferences`(`name`,`value`) values(?,?)";
-		if (is_array($value)) {
-			$result = $this->query($query,array($name,serialize($value)));
-		} else {
-			$result = $this->query($query,array($name,$value));
-		}
+
+		$preferences = $this->table('preferences');
+		$preferences->insert(array(
+			'name' => $name,
+			'value' => is_array($value) ? serialize($value) : $value,
+		));
+
 		if ( isset($prefs) ) {
 			if ( in_array($name, $user_overrider_prefs) ) {
 				$prefs['site_'.$name] = $value;
@@ -4258,12 +4338,17 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		if (!empty($my_user)) {
+			$userPreferences = $this->table('tiki_user_preferences');
+
 			$query = "delete from `tiki_user_preferences` where `user`=? and `prefName`=?";
 			$bindvars=array($my_user,$name);
 			$result = $this->query($query, $bindvars, -1,-1,false);
-			$query = "insert into `tiki_user_preferences`(`user`,`prefName`,`value`) values(?, ?, ?)";
-			$bindvars[]=$value;
-			$result = $this->query($query, $bindvars);
+
+			$userPreferences->insert(array(
+				'user' => $my_user,
+				'prefName' => $name,
+				'value' => $value,
+			));
 		}
 
 		return true;
@@ -4279,9 +4364,14 @@ class TikiLib extends TikiDb_Bridge
 		$query = "delete from `tiki_user_preferences` where `user`=?";
 		$result = $this->query($query, array($my_user), -1,-1,false);
 
+		$userPreferences = $this->table('tiki_user_preferences');
+
 		foreach ($preferences as $prefName => $value) {
-			$query = "insert into `tiki_user_preferences`(`user`,`prefName`,`value`) values(?, ?, ?)";
-			$result = $this->query($query, array($my_user,$prefName,$value));
+			$userPreferences->insert(array(
+				'user' => $my_user,
+				'prefName' => $prefName,
+				'value' => $value,
+			));
 		}
 		$user_preferences[$my_user] =& $preferences;
 
@@ -4359,33 +4449,37 @@ class TikiLib extends TikiDb_Bridge
 			require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 			$data = HTMLPurifier($data);
 		}
-		$mid = ''; $midvar = '';
-		$bindvars = array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $minor, $user, $ip, $description, $user, (int)strlen($data), $html, empty($created)?$this->now:$created, $wysiwyg, $wiki_authors_style);
+		
+		$insertData = array(
+			'pageName' => $name,
+			'hits' => (int) $hits,
+			'data' => $data,
+			'lastModif' => (int) $lastModif,
+			'comment' => $comment,
+			'version' => 1,
+			'version_minor' => $minor,
+			'user' => $user,
+			'page_size' => strlen($data),
+			'is_html' => $html,
+			'created' => empty($created) ? $this->now : $created,
+			'wysiwyg' => $wysiwyg,
+			'wiki_authors_style' => $wiki_authors_style,
+		);
 		if ($lang) {
-			$mid .= ',`lang`';
-			$midvar .= ',?';
-			$bindvars[] = $lang;
+			$insertData['lang'] = $lang;
 		}
 		if (!empty($hash['lock_it']) && ($hash['lock_it'] == 'y' || $hash['lock_it'] == 'on')) {
-			$mid .= ',`flag`,`lockedby`';
-			$midvar .= ',?,?';
-			$bindvars[] = 'L';
-			$bindvars[] = $user;
+			$insertData['flag'] = 'L';
+			$insertData['lockedby'] = $user;
 		} elseif (empty($hash['lock_it']) || $hash['lock_it'] == 'n') {
-			$mid .= ',`flag`,`lockedby`';
-			$midvar .= ',?,?';
-			$bindvars[] = '';
-			$bindvars[] = '';
+			$insertData['flag'] = '';
+			$insertData['lockedby'] = '';
 		}
 		if ($prefs['wiki_comments_allow_per_page'] != 'n') {
 			if (!empty($hash['comments_enabled']) && $hash['comments_enabled'] == 'y') {
-				$mid .= ', `comments_enabled` ';
-				$midvar .= ',?';
-				$bindvars[] = 'y';
+				$insertData['comments_enabled'] = 'y';
 			} else if (empty($hash['comments_enabled']) || $hash['comments_enabled'] == 'n') {
-				$mid .= ', `comments_enabled` ';
-				$midvar .= ',?';
-				$bindvars[] = 'n';
+				$insertData['comments_enabled'] = 'n';
 			}
 		}
 		if (empty($hash['contributions'])) {
@@ -4399,11 +4493,10 @@ class TikiLib extends TikiDb_Bridge
 				$hash2[] = $hash3;
 			}
 		}
-		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`version_minor`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`, `wysiwyg`, `wiki_authors_style` $mid) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? $midvar)";
-		$result = $this->query($query, $bindvars);
-		$this->replicate_page_to_history($name);
+		$pages = $this->table('tiki_pages');
+		$page_id = $pages->insert($insertData);
 
-		$page_id = $this->get_page_id_from_name( $name );
+		$this->replicate_page_to_history($name);
 
 		if( $prefs['quantify_changes'] == 'y' && $prefs['feature_multilingual'] == 'y' ) {
 			include_once 'lib/wiki/quantifylib.php';
