@@ -5,11 +5,26 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
 class ThemeGenLib
 {
-	private $currentTheme;
+	private $currentTheme;	// ThemeGenTheme
 
 	public function ThemeGenLib() {
+		global $prefs;
+		
+		if (!empty($prefs['themegenerator_theme'])) {
+			$t = $prefs['themegenerator_theme'];
+		} else {
+			$t = '';
+		}
+		$this->currentTheme = new ThemeGenTheme($t);
+		
 		return true;
 	}
 	
@@ -24,23 +39,40 @@ class ThemeGenLib
 		$headerlib->add_jsfile('lib/jquery/colorpicker/js/utils.js');
 		$headerlib->add_jsfile('lib/jquery/colorpicker/js/layout.js');
 		
+		$data = $this->currentTheme->loadPref();
+		
 		if (!empty($_REQUEST['tg_css_file'])) {
 			$css_file = $_REQUEST['tg_css_file'];
-		} else if (empty($prefs['themegenerator_css_file'])) {
-			$css_file = $tikilib->get_style_path() . $prefs['style'];	// maybe site_style?
+		} else if ($data) {
+			$css_file = array_keys($data['files']);
+			$css_file = $css_file[0];
 		} else {
-			$css_file = $prefs['themegenerator_css_file'];
+//			$css_file = $prefs['themegenerator_css_file'];
+			$css_file = '';
 		}
 		$mincss .= $headerlib->minify_css( $css_file );	// clean out comments etc
 		
-		
-		preg_match_all('/[^-]color:([^\};!]*?)[;\}!]/', $mincss, $matches);
-		$colors = $matches[1];
-		$colors = array_map('trim', $colors);
-		$colors = array_unique($colors);
-		$colors = array_filter($colors);
-		sort($colors);
-		
+		$num = preg_match_all('/[^-]color:([^\};!]*?)[;\}!]/', $mincss, $matches);
+		if ($num) {
+			$colors = $matches[1];
+			$colors = array_map('trim', $colors);
+			$colors = array_unique($colors);
+			$colors = array_filter($colors);
+			sort($colors);
+			//$data = $this->currentTheme->loadPref();
+			$colors2 = array();
+			foreach ($colors as $color) {
+				$colors2[$color] = array();
+				$colors2[$color]['old'] = $color;
+				if (isset($data['files'][$css_file]['fgcolors'][$color])) {
+					$colors2[$color]['new'] = $data['files'][$css_file]['fgcolors'][$color];
+				} else {
+					$colors2[$color]['new'] = $color;
+				}
+			}
+		} else {
+			$colors2 = array();
+		}		
 		preg_match_all('/background-color:([^\};\!]*?)[;\}\!]/', $mincss, $matches);
 		$bgcolors = $matches[1];
 		$bgcolors = array_map('trim', $bgcolors);
@@ -48,7 +80,7 @@ class ThemeGenLib
 		$bgcolors = array_filter($bgcolors);
 		sort($bgcolors);
 		
-		$smarty->assign_by_ref('tg_fore_colors', $colors);
+		$smarty->assign_by_ref('tg_fore_colors', $colors2);
 		$smarty->assign_by_ref('tg_back_colors', $bgcolors);
 		
 		$smarty->assign_by_ref('tg_css_files', $this->setupCSSFiles());
@@ -80,35 +112,68 @@ class ThemeGenLib
 		
 	}
 	
-	public function newTheme($name) {
-		$theme = new ThemeGenTheme($name);
+	public function saveNewTheme($name) {
+		$this->currentTheme = new ThemeGenTheme($name);
+		$this->currentTheme->savePref();
+	}
+	
+	public function updateCurrentTheme($css_file, $swaps, $type) {
+		$this->currentTheme->setData(array($swaps, $css_file, $type));
+		$this->currentTheme->savePref();
+	}
+	
+	public function deleteCurrentTheme() {
+		global $tikilib;
+		
+		if ($this-currentTheme) {
+			$tikilib->set_preference( 'themegenerator_theme', '' );
+			$this->currentTheme->deletePref();
+		}
+	}
+	
+	public function getCurrentTheme() {
+		return $this->currentTheme;
 	}
 }
 
-class ThemeGenTheme
+require_once 'lib/serializedlist.php';
+
+class ThemeGenTheme extends SerializedList
 {
-	private $name = '';
-	private $data;
-	
 	public function ThemeGenTheme($name) {
-		$this->name = strtolower( preg_replace('/[\s,\/\|]+/', '_', $tikilib->take_away_accent( $name )) );
-		$data = array( 'files' => array() );
+
+		parent::__construct($name);
+		$this->data = array( 'files' => array() );
+		
 	}
 	
-	public function getPrefName() {
-		return 'themegenerator_theme_' . $this->name;
+	public function initData() {
+		$this->data = array( 'files' => array() );
 	}
+
+	public function initPrefPrefix() {
+		$this->prefPrefix = 'themegenerator_theme_';
+	}
+	
+	public function setData($params) {
+		list($swaps, $css_file, $type) = $params;
+		
+		if (!isset($this->data['files'][$css_file])) {
+			$this->data['files'][$css_file] = array();
+		}
+		if (!isset($this->data['files'][$css_file][$type])) {
+			$this->data['files'][$css_file][$type] = array();
+		}
+		
+		foreach ($swaps as $kswap => $swap) {
+			if ($kswap !== $swap) {
+				$this->data['files'][$css_file][$type][$kswap] = $swap;
+			}
+		}
+	}
+	
 }
 
-class ThemeGenCSSFile
-{
-	private $file_path;
-	private $swaps;
-	
-	public function ThemeGenCSSFile($file_path) {
-		$this->file_path;
-	}
-}
 
 global $themegenlib;
 $themegenlib = new ThemeGenLib();

@@ -6,10 +6,19 @@
 // $Id$
 
 function prefs_themegenerator_list() {
+	global $prefs, $themegenlib;
+	include_once 'lib/themegenlib.php';
 	
-	$themes = array('' => tra('Select...'));
-	$list = @unserialize($prefs['themegenerator_theme_list']);
-	sort($list);
+	$themes = array('' => tra('New...'));
+	
+	$list = $themegenlib->getCurrentTheme()->getPrefList();
+	if (count($list) > 0) {
+		$list = array_filter($list);
+		sort($list);
+		foreach( $list as $item ) {
+			$themes[$item] = $item;
+		}
+	}
 	
 	return array(
 		'themegenerator_theme' => array(

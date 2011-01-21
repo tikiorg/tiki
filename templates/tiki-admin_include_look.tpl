@@ -244,14 +244,23 @@
 				<div class="adminoptionboxchild" id="feature_themegenerator_childcontainer">
 					<div class="adminoptionbox">			
 						{preference name="themegenerator_theme"}
-						<div  class="adminoptionboxchild">
-							<input type="text" name="tg_edit_theme_name" value="{$tg_edit_theme_name|escape}" />
-							<input type="submit" name="tg_edit_theme" value="{if empty($tg_edit_theme_name)}{tr}New{/tr}{else}{tr}Edit{/tr}{/if}" />
+						<div  class="adminoptionboxchild" id="feature_themegenerator_childcontainer">
+							
+							<input type="text" name="tg_edit_theme_name" value="{$tg_edit_theme_name|escape}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
+							<input type="submit" name="tg_new_theme" value="{tr}New{/tr}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
+							<input type="submit" name="tg_delete_theme" value="{tr}Delete{/tr}"{if empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
+							{jq}$("select[name=themegenerator_theme]").change(function(){
+								if ($(this)[0].selectedIndex === 0) {
+									$("input[name=tg_edit_theme_name]").show();
+									$("input[name=tg_new_theme]").show();
+									$("input[name=tg_delete_theme]").hide();
+								}
+							});{/jq}
 						</div>
 					</div>
 					<div class="adminoptionbox">			
 						<label for="tg_css_file">Editing: </label>
-						<select id="tg_css_file">
+						<select id="tg_css_file" name="tg_css_file">
 							{foreach from=$tg_css_files item=val key=key}
 								<option value="{$key}"{if $key eq $tg_css_file} selected="selected"{/if}>{$val}</option>
 							{/foreach}
@@ -263,12 +272,12 @@
 							{foreach from=$tg_fore_colors item=color}
 								<li class="colorItem">
 									 <div class="colorSelector">
-									 	<div style="background-color:{$color};">&nbsp;</div>
+									 	<div style="background-color:{$color.new};">&nbsp;</div>
 									 </div>
 									 <span class="colorLabel">
-										{$color}
+										{$color.new}
 									</span>
-									<input type="hidden" name="tg_fg_swaps[{$color}]" value="{$color}" />
+									<input type="hidden" name="tg_fg_swaps[{$color.old}]" value="{$color.new}" />
 								</li>
 							{/foreach}
 						</ul>
