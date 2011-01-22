@@ -76,6 +76,8 @@ class ThemeGenLib
 		} else {
 			$bordercolors = array();
 		}		
+		preg_match_all('/font-size:.*?([\d\.]*[^;\} ]*)/i', $mincss, $matches);
+		$fontsize = $this->currentTheme->processMatches( $matches[1], $css_file, 'fontsize' );
 		
 		// array for smarty to loop through
 		$tg_data = array(
@@ -92,7 +94,13 @@ class ThemeGenLib
 					'colors' => $bordercolors,
 					'title' => tra('Border Colors:'),
 				),
-			)
+			),
+			'tg_text' => array(
+				'fontsize' => array(
+					'text' => $colors,
+					'title' => tra('Foreground Colors:'),
+				),
+			),
 		);
 		
 		$smarty->assign_by_ref( 'tg_data', $tg_data );
@@ -140,13 +148,17 @@ class ThemeGenLib
 		}
 		
 		foreach ($swaps['bordercolors'] as $old => $new) {
-			$css = preg_replace_callback('/(border[^:]*:\s*)(.*)([;\}])/Umis', function ($matches) use ($old, $new) {
-					$out = $matches[1] . str_replace( $old, $new, $matches[2]) . $matches[3];
-					return $out;
-				}, $css);
+			$GLOBALS['tg_old'] = $old;	// for preg_replace_callback on php < 5.3
+			$GLOBALS['tg_new'] = $new;
+			$css = preg_replace_callback('/(border[^:]*:\s*)(.*)([;\}])/Umis', array( $this, 'processCSSColours'), $css);
 		}
 		
 		return $css;
+	}
+	
+	private function processCSSColours($matches) {
+		$out = $matches[1] . str_replace( $GLOBALS['tg_old'], $GLOBALS['tg_new'], $matches[2]) . $matches[3];
+		return $out;
 	}
 	
 	public function saveNewTheme($name) {
