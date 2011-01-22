@@ -1372,7 +1372,7 @@ function wikiplugin_tracker($data, $params)
 			}
 			if (!empty($page))
 				$back .= '~/np~';
-			$smarty->assign_by_ref('tiki_p_admin_trackers', $tiki_p_admin_trackers);
+			$smarty->assign_by_ref('tiki_p_admin_trackers', $perms['tiki_p_admin_trackers']);
 		return $back;
 	}
 	else {
