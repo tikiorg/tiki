@@ -329,6 +329,17 @@ a.admbox.off img {
 	background-color: #aaa;
 	color: #666;
 	padding: 1em;
+	margin: 0 1em 1.5em 0;
+}
+
+.admin .themegenerator label,
+.themegenerator label {
+	background-color: #aaa;
+	color: #ddd;
+	line-height: 24px;
+	padding: 4px 10px 6px;
+	font-weight: bold;
+	text-decoration: underline;
 }
 
 .color_swatches > li {

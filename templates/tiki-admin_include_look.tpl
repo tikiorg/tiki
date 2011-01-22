@@ -259,105 +259,38 @@
 						</div>
 					</div>
 					<div class="adminoptionbox">			
-						<label for="tg_css_file">Editing: </label>
+						<label for="tg_css_file">{tr}Modifying:{/tr} </label>
 						<select id="tg_css_file" name="tg_css_file">
 							{foreach from=$tg_css_files item=val key=key}
 								<option value="{$key}"{if $key eq $tg_css_file} selected="selected"{/if}>{$val}</option>
 							{/foreach}
 						</select>
-						{button _text="{tr}Reset selected{/tr}" _id="resetColors" href="#"}
 						<input type="checkbox" id="toggleColors" /> {tr}Toggle checkboxes{/tr}
-						<input type="checkbox" id="selectChangedColors" /> {tr}Toggle changed{/tr}
+						<input type="checkbox" id="toggleChangedColors" /> {tr}Toggle changed{/tr}
+						{button _text="{tr}Reset selected{/tr}" _id="resetColors" href="#"}
 					</div>
-					<div class="adminoptionbox">			
-						<label for="tg_fg_colors">{tr}Foreground Colors:{/tr}</label>
-						<ul id="tg_fg_colors" class="color_swatches clearfix">
-							{foreach from=$tg_fore_colors item=color}
-								<li class="colorItem{if $color.old neq $color.new} changed{/if}">
-									<div class="clearfix">
-										 <div class="colorSelector">
-										 	<div style="background-color:{$color.new};">&nbsp;</div>
-										 </div>
-										 <span class="colorLabel tips" title="{tr}Foreground Colors|{/tr}{if $color.old neq $color.new}{tr 0=$color.old 1=$color.new}Changed from %0 to %1{/tr}{else}{tr}Color unchanged{/tr}{/if}">
-											{$color.new}
-										</span>
-										<input type="hidden" name="tg_swaps[fgcolors][{$color.old}]" value="{$color.new}" />
-									</div>
-									<input type="checkbox" value="{$color.old}" />
-								</li>
-							{/foreach}
-						</ul>
-						<label for="tg_bg_colors">{tr}Background Colors:{/tr}</label>
-						<ul id="tg_bg_colors" class="color_swatches clearfix">
-							{foreach from=$tg_back_colors item=color}
-								<li class="colorItem{if $color.old neq $color.new} changed{/if}">
-									<div class="clearfix">
-										<div class="colorSelector">
-											<div style="background-color:{$color.new};">&nbsp;</div>
+					<div class="adminoptionbox themegenerator">
+						{foreach from=$tg_data.tg_colors item=tg_color_data key=tg_color_type}
+							<label for="tg_{$tg_color_type}" class="ui-corner-top">{$tg_color_data.title}</label>
+							<ul id="tg_{$tg_color_type}" class="color_swatches clearfix ui-corner-bottom ui-corner-tr">
+								{foreach from=$tg_color_data.colors item=color}
+									<li class="colorItem{if $color.old neq $color.new} changed{/if}">
+										<div class="clearfix">
+											 <div class="colorSelector">
+											 	<div style="background-color:{$color.new};">&nbsp;</div>
+											 </div>
+											 <span class="colorLabel tips" title="{$tg_color_data.title}|{if $color.old neq $color.new}{tr 0=$color.old 1=$color.new}Changed from %0 to %1{/tr}{else}{tr}Color unchanged{/tr}{/if}">
+												{$color.new}
+											</span>
+											<input type="hidden" name="tg_swaps[{$tg_color_type}][{$color.old}]" value="{$color.new}" />
 										</div>
-										<span class="colorLabel tips" title="{tr}Background Colors|{/tr}{if $color.old neq $color.new}{tr 0=$color.old 1=$color.new}Changed from %0 to %1{/tr}{else}{tr}Color unchanged{/tr}{/if}">
-											{$color.new}
-										</span>
-										<input type="hidden" name="tg_swaps[bgcolors][{$color.old}]" value="{$color.new}" />
 										<input type="checkbox" value="{$color.old}" />
-									</div>
-								</li>
-							{/foreach}
-						</ul>
-						<label for="tg_bg_colors">{tr}Border Colors:{/tr}</label>
-						<ul id="tg_border_colors" class="color_swatches clearfix">
-							{foreach from=$tg_border_colors item=color}
-								<li class="colorItem{if $color.old neq $color.new} changed{/if}">
-									<div class="clearfix">
-										<div class="colorSelector">
-											<div style="background-color:{$color.new};">&nbsp;</div>
-										</div>
-										<span class="colorLabel tips" title="{tr}Border Colors|{/tr}{if $color.old neq $color.new}{tr 0=$color.old 1=$color.new}Changed from %0 to %1{/tr}{else}{tr}Color unchanged{/tr}{/if}">
-											{$color.new}
-										</span>
-										<input type="hidden" name="tg_swaps[bordercolors][{$color.old}]" value="{$color.new}" />
-										<input type="checkbox" value="{$color.old}" />
-									</div>
-								</li>
-							{/foreach}
-						</ul>
+									</li>
+								{/foreach}
+							</ul>
+						{/foreach}
 					</div>
 				</div>
-				{jq}
-$(".colorItem > div").tiki("colorpicker", "", {
-	colorLabel: ".colorLabel",
-	colorSelector: ".colorSelector > div",
-	colorInput: "input"
-});
-$(".colorItem :checkbox").click(function(){
-	if ($(this).attr("checked")) {
-		$(this).parent().addClass("selected");
-	} else {
-		$(this).parent().removeClass("selected");
-	}
-});
-$("#resetColors").click(function(){
-	$(".colorItem :checkbox:checked").each(function(){
-		$(this).parent().find("input[type=hidden]").val($(this).val());
-		$(this).parent().find(".colorLabel").text($(this).val());
-		$(this).parent().find(".colorSelector > div").css("background-color", $(this).val());
-		$(this).click();
-		$(this).parent().removeClass("selected");
-	});
-	return false;
-});
-$("#toggleChangedColors").click(function(){
-	$(".colorItem").each(function(){
-		if ($("input[type=hidden]", this).val() !== $("input[type=checkbox]", this).val()) {
-			$(this).addClass("selected").find(":checkbox").click();
-		}
-	});
-});
-$("#toggleColors").click(function(){
-	$(".colorItem :checkbox").click().parent().removeClass("selected");
-	$(".colorItem :checkbox:checked").parent().addClass("selected");
-});
-{/jq}
 			</fieldset>
 				
 			<fieldset>

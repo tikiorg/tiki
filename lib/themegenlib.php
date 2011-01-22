@@ -28,6 +28,10 @@ class ThemeGenLib
 	
 	public function setupEditor() {
 		global $headerlib, $smarty, $prefs;
+		
+		// tiki themegen include
+		$headerlib->add_jsfile('lib/jquery_tiki/tiki-themegenerator.js');
+		
 		// set up colorpicker
 		$headerlib->add_cssfile('lib/jquery/colorpicker/css/colorpicker.css');
 		$headerlib->add_cssfile('lib/jquery_tiki/colorpicker/layout.css');
@@ -69,9 +73,25 @@ class ThemeGenLib
 			$bordercolors = array();
 		}		
 		
-		$smarty->assign_by_ref('tg_fore_colors', $colors);
-		$smarty->assign_by_ref('tg_back_colors', $bgcolors);
-		$smarty->assign_by_ref('tg_border_colors', $bordercolors);
+		// array for smarty to loop through
+		$tg_data = array(
+			'tg_colors' => array(
+				'fgcolors' => array(
+					'colors' => $colors,
+					'title' => tra('Foreground Colors:'),
+				),
+				'bgcolors' => array(
+					'colors' => $bgcolors,
+					'title' => tra('Background Colors:'),
+				),
+				'bordercolors' => array(
+					'colors' => $bordercolors,
+					'title' => tra('Border Colors:'),
+				),
+			)
+		);
+		
+		$smarty->assign_by_ref( 'tg_data', $tg_data );
 		
 		$smarty->assign_by_ref('tg_css_files', $this->setupCSSFiles());
 		$smarty->assign_by_ref('tg_css_file', $css_file);
