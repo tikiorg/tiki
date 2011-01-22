@@ -5319,6 +5319,8 @@ class TikiLib extends TikiDb_Bridge
 			$outputFormat = $parseOptions['context_format'];
 		}
 
+		require_once 'lib/core/WikiParser/PluginOutput.php';
+
 		if( ! $this->plugin_exists( $name, true ) ) {
 			return $this->convert_plugin_output( WikiParser_PluginOutput::internalError( tr('Plugin <strong>%0</strong> does not exist.', $name) ), '', $outputFormat, $parseOptions );
 		}
@@ -5332,8 +5334,6 @@ class TikiLib extends TikiDb_Bridge
 			$trklib->replace_pretty_tracker_refs($args);
 		}
 		
-		require_once 'lib/core/WikiParser/PluginOutput.php';
-
 		$func_name = 'wikiplugin_' . $name;
 		
 		if( ! $validationPerformed ) {
