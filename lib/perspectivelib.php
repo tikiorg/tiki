@@ -7,6 +7,14 @@
 
 class PerspectiveLib
 {
+	private $perspectives;
+	private $perspectivePreferences;
+
+	function __construct() {
+		$this->perspectives = TikiDb::get()->table('tiki_perspectives');
+		$this->perspectivePreferences = TikiDb::get()->table('tiki_perspective_preferences');
+	}
+
 	function get_current_perspective( $prefs ) {
 		if( isset( $_REQUEST['perspectiveId'] ) ) {
 			return (int) $_REQUEST['perspectiveId'];
@@ -107,39 +115,35 @@ class PerspectiveLib
 	// Adds or renames a perspective. If $perspectiveId exists, rename it to $name. Otherwise, create a new perspective with id $perspectiveId named $name.
 	// Returns true if and only if the operation succeeds.
 	function replace_perspective( $perspectiveId, $name ) {
-		$db = TikiDb::get();
-
 		if( $perspectiveId ) {
-			$db->query( 'UPDATE tiki_perspectives SET name = ? WHERE perspectiveId = ?', 
-				array( $name, $perspectiveId ) );
+			$this->perspectives->update(array(
+				'name' => $name,
+			), array(
+				'perspectiveId' => $perspectiveId,
+			));
 
 			return $perspectiveId;
 		} else {
-			$db->query( 'INSERT INTO tiki_perspectives ( name ) VALUES( ? )',
-				array( $name ) );
-
-			$max = $db->getOne( 'SELECT MAX(perspectiveId) FROM tiki_perspectives' );
-			return $max;
+			return $this->perspectives->insert(array(
+				'name' => $name,
+			));
 		}
 	}
 	
 	//Removes a perspective. 
 	function remove_perspective ( $perspectiveId )
 	{
-		$db = TikiDb::get();
-		
 		if ( $perspectiveId )
 		{
-			$db->query( 'DELETE from tiki_perspectives WHERE perspectiveId = ?', array( $perspectiveId ) );
-			$db->query( 'DELETE from tiki_perspective_preferences WHERE perspectiveId = ?', array( $perspectiveId ) );
+			$this->perspectives->delete(array('perspectiveId' => $perspectiveId));
+			$this->perspectivePreferences->deleteMultiple(array('perspectiveId' => $perspectiveId));
 		}
 	}
 
 	// Replaces all preferences from $perspectiveId with those in the provided string-indexed array (in format "pref_name" => "pref_value").
 	function replace_preferences( $perspectiveId, $preferences ) {
 		$db = TikiDb::get();
-		$db->query( 'DELETE FROM tiki_perspective_preferences WHERE perspectiveId = ?',
-			array( $perspectiveId ) );
+		$this->perspectivePreferences->deleteMultiple(array('perspectiveId' => $perspectiveId));
 
 		global $prefslib; require_once 'lib/prefslib.php';
 		foreach( $preferences as $pref => $value ) {
@@ -150,19 +154,25 @@ class PerspectiveLib
 	
 	// Replaces a specific preference
 	function replace_preference ( $preference, $value, $newValue ) {
-		$db = TikiDb::get();
-		$db->query( 'UPDATE tiki_perspective_preferences SET value = ? WHERE pref = ? and value = ?',
-			array( serialize( $newValue ), $preference, serialize( $value ) ) );
+		$this->perspectivePreferences->update(array(
+			'value' => serialize($newValue),
+		), array(
+			'pref' => $preference,
+			'value' => serialize($value),
+		));
 	}
 
 	// Sets $preference's value for $perspectiveId to $value.
 	function set_preference( $perspectiveId, $preference, $value ) {
-		$db = TikiDb::get();
-
-		$db->query( 'DELETE FROM tiki_perspective_preferences WHERE perspectiveId = ? AND pref = ?',
-			array( $perspectiveId, $preference ) );
-		$db->query( 'INSERT INTO tiki_perspective_preferences ( perspectiveId, pref, value ) VALUES( ?, ?, ? )',
-			array( $perspectiveId, $preference, serialize( $value ) ) );
+		$this->perspectivePreferences->delete(array(
+			'perspectiveId' => $perspectiveId,
+			'pref' => $preference,
+		));
+		$this->perspectivePreferences->insert(array(
+			'perspectiveId' => $perspectiveId,
+			'pref' => $preference,
+			'value' => serialize($value),
+		));
 	}
 
 	// Returns true if and only if a perspective with the given $perspectiveId exists.
