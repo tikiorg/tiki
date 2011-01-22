@@ -41,6 +41,10 @@ class ThemeGenLib
 		$headerlib->add_jsfile('lib/jquery/colorpicker/js/utils.js');
 		$headerlib->add_jsfile('lib/jquery/colorpicker/js/layout.js');
 		
+		// colour lib
+		$headerlib->add_jsfile('lib/jquery/jquery.color.js');
+		
+		
 		$data = $this->currentTheme->loadPref();
 		
 		if (!empty($_REQUEST['tg_css_file'])) {
@@ -136,7 +140,10 @@ class ThemeGenLib
 		}
 		
 		foreach ($swaps['bordercolors'] as $old => $new) {
-			$css = preg_replace('/(border(?:-.*?)?:\s*)' . $old . '/Umis', '$1' . $new, $css);
+			$css = preg_replace_callback('/(border[^:]*:\s*)(.*)([;\}])/Umis', function ($matches) use ($old, $new) {
+					$out = $matches[1] . str_replace( $old, $new, $matches[2]) . $matches[3];
+					return $out;
+				}, $css);
 		}
 		
 		return $css;

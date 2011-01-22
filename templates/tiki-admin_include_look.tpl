@@ -267,6 +267,7 @@
 						</select>
 						<input type="checkbox" id="toggleColors" /> {tr}Toggle checkboxes{/tr}
 						<input type="checkbox" id="toggleChangedColors" /> {tr}Toggle changed{/tr}
+						<input type="checkbox" id="livePreview" checked="checked" "/> {tr}Live preview{/tr}
 						{button _text="{tr}Reset selected{/tr}" _id="resetColors" href="#"}
 					</div>
 					<div class="adminoptionbox themegenerator">
