@@ -11,7 +11,7 @@
 /***** XHTML Elements (body tag here, others follow Layout) *****/
 
 body {
-	font: 70% 1.4em #000 Verdana Geneva Arial Helvetica sans-serif;
+	font: 70%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;
 	color: #848484;
 }
 
@@ -55,7 +55,7 @@ also styling of page layout divs) *****/
 #col3 {
 	width: 280px;
 	margin-left: -280px;
-	margin-bottom: ;
+	margin-bottom: 0;
 	font-size: 1em;
 }
 
@@ -245,8 +245,7 @@ hr {
 	display: block;
 	margin: 0;
 	margin-top: -10px;
-	margin-right: 0 !importan
-	;
+	margin-right: 0 !important;
 	background: url(business/magnify.png) no-repeat 0 -1px;
 	padding-left: 29px;
 	color: #fff;
@@ -422,20 +421,20 @@ hr {
 /** Links in other menus **/
 .separator,
 .option {
-	margin-bottom: ;
+	margin-bottom: 0;
 }
 
 .menusection .option {
-	padding-left: ;
+	padding-left: 0;
 }
 
 .option {
-	padding-left: ;
+	padding-left: 0;
 }
 
 .option a {
-	padding: ;
-	background: ;
+	padding: 0;
+	background: 0;
 }
 
 /***** Misc. Center Col. *****/
@@ -543,13 +542,13 @@ h3.box-title a:visited {
 
 .normal,
 .admin {
-	border: 1px solid 1px solid #3273c4;
+	border: 1px solid #3273c4;
 	border-collapse: collapse;
 }
 
 .normal td,
 .admin td {
-	border: ;
+	border: none;
 	padding: 0.2em;
 }
 
@@ -670,17 +669,17 @@ h1.pagetitle a:hover {
 .codelisting {
 	background: #f5f5f5;
 	color: #666666;
-	border: 1px solid 1px dashed #adacaf;
+	border: 1px dashed #adacaf;
 }
 
 .codecaption {
-	border: 1px solid 1px solid #adacaf;
+	border: 1px solid #adacaf;
 	color: #666666;
 	background: #f5f5f5;
 }
 
 #textarea-toolbar {
-	background: ;
+	background: inherit;
 	border: 1px solid;
 }
 
@@ -762,14 +761,14 @@ body.tiki_blogs .author_actions {
 
 .opaque .box-title {
 	padding-bottom: 2px;
-	border-bottom: url(business/title_bg.png) no-repeat 0 0;
+	border-bottom: 0;
 }
 
 /***** Trackers *****/
 /***** Categories, Tags *****/
 /***** Tags (freetags) *****/
 .freetagitemlist {
-	background: ;
+	background: inherit;
 	border: 1px solid;
 	margin-bottom: 30px;
 	padding: 0 0 10px;

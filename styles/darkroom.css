@@ -731,7 +731,7 @@ a.tikihelp:hover {
 
 /**infinite carousel**/
 #carousel {
-        color: #black;
+        color: black;
 }
 
 #carousel a {
@@ -792,7 +792,7 @@ img.flipmodimage:hover {
 
 .box-data table td {
 	padding: 0.2em;
-	text-align: start;
+	text-align: left;
 }
 
 .box-data li,

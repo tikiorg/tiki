@@ -20,7 +20,7 @@ body {
 	background: #9faec2 url(eatlon/body_bg.gif) repeat-x;
 	font-family: arial, sans-serif;
 	color: #8f8f8f;
-	font: 76%/1.4em black Verdana, Geneva, Arial, Helvetica, sans-serif}
+	font: 76%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif}
 
 html>body {font-size: 76% !important}
 body.fullscreen {padding: 3em}
@@ -715,7 +715,8 @@ textarea.wikiedit {font-size: 1.1em}
 	text-align: center;
 	padding: 3px;
 	line-height: 150%;
-	text-transform: 0}
+	text-transform: none;
+}
 
 .postinfo a {
 	color: #9CF;

@@ -675,8 +675,6 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 
 /***** Directory *****/
 .dirsite {
-	background: /*dirsite_background*/;
-	border: /*dirsite_border*/;
 	margin-bottom: 30px;
 	padding: 0 0 10px}
 

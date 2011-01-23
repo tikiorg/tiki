@@ -154,8 +154,7 @@ a.admbox.off img {
 	height: auto;
 	max-height: 400px;
 	min-height: 16px;
-	overflow-y: auto;
-	overflow-x: hidden;
+	overflow: auto;
 	margin: 0;
 }
 
@@ -205,8 +204,7 @@ a.admbox.off img {
 	width: 95%;
 	min-height: 20px;
 	min-width: 500px;
-	overflow-y: hidden;
-	overflow-x: hidden;
+	overflow: hidden;
 	border: solid thin gray;
 	margin: 0;
 	padding: 2px 4px 0;
@@ -304,7 +302,7 @@ a.admbox.off img {
 
 .module-placeholder {
 	width: 160px;
-	minHeight: 40px;
+	min-height: 40px;
 	list-style-type: none;
 	background-color: #ff8;
 	border: #884 2px solid;

@@ -16,7 +16,7 @@
 body {
 	background: #000 url(abse/wgreenwall.png) fixed;
 	color: #fff;
-	font: 70% "Bitstream Vera Sans", Verdana, Geneva, sans-serif normal}
+	font: 70% "Bitstream Vera Sans", Verdana, Geneva, sans-serif}
 
 html>body {font-size: .7em !important}
 
@@ -75,7 +75,7 @@ html>body #c1c2 #wrapper #col1 #tiki-center:hover {
 	font-size: 0.8em;
 	font-weight: bold;
 	text-align: center;
-	background: url(abse/crimeboy_design.png) no-repeat center 100%;
+	background: url("abse/crimeboy_design.png") no-repeat 50% 100%;
 	padding-bottom: 40px}
 
 #footer a {font-weight: bold}
@@ -96,7 +96,7 @@ a:hover {
 	text-decoration: underline}
 
 h1, h2, h3, h4, h5 {
-	color: #bdcec !important;
+	color: #bdcec3 !important;
 	font-weight: bold;
 	letter-spacing: -1px;
 	margin: 0 0 15px;
@@ -242,7 +242,7 @@ body.cke_show_borders {
 .floatright img {margin-right: 40px}
 
 #sitead {
-	clear: 0;
+	clear: none;
 	text-align: center;
 	font-size: 11px;
 	font-family: Geneva, Arial, Helvetica, sans-serif;
@@ -475,11 +475,11 @@ img.flipmodimage:hover {border: 1px solid #55914E !important}
 
 .box-data table td {
 	padding: 0.2em;
-	text-align: start}
+	text-align: left}
 
 .box-data li {
 	padding: 0.2em;
-	text-align: start}
+	text-align: left}
 
 .box-data li:hover {
 	text-decoration: none;
@@ -1185,7 +1185,7 @@ td.dirfooter {font-size: .95em}
 
 .Calwiki,
 .Calwiki a,
-.Calwiki a:visited {color: #bdcecC3}
+.Calwiki a:visited {color: #bdcec3}
 
 .calcontent a.linkmenu,
 .calcontent a.linkmenu:hover {

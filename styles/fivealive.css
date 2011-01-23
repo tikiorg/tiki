@@ -1167,12 +1167,7 @@ a.dirsublink {
 
 a.admbox.off:hover,
 a.admbox.off:focus,
-a.admbox.off:active {
-	border-right: ;
-	border-top: ;
-	border-left: ;
-	border-bottom: ;
-}
+a.admbox.off:active {}
 
 .toolbars-admin .full li,
 .toolbars-admin .rows .row,
@@ -1180,10 +1175,7 @@ a.admbox.off:active {
 .toolbar-list,
 .toolbar-list,
 a.toolbar,
-a.qt-inline {
-	background: ;
-	color: ;
-}*/
+a.qt-inline {}
 
 /***** Ajax, jquery. etc. *****/
 /***** Ajax *****/

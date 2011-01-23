@@ -347,7 +347,6 @@ h3.box-title,
 .box-data {
 	padding: .5em 1em;
 	background: none;
-	zoom: 1;
 }
 
 /** Other boxes **/
@@ -375,14 +374,14 @@ h3.box-title,
 .errors .rbox-title,
 .errors .rbox-data {
 	color: #cd0a0a;
-	background:#fef1ec url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% bottom;
+	background:#fef1ec url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% 100%;
 	border:1px solid #cd0a0a;
 }
 
 .warning .rbox-title,
 .warning .rbox-data {
 	color: #cd0a0a;
-	background: #fef1ec url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% bottom;
+	background: #fef1ec url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% 100%;
 	border:1px solid #cd0a0a;
 }
 

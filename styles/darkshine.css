@@ -168,7 +168,7 @@ input[type=checkbox] {border: 0}
 select[multiple] {height: 10em}
 select[name="theme"] {width: 80%}
 small {font-size: 1em}
-ul {list-style: 0}
+ul {list-style: none}
 tt {font-size: 110%}
 
 /***** Site Header & Identity *****/
@@ -883,7 +883,8 @@ img.articleimage {
 	display: block;
 	padding: 3px;
 	line-height: 150%;
-	text-transform: 0}
+	text-transform: none;
+}
 
 .blogtools {
 	padding: 3px;
@@ -1246,7 +1247,7 @@ Caltrack a:visited {color:#00BD02}
 
 .calcontent a.linkmenu,
 .calcontent a.linkmenu:hover {
-	background-image: 0;
+	background-image: none;
 	padding: 0}
 
 .calfocus {

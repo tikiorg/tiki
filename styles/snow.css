@@ -272,7 +272,7 @@ ul {
 .cssmenu_horiz a:hover,
 .cssmenu_vert a:hover {
 	color: #6c7b8c;
-	text-decoration: none}
+	text-decoration: none;
 }
 
 /* typography, colors */
@@ -710,7 +710,7 @@ a.pagetitle:hover {
 
 ul.floatleft {
 	display: block;
-	list-style: 0;
+	list-style: none;
 	padding: 0;
 	text-align: left;
 	height: 20px;
@@ -918,7 +918,8 @@ img.articleimage {
 	text-align: center;
 	padding: 3px;
 	line-height: 150%;
-	text-transform: 0}
+	text-transform: none;
+}
 
 a.blogt:hover {
 	color: #FFF;

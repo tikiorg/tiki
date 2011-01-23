@@ -14,7 +14,9 @@
 			others follow Layout) *****/
 body {
 	background: #0F1644 url(twist/background.gif);
-	font: 76%/1.4em black Verdana, Geneva, Arial, Helvetica, sans-serif}
+	font: 76%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: black;
+}
 
 /* next two: fixed-width: 800px */
 body.fixed_width .fixedwidth {
@@ -221,7 +223,7 @@ select[name="theme"] {width: 125px}
 
 #sitead {
 	margin: 5px;
-	clear: 0;
+	clear: none;
 	padding: 1em}
 
 #sitead.floatright {padding-right: 100px}
@@ -923,7 +925,8 @@ a.forumspagetitle:hover {
 	text-align: center;
 	padding: 3px;
 	line-height: 150%;
-	text-transform: 0}
+	text-transform: none;
+}
 
 .postinfo a {
 	color: #9CF;
@@ -1258,8 +1261,7 @@ Caltrack a:visited {color: #00BD02}
 
 .calodd,
 .caleven {border: 1px solid #999}
-.
-calodd {background: #efefef}
+.calodd {background: #efefef}
 .caleven {background: white}
 .caldark {background: #002C5E}
 .caldark .calfocus {background: #002C5E}
