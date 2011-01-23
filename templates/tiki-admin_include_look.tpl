@@ -271,21 +271,37 @@
 						{button _text="{tr}Reset selected{/tr}" _id="resetColors" href="#"}
 					</div>
 					<div class="adminoptionbox themegenerator">
-						{foreach from=$tg_data.tg_colors item=tg_color_data key=tg_color_type}
-							<label for="tg_{$tg_color_type}" class="ui-corner-top">{$tg_color_data.title}</label>
-							<ul id="tg_{$tg_color_type}" class="color_swatches clearfix ui-corner-bottom ui-corner-tr">
-								{foreach from=$tg_color_data.colors item=color}
+						{foreach from=$tg_data.colors item=tg_data_item key=tg_type}
+							<label for="tg_{$tg_type}" class="ui-corner-top">{$tg_data_item.title}</label>
+							<ul id="tg_{$tg_type}" class="color_swatches clearfix ui-corner-bottom ui-corner-tr">
+								{foreach from=$tg_data_item.colors item=color}
 									<li class="colorItem{if $color.old neq $color.new} changed{/if}">
 										<div class="clearfix">
 											 <div class="colorSelector">
 											 	<div style="background-color:{$color.new};">&nbsp;</div>
 											 </div>
-											 <span class="colorLabel tips" title="{$tg_color_data.title}|{if $color.old neq $color.new}{tr 0=$color.old 1=$color.new}Changed from %0 to %1{/tr}{else}{tr}Color unchanged{/tr}{/if}">
+											 <span class="colorLabel tips" title="{$tg_data_item.title}|{if $color.old neq $color.new}{tr 0=$color.old 1=$color.new}Changed from %0 to %1{/tr}{else}{tr}Color unchanged{/tr}{/if}">
 												{$color.new}
 											</span>
-											<input type="hidden" name="tg_swaps[{$tg_color_type}][{$color.old}]" value="{$color.new}" />
+											<input type="hidden" name="tg_swaps[{$tg_type}][{$color.old}]" value="{$color.new}" />
 										</div>
 										<input type="checkbox" value="{$color.old}" />
+									</li>
+								{/foreach}
+							</ul>
+						{/foreach}
+						{foreach from=$tg_data.texts item=tg_data_item key=tg_type}
+							<label for="tg_{$tg_type}" class="ui-corner-top">{$tg_data_item.title}</label>
+							<ul id="tg_{$tg_type}" class="clearfix ui-corner-bottom ui-corner-tr">
+								{foreach from=$tg_data_item.sizes item=size}
+									<li class="tgItem{if $size.old neq $size.new} changed{/if}">
+										<div class="clearfix">
+											 <span class="textLabel tips" title="{$tg_data_item.title}|{if $size.old neq $size.new}{tr 0=$size.old 1=$size.new}Changed from %0 to %1{/tr}{else}{tr}size unchanged{/tr}{/if}">
+												{$size.new}
+											</span> :
+											<input type="text" name="tg_swaps[{$tg_type}][{$size.old}]" value="{$size.new}" />
+										</div>
+										<input type="checkbox" value="{$size.old}" />
 									</li>
 								{/foreach}
 							</ul>

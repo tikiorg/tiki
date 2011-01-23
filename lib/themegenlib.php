@@ -77,11 +77,11 @@ class ThemeGenLib
 			$bordercolors = array();
 		}		
 		preg_match_all('/font-size:.*?([\d\.]*[^;\} ]*)/i', $mincss, $matches);
-		$fontsize = $this->currentTheme->processMatches( $matches[1], $css_file, 'fontsize' );
+		$fontsizes = $this->currentTheme->processMatches( $matches[1], $css_file, 'fontsize' );
 		
 		// array for smarty to loop through
 		$tg_data = array(
-			'tg_colors' => array(
+			'colors' => array(
 				'fgcolors' => array(
 					'colors' => $colors,
 					'title' => tra('Foreground Colors:'),
@@ -95,10 +95,10 @@ class ThemeGenLib
 					'title' => tra('Border Colors:'),
 				),
 			),
-			'tg_text' => array(
+			'texts' => array(
 				'fontsize' => array(
-					'text' => $colors,
-					'title' => tra('Foreground Colors:'),
+					'sizes' => $fontsizes,
+					'title' => tra('Font Sizes:'),
 				),
 			),
 		);
