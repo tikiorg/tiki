@@ -2311,6 +2311,49 @@ class SheetLib extends TikiLib
 			$this->setupJQuerySheetHistoryFiles = true;
 		}
 	}
+	
+	function saveSheet($data, $id) {
+		global $user, $sheetlib;
+		
+		$grid = new TikiSheet($id);
+		$data =  json_decode($data);
+		$rc =  '';
+		if (is_array($data)) {
+			foreach ($data as $d) {
+				$handler = new TikiSheetHTMLTableHandler($d);
+				$res = $grid->import($handler);
+				// Save the changes
+				$rc .= strlen($rc) === 0 ? '' : ', ';
+				if ($res) {
+					$id = $d->metadata->sheetId;
+					if (!$id) {
+						if (!empty($d->metadata->title)) {
+							$t = $d->metadata->title;
+						} else {
+							$t = $info['title'] . ' subsheet'; 
+						}
+						$id = $sheetlib->replace_sheet( 0, $t, '', $user, $id );
+						$rc .= tra('new') . ' ';
+						$handler = new TikiSheetHTMLTableHandler($d);
+						$res = $grid->import($handler);
+					}
+					if ($id && $res) {
+						$handler = new TikiSheetDatabaseHandler($id);
+						$grid->export($handler);
+						$rc .= $grid->getColumnCount() . ' x ' . $grid->getRowCount() . ' ' . tra('sheet') . " (id=$id)";
+					}
+					if (!empty($d->metadata->title)) {
+						$sheetlib->set_sheet_title($id, $d->metadata->title);
+					}
+				}
+			}
+		}
+		return ($res ?  tra('Saved'). ': ' . $rc : tra('Save failed'));
+	}
+	
+	function checkPerms() {
+		
+	}
 } // }}}1
 $sheetlib = new SheetLib;
 

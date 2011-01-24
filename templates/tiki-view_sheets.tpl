@@ -41,7 +41,7 @@
 		{/if}
 		
 		{if $parseValues eq 'y'}
-			{if $editReload eq 'y'}
+			{if $parse eq 'y'}
 				{button parse="n" _text="{tr}No parse{/tr}"  _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _auto_args="*"}
 			{else}
 				{button parse="y" _text="{tr}Parse{/tr}"  _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _auto_args="*"}
