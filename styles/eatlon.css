@@ -968,7 +968,7 @@ Caltrack a:visited {color: #00BD02}
 .Calquiz a:hover,
 .Calsurv a:hover,
 .Caltrack a:hover,
-.Calwiki a:hover {color: darkviolet}
+.Calwiki a:hover {color: #9400d3}
 
 .calcontent a.linkmenu,
 .calcontent a.linkmenu:hover {
@@ -1035,10 +1035,10 @@ Caltrack a:visited {color: #00BD02}
 	padding: 2px;
 	font-size: 1em}
 
-.event {background: whitesmoke}
+.event {background: #f5f5f5}
 .addevent {padding: 0 5px; float: right}
 * html .addevent {padding: 0}
-.calodd, .caleven {border: 1px solid darkgray}
+.calodd, .caleven {border: 1px solid #a9a9a9}
 .calodd {background: #ececec}
 * html .calodd {padding: 0}
 .caleven {background: #f5f5f5}

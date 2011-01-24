@@ -267,7 +267,6 @@ tr.odd td:hover,
 td.odd:hover,
 li.odd:hover {
 	background: #FFF7E6;
-	border-right: /*tdodd_border-right*/;
 }
 
 tr.even td,
@@ -284,7 +283,6 @@ tr.even td:hover,
 td.even:hover,
 li.even:hover {
 	background: #FFF7E6;
-	border-right: /*tdeven_border-right*/;
 }
 
 

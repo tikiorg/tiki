@@ -590,7 +590,7 @@ body.wikitext {
 	display: block;
 	padding-top: 2px;
 	}
-.tabstoggle span a; .tabstoggle span a:hover {
+.tabstoggle span a, .tabstoggle span a:hover {
 	display: block;
 }
 
@@ -630,7 +630,7 @@ body.wikitext {
 }
 
 .normal {
-	border: solid 1px #abcde
+	border: solid 1px #abcdef;
 }
 
 .categpath {
@@ -646,7 +646,7 @@ body.wikitext {
 .admbox img {margin-top: 20px;}
 
 /* structures toc */
-.toc {margin-left: 0.5em; padding-left: 0.5em; list-style-type: 0}
+.toc {margin-left: 0.5em; padding-left: 0.5em; list-style-type: none}
 .toc li {margin-left: .2em; padding-left: .2em}
 
 /* jscalendar */
