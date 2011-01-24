@@ -81,7 +81,7 @@ class ThemeGenLib
 		} else {
 			$bgcolors = array();
 		}		
-		$num = preg_match_all('/border(?:-.*?)?:.*?(#[0-9A-F]{3,6})[\s;\}\!]/i', $mincss, $matches);
+		$num = preg_match_all('/border(?:-.*)?:.*(#[0-9A-F]{3,6})[\s;\}\!]/Umis', $mincss, $matches);
 		if ($num) {
 			$bordercolors = $this->currentTheme->processMatches( $matches[1], $css_file, 'bordercolors' );
 		} else {
