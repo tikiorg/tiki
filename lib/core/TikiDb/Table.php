@@ -78,9 +78,86 @@ class TikiDb_Table
 		$this->db->query($query, $bindvars);
 	}
 
+	function fetchOne($field, array $conditions)
+	{
+		if ($result = $this->fetchRow(array($field), $conditions)) {
+			return reset($result);
+		}
+
+		return false;
+	}
+
+	function fetchCount(array $conditions)
+	{
+		return $this->fetchOne($this->count(), $conditions);
+	}
+
+	function fetchFullRow(array $conditions)
+	{
+		return $this->fetchRow($this->all(), $conditions);
+	}
+
+	function fetchRow(array $fields, array $conditions)
+	{
+		$result = $this->fetchAll($fields, $conditions, 1, 0);
+		
+		return reset($result);
+	}
+
+	function fetchColumn($field, array $conditions, $numrows = -1, $offset = -1)
+	{
+		$result = $this->fetchAll(array($field), $conditions, $numrows, $offset);
+
+		$output = array();
+
+		foreach ($result as $row) {
+			$output[] = reset($row);
+		}
+
+		return $output;
+	}
+
+	function fetchAll(array $fields, array $conditions, $numrows = -1, $offset = -1)
+	{
+		$bindvars = array();
+
+		$fieldDescription = '';
+
+		foreach ($fields as $f) {
+			if ($f instanceof TikiDB_Expr) {
+				$fieldDescription .= $f->getQueryPart(null);
+				$bindvars = array_merge($bindvars, $f->getValues());
+			} else {
+				$fieldDescription .= $this->escapeIdentifier($f);
+			}
+
+			$fieldDescription .= ', ';
+		}
+
+		$query = 'SELECT ' . rtrim($fieldDescription, ', ') . ' FROM ' . $this->escapeIdentifier($this->tableName);
+		$query .= $this->buildConditions($conditions, $bindvars);
+
+		return $this->db->fetchAll($query, $bindvars, $numrows, $offset);
+	}
+
 	function expr($string, $arguments)
 	{
 		return new TikiDb_Expr($string, $arguments);
+	}
+
+	function all()
+	{
+		return array($this->expr('*', array()));
+	}
+
+	function count()
+	{
+		return $this->expr('COUNT(*)', array());
+	}
+
+	function sum($field)
+	{
+		return $this->expr("SUM(`$field`)", array());
 	}
 
 	function increment($count)
@@ -106,6 +183,11 @@ class TikiDb_Table
 	function like($value)
 	{
 		return $this->expr('$$ LIKE ?', array($value));
+	}
+
+	function exactly($value)
+	{
+		return $this->expr('BINARY $$ = ?', array($value));
 	}
 
 	private function buildDelete(array $conditions, & $bindvars)

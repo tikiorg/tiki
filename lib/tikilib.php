@@ -205,7 +205,7 @@ class TikiLib extends TikiDb_Bridge
 		if ($name == 'local') {
 			return true;
 		}
-		return $this->getOne("select `dsn`  from `tiki_dsn` where `name`='$name'");
+		return $this->table('tiki_dsn')->fetchOne('dsn', array('name' => $name));
 	}
 
 	function get_dsn_info($name) {
@@ -436,8 +436,9 @@ class TikiLib extends TikiDb_Bridge
 	 */
 	function get_user_notification($id) {
 
-		$query = "select `user` from `tiki_user_watches` where `watchId`=?";
-		return $this->getOne($query, array($id));
+		return $this->table('tiki_user_watches')->fetchOne('user', array(
+			'watchId' => $id,
+		));
 
 	}
 	/*shared*/
@@ -489,15 +490,17 @@ class TikiLib extends TikiDb_Bridge
 
 	/*shared*/
 	function get_user_watches($user, $event = '') {
-		$mid = '';
-		$bindvars=array($user);
+		$userWatches = $this->table('tiki_user_watches');
+
+		$conditions = array(
+			'user' => $userWatches->exactly($user),
+		);
+
 		if ($event) {
-			$mid = " and `event`=? ";
-			$bindvars[]=$event;
+			$conditions['event'] = $event;
 		}
 
-		$query = "select * from `tiki_user_watches` where binary `user`=? $mid";
-		return $this->fetchAll($query,$bindvars);
+		return $userWatches->fetchAll($userWatches->all(), $conditions);
 	}
 
 	/*shared*/
@@ -513,6 +516,17 @@ class TikiLib extends TikiDb_Bridge
 
 	/*shared*/
 	function user_watches($user, $event, $object, $type = NULL) {
+		$userWatches = $this->table('tiki_user_watches');
+
+		$conditions = array(
+			'user' => $user,
+			'object' => $object,
+		);
+
+		if ($type) {
+			$conditions['type'] = $type;
+		}
+
 		if (is_array($event)) {
 			$query = "select `event` from `tiki_user_watches` where `user`=? and `object`=? and `event` in (".implode(',',array_fill(0, count($event),'?')).")";
 			$bindvars = array_merge(array($user, $object), $event);
@@ -530,40 +544,31 @@ class TikiLib extends TikiDb_Bridge
 			}
 			return $ret;
 		} else {
-			$query = "select count(*) from `tiki_user_watches` where `user`=? and `object`=? and `event`=?";
-			$bindvars = array($user, $object, $event);
-			if ($type) {
-				$query .= " and `type`=?";
-				$bindvars[] = $type;
-			}
-			return $this->getOne($query, $bindvars);
+			return $userWatches->fetchCount($conditions);
 		}
 	}
 
 	function get_groups_watching( $object, $event, $type = NULL ) {
-		$query = 'SELECT `group` FROM `tiki_group_watches` WHERE `object` = ? AND `event` = ?';
-		$bindvars = array( $object, $event);
-		if ($type) {
-			$query .= ' AND `type` = ?';
-			$bindvars[]= $type;
-		}
-		$result = $this->fetchAll( $query, $bindvars );
+		$groupWatches = $this->table('tiki_group_watches');
+		$conditions = array(
+			'object' => $object,
+			'event' => $event,
+		);
 
-		$groups = array();
-		foreach( $result as $row ) {
-			$groups[] = $row['group'];
+		if ($type) {
+			$conditions['type'] = $type;
 		}
-		return $groups;
+
+		return $groupWatches->fetchColumn('group', $conditions);
 	}
 
 	/*shared*/
 	function get_user_event_watches($user, $event, $object) {
-		$query = "select * from `tiki_user_watches` where `user`=? and `event`=? and `object`=?";
-		$result = $this->query($query,array($user,$event,$object));
-		if (!$result->numRows())
-			return false;
-		$res = $result->fetchRow();
-		return $res;
+		return $this->table('tiki_user_watches')->fetchFullRow(array(
+			'user' => $user,
+			'event' => $event,
+			'object' => $object,
+		));
 	}
 
 	/*shared*/
@@ -782,12 +787,16 @@ class TikiLib extends TikiDb_Bridge
 
 	/*shared*/
 	function dir_stats() {
+		$sites = $this->table('tiki_directory_sites');
+		$categories = $this->table('tiki_directory_categories');
+		$search = $this->table('tiki_directory_search');
+
 		$aux = array();
-		$aux["valid"] = $this->getOne("select count(*) from `tiki_directory_sites` where `isValid`=?",array('y'));
-		$aux["invalid"] = $this->getOne("select count(*) from `tiki_directory_sites` where `isValid`=?",array('n'));
-		$aux["categs"] = $this->getOne("select count(*) from `tiki_directory_categories`",array());
-		$aux["searches"] = $this->getOne("select sum(`hits`) from `tiki_directory_search`",array());
-		$aux["visits"] = $this->getOne("select sum(`hits`) from `tiki_directory_sites`",array());
+		$aux["valid"] = $sites->fetchCount(array('isValue' => 'y'));
+		$aux["invalid"] = $sites->fetchCount(array('isValue' => 'n'));
+		$aux["categs"] = $categories->fetchCount(array());
+		$aux["searches"] = $search->fetchOne($search->sum('hits'), array());
+		$aux["visits"] = $search->fetchOne($sites->sum('hits'), array());
 		return $aux;
 	}
 
@@ -815,17 +824,16 @@ class TikiLib extends TikiDb_Bridge
 
 	/*shared*/
 	function get_directory($categId) {
-		$query = "select * from `tiki_directory_categories` where `categId`=?";
-		$result = $this->query($query,array($categId));
-		if (!$result->numRows()) return false;
-		$res = $result->fetchRow();
-		return $res;
+		return $this->table('tiki_directory_categories')->fetchFullRow(array('categId' => $categId));
 	}
 
 	/*shared*/
 	function user_unread_messages($user) {
-		$cant = $this->getOne("select count(*) from `messu_messages` where `user`=? and `isRead`=?",array($user,'n'));
-		return $cant;
+		$messages = $this->table('messu_messages');
+		return $messages->fetchCount(array(
+			'user' => $user,
+			'isRead' => 'n',
+		));
 	}
 
 	/*shared*/
@@ -863,6 +871,9 @@ class TikiLib extends TikiDb_Bridge
 		$result = $this->fetchAll($query,array('u','o',$user));
 		$ret = array();
 
+		$trackers = $this->table('tiki_trackers');
+		$trackerFields = $this->table('tiki_tracker_fields');
+		$trackerItemFields = $this->table('tiki_tracker_item_fields');
 		//FIXME Perm:filter ?
 		foreach ( $result as $res ) {
 			if (!$this->user_has_perm_on_object($user, $res['trackerId'], 'tracker', 'tiki_p_view_trackers')) {
@@ -872,10 +883,19 @@ class TikiLib extends TikiDb_Bridge
 
 			$trackerId = $res["trackerId"];
 			// Now get the isMain field for this tracker
-			$fieldId = $this->getOne("select `fieldId`  from `tiki_tracker_fields` ttf where `isMain`=? and `trackerId`=?",array('y',(int)$trackerId));
+			$fieldId = $trackerFields->fetchOne('fieldId', array(
+				'isMain' => 'y',
+				'trackerId' => (int) $trackerId
+			));
 			// Now get the field value
-			$value = $this->getOne("select `value`  from `tiki_tracker_item_fields` where `fieldId`=? and `itemId`=?",array((int)$fieldId,(int)$itemId));
-			$tracker = $this->getOne("select `name`  from `tiki_trackers` where `trackerId`=?",array((int)$trackerId));
+			$value = $trackerItemFields->fetchOne('value', array(
+				'fieldId' => (int) $fieldId,
+				'itemId' => (int) $itemId
+			));
+			$tracker = $trackers->fetchOne('name', array(
+				'trackerId' => (int) $trackerId,
+			));
+
 			$aux["trackerId"] = $trackerId;
 			$aux["itemId"] = $itemId;
 			$aux["value"] = $value;
@@ -899,10 +919,19 @@ class TikiLib extends TikiDb_Bridge
 
 				$trackerId = $res["trackerId"];
 				// Now get the isMain field for this tracker
-				$fieldId = $this->getOne("select `fieldId`  from `tiki_tracker_fields` ttf where `isMain`=? and `trackerId`=?",array('y',(int)$trackerId));
+				$fieldId = $trackerFields->fetchOne('fieldId', array(
+					'isMain' => 'y',
+					'trackerId' => (int) $trackerId
+				));
 				// Now get the field value
-				$value = $this->getOne("select `value`  from `tiki_tracker_item_fields` where `fieldId`=? and `itemId`=?",array((int)$fieldId,(int)$itemId));
-				$tracker = $this->getOne("select `name`  from `tiki_trackers` where `trackerId`=?",array((int)$trackerId));
+				$value = $trackerItemFields->fetchOne('value', array(
+					'fieldId' => (int) $fieldId,
+					'itemId' => (int) $itemId
+				));
+				$tracker = $trackers->fetchOne('name', array(
+					'trackerId' => (int) $trackerId,
+				));
+
 				$aux["trackerId"] = $trackerId;
 				$aux["itemId"] = $itemId;
 				$aux["value"] = $value;
@@ -1025,11 +1054,7 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function get_tracker($trackerId) {
-		$query = "select * from `tiki_trackers` where `trackerId`=?";
-		$result = $this->query($query,array((int) $trackerId));
-		if (!$result->numRows()) return false;
-		$res = $result->fetchRow();
-		return $res;
+		return $this->table('tiki_trackers')->fetchFullRow(array('trackerId' => (int) $trackerId));
 	}
 	/*shared*/
 
@@ -1204,7 +1229,7 @@ class TikiLib extends TikiDb_Bridge
 				$fields[] = $res2;
 			}
 			$res["field_values"] = $fields;
-			$res["comments"] = $this->getOne("select count(*) from `tiki_tracker_item_comments` where `itemId`=?",array((int) $itid));
+			$res["comments"] = $this->table('tiki_tracker_item_comments')->fetchCount(array('itemId' => (int) $itid));
 			if ($pass) {
 				$kl = $kx.$itid;
 				$ret["$kl"] = $res;
@@ -1224,9 +1249,7 @@ class TikiLib extends TikiDb_Bridge
 	// All information about an event type
 	// shared
 	function get_event($event) {
-		$query = "select * from `tiki_score` where `event`=?";
-		$result = $this->query($query,array($event));
-		return $result->fetchRow();
+		return $this->table('tiki_score')->fetchFullRow(array('event' => $event));
 	}
 
 	/*
@@ -1256,17 +1279,21 @@ class TikiLib extends TikiDb_Bridge
 			$expire = $event['expiration'];
 			$event_id = $event_type . '_' . $id;
 
-			$query = "select count(*) from `tiki_users_score` where `user`=? and `event_id`=?";
-			$bindvars = array($user, $event_id);
+			$usersScore = $this->table('tiki_users_score');
+
+			$conditions = array(
+				'user' => $user,
+				'event_id' => $event_id,
+			);
+
 			if ($expire) {
-				$query .= " and `expire` > ?";
-				$bindvars[] = time();
+				$conditions['expire'] = $usersScore->greaterThan($this->now);
 			}
-			if ($this->getOne($query, $bindvars)) {
+
+			if ($usersScore->fetchCount($conditions)) {
 				return true;
 			}
 
-			$usersScore = $this->table('tiki_users_score');
 			$usersScore->delete(array(
 				'user' => $user,
 				'event_id' => $event_id,
@@ -1354,9 +1381,7 @@ class TikiLib extends TikiDb_Bridge
 			$res = $user;
 			$user = $user['login'];
 		} else {
-			$query = "select `login`,`avatarType`,`avatarLibName` from `users_users` where `login`=?";
-			$result = $this->query($query,array($user));
-			$res = $result->fetchRow();
+			$res = $this->table('users_users')->fetchRow(array('login', 'avatarType', 'avatarLibName'), array('login' => $user));
 		}
 
 		if (!$res) {
@@ -1412,9 +1437,9 @@ class TikiLib extends TikiDb_Bridge
 	/* Referer stats */
 	/*shared*/
 	function register_referer($referer) {
-		$cant = $this->getOne("select count(*) from `tiki_referer_stats` where `referer`=?",array($referer));
-
 		$refererStats = $this->table('tiki_referer_stats');
+
+		$cant = $refererStats->fetchCount(array('referer' => $referer));
 
 		if ($cant) {
 			$refererStats->update(array(
@@ -1449,55 +1474,14 @@ class TikiLib extends TikiDb_Bridge
 
 	/*shared*/
 	function get_wiki_attachment($attId) {
-		$query = "select * from `tiki_wiki_attachments` where `attId`=?";
-		$result = $this->query($query,array((int)$attId));
-		if (!$result->numRows()) return false;
-		$res = $result->fetchRow();
-		return $res;
+		return $this->table('tiki_wiki_attachments')->fetchFullRow(array('attId' => (int) $attId));
 	}
 
 	/*shared*/
-	/*
-		 function get_random_image($galleryId = -1) {
-		 $whgal = "";
-		 $bindvars = array();
-		 if (((int)$galleryId) != -1) {
-		 $whgal = " where `galleryId`=? ";
-		 $bindvars[] = (int) $galleryId;
-		 }
-
-		 $query = "select count(*) from `tiki_images` $whgal";
-		 $cant = $this->getOne($query,$bindvars);
-		 $ret = array();
-
-		 if ($cant) {
-		 $pick = rand(0, $cant - 1);
-
-		 $query = "select `imageId` ,`galleryId`,`name` from `tiki_images` $whgal";
-		 $result = $this->query($query,$bindvars,1,$pick);
-		 $res = $result->fetchRow();
-		 $ret["galleryId"] = $res["galleryId"];
-		 $ret["imageId"] = $res["imageId"];
-		 $ret["name"] = $res["name"];
-		 $query = "select `name`  from `tiki_galleries` where `galleryId` = ?";
-		 $ret["gallery"] = $this->getOne($query,array((int)$res["galleryId"]));
-		 } else {
-		 $ret["galleryId"] = 0;
-
-		 $ret["imageId"] = 0;
-		 $ret["name"] = tra("No image yet, sorry.");
-		 }
-
-		 return ($ret);
-		 }
-	 */ /* Sept */
-
-	/*shared*/
 	function get_gallery($id) {
-		$query = "select * from `tiki_galleries` where `galleryId`=?";
-		$result = $this->query($query,array((int) $id));
-		$res = $result->fetchRow();
-		return $res;
+		return $this->table('tiki_galleries')->fetchFullRow(array(
+			'galleryId' => (int) $id,
+		));
 	}
 
 	// Last visit module ////
@@ -1505,7 +1489,8 @@ class TikiLib extends TikiDb_Bridge
 	function get_news_from_last_visit($user) {
 		if (!$user) return false;
 
-		$last = $this->getOne("select `lastLogin`  from `users_users` where `login`=?",array($user));
+		$last = $this->table('users_users')->fetchOne('lastLogin', array('login' => $user));
+
 		$ret = array();
 		if (!$last) {
 			$last = time();
@@ -1563,16 +1548,17 @@ class TikiLib extends TikiDb_Bridge
 
 	function add_pageview() {
 		$dayzero = $this->make_time(0, 0, 0, $this->date_format("%m",$this->now), $this->date_format("%d",$this->now), $this->date_format("%Y",$this->now));
-		$cant = $this->getOne("select count(*) from `tiki_pageviews` where `day`=?",array((int)$dayzero));
+		$conditions = array(
+			'day' => (int) $dayzero,
+		);
 
 		$pageviews = $this->table('tiki_pageviews');
+		$cant = $pageviews->fetchCount($conditions);
 
 		if ($cant) {
 			$pageviews->update(array(
 				'pageviews' => $pageviews->increment(1),
-			), array(
-				'day' => (int) $dayzero,
-			));
+			), $conditions);
 		} else {
 			$pageviews->insert(array(
 				'day' => (int) $dayzero,
@@ -1612,8 +1598,7 @@ class TikiLib extends TikiDb_Bridge
 	// User assigned modules ////
 	/*shared*/
 	function get_user_login($id) {
-		$login = $this->getOne("select `login` from `users_users` where `userId`=?", array((int)$id));
-		return $login;
+		return $this->table('users_users')->fetchOne('login', array('userId' => (int) $id));
 	}
 
 	function get_user_id($u) {
@@ -1625,7 +1610,7 @@ class TikiLib extends TikiDb_Bridge
 		if ( isset($_SESSION['u_info']['id']) && $current ) return $_SESSION['u_info']['id'];
 
 		// In other cases, we look in db
-		$id = $this->getOne("select `userId` from `users_users` where `login`=?", array($u));
+		$id = $this->table('users_users')->fetchOne('userId', array('login' => $u));
 		$id = ($id === NULL) ? -1 : $id;
 		if ( $current ) $_SESSION['u_info']['id'] = $id;
 		return $id;
@@ -1633,26 +1618,24 @@ class TikiLib extends TikiDb_Bridge
 
 	/*shared*/
 	function get_groups_all($group) {
-		$query = "select `groupName`  from `tiki_group_inclusion` where `includeGroup`=?";
-		$result = $this->fetchAll($query, array($group));
-		$ret = array();
+		$result = $this->table('tiki_group_inclusion')->fetchColumn('groupName', array(
+			'includeGroup' => $group,
+		));
+		$ret = $result;
 		foreach ( $result as $res ) {
-			$ret[] = $res["groupName"];
-			$ret2 = $this->get_groups_all($res["groupName"]);
-			$ret = array_merge($ret, $ret2);
+			$ret = array_merge($ret, $this->get_groups_all($res));
 		}
 		return array_unique($ret);
 	}
 
 	/*shared*/
 	function get_included_groups($group) {
-		$query = "select `includeGroup`  from `tiki_group_inclusion` where `groupName`=?";
-		$result = $this->fetchAll($query, array($group));
-		$ret = array();
+		$result = $this->table('tiki_group_inclusion')->fetchColumn('includeGroup', array(
+			'groupName' => $group,
+		));
+		$ret = $result;
 		foreach ( $result as $res ) {
-			$ret[] = $res["includeGroup"];
-			$ret2 = $this->get_included_groups($res["includeGroup"]);
-			$ret = array_merge($ret, $ret2);
+			$ret = array_merge($ret, $this->get_included_groups($res));
 		}
 		return array_unique($ret);
 	}
@@ -1676,19 +1659,14 @@ class TikiLib extends TikiDb_Bridge
 		}
 		if (!isset($this->usergroups_cache[$user])) {
 			$userid = $this->get_user_id($user);
-			$query = "select `groupName`  from `users_usergroups` where `userId`=?";
-			$result=$this->fetchAll($query,array((int) $userid));
-			$ret = array();
+			$result = $this->table('users_usergroups')->fetchColumn('groupName', array(
+				'userId' => $userid,
+			));
+			$ret = $result;
 			foreach ( $result as $res ) {
-				$ret[] = $res["groupName"];
-				$included = $userlib->get_included_groups($res["groupName"]);
-				$ret = array_merge($ret, $included);
+				$ret = array_merge($ret, $userlib->get_included_groups($res["groupName"]));
 			}
 			$ret[] = "Registered";
-
-// The line below seems to govern whether Anonymous is 'included' in the Registered group
-// removing this for 4.0 but leaving commented code here for future reference - jonnyb
-//			$ret[] = "Anonymous";
 
 			if (isset($_SESSION["groups_are_emulated"]) && $_SESSION["groups_are_emulated"]=="y"){
 				$ret = array_intersect($ret,unserialize($_SESSION['groups_emulated']));
@@ -1796,19 +1774,12 @@ class TikiLib extends TikiDb_Bridge
 	// More about this on version 1.3 when we add the pageRank
 	// column to tiki_pages
 	function pageRank($loops = 16) {
-		$query = "select `pageName`  from `tiki_pages`";
-		//FIXME
-		$result = $this->fetchAll($query,array());
-		$ret = array();
+		$pagesTable = $this->table('tiki_pages');
 
-		foreach ( $result as $res ) {
-			$ret[] = $res["pageName"];
-		}
+		$ret = $pagesTable->fetchColumn('pageName', array());
 
 		// Now calculate the loop
 		$pages = array();
-
-		$pagesTable = $this->table('tiki_pages');
 
 		foreach ($ret as $page) {
 			$val = 1 / count($ret);
@@ -1930,16 +1901,20 @@ class TikiLib extends TikiDb_Bridge
 		$categlib = TikiLib::lib('categ');
 		$objectlib = TikiLib::lib('object');
 		$categlib->uncategorize_object($type, $id);
+
 		// Now remove comments
-		$query = "select * from `tiki_comments` where `object`=?  and `objectType`=?";
-		$result = $this->fetchAll($query, array( $id, $type ));
-		if ( !empty($result) ) {		
+		$threads = $this->table('tiki_comments')->fetchColumn('threadId', array(
+			'object' => $id,
+			'objectType' => $type,
+		));
+		if ( !empty($threads) ) {		
 			$commentslib = TikiLib::lib('comments');
 
-			foreach ( $result as $res ) {
-				$commentslib->remove_comment($res['threadId']);
+			foreach ( $threads as $threadId ) {
+				$commentslib->remove_comment($threadId);
 			}
 		}
+
 		// Remove individual permissions for this object if they exist
 		$object = $type . $id;
 		$this->table('users_objectpermissions')->deleteMultiple(array(
@@ -2044,10 +2019,8 @@ class TikiLib extends TikiDb_Bridge
 	// Functions for the menubuilder and polls////
 	/*Shared*/
 	function get_menu($menuId) {
-		$query = "select * from `tiki_menus` where `menuId`=?";
-		$result = $this->query($query,array((int)$menuId));
-		if ( ! $result->numRows() ) return false;
-		$res = $result->fetchRow();
+		$res = $this->table('tiki_menus')->fetchFullRow(array('menuId' => (int) $menuId));
+
 		if ( empty($res['icon']) ) {
 			$res['oicon'] = null;
 		} else {
@@ -2803,8 +2776,7 @@ class TikiLib extends TikiDb_Bridge
 			if( ! $this->score_event($user, 'fgallery_download', $id) )
 				return false;
 
-			$query = "select `user` from `tiki_files` where `fileId`=?";
-			$owner = $this->getOne($query, array((int)$id));
+			$owner = $this->table('tiki_files')->fetchOne('user', array('fileId' => (int) $id));
 			if( ! $this->score_event($owner, 'fgallery_is_downloaded', "$user:$id") )
 				return false;
 		}
@@ -2837,9 +2809,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		if ( $id > 0 ) {
-			$query = "select * from `tiki_file_galleries` where `galleryId`=?";
-			$result = $this->query($query,array((int) $id));
-			$res = $result->fetchRow();
+			$res = $this->table('tiki_file_galleries')->fetchFullRow(array('galleryId' => (int) $id));
 		} else {
 			$res = array();
 		}
