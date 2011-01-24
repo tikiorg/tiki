@@ -96,15 +96,6 @@ if ($prefs['feature_groupalert'] == 'y' && !empty($calID) ) {
 }
 
 $tikilib->get_perm_object( $calID, 'calendar' );
-$calendar = $calendarlib->get_calendar($calID);
-if ($calendar['personal'] == 'y') {
-	$ownCal = ($user && $user == $calendar["user"]) ? 'y' : 'n';
-	$tiki_p_view_calendar = $ownCal;
-	$tiki_p_view_events = $ownCal;
-	$tiki_p_add_events = $ownCal;
-	$tiki_p_change_events = $ownCal;
-}
-
 $access->check_permission('tiki_p_view_calendar');
 
 if (isset($_REQUEST['save']) && !isset($_REQUEST['preview']) && !isset($_REQUEST['act'])) {
@@ -442,6 +433,12 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
   $smarty->assign('msg', tra("You do not have permission to view this page"));
   $smarty->display("error.tpl");
   die;
+}
+if (!empty($id) && $calendar['personal'] == 'y' && $calitem['user'] != $user) {
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra("You do not have permission to view this page"));
+	$smarty->display("error.tpl");
+	die;
 }
 
 if (!empty($calendar['eventstatus'])) {
