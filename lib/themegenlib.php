@@ -50,8 +50,19 @@ class ThemeGenLib
 		if (!empty($_REQUEST['tg_css_file'])) {
 			$css_file = $_REQUEST['tg_css_file'];
 		} else if ($data) {
-			$css_file = array_keys($data['files']);
-			$css_file = $css_file[0];
+			$css_files = array_keys($data['files']);
+			$css_file_found = false;
+			foreach ( $css_files as $css_file) {
+				foreach( $headerlib->cssfiles as $files) {
+					if (in_array($css_file, $files)) {
+						$css_file_found = true;
+						break 2;
+					}
+				}
+			}
+			if ( !$css_file_found ) {
+				$css_file = ''; //$css_file[0];
+			}
 		} else {
 //			$css_file = $prefs['themegenerator_css_file'];
 			$css_file = '';
@@ -129,12 +140,13 @@ class ThemeGenLib
 		
 		$css_files[$tikilib->get_style_path() . $prefs['style']] = $prefs['style'];
 		$css .= file_get_contents( $tikilib->get_style_path() . $prefs['style'] );
-		
-		preg_match_all( '/@import\s+url\("([^;]*)"\);/', $css, $parts );
-		$imports = array_reverse(array_unique( $parts[1] ));
-		foreach( $imports as $import) {
-			$css_files[$tikilib->get_style_path() . $import] = $import;
-		}
+
+// shame - doesn't work on @imported files, might be a way with minified on...
+//		preg_match_all( '/@import\s+url\("([^;]*)"\);/', $css, $parts );
+//		$imports = array_reverse(array_unique( $parts[1] ));
+//		foreach( $imports as $import) {
+//			$css_files[$tikilib->get_style_path() . $import] = $import;
+//		}
 		
 		return $css_files;
 		

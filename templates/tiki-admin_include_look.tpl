@@ -250,11 +250,15 @@
 							<input type="submit" name="tg_new_theme" value="{tr}New{/tr}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
 							<input type="submit" name="tg_delete_theme" value="{tr}Delete{/tr}"{if empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
 							{jq}$("select[name=themegenerator_theme]").change(function(){
-								if ($(this)[0].selectedIndex === 0) {
-									$("input[name=tg_edit_theme_name]").show();
-									$("input[name=tg_new_theme]").show();
-									$("input[name=tg_delete_theme]").hide();
-								}
+	if ($(this)[0].selectedIndex === 0) {
+		$("input[name=tg_edit_theme_name]").keyup(function(e){
+			if (e.keyCode === 13 && $(this).val()) {
+				$("input[name=tg_new_theme]").click();
+			}
+		}).show();
+		$("input[name=tg_new_theme]").show();
+		$("input[name=tg_delete_theme]").hide();
+	}
 							});{/jq}
 						</div>
 					</div>

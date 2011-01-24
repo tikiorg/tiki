@@ -368,7 +368,7 @@ a.admbox.off img {
 	width: 37px;
 }
 
-.tgItems .changed {
+.tgItems .changed input {
 	font-style: italic;
 	color: #333;
 }
