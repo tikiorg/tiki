@@ -1200,9 +1200,16 @@ class TikiLib extends TikiDb_Bridge
 			if( ! $row = $result->fetchRow( $result ) )
 				return false;
 		}
-		$query = "update `users_users` set `score` = `score` + ? where `login`=?";
+
 		$event['id'] = $id; // just for debug
-		$this->query($query, array($score, $user));
+
+		$table = $this->table('users_users');
+		$table->update(array(
+			'score' => $table->increment($score),
+		), array(
+			'login' => $user,
+		));
+
 		return true;
 	}
 
@@ -1322,11 +1329,16 @@ class TikiLib extends TikiDb_Bridge
 	function register_referer($referer) {
 		$cant = $this->getOne("select count(*) from `tiki_referer_stats` where `referer`=?",array($referer));
 
+		$refererStats = $this->table('tiki_referer_stats');
+
 		if ($cant) {
-			$query = "update `tiki_referer_stats` set `hits`=`hits`+1,`last`=? where `referer`=?";
-			$this->query($query,array((int)$this->now,$referer));
+			$refererStats->update(array(
+				'hits' => $refererStats->increment(1),
+				'last' => $this->now,
+			), array(
+				'referer' => $referer,
+			));
 		} else {
-			$refererStats = $this->table('tiki_referer_stats');
 			$refererStats->insert(array(
 				'last' => $this->now,
 				'referer' => $referer,
@@ -1340,8 +1352,12 @@ class TikiLib extends TikiDb_Bridge
 	function add_wiki_attachment_hit($id) {
 		global $prefs, $user;
 		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
-			$query = "update `tiki_wiki_attachments` set `hits`=`hits`+1 where `attId`=?";
-			$result = $this->query($query,array((int)$id));
+			$wikiAttachments = $this->table('tiki_wiki_attachments');
+			$wikiAttachments->update(array(
+				'hits' => $wikiAttachments->increment(1),
+			), array(
+				'attId' => (int) $id,
+			));
 		}
 		return true;
 	}
@@ -1464,11 +1480,15 @@ class TikiLib extends TikiDb_Bridge
 		$dayzero = $this->make_time(0, 0, 0, $this->date_format("%m",$this->now), $this->date_format("%d",$this->now), $this->date_format("%Y",$this->now));
 		$cant = $this->getOne("select count(*) from `tiki_pageviews` where `day`=?",array((int)$dayzero));
 
+		$pageviews = $this->table('tiki_pageviews');
+
 		if ($cant) {
-			$query = "update `tiki_pageviews` set `pageviews`=`pageviews`+1 where `day`=?";
-			$this->query($query,array((int)$dayzero),-1,-1,false);
+			$pageviews->update(array(
+				'pageviews' => $pageviews->increment(1),
+			), array(
+				'day' => (int) $dayzero,
+			));
 		} else {
-			$pageviews = $this->table('tiki_pageviews');
 			$pageviews->insert(array(
 				'day' => (int) $dayzero,
 				'pageviews' => 1,
@@ -2665,6 +2685,8 @@ class TikiLib extends TikiDb_Bridge
 	function add_file_hit($id) {
 		global $prefs, $user, $filegallib;
 
+		$files = $this->table('tiki_files');
+
 		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 			// Enforce max download per file
 			if( $prefs['fgal_limit_hits_per_file'] == 'y' ) {
@@ -2678,10 +2700,14 @@ class TikiLib extends TikiDb_Bridge
 				}
 			}
 
-			$query = 'update `tiki_files` set `hits`=`hits`+1, `lastDownload`=? where `fileId`=?';
-			$this->query($query,array($this->now, (int) $id));
+			$files->update(array(
+				'hits' => $files->increment(1),
+				'lastDownload' => $this->now,
+			), array(
+				'fileId' => (int) $id,
+			));
 		} else {
-			$this->table('tiki_files')->update(array(
+			$files->update(array(
 				'lastDownload' => $this->now,
 			), array(
 				'fileId' => (int) $id,
@@ -2705,8 +2731,12 @@ class TikiLib extends TikiDb_Bridge
 	function add_file_gallery_hit($id) {
 		global $prefs, $user;
 		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
-			$query = "update `tiki_file_galleries` set `hits`=`hits`+1 where `galleryId`=?";
-			$result = $this->query($query,array((int) $id));
+			$fileGalleries = $this->table('tiki_file_galleries');
+			$fileGalleries->update(array(
+				'hits' => $fileGalleries->increment(1),
+			), array(
+				'galleryId' => (int) $id,
+			));
 		}
 		return true;
 	}
@@ -4269,8 +4299,12 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function set_lastUpdatePrefs() {
-		$query = "update `tiki_preferences` set `value`=`value`+1 where `name`=?";
-		$this->query($query, array('lastUpdatePrefs'));
+		$preferences = $this->table('tiki_preferences');
+		$preferences->update(array(
+			'value' => $preferences->increment(1),
+		), array(
+			'name' => 'lastUpdatePrefs',
+		));
 	}
 
 	function _get_values($table, $field_name, $var_names = null, &$global_ref, $query_cond = '', $bindvars = null) {
@@ -4479,8 +4513,12 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function add_hit($pageName) {
-		$query = "update `tiki_pages` set `hits`=`hits`+1 where `pageName` = ?";
-		$result = $this->query($query, array($pageName));
+		$pages = $this->table('tiki_pages');
+		$pages->update(array(
+			'hits' => $pages->increment('hits'),
+		), array(
+			'pageName' => $pageName,
+		));
 		return true;
 	}
 

@@ -157,5 +157,49 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 			'objectId' => 'HomePage',
 		));
 	}
+
+	function testExpressionAssign()
+	{
+		$mock = $this->getMock('TikiDb');
+
+		$query = 'UPDATE `my_table` SET `hits` = `hits` + ? WHERE 1=1 AND `fileId` = ? LIMIT 1';
+
+		$mock->expects($this->once())
+			->method('query')
+			->with($this->equalTo($query), $this->equalTo(array(5, 42)));
+
+		$table = new TikiDb_Table($mock, 'my_table');
+		$table->update(array(
+			'hits' => $table->expr('$$ + ?', array(5)),
+		), array(
+			'fileId' => 42,
+		));
+	}
+
+	function testComplexBuilding()
+	{
+		$mock = $this->getMock('TikiDb');
+
+		$query = 'UPDATE `my_table` SET `hits` = `weight` * ? * (`hits` + ?) WHERE 1=1 AND `fileId` = ? LIMIT 1';
+
+		$mock->expects($this->once())
+			->method('query')
+			->with($this->equalTo($query), $this->equalTo(array(1.5, 5, 42)));
+
+		$table = new TikiDb_Table($mock, 'my_table');
+		$table->update(array(
+			'hits' => $table->expr('`weight` * ? * ($$ + ?)', array(1.5, 5)),
+		), array(
+			'fileId' => 42,
+		));
+	}
+
+	function testIncrement()
+	{
+		$mock = $this->getMock('TikiDb');
+		$table = new TikiDb_Table($mock, 'my_table');
+
+		$this->assertEquals($table->expr('$$ + ?', array(1)), $table->increment(1));
+	}
 }
 
