@@ -2866,8 +2866,12 @@ class TikiLib extends TikiDb_Bridge
 
 	function semaphore_is_set($semName, $limit, $objectType='wiki page') {
 		$lim = $this->now - $limit;
-		$query = "delete from `tiki_semaphores` where `timestamp`<?"; // clean all the old semaphores even if it is not on the object
-		$result = $this->query($query,array((int)$lim));
+
+		$semaphores = $this->table('tiki_semaphores');
+		$semaphores->deleteMultiple(array(
+			'timestamp' => $semaphores->lesserThan((int) $lim),
+		));
+
 		$query = "select `semName`  from `tiki_semaphores` where `semName`=? and `objectType`=?";
 		$result = $this->query($query,array($semName, $objectType));
 		return $result->numRows();
@@ -3124,15 +3128,22 @@ class TikiLib extends TikiDb_Bridge
 			if ($res['user'] && $res['user'] != $user)
 				$logslib->add_log('login', 'timeout', $res['user'], ' ', ' ', $res['timestamp']+ $delay);
 		}
-		$query = "delete from `tiki_sessions` where `sessionId`=? or `timestamp`<?";
-		$bindvars = array($this->sessionId, $oldy);
-		if ($user) {
-			$query .= " or `user`=?";
-			$bindvars[] = $user;
-		}
-		$this->query($query, $bindvars, -1, -1, false);
 
 		$sessions = $this->table('tiki_sessions');
+
+		$sessions->delete(array(
+			'sessionId' => $this->sessionId,
+		));
+		$sessions->deleteMultiple(array(
+			'timestamp' => $sessions->lesserThan($oldy),
+		));
+
+		if ($user) {
+			$sessions->delete(array(
+				'user' => $user,
+			));
+		}
+
 		$sessions->insert(array(
 			'sessionId' => $this->sessionId,
 			'timestamp' => $this->now,
@@ -3141,8 +3152,11 @@ class TikiLib extends TikiDb_Bridge
 		));
 		if ($prefs['session_storage'] == 'db') {
 			// clean up adodb sessions as well in case adodb session garbage collection not working
-			$query = "delete from `sessions` where `expiry`<?";
-			$this->query($query, array($oldy));
+			$sessions = $this->table('sessions');
+
+			$sessions->deleteMultiple(array(
+				'expiry' => $sessions->lesserThan($oldy),
+			));
 		}
 
 		$uptodate = true;
@@ -3618,9 +3632,17 @@ class TikiLib extends TikiDb_Bridge
 
 		global $structlib;include_once('lib/structures/structlib.php');
 		$page_info = $structlib->s_get_page_info($page_ref_id);
-		$query = "update `tiki_structures` set `pos`=`pos`-1 where `pos`>? and `parent_id`=?";
-		$this->query($query ,array((int)$page_info['pos'], (int)$page_info['parent_id']));
-		$this->table('tiki_structures')->delete(array(
+
+		$structures = $this->table('tiki_structures');
+
+		$structures->updateMultiple(array(
+			'pos' => $structures->decrement(1),
+		), array(
+			'pos' => $structures->greaterThan((int) $page_info['pos']),
+			'parent_id' => (int) $page_info['parent_id'],
+		));
+
+		$structures->delete(array(
 			'page_ref_id' => $page_ref_id,
 		));
 		return true;
@@ -5433,9 +5455,11 @@ if( \$('#$id') ) {
 			if (!$user) {
 				$user = tra('Anonymous');
 			}
-			$this->query( "DELETE FROM `tiki_plugin_security` WHERE `fingerprint` = ?", array( $fp ) );
 
 			$pluginSecurity = $this->table('tiki_plugin_security');
+			$pluginSecurity->delete(array(
+				'fingerprint' => $fp,
+			));
 			$pluginSecurity->insert(array(
 				'fingerprint' => $fp,
 				'status' => 'pending',
@@ -5458,9 +5482,10 @@ if( \$('#$id') ) {
 			$objectId = '';
 		}
 
-		$this->query( "DELETE FROM `tiki_plugin_security` WHERE `fingerprint` = ?", array( $fp ) );
-
 		$pluginSecurity = $this->table('tiki_plugin_security');
+		$pluginSecurity->delete(array(
+			'fingerprint' => $fp,
+		));
 		$pluginSecurity->insert(array(
 			'fingerprint' => $fp,
 			'status' => $type,
@@ -5471,7 +5496,10 @@ if( \$('#$id') ) {
 	}
 
 	function plugin_clear_fingerprint( $fp ) {
-		$this->query( "DELETE FROM `tiki_plugin_security` WHERE `fingerprint` = ?", array( $fp ) );
+		$pluginSecurity = $this->table('tiki_plugin_security');
+		$pluginSecurity->delete(array(
+			'fingerprint' => $fp,
+		));
 	}
 
 	function list_plugins_pending_approval() {
@@ -5479,13 +5507,27 @@ if( \$('#$id') ) {
 	}
 
 	function approve_all_pending_plugins() {
-	// Update all pending plugins to accept
-	$this->query("UPDATE `tiki_plugin_security` SET `status`='accept', `approval_by`='admin' WHERE `status`='pending'");  
+		global $user;
+
+		$pluginSecurity = $this->table('tiki_plugin_security');
+		$pluginSecurity->updateMultiple(array(
+			'status' => 'accept',
+			'approval_by' => $user,
+		), array(
+			'status' => 'pending',
+		));
 	}
 
 	function approve_selected_pending_plugings($fp) {
-	// Update selected pending plugins to accept
-	$this->query("UPDATE `tiki_plugin_security` SET `status`='accept', `approval_by`='admin' WHERE `fingerprint` = ?", array( $fp ));  
+		global $user;
+
+		$pluginSecurity = $this->table('tiki_plugin_security');
+		$pluginSecurity->update(array(
+			'status' => 'accept',
+			'approval_by' => $user,
+		), array(
+			'fingerprint' => $fp,
+		));
 	}
 
 	function plugin_fingerprint( $name, $meta, $data, $args ) {
@@ -7486,8 +7528,13 @@ if( \$('#$id') ) {
 			'fromPage' => $page,
 		));
 
-		$query = "delete from `tiki_object_relations` where `source_type` = 'wiki page' AND `source_itemId`=? AND `target_type` = 'wiki page' AND `relation` LIKE 'tiki.link.%'";
-		$result = $this->query($query, array($page));
+		$objectRelations = $this->table('tiki_object_relations');
+		$objectRelations->deleteMultiple(array(
+			'source_type' => 'wiki page',
+			'source_itemId' => $page,
+			'target_type' => 'wiki page',
+			'relation' => $objectRelations->like('tiki.link.%'),
+		));
 	}
 
 	function replace_link($pageFrom, $pageTo, $types = array()) {

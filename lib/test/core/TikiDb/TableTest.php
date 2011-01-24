@@ -194,12 +194,61 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		));
 	}
 
+	function testComplexCondition()
+	{
+		$mock = $this->getMock('TikiDb');
+
+		$query = 'DELETE FROM `my_table` WHERE 1=1 AND `pageName` = ? AND `modified` < ?';
+
+		$mock->expects($this->once())
+			->method('query')
+			->with($this->equalTo($query), $this->equalTo(array('SomePage', 12345)));
+
+		$table = new TikiDb_Table($mock, 'my_table');
+		$table->deleteMultiple(array(
+			'pageName' => 'SomePage',
+			'modified' => $table->expr('$$ < ?', array(12345)),
+		));
+	}
+
 	function testIncrement()
 	{
 		$mock = $this->getMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('$$ + ?', array(1)), $table->increment(1));
+	}
+
+	function testDecrement()
+	{
+		$mock = $this->getMock('TikiDb');
+		$table = new TikiDb_Table($mock, 'my_table');
+
+		$this->assertEquals($table->expr('$$ - ?', array(1)), $table->decrement(1));
+	}
+
+	function testGreaterThan()
+	{
+		$mock = $this->getMock('TikiDb');
+		$table = new TikiDb_Table($mock, 'my_table');
+
+		$this->assertEquals($table->expr('$$ > ?', array(1)), $table->greaterThan(1));
+	}
+
+	function testLesserThan()
+	{
+		$mock = $this->getMock('TikiDb');
+		$table = new TikiDb_Table($mock, 'my_table');
+
+		$this->assertEquals($table->expr('$$ < ?', array(1)), $table->lesserThan(1));
+	}
+
+	function testLike()
+	{
+		$mock = $this->getMock('TikiDb');
+		$table = new TikiDb_Table($mock, 'my_table');
+
+		$this->assertEquals($table->expr('$$ LIKE ?', array('foo%')), $table->like('foo%'));
 	}
 }
 

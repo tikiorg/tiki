@@ -36,9 +36,10 @@ class TikiDb_Table
 	 */
 	function delete(array $conditions)
 	{
-		$query = $this->buildDelete($conditions) . ' LIMIT 1';
+		$bindvars = array();
+		$query = $this->buildDelete($conditions, $bindvars) . ' LIMIT 1';
 
-		$this->db->query($query, array_values($conditions));
+		$this->db->query($query, $bindvars);
 	}
 
 	/**
@@ -47,6 +48,7 @@ class TikiDb_Table
 	 */
 	function update(array $values, array $conditions)
 	{
+		$bindvars = array();
 		$query = $this->buildUpdate($values, $conditions, $bindvars) . ' LIMIT 1';
 
 		$this->db->query($query, $bindvars);
@@ -54,6 +56,7 @@ class TikiDb_Table
 
 	function updateMultiple(array $values, array $conditions)
 	{
+		$bindvars = array();
 		$query = $this->buildUpdate($values, $conditions, $bindvars);
 
 		$this->db->query($query, $bindvars);
@@ -69,9 +72,10 @@ class TikiDb_Table
 	 */
 	function deleteMultiple(array $conditions)
 	{
-		$query = $this->buildDelete($conditions);
+		$bindvars = array();
+		$query = $this->buildDelete($conditions, $bindvars);
 
-		$this->db->query($query, array_values($conditions));
+		$this->db->query($query, $bindvars);
 	}
 
 	function expr($string, $arguments)
@@ -84,24 +88,49 @@ class TikiDb_Table
 		return $this->expr('$$ + ?', array($count));
 	}
 
-	private function buildDelete(array $conditions)
+	function decrement($count)
+	{
+		return $this->expr('$$ - ?', array($count));
+	}
+
+	function greaterThan($value)
+	{
+		return $this->expr('$$ > ?', array($value));
+	}
+
+	function lesserThan($value)
+	{
+		return $this->expr('$$ < ?', array($value));
+	}
+
+	function like($value)
+	{
+		return $this->expr('$$ LIKE ?', array($value));
+	}
+
+	private function buildDelete(array $conditions, & $bindvars)
 	{
 		$query = "DELETE FROM {$this->escapeIdentifier($this->tableName)}";
-		$query .= $this->buildConditions($conditions);
+		$query .= $this->buildConditions($conditions, $bindvars);
 
 		return $query;
 	}
 
-	private function buildConditions(array $conditions)
+	private function buildConditions(array $conditions, & $bindvars)
 	{ 
 		$query = " WHERE 1=1";
 
 		foreach ($conditions as $key => $value) {
 			$field = $this->escapeIdentifier($key);
-			if (empty($value)) {
+			if ($value instanceof TikiDb_Expr) {
+				$query .= " AND {$value->getQueryPart($field)}";
+				$bindvars = array_merge($bindvars, $value->getValues());
+			} elseif (empty($value)) {
 				$query .= " AND ($field = ? OR $field IS NULL)";
+				$bindvars[] = $value;
 			} else {
 				$query .= " AND $field = ?";
+				$bindvars[] = $value;
 			}
 		}
 
@@ -111,8 +140,6 @@ class TikiDb_Table
 	private function buildUpdate(array $values, array $conditions, & $bindvars)
 	{
 		$query = "UPDATE {$this->escapeIdentifier($this->tableName)} SET ";
-
-		$bindvars = array();
 
 		foreach ($values as $key => $value) {
 			$field = $this->escapeIdentifier($key);
@@ -125,8 +152,7 @@ class TikiDb_Table
 			}
 		}
 
-		$query = rtrim($query, ' ,') . $this->buildConditions($conditions);
-		$bindvars = array_merge($bindvars, array_values($conditions));
+		$query = rtrim($query, ' ,') . $this->buildConditions($conditions, $bindvars);
 
 		return $query;
 	}
