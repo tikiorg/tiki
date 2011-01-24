@@ -1862,12 +1862,12 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 				if( !empty( $style ) ) {
 					//we have to sanitize the css style here
 					$tdStyle = "";
-					$color = $sheetlib->getAttrFromCssString($style, "color", "");
-					$bgColor = $sheetlib->getAttrFromCssString($style, "background-color", "");
+					$color = $sheetlib->get_attr_from_css_string($style, "color", "");
+					$bgColor = $sheetlib->get_attr_from_css_string($style, "background-color", "");
 					$tdHeight = '';
 					
 					if ($trHeightIsSet == false) {
-						$trHeight = $sheetlib->getAttrFromCssString($style, "height", "20px");
+						$trHeight = $sheetlib->get_attr_from_css_string($style, "height", "20px");
 						$trHeightIsSet = true;
 					}
 					
@@ -1925,7 +1925,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		for( $j = $sheet->getRangeBeginCol(); $endCol > $j; $j++ )
 		{
 			$style = $sheet->cellInfo[$begin][$j]['style'];
-			$width = $sheetlib->getAttrFromCssString($style, "width", "118px");
+			$width = $sheetlib->get_attr_from_css_string($style, "width", "118px");
 			echo "<col style='width: $width;' width='$width' />\n";
 		}
 	}
@@ -2023,7 +2023,7 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 				if( !empty( $style ) ) {
 					$append .= " style='{$style}'";
 					
-					$trHeight = $sheetlib->getAttrFromCssString($style, "height", "20px");
+					$trHeight = $sheetlib->get_attr_from_css_string($style, "height", "20px");
 				}
 					
 				$class = $sheet->cellInfo[$i][$j]['class'];
@@ -2056,7 +2056,7 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 
 /** TikiSheetHTMLTableHandler
  * Class that imports a sheet from an HTML table
- * Designed to be used with jQuery.sheet.saveSheet
+ * Designed to be used with jQuery.sheet.save_sheet
  */
 class TikiSheetHTMLTableHandler extends TikiSheetDataHandler
 {
@@ -2256,8 +2256,110 @@ class SheetLib extends TikiLib
 		}
 		return $sheetId;
 	}
+	
+	function set_sheet_title( $sheetId, $title ) {
+		if ( $sheetId ) {
+			$this->query( "UPDATE `tiki_sheets` SET `title` = ? WHERE `sheetId` = ?", array( $title, $sheetId ) );
+		}
+	}
+	
+	function setup_jquery_sheet() {
+		global $headerlib;
+		if (!$this->setup_jQuery_sheet_files) {
+			$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/jquery.sheet.css' );
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.js' );
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.advancedfn.js' );
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.financefn.js' );
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/parser.js' );
+			$headerlib->add_jsfile( 'lib/sheet/grid.js' );
+			
+			//json support
+			$headerlib->add_jsfile('lib/jquery/jquery.json-2.2.js');
+			
+			// plugins
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/jquery.scrollTo-min.js' );
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/raphael-min.js', 'external' );
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.raphael-min.js', 'external' );
+			$this->setup_jQuery_sheet_files = true;
+		}
+	}
+	
+	function setup_jquery_sheet_history() {
+		global $headerlib;
+		if (!$this->setup_jQuery_sheet_history_files) {
+			$headerlib->add_jsfile( 'lib/sheet/tiki-history_sheets.js' );
+			$this->setup_jQuery_sheet_history_files = true;
+		}
+	}
+	
+	function rollback_sheet($id, $readdate=null) {
+		global $user, $sheetlib;
+		
+		
+	}
+	
+	function clone_sheet( $sheetid, $readdate = null ) {
+		global $user, $prefs;
+		
+		if (!isset($readdate)) {
+			$readdate = time();
+		}
+		
+		$readdate = (int)$readdate;
+		
+		//clone the sheet
+		$this->query( "
+			INSERT INTO `tiki_sheets` (`title`, `description`, `author`, `parentSheetId`, `clonedSheetId`)
+			SELECT CONCAT('CLONED - ', `title`), `description`, `author`, `parentSheetId`, `sheetid`
+			FROM `tiki_sheets`
+			WHERE `sheetid` = ? OR `parentSheetId` = ?
+		", array( $sheetid, $sheetid ) );
+		
+		$newSheetid = $this->getOne( "SELECT MAX(`sheetId`) FROM `tiki_sheets` WHERE `author` = ?", array( $user ) );
+		
+		//clone sheet's children
+		$this->query( "
+			INSERT INTO `tiki_sheets` (`title`, `description`, `author`, `parentSheetId`, `clonedSheetId`)
+			SELECT CONCAT('CLONED - ', `title`), `description`, `author`, ?, `sheetid`
+			FROM `tiki_sheets`
+			WHERE `parentSheetId` = ?
+		", array( $newSheetid, $sheetid ) );
+		
+		//clone the sheet layout
+		$this->query( "
+			INSERT INTO `tiki_sheet_layout` (`sheetId`, `begin`, `end`, `headerRow`, `footerRow`, `className`, `parseValues`, `clonedSheetId`)
+			SELECT ?, `begin`, `end`, `headerRow`, `footerRow`, `className`, `parseValues`, `sheetId`
+			FROM `tiki_sheet_layout`
+			WHERE `sheetid` = ?
+		", array( $newSheetid, $sheetid ) );
+		
+		//clone sheet's values
+		$result = $this->query("SELECT `sheetid`, `clonedSheetId` FROM `tiki_sheets` WHERE `clonedSheetId` = ?", array( $sheetid ) );
+		while( $row = $result->fetchRow() )
+		{
+			$this->query( "
+				INSERT INTO `tiki_sheet_values` (`sheetId`, `begin`, `end`, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user`, `style`, `class`)
+				SELECT ?, `begin`, `end`, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user`, `style`, `class`
+				FROM `tiki_sheet_values`
+				WHERE
+					`sheetId` = ? AND 
+					? >= `begin` AND 
+					( `end` IS NULL OR `end` > ? )
+				", array( $row["sheetid"], $row["clonedSheetId"], $readdate, $readdate ) );
+		}
+		
+		if ($prefs['feature_actionlog'] == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			$query = 'select `sheetId` from `tiki_sheets` where `title`=? and `description`= ? and `author`=?';
+			$newId = $this->getOne($query, array($title, $description, $user ) );
+			$logslib->add_action('Cloning', $sheetid, 'sheet');
+			$logslib->add_action('Cloned', $newSheetid, 'sheet');
+		}
 
-	function replace_layout( $sheetId, $className, $headerRow, $footerRow, $parseValues = 'n' ) // {{{2
+		return $newSheetid;
+	}
+	
+	function clone_layout( $sheetId, $className, $headerRow, $footerRow, $parseValues = 'n' ) // {{{2
 	{
 		if( $row = $this->get_sheet_layout( $sheetId ) )
 		{
@@ -2281,42 +2383,7 @@ class SheetLib extends TikiLib
 		return true;
 	}
 	
-	function set_sheet_title( $sheetId, $title ) {
-		if ( $sheetId ) {
-			$this->query( "UPDATE `tiki_sheets` SET `title` = ? WHERE `sheetId` = ?", array( $title, $sheetId ) );
-		}
-	}
-	
-	function setupJQuerySheet() {
-		global $headerlib;
-		if (!$this->setupJQuerySheetFiles) {
-			$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/jquery.sheet.css' );
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.js' );
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.advancedfn.js' );
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.financefn.js' );
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/parser.js' );
-			$headerlib->add_jsfile( 'lib/sheet/grid.js' );
-			
-			//json support
-			$headerlib->add_jsfile('lib/jquery/jquery.json-2.2.js');
-			
-			// plugins
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/jquery.scrollTo-min.js' );
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/raphael-min.js', 'external' );
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.raphael-min.js', 'external' );
-			$this->setupJQuerySheetFiles = true;
-		}
-	}
-	
-	function setupJQuerySheetHistory() {
-		global $headerlib;
-		if (!$this->setupJQuerySheetHistoryFiles) {
-			$headerlib->add_jsfile( 'lib/sheet/tiki-history_sheets.js' );
-			$this->setupJQuerySheetHistoryFiles = true;
-		}
-	}
-	
-	function saveSheet($data, $id) {
+	function save_sheet($data, $id) {
 		global $user, $sheetlib;
 		
 		$grid = new TikiSheet($id);
@@ -2355,12 +2422,12 @@ class SheetLib extends TikiLib
 		return ($res ?  tra('Saved'). ': ' . $rc : tra('Save failed'));
 	}
 	
-	/** getAttrFromCssString {{{2
+	/** get_attr_from_css_string {{{2
 	 * Grabs a css setting from a string
 	 * @param $style A simple css style string used with an html dom object
 	 * @param $attr The name of the css attribute you'd like to extract from $style
 	 */
-	function getAttrFromCssString($style, $attr, $default) {
+	function get_attr_from_css_string($style, $attr, $default) {
 		global $sheetlib;
 		$style = strtolower($style);
 		$style = str_replace(' ', '', $style);
@@ -2404,16 +2471,16 @@ class SheetLib extends TikiLib
 	    return false;
 	}
 	
-	function diffSheetsAsHTML( $id, $dates = null )
+	function diff_sheets_as_html( $id, $dates = null )
 	{
 		global $prefs, $sheetlib;
 			
-		function countLongest( $array1, $array2 )
+		function count_longest( $array1, $array2 )
 		{
 			return (count($array1) > count($array2) ? count($array1) : count($array2));
 		}
 		
-		function joinWithSubGrids( $id, $date )
+		function join_with_sub_grids( $id, $date )
 		{
 			global $prefs, $sheetlib;
 			$result1 = "";
@@ -2438,7 +2505,7 @@ class SheetLib extends TikiLib
 			return $grids;
 		}
 		
-		function sanitizeForDiff($val)
+		function sanitize_for_diff($val)
 		{
 			$val = str_replace("<br/>", 	"<br>", $val);
 			$val = str_replace("<br />",	"<br>", $val);
@@ -2450,10 +2517,10 @@ class SheetLib extends TikiLib
 			return explode("<br>", $val);
 		}
 		
-		function diffToHtml($changes)
+		function diff_to_html($changes)
 		{
 			$result = array("", "");
-			for ( $i = 0; $i < countLongest($changes->orig, $changes->final); $i++ )
+			for ( $i = 0; $i < count_longest($changes->orig, $changes->final); $i++ )
 			{
 				$class = array("", "");
 				$char = array("", "");
@@ -2484,17 +2551,17 @@ class SheetLib extends TikiLib
 			return $result;
 		}
 		
-		$grids1 = joinWithSubGrids($_REQUEST["sheetId"], $dates[0]);
-		$grids2 = joinWithSubGrids($_REQUEST["sheetId"], $dates[1]);
+		$grids1 = join_with_sub_grids($_REQUEST["sheetId"], $dates[0]);
+		$grids2 = join_with_sub_grids($_REQUEST["sheetId"], $dates[1]);
 		
-		for ( $i = 0; $i < countLongest($grids1, $grids2); $i++ ) { //cycle through the sheets within a spreadsheet
+		for ( $i = 0; $i < count_longest($grids1, $grids2); $i++ ) { //cycle through the sheets within a spreadsheet
 			$result1 .= "<table>";
 			$result2 .= "<table>";
-			for ( $row = 0; $row < countLongest($grids1[$i]->dataGrid, $grids2[$i]->dataGrid); $row++ ) { //cycle through rows
+			for ( $row = 0; $row < count_longest($grids1[$i]->dataGrid, $grids2[$i]->dataGrid); $row++ ) { //cycle through rows
 				$result1 .= "<tr>";
 				$result2 .= "<tr>";
-				for ( $col = 0; $col < countLongest($grids1[$i]->dataGrid[$row], $grids2[$i]->dataGrid[$row]); $col++ ) { //cycle through columns
-					$diff = new Text_Diff( sanitizeForDiff( $grids1[$i]->dataGrid[$row][$col] ), sanitizeForDiff( $grids2[$i]->dataGrid[$row][$col] ) );
+				for ( $col = 0; $col < count_longest($grids1[$i]->dataGrid[$row], $grids2[$i]->dataGrid[$row]); $col++ ) { //cycle through columns
+					$diff = new Text_Diff( sanitize_for_diff( $grids1[$i]->dataGrid[$row][$col] ), sanitize_for_diff( $grids2[$i]->dataGrid[$row][$col] ) );
 					$changes = $diff->getDiff();
 						
 					//print_r($changes);
@@ -2505,19 +2572,19 @@ class SheetLib extends TikiLib
 					//I left this diff switch, but it really isn't being used as of now, in the future we may though.
 					switch ( get_class($changes[0]) ) {
 						case 'Text_Diff_Op_copy':
-							$values = diffToHtml($changes[0]);
+							$values = diff_to_html($changes[0]);
 							break;
 						case 'Text_Diff_Op_change':
-							$values = diffToHtml($changes[0]);
+							$values = diff_to_html($changes[0]);
 							break;
 						case 'Text_Diff_Op_delete':
-							$values = diffToHtml($changes[0]);
+							$values = diff_to_html($changes[0]);
 							break;
 						case 'Text_Diff_Op_add':
-							$values = diffToHtml($changes[0]);
+							$values = diff_to_html($changes[0]);
 							break;
 						default:
-							$values = diffToHtml($changes[0]);
+							$values = diff_to_html($changes[0]);
 					}
 					$result1 .= "<td class='$class1'>".$values[0]."</td>";
 					$result2 .= "<td class='$class2'>".$values[1]."</td>";

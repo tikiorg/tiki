@@ -81,18 +81,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { //save
 		die;
 	}
 	if (isset($_REQUEST['s']) && !empty($_REQUEST['s'])) {					// ********* AJAX save request from jQuery.sheet
-		$result = $sheetlib->saveSheet( $_REQUEST['s'], $_REQUEST["sheetId"] );
+		$result = $sheetlib->save_sheet( $_REQUEST['s'], $_REQUEST["sheetId"] );
 		die($result);
 	}
+	
+} elseif ( $_REQUEST['parse'] == "clone" ) {
+	$result = $sheetlib->clone_sheet( $_REQUEST["sheetId"], $_REQUEST['readdate'] );
+	die($result);
 	
 } else {
 	$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
 	
 	//We make sheet able to look at other date save
 	if (isset($_REQUEST['readdate']) && !empty($_REQUEST['readdate'])) {
-		$readdate = $_REQUEST['readdate'];
-		$smarty->assign('read_date', $readdate);
-		$handler->setReadDate($readdate);
+		$smarty->assign('read_date', $_REQUEST['readdate']);
+		$handler->setReadDate($_REQUEST['readdate']);
 	}
 	
 	$grid = new TikiSheet($_REQUEST["sheetId"]);
@@ -106,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { //save
 	}
 	$smarty->assign('parseValues', $grid->parseValues);
 			
-	$tableHtml[0] = $grid->getTableHtml( true, $readdate );
+	$tableHtml[0] = $grid->getTableHtml( true, $_REQUEST['readdate'] );
 		
 	if (isset($_REQUEST['sheetonly']) && $_REQUEST['sheetonly'] == 'y') {
 		foreach( $tableHtml as $table ) {
@@ -126,7 +129,7 @@ if ($prefs['feature_contribution'] == 'y') {
 	include_once ('contribution.php');
 }
 
-$sheetlib->setupJQuerySheet();
+$sheetlib->setup_jquery_sheet();
 $headerlib->add_jq_onready('
 	$.sheet.tikiOptions = $.extend($.sheet.tikiOptions, {
 		editable: ("'. $_REQUEST['parse'] .'" == "edit" ? true : false)
