@@ -610,9 +610,9 @@ class HeaderLib
 	}
 	
 	private function process_themegen_files($files) {
-		global $prefs, $tikidomainslash;
+		global $prefs, $tikidomainslash, $in_installer;
 		
-		if ($prefs['feature_themegenerator'] === 'y' && !empty($prefs['themegenerator_theme'])) {
+		if (empty($in_installer) && $prefs['feature_themegenerator'] === 'y' && !empty($prefs['themegenerator_theme'])) {
 			global $themegenlib; include_once 'lib/themegenlib.php';
 			
 			$data = $themegenlib->getCurrentTheme()->getData();
