@@ -1363,6 +1363,7 @@ function get_default_prefs() {
 		'feature_custom_html_head_content' => '{if $prefs.feature_secondary_sitemenu_custom_code ne ""}<style type="text/css">#sitelogo img {literal}{margin-top: 0; position: relative; top: -12px;}{/literal}</style>{/if}',
 		'feature_fixed_width' => 'y',
 		'feature_html_head_base_tag' => 'n',
+		'feature_themegenerator' => 'n',
 
 		// Modules
 		'module_zones_top' => 'y',
