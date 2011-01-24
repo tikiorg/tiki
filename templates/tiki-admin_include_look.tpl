@@ -265,47 +265,72 @@
 								<option value="{$key}"{if $key eq $tg_css_file} selected="selected"{/if}>{$val}</option>
 							{/foreach}
 						</select>
-						<input type="checkbox" id="toggleColors" /> {tr}Toggle checkboxes{/tr}
-						<input type="checkbox" id="toggleChangedColors" /> {tr}Toggle changed{/tr}
-						<input type="checkbox" id="livePreview" checked="checked" "/> {tr}Live preview{/tr}
-						{button _text="{tr}Reset selected{/tr}" _id="resetColors" href="#"}
 					</div>
 					<div class="adminoptionbox themegenerator">
-						{foreach from=$tg_data.colors item=tg_data_item key=tg_type}
-							<label for="tg_{$tg_type}" class="ui-corner-top">{$tg_data_item.title}</label>
-							<ul id="tg_{$tg_type}" class="color_swatches clearfix ui-corner-bottom ui-corner-tr">
-								{foreach from=$tg_data_item.colors item=color}
-									<li class="colorItem{if $color.old neq $color.new} changed{/if}">
-										<div class="clearfix">
-											 <div class="colorSelector">
-											 	<div style="background-color:{$color.new};">&nbsp;</div>
-											 </div>
-											 <span class="colorLabel tips" title="{$tg_data_item.title}|{if $color.old neq $color.new}{tr 0=$color.old 1=$color.new}Changed from %0 to %1{/tr}{else}{tr}Color unchanged{/tr}{/if}">
-												{$color.new}
-											</span>
-											<input type="hidden" name="tg_swaps[{$tg_type}][{$color.old}]" value="{$color.new}" />
-										</div>
-										<input type="checkbox" value="{$color.old}" />
-									</li>
+						<ul>
+							{foreach from=$tg_data item=tg_section_data key=tg_section}
+								<li><a href="#tg_section_{$tg_section}">{$tg_section_data.title}</a></li>
+							{/foreach}
+						</ul>
+						{foreach from=$tg_data item=tg_section_data key=tg_section}
+							
+							<div id="tg_section_{$tg_section}">
+								<div class="clearfix tgTools">
+									<input type="checkbox" class="tgToggle" /> {tr}Toggle checkboxes{/tr}
+									<input type="checkbox" class="tgToggleChanged" /> {tr}Toggle changed{/tr}
+									<input type="checkbox" class="tgLivePreview" checked="checked" /> {tr}Live preview{/tr}
+									{button _text="{tr}Reset selected{/tr}" _class="tgResetSection" href="#"}
+								</div>
+								{foreach from=$tg_section_data.types item=tg_data_type key=tg_type}
+									<label for="tg_{$tg_type}" class="ui-corner-top">{$tg_data_type.title}</label>
+									<ul id="tg_{$tg_type}" class="{$tg_section}Items tgItems clearfix ui-corner-bottom ui-corner-tr">
+										{foreach from=$tg_data_type.items item=tg_item}
+											<li class="tgItem{if $tg_item.old neq $tg_item.new} changed{/if}">
+												<div class="clearfix tips" title="{$tg_data_type.title}|
+														{if $tg_item.old neq $tg_item.new}
+															{tr 0=$tg_item.old 1=$tg_item.new}Changed from %0 to %1{/tr}
+														{else}
+															{tr}Unchanged{/tr}
+														{/if}">
+													{if $tg_section eq 'colors'}
+														<div class="colorSelector">
+															<div style="background-color:{$tg_item.new};">&nbsp;</div>
+														</div>
+														<input type="text" name="tg_swaps[{$tg_type}][{$tg_item.old}]"
+																value="{$tg_item.new}" class="tgValue" />
+													{elseif $tg_section eq 'typeography'}
+														{if $tg_type eq "fontsize"}
+															 <div class="tgLabel">
+																{$tg_item.old}
+																</div>
+															<input type="text" name="tg_swaps[{$tg_type}][{$tg_item.old}]"
+																	value="{$tg_item.new}" class="tgValue" />
+														{/if}
+													{/if}
+												</div>
+												<input type="checkbox" value="{$tg_item.old}" />
+											</li>
+										{foreachelse}
+											{tr}No definitions found{/tr}
+										{/foreach}
+									</ul>
+								{foreachelse}
+									{tr}No types found{/tr}
 								{/foreach}
-							</ul>
+							</div>
 						{/foreach}
-						{foreach from=$tg_data.texts item=tg_data_item key=tg_type}
+						{*foreach from=$tg_data.type item=tg_data_item key=tg_type}
 							<label for="tg_{$tg_type}" class="ui-corner-top">{$tg_data_item.title}</label>
 							<ul id="tg_{$tg_type}" class="clearfix ui-corner-bottom ui-corner-tr">
 								{foreach from=$tg_data_item.sizes item=size}
 									<li class="tgItem{if $size.old neq $size.new} changed{/if}">
 										<div class="clearfix">
-											 <span class="textLabel tips" title="{$tg_data_item.title}|{if $size.old neq $size.new}{tr 0=$size.old 1=$size.new}Changed from %0 to %1{/tr}{else}{tr}size unchanged{/tr}{/if}">
-												{$size.new}
-											</span> :
-											<input type="text" name="tg_swaps[{$tg_type}][{$size.old}]" value="{$size.new}" />
 										</div>
 										<input type="checkbox" value="{$size.old}" />
 									</li>
 								{/foreach}
 							</ul>
-						{/foreach}
+						{/foreach*}
 					</div>
 				</div>
 			</fieldset>

@@ -82,24 +82,30 @@ class ThemeGenLib
 		// array for smarty to loop through
 		$tg_data = array(
 			'colors' => array(
-				'fgcolors' => array(
-					'colors' => $colors,
-					'title' => tra('Foreground Colors:'),
+				'types' => array(
+					'fgcolors' => array(
+						'items' => $colors,
+						'title' => tra('Foreground Colors:'),
+					),
+					'bgcolors' => array(
+						'items' => $bgcolors,
+						'title' => tra('Background Colors:'),
+					),
+					'bordercolors' => array(
+						'items' => $bordercolors,
+						'title' => tra('Border Colors:'),
+					),
 				),
-				'bgcolors' => array(
-					'colors' => $bgcolors,
-					'title' => tra('Background Colors:'),
-				),
-				'bordercolors' => array(
-					'colors' => $bordercolors,
-					'title' => tra('Border Colors:'),
-				),
+				'title' => tra('Colors:'),
 			),
-			'texts' => array(
-				'fontsize' => array(
-					'sizes' => $fontsizes,
-					'title' => tra('Font Sizes:'),
+			'typeography' => array(
+				'types' => array(
+					'fontsize' => array(
+						'items' => $fontsizes,
+						'title' => tra('Font Sizes:'),
+					),
 				),
+				'title' => tra('Typography:'),
 			),
 		);
 		
@@ -152,7 +158,15 @@ class ThemeGenLib
 			$GLOBALS['tg_new'] = $new;
 			$css = preg_replace_callback('/(border[^:]*:\s*)(.*)([;\}])/Umis', array( $this, 'processCSSColours'), $css);
 		}
+
+		foreach ($swaps['fontsize'] as $old => $new) {
+			//                        sizes usually start with a numeric so add a space after the $1
+			$css = preg_replace('/(font-size:\s*)' . $old . '/Umis', "$1 " . $new, $css);
+		}
 		
+//		preg_match_all('/font-size:.*?([\d\.]*[^;\} ]*)/i', $mincss, $matches);
+//		$fontsizes = $this->currentTheme->processMatches( $matches[1], $css_file, '' );
+
 		return $css;
 	}
 	

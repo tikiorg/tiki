@@ -150,8 +150,11 @@ if (isset($_REQUEST["looksetup"])) {
 
 if ($reload) {
 		$location = 'location: tiki-admin.php?page=look';
-		if ($prefs['feature_tabs'] == 'y' && isset($_COOKIE['tab']) && $_COOKIE['tab'] > 1) {
+		if ($prefs['feature_tabs'] === 'y' && isset($_COOKIE['tab']) && $_COOKIE['tab'] > 1) {
 			$location.= "&cookietab=" . $_COOKIE['tab'];
+		}
+		if ($prefs['feature_themegenerator'] === 'y' && !empty($_REQUEST['tg_css_file'])) {
+			$location.= "&tg_css_file=" . $_REQUEST['tg_css_file'];
 		}
 		header($location);
 		exit;

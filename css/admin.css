@@ -319,14 +319,15 @@ a.admbox.off img {
 
 /* end modules revamp */
 
-/* tiki 7 theme generator */
+/* tiki 7 theme generator *
+ * deliberately pixel based sizes */
 
-.color_swatches {
+.tgItems {
 	list-style: none;
 	line-height: 40px;
 	background-color: #aaa;
 	color: #666;
-	padding: 1em;
+	padding: 10px;
 	margin: 0 1em 1.5em 0;
 }
 
@@ -340,33 +341,47 @@ a.admbox.off img {
 	text-decoration: underline;
 }
 
-.color_swatches > li {
+.tgItems > li {
 	position: relative;
-	width: 10em;
+	width: 130px;
 	float: left;
 	background-color: #aaa;
 	border: 2px solid #aaa;
 	margin: 1px;
 }
 
-.color_swatches > li > div > * {
+.tgItems > li > div > * {
 	float:left;
 	margin: 3px 6px 0px 0px;
 }
 
-.color_swatches .changed {
+.tgItems .tgValue {
+	margin-top: 10px;
+	width: 60px;
+	color: #666;
+	background-color: #ddd;
+	border-color: #999 #ccc #ccc #999;
+}
+
+.tgItems .tgLabel {
+	text-align: right;
+	width: 37px;
+}
+
+.tgItems .changed {
 	font-style: italic;
 	color: #333;
 }
 
-.color_swatches .selected {
+.tgItems .selected {
 	border: 2px solid #bbb;
 }
 
-.color_swatches input[type=checkbox] {
+.tgItems input[type=checkbox] {
 	position: absolute;
 	right: 5px;
 	top: 12px;
 }
+
 
 /* end theme generator */
