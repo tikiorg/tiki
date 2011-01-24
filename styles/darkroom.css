@@ -314,20 +314,12 @@ ol {
 	padding-top: 2px;
 }
 
-#sioptions {
-	padding-left: 0;
-	margin: 0;
-}
-
-#sioptionscentered {
-	margin: 1em;
-}
-
 #sitelogo {
 	margin: auto !important;
 	padding: 1em;
 }
 
+/* id is no longer used but this is retained as possible reference for banner module CSS */Å@
 #sitead {
 	clear: none;
 	color: #999;
@@ -335,14 +327,6 @@ ol {
 	margin-top: .8em;
 	padding: 1em;
 	font: 11px Geneva, Arial, Helvetica, sans-serif;
-}
-
-#sitead.floatright {
-	padding-right: 100px;
-}
-
-#sitead.floatleft {
-	padding-left: 100px;
 }
 
 .floatright img {

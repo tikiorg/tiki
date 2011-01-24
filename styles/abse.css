@@ -228,19 +228,9 @@ body.cke_show_borders {
 	background: transparent;
 	padding-top: 0}
 
-#siteheader {
-	padding-top: 4px;
-	padding-bottom: 4px;
-	min-height: 74px}
-	
-* html #siteheader {height: 74px}
-
-#sioptions {
-	margin: 0;
-	padding: 1em}
-
 .floatright img {margin-right: 40px}
 
+/* id is no longer used but this is retained as possible reference for banner module CSS */Å@
 #sitead {
 	clear: none;
 	text-align: center;
@@ -249,8 +239,6 @@ body.cke_show_borders {
 	max-width: 460px;
 	margin-top: .8em}
 
-#sitead.floatright {padding-right: 100px}
-#sitead.floatleft {padding-left: 100px}
 #siteloginbar,
 #siteloginbar_popup {bottom: 4px}
 

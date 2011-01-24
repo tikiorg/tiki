@@ -493,10 +493,6 @@ select {
 	color: #000;
 } /* end search form filter dropdown */
 
-#sioptions {
-	clear: right;
-}
-
 #sitelogo img {
 	margin-top: 16px;
 }

@@ -366,44 +366,9 @@ label {
 	min-height: 121px;
 }
 
-#siteheader {
-	background: #fff;
-}
-
-#customcode,
-#customcodewith_ad {
-	width: auto;
-}
-
-#topbar_custom_code {
-	margin: 0 58px;
-}
-
-#sioptions {
-	padding: 0 58px;
-	position: relative;
-}
-
-#sioptionscentered {
-	text-align: center;
-}
-
 #sitelogo {
 	padding: 8px 0 0 0;
 	overflow: hidden;
-}
-
-#sitead.floatright {
-	padding-right: 100px;
-}
-
-#sitead.floatleft {
-	padding-left: 100px;
-}
-
-#customcode.floatright {
-	margin-top: 30px;
-	margin-right: 120px;
 }
 
 .siteloginbar {
@@ -547,10 +512,6 @@ label {
 	color: #fff;
 	font-size: 93%;
 	z-index: 10;
-}
-
-#topbar_custom_code {
-	background: inherit;
 }
 
 /* centercolumn */
