@@ -37,7 +37,7 @@
 			</table>
 			
 			<div class="navbar" style="text-align: center;">
-				{button _id="go_fullscreen" _text="{tr}Full Screen{/tr}"}
+				{button _id="go_fullscreen" _text="{tr}Toggle Full Screen{/tr}"}
 			</div>
 		{/tab}
 	{/if}

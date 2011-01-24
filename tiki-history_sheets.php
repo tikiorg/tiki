@@ -79,7 +79,7 @@ if ( count($sheetIndexes) > 1 ) {
 	$smarty->assign( 'ver_cant' , count($history) );
 	//$paginate = (isset($_REQUEST['paginate']) && $_REQUEST['paginate'] == 'on');
 	//$smarty->assign('paginate', $paginate);
-	$smarty->assign( 'grid_content', diffSheetsAsHTML($_REQUEST["sheetId"], $dates) );
+	$smarty->assign( 'grid_content',	$sheetlib->diffSheetsAsHTML($_REQUEST["sheetId"], $dates) );
 	
 	$cookietab = 1;
 	$headerlib->add_jq_onready("

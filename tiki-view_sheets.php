@@ -139,14 +139,14 @@ $headerlib->add_jq_onready('
 	
 	$("#edit_button a")
 		.click(function() {
-			$.sheet.manageState(tikiSheet, "y", "edit");
+			$.sheet.manageState(tikiSheet, true, "edit");
 			return false;
 		});
 						
 	$("#save_button a")
 		.click( function () {
 			$.sheet.saveSheet("tiki-view_sheets.php?sheetId=" + tikiSheet.id, false, function() {
-				$.sheet.manageState(tikiSheet, "y", "");
+				$.sheet.manageState(tikiSheet, true, "");
 			});
 			
 			return false;

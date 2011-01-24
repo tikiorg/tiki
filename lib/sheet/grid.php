@@ -1817,6 +1817,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 	 */
 	function drawRows( &$sheet, $begin, $end )
 	{
+		global $sheetlib;
 		for( $i = $begin; ($end - 1) > $i; $i++ )
 		{
 			$td = "";
@@ -1861,12 +1862,12 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 				if( !empty( $style ) ) {
 					//we have to sanitize the css style here
 					$tdStyle = "";
-					$color = getAttrFromCssString($style, "color", "");
-					$bgColor = getAttrFromCssString($style, "background-color", "");
+					$color = $sheetlib->getAttrFromCssString($style, "color", "");
+					$bgColor = $sheetlib->getAttrFromCssString($style, "background-color", "");
 					$tdHeight = '';
 					
 					if ($trHeightIsSet == false) {
-						$trHeight = getAttrFromCssString($style, "height", "20px");
+						$trHeight = $sheetlib->getAttrFromCssString($style, "height", "20px");
 						$trHeightIsSet = true;
 					}
 					
@@ -1919,11 +1920,12 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 	 */
 	function drawCols( &$sheet, $begin, $end )
 	{
+		global $sheetlib;
 		$endCol = $sheet->getRangeEndCol() < 0 ? $sheet->getColumnCount() : $sheet->getRangeEndCol();
 		for( $j = $sheet->getRangeBeginCol(); $endCol > $j; $j++ )
 		{
 			$style = $sheet->cellInfo[$begin][$j]['style'];
-			$width = getAttrFromCssString($style, "width", "118px");
+			$width = $sheetlib->getAttrFromCssString($style, "width", "118px");
 			echo "<col style='width: $width;' width='$width' />\n";
 		}
 	}
@@ -1988,6 +1990,8 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 	 */
 	function drawRows( &$sheet, $begin, $end )
 	{
+		global $sheetlib;
+		
 		for( $i = $begin; $end > $i; $i++ )
 		{
 			$trHeight = "20px";
@@ -2019,7 +2023,7 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 				if( !empty( $style ) ) {
 					$append .= " style='{$style}'";
 					
-					$trHeight = getAttrFromCssString($style, "height", "20px");
+					$trHeight = $sheetlib->getAttrFromCssString($style, "height", "20px");
 				}
 					
 				$class = $sheet->cellInfo[$i][$j]['class'];
@@ -2351,183 +2355,181 @@ class SheetLib extends TikiLib
 		return ($res ?  tra('Saved'). ': ' . $rc : tra('Save failed'));
 	}
 	
-	function checkPerms() {
+	/** getAttrFromCssString {{{2
+	 * Grabs a css setting from a string
+	 * @param $style A simple css style string used with an html dom object
+	 * @param $attr The name of the css attribute you'd like to extract from $style
+	 */
+	function getAttrFromCssString($style, $attr, $default) {
+		global $sheetlib;
+		$style = strtolower($style);
+		$style = str_replace(' ', '', $style);
 		
+		$attr = strtolower($attr);
+		
+		$cssAttrs = explode(';', $style);
+		foreach($cssAttrs as &$v) {
+			$v = explode(':', $v);
+		}
+		
+		$key = $sheetlib->array_searchRecursive($attr, $cssAttrs);
+		$result;
+		if ($key === false) {
+			$result = $default;
+		} else {
+			$result = $cssAttrs[$key[0]][$key[1] + 1];
+		}
+		
+		return ($result != 'auto' ? $result : $default);
+	}
+	
+	// array_search with recursive searching, optional partial matches and optional search by key
+	function array_searchRecursive( $needle, $haystack, $strict=false, $path=array() )
+	{
+		global $sheetlib;
+		
+	    if( !is_array($haystack) ) {
+	        return false;
+	    }
+	 
+	    foreach( $haystack as $key => $val ) {
+	        if( is_array($val) && $subPath = $sheetlib->array_searchRecursive($needle, $val, $strict, $path) ) {
+	            $path = array_merge($path, array($key), $subPath);
+	            return $path;
+	        } elseif ( (!$strict && $val == $needle) || ($strict && $val === $needle) ) {
+	            $path[] = $key;
+	            return $path;
+	        }
+	    }
+	    return false;
+	}
+	
+	function diffSheetsAsHTML( $id, $dates = null )
+	{
+		global $prefs, $sheetlib;
+			
+		function countLongest( $array1, $array2 )
+		{
+			return (count($array1) > count($array2) ? count($array1) : count($array2));
+		}
+		
+		function joinWithSubGrids( $id, $date )
+		{
+			global $prefs, $sheetlib;
+			$result1 = "";
+			$result2 = "";
+			
+			$handler = new TikiSheetDatabaseHandler($id, $date);
+			$handler->setReadDate($date);
+			$grid = new TikiSheet($id, true);
+			$grid->import($handler);
+			
+			$subgrids = $sheetlib->get_sheet_subsheets($grid->sheetId);
+			$i = 0;
+			$grids = array($grid);
+			foreach ($subgrids as $sub) {
+				$handler = new TikiSheetDatabaseHandler($sub['sheetId'], $date);
+				$handler->setReadDate($date);
+				$subsheet = new TikiSheet($sub['sheetId'], true);
+				$subsheet->import($handler);
+				array_push($grids, $subsheet);
+				$i++;
+			}
+			return $grids;
+		}
+		
+		function sanitizeForDiff($val)
+		{
+			$val = str_replace("<br/>", 	"<br>", $val);
+			$val = str_replace("<br />",	"<br>", $val);
+			$val = str_replace("<br  />", 	"<br>", $val);
+			$val = str_replace("<BR/>",		"<br>", $val);
+			$val = str_replace("<BR />", 	"<br>", $val);
+			$val = str_replace("<BR  />",	"<br>", $val);
+			
+			return explode("<br>", $val);
+		}
+		
+		function diffToHtml($changes)
+		{
+			$result = array("", "");
+			for ( $i = 0; $i < countLongest($changes->orig, $changes->final); $i++ )
+			{
+				$class = array("", "");
+				$char = array("", "");
+				$vals = array( trim( $changes->orig[$i] ), trim( $changes->final[$i] ) );
+				
+				if ($vals[0] && $vals[1]) {
+					if ( $vals[0] != $vals[1] ) {
+						$class[1] .= "diffadded";
+					}
+				} else if ($vals[0]) {
+					$class[0] .= "diffadded";
+					$class[1] .= "diffdeleted";
+					$vals[1] = $vals[0];
+					$char[1] = "-";
+				} else if ($vals[1]) {
+					$class[0] .= "diffdeleted";
+					$class[1] .= "diffadded";
+					$char[1] = "+";
+				}
+				
+				if ( $vals[0] ) {
+					$result[0] .= "<span class='$class[0]'>".$char[0].$vals[0]."</span><br />";
+				}
+				if ( $vals[1] ) {
+					$result[1] .= "<span class='$class[1]'>".$char[1].$vals[1]."</span><br />";
+				}
+			} 
+			return $result;
+		}
+		
+		$grids1 = joinWithSubGrids($_REQUEST["sheetId"], $dates[0]);
+		$grids2 = joinWithSubGrids($_REQUEST["sheetId"], $dates[1]);
+		
+		for ( $i = 0; $i < countLongest($grids1, $grids2); $i++ ) { //cycle through the sheets within a spreadsheet
+			$result1 .= "<table>";
+			$result2 .= "<table>";
+			for ( $row = 0; $row < countLongest($grids1[$i]->dataGrid, $grids2[$i]->dataGrid); $row++ ) { //cycle through rows
+				$result1 .= "<tr>";
+				$result2 .= "<tr>";
+				for ( $col = 0; $col < countLongest($grids1[$i]->dataGrid[$row], $grids2[$i]->dataGrid[$row]); $col++ ) { //cycle through columns
+					$diff = new Text_Diff( sanitizeForDiff( $grids1[$i]->dataGrid[$row][$col] ), sanitizeForDiff( $grids2[$i]->dataGrid[$row][$col] ) );
+					$changes = $diff->getDiff();
+						
+					//print_r($changes);
+					
+					$class = array('','');
+					$values = array('','');
+					
+					//I left this diff switch, but it really isn't being used as of now, in the future we may though.
+					switch ( get_class($changes[0]) ) {
+						case 'Text_Diff_Op_copy':
+							$values = diffToHtml($changes[0]);
+							break;
+						case 'Text_Diff_Op_change':
+							$values = diffToHtml($changes[0]);
+							break;
+						case 'Text_Diff_Op_delete':
+							$values = diffToHtml($changes[0]);
+							break;
+						case 'Text_Diff_Op_add':
+							$values = diffToHtml($changes[0]);
+							break;
+						default:
+							$values = diffToHtml($changes[0]);
+					}
+					$result1 .= "<td class='$class1'>".$values[0]."</td>";
+					$result2 .= "<td class='$class2'>".$values[1]."</td>";
+				}
+				$result1 .= "</tr>";
+				$result2 .= "</tr>";
+			}
+			$result1 .= "</table>";
+			$result2 .= "</table>";
+		}
+			
+		return array($result1, $result2);
 	}
 } // }}}1
 $sheetlib = new SheetLib;
-
-/** getAttrFromCssString {{{2
- * Grabs a css setting from a string
- * @param $style A simple css style string used with an html dom object
- * @param $attr The name of the css attribute you'd like to extract from $style
- */
-function getAttrFromCssString($style, $attr, $default) {
-	$style = strtolower($style);
-	$style = str_replace(' ', '', $style);
-	
-	$attr = strtolower($attr);
-	
-	$cssAttrs = explode(';', $style);
-	foreach($cssAttrs as &$v) {
-		$v = explode(':', $v);
-	}
-	
-	$key = array_searchRecursive($attr, $cssAttrs);
-	$result;
-	if ($key === false) {
-		$result = $default;
-	} else {
-		$result = $cssAttrs[$key[0]][$key[1] + 1];
-	}
-	
-	return ($result != 'auto' ? $result : $default);
-}
-
-// array_search with recursive searching, optional partial matches and optional search by key
-function array_searchRecursive( $needle, $haystack, $strict=false, $path=array() )
-{
-    if( !is_array($haystack) ) {
-        return false;
-    }
- 
-    foreach( $haystack as $key => $val ) {
-        if( is_array($val) && $subPath = array_searchRecursive($needle, $val, $strict, $path) ) {
-            $path = array_merge($path, array($key), $subPath);
-            return $path;
-        } elseif ( (!$strict && $val == $needle) || ($strict && $val === $needle) ) {
-            $path[] = $key;
-            return $path;
-        }
-    }
-    return false;
-}
-
-
-function diffSheetsAsHTML( $id, $dates = null )
-{
-	global $prefs, $sheetlib;
-		
-	function countLongest( $array1, $array2 )
-	{
-		return (count($array1) > count($array2) ? count($array1) : count($array2));
-	}
-	
-	function joinWithSubGrids( $id, $date )
-	{
-		global $prefs, $sheetlib;
-		$result1 = "";
-		$result2 = "";
-		
-		$handler = new TikiSheetDatabaseHandler($id, $date);
-		$handler->setReadDate($date);
-		$grid = new TikiSheet($id, true);
-		$grid->import($handler);
-		
-		$subgrids = $sheetlib->get_sheet_subsheets($grid->sheetId);
-		$i = 0;
-		$grids = array($grid);
-		foreach ($subgrids as $sub) {
-			$handler = new TikiSheetDatabaseHandler($sub['sheetId'], $date);
-			$handler->setReadDate($date);
-			$subsheet = new TikiSheet($sub['sheetId'], true);
-			$subsheet->import($handler);
-			array_push($grids, $subsheet);
-			$i++;
-		}
-		return $grids;
-	}
-	
-	function sanitizeForDiff($val)
-	{
-		$val = str_replace("<br/>", 	"<br>", $val);
-		$val = str_replace("<br />",	"<br>", $val);
-		$val = str_replace("<br  />", 	"<br>", $val);
-		$val = str_replace("<BR/>",		"<br>", $val);
-		$val = str_replace("<BR />", 	"<br>", $val);
-		$val = str_replace("<BR  />",	"<br>", $val);
-		
-		return explode("<br>", $val);
-	}
-	
-	function diffToHtml($changes)
-	{
-		$result = array("", "");
-		for ( $i = 0; $i < countLongest($changes->orig, $changes->final); $i++ )
-		{
-			$class = array("", "");
-			$char = array("", "");
-			$vals = array( trim( $changes->orig[$i] ), trim( $changes->final[$i] ) );
-			
-			if ($vals[0] && $vals[1]) {
-				if ( $vals[0] != $vals[1] ) {
-					$class[1] .= "diffadded";
-				}
-			} else if ($vals[0]) {
-				$class[0] .= "diffadded";
-				$class[1] .= "diffdeleted";
-				$vals[1] = $vals[0];
-				$char[1] = "-";
-			} else if ($vals[1]) {
-				$class[0] .= "diffdeleted";
-				$class[1] .= "diffadded";
-				$char[1] = "+";
-			}
-			
-			if ( $vals[0] ) {
-				$result[0] .= "<span class='$class[0]'>".$char[0].$vals[0]."</span><br />";
-			}
-			if ( $vals[1] ) {
-				$result[1] .= "<span class='$class[1]'>".$char[1].$vals[1]."</span><br />";
-			}
-		} 
-		return $result;
-	}
-	
-	$grids1 = joinWithSubGrids($_REQUEST["sheetId"], $dates[0]);
-	$grids2 = joinWithSubGrids($_REQUEST["sheetId"], $dates[1]);
-	
-	for ( $i = 0; $i < countLongest($grids1, $grids2); $i++ ) { //cycle through the sheets within a spreadsheet
-		$result1 .= "<table>";
-		$result2 .= "<table>";
-		for ( $row = 0; $row < countLongest($grids1[$i]->dataGrid, $grids2[$i]->dataGrid); $row++ ) { //cycle through rows
-			$result1 .= "<tr>";
-			$result2 .= "<tr>";
-			for ( $col = 0; $col < countLongest($grids1[$i]->dataGrid[$row], $grids2[$i]->dataGrid[$row]); $col++ ) { //cycle through columns
-				$diff = new Text_Diff( sanitizeForDiff( $grids1[$i]->dataGrid[$row][$col] ), sanitizeForDiff( $grids2[$i]->dataGrid[$row][$col] ) );
-				$changes = $diff->getDiff();
-					
-				//print_r($changes);
-				
-				$class = array('','');
-				$values = array('','');
-				
-				//I left this diff switch, but it really isn't being used as of now, in the future we may though.
-				switch ( get_class($changes[0]) ) {
-					case 'Text_Diff_Op_copy':
-						$values = diffToHtml($changes[0]);
-						break;
-					case 'Text_Diff_Op_change':
-						$values = diffToHtml($changes[0]);
-						break;
-					case 'Text_Diff_Op_delete':
-						$values = diffToHtml($changes[0]);
-						break;
-					case 'Text_Diff_Op_add':
-						$values = diffToHtml($changes[0]);
-						break;
-					default:
-						$values = diffToHtml($changes[0]);
-				}
-				$result1 .= "<td class='$class1'>".$values[0]."</td>";
-				$result2 .= "<td class='$class2'>".$values[1]."</td>";
-			}
-			$result1 .= "</tr>";
-			$result2 .= "</tr>";
-		}
-		$result1 .= "</table>";
-		$result2 .= "</table>";
-	}
-		
-	return array($result1, $result2);
-}
