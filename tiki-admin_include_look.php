@@ -137,6 +137,7 @@ if ($prefs['feature_themegenerator'] === 'y') {
 	}
 	
 	$themegenlib->setupEditor();
+	$auto_query_args[] = 'tg_css_file';
 }
 
 if (isset($_REQUEST["looksetup"])) {
