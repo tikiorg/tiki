@@ -271,6 +271,7 @@ class UsersLib extends TikiLib
 		if ( $prefs['auth_method'] === 'cas' && $user !== 'admin' && $user !== '' && $prefs['cas_force_logout'] === 'y' ) {
 			phpCAS::logoutWithRedirectServiceAndUrl($url,$url);
 		}
+		unset($_SESSION['cas_validation_time']);
 		unset($_SESSION[$user_cookie_site]);
 		session_unset();
 		session_destroy();
@@ -810,7 +811,13 @@ class UsersLib extends TikiLib
 	function check_cas_authentication($user_cookie_site) {
 		global $tikilib, $prefs, $base_url, $webdav_access;
 
-		if ( isset($webdav_access) && $webdav_access === true ) {
+		// Avoid CAS authentication check if the client is not able to handle HTTP redirects to another domain. This includes:
+		//  - WebDAV requests
+		//  - Javascript/AJAX requests
+		//
+		if ( ( isset($webdav_access) && $webdav_access === true )
+			|| ( isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' )
+		) {
 			return true;
 		}
 
@@ -825,6 +832,7 @@ class UsersLib extends TikiLib
 
 		if (isset($_REQUEST['ticket']) && empty($_SESSION[$user_cookie_site])) {
 			$cas_user = '';
+			$_SESSION['cas_is_validating'] = false;
 			$this->validate_user_cas($cas_user, true);
 			die();
 		}
@@ -834,21 +842,23 @@ class UsersLib extends TikiLib
 		//   - using CAS auth method
 		//   - not calling tiki-login.php nor tiki-logout.php
 		//   - not using 'admin' user
-		//   - either the request is not a POST ( which does not keep its params with CAS redirections ) or the CAS validation timed out
+		//   - the request is not a POST ( which does not keep its params with CAS redirections )
+		//   - either the CAS validation timed out or the validation process has not ended within 5 seconds which often means that the redirection to the CAS server failed
 		//
 		if (php_sapi_name() !== 'cli'
 			&& (isset($_SESSION[$user_cookie_site]) || $prefs['cas_autologin'] == 'y')
 			&& basename($_SERVER["SCRIPT_NAME"]) != 'tiki-login.php'
 			&& basename($_SERVER["SCRIPT_NAME"]) != 'tiki-logout.php'
-			&& $_SESSION[$user_cookie_site] != 'admin'
+			&& (!isset($_SESSION[$user_cookie_site]) || $_SESSION[$user_cookie_site] != 'admin' )
 			&& empty($_POST)
-			&& $prefs['cas_authentication_timeout']
-			&& $tikilib->now - $_SESSION['cas_validation_time'] > $prefs['cas_authentication_timeout']
+			&& ( ( $prefs['cas_authentication_timeout'] && $tikilib->now - $_SESSION['cas_validation_time'] > $prefs['cas_authentication_timeout'] )
+				|| ( isset($_SESSION['cas_is_validating']) && $_SESSION['cas_is_validating'] === true && $tikilib->now - $_SESSION['cas_validation_time'] > 5 ) )
 		) {
 			unset($_SESSION["$user_cookie_site"]);
 			unset($_SESSION['phpCAS']['user']);
 
 			$_SESSION['cas_validation_time'] = $tikilib->now;
+			$_SESSION['cas_is_validating'] = true;
 			$cas_user = '';
 
 			// phpCAS will always redirect to CAS validate URL
@@ -909,6 +919,7 @@ class UsersLib extends TikiLib
 			$user = null;
 			return PASSWORD_INCORRECT;
 		}
+
 	}
 
 	function init_ldap($user, $pass) {
