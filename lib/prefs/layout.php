@@ -15,6 +15,7 @@ function prefs_layout_list() {
 			'name' => tra('Layout Width'),
 			'type' => 'text',
 			'description' => tra('Constrains the site display width (default: 990px).'),
+			'hint' => tra('ex.: 800px'),
 			'dependencies' => array(
 				'feature_fixed_width',
 			),
