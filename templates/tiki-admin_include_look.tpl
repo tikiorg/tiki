@@ -130,6 +130,7 @@
 			{preference name=feature_right_column}
 		
 			{preference name=module_zones_top}
+			{preference name=module_zones_topbar}
 			{preference name=module_zones_pagetop}
 			{preference name=module_zones_pagebottom}
 			{preference name=module_zones_bottom}
