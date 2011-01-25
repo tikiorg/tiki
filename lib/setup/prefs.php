@@ -1988,3 +1988,7 @@ function initialize_prefs() {
 
 	$prefs = empty($modified) ? $defaults : array_merge( $defaults, $modified );
 }
+
+// PHP fonctionnalities
+$prefs['php_libxml'] = class_exists('DOMDocument') ? 'y' :'n';
+$prefs['php_datetime'] = class_exists('DateTime') ? 'y' :'n';

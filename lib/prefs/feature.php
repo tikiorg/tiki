@@ -1781,6 +1781,8 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_file_galleries',
+				'php_libxml',
+				'php_datetime',
 			),
 		),
 		'feature_fixed_width' => array(
