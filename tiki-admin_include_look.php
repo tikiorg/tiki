@@ -129,6 +129,8 @@ if ($prefs['feature_themegenerator'] === 'y') {
 			$themegenlib->saveNewTheme($tg_edit_theme_name);
 		} else if (!empty($_REQUEST['tg_delete_theme'])) {
 			$themegenlib->deleteCurrentTheme();
+		} else if (!empty($_REQUEST['tg_swaps']) && !empty($_REQUEST['tg_preview'])) {
+			$themegenlib->previewCurrentTheme($_REQUEST['tg_css_file'], $_REQUEST['tg_swaps']);
 		} else if (!empty($_REQUEST['tg_swaps']) && !empty($_REQUEST['tg_css_file'])) {
 			$themegenlib->updateCurrentTheme($_REQUEST['tg_css_file'], $_REQUEST['tg_swaps']);
 		} else {
@@ -154,8 +156,13 @@ if ($reload) {
 		if ($prefs['feature_tabs'] === 'y' && isset($_COOKIE['tab']) && $_COOKIE['tab'] > 1) {
 			$location.= "&cookietab=" . $_COOKIE['tab'];
 		}
-		if ($prefs['feature_themegenerator'] === 'y' && !empty($_REQUEST['tg_css_file'])) {
-			$location.= "&tg_css_file=" . $_REQUEST['tg_css_file'];
+		if ($prefs['feature_themegenerator'] === 'y') {
+			if (!empty($_REQUEST['tg_css_file'])) {
+				$location.= "&tg_css_file=" . $_REQUEST['tg_css_file'];
+			}
+			if (!empty($_REQUEST['tg_preview'])) {
+				$location.= "&tg_preview=true";
+			}
 		}
 		header($location);
 		exit;

@@ -339,6 +339,8 @@ a.admbox.off img {
 	padding: 4px 10px 6px;
 	font-weight: bold;
 	text-decoration: underline;
+	width: 100px;
+	white-space: nowrap;
 }
 
 .tgItems > li {

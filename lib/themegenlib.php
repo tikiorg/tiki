@@ -31,6 +31,7 @@ class ThemeGenLib
 		
 		// tiki themegen include
 		$headerlib->add_jsfile('lib/jquery_tiki/tiki-themegenerator.js');
+		$headerlib->add_cssfile('css/admin.css');
 		
 		// set up colorpicker
 		$headerlib->add_cssfile('lib/jquery/colorpicker/css/colorpicker.css');
@@ -44,8 +45,12 @@ class ThemeGenLib
 		// colour lib
 		$headerlib->add_jsfile('lib/jquery/jquery.color.js');
 		
-		
-		$data = $this->currentTheme->loadPref();
+		if (!empty($_SESSION['tg_preview']) && !empty($_REQUEST['tg_preview'])) {
+			$data = unserialize($_SESSION['tg_preview']);
+			$this->currentTheme->setData($data);
+		} else {
+			$data = $this->currentTheme->loadPref();
+		}
 		
 		if (!empty($_REQUEST['tg_css_file'])) {
 			$css_file = $_REQUEST['tg_css_file'];
@@ -190,11 +195,23 @@ class ThemeGenLib
 	public function saveNewTheme($name) {
 		$this->currentTheme = new ThemeGenTheme($name);
 		$this->currentTheme->savePref();
+		if (!empty($_SESSION['tg_preview'])) {
+			unset($_SESSION['tg_preview']);
+		}
 	}
 	
 	public function updateCurrentTheme($css_file, $swaps) {
 		$this->currentTheme->setData(array($swaps, $css_file));
 		$this->currentTheme->savePref();
+		if (!empty($_SESSION['tg_preview'])) {
+			unset($_SESSION['tg_preview']);
+		}
+	}
+	
+	public function previewCurrentTheme($css_file, $swaps) {
+		$this->currentTheme->setData(array($swaps, $css_file));
+		$_SESSION['tg_preview'] = serialize($this->currentTheme->getData());
+		//$this->currentTheme->savePref();
 	}
 	
 	public function deleteCurrentTheme() {
@@ -230,6 +247,11 @@ class ThemeGenTheme extends SerializedList
 	
 	public function setData($params) {
 		list($swaps, $css_file) = $params;
+		
+		if (!$swaps && !$css_file && isset($params['files'])) {
+			$this->data = $params;
+			return;
+		}
 		
 		if (!isset($this->data['files'][$css_file])) {
 			$this->data['files'][$css_file] = array();
