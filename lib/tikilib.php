@@ -3667,7 +3667,7 @@ class TikiLib extends TikiDb_Bridge
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		$images = $this->table('images');
+		$images = $this->table('tiki_images');
 		foreach ( $result as $res ) {
 
 			global $user;
