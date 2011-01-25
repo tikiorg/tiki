@@ -104,9 +104,13 @@ class TikiDb_Table
 		return reset($result);
 	}
 
-	function fetchColumn($field, array $conditions, $numrows = -1, $offset = -1)
+	function fetchColumn($field, array $conditions, $numrows = -1, $offset = -1, $order = null)
 	{
-		$result = $this->fetchAll(array($field), $conditions, $numrows, $offset);
+		if (! empty($order)) {
+			$order = array($field => $order);
+		}
+
+		$result = $this->fetchAll(array($field), $conditions, $numrows, $offset, $order);
 
 		$output = array();
 
@@ -117,9 +121,9 @@ class TikiDb_Table
 		return $output;
 	}
 
-	function fetchMap($keyField, $valueField, array $conditions, $numrows = -1, $offset = -1)
+	function fetchMap($keyField, $valueField, array $conditions, $numrows = -1, $offset = -1, $order = null)
 	{
-		$result = $this->fetchAll(array($keyField, $valueField), $conditions, $numrows, $offset);
+		$result = $this->fetchAll(array($keyField, $valueField), $conditions, $numrows, $offset, $order);
 
 		$map = array();
 
@@ -133,7 +137,7 @@ class TikiDb_Table
 		return $map;
 	}
 
-	function fetchAll(array $fields, array $conditions, $numrows = -1, $offset = -1)
+	function fetchAll(array $fields, array $conditions, $numrows = -1, $offset = -1, $orderClause = null)
 	{
 		$bindvars = array();
 
@@ -152,33 +156,34 @@ class TikiDb_Table
 
 		$query = 'SELECT ' . rtrim($fieldDescription, ', ') . ' FROM ' . $this->escapeIdentifier($this->tableName);
 		$query .= $this->buildConditions($conditions, $bindvars);
+		$query .= $this->buildOrderClause($orderClause);
 
 		return $this->db->fetchAll($query, $bindvars, $numrows, $offset);
 	}
 
-	function expr($string, $arguments)
+	function expr($string, $arguments = array())
 	{
 		return new TikiDb_Expr($string, $arguments);
 	}
 
 	function all()
 	{
-		return array($this->expr('*', array()));
+		return array($this->expr('*'));
 	}
 
 	function count()
 	{
-		return $this->expr('COUNT(*)', array());
+		return $this->expr('COUNT(*)');
 	}
 
 	function sum($field)
 	{
-		return $this->expr("SUM(`$field`)", array());
+		return $this->expr("SUM(`$field`)");
 	}
 
 	function max($field)
 	{
-		return $this->expr("MAX(`$field`)", array());
+		return $this->expr("MAX(`$field`)");
 	}
 
 	function increment($count)
@@ -201,6 +206,11 @@ class TikiDb_Table
 		return $this->expr('$$ < ?', array($value));
 	}
 
+	function not($value)
+	{
+		return $this->expr('$$ <> ?', array($value));
+	}
+
 	function like($value)
 	{
 		return $this->expr('$$ LIKE ?', array($value));
@@ -214,6 +224,15 @@ class TikiDb_Table
 	function exactly($value)
 	{
 		return $this->expr('BINARY $$ = ?', array($value));
+	}
+
+	function in(array $values)
+	{
+		if (empty($values)) {
+			return $this->expr('1=0', array());
+		} else {
+			return $this->expr('$$ IN(' . rtrim(str_repeat('?, ', count($values)), ', ') . ')', $values);
+		}
 	}
 
 	private function buildDelete(array $conditions, & $bindvars)
@@ -243,6 +262,21 @@ class TikiDb_Table
 		}
 
 		return $query;
+	}
+
+	private function buildOrderClause($orderClause)
+	{
+		if ($orderClause instanceof TikiDb_Expr) {
+			return ' ORDER BY ' . $orderClause->getQueryPart();
+		} elseif (is_array($orderClause) && ! empty($orderClause)) {
+			$part = ' ORDER BY ';
+
+			foreach ($orderClause as $key => $direction) {
+				$part .= "`$key` $direction, ";
+			}
+
+			return rtrim($part, ', ');
+		}
 	}
 
 	private function buildUpdate(array $values, array $conditions, & $bindvars)

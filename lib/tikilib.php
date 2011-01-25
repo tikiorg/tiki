@@ -528,21 +528,11 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		if (is_array($event)) {
-			$query = "select `event` from `tiki_user_watches` where `user`=? and `object`=? and `event` in (".implode(',',array_fill(0, count($event),'?')).")";
-			$bindvars = array_merge(array($user, $object), $event);
-			if ($type) {
-				$query .= " and `type`=?";
-				$bindvars[] = $type;
-			}
-			$result = $this->fetchAll($query, $bindvars);
-			if ( count($result) === 0 ) {
-				return false;
-			}
-			$ret = array();
-			foreach ( $result as $res ) {
-				$ret[] = $res['event'];
-			}
-			return $ret;
+			$conditions['event'] = $userWatches->in($event);
+
+			$ret = $userWatches->fetchColumn('event', $conditions);
+
+			return empty($ret) ? false : $ret;
 		} else {
 			return $userWatches->fetchCount($conditions);
 		}
@@ -803,23 +793,19 @@ class TikiLib extends TikiDb_Bridge
 	/*shared*/
 	function dir_list_all_valid_sites2($offset, $maxRecords, $sort_mode, $find) {
 
+		$sites = $this->table('tiki_directory_sites');
+		$conditions = array(
+			'isValid' => 'y',
+		);
+
 		if ($find) {
-			$mid = " where `isValid`=? and (`name` like ? or `description` like ?)";
-			$bindvars=array('y','%'.$find.'%','%'.$find.'%');
-		} else {
-			$mid = " where `isValid`=? ";
-			$bindvars=array('y');
+			$conditions['search'] = $sites->expr('(`name` like ? or `description` like ?)', array("%$find%", "%$find%"));
 		}
 
-		$query = "select * from `tiki_directory_sites` $mid order by ".$this->convertSortMode($sort_mode);
-		$query_cant = "select count(*) from `tiki_directory_sites` $mid";
-		$result = $this->fetchAll($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
-
-		$retval = array();
-		$retval["data"] = $result;
-		$retval["cant"] = $cant;
-		return $retval;
+		return array(
+			'data' => $sites->fetchAll($sites->all(), $conditions, $maxRecords, $offset, $sites->expr($this->convertSortMode($sort_mode))),
+			'cant' => $sites->fetchCount($conditions),
+		);
 	}
 
 	/*shared*/
@@ -991,66 +977,68 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function list_quizzes($offset, $maxRecords, $sort_mode = 'name_desc', $find = null) {
-		$bindvars = array();
-		$mid = '';
+		
+		$quizzes = $this->table('tiki_quizzes');
+		$conditions = array();
+
 		if ( ! empty($find) ) {
 			$findesc = '%' . $find . '%';
-			$mid = " where (`name` like ? or `description` like ?)";
-			$bindvars = array($findesc, $findesc);
+			$conditions['search'] = $quizzes->expr('(`name` like ? or `description` like ?)', array($finddesc, $finddesc));
 		}
 
-		$query = "select `quizId` from `tiki_quizzes` $mid";
-		$result = $this->fetchAll($query, $bindvars);
+		$result = $quizzes->fetchColumn('quizId', $conditions);
 		$res = $ret = $retids = array();
 		$n = 0;
 
 		//FIXME Perm:filter ?
 		foreach ( $result as $res ) {
 			global $user;
-			$objperm = $this->get_perm_object($res['quizId'], 'quizzes', '', false);
+			$objperm = $this->get_perm_object($res, 'quizzes', '', false);
 
 			if ( $objperm['tiki_p_take_quiz'] == 'y' ) {
 				if ( ($maxRecords == -1) || (($n >= $offset) && ($n < ($offset + $maxRecords))) ) {
-					$retids[] = $res['quizId'];
+					$retids[] = $res;
 				}
 				$n++;
 			}
 		}
 
 		if ($n > 0) {
-		  $query = 'select * from `tiki_quizzes` where `quizId` in (' . implode(',', $retids) . ') order by ' . $this->convertSortMode($sort_mode);
-		  $result = $this->fetchAll($query);
-		  foreach ( $result as $res ) {
-				$res['questions'] = $this->getOne('select count(*) from `tiki_quiz_questions` where `quizId`=?', array( (int) $res['quizId'] ));
-				$res['results'] = $this->getOne('select count(*) from `tiki_quiz_results` where `quizId`=?', array( (int) $res['quizId'] ));
+			$result = $quizzes->fetchAll($quizzes->all(), array(
+				'quizId' => $quizzes->in($retids),
+			), -1, -1, $quizzes->expr($this->convertSortMode($sort_mode)));
+
+			$questions = $this->table('tiki_quiz_questions');
+			$results = $this->table('tiki_quiz_results');
+
+			foreach ( $result as $res ) {
+				$res['questions'] = $questions->fetchCount(array('quizId' => (int) $res['quizId']));
+				$res['results'] = $results->fetchCount(array('quizId' => (int) $res['quizId']));
 				$ret[] = $res;
 			}
 		}
-		$retval['data'] = $ret;
-		$retval['cant'] = $n;
-		return $retval;
+
+		return array(
+			'data' => $ret,
+			'cant' => $n,
+		);
 	}
 
 	/*shared*/
 	function list_quiz_sum_stats($offset, $maxRecords, $sort_mode, $find) {
 		$this->compute_quiz_stats();
+
+		$stats = $this->table('tiki_quiz_stats_sum');
+		$conditions = array();
+
 		if ($find) {
-			$findesc = '%' . $find . '%';
-			$mid = ' where `quizName` like ? ';
-			$bindvars=array($findesc);
-		} else {
-			$mid = "  ";
-			$bindvars=array();
+			$conditions['quizName'] = $stats->like("%$find%");
 		}
 
-		$query = "select * from `tiki_quiz_stats_sum` $mid order by " . $this->convertSortMode($sort_mode);
-		$query_cant = "select count(*) from `tiki_quiz_stats_sum` $mid";
-		$ret = $this->fetchAll($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
-		$retval = array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
-		return $retval;
+		return array(
+			'data' => $stats->fetchAll($stats->all(), $conditions, $maxRecords, $offset, $stats->expr($this->convertSortMode($sort_mode))),
+			'cant' => $stats->fetchCount($conditions),
+		);
 	}
 
 	function get_tracker($trackerId) {
@@ -1330,16 +1318,17 @@ class TikiLib extends TikiDb_Bridge
 		if (!$start) {
 			$start = "0";
 		}
-		// admin doesn't go on ranking
-		$query = "select `userId`, `login`, `score` from `users_users` where `login` <> 'admin' order by `score` desc";
 
-		$result = $this->fetchAll($query,array(),$limit,$start);
-		$ranking = array();
-		foreach ( $result as $res ) {
+		$users = $this->table('users_users');
+
+		$result = $users->fetchAll(array('userId', 'login', 'score'), array(
+			'login' => $users->not('admin'),
+		), $limit, $start, array('score' => 'desc'));
+
+		foreach ( $result as & $res ) {
 			$res['position'] = ++$start;
-			$ranking[] = $res;
 		}
-		return $ranking;
+		return $result;
 	}
 
 	// Returns html <img> tag to star corresponding to user's score
@@ -2034,24 +2023,24 @@ class TikiLib extends TikiDb_Bridge
 		global $user, $tiki_p_admin, $prefs;
 		$smarty = TikiLib::lib('smarty');
 		$wikilib = TikiLib::lib('wiki');
-		$ret = array();
-		$retval = array();
-		$bindvars = array((int)$menuId);
+
+		$options = $this->table('tiki_menu_options');
+		$conditions = array(
+			'menuId' => $menuId,
+		);
 		if ($find) {
-			$mid = " where `menuId`=? and (`name` like ? or `url` like ?)";
-			$bindvars[] = '%'. $find . '%';
-			$bindvars[] = '%'. $find . '%';
-		} else {
-			$mid = " where `menuId`=? ";
+			$conditions['search'] = $options->expr('(`name` like ? or `url` like ?)', array("%$find%", "%$find%"));
 		}
+
 		if ($level && $prefs['feature_userlevels'] == 'y') {
-			$mid.= " and `userlevel`<=?";
-			$bindvars[] = $level;
+			$conditions['userlevel'] = $options->lesserThan($level + 1);
 		}
-		$query = "select * from `tiki_menu_options` $mid order by ".$this->convertSortMode($sort_mode);
-		$query_cant = "select count(*) from `tiki_menu_options` $mid";
-		$result = $this->fetchAll($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
+
+		$sort = $options->expr($this->convertSortMode($sort_mode));
+		$result = $options->fetchAll($options->all(), $conditions, $maxRecords, $offset, $sort);
+		$cant = $options->fetchCOunt($conditions);
+
+		$ret = array();
 		foreach ( $result as $res ) {
 			$res['canonic'] = $res['url'];
 			if (preg_match('|^\(\((.+?)\)\)$|', $res['url'], $matches)) {
@@ -2128,9 +2117,11 @@ class TikiLib extends TikiDb_Bridge
 				$ret[] = $res;
 			}
 		}
-		$retval["data"] = array_values($ret);
-		$retval["cant"] = $cant;
-		return $retval;
+
+		return array(
+			'data' => array_values($ret),
+			'cant' => $cant,
+		);
 	}
 	/* shared
 	 * gets result from list_menu_options and sorts "sorted section" sections.
@@ -2830,73 +2821,27 @@ class TikiLib extends TikiDb_Bridge
 	function list_visible_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user = '', $find = null) {
 		// If $user is admin then get ALL galleries, if not only user galleries are shown
 
-		$old_sort_mode = '';
-		$bindvars = array('y');
-		$whuser = "";
-
-		if (in_array($sort_mode, array( 'files_desc', 'files_asc'))) {
-			$old_offset = $offset;
-			$old_maxRecords = $maxRecords;
-			$old_sort_mode = $sort_mode;
-			$sort_mode = 'user_desc';
-			$offset = 0;
-			$maxRecords = -1;
-		}
+		$fileGalleries = $this->table('tiki_file_galleries');
+		$conditions = array(
+			'visible' => 'y',
+		);
 
 		// If the user is not admin then select `it` 's own galleries or public galleries
 		global $tiki_p_admin_files_galleries;
 		if ($tiki_p_admin_files_galleries != 'y') {
-			$whuser.= " and (`user`=? or `public`=?)";
-			$bindvars[] = $user;
-			$bindvars[] = "y";
+			$conditions['nonAdmin'] = $fileGalleries->expr('(`user`=? or `public`=?)', array($user, 'y'));
 		}
 
 		if (! empty($find) ) {
 			$findesc = '%' . $find . '%';
-			$whuser .= " and (`name` like ? or `description` like ?)";
-			$bindvars[] = $findesc;
-			$bindvars[] = $findesc;
+			$conditions['search'] = $fileGalleries->expr('(`name` like ? or `description` like ?)', array($finddesc, $finddesc));
 		}
 
-		$query = "select * from `tiki_file_galleries` where `visible`=? $whuser order by ".$this->convertSortMode($sort_mode);
-		$query_cant = "select count(*) from `tiki_file_galleries` where `visible`=? $whuser";
-		$result = $this->fetchAll($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
-		$ret = array();
-
-		foreach ( $result as $res ) {
-			$aux = array();
-
-			$aux["name"] = $res["name"];
-			$gid = $res["galleryId"];
-			$aux["id"] = $gid;
-			$aux["visible"] = $res["visible"];
-			$aux["galleryId"] = $res["galleryId"];
-			$aux["description"] = $res["description"];
-			$aux["created"] = $res["created"];
-			$aux["lastModif"] = $res["lastModif"];
-			$aux["user"] = $res["user"];
-			$aux["hits"] = $res["hits"];
-			$aux["public"] = $res["public"];
-			//  The file count is not needed by any caller, so save the query. GG
-			//	    $aux["files"] = $this->getOne("select count(*) from `tiki_files` where `galleryId`=?",array((int)$gid));
-			$ret[] = $aux;
-		}
-		if ($old_sort_mode == 'files_asc') {
-			usort($ret, 'compare_files');
-		}
-		if ($old_sort_mode == 'files_desc') {
-			usort($ret, 'r_compare_files');
-		}
-
-		if (in_array($old_sort_mode, array( 'files_desc', 'files_asc'))) {
-			$ret = array_slice($ret, $old_offset, $old_maxRecords);
-		}
-
-		$retval = array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
-		return $retval;
+		$sort = $this->convertSortMode($sort_mode);
+		return array(
+			"data" => $fileGalleries->fetchAll($fileGalleries->all(), $conditions, $maxRecords, $offset, $fileGalleries->expr($sort)),
+			"cant" => $fileGalleries->fetchCount($conditions),
+		);
 	}
 
 	// Semaphore functions ////
@@ -3032,8 +2977,7 @@ class TikiLib extends TikiDb_Bridge
 			return 0;
 		}
 
-		$query = "select count(*) from `tiki_friends` where `user`=? and `friend`=?";
-		return $this->getOne($query, array($user, $friend));
+		return $this->table('tiki_friends')->fetchCount(array('user' => $user, 'friend' => $friend));
 	}
 
 	// Check if there's already a friendship request from userwatched to userwatching
@@ -3042,8 +2986,7 @@ class TikiLib extends TikiDb_Bridge
 			return 0;
 		}
 
-		$query = "select count(*) from `tiki_friendship_requests` where `userTo`=? and `userFrom`=?";
-		return $this->getOne($query, array($userwatching, $userwatched));
+		return $this->table('tiki_friendship_requests')->fetchCount(array('userTo' => $userwatching, 'userFrom' => $userwatched));
 	}
 
 	function get_friends_count($user) {
@@ -3053,8 +2996,7 @@ class TikiLib extends TikiDb_Bridge
 		if ($cachelib->isCached($cacheKey)) {
 			return $cachelib->getCached($cacheKey);
 		} else {
-			$query = "select count(*) from `tiki_friends` where `user`=?";
-			$count = $this->getOne($query, array($user));
+			$count = $this->table('tiki_friends')->fetchCount(array('user' => $user));
 			$cachelib->cacheItem($cacheKey, $count);
 			return $count;
 		}
@@ -7716,13 +7658,15 @@ if( \$('#$id') ) {
 				// Select only versions older than keep_versions days
 				$keep = $prefs['keep_versions'];
 
-				$oktodel = $saveLastModif - ($keep * 24 * 3600);
-				$query = "select `pageName` ,`version`, `historyId` from `tiki_history` where `pageName`=? and `lastModif`<=? order by `lastModif` asc";
-				$result = $this->fetchAll($query,array($pageName,$oktodel),$nb - $maxversions);
-				foreach ( $result as $res ) {
-					$page = $res["pageName"];
-					$version = $res["version"];
-					$histlib->remove_version($res['pageName'], $res['version']);
+				$oktodel = $saveLastModif - ($keep * 24 * 3600) + 1;
+
+				$history = $this->table('tiki_history');
+				$result = $history->fetchColumn('version', array(
+					'pageName' => $pageName,
+					'lastModif' => $history->lesserThan($oktodel),
+				), $nb - $maxversions, 0, array('lastModif' => 'ASC'));
+				foreach ( $result as $toRemove ) {
+					$histlib->remove_version($pageName, $toRemove);
 				}
 			}
 		}
@@ -9053,14 +8997,6 @@ function compare_images($ar1, $ar2) {
 
 function r_compare_images($ar1, $ar2) {
 	return $ar2["images"] - $ar1["images"];
-}
-
-function compare_files($ar1, $ar2) {
-	return $ar1["files"] - $ar2["files"];
-}
-
-function r_compare_files($ar1, $ar2) {
-	return $ar2["files"] - $ar1["files"];
 }
 
 function compare_versions($ar1, $ar2) {

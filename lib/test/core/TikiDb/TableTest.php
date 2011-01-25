@@ -247,6 +247,24 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(array('hello', 'world'), $table->fetchColumn('group', array('object' => 42, 'event' => 'foobar')));
 	}
 
+	function testFetchColumnWithSort()
+	{
+		$mock = $this->getMock('TikiDb');
+
+		$query = 'SELECT `group` FROM `tiki_group_watches` WHERE 1=1 AND `object` = ? AND `event` = ? ORDER BY `group` ASC';
+
+		$mock->expects($this->once())
+			->method('fetchAll')
+			->with($this->equalTo($query), $this->equalTo(array(42, 'foobar')), $this->equalTo(-1), $this->equalTo(-1))
+			->will($this->returnValue(array(
+				array('group' => 'hello'),
+				array('group' => 'world'),
+			)));
+
+		$table = new TikiDb_Table($mock, 'tiki_group_watches');
+		$this->assertEquals(array('hello', 'world'), $table->fetchColumn('group', array('object' => 42, 'event' => 'foobar'), -1, -1, 'ASC'));
+	}
+
 	function testFetchRow()
 	{
 		$mock = $this->getMock('TikiDb');
@@ -308,7 +326,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 	{
 		$mock = $this->getMock('TikiDb');
 
-		$query = 'SELECT `user`, `email` FROM `users_users` WHERE 1=1 AND `userId` > ?';
+		$query = 'SELECT `user`, `email` FROM `users_users` WHERE 1=1 AND `userId` > ? ORDER BY `user` DESC';
 
 
 		$mock->expects($this->once())
@@ -325,7 +343,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 			'hello' => 'hello@example.com',
 			'world' => 'world@example.com',
 		);
-		$this->assertEquals($expect, $table->fetchMap('user', 'email', array('userId' => $table->greaterThan(42))));
+		$this->assertEquals($expect, $table->fetchMap('user', 'email', array('userId' => $table->greaterThan(42)), -1, -1, array('user' => 'DESC')));
 	}
 
 	function testIncrement()
@@ -342,6 +360,14 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('$$ - ?', array(1)), $table->decrement(1));
+	}
+
+	function testNot()
+	{
+		$mock = $this->getMock('TikiDb');
+		$table = new TikiDb_Table($mock, 'my_table');
+
+		$this->assertEquals($table->expr('$$ <> ?', array(1)), $table->not(1));
 	}
 
 	function testGreaterThan()
@@ -366,6 +392,22 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('$$ LIKE ?', array('foo%')), $table->like('foo%'));
+	}
+
+	function testInWithEmptyArray()
+	{
+		$mock = $this->getMock('TikiDb');
+		$table = new TikiDb_Table($mock, 'my_table');
+
+		$this->assertEquals($table->expr('1=0', array()), $table->in(array()));
+	}
+
+	function testInWithData()
+	{
+		$mock = $this->getMock('TikiDb');
+		$table = new TikiDb_Table($mock, 'my_table');
+
+		$this->assertEquals($table->expr('$$ IN(?, ?, ?)', array(1, 2, 3)), $table->in(array(1, 2, 3)));
 	}
 
 	function testExactMatch()
