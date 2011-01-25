@@ -370,8 +370,8 @@ class WikiLib extends TikiLib
 		} else {
 			return $content;
 		}
-		
-		if ($prefs['wiki_cache'] > 0 && empty($user) ) {
+		$wiki_cache = !empty($info['wiki_cache']) ? $info['wiki_cache'] : $prefs['wiki_cache'];
+		if ($wiki_cache > 0 && empty($user) ) {
 			$cache_info = $this->get_cache_info($page);
 			if (!empty($cache_info['cache_timestamp']) && $cache_info['cache_timestamp'] + $prefs['wiki_cache'] > $this->now) {
 				$content = $cache_info['cache'];
@@ -381,17 +381,13 @@ class WikiLib extends TikiLib
 				$content = preg_replace('/\s*<script.*javascript.*>.*\/script>\s*/Umis', '', $content);
 				$canBeRefreshed = true;
 			} else {
-				if (!empty($info['wiki_cache'])) {
-					$js1 = $headerlib->getJs();
-				}
+				$js1 = $headerlib->getJs();
 				$content = $this->parse_data($info['data'], $parse_options );
-				if (!empty($info['wiki_cache'])) {
-					// get any JS added to headerlib during parse_data and add to the bottom of the data to cache
-					$js2 = $headerlib->getJs();
-					$js = array_diff( $js2, $js1 );
-					$js = $headerlib->wrap_js( implode( "\n", $js) );
-					$this->update_cache($page, $content . $js);
-				}
+				// get any JS added to headerlib during parse_data and add to the bottom of the data to cache
+				$js2 = $headerlib->getJs();
+				$js = array_diff( $js2, $js1 );
+				$js = $headerlib->wrap_js( implode( "\n", $js) );
+				$this->update_cache($page, $content . $js);
 			}
 		} else {
 			$content = $this->parse_data($info['data'], $parse_options );
