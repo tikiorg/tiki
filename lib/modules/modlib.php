@@ -27,6 +27,7 @@ class ModLib extends TikiLib
 		'b' => 'bottom_modules',
 		'p' => 'pagetop_modules',
 		'q' => 'pagebottom_modules',
+		'o' => 'topbar_modules',
 	);
 
 	function replace_user_module($name, $title, $data, $parse=NULL) {

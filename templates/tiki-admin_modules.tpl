@@ -87,6 +87,43 @@
 		{/section}
 	</table>
 	<br />
+	<a name="topbarmod"></a>
+		<table class="normal">
+		<caption>{tr}Topbar Modules{/tr}</caption>
+		<tr>
+			<th>{tr}Name{/tr}</th>
+			<th>{tr}Order{/tr}</th>
+			<th>{tr}Cache{/tr}</th>
+			<th>{tr}Rows{/tr}</th>
+			<th>{tr}Parameters{/tr}</th>
+			<th>{tr}Groups{/tr}</th>
+			<th>{tr}Action{/tr}</th>
+		</tr>
+		{cycle print=false values="even,odd"}
+		{section name=user loop=$topbar}
+			<tr class="{cycle}">
+				<td>{$topbar[user].name|escape}</td>
+				<td>{$topbar[user].ord}</td>
+				<td>{$topbar[user].cache_time}</td>
+				<td>{$topbar[user].rows}</td>
+				<td style="max-width: 40em; white-space: normal;font-size:smaller;">{$top[user].params|stringfix:"&":"<br />"}</td>
+				<td>{$topbar[user].module_groups}</td>
+				<td>
+					<a class="link" href="tiki-admin_modules.php?edit_assign={$topbar[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+					{if $topbar[0].moduleId ne $topbar[user].moduleId}
+						<a class="link" href="tiki-admin_modules.php?modup={$topbar[user].moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
+					{/if}
+					{if !$smarty.section.user.last and $topbar[user.index_next].moduleId}
+						<a class="link" href="tiki-admin_modules.php?moddown={$topbar[user].moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
+					{/if}
+					<a class="link" href="tiki-admin_modules.php?unassign={$topbar[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
+				</td>
+			</tr>
+		{sectionelse}
+			{norecords _colspan=7}
+		{/section}
+	</table>
+	<br />
 
 	<a name="pagetopmod"></a>
 	<table class="normal">
