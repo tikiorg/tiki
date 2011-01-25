@@ -367,17 +367,17 @@ class WikiLib extends TikiLib
 		$canBeRefreshed = false;
 		
 		$info = $this->get_page_info($page);
-		if (!empty($info)) {
-			$parse_options = array(
-				'is_html' => $info['is_html'],
-				'language' => $info['lang'],
-			);
-			if ($suppress_icons || (!empty($info['lockedby']) && $info['lockedby'] != $user)) {
-				$parse_options['suppress_icons'] = true;
-			}
-		} else {
-			return $content;
+		if (empty($info)) {
+			return '';
 		}
+		$parse_options = array(
+			'is_html' => $info['is_html'],
+			'language' => $info['lang'],
+		);
+		if ($suppress_icons || (!empty($info['lockedby']) && $info['lockedby'] != $user)) {
+			$parse_options['suppress_icons'] = true;
+		}
+
 		$wiki_cache = !empty($info['wiki_cache']) ? $info['wiki_cache'] : $prefs['wiki_cache']; 
 		if ($wiki_cache > 0 && empty($user) ) {
 			$cache_info = $this->get_cache_info($page);
