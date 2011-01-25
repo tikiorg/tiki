@@ -117,6 +117,22 @@ class TikiDb_Table
 		return $output;
 	}
 
+	function fetchMap($keyField, $valueField, array $conditions, $numrows = -1, $offset = -1)
+	{
+		$result = $this->fetchAll(array($keyField, $valueField), $conditions, $numrows, $offset);
+
+		$map = array();
+
+		foreach( $result as $row ) {
+			$key = array_shift( $row );
+			$value = array_shift( $row );
+
+			$map[ $key ] = $value;
+		}
+
+		return $map;
+	}
+
 	function fetchAll(array $fields, array $conditions, $numrows = -1, $offset = -1)
 	{
 		$bindvars = array();
@@ -160,6 +176,11 @@ class TikiDb_Table
 		return $this->expr("SUM(`$field`)", array());
 	}
 
+	function max($field)
+	{
+		return $this->expr("MAX(`$field`)", array());
+	}
+
 	function increment($count)
 	{
 		return $this->expr('$$ + ?', array($count));
@@ -183,6 +204,11 @@ class TikiDb_Table
 	function like($value)
 	{
 		return $this->expr('$$ LIKE ?', array($value));
+	}
+
+	function unlike($value)
+	{
+		return $this->expr('$$ NOT LIKE ?', array($value));
 	}
 
 	function exactly($value)

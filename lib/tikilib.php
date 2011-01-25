@@ -3221,21 +3221,14 @@ class TikiLib extends TikiDb_Bridge
 	// Returns the number of registered users which logged in or were active in the last 5 minutes.
 	function count_sessions() {
 		$this->update_session();
-		$query = "select count(*) from `tiki_sessions`";
-		$cant = $this->getOne($query,array());
-		return $cant;
+		return $this->table('tiki_sessions')->fetchCount(array());
 	}
 
 	// Returns a string-indexed array with all the hosts/servers active in the last 5 minutes. Keys are hostnames. Values represent the number of registered users which logged in or were active in the last 5 minutes on the host.
 	function count_cluster_sessions() {
 		$this->update_session();
 		$query = "select `tikihost`, count(`tikihost`) as cant from `tiki_sessions` group by `tikihost`";
-		$result = $this->fetchAll($query, array());
-		$ret = array();
-		foreach ( $result as $res ) {
-			$ret[$res["tikihost"]]=$res["cant"];
-		}
-		return $ret;
+		return $this->fetchMap($query, array());
 	}
 
 	/*shared*/
@@ -3289,9 +3282,7 @@ class TikiLib extends TikiDb_Bridge
 
 	/*shared*/
 	function is_user_module($name) {
-		$query = "select `name`  from `tiki_user_modules` where `name`=?";
-		$result = $this->query($query,array($name));
-		return $result->numRows();
+		return $this->table('tiki_user_modules')->fetchCount(array('name' => $name));
 	}
 
 	/*shared*/
@@ -3302,9 +3293,9 @@ class TikiLib extends TikiDb_Bridge
 		if ( $cachelib->isCached($cacheKey) ) {
 			$return = unserialize($cachelib->getCached($cacheKey));
 		} else {
-			$query = "select * from `tiki_user_modules` where `name`=?";
-			if( $result = $this->query($query, array($name)) ) {
-				$return = $result->fetchRow();
+			$return = $this->table('tiki_user_modules')->fetchFullRow(array('name' => $name));
+
+			if($return) {
 				$cachelib->cacheItem($cacheKey, serialize($return));
 			}
 		}
@@ -3416,10 +3407,7 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function is_cached($url) {
-		$query = "select `cacheId`  from `tiki_link_cache` where `url`=?";
-		$result = $this->query($query, array($url) );
-		$cant = $result->numRows();
-		return $cant;
+		return $this->table('tiki_link_cache')->fetchCount(array('url' => $url));
 	}
 
 	function list_cache($offset, $maxRecords, $sort_mode, $find) {
@@ -3446,13 +3434,13 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function refresh_cache($cacheId) {
-		$query = "select `url`  from `tiki_link_cache`
-			where `cacheId`=?";
+		$linkCache = $this->table('tiki_link_cache');
 
-		$url = $this->getOne($query, array( $cacheId ) );
+		$url = $linkCache->fetchOne('url', array('cacheId' => $cacheId));
+
 		$data = $this->httprequest($url);
 
-		$this->table('tiki_link_cache')->update(array(
+		$linkCache->update(array(
 			'data' => $data,
 			'refresh' => $this->now,
 		), array(
@@ -3471,37 +3459,26 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function get_cache($cacheId) {
-		$query = "select * from `tiki_link_cache`
-			where `cacheId`=?";
-
-		$result = $this->query($query, array( $cacheId ) );
-		$res = $result->fetchRow();
-		return $res;
+		return $this->table('tiki_link_cache')->fetchFullRow(array('cacheId' => $cacheId));
 	}
 
 	function get_cache_id($url) {
-		if (!$this->is_cached($url))
-			return false;
-
-		$query = "select `cacheId`  from `tiki_link_cache`
-			where `url`=?";
-		$id = $this->getOne($query, array( $url ) );
-		return $id;
+		$id =  $this->table('tiki_link_cache')->fetchOne('cacheId', array('url' => $url));
+		return $id ? $id : false;
 	}
 	/* cachetime = 0 => no cache, otherwise duration cache is valid */
 	function get_cached_url($url, &$isFresh, $cachetime=0) {
-		$query = 'select * from `tiki_link_cache` where `url`=?';
-		$result = $this->query($query, $url);
-		$res = $result->fetchRow();
+		$linkCache = $this->table('tiki_link_cache');
+
+		$res = $linkCache->fetchFullRow(array('url' => $url));
 		$now =  $this->now;
+
 		if (empty($res) || ($now - $res['refresh']) > $cachetime) { // no cache or need to refresh
 			$res['data'] = $this->httprequest($url);
 			$isFresh = true;
 			//echo '<br />Not cached:'.$url.'/'.strlen($res['data']);
 			$res['refresh'] = $now;
 			if ($cachetime > 0) {
-				$linkCache = $this->table('tiki_link_cache');
-
 				if (empty($res['cacheId'])) {
 					$linkCache->insert(array(
 						'url' => $url,
@@ -3509,8 +3486,7 @@ class TikiLib extends TikiDb_Bridge
 						'refresh' => $res['refresh'],
 					));
 
-					$result = $this->query($query, $url);
-					$res = $result->fetchRow();
+					$res = $linkCache->fetchFullRow(array('url' => $url));
 				} else {
 					$linkCache->update(array(
 						'data' => $res['data'],
@@ -3549,9 +3525,7 @@ class TikiLib extends TikiDb_Bridge
 
 	// Returns the name of all pages
 	function get_all_pages() {
-
-		$query = "select `pageName` from `tiki_pages`";
-		return $this->fetchAll($query,array());
+		return $this->table('tiki_pages')->fetchAll(array('pageName'), array());
 	}
 
 	/**
@@ -3751,6 +3725,7 @@ class TikiLib extends TikiDb_Bridge
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
+		$images = $this->table('images');
 		foreach ( $result as $res ) {
 
 			global $user;
@@ -3771,7 +3746,7 @@ class TikiLib extends TikiDb_Bridge
 				$aux["public"] = $res["public"];
 				$aux["theme"] = $res["theme"];
 				$aux["geographic"] = $res["geographic"];
-				$aux["images"] = $this->getOne("select count(*) from `tiki_images` where `galleryId`=?",array($gid));
+				$aux["images"] = $images->fetchCount(array('galleryId' => $gid));
 				$ret[] = $aux;
 			}
 		}
@@ -3998,6 +3973,9 @@ class TikiLib extends TikiDb_Bridge
 		// but if yes, the next lines have to be reviewed.
 
 
+		$history = $this->table('tiki_history');
+		$links = $this->table('tiki_links');
+
 		foreach( $raw as $res ) {
 			if( $initial ) {
 				$valid = false;
@@ -4025,11 +4003,11 @@ class TikiLib extends TikiDb_Bridge
 					unset($res['page_size']);
 					$res['flag'] = $res['flag'] == 'L' ? 'locked' : 'unlocked';
 					if ($forListPages && $prefs['wiki_list_versions'] == 'y')
-						$res['versions'] = $this->getOne("select count(*) from `tiki_history` where `pageName`=?",array($page));
+						$res['versions'] = $history->fetchCount(array('pageName' => $page));
 					if ($forListPages && $prefs['wiki_list_links'] == 'y')
-						$res['links'] = $this->getOne("select count(*) from `tiki_links` where `fromPage`=?",array($page));
+						$res['links'] = $links->fetchCount(array('fromPage' => $page));
 					if ($forListPages && $prefs['wiki_list_backlinks'] == 'y')
-						$res['backlinks'] = $this->getOne("select count(*) from `tiki_links` where `toPage`=? and `fromPage` not like 'objectlink:%'",array($page));
+						$res['backlinks'] = $links->fetchCount(array('toPage' => $page, 'fromPage' => $links->unlike('objectlink:%')));
 					// backlinks do not include links from non-page objects TODO: full feature allowing this with options
 				}
 				$ret[] = $res;
@@ -4275,7 +4253,8 @@ class TikiLib extends TikiDb_Bridge
 			$modified = array();
 
 			// logged in
-			$result = $this->fetchAll("select `name` ,`value` from `tiki_preferences`");
+			$result = $this->table('tiki_preferences')->fetchAll(array('name', 'value'), array());
+
 			foreach ( $result as $res ) {
 				$name = $res['name'];
 				$value = $res['value'];
@@ -4311,11 +4290,8 @@ class TikiLib extends TikiDb_Bridge
 				//Only handle $filtername as array with exact_matches
 				return false;
 			} else {
-				$query = "select `name`, `value` from `tiki_preferences` where `name` like ?";
-				$result = $this->fetchAll($query, array($names));
-				foreach ( $result as $res ) {
-					$preferences[$res["name"]] = $res["value"];
-				}
+				$tikiPreferences = $this->table('tiki_preferences');
+				$preferences = $tikiPreferences->fetchMap('name', 'value', array('name' => $tikiPreferences->like($names)));
 			}
 		}
 		return $preferences;
@@ -4718,9 +4694,9 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		//if there are links to this page, clear cache to avoid linking to edition
-		$result = $this->fetchAll("select `fromPage` from `tiki_links` where `toPage`=?",array($name));
-		foreach ( $result as $res ) {
-			$this->invalidate_cache($res['fromPage']);
+		$toInvalidate = $this->table('tiki_links')->fetchColumn('fromPage', array('toPage' => $name));
+		foreach ( $toInvalidate as $res ) {
+			$this->invalidate_cache($res);
 		}
 
 		if ($prefs['feature_score'] == 'y') {
@@ -4762,8 +4738,7 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function get_user_pages($user, $max, $who='user') {
-		$query = "select `pageName` from `tiki_pages` where `$who`=?";
-		return $this->fetchAll($query,array($user),$max);
+		return $this->table('tiki_pages')->fetchAll(array('pageName'), array($who => $user), $max);
 	}
 
 	function get_user_galleries($user, $max) {
@@ -4837,24 +4812,16 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function get_page_info_from_id($page_id) {
-		$query = "select * from `tiki_pages` where `page_id`=?";
-		$result = $this->query($query, array($page_id));
-
-		if (!$result->numRows())
-			return false;
-		else
-			return $result->fetchRow();
+		return $this->table('tiki_pages')->fetchFullRow(array('page_id' => $page_id));
 	}
 
 
 	function get_page_name_from_id($page_id) {
-		$query = "select `pageName`  from `tiki_pages` where `page_id`=?";
-		return $this->getOne($query, array((int)$page_id));
+		return $this->table('tiki_pages')->fetchOne('pageName', array('page_id' => $page_id));
 	}
 
 	function get_page_id_from_name($page) {
-		$query = "select `page_id` from `tiki_pages` where `pageName`=?";
-		return $this->getOne($query, array($page));
+		return $this->table('tiki_pages')->fetchOne('page_id', array('pageName' => $page));
 	}
 
 	function how_many_at_start($str, $car) {
@@ -6652,8 +6619,7 @@ if( \$('#$id') ) {
 	}
 
 	private function get_dynamic_variable( $name, $lang = null ) {
-		$query = "select `data`, `lang` from `tiki_dynamic_variables` where `name`=?";
-		$result = $this->fetchAll( $query, array( $name ) );
+		$result = $this->table('tiki_dynamic_variables')->fetchAll(array('data', 'lang'), array('name' => $name));
 
 		$value = "NaV";
 
@@ -7766,8 +7732,8 @@ if( \$('#$id') ) {
 			if (strtolower($pageName) != 'sandbox') {
 				if ($prefs['feature_contribution'] == 'y') {// transfer page contributions to the history
 					$contributionlib = TikiLib::lib('contribution');
-					$query = 'select max(`historyId`) from `tiki_history`where `pageName`=? and `version`=?';
-					$historyId = $this->getOne($query, array($pageName,(int) $old_version));
+					$history = $this->table('tiki_history');
+					$historyId = $history->fetchOne($history->max('historyId'), array('pageName' => $pageName, 'version' => (int) $old_version));
 					$contributionlib->change_assigned_contributions($pageName, 'wiki page', $historyId, 'history', '', $pageName.'/'.$old_version, "tiki-pagehistory.php?page=$pageName&preview=$old_version");
 				}
 			}
@@ -9029,8 +8995,7 @@ JS;
 	// wiki page corresponding to a tracker item (230 in the example) using prefix aliases
 	// Returns false if no such page is found.
 	function get_trackeritem_pagealias($itemId) {
-		$query = "select `trackerId` from `tiki_tracker_items` where `itemId` = ?";
-		$trackerId = $this->getOne($query, array($itemId));
+		$trackerId = $this->table('tiki_tracker_items')->fetchOne('trackerId', array('itemId' => $itemId));
 
 		$semanticlib = TikiLib::lib('semantic');
 		$t_links = $semanticlib->getLinksUsing('trackerid', array( 'toPage' => $trackerId ) );

@@ -304,6 +304,30 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($row, $table->fetchFullRow(array('userId' => 42)));
 	}
 
+	function testFetchMap()
+	{
+		$mock = $this->getMock('TikiDb');
+
+		$query = 'SELECT `user`, `email` FROM `users_users` WHERE 1=1 AND `userId` > ?';
+
+
+		$mock->expects($this->once())
+			->method('fetchAll')
+			->with($this->equalTo($query), $this->equalTo(array(42)), $this->equalTo(-1), $this->equalTo(-1))
+			->will($this->returnValue(array(
+				array('user' => 'hello', 'email' => 'hello@example.com'),
+				array('user' => 'world', 'email' => 'world@example.com'),
+			)));
+
+		$table = new TikiDb_Table($mock, 'users_users');
+
+		$expect = array(
+			'hello' => 'hello@example.com',
+			'world' => 'world@example.com',
+		);
+		$this->assertEquals($expect, $table->fetchMap('user', 'email', array('userId' => $table->greaterThan(42))));
+	}
+
 	function testIncrement()
 	{
 		$mock = $this->getMock('TikiDb');
@@ -374,6 +398,14 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('SUM(`hits`)', array()), $table->sum('hits'));
+	}
+
+	function testMaxField()
+	{
+		$mock = $this->getMock('TikiDb');
+		$table = new TikiDb_Table($mock, 'my_table');
+
+		$this->assertEquals($table->expr('MAX(`hits`)', array()), $table->max('hits'));
 	}
 }
 
