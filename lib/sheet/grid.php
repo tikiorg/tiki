@@ -2294,11 +2294,10 @@ class SheetLib extends TikiLib
 	
 	function rollback_sheet($id, $readdate=null) {
 		global $user, $sheetlib;
-		
-		
+		return "not yet working";
 	}
 	
-	function clone_sheet( $sheetid, $readdate = null ) {
+	function clone_sheet( $sheetId, $readdate = null, $parentSheetId = 0) {
 		global $user, $prefs;
 		
 		if (!isset($readdate)) {
@@ -2306,57 +2305,55 @@ class SheetLib extends TikiLib
 		}
 		
 		$readdate = (int)$readdate;
+		$parentSheetId = (int)$parentSheetId;
 		
-		//clone the sheet
+		//clone the parent sheet & get it's id
 		$this->query( "
 			INSERT INTO `tiki_sheets` (`title`, `description`, `author`, `parentSheetId`, `clonedSheetId`)
-			SELECT CONCAT('CLONED - ', `title`), `description`, `author`, `parentSheetId`, `sheetid`
+			SELECT CONCAT('CLONED - ', `title`), `description`, ?, ?, `sheetid`
 			FROM `tiki_sheets`
-			WHERE `sheetid` = ? OR `parentSheetId` = ?
-		", array( $sheetid, $sheetid ) );
+			WHERE `sheetid` = ?
+		", array( $user, $parentSheetId, $sheetId ) );
 		
-		$newSheetid = $this->getOne( "SELECT MAX(`sheetId`) FROM `tiki_sheets` WHERE `author` = ?", array( $user ) );
-		
-		//clone sheet's children
-		$this->query( "
-			INSERT INTO `tiki_sheets` (`title`, `description`, `author`, `parentSheetId`, `clonedSheetId`)
-			SELECT CONCAT('CLONED - ', `title`), `description`, `author`, ?, `sheetid`
-			FROM `tiki_sheets`
-			WHERE `parentSheetId` = ?
-		", array( $newSheetid, $sheetid ) );
-		
+		$newSheetId = $this->getOne( "SELECT MAX(`sheetId`) FROM `tiki_sheets` WHERE `author` = ?", array( $user ) );
 		//clone the sheet layout
 		$this->query( "
 			INSERT INTO `tiki_sheet_layout` (`sheetId`, `begin`, `end`, `headerRow`, `footerRow`, `className`, `parseValues`, `clonedSheetId`)
 			SELECT ?, `begin`, `end`, `headerRow`, `footerRow`, `className`, `parseValues`, `sheetId`
 			FROM `tiki_sheet_layout`
 			WHERE `sheetid` = ?
-		", array( $newSheetid, $sheetid ) );
+		", array( $newSheetId, $sheetId ) );
 		
 		//clone sheet's values
-		$result = $this->query("SELECT `sheetid`, `clonedSheetId` FROM `tiki_sheets` WHERE `clonedSheetId` = ?", array( $sheetid ) );
+	  $this->query( "
+      INSERT INTO `tiki_sheet_values` (`sheetId`, `begin`, `end`, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user`, `style`, `class`, `clonedSheetId`)
+      SELECT ?, `begin`, NULL, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user`, `style`, `class`, ?
+      FROM `tiki_sheet_values`
+    	WHERE
+        `sheetId` = ? AND 
+        ? >= `begin` AND 
+        (
+        	`end` IS NULL OR
+        	`end` > ?
+        )
+      ", array( $newSheetId, $sheetId, $sheetId, $readdate, $readdate ) );
+		
+		//clone the children sheets if they exist
+		$result = $this->query("SELECT `sheetId` FROM `tiki_sheets` WHERE `parentSheetId` = ?", array( $sheetId ) );
 		while( $row = $result->fetchRow() )
 		{
-			$this->query( "
-				INSERT INTO `tiki_sheet_values` (`sheetId`, `begin`, `end`, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user`, `style`, `class`)
-				SELECT ?, `begin`, `end`, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user`, `style`, `class`
-				FROM `tiki_sheet_values`
-				WHERE
-					`sheetId` = ? AND 
-					? >= `begin` AND 
-					( `end` IS NULL OR `end` > ? )
-				", array( $row["sheetid"], $row["clonedSheetId"], $readdate, $readdate ) );
+			if ($row['sheetId']) {
+				$this->clone_sheet($row['sheetId'], $readdate, $newSheetId);
+			}
 		}
 		
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
-			$query = 'select `sheetId` from `tiki_sheets` where `title`=? and `description`= ? and `author`=?';
-			$newId = $this->getOne($query, array($title, $description, $user ) );
-			$logslib->add_action('Cloning', $sheetid, 'sheet');
-			$logslib->add_action('Cloned', $newSheetid, 'sheet');
+			$logslib->add_action('Cloning', $sheetId, 'sheet');
+			$logslib->add_action('Cloned', $newSheetId, 'sheet');
 		}
 
-		return $newSheetid;
+		return $newSheetId;
 	}
 	
 	function clone_layout( $sheetId, $className, $headerRow, $footerRow, $parseValues = 'n' ) // {{{2

@@ -87,8 +87,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { //save
 	
 } elseif ( $_REQUEST['parse'] == "clone" ) {
 	$result = $sheetlib->clone_sheet( $_REQUEST["sheetId"], $_REQUEST['readdate'] );
-	die($result);
-	
+	if ($result) {
+		header("Location: tiki-view_sheets.php?sheetId=".$result);
+	}
 } else {
 	$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
 	
