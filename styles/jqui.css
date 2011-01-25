@@ -15,6 +15,7 @@ body {
 	color: #000;
 	background: #fff}
 
+html > body,
 *:first-child+html body {font-size: 74% !important}
 
  /***** Layout (overrides layout.css;
@@ -233,7 +234,7 @@ input[type="submit"]:hover,
 
 #tiki-top .cssmenu_horiz li a {
 	padding: 14px 1em;
-	font-size: 12px;
+	font-size: 1em;
 	font-weight: bold;
 	text-decoration: none;
 	background: none;
@@ -672,7 +673,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 }
 
 .calfocuson {
-	font-size: 100%;
+	font-size: 1em;
 	background: #fcefa1;
 }
 
