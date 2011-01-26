@@ -412,11 +412,13 @@ if( isset( $_REQUEST['pagenum'] ) && $_REQUEST['pagenum'] > 0 ) {
 	$pageRenderer->setPageNumber( (int) $_REQUEST['pagenum'] );
 }
 
+$just_saved = false;
 if (isset($_SESSION['saved_msg']) && $_SESSION['saved_msg'] == $info['pageName'] && $info['user'] == $user ) {
 	// Generate the 'Page has been saved...' message
 	require_once('lib/smarty_tiki/modifier.userlink.php');
 	$smarty->assign('saved_msg', sprintf( tra('Page saved (version %d).'), $info['version'] ) );
 	unset($_SESSION['saved_msg']);
+	$just_saved = true;
 }
 
 if($prefs['feature_wiki_attachments'] == 'y') {
