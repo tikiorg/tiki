@@ -368,12 +368,9 @@ background-image:url('../lib/jquery/jquery-ui/themes/smoothness/images/ui-icons_
 /***** Boxes *****/
 /** Modules **/
 .box {
-	width: 200px;
 	text-align: left;
-	margin-left: auto;
-	margin-right: auto;
 	padding-bottom: 4px}
-
+	
 h3.box-title {
 	padding-top: 0;
 	background: #5e0000;
