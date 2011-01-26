@@ -16,7 +16,7 @@ class TikiWebdav_PathFactories_File implements ezcWebdavPathFactory
 		global $tikilib, $base_url;
 		global $filegallib; require_once('lib/filegals/filegallib.php');
 
-		$requestPath = str_replace( $base_url . 'tiki-webdav.php', '', rawurldecode( trim( $uri ) ) );
+		$requestPath = preg_replace('#.*tiki-webdav\.php#','', rawurldecode( trim( $uri ) ));
 
 		if ( empty($requestPath) )
 		{
