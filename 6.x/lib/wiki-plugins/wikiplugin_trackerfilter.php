@@ -107,7 +107,12 @@ function wikiplugin_trackerfilter($data, $params) {
 	}
 	$default = array('noflipflop'=>'n', 'action'=>'Filter', 'line' => 'n', 'displayList' => 'n', 'export_action' => '',
 					 'export_itemid' => 'y', 'export_status' => 'n', 'export_created' => 'n', 'export_modif' => 'n', 'export_charset' => 'UTF-8', 'status' => 'opc');
-	
+
+	if (isset($_REQUEST['reset_filter'])) {
+		wikiplugin_trackerFilter_reset_filters();
+	} else if (!isset($_REQUEST['filter']) && isset($_REQUEST['session_filters']) && $_REQUEST['session_filters'] == 'y') {
+		$params = array_merge($params, wikiplugin_trackerFilter_get_session_filters());
+	}
 	if (isset($_REQUEST["mapview"]) && $_REQUEST["mapview"] == 'y' && !isset($_REQUEST["searchmap"]) && !isset($_REQUEST["searchlist"]) || isset($_REQUEST["searchmap"]) && !isset($_REQUEST["searchlist"])) {
 		$params["googlemap"] = 'y';
 	}
@@ -239,6 +244,7 @@ $(".trackerfilter form").submit( function () {
 			}
 		}
 		$params['max'] = $prefs['maxRecords'];
+		wikiplugin_trackerFilter_save_session_filters($params);
 		$smarty->assign('urlquery', wikiplugin_trackerFilter_build_urlquery($params));
 		include_once('lib/wiki-plugins/wikiplugin_trackerlist.php');
 		$dataRes .= wikiplugin_trackerlist($data, $params);
@@ -341,6 +347,42 @@ function wikiplugin_trackerfilter_build_trackerlist_filter($input, $formats, &$f
 			}
 		}
 	}
+}
+
+function wikiplugin_trackerFilter_reset_filters() {
+	unset($_SESSION[wikiplugin_trackerFilter_get_session_filters_key()]);
+	unset($_REQUEST['tracker_filters']);
+
+	foreach ($_REQUEST as $key => $val) {
+		if (substr($key, 0, 2) == 'f_') {
+			unset($_REQUEST[$key]);
+		}
+	}
+}
+
+function wikiplugin_trackerFilter_get_session_filters_key() {
+	$trackerId = isset($_REQUEST['trackerId']) ? $_REQUEST['trackerId'] : 0;
+	return 'f_' . $_REQUEST['page'] . '_' . $trackerId;
+}
+
+function wikiplugin_trackerFilter_save_session_filters($filters) {
+	$_SESSION[wikiplugin_trackerFilter_get_session_filters_key()] = $filters;
+}
+
+function wikiplugin_trackerFilter_get_session_filters() {
+	$key = wikiplugin_trackerFilter_get_session_filters_key();
+
+	if (!isset($_SESSION[$key])) {
+		return array();
+	}
+
+	if (isset($_SESSION[$key]['filterfield'])) {
+		foreach ($_SESSION[$key]['filterfield'] as $idx => $field) {
+			$_REQUEST['f_' . $field] = $_SESSION[$key]['filtervalue'][$idx];
+		}
+	}
+
+	return $_SESSION[$key];
 }
 
 function wikiplugin_trackerFilter_split_filters($filters) {

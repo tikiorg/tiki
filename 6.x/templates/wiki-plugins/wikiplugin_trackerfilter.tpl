@@ -112,6 +112,7 @@ function tf_export_submit(fm) {
 		<input class="button submit" type="submit" name="export_filter" value="{tr}{$export_action}{/tr}" />
 	{elseif $action and $action neq " "}
 		<input class="button submit" type="submit" name="filter" value="{if empty($action)}{tr}Filter{/tr}{else}{tr}{$action}{/tr}{/if}" />
+		<input class="button submit" type="submit" name="reset_filter" value="{tr}Reset{/tr}" />
 	{else}
 		&nbsp;
 	{/if}
