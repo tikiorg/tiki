@@ -331,7 +331,6 @@
 				</td>
 			{/if}
 		</tr>
-		{cycle print=false}
 	{/if}
 	{sectionelse}
 		<tr>
