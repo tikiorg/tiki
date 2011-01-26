@@ -267,12 +267,32 @@ function CKeditor_OnComplete() {
 // Display edit time out
 
 		$js_editlock .= "
+var editTimeoutSeconds = ".((int)ini_get('session.gc_maxlifetime')).";
+var editTimeElapsedSoFar = 0;
+var editTimeoutIntervalId;
+var editTimerWarnings = 0;
+var editTimeoutTipIsDisplayed = false;
+
 // edit timeout warnings
 function editTimerTick() {
 	editTimeElapsedSoFar++;
-	
+
 	var seconds = editTimeoutSeconds - editTimeElapsedSoFar;
-	
+	var edittimeout = \$('#edittimeout');
+
+	if ( edittimeout && seconds <= 300 ) {
+		if ( ! editTimeoutTipIsDisplayed ) {
+			edittimeout.parents('.rbox:first').fadeIn();
+			editTimeoutTipIsDisplayed = true;
+		}
+		if ( seconds > 0 && seconds % 60 == 0 ) {
+			var minutes = seconds / 60;
+			edittimeout.text( minutes );
+		} else if ( seconds <= 0 ) {
+			edittimeout.parents('.rbox-data:first').text('".addslashes(tra('Your edit session has expired'))."');
+		}
+	}
+
 	if (editTimerWarnings == 0 && seconds <= 60 && window.editorDirty) {
 		alert('".addslashes(tra('Your edit session will expire in:')).' 1 '.tra('minute').'. '.
 				addslashes(tra('You must PREVIEW or SAVE your work now, to avoid losing your edits.'))."');
@@ -281,12 +301,8 @@ function editTimerTick() {
 		clearInterval(editTimeoutIntervalId);
 		editTimeoutIntervalId = 0;
 		window.status = '".addslashes(tra('Your edit session has expired'))."';
-	} else if (seconds < 300) {		// don't bother until 5 minutes to go
-		\$('#edittimeout').parents('.rbox:first').fadeIn();
-		if (seconds % 60 == 0 && \$('#edittimeout')) {
-			\$('#edittimeout').text(Math.floor(seconds / 60));
-		}
-		window.status = '".addslashes(tra('Your edit session will expire in:'))."' + \" \" + Math.floor(seconds / 60) + ':' + ((seconds % 60 < 10) ? '0' : '') + (seconds % 60);
+	} else if (seconds <= 300) {		// don't bother until 5 minutes to go
+		window.status = '".addslashes(tra('Your edit session will expire in:'))."' + \" \" + minutes + ':' + ((seconds % 60 < 10) ? '0' : '') + (seconds % 60);
 	}
 }
 
@@ -294,10 +310,7 @@ function editTimerTick() {
 	editTimeoutIntervalId = setInterval(editTimerTick, 1000);
 	\$('#edittimeout').parents('.rbox:first').hide();
 } );
-var editTimeoutSeconds = ".ini_get('session.gc_maxlifetime').";
-var editTimeElapsedSoFar = 0;
-var editTimeoutIntervalId;
-var editTimerWarnings = 0;
+
 // end edit timeout warnings
 
 ";
