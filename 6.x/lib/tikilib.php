@@ -7698,6 +7698,10 @@ class TikiLib extends TikiDb_Bridge
 		if ( ! $timestamp ) {
 			$timestamp = time();
 		}
+		if (!is_object($tikidate)) {
+			require_once('lib/tikidate.php');
+			$tikidate = new TikiDate();
+		}
 
 		$tikidate->setTZbyID('UTC');
 		try {
