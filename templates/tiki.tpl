@@ -50,8 +50,9 @@
 				{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.header_shadow_end}</div>{/if}
 			{/if}
 		{/if}
-
+<div class="middle_outer">
 			{if $prefs.feature_layoutshadows eq 'y'}<div id="middle-shadow">{eval var=$prefs.middle_shadow_start}{/if}<div class="clearfix fixedwidth" id="middle">
+			
 				<div class="content clearfix modules" id="topbar_modules">
 					{section name=homeix loop=$topbar_modules}
 						{$topbar_modules[homeix].data}
@@ -158,8 +159,9 @@
 	{/if}
 {/if}
 		<!--[if IE 7]><br style="clear:both; height: 0" /><![endif]-->
+		
 			</div>{* -- END of middle -- *}{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.middle_shadow_end}</div>{/if}
-
+</div>
 			{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 				{if $prefs.module_zones_bottom eq 'fixed' or ($prefs.module_zones_bottom ne 'n' && $bottom_modules|@count > 0)}{* previously if $prefs.feature_bot_bar eq 'y' *}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}

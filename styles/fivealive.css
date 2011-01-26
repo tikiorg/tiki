@@ -43,7 +43,6 @@ body.fixed_width .fixedwidth {
 }
 
 #header_container {	/* 2nd whole width div for background image tricks */
-	background: transparent url('fivealive/topbar.jpg') 0 100% repeat-x;
 }
 
 #header {			/* main whole width div */
@@ -57,28 +56,26 @@ body.fixed_width .fixedwidth {
 }
 
 #top_modules {		/* inner div that contains the modules */
-	height: 220px;
+	height: 168px;
 }
 
 #tiki-top {
-	position: absolute;
-	bottom: 0;
 	width: 100%;
 }
 
-#header .box-search {
+#topbar_modules .box-search {
 	position: absolute;
-	bottom: 10px;
+	top: 13px;
 	right: 10px;
-	z-index: 1;
+}
+
+.middle_outer {
+		background: url('fivealive/topbar.jpg') repeat-x;
 }
 
 #middle {
 	display: table;
-	margin: auto;
-	margin-top: 0;
-	margin-bottom: 0;
-	background: transparent;
+	margin: 0 auto;
 }
 
 #fixedwidth[id]
@@ -530,7 +527,7 @@ select {
 #header .box-login_box {
 	position: absolute;
 	right: 10px;
-	bottom: 50px;
+	bottom: 0;
 	width: 10em;
 	height: 26px;
 	line-height: 26px;
@@ -649,18 +646,17 @@ li.login_link ul li a {
 }
 #tiki-top[id] {height: auto; min-height: 50px;}
 
-#tiki-top ul.cssmenu_horiz  {
-	margin-top: 2px;
-}
-
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
 
 /* default and topbar dropdown typography (colors) and padding */
 .cssmenu_vert li ul a,
 .cssmenu_horiz li ul a,
+.cssmenu_horiz li ul a,
 #header .cssmenu_horiz li ul a,
-#header .cssmenu_horiz li:hover ul a {
+#header .cssmenu_horiz li:hover ul a,
+#topbar_modules .cssmenu_horiz li ul a,
+#topbar_modules .cssmenu_horiz li:hover ul a {
 	background: #153c64;
 	font-weight: normal;
 	text-decoration: none;
@@ -669,7 +665,8 @@ li.login_link ul li a {
 
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
-#header .cssmenu_horiz li ul a:hover {
+#header .cssmenu_horiz li ul a:hover,
+#topbar_modules .cssmenu_horiz li ul a:hover {
 	background: #128bc9;
 	text-decoration: none;
 	border-right: none;
@@ -681,7 +678,8 @@ li.login_link ul li a {
 	padding: .75em 1em;
 }
 
-#header .cssmenu_horiz li a {
+#header .cssmenu_horiz li a,
+#topbar_modules .cssmenu_horiz li a {
 	font-weight: bold;
 	text-decoration: none;
 	text-transform: uppercase;
@@ -693,7 +691,7 @@ li.login_link ul li a {
 	padding: 8px .7em;
 }
 
-#header #secondary_site_menu .cssmenu_horiz li.menuSection a {
+#secondary_site_menu .cssmenu_horiz li.menuSection a {
 	padding-right: 25px;
 }
 
@@ -727,30 +725,24 @@ li.login_link ul li a {
 	padding-right: 30px;
 }
 
-#header .cssmenu_horiz ul li a {
+#tiki-top .cssmenu_horiz ul li a {
 	text-transform: none;
 }
 
-#header .cssmenu_horiz ul li:hover a {
+#tiki-top .cssmenu_horiz ul li:hover a {
 	text-decoration: none;
 }
 
 #secondary_site_menu .cssmenu_horiz li a > .sf-sub-indicator {top: 13px}
 #tiki-top .cssmenu_horiz li a > .sf-sub-indicator {top: 24px}
-#header .cssmenu_horiz li li a > .sf-sub-indicator {top: 9px}
+#tiki-top .cssmenu_horiz li li a > .sf-sub-indicator {top: 9px}
 #col2 .cssmenu_vert li a > .sf-sub-indicator {top: 5px}
 
-#header .cssmenu_horiz li.selected a,
 .cssmenu_horiz li.selected a,
 .cssmenu_vert li.selected a {
-color:#ff69b4; /* Changed ###Trebly:B01212:old blue light: 
-#c2eef8 Was not visible before : a more soft pink could be find ### . 
-General idea if blue is a link a link selected is blue+brown visited and ligher blue+pink
-to generalize ? ###*/
-
+	color: #c2eef8;
 }
 
-#header .cssmenu_horiz li.selected li a,
 .cssmenu_horiz li.selected li a,
 .cssmenu_vert li.selected li a {
 	font-style: normal;

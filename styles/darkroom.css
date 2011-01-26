@@ -242,7 +242,7 @@ ol {
 }
 
 #top_modules {
-	min-height: 130px;
+	min-height: 100px;
 }
 
 #middle {
@@ -378,18 +378,19 @@ input[id="sl-login-pass"] {
 }
 
 #tiki-top {
-	position: absolute;
-	bottom: 0;
 	width: 100%;
 	border-top: 1px solid #818181;
-	height: 34px;
+	height: 35px;
 	background: url(darkroom/button.png) repeat-x;
 }
+#topbar_modules {
+	position: relative;
+}
 
-#header .box-search {
+#topbar_modules .box-search {
 	position: absolute;
 	right: 10px;
-	bottom: 10px;
+	top: 8px;
 	z-index: 2;
 }
 
@@ -739,7 +740,7 @@ background-image: url('../lib/jquery/jquery-ui/themes/ui-darkness/images/ui-icon
 	background: #292929;
 	margin-bottom: 8px;
 	padding-bottom: 2px;
-	width: 190px;
+/*	width: 190px;*/
 }
 
 h3.box-title {
