@@ -743,7 +743,11 @@ li.login_link ul li a {
 #header .cssmenu_horiz li.selected a,
 .cssmenu_horiz li.selected a,
 .cssmenu_vert li.selected a {
-	color: #c2eef8;
+color:#ff69b4; /* Changed ###Trebly:B01212:old blue light: 
+#c2eef8 Was not visible before : a more soft pink could be find ### . 
+General idea if blue is a link a link selected is blue+brown visited and ligher blue+pink
+to generalize ? ###*/
+
 }
 
 #header .cssmenu_horiz li.selected li a,
@@ -1129,6 +1133,28 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 /***** File Galleries *****/
 /***** Trackers *****/
 /***** Categories, Tags *****/
+.catlist_title {
+/* Moved to layout.css some features can be altered here to fit with the particular style
+//	padding: 9px 5px 5px 0px;
+//	display: block;
+//	font-weight: bold;
+//	font-size: 110%;
+//	border: 1px solid #d7d7d7;
+//	border-bottom: 1px solid #ededed;
+//	background: #ededed;
+*/
+}
+
+.cattitle {
+/* Moved to layout.css some features can be altered here to fit with the particular style
+//	padding: 9px 5px 5px 0px;
+//	display: block;
+//	font-weight: bold;
+//	font-size: 110%;
+//	border: 1px solid #d7d7d7;
+//	border-bottom: 1px solid #ededed;
+*/	background: #ededed;
+}
 /***** Tags (freetags) *****/
 /*****  Polls  *****/
 /***** FAQs *****/
