@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -25,6 +25,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 			//'lockdiscovery',
 			);
 
+	protected $resourceStorage = null;
 	protected $propertyStorage = null;
 
 	public function getRoot() {
@@ -496,10 +497,17 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 		$isCollection = ( $objectId['type'] == 'filegal' );
 
-		if ( $isCollection ) {
-			$tikiInfo = $filegallib->get_file_gallery_info($objectId['id']);
+		if ( isset($this->resourceStorage[$objectId['id']]) ) {
+			// Use cached values
+			$tikiInfo = $this->resourceStorage[$objectId['id']];
 		} else {
-			$tikiInfo = $filegallib->get_file_info($objectId['id']);
+			if ( $isCollection ) {
+				$tikiInfo = $filegallib->get_file_gallery_info($objectId['id']);
+			} else {
+				$tikiInfo = $filegallib->get_file_info($objectId['id']);
+			}
+
+			$this->resourceStorage[$objectId['id']] = $tikiInfo;
 		}
 
 		$storage = $this->getPropertyStorage( $path );
@@ -622,18 +630,148 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		return $storage;
 	}
 
-	///TODO
-	public function copyRecursive( $source, $destination, $depth = ezcWebdavRequest::DEPTH_INFINITY )
-	{
-		print_debug("WARNING: copyRecursive method not implemented\n");
-		return false; //FIXME
-	}
-
-	///TODO
 	protected function performCopy( $fromPath, $toPath, $depth = ezcWebdavRequest::DEPTH_INFINITY )
 	{
-		print_debug("WARNING: performCopy method not implemented\n");
-		return false; ///FIXME
+		global $prefs, $filegallib, $tikilib;
+
+		$infos = array( 'source' => array(), 'dest' => array() );
+		$infos['dest']['name'] = basename( $toPath );
+		$source = $fromPath;
+		$dest = $toPath;
+
+		foreach ( array( 'source', 'dest' ) as $k )
+		{
+			// Get source and dest infos
+			if ( ( $infos[$k] = $filegallib->get_objectid_from_virtual_path( $$k ) ) !== false )
+			{
+				switch ( $infos[$k]['type'] )
+				{
+					case 'filegal':
+						$infos[$k]['infos'] = $filegallib->get_file_gallery_info( $infos[$k]['id'] );
+						$infos[$k]['parentId'] = $infos[$k]['infos']['parentId'];
+						$infos[$k]['name'] = $infos[$k]['infos']['name'];
+						break;
+
+					case 'file':
+						$infos[$k]['infos'] = $tikilib->get_file( $infos[$k]['id'] );
+						$infos[$k]['parentId'] = $infos[$k]['infos']['galleryId'];
+						$infos[$k]['name'] = $infos[$k]['infos']['filename'];
+						break;
+				}
+			}
+			// If dest doesn't exist, it usually means that the file / filegal has to be renamed
+			elseif ( $k == 'dest' )
+			{
+				if ( ( $objectId = $filegallib->get_objectid_from_virtual_path( dirname( $$k ) ) ) !== false
+						&& $objectId['type'] == 'filegal'
+					 )
+				{
+					$infos[$k] = array(
+							'id' => $infos['source']['id'],
+							'type' => $infos['source']['type'],
+							'infos' => $infos['source']['infos'],
+							'parentId' => $objectId['id'],
+							'name' => basename( $$k )
+							);
+
+					switch ( $infos[$k]['type'] )
+					{
+						case 'filegal':
+							$infos[$k]['infos']['name'] = $infos[$k]['name'];
+							$infos[$k]['infos']['parentId'] = $infos[$k]['parentId'];
+							break;
+
+						case 'file':
+							$infos[$k]['infos']['name'] = $infos[$k]['name'];
+							$infos[$k]['infos']['filename'] = $infos[$k]['name'];
+							$infos[$k]['infos']['galleryId'] = $infos[$k]['parentId'];
+							break;
+					}
+
+					$doRename = true;
+				}
+			}
+			// If source doesn't exist, we stop here
+			else
+			{
+				return false;
+			}
+		}
+
+		$doMove = $infos['source']['parentId'] != $infos['dest']['parentId'];
+
+		switch ( $infos['source']['type'] )
+		{
+			case 'filegal':
+				// Duplicate
+				$newId = $filegallib->duplicate_file_gallery( $infos['source']['id'], $infos['dest']['name'] );
+
+				if ( ((bool) $newId ) !== true )
+				{
+					return false;
+				}
+
+				if ( $doMove )
+				{
+					// Move in an other gallery
+					return (bool) $filegallib->move_file_gallery(
+							$newId,
+							$infos['dest']['parentId']
+							);
+				}
+
+				return true;
+
+			case 'file':
+				if ( $prefs['fgal_use_db'] === 'n' ) {
+					$newPath = md5( $infos['dest']['name'] );
+					do
+					{
+						$newPath = md5( uniqid( $newPath ) );
+					}
+					while ( file_exists( $this->root . '/' . $newPath ) );
+
+					if ( @copy( $this->root . '/' . $infos['source']['infos']['path'] , $this->root . '/' . $newPath ) === false )
+					{
+						return false;
+					}
+				} else {
+					$newPath = '';
+				}
+
+				$newId = $filegallib->insert_file(
+						$infos['source']['parentId'],
+						$infos['dest']['name'],
+						$infos['source']['infos']['description'],
+						$infos['dest']['name'],
+						$infos['source']['infos']['data'],
+						$infos['source']['infos']['filesize'],
+						$infos['source']['infos']['filetype'],
+						$user,
+						$newPath,
+						'',
+						$infos['source']['infos']['author'],
+						$infos['source']['infos']['created'],
+						$infos['source']['infos']['lockedby']
+						);
+
+				if ( ((bool) $newId ) !== true )
+				{
+					return false;
+				}
+
+				if ( $doMove )
+				{
+					return (bool) $filegallib->set_file_gallery(
+							$newId,
+							$infos['dest']['parentId']
+							);
+				}
+
+				return true;
+		}
+
+		return false;
 	}
 
 	protected function performDelete( $path )
@@ -664,7 +802,8 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		return ( $objectId = $filegallib->get_objectid_from_virtual_path($path) ) !== false && $objectId['type'] == 'filegal';
 	}
 
-	protected function getCollectionMembers( $path ) {
+	protected function getCollectionMembers( $path )
+	{
 		global $tikilib;
 		global $filegallib; include_once('lib/filegals/filegallib.php');
 
