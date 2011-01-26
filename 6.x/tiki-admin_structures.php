@@ -263,8 +263,7 @@ ask_ticket('admin-structures');
 include_once ('tiki-section_options.php');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-// Detect if we have a PDF export mod installed
-$smarty->assign('pdf_export', file_exists('lib/mozilla2ps/mod_urltopdf.php') ? 'y' : 'n');
+$smarty->assign('pdf_export', ($prefs['print_pdf_from_url'] != 'none') ? 'y' : 'n');
 // Display the template
 $smarty->assign('mid', 'tiki-admin_structures.tpl');
 $smarty->display("tiki.tpl");
