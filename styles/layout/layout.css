@@ -32,7 +32,7 @@ header, nav, article, footer, address {
 /* lite.css needs the centre section to be
  * display:table to avoid overlapping columns */
 #middle {
-  width:1280px; /* ###trebly this by default is 100% for the 3 columns, for test I reduce to 70%, it should depend of screen 1280 max ?*/
+  /* width:1280px; /* ###trebly this by default is 100% for the 3 columns, for test I reduce to 70%, it should depend of screen 1280 max ?*/
 	display: table;
 }
 
