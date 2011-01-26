@@ -380,9 +380,15 @@ input[id="sl-login-pass"] {
 #tiki-top {
 	width: 100%;
 	border-top: 1px solid #818181;
-	height: 35px;
+	height: 34px;
 	background: url(darkroom/button.png) repeat-x;
+	padding-top: 0;
 }
+
+#tiki-top .cssmenu_horiz {
+	margin-top: 0;
+}
+
 #topbar_modules {
 	position: relative;
 }
@@ -390,7 +396,7 @@ input[id="sl-login-pass"] {
 #topbar_modules .box-search {
 	position: absolute;
 	right: 10px;
-	top: 8px;
+	top: 4px;
 	z-index: 2;
 }
 
@@ -482,7 +488,7 @@ a.flip:hover,
 }
 
 #tiki-top .cssmenu_horiz li a:hover {
-	border: 1px solid #909090;
+	/*border: 1px solid #909090;*/
 	color: #909090;
 }
 
@@ -505,7 +511,7 @@ a.flip:hover,
 	color: #a6a68d;
 	font-weight: bold;
 	font-size: 12px;
-	padding: 6px 1em;
+	padding: 5px 1em 6px;
 }
 
 /* default link padding */
@@ -514,8 +520,9 @@ a.flip:hover,
 	padding: .75em 1em;
 }
 
-#tiki-top .cssmenu_horiz li ul li a {
+#tiki-top .cssmenu_horiz li li a {
 	padding: 4px 1em;
+	border-right: none;
 }
 
 #tiki-top .cssmenu_horiz li.menuSection0 a {

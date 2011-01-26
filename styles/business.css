@@ -18,9 +18,6 @@ body {
 /***** Layout (overrides layout.css;
 also styling of page layout divs) *****/
 
-#middle {
-	padding: 40px 0;
-}
 
 #c1c2 {
 	text-align: left;
@@ -180,7 +177,7 @@ hr {
 
 /***** Site Header & Identity *****/
 #header {
-	min-height: 114px;
+/*	min-height: 114px;*/
 	position: relative;
 }
 
@@ -230,16 +227,15 @@ hr {
 
 #tiki-top {
 	background: #003371 url(business/header.png) repeat-x 0 0;
-	position: absolute;
-	bottom: 0;
 	width: 100%;
+	margin-bottom: 8px;
 }
 
-#header .box-search {
+#topbar_modules .box-search {
 	height: 59px;
 	position: absolute;
 	right: 0;
-	bottom: -10px;
+	top: 0;
 	padding-right: 4px;
 	text-align: right;
 	display: block;
@@ -252,16 +248,16 @@ hr {
 	z-index: 2;
 }
 
-#header .box-search form {
+#topbar_modules .box-search form {
 	margin-top: 16px;
 	margin-left: -2px;
 }
 
-#header .box-search form input {
+#topbar_modules .box-search form input {
 	border: none !important;
 }
 
-#sitesearchbar input#fuser {
+#topbar_modules .box-search input#fuser {
 	width: 150px;
 	color: #696969;
 	border: 0;
@@ -273,10 +269,10 @@ hr {
 #header .box-login_box {
 	position: absolute;
 	right: 10px;
-	bottom: 45px;
+	bottom: 0;
 }
 
-#siteloginbar_popup .tabmark {
+.siteloginbar_popup .tabmark {
 	background: none;
 	border: none;
 }
@@ -319,7 +315,7 @@ hr {
 	margin-left: 48px;
 }
 
-#header .cssmenu_horiz li a {
+#tiki-top .cssmenu_horiz li a {
 	text-decoration: none;
 	color: #fff;
 	font-size: 10px;
@@ -331,29 +327,29 @@ hr {
 	text-transform: uppercase;
 }
 
-#header .cssmenu_horiz li:hover a {
+#tiki-top .cssmenu_horiz li:hover a {
 	color: #fff;
 	background: url(business/nav_h.gif) repeat-x;
 	text-decoration: none;
 }
 
-#header .cssmenu_horiz li.menuSection a {
+#tiki-top .cssmenu_horiz li.menuSection a {
 	padding-right: 20px !important;
 }
 
-#header .cssmenu_horiz li ul li a {
+#tiki-top .cssmenu_horiz li ul li a {
 	border-left: 0;
 	border-right: 0;
 }
 
 /* top compensation for tiki-top padding */
-#header .cssmenu_horiz li ul,
-#header .cssmenu_horiz li.sfHover ul {
+#tiki-top .cssmenu_horiz li ul,
+#tiki-top .cssmenu_horiz li.sfHover ul {
 	margin-top: 12px;
 }
 
-#header .cssmenu_horiz li ul ul,
-#header .cssmenu_horiz li.sfHover ul ul,
+#tiki-top .cssmenu_horiz li ul ul,
+#tiki-top .cssmenu_horiz li.sfHover ul ul,
 .cssmenu_vert li ul ul {
 	margin-top: -1px;
 }
@@ -403,11 +399,11 @@ hr {
 }
 
 /* theme-specific arrows and arrow top padding */
-#header .cssmenu_horiz .sf-sub-indicator {
+#tiki-top .cssmenu_horiz .sf-sub-indicator {
 	top: 1.8em;
 }
 
-#header .cssmenu_horiz li ul li .sf-sub-indicator {
+#tiki-top .cssmenu_horiz li ul li .sf-sub-indicator {
 	top: .5em;
 	background: url(business/arrows-467aa7.png) no-repeat;
 }

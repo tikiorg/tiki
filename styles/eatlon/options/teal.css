@@ -30,7 +30,6 @@ body.fullscreen {padding: 3em}
 body.fixed_width .fixedwidth {
 	margin-bottom: 20px;
 	width: 900px !important;
-	background: #fff;
 }
 
 body.fixed_width *:first-child+html #c1c2 {
@@ -44,21 +43,18 @@ body.fixed_width #main[id] {
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
-#main {
-		background: #fff;
-}
 
 #middle {
 	text-align: left;
 	min-height: 450px/*;
 	height: auto !important*/}
 
-#header {
+#header_fixedwidth {
 	text-align: left;
 	height: 190px;
-	background: #fff url(teal/head_bg.gif)}
-
-tr#midrow {background: #fff}
+	background: #fff url(teal/head_bg.gif);
+	margin-bottom: 0;
+}
 
 #c1c2 #wrapper #col1.marginleft  {
 	margin-left: 180px;
@@ -85,10 +81,13 @@ tr#midrow {background: #fff}
 
 
 #footer {
+	min-height: 163px}
+	
+.footerbgtrap {
 	background: #fff url(teal/bottom_bg.png) no-repeat 100% 100%;
 	min-height: 163px}
 
-#footer .content {
+#bottom_modules {
 	background: url(teal/bottom_bg.png) no-repeat 0 100%;
 	min-height: 163px;
 	text-align: center;
@@ -230,11 +229,10 @@ tt {font-size: 1.2em}
 /***** Site Header & Identity *****/
 #header {position: static}
 	
-#header-top {
+#top_modules {
 	height: 140px;
 	background: url(teal/banner.gif) no-repeat 100% 100%}
 
-#sioptions  {padding: 0}
 
 #sitelogo a,
 #sitelogo a:visited,
@@ -242,10 +240,11 @@ tt {font-size: 1.2em}
 
 #sitelogo img { margin-top: 0; }
 
-#sitead.floatright {padding-right: 10px}
-#sitead.floatleft {padding-left: 10px}
-.floatright img {margin-right: 10px}
-#siteloginbar {right: 20px}
+.box-login_box {
+	position: absolute;
+	right: 20px;
+	bottom: 20px;
+}
 
 input[id="sl-login-user"],
 input[id="sl-login-pass"] {background: #e1e1e2}
@@ -292,7 +291,7 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 	height: 78px;
 	min-height: 78px !important}
 
-#tiki-top .wrapper {
+#tiki-top .role_navigation {
 	height: 78px;
 	min-height: 78px;
 	background: url(teal/menu_bg.png) no-repeat;
@@ -305,13 +304,16 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 
 }
 
-#sitesearchbar {
+.box-search {
+	position: absolute;
+	right: 40px;
+	top: 0;
 	color: #fff;
 	margin-top: 8px;
 }
 
 input#fuser,
-#sitesearchbar select {
+#search_mod_input_1 {
 	border: 1px solid;
 	border-color: #878689 #f3f3f4 #f3f3f4 #878689;
 	background: #afafaf;
@@ -427,89 +429,6 @@ input#fuser,
 #tiki-top ul.cssmenu_horiz li li.sfHover ul {
 	top: 0;
 }
-
-/** PHP Layers Menus **/
-.horbar {
-	margin-top: 0;
-	padding-top: 5px;
-	width: 100%}
-	
-.horbar table {margin-left: 30px}
-
-.horbaritem a,
-.horbaritem a:link,
-.horbaritem a:visited {
-	padding: 6px;
-	text-decoration: none;
-	font: 1em Verdana, Helvetica, Arial, Sans-Serif;
-	color: white;
-	font-weight: bold;
-	border-bottom: none;
-	margin: 0}
-
-* html .horbaritem a,
-* html .horbaritem a:visited {font-size: 12px}
-
-.horbaritem a:hover {
-	color: #d7e5f3 !important;
-	text-decoration: none;
-	border-bottom: none}
-
-.mdksubmenu {
-	background: #9faec2 url(teal/body_bg.gif) 0 -300px repeat-x;
-	margin-top: 6px}
-
-.mdkitem a,
-.mdkitem a:link,
-.mdkitem a:visited {
-	padding: 4px 9px;
-	font-weight: normal;
-	color: #fff}
-
-.mdkitem a:hover {
-	color: #d7e5f3;
-	text-decoration: none}
-
-.box-data .mdkitem a,
-.box-data .mdkitem a:link,
-.box-data .mdkitem a:visited  {
-	padding: 2px 9px;
-	text-decoration: none;
-	color: #008080;
-	border-bottom: 1px solid transparent}
-
-.box-data .mdkitem a:hover {
-	text-decoration: none;
-	color: #636;
-	border-bottom: 1px solid #008080}
-
-.phplmnormal,
-a.phplmnormal:hover,
-a.phplm:link,
-a.phplm:visited,
-a.phplm:hover,
-a.phplm:active {
-	font: 100% Verdana, Tahoma, Arial, sans-serif;
-	color: #008080;
-	text-decoration: none;
-	font-weight: normal;
-	background: transparent}
-
-a.phplm:visited {color: #726461}
-a.phplm:hover {color: #808080}
-a.phplm:active {color: #ff0000}
-
-a.phplmselected:link,
-a.phplmselected:visited,
-a.phplmselected:hover,
-a.phplmselected:active {
-	font: 100% Verdana, Tahoma, Arial, sans-serif;
-	color: #008080;
-	font-weight: normal}
-
-a.phplmselected:hover {color: #d7e5f3}
-
-/** Links in other menus **/
 
 /***** Misc. Center Col. *****/
 a.flip,

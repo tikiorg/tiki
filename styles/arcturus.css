@@ -186,10 +186,6 @@ input[type="submit"]:active,
 	min-height: 40px;
 }
 
-#sioptions {
-	padding: 0 10px;
-}
-
 #sitetitles {
 	font-weight: bold;
 }
@@ -201,6 +197,11 @@ input[type="submit"]:active,
 #sitesubtitle {
 	font-size: 1.2em;
 	margin-top: 10px;
+}
+
+#header .box-login_box {
+	float: right;
+	margin-right: 10px;
 }
 
 #tiki-top {
@@ -219,6 +220,13 @@ input[type="submit"]:active,
 	margin: -2px 0 !important;
 	padding: 0;
 	line-height: 1em;
+}
+
+#topbar_modules .box-search {
+	float: none;
+	position: absolute;
+	right: 10px;
+	top: 0;
 }
 	
 /****** Menus, Links ******/

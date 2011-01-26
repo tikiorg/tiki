@@ -255,26 +255,17 @@ ul span, ol span {
 }
 
 /* Site Header & Identity */
-#header-top {
+#header_fixedwidth {
 	background: url(feb12/header.jpg) repeat-x bottom;
 	height: auto;
 	min-height: 98px;
-}
-
-#siteheader {
-	vertical-align: top;
-}
-
-#sioptions, #sioptionscentered {
-	margin: 0;
-	padding: 10px;
 }
 
 #sitelogo {
 	margin-top: 0;
 }
 #sitelogo img {
-	padding: 0 10px !important;/* important put here because #sitelogo img is too forcible in design.css */
+	padding: 0 10px;
 }
 
 #sitead {

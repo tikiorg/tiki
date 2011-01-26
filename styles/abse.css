@@ -264,12 +264,19 @@ body.cke_show_borders {
 	padding-left: 3em}
 
 #header .box-login_box,
-#header .box-search {
+#topbar_modules .box-search {
 	float: right;
 	margin-right: 10px;
 	font-size: 90%;
 }
-	
+
+#topbar_modules .box-search {
+	float: none;
+	position: absolute;
+	right: 10px;
+	top: 0;
+}
+
 #tiki-top {
 	width: 100%;
 	clear: both;
