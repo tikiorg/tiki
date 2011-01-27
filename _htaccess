@@ -17,10 +17,6 @@
 	deny from all
 </FilesMatch>
 
-<FilesMatch "\.(js|png|gif|jpg|css)$">
-	FileEtag None
-</FilesMatch>
-
 # If the site is stable, might be worth setting the expires header on all files
 #<IfModule mod_expires.c>
 #	<FilesMatch "\.(js|png|gif|jpg|css|ico)$">
@@ -28,7 +24,6 @@
 #		ExpiresDefault "access plus 10 years"
 #	</FilesMatch>
 #</IfModule>
-
 
 # Using ETags will improve the YSlow scores
 FileETag none
