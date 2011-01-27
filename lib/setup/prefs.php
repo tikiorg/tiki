@@ -1747,6 +1747,7 @@ function get_default_prefs() {
 		// Tiki Profiles
 		'profile_sources' => 'http://profiles.tiki.org/profiles',
 		'profile_channels' => '',
+		'profile_unapproved' => 'n',
 
 		// Minichat
 		'feature_minichat' => 'n',

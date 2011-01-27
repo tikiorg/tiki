@@ -31,6 +31,7 @@ class Tiki_Profile
 
 	private static $known = array();
 	private static $resolvePrefix = null;
+	private static $developerMode = false;
 
 	function setFeedback( $feed ) // {{{
 	{
@@ -47,6 +48,11 @@ class Tiki_Profile
 		} else {
 			return $this->feedback;
 		}
+	} // }}}
+
+	public static function enableDeveloperMode() // {{{
+	{
+		self::$developerMode = true;
 	} // }}}
 
 	public static function convertLists( $data, $conversion, $prependKey = false ) // {{{
@@ -168,7 +174,12 @@ class Tiki_Profile
 		if( $domain == 'tiki://local' ) {
 			return self::fromDb( $profile );
 		} else {
-			$url = "$domain/tiki-export_wiki_pages.php?page=" . urlencode( $profile );
+			if (self::$developerMode) {
+				$url = "$domain/tiki-export_wiki_pages.php?latest=1&page=" . urlencode( $profile );
+			} else {
+				$url = "$domain/tiki-export_wiki_pages.php?page=" . urlencode( $profile );
+			}
+
 			return self::fromUrl( $url );
 		}
 	} // }}}
