@@ -53,6 +53,13 @@ function module_since_last_visit_new($mod_reference, $params = null)
 	
 	if (!$user) return false;
 
+	
+	if (!isset($params['use_jquery_ui']) || $params['use_jquery_ui'] != 'n') {
+		$smarty->assign('use_jquery_ui', 'y');
+	} else {
+		$smarty->assign('use_jquery_ui', 'n');
+	}
+
 	if (!isset($params['date_as_link']) || $params['date_as_link'] != 'n') {
 		$smarty->assign('date_as_link', 'y');
 	} else {
