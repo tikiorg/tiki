@@ -1153,7 +1153,7 @@ function wikiplugin_tracker($data, $params)
 							$bindingValue = $trklib->get_item_value($trackerId, $itemId, $f['options_array'][2]);
 							$flds['data'][$i]['list'] = $trklib->get_filtered_item_values($f['options_array'][1], $bindingValue, $f['options_array'][3]);
 						}
-					} elseif ($f['type'] == 'f' && empty($itemId) && (empty($f['options_array'][3]) || $f['options_array'][3] != 'blank')) {
+					} elseif ($f['type'] == 'f' && empty($itemId) && empty($f['options_array'][3])) {
 						$flds['data'][$i]['value'] = $tikilib->now;
 					} elseif ($f['type'] == 'F') {
 						global $freetaglib;
@@ -1239,7 +1239,8 @@ function wikiplugin_tracker($data, $params)
 							}
 							$back.= '</td><td>';
 						} else {
-							$back .= '<tr><th colspan="2">';
+							$back .= '<tr><th colspan="2"><label for="' . $f['ins_id'] . '">' 
+										. wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors) . '</label>';
 						}
 						$smarty->assign_by_ref('field_value', $f);
 						if (!empty($item)) {
