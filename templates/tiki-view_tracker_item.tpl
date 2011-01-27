@@ -73,9 +73,7 @@
 {foreach from=$ins_fields key=ix item=cur_field}
   {if ($cur_field.isHidden ne 'y' or $tiki_p_admin_trackers eq 'y') and !($tracker_info.doNotShowEmptyField eq 'y' and empty($cur_field.value) and empty($cur_field.cat) and empty($cur_field.links) and $cur_field.type ne 'S' and $cur_field.type ne 's' and $cur_field.type ne 'h') and ($cur_field.type ne 'p' or $cur_field.options_array[0] ne 'password') and (empty($cur_field.visibleBy) or in_array($default_group, $cur_field.visibleBy) or $tiki_p_admin_trackers eq 'y')}
 	{if $cur_field.type eq 'h'}
-		</table>
-		{include file='tracker_item_field_value.tpl' field_value=$cur_field list_mode=n item=$item_info}
-		<table class="formcolor">
+		{include file='tracker_item_field_value.tpl' field_value=$cur_field list_mode=n item=$item_info inTable="formcolor"}
 	{elseif $cur_field.type ne 'x'}
 		{if $stick ne 'y'}
 			<tr class="field{$cur_field.fieldId}"><td class="formlabel" >
@@ -104,6 +102,7 @@
 	{/if}
   {/if}
 {/foreach}
+{trackerheader level=-1 title='' inTable='formcolor'}
 {if $tracker_info.showCreatedView eq 'y'}
 	<tr>
 		<td class="formlabel">{tr}Created{/tr}</td>
@@ -121,6 +120,7 @@
 {else}
 	{include file='tracker_pretty_item.tpl' item=$item_info fields=$ins_fields wiki=$tracker_info.viewItemPretty}
 {/if}
+
 {/tab}
 
 {* -------------------------------------------------- tab with comments --- *}
@@ -262,9 +262,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;
 
 {if $cur_field.type ne 'x' and $cur_field.type ne 's'}
 {if $cur_field.type eq 'h'}
-</table>
-<h2>{$cur_field.name}</h2>
-<table class="formcolor">
+	{include file='tracker_item_field_value.tpl' field_value=$cur_field list_mode=n item=$item_info inTable="formcolor"}
 {else}
 {if ($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n' or $cur_field.type eq 'b') and $cur_field.options_array[0] eq '1'}
 <tr><td class="formlabel" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'}<em class='mandatory_star'> *</em>{/if}</td><td >
@@ -518,6 +516,7 @@ or $cur_field.type eq 'i'}
 
 {/if}
 {/foreach}
+{trackerheader level=-1 title='' inTable='formcolor'}
 
 {else}
 <tr>
@@ -542,6 +541,7 @@ or $cur_field.type eq 'i'}
 </td>
 </tr>
 {/if}
+
 
 {* -------------------- antibot code -------------------- *}
 {if $prefs.feature_antibot eq 'y' && $user eq ''}

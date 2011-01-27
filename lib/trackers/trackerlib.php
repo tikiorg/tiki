@@ -3395,10 +3395,11 @@ class TrackerLib extends TikiLib
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: will display the field name as a html header h2;
-				<dt>Usage: <strong>level</strong>
-				<dt>Example: 2
+				<dt>Usage: <strong>level,toggle</strong>
+				<dt>Example: 2,o
 				<dt>Description:
 				<dd><strong>[level]</strong> level of the html header (default 2)
+				<dd><strong>[toggle]</strong> if "o" or "c" will toggle, "c" close by default, "o" open be default
 				</dl>'));
 		$type['S'] = array(
 			'label'=>tra('static text'),

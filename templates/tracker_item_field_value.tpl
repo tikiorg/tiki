@@ -402,11 +402,10 @@
 
 {* -------------------- header ------------------------- *}
 {elseif $field_value.type eq 'h'}
-	{if !empty($field_value.options_array[0]) && $field_value.options_array[0] > 0}
-		<h{$field_value.options_array[0]}>{$field_value.name|escape}</h{$field_value.options_array[0]}>
-	{else}
-		<h2>{$field_value.name|escape}</h2>
-	{/if}
+	{capture name="level"}{if empty($field_value.options_array[0])}2{else}{$field_value.options_array[0]}{/if}{/capture}
+	{capture name="toggle"}{if empty($field_value.options_array[1])}{else}{$field_value.options_array[1]}{/if}{/capture}
+	{capture name="inTable"}{if !empty($inTable)}{$inTable}{else}{/if}{/capture}
+	{trackerheader level=$smarty.capture.level title=$field_value.name toggle=$smarty.capture.toggle inTable=$smarty.capture.inTable}
 
 {* -------------------- subscription -------------------- *}
 {elseif $field_value.type eq 'U'}

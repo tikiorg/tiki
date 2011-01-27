@@ -1306,6 +1306,13 @@ textarea.tshoutbox{
 .fancysort th.header {
 	background-repeat: no-repeat; background-position: right; background-image: url(../../pics/icons/resultset.png);
 }
+/* jq tracker header */
+.trackerHeaderOpen {
+	background-repeat: no-repeat; background-position: right; background-image: url(../../pics/icons/resultset_down.png);
+}
+.trackerHeaderClose {
+	background-repeat: no-repeat; background-position: right; background-image: url(../../pics/icons/resultset_next.png);
+}
 
 /* Perspectives (edit) */
 .dropzone {
