@@ -34,11 +34,11 @@ function module_since_last_visit_new_info() {
 			),
 			'fold_sections' => array(
 				'name' => tra('Fold sections by default'),
-				'description' => tra('If set to "y", fold automatically sections and show only the title (user has to click on each section in order to see the details of modifications)') . ' ' . tra('Default:') . ' "n"'
+				'description' => tra('If set to "y", fold automatically sections and show only the title (user has to click on each section in order to see the details of modifications).') . ' ' . tra('Default:') . ' "n"'
 			),
 			'use_jquery_ui' => array(
-				'name' => tra('Use Jquery presentation'),
-				'description' => tra('If set to "y", it will use jquery to show the result') . ' ' . tra('Default:') . ' "n"'
+				'name' => tra('Use jQuery presentation'),
+				'description' => tra('If set to "y", use jQuery to show the result.') . ' ' . tra('Default:') . ' "n"'
 			),
 		),
 		'common_params' => array( 'nonums', 'rows' ),
