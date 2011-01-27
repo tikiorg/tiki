@@ -33,16 +33,30 @@ class ExportLib extends TikiLib
 		return '';
 	}
 
-	function export_wiki_page($pageName, $nversions = 1) {
+	function export_wiki_page($pageName, $nversions = 1, $showLatest = false) {
+		global $prefs;
+
 		$head = '';
 		$head .= "Date: " . $this->date_format("%a, %e %b %Y %H:%M:%S %O"). "\r\n";
 		$head .= sprintf("Mime-Version: 1.0 (Produced by Tiki)\r\n");
-		$iter = $this->get_page_history($pageName);
 		$info = $this->get_page_info($pageName);
+
+		if ($prefs['flaggedrev_approval'] == 'y') {
+			$flaggedrevisionlib = TikiLib::lib('flaggedrevision');
+			if (! $showLatest && $flaggedrevisionlib->page_requires_approval($pageName)) {
+				$data = $flaggedrevisionlib->get_version_with($pageName, 'moderation', 'OK');
+				$info['data'] = '';
+				if ($data) {
+					$info['data'] = $data['data'];
+				}
+			}
+		}
+
 		$parts = array();
 		$parts[] = MimeifyPageRevision($info);
 
 		if ($nversions > 1 || $nversions == 0) {
+			$iter = $this->get_page_history($pageName);
 			foreach ($iter as $revision) {
 				$parts[] = MimeifyPageRevision($revision);
 

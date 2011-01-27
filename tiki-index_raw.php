@@ -43,15 +43,15 @@ if (!($info = $tikilib->get_page_info($page))) {
 	die;
 }
 
-// Now check permissions to access this page
-$tikilib->get_perm_object( $page, 'wiki page', $info);
-if ($tiki_p_view != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to view this page."));
+require_once 'lib/wiki/renderlib.php';
+$pageRenderer = new WikiRenderer( $info, $user );
+$objectperms = $pageRenderer->applyPermissions();
 
-	$smarty->display("error_raw.tpl");
-	die;
+if ($prefs['flaggedrev_approval'] == 'y' && isset($_REQUEST['latest']) && $objectperms->wiki_view_latest) {
+	$pageRenderer->forceLatest();
 }
+
+$access->check_permission('tiki_p_view');
 
 // BreadCrumbNavigation here
 // Remember to reverse the array when posting the array
@@ -79,9 +79,6 @@ if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 	$tikilib->add_hit($page);
 }
 
-// Get page data
-$info = $tikilib->get_page_info($page);
-
 // Verify lock status
 if ($info["flag"] == 'L') {
 	$smarty->assign('lock', true);
@@ -100,49 +97,11 @@ if ($tiki_p_admin_wiki == 'y') {
 	$smarty->assign('canundo', 'y');
 }
 
-// Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
-$preparsed = array();
-$noparsed = array();
-$tikilib->parse_first( $info["data"], $preparsed, $noparsed );
-
-$pdata = $tikilib->parse_data_raw($info["data"]);
-
-if (!isset($_REQUEST['pagenum']))
-	$_REQUEST['pagenum'] = 1;
-
-$pages = $wikilib->get_number_of_pages($pdata);
-$pdata = $wikilib->get_page($pdata, $_REQUEST['pagenum']);
-$smarty->assign('pages', $pages);
-
-if ($pages > $_REQUEST['pagenum']) {
-	$smarty->assign('next_page', $_REQUEST['pagenum'] + 1);
-} else {
-	$smarty->assign('next_page', $_REQUEST['pagenum']);
+if( isset( $_REQUEST['pagenum'] ) && $_REQUEST['pagenum'] > 0 ) {
+	$pageRenderer->setPageNumber( (int) $_REQUEST['pagenum'] );
 }
 
-if ($_REQUEST['pagenum'] > 1) {
-	$smarty->assign('prev_page', $_REQUEST['pagenum'] - 1);
-} else {
-	$smarty->assign('prev_page', 1);
-}
-
-$smarty->assign('first_page', 1);
-$smarty->assign('last_page', $pages);
-$smarty->assign('pagenum', $_REQUEST['pagenum']);
-
-// Put ~pp~, ~np~ and <pre> back. --rlpowell, 24 May 2004
-$tikilib->replace_preparse( $info["data"], $preparsed, $noparsed );
-$tikilib->replace_preparse( $pdata, $preparsed, $noparsed );
-
-$smarty->assign_by_ref('parsed', $pdata);
-//$smarty->assign_by_ref('lastModif',date("l d of F, Y  [H:i:s]",$info["lastModif"]));
-$smarty->assign_by_ref('lastModif', $info["lastModif"]);
-
-if (empty($info["user"])) {
-	$info["user"] = 'anonymous';
-}
-
-$smarty->assign_by_ref('lastUser', $info["user"]);
+$pageRenderer->useRaw();
 
 // Comments engine!
 if ($prefs['feature_wiki_comments'] == 'y') {
@@ -156,6 +115,7 @@ if ($prefs['feature_wiki_comments'] == 'y') {
 }
 
 include_once ('tiki-section_options.php');
+$pageRenderer->runSetups();
 ask_ticket('index-raw');
 
 // Display the Index Template

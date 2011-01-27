@@ -19,6 +19,7 @@ class WikiRenderer
 	private $pageNumber = 1;
 	private $sortMode = 'created_desc';
 	private $showAttachments = 'n';
+	private $raw = false;
 
 	private $hasPermissions;
 	private $prep = array(
@@ -344,7 +345,11 @@ class WikiRenderer
 				'language' => $this->info['lang']
 			);
 
-			$pdata = $wikilib->parse_data($this->content_to_render, $parse_options);
+			if ($this->raw) {
+				$pdata = $tikilib->parse_data_raw($this->content_to_render);
+			} else {
+				$pdata = $wikilib->parse_data($this->content_to_render, $parse_options);
+			}
 		}
 
 		$pages = $wikilib->get_number_of_pages($pdata);
@@ -625,5 +630,10 @@ class WikiRenderer
 	function forceLatest() // {{{
 	{
 		$this->content_to_render = $this->info['data'];
+	} // }}}
+
+	function useRaw() // {{{
+	{
+		$this->raw = true;
 	} // }}}
 }

@@ -128,6 +128,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'header':
 			global $headerlib;
 			return $libraries[$name] = $headerlib;
+		case 'flaggedrevision':
+			global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
+			return $libraries[$name] = $flaggedrevisionlib;
 		}
 	}
 

@@ -48,7 +48,14 @@ if (!($info = $tikilib->get_page_info($page))) {
 	die;
 }
 
-$tikilib->get_perm_object( $page, 'wiki page', $info);
+require_once 'lib/wiki/renderlib.php';
+$pageRenderer = new WikiRenderer( $info, $user );
+$objectperms = $pageRenderer->applyPermissions();
+
+if ($prefs['flaggedrev_approval'] == 'y' && isset($_REQUEST['latest']) && $objectperms->wiki_view_latest) {
+	$pageRenderer->forceLatest();
+}
+
 $access->check_permission('tiki_p_view');
 
 // BreadCrumbNavigation here
@@ -76,9 +83,6 @@ if (!in_array($page, $_SESSION["breadCrumb"])) {
 if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 	$tikilib->add_hit($page);
 }
-
-// Get page data
-$info = $tikilib->get_page_info($page);
 
 $smarty->assign('page_user', $info['user']);
 
@@ -145,67 +149,16 @@ $pdata = str_replace('tiki-index.php', 'tiki-index_p.php', $pdata);
 if (!isset($_REQUEST['pagenum']))
 	$_REQUEST['pagenum'] = 1;
 
-$pages = $wikilib->get_number_of_pages($pdata);
-$pdata = $wikilib->get_page($pdata, $_REQUEST['pagenum']);
-$smarty->assign('pages', $pages);
-
-if ($pages > $_REQUEST['pagenum']) {
-	$smarty->assign('next_page', $_REQUEST['pagenum'] + 1);
-} else {
-	$smarty->assign('next_page', $_REQUEST['pagenum']);
+if( isset( $_REQUEST['pagenum'] ) && $_REQUEST['pagenum'] > 0 ) {
+	$pageRenderer->setPageNumber( (int) $_REQUEST['pagenum'] );
 }
 
-if ($_REQUEST['pagenum'] > 1) {
-	$smarty->assign('prev_page', $_REQUEST['pagenum'] - 1);
-} else {
-	$smarty->assign('prev_page', 1);
-}
-
-$smarty->assign('first_page', 1);
-$smarty->assign('last_page', $pages);
-$smarty->assign('pagenum', $_REQUEST['pagenum']);
-
-// Put ~pp~, ~np~ and <pre> back. --rlpowell, 24 May 2004
-$tikilib->replace_preparse( $info["data"], $preparsed, $noparsed );
-$tikilib->replace_preparse( $pdata, $preparsed, $noparsed );
-
-$smarty->assign_by_ref('parsed', $pdata);
-
-$smarty->assign_by_ref('lastModif', $info["lastModif"]);
-
-if (empty($info["user"])) {
-	$info["user"] = 'anonymous';
-}
-
-$smarty->assign_by_ref('lastUser', $info["user"]);
-$smarty->assign_by_ref('description', $info["description"]);
 
 include_once('tiki-section_options.php');
 
-$smarty->assign('wiki_extras', 'y');
-$smarty->assign('structure', 'n');
+$pageRenderer->runSetups();
 
-/* broken since nov 18 2003
-if ($structlib->page_is_in_structure($page)) {
-	$smarty->assign('structure', 'y');
-	if (isset($_REQUEST["structID"]))	{
-		$prev_next_pages = $structlib->get_prev_next_pages($page, $_REQUEST["structID"]);
-	}
-	else {
-		$prev_next_pages = $structlib->get_prev_next_pages($page);
-	} 	
-	$smarty->assign('struct_prev_next', $prev_next_pages);
-}
-*/
-
-if ($prefs['feature_theme_control'] == 'y') {
-	$cat_type = 'wiki page';
-
-	$cat_objid = $_REQUEST["page"];
-	include('tiki-tc.php');
-}
 ask_ticket('index-p');
 
 // Display the Index Template
-$smarty->assign('dblclickedit', 'y');
 $smarty->display("tiki-index_p.tpl");
