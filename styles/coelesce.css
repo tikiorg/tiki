@@ -273,11 +273,8 @@ body.tiki_wiki_page.manage #c1c2 #wrapper #col1 #tiki-center {
 #top_modules {
 	background: url(coelesce/pagebg.jpg) repeat-x 0 100%;
 	position: relative;
-}
-
-#header-top[id] {
-	height: auto;
-/*	min-height: 80px;*/
+	min-height: 80px;
+	
 }
 
 #sitelogo {
@@ -303,26 +300,64 @@ body.tiki_wiki_page.manage #c1c2 #wrapper #col1 #tiki-center {
 #top_modules .box-login_box a:visited {
 	color: #fff;
 }
-
-#top_modules .box-search {
+/*
+#topbar_modules .box-search {
 	position: absolute;
 	right: 30px;
-	bottom: 8px;
+	top: 0;
 	text-align: right;
 	color: #fff;
-	padding: 0 0 0 15px;
+	padding: 0;
+	padding-right: 0;
 	text-align: left;
-	background: url(coelesce/search_wide.jpg) no-repeat 0 0;
+	background: url(coelesce/search_wide4.png) 0 100% no-repeat;
 	color: #517ea7;
-	height: 33px;
+	height: 32px;
 }
 
-#top_modules .box-search form {
-	background: url(coelesce/search_wide.jpg) 100% 0 no-repeat;
-	margin-right: 0;
-	margin-left: auto;
-	padding: 7px 35px 0 0;
-	height: 33px;
+#topbar_modules .box-search form {
+	background: url(coelesce/search_wide4.png) 100% 0 no-repeat;
+	padding-right: 40px;
+	padding-top: 6px;
+	margin-left: 15px;
+	margin-right: -15px;
+	height: 32px;
+}
+*/
+#top_modules .box-search,
+#topbar_modules .box-search {
+	position: absolute;
+	right: 30px;
+	top: 0;
+	text-align: right;
+	color: #fff;
+	padding: 0;
+	padding-right: 0;
+	text-align: left;
+	background: url(coelesce/search_wide.png) 0 0 no-repeat;
+	color: #517ea7;
+	height: 32px;
+}
+
+#top_modules .box-search {
+	bottom: 12px;
+	top: auto	
+}
+
+#top_modules .box-search form,
+#topbar_modules .box-search form {
+	background: url(coelesce/search_wide.png) 100% 0 no-repeat;
+	padding-right: 40px;
+	margin-left: 15px;
+	margin-right: -15px;
+	height: 32px;
+	padding-top: 8px;
+}
+
+
+.box-search form .ac_input {
+	border: none;
+	background: none;
 }
 
 #sitesearchbar form {
