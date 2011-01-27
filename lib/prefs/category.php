@@ -69,7 +69,7 @@ function prefs_category_list() {
 			),
 		),
 		'category_morelikethis_mincommon' => array(
-			'name' => tra('Minimum amount of categories in common'),
+			'name' => tra('Minimum number of categories in common'),
 			'type' => 'list',
 			'options' => array(
 				'1' => tra('1'),
