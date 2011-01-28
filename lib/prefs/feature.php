@@ -1107,10 +1107,12 @@ function prefs_feature_list() {
 		'feature_sitemycode' => array(
 			'name' => tra('Custom Site Header'),
 			'type' => 'flag',
+			'warning' => tra('Obsolete in tiki7'),
 		),
 		'feature_sitelogo' => array(
 			'name' => tra('Site Logo and Title'),
 			'type' => 'flag',
+			'warning' => tra('Obsolete in tiki7'),
 		),
 		'feature_sitesearch' => array(
 			'name' => tra('Search Bar'),
@@ -1118,10 +1120,12 @@ function prefs_feature_list() {
 			'dependencies' => array(
 				'feature_search_fulltext',
 			),
+			'warning' => tra('Obsolete in tiki7'),
 		),
 		'feature_site_login' => array(
 			'name' => tra('Login Bar'),
 			'type' => 'flag',
+			'warning' => tra('Obsolete in tiki7'),
 		),
 		'feature_topbar_custom_code' => array(
 			'name' => tra('Top Bar Custom Code'),
@@ -1139,6 +1143,7 @@ function prefs_feature_list() {
 		'feature_sitemenu' => array(
 			'name' => tra('Site menu bar'),
 			'type' => 'flag',
+			'warning' => tra('Obsolete in tiki7'),
 		),
 		'feature_sitemenu_custom_code' => array (
 			'name' => tra('Site menu custom code'),
@@ -1161,10 +1166,12 @@ function prefs_feature_list() {
 			'dependencies' => array(
 				'feature_cssmenus',
 			),
+			'warning' => tra('Obsolete in tiki7'),
 		),
 		'feature_top_bar' => array(
 			'name' => tra('Top Bar'),
 			'type' => 'flag',
+			'warning' => tra('Obsolete in tiki7'),
 		),
 		'feature_custom_center_column_header' => array(
 			'name' => tra('Custom Center Column Header'),
