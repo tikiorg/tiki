@@ -199,6 +199,10 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 	protected function createResource( $path, $content = null )
 	{
+		return true;
+	}
+	protected function _createResource( $path, $content = null )
+	{
 		global $user, $tikilib, $prefs;
 		global $filegallib; require_once('lib/filegals/filegallib.php');
 
@@ -215,6 +219,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		$name = basename( $path );
 		if ( empty($content) ) $content = '';
 
+		include_once('lib/mime/mimelib.php');
 		if ( $prefs['fgal_use_db'] === 'n' ) {
 			$fhash = md5( $name );
 			do
@@ -227,8 +232,10 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				print_debug("createResource: ". $this->root . '/' . $fhash ." failed\n");	
 				return false;
 			}
+			$mime = tiki_get_mime($name, 'application/octet-stream', $this->root . '/' . $fhash);
 		} else {
 			$fhash = '';
+			$mime = ($objectId['type'] != 'file') ? 'inode/directory' : tiki_get_mime_from_content($content);
 		}
 
 		$fileId = $filegallib->insert_file(
@@ -236,9 +243,9 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				$name,
 				'',
 				$name,
-				'',
-				0,
-				'application/octet-stream',
+				$content,
+				@strlen( $content ),
+				$mime,
 				$user,
 				$fhash,
 				'',
@@ -253,12 +260,21 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		global $user, $tikilib, $prefs;
 		global $filegallib; require_once('lib/filegals/filegallib.php');
 
-		if ( empty($path)
-				|| substr($path, -1, 1) == '/'
-				|| ( $objectId = $filegallib->get_objectid_from_virtual_path( $path ) ) === false
-				|| $objectId['type'] != 'file'
-			 ) return false;
+		if ( empty($path) || substr($path, -1, 1) == '/' ) {
+			print_debug("\nsetResourceContents failed empty path or directory\n");
+			return false;
+		}
+		if ( ( $objectId = $filegallib->get_objectid_from_virtual_path( $path ) ) === false ) {
+			print_debug("\nCreateResouce new $path\n");
+			return $this->_createResource($path, $content ) ;
+		}
 
+		if ($objectId['type'] != 'file') {
+			print_debug("\nsetResourceContents failed : destination is not a file\n");
+			return false;
+		}
+
+		include_once('lib/mime/mimelib.php');
 		$name = basename( $path );
 		if ( empty($content) ) $content = '';
 
@@ -270,7 +286,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 			}
 			while ( file_exists( $this->root . '/' . $fhash ) );
 
-			$mime = tiki_get_mime($this->root . '/' . $fhash, 'application/octet-stream', $name);
+			$mime = tiki_get_mime($name,  'application/octet-stream', $this->root . '/' . $fhash);
 		} else {
 			$fhash = '';
 			$mime = ($objectId['type'] != 'file') ? 'inode/directory' : tiki_get_mime_from_content($content);
