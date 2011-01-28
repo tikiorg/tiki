@@ -226,12 +226,9 @@ small {
 }
 
 /* #Header */
-#header {
-	text-align: left;
-}
 
-.floatleft #sitetitle,
-.floatleft #sitesubtitle {
+#sitetitle,
+#sitesubtitle {
 	padding-left: 20px;
 }
 
@@ -249,44 +246,23 @@ small {
 	color: #000;
 }
 
-#header-top {
-	position: relative;
-}
-
 /* Look & Feel options */
-#siteheader {
-	padding-top: 26px;
+#top_modules {
+	padding: 26px 0 0 0;
 }
 
-#sioptions {
-	padding: 1em;
-}
-
-#sitead {
-	clear: none;
-}
-
-#sitead.floatright {
-	padding-right: 100px;
-}
-
-#sitead.floatleft {
-	padding-left: 100px;
-}
-
-#bannertopright {
-	padding-right: 1em;
-}
-
-#siteloginbar {
+#top_modules .box-login_box {
+	position: absolute;
+	right: 20px;
+	bottom: 2px;
 	font-size: 1em;
 }
 
-#siteloginbar * {
+.siteloginbar * {
 	margin: .2em;
 }
 
- #siteloginbar.logged-in {
+.siteloginbar.logged-in {
 	bottom: 3px;
 }
 
@@ -296,17 +272,20 @@ small {
 	border-bottom: 1px solid #d3d3d3;
 }
 
-#sitesearchbar {
-	padding: 0 4px 0 0;
+#topbar_modules .box-search {
+	position: absolute;
+	right: 10px;
+	top: 4px;
+	z-index: 2;
 }
 
-#sitesearchbar .findtable {
+.sitesearchbar .findtable {
 	margin-bottom: 0;
 }
 
 /* Middle */
 #middle {
-	margin-top: 1em;
+
 }
 
 #c1c2 {

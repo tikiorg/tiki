@@ -274,23 +274,9 @@ label {
 	text-decoration: none;
 }
 
-#header-top {
-	position: relative;
+#top_modules {
 	min-height: 50px;
 	padding-top: 2px;
-}
-
-	
-#header-top[id] {
-	height: auto;
-	min-height: 50px;
-}
-
-#siteheader {
-	text-align: left;
-	background: transparent;
-	padding-bottom: 0;
-	margin: 0;
 }
 
 #sitetitles {
@@ -305,24 +291,12 @@ label {
 	font-size: 1.2em;
 }
 
-#sioptions {
-	margin: 8px;
-}
-
 #sitelogo {
 	margin: auto;
 	overflow: hidden;
 }
 
-#sitead.floatright {
-	padding-right: 100px;
-}
-
-#sitead.floatleft {
-	padding-left: 100px;
-}
-
-#siteloginbar {
+#top_modules .box-login_box {
 	text-align: right;
 	position: absolute;
 	bottom: 3px;
@@ -364,7 +338,7 @@ label {
 	text-decoration: none;
 }
 
-#sitesearchbar {
+#topbar_modules .box-search {
 	font-size: .95em;
 	text-align: right;
 	float: right;
