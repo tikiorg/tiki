@@ -1,5 +1,6 @@
+{* $id$ *}
 <div class="adminoptionbox{if isset($smarty.request.highlight) and $smarty.request.highlight eq $p.preference} highlight{/if}" style="text-align: left;">
-	<label for="{$p.id|escape}">{$p.name|escape}:</label>
+  <label for="{$p.id|escape}">{$p.name|escape|breakline}:</label>
 	<select name="{$p.preference|escape}" id="{$p.id|escape}">
 		{foreach from=$p.options key=value item=label}
 			<option value="{$value|escape}"{if $value eq $p.value} selected="selected"{/if}>{$label|escape}</option>
