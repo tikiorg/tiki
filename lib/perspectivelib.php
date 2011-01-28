@@ -68,12 +68,12 @@ class PerspectiveLib
 	}
 
 	private function is_in_subnet( $ip, $subnet ) {
-		list( $subnet, $mask ) = explode( '/', $subnet );
+		list( $subnet, $size ) = explode( '/', $subnet );
 
 		// Warning - bit shifting ahead.
 
 		// Create the real mask from the /X suffix
-		$mask = 0xFFFFFFFF ^ ((1 << (int) $mask) - 1);
+		$mask = 0xFFFFFFFF ^ ((1 << (int) (32 - $size)) - 1);
 
 		// Make sure the subnet-relevant part matches for the IP and the subnet being compared
 		return (ip2long($subnet) & $mask) === (ip2long($ip) & $mask);
