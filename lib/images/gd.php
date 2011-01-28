@@ -192,7 +192,9 @@ class Image extends ImageAbstract
 	}
 
 	function _get_height() {
-		if ($this->height) {
+		if ($this->loaded && $this->data) {
+			return imagesy($this->data);
+		} else if ($this->height) {
 			return $this->height;
 		} else if ($this->filename) {
 			list($this->width, $this->height, $type) = getimagesize($this->filename);
@@ -200,7 +202,7 @@ class Image extends ImageAbstract
 				return $this->height;
 			}
 		}
-		if (!$this->data) {
+		if (!$this->loaded || !$this->data) {
 			$this->_load_data();
 		}
 		if ($this->data) {
@@ -209,7 +211,9 @@ class Image extends ImageAbstract
 	}
 
 	function _get_width() {
-		if ($this->width) {
+		if ($this->loaded && $this->data) {
+			return imagesx($this->data);
+		} else if ($this->width) {
 			return $this->width;
 		} else if ($this->filename) {
 			list($this->width, $this->height, $type) = getimagesize($this->filename);
@@ -217,7 +221,7 @@ class Image extends ImageAbstract
 				return $this->width;
 			}
 		}
-		if (!$this->data) {
+		if (!$this->loaded || !$this->data) {
 			$this->_load_data();
 		}
 		if ($this->data) {
