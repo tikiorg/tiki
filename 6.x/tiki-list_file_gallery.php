@@ -795,7 +795,7 @@ if (isset($_GET['slideshow'])) {
 		} else {
 			$syntax = '';
 		}
-		$with_archive = ( isset($gal_info[archives]) && $gal_info[archives] == '-1') ? false : true;
+		$with_archive = ( isset($gal_info['archives']) && $gal_info['archives'] == '-1') ? false : true;
 		// Get list of files in the gallery
 		$files = $tikilib->get_files( $_REQUEST['offset']
 																, $_REQUEST['maxRecords']
