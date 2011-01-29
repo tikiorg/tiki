@@ -321,6 +321,13 @@ if ($prefs['javascript_enabled'] != 'n') {
 		$headerlib->add_jsfile("lib/jquery/jquery.sparkline.min.js");
 		$headerlib->add_jsfile("lib/metrics.js");
 	}
+	
+	// include and setup themegen editor if already open
+	if ($tiki_p_admin === 'y' && $prefs['feature_themegenerator'] === 'y' && !empty($_COOKIE['themegen']) &&
+			(strpos($_SERVER['SCRIPT_NAME'], 'tiki-admin.php') === false || strpos($_SERVER['QUERY_STRING'], 'page=look') === false)) {
+		include_once 'lib/themegenlib.php';
+		$themegenlib->setupEditor();
+	}
 
 }	// end if $prefs['javascript_enabled'] != 'n'
 

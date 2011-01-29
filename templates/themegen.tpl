@@ -61,8 +61,5 @@
 				{/foreach}
 			</div>
 		{/foreach}
-		<div class="input_submit_container clear" style="text-align: center">
-			<input type="submit" name="tg_preview" value="{tr}Preview Theme{/tr}">
-		</div>
 	</div>
 </div>

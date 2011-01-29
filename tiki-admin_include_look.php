@@ -140,6 +140,8 @@ if ($prefs['feature_themegenerator'] === 'y') {
 	
 	$themegenlib->setupEditor();
 	$auto_query_args[] = 'tg_css_file';
+	
+	
 }
 
 if (isset($_REQUEST["looksetup"])) {
@@ -156,14 +158,14 @@ if ($reload) {
 		if ($prefs['feature_tabs'] === 'y' && isset($_COOKIE['tab']) && $_COOKIE['tab'] > 1) {
 			$location.= "&cookietab=" . $_COOKIE['tab'];
 		}
-		if ($prefs['feature_themegenerator'] === 'y') {
-			if (!empty($_REQUEST['tg_css_file'])) {
-				$location.= "&tg_css_file=" . $_REQUEST['tg_css_file'];
-			}
-			if (!empty($_REQUEST['tg_preview'])) {
-				$location.= "&tg_preview=true";
-			}
-		}
+//		if ($prefs['feature_themegenerator'] === 'y') {
+//			if (!empty($_REQUEST['tg_css_file'])) {
+//				$location.= "&tg_css_file=" . $_REQUEST['tg_css_file'];
+//			}
+//			if (!empty($_REQUEST['tg_preview'])) {
+//				$location.= "&tg_preview=true";
+//			}
+//		}
 		header($location);
 		exit;
 }

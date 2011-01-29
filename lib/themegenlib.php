@@ -38,14 +38,14 @@ class ThemeGenLib
 		$headerlib->add_cssfile('lib/jquery_tiki/colorpicker/layout.css');
 	
 		$headerlib->add_jsfile('lib/jquery/colorpicker/js/colorpicker.js');
-		$headerlib->add_jsfile('lib/jquery/colorpicker/js/eye.js');
-		$headerlib->add_jsfile('lib/jquery/colorpicker/js/utils.js');
-		$headerlib->add_jsfile('lib/jquery/colorpicker/js/layout.js');
+//		$headerlib->add_jsfile('lib/jquery/colorpicker/js/eye.js');
+//		$headerlib->add_jsfile('lib/jquery/colorpicker/js/utils.js');
+//		$headerlib->add_jsfile('lib/jquery/colorpicker/js/layout.js');
 		
 		// colour lib
 		$headerlib->add_jsfile('lib/jquery/jquery.color.js');
 		
-		if (!empty($_SESSION['tg_preview']) && !empty($_REQUEST['tg_preview'])) {
+		if (!empty($_SESSION['tg_preview'])) {	// && !empty($_REQUEST['tg_preview'])
 			$data = unserialize($_SESSION['tg_preview']);
 			$this->currentTheme->setData($data);
 		} else {
@@ -129,7 +129,21 @@ class ThemeGenLib
 		
 		$smarty->assign_by_ref('tg_css_files', $this->setupCSSFiles());
 		$smarty->assign_by_ref('tg_css_file', $css_file);
-		$headerlib->add_jq_onready('$("#tg_css_file").change(function() { location.replace(location.href + "&tg_css_file=" + escape($(this).val())); });');
+		
+		if (($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_REQUEST['tg_open_dialog']))) {
+			$smarty->display('themegen.tpl');
+			die;
+		}
+		
+		if (!empty($_COOKIE['themegen'])) {
+			if (strpos($_COOKIE['themegen'], 'state:open') !== false) {
+				$headerlib->add_jq_onready('openThemeGenDialog();', 100);
+			}
+		} else if (!empty($_SESSION['tg_preview'])) {
+			unset($_SESSION['tg_preview']);
+		}
+
+		
 	}
 	
 	public function setupCSSFiles () {

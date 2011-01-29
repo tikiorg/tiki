@@ -261,13 +261,21 @@
 		$("input[name=tg_delete_theme]").hide();
 	}
 							});{/jq}
-							{if $prefs.feature_jquery_ui eq "y"}
-								{button _text="{tr}Open editor in dialog{/tr}" _class="tgFloatDialog" href="#"}
+							{if $prefs.feature_jquery_ui eq "y" and $prefs.feature_ajax eq "y"}
+								{button _text="{tr}Open editor{/tr}" _class="tgFloatDialog" href="#"}
 							{/if}
 						</div>
 					</div>
 					<div class="adminoptionbox">
-						{include file="themegen.tpl"}
+						{if $prefs.feature_jquery_ui neq "y" or $prefs.feature_ajax neq "y"}
+							<div id="themegenerator_container">
+								{include file="themegen.tpl"}
+								<div class="input_submit_container clear" style="text-align: center">
+									<input type="submit" name="tg_preview" value="{tr}Preview Theme{/tr}">
+								</div>
+							</div>
+							{jq}initThemeGenDialog();{/jq}
+						{/if}
 					</div>
 				</div>
 			</fieldset>
