@@ -13,7 +13,7 @@
 
 <table class="normal">
 <tr>
-	<th>{tr}Version{/tr}
+	<th>{tr}Version{/tr}</th>
 	<th>{tr}Date{/tr}</th>
 	<th>{tr}User{/tr}</th>
 	<th>{tr}Field ID{/tr}</th>
