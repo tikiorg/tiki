@@ -67,7 +67,21 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php') || strstr($_SERVER['SCRIPT
 
 	}
 	
+	// If the HomePage does not exist, create it
 	if ($check && !$tikilib->page_exists($_REQUEST['page'])) {
-		$tikilib->create_page($_REQUEST['page'], 0,tra('_HOMEPAGE_CONTENT_'),$tikilib->now,'Tiki initialization', 'admin', '0.0.0.0', '', 'en', false, null, 'n', '');
+
+		// Get the translated HomePage content
+		$homePageLang = $prefs['language'];
+		$homePageTranslationKey = '_HOMEPAGE_CONTENT_';
+		$translatedHomePageContent = tra( $homePageTranslationKey );
+
+		// If the HomePage has not been translated yet, fallback to the 'en' translation
+		if ( $translatedHomePageContent == $homePageTranslationKey ) {
+			$homePageLang = 'en';
+			$translatedHomePageContent = tra( $homePageTranslationKey, $homePageLang );
+		}
+
+		$tikilib->create_page( $_REQUEST['page'], 0, $translatedHomePageContent, $tikilib->now, 'Tiki initialization', 'admin', '0.0.0.0', '', $homePageLang, false, null, 'n', '' );
+		unset( $homePageTranslationKey, $translatedHomePageContent, $homePageLang );
 	}
 }
