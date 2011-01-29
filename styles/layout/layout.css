@@ -48,7 +48,6 @@ header, nav, article, footer, address {
 .fixed_width #main {
 	margin-top: 18px;
 	margin-bottom: 5px;
-	display: table;
 }
 
 .fixed_width .fixedwidth[id] {
