@@ -48,29 +48,34 @@ class ThemeGenLib
 		if (!empty($_SESSION['tg_preview'])) {	// && !empty($_REQUEST['tg_preview'])
 			$data = unserialize($_SESSION['tg_preview']);
 			$this->currentTheme->setData($data);
+			if (!empty($_SESSION['tg_css_file']) && empty($_REQUEST['tg_css_file'])) {
+				$css_file = $_SESSION['tg_css_file'];
+			}
 		} else {
 			$data = $this->currentTheme->loadPref();
 		}
 		
-		if (!empty($_REQUEST['tg_css_file'])) {
-			$css_file = $_REQUEST['tg_css_file'];
-		} else if ($data) {
-			$css_files = array_keys($data['files']);
-			$css_file_found = false;
-			foreach ( $css_files as $css_file) {
-				foreach( $headerlib->cssfiles as $files) {
-					if (in_array($css_file, $files)) {
-						$css_file_found = true;
-						break 2;
+		if (empty($css_file)) {
+			if (!empty($_REQUEST['tg_css_file'])) {
+				$css_file = $_REQUEST['tg_css_file'];
+			} else if ($data) {
+				$css_files = array_keys($data['files']);
+				$css_file_found = false;
+				foreach ( $css_files as $css_file) {
+					foreach( $headerlib->cssfiles as $files) {
+						if (in_array($css_file, $files)) {
+							$css_file_found = true;
+							break 2;
+						}
 					}
 				}
+				if ( !$css_file_found ) {
+					$css_file = ''; //$css_file[0];
+				}
+			} else {
+	//			$css_file = $prefs['themegenerator_css_file'];
+				$css_file = '';
 			}
-			if ( !$css_file_found ) {
-				$css_file = ''; //$css_file[0];
-			}
-		} else {
-//			$css_file = $prefs['themegenerator_css_file'];
-			$css_file = '';
 		}
 		$mincss .= $headerlib->minify_css( $css_file );	// clean out comments etc
 		
@@ -225,6 +230,7 @@ class ThemeGenLib
 	public function previewCurrentTheme($css_file, $swaps) {
 		$this->currentTheme->setData(array($swaps, $css_file));
 		$_SESSION['tg_preview'] = serialize($this->currentTheme->getData());
+		$_SESSION['tg_css_file'] = $css_file;
 		//$this->currentTheme->savePref();
 	}
 	

@@ -131,6 +131,9 @@ if ($prefs['feature_themegenerator'] === 'y') {
 			$themegenlib->deleteCurrentTheme();
 		} else if (!empty($_REQUEST['tg_swaps']) && !empty($_REQUEST['tg_preview'])) {
 			$themegenlib->previewCurrentTheme($_REQUEST['tg_css_file'], $_REQUEST['tg_swaps']);
+		} else if (!empty($_REQUEST['tg_swaps']) && !empty($_REQUEST['tg_change_file'])) {
+			//$themegenlib->previewCurrentTheme($_REQUEST['tg_css_file'], $_REQUEST['tg_swaps']);
+			$reload = false;
 		} else if (!empty($_REQUEST['tg_swaps']) && !empty($_REQUEST['tg_css_file'])) {
 			$themegenlib->updateCurrentTheme($_REQUEST['tg_css_file'], $_REQUEST['tg_swaps']);
 		} else {
@@ -139,7 +142,7 @@ if ($prefs['feature_themegenerator'] === 'y') {
 	}
 	
 	$themegenlib->setupEditor();
-	$auto_query_args[] = 'tg_css_file';
+	//$auto_query_args[] = 'tg_css_file';
 	
 	
 }
