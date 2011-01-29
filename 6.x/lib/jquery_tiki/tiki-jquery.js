@@ -836,7 +836,7 @@ function handlePluginFieldsHierarchy(type) {
 var fullScreenState = [];
 
 $(document).ready(function() {	// if in translation-diff-mode go fullscreen automatically
-	if ($("#diff_outer").length && !$(".wikipreview").length) {	// but not if previewing (TODO better)
+	if ($("#diff_outer").length && !$.trim($(".wikipreview .wikitext").html()).length) {	// but not if previewing (TODO better)
 		toggleFullScreen("editwiki");
 	}
 });
