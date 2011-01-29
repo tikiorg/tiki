@@ -72,7 +72,7 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php') || strstr($_SERVER['SCRIPT
 
 		// Get the translated HomePage content
 		$homePageLang = $prefs['language'];
-		$homePageTranslationKey = '_HOMEPAGE_CONTENT_';
+		$homePageTranslationKey = '_HOMEPAGE_CONTENT_'; //get_strings tra("_HOMEPAGE_CONTENT_")
 		$translatedHomePageContent = tra( $homePageTranslationKey );
 
 		// If the HomePage has not been translated yet, fallback to the 'en' translation
