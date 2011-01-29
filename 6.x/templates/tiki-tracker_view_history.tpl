@@ -16,7 +16,7 @@
 	<th>{tr}Version{/tr}
 	<th>{tr}Date{/tr}</th>
 	<th>{tr}User{/tr}</th>
-	<th>{tr}Field ID{/tr}</th
+	<th>{tr}Field ID{/tr}</th>
 	<th>{tr}Field{/tr}</th>
 	<th>{tr}Old{/tr}</th>
 	<th>{tr}New{/tr}</th>
