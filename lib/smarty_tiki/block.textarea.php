@@ -272,6 +272,7 @@ var editTimeElapsedSoFar = 0;
 var editTimeoutIntervalId;
 var editTimerWarnings = 0;
 var editTimeoutTipIsDisplayed = false;
+var minutes;
 
 // edit timeout warnings
 function editTimerTick() {
@@ -286,7 +287,7 @@ function editTimerTick() {
 			editTimeoutTipIsDisplayed = true;
 		}
 		if ( seconds > 0 && seconds % 60 == 0 ) {
-			var minutes = seconds / 60;
+			minutes = seconds / 60;
 			edittimeout.text( minutes );
 		} else if ( seconds <= 0 ) {
 			edittimeout.parents('.rbox-data:first').text('".addslashes(tra('Your edit session has expired'))."');
