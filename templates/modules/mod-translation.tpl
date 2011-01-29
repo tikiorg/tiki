@@ -56,8 +56,8 @@
 										{if $tiki_p_edit eq 'y'}
 											<a href="tiki-editpage.php?page={if isset($stagingPageName) && $hasStaging == 'y'}{$stagingPageName|escape:'url'}{else}{$page|escape:'url'}{/if}&amp;source_page={$better.page|escape:'url'}&amp;oldver={$better.last_update|escape:'url'}&amp;newver={$better.current_version|escape:'url'}&amp;diff_style={$default_diff_style}">{icon _id=page_translate_from alt="{tr}update from it{/tr}" style="vertical-align:middle"}</a>
 										{/if}
-										<a href="tiki-index.php?page={$better.page|escape:'url'}">{icon _id=page alt="{tr}view{/tr}" style="vertical-align:middle"}</a>
-										<a href="tiki-index.php?page={$better.page|escape:'url'}" title="{$better.page|escape}">
+										<a href="tiki-index.php?page={$better.page|escape:'url'}&no_bl=y">{icon _id=page alt="{tr}view{/tr}" style="vertical-align:middle"}</a>
+										<a href="tiki-index.php?page={$better.page|escape:'url'}&no_bl=y" title="{$better.page|escape}">
 										{if $show_language eq 'y'}
 											{$better.lang|langname}</a> 
 										{else}
