@@ -192,34 +192,14 @@ class Image extends ImageAbstract
 	}
 
 	function _get_height() {
-		if ($this->height) {
-			return $this->height;
-		} else if ($this->filename) {
-			list($this->width, $this->height, $type) = getimagesize($this->filename);
-			if ($this->height) {
-				return $this->height;
-			}
-		}
-		if (!$this->data) {
-			$this->_load_data();
-		}
+		$this->_load_data();
 		if ($this->data) {
 			return imagesy($this->data);
 		}
 	}
 
 	function _get_width() {
-		if ($this->width) {
-			return $this->width;
-		} else if ($this->filename) {
-			list($this->width, $this->height, $type) = getimagesize($this->filename);
-			if ($this->width) {
-				return $this->width;
-			}
-		}
-		if (!$this->data) {
-			$this->_load_data();
-		}
+		$this->_load_data();
 		if ($this->data) {
 			return imagesx($this->data);
 		}
