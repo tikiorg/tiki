@@ -369,7 +369,7 @@ function switchEditor(mode, form) {
 	
 	if (hiddenParents.length) { hiddenParents.show(); }
 	
-	if (!CodeMirror) { //so as not to conflict with CodeMirror resize
+	if (typeof CodeMirror === 'undefined') { //so as not to conflict with CodeMirror resize
 		\$('#$as_id')
 			.resizable( {
 				minWidth: \$('#$as_id').width(),
