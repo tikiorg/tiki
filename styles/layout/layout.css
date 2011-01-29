@@ -1,5 +1,4 @@
 /* $Id$
-/* ### Trebly:B01221: Added div.catlists and li.catlists for category lists modes inline-block or block 6.x 7.x 	*/
 /*	This file (layout.css) is to be imported by theme stylesheets. */
 	
 
@@ -32,7 +31,6 @@ header, nav, article, footer, address {
 /* lite.css needs the centre section to be
  * display:table to avoid overlapping columns */
 #middle {
-  /* width:1280px; /* ###trebly this by default is 100% for the 3 columns, for test I reduce to 70%, it should depend of screen 1280 max ?*/
 	display: table;
 }
 
@@ -140,21 +138,6 @@ img {
 }
 
 /***** Site Header & Identity *****/
-#siteheader {
-/*	text-align: left;*/
-	vertical-align: middle;
-	padding: 0;
-	margin: 0;
-}
-
-#sioptionscentered {
-	text-align: center;
-}
-
-#sioptionscentered #logo img {
-	margin: auto;
-}
-
 .floatright {
 	float: right;
 	clear: none;
@@ -163,10 +146,6 @@ img {
 .floatleft {
 	float: left;
 	clear: none;
-}
-
-#sitead {
-	margin: auto;
 }
 
 .siteloginbar div {
@@ -477,7 +456,6 @@ li#logout_link a {
 }
 
 /* centercolumn */
-	
 .fullscreen .tellafriend,
 .fullscreen .share {
 	margin-right: 100px;
@@ -527,8 +505,8 @@ ul.jumplinks,
 	z-index: 9;
 }
 
-ul.jumplinks a:focus,
-ul.jumplinks a:active {
+.jumplinks a:focus,
+.jumplinks a:active {
 	position: absolute;
 	top: 9010px;
 	left: 9010px;
@@ -673,14 +651,13 @@ img.icon {
 	white-space: nowrap;
 }
 
-/* ###trebly:B01221-12:[ENH]-> not Hx title simple par title
 /** Titles (not boxed) bold lines alone not in summary used by categobjects.tpl + ? **/
 .simple_title {
 	font-weight: bold;
 	display: block;
-	padding: 8px 5px 5px 0px;
+	padding: 8px 5px 5px 0;
 }
-/* ###trebly:B01221-12:end
+
 /** Find form **/
 .findtable {
   text-align: center;
@@ -778,10 +755,9 @@ a.toolbar {			/* each tool button */
 
 /* Inline_help : the inline_help are text displayed dependinf of user option : beginner, confirmed, expert */
 .simple_inlinehelp {
-font-style: italic;
-font-size: small;
-color:green; 
-font-family: sans-serif; 
+	font-style: italic;
+	font-size: small;
+	font-family: sans-serif; 
 }
 
 #site_report {
@@ -810,7 +786,7 @@ font-family: sans-serif;
 }
 
 .box {
-/*	overflow: hidden; ###trebly:test */
+/*	overflow: hidden; */
 }
 
 h3.box-title {
@@ -821,9 +797,7 @@ h3.box-title {
 
 .moduleflip,
 .box-title span img.flipmodimage {
-	display: none !important;
-	/*float: right;
-	position: relative;*/
+	display: none;
 	position: absolute;
 	right: 1%;
 	top: 0;
@@ -831,7 +805,7 @@ h3.box-title {
 
 .box:hover .moduleflip,
 .box:hover .box-title span img.flipmodimage {
-	display: block !important;
+	display: block;
 }
 
 .box:hover img.flipmodimage {
@@ -890,9 +864,6 @@ h3.box-title {
 	overflow: hidden;
 }
 
-
-
-
 /* remarks boxes */
 .rbox-title {
 	display: inline-block;
@@ -917,20 +888,6 @@ h3.box-title {
 	float: right;
 	cursor: pointer;
 }
-/* ###trebly:B012: List of other reachable category elements "catlist"*/
-/* moved to layout.css from style main ### trebly:B01221-11 : div.catlists ul { /* BTy:B01103-2 on 5.3 try to display list of items of a category as a lits non in-line*/
-/*display:inline-block; // for catlists or .catlist_block to choose a list moved to layout.css */
-/* allow long blocks to be displayed as a list, tpl is enhanced to separate in-blocks */	
-
-div.catlists ul.catitems {
-	display:inline-block;
-}
-	
-div.catlists_block  ul.catitems_block  li {
-display:block;
-}
-/* end ###trebly:B012
-
 
 /* For wikitext or custom code areas, editors can add, for example, a div class="halffloat"
 and put two modules or other divs between its tags;, each of these will use just under half of the width of the 
@@ -1036,9 +993,6 @@ tr.diffheader {
 	position: relative;
 	padding: 4px;
 	top: 0;
-/*	padding-top: 21px;
-	margin-bottom: 25px;
-	margin-top: -1px;*/
 }
 
 .tabcontent table {
@@ -1168,28 +1122,8 @@ ul.floatleft li {
 }
 
 /* fancytable (sortable) plugin */
-
 .fancysort .header {
 	cursor: pointer;
-}
-
-/* img plugin */
-.imgbox {
-        padding: 5px;
-}
-
-.thumbcaption {
-        padding: 2px;
-}
-
-.magnify {
-        float: right;
-        padding-top: 0.1cm;
-}
-
-img.magnify {
-        height: 12px;
-        width: 12px;
 }
 
 /** Wiki tocs **/
@@ -1221,8 +1155,6 @@ img.magnify {
 
 /* Wiki diff layout */
 .diff td {
-	overflow-x: auto;
-	overflow-y: visible;
 	white-space: normal;
 	
 }
@@ -1564,15 +1496,13 @@ body.tiki_forums .normal {
 	font-size: 1.2em;
 }
 
-.simple_comment { /* ###trebly:B01229:added applied mainly to titles : option ? help-inline-level user defined  */
-font-style: italic;
-font-size: x-small;
+/* applied mainly to titles : option ? help-inline-level user defined  */
+.simple_comment {
+	font-style: italic;
+	font-size: x-small;
 }
 
-
-
 /* Comment Annotations */
-
 dl.note-list {
 	margin: .5em;
 }
@@ -1606,12 +1536,10 @@ textarea#editpost2 {
 	margin-left: 10px;
 }
 
-.subcomment_lblogs { /* ###trebly:B012 tested on blogs to generalize to all lists with comments subcomments */
-	/* margin-left: 10px; */
-	border-bottom:double medium ; /* ### thin;	blogs are not well separated*/
-}
-
+/*
+.subcomment_lblogs {}
 .commentsedithelp {}
+*/
 
 /**** Image Galleries ****/
 .galtable {
@@ -1771,38 +1699,21 @@ body.filegal_popup #tiki-center {
 
 /***** Categories, Tags *****/
 
-/* ### trebly:B01221-11 : div.catlists ul { /* BTy:B01103-2 on 5.3 try to display list of items of a category as a lits non in-line*/
-/*display:inline-block; // for catlists or .catlist_block to choose a list moved to layout.css */
-/* allow long blocks to be displayed as a list, tpl is enhanced to separate in-blocks */	
-
-div.catlists ul.catitems {
-	display:inline-block;
-}	
-div.catlists_block  ul.catitems_block  li {
-	display:block;
-}
-.catlists_title {
-/* Can be altered by particular style to fit with his particularities (color) */
-padding: 10px 5px 5px 0px;
-display: block;
-font-weight: bold;
-font-size: 140%;
-border: 2px double #d7d7d7;
-border-bottom: 1px solid #ededed;
-background: #ededed;
+.catlists .catitems {
+	display :inline-block;
 }
 
-.cattitle {
-margin-top: 12px;
-	padding: 9px 5px 5px 0px;
+.catlists_block  .catitems_block  li {
 	display: block;
-	font-weight: bold;
-	font-size: 110%;
-	border: 1px solid #d7d7d7;
-	border-bottom: 1px solid #ededed; /* can be altered by style */
-	background: #ededed;  /* can be altered by style */
 }
-/* End ###trebly:added */
+
+.catlists_title {
+	padding: 10px 5px 5px 0px;
+	display: block;
+}
+/*
+.cattitle {
+}*/
 
 .categpath {
 	display: block;
@@ -1883,8 +1794,8 @@ a.freetag:hover {/* freetags.css (line 8)*/
 }
 
 li.freetag {
-	list-style: none !important;
-	display: inline !important;
+	list-style: none;
+	display: inline;
 	margin: 0;
 	padding: 0;
 }
@@ -1892,10 +1803,10 @@ li.freetag {
 ul.freetag {
 	margin: 0;
 	padding: 0;
-	display: inline !important;
+	display: inline;
 }
 
-.freetag a {display: inline !important}
+.freetag a {display: inline}
 
 .freetagObjectOdd {
 	margin: 2px;
