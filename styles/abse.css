@@ -239,14 +239,17 @@ body.cke_show_borders {
 	max-width: 460px;
 	margin-top: .8em}
 
-#siteloginbar,
-#siteloginbar_popup {bottom: 4px}
+#top_modules .siteloginbar_popup {
+	position: absolute;
+	right: 10px;
+	bottom: 0;
+}
 
-#siteloginbar_popup ul.cssmenu_horiz li ul {
+/*.siteloginbar_popup ul.cssmenu_horiz li ul {
 	padding: 0;
 	background: none;
 	margin-top: -12px;
-}
+}*/
 
 #sitetitles {
 	padding-left: 20px;
@@ -570,7 +573,6 @@ td.heading {
 }
 
 
-/** Tabs **/
 /** Tabs **/
 /* reset what's in layout.css */
 
@@ -1094,93 +1096,6 @@ td.dirfooter {font-size: .95em}
 .Cal2 {
 	color: #000;
 	font-size: 90%}
-
-.Calart,
-.Calblog,
-.Calchart,
-.Caldir,
-.Caleph,
-.Calfaq,
-.Calfgal,
-.Calforum,
-.Calgal,
-.Calnl,
-.Calquiz,
-.Calsurv,
-.Caltrack,
-.Calwiki {font-size: 90%}
-	
-.Calart:before,
-.Calblog:before,
-.Calchart:before,
-.Caldir:before,
-.Caleph:before,
-.Calfaq:before,
-.Calfgal:before,
-.Calforum:before,
-.Calgal:before,
-.Calnl:before,
-.Calquiz:before,
-.Calsurv:before,
-.Caltrack:before,
-.Calwiki:before {
-	background: #000;
-	font-size: 1.2em} 
-
-.Calart,
-.Calart a,
-.Calart a:visited {color: #fa8072}
-
-.Calblog,
-.Calblog a,
-.Calblog a:visited {color: #da70d6}
-
-.Calchart,
-.Calchart a,
-.Calchart a:visited {color: #304f30}
-
-.Caldir,
-.Caldir a,
-.Caldir a:visited {color: #cf00d0}
-
-.Calfaq,
-.Calfaq a,
-.Calfaq a:visited {color: #d15e5e}
-
-.Calfgal,
-.Calfgal a,
-.Calfgal a:visited {color: #8B4513}
-
-.Calforum,
-.Calforum a,
-.Calforum a:visited {color: #cdce00}
-
-.Calgal,
-.Calgal a,
-.Calgal a:visited {color: #8b4513}
-
-.Calnl,
-.Calnl a,
-.Calnl a:visited {color: #708090}
-
-.Calquiz,
-.Calquiz a,
-.Calquiz a:visited {color: #5f9ea0}
-
-.Calsurv,
-.Calsurv a,
-.Calsurv a:visited {color: #daa520}
-
-.Caltrack,
-.Caltrack a,
-.Caltrack a:visited {color: #00bd02}
-	
-.Calweb {font-size: 1em}
-.Calweb:hover {color: #996633}
-
-.Calwiki,
-.Calwiki a,
-.Calwiki a:visited {color: #bdcec3}
 
 .calcontent a.linkmenu,
 .calcontent a.linkmenu:hover {

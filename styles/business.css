@@ -177,7 +177,6 @@ hr {
 
 /***** Site Header & Identity *****/
 #header {
-/*	min-height: 114px;*/
 	position: relative;
 }
 
@@ -266,7 +265,7 @@ hr {
 	background: url(business/input.gif) repeat-x;
 }
 
-#header .box-login_box {
+#top_modules .siteloginbar_popup {
 	position: absolute;
 	right: 10px;
 	bottom: 0;

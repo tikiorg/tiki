@@ -182,12 +182,11 @@ input[type="submit"]:active,
 
 
 /***** Site Header & Identity *****/
-#header-top {
-	min-height: 40px;
-}
+
 
 #sitetitles {
 	font-weight: bold;
+	padding-bottom: 15px;
 }
 
 #sitetitle {
@@ -202,6 +201,12 @@ input[type="submit"]:active,
 #header .box-login_box {
 	float: right;
 	margin-right: 10px;
+}
+
+#top_modules .siteloginbar_popup {
+	position: absolute;
+	right: 10px;
+	bottom: 0;
 }
 
 #tiki-top {

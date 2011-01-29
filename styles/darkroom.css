@@ -309,9 +309,13 @@ ol {
 
 /* Site Header & Identity */
 #header_fixedwidth {
-	height: auto;
-	min-height: 50px;
+/*	height: auto;
+	min-height: 50px;*/
 	padding-top: 2px;
+}
+
+#top_modules {
+	min-height: 100px;
 }
 
 #sitelogo {
@@ -351,11 +355,13 @@ ol {
 	font-size: 1.6em;
 }
 
-.siteloginbar,
-.siteloginbar_popup {
-	bottom: 2px;
+#top_modules .siteloginbar_popup {
+	position: absolute;
+	right: 10px;
+	bottom: 0;
+	white-space: nowrap;
 }
-
+/*
 .siteloginbar * {
 	padding: 2px;
 }
@@ -376,7 +382,7 @@ input[id="sl-login-pass"] {
 .siteloginbar_popup .tabcontent {
 	margin: 0;
 }
-
+*/
 #tiki-top {
 	width: 100%;
 	border-top: 1px solid #818181;
