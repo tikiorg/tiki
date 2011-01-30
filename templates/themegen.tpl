@@ -40,7 +40,7 @@
 										</div>
 										<input type="text" name="tg_swaps[{$tg_type}][{$tg_item.old}]"
 												value="{$tg_item.new}" class="tgValue" />
-									{elseif $tg_section eq 'typeography'}
+									{elseif $tg_section eq 'typography'}
 										{if $tg_type eq "fontsize"}
 											 <div class="tgLabel">
 												{$tg_item.old}

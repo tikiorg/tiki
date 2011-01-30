@@ -260,7 +260,7 @@
 		$("input[name=tg_new_theme]").show();
 		$("input[name=tg_delete_theme]").hide();
 	}
-							});{/jq}
+							}).change();{/jq}
 							{if $prefs.feature_jquery_ui eq "y" and $prefs.feature_ajax eq "y"}
 								{button _text="{tr}Open editor{/tr}" _class="tgFloatDialog" href="#"}
 							{/if}

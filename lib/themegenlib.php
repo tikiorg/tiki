@@ -119,7 +119,7 @@ class ThemeGenLib
 				),
 				'title' => tra('Colors:'),
 			),
-			'typeography' => array(
+			'typography' => array(
 				'types' => array(
 					'fontsize' => array(
 						'items' => $fontsizes,
@@ -157,7 +157,7 @@ class ThemeGenLib
 		$css_files = array('' => tra('Select...'));
 		$css = '';
 		
-		if (!empty($prefs['style_option'])) {
+		if (!empty($prefs['style_option']) && $prefs['style_option'] !== tra('None')) {
 			$css_files[$tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option'])] = $style_base . '/' . $prefs['style_option'];
 			$css .= file_get_contents( $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']) );
 		}
@@ -258,7 +258,13 @@ class ThemeGenTheme extends SerializedList
 	}
 	
 	public function initData() {
-		$this->data = array( 'files' => array() );
+		global $prefs;
+		
+		$this->data = array(
+			'files' => array(),
+			'theme' => $prefs['style'],
+			'theme-option' => $prefs['style_option'], 
+		);
 	}
 
 	public function initPrefPrefix() {
@@ -266,12 +272,17 @@ class ThemeGenTheme extends SerializedList
 	}
 	
 	public function setData($params) {
+		global $prefs;
+
 		list($swaps, $css_file) = $params;
 		
 		if (!$swaps && !$css_file && isset($params['files'])) {
 			$this->data = $params;
 			return;
 		}
+		
+		$this->data['theme'] = $prefs['style'];
+		$this->data['theme-option'] = $prefs['style_option'];
 		
 		if (!isset($this->data['files'][$css_file])) {
 			$this->data['files'][$css_file] = array();
