@@ -35,7 +35,7 @@
 				{/if}
 
         <div class="quizoptions">
-          <table class="normal">
+          <table class="formcolor">
             <tr>
               <td valign="top">
               	&nbsp;
