@@ -71,6 +71,32 @@ class Smarty_Tiki extends Smarty
 		return parent::_smarty_include($params);
 	}
 
+	// Fetch templates from plugins (smarty plugins, wiki plugins, modules, ...) that may need to :
+	//   - temporarily override some smarty vars,
+	//   - prefix their self_link / button / query URL arguments
+	//
+	function plugin_fetch($_smarty_tpl_file, &$override_vars = null) {
+		$smarty_orig_values = array();
+		if ( is_array( $override_vars ) ) {
+			foreach ( $override_vars as $k => $v ) {
+				$smarty_orig_values[ $k ] =& $this->get_template_vars( $k );
+				$this->assign_by_ref($k, $override_vars[ $k ]);
+			}
+		}
+
+		$return = $this->fetch($_smarty_tpl_file);
+
+		// Restore original values of smarty variables
+		if ( count( $smarty_orig_values ) > 0 ) {
+			foreach ( $smarty_orig_values as $k => $v ) {
+				$this->assign_by_ref($k, &$smarty_orig_values[ $k ]);
+			}
+		}
+
+		unset( $smarty_orig_values );
+		return $return;
+	}
+
 	function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false) {
 		global $prefs, $style_base, $tikidomain, $zoom_templates;
 
