@@ -26,17 +26,22 @@ class FileGalLib extends TikiLib
 	function remove_file($fileInfo, $galInfo='', $disable_notifications = false) {
 		global $prefs, $smarty, $user;
 
+		if ( empty( $fileInfo['fileId'] ) ) {
+			return false;
+		}
+		$fileId = $fileInfo['fileId'];
+
 		if ($podCastGallery = $this->isPodCastGallery($fileInfo['galleryId'], $galInfo)) {
 			$savedir=$prefs['fgal_podcast_dir'];
 		} else {
 			$savedir=$prefs['fgal_use_dir'];
 		}
 
-		$this->deleteBacklinks(null, $fileInfo['fileId']);
+		$this->deleteBacklinks(null, $fileId);
 		if ($fileInfo['path']) {
 			unlink ($savedir . $fileInfo['path']);
 		}
-		$archives = $this->get_archives($fileInfo['fileId']);
+		$archives = $this->get_archives($fileId);
 		foreach ($archives['data'] as $archive) {
 			if ($archive['path']) {
 				unlink ($savedir . $archive['path']);
@@ -45,17 +50,22 @@ class FileGalLib extends TikiLib
 		}
 
 		$query = 'delete from `tiki_files` where `fileId`=? or `archiveId`=?';
-		$result = $this->query($query,array($fileInfo['fileId'], $fileInfo['fileId']));
-		$this->remove_draft($fileInfo['fileId']);
-		$this->remove_object('file', $fileInfo['fileId']);
+		$result = $this->query($query,array($fileId, $fileId));
+		$this->remove_draft($fileId);
+		$this->remove_object('file', $fileId);
 
 		//Watches
 		if ( ! $disable_notifications ) $this->notify($fileInfo['galleryId'], $fileInfo['name'], $fileInfo['filename'], '', 'remove file', $user);
 
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
-			$logslib->add_action('Removed', $fileInfo['fileId'].'/'.$fileInfo['filename'], 'file', '');
+			$logslib->add_action('Removed', $fileId . '/' . $fileInfo['filename'], 'file', '');
 		}
+
+		// Delete upload file limit
+		global $tikilib;
+		$tikilib->delete_preference( "fgal_{$fileId}_hit_limit" );
+
 		return true;
 	}
 
@@ -975,11 +985,13 @@ class FileGalLib extends TikiLib
 		$limit = (int) $limit;
 		$pref = "fgal_{$fileId}_hit_limit";
 
-		if( $limit <= 0 )
+		if ( $limit <= 0 ) {
 			$tikilib->delete_preference( $pref );
-		else
+		} else {
 			$tikilib->set_preference( $pref, $limit );
+		}
 	}
+
 	// not the best optimisation as using a library using files and not content
 	function zip($fileIds, &$error, $zipName='') {
 		global $tiki_p_admin_file_galleries, $userlib, $tikilib, $prefs, $user;
