@@ -2,7 +2,7 @@
 	<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 	{if $status}<input type="hidden" name="status" value="{$status}" />{/if}
 	{if $sort_mode}<input type="hidden" name="sort_mode" value="{$sort_mode}" />{/if}
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
 			{if ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')) and $showstatus ne 'n'}
 				{foreach key=st item=stdata from=$status_types}
