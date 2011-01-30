@@ -16,6 +16,9 @@ require_once (defined('SMARTY_DIR') ? SMARTY_DIR : 'lib/smarty/libs/') . 'Smarty
 
 class Smarty_Tiki extends Smarty
 {
+	var $url_overriding_prefix_stack = null;
+	var $url_overriding_prefix = null;
+
 	function Smarty_Tiki($tikidomain = '') {
 		parent::Smarty();
 		global $prefs;
@@ -54,6 +57,8 @@ class Smarty_Tiki extends Smarty
 		$secure_dirs[] = 'img/icons2';
 		$this->secure_dir = $secure_dirs;
 		$this->security_settings['ALLOW_SUPER_GLOBALS'] = true;
+
+		$this->url_overriding_prefix_stack = array();
 	}
 
 	function _smarty_include($params) {
@@ -294,6 +299,19 @@ class Smarty_Tiki extends Smarty
     			$file = '/';
   		}
 		return $this->template_dir.$file.$template;
+	}
+
+	function set_request_overriders( $url_arguments_prefix, $arguments_list ) {
+		$this->url_overriding_prefix_stack[] = array( $url_arguments_prefix . '-', $arguments_list );
+		$this->url_overriding_prefix =& $this->url_overriding_prefix_stack[ count( $this->url_overriding_prefix_stack ) - 1 ];
+	}
+
+	function remove_request_overriders( $url_arguments_prefix, $arguments_list ) {
+		$last_override_prefix = empty( $this->url_overriding_prefix_stack ) ? false : array_pop($this->url_overriding_prefix_stack);
+		if ( ! is_array($last_override_prefix) || $url_arguments_prefix . '-' != $last_override_prefix[0] ) {
+			trigger_error( 'URL Overriding prefix stack is in a bad state', E_USER_ERROR );
+		}
+		$this->url_overriding_prefix =& $this->url_overriding_prefix_stack[ count( $this->url_overriding_prefix_stack ) - 1 ];;
 	}
 }
 
