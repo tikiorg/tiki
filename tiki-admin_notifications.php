@@ -72,7 +72,7 @@ if (isset($_REQUEST["add"])) {
 	}
 	if ($save and isset($_REQUEST['event']) and isset($watches[$_REQUEST['event']])) {
 		$result = $tikilib->add_user_watch($login, $_REQUEST["event"], $watches[$_REQUEST['event']]['object'], $watches[$_REQUEST['event']]['type'], $watches[$_REQUEST['event']]['label'], $watches[$_REQUEST['event']]['url'], isset($email) ? $email : NULL);
-		if (!result) {
+		if (!$result) {
 			$tikifeedback[] = array(
 				'mes' => tra("The user has no email set. No notifications will be sent.")
 			);			
