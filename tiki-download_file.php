@@ -110,19 +110,24 @@ if (!$skip) {
 		$smarty->display('error.tpl');
 		die;
 	}
-	if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files') && !($info['backlinkPerms'] == 'y' && !$filegallib->hasOnlyPrivateBacklinks($info['fileId']))) {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra('Permission denied'));
-		$smarty->display('error.tpl');
-		die;
-	}
-	if ( isset($_GET['thumbnail']) && is_numeric($_GET['thumbnail'])) { //check also perms on thumb 
-		$info_thumb = $tikilib->get_file($_GET['thumbnail']);
-		if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info_thumb['galleryId'], 'file gallery', 'tiki_p_download_files') && !($info['backlinkPerms'] == 'y' && !$filegallib->hasOnlyPrivateBacklinks($info_thumb['fileId']))) {
+
+	if ( $prefs['auth_tokens'] == 'n' || !$is_token_access ) {
+		// Check permissions except if the user comes with a valid Token
+
+		if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files') && !($info['backlinkPerms'] == 'y' && !$filegallib->hasOnlyPrivateBacklinks($info['fileId']))) {
 			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra('Permission denied'));
 			$smarty->display('error.tpl');
 			die;
+		}
+		if ( isset($_GET['thumbnail']) && is_numeric($_GET['thumbnail'])) { //check also perms on thumb 
+			$info_thumb = $tikilib->get_file($_GET['thumbnail']);
+			if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info_thumb['galleryId'], 'file gallery', 'tiki_p_download_files') && !($info['backlinkPerms'] == 'y' && !$filegallib->hasOnlyPrivateBacklinks($info_thumb['fileId']))) {
+				$smarty->assign('errortype', 401);
+				$smarty->assign('msg', tra('Permission denied'));
+				$smarty->display('error.tpl');
+				die;
+			}
 		}
 	}
 }
