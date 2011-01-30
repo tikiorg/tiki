@@ -8010,12 +8010,17 @@ if( \$('#$id') ) {
 
 	static function date_format($format, $timestamp = false, $_user = false, $input_format = 5/*DATE_FORMAT_UNIXTIME*/, $is_strftime_format = true) {
 		$tikilib = TikiLib::lib('tiki');
-		$tikidate = TikiLib::lib('tikidate');
+		static $currentUserDateByFormat = array();
 
 		if ( ! $timestamp ) {
-			$timestamp = time();
+			$timestamp = $tikilib->now;
 		}
 
+		if ( $_user === false && $is_strftime_format && $timestamp == $tikilib->now && isset( $currentUserDateByFormat[ $format ] ) ) {
+			return $currentUserDateByFormat[ $format ];
+		}
+
+		$tikidate = TikiLib::lib('tikidate');
 		$tikidate->setTZbyID('UTC');
 		try {
 			$tikidate->setDate($timestamp);
@@ -8030,7 +8035,11 @@ if( \$('#$id') ) {
 			$tikidate->setTZbyID($tz);
 		}
 
-		return $tikidate->format($format, $is_strftime_format);
+		$return = $tikidate->format($format, $is_strftime_format);
+		if ( $is_strftime_format ) {
+			$currentUserDateByFormat[ $format ] = $return;
+		}
+		return $return;
 	}
 
 	function make_time($hour,$minute,$second,$month,$day,$year) {
