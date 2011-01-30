@@ -59,7 +59,7 @@ html > body,
 
 .footerbgtrap {
 	color: #363636;
-	background: #fff url(../lib/jquery/jquery-ui/themes/smoothness/images/ui-bg_flat_75_ffffff_40x100.png);
+	background: #fdfdfd;
 	border: 1px solid #cccccc;
 	border-bottom: none;
 	margin: 10px;
@@ -160,7 +160,7 @@ input[type="submit"]:hover,
 
 .button.highlight a {
 	border: 1px solid #fcefa1;
-	background: #f3f3f3 url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x;
+	background: #aaaaaa;
 	color: #363636;
 }
 
@@ -334,7 +334,7 @@ a .sf-sub-indicator {
 .cbox {
 	padding: .2em;
 	margin: 0 .5em 10px;
-	background: #ffffff url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
+	background-color: #fefefe;
 	color: #363636;
 	border: 1px solid #aaa;
 }
@@ -359,7 +359,7 @@ h3.box-title,
 .cbox-data,
 .box-data {
 	padding: .5em 1em;
-	background: none;
+	background-image: none;
 }
 
 /** Other boxes **/
