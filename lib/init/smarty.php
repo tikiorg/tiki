@@ -142,6 +142,8 @@ class Smarty_Tikiwiki extends Smarty
 			if ($prefs['feature_fullscreen'] != 'y' || empty($_SESSION['fullscreen']) || $_SESSION['fullscreen'] != 'y')
 				include_once('tiki-modules.php');
 		} elseif ($_smarty_tpl_file == 'confirm.tpl' || $_smarty_tpl_file == 'error.tpl' || $_smarty_tpl_file == 'error_ticket.tpl' || $_smarty_tpl_file == 'error_simple.tpl') {
+			ob_end_clean(); // Empty existing Output Buffer that may have been created in smarty before the call of this confirm / error* template
+
 			include_once('tiki-modules.php');
 		}
 		if (isset($style_base)) {
