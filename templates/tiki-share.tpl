@@ -266,7 +266,7 @@
 				</td>
 			</tr>
 		{/if}
-		{if $prefs.feature_forums!='y' && $report != 'y'}
+		{if $prefs.feature_forums eq 'y' && $report != 'y'}
 			<tr>
 				<td rowspan="2">
 					<img src="pics/large/stock_index48x48.png" alt="{tr}Forums{/tr}" />
