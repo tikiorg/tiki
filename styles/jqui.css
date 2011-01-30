@@ -362,6 +362,12 @@ h3.box-title,
 	background-image: none;
 }
 
+/* menu in a module, use module bg colour */
+.box-menu .cssmenu_vert a {
+	background-color: inherit;
+}
+
+
 /** Other boxes **/
 
 .rbox-title,
