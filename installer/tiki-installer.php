@@ -165,10 +165,10 @@ function isWindows() {
 	return $windows;
 }
 
-class Smarty_Tikiwiki_Installer extends Smarty
+class Smarty_Tiki_Installer extends Smarty
 {
 
-	function Smarty_Tikiwiki_Installer($tikidomain) {
+	function Smarty_Tiki_Installer($tikidomain) {
 		parent::Smarty();
 		if ($tikidomain) {
 			$tikidomain .= '/'; 
@@ -178,7 +178,7 @@ class Smarty_Tikiwiki_Installer extends Smarty
 		$this->config_dir = realpath('configs/');
 		$this->cache_dir = realpath("templates_c/$tikidomain");
 		$this->caching = 0;
-		$this->assign('app_name', 'Tikiwiki');
+		$this->assign('app_name', 'Tiki');
 		include_once('lib/setup/third_party.php');
 		$this->plugins_dir = array(	// the directory order must be like this to overload a plugin
 			TIKI_SMARTY_DIR,
@@ -528,7 +528,7 @@ $_SESSION["install-logged-$multi"] = 'y';
 
 // Init smarty
 global $tikidomain;
-$smarty = new Smarty_Tikiwiki_Installer($tikidomain);
+$smarty = new Smarty_Tiki_Installer($tikidomain);
 $smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('mid', 'tiki-install.tpl');

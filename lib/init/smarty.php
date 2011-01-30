@@ -14,9 +14,9 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== FALSE) {
 require_once 'lib/setup/third_party.php';
 require_once (defined('SMARTY_DIR') ? SMARTY_DIR : 'lib/smarty/libs/') . 'Smarty.class.php';
 
-class Smarty_Tikiwiki extends Smarty
+class Smarty_Tiki extends Smarty
 {
-	function Smarty_Tikiwiki($tikidomain = '') {
+	function Smarty_Tiki($tikidomain = '') {
 		parent::Smarty();
 		global $prefs;
 
@@ -28,7 +28,7 @@ class Smarty_Tikiwiki extends Smarty
 		$this->caching = 0;
 		$this->compile_check = ( $prefs['smarty_compilation'] != 'never' );
 		$this->force_compile = ( $prefs['smarty_compilation'] == 'always' );
-		$this->assign('app_name', 'Tikiwiki');
+		$this->assign('app_name', 'Tiki');
 		$this->plugins_dir = array(	// the directory order must be like this to overload a plugin
 			TIKI_SMARTY_DIR,
 			SMARTY_DIR.'plugins'
@@ -138,13 +138,16 @@ class Smarty_Tikiwiki extends Smarty
 				$this->assign('print_page', 'y');
 			}
 			$data = $this->fetch($tpl, $_smarty_cache_id, $_smarty_compile_id);//must get the mid because the modules can overwrite smarty variables
+
 			$this->assign('mid_data', $data);
 			if ($prefs['feature_fullscreen'] != 'y' || empty($_SESSION['fullscreen']) || $_SESSION['fullscreen'] != 'y')
 				include_once('tiki-modules.php');
+
 		} elseif ($_smarty_tpl_file == 'confirm.tpl' || $_smarty_tpl_file == 'error.tpl' || $_smarty_tpl_file == 'error_ticket.tpl' || $_smarty_tpl_file == 'error_simple.tpl') {
 			ob_end_clean(); // Empty existing Output Buffer that may have been created in smarty before the call of this confirm / error* template
 
 			include_once('tiki-modules.php');
+
 		}
 		if (isset($style_base)) {
 			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/$_smarty_tpl_file")) {
@@ -155,6 +158,7 @@ class Smarty_Tikiwiki extends Smarty
 				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
 			}
 		}
+
 		$_smarty_cache_id = $prefs['language'] . $_smarty_cache_id;
 		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id;
 
@@ -268,7 +272,7 @@ class Smarty_Tikiwiki extends Smarty
 }
 
 if (!isset($tikidomain)) { $tikidomain = ''; }
-$smarty = new Smarty_Tikiwiki($tikidomain);
+$smarty = new Smarty_Tiki($tikidomain);
 $smarty->load_filter('pre', 'tr');
 $smarty->load_filter('pre', 'jq');
 
