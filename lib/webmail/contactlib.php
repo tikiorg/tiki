@@ -55,7 +55,7 @@ class ContactLib extends TikiLib
 		return $ret;
 	}
 
-	function are_contacts($contacts, $user) {
+	function are_contacts($contacts, $user = '') {
 		$ret = array();
 
 		foreach ($contacts as $con) {
@@ -68,6 +68,21 @@ class ContactLib extends TikiLib
 				$ret[] = $con;
 		}
 		return $ret;
+	}
+	
+	function exist_contact($contact, $user = '') {
+		
+		$contact = trim($contact);
+		$query = "select count(*) from `tiki_webmail_contacts` where `email`=? ".(($user!='')?(' and `user` =? '):(''));
+		$params[] = $contact;
+		if($user!=''){
+			$params[] = $user; 	
+		}
+		
+		if($this->getOne($query, $params) == 0){
+			return false;
+		}
+		return true;
 	}
 
 	function list_contacts_by_letter($user, $offset, $maxRecords, $sort_mode, $letter, $include_group_contacts = false) {
@@ -86,6 +101,22 @@ class ContactLib extends TikiLib
 			}
 		}
 		return $dirs;
+	}
+	
+	function add_contacts($contacts, $user){
+		
+		if(is_array($contacts)){
+			foreach ($contacts as $contact) {
+				$query = 'insert into `tiki_webmail_contacts` set `firstName`=?, `lastName`=?, `email`=?, `nickname`=?, `user`=?';
+				$res = $this->query($query, array($contact['firstName'], $contact['lastName'], $contact['email'], $contact['nickname'], $user));
+				
+				if ($res->numRows()) {
+					$result[] = $res->fetchRow();
+				}		
+			}
+		}
+		
+		return $result;
 	}
 	
 	function replace_contact($contactId, $firstName, $lastName, $email, $nickname, $user, $groups=array(), $exts=array(), $dontDeleteExts = false) {

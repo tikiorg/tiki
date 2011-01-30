@@ -113,12 +113,7 @@ if (strstr($_REQUEST['url'], 'tiki-share.php')) {
 	header('location: tiki-share.php?url=' . $_REQUEST['url']);
 }
 $url_for_friend = $tikilib->httpPrefix( true ) . $_REQUEST['url'];
-if( $prefs['auth_token_share'] == 'y' && $prefs['auth_token_access'] == 'y' && isset($_POST['share_access']) ) {
-	require_once 'lib/auth/tokens.php';
-	$tokenlib = AuthTokens::build( $prefs );
-	$url_for_friend = $tokenlib->includeToken( $url_for_friend, $globalperms->getGroups() );
-	$smarty->assign('share_access',true);
-}
+
 if ($report != 'y') {
 	if (isset($_REQUEST['shorturl'])) {
 		$shorturl=$_REQUEST['shorturl'];
@@ -136,7 +131,7 @@ if ($report != 'y') {
 }
 $smarty->assign('url', $_REQUEST['url']);
 $smarty->assign('prefix', $tikilib->httpPrefix( true ));
-$smarty->assign( 'url_for_friend', $url_for_friend );
+$smarty->assign_by_ref( 'url_for_friend', $url_for_friend );
 
 if (!empty($_REQUEST['subject'])) {
 	$subject = $_REQUEST['subject'];
@@ -155,7 +150,15 @@ if (isset($_REQUEST['send'])) {
 	if (!empty($_REQUEST['comment'])) {
 		$smarty->assign('comment', $_REQUEST['comment']);	
 	}
-
+	
+	if(!empty($_REQUEST['share_token_notification'])){
+		$smarty->assign('share_token_notification', $_REQUEST['share_token_notification']);
+	}
+	
+	if(!empty($_REQUEST['how_much_time_access'])){
+		$smarty->assign('how_much_time_access', $_REQUEST['how_much_time_access']);
+	}
+	
 	check_ticket('share');
 	if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
 		$errors[] = $captchalib->getErrors();
@@ -169,6 +172,64 @@ if (isset($_REQUEST['send'])) {
 		$_REQUEST['do_email']=1;
 	}
 	if (isset ($_REQUEST['do_email']) and $_REQUEST['do_email']==1) {
+		// send
+		
+		// Fix for multi adresses with autocomplete funtionnality
+		if(substr($_REQUEST['addresses'],-2) == ', '){
+			$_REQUEST['addresses'] = substr($_REQUEST['addresses'], 0, -2);
+		} 
+		$adresses = checkAddresses($_REQUEST['addresses']);
+		
+		require_once 'lib/auth/tokens.php';
+		if($prefs['share_can_choose_how_much_time_access'] && isset($_REQUEST['how_much_time_access']) && is_numeric($_REQUEST['how_much_time_access']) && $_REQUEST['how_much_time_access']>=1){
+			$prefs['auth_token_access_maxhits'] = $_REQUEST['how_much_time_access'];
+			
+			/* To upload, you need 2 token: one to see the page and another */
+			if(strpos($_REQUEST['url'], "tiki-upload_file")){
+				$prefs['auth_token_access_maxhits'] = $prefs['auth_token_access_maxhits']*2+1;
+			}
+			
+		}
+		
+		
+		if($_REQUEST['share_token_notification'] == 'y'){
+			// list all users to give an unique token for notification
+			$tokenlib = AuthTokens::build( $prefs );
+						
+			if(is_array($adresses)){
+				foreach ($adresses as $adresse) {
+					$tokenlist[] = $tokenlib->includeTokenReturn( $url_for_friend, $globalperms->getGroups(), $adresse );	
+					// if preference share_contact_add_non_existant_contact the add auomaticly to contact
+					if($prefs['share_contact_add_non_existant_contact'] == 'y' && $prefs['feature_contacts'] == 'y'){
+						// check if email exist for at least one contact in 
+						if(!$contactlib->exist_contact($adresse, $user)){
+							$contacts = array(array('email'=>$adresse));
+							$contactlib->add_contacts($contacts, $user);
+						}
+					}
+				}
+			}	
+
+			$smarty->assign('share_access',true);
+			
+			if(is_array($tokenlist)){
+				foreach ($tokenlist as $i=>$data) {
+					// Delete old user watch if it's necessary => avoid bad mails
+					$tikilib->remove_user_watch_object('auth_token_called', $data['tokenId'], 'security');
+					$tikilib->add_user_watch($user, 'auth_token_called', $data['tokenId'], 'security', tra('Token called'), $data['url']);
+				}
+			}
+			
+			
+		} else {
+			if( $prefs['auth_token_share'] == 'y' && ($prefs['auth_token_access'] == 'y' || isset($_POST['share_access']))) {
+				$tokenlib = AuthTokens::build( $prefs );
+				$url_for_friend = $tokenlib->includeTokenReturn( $url_for_friend, $globalperms->getGroups(), $_REQUEST['addresses']);
+				$smarty->assign('share_access',true);
+			} 
+			$tokenlist[0] = $url_for_friend;
+		}		
+		
 		$smarty->assign_by_ref('email', $_REQUEST['email']);
 		if (!empty($_REQUEST['addresses'])) {
 			$smarty->assign('addresses', $_REQUEST['addresses']);
@@ -176,7 +237,7 @@ if (isset($_REQUEST['send'])) {
 		if (!empty($_REQUEST['name'])) {
 			$smarty->assign('name', $_REQUEST['name']);
 		}
-		$emailSent = sendMail($_REQUEST['email'], $_REQUEST['addresses'], $subject);
+		$emailSent = sendMail($_REQUEST['email'], $_REQUEST['addresses'], $subject, $tokenlist);
 		$smarty->assign('emailSent', $emailSent);
 		$ok = $ok && $emailSent;
 	} // do_email
@@ -236,6 +297,7 @@ if (isset($_REQUEST['send'])) {
 	$smarty->assign_by_ref('name', $user);
 	$smarty->assign('email', $userlib->get_user_email($user));
 }
+
 ask_ticket('share');
 $smarty->assign('mid', 'tiki-share.tpl');
 $smarty->display('tiki.tpl');
@@ -247,7 +309,9 @@ $smarty->display('tiki.tpl');
  */
 function checkAddresses($recipients) {
 	global $errors, $prefs;
-	global $registrationlib; include_once ('lib/registration/registrationlib.php');
+	global $registrationlib, $userlib; 
+	include_once ('lib/registration/registrationlib.php');
+	
 	$e=array();
 	if (!is_array($recipients)) {
 		$recipients=preg_split('/(,|;)/',$recipients);
@@ -280,12 +344,13 @@ function checkAddresses($recipients) {
  * @param string|array	$recipients	List of recipients either as array or comma/semi colon separated string
  * @param string		$subject	E-Mail subject
  * @param string		$url_for_friend		URL to share
+ * @param array			$tokenlist
  * @return bool						true on success / false if the supplied parameters were incorrect/missing or an error occurred sending the mail
  */
-function sendMail($sender, $recipients, $subject) {
-	global $errors, $prefs, $smarty, $user, $userlib;
+function sendMail($sender, $recipients, $subject, $tokenlist = array()) {
+	global $errors, $prefs, $smarty, $user, $userlib, $logslib;
 	global $registrationlib; include_once ('lib/registration/registrationlib.php');
-	
+		
 	if (empty($sender)) {
 		$errors[] = tra('Your email is mandatory');
 		return false;
@@ -314,16 +379,21 @@ function sendMail($sender, $recipients, $subject) {
 		$mail->setHeader("Return-Path", "<$from>");
 		$mail->setHeader("Reply-To", "<$from>");
 	}
-
-	$txt = $smarty->fetch('mail/share.tpl');
 	$mail->setSubject($subject);
-	$mail->setText($txt);
-	$mail->buildMessage();
+	
 	$ok = true;
-	foreach($recipients as $recipient) {
+	foreach($recipients as $i=>$recipient) {
+		$url_for_friend = $tokenlist[$i]['url'];
+		$smarty->assign('url_for_friend', $url_for_friend);
+		$txt = $smarty->fetch('mail/share.tpl');
+		// Rebuild email message texte
+		$mail->is_built = false;
+		$mail->setText($txt);
 		$mailsent = $mail->send(array($recipient));
 		if (!$mailsent) {
-			$errors[] = tra("Error sending mail to"). " $email";
+			$errors[] = tra("Error sending mail to"). " $recipient";
+		} else {
+			$logslib->add_log('share', tra('Share page').': '.$url_for_friend.' '.tra('to').' '.$recipient.' '.tra('by').' '.$user);
 		}
 		$ok = $ok && $mailsent;
 	}

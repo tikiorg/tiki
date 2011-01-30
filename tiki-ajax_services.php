@@ -47,6 +47,31 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 			}
 		}
 		$access->output_serialized($usrs);
+	} elseif ($_REQUEST['listonly'] == 'usersandcontacts') {
+		$listcontact = $contactlib->list_contacts($user);
+		$listusers = $userlib->get_users();
+		
+		$contacts = array();		
+		$query = $_REQUEST['q'];
+				
+		foreach($listcontact as $key=>$contact) {
+			if (isset($query) && (stripos($contact['firstName'], $query) !== false or stripos($contact['lastName'], $query) !== false or stripos($contact['email'], $query) !== false)) {
+				if($contact['email']<>''){ $contacts[] = $contact['email']; }
+			}
+		}
+		foreach($listusers['data'] as $key=>$contact) {
+			if (isset($query) && (stripos($contact['firstName'], $query) !== false or stripos($contact['login'], $query) !== false or stripos($contact['lastName'], $query) !== false or stripos($contact['email'], $query) !== false)) {
+				if($prefs['login_is_email'] == 'y'){
+					$contacts[] = $contact['login'];
+				} else {
+					$contacts[] = $contact['email'];
+				}
+			}
+		}
+		$contacts = array_unique($contacts);
+		sort($contacts);
+		$access->output_serialized($contacts);
+		
 	} elseif ($_REQUEST['listonly'] == 'userrealnames') {
 		$groups = '';
 		$listusers = $userlib->get_users_light(0, -1, 'login_asc', '', $groups);

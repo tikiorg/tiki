@@ -87,10 +87,10 @@ function prefs_fgal_list() {
 			'type' => 'list',
 			'options' => array(
 							  'n' 				=> tra('Never'),
-							  'bar_and_text' 	=> tra('Yes, display only and detail text'),
+							  'bar_and_text' 	=> tra('Yes, display bar and detail text'),
 							  'y' 				=> tra('Yes, display only bar'),
-							  'text_only'		=> tra('Yes, display bar and detail text')
-		),
+							  'text_only'		=> tra('Yes, display only text')
+			),
 		),
 		'fgal_use_db' => array(
 			'name' => tra('Storage'),

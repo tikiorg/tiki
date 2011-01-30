@@ -397,7 +397,9 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 		
-		$this->remove_user_watch( $user, $event, $object, $type );
+		if($event != 'auth_token_called'){
+			$this->remove_user_watch( $user, $event, $object, $type );
+		}
 
 		$userWatches = $this->table('tiki_user_watches');
 		$userWatches->insert(array(
@@ -708,6 +710,9 @@ class TikiLib extends TikiDb_Bridge
 				case 'user_registers':
 					$userlib = TikiLib::lib('user');
 					$res['perm'] = $userlib->user_has_permission($res['user'], 'tiki_p_admin');
+					break;
+				case 'auth_token_called':
+					$res['perm'] = true;
 					break;
 				default:
 					// for security we deny all others.
@@ -2440,6 +2445,8 @@ class TikiLib extends TikiDb_Bridge
 				'tf.`lastModifUser` as `last_user`' => "'' as `last_user`",
 				'tf.`lockedby`' => "'' as `lockedby`",
 				'tf.`comment`' => "'' as `comment`",
+				'tf.`deleteAfter`' => "'' as `deleteAfter`",
+				'tf.`maxhits`' => "'' as `maxhits`",
 				'tf.`archiveId`' => '0 as `archiveId`',
 				"'' as `visible`" => 'tfg.`visible`',
 				"'' as `public`" => 'tfg.`public`',
@@ -2657,8 +2664,27 @@ class TikiLib extends TikiDb_Bridge
 				continue;
 			}
 			// add markup to be inserted onclick
+			// add information for share column if is active
 			if ($object_type === 'file') {
 				$res['wiki_syntax'] = $this->process_fgal_syntax($wiki_syntax, $res);
+				
+				if($prefs['auth_token_access'] == 'y'){
+					$query = 'select email, sum((maxhits - hits)) as visit, sum(maxhits) as maxhits  from tiki_auth_tokens where `parameters`=? group by email';
+					$share_result = $this->fetchAll($query, array('{"fileId":"'.$res['id'].'"}'));
+					$res['share']['data'] = $share_result;
+					$tmp = array();
+					if(is_array($res['share']['data'])){
+						foreach ($res['share']['data'] as $data) {
+							$tmp[] = $data['email'];
+						}
+					}
+					$string_share = implode(', ',$tmp);
+					$res['share']['string'] = substr($string_share, 0, 40);
+					if(strlen($string_share) >40){
+						$res['share']['string'] .= '...';
+					}
+					$res['share']['nb'] = count($share_result);
+				}
 			}
 				
 			$n++;

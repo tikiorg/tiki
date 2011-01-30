@@ -593,6 +593,7 @@ function get_default_prefs() {
 		'fgal_list_lastDownload' => 'n',
 		'fgal_list_lockedby' => 'a',
 		'fgal_list_deleteAfter' => 'n',
+		'fgal_list_share' => 'n',
 		'fgal_show_path' => 'y',
 		'fgal_show_explorer' => 'y',
 		'fgal_show_slideshow' => 'n',
@@ -1434,6 +1435,12 @@ function get_default_prefs() {
 		// tell a friend
 		'feature_tell_a_friend' => 'n',
 		'feature_share' => 'n',
+		'share_display_links' => 'y',
+		'share_token_notification' => 'y',
+		'share_contact_add_non_existant_contact' => 'n',
+		'share_display_name_and_email' => 'y',
+		'share_max_access_time' => '-1',
+		'share_can_choose_how_much_time_access' => 'n',
 	
 		// copyright
 		'feature_copyright' => 'n',

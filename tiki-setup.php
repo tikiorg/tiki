@@ -349,3 +349,9 @@ if( session_id() ) {
 	}
 }
 
+if ( isset($token_error) ) {
+	$smarty->assign('token_error', $token_error);
+	$smarty->display('error.tpl');
+	die;
+}
+

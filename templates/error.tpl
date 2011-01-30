@@ -59,7 +59,11 @@ close();
 						{/remarksbox}
 					{/if}
 				{else}
-					{if $errortype eq 401 && empty($user) and $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
+					{if isset($token_error)}
+						{remarksbox type='errors' title="{tr}Token Error{/tr}"}
+							{$token_error}
+						{/remarksbox}
+					{elseif $errortype eq 401 && empty($user) and $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
 						{remarksbox type='errors' title=$errortitle}
 							{tr}Permission denied{/tr}
 						{/remarksbox}

@@ -464,6 +464,7 @@ if (isset($_REQUEST['edit'])) {
 											'show_modified'			=> $_REQUEST['fgal_list_lastModif'],
 											'show_creator'			=> $_REQUEST['fgal_list_creator'],
 											'show_deleteAfter'		=> $_REQUEST['fgal_list_deleteAfter'],
+											'show_share'			=> $_REQUEST['fgal_list_share'],
 											'show_author'				=> $_REQUEST['fgal_list_author'],
 											'subgal_conf'				=> $_REQUEST['subgal_conf'],
 											'show_last_user'		=> $_REQUEST['fgal_list_last_user'],

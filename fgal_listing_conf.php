@@ -30,7 +30,8 @@ $fgal_listing_conf = array(
 	'lastDownload' => array('name' => tra('Last download')),
 	'lockedby' => array('name' => tra('Locked by'), 'icon' => 'lock_gray'),
 	'backlinks' => array('name' => tra('Backlinks')),
-	'deleteAfter' => array('name'=>tra('Delete After'))
+	'deleteAfter' => array('name'=>tra('Delete After')),
+	'share' => array('name'=>tra('Share with'))
 );
 
 if (isset($section) && $section == 'admin') {
