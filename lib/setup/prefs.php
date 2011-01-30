@@ -592,6 +592,7 @@ function get_default_prefs() {
 		'fgal_list_hits' => 'o',
 		'fgal_list_lastDownload' => 'n',
 		'fgal_list_lockedby' => 'a',
+		'fgal_list_deleteAfter' => 'n',
 		'fgal_show_path' => 'y',
 		'fgal_show_explorer' => 'y',
 		'fgal_show_slideshow' => 'n',
@@ -1433,7 +1434,7 @@ function get_default_prefs() {
 		// tell a friend
 		'feature_tell_a_friend' => 'n',
 		'feature_share' => 'n',
-
+	
 		// copyright
 		'feature_copyright' => 'n',
 

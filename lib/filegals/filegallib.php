@@ -381,6 +381,7 @@ class FileGalLib extends TikiLib
 			'image_max_size_y' => 0,
 			'backlinkPerms' => 'n',
 			'show_backlinks' => 'n',
+			'show_deleteAfter' => $prefs['fgal_list_deleteAfter'],
 			'show_lastDownload' => 'n',
 			'description' => '',
 			'sort_mode' => $prefs['fgal_sort_mode'],
@@ -435,7 +436,7 @@ class FileGalLib extends TikiLib
 			`show_last_user`=?, `show_comment`=?, `show_files`=?, `show_explorer`=?,
 			`show_path`=?, `show_slideshow`=?, `default_view`=?, `quota`=?,
 			`image_max_size_x`=?, `image_max_size_y`=?,
-			`backlinkPerms`=?, `show_backlinks`=?, `wiki_syntax`=?, `template`=? where `galleryId`=?";
+			`backlinkPerms`=?, `show_backlinks`=?, `show_deleteAfter`=?, `wiki_syntax`=?, `template`=? where `galleryId`=?";
 
 			$bindvars=array(trim($fgal_info['name']), (int) $fgal_info['maxRows'],
 			$fgal_info['description'], (int) $this->now, $fgal_info['public'],
@@ -453,7 +454,7 @@ class FileGalLib extends TikiLib
 			$fgal_info['show_path'], $fgal_info['show_slideshow'],
 			$fgal_info['default_view'], $fgal_info['quota'],
 			(int)$fgal_info['image_max_size_x'], (int)$fgal_info['image_max_size_y'],
-			$fgal_info['backlinkPerms'], $fgal_info['show_backlinks'], $fgal_info['wiki_syntax'],
+			$fgal_info['backlinkPerms'], $fgal_info['show_backlinks'], $fgal_info['show_deleteAfter'], $fgal_info['wiki_syntax'],
 			$fgal_info['template'], (int)$fgal_info['galleryId']);
 
 			$result = $this->query($query,$bindvars);
@@ -473,8 +474,8 @@ class FileGalLib extends TikiLib
 			`archives`, `sort_mode`, `show_modified`, `show_creator`, `show_author`,
 			`subgal_conf`, `show_last_user`, `show_comment`, `show_files`,
 			`show_explorer`, `show_path`, `show_slideshow`, `default_view`, `quota`,
-			`image_max_size_x`, `image_max_size_y`, `backlinkPerms`, `show_backlinks`, `wiki_syntax`, `template`)
-			values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			`image_max_size_x`, `image_max_size_y`, `backlinkPerms`, `show_backlinks`, `show_deleteAfter`, `wiki_syntax`, `template`)
+			values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			$bindvars=array($fgal_info['name'], $fgal_info['description'], (int)
 			$this->now, $fgal_info['user'], (int) $this->now, (int)
@@ -492,7 +493,7 @@ class FileGalLib extends TikiLib
 			$fgal_info['show_slideshow'], $fgal_info['default_view'],
 			$fgal_info['quota'],
 			(int)$fgal_info['image_max_size_x'], (int)$fgal_info['image_max_size_y'],
-			$fgal_info['backlinkPerms'], $fgal_info['show_backlinks'], $fgal_info['wiki_syntax'],
+			$fgal_info['backlinkPerms'], $fgal_info['show_backlinks'], $fgal_info['show_deleteAfter'], $fgal_info['wiki_syntax'],
 			$fgal_info['template']);
 
 			$result = $this->query($query,$bindvars);
@@ -1713,12 +1714,12 @@ class FileGalLib extends TikiLib
 			`show_id`=?, `show_icon`=?, `show_name`=?, `show_description`=?, `show_size`=?,
 			`show_created`=?, `show_modified`=?, `show_creator`=?, `show_author`=?, `show_last_user`=?,
 			`show_comment`=?, `show_files`=?, `show_hits`=?, `show_lastDownload`=?,
-			`show_lockedby`=?, `show_backlinks`=?, `show_explorer`=?, `show_path`=?, `show_slideshow`=? 
+			`show_lockedby`=?, `show_backlinks`=?, `show_deleteAfter`=?, `show_explorer`=?, `show_path`=?, `show_slideshow`=? 
 			where `galleryId` in (".implode(',',array_fill(0, count($fgalIds),'?')).")";
 		$this->query($query, array_merge(array($prefs['fgal_sort_mode'], $prefs['fgal_default_view'], $prefs['fgal_list_id'], $prefs['fgal_list_type'], $prefs['fgal_list_name'],
 			$prefs['fgal_list_description'], $prefs['fgal_list_size'], $prefs['fgal_list_created'], $prefs['fgal_list_lastModif'], $prefs['fgal_list_creator'], 
 			$prefs['fgal_list_author'], $prefs['fgal_list_last_user'], $prefs['fgal_list_comment'], $prefs['fgal_list_files'], $prefs['fgal_list_hits'], 
-			$prefs['fgal_list_lastDownload'], $prefs['fgal_list_lockedby'], $prefs['fgal_list_backlinks'], $prefs['fgal_show_explorer'], $prefs['fgal_show_path'], $prefs['fgal_show_slideshow']), 
+			$prefs['fgal_list_lastDownload'], $prefs['fgal_list_lockedby'], $prefs['fgal_list_backlinks'], $prefs['fgal_list_deleteAfter'], $prefs['fgal_show_explorer'], $prefs['fgal_show_path'], $prefs['fgal_show_slideshow']), 
 			$fgalIds));
 	}
 	function getGalleryId($name, $parentId) {

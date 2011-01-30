@@ -29,8 +29,10 @@ $fgal_listing_conf = array(
 	'hits' => array('name' => tra('Hits')),
 	'lastDownload' => array('name' => tra('Last download')),
 	'lockedby' => array('name' => tra('Locked by'), 'icon' => 'lock_gray'),
-	'backlinks' => array('name' => tra('Backlinks'))
+	'backlinks' => array('name' => tra('Backlinks')),
+	'deleteAfter' => array('name'=>tra('Delete After'))
 );
+
 if (isset($section) && $section == 'admin') {
 	foreach ($fgal_listing_conf as $k=>$v) {
 		$fgal_listing_conf_admin[$k.'_admin'] = $v;

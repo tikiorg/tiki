@@ -477,6 +477,7 @@ function wikiplugin_files($data, $params) {
 	if (!empty($showlockedby)) $gal_info['show_lockedby'] = $showlockedby;
 	if (!empty($showhits)) $gal_info['show_hits'] = $showhits;
 	if (!empty($showfiles)) $gal_info['show_files'] = $showfiles;
+	if (!empty($showdeleteafter)) $gal_info['show_deleteAfter'] = $showdeleteafter;
 	if (!empty($showaction)) $gal_info['show_action'] = $showaction;
 	if (!empty($showcomment)) $gal_info['show_comment'] = $showcomment;
 	if (!empty($showlasteditor)) $gal_info['show_last_user'] = $showlasteditor;

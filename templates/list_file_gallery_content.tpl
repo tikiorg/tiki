@@ -260,10 +260,10 @@
 						{/if}
 					{elseif $propname eq 'created' or $propname eq 'lastModif' or $propname eq 'lastDownload'}
 						{if empty($propval)}
-						{assign var=propval value=''}
-					{else}
-						{assign var=propval value=$propval|tiki_short_date}
-					{/if}
+							{assign var=propval value=''}
+						{else}
+							{assign var=propval value=$propval|tiki_short_date}
+						{/if}
 					{elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
 						{assign var=propval value=$propval|userlink}
 					{elseif $propname eq 'size'}
@@ -293,8 +293,14 @@
 							{assign var=fid value=$files[changes].id}
 							{assign var=propval value="<a class='fgalbacklink' href='list-file_backlinks_ajax.php?fileId=$fid' rel='list-file_backlinks_ajax.php?fileId=$fid'>$propval</a>"}
 						{/if}
+					{elseif $propname eq 'deleteAfter'}
+						{if empty($files[changes].deleteAfter)}
+							{assign var=propval value="-"}
+						{else}
+							{assign var=limitdate value=$files[changes].deleteAfter+$files[changes].lastModif}
+							{assign var=propval value=$limitdate|tiki_remaining_days_from_now:$prefs.short_date_format}
+						{/if}
 					{/if}
-	
 					{if $propname eq 'name' and ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'f' ) }
 						<td>
 							{if $link neq ''}<a class='fgalname' {$link}>{/if}{$files[changes].filename|escape}{if $link neq ''}</a>{/if}

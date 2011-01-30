@@ -758,6 +758,7 @@ CREATE TABLE `tiki_file_galleries` (
   `wiki_syntax` varchar(200) default NULL,
   `backlinkPerms` char(1) default 'n',
   `show_backlinks` char(1) default NULL,
+  `show_deleteAfter` char(1) default NULL,
   `image_max_size_x` int(8) NOT NULL default '0',
   `image_max_size_y` int(8) NOT NULL default '0',
   PRIMARY KEY (`galleryId`)
