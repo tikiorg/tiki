@@ -8,6 +8,7 @@
 // To include a link in your tpl do
 //<a href="tiki-share.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Share this page{/tr}</a>
 
+$section = 'share';
 require_once ('tiki-setup.php');
 if (empty($_REQUEST['report'])) {
 	$access->check_feature('feature_share');
