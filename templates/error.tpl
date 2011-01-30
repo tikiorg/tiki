@@ -23,6 +23,11 @@ close();
 			{assign var='errortitle' value="{tr}Error{/tr}" }
 		{/if}
 				{if ($errortype eq "404")}
+					{if isset($file_error)}
+						{remarksbox type='errors' title="{tr}File error{/tr}"}
+							{$file_error}
+						{/remarksbox}
+					{else}
 					{if $prefs.feature_likePages eq 'y'}
 						{if $likepages}
 							{remarksbox type='errors' title=$errortitle}

@@ -109,7 +109,9 @@ if (!$skip) {
 		die;
 	}
 	if ( ! is_array($info) ) {
+		$smarty->assign('errortype', 404);
 		$smarty->assign('msg', tra('Incorrect param').' '.tra($error));
+		$smarty->assign('file_error', tra('Error: this file has been deleted'));
 		$smarty->display('error.tpl');
 		die;
 	}
