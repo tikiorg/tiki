@@ -75,7 +75,7 @@
 					{include file='list_file_gallery_content.tpl'}
 				{/if}
 
-				{if $files and $gal_info.show_checked neq 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y')}
+				{if $files and $gal_info.show_checked neq 'n' and $prefs.fgal_checked eq 'y' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y')}
 					<div id="sel">
 						<div>
 							{tr}Perform action with checked:{/tr}

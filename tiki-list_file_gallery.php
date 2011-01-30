@@ -464,6 +464,7 @@ if (isset($_REQUEST['edit'])) {
 											'show_modified'			=> $_REQUEST['fgal_list_lastModif'],
 											'show_creator'			=> $_REQUEST['fgal_list_creator'],
 											'show_deleteAfter'		=> $_REQUEST['fgal_list_deleteAfter'],
+											'show_checked'			=> $_REQUEST['fgal_show_checked'],
 											'show_share'			=> $_REQUEST['fgal_list_share'],
 											'show_author'				=> $_REQUEST['fgal_list_author'],
 											'subgal_conf'				=> $_REQUEST['subgal_conf'],
@@ -502,6 +503,10 @@ if (isset($_REQUEST['edit'])) {
 		
 		if ($prefs['fgal_show_path'] != 'y') {
 			$gal_info['show_path'] = $old_gal_info['show_path'];
+		}
+		
+		if ($prefs['fgal_show_checked'] != 'y') {
+			$gal_info['show_checked'] = $old_gal_info['show_checked'];
 		}
 		
 		$fgal_diff = array_diff_assoc($gal_info, $old_gal_info);

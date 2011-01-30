@@ -121,6 +121,12 @@ function prefs_fgal_list() {
 			'type' => 'flag',
 			'help' => 'File+Gallery+Config',
 		),
+		'fgal_checked' => array(
+			'name' => tra('Allow action on multiple files or galleries'),
+			'description' => tra('The check button on file gallery can be remove'),
+			'type' => 'flag',
+			'help' => 'File+Gallery+Config',
+		),
 		'fgal_delete_after_email' => array(
 			'name' => tra('Deletion emails notification'),
 			'description' => tra('These emails will receive a copy of each deleted file. Emails are separated with comma'),

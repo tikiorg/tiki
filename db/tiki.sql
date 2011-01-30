@@ -759,6 +759,7 @@ CREATE TABLE `tiki_file_galleries` (
   `backlinkPerms` char(1) default 'n',
   `show_backlinks` char(1) default NULL,
   `show_deleteAfter` char(1) default NULL,
+  `show_checked` char(1) default NULL,
   `show_share` char(1) default NULL,
   `image_max_size_x` int(8) NOT NULL default '0',
   `image_max_size_y` int(8) NOT NULL default '0',
