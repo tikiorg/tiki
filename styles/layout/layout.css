@@ -787,6 +787,11 @@ a.toolbar {			/* each tool button */
 	position: relative;
 }
 
+/* use default col width from *lite.css for modules in centre section */
+#tiki-center .module {
+	max-width: 180px;
+}
+
 .box {
 /*	overflow: hidden; */
 }
