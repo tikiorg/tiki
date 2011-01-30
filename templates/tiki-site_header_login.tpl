@@ -8,9 +8,7 @@
 	{$user|userlink} | <a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>
 {else}
 <div id="siteloginbar">
-	{if !empty($user)}
-		{$user|userlink} | <a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>
-	{elseif $smarty.request.user neq 'admin' && $prefs.auth_method eq 'cas' && $showloginboxes neq 'y'}
+	{if $smarty.request.user neq 'admin' && $prefs.auth_method eq 'cas' && $showloginboxes neq 'y'}
 		<b><a href="tiki-login.php?cas=y">{tr}Log in through CAS{/tr}</a></b>
 		{if $prefs.cas_skip_admin eq 'y' && $prefs.cas_show_alternate_login eq 'y'}
 			&nbsp;|&nbsp;{self_link _template='tiki-site_header_login.tpl' _title="{tr}Log in as admin{/tr}" _icon='user_red' _htmlelement='siteloginbar' user='admin'}{tr}Log in as admin{/tr}{/self_link}
