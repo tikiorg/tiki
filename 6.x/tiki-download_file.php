@@ -7,6 +7,7 @@
 
 $force_no_compression = true;
 $skip = false;
+$thumbnail_format = 'jpeg';
 
 if ( isset($_GET['fileId']) && isset($_GET['thumbnail']) && isset($_COOKIE[ session_name() ]) && count($_GET) == 2 ) {
 
@@ -152,6 +153,7 @@ $content_changed = false;
 $content = &$info['data'];
 
 $md5 = '';
+$filepath = '';
 if ( ! empty($info['path']) )  {
 	if (!$skip and $filegallib->isPodCastGallery($info['galleryId'])) {
 		$filepath = $prefs['fgal_podcast_dir'].$info['path'];
@@ -227,6 +229,11 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 		$cacheName = $md5;
 		$cacheType = ( isset($_GET['thumbnail']) ? 'thumbnail_' : 'preview_' ) . ((int)$_REQUEST['fileId']).'_';
 		$use_cache = true;
+
+		if ( isset($_GET['thumbnail']) ) {
+			// For thumbnails, change the filetype to the appropriate one, which is often different from the original filetype...
+			$info['filetype'] = 'image/' . $thumbnail_format;
+		}
 	}
 
 	$build_content = true;
@@ -250,78 +257,90 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 	
 			$content_changed = true;
 			$format = substr($info['filename'], strrpos($info['filename'], '.') + 1);
-	
+
 			// Fallback to an icon if the format is not supported
 			if ( ! Image::is_supported($format) ) {
 				$_GET['icon'] = 'y';
 				$_GET['max'] = 32;
 			}
-	
-			if ( isset($_GET['icon']) ) {
-				unset($info['path']);
-				$content = null; // Explicitely free memory before generating icon
 
-				if ( isset($_GET['max']) ) {
-					$icon_x = $_GET['max'];
-					$icon_y = $_GET['max'];
-				} else {
-					$icon_x = isset($_GET['x']) ? $_GET['x'] : 0;
-					$icon_y = isset($_GET['y']) ? $_GET['y'] : 0;	
-				}
+			do {
+				$tryIconFallback = false;
+
+				if ( isset($_GET['icon']) ) {
+					unset($info['path']);
+					$content = null; // Explicitely free memory before generating icon
 	
-				$content = Image::icon($format, $icon_x, $icon_y);
-				$format = Image::get_icon_default_format();
-				$info['filetype'] = 'image/'.$format;
-				$info['lastModif'] = 0;
-			}
+					if ( isset($_GET['max']) ) {
+						$icon_x = $_GET['max'];
+						$icon_y = $_GET['max'];
+					} else {
+						$icon_x = isset($_GET['x']) ? $_GET['x'] : 0;
+						$icon_y = isset($_GET['y']) ? $_GET['y'] : 0;	
+					}
+		
+					$content = Image::icon($format, $icon_x, $icon_y);
+					$format = Image::get_icon_default_format();
+					$info['filetype'] = 'image/'.$format;
+					$info['lastModif'] = 0;
+				}
+		
+				if ( ! isset($_GET['icon']) || ( isset($_GET['format']) && $_GET['format'] != $format ) ) {
+	  				if ( ! empty($info['path']) ) {
+						$image = new Image($prefs['fgal_use_dir'].$info['path'], true);
+					} else {
+						$image = new Image($content);
+						$content = null; // Explicitely free memory before getting cache
+					}
+					if ( $image->is_empty() ) die;
+		
+					$resize = false;
+					// We resize if needed
+					if ( isset($_GET['x']) || isset($_GET['y']) ) {
+						$image->resize($_GET['x']+0, $_GET['y']+0);
+						$resize = true;
+					}
+					// We scale if needed
+					elseif ( isset($_GET['scale']) ) {
+						$image->scale($_GET['scale']+0);
+						$resize = true;
+					}
+					// We reduce size if length or width is greater that $_GET['max'] if needed
+					elseif ( isset($_GET['max']) ) {
+						$image->resizemax($_GET['max']+0);
+						$resize = true;
+					}
+					// We resize to a thumbnail size if needed
+					elseif ( isset($_GET['thumbnail']) ) {
+						$image->resizethumb();
+					}
+					// We resize to a preview size if needed
+					elseif ( isset($_GET['preview']) ) {
+						$image->resizemax('800');
+						$resize = true;
+					}
+		
+					// We change the image format if needed
+					if ( isset($_GET['format']) && Image::is_supported($_GET['format']) ) {
+						$image->convert($_GET['format']);
+					}
+					// Or, if no format is explicitely specified and a thumbnail has to be created, we convert the image to the $thumbnail_format
+					elseif ( isset($_GET['thumbnail']) ) {
+						$image->convert($thumbnail_format);
+					}
+		
+					$content =& $image->display();
 	
-			if ( ! isset($_GET['icon']) || ( isset($_GET['format']) && $_GET['format'] != $format ) ) {
-  				if ( ! empty($info['path']) ) {
-					$image = new Image($prefs['fgal_use_dir'].$info['path'], true);
-				} else {
-					$image = new Image($content);
-					$content = null; // Explicitely free memory before getting cache
+					// If the new image creating has failed, fallback to an icon
+					if ( ! isset($_GET['icon']) && ( $content === null || $content === false ) ) {
+						$tryIconFallback = true;
+						$_GET['icon'] = 'y';
+						$_GET['max'] = 32;
+					} else {
+						$info['filetype'] = $image->get_mimetype();
+					}
 				}
-				if ( $image->is_empty() ) die;
-	
-				$resize = false;
-				// We resize if needed
-				if ( isset($_GET['x']) || isset($_GET['y']) ) {
-					$image->resize($_GET['x']+0, $_GET['y']+0);
-					$resize = true;
-				}
-				// We scale if needed
-				elseif ( isset($_GET['scale']) ) {
-					$image->scale($_GET['scale']+0);
-					$resize = true;
-				}
-				// We reduce size if length or width is greater that $_GET['max'] if needed
-				elseif ( isset($_GET['max']) ) {
-					$image->resizemax($_GET['max']+0);
-					$resize = true;
-				}
-				// We resize to a thumbnail size if needed
-				elseif ( isset($_GET['thumbnail']) ) {
-					$image->resizethumb();
-				}
-				// We resize to a preview size if needed
-				elseif ( isset($_GET['preview']) ) {
-					$image->resizemax('800');
-					$resize = true;
-				}
-	
-				// We change the image format if needed
-				if ( isset($_GET['format']) && Image::is_supported($_GET['format']) ) {
-					$image->convert($_GET['format']);
-				}
-				// By default, we change the image format to the usual most common format (jpeg) for thumbnails
-				elseif ( isset($_GET['thumbnail']) ) {
-					$image->convert('jpeg');
-				}
-	
-				$content =& $image->display();
-				$info['filetype'] = $image->get_mimetype();
-			}
+			} while ( $tryIconFallback );
 		}
 		
 		if ( $use_cache && !empty($content) ) {
@@ -337,7 +356,7 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 
 if ( empty($info['filetype']) || $info['filetype'] == 'application/x-octetstream' || $info['filetype'] == 'application/octet-stream' ) {
 	include_once('lib/mime/mimelib.php');
-	$info['filetype'] = tiki_get_mime($info['filename'], 'application/octet-stream');
+	$info['filetype'] = tiki_get_mime($info['filename'], 'application/octet-stream', $filepath);
 }
 header('Content-type: '.$info['filetype']);
 
@@ -349,7 +368,7 @@ if ( ! $content_changed and !isset($_GET['display']) ) {
 	header("Content-Disposition: attachment; filename=\"$file\"");
 }
 
-if ( $info['path'] and !$content_changed ) {
+if ( !empty($filepath) and !$content_changed ) {
 	header('Content-Length: '.filesize($filepath));
 	readfile_chunked($filepath);
 } else {
