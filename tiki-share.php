@@ -197,6 +197,7 @@ if (isset($_REQUEST['send'])) {
 			$tokenlib = AuthTokens::build( $prefs );
 						
 			if(is_array($adresses)){
+				$contactlib = TikiLib::lib('contact');
 				foreach ($adresses as $adresse) {
 					$tokenlist[] = $tokenlib->includeTokenReturn( $url_for_friend, $globalperms->getGroups(), $adresse );	
 					// if preference share_contact_add_non_existant_contact the add auomaticly to contact

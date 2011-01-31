@@ -48,6 +48,7 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 		}
 		$access->output_serialized($usrs);
 	} elseif ($_REQUEST['listonly'] == 'usersandcontacts') {
+		$contactlib = TikiLib::lib('contact');
 		$listcontact = $contactlib->list_contacts($user);
 		$listusers = $userlib->get_users();
 		

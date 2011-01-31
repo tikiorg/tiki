@@ -131,6 +131,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'flaggedrevision':
 			global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
 			return $libraries[$name] = $flaggedrevisionlib;
+		case 'contact':
+			global $contactlib; require_once 'lib/webmail/contactlib.php';
+			return $libraries[$name] = $contactlib;
 		}
 	}
 
