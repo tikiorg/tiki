@@ -38,20 +38,7 @@ $smarty->assign('title', $info['title']);
 $smarty->assign('description', $info['description']);
 $smarty->assign('page_mode', 'view' );
 
-$result = $tikilib->query( "SELECT DISTINCT `begin`, `user` FROM `tiki_sheet_values` WHERE `sheetId` = ? ORDER BY begin DESC", array( $_REQUEST['sheetId'] ) );
-$history = array();
-
-$i = 0;
-while( $row = $result->fetchRow() ) {
-	$history[$i] = array(
-		"stamp" => $row['begin'], 
-		"string" => $tikilib->date_format( "%Y-%m-%d %H:%M:%S", $row['begin'] ), 
-		"user" => $row['user'],
-		"index" => $i
-	);
-	$i++;
-}
-
+$history = $sheetlib->sheet_history( $_REQUEST['sheetId'] );
 $smarty->assign_by_ref( 'history', $history );
 
 $sheetIndexes = array();

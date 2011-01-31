@@ -2315,6 +2315,10 @@ class SheetLib extends TikiLib
 		}
 	}
 	
+	function sheet_history( $sheetId ) {
+		return $this->fetchAll( "SELECT DISTINCT `begin` as stamp, `user`, DATE_FORMAT(FROM_UNIXTIME(`begin`), '%M %D %Y %h:%i:%s') as prettystamp FROM `tiki_sheet_values` WHERE `sheetId` = ? ORDER BY begin DESC", array( $sheetId ) );
+	}
+	
 	function rollback_sheet($id, $readdate=null) {
 		global $user, $sheetlib;
 		
