@@ -24,7 +24,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 
 function smarty_block_title($params, $content, &$smarty, $repeat) {
-	global $prefs, $tiki_p_view_templates, $tiki_p_edit_templates, $tiki_p_admin, $smarty;
+	global $prefs, $tiki_p_view_templates, $tiki_p_edit_templates, $tiki_p_admin;
 
   if ( $repeat || $content == '' ) return;
   include_once('lib/smarty_tiki/function.icon.php');
