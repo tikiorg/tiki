@@ -13,13 +13,16 @@ $access->check_feature('feature_sheet');
 
 $auto_query_args = array('sheetId');
 
+$cookietab = 2;
 if (!isset($_REQUEST["sheetId"])) {
 	$cookietab = 1;
 	$_REQUEST["sheetId"] = 0;
 	$info = array();
 	$smarty->assign('headtitle', tra('Spreadsheets'));
 } else {
-	$cookietab = 2;
+	if (isset($_REQUEST['edit_mode']) && $_REQUEST['edit_mode'] == 1) {
+		$cookietab = 2;	
+	}
 	$info = $sheetlib->get_sheet_info($_REQUEST["sheetId"]);
 	if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_view_sheet')) $tiki_p_view_sheet = 'y';
 	else $tiki_p_view_sheet = 'n';
@@ -93,7 +96,6 @@ if (isset($_REQUEST["edit"])) {
 	}
 	$smarty->assign_by_ref('parseValues', $_REQUEST['parseValues']);
 	$gid = $sheetlib->replace_sheet($_REQUEST["sheetId"], $_REQUEST["title"], $_REQUEST["description"], $_REQUEST['creator'], $_REQUEST['parentSheetId']);
-	//$sheetlib->replace_layout($gid, $_REQUEST["className"], $_REQUEST["headerRow"], $_REQUEST["footerRow"], $_REQUEST['parseValues']);
 	$cat_type = 'sheet';
 	$cat_objid = $gid;
 	$cat_desc = substr($_REQUEST["description"], 0, 200);
@@ -104,8 +106,9 @@ if (isset($_REQUEST["edit"])) {
 }
 if (isset($_REQUEST["removesheet"])) {
 	$access->check_permission('tiki_p_edit_sheet');
-	$access->check_authenticity();
+	$access->check_authenticity(tra("Are you sure you want to delete this spreadsheet?"));
 	$sheetlib->remove_sheet($_REQUEST["sheetId"]);
+	header("Location: tiki-sheets.php");
 }
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'title_asc';

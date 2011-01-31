@@ -73,27 +73,27 @@ if (
 	die;
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') { //save
+if (isset($_REQUEST['s']) && !empty($_REQUEST['s'])) { //save
 	if (!$objectperms->edit_sheet && $tiki_p_admin != 'y') {
 		$smarty->assign('msg', tra('Permission denied'));
 		$smarty->display("error.tpl");
 		die;
 	}
-	if (isset($_REQUEST['s']) && !empty($_REQUEST['s'])) {					// ********* AJAX save request from jQuery.sheet
-		$result = $sheetlib->save_sheet( $_REQUEST['s'], $_REQUEST["sheetId"] );
-		die($result);
-	}
+	
+	// ********* AJAX save request from jQuery.sheet
+	$result = $sheetlib->save_sheet( $_REQUEST['s'], $_REQUEST["sheetId"] );
+	die($result);
 	
 } elseif ( $_REQUEST['parse'] == "clone" ) {
 	$access->check_permission('tiki_p_edit_sheet');
-	//$access->check_authenticity();
+	$access->check_authenticity(tra("Are you sure you want to clone this spreadsheet?"));
 	$id = $sheetlib->clone_sheet( $_REQUEST["sheetId"], $_REQUEST['readdate'] );
 	if ($id) {
 		header("Location: tiki-view_sheets.php?sheetId=".$id);
 	}
 } elseif ($_REQUEST['parse'] == 'rollback' && !empty($_REQUEST['readdate'])) {
 	$access->check_permission('tiki_p_edit_sheet');
-	//$access->check_authenticity();
+	$access->check_authenticity(tra("Are you sure you want to rollback this spreadsheet?"));
 	$id = $sheetlib->rollback_sheet( $_REQUEST["sheetId"], $_REQUEST['readdate'] );
 	if ($id) {
 		header("Location: tiki-view_sheets.php?sheetId=".$id);

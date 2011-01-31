@@ -61,10 +61,10 @@
 		    			{$history[revision_date].user}
 		    		</td>
 			    	<td style="vertical-align: middle; text-align: center;">
-					   	<input type="radio" name="compareSheet1" class="compareSheet1" value="{$history[revision_date].index}" onclick="compareSheetClick(this);" />
+					   	<input type="radio" name="compareSheet1" class="compareSheet1" value="{$smarty.section.revision_date.index}" onclick="compareSheetClick(this);" />
 			    	</td>
 			    	<td style="vertical-align: middle; text-align: center;">
-					   	<input type="radio" name="compareSheet2" class="compareSheet2" value="{$history[revision_date].index}" onclick="compareSheetClick(this);" />
+					   	<input type="radio" name="compareSheet2" class="compareSheet2" value="{$smarty.section.revision_date.index}" onclick="compareSheetClick(this);" />
 			    	</td>
 		    		<td style="text-align: center;">
 		    			<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$history[revision_date].stamp}&parse=y" title="{tr}View Spreadsheet{/tr}">{tr}View{/tr}</a> |
