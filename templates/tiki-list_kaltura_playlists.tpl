@@ -2,7 +2,7 @@
 {if $playlistId eq "0"}
 {title}Create Kaltura Playlist{/title}
 <form action="tiki-list_kaltura_playlists.php?playlistId=0" method="get">
-<table class="normal">
+<table class="formcolor">
 <tr>
 	<td>Playlist Name</td><td><input name="playlist_name" /></td>
 </tr>
@@ -70,7 +70,7 @@
 </td></tr>
 <tr><td>
 <br />
-<table class="normal">
+<table class="formcolor">
 <tr><td width="200" class="even">Name </td><td class="even">{$kplaylist->name}</td></tr>
 <tr><td width="200" class="odd">Description </td><td class="odd">{$kplaylist->description}</td></tr>
 <tr><td width="200" class="even">Tags </td><td class="even">{$kplaylist->tags}</td></tr>
