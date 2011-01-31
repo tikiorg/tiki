@@ -1883,5 +1883,420 @@ class FileGalLib extends TikiLib
 		}
 	}
 
+	private function _actionHandler_uploadFile( $params ) {
+		global $user, $prefs, $tikilib, $logslib, $smarty, $tiki_p_admin, $tiki_p_batch_upload_files;
+
+		$batch_job = false;
+		$didFileReplace = false;
+		$aux = array();
+		$errors = array();
+		$uploads = array();
+
+		$foo = parse_url($_SERVER["REQUEST_URI"]);
+		$foo1 = str_replace("tiki-upload_file", "tiki-download_file", $foo["path"]);
+		$smarty->assign('url_browse', $tikilib->httpPrefix() . $foo1);
+		$url_browse = $tikilib->httpPrefix() . $foo1;
+
+		// create direct download path for podcasts
+		$gal_info = null;
+		if ( ! empty( $params['galleryId'][0] ) ) {
+			$gal_info = $tikilib->get_file_gallery( (int) $params['galleryId'][0] );
+			$podCastGallery = empty( $params['galleryId'][0] ) ? false : $this->isPodCastGallery( (int) $params["galleryId"][0], $gal_info );
+		}
+		$podcast_url = str_replace("tiki-upload_file.php", "", $foo["path"]);
+		$podcast_url = $tikilib->httpPrefix() . $podcast_url . $prefs['fgal_podcast_dir'];
+
+		if ( isset( $params['fileId'] ) ) {
+
+			$editFile = true;
+			$editFileId = $params['fileId'];
+
+			if ( $gal_info !== null && ( $nb_files = count( $params['galleryId'] ) ) != 1 ) {
+				for ( $i = $nb_files - 1; $i >= 0 ; $i-- ) {
+					if ( ! isset( $params['galleryId'][$i] ) || $params['galleryId'][$i] != $params['galleryId'][0] ) {
+						$smarty->assign('errortype', 401);
+						$smarty->assign('msg', tra('You are trying to edit multiple files in different galleries, which is not supported yet'));
+						$smarty->display('error.tpl');
+						die;
+					}
+				}
+			}
+
+			if ( isset( $params['fileInfo'] ) ) {
+				$fileInfo = $params['fileInfo'];
+				$fileInfo['fileId'] = $editFileId;
+			} else {
+				if ( ! ( $fileInfo = $this->get_file_info( $editFileId ) ) ) {
+					$smarty->assign('msg', tra('The specified file does not exist'));
+					$smarty->display('error.tpl');
+					die;
+				}
+			}
+
+			if ( ! empty( $params['name'][0] ) ) $fileInfo['name'] = $params['name'][0];
+			if ( ! empty( $params['description'][0] ) ) $fileInfo['description'] = $params['description'][0];
+			if ( ! empty( $params['user'][0] ) ) $fileInfo['user'] = $params['user'][0];
+			if ( ! empty( $params['author'][0] ) ) $fileInfo['author'] = $params['author'][0];
+
+		} else {
+			$editFileId = 0;
+			$editFile = false;
+			$fileInfo = null;
+		}
+		
+		$aFiles['userfile'] = $_FILES['userfile'];
+		
+		foreach ( $aFiles["userfile"]["error"] as $key => $error ) {
+			
+			if (empty($params['returnUrl'])) {
+				print_progress('<?xml version="1.0" encoding="UTF-8"?>');
+			}
+			$formId = $params['formId'];
+			$smarty->assign("FormId", $params['formId']);
+			if (empty($params['galleryId'][$key])) {
+				continue;
+			}
+			
+			if (!isset($params['comment'][$key])) {
+				$params['comment'][$key] = '';
+			}
+			
+			// We process here file uploads
+			if (!empty($aFiles["userfile"]["name"][$key])) {
+				
+				// Were there any problems with the upload?  If so, report here.
+				if (!is_uploaded_file($aFiles["userfile"]["tmp_name"][$key])) {
+					$errors[] = $aFiles['userfile']['name'][$key] . ': ' . tra('Upload was not successful') . ': ' . $tikilib->uploaded_file_error($error);
+					continue;
+				}
+				// Check the name
+				if (!empty($prefs['fgal_match_regex'])) {
+					if (!preg_match('/' . $prefs['fgal_match_regex'] . '/', $aFiles["userfile"]['name'][$key])) {
+						$errors[] = tra('Invalid filename (using filters for filenames)') . ': ' . $aFiles["userfile"]["name"][$key];
+						continue;
+					}
+				}
+				if (!empty($prefs['fgal_nmatch_regex'])) {
+					if (preg_match('/' . $prefs['fgal_nmatch_regex'] . '/', $aFiles["userfile"]["name"][$key])) {
+						$errors[] = tra('Invalid filename (using filters for filenames)') . ': ' . $aFiles["userfile"]["name"][$key];
+						continue;
+					}
+				}
+				$name = $aFiles["userfile"]["name"][$key];
+				if (isset($params["isbatch"][$key]) && $params["isbatch"][$key] == 'on' && strtolower(substr($name, strlen($name) - 3)) == 'zip') {
+					if ($tiki_p_batch_upload_files == 'y') {
+						if (!$this->process_batch_file_upload($params["galleryId"][$key], $aFiles["userfile"]['tmp_name'][$key], $user, isset($params["description"][$key]) ? $params["description"][$key] : '', $errors)) {
+							continue;
+						}
+						$batch_job = true;
+						$batch_job_galleryId = $params["galleryId"][$key];
+						print_msg(tra('Batch file processed') . " $name", $formId);
+						continue;
+					} else {
+						$errors[] = tra('No permission to upload zipped file packages');
+						continue;
+					}
+				}
+				
+				if (!$this->checkQuota($aFiles['userfile']['size'][$key], $params['galleryId'][$key], $error)) {
+					$errors[] = $error;
+					continue;
+				}
+	
+				$size = $aFiles["userfile"]['size'][$key];
+				$type = $aFiles["userfile"]['type'][$key];
+				$name = stripslashes($aFiles["userfile"]['name'][$key]);
+	
+				$file_name = $aFiles["userfile"]["name"][$key];
+				$file_tmp_name = $aFiles["userfile"]["tmp_name"][$key];
+				$tmp_dest = $prefs['tmpDir'] . "/" . $file_name . ".tmp";
+	
+				// Handle per gallery image size limits
+				$ratio = 0;
+				list(,$subtype)=explode('/',strtolower($type));
+				if ($subtype == "pjpeg")	// supress ie non-mime type (ie sends non standard mime-type for jpeg)
+				{
+					$subtype = "jpeg";
+					$type = "image/jpeg";
+				}
+				// If it's an image format we can handle and gallery has limits on image sizes
+				if ( (in_array($subtype, array("jpg","jpeg","gif","png","bmp","wbmp"))) 
+					&& ( ($gal_info["image_max_size_x"]) || ($gal_info["image_max_size_y"]) && (!$podCastGallery) ) ) {
+					$image_size_info = getimagesize($file_tmp_name);
+					$image_x = $image_size_info[0];
+					$image_y = $image_size_info[1];
+					if($gal_info["image_max_size_x"]) {
+						$rx=$image_x/$gal_info["image_max_size_x"];
+					}else{
+						$rx=0;
+					}
+					if($gal_info["image_max_size_y"]) {
+						$ry=$image_y/$gal_info["image_max_size_y"];
+					}else{
+						$ry=0;
+					}
+					$ratio=max($rx,$ry);
+					if($ratio>1) {	// Resizing will occur
+						$image_new_x=$image_x/$ratio;
+						$image_new_y=$image_y/$ratio;
+						$resized_file = $tmp_dest;
+						$image_resized_p = imagecreatetruecolor($image_new_x, $image_new_y);
+						switch($subtype) {
+							case "gif":
+								$image_p = imagecreatefromgif($file_tmp_name);
+								break;
+							case "png":
+								$image_p = imagecreatefrompng($file_tmp_name);
+								break;
+							case "bmp":
+							case "wbmp":
+								$image_p = imagecreatefromwbmp($file_tmp_name);
+								break;
+							case "jpg":
+							case "jpeg":
+								$image_p = imagecreatefromjpeg($file_tmp_name);
+								break;
+						}
+						if(!imagecopyresampled($image_resized_p, $image_p, 0, 0, 0, 0, $image_new_x, $image_new_y, $image_x, $image_y)) {
+							$errors[] = tra('Cannot resize the file:') . ' ' . $resized_file;
+						}
+						switch($subtype) {
+							case "gif":
+								if (!imagegif($image_resized_p, $resized_file)){
+									$errors[] = tra('Cannot write the file:') . ' ' . $resized_file;
+								}
+								break;
+							case "png":
+								if (!imagepng($image_resized_p, $resized_file)){
+									$errors[] = tra('Cannot write the file:') . ' ' . $resized_file;
+								}
+								break;
+							case "bmp":
+							case "wbmp":
+								if (!image2wbmp($image_resized_p, $resized_file)){
+									$errors[] = tra('Cannot write the file:') . ' ' . $resized_file;
+								}
+								break;
+							case "jpg":
+							case "jpeg":
+								if (!imagejpeg($image_resized_p, $resized_file)){
+									$errors[] = tra('Cannot write the file:') . ' ' . $resized_file;
+								}
+								break;
+						}
+						unlink($image_p);
+						$feedback_message = sprintf(tra('Image was reduced: %s x %s -> %s x %s'),$image_x, $image_y, (int)$image_new_x, (int)$image_new_y);
+						$size = filesize($resized_file);
+					}
+				}
+	
+				if ($ratio <=1) {
+					// No resizing
+					if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
+						if ($tiki_p_admin == 'y') {
+							$errors[] = tra('Errors detected').'. '.tra('Check that these paths exist and are writable by the web server').': '.$file_tmp_name.' '.$tmp_dest;
+							continue;
+						}	else	{
+							$errors[] = tra('Errors detected');
+							continue;
+						}
+						$logslib->add_log('file_gallery', tra('Errors detected').'. '.tra('Check that these paths exist and are writable by the web server').': '.$file_tmp_name.' '.$tmp_dest);
+					} else {
+						$logslib->add_log('file_gallery', tra('File added: ').$tmp_dest.' '.tra('by').' '.$user);
+					}
+				}
+	
+				$fp = fopen($tmp_dest, "rb");
+				if (!$fp) {
+					$errors[] = tra('Cannot read the file:') . ' ' . $tmp_dest;
+				}
+				$data = '';
+				$fhash = '';
+				$extension = '';
+				if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
+					$fhash = md5($name = $aFiles["userfile"]['name'][$key]);
+					$extension = '';
+					// for podcast galleries add the extension so the
+					// file can be called directly if name is known,
+					if ($podCastGallery) {
+						$path_parts = pathinfo($aFiles["userfile"]['name'][$key]);
+						if (in_array(strtolower($path_parts['extension']), array('m4a', 'mp3', 'mov', 'mp4', 'm4v', 'pdf', 'flv', 'swf'))) {
+							$extension = '.' . strtolower($path_parts['extension']);
+						} else {
+							$errors[] = tra('Incorrect file extension:').$path_parts['extension'];
+						}
+						$savedir = $prefs['fgal_podcast_dir'];
+					} else {
+						$savedir = $prefs['fgal_use_dir'];
+					}
+					do {
+						$fhash = md5(uniqid($fhash));
+					}
+					while (file_exists($savedir . $fhash . $extension));
+					@$fw = fopen($savedir . $fhash . $extension, "wb");
+					if (!$fw) {
+						$errors[] = tra('Cannot write to this file:') . $savedir . $fhash;
+					}
+				}
+				while (!feof($fp)) {
+					if (($prefs['fgal_use_db'] == 'y') && (!$podCastGallery)) {
+						$data.= fread($fp, 8192 * 16);
+					} else {
+						if (($data = fread($fp, 8192 * 16)) === false) {
+							$errors[] = tra('Cannot read the file:') . ' ' . $tmp_dest;
+						}
+						if (fwrite($fw, $data) === false) {
+							$errors[] = tra('Cannot write to this file:') . $savedir . $fhash;
+						}
+					}
+				}
+				fclose($fp);
+				// remove file after copying it to the right location or database
+				@unlink($tmp_dest);
+				if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
+					fclose($fw);
+					$data = '';
+				}
+	
+				if (preg_match('/.flv$/', $name)) {
+					$type = "video/x-flv";
+				}
+				if (count($errors)) {
+					continue;
+				}
+				if (!$size) {
+					$errors[] = tra('Warning: Empty file:') . '  ' . $name . '. ' . tra('Please re-upload your file');
+				}
+				if (($prefs['fgal_use_db'] == 'y') && (!$podCastGallery)) {
+					if (!isset($data) || strlen($data) < 1) {
+						$errors[] = tra('Warning: Empty file:') . ' ' . $name . '. ' . tra('Please re-upload your file');
+					}
+				}
+	
+				if (empty($params['name'][$key])) $params['name'][$key] = $name;
+				if (empty($params['user'][$key])) $params['user'][$key] = $user;
+				if (!isset($params['description'][$key])) $params['description'][$key] = '';
+				if (empty($params['author'][$key])) $params['author'][$key] = $user;
+				if (empty($params['deleteAfter'][$key]) || empty($params['deleteAfter_unit'][$key])) {
+					$deleteAfter = null;
+				} else {
+					$deleteAfter = $params['deleteAfter'][$key]*$params['deleteAfter_unit'][$key];
+				}
+
+				if ( is_array( $fileInfo ) ) {
+					$fileInfo['filename'] = $file_name;
+				}
+
+				if (isset($data)) {
+					if ($editFile) {
+						$didFileReplace = true;
+						$fileId = $this->replace_file($editFileId, $params["name"][$key], $params["description"][$key], $name, $data, $size, $type, $params['user'][$key], $fhash . $extension, $params['comment'][$key], $gal_info, $didFileReplace, $params['author'][$key], $fileInfo['lastModif'], $fileInfo['lockedby'], $deleteAfter);
+						if ($prefs['fgal_limit_hits_per_file'] == 'y') {
+							$this->set_download_limit($editFileId, $params['hit_limit'][$key]);
+						}
+					} else {
+						$fileId = $this->insert_file($params["galleryId"][$key], $params["name"][$key], $params["description"][$key], $name, $data, $size, $type, $params['user'][$key], $fhash . $extension, '', $params['author'][$key], '', '', $deleteAfter);
+					}
+					if (!$fileId) {
+						$errors[] = tra('Upload was not successful. Duplicate file content') . ': ' . $name;
+						if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
+							@unlink($savedir . $fhash);
+						}
+					} else {
+						$_SESSION['allowed'][$fileId] = true;
+					}
+					if ($prefs['fgal_limit_hits_per_file'] == 'y') {
+						$this->set_download_limit($fileId, $params['hit_limit'][$key]);
+					}
+					if (count($errors) == 0) {
+						$aux['name'] = $name;
+						$aux['size'] = $size;
+						$aux['fileId'] = $fileId;
+						if ($podCastGallery) {
+							$aux['dllink'] = $podcast_url . $fhash . $extension . '&amp;thumbnail=y';
+						} else {
+							$aux['dllink'] = $url_browse . "?fileId=" . $fileId;
+						}
+						$uploads[] = $aux;
+						$cat_type = 'file';
+						$cat_objid = $fileId;
+						$cat_desc = substr($params["description"][$key], 0, 200);
+						$cat_name = empty($params['name'][$key]) ? $name : $params['name'][$key];
+						$cat_href = $aux['dllink'];
+						$cat_object_exists = (bool) $fileId;
+						if ($prefs['feature_groupalert'] == 'y' && isset($params['listtoalert'])) {
+							global $groupalertlib; include_once ('lib/groupalert/groupalertlib.php');
+							$groupalertlib->Notify($params['listtoalert'], "tiki-download_file.php?fileId=" . $fileId);
+						}
+						include_once ('categorize.php');
+						// Print progress
+						if (empty($params['returnUrl']) && $prefs['javascript_enabled'] == 'y') {
+							$smarty->assign("name", $aux['name']);
+							$smarty->assign("size", $aux['size']);
+							$smarty->assign("fileId", $aux['fileId']);
+							$smarty->assign("dllink", $aux['dllink']);
+							$smarty->assign("nextFormId", $params['formId'] + 1);
+							$smarty->assign("feedback_message",$feedback_message);
+							$syntax = $this->getWikiSyntax($params["galleryId"][$key]);
+							$syntax = $tikilib->process_fgal_syntax($syntax, $aux);
+							$smarty->assign('syntax', $syntax);
+							print_progress($smarty->fetch("tiki-upload_file_progress.tpl"));
+						}
+					}
+				}
+			}
+		}
+
+		if (empty($params['returnUrl']) && count($errors)) {
+			foreach($errors as $error) {
+				print_msg($error, $formId);
+			}
+		}
+		if ($editFile && !$didFileReplace) {
+			if (empty($params['deleteAfter']) || empty($params['deleteAfter_unit'])) {
+				$deleteAfter = null;
+			} else {
+				$deleteAfter = $params['deleteAfter']*$params['deleteAfter_unit'];
+			}
+			$fileInfo['fileId'] = $this->replace_file($editFileId, $params['name'][0], $params['description'][0], $fileInfo['filename'], $fileInfo['data'], $fileInfo['filesize'], $fileInfo['filetype'], $fileInfo['user'], $fileInfo['path'], $params['comment'][0], $gal_info, $didFileReplace, $params['author'][0], $fileInfo['lastModif'], $fileInfo['lockedby'], $deleteAfter);
+			$fileChangedMessage = tra('File update was successful') . ': ' . $params['name'];
+			$smarty->assign('fileChangedMessage', $fileChangedMessage);
+			$cat_type = 'file';
+			$cat_objid = $editFileId;
+			$cat_desc = substr($params["description"][0], 0, 200);
+			$cat_name = empty($fileInfo['name']) ? $fileInfo['filename'] : $fileInfo['name'];
+			$cat_href = $podCastGallery ? $podcast_url . $fhash : "$url_browse?fileId=" . $editFileId;
+			$cat_object_exists = (bool) $cat_objid;
+			if ($prefs['fgal_limit_hits_per_file'] == 'y') {
+				$this->set_download_limit($editFileId, $params['hit_limit'][0]);
+			}
+			include_once ('categorize.php');
+		}
+		if ($batch_job and count($errors) == 0) {
+			header("location: tiki-list_file_gallery.php?galleryId=" . $batch_job_galleryId);
+			die;
+		}
+
+		if (!empty($editFileId) and count($errors) == 0) {
+			header("location: tiki-list_file_gallery.php?galleryId=" . $params["galleryId"][0]);
+			die;
+		}
+
+		$smarty->assign('errors', $errors);
+		$smarty->assign('uploads', $uploads);
+
+		if (!empty($params['returnUrl'])) {
+			if (!empty($errors)) {
+				$smarty->assign('msg', implode($errors, '<br />'));
+				$smarty->display('error.tpl');
+				die;
+			}
+			header('location: '.$params['returnUrl']);
+			die;
+		}
+
+		// Returns fileInfo of the new file if only one file has been edited / uploaded
+		return $fileInfo;
+	}
 }
 $filegallib = new FileGalLib;
