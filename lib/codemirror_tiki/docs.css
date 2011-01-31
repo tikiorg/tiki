@@ -92,12 +92,14 @@ pre.code {
 	position: absolute;
 	top: 0px ! important;
 	left: 0px ! important;
-	z-index: 99999;
+	z-index: 99999 ! important;
 	position: fixed;
 	top: expression(eval(document.body.scrollTop + 15) + "px");
 	/*left: expression(eval(document.body.scrollLeft) + "px");*/
 }
-
+.CodeMirror-fullscreen * {
+	z-index: 99999 ! important;
+}
 .noScroll
 {
 	overflow: hidden ! important;
