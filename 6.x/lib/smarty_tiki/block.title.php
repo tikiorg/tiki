@@ -24,7 +24,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 
 function smarty_block_title($params, $content, &$smarty, $repeat) {
-  global $prefs, $tiki_p_view_templates, $tiki_p_edit_templates, $tiki_p_admin;
+  global $prefs, $tiki_p_view_templates, $tiki_p_edit_templates, $tiki_p_admin, $smarty;
 
   if ( $repeat || $content == '' ) return;
   include_once('lib/smarty_tiki/function.icon.php');
@@ -39,6 +39,7 @@ function smarty_block_title($params, $content, &$smarty, $repeat) {
   $html = '<h1>';
   $html .= '<a class="pagetitle" href="' . $params['url'] . '">' . $content . "</a>\n";
   
+  if ($smarty->get_template_vars('print_page') != 'y') {
   if ( $prefs['feature_help'] == 'y' && $prefs['helpurl'] != '' && $params['help'] != '' ) {
     $html .= '<a href="' . $prefs['helpurl'] . $params['help'] . '" class="titletips" title="' . tra('Help page:') . ' ' . $content . '">'
           . smarty_function_icon(array('_id' => 'help') , $smarty)
@@ -55,6 +56,7 @@ function smarty_block_title($params, $content, &$smarty, $repeat) {
     $html .= '<a class="titletips" href="tiki-admin.php?page=' . $params['admpage'] . '" title="' . tra('Admin page:') . ' ' . $content . '">'
           . smarty_function_icon(array('_id' => 'wrench', 'alt' => tra('Admin Feature')), $smarty)
           . "</a>\n";
+  }
   }
   
   $html .= '</h1>';
