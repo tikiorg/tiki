@@ -94,7 +94,7 @@ class Smarty_Tiki extends Smarty
 		// Restore original values of smarty variables
 		if ( count( $smarty_orig_values ) > 0 ) {
 			foreach ( $smarty_orig_values as $k => $v ) {
-				$this->assign_by_ref($k, &$smarty_orig_values[ $k ]);
+				$this->assign_by_ref($k, $smarty_orig_values[ $k ]);
 			}
 		}
 
