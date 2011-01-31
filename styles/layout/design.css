@@ -609,7 +609,7 @@ td.norecords {
 	text-align: left;
 	font-weight: bold;
 }
-td.id {
+td.id, td.icon {
 	text-align: center;
 }
 
