@@ -21,7 +21,7 @@
 	<tr><th>{tr}Group{/tr}</th><th>{tr}Permission{/tr}</th></tr>
 	{cycle values="even,odd" print=false}
 	{foreach from=$content.default item=default}
-		<tr class="{cycle}"><td>{$default.group|escape}</td><td>{$default.perm|escape}</td></tr>
+		<tr class="{cycle}"><td class="text">{$default.group|escape}</td><td class="text">{$default.perm|escape}</td></tr>
 	{/foreach}
 	</table>
 	</div>
@@ -34,10 +34,10 @@
 		{if !empty($object.special)}
 			{foreach from=$object.special item=special}
 				<tr class="{cycle}">
-					<td>{$special.objectName}</td>
-					<td>{$special.group|escape}</td>
-					<td>{$special.perm|escape}</td>
-					<td>
+					<td class="text">{$special.objectName}</td>
+					<td class="text">{$special.group|escape}</td>
+					<td class="text">{$special.perm|escape}</td>
+					<td class="text">
 						{if !empty($special.objectId)}
 							<a href="tiki-objectpermissions.php?objectId={$special.objectId}&amp;objectType={$special.objectType}&amp;objectName={$special.objectName|escape}">{tr}{$special.reason|escape}{/tr}</a>
 						{else}
@@ -60,10 +60,10 @@
 		{if !empty($object.category)}
 			{foreach from=$object.category item=special}
 				<tr class="{cycle}">
-					<td>{if isset($object.objectName)}{$object.objectName}{else}{$object.objectId}{/if}</td>
-					<td>{$special.group|escape}</td>
-					<td>{$special.perm|escape}</td>
-					<td>
+					<td class="text">{if isset($object.objectName)}{$object.objectName}{else}{$object.objectId}{/if}</td>
+					<td class="text">{$special.group|escape}</td>
+					<td class="text">{$special.perm|escape}</td>
+					<td class="text">
 						{if !empty($special.objectId)}
 							<a href="tiki-objectpermissions.php?objectId={$special.objectId}&amp;objectType={$special.objectType}&amp;objectName={$special.objectName|escape}">{tr}{$special.reason|escape}:{/tr} {$special.objectName}</a>
 						{else}

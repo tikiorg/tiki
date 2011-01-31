@@ -176,7 +176,7 @@
 		{/if}
 
 		{if $prefs.wiki_list_name eq 'y'}
-			<td>
+			<td class="text">
 				<a href="{$listpages[changes].pageName|sefurl:'wiki':'':$all_langs}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].pageName|escape}">
 					{$listpages[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true|escape}
 				</a>
@@ -192,7 +192,7 @@
 		{/if}
 
 		{foreach from=$wplp_used key=lc item=ln}
-			<td>
+			<td class="text">
 				{if $listpages[changes].translations[$lc]}
 					<a href="{$listpages[changes].translations[$lc]|sefurl}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].translations[$lc]|escape}">
 						{$listpages[changes].translations[$lc]|escape}
@@ -285,13 +285,13 @@
 		{/if}
 
 		{if $prefs.wiki_list_language eq 'y'}
-			<td>
+			<td class="text">
 				{$listpages[changes].lang}
 			</td>
 		{/if}
 
 		{if $prefs.wiki_list_categories eq 'y'}
-			<td>
+			<td class="text">
 				{foreach item=categ from=$listpages[changes].categname name=categ}
 					{if !$smarty.foreach.categ.first}<br />{/if}
 					{$categ|escape}
@@ -300,7 +300,7 @@
 		{/if}
 
 		{if $prefs.wiki_list_categories_path eq 'y'}
-			<td>
+			<td class="text">
 				{foreach item=categpath from=$listpages[changes].categpath}
 					{if !$smarty.foreach.categpath.first}<br />{/if}
 					{$categpath|escape}

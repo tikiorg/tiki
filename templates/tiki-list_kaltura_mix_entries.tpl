@@ -17,19 +17,19 @@
 					    
 		    {include file=tiki-list_kaltura_entries_actions.tpl}
 		    
-			<td><input type="checkbox" name="mixId[]" value="{$item->id}" /></td>
-			<td><a href="#" {popup trigger="onclick" sticky=1 fullhtml="1" text=$smarty.capture.actions|escape:"javascript"|escape:"html"}><img class="athumb" src="{$item->thumbnailUrl}" alt="{$item->description}" height="80" width="120"/></a></td>
-			<td><a href="tiki-kaltura_video.php?{$entryType}Id={$item->id}"><img src="pics/icons/application_form_magnify.png" class="icon" /> {$item->name}</a></td>
-			<td>{$item->createdAt}</td>
-			<td>{$item->tags}</td>
-			<td>{$modifiedAt[$key]}
+			<td class="checkbox"><input type="checkbox" name="mixId[]" value="{$item->id}" /></td>
+			<td class="text"><a href="#" {popup trigger="onclick" sticky=1 fullhtml="1" text=$smarty.capture.actions|escape:"javascript"|escape:"html"}><img class="athumb" src="{$item->thumbnailUrl}" alt="{$item->description}" height="80" width="120"/></a></td>
+			<td class="text"><a href="tiki-kaltura_video.php?{$entryType}Id={$item->id}"><img src="pics/icons/application_form_magnify.png" class="icon" /> {$item->name}</a></td>
+			<td class="text">{$item->createdAt}</td>
+			<td class="text">{$item->tags}</td>
+			<td class="text">{$modifiedAt[$key]}
 			{if !$prefs.kuser}
 			<br/><br/>
 			{tr}Modified By:{/tr} {$modifiedBy[$key]}
 			{/if}
 			</td>
 			{include file=tiki-list_kaltura_entries_add_info.tpl}
-			<td><a href="#" {popup trigger="onmouseover" fullhtml="1" sticky=true text=$smarty.capture.add_info|escape:"javascript"|escape:"html" left=true}>{icon _id='information' class='' title=''}</a></td>
+			<td class="text"><a href="#" {popup trigger="onmouseover" fullhtml="1" sticky=true text=$smarty.capture.add_info|escape:"javascript"|escape:"html" left=true}>{icon _id='information' class='' title=''}</a></td>
 		</tr>
 		{/if}
 		{/foreach}

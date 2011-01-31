@@ -106,14 +106,14 @@
 		{if $item->id ne ''}
 		<tr {if ($key % 2)}class="odd"{else}class="even"{/if}>	
 			{include file=tiki-list_kaltura_entries_actions.tpl}
-			<td><input type="checkbox" name="playlistId[]" value="{$item->id}" /></td>
-			<td><a href="tiki-list_kaltura_playlists.php?playlistId={$item->id}">{$item->name}</a></td>
-			<td>{$item->playlistType}</td>
-			<td>{$item->createdAt}<br/><br/>Created By: {$item->userId}</td>
-			<td height="100">{$item->tags}</td>
-			<td>{$item->version}</td>
+			<td class="checkbox"><input type="checkbox" name="playlistId[]" value="{$item->id}" /></td>
+			<td class="text"><a href="tiki-list_kaltura_playlists.php?playlistId={$item->id}">{$item->name}</a></td>
+			<td class="text">{$item->playlistType}</td>
+			<td class="text">{$item->createdAt}<br/><br/>Created By: {$item->userId}</td>
+			<td height="100" class="text">{$item->tags}</td>
+			<td class="text">{$item->version}</td>
 			{include file=tiki-list_kaltura_entries_add_info.tpl}	
-			<td><a href="#" {popup trigger="onmouseover" fullhtml="1" text=$smarty.capture.add_info|escape:"javascript"|escape:"html" left=true}>{icon _id='information' class='' title=''}</a></td>
+			<td class="text"><a href="#" {popup trigger="onmouseover" fullhtml="1" text=$smarty.capture.add_info|escape:"javascript"|escape:"html" left=true}>{icon _id='information' class='' title=''}</a></td>
 		</tr>
 		{/if}
 		{/foreach}   

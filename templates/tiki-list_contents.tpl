@@ -22,8 +22,8 @@
 			{cycle values="odd,even" print=false}
 			{section name=changes loop=$listpages}
 			  <tr class="{cycle}">
-			    <td>{$listpages[changes].contentId}</td>
-			    <td>
+			    <td class="id">{$listpages[changes].contentId}</td>
+			    <td class="text">
 			      {if $listpages[changes].contentLabel neq ''}
 			         <b>{$listpages[changes].contentLabel}</b>
 			      {/if}
@@ -31,11 +31,11 @@
 			        <div class="subcomment">{$listpages[changes].description}</div>
 			      {/if}
 			    </td>
-			    <td>{$listpages[changes].data|escape:'html'|nl2br}</td>
-			    <td>{$listpages[changes].actual|tiki_short_datetime}</td>
-			    <td>{$listpages[changes].next|tiki_short_datetime}</td>
-			    <td>{$listpages[changes].future}</td>
-			    <td>
+			    <td class="text">{$listpages[changes].data|escape:'html'|nl2br}</td>
+			    <td class="date">{$listpages[changes].actual|tiki_short_datetime}</td>
+			    <td class="date">{$listpages[changes].next|tiki_short_datetime}</td>
+			    <td class="text">{$listpages[changes].future}</td>
+			    <td class="action">
 			      {self_link _class='link' _icon='page_edit' edit=$listpages[changes].contentId cookietab=2}{tr}Edit{/tr}{/self_link}
 			      <a class="link" href="tiki-edit_programmed_content.php?contentId={$listpages[changes].contentId}" title="{tr}Program{/tr}">{icon _id=wrench alt="{tr}Program{/tr}"}</a>
 			      {self_link _class='link' _icon='cross' _template='confirm.tpl' remove=$listpages[changes].contentId}{tr}Remove{/tr}{/self_link}

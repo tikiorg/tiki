@@ -25,20 +25,20 @@
 	{cycle values="odd,even" print=false}
 	{section name=user loop=$channels}
 		<tr class="{cycle}">
-			<td>
+			<td class="text">
 				<a class="tablename" href="tiki-view_faq.php?faqId={$channels[user].faqId}">{$channels[user].title|escape}</a>
 				<div class="subcomment">
 					{$channels[user].description|escape|nl2br}
 				</div>
 			</td>
-			<td style="text-align:right;">
+			<td class="integer">
 				{$channels[user].hits}
 			</td>
-			<td style="text-align:right;">
+			<td class="integer">
 				{$channels[user].questions} ({$channels[user].suggested})
 			</td>
 			{if $tiki_p_admin_faqs eq 'y'}
-				<td style="text-align:right">
+				<td class="action">
 					<a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;faqId={$channels[user].faqId}">{icon _id='page_edit'}</a>
 					<a class="link" href="tiki-faq_questions.php?faqId={$channels[user].faqId}">{icon _id='help' alt="{tr}Questions{/tr}"}</a>
 					<a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].faqId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>

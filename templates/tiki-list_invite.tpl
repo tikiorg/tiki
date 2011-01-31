@@ -42,11 +42,11 @@
 {foreach item=invited from=$inviteds}
 	<tr class="{cycle}">
 	{if $tiki_p_admin eq 'y'}
-		<td>{$invited.inviter|userlink}</td>
+		<td class="text">{$invited.inviter|userlink}</td>
 	{/if}
-	<td>{$invited.ts|tiki_short_date}</td>
-	<td>{$invited.email|escape}</td>
-	<td>{$invited.used|escape}</td>
+	<td class="date">{$invited.ts|tiki_short_date}</td>
+	<td class="email">{$invited.email|escape}</td>
+	<td class="text">{$invited.used|escape}</td>
 	</tr>
 {/foreach}
 </table>
