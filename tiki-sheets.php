@@ -123,9 +123,11 @@ if (!isset($_REQUEST["offset"])) {
 }
 $smarty->assign_by_ref('offset', $offset);
 // Get the list of sheets available for this user (or public galleries)
-$sheets = $sheetlib->list_sheets($offset, $maxRecords, $sort_mode, $find);
+$sheets = $sheetlib->list_sheets($offset, $maxRecords, $sort_mode, $find, true);
+print_r($sheetsAvailableAsParents);
 $smarty->assign_by_ref('cant_pages', $sheets["cant"]);
 $smarty->assign_by_ref('sheets', $sheets["data"]);
+
 include_once ('tiki-section_options.php');
 ask_ticket('sheet');
 // Display the template

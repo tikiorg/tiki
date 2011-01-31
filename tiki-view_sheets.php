@@ -17,7 +17,9 @@ $auto_query_args = array(
 	'height',
 );
 $access->check_feature('feature_sheet');
-
+	print_r($_GET);
+	print_r($_POST);
+	print_r($_REQUEST);
 if (!isset($_REQUEST['sheetId'])) die;
 
 $info = $sheetlib->get_sheet_info($_REQUEST['sheetId']);
@@ -86,11 +88,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { //save
 	}
 	
 } elseif ( $_REQUEST['parse'] == "clone" ) {
-	$result = $sheetlib->clone_sheet( $_REQUEST["sheetId"], $_REQUEST['readdate'] );
-	if ($result) {
-		header("Location: tiki-view_sheets.php?sheetId=".$result);
+	$access->check_permission('tiki_p_edit_sheet');
+	//$access->check_authenticity();
+	$id = $sheetlib->clone_sheet( $_REQUEST["sheetId"], $_REQUEST['readdate'] );
+	if ($id) {
+		header("Location: tiki-view_sheets.php?sheetId=".$id);
+	}
+} elseif ($_REQUEST['parse'] == 'rollback' && !empty($_REQUEST['readdate'])) {
+	$access->check_permission('tiki_p_edit_sheet');
+	//$access->check_authenticity();
+	$id = $sheetlib->rollback_sheet( $_REQUEST["sheetId"], $_REQUEST['readdate'] );
+	if ($id) {
+		header("Location: tiki-view_sheets.php?sheetId=".$id);
 	}
 } else {
+	if ($_REQUEST['parse'] == 'edit') {
+		$access->check_permission('tiki_p_edit_sheet');
+	}
 	$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
 	
 	//We make sheet able to look at other date save

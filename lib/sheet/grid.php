@@ -1311,7 +1311,16 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	{
 		global $tikilib;
 		
-		$result = $tikilib->query( "SELECT `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `style`, `class`, `user` FROM `tiki_sheet_values` WHERE `sheetId` = ? AND ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
+		$result = $tikilib->query( "
+			SELECT `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `style`, `class`, `user`
+			FROM `tiki_sheet_values`
+			WHERE
+				`sheetId` = ? AND 
+				? >= `begin` AND 
+				( 
+					`end` IS NULL OR
+					`end` > ? )
+		", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
 
 		while( $row = $result->fetchRow() )
 		{
@@ -1326,7 +1335,14 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 		}
 
 		// Fetching the layout informations.
-		$result2 = $tikilib->query( "SELECT `className`, `headerRow`, `footerRow`, `parseValues` FROM `tiki_sheet_layout` WHERE `sheetId` = ? AND ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
+		$result2 = $tikilib->query( "
+			SELECT `className`, `headerRow`, `footerRow`, `parseValues`
+			FROM `tiki_sheet_layout`
+			WHERE
+				`sheetId` = ? AND 
+				? >= `begin` AND 
+				( `end` IS NULL OR `end` > ? )
+		", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
 
 		if( $row = $result2->fetchRow() )
 		{
@@ -2301,7 +2317,41 @@ class SheetLib extends TikiLib
 	
 	function rollback_sheet($id, $readdate=null) {
 		global $user, $sheetlib;
-		return "not yet working";
+		
+		if ($readdate) {
+			$now = (int)time();
+			
+			 $this->query( "
+				 UPDATE `tiki_sheet_values`
+				 SET `end` = ?
+				 WHERE
+				 	`sheetId` = ? AND
+				 	`end` IS NULL
+			 ", array( $now, $id ) );
+			 
+			 $this->query("
+				 INSERT INTO `tiki_sheet_values` (`sheetId`, `begin`, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user`, `style`, `class`, `clonedSheetId`)
+				 SELECT `sheetId`, ?, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user`, `style`, `class`, `clonedSheetId`
+				 FROM `tiki_sheet_values`
+				 WHERE
+				 	`sheetId` = ? AND
+				    ? >= `begin` AND 
+				    `end` > ?
+			", array( $now, $id, $readdate, $readdate ) );
+			 
+		}
+		
+		if ($prefs['feature_actionlog'] == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib->add_action('Spreadsheet-Rollback', $id, 'sheet');
+		}
+		
+		$children = $this->fetchAll( "SELECT `sheetId` FROM `tiki_sheets` WHERE `parentSheetId` = ?", array($id) );
+		foreach($children as $child) {
+			$this->rollback_sheet( $child['sheetId'], $readdate );
+		}
+		
+		return $id;
 	}
 	
 	function clone_sheet( $sheetId, $readdate = null, $parentSheetId = 0) {
@@ -2333,16 +2383,16 @@ class SheetLib extends TikiLib
 		
 		//clone sheet's values
 	  $this->query( "
-      INSERT INTO `tiki_sheet_values` (`sheetId`, `begin`, `end`, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user`, `style`, `class`, `clonedSheetId`)
-      SELECT ?, `begin`, NULL, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user`, `style`, `class`, ?
-      FROM `tiki_sheet_values`
-    	WHERE
-        `sheetId` = ? AND 
-        ? >= `begin` AND 
-        (
-        	`end` IS NULL OR
-        	`end` > ?
-        )
+	      INSERT INTO `tiki_sheet_values` (`sheetId`, `begin`, `end`, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user`, `style`, `class`, `clonedSheetId`)
+	      SELECT ?, `begin`, NULL, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user`, `style`, `class`, ?
+	      FROM `tiki_sheet_values`
+	    	WHERE
+	        `sheetId` = ? AND 
+	        ? >= `begin` AND 
+	        (
+	        	`end` IS NULL OR
+	        	`end` > ?
+	        )
       ", array( $newSheetId, $sheetId, $sheetId, $readdate, $readdate ) );
 		
 		//clone the children sheets if they exist
@@ -2399,7 +2449,6 @@ class SheetLib extends TikiLib
 				$res = $grid->import($handler);
 				// Save the changes
 				$rc .= strlen($rc) === 0 ? '' : ', ';
-				//print_r($sheet);
 				if ($res) {
 					if (!$sheet->metadata->sheetId) {
 						if (!empty($sheet->metadata->title)) {
@@ -2409,6 +2458,7 @@ class SheetLib extends TikiLib
 						}
 						$newId = $sheetlib->replace_sheet( 0, $title, '', $user, $id );
 						$rc .= tra('new') . " (id=$newId) ";
+						$sheet->metadata->sheetId = $newId;
 						$handler = new TikiSheetHTMLTableHandler($sheet);
 						$res = $grid->import($handler);
 					}

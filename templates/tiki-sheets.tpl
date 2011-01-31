@@ -112,9 +112,11 @@
 						<select name="parentSheetId">
 							<option value="">{tr}None{/tr}</option>
 							{section name=sheet loop=$sheets}
+								{if $sheets[sheet].parentSheetId eq '0'}
 								<option value="{$sheets[sheet].sheetId}"{if $parentSheetId eq $sheets[sheet].sheetId} selected="selected"{/if}>
 									{$sheets[sheet].title|escape}
 								</option>
+								{/if}
 							{/section}
 						</select>
 						<em>{tr}Makes this sheet a "child" sheet of a multi-sheet set{/tr}</em>
