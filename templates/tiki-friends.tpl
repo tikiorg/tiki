@@ -44,8 +44,7 @@
 {/if}
 <p style="font-weight: bold;">{tr}Your friends{/tr}</p>
 
-{include file='find.tpl'}
-{jq}$("#find").tiki("autocomplete", "username"){/jq}
+{include file='find.tpl' autocomplete="username"}
 
 <table class="userlist">
 {if $listpages}

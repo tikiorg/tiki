@@ -4,8 +4,7 @@
 
 {$cant_users} {if !$find}{tr}users registered{/tr}{else} {tr}Users{/tr} {tr}like{/tr} "{$find}"{/if}
 
-{include file='find.tpl'}
-{jq}$("#find").tiki("autocomplete", "username"){/jq}
+{include file='find.tpl' autocomplete="username"}
 
 <table bgcolor="#ffffff" class="normal">
 	<tr>

@@ -23,6 +23,7 @@
 	* filters               : array( filter_field1 => array( option1_value => option1_text, ... ), filter_field2 => ... )
 	*		filter_names          : array( filter_field1 => filter_field1_name, ... )
 	*		filter_values         : array( filter_fieldX => filter_fieldX_selected_value, ... )
+	* autocomplete						: name of the variable you want for autocomplete of the input field (only for <input type="text" ... />
 	*
 	* Usage examples : {include file='find.tpl'}
 	*                  {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'} 
@@ -41,6 +42,9 @@
 			{tr}{$whatlabel}{/tr}
 		{/if}
 		<input type="text" name="find" id="find" value="{$find|escape}" />
+		{if isset($autocomplete)}
+			{jq}$("#find").tiki("autocomplete", "{{$autocomplete}}"){/jq}
+		{/if}
 	</label>
 
 {if isset($exact_match)}
