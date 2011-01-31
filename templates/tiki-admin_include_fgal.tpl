@@ -79,6 +79,7 @@
 				</div>
 				{preference name='fgal_keep_fileId'}
 				{preference name='feature_use_fgal_for_user_files'}
+				{preference name='feature_use_fgal_for_wiki_attachments'}
 			</fieldset>
 
 			<fieldset>

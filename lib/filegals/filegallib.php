@@ -23,6 +23,37 @@ class FileGalLib extends TikiLib
 		}
 	}
 
+	function get_attachment_gallery( $objectId, $objectType ) {
+		switch ( $objectType ) {
+			case 'wiki page': return $this->get_wiki_attachment_gallery( $objectId );
+		}
+
+		return false;
+	}
+
+	function get_wiki_attachment_gallery( $pageName ) {
+		global $prefs;
+
+		// Get the Wiki Attachment Gallery for this wiki page or create it if it does not exist
+		if ( ! $return = $this->getGalleryId( $pageName, $prefs['fgal_root_wiki_attachments_id'] ) ) {
+
+			// Create the attachment gallery only if the wiki page really exists
+			if ( $this->get_page_id_from_name( $pageName ) > 0 ) {
+
+				$return = $this->replace_file_gallery( array(
+					'name' => $pageName,
+					'user' => 'admin',
+					'type' => 'default',
+					'public' => 'y',
+					'visible' => 'y',
+					'parentId' => $prefs['fgal_root_wiki_attachments_id']
+				) );
+			}
+		}
+
+		return $return;
+	}
+
 	function get_user_file_gallery(){
 		global $user, $prefs;
 		

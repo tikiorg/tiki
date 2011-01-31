@@ -392,7 +392,7 @@ class WikiRenderer
 	private function setupAttachments() // {{{
 	{
 		global $prefs, $wikilib;
-		if ( $prefs['feature_wiki_attachments'] != 'y' )
+		if ( $prefs['feature_wiki_attachments'] != 'y' || $prefs['feature_use_fgal_for_wiki_attachments'] == 'y' )
 			return;
 
 		// If anything below here is changed, please change lib/wiki-plugins/wikiplugin_attach.php as well.

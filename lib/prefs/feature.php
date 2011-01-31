@@ -991,6 +991,14 @@ function prefs_feature_list() {
 				'feature_file_galleries','feature_userfiles'
 			),
 		),
+		'feature_use_fgal_for_wiki_attachments' =>array(
+			'name' => tra('Use file galleries for wiki attachments'),
+			'type' => 'flag',
+			'help' => 'File+Gallery+Config',
+			'dependencies' => array(
+				'feature_file_galleries','feature_wiki_attachments'
+			),
+		),
 		'feature_file_galleries_author' => array(
 			'name' => tra("Require file author's name for anonymous uploads"),
 			'type' => 'flag',
