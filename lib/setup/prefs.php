@@ -628,6 +628,7 @@ function get_default_prefs() {
 		'fgal_keep_fileId' => 'n',
 		'fgal_show_thumbactions' => 'y',
 		'fgal_thumb_max_size' => 120,
+		'fgal_display_zip_option' => 'y',
 		'fgal_checked' => 'y',
 
 		// imagegals

@@ -56,6 +56,12 @@ function prefs_fgal_list() {
 							  'different_galleries' => tra('Only in different galleries')
 			),
 		),
+		'fgal_display_zip_option' => array(
+			'name' => tra('Display zip option in gallery'),
+			'type' => 'flag',
+			'description' => tra('Display in the gallery the zip option (in upload and gallery file)'),
+			'help' => 'File+Zip+Gallery+Config',
+		),
 		'fgal_match_regex' => array(
 			'name' => tra('Must match'),
 			'type' => 'text',
