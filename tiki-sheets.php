@@ -14,6 +14,7 @@ $access->check_feature('feature_sheet');
 $auto_query_args = array('sheetId');
 
 if (!isset($_REQUEST["sheetId"])) {
+	$cookietab = 1;
 	$_REQUEST["sheetId"] = 0;
 	$info = array();
 	$smarty->assign('headtitle', tra('Spreadsheets'));
@@ -92,7 +93,7 @@ if (isset($_REQUEST["edit"])) {
 	}
 	$smarty->assign_by_ref('parseValues', $_REQUEST['parseValues']);
 	$gid = $sheetlib->replace_sheet($_REQUEST["sheetId"], $_REQUEST["title"], $_REQUEST["description"], $_REQUEST['creator'], $_REQUEST['parentSheetId']);
-	$sheetlib->replace_layout($gid, $_REQUEST["className"], $_REQUEST["headerRow"], $_REQUEST["footerRow"], $_REQUEST['parseValues']);
+	//$sheetlib->replace_layout($gid, $_REQUEST["className"], $_REQUEST["headerRow"], $_REQUEST["footerRow"], $_REQUEST['parseValues']);
 	$cat_type = 'sheet';
 	$cat_objid = $gid;
 	$cat_desc = substr($_REQUEST["description"], 0, 200);

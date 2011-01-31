@@ -2167,9 +2167,9 @@ class SheetLib extends TikiLib
 		return $result;
 	}
 	
-	function list_sheets( $offset = 0, $maxRecord = -1, $sort_mode = 'title_desc', $find = '' ) // {{{2
+	function list_sheets( $offset = 0, $maxRecord = -1, $sort_mode = 'title_desc', $find = '' , $includeChildren = false) // {{{2
 	{
-	global $user, $tikilib, $userlib;
+		global $user, $tikilib, $userlib;
 		switch( $sort_mode )
 		{
 			case "author_asc":
@@ -2202,7 +2202,16 @@ class SheetLib extends TikiLib
 				$mid = ' WHERE ';
 			$mid .= ' `title` like ? ';
 		}
-
+		
+		if (!$includeChildren) {
+			if (!$mid) {
+				$mid .= ' WHERE ';
+			} else {
+				$mid .= ' AND ';
+			}
+			$mid .= ' (parentSheetId = 0 or parentSheetId = null) ';
+		}
+		
 		$result = $this->query( "SELECT * FROM `tiki_sheets`  $mid ORDER BY $sort", $bindvars, $maxRecord, $offset );
 
 		while( $row = $result->fetchRow() ) {
@@ -2232,11 +2241,9 @@ class SheetLib extends TikiLib
 		}
 	}
 
-	function replace_sheet( $sheetId, $title, $description, $author, $parentSheetId = null ) // {{{2
+	function replace_sheet( $sheetId, $title, $description, $author, $parentSheetId = 0 ) // {{{2
 	{
 		global $prefs;
-		
-		if (!$parentSheetId) { $parentSheetId = null; }
 
 		if( $sheetId == 0 )
 		{
@@ -2384,34 +2391,34 @@ class SheetLib extends TikiLib
 		global $user, $sheetlib;
 		
 		$grid = new TikiSheet($id);
-		$data =  json_decode($data);
+		$sheets =  json_decode($data);
 		$rc =  '';
-		if (is_array($data)) {
-			foreach ($data as $d) {
-				$handler = new TikiSheetHTMLTableHandler($d);
+		if (is_array($sheets)) {
+			foreach ($sheets as $sheet) {
+				$handler = new TikiSheetHTMLTableHandler($sheet);
 				$res = $grid->import($handler);
 				// Save the changes
 				$rc .= strlen($rc) === 0 ? '' : ', ';
+				//print_r($sheet);
 				if ($res) {
-					$id = $d->metadata->sheetId;
-					if (!$id) {
-						if (!empty($d->metadata->title)) {
-							$t = $d->metadata->title;
+					if (!$sheet->metadata->sheetId) {
+						if (!empty($sheet->metadata->title)) {
+							$title = $sheet->metadata->title;
 						} else {
-							$t = $info['title'] . ' subsheet'; 
+							$title = $info['title'] . ' subsheet'; 
 						}
-						$id = $sheetlib->replace_sheet( 0, $t, '', $user, $id );
-						$rc .= tra('new') . ' ';
-						$handler = new TikiSheetHTMLTableHandler($d);
+						$newId = $sheetlib->replace_sheet( 0, $title, '', $user, $id );
+						$rc .= tra('new') . " (id=$newId) ";
+						$handler = new TikiSheetHTMLTableHandler($sheet);
 						$res = $grid->import($handler);
 					}
 					if ($id && $res) {
-						$handler = new TikiSheetDatabaseHandler($id);
+						$handler = new TikiSheetDatabaseHandler($sheet->metadata->sheetId);
 						$grid->export($handler);
-						$rc .= $grid->getColumnCount() . ' x ' . $grid->getRowCount() . ' ' . tra('sheet') . " (id=$id)";
+						$rc .= $grid->getColumnCount() . ' x ' . $grid->getRowCount() . ' ' . tra('sheet') . " (id=".$sheet->metadata->sheetId.")";
 					}
-					if (!empty($d->metadata->title)) {
-						$sheetlib->set_sheet_title($id, $d->metadata->title);
+					if (!empty($sheet->metadata->title)) {
+						$sheetlib->set_sheet_title($sheet->metadata->sheetId, $sheet->metadata->title);
 					}
 				}
 			}
