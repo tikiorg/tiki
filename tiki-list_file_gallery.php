@@ -239,37 +239,14 @@ if (!empty($_REQUEST['validate']) && $prefs['feature_file_galleries_save_draft']
 	$filegallib->validate_draft($info['fileId']);
 }
 
-// Delete a file
-if (!empty($_REQUEST['remove'])) {
-	// To remove an image the user must be the owner or the file or the gallery or admin
-	if (!$info = $filegallib->get_file_info($_REQUEST['remove'])) {
-		$smarty->assign('msg', tra('Incorrect param'));
-		$smarty->display('error.tpl');
-		die;
-	}
-	if ($tiki_p_admin_file_galleries != 'y' && (!$user || $user != $gal_info['user'])) {
-		if ($user != $info['user']) {
-			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra('You do not have permission to remove files from this gallery'));
-			$smarty->display('error.tpl');
-			die;
-		}
-	}
-	$backlinks = $filegallib->getFileBacklinks($_REQUEST['remove']);
-
-	if (isset($_POST['daconfirm']) && !empty($backlinks)) {
-		$smarty->assign_by_ref('backlinks', $backlinks);
-		$smarty->assign('file_backlinks_title', 'WARNING: The file is used in:');//get_strings tra('WARNING: The file is used in:')
-		$smarty->assign('confirm_detail', $smarty->fetch('file_backlinks.tpl'));
-	}
-
-	if (!empty($_REQUEST['draft'])) {
-		$access->check_authenticity(tra('Remove file draft: ') . (!empty($info['name']) ? htmlspecialchars($info['name']) . ' - ' : '') . $info['filename']);
-		$filegallib->remove_draft($info['fileId'], $user);
-	} else {
-		$access->check_authenticity(tra('Remove file: ') . (!empty($info['name']) ? htmlspecialchars($info['name']) . ' - ' : '') . $info['filename']);
-		$filegallib->remove_file($info, $gal_info);
-	}
+if ( ! empty($_REQUEST['remove']) ) {
+	$filegallib->actionHandler(
+		'removeFile',
+		array(
+			'fileId' => $_REQUEST['remove'],
+			'draft' => ( ! empty($_REQUEST['draft']) )
+		)
+	);
 }
 
 $foo = parse_url($_SERVER['REQUEST_URI']);

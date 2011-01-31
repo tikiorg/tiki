@@ -1819,5 +1819,69 @@ class FileGalLib extends TikiLib
 		$syntax = '{img fileId="%fileId%" thumb="y" rel="box[g]"}';	// should be a pref
 		return $syntax;
 	}
+
+	public function actionHandler($action, $params) {
+		$method_name = '_actionHandler_' . $action;
+		if ( ! is_callable( array( $this, $method_name ) ) )
+			return false;
+
+		return call_user_func( array( $this, $method_name ), $params );
+	}
+
+	private function _actionHandler_removeFile( $params ) {
+		// mandatory params: int fileId
+		// optional params: boolean draft, array gal_info
+		if ( ! empty( $params ) && isset( $params['fileId'] ) ) {
+			// To remove an image the user must be the owner or the file or the gallery or admin
+
+			if ( ! isset( $params['draft'] ) ) {
+				$params['draft'] = false;
+			}
+
+			global $smarty;
+			if ( ! $info = $this->get_file_info( $params['fileId'] ) ) {
+				$smarty->assign('msg', tra('Incorrect param'));
+				$smarty->display('error.tpl');
+				die;
+			}
+
+			if ( empty( $params['gal_info'] ) || ! isset( $params['gal_info']['user'] ) ) {
+				if ( isset( $info['galleryId'] ) ) {
+					$params['gal_info'] = $this->get_file_gallery_info( $info['galleryId'] );
+				} else {
+					$params['gal_info'] = array('user' => '');
+				}
+			}
+
+			global $tiki_p_admin_file_galleries, $user;
+			if ( $tiki_p_admin_file_galleries != 'y' && ( ! $user || $user != $gal_info['user'] ) ) {
+				if ( $user != $info['user'] ) {
+					$smarty->assign('errortype', 401);
+					$smarty->assign('msg', tra('You do not have permission to remove files from this gallery'));
+					$smarty->display('error.tpl');
+					die;
+				}
+			}
+
+			$backlinks = $this->getFileBacklinks( $params['fileId'] );
+
+			if ( isset( $_POST['daconfirm'] ) && ! empty( $backlinks ) ) {
+				$smarty->assign_by_ref('backlinks', $backlinks);
+				$smarty->assign('file_backlinks_title', 'WARNING: The file is used in:');//get_strings tra('WARNING: The file is used in:')
+				$smarty->assign('confirm_detail', $smarty->fetch('file_backlinks.tpl')); ///FIXME
+			}
+
+			global $access;
+			$confirmationText = ( empty( $info['name'] ) ? '' : htmlspecialchars( $info['name']) . ' - ' ) . $info['filename'];
+			if ( $params['draft'] ) {
+				$access->check_authenticity( tra( 'Remove file draft: ') . $confirmationText );
+				$this->remove_draft( $info['fileId'], $user );
+			} else {
+				$access->check_authenticity( tra('Remove file: ') . $confirmationText );
+				$this->remove_file( $info, $gal_info );
+			}
+		}
+	}
+
 }
 $filegallib = new FileGalLib;
