@@ -36,7 +36,7 @@
 			    <td>{$listpages[changes].next|tiki_short_datetime}</td>
 			    <td>{$listpages[changes].future}</td>
 			    <td>
-			      {self_link _class='link' _icon='page_edit' edit=$listpages[changes].contentId}{tr}Edit{/tr}{/self_link}
+			      {self_link _class='link' _icon='page_edit' edit=$listpages[changes].contentId cookietab=2}{tr}Edit{/tr}{/self_link}
 			      <a class="link" href="tiki-edit_programmed_content.php?contentId={$listpages[changes].contentId}" title="{tr}Program{/tr}">{icon _id=wrench alt="{tr}Program{/tr}"}</a>
 			      {self_link _class='link' _icon='cross' _template='confirm.tpl' remove=$listpages[changes].contentId}{tr}Remove{/tr}{/self_link}
 			    </td>
