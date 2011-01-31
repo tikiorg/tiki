@@ -6,7 +6,16 @@
 // $Id$
 
 $section = 'mytiki';
+
 require_once ('tiki-setup.php');
+
+if ( $user != '' && $prefs['feature_use_fgal_for_user_files'] == 'y' ){
+	$filegallib = TikiLib::lib('filegal');
+	$idGallery = $filegallib->get_user_file_gallery();
+
+	// redirect user in correct gallery
+	header('location: tiki-list_file_gallery.php?galleryId='.$idGallery);
+}
 include_once ('lib/userfiles/userfileslib.php');
 
 $access->check_feature('feature_userfiles', '', 'community');

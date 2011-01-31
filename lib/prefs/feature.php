@@ -983,6 +983,14 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'help' => 'File+Gallery+Config',
 		),
+		'feature_use_fgal_for_user_files' =>array(
+			'name' => tra('Use file galleries for user files'),
+			'type' => 'flag',
+			'help' => 'File+Gallery+Config',
+			'dependencies' => array(
+				'feature_file_galleries','feature_userfiles'
+			),
+		),
 		'feature_file_galleries_author' => array(
 			'name' => tra("Require file author's name for anonymous uploads"),
 			'type' => 'flag',

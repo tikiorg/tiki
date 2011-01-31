@@ -78,6 +78,7 @@
 					{preference name='fgal_delete_after_email'}
 				</div>
 				{preference name='fgal_keep_fileId'}
+				{preference name='feature_use_fgal_for_user_files'}
 			</fieldset>
 
 			<fieldset>

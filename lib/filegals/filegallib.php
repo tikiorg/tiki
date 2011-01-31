@@ -23,6 +23,38 @@ class FileGalLib extends TikiLib
 		}
 	}
 
+	function get_user_file_gallery(){
+		global $user, $prefs;
+		
+		// serach if user file gallery exist
+		$query = "select `value` from `tiki_user_preferences` where `prefName` = 'user_gallery_id' and `user` = ? ";
+		$resultSelect = $this->query($query,array($user));
+				
+		if($resultSelect->numrows == 0){
+			// create an apporpriate file gallerie
+			$galInfos = array(
+							'name' 		=> $user,
+							'user'		=> $user,
+							'type' 		=> 'default',
+							'public'	=> 'n',
+							'visible'	=> 'y',
+							'parentId' 	=> $prefs['fgal_root_user_id']);
+			$idGallery = $this->replace_file_gallery($galInfos);
+			if($idGallery>0){
+				// add user gallery to preferences
+				$query = "insert into `tiki_user_preferences` (`prefName`, `user`, `value`) values (?, ?, ?)";
+				$this->query($query, array("user_gallery_id", $user, $idGallery));
+			}
+			return $idGallery;
+		}
+		
+		$result = $resultSelect->fetchRow();
+		if ( ! empty($result['value']) ) {
+			// redirect user to his gallery
+			return $result['value'];
+		}
+	}
+
 	function remove_file($fileInfo, $galInfo='', $disable_notifications = false) {
 		global $prefs, $smarty, $user;
 
