@@ -106,14 +106,16 @@
 
 				{if $menu_text neq 'y'}</div>{/if}
 				
-				<div class="upspan {if $menu_text eq 'y'}upspantext{/if}" style="display: inline; position:relative{if $menu_text eq 'y'}; position:absolute{else}; float:left{/if}; overflow:hidden" title="{$replace_action_title}">
-					<input type="file" style="position:absolute; z-index:1001; right:0; top:0; font-size:600px; opacity:0; -moz-opacity:0; filter:alpha(opacity=0); cursor:pointer" name="upfile{$files[changes].id}" onchange="this.form.submit(); return false;"/>
-					<a href="#">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt=$replace_action_title}</a>
-				</div>
+				{if $prefs.fgal_display_replace eq 'y'}
+					<div class="upspan {if $menu_text eq 'y'}upspantext{/if}" style="display: inline; position:relative{if $menu_text eq 'y'}; position:absolute{else}; float:left{/if}; overflow:hidden" title="{$replace_action_title}">
+						<input type="file" style="position:absolute; z-index:1001; right:0; top:0; font-size:600px; opacity:0; -moz-opacity:0; filter:alpha(opacity=0); cursor:pointer" name="upfile{$files[changes].id}" onchange="this.form.submit(); return false;"/>
+						<a href="#">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt=$replace_action_title}</a>
+					</div>
 
-				{if $menu_text eq 'y'}
-					{* the line above is used to give enough space to the real 'Upload New Version' button *}
-					<a style="visibility: hidden">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt=$replace_action_title}</a>
+					{if $menu_text eq 'y'}
+						{* the line above is used to give enough space to the real 'Upload New Version' button *}
+						<a style="visibility: hidden">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt=$replace_action_title}</a>
+					{/if}
 				{/if}
 
 			{else}
@@ -122,7 +124,9 @@
 				
 			{/if}
 
-			<a href="tiki-upload_file.php?galleryId={$files[changes].galleryId}&amp;fileId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='page_edit' alt="{tr}Properties{/tr}"}</a>
+			{if $prefs.fgal_display_properties eq 'y'}
+				<a href="tiki-upload_file.php?galleryId={$files[changes].galleryId}&amp;fileId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='page_edit' alt="{tr}Properties{/tr}"}</a>
+			{/if}
 			{/if}
 
 			{if $gal_info.lockable eq 'y' and $files[changes].isgal neq 1}
