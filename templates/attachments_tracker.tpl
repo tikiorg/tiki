@@ -1,6 +1,6 @@
 {* $Id$ *}
 {strip}
-{if $tiki_p_attach_trackers eq 'y'}
+{if $print_page ne 'y' and $tiki_p_attach_trackers eq 'y'}
 	<h2>{tr}Attach a file to this item{/tr}</h2>
 	<form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post">
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
