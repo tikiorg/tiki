@@ -17,9 +17,6 @@ $auto_query_args = array(
 	'height',
 );
 $access->check_feature('feature_sheet');
-	print_r($_GET);
-	print_r($_POST);
-	print_r($_REQUEST);
 if (!isset($_REQUEST['sheetId'])) die;
 
 $info = $sheetlib->get_sheet_info($_REQUEST['sheetId']);
