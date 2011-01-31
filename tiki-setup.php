@@ -355,3 +355,5 @@ if ( isset($token_error) ) {
 	die;
 }
 
+require_once( 'lib/setup/plugins_actions.php' );
+
