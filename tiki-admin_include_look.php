@@ -142,14 +142,13 @@ if ($prefs['feature_themegenerator'] === 'y') {
 	}
 	
 	$themegenlib->setupEditor();
-	//$auto_query_args[] = 'tg_css_file';
-	
 	
 }
 
 if (isset($_REQUEST["looksetup"])) {
 	for ($i = 0, $count_feedback = count($tikifeedback); $i < $count_feedback; $i++) {
-		if (substr($tikifeedback[$i]['name'], 0, 5) == 'style') { // if style or style_option
+		if (substr($tikifeedback[$i]['name'], 0, 5) == 'style' ||			// if style or style_option
+				$tikifeedback[$i]['name'] === 'themegenerator_theme') {		//	or themegen theme changed
 			// If the theme has changed, reload the page to use the new theme
 			$reload = true;
 		}
@@ -161,14 +160,6 @@ if ($reload) {
 		if ($prefs['feature_tabs'] === 'y' && isset($_COOKIE['tab']) && $_COOKIE['tab'] > 1) {
 			$location.= "&cookietab=" . $_COOKIE['tab'];
 		}
-//		if ($prefs['feature_themegenerator'] === 'y') {
-//			if (!empty($_REQUEST['tg_css_file'])) {
-//				$location.= "&tg_css_file=" . $_REQUEST['tg_css_file'];
-//			}
-//			if (!empty($_REQUEST['tg_preview'])) {
-//				$location.= "&tg_preview=true";
-//			}
-//		}
 		header($location);
 		exit;
 }

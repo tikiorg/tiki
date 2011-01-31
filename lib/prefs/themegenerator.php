@@ -18,8 +18,8 @@ function prefs_themegenerator_list() {
 		foreach( $list as $item ) {
 			$tm = new ThemeGenTheme($item);
 			$d = $tm->getData();
-			if ((!isset($d['theme']) || $d['theme'] === $prefs['style']) &&
-							(!isset($d['theme-option']) || $d['theme-option'] === $prefs['style_option'])) {
+			if ((empty($d['theme']) || $d['theme'] === $prefs['style']) &&
+					(empty($d['theme-option']) || $d['theme-option'] === $prefs['style_option'])) {
 				$themes[$item] = $item;
 			}
 		}

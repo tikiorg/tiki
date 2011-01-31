@@ -1,4 +1,5 @@
 {* $Id$ *}
+{strip}
 <div id="themegenerator_content">
 	<div class="box-data">			
 		<label for="tg_css_file">{tr}Modifying:{/tr} </label>
@@ -18,9 +19,12 @@
 
 			<div id="tg_section_{$tg_section}">
 				<div class="clearfix tgTools">
-					<input type="checkbox" class="tgToggle" /> {tr}Toggle checkboxes{/tr}
-					<input type="checkbox" class="tgToggleChanged" /> {tr}Toggle changed{/tr}
-					<input type="checkbox" class="tgLivePreview" checked="checked" /> {tr}Live preview{/tr}
+					<input type="checkbox" class="tgToggle" id="tgToggle_{$tg_section}" />
+					<label for="tgToggle_{$tg_section}">{tr}Toggle checkboxes{/tr}</label>
+					<input type="checkbox" class="tgToggleChanged" id="tgToggleChanged_{$tg_section}" />
+					<label for="tgToggleChanged_{$tg_section}">{tr}Toggle changed{/tr}</label>
+					<input type="checkbox" class="tgLivePreview" checked="checked" id="tgLivePreview_{$tg_section}" />
+					<label for="tgLivePreview_{$tg_section}">{tr}Live preview{/tr}</label>
 					{button _text="{tr}Reset selected{/tr}" _class="tgResetSection" href="#"}
 				</div>
 				{foreach from=$tg_section_data.types item=tg_data_type key=tg_type}
@@ -63,3 +67,4 @@
 		{/foreach}
 	</div>
 </div>
+{/strip}

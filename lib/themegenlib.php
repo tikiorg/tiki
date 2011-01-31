@@ -263,7 +263,7 @@ class ThemeGenTheme extends SerializedList
 		$this->data = array(
 			'files' => array(),
 			'theme' => $prefs['style'],
-			'theme-option' => $prefs['style_option'], 
+			'theme-option' => '',			//$prefs['style_option'], 
 		);
 	}
 
@@ -281,23 +281,25 @@ class ThemeGenTheme extends SerializedList
 			return;
 		}
 		
-		$this->data['theme'] = $prefs['style'];
-		$this->data['theme-option'] = $prefs['style_option'];
-		
 		if (!isset($this->data['files'][$css_file])) {
 			$this->data['files'][$css_file] = array();
 		}
 		
 		foreach($swaps as $type => $swaps2) {
-//			if (!isset($this->data['files'][$css_file][$type])) {
-				$this->data['files'][$css_file][$type] = array();
-//			}
+			$this->data['files'][$css_file][$type] = array();
 		
 			foreach ($swaps2 as $kswap => $swap) {
 				if ($kswap !== $swap) {
 					$this->data['files'][$css_file][$type][$kswap] = $swap;
 				}
 			}
+		}
+		
+		$this->data['theme'] = $prefs['style'];
+		if ( in_array($prefs['style_option'], array_keys( $this->data['files'] ))) {
+			$this->data['theme-option'] = $prefs['style_option'];
+		} else {
+			$this->data['theme-option'] = '';
 		}
 	}
 	
