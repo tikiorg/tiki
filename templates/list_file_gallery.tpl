@@ -94,7 +94,9 @@
 								{icon _id='arrow_refresh' _tag='input_image' _confirm="{tr}Are you sure you want to reset the default gallery list table settings?{/tr}" name='defaultsel' alt="{tr}Reset to default gallery list table settings{/tr}" style='vertical-align: middle;'}
 							{/if}
 							
-							{icon _id='pics/icons/mime/zip.png' _tag='input_image' name='zipsel' alt="{tr}Download the zip{/tr}" style='vertical-align: middle;'}
+							{if $prefs.fgal_display_zip_option eq 'y'}
+								{icon _id='pics/icons/mime/zip.png' _tag='input_image' name='zipsel' alt="{tr}Download the zip{/tr}" style='vertical-align: middle;'}
+							{/if}
 							
 							{if $tiki_p_assign_perm_file_gallery eq 'y'}
 								{icon _id='key' _tag='input_image' name='permsel' alt="{tr}Assign permissions to file galleries{/tr}" title="{tr}Assign permissions to file galleries{/tr}" style='vertical-align: middle;'}
