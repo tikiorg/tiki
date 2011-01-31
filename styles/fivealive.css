@@ -394,6 +394,10 @@ input[type="password"],
 select {
 	margin: 2px;
 }
+input[type="text"] {
+        width: 99%;
+}
+
 
 /***** Site Header & Identity *****/
 
