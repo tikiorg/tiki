@@ -483,6 +483,12 @@ class TikiLib extends TikiDb_Bridge
 		$this->table('tiki_user_watches')->deleteMultiple($conditions);
 	}
 
+	/*token notification*/
+	function remove_user_watch_object($event, $object, $type = 'wiki page') {
+		$query = "delete from `tiki_user_watches` where `event`=? and `object`=? and `type` = ?";
+		$this->query($query,array($event,$object,$type));
+	}
+
 	function remove_group_watch($group, $event, $object, $type = 'wiki page') {
 		$conditions = array(
 			'group' => $group,
