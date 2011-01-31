@@ -78,7 +78,9 @@
 				{if $files and $gal_info.show_checked neq 'n' and $prefs.fgal_checked eq 'y' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y')}
 					<div id="sel">
 						<div>
-							{tr}Perform action with checked:{/tr}
+							{if $tiki_p_admin_file_galleries eq 'y' or $tiki_p_remove_files eq 'y' or !isset($file_info) or $tiki_p_admin_file_galleries eq 'y' or $prefs.fgal_display_zip_option eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y'}
+								{tr}Perform action with checked:{/tr}
+							{/if}
 							{if !isset($file_info)}
 								{if $offset}<input type="hidden" name="offset" value="{$offset}" />{/if}
 								{if $tiki_p_admin_file_galleries eq 'y'}
