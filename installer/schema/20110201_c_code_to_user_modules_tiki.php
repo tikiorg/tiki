@@ -14,6 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * Prefs replaced (and removed) by this update:
  *  feature_sitemycode
  *  sitemycode
+ *  sitemycode_publish
  *  feature_secondary_sitemenu_custom_code
  *  feature_sitemenu_custom_code
  *  feature_custom_center_column_header
@@ -37,8 +38,10 @@ function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
 			$installer->query( "INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
 					array( 'sitemycode', '', $custom_code, NULL));
 
-			$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-									"('sitemycode','t',1,7200,'nobox=y','a:0:{}');");
+			if ($prefs['sitemycode_publish'] === 'y') {
+				$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
+										"('sitemycode','t',1,7200,'nobox=y','a:0:{}');");
+			}
 		}
 	}
 	
@@ -98,7 +101,7 @@ function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
 
 //	TODO uncomment when stable (pre Tiki 7 release)
 //	$installer->query( "DELETE FROM `tiki_preferences` WHERE `name` IN ".
-//						"('feature_sitemycode','sitemycode', 'feature_secondary_sitemenu_custom_code',
+//						"('feature_sitemycode','sitemycode', 'sitemycode_publish', 'feature_secondary_sitemenu_custom_code',
 //							'feature_sitemenu_custom_code', 'feature_custom_center_column_header',
 //							'bot_logo_code', 'feature_bot_logo');");
 	
