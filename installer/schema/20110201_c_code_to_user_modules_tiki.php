@@ -18,6 +18,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *  feature_sitemenu_custom_code
  *  feature_custom_center_column_header
  *  bot_logo_code
+ *  feature_bot_logo
  */
 
 function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
@@ -29,7 +30,7 @@ function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
 	
 	// add quickadmin but prefs feature_sitemycode, sitemycode stay and will need manual upgrading
 	if( $prefs['feature_sitemycode'] === 'y' ) {
-		$custom_code = $installer->getOne( "SELECT `value` FROM `tiki_preferences` WHERE `name` = 'sitemycode'");
+		$custom_code = $prefs['sitemycode'];
 		
 		if (preg_replace('/\s/', '', $custom_code) != preg_replace('/\s/', '', $defaults['sitemycode'])) {	// line ends seem to differ
 			
@@ -42,7 +43,7 @@ function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
 	}
 	
 	if( !empty($prefs['feature_secondary_sitemenu_custom_code']) ) {
-		$custom_code = $installer->getOne( "SELECT `value` FROM `tiki_preferences` WHERE `name` = 'feature_secondary_sitemenu_custom_code'");
+		$custom_code = $prefs['feature_secondary_sitemenu_custom_code'];
 		
 		$installer->query( "INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
 					array( 'secondary_sitemenu_custom_code', '', $custom_code, NULL));
@@ -52,7 +53,7 @@ function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
 	}
 	
 	if( !empty($prefs['feature_sitemenu_custom_code']) ) {
-		$custom_code = $installer->getOne( "SELECT `value` FROM `tiki_preferences` WHERE `name` = 'feature_sitemenu_custom_code'");
+		$custom_code = $prefs['feature_sitemenu_custom_code'];
 		
 		$installer->query( "INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
 					array( 'sitemenu_custom_code', '', $custom_code, NULL));
@@ -62,7 +63,7 @@ function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
 	}
 	
 	if( !empty($prefs['feature_topbar_custom_code']) ) {
-		$custom_code = $installer->getOne( "SELECT `value` FROM `tiki_preferences` WHERE `name` = 'feature_topbar_custom_code'");
+		$custom_code = $prefs['feature_topbar_custom_code'];
 		
 		$installer->query( "INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
 					array( 'topbar_custom_code', '', $custom_code, NULL));
@@ -72,7 +73,7 @@ function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
 	}
 	
 	if( !empty($prefs['feature_custom_center_column_header']) ) {
-		$custom_code = $installer->getOne( "SELECT `value` FROM `tiki_preferences` WHERE `name` = 'feature_custom_center_column_header'");
+		$custom_code = $prefs['feature_custom_center_column_header'];
 		
 		$installer->query( "INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
 					array( 'custom_center_column_header', '', $custom_code, NULL));
@@ -82,13 +83,15 @@ function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
 	}
 	
 	if( !empty($prefs['bot_logo_code']) ) {
-		$custom_code = $installer->getOne( "SELECT `value` FROM `tiki_preferences` WHERE `name` = 'bot_logo_code'");
+		$custom_code = $prefs['bot_logo_code'];
 		
 		$installer->query( "INSERT INTO `tiki_user_modules` (name,title,data,parse) VALUES (?,?,?,?);",
 					array( 'bot_logo_code', '', $custom_code, NULL));
 
-		$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-									"('bot_logo_code','b',1,7200,'nobox=y','a:0:{}');");
+		if ($prefs['feature_bot_logo'] === 'y') {
+			$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
+										"('bot_logo_code','b',1,7200,'nobox=y','a:0:{}');");
+		}
 	}
 	
 	
@@ -96,7 +99,8 @@ function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
 //	TODO uncomment when stable (pre Tiki 7 release)
 //	$installer->query( "DELETE FROM `tiki_preferences` WHERE `name` IN ".
 //						"('feature_sitemycode','sitemycode', 'feature_secondary_sitemenu_custom_code',
-//							'feature_sitemenu_custom_code', 'feature_custom_center_column_header', 'bot_logo_code');");
+//							'feature_sitemenu_custom_code', 'feature_custom_center_column_header',
+//							'bot_logo_code', 'feature_bot_logo');");
 	
 }
 
