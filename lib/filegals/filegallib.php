@@ -23,6 +23,48 @@ class FileGalLib extends TikiLib
 		}
 	}
 
+	private function get_gallery_save_dir($galleryId, $galInfo = null) {
+		global $prefs;
+
+		$podCastException = $this->isPodCastGallery($galleryId, $galInfo);
+
+		if ($prefs['fgal_use_db'] == 'y' && ! $podCastException) {
+			return false;
+		}
+		
+		if ($podCastException) {
+			return $prefs['fgal_podcast_dir'];
+		} else {
+			return $prefs['fgal_use_dir'];
+		}
+	}
+
+	private function get_file_checksum($galleryId, $path, $data) {
+		global $prefs;
+
+		$savedir = $this->get_gallery_save_dir($galleryId);
+
+		if (false !== $savedir) {
+			if ( filesize ($savedir . $path) > 0 ) {
+				return md5_file($savedir . $path);
+			} else {
+				return md5(time());
+			}
+		} else {
+			return md5($data);
+		}
+	}
+
+	private function find_unique_name($directory, $start) {
+		$fhash = md5($start);
+
+		while (file_exists($directory . $fhash)) {
+			$fhash = md5(uniqid($fhash));
+		}
+
+		return $fhash;
+	}
+
 	function get_attachment_gallery( $objectId, $objectType ) {
 		switch ( $objectType ) {
 			case 'wiki page': return $this->get_wiki_attachment_gallery( $objectId );
@@ -86,11 +128,7 @@ class FileGalLib extends TikiLib
 		}
 		$fileId = $fileInfo['fileId'];
 
-		if ($podCastGallery = $this->isPodCastGallery($fileInfo['galleryId'], $galInfo)) {
-			$savedir=$prefs['fgal_podcast_dir'];
-		} else {
-			$savedir=$prefs['fgal_use_dir'];
-		}
+		$savedir = $this->get_gallery_save_dir($fileInfo['galleryId'], $galInfo);
 
 		$this->deleteBacklinks(null, $fileId);
 		if ($fileInfo['path']) {
@@ -134,25 +172,9 @@ class FileGalLib extends TikiLib
 		$galleriesTable = $this->table('tiki_file_galleries');
 
 		$name = trim(strip_tags($name));
-		if ($podCastGallery = $this->isPodCastGallery($galleryId)) {
-			$savedir=$prefs['fgal_podcast_dir'];
-		} else {
-			$savedir=$prefs['fgal_use_dir'];
-		}
-		if (($prefs['fgal_use_db'] === 'n') || ($podCastGallery)) {
-			if ( filesize ($savedir . $path) > 0 ) {
-				if (function_exists('md5_file')) {
-					$checksum = md5_file($savedir . $path);
-				} else {
-					$checksum = md5(implode('', file($savedir . $path)));
-				}
-			} else {
-				$checksum = md5(time());
-			}
-		} else {
-			$checksum = md5($data);
-		}
 		$description = strip_tags($description);
+
+		$checksum = $this->get_file_checksum($galleryId, $path, $data);
 
 		if ( $prefs['fgal_allow_duplicates'] !== 'y' && !empty($data) ) {
 			$conditions = array('hash' => $checksum);
@@ -340,7 +362,7 @@ class FileGalLib extends TikiLib
 
 			if ($prefs['fgal_use_db'] == 'n') {
 				$savedir = $prefs['fgal_use_dir'];
-				$newPath = md5(uniqid(md5($filesTable->fetchOne('name', array('fileId' => $fileId)))));
+				$newPath = $this->find_unique_name($savedir, $filesTable->fetchOne('name', array('fileId' => $fileId)));
 
 				if (file_exists($savedir . $old_file['path'])) {
 					// Deletes old production file
@@ -641,11 +663,7 @@ class FileGalLib extends TikiLib
 		$files = array();
 		$h = opendir($extract_dir);
 		$gal_info = $this->get_file_gallery_info($galleryId);
-		if ($podCastGallery = $this->isPodCastGallery($galleryId, $gal_info)) {
-			$savedir=$prefs['fgal_podcast_dir'];
-		} else {
-			$savedir=$prefs['fgal_use_dir'];
-		}
+		$savedir = $this->get_gallery_save_dir($galleryId, $gal_info);
 
 		// check filters
 		$upl = 1;
@@ -679,37 +697,20 @@ class FileGalLib extends TikiLib
 		rewinddir ($h);
 		while (($file = readdir($h)) !== false) {
 			if ($file != '.' && $file != '..' && is_file($extract_dir.'/'.$file)) {
-				if (!($fp = fopen($extract_dir.$file, "rb"))) {
+				if (false === $data = @file_get_contents($extract_dir.$file)) {
 					$errors[] = tra('Cannot open this file:'). "temp/$file";
 					return false;
 				}
-				$data = '';
 				$fhash = '';
 
-				if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
-					$fhash = md5($name = $file);
+				if (false !== $savedir) {
+					// Store on disk
+					$fhash = $this->find_unique_name($name);
 
-					@$fw = fopen($savedir . $fhash, "wb");
-
-					if (!$fw) {
+					if (false === @file_put_contents($savedir . $fhash, $data)) {
 						$errors[] = tra('Cannot write to this file:'). $fhash;
 						return false;
 					}
-				}
-				while (!feof($fp)) {
-					if (($prefs['fgal_use_db'] == 'y') && (!$podCastGallery)) {
-						$data .= fread($fp, 8192 * 16);
-					} else {
-						$data = fread($fp, 8192 * 16);
-
-						fwrite($fw, $data);
-					}
-				}
-
-				fclose ($fp);
-
-				if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
-					fclose ($fw);
 
 					$data = '';
 				}
@@ -832,28 +833,14 @@ class FileGalLib extends TikiLib
 		$name = trim(strip_tags($name));
 		$description = strip_tags($description);
 
-		if ($podCastGallery = $this->isPodCastGallery($gal_info['galleryId'], $gal_info)) {
-			$savedir=$prefs['fgal_podcast_dir'];
-		} else {
-			$savedir=$prefs['fgal_use_dir'];
-		}
-
 		// User avatar full images are always using db and not file location (at the curent state of feature)
 		if (isset($prefs['user_store_file_gallery_picture']) && $prefs['user_store_file_gallery_picture'] == 'y' && $prefs["user_picture_gallery_id"] == $gal_info['galleryId']) {
 			$userPictureGallery = true;			
 		} else {
 			$userPictureGallery = false;
 		}
-		if (($prefs['fgal_use_db'] == 'n' && !$userPictureGallery) || ($podCastGallery)) {
-			if (function_exists('md5_file')) {
-				if (!($checksum = md5_file($savedir . $path)))
-					$checksum = '';
-			} else {
-				$checksum = md5(implode('', file($savedir . $path)));
-			}
-		} else {
-			$checksum = md5($data);
-		}
+
+		$checksum = $this->get_file_checksum($gal_info['galleryId'], $path, $data);
 
 		$search_data = '';
 		if ($prefs['fgal_enable_auto_indexing'] != 'n') {
@@ -924,6 +911,8 @@ class FileGalLib extends TikiLib
 			}
 
 			if ( $didFileReplace && !empty($oldPath) ) {
+				$savedir = $this->get_gallery_save_dir($gal_info['galleryId'], $gal_info);
+
 				unlink($savedir . $oldPath);
 			}
 
@@ -1001,12 +990,6 @@ class FileGalLib extends TikiLib
 			return false;
 		}
 
-		if ($podCastGallery = $this->isPodCastGallery($galleryId)) {
-			$savedir=$prefs['fgal_podcast_dir'];
-		} else {
-			$savedir=$prefs['fgal_use_dir'];
-		}
-
 		$fileParseApps = $this->get_file_handlers();
 
 		$parseApp = '';
@@ -1020,32 +1003,23 @@ class FileGalLib extends TikiLib
 
 		if (empty($path)) {
 			$tmpfname = tempnam("/tmp", "wiki_");
-			$tmpFile = fopen($tmpfname,'w');
-			if ($tmpFile === false)
+			if (false === $tmpFile = @file_put_contents($tmpfname, $data)) {
 				return false;
+			}
+		} else {
+			$savedir = $this->get_gallery_save_dir($galleryId);
 
-			if (fwrite($tmpFile,$data) === false)
-				return false;
-			fflush($tmpFile);
-			fclose($tmpFile);
-		}
-		else {
 			$tmpfname = $savedir . $path;
 		}
 
-		$cmd = str_replace('%1',$tmpfname,$parseApp);
+		$cmd = str_replace('%1',escapeshellarg($tmpfname),$parseApp);
 		$handle = popen("$cmd","r");
-		if ($handle === false) {
-			if (empty($path))
-				@unlink($tmpfname);
-			return false;
+		if ($handle !== false) {
+			$contents = stream_get_contents($handle);
+			fclose($handle);
+		} else {
+			$contents = false;
 		}
-
-		$contents = '';
-		while (!feof($handle)) {
-			$contents .= fread($handle, 8192);
-		}
-		fclose($handle);
 
 		if (empty($path))
 			@unlink($tmpfname);
@@ -1125,7 +1099,7 @@ class FileGalLib extends TikiLib
 						return false;
 					}
 				} else {//write file in temp
-					if (file_put_contents($tmp, $info['data']) === false) {
+					if (@file_put_contents($tmp, $info['data']) === false) {
 						$error = "Can not write to $tmp";
 						return false;
 					}
@@ -1768,13 +1742,9 @@ class FileGalLib extends TikiLib
 		$file_info = $files->fetchFullRow(array('fileId' => $file_id));
 
 		if ($to == 'to_db') {
-			if (!($fw = fopen($prefs['fgal_use_dir'] .$file_info['path'], 'rb'))) {
+			if (false === $data = @file_get_contents($prefs['fgal_use_dir'] .$file_info['path'])) {
 				return tra('Cannot open this file:') . $prefs['fgal_use_dir'] . $file_info['path'];
 			}
-			if (($data = fread($fw, $file_info['filesize'])) === false) {
-				return tra('Cannot read to this file:') . $prefs['fgal_use_dir'] . $fhash;
-			}
-			fclose($fw);
 
 			$files->update(array(
 				'data' => $data,
@@ -1784,17 +1754,12 @@ class FileGalLib extends TikiLib
 			));
 			unlink($prefs['fgal_use_dir'] .$file_info['path']);
 		} else {
-			$fhash = md5($file_info['name']);
-			do {
-				$fhash = md5(uniqid($fhash));
-			} while (file_exists($prefs['fgal_use_dir'] . $fhash));
-			if (!($fw = fopen($prefs['fgal_use_dir'] . $fhash, 'wb'))) {
-				return tra('Cannot open this file:') . $prefs['fgal_use_dir'] . $fhash;
-			}
-			if (!fwrite($fw, $file_info['data'])) {
+			$fhash = $this->find_unique_name($prefs['fgal_use_dir'], $file_info['name']);
+
+			if (false === @file_put_contents($prefs['fgal_use_dir'] . $fhash, $file_info['data'])) {
 				return tra('Cannot write to this file:') . $prefs['fgal_use_dir'] . $fhash;
 			}
-			fclose($fw);
+
 			$files->update(array(
 				'data' => '',
 				'path' => $fhash,
@@ -1966,15 +1931,13 @@ class FileGalLib extends TikiLib
 				}
 			}
 			if (!empty($prefs['fgal_delete_after_email'])) {
+				$savedir = $this->get_gallery_save_dir($galInfo['galleryId'], $galInfo);
+				$fileInfo['data'] = file_get_contents($savedir.$fileInfo['path']);
+
 				$smarty->assign_by_ref('fileInfo', $fileInfo);
 				$mail = new TikiMail();
 				$mail->setSubject(tra('Old File deleted:', $prefs['site_language']).' '.$fileInfo['filename']);
 				$mail->setText($smarty->fetchLang($prefs['site_language'], 'mail/fgal_old_file_deleted.tpl'));
-				if ($this->isPodCastGallery($galInfo['galleryId'], $galInfo)) {
-					$fileInfo['data'] = file_get_contents($prefs['fgal_podcast_dir'].$fileInfo['path']);
-				} elseif (!empty($fileInfo['path'])) {
-					$fileInfo['data'] = file_get_contents($prefs['fgal_use_dir'].$fileInfo['path']);
-				}
 				$mail->addAttachment($fileInfo['data'], $fileInfo['filename'], $fileInfo['filetype']);
 				$to = preg_split('/ *, */', $prefs['fgal_delete_after_email']);
 				$mail->send($to);
@@ -2095,7 +2058,8 @@ class FileGalLib extends TikiLib
 		$gal_info = null;
 		if ( ! empty( $params['galleryId'][0] ) ) {
 			$gal_info = $tikilib->get_file_gallery( (int) $params['galleryId'][0] );
-			$podCastGallery = empty( $params['galleryId'][0] ) ? false : $this->isPodCastGallery( (int) $params["galleryId"][0], $gal_info );
+			$podCastGallery = $this->isPodCastGallery( (int) $params["galleryId"][0], $gal_info );
+			$savedir = $this->get_file_savedir( (int) $params["galleryId"][0], $gal_info );
 		}
 		$podcast_url = str_replace("tiki-upload_file.php", "", $foo["path"]);
 		$podcast_url = $tikilib->httpPrefix() . $podcast_url . $prefs['fgal_podcast_dir'];
@@ -2143,7 +2107,7 @@ class FileGalLib extends TikiLib
 		foreach ( $aFiles["userfile"]["error"] as $key => $error ) {
 			
 			if (empty($params['returnUrl'])) {
-				print_progress('<?xml version="1.0" encoding="UTF-8"?>');
+				print_progress('<?xml version="1.0" encoding="UTF-8"?'.'>');
 			}
 			$formId = $params['formId'];
 			$smarty->assign("FormId", $params['formId']);
@@ -2300,68 +2264,49 @@ class FileGalLib extends TikiLib
 					}
 				}
 	
-				$fp = fopen($tmp_dest, "rb");
-				if (!$fp) {
+				if (false === $data = @file_get_contents($temp_dest)) {
 					$errors[] = tra('Cannot read the file:') . ' ' . $tmp_dest;
 				}
-				$data = '';
+
+				@unlink($tmp_dest);
+
 				$fhash = '';
 				$extension = '';
-				if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
-					$fhash = md5($name = $aFiles["userfile"]['name'][$key]);
+				if (false !== $savedir) {
+					$name = $aFiles["userfile"]['name'][$key];
 					$extension = '';
 					// for podcast galleries add the extension so the
 					// file can be called directly if name is known,
 					if ($podCastGallery) {
-						$path_parts = pathinfo($aFiles["userfile"]['name'][$key]);
+						$path_parts = pathinfo($name);
 						if (in_array(strtolower($path_parts['extension']), array('m4a', 'mp3', 'mov', 'mp4', 'm4v', 'pdf', 'flv', 'swf'))) {
 							$extension = '.' . strtolower($path_parts['extension']);
 						} else {
 							$errors[] = tra('Incorrect file extension:').$path_parts['extension'];
 						}
-						$savedir = $prefs['fgal_podcast_dir'];
-					} else {
-						$savedir = $prefs['fgal_use_dir'];
 					}
-					do {
-						$fhash = md5(uniqid($fhash));
-					}
-					while (file_exists($savedir . $fhash . $extension));
-					@$fw = fopen($savedir . $fhash . $extension, "wb");
-					if (!$fw) {
+
+					$fhash = $this->find_unique_name($savedir, $name);
+
+					if (false === @file_put_contents($savedir . $fhash . $extension, $data)) {
 						$errors[] = tra('Cannot write to this file:') . $savedir . $fhash;
 					}
-				}
-				while (!feof($fp)) {
-					if (($prefs['fgal_use_db'] == 'y') && (!$podCastGallery)) {
-						$data.= fread($fp, 8192 * 16);
-					} else {
-						if (($data = fread($fp, 8192 * 16)) === false) {
-							$errors[] = tra('Cannot read the file:') . ' ' . $tmp_dest;
-						}
-						if (fwrite($fw, $data) === false) {
-							$errors[] = tra('Cannot write to this file:') . $savedir . $fhash;
-						}
-					}
-				}
-				fclose($fp);
-				// remove file after copying it to the right location or database
-				@unlink($tmp_dest);
-				if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
-					fclose($fw);
+
 					$data = '';
 				}
 	
 				if (preg_match('/.flv$/', $name)) {
 					$type = "video/x-flv";
 				}
+
 				if (count($errors)) {
 					continue;
 				}
+
 				if (!$size) {
 					$errors[] = tra('Warning: Empty file:') . '  ' . $name . '. ' . tra('Please re-upload your file');
 				}
-				if (($prefs['fgal_use_db'] == 'y') && (!$podCastGallery)) {
+				if (false === $savedir) {
 					if (!isset($data) || strlen($data) < 1) {
 						$errors[] = tra('Warning: Empty file:') . ' ' . $name . '. ' . tra('Please re-upload your file');
 					}
@@ -2393,7 +2338,7 @@ class FileGalLib extends TikiLib
 					}
 					if (!$fileId) {
 						$errors[] = tra('Upload was not successful. Duplicate file content') . ': ' . $name;
-						if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
+						if (false !== $savedir) {
 							@unlink($savedir . $fhash);
 						}
 					} else {
