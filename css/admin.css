@@ -331,8 +331,8 @@ a.admbox.off img {
 	margin: 0 1em 1.5em 0;
 }
 
-.admin .themegenerator > label,
-.themegenerator > label {
+.admin .themegenerator > div > label,
+.themegenerator > div > label {
 	background-color: #aaa;
 	color: #ddd;
 	line-height: 24px;
