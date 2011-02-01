@@ -2615,8 +2615,8 @@ class SheetLib extends TikiLib
 		$grids2 = join_with_sub_grids($_REQUEST["sheetId"], $dates[1]);
 		
 		for ( $i = 0; $i < count_longest($grids1, $grids2); $i++ ) { //cycle through the sheets within a spreadsheet
-			$result1 .= "<table>";
-			$result2 .= "<table>";
+			$result1 .= "<table title='".$grids1[$i]->getTitle()."'>";
+			$result2 .= "<table title='".$grids2[$i]->getTitle()."'>";
 			for ( $row = 0; $row < count_longest($grids1[$i]->dataGrid, $grids2[$i]->dataGrid); $row++ ) { //cycle through rows
 				$result1 .= "<tr>";
 				$result2 .= "<tr>";
