@@ -2526,6 +2526,7 @@ class SheetLib extends TikiLib
 				}
 			}
 		} else {
+			/*
 			$grid = new TikiSheet();
 			if ($type == 'csv') {
 				foreach ($sheets as $sheet) {
@@ -2543,7 +2544,7 @@ class SheetLib extends TikiLib
 						$rc .= tra("file - ").$file;
 					}
 				}
-			}
+			}*/
 		}
 		return ($res ?  tra('Saved'). ': ' . $rc : tra('Save failed'));
 	}
