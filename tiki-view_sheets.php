@@ -15,13 +15,14 @@ $auto_query_args = array(
 	'parse',
 	'simple',
 	'height',
+	'type',
+	'file',
 );
 $access->check_feature('feature_sheet');
-if (!isset($_REQUEST['sheetId'])) die;
 
 $info = $sheetlib->get_sheet_info($_REQUEST['sheetId']);
 
-if (empty($info)) {
+if (empty($info) && !isset( $_REQUEST['file'])) {
 	$smarty->assign('Incorrect parameter');
 	$smarty->display('error.tpl');
 	die;
@@ -111,27 +112,40 @@ if (isset($_REQUEST['s']) && !empty($_REQUEST['s'])) { //save
 }
 
 //Edit & View
-$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
-
-//We make sheet able to look at other date save
-if (isset($_REQUEST['readdate']) && !empty($_REQUEST['readdate'])) {
-	$smarty->assign('read_date', $_REQUEST['readdate']);
-	$handler->setReadDate($_REQUEST['readdate']);
-}
-
-$grid = new TikiSheet($_REQUEST["sheetId"]);
-$grid->import($handler);
-
-//ensure that sheet isn't being edited, then parse values if needed
-if ( $grid->parseValues && $_REQUEST['parse'] != 'edit' ) {
-	$grid->parseValues = true;
+if ( isset($_REQUEST['file']) && isset($_REQUEST['type'])) {
+	//File sheets
+	switch ( $_REQUEST['type'] ) {
+		case 'excelcsv': $handler = new TikiSheetCSVExcelHandler( $_REQUEST['file'] ); break;
+		case 'csv':  $handler = new TikiSheetCSVHandler( $_REQUEST['file'] ); break;
+	}
+	
+	$grid = new TikiSheet();
+	$grid->import( $handler );
+	$tableHtml[0] = $grid->getTableHtml( true , null, false );
 } else {
-	$grid->parseValues = false;
+	//Database sheet
+	$handler = new TikiSheetDatabaseHandler( $_REQUEST["sheetId"] );
+	//We make sheet able to look at other date save
+	if (isset($_REQUEST['readdate']) && !empty($_REQUEST['readdate'])) {
+		$smarty->assign('read_date', $_REQUEST['readdate']);
+		$handler->setReadDate($_REQUEST['readdate']);
+	}
+	
+	$grid = new TikiSheet( $_REQUEST["sheetId"] );
+	$grid->import( $handler );
+		
+	//ensure that sheet isn't being edited, then parse values if needed
+	if ( $grid->parseValues && $_REQUEST['parse'] != 'edit' ) {
+		$grid->parseValues = true;
+	} else {
+		$grid->parseValues = false;
+	}
+	
+	$smarty->assign('parseValues', $grid->parseValues);
+			
+	$tableHtml[0] = $grid->getTableHtml( true, $_REQUEST['readdate'] );
 }
 
-$smarty->assign('parseValues', $grid->parseValues);
-		
-$tableHtml[0] = $grid->getTableHtml( true, $_REQUEST['readdate'] );
 	
 if (isset($_REQUEST['sheetonly']) && $_REQUEST['sheetonly'] == 'y') {
 	foreach( $tableHtml as $table ) {

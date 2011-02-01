@@ -319,7 +319,7 @@ class TikiSheet
 	 * @param bool $incsubs Include sub-sheets
 	 * @param timestamp $date Date (revision) to read sub-sheets from
 	 */
-	function getTableHtml( $incsubs = true, $date = null ) {
+	function getTableHtml( $incsubs = true, $date = null, $fromDb = true ) {
 		global $prefs, $sheetlib;
 		
 		$handler = new TikiSheetOutputHandler(null, ($this->parseValues == 'y' && $_REQUEST['parse'] != 'n'));
@@ -328,7 +328,7 @@ class TikiSheet
 		$data = ob_get_contents();
 		ob_end_clean();
 		
-		if ($incsubs && !$this->isSubSheet) {
+		if ($incsubs && !$this->isSubSheet && $fromDb) {
 			$subsheets = $sheetlib->get_sheet_subsheets($this->sheetId);
 			if (count($subsheets) > 0) {
 				foreach ($subsheets as $sub) {
@@ -1066,7 +1066,16 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 				foreach( $data as $col=>$value )
 				{
 					$sheet->initCell( $row, $col );
-					$sheet->setValue( $this->encoding->convert_encoding ( $value ) );
+					$cellValue = $this->encoding->convert_encoding ( $value );
+					$sheet->setValue( $cellValue );
+                	
+					if ( isset($cellValue) ) {
+						if (strlen( $cellValue )) {
+							if ($cellValue[0] == '=' ) {
+								$sheet->setCalculation( substr($cellValue, 1) );
+							}
+						}
+					}
 					$sheet->setSize( 1, 1 );
 				}
 
@@ -1177,7 +1186,17 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
                 foreach( $data as $col=>$value )
                 {
                     $sheet->initCell( $row, $col );
-                    $sheet->setValue( $this->encoding->convert_encoding ( $value ) );
+                	$cellValue = $this->encoding->convert_encoding ( $value );
+					$sheet->setValue( $cellValue );
+                	
+					if ( isset($cellValue) ) {
+						if (strlen( $cellValue )) {
+							if ($cellValue[0] == '=' ) {
+								$sheet->setCalculation( substr($cellValue, 1) );
+							}
+						}
+					}
+					
                     $sheet->setSize( 1, 1 );
                 }
 
@@ -1523,7 +1542,16 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 						else
 							$width = $info['colspan'];
 
-						$sheet->setValue( $this->encoding->convert_encoding ( $value ) );
+						$cellValue = $this->encoding->convert_encoding ( $value );
+						$sheet->setValue( $cellValue );
+	                	
+						if ( isset($cellValue) ) {
+							if (strlen( $cellValue )) {
+								if ($cellValue[0] == '=' ) {
+									$sheet->setCalculation( substr($cellValue, 1) );
+								}
+							}
+						}
 						$sheet->setSize( $width, $height );
 					}
 			}
@@ -1691,6 +1719,13 @@ class TikiSheetWikiTableHandler extends TikiSheetDataHandler
 					{
 						$sheet->initCell( $row, $col );
 						$sheet->setValue( $value );
+						if ( isset($value) ) {
+							if (strlen( $value )) {
+								if ($value[0] == '=' ) {
+									$sheet->setCalculation( substr($value, 1) );
+								}
+							}
+						}
 						$sheet->setSize( 1, 1 );
 					}
 					++$row;
