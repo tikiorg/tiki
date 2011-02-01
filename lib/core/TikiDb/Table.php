@@ -39,7 +39,7 @@ class TikiDb_Table
 		$bindvars = array();
 		$query = $this->buildDelete($conditions, $bindvars) . ' LIMIT 1';
 
-		$this->db->query($query, $bindvars);
+		return $this->db->query($query, $bindvars);
 	}
 
 	/**
@@ -51,7 +51,7 @@ class TikiDb_Table
 		$bindvars = array();
 		$query = $this->buildUpdate($values, $conditions, $bindvars) . ' LIMIT 1';
 
-		$this->db->query($query, $bindvars);
+		return $this->db->query($query, $bindvars);
 	}
 
 	function updateMultiple(array $values, array $conditions)
@@ -59,7 +59,7 @@ class TikiDb_Table
 		$bindvars = array();
 		$query = $this->buildUpdate($values, $conditions, $bindvars);
 
-		$this->db->query($query, $bindvars);
+		return $this->db->query($query, $bindvars);
 	}
 
 
@@ -75,12 +75,12 @@ class TikiDb_Table
 		$bindvars = array();
 		$query = $this->buildDelete($conditions, $bindvars);
 
-		$this->db->query($query, $bindvars);
+		return $this->db->query($query, $bindvars);
 	}
 
-	function fetchOne($field, array $conditions)
+	function fetchOne($field, array $conditions, $orderClause = null)
 	{
-		if ($result = $this->fetchRow(array($field), $conditions)) {
+		if ($result = $this->fetchRow(array($field), $conditions, $orderClause)) {
 			return reset($result);
 		}
 
@@ -92,14 +92,14 @@ class TikiDb_Table
 		return $this->fetchOne($this->count(), $conditions);
 	}
 
-	function fetchFullRow(array $conditions)
+	function fetchFullRow(array $conditions, $orderClause = null)
 	{
-		return $this->fetchRow($this->all(), $conditions);
+		return $this->fetchRow($this->all(), $conditions, $orderClause);
 	}
 
-	function fetchRow(array $fields, array $conditions)
+	function fetchRow(array $fields, array $conditions, $orderClause = null)
 	{
-		$result = $this->fetchAll($fields, $conditions, 1, 0);
+		$result = $this->fetchAll($fields, $conditions, 1, 0, $orderClause);
 		
 		return reset($result);
 	}
@@ -143,12 +143,16 @@ class TikiDb_Table
 
 		$fieldDescription = '';
 
-		foreach ($fields as $f) {
+		foreach ($fields as $k => $f) {
 			if ($f instanceof TikiDB_Expr) {
 				$fieldDescription .= $f->getQueryPart(null);
 				$bindvars = array_merge($bindvars, $f->getValues());
 			} else {
 				$fieldDescription .= $this->escapeIdentifier($f);
+			}
+
+			if (is_string($k)) {
+				$fieldDescription .= ' AS ' . $this->escapeIdentifier($k);
 			}
 
 			$fieldDescription .= ', ';

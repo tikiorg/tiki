@@ -328,7 +328,6 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$query = 'SELECT `user`, `email` FROM `users_users` WHERE 1=1 AND `userId` > ? ORDER BY `user` DESC';
 
-
 		$mock->expects($this->once())
 			->method('fetchAll')
 			->with($this->equalTo($query), $this->equalTo(array(42)), $this->equalTo(-1), $this->equalTo(-1))
@@ -344,6 +343,29 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 			'world' => 'world@example.com',
 		);
 		$this->assertEquals($expect, $table->fetchMap('user', 'email', array('userId' => $table->greaterThan(42)), -1, -1, array('user' => 'DESC')));
+	}
+
+	function testAliasField()
+	{
+		$mock = $this->getMock('TikiDb');
+
+		$query = 'SELECT `user`, `email` AS `address` FROM `users_users` WHERE 1=1 AND `userId` > ? ORDER BY `user` DESC';
+
+		$mock->expects($this->once())
+			->method('fetchAll')
+			->with($this->equalTo($query), $this->equalTo(array(42)), $this->equalTo(-1), $this->equalTo(-1))
+			->will($this->returnValue(array(
+				array('user' => 'hello', 'address' => 'hello@example.com'),
+				array('user' => 'world', 'address' => 'world@example.com'),
+			)));
+
+		$table = new TikiDb_Table($mock, 'users_users');
+
+		$expect = array(
+			array('user' => 'hello', 'address' => 'hello@example.com'),
+			array('user' => 'world', 'address' => 'world@example.com'),
+		);
+		$this->assertEquals($expect, $table->fetchAll(array('user', 'address' => 'email'), array('userId' => $table->greaterThan(42)), -1, -1, array('user' => 'DESC')));
 	}
 
 	function testIncrement()
