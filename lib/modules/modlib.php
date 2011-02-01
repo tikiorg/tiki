@@ -198,7 +198,9 @@ class ModLib extends TikiLib
 
 	function remove_user_module($name) {
 
-		$this->unassign_module($name);
+		$query = "delete from `tiki_modules` where `name`=?";
+		$result = $this->query($query,array($name));
+		
 		$query = " delete from `tiki_user_modules` where `name`=?";
 		$result = $this->query($query,array($name));
 

@@ -269,10 +269,11 @@ if (isset($_REQUEST["assign"])) {
 }
 
 if (isset($_REQUEST["um_remove"])) {
-    check_ticket('admin-modules');
     $_REQUEST["um_remove"] = urldecode($_REQUEST["um_remove"]);
+	$access->check_authenticity(tra('Are you sure you want to delete this User Module?') . '&nbsp;&nbsp;(&quot;' . $_REQUEST["um_remove"] . '&quot;)');
     $modlib->remove_user_module($_REQUEST["um_remove"]);
     $logslib->add_log('adminmodules', 'removed user module ' . $_REQUEST["um_remove"]);
+	$cookietab = 1;
 }
 if (isset($_REQUEST["um_edit"])) {
     check_ticket('admin-modules');
