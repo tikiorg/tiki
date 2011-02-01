@@ -20,7 +20,7 @@
 		{button _id="cancel_button" _text="{tr}Cancel{/tr}" _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _class="" _title="{tr}Tiki Sheet{/tr} | {tr}Cancel editing current spreadsheet{/tr}"}
 	</span>
 	<span id="editState">
-		{button _id="edit_button" _text="{tr}Edit{/tr}" _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" parse="edit" _class="" _title="{tr}New jQuery.sheet based editing{/tr}"}
+		{button _id="edit_button" _text="{tr}Edit{/tr}" _htmlelement="role_main" _template="tiki-view_sheets.tpl" parse="edit" _auto_args="*"  _class="" _title="{tr}New jQuery.sheet based editing{/tr}"}
 			
 		{if $tiki_p_view_sheet eq 'y' || $tiki_p_admin eq 'y'}
 			{button href="tiki-sheets.php" _text="{tr}List Sheets{/tr}"}
@@ -47,21 +47,23 @@
 				{button parse="y" _text="{tr}Parse{/tr}"  _htmlelement="role_main" _template="tiki-view_sheets.tpl" sheetId="$sheetId" _auto_args="*"}
 			{/if}
 		{/if}
-	
-		{if $objectperms->view_sheet_history}
-			{button href="tiki-history_sheets.php?sheetId=$sheetId" _text="{tr}History{/tr}"}
-		{/if}
-	
-		{if  $objectperms->view_sheet}
-			{button href="tiki-export_sheet.php?sheetId=$sheetId" _text="{tr}Export{/tr}"}
-		{/if}
-	
-		{if  $objectperms->edit_sheet}
-			{button href="tiki-import_sheet.php?sheetId=$sheetId" _text="{tr}Import{/tr}"}
-		{/if}
-	
-		{if $chart_enabled eq 'y'}
-			{button href="tiki-graph_sheet.php?sheetId=$sheetId" _text="{tr}Graph{/tr}"}
+		
+		{if $sheetId}
+			{if $objectperms->view_sheet_history}
+				{button href="tiki-history_sheets.php?sheetId=$sheetId" _text="{tr}History{/tr}"}
+			{/if}
+		
+			{if  $objectperms->view_sheet}
+				{button href="tiki-export_sheet.php?sheetId=$sheetId" _text="{tr}Export{/tr}"}
+			{/if}
+		
+			{if  $objectperms->edit_sheet}
+				{button href="tiki-import_sheet.php?sheetId=$sheetId" _text="{tr}Import{/tr}"}
+			{/if}
+		
+			{if $chart_enabled eq 'y'}
+				{button href="tiki-graph_sheet.php?sheetId=$sheetId" _text="{tr}Graph{/tr}"}
+			{/if}
 		{/if}
 	</span>
 </div>

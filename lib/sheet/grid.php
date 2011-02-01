@@ -186,6 +186,14 @@ class TikiSheet
 		);
 	}// }}}2
 	
+	function TikiSheetFile ( $file, $type )
+	{
+		$grid = new TikiSheet();
+		$grid->file = $file;
+		$grid->type = $type;
+		return $grid;
+	}
+	
 	/** TikiSheet {{{2
 	 * Initializes the data container.
 	 */
@@ -1214,19 +1222,12 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
     // _save {{{2
     function _save( &$sheet )
     {
-        $total = array();
-        
-        ksort ($sheet->dataGrid);
-        
-        foreach( $sheet->dataGrid as $row ) 
+        $total = array(); 
+        foreach( $sheet->data as $row ) 
         {
-            if( is_array( $row ) ) 
-            {
-                ksort($row);
-                $total[] = $this->fputcsvexcel( $row ,';','"');
-            }
+            $total[] = $this->fputcsvexcel( $row ,';','"', $sheet->metadata->columns);
         }
-
+        //print_r($sheet);
         if( is_array( $total ) )
             $total = implode( "\n", $total );
             
@@ -1277,18 +1278,26 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
         return "1.0";
     }
     
-    function fputcsvexcel( $row, $fd=';', $quot='"')
+    function fputcsvexcel( $row, $fd=';', $quot='"', $limit)
     {
        $str='';
-       foreach ($row as $cell) {
-           str_replace(Array($quot,        "\n"),
-                       Array($quot.$quot,  ''),
-                       $cell);
-           if (strchr($cell, $fd)) {
-               $str.=$quot.$cell.$quot.$fd;
-           } else {
-               $str.=$cell.$fd;
-           }
+       $i = 0;
+       foreach ($row as $col) {
+       		if ($i && $i < $limit) {
+				$cell = ($col->formula ? $col->formula : $col->value);
+	          	str_replace(
+	           		Array($quot,        "\n"),
+					Array($quot.$quot,  ''),
+	                $cell
+				);
+				
+				if (strchr($cell, $fd)) {
+					$str.=$quot.$cell.$quot.$fd;
+				} else {
+					$str.=$cell.$fd;
+				}
+       		}
+			$i++;
        }
     
        return  $str;
@@ -2478,38 +2487,60 @@ class SheetLib extends TikiLib
 		return true;
 	}
 	
-	function save_sheet($data, $id) {
+	function save_sheet($data, $id, $file, $type = 'db') {
 		global $user, $sheetlib;
 		
-		$grid = new TikiSheet($id);
 		$sheets =  json_decode($data);
 		$rc =  '';
-		if (is_array($sheets)) {
-			foreach ($sheets as $sheet) {
-				$handler = new TikiSheetHTMLTableHandler($sheet);
-				$res = $grid->import($handler);
-				// Save the changes
-				$rc .= strlen($rc) === 0 ? '' : ', ';
-				if ($res) {
-					if (!$sheet->metadata->sheetId) {
-						if (!empty($sheet->metadata->title)) {
-							$title = $sheet->metadata->title;
-						} else {
-							$title = $info['title'] . ' subsheet'; 
+		
+		if ($id) {
+			$grid = new TikiSheet($id);
+			if (is_array($sheets)) {
+				foreach ($sheets as $sheet) {
+					$handler = new TikiSheetHTMLTableHandler($sheet);
+					$res = $grid->import($handler);
+					// Save the changes
+					$rc .= strlen($rc) === 0 ? '' : ', ';
+					if ($res) {
+						if (!$sheet->metadata->sheetId) {
+							if (!empty($sheet->metadata->title)) {
+								$title = $sheet->metadata->title;
+							} else {
+								$title = $info['title'] . ' subsheet'; 
+							}
+							$newId = $sheetlib->replace_sheet( 0, $title, '', $user, $id );
+							$rc .= tra('new') . " (id=$newId) ";
+							$sheet->metadata->sheetId = $newId;
+							$handler = new TikiSheetHTMLTableHandler($sheet);
+							$res = $grid->import($handler);
 						}
-						$newId = $sheetlib->replace_sheet( 0, $title, '', $user, $id );
-						$rc .= tra('new') . " (id=$newId) ";
-						$sheet->metadata->sheetId = $newId;
-						$handler = new TikiSheetHTMLTableHandler($sheet);
-						$res = $grid->import($handler);
+						if ($id && $res) {
+							$handler = new TikiSheetDatabaseHandler( $sheet->metadata->sheetId );
+							$grid->export($handler);
+							$rc .= $grid->getColumnCount() . ' x ' . $grid->getRowCount() . ' ' . tra('sheet') . " (id=".$sheet->metadata->sheetId.")";
+						}
+						if (!empty($sheet->metadata->title)) {
+							$sheetlib->set_sheet_title($sheet->metadata->sheetId, $sheet->metadata->title);
+						}
 					}
-					if ($id && $res) {
-						$handler = new TikiSheetDatabaseHandler($sheet->metadata->sheetId);
-						$grid->export($handler);
-						$rc .= $grid->getColumnCount() . ' x ' . $grid->getRowCount() . ' ' . tra('sheet') . " (id=".$sheet->metadata->sheetId.")";
+				}
+			}
+		} else {
+			$grid = new TikiSheet();
+			if ($type == 'csv') {
+				foreach ($sheets as $sheet) {
+					$handler = new TikiSheetCSVHandler( $file );
+					if ($handler->_save($sheet)) {
+						$res .= $file;
+						$rc .= tra("file - ").$file;		
 					}
-					if (!empty($sheet->metadata->title)) {
-						$sheetlib->set_sheet_title($sheet->metadata->sheetId, $sheet->metadata->title);
+				}
+			} elseif ($type == 'excelcsv') {
+				foreach ($sheets as $sheet) {
+					$handler = new TikiSheetCSVExcelHandler( $file );
+					if ($handler->_save($sheet)) {
+						$res .= $file;
+						$rc .= tra("file - ").$file;
 					}
 				}
 			}

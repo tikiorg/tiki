@@ -78,10 +78,14 @@ if ($prefs['feature_contribution'] == 'y') {
 //End permissions
 
 //Save
-if (isset($_REQUEST['s']) && !empty($_REQUEST['s'])) { //save
-	$result = $sheetlib->save_sheet( $_REQUEST['s'], $_REQUEST["sheetId"] );
+if (isset($_REQUEST['s']) && !empty($_REQUEST['s']) ) { //save
+	if ( $_REQUEST['sheetId'] ) {
+		$result = $sheetlib->save_sheet( $_REQUEST['s'], $_REQUEST["sheetId"] );
+		
+	} elseif ( $_REQUEST['type'] && $_REQUEST['file'] ) {
+		$result = $sheetlib->save_sheet( $_REQUEST['s'], null, $_REQUEST['file'], $_REQUEST['type'] );
+	}
 	die($result);
-
 //Clone
 } elseif ( $_REQUEST['parse'] == "clone" ) {
 	if ( !$sheetlib->user_can_edit( $_REQUEST['sheetId'] ) ) {
@@ -155,8 +159,6 @@ if (isset($_REQUEST['sheetonly']) && $_REQUEST['sheetonly'] == 'y') {
 }
 
 $smarty->assign('grid_content', $tableHtml);
-$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
-$grid->import($handler);
 
 $sheetlib->setup_jquery_sheet();
 $headerlib->add_jq_onready('
@@ -166,6 +168,8 @@ $headerlib->add_jq_onready('
 	
 	var tikiSheet = $("div.tiki_sheet").sheet($.sheet.tikiOptions);
 	tikiSheet.id = "'.$_REQUEST['sheetId'].'";
+	tikiSheet.type = "'.$_REQUEST['type'].'";
+	tikiSheet.file = "'.$_REQUEST['file'].'";
 	
 	$.sheet.manageState(tikiSheet);
 	
@@ -177,7 +181,7 @@ $headerlib->add_jq_onready('
 						
 	$("#save_button a")
 		.click( function () {
-			$.sheet.saveSheet("tiki-view_sheets.php?sheetId=" + tikiSheet.id, false, function() {
+			$.sheet.saveSheet(tikiSheet, function() {
 				$.sheet.manageState(tikiSheet, true, "");
 			});
 			
