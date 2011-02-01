@@ -66,7 +66,7 @@ function upgrade_20101230_create_top_modules_tiki( $installer ) {
 //	TODO uncomment when stable (pre Tiki 7 release)
 //	$installer->query( "DELETE FROM `tiki_preferences` WHERE `name` IN ".
 //							"('feature_top_bar','feature_sitelogo','feature_site_login','feature_sitemenu',".
-//							"'feature_topbar_id_menu','feature_sitesearch', 'feature_sitemycode');");
+//							"'feature_topbar_id_menu','feature_sitesearch');");
 	
 }
 
