@@ -716,7 +716,7 @@ a.toolbar {			/* each tool button */
 
 .toolbars-picker {	/* colours, smilies etc */
 	position: absolute;
-	width: 288px;
+	width: 128px;
 	z-index: 300;
 	line-height: 12px;
 }
