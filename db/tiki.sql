@@ -2000,6 +2000,7 @@ CREATE TABLE `tiki_sheet_layout` (
   `footerRow` int(4) NOT NULL default '0',
   `className` varchar(64) default NULL,
   `parseValues` char( 1 ) NOT NULL default 'n',
+  `clonedSheetId` int(8) NULL,
   UNIQUE KEY `sheetId` (`sheetId`, `begin`)
 ) ENGINE=MyISAM;
 
@@ -2018,6 +2019,7 @@ CREATE TABLE `tiki_sheet_values` (
   `user` varchar(200) default '',
   `style` varchar( 255 ) default '',
   `class` varchar( 255 ) default '',
+  `clonedSheetId` int(8) NULL,
   UNIQUE KEY `sheetId` (`sheetId`,begin,`rowIndex`,`columnIndex`),
   KEY `sheetId_2` (`sheetId`,`rowIndex`,`columnIndex`)
 ) ENGINE=MyISAM;
@@ -2029,6 +2031,7 @@ CREATE TABLE `tiki_sheets` (
   `description` text,
   `author` varchar(200) NOT NULL default '',
   `parentSheetId` int(8) NULL,
+  `clonedSheetId` int(8) NULL,
   PRIMARY KEY (`sheetId`)
 ) ENGINE=MyISAM;
 

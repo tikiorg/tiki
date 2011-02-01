@@ -63,83 +63,86 @@ $smarty->assign('chart_enabled', (function_exists('imagepng') || function_exists
 $smarty->assign('title', $info['title']);
 $smarty->assign('description', $info['description']);
 
-// Process the insertion or modification of a gallery here
+// Start permissions
 if (
 		$_REQUEST['parse'] == 'edit' && 
-		!$objectperms->edit_sheet && $tiki_p_admin != 'y'
+		(
+			!$objectperms->edit_sheet || 
+			$tiki_p_admin != 'y'
+		)
 	) {
 	$smarty->assign('msg', tra("Permission denied") . ": feature_sheet");
 	$smarty->display("error.tpl");
 	die;
 }
 
+if ($prefs['feature_contribution'] == 'y') {
+	$contributionItemId = $_REQUEST['sheetId'];
+	include_once ('contribution.php');
+}
+//End permissions
+
+//Save
 if (isset($_REQUEST['s']) && !empty($_REQUEST['s'])) { //save
-	if (!$objectperms->edit_sheet && $tiki_p_admin != 'y') {
-		$smarty->assign('msg', tra('Permission denied'));
-		$smarty->display("error.tpl");
-		die;
-	}
-	
-	// ********* AJAX save request from jQuery.sheet
 	$result = $sheetlib->save_sheet( $_REQUEST['s'], $_REQUEST["sheetId"] );
 	die($result);
-	
+
+//Clone
 } elseif ( $_REQUEST['parse'] == "clone" ) {
 	$access->check_permission('tiki_p_edit_sheet');
 	$access->check_authenticity(tra("Are you sure you want to clone this spreadsheet?"));
 	$id = $sheetlib->clone_sheet( $_REQUEST["sheetId"], $_REQUEST['readdate'] );
 	if ($id) {
 		header("Location: tiki-view_sheets.php?sheetId=".$id);
+	} else {
+		$smarty->assign('msg', tra("Clone Error"));
 	}
+
+//Rollback
 } elseif ($_REQUEST['parse'] == 'rollback' && !empty($_REQUEST['readdate'])) {
 	$access->check_permission('tiki_p_edit_sheet');
 	$access->check_authenticity(tra("Are you sure you want to rollback this spreadsheet?"));
 	$id = $sheetlib->rollback_sheet( $_REQUEST["sheetId"], $_REQUEST['readdate'] );
 	if ($id) {
 		header("Location: tiki-view_sheets.php?sheetId=".$id);
-	}
-} else {
-	if ($_REQUEST['parse'] == 'edit') {
-		$access->check_permission('tiki_p_edit_sheet');
-	}
-	$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
-	
-	//We make sheet able to look at other date save
-	if (isset($_REQUEST['readdate']) && !empty($_REQUEST['readdate'])) {
-		$smarty->assign('read_date', $_REQUEST['readdate']);
-		$handler->setReadDate($_REQUEST['readdate']);
-	}
-	
-	$grid = new TikiSheet($_REQUEST["sheetId"]);
-	$grid->import($handler);
-
-	//ensure that sheet isn't being edited, then parse values if needed
-	if ( $grid->parseValues && $_REQUEST['parse'] != 'edit' ) {
-		$grid->parseValues = true;
 	} else {
-		$grid->parseValues = false;
+		$smarty->assign('msg', tra("Rollback Error"));
 	}
-	$smarty->assign('parseValues', $grid->parseValues);
-			
-	$tableHtml[0] = $grid->getTableHtml( true, $_REQUEST['readdate'] );
+}
+
+//Edit & View
+$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
+
+//We make sheet able to look at other date save
+if (isset($_REQUEST['readdate']) && !empty($_REQUEST['readdate'])) {
+	$smarty->assign('read_date', $_REQUEST['readdate']);
+	$handler->setReadDate($_REQUEST['readdate']);
+}
+
+$grid = new TikiSheet($_REQUEST["sheetId"]);
+$grid->import($handler);
+
+//ensure that sheet isn't being edited, then parse values if needed
+if ( $grid->parseValues && $_REQUEST['parse'] != 'edit' ) {
+	$grid->parseValues = true;
+} else {
+	$grid->parseValues = false;
+}
+
+$smarty->assign('parseValues', $grid->parseValues);
 		
-	if (isset($_REQUEST['sheetonly']) && $_REQUEST['sheetonly'] == 'y') {
-		foreach( $tableHtml as $table ) {
-			echo $table;
-		}
-		die;
-	}
+$tableHtml[0] = $grid->getTableHtml( true, $_REQUEST['readdate'] );
 	
-	$smarty->assign('grid_content', $tableHtml);
-	$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
-	$grid->import($handler);
+if (isset($_REQUEST['sheetonly']) && $_REQUEST['sheetonly'] == 'y') {
+	foreach( $tableHtml as $table ) {
+		echo $table;
+	}
+	die;
 }
 
-
-if ($prefs['feature_contribution'] == 'y') {
-	$contributionItemId = $_REQUEST['sheetId'];
-	include_once ('contribution.php');
-}
+$smarty->assign('grid_content', $tableHtml);
+$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
+$grid->import($handler);
 
 $sheetlib->setup_jquery_sheet();
 $headerlib->add_jq_onready('
