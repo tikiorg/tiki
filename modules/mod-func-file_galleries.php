@@ -24,7 +24,7 @@ function module_file_galleries( $mod_reference, $module_params ) {
 	global $filegallib; include_once ('lib/filegals/filegallib.php');
 	global $smarty;
 	
-	$all_galleries = $filegallib->getFileGalleriesData();
+	$all_galleries = $filegallib->getSubGalleries();
 	
 	if ( isset($all_galleries) && is_array($all_galleries) && count($all_galleries) > 0 ) {
 		$phplayersTreeData = $filegallib->getFilegalsTreePhplayers();

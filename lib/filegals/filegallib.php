@@ -1112,7 +1112,13 @@ class FileGalLib extends TikiLib
 	}
 
         function getGalleriesParentIds() {
-		return $this->fetchAll( 'SELECT `galleryId`, `parentId` FROM `tiki_file_galleries`' );
+		static $return = null;
+
+		if ( $return === null ) {
+			$return = $this->fetchAll( 'SELECT `galleryId`, `parentId` FROM `tiki_file_galleries`' );
+		}
+
+		return $return;
 	}
 
 	/**
@@ -1181,31 +1187,112 @@ class FileGalLib extends TikiLib
 		return $this->getGalleryChildrenIds( $childSubtree, $parentId, $format );
 	}
 
-	function getFileGalleriesData() {
-		static $return = null;
+	/* Get subgalleries for parent $parentId
+	 *
+	 * @param int $parentId Parent ID of subgalleries to get
+	 * @param bool $wholeSpecialGallery If true, will return the subgalleries of the special gallery (User File Galleries, Wiki Attachment Galleries, File Galleries, ...) that contains the $parentId gallery
+	 * @param string $permission If set, will limit the list of subgalleries to those having this permission for the current user
+	 */
+	function getSubGalleries( $parentId = 0, $wholeSpecialGallery = true, $permission = '' ) {
 
-		if ( $return === null ) {
-			global $prefs, $cachelib, $user;
-			$cacheName = $this->get_all_galleries_cache_name($user);
+		// Use the special File Galleries root if no other special gallery root id is specified
+		if ( $parentId == 0 ) {
+			global $prefs;
+			$parentId = $prefs['fgal_root_id'];
+		}
+
+		// If needed, get the id of the special gallery that contains the $parentId gallery
+		if ( $wholeSpecialGallery ) {
+			$parentId = $this->getGallerySpecialRoot( $parentId );
+			$useCache = true;
+		}
+
+		global $cachelib, $user;
+		if ( $useCache ) {
+			$cacheName = 'pid' . $parentId . '_' . $this->get_all_galleries_cache_name($user);
 			$cacheType = $this->get_all_galleries_cache_type();
-			if ( ! $return = $cachelib->getSerialized($cacheName, $cacheType) ) {
-				$return = $this->list_file_galleries(0, -1, 'name_asc', $user, '', $prefs['fgal_root_id'], false, true, false, false,false,true, false );
+		}
+		if ( ! $useCache || ! $return = $cachelib->getSerialized($cacheName, $cacheType) ) {
+			$return = $this->list_file_galleries(0, -1, 'name_asc', $user, '', $parentId, false, true, false, false, false, true, false );
+			if ( is_array( $return ) ) {
+				$return['parentId'] = $parentId;
+			}
+			if ( $useCache ) {
 				$cachelib->cacheItem($cacheName, serialize($return), $cacheType);
 			}
+		}
+
+		if ( $permission != '' ) {
+			$return['data'] = Perms::filter(array('type' => 'file gallery'), 'object', $return['data'], array('object'=>'id'), $permission);
 		}
 
 		return $return;
 	}
 
-	function getFilegalsIdsTree() {
-		static $return = null;
+	/**
+	 * Get the Id of the gallery special root, which will be a gallery of type 'special' with the parentId '-1'
+	 *    (i.e. 'File Galleries', 'Users File Galleries', ...)
+	 * 
+	 * @param int $galleryId The id of the gallery 
+	 * @return The special root gallery Id
+	 */
+	function getGallerySpecialRoot( $galleryId, $treeParentId = null, &$tree = null ) {
+		global $prefs;
 
-		if ( $return === null ) {
-			global $prefs;
-			$return = array();
-			$this->getGalleryIds( $return, $prefs['fgal_root_id'], 'tree' );
+		if ( ( $treeParentId === null xor $tree === null ) || $galleryId <= 0 ) {
+			// If parameters are not valid, return false (they should be null at first call and not empty when recursively called)
+			return false;
+		} elseif ( $treeParentId === null ) {
+			// Initialize the full tree and the top root of all galleries
+			$tree = array();
+			$treeParentId = -1;
+			$this->getGalleryChildrenIds( $tree, $treeParentId, 'tree' );
+		} elseif ( $treeParentId == $galleryId ) {
+			// If the searched gallery is the same as the current tree parent id, then return tree (we found the right branch of the tree)
+			return true;
 		}
 
+		if ( ! empty( $tree ) ) {
+			foreach ( $tree as $subGalleryId => $childs ) {
+				if ( $result = $this->getGallerySpecialRoot( $galleryId, $subGalleryId, $childs ) ) {
+					if ( is_integer($result) ) {
+						return $result;
+					} elseif ( $treeParentId == $prefs['fgal_root_user_id'] || $treeParentId == -1 ) {
+						//
+						// If the parent is :
+						//   - either the User File Gallery, stop here to keep only the user gallery instead of all users galleries
+						//   - or already the top root of all galleries, it means that the gallery is a special gallery root
+						//
+						return (int)$subGalleryId;
+					} else {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	// Get the tree of 'Wiki Attachment File Galleries' filegal of the specified wiki page
+	function getWikiAttachmentFilegalsIdsTree( $pageName ) {
+		$return = array();
+		$this->getGalleryIds( $return, $this->get_wiki_attachment_gallery( $pageName ), 'tree' );
+		return $return;
+	}
+
+	// Get the tree of 'Users File Galleries' filegal of the current user
+	function getUserFilegalsIdsTree() {
+		$return = array();
+		$this->getGalleryIds( $return, $this->get_user_file_gallery(), 'tree' );
+		return $return;
+	}
+
+	// Get the tree of 'File Galleries' filegal 
+	function getFilegalsIdsTree() {
+		global $prefs;
+		$return = array();
+		$this->getGalleryIds( $return, $prefs['fgal_root_id'], 'tree' );
 		return $return;
 	}
 
@@ -1218,7 +1305,7 @@ class FileGalLib extends TikiLib
 	function getTreePhplayers( $idTree, $currentGalleryId = null ) {
 		global $prefs;
 
-		$allGalleries = $this->getFileGalleriesData();
+		$allGalleries = $this->getSubGalleries();
 
 		$idTreeKeys = array_keys( $idTree );
 		$rootGalleryId = $idTreeKeys[0];

@@ -937,7 +937,7 @@ if ($prefs['feature_file_galleries_templates'] == 'y') {
 }
 
 if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || isset($_REQUEST['movesel_x']) || isset($_REQUEST["edit_mode"])) {
-	$all_galleries = $filegallib->getFileGalleriesData();
+	$all_galleries = $filegallib->getSubGalleries( ( isset($_REQUEST['parentId']) && $galleryId == 0 ) ? $_REQUEST['parentId'] : $galleryId );
 	$gals = array();
 	foreach ($all_galleries['data'] as $gal) {
 		if ($gal['id'] != $galleryId) {
@@ -946,6 +946,7 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 	}
 	sort($gals);
 	$smarty->assign_by_ref('all_galleries', $gals);
+	$smarty->assign('treeRootId', $all_galleries['parentId']);
 
 	if ( ! empty($all_galleries) && is_array($all_galleries) && $all_galleries['cant'] > 0) {
 		$phplayersTreeData = $filegallib->getFilegalsTreePhplayers( $galleryId );

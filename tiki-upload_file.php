@@ -45,8 +45,10 @@ function print_msg($msg, $id) {
 	}
 }
 
+$requestGalleryId = null;
 if ( isset( $_REQUEST['galleryId'] ) && ! is_array( $_REQUEST['galleryId'] ) ) {
-	$_REQUEST['galleryId'] = array( $_REQUEST['galleryId'] );
+	$requestGalleryId = $_REQUEST['galleryId'];
+	$_REQUEST['galleryId'] = array( $requestGalleryId );
 }
 
 $fileInfo = null;
@@ -181,16 +183,9 @@ $smarty->assign('editFileId', (int) $fileId);
 $smarty->assign( 'galleryId', empty( $_REQUEST['galleryId'][0] ) ? '' : $_REQUEST['galleryId'][0] );
 
 if ( empty( $fileId ) ) {
-	global $cachelib;
-	include_once ('lib/cache/cachelib.php');
-	$cacheName = $filegallib->get_all_galleries_cache_name($user);
-	$cacheType = $filegallib->get_all_galleries_cache_type();
-	if (!$galleries = $cachelib->getSerialized($cacheName, $cacheType)) {
-		$galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', $prefs['fgal_root_id'], false, true, false, false, false, true, false);
-		$cachelib->cacheItem($cacheName, serialize($galleries), $cacheType);
-	}
-	$galleries['data'] = Perms::filter(array('type' => 'file gallery'), 'object', $galleries['data'], array('object'=>'id'), 'upload_files');
+	$galleries = $filegallib->getSubGalleries( $requestGalleryId, true, 'upload_files' );
 	$smarty->assign_by_ref('galleries', $galleries["data"]);
+	$smarty->assign( 'treeRootId', $galleries['parentId'] );
 }
 
 if ( $prefs['fgal_limit_hits_per_file'] == 'y' ) {
