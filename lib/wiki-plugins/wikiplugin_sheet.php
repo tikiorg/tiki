@@ -225,17 +225,16 @@ EOF;
 	
 	if (!isset($simple) || $simple != 'y') {
 		global $headerlib;
+		$sheetlib->setup_jquery_sheet();
 		$headerlib->add_jq_onready('
-			if (typeof ajaxLoadingShow == "function") {
-				ajaxLoadingShow("role_main");
-			}
-			setTimeout (function () {
-				$("div.tiki_sheet").tiki("sheet", "",{
+			$("div.tiki_sheet").each(function() {
+				$(this).sheet($.extend($.sheet.tikiOptions,{
 					editable:false'. ( isset($url) ? ',
 					urlGet: "'.$url.'",
 					buildSheet: false': '' ) .'
-					});
-			}, 0);', 500);
+				}));
+			});
+		');
 
 	} else if (preg_match('/^([A-Z]+[0-9]+):\1$/', strtoupper($range))) {
 		return $ret;	// return a single cell raw
