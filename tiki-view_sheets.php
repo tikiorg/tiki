@@ -35,7 +35,7 @@ if ($user && $user == $info['author']) {
 	$objectperms->tiki_p_edit_sheet = 1;
 }
 
-if ($tiki_p_admin != 'y' && !$objectperms->view_sheet) {
+if (!$sheetlib->user_can_view( $_REQUEST['sheetId'] )) {
 	$smarty->assign('msg', tra('Permission denied'));
 	$smarty->display("error.tpl");
 	die;
@@ -64,13 +64,7 @@ $smarty->assign('title', $info['title']);
 $smarty->assign('description', $info['description']);
 
 // Start permissions
-if (
-		$_REQUEST['parse'] == 'edit' && 
-		(
-			!$objectperms->edit_sheet || 
-			$tiki_p_admin != 'y'
-		)
-	) {
+if ( $_REQUEST['parse'] == 'edit' && !$sheetlib->user_can_edit( $_REQUEST['sheetId'] ) ) {
 	$smarty->assign('msg', tra("Permission denied") . ": feature_sheet");
 	$smarty->display("error.tpl");
 	die;
@@ -89,7 +83,10 @@ if (isset($_REQUEST['s']) && !empty($_REQUEST['s'])) { //save
 
 //Clone
 } elseif ( $_REQUEST['parse'] == "clone" ) {
-	$access->check_permission('tiki_p_edit_sheet');
+	if ( !$sheetlib->user_can_edit( $_REQUEST['sheetId'] ) ) {
+		$smarty->assign('msg', tra("Permission denied"));
+		die;
+	}
 	$access->check_authenticity(tra("Are you sure you want to clone this spreadsheet?"));
 	$id = $sheetlib->clone_sheet( $_REQUEST["sheetId"], $_REQUEST['readdate'] );
 	if ($id) {
@@ -100,7 +97,10 @@ if (isset($_REQUEST['s']) && !empty($_REQUEST['s'])) { //save
 
 //Rollback
 } elseif ($_REQUEST['parse'] == 'rollback' && !empty($_REQUEST['readdate'])) {
-	$access->check_permission('tiki_p_edit_sheet');
+	if ( !$sheetlib->user_can_edit( $_REQUEST['sheetId'] ) ) {
+		$smarty->assign('msg', tra("Permission denied"));
+		die;
+	}
 	$access->check_authenticity(tra("Are you sure you want to rollback this spreadsheet?"));
 	$id = $sheetlib->rollback_sheet( $_REQUEST["sheetId"], $_REQUEST['readdate'] );
 	if ($id) {

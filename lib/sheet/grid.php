@@ -2309,6 +2309,8 @@ class SheetLib extends TikiLib
 	
 	function setup_jquery_sheet_history() {
 		global $headerlib;
+		$this->setup_jquery_sheet();
+		
 		if (!$this->setup_jQuery_sheet_history_files) {
 			$headerlib->add_jsfile( 'lib/sheet/tiki-history_sheets.js' );
 			$this->setup_jQuery_sheet_history_files = true;
@@ -2655,6 +2657,18 @@ class SheetLib extends TikiLib
 		}
 			
 		return array($result1, $result2);
+	}
+	
+	function user_can_view($sheetId) {
+		global $user;
+		$objectperms = Perms::get( 'sheet', $sheetId );
+		return ( $objectperms->view_sheet || $objectperms->admin );
+	}
+	
+	function user_can_edit($sheetId) {
+		global $user;
+		$objectperms = Perms::get( 'sheet', $sheetId );
+		return ( $objectperms->edit_sheet || $objectperms->admin );
 	}
 } // }}}1
 $sheetlib = new SheetLib;

@@ -16,7 +16,6 @@ $auto_query_args = array(
 );
 $access->check_feature('feature_sheet');
 
-$sheetlib->setup_jquery_sheet();
 $sheetlib->setup_jquery_sheet_history();
 
 $info = $sheetlib->get_sheet_info( $_REQUEST['sheetId'] );
