@@ -402,4 +402,9 @@ a.admbox.off img {
 	width: 20em;
 }
 
+.tgContexts li {
+	font-family: monospace;
+	font-size: 1.2em;
+}
+
 /* end theme generator */

@@ -27,7 +27,7 @@ class ThemeGenLib
 	}
 	
 	public function setupEditor() {
-		global $headerlib, $smarty, $prefs;
+		global $headerlib, $smarty, $prefs, $tikilib;
 		
 		if ($this->currentTheme->initDone ||	// filter out unnecessay setups
 				strpos($_SERVER["SCRIPT_NAME"], 'tiki-download_file.php') !== false ||
@@ -88,20 +88,33 @@ class ThemeGenLib
 					}
 				}
 				if ( !$css_file_found ) {
-					$css_file = ''; //$css_file[0];
+					$css_file = $tikilib->get_style_path() . $prefs['style'];
 				}
 			} else {
-				$css_file = '';
+				$css_file = $tikilib->get_style_path() . $prefs['style'];
 			}
 		}
-		$mincss .= $headerlib->minify_css( $css_file );	// clean out comments etc
+		$mincss = $headerlib->minify_css( $css_file );	// clean out comments etc
+		
+		$mincss = '}' . preg_replace('/@import url(.*);/Umis', '', $mincss);
 		
 		$colors		  = $this->currentTheme->findMatches('/[^-]color:([^\};!]*?)[;\}!]/i', $mincss, $css_file, 'fgcolors');
-		$bgcolors	  = $this->currentTheme->findMatches('/background(?:-color)?:.*?(#[0-9A-F]{3,6})[\s;\}\!]/i', $mincss, $css_file, 'bgcolors');
-		$bordercolors = $this->currentTheme->findMatches('/border(?:-.*)?:.*(#[0-9A-F]{3,6})[\s;\}\!]/Umis', $mincss, $css_file, 'bordercolors');
-		$fontsizes	  = $this->currentTheme->findMatches('/font-size:.*?([\d\.]*[^;\} ]*)/i', $mincss, $css_file, 'fontsize');
+		$this->findContexts($colors, $mincss, '/[\}]\s*([^\{@]*)\{[^\}]*[^-]?color:\s*$0[\}; !]/Umis');
+		
+		$bgcolors	  = $this->currentTheme->findMatches('/background(?:-color)?:[^\};]*?(#[0-9A-F]{3,6})[\s;\}\!]/i', $mincss, $css_file, 'bgcolors');
+		$this->findContexts($bgcolors, $mincss, '/[\}]\s*([^\{@]*)\{[^\}]*background(?:-color)?:\s*$0[\}; !]/Umis');
+		
+		$bordercolors = $this->currentTheme->findMatches('/border(?:-[^\};]*)?:[^\};]*(#[0-9A-F]{3,6})[\s;\}\!]/Umis', $mincss, $css_file, 'bordercolors');
+		$this->findContexts($bordercolors, $mincss, '/[\}]\s*([^\{@]*)\{[^\}]*border(?:-.*)?:.*$0[\}; !]/Umis');
+		
+		$fontsizes	  = $this->currentTheme->findMatches('/font-size:[^\};]*?([\d\.]*[^;\} ]*)/i', $mincss, $css_file, 'fontsize');
+		$this->findContexts($fontsizes, $mincss, '/[\}]\s*([^\{@]*)\{[^\}]*font-size:\s*$0[\}; !]/Umis');
+		
 		$fontfamilies = $this->currentTheme->findMatches('/font-family:\s*?([^;\}]*)/i', $mincss, $css_file, 'fontfamily', false);
+		$this->findContexts($fontfamilies, $mincss, '/[\}]\s*([^\{@]*)\{[^\}]*font-family:\s*$0[\};]/Umis');
+		
 		$fonts		  = $this->currentTheme->findMatches('/font:\s*?([^;\}]*)/i', $mincss, $css_file, 'font', false);
+		$this->findContexts($fonts, $mincss, '/[\}]\s*([^\{@]*)\{[^\}]*font:\s*$0[\};]/Umis');
 		
 		// array for smarty to loop through
 		$tg_data = array(
@@ -143,6 +156,10 @@ class ThemeGenLib
 		
 		$smarty->assign_by_ref( 'tg_data', $tg_data );
 		
+//		$css_files = $this->setupCSSFiles();
+//		if (empty($css_file) && count($css_files) > 0) {
+//			$css_file = $css_files[1];
+//		}
 		$smarty->assign_by_ref('tg_css_files', $this->setupCSSFiles());
 		$smarty->assign_by_ref('tg_css_file', $css_file);
 		
@@ -152,6 +169,18 @@ class ThemeGenLib
 		}
 		
 		$this->currentTheme->initDone = true;		
+	}
+	
+	private function findContexts( &$items, $haystack, $regexp) {
+		$m = null;
+		foreach ($items as &$item) {
+			$c = preg_match_all( str_replace('$0', preg_quote( html_entity_decode($item['old']), '/'), $regexp), $haystack, $m);
+			if ($c) {
+				$item['contexts'] = htmlentities('<ul class="tgContexts"><li>' . implode('</li><li>', str_replace(',', ',<br />', $m[1])) . '</li></ul>');
+			} else {
+				$item['contexts'] = '<ul><li>Not found (error)</li></ul>';
+			}
+		}
 	}
 	
 	public function setupCSSFiles () {
@@ -205,11 +234,11 @@ class ThemeGenLib
 		
 		foreach ($swaps['font'] as $old => $new) {
 			//                        also usually start with a numeric so add a space after the $1
-			$css = preg_replace('/(font:\s*)' . preg_quote($old, '/') . '/Umis', "$1 " . $new, $css);
+			$css = preg_replace('/(font:\s*)' . preg_quote($old, '/') . '/Umis', "$1 " . html_entity_decode($new), $css);
 		}
 		
 		foreach ($swaps['fontfamily'] as $old => $new) {
-			$css = preg_replace('/(font-family:\s*)' . preg_quote($old, '/') . '/Umis', "$1" . $new, $css);
+			$css = preg_replace('/(font-family:\s*)' . preg_quote($old, '/') . '/Umis', "$1" . html_entity_decode($new), $css);
 		}
 		
 
@@ -318,7 +347,8 @@ class ThemeGenTheme extends SerializedList
 	
 	public function findMatches( $regexp, $haystack, $filename, $type, $lower = true, $matchNumber = 1) {
 		preg_match_all( $regexp, $haystack, $matches );
-		return $this->processMatches( $matches[$matchNumber], $filename, $type, $lower );
+		$items = $this->processMatches( $matches[$matchNumber], $filename, $type, $lower );
+		return $items;
 	}
 	
 	
@@ -338,7 +368,7 @@ class ThemeGenTheme extends SerializedList
 				$processed[$match] = array();
 				$processed[$match]['old'] = $match;
 				if (isset($this->data['files'][$css_file][$type][$match])) {
-					$processed[$match]['new'] = htmlentities($this->data['files'][$css_file][$type][$match]);
+					$processed[$match]['new'] = $this->data['files'][$css_file][$type][$match];
 				} else {
 					$processed[$match]['new'] = $match;
 				}

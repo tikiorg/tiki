@@ -38,6 +38,8 @@
 						{foreach from=$tg_data_type.items item=tg_item}
 							<li class="tgItem{if $tg_item.old neq $tg_item.new} changed{/if}">
 								<div class="clearfix tips" title="{$tg_data_type.title}|
+										{tr}Found in:{/tr}
+										{$tg_item.contexts}
 										{if $tg_item.old neq $tg_item.new}
 											{tr 0=$tg_item.old 1=$tg_item.new}Changed from %0 to %1{/tr}
 										{else}
