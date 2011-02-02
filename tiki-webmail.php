@@ -146,7 +146,7 @@ if ($_REQUEST['locSection'] == 'read') {
 					// gets positions of the start and end body tags then substr the bit inbetween
 					$bod = substr($bod, $m[0][0][1] + strlen($m[0][0][0]), $m[0][1][1]);
 				}
-				$bod = strip_tags( $bod, '<a><b><i><table><tbody><tr><td><th><ul><li><img><hr><ol><br /><h1><h2><h3><h4><h5><h6><div><span><font><form><input><textarea><checkbox><select><style>');
+				$bod = strip_tags( $bod, '<a><b><i><strong><em><p><blockquote><table><tbody><tr><td><th><ul><li><img><hr><ol><br><h1><h2><h3><h4><h5><h6><div><span><font><form><input><textarea><checkbox><select><style>');
 				// try to close malformed html not fixed by the purifier - because people email Really Bad Things and this messes up *lite.css layout
 				$bod = closetags($bod);
 				$bodies[$i]['body'] = $bod;
