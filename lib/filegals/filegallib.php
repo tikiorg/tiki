@@ -180,7 +180,7 @@ class FileGalLib extends TikiLib
 			$conditions = array('hash' => $checksum);
 
 			if ( $prefs['fgal_allow_duplicates'] === 'different_galleries' ) {
-				$conditions = array('galleryId' => $galleryId);
+				$conditions['galleryId'] = $galleryId;
 			}
 			if ( $filesTable->fetchCount($conditions) ) {
 				return false;
@@ -569,7 +569,6 @@ class FileGalLib extends TikiLib
 			'show_lockedby' => $prefs['fgal_list_lockedby'],
 			'show_checked' => $prefs['fgal_show_checked'],
 			'show_share' => $prefs['fgal_list_share'],
-			'show_userlink' => 'y',
 			'show_explorer' => $prefs['fgal_show_explorer'],
 			'show_path' => $prefs['fgal_show_path'],
 			'show_slideshow' => $prefs['fgal_show_slideshow'],
@@ -1900,7 +1899,6 @@ class FileGalLib extends TikiLib
 			'show_lockedby' => $prefs['fgal_list_lockedby'],
 			'show_checked' => $prefs['fgal_show_checked'],
 			'show_share' => $prefs['fgal_list_share'],
-			'show_userlink' => 'y',
 			'show_explorer' => $prefs['fgal_show_explorer'],
 			'show_path' => $prefs['fgal_show_path'],
 			'show_slideshow' => $prefs['fgal_show_slideshow'],
@@ -2059,7 +2057,7 @@ class FileGalLib extends TikiLib
 		if ( ! empty( $params['galleryId'][0] ) ) {
 			$gal_info = $tikilib->get_file_gallery( (int) $params['galleryId'][0] );
 			$podCastGallery = $this->isPodCastGallery( (int) $params["galleryId"][0], $gal_info );
-			$savedir = $this->get_file_savedir( (int) $params["galleryId"][0], $gal_info );
+			$savedir = $this->get_gallery_save_dir( (int) $params["galleryId"][0], $gal_info );
 		}
 		$podcast_url = str_replace("tiki-upload_file.php", "", $foo["path"]);
 		$podcast_url = $tikilib->httpPrefix() . $podcast_url . $prefs['fgal_podcast_dir'];
@@ -2264,7 +2262,7 @@ class FileGalLib extends TikiLib
 					}
 				}
 	
-				if (false === $data = @file_get_contents($temp_dest)) {
+				if (false === $data = @file_get_contents($tmp_dest)) {
 					$errors[] = tra('Cannot read the file:') . ' ' . $tmp_dest;
 				}
 
