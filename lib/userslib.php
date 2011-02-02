@@ -1498,7 +1498,10 @@ class UsersLib extends TikiLib
 	
 	function get_users_light($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $group = '') {
 		// This is a lighter version of get_users_names designed for ajax checking of userrealnames
-		global $prefs;
+		global $prefs, $tiki_p_list_users;
+
+		if ( $tiki_p_list_users	!== 'y') return array();
+
 		$mid = '';
 		$bindvars = array();
 		if(!empty($group)) {
@@ -1508,7 +1511,7 @@ class UsersLib extends TikiLib
 			$mid = ', `users_usergroups` uug where uu.`userId`=uug.`userId` and uug.`groupName` in ('.implode(',',array_fill(0, count($group),'?')).')';
 			$bindvars = $group;
 		}
-		if ($find) {
+		if ( !empty($find) ) {
 			$findesc = '%' . $find . '%';
 			if (empty($mid)) {
 				$mid .= " where uu.`login` like ?";
@@ -1540,8 +1543,11 @@ class UsersLib extends TikiLib
 	
 	function get_users_names($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '') {
 
+		global $tiki_p_list_users;
+		if ( $tiki_p_list_users	!== 'y') return array();
+
 		// This function gets an array of user login names.
-		if ($find) {
+		if ( !empty($find) ) {
 			$findesc = '%' . $find . '%';
 			$mid = " where `login` like ?";
 			$bindvars=array($findesc);
@@ -1563,6 +1569,9 @@ class UsersLib extends TikiLib
 
 	function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $initial = '', $inclusion=false, $group='', $email='') {
 
+		global $tiki_p_list_users;
+		if ( $tiki_p_list_users	!== 'y') return array();
+
 		$mid = '';
 		$bindvars = array();
 		$mmid = '';
@@ -1579,7 +1588,7 @@ class UsersLib extends TikiLib
 			$bindvars = $group;
 			$mbindvars = $bindvars;
 		}
-		if($email) {
+		if( !empty($email) ) {
 			$mid.= $mid == '' ? ' where' : ' and';
 			$mid.= ' uu.`email` like ?';
 			$mmid = $mid;
@@ -1587,7 +1596,7 @@ class UsersLib extends TikiLib
 			$mbindvars[] = '%'.$email.'%';
 		}
 
-		if ($find) {
+		if (! empty($find) ) {
 			$mid.= $mid == '' ? ' where' : ' and';
 			$mid.= " uu.`login` like ?";
 			$mmid = $mid;
@@ -1595,7 +1604,7 @@ class UsersLib extends TikiLib
 			$mbindvars[] = '%'.$find.'%';
 		}
 
-		if ($initial) {
+		if ( !empty($initial) ) {
 			$mid = " where `login` like ?";
 			$mmid = $mid;
 			$bindvars = array($initial.'%');
@@ -1790,7 +1799,10 @@ class UsersLib extends TikiLib
 	}
 
 	function list_all_users() {
-		global $cachelib;
+		global $cachelib, $tiki_p_list_users;
+
+		if ( $tiki_p_list_users	!== 'y') return array();
+
 		if (! $users = $cachelib->getSerialized("userslist")) {
 			$users = array();
 			$result = $this->query("select `login`,`userId` from `users_users` order by `login`", array());
