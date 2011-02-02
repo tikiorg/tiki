@@ -1019,8 +1019,6 @@ $smarty->assign_by_ref('gal_info', $gal_info);
 
 $smarty->assign('view', isset($_REQUEST['view']) ? $_REQUEST['view'] : $fgal_options['default_view']['value']);
 
-$headerlib->add_jsfile('lib/filegals/tiki-list_file_gallery.js');
-
 // Display the template
 if (!empty($_REQUEST['filegals_manager'])) {
 	$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);

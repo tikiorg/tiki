@@ -43,6 +43,22 @@
 									{foreach from=$all_templates key=key item=item}
 										<option value="{$item.id}"{if $gal_info.template eq $item.id} selected="selected"{/if}>{$item.label|escape}</option>
 									{/foreach}
+									{jq}
+$('#fgal_template').change( function() {
+	var otherTabs = $('span.tabinactive');
+	var otherParams = $('#description').parents('tr').nextAll('tr');
+
+	if ($(this).val() != '') {
+		// Select template, hide parameters
+		otherTabs.hide();
+		otherParams.hide();
+	} else {
+		// No template, show parameters
+		otherTabs.show();
+		otherParams.show();
+	}
+}).change();
+								{/jq}
 								</select>
 							</td>
 						</tr>
