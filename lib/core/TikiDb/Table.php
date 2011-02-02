@@ -271,7 +271,7 @@ class TikiDb_Table
 	private function buildOrderClause($orderClause)
 	{
 		if ($orderClause instanceof TikiDb_Expr) {
-			return ' ORDER BY ' . $orderClause->getQueryPart();
+			return ' ORDER BY ' . $orderClause->getQueryPart(null);
 		} elseif (is_array($orderClause) && ! empty($orderClause)) {
 			$part = ' ORDER BY ';
 
