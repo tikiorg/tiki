@@ -1189,8 +1189,9 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 		if (!empty($export) && $export != 'n' && $tiki_p_export_tracker == 'y') {
 			$exportUrl = "tiki-view_tracker.php?trackerId=$trackerId&amp;cookietab=3";
-			if (!empty($fields)) 
-				$exportUrl .= "&amp;displayedFields=$fields";
+			if (!empty($fields)) {
+				$exportUrl .= '&amp;displayedFields='.(is_array($fields)? implode(':', $fields): $fields);
+			}
 			if (is_array($filterfield)) {
 				foreach ($filterfield as $i=>$fieldId) {
 					$exportUrl .= "&amp;f_$fieldId=";
