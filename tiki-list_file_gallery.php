@@ -577,111 +577,46 @@ if (!empty($_FILES)) {
 		$smarty->display('error.tpl');
 		die;
 	}
-	$savedir = $prefs['fgal_use_dir'];
-	foreach($_FILES as $k => $v) {
-		$reg = array();
-		if (!empty($v['tmp_name']) && is_uploaded_file($v['tmp_name'])) {
-			$tmp_dest = $prefs['tmpDir'] . '/' . $v['name'] . '.tmp';
-			$msg = '';
-			if (!$v['size']) {
-				$msg = tra('Warning: Empty file:') . '  ' . htmlentities($v['name']) . '. ' . tra('Please re-upload your file');
-			} elseif (empty($v['name']) || !preg_match('/^upfile(\d+)$/', $k, $regs) || !($fileInfo = $filegallib->get_file_info($regs[1]))) {
-				$msg = tra('Could not upload the file') . ': ' . htmlentities($v['name']);
-			} elseif ((!empty($prefs['fgal_match_regex']) && (!preg_match('/' . $prefs['fgal_match_regex'] . '/', $v['name']))) || (!empty($prefs['fgal_nmatch_regex']) && (preg_match('/' . $prefs['fgal_nmatch_regex'] . '/', $v['name'])))) {
-				$msg = tra('Invalid filename (using filters for filenames)') . ': ' . htmlentities($v['name']);
-			} elseif ($_REQUEST['galleryId'] != $fileInfo['galleryId']) {
-				$msg = tra('Could not find the file requested');
-			} elseif (!empty($fileInfo['lockedby']) && $fileInfo['lockedby'] != $user && $tiki_p_admin_file_galleries != 'y') {
-				// if locked, user must be the locker
-				$msg = tra(sprintf('The file is locked by %s', $fileInfo['lockedby']));
-			} elseif (!($tiki_p_edit_gallery_file == 'y' || (!empty($user) && ($user == $fileInfo['user'] || $user == $fileInfo['lockedby'])))) {
-				// must be the owner or the locker or have the perms
-				$smarty->assign('errortype', 401);
-				$msg = tra('You do not have permission to edit this file');
-			} elseif (!move_uploaded_file($v['tmp_name'], $tmp_dest)) {
-				$msg = tra('Errors detected');
-			} elseif (!($fp = fopen($tmp_dest, 'rb'))) {
-				$msg = tra('Cannot read the file:') . ' ' . $tmp_dest;
-			}
 
-			if ($msg != '') {
-				$smarty->assign('msg', $msg);
-				$smarty->display('error.tpl');
-				die;
+	foreach($_FILES as $k => $v) {
+		$result = $filegallib->handle_file_upload($k, $v);
+
+		if (isset($result['error'])) {
+			$smarty->assign('msg', $result['error']);
+			$smarty->display('error.tpl');
+			exit;
+		}
+
+		$fileId = $filegallib->replace_file($fileInfo['fileId']
+											, $fileInfo['name']
+											, $fileInfo['description']
+											, $result['name']
+											, $result['data']
+											, $result['size']
+											, $type['type']
+											, $user
+											, $result['fhash']
+											, $fileInfo['comment']
+											, $gal_info
+											, true		// replace file
+											, $fileInfo['author']
+											, $fileInfo['lastModif']
+											, $fileInfo['lockedby']
+											);
+
+		if (!$fileId) {
+			// If insert failed and stored on disk
+			if ($result['fhash']) {
+				@unlink($savedir . $result['fhash']);
 			}
-			$data = '';
-			$fhash = '';
-			if ($prefs['fgal_use_db'] == 'n') {
-				$fhash = md5(uniqid(md5($v['name'])));
-				if ($prefs['feature_file_galleries_save_draft'] == 'y') {
-					$fhash .= '.' . $user . '.draft';
-				}
-				@$fw = fopen($savedir . $fhash, 'wb');
-				if (!$fw) {
-					$smarty->assign('msg', tra('Cannot write to this file:') . $savedir . $fhash);
-					$smarty->display('error.tpl');
-					die;
-				}
-			}
-			while (!feof($fp)) {
-				if ($prefs['fgal_use_db'] == 'y') {
-					$data.= fread($fp, 8192 * 16);
-				} else {
-					if (($data = fread($fp, 8192 * 16)) === false) {
-						$smarty->assign('msg', tra('Cannot read the file:') . $tmp_dest);
-						$smarty->display('error.tpl');
-						die;
-					}
-					fwrite($fw, $data);
-				}
-			}
-			fclose($fp);
-			// remove file after copying it to the right location or database
-			@unlink($tmp_dest);
-			if ($prefs['fgal_use_db'] == 'n') {
-				fclose($fw);
-				$data = '';
-			}
-			if (preg_match('/.flv$/', $v['name']))
-				$type = 'video/x-flv';
-			if ($prefs['fgal_use_db'] == 'y' && (!isset($data) || strlen($data) < 1)) {
-				$smarty->assign('msg', tra('Warning: Empty file:') . ' ' . $v['name'] . '. ' . tra('Please re-upload your file'));
-				$smarty->display('error.tpl');
-				die;
-			}
-			$fileInfo['filename'] = $v['name'];
-			$fileId = $filegallib->replace_file($fileInfo['fileId']
-																				, $fileInfo['name']
-																				, $fileInfo['description']
-																				, $v['name']
-																				, $data, $v['size']
-																				, $v['type']
-																				, $user
-																				, $fhash
-																				, $fileInfo['comment']
-																				, $gal_info
-																				, true		// replace file
-																				, $fileInfo['author']
-																				, $fileInfo['lastModif']
-																				, $fileInfo['lockedby']
-																				);
-			if (!$fileId) {
-				if ($prefs['fgal_use_db'] == 'n') {
-					@unlink($savedir . $fhash);
-				}
-				$smarty->assign('msg', tra('Upload was not successful. Duplicate file content') . ': ' . $v['name']);
-				$smarty->display('error.tpl');
-				die;
-			}
-			$smarty->assign('fileId', $fileId);
-			$smarty->assign('fileChangedMessage', tra('File update was successful') . ': ' . $v['name']);
-			if (isset($_REQUEST['fast']) && $prefs['fgal_asynchronous_indexing'] == 'y') {
-				$smarty->assign('reindex_file_id', $fileId);
-			}
-		} elseif ($v['error'] != 0 && !empty($v['tmp_name'])) {
-			$smarty->assign('msg', tra('Upload was not successful') . ': ' . $tikilib->uploaded_file_error($v['error']));
+			$smarty->assign('msg', tra('Upload was not successful. Duplicate file content') . ': ' . $v['name']);
 			$smarty->display('error.tpl');
 			die;
+		}
+		$smarty->assign('fileId', $fileId);
+		$smarty->assign('fileChangedMessage', tra('File update was successful') . ': ' . $v['name']);
+		if (isset($_REQUEST['fast']) && $prefs['fgal_asynchronous_indexing'] == 'y') {
+			$smarty->assign('reindex_file_id', $fileId);
 		}
 	}
 }

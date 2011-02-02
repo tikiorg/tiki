@@ -765,7 +765,7 @@ class FileGalLib extends TikiLib
 	function get_files_info($galleryIds = null, $fileIds = null, $include_search_data = false, $include_data = false) {
 		$files = $this->table('tiki_files');
 
-		$fields = array('fileId', 'galleryId', 'name', 'description', 'created', 'filename', 'filesize', 'filetype', 'user', 'author', 'hits', 'votes', 'points', 'path', 'reference_url', 'is_reference', 'hash', 'lastModif', 'lastModifUser', 'lockedby', 'comment', 'archiveId`');
+		$fields = array('fileId', 'galleryId', 'name', 'description', 'created', 'filename', 'filesize', 'filetype', 'user', 'author', 'hits', 'votes', 'points', 'path', 'reference_url', 'is_reference', 'hash', 'lastModif', 'lastModifUser', 'lockedby', 'comment', 'archiveId');
 	
 		if ($include_search_data && $include_data) {
 			$fields = $files->all();
@@ -781,11 +781,11 @@ class FileGalLib extends TikiLib
 		$conditions = array();
 
 		if ( ! empty($fileIds) ) {
-			$conditions['fileId'] = $files->in($fileIds);
+			$conditions['fileId'] = $files->in((array) $fileIds);
 		}
 
 		if ( ! empty($galleryIds) ) {
-			$conditions['galleryId'] = $files->in($galleryIds);
+			$conditions['galleryId'] = $files->in((array) $galleryIds);
 		}
 
 		return $files->fetchAll($fields, $conditions);
@@ -2626,7 +2626,7 @@ class FileGalLib extends TikiLib
 		// create direct download path for podcasts
 		$gal_info = null;
 		if ( ! empty( $params['galleryId'][0] ) ) {
-			$gal_info = $tikilib->get_file_gallery( (int) $params['galleryId'][0] );
+			$gal_info = $this->get_file_gallery( (int) $params['galleryId'][0] );
 			$podCastGallery = $this->isPodCastGallery( (int) $params["galleryId"][0], $gal_info );
 			$savedir = $this->get_gallery_save_dir( (int) $params["galleryId"][0], $gal_info );
 		}
@@ -2693,7 +2693,7 @@ class FileGalLib extends TikiLib
 				
 				// Were there any problems with the upload?  If so, report here.
 				if (!is_uploaded_file($aFiles["userfile"]["tmp_name"][$key])) {
-					$errors[] = $aFiles['userfile']['name'][$key] . ': ' . tra('Upload was not successful') . ': ' . $tikilib->uploaded_file_error($error);
+					$errors[] = $aFiles['userfile']['name'][$key] . ': ' . tra('Upload was not successful') . ': ' . $this->uploaded_file_error($error);
 					continue;
 				}
 				// Check the name
@@ -2946,7 +2946,7 @@ class FileGalLib extends TikiLib
 							$smarty->assign("nextFormId", $params['formId'] + 1);
 							$smarty->assign("feedback_message",$feedback_message);
 							$syntax = $this->getWikiSyntax($params["galleryId"][$key]);
-							$syntax = $tikilib->process_fgal_syntax($syntax, $aux);
+							$syntax = $this->process_fgal_syntax($syntax, $aux);
 							$smarty->assign('syntax', $syntax);
 							print_progress($smarty->fetch("tiki-upload_file_progress.tpl"));
 						}
@@ -3005,6 +3005,67 @@ class FileGalLib extends TikiLib
 
 		// Returns fileInfo of the new file if only one file has been edited / uploaded
 		return $fileInfo;
+	}
+
+	function handle_file_upload($fileKey, $file)
+	{
+		global $prefs, $user;
+
+		$savedir = $prefs['fgal_use_dir'];
+
+		$msg = null;
+		if (! is_uploaded_file($file['tmp_name'])) {
+			$msg = array('error' => tra('Upload was not successful') . ': ' . $this->uploaded_file_error($file['error']));
+		} elseif (! $file['size']) {
+			$msg = tra('Warning: Empty file:') . '  ' . htmlentities($file['name']) . '. ' . tra('Please re-upload your file');
+		} elseif (empty($file['name']) || !preg_match('/^upfile(\d+)$/', $fileKey, $regs) || !($fileInfo = $filegallib->get_file_info($regs[1]))) {
+			$msg = tra('Could not upload the file') . ': ' . htmlentities($file['name']);
+		} elseif ((!empty($prefs['fgal_match_regex']) && (!preg_match('/' . $prefs['fgal_match_regex'] . '/', $file['name']))) || (!empty($prefs['fgal_nmatch_regex']) && (preg_match('/' . $prefs['fgal_nmatch_regex'] . '/', $file['name'])))) {
+			$msg = tra('Invalid filename (using filters for filenames)') . ': ' . htmlentities($file['name']);
+		} elseif ($_REQUEST['galleryId'] != $fileInfo['galleryId']) {
+			$msg = tra('Could not find the file requested');
+		} elseif (!empty($fileInfo['lockedby']) && $fileInfo['lockedby'] != $user && $tiki_p_admin_file_galleries != 'y') {
+			// if locked, user must be the locker
+			$msg = tra(sprintf('The file is locked by %s', $fileInfo['lockedby']));
+		} elseif (!($tiki_p_edit_gallery_file == 'y' || (!empty($user) && ($user == $fileInfo['user'] || $user == $fileInfo['lockedby'])))) {
+			// must be the owner or the locker or have the perms
+			$smarty->assign('errortype', 401);
+			$msg = tra('You do not have permission to edit this file');
+		}
+
+		if ($msg) {
+			@unlink($file['tmp_name']);
+			return array('error' => $msg);
+		}
+
+		$data = '';
+		$fhash = '';
+		if ($prefs['fgal_use_db'] == 'n') {
+			$fhash = $this->find_unique_name($savedir, $file['name']);
+			if ($prefs['feature_file_galleries_save_draft'] == 'y') {
+				$fhash .= '.' . $user . '.draft';
+			}
+
+			if (! move_uploaded_file($file['tmp_name'], $savedir . $fhash)) {
+				@unlink($file['tmp_name']);
+				return array('error' => tra('Cannot write to this file:') . $savedir . $fhash);
+			}
+		} else {
+			$data = file_get_contents($file['tmp_name']);
+
+			if (false === $data) {
+				@unlink($file['tmp_name']);
+				return array('error' => tra('Cannot read uploaded file.'));
+			}
+		}
+
+		return array(
+			'filename' => $file['name'],
+			'fhash' => $fhash,
+			'data' => $data,
+			'type' => preg_match('/.flv$/', $file['name']) ? 'video/x-flv' : $file['type'],
+			'size' => $file['size'],
+		);
 	}
 }
 $filegallib = new FileGalLib;
