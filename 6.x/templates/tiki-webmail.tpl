@@ -590,7 +590,7 @@
 					<tr>
 						<td>&nbsp;</td>
 						<td colspan="3">
-							<textarea name="body" cols="60" rows="30">{$body}</textarea>
+							{textarea name='body'}{$body}{/textarea}
 						</td>
 					</tr>
 					<tr>
