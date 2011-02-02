@@ -345,7 +345,6 @@ a.admbox.off img {
 
 .tgItems > li {
 	position: relative;
-	width: 130px;
 	float: left;
 	background-color: #aaa;
 	border: 2px solid #aaa;
@@ -355,6 +354,10 @@ a.admbox.off img {
 .tgItems > li > div > * {
 	float:left;
 	margin: 3px 6px 0px 0px;
+}
+
+.tgItems > li > * {
+	float:left;
 }
 
 .tgItems .tgValue {
@@ -367,7 +370,7 @@ a.admbox.off img {
 
 .tgItems .tgLabel {
 	text-align: right;
-	width: 37px;
+	width: 48px;
 }
 
 .tgItems .changed input {
@@ -380,15 +383,23 @@ a.admbox.off img {
 }
 
 .tgItems input[type=checkbox] {
-	position: absolute;
-	right: 5px;
-	top: 12px;
+	margin-top: 14px;
 }
 
 .tgTools * {
 	float: left;
 	vertical-align: middle;
 	font-size: 0.9em;
+}
+
+.tgItems div.tgWide {
+	width: 10em;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.tgItems input.tgWide {
+	width: 20em;
 }
 
 /* end theme generator */

@@ -29,6 +29,13 @@ class ThemeGenLib
 	public function setupEditor() {
 		global $headerlib, $smarty, $prefs;
 		
+		if ($this->currentTheme->initDone ||	// filter out unnecessay setups
+				strpos($_SERVER["SCRIPT_NAME"], 'tiki-download_file.php') !== false ||
+				strpos($_SERVER["SCRIPT_NAME"], 'tiki-ajax_services.php') !== false) {
+			
+			return;
+		}
+		
 		// tiki themegen include
 		$headerlib->add_jsfile('lib/jquery_tiki/tiki-themegenerator.js');
 		$headerlib->add_cssfile('css/admin.css');
@@ -38,14 +45,25 @@ class ThemeGenLib
 		$headerlib->add_cssfile('lib/jquery_tiki/colorpicker/layout.css');
 	
 		$headerlib->add_jsfile('lib/jquery/colorpicker/js/colorpicker.js');
-//		$headerlib->add_jsfile('lib/jquery/colorpicker/js/eye.js');
-//		$headerlib->add_jsfile('lib/jquery/colorpicker/js/utils.js');
-//		$headerlib->add_jsfile('lib/jquery/colorpicker/js/layout.js');
 		
 		// colour lib
 		$headerlib->add_jsfile('lib/jquery/jquery.color.js');
 		
-		if (!empty($_SESSION['tg_preview'])) {	// && !empty($_REQUEST['tg_preview'])
+		if (!empty($_COOKIE['themegen'])) {
+			if (strpos($_COOKIE['themegen'], 'state:open') !== false) {
+				$headerlib->add_jq_onready('openThemeGenDialog();', 100);
+			}
+		} else if (!empty($_SESSION['tg_preview'])) {	// or remove preview session if no cookie
+			unset($_SESSION['tg_preview']);
+		}
+		
+		// if not admin/look page so add open dialog js or remove session and return
+		if (strpos($_SERVER["SCRIPT_NAME"], 'tiki-admin.php') === false ||
+				strpos($_SERVER["QUERY_STRING"], 'page=look') === false) {
+			return;
+		}
+		
+		if (!empty($_SESSION['tg_preview'])) {
 			$data = unserialize($_SESSION['tg_preview']);
 			$this->currentTheme->setData($data);
 			if (!empty($_SESSION['tg_css_file']) && empty($_REQUEST['tg_css_file'])) {
@@ -73,32 +91,17 @@ class ThemeGenLib
 					$css_file = ''; //$css_file[0];
 				}
 			} else {
-	//			$css_file = $prefs['themegenerator_css_file'];
 				$css_file = '';
 			}
 		}
 		$mincss .= $headerlib->minify_css( $css_file );	// clean out comments etc
 		
-		$num = preg_match_all( '/[^-]color:([^\};!]*?)[;\}!]/i', $mincss, $matches );
-		if ($num) {
-			$colors = $this->currentTheme->processMatches( $matches[1], $css_file, 'fgcolors' );
-		} else {
-			$colors = array();
-		}
-		$num = preg_match_all('/background(?:-color)?:.*?(#[0-9A-F]{3,6})[\s;\}\!]/i', $mincss, $matches);
-		if ($num) {
-			$bgcolors = $this->currentTheme->processMatches( $matches[1], $css_file, 'bgcolors' );
-		} else {
-			$bgcolors = array();
-		}		
-		$num = preg_match_all('/border(?:-.*)?:.*(#[0-9A-F]{3,6})[\s;\}\!]/Umis', $mincss, $matches);
-		if ($num) {
-			$bordercolors = $this->currentTheme->processMatches( $matches[1], $css_file, 'bordercolors' );
-		} else {
-			$bordercolors = array();
-		}		
-		preg_match_all('/font-size:.*?([\d\.]*[^;\} ]*)/i', $mincss, $matches);
-		$fontsizes = $this->currentTheme->processMatches( $matches[1], $css_file, 'fontsize' );
+		$colors		  = $this->currentTheme->findMatches('/[^-]color:([^\};!]*?)[;\}!]/i', $mincss, $css_file, 'fgcolors');
+		$bgcolors	  = $this->currentTheme->findMatches('/background(?:-color)?:.*?(#[0-9A-F]{3,6})[\s;\}\!]/i', $mincss, $css_file, 'bgcolors');
+		$bordercolors = $this->currentTheme->findMatches('/border(?:-.*)?:.*(#[0-9A-F]{3,6})[\s;\}\!]/Umis', $mincss, $css_file, 'bordercolors');
+		$fontsizes	  = $this->currentTheme->findMatches('/font-size:.*?([\d\.]*[^;\} ]*)/i', $mincss, $css_file, 'fontsize');
+		$fontfamilies = $this->currentTheme->findMatches('/font-family:\s*?([^;\}]*)/i', $mincss, $css_file, 'fontfamily', false);
+		$fonts		  = $this->currentTheme->findMatches('/font:\s*?([^;\}]*)/i', $mincss, $css_file, 'font', false);
 		
 		// array for smarty to loop through
 		$tg_data = array(
@@ -125,6 +128,14 @@ class ThemeGenLib
 						'items' => $fontsizes,
 						'title' => tra('Font Sizes:'),
 					),
+					'font' => array(
+						'items' => $fonts,
+						'title' => tra('Font:'),
+					),
+					'fontfamily' => array(
+						'items' => $fontfamilies,
+						'title' => tra('Font Families:'),
+					),
 				),
 				'title' => tra('Typography:'),
 			),
@@ -140,15 +151,7 @@ class ThemeGenLib
 			die;
 		}
 		
-		if (!empty($_COOKIE['themegen'])) {
-			if (strpos($_COOKIE['themegen'], 'state:open') !== false) {
-				$headerlib->add_jq_onready('openThemeGenDialog();', 100);
-			}
-		} else if (!empty($_SESSION['tg_preview'])) {
-			unset($_SESSION['tg_preview']);
-		}
-
-		
+		$this->currentTheme->initDone = true;		
 	}
 	
 	public function setupCSSFiles () {
@@ -200,8 +203,15 @@ class ThemeGenLib
 			$css = preg_replace('/(font-size:\s*)' . $old . '/Umis', "$1 " . $new, $css);
 		}
 		
-//		preg_match_all('/font-size:.*?([\d\.]*[^;\} ]*)/i', $mincss, $matches);
-//		$fontsizes = $this->currentTheme->processMatches( $matches[1], $css_file, '' );
+		foreach ($swaps['font'] as $old => $new) {
+			//                        also usually start with a numeric so add a space after the $1
+			$css = preg_replace('/(font:\s*)' . preg_quote($old, '/') . '/Umis', "$1 " . $new, $css);
+		}
+		
+		foreach ($swaps['fontfamily'] as $old => $new) {
+			$css = preg_replace('/(font-family:\s*)' . preg_quote($old, '/') . '/Umis', "$1" . $new, $css);
+		}
+		
 
 		return $css;
 	}
@@ -252,6 +262,8 @@ require_once 'lib/serializedlist.php';
 
 class ThemeGenTheme extends SerializedList
 {
+	var $initDone;
+	
 	public function ThemeGenTheme($name) {
 
 		parent::__construct($name);
@@ -265,6 +277,7 @@ class ThemeGenTheme extends SerializedList
 			'theme' => $prefs['style'],
 			'theme-option' => '',			//$prefs['style_option'], 
 		);
+		$this->initDone = false;
 	}
 
 	public function initPrefPrefix() {
@@ -290,7 +303,7 @@ class ThemeGenTheme extends SerializedList
 		
 			foreach ($swaps2 as $kswap => $swap) {
 				if ($kswap !== $swap) {
-					$this->data['files'][$css_file][$type][$kswap] = $swap;
+					$this->data['files'][$css_file][$type][htmlentities($kswap)] = htmlentities($swap);
 				}
 			}
 		}
@@ -303,22 +316,31 @@ class ThemeGenTheme extends SerializedList
 		}
 	}
 	
-	public function processMatches($matches, $css_file, $type) {
+	public function findMatches( $regexp, $haystack, $filename, $type, $lower = true, $matchNumber = 1) {
+		preg_match_all( $regexp, $haystack, $matches );
+		return $this->processMatches( $matches[$matchNumber], $filename, $type, $lower );
+	}
+	
+	
+	private function processMatches($matches, $css_file, $type, $lower) {
 		$processed = array();
 		if (is_array( $matches )) {
 			$matches = array_map('trim', $matches);
-			$matches = array_map('strtolower', $matches);
+			if ($lower) {
+				$matches = array_map('strtolower', $matches);
+			}
 			$matches = array_unique($matches);
 			$matches = array_filter($matches);
 			sort($matches);
 			//$data = $this->currentTheme->loadPref();
-			foreach ($matches as $color) {
-				$processed[$color] = array();
-				$processed[$color]['old'] = $color;
-				if (isset($this->data['files'][$css_file][$type][$color])) {
-					$processed[$color]['new'] = $this->data['files'][$css_file][$type][$color];
+			foreach ($matches as $match) {
+				$match = htmlentities($match);
+				$processed[$match] = array();
+				$processed[$match]['old'] = $match;
+				if (isset($this->data['files'][$css_file][$type][$match])) {
+					$processed[$match]['new'] = htmlentities($this->data['files'][$css_file][$type][$match]);
 				} else {
-					$processed[$color]['new'] = $color;
+					$processed[$match]['new'] = $match;
 				}
 			}
 		}

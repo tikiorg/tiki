@@ -2,7 +2,12 @@
 {strip}
 <div id="themegenerator_content">
 	<div class="box-data">			
-		<label for="tg_css_file">{tr}Modifying:{/tr} </label>
+		{if !empty($smarty.session.tg_preview)}
+			<div style="float:right;">
+				<em class="highlight">{tr}* PREVIEW *{/tr}</em>
+			</div>
+		{/if}
+		<label for="tg_css_file" style="display: inline;">{tr}Modifying:{/tr} </label>
 		<select id="tg_css_file" name="tg_css_file">
 			{foreach from=$tg_css_files item=val key=key}
 				<option value="{$key}"{if $key eq $tg_css_file} selected="selected"{/if}>{$val}</option>
@@ -51,6 +56,12 @@
 												</div>
 											<input type="text" name="tg_swaps[{$tg_type}][{$tg_item.old}]"
 													value="{$tg_item.new}" class="tgValue" />
+										{elseif $tg_type eq "fontfamily" or $tg_type eq "font"}
+											 <div class="tgLabel tgWide">
+												{$tg_item.old|truncate:999}
+												</div>
+											<input type="text" name="tg_swaps[{$tg_type}][{$tg_item.old}]"
+													value="{$tg_item.new}" class="tgValue tgWide" />
 										{/if}
 									{/if}
 								</div>
