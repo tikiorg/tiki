@@ -96,27 +96,33 @@ class FileGalLib extends TikiLib
 		return $return;
 	}
 
-	function get_user_file_gallery(){
+	function get_user_file_gallery() {
 		global $user, $prefs;
 		$tikilib = TikiLib::lib('tiki');
 		
-		if ($galleryId = $tikilib->get_user_preference($user, 'user_gallery_id')) {
-			return $galleryId;
+		// Feature check + Anonymous don't have their own Users File Gallery
+		if ( $user == '' || $prefs['feature_use_fgal_for_user_files'] == 'n' || $prefs['feature_userfiles'] == 'n' || ( $userId = $tikilib->get_user_id( $user ) ) <= 0  ) {
+			return false;
 		}
 
-		// create an apporpriate file gallerie
-		$galInfos = array(
-						'name' 		=> $user,
-						'user'		=> $user,
-						'type' 		=> 'default',
-						'public'	=> 'n',
-						'visible'	=> 'y',
-						'parentId' 	=> $prefs['fgal_root_user_id']);
-		$idGallery = $this->replace_file_gallery($galInfos);
+		$conditions = array(
+			'type' => 'user',
+			'name' => $userId,
+			'user' => $user,
+			'parentId' => $prefs['fgal_root_user_id']
+		);
 
-		if($idGallery>0){
-			$tikilib->set_user_preference($user, 'user_gallery_id', $idGallery);
+		if ( $idGallery = $this->table('tiki_file_galleries')->fetchOne('galleryId', $conditions) ) {
+			return $idGallery;
 		}
+
+		$fgal_info =& $conditions;
+		$fgal_info['public'] = 'n';
+		$fgal_info['visible'] = 'y';
+
+		// Create the user gallery if it does not exist yet
+		$idGallery = $this->replace_file_gallery( $fgal_info );
+
 		return $idGallery;
 	}
 
