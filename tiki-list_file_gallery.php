@@ -936,19 +936,20 @@ if ($prefs['feature_file_galleries_templates'] == 'y') {
 	$smarty->assign_by_ref('all_templates', $templates);
 }
 
+$subGalleries = $filegallib->getSubGalleries( ( isset($_REQUEST['parentId']) && $galleryId == 0 ) ? $_REQUEST['parentId'] : $galleryId );
+$smarty->assign('treeRootId', $subGalleries['parentId']);
+
 if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || isset($_REQUEST['movesel_x']) || isset($_REQUEST["edit_mode"])) {
-	$all_galleries = $filegallib->getSubGalleries( ( isset($_REQUEST['parentId']) && $galleryId == 0 ) ? $_REQUEST['parentId'] : $galleryId );
 	$gals = array();
-	foreach ($all_galleries['data'] as $gal) {
+	foreach ($subGalleries['data'] as $gal) {
 		if ($gal['id'] != $galleryId) {
 			$gals[] = array('label' => $gal['parentName'] . ' > ' . $gal['name'], 'id' => $gal['id']);
 		}
 	}
 	sort($gals);
 	$smarty->assign_by_ref('all_galleries', $gals);
-	$smarty->assign('treeRootId', $all_galleries['parentId']);
 
-	if ( ! empty($all_galleries) && is_array($all_galleries) && $all_galleries['cant'] > 0) {
+	if ( ! empty($subGalleries) && is_array($subGalleries) && $subGalleries['cant'] > 0) {
 		$phplayersTreeData = $filegallib->getFilegalsTreePhplayers( $galleryId );
 
 		if ( $prefs['fgal_show_path'] == 'y' ) {
@@ -956,7 +957,7 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 		}
 	
 		if ($prefs['javascript_enabled'] != 'n') {
-			$tree_array = array('data' => $all_galleries['data'],
+			$tree_array = array('data' => $subGalleries['data'],
 				'name' => $phplayersTreeData['tree']['name'],
 				'link' => $phplayersTreeData['tree']['link'],
 				'id' => $phplayersTreeData['tree']['id']
