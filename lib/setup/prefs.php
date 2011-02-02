@@ -1125,7 +1125,7 @@ function get_default_prefs() {
 		'syncGroupsWithDirectory' => 'n',
 		'syncUsersWithDirectory' => 'n',
 		'useRegisterPasscode' => 'n',
-		'registerPasscode' => isset($tikilib) ? md5($tikilib->genPass()) : md5(mt_rand()),
+		'registerPasscode' => NULL,
 		'rememberme' => 'disabled',
 		'remembertime' => 7200,
 		'feature_clear_passwords' => 'n',
@@ -1975,8 +1975,18 @@ function initialize_prefs() {
 	}
 
 	$prefs = empty($modified) ? $defaults : array_merge( $defaults, $modified );
+
+	// Default value for registerPasscode, which needs to call a function that needs prefs itself
+	if ( $prefs['registerPasscode'] === NULL ) {
+		$prefs['registerPasscode'] = isset($tikilib) ? md5($tikilib->genPass()) : md5(mt_rand());
+	}
+
 }
 
 // PHP fonctionnalities
 $prefs['php_libxml'] = class_exists('DOMDocument') ? 'y' :'n';
 $prefs['php_datetime'] = class_exists('DateTime') ? 'y' :'n';
+
+$prefs['error_reporting_adminonly'] = 'n';
+$prefs['error_reporting_level'] = 2039;
+$prefs['smarty_notice_reporting'] = 'y';
