@@ -330,9 +330,9 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		if ( $objectId !== false && $objectId['type'] == 'file' )
 		{
 			if ($prefs['feature_file_galleries_save_draft'] == 'y') {
-				$fileInfo = $tikilib->get_file_draft($objectId['id']);
+				$fileInfo = $filegallib->get_file_draft($objectId['id']);
 			} else {
-				$fileInfo = $tikilib->get_file($objectId['id']);
+				$fileInfo = $filegallib->get_file($objectId['id']);
 			}
 			if ( empty($fileInfo['path']) ) {
 				return $fileInfo['data'];
@@ -624,7 +624,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 						break;
 
 					case 'file':
-						$infos[$k]['infos'] = $tikilib->get_file( $infos[$k]['id'] );
+						$infos[$k]['infos'] = $filegallib->get_file( $infos[$k]['id'] );
 						$infos[$k]['parentId'] = $infos[$k]['infos']['galleryId'];
 						$infos[$k]['name'] = $infos[$k]['infos']['filename'];
 						break;
@@ -786,7 +786,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 		print_debug("-> getCollectionMembers\ngalleryId:$galleryId\n");
 		if ( $galleryId !== false ) {
-			$files = $tikilib->get_files(0, -1, 'name_desc', '', (int)$galleryId, true, true, false, true, false, false, false, false, 'admin', true, false);
+			$files = $filegallib->get_files(0, -1, 'name_desc', '', (int)$galleryId, true, true, false, true, false, false, false, false, 'admin', true, false);
 
 			foreach ( $files['data'] as $fileInfo ) {
 				if ( $fileInfo['isgal'] == '1' ) {
@@ -1007,7 +1007,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 					case 'file':
 						///TODO: Throw an error if dest is a file, but source is a filegal
 
-						$infos[$k]['infos'] = $tikilib->get_file( $infos[$k]['id'] );
+						$infos[$k]['infos'] = $filegallib->get_file( $infos[$k]['id'] );
 						$infos[$k]['parentId'] = $infos[$k]['infos']['galleryId'];
 						$infos[$k]['name'] = $infos[$k]['infos']['filename'];
 						break;

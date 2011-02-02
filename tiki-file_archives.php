@@ -17,7 +17,7 @@ if (empty($_REQUEST['fileId']) || !($fileInfo = $filegallib->get_file_info($_REQ
 	die;
 }
 
-$gal_info = $tikilib->get_file_gallery($fileInfo['galleryId']);
+$gal_info = $filegallib->get_file_gallery($fileInfo['galleryId']);
 
 $tikilib->get_perm_object($fileInfo['galleryId'], 'file gallery', $gal_info, true);
 

@@ -80,7 +80,8 @@ foreach($types as $type) {
 
 		case 'file galleries':
 		case 'file gallery':
-			$objects = $tikilib->list_file_galleries( 0, -1, 'name_asc', '', '', $prefs['fgal_root_id'] );
+			$filegallib = TikiLib::lib('filegal');
+			$objects = $filegallib->list_file_galleries( 0, -1, 'name_asc', '', '', $prefs['fgal_root_id'] );
 			foreach($objects['data'] as $object) {
 				$r = list_perms($object['id'], $type, $object['name']);
 				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name']); }

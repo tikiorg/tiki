@@ -22,8 +22,9 @@ function module_last_file_galleries_info() {
 }
 
 function module_last_file_galleries( $mod_reference, $module_params ) {
-	global $tikilib, $smarty, $prefs;
-	$ranking = $tikilib->get_files(0, $mod_reference["rows"], 'lastModif_desc', null, $prefs['fgal_root_id'], false, true, false, false);
+	global $smarty, $prefs;
+	$filegallib = TikiLib::lib('filegal');
+	$ranking = $filegallib->get_files(0, $mod_reference["rows"], 'lastModif_desc', null, $prefs['fgal_root_id'], false, true, false, false);
 	
 	$smarty->assign('modLastFileGalleries', $ranking["data"]);
 }

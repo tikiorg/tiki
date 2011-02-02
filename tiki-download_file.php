@@ -93,17 +93,17 @@ $error = '';
 if (!$skip) {
 	if ( isset($_REQUEST['fileId']) && !is_array($_REQUEST['fileId'])) {
 		if (isset($_GET['draft'])) {
-			$info = $tikilib->get_file_draft($_REQUEST['fileId']);
+			$info = $filegallib->get_file_draft($_REQUEST['fileId']);
 		} else {
-			$info = $tikilib->get_file($_REQUEST['fileId']);
+			$info = $filegallib->get_file($_REQUEST['fileId']);
 		}
 	} elseif ( isset($_REQUEST['galleryId']) && isset($_REQUEST['name']) ) {
-		$info = $tikilib->get_file_by_name($_REQUEST['galleryId'], $_REQUEST['name']);
+		$info = $filegallib->get_file_by_name($_REQUEST['galleryId'], $_REQUEST['name']);
 	} elseif ( isset($_REQUEST['fileId']) && is_array($_REQUEST['fileId'])) {
 		$info = $filegallib->zip($_REQUEST['fileId'], $error);
 		$zip = true;
 	} elseif ( !empty($_REQUEST['randomGalleryId'])) {
-		$info =  $tikilib->get_file(0, $_REQUEST['randomGalleryId']);
+		$info =  $filegallib->get_file(0, $_REQUEST['randomGalleryId']);
 	} else {
 		$smarty->assign('msg', tra('Incorrect param'));
 		$smarty->display('error.tpl');
@@ -127,7 +127,7 @@ if (!$skip) {
 			die;
 		}
 		if ( isset($_GET['thumbnail']) && is_numeric($_GET['thumbnail'])) { //check also perms on thumb 
-			$info_thumb = $tikilib->get_file($_GET['thumbnail']);
+			$info_thumb = $filegallib->get_file($_GET['thumbnail']);
 			if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info_thumb['galleryId'], 'file gallery', 'tiki_p_download_files') && !($info['backlinkPerms'] == 'y' && !$filegallib->hasOnlyPrivateBacklinks($info_thumb['fileId']))) {
 				$smarty->assign('errortype', 401);
 				$smarty->assign('msg', tra('Permission denied'));
@@ -142,7 +142,8 @@ if (!$skip) {
 if ( ! isset($_GET['thumbnail']) && ! isset($_GET['icon']) ) {
 
 	require_once('lib/stats/statslib.php');
-	if( ! $tikilib->add_file_hit($info['fileId']) )	{
+	$filegallib = TikiLib::lib('filegal');
+	if( ! $filegallib->add_file_hit($info['fileId']) )	{
 		$smarty->assign('msg', tra('You cannot download this file right now. Your score is low or file limit was reached.'));
 		$smarty->display('error.tpl');
 		die;
@@ -337,7 +338,7 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 					elseif ( isset($_GET['thumbnail']) ) {
 						if (is_numeric($_GET['thumbnail'])) {
 							if (empty($info_thumb)) {
-								$info_thumb = $tikilib->get_file($_GET['thumbnail']);
+								$info_thumb = $filegallib->get_file($_GET['thumbnail']);
 							}
 							if ( ! empty($info_thumb['path']) ) {
 								$image = new Image($prefs['fgal_use_dir'].$info_thumb['path'], true);

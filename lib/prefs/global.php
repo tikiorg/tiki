@@ -418,7 +418,8 @@ function feature_home_pages()
 
 	// File gallery
 	if ( $prefs['feature_file_galleries'] == 'y' ) {
-			$hgalinfo = $tikilib->get_file_gallery($prefs['home_file_gallery']);
+			$filegallib = TikiLib::lib('filegal');
+			$hgalinfo = $filegallib->get_file_gallery($prefs['home_file_gallery']);
 			$home_gal_name = substr($hgalinfo["name"], 0, 20);
 			$tikiIndex['tiki-list_file_gallery.php?galleryId=' . $prefs['home_file_gallery']] = tra('File Gallery:') . $home_gal_name;
 	}

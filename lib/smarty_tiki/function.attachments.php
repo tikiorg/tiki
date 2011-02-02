@@ -90,7 +90,7 @@ function smarty_function_attachments($params, &$smarty) {
 
 	/*** If anything in this function is changed, please change lib/wiki-plugins/wikiplugin_attach.php as well. ***/
 
-	if ( empty( $galleryId ) || ! $gal_info = $tikilib->get_file_gallery( $galleryId ) ) {
+	if ( empty( $galleryId ) || ! $gal_info = $filegallib->get_file_gallery( $galleryId ) ) {
 		include_once('lib/smarty_tiki/block.remarksbox.php');
 		return smarty_block_remarksbox( array( 'type' => 'errors', 'title' => tra('Wrong attachments gallery')),
 			tra('You are attempting to display a gallery that is not a valid attachment gallery') . ' (ID=' . $galleryId . ')',
@@ -120,7 +120,7 @@ function smarty_function_attachments($params, &$smarty) {
 	$gal_info['show_checked'] = 'n';
 
 	// Get list of files in the gallery
-	$files = $tikilib->get_files(0, -1, $params['sort_mode'], '', $galleryId);
+	$files = $filegallib->get_files(0, -1, $params['sort_mode'], '', $galleryId);
 
 	// Reajust perms using special wiki attachments perms
 	global $tiki_p_wiki_admin_attachments, $tiki_p_wiki_attach_files, $tiki_p_wiki_view_attachments;

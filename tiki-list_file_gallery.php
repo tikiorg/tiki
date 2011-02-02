@@ -49,7 +49,7 @@ if ( empty($_REQUEST['galleryId']) && isset($_REQUEST['parentId']) ) {
 	$_REQUEST['galleryId'] = 0;
 
 	// Initialize listing fields with default values (used for the main gallery listing)
-	$gal_info = $tikilib->get_file_gallery();
+	$gal_info = $filegallib->get_file_gallery();
 	$gal_info['usedSize'] = 0;
 	$gal_info['maxQuota'] = $filegallib->getQuota($_REQUEST['parentId'], true);
 
@@ -58,7 +58,7 @@ if ( empty($_REQUEST['galleryId']) && isset($_REQUEST['parentId']) ) {
 		$_REQUEST['galleryId'] = $prefs['fgal_root_id'];
 	}
 
-	if ( $gal_info = $tikilib->get_file_gallery($_REQUEST['galleryId']) ) {
+	if ( $gal_info = $filegallib->get_file_gallery($_REQUEST['galleryId']) ) {
 		$tikilib->get_perm_object($_REQUEST['galleryId'], 'file gallery', $gal_info);
 		if ($userlib->object_has_one_permission($_REQUEST['galleryId'], 'file gallery')) {
 			$smarty->assign('individual', 'y');
@@ -790,7 +790,7 @@ if (!empty($_REQUEST['find_sub']) && ($_REQUEST['find_sub'] == 'on' || $_REQUEST
 if (isset($_GET['slideshow'])) {
 	$_REQUEST['maxRecords'] = $maxRecords = - 1;
 	$offset = 0;
-	$files = $tikilib->get_files( 0
+	$files = $filegallib->get_files( 0
 															, -1
 															, $_REQUEST['sort_mode']
 															, $_REQUEST['find']
@@ -830,7 +830,7 @@ if (isset($_GET['slideshow'])) {
 		}
 		$with_archive = ( isset($gal_info['archives']) && $gal_info['archives'] == '-1') ? false : true;
 		// Get list of files in the gallery
-		$files = $tikilib->get_files( $_REQUEST['offset']
+		$files = $filegallib->get_files( $_REQUEST['offset']
 																, $_REQUEST['maxRecords']
 																, $_REQUEST['sort_mode']
 																, $_REQUEST['find']
@@ -985,7 +985,7 @@ if ($_REQUEST['galleryId'] == 0) {
 } else {
 	if (!isset($_REQUEST['fileId'])) {
 		// Add a gallery hit
-		$tikilib->add_file_gallery_hit($_REQUEST['galleryId']);
+		$filegallib->add_file_gallery_hit($_REQUEST['galleryId']);
 	}
 }
 

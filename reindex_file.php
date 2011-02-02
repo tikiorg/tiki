@@ -28,7 +28,7 @@ if ( ($id = (int)$_GET['id']) > 0 ) {
 		$info = $filegallib->get_file_info($id);
 
 		if ( $info['galleryId'] > 0 ) {
-			$gal_info = $tikilib->get_file_gallery($info['galleryId']);
+			$gal_info = $filegallib->get_file_gallery($info['galleryId']);
 		
 			// Check perms
 			$tikilib->get_perm_object($info['galleryId'], 'file gallery', $gal_info, true);

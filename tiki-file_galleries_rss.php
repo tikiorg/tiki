@@ -16,6 +16,8 @@ if ($prefs['feed_file_galleries'] != 'y') {
         require_once ('tiki-rss_error.php');
 }
 
+$filegallib = TikiLib::lib('filegal');
+
 $feed = "filegals";
 $uniqueid = $feed;
 $output = $rsslib->get_from_cache($uniqueid);
@@ -30,7 +32,7 @@ if ($output["data"]=="EMPTY") {
 	$titleId = "filename";
 	$readrepl = "tiki-download_file.php?$id=%s";
 
-	$changes = $tikilib->list_files(0, $prefs['feed_file_galleries_max'], $dateId.'_desc', '');
+	$changes = $filegallib->list_files(0, $prefs['feed_file_galleries_max'], $dateId.'_desc', '');
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 }
 header("Content-type: ".$output["content-type"]);

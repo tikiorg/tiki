@@ -27,16 +27,17 @@ function module_last_files_info() {
 }
 
 function module_last_files( $mod_reference, $module_params ) {
-	global $smarty, $tikilib;
+	global $smarty;
+	$filegallib = TikiLib::lib('filegal');
 	if (isset($module_params["galleryId"])) {
 		if (strstr($module_params['galleryId'], ':')) {
-			$ranking = $tikilib->get_files(0, $mod_reference["rows"], 'created_desc', '', explode(':',$module_params['galleryId']));
+			$ranking = $filegallib->get_files(0, $mod_reference["rows"], 'created_desc', '', explode(':',$module_params['galleryId']));
 		} else {
-			$ranking = $tikilib->get_files(0, $mod_reference["rows"], 'created_desc', '', $module_params["galleryId"]);
+			$ranking = $filegallib->get_files(0, $mod_reference["rows"], 'created_desc', '', $module_params["galleryId"]);
 		}
 	} else {
 		global $prefs;
-		$ranking = $tikilib->get_files(0, $mod_reference["rows"], 'created_desc', '', $prefs['fgal_root_id'], false, false, false, true, false, false, false, true);
+		$ranking = $filegallib->get_files(0, $mod_reference["rows"], 'created_desc', '', $prefs['fgal_root_id'], false, false, false, true, false, false, false, true);
 	}
 	
 	$smarty->assign('modLastFiles', $ranking["data"]);

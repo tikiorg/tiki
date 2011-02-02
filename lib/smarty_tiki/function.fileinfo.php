@@ -21,10 +21,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 function smarty_function_fileinfo($params, &$smarty) {
 	if ( ! is_array($params) || ! isset($params['_id']) || ! isset($params['_field']) ) return;
-	global $tikilib;
+	$filegallib = TikiLib::lib('filegal');
 	$params['_id'] = (int)$params['_id'];
 
-	$infos = $tikilib->get_file($params['_id']);
+	$infos = $filegallib->get_file($params['_id']);
 
 	if ( isset($infos[$params['_field']]) && $infos[$params['_field']] != '' ) {
 		$return = $infos[$params['_field']];

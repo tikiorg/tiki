@@ -885,8 +885,10 @@ class CategLib extends ObjectLib
 		$catObjectId = $this->is_categorized('file gallery', $galleryId);
 
 		if (!$catObjectId) {
+			$filegallib = TikiLib::lib('filegal');
+
 			// The page is not cateorized
-			$info = $this->get_file_gallery($galleryId);
+			$info = $filegallib->get_file_gallery($galleryId);
 
 			$href = 'tiki-list_file_gallery.php?galleryId=' . $galleryId;
 			$catObjectId = $this->add_categorized_object('file gallery', $galleryId, $info["description"], $info["name"], $href);

@@ -122,14 +122,6 @@ if( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 	}
 }
 
-require_once 'lib/core/Perms.php';
-require_once 'lib/core/Perms/Check/Direct.php';
-require_once 'lib/core/Perms/Check/Indirect.php';
-require_once 'lib/core/Perms/Check/Alternate.php';
-require_once 'lib/core/Perms/ResolverFactory/GlobalFactory.php';
-require_once 'lib/core/Perms/ResolverFactory/CategoryFactory.php';
-require_once 'lib/core/Perms/ResolverFactory/ObjectFactory.php';
-
 $sequence = array(
 	$globalAdminCheck = new Perms_Check_Alternate( 'admin' ),
 	new Perms_Check_Direct,
@@ -137,7 +129,6 @@ $sequence = array(
 );
 
 if( $user ) {
-	require_once 'lib/core/Perms/Check/Creator.php';
 	$sequence[] = new Perms_Check_Creator( $user );
 }
 

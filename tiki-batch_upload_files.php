@@ -32,7 +32,7 @@ if (!isset($_REQUEST['galleryId'])) {
 	$_REQUEST['galleryId'] = 0;
 	$podCastGallery = false;
 } else {
-	$gal_info = $tikilib->get_file_gallery($_REQUEST["galleryId"]);
+	$gal_info = $filegallib->get_file_gallery($_REQUEST["galleryId"]);
 	$podCastGallery = $filegallib->isPodCastGallery($_REQUEST["galleryId"], $gal_info);
 }
 $smarty->assign('filedir', $filedir);

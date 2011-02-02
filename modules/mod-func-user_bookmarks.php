@@ -86,7 +86,8 @@ function module_user_bookmarks( $mod_reference, $module_params ) {
 	
 				// Check if we are bookmarking a file gallery
 				if (strstr($_SERVER["REQUEST_URI"], 'tiki-list_file_gallery')) {
-					$info = $tikilib->get_file_gallery($setup_query_data["galleryId"]);
+					$filegallib = TikiLib::lib('filegal');
+					$info = $filegallib->get_file_gallery($setup_query_data["galleryId"]);
 	
 					$name = $info["name"];
 				}

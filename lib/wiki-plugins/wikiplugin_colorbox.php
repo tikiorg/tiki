@@ -139,7 +139,9 @@ function wikiplugin_colorbox($data, $params) {
 		}
 		if (empty($params['sort_mode'])) $params['sort_mode'] = 'created_desc';
 		$filter = empty($params['fileId'])? '': array('fileId'=> $params['fileId']);
-		$files = $tikilib->get_files(0, -1, $params['sort_mode'], '', $params['fgalId'], false, false, false, true, false, false, false, false, '', true, false, false, $filter);
+
+		$filegallib = TikiLib::lib('filegal');
+		$files = $filegallib->get_files(0, -1, $params['sort_mode'], '', $params['fgalId'], false, false, false, true, false, false, false, false, '', true, false, false, $filter);
 		$smarty->assign('colorboxUrl', 'tiki-download_file.php?fileId=');
 		$smarty->assign('colorboxColumn', 'id');
 		if ($params['thumb'] != 'n') {
