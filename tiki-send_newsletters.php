@@ -359,7 +359,7 @@ if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) || $resend 
 
 // Article Clipping
 $articleClip = '';
-if ($nl_info["allowArticleClip"] == 'y' && empty($articleClip)) {
+if (isset($nl_info) && $nl_info["allowArticleClip"] == 'y' && empty($articleClip)) {
 	if ($nl_info["autoArticleClip"] == 'y' || isset($_REQUEST["clipArticles"])) {
 		$articleClip = $nllib->clip_articles($_REQUEST["nlId"]);
 		// prevent clearing of keyed in info if any
