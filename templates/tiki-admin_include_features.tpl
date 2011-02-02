@@ -130,7 +130,6 @@
 					<div class="adminoptionboxchild" id="log_sql_childcontainer">
 						{preference name=log_sql_perf_min}
 					</div>
-					{preference name=feature_bot_bar_debug}
 					{preference name=log_tpl}
 				</fieldset>
 			</div>

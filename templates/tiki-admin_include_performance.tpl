@@ -31,7 +31,6 @@
 			</div>
 			{preference name=tiki_cachecontrol_session}
 			{preference name=smarty_compilation}
-			{preference name=feature_bot_bar_debug}
 		{/tab}
 		
 		{tab name="{tr}Bytecode Cache{/tr}"}

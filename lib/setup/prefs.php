@@ -1329,21 +1329,6 @@ function get_default_prefs() {
 
 		'site_crumb_seper' => '»',
 		'site_nav_seper' => '|',
-		'feature_sitemycode' => 'y',
-		'sitemycode' => '{if $tiki_p_admin == "y"}
-<div id="quickadmin" style="text-align: left; padding-left: 12px;"><small>{tr}Quick Admin{/tr}</small>:
-{icon _id=database_refresh title="{tr}Clear all Tiki caches{/tr}" href="tiki-admin_system.php?do=all"}
-{icon _id=wrench title="{tr}Modify the look &amp; feel (logo, theme, etc.){/tr}" href="tiki-admin.php?page=look&amp;cookietab=2"} 
-{if $prefs.lang_use_db eq "y"}
-{if isset($smarty.session.interactive_translation) && $smarty.session.interactive_translation_mode eq "on"}
-{icon _id=world_edit title="{tr}Toggle interactive translation off{/tr}" href="tiki-interactive_trans.php?interactive_translation_mode=off"}
-{else}
-{icon _id=world_edit title="{tr}Toggle interactive translation on{/tr}" href="tiki-interactive_trans.php?interactive_translation_mode=on"}
-{/if}
-{/if}
-</div>  
-{/if}',
-		'sitemycode_publish' => 'n',
 		'feature_sitelogo' => 'y',
 		'sitelogo_bgcolor' => 'transparent',
 		'sitelogo_bgstyle' => '',
@@ -1359,19 +1344,10 @@ function get_default_prefs() {
 		'sitead_publish' => 'n',
 		'feature_breadcrumbs' => 'n',
 		'feature_siteloclabel' => 'y',
-		'feature_sitesearch' => 'y',
-		'feature_site_login' => 'y',
-		'feature_sitemenu' => 'n',
-		'feature_sitemenu_custom_code' => '',
-		'feature_secondary_sitemenu_custom_code' => '',
-		'feature_topbar_version' => 'n',
-		'feature_topbar_id_menu' => '42',
-		'feature_topbar_custom_code' => '',
 		'feature_sitetitle' => 'y',
 		'feature_sitedesc' => 'n',
-		'feature_bot_logo' => 'n',
 		'feature_endbody_code' => '',
-		'feature_custom_html_head_content' => '{if $prefs.feature_secondary_sitemenu_custom_code ne ""}<style type="text/css">#sitelogo img {literal}{margin-top: 0; position: relative; top: -12px;}{/literal}</style>{/if}',
+		'feature_custom_html_head_content' => '',
 		'feature_fixed_width' => 'y',
 		'feature_html_head_base_tag' => 'n',
 		'feature_themegenerator' => 'n',
@@ -1387,10 +1363,6 @@ function get_default_prefs() {
 		'feature_right_column' => 'y',
 		'feature_top_bar' => 'y',
 		'feature_bot_bar' => 'y',
-		'feature_bot_bar_icons' => 'n',
-		'feature_bot_bar_debug' => 'n',
-		'feature_bot_bar_rss' => 'y',
-		'feature_bot_bar_power_by_tw' => 'y',
 		'maxRecords' => 25,
 		'maxArticles' => 10,
 		'maxVersions' => 0,
@@ -1417,7 +1389,6 @@ function get_default_prefs() {
 		'footer_shadow_end' => '',
 		'box_shadow_start' => '',
 		'box_shadow_end' => '',
-		'feature_custom_center_column_header' => '',
 		'header_custom_css' => '',
 		'header_custom_js' => '',
 		'feature_theme_generator' => 'n',
@@ -1677,7 +1648,6 @@ function get_default_prefs() {
 		'load_threshold' => 3,
 		'site_busy_msg' => 'Server is currently too busy; please come back later.',
 
-		'bot_logo_code' => '',
 		'feature_create_webhelp' => 'n',
 		'page_n_times_in_a_structure' => 'n',
 		'feature_forums_search' => 'n',

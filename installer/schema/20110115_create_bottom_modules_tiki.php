@@ -22,6 +22,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *  feature_babelfish
  *  feature_babelfish_logo (TODO - still needs lib/setup/babelfish.php for this to work and i can't work out why)
  *  feature_bot_bar_debug
+ *  feature_bot_bar
  */
 
 function upgrade_20110115_create_bottom_modules_tiki( $installer ) {

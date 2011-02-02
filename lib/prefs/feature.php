@@ -1077,13 +1077,6 @@ function prefs_feature_list() {
 			),
 			'perspective' => false,
 		),
-		'feature_bot_bar_power_by_tw' => array(
-			'name' => tra("Add a Powered by Tiki link on your site's footer"),
-			'type' => 'flag',
-			'dependencies' => array(
-				'feature_bot_bar',
-			),			
-		),
 		'feature_editcss' => array(
 			'name' => tra('Edit CSS'),
 			'type' => 'flag',
@@ -1120,80 +1113,15 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'description' => tra('The &lt;base&gt; tag specifies a default address for all links on a page.'),
 		),
-		'feature_sitemycode' => array(
-			'name' => tra('Custom Site Header'),
-			'type' => 'flag',
-			'warning' => tra('Obsolete in tiki7'),
-		),
 		'feature_sitelogo' => array(
 			'name' => tra('Site Logo and Title'),
 			'type' => 'flag',
-			'warning' => tra('Obsolete in tiki7'),
-		),
-		'feature_sitesearch' => array(
-			'name' => tra('Search Bar'),
-			'type' => 'flag',
-			'dependencies' => array(
-				'feature_search_fulltext',
-			),
-			'warning' => tra('Obsolete in tiki7'),
-		),
-		'feature_site_login' => array(
-			'name' => tra('Login Bar'),
-			'type' => 'flag',
-			'warning' => tra('Obsolete in tiki7'),
-		),
-		'feature_topbar_custom_code' => array(
-			'name' => tra('Top Bar Custom Code'),
-			'type' => 'textarea',
-			'size' => '6',
-			'filter' => 'rawhtml_unsafe',
-		),
-		'feature_topbar_version' => array(
-			'name' => tra('Display current Tiki version'),
-			'type' => 'flag',
-			'dependencies' => array(
-				'feature_bot_bar_power_by_tw',
-			),
-		),
-		'feature_sitemenu' => array(
-			'name' => tra('Site menu bar'),
-			'type' => 'flag',
-			'warning' => tra('Obsolete in tiki7'),
-		),
-		'feature_sitemenu_custom_code' => array (
-			'name' => tra('Site menu custom code'),
-			'type' => 'textarea',
-			'size' => '4',
-			'hint' => tra('Example:') . " {if isset(\$objectCategoryIds) and in_array(2, \$objectCategoryIds)}
-     {menu id=43 css=y type=horiz}{else}{menu id=44 css=y type=horiz}{/if}",
-		),
-		'feature_secondary_sitemenu_custom_code' => array (
-			'name' => tra('Secondary site menu custom code'),
-			'type' => 'textarea',
-			'size' => '2',
-			'hint' => tra('Example:') . "  {if \$prefs.language eq \"fr\"} <a href=\"tiki-switch_lang.php?language=en\">-English-</a> {else} <a href=\"tiki-switch_lang.php?language=fr\">-Français-</a>{/if}",
-		),
-		'feature_topbar_id_menu' => array(
-			'name' => tra('Menu ID'),
-			'hint' => tra('Needs CSS Menus'),
-			'type' => 'text',
-			'size' => '5',
-			'dependencies' => array(
-				'feature_cssmenus',
-			),
 			'warning' => tra('Obsolete in tiki7'),
 		),
 		'feature_top_bar' => array(
 			'name' => tra('Top Bar'),
 			'type' => 'flag',
 			'warning' => tra('Obsolete in tiki7'),
-		),
-		'feature_custom_center_column_header' => array(
-			'name' => tra('Custom Center Column Header'),
-			'hint' => tra('Example:') . " {if \$page eq 'Travel'}{banner zone=5}{/if}",
-			'type' => 'textarea',
-			'size' => '6',
 		),
 		'feature_left_column' => array(
 			'name' => tra('Left column'),
@@ -1255,10 +1183,6 @@ function prefs_feature_list() {
 				'feature_wiki_description',
 			),
 		),
-		'feature_bot_logo' => array(
-			'name' => tra('Custom Site Footer'),
-			'type' => 'flag',
-		),
 		'feature_endbody_code' => array(
 			'name' => tra('Custom End of <body> Code'),
 			'hint' => tra('Example:') . ' ' . "{wiki}{literal}{GOOGLEANALYTICS(account=xxxx) /}{/literal}{/wiki}",
@@ -1269,19 +1193,7 @@ function prefs_feature_list() {
 		'feature_bot_bar' => array(
 			'name' => tra('Bottom bar'),
 			'type' => 'flag',
-		),
-		'feature_bot_bar_icons' => array(
-			'name' => tra('Bottom bar icons'),
-			'type' => 'flag',
-		),
-		'feature_bot_bar_debug' => array(
-			'name' => tra('Bottom bar debug'),
-			'type' => 'flag',
-			'description' => tra('Indicate various debug-related information in the footer of the site (Execution time, Memory usage, etc.)'),
-		),
-		'feature_bot_bar_rss' => array(
-			'name' => tra('Bottom bar (RSS)'),
-			'type' => 'flag',
+			'warning' => tra('Obsolete in tiki7'),
 		),
 		'feature_site_report' => array(
 			'name' => tra('Webmaster Report'),

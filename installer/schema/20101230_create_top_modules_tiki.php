@@ -15,6 +15,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * 	feature_sitelogo
  * 	feature_site_login
  * 	feature_top_bar
+ *  feature_topbar_id_menu
  * 	feature_sitemenu
  *  feature_sitesearch
  */

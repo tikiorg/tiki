@@ -173,12 +173,6 @@ function prefs_global_list() {
 			'name' => tra('Each group can have its theme'),
 			'type' => 'flag',
 		),
-		'sitemycode' => array(
-			'name' => tra('Custom Site Header Content'),
-			'hint' => tra ('Example:') . ' ' .  "{if \$user neq ''}<div align=\"right\" style=\"float: right; font-size: 10px\">{tr}logged as:{/tr} {\$user}</div>{/if}",
-			'type' => 'textarea',
-			'size' => '6',
-		),
 		'sitetitle' => array(
 			'name' => tra('Site title'),
 			'type' => 'text',

@@ -86,14 +86,6 @@
 		{tab name="{tr}General Layout options{/tr}"}
 			{preference name=feature_html_head_base_tag}
 			{preference name=feature_custom_html_head_content}
-			{preference name=feature_secondary_sitemenu_custom_code}
-			{preference name=feature_sitemycode}
-			<div class="adminoptionboxchild" id="feature_sitemycode_childcontainer">
-				{icon _id=information}
-				<em>{tr}The Custom Site Header will display for the Admin only. Select <strong>Publish</strong> to display the content for <em>all</em> users.{/tr}</em>
-				{preference name=sitemycode}
-				{preference name=sitemycode_publish}
-			</div>
 
 			{preference name=feature_sitelogo}
 			<div class="adminoptionboxchild" id="feature_sitelogo_childcontainer">
@@ -113,19 +105,8 @@
 					{preference name=sitesubtitle}
 				</fieldset>
 			</div>
-			{preference name=feature_site_login}
 			{preference name=feature_top_bar}
-			<div class="adminoptionboxchild" id="feature_top_bar_childcontainer">
-				{preference name=feature_sitemenu}
-				<div class="adminoptionboxchild" id="feature_sitemenu_childcontainer">
-					{preference name=feature_sitemenu_custom_code}
-					{preference name=feature_topbar_id_menu}
-				</div>
-				{preference name=feature_sitesearch}
-				{preference name=feature_topbar_custom_code}
-			</div>
 		
-			{preference name=feature_custom_center_column_header}
 			{preference name=feature_left_column}
 			{preference name=feature_right_column}
 		
@@ -143,22 +124,10 @@
 				{preference name=feature_sitedesc}
 			</div>
 		
-			{preference name=feature_bot_logo}
-			<div class="adminoptionboxchild" id="feature_bot_logo_childcontainer">
-				{preference name=bot_logo_code}
-			</div>
-
 			{preference name=feature_endbody_code}
 		
 			{preference name=feature_bot_bar}
 			<div class="adminoptionboxchild" id="feature_bot_bar_childcontainer">
-				{preference name=feature_bot_bar_icons}
-				{preference name=feature_bot_bar_debug}
-				{preference name=feature_bot_bar_rss}
-				{preference name=feature_bot_bar_power_by_tw}
-				<div class="adminoptionboxchild" id="feature_bot_bar_power_by_tw_childcontainer">
-					{preference name=feature_topbar_version}
-				</div>
 			</div>
 
 			<div class="adminoptionbox">

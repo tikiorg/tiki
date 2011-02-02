@@ -56,7 +56,7 @@
   </div>
   {if $prefs.feature_bot_bar eq 'y'}
   <div id="tiki-bot">
-    {include file='tiki-bot_bar.tpl'}
+    {* modules revamp: TODO include file='tiki-bot_bar.tpl' *}
   </div>
   {/if}
 </div>

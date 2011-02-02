@@ -20,6 +20,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *  feature_custom_center_column_header
  *  bot_logo_code
  *  feature_bot_logo
+ *  feature_topbar_custom_code
  */
 
 function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
@@ -103,7 +104,7 @@ function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
 //	$installer->query( "DELETE FROM `tiki_preferences` WHERE `name` IN ".
 //						"('feature_sitemycode','sitemycode', 'sitemycode_publish', 'feature_secondary_sitemenu_custom_code',
 //							'feature_sitemenu_custom_code', 'feature_custom_center_column_header',
-//							'bot_logo_code', 'feature_bot_logo');");
+//							'bot_logo_code', 'feature_bot_logo', 'feature_topbar_custom_code');");
 	
 }
 
