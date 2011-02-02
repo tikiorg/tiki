@@ -449,7 +449,7 @@ if (isset($_REQUEST['edit'])) {
 		}
 		
 		if ($prefs['fgal_show_explorer'] != 'y') {
-			$gal_info['show_show_explorer'] = $old_gal_info['show_show_explorer'];
+			$gal_info['show_explorer'] = $old_gal_info['show_explorer'];
 		}
 		
 		if ($prefs['fgal_show_path'] != 'y') {
