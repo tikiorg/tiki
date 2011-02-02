@@ -2351,18 +2351,16 @@ class SheetLib extends TikiLib
 		}
 	}
 	
-	function setup_jquery_sheet_history() {
-		global $headerlib;
-		$this->setup_jquery_sheet();
-		
-		if (!$this->setup_jQuery_sheet_history_files) {
-			$headerlib->add_jsfile( 'lib/sheet/tiki-history_sheets.js' );
-			$this->setup_jQuery_sheet_history_files = true;
-		}
-	}
-	
 	function sheet_history( $sheetId ) {
-		return $this->fetchAll( "SELECT DISTINCT `begin` as stamp, `user`, DATE_FORMAT(FROM_UNIXTIME(`begin`), '%M %D %Y %h:%i:%s') as prettystamp FROM `tiki_sheet_values` WHERE `sheetId` = ? ORDER BY begin DESC", array( $sheetId ) );
+		return $this->fetchAll( "
+			SELECT DISTINCT
+				`tiki_sheet_values`.`begin` as stamp,
+				`tiki_sheet_values`.`user`,
+				DATE_FORMAT(FROM_UNIXTIME(`tiki_sheet_values`.`begin`), '%M %D %Y %h:%i:%s') as prettystamp
+			FROM `tiki_sheet_values`
+			INNER JOIN `tiki_sheets` ON `tiki_sheets`.`sheetId` = `tiki_sheet_values`.`sheetId`
+			WHERE `tiki_sheets`.`sheetId` = ? OR `tiki_sheets`.`parentSheetId` = ?
+			ORDER BY begin DESC", array( $sheetId, $sheetId ) );
 	}
 	
 	function rollback_sheet($id, $readdate=null) {
@@ -2601,7 +2599,7 @@ class SheetLib extends TikiLib
 	function diff_sheets_as_html( $id, $dates = null )
 	{
 		global $prefs, $sheetlib;
-			
+		
 		function count_longest( $array1, $array2 )
 		{
 			return (count($array1) > count($array2) ? count($array1) : count($array2));
@@ -2678,8 +2676,8 @@ class SheetLib extends TikiLib
 			return $result;
 		}
 		
-		$grids1 = join_with_sub_grids($_REQUEST["sheetId"], $dates[0]);
-		$grids2 = join_with_sub_grids($_REQUEST["sheetId"], $dates[1]);
+		$grids1 = join_with_sub_grids($id, $dates[0]);
+		$grids2 = join_with_sub_grids($id, $dates[1]);
 		
 		for ( $i = 0; $i < count_longest($grids1, $grids2); $i++ ) { //cycle through the sheets within a spreadsheet
 			$result1 .= "<table title='".$grids1[$i]->getTitle()."'>";

@@ -52,7 +52,7 @@
 				{/if}
 				{if $sheets[changes].tiki_p_edit_sheet eq 'y'}
 					<a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;sheetId={$sheets[changes].sheetId}">
-						{icon _id='page_edit' alt="{tr}Edit{/tr}"}
+						{icon _id='page_edit' alt="{tr}Configure{/tr}"}
 					</a>
 					<a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removesheet=y&amp;sheetId={$sheets[changes].sheetId}">
 						{icon _id='cross' alt="{tr}Delete{/tr}"}
@@ -69,12 +69,12 @@
 {/tab}
 
 {if $tiki_p_edit_sheet eq 'y'}
-	{capture name=title}{if $sheetId eq 0}{tr}Create{/tr}{else}{tr}Edit{/tr}{/if}{/capture}
+	{capture name=title}{if $sheetId eq 0}{tr}Create{/tr}{else}{tr}Configure{/tr}{/if}{/capture}
 	{tab name=$smarty.capture.title}
 		{if $sheetId eq 0}
 			<h2>{tr}Create a sheet{/tr}</h2>
 		{else}
-			<h2>{tr}Edit this sheet:{/tr} {$title}</h2>
+			<h2>{tr}Configure this sheet:{/tr} {$title}</h2>
 			{if $tiki_p_edit_sheet eq 'y'}
 				<div class="navbar">
 					{button href="tiki-sheets.php?edit_mode=1&amp;sheetId=0" _text="{tr}Create New Sheet{/tr}"}
@@ -107,14 +107,14 @@
 					</td>
 				</tr>
 				<tr>
-					<td>{tr}Parent SheetId:{/tr}</td>
+					<td>{tr}Join with Spreadsheet:{/tr}</td>
 					<td>
 						<select name="parentSheetId">
 							<option value="">{tr}None{/tr}</option>
 							{section name=sheet loop=$sheets}
-								{if $sheets[sheet].parentSheetId eq '0'}
+								{if not $sheets[sheet].parentSheetId}
 								<option value="{$sheets[sheet].sheetId}"{if $parentSheetId eq $sheets[sheet].sheetId} selected="selected"{/if}>
-									{$sheets[sheet].title|escape}
+									{$sheets[sheet].title|escape} - ({$sheets[sheet].sheetId})
 								</option>
 								{/if}
 							{/section}
