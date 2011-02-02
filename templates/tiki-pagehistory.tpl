@@ -77,9 +77,21 @@
 	{if $prefs.feature_jquery_ui eq "y"}{jq}$("#page_source").resizable();{/jq}{/if}
 {/if}
 
+{if $flaggedrev_approval and $tiki_p_wiki_approve eq 'y' and $flaggedrev_compare_approve}
+	{remarksbox type=comment title="{tr}Content Approval{/tr}"}
+		<form method="post" action="tiki-pagehistory.php?page={$page|escape:'url'}&amp;preview={$new.version|escape:'url'}">
+			<p>{tr}This revision has not been approved.{/tr}<p>
+			<div class="submit">
+				<input type="hidden" name="approve" value="{$new.version|escape}"/>
+				<input type="submit" name="flaggedrev" value="{tr}Approve Revision{/tr}"/>
+			</div>
+		</form>
+	{/remarksbox}
+{/if}
+
 {include file='pagehistory.tpl'}
 
-<hr />
+<hr style="clear: both;"/>
 
 {if !isset($noHistory)}
 	{if $preview || $source || $diff_style}<h2>{tr}History{/tr}</h2>{/if}
