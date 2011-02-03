@@ -138,7 +138,7 @@ function doChallengeResponse() {
 				{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}
 			</div>
 		</div>
-		{if $prefs.rememberme ne 'disabled' and !empty($module_params.remember) and $module_params.remember neq 'n'}
+		{if $prefs.rememberme ne 'disabled' and (empty($module_params.remember) or $module_params.remember neq 'n')}
 			{if $prefs.rememberme eq 'always'}
 				<input type="hidden" name="rme" id="login-remember-module-input_{$module_logo_instance}" value="on" />
 			{else}
