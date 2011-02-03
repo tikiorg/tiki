@@ -4,16 +4,17 @@
 				<header id="header">
 					<div id="header_fixedwidth" class="clearfix fixedwidth">
 						<div class="content clearfix modules" id="top_modules">
-							<div id="sitelogo" style="padding-left:0; padding-top: 0px"><h1 style="margin: 0"><img style="border:none;margin-bottom: 24px; vertical-align:middle" alt="{tr}Tiki Wiki CMS Groupware{/tr}" src="{if isset($ie6)}img/tiki/tikisitelogo.gif{else}img/tiki/Tiki_WCG.png{/if}" />
+							<div id="sitelogo" style="padding-left:0; padding-top: 0px"><h1 style="margin: 0"><img style="border:none;vertical-align:middle" alt="{tr}Tiki Wiki CMS Groupware{/tr}" src="{if isset($ie6)}img/tiki/tikisitelogo.gif{else}img/tiki/Tiki_WCG.png{/if}" />
 								<span style="vertical-align:middle; margin-left: 120px; color: #fff; padding-top: 30px;">{tr}Tiki installer{/tr} {$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></span></h1>
 							</div>
-						<div id="tiki-top" style="position: static"></div> {* added for background image consistency *}
+						<div id="tiki-top" style="position: absolute; top: 168px;"></div> {* added for background image consistency *}
 						</div>
 					</div>
 				</header>
 			</div>
 		</div>
-<div id="middle" class="clearfix">
+<div class="middle_outer">
+<div id="middle" class="clearfix" style="padding-top: 55px">
 	<div id="c1c2" class="clearfix">
 		<div id="wrapper" class="clearfix">
 			<div id="col1" class="marginleft">
@@ -734,7 +735,7 @@
 		</div>
 	</div>
 </div>			
-			
+</div>			
 	  	</div>
 </div>
 <footer id="footer">

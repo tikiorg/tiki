@@ -98,6 +98,7 @@ function createPage($title, $content){
 		<title>$title</title>
 	</head>
 	<body class="tiki_wiki fixed_width">
+	<div id="fixedwidth">
 	<div id="outer_wrapper">
 		<div id="header_outer">
 			<div id="header_container">
@@ -105,9 +106,9 @@ function createPage($title, $content){
 					<div id="header_fixedwidth" class="clearfix fixedwidth">
 						<div class="content clearfix modules" id="top_modules">
 							<div id="sitelogo">
-								<img alt="Site Logo" src="img/tiki/Tiki_WCG.png" style="margin-bottom: 24px" />
+								<img alt="Site Logo" src="img/tiki/Tiki_WCG.png"  />
 							</div>
-							<div id="tiki-top" class="clearfix" style="position: static">
+							<div id="tiki-top" class="clearfix" style="position: absolute; top: 166px;">
 								<h1 style="color: #fff; text-shadow: 3px 2px 0 #781437; margin: 0; padding: 0; line-height: 1.6;">$title</h1>
 							</div>
 						</div>
@@ -115,14 +116,15 @@ function createPage($title, $content){
 				</header>
 			</div>
 		</div>	
-		<div style="display: table; width: 990px; text-align: center;">
+			<div class="middle_outer">
 			<div id="middle" >
-				<div id="tiki-center" style="display: table; width: 990px; text-align: center;">
-					$content
+				<div id="tiki-top"></div>
+					<div id="tiki-center" style="display: table; width: 990px; text-align: center;">
+						$content
+					</div>
 				</div>
-			</div>
-		</div>
-		</div><!--
+				</div>
+			</div><!--
 		<footer id="footer" style="margin-top: 50px;">
 	<div class="footer_liner">
 		<div class="footerbgtrap fixedwidth" style="padding: 10px 0;">
@@ -130,6 +132,7 @@ function createPage($title, $content){
 		</div>
 	</div>
 </footer>-->
+</div>
 	</body>
 </html>
 END;
