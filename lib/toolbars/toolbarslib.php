@@ -90,7 +90,7 @@ abstract class Toolbar
 			'table',
 			'rule',
 			'pagebreak',
-			'blockquote',
+			'box',
 			'h1',
 			'h2',
 			'h3',
@@ -667,10 +667,10 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			$wysiwyg = 'PageBreak';
 			$syntax = '...page...';
 			break;
-		case 'blockquote':
-			$label = tra('Block Quote');
+		case 'box':
+			$label = tra('Box');
 			$icon = tra('pics/icons/box.png');
-			$wysiwyg = 'Blockquote';
+			$wysiwyg = 'Box';
 			$syntax = '^text^';
 			break;
 		case 'h1':
