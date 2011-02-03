@@ -210,7 +210,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;
 {/if}
 {if $from}<input type="hidden" name="from" value="{$from}" />{/if}
 {section name=ix loop=$fields}
-{if $fields[ix].value}
+{if !empty($fields[ix].value)}
 <input type="hidden" name="{$fields[ix].id|escape}" value="{$fields[ix].value|escape}" />
 {/if}
 {/section}
@@ -311,7 +311,7 @@ $("#user_selector_{{$cur_field.id}}").tiki("autocomplete", "username", {mustMatc
 
 	{else}
 
-<select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
+<select name="ins_{$cur_field.id}" {if !empty($cur_field.http_request)}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
 {if $cur_field.isMandatory ne 'y'}<option value="">{tr}None{/tr}</option>{/if}
 {foreach key=id item=one from=$users}
 {if ( ! isset($cur_field.itemChoices) || $cur_field.itemChoices|@count eq 0 || in_array($one, $cur_field.itemChoices) ) }
@@ -335,7 +335,7 @@ $("#user_selector_{{$cur_field.id}}").tiki("autocomplete", "username", {mustMatc
 
 {elseif $cur_field.type eq 'g'}
 {if !$cur_field.options or $tiki_p_admin_trackers eq 'y'}
-<select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
+<select name="ins_{$cur_field.id}" {if !empty($cur_field.http_request)}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
 {if $cur_field.isMandatory ne 'y'}<option value="">{tr}None{/tr}</option>{/if}
 {section name=ux loop=$groups}
 {if ( ! isset($cur_field.itemChoices) || $cur_field.itemChoices|@count eq 0 || in_array($groups[ux], $cur_field.itemChoices) ) }
@@ -587,7 +587,7 @@ or $cur_field.type eq 'i'}
 {/if}
 
 {foreach from=$ins_fields key=ix item=cur_field}
-{if $cur_field.http_request}
+{if !empty($cur_field.http_request)}
 {jq}
 selectValues('trackerIdList={{$cur_field.http_request[0]}}&fieldlist={{$cur_field.http_request[3]}}&filterfield={{$cur_field.http_request[1]}}&status={{$cur_field.http_request[4]}}&mandatory={{$cur_field.http_request[6]}}&filtervalue={{$cur_field.http_request[7]|escape:"url"}}&selected={{$cur_field.http_request[8]|escape:"url"}}','{{$cur_field.http_request[5]}}')
 {/jq}
