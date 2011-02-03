@@ -1162,6 +1162,78 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 	}
  } // }}}1
  
+ /** TikiSheetCSVHandler {{{1
+ * Class that stores the sheet representation in a
+ * standard text file as a serialized PHP object.
+ */
+class TikiSheetFileGalleryCSVHandler extends TikiSheetDataHandler
+{
+	var $file;
+	
+	/** Constructor {{{2
+	 * Initializes the the serializer on a file.
+	 * @param $file The file path to save or load from.
+	 */
+	function TikiSheetFileGalleryCSVHandler( $fileId = 0 )
+	{
+		include_once('lib/filegals/filegallib.php');
+		global $prefs, $headerlib, $filegallib;
+		$fileInfo = $filegallib->get_file_info( $fileId );
+		
+		if ($fileInfo['filetype'] != 'text/csv') return false;
+		
+		$this->data = $fileInfo['data'];
+	}
+	// _load {{{2
+	function _load( &$sheet )
+	{
+		$rows = explode("\n", $this->data);
+		for($i = 0; $i < count($rows); $i++) {
+			$cols = preg_split("/[,;](?!(?:[^\\\",;]|[^\\\"],[^\\\"])+\\\")/", $rows[$i]);
+			
+			for($j = 0; $j < count($cols); $j++) {
+				$sheet->initCell( $i, $j );
+				$sheet->setValue( $cols[$j] );
+				
+				if ( isset($cols[$j]) ) {
+					if (strlen( $cols[$j] )) {
+						if ($cols[$j][0] == '=' ) {
+							$sheet->setCalculation( substr($cols[$j], 1) );
+						}
+					}
+				}
+				
+				$sheet->setSize( 1, 1 );
+			}
+		}
+		return true;
+	}
+
+	// _save {{{2
+	function _save( &$sheet )
+	{
+		
+	}
+
+	// name {{{2
+	function name()
+	{
+		return "CSV File from Tiki Gallery";
+	}
+
+	// supports {{{2
+	function supports( $type )
+	{
+		return ( ( TIKISHEET_SAVE_DATA | TIKISHEET_LOAD_DATA ) & $type ) > 0;
+	}
+
+	// version {{{2
+	function version()
+	{
+		return "1.0-test";
+	}
+ } // }}}1
+ 
  /** TikiSheetCSVExcelHandler {{{1
  * Class that stores the sheet representation in a
  * standard text file as a serialized PHP object. The difference

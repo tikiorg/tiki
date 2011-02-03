@@ -53,8 +53,12 @@
 		<a href="{$files[changes].id|sefurl:display}">
 		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 		</a>
+	{elseif $files[changes].type eq 'text/csv'}
+		<a href="tiki-view_sheets.php?fileId={$files[changes].id}">
+		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
+		</a>
 	{/if}
-
+	
 	{if (isset($files[changes].p_download_files) and  $files[changes].p_download_files eq 'y')
 	 or (!isset($files[changes].p_download_files) and $files[changes].perms.tiki_p_download_files eq 'y')}
 		{if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}

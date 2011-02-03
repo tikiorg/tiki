@@ -17,12 +17,13 @@ $auto_query_args = array(
 	'height',
 	'type',
 	'file',
+	'fileId'
 );
 $access->check_feature('feature_sheet');
 
 $info = $sheetlib->get_sheet_info($_REQUEST['sheetId']);
 
-if (empty($info) && !isset( $_REQUEST['file'])) {
+if (empty($info) && !isset( $_REQUEST['file']) && !isset($_REQUEST['fileId'])) {
 	$smarty->assign('Incorrect parameter');
 	$smarty->display('error.tpl');
 	die;
@@ -71,6 +72,13 @@ if ( $_REQUEST['parse'] == 'edit' && !$sheetlib->user_can_edit( $_REQUEST['sheet
 	die;
 }
 
+//check to see if we are to do something other than view a file, which is not allowed
+if ( $_REQUEST['parse'] != 'y' && ( isset($_REQUEST['file']) || isset($_REQUEST['fileId']) ) ) {
+	$smarty->assign('msg', tra("Files are read only at this time"));
+	$smarty->display("error.tpl");
+	die;
+}
+
 if ($prefs['feature_contribution'] == 'y') {
 	$contributionItemId = $_REQUEST['sheetId'];
 	include_once ('contribution.php');
@@ -83,7 +91,7 @@ if (isset($_REQUEST['s']) && !empty($_REQUEST['s']) ) { //save
 		$result = $sheetlib->save_sheet( $_REQUEST['s'], $_REQUEST["sheetId"] );
 		
 	} elseif ( $_REQUEST['type'] && $_REQUEST['file'] ) {
-		$result = $sheetlib->save_sheet( $_REQUEST['s'], null, $_REQUEST['file'], $_REQUEST['type'] );
+		//$result = $sheetlib->save_sheet( $_REQUEST['s'], null, $_REQUEST['file'], $_REQUEST['type'] );
 	}
 	die($result);
 //Clone
@@ -116,7 +124,7 @@ if (isset($_REQUEST['s']) && !empty($_REQUEST['s']) ) { //save
 }
 
 //Edit & View
-if ( isset($_REQUEST['file']) && isset($_REQUEST['type'])) {
+if ( isset($_REQUEST['file']) && isset($_REQUEST['type']) ) {
 	//File sheets
 	switch ( $_REQUEST['type'] ) {
 		case 'excelcsv': $handler = new TikiSheetCSVExcelHandler( $_REQUEST['file'] ); break;
@@ -126,6 +134,19 @@ if ( isset($_REQUEST['file']) && isset($_REQUEST['type'])) {
 	$grid = new TikiSheet();
 	$grid->import( $handler );
 	$tableHtml[0] = $grid->getTableHtml( true , null, false );
+	
+	$smarty->assign('notEditable', 'true');
+	
+} elseif ( isset($_REQUEST['fileId']) ) {
+	include_once('lib/filegals/filegallib.php');
+	$access->check_feature('feature_file_galleries');
+	$handler = new TikiSheetFileGalleryCSVHandler($_REQUEST['fileId']);
+	
+	$grid = new TikiSheet();
+	$grid->import( $handler );
+	$tableHtml[0] = $grid->getTableHtml( true , null, false );
+	$smarty->assign('notEditable', 'true');
+	
 } else {
 	//Database sheet
 	$handler = new TikiSheetDatabaseHandler( $_REQUEST["sheetId"] );
