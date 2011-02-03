@@ -77,7 +77,7 @@
 					<a class="link" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{icon _id='page_edit'}</a>
 				{/if}
 				{if $tiki_p_approve_submission eq 'y'}
-					<a class="link" href="tiki-list_submissions.php?approve={$listpages[changes].subId}"><img src='img/icons2/post.gif' alt="{tr}Approve{/tr}" title="{tr}Approve{/tr}" /></a>
+					<a class="link" href="tiki-list_submissions.php?approve={$listpages[changes].subId}">{icon _id='accept' alt="{tr}Approve{/tr}"}</a>
 				{/if}
 				{if $tiki_p_remove_submission eq 'y'}
 					<a class="link" href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].subId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
