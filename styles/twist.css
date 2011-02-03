@@ -19,9 +19,9 @@ body {
 }
 
 /* next two: fixed-width: 800px */
-body.fixed_width .fixedwidth {
+body.fixed_width #fixedwidth {
 	margin-bottom: 20px;
-	width: 800px !important;
+	width: 800px;
 	background: #fff;
 }
 
@@ -196,44 +196,32 @@ form.admin input[name="features"] {margin-bottom: 3px !important}
 select[name="theme"] {width: 125px}
 
 /***** Site Header & Identity *****/
-#header {
-	background: url(twist/header.jpg) no-repeat 100% 0;
+#header_fixedwidth {
+	background: url(twist/header.jpg) no-repeat 100% 100%;
 	color: #fff;
-	margin: 0;
-	padding: 0}
+}
 	
+#header {
+	background: url(twist/header.jpg) no-repeat 0 100%;
+	margin-right: 22px;
+	padding-left: 30px;
+	width: inherit;
+}
+
 #header a,
 #header a:visited {color: #fff}
 
-#header-top {
-	height: 82px;
+#top_modules {
+	min-height: 82px;
+	padding: 30px 0 0 0;
 	margin: 0;
-	padding: 0;
-}
-	
-#siteheader  {
-	background: url(twist/header.jpg) no-repeat 0 0;
-	margin: 0;
-	padding-left: 30px;
-	margin-right: 22px;
 }
 
-#sioptionscentered {margin: 1em}
-#sitelogo {padding: 0}
-
-#sitead {
-	margin: 5px;
-	clear: none;
-	padding: 1em}
-
-#sitead.floatright {padding-right: 100px}
-#sitead.floatleft {padding-left: 100px}
-
-#siteloginbar {
+.siteloginbar_popup {
 	color: #fff;
-	bottom: auto;
-	position: static;
-	margin-right: 10px;
+	bottom: 0;
+	position: absolute;
+	margin: 10px;
 }
 
 #siteloginbar a,
@@ -271,12 +259,12 @@ select[name="theme"] {width: 125px}
 #sitesearchbar select option {
 	color: #fff;
 }
-
+/*
 #sitetitles {
 	position: absolute;
 	left: 0;
 	bottom: 0}
-
+*/
 #sitetitle {
 	font-size: 2.4em;
 	color: #fff;
@@ -289,9 +277,9 @@ select[name="theme"] {width: 125px}
 	color: #fff}
 
 #tiki-top {
-	padding-right: 0;
-	padding-left: 0;
-	padding-top: 0;
+	position: absolute;
+	bottom: 13px;
+	right: 18px;
 	font-weight: bold;
 	font-size: 11px;
 	color: #fff;
@@ -351,8 +339,8 @@ select[name="theme"] {width: 125px}
 #tiki-top .cssmenu_horiz {
 	text-align: left;
 	color: black;
-	margin-top: 10px;
-	margin-left: 305px;
+	margin-top: 0;
+/*	margin-left: 305px;*/
 	background: #efefef;
 	white-space: nowrap}
 	
