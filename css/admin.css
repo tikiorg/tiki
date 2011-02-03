@@ -132,7 +132,7 @@ a.admbox.off img {
 }
 
 .q1 {
-	min-width: 20%;
+	width: 20%;
 	display: block;
 	float: left;
 	clear: none;
@@ -140,6 +140,7 @@ a.admbox.off img {
 }
 .q234 {
 	min-width: 75%;
+	max-width: 79%;
 	float: left;
 	clear: none;
 }

@@ -337,32 +337,26 @@
 		{elseif !empty($moduleId)}
 			<input type="hidden" name="moduleId" value="{$moduleId}" />
 		{/if}
-		<table class="formcolor">
-			<tr>
-				<td><label for="assign_name">{tr}Module Name{/tr}</label></td>
-				<td>
-					<select id="assign_name" name="assign_name" onchange="needToConfirm=false;this.form.preview.click()">
-						<option value=""></option>
-						{foreach key=name item=info from=$all_modules_info}
-							<option value="{$name|escape}" {if $assign_name eq $name || $assign_selected eq $name}selected="selected"{/if}>{$info.name}</option>
-						{/foreach}
-					</select>
-				</td>
-			</tr>
+		<fieldset>
+			<div class="admin2cols">
+				<label for="assign_name">{tr}Module Name{/tr}</label>
+				<select id="assign_name" name="assign_name" onchange="needToConfirm=false;this.form.preview.click()">
+					<option value=""></option>
+					{foreach key=name item=info from=$all_modules_info}
+						<option value="{$name|escape}" {if $assign_name eq $name || $assign_selected eq $name}selected="selected"{/if}>{$info.name}</option>
+					{/foreach}
+				</select>
+			</div>
 
-{if !empty($assign_name)}
-{* because changing the module name willl auto-submit the form, no reason to display these fields until a module is selected *}
-	{include file='admin_modules_form.tpl'}
-{else}
-			<tr>
-				<td>&nbsp;</td>
-				<td>
+			{if !empty($assign_name)}
+			{* because changing the module name willl auto-submit the form, no reason to display these fields until a module is selected *}
+				{include file='admin_modules_form.tpl'}
+			{else}
+				<div class="input_submit_container">
 					<input type="submit" name="preview" value="{tr}Module Options{/tr}" onclick="needToConfirm=false;" />
-				</td>
-			</tr>
-
-{/if}
-		</table>
+				</div>
+			{/if}
+		</fieldset>
 	</form>
 {/tab}
 
