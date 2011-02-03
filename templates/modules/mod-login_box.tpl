@@ -157,8 +157,11 @@ function doChallengeResponse() {
 			<div>
 				[&nbsp;{strip}
 				{if $module_params.show_register eq 'y'}
-					<a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a>&nbsp;|&nbsp;
+					<a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a>
 				{/if}
+				{if $module_params.show_register eq 'y' && $module_params.show_forgot eq 'y'}
+				    &nbsp;|&nbsp;
+				{/if}				
 				{if $module_params.show_forgot eq 'y'}
 					<a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a>
 				{/if}
