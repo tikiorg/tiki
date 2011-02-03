@@ -1491,17 +1491,16 @@ function wikiplugin_trackerlist($data, $params) {
 				
 				if (!empty($displaysheet) && $displaysheet == 'y') {
 					global $headerlib;
+					
+					require_once ('lib/sheet/grid.php');
+					$sheetlib->setup_jquery_sheet();
 					$headerlib->add_jq_onready('
-						if (typeof ajaxLoadingShow == "function") {
-							ajaxLoadingShow("role_main");
-						}
-						setTimeout (function () {
-							$("div.trackercontainer").tiki("sheet", "",{
-								editable:false,
-								buildSheet: true,
-								minSize: {rows: 0, cols: 0}
-							});
-						}, 0);', 500);
+						$("div.trackercontainer").sheet($.extend($.sheet.tikiOptions,{
+							editable:false,
+							buildSheet: true,
+							minSize: {rows: 0, cols: 0}
+						}));
+					');
 					$smarty->assign('displaysheet', 'true');
 				}
 				
