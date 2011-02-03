@@ -146,7 +146,7 @@
 													</p>
 												{/remarksbox}
 											{/if}
-											{section name=homeix loop=$tiki-center}
+											{section name=homeix loop=$right_modules}
 												{$right_modules[homeix].data}
 											{/section}
 										</div>
