@@ -33,8 +33,21 @@ body.filegal_popup {
  /***** Layout *****/
 
 /*#fixedwidth*/
+#fixedwidth {
+	margin: 0;
+}
 
-body.fixed_width .fixedwidth {
+body.fixed_width #fixedwidth {
+	width: 100%;
+	margin: 0;
+}
+
+/* fixed width */
+#header_fixedwidth,
+#middle_fixedwidth,
+.footerbgtrap {
+	width: 990px;
+	margin: 0 auto;
 }
 
 #header_outer {		/* whole width div containing the header strip */
@@ -43,14 +56,15 @@ body.fixed_width .fixedwidth {
 }
 
 #header_container {	/* 2nd whole width div for background image tricks */
+	background: url(fivealive/header_left.png) 0 100% no-repeat;
+
 }
 
-#header {			/* main whole width div */
-	background: url(fivealive/header_left.png) 0 100% no-repeat;
+#header_fixedwidth {			/* main whole width div */
 /*	height: 220px;*/
 }
 	
-#header_fixedwidth {	/* inner <header> element that gets .fixedwidth class applied */
+#header {	/* inner <header> element that gets .fixedwidth class applied */
 	background: url(fivealive/options/blueberry/siteheader.jpg) 0 0 no-repeat;
 /*	height: 220px;*/
 }
@@ -61,6 +75,10 @@ body.fixed_width .fixedwidth {
 
 #tiki-top {
 	width: 100%;
+}
+
+#topbar_modules {
+	min-height: 55px;
 }
 
 #topbar_modules .box-search {
@@ -529,7 +547,7 @@ select {
 
 /* Sitelogin Popup */
 
-#header .box-login_box {
+#top_modules .siteloginbar_popup {
 	position: absolute;
 	right: 10px;
 	bottom: 0;

@@ -26,7 +26,7 @@
 {if $prefs.feature_ajax eq 'y'}
 	{include file='tiki-ajax_header.tpl'}
 {/if}
-	<div id="outer_wrapper"> {* used to be  id="fixedwidth" *}
+	<div id="fixedwidth"> {* enables fixed-width layouts *}
 		{if $prefs.feature_layoutshadows eq 'y'}
 			<div id="main-shadow">{eval var=$prefs.main_shadow_start}
 		{/if}
@@ -36,15 +36,15 @@
 				{if $prefs.feature_layoutshadows eq 'y'}<div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}
 				<div id="header_outer">
 					<div id="header_container">
-						<header class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
-							<div id="header_fixedwidth" class="clearfix fixedwidth">
+						<div id="header_fixedwidth">
+							<header class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 								<div class="content clearfix modules" id="top_modules">
 									{section name=homeix loop=$top_modules}
 										{$top_modules[homeix].data}
 									{/section}
 								</div>
-							</div>
-						</header>
+							</header>
+						</div>	
 					</div>
 				</div>
 				{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.header_shadow_end}</div>{/if}
@@ -164,7 +164,7 @@
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}
 						<footer id="footer">
 							<div class="footer_liner">
-								<div class="footerbgtrap fixedwidth">
+								<div class="footerbgtrap">
 									<div id="bottom_modules" class="content modules"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 										{section name=homeix loop=$bottom_modules}
 											{$bottom_modules[homeix].data}

@@ -28,24 +28,18 @@ header, nav, article, footer, address {
     display: block;  
 } 
 
-/* lite.css needs the centre section to be
- * display:table to avoid overlapping columns */
-#middle {
+/* general #fixedwidth wrapper when fixed width is off */
+#fixedwidth {
 	display: table;
-}
-
-/* general .fixedwidth wrapper when fixed width is off */
-.fixedwidth {
-	margin: 0 auto;
+	margin: auto;
+	margin-top: 0;
+	margin-bottom: 0;
 	width: 100%;
 }
 
 /* when fixed width is set to on */
-.fixed_width .fixedwidth {
+.fixed_width #fixedwidth {
 	width: 990px;
-}
-
-.fixed_width #main {
 	margin-top: 18px;
 	margin-bottom: 5px;
 }
