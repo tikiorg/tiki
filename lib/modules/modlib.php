@@ -715,7 +715,7 @@ class ModLib extends TikiLib
 		global $tikilib, $smarty;
 
 		$smarty->assign('module_type','module');
-		$info = $tikilib->get_user_module( $name );
+		$info = $this->get_user_module( $name );
 		if (!empty($info)) {
 			// test if we have a menu
 			if (strpos($info['data'],'{menu ') === 0 and strpos($info['data'],"css=n") === false) {
@@ -824,5 +824,79 @@ class ModLib extends TikiLib
 	function add_pref_error($module_name, $preference_name) {
 		$this->pref_errors[] = array('mod_name' => $module_name, 'pref_name' => $preference_name);
 	}
+
+	
+	/* Returns all module assignations for a certain position, or all positions (by default). A module assignation
+	is represented by an array similar to a tiki_modules record. The groups field is unserialized in the module_groups key, a spaces-separated list of groups.
+	If asking for a specific position, returns an array of module assignations. If not, returns an array of arrays of modules assignations indexed by positions. For example: array("l" -> array("module assignation"))
+	TODO: Document $displayed's effect */
+	function get_assigned_modules($position = null, $displayed="n") {
+		
+		$filter = '';
+		$bindvars = array();
+
+		if ( $position !== null ) {
+			$filter .= 'where `position`=?';
+			$bindvars[] = $position;
+		}
+
+		if ( $displayed != 'n' ) {
+			$filter .= ( $filter == '' ? 'where' : 'and' ) . " (`type` is null or `type` != ?)";
+			$bindvars[] = 'y';
+		}
+
+		$query = "select * from `tiki_modules` $filter order by ".$this->convertSortMode("ord_asc");
+
+		$result = $this->fetchAll($query, $bindvars);
+
+		$ret = array();
+		foreach ( $result as $res ) {
+			if ($res["groups"] && strlen($res["groups"]) > 1) {
+				$grps = @unserialize($res["groups"]);
+
+				$res["module_groups"] = '';
+				if (is_array($grps)) {
+					foreach ($grps as $grp) {
+						$res["module_groups"] .= " $grp ";
+					}
+				}
+			} else {
+				$res["module_groups"] = '&nbsp;';
+			}
+			if ( $position === null ) {
+				if ( ! isset($ret[$res['position']]) ) {
+					$ret[$res['position']] = array();
+				}
+				$ret[$res['position']][] = $res;
+			} else {
+				$ret[] = $res;
+			}
+		}
+		return $ret;
+	}
+
+	function is_user_module($name) {
+		return $this->table('tiki_user_modules')->fetchCount(array('name' => $name));
+	}
+
+	function get_user_module($name) {
+		$cachelib = TikiLib::lib('cache');
+		$cacheKey = "user_modules_$name";
+
+		if ( $cachelib->isCached($cacheKey) ) {
+			$return = unserialize($cachelib->getCached($cacheKey));
+		} else {
+			$return = $this->table('tiki_user_modules')->fetchFullRow(array('name' => $name));
+
+			if($return) {
+				$cachelib->cacheItem($cacheKey, serialize($return));
+			}
+		}
+
+		return $return;
+	}
+
+
+	
 }
 $modlib = new ModLib;

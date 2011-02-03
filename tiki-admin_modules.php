@@ -180,8 +180,8 @@ if (isset($_REQUEST["preview"])) {
 	else
 		$module_rows = 10;
 
-    if ($tikilib->is_user_module($_REQUEST["assign_name"])) {
-        $info = $tikilib->get_user_module($_REQUEST["assign_name"]);
+    if ($modlib->is_user_module($_REQUEST["assign_name"])) {
+        $info = $modlib->get_user_module($_REQUEST["assign_name"]);
         $smarty->assign_by_ref('user_title', $info["title"]);
         if ($info["parse"] == "y") {
             $parse_data = $tikilib->parse_data($info["data"]);
@@ -278,7 +278,7 @@ if (isset($_REQUEST["um_remove"])) {
 if (isset($_REQUEST["um_edit"])) {
     check_ticket('admin-modules');
     $_REQUEST["um_edit"] = urldecode($_REQUEST["um_edit"]);
-    $um_info = $tikilib->get_user_module($_REQUEST["um_edit"]);
+    $um_info = $modlib->get_user_module($_REQUEST["um_edit"]);
     $smarty->assign_by_ref('um_name', $um_info["name"]);
     $smarty->assign_by_ref('um_title', $um_info["title"]);
     $smarty->assign_by_ref('um_data', $um_info["data"]);
@@ -355,19 +355,19 @@ $smarty->assign( 'maxRecords', $maxRecords );
 $smarty->assign( 'offset', $offset );
 $smarty->assign( 'maximum', $maximum );
 
-$left = $tikilib->get_assigned_modules('l');
-$right = $tikilib->get_assigned_modules('r');
+$left = $modlib->get_assigned_modules('l');
+$right = $modlib->get_assigned_modules('r');
 $smarty->assign_by_ref('left', $left);
 $smarty->assign_by_ref('right', $right);
-$top = $tikilib->get_assigned_modules('t');
-$bottom = $tikilib->get_assigned_modules('b');
+$top = $modlib->get_assigned_modules('t');
+$bottom = $modlib->get_assigned_modules('b');
 $smarty->assign_by_ref('top', $top);
 $smarty->assign_by_ref('bottom', $bottom);
-$pagetop = $tikilib->get_assigned_modules('p');
-$pagebottom = $tikilib->get_assigned_modules('q');
+$pagetop = $modlib->get_assigned_modules('p');
+$pagebottom = $modlib->get_assigned_modules('q');
 $smarty->assign_by_ref('pagetop', $pagetop);
 $smarty->assign_by_ref('pagebottom', $pagebottom);
-$topbar = $tikilib->get_assigned_modules('o');
+$topbar = $modlib->get_assigned_modules('o');
 $smarty->assign_by_ref('topbar', $topbar);
 $headerlib->add_css('.module:hover {
 	cursor: move;
