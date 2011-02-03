@@ -35,6 +35,9 @@ function print_progress($msg) {
 	}
 }
 
+if ( $prefs['auth_token_access'] == 'y' && $token ) {
+	$smarty->assign('token_id', $token);
+}
 function print_msg($msg, $id) {
 	global $prefs;
 	if ($prefs['javascript_enabled'] == 'y') {

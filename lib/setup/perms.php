@@ -53,10 +53,29 @@ if( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 	$token = $_REQUEST['TOKEN'];
 		
 	unset( $_GET['TOKEN'] );
+	unset( $_POST['TOKEN'] );
 	unset( $_REQUEST['TOKEN'] );
+	$tokenParams = $_GET;
+
+ 	/**
+ 	 * Shared 'Upload File' case
+ 	 */
+	if ( isset($isUpload) && $isUpload && ! empty($_POST['galleryId']) && empty($_GET['galleryId']) ) {
+		foreach ( (array) $_POST['galleryId'] as $v ) {
+			if ( ! empty( $tokenParams['galleryId'] ) ) {
+				if ( $tokenParams['galleryId'] == $v ) {
+					continue;
+				} else {
+					unset( $tokenParams['galleryId'] );
+					break;
+				}
+			}
+			$tokenParams['galleryId'] = $v;
+		}
+	}
 
 	$tokenlib = AuthTokens::build( $prefs );
-	if( $groups = $tokenlib->getGroups( $token, $_SERVER['PHP_SELF'], $_GET ) ) {
+	if( $groups = $tokenlib->getGroups( $token, $_SERVER['PHP_SELF'], $tokenParams ) ) {
 	 	$groupList = $groups;
 	 	$detailtoken = $tokenlib->getToken($token);
 	 	$is_token_access = true;	
@@ -159,3 +178,4 @@ $globalperms->globalize( $shortPermList, $smarty, false );
 $smarty->assign( 'globalperms', $globalperms );
 
 unset($allperms);
+unset($tokenParams);

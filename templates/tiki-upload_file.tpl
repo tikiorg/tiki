@@ -35,7 +35,7 @@
 </div>
 {/if}
 
-{if count($errors) > 0}
+{if isset($errors) and count($errors) > 0}
 	<div class="simplebox highlight">
 	<h2>{tr}Errors detected{/tr}</h2>
 	{section name=ix loop=$errors}
@@ -261,6 +261,9 @@
 <input type="hidden" name="formId" value="0"/>
 {if $filegals_manager neq ''}
 	<input type="hidden" name="filegals_manager" value="{$filegals_manager}"/>
+{/if}
+{if isset($token_id) and $token_id neq ''}
+	<input type="hidden" value="{$token_id}" name="TOKEN" />
 {/if}
 <input type="hidden" name="simpleMode" value="{$simpleMode}"/>
 {$upload_str}
