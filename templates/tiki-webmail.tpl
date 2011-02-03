@@ -591,7 +591,7 @@
 					<tr>
 						<td>{tr}Use HTML mail{/tr}</td>
 						<td colspan="3">
-							<input type="checkbox" name="useHTML"{if $useHTML eq "y"} checked="checked"{/if} />
+							<input type="checkbox" name="useHTML"{if $useHTML eq "y" || $smarty.session.wysiwyg eq "y"} checked="checked"{/if} />
 						</td>
 					</tr>
 				</table>
