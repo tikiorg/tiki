@@ -23,14 +23,14 @@ function capLock(e, el){
 				<form action="{if $prefs.https_login eq 'encouraged' || $prefs.https_login eq 'required' || $prefs.https_login eq 'force_nocheck'}{$base_url_https}{/if}{$prefs.login_url}" method="post"{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
 					<fieldset>
 						<legend>{tr}Switch User{/tr}</legend>
-						<label for="login-switchuser">{tr}Username:{/tr}</label>
+						<label for="login-switchuser_{$module_logo_instance}">{tr}Username:{/tr}</label>
 						<input type="hidden" name="su" value="1" />
 						{if $prefs.feature_help eq 'y'}
 							{help url="Switch+User" desc="{tr}Help{/tr}" desc="{tr}Switch User:{/tr}{tr}Enter user name and click 'Switch'.<br />Useful for testing permissions.{/tr}"}
 						{/if}
-						<input type="text" name="username" id="login-switchuser" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
+						<input type="text" name="username" id="login-switchuser_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
 						<div style="text-align: center"><button type="submit" name="actsu">{tr}Switch{/tr}</button></div>
-						{jq}$("#login-switchuser").tiki("autocomplete", "username"){/jq}
+						{jq}$("#login-switchuser_{$module_logo_instance}").tiki("autocomplete", "username"){/jq}
 					</fieldset>
 				</form>
 			{/if}
@@ -39,7 +39,7 @@ function capLock(e, el){
 		{elseif $module_params.mode eq "popup"}
 			<div class="siteloginbar_popup">
 				<ul class="clearfix cssmenu_horiz">
-					<li class="tabmark" id="logout_link"><a href="tiki-logout.php" class="login_link">Log out</a>
+					<li class="tabmark" id="logout_link_{$module_logo_instance}"><a href="tiki-logout.php" class="login_link">Log out</a>
 						<ul>
 							<li>
 								<div class="cbox">{$user|userlink} | <a href="tiki-logout.php" title="Log out">Log out</a></div>
@@ -99,7 +99,7 @@ function doChallengeResponse() {
 		{if $module_params.mode eq "popup"}
 			<div class="siteloginbar_popup">
 				<ul class="clearfix cssmenu_horiz">
-					<li class="tabmark" id="logout_link"><a href="tiki-logout.php" class="login_link">Log in</a>
+					<li class="tabmark" id="logout_link_{$module_logo_instance}"><a href="tiki-logout.php" class="login_link">Log in</a>
 						<ul>
 							<li>
 								<div class="cbox">
@@ -116,33 +116,60 @@ function doChallengeResponse() {
 			{/remarksbox}
 		{/if}
 		<div>
-			<label for="login-user">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username:{/tr}{/if}</label>
+			<label for="login-user_{$module_logo_instance}">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username:{/tr}{/if}</label>
 			{if $loginuser eq ''}
-				<input type="text" name="user" id="login-user" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" {if !empty($error_login)} value="{$error_user|escape}"{/if} />
-				<script type="text/javascript">document.getElementById('login-user').focus();</script>
+				<input type="text" name="user" id="login-user_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" {if !empty($error_login)} value="{$error_user|escape}"{/if} />
+				<script type="text/javascript">document.getElementById('login-user_{$module_logo_instance}').focus();</script>
 			{else}
-				<input type="hidden" name="user" id="login-user" value="{$loginuser}" /><b>{$loginuser}</b>
+				<input type="hidden" name="user" id="login-user_{$module_logo_instance}" value="{$loginuser}" /><b>{$loginuser}</b>
 			{/if}
 		</div>
-		<script type="text/javascript">document.getElementById('login-user').focus();</script>
+		<script type="text/javascript">document.getElementById('login-user_{$module_logo_instance}').focus();</script>
 		{if $prefs.feature_challenge eq 'y'} <!-- quick hack to make challenge/response work until 1.8 tiki auth overhaul -->
 			<div>
-				<label for="login-email">{tr}eMail:{/tr}</label>
-				<input type="text" name="email" id="login-email" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
+				<label for="login-email_{$module_logo_instance}">{tr}eMail:{/tr}</label>
+				<input type="text" name="email" id="login-email_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
 			</div>
 		{/if}
 		<div>
-			<label for="login-pass">{tr}Password:{/tr}</label>
-			<input onkeypress="capLock(event, this)" type="password" name="pass" id="login-pass" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
+			<label for="login-pass_{$module_logo_instance}">{tr}Password:{/tr}</label>
+			<input onkeypress="capLock(event, this)" type="password" name="pass" id="login-pass_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
 			<div class="divCapson" style="display:none;">
 				{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}
 			</div>
 		</div>
 		{if $prefs.rememberme ne 'disabled' and !empty($module_params.remember) and $module_params.remember neq 'n'}
 			{if $prefs.rememberme eq 'always'}
-				<input type="hidden" name="rme" id="login-remember-module-input" value="on" />
+				<input type="hidden" name="rme" id="login-remember-module-input_{$module_logo_instance}" value="on" />
 			{else}
-				<div style="text-align: center"><input type="checkbox" name="rme" id="login-remember-module" value="on" /><label for="login-remember-module">{tr}Remember me{/tr}</label> ({tr}for{/tr} {if $prefs.remembertime eq 300}5 {tr}minutes{/tr}{elseif $prefs.remembertime eq 900}15 {tr}minutes{/tr}{elseif $prefs.remembertime eq 1800}30 {tr}minutes{/tr}{elseif $prefs.remembertime eq 3600}1 {tr}hour{/tr}{elseif $prefs.remembertime eq 7200}2 {tr}hours{/tr}{elseif $prefs.remembertime eq 36000}10 {tr}hours{/tr}{elseif $prefs.remembertime eq 72000}20 {tr}hours{/tr}{elseif $prefs.remembertime eq 86400} 1 {tr}day{/tr}{elseif $prefs.remembertime eq 604800}1 {tr}week{/tr}{elseif $prefs.remembertime eq 2629743}1 {tr}month{/tr}{elseif $prefs.remembertime eq 31556926}1 {tr}year{/tr}{/if})
+				<div style="text-align: center">
+					<input type="checkbox" name="rme" id="login-remember-module_{$module_logo_instance}" value="on" />
+					<label for="login-remember-module_{$module_logo_instance}">{tr}Remember me{/tr}</label>
+					({tr}for{/tr}
+					{if $prefs.remembertime eq 300}
+						5 {tr}minutes{/tr}
+					{elseif $prefs.remembertime eq 900}
+						15 {tr}minutes{/tr}
+					{elseif $prefs.remembertime eq 1800}
+						30 {tr}minutes{/tr}
+					{elseif $prefs.remembertime eq 3600}
+						1 {tr}hour{/tr}
+					{elseif $prefs.remembertime eq 7200}
+						2 {tr}hours{/tr}
+					{elseif $prefs.remembertime eq 36000}
+						10 {tr}hours{/tr}
+					{elseif $prefs.remembertime eq 72000}
+						20 {tr}hours{/tr}
+					{elseif $prefs.remembertime eq 86400}
+						1 {tr}day{/tr}
+					{elseif $prefs.remembertime eq 604800}
+						1 {tr}week{/tr}
+					{elseif $prefs.remembertime eq 2629743}
+						1 {tr}month{/tr}
+					{elseif $prefs.remembertime eq 31556926}
+						1 {tr}year{/tr}
+					{/if}
+					)
 				</div>
 			{/if}
 		{/if}
@@ -178,8 +205,8 @@ function doChallengeResponse() {
 		{/if}
 		{if $prefs.feature_show_stay_in_ssl_mode eq 'y' && $show_stay_in_ssl_mode eq 'y'}
 			<div>
-				<label for="login-stayssl">{tr}Stay in SSL mode:{/tr}</label>?
-				<input type="checkbox" name="stay_in_ssl_mode" id="login-stayssl" {if $stay_in_ssl_mode eq 'y'}checked="checked"{/if} />
+				<label for="login-stayssl_{$module_logo_instance}">{tr}Stay in SSL mode:{/tr}</label>?
+				<input type="checkbox" name="stay_in_ssl_mode" id="login-stayssl_{$module_logo_instance}" {if $stay_in_ssl_mode eq 'y'}checked="checked"{/if} />
 			</div>
 		{/if}
 		{* This is needed as unchecked checkboxes are not sent. The other way of setting hidden field with same name is potentially non-standard *}

@@ -3,8 +3,6 @@
 	<base href="{$base_uri|escape}" />
 {/if}
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="Content-Script-Type" content="text/javascript" />
-<meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="generator" content="Tiki Wiki CMS Groupware - http://tiki.org" />
 
 {* --- Canonical URL --- *}
