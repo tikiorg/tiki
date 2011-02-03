@@ -77,13 +77,13 @@
 													<br style="clear:both" />
 												</div>
 											{/if}
-											{if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && $pagetop_modules|@count > 0)}
-												<div class="content clearfix modules" id="pagetop_modules">
-													{section name=homeix loop=$pagetop_modules}
-														{$pagetop_modules[homeix].data}
-													{/section}
-												</div>
-											{/if}
+										{/if}
+										{if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && $pagetop_modules|@count > 0)}
+											<div class="content clearfix modules" id="pagetop_modules">
+												{section name=homeix loop=$pagetop_modules}
+													{$pagetop_modules[homeix].data}
+												{/section}
+											</div>
 										{/if}
 										{if $section neq 'share' && $prefs.feature_share eq 'y' && $tiki_p_share eq 'y' and (!isset($edit_page) or $edit_page ne 'y' and $prefs.feature_site_send_link ne 'y')}
 											<div class="share">
@@ -96,40 +96,40 @@
 											</div>
 										{/if}
 										{if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
-												<div id="tiki-center" {*id needed for ajax editpage link*} class="clearfix content">
-													{if $display_msg}
-														{remarksbox type="note" title="{tr}Notice{/tr}"}{$display_msg|escape}{/remarksbox}
-													{/if}
-													<div id="role_main">
-														{$mid_data}  {* You can modify mid_data using tiki-show_page.tpl *}
-													</div>
-													{if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && $pagebottom_modules|@count > 0)}
-														<div class="content clearfix modules" id="pagebottom_modules">
-															{section name=homeix loop=$pagebottom_modules}
-																{$pagebottom_modules[homeix].data}
-															{/section}
-														</div>
-													{/if}
-													{show_help}
-												</div>
-												{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
+										<div id="tiki-center" {*id needed for ajax editpage link*} class="clearfix content">
+											{if $display_msg}
+												{remarksbox type="note" title="{tr}Notice{/tr}"}{$display_msg|escape}{/remarksbox}
+											{/if}
+											<div id="role_main">
+												{$mid_data}  {* You can modify mid_data using tiki-show_page.tpl *}
 											</div>
-										</div>
-
-									{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
-										<hr class="hidden" />{* for semantic separation of center and side columns *}
-										{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}
-											<aside id="col2"{if $prefs.feature_left_column eq 'user'} style="display:{if isset($cookie.show_col2) and $cookie.show_col2 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
-												<h2 class="hidden">Sidebar</h2>
-												<div id="left_modules" class="content modules">
-													{section name=homeix loop=$left_modules}
-														{$left_modules[homeix].data}
+											{if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && $pagebottom_modules|@count > 0)}
+												<div class="content clearfix modules" id="pagebottom_modules">
+													{section name=homeix loop=$pagebottom_modules}
+														{$pagebottom_modules[homeix].data}
 													{/section}
 												</div>
-											</aside>
-										{/if}
+											{/if}
+											{show_help}
+										</div>{* end #tiki-center *}
+										{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
+									</div>
+								</div>{* end #wrapper *}
+
+								{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
+									<hr class="hidden" />{* for semantic separation of center and side columns *}
+									{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}
+										<aside id="col2"{if $prefs.feature_left_column eq 'user'} style="display:{if isset($cookie.show_col2) and $cookie.show_col2 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+											<h2 class="hidden">Sidebar</h2>
+											<div id="left_modules" class="content modules">
+												{section name=homeix loop=$left_modules}
+													{$left_modules[homeix].data}
+												{/section}
+											</div>
+										</aside>
 									{/if}
-								</div>{* -- END of c1c2 -- *}
+								{/if}
+							</div>{* -- END of #c1c2 -- *}
 							{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 								{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n')}
 									<aside class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_col3) and $cookie.show_col3 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
@@ -146,7 +146,7 @@
 													</p>
 												{/remarksbox}
 											{/if}
-											{section name=homeix loop=$right_modules}
+											{section name=homeix loop=$tiki-center}
 												{$right_modules[homeix].data}
 											{/section}
 										</div>
@@ -155,9 +155,9 @@
 								{/if}
 							{/if}
 							<!--[if IE 7]><br style="clear:both; height: 0" /><![endif]-->
-						</div>{* -- END of middle -- *}
+						</div>{* -- END of #middle -- *}
 					{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.middle_shadow_end}</div>{/if}
-				</div>
+				</div>{* end .middle_outer *}
 				{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 					{if $prefs.module_zones_bottom eq 'fixed' or ($prefs.module_zones_bottom ne 'n' && $bottom_modules|@count > 0)}{* previously if $prefs.feature_bot_bar eq 'y' *}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}

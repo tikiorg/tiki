@@ -29,13 +29,17 @@ record_module_loading_errors();
 $show_columns = array_fill_keys( array_keys( $modules ), 'n' );
 
 foreach( $modules as $zone => & $moduleList ) {
-	foreach( $moduleList as & $mod_reference ) {
-		$show_columns[$zone] = 'y';
+	if ($prefs['feature_fullscreen'] != 'y' || empty($_SESSION['fullscreen']) || $_SESSION['fullscreen'] != 'y' ||
+			strpos($zone, 'page') === 0) {	// pagetop and pagebottom zones appear in fullscreen
 
-		$mod_reference['data'] = $modlib->execute_module( $mod_reference );
+		foreach( $moduleList as & $mod_reference ) {
+			$show_columns[$zone] = 'y';
+
+			$mod_reference['data'] = $modlib->execute_module( $mod_reference );
+		}
+
+		$smarty->assign_by_ref( $zone, $moduleList );
 	}
-
-	$smarty->assign_by_ref( $zone, $moduleList );
 }
 
 $smarty->assign_by_ref( 'show_columns', $show_columns );

@@ -171,8 +171,7 @@ class Smarty_Tiki extends Smarty
 			$data = $this->fetch($tpl, $_smarty_cache_id, $_smarty_compile_id);//must get the mid because the modules can overwrite smarty variables
 
 			$this->assign('mid_data', $data);
-			if ($prefs['feature_fullscreen'] != 'y' || empty($_SESSION['fullscreen']) || $_SESSION['fullscreen'] != 'y')
-				include_once('tiki-modules.php');
+			include_once('tiki-modules.php');
 
 		} elseif ($_smarty_tpl_file == 'confirm.tpl' || $_smarty_tpl_file == 'error.tpl' || $_smarty_tpl_file == 'error_ticket.tpl' || $_smarty_tpl_file == 'error_simple.tpl') {
 			ob_end_clean(); // Empty existing Output Buffer that may have been created in smarty before the call of this confirm / error* template
