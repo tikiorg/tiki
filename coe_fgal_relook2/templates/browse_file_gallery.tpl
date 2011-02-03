@@ -2,7 +2,7 @@
 <div id="thumbnails" style="float:left">
 
   {section name=changes loop=$files}
-  
+
   {* Checkboxes *}
   {if $files[changes].isgal eq 1}
     {assign var=checkname value=$subgal_checkbox_name|default:'subgal'}
@@ -178,11 +178,10 @@
       {if $prefs.fgal_show_thumbactions eq 'y' or $show_details eq 'y'}
         <div class="thumbactions" style="float:right; width:{$thumbnail_size}px">
 
-      {if $files[changes].isgal neq 1}
-        {if $gal_info.show_checked neq 'n' and $tiki_p_admin_file_galleries eq 'y' and $filegals_manager eq ''}
-          <label style="float:left"><input type="checkbox" onclick="flip_thumbnail_status('{$checkname}_{$files[changes].id}')" name="{$checkname}[]" value="{$files[changes].id|escape}" {if $is_checked eq 'y'}checked="checked"{/if} />{if isset($checkbox_label)}{$checkbox_label}{/if}</label>
-        {/if}
-      {/if}
+        {if $files[changes].isgal neq 1}
+          {if $gal_info.show_checked neq 'n' and $tiki_p_admin_file_galleries eq 'y' and $filegals_manager eq ''}
+            <label style="float:left"><input type="checkbox" onclick="flip_thumbnail_status('{$checkname}_{$files[changes].id}')" name="{$checkname}[]" value="{$files[changes].id|escape}" {if $is_checked eq 'y'}checked="checked"{/if} />{if isset($checkbox_label)}{$checkbox_label}{/if}</label>
+          {/if}
 
           {if $gal_info.show_action neq 'n'}
             {if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' ) and $prefs.javascript_enabled eq 'y'}
@@ -198,6 +197,7 @@
         </div> {* thumbactions *}
       {/if}
     </div> {* thumbnailcontener *}
+  {/if}
 
 {jq}
 	adjustThumbnails()	

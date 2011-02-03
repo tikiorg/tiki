@@ -65,7 +65,7 @@ h2,
 h3,
 h4 {
 	font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-	text-transform: small-caps;
+	font-variant: small-caps;
 	color: #00f000;
 }
 
@@ -324,7 +324,6 @@ a .sf-sub-indicator {
 	margin-bottom: 6px;
 	border: 1px outset #00a000;
 	padding-bottom: 10px;
-	width: 170px;
 }
 
 h3.box-title {
@@ -428,7 +427,7 @@ th,
 td.heading,
 tr.diffheader {
 	border: 1px outset #00b000;
-	font: "Matrix_vs_miltown","Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;
+	font-family: "Matrix_vs_miltown","Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;
 	font-variant: small-caps;
 	font-size: inherit;
 	color: #90ee90;
@@ -441,7 +440,7 @@ tr.diffheader {
 
 .normal td,
 .wikicell {
-	background: #70bb080;
+	background: #70bb08;
 	border: 1px outset #90ee90;
 }
 

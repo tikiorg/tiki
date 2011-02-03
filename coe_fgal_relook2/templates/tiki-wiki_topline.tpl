@@ -4,7 +4,7 @@
 		<div class="wikiinfo" style="float: left">
 
 {if $prefs.wiki_page_name_above eq 'y' and $print_page ne 'y'}
-	<a href="tiki-index.php?page={$page|escape:"url"}" class="titletop">{$page}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{* The hard-coded spaces help selecting the page name for inclusion in a wiki link *}
+    <a href="javascript:self.location=self.location;" class="titletop" title="{tr}refresh{/tr}">{$page}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{* The hard-coded spaces help selecting the page name for inclusion in a wiki link *}
 {/if}
 
 {if $prefs.feature_wiki_pageid eq 'y' and $print_page ne 'y'}
@@ -13,7 +13,7 @@
 
 {breadcrumbs type="desc" loc="page" crumbs=$crumbs}
 
-{if $cached_page eq 'y'}<span class="cachedStatus'>({tr}Cached{/tr})</span>{/if}
+{if $cached_page eq 'y'}<span class="cachedStatus">({tr}Cached{/tr})</span>{/if}
 {if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categorypath eq 'y' and $tiki_p_view_category eq 'y'}
 	{$display_catpath}
 {/if}
@@ -24,7 +24,7 @@
 			<div class="wikiactions" style="float: right; padding-left:10px; white-space: nowrap">
 				<div class="icons" style="float: left;">
 		{if $pdf_export eq 'y'}
-					<a href="tiki-print.php?{query display="pdf"}" title="{tr}PDF{/tr}">{icon _id='page_white_acrobat' alt="{tr}PDF{/tr}"}</a>
+					<a href="tiki-print.php?{query display="pdf" page=$page}" title="{tr}PDF{/tr}">{icon _id='page_white_acrobat' alt="{tr}PDF{/tr}"}</a>
 		{/if}
 		{if $prefs.flaggedrev_approval neq 'y' or ! $revision_approval or $lastVersion eq $revision_displayed}
 			{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y' and $machine_translate_to_lang == '' or $canEditStaging eq 'y' }

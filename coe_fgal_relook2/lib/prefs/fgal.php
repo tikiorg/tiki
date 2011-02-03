@@ -56,6 +56,12 @@ function prefs_fgal_list() {
 							  'different_galleries' => tra('Only in different galleries')
 			),
 		),
+		'fgal_display_zip_option' => array(
+			'name' => tra('Display zip option in gallery'),
+			'type' => 'flag',
+			'description' => tra('Display in the gallery the zip option (in upload and gallery file)'),
+			'help' => 'File+Zip+Gallery+Config',
+		),
 		'fgal_match_regex' => array(
 			'name' => tra('Must match'),
 			'type' => 'text',
@@ -87,10 +93,10 @@ function prefs_fgal_list() {
 			'type' => 'list',
 			'options' => array(
 							  'n' 				=> tra('Never'),
-							  'bar_and_text' 	=> tra('Yes, display only and detail text'),
+							  'bar_and_text' 	=> tra('Yes, display bar and detail text'),
 							  'y' 				=> tra('Yes, display only bar'),
-							  'text_only'		=> tra('Yes, display bar and detail text')
-		),
+							  'text_only'		=> tra('Yes, display only text')
+			),
 		),
 		'fgal_use_db' => array(
 			'name' => tra('Storage'),
@@ -115,9 +121,27 @@ function prefs_fgal_list() {
 			'name' => tra('Include a search box on file galleries'),
 			'type' => 'flag',
 		),
+		'fgal_list_ratio_hits' => array(
+			'name' => tra('Display hits with a ratio between hits / maxhits'),
+			'type' => 'flag',
+		),
+		'fgal_display_properties' => array(
+			'name' => tra('Display properties in the context menu'),
+			'type' => 'flag',
+		),
+		'fgal_display_replace' => array(
+			'name' => tra('Display replace menu in context menu'),
+			'type' => 'flag',
+		),
 		'fgal_delete_after' => array(
 			'name' => tra('Automatic deletion of old files'),
 			'description' => tra('The user will have an option when uploading a file to specify the time after which the file is deleted'),
+			'type' => 'flag',
+			'help' => 'File+Gallery+Config',
+		),
+		'fgal_checked' => array(
+			'name' => tra('Allow action on multiple files or galleries'),
+			'description' => tra('The check button on file gallery can be remove'),
 			'type' => 'flag',
 			'help' => 'File+Gallery+Config',
 		),

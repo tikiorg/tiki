@@ -43,9 +43,9 @@ function wikiplugin_archivebuilder( $data, $params ) {
 		$archive->open( $file = tempnam( 'temp/', 'archive' ) . '.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE );
 
 		foreach( explode( "\n", $data ) as $line ) {
-			if ( empty( $line ) ) continue;
 			$parts = explode( ":", trim( $line ) );
 			$handler = array_shift( $parts );
+
 			if( isset( $handlers[$handler] ) ) {
 				$result = call_user_func_array( $handlers[$handler], $parts );
 				foreach( $result as $name => $content ) {

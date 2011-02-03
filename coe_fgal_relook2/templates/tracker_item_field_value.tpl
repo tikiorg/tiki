@@ -92,7 +92,7 @@
 
 {* -------------------- empty field -------------------- *}
 {elseif empty($field_value.value) and $field_value.value != '0' and $field_value.type ne 'U' and $field_value.type ne '*' and $field_value.type ne 's' 
-	and $field_value.type ne 'q' and $field_value.type ne 'n' and $field_value.type ne 'C'}
+	and $field_value.type ne 'q' and $field_value.type ne 'n' and $field_value.type ne 'C' and $field_value.type ne 'h'}
 	{if $list_mode ne 'csv' and $is_link eq 'y'}&nbsp;{/if} {* to have something to click on *}
 
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *}
@@ -402,7 +402,10 @@
 
 {* -------------------- header ------------------------- *}
 {elseif $field_value.type eq 'h'}
-	<h2>{$field_value.value}</h2>
+	{capture name="level"}{if empty($field_value.options_array[0])}2{else}{$field_value.options_array[0]}{/if}{/capture}
+	{capture name="toggle"}{if empty($field_value.options_array[1])}{else}{$field_value.options_array[1]}{/if}{/capture}
+	{capture name="inTable"}{if !empty($inTable)}{$inTable}{else}{/if}{/capture}
+	{trackerheader level=$smarty.capture.level title=$field_value.name toggle=$smarty.capture.toggle inTable=$smarty.capture.inTable}
 
 {* -------------------- subscription -------------------- *}
 {elseif $field_value.type eq 'U'}

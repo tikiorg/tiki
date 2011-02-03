@@ -115,31 +115,31 @@
 		{if count($channels)}
 			{if $view neq 'list'}
 				<tr>
-					<td colspan="6" style="font-size:80%;color:#999;">
+					<td colspan="5" style="font-size:80%;color:#999;">
 						{tr}from{/tr} <b>{$k}</b>
 					</td>
 				</tr>
 			{/if}
 			{section name=user loop=$channels}
 				<tr class="{cycle}">
-					<td>
+					<td class="text">
 						<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">
 							{$channels[user].firstName}
 						</a>
 					</td>
-					<td>
+					<td class="text">
 						<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">
 							{$channels[user].lastName}
 						</a>
 					</td>
-					<td>
+					<td class="email">
 						{if $prefs.feature_webmail eq 'y'}
 							{self_link _script='tiki-webmail.php' locSection='compose' to=$channels[user].email}{$channels[user].email}{/self_link}
 						{else}
 							<a class="link" href="mailto:{$channels[user].email}">{$channels[user].email}</a>
 						{/if}
 					</td>
-					<td>
+					<td class="text">
 						{$channels[user].nickname}
 					</td>
 					{foreach from=$exts item=ext key=e}
@@ -160,7 +160,7 @@
 						</td>
 					{/if}
 					
-					<td>&nbsp;
+					<td class="action">
 						{if $channels[user].user eq $user}
 							<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}" title="{tr}Edit{/tr}">
 								{icon _id='page_edit'}

@@ -186,6 +186,14 @@ class TikiSheet
 		);
 	}// }}}2
 	
+	function TikiSheetFile ( $file, $type )
+	{
+		$grid = new TikiSheet();
+		$grid->file = $file;
+		$grid->type = $type;
+		return $grid;
+	}
+	
 	/** TikiSheet {{{2
 	 * Initializes the data container.
 	 */
@@ -319,7 +327,7 @@ class TikiSheet
 	 * @param bool $incsubs Include sub-sheets
 	 * @param timestamp $date Date (revision) to read sub-sheets from
 	 */
-	function getTableHtml( $incsubs = true, $date = null ) {
+	function getTableHtml( $incsubs = true, $date = null, $fromDb = true ) {
 		global $prefs, $sheetlib;
 		
 		$handler = new TikiSheetOutputHandler(null, ($this->parseValues == 'y' && $_REQUEST['parse'] != 'n'));
@@ -328,7 +336,7 @@ class TikiSheet
 		$data = ob_get_contents();
 		ob_end_clean();
 		
-		if ($incsubs && !$this->isSubSheet) {
+		if ($incsubs && !$this->isSubSheet && $fromDb) {
 			$subsheets = $sheetlib->get_sheet_subsheets($this->sheetId);
 			if (count($subsheets) > 0) {
 				foreach ($subsheets as $sub) {
@@ -1066,7 +1074,16 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 				foreach( $data as $col=>$value )
 				{
 					$sheet->initCell( $row, $col );
-					$sheet->setValue( $this->encoding->convert_encoding ( $value ) );
+					$cellValue = $this->encoding->convert_encoding ( $value );
+					$sheet->setValue( $cellValue );
+                	
+					if ( isset($cellValue) ) {
+						if (strlen( $cellValue )) {
+							if ($cellValue[0] == '=' ) {
+								$sheet->setCalculation( substr($cellValue, 1) );
+							}
+						}
+					}
 					$sheet->setSize( 1, 1 );
 				}
 
@@ -1177,7 +1194,17 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
                 foreach( $data as $col=>$value )
                 {
                     $sheet->initCell( $row, $col );
-                    $sheet->setValue( $this->encoding->convert_encoding ( $value ) );
+                	$cellValue = $this->encoding->convert_encoding ( $value );
+					$sheet->setValue( $cellValue );
+                	
+					if ( isset($cellValue) ) {
+						if (strlen( $cellValue )) {
+							if ($cellValue[0] == '=' ) {
+								$sheet->setCalculation( substr($cellValue, 1) );
+							}
+						}
+					}
+					
                     $sheet->setSize( 1, 1 );
                 }
 
@@ -1195,19 +1222,12 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
     // _save {{{2
     function _save( &$sheet )
     {
-        $total = array();
-        
-        ksort ($sheet->dataGrid);
-        
-        foreach( $sheet->dataGrid as $row ) 
+        $total = array(); 
+        foreach( $sheet->data as $row ) 
         {
-            if( is_array( $row ) ) 
-            {
-                ksort($row);
-                $total[] = $this->fputcsvexcel( $row ,';','"');
-            }
+            $total[] = $this->fputcsvexcel( $row ,';','"', $sheet->metadata->columns);
         }
-
+        //print_r($sheet);
         if( is_array( $total ) )
             $total = implode( "\n", $total );
             
@@ -1258,18 +1278,26 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
         return "1.0";
     }
     
-    function fputcsvexcel( $row, $fd=';', $quot='"')
+    function fputcsvexcel( $row, $fd=';', $quot='"', $limit)
     {
        $str='';
-       foreach ($row as $cell) {
-           str_replace(Array($quot,        "\n"),
-                       Array($quot.$quot,  ''),
-                       $cell);
-           if (strchr($cell, $fd)) {
-               $str.=$quot.$cell.$quot.$fd;
-           } else {
-               $str.=$cell.$fd;
-           }
+       $i = 0;
+       foreach ($row as $col) {
+       		if ($i && $i < $limit) {
+				$cell = ($col->formula ? $col->formula : $col->value);
+	          	str_replace(
+	           		Array($quot,        "\n"),
+					Array($quot.$quot,  ''),
+	                $cell
+				);
+				
+				if (strchr($cell, $fd)) {
+					$str.=$quot.$cell.$quot.$fd;
+				} else {
+					$str.=$cell.$fd;
+				}
+       		}
+			$i++;
        }
     
        return  $str;
@@ -1311,7 +1339,16 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	{
 		global $tikilib;
 		
-		$result = $tikilib->query( "SELECT `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `style`, `class`, `user` FROM `tiki_sheet_values` WHERE `sheetId` = ? AND ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
+		$result = $tikilib->query( "
+			SELECT `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `style`, `class`, `user`
+			FROM `tiki_sheet_values`
+			WHERE
+				`sheetId` = ? AND 
+				? >= `begin` AND 
+				( 
+					`end` IS NULL OR
+					`end` > ? )
+		", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
 
 		while( $row = $result->fetchRow() )
 		{
@@ -1326,7 +1363,14 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 		}
 
 		// Fetching the layout informations.
-		$result2 = $tikilib->query( "SELECT `className`, `headerRow`, `footerRow`, `parseValues` FROM `tiki_sheet_layout` WHERE `sheetId` = ? AND ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
+		$result2 = $tikilib->query( "
+			SELECT `className`, `headerRow`, `footerRow`, `parseValues`
+			FROM `tiki_sheet_layout`
+			WHERE
+				`sheetId` = ? AND 
+				? >= `begin` AND 
+				( `end` IS NULL OR `end` > ? )
+		", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
 
 		if( $row = $result2->fetchRow() )
 		{
@@ -1507,7 +1551,16 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 						else
 							$width = $info['colspan'];
 
-						$sheet->setValue( $this->encoding->convert_encoding ( $value ) );
+						$cellValue = $this->encoding->convert_encoding ( $value );
+						$sheet->setValue( $cellValue );
+	                	
+						if ( isset($cellValue) ) {
+							if (strlen( $cellValue )) {
+								if ($cellValue[0] == '=' ) {
+									$sheet->setCalculation( substr($cellValue, 1) );
+								}
+							}
+						}
 						$sheet->setSize( $width, $height );
 					}
 			}
@@ -1675,6 +1728,13 @@ class TikiSheetWikiTableHandler extends TikiSheetDataHandler
 					{
 						$sheet->initCell( $row, $col );
 						$sheet->setValue( $value );
+						if ( isset($value) ) {
+							if (strlen( $value )) {
+								if ($value[0] == '=' ) {
+									$sheet->setCalculation( substr($value, 1) );
+								}
+							}
+						}
 						$sheet->setSize( 1, 1 );
 					}
 					++$row;
@@ -1817,6 +1877,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 	 */
 	function drawRows( &$sheet, $begin, $end )
 	{
+		global $sheetlib;
 		for( $i = $begin; ($end - 1) > $i; $i++ )
 		{
 			$td = "";
@@ -1861,12 +1922,12 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 				if( !empty( $style ) ) {
 					//we have to sanitize the css style here
 					$tdStyle = "";
-					$color = getAttrFromCssString($style, "color", "");
-					$bgColor = getAttrFromCssString($style, "background-color", "");
+					$color = $sheetlib->get_attr_from_css_string($style, "color", "");
+					$bgColor = $sheetlib->get_attr_from_css_string($style, "background-color", "");
 					$tdHeight = '';
 					
 					if ($trHeightIsSet == false) {
-						$trHeight = getAttrFromCssString($style, "height", "20px");
+						$trHeight = $sheetlib->get_attr_from_css_string($style, "height", "20px");
 						$trHeightIsSet = true;
 					}
 					
@@ -1919,11 +1980,12 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 	 */
 	function drawCols( &$sheet, $begin, $end )
 	{
+		global $sheetlib;
 		$endCol = $sheet->getRangeEndCol() < 0 ? $sheet->getColumnCount() : $sheet->getRangeEndCol();
 		for( $j = $sheet->getRangeBeginCol(); $endCol > $j; $j++ )
 		{
 			$style = $sheet->cellInfo[$begin][$j]['style'];
-			$width = getAttrFromCssString($style, "width", "118px");
+			$width = $sheetlib->get_attr_from_css_string($style, "width", "118px");
 			echo "<col style='width: $width;' width='$width' />\n";
 		}
 	}
@@ -1988,6 +2050,8 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 	 */
 	function drawRows( &$sheet, $begin, $end )
 	{
+		global $sheetlib;
+		
 		for( $i = $begin; $end > $i; $i++ )
 		{
 			$trHeight = "20px";
@@ -2019,7 +2083,7 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 				if( !empty( $style ) ) {
 					$append .= " style='{$style}'";
 					
-					$trHeight = getAttrFromCssString($style, "height", "20px");
+					$trHeight = $sheetlib->get_attr_from_css_string($style, "height", "20px");
 				}
 					
 				$class = $sheet->cellInfo[$i][$j]['class'];
@@ -2052,7 +2116,7 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 
 /** TikiSheetHTMLTableHandler
  * Class that imports a sheet from an HTML table
- * Designed to be used with jQuery.sheet.saveSheet
+ * Designed to be used with jQuery.sheet.save_sheet
  */
 class TikiSheetHTMLTableHandler extends TikiSheetDataHandler
 {
@@ -2163,9 +2227,9 @@ class SheetLib extends TikiLib
 		return $result;
 	}
 	
-	function list_sheets( $offset = 0, $maxRecord = -1, $sort_mode = 'title_desc', $find = '' ) // {{{2
+	function list_sheets( $offset = 0, $maxRecord = -1, $sort_mode = 'title_desc', $find = '' , $includeChildren = false) // {{{2
 	{
-	global $user, $tikilib, $userlib;
+		global $user, $tikilib, $userlib;
 		switch( $sort_mode )
 		{
 			case "author_asc":
@@ -2198,7 +2262,16 @@ class SheetLib extends TikiLib
 				$mid = ' WHERE ';
 			$mid .= ' `title` like ? ';
 		}
-
+		
+		if (!$includeChildren) {
+			if (!$mid) {
+				$mid .= ' WHERE ';
+			} else {
+				$mid .= ' AND ';
+			}
+			$mid .= ' (parentSheetId = 0 or parentSheetId = null) ';
+		}
+		
 		$result = $this->query( "SELECT * FROM `tiki_sheets`  $mid ORDER BY $sort", $bindvars, $maxRecord, $offset );
 
 		while( $row = $result->fetchRow() ) {
@@ -2228,11 +2301,9 @@ class SheetLib extends TikiLib
 		}
 	}
 
-	function replace_sheet( $sheetId, $title, $description, $author, $parentSheetId = null ) // {{{2
+	function replace_sheet( $sheetId, $title, $description, $author, $parentSheetId = 0 ) // {{{2
 	{
 		global $prefs;
-		
-		if (!$parentSheetId) { $parentSheetId = null; }
 
 		if( $sheetId == 0 )
 		{
@@ -2252,8 +2323,145 @@ class SheetLib extends TikiLib
 		}
 		return $sheetId;
 	}
+	
+	function set_sheet_title( $sheetId, $title ) {
+		if ( $sheetId ) {
+			$this->query( "UPDATE `tiki_sheets` SET `title` = ? WHERE `sheetId` = ?", array( $title, $sheetId ) );
+		}
+	}
+	
+	function setup_jquery_sheet() {
+		global $headerlib;
+		if (!$this->setup_jQuery_sheet_files) {
+			$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/jquery.sheet.css' );
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.js' );
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.advancedfn.js' );
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.financefn.js' );
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/parser.js' );
+			$headerlib->add_jsfile( 'lib/sheet/grid.js' );
+			
+			//json support
+			$headerlib->add_jsfile('lib/jquery/jquery.json-2.2.js');
+			
+			// plugins
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/jquery.scrollTo-min.js' );
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/raphael-min.js', 'external' );
+			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.raphael-min.js', 'external' );
+			$this->setup_jQuery_sheet_files = true;
+		}
+	}
+	
+	function sheet_history( $sheetId ) {
+		return $this->fetchAll( "
+			SELECT DISTINCT
+				`tiki_sheet_values`.`begin` as stamp,
+				`tiki_sheet_values`.`user`,
+				DATE_FORMAT(FROM_UNIXTIME(`tiki_sheet_values`.`begin`), '%M %D %Y %h:%i:%s') as prettystamp
+			FROM `tiki_sheet_values`
+			INNER JOIN `tiki_sheets` ON `tiki_sheets`.`sheetId` = `tiki_sheet_values`.`sheetId`
+			WHERE `tiki_sheets`.`sheetId` = ? OR `tiki_sheets`.`parentSheetId` = ?
+			ORDER BY begin DESC", array( $sheetId, $sheetId ) );
+	}
+	
+	function rollback_sheet($id, $readdate=null) {
+		global $user, $sheetlib;
+		
+		if ($readdate) {
+			$now = (int)time();
+			
+			 $this->query( "
+				 UPDATE `tiki_sheet_values`
+				 SET `end` = ?
+				 WHERE
+				 	`sheetId` = ? AND
+				 	`end` IS NULL
+			 ", array( $now, $id ) );
+			 
+			 $this->query("
+				 INSERT INTO `tiki_sheet_values` (`sheetId`, `begin`, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user`, `style`, `class`, `clonedSheetId`)
+				 SELECT `sheetId`, ?, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user`, `style`, `class`, `clonedSheetId`
+				 FROM `tiki_sheet_values`
+				 WHERE
+				 	`sheetId` = ? AND
+				    ? >= `begin` AND 
+				    `end` > ?
+			", array( $now, $id, $readdate, $readdate ) );
+			 
+		}
+		
+		if ($prefs['feature_actionlog'] == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib->add_action('Spreadsheet-Rollback', $id, 'sheet');
+		}
+		
+		$children = $this->fetchAll( "SELECT `sheetId` FROM `tiki_sheets` WHERE `parentSheetId` = ?", array($id) );
+		foreach($children as $child) {
+			$this->rollback_sheet( $child['sheetId'], $readdate );
+		}
+		
+		return $id;
+	}
+	
+	function clone_sheet( $sheetId, $readdate = null, $parentSheetId = 0) {
+		global $user, $prefs;
+		
+		if (!isset($readdate)) {
+			$readdate = time();
+		}
+		
+		$readdate = (int)$readdate;
+		$parentSheetId = (int)$parentSheetId;
+		
+		//clone the parent sheet & get it's id
+		$this->query( "
+			INSERT INTO `tiki_sheets` (`title`, `description`, `author`, `parentSheetId`, `clonedSheetId`)
+			SELECT CONCAT('CLONED - ', `title`), `description`, ?, ?, `sheetid`
+			FROM `tiki_sheets`
+			WHERE `sheetid` = ?
+		", array( $user, $parentSheetId, $sheetId ) );
+		
+		$newSheetId = $this->getOne( "SELECT MAX(`sheetId`) FROM `tiki_sheets` WHERE `author` = ?", array( $user ) );
+		//clone the sheet layout
+		$this->query( "
+			INSERT INTO `tiki_sheet_layout` (`sheetId`, `begin`, `end`, `headerRow`, `footerRow`, `className`, `parseValues`, `clonedSheetId`)
+			SELECT ?, `begin`, `end`, `headerRow`, `footerRow`, `className`, `parseValues`, `sheetId`
+			FROM `tiki_sheet_layout`
+			WHERE `sheetid` = ?
+		", array( $newSheetId, $sheetId ) );
+		
+		//clone sheet's values
+	  $this->query( "
+	      INSERT INTO `tiki_sheet_values` (`sheetId`, `begin`, `end`, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user`, `style`, `class`, `clonedSheetId`)
+	      SELECT ?, `begin`, NULL, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user`, `style`, `class`, ?
+	      FROM `tiki_sheet_values`
+	    	WHERE
+	        `sheetId` = ? AND 
+	        ? >= `begin` AND 
+	        (
+	        	`end` IS NULL OR
+	        	`end` > ?
+	        )
+      ", array( $newSheetId, $sheetId, $sheetId, $readdate, $readdate ) );
+		
+		//clone the children sheets if they exist
+		$result = $this->query("SELECT `sheetId` FROM `tiki_sheets` WHERE `parentSheetId` = ?", array( $sheetId ) );
+		while( $row = $result->fetchRow() )
+		{
+			if ($row['sheetId']) {
+				$this->clone_sheet($row['sheetId'], $readdate, $newSheetId);
+			}
+		}
+		
+		if ($prefs['feature_actionlog'] == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib->add_action('Cloning', $sheetId, 'sheet');
+			$logslib->add_action('Cloned', $newSheetId, 'sheet');
+		}
 
-	function replace_layout( $sheetId, $className, $headerRow, $footerRow, $parseValues = 'n' ) // {{{2
+		return $newSheetId;
+	}
+	
+	function clone_layout( $sheetId, $className, $headerRow, $footerRow, $parseValues = 'n' ) // {{{2
 	{
 		if( $row = $this->get_sheet_layout( $sheetId ) )
 		{
@@ -2277,360 +2485,255 @@ class SheetLib extends TikiLib
 		return true;
 	}
 	
-	function set_sheet_title( $sheetId, $title ) {
-		if ( $sheetId ) {
-			$this->query( "UPDATE `tiki_sheets` SET `title` = ? WHERE `sheetId` = ?", array( $title, $sheetId ) );
-		}
-	}
-	
-	function setupJQuerySheet() {
-		global $headerlib;
-		if (!$this->setupJQuerySheetFiles) {
-			$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/jquery.sheet.css' );
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.js' );
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.advancedfn.js' );
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.financefn.js' );
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/parser.js' );
-			
-			//json support
-			$headerlib->add_jsfile('lib/jquery/jquery.json-2.2.js');
-			
-			// plugins
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/jquery.scrollTo-min.js' );
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/raphael-min.js', 'external' );
-			$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/g.raphael-min.js', 'external' );
-			$headerlib->add_jq_onready( '
-				// override saveSheet on jQuery.sheet for tiki specific export
-				$.sheet.saveSheet = function( url, redirect ) {
-					$( $.sheet.instance ).each( function( i ){
-						if (typeof redirect === "undefined") { redirect = false; }
-						// not set to 0 by default in case AJAX has caused a spurious one to appear
-
-						this.evt.cellEditDone();
-						
-						var s = $.sheet.exportSheet(this);
-						
-						s = "s=" + $.toJSON(s)	// convert to JSON
-							.replace(/\+/g,"%2B")	// replace +s with 0x2B hex value
-							.replace(/\&/g,"%26");	// and replace &s with 0x26
-							
-						var setDirty = this.setDirty;
-						$.ajax({
-							url: url,
-							type: "POST",
-							data: s,
-							//contentType: "application/json; charset=utf-8",
-							dataType: "html",
-							beforeSend: function() { window.showFeedback("Saving", 10000); }, 
-							success: function(data) {
-								setDirty(false);
-								window.showFeedback(data, 2000, redirect);
+	function save_sheet($data, $id, $file, $type = 'db') {
+		global $user, $sheetlib;
+		
+		$sheets =  json_decode($data);
+		$rc =  '';
+		
+		if ($id) {
+			$grid = new TikiSheet($id);
+			if (is_array($sheets)) {
+				foreach ($sheets as $sheet) {
+					$handler = new TikiSheetHTMLTableHandler($sheet);
+					$res = $grid->import($handler);
+					// Save the changes
+					$rc .= strlen($rc) === 0 ? '' : ', ';
+					if ($res) {
+						if (!$sheet->metadata->sheetId) {
+							if (!empty($sheet->metadata->title)) {
+								$title = $sheet->metadata->title;
+							} else {
+								$title = $info['title'] . ' subsheet'; 
 							}
-						});
-					});
-				};
-				
-				$.sheet.exportSheet = function(sheetInstance) {	// diverged from jQuery.sheet 1.1 / Tiki 6
-					var sheetClone = sheetInstance.sheetDecorateRemove(true);
-					var documents = []; //documents
-					
-					$(sheetClone).each(function() {
-						var document = {}; //document
-						document.metadata = {};
-						document.data = {};
-						
-						//This preserves the width for postback, very important for styles
-						//<DO_NOT_REMOVE>
-						var table = $(this);
-						var trFirst = table.find("tr:first");
-						table.find("col").each(function(i){
-							//because css isnt always set correctly, we need to check the width attribute as well
-							//we also sanitize width string here
-							var w = parseInt((jQuery(this).css("width") + "").replace("px",""), 10);
-							var w2 = parseInt((jQuery(this).attr("width") + "").replace("px",""), 10);
-							
-							w = (w > w2 ? w : w2);
-							
-							trFirst.find("td").eq(i)
-								.css("width", w + "px")
-								.attr("width", w);
-						});
-						//</DO_NOT_REMOVE>
-						
-						var trs = table.find("tr");
-						var rowCount = trs.length;
-						var colCount = 0;
-						var col_widths = "";
-						
-						trs.each(function(i) {
-							var tr = $(this);
-							var tds = tr.find("td");
-							colCount = tds.length;
-							
-							document.data["r" + i] = {};
-							
-							var h = tr.css("height");
-							document.data["r" + i].height = (h ? h : tr.attr("height"));
-							
-							tds.each(function(j) {
-								var td = jQuery(this);
-								var colSpan = td.attr("colspan");
-								colSpan = (colSpan > 1 ? colSpan : null);
-		
-								document.data["r" + i]["c" + j] = {
-									value: td.html(),
-									formula: td.attr("formula"),
-									stl: td.attr("style"),
-									colspan: colSpan,
-									cl: td.attr("class")
-								};
-								
-								var sp = td.attr("colSpan");
-								if (sp > 1) {
-									doc.data["r" + i]["c" + j].width = sp;
-								}
-								sp = td.attr("rowSpan");	// TODO in .sheet
-								if (sp > 1) {
-									doc.data["r" + i]["c" + j].height = sp;
-								}
-							});
-						});
-							
-						var id = table.attr("rel");
-						id = id ? id.match(/sheetId(\d+)/) : null;
-						id = id && id.length > 0 ? id[1] : 0;
-		
-						document.metadata = {
-							"columns": parseInt(colCount, 10), //length is 1 based, index is 0 based
-							"rows": parseInt(rowCount, 10), //length is 1 based, index is 0 based
-							"title": table.attr("title"),
-							"col_widths": {},
-							"sheetId": id
-						};
-						
-						table.find("colgroup").children().each(function(i) {
-							document.metadata.col_widths["c" + i] = ($(this).attr("width") + "").replace("px", "");
-						});
-						
-						documents.push(document); //append to documents
-					});
-					return documents;
-				};
-
-				inlineMenu = $(
-					($("#sheetTools").html() + "")
-						.replace(/sheetInstance/g, "$.sheet.instance[" + $.sheet.I() + "]")
-				);
-				
-				inlineMenu.find(".qt-picker").attr("instance", $.sheet.I());
-				
-				$.sheet.tikiOptions =  {
-						urlMenu:"lib/jquery_tiki/jquery.sheet/menu.html",
-						urlGet: "",
-						buildSheet: true,
-						autoFiller: true,
-						inlineMenu: inlineMenu,
-						colMargin: 20, //beefed up colMargin because the default size was too small for font
-						height: $(window).height() * 0.8
-				};
-			
-				$.sheet.after = function(o) {
-					window.toggleFullScreen = function(areaname) {
-						o.sheetInstance.toggleFullScreen();
-					};
-					
-					if (jqueryTiki.ui) {
-		 				if (typeof ajaxLoadingShow === "function") {
-		 					ajaxLoadingHide();
-		 				}
-		 			}
-				};
-			' );
-			$this->setupJQuerySheetFiles = true;
+							$newId = $sheetlib->replace_sheet( 0, $title, '', $user, $id );
+							$rc .= tra('new') . " (id=$newId) ";
+							$sheet->metadata->sheetId = $newId;
+							$handler = new TikiSheetHTMLTableHandler($sheet);
+							$res = $grid->import($handler);
+						}
+						if ($id && $res) {
+							$handler = new TikiSheetDatabaseHandler( $sheet->metadata->sheetId );
+							$grid->export($handler);
+							$rc .= $grid->getColumnCount() . ' x ' . $grid->getRowCount() . ' ' . tra('sheet') . " (id=".$sheet->metadata->sheetId.")";
+						}
+						if (!empty($sheet->metadata->title)) {
+							$sheetlib->set_sheet_title($sheet->metadata->sheetId, $sheet->metadata->title);
+						}
+					}
+				}
+			}
+		} else {
+			/*
+			$grid = new TikiSheet();
+			if ($type == 'csv') {
+				foreach ($sheets as $sheet) {
+					$handler = new TikiSheetCSVHandler( $file );
+					if ($handler->_save($sheet)) {
+						$res .= $file;
+						$rc .= tra("file - ").$file;		
+					}
+				}
+			} elseif ($type == 'excelcsv') {
+				foreach ($sheets as $sheet) {
+					$handler = new TikiSheetCSVExcelHandler( $file );
+					if ($handler->_save($sheet)) {
+						$res .= $file;
+						$rc .= tra("file - ").$file;
+					}
+				}
+			}*/
 		}
+		return ($res ?  tra('Saved'). ': ' . $rc : tra('Save failed'));
 	}
 	
-	function setupJQuerySheetHistory() {
-		global $headerlib;
-		if (!$this->setupJQuerySheetHistoryFiles) {
-			$headerlib->add_jsfile( 'lib/sheet/tiki-history_sheets.js' );
-			$this->setupJQuerySheetHistoryFiles = true;
+	/** get_attr_from_css_string {{{2
+	 * Grabs a css setting from a string
+	 * @param $style A simple css style string used with an html dom object
+	 * @param $attr The name of the css attribute you'd like to extract from $style
+	 */
+	function get_attr_from_css_string($style, $attr, $default) {
+		global $sheetlib;
+		$style = strtolower($style);
+		$style = str_replace(' ', '', $style);
+		
+		$attr = strtolower($attr);
+		
+		$cssAttrs = explode(';', $style);
+		foreach($cssAttrs as &$v) {
+			$v = explode(':', $v);
 		}
+		
+		$key = $sheetlib->array_searchRecursive($attr, $cssAttrs);
+		$result;
+		if ($key === false) {
+			$result = $default;
+		} else {
+			$result = $cssAttrs[$key[0]][$key[1] + 1];
+		}
+		
+		return ($result != 'auto' ? $result : $default);
+	}
+	
+	// array_search with recursive searching, optional partial matches and optional search by key
+	function array_searchRecursive( $needle, $haystack, $strict=false, $path=array() )
+	{
+		global $sheetlib;
+		
+	    if( !is_array($haystack) ) {
+	        return false;
+	    }
+	 
+	    foreach( $haystack as $key => $val ) {
+	        if( is_array($val) && $subPath = $sheetlib->array_searchRecursive($needle, $val, $strict, $path) ) {
+	            $path = array_merge($path, array($key), $subPath);
+	            return $path;
+	        } elseif ( (!$strict && $val == $needle) || ($strict && $val === $needle) ) {
+	            $path[] = $key;
+	            return $path;
+	        }
+	    }
+	    return false;
+	}
+	
+	function diff_sheets_as_html( $id, $dates = null )
+	{
+		global $prefs, $sheetlib;
+		
+		function count_longest( $array1, $array2 )
+		{
+			return (count($array1) > count($array2) ? count($array1) : count($array2));
+		}
+		
+		function join_with_sub_grids( $id, $date )
+		{
+			global $prefs, $sheetlib;
+			$result1 = "";
+			$result2 = "";
+			
+			$handler = new TikiSheetDatabaseHandler($id, $date);
+			$handler->setReadDate($date);
+			$grid = new TikiSheet($id, true);
+			$grid->import($handler);
+			
+			$subgrids = $sheetlib->get_sheet_subsheets($grid->sheetId);
+			$i = 0;
+			$grids = array($grid);
+			foreach ($subgrids as $sub) {
+				$handler = new TikiSheetDatabaseHandler($sub['sheetId'], $date);
+				$handler->setReadDate($date);
+				$subsheet = new TikiSheet($sub['sheetId'], true);
+				$subsheet->import($handler);
+				array_push($grids, $subsheet);
+				$i++;
+			}
+			return $grids;
+		}
+		
+		function sanitize_for_diff($val)
+		{
+			$val = str_replace("<br/>", 	"<br>", $val);
+			$val = str_replace("<br />",	"<br>", $val);
+			$val = str_replace("<br  />", 	"<br>", $val);
+			$val = str_replace("<BR/>",		"<br>", $val);
+			$val = str_replace("<BR />", 	"<br>", $val);
+			$val = str_replace("<BR  />",	"<br>", $val);
+			
+			return explode("<br>", $val);
+		}
+		
+		function diff_to_html($changes)
+		{
+			$result = array("", "");
+			for ( $i = 0; $i < count_longest($changes->orig, $changes->final); $i++ )
+			{
+				$class = array("", "");
+				$char = array("", "");
+				$vals = array( trim( $changes->orig[$i] ), trim( $changes->final[$i] ) );
+				
+				if ($vals[0] && $vals[1]) {
+					if ( $vals[0] != $vals[1] ) {
+						$class[1] .= "diffadded";
+					}
+				} else if ($vals[0]) {
+					$class[0] .= "diffadded";
+					$class[1] .= "diffdeleted";
+					$vals[1] = $vals[0];
+					$char[1] = "-";
+				} else if ($vals[1]) {
+					$class[0] .= "diffdeleted";
+					$class[1] .= "diffadded";
+					$char[1] = "+";
+				}
+				
+				if ( $vals[0] ) {
+					$result[0] .= "<span class='$class[0]'>".$char[0].$vals[0]."</span><br />";
+				}
+				if ( $vals[1] ) {
+					$result[1] .= "<span class='$class[1]'>".$char[1].$vals[1]."</span><br />";
+				}
+			} 
+			return $result;
+		}
+		
+		$grids1 = join_with_sub_grids($id, $dates[0]);
+		$grids2 = join_with_sub_grids($id, $dates[1]);
+		
+		for ( $i = 0; $i < count_longest($grids1, $grids2); $i++ ) { //cycle through the sheets within a spreadsheet
+			$result1 .= "<table title='".$grids1[$i]->getTitle()."'>";
+			$result2 .= "<table title='".$grids2[$i]->getTitle()."'>";
+			for ( $row = 0; $row < count_longest($grids1[$i]->dataGrid, $grids2[$i]->dataGrid); $row++ ) { //cycle through rows
+				$result1 .= "<tr>";
+				$result2 .= "<tr>";
+				for ( $col = 0; $col < count_longest($grids1[$i]->dataGrid[$row], $grids2[$i]->dataGrid[$row]); $col++ ) { //cycle through columns
+					$diff = new Text_Diff( sanitize_for_diff( $grids1[$i]->dataGrid[$row][$col] ), sanitize_for_diff( $grids2[$i]->dataGrid[$row][$col] ) );
+					$changes = $diff->getDiff();
+						
+					//print_r($changes);
+					
+					$class = array('','');
+					$values = array('','');
+					
+					//I left this diff switch, but it really isn't being used as of now, in the future we may though.
+					switch ( get_class($changes[0]) ) {
+						case 'Text_Diff_Op_copy':
+							$values = diff_to_html($changes[0]);
+							break;
+						case 'Text_Diff_Op_change':
+							$values = diff_to_html($changes[0]);
+							break;
+						case 'Text_Diff_Op_delete':
+							$values = diff_to_html($changes[0]);
+							break;
+						case 'Text_Diff_Op_add':
+							$values = diff_to_html($changes[0]);
+							break;
+						default:
+							$values = diff_to_html($changes[0]);
+					}
+					$result1 .= "<td class='$class1'>".$values[0]."</td>";
+					$result2 .= "<td class='$class2'>".$values[1]."</td>";
+				}
+				$result1 .= "</tr>";
+				$result2 .= "</tr>";
+			}
+			$result1 .= "</table>";
+			$result2 .= "</table>";
+		}
+			
+		return array($result1, $result2);
+	}
+	
+	function user_can_view($sheetId) {
+		global $user;
+		$objectperms = Perms::get( 'sheet', $sheetId );
+		return ( $objectperms->view_sheet || $objectperms->admin );
+	}
+	
+	function user_can_edit($sheetId) {
+		global $user;
+		$objectperms = Perms::get( 'sheet', $sheetId );
+		return ( $objectperms->edit_sheet || $objectperms->admin );
 	}
 } // }}}1
 $sheetlib = new SheetLib;
-
-/** getAttrFromCssString {{{2
- * Grabs a css setting from a string
- * @param $style A simple css style string used with an html dom object
- * @param $attr The name of the css attribute you'd like to extract from $style
- */
-function getAttrFromCssString($style, $attr, $default) {
-	$style = strtolower($style);
-	$style = str_replace(' ', '', $style);
-	
-	$attr = strtolower($attr);
-	
-	$cssAttrs = explode(';', $style);
-	foreach($cssAttrs as &$v) {
-		$v = explode(':', $v);
-	}
-	
-	$key = array_searchRecursive($attr, $cssAttrs);
-	$result;
-	if ($key === false) {
-		$result = $default;
-	} else {
-		$result = $cssAttrs[$key[0]][$key[1] + 1];
-	}
-	
-	return ($result != 'auto' ? $result : $default);
-}
-
-// array_search with recursive searching, optional partial matches and optional search by key
-function array_searchRecursive( $needle, $haystack, $strict=false, $path=array() )
-{
-    if( !is_array($haystack) ) {
-        return false;
-    }
- 
-    foreach( $haystack as $key => $val ) {
-        if( is_array($val) && $subPath = array_searchRecursive($needle, $val, $strict, $path) ) {
-            $path = array_merge($path, array($key), $subPath);
-            return $path;
-        } elseif ( (!$strict && $val == $needle) || ($strict && $val === $needle) ) {
-            $path[] = $key;
-            return $path;
-        }
-    }
-    return false;
-}
-
-
-function diffSheetsAsHTML( $id, $dates = null )
-{
-	global $prefs, $sheetlib;
-		
-	function countLongest( $array1, $array2 )
-	{
-		return (count($array1) > count($array2) ? count($array1) : count($array2));
-	}
-	
-	function joinWithSubGrids( $id, $date )
-	{
-		global $prefs, $sheetlib;
-		$result1 = "";
-		$result2 = "";
-		
-		$handler = new TikiSheetDatabaseHandler($id, $date);
-		$handler->setReadDate($date);
-		$grid = new TikiSheet($id, true);
-		$grid->import($handler);
-		
-		$subgrids = $sheetlib->get_sheet_subsheets($grid->sheetId);
-		$i = 0;
-		$grids = array($grid);
-		foreach ($subgrids as $sub) {
-			$handler = new TikiSheetDatabaseHandler($sub['sheetId'], $date);
-			$handler->setReadDate($date);
-			$subsheet = new TikiSheet($sub['sheetId'], true);
-			$subsheet->import($handler);
-			array_push($grids, $subsheet);
-			$i++;
-		}
-		return $grids;
-	}
-	
-	function sanitizeForDiff($val)
-	{
-		$val = str_replace("<br/>", 	"<br>", $val);
-		$val = str_replace("<br />",	"<br>", $val);
-		$val = str_replace("<br  />", 	"<br>", $val);
-		$val = str_replace("<BR/>",		"<br>", $val);
-		$val = str_replace("<BR />", 	"<br>", $val);
-		$val = str_replace("<BR  />",	"<br>", $val);
-		
-		return explode("<br>", $val);
-	}
-	
-	function diffToHtml($changes)
-	{
-		$result = array("", "");
-		for ( $i = 0; $i < countLongest($changes->orig, $changes->final); $i++ )
-		{
-			$class = array("", "");
-			$char = array("", "");
-			$vals = array( trim( $changes->orig[$i] ), trim( $changes->final[$i] ) );
-			
-			if ($vals[0] && $vals[1]) {
-				if ( $vals[0] != $vals[1] ) {
-					$class[1] .= "diffadded";
-				}
-			} else if ($vals[0]) {
-				$class[0] .= "diffadded";
-				$class[1] .= "diffdeleted";
-				$vals[1] = $vals[0];
-				$char[1] = "-";
-			} else if ($vals[1]) {
-				$class[0] .= "diffdeleted";
-				$class[1] .= "diffadded";
-				$char[1] = "+";
-			}
-			
-			if ( $vals[0] ) {
-				$result[0] .= "<span class='$class[0]'>".$char[0].$vals[0]."</span><br />";
-			}
-			if ( $vals[1] ) {
-				$result[1] .= "<span class='$class[1]'>".$char[1].$vals[1]."</span><br />";
-			}
-		} 
-		return $result;
-	}
-	
-	$grids1 = joinWithSubGrids($_REQUEST["sheetId"], $dates[0]);
-	$grids2 = joinWithSubGrids($_REQUEST["sheetId"], $dates[1]);
-	
-	for ( $i = 0; $i < countLongest($grids1, $grids2); $i++ ) { //cycle through the sheets within a spreadsheet
-		$result1 .= "<table>";
-		$result2 .= "<table>";
-		for ( $row = 0; $row < countLongest($grids1[$i]->dataGrid, $grids2[$i]->dataGrid); $row++ ) { //cycle through rows
-			$result1 .= "<tr>";
-			$result2 .= "<tr>";
-			for ( $col = 0; $col < countLongest($grids1[$i]->dataGrid[$row], $grids2[$i]->dataGrid[$row]); $col++ ) { //cycle through columns
-				$diff = new Text_Diff( sanitizeForDiff( $grids1[$i]->dataGrid[$row][$col] ), sanitizeForDiff( $grids2[$i]->dataGrid[$row][$col] ) );
-				$changes = $diff->getDiff();
-					
-				//print_r($changes);
-				
-				$class = array('','');
-				$values = array('','');
-				
-				//I left this diff switch, but it really isn't being used as of now, in the future we may though.
-				switch ( get_class($changes[0]) ) {
-					case 'Text_Diff_Op_copy':
-						$values = diffToHtml($changes[0]);
-						break;
-					case 'Text_Diff_Op_change':
-						$values = diffToHtml($changes[0]);
-						break;
-					case 'Text_Diff_Op_delete':
-						$values = diffToHtml($changes[0]);
-						break;
-					case 'Text_Diff_Op_add':
-						$values = diffToHtml($changes[0]);
-						break;
-					default:
-						$values = diffToHtml($changes[0]);
-				}
-				$result1 .= "<td class='$class1'>".$values[0]."</td>";
-				$result2 .= "<td class='$class2'>".$values[1]."</td>";
-			}
-			$result1 .= "</tr>";
-			$result2 .= "</tr>";
-		}
-		$result1 .= "</table>";
-		$result2 .= "</table>";
-	}
-		
-	return array($result1, $result2);
-}

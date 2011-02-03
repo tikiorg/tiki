@@ -52,6 +52,7 @@
 				<div class="adminoptionboxchild" id="feature_file_galleries_comments_childcontainer">
 					<a class="link" href="tiki-admin.php?page=comments">{tr}Manage comment settings{/tr}</a>
 				</div>
+				{preference name='fgal_display_zip_option'}
 
 				{preference name='fgal_limit_hits_per_file'}
 				{preference name='fgal_prevent_negative_score'}
@@ -77,6 +78,8 @@
 					{preference name='fgal_delete_after_email'}
 				</div>
 				{preference name='fgal_keep_fileId'}
+				{preference name='feature_use_fgal_for_user_files'}
+				{preference name='feature_use_fgal_for_wiki_attachments'}
 			</fieldset>
 
 			<fieldset>
@@ -132,6 +135,10 @@
 			{preference name='fgal_search_in_content'}
 			{preference name='fgal_show_thumbactions'}
 			{preference name='fgal_thumb_max_size'}
+			{preference name='fgal_list_ratio_hits'}
+			{preference name='fgal_display_properties'}
+			{preference name='fgal_display_replace'}
+			{preference name='fgal_checked'}
 
 			<fieldset>
 				<legend>{tr}Select which items to display when listing galleries: {/tr}</legend>

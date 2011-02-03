@@ -27,6 +27,9 @@
 				{preference name=feature_tasks}
 				{preference name=feature_messages}
 				{preference name=feature_userfiles}
+				<div class="adminoptionboxchild" id="feature_userfiles_childcontainer">
+					{preference name=feature_use_fgal_for_user_files}
+				</div>
 				{preference name=feature_userlevels}
 				{preference name=feature_groupalert}
 				{preference name=change_theme}

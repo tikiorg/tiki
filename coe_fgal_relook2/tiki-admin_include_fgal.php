@@ -72,6 +72,9 @@ if (isset($_REQUEST["filegallistprefs"])) {
 	simple_set_value('fgal_list_files');
 	simple_set_value('fgal_list_hits');
 	simple_set_value('fgal_list_lastDownload');
+	simple_set_value('fgal_list_deleteAfter');
+	simple_set_value('fgal_list_checked');
+	simple_set_value('fgal_list_share');
 	simple_set_value('fgal_list_lockedby');
 	$_REQUEST['fgal_sort_mode'] = (empty($_REQUEST['fgal_sortorder']) ? 'created' : $_REQUEST['fgal_sortorder']) . '_' . (empty($_REQUEST['fgal_sortdirection']) ? 'desc' : $_REQUEST['fgal_sortdirection']);
 	$prefs['fgal_sort_mode'] = $_REQUEST['fgal_sort_mode'];
@@ -82,6 +85,7 @@ if (isset($_REQUEST["filegallistprefs"])) {
 	simple_set_value('fgal_default_view');
 	simple_set_value('fgal_list_backlinks');
 	simple_set_value('fgal_list_id_admin');
+	simple_set_value('fgal_list_ratio_hits');
 	simple_set_value('fgal_list_type_admin');
 	simple_set_value('fgal_list_name_admin');
 	simple_set_value('fgal_list_description_admin');

@@ -188,9 +188,12 @@ function convertOverlib(element, tip, params) {	// process modified overlib even
 	prefix = "|";
 	$(element).attr('title', prefix + tip);
 
+	if (options.activation !== 'click') {
+		options.hoverIntent = { sensitivity: 3, interval: 300, timeout: 0};
+	}
 	$(element).data('processed', true);	
-	
-	//options.sticky = true; //useful for css work
+
+//options.sticky = true; //useful for css work
 	$(element).cluetip(options);
 
 	if (options.activation === 'click') {
@@ -259,7 +262,8 @@ function ajaxLoadingHide() {
 }
 
 function setUpClueTips() {
-	var ctOptions = { splitTitle: '|', cluezIndex: 1500, width: 'auto', fx: { open: 'fadeIn', openSpeed: 'fast' }, clickThrough: true };
+	var ctOptions = { splitTitle: '|', cluezIndex: 2000, width: 'auto', fx: { open: 'fadeIn', openSpeed: 'fast' },
+		clickThrough: true, hoverIntent: { sensitivity: 3, interval: 600, timeout: 0} };
 	$.cluetip.setup({ insertionType: 'insertBefore', insertionElement: '#main' });
 	
 	$('.tips[title!=""]').cluetip($.extend(ctOptions, {}));
@@ -532,6 +536,7 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
         pageName = '';
     }
 	var textarea = $('#' + area_id)[0];
+	var textareaEditor = getCodeMirrorFromInput($(textarea));
 	var replaceText = false;
 	
 	if (!pluginArgs && !bodyContent) {
@@ -539,7 +544,7 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
 		bodyContent = "";
 		
 		dialogSelectElement( area_id, '{' + type.toUpperCase(), '{' + type.toUpperCase() + '}' ) ;
-		var sel = getTASelection( textarea );
+		var sel = ( textareaEditor ? textareaEditor.selection() : getTASelection( textarea ) );
 		if (sel && sel.length > 0) {
 			sel = sel.replace(/^\s\s*/, "").replace(/\s\s*$/g, "");	// trim
 			//alert(sel.length);
@@ -755,7 +760,7 @@ function handlePluginFieldsHierarchy(type) {
 var fullScreenState = [];
 
 $(document).ready(function() {	// if in translation-diff-mode go fullscreen automatically
-	if ($("#diff_outer").length && !$(".wikipreview").length) {	// but not if previewing (TODO better)
+	if ($("#diff_outer").length && !$.trim($(".wikipreview .wikitext").html()).length) {	// but not if previewing (TODO better)
 		toggleFullScreen("editwiki");
 	}
 });
@@ -797,7 +802,7 @@ function toggleFullScreen(area_id) {
 			parentId = $ta.parent().attr('id');
 			
 			codeMirrorContainer = $('<div id="codemirrorContainer_' + area_id + '" class="' + area_id + ' CodeMirror-fullscreen" parentId="' + parentId + '"  />')
-				.appendTo('form')
+				.insertAfter($ta.parent().parent())
 				.append(toolbar)
 				.append($ta);
 			
@@ -1015,6 +1020,7 @@ $.fn.tiki = function(func, type, options) {
 				if (typeof type !== 'undefined') { // func and type given
 					options = options || {};		// some default options for autocompletes in tiki
 					opts = {extraParams: {"httpaccept": "text/javascript"},
+								multiple: false,
 								dataType: "json",
 								parse: parseAutoJSON,
 								formatItem: function(row) { return row; },
@@ -1035,6 +1041,9 @@ $.fn.tiki = function(func, type, options) {
 						break;
 					case "username":
 						data = "tiki-ajax_services.php?listonly=users";
+						break;
+					case "usersandcontacts":
+						data = "tiki-ajax_services.php?listonly=usersandcontacts";
 						break;
 					case "userrealname":
 						data = "tiki-ajax_services.php?listonly=userrealnames";
@@ -1154,7 +1163,8 @@ $.fn.tiki = function(func, type, options) {
 					$(this).accordion(opts);			
 				});
 			}
-	}
+			break;
+	}	// end switch(func)
 };
 
 /******************************
@@ -1357,7 +1367,8 @@ function dialogSelectElement( area_id, elementStart, elementEnd ) {
 	if ($('#cke_contents_' + area_id).length !== 0) { return; }	// TODO for ckeditor
 	
 	var $textarea = $('#' + area_id);
-	var val = $textarea.val();
+	var textareaEditor = getCodeMirrorFromInput($textarea);
+	var val = ( textareaEditor ? textareaEditor.getCode() : $textarea.val() );
 	var pairs = [], pos = 0, s = 0, e = 0;
 	
 	while (s > -1 && e > -1) {	// positions of start/end markers
@@ -1371,8 +1382,9 @@ function dialogSelectElement( area_id, elementStart, elementEnd ) {
 		}
 	}
 	
-	$textarea[0].focus();
-	var selection = $textarea.selection();
+	(textareaEditor ? textareaEditor : $textarea[0]).focus();
+	
+	var selection = ( textareaEditor ? textareaEditor : $textarea ).selection();
 
 	s = selection.start;
 	e = selection.end;

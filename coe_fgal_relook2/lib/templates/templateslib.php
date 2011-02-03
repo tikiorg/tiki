@@ -69,6 +69,44 @@ class TemplatesLib extends TikiLib
 		return $res;
 	}
 
+	function get_parsed_template($templateId, $lang = null, $format = 'yaml') {
+		$res = $this->get_template($templateId, $lang);
+
+		if ( !$res ) {
+			return false;
+		}
+
+		switch ( $format ) {
+			case 'yaml':
+				require_once( 'lib/profilelib/profilelib.php' );
+				require_once( 'lib/profilelib/installlib.php' );
+
+				$content =
+				"{CODE(caption=>YAML)}objects:\n".
+				" -\n".
+				"  type: file_gallery\n".
+				"  data:\n".
+				"   ". implode("\n   ", explode("\n", $res['content'])) .
+				"{CODE}";
+
+				$profile = Tiki_Profile::fromString( $content, $res['name'] );
+				$installer = new Tiki_Profile_Installer();
+				$objects = $profile->getObjects();
+
+				if ( isset($objects[0]) ) {
+					$data = $installer->getInstallHandler( $objects[0] )->getData();
+					unset($data['galleryId'], $data['parentId'], $data['name'], $data['user']);
+					$res['content'] = $data;
+				} else {
+					$res['content'] = array();
+				}
+
+				break;
+		}
+
+		return $res;
+	}
+
 	private function get_template_from_page( $page, $lang ) {
 		global $prefs;
 		$info = $this->get_page_info( $page );

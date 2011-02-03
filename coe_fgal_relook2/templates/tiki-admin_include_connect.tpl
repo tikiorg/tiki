@@ -10,7 +10,7 @@
 	<form class="admin" id="connect" name="connect" action="tiki-admin.php?page=connect" method="post">
 		<fieldset>
 			<legend>{tr}Help Tiki spread{/tr}</legend>
-			{preference name=feature_bot_bar_power_by_tw}
+			{tr}Add the "Powered By" module to your site: {/tr} <a href="tiki-admin_modules.php">{tr}Click here to manage modules{/tr}</a>
 		</fieldset>
 
 		<fieldset>

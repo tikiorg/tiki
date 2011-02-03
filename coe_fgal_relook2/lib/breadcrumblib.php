@@ -228,25 +228,24 @@ function breadcrumb_getTitle($crumbs, $loc) {
 function _breadcrumb_getTitle($crumbs, $loc) {
     global $prefs, $print_page, $info, $structure, $structure_path, $tikilib, $smarty;
 
+	$len = count($crumbs);
+	
     if ( $prefs['feature_breadcrumbs'] == 'n' || $prefs['feature_sitetitle'] == 'title' ) {
-        $ret = '<strong><a title="';
-    } else if ( $prefs['feature_sitetitle'] == 'y' ) {
         $class = "pagetitle";
-        $ret = '<a class="'.$class.'" title="';
+        $ret = '<strong><a class="'.$class.'" title="'.tra("refresh").'" href="javascript:self.location=self.location;">';
     } else {
         $class = "crumblink";
         $ret = '<a class="'.$class.'" title="';
+		if ( ($structure == 'y') && $info ) {
+			$cnt = count($structure_path);
+		} else {
+			$cnt = count($crumbs);                      
+		}
+		$ret .= tra("go back to this crumb");
+		$ret .= '" accesskey="'.($cnt);
+		include_once('tiki-sefurl.php');
+		$ret .= '" href="'.filter_out_sefurl($crumbs[$len-1]->url, $smarty).'">';
     }
-    $len = count($crumbs);
-    if ( ($structure == 'y') && $info ) {
-        $cnt = count($structure_path);
-    } else {
-        $cnt = count($crumbs);                      
-    }
-    $ret .= 'refresh';
-    $ret .= '" accesskey="'.($cnt);
-    include_once('tiki-sefurl.php');
-    $ret .= '" href="'.filter_out_sefurl($crumbs[$len-1]->url, $smarty).'">';
     if ($prefs['feature_breadcrumbs'] == 'n' && $loc == "admin")
         $ret .= tra("Administration:")." ";
         if ($prefs['wikiapproval_hideprefix'] == 'y' && $approved = $tikilib->get_approved_page( $crumbs[$len-1]->title ) ) { 

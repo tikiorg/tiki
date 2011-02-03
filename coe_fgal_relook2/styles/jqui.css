@@ -15,6 +15,7 @@ body {
 	color: #000;
 	background: #fff}
 
+html > body,
 *:first-child+html body {font-size: 74% !important}
 
  /***** Layout (overrides layout.css;
@@ -58,8 +59,8 @@ body {
 
 .footerbgtrap {
 	color: #363636;
-	background: #fff url(../lib/jquery/jquery-ui/themes/smoothness/images/ui-bg_flat_75_ffffff_40x100.png);
-	border: 1px solid #d3d3d3;
+	background: #fdfdfd;
+	border: 1px solid #cccccc;
 	border-bottom: none;
 	margin: 10px;
 	margin-bottom: 0;
@@ -103,7 +104,7 @@ h5 {
 }
 
 fieldset {
-	border: 1px solid #d4d4d4}
+	border: 1px solid #cccccc}
 	
 legend {
 	color: #000;
@@ -125,10 +126,10 @@ input[type="submit"],
 	line-height: 1.4em;
 	width: auto;
 	overflow: visible;
-	border: 1px solid #d3d3d3;
-	background: #e6e6e6 url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+	border: 1px solid #cccccc;
+	background: #e2e2e2 url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
 	font-weight: normal;
-	color: #555555;
+	color: #666666;
 	outline: none;
 }
 
@@ -139,17 +140,17 @@ input[type="submit"]:hover,
 .button input:hover,
 .calbuttonBox:hover {
 	margin: .5em .4em .5em 0;
-	border: 1px solid #999999;
-	background: #dadada url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+	border: 1px solid #aaa;
+	background: #cccccc url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
 	font-weight: normal;
-	color: #212121;
+	color: #363636;
 	outline: none;
 }
 	
 .highlight,
 .highlight a {
 	border: 1px solid #fcefa1;
-	background: #fbf9ee url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+	background: #f3f3f3 url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
 	color: #363636;
 }
 
@@ -159,7 +160,7 @@ input[type="submit"]:hover,
 
 .button.highlight a {
 	border: 1px solid #fcefa1;
-	background: #fbf9ee url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x;
+	background: #aaaaaa;
 	color: #363636;
 }
 
@@ -169,12 +170,8 @@ input[type="submit"]:hover,
 
 
 /***** Site Header & Identity *****/
-#header-top {
+#header {
 	min-height: 40px;
-}
-
-#sioptions {
-	padding: 0 10px;
 }
 
 #sitetitles {
@@ -191,17 +188,33 @@ input[type="submit"]:hover,
 	margin-top: 10px;
 }
 
+#top_modules .box-login_box {
+	float: right;
+	margin-right: 20px;
+	margin-top: 40px;
+	color: #f5f5f5;
+}
+
+
 #siteloginbar_popup {
 	bottom: 1px;
 }
 
 #tiki-top {
 	padding: .5em .3em .3em 1em;
-	border: 1px solid #aaaaaa;
+	border: 1px solid #aaa;
 	background: #cccccc url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
-	color: #222222;
+	color: #363636;
 	margin: 0 10px 10px;
 	font-size: 1.1em;
+}
+
+#topbar_modules .box-search {
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	height: 34px;
+	line-height: 34px;
 }
 	
 /****** Menus, Links ******/
@@ -233,7 +246,7 @@ input[type="submit"]:hover,
 
 #tiki-top .cssmenu_horiz li a {
 	padding: 14px 1em;
-	font-size: 12px;
+	font-size: 1em;
 	font-weight: bold;
 	text-decoration: none;
 	background: none;
@@ -321,9 +334,9 @@ a .sf-sub-indicator {
 .cbox {
 	padding: .2em;
 	margin: 0 .5em 10px;
-	background: #ffffff url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
-	color: #222222;
-	border: 1px solid #aaaaaa;
+	background-color: #fefefe;
+	color: #363636;
+	border: 1px solid #aaa;
 }
 
 #col2 .box,
@@ -335,9 +348,9 @@ a .sf-sub-indicator {
 h3.box-title,
 .cbox-title {
 	padding: .5em .3em .3em 1em; position: relative;
-	border: 1px solid #aaaaaa;
+	border: 1px solid #aaa;
 	background: #cccccc url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
-	color: #222222;
+	color: #363636;
 	font-weight: bold;
 	margin: 0;
 	font-size: 1.1em;
@@ -346,9 +359,14 @@ h3.box-title,
 .cbox-data,
 .box-data {
 	padding: .5em 1em;
-	background: none;
-	zoom: 1;
+	background-image: none;
 }
+
+/* menu in a module, use module bg colour */
+.box-menu .cssmenu_vert a {
+	background-color: inherit;
+}
+
 
 /** Other boxes **/
 
@@ -357,7 +375,7 @@ h3.box-title,
 /* -moz-background-clip: border;
 	-moz-background-inline-policy: continuous;
 	-moz-background-origin :padding;*/
-	background: #fbf9ee url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png) repeat-x scroll 50% 50%;
+	background: #f3f3f3 url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png) repeat-x scroll 50% 50%;
 	border: 1px solid #ccc;
 	color: #363636;
 }
@@ -375,21 +393,21 @@ h3.box-title,
 .errors .rbox-title,
 .errors .rbox-data {
 	color: #cd0a0a;
-	background:#fef1ec url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% bottom;
+	background:#fef1ec url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% 100%;
 	border:1px solid #cd0a0a;
 }
 
 .warning .rbox-title,
 .warning .rbox-data {
 	color: #cd0a0a;
-	background: #fef1ec url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% bottom;
+	background: #fef1ec url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% 100%;
 	border:1px solid #cd0a0a;
 }
 
 .simplebox {
 	border: 1px solid #666;
-	background-color: #eee;
-	color: #333;
+	background-color: #cccccc;
+	color: #363636;
 }
 
 .errors {
@@ -464,8 +482,8 @@ li.even {
 .tabmark {
 	list-style-image: none;
 	float: left;
-	border: 1px solid #d3d3d3;
-	background: #e6e6e6 url(../lib/jquery/jquery-ui/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+	border: 1px solid #cccccc;
+	background: #e2e2e2 url(../lib/jquery/jquery-ui/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
 	outline: none;
 	border-bottom-width: 0 !important;
 	margin: 0 .2em -1px 0;
@@ -473,7 +491,7 @@ li.even {
 
 .tabmark a {
 	padding: 0.5em 1em;
-	color: #555555;
+	color: #666666;
 	font-weight: normal;
 }
 
@@ -483,7 +501,7 @@ li.even {
 	border: 1px solid #aaa;
 	background: #fff url(../lib/jquery/jquery-ui/themes/smoothness/images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x;
 	font-weight: normal;
-	color: #212121;
+	color: #363636;
 	outline: none;
 }
 
@@ -496,11 +514,11 @@ li.even {
 	line-height: 1.4em;
 	padding: .2em 1em;
 	display: inline;
-	border: 1px solid #696969;
+	border: 1px solid #666666;
 	border-bottom: none;
 	margin: 0;
-	color: #696969;
-	background: #f5f5f5;
+	color: #666666;
+	background: #f9f9f9;
 	font-weight: bold;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
@@ -514,9 +532,9 @@ li.even {
 	font-family: "Courier New", Courier, monospace;
 	line-height: 1.2em;
 	padding: 1em;
-	background: #f5f5f5;
+	background: #f9f9f9;
 	margin: 0;
-	border: 1px solid #696969;
+	border: 1px solid #666666;
 	overflow: auto;
 	border-top-right-radius: 3px;
 	border-bottom-left-radius: 3px;
@@ -569,7 +587,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 	position: relative;
 	border: 1px solid #aaa;
 	background: #ccc url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
-	color: #222;
+	color: #363636;
 	font-weight: bold;
 	font-size: 1.1em;
 }
@@ -593,7 +611,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 }
 
 .forum_actions {
-	background: #333;
+	background: #363636;
 	color: #fff;
 	padding: 3px;
 }
@@ -669,12 +687,12 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 	background: #e2e2e2;
 }
 .caleven {
-	background: #d4d4d4;
+	background: #cccccc;
 }
 
 .calfocuson {
-	font-size: 100%;
-	background: #f3e498;
+	font-size: 1em;
+	background: #fcefa1;
 }
 
 .calfocuson a {
@@ -682,7 +700,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 }
 
 .calHeadingOn, .calHeadingOn a {
-	background: #f3e498;
+	background: #fcefa1;
 }
 
 /*.calodd .calfocus, .calodd .calfocuson*/
@@ -692,7 +710,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
    =cluetipClass: 'default' */
 
 .cluetip-default {
-	background: #999;
+	background: #aaa;
 	color: #000;
 }
 
@@ -711,7 +729,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 
 #cluetip-close { 
 	background: #aaa;
-	color: #900;
+	color: #cd0a0a;
 }
 
 /***** Ajax, jquery. etc. *****/

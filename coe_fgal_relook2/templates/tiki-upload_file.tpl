@@ -171,15 +171,15 @@
 			<input type="hidden" name="lockedby" value="{$fileInfo.lockedby|escape}" \>
 		{else}
 			{if count($galleries) eq 0}
-				<input type="hidden" name="galleryId" value="{$prefs.fgal_root_id}"/>
+				<input type="hidden" name="galleryId" value="{$treeRootId}"/>
 			{elseif empty($groupforalert)}
 			<tr><td>
 				<label for="galleryId">{tr}File gallery:{/tr}</label>
 			</td><td width="80%">
 				<select id="galleryId" name="galleryId[]">
-					<option value="{$prefs.fgal_root_id}" {if $prefs.fgal_root_id eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}File Galleries{/tr}</option>
+					<option value="{$treeRootId}" {if $treeRootId eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}Root{/tr}</option>
 				{section name=idx loop=$galleries}
-					{if $galleries[idx].id neq $prefs.fgal_root_id and $galleries[idx].perms.tiki_p_upload_files eq 'y'}
+					{if $galleries[idx].id neq $treeRootId and $galleries[idx].perms.tiki_p_upload_files eq 'y'}
 					<option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name|escape}</option>
 					{/if}
 				{/section}

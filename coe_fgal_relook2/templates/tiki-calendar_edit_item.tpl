@@ -720,7 +720,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 </table>
 
 {if $edit}
-<table class="normal">
+<table class="formcolor">
 {if $recurrence.id gt 0}
 <tr><td>
 	<input type="radio" id="id_affectEvt" name="affect" value="event" checked="checked"/><label for="id_affectEvt">{tr}Update this event only{/tr}</label><br />

@@ -8,12 +8,16 @@
 $section = 'sheet';
 require_once ('tiki-setup.php');
 require_once ('lib/sheet/grid.php');
+$auto_query_args = array(
+	'sheetId',
+	'readdate',
+);
 
 $access->check_feature('feature_sheet');
 
 $info = $sheetlib->get_sheet_info( $_REQUEST['sheetId'] );
 if (empty($info)) {
-	$smarty->assign('Incorrect parameter');
+	$smarty->assign('msg', tra('Incorrect parameter'));
 	$smarty->display('error.tpl');
 	die;
 }
@@ -33,19 +37,19 @@ $smarty->assign('title', $info['title']);
 $smarty->assign('description', $info['description']);
 
 $smarty->assign('page_mode', 'form' );
+$smarty->assign('sheetId', $_REQUEST['sheetId'] );
 
 // Process the insertion or modification of a gallery here
-
 $grid = new TikiSheet;
 
-if( $_SERVER['REQUEST_METHOD'] == 'POST' )
+$history = $sheetlib->sheet_history( $_REQUEST['sheetId'] );
+$smarty->assign_by_ref( 'history', $history );
+
+if( isset($_REQUEST['encoding']) )
 {
 	$smarty->assign('page_mode', 'submit' );
 
-	$sheetId = $_REQUEST['sheetId'];
-    $encoding = $_REQUEST['encoding'];
-
-	$handler = new TikiSheetDatabaseHandler( $sheetId );
+	$handler = new TikiSheetDatabaseHandler( $_REQUEST['sheetId'], $_REQUEST['readdate'] );
 	$grid->import( $handler );
 
 	$handler = $_REQUEST['handler'];
@@ -58,7 +62,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 		die;
 	}
 
-	$handler = new $handler( "php://stdout" , 'UTF-8', $encoding );
+	$handler = new $handler( "php://stdout" , 'UTF-8', $_REQUEST['encoding'] );
 	$grid->export( $handler );
 
 	exit;

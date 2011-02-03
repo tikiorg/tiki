@@ -125,6 +125,12 @@ class NotificationLib extends TikiLib
 			'available' => $prefs['feature_file_galleries'] == 'y',
 			'permission' => $tiki_p_admin == 'y'
 		);
+		$watches['auth_token_called'] = array(
+			'label' => tra('Token is called') ,
+			'type' => 'security',
+			'url' => '',
+			'object' => '*'
+		);
 
 		foreach($watches as $key => $watch) {
 			if (array_key_exists('available', $watch) && !$watch['available']) {

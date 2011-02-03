@@ -14,9 +14,12 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== FALSE) {
 require_once 'lib/setup/third_party.php';
 require_once (defined('SMARTY_DIR') ? SMARTY_DIR : 'lib/smarty/libs/') . 'Smarty.class.php';
 
-class Smarty_Tikiwiki extends Smarty
+class Smarty_Tiki extends Smarty
 {
-	function Smarty_Tikiwiki($tikidomain = '') {
+	var $url_overriding_prefix_stack = null;
+	var $url_overriding_prefix = null;
+
+	function Smarty_Tiki($tikidomain = '') {
 		parent::Smarty();
 		global $prefs;
 
@@ -28,7 +31,7 @@ class Smarty_Tikiwiki extends Smarty
 		$this->caching = 0;
 		$this->compile_check = ( $prefs['smarty_compilation'] != 'never' );
 		$this->force_compile = ( $prefs['smarty_compilation'] == 'always' );
-		$this->assign('app_name', 'Tikiwiki');
+		$this->assign('app_name', 'Tiki');
 		$this->plugins_dir = array(	// the directory order must be like this to overload a plugin
 			TIKI_SMARTY_DIR,
 			SMARTY_DIR.'plugins'
@@ -54,6 +57,8 @@ class Smarty_Tikiwiki extends Smarty
 		$secure_dirs[] = 'img/icons2';
 		$this->secure_dir = $secure_dirs;
 		$this->security_settings['ALLOW_SUPER_GLOBALS'] = true;
+
+		$this->url_overriding_prefix_stack = array();
 	}
 
 	function _smarty_include($params) {
@@ -69,6 +74,32 @@ class Smarty_Tikiwiki extends Smarty
 			}
 		}
 		return parent::_smarty_include($params);
+	}
+
+	// Fetch templates from plugins (smarty plugins, wiki plugins, modules, ...) that may need to :
+	//   - temporarily override some smarty vars,
+	//   - prefix their self_link / button / query URL arguments
+	//
+	function plugin_fetch($_smarty_tpl_file, &$override_vars = null) {
+		$smarty_orig_values = array();
+		if ( is_array( $override_vars ) ) {
+			foreach ( $override_vars as $k => $v ) {
+				$smarty_orig_values[ $k ] =& $this->get_template_vars( $k );
+				$this->assign_by_ref($k, $override_vars[ $k ]);
+			}
+		}
+
+		$return = $this->fetch($_smarty_tpl_file);
+
+		// Restore original values of smarty variables
+		if ( count( $smarty_orig_values ) > 0 ) {
+			foreach ( $smarty_orig_values as $k => $v ) {
+				$this->assign_by_ref($k, $smarty_orig_values[ $k ]);
+			}
+		}
+
+		unset( $smarty_orig_values );
+		return $return;
 	}
 
 	function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false) {
@@ -138,11 +169,16 @@ class Smarty_Tikiwiki extends Smarty
 				$this->assign('print_page', 'y');
 			}
 			$data = $this->fetch($tpl, $_smarty_cache_id, $_smarty_compile_id);//must get the mid because the modules can overwrite smarty variables
+
 			$this->assign('mid_data', $data);
 			if ($prefs['feature_fullscreen'] != 'y' || empty($_SESSION['fullscreen']) || $_SESSION['fullscreen'] != 'y')
 				include_once('tiki-modules.php');
+
 		} elseif ($_smarty_tpl_file == 'confirm.tpl' || $_smarty_tpl_file == 'error.tpl' || $_smarty_tpl_file == 'error_ticket.tpl' || $_smarty_tpl_file == 'error_simple.tpl') {
+			ob_end_clean(); // Empty existing Output Buffer that may have been created in smarty before the call of this confirm / error* template
+
 			include_once('tiki-modules.php');
+
 		}
 		if (isset($style_base)) {
 			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/$_smarty_tpl_file")) {
@@ -153,6 +189,7 @@ class Smarty_Tikiwiki extends Smarty
 				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
 			}
 		}
+
 		$_smarty_cache_id = $prefs['language'] . $_smarty_cache_id;
 		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id;
 
@@ -263,10 +300,23 @@ class Smarty_Tikiwiki extends Smarty
   		}
 		return $this->template_dir.$file.$template;
 	}
+
+	function set_request_overriders( $url_arguments_prefix, $arguments_list ) {
+		$this->url_overriding_prefix_stack[] = array( $url_arguments_prefix . '-', $arguments_list );
+		$this->url_overriding_prefix =& $this->url_overriding_prefix_stack[ count( $this->url_overriding_prefix_stack ) - 1 ];
+	}
+
+	function remove_request_overriders( $url_arguments_prefix, $arguments_list ) {
+		$last_override_prefix = empty( $this->url_overriding_prefix_stack ) ? false : array_pop($this->url_overriding_prefix_stack);
+		if ( ! is_array($last_override_prefix) || $url_arguments_prefix . '-' != $last_override_prefix[0] ) {
+			trigger_error( 'URL Overriding prefix stack is in a bad state', E_USER_ERROR );
+		}
+		$this->url_overriding_prefix =& $this->url_overriding_prefix_stack[ count( $this->url_overriding_prefix_stack ) - 1 ];;
+	}
 }
 
 if (!isset($tikidomain)) { $tikidomain = ''; }
-$smarty = new Smarty_Tikiwiki($tikidomain);
+$smarty = new Smarty_Tiki($tikidomain);
 $smarty->load_filter('pre', 'tr');
 $smarty->load_filter('pre', 'jq');
 

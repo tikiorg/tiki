@@ -26,10 +26,7 @@
 {/if}
 
 {* --- Canonical URL --- *}
-{if $prefs.feature_canonical_url eq 'y'}
-	{if $page neq ''} <link rel="canonical" href="{$page|sefurl}" /> {/if}
-{/if}	
-
+{include file='canonical.tpl'}
 
 {* --- Tiki block --- *}
 {include file='bidi.tpl'}

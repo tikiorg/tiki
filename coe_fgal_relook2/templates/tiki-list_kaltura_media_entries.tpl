@@ -15,15 +15,15 @@
 		{if $item->id ne ''}
 	<tr{if ($key % 2)} class="odd"{else} class="even"{/if}>	
 			{include file=tiki-list_kaltura_entries_actions.tpl}
-		<td><input type="checkbox" name="mediaId[]" value="{$item->id}" /></td>
-		<td><a href="#" {popup trigger="onclick" sticky=1 fullhtml="1" text=$smarty.capture.actions|escape:"javascript"|escape:"html"}><img class="athumb" src="{$item->thumbnailUrl}" alt="{$item->description}" height="80" width="120" /></a></td>
-		<td><a href="tiki-kaltura_video.php?{$entryType}Id={$item->id}" title="{tr}View{/tr}">{$item->name}</a></td>
-		<td>{$item->mediaType}</td>
-		<td>{$item->createdAt|tiki_short_datetime}</td>
-		<td>{$item->statusString}</td>
-		<td>{$item->tags}</td>
+		<td class="checkbox"><input type="checkbox" name="mediaId[]" value="{$item->id}" /></td>
+		<td class="text"><a href="#" {popup trigger="onclick" sticky=1 fullhtml="1" text=$smarty.capture.actions|escape:"javascript"|escape:"html"}><img class="athumb" src="{$item->thumbnailUrl}" alt="{$item->description}" height="80" width="120" /></a></td>
+		<td class="text"><a href="tiki-kaltura_video.php?{$entryType}Id={$item->id}" title="{tr}View{/tr}">{$item->name}</a></td>
+		<td class="text">{$item->mediaType}</td>
+		<td class="date">{$item->createdAt|tiki_short_datetime}</td>
+		<td class="text">{$item->statusString}</td>
+		<td class="text">{$item->tags}</td>
 			{include file=tiki-list_kaltura_entries_add_info.tpl}	
-		<td><a href="#" {popup trigger="onmouseover" fullhtml="1" sticky=true text=$smarty.capture.add_info|escape:"javascript"|escape:"html" left=true}>{icon _id='information' class='' title='{tr}More Information{/tr}'}</a></td>
+		<td class="text"><a href="#" {popup trigger="onmouseover" fullhtml="1" sticky=true text=$smarty.capture.add_info|escape:"javascript"|escape:"html" left=true}>{icon _id='information' class='' title='{tr}More Information{/tr}'}</a></td>
 	</tr>
 		{/if}
 	{/foreach}

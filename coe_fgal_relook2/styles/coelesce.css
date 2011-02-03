@@ -197,15 +197,14 @@ label {
 	color: #2d2d2d;
 	font-size: 1.05em;
 }
-
+/*
 #header {
 	text-align: left;
 	background: #96bce3;
-}
+}*/
 
 #middle {
 	background: white;
-	margin-top: 28px;
 	margin-bottom: 20px;
 }
 
@@ -271,31 +270,11 @@ body.tiki_wiki_page.manage #c1c2 #wrapper #col1 #tiki-center {
 }
 
 /* Site Header & Identity */
-#header-top {
-	background: url(coelesce/pagebg.jpg) repeat-x bottom;
-	height: 80px;
+#top_modules {
+	background: url(coelesce/pagebg.jpg) repeat-x 0 100%;
 	position: relative;
-}
-
-#header-top[id] {
-	height: auto;
 	min-height: 80px;
-}
-
-#sioptions {
-	padding: 0;
-}
-
-#sioptionscentered {
-	margin: 1em;
-}
-
-.floatright {
-	margin-right: 8px;
-}
-
-.floatleft {
-	margin-left: 8px;
+	
 }
 
 #sitelogo {
@@ -309,41 +288,76 @@ body.tiki_wiki_page.manage #c1c2 #wrapper #col1 #tiki-center {
 	float: left;
 }
 
-#login_search {
-	display: block;
+#top_modules .box-login_box {
 	position: absolute;
-	right: 30px;
-	bottom: 12px;
+	bottom: 50px;
+	right: 36px;
 	text-align: right;
 	color: #fff;
 }
-	
-#login_search a,
-#login_search a:visited {
+
+#top_modules .box-login_box a,
+#top_modules .box-login_box a:visited {
 	color: #fff;
 }
-
-#login_language {
-	display: none; /*inline*/
-}
-
-#sitesearchbar {
-	float: right;
-	margin-top: 3px;
-	margin-right: 0;
-	margin-left: auto;
-	padding: 0 0 0 15px;
-	min-width: 180px;
+/*
+#topbar_modules .box-search {
+	position: absolute;
+	right: 30px;
+	top: 0;
+	text-align: right;
+	color: #fff;
+	padding: 0;
+	padding-right: 0;
 	text-align: left;
-	background: url(coelesce/search_wide.jpg) no-repeat;
+	background: url(coelesce/search_wide4.png) 0 100% no-repeat;
 	color: #517ea7;
+	height: 32px;
 }
 
-#sitesearchbar .wrapper {
-	background: url(coelesce/search_wide.jpg) 100% 0 no-repeat;
-	margin-right: 0;
-	margin-left: auto;
-	padding: 0 35px 0 0;
+#topbar_modules .box-search form {
+	background: url(coelesce/search_wide4.png) 100% 0 no-repeat;
+	padding-right: 40px;
+	padding-top: 6px;
+	margin-left: 15px;
+	margin-right: -15px;
+	height: 32px;
+}
+*/
+#top_modules .box-search,
+#topbar_modules .box-search {
+	position: absolute;
+	right: 30px;
+	top: 0;
+	text-align: right;
+	color: #fff;
+	padding: 0;
+	padding-right: 0;
+	text-align: left;
+	background: url(coelesce/search_wide.png) 0 0 no-repeat;
+	color: #517ea7;
+	height: 32px;
+}
+
+#top_modules .box-search {
+	bottom: 12px;
+	top: auto	
+}
+
+#top_modules .box-search form,
+#topbar_modules .box-search form {
+	background: url(coelesce/search_wide.png) 100% 0 no-repeat;
+	padding-right: 40px;
+	margin-left: 15px;
+	margin-right: -15px;
+	height: 32px;
+	padding-top: 8px;
+}
+
+
+.box-search form .ac_input {
+	border: none;
+	background: none;
 }
 
 #sitesearchbar form {
@@ -417,6 +431,7 @@ input[name="search"] {
 	color: #9eb8d5;
 	font-size: 34px;
 	display: inline;
+	margin-bottom: 10px;
 }
 
 #sitetitle a,
@@ -430,6 +445,7 @@ input[name="search"] {
 #sitesubtitle {
 	display: inline;
 	margin-left: 14px;
+	margin-bottom: 0;
 	color: white;
 	font-size: 14px;
 	font-weight: normal;
@@ -516,6 +532,10 @@ small.date {
 /** CSS (suckerfish) menus **/
 
 /* typography, colors */
+.box {
+	overflow: visible;
+}
+
 .cssmenu_horiz li a {
 	padding: 6px 1em;
 	font-weight: bold;
@@ -1534,10 +1554,6 @@ textarea#editpost2 {
 
 .catitems {
 	margin-left: 25px;
-}
-
-.catitems li a {
-	white-space: nowrap;
 }
 
 /***** Tags (freetags) *****/

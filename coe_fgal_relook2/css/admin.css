@@ -154,8 +154,7 @@ a.admbox.off img {
 	height: auto;
 	max-height: 400px;
 	min-height: 16px;
-	overflow-y: auto;
-	overflow-x: hidden;
+	overflow: auto;
 	margin: 0;
 }
 
@@ -205,8 +204,7 @@ a.admbox.off img {
 	width: 95%;
 	min-height: 20px;
 	min-width: 500px;
-	overflow-y: hidden;
-	overflow-x: hidden;
+	overflow: hidden;
 	border: solid thin gray;
 	margin: 0;
 	padding: 2px 4px 0;
@@ -292,17 +290,19 @@ a.admbox.off img {
 	text-align: right;
 }
 
+/* end from ui-revamp branch */
+
+/* tiki 7 modules revamp */
+
 .assigned_modules {
 	padding: 1em 2em 1em 0;
 	width: 40%;
 	min-height: 10em;
 }
 
-/* end from ui-revamp branch */
-
 .module-placeholder {
 	width: 160px;
-	minHeight: 40px;
+	min-height: 40px;
 	list-style-type: none;
 	background-color: #ff8;
 	border: #884 2px solid;
@@ -317,3 +317,94 @@ a.admbox.off img {
 	-moz-user-select: none;
 }
 
+/* end modules revamp */
+
+/* tiki 7 theme generator *
+ * deliberately pixel based sizes */
+
+.tgItems {
+	list-style: none;
+	line-height: 40px;
+	background-color: #aaa;
+	color: #666;
+	padding: 10px;
+	margin: 0 1em 1.5em 0;
+}
+
+.admin .themegenerator > div > label,
+.themegenerator > div > label {
+	background-color: #aaa;
+	color: #ddd;
+	line-height: 24px;
+	padding: 4px 10px 6px;
+	font-weight: bold;
+	text-decoration: underline;
+/*	width: 100px;*/
+	white-space: nowrap;
+}
+
+.tgItems > li {
+	position: relative;
+	float: left;
+	background-color: #aaa;
+	border: 2px solid #aaa;
+	margin: 1px;
+}
+
+.tgItems > li > div > * {
+	float:left;
+	margin: 3px 6px 0px 0px;
+}
+
+.tgItems > li > * {
+	float:left;
+}
+
+.tgItems .tgValue {
+	margin-top: 10px;
+	width: 60px;
+	color: #666;
+	background-color: #ddd;
+	border-color: #999 #ccc #ccc #999;
+}
+
+.tgItems .tgLabel {
+	text-align: right;
+	width: 48px;
+}
+
+.tgItems .changed input {
+	font-style: italic;
+	color: #333;
+}
+
+.tgItems .selected {
+	border: 2px solid #bbb;
+}
+
+.tgItems input[type=checkbox] {
+	margin-top: 14px;
+}
+
+.tgTools * {
+	float: left;
+	vertical-align: middle;
+	font-size: 0.9em;
+}
+
+.tgItems div.tgWide {
+	width: 10em;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.tgItems input.tgWide {
+	width: 20em;
+}
+
+.tgContexts li {
+	font-family: monospace;
+	font-size: 1.2em;
+}
+
+/* end theme generator */

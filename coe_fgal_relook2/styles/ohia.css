@@ -368,12 +368,9 @@ background-image:url('../lib/jquery/jquery-ui/themes/smoothness/images/ui-icons_
 /***** Boxes *****/
 /** Modules **/
 .box {
-	width: 200px;
 	text-align: left;
-	margin-left: auto;
-	margin-right: auto;
 	padding-bottom: 4px}
-
+	
 h3.box-title {
 	padding-top: 0;
 	background: #5e0000;
@@ -618,7 +615,8 @@ h1 a.pagetitle:hover {
 #page-bar {
 	display: block;
 	margin-top: 0;
-	float: 0}
+	float: none;
+}
 
 
 #wikihelp-tab table,
@@ -756,7 +754,7 @@ li.toclevel a:hover {
 	display: block;
 	padding: 3px;
 	line-height: 150%;
-	text-transform: 0;
+	text-transform: none;
 	font-size: 90%}
 
 * html .bloginfo table {font-size: 11px}

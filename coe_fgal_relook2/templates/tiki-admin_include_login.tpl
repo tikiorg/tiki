@@ -293,6 +293,7 @@
 				{/if}
 
 				{preference name='cas_create_user_tiki'}
+				{preference name='cas_autologin'}
 				{preference name='cas_skip_admin'}
 				{preference name='cas_show_alternate_login'}
 				{preference name='cas_force_logout'}

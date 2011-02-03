@@ -269,10 +269,9 @@ class UsersLib extends TikiLib
 		if (SID) $url.= '?' . SID;
 
 		if ( $prefs['auth_method'] === 'cas' && $user !== 'admin' && $user !== '' && $prefs['cas_force_logout'] === 'y' ) {
-			require_once ('lib/phpcas/CAS.php');
-			phpCAS::client($prefs['cas_version'], '' . $prefs['cas_hostname'], (int)$prefs['cas_port'], '' . $prefs['cas_path'], false);
 			phpCAS::logoutWithRedirectServiceAndUrl($url,$url);
 		}
+		unset($_SESSION['cas_validation_time']);
 		unset($_SESSION[$user_cookie_site]);
 		session_unset();
 		session_destroy();
@@ -809,9 +808,68 @@ class UsersLib extends TikiLib
 		}
 	}
 
-	// validate the user through CAS
-        function validate_user_cas(&$user, $checkOnly = false) {
-		global $tikilib, $prefs, $base_url;
+	function check_cas_authentication($user_cookie_site) {
+		global $tikilib, $prefs, $base_url, $webdav_access;
+
+		// Avoid CAS authentication check if the client is not able to handle HTTP redirects to another domain. This includes:
+		//  - WebDAV requests
+		//  - Javascript/AJAX requests
+		//
+		if ( ( isset($webdav_access) && $webdav_access === true )
+			|| ( isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' )
+		) {
+			return true;
+		}
+
+		// just make sure we're supposed to be here
+		if ( !$this->_init_cas_client() ) {
+			return false;
+		}
+
+		if ( !empty($_SESSION['phpCAS']['user']) ) {
+			$_SESSION[$user_cookie_site] = $_SESSION['phpCAS']['user'];
+		}
+
+		if (isset($_REQUEST['ticket']) && empty($_SESSION[$user_cookie_site])) {
+			$cas_user = '';
+			$_SESSION['cas_is_validating'] = false;
+			$this->validate_user_cas($cas_user, true);
+			die();
+		}
+
+		// Check for CAS (re-)validation
+		//  Only if :
+		//   - using CAS auth method
+		//   - not calling tiki-login.php nor tiki-logout.php
+		//   - not using 'admin' user
+		//   - the request is not a POST ( which does not keep its params with CAS redirections )
+		//   - either the CAS validation timed out or the validation process has not ended within 5 seconds which often means that the redirection to the CAS server failed
+		//
+		if (php_sapi_name() !== 'cli'
+			&& (isset($_SESSION[$user_cookie_site]) || $prefs['cas_autologin'] == 'y')
+			&& basename($_SERVER["SCRIPT_NAME"]) != 'tiki-login.php'
+			&& basename($_SERVER["SCRIPT_NAME"]) != 'tiki-logout.php'
+			&& (!isset($_SESSION[$user_cookie_site]) || $_SESSION[$user_cookie_site] != 'admin' )
+			&& empty($_POST)
+			&& ( ( $prefs['cas_authentication_timeout'] && $tikilib->now - $_SESSION['cas_validation_time'] > $prefs['cas_authentication_timeout'] )
+				|| ( isset($_SESSION['cas_is_validating']) && $_SESSION['cas_is_validating'] === true && $tikilib->now - $_SESSION['cas_validation_time'] > 5 ) )
+		) {
+			unset($_SESSION["$user_cookie_site"]);
+			unset($_SESSION['phpCAS']['user']);
+
+			$_SESSION['cas_validation_time'] = $tikilib->now;
+			$_SESSION['cas_is_validating'] = true;
+			$cas_user = '';
+
+			// phpCAS will always redirect to CAS validate URL
+			$this->validate_user_cas($cas_user, true);
+
+			die();
+		}
+	}
+
+	function _init_cas_client() {
+		global $prefs;
 
 		// just make sure we're supposed to be here
 		if ($prefs['auth_method'] != 'cas') {
@@ -824,51 +882,44 @@ class UsersLib extends TikiLib
 		// initialize phpCAS
 		if ( !isset($GLOBALS['PHPCAS_CLIENT']) ) {
 			phpCAS::client($prefs['cas_version'], ''.$prefs['cas_hostname'], (int) $prefs['cas_port'], ''.$prefs['cas_path'], false);
-			//phpCAS::setPGTStorageFile('xml',session_save_path());
-			//phpCAS::setPGTStorageFile('plain','/tmp/phpcas_tickets');
 		}
-		// Redirect to this URL after authentication
 
-		if ( !empty($prefs['cas_extra_param']) ) {
+		return true;
+	}
+
+	// validate the user through CAS
+        function validate_user_cas(&$user, $checkOnly = false) {
+		global $tikilib, $prefs, $base_url;
+
+		// just make sure we're supposed to be here
+		if (!$this->_init_cas_client()) {
+			return false;
+		}
+
+		// Redirect to this URL after authentication
+		if ( !empty($prefs['cas_extra_param']) && basename($_SERVER["SCRIPT_NAME"]) == 'tiki-login.php' ) {
 			phpCAS::setFixedServiceURL( $base_url . 'tiki-login.php?cas=y&' . $prefs['cas_extra_param'] );
 		}
 
 		// check CAS authentication
 		phpCAS::setNoCasServerValidation();
-		if ( isset($_SESSION['cas_redirect']) || $checkOnly ) {
-			if ( ! $checkOnly ) {
-				unset($_SESSION['phpCAS']['auth_checked']);
-			}
+		if ( $checkOnly ) {
+			unset($_SESSION['phpCAS']['auth_checked']);
 			$auth = phpCAS::checkAuthentication();
 		} else {
 			$auth = phpCAS::forceAuthentication();
 		}
-		$_SESSION['cas_validation_time'] = time();
+		$_SESSION['cas_validation_time'] = $tikilib->now;
 
 		// at this step, the user has been authenticated by the CAS server
 		// and the user's login name can be read with phpCAS::getUser().
-
-		if ( $auth ) {
-			$user = phpCAS::getUser();
-		} elseif ( isset($_SESSION['cas_redirect']) ) {
-			// If the user has logged out from the CAS server
-			// continue as Anonymous
-			$user = null;
-			$cookie_site = preg_replace('/[^a-zA-Z0-9]/', '', $prefs['cookie_name']);
-			$user_cookie_site = 'tiki-user-' . $cookie_site;
-			$_SESSION[$user_cookie_site] = null;
-			header('Location: '.$_SESSION['cas_redirect']);
-			unset($_SESSION['cas_redirect']);
-			die();
-		} else {
-			$user = null;
-		}
-
-		if ( isset($user) ) {
+		if ( $auth && ($user = phpCAS::getUser()) ) {
 			return USER_VALID;
 		} else {
+			$user = null;
 			return PASSWORD_INCORRECT;
 		}
+
 	}
 
 	function init_ldap($user, $pass) {
@@ -1361,21 +1412,30 @@ class UsersLib extends TikiLib
 	}
 
 	// ldap sync
-	function sync_and_update_lastlogin($user, $password) {
-		global $prefs;
-		$ret = true;
+	function sync_and_update_lastlogin($user, $pass) {
+		global $prefs, $tikilib;
+		$current = $this->getOne("select `currentLogin` from `users_users` where `login`= ?", array($user));
+		$ret = $this->update_lastlogin($user, $current);
 
-		if ($prefs['syncGroupsWithDirectory'] == 'y' || $prefs['syncUsersWithDirectory'] == 'y') {
+		if (is_null($current)) {
+			// First time
+			$current = 0;
+		}
+
+		// A LDAP synchronisation is not done in the 1st minute after login
+		if ( $tikilib->now - $current >= 60 && ( $prefs['syncGroupsWithDirectory'] == 'y' || $prefs['syncUsersWithDirectory'] == 'y' ) ) {
 			$ret &= $this->ldap_sync_user_and_groups($user, $pass);
 		}
 
-		return $ret & $this->update_lastlogin($user);
+		return $ret;
 	}
 
 	// update the lastlogin status on this user
-	function update_lastlogin($user) {
+	function update_lastlogin($user, $current = null) {
 		// Check
-		$current = $this->getOne("select `currentLogin` from `users_users` where `login`= ?", array($user));
+		if (is_null($current)) {
+			$current = $this->getOne("select `currentLogin` from `users_users` where `login`= ?", array($user));
+		}
 
 		if (is_null($current)) {
 			// First time
@@ -1438,7 +1498,10 @@ class UsersLib extends TikiLib
 	
 	function get_users_light($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $group = '') {
 		// This is a lighter version of get_users_names designed for ajax checking of userrealnames
-		global $prefs;
+		global $prefs, $tiki_p_list_users;
+
+		if ( $tiki_p_list_users	!== 'y') return array();
+
 		$mid = '';
 		$bindvars = array();
 		if(!empty($group)) {
@@ -1448,7 +1511,7 @@ class UsersLib extends TikiLib
 			$mid = ', `users_usergroups` uug where uu.`userId`=uug.`userId` and uug.`groupName` in ('.implode(',',array_fill(0, count($group),'?')).')';
 			$bindvars = $group;
 		}
-		if ($find) {
+		if ( !empty($find) ) {
 			$findesc = '%' . $find . '%';
 			if (empty($mid)) {
 				$mid .= " where uu.`login` like ?";
@@ -1480,8 +1543,11 @@ class UsersLib extends TikiLib
 	
 	function get_users_names($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '') {
 
+		global $tiki_p_list_users;
+		if ( $tiki_p_list_users	!== 'y') return array();
+
 		// This function gets an array of user login names.
-		if ($find) {
+		if ( !empty($find) ) {
 			$findesc = '%' . $find . '%';
 			$mid = " where `login` like ?";
 			$bindvars=array($findesc);
@@ -1503,6 +1569,9 @@ class UsersLib extends TikiLib
 
 	function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $initial = '', $inclusion=false, $group='', $email='') {
 
+		global $tiki_p_list_users;
+		if ( $tiki_p_list_users	!== 'y') return array();
+
 		$mid = '';
 		$bindvars = array();
 		$mmid = '';
@@ -1519,7 +1588,7 @@ class UsersLib extends TikiLib
 			$bindvars = $group;
 			$mbindvars = $bindvars;
 		}
-		if($email) {
+		if( !empty($email) ) {
 			$mid.= $mid == '' ? ' where' : ' and';
 			$mid.= ' uu.`email` like ?';
 			$mmid = $mid;
@@ -1527,7 +1596,7 @@ class UsersLib extends TikiLib
 			$mbindvars[] = '%'.$email.'%';
 		}
 
-		if ($find) {
+		if (! empty($find) ) {
 			$mid.= $mid == '' ? ' where' : ' and';
 			$mid.= " uu.`login` like ?";
 			$mmid = $mid;
@@ -1535,7 +1604,7 @@ class UsersLib extends TikiLib
 			$mbindvars[] = '%'.$find.'%';
 		}
 
-		if ($initial) {
+		if ( !empty($initial) ) {
 			$mid = " where `login` like ?";
 			$mmid = $mid;
 			$bindvars = array($initial.'%');
@@ -1730,7 +1799,10 @@ class UsersLib extends TikiLib
 	}
 
 	function list_all_users() {
-		global $cachelib;
+		global $cachelib, $tiki_p_list_users;
+
+		if ( $tiki_p_list_users	!== 'y') return array();
+
 		if (! $users = $cachelib->getSerialized("userslist")) {
 			$users = array();
 			$result = $this->query("select `login`,`userId` from `users_users` order by `login`", array());
@@ -2100,6 +2172,17 @@ class UsersLib extends TikiLib
 		return $ret;
 	}
 
+	/**
+	 * Return information about users that belong to a 
+	 * specific group
+	 * 
+	 * @param string $group group name
+	 * @param int $offset
+	 * @param int $max
+	 * @param string $what which user fields to retrieve
+	 * @param string $sort_mode
+	 * @return array list of users
+	 */
 	function get_group_users($group, $offset = 0, $max=-1, $what='login', $sort_mode='login_asc') {
 		global $prefs;
 		$w = $what=='*'? 'uu.*, ug.`created`, ug.`expire` ': "uu.`$what`"; 
@@ -2704,7 +2787,7 @@ class UsersLib extends TikiLib
 		{
 			$hash = '';
 			if (!isset($prefs['validateRegistration']) || $prefs['validateRegistration'] != 'y')
-				$lastLogin = time();
+				$lastLogin = $tikilib->now;
 		}
 
 		if ( $prefs['feature_clear_passwords'] == 'n' ) {
@@ -3339,7 +3422,7 @@ class UsersLib extends TikiLib
 		// TODO: CLEANUP duplicates code in callback_tikiwiki_send_email() in registrationlib?
 		global $tikilib, $prefs, $smarty;
 		$foo = parse_url($_SERVER['REQUEST_URI']);
-		$foo1 = str_replace(array('tiki-send_mail', 'tiki-register', 'tiki-remind_password', 'tiki-adminusers'), 'tiki-login_validate', $foo['path']);
+		$foo1 = str_replace(array('tiki-send_mail', 'tiki-register', 'tiki-remind_password', 'tiki-adminusers', 'remote'), 'tiki-login_validate', $foo['path']);
 		$foo2 = str_replace(array('tiki-send_mail', 'tiki-register', 'tiki-remind_password', 'tiki-adminusers'), 'tiki-assignuser', $foo['path']);
 		$foo3 = str_replace(array('tiki-send_mail', 'tiki-register', 'tiki-remind_password', 'tiki-adminusers'), 'tiki-user_preferences', $foo['path']);
 		$machine = $tikilib->httpPrefix( true ) . $foo1;
@@ -3617,7 +3700,7 @@ class UsersLib extends TikiLib
 	}
 	function update_expired_groups() {
 		global $tikilib;
-		$query = 'SELECT uu.* FROM `users_usergroups` uu, `users_groups` ug WHERE ( uu.`groupName`= ug.`groupName` AND ug.`expireAfter` > ? AND uu.`created` IS NOT NULL AND uu.`expire` is NULL AND uu.`created` + ug.`expireAfter`*24*60*60 < ?) OR (ug.`expireAfter` = ? AND uu.`expire` < ?)';
+		$query = 'SELECT uu.* FROM `users_usergroups` uu LEFT JOIN `users_groups` ug ON (uu.`groupName`= ug.`groupName`) WHERE ( ug.`expireAfter` > ? AND uu.`created` IS NOT NULL AND uu.`expire` is NULL AND uu.`created` + ug.`expireAfter`*24*60*60 < ?) OR (ug.`expireAfter` = ? AND uu.`expire` < ?)';
 		$result = $this->query($query, array(0, $tikilib->now, 0, $tikilib->now ));
 		$query = 'DELETE FROM `users_usergroups` WHERE `groupName`=? AND `userId`=?';
 		while ($res = $result->fetchrow()) {

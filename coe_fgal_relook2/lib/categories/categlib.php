@@ -885,8 +885,10 @@ class CategLib extends ObjectLib
 		$catObjectId = $this->is_categorized('file gallery', $galleryId);
 
 		if (!$catObjectId) {
+			$filegallib = TikiLib::lib('filegal');
+
 			// The page is not cateorized
-			$info = $this->get_file_gallery($galleryId);
+			$info = $filegallib->get_file_gallery($galleryId);
 
 			$href = 'tiki-list_file_gallery.php?galleryId=' . $galleryId;
 			$catObjectId = $this->add_categorized_object('file gallery', $galleryId, $info["description"], $info["name"], $href);
@@ -1196,7 +1198,9 @@ class CategLib extends ObjectLib
     }
     
     //Moved from tikilib.php
-    function get_categoryobjects($catids,$types="*",$sort='created_desc',$split=true,$sub=false,$and=false, $maxRecords = 500) {
+    // ###trebly:B01229:Test change $sort to name_asc : pb which other case than listcats
+   // function get_categoryobjects($catids,$types="*",$sort='created_desc',$split=true,$sub=false,$and=false, $maxRecords = 500) {
+  function get_categoryobjects($catids,$types="*",$sort='name_asc',$split=true,$sub=false,$and=false, $maxRecords = 500) {
 		global $smarty, $prefs;
 
 		$typetokens = array(
@@ -1262,7 +1266,8 @@ class CategLib extends ObjectLib
 		} elseif (isset($typetitles["$types"])) {
 			$typesallowed = array($types);
 		}
-		
+		// ###trebly:B01229:Test of a title of the lists
+		$out=$smarty->fetch("categobjects_title.tpl");
 		foreach ($catids as $id) {
 			$titles["$id"] = $this->get_category_name($id);
 			$objectcat = array();
@@ -1294,6 +1299,8 @@ class CategLib extends ObjectLib
 				$smarty->assign("titles", $titles);
 				$smarty->assign("listcat", $listcat);
 				$smarty->assign("one", count($listcat));
+				// ###trebly:B01229 test sur display des objets de même catégorie
+				//$out .= echo('<br />Titre de la liste des objets de catégories <br />').$smarty->fetch("categobjects.tpl");
 				$out .= $smarty->fetch("categobjects.tpl");
 				$listcat = array();
 				$titles = array();
@@ -1571,13 +1578,10 @@ class CategLib extends ObjectLib
 	 * Returns true if the given user has edit permission for the category.
 	 */
 	function has_edit_permission($user, $categoryId) {
-		// TODO Fix this, only used by staging and approval, edit no longer has a meaning
 		global $userlib;
 		return ($userlib->user_has_permission($user,'tiki_p_admin')
-				|| ($userlib->user_has_permission($user,'tiki_p_edit_categorized') && !$userlib->object_has_one_permission($categoryId,"category"))
-				|| ($userlib->user_has_permission($user,'tiki_p_admin_categories') && !$userlib->object_has_one_permission($categoryId,"category"))				 
-				|| $userlib->object_has_permission($user, $categoryId, "category", "tiki_p_edit_categorized") 
-				|| $userlib->object_has_permission($user, $categoryId, "category", "tiki_p_admin_categories")
+				|| ($userlib->user_has_permission($user,'tiki_p_edit') && !$userlib->object_has_one_permission($categoryId,"category"))				 
+				|| $userlib->object_has_permission($user, $categoryId, "category", "tiki_p_edit") 
 				);
 	}
 	

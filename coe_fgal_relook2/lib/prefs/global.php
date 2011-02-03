@@ -173,12 +173,6 @@ function prefs_global_list() {
 			'name' => tra('Each group can have its theme'),
 			'type' => 'flag',
 		),
-		'sitemycode' => array(
-			'name' => tra('Custom Site Header Content'),
-			'hint' => tra ('Example:') . ' ' .  "{if \$user neq ''}<div align=\"right\" style=\"float: right; font-size: 10px\">{tr}logged as:{/tr} {\$user}</div>{/if}",
-			'type' => 'textarea',
-			'size' => '6',
-		),
 		'sitetitle' => array(
 			'name' => tra('Site title'),
 			'type' => 'text',
@@ -424,7 +418,8 @@ function feature_home_pages()
 
 	// File gallery
 	if ( $prefs['feature_file_galleries'] == 'y' ) {
-			$hgalinfo = $tikilib->get_file_gallery($prefs['home_file_gallery']);
+			$filegallib = TikiLib::lib('filegal');
+			$hgalinfo = $filegallib->get_file_gallery($prefs['home_file_gallery']);
 			$home_gal_name = substr($hgalinfo["name"], 0, 20);
 			$tikiIndex['tiki-list_file_gallery.php?galleryId=' . $prefs['home_file_gallery']] = tra('File Gallery:') . $home_gal_name;
 	}

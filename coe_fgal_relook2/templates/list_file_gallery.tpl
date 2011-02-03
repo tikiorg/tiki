@@ -75,10 +75,12 @@
 					{include file='list_file_gallery_content.tpl'}
 				{/if}
 
-				{if $files and $gal_info.show_checked neq 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y') and $filegals_manager eq ''}
+				{if $files and $gal_info.show_checked neq 'n' and $prefs.fgal_checked eq 'y' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y') and $filegals_manager eq ''}
 					<div id="sel">
 						<div>
-							{tr}Perform action with checked:{/tr}
+							{if $tiki_p_admin_file_galleries eq 'y' or $tiki_p_remove_files eq 'y' or !isset($file_info) or $tiki_p_admin_file_galleries eq 'y' or $prefs.fgal_display_zip_option eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y'}
+								{tr}Perform action with checked:{/tr}
+							{/if}
 							{if !isset($file_info)}
 								{if $offset}<input type="hidden" name="offset" value="{$offset}" />{/if}
 								{if $tiki_p_admin_file_galleries eq 'y'}
@@ -94,7 +96,9 @@
 								{icon _id='arrow_refresh' _tag='input_image' _confirm="{tr}Are you sure you want to reset the default gallery list table settings?{/tr}" name='defaultsel' alt="{tr}Reset to default gallery list table settings{/tr}" style='vertical-align: middle;'}
 							{/if}
 							
-							{icon _id='pics/icons/mime/zip.png' _tag='input_image' name='zipsel' alt="{tr}Download the zip{/tr}" style='vertical-align: middle;'}
+							{if $prefs.fgal_display_zip_option eq 'y'}
+								{icon _id='pics/icons/mime/zip.png' _tag='input_image' name='zipsel' alt="{tr}Download the zip{/tr}" style='vertical-align: middle;'}
+							{/if}
 							
 							{if $tiki_p_assign_perm_file_gallery eq 'y'}
 								{icon _id='key' _tag='input_image' name='permsel' alt="{tr}Assign permissions to file galleries{/tr}" title="{tr}Assign permissions to file galleries{/tr}" style='vertical-align: middle;'}

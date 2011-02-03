@@ -1,7 +1,9 @@
 {* $Id$ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 
-{title help="trackers"}{tr}Tracker Item:{/tr} {$tracker_info.name|escape}{/title}
+{title help="trackers"}{$tracker_info.name|escape}{/title}
+
+{if $print_page ne 'y'}
 
 {* --------- navigation ------ *}
 <div class="navbar">
@@ -36,9 +38,9 @@
 <div class="categbar" align="right">
 	{if $user and $prefs.feature_user_watches eq 'y'}
 		{if $category_watched eq 'y'}
-			{tr}Watched by categories{/tr}:
+			{tr}Watched by categories:{/tr}
 			{section name=i loop=$watching_categories}
-				<a href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}">{$watching_categories[i].name}</a>&nbsp;
+				<a href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}">{$watching_categories[i].name|escape}</a>&nbsp;
 			{/section}
 		{/if}
 	{/if}
@@ -53,6 +55,7 @@
 {/if}
 
 {include file='tracker_error.tpl'}
+{/if}{*print_page*}
 
 {tabset name='tabs_view_tracker_item'}
 
@@ -73,9 +76,7 @@
 {foreach from=$ins_fields key=ix item=cur_field}
   {if ($cur_field.isHidden ne 'y' or $tiki_p_admin_trackers eq 'y') and !($tracker_info.doNotShowEmptyField eq 'y' and empty($cur_field.value) and empty($cur_field.cat) and empty($cur_field.links) and $cur_field.type ne 'S' and $cur_field.type ne 's' and $cur_field.type ne 'h') and ($cur_field.type ne 'p' or $cur_field.options_array[0] ne 'password') and (empty($cur_field.visibleBy) or in_array($default_group, $cur_field.visibleBy) or $tiki_p_admin_trackers eq 'y')}
 	{if $cur_field.type eq 'h'}
-		</table>
-		<h2>{$cur_field.name|escape}</h2>
-		<table class="formcolor">
+		{include file='tracker_item_field_value.tpl' field_value=$cur_field list_mode=n item=$item_info inTable="formcolor"}
 	{elseif $cur_field.type ne 'x'}
 		{if $stick ne 'y'}
 			<tr class="field{$cur_field.fieldId}"><td class="formlabel" >
@@ -104,6 +105,7 @@
 	{/if}
   {/if}
 {/foreach}
+{trackerheader level=-1 title='' inTable='formcolor'}
 {if $tracker_info.showCreatedView eq 'y'}
 	<tr>
 		<td class="formlabel">{tr}Created{/tr}</td>
@@ -121,6 +123,7 @@
 {else}
 	{include file='tracker_pretty_item.tpl' item=$item_info fields=$ins_fields wiki=$tracker_info.viewItemPretty}
 {/if}
+
 {/tab}
 
 {* -------------------------------------------------- tab with comments --- *}
@@ -134,7 +137,7 @@
 
 {tab name=$tabcomment_vtrackit}
 
-{if $tiki_p_comment_tracker_items eq 'y'}
+{if $print_page ne 'y' and $tiki_p_comment_tracker_items eq 'y'}
 <h2>{tr}Add a Comment{/tr}</h2>
 <form action="tiki-view_tracker_item.php" method="post" id="commentform" name="commentform">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
@@ -157,7 +160,7 @@
 {section name=ix loop=$comments}
 <div class="commentbloc">
 <b>{$comments[ix].title|escape}</b> {if $comments[ix].user}{tr}by{/tr} {$comments[ix].user|userlink}{/if}
-  {if $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>|&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}"
+  {if $print_page ne 'y' and $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>|&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}"
 title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;]{/if}
 <br />
 <small>{tr}posted on:{/tr} {$comments[ix].posted|tiki_short_datetime}</small><br />
@@ -177,7 +180,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;
 {/if}
 
 {* --------------------------------------------------------------- tab with edit --- *}
-{if ($tiki_p_modify_tracker_items eq 'y' and $item_info.status ne 'p' and $item_info.status ne 'c') or ($tiki_p_modify_tracker_items_pending eq 'y' and $item_info.status eq 'p') or ($tiki_p_modify_tracker_items_closed eq 'y' and $item_info.status eq 'c') or $special}
+{if $print_page ne 'y' && ($tiki_p_modify_tracker_items eq 'y' and $item_info.status ne 'p' and $item_info.status ne 'c') or ($tiki_p_modify_tracker_items_pending eq 'y' and $item_info.status eq 'p') or ($tiki_p_modify_tracker_items_closed eq 'y' and $item_info.status eq 'c') or $special}
 {capture name="editTitle"}{if ($tiki_p_remove_tracker_items eq 'y' and $item_info.status ne 'p' and $item_info.status ne 'c') or ($tiki_p_remove_tracker_items_pending eq 'y' and $item_info.status eq 'p') or ($tiki_p_remove_tracker_items_closed eq 'y' and $item_info.status eq 'c')}{tr}Edit/Delete{/tr}{else}{tr}Edit{/tr}{/if}{/capture}
 {tab name="`$smarty.capture.editTitle`"}
 <h2>{tr}Edit Item{/tr}</h2>
@@ -262,9 +265,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;
 
 {if $cur_field.type ne 'x' and $cur_field.type ne 's'}
 {if $cur_field.type eq 'h'}
-</table>
-<h2>{$cur_field.name}</h2>
-<table class="formcolor">
+	{include file='tracker_item_field_value.tpl' field_value=$cur_field list_mode=n item=$item_info inTable="formcolor"}
 {else}
 {if ($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n' or $cur_field.type eq 'b') and $cur_field.options_array[0] eq '1'}
 <tr><td class="formlabel" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'}<em class='mandatory_star'> *</em>{/if}</td><td >
@@ -518,6 +519,7 @@ or $cur_field.type eq 'i'}
 
 {/if}
 {/foreach}
+{trackerheader level=-1 title='' inTable='formcolor'}
 
 {else}
 <tr>
@@ -542,6 +544,7 @@ or $cur_field.type eq 'i'}
 </td>
 </tr>
 {/if}
+
 
 {* -------------------- antibot code -------------------- *}
 {if $prefs.feature_antibot eq 'y' && $user eq ''}
@@ -576,8 +579,12 @@ or $cur_field.type eq 'i'}
 {/if}
 
 {/tabset}
-
 <br /><br />
+
+{if $print_page eq 'y'}
+	{capture name=url}{$base_url}{$itemId|sefurl:trackeritem}{/capture}
+	{tr}The original document is available at{/tr} <a href="{$smarty.capture.url}">{$smarty.capture.url}</a>
+{/if}
 
 {foreach from=$ins_fields key=ix item=cur_field}
 {if $cur_field.http_request}

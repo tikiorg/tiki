@@ -99,4 +99,6 @@
 
 	{self_link page="socialnetworks" _class="admbox" _style="background-image: url('pics/large/socialnetworks48x48.png')" _selected="'`$prefs.feature_socialnetworks`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Social Networks{/tr}" title="{tr}Social networks{/tr}{if $prefs.feature_socialnetworks ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Social networks{/tr}</span>{/self_link}
 
+	{self_link page="share" _class="admbox" _style="background-image: url('img/mytiki/stock_contact.png')" _selected="'`$prefs.feature_share`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Share{/tr}" title="{tr}Share{/tr}{if $prefs.feature_share ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Share{/tr}</span>{/self_link}
+
 </div>

@@ -27,7 +27,7 @@ fieldset {
 
 hr {
 	color: #18a3bb;
-	background: #18a3bb;s
+	background: #18a3bb;
 }
 
 #header_outer {
@@ -103,17 +103,28 @@ input[type="submit"]:hover,
 .cssmenu_vert li ul a,
 .cssmenu_horiz li ul a,
 #header .cssmenu_horiz li ul a,
-#header .cssmenu_horiz li:hover ul a {
+#header .cssmenu_horiz li:hover ul a,
+#topbar_modules .cssmenu_horiz li ul a,
+#topbar_modules .cssmenu_horiz li:hover ul a {
 	background: #005064;
 }
 
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
-#header .cssmenu_horiz li ul a:hover {
+#header .cssmenu_horiz li ul a:hover,
+#topbar_modules .cssmenu_horiz li ul a:hover {
 	background: #14a1bb;
 }
 
+#header .cssmenu_horiz li.selected a,
+#topbar_modules .cssmenu_horiz li.selected a,
+.cssmenu_horiz li.selected a,
+.cssmenu_vert li.selected a {
+	color: #b4f3fb;
+}
+
 #header .cssmenu_horiz li.selected li a,
+#topbar_modules .cssmenu_horiz li.selected li a,
 .cssmenu_horiz li.selected li a,
 .cssmenu_vert li.selected li a {
 	font-style: normal;

@@ -494,12 +494,12 @@ function wikiplugin_tracker($data, $params)
 					$smarty->assign('register_passcode', $smarty->fetch('register-passcode.tpl'));
 					$smarty->assign('register_groupchoice', $smarty->fetch('register-groupchoice.tpl'));
 				}
-				if (!empty($fields)) {
-					$outf = preg_split('/ *: */', $fields);$fields;
-				} elseif (!empty($wiki)) {
+				if (!empty($wiki)) {
 					$outf = $trklib->get_pretty_fieldIds($wiki, 'wiki', $outputPretty);
-				} else {
+				} elseif (!empty($tpl)) {
 					$outf = $trklib->get_pretty_fieldIds($tpl, 'tpl', $outputPretty);
+				} elseif (!empty($fields)) {
+					$outf = preg_split('/ *: */', $fields);
 				}
 				if (!empty($_REQUEST['autosavefields'])) {
 					$autosavefields = explode(':', $_REQUEST['autosavefields']);
@@ -1199,7 +1199,7 @@ function wikiplugin_tracker($data, $params)
 							$bindingValue = $trklib->get_item_value($trackerId, $itemId, $f['options_array'][2]);
 							$flds['data'][$i]['list'] = $trklib->get_filtered_item_values($f['options_array'][1], $bindingValue, $f['options_array'][3]);
 						}
-					} elseif ($f['type'] == 'f' && empty($itemId) && empty($f['options_array'][3])) {
+					} elseif ($f['type'] == 'f' && empty($itemId) && (empty($f['options_array'][3]) || $f['options_array'][3] != 'blank')) {
 						$flds['data'][$i]['value'] = $tikilib->now;
 					} elseif ($f['type'] == 'F') {
 						global $freetaglib;
@@ -1289,8 +1289,7 @@ function wikiplugin_tracker($data, $params)
 							}
 							$back.= '</td><td>';
 						} else {
-							$back .= '<tr><th colspan="2"><label for="' . $f['ins_id'] . '">' 
-										. wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors) . '</label>';
+							$smarty->assign('inTable', (empty($tpl) && empty($wiki))?'wikiplugin_tracker':'');
 						}
 						$smarty->assign_by_ref('field_value', $f);
 						if (!empty($item)) {
@@ -1311,8 +1310,6 @@ function wikiplugin_tracker($data, $params)
 					if (empty($tpl) && empty($wiki)) {
 					if ($f['type'] != 'h'){
 						$back.= "</td></tr>";
-						} else {
-						$back.= "</th></tr>";						
 						}
 					}
 					if (!empty($f['http_request']) && !empty($itemId)) {
@@ -1336,6 +1333,9 @@ function wikiplugin_tracker($data, $params)
 				$smarty->security = true;
 				$back .= $smarty->fetch('wiki:'.$wiki);
 			}
+			include_once('lib/smarty_tiki/function.trackerheader.php');
+			$back .= smarty_function_trackerheader(array('level'=>-1, 'title'=>'', 'inTable' =>(empty($tpl) && empty($wiki))?'wikiplugin_tracker':'' ), $smarty);
+
 			if ($prefs['feature_antibot'] == 'y' && empty($user)) {
 				// in_tracker session var checking is for tiki-register.php
 				$smarty->assign('showmandatory', $showmandatory);
@@ -1373,7 +1373,7 @@ function wikiplugin_tracker($data, $params)
 			}
 			if (!empty($page))
 				$back .= '~/np~';
-			$smarty->assign_by_ref('tiki_p_admin_trackers', $tiki_p_admin_trackers);
+			$smarty->assign_by_ref('tiki_p_admin_trackers', $perms['tiki_p_admin_trackers']);
 		return $back;
 	}
 	else {

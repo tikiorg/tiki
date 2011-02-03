@@ -229,8 +229,8 @@ CREATE TABLE `tiki_banning` (
   `ip3` char(3) default NULL,
   `ip4` char(3) default NULL,
   `user` varchar(200) default '',
-  `date_from` timestamp(14) NOT NULL,
-  `date_to` timestamp(14) NOT NULL,
+  `date_from` timestamp NOT NULL,
+  `date_to` timestamp NOT NULL,
   `use_dates` char(1) default NULL,
   `created` int(14) default NULL,
   `message` text,
@@ -758,12 +758,17 @@ CREATE TABLE `tiki_file_galleries` (
   `wiki_syntax` varchar(200) default NULL,
   `backlinkPerms` char(1) default 'n',
   `show_backlinks` char(1) default NULL,
+  `show_deleteAfter` char(1) default NULL,
+  `show_checked` char(1) default NULL,
+  `show_share` char(1) default NULL,
   `image_max_size_x` int(8) NOT NULL default '0',
   `image_max_size_y` int(8) NOT NULL default '0',
   PRIMARY KEY (`galleryId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
-INSERT INTO `tiki_file_galleries` (`name`, `type`, `description`, `visible`, `user`, `public`, `parentId`) VALUES ('File Galleries', 'system', '', 'y', 'admin', 'y', -1);
+INSERT INTO `tiki_file_galleries` (`galleryId`, `name`, `type`, `description`, `visible`, `user`, `public`, `parentId`) VALUES ('1','File Galleries', 'system', '', 'y', 'admin', 'y', -1);
+INSERT INTO `tiki_file_galleries` (`galleryId`, `name`, `type`, `description`, `visible`, `user`, `public`, `parentId`) VALUES ('2','Users File Galleries', 'system', '', 'y', 'admin', 'y', -1);
+INSERT INTO `tiki_file_galleries` (`galleryId`, `name`, `type`, `description`, `visible`, `user`, `public`, `parentId`) VALUES ('3','Wiki Attachments', 'system', '', 'y', 'admin', 'y', -1);
 
 
 DROP TABLE IF EXISTS `tiki_files`;
@@ -780,6 +785,7 @@ CREATE TABLE `tiki_files` (
   `user` varchar(200) default '',
   `author` varchar(40) default NULL,
   `hits` int(14) default NULL,
+  `maxhits` INT( 14 ) default NULL, 
   `lastDownload` int(14) default NULL,
   `votes` int(8) default NULL,
   `points` decimal(8,2) default NULL,
@@ -1525,12 +1531,12 @@ CREATE TABLE `tiki_modules` (
 ) ENGINE=MyISAM;
 
 INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES
-	('menu','l',1,7200,'id=42&flip=y','a:1:{i:0;s:10:"Registered";}'),
-	('logo','t',1,7200,'nobox=y&style=float%3Aleft%3Bmargin%3A0+30px%3B','a:0:{}'),
-	('login_box','t',2,0,'mode=header&nobox=y&style=position%3Aabsolute%3Bright%3A30px%3Btop%3A5px%3B','a:0:{}'),
-	('quickadmin','t',3,7200,'nobox=y&style=position%3A+absolute%3B+right%3A+200px%3B','a:1:{i:0;s:6:"Admins";}'),
-	('rsslist','b',1,7200,'nobox=y','a:0:{}'),
-	('poweredby','b',2,7200,'nobox=y&icons=n&version=n','a:0:{}');
+    ('menu','l',1,7200,'id=42&flip=y','a:1:{i:0;s:10:"Registered";}'),
+    ('logo','t',1,7200,'nobox=y&style=float%3Aleft%3Bmargin%3A0+30px%3B','a:0:{}'),
+    ('login_box','t',2,0,'mode=header&nobox=y&style=position%3Aabsolute%3Bright%3A30px%3Btop%3A5px%3B','a:0:{}'),
+    ('quickadmin','t',3,7200,'nobox=y&style=position%3A+absolute%3B+right%3A+200px%3B','a:1:{i:0;s:6:"Admins";}'),
+    ('rsslist','b',1,7200,'nobox=y','a:0:{}'),
+    ('poweredby','b',2,7200,'nobox=y&icons=n&version=n','a:0:{}');
 
 DROP TABLE IF EXISTS `tiki_newsletter_subscriptions`;
 CREATE TABLE `tiki_newsletter_subscriptions` (
@@ -1670,7 +1676,7 @@ CREATE TABLE `tiki_polls` (
   `active` char(1) default NULL,
   `publishDate` int(14) default NULL,
   `voteConsiderationSpan` int(4) default 0,
-	`anonym` ENUM( 'a', 'u', 'i', 'c' ) NOT NULL DEFAULT 'u',
+    `anonym` ENUM( 'a', 'u', 'i', 'c' ) NOT NULL DEFAULT 'u',
   PRIMARY KEY (`pollId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 ALTER TABLE tiki_polls ADD INDEX tiki_poll_lookup ( active , title );
@@ -1994,6 +2000,7 @@ CREATE TABLE `tiki_sheet_layout` (
   `footerRow` int(4) NOT NULL default '0',
   `className` varchar(64) default NULL,
   `parseValues` char( 1 ) NOT NULL default 'n',
+  `clonedSheetId` int(8) NULL,
   UNIQUE KEY `sheetId` (`sheetId`, `begin`)
 ) ENGINE=MyISAM;
 
@@ -2012,6 +2019,7 @@ CREATE TABLE `tiki_sheet_values` (
   `user` varchar(200) default '',
   `style` varchar( 255 ) default '',
   `class` varchar( 255 ) default '',
+  `clonedSheetId` int(8) NULL,
   UNIQUE KEY `sheetId` (`sheetId`,begin,`rowIndex`,`columnIndex`),
   KEY `sheetId_2` (`sheetId`,`rowIndex`,`columnIndex`)
 ) ENGINE=MyISAM;
@@ -2023,6 +2031,7 @@ CREATE TABLE `tiki_sheets` (
   `description` text,
   `author` varchar(200) NOT NULL default '',
   `parentSheetId` int(8) NULL,
+  `clonedSheetId` int(8) NULL,
   PRIMARY KEY (`sheetId`)
 ) ENGINE=MyISAM;
 
@@ -3106,7 +3115,7 @@ DROP TABLE IF EXISTS `tiki_friendship_requests`;
 CREATE TABLE `tiki_friendship_requests` (
   `userFrom` varchar(200) NOT NULL default '',
   `userTo` varchar(200) NOT NULL default '',
-  `tstamp` timestamp(14) NOT NULL,
+  `tstamp` timestamp NOT NULL,
   PRIMARY KEY (`userFrom`(120),`userTo`(120))
 ) ENGINE=MyISAM;
 
@@ -3154,7 +3163,7 @@ CREATE TABLE `tiki_users_score` (
   `user` char(200) NOT NULL default '',
   `event_id` char(200) NOT NULL default '',
   `expire` int(14) NOT NULL default '0',
-  `tstamp` timestamp(14) NOT NULL,
+  `tstamp` timestamp NOT NULL,
   PRIMARY KEY (`user`(110),`event_id`(110)),
   KEY `user` (user(110),event_id(110),expire)
 ) ENGINE=MyISAM;
@@ -3591,8 +3600,10 @@ CREATE TABLE `tiki_auth_tokens` (
     `creation` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `timeout` INT NOT NULL DEFAULT 0,
     `hits` INT NOT NULL DEFAULT 1,
+    `maxhits` INT NOT NULL DEFAULT 1, 
     `token` CHAR(32),
     `entry` VARCHAR(50),
+    `email` varchar(255) NOT NULL,
     `parameters` VARCHAR(255),
     `groups` VARCHAR(255),
     PRIMARY KEY( `tokenId` ),

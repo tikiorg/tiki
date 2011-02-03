@@ -8,9 +8,7 @@
 <meta name="generator" content="Tiki Wiki CMS Groupware - http://tiki.org" />
 
 {* --- Canonical URL --- *}
-{if $prefs.feature_canonical_url eq 'y'}
-	{if $page neq ''} <link rel="canonical" href="{$page|sefurl}" /> {/if}
-{/if}	
+{include file='canonical.tpl'}	
 
 {if !empty($forum_info.name) & $prefs.metatag_threadtitle eq 'y'}
 	<meta name="keywords" content="{tr}Forum{/tr} {$forum_info.name|escape} {$thread_info.title|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if}" />
@@ -79,8 +77,6 @@
 			{$userinfo.login|username}
 		{elseif !empty($tracker_info.name)}
 			{$tracker_info.name|escape}
-		{elseif !empty($gal_info.name)}
-			{$gal_info.name|escape}
 		{elseif !empty($headtitle)}
 			{$headtitle|tr_if|escape}{* use $headtitle last if feature specific title not found *}
 		{/if}

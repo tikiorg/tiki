@@ -29,8 +29,11 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 
 function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
-	global $prefs, $smarty_tabset_name, $smarty_tabset, $smarty_tabset_i_tab, $cookietab, $headerlib;
+	global $prefs, $smarty_tabset_name, $smarty_tabset, $smarty_tabset_i_tab, $cookietab, $headerlib, $smarty;
 
+	if ($smarty->get_template_vars('print_page') == 'y') {
+		$params['toggle'] = 'n';
+	}
 	if ( $repeat ) {
 		// opening 
 		$smarty_tabset = array();

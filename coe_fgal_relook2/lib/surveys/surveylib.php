@@ -175,6 +175,7 @@ class SurveyLib extends TikiLib
 	function list_survey_questions($surveyId, $offset, $maxRecords, $sort_mode, $find)
 	{
 		global $tikilib;
+		$filegallib = TikiLib::lib('filegal');
 		$bindvars = array((int) $surveyId);
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -254,7 +255,7 @@ class SurveyLib extends TikiLib
 		
 			// For a multiple choice from a file gallery, show all files in the stats results, even if there was no vote for those files
 			if ($res['type'] == 'g' && $res['options'] > 0) {
-				$files = $this->get_files(0, -1, '', '', $options[0], false, false, false, true, false, false, false, false, '', false, false);
+				$files = $filegallib->get_files(0, -1, '', '', $options[0], false, false, false, true, false, false, false, false, '', false, false);
 				foreach ($files['data'] as $f) {
 					if ( ! isset($ids[$f['id']]) ) {
 						$ret2[] = array(

@@ -65,9 +65,9 @@ function listimgal_pref()
  */
 function listfgal_pref()
 {
-	global $tikilib;
+	$filegallib = TikiLib::lib('filegal');
 
-	$allfgals = $tikilib->list_visible_file_galleries(0, -1, 'name_desc', 'admin', '');
+	$allfgals = $filegallib->list_visible_file_galleries(0, -1, 'name_desc', 'admin', '');
 
 	$listfgals = array();
 

@@ -269,10 +269,11 @@ if (isset($_REQUEST["assign"])) {
 }
 
 if (isset($_REQUEST["um_remove"])) {
-    check_ticket('admin-modules');
     $_REQUEST["um_remove"] = urldecode($_REQUEST["um_remove"]);
+	$access->check_authenticity(tra('Are you sure you want to delete this User Module?') . '&nbsp;&nbsp;(&quot;' . $_REQUEST["um_remove"] . '&quot;)');
     $modlib->remove_user_module($_REQUEST["um_remove"]);
     $logslib->add_log('adminmodules', 'removed user module ' . $_REQUEST["um_remove"]);
+	$cookietab = 1;
 }
 if (isset($_REQUEST["um_edit"])) {
     check_ticket('admin-modules');
@@ -366,6 +367,8 @@ $pagetop = $tikilib->get_assigned_modules('p');
 $pagebottom = $tikilib->get_assigned_modules('q');
 $smarty->assign_by_ref('pagetop', $pagetop);
 $smarty->assign_by_ref('pagebottom', $pagebottom);
+$topbar = $tikilib->get_assigned_modules('o');
+$smarty->assign_by_ref('topbar', $topbar);
 $headerlib->add_css('.module:hover {
 	cursor: move;
 	background-color: #ffa;

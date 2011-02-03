@@ -153,11 +153,11 @@
 	{foreach item=w from=$watches}
 		<tr class="{cycle}">
 			{if $watches}
-				<td style="text-align:center;">
+				<td class="checkbox">
 					<input type="checkbox" name="watch[{$w.watchId}]" />
 				</td>
 			{/if}
-			<td>
+			<td class="text">
 				{if $w.event eq 'blog_post'}
 					{tr}A user submits a blog post{/tr}
 				{elseif $w.event eq 'forum_post_thread'}
@@ -175,7 +175,7 @@
 				{/if}
 				({$w.event})
 			</td>
-			<td><a class="link" href="{$w.url}">{tr}{$w.type}:{/tr} {$w.title|escape}</a></td>
+			<td class="text"><a class="link" href="{$w.url}">{tr}{$w.type}:{/tr} {$w.title|escape}</a></td>
 		</tr>
 	{foreachelse}
 		{norecords _colspan=2}

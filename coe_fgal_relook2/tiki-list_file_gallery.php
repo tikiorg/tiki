@@ -49,7 +49,7 @@ if ( empty($_REQUEST['galleryId']) && isset($_REQUEST['parentId']) ) {
 	$_REQUEST['galleryId'] = 0;
 
 	// Initialize listing fields with default values (used for the main gallery listing)
-	$gal_info = $tikilib->get_file_gallery();
+	$gal_info = $filegallib->get_file_gallery();
 	$gal_info['usedSize'] = 0;
 	$gal_info['maxQuota'] = $filegallib->getQuota($_REQUEST['parentId'], true);
 
@@ -58,7 +58,7 @@ if ( empty($_REQUEST['galleryId']) && isset($_REQUEST['parentId']) ) {
 		$_REQUEST['galleryId'] = $prefs['fgal_root_id'];
 	}
 
-	if ( $gal_info = $tikilib->get_file_gallery($_REQUEST['galleryId']) ) {
+	if ( $gal_info = $filegallib->get_file_gallery($_REQUEST['galleryId']) ) {
 		$tikilib->get_perm_object($_REQUEST['galleryId'], 'file gallery', $gal_info);
 		if ($userlib->object_has_one_permission($_REQUEST['galleryId'], 'file gallery')) {
 			$smarty->assign('individual', 'y');
@@ -239,37 +239,14 @@ if (!empty($_REQUEST['validate']) && $prefs['feature_file_galleries_save_draft']
 	$filegallib->validate_draft($info['fileId']);
 }
 
-// Delete a file
-if (!empty($_REQUEST['remove'])) {
-	// To remove an image the user must be the owner or the file or the gallery or admin
-	if (!$info = $filegallib->get_file_info($_REQUEST['remove'])) {
-		$smarty->assign('msg', tra('Incorrect param'));
-		$smarty->display('error.tpl');
-		die;
-	}
-	if ($tiki_p_admin_file_galleries != 'y' && (!$user || $user != $gal_info['user'])) {
-		if ($user != $info['user']) {
-			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra('You do not have permission to remove files from this gallery'));
-			$smarty->display('error.tpl');
-			die;
-		}
-	}
-	$backlinks = $filegallib->getFileBacklinks($_REQUEST['remove']);
-
-	if (isset($_POST['daconfirm']) && !empty($backlinks)) {
-		$smarty->assign_by_ref('backlinks', $backlinks);
-		$smarty->assign('file_backlinks_title', 'WARNING: The file is used in:');//get_strings tra('WARNING: The file is used in:')
-		$smarty->assign('confirm_detail', $smarty->fetch('file_backlinks.tpl'));
-	}
-
-	if (!empty($_REQUEST['draft'])) {
-		$access->check_authenticity(tra('Remove file draft: ') . (!empty($info['name']) ? htmlspecialchars($info['name']) . ' - ' : '') . $info['filename']);
-		$filegallib->remove_draft($info['fileId'], $user);
-	} else {
-		$access->check_authenticity(tra('Remove file: ') . (!empty($info['name']) ? htmlspecialchars($info['name']) . ' - ' : '') . $info['filename']);
-		$filegallib->remove_file($info, $gal_info);
-	}
+if ( ! empty($_REQUEST['remove']) ) {
+	$filegallib->actionHandler(
+		'removeFile',
+		array(
+			'fileId' => $_REQUEST['remove'],
+			'draft' => ( ! empty($_REQUEST['draft']) )
+		)
+	);
 }
 
 $foo = parse_url($_SERVER['REQUEST_URI']);
@@ -463,6 +440,9 @@ if (isset($_REQUEST['edit'])) {
 											'sort_mode'					=> $_REQUEST['sortorder'] . '_' . $_REQUEST['sortdirection'],
 											'show_modified'			=> $_REQUEST['fgal_list_lastModif'],
 											'show_creator'			=> $_REQUEST['fgal_list_creator'],
+											'show_deleteAfter'		=> $_REQUEST['fgal_list_deleteAfter'],
+											'show_checked'			=> $_REQUEST['fgal_show_checked'],
+											'show_share'			=> $_REQUEST['fgal_list_share'],
 											'show_author'				=> $_REQUEST['fgal_list_author'],
 											'subgal_conf'				=> $_REQUEST['subgal_conf'],
 											'show_last_user'		=> $_REQUEST['fgal_list_last_user'],
@@ -482,16 +462,10 @@ if (isset($_REQUEST['edit'])) {
 
 		if ($prefs['feature_file_galleries_templates'] == 'y' && isset($_REQUEST['fgal_template']) && !empty($_REQUEST['fgal_template'])) {
 			// Override with template parameters
-			require_once( 'lib/Horde/Yaml.php' );
-			require_once( 'lib/Horde/Yaml/Loader.php' );
-			require_once( 'lib/Horde/Yaml/Dumper.php' );
-			require_once( 'lib/Horde/Yaml/Node.php' );
-			require_once( 'lib/Horde/Yaml/Exception.php' );
-
-			$template = $templateslib->get_template($_REQUEST['fgal_template']);
+			$template = $templateslib->get_parsed_template($_REQUEST['fgal_template']);
 
 			if ($template) {
-				$gal_info = array_merge($gal_info, Horde_Yaml::load($template['content']));
+				$gal_info = array_merge($gal_info, $template['content']);
 				$gal_info['template'] = $_REQUEST['fgal_template'];
 			}
 		}
@@ -501,11 +475,15 @@ if (isset($_REQUEST['edit'])) {
 		}
 		
 		if ($prefs['fgal_show_explorer'] != 'y') {
-			$gal_info['show_show_explorer'] = $old_gal_info['show_show_explorer'];
+			$gal_info['show_explorer'] = $old_gal_info['show_explorer'];
 		}
 		
 		if ($prefs['fgal_show_path'] != 'y') {
 			$gal_info['show_path'] = $old_gal_info['show_path'];
+		}
+		
+		if ($prefs['fgal_show_checked'] != 'y') {
+			$gal_info['show_checked'] = $old_gal_info['show_checked'];
 		}
 		
 		$fgal_diff = array_diff_assoc($gal_info, $old_gal_info);
@@ -599,111 +577,46 @@ if (!empty($_FILES)) {
 		$smarty->display('error.tpl');
 		die;
 	}
-	$savedir = $prefs['fgal_use_dir'];
-	foreach($_FILES as $k => $v) {
-		$reg = array();
-		if (!empty($v['tmp_name']) && is_uploaded_file($v['tmp_name'])) {
-			$tmp_dest = $prefs['tmpDir'] . '/' . $v['name'] . '.tmp';
-			$msg = '';
-			if (!$v['size']) {
-				$msg = tra('Warning: Empty file:') . '  ' . htmlentities($v['name']) . '. ' . tra('Please re-upload your file');
-			} elseif (empty($v['name']) || !preg_match('/^upfile(\d+)$/', $k, $regs) || !($fileInfo = $filegallib->get_file_info($regs[1]))) {
-				$msg = tra('Could not upload the file') . ': ' . htmlentities($v['name']);
-			} elseif ((!empty($prefs['fgal_match_regex']) && (!preg_match('/' . $prefs['fgal_match_regex'] . '/', $v['name']))) || (!empty($prefs['fgal_nmatch_regex']) && (preg_match('/' . $prefs['fgal_nmatch_regex'] . '/', $v['name'])))) {
-				$msg = tra('Invalid filename (using filters for filenames)') . ': ' . htmlentities($v['name']);
-			} elseif ($_REQUEST['galleryId'] != $fileInfo['galleryId']) {
-				$msg = tra('Could not find the file requested');
-			} elseif (!empty($fileInfo['lockedby']) && $fileInfo['lockedby'] != $user && $tiki_p_admin_file_galleries != 'y') {
-				// if locked, user must be the locker
-				$msg = tra(sprintf('The file is locked by %s', $fileInfo['lockedby']));
-			} elseif (!($tiki_p_edit_gallery_file == 'y' || (!empty($user) && ($user == $fileInfo['user'] || $user == $fileInfo['lockedby'])))) {
-				// must be the owner or the locker or have the perms
-				$smarty->assign('errortype', 401);
-				$msg = tra('You do not have permission to edit this file');
-			} elseif (!move_uploaded_file($v['tmp_name'], $tmp_dest)) {
-				$msg = tra('Errors detected');
-			} elseif (!($fp = fopen($tmp_dest, 'rb'))) {
-				$msg = tra('Cannot read the file:') . ' ' . $tmp_dest;
-			}
 
-			if ($msg != '') {
-				$smarty->assign('msg', $msg);
-				$smarty->display('error.tpl');
-				die;
+	foreach($_FILES as $k => $v) {
+		$result = $filegallib->handle_file_upload($k, $v);
+
+		if (isset($result['error'])) {
+			$smarty->assign('msg', $result['error']);
+			$smarty->display('error.tpl');
+			exit;
+		}
+
+		$fileId = $filegallib->replace_file($fileInfo['fileId']
+											, $fileInfo['name']
+											, $fileInfo['description']
+											, $result['name']
+											, $result['data']
+											, $result['size']
+											, $type['type']
+											, $user
+											, $result['fhash']
+											, $fileInfo['comment']
+											, $gal_info
+											, true		// replace file
+											, $fileInfo['author']
+											, $fileInfo['lastModif']
+											, $fileInfo['lockedby']
+											);
+
+		if (!$fileId) {
+			// If insert failed and stored on disk
+			if ($result['fhash']) {
+				@unlink($savedir . $result['fhash']);
 			}
-			$data = '';
-			$fhash = '';
-			if ($prefs['fgal_use_db'] == 'n') {
-				$fhash = md5(uniqid(md5($v['name'])));
-				if ($prefs['feature_file_galleries_save_draft'] == 'y') {
-					$fhash .= '.' . $user . '.draft';
-				}
-				@$fw = fopen($savedir . $fhash, 'wb');
-				if (!$fw) {
-					$smarty->assign('msg', tra('Cannot write to this file:') . $savedir . $fhash);
-					$smarty->display('error.tpl');
-					die;
-				}
-			}
-			while (!feof($fp)) {
-				if ($prefs['fgal_use_db'] == 'y') {
-					$data.= fread($fp, 8192 * 16);
-				} else {
-					if (($data = fread($fp, 8192 * 16)) === false) {
-						$smarty->assign('msg', tra('Cannot read the file:') . $tmp_dest);
-						$smarty->display('error.tpl');
-						die;
-					}
-					fwrite($fw, $data);
-				}
-			}
-			fclose($fp);
-			// remove file after copying it to the right location or database
-			@unlink($tmp_dest);
-			if ($prefs['fgal_use_db'] == 'n') {
-				fclose($fw);
-				$data = '';
-			}
-			if (preg_match('/.flv$/', $v['name']))
-				$type = 'video/x-flv';
-			if ($prefs['fgal_use_db'] == 'y' && (!isset($data) || strlen($data) < 1)) {
-				$smarty->assign('msg', tra('Warning: Empty file:') . ' ' . $v['name'] . '. ' . tra('Please re-upload your file'));
-				$smarty->display('error.tpl');
-				die;
-			}
-			$fileInfo['filename'] = $v['name'];
-			$fileId = $filegallib->replace_file($fileInfo['fileId']
-																				, $fileInfo['name']
-																				, $fileInfo['description']
-																				, $v['name']
-																				, $data, $v['size']
-																				, $v['type']
-																				, $user
-																				, $fhash
-																				, $fileInfo['comment']
-																				, $gal_info
-																				, true		// replace file
-																				, $fileInfo['author']
-																				, $fileInfo['lastModif']
-																				, $fileInfo['lockedby']
-																				);
-			if (!$fileId) {
-				if ($prefs['fgal_use_db'] == 'n') {
-					@unlink($savedir . $fhash);
-				}
-				$smarty->assign('msg', tra('Upload was not successful. Duplicate file content') . ': ' . $v['name']);
-				$smarty->display('error.tpl');
-				die;
-			}
-			$smarty->assign('fileId', $fileId);
-			$smarty->assign('fileChangedMessage', tra('File update was successful') . ': ' . $v['name']);
-			if (isset($_REQUEST['fast']) && $prefs['fgal_asynchronous_indexing'] == 'y') {
-				$smarty->assign('reindex_file_id', $fileId);
-			}
-		} elseif ($v['error'] != 0 && !empty($v['tmp_name'])) {
 			$smarty->assign('msg', tra('Upload was not successful') . ': ' . $tikilib->uploaded_file_error($v['error']));
 			$smarty->display('error.tpl');
 			die;
+		}
+		$smarty->assign('fileId', $fileId);
+		$smarty->assign('fileChangedMessage', tra('File update was successful') . ': ' . $v['name']);
+		if (isset($_REQUEST['fast']) && $prefs['fgal_asynchronous_indexing'] == 'y') {
+			$smarty->assign('reindex_file_id', $fileId);
 		}
 	}
 }
@@ -812,7 +725,7 @@ if (!empty($_REQUEST['find_sub']) && ($_REQUEST['find_sub'] == 'on' || $_REQUEST
 if (isset($_GET['slideshow'])) {
 	$_REQUEST['maxRecords'] = $maxRecords = - 1;
 	$offset = 0;
-	$files = $tikilib->get_files( 0
+	$files = $filegallib->get_files( 0
 															, -1
 															, $_REQUEST['sort_mode']
 															, $_REQUEST['find']
@@ -850,9 +763,9 @@ if (isset($_GET['slideshow'])) {
 		} else {
 			$syntax = '';
 		}
-		$with_archive = ( isset($gal_info[archives]) && $gal_info[archives] == '-1') ? false : true;
+		$with_archive = ( isset($gal_info['archives']) && $gal_info['archives'] == '-1') ? false : true;
 		// Get list of files in the gallery
-		$files = $tikilib->get_files( $_REQUEST['offset']
+		$files = $filegallib->get_files( $_REQUEST['offset']
 																, $_REQUEST['maxRecords']
 																, $_REQUEST['sort_mode']
 																, $_REQUEST['find']
@@ -958,10 +871,12 @@ if ($prefs['feature_file_galleries_templates'] == 'y') {
 	$smarty->assign_by_ref('all_templates', $templates);
 }
 
+$subGalleries = $filegallib->getSubGalleries( ( isset($_REQUEST['parentId']) && $galleryId == 0 ) ? $_REQUEST['parentId'] : $galleryId );
+$smarty->assign('treeRootId', $subGalleries['parentId']);
+
 if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || isset($_REQUEST['movesel_x']) || isset($_REQUEST["edit_mode"])) {
-	$all_galleries = $filegallib->getFileGalleriesData();
 	$gals = array();
-	foreach ($all_galleries['data'] as $gal) {
+	foreach ($subGalleries['data'] as $gal) {
 		if ($gal['id'] != $galleryId) {
 			$gals[] = array('label' => $gal['parentName'] . ' > ' . $gal['name'], 'id' => $gal['id']);
 		}
@@ -969,7 +884,7 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 	sort($gals);
 	$smarty->assign_by_ref('all_galleries', $gals);
 
-	if ( ! empty($all_galleries) && is_array($all_galleries) && $all_galleries['cant'] > 0) {
+	if ( ! empty($subGalleries) && is_array($subGalleries) && $subGalleries['cant'] > 0) {
 		$phplayersTreeData = $filegallib->getFilegalsTreePhplayers( $galleryId );
 
 		if ( $prefs['fgal_show_path'] == 'y' ) {
@@ -977,7 +892,7 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 		}
 	
 		if ($prefs['javascript_enabled'] != 'n') {
-			$tree_array = array('data' => $all_galleries['data'],
+			$tree_array = array('data' => $subGalleries['data'],
 				'name' => $phplayersTreeData['tree']['name'],
 				'link' => $phplayersTreeData['tree']['link'],
 				'id' => $phplayersTreeData['tree']['id']
@@ -1005,7 +920,7 @@ if ($_REQUEST['galleryId'] == 0) {
 } else {
 	if (!isset($_REQUEST['fileId'])) {
 		// Add a gallery hit
-		$tikilib->add_file_gallery_hit($_REQUEST['galleryId']);
+		$filegallib->add_file_gallery_hit($_REQUEST['galleryId']);
 	}
 }
 
@@ -1040,8 +955,6 @@ $smarty->assign_by_ref('gal_info', $gal_info);
 $smarty->assign('view', isset($_REQUEST['view']) ? $_REQUEST['view'] : $fgal_options['default_view']['value']);
 $other = (isset($_REQUEST['view'])&&$_REQUEST['view']=='browse'?'list':'browse');
 $smarty->assign('altmode', $_SERVER['PHP_SELF']."?view=".$other.(isset($_REQUEST["galleryId"])?"&galleryId=".$_REQUEST["galleryId"]:""));
-
-$headerlib->add_jsfile('lib/filegals/tiki-list_file_gallery.js');
 
 // Display the template
 if (!empty($_REQUEST['filegals_manager'])) {

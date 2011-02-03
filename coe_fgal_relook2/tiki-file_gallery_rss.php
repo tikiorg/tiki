@@ -37,8 +37,10 @@ $uniqueid = "$feed.id=".md5(implode('_', $galleryIds));
 $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {
+	$filegallib = TikiLib::lib('filegal');
+
 	if (count($galleryIds) == 1) {
-		$tmp = $tikilib->get_file_gallery($galleryIds[0]);
+		$tmp = $filegallib->get_file_gallery($galleryIds[0]);
 		$title = $prefs['feed_file_gallery_title'];
 		$title .= $tmp['name'];
 		$desc = $prefs['feed_file_gallery_desc'];
@@ -63,7 +65,7 @@ if ($output["data"]=="EMPTY") {
 		$readrepl = "tiki-download_file.php?$id=%s";
 	}
 
-	$changes = $tikilib->get_files( 0, $prefs['feed_file_gallery_max'], $dateId.'_desc', '', $galleryIds);
+	$changes = $filegallib->get_files( 0, $prefs['feed_file_gallery_max'], $dateId.'_desc', '', $galleryIds);
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 }
 header("Content-type: ".$output["content-type"]);

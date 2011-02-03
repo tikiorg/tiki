@@ -19,11 +19,11 @@
 {/if}
   
 <h2>{tr}User Information{/tr}</h2>
-<table class="normal">
-	<tr><td class="even">{tr}Login:{/tr}</td><td class="odd">{$user_info.login|escape}</td></tr>
-	<tr><td class="even">{tr}Email:{/tr}</td><td class="odd">{$user_info.email}</td></tr>
+<table class="formcolor">
+	<tr><td>{tr}Login:{/tr}</td><td>{$user_info.login|escape}</td></tr>
+	<tr><td>{tr}Email:{/tr}</td><td>{$user_info.email}</td></tr>
 	<tr>
-		<td class="even">{tr}Groups:{/tr}</td><td class="odd">
+		<td>{tr}Groups:{/tr}</td><td>
 			{foreach from=$user_info.groups item=what key=grp}
 				{if $what eq 'included'}<i>{/if}{$grp|escape}{if $what eq 'included'}</i>{/if}
 				{if $grp != "Anonymous" && $grp != "Registered"}
@@ -34,7 +34,8 @@
 	</tr>
 	<form method="post" action="tiki-assignuser.php{if $assign_user}?assign_user={$assign_user}{/if}">
 		<tr>
-			<td class="even">{tr}Default Group:{/tr}</td><td class="odd">
+			<td>{tr}Default Group:{/tr}</td>
+			<td>
 				<select name="defaultgroup">
 					<option value=""></option>
 					{foreach from=$user_info.groups key=name item=included}
@@ -65,7 +66,7 @@
 	{section name=user loop=$users}
 		{if $users[user].groupName != 'Anonymous'}
 			<tr class="{cycle}">
-				<td>
+				<td class="text">
 					{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
 						<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit{/tr}">
 					{/if}
@@ -74,8 +75,8 @@
 						</a>
 					{/if}
 				</td>
-				<td>{tr}{$users[user].groupDesc|escape}{/tr}</td>
-				<td>
+				<td class="text">{tr}{$users[user].groupDesc|escape}{/tr}</td>
+				<td class="action">
 					{if $users[user].what ne 'real'}
 						<a class="link" href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}&amp;action=assign&amp;group={$users[user].groupName|escape:url}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}" title="{tr}Assign User to Group{/tr}">{icon _id='add' alt="{tr}Assign{/tr}"}</a>
 					{elseif $users[user].groupName ne "Registered"}

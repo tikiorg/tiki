@@ -76,7 +76,6 @@
 
 			<fieldset>
 				<legend>{tr}Features{/tr}</legend>
-				{preference name=feature_sitesearch}
 				{preference name=feature_referer_highlight}
 				{preference name=search_parsed_snippet}
 				{preference name=feature_search_stats}

@@ -16,7 +16,7 @@
 body {
 	background: #000 url(abse/wgreenwall.png) fixed;
 	color: #fff;
-	font: 70% "Bitstream Vera Sans", Verdana, Geneva, sans-serif normal}
+	font: 70% "Bitstream Vera Sans", Verdana, Geneva, sans-serif}
 
 html>body {font-size: .7em !important}
 
@@ -75,7 +75,7 @@ html>body #c1c2 #wrapper #col1 #tiki-center:hover {
 	font-size: 0.8em;
 	font-weight: bold;
 	text-align: center;
-	background: url(abse/crimeboy_design.png) no-repeat center 100%;
+	background: url("abse/crimeboy_design.png") no-repeat 50% 100%;
 	padding-bottom: 40px}
 
 #footer a {font-weight: bold}
@@ -96,7 +96,7 @@ a:hover {
 	text-decoration: underline}
 
 h1, h2, h3, h4, h5 {
-	color: #bdcec !important;
+	color: #bdcec3 !important;
 	font-weight: bold;
 	letter-spacing: -1px;
 	margin: 0 0 15px;
@@ -228,37 +228,28 @@ body.cke_show_borders {
 	background: transparent;
 	padding-top: 0}
 
-#siteheader {
-	padding-top: 4px;
-	padding-bottom: 4px;
-	min-height: 74px}
-	
-* html #siteheader {height: 74px}
-
-#sioptions {
-	margin: 0;
-	padding: 1em}
-
 .floatright img {margin-right: 40px}
 
+/* id is no longer used but this is retained as possible reference for banner module CSS */
 #sitead {
-	clear: 0;
+	clear: none;
 	text-align: center;
 	font-size: 11px;
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 	max-width: 460px;
 	margin-top: .8em}
 
-#sitead.floatright {padding-right: 100px}
-#sitead.floatleft {padding-left: 100px}
-#siteloginbar,
-#siteloginbar_popup {bottom: 4px}
+#top_modules .siteloginbar_popup {
+	position: absolute;
+	right: 10px;
+	bottom: 0;
+}
 
-#siteloginbar_popup ul.cssmenu_horiz li ul {
+/*.siteloginbar_popup ul.cssmenu_horiz li ul {
 	padding: 0;
 	background: none;
 	margin-top: -12px;
-}
+}*/
 
 #sitetitles {
 	padding-left: 20px;
@@ -276,12 +267,19 @@ body.cke_show_borders {
 	padding-left: 3em}
 
 #header .box-login_box,
-#header .box-search {
+#topbar_modules .box-search {
 	float: right;
 	margin-right: 10px;
 	font-size: 90%;
 }
-	
+
+#topbar_modules .box-search {
+	float: none;
+	position: absolute;
+	right: 10px;
+	top: 0;
+}
+
 #tiki-top {
 	width: 100%;
 	clear: both;
@@ -475,11 +473,11 @@ img.flipmodimage:hover {border: 1px solid #55914E !important}
 
 .box-data table td {
 	padding: 0.2em;
-	text-align: start}
+	text-align: left}
 
 .box-data li {
 	padding: 0.2em;
-	text-align: start}
+	text-align: left}
 
 .box-data li:hover {
 	text-decoration: none;
@@ -575,7 +573,6 @@ td.heading {
 }
 
 
-/** Tabs **/
 /** Tabs **/
 /* reset what's in layout.css */
 
@@ -1099,93 +1096,6 @@ td.dirfooter {font-size: .95em}
 .Cal2 {
 	color: #000;
 	font-size: 90%}
-
-.Calart,
-.Calblog,
-.Calchart,
-.Caldir,
-.Caleph,
-.Calfaq,
-.Calfgal,
-.Calforum,
-.Calgal,
-.Calnl,
-.Calquiz,
-.Calsurv,
-.Caltrack,
-.Calwiki {font-size: 90%}
-	
-.Calart:before,
-.Calblog:before,
-.Calchart:before,
-.Caldir:before,
-.Caleph:before,
-.Calfaq:before,
-.Calfgal:before,
-.Calforum:before,
-.Calgal:before,
-.Calnl:before,
-.Calquiz:before,
-.Calsurv:before,
-.Caltrack:before,
-.Calwiki:before {
-	background: #000;
-	font-size: 1.2em} 
-
-.Calart,
-.Calart a,
-.Calart a:visited {color: #fa8072}
-
-.Calblog,
-.Calblog a,
-.Calblog a:visited {color: #da70d6}
-
-.Calchart,
-.Calchart a,
-.Calchart a:visited {color: #304f30}
-
-.Caldir,
-.Caldir a,
-.Caldir a:visited {color: #cf00d0}
-
-.Calfaq,
-.Calfaq a,
-.Calfaq a:visited {color: #d15e5e}
-
-.Calfgal,
-.Calfgal a,
-.Calfgal a:visited {color: #8B4513}
-
-.Calforum,
-.Calforum a,
-.Calforum a:visited {color: #cdce00}
-
-.Calgal,
-.Calgal a,
-.Calgal a:visited {color: #8b4513}
-
-.Calnl,
-.Calnl a,
-.Calnl a:visited {color: #708090}
-
-.Calquiz,
-.Calquiz a,
-.Calquiz a:visited {color: #5f9ea0}
-
-.Calsurv,
-.Calsurv a,
-.Calsurv a:visited {color: #daa520}
-
-.Caltrack,
-.Caltrack a,
-.Caltrack a:visited {color: #00bd02}
-	
-.Calweb {font-size: 1em}
-.Calweb:hover {color: #996633}
-
-.Calwiki,
-.Calwiki a,
-.Calwiki a:visited {color: #bdcecC3}
 
 .calcontent a.linkmenu,
 .calcontent a.linkmenu:hover {

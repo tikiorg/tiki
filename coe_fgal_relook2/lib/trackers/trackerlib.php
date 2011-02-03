@@ -867,7 +867,7 @@ class TrackerLib extends TikiLib
 				} elseif ($ev) {
 					if (is_array($ev)) {
 						$keys = array_keys($ev);
-						if (in_array($keys[0], array('<', '>', '<=', '>='))) {
+						if (in_array((string)$keys[0], array('<', '>', '<=', '>='))) {
 							$mid .= " AND ttif$i.`value`".$keys[0].'?';
 							$bindvars[] = $ev[$keys[0]];
 						} elseif ($keys[0] == 'not') {
@@ -3343,6 +3343,7 @@ class TrackerLib extends TikiLib
 				<dd><strong>[endyear]</strong> allows you to specify a custom end year in the date range (eg. 2020), default is 4 years from now;
 				<dd><strong>[blankdate]</strong> when set to "blank" will default the initial date field to an empty date, and allow selection of empty dates;
 				<dd>blankdate is overridden if the field isMandatory;
+				<dd>when set to "empty" will allow selection of empty date but default to current date
 				<dd>multiple options must appear in the order specified, separated by commas.
 				<dt>Example: "d,2000,2009,blank"
 				<dd>sets a date only field from 2000 through 2009, allowing blank dates.
@@ -3391,9 +3392,14 @@ class TrackerLib extends TikiLib
 				</dl>'));
 		$type['h'] = array(
 			'label'=>tra('header'),
-			'opt'=>false,
+			'opt'=>true,
 			'help'=>tra('<dl>
-				<dt>Function: will display trhe field name as a html header h2;
+				<dt>Function: will display the field name as a html header h2;
+				<dt>Usage: <strong>level,toggle</strong>
+				<dt>Example: 2,o
+				<dt>Description:
+				<dd><strong>[level]</strong> level of the html header (default 2)
+				<dd><strong>[toggle]</strong> if "o" or "c" will toggle, "c" close by default, "o" open be default
 				</dl>'));
 		$type['S'] = array(
 			'label'=>tra('static text'),
@@ -4250,7 +4256,7 @@ class TrackerLib extends TikiLib
 		}
 	}
 	function update_item_link_value($trackerId, $fieldId, $old, $new) {
-		if ($old == $new) {
+		if ($old == $new || empty($old)) {
 			return;
 		}
 		static $fields_used_in_item_links;

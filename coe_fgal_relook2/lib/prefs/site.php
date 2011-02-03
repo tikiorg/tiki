@@ -91,7 +91,7 @@ function prefs_site_list() {
 			'type' => 'textarea',
 			'perspective' => false,
 			'size' => 10,
-			'hint' => tra('One per line. Subnet and mask, separated by comma with the perspective ID. Ex.: 192.168.12.0/8,12'),
+			'hint' => tra('One per line. Network prefix in CIDR notation (address/mask size), separated by comma with the perspective ID.') . ' ' . tra('Example:') . ' 192.168.12.0/24,12',
 		),
 	);
 }

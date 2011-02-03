@@ -17,7 +17,7 @@
 	{if $slvn_info.cant == 0}
 		<div class="separator">{tr}Nothing has changed{/tr}</div>
 	{else}
-		{if $prefs.feature_jquery_ui eq "y" and $module_params.use_jquery_ui eq "y"}
+		{if $prefs.feature_jquery_ui eq "y" and $use_jquery_ui eq "y"}
 			{assign var=fragment value=1}
 			<div id="mytabs">
 	  		<ul>
@@ -58,7 +58,7 @@
 		{/if}
 		{foreach key=pos item=slvn_item from=$slvn_info.items}
 			{if $slvn_item.count > 0 }
-				{if $prefs.feature_jquery_ui eq "y" and $module_params.use_jquery_ui eq "y"}<div id="fragment-{$fragment}">{/if}
+				{if $prefs.feature_jquery_ui eq "y" and $use_jquery_ui eq "y"}<div id="fragment-{$fragment}">{/if}
 				{assign var=cname value=$slvn_item.cname}
 				{if $slvn_item.count eq $module_rows}
 					<div class="separator"><a class="separator" href="javascript:flip('{$cname}');">{tr}Multiple{/tr} {$slvn_item.label}, {tr}including{/tr}</a></div>
@@ -106,14 +106,14 @@
 						{if $nonums != 'y'}</ol>{else}</ul>{/if}
 					</div>
 				{/if}
-				{if $prefs.feature_jquery_ui eq "y" and $module_params.use_jquery_ui eq "y"}
+				{if $prefs.feature_jquery_ui eq "y" and $use_jquery_ui eq "y"}
 					</div>
 	           {assign var=fragment value=`$fragment+1`}
 				{/if}
 			{/if}
 		{/foreach}
-		{if $prefs.feature_jquery_ui eq "y" and $module_params.use_jquery_ui eq "y"}</div>{/if}
+		{if $prefs.feature_jquery_ui eq "y" and $use_jquery_ui eq "y"}</div>{/if}
 	{/if}
-	{if $prefs.feature_jquery_ui eq "y" and $module_params.use_jquery_ui eq "y"}{jq} $(function() {$("#mytabs").tabs({});}); {/jq}{/if}
+	{if $prefs.feature_jquery_ui eq "y" and $use_jquery_ui eq "y"}{jq} $(function() {$("#mytabs").tabs({});}); {/jq}{/if}
 	{/tikimodule}
 {/if}

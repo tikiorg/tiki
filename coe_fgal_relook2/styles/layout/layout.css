@@ -1,5 +1,6 @@
 /* $Id$
-	This file (layout.css) is to be imported by theme stylesheets. */
+/*	This file (layout.css) is to be imported by theme stylesheets. */
+	
 
 /***** XHTML Elements *****/
 body {
@@ -43,10 +44,12 @@ header, nav, article, footer, address {
 .fixed_width .fixedwidth {
 	width: 990px;
 }
+
 .fixed_width #main {
 	margin-top: 18px;
 	margin-bottom: 5px;
 }
+
 .fixed_width .fixedwidth[id] {
 	height: auto;
 }
@@ -137,21 +140,6 @@ img {
 }
 
 /***** Site Header & Identity *****/
-#siteheader {
-/*	text-align: left;*/
-	vertical-align: middle;
-	padding: 0;
-	margin: 0;
-}
-
-#sioptionscentered {
-	text-align: center;
-}
-
-#sioptionscentered #logo img {
-	margin: auto;
-}
-
 .floatright {
 	float: right;
 	clear: none;
@@ -160,10 +148,6 @@ img {
 .floatleft {
 	float: left;
 	clear: none;
-}
-
-#sitead {
-	margin: auto;
 }
 
 .siteloginbar div {
@@ -394,7 +378,8 @@ li#logout_link a {
 .minimize-modules-left #col2 .separatoricon-url,
 .minimize-modules-right #col3 .box .menuLevel1 .menuText,
 .minimize-modules-right #col3 .separatoricon-url {
-	display: inline !important;
+  display: inline !important;
+  /* overflow: visible !important;      /* ###trebly:B10115: -> test pb overflow menulvel1     */
 }
 
 .minimize-modules-left #col2 .box,
@@ -473,7 +458,6 @@ li#logout_link a {
 }
 
 /* centercolumn */
-	
 .fullscreen .tellafriend,
 .fullscreen .share {
 	margin-right: 100px;
@@ -523,8 +507,8 @@ ul.jumplinks,
 	z-index: 9;
 }
 
-ul.jumplinks a:focus,
-ul.jumplinks a:active {
+.jumplinks a:focus,
+.jumplinks a:active {
 	position: absolute;
 	top: 9010px;
 	left: 9010px;
@@ -669,6 +653,13 @@ img.icon {
 	white-space: nowrap;
 }
 
+/** Titles (not boxed) bold lines alone not in summary used by categobjects.tpl + ? **/
+.simple_title {
+	font-weight: bold;
+	display: block;
+	padding: 8px 5px 5px 0;
+}
+
 /** Find form **/
 .findtable {
   text-align: center;
@@ -725,7 +716,7 @@ a.toolbar {			/* each tool button */
 
 .toolbars-picker {	/* colours, smilies etc */
 	position: absolute;
-	width: 288px;
+	width: 128px;
 	z-index: 300;
 	line-height: 12px;
 }
@@ -764,6 +755,13 @@ a.toolbar {			/* each tool button */
 	overflow: auto;
 }
 
+/* Inline_help : the inline_help are text displayed dependinf of user option : beginner, confirmed, expert */
+.simple_inlinehelp {
+	font-style: italic;
+	font-size: small;
+	font-family: sans-serif; 
+}
+
 #site_report {
 	text-align: center;
 }
@@ -789,8 +787,13 @@ a.toolbar {			/* each tool button */
 	position: relative;
 }
 
+/* use default col width from *lite.css for modules in centre section */
+#tiki-center .module {
+	max-width: 180px;
+}
+
 .box {
-	overflow: hidden;
+/*	overflow: hidden; */
 }
 
 h3.box-title {
@@ -801,9 +804,7 @@ h3.box-title {
 
 .moduleflip,
 .box-title span img.flipmodimage {
-	display: none !important;
-	/*float: right;
-	position: relative;*/
+	display: none;
 	position: absolute;
 	right: 1%;
 	top: 0;
@@ -811,7 +812,7 @@ h3.box-title {
 
 .box:hover .moduleflip,
 .box:hover .box-title span img.flipmodimage {
-	display: block !important;
+	display: block;
 }
 
 .box:hover img.flipmodimage {
@@ -999,9 +1000,6 @@ tr.diffheader {
 	position: relative;
 	padding: 4px;
 	top: 0;
-/*	padding-top: 21px;
-	margin-bottom: 25px;
-	margin-top: -1px;*/
 }
 
 .tabcontent table {
@@ -1131,28 +1129,8 @@ ul.floatleft li {
 }
 
 /* fancytable (sortable) plugin */
-
 .fancysort .header {
 	cursor: pointer;
-}
-
-/* img plugin */
-.imgbox {
-        padding: 5px;
-}
-
-.thumbcaption {
-        padding: 2px;
-}
-
-.magnify {
-        float: right;
-        padding-top: 0.1cm;
-}
-
-img.magnify {
-        height: 12px;
-        width: 12px;
 }
 
 /** Wiki tocs **/
@@ -1184,8 +1162,6 @@ img.magnify {
 
 /* Wiki diff layout */
 .diff td {
-	overflow-x: auto;
-	overflow-y: visible;
 	white-space: normal;
 	
 }
@@ -1527,8 +1503,13 @@ body.tiki_forums .normal {
 	font-size: 1.2em;
 }
 
-/* Comment Annotations */
+/* applied mainly to titles : option ? help-inline-level user defined  */
+.simple_comment {
+	font-style: italic;
+	font-size: x-small;
+}
 
+/* Comment Annotations */
 dl.note-list {
 	margin: .5em;
 }
@@ -1562,7 +1543,10 @@ textarea#editpost2 {
 	margin-left: 10px;
 }
 
+/*
+.subcomment_lblogs {}
 .commentsedithelp {}
+*/
 
 /**** Image Galleries ****/
 .galtable {
@@ -1721,6 +1705,23 @@ body.filegal_popup #tiki-center {
 }
 
 /***** Categories, Tags *****/
+
+.catlists .catitems {
+	display :inline-block;
+}
+
+.catlists_block  .catitems_block  li {
+	display: block;
+}
+
+.catlists_title {
+	padding: 10px 5px 5px 0px;
+	display: block;
+}
+/*
+.cattitle {
+}*/
+
 .categpath {
 	display: block;
 }
@@ -1800,8 +1801,8 @@ a.freetag:hover {/* freetags.css (line 8)*/
 }
 
 li.freetag {
-	list-style: none !important;
-	display: inline !important;
+	list-style: none;
+	display: inline;
 	margin: 0;
 	padding: 0;
 }
@@ -1809,10 +1810,10 @@ li.freetag {
 ul.freetag {
 	margin: 0;
 	padding: 0;
-	display: inline !important;
+	display: inline;
 }
 
-.freetag a {display: inline !important}
+.freetag a {display: inline}
 
 .freetagObjectOdd {
 	margin: 2px;

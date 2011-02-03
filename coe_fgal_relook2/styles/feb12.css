@@ -176,10 +176,6 @@ ul span, ol span {
 	font-size: 12pt !important;
 }
 
-.fullscreenbutton:hover,
-#fullscreenbutton:hover {
-	cursor: pointer;
-}
 
 /*** *litecss-based layout
 	(overrides lite.css) ***/
@@ -243,38 +239,18 @@ ul span, ol span {
 	font-size: .9em;
 }
 
-/*** Error page ***/
-#tiki-main #tiki-top {
-	margin-top: 100px;
-}
-
-/* To center cbox */
-#tiki-main #tikimidtbl {
-	margin: auto;
-	width: auto;
-}
-
 /* Site Header & Identity */
-#header-top {
+#header_fixedwidth {
 	background: url(feb12/header.jpg) repeat-x bottom;
 	height: auto;
 	min-height: 98px;
-}
-
-#siteheader {
-	vertical-align: top;
-}
-
-#sioptions, #sioptionscentered {
-	margin: 0;
-	padding: 10px;
 }
 
 #sitelogo {
 	margin-top: 0;
 }
 #sitelogo img {
-	padding: 0 10px !important;/* important put here because #sitelogo img is too forcible in design.css */
+	padding: 0 10px;
 }
 
 #sitead {
@@ -289,10 +265,10 @@ ul span, ol span {
 	padding-right: 1em;
 }
 
-#siteloginbar {
-	position: absolute;
-	bottom: 7px;
-	right: 3px;
+.box-login_box {
+	float: right;
+	margin-right: 20px;
+	margin-top: 40px;
 	color: #f5f5f5;
 }
 
@@ -367,14 +343,12 @@ ul span, ol span {
 	color: #F5F5F5;
 }
 
-#sitesearchbar {
+#topbar_modules .box-search {
+	position: absolute;
+	top: 4px;
+	right: 20px;
 	height: 34px;
 	line-height: 34px;
-}
-
-#topbar_custom_code {
-	background: #205684;
-	color: #fff;
 }
 
 /* centercolumn */

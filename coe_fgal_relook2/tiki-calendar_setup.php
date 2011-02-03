@@ -61,7 +61,7 @@ if ( ! isset($calendarViewMode) ) {
 // for the moment 01/11/2011:11:55 just one value is used with index 'default', but initialisation is done. 
 // The init is actually into two places, tiki-calendar_setup.php and tiki-calendar_export.php will be grouped for clean
 // $prefs would be added when need, $_SESSION, $PARAMS too this now generates not any change in the behavior.
-$calendarViewMode=array(casedefault=>'month',calgen=>'month',calaction=>'month',modcalgen=>'month',modcalaction=>'month',trackercal=>'month');
+$calendarViewMode=array('casedefault'=>'month','calgen'=>'month','calaction'=>'month','modcalgen'=>'month','modcalaction'=>'month','trackercal'=>'month');
 	if (!empty($_REQUEST['viewmode'])) {
 		$calendarViewMode['casedefault'] = $_REQUEST['viewmode'];
 	} elseif (!empty($_SESSION['CalendarViewMode'])) {

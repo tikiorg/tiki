@@ -29,16 +29,16 @@
 		{cycle values="odd,even" print=false}
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
-				<td style="text-align:center;">
+				<td class="checkbox">
 					<input type="checkbox" name="userfile[{$channels[user].fileId}]" />
 				</td>
-				<td>{$channels[user].filename|iconify}
+				<td class="text">{$channels[user].filename|iconify}
 					<a class="link" href="tiki-download_userfile.php?fileId={$channels[user].fileId}">
 						{$channels[user].filename}
 					</a>
 				</td>
-				<td>{$channels[user].created|tiki_short_datetime}</td>
-				<td style="text-align:right;">{$channels[user].filesize|kbsize}</td>
+				<td class="text">{$channels[user].created|tiki_short_datetime}</td>
+				<td class="integer">{$channels[user].filesize|kbsize}</td>
 			</tr>
 		{sectionelse}
 			{norecords _colspan=4}

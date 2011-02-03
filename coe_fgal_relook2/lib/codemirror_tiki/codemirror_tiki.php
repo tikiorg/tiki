@@ -1,5 +1,4 @@
 <?php
-
 function tiki_syntax_highlighter_base() {
 	global $headerlib, $prefs;
 	
@@ -8,13 +7,14 @@ function tiki_syntax_highlighter_base() {
 		$headerlib->add_jsfile( 'lib/codemirror/js/codemirror.js' );		
 
 		$headerlib->add_js("
-			var startCodeMirror = function() {
+			$(function() {
 				var editwiki = $('#editwiki');
+				var toolbar = $('#editwiki_toolbar');
 				//ensure that codemirror is running and CKEditor isn't, if so run
 				if (window.CKEDITOR) return false;
-				if (!editwiki[0]) return false;
-				if (!CodeMirror) return false;
-				
+				if (!editwiki.length) return false;
+				if (!window.CodeMirror) return false;
+					
 				var editor = CodeMirror.fromTextArea(editwiki[0], {
 					height: '350px',
 					path: 'lib/codemirror/js/',
@@ -25,10 +25,14 @@ function tiki_syntax_highlighter_base() {
 						editwiki.val(editor.getCode());
 					}
 				});
+					
+				toolbar
+					.css('width', '100%')
+					.nextAll()
+					.css('width', '100%');
 				
 				addCodeMirrorEditorRelation(editor, editwiki);
-			};
-			startCodeMirror();
+			});
 		");
 	}
 }
@@ -45,7 +49,7 @@ function tiki_syntax_highlighter_code() {
 					var code = args.container.find('textarea:first').addClass('codeMirror');
 					//ensure that codemirror is running and CKEditor isn't, if so run
 					if (window.CKEDITOR) return false;
-					if (!code[0]) return false;
+					if (!code.length) return false;
 					if (!CodeMirror) return false;
 
 					var editor = CodeMirror.fromTextArea(code[0], {
@@ -56,8 +60,11 @@ function tiki_syntax_highlighter_code() {
 						onChange: function() {
 							//Setup codemirror to send the text back to the textarea
 							code.val(editor.getCode());
-						}
+						},
+						lineNumbers: true
 					});
+					
+					addCodeMirrorEditorRelation(editor, code);
 				});
 		");
 	}
@@ -76,7 +83,7 @@ function tiki_syntax_highlighter_r() {
 				
 					//ensure that codemirror is running and CKEditor isn't, if so run
 					if (window.CKEDITOR) return false;
-					if (!r[0]) return false;
+					if (!r.length) return false;
 					if (!CodeMirror) return false;
 
 					var editor = CodeMirror.fromTextArea(r[0], {
@@ -90,6 +97,8 @@ function tiki_syntax_highlighter_r() {
 						},
 						lineNumbers: true
 					});
+					
+					addCodeMirrorEditorRelation(editor, r);
 				});
 		");
 	}
@@ -108,7 +117,7 @@ function tiki_syntax_highlighter_rr() {
 				
 					//ensure that codemirror is running and CKEditor isn't, if so run
 					if (window.CKEDITOR) return false;
-					if (!rr[0]) return false;
+					if (!rr.length) return false;
 					if (!CodeMirror) return false;
 
 					var editor = CodeMirror.fromTextArea(rr[0], {
@@ -122,6 +131,8 @@ function tiki_syntax_highlighter_rr() {
 						},
 						lineNumbers: true
 					});
+					
+					addCodeMirrorEditorRelation(editor, rr);
 				});
 		");
 	}

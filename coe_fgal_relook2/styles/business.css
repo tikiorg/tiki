@@ -11,16 +11,13 @@
 /***** XHTML Elements (body tag here, others follow Layout) *****/
 
 body {
-	font: 70% 1.4em #000 Verdana Geneva Arial Helvetica sans-serif;
+	font: 70%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;
 	color: #848484;
 }
 
 /***** Layout (overrides layout.css;
 also styling of page layout divs) *****/
 
-#middle {
-	padding: 40px 0;
-}
 
 #c1c2 {
 	text-align: left;
@@ -55,7 +52,7 @@ also styling of page layout divs) *****/
 #col3 {
 	width: 280px;
 	margin-left: -280px;
-	margin-bottom: ;
+	margin-bottom: 0;
 	font-size: 1em;
 }
 
@@ -180,7 +177,6 @@ hr {
 
 /***** Site Header & Identity *****/
 #header {
-	min-height: 114px;
 	position: relative;
 }
 
@@ -230,39 +226,37 @@ hr {
 
 #tiki-top {
 	background: #003371 url(business/header.png) repeat-x 0 0;
-	position: absolute;
-	bottom: 0;
 	width: 100%;
+	margin-bottom: 8px;
 }
 
-#header .box-search {
+#topbar_modules .box-search {
 	height: 59px;
 	position: absolute;
 	right: 0;
-	bottom: -10px;
+	top: 0;
 	padding-right: 4px;
 	text-align: right;
 	display: block;
 	margin: 0;
 	margin-top: -10px;
-	margin-right: 0 !importan
-	;
+	margin-right: 0 !important;
 	background: url(business/magnify.png) no-repeat 0 -1px;
 	padding-left: 29px;
 	color: #fff;
 	z-index: 2;
 }
 
-#header .box-search form {
+#topbar_modules .box-search form {
 	margin-top: 16px;
 	margin-left: -2px;
 }
 
-#header .box-search form input {
+#topbar_modules .box-search form input {
 	border: none !important;
 }
 
-#sitesearchbar input#fuser {
+#topbar_modules .box-search input#fuser {
 	width: 150px;
 	color: #696969;
 	border: 0;
@@ -271,13 +265,13 @@ hr {
 	background: url(business/input.gif) repeat-x;
 }
 
-#header .box-login_box {
+#top_modules .siteloginbar_popup {
 	position: absolute;
 	right: 10px;
-	bottom: 45px;
+	bottom: 0;
 }
 
-#siteloginbar_popup .tabmark {
+.siteloginbar_popup .tabmark {
 	background: none;
 	border: none;
 }
@@ -320,7 +314,7 @@ hr {
 	margin-left: 48px;
 }
 
-#header .cssmenu_horiz li a {
+#tiki-top .cssmenu_horiz li a {
 	text-decoration: none;
 	color: #fff;
 	font-size: 10px;
@@ -332,29 +326,29 @@ hr {
 	text-transform: uppercase;
 }
 
-#header .cssmenu_horiz li:hover a {
+#tiki-top .cssmenu_horiz li:hover a {
 	color: #fff;
 	background: url(business/nav_h.gif) repeat-x;
 	text-decoration: none;
 }
 
-#header .cssmenu_horiz li.menuSection a {
+#tiki-top .cssmenu_horiz li.menuSection a {
 	padding-right: 20px !important;
 }
 
-#header .cssmenu_horiz li ul li a {
+#tiki-top .cssmenu_horiz li ul li a {
 	border-left: 0;
 	border-right: 0;
 }
 
 /* top compensation for tiki-top padding */
-#header .cssmenu_horiz li ul,
-#header .cssmenu_horiz li.sfHover ul {
+#tiki-top .cssmenu_horiz li ul,
+#tiki-top .cssmenu_horiz li.sfHover ul {
 	margin-top: 12px;
 }
 
-#header .cssmenu_horiz li ul ul,
-#header .cssmenu_horiz li.sfHover ul ul,
+#tiki-top .cssmenu_horiz li ul ul,
+#tiki-top .cssmenu_horiz li.sfHover ul ul,
 .cssmenu_vert li ul ul {
 	margin-top: -1px;
 }
@@ -404,11 +398,11 @@ hr {
 }
 
 /* theme-specific arrows and arrow top padding */
-#header .cssmenu_horiz .sf-sub-indicator {
+#tiki-top .cssmenu_horiz .sf-sub-indicator {
 	top: 1.8em;
 }
 
-#header .cssmenu_horiz li ul li .sf-sub-indicator {
+#tiki-top .cssmenu_horiz li ul li .sf-sub-indicator {
 	top: .5em;
 	background: url(business/arrows-467aa7.png) no-repeat;
 }
@@ -422,20 +416,20 @@ hr {
 /** Links in other menus **/
 .separator,
 .option {
-	margin-bottom: ;
+	margin-bottom: 0;
 }
 
 .menusection .option {
-	padding-left: ;
+	padding-left: 0;
 }
 
 .option {
-	padding-left: ;
+	padding-left: 0;
 }
 
 .option a {
-	padding: ;
-	background: ;
+	padding: 0;
+	background: 0;
 }
 
 /***** Misc. Center Col. *****/
@@ -543,13 +537,13 @@ h3.box-title a:visited {
 
 .normal,
 .admin {
-	border: 1px solid 1px solid #3273c4;
+	border: 1px solid #3273c4;
 	border-collapse: collapse;
 }
 
 .normal td,
 .admin td {
-	border: ;
+	border: none;
 	padding: 0.2em;
 }
 
@@ -670,17 +664,17 @@ h1.pagetitle a:hover {
 .codelisting {
 	background: #f5f5f5;
 	color: #666666;
-	border: 1px solid 1px dashed #adacaf;
+	border: 1px dashed #adacaf;
 }
 
 .codecaption {
-	border: 1px solid 1px solid #adacaf;
+	border: 1px solid #adacaf;
 	color: #666666;
 	background: #f5f5f5;
 }
 
 #textarea-toolbar {
-	background: ;
+	background: inherit;
 	border: 1px solid;
 }
 
@@ -762,14 +756,14 @@ body.tiki_blogs .author_actions {
 
 .opaque .box-title {
 	padding-bottom: 2px;
-	border-bottom: url(business/title_bg.png) no-repeat 0 0;
+	border-bottom: 0;
 }
 
 /***** Trackers *****/
 /***** Categories, Tags *****/
 /***** Tags (freetags) *****/
 .freetagitemlist {
-	background: ;
+	background: inherit;
 	border: 1px solid;
 	margin-bottom: 30px;
 	padding: 0 0 10px;

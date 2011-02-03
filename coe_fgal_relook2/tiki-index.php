@@ -472,7 +472,7 @@ if (isset($_SESSION['saved_msg']) && $_SESSION['saved_msg'] == $info['pageName']
 	$just_saved = true;
 }
 
-if($prefs['feature_wiki_attachments'] == 'y') {
+if ( $prefs['feature_wiki_attachments'] == 'y' && $prefs['feature_use_fgal_for_wiki_attachments'] != 'y' ) {
     if(isset($_REQUEST['removeattach'])) {
 	check_ticket('index');
 	$owner = $wikilib->get_attachment_owner($_REQUEST['removeattach']);

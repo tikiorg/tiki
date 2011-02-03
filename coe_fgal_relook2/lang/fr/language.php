@@ -66,7 +66,7 @@
 // ### This allows to have only one translation for "{tr}Login{/tr}" and "{tr}Login:{/tr}"
 // ### and it still allows to translate ":" as "&nbsp;:" for languages that
 // ### need it (like french)
-
+// __________________________________________________________________________ BEGIN CODE ______________________________________________________
 $lang=Array(
 // ### Start of unused words
 // ### Please remove manually!
@@ -1293,8 +1293,8 @@ $lang=Array(
 "Nov" => "nov.",
 "Number of characters for username and password input fields" => "Number of characters for username and password input fields",
 "Number of columns per page when listing categories" => "Nombre de colonnes par page à l'affichage des catégories",
-"Number of files transferred to the database" => "Number of files transferred to the database",
-"Number of files transferred to the file system" => "Number of files transferred to the file system",
+"Number of files transferred to the database" => "Nombre de fichiers transferrés vers la base de données",
+"Number of files transferred to the file system" => "Nombre de fichiers transferrés vers le gestionnaire de fichiers",
 "Number of lines" => "Nombre de lignes",
 "Number of messages to display" => "Number of messages to display",
 "Number of required answers (for multiple choices)" => "Nombre de réponses requises (pour les questions à choix multiples)",
@@ -2592,7 +2592,7 @@ $lang=Array(
 "Wiki page %s changed" => "La page Wiki %s a été modifiée",
 "Wiki Page List Configuration" => "Configuration de l'affichage de la liste des pages Wiki",
 "Wiki page name to include" => "Nom de la page Wiki à inclure",
-"Wiki page name to redirect to" => "Nome de la page wiki vers laquelle rediriger",
+"Wiki page name to redirect to" => "Nom de la page wiki vers laquelle rediriger",
 "Wiki plugins extend the function of wiki syntax with more specialized commands" => "Wiki plugins extend the function of wiki syntax with more specialized commands",
 "Wiki syntax containing the text to display" => "Syntaxe Wiki contenant le texte à afficher",
 "Wiki text containing an {ELSE} marker" => "Wiki text containing an {ELSE} marker",
@@ -9141,8 +9141,9 @@ $lang=Array(
 "Maximum average server load threshold in the last minute" => "Seuil maximum de charge du serveur dans la dernière minute",
 "Log mail in Tiki logs" => "Noter les emails dans les journaux Tiki",
 "Smarty Template usage indicator" => "Indicateur de l'usage de Smarty Template ",
-"Add HTML comment at start and end of each Smarty template (TPL)" => "Ajouter des commentaires HTML au début et à la fin de chaque modèle Smarty (TPL)",
-"Use only for development, not in production because these warnings are added to emails as well, and visible to the users" => "À n'utiliser qu'en développement, non en production car les avertissements sont ajoutés aux emails aussi, et visible par les utilisateurs",
+"Add HTML comment at start and end of each Smarty template (TPL)" => "Ajouter des commentaires au format HTML au début et à la fin de chaque modèle Smarty (TPL)",
+//###trebly:B10119 changed "Use only for development, not in production because these warnings are added to emails as well, and visible to the users" => "À n'utiliser qu'en développement, non en production car les avertissements sont ajoutés aux emails aussi, et visible par les utilisateurs",
+"Use generally only for development, or during the start of an application, not in production because these warnings can be, folowing options used, to emails text as well, and visible to the users" => "A n\'utiliser générallement que pendant un developpement ou lors du démarrage d'une application, pas en production, parce que, suivant les options choisies, ces informations peuvent être affichées dans le texte des e-mails",
 "Log SQL" => "Journaux SQL",
 "Log SQL queries" => "Logguer les requêtes SQL",
 "Log queries using more than (seconds)" => "Logguer les requêtes qui prennent plus que (secondes)",
@@ -9893,7 +9894,7 @@ $lang=Array(
 "Puts the number of downloads in the alt comment" => "Insère le nombre de téléchargements dans le texte alternatif (balise alt)",
 "Shows a file icon" => "Affiche une icône de fichier",
 "Displays the user Avatar" => "Affiche l'avatar utilisateur",
-"username" => "nom utilisateur",
+"username" => "nom d'utilisateur",
 "Back" => "Retour",
 "Insert back link on wiki page" => "Insère un lien de retour dans la page wiki",
 "Excluded pages" => "Pages exclues",
@@ -11323,8 +11324,8 @@ $lang=Array(
 "Create/Edit category" => "Créer/Éditer une catégorie",
 "Create New" => "Créer un nouveau",
 "Add new category" => "Ajouter une nouvelle catégorie",
-"Batch upload" => "Chargement par lot",
-"Batch upload (CSV file)" => "Chargement par lot (fichier CSV)",
+"Batch upload" => "Chargement par \"batch\"",
+"Batch upload (CSV file)" => "Chargement par \"batch\" (fichier CSV)",
 "Objects in category" => "Objets dans la catégorie",
 "Remove from this Category" => "Supprimer de cette catégorie",
 "No records found." => "Aucun résultat.",
@@ -13509,7 +13510,7 @@ $lang=Array(
 "Searched" => "Recherché",
 "Search in" => "Rechercher dans",
 "Simple search" => "Recherche simple",
-"No pages matched the search criteria" => "Aucune page ne correspond aux critères de recherche",
+"No pages matched the search criteria" => "Aucune page ne correspond au(x) critère(s) de recherche",
 "Advanced Search Help" => "Aide pour la Recherche Avancée",
 "All dates" => "Toutes les dates",
 "Calendar Items" => "Évènements du calendrier",
@@ -14131,7 +14132,7 @@ $lang=Array(
 "The passwords do not match" => "Les mots de passe ne sont pas identiques",
 "User %s already exists" => "L'utilisateur %s existe déjà",
 "User login contains invalid characters" => "Le nom d'utilisateur contient des caractères invalides",
-"New %s created with %s %s." => "Un nouveau %s a été créé avec le %s %s.",
+"New user created with username %s." => "Un nouvel utilisateur a été créé avec le nom d'utilisateur %s.",
 "Impossible to create new %s with %s %s." => "Impossible de créer un nouveau %s avec %s %s.",
 "%s %s successfully deleted." => "%s %s supprimé avec succès.",
 "Deleted account %s" => "Supprimer le compte %s",
@@ -14478,4 +14479,35 @@ $lang=Array(
 "TikiTest Replay" => "Rejouer TikiTest",
 "The page is empty" => "La page est vide",
 "You do not have permissions to view the maps" => "Droit d'accès refusé&nbsp;: vous ne pouvez pas voir les cartes",
+//###trebly:B10125:categobjects.tpl
+"Active option \"show objects of the same category\" shows above all links to others objects of the sames categories than the current object" => "L'option active \"montre les objets appartenant aux mêmes catégories\" donne ci-dessous les liens vers l'ensemble des objects correspondants",
+"The other objects of the category can be reached by the following links" => "Les autres objets la catégorie sont directement accesibles grâce aux liens suivants",
+//###trebly:B10125-08:-> new Associated to pref : category_categoryobjects_disp  allows to display categobjects as a list using (ajax) text for general default pref and help)
+"When the option \"Show category objects\" is chosen, 
+      links to the objects are displayed as a list which is always sorted by type (as wiki pages or articles, blogs etc.) 
+      with a subtitle for each type and, in a type, the links to the objects are alphabetically sorted by object title. 
+      <br>There are two ways to display the list 
+      <br>- the first way is named \"list by line\" where there is one link per line 
+      (This list can be long but easier to read particularly when there are many objects)
+      <br>- the second way is more compact and is named \"block\" where the links are placed end to end, \"inline\" separated by the \"|\" char " => 
+      "Lorsque l'option \"Afficher les objets catégorie\" est choisie,
+       des liens vers les objets sont affichés dans une liste qui est toujours triée par type d'objet (pages wiki, articles, blogs, etc.)
+       avec un sous-titre pour chaque type et, dans un type, les liens vers les objets sont triés par ordre alphabétique suivant le titre de l'objet.
+       <br> Il ya deux façons d'afficher la liste
+       <br> - la première est appelée \"liste par ligne\" où il y a un lien par ligne
+       (Cette liste peut être longue, mais est plus facile à lire surtout quand il y a beaucoup d'objets)
+       <br> - la deuxième est plus compacte et est nommée «bloc» où les liens sont mis bout à bout, les liens sont séparés par le caractère \"|\" ",
+"Display mode [breakline]of category objects links" => "Mode d'affichage des liens vers[breakline]les objets des catégories", 
+"Display as a \"list by line\" with separated lines" => "Affiche en lignes séparées \"liste en lignes\"",
+"Display \"inline\" as blocks separated by a \"|\"" => "Affiche les liens en ligne, séparés par \"|\"", 
+//Associated with log_mail_tpl
+"TikiTests mode fr mails with"=>"Mode TikiTest pour e-mails avec",
+"Don't insert ref. to TPL into mails" => "Ne pas insérer de réf au TPL dans les mails",   
+"Insert tikiTPL tag into mail header" => "Insérer une marque Tiki dans l\'en tête de mail",
+"Introduce during system test into mails, in HTML comment format, the reference of the TPL used as a mark into header and optionnally at the beginning and the end of the text" => 
+"Introduire dans les mails, en phase de test, dans le format d'un commentaire HTML, une référence au template (TPL) utilisé, suivant l'option : <br /><ul><li>-dans l\'en tête (caché)</li><li>-en en tête et fin du texte et à la fin du sujet</li><li>-aucune référence</li></ul>)",
+"You need to clear your Tiki template cache for this change to take effect" => "Vous devez effacer le cache des Templates pour que le changement de paramètre prenne effet",
+"Use only for development the option \"Insert into text\", not in production, because these warnings are added to emails content as well, and are visible to the users" => "N\'utiliser l\'option \"insérer dans le texte\" que pour les test, pas en production parce ces alertes sont évidemment visibles par les utilisateurs, si vous voulez laisser marqués les mails utiliser l'\option \"caché\" (Insérer une marque Tiki dans l\'en tête de mail)",
 "###end###"=>"###end###");
+  
+?>

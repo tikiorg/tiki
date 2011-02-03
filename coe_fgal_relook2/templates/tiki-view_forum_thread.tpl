@@ -131,11 +131,11 @@
 	{cycle values="odd,even" print=false}
 	{foreach from=$atts.data item=att}
 	<tr class="{cycle}">
-		<td>{$att.filename|iconify}</td>
-		<td><a href="tiki-download_forum_attachment.php?attId={$att.attId}" title="{tr}Download{/tr}">{$att.filename|escape}</a></td>
-		<td>{$att.filesize|kbsize}</td>
-		<td>{$att.created|tiki_short_datetime}</td>
-		<td><a href="tiki-download_forum_attachment.php?attId={$att.attId}" title="{tr}Download{/tr}">{icon _id='disk' alt="{tr}Download{/tr}"}</a></td>
+		<td class="icon">{$att.filename|iconify}</td>
+		<td class="text"><a href="tiki-download_forum_attachment.php?attId={$att.attId}" title="{tr}Download{/tr}">{$att.filename|escape}</a></td>
+		<td class="integer">{$att.filesize|kbsize}</td>
+		<td class="date">{$att.created|tiki_short_datetime}</td>
+		<td class="action"><a href="tiki-download_forum_attachment.php?attId={$att.attId}" title="{tr}Download{/tr}">{icon _id='disk' alt="{tr}Download{/tr}"}</a></td>
 	</tr>
 	{/foreach} 
 </table>

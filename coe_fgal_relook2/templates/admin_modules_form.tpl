@@ -10,6 +10,7 @@
 				<td>
 					<select id="assign_position" name="assign_position">
 						<option value="t" {if $assign_position eq 't'}selected="selected"{/if}>{tr}Top{/tr}</option>
+						<option value="o" {if $assign_position eq 'o'}selected="selected"{/if}>{tr}Topbar{/tr}</option>
 						<option value="p" {if $assign_position eq 'p'}selected="selected"{/if}>{tr}Page Top{/tr}</option>
 						<option value="l" {if $assign_position eq 'l'}selected="selected"{/if}>{tr}Left{/tr}</option>
 						<option value="r" {if $assign_position eq 'r'}selected="selected"{/if}>{tr}Right{/tr}</option>

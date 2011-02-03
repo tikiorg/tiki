@@ -15,14 +15,13 @@ require_once 'lib/profilelib/installlib.php';
 require_once 'lib/profilelib/listlib.php';
 $list = new Tiki_Profile_List;
 $sources = $list->getSources();
+
+if ($prefs['profile_unapproved'] == 'y') {
+	Tiki_Profile::enableDeveloperMode();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	check_ticket('admin-inc-profiles');
-	if (isset($_POST['config'])) { // {{{
-		$tikilib->set_preference('profile_sources', $_POST['profile_sources']);
-		$tikilib->set_preference('profile_channels', $_POST['profile_channels']);
-		header('Location: tiki-admin.php?page=profiles');
-		exit;
-	} // }}}
 	if (isset($_POST['forget'], $_POST['pp'], $_POST['pd'])) { // {{{
 		$profile = Tiki_Profile::fromNames($_POST['pd'], $_POST['pp']);
 		$profile->removeSymbols();

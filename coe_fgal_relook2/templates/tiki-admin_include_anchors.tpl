@@ -152,4 +152,8 @@
 {self_link page="socialnetworks" _class="icon tips" _title="{tr}Social networks{/tr}|{tr}Configure social networks integration{/tr}"}{icon _id="pics/large/socialnetworks.png" alt="{tr}Social networks{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 
+{if $prefs.feature_share eq 'y'}
+{self_link page="share" _class="icon tips" _title="{tr}Share{/tr}|{tr}Configure share feature{/tr}"}{icon _id="img/mytiki/stock_contact.png" alt="{tr}Share{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+{/if}
+
 <br class="clear" />

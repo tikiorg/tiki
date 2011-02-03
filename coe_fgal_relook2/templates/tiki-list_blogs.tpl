@@ -51,7 +51,7 @@
 {section name=changes loop=$listpages}
 <tr class="{cycle}">
 {if $prefs.blog_list_title eq 'y' or $prefs.blog_list_description eq 'y'}
-	<td>
+	<td class="text">
 		{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }
 			<a class="blogname" href="{$listpages[changes].blogId|sefurl:blog}" title="{$listpages[changes].title|escape}">
 		{/if}

@@ -17,10 +17,6 @@
 	deny from all
 </FilesMatch>
 
-<FilesMatch "\.(js|png|gif|jpg|css)$">
-	FileEtag None
-</FilesMatch>
-
 # If the site is stable, might be worth setting the expires header on all files
 #<IfModule mod_expires.c>
 #	<FilesMatch "\.(js|png|gif|jpg|css|ico)$">
@@ -28,7 +24,6 @@
 #		ExpiresDefault "access plus 10 years"
 #	</FilesMatch>
 #</IfModule>
-
 
 # Using ETags will improve the YSlow scores
 FileETag none
@@ -96,9 +91,8 @@ RewriteRule ^contact$              tiki-contact.php                         [L]
 RewriteRule ^directories$          tiki-directory_browse.php                [L]
 RewriteRule ^dirlink([0-9]+)       tiki-directory_redirect.php?siteId=$1    [QSA,L]
 RewriteRule ^faqs$                 tiki-list_faqs.php                       [L]
-RewriteRule ^files$                tiki-list_file_gallery.php               [L]
+RewriteRule ^filelist$             tiki-list_file_gallery.php               [L]
 RewriteRule ^forums$               tiki-forums.php                          [L]
-RewriteRule ^images$               tiki-galleries.php                       [L]
 RewriteRule ^galleries$            tiki-galleries.php                       [L]
 RewriteRule ^login$                tiki-login_scr.php                       [L]
 RewriteRule ^logout$               tiki-logout.php                          [L]

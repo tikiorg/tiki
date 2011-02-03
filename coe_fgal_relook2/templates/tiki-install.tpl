@@ -1,16 +1,18 @@
-<div id="fixedwidth"> {* enables fixed-width layouts *}
-	<div id="main">
-<div id="header">
-	<div id="siteheader" class="clearfix">
-		<div id="header-top">
-			<div id="sitelogo" style="padding-left:0; padding-top: 0px"><h1 style="margin: 0"><img style="border:medium none; vertical-align:middle" alt="{tr}Tiki Wiki CMS Groupware{/tr}" src="{if isset($ie6)}img/tiki/tikisitelogo.gif{else}img/tiki/Tiki_WCG.png{/if}" />
-				<span style="vertical-align:middle; margin-left:120px; color: #fff;">{tr}Tiki installer{/tr} {$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></span></h1>
+<div id="outer_wrapper">
+		<div id="header_outer">
+			<div id="header_container">
+				<header id="header">
+					<div id="header_fixedwidth" class="clearfix fixedwidth">
+						<div class="content clearfix modules" id="top_modules">
+							<div id="sitelogo" style="padding-left:0; padding-top: 0px"><h1 style="margin: 0"><img style="border:none;margin-bottom: 24px; vertical-align:middle" alt="{tr}Tiki Wiki CMS Groupware{/tr}" src="{if isset($ie6)}img/tiki/tikisitelogo.gif{else}img/tiki/Tiki_WCG.png{/if}" />
+								<span style="vertical-align:middle; margin-left: 120px; color: #fff; padding-top: 30px;">{tr}Tiki installer{/tr} {$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></span></h1>
+							</div>
+						<div id="tiki-top" style="position: static"></div> {* added for background image consistency *}
+						</div>
+					</div>
+				</header>
 			</div>
 		</div>
-	</div>
-	<div id="tiki-top"></div> {* added for background image consistency *}
-</div>
-
 <div id="middle" class="clearfix">
 	<div id="c1c2" class="clearfix">
 		<div id="wrapper" class="clearfix">
@@ -735,9 +737,13 @@
 			
 	  	</div>
 </div>
-<hr />
-
-<p align="center"><a href="http://tiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}Tiki Wiki CMS Groupware{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} "><img src="img/tiki/tikibutton.png" alt="{tr}Powered by Tiki Wiki CMS Groupware{/tr}" style="width:88px; height:31px; border:0" /></a></p>
+<footer id="footer">
+	<div class="footer_liner">
+		<div class="footerbgtrap fixedwidth" style="padding: 10px 0;">
+			<a href="http://tiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}Tiki Wiki CMS Groupware{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} "><img src="img/tiki/tikibutton.png" alt="{tr}Powered by Tiki Wiki CMS Groupware{/tr}" style="width:88px; height:31px; border:0" /></a>
+		</div>
+	</div>
+</footer>
 
 		</div>{* -- END of main -- *}
-	</div> {* -- END of fixedwidth -- *}
+	</div> {* -- END of puterwrapper -- *}

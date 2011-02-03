@@ -4,7 +4,7 @@
 		{if isset($verbose) && $verbose eq 'y'}{tr}The main text of this page is available in the following languages:{/tr}{/if}
 			{if isset($type) && $type == 'article'}
 				<form action="tiki-read_article.php" method="get">
-					<div class="form">
+					<div>
 						<select name="articleId" onchange="this.form.submit()">
 							{section name=i loop=$trads}
 							<option value="{$trads[i].objId|escape}">{$trads[i].langName|escape}</option>
@@ -47,7 +47,7 @@
 				}
 				{/jq}
 				<form action="tiki-index.php" method="get">
-					<div class="form">
+					<div>
 						{if $prefs.feature_machine_translation eq 'y'}
 						<input type="hidden" name="machine_translate_to_lang" value="" />
 						{/if}

@@ -86,7 +86,7 @@ if ($_REQUEST['locSection'] == 'read') {
 		$mail = $webmaillib->get_mail_storage($current);
 	} catch (Exception $e) {
 		// do something better with the error
-		$smarty->assign('conmsg', tra('There is a problem connecting to that account.').'<br />'.$e->getMessage());
+		$smarty->assign('conmsg', tra('There was a problem connecting to that account.').'<br />'.$e->getMessage());
 	}
 
 	if (isset($_REQUEST['delete_one'])) {
@@ -97,7 +97,7 @@ if ($_REQUEST['locSection'] == 'read') {
 			$webmaillib->remove_webmail_message($current['accountId'], $user, $aux['realmsgid']);
 			unset($_REQUEST['msgid']);
 		} catch (Exception $e) {
-			$smarty->assign('conmsg', tra('There are a problem deleting that mail.').'<br />'.$e->getMessage());
+			$smarty->assign('conmsg', tra('There was a problem deleting that mail.').'<br />'.$e->getMessage());
 		}
 	}
 
@@ -146,7 +146,7 @@ if ($_REQUEST['locSection'] == 'read') {
 					// gets positions of the start and end body tags then substr the bit inbetween
 					$bod = substr($bod, $m[0][0][1] + strlen($m[0][0][0]), $m[0][1][1]);
 				}
-				$bod = strip_tags( $bod, '<a><b><i><table><tbody><tr><td><th><ul><li><img><hr><ol><br /><h1><h2><h3><h4><h5><h6><div><span><font><form><input><textarea><checkbox><select><style>');
+				$bod = strip_tags( $bod, '<a><b><i><strong><em><p><blockquote><table><tbody><tr><td><th><ul><li><img><hr><ol><br><h1><h2><h3><h4><h5><h6><div><span><font><form><input><textarea><checkbox><select><style>');
 				// try to close malformed html not fixed by the purifier - because people email Really Bad Things and this messes up *lite.css layout
 				$bod = closetags($bod);
 				$bodies[$i]['body'] = $bod;
@@ -230,7 +230,8 @@ if ($_REQUEST['locSection'] == 'read') {
 		}
 		$aux['timestamp'] = strtotime($aux['delivery-date']);
 		
-		$aux['subject'] = isset($aux['subject']) ? utf8_encode($aux['subject']) : '';
+		//$aux['subject'] = isset($aux['subject']) ? utf8_encode($aux['subject']) : '';
+		$aux['subject'] = isset($aux['subject']) ? mb_decode_mimeheader($aux['subject']) : ''; // the commented out line above doesn't work
 		$aux['from']    = isset($aux['from'])    ? utf8_encode($aux['from']) : '';
 		$aux['to']      = isset($aux['to'])      ? utf8_encode($aux['to']) : '';
 		$aux['cc']      = isset($aux['cc'])      ? utf8_encode($aux['cc']) : '';
@@ -304,7 +305,7 @@ END;
 		$mail = $webmaillib->get_mail_storage($current);
 	} catch (Exception $e) {
 		// do something better with the error
-		$smarty->assign('conmsg', tra('There are a problem connecting to that account.').'<br />'.$e->getMessage());
+		$smarty->assign('conmsg', tra('There was a problem connecting to that account.').'<br />'.$e->getMessage());
 	}
 
 	// The user just clicked on one of the flags, so set up for flag change
@@ -340,7 +341,7 @@ END;
 				}
 			}
 			if (!empty($err)) {
-				$smarty->assign('conmsg', tra('There are a problem deleting mails.').'<br />'.$err);
+				$smarty->assign('conmsg', tra('There was a problem while trying to delete these mails.').'<br />'.$err);
 			}
 		}
 	}
@@ -352,7 +353,7 @@ END;
 		try {
 			$mail->removeMessage($_REQUEST['msgdel']);
 		} catch (Exception $e) {
-			$smarty->assign('conmsg', tra('There are a problem deleting that mail.').'<br />'.$e->getMessage());
+			$smarty->assign('conmsg', tra('There was a problem while trying to delete that mail.').'<br />'.$e->getMessage());
 		}
 	}
 	
@@ -450,6 +451,7 @@ END;
 			$aux = $filtered[$i];
 		} else {
 			$aux = $webmail_list[$i-1];
+			$aux['subject'] = mb_decode_mimeheader($aux['subject']); // Lets decode the Subject before going to list it... otherwise it returns garbage for non-ascii subjects
 			$webmaillib->replace_webmail_message($current['accountId'], $user, $aux['realmsgid']);
 			list($aux['isRead'], $aux['isFlagged'], $aux['isReplied']) = $webmaillib->get_mail_flags($current['accountId'], $user, $aux['realmsgid']);
 		}

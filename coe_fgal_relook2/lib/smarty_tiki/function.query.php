@@ -15,6 +15,16 @@ function smarty_function_query($params, &$smarty) {
 	global $auto_query_args;
 	static $request = NULL;
 
+	// Modify explicit params to be prefixed if they need to (used in a plugin, module, ...)
+	if ( $smarty->url_overriding_prefix !== null ) {
+		foreach ( $smarty->url_overriding_prefix[1] as $v ) {
+			if ( isset( $params[ $v ] ) ) {
+				$params[ $smarty->url_overriding_prefix[0] . $v ] = $params[ $v ];
+				unset( $params[ $v ] );
+			}
+		}
+	}
+
 	if ( isset($params['_noauto']) && $params['_noauto'] == 'y' ) {
 		$query = array();
 		foreach( $params as $param_name => $param_value ) {

@@ -50,8 +50,14 @@
 				{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.header_shadow_end}</div>{/if}
 			{/if}
 		{/if}
-
+<div class="middle_outer">
 			{if $prefs.feature_layoutshadows eq 'y'}<div id="middle-shadow">{eval var=$prefs.middle_shadow_start}{/if}<div class="clearfix fixedwidth" id="middle">
+			
+				<div class="content clearfix modules" id="topbar_modules">
+					{section name=homeix loop=$topbar_modules}
+						{$topbar_modules[homeix].data}
+					{/section}
+				</div>
 				<div class="clearfix {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}nofullscreen{else}fullscreen{/if}" id="c1c2">
 					<div class="clearfix" id="wrapper">
 						<div id="col1" class="{if $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}marginleft{/if}{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n')} marginright{/if}"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
@@ -81,7 +87,7 @@
 	{/if}
 {/if}
 
-{if $prefs.feature_share eq 'y' && $tiki_p_share eq 'y' and (!isset($edit_page) or $edit_page ne 'y' and $prefs.feature_site_send_link ne 'y')}
+{if $section neq 'share' && $prefs.feature_share eq 'y' && $tiki_p_share eq 'y' and (!isset($edit_page) or $edit_page ne 'y' and $prefs.feature_site_send_link ne 'y')}
 							<div class="share">
 								<a title="{tr}Share this page{/tr}" href="tiki-share.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Share this page{/tr}</a>
 							</div>
@@ -93,9 +99,6 @@
 {/if}
 
 							{if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}<div id="tiki-center" {*id needed for ajax editpage link*} class="clearfix content">
-							{if $prefs.feature_custom_center_column_header}{* Content comes from Look and Feel admin  *}
-								<div id="custom_center_column_header">{eval var=$prefs.feature_custom_center_column_header}</div>
-							{/if}
 {if $display_msg}
 	{remarksbox type="note" title="{tr}Notice{/tr}"}{$display_msg|escape}{/remarksbox}
 {/if}
@@ -153,8 +156,9 @@
 	{/if}
 {/if}
 		<!--[if IE 7]><br style="clear:both; height: 0" /><![endif]-->
+		
 			</div>{* -- END of middle -- *}{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.middle_shadow_end}</div>{/if}
-
+</div>
 			{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 				{if $prefs.module_zones_bottom eq 'fixed' or ($prefs.module_zones_bottom ne 'n' && $bottom_modules|@count > 0)}{* previously if $prefs.feature_bot_bar eq 'y' *}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}
@@ -165,9 +169,6 @@
 										{section name=homeix loop=$bottom_modules}
 											{$bottom_modules[homeix].data}
 										{/section}
-										{* modules revamp temp fix for feature_bot_logo - TODO migrate to user modules *}
-										{if $prefs.feature_bot_logo eq 'y'}<div id="custom_site_footer">{eval var=$prefs.bot_logo_code}</div>{/if}
-										{* include file='tiki-bot_bar.tpl' *}
 									</div>
 								</div>
 							</div>

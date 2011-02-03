@@ -22,8 +22,8 @@
 								<label for="name">{tr}Name:{/tr}</label>
 							</td>
 							<td>
-								{if $galleryId eq $prefs.fgal_root_id}
-									<b>{tr}File Galleries{/tr}</b>
+								{if $galleryId eq $treeRootId}
+									<b>{tr}{$gal_info.name}{/tr}</b>
 									<input type="hidden" name="name" value="{$gal_info.name|escape}" />
 								{else}
 									<input type="text" size="50" id="name" name="name" value="{$gal_info.name|escape}" style="width:100%"/>
@@ -43,6 +43,22 @@
 									{foreach from=$all_templates key=key item=item}
 										<option value="{$item.id}"{if $gal_info.template eq $item.id} selected="selected"{/if}>{$item.label|escape}</option>
 									{/foreach}
+									{jq}
+$('#fgal_template').change( function() {
+	var otherTabs = $('span.tabinactive');
+	var otherParams = $('#description').parents('tr').nextAll('tr');
+
+	if ($(this).val() != '') {
+		// Select template, hide parameters
+		otherTabs.hide();
+		otherParams.hide();
+	} else {
+		// No template, show parameters
+		otherTabs.show();
+		otherParams.show();
+	}
+}).change();
+								{/jq}
 								</select>
 							</td>
 						</tr>
@@ -52,7 +68,7 @@
 								<label for="fgal_type">{tr}Type:{/tr}</label>
 							</td>
 							<td>
-								{if $galleryId eq $prefs.fgal_root_id}
+								{if $galleryId eq $treeRootId}
 									{tr}System{/tr}
 									<input type="hidden" name="fgal_type" value="system" />
 								{else}
@@ -117,7 +133,7 @@
 								<input size="5" type="text" id="archives" name="archives" value="{$gal_info.archives|escape}" />
 								<br />
 								<em>{tr}Use{/tr} 0={tr}unlimited{/tr}, -1={tr}none{/tr}.</em>
-								{if $galleryId neq $prefs.fgal_root_id}
+								{if $galleryId neq $treeRootId}
 							</td>
 						</tr>
 						<tr>
@@ -126,7 +142,7 @@
 							</td>
 							<td>
 								<select name="parentId" id="parentId">
-									<option value="{$prefs.fgal_root_id}"{if $parentId eq $prefs.fgal_root_id} selected="selected"{/if}>{tr}none{/tr}</option>
+									<option value="{$treeRootId}"{if $parentId eq $treeRootId} selected="selected"{/if}>{tr}none{/tr}</option>
 									{foreach from=$all_galleries key=key item=item}
 										{if $galleryId neq $item.id}
 										<option value="{$item.id}"{if $parentId eq $item.id} selected="selected"{/if}>{$item.label|escape}</option>

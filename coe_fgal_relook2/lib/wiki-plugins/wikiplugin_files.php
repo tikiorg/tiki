@@ -360,7 +360,7 @@ function wikiplugin_files($data, $params) {
 	if (!isset($sort))
 		$sort = 'name_asc';
 	if (isset($galleryId)) {
-		$gal_info = $tikilib->get_file_gallery($galleryId);
+		$gal_info = $filegallib->get_file_gallery($galleryId);
 		if ($tiki_p_admin != 'y' && $tiki_p_admin_files_galleries != 'y' && $gal_info['user'] != $user) {
 			$p_view_file_gallery = $tikilib->user_has_perm_on_object($user, $galleryId, 'file gallery', 'tiki_p_view_file_gallery');
 			if ($p_view_file_gallery != 'y')
@@ -386,7 +386,7 @@ function wikiplugin_files($data, $params) {
 			return "~np~<a onclick=\"javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId&find_creator=$creator&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');\" href=\"#\">".tra($data).'</a>~/np~';
 		}
 		$find = isset($_REQUEST['find'])?  $_REQUEST['find']: '';
-		$fs = $tikilib->get_files(0, -1, $sort, $find, $galleryId, false, true, true, true, false, false, true, false, '', true, false, false, $filter);
+		$fs = $filegallib->get_files(0, -1, $sort, $find, $galleryId, false, true, true, true, false, false, true, false, '', true, false, false, $filter);
 		if (isset($categId)) {
 			$objects = $categlib->list_category_objects($categId, 0, -1, 'itemId_asc', 'file');
 			$objects_in_categs = array();
@@ -413,7 +413,7 @@ function wikiplugin_files($data, $params) {
 		$objects = $categlib->list_category_objects($categId, 0, -1, 'itemId_asc', 'file gallery');
 		// get the files of the gallery
 		foreach ($objects['data'] as $og) {
-			$gal_info = $tikilib->get_file_gallery($og['itemId']);
+			$gal_info = $filegallib->get_file_gallery($og['itemId']);
 			if ($tiki_p_admin != 'y' && $tiki_p_admin_files_galleries != 'y' && $gal_info['user'] != $user) {
 				$p_view_file_gallery = $tikilib->user_has_perm_on_object($user, $gal_info['galleryId'], 'file gallery', 'tiki_p_view_file_gallery');
 				if ($p_view_file_gallery != 'y')
@@ -428,7 +428,7 @@ function wikiplugin_files($data, $params) {
 				$p_edit_gallery_file = 'y';
 			}
 
-			$fs = $tikilib->get_files(0, -1, $sort, '', $og['itemId'], false, true, false, true, false, true, true, false, '', true, false, false, $filter);			                                                      
+			$fs = $filegallib->get_files(0, -1, $sort, '', $og['itemId'], false, true, false, true, false, true, true, false, '', true, false, false, $filter);			                                                      
 			if ($fs['cant']) {
 				for ($i = 0; $i < $fs['cant']; ++$i) {
 					$fs['data'][$i]['gallery'] = $gal_info['name'];
@@ -477,6 +477,9 @@ function wikiplugin_files($data, $params) {
 	if (!empty($showlockedby)) $gal_info['show_lockedby'] = $showlockedby;
 	if (!empty($showhits)) $gal_info['show_hits'] = $showhits;
 	if (!empty($showfiles)) $gal_info['show_files'] = $showfiles;
+	if (!empty($showdeleteafter)) $gal_info['show_deleteAfter'] = $showdeleteafter;
+	if (!empty($showchecked)) $gal_info['show_checked'] = $showchecked;
+	if (!empty($showshare)) $gal_info['show_share'] = $showshare;
 	if (!empty($showaction)) $gal_info['show_action'] = $showaction;
 	if (!empty($showcomment)) $gal_info['show_comment'] = $showcomment;
 	if (!empty($showlasteditor)) $gal_info['show_last_user'] = $showlasteditor;
@@ -511,7 +514,7 @@ function wikiplugin_files($data, $params) {
 	function  wikiplugin_files_check_perm_file($fileId) {
 		global $filegallib, $tikilib, $tiki_p_admin, $user, $tiki_p_admin_files_galleries;
 		$info = $filegallib->get_file_info($fileId);
-		$gal_info = $tikilib->get_file_gallery($info['galleryId']);
+		$gal_info = $filegallib->get_file_gallery($info['galleryId']);
 		if ($tiki_p_admin != 'y' && $tiki_p_admin_files_galleries != 'y' && $gal_info['user'] != $user) {
 			$info['p_view_file_gallery'] = $tikilib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_view_file_gallery');
 			if ($info['p_view_file_gallery'] != 'y') {

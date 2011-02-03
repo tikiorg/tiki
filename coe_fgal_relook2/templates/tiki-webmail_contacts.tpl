@@ -41,9 +41,9 @@
 			{cycle values="odd,even" print=false}
 			{section name=user loop=$channels}
 				<tr class="{cycle}">
-					<td>{$channels[user].firstName}</td>
-					<td>{$channels[user].lastName}</td>
-					<td>
+					<td class="text">{$channels[user].firstName}</td>
+					<td class="text">{$channels[user].lastName}</td>
+					<td class="email">
 						<a class="link" href="#" onclick="javascript:window.opener.document.getElementById('{$element}').value=window.opener.document.getElementById('{$element}').value + '{$channels[user].email}' + ' ';">
 							{$channels[user].email}
 						</a>
@@ -53,7 +53,7 @@
 						</a>
 						&nbsp;&nbsp;]
 					</td>
-					<td>{$channels[user].nickname}</td>
+					<td class="text">{$channels[user].nickname}</td>
 				</tr>
 			{/section}
 		</table>

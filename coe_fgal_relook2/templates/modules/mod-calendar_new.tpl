@@ -31,11 +31,11 @@
 					{assign var=month_today value=$smarty.now|tiki_date_format:"%m"}
 
 					{if $cell[w][d].focus}
-						{cycle values="calodd,caleven" print=false}
+						{cycle values="odd,even" print=false}
 					{else}
-						{cycle values="caldark" print=false}
+						{cycle values="notoddoreven" print=false}
 					{/if}
-					<td class="{cycle advance=false}{if $date eq $today} calfocuson{/if}{if isset($cell[w][d].items[0]) and ($cell[w][d].items[0].modifiable eq "y" 
+					<td class="{cycle advance=false}{if $date eq $today} highlight{/if}{if isset($cell[w][d].items[0]) and ($cell[w][d].items[0].modifiable eq "y" 
 								|| $cell[w][d].items[0].visible eq 'y')} focus{/if}" width="14%" style="text-align:center; font-size:0.8em;">
 
 						{if isset($cell[w][d].over)}

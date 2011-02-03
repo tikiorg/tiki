@@ -12,6 +12,11 @@ function prefs_cas_list() {
 				'type' => 'flag',
 				'perspective' => false,
 				),
+		        'cas_autologin' => array(
+				'name' => tra('Try automatically to connect SSO'),
+				'type' => 'flag',
+				'perspective' => false,
+				),
 			'cas_skip_admin' => array(
 				'name' => tra('Use Tiki authentication for Admin login'),
 				'type' => 'flag',

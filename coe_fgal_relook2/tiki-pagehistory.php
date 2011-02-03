@@ -426,15 +426,30 @@ if (\$("input[name=newver][checked=checked]").length) {
 }
 JS
 );
-if (isset($_REQUEST["compare"])) histlib_helper_setup_diff($page, $oldver, $newver);
-else $smarty->assign('diff_style', $info['is_html'] === '1' ? 'htmldiff' : $prefs['default_wiki_diff_style']);
-if ($info["flag"] == 'L') $smarty->assign('lock', true);
-else $smarty->assign('lock', false);
-$smarty->assign('page_user', $info['user']);
+if (isset($_REQUEST["compare"])) {
+	histlib_helper_setup_diff($page, $oldver, $newver);
+
+	if (isset($approved_versions)) {
+		$smarty->assign('flaggedrev_compare_approve', ! in_array($newver, $approved_versions));
+	}
+} else {
+	$smarty->assign('diff_style', $info['is_html'] === '1' ? 'htmldiff' : $prefs['default_wiki_diff_style']);
+}
+
+if ($info["flag"] == 'L') {
+	$smarty->assign('lock', true);
+} else {
+	$smarty->assign('lock', false);
+}
+
 ask_ticket('page-history');
+
 // disallow robots to index page:
+$smarty->assign('page_user', $info['user']);
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
 include_once ('tiki-section_options.php');
 // Display the template
 $smarty->assign('mid', 'tiki-pagehistory.tpl');
 $smarty->display("tiki.tpl");
+

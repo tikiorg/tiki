@@ -166,7 +166,11 @@
 
 	{if $wiki_extras eq 'y' && $prefs.feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y'}
 		<a name="attachments"></a>
-		{include file='attachments.tpl'}
+		{if $prefs.feature_use_fgal_for_wiki_attachments eq 'y'}
+			{attachments _id=$page _type='wiki page'}
+		{else}
+			{include file='attachments.tpl'}
+		{/if}
 	{/if}
 
 	{if $prefs.feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments == 'y' and $edit_page ne 'y' and $comments_allowed_on_page == 'y'}

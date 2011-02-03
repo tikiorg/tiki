@@ -51,11 +51,20 @@ $staging_page = $page;
 $page = $tikilib->get_approved_page($page);
 
 // If either page doesn't exist then display an error
-if (!$tikilib->page_exists($page) || !$tikilib->page_exists($staging_page)) { 
-	$smarty->assign('msg', tra("Either staging or approved page cannot be found"));
+if (!$tikilib->page_exists($staging_page)) { 
+	$smarty->assign('msg', tra("Staging page cannot be found"));
 
 	$smarty->display("error.tpl");
 	die;
+}
+
+// get staging page info
+
+$staging_info = $tikilib->get_page_info($staging_page);
+
+// If approved page does not exist, then create it first
+if ($page && !$tikilib->page_exists($page)) {
+	$tikilib->create_page($page, 0, '', $staging_info['lastModif'] - 1, 'Staging creation');
 }
 
 // Check approved page edit permissions
@@ -63,78 +72,11 @@ $info = $tikilib->get_page_info($page);
 $tikilib->get_perm_object($page, 'wiki page', $info, true);
 $access->check_permission('tiki_p_edit');
 
-// get staging page info
-
-$staging_info = $tikilib->get_page_info($staging_page);
-
 if ( $staging_info['lastModif'] < $info['lastModif'] ) { 
 	$smarty->assign('msg', tra("Approved page was last saved after most recent staging edit"));
 
 	$smarty->display("error.tpl");
 	die;
-}
-
-$emails = $notificationlib->get_mail_events('user_review_approval', $staging_info['page_id']);
-if (count($emails)) {
-	// remove duplicates to avoid sending email twice to the same address
-	$emails = array_unique($emails);
-	foreach ($emails as $k => $email) {
-		$emailUser = $userlib->get_user_by_email($email);
-		$emails[$k] = array($email, $emailUser);
-	}
-	$smarty->assign('mail_reviewer', $user);
-	$mail_articleurl =  mb_ereg_replace(' ', '+', $page);
-	if ($_REQUEST['action'] != 'reject') {
-		$lastversion = $histlib->get_page_latest_version($staging_page);
-		$smarty->assign('mail_reviewcomments', $_REQUEST['approve_comment']);
-		sendApprovalEmailNotification($smarty, $tikilib, $userlib, $prefs, $emails, "user_review_approved_notification_subject.tpl", "user_review_approved_notification.tpl", 
-		$_SERVER["SERVER_NAME"], '/tiki-view_forum.php?forumId=3', $page, $mail_articleurl
-		);
-		if ($_REQUEST['outofdate']) {
-			// mark other translations as out of date
-			$flags = array();
-			$flags[] = 'critical';
-			$multilinguallib->createTranslationBit( 'wiki page', $staging_info['page_id'], $lastversion, $flags );
-		}
-		$notificationlib->remove_events_object('user_review_approval', $staging_info['page_id']);
-	}
-	else {
-		$smarty->assign('mail_reviewcomments', $_REQUEST['reject_comment']);
-        $smarty->assign('mail_stagingsource', html_entity_decode($staging_info['data'], ENT_QUOTES));
-		sendApprovalEmailNotification($smarty, $tikilib, $userlib, $prefs, $emails, "user_review_rejected_notification_subject.tpl", "user_review_rejected_notification.tpl", 
-		$_SERVER["SERVER_NAME"], '/tiki-view_forum.php?forumId=3', $page, $mail_articleurl
-		);
-		require_once('lib/diff/difflib.php');
-		// rollback to last approved version and remove older versions
-        // outofsync code copied from tiki-index.php ~ line 854 (r49554)
-        $approvedPageInfo = $histlib->get_page_from_history($page, 0);
-        if ($staging_info['lastModif'] > $approvedPageInfo['lastModif']) {
-            $outofdateversion = $histlib->get_version_by_time($staging_page, $approvedPageInfo['lastModif'], 'after');
-            if ($outofdateversion > 0) {
-                $lastsyncversion = $histlib->get_version_by_time($staging_page, $approvedPageInfo['lastModif']);
-		        rollback_page_to_version($prefs, $histlib, $categlib, $staging_page, $lastsyncversion, false, true);
-                $lastversion = $histlib->get_page_latest_version($staging_page);
-		        $remove_version = $lastsyncversion;
-		        while ($remove_version <= $lastversion) {
-			        $histlib->remove_version($staging_page, $remove_version);
-			        $remove_version++;
-		        }
-            }
-            else {
-                // last sync can't be found, so remove the last edit and rollback copy only
-                $lastversion = $histlib->get_page_latest_version($staging_page);
-                rollback_page_to_version($prefs, $histlib, $categlib, $staging_page, $lastversion, false, true);
-                $histlib->remove_version($staging_page, $lastversion);
-                $lastversion = $histlib->get_page_latest_version($staging_page);
-                $histlib->remove_version($staging_page, $lastversion);
-            }
-        }
-		$notificationlib->remove_events_object('user_review_approval', $staging_info['page_id']);
-        $smarty->assign('staging_page', $staging_page);
-		$smarty->assign('mid', 'tiki-approve_staging_page.tpl');
-		$smarty->display("tiki.tpl");
-		die;
-	}
 }
 
 // update approved page contents
@@ -230,6 +172,11 @@ if ($prefs['feature_freetags'] == 'y' && ($prefs['wikiapproval_update_freetags']
 	}
 	
 	$freetaglib->update_tags($user, $page, 'wiki page', $taglist);
+}
+
+//delete staging page
+if ($prefs['wikiapproval_delete_staging'] == 'y') {
+	$tikilib->remove_all_versions($staging_page);
 }
 
 // OK, done

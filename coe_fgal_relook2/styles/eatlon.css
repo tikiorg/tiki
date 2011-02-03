@@ -20,7 +20,7 @@ body {
 	background: #9faec2 url(eatlon/body_bg.gif) repeat-x;
 	font-family: arial, sans-serif;
 	color: #8f8f8f;
-	font: 76%/1.4em black Verdana, Geneva, Arial, Helvetica, sans-serif}
+	font: 76%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif}
 
 html>body {font-size: 76% !important}
 body.fullscreen {padding: 3em}
@@ -28,8 +28,8 @@ body.fullscreen {padding: 3em}
 /* next two: fixed-width: 960px */
 body.fixed_width .fixedwidth {
 	margin-bottom: 20px;
-	width: 900px !important;
-	background: #fff;
+	width: 900px;
+
 }
 
 body.fixed_width *:first-child+html #c1c2 {
@@ -43,21 +43,20 @@ body.fixed_width #main[id] {
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
-#main {
-		background: #fff;
-}
 
 #middle {
 	text-align: left;
-	min-height: 450px/*;
-	height: auto !important*/}
+	min-height: 450px;
+	background: #fff;
+	margin-bottom: 0;
+}
 
-#header {
+#header_fixedwidth {
 	text-align: left;
-	height: 204px;
-	background: #fff url(eatlon/head_bg.gif) repeat-x}
-
-tr#midrow {background: #fff}
+	height: 126px;
+	background: #fff url(eatlon/head_bg.gif) repeat-x 0 0;
+	margin-bottom: 0;
+	}
 
 #c1c2 #wrapper #col1.marginleft  {
 	margin-left: 180px;
@@ -84,10 +83,13 @@ tr#midrow {background: #fff}
 
 
 #footer {
+	min-height: 163px}
+	
+.footerbgtrap {
 	background: #fff url(eatlon/bottom_bg.png) no-repeat 100% 100%;
 	min-height: 163px}
 
-#footer .content {
+#bottom_modules {
 	background: url(eatlon/bottom_bg.png) no-repeat 0 100%;
 	min-height: 163px;
 	text-align: center;
@@ -95,6 +97,8 @@ tr#midrow {background: #fff}
 	margin-right: 50px;
 	padding-bottom: 30px;
 }
+
+
 
 /***** XHTML Elements (other than body tag) ******/
 a,
@@ -232,16 +236,18 @@ tt {font-size: 1.2em}
 	min-height: 140px;
 	background: url(eatlon/banner.gif) no-repeat 100% 5px}
 
-#sioptions  {padding: 1em}
 
 #sitelogo a,
 #sitelogo a:visited,
 #sitelogo a:hover {border-bottom: 0}
 
-#sitead.floatright {padding-right: 10px}
-#sitead.floatleft {padding-left: 10px}
 .floatright img {margin-right: 10px}
-#siteloginbar {right: 20px}
+
+.box-login_box {
+	position: absolute;
+	right: 20px;
+	bottom: 20px;
+}
 
 input[id="sl-login-user"],
 input[id="sl-login-pass"] {background: #e1e1e2}
@@ -295,13 +301,16 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 
 }
 
-#sitesearchbar {
+.box-search {
+	position: absolute;
+	right: 40px;
+	top: 0;
 	color: #fff;
 	margin-top: 8px;
 }
 
 input#fuser,
-#sitesearchbar select {
+#search_mod_input_1 {
 	border: 1px solid;
 	border-color: #878689 #f3f3f4 #f3f3f4 #878689;
 	background: #afafaf;
@@ -715,7 +724,8 @@ textarea.wikiedit {font-size: 1.1em}
 	text-align: center;
 	padding: 3px;
 	line-height: 150%;
-	text-transform: 0}
+	text-transform: none;
+}
 
 .postinfo a {
 	color: #9CF;
@@ -967,7 +977,7 @@ Caltrack a:visited {color: #00BD02}
 .Calquiz a:hover,
 .Calsurv a:hover,
 .Caltrack a:hover,
-.Calwiki a:hover {color: darkviolet}
+.Calwiki a:hover {color: #9400d3}
 
 .calcontent a.linkmenu,
 .calcontent a.linkmenu:hover {
@@ -1034,10 +1044,10 @@ Caltrack a:visited {color: #00BD02}
 	padding: 2px;
 	font-size: 1em}
 
-.event {background: whitesmoke}
+.event {background: #f5f5f5}
 .addevent {padding: 0 5px; float: right}
 * html .addevent {padding: 0}
-.calodd, .caleven {border: 1px solid darkgray}
+.calodd, .caleven {border: 1px solid #a9a9a9}
 .calodd {background: #ececec}
 * html .calodd {padding: 0}
 .caleven {background: #f5f5f5}

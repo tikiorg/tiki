@@ -66,7 +66,7 @@
 								<tr>
 									<td>{tr}Group:{/tr}</td>
 									<td colspan="3">
-										<select id="menu_groupname" name="groupname[]" size="4" multiple>
+										<select id="menu_groupname" name="groupname[]" size="4" multiple="multiple">
 											<option value="">&nbsp;</option>
 											{foreach key=k item=i from=$option_groups}<option value="{$k|escape}" {$i}>{$k|escape}</option>{/foreach}
 										</select>

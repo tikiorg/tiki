@@ -40,7 +40,7 @@ if ($prefs['feature_tikitests'] == 'y') require_once ('tiki_tests/tikitestslib.p
 $crumbs[] = new Breadcrumb($prefs['browsertitle'], '', $prefs['tikiIndex']);
 if ($prefs['site_closed'] == 'y') require_once ('lib/setup/site_closed.php');
 require_once ('lib/setup/error_reporting.php');
-if ($prefs['feature_bot_bar_debug'] == 'y' || $prefs['use_load_threshold'] == 'y') require_once ('lib/setup/load_threshold.php');
+if ($prefs['use_load_threshold'] == 'y') require_once ('lib/setup/load_threshold.php');
 if (($prefs['feature_wysiwyg'] != 'n' && $prefs['feature_wysiwyg'] != 'y') || $prefs['case_patched'] == 'n') require_once ('lib/setup/patches.php');
 require_once ('lib/setup/sections.php');
 require_once ('lib/headerlib.php');
@@ -321,6 +321,13 @@ if ($prefs['javascript_enabled'] != 'n') {
 		$headerlib->add_jsfile("lib/jquery/jquery.sparkline.min.js");
 		$headerlib->add_jsfile("lib/metrics.js");
 	}
+	
+	// include and setup themegen editor if already open
+	if ($tiki_p_admin === 'y' && $prefs['feature_themegenerator'] === 'y' && !empty($_COOKIE['themegen']) &&
+			(strpos($_SERVER['SCRIPT_NAME'], 'tiki-admin.php') === false || strpos($_SERVER['QUERY_STRING'], 'page=look') === false)) {
+		include_once 'lib/themegenlib.php';
+		$themegenlib->setupEditor();
+	}
 
 }	// end if $prefs['javascript_enabled'] != 'n'
 
@@ -341,4 +348,12 @@ if( session_id() ) {
 		header( 'Cache-Control: ' . $prefs['tiki_cachecontrol_nosession'] );
 	}
 }
+
+if ( isset($token_error) ) {
+	$smarty->assign('token_error', $token_error);
+	$smarty->display('error.tpl');
+	die;
+}
+
+require_once( 'lib/setup/plugins_actions.php' );
 

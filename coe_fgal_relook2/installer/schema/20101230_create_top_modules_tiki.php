@@ -15,6 +15,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * 	feature_sitelogo
  * 	feature_site_login
  * 	feature_top_bar
+ *  feature_topbar_id_menu
  * 	feature_sitemenu
  *  feature_sitesearch
  */
@@ -41,12 +42,12 @@ function upgrade_20101230_create_top_modules_tiki( $installer ) {
 		if ($prefs['feature_sitemenu'] === 'y') {
 			$menuId = $installer->getOne( "SELECT `value` FROM `tiki_preferences` WHERE `name` = 'feature_topbar_id_menu'");
 			$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-									"('menu','t',5,7200,'id=$menuId&type=horiz&menu_id=tiki-top&menu_class=clearfix&nobox=y&style=float%3Aleft%3Bclear%3Aboth%3Bwidth%3A100%25%3B','a:1:{i:0;s:9:\"Anonymous\";}');");
+									"('menu','o',2,7200,'id=$menuId&type=horiz&menu_id=tiki-top&menu_class=clearfix&nobox=y','a:1:{i:0;s:9:\"Anonymous\";}');");
 		}
 		// add site search
 		if($prefs['feature_sitesearch'] === 'y' ) {
 			$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-									"('search','t',6,7200,'nobox=y&style=float%3Aright%3Bclear%3Aright%3B','a:1:{i:0;s:9:\"Anonymous\";}');");
+									"('search','o',1,7200,'nobox=y&style=float%3Aright%3Bclear%3Aright%3B','a:1:{i:0;s:9:\"Anonymous\";}');");
 		}
 	}
 	// add quickadmin but prefs feature_sitemycode, sitemycode stay and will need manual upgrading

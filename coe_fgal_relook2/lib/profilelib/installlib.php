@@ -254,7 +254,7 @@ class Tiki_Profile_Installer
 		return true;
 	} // }}}
 
-	private function getInstallHandler( Tiki_Profile_Object $object ) // {{{
+	public function getInstallHandler( Tiki_Profile_Object $object ) // {{{
 	{
 		$type = $object->getType();
 		if( array_key_exists( $type, $this->handlers ) )
@@ -1601,7 +1601,7 @@ class Tiki_Profile_InstallHandler_BlogPost extends Tiki_Profile_InstallHandler /
 			}
 		}
 
-		$entryId = $bloglib->blog_post( $data['blog'], $data['content'], $data['user'], $data['title'], '', $data['private'] );
+		$entryId = $bloglib->blog_post( $data['blog'], $data['content'], $data['excerpt'], $data['user'], $data['title'], '', $data['private'] );
 
 		return $entryId;
 	}

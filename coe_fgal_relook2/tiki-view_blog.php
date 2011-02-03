@@ -169,10 +169,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 		}
 	}
 }
-if ($prefs['feature_mobile'] == 'y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
-	include_once ("lib/hawhaw/hawtikilib.php");
-	HAWTIKI_view_blog($listpages, $blog_data);
-}
+
 if ($prefs['feature_actionlog'] == 'y') {
 	$logslib->add_action('Viewed', $_REQUEST['blogId'], 'blog', '');
 }

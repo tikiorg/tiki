@@ -2,7 +2,7 @@
 
 {title admpage="calendar"}
 	{if $displayedcals|@count eq 1}
-		{tr}Calendar{/tr}: {assign var=x value=$displayedcals[0]}{$infocals[$x].name|escape}
+		{tr}Calendar:{/tr} {assign var=x value=$displayedcals[0]}{$infocals[$x].name|escape}
 	{else}
 		{tr}Calendar{/tr}
 	{/if}
@@ -85,10 +85,10 @@
 	<div class="categbar" align="right">
 		{if $user and $prefs.feature_user_watches eq 'y'}
 			{if $category_watched eq 'y'}
-				{tr}Watched by categories{/tr}:
+				{tr}Watched by categories:{/tr}
 				{section name=i loop=$watching_categories}
 					{assign var=thiswatchingcateg value=$watching_categories[i].categId}
-					{button href="tiki-browse_categories.php?parentId=$thiswatchingcateg" _text=$watching_categories[i].name}
+					{button href="tiki-browse_categories.php?parentId=$thiswatchingcateg" _text=$watching_categories[i].name|escape}
 					&nbsp;
 				{/section}
 			{/if}	

@@ -559,9 +559,8 @@ function wikiplugin_img_info() {
 	
 	//get random image and treat as file gallery image afterwards
 	if (!empty($imgdata['randomGalleryId'])) {
-		include_once('lib/tikilib.php');
-		$tikilib = new TikiLib();
-		$dbinfo = $tikilib->get_file(0, $imgdata['randomGalleryId']);
+		$filegallib = TikiLib::lib('filegal');
+		$dbinfo = $filegallib->get_file(0, $imgdata['randomGalleryId']);
 		$imgdata['fileId'] = $dbinfo['fileId'];
 		$basepath = $prefs['fgal_use_dir'];
 	}
@@ -617,8 +616,7 @@ function wikiplugin_img_info() {
     			$dbinfot = array_merge($dbinfot, $dbinfot2);
 				$basepath = $prefs['gal_use_dir'];
 			} elseif (!isset($dbinfo) && !empty($imgdata['fileId'])) {
-				global $filegallib; 
-				include_once('lib/filegals/filegallib.php');
+				$filegallib = TikiLib::lib('filegal');
 				$dbinfo = $filegallib->get_file($imgdata['fileId']);
 				$basepath = $prefs['fgal_use_dir'];
 			} else {					//only attachments left

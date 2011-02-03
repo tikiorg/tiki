@@ -194,6 +194,29 @@
 			{else}
 				{assign var=over_infos value=''}
 			{/if}
+			
+			{assign var=nb_over_share value=0}
+			{capture name=over_share}{strip}
+			    <div class='opaque'>
+			      <div class='box-title'>{tr}Share with:{/tr}</div>
+			      <div class='box-data'>
+			        <div>
+			            {foreach item=prop key=propname from=$files[changes].share.data}
+							<b>{$prop.email}</b>: {$prop.visit} / {$prop.maxhits}<br />
+							{assign var=nb_over_share value=`$nb_over_share+1`}
+						{/foreach}
+			        </div>
+			      </div>
+			    </div>
+			{/strip}{/capture}
+			
+			{if $nb_over_share gt 0}
+			    {assign var=over_share value=$smarty.capture.over_share}
+			{else}
+			    {assign var=over_share value=''}
+			{/if}
+			
+			
 		<tr class="{cycle}">
 
 			{if $gal_info.show_checked neq 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y') and $filegals_manager eq ''}
@@ -269,10 +292,10 @@
 						{/if}
 					{elseif $propname eq 'created' or $propname eq 'lastModif' or $propname eq 'lastDownload'}
 						{if empty($propval)}
-						{assign var=propval value=''}
-					{else}
-						{assign var=propval value=$propval|tiki_short_date}
-					{/if}
+							{assign var=propval value=''}
+						{else}
+							{assign var=propval value=$propval|tiki_short_date}
+						{/if}
 					{elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
 						{assign var=propval value=$propval|userlink}
 					{elseif $propname eq 'size'}
@@ -302,8 +325,35 @@
 							{assign var=fid value=$files[changes].id}
 							{assign var=propval value="<a class='fgalbacklink' href='list-file_backlinks_ajax.php?fileId=$fid' rel='list-file_backlinks_ajax.php?fileId=$fid'>$propval</a>"}
 						{/if}
+					{elseif $propname eq 'deleteAfter'}
+						{if empty($files[changes].deleteAfter)}
+							{assign var=propval value="-"}
+						{else}
+							{assign var=limitdate value=$files[changes].deleteAfter+$files[changes].lastModif}
+							{assign var=propval value=$limitdate|tiki_remaining_days_from_now:$prefs.short_date_format}
+						{/if}
+					{elseif $propname eq 'share'}
+						{assign var=share_string value=$files[changes].share.string}
+						{assign var=share_nb value=$files[changes].share.nb}
+						{capture assign=share_capture}{strip}
+							<a class='fgalname' href='#' {popup fullhtml=1 text=$over_share|escape:'javascript'|escape:'html' left=true} style='cursor:help'>{icon _id='group_link' class='' title=''}</a> ({$share_nb}) {$share_string}
+						{/strip}{/capture}
+						{assign var=propval value=$share_capture}
+					{elseif $propname eq 'hits'}
+						{if $prefs.fgal_list_hits eq 'y'}
+							{if $prefs.fgal_list_ratio_hits eq 'y'}
+								{assign var=hits value=$files[changes].hits}
+								{assign var=maxhits value=$files[changes].maxhits}
+								{if $maxhits <= 0}
+									{assign var=propval value=$hits}
+								{else}
+									{assign var=propval value="$hits / <b>$maxhits</b>"}
+								{/if}
+							{else}
+								{assign var=propval value=$files[changes].hits}
+							{/if}
+						{/if}
 					{/if}
-	
 					{if $propname eq 'name' and ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'f' ) }
 						<td>
 							{if $link neq ''}<a class='fgalname {$linkclass}' {$link}>{/if}{$files[changes].filename|escape}{if $link neq ''}</a>{/if}

@@ -19,6 +19,7 @@ class WikiRenderer
 	private $pageNumber = 1;
 	private $sortMode = 'created_desc';
 	private $showAttachments = 'n';
+	private $raw = false;
 
 	private $hasPermissions;
 	private $prep = array(
@@ -344,7 +345,11 @@ class WikiRenderer
 				'language' => $this->info['lang']
 			);
 
-			$pdata = $wikilib->parse_data($this->content_to_render, $parse_options);
+			if ($this->raw) {
+				$pdata = $tikilib->parse_data_raw($this->content_to_render);
+			} else {
+				$pdata = $wikilib->parse_data($this->content_to_render, $parse_options);
+			}
 		}
 
 		$pages = $wikilib->get_number_of_pages($pdata);
@@ -387,7 +392,7 @@ class WikiRenderer
 	private function setupAttachments() // {{{
 	{
 		global $prefs, $wikilib;
-		if ( $prefs['feature_wiki_attachments'] != 'y' )
+		if ( $prefs['feature_wiki_attachments'] != 'y' || $prefs['feature_use_fgal_for_wiki_attachments'] == 'y' )
 			return;
 
 		// If anything below here is changed, please change lib/wiki-plugins/wikiplugin_attach.php as well.
@@ -456,6 +461,7 @@ class WikiRenderer
 	private function setupCategories() // {{{
 	{
 		global $prefs, $categlib;
+		require_once 'lib/categories/categlib.php';
 
 		$cats = array();
 		if ($prefs['feature_categories'] == 'y' && $categlib->is_categorized('wiki page',$this->page)) {
@@ -516,10 +522,10 @@ class WikiRenderer
 		$this->smartyassign('trail', $crumbs);
 	} // }}}
 
-	private function setupStaging() // {{{
+	function setupStaging() // {{{
 	{
 		global $prefs, $tikilib, $categlib, $histlib, $tiki_p_edit;
-
+		require_once 'lib/categories/categlib.php';
 		if ($prefs['feature_wikiapproval'] != 'y')
 			return;
 
@@ -624,5 +630,10 @@ class WikiRenderer
 	function forceLatest() // {{{
 	{
 		$this->content_to_render = $this->info['data'];
+	} // }}}
+
+	function useRaw() // {{{
+	{
+		$this->raw = true;
 	} // }}}
 }

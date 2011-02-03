@@ -138,7 +138,8 @@ input[type="submit"],
 	color: #000;
 	font-weight: bold;
 	background: #fff;
-	border: 1px solid #7c7c7c #c3c3c3 #ddd #c3c3c3;
+	border: 1px solid;
+	border-color:  #7c7c7c #c3c3c3 #ddd #c3c3c3;
 }
 
 .button a:hover,
@@ -152,7 +153,8 @@ input[type="submit"]:hover,
 	color : #000;
 	background: #ddd;
 	font-weight: bold;
-	border: 1px solid #c3c3c3 #7c7c7c #c3c3c3 #ddd;
+	border: 1px solid;
+	border-color: #c3c3c3 #7c7c7c #c3c3c3 #ddd;
 }
 	
 .button a:active,
@@ -180,16 +182,11 @@ input[type="submit"]:active,
 
 
 /***** Site Header & Identity *****/
-#header-top {
-	min-height: 40px;
-}
 
-#sioptions {
-	padding: 0 10px;
-}
 
 #sitetitles {
 	font-weight: bold;
+	padding-bottom: 15px;
 }
 
 #sitetitle {
@@ -199,6 +196,17 @@ input[type="submit"]:active,
 #sitesubtitle {
 	font-size: 1.2em;
 	margin-top: 10px;
+}
+
+#header .box-login_box {
+	float: right;
+	margin-right: 10px;
+}
+
+#top_modules .siteloginbar_popup {
+	position: absolute;
+	right: 10px;
+	bottom: 0;
 }
 
 #tiki-top {
@@ -217,6 +225,13 @@ input[type="submit"]:active,
 	margin: -2px 0 !important;
 	padding: 0;
 	line-height: 1em;
+}
+
+#topbar_modules .box-search {
+	float: none;
+	position: absolute;
+	right: 10px;
+	top: 0;
 }
 	
 /****** Menus, Links ******/
@@ -569,7 +584,8 @@ h1 a.pagetitle:hover {
 	
 .wikitext {
 	background: #fff;
-	border: 1px solid #7c7c7c #c3c3c3 #ddd #c3c3c3;
+	border: 1px solid;
+	border-color: #7c7c7c #c3c3c3 #ddd #c3c3c3;
 	padding: 0.5em  0.8em;
 	margin: 0.5ex 0px;
 }
@@ -675,8 +691,6 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 
 /***** Directory *****/
 .dirsite {
-	background: /*dirsite_background*/;
-	border: /*dirsite_border*/;
 	margin-bottom: 30px;
 	padding: 0 0 10px}
 

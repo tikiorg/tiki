@@ -99,7 +99,7 @@ function newPost($params) {
   }
   
   // User ok and can submit then submit the post
-  $id = $bloglib->blog_post($blogid,$content,$username, $title);
+  $id = $bloglib->blog_post($blogid,$content,'', $username, $title);
    
   return new XML_RPC_Response(new XML_RPC_Value("$id"));
 }

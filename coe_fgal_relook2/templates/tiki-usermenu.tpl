@@ -53,18 +53,20 @@
 		{cycle values="odd,even" print=false}
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
-				<td style="text-align:center;">
+				<td class="checkbox">
 					<input type="checkbox" name="menu[{$channels[user].menuId}]" />
 				</td>
-				<td>{$channels[user].position}</td>
-				<td>
+				<td class="text">{$channels[user].position}</td>
+				<td class="text">
 					<a class="link" href="tiki-usermenu.php?menuId={$channels[user].menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">
 						{$channels[user].name}
 					</a>
 				</td>
-				<td>{$channels[user].url|truncate:40:"...":true}</td>
-				<td style="text-align:center;">{$channels[user].mode}</td>
+				<td class="text">{$channels[user].url|truncate:40:"...":true}</td>
+				<td class="text">{$channels[user].mode}</td>
 			</tr>
+		{sectionelse}
+			{norecords _colspan=5}
 		{/section}
 	</table>
 </form>

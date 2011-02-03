@@ -128,13 +128,36 @@ class WikiLib extends TikiLib
 
 	// Returns a string containing all characters considered bad in page names
 	function get_badchars() {
-		return "/?#[]@$&*+;=<>";
+		return "/?#[]@$&+;=<>";
 	}
 	
 	// Returns a boolean indicating whether the given page name contains "bad characters"
 	// See http://dev.tiki.org/Bad+characters
 	function contains_badchars($name) {
-		return preg_match("/[\/?#\[\]@$&*+;=<>]/", $name);		
+		return preg_match("/[\/?#\[\]@$&+;=<>]/", $name);		
+	}
+
+	/**
+	 * Duplicate an existing page
+	 *
+	 * @param string $name
+	 * @param string $copyName
+	 * @return bool
+	 */
+	function wiki_duplicate_page($name, $copyName = null) {
+		global $tikilib;
+
+		$info = $tikilib->get_page_info($name);
+
+		if (!$info) {
+			return false;
+		}
+
+		if (!$copyName) {
+			$copyName = $name . ' (' . $tikilib->now . ')';
+		}
+
+		return $tikilib->create_page($copyName, 0, $info['data'], $tikilib->now, $info['comment'], $info['user'], $info['ip'], $info['description'], $info['lang'], $info['is_html']);
 	}
 
 	// This method renames a wiki page
@@ -344,19 +367,19 @@ class WikiLib extends TikiLib
 		$canBeRefreshed = false;
 		
 		$info = $this->get_page_info($page);
-		if (!empty($info)) {
-			$parse_options = array(
-				'is_html' => $info['is_html'],
-				'language' => $info['lang'],
-			);
-			if ($suppress_icons || (!empty($info['lockedby']) && $info['lockedby'] != $user)) {
-				$parse_options['suppress_icons'] = true;
-			}
-		} else {
-			return $content;
+		if (empty($info)) {
+			return '';
 		}
-		
-		if ($prefs['wiki_cache'] > 0 && empty($user) ) {
+		$parse_options = array(
+			'is_html' => $info['is_html'],
+			'language' => $info['lang'],
+		);
+		if ($suppress_icons || (!empty($info['lockedby']) && $info['lockedby'] != $user)) {
+			$parse_options['suppress_icons'] = true;
+		}
+
+		$wiki_cache = !empty($info['wiki_cache']) ? $info['wiki_cache'] : $prefs['wiki_cache']; 
+		if ($wiki_cache > 0 && empty($user) ) {
 			$cache_info = $this->get_cache_info($page);
 			if (!empty($cache_info['cache_timestamp']) && $cache_info['cache_timestamp'] + $prefs['wiki_cache'] > $this->now) {
 				$content = $cache_info['cache'];
@@ -366,17 +389,13 @@ class WikiLib extends TikiLib
 				$content = preg_replace('/\s*<script.*javascript.*>.*\/script>\s*/Umis', '', $content);
 				$canBeRefreshed = true;
 			} else {
-				if (!empty($info['wiki_cache'])) {
-					$js1 = $headerlib->getJs();
-				}
+				$js1 = $headerlib->getJs();
 				$content = $this->parse_data($info['data'], $parse_options );
-				if (!empty($info['wiki_cache'])) {
-					// get any JS added to headerlib during parse_data and add to the bottom of the data to cache
-					$js2 = $headerlib->getJs();
-					$js = array_diff( $js2, $js1 );
-					$js = $headerlib->wrap_js( implode( "\n", $js) );
-					$this->update_cache($page, $content . $js);
-				}
+				// get any JS added to headerlib during parse_data and add to the bottom of the data to cache
+				$js2 = $headerlib->getJs();
+				$js = array_diff( $js2, $js1 );
+				$js = $headerlib->wrap_js( implode( "\n", $js) );
+				$this->update_cache($page, $content . $js);
 			}
 		} else {
 			$content = $this->parse_data($info['data'], $parse_options );

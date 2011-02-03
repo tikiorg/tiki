@@ -242,7 +242,7 @@ ol {
 }
 
 #top_modules {
-	min-height: 130px;
+	min-height: 100px;
 }
 
 #middle {
@@ -309,18 +309,13 @@ ol {
 
 /* Site Header & Identity */
 #header_fixedwidth {
-	height: auto;
-	min-height: 50px;
+/*	height: auto;
+	min-height: 50px;*/
 	padding-top: 2px;
 }
 
-#sioptions {
-	padding-left: 0;
-	margin: 0;
-}
-
-#sioptionscentered {
-	margin: 1em;
+#top_modules {
+	min-height: 100px;
 }
 
 #sitelogo {
@@ -328,6 +323,7 @@ ol {
 	padding: 1em;
 }
 
+/* id is no longer used but this is retained as possible reference for banner module CSS */
 #sitead {
 	clear: none;
 	color: #999;
@@ -335,14 +331,6 @@ ol {
 	margin-top: .8em;
 	padding: 1em;
 	font: 11px Geneva, Arial, Helvetica, sans-serif;
-}
-
-#sitead.floatright {
-	padding-right: 100px;
-}
-
-#sitead.floatleft {
-	padding-left: 100px;
 }
 
 .floatright img {
@@ -367,11 +355,13 @@ ol {
 	font-size: 1.6em;
 }
 
-.siteloginbar,
-.siteloginbar_popup {
-	bottom: 2px;
+#top_modules .siteloginbar_popup {
+	position: absolute;
+	right: 10px;
+	bottom: 0;
+	white-space: nowrap;
 }
-
+/*
 .siteloginbar * {
 	padding: 2px;
 }
@@ -392,20 +382,27 @@ input[id="sl-login-pass"] {
 .siteloginbar_popup .tabcontent {
 	margin: 0;
 }
-
+*/
 #tiki-top {
-	position: absolute;
-	bottom: 0;
 	width: 100%;
 	border-top: 1px solid #818181;
 	height: 34px;
 	background: url(darkroom/button.png) repeat-x;
+	padding-top: 0;
 }
 
-#header .box-search {
+#tiki-top .cssmenu_horiz {
+	margin-top: 0;
+}
+
+#topbar_modules {
+	position: relative;
+}
+
+#topbar_modules .box-search {
 	position: absolute;
 	right: 10px;
-	bottom: 10px;
+	top: 4px;
 	z-index: 2;
 }
 
@@ -497,7 +494,7 @@ a.flip:hover,
 }
 
 #tiki-top .cssmenu_horiz li a:hover {
-	border: 1px solid #909090;
+	/*border: 1px solid #909090;*/
 	color: #909090;
 }
 
@@ -520,7 +517,7 @@ a.flip:hover,
 	color: #a6a68d;
 	font-weight: bold;
 	font-size: 12px;
-	padding: 6px 1em;
+	padding: 5px 1em 6px;
 }
 
 /* default link padding */
@@ -529,8 +526,9 @@ a.flip:hover,
 	padding: .75em 1em;
 }
 
-#tiki-top .cssmenu_horiz li ul li a {
+#tiki-top .cssmenu_horiz li li a {
 	padding: 4px 1em;
+	border-right: none;
 }
 
 #tiki-top .cssmenu_horiz li.menuSection0 a {
@@ -731,7 +729,7 @@ a.tikihelp:hover {
 
 /**infinite carousel**/
 #carousel {
-        color: #black;
+        color: black;
 }
 
 #carousel a {
@@ -755,7 +753,7 @@ background-image: url('../lib/jquery/jquery-ui/themes/ui-darkness/images/ui-icon
 	background: #292929;
 	margin-bottom: 8px;
 	padding-bottom: 2px;
-	width: 190px;
+/*	width: 190px;*/
 }
 
 h3.box-title {
@@ -792,7 +790,7 @@ img.flipmodimage:hover {
 
 .box-data table td {
 	padding: 0.2em;
-	text-align: start;
+	text-align: left;
 }
 
 .box-data li,

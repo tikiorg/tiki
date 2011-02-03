@@ -32,6 +32,13 @@ class AuthTokens
 		}
 	}
 
+	function getToken( $token ){
+		$data = $this->db->query( 'SELECT * FROM tiki_auth_tokens WHERE token = ? AND token = ' . self::SCHEME, array( $token ) )
+			->fetchRow();
+		return $data;
+	}
+	
+	
 	function getGroups( $token, $entry, $parameters ) {
 		$this->db->query( 'DELETE FROM tiki_auth_tokens WHERE UNIX_TIMESTAMP(creation) + timeout < UNIX_TIMESTAMP() OR `hits` <= 0' );
 		$data = $this->db->query( 'SELECT tokenId, entry, parameters, groups FROM tiki_auth_tokens WHERE token = ? AND token = ' . self::SCHEME, array( $token ) )
@@ -75,21 +82,24 @@ class AuthTokens
 			$hits = $this->maxHits;
 		}
 
-		$this->db->query( 'INSERT INTO tiki_auth_tokens ( timeout, hits, entry, parameters, groups ) VALUES( ?, ?, ?, ?, ? )', array(
+		$this->db->query( 'INSERT INTO tiki_auth_tokens ( timeout, maxhits, hits, entry, parameters, groups, email ) VALUES( ?, ?, ?, ?, ?, ?, ? )', array(
 			(int) $timeout,
+			(int) $hits,
 			(int) $hits,
 			$entry,
 			json_encode( $parameters ),
 			json_encode( $groups ),
+			$arguments['email']
 		) );
 		$max = $this->db->getOne( 'SELECT MAX(tokenId) FROM tiki_auth_tokens' );
 
 		$this->db->query( 'UPDATE tiki_auth_tokens SET token = ' . self::SCHEME . ' WHERE tokenId = ?', array( $max ) );
 
-		return $this->db->getOne( 'SELECT token FROM tiki_auth_tokens WHERE tokenId = ?', array( $max ) );
+		return $this->db->query( 'SELECT * FROM tiki_auth_tokens WHERE tokenId = ?', array( $max ) )
+		->fetchRow();
 	}
 
-	function includeToken( $url, array $groups = array() ) {
+	function includeToken( $url, array $groups = array(), $email = "" ) {
 		$data = parse_url( $url );
 		if( isset( $data['query'] ) ) {
 			parse_str( $data['query'], $args );
@@ -98,8 +108,8 @@ class AuthTokens
 			$args = array();
 		}
 
-		$token = $this->createToken( $data['path'], $args, $groups );
-		$args['TOKEN'] = $token;
+		$token = $this->createToken( $data['path'], $args, $groups, array('email'=>$email) );
+		$args['TOKEN'] = $token['token'];
 
 		$query = '?' . http_build_query( $args, '', '&' );
 
@@ -110,5 +120,30 @@ class AuthTokens
 		}
 
 		return "{$data['scheme']}://{$data['host']}{$data['path']}$query$anchor";
+	}
+	
+	function includeTokenReturn( $url, array $groups = array(), $email = "" ) {
+		$data = parse_url( $url );
+		if( isset( $data['query'] ) ) {
+			parse_str( $data['query'], $args );
+			unset( $args['TOKEN'] );
+		} else {
+			$args = array();
+		}
+		
+		$token = $this->createToken( $data['path'], $args, $groups, array('email'=>$email) );
+		$args['TOKEN'] = $token['token'];
+		
+		$query = '?' . http_build_query( $args, '', '&' );
+
+		if( ! isset( $data['fragment'] ) ) {
+			$anchor = '';
+		} else {
+			$anchor = "#{$data['fragment']}";
+		}
+		
+		$token['url'] = "{$data['scheme']}://{$data['host']}{$data['path']}$query$anchor";
+		
+		return $token;
 	}
 }

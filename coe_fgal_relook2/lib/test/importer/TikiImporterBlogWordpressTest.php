@@ -26,7 +26,9 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
         $obj->expects($this->once())->method('insertData')->with($parsedData);
 
         $this->expectOutputString("Loading and validating the XML file\n\nImportation completed!\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>");
+        $_FILES['importFile']['type'] = 'text/xml'; 
         $obj->import(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
+        unset($_FILES['importFile']);
 
         $this->assertTrue($obj->dom instanceof DOMDocument);
         $this->assertTrue($obj->dom->hasChildNodes());

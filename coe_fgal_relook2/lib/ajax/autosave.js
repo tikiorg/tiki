@@ -47,7 +47,7 @@ function toggle_autosaved(editorId, autoSaveId) {
 				output = jQuery(data).find('data').text();
 				// back up current
 				$("#"+editorId).parents("form:first").
-					append($("<input type='hidden' id='"+editorId+"_original' value='"+$("#"+editorId).val()+"' />"));
+					append($("<input type='hidden' id='"+editorId+"_original' value='"+escape($("#"+editorId).val())+"' />"));
 				if (cked) {
 					cked.setData(output);
 				} else if ($("#"+editorId).length) {	// wiki editor
@@ -61,7 +61,7 @@ function toggle_autosaved(editorId, autoSaveId) {
 			}
 		});
 	} else {	// toggle back to original
-		output = $("#"+editorId+"_original").val();
+		output = unescape($("#"+editorId+"_original").val());
 		if (cked) {
 			cked.setData(output);	// cked leaves the original content in the ta
 		} else if ($("#"+editorId).length) {	// wiki editor
