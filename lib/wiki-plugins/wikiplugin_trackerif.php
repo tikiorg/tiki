@@ -119,21 +119,17 @@ function wikiplugin_trackerif_test(LDAPFilter $test, array $values) {
                 preg_match('/^\(\'?([^!\']*)\'?(=|!=|<|<=|>|>=)\'?([^\']*)\'?\)$/', $test->_filter, $matches);
 
                 if (count($matches) == 4) {
-                        $_a = null;
-                        $_b = null;
+                        $_a = $matches[1];
+                        $_b = $matches[3];
 
-                        if (preg_match('/f_([1-9]+)/', $matches[1], $matches_f) && isset($values[$matches_f[1]])) {
+                        if (preg_match('/f_([0-9]+)/', $matches[1], $matches_f)) {
                                 // Retrieve the field f_*
-                                $_a = $values[$matches_f[1]];
-                        } else {
-                                $_a = '';
+                                $_a = isset( $values[$matches_f[1]] ) ? $values[$matches_f[1]] : '';
                         }
 
-                        if (preg_match('/f_([1-9]+)/', $matches[3], $matches_f) && isset($values[$matches_f[1]])) {
+                        if (preg_match('/f_([0-9]+)/', $matches[3], $matches_f)) {
                                 // Retrieve the field f_*
-                                $_b = $values[$matches_f[1]];
-                        } else {
-                                $_b = '';
+                                $_b = isset( $values[$matches_f[1]] ) ? $values[$matches_f[1]] : '';
                         }
 
                         switch ($matches[2]) {
