@@ -1089,7 +1089,7 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 	{
 		$this->file = $file;
 		$this->lineLen = $lineLen;
-		$this->data = file_get_contents($this->file);
+		$this->data = strip_tags( file_get_contents($this->file) );
         $this->encoding = new Encoding ($inputEncoding, $outputEncoding);
 	}
 
@@ -1239,7 +1239,7 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
     {
         $this->file = $file;
         $this->lineLen = $lineLen;
-        $this->data = file_get_contents($this->file);
+        $this->data = strip_tags(file_get_contents($this->file));
         $this->encoding = new Encoding ($inputEncoding, $outputEncoding);
     }
 
