@@ -716,13 +716,21 @@ a.toolbar {			/* each tool button */
 }
 
 .toolbars-picker a {
-	padding: 0;
+	padding: 0px;
+	margin: 0px;
 	display: inline-block;
 	border: #fff 1px solid;
+	overflow: hidden;
 }
 
 .toolbars-picker a:hover {
 	border: #f00 1px solid;
+}
+
+.toolbars-picker-reset {
+	width: 100% !important;
+	text-align: center;
+	border: none !important;
 }
 
 /* New Help section */

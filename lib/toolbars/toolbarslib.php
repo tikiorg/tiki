@@ -769,7 +769,7 @@ class ToolbarPicker extends Toolbar
 	
 	public static function fromName( $tagName ) // {{{
 	{
-		global $headerlib;
+		global $headerlib, $section;
 		$prefs = array();
 		$styleType = '';
 		
@@ -805,7 +805,7 @@ class ToolbarPicker extends Toolbar
 			
 		$hex = array('0', '3', '6', '8', '9', 'C', 'F');
 			$count_hex = count($hex);
-
+			
 			for ($r = 0; $r < $count_hex; $r+=2){ // red
 				for ($g = 0; $g < $count_hex; $g+=2){ // green
 					for ($b = 0; $b < $count_hex; $b+=2){ // blue
@@ -815,10 +815,14 @@ class ToolbarPicker extends Toolbar
 				}
 			}
 			
-			$list = array();
+			$list = array();	
 			foreach( $rawList as $color) {
 				$list["~~#$color:text~~"] = "<span style='background-color: #$color' title='#$color' />&nbsp;</span>";
 			}
+			
+			if ($section == 'sheet')
+				$list['reset'] = "<span title='".tra("Reset Colors")."' class='toolbars-picker-reset' reset='true'>".tra("Reset")."</span>";
+			
 			$headerlib->add_css('.toolbars-picker span {display: block; width: 14px; height: 12px}');
 			break;
 
@@ -830,7 +834,7 @@ class ToolbarPicker extends Toolbar
 			
 			$hex = array('0', '3', '6', '8', '9', 'C', 'F');
 			$count_hex = count($hex);
-
+			
 			for ($r = 0; $r < $count_hex; $r+=2){ // red
 				for ($g = 0; $g < $count_hex; $g+=2){ // green
 					for ($b = 0; $b < $count_hex; $b+=2){ // blue
@@ -844,6 +848,9 @@ class ToolbarPicker extends Toolbar
 			foreach( $rawList as $color) {
 				$list["~~black,#$color:text~~"] = "<span style='background-color: #$color' title='#$color' />&nbsp;</span>";
 			}
+			if ($section == 'sheet')
+				$list['reset'] = "<span title='".tra("Reset Colors")."' class='toolbars-picker-reset' reset='true'>".tra("Reset")."</span>";
+			
 			$headerlib->add_css('.toolbars-picker span {display: block; width: 14px; height: 12px}');
 			break;
 
