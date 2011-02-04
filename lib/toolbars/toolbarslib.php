@@ -1184,7 +1184,7 @@ class ToolbarHelptool extends Toolbar
 			$plugins = $wikilib->list_plugins(true, $areaId);
 		}
 		if ($section == 'sheet') {
-			$sheethelp = $smarty->fetch('tiki-edit_help_sheet.tpl');
+			$sheethelp = $smarty->fetch('tiki-edit_help_sheet.tpl') . $smarty->fetch('tiki-edit_help_sheet_interface.tlp');
 		} else {
 			$sheethelp = '';
 		}
