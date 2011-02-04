@@ -185,6 +185,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;
 {tab name="`$smarty.capture.editTitle`"}
 <h2>{tr}Edit Item{/tr}</h2>
 
+<div class="nohighlight">
 {include file="tracker_validator.tpl"}
 
 {if  $tiki_p_admin_trackers eq 'y' and !empty($trackers)}	
@@ -573,7 +574,8 @@ or $cur_field.type eq 'i'}
 <h2>{tr}Special Operations{/tr}</h2>
 {$trkact}
 {/if}
-{/tab}{*nohighlight - important comment to delimit the zone not to highlight in a search result*}
+</div><!--nohighlight-->{*important comment to delimit the zone not to highlight in a search result*}
+{/tab}
 {/if}
 
 {/tabset}
