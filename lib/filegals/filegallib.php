@@ -170,7 +170,7 @@ class FileGalLib extends TikiLib
 		return true;
 	}
 
-	function insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='', $author, $created='', $lockedby=NULL, $deleteAfter=NULL, $id=0) {
+	function insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='', $author=null, $created='', $lockedby=NULL, $deleteAfter=NULL, $id=0) {
 		global $prefs, $user;
 		$tikilib = TikiLib::lib('tiki');
 		$smarty = TikiLib::lib('smarty');
@@ -3065,6 +3065,44 @@ class FileGalLib extends TikiLib
 			'data' => $data,
 			'type' => preg_match('/.flv$/', $file['name']) ? 'video/x-flv' : $file['type'],
 			'size' => $file['size'],
+		);
+	}
+
+	function handle_batch_upload($galleryId, $info)
+	{
+		$savedir = $this->get_gallery_save_dir($galleryId);
+
+		$fhash = null;
+		$data = null;
+
+		if ($savedir) {
+			$fhash = $this->find_unique_name($savedir, $info['name']);
+
+			if (in_array($ext, array(
+				"m4a",
+				"mp3",
+				"mov",
+				"mp4",
+				"m4v",
+				"pdf"
+			))) {
+				$fhash.= "." . $ext;
+			}
+
+			if (! rename($info['source'], $savedir . $fhash)) {
+				return array('error' => tra('Cannot write to this file:') . $savedir . $fhash);
+			}
+		} else {
+			$data = file_get_contents($info['source']);
+
+			if (false === $data) {
+				return array('error' => tra('Cannot read file on disk.'));
+			}
+		}
+
+		return array(
+			'data' => $data,
+			'fhash' => $fhash,
 		);
 	}
 }
