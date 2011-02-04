@@ -6,7 +6,17 @@
 // $Id$
 
 /* {autocomplete element=$element type=$type }
- * do the same than assign but accept a varaible as var name
+ * Attach jQuery autocomplete to element/s
+ * 
+ * Params:
+ * 
+ *		element: Required (jQuery selector, and match multiple elements)
+ *		type:    Required (defined in tiki-jquery.js -> $.fn.tiki
+ *				 currently: pagename|groupname|username|usersandcontacts|userrealname|tag|icon|trackername)
+ *		options: Optional further options for autocomplete fn
+ *				 see http://docs.jquery.com/Plugins/Autocomplete/autocomplete#url_or_dataoptions
+ *				 N.B. Will be wrapped in {} chars here to avoid smarty delimiter difficulties
+ * 
  */
 function smarty_function_autocomplete($params, &$smarty) {
 	global $prefs, $headerlib;
@@ -14,7 +24,13 @@ function smarty_function_autocomplete($params, &$smarty) {
 	if ($prefs['javascript_enabled'] !== 'y' or $prefs['feature_jquery_autocomplete'] !== 'y') return '';
 
 	if ( empty($params) || empty($params['element']) || empty($params['type']) ) return '';
+	
+	if (!empty($params['options'])) {
+		$options = ',{' . $params['options'] . '}';
+	} else {
+		$options = '';
+	}
 
-	$content = '$("' . $params['element'] . '").tiki("autocomplete", "'. $params['type'] .'");';
+	$content = '$("' . $params['element'] . '").tiki("autocomplete", "'. $params['type'] .'"' . $options . ');';
 	$headerlib->add_jq_onready($content);
 }
