@@ -27,10 +27,8 @@
 			<label class="findtitle">
 				{tr}Search{/tr} <input id="highlight{$iSearch}" name="words" style="width:300px" type="text" accesskey="s" value="{$words|escape}" />
 			</label>
-			{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $prefs.search_autocomplete eq 'y'}
-				{jq}
-					$("#highlight{{$iSearch}}").tiki("autocomplete", "pagename");
-				{/jq}
+			{if $prefs.search_autocomplete eq 'y'}
+				{autocomplete element="#highlight$iSearch" type='pagename'}
 			{/if}			
 				{if !( $searchStyle eq "menu" )}
 				<label class="searchboolean" for="boolean">

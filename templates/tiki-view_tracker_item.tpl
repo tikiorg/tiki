@@ -392,10 +392,8 @@ $("#user_selector_{{$cur_field.id}}").tiki("autocomplete", "username", {mustMatc
 
 {elseif $cur_field.type eq 'k'}
         <input type="text" id="page_selector_{$cur_field.id}" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}"{/if} />
-        {if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $cur_field.isMandatory ne 'y'} {* since autocomplete allows blank entry it can't be used for mandatory selection. *}
-			{jq}
-			$("#page_selector_{{$cur_field.id}}").tiki("autocomplete", "pagename" );
-			{/jq}
+        {if $cur_field.isMandatory ne 'y'} {* since autocomplete allows blank entry it can't be used for mandatory selection. *}
+			{autocomplete element="#page_selector_`$cur_field.id`" type='pagename'}
         {/if}
         
 {elseif $cur_field.type eq 'n' or $cur_field.type eq 'b'}

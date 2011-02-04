@@ -98,7 +98,7 @@
 							<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}">
 								<input type="text" name="filtervalue[{$fid}]" value="{if $fid == $filterfield}{$filtervalue}{/if}" id="filter-username" />
 							</div>
-							{jq}$("#filter-username").tiki("autocomplete", "username"){/jq}
+							{autocomplete element='#filter-username' type='username'}
 						{else}
 							<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}">
 								<input type="text" name="filtervalue[{$fid}]" value="{if $fid == $filterfield}{$filtervalue}{/if}" />

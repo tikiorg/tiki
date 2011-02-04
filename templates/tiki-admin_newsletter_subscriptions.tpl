@@ -367,7 +367,7 @@
 				<input type="text" name="wikiPageName" value="" size="60" />
 				<br />
 				<i>{tr}Emails on a wiki page which will be added at each newsletter sending, one e-mail per line{/tr}</i>
-				{jq}$("input[name=wikiPageName]").tiki("autocomplete", "pagename");{/jq}
+				{autocomplete element='input[name=wikiPageName]' type='pagename'}
 			</td>
 		</tr>
 		<tr>

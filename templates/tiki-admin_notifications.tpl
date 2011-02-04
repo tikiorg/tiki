@@ -53,7 +53,7 @@
 			<td><label for="flogin">{tr}User:{/tr}</label></td>
 			<td>
 				<input type="text" id="flogin" name="login" />
-				{jq}$("#flogin").tiki("autocomplete", "username"){/jq}
+				{autocomplete element='#flogin' type='username'}
 				<a href="#" onclick="javascript:document.getElementById('flogin').value='{$user}'" class="link">{tr}Myself{/tr}</a>
 			</td>
 		</tr>

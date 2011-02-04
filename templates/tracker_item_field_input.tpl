@@ -226,10 +226,8 @@
 {elseif $field_value.type eq 'k'}
 	{if $field_value.options[0] != 1 || $tiki_p_admin_trackers == 'y'}
 		<input type="text" id="page_selector_{$field_value.fieldId}" name="{$field_value.ins_id}" {if $field_value.options_array[1] gt 0}size="{$field_value.options_array[1]}"{/if} value="{if $field_value.value}{$field_value.value|escape}{else}{$field_value.defaultvalue|escape}{/if}" />
-		{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $field_value.isMandatory ne 'y'} {* since autocomplete allows blank entry it can't be used for mandatory selection. *}     
-			{jq}
-			$("#page_selector_{{$field_value.fieldId}}").tiki("autocomplete", "pagename" );
-			{/jq}
+		{if $field_value.isMandatory ne 'y'} {* since autocomplete allows blank entry it can't be used for mandatory selection. *}     
+			{autocomplete element="#page_selector_`$field_value.fieldId`" type='pagename'}
 		{/if}
 	{else}
 		{$field_value.value|escape}

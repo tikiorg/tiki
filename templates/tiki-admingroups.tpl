@@ -152,11 +152,7 @@
 						{remarksbox type="tip" title="{tr}Tip{/tr}"}
 							{tr}Use wiki page name or full URL{/tr}. {tr}For other Tiki features, use relative links (such as <em>http:tiki-forums.php</em>).{/tr}
 						{/remarksbox}
-						{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
-							{jq}
-								$("#groups_home").tiki("autocomplete", "pagename");
-							{/jq}
-						{/if}
+						{autocomplete element='#groups_home' type='pagename'}
 					</td>
 				</tr>
 			{/if}

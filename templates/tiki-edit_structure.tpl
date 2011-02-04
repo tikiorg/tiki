@@ -129,9 +129,7 @@
   <input type="text" name="pageAlias" id="pageAlias" value="{$pageAlias}" />  <input type="submit" name="create" value="{tr}Update{/tr}" />
   </td>
   </tr>
-  {if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
-  {jq}$("#pageAlias").tiki("autocomplete", "pagename");{/jq}
-  {/if}
+	{autocomplete element='#pageAlias' type='pagename'}
   <tr>
   <td>{tr}Move in this structure{/tr}</td>
   <td>
@@ -174,9 +172,7 @@
   </td>
   <td>
   <input type="text" name="name" id="name" />
-  {if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
-  {jq}$("#name").tiki("autocomplete", "pagename");{/jq}
-  {/if}
+	{autocomplete element='#name' type='pagename'}
   </td>
   </tr>
   <tr>
@@ -184,9 +180,7 @@
   <label for="name2">{tr}Use pre-existing page:{/tr}</label><br /><br />
         <input type="text" name="find_objects" id="find_objects" value="{$find_objects|escape}" />
         <input type="submit" value="{tr}Filter{/tr}" name="search_objects" />
-          {if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
-          {jq}$("#find_objects").tiki("autocomplete", "pagename");{/jq}
-          {/if}
+        {autocomplete element='#find_objects' type='pagename'}
 
         {if $prefs.feature_categories eq 'y'}	
 		<select name="categId">
