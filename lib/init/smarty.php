@@ -55,6 +55,12 @@ class Smarty_Tiki extends Smarty
 			array('tra', 'strlen', 'strstr', 'strtolower', 'basename', 'ereg', 'array_key_exists', 'preg_match', 'in_array')
 		);
 		$secure_dirs[] = 'img/icons2';
+		$secure_dirs[] = 'img/flags';
+		$secure_dirs[] = 'imgages/';
+		$secure_dirs[] = 'pics/';
+		$secure_dirs[] = 'pics/icons';
+		$secure_dirs[] = 'pics/icons/mime';
+		$secure_dirs[] = 'pics/large';
 		$this->secure_dir = $secure_dirs;
 		$this->security_settings['ALLOW_SUPER_GLOBALS'] = true;
 
