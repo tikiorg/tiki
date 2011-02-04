@@ -493,6 +493,11 @@ class ModLib extends TikiLib
 
 			if( function_exists( $info_func ) ) {
 				$info = $info_func();
+				if (!empty($info['params'])) {
+					foreach ($info['params'] as &$p) {
+						$p['section'] = 'module';
+					}
+				}
 			}
 
 			$info['type'] = 'function';
@@ -515,78 +520,93 @@ class ModLib extends TikiLib
 				'name' => tra('Module Title'),
 				'description' => tra('Title to display at the top of the box.'),
 				'filter' => 'striptags',
+				'section' => 'appearance',
 			),
 			'nobox' => array(
 				'name' => tra('No box'),
 				'description' => 'y|n '.tra('Show only the content'),
+				'section' => 'appearance',
 			),
 			'decorations' => array(
 				'name' => tra('Decorations'),
 				'description' => 'y|n '. tra('Show module decorations'),
+				'section' => 'appearance',
 			),
 			'notitle' => array(
 				'name' => tra('No title'),
 				'description' => 'y|n '.tra('Show module title'),
 				'filter' => 'alpha',
+				'section' => 'appearance',
 			),
 			'perspective' => array(
 				'name' => tra('Perspective'),
 				'description' => tra('Only display the module if in one of the listed perspective IDs. Semi-colon separated.'),
 				'separator' => ';',
 				'filter' => 'digits',
+				'section' => 'visibility',
 			),
 			'lang' => array(
 				'name' => tra('Language'),
 				'description' => tra('Module only applicable for the specified languages. Languages are defined as two character language codes. Multiple values can be separated by semi-colons.'),
 				'separator' => ';',
 				'filter' => 'lang',
+				'section' => 'visibility',
 			),
 			'section' => array(
 				'name' => tra('Section'),
 				'description' => tra('Module only applicable for the specified sections. Multiple values can be separated by semi-colons.'),
 				'separator' => ';',
 				'filter' => 'striptags',
+				'section' => 'visibility',
 			),
 			'page' => array(
 				'name' => tra('Page filter'),
 				'description' => tra('Module only applicable on the specified page names. Multiple values can be separated by semi-colons.'),
 				'separator' => ';',
 				'filter' => 'pagename',
+				'section' => 'visibility',
 			),
 			'nopage' => array(
 				'name' => tra('No Page'),
 				'description' => tra('Module not applicable on the specified page names. Multiple values can be separated by semi-colons.'),
 				'separator' => ';',
 				'filter' => 'pagename',
+				'section' => 'visibility',
 			),
 			'theme' => array(
 				'name' => tra('Theme'),
-				'description' => tra('Module enabled or disabled depending on the theme file name (e.g. "thenews.css"). Specified themes can be either included or excluded. Theme names prefixed by \"!\" are in the exclusion list. Multiple values can be separated by semi-colons.'),
+				'description' => tra('Module enabled or disabled depending on the theme file name (e.g. "thenews.css"). Specified themes can be either included or excluded. Theme names prefixed by "!" are in the exclusion list. Multiple values can be separated by semi-colons.'),
 				'separator' => ';',
 				'filter' => 'themename',
+				'section' => 'visibility',
 			),
 			'creator' => array(
 				'name' => tra('Creator'),
 				'description' => tra('Module only available based on the relationship of the user with the wiki page. Either only creators (y) or only non-creators (n) will see the module.'),
 				'filter' => 'alpha',
+				'section' => 'visibility',
 			),
 			'contributor' => array(
 				'name' => tra('Contributor'),
 				'description' => tra('Module only available based on the relationship of the user with the wiki page. Either only contributors (y) or only non-contributors (n) will see the module.'),
 				'filter' => 'alpha',
+				'section' => 'visibility',
 			),
 			'flip' => array(
 				'name' => tra('Flip'),
 				'description' => tra('Users can shade module.'),
 				'filter' => 'alpha',
+				'section' => 'appearance',
 			),
 			'style' => array(
 				'name' => tra('Style'),
 				'description' => tra('CSS styling for positioning the module.'),
+				'section' => 'appearance',
 			),
 			'class' => array(
 				'name' => tra('Class'),
 				'description' => tra('Custom CSS class.'),
+				'section' => 'appearance',
 			),
 		) );
 
@@ -595,10 +615,12 @@ class ModLib extends TikiLib
 			'nonums' => array(
 				'name' => tra('No numbers'),
 				'description' => tra('If set to "y", the module will not number list items.'),
+				'section' => 'appearance',
 			),
 			'rows' => array(
 				'name' => tra('Rows'),
 				'description' => tra('Number of rows, or items, to display.') . ' ' . tra('Default: 10.'),
+				'section' => 'appearance',
 			)
 		);
 
@@ -697,8 +719,8 @@ class ModLib extends TikiLib
 			$smarty->clear_assign('tpl_module_style');
 			
 			if ($module_admin_mode && $timer) {
-				$elapsed = $timer->stop('module');
-				$data = preg_replace('/div class="/', 'div title="Module Execution Time ' . $elapsed . '"  class="' , $data);
+				$elapsed = round( $timer->stop('module'), 3);
+				$data = preg_replace('/<div /', '<div title="Module Execution Time ' . $elapsed . 's" ' , $data);
 			}
 						
 			if (!empty($cachefile) && !$module_admin_mode) {
@@ -781,6 +803,15 @@ class ModLib extends TikiLib
 				$inner['value'] = null;
 			}
 		}
+		// resort params into sections
+		$reorderedparams = array();
+		foreach ($params as $k => $p) {
+			if (!isset($reorderedparams[$p['section']])) {
+				$reorderedparams[$p['section']] = array();
+			}
+			$reorderedparams[$p['section']][$k] = $p;
+		}
+		$params = $reorderedparams;
 	}
 
 	function serializeParameters( $name, $params ) {
