@@ -221,7 +221,23 @@ EOF;
 	}
 	
 	// Grab sheet output
-	$ret = $sheet->getTableHtml( $subsheets );
+	if (isset($url)) {
+		$file = file_get_contents($url);
+		$pathInfo = pathinfo($url);
+		if ($pathInfo['extension'] == 'csv') {
+			$handler = new TikiSheetCSVHandler( $url );
+			$grid = new TikiSheet();
+			$grid->import( $handler );
+			$ret = $grid->getTableHtml( true , null, false );
+
+		} else {
+			$ret = file_get_contents( $url );
+		}
+	} else {
+		$ret = strip_tags($sheet->getTableHtml( $subsheets ));
+	}
+	
+	
 	
 	if (!isset($simple) || $simple != 'y') {
 		global $headerlib;
@@ -229,9 +245,7 @@ EOF;
 		$headerlib->add_jq_onready('
 			$("div.tiki_sheet").each(function() {
 				$(this).sheet($.extend($.sheet.tikiOptions,{
-					editable:false'. ( isset($url) ? ',
-					urlGet: "'.$url.'",
-					buildSheet: false': '' ) .'
+					editable:false
 				}));
 			});
 		');

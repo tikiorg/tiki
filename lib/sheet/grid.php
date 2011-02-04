@@ -729,6 +729,9 @@ class TikiSheetDataHandler
 	 * @return true on success.
 	 * @abstract
 	 */
+	var $maxrows = 300;
+    var $maxcols = 26;
+    
 	function _load( &$sheet )
 	{
 		trigger_error( "Abstract method call. _load() not defined in " . get_class( $this ), E_USER_ERROR );
@@ -774,6 +777,32 @@ class TikiSheetDataHandler
 	function version()
 	{
 		trigger_error( "Abstract method call. version() not defined in " . get_class( $this ), E_USER_ERROR );
+	}
+	
+	function parseCsv( &$sheet ) {
+		$rows = explode("\n", $this->data);
+		for($i = 0; $i < count($rows) && $i < $this->maxrows; $i++) {
+			$cols = preg_split("/[,;](?!(?:[^\\\",;]|[^\\\"],[^\\\"])+\\\")/", $rows[$i]);
+			
+			for($j = 0; $j < count($cols) && $j < $this->maxcols; $j++) {
+				$sheet->initCell( $i, $j );
+				$sheet->setValue( $cols[$j] );
+				
+				if ( isset($cols[$j]) ) {
+					if (strlen( $cols[$j] )) {
+						if ($cols[$j][0] == '=' ) {
+							$sheet->setCalculation( substr($cols[$j], 1) );
+						}
+					}
+				}
+				
+				$sheet->setSize( 1, 1 );
+			}
+		}
+		
+		if ($i >= $this->maxrows || $j >= $this->maxcols) $this->truncated = true;
+		
+		return true;
 	}
 } // }}}1
 
@@ -1060,42 +1089,14 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 	{
 		$this->file = $file;
 		$this->lineLen = $lineLen;
+		$this->data = file_get_contents($this->file);
         $this->encoding = new Encoding ($inputEncoding, $outputEncoding);
 	}
 
 	// _load {{{2
 	function _load( &$sheet )
 	{
-		if( $file = @fopen( $this->file, "r" ) )
-		{
-			$row = 0;
-			while( $data = @fgetcsv( $file, $this->lineLen ) )
-			{
-				foreach( $data as $col=>$value )
-				{
-					$sheet->initCell( $row, $col );
-					$cellValue = $this->encoding->convert_encoding ( $value );
-					$sheet->setValue( $cellValue );
-                	
-					if ( isset($cellValue) ) {
-						if (strlen( $cellValue )) {
-							if ($cellValue[0] == '=' ) {
-								$sheet->setCalculation( substr($cellValue, 1) );
-							}
-						}
-					}
-					$sheet->setSize( 1, 1 );
-				}
-
-				$row++;
-			}
-
-			@fclose( $file );
-
-			return true;
-		}
-		else
-			return false;
+		return $this->parseCSV( $sheet );
 	}
 
 	// _save {{{2
@@ -1187,32 +1188,11 @@ class TikiSheetFileGalleryCSVHandler extends TikiSheetDataHandler
 		$this->maxcols = $maxcols;
 		$this->truncated = false;
 	}
+	
 	// _load {{{2
 	function _load( &$sheet )
 	{
-		$rows = explode("\n", $this->data);
-		for($i = 0; $i < count($rows) && $i < $this->maxrows; $i++) {
-			$cols = preg_split("/[,;](?!(?:[^\\\",;]|[^\\\"],[^\\\"])+\\\")/", $rows[$i]);
-			
-			for($j = 0; $j < count($cols) && $j < $this->maxcols; $j++) {
-				$sheet->initCell( $i, $j );
-				$sheet->setValue( $cols[$j] );
-				
-				if ( isset($cols[$j]) ) {
-					if (strlen( $cols[$j] )) {
-						if ($cols[$j][0] == '=' ) {
-							$sheet->setCalculation( substr($cols[$j], 1) );
-						}
-					}
-				}
-				
-				$sheet->setSize( 1, 1 );
-			}
-		}
-		
-		if ($i >= $this->maxrows || $j >= $this->maxcols) $this->truncated = true;
-		
-		return true;
+		return $this->parseCsv($sheet);
 	}
 
 	// _save {{{2
@@ -1240,6 +1220,7 @@ class TikiSheetFileGalleryCSVHandler extends TikiSheetDataHandler
 	}
  } // }}}1
  
+ 
  /** TikiSheetCSVExcelHandler {{{1
  * Class that stores the sheet representation in a
  * standard text file as a serialized PHP object. The difference
@@ -1258,44 +1239,15 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
     {
         $this->file = $file;
         $this->lineLen = $lineLen;
+        $this->data = file_get_contents($this->file);
         $this->encoding = new Encoding ($inputEncoding, $outputEncoding);
     }
 
-    // _load {{{2
-    function _load( &$sheet )
-    {
-        if( $file = @fopen( $this->file, "r" ) )
-        {
-            $row = 0;
-            while( $data = @fgetcsv( $file, $this->lineLen , ";", '"') )
-            {
-                foreach( $data as $col=>$value )
-                {
-                    $sheet->initCell( $row, $col );
-                	$cellValue = $this->encoding->convert_encoding ( $value );
-					$sheet->setValue( $cellValue );
-                	
-					if ( isset($cellValue) ) {
-						if (strlen( $cellValue )) {
-							if ($cellValue[0] == '=' ) {
-								$sheet->setCalculation( substr($cellValue, 1) );
-							}
-						}
-					}
-					
-                    $sheet->setSize( 1, 1 );
-                }
-
-                $row++;
-            }
-
-            @fclose( $file );
-
-            return true;
-        }
-        else
-            return false;
-    }
+// _load {{{2
+	function _load( &$sheet )
+	{
+		return $this->parseCsv( $sheet );
+	}
 
     // _save {{{2
     function _save( &$sheet )

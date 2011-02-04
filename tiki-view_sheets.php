@@ -15,7 +15,6 @@ $auto_query_args = array(
 	'parse',
 	'simple',
 	'height',
-	'type',
 	'file',
 	'fileId'
 );
@@ -90,7 +89,7 @@ if (isset($_REQUEST['s']) && !empty($_REQUEST['s']) ) { //save
 	if ( $_REQUEST['sheetId'] ) {
 		$result = $sheetlib->save_sheet( $_REQUEST['s'], $_REQUEST["sheetId"] );
 		
-	} elseif ( $_REQUEST['type'] && $_REQUEST['file'] ) {
+	} elseif ( $_REQUEST['file'] ) {
 		//$result = $sheetlib->save_sheet( $_REQUEST['s'], null, $_REQUEST['file'], $_REQUEST['type'] );
 	}
 	die($result);
@@ -124,13 +123,9 @@ if (isset($_REQUEST['s']) && !empty($_REQUEST['s']) ) { //save
 }
 
 //Edit & View
-if ( isset($_REQUEST['file']) && isset($_REQUEST['type']) ) {
+if ( isset($_REQUEST['file']) ) {
 	//File sheets
-	switch ( $_REQUEST['type'] ) {
-		case 'excelcsv': $handler = new TikiSheetCSVExcelHandler( $_REQUEST['file'] ); break;
-		case 'csv':  $handler = new TikiSheetCSVHandler( $_REQUEST['file'] ); break;
-	}
-	
+	$handler = new TikiSheetCSVHandler( $_REQUEST['file'] );
 	$grid = new TikiSheet();
 	$grid->import( $handler );
 	$tableHtml[0] = $grid->getTableHtml( true , null, false );
@@ -190,7 +185,6 @@ $headerlib->add_jq_onready('
 	
 	var tikiSheet = $("div.tiki_sheet").sheet($.sheet.tikiOptions);
 	tikiSheet.id = "'.$_REQUEST['sheetId'].'";
-	tikiSheet.type = "'.$_REQUEST['type'].'";
 	tikiSheet.file = "'.$_REQUEST['file'].'";
 	
 	$.sheet.manageState(tikiSheet);
