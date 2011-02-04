@@ -56,7 +56,7 @@ class Smarty_Tiki extends Smarty
 		);
 		$secure_dirs[] = 'img/icons2';
 		$secure_dirs[] = 'img/flags';
-		$secure_dirs[] = 'imgages/';
+		$secure_dirs[] = 'images/';
 		$secure_dirs[] = 'pics/';
 		$secure_dirs[] = 'pics/icons';
 		$secure_dirs[] = 'pics/icons/mime';
