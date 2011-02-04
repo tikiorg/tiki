@@ -1174,7 +1174,7 @@ class TikiSheetFileGalleryCSVHandler extends TikiSheetDataHandler
 	 * Initializes the the serializer on a file.
 	 * @param $file The file path to save or load from.
 	 */
-	function TikiSheetFileGalleryCSVHandler( $fileId = 0 )
+	function TikiSheetFileGalleryCSVHandler( $fileId = 0 , $maxrows = 300, $maxcols = 26)
 	{
 		include_once('lib/filegals/filegallib.php');
 		global $prefs, $headerlib, $filegallib;
@@ -1183,15 +1183,18 @@ class TikiSheetFileGalleryCSVHandler extends TikiSheetDataHandler
 		if ($fileInfo['filetype'] != 'text/csv') return false;
 		
 		$this->data = $fileInfo['data'];
+		$this->maxrows = $maxrows;
+		$this->maxcols = $maxcols;
+		$this->truncated = false;
 	}
 	// _load {{{2
 	function _load( &$sheet )
 	{
 		$rows = explode("\n", $this->data);
-		for($i = 0; $i < count($rows); $i++) {
+		for($i = 0; $i < count($rows) && $i < $this->maxrows; $i++) {
 			$cols = preg_split("/[,;](?!(?:[^\\\",;]|[^\\\"],[^\\\"])+\\\")/", $rows[$i]);
 			
-			for($j = 0; $j < count($cols); $j++) {
+			for($j = 0; $j < count($cols) && $j < $this->maxcols; $j++) {
 				$sheet->initCell( $i, $j );
 				$sheet->setValue( $cols[$j] );
 				
@@ -1206,6 +1209,9 @@ class TikiSheetFileGalleryCSVHandler extends TikiSheetDataHandler
 				$sheet->setSize( 1, 1 );
 			}
 		}
+		
+		if ($i >= $this->maxrows || $j >= $this->maxcols) $this->truncated = true;
+		
 		return true;
 	}
 

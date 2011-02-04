@@ -134,9 +134,9 @@ if ( isset($_REQUEST['file']) && isset($_REQUEST['type']) ) {
 	$grid = new TikiSheet();
 	$grid->import( $handler );
 	$tableHtml[0] = $grid->getTableHtml( true , null, false );
-	
 	$smarty->assign('notEditable', 'true');
 	
+	if ($handler->truncated) $smarty->assign('msg', tra('Spreadsheet truncated'));
 } elseif ( isset($_REQUEST['fileId']) ) {
 	include_once('lib/filegals/filegallib.php');
 	$access->check_feature('feature_file_galleries');
@@ -147,6 +147,7 @@ if ( isset($_REQUEST['file']) && isset($_REQUEST['type']) ) {
 	$tableHtml[0] = $grid->getTableHtml( true , null, false );
 	$smarty->assign('notEditable', 'true');
 	
+	if ($handler->truncated) $smarty->assign('msg', tra('Spreadsheet truncated'));
 } else {
 	//Database sheet
 	$handler = new TikiSheetDatabaseHandler( $_REQUEST["sheetId"] );

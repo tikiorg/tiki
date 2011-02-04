@@ -5,6 +5,9 @@
 <div class="description">
 	{$description|escape}
 </div>
+<div class="msg">
+	{$msg}
+</div>
 
 {foreach from=$grid_content item=thisGrid}
 	<div class="tiki_sheet"
