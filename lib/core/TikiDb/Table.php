@@ -106,7 +106,7 @@ class TikiDb_Table
 
 	function fetchColumn($field, array $conditions, $numrows = -1, $offset = -1, $order = null)
 	{
-		if (! empty($order)) {
+		if (is_string($order)) {
 			$order = array($field => $order);
 		}
 
