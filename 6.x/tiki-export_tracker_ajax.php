@@ -211,7 +211,9 @@ if (count($listfields) > 0) {
 		$str .= $delimitorL.$field['name'].' -- '.$field['fieldId'].$delimitorR;
 	}
 }
-
+if (empty($_REQUEST['encoding']) || $_REQUEST['encoding'] == 'ISO-8859-1') {
+	$str = utf8_decode($str);
+}
 $str .= "\n";
 if (!empty($fp)) {
 	fwrite($fp, $str);
