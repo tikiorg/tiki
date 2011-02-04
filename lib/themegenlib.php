@@ -14,9 +14,124 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 class ThemeGenLib
 {
 	private $currentTheme;	// ThemeGenTheme
+	private $tg_data;
 
 	public function ThemeGenLib() {
 		global $prefs;
+		
+		// array containing customisable elements
+		
+		// some handy matches
+		$unit = '[-+]?[\d\.]+(?:px|em|ex|%|in|cm|mm|pt|pc)?';
+		$color = '#[0-9a-f]{3,6}|aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|orange|purple|red|silver|teal|white|yellow';
+		
+		$this->tg_data = array(
+			'colors' => array(
+				'types' => array(
+					'fgcolors' => array(
+						'items' => array(),
+						'title' => tra('Foreground Colors:'),
+						'selector' => 'color',
+						'regexps' => array(
+							'find' => '/[^-]color:\s*('.$color.')[;\}!]/Umis',
+							'context' => '/[\}]\s*([^\{]*)\{[^\}]*[^-]?color:\s*$0[\}; !]/Umis',
+							'replace' => '/([^-]color:\s*)$0([ !;\}])/Umis',
+						),
+					),
+					'bgcolors' => array(
+						'items' => array(),
+						'title' => tra('Background Colors:'),
+						'selector' => 'color',
+						'regexps' => array(
+							'find' => '/background(?:-color)?:[^\};]*?('.$color.')[\s;\}\!]/Umis',
+							'context' => '/[\}]\s*([^\{]*)\{[^\}]*background(?:-color)?:\s*$0[\}; !]/Umis',
+							'replace' => '/(background(?:-color)?:[^;\}]*)$0([ !;\}])/Umis',
+						),
+					),
+				),
+				'title' => tra('Colors:'),
+			),
+			'borders' => array(
+				'types' => array(
+					'bordercolors' => array(
+						'items' => array(),
+						'title' => tra('Border Colors:'),
+						'selector' => 'color',
+						'regexps' => array(
+							'find' => '/border(?:-[^\};]*)?:[^\};]*('.$color.')[\s;\}\!]/Umis',
+							'context' => '/[\}]\s*([^\{]*)\{[^\}]*border(?:-.*)?:.*$0[\}; !]/Umis',
+							'replace' => '/(border[^:]*:[^;\}]*)$0([ !;\}])/Umis',
+						),
+					),
+					'borderwidths' => array(
+						'items' => array(),
+						'title' => tra('Border Widths:'),
+						'selector' => 'size',
+						'regexps' => array(
+							'find' => '/border(?!radius):[^\};]*('.$unit.')[\s;\}\!]/Umis',
+							'context' => '/[\}]\s*([^\{]*)\{[^\}]*border(?:-[^:]*)?:[^\}]*$0[\}; !]/Umis',
+							'replace' => '/(border[^:]*:[^;\}]*)$0([ !;\}])/Umis',
+						),
+					),
+					'borderstyles' => array(
+						'items' => array(),
+						'title' => tra('Border Styles:'),
+						'selector' => 'borderstyle',
+						'regexps' => array(
+							'find' => '',
+							'context' => '',
+							'replace' => '',
+						),
+					),
+					'borderradii' => array(
+						'items' => array(),
+						'title' => tra('Border Radii:'),
+						'selector' => 'size',
+						'regexps' => array(
+							'find' => '',
+							'context' => '',
+							'replace' => '',
+						),
+					),
+				),
+				'title' => tra('Borders:'),
+			),
+			'typography' => array(
+				'types' => array(
+					'fontsize' => array(
+						'items' => array(),
+						'title' => tra('Font Sizes:'),
+						'selector' => 'size',
+						'regexps' => array(
+							'find' => '/font-size:[^\};]*?('.$unit.')/i',
+							'context' => '/[\}]\s*([^\{]*)\{[^\}]*font-size:\s*$0[\}; !]/Umis',
+							'replace' => '/(font-size:\s*)$0([ !;\}])/Umis',
+						),
+					),
+					'font' => array(
+						'items' => array(),
+						'title' => tra('Font:'),
+						'selector' => 'text',
+						'regexps' => array(
+							'find' => '/font:\s*?([^;\}]*)/i',
+							'context' => '/[\}]\s*([^\{]*)\{[^\}]*font:\s*$0[\};]/Umis',
+							'replace' => '/(font:\s*)$0([!;\}])/Umis',
+						),
+					),
+					'fontfamily' => array(
+						'items' => array(),
+						'title' => tra('Font Families:'),
+						'selector' => 'fontfamily',
+						'regexps' => array(
+							'find' => '/font-family:\s*?([^;\}]*)/i',
+							'context' => '/[\}]\s*([^\{]*)\{[^\}]*font-family:\s*$0[\};]/Umis',
+							'replace' => '/(font-family:\s*)$0([!;\}])/Umis',
+						),
+					),
+				),
+				'title' => tra('Typography:'),
+			),
+		);
 		
 		if (!empty($prefs['themegenerator_theme'])) {
 			$t = $prefs['themegenerator_theme'];
@@ -98,68 +213,15 @@ class ThemeGenLib
 		
 		$mincss = '}' . preg_replace('/@import url(.*);/Umis', '', $mincss);
 		
-		$colors		  = $this->currentTheme->findMatches('/[^-]color:([^\};!]*?)[;\}!]/i', $mincss, $css_file, 'fgcolors');
-		$this->findContexts($colors, $mincss, '/[\}]\s*([^\{@]*)\{[^\}]*[^-]?color:\s*$0[\}; !]/Umis');
+		foreach ($this->tg_data as $secName => &$secData) {
+			foreach ($secData['types'] as $typeName => &$typeData) {
+				$typeData['items'] = $this->currentTheme->findMatches($typeData['regexps']['find'], $mincss, $css_file, $typeName);
+				$this->findContexts($typeData['items'], $mincss, $typeData['regexps']['context']);
+			}
+		}
 		
-		$bgcolors	  = $this->currentTheme->findMatches('/background(?:-color)?:[^\};]*?(#[0-9A-F]{3,6})[\s;\}\!]/i', $mincss, $css_file, 'bgcolors');
-		$this->findContexts($bgcolors, $mincss, '/[\}]\s*([^\{@]*)\{[^\}]*background(?:-color)?:\s*$0[\}; !]/Umis');
+		$smarty->assign_by_ref( 'tg_data', $this->tg_data );
 		
-		$bordercolors = $this->currentTheme->findMatches('/border(?:-[^\};]*)?:[^\};]*(#[0-9A-F]{3,6})[\s;\}\!]/Umis', $mincss, $css_file, 'bordercolors');
-		$this->findContexts($bordercolors, $mincss, '/[\}]\s*([^\{@]*)\{[^\}]*border(?:-.*)?:.*$0[\}; !]/Umis');
-		
-		$fontsizes	  = $this->currentTheme->findMatches('/font-size:[^\};]*?([\d\.]*[^;\} ]*)/i', $mincss, $css_file, 'fontsize');
-		$this->findContexts($fontsizes, $mincss, '/[\}]\s*([^\{@]*)\{[^\}]*font-size:\s*$0[\}; !]/Umis');
-		
-		$fontfamilies = $this->currentTheme->findMatches('/font-family:\s*?([^;\}]*)/i', $mincss, $css_file, 'fontfamily', false);
-		$this->findContexts($fontfamilies, $mincss, '/[\}]\s*([^\{@]*)\{[^\}]*font-family:\s*$0[\};]/Umis');
-		
-		$fonts		  = $this->currentTheme->findMatches('/font:\s*?([^;\}]*)/i', $mincss, $css_file, 'font', false);
-		$this->findContexts($fonts, $mincss, '/[\}]\s*([^\{@]*)\{[^\}]*font:\s*$0[\};]/Umis');
-		
-		// array for smarty to loop through
-		$tg_data = array(
-			'colors' => array(
-				'types' => array(
-					'fgcolors' => array(
-						'items' => $colors,
-						'title' => tra('Foreground Colors:'),
-					),
-					'bgcolors' => array(
-						'items' => $bgcolors,
-						'title' => tra('Background Colors:'),
-					),
-					'bordercolors' => array(
-						'items' => $bordercolors,
-						'title' => tra('Border Colors:'),
-					),
-				),
-				'title' => tra('Colors:'),
-			),
-			'typography' => array(
-				'types' => array(
-					'fontsize' => array(
-						'items' => $fontsizes,
-						'title' => tra('Font Sizes:'),
-					),
-					'font' => array(
-						'items' => $fonts,
-						'title' => tra('Font:'),
-					),
-					'fontfamily' => array(
-						'items' => $fontfamilies,
-						'title' => tra('Font Families:'),
-					),
-				),
-				'title' => tra('Typography:'),
-			),
-		);
-		
-		$smarty->assign_by_ref( 'tg_data', $tg_data );
-		
-//		$css_files = $this->setupCSSFiles();
-//		if (empty($css_file) && count($css_files) > 0) {
-//			$css_file = $css_files[1];
-//		}
 		$smarty->assign_by_ref('tg_css_files', $this->setupCSSFiles());
 		$smarty->assign_by_ref('tg_css_file', $css_file);
 		
@@ -213,42 +275,30 @@ class ThemeGenLib
 		
 		$css = $headerlib->minify_css( $file );
 		
-		foreach ($swaps['fgcolors'] as $old => $new) {
-			$css = preg_replace('/([^-]color:\s*)' . $old . '/Umis', '$1' . $new, $css);
+		foreach ($this->tg_data as $secName => &$secData) {
+			foreach ($secData['types'] as $typeName => &$typeData) {
+				foreach ($swaps[$typeName] as $old => $new) {
+					$reg = str_replace( '$0', preg_quote($old, '/'), $typeData['regexps']['replace'] );
+					$css = preg_replace( $reg, '$1 ' . html_entity_decode($new) . '$2', $css);
+				}
+			}
 		}
 		
-		foreach ($swaps['bgcolors'] as $old => $new) {
-			$css = preg_replace('/(background(?:-color)?:\s*)' . $old . '/Umis', '$1' . $new, $css);
-		}
-		
-		foreach ($swaps['bordercolors'] as $old => $new) {
-			$GLOBALS['tg_old'] = $old;	// for preg_replace_callback on php < 5.3
-			$GLOBALS['tg_new'] = $new;
-			$css = preg_replace_callback('/(border[^:]*:\s*)(.*)([;\}])/Umis', array( $this, 'processCSSColours'), $css);
-		}
+// still need to deal with multi colour border defs
+//		foreach ($swaps['bordercolors'] as $old => $new) {
+//			$GLOBALS['tg_old'] = $old;	// for preg_replace_callback on php < 5.3
+//			$GLOBALS['tg_new'] = $new;
+//			$css = preg_replace_callback('/(border[^:]*:\s*)(.*)([;\}])/Umis', array( $this, 'processCSSColours'), $css);
+//		}
 
-		foreach ($swaps['fontsize'] as $old => $new) {
-			//                        sizes usually start with a numeric so add a space after the $1
-			$css = preg_replace('/(font-size:\s*)' . $old . '/Umis', "$1 " . $new, $css);
-		}
-		
-		foreach ($swaps['font'] as $old => $new) {
-			//                        also usually start with a numeric so add a space after the $1
-			$css = preg_replace('/(font:\s*)' . preg_quote($old, '/') . '/Umis', "$1 " . html_entity_decode($new), $css);
-		}
-		
-		foreach ($swaps['fontfamily'] as $old => $new) {
-			$css = preg_replace('/(font-family:\s*)' . preg_quote($old, '/') . '/Umis', "$1" . html_entity_decode($new), $css);
-		}
-		
 
 		return $css;
 	}
 	
-	private function processCSSColours($matches) {
-		$out = $matches[1] . str_replace( $GLOBALS['tg_old'], $GLOBALS['tg_new'], $matches[2]) . $matches[3];
-		return $out;
-	}
+//	private function processCSSColours($matches) {
+//		$out = $matches[1] . str_replace( $GLOBALS['tg_old'], $GLOBALS['tg_new'], $matches[2]) . $matches[3];
+//		return $out;
+//	}
 	
 	public function saveNewTheme($name) {
 		$this->currentTheme = new ThemeGenTheme($name);
