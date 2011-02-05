@@ -802,8 +802,8 @@ class TikiLib extends TikiDb_Bridge
 		$search = $this->table('tiki_directory_search');
 
 		$aux = array();
-		$aux["valid"] = $sites->fetchCount(array('isValue' => 'y'));
-		$aux["invalid"] = $sites->fetchCount(array('isValue' => 'n'));
+		$aux["valid"] = $sites->fetchCount(array('isValid' => 'y'));
+		$aux["invalid"] = $sites->fetchCount(array('isValid' => 'n'));
 		$aux["categs"] = $categories->fetchCount(array());
 		$aux["searches"] = $search->fetchOne($search->sum('hits'), array());
 		$aux["visits"] = $search->fetchOne($sites->sum('hits'), array());
