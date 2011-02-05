@@ -125,51 +125,9 @@ input[type=radio] {
 	border: 0;
 }
 
-/***** Site Header & Identity *****/
-
-#header-top {
-	position: relative;
-}
-
-#siteheader {
-	background: transparent;
-}
-
-#customcodewith_ad {
-	width: 400px;
-}
-
-#sitead.floatright {
-	padding-right: 40px;
-}
-
-#sitead.floatleft {
-	padding-left: 40px;
-}
-
-#sioptionscentered #sitead.floatleft {
-	padding-left: 10px;
-}
 
 #sitelogo img {
 	margin-top: 10px;
-}
-
-#bannertopright {
-	padding-right: 4px;
-}
-
-#sitelocbar {
-	float: left;
-	padding: 2px 2px 3px 10px;
-}
-
-#siteloginbar {
-	text-align: right;
-	position: absolute;
-	bottom: 3px;
-	right: 10px;
-	font-size: 90%;
 }
 
 .pass a,
