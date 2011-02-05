@@ -35,6 +35,7 @@
 						</div>
 						{/if}
 						
+			{cycle values="even,odd" print=false}
 						<div class="simplebox">
 							<div>
 			{if $avatar}
@@ -44,7 +45,6 @@
 								</div>
 			{/if}
 								
-			{cycle values="even,odd" print=false}
 			{if $realName}
 								<div class="clearfix {cycle}">
 									<div class="floatleft">{tr}Real Name:{/tr}</div>
