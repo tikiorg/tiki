@@ -68,7 +68,7 @@ if ($s) {
 // check file upload dir and compare it to tiki root dir
 $s = ini_get('upload_tmp_dir');
 $sn = substr($_SERVER['SCRIPT_NAME'], 0, -23);
-if (strpos($sn, $s) !== FALSE) {
+if ( $s != "" && strpos($sn, $s) !== FALSE) {
 	$phpsettings['upload_tmp_dir'] = array(
 		'risk' => tra('unsafe') ,
 		'setting' => $s,
