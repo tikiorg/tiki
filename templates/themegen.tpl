@@ -57,6 +57,21 @@
 										</div>
 										<input type="text" name="tg_swaps[{$tg_type}][{$tg_item.old}]"
 												value="{$tg_item.new}" class="tgValue" />
+									{elseif $tg_data_type.selector eq 'borderstyle'}
+										 <div class="tgLabel">
+											{$tg_item.old}
+										</div>
+										<select name="tg_swaps[{$tg_type}][{$tg_item.old}]" class="tgBorderStyle">
+											<option value="dotted"{if $tg_item.new eq 'dotted'} selected="selected"{/if}">dotted</option>
+											<option value="dashed"{if $tg_item.new eq 'dashed'} selected="selected"{/if}">dashed</option>
+											<option value="solid"{if $tg_item.new eq 'solid'} selected="selected"{/if}">solid</option>
+											<option value="double"{if $tg_item.new eq 'double'} selected="selected"{/if}">double</option>
+											<option value="groove"{if $tg_item.new eq 'groove'} selected="selected"{/if}">groove</option>
+											<option value="ridge"{if $tg_item.new eq 'ridge'} selected="selected"{/if}">ridge</option>
+											<option value="inset"{if $tg_item.new eq 'inset'} selected="selected"{/if}">inset</option>
+											<option value="outset"{if $tg_item.new eq 'outset'} selected="selected"{/if}">outset</option>
+										</select>
+												
 									{else}{* "fontfamily", "text" etc *}
 										 <div class="tgLabel tgWide">
 											{$tg_item.old|truncate:999}

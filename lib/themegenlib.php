@@ -24,6 +24,10 @@ class ThemeGenLib
 		// some handy matches
 		$unit = '[-+]?[\d\.]+(?:px|em|ex|%|in|cm|mm|pt|pc)?';
 		$color = '#[0-9a-f]{3,6}|aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|orange|purple|red|silver|teal|white|yellow';
+		$delims = '[\s!;\}]';	// delimiter with space
+		$delimn = '[!;\}]';	// delimiter with NO space
+		$selector = '[\}]\s*([^\{]*)\{[^\}]*';
+		$bstyles = 'dotted|dashed|solid|double|groove|ridge|inset|outset';	// no 'none' for now
 		
 		$this->tg_data = array(
 			'colors' => array(
@@ -33,9 +37,9 @@ class ThemeGenLib
 						'title' => tra('Foreground Colors:'),
 						'selector' => 'color',
 						'regexps' => array(
-							'find' => '/[^-]color:\s*('.$color.')[;\}!]/Umis',
-							'context' => '/[\}]\s*([^\{]*)\{[^\}]*[^-]?color:\s*$0[\}; !]/Umis',
-							'replace' => '/([^-]color:\s*)$0([ !;\}])/Umis',
+							'find' => '/(?<!-)color:\s*('.$color.')[;\}!]/Umis',
+							'context' => '/'.$selector.'(?<!-)color:\s*$0'.$delims.'/Umis',
+							'replace' => '/((?<!-)color:\s*)$0('.$delims.')/Umis',
 						),
 					),
 					'bgcolors' => array(
@@ -44,8 +48,8 @@ class ThemeGenLib
 						'selector' => 'color',
 						'regexps' => array(
 							'find' => '/background(?:-color)?:[^\};]*?('.$color.')[\s;\}\!]/Umis',
-							'context' => '/[\}]\s*([^\{]*)\{[^\}]*background(?:-color)?:\s*$0[\}; !]/Umis',
-							'replace' => '/(background(?:-color)?:[^;\}]*)$0([ !;\}])/Umis',
+							'context' => '/'.$selector.'background(?:-color)?:\s*$0'.$delims.'/Umis',
+							'replace' => '/(background(?:-color)?:[^;\}]*)$0('.$delims.')/Umis',
 						),
 					),
 				),
@@ -58,9 +62,9 @@ class ThemeGenLib
 						'title' => tra('Border Colors:'),
 						'selector' => 'color',
 						'regexps' => array(
-							'find' => '/border(?:-[^\};]*)?:[^\};]*('.$color.')[\s;\}\!]/Umis',
-							'context' => '/[\}]\s*([^\{]*)\{[^\}]*border(?:-.*)?:.*$0[\}; !]/Umis',
-							'replace' => '/(border[^:]*:[^;\}]*)$0([ !;\}])/Umis',
+							'find' => '/border[\w-]*:[^\};]*('.$color.')[\s;\}\!]/Umis',
+							'context' => '/'.$selector.'border[\w-]*:.*$0'.$delims.'/Umis',
+							'replace' => '/(border[\w-]*:[^;\}]*)$0('.$delims.')/Umis',
 						),
 					),
 					'borderwidths' => array(
@@ -68,9 +72,9 @@ class ThemeGenLib
 						'title' => tra('Border Widths:'),
 						'selector' => 'size',
 						'regexps' => array(
-							'find' => '/border(?!radius):[^\};]*('.$unit.')[\s;\}\!]/Umis',
-							'context' => '/[\}]\s*([^\{]*)\{[^\}]*border(?:-[^:]*)?:[^\}]*$0[\}; !]/Umis',
-							'replace' => '/(border[^:]*:[^;\}]*)$0([ !;\}])/Umis',
+							'find' => '/border(?!-radius)[\w-]*(?<!radius):[^\};]*('.$unit.')[\s;\}\!]/Umis',
+							'context' => '/'.$selector.'border(?:(?!-radius)[\w-]*(?<!radius))?:[^\}]*$0'.$delims.'/Umis',
+							'replace' => '/(border(?!-radius)[\w-]*(?<!radius):[^;\}]*)$0('.$delims.')/Umis',
 						),
 					),
 					'borderstyles' => array(
@@ -78,9 +82,9 @@ class ThemeGenLib
 						'title' => tra('Border Styles:'),
 						'selector' => 'borderstyle',
 						'regexps' => array(
-							'find' => '',
-							'context' => '',
-							'replace' => '',
+							'find' => '/border[\w-]*:[^\};]*('.$bstyles.')[\s;\}\!]/Umis',
+							'context' => '/'.$selector.'border[\w-]*:.*$0'.$delims.'/Umis',
+							'replace' => '/(border[\w-]*:[^;\}]*)$0('.$delims.')/Umis',
 						),
 					),
 					'borderradii' => array(
@@ -88,9 +92,9 @@ class ThemeGenLib
 						'title' => tra('Border Radii:'),
 						'selector' => 'size',
 						'regexps' => array(
-							'find' => '',
-							'context' => '',
-							'replace' => '',
+							'find' => '/border(?:-[^\};]*)?-radius(?:-[^\};]*)?:[^\};]*('.$unit.')[\s;\}\!]/Umis',
+							'context' => '/'.$selector.'border(?:-.*)?:.*$0'.$delims.'/Umis',
+							'replace' => '/(border[^:]*:[^;\}]*)$0('.$delims.')/Umis',
 						),
 					),
 				),
@@ -104,8 +108,8 @@ class ThemeGenLib
 						'selector' => 'size',
 						'regexps' => array(
 							'find' => '/font-size:[^\};]*?('.$unit.')/i',
-							'context' => '/[\}]\s*([^\{]*)\{[^\}]*font-size:\s*$0[\}; !]/Umis',
-							'replace' => '/(font-size:\s*)$0([ !;\}])/Umis',
+							'context' => '/'.$selector.'font-size:\s*$0'.$delims.'/Umis',
+							'replace' => '/(font-size:\s*)$0('.$delims.')/Umis',
 						),
 					),
 					'font' => array(
@@ -114,8 +118,8 @@ class ThemeGenLib
 						'selector' => 'text',
 						'regexps' => array(
 							'find' => '/font:\s*?([^;\}]*)/i',
-							'context' => '/[\}]\s*([^\{]*)\{[^\}]*font:\s*$0[\};]/Umis',
-							'replace' => '/(font:\s*)$0([!;\}])/Umis',
+							'context' => '/'.$selector.'font:\s*$0'.$delimn.'/Umis',
+							'replace' => '/(font:\s*)$0('.$delimn.')/Umis',
 						),
 					),
 					'fontfamily' => array(
@@ -124,8 +128,8 @@ class ThemeGenLib
 						'selector' => 'fontfamily',
 						'regexps' => array(
 							'find' => '/font-family:\s*?([^;\}]*)/i',
-							'context' => '/[\}]\s*([^\{]*)\{[^\}]*font-family:\s*$0[\};]/Umis',
-							'replace' => '/(font-family:\s*)$0([!;\}])/Umis',
+							'context' => '/'.$selector.'font-family:\s*$0'.$delimn.'/Umis',
+							'replace' => '/(font-family:\s*)$0('.$delimn.')/Umis',
 						),
 					),
 				),
