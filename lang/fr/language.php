@@ -6496,7 +6496,7 @@ $lang=Array(
 // "If you would like to be notified when someone replies to this topic<br />please tell us your e-mail address" => "If you would like to be notified when someone replies to this topic<br />please tell us your e-mail address",
 // "(your email address will not be published)" => "(your email address will not be published)",
 // "Rate this Article (10=best, 0=worse)" => "Rate this Article (10=best, 0=worse)",
-// "Send me an e-mail when someone replies" => "Send me an e-mail when someone replies",
+"Send me an e-mail when someone replies" => "M'envoyer un courriel quand quelqu'un répond",
 // "Copyrights" => "Copyrights",
 // "Database is not currently up to date! Visit <a href=\"tiki-install.php\">Tiki Installer</a> to resolve this issue" => "Database is not currently up to date! Visit <a href=\"tiki-install.php\">Tiki Installer</a> to resolve this issue",
 // "Tiki is unable to connect to the database" => "Tiki is unable to connect to the database",
@@ -7355,8 +7355,8 @@ $lang=Array(
 // "Interval in which you want to get the reports" => "Interval in which you want to get the reports",
 // "HTML-Email" => "HTML-Email",
 // "My watches" => "My watches",
-// "Group Monitor Topics of this Forum" => "Group Monitor Topics of this Forum",
-// "Group Monitor Topics and Threads of this Forum" => "Group Monitor Topics and Threads of this Forum",
+"Group Monitor Topics of this Forum" => "Surveillance de groupe des fils de discussion de ce forum",
+"Group Monitor Topics and Threads of this Forum" => "Surveillance de groupe des fils de discussion et articles de ce forum",
 // "Post New" => "Post New",
 // "pts" => "pts",
 // "Atts" => "Atts",
@@ -11199,7 +11199,7 @@ $lang=Array(
 "Last update from SVN" => "Dernière mise à jour depuis SVN",
 "Execution time" => "Temps d'exécution",
 "Memory usage" => "Mémoire utilisée",
-"database queries used in " => "requêtes à la base de données utilisées en ",
+"database queries used in " => "requêtes à la base de données utilisées en",
 "Server load" => "Charge du serveur",
 "Login through CAS" => "Connexion avec CAS",
 "Login through Shibboleth" => "Connection via Shibboleth",
@@ -14508,6 +14508,7 @@ $lang=Array(
 "Introduire dans les mails, en phase de test, dans le format d'un commentaire HTML, une référence au template (TPL) utilisé, suivant l'option : <br /><ul><li>-dans l\'en tête (caché)</li><li>-en en tête et fin du texte et à la fin du sujet</li><li>-aucune référence</li></ul>)",
 "You need to clear your Tiki template cache for this change to take effect" => "Vous devez effacer le cache des Templates pour que le changement de paramètre prenne effet",
 "Use only for development the option \"Insert into text\", not in production, because these warnings are added to emails content as well, and are visible to the users" => "N\'utiliser l\'option \"insérer dans le texte\" que pour les test, pas en production parce ces alertes sont évidemment visibles par les utilisateurs, si vous voulez laisser marqués les mails utiliser l'\option \"caché\" (Insérer une marque Tiki dans l\'en tête de mail)",
+"Assign permissions to file galleries" => "Assigner des permissions aux galleries de fichiers",
 "###end###"=>"###end###");
   
 ?>
