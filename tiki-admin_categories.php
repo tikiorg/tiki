@@ -7,7 +7,6 @@
 
 require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
-include_once ('lib/tree/categ_admin_tree.php');
 
 $access->check_feature('feature_categories');
 $access->check_permission('tiki_p_admin_categories');
