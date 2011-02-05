@@ -74,7 +74,7 @@
 			
 {tab name="{tr}Interface{/tr}"}
 			<fieldset class="admin featurelist">
-				<legend> {tr}AJAX{/tr} </legend>	
+				<legend> {tr}Ajax{/tr} </legend>	
 				{preference name=feature_ajax}
 				<div class="adminoptionboxchild half_width" id="feature_ajax_childcontainer">
 					{preference name=ajax_autosave}
