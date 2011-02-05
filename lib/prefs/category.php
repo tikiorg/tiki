@@ -93,7 +93,7 @@ function prefs_category_serialize_defaults( $data ) {
 	}
 
 	$out = '';
-	if ( $data !== false ) {
+	if ( is_array( $data ) ) {
 		foreach( $data as $row ) {
 			$out .= implode( ',', $row['categories'] ) . '/' . $row['default'] . "\n";
 		}
