@@ -964,7 +964,7 @@ class FileGalLib extends TikiLib
 
 	function get_file_handlers() {
 		$handlers = $this->table('tiki_file_handlers');
-		return $handlers->fetchMap('mime_type', 'cmd');
+		return $handlers->fetchMap('mime_type', 'cmd', array() );
 	}
 
 	function reindex_all_files_for_search_text() {
