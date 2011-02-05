@@ -381,19 +381,21 @@ class ModLib extends TikiLib
 
 		if( isset( $params['theme'] ) ) {
 			global $tc_theme;
-
-			if( $params['theme']{0} != '!' ) { // usual behavior
-				if( isset($tc_theme) && $tc_theme > '' && $params['theme'] != $tc_theme ) {
-					return false;
-				} elseif( $params['theme'] != $prefs['style'] && ( !isset($tc_theme) || $tc_theme == '' ) ) {
-					return false;
-				}
-			} else { // negation behavior
-				$excluded_theme = substr($params['theme'],1);
-				if( isset($tc_theme) && $tc_theme > '' && $excluded_theme == $tc_theme ) {
-					return false;
-				} elseif( $excluded_theme == $prefs['style'] && ( ! isset( $tc_theme ) || $tc_theme == '' ) ) {
-					return false;
+			
+			foreach ((array) $params['theme'] as $t) {
+				if( $t{0} != '!' ) { // usual behavior
+					if( !empty($tc_theme) && $t !== $tc_theme ) {
+						return false;
+					} elseif( $t !== $prefs['style'] && empty($tc_theme)) {
+						return false;
+					}
+				} else { // negation behavior
+					$excluded_theme = substr($t,1);
+					if( !empty($tc_theme) && $excluded_theme === $tc_theme ) {
+						return false;
+					} elseif( $excluded_theme === $prefs['style'] && empty( $tc_theme )) {
+						return false;
+					}
 				}
 			}
 		}
