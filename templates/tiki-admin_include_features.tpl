@@ -105,7 +105,7 @@
 {/tab}
 
 {tab name="{tr}Programmer{/tr}"}
-			<div class="admin featurelist">
+			<div class="admin featurelist clearfix">
 				{preference name=feature_integrator}
 				{preference name=feature_xmlrpc}
 				{preference name=feature_debug_console}
