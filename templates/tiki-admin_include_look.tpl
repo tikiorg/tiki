@@ -230,7 +230,8 @@
 		$("input[name=tg_delete_theme]").hide();
 	}
 							}).change();{/jq}
-							{if $prefs.feature_jquery_ui eq "y" and $prefs.feature_ajax eq "y"}
+							{if $prefs.feature_jquery_ui eq "y" and $prefs.feature_ajax eq "y" and not empty($prefs.themegenerator_theme)}
+								{* TODO make non-live themes editable & previewable *}
 								{button _text="{tr}Open editor{/tr}" _class="tgFloatDialog" href="#"}
 							{/if}
 						</div>
