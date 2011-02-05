@@ -31,10 +31,10 @@ hr {
 }
 
 #header_outer {
-	background: url(akebi/headertile.jpg) 0 0 no-repeat;
+	background: url(akebi/siteheadertile.jpg) 0 0 no-repeat;
 }
 
-#header_fixedwidth {
+#header {
 	background: url(akebi/siteheader.png) -250px 0 no-repeat;
 }
 
