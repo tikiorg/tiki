@@ -201,8 +201,8 @@
 			<tr>
 				<td>{tr}Edit{/tr}
 				</td>
-				<td>
-					{if $prefs.feature_forum_parse eq 'y'}
+				<td>					
+					{if $prefs.feature_forum_parse eq 'y' and $prefs.javascript_enabled eq "n"}
 						{toolbars area_id='editpost'}
 					{/if}
 					{textarea id='editpost' name="comments_data" rows=$rows cols=$cols}{$comment_data}{/textarea}
