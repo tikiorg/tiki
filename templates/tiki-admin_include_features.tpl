@@ -168,6 +168,7 @@
 						{preference name=feature_wiki_mindmap}
 						{preference name=feature_wysiwyg}
 						{preference name=feature_accounting}
+						{preference name=payment_feature}
 				</fieldset>
 			</div>
 
