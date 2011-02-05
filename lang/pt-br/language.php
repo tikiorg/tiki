@@ -14494,4 +14494,5 @@ $lang=Array(
 "Error deleting the file" => "Erro ao deletar o arquivo",
 "The page is empty" => "A página está vazia",
 "You do not have permissions to view the maps" => "Você não possui permissões para ver os mapas",
+"Show only database stored translations" => "Mostrar apenas traduções guardadas na base de dados",
 "###end###"=>"###end###");
