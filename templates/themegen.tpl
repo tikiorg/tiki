@@ -56,7 +56,7 @@
 											{$tg_item.old}
 										</div>
 										<input type="text" name="tg_swaps[{$tg_type}][{$tg_item.old}]"
-												value="{$tg_item.new}" class="tgValue" />
+												value="{$tg_item.new}" class="tgValue tgSize" />
 									{elseif $tg_data_type.selector eq 'borderstyle'}
 										 <div class="tgLabel">
 											{$tg_item.old}
