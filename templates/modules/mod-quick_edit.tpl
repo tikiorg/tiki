@@ -2,6 +2,7 @@
 
 {tikimodule error=$module_params.error title=$tpl_module_title name="quick_edit" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 <form method="post" action="{$qe_action|escape}">
+<div>
 {if $templateId}<input type="hidden" name="templateId" value="{$templateId}" />{/if}
 {if $customTip}<input type="hidden" name="customTip" value="{$customTip}" />{/if}
 {if $customTipTitle}<input type="hidden" name="customTipTitle" value="{$customTipTitle}" />{/if}
@@ -33,6 +34,7 @@
 <input type="hidden" name="cat_categorize" value="on" />{/if}
 {if $pastetext==1}<label>{tr}Paste content here{/tr}</label><textarea name="copypaste" style="width:96%;" cols="{$size}" rows="2"></textarea>{/if}
 <input type="submit" name="qedit" value="{$submit}" />
+</div>
 </form>
 {if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
 {jq}
