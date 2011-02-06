@@ -1,1 +1,0 @@
-INSERT IGNORE INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_promote_page', 'Can promote a page (email, twitter, facebook)', 'Basic', 'tiki', NULL, NULL);
