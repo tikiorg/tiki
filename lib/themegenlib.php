@@ -112,6 +112,16 @@ class ThemeGenLib
 							'replace' => '/(font-size:\s*)$0('.$delims.')/Umis',
 						),
 					),
+					'lineheight' => array(
+						'items' => array(),
+						'title' => tra('Line Heights:'),
+						'selector' => 'size',
+						'regexps' => array(
+							'find' => '/line-height:[^\};]*?('.$unit.')/i',
+							'context' => '/'.$selector.'line-height:\s*$0'.$delims.'/Umis',
+							'replace' => '/(line-height:\s*)$0('.$delims.')/Umis',
+						),
+					),
 					'font' => array(
 						'items' => array(),
 						'title' => tra('Font:'),
@@ -167,7 +177,9 @@ class ThemeGenLib
 		
 		// colour lib
 		$headerlib->add_jsfile('lib/jquery/jquery.color.js');
-		
+		// units converter
+		$headerlib->add_jsfile('lib/jquery/pxem.jQuery.js');
+
 		if (!empty($_COOKIE['themegen'])) {
 			if (strpos($_COOKIE['themegen'], 'state:open') !== false) {
 				$headerlib->add_jq_onready('openThemeGenDialog();', 100);
