@@ -15,8 +15,8 @@
 		{preference name=user_assigned_modules}
 		{preference name=user_flip_modules}
 		{preference name=modallgroups}
-		{remarksbox type="warning" title="{tr}Warning{/tr}"}
-			{tr}Hint: If you lose your login module, use tiki-login_scr.php to be able to login!{/tr}
+		{remarksbox type="tip" title="{tr}Hint{/tr}"}
+			{tr}If you lose your login module, use tiki-login_scr.php to be able to login!{/tr}
 		{/remarksbox}
 		{preference name=modseparateanon}
 		{preference name=modhideanonadmin}
