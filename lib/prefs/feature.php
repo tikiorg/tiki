@@ -694,6 +694,12 @@ function prefs_feature_list() {
 			'help' => 'Smileys',
 			'type' => 'flag',
 		),
+		'feature_draw' => array(
+			'name' => tra('Draw - (svg-edit)'),
+			'description' => tra('Draw gives you the ability to edit svg images all around Tiki'),
+			'help' => 'Draw',
+			'type' => 'flag',
+		),
 		'feature_dynamic_content' => array(
 			'name' => tra('Dynamic Content System'),
 			'description' => tra('Bloc of content which can be reused and programmed (timed)'),

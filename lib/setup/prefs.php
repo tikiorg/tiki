@@ -1542,6 +1542,7 @@ function get_default_prefs() {
 		'feature_debug_console' => 'n',
 		'feature_debugger_console' => 'n',
 		'feature_display_my_to_others' => 'n',
+		'feature_draw' => 'n',
 		'feature_dynamic_content' => 'n',
 		'feature_edit_templates' => 'n',
 		'feature_editcss' => 'n',
