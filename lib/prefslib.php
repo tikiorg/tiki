@@ -154,7 +154,7 @@ class PreferencesLib
 		}
 	}
 	
-	function getInput( JitFilter $filter, $preferences = array(), $environment ) {
+	function getInput( JitFilter $filter, $preferences = array(), $environment = '' ) {
 		$out = array();
 
 		foreach( $preferences as $name ) {
