@@ -91,6 +91,7 @@ abstract class Toolbar
 			'rule',
 			'pagebreak',
 			'box',
+			'email',			
 			'h1',
 			'h2',
 			'h3',
@@ -673,6 +674,12 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			$wysiwyg = 'Box';
 			$syntax = '^text^';
 			break;
+		case 'email':
+			$label = tra('Email');
+			$icon = tra('pics/icons/email.png');
+			$wysiwyg = null;			
+			$syntax = '[mailto:email@example.com|text]';
+			break;			
 		case 'h1':
 		case 'h2':
 		case 'h3':
