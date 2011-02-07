@@ -49,9 +49,9 @@
 								{self_link remove=$channels[user].menuId _title="{tr}Delete{/tr}"}{icon _id='cross' alt="{tr}Delete{/tr}"}{/self_link}
 							{/if}
 						{else}
-							{*if $tiki_p_admin eq 'y'}
+							{if $tiki_p_admin eq 'y'}
 								{button reset="y" menuId=$channels[user].menuId _text="{tr}RESET{/tr}" _auto_args="reset,menuId"}
-							{/if*}
+							{/if}
 						{/if}
 						{if $tiki_p_edit_menu eq 'y'}
 							{self_link  menuId=$channels[user].menuId clone="y" _title="{tr}Clone this menu and it's options{/tr}" _icon="page_copy"}{/self_link}

@@ -58,6 +58,7 @@ if (isset($_REQUEST['clone']) && $_REQUEST['menuId'] > 0) {
 
 if (isset($_REQUEST['reset'])) {
 	$access->check_authenticity(tra('Are you sure you want to reset the Application Menu to the current system default?'));
+	$menulib->reset_app_menu();
 }
 
 if (!isset($_REQUEST["sort_mode"])) {

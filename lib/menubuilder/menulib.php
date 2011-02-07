@@ -91,6 +91,24 @@ class MenuLib extends TikiLib
 		}
 	}
 
+	/*
+	 * Replace the current menu options for id 42 with what's in tiki.sql
+	 */
+	function reset_app_menu() {
+		$tiki_sql = file_get_contents('db/tiki.sql');
+		preg_match_all('/^INSERT (?:INTO )?`tiki_menu_options` .*$/mi', $tiki_sql, $matches);
+
+		if ($matches && count($matches[0])) {
+			$menuoptions = $this->table('tiki_menu_options');
+			$menuoptions->deleteMultiple( array( 'menuId' => 42 ));
+			
+			$query = implode( '', $matches[0] );
+			$this->query($query);
+
+			$this->empty_menu_cache($menuId);
+		}
+	}
+
 	function get_max_option($menuId)
 	{
 		$query = "select max(`position`) from `tiki_menu_options` where `menuId`=?";
