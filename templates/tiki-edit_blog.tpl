@@ -27,7 +27,7 @@
   <input type="hidden" name="blogId" value="{$blogId|escape}" />
   {tabset name='tabs_editblog'}
     {tab name="{tr}General Settings{/tr}"}
-      <table class="normal">
+      <table class="formcolor">
         <tr class="editblogform">
           <td><label for="blog-title">{tr}Title{/tr}</label></td>
           <td><input type="text" name="title" id="blog-title" value="{$title|escape}" /></td>
@@ -79,7 +79,7 @@
       </table>
     {/tab}
     {tab name="{tr}Display Options{/tr}"}
-      <table class="normal">
+      <table class="formcolor">
         <tr class="editblogform">
           <td><label for="blogs-number">{tr}Number of posts to show per page{/tr}</label></td>
           <td><input type="text" name="maxPosts" id="blogs-number" value="{$maxPosts|escape}" /></td>

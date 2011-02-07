@@ -69,7 +69,7 @@
 			{if $action eq 'edit_tran_sw' || $action eq 'edit_rec_sw'}
 				<div class="simplebox">
 					<h4>{if $action eq 'edit_tran_sw'}{tr}Edit translations:{/tr}{else}{tr}Translate recorded:{/tr}{/if}</h4>
-					<table class="formcolor normal" id="edit_translations">
+					<table class="formcolor" id="edit_translations">
 						<tr>
 							<td align="center" colspan=3>
 								{include file='find.tpl' find_show_num_rows='y'}
@@ -104,7 +104,7 @@
 							<tr>
 								<td colspan="2">
 									{if isset($item.originalTranslation)}
-										<table class="normal" id="diff_{$smarty.foreach.translations.index}" style="display: none;">{$item.diff}</table>
+										<table class="formcolor" id="diff_{$smarty.foreach.translations.index}" style="display: none;">{$item.diff}</table>
 									{/if}
 								</td>
 							</tr>

@@ -52,7 +52,7 @@
 <form action="tiki-directory_admin_related.php">
   <input type="hidden" name="parent" value="{$parent|escape}" />
   <input type="hidden" name="oldcategId" value="{$items[user].relatedTo|escape}" />
-  <table class="normal">
+  <table class="formcolor">
     <tr>
       <th>{tr}Directory Category{/tr}</th>
       <th>{tr}Action{/tr}</th>

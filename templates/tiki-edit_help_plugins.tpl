@@ -17,7 +17,7 @@
 {/if}
 
 {listfilter selectors='#plugins_help_table tr'} 
-<table id="plugins_help_table" width="95%" class="normal">
+<table id="plugins_help_table" width="95%" class="formcolor">
 	<tr><th>{tr}Description{/tr}</th></tr>
   {cycle values="even,odd" print=false}
   {section name=i loop=$plugins}    {* To modify the template of below: tiki-plugin_help.tpl *}

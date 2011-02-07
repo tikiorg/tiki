@@ -19,7 +19,7 @@
 </p>
 {/if}
  
-<table width="95%" class="normal">
+<table width="95%" class="formcolor">
  <tr>
 	<th>{tr}Wiki Syntax{/tr}</th>
 </tr>
