@@ -263,6 +263,9 @@
 
 		{tab name="{tr}Miscellaneous{/tr}"}
 			{preference name=feature_tabs}
+			<div class="adminoptionboxchild" id="feature_tabs_childcontainer">
+				{preference name=layout_tabs_optional}
+			</div>
 			{preference name=layout_section}
 			{if $prefs.layout_section eq 'y'}
 				{button _text="{tr}Admin layout per section{/tr}" href="tiki-admin_layout.php"}

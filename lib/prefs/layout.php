@@ -20,5 +20,12 @@ function prefs_layout_list() {
 				'feature_fixed_width',
 			),
 		),
+		'layout_tabs_optional' => array(
+			'name' => tra('Users can choose not to have tabs'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_tabs',
+			),
+		),
 	);	
 }

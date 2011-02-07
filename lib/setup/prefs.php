@@ -1579,6 +1579,7 @@ function get_default_prefs() {
 		'feature_source' => 'y',
 		'feature_stats' => 'n',
 		'feature_tabs' => 'y',
+		'layout_tabs_optional' => 'y',
 		'feature_theme_control' => 'n',
 		'feature_ticketlib' => 'n',
 		'feature_ticketlib2' => 'y',
