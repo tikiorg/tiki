@@ -60,19 +60,14 @@
     {cycle values="odd,even" print=false}
     {section name=user loop=$items}
     <tr class="{cycle}">
-      <td><select name="categId">
-          
-{section name=ix loop=$categs}
-      
-          <option value="{$categs[ix].categId|escape}" {if $categs[ix].categId eq $items[user].relatedTo}selected="selected"{/if}>{$categs[ix].path}</option>
-          
-{/section}
-
-        </select>
+      <td>
+			<select name="categId">
+				{section name=ix loop=$categs}
+					<option value="{$categs[ix].categId|escape}" {if $categs[ix].categId eq $items[user].relatedTo}selected="selected"{/if}>{$categs[ix].path}</option>
+				{/section}
+			</select>
       </td>
-      <td><input type="submit" name="remove" value="{tr}Remove{/tr}" />
-        <input type="submit" name="update" value="{tr}Update{/tr}" />
-      </td>
+      <td><input type="submit" name="remove" value="{tr}Remove{/tr}" /><input type="submit" name="update" value="{tr}Update{/tr}" /></td>
     </tr>
     {sectionelse}
 		{norecords _colspan=2}
