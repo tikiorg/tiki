@@ -388,7 +388,70 @@ $("#repository, #categories").change(function(){
 	{/remarksbox}
 {/if}
 {/tab}
-
+{tab name="{tr}Export{/tr}"}
+	<form action="tiki-admin.php?page=profiles" method="post">
+		<fieldset id="export_to_yaml">
+			<legend>{tr}Export YAML{/tr}</legend>
+			{if !empty($export_yaml)}
+				{$export_yaml}
+			{/if}
+			<div class="navbar">
+				<label for="export_type">{tr}Object type:{/tr}</label>
+				<select name="export_type" id="export_type">
+					<option value="prefs"{if $export_type eq "prefs"} checked="checked"{/if}>
+						{tr}Preferences{/tr}
+					</option>
+				</select>
+			</div>
+			<fieldset>
+				<legend>{tr}Export modified preferences as YAML{/tr}</legend>
+				<div class="navbar">
+					{listfilter selectors="#prefs_to_export_list > li"}
+					<label for="select_all_prefs_to_export">{tr}Toggle Visible{/tr}</label>
+					<input type="checkbox" id="select_all_prefs_to_export" />
+					<label for="export_show_added">{tr}Show added preferences{/tr}</label>
+					<input type="checkbox" name="export_show_added" id="export_show_added"
+							{if !empty($smarty.request.export_show_added)} checked="checked"{/if} />
+				</div>
+				<ul id="prefs_to_export_list">
+					{cycle values="odd,even" print=false}
+					{foreach from=$modified_list  key="name" item="data"}
+						<li class="{cycle}">
+							<input type="checkbox" name="prefs_to_export[{$name}]" value="{$data.cur|escape}"
+									 id="checkbox_{$name}"{if isset($prefs_to_export[$name])} checked="checked"{/if} />
+							<label for="checkbox_{$name}">
+								{$name} = <strong>{$data.cur|truncate:40:"...":true|escape}</strong>
+								<em>
+									&nbsp;&nbsp;
+									{if isset($data.def)}
+										{if empty($data.def)}
+											('')
+										{else}
+											({$data.def|truncate:20:"...":true|escape})
+										{/if}
+									{else}
+										({tr}no default{/tr})
+									{/if}
+								</em>
+							</label>
+						</li>
+					{/foreach}
+				</ul>
+				{jq}
+$("#select_all_prefs_to_export").click( function () {
+	$("input[name^=prefs_to_export]:visible").click();
+});
+$("#export_show_added, #export_type").click( function () {
+	$(this)[0].form.submit();
+});
+				{/jq}
+				<div class="input_submit_container">
+					<input type="submit" name="export" value="{tr}Export{/tr}" />
+				</div>
+			</fieldset>
+		</fieldset>
+	</form>
+{/tab}
 {tab name="{tr}Advanced{/tr}"}
 
 <fieldset><legend>{tr}Repositories{/tr}</legend>

@@ -409,3 +409,23 @@ a.admbox.off img {
 }
 
 /* end theme generator */
+
+/* profiles */
+
+#prefs_to_export_list {
+	height: 30em;
+	overflow: auto;
+	list-style: none;
+	padding: 0;
+}
+
+#prefs_to_export_list li {
+	padding: 0.4em 2em;
+}
+#export_to_yaml label {
+	margin-left: 1em;
+}
+
+
+/* end profiles */
+

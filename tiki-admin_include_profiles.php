@@ -179,6 +179,29 @@ else
 	
 $smarty->assign('tikiMajorVersion' ,substr($TWV->version,0,2));
 
+$modified = $prefslib->getModifiedPreferences( !empty($_REQUEST['export_show_added']) ? true : false );
+$smarty->assign('modified_list', $modified);
+
+if (!isset($_REQUEST['export_type'])) {
+	$_REQUEST['export_type'] = 'prefs';
+}
+$smarty->assign( 'export_type', $_REQUEST['export_type']);
+
+if (isset($_REQUEST['export']) && $_REQUEST['export_type'] === 'prefs') {
+	include_once 'lib/Horde/Yaml.php';
+	include_once 'lib/Horde/Yaml/Dumper.php';
+	$export_yaml = Horde_Yaml::dump( array( 'preferences' => $_REQUEST['prefs_to_export'] ),
+			array('indent' => 1, 'wordwrap' => 0));
+
+	$export_yaml = preg_replace( '/^---\n/', '', $export_yaml);
+	$export_yaml =  "{CODE(caption=>YAML,wrap=>0)}\n" . $export_yaml . "{CODE}\n";
+
+	include_once 'lib/wiki-plugins/wikiplugin_code.php';
+	$export_yaml =  wikiplugin_code( $export_yaml, array('caption' => 'Wiki markup', 'colors' => 'tikiwiki' ));
+	$export_yaml = preg_replace( '/~[\/]?np~/', '', $export_yaml);
 	
+	$smarty->assign( 'export_yaml', $export_yaml );
+	$smarty->assign( 'prefs_to_export', $_REQUEST['prefs_to_export']);
+}
 
 ask_ticket('admin-inc-profiles');

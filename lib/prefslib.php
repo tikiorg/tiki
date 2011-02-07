@@ -433,6 +433,47 @@ class PreferencesLib
 	private function _getMulticheckboxValue( $info, $data ) {
 		return $this->_getMultilistValue( $info, $data );
 	}
+
+	// for export as yaml for tiki 7
+
+	/**
+	 * @global TikiLib $tikilib
+	 * @param bool $added shows current prefs not in defaults
+	 * @return array (prefname => array( 'cur' => current value, 'def' => default value ))
+	 */
+	function getModifiedPreferences( $added = false ) {
+		global $tikilib;
+
+		$prefsTable = $tikilib->table('tiki_preferences');	// get prefs direct from db
+		$res = $prefsTable->fetchAll( $prefsTable->all() );
+		$prefs = array();
+
+		foreach ($res as $row) {
+			$prefs[$row['name']] = $row['value'];
+		}
+
+		$defaults = get_default_prefs();
+		$modified = array();
+
+		foreach($prefs as $pref => $val) {
+			if (( $added && !isset($defaults[$pref])) || (isset($defaults[$pref]) && $val !== $defaults[$pref] )) {
+				if (!in_array($pref, array( 'tiki_release', 'tiki_version_last_check', 'lastUpdatePrefs' ))) {	// prefs modified by the system etc
+					if (!in_array($pref, array( 'fgal_use_dir', 'sender_email' ))) {	// prefs with system info etc
+						$modified[$pref] = array(
+							'cur' => $prefs[$pref],
+						);
+						if (isset($defaults[$pref])) {
+							$modified[$pref]['def'] = $defaults[$pref];
+						}
+					}
+				}
+			}
+		}
+		ksort($modified);
+		
+		return $modified;
+	}
+
 }
 
 global $prefslib;
