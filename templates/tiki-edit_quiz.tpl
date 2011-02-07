@@ -39,18 +39,18 @@
 	{cycle values="odd,even" print=false}
 	{section name=user loop=$channels}
 		<tr class="{cycle}">
-			<td>{$channels[user].quizId}</td>
-			<td>
+			<td class="id">{$channels[user].quizId}</td>
+			<td class="text">
 				{$channels[user].name|escape}
 				<div class="subcomment">
 					{$channels[user].description|escape|nl2br}
 				</div>
 			</td>
-			<td style="text-align: center;">{$channels[user].canRepeat}</td>
-			<td style="text-align: center;">{$channels[user].timeLimited} {if $channels[user].timeLimited eq 'y'}({$channels[user].timeLimit} mins){/if}</td>
-			<td style="text-align: center;">{$channels[user].questions}</td>
-			<td style="text-align: center;">{$channels[user].results}</td>
-			<td style="text-align: right;">
+			<td class="text">{$channels[user].canRepeat}</td>
+			<td class="text">{$channels[user].timeLimited} {if $channels[user].timeLimited eq 'y'}({$channels[user].timeLimit} mins){/if}</td>
+			<td class="integer">{$channels[user].questions}</td>
+			<td class="integer">{$channels[user].results}</td>
+			<td class="action">
 
 			{self_link _icon='page_edit' cookietab='2' _anchor='anchor2' quizId=$channels[user].quizId}{tr}Edit{/tr}{/self_link}
 				<a class="link" href="tiki-edit_quiz_questions.php?quizId={$channels[user].quizId}">{icon _id='help' alt="{tr}Questions{/tr}" title="{tr}Questions{/tr}"}</a>

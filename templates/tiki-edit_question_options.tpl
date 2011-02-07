@@ -34,14 +34,16 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr class="{cycle}">
-<td>{$channels[user].optionId}</td>
-<td>{$channels[user].optionText|escape}</td>
-<td>{$channels[user].points}</td>
-<td>
+<td class="id">{$channels[user].optionId}</td>
+<td class="text">{$channels[user].optionText|escape}</td>
+<td class="integer">{$channels[user].points}</td>
+<td class="action">
    <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
    <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 </td>
 </tr>
+{sectionelse}
+	{norecords _colspan=4}
 {/section}
 </table>
 

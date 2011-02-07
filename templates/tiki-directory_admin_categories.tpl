@@ -103,13 +103,13 @@
   {cycle values="odd,even" print=false}
   {section name=user loop=$items}
   <tr class="{cycle}">
-    <td><a class="tablename" href="tiki-directory_admin_categories.php?parent={$items[user].categId}">{$items[user].name|escape}</a></td>
-    <td>{$items[user].childrenType}</td>
-    <td>{$items[user].viewableChildren}</td>
-    <td>{$items[user].allowSites}{if $items[user].allowSites eq 'y'} ({$items[user].sites}) {/if}</td>
-    <td>{$items[user].showCount}</td>
-    <td>{$items[user].editorGroup}</td>
-    <td><a class="link" href="tiki-directory_admin_related.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;categId={$items[user].categId}"><img src='img/icons2/admin_move.gif' alt="{tr}relate{/tr}" title="{tr}relate{/tr}" /></a> <a class="link" href="tiki-directory_admin_categories.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;parent={$parent}&amp;categId={$items[user].categId}">{icon _id='page_edit'}</a> <a class="link" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].categId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a> </td>
+    <td class="text"><a class="tablename" href="tiki-directory_admin_categories.php?parent={$items[user].categId}">{$items[user].name|escape}</a></td>
+    <td class="text">{$items[user].childrenType}</td>
+    <td class="integer">{$items[user].viewableChildren}</td>
+    <td class="text">{$items[user].allowSites}{if $items[user].allowSites eq 'y'} ({$items[user].sites}) {/if}</td>
+    <td class="text">{$items[user].showCount}</td>
+    <td class="text">{$items[user].editorGroup}</td>
+    <td class="action"><a class="link" href="tiki-directory_admin_related.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;categId={$items[user].categId}"><img src='img/icons2/admin_move.gif' alt="{tr}relate{/tr}" title="{tr}relate{/tr}" /></a> <a class="link" href="tiki-directory_admin_categories.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;parent={$parent}&amp;categId={$items[user].categId}">{icon _id='page_edit'}</a> <a class="link" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].categId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a> </td>
   </tr>
   {sectionelse}
 		{norecords _colspan=7}
