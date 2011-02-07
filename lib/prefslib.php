@@ -445,7 +445,7 @@ class PreferencesLib
 		global $tikilib;
 
 		$prefsTable = $tikilib->table('tiki_preferences');	// get prefs direct from db
-		$res = $prefsTable->fetchAll( $prefsTable->all() );
+		$res = $prefsTable->fetchAll( $prefsTable->all(), array() );
 		$prefs = array();
 
 		foreach ($res as $row) {

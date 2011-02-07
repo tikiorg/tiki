@@ -293,9 +293,11 @@ class ThemeGenLib
 		
 		foreach ($this->tg_data as $secName => &$secData) {
 			foreach ($secData['types'] as $typeName => &$typeData) {
-				foreach ($swaps[$typeName] as $old => $new) {
-					$reg = str_replace( '$0', preg_quote($old, '/'), $typeData['regexps']['replace'] );
-					$css = preg_replace( $reg, '$1 ' . html_entity_decode($new) . '$2', $css);
+				if (isset($swaps[$typeName])) {
+					foreach ($swaps[$typeName] as $old => $new) {
+						$reg = str_replace( '$0', preg_quote($old, '/'), $typeData['regexps']['replace'] );
+						$css = preg_replace( $reg, '$1 ' . html_entity_decode($new) . '$2', $css);
+					}
 				}
 			}
 		}
