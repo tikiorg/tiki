@@ -62,8 +62,9 @@ if ($tiki_p_admin == 'y') {
 			exit;
 		}
 		if ($userlib->user_exists($_REQUEST['username'])) {
-			$_SESSION[$user_cookie_site] = $_REQUEST['username'];
-			$smarty->assign_by_ref('user', $_REQUEST['username']);
+			$username = $userlib->get_user_real_case($_REQUEST['username']);
+			$_SESSION[$user_cookie_site] = $username;
+			$smarty->assign_by_ref('user', $username);
 		}
 		header('location: ' . $_SESSION['loginfrom']);
 		// Unset session variable for the next su

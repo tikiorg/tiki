@@ -207,6 +207,10 @@ class UsersLib extends TikiLib
 		}
 		return $rv[$user];
 	}
+	function get_user_real_case($user) {
+		$query = "select `login` from `users_users` where upper(`login`) = ?";
+		return $this->getOne($query, array(strtoupper($user)) );
+	}
 
 	function group_exists($group) {
 		return in_array($group, $this->list_all_groups());
