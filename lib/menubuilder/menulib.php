@@ -73,6 +73,24 @@ class MenuLib extends TikiLib
 		return true;
 	}
 
+	function clone_menu($menuId) {
+		$menus = $this->table('tiki_menus');
+		$row = $menus->fetchFullRow( array( 'menuId' => $menuId ));
+		$row['menuId'] = null;
+		$row['name'] = $row['name'] . ' ' . tra('(copy)');
+		$newId = $menus->insert( $row );
+
+		$menuoptions = $this->table('tiki_menu_options');
+		$oldoptions = $menuoptions->fetchAll( $menuoptions->all(), array( 'menuId' => $menuId ));
+		$row = null;
+
+		foreach( $oldoptions as $row ) {
+			$row['optionId'] = null;
+			$row['menuId'] = $newId;
+			$menuoptions->insert( $row );
+		}
+	}
+
 	function get_max_option($menuId)
 	{
 		$query = "select max(`position`) from `tiki_menu_options` where `menuId`=?";

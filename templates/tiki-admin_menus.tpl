@@ -22,8 +22,10 @@
 				<tr class="{cycle}">
 					<td class="id">{$channels[user].menuId}</td>
 					<td class="text">
-						{if $tiki_p_edit_menu_option eq 'y'}
+						{if $tiki_p_edit_menu_option eq 'y' and $channels[user].menuId neq 42}
 							<a class="link" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Configure/Options{/tr}">{$channels[user].name|escape}</a>
+						{else}
+							{$channels[user].name|escape}
 						{/if}
 						<br />
 						{$channels[user].description|escape|nl2br}
@@ -31,16 +33,29 @@
 					<td class="text">{$channels[user].type}</td>
 					<td class="integer">{$channels[user].options}&nbsp;</td>
 					<td class="action">
-						{self_link menuId=$channels[user].menuId cookietab="2" _title="{tr}Edit{/tr}"}{icon _id='page_edit'}{/self_link}
-						{if $tiki_p_edit_menu_option eq 'y'}
-							<a class="link" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Configure/Options{/tr}">{icon _id='table' alt="{tr}Configure/Options{/tr}"}</a>
-						{/if}
-						{if $channels[user].individual eq 'y'}
-							<a title="{tr}Active Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=menus&amp;permType=menus&amp;objectId={$channels[user].menuId}">{icon _id='key_active' alt="{tr}Active Permissions{/tr}"}</a>
+						{if $channels[user].menuId neq 42}
+							{if $tiki_p_edit_menu eq 'y'}
+								{self_link menuId=$channels[user].menuId cookietab="2" _title="{tr}Edit{/tr}"}{icon _id='page_edit'}{/self_link}
+							{/if}
+							{if $tiki_p_edit_menu_option eq 'y'}
+								<a class="link" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Configure/Options{/tr}">{icon _id='table' alt="{tr}Configure/Options{/tr}"}</a>
+							{/if}
+							{if $channels[user].individual eq 'y'}
+								<a title="{tr}Active Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=menus&amp;permType=menus&amp;objectId={$channels[user].menuId}">{icon _id='key_active' alt="{tr}Active Permissions{/tr}"}</a>
+							{else}
+								<a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=menus&amp;permType=menus&amp;objectId={$channels[user].menuId}">{icon _id='key' alt="{tr}Permissions{/tr}"}</a>
+							{/if}
+							{if $tiki_p_edit_menu eq 'y'}
+								{self_link remove=$channels[user].menuId _title="{tr}Delete{/tr}"}{icon _id='cross' alt="{tr}Delete{/tr}"}{/self_link}
+							{/if}
 						{else}
-							<a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=menus&amp;permType=menus&amp;objectId={$channels[user].menuId}">{icon _id='key' alt="{tr}Permissions{/tr}"}</a>
+							{*if $tiki_p_admin eq 'y'}
+								{button reset="y" menuId=$channels[user].menuId _text="{tr}RESET{/tr}" _auto_args="reset,menuId"}
+							{/if*}
 						{/if}
-						{self_link remove=$channels[user].menuId _title="{tr}Delete{/tr}"}{icon _id='cross' alt="{tr}Delete{/tr}"}{/self_link}
+						{if $tiki_p_edit_menu eq 'y'}
+							{self_link  menuId=$channels[user].menuId clone="y" _title="{tr}Clone this menu and it's options{/tr}" _icon="page_copy"}{/self_link}
+						{/if}
 					</td>
 				</tr>
 			{sectionelse}

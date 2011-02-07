@@ -30,7 +30,7 @@ if ($_REQUEST["menuId"]) {
 }
 $smarty->assign_by_ref('info', $info);
 if (isset($_REQUEST["remove"])) {
-	$access->check_authenticity();
+	$access->check_authenticity( tra('Are you sure you want to delete menu id:') . ' ' . $_REQUEST['remove'] );
 	$menulib->remove_menu($_REQUEST["remove"]);
 	$smarty->clear_cache('tiki-user_menu.tpl', $_REQUEST['menuId']);
 }
@@ -50,6 +50,16 @@ if (isset($_REQUEST["save"])) {
 		'use_items_icons' => 'n'
 	));
 }
+
+if (isset($_REQUEST['clone']) && $_REQUEST['menuId'] > 0) {
+	check_ticket('admin-menus');
+	$menulib->clone_menu($_REQUEST["menuId"]);
+}
+
+if (isset($_REQUEST['reset'])) {
+	$access->check_authenticity(tra('Are you sure you want to reset the Application Menu to the current system default?'));
+}
+
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_desc';
 } else {
