@@ -16,7 +16,6 @@
 body {
 	margin: 0;
 	padding: 0;
-	background: #fff url(clubcard/img01.jpg) repeat-x left top;
 	font-size: 72%;
 	font-family: Arial, Helvetica, sans-serif;
 	text-align: justify;
@@ -25,19 +24,17 @@ body {
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
 
-div#middle {padding-top: 10px}
-
 #c1c2 {
 	text-align: left;
 	font-size: 1.0em}
 
 #col1 {padding: 0 17px}
 
-#col1 > .content,
+/*#col1 > .content,
 #showhide_columns,
 .tellafriend {
 	margin-right: 140px
-}
+}*/
 
 #showhide_columns,
 .tellafriend,
@@ -51,16 +48,16 @@ body.fullscreen #col1 {
 	margin-left: 30px !important;
 	margin-right: 30px !important}
 
-#c1c2 #wrapper #col1.marginleft {margin-left: 390px}
+#c1c2 #wrapper #col1.marginleft {margin-left: 235px}
 #c1c2 #wrapper #col1.marginright {margin-right: 235px}
 
 #c1c2 #col2 {
-	width: 390px;
+	width: 235px;
 	}
-
+/*
 #c1c2 #col2 .content {
 	padding-left: 155px}
-
+*/
 #col3 {
 	margin-left: -235px;
 	width: 235px;
@@ -89,8 +86,6 @@ body.fullscreen #col1 {
 	padding: 0;
 	margin: 0;
 }
-
-
 
 /***** XHTML Elements (other than body tag) ******/
 h1, h2, h3, h4, h5 {
@@ -169,12 +164,6 @@ input[type=submit]:hover,
 	background: #678B1D;
 }
 
-.box-data .button a:hover,
-.box-data button:hover,
-.box-data input[type=reset]:hover,
-.box-data input[type=submit]:hover,
-.box-data .button input:hover {}
-
 #header input[type=text],
 #header input[type=password] {
 	background: #29a0c8;
@@ -184,23 +173,27 @@ input[type=submit]:hover,
 
 
 /***** Site Header & Identity *****/
-#header {
-	min-height: 200px;
+
+#fixed_width {
+	width: auto;
+}
+
+#header_outer {
+		background: #fff url(clubcard/img01.jpg) repeat-x;
+}
+
+#header_fixedwidth {
 	color: #8e8c8d}
+	
+.fixed_width #header_fixedwidth,
+.fixed_width #middle {
+	width: 700px;
+	margin: 0 auto;
+}
 
-* html #header {height: 200px}
-
-#header-top {
-	min-height: 100px;
+#top_modules {
+	height: 160px;
 	position: relative;
-}
-
-* html #header-top {
-	height: 100px
-}
-
-#sioptions {
-	padding: 0 155px;
 }
 
 #sitetitles {
@@ -231,22 +224,32 @@ input[type=submit]:hover,
 	color: #8E8C8D;
 }
 
-#siteloginbar {
+.siteloginbar_popup {
 	position: absolute;
-	bottom: 3px;
-	right: 155px;
+	bottom: 58px;
+	right: 10px;
 }
 
-#tiki-top {
+#top_modules #tiki-top {
+	position: absolute;
+	bottom: 10px;
+	left: 0;
 	height: 50px;
-	margin: 0 155px;
+	width: 100%;
 	background: url(clubcard/img02.jpg) repeat-x left top;
 
 }
 
-#sitesearchbar {
+#topbar_modules {
+	min-height: 40px;
+}
+
+#topbar_modules .box-search {
 	padding-top: 10px;
 	color: #fff;
+	position: absolute;
+	top: 0;
+	right: 0;
 }
 
 /****** Menus, Links ******/
@@ -270,8 +273,7 @@ input[type=submit]:hover,
 	top: 0;
 }
 
-#tiki-top ul.cssmenu_horiz li.menuLevel0 a,
-.horbar a {
+#tiki-top ul.cssmenu_horiz li.menuLevel0 a {
 	display: block;
 	padding: 17px 20px 17px 20px;
 	background: url(clubcard/img03.jpg) no-repeat right 18px;
@@ -281,19 +283,16 @@ input[type=submit]:hover,
 	color: #FFFFFF;
 }
 
-#tiki-top ul.cssmenu_horiz li ul li,
-.mdksubframe {
+#tiki-top ul.cssmenu_horiz li ul li {
 	background: #5b5b5b;
 }
 
-#tiki-top ul.cssmenu_horiz li.menuLevel1 a,
-.mdkitem {
+#tiki-top ul.cssmenu_horiz li.menuLevel1 a {
 	background: none;
 	padding: 5px 20px;
 }
 
-.cssmenu_vert li ul li,
-.mdkverbar .mdksubframe {
+.cssmenu_vert li ul li {
 	background: #95c72a;
 }
 
@@ -302,18 +301,10 @@ input[type=submit]:hover,
 	border-top: 0;
 	margin-bottom: -1px;
 }
-/*
-.cssmenu_vert li ul {
-	background: #95c72a;
-}*/
+
 
 .cssmenu_vert li ul li:first-child {
 	border-top: 1px dashed #678b1d;
-}
-
-.mdkverbar .mdksubframe {
-	background: #95c72a;
-	border: 1px dashed #678b1d;
 }
 
 /* special arrows and arrow top padding */
@@ -323,8 +314,6 @@ input[type=submit]:hover,
 a > .sf-sub-indicator {
 	top: .4em;
 }
-
-/** PHP Layers Menus **/
 
 
 /** Links in other menus **/

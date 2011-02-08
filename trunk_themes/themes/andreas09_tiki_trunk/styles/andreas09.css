@@ -22,7 +22,6 @@ html>body {font-size: 72% !important}
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
 #middle {
-	padding-top: 20px;
 	background: url(andreas09/options/black/mid.jpg) repeat-x}
 
 
@@ -202,23 +201,31 @@ table textarea {font-size: 1.3em}
 ul, ol {text-align: left}
 
 /***** Site Header & Identity *****/
-#header-top {
-	min-height: 101px !important;
+#header {
 	background: url(andreas09/options/black/header.jpg) repeat-x bottom}
 
 * html #header-top {height: 101px}
 
-#siteheader {
+#header {
 	color: #fff;
 	margin: 0;
 	text-align: left}
-
-#sioptions  {padding: 0 1em}
-
-#siteloginbar {
+	
+#top_modules {
+	min-height: 101px;
+}
+	
+.siteloginbar_popup {
+	position: absolute;
 	bottom: 2px;
-	right: 0;
+	right: 10px;
 	font-size: 95%}
+	
+.box-logo {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+}
 
 #sitetitle,
 #sitesubtitle {
@@ -230,27 +237,32 @@ ul, ol {text-align: left}
 
 #sitetitle {
 	font-size: 2.6em;
-	padding-top: 20px}
+}
 
 #sitesubtitle {font-size: 1.6em}
 
-#header-top a,
-#header-top a:link,
-#header-top a:visited {color: #fff}
+#header a,
+#header a:visited {color: #fff}
+
+#topbar_modules {
+	min-height: 38px;
+}
 
 #tiki-top {
 	background: url(andreas09/options/black/header.jpg) repeat-x;
-	height: 38px}
+	height: 38px;
+}
 
-#sitesearchbar {
-	margin-right: 10px;
-	margin-top: 8px;
+.box-search {
+	position: absolute;
+	right: 10px;
+	top: 8px;
 	font-size: 95%;
 	color: #303030}
 
-#sitesearchbar form {margin-top: 6px; margin-bottom: -6px}
+.box-search form {}
 
-#sitesearchbar .button {
+.box-search .button {
 	border: solid 1px #aaa;
 	background: #f0f0f0 url(andreas09/options/black/menuhover.jpg) top left repeat-x;
 	color: #505050;

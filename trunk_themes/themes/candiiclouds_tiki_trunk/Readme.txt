@@ -11,9 +11,6 @@ adapted for Tiki Wiki CMS Groupware by Gary Cunningham-Lee (chibaguy).
 
 * templates/styles/candiiclouds/credits.tpl
 * templates/styles/candiiclouds/index.php
-* templates/styles/candiiclouds/tiki.tpl
-* templates/styles/candiiclouds/tiki-site_header_top.tpl
-
 
 -=Stylesheet and background images=-
 * styles/candiiclouds.css
@@ -37,9 +34,10 @@ http://zukakakina.com/Candii Clouds
 See http://themes.tiki.org/Upgrading for overview of changes in this Tiki version related to themes.
  
 -=Version=-
-* Tiki 6
+* Tiki 7
  
 -=Changelog=-
+6 updated for Tiki 7
 5 updated for Tiki 6
 4 updated for Tiki 5
 3 updated for Tiki 4

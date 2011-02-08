@@ -10,7 +10,6 @@
 -=Files=-
 * templates/styles/andreas09/credits.tpl
 * templates/styles/andreas09/index.php
-* templaes/styles/andreas09/tiki-site_header_popup.tpl
 * styles/andreas09.css
 * styles/andreas09/andreas09.png
 * styles/andreas09/header.jpg
@@ -61,9 +60,10 @@ http://zukakakina.com/Andreas09
 See http://themes.tiki.org/Upgrading for overview of changes in this Tiki version related to themes.
  
 -=Version=-
-* Tiki 6
+* Tiki 7
  
 -=Changelog=-
+6 updated for Tiki 7
 5 updated for Tiki 6
 4 updated for Tiki 5
 3 updated for Tiki 4

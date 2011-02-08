@@ -34,9 +34,10 @@ http://zukakakina.com/ClubCard
 See http://themes.tiki.org/Upgrading for overview of changes in this Tiki version related to themes.
  
 -=Version=-
-* Tiki 6
+* Tiki 7
  
 -=Changelog=-
+5 update for Tiki 7
 4 update for Tiki 6
 3 update for Tiki 5
 2 update for Tiki 4

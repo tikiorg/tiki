@@ -7,6 +7,7 @@
  */
 
 /* Import the default layout properties file: */
+@import url("lite/lite.css");
 @import url("layout/layout.css");
 @import url("layout/design.css");
 
@@ -27,29 +28,46 @@ html>body {font-size: .7em !important}
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
-table#main {font-size: 1em}
+		
+#main {
+	background: #fff;
+	padding-top: 10px;
+}
 
-td#leftmargin {
-	width: 10%;
-	background: url(candiiclouds/leftmarginbg.jpg) 100% 0 repeat-y}
+.fixed_width #fixedwidth {
+	width: 900px;
 
+}
+		
 td#header {background: #fff}
 
-td#rightmargin {
-	width: 10%;
-	background: url(candiiclouds/rightmarginbg.jpg) 0 0 repeat-y;}
+#c1c2 #wrapper #col1.marginleft  {
+	margin-left: 210px;
+}
 
-td#leftcolumn {
+#c1c2 #wrapper #col1.marginright {
+	margin-right: 210px;
+}
+
+#c1c2 #col2 {
 	width: 210px;
-	background: #fff}
+	background: #fff;
+}
 
-td#centercolumn {
+#col3 {
+	width: 210px;
+	margin-left: -210px;
+	background: #fff;
+}
+
+#col2 > .content,
+#col3 > .content {
+	margin: 0 10px;
+}
+
+#col1 > .content {
 	padding: 35px 10px 10px 10px;
 	background: #fff url(candiiclouds/cloudsbdr.gif) no-repeat top center}
-
-td#rightcolumn {
-	width: 210px;
-	background: #fff}
 
 #footer {
 	font-family: Tahoma;
@@ -179,22 +197,19 @@ u {
 	text-decoration: none}
 
 /***** Site Header & Identity *****/
-#header-top {
-	background: #fff;
-	padding: 10px}
+#header_fixedwidth {
+	padding: 10px;
+}
 
-img#bcloud {
-	float: left;
-	clear: none;
-	margin-right: 50px}
+#header {
+	background: url(candiiclouds/banstars.gif);
 
-#siteheader {
-	display: block;
-	min-height: 120px}
+}
 
-div#sioptions  {background: url(candiiclouds/banstars.gif);}
-#sioptionscentered {background: url(candiiclouds/banstars.gif);}
-.floatright img {margin-right: 40px}
+#top_modules  {
+	background: url(candiiclouds/bcloud.gif) no-repeat;
+	min-height: 120px;
+}
 
 div#sitelogo {
 	float: left;
@@ -202,17 +217,11 @@ div#sitelogo {
 	margin: 0;
 	padding: 0}
 
-#sitelogo a {border-bottom: 0}
-div#sitead {margin: 5px}
-#sitead.floatright {padding-right: 100px}
-#sitead.floatleft {padding-left: 100px}
 
-#siteloginbar {
+#top_modules .siteloginbar_popup {
+	position: absolute;
 	right: 13px;
-	bottom: 8px}
-
-#siteloginbar_popup {
-	bottom: 3px;
+	bottom: 8px;
 }
 
 #sitetitle {
@@ -227,7 +236,12 @@ div#sitead {margin: 5px}
 
 #sitesubtitle {text-indent: 42px}
 
-#sitesearchbar {border-left: 1px solid #fff}
+#topbar_modules .box-search {
+	border-left: 1px solid #fff;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
 
 input#fuser,
 select[name="where"],
@@ -440,14 +454,13 @@ a.linkmenu:hover{
 /** Modules **/
 .box {
 	margin-bottom: 10px;
-	width: 210px}
+}
 
 .wikitext .box {width: auto}
 
 h3.box-title {
 	background: url(candiiclouds/sbihead.gif) no-repeat;
-	height: 24px;
-	width: 205px;
+	min-height: 24px;
 	margin-right: auto;
 	margin-bottom: 4px;
 	margin-left: auto;
@@ -458,7 +471,7 @@ h3.box-title {
 	letter-spacing: -0.5px}
 
 .wikitext h3.box-title {
-	height: 30px;
+	min-height: 30px;
 	margin-bottom: 4px;
 	padding: 5px 0 0 0;
 }
@@ -472,7 +485,7 @@ h3.box-title {
 	margin-left: auto;
 	margin-right: auto;
 	padding: 10px;
-	width: 180px}
+}
 
 * html .box-data {
 	margin-left: 10px;

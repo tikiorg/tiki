@@ -1,10 +1,6 @@
 /* $Id$
 	Faulkner theme for Tiki Wiki CMS Groupware, adapted by the
 	original WordPress template by Demus Designs (http://www.demusdesign.com.
-	Two page-layout tables used to enable expanding content area
-	and side-column-independent background gradients. Because IE7
-	does not support display:table, minimal HTML tables are needed for
-	graphic treatment and column integrity.
 	See http://themes.tikiwiki.org or http://zukakakakina.com
 	for more information. Released under GPL license.
 	Please respect the request of the original author and display
@@ -12,6 +8,7 @@
 */
 
 /* Import foundation CSS files. */
+@import url("lite/lite.css");
 @import url("layout/layout.css");
 @import url("layout/design.css");
 
@@ -19,82 +16,57 @@
 			others follow Layout) *****/
 body {
 	font: 75% Times, "Times New Roman", serif;
-	background: url(faulkner/parchment.jpg)}
+	background: url(faulkner/foot.jpg) 50% 0;
+}
 
 html>body {font-size: 1em !important}
 
 body.fullscreen {
 	text-align: left;
 	padding: 3em}
-/*
-a#fullscreenbutton,
-a#fullscreenbutton:visited {color: #996633}
 
-body.fullscreen a#fullscreenbutton,
-body.fullscreen a#fullscreenbutton:visited {
-	color: #800;
-	text-decoration: underline}
-
-body.fullscreen a#fullscreenbutton:hover {
-	color: #C90;
-	text-decoration: none}*/
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
-table#main {
-	border-collapse: collapse;
-	width: 100%}
 
-* html table#main td {font-size: 13px}
+.fixed_width #fixedwidth {
+	width: 800px;
+}
 
-div#tiki-main {text-align: center}
+#c1c2 #wrapper #col1.marginleft  {
+	margin-left: 180px;
+}
 
-td#leftmargin {
-	width: 15%;
-	background: url(faulkner/leftmargin.jpg) repeat-y 100% 0}
+#c1c2 #wrapper #col1.marginright {
+	margin-right: 180px;
+}
 
-td#topmargin {height: 0}
+#fixedwidth {
+	background: url(faulkner/parchment.jpg);
+}
 
-td#header {
-	background: url(faulkner/parchmentright.jpg) repeat-y 100% 0;
-	text-align: center;
-	margin: 0;
-	padding: 0;
-	position: relative}
-
-td#rightmargin {
-	width: 15%;
-	background: url(faulkner/rightmargin.jpg) repeat-y 0% 0%}
-
-table#colscontainer {
-	background: url(faulkner/parchmentleft.jpg) repeat-y;
-	text-align: left}
-
-div#colscontainerdiv {
+#main {
 	background: url(faulkner/parchmentright.jpg) repeat-y 100% 0}
 
-td#leftborder {
+#header_outer,
+.middle_outer,
+#footer {
 	background: url(faulkner/parchmentleft.jpg) repeat-y;
-	width: 71px	}
+}
 
-td#leftcolumn {
+#c1c2 #col2 {
 	width: 180px;
-	padding: 1em}
+}
 
-td#centercolumn {
-	padding: 1em;
-	padding-left: 2em}
 
-td#rightcolumn {
+#col3 {
 	width: 180px;
-	padding: 1em}
+}
 
-td#leftcolumn a,
-td#rightcolumn a {text-decoration: none}
-
-td#rightborder {
-	background: url(faulkner/parchmentright.jpg) repeat-y;
-	width: 71px}
+#c1c2 #col2 > .content,
+#col3 > .content {
+	margin: 0 10px;
+}
 
 #footer {
 	min-height: 100px;
@@ -113,8 +85,6 @@ td#rightborder {
 #footer a:hover {
 	color: #c90;
 	text-decoration: underline}
-
-td#bottommargin {height: 0}
 
 /***** XHTML Elements (other than body tag) ******/
 a,
@@ -197,19 +167,6 @@ input[type="submit"],
 .calbuttonon {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 	font-size: 11px;
-/*	line-height: 20px;*/
-	font-weight: normal;
-	color: #660000;
-	background: #eacca7;
-	border: 1px solid;
-	border-color: #eccaa3 #880000 #880000 #eccaa3;
-	padding: 0 4px}
-
-* html input[type="reset"],
-* html input[type="submit"] {
-	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
-	font-size: 11px;
-/*	line-height: 20px;*/
 	font-weight: normal;
 	color: #660000;
 	background: #eacca7;
@@ -235,9 +192,6 @@ input[type="reset"]:active,
 input[type="submit"]:active,
 .button input:active,
 .submitbutton:active {border-color: #223845 #41cbe7 #41cbe7 #223845; }
-
-* html .findtable input {font-size: 1em}
-/*form.admin input[name="features"] {margin-bottom: 3px !important}*/
 
 .highlight, .button.highlight a {
 	background: #eacca7;
@@ -269,19 +223,29 @@ div#header {background: url(faulkner/parchmentright.jpg) 100% 0 repeat-y}
 	min-height: 70px;
 	margin: 0 auto;
 	padding-top: 30px}
+	
+#top_modules {
+	min-height: 160px;
+	text-align: center;
+	padding-top: 30px;
+}
 
-#sioptions  {padding: 1em}
-#sitead.floatright {padding-right: 100px}
-#sitead.floatleft {padding-left: 100px}
-.floatright img {margin-right: 40px}
-#bannertopright {padding-right: 1em}
-
-#siteloginbar {font-size: 80%}
+#top_modules .siteloginbar_popup {
+	position: absolute;
+	bottom: 1px;
+	right: 20px;
+}
 
 input[id="sl-login-user"],
 input[id="sl-login-pass"] {font-size: 90%}
 
 #siteloginbar input.wikiaction {font-size: 90%}
+
+#top_modules .box-logo {
+	margin: 0 auto;
+	width: 300px;
+	white-space: nowrap;
+}
 
 #sitetitles {
 	background: url(faulkner/title_right.gif) 100% 16px no-repeat;
@@ -313,7 +277,7 @@ input[id="sl-login-pass"] {font-size: 90%}
 #header a,
 #header a:visited {text-decoration: none}
 
-#tiki-top {
+#faulkner_topbar_menu {
 	margin: 0 auto;
 	padding: 0;
 	padding-bottom: 20px;
@@ -321,10 +285,16 @@ input[id="sl-login-pass"] {font-size: 90%}
 	text-align: center;
 	background: url(faulkner/ornament.gif) bottom center no-repeat}
 
-#tiki-top table {
+#faulkner_topbar_menu table {
 	width: auto;
 	margin: auto;
 	text-align: left}
+	
+#topbar_modules .box-search {
+	position: absolute;
+	right: 10px;
+	bottom: 0px;
+}
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
@@ -392,28 +362,28 @@ input[id="sl-login-pass"] {font-size: 90%}
 }
 
 /* left column width */
-td#leftcolumn .cssmenu_vert,
-td#leftcolumn .cssmenu_vert li {
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
 	width: 170px;
 }
 
 /* offset from left column (matches above) */
-td#leftcolumn .cssmenu_vert li:hover ul,
-td#leftcolumn .cssmenu_vert li.sfHover ul {
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
 	left: 170px;
 }
 
 /* return ul ul ... to default */
-td#leftcolumn .cssmenu_vert li:hover ul,
-td#leftcolumn .cssmenu_vert li.sfHover ul,
-td#leftcolumn .cssmenu_vert li:hover ul li,
-td#leftcolumn .cssmenu_vert li.sfHover ul li {
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
 	width: 10em;
 }
 
 /* return ul ul ... to default */
-td#leftcolumn .cssmenu_vert li li:hover ul,
-td#leftcolumn .cssmenu_vert li li.sfHover ul {
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
 	left: 10em;
 }
 
@@ -430,103 +400,6 @@ a .sf-sub-indicator {
 	top: .5em;
 }
 
-
-/** PHP Layers Menus **/
-.horbar {
-	text-align: center;
-	white-space: nowrap;
-	border-top: 1px solid #600}
-
-.horbar table {
-  margin-left: auto;
-  margin-right: auto}
-
-.horbaritem a,
-.horbaritem a:visited {
-	padding: 10px 15px 5px 15px;
-	font: 600 1.2em garamond,times,'times new romans',serif;
-	color: #990000;
-	text-align: center;
-	text-decoration: none}
-
-.horbaritem a:hover {
-	padding: 10px 15px 5px 15px;
-	color: #C90;
-	text-decoration: none;
-	background: url(faulkner/menuhover.jpg) repeat-x bottom left}
-
-.mdkitem a:link,
-.mdkitem a:visited  {
-  background: url(faulkner/parchment.jpg);
-  padding: 2px 5px;
-  text-decoration: none}
-
-.box .mdkitem a {background: transparent}
-
-.mdkitem a:hover  {
-	padding: 2px 5px;
-	color: #C90;
-	text-decoration: none;
-	background: url(faulkner/menuhover.jpg) repeat-x bottom left}
-
-.mdkitem a:active {color: #000}
-
-.mdksubmenu {
-	margin-top: 3px;
-	border-top: 1px solid #98615F;
-	background: transparent url(faulkner/h3bg.gif) no-repeat bottom center;
-	padding: 0 0 16px 0}
-
-.mdksubmenu table {width: 150px}
-
-.mdksubframe .mdkitem {
-	background: url(faulkner/parchment.jpg);
-	text-decoration: none}
-
-/*.box */.mdksubframe .mdkitem a,
-.mdksubframe .mdkitem a:visited {
-	font-size: 0.9em;
-	padding: 5px 5px 5px 22px;
-	background: url(faulkner/menu.gif) left no-repeat;
-	color:#600}
-
-.mdksubframe .mdkitem a:hover {
-	background: #ECCAA3 url(faulkner/menu.gif) -360px 50% no-repeat;
-	color: #800;
-	padding: 5px 5px 5px 22px}
-
-.phplmnormal,
-a.phplmnormal:hover,
-a.phplm:link,
-a.phplm:visited,
-a.phplm:hover,
-a.phplm:active {
-	font-size: 0.9em;
-	background: transparent;
-	color: #800;
-	font-family: Times, 'Times New Roman', serif}
-
-a.phplmnormal:hover,
-a.phplm:hover {
-	font-size: 0.9em;
-	color: #C90;
-	background: transparent;
-	text-decoration: none}
-
-a.phplm:active {color: #ff0000}
-
-a.phplmselected:link,
-a.phplmselected:visited,
-a.phplmselected:hover,
-a.phplmselected:active {
-	font-size: 0.9em;
-	text-decoration: none;
-	background: #eee}
-
-a.phplmselected:hover {
-	font-size: 0.9em;
-	text-decoration: none;
-	background: #f0f9ff}
 
 /** Links in other menus **/
 .option a:link,
@@ -579,11 +452,11 @@ a.flip:hover,
 
 /***** Boxes *****/
 /** Modules **/
-#leftcolumn .box,
-#rightcolumn .box {
+#col2 .box,
+#col3 .box {
 	padding-bottom: 5px;
 	margin-bottom: 1em;
-	width: 180px !important}
+}
 
 h3.box-title {
 	border-top: 1px solid #98615F;
