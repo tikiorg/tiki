@@ -62,9 +62,11 @@ class ThemeGenLib
 						'title' => tra('Border Colors'),
 						'selector' => 'color',
 						'regexps' => array(
-							'find' => '/border[\w-]?:[^;\}]*(?:('.$color.')'.$delims.')/Umis',
-							'context' => '/'.$selector.'border[\w-]?:[^\;\}\!]*$0[^\;\}\!]*'.$delimn.'/Umis',
-							'replace' => '/border[\w-]?:[^\;\}\!]*$0[^\;\}\!]*'.$delimn.'/Umis',
+							// special single find capture for borders with multiple colours
+							'find' => '/border[\w-]*\:[^;\}]*(#[0-9a-f\s]{3,6}[\s#0-9a-f]*)'.$delimn.'/Umis',
+							'context' => '/'.$selector.'border[\w-]*:[^\;\}\!]*$0[^\;\}\!]*'.$delimn.'/Umis',
+							// special single replace capture for borders with multiple colours
+							'replace' => '/border[\w-]*:[^\;\}\!]*$0[^\;\}\!]*'.$delimn.'/Umis',
 						),
 					),
 					'borderwidths' => array(
@@ -420,24 +422,37 @@ class ThemeGenTheme extends SerializedList
 	}
 	
 	public function findMatches( $regexp, $haystack, $filename, $type, $lower = true, $matchNumber = 1) {
+		$items = null;
 		preg_match_all( $regexp, $haystack, $matches );
-		$items = $this->processMatches( $matches[$matchNumber], $filename, $type, $lower );
+		if (count($matches) > $matchNumber && count($matchNumber) > 0) {
+			$items = $this->processMatches( $matches[$matchNumber], $filename, $type, $lower );
+		}
 		return $items;
 	}
 	
 	
-	private function processMatches($matches, $css_file, $type, $lower) {
+	private function processMatches($matchesIn, $css_file, $type, $lower) {
 		$processed = array();
-		if (is_array( $matches )) {
-			$matches = array_map('trim', $matches);
+		if (is_array( $matchesIn )) {
+			$matchesIn = array_map('trim', $matchesIn);
 			if ($lower) {
-				$matches = array_map('strtolower', $matches);
+				$matchesIn = array_map('strtolower', $matchesIn);
 			}
-			$matches = array_unique($matches);
-			$matches = array_filter($matches);
-			sort($matches);
-			//$data = $this->currentTheme->loadPref();
-			foreach ($matches as $match) {
+			// Deal with multiple border colours (widths, styles and radii still TODO but not used in tiki CSS afaik)
+			foreach ($matchesIn as &$match) {
+				if (strpos($match, ' ') && in_array( $type, array('bordercolors'))) {
+					$arr = explode( ' ', $match );
+					foreach ( $arr as $a ) {
+						$matchesIn[] = $a;
+					}
+					$match = '';
+				}
+			}
+			$matchesIn = array_unique($matchesIn);
+			$matchesIn = array_filter($matchesIn);
+			sort($matchesIn);
+
+			foreach ($matchesIn as $match) {
 				$match = htmlentities($match);
 				$processed[$match] = array();
 				$processed[$match]['old'] = $match;
