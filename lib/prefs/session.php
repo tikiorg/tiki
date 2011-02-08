@@ -21,7 +21,7 @@ function prefs_session_list() {
 		'session_lifetime' => array(
 			'name' => tra('Session lifetime'),
 			'description' => tra('Session lifetime'),
-			'hint' => tra('Value provided in minutes'),
+			'hint' => tra('Value provided in minutes. It will be the minimum time you are logged in. If you want it to be the exact time, you need to adjust in .htaccess session.gc_probability and session.gc_divisor to 1. Be careful that changing the probability will affect the server performance.'),
 			'type' => 'text',
 			'filter' => 'digits',
 			'perspective' => false,
