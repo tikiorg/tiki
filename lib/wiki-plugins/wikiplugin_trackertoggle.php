@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_box.php 31491 2010-12-19 05:48:56Z lindonb $
+// $Id$
 
 function wikiplugin_trackertoggle_info() {
 	return array(
