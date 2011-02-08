@@ -970,6 +970,10 @@ tr.diffheader {
 	width: 92%;
 }
 
+.tabs .full_width {
+	width: 100%;
+}
+
 .tabmark {
 	display: inline;
 	margin: 0;

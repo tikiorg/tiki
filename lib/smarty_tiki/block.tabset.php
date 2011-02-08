@@ -66,6 +66,9 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 				$button_params['_onclick'] = "setCookie('tabbed_$smarty_tabset_name','".((isset($_COOKIE["tabbed_$smarty_tabset_name"]) && $_COOKIE["tabbed_$smarty_tabset_name"] == 'n') ? 'y' : 'n' )."') ;";
 				$notabs = smarty_function_button($button_params,$smarty);
 				$notabs = "<div class='tabstoggle floatright'>$notabs</div>";
+				$content_class = '';
+			} else {
+				$content_class = ' full_width';
 			}
 		} else {
 			return $content;
@@ -77,7 +80,7 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 		$max = $smarty_tabset_i_tab - 1;
 		$ini = $smarty_tabset_i_tab - count($smarty_tabset);
 		$focus = $ini;
-		$ret .= '<div class="container">';
+		$ret .= '<div class="container' . $content_class . '">';
 		foreach ($smarty_tabset as $value) {
 			$ret .= '<span id="tab'.$focus.'" class="tabmark '.($focus == $cookietab ? 'tabactive' : 'tabinactive').'"><a href="#content'.$focus.'" onclick="tikitabs('.$focus.','.$max.','.$ini.'); return false;">'.$value.'</a></span>';
 			++$focus;
