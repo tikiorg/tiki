@@ -85,7 +85,7 @@
 
 <h2>{tr}Admin Topics{/tr}</h2>
 <form  enctype="multipart/form-data"  action="tiki-minical_prefs.php" method="post">
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
 			<td>{tr}Name:{/tr}</td><td><input type="text" name="name" /></td>
 		</tr>

@@ -49,7 +49,7 @@
 			</td>
 		</tr>
 		</table>
-     <table width="100%" class="normal">
+     <table width="100%" class="formcolor">
 				<tr>
 					<td class="even">{tr}Video Title{/tr}</td>
 					<td class="even">
