@@ -6,7 +6,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 	{
 		$mock = $this->getMock('TikiDb');
 
-		$query = 'INSERT INTO `my_table` (`label`) VALUES (?)';
+		$query = 'INSERT IGNORE INTO `my_table` (`label`) VALUES (?)';
 
 		$mock->expects($this->once())
 			->method('query')
@@ -20,7 +20,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$table = new TikiDb_Table($mock, 'my_table');
 		$this->assertEquals(42, $table->insert(array(
 			'label' => 'hello',
-		)));
+		), true));
 	}
 
 	function testInsertWithMultipleValues()
@@ -430,6 +430,14 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('$$ IN(?, ?, ?)', array(1, 2, 3)), $table->in(array(1, 2, 3)));
+	}
+
+	function testInWithDataNotSensitive()
+	{
+		$mock = $this->getMock('TikiDb');
+		$table = new TikiDb_Table($mock, 'my_table');
+
+		$this->assertEquals($table->expr('BINARY $$ IN(?, ?, ?)', array(1, 2, 3)), $table->in(array(1, 2, 3), true));
 	}
 
 	function testExactMatch()

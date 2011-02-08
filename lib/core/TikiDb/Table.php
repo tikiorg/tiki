@@ -17,13 +17,18 @@ class TikiDb_Table
 	 * against the schema. This is only a helper method to improve code readability.
 	 *
 	 * @param $values array Key-value pairs to insert.
+	 * @param $ignore boolean Insert as ignore statement
 	 */
-	function insert(array $values)
+	function insert(array $values, $ignore = false)
 	{
 		$fieldDefinition = implode(', ', array_map(array($this, 'escapeIdentifier'), array_keys($values)));
 		$fieldPlaceholders = rtrim(str_repeat('?, ', count($values)), ' ,');
 
-		$query = "INSERT INTO {$this->escapeIdentifier($this->tableName)} ($fieldDefinition) VALUES ($fieldPlaceholders)";
+		if ($ignore) {
+			$ignore = ' IGNORE';
+		}
+
+		$query = "INSERT$ignore INTO {$this->escapeIdentifier($this->tableName)} ($fieldDefinition) VALUES ($fieldPlaceholders)";
 
 		$this->db->query($query, array_values($values));
 
@@ -212,7 +217,11 @@ class TikiDb_Table
 
 	function not($value)
 	{
-		return $this->expr('$$ <> ?', array($value));
+		if (empty($value)) {
+			return $this->expr('($$ <> ? AND $$ IS NOT NULL)', array($value));
+		} else {
+			return $this->expr('$$ <> ?', array($value));
+		}
 	}
 
 	function like($value)
@@ -230,13 +239,18 @@ class TikiDb_Table
 		return $this->expr('BINARY $$ = ?', array($value));
 	}
 
-	function in(array $values)
+	function in(array $values, $caseSensitive = false)
 	{
 		if (empty($values)) {
 			return $this->expr('1=0', array());
 		} else {
-			return $this->expr('$$ IN(' . rtrim(str_repeat('?, ', count($values)), ', ') . ')', $values);
+			return $this->expr(($caseSensitive ? 'BINARY ' : '') . '$$ IN(' . rtrim(str_repeat('?, ', count($values)), ', ') . ')', $values);
 		}
+	}
+
+	function sortMode($sortMode)
+	{
+		return $this->expr($this->db->convertSortMode($sortMode));
 	}
 
 	private function buildDelete(array $conditions, & $bindvars)
