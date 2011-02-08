@@ -1792,11 +1792,6 @@ body.filegal_popup #tiki-center {
 	padding: 0;
 }
 
-.trackerfilter-result {
-	max-height: 120ex;
-	overflow: auto;
-}
-
 /***** Categories, Tags *****/
 .categpath {
 	display: block;
