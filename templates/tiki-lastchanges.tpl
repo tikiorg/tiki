@@ -49,17 +49,17 @@
 	{section name=changes loop=$lastchanges}
 		<tr class="{cycle}">
 			<td class="date">{$lastchanges[changes].lastModif|tiki_short_datetime}</td>
-			<td>
+			<td class="text">
 				<a href="{$lastchanges[changes].pageName|sefurl}" class="tablename" title="{$lastchanges[changes].pageName|escape}">
 					{$lastchanges[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true|escape}
 				</a> 
 			</td>
-			<td>{tr}{$lastchanges[changes].action|escape}{/tr}</td>
+			<td class="text">{tr}{$lastchanges[changes].action|escape}{/tr}</td>
 			<td class="username">{$lastchanges[changes].user|userlink}</td>
 			{if $prefs.feature_wiki_history_ip ne 'n'}
 				<td>{$lastchanges[changes].ip}</td>
 			{/if}
-			<td>{$lastchanges[changes].comment|escape}</td>
+			<td class="text">{$lastchanges[changes].comment|escape}</td>
 			<td class="action">
 				{if $tiki_p_wiki_view_history eq 'y'} 
 					{if $lastchanges[changes].version}

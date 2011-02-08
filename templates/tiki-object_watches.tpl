@@ -75,12 +75,12 @@
 		{if $g ne 'Anonymous'}
 			<tr class="{cycle}">
 				{if !empty($cat) && !empty($desc)}
-					<td><label for="group_watch{$i}">{$g|escape}</label></td>
+					<td class="text"><label for="group_watch{$i}">{$g|escape}</label></td>
 					{if $isTop ne 'y' }
-						<td style="text-align:center;"><input id="group_watch{$i}"type="checkbox" name="checked[]" 
+						<td class="checkbox"><input id="group_watch{$i}"type="checkbox" name="checked[]" 
 						value="{$g|escape}"{if in_array($g, $group_watches)} checked="checked"{/if} /></td>
 					{/if}
-					<td style="text-align:center;">
+					<td class="text">
 						<input id="group_watch{$i}" type="radio" name="{$g|escape}" value="cat_leave_desc" checked="checked" /> 
 						<label for="group_watch{$i}">Leave unchanged &nbsp;&nbsp;&nbsp;</label>
 						<input id="group_watch{$i}" type="radio" name="{$g|escape}" value="cat_add_desc" /> 
@@ -90,9 +90,9 @@
 					</td>
 					
 				{else}
-				<td><input id="group_watch{$i}" type="checkbox" name="checked[]" value="{$g|escape}"
+				<td class="checkbox"><input id="group_watch{$i}" type="checkbox" name="checked[]" value="{$g|escape}"
 					{if in_array($g, $group_watches)} checked="checked"{/if} /></td>
-				<td><label for="group_watch{$i}">{$g|escape}</label></td>
+				<td class="text"><label for="group_watch{$i}">{$g|escape}</label></td>
 				{/if}
 			</tr>
 		{/if}

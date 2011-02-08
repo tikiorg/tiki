@@ -88,7 +88,7 @@
 		{/if}
 
 		<tr class="{cycle}">
-			<td>
+			<td class="text">
 				<span style="float:left">
 					{if ($channels[user].individual eq 'n') or ($tiki_p_admin eq 'y') or ($channels[user].individual_tiki_p_forum_read eq 'y')}
 						<a class="forumname" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name|escape}</a>
@@ -118,7 +118,7 @@
 				<td class="integer">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
 			{/if}
 			{if $prefs.forum_list_lastpost eq 'y'}	
-				<td>
+				<td class="text">
 					{if isset($channels[user].lastPost)}
 						{$channels[user].lastPost|tiki_short_datetime}<br />
 						{if $prefs.forum_reply_notitle neq 'y'}<small><i>{$channels[user].lastPostData.title|escape}</i>{/if}

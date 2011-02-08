@@ -59,9 +59,9 @@
     {cycle values="odd,even" print=false}
     {section name=ix loop=$edition_errors}
       <tr class="{cycle}">
-        <td>{$edition_errors[ix].email}</td>
-        <td>{$edition_errors[ix].login}</td>
-        <td>{if {$edition_errors[ix].error eq 'y'}{tr}Error{/tr}{else}{tr}Not sent{/tr}{/if}</td>
+        <td class="email">{$edition_errors[ix].email}</td>
+        <td class="username">{$edition_errors[ix].login}</td>
+        <td class="text">{if {$edition_errors[ix].error eq 'y'}{tr}Error{/tr}{else}{tr}Not sent{/tr}{/if}</td>
       </tr>
     {/section}
   </table>

@@ -31,19 +31,19 @@
             {cycle values="even,odd" print=false}
             {section name=ix loop=$user_pages}
               <tr class="{cycle}">
-                <td>
+                <td class="text">
                   <a class="link" title="{tr}View:{/tr} {$user_pages[ix].pageName}" href="tiki-index.php?page={$user_pages[ix].pageName|escape:"url"}">{$user_pages[ix].pageName|truncate:40:"(...)"}</a>
                 </td>
-                <td style="text-align:center;">
+                <td class="username">
                   {if $userwatch eq $user_pages[ix].creator}{tr}y{/tr}{else}&nbsp;{/if}
                 </td>
-                <td style="text-align:center;">
+                <td class="username">
                   {if $userwatch eq $user_pages[ix].lastEditor}{tr}y{/tr}{else}&nbsp;{/if}
                 </td>
-                <td>
+                <td class="date">
                   {$user_pages[ix].date|tiki_short_datetime}
                 </td>
-                <td style="text-align:center;" width="50px">
+                <td class="action">
                   <a class="link" href="tiki-editpage.php?page={$user_pages[ix].pageName|escape:"url"}">
                     {icon _id='page_edit' title="{tr}Edit:{/tr} `$user_pages[ix].pageName`"}
                   </a>
@@ -72,10 +72,10 @@
             {cycle values="even,odd" print=false}
             {section name=ix loop=$user_galleries}
               <tr class="{cycle}">
-                <td>
+                <td class="text">
                   <a class="link" href="{$user_galleries[ix].galleryId|sefurl:gallery}">{$user_galleries[ix].name}</a>
                 </td>
-                <td style="text-align:center;" width="50px">
+                <td class="action">
                   <a class="link" href="tiki-galleries.php?editgal={$user_galleries[ix].galleryId}">
                     {icon _id='page_edit'}
                   </a>
@@ -104,10 +104,10 @@
             {cycle values="even,odd" print=false}
             {section name=ix loop=$user_articles}
               <tr class="{cycle}">
-                <td>
+                <td class="text">
                   <a class="link" href="{$user_articles[ix].articleId|sefurl:article}">{$user_articles[ix].title}</a>
                 </td>
-                <td style="text-align:center;" width="50px">
+                <td class="action">
                   <a class="link" href="tiki-edit_article.php?articleId={$user_articles[ix].articleId}">
                     {icon _id='page_edit'}
                   </a>
@@ -136,10 +136,10 @@
             {cycle values="even,odd" print=false}
             {section name=ix loop=$user_items}
               <tr class="{cycle}">
-                <td>
+                <td class="text">
                   <a class="link" title="{tr}View{/tr}" href="tiki-view_tracker_item.php?trackerId={$user_items[ix].trackerId}&amp;itemId={$user_items[ix].itemId}">{$user_items[ix].value}</a>
                 </td>
-                <td>
+                <td class="text">
                   <a class="link" title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$user_items[ix].trackerId}">{$user_items[ix].name}</a>
                 </td>
               </tr>
@@ -168,13 +168,13 @@
             {cycle values="even,odd" print=false}
             {section name=ix loop=$msgs}
               <tr class="{cycle}">
-                <td>
+                <td class="text">
                   <a class="link" title="{tr}View{/tr}" href="messu-read.php?offset=0&amp;flag=&amp;flagval=&amp;find=&amp;sort_mode=date_desc&amp;priority=&amp;msgId={$msgs[ix].msgId}">{$msgs[ix].subject}</a>
                 </td>
-                <td>
+                <td class="text">
                   {$msgs[ix].user_from}
                 </td>
-                <td>
+                <td class="date">
                   {$msgs[ix].date|tiki_short_datetime}
                 </td>
               </tr>
@@ -200,7 +200,7 @@
             {cycle values="even,odd" print=false}
             {section name=ix loop=$tasks}
               <tr class="{cycle}">
-                <td>
+                <td class="text">
                   <a class="link" href="tiki-user_tasks.php?taskId={$tasks[ix].taskId}">{$tasks[ix].title}</a>
                 </td>
               </tr>
@@ -227,10 +227,10 @@
             {cycle values="even,odd" print=false}
             {section name=ix loop=$user_forum_topics}
               <tr class="{cycle}">
-                <td>
+                <td class="text">
                   <a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_topics[ix].threadId}&amp;forumId={$user_forum_topics[ix].object}">{$user_forum_topics[ix].title}</a>
                 </td>                
-                <td>
+                <td class="date">
                   {$user_forum_topics[ix].commentDate|tiki_short_datetime}
                 </td>  
               </tr>
@@ -257,10 +257,10 @@
             {cycle values="even,odd" print=false}
             {section name=ix loop=$user_forum_replies}
               <tr class="{cycle}">
-                <td>
+                <td class="text">
                   <a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_replies[ix].threadId}&amp;forumId={$user_forum_replies[ix].object}">{$user_forum_replies[ix].title}</a>
                 </td>
-                <td>
+                <td class="date">
                   {$user_forum_replies[ix].commentDate|tiki_short_datetime}
                 </td>                  
               </tr>
@@ -287,10 +287,10 @@
             {cycle values="even,odd" print=false}
             {section name=ix loop=$user_blogs}
               <tr class="{cycle}">
-                <td>
+                <td class="text">
                   <a class="link" title="{tr}View{/tr}" href="{$user_blogs[ix].blogId|sefurl:blog}">{$user_blogs[ix].title}</a>
                 </td>
-                <td style="text-align:center;" width="50px">
+                <td class="action">
                   <a class="link" href="tiki-edit_blog.php?blogId={$user_blogs[ix].blogId}">
                     {icon _id='page_edit'}
                   </a>

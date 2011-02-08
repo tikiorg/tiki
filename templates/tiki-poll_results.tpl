@@ -109,11 +109,11 @@
 {cycle values="odd,even" print=false}
 {section name=ix loop=$list_votes}
 <tr class="{cycle}">
-	<td>{$list_votes[ix].user|userlink}</td>
-	<td>{$list_votes[ix].ip|escape}</td>
-	<td>{$list_votes[ix].title|escape}</td>
-	<td>{$list_votes[ix].time|tiki_short_date}</td>
-	{if $tiki_p_admin eq 'y'}<td>{self_link deletevote=1 user=$list_votes[ix].user ip=$list_votes[ix].ip optionId=$list_votes[ix].optionId}{icon _id=cross}{/self_link}</td>{/if}
+	<td class="username">{$list_votes[ix].user|userlink}</td>
+	<td class="text">{$list_votes[ix].ip|escape}</td>
+	<td class="text">{$list_votes[ix].title|escape}</td>
+	<td class="date">{$list_votes[ix].time|tiki_short_date}</td>
+	{if $tiki_p_admin eq 'y'}<td class="action">{self_link deletevote=1 user=$list_votes[ix].user ip=$list_votes[ix].ip optionId=$list_votes[ix].optionId}{icon _id=cross}{/self_link}</td>{/if}
 </tr>
 {sectionelse}
 	{norecords _colspan=4}

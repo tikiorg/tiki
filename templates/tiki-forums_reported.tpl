@@ -41,18 +41,15 @@
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}
 <tr class="{cycle}">
-	<td style="text-align:center;">
+	<td class="checkbox">
 	  <input type="checkbox" name="msg[{$items[ix].threadId}]" />
 	</td>
-  
-	<td style="text-align:left;">
+	<td class="text">
 		<a class="link" href="tiki-view_forum_thread.php?topics_offset=0&amp;topics_sort_mode=commentDate_desc&amp;topics_threshold=0&amp;topics_find=&amp;forumId={$items[ix].forumId}&amp;comments_parentId={$items[ix].parentId}">{$items[ix].title|escape}</a>
 	</td>
-	
 	<td style="text-align:left;">
 		{$items[ix].user|username}
 	</td>
-
 </tr>
 {sectionelse}
 	{norecords _colspan=2}

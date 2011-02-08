@@ -23,17 +23,17 @@
 			</tr>
 {foreach name=foo from=$plugin_list item=plugin}
 			<tr class="{cycle}">
-				<td style="text-align:center"><input type="checkbox" name="clear[]" value="{$plugin.fingerprint|escape}" id="{$plugin.fingerprint|escape}"/></td>
-				<td><label for="{$plugin.fingerprint|escape}"><strong>{$plugin.fingerprint|substring:0:20|escape|replace:"-":"</strong> <br />{tr}Signature:{/tr} "}...</label>
-				<td>{if $plugin.last_objectType eq 'wiki page'}
+				<td class="checkbox"><input type="checkbox" name="clear[]" value="{$plugin.fingerprint|escape}" id="{$plugin.fingerprint|escape}"/></td>
+				<td class="text"><label for="{$plugin.fingerprint|escape}"><strong>{$plugin.fingerprint|substring:0:20|escape|replace:"-":"</strong> <br />{tr}Signature:{/tr} "}...</label>
+				<td class="text">{if $plugin.last_objectType eq 'wiki page'}
 					{tr 0=$plugin.last_objectId|sefurl:'wiki page' 1=$plugin.last_objectId|escape }Wiki page: <a href="%0#{$plugin.fingerprint}" title="{tr}View this page{/tr}.">%1</a>{/tr}
 					{else}
 					{tr}Unknown{/tr}
 					{/if}
 				</td>
-				<td>{if $plugin.added_by}{$plugin.added_by|userlink}{else}{tr}Unknown{/tr}{/if}
+				<td class="text">{if $plugin.added_by}{$plugin.added_by|userlink}{else}{tr}Unknown{/tr}{/if}
 				</td>
-				<td>
+				<td class="action">
 					<a href="tiki-plugins.php?approveone={$plugin.fingerprint}">{icon _id='accept' alt="{tr}Approve{/tr}"}</a>
 					<a href="tiki-plugins.php?clearone={$plugin.fingerprint}">{icon _id='delete' alt="{tr}Clear{/tr}"}</a>
 {if $plugin.last_objectType eq 'wiki page'}

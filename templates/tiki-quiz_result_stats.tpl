@@ -8,7 +8,7 @@
 	{button href="tiki-edit_quiz.php" _text="{tr}Admin Quizzes{/tr}"}
 </div>
 
-<table class="normal">
+<table class="formcolor">
 	<tr>
 		<th colspan="2">{tr}Quiz stats{/tr}</th>
 	</tr>
@@ -58,11 +58,11 @@
 	{cycle print=false values="odd,even"}
 	{section name=ix loop=$questions}
 		<tr class="{cycle}">
-			<td>{$questions[ix].question}</td>
-			<td>{$questions[ix].options[0].optionText}</td>
-			<td>{$questions[ix].options[0].points}</td>
+			<td class="text">{$questions[ix].question}</td>
+			<td class="text">{$questions[ix].options[0].optionText}</td>
+			<td class="integer">{$questions[ix].options[0].points}</td>
 			{if $questions[ix].options[0].filename}
-				<td>
+				<td class="action">
 					<a href="tiki-quiz_download_answer.php?answerUploadId={$questions[ix].options[0].answerUploadId}">{$questions[ix].options[0].filename}</a>
 				</td>
 			{/if}

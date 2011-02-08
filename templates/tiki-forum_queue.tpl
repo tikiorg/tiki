@@ -133,11 +133,11 @@
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}
 <tr class="{cycle}">
-	<td style="text-align:center;">
+	<td class="checkbox">
 	  <input type="checkbox" name="msg[{$items[ix].qId}]" />
 	</td>
   
-	<td style="text-align:left;">
+	<td class="text">
 		{if $items[ix].parentId > 0}
 			[{tr}Topic:{/tr} {$items[ix].topic_title|escape}]
 		{else}
@@ -165,16 +165,10 @@
 				<br />
 			{/section}
   		  {/if}
-
-		
 	</td>
 </tr>
 {sectionelse}
-<tr class="{cycle advance=false}">
-	<td colspan="2">
-	{tr}No messages queued yet{/tr}
-	</td>
-</tr>	
+	{norecords _colspan=2 _text="{tr}No messages queued yet{/tr}"}
 {/section}
 </table>
 {if $items}

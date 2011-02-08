@@ -71,10 +71,10 @@
 						</tr>
 						{foreach key=id item=data from=$userpaycredits}
 						<tr>
-							<td>{$data.display_text|escape}</td>
-							<td>{$data.remain|escape}</td>
-							<td>{$data.price|escape}</td>
-							<td><input type="radio" name="tiki_credit_type" value="{$id|escape}" {if !$data.enough}disabled="disabled"{/if} /></td>
+							<td class="text">{$data.display_text|escape}</td>
+							<td class="text">{$data.remain|escape}</td>
+							<td class="integer">{$data.price|escape}</td>
+							<td class="text"><input type="radio" name="tiki_credit_type" value="{$id|escape}" {if !$data.enough}disabled="disabled"{/if} /></td>
 						</tr>
 						{/foreach}
 						<tr>

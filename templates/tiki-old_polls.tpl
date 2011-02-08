@@ -12,10 +12,10 @@
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listpages}
 <tr class="{cycle}">
-<td>{$listpages[changes].title|escape}</td>
-<td>{$listpages[changes].publishDate|tiki_short_datetime}</td>
-<td>{$listpages[changes].votes}</td>
-<td>
+<td class="text">{$listpages[changes].title|escape}</td>
+<td class="date">{$listpages[changes].publishDate|tiki_short_datetime}</td>
+<td class="text">{$listpages[changes].votes}</td>
+<td class="action">
 <a class="link" href="tiki-poll_results.php?pollId={$listpages[changes].pollId}">{icon _id="chart_curve" alt="{tr}Results{/tr}"}</a>
 {if $tiki_p_vote_poll ne 'n'}
 	<a class="link" href="tiki-poll_form.php?pollId={$listpages[changes].pollId}">{tr}Vote{/tr}</a>
