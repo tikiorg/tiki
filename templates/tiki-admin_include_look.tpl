@@ -83,7 +83,7 @@
 			{preference name=categories_used_in_tpl}
 		{/tab}
 		
-		{tab name="{tr}General Layout options{/tr}"}
+		{tab name="{tr}General Layout{/tr}"}
 			{preference name=feature_html_head_base_tag}
 			{preference name=feature_custom_html_head_content}
 
@@ -163,7 +163,7 @@
 			</div>
 		{/tab}
 
-		{tab name="{tr}Pagination links{/tr}"}
+		{tab name="{tr}Pagination{/tr}"}
 			{preference name=user_selector_threshold}
 			{preference name=maxRecords}
 			{preference name=nextprev_pagination}
@@ -213,7 +213,7 @@
 				{preference name="feature_themegenerator"}
 				<div class="adminoptionboxchild" id="feature_themegenerator_childcontainer">
 					<div class="adminoptionbox">			
-						{preference name="themegenerator_theme"}
+						{preference name="themegenerator_theme" default=$prefs.site_themegenerator_theme}
 						<div  class="adminoptionboxchild" id="feature_themegenerator_childcontainer">
 							
 							<input type="text" name="tg_edit_theme_name" value="{$tg_edit_theme_name|escape}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
