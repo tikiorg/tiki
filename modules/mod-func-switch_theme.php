@@ -39,5 +39,15 @@ function module_switch_theme( $mod_reference, $module_params ) {
 
 	$smarty->assign('styleslist',$tikilib->list_styles());
 	$smarty->assign( "style_options", $tikilib->list_style_options($current_style));
+
+	if ($prefs['feature_themegenerator'] === 'y') {
+		include_once 'lib/prefs/themegenerator.php';
+		$p = prefs_themegenerator_list();
+		if (!empty($p['themegenerator_theme']['options'])) {
+			$smarty->assign('themegen_list', array_keys($p['themegenerator_theme']['options']));
+			$smarty->assign('themegenerator_theme', $prefs['themegenerator_theme']);
+		}
+	}
+
 	$smarty->clear_assign('tpl_module_title'); // TPL sets dynamic default title
 }

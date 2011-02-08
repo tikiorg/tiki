@@ -14,7 +14,8 @@ if ( basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__) ) {
   exit;
 }
 
-$user_overrider_prefs = array('language', 'style', 'style_option', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage','default_calendars', 'metatag_robots');
+$user_overrider_prefs = array('language', 'style', 'style_option', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage',
+								'default_calendars', 'metatag_robots', 'themegenerator_theme');
 initialize_prefs();
 
 function get_default_prefs() {
