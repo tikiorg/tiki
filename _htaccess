@@ -173,6 +173,11 @@ RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA
 #AuthUserFile /etc/httpd/passwords
 #Require valid-user 
 
+# if you want to extend the session exactly to 10mn
+#php_value session.gc_maxlifetime 1000
+#php_value session.gc_probability 1
+#php_value session.gc_divisor 1 
+
 <IfModule mod_dir.c>
 	DirectoryIndex tiki-index.php
 </IfModule>
