@@ -174,7 +174,7 @@ RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA
 #Require valid-user 
 
 # if you want to extend the session exactly to 10mn
-#php_value session.gc_maxlifetime 1000
+#php_value session.gc_maxlifetime 600
 #php_value session.gc_probability 1
 #php_value session.gc_divisor 1 
 
