@@ -66,8 +66,9 @@ function wikiplugin_trackertoggle($data, $params) {
 	} else {
 		$extension = '';
 	}
-	$jq = "if (\$('input[name=$htmlFieldId]$extension').val() == $value) {\$('#$id').$action();} else {\$('#$id').$anti();}";
-	$jq .= "\$('input[name=$htmlFieldId]').change(function () { $jq });";
+	$htmltype = $field['type'] == 'a'? 'textarea': 'input';
+	$jq = "if (\$('".$htmltype."[name=$htmlFieldId]$extension').val() == $value) {\$('#$id').$action();} else {\$('#$id').$anti();}";
+	$jq .= "\$('".$htmltype."[name=$htmlFieldId]').change(function () { $jq });";
 
 	$headerlib->add_jq_onready($jq);
 }
