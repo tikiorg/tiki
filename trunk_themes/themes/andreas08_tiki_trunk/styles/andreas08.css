@@ -3,6 +3,7 @@
 */
 
 /* Import the default properties files: */
+@import url("lite/lite.css");
 @import url("layout/layout.css");
 @import url("layout/design.css");
 
@@ -18,39 +19,54 @@ body {
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
 
-table#main {
+.fixed_width #fixedwidth {
 	font-size: .9em;
 	margin-top: 20px;
-	min-width: 760px;
-	color: #303030}
+	width: 760px;
+	color: #303030;
+	border: 1px solid #a0a0a0}
 
-td#leftmargin {width: 10%}
-td#rightmargin {width: 10%}
-
-td#main-header {
+#header_fixedwidth {
 	background: #467aa7;
 	color: #fff}
+	
+#c1c2 #wrapper #col1.marginleft  {
+	margin-left: 180px;
+}
 
-td#leftcolumn {
-	width: 180px;
-	padding: 1em;
+#c1c2 #wrapper #col1.marginright {
+	margin-right: 180px;
+}
+
+#col3 {
 	background: #fff;
-	border-left: 2px solid #a0a0a0}
+	width: 180px;
+	margin-left: -180px;
+}
 
-td#centercolumn {
+#c1c2 #col2   {
+	width: 180px;
+	background: #fff;
+}
+
+#c1c2 #col2 > .content,
+#col3 > .content {
+	margin: 1em;
+}
+
+#col1 > .content {
 	background: #fff;
 	padding: 0 10px 10px 10px;
 	border-left: 2px solid #a0a0a0;
 	border-right: 2px solid #a0a0a0}
+	
+#showhide_columns {
+	border-left: 2px solid #a0a0a0;
+	border-right: 2px solid #a0a0a0
+}
 
-td#rightcolumn {
-	background: #fff;
-	width: 180px;
-	padding: 1em;
-	border-right: 2px inset #a0a0a0 !important}
 
-#footer,
-div#tiki-bot {
+.footerbgtrap {
  	text-align: center;
 	padding: 5px 0;
 	margin: 0 1px;
@@ -58,14 +74,12 @@ div#tiki-bot {
 	color: #f0f0f0;
 	background: #467aa7}
 
-#footer a,
-#tiki-bot a {
+#footer a {
 	color: #f0f0f0;
 	background: inherit;
 	font-weight: bold}
 
-#footer a:hover,
-#tiki-bot a:hover {
+#footer a:hover {
 	color: #fff;
 	background:inherit;
 	text-decoration: underline}
@@ -73,7 +87,6 @@ div#tiki-bot {
 /***** XHTML Elements (other than body tag) ******/
 
 a,
-a:link,
 a:visited {
 	color: #467aa7;
 	font-weight: bold;
@@ -139,10 +152,7 @@ input[name="search"] {
 button:hover,
 .button input:hover,
 .submitbutton:hover,
-.calbuttonBox a:hover {
-	background: #578bb8;
-}
-
+.calbuttonBox a:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
 input[name="search"]:hover {
@@ -154,14 +164,6 @@ select[name="where"] {
 	background: #578BB8;
 	color: #fff}
 
-* html input#sl-login-user,
-* html input#sl-login-pass,
-* html input#fuser,
-* html input#login-user,
-* html input#login-pass {
-	padding: 0 4px;
-	margin-right: 4px}
-
 
 .highlight { }
 
@@ -170,19 +172,14 @@ td textarea {font-size: 1.3em}
 
 
 /***** Site Header & Identity *****/
-#header-top {min-height: 80px}
-#siteheader {position: relative}
-
-div#sioptions {padding: 1em}
-#sioptionscentered {margin: 1em}
-#sitead {clear: none}
+#top_modules {min-height: 80px}
 
 input[id="fuser"] {
 	background: #578bb8;
 	color: #fff;
 	font-size: .9em}
-/*
-#siteloginbar {text-transform: uppercase}
+
+.siteloginbar {text-transform: uppercase}
 
 input[id="sl-login-user"],
 input[id="sl-login-pass"] {
@@ -191,16 +188,18 @@ input[id="sl-login-pass"] {
 	text-transform: none;
 	font-size: 1.3em}
 
-#siteloginbar input.wikiaction {
+.siteloginbar input.wikiaction {
 	border: 1px solid white;
 	background: #467aa7;
 	color: #fff;
 	cursor: pointer;
 	text-transform: uppercase;
 	font-size: 90%}
-*/
-#siteloginbar_popup {
+
+#top_modules .siteloginbar_popup {
+	position: absolute;
 	bottom: 1px;
+	right: 10px;
 }
 
 
@@ -236,16 +235,17 @@ input[id="sl-login-pass"] {
 	margin-bottom: 0;
 }
 
-#sitesearchbar {
-	margin-right:  10px;
+#topbar_modules .box-search {
+	position: absolute;
+	right:  10px;
+	top: 0;
 	padding-top: 3px;
 	padding-left: 10px;
 	font-size: 90%;
 	border-left: 1px solid #fff}
 
-#sitesearchbar br {display: none}
+.sitesearchbar br {display: none}
 input#fuser {line-height: 90%}
-
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
@@ -348,84 +348,6 @@ td#leftcolumn .cssmenu_vert li li.sfHover ul {
 	border-right: none;
 }
 
-/** PHP Layers Menus **/
-.horbar {
-	margin-left: 1px;
-	color: #fff}
-
-.horbaritem a,
-.horbaritem a:visited,
-.horbaritem a:hover {
-	border-right: 1px solid #fff;
-	padding: 6px 10px;
-	font-weight: normal;
-	text-transform: uppercase;
-	text-decoration: none;
-	background: inherit;
-	color: #fff;
-	font-size: .9em}
-
-.horbaritem a:hover {
-	background: #80b0da;
-	color: #fff;
-	text-decoration: none}
-
-.mdkverbar {margin: 0}
-.mdksubframe {background: #467AA7}
-.mdkitem {background: #467AA7}
-
-.mdkitem a,
-.mdkitem a:visited {
-	padding: 3px 10px;
-	text-decoration: none;
-	font-size: .9em;
-	color: #fff;
-	font-weight: normal}
-
-.mdkitem a:hover  {
-	background: 0;
-	color: #fff;
-	text-decoration: none;
-	background: #80b0da}
-
-.mdkitem a:active {color: #993300}
-
-.phplmnormal,
-a.phplmnormal:hover,
-a.phplm:link,
-a.phplm:visited,
-a.phplm:hover,
-a.phplm:active {
-	color: #467aa7;
-	text-decoration: none;
-	font-size: 10px;
-	font-weight: normal}
-
-a.phplm:hover {
-	color: #467aa7;
-	font-size: 10px;
-	text-decoration: underline;
-	background: transparent;
-	font-weight: normal}
-
-a.phplm:active {color: #ff0000}
-
-a.phplmselected:link,
-a.phplmselected:visited,
-a.phplmselected:hover,
-a.phplmselected:active {
-	color: black;
-	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size: 10px;
-	text-decoration: underline;
-	background: #eee;
-	font-weight: normal}
-
-a.phplmselected:hover {
-	text-decoration: none;
-	background: #E9ECEF;
-	font-weight: normal}
-
 /** Links in other menus **/
 
 .option a.linkmenu {font-weight: normal}
@@ -445,7 +367,6 @@ a.flip:hover,
 /***** Boxes *****/
 /** Modules **/
 .box {
-	width: 180px;
 	margin-bottom: 20px}
 
 .wikitext .box {width: auto}
@@ -465,7 +386,6 @@ h3.box-title {
 	border: 1px solid transparent;
 	background: #fff}
 
-img.flipmodimage:hover {border: 1px solid #58A7D2 !important}
 .box-data {background: #fff}
 
 /** Other boxes **/

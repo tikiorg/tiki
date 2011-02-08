@@ -10,8 +10,6 @@
 (All file paths from Tiki root directory.)
 * templates/styles/andreas08/credits.tpl
 * templates/styles/andreas08/index.php (standard file to prevent directory browsing)
-* templates/styles/andreas08/tiki.tpl
-* templates/styles/andreas08/tiki-site_header_top.tpl
 
 -=Stylesheet and background images=-
 * styles/andreas08.css
@@ -26,9 +24,10 @@ http://zukakakina.com/Andreas08
 See http://themes.tiki.org/Upgrading for overview of changes in this Tiki version related to themes.
  
 -=Version=-
-* Tiki 6.
+* Tiki 7
  
 -=Changelog=-
+6 update for Tiki 7
 5 update for Tiki 6
 4 update for Tiki 5
 3 update for Tiki 4
