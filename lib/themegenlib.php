@@ -24,8 +24,8 @@ class ThemeGenLib
 		// some handy matches
 		$unit = '[-+]?[\d\.]+(?:px|em|ex|%|in|cm|mm|pt|pc)?';
 		$color = '#[0-9a-f]{3,6}|aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|orange|purple|red|silver|teal|white|yellow';
-		$delims = '[\s!;\}]';	// delimiter with space
-		$delimn = '[!;\}]';	// delimiter with NO space
+		$delims = '[\s\!;\}]';	// delimiter with space
+		$delimn = '[\!;\}]';	// delimiter with NO space
 		$selector = '[\}]\s*([^\{]*)\{[^\}]*';
 		$bstyles = 'dotted|dashed|solid|double|groove|ridge|inset|outset';	// no 'none' for now
 		
@@ -34,52 +34,52 @@ class ThemeGenLib
 				'types' => array(
 					'fgcolors' => array(
 						'items' => array(),
-						'title' => tra('Foreground Colors:'),
+						'title' => tra('Foreground Colors'),
 						'selector' => 'color',
 						'regexps' => array(
-							'find' => '/(?<!-)color:\s*('.$color.')[;\}!]/Umis',
+							'find' => '/(?<!-)color:\s*('.$color.')[;\}\!]/Umis',
 							'context' => '/'.$selector.'(?<!-)color:\s*$0'.$delims.'/Umis',
 							'replace' => '/((?<!-)color:\s*)$0('.$delims.')/Umis',
 						),
 					),
 					'bgcolors' => array(
 						'items' => array(),
-						'title' => tra('Background Colors:'),
+						'title' => tra('Background Colors'),
 						'selector' => 'color',
 						'regexps' => array(
-							'find' => '/background(?:-color)?:[^\};]*?('.$color.')[\s;\}\!]/Umis',
+							'find' => '/background(?:-color)?:[^\};]*?('.$color.')'.$delims.'/Umis',
 							'context' => '/'.$selector.'background(?:-color)?:\s*$0'.$delims.'/Umis',
 							'replace' => '/(background(?:-color)?:[^;\}]*)$0('.$delims.')/Umis',
 						),
 					),
 				),
-				'title' => tra('Colors:'),
+				'title' => tra('Colors'),
 			),
 			'borders' => array(
 				'types' => array(
 					'bordercolors' => array(
 						'items' => array(),
-						'title' => tra('Border Colors:'),
+						'title' => tra('Border Colors'),
 						'selector' => 'color',
 						'regexps' => array(
-							'find' => '/border[\w-]*:[^\};]*('.$color.')[\s;\}\!]/Umis',
-							'context' => '/'.$selector.'border[\w-]*:.*$0'.$delims.'/Umis',
-							'replace' => '/(border[\w-]*:[^;\}]*)$0('.$delims.')/Umis',
+							'find' => '/border[\w-]?:[^;\}]*(?:('.$color.')'.$delims.')/Umis',
+							'context' => '/'.$selector.'border[\w-]?:[^\;\}\!]*$0[^\;\}\!]*'.$delimn.'/Umis',
+							'replace' => '/border[\w-]?:[^\;\}\!]*$0[^\;\}\!]*'.$delimn.'/Umis',
 						),
 					),
 					'borderwidths' => array(
 						'items' => array(),
-						'title' => tra('Border Widths:'),
+						'title' => tra('Border Widths'),
 						'selector' => 'size',
 						'regexps' => array(
-							'find' => '/border(?!-radius)[\w-]*(?<!radius):[^\};]*('.$unit.')[\s;\}\!]/Umis',
-							'context' => '/'.$selector.'border(?:(?!-radius)[\w-]*(?<!radius))?:[^\}]*$0'.$delims.'/Umis',
-							'replace' => '/(border(?!-radius)[\w-]*(?<!radius):[^;\}]*)$0('.$delims.')/Umis',
+							'find' => '/border(?!-radius)[\w-]*(?<!radius):[^\};]*((?<![\da-f#])'.$unit.')[\s;\}\!]/Umis',
+							'context' => '/'.$selector.'border(?:(?!-radius)[\w-]*(?<!radius))?:[^\}]*(?<![\da-f#])$0'.$delims.'/Umis',
+							'replace' => '/(border(?!-radius)[\w-]*(?<!radius):[^;\}]*)(?<![\da-f#])$0('.$delims.')/Umis',
 						),
 					),
 					'borderstyles' => array(
 						'items' => array(),
-						'title' => tra('Border Styles:'),
+						'title' => tra('Border Styles'),
 						'selector' => 'borderstyle',
 						'regexps' => array(
 							'find' => '/border[\w-]*:[^\};]*('.$bstyles.')[\s;\}\!]/Umis',
@@ -89,22 +89,22 @@ class ThemeGenLib
 					),
 					'borderradii' => array(
 						'items' => array(),
-						'title' => tra('Border Radii:'),
+						'title' => tra('Border Radii'),
 						'selector' => 'size',
 						'regexps' => array(
 							'find' => '/border(?:-[^\};]*)?-radius(?:-[^\};]*)?:[^\};]*('.$unit.')[\s;\}\!]/Umis',
-							'context' => '/'.$selector.'border(?:-.*)?:.*$0'.$delims.'/Umis',
-							'replace' => '/(border[^:]*:[^;\}]*)$0('.$delims.')/Umis',
+							'context' => '/'.$selector.'border(?:-.*)?:.*(?<![\da-f#])$0'.$delims.'/Umis',
+							'replace' => '/(border[^:]*:[^;\}]*)(?<![\da-f#])$0('.$delims.')/Umis',
 						),
 					),
 				),
-				'title' => tra('Borders:'),
+				'title' => tra('Borders'),
 			),
 			'typography' => array(
 				'types' => array(
 					'fontsize' => array(
 						'items' => array(),
-						'title' => tra('Font Sizes:'),
+						'title' => tra('Font Sizes'),
 						'selector' => 'size',
 						'regexps' => array(
 							'find' => '/font-size:[^\};]*?('.$unit.')/i',
@@ -114,7 +114,7 @@ class ThemeGenLib
 					),
 					'lineheight' => array(
 						'items' => array(),
-						'title' => tra('Line Heights:'),
+						'title' => tra('Line Heights'),
 						'selector' => 'size',
 						'regexps' => array(
 							'find' => '/line-height:[^\};]*?('.$unit.')/i',
@@ -124,7 +124,7 @@ class ThemeGenLib
 					),
 					'font' => array(
 						'items' => array(),
-						'title' => tra('Font:'),
+						'title' => tra('Font'),
 						'selector' => 'text',
 						'regexps' => array(
 							'find' => '/font:\s*?([^;\}]*)/i',
@@ -134,7 +134,7 @@ class ThemeGenLib
 					),
 					'fontfamily' => array(
 						'items' => array(),
-						'title' => tra('Font Families:'),
+						'title' => tra('Font Families'),
 						'selector' => 'fontfamily',
 						'regexps' => array(
 							'find' => '/font-family:\s*?([^;\}]*)/i',
@@ -143,7 +143,7 @@ class ThemeGenLib
 						),
 					),
 				),
-				'title' => tra('Typography:'),
+				'title' => tra('Typography'),
 			),
 		);
 		
@@ -296,7 +296,13 @@ class ThemeGenLib
 				if (isset($swaps[$typeName])) {
 					foreach ($swaps[$typeName] as $old => $new) {
 						$reg = str_replace( '$0', preg_quote($old, '/'), $typeData['regexps']['replace'] );
-						$css = preg_replace( $reg, '$1 ' . html_entity_decode($new) . '$2', $css);
+						if (!in_array($typeName, array( 'bordercolors' ))) {
+							$css = preg_replace( $reg, '$1 ' . html_entity_decode($new) . '$2', $css);
+						} else {
+							$GLOBALS['tg_old'] = $old;	// for preg_replace_callback on php < 5.3
+							$GLOBALS['tg_new'] = html_entity_decode($new);
+							$css = preg_replace_callback($reg, array( $this, 'processCSSMultiVars'), $css);
+						}
 					}
 				}
 			}
@@ -313,10 +319,10 @@ class ThemeGenLib
 		return $css;
 	}
 	
-//	private function processCSSColours($matches) {
-//		$out = $matches[1] . str_replace( $GLOBALS['tg_old'], $GLOBALS['tg_new'], $matches[2]) . $matches[3];
-//		return $out;
-//	}
+	private function processCSSMultiVars($matches) {
+		$out = str_replace( $GLOBALS['tg_old'], $GLOBALS['tg_new'], $matches[0]);
+		return $out;
+	}
 	
 	public function saveNewTheme($name) {
 		$this->currentTheme = new ThemeGenTheme($name);
