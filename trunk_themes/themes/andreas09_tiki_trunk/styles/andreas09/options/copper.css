@@ -1,0 +1,73 @@
+/* Andreas09 theme for TikiWiki CMS/Groupware,
+	copper option
+	released under LGPL license.
+	For more information, visit http://themes.tikiwiki.org. */
+
+/* Links in buttons */
+span.button a,
+span.button a:visited,
+button,
+input[type="reset"],
+input[type="submit"],
+span.button input,
+.submitbutton,
+.calbuttonoff,
+.calbuttonon {
+	background: #f0f0f0 url(copper/menuhover.jpg) 0 -20px repeat-x}
+
+.button a:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover,
+.submitbutton:hover {background: #f0f0f0 url(copper/menuhover.jpg) 0 0 repeat-x;}
+
+#header-top {background: url(copper/header.jpg) repeat-x bottom}
+#tiki-top {background: url(copper/header.jpg) repeat-x; height: 38px}
+
+#sitesearchbar .button {
+	border: solid 1px #aaa;
+	background: #f0f0f0 url(copper/menuhover.jpg) top left repeat-x;
+	color: #505050}
+
+.horbaritem a:hover,
+#tiki-top .cssmenu_horiz li a:hover  {
+	background: #f0f0f0 url(copper/menuhover.jpg) top repeat-x;
+	color: #505050}
+
+#middle {background: url(copper/mid.jpg) repeat-x}
+
+a.phplmselected:link,
+a.phplmselected:visited,
+a.phplmselected:hover,
+a.phplmselected:active {
+	font: 100% Verdana, Tahoma, Arial, sans-serif;
+	color: black;
+	background: url(copper/menuhover.jpg)}
+
+div.adminanchors {background: url(copper/header.jpg) repeat-x bottom !important}
+
+.tabmark a:hover {
+	color: black;
+	background: #f0f0f0 url(copper/menuhover.jpg) top left repeat-x}
+
+.titlebar {
+	background:#f0f0f0 url(copper/menuhover.jpg) top left repeat-x;
+	color:#505050}
+
+.post .postbody-title {background: transparent url(copper/header.jpg) repeat-x bottom}
+.post .author {background: url(copper/mid.jpg) repeat-x}
+.post .author_post_info {display: block}
+
+#caltable .calfocuson,
+.box-data td.fc a.today,
+.box-data td a.today, {
+	border: solid 1px #AAAAAA;
+	background: #f0f0f0 url(copper/menuhover.jpg) top left repeat-x;
+	color: #505050}
+
+.daterow,
+.daterow:hover,
+.calnavigation a,.calnavigation a:hover {
+	color: #000;
+	background: #f0f0f0 url(copper/menuhover.jpg) top left repeat-x}

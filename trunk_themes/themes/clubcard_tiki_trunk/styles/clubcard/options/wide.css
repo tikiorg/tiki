@@ -1,0 +1,56 @@
+/* Clubcard theme "full-width" option */
+#sioptions {
+	padding: 0 10px;
+}
+
+#sitetitles {
+	padding-left: 0;
+}
+
+#siteloginbar {
+	right: 10px;
+}
+
+#tiki-top {
+	margin: 0 10px;
+}
+
+#col1 > .content,
+#showhide_columns,
+.tellafriend {
+	margin-right: 0;
+}
+
+#c1c2 #wrapper #col1.marginleft {margin-left: 210px}
+#c1c2 #wrapper #col1.marginright {margin-right: 210px}
+
+#c1c2 #col2 {
+	width: 210px;
+	}
+
+#c1c2 #col2 .content {
+	padding-left: 10px}
+
+#col3 {
+	margin-left: -210px;
+	width: 210px;
+	text-align: center}
+
+#col3 .content {
+	padding-right: 10px;
+}
+
+.footerbgtrap {
+	margin: 20px 10px 0 10px;
+	background: #E5E5E5;
+	padding: 10px;
+}
+
+.box {
+	width: 200px;
+	margin-bottom: 10px;
+	text-align: left}
+
+#tiki-center .box {
+	width: auto;
+}

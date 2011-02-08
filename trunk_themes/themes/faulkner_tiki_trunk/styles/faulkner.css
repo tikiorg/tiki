@@ -1,0 +1,1177 @@
+/* $Id$
+	Faulkner theme for Tiki Wiki CMS Groupware, adapted by the
+	original WordPress template by Demus Designs (http://www.demusdesign.com.
+	Two page-layout tables used to enable expanding content area
+	and side-column-independent background gradients. Because IE7
+	does not support display:table, minimal HTML tables are needed for
+	graphic treatment and column integrity.
+	See http://themes.tikiwiki.org or http://zukakakakina.com
+	for more information. Released under GPL license.
+	Please respect the request of the original author and display
+	the Demus Design credit/link in the page footer.
+*/
+
+/* Import foundation CSS files. */
+@import url("layout/layout.css");
+@import url("layout/design.css");
+
+/***** XHTML Elements (body tag here,
+			others follow Layout) *****/
+body {
+	font: 75% Times, "Times New Roman", serif;
+	background: url(faulkner/parchment.jpg)}
+
+html>body {font-size: 1em !important}
+
+body.fullscreen {
+	text-align: left;
+	padding: 3em}
+/*
+a#fullscreenbutton,
+a#fullscreenbutton:visited {color: #996633}
+
+body.fullscreen a#fullscreenbutton,
+body.fullscreen a#fullscreenbutton:visited {
+	color: #800;
+	text-decoration: underline}
+
+body.fullscreen a#fullscreenbutton:hover {
+	color: #C90;
+	text-decoration: none}*/
+
+ /***** Layout (overrides layout.css;
+		also styling of page layout divs)  *****/
+table#main {
+	border-collapse: collapse;
+	width: 100%}
+
+* html table#main td {font-size: 13px}
+
+div#tiki-main {text-align: center}
+
+td#leftmargin {
+	width: 15%;
+	background: url(faulkner/leftmargin.jpg) repeat-y 100% 0}
+
+td#topmargin {height: 0}
+
+td#header {
+	background: url(faulkner/parchmentright.jpg) repeat-y 100% 0;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	position: relative}
+
+td#rightmargin {
+	width: 15%;
+	background: url(faulkner/rightmargin.jpg) repeat-y 0% 0%}
+
+table#colscontainer {
+	background: url(faulkner/parchmentleft.jpg) repeat-y;
+	text-align: left}
+
+div#colscontainerdiv {
+	background: url(faulkner/parchmentright.jpg) repeat-y 100% 0}
+
+td#leftborder {
+	background: url(faulkner/parchmentleft.jpg) repeat-y;
+	width: 71px	}
+
+td#leftcolumn {
+	width: 180px;
+	padding: 1em}
+
+td#centercolumn {
+	padding: 1em;
+	padding-left: 2em}
+
+td#rightcolumn {
+	width: 180px;
+	padding: 1em}
+
+td#leftcolumn a,
+td#rightcolumn a {text-decoration: none}
+
+td#rightborder {
+	background: url(faulkner/parchmentright.jpg) repeat-y;
+	width: 71px}
+
+#footer {
+	min-height: 100px;
+	margin: 0 auto;
+	color: #996633;
+	padding: 20px 0;
+	text-align: center;
+	font-size: 0.8em;
+	background: #300 url(faulkner/foot.jpg) repeat-y top center}
+
+#footer a:link,
+#footer a:visited {
+	color: #996633;
+	text-decoration: none}
+
+#footer a:hover {
+	color: #c90;
+	text-decoration: underline}
+
+td#bottommargin {height: 0}
+
+/***** XHTML Elements (other than body tag) ******/
+a,
+a:visited {
+	color: #800;
+	text-decoration: underline}
+
+a:hover {
+	color: #C90;
+	text-decoration: none}
+
+table caption {
+	font-family: garamond,times,serif;
+	font-size: 1.2em;
+	font-weight: 400;
+	margin-top: 10px;
+	padding: 0 0 0.5em 3px;
+	text-align: left}
+
+h1 {
+	font: 600 1.6em garamond,times,'times new romans',serif;
+	color: #600;
+	margin: 0 0 10px 0}
+
+h2 {
+	font: 600 1.4em 'times new romans',times,serif;
+	color: #740;
+	margin: 3px 0}
+
+h3 {
+	font: 400 1.2em garamond,times,serif;
+	color: #404040;
+	font-style: italic;
+	margin: 0 0 10px 0}
+
+h4 {font: 400 1.2em garamond,times,serif;
+	color: #404040;
+	font-style: italic;
+	margin: 0 0 10px 0}
+
+h5 {font: 400 1.2em garamond,times,serif;
+	color: #404040;
+	font-style: italic;
+	margin: 0 0 10px 0}
+
+hr {
+	display: block;
+	height: 10px;
+	border: none;
+	color: inherit;
+	white-space: nowrap;
+	background: url(faulkner/entrybg.gif) center no-repeat}
+
+fieldset {border: 1px solid #660000}
+legend {color: #000}
+legend a {text-decoration: none}
+
+input,
+textarea,
+option,
+select,
+body.cke_show_borders {
+	background: #FFF4DA;
+	font-family: "Times New Roman", Times, serif;
+	color: #660000}
+
+* html .wikitopline select {font-size: .9em}
+
+input[type=checkbox],
+input[type=radio] {border: 0}
+
+.button a,
+.button a:visited,
+button,
+input[type="reset"],
+input[type="submit"],
+.button input,
+.submitbutton,
+.calbuttonoff,
+.calbuttonon {
+	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
+	font-size: 11px;
+/*	line-height: 20px;*/
+	font-weight: normal;
+	color: #660000;
+	background: #eacca7;
+	border: 1px solid;
+	border-color: #eccaa3 #880000 #880000 #eccaa3;
+	padding: 0 4px}
+
+* html input[type="reset"],
+* html input[type="submit"] {
+	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
+	font-size: 11px;
+/*	line-height: 20px;*/
+	font-weight: normal;
+	color: #660000;
+	background: #eacca7;
+	border: 1px solid;
+	border-color: #eccaa3 #880000 #880000 #eccaa3;
+	padding: 0 4px}
+
+.button a:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover,
+.submitbutton:hover {
+	background: #edd4ae;
+	color: #660000;
+	border: 1px solid;
+	border-color: #880000 #eccaa3 #eccaa3 #880000;
+	padding: 0 4px}
+
+.button a:active,
+button:active,
+input[type="reset"]:active,
+input[type="submit"]:active,
+.button input:active,
+.submitbutton:active {border-color: #223845 #41cbe7 #41cbe7 #223845; }
+
+* html .findtable input {font-size: 1em}
+/*form.admin input[name="features"] {margin-bottom: 3px !important}*/
+
+.highlight, .button.highlight a {
+	background: #eacca7;
+	color: red;
+}
+select[multiple] {height: 10em}
+small {font-size: .9em}
+label {margin: 0 2px}
+
+ol {
+	color: #600;
+	font-family: garamond,times,serif;
+	font-weight: 600;
+	font-style: italic}
+
+ol li {padding: 4px 0}
+
+/***** Site Header & Identity *****/
+#main-header {background: url(faulkner/parchmentleft.jpg) repeat-y}
+div#header {background: url(faulkner/parchmentright.jpg) 100% 0 repeat-y}
+
+#header-top {
+	position: relative;
+	text-align: center;
+	min-height: 70px}
+
+#siteheader {
+	text-align: center;
+	min-height: 70px;
+	margin: 0 auto;
+	padding-top: 30px}
+
+#sioptions  {padding: 1em}
+#sitead.floatright {padding-right: 100px}
+#sitead.floatleft {padding-left: 100px}
+.floatright img {margin-right: 40px}
+#bannertopright {padding-right: 1em}
+
+#siteloginbar {font-size: 80%}
+
+input[id="sl-login-user"],
+input[id="sl-login-pass"] {font-size: 90%}
+
+#siteloginbar input.wikiaction {font-size: 90%}
+
+#sitetitles {
+	background: url(faulkner/title_right.gif) 100% 16px no-repeat;
+	padding-right: 60px}
+
+#sitetitle {
+	font: 250% garamond, times, 'times new romans', serif;
+	color: #630;
+	font-weight: 600;
+	margin: 0 auto;
+	background: url(faulkner/title_left.gif) 0 16px no-repeat;
+	padding-left: 60px}
+
+#sitesubtitle {
+	font: 100% times, 'times new romans', serif;
+	color: #505050;
+	letter-spacing: 3px;
+	margin: 0 auto;
+	margin-bottom: 20px;
+	margin-left: 60px;
+	padding: 0px;
+	font-variant: small-caps}
+
+#sitetitle a,
+#customcode a,
+#sitetitle a:visited,
+#customcode a:visited {color: #663300}
+
+#header a,
+#header a:visited {text-decoration: none}
+
+#tiki-top {
+	margin: 0 auto;
+	padding: 0;
+	padding-bottom: 20px;
+	list-style-type: none;
+	text-align: center;
+	background: url(faulkner/ornament.gif) bottom center no-repeat}
+
+#tiki-top table {
+	width: auto;
+	margin: auto;
+	text-align: left}
+
+/****** Menus, Links ******/
+/** CSS (suckerfish) menus **/
+.cssmenu ul,
+.cssmenu_vert li ul,
+.box-data .cssmenu_vert li ul,
+.cssmenu_horiz li ul {
+	border-top: 1px solid #98615F;
+	background: transparent url(faulkner/h3bg.gif) no-repeat bottom center;
+	padding: 0 0 14px 0}
+
+.cssmenu_vert li ul {
+	padding-bottom: 1px}
+
+.cssmenu_horiz li,
+.cssmenu_vert li ul li,
+.cssmenu li {background: url(faulkner/parchment.jpg)}
+
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	display: block;
+	background: transparent url(faulkner/menu.gif) no-repeat scroll left center;
+	color: #660000;
+	font-size: 0.9em;
+	padding: 5px 5px 5px 22px;
+	text-decoration: none}
+
+.cssmenu_vert a:link,
+.cssmenu_vert a:visited {
+	color: #660000;
+}
+
+.cssmenu_horiz a:hover,
+.cssmenu_vert a:hover {
+	background: #ECCAA3 url(faulkner/menu.gif) no-repeat -360px 50%;
+	color: #880000;
+}
+
+.cssmenu_vert a:hover {
+	color: #880000;
+	text-decoration: none}
+
+.cssmenu_vert ul a:link,
+.cssmenu_vert ul a:visited {color: #660000}
+
+.cssmenu_vert ul a:hover {color: #880000}
+
+#tiki-top .cssmenu_horiz > li > a {
+	/*padding: 10px 15px 5px 15px;*/
+	font: 600 1.2em garamond,times,'times new romans',serif;
+	color: #990000}
+
+#tiki-top .cssmenu_horiz > li > a:hover {
+	/*padding: 10px 15px 5px 15px;*/
+	color: #C90;
+	text-decoration: none;
+	background: url(faulkner/menuhover.jpg) repeat-x bottom left}
+	
+#tiki-top .cssmenu_horiz li ul {
+	margin-top: -9px;
+}
+
+#tiki-top .cssmenu_horiz li ul ul {
+	margin-top: -1px;
+}
+
+/* left column width */
+td#leftcolumn .cssmenu_vert,
+td#leftcolumn .cssmenu_vert li {
+	width: 170px;
+}
+
+/* offset from left column (matches above) */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul {
+	left: 170px;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul,
+td#leftcolumn .cssmenu_vert li:hover ul li,
+td#leftcolumn .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li li:hover ul,
+td#leftcolumn .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+a .sf-sub-indicator {
+	background: url(faulkner/arrows-600.png) no-repeat -10px -100px;
+	top: .5em;
+}
+
+#tiki-top .cssmenu_horiz li a .sf-sub-indicator {
+	top: 0.7em;
+}
+
+#tiki-top .cssmenu_horiz li ul li a .sf-sub-indicator {
+	top: .5em;
+}
+
+
+/** PHP Layers Menus **/
+.horbar {
+	text-align: center;
+	white-space: nowrap;
+	border-top: 1px solid #600}
+
+.horbar table {
+  margin-left: auto;
+  margin-right: auto}
+
+.horbaritem a,
+.horbaritem a:visited {
+	padding: 10px 15px 5px 15px;
+	font: 600 1.2em garamond,times,'times new romans',serif;
+	color: #990000;
+	text-align: center;
+	text-decoration: none}
+
+.horbaritem a:hover {
+	padding: 10px 15px 5px 15px;
+	color: #C90;
+	text-decoration: none;
+	background: url(faulkner/menuhover.jpg) repeat-x bottom left}
+
+.mdkitem a:link,
+.mdkitem a:visited  {
+  background: url(faulkner/parchment.jpg);
+  padding: 2px 5px;
+  text-decoration: none}
+
+.box .mdkitem a {background: transparent}
+
+.mdkitem a:hover  {
+	padding: 2px 5px;
+	color: #C90;
+	text-decoration: none;
+	background: url(faulkner/menuhover.jpg) repeat-x bottom left}
+
+.mdkitem a:active {color: #000}
+
+.mdksubmenu {
+	margin-top: 3px;
+	border-top: 1px solid #98615F;
+	background: transparent url(faulkner/h3bg.gif) no-repeat bottom center;
+	padding: 0 0 16px 0}
+
+.mdksubmenu table {width: 150px}
+
+.mdksubframe .mdkitem {
+	background: url(faulkner/parchment.jpg);
+	text-decoration: none}
+
+/*.box */.mdksubframe .mdkitem a,
+.mdksubframe .mdkitem a:visited {
+	font-size: 0.9em;
+	padding: 5px 5px 5px 22px;
+	background: url(faulkner/menu.gif) left no-repeat;
+	color:#600}
+
+.mdksubframe .mdkitem a:hover {
+	background: #ECCAA3 url(faulkner/menu.gif) -360px 50% no-repeat;
+	color: #800;
+	padding: 5px 5px 5px 22px}
+
+.phplmnormal,
+a.phplmnormal:hover,
+a.phplm:link,
+a.phplm:visited,
+a.phplm:hover,
+a.phplm:active {
+	font-size: 0.9em;
+	background: transparent;
+	color: #800;
+	font-family: Times, 'Times New Roman', serif}
+
+a.phplmnormal:hover,
+a.phplm:hover {
+	font-size: 0.9em;
+	color: #C90;
+	background: transparent;
+	text-decoration: none}
+
+a.phplm:active {color: #ff0000}
+
+a.phplmselected:link,
+a.phplmselected:visited,
+a.phplmselected:hover,
+a.phplmselected:active {
+	font-size: 0.9em;
+	text-decoration: none;
+	background: #eee}
+
+a.phplmselected:hover {
+	font-size: 0.9em;
+	text-decoration: none;
+	background: #f0f9ff}
+
+/** Links in other menus **/
+.option a:link,
+.option a:visited,
+a.linkmenu,
+.rsslink,
+.linkmenu:visited,
+.rsslink:visited {
+	text-decoration: none;
+	font-size: 0.9em;
+	padding: 5px 5px 5px 22px;
+	background: url(faulkner/menu.gif) left no-repeat;
+	color: #600}
+
+.option a:hover,
+.option a:active {
+	background: #ECCAA3 url(faulkner/menu.gif) -360px 50% no-repeat;
+	color: #800}
+
+a.linkmodule {
+	text-decoration: none;
+	font-size: 0.9em;
+	padding: 1px 5px 1px 22px;
+	background: url(faulkner/menu.gif) left no-repeat;
+	color: #600}
+
+a.linkmodule:hover {
+	background: #ECCAA3 url(faulkner/menu.gif) right no-repeat;
+	color: #800}
+
+li a.linkmodule,
+li a.linkmodule:hover,
+.shoutboxmodmsg a.linkmodule,
+.shoutboxmodmsg a.linkmodule:hover {
+	background-image: none;
+	padding-left: 1px}
+
+/***** Misc. Center Col. *****/
+a.flip,
+a.flip:visited,
+.tellafriend a,
+.tellafriend a:visited {color: #E6C7A0}
+
+a.flip:hover,
+.tellafriend a:hover {color: #C90}
+
+*:first-child+html #tiki-center {width: 90%}
+
+/****** Misc. Global ****/
+
+/***** Boxes *****/
+/** Modules **/
+#leftcolumn .box,
+#rightcolumn .box {
+	padding-bottom: 5px;
+	margin-bottom: 1em;
+	width: 180px !important}
+
+h3.box-title {
+	border-top: 1px solid #98615F;
+	background: url(faulkner/h3bg.gif) no-repeat bottom center;
+	padding: 2px 0 16px 0;
+	font: 1.1em Garamond,'Times New Roman', serif;
+	color: #a80;
+	font-variant: small-caps;
+	text-align:center;
+	margin: 0}
+
+.box-title a,
+.box-title a:link {color: #a80}
+.flipmodimage:hover {border: 1px solid #eccaa3 !important}
+
+.box-data ol li a,
+.box-data ol li:hover {
+	background: none;
+	padding-left: 0}
+
+ul.module,
+ul.module li {list-style: none}
+
+/** Other boxes **/
+.cbox {
+	border: 1px solid #660000;
+	background: url(faulkner/parchmentlight.jpg);
+	color: black}
+
+.cbox-title {border-bottom: 1px solid #660000}
+
+.rbox {}
+
+.rbox-title,
+.rbox-data {
+	border-color: #cc9900;
+	background: url(faulkner/parchmentlight.jpg)}
+
+.rbox-title {background: #eacca7}
+
+.simplebox {
+	color: black;
+	border-color: #cc9900;
+	background: url(faulkner/parchmentlight.jpg)}
+
+/***** Tables, Tabs *****/
+/** Tables **/
+
+.normal td,
+.normal,
+.wikitable td,
+.odd,
+.even {
+	padding: 4px 7px !important;
+	text-align: left;
+	border-bottom: 1px solid #D6B8A0;
+	margin: 0;
+	vertical-align: top}
+
+th,
+.heading {
+	border-bottom: 1px solid #660000;
+	border-top: 2px solid #660000;
+	color: #774400;
+	text-align: center;
+	padding: 4px 7px !important;
+	vertical-align: top}
+
+.form {padding: 0.2em}
+
+
+tr.odd,
+.odd,
+li.odd,
+tr.even,
+.even,
+li.even {
+	background: url(faulkner/parchment.jpg);
+}
+
+tr.odd:hover,
+.odd:hover,
+li.odd:hover,
+tr.even:hover,
+.even:hover,
+li.even:hover {
+	background: url(faulkner/parchmentlight.jpg);
+}
+
+/** Tabs **/
+.tabs {
+	margin: 10px 1px -21px 0 !important;
+	border-bottom: 1px solid #e8d7cc}
+
+.tabmark {
+	background: #fff3d4;
+	border: 1px solid #d6b8a0;
+	border-bottom: 1px solid #e8d7cc}
+
+.tabmark a {color: #000}
+
+.tabmark a:active {
+	background: #fff;
+	color: red}
+
+.tabmark a:hover {
+	color: black;
+	background: #edd4ae}
+
+.tabcontent {
+	border: 1px solid #d6b8a0;
+	padding: 26px 2px 2px 2px;
+	margin-bottom: 25px;
+	background: #fff3d4}
+
+form fieldset.tabcontent {
+	border-top: 1px solid #fff3d4;
+	border-left: 1px solid #fff3d4;
+	border-right: 1px solid #ffe399;
+	border-bottom: 1px solid #ffe399;
+	border-top: 0 !important}
+
+/***** Wiki *****/
+h1 a.pagetitle {
+	font-size: 1.1em;
+	text-decoration: none}
+
+h1 a.pagetitle:hover {text-decoration: underline}
+
+div#description,
+.description {
+	font-size: .9em;
+	font-style: italic}
+
+.wikitext {line-height: 1.5em}
+
+.wikitext h1,
+.wikitext h2,
+.wikitext h3,
+.wikitext h4,
+.wikitext h5 {
+	/*margin: 0 0 15px;
+	padding: 0;*/}
+
+.titlebar {
+	text-align: center;
+	text-transform: uppercase;
+	padding: 0 10px;
+	border-top: 1px solid #601C2A;
+	border-bottom: 5px inset #763941;
+	line-height: 1.3em}
+
+.wikitext ul {list-style-type: none}
+
+.wikitext ul li {
+	padding-left: 17px;
+	background: url(faulkner/bullet.gif) no-repeat 0 6px;
+	margin-left: 10px}
+
+.wikitable {border-top: 2px solid #660000}
+
+.wikicell {
+	padding: 4px 7px !important;
+	text-align: left;
+	border-bottom: 1px solid #D6B8A0;
+	margin: 0;
+	vertical-align: top}
+
+#wikihelp-tab table,
+#wikihelp-tab table td {
+	border: solid 1px #909090;
+	border-collapse: collapse}
+
+#wikihelp-tab table td {padding: 2px}
+textarea.wikiedit {font-size: 1.0em}
+
+/** Wiki plugins **/
+
+/* Code plugin  */
+.code {
+	font-size: 90%;
+	padding: 3px;
+	border: 1px dashed #ffe399;
+	font-family: "Courier New", Courier, monospace}
+
+.codelisting {
+	font-family: "Courier New", Courier, monospace;
+	padding: 10px;
+	margin: 4px;
+	border: 1px dashed #ADACAF;
+	overflow: auto;
+   width: 500px}
+
+.codecaption {
+	font-size: 90%;
+	padding: 0 10px;
+	position: relative;
+	bottom: -5px;
+	display: inline;
+	border: 1px solid #ADACAF;
+	border-bottom: none;
+	margin: 0;
+	font-weight: bold}
+
+/* Quote plugin */
+.quoteheader {margin-left: 20px}
+
+/* fancytable (sortable) plugin */
+.fancysort .header:hover {
+	/*color: #82AC78;*/
+}
+
+/** Wiki tocs **/
+.tocnav {
+	background: #EBEBEB;
+	padding: 3px}
+
+/* Wiki diff styles */
+.diff td {border: 1px solid #eccaa3}
+.diff div {border-top: 1px solid #eccaa3}
+.diffheader {background: #eccaa3; font-weight: bold}
+
+/***** Articles ****/
+.articletopline {
+	font-size: 90%;
+	font-style: italic}
+
+.articletitle {
+	padding-top: 16px;
+	margin-top: 6px;
+	margin-bottom: 15px;
+	text-align: left}
+
+.articletitle h2 {
+	font-size: 1.5em;
+	font-weight: normal}
+
+.titleb {font-size: 1.0em}
+.articlesubtitle {font-size: 0.9em}
+
+.articleheading {
+	margin-top: 6px;
+	line-height: 1.15em}
+
+img.topicimage,
+img.articleimagenofloat,
+img.articleimage {
+	padding: 2px 0;
+	margin-bottom: 10px}
+
+.articlebody {line-height: 1.5em}
+
+/***** Blogs *****/
+.blogtitle {
+	font-size: 1.3em;
+	font-weight: bold;
+	padding: 3px;
+	margin-top: 10px;
+	font-weight: bold;
+	line-height: 80%}
+
+.bloginfo {
+	text-align: center;
+	padding: 3px;
+	line-height: 150%;
+	text-transform: none}
+/*
+* html .bloginfo table {font-size: 11px}
+*/
+
+a.blogt:hover {
+	color: #FFF;
+	border-bottom: 1px dotted #FFF}
+
+.postinfo {font-size: 1.2em}
+
+.posthead {
+	font-weight: bold;
+	letter-spacing: .4pt}
+
+.posthead h3 {font-size: 1.2em}
+
+body.tiki_blogs .postbody {
+	margin-right: 8px;
+	line-height: 1.2em;
+	margin-bottom: 1em}
+
+* html .postbody table {font-size: 11px}
+
+/***** Forums *****/
+
+.post .postbody {
+	border-top: 1px solid #660000;
+	border-bottom: 1px solid #660000;
+	padding: 0 0 3px 0;
+/*	background: url(faulkner/parchmentlight.jpg);*/
+	font-size: 1em}
+
+* html .post .postbody {font-size: 11px}
+.post .postbody .content {color: #000}
+
+.post .postbody-title {
+	display: block;
+	background: #EDD4AE;
+	border-bottom: 1px solid #660000;
+	margin-bottom: 4px}
+
+.post .postbody-title .title {
+	color: #660000;
+	font-weight: bold;
+	font-size: 1.2em}
+
+.post .author {background: #EDD4AE}
+.post .author_post_info {padding: 0 2px 2px 2px}
+.post .author_info .icons .actions {margin-right: .9em}
+.post .author_post_info_on {font-style: italic}
+
+.post .author_info {
+	float: right;
+	background: #EDD4AE;
+	padding: 0 2px 2px 2px;
+	margin-top: -3px;
+	margin-right: 3px;
+	margin-left: 5px;
+	border-bottom: 1px solid #660000}
+
+.post .postbody-title .actions {font-size: .9em}
+.post .postbody .attachments {border-top: 1px dotted #edd4ae}
+.post .postfooter .status {font-size: 1em}
+
+.post .contribution {
+	background: #edd4ae;
+	border: 1px solid #660000;
+	padding: 0 2px 0 2px}
+
+.post .avatar {
+	border: 1px solid #880000;
+	background: #edd4ae}
+
+.forum_actions .actions {
+	border-top: 1px solid #880000;
+	border-top: 1px solid #880000;
+	background: #edd4ae}
+
+.forum_actions .headers .title {
+	background: #edd4ae;
+	border-top: 1px solid #660000}
+
+.forum_actions .headers .infos {font-size: smaller}
+textarea#editpost2 {font-size: 1em}
+
+.title a {
+	text-decoration: none;
+}
+
+/**** Image Galleries ****/
+.galtable {
+	border-collapse: collapse;
+	border: 1px solid #cc9900}
+
+.galtable a.linkmenu {padding: 0}
+
+.eventhumb,
+.oddthumb {
+	padding-left: 5px;
+	padding-right: 5px;
+	vertical-align: top}
+
+.oddthumb {background: #fff3d4}
+.eventhumb {background: #edd4ae}
+
+.caption {
+	color: #660000;
+	font-size: .8em}
+
+/***** File Galleries *****/
+.fgalexplorer {border: 1px solid #cc9900}
+
+.fgallisting table td {
+	padding-left: 2px;
+	padding-right: 2px}
+
+/***** Trackers *****/
+/***** Categories, Tags *****/
+/***** Tags (freetags) *****/
+/*****  Polls  *****/
+/***** FAQs *****/
+/***** Quizzes *****/
+/***** Shoutbox *****/
+
+textarea.tshoutbox{
+/*	width: 162px*/}
+
+/***** Directory *****/
+.dircategs {
+	border: 1px solid #ffe399;
+	padding: 5px}
+
+.dirlistsites {
+	padding: 5px 0 10px 5px;
+	margin-top: 10px}
+
+.dirrelated {
+	margin-top: 10px;
+	padding: 5px}
+
+.dirfooter {font-size: .95em}
+.dirfooter {margin-top: 10px}
+
+/***** Messages *****/
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {border: 1px solid #ffe399}
+
+.prio1 {background: #fff3d4}
+.prio2 {background: #fff3d3}
+.prio3 {background: #fff3d2}
+.prio4 {background: #fff3d1}
+.prio5 {background: #fff3d0}
+
+.messureadflag {background: #ffe399}
+.messureadhead {background: #ffedbd}
+.messureadbody {background: #ffedbd}
+
+/***** TikiSheets *****/
+.default thead td,
+.default tfoot td {
+	font-weight: bold;
+	text-align: center;
+	background: #660000;
+	color: #fff3d4}
+
+.default	td {
+	border: solid 1px #660000;
+	background: #ffedbd}
+
+/***** Calendar *****/
+.Cal0,
+.Cal1,
+.Cal2 {font-size: 90%}
+
+.Calart,
+.Calblog,
+.Calchart,
+.Caldir,
+.Caleph,
+.Calfaq,
+.Calfgal,
+.Calforum,
+.Calgal,
+.Calnl,
+.Calquiz,
+.Calsurv,
+.Caltrack,
+.Calwiki {
+	font-size: 1.1em;
+	border-top: 0}
+
+.Calart,
+.Calart a,
+.Calart a:visited {color: #FA8072}
+
+.Calblog,
+.Calblog a,
+.Calblog a:visited {color: #cb3bc4}
+
+.Calchart,
+.Calchart a,
+.Calchart a:visited {color: #304F30}
+
+.Caldir,
+.Caldir a,
+.Caldir a:visited {color: #800080}
+
+.Caleph,
+.Caleph a,
+.Caleph a:visited {color: #008000}
+
+.Calfaq,
+.Calfaq a,
+.Calfaq a:visited {color: #822222}
+
+.Calfgal,
+.Calfgal a,
+.Calfgal a:visited {color: #8B4513}
+
+.Calforum,
+.Calforum a,
+.Calforum a:visited {color: #808000}
+
+.Calgal,
+.Calgal a,
+.Calgal a:visited {color: #8B4513}
+
+.Calnl,
+.Calnl a,
+.Calnl a:visited {color: #708090}
+
+.Calquiz,
+.Calquiz a,
+.Calquiz a:visited {color: #5F9EA0}
+
+.Calsurv,
+.Calsurv a,
+.Calsurv a:visited {color: #DAA520}
+
+Caltrack,
+Caltrack a,
+Caltrack a:visited {color: #00BD02}
+
+.Calweb {color: #336699}
+
+.Calwiki,
+.Calwiki a,
+.Calwiki a:visited {color: #2C4B80}
+
+.calfocus {
+	font-size: 1em;
+	border-bottom-color: #66160b;
+	background: #edd4ae}
+
+.calfocuson {font-size: 1em}
+
+.calprio1 a,
+.calprio2 a,
+.calprio3 a,
+.calprio4 a,
+.calprio5 a,
+.calprio6 a,
+.calprio7 a,
+.calprio8 a,
+.calprio9 a {
+	color:#393e51;
+	font-weight:normal}
+
+.caltitle {color: #425262}
+.caltoggle {font-size: 90%}
+
+.opaque {
+	background: url(faulkner/parchmentlight.jpg);
+	border: none;
+	border-top: 2px solid #660000;
+	border-bottom: 1px solid #880000}
+
+.opaque .box-title {border-bottom: 1px solid #660000}
+
+.searchresults {display: inline}
+
+.calinput {background: #3f3f3f}
+.calfocuson + .calcontent {background: #F5F5F5}
+.days {color: #600}
+#caltable .weeks {color: #600}
+.addevent {padding: 0 5px; float: right}
+* html .addevent {padding: 0}
+.calodd, .caleven {border: 1px solid #66160b}
+.calodd {background: #ead2b0}
+* html .calodd {padding: 0}
+.caleven {background: #fae9cf}
+* html .caleven {padding: 0}
+.caldark {background: #e8c8a1}
+* html .caldark {padding: 0}
+.caldark .calfocus {background: inherit}
+.daterow {color: #800;background: transparent; text-decoration: underline}
+.daterow:hover {color: #C90; background: transparent; text-decoration: none}
+
+/***** Admin *****/
+a.admbox {
+	border: 1px solid #880000;
+	background: #eacca7 center no-repeat}
+
+a.admbox:hover,
+a.admbox:focus,
+a.admbox:active  {
+	background: #f4e3c9 center no-repeat;
+	border: 1px solid #cc9900}
+
+a.admbox.off {
+	border: 1px solid #9f9f9f;
+	color: #9f9f9f}
+
+/***** Ajax, jquery. etc. *****/
+/***** Ajax *****/
+
+.tab-wrapper {border: 1px solid #edd4ae}
+/***** New (unsorted) *****/
+
+/***** End New (unsorted) *****/
+
+/* End of File */

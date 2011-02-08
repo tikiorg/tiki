@@ -1,0 +1,1 @@
+<a href="http://zukakakina.com" title="Adapted by Gary Cunningham-Lee aka chibaguy">{tr}Theme{/tr}</a>: <a href="http://andreasviklund.com/" title="{tr}Design by{/tr} Andreas Viklund">Andreas09</a>
