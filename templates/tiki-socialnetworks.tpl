@@ -13,7 +13,7 @@
 {tab name="{tr}Accounts{/tr}"}
 {cycle values="odd,even" print=false}
 <form action="tiki-socialnetworks.php" method="post">
-<table class="normal" style="width:100%;">
+<table class="formcolor" style="width:100%;">
 <tr>
  <th colspan="2"><img src="img/icons/twitter_t_logo_32.png" alt="Twitter" width="16" height="16" /> Twitter</th>
 </tr>

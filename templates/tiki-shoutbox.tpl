@@ -5,7 +5,7 @@
 {if $tiki_p_admin_shoutbox eq 'y'}
 	<h2>{tr}Change shoutbox general settings{/tr}</h2>
 	<form action="tiki-shoutbox.php" method="post">
-		<table class="normal">
+		<table class="formcolor">
 			<tr>
 				<td class="odd">{tr}auto-link urls{/tr}</td>
 				<td class="odd">
