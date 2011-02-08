@@ -23,7 +23,7 @@
 
 <h2 id="site_stats">{tr}Site Stats{/tr}</h2>
 {cycle values="odd,even" print=false advance=false}
-<table class="normal">
+<table class="formcolor">
 	<tr class="{cycle}">
 		<td>{tr}Date of first pageview{/tr}</td>
 		<td style="text-align:right;">{$site_stats.started|tiki_long_date}</td>
@@ -52,7 +52,7 @@
 {if $wiki_stats}
 	<h2 id="wiki_stats">{tr}Wiki Stats{/tr}</h2>
 	{cycle values="odd,even" print=false advance=false}
-	<table class="normal">
+	<table class="formcolor">
 		<tr class="{cycle}">
 			<td>{tr}Wiki Pages{/tr}</td>
 			<td style="text-align:right;">{$wiki_stats.pages}</td>
@@ -91,7 +91,7 @@
 {if $igal_stats}
 	<h2 id="igal_stats">{tr}Image galleries Stats{/tr}</h2>
 	{cycle values="odd,even" print=false advance=false}
-	<table class="normal">
+	<table class="formcolor">
 		<tr class="{cycle}">
 			<td>{tr}Galleries{/tr}</td>
 			<td style="text-align:right;">{$igal_stats.galleries}</td>
@@ -122,7 +122,7 @@
 {if $fgal_stats}
 	<h2 id="fgal_stats">{tr}File galleries Stats{/tr}</h2>
 	{cycle values="odd,even" print=false advance=false}
-	<table class="normal">
+	<table class="formcolor">
 		<tr class="{cycle}">
 			<td>{tr}Galleries{/tr}</td>
 			<td style="text-align:right;">{$fgal_stats.galleries}</td>
@@ -157,7 +157,7 @@
 {if $cms_stats}
 	<h2 id="cms_stats">{tr}CMS Stats{/tr}</h2>
 	{cycle values="odd,even" print=false advance=false}
-	<table class="normal">
+	<table class="formcolor">
 		<tr class="{cycle}">
 			<td>{tr}Articles{/tr}</td>
 			<td style="text-align:right;">{$cms_stats.articles}</td>
@@ -188,7 +188,7 @@
 {if $forum_stats}
 	{cycle values="odd,even" print=false advance=false}
 	<h2 id="forum_stats">{tr}Forum Stats{/tr}</h2>
-	<table class="normal">
+	<table class="formcolor">
 		<tr class="{cycle}">
 			<td>{tr}Forums{/tr}</td>
 			<td style="text-align:right;">{$forum_stats.forums}</td>
@@ -219,7 +219,7 @@
 {if $blog_stats}
 	<h2 id="blog_stats">{tr}Blog Stats{/tr}</h2>
 	{cycle values="odd,even" print=false advance=false}
-	<table class="normal">
+	<table class="formcolor">
 		<tr class="{cycle}">
 			<td>{tr}Weblogs{/tr}</td>
 			<td style="text-align:right;">{$blog_stats.blogs}</td>
@@ -250,7 +250,7 @@
 {if $poll_stats}
 	<h2 id="poll_stats">{tr}Poll Stats{/tr}</h2>
 	{cycle values="odd,even" print=false advance=false}
-	<table class="normal">
+	<table class="formcolor">
 		<tr class="{cycle}">
 			<td>{tr}Polls{/tr}</td>
 			<td style="text-align:right;">{$poll_stats.polls}</td>
@@ -269,7 +269,7 @@
 {if $faq_stats}
 	<h2 id="faq_stats">{tr}FAQ Stats{/tr}</h2>
 	{cycle values="odd,even" print=false advance=false}
-	<table class="normal">
+	<table class="formcolor">
 		<tr class="{cycle}">
 			<td>{tr}FAQs{/tr}</td>
 			<td style="text-align:right;">{$faq_stats.faqs}</td>
@@ -288,7 +288,7 @@
 {if $user_stats}
 	<h2 id="user_stats">{tr}User Stats{/tr}</h2>
 	{cycle values="odd,even" print=false advance=false}
-	<table class="normal">
+	<table class="formcolor">
 		<tr class="{cycle}">
 			<td>{tr}Users{/tr}</td>
 			<td style="text-align:right;">{$user_stats.users}</td>
@@ -307,7 +307,7 @@
 {if $quiz_stats}
 	<h2 id="quiz_stats">{tr}Quiz Stats{/tr}</h2>
 	{cycle values="odd,even" print=false advance=false}
-	<table class="normal">
+	<table class="formcolor">
 		<tr class="{cycle}">
 			<td>{tr}Quizzes{/tr}</td>
 			<td style="text-align:right;">{$quiz_stats.quizzes}</td>
@@ -351,9 +351,9 @@
 		{cycle values="odd,even" print=false advance=false}
 		{section name=i loop=$best_objects_stats_between}
 			<tr class="{cycle}">
-				<td>{$best_objects_stats_between[i]->object|escape}</td>
-				<td>{tr}{$best_objects_stats_between[i]->type}{/tr}</td>
-				<td>{$best_objects_stats_between[i]->hits}</td>
+				<td class="text">{$best_objects_stats_between[i]->object|escape}</td>
+				<td class="text">{tr}{$best_objects_stats_between[i]->type}{/tr}</td>
+				<td class="integer">{$best_objects_stats_between[i]->hits}</td>
 			</tr>
 		{/section}
 	</table>
@@ -370,9 +370,9 @@
 		{cycle values="odd,even" print=false advance=false}
 		{section name=i loop=$best_objects_stats_lastweek}
 			<tr class="{cycle}">
-				<td>{$best_objects_stats_lastweek[i]->object|escape}</td>
-				<td>{tr}{$best_objects_stats_lastweek[i]->type}{/tr}</td>
-				<td>{$best_objects_stats_lastweek[i]->hits}</td>
+				<td class="text">{$best_objects_stats_lastweek[i]->object|escape}</td>
+				<td class="text">{tr}{$best_objects_stats_lastweek[i]->type}{/tr}</td>
+				<td class="integer">{$best_objects_stats_lastweek[i]->hits}</td>
 			</tr>
 		{/section}
 	</table>

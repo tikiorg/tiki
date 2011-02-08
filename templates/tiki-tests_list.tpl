@@ -4,7 +4,7 @@
 
 {pagination_links cant=$files_number offset=$offset step=$files_per_page}{/pagination_links}
 
-<table class="normal" width="100%" style="clear: both;">
+<table class="normal" style="clear: both;">
 <tr>
 	<th>{tr}File Name{/tr}</th>
 	<th>{tr}Actions{/tr}</th>
@@ -12,8 +12,8 @@
 {cycle values="odd,even" print=false}
 {foreach from=$files item=file}
 <tr class="{cycle}">
-	<td>{$file}</td>
-	<td width="100px">
+	<td class="text">{$file}</td>
+	<td class="action">
 		{self_link action={tr}Remove{/tr} filename="$file" _ajax='n' _icon='cross'}{tr}Remove{/tr}{/self_link}
 		{self_link _script='tiki_tests/tiki-tests_replay.php' action={tr}Config{/tr} filename="$file" _ajax='n' _icon='resultset_next'}{tr}Replay{/tr}{/self_link}
 		{self_link _script='tiki_tests/tiki-tests_edit.php' action={tr}Show{/tr} filename="$file" _ajax='n' _icon='pencil'}{tr}Edit{/tr}{/self_link}

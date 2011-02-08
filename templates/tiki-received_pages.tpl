@@ -81,18 +81,18 @@
 		{cycle values="even,odd" print=false}
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
-				<td>{$channels[user].receivedPageId}</td>
+				<td class="id">{$channels[user].receivedPageId}</td>
 				{if $channels[user].pageExists ne ''}
-					<td>
+					<td class="text">
 						<span class="highlight">{$channels[user].pageName}</span>
 					</td>
 				{else}
-					<td>{$channels[user].pageName}</td>
+					<td class="text">{$channels[user].pageName}</td>
 				{/if}
-				<td>{$channels[user].receivedDate|tiki_short_date}</td>
-				<td>{$channels[user].receivedFromSite}</td>
-				<td>{$channels[user].receivedFromUser}</td>
-				<td>
+				<td class="date">{$channels[user].receivedDate|tiki_short_date}</td>
+				<td class="text">{$channels[user].receivedFromSite}</td>
+				<td class="text">{$channels[user].receivedFromUser}</td>
+				<td class="action">
 					<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$channels[user].receivedPageId}">{icon _id='page_edit'}</a>
 					<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedPageId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 					<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedPageId}">{icon _id='accept'}</a> &nbsp;
@@ -136,14 +136,14 @@
 		{section name=user loop=$structures}
 			{if $structures[user].structureName eq $structures[user].pageName}
 				<tr class="{cycle}">
-					<td>&nbsp;</td>
-					<td>{$structures[user].receivedPageId}</td>
-					<td>{$structures[user].pageName}</td>
-					<td>&nbsp;</td>
-					<td>{$structures[user].receivedDate|tiki_short_date}</td>
-					<td>{$structures[user].receivedFromSite}</td>
-					<td>{$structures[user].receivedFromUser}</td>
-					<td>
+					<td class="text">&nbsp;</td>
+					<td class="id">{$structures[user].receivedPageId}</td>
+					<td class="text">{$structures[user].pageName}</td>
+					<td class="text">&nbsp;</td>
+					<td class="date">{$structures[user].receivedDate|tiki_short_date}</td>
+					<td class="text">{$structures[user].receivedFromSite}</td>
+					<td class="text">{$structures[user].receivedFromUser}</td>
+					<td class="action">
 						<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$structures[user].receivedPageId}">{icon _id='accept'}</a> 
 						&nbsp;
 						<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$structures[user].receivedPageId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
@@ -152,22 +152,22 @@
 				{section name=ix loop=$structures}
 					{if $structures[ix].structureName eq $structures[user].structureName}
 						<tr class="{cycle}">
-							<td>
+							<td class="checkbox">
 								<input type="checkbox" name="checked[]" value="{$structures[ix].pageName|escape}" />
 							</td>
-							<td>{$structures[ix].receivedPageId}</td>
-							<td>&nbsp;</td>
+							<td class="id">{$structures[ix].receivedPageId}</td>
+							<td class="text">&nbsp;</td>
 							{if $structures[ix].pageExists ne ''}
-								<td>
+								<td class="text">
 									<span class="highlight">{$structures[ix].pageName}</span>
 								</td>
 							{else}
-								<td>{$structures[ix].pageName}</td>
+								<td class="text">{$structures[ix].pageName}</td>
 							{/if}
-							<td>{$structures[ix].receivedDate|tiki_short_date}</td>
-							<td>{$structures[ix].receivedFromSite}</td>
-							<td>{$structures[ix].receivedFromUser}</td>
-							<td>
+							<td class="date">{$structures[ix].receivedDate|tiki_short_date}</td>
+							<td class="text">{$structures[ix].receivedFromSite}</td>
+							<td class="text">{$structures[ix].receivedFromUser}</td>
+							<td class="action">
 								<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$structures[ix].receivedPageId}">{icon _id='page_edit'}</a>
 								<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$structures[ix].receivedPageId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 							</td>
