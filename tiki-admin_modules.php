@@ -286,15 +286,25 @@ if (isset($_REQUEST["um_edit"])) {
 }
 $user_modules = $modlib->list_user_modules();
 $smarty->assign_by_ref('user_modules', $user_modules["data"]);
+
 $all_modules = $modlib->get_all_modules();
 sort($all_modules);
 $smarty->assign_by_ref('all_modules', $all_modules);
 $all_modules_info = array_combine( 
 	$all_modules, 
 	array_map( array( $modlib, 'get_module_info' ), $all_modules ) 
-) ;
-asort($all_modules_info);
-$smarty->assign( 'all_modules_info', $all_modules_info);
+);
+foreach ($all_modules_info as &$mod) {
+	foreach ($mod['prefs'] as $pf) {
+		$mod['enabled'] = ($prefs[$pf] === 'y');
+	}
+}
+//asort($all_modules_info);
+$smarty->assign_by_ref( 'all_modules_info', $all_modules_info);
+if (!empty($_REQUEST['module_list_show_all'])) {
+	$smarty->assign('module_list_show_all', true);
+}
+
 $orders = array();
 for ($i = 1;$i < 50;$i++) {
     $orders[] = $i;

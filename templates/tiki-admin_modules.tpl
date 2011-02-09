@@ -620,16 +620,28 @@
 {/tab}
 
 {tab name="{tr}All Modules{/tr}"}
-	<div style="height:400px;overflow:auto;">
-		{listfilter selectors='#module_list li'}
-		<ul id="module_list">
-			{foreach key=name item=info from=$all_modules_info}
-				<li>
-				{$info.name} <em>({$name})</em>
-				</li>
-			{/foreach}
-		</ul>
-	</div>
+
+	<form method="post" action="tiki-admin_modules.php">
+		<div style="height:400px;overflow:auto;">
+			<div class="navbar">
+				{listfilter selectors='#module_list li'}
+				<input type="checkbox" name="module_list_show_all" id="module_list_show_all"{if $module_list_show_all} checked="checked"{/if} />
+				<label for="module_list_show_all">{tr}Show all modules{/tr}</label>
+			</div>
+			<ul id="module_list">
+				{foreach key=name item=info from=$all_modules_info}
+					<li class="{if $info.enabled}enabled{else}disabled{/if}">
+						{$info.name} <em>({$name})</em>
+					</li>
+				{/foreach}
+			</ul>
+		</div>
+	</form>
+	{jq}
+$("#module_list_show_all").click(function(){
+	$("#module_list li.disabled").toggle($(this).attr("checked"));
+});
+{/jq}
 {/tab}
 
 {/tabset}
