@@ -188,16 +188,10 @@ input[type="submit"]:hover,
 	margin-top: 10px;
 }
 
-#top_modules .box-login_box {
-	float: right;
-	margin-right: 20px;
-	margin-top: 40px;
-	color: #f5f5f5;
-}
-
-
-#siteloginbar_popup {
+#top_modules .siteloginbar_popup {
+	position: absolute;
 	bottom: 1px;
+	right: 20px;
 }
 
 #tiki-top {
@@ -231,8 +225,8 @@ input[type="submit"]:hover,
 	padding: .5em 1em;
 }
 
-.cssmenu_horiz li ul li,
-.cssmenu_vert li ul li {
+.cssmenu_horiz ul li,
+.cssmenu_vert ul li {
 	background: #e2e2e2;
 	border: 1px solid #aaa;
 	border-top: 0;

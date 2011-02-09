@@ -26,10 +26,9 @@ html>body {font-size: 76% !important}
 body.fullscreen {padding: 3em}
 
 /* next two: fixed-width: 960px */
-body.fixed_width .fixedwidth {
+body.fixed_width #fixedwidth {
 	margin-bottom: 20px;
 	width: 900px;
-
 }
 
 body.fixed_width *:first-child+html #c1c2 {
@@ -230,11 +229,10 @@ ul, ol {text-align: left}
 tt {font-size: 1.2em}
 
 /***** Site Header & Identity *****/
-#header {position: static}
 	
 #top_modules {
-	min-height: 140px;
-	background: url(eatlon/banner.gif) no-repeat 100% 5px}
+	min-height: 126px;
+	background: url(eatlon/banner.gif) no-repeat 100% 0}
 
 
 #sitelogo a,
@@ -243,10 +241,10 @@ tt {font-size: 1.2em}
 
 .floatright img {margin-right: 10px}
 
-.box-login_box {
+#top_modules .siteloginbar_popup {
 	position: absolute;
 	right: 20px;
-	bottom: 20px;
+	bottom: 0;
 }
 
 input[id="sl-login-user"],
@@ -397,9 +395,9 @@ input#fuser,
 	color: #d7e5f3
 }
 
-.cssmenu li ul li,
-.cssmenu_horiz li ul li,
-.cssmenu_vert li ul li {background: #9faec2 url(eatlon/body_bg.gif) 0 -300px repeat-x}
+.cssmenu ul li,
+.cssmenu_horiz ul li,
+.cssmenu_vert ul li {background: #9faec2 url(eatlon/body_bg.gif) 0 -300px repeat-x}
 
 .cssmenu_vert .sf-sub-indicator {background: url(eatlon/arrows-6d819d.png) no-repeat 10px 0}
 * html .cssmenu_vert ul .sf-sub-indicator {background: url(eatlon/arrows-6d819d.png) no-repeat -10px 0}

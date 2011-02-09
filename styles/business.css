@@ -282,8 +282,7 @@ hr {
 /* default and topbar dropdown typography (colors) and padding */
 .cssmenu_horiz a,
 .cssmenu_vert a,
-#header .cssmenu_horiz li ul li a,
-#header .cssmenu_horiz li:hover ul li a {
+.cssmenu_horiz ul li a {
 	color: #0082e0;
 	background: #fff;
 	font-weight: normal;
@@ -299,12 +298,7 @@ hr {
 }
 
 /* default backgrounds */
-/*.cssmenu_horiz li,*/
-.cssmenu_vert li,
-#header .cssmenu_horiz li:hover ul li,
-#header .cssmenu_horiz li:hover ul li a {
-	background: #fff;
-}
+
 
 .cssmenu_horiz ul li a {
 	border-right: 0;

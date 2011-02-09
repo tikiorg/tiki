@@ -35,14 +35,14 @@ function capLock(e, el){
 				</form>
 			{/if}
 		{elseif $module_params.mode eq "header"}
-			<span style="white-space: nowrap">{$user|userlink}</span> | <a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>
+			<span style="white-space: nowrap">{$user|userlink}</span> <a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>
 		{elseif $module_params.mode eq "popup"}
 			<div class="siteloginbar_popup">
 				<ul class="clearfix cssmenu_horiz">
-					<li class="tabmark" id="logout_link_{$module_logo_instance}"><a href="tiki-logout.php" class="login_link">Log out</a>
-						<ul>
-							<li>
-								<div class="cbox">{$user|userlink} | <a href="tiki-logout.php" title="Log out">Log out</a></div>
+					<li {*class="tabmark" *}id="logout_link_{$module_logo_instance}"><span class="tabmark"><a href="tiki-logout.php" class="login_link">Log out</a></span>
+						<ul class="siteloginbar_poppedup">
+							<li class="tabcontent">
+								{*<div class="cbox">*}{$user|userlink} <a href="tiki-logout.php" title="Log out">Log out</a>{*</div>*}
 							</li>
 						</ul>
 					</li>
@@ -99,10 +99,10 @@ function doChallengeResponse() {
 		{if $module_params.mode eq "popup"}
 			<div class="siteloginbar_popup">
 				<ul class="clearfix cssmenu_horiz">
-					<li class="tabmark" id="logout_link_{$module_logo_instance}"><a href="tiki-logout.php" class="login_link">Log in</a>
-						<ul>
-							<li>
-								<div class="cbox">
+					<li {*class="tabmark" *}id="logout_link_{$module_logo_instance}"><span class="tabmark"><a href="tiki-logout.php" class="login_link">Log in</a></span>
+						<ul class="siteloginbar_poppedup">
+							<li class="tabcontent">
+								{*<div class="cbox">*}
 		{/if}
 		{if $module_params.nobox neq 'y'}
 			<fieldset>
@@ -170,7 +170,7 @@ function doChallengeResponse() {
 						1 {tr}year{/tr}
 					{/if}
 					)
-				</div>
+				{*</div>*}
 			{/if}
 		{/if}
 		<div style="text-align: center">
@@ -182,24 +182,21 @@ function doChallengeResponse() {
 		
 		{if $module_params.show_forgot eq 'y' or $module_params.show_register eq 'y'}
 			<div>
-				[&nbsp;{strip}
+				{strip}
 				{if $module_params.show_register eq 'y'}
-					<a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a>
+					<div><a {*class="linkmodule"*} href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a></div>
 				{/if}
-				{if $module_params.show_register eq 'y' && $module_params.show_forgot eq 'y'}
-				    &nbsp;|&nbsp;
-				{/if}				
 				{if $module_params.show_forgot eq 'y'}
-					<a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a>
+					<div><a {*class="linkmodule"*} href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a></div>
 				{/if}
-				{/strip}&nbsp;]
+				{/strip}
 			</div>
 		{else}
 			&nbsp;
 		{/if}
 		{if $prefs.feature_switch_ssl_mode eq 'y' && ($prefs.https_login eq 'allowed' || $prefs.https_login eq 'encouraged')}
 			<div>
-				<a class="linkmodule" href="{$base_url_http}{$prefs.login_url}" title="{tr}Click here to login using the default security protocol{/tr}">{tr}Standard{/tr}</a> |
+				<a class="linkmodule" href="{$base_url_http}{$prefs.login_url}" title="{tr}Click here to login using the default security protocol{/tr}">{tr}Standard{/tr}</a>
 				<a class="linkmodule" href="{$base_url_https}{$prefs.login_url}" title="{tr}Click here to login using a secure protocol{/tr}">{tr}Secure{/tr}</a>
 			</div>
 		{/if}
@@ -220,7 +217,7 @@ function doChallengeResponse() {
 						</ul>
 					</li>
 				</ul>
-			</div>
+			{*</div>*}
 		{/if}
 		
 		{if $use_intertiki_auth eq 'y'}

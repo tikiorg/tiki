@@ -34,11 +34,11 @@ body {
 
 #c1c2 #col2 {
 	width: 230px;
-	text-align: center}
+}
 
 #c1c2 #col2 .content {
 	overflow: visible;
-	text-align: center}
+}
 
 #col3 {
 	margin-left: -230px;
@@ -47,7 +47,7 @@ body {
 
 #col3 .content {
 	margin: 0;
-	text-align: center}
+}
 
 #footer {
  	text-align: center;
@@ -191,7 +191,6 @@ textarea {
 
 p {color: #000}
 small {font-size: 0.8em}
-label {color: #000}
 
 ul {
 	list-style-type: square;
@@ -202,7 +201,7 @@ ul {
 /***** Site Header & Identity *****/
 #top_modules {min-height: 102px}
 
-.box-login_box {
+#top_modules .box-login_box {
 	position: absolute;
 	right: 20px;
 	bottom: 0;
@@ -212,8 +211,6 @@ ul {
 #siteloginbar_popup .cssmenu_horiz li ul {
 	margin-top: -8px;	
 }
-
-#bannertopright {padding-right: 1em}
 
 #sitetitle,
 #sitesubtitle {

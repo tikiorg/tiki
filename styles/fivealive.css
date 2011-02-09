@@ -676,8 +676,8 @@ li.login_link ul li a {
 .cssmenu_vert li ul a,
 .cssmenu_horiz li ul a,
 .cssmenu_horiz li ul a,
-#header .cssmenu_horiz li ul a,
-#header .cssmenu_horiz li:hover ul a,
+.box-menu .cssmenu_horiz li ul a,
+.box-menu .cssmenu_horiz li:hover ul a,
 #topbar_modules .cssmenu_horiz li ul a,
 #topbar_modules .cssmenu_horiz li:hover ul a {
 	background: #153c64;
@@ -688,7 +688,7 @@ li.login_link ul li a {
 
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
-#header .cssmenu_horiz li ul a:hover,
+.box-menu .cssmenu_horiz li ul a:hover,
 #topbar_modules .cssmenu_horiz li ul a:hover {
 	background: #128bc9;
 	text-decoration: none;
@@ -701,7 +701,7 @@ li.login_link ul li a {
 	padding: .75em 1em;
 }
 
-#header .cssmenu_horiz li a,
+.box-menu .cssmenu_horiz li a,
 #topbar_modules .cssmenu_horiz li a {
 	font-weight: bold;
 	text-decoration: none;

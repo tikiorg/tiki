@@ -205,7 +205,7 @@ input[type="submit"]:active,
 
 #top_modules .siteloginbar_popup {
 	position: absolute;
-	right: 10px;
+	right: 30px;
 	bottom: 0;
 }
 
@@ -247,7 +247,7 @@ input[type="submit"]:active,
 }
 
 .cssmenu_vert ul a,
-.cssmenu_horiz li ul li a,
+.cssmenu_horiz ul li a,
 .cssmenu_horiz li:hover ul li a {
 	background: #ded6c6;
 	text-decoration: none;

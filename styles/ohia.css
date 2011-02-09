@@ -31,13 +31,6 @@ body.cke_show_borders {
 	background: transparent;
 	color: #f4f4f4}
 	
-#header {
-	text-align: left;
-	background: transparent;
-	min-height: 122px;
-	position: relative;
-}
-	
 #middle {background: #222}
 
 #c1c2 #wrapper #col1 > .content {
@@ -183,41 +176,23 @@ small {font-size: .9em}
 label {margin: 0 2px}
 
 /***** Site Header & Identity *****/
-#header-top {
-	position: static;
-}
 
-#siteheader {
+#top_modules {
 	text-align: left;
 	background: transparent;
-	vertical-align: middle;
-	padding: 0;
-	margin: 0;
+	min-height: 122px;
+	position: relative;
 	background: #d40000 url(ohia/header.png) repeat-x 0 100%;
 }
 
-div#sioptions {
-	width: 100%;
-	margin: 0}
-
-div#sitelogo {
-	margin: auto}
-
-div#sitead {margin: auto}
-#sitead.floatright {padding-right: 100px}
-#sitead.floatleft {padding-left: 100px}
-
-#siteloginbar {padding: 6px 3px}
-
-#siteloginbar a,
-#siteloginbar a:visited {color: #f4f4f4}
-
-#siteloginbar_popup {
+#top_modules .siteloginbar_popup {
 	bottom: 9px;
 }
 
-#sitelocbar {float: left}
-#customcodewith_ad {width: 400px}
+.siteloginbar {padding: 6px 3px}
+
+.siteloginbar a,
+.siteloginbar a:visited {color: #f4f4f4}
 
 #sitetitle,
 #sitesubtitle {
@@ -248,7 +223,7 @@ div#sitead {margin: auto}
 
 #tiki-top table {width: auto}
 
-#sitesearchbar {
+#top_modules .box-search {
 	padding: 2px;
 	text-decoration: none;
 	font: 1.1em Verdana, Helvetica, Arial, Sans-Serif;
@@ -257,7 +232,7 @@ div#sitead {margin: auto}
 	border-left: 1px solid #333;
 	border-bottom: 1px solid #696969}
 	
-#sitesearchbar form {margin-right: 40px}
+#top_modules .box-search sitesearchbar form {margin-right: 40px}
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/

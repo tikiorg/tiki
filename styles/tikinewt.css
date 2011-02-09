@@ -923,31 +923,38 @@ td.third {
 }
 
 /** Tabs **/
-.tab1 form {
-	display: inline;
-}
+.tabactive,
+.tabinactive,
+[class].tabactive,
+[class].tabinactive {top: 0 !important}
 
 .tabs {
-	border-bottom: solid 1px #225566 !important;
-	margin: 10px 1px 0 0 !important;
-	padding: 0 !important;
+	list-style-image:none;
+	list-style-position:outside;
+	list-style-type:none;
+	position:relative;
+	padding: .2em .2em 0;
+	margin:0 0.2em 0 0;
+	border: none;
+}
+
+.tabs span {
+	display: block;
+	float: left;
 }
 
 .tabmark {
-	display: inline;
-	font-size: .95em;
+/*	font-size: .95em;
 	background: #ddd;
 	border: 1px solid #666;
-	margin: 0;
-	margin-right: 5px;
-	padding: 2px 0;
-}
+*/}
 
-.tabmark a {
+.tabmark a,
+.tabmark a:visited {
+	padding: 0.5em 1em;
 	border-bottom: 0;
 	color: #666;
 	font-weight: bold;
-	padding: 1px 5px;
 }
 
 .tabmark a:active {

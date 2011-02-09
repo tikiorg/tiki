@@ -722,12 +722,12 @@ tr.diffheader {
 	border-bottom-width: 0 !important;
 }
 
-.tabmark a {
+.tabmark > a {
 	color: #a8cce2;
 	border: none;
 }
 
-.tabmark a:hover {
+.tabmark > a:hover {
 	background: url(feb12/header.jpg) repeat-x 0 100%;
 	color: #eee !important;
 	text-decoration: none;

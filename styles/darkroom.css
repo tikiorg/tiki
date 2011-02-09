@@ -216,11 +216,6 @@ small {
 	font-size: 0.8em;
 }
 
-ul,
-ol {
-	text-align: left;
-}
-
 /***** Page Layout *****/
 
 .fullscreenbutton:hover,
@@ -359,7 +354,10 @@ ol {
 	position: absolute;
 	right: 10px;
 	bottom: 0;
-	white-space: nowrap;
+}
+
+.siteloginbar_poppedup {
+    width: 13em !important;
 }
 /*
 .siteloginbar * {
@@ -404,12 +402,6 @@ input[id="sl-login-pass"] {
 	right: 10px;
 	top: 4px;
 	z-index: 2;
-}
-
-#header .box-login_box {
-	position: absolute;
-	right: 10px;
-	bottom: 45px;
 }
 
 /* centercolumn */
@@ -793,8 +785,7 @@ img.flipmodimage:hover {
 	text-align: left;
 }
 
-.box-data li,
-.module li {
+.box-data li {
 	padding: 0.2em;
 }
 
@@ -993,19 +984,18 @@ td.form {
 }
 
 .tabmark {
-	font-size: 10px;
-	background: #4e4e4e url(darkroom/button.png);
+	background: #4e4e4e url(darkroom/button.png) repeat-x;/*
 	border: 1px solid #666;
 	border-bottom-width: 0 !important;
 	padding: 2px 0;
-	color: #f5f5f5;
-	margin: 0 .2em -1px 0;
+	margin: 0 .2em -1px 0;*/
+	display: block;
 }
 
 .tabmark a {
 	border: 1px solid transparent;
 	font-weight: bold;
-	padding: 1px 5px;
+	padding: 3px 5px;
 	color: #f5f5f5;
 }
 

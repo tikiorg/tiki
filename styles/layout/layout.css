@@ -143,7 +143,7 @@ img {
 	float: left;
 	clear: none;
 }
-
+/*
 .siteloginbar div {
 	display: inline;
 }
@@ -160,7 +160,7 @@ img {
 
 .siteloginbar form {
 	padding-right: 0;
-}
+}*/
 
 /* Sitelogin Popup */
 .tiki_register_login {
@@ -175,6 +175,10 @@ img {
 	right: 4em;*/
 }
 
+.siteloginbar_poppedup {
+	margin-left: -20%;
+}
+
 .siteloginbar_popup .tabcontent fieldset {
 	margin: 0;
 	margin-left: -4px;
@@ -185,6 +189,10 @@ img {
 	font-size: 1em;
 	font-weight: normal;
 	margin: auto;
+}
+
+.siteloginbar_poppedup div {
+	text-align: right;
 }
 
 li#register_link {
@@ -878,8 +886,8 @@ h3.box-title {
 	display: inline-block;
 	width: auto;
 	z-index: 1;
-	position: relative;
-	bottom: -1px;
+	margin-bottom: 0;
+	padding-bottom: 2px;
 }
 	
 .rbox-title .icon {
@@ -888,8 +896,8 @@ h3.box-title {
 }
 	
 .rbox-data {
-	position: relative;
-	top: 0;
+	margin-top: -1px;	
+	padding-top: 3px;
 	z-index: 0;
 }
 
@@ -979,7 +987,6 @@ tr.diffheader {
 	margin: 0;
 	margin-right: 5px;
 	padding: 1px 0;
-	cursor: pointer;
 }
 	
 .tabmark a {
@@ -1019,6 +1026,15 @@ tr.diffheader {
 
 .tabcontent table td {
 	padding: 5px;
+}
+
+/* avoid applying menu styles to popup links */
+.siteloginbar_popup .cssmenu_horiz ul.siteloginbar_poppedup li a,
+.siteloginbar_popup .cssmenu_horiz ul.siteloginbar_poppedup li a:hover,
+.siteloginbar_popup .cssmenu_horiz li:hover ul.siteloginbar_poppedup li a {
+	background: none;
+	border: none;
+	text-transform: none;
 }
 
 /***** Wiki *****/
