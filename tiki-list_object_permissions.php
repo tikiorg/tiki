@@ -91,7 +91,7 @@ foreach($types as $type) {
 
 		case 'tracker':
 		case 'trackers':
-			$objects = $tikilib->list_trackers();
+			$objects = TikiLib::lib('trk')->list_trackers();
 			foreach($objects['data'] as $object) {
 				$r = list_perms($object['trackerId'], $type, $object['name']);
 				if (count($r['special']) > 0) { $res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name']); }

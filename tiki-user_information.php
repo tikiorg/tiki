@@ -128,7 +128,8 @@ if ($prefs['feature_display_my_to_others'] == 'y') {
 		$smarty->assign_by_ref('user_galleries', $user_galleries);
 	}
 	if ($prefs['feature_trackers'] == 'y') {
-		$user_items = $tikilib->get_user_items($userwatch);
+		$trklib = TikiLib::lib('trk');
+		$user_items = $trklib->get_user_items($userwatch);
 		$smarty->assign_by_ref('user_items', $user_items);
 	}
 	if ($prefs['feature_articles'] == 'y') {

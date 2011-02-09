@@ -1176,7 +1176,7 @@ if ($tracker_info["useAttachments"] == 'y') {
 	$smarty->assign('attextra', $attextra);
 }
 if (isset($_REQUEST['moveto']) && empty($_REQUEST['moveto'])) {
-	$trackers = $tikilib->list_trackers();
+	$trackers = $trklib->list_trackers();
 	$smarty->assign_by_ref('trackers', $trackers['data']);
 	$_REQUEST['show'] = 'mod';
 }

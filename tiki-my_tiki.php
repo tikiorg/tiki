@@ -59,10 +59,10 @@ if ($prefs['feature_galleries'] == 'y') {
 if ($prefs['feature_trackers'] == 'y') {
 	$mytiki_user_items = $tikilib->get_user_preference($user, 'mytiki_items', 'y');
 	if ($mytiki_user_items == 'y') {
-		$user_items = $tikilib->get_user_items($userwatch);
+		$trklib = TikiLib::lib('trk');
+		$user_items = $trklib->get_user_items($userwatch);
 		$smarty->assign_by_ref('user_items', $user_items);
 		$smarty->assign('mytiki_user_items', 'y');
-		global $trklib; include_once('lib/trackers/trackerlib.php');
 		$nb_item_comments = $trklib->nbComments($user);
 		$smarty->assign_by_ref('nb_item_comments', $nb_item_comments);
 	}

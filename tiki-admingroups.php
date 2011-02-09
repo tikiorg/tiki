@@ -14,7 +14,8 @@ $auto_query_args = array('group');
 if (!isset($cookietab)) { $cookietab = '1'; }
 list($trackers, $ag_utracker, $ag_ufield, $ag_gtracker, $ag_gfield, $ag_rufields) = array(array() ,	0, 0, 0, 0, '');
 if (isset($prefs['groupTracker']) and $prefs['groupTracker'] == 'y') {
-	$trackerlist = $tikilib->list_trackers(0, -1, 'name_asc', '');
+	$trklib = TikiLib::lib('trk');
+	$trackerlist = $trklib->list_trackers(0, -1, 'name_asc', '');
 	$trackers = $trackerlist['list'];
 	if (isset($_REQUEST["groupstracker"]) and isset($trackers[$_REQUEST["groupstracker"]])) {
 		$ag_gtracker = $_REQUEST["groupstracker"];
@@ -24,7 +25,8 @@ if (isset($prefs['groupTracker']) and $prefs['groupTracker'] == 'y') {
 	}
 }
 if (isset($prefs['userTracker']) and $prefs['userTracker'] == 'y') {
-	if (!isset($trackerlist)) $trackerlist = $tikilib->list_trackers(0, -1, 'name_asc', '');
+	$trklib = TikiLib::lib('trk');
+	if (!isset($trackerlist)) $trackerlist = $trklib->list_trackers(0, -1, 'name_asc', '');
 	$trackers = $trackerlist['list'];
 	if (isset($_REQUEST["userstracker"]) and isset($trackers[$_REQUEST["userstracker"]])) {
 		$ag_utracker = $_REQUEST["userstracker"];

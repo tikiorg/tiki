@@ -69,7 +69,8 @@ function filter_out_sefurl($tpl_output, &$smarty, $type = null, $title = null, $
 	}
 	if ($type == 'tracker item' || $type == 'trackeritem') {
 		if (preg_match('/itemId=([0-9]+)/', $tpl_output, $matches)) {
-			if ($prefs["feature_sefurl_tracker_prefixalias"] == 'y' && $pagealias = $tikilib->get_trackeritem_pagealias($matches[1])){
+			$trklib = TikiLib::lib('trk');
+			if ($prefs["feature_sefurl_tracker_prefixalias"] == 'y' && $pagealias = $trklib->get_trackeritem_pagealias($matches[1])){
 				$tpl_output = "./tiki-index.php?page=" . $pagealias;
 			}
 		}

@@ -1466,7 +1466,7 @@ function wikiplugin_trackerlist($data, $params) {
 				$smarty->assign('trackerlistmapview', false);
 			}
 
-			$tracker = $tikilib->get_tracker($trackerId,0,-1);
+			$tracker = $trklib->get_tracker($trackerId,0,-1);
 			/*foreach ($query_array as $k=>$v) {
 				if (!is_array($v)) { //only to avoid an error: eliminate the params that are not simple (ex: if you have in the same page a tracker list plugin and a tracker plugin, filling the tracker plugin interfers with the tracker list. In any case this is buggy if two tracker list plugins in the same page and if one needs the query value....
 					$quarray[] = urlencode($k) ."=". urlencode($v);

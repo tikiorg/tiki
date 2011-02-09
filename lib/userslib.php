@@ -1868,22 +1868,22 @@ class UsersLib extends TikiLib
 
 		$groupTracker = $this->get_tracker_usergroup( $user );
 		if( $groupTracker && $groupTracker['usersTrackerId'] ) {
-			global $trklib;
-			if( ! $trklib ) require_once 'lib/trackers/trackerlib.php';
+			$trklib = TikiLib::lib('trk');
 
 			$itemId = $trklib->get_item_id( $groupTracker['usersTrackerId'], $groupTracker['usersFieldId'], $user );
-			if( $itemId )
+			if( $itemId ) {
 				$trklib->remove_tracker_item( $itemId );
+			}
 		}
 
 		$tracker = $this->get_usertracker( $userId );
 		if( $tracker && $tracker['usersTrackerId'] ) {
-			global $trklib;
-			if( ! $trklib ) require_once 'lib/trackers/trackerlib.php';
+			$trklib = TikiLib::lib('trk');
 
 			$itemId = $trklib->get_item_id( $tracker['usersTrackerId'], $tracker['usersFieldId'], $user );
-			if( $itemId )
+			if( $itemId ) {
 				$trklib->remove_tracker_item( $itemId );
+			}
 		}
 
 		$query = "delete from `users_users` where binary `login` = ?";
@@ -3802,11 +3802,8 @@ class UsersLib extends TikiLib
 		$userid = $this->get_user_id($user);
 		$tracker = $this->get_usertracker($userid);
 		if( $tracker && $tracker['usersTrackerId'] ) {
-			global $trklib;
-			if( ! $trklib ) {
-				require_once 'lib/trackers/trackerlib.php';	
-			}
-			global $categlib; include_once('lib/categories/categlib.php');
+			$trklib = TikiLib::lib('trk');
+			$categlib = TikiLib::lib('categ');
 			$itemid = $trklib->get_item_id( $tracker['usersTrackerId'], $tracker['usersFieldId'], $user );
 			$cat = $categlib->get_object_categories('trackeritem', $itemid);
 			$categId = $this->getOne("select `categId` from `tiki_categories` where `name` = ?", array($group));
@@ -3821,11 +3818,8 @@ class UsersLib extends TikiLib
 		$userid = $this->get_user_id($user);
 		$tracker = $this->get_usertracker($userid);
 		if( $tracker && $tracker['usersTrackerId'] ) {
-			global $trklib;
-			if( ! $trklib ) {
-				require_once 'lib/trackers/trackerlib.php';
-			}
-			global $categlib; include_once('lib/categories/categlib.php');
+			$trklib = TikiLib::lib('trk');
+			$categlib = TikiLib::lib('categ');
 			$itemid = $trklib->get_item_id( $tracker['usersTrackerId'], $tracker['usersFieldId'], $user );
 			$cat = $categlib->get_object_categories('trackeritem', $itemid);
 			$categId = $this->getOne("select `categId` from `tiki_categories` where `name` = ?", array($group));

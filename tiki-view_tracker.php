@@ -735,7 +735,7 @@ $groups = $userlib->list_all_groups();
 $smarty->assign_by_ref('users', $users);
 $smarty->assign_by_ref('groups', $groups);
 if ($tiki_p_export_tracker == 'y') {
-	$trackers = $tikilib->list_trackers();
+	$trackers = $trklib->list_trackers();
 	$smarty->assign_by_ref('trackers', $trackers['data']);
 	include_once ('lib/wiki-plugins/wikiplugin_trackerfilter.php');
 	$formats = '';

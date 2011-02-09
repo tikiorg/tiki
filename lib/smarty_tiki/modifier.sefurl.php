@@ -61,7 +61,8 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 	case 'trackeritem':
 		$replacementpage = '';
 		if ($prefs["feature_sefurl_tracker_prefixalias"] == 'y') {
-			$replacementpage = $tikilib->get_trackeritem_pagealias($source);
+			$trklib = TikiLib::lib('trk');
+			$replacementpage = $trklib->get_trackeritem_pagealias($source);
 		}
 		if ($replacementpage) {
 			return $wikilib->sefurl($replacementpage, $with_next, $all_langs);

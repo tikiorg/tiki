@@ -38,7 +38,7 @@ if (isset($_REQUEST['sort_mode'])) {
 }
 $output = $rsslib->get_from_cache($uniqueid);
 if ($output["data"] == "EMPTY") {
-	$tmp = $tikilib->get_tracker($_REQUEST["$id"]);
+	$tmp = $trklib->get_tracker($_REQUEST["$id"]);
 	if (empty($tmp)) {
 		$errmsg = tra("Incorrect param");
 		require_once ('tiki-rss_error.php');

@@ -413,7 +413,7 @@ $info['autoCreateGroup'] = '';
 $info['autoCreateGroupInc'] = 0;
 $info['autoAssignGroupItem'] = '';
 if ($_REQUEST["trackerId"]) {
-	$info = array_merge($info, $tikilib->get_tracker($_REQUEST["trackerId"]));
+	$info = array_merge($info, $trklib->get_tracker($_REQUEST["trackerId"]));
 	$info = array_merge($info, $trklib->get_tracker_options($_REQUEST["trackerId"]));
 	require_once 'lib/todolib.php';
 	$info['todos'] = $todolib->listTodoObject('tracker', $_REQUEST['trackerId']);

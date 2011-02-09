@@ -60,7 +60,7 @@ function wikiplugin_miniquiz($data, $params) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
 
-	$items = $tikilib->list_tracker_items($trackerId,0,-1,'lastModif_desc','','o');
+	$items = $trklib->list_tracker_items($trackerId,0,-1,'lastModif_desc','','o');
 	foreach ($items['data'] as $it) {
 		$id = $it['itemId'];
 		foreach ($it['field_values'] as $val) {

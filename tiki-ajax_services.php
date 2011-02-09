@@ -126,7 +126,7 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 
 		$access->output_serialized( $shippinglib->getRates( $_REQUEST['from'], $_REQUEST['to'], $_REQUEST['packages'] ) );
 	} elseif(  $_REQUEST['listonly'] == 'trackername' ) {
-		$trackers = $tikilib->list_trackers();
+		$trackers = TikiLib::lib('trk')->list_trackers();
 		$ret = array();
 		foreach ($trackers['data'] as $tracker) {
 			$ret[] = $tracker['name'];
