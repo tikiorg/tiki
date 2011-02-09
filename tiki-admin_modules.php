@@ -365,20 +365,17 @@ $smarty->assign( 'maxRecords', $maxRecords );
 $smarty->assign( 'offset', $offset );
 $smarty->assign( 'maximum', $maximum );
 
-$left = $modlib->get_assigned_modules('l');
-$right = $modlib->get_assigned_modules('r');
-$smarty->assign_by_ref('left', $left);
-$smarty->assign_by_ref('right', $right);
-$top = $modlib->get_assigned_modules('t');
-$bottom = $modlib->get_assigned_modules('b');
-$smarty->assign_by_ref('top', $top);
-$smarty->assign_by_ref('bottom', $bottom);
-$pagetop = $modlib->get_assigned_modules('p');
-$pagebottom = $modlib->get_assigned_modules('q');
-$smarty->assign_by_ref('pagetop', $pagetop);
-$smarty->assign_by_ref('pagebottom', $pagebottom);
-$topbar = $modlib->get_assigned_modules('o');
-$smarty->assign_by_ref('topbar', $topbar);
+$assigned_modules = $modlib->get_assigned_modules();
+$module_zones = array();
+foreach( $modlib->module_zones as $initial => $zone) {
+	$module_zones[$initial] = array(
+		'id' => $zone,
+		'name' => substr($zone, 0, strpos($zone, '_'))
+	);
+}
+$smarty->assign_by_ref( 'assigned_modules', $assigned_modules );
+$smarty->assign_by_ref( 'module_zones', $module_zones );
+
 $headerlib->add_css('.module:hover {
 	cursor: move;
 	background-color: #ffa;

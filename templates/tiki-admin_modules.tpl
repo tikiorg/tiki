@@ -50,273 +50,47 @@
 		</legend>
 	{/if}
 	<h2>{tr}Assigned Modules{/tr}</h2>
-	<a name="topmod"></a>
-	<table class="normal">
-		<caption>{tr}Top Modules{/tr}</caption>
-		<tr>
-			<th>{tr}Name{/tr}</th>
-			<th>{tr}Order{/tr}</th>
-			<th>{tr}Cache{/tr}</th>
-			<th>{tr}Rows{/tr}</th>
-			<th>{tr}Parameters{/tr}</th>
-			<th>{tr}Groups{/tr}</th>
-			<th>{tr}Action{/tr}</th>
-		</tr>
-		{cycle print=false values="even,odd"}
-		{section name=user loop=$top}
-			<tr class="{cycle}">
-				<td>{$top[user].name|escape}</td>
-				<td>{$top[user].ord}</td>
-				<td>{$top[user].cache_time}</td>
-				<td>{$top[user].rows}</td>
-				<td style="max-width: 40em; white-space: normal;font-size:smaller;">{$top[user].params|stringfix:"&":"<br />"}</td>
-				<td>{$top[user].module_groups}</td>
-				<td>
-					<a class="link" href="tiki-admin_modules.php?edit_assign={$top[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-					{if $top[0].moduleId ne $top[user].moduleId}
-						<a class="link" href="tiki-admin_modules.php?modup={$top[user].moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
-					{/if}
-					{if !$smarty.section.user.last and $top[user.index_next].moduleId}
-						<a class="link" href="tiki-admin_modules.php?moddown={$top[user].moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
-					{/if}
-					<a class="link" href="tiki-admin_modules.php?unassign={$top[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
-				</td>
-			</tr>
-		{sectionelse}
-			{norecords _colspan=7}
-		{/section}
-	</table>
-	<br />
-	<a name="topbarmod"></a>
-		<table class="normal">
-		<caption>{tr}Topbar Modules{/tr}</caption>
-		<tr>
-			<th>{tr}Name{/tr}</th>
-			<th>{tr}Order{/tr}</th>
-			<th>{tr}Cache{/tr}</th>
-			<th>{tr}Rows{/tr}</th>
-			<th>{tr}Parameters{/tr}</th>
-			<th>{tr}Groups{/tr}</th>
-			<th>{tr}Action{/tr}</th>
-		</tr>
-		{cycle print=false values="even,odd"}
-		{section name=user loop=$topbar}
-			<tr class="{cycle}">
-				<td>{$topbar[user].name|escape}</td>
-				<td>{$topbar[user].ord}</td>
-				<td>{$topbar[user].cache_time}</td>
-				<td>{$topbar[user].rows}</td>
-				<td style="max-width: 40em; white-space: normal;font-size:smaller;">{$top[user].params|stringfix:"&":"<br />"}</td>
-				<td>{$topbar[user].module_groups}</td>
-				<td>
-					<a class="link" href="tiki-admin_modules.php?edit_assign={$topbar[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-					{if $topbar[0].moduleId ne $topbar[user].moduleId}
-						<a class="link" href="tiki-admin_modules.php?modup={$topbar[user].moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
-					{/if}
-					{if !$smarty.section.user.last and $topbar[user.index_next].moduleId}
-						<a class="link" href="tiki-admin_modules.php?moddown={$topbar[user].moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
-					{/if}
-					<a class="link" href="tiki-admin_modules.php?unassign={$topbar[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
-				</td>
-			</tr>
-		{sectionelse}
-			{norecords _colspan=7}
-		{/section}
-	</table>
-	<br />
 
-	<a name="pagetopmod"></a>
-	<table class="normal">
-		<caption>{tr}Page Top Modules{/tr}</caption>
-		<tr>
-			<th>{tr}Name{/tr}</th>
-			<th>{tr}Order{/tr}</th>
-			<th>{tr}Cache{/tr}</th>
-			<th>{tr}Rows{/tr}</th>
-			<th>{tr}Parameters{/tr}</th>
-			<th>{tr}Groups{/tr}</th>
-			<th>{tr}Action{/tr}</th>
-		</tr>
-		{cycle print=false values="even,odd"}
-		{section name=user loop=$pagetop}
-			<tr class="{cycle}">
-				<td>{$pagetop[user].name|escape}</td>
-				<td>{$pagetop[user].ord}</td>
-				<td>{$pagetop[user].cache_time}</td>
-				<td>{$pagetop[user].rows}</td>
-				<td style="max-width: 40em; white-space: normal;font-size:smaller;">{$pagetop[user].params|stringfix:"&":"<br />"}</td>
-				<td>{$pagetop[user].module_groups}</td>
-				<td>
-					<a class="link" href="tiki-admin_modules.php?edit_assign={$pagetop[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-					{if $pagetop[0].moduleId ne $pagetop[user].moduleId}
-						<a class="link" href="tiki-admin_modules.php?modup={$pagetop[user].moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
-					{/if}
-					{if !$smarty.section.user.last and $pagetop[user.index_next].moduleId}
-						<a class="link" href="tiki-admin_modules.php?moddown={$pagetop[user].moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
-					{/if}
-					<a class="link" href="tiki-admin_modules.php?unassign={$pagetop[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
-				</td>
-			</tr>
-		{sectionelse}
-			{norecords _colspan=7}
-		{/section}
-	</table>
-	<br />
-
-	<br />	<a name="leftmod"></a>
-	<table class="normal">
-		<caption>{tr}Left Modules{/tr}</caption>
-		<tr>
-			<th>{tr}Name{/tr}</th>
-			<th>{tr}Order{/tr}</th>
-			<th>{tr}Cache{/tr}</th>
-			<th>{tr}Rows{/tr}</th>
-			<th>{tr}Parameters{/tr}</th>
-			<th>{tr}Groups{/tr}</th>
-			<th>{tr}Action{/tr}</th>
-		</tr>
-		{cycle print=false values="even,odd"}
-		{section name=user loop=$left}
-			<tr class="{cycle}">
-				<td class="text">{$left[user].name|escape}</td>
-				<td class="integer">{$left[user].ord}</td>
-				<td class="integer">{$left[user].cache_time}</td>
-				<td class="integer">{$left[user].rows}</td>
-				<td class="text">{$left[user].params|stringfix:"&":"<br />"}</td>
-				<td class="text">{$left[user].module_groups}</td>
-				<td class="action">
-					<a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-					{if $left[0].moduleId ne $left[user].moduleId}
-						<a class="link" href="tiki-admin_modules.php?modup={$left[user].moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
-					{/if}
-					{if !$smarty.section.user.last and $left[user.index_next].moduleId}
-						<a class="link" href="tiki-admin_modules.php?moddown={$left[user].moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
-					{/if}
-					<a class="link" href="tiki-admin_modules.php?modright={$left[user].moduleId}" title="{tr}Move to Right Column{/tr}">{icon _id='arrow_right'}</a>
-					<a class="link" href="tiki-admin_modules.php?unassign={$left[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
-				</td>
-			</tr>
-		{sectionelse}
-			{norecords _colspan=7}
-		{/section}
-	</table>
-	<br />
-	<br />
-	<a name="rightmod"></a>
-	<table class="normal">
-		<caption>{tr}Right Modules{/tr}</caption>
-		<tr>
-			<th>{tr}Name{/tr}</th>
-			<th>{tr}Order{/tr}</th>
-			<th>{tr}Cache{/tr}</th>
-			<th>{tr}Rows{/tr}</th>
-			<th>{tr}Parameters{/tr}</th>
-			<th>{tr}Groups{/tr}</th>
-			<th>{tr}Action{/tr}</th>
-		</tr>
-		{cycle print=false values="even,odd"}
-		{section name=user loop=$right}
-			<tr class="{cycle}">
-				<td class="text">{$right[user].name|escape}</td>
-				<td class="integer">{$right[user].ord}</td>
-				<td class="integer">{$right[user].cache_time}</td>
-				<td class="integer">{$right[user].rows}</td>
-				<td class="text">{$right[user].params|stringfix:"&":"<br />"}</td>
-				<td class="text">{$right[user].module_groups}</td>
-				<td class="action">
-					<a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-					{if $right[0].moduleId ne $right[user].moduleId}
-						<a class="link" href="tiki-admin_modules.php?modup={$right[user].moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
-					{/if}
-					{if !$smarty.section.user.last and $right[user.index_next].moduleId}
-						<a class="link" href="tiki-admin_modules.php?moddown={$right[user].moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
-					{/if}
-					<a class="link" href="tiki-admin_modules.php?modleft={$right[user].moduleId}" title="{tr}Move to Left Column{/tr}">{icon _id='arrow_left'}</a>
-					<a class="link" href="tiki-admin_modules.php?unassign={$right[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
-				</td>
-			</tr>
-		{sectionelse}
-         {norecords _colspan=7}
-		{/section}
-	</table>
-	<br/>
-	<br />
-
-	<a name="pagebottommod"></a>
-	<table class="normal">
-		<caption>{tr}Page Bottom Modules{/tr}</caption>
-		<tr>
-			<th>{tr}Name{/tr}</th>
-			<th>{tr}Order{/tr}</th>
-			<th>{tr}Cache{/tr}</th>
-			<th>{tr}Rows{/tr}</th>
-			<th>{tr}Parameters{/tr}</th>
-			<th>{tr}Groups{/tr}</th>
-			<th>{tr}Action{/tr}</th>
-		</tr>
-		{cycle print=false values="even,odd"}
-		{section name=user loop=$pagebottom}
-			<tr class="{cycle}">
-				<td>{$pagebottom[user].name|escape}</td>
-				<td>{$pagebottom[user].ord}</td>
-				<td>{$pagebottom[user].cache_time}</td>
-				<td>{$pagebottom[user].rows}</td>
-				<td style="max-width: 40em; white-space: normal;font-size:smaller;">{$pagebottom[user].params|stringfix:"&":"<br />"}</td>
-				<td>{$pagebottom[user].module_groups}</td>
-				<td>
-					<a class="link" href="tiki-admin_modules.php?edit_assign={$pagebottom[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-					{if $pagebottom[0].moduleId ne $pagebottom[user].moduleId}
-						<a class="link" href="tiki-admin_modules.php?modup={$pagebottom[user].moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
-					{/if}
-					{if !$smarty.section.user.last and $pagebottom[user.index_next].moduleId}
-						<a class="link" href="tiki-admin_modules.php?moddown={$pagebottom[user].moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
-					{/if}
-					<a class="link" href="tiki-admin_modules.php?unassign={$pagebottom[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
-				</td>
-			</tr>
-		{sectionelse}
-			{norecords _colspan=7}
-		{/section}
-	</table>
-	<br />
-
-	<a name="bottommod"></a>
-	<table class="normal">
-		<caption>{tr}Bottom Modules{/tr}</caption>
-		<tr>
-			<th>{tr}Name{/tr}</th>
-			<th>{tr}Order{/tr}</th>
-			<th>{tr}Cache{/tr}</th>
-			<th>{tr}Rows{/tr}</th>
-			<th>{tr}Parameters{/tr}</th>
-			<th>{tr}Groups{/tr}</th>
-			<th>{tr}Action{/tr}</th>
-		</tr>
-		{cycle print=false values="even,odd"}
-		{section name=user loop=$bottom}
-			<tr class="{cycle}">
-				<td>{$bottom[user].name|escape}</td>
-				<td>{$bottom[user].ord}</td>
-				<td>{$bottom[user].cache_time}</td>
-				<td>{$bottom[user].rows}</td>
-				<td style="max-width: 40em; white-space: normal;font-size:smaller;">{$bottom[user].params|stringfix:"&":"<br />"}</td>
-				<td>{$bottom[user].module_groups}</td>
-				<td>
-					<a class="link" href="tiki-admin_modules.php?edit_assign={$bottom[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-					{if $bottom[0].moduleId ne $bottom[user].moduleId}
-						<a class="link" href="tiki-admin_modules.php?modup={$bottom[user].moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
-					{/if}
-					{if !$smarty.section.user.last and $bottom[user.index_next].moduleId}
-						<a class="link" href="tiki-admin_modules.php?moddown={$bottom[user].moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
-					{/if}
-					<a class="link" href="tiki-admin_modules.php?unassign={$bottom[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
-				</td>
-			</tr>
-		{sectionelse}
-			{norecords _colspan=7}
-		{/section}
-	</table>
-	<br />
+	{foreach from=$module_zones key=zone_initial item=zone_info}
+		<a name="{$zone_info.id}_mod"></a>
+		<fieldset>
+			<legend>{$zone_info.name|capitalize}{tr} Modules{/tr}</legend>
+			<table class="normal">
+				<tr>
+					<th>{tr}Name{/tr}</th>
+					<th>{tr}Order{/tr}</th>
+					<th>{tr}Cache{/tr}</th>
+					<th>{tr}Rows{/tr}</th>
+					<th>{tr}Parameters{/tr}</th>
+					<th>{tr}Groups{/tr}</th>
+					<th>{tr}Action{/tr}</th>
+				</tr>
+				{cycle print=false values="even,odd"}
+				{foreach from=$assigned_modules[$zone_initial] item=module}
+					<tr class="{cycle}">
+						<td>{$module.name|escape}</td>
+						<td>{$module.ord}</td>
+						<td>{$module.cache_time}</td>
+						<td>{$module.rows}</td>
+						<td style="max-width: 40em; white-space: normal;font-size:smaller;">{$module.params|stringfix:"&":"<br />"}</td>
+						<td>{$module.module_groups}</td>
+						<td>
+							<a class="link" href="tiki-admin_modules.php?edit_assign={$module.moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+							{if $top[0].moduleId ne $module.moduleId}
+								<a class="link" href="tiki-admin_modules.php?modup={$module.moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
+							{/if}
+							{if !$smarty.section.user.last and $top[user.index_next].moduleId}
+								<a class="link" href="tiki-admin_modules.php?moddown={$module.moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
+							{/if}
+							<a class="link" href="tiki-admin_modules.php?unassign={$module.moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
+						</td>
+					</tr>
+				{foreachelse}
+					{norecords _colspan=7}
+				{/foreach}
+			</table>
+		</fieldset>
+	{/foreach}
 
 	<a name="assign"></a>
 	{if $assign_name eq ''}
