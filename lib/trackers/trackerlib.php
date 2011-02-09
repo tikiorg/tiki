@@ -470,10 +470,9 @@ class TrackerLib extends TikiLib
 	}
 
 	function get_item_id($trackerId,$fieldId,$value) {
-		$query = "select distinct ttif.`itemId` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
+		$query = "select ttif.`itemId` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
 		$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`value`=?";
-		$ret = $this->getOne($query,array((int) $trackerId,(int)$fieldId,$value));
-		return $ret;
+		return $this->getOne($query,array((int) $trackerId,(int)$fieldId,$value));
 	}
 
 	function get_item($trackerId,$fieldId,$value) {
@@ -1028,15 +1027,17 @@ class TrackerLib extends TikiLib
 				// Do we need a numerical sort on the field ?
 				$field = $this->get_tracker_field($asort_mode);
 				switch ($field['type']) {
-					case 'C':
-					case '*':
-					case 'q':
-					case 'n': $numsort = true;
-						break;
-					case 's': if ($field['name'] == 'Rating' || $field['name'] == tra('Rating')) {
-							$numsort = true;
-						}
-						break;
+				case 'C':
+				case '*':
+				case 'q':
+				case 'n':
+					$numsort = true;
+					break;
+				case 's':
+					if ($field['name'] == 'Rating' || $field['name'] == tra('Rating')) {
+						$numsort = true;
+					}
+					break;
 				}
 			} else {
 				list($csort_mode, $corder) = preg_split('/_/', $sort_mode);
@@ -1836,14 +1837,11 @@ class TrackerLib extends TikiLib
 
 				// Handle truncated fields. Only for textareas which have option 3 set
 				if ( $array["type"] == 'a' && isset($array["options_array"][3]) && ($array['options_array'][3]) ) {
-					if (function_exists('mb_substr') && function_exists('mb_strlen')) {
-						if ( mb_strlen($array['value']) > $array['options_array'][3] ) {
-							$ins_fields['data'][$i]['value'] = mb_substr($array['value'],0,$array['options_array'][3]);
-						}
-					} else {
-						if ( strlen($array['value']) > $array['options_array'][3] ) {
-							$ins_fields['data'][$i]['value'] = substr($array['value'],0,$array['options_array'][3]);
-						}
+					$f_len = function_exists('mb_strlen') ? 'mb_strlen' : 'strlen';
+					$f_substr = function_exists('mb_substr') ? 'mb_substr' : 'substr';
+
+					if ( $f_len($array['value']) > $array['options_array'][3] ) {
+						$ins_fields['data'][$i]['value'] = $f_substr($array['value'],0,$array['options_array'][3]);
 					}
 				}
 
@@ -1886,7 +1884,7 @@ class TrackerLib extends TikiLib
 					if (isset($array['options_array'][3]) && $array['options_array'][3] == 'itemId') {
 						$value = $currentItemId;
 					} elseif ($itemId == false) {
-						$value = $this->getOne("select max(cast(`value` as UNSIGNED)) from `tiki_tracker_item_fields` where `fieldId`=?",array((int)$fieldId));
+						$value = $this->itemFields()->fetchOne($this->itemFields()->expr('MAX(CAST(`value` as UNSIGNED))'), array('fieldId' => (int) $fieldId));
 						if ($value == NULL) {
 							$value = isset($array['options_array'][0]) ? $array['options_array'][0] : 1;
 						} else {
@@ -3351,8 +3349,7 @@ class TrackerLib extends TikiLib
 	 * Returns the trackerId of the tracker possessing the item ($itemId)
 	 */
 	function get_tracker_for_item($itemId) {
-		$query = "select t1.`trackerId` from `tiki_trackers` t1, `tiki_tracker_items` t2 where t1.`trackerId`=t2.`trackerId` and `itemId`=?";
-		return $this->getOne($query,array((int) $itemId));
+		return $this->items()->fetchOne('trackerId', array('itemId' => (int) $itemId));
 	}
 
 	function get_tracker_options($trackerId) {
@@ -3468,15 +3465,12 @@ class TrackerLib extends TikiLib
 	function field_types() {
 
 		$userlib = TikiLib::lib('user');
+
 		$tmp = $userlib->list_all_users();
-		foreach ( $tmp as $u ) {
-			$all_users[$u] = $u;
-		}
+		$all_users = array_combine($tmp, $tmp);
 
 		$tmp = $userlib->list_all_groups();
-		foreach ( $tmp as $u ) {
-			$all_groups[$u] = $u;
-		}
+		$all_groups = array_combine($tmp, $tmp);
 
 		unset($tmp);
 
