@@ -927,7 +927,7 @@ if ($_REQUEST["itemId"]) {
 						$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data(htmlspecialchars($info["$fid"]));
 					}
 				} elseif ($fields['data'][$i]['type'] == 'usergroups' && !empty($itemUser)) {
-					$ins_fields['data'][$i]['value'] = $tikilib->get_user_groups($itemUser);
+					$ins_fields['data'][$i]['value'] = array_diff($tikilib->get_user_groups($itemUser), array('Registered', 'Anonymous'));
 				} elseif ($fields['data'][$i]['type'] == 'p' && !empty($itemUser)) {
 					if ($fields['data'][$i]['options_array'][0] == 'email') {
 						$ins_fields['data'][$i]['value'] = $userlib->get_user_email($itemUser);
