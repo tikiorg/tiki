@@ -1,7 +1,7 @@
 {* $Id$ *}
 {tikimodule error=$module_params.error title=$tpl_module_title name="assistant" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	<div align="center">
-		<strong>{tr}Thank you for installing Tikiwiki{/tr}!</strong>
+		<strong>{tr}Thank you for installing Tiki{/tr}!</strong>
 	</div>
 	{if $tiki_p_admin eq 'y'}
 	<p>
@@ -10,7 +10,7 @@
 		{tr}Select{/tr} <a class="link" href="tiki-admin.php" title="{tr}Admin Home{/tr}">{tr}Admin{/tr} &gt; {tr}Admin Home{/tr}</a> {tr}from the menu{/tr}.
 	</p>
 	<p>
-		{tr}Read the <a class="link" href="http://doc.tiki.org/Configuration" title="Tikiwiki Documentation" target="_blank">configuration documentation</a>{/tr}.
+		{tr}Read the <a class="link" href="http://doc.tiki.org/Configuration" title="Tiki Documentation" target="_blank">configuration documentation</a>{/tr}.
 	</p>
 	<p>
 		{tr}Watch the <a class="link" href="http://tiki.org/TikiMovies" title="Demos" target="_blank">demo movies{/tr}</a>.
@@ -32,9 +32,9 @@
 	</p>
 	{/if}
 	<p>
-		<a href="http://tiki.org" title="{tr}The Tikiwiki Community{/tr}" target="_blank"><img src="favicon.png" alt="{tr}The Tikiwiki Community{/tr}" style="border:0;margin-right:2px;vertical-align:middle" align="left" /></a>{tr}To learn more, visit: <a href="http://tiki.org" title="The Tikiwiki Community" target="_blank">http://tiki.org</a>{/tr}.
+		<a href="http://tiki.org" title="{tr}The Tiki Community{/tr}" target="_blank"><img src="favicon.png" alt="{tr}The Tiki Community{/tr}" style="border:0;margin-right:2px;vertical-align:middle" align="left" /></a>{tr}To learn more, visit: <a href="http://tiki.org" title="The Tiki Community" target="_blank">http://tiki.org</a>{/tr}.
 	</p>
 	<p>
-		<a href="http://doc.tiki.org" title="{tr}Tikiwiki Documentation{/tr}" target="_blank"><img src="pics/icons/help.png" alt="{tr}Tikiwiki Documentation{/tr}" style="border:0px;margin-right:2px;vertical-align:middle" align="left" /></a>{tr}For help, visit <a href="http://doc.tiki.org" title="Tikiwiki Documentation" target="_blank">http://doc.tiki.org</a>{/tr}.
+		<a href="http://doc.tiki.org" title="{tr}Tiki Documentation{/tr}" target="_blank"><img src="pics/icons/help.png" alt="{tr}Tiki Documentation{/tr}" style="border:0px;margin-right:2px;vertical-align:middle" align="left" /></a>{tr}For help, visit <a href="http://doc.tiki.org" title="Tiki Documentation" target="_blank">http://doc.tiki.org</a>{/tr}.
 	</p>
 {/tikimodule}
