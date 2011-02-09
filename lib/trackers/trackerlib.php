@@ -576,12 +576,12 @@ class TrackerLib extends TikiLib
 				// Check if the field is visible!
 				$fieldId = $res2["fieldId"];
 				if (count($filters) > 0) {
-					if (isset($filters["$fieldId"]["value"]) and $filters["$fieldId"]["value"]) {
-						if ($filters["$fieldId"]["type"] == 'a' || $filters["$fieldId"]["type"] == 't') {
-							if (!stristr($res2["value"], $filters["$fieldId"]["value"]))
+					if (isset($filters[$fieldId]["value"]) and $filters[$fieldId]["value"]) {
+						if (in_array($filters[$fieldId]["type"], array('a', 't'))) {
+							if (!stristr($res2["value"], $filters[$fieldId]["value"]))
 								$pass = false;
 						} else {
-							if (strtolower($res2["value"]) != strtolower($filters["$fieldId"]["value"])) {
+							if (strtolower($res2["value"]) != strtolower($filters[$fieldId]["value"])) {
 								$pass = false;
 							}
 						}
@@ -1480,7 +1480,7 @@ class TrackerLib extends TikiLib
 						$fopt['options_array'][3]
 					);
 					$fopt = $this->set_default_dropdown_option($fopt);
-				} elseif ( $fopt['type'] == 'd' || $fopt['type'] == 'D' || $fopt['type'] == 'R' ) {
+				} elseif (in_array($fopt['type'], array('d', 'D', 'R'))) {
 					$fopt = $this->set_default_dropdown_option($fopt);
 				}
 			}
@@ -1756,7 +1756,7 @@ class TrackerLib extends TikiLib
 				}
 				$the_data .=  "\n----------\n";
 
-			} else if ($array["type"] != 'u' && $array["type"] != 'g' && $array["type"] != 'I' && isset($array['isHidden']) && ($array["isHidden"] == 'p' or $array["isHidden"] == 'y')and $tiki_p_admin_trackers != 'y') {
+			} else if (! in_array($array["type"], array('u', 'g', 'I')) && isset($array['isHidden']) && ($array["isHidden"] == 'p' or $array["isHidden"] == 'y')and $tiki_p_admin_trackers != 'y') {
 				// hidden field type require tracker amdin perm
 			} elseif (empty($array["fieldId"])) {
 				// can have been unset for a user field
@@ -1881,11 +1881,11 @@ class TrackerLib extends TikiLib
 				}
 				$value = $array["value"];
 
-				if (isset($array['type']) and $array['type'] == 'C') {
+				if ($array['type'] == 'C') {
 					$calc = preg_replace('/#([0-9]+)/', '$fil[\1]', $array['options']);
 					eval('$value = '.$calc.';');
 
-				} elseif (isset($array["type"]) and $array["type"] == 'q') {
+				} elseif ($array["type"] == 'q') {
 					if (isset($array['options_array'][3]) && $array['options_array'][3] == 'itemId') {
 						$value = $currentItemId;
 					} elseif ($itemId == false) {
@@ -1949,7 +1949,7 @@ class TrackerLib extends TikiLib
 					} else {
 						$itemFields->insert(array_merge($conditions, array('value' => '')));
 					}
-				} elseif ((isset($array['isMultilingual']) && $array['isMultilingual'] == 'y') && ($array['type'] =='a' || $array['type']=='t')){
+				} elseif ((isset($array['isMultilingual']) && $array['isMultilingual'] == 'y') && in_array($array['type'], array('a', 't'))){
 
 					if (!isset($multi_languages))
 						$multi_languages=$prefs['available_languages'];
@@ -1999,7 +1999,7 @@ class TrackerLib extends TikiLib
 					}
 				} else {
 
-					$is_date = (isset($array["type"]) and ($array["type"] == 'f' or $array["type"] == 'j'));
+					$is_date = in_array($array["type"], array('f', 'j'));
 
 					$is_visible = !isset($array["isHidden"]) || $array["isHidden"] == 'n';
 
@@ -2010,7 +2010,7 @@ class TrackerLib extends TikiLib
 							'itemId' => (int) $currentItemId,
 							'fieldId' => (int) $fieldId,
 						);
-						if ($old_value = $itemFields->fetchOne('value', $conditions)) {
+						if (false !== $old_value = $itemFields->fetchOne('value', $conditions)) {
 							if ($is_visible) {
 								if ($is_date) {
 									$dformat = $prefs['short_date_format'].' '.$prefs['short_time_format'];
@@ -2500,7 +2500,9 @@ class TrackerLib extends TikiLib
 						if ($field['type'] == 'p' && $field['options_array'][0] == 'password') {
 							//$userlib->change_user_password($user, $ins_fields['data'][$i]['value']);
 							continue;
-						} elseif ($field['type'] == 'e') {
+						}
+						switch ($field['type']) {
+						case 'e':
 							$cats = preg_split('/%%%/', trim($data[$i]));
 							$catIds = array();
 							if (!empty($cats)) {
@@ -2514,16 +2516,21 @@ class TrackerLib extends TikiLib
 								}
 							}
 							$data[$i] = '';
-						} elseif ($field['type'] == 's') {
+							break;
+						case 's':
 							$data[$i] = '';
-						} elseif ($field['type'] == 'a') {
+							break;
+						case 'a':
 							$data[$i] = preg_replace('/\%\%\%/',"\r\n",$data[$i]);
-						} elseif ($field['type'] == 'c') {
+							break;
+						case 'c':
 							if (strtolower($data[$i]) == 'yes' || strtolower($data[$i]) == 'on')
 								$data[$i] = 'y';
 							elseif (strtolower($data[$i]) == 'no')
 								$data[$i] = 'n';
-						} elseif ($field['type'] == 'f' || $field['type'] == 'j') {
+							break;
+						case 'f':
+						case 'j':
 							if ($dateFormat == 'mm/dd/yyyy') {
 								list($m, $d, $y) = preg_split('#/#', $data[$i]);
 								$data[$i] = $tikilib->make_time(0, 0, 0, $m, $d, $y);
@@ -2531,9 +2538,12 @@ class TrackerLib extends TikiLib
 								list($d, $m, $y) = preg_split('#/#', $data[$i]);
 								$data[$i] = $tikilib->make_time(0, 0, 0, $m, $d, $y);
 							}
-						} elseif ($field['type'] == 'q') {
+							break;
+						case 'q':
 							$data[$i] = $itemId;
+							break;
 						}
+
 						if ($this->get_item_value($trackerId, $itemId, $field['fieldId']) !== false) {
 							$itemFields->update(array('value' => $data[$i]), array(
 								'itemId' => (int) $itemId,
@@ -2709,11 +2719,11 @@ class TrackerLib extends TikiLib
 
 			if ($f['type'] != 'q' and isset($f['isMandatory']) && $f['isMandatory'] == 'y') {
 
-				if (isset($f['type']) &&  $f['type'] == 'e') {
+				if ($f['type'] == 'e') {
 					if (!in_array($f['fieldId'], $categorized_fields)) {
 						$mandatory_fields[] = $f;
 					}
-				} elseif (isset($f['type']) &&  ($f['type'] == 'a' || $f['type'] == 't') && ($this->is_multilingual($f['fieldId']) == 'y')) {
+				} elseif (in_array($f['type'], array('a', 't')) && ($this->is_multilingual($f['fieldId']) == 'y')) {
 					if (!isset($multi_languages)) {
 						$multi_languages=$prefs['available_languages'];
 					}
@@ -2729,7 +2739,7 @@ class TrackerLib extends TikiLib
 					} else {
 						$mandatory_fields[] = $f;
 					}
-				} elseif (isset($f['type']) &&  ($f['type'] == 'u' || $f['type'] == 'g') && $f['options_array'][0] == 1) {
+				} elseif (in_array($f['type'], array('u', 'g')) && $f['options_array'][0] == 1) {
 					;
 				} elseif ($f['type'] == 'c' && (empty($f['value']) || $f['value'] == 'n')) {
 					$mandatory_fields[] = $f;
@@ -2742,7 +2752,7 @@ class TrackerLib extends TikiLib
 					$mandatory_fields[] = $f;
 				}
 			}
-			if (!empty($f['value']) && isset($f['type'])) {
+			if (!empty($f['value'])) {
 
 				switch ($f['type']) {
 				// IP address (only for IPv4)
@@ -2766,7 +2776,7 @@ class TrackerLib extends TikiLib
 					}
 					break;
 
-				// password					
+				// password
 				case 'p':
 				if ($f['options_array'][0] == 'password') {
 					global $userlib;
@@ -2967,7 +2977,7 @@ class TrackerLib extends TikiLib
 			$res['editableBy'] = ($res['editableBy'] != '') ? unserialize($res['editableBy']) : array();
 			if ($tra_name && $prefs['feature_multilingual'] == 'y' && $prefs['language'] != 'en')
 				$res['name'] = tra($res['name']);
-			if ($res['type'] == 'd' || $res['type'] == 'D' || $res['type'] == 'R') { // drop down
+			if (in_array($res['type'], array('d', 'D', 'R'))) { // drop down
 				if ($prefs['feature_multilingual'] == 'y') {
 					foreach ($res['options_array'] as $key=>$l) {
 						$res['options_array'][$key] = $l;
@@ -2975,7 +2985,7 @@ class TrackerLib extends TikiLib
 				}
 				$res = $this->set_default_dropdown_option($res);
 			}
-			if ($res['type'] == 'l' || $res['type'] == 'r') { // get the last field type
+			if (in_array($res['type'], array('l', 'r'))) { // get the last field type
 				if (!empty($res['options_array'][3])) {
 					if (is_numeric($res['options_array'][3]))
 						$fieldId = $res['options_array'][3];
@@ -4160,13 +4170,14 @@ class TrackerLib extends TikiLib
 		if (preg_match('/^f_([^_]*)_?.*/', $sort_mode, $matches)) {
 			if (isset($list_fields[$matches[1]])) {
 				$type = $list_fields[$matches[1]]['type'];
-				if ($type == 't' || $type == 'a' || $type == 'm')
+				if (in_array($type, array('t', 'a', 'm')))
 					return $matches[1];
 			}
 		}
 		foreach($list_fields as $fieldId=>$field) {
-			if ($field['isMain'] == 'y' && ($field['type'] == 't' || $field['type'] == 'a' || $field['type'] == 'm'))
+			if ($field['isMain'] == 'y' && in_array($field['type'], array('t', 'a', 'm'))) {
 				return $fieldId;
+			}
 		}
 	}
 	function get_nb_items($trackerId) {
@@ -4482,7 +4493,7 @@ class TrackerLib extends TikiLib
 		if ($tiki_p_admin_trackers == 'y') {
 			return true;
 		}
-		if ($field['type'] == 'u' || $field['type'] == 'g' || $field['type'] == 'I') {
+		if (in_array($field['type'], array('u', 'g', 'I'))) {
 			return false;
 		}
 		if (empty($field['isHidden']) || $field['isHidden'] == 'n') {
@@ -4569,7 +4580,7 @@ class TrackerLib extends TikiLib
 				$fields = $allfields['data'];
 			}
 			foreach($fields as $k => $field) {
-				if ($field['fieldId'] == $match && ($field['type'] == 'f' || $field['type'] == 'j')) {
+				if ($field['fieldId'] == $match && in_array($field['type'], array('f', 'j'))) {
 					++$nbDates;
 					$info = $field;
 					break;
@@ -4772,14 +4783,12 @@ class TrackerLib extends TikiLib
 			
 			if ((!empty($except) && in_array($res['fieldId'], $except))
 				|| (!empty($only) && !in_array($res['fieldId'], $only))
-				|| ($res['type'] == 'u' && $res['options_array'][0] == 1)
-				|| ($res['type'] == 'g' && $res['options_array'][0] == 1)
-				|| ($res['type'] == 'I' && $res['options_array'][0] == 1)
+				|| (in_array($res['type'], array('u', 'g', 'I')) && $res['options_array'][0] == 1)
 				|| ($res['type'] == 'q')
 				) {
 				continue;
 			}
-			if ($res['type'] == 'A' || $res['type'] == 'N') {// attachment - image
+			if (in_array($res['type'], array('A', 'N'))) {// attachment - image
 				continue; //not done yet
 			}
 			//echo "duplic".$res['fieldId'].' '. $res['value'].'<br>';
