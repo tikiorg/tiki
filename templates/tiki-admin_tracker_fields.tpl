@@ -45,7 +45,7 @@
 					<th>{self_link _sort_arg='sort_mode' _sort_field='isMandatory' _title="{tr}Is mandatory/required?{/tr}"}{tr}Req.{/tr}{/self_link}</th>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='isTblVisible' _title="{tr}Is column visible when listing tracker items?{/tr}"}{tr}List{/tr}{/self_link}</th>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='isMain' _title="{tr}Column links to edit/view item?{/tr}"}{tr}Main{/tr}{/self_link}</th>
-					<th>{self_link _sort_arg='sort_mode' _sort_field='isMultilingual'}{tr}Multi-lingual{/tr}{/self_link}</th>
+					<th>{self_link _sort_arg='sort_mode' _sort_field='isMultilingual'}{tr}Multilingual{/tr}{/self_link}</th>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='isSearchable' _title="{tr}Is column searchable?{/tr}"}{tr}Search{/tr}{/self_link}</th>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='isPublic' _title="{tr}Field is public? (viewed in trackerlist plugin){/tr}"}{tr}Public{/tr}{/self_link}</th>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='isHidden'}{tr}Hidden{/tr}{/self_link}</th>
