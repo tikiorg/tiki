@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function module_menu_info() {
 	return array(
 		'name' => tra('Menu'),
-		'description' => tra('Horizonatal or vertical menu.'),
+		'description' => tra('Horizontal or vertical menu.'),
 		'params' => array(
 			'id' => array(
 				'name' => tra('Menu Id'),

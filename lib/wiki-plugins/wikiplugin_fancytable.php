@@ -47,7 +47,7 @@ function wikiplugin_fancytable_info() {
 			'headaligns' => array(
 				'required' => false,
 				'name' => tra('Header Horizontal Align'),
-				'description' => tra('Horizonatal alignments for header cells separated by |. Choices: left, right, center, justify.'),
+				'description' => tra('Horizontal alignments for header cells separated by |. Choices: left, right, center, justify.'),
 				'default' => '',
 			),
 			'headvaligns' => array(

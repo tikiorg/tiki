@@ -42,7 +42,7 @@ function wikiplugin_articles_info()
 			'max' => array(
 				'required' => false,
 				'name' => tra('Maximum Displayed'),
-				'description' => tra('The number of articles to display in the list (no max set by default)') . tra('If Pagination is set to y (Yes), this will determine the amount of artilces per page'),
+				'description' => tra('The number of articles to display in the list (no max set by default)') . tra('If Pagination is set to y (Yes), this will determine the amount of articles per page'),
 				'filter' => 'int',
 				'default' => -1
 			),
