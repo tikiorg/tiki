@@ -10,7 +10,7 @@
 
 {tabset name="admin_features"}
 {*
- * The following section is typically for features that act like Tikiwiki
+ * The following section is typically for features that act like Tiki
  * sections and add a configuration icon to the sections list
  *}
 {* ---------- Main features ------------ *}

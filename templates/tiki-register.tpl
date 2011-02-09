@@ -119,7 +119,7 @@
 			<td>
 		{/if}
 				<p>
-					{tr}Associate OpenID with an existing Tikiwiki account{/tr}
+					{tr}Associate OpenID with an existing Tiki account{/tr}
 				</p>
 				{include file="modules/mod-login_box.tpl"} 
 		{if $allowRegister eq 'y'}

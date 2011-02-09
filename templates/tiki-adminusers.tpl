@@ -351,7 +351,7 @@
 							{if $userinfo.userId}
 								<p>
 									{icon _id=exclamation alt="{tr}Warning{/tr}" style="vertical-align:middle"} 
-									<em>{tr}Warning: changing the username could require the user to change his password (for user registered with an old tikiwiki&lt;=1.8){/tr}</em>
+									<em>{tr}Warning: changing the username could require the user to change his password (for user registered with an old Tiki&lt;=1.8){/tr}</em>
 								</p>
 								{if $prefs.feature_intertiki_server eq 'y'}
 									<i>{tr}Warning: it will mess with slave intertiki sites that use this one as master{/tr}</i>
@@ -373,7 +373,7 @@
 						<td colspan="2">
 							<b>{tr}No password is required{/tr}</b>
 							<br />
-							<i>{tr}Tikiwiki is configured to delegate the password managment to LDAP.{/tr}</i>
+							<i>{tr}Tiki is configured to delegate the password managment to LDAP.{/tr}</i>
 						</td>
 					</tr>
 				{else}
