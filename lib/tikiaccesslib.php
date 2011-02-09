@@ -103,7 +103,7 @@ class TikiAccessLib extends TikiLib
 				
 			$msg = tr('Required features: <b>%0</b>. If you do not have the privileges to activate these features, ask the site administrator.', implode( ', ', $features ) );
 
-			$this->display_error('', $msg, '503' );
+			$this->display_error('', $msg, 'no_redirect_login' );
 		}		
 	}
 
