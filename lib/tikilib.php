@@ -110,6 +110,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'relation':
 			global $relationlib; require_once 'lib/attributes/relationlib.php';
 			return $libraries[$name] = $relationlib;
+		case 'attribute':
+			global $attributelib; include_once('lib/attributes/attributelib.php');
+			return $libraries[$name] = $attributelib;
 		case 'hist':
 			global $histlib; include_once ("lib/wiki/histlib.php");
 			return $libraries[$name] = $histlib;
@@ -136,7 +139,25 @@ class TikiLib extends TikiDb_Bridge
 			return $libraries[$name] = $contactlib;
 		case 'filegal':
 			global $filegallib; include_once('lib/filegals/filegallib.php');
-			return $filegallib;
+			return $libraries[$name] = $filegallib;
+		case 'freetag':
+			global $freetaglib; include_once('lib/freetag/freetaglib.php');
+			return $libraries[$name] = $freetaglib;
+		case 'notification':
+			global $notificationlib; include_once ('lib/notifications/notificationlib.php');
+			return $libraries[$name] = $notificationlib;
+		case 'imagegal':
+			global $imagegallib; include_once('lib/imagegals/imagegallib.php');
+			return $libraries[$name] = $imagegallib;
+		case 'admin':
+			global $adminlib; include_once 'lib/admin/adminlib.php';
+			return $libraries[$name] = $adminlib;
+		case 'ldap':
+			global $ldaplib; include_once 'lib/ldap/ldaplib.php';
+			return $libraries[$name] = $ldaplib;
+		case 'todo':
+			global $todolib; include_once('lib/todolib.php');
+			return $libraries[$name] = $todolib;
 		}
 	}
 
