@@ -283,12 +283,12 @@
 								</fieldset>
 							{/if}
 							
-							{if $tiki_p_admin_wiki eq 'y' && $prefs.feature_wiki_import_page eq 'y'}
+							{if $tiki_p_export_wiki eq 'y' && $prefs.feature_wiki_import_page eq 'y'}
 								<fieldset>
 									<legend>{tr}Import page:{/tr}</legend>
 									<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 									<input id="userfile1" name="userfile1" type="file" />
-									{if $prefs.feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
+									{if $prefs.feature_wiki_export eq 'y' and $tiki_p_export_wiki eq 'y'}
 										<a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}&amp;all=1" class="link">{tr}export all versions{/tr}</a>
 									{/if}
 								</fieldset>
