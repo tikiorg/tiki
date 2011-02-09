@@ -607,14 +607,6 @@ class TrackerLib extends TikiLib
 		return $retval;
 	}
 
-	/* experimental shared */
-	function get_item_id($trackerId,$fieldId,$value) {
-		$query = "select ttif.`itemId` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
-		$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`value`=?";
-		$itemId = $this->getOne($query,array((int) $trackerId,(int)$fieldId,$value));
-		return $itemId;
-	}
-
 	/*shared*/
 	function get_user_items($user) {
 		$items = array();
