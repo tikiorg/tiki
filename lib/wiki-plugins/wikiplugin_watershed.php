@@ -131,14 +131,14 @@ function wikiplugin_watershed( $data, $params ) {
 	$smarty->assign('wsd_brandId', $channels[0]["brandId"]);
 	$smarty->assign('wsd_channelCode', $channels[0]["channelCode"]);
 	if ($params['type'] == 'broadcaster') {
-		return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_watershedbroadcaster.tpl' ) . '~/np~';		
+		return $smarty->fetch( 'wiki-plugins/wikiplugin_watershedbroadcaster.tpl' );		
 	} else if ($params['type'] == 'chat') {
-		return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_watershedchat.tpl' ) . '~/np~';
+		return $smarty->fetch( 'wiki-plugins/wikiplugin_watershedchat.tpl' );
 	} else if ($params['type'] == 'archive') {
 		$smarty->assign('wsd_videoId', $params["videoId"]);
-		return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_watershedarchive.tpl' ) . '~/np~';
+		return $smarty->fetch( 'wiki-plugins/wikiplugin_watershedarchive.tpl' );
 	} else {
-		return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_watershedviewer.tpl' ) . '~/np~';
+		return $smarty->fetch( 'wiki-plugins/wikiplugin_watershedviewer.tpl' );
 	}
 }
 
