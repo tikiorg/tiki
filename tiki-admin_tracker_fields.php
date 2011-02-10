@@ -265,7 +265,7 @@ $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $trklib->list_tracker_fields($_REQUEST["trackerId"], $offset, $max, $sort_mode, $find, false);
 $plug = array();
 foreach($channels['data'] as $c) {
-	if ($c['type'] == 'A' && $tracker_info['useAttachments'] != 'y') { // attachement
+	if ($c['type'] == 'A' && $tracker_info['useAttachments'] != 'y') { // attachment
 		$smarty->assign('error', 'This tracker does not allow attachments'); //get_strings tra('Tracker does not allow attachments')
 		
 	}
