@@ -431,28 +431,30 @@ class ThemeGenTheme extends SerializedList
 	}
 	
 	
-	private function processMatches($matchesIn, $css_file, $type, $lower) {
+	private function processMatches($matches, $css_file, $type, $lower) {
 		$processed = array();
-		if (is_array( $matchesIn )) {
-			$matchesIn = array_map('trim', $matchesIn);
+		if (is_array( $matches )) {
+			$matches = array_map('trim', $matches);
 			if ($lower) {
-				$matchesIn = array_map('strtolower', $matchesIn);
+				$matches = array_map('strtolower', $matches);
 			}
+			$matches = array_unique($matches);
 			// Deal with multiple border colours (widths, styles and radii still TODO but not used in tiki CSS afaik)
-			foreach ($matchesIn as &$match) {
-				if (strpos($match, ' ') && in_array( $type, array('bordercolors'))) {
-					$arr = explode( ' ', $match );
+			foreach ($matches as &$m) {
+				if (strpos($m, ' ') && in_array( $type, array('bordercolors'))) {
+					$arr = explode( ' ', $m );
 					foreach ( $arr as $a ) {
-						$matchesIn[] = $a;
+						if (!in_array( $a, $matches)) {
+							$matches[] = $a;
+						}
 					}
-					$match = '';
+					$m = '';
 				}
 			}
-			$matchesIn = array_unique($matchesIn);
-			$matchesIn = array_filter($matchesIn);
-			sort($matchesIn);
+			$matches = array_filter($matches);
+			sort($matches);
 
-			foreach ($matchesIn as $match) {
+			foreach ($matches as $match) {
 				$match = htmlentities($match);
 				$processed[$match] = array();
 				$processed[$match]['old'] = $match;
