@@ -72,6 +72,11 @@ if( isset($domain_map[$host]) ) {
 
 if (isset($_REQUEST['PHPSESSID'])) $tikilib->setSessionId($_REQUEST['PHPSESSID']);
 elseif (function_exists('session_id')) $tikilib->setSessionId(session_id());
+
+if ($prefs['mobile_feature'] === 'y') {
+	require_once ('lib/setup/mobile.php');	// needs to be before js_detect
+}
+
 require_once ('lib/setup/cookies.php');
 require_once ('lib/setup/js_detect.php');
 require_once ('lib/setup/user_prefs.php');
@@ -202,8 +207,6 @@ if( $prefs['feature_bidi'] == 'y' ) {
 
 if ($prefs['javascript_enabled'] != 'n') {
 
-	$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );
-	
 	if( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 		$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js', 'external' );
 	} else {
@@ -215,122 +218,134 @@ if ($prefs['javascript_enabled'] != 'n') {
 	}
 
 	$headerlib->add_jsfile( 'lib/jquery_tiki/tiki-jquery.js' );
-	
-	if ( $prefs['feature_ajax'] === 'y' ) {
-		if ( $prefs['ajax_autosave'] === 'y' ) {
-			$headerlib->add_jsfile('lib/ajax/autosave.js');
-		}
-	}
-	
-	if( $prefs['feature_jquery_ui'] == 'y' ) {
-		if( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
-			$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js', 'external' );
-		} else {
-			if ( $prefs['tiki_minify_javascript'] === 'y' ) {
-				$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js' );
-			} else {
-				$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/jquery-ui.js' );
+
+	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
+
+		$headerlib->add_jsfile( 'lib/jquery_tiki/tiki-jquery.mobile.js' );
+		
+		$headerlib->add_jsfile( 'lib/jquery/jquery.mobile/jquery.mobile.js' );
+		$headerlib->add_cssfile( 'lib/jquery/jquery.mobile/jquery.mobile.css' );
+
+	} else {
+		
+		$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );
+
+		if ( $prefs['feature_ajax'] === 'y' ) {
+			if ( $prefs['ajax_autosave'] === 'y' ) {
+				$headerlib->add_jsfile('lib/ajax/autosave.js');
 			}
 		}
-		$headerlib->add_jsfile( 'lib/jquery/jquery-ui/external/jquery.bgiframe-2.1.2.js' );
-		$headerlib->add_cssfile( 'lib/jquery/jquery-ui/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css' );
-	}
-	
-	if( $prefs['feature_jquery_tooltips'] == 'y' ) {
-		$headerlib->add_jsfile( 'lib/jquery/cluetip/lib/jquery.hoverIntent.js' );
-		if( $prefs['feature_jquery_ui'] !== 'y' ) {
-			$headerlib->add_jsfile( 'lib/jquery/cluetip/lib/jquery.bgiframe.min.js' );
-		}
-		$headerlib->add_jsfile( 'lib/jquery/cluetip/jquery.cluetip.js' );
-		$headerlib->add_cssfile( 'lib/jquery/cluetip/jquery.cluetip.css' );
-	}
-	
-	if( $prefs['feature_jquery_autocomplete'] == 'y' ) {
-		$headerlib->add_jsfile( 'lib/jquery/jquery-autocomplete/lib/jquery.ajaxQueue.js' );
-		if( $prefs['feature_jquery_ui'] !== 'y' || $prefs['feature_jquery_tooltips'] != 'y' ) {
-			$headerlib->add_jsfile( 'lib/jquery/jquery-autocomplete/lib/jquery.bgiframe.min.js' );
-		}
-		$headerlib->add_jsfile( 'lib/jquery/jquery-autocomplete/jquery.autocomplete.js' );
-		$headerlib->add_cssfile( 'lib/jquery/jquery-autocomplete/jquery.autocomplete.css' );
-	}
-	
-	if( $prefs['feature_jquery_superfish'] == 'y' ) {
-		$headerlib->add_jsfile( 'lib/jquery/superfish/js/superfish.js' );
-		$headerlib->add_jsfile( 'lib/jquery/superfish/js/supersubs.js' );
-	}
-	if( $prefs['feature_jquery_reflection'] == 'y' ) {
-		$headerlib->add_jsfile( 'lib/jquery/reflection-jquery/js/reflection.js' );
-	}
-	if( $prefs['feature_jquery_media'] == 'y' ) {
-		$headerlib->add_jsfile( 'lib/jquery/jquery.media.js');
-	}
-	if( $prefs['feature_jquery_jqs5'] == 'y' ) {
-		if ((strpos($_SERVER['PHP_SELF'], 'tiki-index_raw.php') !== false && 
-			isset($_REQUEST['format']) && $_REQUEST['format'] == 'jqs5') ||
-			strpos($_SERVER['PHP_SELF'], 'tiki-slideshow.php') !== false
-			) {
-			$headerlib->add_cssfile( 'lib/jquery/jquery.s5/jquery.s5.css' );
-			//$headerlib->add_cssfile( 'lib/jquery/jqs5/theme/staticfree/style.css' );
-			$headerlib->add_jsfile( 'lib/jquery/jquery.s5/jquery.s5.js' );
-			$headerlib->add_jq_onready( '
-				$("h1,h2,h3,h5,h6").first().parent()
-					.tiki("s5", "", {
-						backgroundUrl: $(".slideshow-background").attr("src")
-					});
-				$(".main").hide();
-				$("#show-errors-button").hide();
-			', 20 );	// late, and tell jqs5 where the page is in tiki
-			$prefs['feature_wiki_description'] = 'n';
-			$prefs['wiki_authors_style'] = 'none';
-			$prefs['feature_page_title'] = 'n';
-			$prefs['wiki_topline_position'] = 'none';
-			$prefs['page_bar_position'] = 'none';
-			$prefs['wiki_edit_section'] = 'n';
-			$prefs['wiki_edit_plugin'] = 'n';
-		}
-	}
-	if( $prefs['feature_jquery_tablesorter'] == 'y' ) {
-		$headerlib->add_cssfile( 'lib/jquery_tiki/tablesorter/themes/tiki/style.css' );
-		$headerlib->add_jsfile( 'lib/jquery/tablesorter/jquery.tablesorter.js' );
-		$headerlib->add_jsfile( 'lib/jquery/tablesorter/addons/pager/jquery.tablesorter.pager.js' );
-	}
-	if( $prefs['feature_shadowbox'] == 'y' ) {
-		$headerlib->add_jsfile( 'lib/jquery/colorbox/jquery.colorbox.js' );
-		$headerlib->add_cssfile( 'lib/jquery/colorbox/styles/colorbox.css' );
-	}
-	if( $prefs['feature_jquery_carousel'] == 'y' ) {
-		$headerlib->add_jsfile( 'lib/jquery/infinitecarousel/jquery.infinitecarousel2.js' );
-	}
 
-	if( $prefs['feature_jquery_validation'] == 'y' ) {
-		$headerlib->add_jsfile( 'lib/jquery/jquery-validate/jquery.validate.js' );
-	}
-	
-	$headerlib->add_jsfile( 'lib/jquery/jquery-ui/external/jquery.cookie.js' );
-	$headerlib->add_jsfile( 'lib/jquery/jquery.async.js', 10 );
-	$headerlib->add_jsfile( 'lib/jquery/treeTable/src/javascripts/jquery.treeTable.js' );
-	$headerlib->add_cssfile( 'lib/jquery/treeTable/src/stylesheets/jquery.treeTable.css' );
-	
-	if( ( $prefs['feature_jquery'] != 'y' || $prefs['feature_jquery_tablesorter'] != 'y' ) && $prefs['javascript_enabled'] == 'y' ) {
-		$headerlib->add_jsfile( 'lib/tiki-js-sorttable.js' );
-	}
-	
-	if( $prefs['wikiplugin_flash'] == 'y' ) {
-		$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );
-	}
+		if( $prefs['feature_jquery_ui'] == 'y' ) {
+			if( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
+				$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js', 'external' );
+			} else {
+				if ( $prefs['tiki_minify_javascript'] === 'y' ) {
+					$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js' );
+				} else {
+					$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/jquery-ui.js' );
+				}
+			}
+			$headerlib->add_jsfile( 'lib/jquery/jquery-ui/external/jquery.bgiframe-2.1.2.js' );
+			$headerlib->add_cssfile( 'lib/jquery/jquery-ui/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css' );
+		}
 
-	if( $prefs['feature_metrics_dashboard'] == 'y' ) {
-		$headerlib->add_cssfile("css/metrics.css");
-		$headerlib->add_jsfile("lib/jquery/jquery.sparkline.min.js");
-		$headerlib->add_jsfile("lib/metrics.js");
-	}
-	
-	// include and setup themegen editor if already open
-	if ($tiki_p_admin === 'y' && $prefs['feature_themegenerator'] === 'y' && !empty($_COOKIE['themegen']) &&
-			(strpos($_SERVER['SCRIPT_NAME'], 'tiki-admin.php') === false || strpos($_SERVER['QUERY_STRING'], 'page=look') === false)) {
-		include_once 'lib/themegenlib.php';
-		$themegenlib->setupEditor();
-	}
+		if( $prefs['feature_jquery_tooltips'] == 'y' ) {
+			$headerlib->add_jsfile( 'lib/jquery/cluetip/lib/jquery.hoverIntent.js' );
+			if( $prefs['feature_jquery_ui'] !== 'y' ) {
+				$headerlib->add_jsfile( 'lib/jquery/cluetip/lib/jquery.bgiframe.min.js' );
+			}
+			$headerlib->add_jsfile( 'lib/jquery/cluetip/jquery.cluetip.js' );
+			$headerlib->add_cssfile( 'lib/jquery/cluetip/jquery.cluetip.css' );
+		}
+
+		if( $prefs['feature_jquery_autocomplete'] == 'y' ) {
+			$headerlib->add_jsfile( 'lib/jquery/jquery-autocomplete/lib/jquery.ajaxQueue.js' );
+			if( $prefs['feature_jquery_ui'] !== 'y' || $prefs['feature_jquery_tooltips'] != 'y' ) {
+				$headerlib->add_jsfile( 'lib/jquery/jquery-autocomplete/lib/jquery.bgiframe.min.js' );
+			}
+			$headerlib->add_jsfile( 'lib/jquery/jquery-autocomplete/jquery.autocomplete.js' );
+			$headerlib->add_cssfile( 'lib/jquery/jquery-autocomplete/jquery.autocomplete.css' );
+		}
+
+		if( $prefs['feature_jquery_superfish'] == 'y' ) {
+			$headerlib->add_jsfile( 'lib/jquery/superfish/js/superfish.js' );
+			$headerlib->add_jsfile( 'lib/jquery/superfish/js/supersubs.js' );
+		}
+		if( $prefs['feature_jquery_reflection'] == 'y' ) {
+			$headerlib->add_jsfile( 'lib/jquery/reflection-jquery/js/reflection.js' );
+		}
+		if( $prefs['feature_jquery_media'] == 'y' ) {
+			$headerlib->add_jsfile( 'lib/jquery/jquery.media.js');
+		}
+		if( $prefs['feature_jquery_jqs5'] == 'y' ) {
+			if ((strpos($_SERVER['PHP_SELF'], 'tiki-index_raw.php') !== false &&
+				isset($_REQUEST['format']) && $_REQUEST['format'] == 'jqs5') ||
+				strpos($_SERVER['PHP_SELF'], 'tiki-slideshow.php') !== false
+				) {
+				$headerlib->add_cssfile( 'lib/jquery/jquery.s5/jquery.s5.css' );
+				//$headerlib->add_cssfile( 'lib/jquery/jqs5/theme/staticfree/style.css' );
+				$headerlib->add_jsfile( 'lib/jquery/jquery.s5/jquery.s5.js' );
+				$headerlib->add_jq_onready( '
+					$("h1,h2,h3,h5,h6").first().parent()
+						.tiki("s5", "", {
+							backgroundUrl: $(".slideshow-background").attr("src")
+						});
+					$(".main").hide();
+					$("#show-errors-button").hide();
+				', 20 );	// late, and tell jqs5 where the page is in tiki
+				$prefs['feature_wiki_description'] = 'n';
+				$prefs['wiki_authors_style'] = 'none';
+				$prefs['feature_page_title'] = 'n';
+				$prefs['wiki_topline_position'] = 'none';
+				$prefs['page_bar_position'] = 'none';
+				$prefs['wiki_edit_section'] = 'n';
+				$prefs['wiki_edit_plugin'] = 'n';
+			}
+		}
+		if( $prefs['feature_jquery_tablesorter'] == 'y' ) {
+			$headerlib->add_cssfile( 'lib/jquery_tiki/tablesorter/themes/tiki/style.css' );
+			$headerlib->add_jsfile( 'lib/jquery/tablesorter/jquery.tablesorter.js' );
+			$headerlib->add_jsfile( 'lib/jquery/tablesorter/addons/pager/jquery.tablesorter.pager.js' );
+		}
+		if( $prefs['feature_shadowbox'] == 'y' ) {
+			$headerlib->add_jsfile( 'lib/jquery/colorbox/jquery.colorbox.js' );
+			$headerlib->add_cssfile( 'lib/jquery/colorbox/styles/colorbox.css' );
+		}
+		if( $prefs['feature_jquery_carousel'] == 'y' ) {
+			$headerlib->add_jsfile( 'lib/jquery/infinitecarousel/jquery.infinitecarousel2.js' );
+		}
+
+		if( $prefs['feature_jquery_validation'] == 'y' ) {
+			$headerlib->add_jsfile( 'lib/jquery/jquery-validate/jquery.validate.js' );
+		}
+
+		$headerlib->add_jsfile( 'lib/jquery/jquery-ui/external/jquery.cookie.js' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.async.js', 10 );
+		$headerlib->add_jsfile( 'lib/jquery/treeTable/src/javascripts/jquery.treeTable.js' );
+		$headerlib->add_cssfile( 'lib/jquery/treeTable/src/stylesheets/jquery.treeTable.css' );
+
+		if( ( $prefs['feature_jquery'] != 'y' || $prefs['feature_jquery_tablesorter'] != 'y' ) && $prefs['javascript_enabled'] == 'y' ) {
+			$headerlib->add_jsfile( 'lib/tiki-js-sorttable.js' );
+		}
+
+		if( $prefs['wikiplugin_flash'] == 'y' ) {
+			$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );
+		}
+
+		if( $prefs['feature_metrics_dashboard'] == 'y' ) {
+			$headerlib->add_cssfile("css/metrics.css");
+			$headerlib->add_jsfile("lib/jquery/jquery.sparkline.min.js");
+			$headerlib->add_jsfile("lib/metrics.js");
+		}
+
+		// include and setup themegen editor if already open
+		if ($tiki_p_admin === 'y' && $prefs['feature_themegenerator'] === 'y' && !empty($_COOKIE['themegen']) &&
+				(strpos($_SERVER['SCRIPT_NAME'], 'tiki-admin.php') === false || strpos($_SERVER['QUERY_STRING'], 'page=look') === false)) {
+			include_once 'lib/themegenlib.php';
+			$themegenlib->setupEditor();
+		}
+	} // end not in $prefs['mobile_mode']
 
 }	// end if $prefs['javascript_enabled'] != 'n'
 

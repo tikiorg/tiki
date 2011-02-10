@@ -194,6 +194,10 @@
 					{preference name=feature_file_galleries_templates}
 					{preference name=feature_syntax_highlighter}
 					{preference name=feature_draw}
+					{preference name=mobile_feature}
+					<div class="adminoptionboxchild" id="mobile_feature_childcontainer">
+						{preference name=mobile_perspectives}
+					</div>
 				</fieldset>
 
 				<fieldset>

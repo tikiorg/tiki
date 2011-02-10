@@ -1705,6 +1705,10 @@ function get_default_prefs() {
 		'iepngfix_selectors' => '#sitelogo a img',
 		'iepngfix_elements' => '',
 		'feature_invite' => 'n',
+
+		// Experimental new mobile feature for Tiki 7
+		'mobile_feature' => 'n',
+		'mobile_perspectives' => array(),
 		
 		// JQuery
 		'feature_jquery' => 'y',			// Default JS lib for - now "hard-wired" on if javascript_enabled
