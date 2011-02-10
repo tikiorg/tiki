@@ -457,7 +457,9 @@ class PreferencesLib
 
 		foreach($prefs as $pref => $val) {
 			if (( $added && !isset($defaults[$pref])) || (isset($defaults[$pref]) && $val !== $defaults[$pref] )) {
-				if (!in_array($pref, array( 'tiki_release', 'tiki_version_last_check', 'lastUpdatePrefs' ))) {	// prefs modified by the system etc
+				if (!in_array($pref, array( 'tiki_release', 'tiki_version_last_check', 'lastUpdatePrefs',
+											'case_patched' ))) {	// prefs modified by the system etc
+					
 					if (!in_array($pref, array( 'fgal_use_dir', 'sender_email' ))) {	// prefs with system info etc
 						$modified[$pref] = array(
 							'cur' => $prefs[$pref],
