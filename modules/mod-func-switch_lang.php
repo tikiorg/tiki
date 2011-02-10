@@ -16,7 +16,7 @@ function module_switch_lang_info()
 	return array(
 		'name' => tra('Switch Language'),
 		'description' => tra('Displays a language picker to change the language of the site.'),
-		'prefs' => array( 'change_language' ),
+		'prefs' => array( 'feature_multilingual', 'change_language' ),
 		'params' => array(
 			'mode' => array(
 				'name' => tra('Display mode'),

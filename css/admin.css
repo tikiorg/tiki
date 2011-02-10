@@ -145,6 +145,19 @@ a.admbox.off img {
 	clear: none;
 }
 
+.q1 {
+	width: 33%;
+	display: block;
+	float: left;
+	clear: none;
+	vertical-align: middle;
+}
+.q23 {
+	width: 66%;
+	float: left;
+	clear: none;
+}
+
 .adminanchors a {float: left;}
 
 /* from ui-revamp branch, via coe branch - jb july 2009 */
@@ -311,8 +324,11 @@ a.admbox.off img {
 	padding: 10px;
 }
 
+#module_list {
+	padding: 0;
+}
 #module_list li {
-	list-style-image: url("../pics/icons/module.png");
+	list-style: none;
 	user-select: none;
 	-webkit-user-select: none;
 	-moz-user-select: none;

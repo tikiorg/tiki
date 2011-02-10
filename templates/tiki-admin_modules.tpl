@@ -404,8 +404,15 @@
 			</div>
 			<ul id="module_list">
 				{foreach key=name item=info from=$all_modules_info}
-					<li class="{if $info.enabled}enabled{else}disabled{/if}">
-						{$info.name} <em>({$name})</em>
+					<li class="{if $info.enabled}enabled{else}disabled{/if} tips clearfix"
+								title="{$info.name} <em>({$name})</em>|{$info.description}
+								{if not $info.enabled}<br /><small><em>({tr}Requires{/tr} {' &amp; '|implode:$info.prefs})</em></small>{/if}">
+						<div class="q1">
+							{icon _id="module"} <strong>{$info.name}</strong>
+						</div>
+						<div class="description q23">
+							{$info.description}
+						</div>
 					</li>
 				{/foreach}
 			</ul>

@@ -295,11 +295,14 @@ $all_modules_info = array_combine(
 	array_map( array( $modlib, 'get_module_info' ), $all_modules ) 
 );
 foreach ($all_modules_info as &$mod) {
+	$mod['enabled'] = true;
 	foreach ($mod['prefs'] as $pf) {
-		$mod['enabled'] = ($prefs[$pf] === 'y');
+		if ($prefs[$pf] !== 'y') {
+			$mod['enabled'] = false;
+		}
 	}
 }
-//asort($all_modules_info);
+asort($all_modules_info);
 $smarty->assign_by_ref( 'all_modules_info', $all_modules_info);
 if (!empty($_REQUEST['module_list_show_all'])) {
 	$smarty->assign('module_list_show_all', true);
