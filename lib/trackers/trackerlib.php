@@ -3407,7 +3407,7 @@ class TrackerLib extends TikiLib
 		$fields = $this->fields();
 
 		if (is_array($type)) {
-			$conditions['bintype'] = $fields->in($type, true);
+			$conditions['type'] = $fields->in($type, true);
 		} else {
 			$conditions['type'] = $fields->exactly($type);
 		}
