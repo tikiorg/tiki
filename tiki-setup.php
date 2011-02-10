@@ -205,7 +205,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 	$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );
 	
 	if( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
-		$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js', 'external' );
+		$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js', 'external' );
 	} else {
 		if ( $prefs['tiki_minify_javascript'] === 'y' ) {
 			$headerlib->add_jsfile( 'lib/jquery/jquery.min.js' );
@@ -224,7 +224,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 	
 	if( $prefs['feature_jquery_ui'] == 'y' ) {
 		if( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
-			$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js', 'external' );
+			$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js', 'external' );
 		} else {
 			if ( $prefs['tiki_minify_javascript'] === 'y' ) {
 				$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js' );
@@ -232,19 +232,22 @@ if ($prefs['javascript_enabled'] != 'n') {
 				$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/jquery-ui.js' );
 			}
 		}
+		$headerlib->add_jsfile( 'lib/jquery/jquery-ui/external/jquery.bgiframe-2.1.2.js' );
 		$headerlib->add_cssfile( 'lib/jquery/jquery-ui/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css' );
 	}
 	
 	if( $prefs['feature_jquery_tooltips'] == 'y' ) {
 		$headerlib->add_jsfile( 'lib/jquery/cluetip/lib/jquery.hoverIntent.js' );
-		$headerlib->add_jsfile( 'lib/jquery/cluetip/lib/jquery.bgiframe.min.js' );
+		if( $prefs['feature_jquery_ui'] !== 'y' ) {
+			$headerlib->add_jsfile( 'lib/jquery/cluetip/lib/jquery.bgiframe.min.js' );
+		}
 		$headerlib->add_jsfile( 'lib/jquery/cluetip/jquery.cluetip.js' );
 		$headerlib->add_cssfile( 'lib/jquery/cluetip/jquery.cluetip.css' );
 	}
 	
 	if( $prefs['feature_jquery_autocomplete'] == 'y' ) {
 		$headerlib->add_jsfile( 'lib/jquery/jquery-autocomplete/lib/jquery.ajaxQueue.js' );
-		if( $prefs['feature_jquery_tooltips'] != 'y' ) {
+		if( $prefs['feature_jquery_ui'] !== 'y' || $prefs['feature_jquery_tooltips'] != 'y' ) {
 			$headerlib->add_jsfile( 'lib/jquery/jquery-autocomplete/lib/jquery.bgiframe.min.js' );
 		}
 		$headerlib->add_jsfile( 'lib/jquery/jquery-autocomplete/jquery.autocomplete.js' );
