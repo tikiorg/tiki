@@ -14,7 +14,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function module_register_info() {
 	return array(
 		'name' => tra('New user registration'),
-		'description' => tra('New user registrationmore tiki-re'),
+		'description' => tra('Permits anonymous visitors to create an account on the system.'),
+		'prefs' => array( 'allowRegister' ),		
 		'params' => array(),
 	);
 }

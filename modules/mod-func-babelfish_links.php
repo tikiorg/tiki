@@ -14,7 +14,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function module_babelfish_links_info() {
 	return array(
 		'name' => tra('Babel Fish Links'),
-		'description' => tra(''),
+		'description' => tra('Offers a link to the Yahoo! Babel Fish translation service'),
+		'prefs' => array( 'feature_babelfish' ),		
 		'params' => array(),
 	);
 }
