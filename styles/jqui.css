@@ -501,12 +501,6 @@ li.even {
 
 /***** Wiki *****/
 
-#description,
-.description {
-	font-size: .95em;
-	font-style: italic;
-}
-
 /* code plugin */
 
 .codecaption {

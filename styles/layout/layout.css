@@ -1038,10 +1038,6 @@ tr.diffheader {
 }
 
 /***** Wiki *****/
-#description,
-.description {
-	display: block;
-}
 
 #pageid {
 	float: left;
