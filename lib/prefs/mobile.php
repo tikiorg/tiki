@@ -17,6 +17,7 @@ function prefs_mobile_list() {
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_ajax',
+				'feature_perspective',
 			),
 		),
 		'mobile_perspectives' => array(

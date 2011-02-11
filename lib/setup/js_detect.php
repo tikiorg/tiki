@@ -102,6 +102,7 @@ jqueryTiki.tooltips = false;
 jqueryTiki.autocomplete = false;
 jqueryTiki.superfish = false;
 jqueryTiki.colorbox = false;
+jqueryTiki.tablesorter = false;
 ';
 	}
 
