@@ -9817,7 +9817,7 @@ $lang=Array(
 "The user email confirmation can't be sent. Contact the administrator" => "Le courriel de confirmation n'a pas pu être envoyé. Contactez l'administrateur SVP",
 "here" => "ici",
 "Could not establish Kaltura session. Try again" => "Impossible d'établir la session Kaltura. Veuillez essayer à nouveau",
-"You need to set your Kaltura account details: " => "Veuillez renseigner votre compte Kaltura : ",
+"You need to set your Kaltura account details: " => "Vous devez configurer les détails de votre compte Kaltura : ",
 "Cannot connect with web service" => "Impossible de se connecter au service web",
 "No permission to view channel" => "Pas de permission pour voir le canal",
 "No permission to view any channel" => "Pas de permission pour voir les canaux",
@@ -14509,6 +14509,8 @@ $lang=Array(
 "You need to clear your Tiki template cache for this change to take effect" => "Vous devez effacer le cache des Templates pour que le changement de paramètre prenne effet",
 "Use only for development the option \"Insert into text\", not in production, because these warnings are added to emails content as well, and are visible to the users" => "N\'utiliser l\'option \"insérer dans le texte\" que pour les test, pas en production parce ces alertes sont évidemment visibles par les utilisateurs, si vous voulez laisser marqués les mails utiliser l'\option \"caché\" (Insérer une marque Tiki dans l\'en tête de mail)",
 "Assign permissions to file galleries" => "Assigner des permissions aux galleries de fichiers",
+"Dynamic content" => "Contenu dynamique",
+"Organize Objects" => "Organiser les objets",
 "###end###"=>"###end###");
   
 ?>
