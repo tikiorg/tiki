@@ -91,6 +91,7 @@ jqueryTiki.effect_tabs_speed = '.($prefs['jquery_effect_tabs_speed'] == 'normal'
 
 jqueryTiki.autosave = '.($prefs['ajax_autosave'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.sefurl = '.($prefs['feature_sefurl'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.ajax = '.($prefs['feature_ajax'] == 'y' ? 'true' : 'false') . ';
 ';	// NB replace "normal" speeds with int to workaround issue with jQuery 1.4.2
 
 	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
@@ -104,10 +105,11 @@ jqueryTiki.superfish = false;
 jqueryTiki.colorbox = false;
 jqueryTiki.tablesorter = false;
 ';
+		if ($prefs['feature_ajax'] !== 'y') {
+			$headerlib->add_js_config('var mobile_ajaxEnabled = false;');
+		}
 	}
-
 	$headerlib->add_js($js, 100);	
-	
 	
 	if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
 		

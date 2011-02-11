@@ -25,7 +25,6 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 			$uagent_info->DetectPalmWebOS()) {		// supported by jquery.mobile
 
 		$prefs['mobile_mode'] = 'y';
-		$prefs['feature_ajax'] = 'y';
 
 		// hard-wire a few prefs shut to speed development
 		$prefs['feature_jquery_ui'] = 'n';
