@@ -136,18 +136,14 @@ function wikiplugin_gauge($data, $params) {
 		$color = '#FF0000';
 	}
 
-	if (!isset($showvalue)) {
-		$showvalue = true;
-	}
-	
 	if (!isset($perc)) {
 		$perc = false;
 	}
 
-	if (!isset($showvalue)) {
-		$showvalue = true;
+	if (isset($showvalue) && $showvalue == 'false') {
+		$showvalue = false;
 	} else {
-		$showvalue = (bool) $showvalue;
+		$showvalue = true;
 	}
 	
 	if (!isset($max) or !$max) {
