@@ -75,8 +75,8 @@
 		<li><a href="#">{$module_title}</a>{capture assign=module_close_tags}</li>{$module_close_tags}{/capture}
 
 	{elseif ($module_position eq "l" or $module_position eq "r")}{* mobile - do the list thing for left and right *}
-		<li><a href="#">{$module_title}</a></li>
-		<ul><li>{capture assign=module_close_tags}</li></ul>{/capture}
+		<li><a href="#">{$module_title}</a>
+		<ul><li>{capture assign=module_close_tags}</li></ul></li>{/capture}
 	{/if}
 
 
