@@ -159,7 +159,7 @@
 	{/capture}
 
 	{if $page_bar neq ''}
-		<div class="clearfix" id="page-bar" data-role="controlgroup" data-type="horizontal">{* mobile *}
+		<div class="clearfix" id="page-bar">
 			{$page_bar}
 		</div>
 	{/if}

@@ -1,6 +1,6 @@
 {* $Id$ *}
-{* override for mobile module layoutas a list *}
-{if 0 and $module_nobox neq 'y'}{* mobile *}
+{* Module layout with controls *}
+{if $module_nobox neq 'y'}
 {if $prefs.feature_layoutshadows eq 'y'}<div class="box-shadow">{$prefs.box_shadow_start}{/if}
 	<div id="module_{$moduleId}" class="box box-{$module_name}{if $module_type eq 'cssmenu'} cssmenubox{/if} module"{if !empty($tpl_module_style)} style="{$tpl_module_style}"{/if}>
 	{if $module_decorations ne 'n'}
@@ -64,34 +64,18 @@
 		<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]--></h3>
 	{/if}
 		<div id="mod-{$module_name|cat:$module_position|cat:$module_ord|escape}" style="display: {if !isset($module_display) or $module_display}block{else}none{/if};{$module_params.style}" class="clearfix box-data{if !empty($module_params.class)} {$module_params.class}{/if}">
-
-{else}{* mobile *}
-
-	{*<div id="module_{$moduleId}" style="{$module_params.style}{$tpl_module_style}" class="module{if !empty($module_params.class)} {$module_params.class}{/if} box-{$module_name}">*}
-	
-	{if $module_name eq "menu"}
-		{if ($module_position neq "l" and $module_position neq "r")}
-			<ul data-role="listview">{capture assign=module_close_tags}</ul>{/capture}{* handle top menu *}
+{else}{* $module_nobox eq 'y' *}
+		<div id="module_{$moduleId}" style="{$module_params.style}{$tpl_module_style}" class="module{if !empty($module_params.class)} {$module_params.class}{/if} box-{$module_name}">
 {/if}
-		<li><a href="#">{$module_title}</a>{capture assign=module_close_tags}</li>{$module_close_tags}{/capture}
-		
-	{elseif ($module_position eq "l" or $module_position eq "r")}{* mobile - do the list thing for left and right *}
-		<li><a href="#">{$module_title}</a></li>
-		<ul><li>{capture assign=module_close_tags}</li></ul>{/capture}
-	{/if}
-
-	
-{/if}{* mobile *}
 {$module_content}
 {$module_error}
-{if 0 and $module_nobox neq 'y'}{* mobile *}
+{if $module_nobox neq 'y'}
 		</div>
-		<div class="box-footer" data-role="footer">
+		<div class="box-footer">
 
 		</div>
 	</div>
 {if $prefs.feature_layoutshadows eq 'y'}{$prefs.box_shadow_end}</div>{/if}
 {else}
-	{$module_close_tags}{* mobile *}
-{*</div>*}
+	</div>
 {/if}
