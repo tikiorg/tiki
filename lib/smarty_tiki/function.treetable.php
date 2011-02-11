@@ -244,7 +244,7 @@ $("#'.$id.'_showSelected").click( function () {
 		for ($i = 0, $icount_checkbox = count($_checkbox); $i < $icount_checkbox; $i++) {
 			$html .= '<th class="checkBoxHeader">';
 			$html .= smarty_function_select_all(
-						array('checkbox_names'=>$_checkbox[$i].'[]',
+						array('checkbox_names'=>array($_checkbox[$i].'[]'),
 							  'label' => empty($_checkboxTitles) ? '' : htmlspecialchars($_checkboxTitles[$i])), $smarty);
 			$html .= '</th>';
 		}
