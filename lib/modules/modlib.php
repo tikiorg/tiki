@@ -327,6 +327,10 @@ class ModLib extends TikiLib
 		$module_params['module_position'] = $module['position'];
 		$module_params['module_ord'] = $module['ord'];
 
+		if ( $prefs['user_flip_modules'] === 'n' ) {
+			$module_params['flip'] = 'n';
+		}
+
 		if( isset( $module_params['section'] ) && $module_params['section'] == 'wiki' ) {
 			$module_params['section'] = 'wiki page';
 		}
