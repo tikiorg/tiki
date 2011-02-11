@@ -1254,10 +1254,12 @@ class TrackerLib extends TikiLib
 			}
 			if (isset($linkfilter) && $linkfilter) {
 				$filterout = false;
+				// NOTE: This implies filterfield if is link field has to be in fields set
 				foreach ($res['field_values'] as $i=>$field) {
 					foreach ($linkfilter as $lf) {
 						if ($field['fieldId'] == $lf["filterfield"]) {
-							if ($lf["filtervalue"] && strpos(implode(',',$field['links']), $lf["filtervalue"]) === false
+							// extra comma at the front and back of filtervalue to avoid ambiguity in partial match
+							if ($lf["filtervalue"] && strpos(',' . implode(',',$field['links']) . ',', $lf["filtervalue"]) === false
 							|| $lf["exactvalue"] && implode(',',$field['links']) != $lf["exactvalue"] && implode(':',$field['links']) != $lf["exactvalue"] ) {
 								$filterout = true;
 								break 2;
