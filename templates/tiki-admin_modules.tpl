@@ -404,10 +404,11 @@
 			</div>
 			<ul id="module_list">
 				{foreach key=name item=info from=$all_modules_info}
-					<li class="{if $info.enabled}enabled{else}disabled{/if} tips clearfix"
-								title="{$info.name} <em>({$name})</em>|{$info.description}
-								{if not $info.enabled}<br /><small><em>({tr}Requires{/tr} {' &amp; '|implode:$info.prefs})</em></small>{/if}">
-						<div class="q1">
+					<li class="{if $info.enabled}enabled{else}disabled{/if} tips clearfix">
+						<input type="hidden" value="{$name}" />
+						<div class="q1"
+								title="{$info.name} &lt;em&gt;({$name})&lt;/em&gt;|{$info.description}
+								{if not $info.enabled}&lt;br /&gt;&lt;small&gt;&lt;em&gt;({tr}Requires{/tr} {' &amp; '|implode:$info.prefs})&lt;/em&gt;&lt;/small&gt;{/if}">
 							{icon _id="module"} <strong>{$info.name}</strong>
 						</div>
 						<div class="description q23">
