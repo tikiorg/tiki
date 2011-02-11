@@ -226,6 +226,8 @@ if ($prefs['javascript_enabled'] != 'n') {
 		$headerlib->add_jsfile( 'lib/jquery/jquery.mobile/jquery.mobile.js' );
 		$headerlib->add_cssfile( 'lib/jquery/jquery.mobile/jquery.mobile.css' );
 
+		$headerlib->drop_cssfile('css/cssmenus.css');
+
 	} else {
 		
 		$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );

@@ -15,7 +15,8 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 
 	$uagent_info = new uagent_info();
 
-	if (( isset($_REQUEST['mobile_mode']) && $_REQUEST['mobile_mode'] === 'y' ) ||
+	if ((isset($_REQUEST['mobile_mode']) && $_REQUEST['mobile_mode'] === 'y') ||
+		(isset($_COOKIE['mobile_mode']) && $_COOKIE['mobile_mode'] === 'y') ||
 			$uagent_info->DetectIphoneOrIpod() ||
 			$uagent_info->DetectIpad() ||
 			$uagent_info->DetectAndroid() ||
@@ -24,11 +25,24 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 			$uagent_info->DetectPalmWebOS()) {		// supported by jquery.mobile
 
 		$prefs['mobile_mode'] = 'y';
+		$prefs['feature_ajax'] = 'y';
+
+		// hard-wire a few prefs shut to speed development
 		$prefs['feature_jquery_ui'] = 'n';
 		$prefs['feature_fullscreen'] = 'n';
 		$prefs['feature_syntax_highlighter'] = 'n';
+		$prefs['feature_layoutshadows'] = 'n';
+		$prefs['change_theme'] = 'n';
+		$prefs['feature_sefurl'] = 'n';
+		$prefs['feature_wysiwyg'] = 'n';
 
-		$prefs['mobile_perspectives'] = unserialize($prefs['mobile_perspectives']);
+		$headerlib->add_js('function sfHover() {alert("not working?");}', 100);	// try and override the css menu func
+
+		$prefs['style'] = 'mobile.css';
+
+		if (!is_array($prefs['mobile_perspectives'])) {
+			$prefs['mobile_perspectives'] = unserialize($prefs['mobile_perspectives']);
+		}
 		if (count($prefs['mobile_perspectives']) > 0) {
 			global $perspectivelib; require_once 'lib/perspectivelib.php';
 
@@ -39,4 +53,8 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 	} else {
 		$prefs['mobile_mode'] = 'n';
 	}
+} else {
+	$prefs['mobile_mode'] = 'n';
 }
+
+setcookie('mobile_mode', $prefs['mobile_mode']);

@@ -170,5 +170,10 @@ function smarty_function_button($params, &$smarty) {
 	}
 
 	$auto_query_args = $auto_query_args_orig;
-	return '<span class="'.(!empty($params['_noborder']) ? '' : 'button').(!empty($class)?" $class":'').'"'.$id.'>'.$html.'</span>';
+	if ($prefs['mobile_feature'] !== 'y' || $prefs['mobile_mode'] !== 'y') {
+		$html = '<span class="'.(!empty($params['_noborder']) ? '' : 'button').(!empty($class)?" $class":'').'"'.$id.'>'.$html.'</span>';
+	} else {
+		$html = preg_replace('/<a /', '<a  data-role="button" ', $html);
+	}
+	return $html;
 }

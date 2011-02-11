@@ -15,6 +15,9 @@ function prefs_mobile_list() {
 			'help' => 'Mobile',
 			'warning' => tra('Experimental. This feature is under development.'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_ajax',
+			),
 		),
 		'mobile_perspectives' => array(
 			'name' => tra('Mobile Perspectives'),

@@ -91,7 +91,11 @@ function smarty_function_menu($params, &$smarty)
 	$data = $smarty->fetch($tpl);
 	$data = preg_replace('/<ul>\s*<\/ul>/', '', $data);
 	$data = preg_replace('/<ol>\s*<\/ol>/', '', $data);
-	return '<nav class="role_navigation">' . $data . '</nav>';
+	if ($prefs['mobile_feature'] !== 'y' || $prefs['mobile_mode'] !== 'y') {
+		return '<nav class="role_navigation">' . $data . '</nav>';
+	} else {
+		return $data;
+	}
 }
 
 function compare_menu_options($a, $b) { return strcmp(tra($a['name']), tra($b['name'])); }
