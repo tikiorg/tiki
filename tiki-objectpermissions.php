@@ -349,9 +349,9 @@ foreach($groups['data'] as &$row) {
 
 }
 
-$smarty->assign('permGroups', implode(',', $permGroups));
+$smarty->assign('permGroups', $permGroups);
 $smarty->assign('permGroupCols', $groupIndices);
-$smarty->assign('groupNames', implode(',', $groupNames));
+$smarty->assign('groupNames', $groupNames);
 //$smarty->assign('groupInheritance', $groupInheritance);
 
 
