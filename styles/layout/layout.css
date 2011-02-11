@@ -798,7 +798,7 @@ a.toolbar {			/* each tool button */
 }
 
 /* use default col width from *lite.css for modules in centre section */
-#tiki-center .module {
+#role_main .module {
 	max-width: 180px;
 }
 
