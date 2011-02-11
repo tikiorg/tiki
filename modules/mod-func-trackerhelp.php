@@ -61,7 +61,7 @@ function module_trackerhelp( $mod_reference, &$module_params ) {
 		} else {
 			$_SESSION['trackerhelp_id'] = $trackerId;
 			$_SESSION['trackerhelp_name'] = $_REQUEST['trackerhelp_name'];
-			$fields = $trklib->list_tracker_fields($trackerId, 0, $module_params['max']);
+			$fields = $trklib->list_tracker_fields($trackerId, 0, -1);
 			$_SESSION['trackerhelp_text'] = array();
 			$_SESSION['trackerhelp_pretty'] = array();
 			foreach($fields['data'] as $field) {
