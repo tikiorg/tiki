@@ -15,7 +15,7 @@
  * it will be updated.
  */
 
-die('REMOVE THIS LINE TO USE THE SCRIPT.');
+die("REMOVE THIS LINE TO USE THE SCRIPT.\n");
 
 if (!isset($argv[1])) {
 	echo "\nUsage: php get_translation_percentage.php pathToTikiRootDir wikiPageName\n";
@@ -60,7 +60,7 @@ if ($return_var == 1) {
 
 
 // calculate the percentage for each language.php
-$percentages = array();
+$outputData = array();
 
 // $langmapping is set on lang/langmapping.php
 foreach ($langmapping as $lang => $null) {
@@ -84,9 +84,11 @@ foreach ($langmapping as $lang => $null) {
 			}
 		}
 		
-		$percentages[$lang] = array(
-//			'untranslated' => round($untranslated / $total, 2) * 100,
-			'translated' => round($translated / $total, 2) * 100
+		$outputData[$lang] = array(
+			'total' => $total,
+			'untranslated' => $untranslated,
+			'translated' => $translated,
+			'percentage' => round($translated / $total, 2) * 100,
 		);
 	}
 }
@@ -94,10 +96,11 @@ foreach ($langmapping as $lang => $null) {
 
 // output translation percentage to terminal or to a wiki page
 $output = "! Status of Tiki translations\n\n";
-$output .= "||__Language code (ISO)__|__English name__|__Native Name__|__Completion__\n";
+$output .= "||__Language code (ISO)__|__English name__|__Native Name__|__Completion__|__Number of strings__\n";
 
-foreach ($percentages as $lang => $percentage) {
-	$output .= "$lang | {$langmapping[$lang][1]} | {$langmapping[$lang][0]} | {gauge value=\"{$percentage['translated']}\" size=\"100\" perc=\"true\"}\n";
+foreach ($outputData as $lang => $data) {
+	$output .= "$lang | {$langmapping[$lang][1]} | {$langmapping[$lang][0]} | {gauge value=\"{$data['percentage']}\" size=\"100\" perc=\"true\"} | ";
+	$output .= "Total: {$data['total']} %%% Translated: {$data['translated']} %%% Untranslated: {$data['untranslated']} \n";
 }
 
 $output .= '||';
