@@ -88,22 +88,25 @@ foreach ($langmapping as $lang => $null) {
 			'total' => $total,
 			'untranslated' => $untranslated,
 			'translated' => $translated,
-			'percentage' => round($translated / $total, 2) * 100,
+			'percentage' => round($translated / $total, 4) * 100,
 		);
 	}
 }
 
 
 // output translation percentage to terminal or to a wiki page
-$output = "! Status of Tiki translations\n\n";
-$output .= "||__Language code (ISO)__|__English name__|__Native Name__|__Completion__|__Number of strings__\n";
+$output = "! Status of Tiki translations\n";
+$output .= "Page last modified on " . $tikilib->date_format($prefs['long_date_format']) . "\n\n";
+$output .= "This page is generated automatically. Please do not change it.\n\n";
+$output .= "The total number of strings is different for each language due to unused translations present in the language.php files.\n\n";
+$output .= "{FANCYTABLE(head=\"Language code (ISO)|English name|Native Name|Completion|Percentage|Number of strings\" sortable=\"y\")}\n";
 
 foreach ($outputData as $lang => $data) {
-	$output .= "$lang | {$langmapping[$lang][1]} | {$langmapping[$lang][0]} | {gauge value=\"{$data['percentage']}\" size=\"100\" perc=\"true\"} | ";
-	$output .= "Total: {$data['total']} %%% Translated: {$data['translated']} %%% Untranslated: {$data['untranslated']} \n";
+	$output .= "$lang | {$langmapping[$lang][1]} | {$langmapping[$lang][0]} | {gauge value=\"{$data['percentage']}\" size=\"100\" showvalue=\"false\"} | ";
+	$output .= "{$data['percentage']}% | Total: {$data['total']} %%% Translated: {$data['translated']} %%% Untranslated: {$data['untranslated']} \n";
 }
 
-$output .= '||';
+$output .= '{FANCYTABLE}';
 
 if (isset($wikiPage)) {
 	$tikilib->update_page($wikiPage, $output, 'Updating translation stats', 'i18nbot', '127.0.0.1');
