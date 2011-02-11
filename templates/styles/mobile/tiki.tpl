@@ -1,10 +1,11 @@
 {* $Id$ *}<!DOCTYPE html>
+{* override for mobile *}
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}" lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}"{if !empty($page_id)} id="page_{$page_id}"{/if}>
 	<head>
 		{include file='header.tpl'}
 	</head>
 	<body{html_body_attributes}>
-
+{* mobile
 		<ul class="jumplinks" style="position:absolute;top:-9000px;left:-9000px;z-index:9;">
 			<li><a href="#tiki-center" title="{tr}Jump to Content{/tr}">{tr}Jump to Content{/tr}</a></li>
 		</ul>
@@ -19,7 +20,6 @@
 			</div>
 		{/if}
 
-		{* TikiTest ToolBar *}
 		{if $prefs.feature_tikitests eq 'y' and $tikitest_state neq 0}
 			{include file='tiki-tests_topbar.tpl'}
 		{/if}
@@ -27,14 +27,14 @@
 		{if $prefs.feature_ajax eq 'y'}
 			{include file='tiki-ajax_header.tpl'}
 		{/if}
-
+ end mobile *}
 		<div id="fixedwidth"> {* enables fixed-width layouts *}
 			{if $prefs.feature_layoutshadows eq 'y'}<div id="main-shadow">{eval var=$prefs.main_shadow_start}{/if}
-			<div id="main">
+			<div id="main" data-role="page">
 				{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y') }
 					{if $prefs.module_zones_top eq 'fixed' or ($prefs.module_zones_top ne 'n' && $top_modules|@count > 0)}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}
-							<div id="header_outer">
+							<div id="header_outer" data-role="header">
 								<div id="header_container">
 									<div id="header_fixedwidth">
 										<header class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
@@ -50,7 +50,7 @@
 						{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.header_shadow_end}</div>{/if}
 					{/if}
 				{/if}
-				<div class="middle_outer">
+				<div class="middle_outer" data-role="content">
 					{if $prefs.feature_layoutshadows eq 'y'}<div id="middle-shadow">{eval var=$prefs.middle_shadow_start}{/if}
 						<div class="clearfix" id="middle">
 							<div class="content clearfix modules" id="topbar_modules">
@@ -122,9 +122,11 @@
 										<aside id="col2"{if $prefs.feature_left_column eq 'user'} style="display:{if isset($cookie.show_col2) and $cookie.show_col2 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 											<h2 class="hidden">Sidebar</h2>
 											<div id="left_modules" class="content modules">
-												{section name=homeix loop=$left_modules}
-													{$left_modules[homeix].data}
-												{/section}
+												<ul data-role="listview" data-inset="true">{* mobile *}
+													{section name=homeix loop=$left_modules}
+														{$left_modules[homeix].data}
+													{/section}
+												</ul>{* mobile *}
 											</div>
 										</aside>
 									{/if}
@@ -135,20 +137,27 @@
 									<aside class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_col3) and $cookie.show_col3 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 										<h2 class="hidden">Sidebar</h2>
 										<div id="right_modules" class="content modules">
-											{if $module_pref_errors}
-												{remarksbox type="warning" title="{tr}Module errors{/tr}"}
-													{tr}The following modules could not be loaded{/tr}
-													<p>
-														{foreach from=$module_pref_errors key=index item=pref_error}
-															<b>{$pref_error.mod_name}:</b><br />
-															{tr}Preference was not set:{/tr} '{$pref_error.pref_name}'<br />
-														{/foreach}
-													</p>
-												{/remarksbox}
-											{/if}
-											{section name=homeix loop=$right_modules}
-												{$right_modules[homeix].data}
-											{/section}
+											<ul data-role="listview" data-inset="true">{* mobile *}
+												{if $module_pref_errors}
+													<li>
+														<a href="#" class="error">{tr}Module errors{/tr}</a>
+														<ul><li>
+															{remarksbox type="warning" title="{tr}Module errors{/tr}"}
+																{tr}The following modules could not be loaded{/tr}
+																<p>
+																	{foreach from=$module_pref_errors key=index item=pref_error}
+																		<b>{$pref_error.mod_name}:</b><br />
+																		{tr}Preference was not set:{/tr} '{$pref_error.pref_name}'<br />
+																	{/foreach}
+																</p>
+															{/remarksbox}
+														</li></ul>
+													</li>
+												{/if}
+												{section name=homeix loop=$right_modules}
+													{$right_modules[homeix].data}
+												{/section}
+											</ul>{* mobile *}
 										</div>
 									</aside>
 									<br style="clear:both" />
@@ -161,7 +170,7 @@
 				{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 					{if $prefs.module_zones_bottom eq 'fixed' or ($prefs.module_zones_bottom ne 'n' && $bottom_modules|@count > 0)}{* previously if $prefs.feature_bot_bar eq 'y' *}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}
-							<footer id="footer">
+							<footer id="footer" data-role="footer">
 								<div class="footer_liner">
 									<div class="footerbgtrap">
 										<div id="bottom_modules" class="content modules"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
