@@ -202,7 +202,7 @@ if ($("#assignstructure").attr("checked")) {
 
 		<table width="100%">
 			<tr>
-				<th>Groups</th>
+				<th>{tr}Groups{/tr}</th>
 			{foreach item=permgroup from=$quickperms}
 				<th>{$permgroup.name}</th>
 			{/foreach}
