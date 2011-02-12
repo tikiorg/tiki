@@ -138,7 +138,7 @@ foreach($ctall as $c) {
 		'id' => $c['categId'],
 		'parent' => $c['parentId'],
 		'data' => '<span class="object-count">'.$c['objects'].'</span>' . $c['eyes'].' <a class="catname" href="tiki-browse_categories.php?parentId=' . $c["categId"] . '&amp;deep=' . $deep . '&amp;type=' 
-					. urlencode($type) . '">' . htmlspecialchars($c['name']) .'</a> ', 
+					. urlencode($type) . '">' . htmlspecialchars(tr($c['name'])) .'</a> ', 
 	);
 }
 $tm = new CatBrowseTreeMaker('categ');
