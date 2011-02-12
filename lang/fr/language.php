@@ -14511,6 +14511,10 @@ $lang=Array(
 "Assign permissions to file galleries" => "Assigner des permissions aux galleries de fichiers",
 "Dynamic content" => "Contenu dynamique",
 "Organize Objects" => "Organiser les objets",
+"Renamed" => "Renommé(e)",
+"Removed version" => "Version supprimée",
+"Posted" => "Posté(e)",
+"Downloaded" => "Téléchargé(e)",
 "###end###"=>"###end###");
   
 ?>
