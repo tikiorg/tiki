@@ -187,7 +187,7 @@
 			</div>{* -- END of main -- *}{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.main_shadow_end}</div>{/if}
 		</div> {* -- END of fixedwidth -- *}
 
-		{include file='footer.tpl'}
+		{*include file='footer.tpl'*}{* mobile *}
 		{if $prefs.socialnetworks_user_firstlogin == 'y'}
 			{include file='tiki-socialnetworks_firstlogin_launcher.tpl'}
 		{/if}
