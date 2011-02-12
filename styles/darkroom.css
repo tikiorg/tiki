@@ -739,6 +739,11 @@ a.tikihelp:hover {
 background-image: url('../lib/jquery/jquery-ui/themes/ui-darkness/images/ui-icons_cccccc_256x240.png');
 }
 
+/** input widget **/
+.ui-widget input {
+	color: #000;
+}
+
 /**** Boxes *****/
 /** Modules **/
 .box {
