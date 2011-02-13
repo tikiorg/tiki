@@ -14,3 +14,47 @@
 	display: none;
 }
 
+/* remarks boxes from layout.css */
+/* also some from design.css */
+
+.rbox {
+	margin: 1em .3em .3em .3em;
+}
+
+.rbox-title,
+.rbox-data {
+	position: relative;
+	padding: 0.3em 0.6em 0.3em 0.4em;
+	border: 1px solid #000;
+	background: #eee;
+	color: #000;
+}
+
+.rbox-title {
+	display: inline-block;
+	width: auto;
+	z-index: 1;
+	bottom: 0;
+	border-bottom-color: #eee;
+	padding: 0.35em 0.9em 0em 0.5em;
+	font-weight: bold;
+}
+
+.rbox-title .icon {
+	padding: 0 .35em 0 0;
+	vertical-align: top;
+}
+
+.rbox-data {
+	padding: 1em 0.5em;
+	top: -1px;
+	z-index: 0;
+}
+
+.rbox-close {
+	float: right;
+	cursor: pointer;
+}
+
+/* end remarks boxes */
+
