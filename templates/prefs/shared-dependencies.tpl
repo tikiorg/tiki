@@ -2,7 +2,7 @@
 {if $p.dependencies}
 	{foreach from=$p.dependencies item=dep}
 		{if $dep.met}
-			<div class="pref_dependency">{tr}Requires{/tr} <a href="{$dep.link|escape}">{$dep.label|escape}</a> (OK)</div>
+			{icon _id="accept" class="pref_dependency tips" title="{tr}Requires:{/tr} "|cat:$dep.label|escape|cat:" (OK)"}
 		{else}
 			<div class="pref_dependency highlight">{tr}You need to set{/tr} <a href="{$dep.link|escape}">{$dep.label|escape}</a></div>
 		{/if}

@@ -2081,6 +2081,10 @@ ul.freetagged li {
 	font-size: 95%;
 }
 
+img.pref_dependency {
+	opacity: 0.25;
+}
+
 /* Perspectives (edit) */
 .dropzone {
 }
