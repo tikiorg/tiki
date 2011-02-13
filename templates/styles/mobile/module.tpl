@@ -68,15 +68,23 @@
 
 	{*<div id="module_{$moduleId}" style="{$module_params.style}{$tpl_module_style}" class="module{if !empty($module_params.class)} {$module_params.class}{/if} box-{$module_name}">*}
 
+	{assign var=module_close_tags value=""}
+	{if ($module_position eq "l" or $module_position eq "r")}{* mobile - do the list thing for left and right *}
+		<div data-role="collapsible" data-collapsed="{if !isset($module_display) or !$module_display}true{else}false{/if}" id="module_{$moduleId}" style="{$module_params.style}{$tpl_module_style}" class="module{if !empty($module_params.class)} {$module_params.class}{/if} box-{$module_name}">
+		{capture assign=module_close_tags}</div>{$module_close_tags}{/capture}
+			<h3 href="#">{$module_title}</h3>
+			<div id="mod-{$smarty.capture.name}{*FIXME*}" class="clearfix box-data{if !empty($module_params.class)} {$module_params.class}{/if}">
+			{capture assign=module_close_tags}</div>{$module_close_tags}{/capture}
+	{/if}
 	{if $module_name eq "menu"}
-		{if ($module_position neq "l" and $module_position neq "r")}
+		{*if ($module_position neq "l" and $module_position neq "r")*}
 			<ul data-role="listview">{capture assign=module_close_tags}</ul>{/capture}{* handle top menu *}
-		{/if}
-		<li><a href="#">{$module_title}</a>{capture assign=module_close_tags}</li>{$module_close_tags}{/capture}
+		{*/if*}
+		<li><a href="#module_{$moduleId}">{$module_title}</a>{capture assign=module_close_tags}</li>{$module_close_tags}{/capture}
 
-	{elseif ($module_position eq "l" or $module_position eq "r")}{* mobile - do the list thing for left and right *}
-		<li><a href="#">{$module_title}</a>
-		<ul><li>{capture assign=module_close_tags}</li></ul></li>{/capture}
+	{else}
+		{*<div id="module_{$moduleId}" style="{$module_params.style}{$tpl_module_style}" class="module{if !empty($module_params.class)} {$module_params.class}{/if} box-{$module_name}">
+		{capture assign=module_close_tags}</div>{$module_close_tags}{/capture*}
 	{/if}
 
 

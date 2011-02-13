@@ -122,11 +122,11 @@
 										<aside id="col2"{if $prefs.feature_left_column eq 'user'} style="display:{if isset($cookie.show_col2) and $cookie.show_col2 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 											<h2 class="hidden">Sidebar</h2>
 											<div id="left_modules" class="content modules">
-												<ul data-role="listview" data-inset="true">{* mobile *}
+												<div data-role="collapsible-set">{* mobile *}
 													{section name=homeix loop=$left_modules}
 														{$left_modules[homeix].data}
 													{/section}
-												</ul>{* mobile *}
+												</div>{* mobile *}
 											</div>
 										</aside>
 									{/if}
@@ -137,27 +137,25 @@
 									<aside class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_col3) and $cookie.show_col3 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 										<h2 class="hidden">Sidebar</h2>
 										<div id="right_modules" class="content modules">
-											<ul data-role="listview" data-inset="true">{* mobile *}
+											<div data-role="collapsible-set">{* mobile *}
 												{if $module_pref_errors}
-													<li>
-														<a href="#" class="error">{tr}Module errors{/tr}</a>
-														<ul><li>
-															{remarksbox type="warning" title="{tr}Module errors{/tr}"}
-																{tr}The following modules could not be loaded{/tr}
-																<p>
-																	{foreach from=$module_pref_errors key=index item=pref_error}
-																		<b>{$pref_error.mod_name}:</b><br />
-																		{tr}Preference was not set:{/tr} '{$pref_error.pref_name}'<br />
-																	{/foreach}
-																</p>
-															{/remarksbox}
-														</li></ul>
-													</li>
+													<div data-role="collapsible">
+														<h3 href="#" class="error">{tr}Module errors{/tr}</h3>
+														{remarksbox type="warning" title="{tr}Module errors{/tr}"}
+															{tr}The following modules could not be loaded{/tr}
+															<p>
+																{foreach from=$module_pref_errors key=index item=pref_error}
+																	<b>{$pref_error.mod_name}:</b><br />
+																	{tr}Preference was not set:{/tr} '{$pref_error.pref_name}'<br />
+																{/foreach}
+															</p>
+														{/remarksbox}
+													</div>
 												{/if}
 												{section name=homeix loop=$right_modules}
 													{$right_modules[homeix].data}
 												{/section}
-											</ul>{* mobile *}
+											</div>{* mobile *}
 										</div>
 									</aside>
 									<br style="clear:both" />
