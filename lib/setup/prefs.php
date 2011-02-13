@@ -1735,7 +1735,7 @@ function get_default_prefs() {
 		// SefUrl
 		'feature_sefurl' => 'n',
 		'feature_sefurl_filter' => 'n',
-		'feature_sefurl_paths' => array(),
+		'feature_sefurl_paths' => '',
 		'feature_sefurl_title_article' =>'n',
 		'feature_sefurl_title_blog' =>'n',
 		'feature_sefurl_tracker_prefixalias' =>'n',
