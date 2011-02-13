@@ -70,7 +70,7 @@
 
 	{assign var=module_close_tags value=""}
 	{if ($module_position eq "l" or $module_position eq "r")}{* mobile - do the list thing for left and right *}
-		<div data-role="collapsible" data-collapsed="{if !isset($module_display) or !$module_display}true{else}false{/if}" id="module_{$moduleId}" style="{$module_params.style}{$tpl_module_style}" class="module{if !empty($module_params.class)} {$module_params.class}{/if} box-{$module_name}">
+		<div data-role="collapsible" data-theme="{$prefs.mobile_theme_modules}" data-collapsed="{if !isset($module_display) or !$module_display}true{else}false{/if}" id="module_{$moduleId}" style="{$module_params.style}{$tpl_module_style}" class="module{if !empty($module_params.class)} {$module_params.class}{/if} box-{$module_name}">
 		{capture assign=module_close_tags}</div>{$module_close_tags}{/capture}
 			<h3 href="#">{$module_title}</h3>
 			<div id="mod-{$smarty.capture.name}{*FIXME*}" class="clearfix box-data{if !empty($module_params.class)} {$module_params.class}{/if}">
@@ -78,7 +78,7 @@
 	{/if}
 	{if $module_name eq "menu"}
 		{*if ($module_position neq "l" and $module_position neq "r")*}
-			<ul data-role="listview">{capture assign=module_close_tags}</ul>{/capture}{* handle top menu *}
+			<ul data-role="listview" data-theme="{$prefs.mobile_theme_menus}">{capture assign=module_close_tags}</ul>{/capture}{* handle top menu *}
 		{*/if*}
 		<li><a href="#module_{$moduleId}">{$module_title}</a>{capture assign=module_close_tags}</li>{$module_close_tags}{/capture}
 
@@ -93,7 +93,7 @@
 {$module_error}
 {if 0 and $module_nobox neq 'y'}{* mobile *}
 		</div>
-		<div class="box-footer" data-role="footer">
+		<div class="box-footer">
 
 		</div>
 	</div>

@@ -1711,6 +1711,11 @@ function get_default_prefs() {
 		// Experimental new mobile feature for Tiki 7
 		'mobile_feature' => 'n',
 		'mobile_perspectives' => array(),
+		'mobile_theme_header' => '',
+		'mobile_theme_content' => '',
+		'mobile_theme_footer' => '',
+		'mobile_theme_modules' => '',
+		'mobile_theme_menus' => '',
 		
 		// JQuery
 		'feature_jquery' => 'y',			// Default JS lib for - now "hard-wired" on if javascript_enabled

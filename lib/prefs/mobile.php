@@ -7,6 +7,15 @@
 
 function prefs_mobile_list() {
 
+	$mobile_themes = array(
+		'' => tra('Default'),
+		'a' => 'A',
+		'b' => 'B',
+		'c' => 'D',
+		'd' => 'D',
+		'e' => 'E',
+	);
+
 	return array(
 
 		'mobile_feature' => array(
@@ -30,6 +39,55 @@ function prefs_mobile_list() {
 				'mobile_feature',
 			),
 		),
-		
+		'mobile_theme_header' => array(
+			'name' => tra('Header Theme'),
+			'hint' => tra('jQuery Mobile Theme'),
+			'help' => 'http://jquerymobile.com/demos/1.0a3/#docs/api/themes.html',
+			'type' => 'list',
+			'options' => $mobile_themes,
+			'dependencies' => array(
+				'mobile_feature',
+			),
+		),
+		'mobile_theme_content' => array(
+			'name' => tra('Content Theme'),
+			'hint' => tra('jQuery Mobile Theme'),
+			'help' => 'http://jquerymobile.com/demos/1.0a3/#docs/api/themes.html',
+			'type' => 'list',
+			'options' => $mobile_themes,
+			'dependencies' => array(
+				'mobile_feature',
+			),
+		),
+		'mobile_theme_footer' => array(
+			'name' => tra('Footer Theme'),
+			'hint' => tra('jQuery Mobile Theme'),
+			'help' => 'http://jquerymobile.com/demos/1.0a3/#docs/api/themes.html',
+			'type' => 'list',
+			'options' => $mobile_themes,
+			'dependencies' => array(
+				'mobile_feature',
+			),
+		),
+		'mobile_theme_modules' => array(
+			'name' => tra('Modules Theme'),
+			'hin' => tra('jQuery Mobile Theme'),
+			'help' => 'http://jquerymobile.com/demos/1.0a3/#docs/api/themes.html',
+			'type' => 'list',
+			'options' => $mobile_themes,
+			'dependencies' => array(
+				'mobile_feature',
+			),
+		),
+		'mobile_theme_menus' => array(
+			'name' => tra('Menus Theme'),
+			'description' => tra('jQuery Mobile Theme'),
+			'help' => 'http://jquerymobile.com/demos/1.0a3/#docs/api/themes.html',
+			'type' => 'list',
+			'options' => $mobile_themes,
+			'dependencies' => array(
+				'mobile_feature',
+			),
+		),
 	);
 }

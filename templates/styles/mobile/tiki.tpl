@@ -34,7 +34,7 @@
 				{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y') }
 					{if $prefs.module_zones_top eq 'fixed' or ($prefs.module_zones_top ne 'n' && $top_modules|@count > 0)}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}
-							<div id="header_outer" data-role="header">
+							<div id="header_outer" data-role="header" data-theme="{$prefs.mobile_theme_header}">
 								<div id="header_container">
 									<div id="header_fixedwidth">
 										<header class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
@@ -50,7 +50,7 @@
 						{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.header_shadow_end}</div>{/if}
 					{/if}
 				{/if}
-				<div class="middle_outer" data-role="content">
+				<div class="middle_outer" data-role="content" data-theme="{$prefs.mobile_theme_content}">
 					{if $prefs.feature_layoutshadows eq 'y'}<div id="middle-shadow">{eval var=$prefs.middle_shadow_start}{/if}
 						<div class="clearfix" id="middle">
 							<div class="content clearfix modules" id="topbar_modules">
@@ -122,7 +122,7 @@
 										<aside id="col2"{if $prefs.feature_left_column eq 'user'} style="display:{if isset($cookie.show_col2) and $cookie.show_col2 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 											<h2 class="hidden">Sidebar</h2>
 											<div id="left_modules" class="content modules">
-												<div data-role="collapsible-set">{* mobile *}
+												<div data-role="collapsible-set" data-theme="{$prefs.mobile_theme_modules}">{* mobile *}
 													{section name=homeix loop=$left_modules}
 														{$left_modules[homeix].data}
 													{/section}
@@ -137,9 +137,9 @@
 									<aside class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_col3) and $cookie.show_col3 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 										<h2 class="hidden">Sidebar</h2>
 										<div id="right_modules" class="content modules">
-											<div data-role="collapsible-set">{* mobile *}
+											<div data-role="collapsible-set" data-theme="{$prefs.mobile_theme_modules}">{* mobile *}
 												{if $module_pref_errors}
-													<div data-role="collapsible">
+													<div data-role="collapsible" data-theme="{$prefs.mobile_theme_modules}">
 														<h3 href="#" class="error">{tr}Module errors{/tr}</h3>
 														{remarksbox type="warning" title="{tr}Module errors{/tr}"}
 															{tr}The following modules could not be loaded{/tr}
@@ -168,7 +168,7 @@
 				{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 					{if $prefs.module_zones_bottom eq 'fixed' or ($prefs.module_zones_bottom ne 'n' && $bottom_modules|@count > 0)}{* previously if $prefs.feature_bot_bar eq 'y' *}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}
-							<footer id="footer" data-role="footer">
+							<footer id="footer" data-role="footer" data-theme="{$prefs.mobile_theme_footer}">
 								<div class="footer_liner">
 									<div class="footerbgtrap">
 										<div id="bottom_modules" class="content modules"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
