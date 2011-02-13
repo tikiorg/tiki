@@ -67,9 +67,7 @@
 						<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=minor&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 					{/remarksbox}
 				</div>
-				{if $prefs.feature_categories eq 'y'}
-					{preference name=feature_wiki_mandatory_category}
-				{/if}
+				{preference name=feature_wiki_mandatory_category}
 				{preference name=feature_actionlog_bytes}
 				{preference name=wiki_mandatory_edit_summary}
 			</fieldset>
@@ -303,11 +301,9 @@
 			<legend>{tr}Revision Approval{/tr}</legend>
 
 			{preference name=flaggedrev_approval}
-			{if $prefs.feature_categories eq 'y'}
-				<div id="flaggedrev_approval_childcontainer">
-					{preference name=flaggedrev_approval_categories}
-				</div>
-			{/if}
+			<div id="flaggedrev_approval_childcontainer">
+				{preference name=flaggedrev_approval_categories}
+			</div>
 		</fieldset>
 	{/tab}
 
