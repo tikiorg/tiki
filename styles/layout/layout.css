@@ -886,8 +886,8 @@ h3.box-title {
 	display: inline-block;
 	width: auto;
 	z-index: 1;
-	margin-bottom: 0;
-	padding-bottom: 2px;
+	position: relative;
+	bottom: 0;
 }
 	
 .rbox-title .icon {
@@ -896,8 +896,8 @@ h3.box-title {
 }
 	
 .rbox-data {
-	margin-top: -1px;	
-	padding-top: 3px;
+	position: relative;	
+	top: -.37em;
 	z-index: 0;
 }
 
