@@ -36,9 +36,9 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 
 		$headerlib->add_js('function sfHover() {alert("not working?");}', 100);	// try and override the css menu func
 
-		$prefs['change_theme'] = 'y';
-		$prefs['style'] = 'mobile.css';
-		$_SESSION['s_prefs']['style'] = 'mobile.css';
+		//$prefs['change_theme'] = 'y';
+		$prefs['style'] = 'mobile.css'; // set in prespective but seems to need a nudge here
+		//$_SESSION['s_prefs']['style'] = 'mobile.css';
 
 		if (!is_array($prefs['mobile_perspectives'])) {
 			$prefs['mobile_perspectives'] = unserialize($prefs['mobile_perspectives']);
