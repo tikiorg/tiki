@@ -1779,7 +1779,7 @@ function get_default_prefs() {
 		'payment_cclite_merchant_user' => 'manager',
 		'payment_cclite_mode' => 'test',
 		'payment_cclite_notify' => 'y',
-		'payment_cclite_hashing_algorithm' => '',
+		'payment_cclite_hashing_algorithm' => 'sha1',
 		'payment_manual' => '',
 		'payment_invoice_prefix' => '',
 
