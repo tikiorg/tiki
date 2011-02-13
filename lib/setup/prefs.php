@@ -199,7 +199,7 @@ function get_default_prefs() {
 		'wiki_mandatory_edit_summary' => 'n',
 
 		'flaggedrev_approval' => 'n',
-		'flaggedrev_approval_categories' => '',
+		'flaggedrev_approval_categories' => array(''), //empty string needed to keep preference from setting unexpectedly
 
 		'wikiplugin_addtocart' => 'n',
 		'wikiplugin_addtogooglecal' => 'n',
