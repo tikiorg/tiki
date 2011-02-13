@@ -23,6 +23,8 @@ function prefs_user_list() {
 		foreach ($all_categs as $categ) {
 			$catree[$categ['categId']] = $categ['categpath'];
 		}
+	} else {
+		$catree['-1'] = tra('None');
 	}
 	
 	return array(
