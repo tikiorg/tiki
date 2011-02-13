@@ -86,7 +86,8 @@ body.fixed_width #main[id] {
 	
 .footerbgtrap {
 	background: #fff url(eatlon/bottom_bg.png) no-repeat 100% 100%;
-	min-height: 163px}
+	min-height: 163px;
+}
 
 #bottom_modules {
 	background: url(eatlon/bottom_bg.png) no-repeat 0 100%;
@@ -94,7 +95,7 @@ body.fixed_width #main[id] {
 	text-align: center;
 	font-size: .9em;
 	margin-right: 50px;
-	padding-bottom: 30px;
+	padding-bottom: 136px;
 }
 
 
@@ -195,19 +196,6 @@ input[type="submit"],
 	font-size: 11px;
 	font-weight: normal;
 	padding: 2px 4px}
-	
-* html input[type="reset"],
-* html input[type="submit"] {
-	border-top: 1px solid #f3f3f4;
-	border-left: 1px solid #f3f3f4;
-	border-right: 1px solid #878689;
-	border-bottom: 1px solid #878689;
-	background: #afafaf;
-	background: url(eatlon/menu_bg.png) 1000px -15px;
-	color: #fff;
-	font-size: 11px;
-	font-weight: normal;
-	padding: 2px 4px}
 
 .button a:hover,
 button:hover,
@@ -218,10 +206,9 @@ input[type="submit"]:hover,
 .calbuttonBox a:hover {
 	border-top: 1px solid #868f93;
 	border-left: 1px solid #868f93;
-	color: #ececec}
-
-* html .wikitopline select {font-size: .9em}
-form.admin input[name="features"] {margin-bottom: 3px !important}
+	color: #ececec;
+	padding: 2px 4px;
+}
 
 select[name="theme"] {width: 135px}
 label {cursor: pointer}
@@ -364,10 +351,6 @@ input#fuser,
 	padding-right: 2.0em;
 }
 	
-* html #tiki-top .cssmenu_horiz li.menuSection0 a,
-* html #tiki-top .cssmenu_horiz li.menuLevel0 a {
-	border-bottom: none}
-	
 .cssmenu_horiz li a:hover,
 .cssmenu_vert ul li a:link,
 .cssmenu_vert ul li a:visited,
@@ -495,11 +478,6 @@ h3.box-title {
 
 /***** Tables, Tabs *****/
 /** Tables **/
-/*
-.admin tr td #page-bar {
-	margin-left: 5px;
-	margin-bottom: 0;
-	background: transparent}*/
 
 .wikitable td {
 	margin: 0;
@@ -566,10 +544,6 @@ td.even,
 	border-left: 1px solid #f3f3f4;
 	border-right: 1px solid #878689;
 	color: #fff}
-
-/*.tabmark a:active {
-	background: url(eatlon/menu_bg.png) 1000px -15px;
-	color: red}*/
 
 .tabmark a:hover {
 	background: url(eatlon/menu_bg.png) 1000px 0;
@@ -655,8 +629,6 @@ textarea.wikiedit {font-size: 1.1em}
 	overflow: auto;
    width: 500px}
 	
-* html .codelisting {padding-bottom: 20px}
-
 .codecaption {
 	font-size: 90%;
 	padding: 0 10px;
@@ -833,16 +805,6 @@ a.blogt:hover {
 	border: 1px solid #8cacbb}
 
 .caption {color: black}
-
-/***** File Galleries *****/
-
-/***** Trackers *****/
-/***** Categories, Tags *****/
-/***** Tags (freetags) *****/
-/*****  Polls  *****/
-/***** FAQs *****/
-/***** Quizzes *****/
-/***** Shoutbox *****/
 
 textarea.tshoutbox{
 	font-size: 1.3em;
