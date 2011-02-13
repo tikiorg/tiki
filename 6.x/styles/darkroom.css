@@ -840,6 +840,10 @@ a.tikihelp:hover {
 	color: #292929;
 }
 
+/** input widget **/
+.ui-widget input {
+	color: #000;
+}
 
 /**** Boxes *****/
 /** Modules **/
