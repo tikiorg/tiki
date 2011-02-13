@@ -1218,7 +1218,7 @@ function get_default_prefs() {
 		'category_jail' => '',
 		'category_defaults' => false,
 		'category_i18n_sync' => 'n',
-		'category_i18n_synced' => array(),
+		'category_i18n_synced' => array(''), //empty string needed to keep preference from setting unexpectedly
 		'category_i18n_unsynced' => array(),
 		'category_autogeocode_within' => '',
 		'category_autogeocode_replace' => 'n',
