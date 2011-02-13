@@ -6,7 +6,7 @@
 // $Id$
 
 // RULE1: $prefs does not contain serialized values. Only the database contains serialized values.
-// RULE2: put array() in default prefs for serialized values
+// RULE2: put array('') in default prefs for serialized values
 
 //this script may only be included - so its better to die if called directly.
 if ( basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__) ) {
@@ -1680,7 +1680,7 @@ function get_default_prefs() {
 		// SefUrl
 		'feature_sefurl' => 'n',
 		'feature_sefurl_filter' => 'n',
-		'feature_sefurl_paths' => '',
+		'feature_sefurl_paths' => array(''), //empty string needed to keep preference from setting unexpectedly
 		'feature_sefurl_title_article' =>'n',
 		'feature_sefurl_title_blog' =>'n',
 		'feature_sefurl_tracker_prefixalias' =>'n',
