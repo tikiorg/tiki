@@ -1218,7 +1218,7 @@ function get_default_prefs() {
 		'category_jail' => '',
 		'category_defaults' => false,
 		'category_i18n_sync' => 'n',
-		'category_i18n_synced' => '',
+		'category_i18n_synced' => array(),
 		'category_i18n_unsynced' => array(),
 		'category_autogeocode_within' => '',
 		'category_autogeocode_replace' => 'n',
@@ -1680,7 +1680,7 @@ function get_default_prefs() {
 		// SefUrl
 		'feature_sefurl' => 'n',
 		'feature_sefurl_filter' => 'n',
-		'feature_sefurl_paths' => array(),
+		'feature_sefurl_paths' => '',
 		'feature_sefurl_title_article' =>'n',
 		'feature_sefurl_title_blog' =>'n',
 		'feature_sefurl_tracker_prefixalias' =>'n',
