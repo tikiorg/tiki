@@ -1270,7 +1270,7 @@ function get_default_prefs() {
 		'feature_categorypath' => 'n',
 		'categorypath_excluded' => '',
 		'categories_used_in_tpl' => 'n',
-		'category_jail' => array(),
+		'category_jail' => '',
 		'category_defaults' => false,
 		'category_i18n_sync' => 'n',
 		'category_i18n_synced' => '',
