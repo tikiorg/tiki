@@ -1132,7 +1132,7 @@ function get_default_prefs() {
 		'syncGroupsWithDirectory' => 'n',
 		'syncUsersWithDirectory' => 'n',
 		'useRegisterPasscode' => 'n',
-		'registerPasscode' => NULL,
+		'registerPasscode' => isset($tikilib) ? md5($tikilib->genPass()) : md5(mt_rand()), 	// Default value needs to call a function that needs prefs itself
 		'rememberme' => 'disabled',
 		'remembertime' => 7200,
 		'feature_clear_passwords' => 'n',
@@ -1988,11 +1988,6 @@ function initialize_prefs() {
 	}
 
 	$prefs = empty($modified) ? $defaults : array_merge( $defaults, $modified );
-
-	// Default value for registerPasscode, which needs to call a function that needs prefs itself
-	if ( $prefs['registerPasscode'] === NULL ) {
-		$prefs['registerPasscode'] = isset($tikilib) ? md5($tikilib->genPass()) : md5(mt_rand());
-	}
 
 }
 
