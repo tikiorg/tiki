@@ -60,6 +60,9 @@ if (isset($_REQUEST['register'])) {
 	} else if (is_string($result)) {
 		$smarty->assign('msg', $result);
 		$smarty->assign('showmsg', 'y');
+	} elseif (!empty($result['msg'])) {
+		$smarty->assign('msg', $result['msg']);
+		$smarty->assign('showmsg', 'y');
 	}
 
 }
