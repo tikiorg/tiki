@@ -11,12 +11,12 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface
 
 	function getDocuments()
 	{
-		return array_values($this->db->fetchMap('SELECT fileId x, fileId FROM tiki_files'));
+		return $this->db->table('tiki_files')->fetchColumn('fileId', array());
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
 	{
-		global $filegallib; require_once 'lib/filegals/filegallib.php';
+		$filegallib = Tikilib::lib('filegal');
 		
 		$file = $filegallib->get_file_info($objectId, true, false);
 

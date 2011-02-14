@@ -12,7 +12,7 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 
 	function getDocuments()
 	{
-		return array_values($this->db->fetchMap('SELECT itemId x, itemId FROM tiki_tracker_items'));
+		return $this->db->table('tiki_tracker_items')->fetchColumn('itemId', array());
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
@@ -22,7 +22,9 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 			trklib performs no meaningful work when extracting the data and strips all
 			required semantics.
 		*/
-		$item = reset($this->db->fetchAll('SELECT trackerId, createdBy, lastModifBy, status, lastModif FROM tiki_tracker_items WHERE itemId = ?', array($objectId)));
+		$item = $this->db->table('tiki_tracker_items')->fetchRow(array('trackerId', 'createdBy', 'lastModifBy', 'status', 'lastModif'), array(
+			'itemId' => $objectId,
+		));
 		$data = array(
 			'title' => $typeFactory->sortable(''),
 			'language' => $typeFactory->identifier('unknown'),
@@ -75,9 +77,9 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 				'parent_object_type',
 			);
 
-			$fields = $this->db->fetchAll("SELECT fieldId FROM tiki_tracker_fields");
+			$fields = $this->db->table('tiki_tracker_fields')->fetchColumn('fieldId', array());
 			foreach ($fields as $field) {
-				$this->fields[] = 'tracker_field_' . $field['fieldId'];
+				$this->fields[] = 'tracker_field_' . $field;
 			}
 		}
 

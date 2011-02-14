@@ -11,13 +11,15 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 
 	function getDocuments()
 	{
-		return array_values($this->db->fetchMap('SELECT threadId x, threadId FROM tiki_comments WHERE objectType = "forum" AND parentId = 0'));
+		return $this->db->table('tiki_comments')->fetchColumn('threadId', array(
+			'objectType' => 'forum',
+			'parentId' => 0,
+		));
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
 	{
-		require_once 'lib/comments/commentslib.php';
-		$commentslib = new Comments;
+		$commentslib = TikiLib::lib('comments');
 		$comment = $commentslib->get_comment($objectId);
 
 		$lastModification = $comment['commentDate'];

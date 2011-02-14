@@ -158,6 +158,15 @@ class TikiLib extends TikiDb_Bridge
 		case 'todo':
 			global $todolib; include_once('lib/todolib.php');
 			return $libraries[$name] = $todolib;
+		case 'art':
+			global $artlib; include_once('lib/articles/artlib.php');
+			return $libraries[$name] = $artlib;
+		case 'blog':
+			global $artlib; include_once('lib/blogs/bloglib.php');
+			return $libraries[$name] = $bloglib;
+		case 'ratingconfig':
+			global $ratingconfiglib; require_once 'lib/rating/configlib.php';
+			return $libraries[$name] = $ratingconfiglib;
 		}
 	}
 

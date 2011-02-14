@@ -6,8 +6,7 @@ class Search_GlobalSource_FreeTagSource implements Search_GlobalSource_Interface
 
 	function __construct()
 	{
-		global $freetaglib; require_once 'lib/freetag/freetaglib.php';
-		$this->freetaglib = $freetaglib;
+		$this->freetaglib = TikiLib::lib('freetag');
 	}
 
 	function getProvidedFields()

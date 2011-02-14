@@ -7,8 +7,7 @@ class Search_GlobalSource_CategorySource implements Search_GlobalSource_Interfac
 
 	function __construct()
 	{
-		global $categlib; require_once 'lib/categories/categlib.php';
-		$this->categlib = $categlib;
+		$this->categlib = TikiLib::lib('categ');
 	}
 
 	function getProvidedFields()

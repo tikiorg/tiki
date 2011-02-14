@@ -8,25 +8,24 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 
 	function __construct()
 	{
-		global $tikilib, $prefs;
+		global $prefs;
 
 		$this->db = TikiDb::get();
-		$this->tikilib = $tikilib;
+		$this->tikilib = TikiLib::lib('tiki');
 
 		if ($prefs['flaggedrev_approval'] == 'y') {
-			global $flaggedrevisionlib; require_once 'lib/wiki/flaggedrevisionlib.php';
-			$this->flaggedrevisionlib = $flaggedrevisionlib;
+			$this->flaggedrevisionlib = TikiLib::lib('flaggedrevision');
 		}
 	}
 
 	function getDocuments()
 	{
-		return array_values($this->db->fetchMap('SELECT page_id, pageName FROM tiki_pages'));
+		return $this->db->table('tiki_pages')->fetchColumn('pageName', array());
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
 	{
-		global $wikilib; require_once 'lib/wiki/wikilib.php';
+		$wikilib = TikiLib::lib('wiki');
 
 		$info = $this->tikilib->get_page_info($objectId, true, true);
 
