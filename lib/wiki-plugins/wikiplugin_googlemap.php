@@ -434,12 +434,13 @@ function wikiplugin_googlemap($data, $params) {
 			return tra("No such object");
 		}
 		$viewPermNeeded = $objectlib->get_needed_perm($locateitemtype, 'view');
-		if (!$tikilib->user_has_perm_on_object($user, $locateitemid, $locateitemtype, $viewPermNeeded)) {
+		if (!$tikilib->user_has_perm_on_object($user, $locateitemid, $locateitemtype, $viewPermNeeded) && !($locateitemtype == 'trackeritem' && !empty($params["trackerfieldid"]))) {
+			// tracker item perms checked below so no need to check here
 			return '';
 		}
 		if ($type == 'locator') {
 			$editPermNeeded = $objectlib->get_needed_perm($locateitemtype, 'edit');
-			if (!$tikilib->user_has_perm_on_object($user, $locateitemid, $locateitemtype, $editPermNeeded)) {
+			if (!$tikilib->user_has_perm_on_object($user, $locateitemid, $locateitemtype, $editPermNeeded) && !($locateitemtype == 'trackeritem' && !empty($params["trackerfieldid"]))) {
 				// if no perm to edit, even if type is set to locator, locator is disabled
 				$type = 'item';
 			}
