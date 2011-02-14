@@ -3033,7 +3033,7 @@ $lang=Array(
 "groups" => "grupos",
 "name" => "nome",
 "Displays a list of plugins available in this wiki." => "Provê uma lista de plug-ins neste wiki.",
-"Maximum size" => "MTamanho máximo",
+"Maximum size" => "Tamanho máximo",
 "System error" => "Erro do sistema",
 "Wiki plugins extend the function of wiki syntax with more specialized commands" => "Plugins wiki aumentam as possibilidades da sintaxe wiki com comandos mais especializados",
 // ### end of unused words
