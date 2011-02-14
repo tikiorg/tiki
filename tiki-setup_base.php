@@ -60,6 +60,8 @@ $needed_prefs = array(
 	'memcache_prefix' => 'tiki_',
 	'memcache_compress' => 'y',
 	'memcache_servers' => false,
+	'min_pass_length' => 5,
+	'pass_chr_special' => 'n'
 );
 $tikilib->get_preferences($needed_prefs, true, true);
 if (!isset($prefs['lastUpdatePrefs']) || $prefs['lastUpdatePrefs'] == - 1) {
