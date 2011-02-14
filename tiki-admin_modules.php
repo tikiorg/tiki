@@ -151,12 +151,14 @@ if (isset($_REQUEST["um_update"])) {
 if (!isset($_REQUEST["groups"])) {
     $_REQUEST["groups"] = array();
 }
-if (isset($_REQUEST["assign"]) || (isset($_REQUEST["preview"]) && $_REQUEST['moduleId'] > 0)) { // Verify that required parameters are present
+if (isset($_REQUEST["assign"]) || isset($_REQUEST["preview"])) { // Verify that required parameters are present
 	$missing_params = array();
 	$modinfo = $modlib->get_module_info( $_REQUEST['assign_name'] );
-	foreach($modinfo["params"] as $pname => $param) {
-		if ($param["required"] && empty($_REQUEST["assign_params"][$pname]))
-			$missing_params[] = $param["name"];
+	if ($_REQUEST['moduleId'] > 0) {
+		foreach($modinfo["params"] as $pname => $param) {
+			if ($param["required"] && empty($_REQUEST["assign_params"][$pname]))
+				$missing_params[] = $param["name"];
+		}
 	}
 	$smarty->assign('missing_params', $missing_params);
 }
