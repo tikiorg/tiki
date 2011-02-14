@@ -5,6 +5,7 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 	private $db;
 	private $tikilib;
 	private $flaggedrevisionlib;
+	private $quantifylib;
 
 	function __construct()
 	{
@@ -15,6 +16,10 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 
 		if ($prefs['flaggedrev_approval'] == 'y') {
 			$this->flaggedrevisionlib = TikiLib::lib('flaggedrevision');
+		}
+
+		if ($prefs['quantify_changes'] == 'y') {
+			$this->quantifylib = TikiLib::lib('quantify');
 		}
 	}
 
@@ -47,6 +52,10 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 			'view_permission' => $typeFactory->identifier('tiki_p_view'),
 			'url' => $typeFactory->identifier($wikilib->sefurl($info['pageName'])),
 		);
+
+		if ($this->quantifylib) {
+			$data['wiki_uptodateness'] = $typeFactory->sortable($this->quantifylib->getCompleteness($info['page_id']));
+		}
 
 		$out = $data;
 
@@ -81,7 +90,7 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 
 	function getProvidedFields()
 	{
-		return array(
+		$fields = array(
 			'title',
 			'hash',
 			'url',
@@ -94,6 +103,12 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 
 			'view_permission',
 		);
+
+		if ($this->quantifylib) {
+			$fields[] = 'wiki_uptodateness';
+		}
+
+		return $fields;
 	}
 
 	function getGlobalFields()
