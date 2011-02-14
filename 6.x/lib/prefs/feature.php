@@ -9,7 +9,7 @@ function prefs_feature_list() {
 
 	global $prefs;
 	
-	$catree = array();
+	$catree = array('-1' => tra('None'));
 
 	if ($prefs['feature_categories'] == 'y') {
 		global $categlib;
@@ -17,7 +17,6 @@ function prefs_feature_list() {
 		include_once ('lib/categories/categlib.php');
 		$all_categs = $categlib->get_all_categories();
 
-		$catree['-1'] = tra('None');
 		$catree['0'] = tra('All');
 
 		foreach ($all_categs as $categ) {
