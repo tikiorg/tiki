@@ -156,6 +156,7 @@ function loadgmap{$gmapname|escape}() {literal}{{/literal}
 
   GEvent.addListener(gmap{$gmapname|escape}map, "zoomend", function(gold, gnew) {literal}{{/literal}
     document.getElementById('{$gmapname|escape}pointz').value = gnew;
+    updateGmapInput{$gmapname|escape}();
   {literal}});{/literal}
 {/if}
 {literal}}{/literal}
