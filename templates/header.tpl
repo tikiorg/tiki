@@ -52,7 +52,7 @@
 		{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
 	{else}
 		{if !empty($tracker_item_main_value)}
-			{$tracker_item_main_value|escape}
+			{$tracker_item_main_value|truncate:255|escape}
 		{elseif !empty($page)}
 			{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}
 				{$approvedPageName|escape}
