@@ -1,9 +1,9 @@
 {* $Id$ *}
 {* override for mobile module layoutas a list *}
+{capture name=name}{$module_name|replace:"+":"_"|cat:$module_position|cat:$module_ord|escape}{/capture}
 {if 0 and $module_nobox neq 'y'}{* mobile *}
 {if $prefs.feature_layoutshadows eq 'y'}<div class="box-shadow">{$prefs.box_shadow_start}{/if}
 	<div id="module_{$moduleId}" class="box box-{$module_name}{if $module_type eq 'cssmenu'} cssmenubox{/if} module"{if !empty($tpl_module_style)} style="{$tpl_module_style}"{/if}>
-	{capture name=name}{$module_name|replace:"+":"_"|cat:$module_position|cat:$module_ord|escape}{/capture}
 	{if $module_decorations ne 'n'}
 		<h3 class="box-title clearfix"{if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
 		{if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
@@ -70,23 +70,12 @@
 
 	{assign var=module_close_tags value=""}
 	{if ($module_position eq "l" or $module_position eq "r")}{* mobile - do the list thing for left and right *}
-		<div data-role="collapsible" data-theme="{$prefs.mobile_theme_modules}" data-collapsed="{if !isset($module_display) or !$module_display}true{else}false{/if}" id="module_{$moduleId}" style="{$module_params.style}{$tpl_module_style}" class="module{if !empty($module_params.class)} {$module_params.class}{/if} box-{$module_name}">
+		<div data-role="collapsible" data-theme="{$prefs.mobile_theme_modules}" data-collapsed="{if !isset($module_display) or !$module_display}false{else}true{/if}" id="module_{$moduleId}" style="{$module_params.style}{$tpl_module_style}" class="module{if !empty($module_params.class)} {$module_params.class}{/if} box-{$module_name}">
 		{capture assign=module_close_tags}</div>{$module_close_tags}{/capture}
 			<h3 href="#">{$module_title}</h3>
 			<div id="mod-{$smarty.capture.name}{*FIXME*}" class="clearfix box-data{if !empty($module_params.class)} {$module_params.class}{/if}">
 			{capture assign=module_close_tags}</div>{$module_close_tags}{/capture}
 	{/if}
-	{if $module_name eq "menu"}
-		{*if ($module_position neq "l" and $module_position neq "r")*}
-			<ul data-role="listview" data-theme="{$prefs.mobile_theme_menus}">{capture assign=module_close_tags}</ul>{/capture}{* handle top menu *}
-		{*/if*}
-		<li><a href="#module_{$moduleId}">{$module_title}</a>{capture assign=module_close_tags}</li>{$module_close_tags}{/capture}
-
-	{else}
-		{*<div id="module_{$moduleId}" style="{$module_params.style}{$tpl_module_style}" class="module{if !empty($module_params.class)} {$module_params.class}{/if} box-{$module_name}">
-		{capture assign=module_close_tags}</div>{$module_close_tags}{/capture*}
-	{/if}
-
 
 {/if}{* mobile *}
 {$module_content}

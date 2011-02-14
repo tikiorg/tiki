@@ -94,6 +94,7 @@ function smarty_function_menu($params, &$smarty)
 	if ($prefs['mobile_feature'] !== 'y' || $prefs['mobile_mode'] !== 'y') {
 		return '<nav class="role_navigation">' . $data . '</nav>';
 	} else {
+		$data = preg_replace('/<ul ([^>]*)>/Umi', '<ul $1  data-role="listview" data-theme="'.$prefs['mobile_theme_menus'].'">', $data, 1);
 		return $data;
 	}
 }
