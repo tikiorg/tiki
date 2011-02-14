@@ -96,6 +96,9 @@ if (!empty($_REQUEST['edit_assign'])) {
 	}
 	$smarty->assign('assign_info', $modinfo);
 }
+if (isset($_REQUEST['edit_assign']) || isset($_REQUEST['preview'])) {	// will be 0 for a new assignment
+	$cookietab = 2;
+}
 if (!empty($_REQUEST['unassign'])) {
     check_ticket('admin-modules');
     $info = $modlib->get_assigned_module($_REQUEST['unassign']);
@@ -148,7 +151,7 @@ if (isset($_REQUEST["um_update"])) {
 if (!isset($_REQUEST["groups"])) {
     $_REQUEST["groups"] = array();
 }
-if (isset($_REQUEST["assign"]) || isset($_REQUEST["preview"])) { // Verify that required parameters are present
+if (isset($_REQUEST["assign"]) || (isset($_REQUEST["preview"]) && $_REQUEST['moduleId'] > 0)) { // Verify that required parameters are present
 	$missing_params = array();
 	$modinfo = $modlib->get_module_info( $_REQUEST['assign_name'] );
 	foreach($modinfo["params"] as $pname => $param) {
@@ -378,6 +381,14 @@ foreach( $modlib->module_zones as $initial => $zone) {
 }
 $smarty->assign_by_ref( 'assigned_modules', $assigned_modules );
 $smarty->assign_by_ref( 'module_zones', $module_zones );
+
+$prefs['module_zones_top'] = 'y';
+$prefs['module_zones_topbar'] = 'y';
+$prefs['module_zones_pagetop'] = 'y';
+$prefs['feature_left_column'] = 'y';
+$prefs['feature_right_column'] = 'y';
+$prefs['module_zones_pagebottom'] = 'y';
+$prefs['module_zones_bottom'] = 'y';
 
 $headerlib->add_css('.module:hover {
 	cursor: move;

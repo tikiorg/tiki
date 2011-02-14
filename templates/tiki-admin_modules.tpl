@@ -50,89 +50,88 @@
 		</legend>
 	{/if}
 	<h2>{tr}Assigned Modules{/tr}</h2>
+	{button edit_assign=0 _auto_args="edit_assign" _text="{tr}Add module{/tr}"}
 
-	{foreach from=$module_zones key=zone_initial item=zone_info}
-		<a name="{$zone_info.id}_mod"></a>
-		<fieldset>
-			<legend>{$zone_info.name|capitalize}{tr} Modules{/tr}</legend>
-			<table class="normal">
-				<tr>
-					<th>{tr}Name{/tr}</th>
-					<th>{tr}Order{/tr}</th>
-					<th>{tr}Cache{/tr}</th>
-					<th>{tr}Rows{/tr}</th>
-					<th>{tr}Parameters{/tr}</th>
-					<th>{tr}Groups{/tr}</th>
-					<th>{tr}Action{/tr}</th>
-				</tr>
-				{cycle print=false values="even,odd"}
-				{foreach from=$assigned_modules[$zone_initial] item=module}
-					<tr class="{cycle}">
-						<td>{$module.name|escape}</td>
-						<td>{$module.ord}</td>
-						<td>{$module.cache_time}</td>
-						<td>{$module.rows}</td>
-						<td style="max-width: 40em; white-space: normal;font-size:smaller;">{$module.params|stringfix:"&":"<br />"}</td>
-						<td>{$module.module_groups}</td>
-						<td>
-							<a class="link" href="tiki-admin_modules.php?edit_assign={$module.moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-							{if $top[0].moduleId ne $module.moduleId}
-								<a class="link" href="tiki-admin_modules.php?modup={$module.moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
-							{/if}
-							{if !$smarty.section.user.last and $top[user.index_next].moduleId}
-								<a class="link" href="tiki-admin_modules.php?moddown={$module.moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
-							{/if}
-							<a class="link" href="tiki-admin_modules.php?unassign={$module.moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
-						</td>
+	<div id="assigned_modules">
+		<ul>
+			{foreach from=$module_zones key=zone_initial item=zone_info}
+				<li><a href="#{$zone_info.id}_modules">{$zone_info.name|capitalize}</a></li>
+			{/foreach}
+		</ul>
+		{foreach from=$module_zones key=zone_initial item=zone_info}
+			<div id="{$zone_info.id}_modules">
+				<table class="normal">
+					<tr>
+						<th>{tr}Name{/tr}</th>
+						<th>{tr}Order{/tr}</th>
+						<th>{tr}Cache{/tr}</th>
+						<th>{tr}Rows{/tr}</th>
+						<th>{tr}Parameters{/tr}</th>
+						<th>{tr}Groups{/tr}</th>
+						<th>{tr}Action{/tr}</th>
 					</tr>
-				{foreachelse}
-					{norecords _colspan=7}
-				{/foreach}
-			</table>
-		</fieldset>
-	{/foreach}
-
-	<a name="assign"></a>
-	{if $assign_name eq ''}
-		<h2>{tr}Assign new module{/tr}</h2>
-	{else}
-		<h2>{tr}Edit this assigned module:{/tr} {$assign_name}</h2>
-	{/if}
-
-	{if $preview eq 'y'}
-		<h3>{tr}Preview{/tr}</h3>
-		{$preview_data}
-	{/if}
-	<form method="post" action="tiki-admin_modules.php{if (0 and empty($assign_name))}#assign{/if}">
-		{* on the initial selection of a new module, reload the page to the #assign anchor *}
-		<input id="module-order" type="hidden" name="module-order" value=""/>
-		{if !empty($info.moduleId)}
-			<input type="hidden" name="moduleId" value="{$info.moduleId}" />
-		{elseif !empty($moduleId)}
-			<input type="hidden" name="moduleId" value="{$moduleId}" />
-		{/if}
-		<fieldset>
-			<div class="admin2cols">
-				<label for="assign_name">{tr}Module Name{/tr}</label>
-				<select id="assign_name" name="assign_name" onchange="needToConfirm=false;this.form.preview.click()">
-					<option value=""></option>
-					{foreach key=name item=info from=$all_modules_info}
-						<option value="{$name|escape}" {if $assign_name eq $name || $assign_selected eq $name}selected="selected"{/if}>{$info.name}</option>
+					{cycle print=false values="even,odd"}
+					{foreach from=$assigned_modules[$zone_initial] item=module}
+						<tr class="{cycle}">
+							<td>{$module.name|escape}</td>
+							<td>{$module.ord}</td>
+							<td>{$module.cache_time}</td>
+							<td>{$module.rows}</td>
+							<td style="max-width: 40em; white-space: normal;font-size:smaller;">{$module.params|stringfix:"&":"<br />"}</td>
+							<td>{$module.module_groups}</td>
+							<td>
+								<a class="link" href="tiki-admin_modules.php?edit_assign={$module.moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+								{if $top[0].moduleId ne $module.moduleId}
+									<a class="link" href="tiki-admin_modules.php?modup={$module.moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
+								{/if}
+								{if !$smarty.section.user.last and $top[user.index_next].moduleId}
+									<a class="link" href="tiki-admin_modules.php?moddown={$module.moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
+								{/if}
+								<a class="link" href="tiki-admin_modules.php?unassign={$module.moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
+							</td>
+						</tr>
+					{foreachelse}
+						{norecords _colspan=7}
 					{/foreach}
-				</select>
+				</table>
 			</div>
-
-			{if !empty($assign_name)}
-			{* because changing the module name willl auto-submit the form, no reason to display these fields until a module is selected *}
-				{include file='admin_modules_form.tpl'}
-			{else}
-				<div class="input_submit_container">
-					<input type="submit" name="preview" value="{tr}Module Options{/tr}" onclick="needToConfirm=false;" />
-				</div>
-			{/if}
-		</fieldset>
-	</form>
+		{/foreach}
+	</div>
+	{if $prefs.feature_jquery_ui eq "y"}{jq notonready=true}$("#assigned_modules").tabs();{/jq}{/if}
 {/tab}
+{if isset($smarty.request.edit_assign) or $preview eq "y"}
+	{tab name="{tr}Edit module{/tr}"}
+		<a name="assign"></a>
+		{if $assign_name eq ''}
+			<h2>{tr}Assign new module{/tr}</h2>
+		{else}
+			<h2>{tr}Edit this assigned module:{/tr} {$assign_name}</h2>
+		{/if}
+
+		{if $preview eq 'y'}
+			<h3>{tr}Preview{/tr}</h3>
+			{$preview_data}
+		{/if}
+		<form method="post" action="tiki-admin_modules.php{if (0 and empty($assign_name))}#assign{/if}">
+			{* on the initial selection of a new module, reload the page to the #assign anchor *}
+			<input id="module-order" type="hidden" name="module-order" value=""/>
+			{if !empty($info.moduleId)}
+				<input type="hidden" name="moduleId" value="{$info.moduleId}" />
+			{elseif !empty($moduleId)}
+				<input type="hidden" name="moduleId" value="{$moduleId}" />
+			{/if}
+			<fieldset>
+					{* because changing the module name willl auto-submit the form, no reason to display these fields until a module is selected *}
+					{include file='admin_modules_form.tpl'}
+				{if empty($assign_name)}
+					<div class="input_submit_container">
+						<input type="submit" name="preview" value="{tr}Module Options{/tr}" onclick="needToConfirm=false;" />
+					</div>
+				{/if}
+			</fieldset>
+		</form>
+	{/tab}
+{/if}
 
 {tab name="{tr}User Modules{/tr}"}
 	{if $prefs.feature_tabs neq 'y'}

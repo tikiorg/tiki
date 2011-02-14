@@ -1,9 +1,9 @@
 {* $Id$ *}
 {* Module layout with controls *}
+{capture name=name}{$module_name|replace:"+":"_"|cat:$module_position|cat:$module_ord|escape}{/capture}
 {if $module_nobox neq 'y'}
 {if $prefs.feature_layoutshadows eq 'y'}<div class="box-shadow">{$prefs.box_shadow_start}{/if}
 	<div id="module_{$moduleId}" class="box box-{$module_name}{if $module_type eq 'cssmenu'} cssmenubox{/if} module"{if !empty($tpl_module_style)} style="{$tpl_module_style}"{/if}>
-	{capture name=name}{$module_name|replace:"+":"_"|cat:$module_position|cat:$module_ord|escape}{/capture}
 	{if $module_decorations ne 'n'}
 		<h3 class="box-title clearfix"{if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
 		{if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
@@ -66,6 +66,7 @@
 		<div id="mod-{$smarty.capture.name}" style="display: {if !isset($module_display) or $module_display}block{else}none{/if};{$module_params.style}" class="clearfix box-data{if !empty($module_params.class)} {$module_params.class}{/if}">
 {else}{* $module_nobox eq 'y' *}
 		<div id="module_{$moduleId}" style="{$module_params.style}{$tpl_module_style}" class="module{if !empty($module_params.class)} {$module_params.class}{/if} box-{$module_name}">
+			<div id="mod-{$smarty.capture.name}">
 {/if}
 {$module_content}
 {$module_error}
@@ -77,5 +78,6 @@
 	</div>
 {if $prefs.feature_layoutshadows eq 'y'}{$prefs.box_shadow_end}</div>{/if}
 {else}
+		</div>
 	</div>
 {/if}
