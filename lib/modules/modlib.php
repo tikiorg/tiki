@@ -22,12 +22,12 @@ class ModLib extends TikiLib
 	// TODO change modules user interface to enable additional zones
 	public $module_zones = array(
 		't' => 'top_modules',
+		'o' => 'topbar_modules',
+		'p' => 'pagetop_modules',
 		'l' => 'left_modules',
 		'r' => 'right_modules',
-		'b' => 'bottom_modules',
-		'p' => 'pagetop_modules',
 		'q' => 'pagebottom_modules',
-		'o' => 'topbar_modules',
+		'b' => 'bottom_modules',
 	);
 
 	function replace_user_module($name, $title, $data, $parse=NULL) {
