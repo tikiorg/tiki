@@ -83,6 +83,9 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 	case 'image':
 		$href = 'tiki-browse_image.php?imageId='.$source;
 		break;
+	case 'sheet':
+		$href = $sefurl ? "sheet$source" : "tiki-view_sheets.php?sheetId=$source";
+		break;
 	default:
 		$href = $source;
 		break;

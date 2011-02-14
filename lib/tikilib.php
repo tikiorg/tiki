@@ -167,6 +167,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'ratingconfig':
 			global $ratingconfiglib; require_once 'lib/rating/configlib.php';
 			return $libraries[$name] = $ratingconfiglib;
+		case 'sheet':
+			global $sheetlib; require_once ('lib/sheet/grid.php');
+			return $libraries[$name] = $sheetlib;
 		}
 	}
 

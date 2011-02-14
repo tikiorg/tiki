@@ -40,6 +40,10 @@ function smarty_block_filter($params, $content, &$smarty, $repeat) {
 		$types[] = 'trackeritem';
 	}
 
+	if ($prefs['feature_sheet'] == 'y') {
+		$types[] = 'sheet';
+	}
+
 	$filter = isset($_REQUEST['filter']) ? $_REQUEST['filter'] : array();
 
 	// General
