@@ -97,7 +97,7 @@ function smarty_function_html_select_time($params, &$smarty)
 			$html_result .= ' ' . $all_extra;
 		}
 		$html_result .= '>'."\n";
-		if (!empty($hour_empty)) $hours = array_merge(array($hour_empty), $hours);
+		if (!empty($hour_empty)) $hours = array_merge(array($hour_empty==' '?'':$hour_empty), $hours);
 		$html_result .= smarty_function_html_options(array('output'          => $hours,
                                                            'values'          => $hours,
                                                            'selected'      => $time == '--'?$hour_empty:TikiLib::date_format($hour_fmt, $time),
@@ -124,7 +124,7 @@ function smarty_function_html_select_time($params, &$smarty)
 			$html_result .= ' ' . $all_extra;
 		}
 		$html_result .= '>'."\n";
-		if (!empty($minute_empty)) $minutes = array_merge(array($minute_empty), $minutes);
+		if (!empty($minute_empty)) $minutes = array_merge(array($minute_empty==' '?'':$minute_empty), $minutes);
 		$html_result .= smarty_function_html_options(array('output'          => $minutes,
                                                            'values'          => $minutes,
                                                            'selected'      => $selected,
@@ -152,7 +152,7 @@ function smarty_function_html_select_time($params, &$smarty)
 			$html_result .= ' ' . $all_extra;
 		}
 		$html_result .= '>'."\n";
-		if (!empty($seconde_empty)) $secondes = array_merge(array($seconde_empty), $secondes);
+		if (!empty($seconde_empty)) $secondes = array_merge(array($seconde_empty==' '?'':$seconde_empty), $secondes);
 		$html_result .= smarty_function_html_options(array('output'          => $seconds,
                                                            'values'          => $seconds,
                                                            'selected'      => $selected,
