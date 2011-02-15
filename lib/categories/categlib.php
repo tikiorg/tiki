@@ -724,7 +724,7 @@ class CategLib extends ObjectLib
 			$info = $trklib->get_tracker_item($itemId);
 			$href = "tiki-view_tracker_item.php?itemId=$itemId&trackerId=".$info['trackerId'];
 			$name = $trklib->get_isMain_value($info['trackerId'], $itemId);
-			$catObjectId = $this->add_categorized_object('trackeritem', $trackeritem, '',$name , $href);
+			$catObjectId = $this->add_categorized_object('trackeritem', $itemId, '',$name , $href);
 		}
 
 		$this->categorize($catObjectId, $categId);
