@@ -116,10 +116,10 @@ $url_browse = $tikilib->httpPrefix() . $foo1;
 // create direct download path for podcasts
 $podcast_url = str_replace("tiki-upload_file.php", "", $foo["path"]);
 $podcast_url = $tikilib->httpPrefix() . $podcast_url . $prefs['fgal_podcast_dir'];
+
 if (!isset($_REQUEST["description"])) $_REQUEST["description"] = '';
 if (!isset($_REQUEST['author'])) $_REQUEST['author'] = '';
-if (isset($_REQUEST['hit_limit'])) $_REQUEST['hit_limit'] = (int)$_REQUEST['hit_limit'];
-else $_REQUEST['hit_limit'] = 0;
+
 $smarty->assign('show', 'n');
 if (!empty($_REQUEST['galleryId'][0]) && $prefs['feature_groupalert'] == 'y') {
 	$groupforalert = $groupalertlib->GetGroup('file gallery', (int)$_REQUEST['galleryId'][0]);
