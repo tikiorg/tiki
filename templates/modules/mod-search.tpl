@@ -79,10 +79,12 @@ function submitSearch{{$search_mod_usage_counter}}() {
 	return true;
 }
     {/jq}
-	{if $smod_params.use_autocomplete eq 'y'}{jq}
-$("#search_mod_input_{{$search_mod_usage_counter}}").tiki("autocomplete", "pagename").result(function(event, item) {
-	$('#search-module-form{{$search_mod_usage_counter}}').attr('page_selected', item);
-});{/jq}{/if}
+	{if $smod_params.use_autocomplete eq 'y'}
+		{capture name="selectFn}select: function(event, item) {ldelim}
+	$('#search-module-form{$search_mod_usage_counter}').attr('page_selected', item.item.value);
+{rdelim}{/capture}
+		{autocomplete element="#search_mod_input_"|cat:$search_mod_usage_counter type="pagename" options=$smarty.capture.selectFn}
+	{/if}
 {/if}
 {/tikimodule}
 {/if}

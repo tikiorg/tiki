@@ -250,6 +250,11 @@ if ($prefs['javascript_enabled'] != 'n') {
 			}
 			$headerlib->add_jsfile( 'lib/jquery/jquery-ui/external/jquery.bgiframe-2.1.2.js' );
 			$headerlib->add_cssfile( 'lib/jquery/jquery-ui/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css' );
+
+			if( $prefs['feature_jquery_autocomplete'] == 'y' ) {
+				$headerlib->add_css('.ui-autocomplete-loading { background: white url("lib/jquery/jquery-ui/themes/' .
+						'/base/images/ui-anim_basic_16x16.gif") right center no-repeat; }');
+			}
 		}
 
 		if( $prefs['feature_jquery_tooltips'] == 'y' ) {
@@ -259,15 +264,6 @@ if ($prefs['javascript_enabled'] != 'n') {
 			}
 			$headerlib->add_jsfile( 'lib/jquery/cluetip/jquery.cluetip.js' );
 			$headerlib->add_cssfile( 'lib/jquery/cluetip/jquery.cluetip.css' );
-		}
-
-		if( $prefs['feature_jquery_autocomplete'] == 'y' ) {
-			$headerlib->add_jsfile( 'lib/jquery/jquery-autocomplete/lib/jquery.ajaxQueue.js' );
-			if( $prefs['feature_jquery_ui'] !== 'y' || $prefs['feature_jquery_tooltips'] != 'y' ) {
-				$headerlib->add_jsfile( 'lib/jquery/jquery-autocomplete/lib/jquery.bgiframe.min.js' );
-			}
-			$headerlib->add_jsfile( 'lib/jquery/jquery-autocomplete/jquery.autocomplete.js' );
-			$headerlib->add_cssfile( 'lib/jquery/jquery-autocomplete/jquery.autocomplete.css' );
 		}
 
 		if( $prefs['feature_jquery_superfish'] == 'y' ) {

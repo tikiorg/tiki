@@ -1239,6 +1239,9 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'description' => tra('Provides various drop-down menus on many text input boxes for page names, user names, groups, tags etc.'),
 			'help' => 'JQuery#Autocomplete',
+			'dependencies' => array(
+				'feature_jquery_ui',
+			),
 		),
 		'feature_jquery_superfish' => array(
 			'name' => tra('Superfish'),

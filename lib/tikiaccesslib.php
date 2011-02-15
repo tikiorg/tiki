@@ -482,7 +482,11 @@ class TikiAccessLib extends TikiLib
 			switch( $name ) {
 			case 'json':
 				header( "Content-Type: $full" );
-				echo json_encode( $data );
+				$data = json_encode( $data );
+				if (isset($_REQUEST['callback'])) {
+					$data = $_REQUEST['callback'] . '(' . $data . ')';
+				}
+				echo $data;
 				return;
 			case 'yaml':
 				require_once( 'Horde/Yaml.php' );
