@@ -14,8 +14,8 @@ function wikiplugin_trackeritemfield_help() {
 function wikiplugin_trackeritemfield_info() {
 	return array(
 		'name' => tra('Tracker Item Field'),
-		'documentation' => 'PluginTrackerItemField',
-		'description' => tra('Display or test the value of a tracker item field'),
+		'documentation' => tra('PluginTrackerItemField'),
+		'description' => tra('Displays the value of a tracker item field or the wiki text if the value of the field is set or has a value(if itemId not specified, use the itemId of the url or the user tracker).'),
 		'prefs' => array( 'wikiplugin_trackeritemfield', 'feature_trackers' ),
 		'body' => tra('Wiki text containing an {ELSE} marker.'),
 		'icon' => 'pics/icons/database_go.png',

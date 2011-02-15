@@ -16,32 +16,32 @@
  * 
  */
 function wikiplugin_back_help() {
-	return tra("Insert back link on wiki page").":<br />~np~{BACK()/}~/np~";
+    return tra("Insert back link on wiki page").":<br />~np~{BACK()/}~/np~";
 }
 
 function wikiplugin_back_info() {
-	return array(
-		'name' => tra('Back'),
-		'documentation' => 'PluginBack',
-		'description' => tra('Displays a link that goes back one page in the browser history'),
-		'prefs' => array( 'wikiplugin_back' ),
-		'params' => array(),
-		);
+    return array(
+        'name' => tra('Back'),
+		'documentation' => tra('PluginBack'),
+        'description' => tra('Displays a link that goes back one page in the browser history'),
+        'prefs' => array( 'wikiplugin_back' ),
+        'params' => array(),
+        );
 }
 
 function wikiplugin_back($data, $params) {
-	global $tikilib;
-	
-	// Remove first <ENTER> if exists...
-	// if (substr($data, 0, 2) == "\r\n") $data = substr($data, 2);
-	
-	extract ($params,EXTR_SKIP);
+    global $tikilib;
+    
+    // Remove first <ENTER> if exists...
+    // if (substr($data, 0, 2) == "\r\n") $data = substr($data, 2);
+    
+    extract ($params,EXTR_SKIP);
+    
+    $begin = "<a href=\"javascript:history.go(-1)\">";
+            
+    $content = tra('Back');
 
-	$begin = "<a href=\"javascript:history.go(-1)\">";
-
-	$content = tra('Back');
-
-	$end = "</a>";
-	
-	return "~np~" . $begin . $content  . $end . "~/np~"; 
+    $end = "</a>";
+    
+    return "~np~" . $begin . $content  . $end . "~/np~"; 
 }

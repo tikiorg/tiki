@@ -12,8 +12,8 @@ function wikiplugin_sql_help() {
 function wikiplugin_sql_info() {
 	return array(
 		'name' => tra('SQL'),
-		'documentation' => 'PluginSQL',
-		'description' => tra('Query a MySQL database and display the results'),
+		'documentation' => tra('PluginSQL'),
+		'description' => tra('Run an SQL query on a database'),
 		'prefs' => array( 'wikiplugin_sql' ),
 		'body' => tra('The SQL query goes in the body. Example: SELECT column1, column2 FROM table'),
 		'validate' => 'all',

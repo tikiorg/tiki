@@ -8,8 +8,8 @@
 function wikiplugin_addtocart_info() {
 	return array(
 		'name' => tra('Add to cart'),
-		'documentation' => 'PluginAddToCart',
-		'description' => tra(' Display a button for adding items to the shopping cart'),
+		'documentation' => tra('PluginAddToCart'),
+		'description' => tra('Adds a product to the virtual cart. The cart can be manipulated using the cart module.'),
 		'prefs' => array( 'wikiplugin_addtocart', 'payment_feature' ),
 		'filter' => 'wikicontent',
 		'format' => 'html',

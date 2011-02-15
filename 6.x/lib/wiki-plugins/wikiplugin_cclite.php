@@ -14,7 +14,7 @@ function wikiplugin_cclite_info() {
 
 	return array(
 		'name' => tra('Cclite'),
-		'documentation' => 'PluginCclite',
+		'documentation' => tra('PluginCclite'),
 		'description' => tra('General purpose cclite utility plugin'),
 //		'validate' => '',
 		'prefs' => array( 'wikiplugin_cclite', 'payment_feature' ),

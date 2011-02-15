@@ -30,8 +30,8 @@ function wikiplugin_aname_help() {
 function wikiplugin_aname_info() {
 	return array(
 		'name' => tra('Anchor Name'),
-		'documentation' => 'PluginAname',
-		'description' => tra('Create an anchor into a wiki page that can be linked to'),
+		'documentation' => tra('PluginAname'),
+		'description' => tra('Inserts an anchor in the wiki page. Anchors can be linked to using the ALINK plugin.'),
 		'prefs' => array('wikiplugin_aname'),
 		'body' => tra('The name of the anchor.'),
 		'params' => array(),

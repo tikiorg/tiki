@@ -54,8 +54,8 @@ function wikiplugin_module_info() {
 
 	return array(
 		'name' => tra('Insert Module'),
-		'documentation' => 'PluginModule',
-		'description' => tra('Display a module in a wiki page'),
+		'documentation' => tra('PluginModule'),
+		'description' => tra('Displays a module inline in a wiki page. More parameters can be added, not supported by User Interface.'),
 		'prefs' => array( 'wikiplugin_module' ),
 		'validate' => 'all',
 		'icon' => 'pics/icons/module.png',

@@ -8,8 +8,8 @@
 function wikiplugin_invite_info() {
 	return array(
 		'name' => tra( 'Invite' ),
-		'documentation' => 'PluginInvite',
-		'description' => tra('Invite a user to join your groups'),
+		'documentation' => tra('PluginInvite'),
+		'description' => tra( 'Invite an email in groups.' ),
 		'prefs' => array( 'wikiplugin_invite' ),
 		'body' => tra('Confirmation message after posting form'),
 		'params' => array(

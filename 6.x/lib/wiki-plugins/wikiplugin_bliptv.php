@@ -10,7 +10,7 @@ require_once('lib/wiki-plugins/wikiplugin_flash.php');
 function wikiplugin_bliptv_info() {
 	return array(
 		'name' => tra('Bliptv'),
-		'documentation' => 'PluginBliptv',
+		'documentation' => tra('PluginBliptv'),
 		'description' => tra('Display a Blip.tv video'),
 		'prefs' => array( 'wikiplugin_bliptv' ),
 		'icon' => 'pics/icons/bliptv.png',

@@ -18,8 +18,8 @@ function wikiplugin_subscribegroup_help() {
 function wikiplugin_subscribegroup_info() {
 	return array(
 		'name' => tra('Subscribe Group'),
-		'documentation' => 'PluginSubscribeGroup',
-		'description' => tra('Allow users to subscribe to a group'),
+		'documentation' => tra('PluginSubscribeGroup'),		
+		'description' => tra('Subscribe or unsubscribe to a group'),
 		'prefs' => array( 'wikiplugin_subscribegroup' ),
 		'body' => tra('text displyed before the button'),
 		'params' => array(

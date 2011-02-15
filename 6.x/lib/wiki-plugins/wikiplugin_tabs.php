@@ -23,8 +23,8 @@ function wikiplugin_tabs_help() {
 function wikiplugin_tabs_info() {
 	return array(
 		'name' => tra('Tabs'),
-		'documentation' => 'PluginTabs',
-		'description' => tra('Arrange content in tabs'),
+		'documentation' => tra('PluginTabs'),			
+		'description' => tra('Display page content in a set of tabs'),
 		'prefs' => array( 'wikiplugin_tabs' ),
 		'body' => tra('Tabs content separated by /////'),
 		'params' => array(

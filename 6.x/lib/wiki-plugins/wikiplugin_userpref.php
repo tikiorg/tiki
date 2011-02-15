@@ -7,9 +7,9 @@
 
 function wikiplugin_userpref_info() {
 	return array(
-		'name' => tra('User Preference'),
+		'name' => tra('Userpref'),
 		'documentation' => 'PluginUserpref',
-		'description' => tra('Display contents based on user preference settings'),
+		'description' => tra("Display wiki text if user has a pref set to a value"),
 		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed to users not matching the condition.'),
 		'prefs' => array('wikiplugin_userpref'),
 		'filter' => 'wikicontent',

@@ -11,8 +11,8 @@ function wikiplugin_mediaplayer_help() {
 function wikiplugin_mediaplayer_info() {
 	return array(
 		'name' => tra('Mediaplayer'),
-		'documentation' => 'PluginMediaplayer',
-		'description' => tra('Add a media player to a page'),
+		'documentation' => tra('PluginMediaplayer'),
+		'description' => tra('Simple mp3 or flv Player'),
 		'extraparams' =>true,
 		'prefs' => array( 'wikiplugin_mediaplayer' ),
 		'params' => array(

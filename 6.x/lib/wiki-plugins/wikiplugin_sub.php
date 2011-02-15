@@ -15,8 +15,8 @@ function wikiplugin_sub_help() {
 function wikiplugin_sub_info() {
 	return array(
 		'name' => tra( 'Subscript' ),
-		'documentation' => 'PluginSub',
-		'description' => tra('Apply subscript font to text'),
+		'documentation' => tra('PluginSub'),		
+		'description' => tra('Displays text in subscript.'),
 		'prefs' => array( 'wikiplugin_sub' ),
 		'body' => tra('text'),
 		'icon' => 'pics/icons/text_subscript.png',

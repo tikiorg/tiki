@@ -20,8 +20,8 @@ function wikiplugin_footnotearea_help() {
 function wikiplugin_footnotearea_info() {
 	return array(
 		'name' => tra( 'Footnotearea' ),
-		'documentation' => 'PluginFootnoteArea',
-		'description' => tra('Create automatically numbered footnotes (together with PluginFootnote)'),
+		'documentation' => tra('PluginFootnoteArea'),
+		'description' => tra('Inserts a section for collected footnotes in the wiki page.'),
 		'prefs' => array('wikiplugin_footnotearea'),
 		'params' => array(),
 	);

@@ -10,8 +10,8 @@ function wikiplugin_memberpayment_info() {
 
 	return array(
 		'name' => tra('Member Payment'),
-		'documentation' => 'PluginMemberPayment',
-		'description' => tra('Receive payments from a member to extend membership to a group.'),
+		'documentation' => tra('PluginMemberPayment'),
+		'description' => tra('Receive payments from a member and extend the length of the membership to a group.'),
 		'validate' => 'all',
 		'prefs' => array( 'wikiplugin_memberpayment', 'payment_feature' ),
 		'params' => array(

@@ -35,8 +35,8 @@ function wikiplugin_skype_help() {
 function wikiplugin_skype_info() {
 	return array(
 		'name' => tra('Skype'),
-		'documentation' => 'PluginSkype',
-		'description' => tra('Call or chat with a Skype user'),
+		'documentation' => tra('PluginSkype'),
+		'description' => tra('Clickable Skype link'),
 		'prefs' => array( 'wikiplugin_skype' ),
 		'body' => tra('Name or number to call or chat with.'),
 		'params' => array(

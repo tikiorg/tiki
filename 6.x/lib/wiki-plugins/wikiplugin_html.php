@@ -13,8 +13,8 @@
 function wikiplugin_html_info() {
 	return array(
 		'name' => tra('HTML'),
-		'documentation' => 'PluginHTML',
-		'description' => tra('Add HTML to a page'),
+		'documentation' => tra('PluginHTML'),
+		'description' => tra('Include literal HTML in a Wiki page'),
 		'prefs' => array('wikiplugin_html'),
 		'body' => tra('HTML code'),
 		'validate' => 'all',

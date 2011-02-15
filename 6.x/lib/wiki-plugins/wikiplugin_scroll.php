@@ -26,8 +26,8 @@ function wikiplugin_scroll_help() {
 function wikiplugin_scroll_info() {
 	return array(
 		'name' => tra('Scroll'),
-		'documentation' => 'PluginScroll',
-		'description' => tra('Show animated text that scrolls up or down'),
+		'documentation' => tra('PluginScroll'),
+		'description' => tra(''),
 		'prefs' => array('wikiplugin_scroll'),
 		'body' => tra('text'),
 		'params' => array(

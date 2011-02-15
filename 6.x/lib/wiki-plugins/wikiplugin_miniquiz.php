@@ -32,8 +32,8 @@ function wikiplugin_miniquiz_help() {
 function wikiplugin_miniquiz_info() {
 	return array(
 		'name' => tra('Mini Quiz'),
-		'documentation' => 'PluginMiniQuiz',
-		'description' => tra('Create a quiz using a tracker'),
+		'documentation' => tra('PluginMiniQuiz'),
+		'description' => tra('Displays a miniquiz'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_miniquiz' ),
 		'body' => tra('Instructions::Feedback'),
 		'params' => array(

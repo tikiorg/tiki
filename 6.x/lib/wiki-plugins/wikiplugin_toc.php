@@ -9,8 +9,8 @@ function wikiplugin_toc_info()
 {
 	return array(
 		'name' => tra('Table of Contents (Structure)'),
-		'documentation' => 'PluginTOC',
-		'description' => tra('Display a table of contents of pages or sub-pages'),
+		'documentation' => tra('PluginTOC'),		
+		'description' => tra('Displays the table of contents for the current structure\'s subtree as part of the page content.'),
 		'prefs' => array( 'wikiplugin_toc', 'feature_wiki_structure' ),
 		'params' => array(
 			'maxdepth' => array(

@@ -32,8 +32,8 @@ function wikiplugin_showpages_help() {
 function wikiplugin_showpages_info() {
 	return array(
 		'name' => tra('Show Pages'),
-		'documentation' => 'PluginShowPages',
-		'description' => tra('Find pages by searching within page names'),
+		'documentation' => tra('PluginShowPages'),
+		'description' => tra('List wiki pages'),
 		'prefs' => array( 'wikiplugin_showpages' ),
 		'params' => array(
 			'find' => array(

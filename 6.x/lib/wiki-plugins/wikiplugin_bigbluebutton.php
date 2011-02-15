@@ -3,8 +3,8 @@
 function wikiplugin_bigbluebutton_info() {
 	return array(
 		'name' => tra('BigBlueButton'),
-		'documentation' => 'PluginBigBlueButton',
-		'description' => tra('Starts a video/audio/chat/presentation session using BigBlueButton'),
+		'documentation' => tra('PluginBigBlueButton'),
+		'description' => tra('Allows to join a BigBlueButton meeting.'),
 		'format' => 'html',
 		'prefs' => array( 'wikiplugin_bigbluebutton', 'bigbluebutton_feature' ),
 		'params' => array(

@@ -14,8 +14,8 @@ function wikiplugin_myspace_help() {
 function wikiplugin_myspace_info() {
 	return array(
 		'name' => tra('MySpace'),
-		'documentation' => 'PluginMySpace',
-		'description' => tra('Display a MySpace Flash mp3 playlist'),
+		'documentation' => tra('PluginMySpace'),			
+		'description' => tra('Displays a MySpace Flash mp3 playlist in the wiki page'),
 		'prefs' => array( 'wikiplugin_myspace' ),
 		'params' => array(
 			'page' => array(

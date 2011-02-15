@@ -18,8 +18,8 @@ function wikiplugin_sort_help() {
 function wikiplugin_sort_info() {
 	return array(
 		'name' => tra('Sort'),
-		'documentation' => 'PluginSort',
-		'description' => tra('Sort lines of text'),
+		'documentation' => tra('PluginSort'),
+		'description' => tra('Sorts the plugin content in the wiki page'),
 		'prefs' => array( 'wikiplugin_sort' ),
 		'body' => tra('Data to sort, one entry per line.'),
 		'filter' => 'text',

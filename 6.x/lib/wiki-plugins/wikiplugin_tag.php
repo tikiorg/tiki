@@ -16,8 +16,8 @@ function wikiplugin_tag_help() {
 function wikiplugin_tag_info() {
 	return array(
 		'name' => tra('Tag'),
-		'documentation' => 'PluginTag',
-		'description' => tra('Apply an HTML tag to content'),
+		'documentation' => tra('PluginTag'),
+		'description' => tra('Displays the text between an html tag'),
 		'prefs' => array( 'wikiplugin_tag' ),
 		'validate' => 'all',
 		'body' => tra('text'),

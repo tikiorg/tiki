@@ -129,8 +129,8 @@ function wikiplugin_backlinks_info()
 {
 	return array(
 		'name' => tra('Backlinks'),
-		'documentation' => 'PluginBacklinks',
-		'description' => tra('Lists all pages that link to a particular page'),
+		'documentation' => tra('PluginBacklinks'),
+		'description' => tra('List all pages linking to the specified page.'),
 		'prefs' => array( 'feature_wiki', 'wikiplugin_backlinks' ),
 		'params' => array(
 			'page' => array(

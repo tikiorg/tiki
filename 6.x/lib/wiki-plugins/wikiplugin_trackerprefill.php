@@ -14,8 +14,8 @@ function wikiplugin_trackerprefill_help() {
 function wikiplugin_trackerprefill_info() {
 	return array(
 		'name' => tra('Tracker Prefill'),
-		'documentation' => 'PluginTrackerPrefill',
-		'description' => tra('Create a button to prefill tracker fields'),
+		'documentation' => tra('PluginTrackerPrefill'),
+		'description' => tra('Displays a button to link to a page with a tracker plugin with prefilled tracker fields.'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerprefill' ),
 		'params' => array(
 			'page' => array(

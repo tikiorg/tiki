@@ -20,7 +20,7 @@ function wikiplugin_sharethis_info() {
 	return array(
 		'name' => tra('Sharethis'),
 		'documentation' => 'PluginSharethis',
-		'description' => tra('Add a ShareThis button'),
+		'description' => tra('Display a social networking tool.'),
 		'prefs' => array( 'wikiplugin_sharethis' ),
 		'params' => array(
 			'sendsvcs' => array(

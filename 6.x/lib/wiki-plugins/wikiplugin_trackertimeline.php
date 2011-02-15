@@ -8,8 +8,8 @@
 function wikiplugin_trackertimeline_info() {
 	return array(
 		'name' => tra( 'Tracker Timeline' ),
-		'documentation' => 'PluginTrackerTimeline',
-		'description' => tra('Show a timeline view of a tracker'),
+		'documentation' => tra('PluginTrackerTimeline'),
+		'description' => tra('Timeline view of a tracker, can be used to display event schedules or gantt charts.'),
 		'prefs' => array( 'wikiplugin_trackertimeline', 'feature_trackers' ),
 		'params' => array(
 			'tracker' => array(

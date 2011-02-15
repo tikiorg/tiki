@@ -10,8 +10,8 @@ function wikiplugin_author_help() {
 function wikiplugin_author_info() {
 	return array(
 		'name' => tra('Author'),
-		'documentation' => 'PluginAuthor',
-		'description' => tra('View author contributions to a wiki page'),
+		'documentation' => tra('PluginAuthor'),
+		'description' => tra('Color codes parts of the page like \'Track changes\' in Office programs.'),
 		'prefs' => array('wikiplugin_author'),
 		'body' => tra('text'),
 		'params' => array(

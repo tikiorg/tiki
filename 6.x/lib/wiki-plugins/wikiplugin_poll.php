@@ -18,8 +18,8 @@ function wikiplugin_poll_help() {
 function wikiplugin_poll_info() {
 	return array(
 		'name' => tra('Poll'),
-		'documentation' => 'PluginPoll',
-		'description' => tra('Display a poll'),
+		'documentation' => tra('PluginPoll'),
+		'description' => tra('Displays the output of a poll, fields are indicated with numeric ids.'),
 		'prefs' => array( 'feature_polls', 'wikiplugin_poll' ),
 		'body' => tra('Title'),
 		'params' => array(

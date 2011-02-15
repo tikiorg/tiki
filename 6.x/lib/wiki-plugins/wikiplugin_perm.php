@@ -11,8 +11,8 @@ function wikiplugin_perm_help() {
 function wikiplugin_perm_info() {
 	return array(
 		'name' => tra('Permissions'),
-		'documentation' => 'PluginPerm',
-		'description' => tra('Display content based on permission settings'),
+		'documentation' => tra('PluginPerm'),
+		'description' => tra('Display wiki text if and only if the user has at least one of a set of permissions (or none, if using notperms).'),
 		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed if conditions are not met.'),
 		'prefs' => array('wikiplugin_perm'),
 		'filter' => 'wikicontent',

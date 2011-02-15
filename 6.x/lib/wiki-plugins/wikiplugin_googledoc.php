@@ -18,8 +18,8 @@ function wikiplugin_googledoc_help() {
 function wikiplugin_googledoc_info() {
 	return array(
 		'name' => tra('Google Doc'),
-		'documentation' => 'PluginGoogleDoc',
-		'description' => tra('Display a Google document'),
+		'documentation' => tra('PluginGoogleDoc'),
+		'description' => tra('Displays a Google document'),
 		'prefs' => array( 'wikiplugin_googledoc' ),
 		'body' => tra('Leave this empty.'),
 //		'validate' => 'all',

@@ -8,7 +8,8 @@
 function wikiplugin_img_info() {
 	return array(
 		'name' => tra('Image'),
-		'description' => tra('Display custom formatted images'),
+		'documentation' => tra('PluginImg'),
+		'description' => tra('Display images'),
 		'prefs' => array( 'wikiplugin_img'),
 		'icon' => 'pics/icons/picture.png',
 		'params' => array(

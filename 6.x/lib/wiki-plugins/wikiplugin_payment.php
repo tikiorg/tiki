@@ -8,8 +8,7 @@
 function wikiplugin_payment_info() {
 	return array(
 		'name' => tra('Payment'),
-		'documentaion' => 'PluginPayment',
-		'description' => tra('Show details of a payment request or invoice'),
+		'description' => tra('Display a payment request\'s details based on the user\'s privileges and the state of the payment. The payment details may include the payment options.'),
 		'prefs' => array( 'wikiplugin_payment', 'payment_feature' ),
 		'params' => array(
 			'id' => array(

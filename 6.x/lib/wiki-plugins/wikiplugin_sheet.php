@@ -27,8 +27,8 @@ function wikiplugin_sheet_help() {
 function wikiplugin_sheet_info() {
 	return array(
 		'name' => tra('Sheet'),
-		'documentation' => 'PluginSheet',
-		'description' => tra('Display data from a TikiSheet'),
+		'documentation' => tra('PluginSheet'),
+		'description' => tra('Displays the content of a spreadsheet in the page.'),
 		'prefs' => array( 'wikiplugin_sheet', 'feature_sheet' ),
 		'body' => tra('Sheet Heading'),
 		'params' => array(
@@ -37,27 +37,27 @@ function wikiplugin_sheet_info() {
 				'name' => tra('Sheet ID'),
 				'description' => tra('Internal ID of the TikiSheet.  Either id or url MUST be used.'),
 				'filter' => 'digits',
-				'accepted' => 'Sheet ID number',
+    			'accepted' => 'Sheet ID number',
 				'default' => '',
-				'since' => ''
+    			'since' => ''
 			),
 			'url' => array(
 				'required' => false,
 				'name' => tra('Sheet Url Location'),
 				'description' => tra('Internal URL of the Table to use as a spreadsheet.  Either id or url MUST be used.'),
 				'filter' => 'url',
-				'accepted' => 'Valid url',
+    			'accepted' => 'Valid url',
 				'default' => '',
-				'since' => '6.0'
+    			'since' => '6.0'
 			),
 			'simple' => array(
 				'required' => false,
 				'name' => tra('Simple'),
 				'description' => tra('Simple table view y/n (Default: n = jquery.sheet view if feature enabled).'),
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
+    			'accepted' => 'y or n',
 				'default' => 'n',
-				'since' => '5.0',
+    			'since' => '5.0',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
@@ -69,27 +69,27 @@ function wikiplugin_sheet_info() {
 				'name' => tra('Width'),
 				'description' => tra('Width in pixels or percentage. Default value is page width. e.g. "200px" or "100%"'),
 				'filter' => 'striptags',
-				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
+    			'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
 				'default' => 'Page width',
-				'since' => '6.0'
+    			'since' => '6.0'
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('Height in pixels or percentage. Default value is complete spreadsheet height.'),
 				'filter' => 'striptags',
-				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
+    			'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
 				'default' => 'Spreadsheet heigth',
-				'since' => '5.0'
+    			'since' => '5.0'
 			),
 			'editable' => array(
 				'required' => false,
 				'name' => tra('Editable'),
 				'description' => tra('Show edit button. Default \'y\' depending on user\'s permissions.'),
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
+    			'accepted' => 'y or n',
 				'default' => 'y',
-				'since' => '6.0',
+    			'since' => '6.0',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
@@ -101,9 +101,9 @@ function wikiplugin_sheet_info() {
 				'name' => tra('Show subsheets'),
 				'description' => tra('y/n. Show multi-sheets. Default \'y\'.'),
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
+    			'accepted' => 'y or n',
 				'default' => 'y',
-				'since' => '6.0',
+    			'since' => '6.0',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
@@ -115,18 +115,18 @@ function wikiplugin_sheet_info() {
 				'name' => tra('Range'),
 				'description' => tra('Show a range of cells (or single cell). Default shows all. e.g. "D1:F3" or "e14:e14"'),
 				'filter' => 'striptags',
-				'accepted' => 'Cell range, e.g. "D1:F3" or "e14:e14"',
+    			'accepted' => 'Cell range, e.g. "D1:F3" or "e14:e14"',
 				'default' => 'All cells',
-				'since' => '6.0',
+    			'since' => '6.0',
 			),
 			'class' => array(
 				'required' => false,
 				'name' => tra('CSS Class'),
 				'description' => tra('Apply custom CSS class to the containing div.'),
 				'filter' => 'text',
-				'accepted' => 'Any valid CSS class',
+    			'accepted' => 'Any valid CSS class',
 				'default' => '',
-				'since' => '6.0',
+    			'since' => '6.0',
 			),
 		),
 	);

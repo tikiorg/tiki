@@ -8,8 +8,8 @@
 function wikiplugin_rcontent_info() {
 	return array(
 		'name' => tra( 'Random Dynamic Content' ),
-		'documentation' => 'PluginRcontent',
-		'description' => tra( 'Display pre-programmed changing content' ),
+		'documentation' => tra('PluginRcontent'),			
+		'description' => tra( 'Includes random content from the dynamic content system.' ),
 		'prefs' => array( 'feature_dynamic_content', 'wikiplugin_rcontent' ),
 		'params' => array(
 			'id' => array(
