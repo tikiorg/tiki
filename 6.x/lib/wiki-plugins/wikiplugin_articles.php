@@ -23,7 +23,7 @@ function wikiplugin_articles_info()
 	return array(
 		'name' => tra('Article List'),
 		'documentation' => 'PluginArticles',
-		'description' => tra('Display multiple articles'),
+		'description' => tra('Display multiple articles in a wiki page'),
 		'prefs' => array( 'feature_articles', 'wikiplugin_articles' ),
 		'params' => array(
 			'usePagination' => array(
