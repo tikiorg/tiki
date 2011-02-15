@@ -920,6 +920,17 @@ a.admbox:hover {
 	text-decoration: none;
 }
 
+/* Quote plugin */
+.quoteheader {
+	background : url('images/quoteleft.gif') no-repeat;
+	padding-left:50px;
+	height:35px;
+}
+
+.quotebody {
+	padding-left:46px;
+}
+
 /***** Ajax, jquery. etc. *****/
 /***** Ajax *****/
 /***** New (unsorted) *****/
