@@ -9,7 +9,7 @@ function wikiplugin_div_info() {
 	return array(
 		'name' => tra('Div'),
 		'documentation' => 'PluginDiv',
-		'description' => tra('Define and format sections of a page or text'),
+		'description' => tra('Defines and formats sections of a page or text'),
 		'prefs' => array('wikiplugin_div'),
 		'body' => tra('text'),
 		'params' => array(
