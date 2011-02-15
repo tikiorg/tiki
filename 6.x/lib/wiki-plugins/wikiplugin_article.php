@@ -24,7 +24,7 @@ function wikiplugin_article_info() {
 	return array(
 		'name' => tra('Article'),
 		'documentation' => 'PluginArticle',
-		'description' => tra('Display a component of an article'),
+		'description' => tra('Display a component of an article in a wiki page'),
 		'prefs' => array( 'feature_articles', 'wikiplugin_article' ),
 		'params' => array(
 			'Field' => array(
