@@ -172,9 +172,10 @@
     <td colspan="2" class="input_submit_container"><input type="submit" name="new_prefs" value="{tr}Save changes{/tr}" /></td>
   
   </table>
+</form>
 {/tab}
 {tab name="{tr}Preferences{/tr}"}
-  
+<form action="tiki-user_preferences.php" method="post">
   <table class="normal">
     <tr>
       <th colspan="2">{tr}General settings{/tr}</th>
@@ -259,7 +260,7 @@
                   </option>
               {/section}
             </select>
-			&nbsp;=>&nbsp;
+			&nbsp;=&gt;&nbsp;
 		  	<input id="read-language-input" type="text" name="read_language" value="{$user_prefs.read_language}"/>
             <br/>&nbsp;
 		  </div>
