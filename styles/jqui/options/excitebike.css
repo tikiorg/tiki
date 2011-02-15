@@ -334,14 +334,14 @@ li.even {
 }
 
 .forum_actions {
-	background:#C5DDFC url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/07_diagonals_small.png) repeat scroll 50% 50%;
+	background: #C5DDFC url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/ui-bg_diagonals-small_25_c5ddfc_40x40.png) 50% 50%;
 	border:1px solid #FFFFFF;
 	color:#333333;
 }
 
 .caleven,
 .calodd {
-	background:#1484E6 url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/08_diagonals_thick.png) repeat scroll 50% 50%;
+	background: #1484E6 url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/ui-bg_diagonals-thick_22_1484e6_40x40.png) 50% 50%;
 	border:1px solid #fff;
 	color:#fff;
 	font-weight:bold;
