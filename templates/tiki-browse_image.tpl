@@ -83,7 +83,7 @@
 {/capture}
 {$smarty.capture.buttons}
 
-<div class="showimage" {if ($popup) }style="height: 400px"{/if}>
+<div class="showimage">
 {if $scaleinfo.clickscale >= 0}
   <a href="{$url_base}{$imageId}&amp;scalesize={$scaleinfo.clickscale}" title="{tr}Click to zoom{/tr}">
 {/if}
