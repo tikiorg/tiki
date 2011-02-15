@@ -1517,13 +1517,10 @@ function group_watch_category_and_descendants($group, $categId, $categName, $top
 	 * Returns true if the given user has edit permission for the category.
 	 */
 	function has_edit_permission($user, $categoryId) {
-		// TODO Fix this, only used by staging and approval, edit no longer has a meaning
 		global $userlib;
 		return ($userlib->user_has_permission($user,'tiki_p_admin')
-				|| ($userlib->user_has_permission($user,'tiki_p_edit_categorized') && !$userlib->object_has_one_permission($categoryId,"category"))
-				|| ($userlib->user_has_permission($user,'tiki_p_admin_categories') && !$userlib->object_has_one_permission($categoryId,"category"))				 
-				|| $userlib->object_has_permission($user, $categoryId, "category", "tiki_p_edit_categorized") 
-				|| $userlib->object_has_permission($user, $categoryId, "category", "tiki_p_admin_categories")
+				|| ($userlib->user_has_permission($user,'tiki_p_edit') && !$userlib->object_has_one_permission($categoryId,"category"))				 
+				|| $userlib->object_has_permission($user, $categoryId, "category", "tiki_p_edit")
 				);
 	}
 	
