@@ -1400,3 +1400,12 @@ textarea.tshoutbox{
 	border: #799 solid 2px;
 	color: #000;
 }
+
+
+/* jquery validation */
+
+label.error {
+	background : url('pics/icons/error.png') no-repeat;
+	color:red;
+	padding-left:20px;
+}
