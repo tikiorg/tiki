@@ -16,7 +16,7 @@
 	<td>Description</td><td><input name="playlist_description" /></td>
 </tr>
 </table>
-<br>
+<br />
 <input type="hidden" name="playlistId" value="0">
 <input type="submit" name="action" value="Create">
 </form>
@@ -29,9 +29,9 @@
 {assign var=cant value=$kmixlist->totalCount}
 
 <form name="list" action="tiki-list_kaltura_playlists.php?type=mix&action=add_entries&playlistId={$playlistId}" method="post">
-<br>
+<br />
 {include file="tiki-list_kaltura_mix_entries.tpl"}
-<br>
+<br />
 <input type="hidden" name="playlistId" value="{$playlistId}">
 <input type="hidden" name="action" value="add_entries">
 <input type="hidden" name="type" value="mix">
@@ -42,12 +42,12 @@
 {else}
 {title}Create Kaltura Playlist: Add Media Entries{/title}
 {button _text="{tr}Mix Entries{/tr}" href="tiki-list_kaltura_playlists.php?type=mix&action=add_entries&playlistId=$playlistId" }
-<br><br>
+<br /><br />
 {assign var=klist value=$kmedialist->objects}
 {assign var=cant value=$kmedialist->totalCount}
 <form action="tiki-list_kaltura_playlists.php?type=media&action=add_entries&playlistId={$playlistId}" method="post" >
 {include file="tiki-list_kaltura_media_entries.tpl"}
-<br>
+<br />
 <input type="hidden" name="playlistId" value="{$playlistId}">
 <input type="hidden" name="action" value="add_entries">
 <input type="hidden" name="type" value="media">
@@ -69,7 +69,7 @@
 <param name="flashvars" value="layoutId=playlistLight&uid=0&partner_id=23929&subp_id=2392900&k_pl_autoContinue=true&k_pl_autoInsertMedia=true&k_pl_0_name={$kplaylist->name}&k_pl_0_url=http%3A%2F%2Fwww.kaltura.com%2Findex.php%2Fpartnerservices2%2Fexecuteplaylist%3Fuid%3D%26partner_id%3D23929%26subp_id%3D2392900%26format%3D8%26ks%3D%7Bks%7D%26playlist_id%3D{$kplaylist->id}"/></object>
 </td></tr>
 <tr><td>
-<br>
+<br />
 <table class="normal">
 <tr><td width="200" class="even">Name </td><td class="even">{$kplaylist->name}</td></tr>
 <tr><td width="200" class="odd">Description </td><td class="odd">{$kplaylist->description}</td></tr>
@@ -90,8 +90,8 @@
 {button _text="{tr}Media Entries{/tr}" href="tiki-list_kaltura_entries2.php?list=media&view=browse" }
 <input type="submit" name="action" value="Create Playlist"/> 
 <input type="submit" name="action" value="Delete"/>
-<br>
-<br>
+<br />
+<br />
 <table class="normal">
 		<tr>
 			<th width="20">&nbsp;</th>
