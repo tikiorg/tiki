@@ -1623,10 +1623,6 @@ textarea#editpost2 {
 	margin-left: 25px;
 }
 
-.catitems li a {
-	white-space: nowrap;
-}
-
 /***** Tags (freetags) *****/
 .freetaglist {
 	border: 1px solid #527ca6;
