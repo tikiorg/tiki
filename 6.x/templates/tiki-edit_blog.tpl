@@ -29,17 +29,20 @@
     {tab name="{tr}General Settings{/tr}"}
       <table class="normal">
         <tr class="editblogform">
-          <td colspan="2"><label for="blog-title">{tr}Title{/tr}</label>
-		  <input type="text" name="title" id="blog-title" value="{$title|escape}" size="{$cols}" /></td>
+          <td><label for="blog-title">{tr}Title{/tr}</label></td>
+          <td><input type="text" name="title" id="blog-title" value="{$title|escape}" /></td>
         </tr>
         <tr class="editblogform">
-          <td colspan="2">
+          <td>
             <label for="blog-desc">{tr}Description{/tr}</label>
+          </td>
+          <td>
             <textarea class="wikiedit" name="description" id="blog-desc" rows="{$rows}" cols="{$cols}" wrap="virtual">{$description|escape}</textarea>
           </td>
         </tr>
         <tr class="editblogform">
-          <td colspan="2"><label>{tr}Creator{/tr}
+          <td>{tr}Creator{/tr}</td>
+          <td>
             <select name="creator">
               {if $tiki_p_admin eq 'y' or $tiki_p_blog_admin eq 'y'}
                 {foreach from=$users key=userId item=u}
@@ -48,29 +51,31 @@
               {else}
                 <option value="{$user|escape}" selected="selected">{$user|escape}</option>
               {/if}
-            </select></label> 
+            </select> 
           </td>
         </tr>
         <tr class="editblogform">
-          <td width="10"><input type="checkbox" name="public" id="blogs-allow_others" {if $public eq 'y'}checked='checked'{/if}/></td>
-		  <td><label for="blogs-allow_others">{tr}Allow other users to post in this blog{/tr}</label></td>
+          <td><label for="blogs-allow_others">{tr}Allow other users to post in this blog{/tr}</label></td>
+          <td><input type="checkbox" name="public" id="blogs-allow_others" {if $public eq 'y'}checked='checked'{/if}/></td>
         </tr>	
         <tr class="editblogform">
-          <td><input type="checkbox" name="alwaysOwner" id="blogs-always_owner" {if $alwaysOwner eq 'y'}checked='checked'{/if}/></td>
           <td><label for="blogs-always_owner">{tr}If others post to blog, Author should always be Owner{/tr}</label></td>
+          <td><input type="checkbox" name="alwaysOwner" id="blogs-always_owner" {if $alwaysOwner eq 'y'}checked='checked'{/if}/></td>
         </tr>
         <tr class="editblogform">
-          <td><input type="checkbox" name="use_find" id="blogs-search" {if $use_find eq 'y'}checked='checked'{/if}/></td>
           <td><label for="blogs-search">{tr}Allow search{/tr}</label></td>
+          <td><input type="checkbox" name="use_find" id="blogs-search" {if $use_find eq 'y'}checked='checked'{/if}/></td>
         </tr>
         <tr class="editblogform">
+          <td><label for="blogs-comments">{tr}Allow comments{/tr}</label></td>
           <td>
             <input type="checkbox" name="allow_comments" id="blogs-comments" {if $allow_comments eq 'y' or $allow_comments eq 'c'}checked='checked'{/if}{if $prefs.feature_blogposts_comments ne 'y'} disabled="disabled"{/if} />
             {if $prefs.feature_blogposts_comments ne 'y'}Global post-level comments is disabled.{/if}
           </td>
-          <td><label for="blogs-comments">{tr}Allow comments{/tr}</label></td>
         </tr>
+
         {include file='categorize.tpl'}
+
       </table>
     {/tab}
     {tab name="{tr}Display Options{/tr}"}
