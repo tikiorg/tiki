@@ -4155,7 +4155,7 @@ class TrackerLib extends TikiLib
 		}
 	}
 	function update_item_link_value($trackerId, $fieldId, $old, $new) {
-		if ($old == $new) {
+		if ($old == $new || empty($old)) {
 			return;
 		}
 		static $fields_used_in_item_links;
