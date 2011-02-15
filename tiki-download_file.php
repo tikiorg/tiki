@@ -33,8 +33,11 @@ if ( isset($_GET['fileId']) && isset($_GET['thumbnail']) && isset($_COOKIE[ sess
 				$result = $db->query($query);
 				if ( $result ) {
 					$tmp = $result->fetchRow();
-					$prefs = array('fgal_use_dir' => $tmp['value']);
+					$prefs['fgal_use_dir'] = $tmp['value'];
 				}
+			}
+			if ( !isset($prefs['fgal_use_dir']) ) {
+				$prefs['fgal_use_dir'] = '';
 			}
 
 			$skip = true;
