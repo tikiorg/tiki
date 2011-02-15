@@ -31,6 +31,12 @@ function wikiplugin_datachannel_info()
 				'filter' => 'pagename',
 				'default' => '$_SERVER[\'HTTP_REFERER\']',
 			),
+			'quietReturn' => array(
+				'required' => false,
+				'name' => tra('Do not use returnURI but instead return true quietly'),
+				'description' => tra('If set to y, will return quietly after data channel has run which would be needed if plugin is used in non-wiki page context.'),
+				'default' => 'n',
+			),
 			'buttonLabel' => array(
 				'required' => false,
 				'name' => tra('Button Label'),
@@ -258,7 +264,11 @@ function wikiplugin_datachannel( $data, $params )
 			
 			if (empty($params['returnURI'])) { $params['returnURI'] = $_SERVER['HTTP_REFERER']; }	// default to return to same page
 			if (empty($params['debug']) || $params['debug'] != 'y') {
-				header( 'Location: ' . $params['returnURI'] );
+				if (isset($params['quietReturn']) && $params['quietReturn'] == 'y') {
+					return true;
+				} else {
+					header( 'Location: ' . $params['returnURI'] );
+				}
 				die;
 			}
 			$smarty->assign('datachannel_feedbacks', array_merge($installer->getFeedback(), $profile->getFeedback()) );
