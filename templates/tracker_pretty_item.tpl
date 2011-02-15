@@ -6,7 +6,6 @@
 	{if $field.isPublic eq 'y'
 	 and ($field.isHidden eq 'n' or ($field.isHidden eq 'c' and $item.itemUser eq $user) or $field.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y')
 	  and $field.type ne 'x'
-	  and $field.type ne 'h'
 	  and (empty($listfields) or in_array($field.fieldId, $listfields)) 
 	  and ($field.type ne 'p' or $field.options_array[0] ne 'password') 
 	  and (empty($field.visibleBy) or in_array($default_group, $field.visibleBy) or $tiki_p_admin_trackers eq 'y')
