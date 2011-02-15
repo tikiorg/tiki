@@ -1003,6 +1003,20 @@ class ArtLib extends TikiLib
 		$topicId = $this->getOne($query, array($topic) );
 		return $topicId;
 	}
+	
+	function get_most_recent_article_id() {
+		$maxRecords = 1;
+		$sort_mode = 'publishDate_desc';
+		$date_min = 0;
+		$date_max = $this->now;
+		$query = 'SELECT `tiki_articles`.`articleId` FROM `tiki_articles` INNER JOIN `tiki_article_types` on `tiki_articles`.`type` = `tiki_article_types`.`type` '.
+				 'WHERE `tiki_articles`.`publishDate`>=\'0\' AND (`tiki_articles`.`publishDate`<=? OR `tiki_article_types`.`show_pre_publ`=\'y\') AND '.
+				 '(`tiki_articles`.`expireDate`>? OR `tiki_article_types`.`show_post_expire`=\'y\') AND `tiki_articles`.`ispublished`=\'y\' '.
+				 'ORDER BY `publishDate` DESC';
+		$bindvars = array( $date_max, $date_max );
+		$id = $this->getOne($query, $bindvars);
+		return $id;
+	}
 
 	function list_articles( $offset = 0
 												, $maxRecords = -1
