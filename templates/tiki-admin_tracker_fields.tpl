@@ -269,12 +269,14 @@
 	{tab name="{tr}Import/Export Trackers Fields{/tr}"}
 		<form action="tiki-admin_tracker_fields.php" method="post">
 			{if $find}<input type="hidden" name="find" value="{$find|escape}" />{/if}
-			{if $max and $max ne $prefs.maxRecords}<input type="hidden" name="max" value="{$max|escape}" />{/if}
 			{if $offset}<input type="hidden" name="offset" value="{$offset|escape}" />{/if}
 			{if $sort_mode}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
 			<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-			{tr}Export fieldId also{/tr}
-			<input type="checkbox" name="exportAll"{if $export_all eq 'y'} checked="checked"{/if}/>
+			<label for="rows-export">{tr}Rows{/tr}</label>
+			<input type="text" name="max" value="{$max|escape}" size="5" id="rows-export" />
+			<br />
+			<label for="fieldId-export">{tr}Export fieldId also{/tr}</label>
+			<input type="checkbox" name="exportAll"{if $export_all eq 'y'} checked="checked"{/if} id="fieldId-export" />
 			<input type="submit" name="refresh" value="{tr}Refresh{/tr}" />
 			{remarksbox}{tr}Check the box to re-import in this tracker and change the fields.{/tr}<br />{tr}Uncheck the box to import in another database.{/tr}{/remarksbox}
 		</form>
@@ -314,5 +316,6 @@ descriptionIsParsed = {$channels[user].descriptionIsParsed}
 </textarea><br />
 			<input type="submit" name="save" value="{tr}Import{/tr}" />
 		</form>
+	{pagination_links cant=$cant step=$max offset=$offset}{/pagination_links}
 	{/tab}
 {/tabset}
