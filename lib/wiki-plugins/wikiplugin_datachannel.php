@@ -111,6 +111,10 @@ function wikiplugin_datachannel( $data, $params )
 	global $prefs, $smarty, $headerlib;
 	$executionId = 'datachannel-exec-' . ++$execution;
 
+	if ($params['price'] == 0) {
+		// Convert things like 0.00 to empty
+		unset($params['price']);
+	}
 	$fields = array();
 	$inputfields = array();
 	$lines = explode( "\n", $data );
