@@ -336,17 +336,24 @@ if (isset($_REQUEST['display'])) {
 	$smarty->assign('mid', 'tiki-print_forum_thread.tpl');
 	// Allow PDF export by installing a Mod that define an appropriate function
 	if ($_REQUEST['display'] == 'pdf') {
-		// Method using 'mozilla2ps' mod
-		if (file_exists('lib/mozilla2ps/mod_urltopdf.php')) {
-			include_once ('lib/mozilla2ps/mod_urltopdf.php');
-			mod_urltopdf();
-		}
+		require_once 'lib/pdflib.php';
+		$generator = new PdfGenerator();
+		$pdf = $generator->getPdf( 'tiki-view_forum_thread.php', array('display' => 'print', 'comments_parentId' => $_REQUEST['comments_parentId'], 'forumId' => $_REQUEST['forumId']) );
+
+		header('Cache-Control: private, must-revalidate');
+		header('Pragma: private');
+		header("Content-Description: File Transfer");
+		header('Content-disposition: attachment; filename="'. $thread_info['title'] . '.pdf"');
+		header("Content-Type: application/pdf");
+		header("Content-Transfer-Encoding: binary");
+		header('Content-Length: '. strlen($pdf));
+		echo $pdf;
+
 	} else {
 		$smarty->display('tiki-print.tpl');
 	}
 } else {
-	// Detect if we have a PDF export mod installed
-	$smarty->assign('pdf_export', file_exists('lib/mozilla2ps/mod_urltopdf.php') ? 'y' : 'n');
+	$smarty->assign('pdf_export', ($prefs['print_pdf_from_url'] != 'none') ? 'y' : 'n');
 	$smarty->assign('display', '');
 	$smarty->assign('mid', 'tiki-view_forum_thread.tpl');
 	$smarty->display('tiki.tpl');
