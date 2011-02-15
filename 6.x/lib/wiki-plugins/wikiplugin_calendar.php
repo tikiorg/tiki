@@ -9,7 +9,7 @@ function wikiplugin_calendar_info() {
 	return array(
 		'name' => tra('Calendar'),
 		'documentation' => 'PluginCalendar',
-		'description' => tra('Display a calendar and its events'),
+		'description' => tra('Display a calendar and its events in a wiki page'),
 		'prefs' => array( 'feature_calendar', 'wikiplugin_calendar' ),
 		'params' => array(
 			'calIds' => array(
