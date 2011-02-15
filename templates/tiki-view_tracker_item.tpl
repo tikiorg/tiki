@@ -3,6 +3,8 @@
 
 {title help="trackers"}{$tracker_info.name|escape}{/title}
 
+{if $print_page ne 'y'}
+
 {* --------- navigation ------ *}
 <div class="navbar">
 	 {if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
@@ -53,6 +55,7 @@
 {/if}
 
 {include file='tracker_error.tpl'}
+{/if}{*print_page*}
 
 {tabset name='tabs_view_tracker_item'}
 
@@ -134,7 +137,7 @@
 
 {tab name=$tabcomment_vtrackit}
 
-{if $tiki_p_comment_tracker_items eq 'y'}
+{if $print_page ne 'y' and $tiki_p_comment_tracker_items eq 'y'}
 <h2>{tr}Add a Comment{/tr}</h2>
 <form action="tiki-view_tracker_item.php" method="post" id="commentform" name="commentform">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
@@ -157,7 +160,7 @@
 {section name=ix loop=$comments}
 <div class="commentbloc">
 <b>{$comments[ix].title|escape}</b> {if $comments[ix].user}{tr}by{/tr} {$comments[ix].user|userlink}{/if}
-  {if $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>|&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}"
+  {if $print_page ne 'y' and $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>|&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}"
 title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;]{/if}
 <br />
 <small>{tr}posted on{/tr}: {$comments[ix].posted|tiki_short_datetime}</small><br />
@@ -177,7 +180,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;
 {/if}
 
 {* --------------------------------------------------------------- tab with edit --- *}
-{if ($tiki_p_modify_tracker_items eq 'y' and $item_info.status ne 'p' and $item_info.status ne 'c') or ($tiki_p_modify_tracker_items_pending eq 'y' and $item_info.status eq 'p') or ($tiki_p_modify_tracker_items_closed eq 'y' and $item_info.status eq 'c')or $special}
+{if $print_page ne 'y' && ($tiki_p_modify_tracker_items eq 'y' and $item_info.status ne 'p' and $item_info.status ne 'c') or ($tiki_p_modify_tracker_items_pending eq 'y' and $item_info.status eq 'p') or ($tiki_p_modify_tracker_items_closed eq 'y' and $item_info.status eq 'c')or $special}
 {tab name="{tr}Edit/Delete{/tr}"}
 <h2>{tr}Edit Item{/tr}</h2>
 
@@ -563,8 +566,12 @@ or $cur_field.type eq 'i'}
 {/if}
 
 {/tabset}
-
 <br /><br />
+
+{if $print_page eq 'y'}
+	{capture name=url}{$base_url}{$itemId|sefurl:trackeritem}{/capture}
+	{tr}The original document is available at{/tr} <a href="{$smarty.capture.url}">{$smarty.capture.url}</a>
+{/if}
 
 {foreach from=$ins_fields key=ix item=cur_field}
 {if $cur_field.http_request}
