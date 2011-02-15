@@ -12,13 +12,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 require_once $smarty->_get_plugin_filepath('modifier','tiki_date_format');
-function smarty_modifier_tiki_short_datetime($string, $intro='') {
+function smarty_modifier_tiki_short_datetime($string, $intro='', $same='y') {
 	global $prefs;
 
 	$date = smarty_modifier_tiki_date_format($string, $prefs['short_date_format']);
 	$time = smarty_modifier_tiki_date_format($string, $prefs['short_time_format']);
 	
-	if( $prefs['tiki_same_day_time_only'] == 'y' && $date == smarty_modifier_tiki_date_format( time(), $prefs['short_date_format'] ) ) {
+	if( $same != 'n' && $prefs['tiki_same_day_time_only'] == 'y' && $date == smarty_modifier_tiki_date_format( time(), $prefs['short_date_format'] ) ) {
 		//tra('on') tra('on:') tra('at') tra('at:')
 		return empty($intro)? $time: str_replace(array('on', 'On'), array('at', 'At'), $intro).' '.$time;
 	} else {

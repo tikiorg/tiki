@@ -266,7 +266,11 @@
 		{elseif $field_value.options_array[0] eq 't'}
 			{$field_value.value|tiki_short_time}
 		{else}
-			{$field_value.value|tiki_short_datetime}
+			{if $list_mode eq 'csv'}
+				{$field_value.value|tiki_short_datetime:'':n}
+			{else}
+				{$field_value.value|tiki_short_datetime}
+			{/if}
 		{/if}
 	{else}&nbsp;{/if}
 
