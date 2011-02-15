@@ -596,8 +596,8 @@ a.forumnameread {color: #fd0006}
 
 /** Tabs **/
 .tabs {
-	border-bottom: solid 1px #640000 !important;
-	margin-bottom: -18px}
+	padding: .2em .2em 0;
+	margin: 0 0.2em 0 0;}
 
 .tabmark {
 	background: #5e0000;
