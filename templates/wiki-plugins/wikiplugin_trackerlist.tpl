@@ -77,7 +77,7 @@
 						{/if}
 					{else}
 		<th class="auto field{$ix.fieldId}">
-						{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}
+						{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='f_'|cat:$ix.fieldId session_filters='y'}{$ix.name|default:"&nbsp;"}{/self_link}
 		</th>
 					{/if}
 				{/if}
