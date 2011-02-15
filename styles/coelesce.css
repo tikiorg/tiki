@@ -327,7 +327,7 @@ body.tiki_wiki_page.manage #c1c2 #wrapper #col1 #tiki-center {
 	display: none; /*inline*/
 }
 
-#sitesearchbar {
+.searchbar_wrapper {
 	float: right;
 	margin-top: 3px;
 	margin-right: 0;
@@ -339,7 +339,7 @@ body.tiki_wiki_page.manage #c1c2 #wrapper #col1 #tiki-center {
 	color: #517ea7;
 }
 
-#sitesearchbar .wrapper {
+#sitesearchbar {
 	background: url(coelesce/search_wide.jpg) 100% 0 no-repeat;
 	margin-right: 0;
 	margin-left: auto;

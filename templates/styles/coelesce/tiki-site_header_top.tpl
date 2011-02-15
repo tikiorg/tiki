@@ -3,8 +3,8 @@
 {include file='tiki-site_header_top_begin.tpl'}
 {include file='tiki-secondary_sitemenu.tpl'}
 <div id="login_search">
-	<div class="wrapper">
-		{include file='tiki-site_header_login.tpl'}
+	{include file='tiki-site_header_login.tpl'}
+	<div class="searchbar_wrapper">
 		{include file='tiki-sitesearchbar.tpl'}
 	</div>
 </div>
