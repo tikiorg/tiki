@@ -15,6 +15,10 @@ if (version_compare(PHP_VERSION, '5.1.0', '<')) {
 	header('location: tiki-install.php');
 	exit;
 }
+
+// Be sure that the user is not already defined by PHP on hosts that still have the php.ini config "register_globals = On"
+unset($user);
+
 require_once 'lib/setup/third_party.php';
 require_once 'tiki-filter-base.php';
 // Enable Versioning
