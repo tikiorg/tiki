@@ -109,7 +109,7 @@ function prefs_user_list() {
 		),
 		'user_register_prettytracker' => array(
 			'name' => tra('Use pretty trackers for registration form'),
-			'help' => 'Pretty+Trackers',
+			'help' => 'User+Tracker',
 			'description' => tra('Use pretty trackers for registration form'),
 			'type' => 'flag',
 			'dependencies' => array(
