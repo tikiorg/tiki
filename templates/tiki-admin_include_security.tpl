@@ -19,6 +19,8 @@
 			{preference name=feature_htmlpurifier_output}
 			{preference name=menus_item_names_raw}
 			
+			{preference name=session_protected}
+
 			{tr}Please also see:{/tr} <a href="tiki-admin.php?page=login">{tr}HTTPS (SSL) and other login preferences{/tr}</a>
 			
 		<fieldset>
