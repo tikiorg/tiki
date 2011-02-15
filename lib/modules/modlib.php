@@ -406,7 +406,23 @@ class ModLib extends TikiLib
 
 		return $out;
 	}
-
+	
+	function list_module_files() {
+		$files = array();
+		if (is_dir('modules')) {
+			if ($dh = opendir('modules')) {
+				while (($file = readdir($dh)) !== false) {
+					if (preg_match("/^mod-func-.*\.php$/", $file)) {
+						array_push($files, $file);
+					}
+				}
+				closedir ($dh);
+			}
+		}
+		sort($files);
+		return $files;
+	}
+	
 	function get_module_info( $module ) {
 		if( is_array( $module ) ) {
 			$moduleName = $module['name'];
