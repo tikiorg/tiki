@@ -50,6 +50,11 @@ if ($prefs['wikiapproval_approved_category'] == 0 && $tiki_p_edit != 'y' || $pre
 $staging_page = $page;
 $page = $tikilib->get_approved_page($page);
 
+// If approved page does not exist, then create it first
+if ($page && !$tikilib->page_exists($page)) {
+	$tikilib->create_page($page, 0, '', $tikilib->now, 'Staging creation');
+}
+
 // If either page doesn't exist then display an error
 if (!$tikilib->page_exists($page) || !$tikilib->page_exists($staging_page)) { 
 	$smarty->assign('msg', tra("Either staging or approved page cannot be found"));
