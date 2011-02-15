@@ -30,7 +30,7 @@
  end mobile *}
 		<div id="fixedwidth"> {* enables fixed-width layouts *}
 			{if $prefs.feature_layoutshadows eq 'y'}<div id="main-shadow">{eval var=$prefs.main_shadow_start}{/if}
-			<div id="main" data-role="page">
+			<div id="main" data-role="page">{* mobile *}
 				{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y') }
 					{if $prefs.module_zones_top eq 'fixed' or ($prefs.module_zones_top ne 'n' && $top_modules|@count > 0)}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}
@@ -139,7 +139,7 @@
 										<div id="right_modules" class="content modules">
 											<div data-role="collapsible-set" data-theme="{$prefs.mobile_theme_modules}">{* mobile *}
 												{if $module_pref_errors}
-													<div data-role="collapsible" data-theme="{$prefs.mobile_theme_modules}">
+													<div data-role="collapsible" data-theme="{$prefs.mobile_theme_modules}" data-collapsed="true">
 														<h3 href="#" class="error">{tr}Module errors{/tr}</h3>
 														{remarksbox type="warning" title="{tr}Module errors{/tr}"}
 															{tr}The following modules could not be loaded{/tr}

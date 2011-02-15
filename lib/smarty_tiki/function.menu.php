@@ -94,7 +94,9 @@ function smarty_function_menu($params, &$smarty)
 	if ($prefs['mobile_feature'] !== 'y' || $prefs['mobile_mode'] !== 'y') {
 		return '<nav class="role_navigation">' . $data . '</nav>';
 	} else {
-		$data = preg_replace('/<ul ([^>]*)>/Umi', '<ul $1  data-role="listview" data-theme="'.$prefs['mobile_theme_menus'].'">', $data, 1);
+		$data = preg_replace('/<ul ([^>]*)>/Umi', '<ul $1 data-role="listview" data-theme="'.$prefs['mobile_theme_menus'].'">', $data, 1);
+		// crude but effective hack for loading menu items via ajax - hopefully to be replaced by something more elegant soon
+		$data = preg_replace('/<a ([^>]*)>/Umi', '<a $1 rel="external">', $data);
 		return $data;
 	}
 }
