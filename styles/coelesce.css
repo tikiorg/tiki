@@ -455,13 +455,13 @@ a.flip:visited,
 .tellafriend a,
 .share a,
 .tellafriend a:visited,
-.share a:visited, {
+.share a:visited {
 	color: silver;
 }
 
 a.flip:hover,
 .tellafriend a:hover,
-.share a:hover, {
+.share a:hover {
 	color: #517ea7;
 }
 
@@ -617,6 +617,16 @@ a.phplmselected:hover {
 	padding: 6px 1em;
 	font-weight: bold;
 	font-size: 12px;
+}
+
+.box-data .cssmenu_vert {
+	position: relative;
+	z-index: 700;
+}
+
+.cssmenu_vert li.menuLevel1,
+.cssmenu_horiz li.menuLevel1 {
+        z-index: 991;
 }
 
 .box-data .cssmenu_vert li {
