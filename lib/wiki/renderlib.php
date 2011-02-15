@@ -513,7 +513,7 @@ class WikiRenderer
 	function setupStaging() // {{{
 	{
 		global $prefs, $tikilib, $categlib, $histlib, $tiki_p_edit;
-
+		require_once 'lib/categories/categlib.php';
 		if ($prefs['feature_wikiapproval'] != 'y')
 			return;
 
