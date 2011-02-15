@@ -165,6 +165,9 @@ RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA
 # increase memory
 #php_value memory_limit 128M
 
+# increase execution time (default value in apache use to be 30, and in some cases of long wiki pages with many plugins it may take longer)
+#php_value max_execution_time 90
+
 # In some cases you may see open_basedir warnings about Smarty accessing php files that it shouldn't
 # The following line (uncommented) will reset the include path to use only Tiki's files which will solve this in most cases
 #php_value include_path "." 
