@@ -3731,9 +3731,12 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 
-		$ret2 = $this->get_local_perms($user, $objectId, $objectType, $info, true);
-		if ($ret2) {
-			$ret = $ret2;
+		// Skip those 'local' permissions for admin users and when global is not requested.
+		if ($global && ! Perms::get()->admin) {
+			$ret2 = $this->get_local_perms($user, $objectId, $objectType, $info, true);
+			if ($ret2) {
+				$ret = $ret2;
+			}
 		}
 		
 		return $ret;
@@ -3826,7 +3829,8 @@ class TikiLib extends TikiDb_Bridge
 					}
 					return $ret;
 				}
-				if ($prefs['feature_wiki_userpage'] == 'y' && !empty($user) && strcasecmp($prefs['feature_wiki_userpage_prefix'], substr($objectId, 0, strlen($prefs['feature_wiki_userpage_prefix']))) == 0) {
+				// Enabling userpage is not enough, the prefix must be present, otherwise, permissions will be messed-up on new page creation
+				if ($prefs['feature_wiki_userpage'] == 'y' && !empty($prefs['feature_wiki_userpage_prefix']) && !empty($user) && strcasecmp($prefs['feature_wiki_userpage_prefix'], substr($objectId, 0, strlen($prefs['feature_wiki_userpage_prefix']))) == 0) {
 					if (strcasecmp($objectId, $prefs['feature_wiki_userpage_prefix'].$user) == 0) { //can edit his page
 						if (!$global) {
 							$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
