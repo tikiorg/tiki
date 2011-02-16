@@ -71,13 +71,13 @@
 		<tr>
 			<td>{tr}Rule active from{/tr}</td>
 			<td>
-				{html_select_date prefix="date_from" time="$info.date_from" field_order=$prefs.display_field_order}
+				{html_select_date prefix="date_from" time=$info.date_from field_order=$prefs.display_field_order}
 			</td>
 		</tr>
 		<tr>
 			<td>{tr}Rule active until{/tr}</td>
 			<td>
-				{html_select_date prefix="date_to" time="$info.date_to" field_order=$prefs.display_field_order}
+				{html_select_date prefix="date_to" time=$info.date_to field_order=$prefs.display_field_order}
 			</td>
 		</tr>
 		<tr>
