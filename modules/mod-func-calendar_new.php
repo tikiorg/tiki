@@ -16,6 +16,7 @@ function module_calendar_new_info() {
 		'name' => tra('Calendar'),
 		'description' => tra('Includes a calendar or a list of calendar events.'),
 		'prefs' => array( 'feature_calendar' ),
+		'documentation' => 'Module calendar_new',
 		'params' => array(
 			'calIds' => array(
 				'name' => tra('Calendars filter'),

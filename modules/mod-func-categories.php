@@ -16,6 +16,7 @@ function module_categories_info() {
 		'name' => tra('Categories'),
 		'description' => tra('Displays links to categories as a tree.'),
 		'prefs' => array( 'feature_categories' ),
+		'documentation' => 'Module categories',
 		'params' => array(
 			'type' => array(
 				'name' => tra('Object type filter'),

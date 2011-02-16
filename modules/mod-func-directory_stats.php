@@ -16,6 +16,7 @@ function module_directory_stats_info() {
 		'name' => tra('Directory statistics'),
 		'description' => tra('Displays statistics about the directory, including the number of sites validated and to validate, the number of categories, of searches and of visited links.'),
 		'prefs' => array( 'feature_directory' ),
+		'documentation' => 'Module directory_stats',
 		'params' => array()
 	);
 }

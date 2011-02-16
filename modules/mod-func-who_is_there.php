@@ -16,6 +16,7 @@ function module_who_is_there_info() {
 		'name' => tra('Online users'),
 		'description' => tra('Displays information about users currently logged in.'),
 		'prefs' => array(),
+		'documentation' => 'Module who_is_there',
 		'params' => array(
 			'content' => array(
 				'name' => tra('Content to display'),

@@ -16,6 +16,7 @@ function module_random_images_info() {
 		'name' => tra('Random image'),
 		'description' => tra('Displays a random image.'),
 		'prefs' => array( 'feature_galleries' ),
+		'documentation' => 'Module random_images',
 		'params' => array(
 			'galleryId' => array(
 				'name' => tra('Gallery identifier'),

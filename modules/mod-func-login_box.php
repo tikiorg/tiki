@@ -16,6 +16,7 @@ function module_login_box_info() {
 		'name' => tra('Login'),
 		'description' => tra('Login box'),
 		'prefs' => array(),
+		'documentation' => 'Module login_box',
 		'params' => array(
 			'input_size' => array(
 				'name' => tra('Input size'),
