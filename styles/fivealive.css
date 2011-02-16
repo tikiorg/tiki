@@ -44,7 +44,7 @@ body.fixed_width #fixedwidth {
 
 /* fixed width */
 #header_fixedwidth,
-#middle_fixedwidth,
+#middle,
 .footerbgtrap {
 	width: 990px;
 	margin: 0 auto;
