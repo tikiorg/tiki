@@ -30,6 +30,9 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 
 	// some defaults
 	$params['_toolbars'] = isset($params['_toolbars']) ? $params['_toolbars'] : 'y';
+	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
+		$params['_toolbars'] = 'n';
+	}
 	if ( $prefs['javascript_enabled'] != 'y') $params['_toolbars'] = 'n';
 
 	if (!isset($params['_wysiwyg'])) {	// should not be set usually(?)

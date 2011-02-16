@@ -33,6 +33,7 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 		$prefs['feature_layoutshadows'] = 'n';
 		$prefs['feature_sefurl'] = 'n';
 		$prefs['feature_wysiwyg'] = 'n';
+		$prefs['ajax_autosave'] = 'n';
 
 		$headerlib->add_js('function sfHover() {alert("not working?");}', 100);	// try and override the css menu func
 
