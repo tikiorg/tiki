@@ -91,19 +91,14 @@
       </td>
     </tr>
   
-    {if $prefs.feature_gmap eq 'y'}
     <tr>
       <td>{tr}Location:{/tr}</td>
       <td>
-        {if 0 and $prefs.feature_ajax eq 'y' and !empty($user_prefs.lat)}{* AJAX_TODO *}
-          {wikiplugin _name="googlemap" type="user" setdefaultxyz="" locateitemtype="user" locateitemid="$userwatch" width="200" height="100" controls="n"}{/wikiplugin}
-        {/if}
-        <p>
-          {button href="tiki-gmap_locator.php" for="user" view_user=$userinfo.login|escape for="user" _text="{tr}Use Google Map locator{/tr}" _auto_args='view_user,for'}
-        </p>
+	  	<div class="map-container" style="height: 250px;" data-target-field="location">
+		</div>
+		<input type="hidden" name="location" value="{$location|escape}"/>
       </td>
     </tr>
-    {/if}
 
     <tr>
       <td>{tr}Homepage URL:{/tr}</td>
@@ -315,27 +310,6 @@
       </tr>
     {/if}
   
-    {if $prefs.feature_maps eq 'y' or $prefs.feature_gmap eq 'y'}
-      <tr>
-        <td>{tr}Longitude:{/tr}</td>
-        <td>
-          <input type="text" name="lon" value="{$user_prefs.lon|escape}" /> <em>Use WGS84/decimal degrees</em>
-        </td>
-      </tr>
-      <tr>
-        <td>{tr}Latitude:{/tr}</td>
-        <td>
-          <input type="text" name="lat" value="{$user_prefs.lat|escape}" /> <em>for longitude and latitude</em>
-        </td>
-      </tr>
-      <tr>
-        <td>{tr}Map zoom:{/tr}</td>
-        <td>
-          <input type="text" name="zoom" value="{$user_prefs.zoom|escape}" />
-        </td>
-      </tr>
-    {/if}
-
     {if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
       <tr>
         <th colspan="2">{tr}User Messages{/tr}</th>

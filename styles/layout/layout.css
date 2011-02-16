@@ -2200,4 +2200,8 @@ div.aclabel, span.aclabel, label.aclabel {
 	list-style: none;
 }
 
+.minimap {
+	height: 180px;
+}
+
 /* End of File */

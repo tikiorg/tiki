@@ -637,6 +637,13 @@ class HeaderLib
 		}
 		return $files;
 	}
+
+	function add_map() {
+		// Annoying notice with copyrights still remain in google
+		//$this->add_jsfile('http://maps.google.com/maps/api/js?v=3.3&sensor=false', 'external');
+		$this->add_jsfile('http://openlayers.org/api/2.10/OpenLayers.js', 'external');
+		$this->add_js('$(".map-container:not(.done)").addClass("done").createMap();');
+	}
 }
 
 $headerlib = new HeaderLib;
