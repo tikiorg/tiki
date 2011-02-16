@@ -33,19 +33,20 @@ body.filegal_popup {
  /***** Layout *****/
 
 /*#fixedwidth*/
-#fixedwidth {
+.fixedwidth {
 	margin: 0;
 }
 
-body.fixed_width #fixedwidth {
+body.fixed_width .fixedwidth {
 	width: 100%;
 	margin: 0;
 }
 
 /* fixed width */
-#header_fixedwidth,
-#middle,
-.footerbgtrap {
+.fixed_width .fixedwidth .fixedwidth
+/*.fixed_width #header_fixedwidth,
+.fixed_width #middle,
+.fixed_width .footerbgtrap*/ {
 	width: 990px;
 	margin: 0 auto;
 }

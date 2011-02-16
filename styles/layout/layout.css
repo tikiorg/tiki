@@ -29,7 +29,7 @@ header, nav, article, footer, address {
 } 
 
 /* general #fixedwidth wrapper when fixed width is off */
-#fixedwidth {
+.fixedwidth {
 	display: table;
 	margin: auto;
 	margin-top: 0;

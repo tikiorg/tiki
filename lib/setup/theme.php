@@ -17,7 +17,7 @@ if ( isset($_SESSION['try_style']) ) {
 }
 
 if ($prefs['feature_fixed_width'] === 'y') {
-	$headerlib->add_css('.fixed_width .fixedwidth { width:' . (!empty($prefs['layout_fixed_width']) ? $prefs['layout_fixed_width'] : '990px') . '; }');
+	$headerlib->add_css('.fixed_width .fixedwidth, .fixed_width .fixedwidth .fixedwidth { width:' . (!empty($prefs['layout_fixed_width']) ? $prefs['layout_fixed_width'] : '990px') . '; }');
 }
 
 if ( $prefs['useGroupTheme'] == 'y' && $group_style = $userlib->get_user_group_theme()) {
