@@ -4,7 +4,7 @@
 	Visit http://themes.tiki.org for more information.
 */
  
-/* Import foundation CSS files. *
+/* Don't import foundation CSS files. *
 @import url("lite/lite.css");
 @import url("layout/layout.css");
 @import url("layout/design.css");
@@ -57,4 +57,116 @@
 }
 
 /* end remarks boxes */
+
+/* reduce visual clutter */
+.cachedStatus {
+	display: none;
+}
+
+/* some help for tables */
+
+.normal {
+	border: 1px solid 		#ccc;
+	-moz-border-radius: 	.6em;
+	-webkit-border-radius: 	.6em;
+	border-radius: 			.6em;
+	border-collapse:		collapse;
+}
+
+.normal td, .normal th {
+	padding: 0.2em 0.4em;
+}
+
+.ui-content.ui-body-a .normal th {
+	border:				1px solid #2A2A2A;
+	background: 		#111111;
+	color: 				#ffffff;
+	font-weight:		bold;
+	text-shadow:		0 -1px 1px #000000;
+	background-image: -moz-linear-gradient(top,
+							#3c3c3c,
+							#111111);
+	background-image: -webkit-gradient(linear,left top,left bottom,
+							color-stop(0, 	#3c3c3c),
+							color-stop(1, 		#111111));
+  	-msfilter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#3c3c3c', EndColorStr='#111111')";
+}
+
+.ui-content.ui-content.ui-body-a .even {
+	background: #333;
+}
+
+.ui-content.ui-body-b .normal th {
+	border: 1px solid 		#456f9a;
+	background: 			#5e87b0;
+	color: 					#fff;
+	font-weight: bold;
+	text-shadow: 0 -1px 1px #254f7a;
+	background-image: -moz-linear-gradient(top,
+							#81a8ce,
+							#5e87b0);
+	background-image: -webkit-gradient(linear,left top,left bottom,
+							color-stop(0, 		#81a8ce),
+							color-stop(1, 		#5e87b0));
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#81a8ce', EndColorStr='#5e87b0')";
+}
+
+.ui-content.ui-content.ui-body-b .even {
+	background: #ccc;
+}
+
+.ui-content.ui-body-c .normal th {
+	border: 1px solid 		#B3B3B3;
+	background: 			#e9eaeb;
+	color: 					#3E3E3E;
+	font-weight: bold;
+	text-shadow: 0 1px 1px 	#fff;
+	background-image: -moz-linear-gradient(top,
+							#f0f0f0,
+							#e9eaeb);
+	background-image: -webkit-gradient(linear,left top,left bottom,
+							color-stop(0, 	#f0f0f0),
+							color-stop(1, 	#e9eaeb));
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#f0f0f0', EndColorStr='#e9eaeb')";
+}
+
+.ui-content.ui-body-c .even {
+	background: #ddd;
+}
+
+.ui-content.ui-body-d .normal th {
+	border: 1px solid 		#ccc;
+	background: 			#bbb;
+	color: 					#333;
+	text-shadow: 0 1px 0 #eee;
+	background-image: -moz-linear-gradient(top,
+							#ddd,
+							#bbb);
+	background-image: -webkit-gradient(linear,left top,left bottom,
+							color-stop(0, 		#ddd),
+							color-stop(1, 		#bbb));
+  	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#dddddd', EndColorStr='#bbbbbb')";
+}
+
+.ui-content.ui-body-d .even {
+	background: #f8f8f8;
+}
+
+.ui-content.ui-body-e table th {
+	border: 1px solid 		#F7C942;
+	background: 			#fadb4e;
+	color: 					#333;
+	text-shadow: 0 1px 0 	#fff;
+	background-image: -moz-linear-gradient(top,
+							#fceda7,
+							#fadb4e);
+	background-image: -webkit-gradient(linear,left top,left bottom,
+							color-stop(0, 		#fceda7),
+							color-stop(1, 		#fadb4e));
+  	-msfilter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#fceda7', EndColorStr='#fadb4e')";
+}
+
+.ui-content.ui-body-e .even {
+	background: #FEEAA1;
+}
 

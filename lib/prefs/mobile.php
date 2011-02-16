@@ -11,7 +11,7 @@ function prefs_mobile_list() {
 		'' => tra('Default'),
 		'a' => 'A',
 		'b' => 'B',
-		'c' => 'D',
+		'c' => 'C',
 		'd' => 'D',
 		'e' => 'E',
 	);
