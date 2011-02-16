@@ -60,7 +60,7 @@
 		</ul>
 		{foreach from=$module_zones key=zone_initial item=zone_info}
 			<div id="{$zone_info.id}_modules">
-				<table class="normal">
+				<table class="normal" id="assigned_zone_{$zone_initial}">
 					<tr>
 						<th>{tr}Name{/tr}</th>
 						<th>{tr}Order{/tr}</th>
@@ -77,8 +77,8 @@
 							<td>{$module.ord}</td>
 							<td>{$module.cache_time}</td>
 							<td>{$module.rows}</td>
-							<td style="max-width: 40em; white-space: normal;font-size:smaller;">{$module.params|stringfix:"&":"<br />"}</td>
-							<td>{$module.module_groups}</td>
+							<td style="font-size:smaller;">{$module.params|escape:unescape|replace:"+":" "|replace:"&":"<br />"}</td>
+							<td style="font-size:smaller;">{$module.module_groups}</td>
 							<td>
 								<a class="link" href="tiki-admin_modules.php?edit_assign={$module.moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 								{if $top[0].moduleId ne $module.moduleId}

@@ -308,10 +308,20 @@ a.admbox.off img {
 
 /* tiki 7 modules revamp */
 
-.assigned_modules {
-	padding: 1em 2em 1em 0;
-	width: 40%;
-	min-height: 10em;
+#assigned_modules {
+}
+
+#assigned_modules tr {
+	cursor: pointer;
+	border: 1px solid transparent;
+}
+
+#assigned_modules tr.odd:hover {
+	border-color: #ccc;
+}
+
+#assigned_modules tr.even:hover {
+	border-color: #bbb;
 }
 
 .module-placeholder {
