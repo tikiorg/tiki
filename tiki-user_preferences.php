@@ -160,7 +160,7 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 	if (isset($_REQUEST["homePage"])) $tikilib->set_user_preference($userwatch, 'homePage', $_REQUEST["homePage"]);
 
 	if (isset($_REQUEST['location'])) {
-		if (preg_match("/^(-?\d*(\.\d+)?),(-?\d*(\.\d+)?):(\d+)$/", $_REQUEST['location'], $parts)) {
+		if (preg_match("/^(-?\d*(\.\d+)?),(-?\d*(\.\d+)?),(\d+)$/", $_REQUEST['location'], $parts)) {
 			$tikilib->set_user_preference($userwatch, 'lat', $parts[1]);
 			$tikilib->set_user_preference($userwatch, 'lon', $parts[3]);
 			$tikilib->set_user_preference($userwatch, 'zoom', $parts[5]);
@@ -315,7 +315,7 @@ if ($lat || $lon) {
 	$location = "$lat,$lon";
 
 	if ($zoom) {
-		$location .= ":$zoom";
+		$location .= ",$zoom";
 	}
 }
 
