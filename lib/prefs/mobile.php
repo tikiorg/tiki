@@ -89,5 +89,15 @@ function prefs_mobile_list() {
 				'mobile_feature',
 			),
 		),
+		'mobile_use_latest_lib' => array(
+			'name' => tra('Use Latest Library'),
+			'description' => tra('Use latest test version of the jquery.mobile'),
+			'help' => 'Mobile',
+			'warning' => tra('Experimental. This feature is even more under development.'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'mobile_feature',
+			),
+		),
 	);
 }

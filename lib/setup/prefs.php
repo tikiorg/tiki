@@ -1716,6 +1716,7 @@ function get_default_prefs() {
 		'mobile_theme_footer' => '',
 		'mobile_theme_modules' => '',
 		'mobile_theme_menus' => '',
+		'mobile_use_latest_lib' => 'n',
 		
 		// JQuery
 		'feature_jquery' => 'y',			// Default JS lib for - now "hard-wired" on if javascript_enabled

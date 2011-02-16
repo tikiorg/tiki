@@ -222,10 +222,15 @@ if ($prefs['javascript_enabled'] != 'n') {
 	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 
 		$headerlib->add_jsfile( 'lib/jquery_tiki/tiki-jquery.mobile.js' );
-		
-		$headerlib->add_jsfile( 'lib/jquery/jquery.mobile/jquery.mobile.js' );
-		$headerlib->add_cssfile( 'lib/jquery/jquery.mobile/jquery.mobile.css' );
 
+		if ($prefs['mobile_use_latest_lib'] === 'y') {
+			$headerlib->add_jsfile( 'http://jquerymobile.com/test/js/' );
+			$headerlib->add_cssfile( 'http://jquerymobile.com/test/themes/default/' );
+		} else {
+			$headerlib->add_jsfile( 'lib/jquery/jquery.mobile/jquery.mobile.js' );
+			$headerlib->add_cssfile( 'lib/jquery/jquery.mobile/jquery.mobile.css' );
+		}
+		
 		$headerlib->drop_cssfile('css/cssmenus.css');
 
 	} else {

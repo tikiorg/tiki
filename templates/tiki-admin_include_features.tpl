@@ -204,6 +204,7 @@
 						{preference name=mobile_theme_footer}
 						{preference name=mobile_theme_modules}
 						{preference name=mobile_theme_menus}
+						{preference name=mobile_use_latest_lib}
 						</fieldset>
 					</div>
 				</fieldset>
