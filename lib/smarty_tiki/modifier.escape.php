@@ -98,6 +98,9 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'UTF-8'
            }
            return $_res;
 
+        case 'unescape':
+            return rawurldecode($string);
+
         default:
             return $string;
     }
