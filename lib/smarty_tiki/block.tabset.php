@@ -80,9 +80,17 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 		$max = $smarty_tabset_i_tab - 1;
 		$ini = $smarty_tabset_i_tab - count($smarty_tabset);
 		$focus = $ini;
-		$ret .= '<div class="container' . $content_class . '">';
+		if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
+			$mobile_div_data = ' data-role="controlgroup" data-type="horizontal"';
+			$mobile_a_data = ' data-role="button"';
+		} else {
+			$mobile_div_data = '';
+			$mobile_a_data = '';
+		}
+		$ret .= '<div class="container' . $content_class . '"'. $mobile_div_data.'>';
 		foreach ($smarty_tabset as $value) {
-			$ret .= '<span id="tab'.$focus.'" class="tabmark '.($focus == $cookietab ? 'tabactive' : 'tabinactive').'"><a href="#content'.$focus.'" onclick="tikitabs('.$focus.','.$max.','.$ini.'); return false;">'.$value.'</a></span>';
+			$ret .= '<span id="tab'.$focus.'" class="tabmark '.($focus == $cookietab ? 'tabactive' : 'tabinactive').'">'.
+				'<a href="#content'.$focus.'" onclick="tikitabs('.$focus.','.$max.','.$ini.'); return false;"'.$mobile_a_data.'>'.$value.'</a></span>';
 			++$focus;
 		}
 		$ret .= "</div></div>$content";
