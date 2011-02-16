@@ -1969,6 +1969,9 @@ a.viewmodeon img.icon {
 	display: inline;
 }
 
+.dtstart {
+	color: #D8D8D8;
+}
 /*****  Polls  *****/
 .pollresults {
 	margin-top: 5px;
