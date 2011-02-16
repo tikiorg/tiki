@@ -93,7 +93,7 @@ function prefs_mobile_list() {
 			'name' => tra('Use Latest Library'),
 			'description' => tra('Use latest test version of the jquery.mobile'),
 			'help' => 'Mobile',
-			'warning' => tra('Experimental. This feature is even more under development.'),
+			'warning' => tra('Caution: Uses jqm development server, please use sparingly.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'mobile_feature',

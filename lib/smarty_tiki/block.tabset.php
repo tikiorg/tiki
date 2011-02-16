@@ -90,7 +90,8 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 		$ret .= '<div class="container' . $content_class . '"'. $mobile_div_data.'>';
 		foreach ($smarty_tabset as $value) {
 			$ret .= '<span id="tab'.$focus.'" class="tabmark '.($focus == $cookietab ? 'tabactive' : 'tabinactive').'">'.
-				'<a href="#content'.$focus.'" onclick="tikitabs('.$focus.','.$max.','.$ini.'); return false;"'.$mobile_a_data.'>'.$value.'</a></span>';
+				'<a href="#' . ( empty($mobile_a_data) ? 'content'.$focus.'"' : '"' ) .
+				' onclick="tikitabs('.$focus.','.$max.','.$ini.'); return false;"'.$mobile_a_data.'>'.$value.'</a></span>';
 			++$focus;
 		}
 		$ret .= "</div></div>$content";

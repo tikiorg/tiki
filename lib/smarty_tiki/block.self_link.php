@@ -141,9 +141,10 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 				$content = smarty_function_icon($icon_params, $smarty);
 			}
 
-			$link = ( ( isset($params['_class']) && $params['_class'] != '' ) ? 'class="'.$params['_class'].'" ' : '' )
-				. ( ( isset($params['_style']) && $params['_style'] != '' ) ? 'style="'.$params['_style'].'" ' : '' )
-				. ( ( isset($params['_title']) && $params['_title'] != '' ) ? 'title="'.str_replace('"','\"',$params['_title']).'" ' : '' );
+			$link = ( !empty($params['_class']) ? 'class="'.$params['_class'].'" ' : '' )
+				. ( !empty($params['_style']) ? 'style="'.$params['_style'].'" ' : '' )
+				. ( !empty($params['_title']) ? 'title="'.str_replace('"','\"',$params['_title']).'" ' : '' )
+				. ( !empty($params['_rel']) ? 'rel="'.str_replace('"','\"',$params['_rel']).'" ' : '' );
 			foreach ( $params as $k => $v ) {
 				if ( strlen($k) > 3 && substr($k, 0, 3) == '_on' ) {
 					$link .= htmlentities(substr($k, 1)).'="'.$v.'" '; // $v should be already htmlentitized in the template
