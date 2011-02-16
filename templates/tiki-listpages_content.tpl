@@ -330,7 +330,6 @@
 				{/if}
 			</td>
 		{/if}
-		{cycle print=false}
 		</tr>
 	{sectionelse}
 		{capture assign='find_htmlescaped'}{$find|escape}{/capture}
