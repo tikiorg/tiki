@@ -98,6 +98,9 @@
 		{/foreach}
 	</div>
 	{if $prefs.feature_jquery_ui eq "y"}{jq notonready=true}$("#assigned_modules").tabs();{/jq}{/if}
+	<form method="post" action="#">
+		<input id="module-order" type="hidden" name="module-order" value=""/>
+	</form>
 {/tab}
 {if isset($smarty.request.edit_assign) or $preview eq "y"}
 	{tab name="{tr}Edit module{/tr}"}
@@ -112,9 +115,8 @@
 			<h3>{tr}Preview{/tr}</h3>
 			{$preview_data}
 		{/if}
-		<form method="post" action="tiki-admin_modules.php{if (0 and empty($assign_name))}#assign{/if}">
+		<form method="post" action="tiki-admin_modules.php{if empty($assign_name)}#assign{/if}">
 			{* on the initial selection of a new module, reload the page to the #assign anchor *}
-			<input id="module-order" type="hidden" name="module-order" value=""/>
 			{if !empty($info.moduleId)}
 				<input type="hidden" name="moduleId" value="{$info.moduleId}" />
 			{elseif !empty($moduleId)}
