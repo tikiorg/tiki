@@ -43,6 +43,11 @@ function module_categories_info() {
 				'description' => tra('Show only these categories and the immediate child categories of these. Example values: 3,5,6.'),
 				'filter' => 'striptags'
 			),
+			'selflink' => array(
+				'name' => tra('Category links to a page named as the category'),
+				'description' => 'y|n .'.tra('If y, category links to a page named as the category'),
+				'filter' => 'alpha'
+			),
 		),
 	);
 }
@@ -99,10 +104,16 @@ function module_categories( $mod_reference, &$module_params ) {
 	include_once ('lib/tree/categ_browse_tree.php');
 	$tree_nodes = array();
 	foreach ($categories as $cat) {
+		if (isset($module_params['selflink']) && $module_params['selflink'] == 'y') {
+			include_once('tiki-sefurl.php');
+			$url = filter_out_sefurl('tiki-index.php?page='.$cat['name'], $smarty);
+		} else {
+			$url = 'tiki-browse_categories.php?parentId=' . $cat['categId'] .$urlEnd;
+		}
 		$tree_nodes[] = array(
 			"id" => $cat["categId"],
 			"parent" => $cat["parentId"],
-			"data" => '<a class="catname" href="tiki-browse_categories.php?parentId=' . $cat["categId"] .$urlEnd.'">' . $cat["name"] . '</a><br />'
+			"data" => '<a class="catname" href="'.$url.'">' . $cat['name'] . '</a><br />'
 		);
 	}
 	$tm = new CatBrowseTreeMaker("mod_categ");
