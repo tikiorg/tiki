@@ -439,7 +439,7 @@
 
 {* -------------------- google map -------------------- *}
 {elseif $field_value.type eq 'G'}
-	{if $prefs.feature_gmap eq 'y'}
+	{if $prefs.feature_gmap eq 'y' and $prefs.gmap_key}
 		{if $list_mode eq 'csv'}
 			{$field_value.value}
 		{elseif !empty($field_value.x) && !empty($field_value.y)}
@@ -452,7 +452,11 @@
 			{/if}
 		{/if}
 	{else}
-	  {tr}Google Maps is not enabled.{/tr}
+	  <form method="get" action="">
+		{$headerlib->add_map()}
+		<div class="map-container" style="width: 250px; height: 250px;" data-target-field="location"></div>
+	  	<input type="hidden" name="location" value="{$field_value.value}" disabled="disabled"/>
+	  </form>
 	{/if}
 
 
