@@ -8,7 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_locator_info() {
 	return array(
-		'name' => tra('Locator (mini-map)'),
+		'name' => tra('Locator'),
 		'description' => tra('Presents a map with the geolocated content within the page.'),
 		'prefs' => tra(),
 		'params' => tra(
