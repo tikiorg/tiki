@@ -138,6 +138,7 @@ function wikiplugin_sharethis($data, $params) {
 	global $headerlib; include_once('lib/headerlib.php');
 	extract ($params,EXTR_SKIP);
 	$sharethis_options = array();
+	$iconcode = '';
 	$sep = '&amp;';
 	$comma = '%2C';
 	$lb = '%23';
