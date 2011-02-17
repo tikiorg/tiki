@@ -1700,7 +1700,6 @@ function get_default_prefs() {
 		'wiki_3d_autoload' => '',
 		'javascript_enabled' => 'n',
 		'javascript_cdn' => 'none',
-		'feature_template_zoom' => 'y',
 		'menus_items_icons' => 'n',
 		'menus_items_icons_path' => 'pics/large',
 		'feature_iepngfix' => 'n',

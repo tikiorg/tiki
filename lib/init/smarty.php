@@ -154,23 +154,6 @@ class Smarty_Tiki extends Smarty
 				}
 			}
 
-			// Enable Template Zoom
-			if ( $prefs['feature_template_zoom'] == 'y' && isset($zoom_templates) ) {
-				if ( ! isset($_REQUEST['zoom']) && isset($_REQUEST['zoom_value']) && isset($_REQUEST['zoom_x']) && isset($_REQUEST['zoom_y']) ) {
-					// Hack for IE6 when using an image input to submit the zoom value
-					//  (IE will only send zoom_x and zoom_y params without the value instead of zoom)
-					//  In this case, and if we have set a hidden field 'zoom_value', we use it's value
-					//
-					$_REQUEST['zoom'] = $_REQUEST['zoom_value'];
-				}
-				if ( isset($_REQUEST['zoom']) && is_array($zoom_templates) && in_array($_REQUEST['zoom'], $zoom_templates) ) {
-					$_smarty_tpl_file = 'tiki_full.tpl';
-					$tpl = $_REQUEST['zoom'].'.tpl';
-					$prefs['feature_fullscreen'] = 'n';
-					$this->assign('zoom_mode', 'y');
-				}
-			}
-
 			if ( $_smarty_tpl_file == 'tiki-print.tpl' ) {
 				$this->assign('print_page', 'y');
 			}

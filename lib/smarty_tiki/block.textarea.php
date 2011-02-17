@@ -54,10 +54,6 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	
 	$params['_simple'] = isset($params['_simple']) ? $params['_simple'] : 'n';
 	
-	if ( isset($params['_zoom']) && $params['_zoom'] == 'n' ) {
-		$feature_template_zoom_orig = $prefs['feature_template_zoom'];
-		$prefs['feature_template_zoom'] = 'n';
-	}
 	if ( ! isset($params['section']) ) {
 		global $section;
 		$params['section'] = $section ? $section: 'wiki page';
@@ -247,10 +243,6 @@ function CKeditor_OnComplete() {
 		if ( $textarea_attributes != '' ) {
 			$smarty->assign('textarea_attributes', $textarea_attributes);
 		}
-		if ( isset($params['_zoom']) && $params['_zoom'] == 'n' ) {
-			$prefs['feature_template_zoom'] = $feature_template_zoom_orig;
-		}
-		
 		$smarty->assign_by_ref('pagedata', htmlspecialchars($content));
 		$smarty->assign('comments', isset($params['comments']) ? $params['comments'] : $params['_simple'] === 'y' ? 'y' : 'n');
 		$smarty->assign('switcheditor', isset($params['switcheditor']) ? $params['switcheditor'] : 'n');
