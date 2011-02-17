@@ -7197,6 +7197,10 @@ if( \$('#$id') ) {
 		return $short_datetime_format;
 	}
 
+	static function date_format2($format, $timestamp = false, $_user = false, $input_format = 5/*DATE_FORMAT_UNIXTIME*/) {
+		return TikiLib::date_format($format, $timestamp, $_user, $input_format, false);
+	}
+
 	static function date_format($format, $timestamp = false, $_user = false, $input_format = 5/*DATE_FORMAT_UNIXTIME*/, $is_strftime_format = true) {
 		$tikilib = TikiLib::lib('tiki');
 		static $currentUserDateByFormat = array();

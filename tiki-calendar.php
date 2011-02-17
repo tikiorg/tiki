@@ -256,10 +256,10 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 			foreach ($listevents["$dday"] as $le) {
 				$nbDaysLeftThisWeek = min(ceil(($le['endTimeStamp'] - $dday)/86400),(7-$w));
 				if ($calendarViewMode['casedefault'] == 'month') {
-					$endOfCurrentMonth = $tikilib->make_time(23,59,59,TikiLib::date_format('m',$dday) + 1,0,TikiLib::date_format('Y',$dday));
+					$endOfCurrentMonth = $tikilib->make_time(23,59,59,TikiLib::date_format('m',$dday) + 1,0,TikiLib::date_format2('Y',$dday));
 					$nbDaysLeftThisWeek = min(ceil(($endOfCurrentMonth - $dday)/86400),$nbDaysLeftThisWeek);
 				} elseif ($calendarViewMode['casedefault'] == 'year') {
-					$endOfCurrentYear = $tikilib->make_time(23,59,59,12,31,TikiLib::date_format('Y',$dday));
+					$endOfCurrentYear = $tikilib->make_time(23,59,59,12,31,TikiLib::date_format2('Y',$dday));
 					$nbDaysLeftThisWeek = min(ceil(($endOfCurrentYear - $dday)/86400),$nbDaysLeftThisWeek);
 				}
 				if (!array_key_exists('nbDaysLeftThisWeek',$le)) {

@@ -261,12 +261,12 @@ class CalRecurrence extends TikiLib
 	public function createEvents() {
 		// calculate the date of every events to create
 		$dates = array();
-		$start = TikiLib::date_format('Y/m/d',$this->getStartPeriod());
+		$start = TikiLib::date_format2('Y/m/d',$this->getStartPeriod());
 		$start = explode("/",$start);
 		if ($this->getNbRecurrences() > 0) {
 			$nbRec = $this->getNbRecurrences();
 			if ($this->isWeekly()) {
-				$startWeekday = TikiLib::date_format('w',$this->getStartPeriod()); // 0->Sunday, 6->Saturday
+				$startWeekday = TikiLib::date_format2('w',$this->getStartPeriod()); // 0->Sunday, 6->Saturday
 				$firstEventDate = $this->getWeekday() - $startWeekday;
 				if ($firstEventDate < 0)
 					$firstEventDate += 7;
@@ -285,14 +285,14 @@ class CalRecurrence extends TikiLib
 					$occurrences++;
 				}
 			} elseif ($this->isYearly()) {
-				$yymm = TikiLib::date_format('md',$this->getStartPeriod());
+				$yymm = TikiLib::date_format2('md',$this->getStartPeriod());
 				$isLeapDay = ($this->getDateOfYear() == 229); // Feb 29th case.
 				$offset = ($this->getDateOfYear() < $yymm) ? 1 : 0;
 				$dt = str_pad($this->getDateOfYear(),4,"0",STR_PAD_LEFT);
 				$occurrences = 0;
 				for ($i=0 ; $occurrences < $nbRec ; $i++) {
 					if ($isLeapDay) {
-						if ( TikiLib::date_format('L', TikiLib::make_time(0,0,0,1,1,$start[0] + $offset + $i)) == 0 ) {
+						if ( TikiLib::date_format2('L', TikiLib::make_time(0,0,0,1,1,$start[0] + $offset + $i)) == 0 ) {
 							continue;
 						}
 					}
@@ -305,7 +305,7 @@ class CalRecurrence extends TikiLib
 			}
 		} elseif ($this->getEndPeriod() > 0) {
 			if ($this->isWeekly()) {
-				$startWeekday = TikiLib::date_format('w',$this->getStartPeriod()); // 0->Sunday, 6->Saturday
+				$startWeekday = TikiLib::date_format2('w',$this->getStartPeriod()); // 0->Sunday, 6->Saturday
 				$firstEventDate = $this->getWeekday() - $startWeekday;
 				if ($firstEventDate < 0)
 					$firstEventDate += 7;
@@ -320,7 +320,7 @@ class CalRecurrence extends TikiLib
 				$currDate = TikiLib::make_time(0,0,0,$startMonth,$this->getDayOfMonth(),$start[0]);
 				$i = 0;
 				while ($currDate < $this->getEndPeriod()) {
-					$nbDaysInMonth = TikiLib::date_format('t',TikiLib::make_time(0,0,0,$startMonth + $i,1,$start[0]));
+					$nbDaysInMonth = TikiLib::date_format2('t',TikiLib::make_time(0,0,0,$startMonth + $i,1,$start[0]));
 					if ($this->getDayOfMonth() > $nbDaysInMonth) {
 						$i++;
 						$currDate = TikiLib::make_time(0,0,0,substr($dt,0,2),substr($dt,-2),$start[0] + $offset + $i);
@@ -331,7 +331,7 @@ class CalRecurrence extends TikiLib
 					$currDate = TikiLib::make_time(0,0,0,$startMonth + $i,$this->getDayOfMonth(),$start[0]);
 				}
 			} elseif ($this->isYearly()) {
-				$yymm = TikiLib::date_format('md',$this->getStartPeriod());
+				$yymm = TikiLib::date_format2('md',$this->getStartPeriod());
 				$isLeapDay = ($this->getDateOfYear() == 229); // Feb 29th case.
 				$offset = ($this->getDateOfYear() < $yymm) ? 1 : 0;
 				$dt = str_pad($this->getDateOfYear(),4,"0",STR_PAD_LEFT);
@@ -339,7 +339,7 @@ class CalRecurrence extends TikiLib
 				$i = 0;
 				while ($currDate < $this->getEndPeriod()) {
 					if ($isLeapDay) {
-						if (TikiLib::date_format('L',TikiLib::make_time(0,0,0,1,1,$start[0] + $offset + $i)) == 0) {
+						if (TikiLib::date_format2('L',TikiLib::make_time(0,0,0,1,1,$start[0] + $offset + $i)) == 0) {
 							$i++;
 							$currDate = TikiLib::make_time(0,0,0,substr($dt,0,2),substr($dt,-2),$start[0] + $offset + $i);
 							continue;
@@ -455,7 +455,7 @@ class CalRecurrence extends TikiLib
 						$tmp[] = $aField . " = ?";
                         $bindvars[] = $this->$aField;
 					} else {
-						$anEvtStart = TikiLib::date_format('Y/m/d',$anEvt['start']);
+						$anEvtStart = TikiLib::date_format2('Y/m/d',$anEvt['start']);
 						$anEvtStart = explode('/',$anEvtStart);
 						$newStartHour = floor($this->getStart()/100);
 						$newStartMin = $this->getStart() - 100*$newStartHour;
@@ -473,9 +473,9 @@ class CalRecurrence extends TikiLib
 							$doWeChangeTimeIfNeeded = false;
 							if (is_null($advanced)) {
 								if ($this->getWeekday() < $oldRec->getWeekday()) {
-									if (TikiLib::date_format('w',TikiLib::make_time()) <= $this->getWeekday()) {
-										$offsetInSeconds = ($this->getWeekday() - TikiLib::date_format('w',TikiLib::make_time())) * dayInSeconds;
-										$couldBeDay = TikiLib::make_time($newStartHour,$newStartMin,0,TikiLib::date_format('m'),TikiLib::date_format('d'),TikiLib::date_format('Y')) + $offsetInSeconds;
+									if (TikiLib::date_format2('w',TikiLib::make_time()) <= $this->getWeekday()) {
+										$offsetInSeconds = ($this->getWeekday() - TikiLib::date_format2('w',TikiLib::make_time())) * dayInSeconds;
+										$couldBeDay = TikiLib::make_time($newStartHour,$newStartMin,0,TikiLib::date_format2('m'),TikiLib::date_format2('d'),TikiLib::date_format2('Y')) + $offsetInSeconds;
 										if ($couldBeDay >= $this->getStartPeriod()) {
 											$advanced = true;
 										}
@@ -486,7 +486,7 @@ class CalRecurrence extends TikiLib
 								$advanced = false;
 							}
 							if (!is_null($advanced)) {
-								$daysOffsetEvent = $this->getWeekday() - TikiLib::date_format('w',TikiLib::make_time(0,0,0,$anEvtStart[1],$anEvtStart[2],$anEvtStart[0]));
+								$daysOffsetEvent = $this->getWeekday() - TikiLib::date_format2('w',TikiLib::make_time(0,0,0,$anEvtStart[1],$anEvtStart[2],$anEvtStart[0]));
 								$tmp[] = "start=?";
                                 $bindvars[] = TikiLib::make_time($newStartHour,$newStartMin,0,$anEvtStart[1],$anEvtStart[2] + $daysOffsetEvent,$anEvtStart[0]);
 								$tmp[] = "end=?";
@@ -503,9 +503,9 @@ class CalRecurrence extends TikiLib
 							$doWeChangeTimeIfNeeded = false;
 							if (is_null($advanced)) {
 								if ($this->getDayOfMonth() < $oldRec->getDayOfMonth()) {
-									if (TikiLib::date_format('d',TikiLib::make_time()) <= $this->getDayOfMonth()) {
-										$offsetInSeconds = ($this->getDayOfMonth() - TikiLib::date_format('d',TikiLib::make_time())) * dayInSeconds;
-										$couldBeDay = TikiLib::make_time(0,0,0,TikiLib::date_format('m',TikiLib::make_time()),TikiLib::date_format('d',TikiLib::make_time()),TikiLib::date_format('Y',TikiLib::make_time())) + $offsetInSeconds;
+									if (TikiLib::date_format2('d',TikiLib::make_time()) <= $this->getDayOfMonth()) {
+										$offsetInSeconds = ($this->getDayOfMonth() - TikiLib::date_format2('d',TikiLib::make_time())) * dayInSeconds;
+										$couldBeDay = TikiLib::make_time(0,0,0,TikiLib::date_format2('m',TikiLib::make_time()),TikiLib::date_format2('d',TikiLib::make_time()),TikiLib::date_format2('Y',TikiLib::make_time())) + $offsetInSeconds;
 										if ($couldBeDay >= $this->getStartPeriod()) {
 											$advanced = true;
 										}
@@ -545,8 +545,8 @@ class CalRecurrence extends TikiLib
 								$olddate = str_pad($oldRec->getDateOfYear(),4,'0',STR_PAD_LEFT);
 
 								if ($this->getDateOfYear() < $oldRec->getDateOfYear()) {
-									if (time() <= TikiLib::make_time($newStartHour,$newStartMin,0,substr($thisdate,0,2),substr($thisdate,-2),TikiLib::date_format('Y'))) {
-										$offsetInSeconds = TikiLib::make_time($newStartHour,$newStartMin,0,substr($thisdate,0,2),substr($thisdate,-2),TikiLib::date_format('Y')) - $this->getStartPeriod();
+									if (time() <= TikiLib::make_time($newStartHour,$newStartMin,0,substr($thisdate,0,2),substr($thisdate,-2),TikiLib::date_format2('Y'))) {
+										$offsetInSeconds = TikiLib::make_time($newStartHour,$newStartMin,0,substr($thisdate,0,2),substr($thisdate,-2),TikiLib::date_format2('Y')) - $this->getStartPeriod();
 										if ($offsetInSeconds > 0) {
 											$advanced = true;
 										}
@@ -580,7 +580,7 @@ class CalRecurrence extends TikiLib
 					}
 				}
 				if (in_array("_start",$changedFields) && $doWeChangeTimeIfNeeded) {
-					$anEvtStart = TikiLib::date_format('Y/m/d',$anEvt['start']);
+					$anEvtStart = TikiLib::date_format2('Y/m/d',$anEvt['start']);
 					$anEvtStart = explode('/',$anEvtStart);
 					$newStartHour = floor($this->getStart()/100);
 					$newStartMin = $this->getStart() - 100*$newStartHour;
@@ -588,7 +588,7 @@ class CalRecurrence extends TikiLib
                     $bindvars[] = TikiLib::make_time($newStartHour, $newStartMin, 0, $anEvtStart[1], $anEvtStart[2], $anEvtStart[0]);
 				}
 				if (in_array("_end",$changedFields) && $doWeChangeTimeIfNeeded) {
-					$anEvtStart = TikiLib::date_format('Y/m/d',$anEvt['start']);
+					$anEvtStart = TikiLib::date_format2('Y/m/d',$anEvt['start']);
 					$anEvtStart = explode('/',$anEvtStart);
 					$newEndHour = floor($this->getEnd()/100);
 					$newEndMin = $this->getEnd() - 100*$newEndHour;
@@ -659,10 +659,10 @@ class CalRecurrence extends TikiLib
 		$result = array();
 		if ($evt['calendarId'] != $oldRec->getCalendarId())
 			$result[] = "calendarId";
-		if (TikiLib::date_format('Hi',$evt['start']) != $oldRec->getStart())
+		if (TikiLib::date_format2('Hi',$evt['start']) != $oldRec->getStart())
 			$result[] = "start";
 		// checking the end is double check : is it the right hour ? is it the same day ?
-		if ((TikiLib::date_format('Hi',$evt['end']) != $oldRec->getEnd()) || (TikiLib::date_format('Ymd',$evt['start']) != TikiLib::date_format('Ymd',$evt['end'])))
+		if ((TikiLib::date_format2('Hi',$evt['end']) != $oldRec->getEnd()) || (TikiLib::date_format2('Ymd',$evt['start']) != TikiLib::date_format2('Ymd',$evt['end'])))
 			$result[] = "end";
 		if ($evt['allday'] != $oldRec->isAllday())
 			$result[] = "allday";
@@ -684,18 +684,18 @@ class CalRecurrence extends TikiLib
 			$result[] = "name";
 		if ($evt['description'] != $oldRec->getDescription())
 			$result[] = "description";
-		if (TikiLib::date_format('Hi',$evt['start']) != str_pad($oldRec->getStart(),4,"0",STR_PAD_LEFT))
+		if (TikiLib::date_format2('Hi',$evt['start']) != str_pad($oldRec->getStart(),4,"0",STR_PAD_LEFT))
 			$result[] = "_start";
-		if (TikiLib::date_format('Hi',$evt['end']) != str_pad($oldRec->getEnd(),4,"0",STR_PAD_LEFT))
+		if (TikiLib::date_format2('Hi',$evt['end']) != str_pad($oldRec->getEnd(),4,"0",STR_PAD_LEFT))
 			$result[] = "_end";
 		if ($oldRec->isWeekly()) {
-			if (TikiLib::date_format('w',$evt['start']) != $oldRec->getWeekday())
+			if (TikiLib::date_format2('w',$evt['start']) != $oldRec->getWeekday())
 				$result[] = "_weekday";
 		} elseif ($oldRec->isMonthly()) {
-			if (TikiLib::date_format('d',$evt['start']) != $oldRec->getDayOfMonth())
+			if (TikiLib::date_format2('d',$evt['start']) != $oldRec->getDayOfMonth())
 				$result[] = "_dayOfMonth";
 		} elseif ($oldRec->isYearly()) {
-			if (TikiLib::date_format('md',$evt['start']) != $oldRec->getDateOfYear())
+			if (TikiLib::date_format2('md',$evt['start']) != $oldRec->getDateOfYear())
 				$result[] = "_dateOfYear";
 		}
 		return $result;
