@@ -7706,7 +7706,7 @@ class TikiLib extends TikiDb_Bridge
 
 		$tikidate->setTZbyID('UTC');
 		try {
-			$tikidate->setDate($timestamp, $input_format);
+			$tikidate->setDate($timestamp);
 		} catch (Exception $e) {
 			return $e->getMessage();
 		}
