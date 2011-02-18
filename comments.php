@@ -336,6 +336,7 @@ if (isset($_REQUEST["comments_previewComment"]) || isset($_REQUEST["comments_pos
 	$comment_preview = array();
 
 	$comment_preview['title'] = $_REQUEST["comments_title"];
+
 	$comment_preview['parsed'] = $commentslib->parse_comment_data(strip_tags($_REQUEST["comments_data"]));
 	$comment_preview['rating'] = $_REQUEST["comment_rating"];
 	$comment_preview['commentDate'] = $tikilib->now;
@@ -356,6 +357,7 @@ if (isset($_REQUEST["comments_previewComment"]) || isset($_REQUEST["comments_pos
 		$smarty->assign('comment_preview', 'y');
 	}
 	$smarty->assign('comment_data', $_REQUEST["comments_data"]);
+	$smarty->assign('comment_title', $comment_preview["title"]);
 	$comments_show = 'y';
 }
 
