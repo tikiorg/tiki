@@ -500,6 +500,10 @@ class TikiAccessLib extends TikiLib
 				header( "Content-Type: $full" );
 				echo Horde_Yaml::dump($data);
 				return;
+			case 'html':
+				header( "Content-Type: $full" );
+				echo $data;
+				return;
 			}
 		}
 	}
