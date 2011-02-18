@@ -48,8 +48,6 @@ The ((railway terminology)) that is used to describe a 'train' varies between co
 {DL()}
 United Kingdom: {DL}
 
-
-
 In the United Kingdom, the interchangeable terms __set__ and __unit__ are used to refer to a group of permanently or semi-permanently coupled vehicles, such as those of a ((multiple unit)). While when referring to a train made up of a variety of vehicles, or of several sets/units, the term __formation__ is used. (Although the UK public and media often forgo 'formation', for simply 'train'.)  The word __rake__ is also used for a group of coaches or wagons.
 
 In the United Kingdom Section 83(1) of the ((Railways Act 1993)) defines &quot;train&quot; as follows:
@@ -57,8 +55,6 @@ In the United Kingdom Section 83(1) of the ((Railways Act 1993)) defines &quot;t
 a) two or more items of rolling stock coupled together, at least one of which is a locomotive; or
 b) a locomotive not coupled to any other rolling stock.
 {DL}
-
-
 
 {DL()}
 United States: {DL}
@@ -113,8 +109,6 @@ In order to achieve much faster operation over {{convert|500|km/h|mph|0|abbr=on}
 * ((Inter-city rail|Intercity)) trains: connecting cities in the fastest time possible, by passing all ((intermediate)) ((stations))
 * ((Fast)) trains: calling at larger intermediate stations between cities, serving large ((urban)) ((communities))
 * ((Regional)) trains: calling at all intermediate stations between cities, serving all lineside ((communities))
-
-
 
 The distinction between the types can be thin or even non-existent. Trains can run as Intercity services between major cities, then revert to a fast or even regional train service to serve communities at the ((extremity)) of their journey. This practice allows ((marginal)) communities remaining to be served while saving ((money)) at the expense of a longer journey time for those wishing to travel to the ((terminus)) station.
 
@@ -178,8 +172,6 @@ Mine trains are operated in large mines and carry both workers and goods.
 {DL()}
 Overland trains: {DL}
 
-
-
 ((Overland train))s are used to carry cargo over rough terrain.
 
 !!Freight trains
@@ -223,8 +215,6 @@ Freight trains are sometimes illegally boarded by passengers who do not wish to 
 * ((List of train songs))
 * ((Unit train))
 
-
-
 &lt;/div&gt;
 
 !!!Rail accidents
@@ -247,8 +237,6 @@ Freight trains are sometimes illegally boarded by passengers who do not wish to 
   | postscript = &lt;!--None--&gt;}}, 256 pp.
 ~/pp~
 !!External links
-
-
 {{wiktionary|train}}
 {{commonscat-inline|Trains}}
 
