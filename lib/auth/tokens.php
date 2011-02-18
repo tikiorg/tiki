@@ -82,6 +82,12 @@ class AuthTokens
 			$hits = $this->maxHits;
 		}
 
+		if (isset($arguments['email'])) {
+			$email = $arguments['email'];
+		} else {
+			$email = '';
+		}
+		
 		$this->db->query( 'INSERT INTO tiki_auth_tokens ( timeout, maxhits, hits, entry, parameters, groups, email ) VALUES( ?, ?, ?, ?, ?, ?, ? )', array(
 			(int) $timeout,
 			(int) $hits,
@@ -89,7 +95,7 @@ class AuthTokens
 			$entry,
 			json_encode( $parameters ),
 			json_encode( $groups ),
-			$arguments['email']
+			$email
 		) );
 		$max = $this->db->getOne( 'SELECT MAX(tokenId) FROM tiki_auth_tokens' );
 
