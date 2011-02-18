@@ -19,7 +19,7 @@
 {cycle values="odd,even" print=false}
 	{section name=changes loop=$sheets}
 		<tr class="{cycle}">
-			<td class="text"><a class="galname" href="tiki-view_sheets.php?sheetId={$sheets[changes].sheetId}">{$sheets[changes].title}</a></td>
+			<td class="text"><a class="galname sheetLink" sheetId="{$sheets[changes].sheetId}" href="tiki-view_sheets.php?sheetId={$sheets[changes].sheetId}">{$sheets[changes].title}</a></td>
 			<td class="text">{$sheets[changes].description}</td>
 			<td class="username">{$sheets[changes].author}</td>
 			<td class="action">

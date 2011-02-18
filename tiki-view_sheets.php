@@ -19,6 +19,7 @@ $auto_query_args = array(
 	'fileId'
 );
 $access->check_feature('feature_sheet');
+$access->check_feature('feature_jquery_ui');
 
 $info = $sheetlib->get_sheet_info($_REQUEST['sheetId']);
 
@@ -184,9 +185,11 @@ $headerlib->add_jq_onready('
 	});
 	
 	var tikiSheet = $("div.tiki_sheet").sheet($.sheet.tikiOptions);
+	
 	tikiSheet.id = "'.$_REQUEST['sheetId'].'";
 	tikiSheet.file = "'.$_REQUEST['file'].'";
 	
+	$.sheet.link.setupUI(tikiSheet);
 	$.sheet.manageState(tikiSheet);
 	
 	$("#edit_button a")

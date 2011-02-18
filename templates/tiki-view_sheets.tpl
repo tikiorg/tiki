@@ -75,3 +75,10 @@
 <div id="sheetTools" style="display: none;">
 	<div style="text-align: left;">{toolbars area_id="jSheetControls_formula_0"}</div>
 </div>
+
+<div class="switchSheet" style="display: none;" title="{tr}What would you like to add?{/tr}">
+	<input class="newSpreadsheet" type="button" value="{tr}New spreadsheet{/tr}" style="width: 100%;" /><br />
+	<input class="addSpreadsheet" type="button" value="{tr}Existing spreadsheet{/tr}" style="width: 100%;" /><br />
+	<input class="addTracker" type="button" value="{tr}Tracker as a spreadsheet{/tr}" style="width: 100%;" /><br />
+	<input class="addFile" type="button" value="{tr}Spreadsheet from file gallery{/tr}" style="width: 100%;" />
+</div>
