@@ -170,6 +170,12 @@ class TikiLib extends TikiDb_Bridge
 		case 'sheet':
 			global $sheetlib; require_once ('lib/sheet/grid.php');
 			return $libraries[$name] = $sheetlib;
+		case 'zotero':
+			require_once 'lib/zoterolib.php';
+			return $libraries[$name] = new ZoteroLib;
+		case 'oauth':
+			require_once 'lib/oauthlib.php';
+			return $libraries[$name] = new OAuthLib;
 		}
 	}
 

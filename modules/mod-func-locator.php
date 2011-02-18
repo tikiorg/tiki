@@ -10,7 +10,7 @@ function module_locator_info() {
 	return array(
 		'name' => tra('Locator'),
 		'description' => tra('Presents a map with the geolocated content within the page.'),
-		'prefs' => tra(),
+		'prefs' => array(),
 		'params' => tra(
 		),
 	);

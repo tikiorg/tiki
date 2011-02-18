@@ -135,6 +135,39 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 	}
 }
 
+// Handle Zotero Requests
+if ($prefs['zotero_enabled'] == 'y' && $access->is_serializable_request() && isset($_REQUEST['zotero_tags'])) {
+	$zoterolib = TikiLib::lib('zotero');
+
+	$references = $zoterolib->get_references($_REQUEST['zotero_tags']);
+	
+	if ($references === false) {
+		$access->output_serialized(array(
+			'type' => 'unauthorized',
+			'results' => array(),
+		));
+	} else {
+		$access->output_serialized(array(
+			'type' => 'success',
+			'results' => $references,
+		));
+	}
+}
+
+if (isset($_REQUEST['oauth_request'])) {
+	$oauthlib = TikiLib::lib('oauth');
+
+	$oauthlib->request_token($_REQUEST['oauth_request']);
+	die('Provider not supported.');
+}
+
+if (isset($_REQUEST['oauth_callback'])) {
+	$oauthlib = TikiLib::lib('oauth');
+
+	$oauthlib->request_access($_REQUEST['oauth_callback']);
+	$access->redirect('');
+}
+
 function read_icon_dir($dir, &$icons, $max) {
 	$fp = opendir($dir);
 	while(false !== ($f = readdir($fp))) {

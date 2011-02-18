@@ -169,6 +169,12 @@
 						{preference name=feature_wysiwyg}
 						{preference name=feature_accounting}
 						{preference name=payment_feature}
+						{preference name=zotero_enabled}
+						<div class="adminoptionboxchild" id="zotero_enabled_childcontainer">
+							{preference name=zotero_client_key}
+							{preference name=zotero_client_secret}
+							{preference name=zotero_group_id}
+						</div>
 				</fieldset>
 			</div>
 

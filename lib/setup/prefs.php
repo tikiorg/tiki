@@ -1891,6 +1891,12 @@ function get_default_prefs() {
 		'feature_syntax_highlighter' => 'y',
 
 		'feature_accounting' => 'n',
+
+		// Zotero
+		'zotero_enabled' => 'n',
+		'zotero_client_key' => '',
+		'zotero_client_secret' => '',
+		'zotero_group_id' => '',
 	);
 
 	// Special default values
