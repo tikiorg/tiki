@@ -37,5 +37,35 @@ class ZoteroLib extends TikiDb_Bridge
 
 		return false;
 	}
+	
+	function get_entry($itemId)
+	{
+		global $prefs;
+
+		$oauthlib = TikiLib::lib('oauth');
+		$response = $oauthlib->do_request('zotero', array(
+			'url' => "https://api.zotero.org/groups/{$prefs['zotero_group_id']}/items/" . urlencode($itemId),
+			'get' => array(
+				'content' => 'bib',
+			),
+		));
+
+		if ($response->isSuccessful()) {
+			$entry = $response->getBody();
+			$entry = str_replace('<entry ', '<feed xmlns="http://www.w3.org/2005/Atom"><entry ', $entry) . '</feed>';
+			$feed = Zend_Feed_Reader::importString($entry);
+
+			foreach ($feed as $entry) {
+				return array(
+					'key' => basename($entry->getLink()),
+					'url' => $entry->getLink(),
+					'title' => $entry->getTitle(),
+					'content' => $entry->getContent(),
+				);
+			}
+		}
+
+		return false;
+	}
 }
 
