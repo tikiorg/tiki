@@ -183,8 +183,25 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 			'', 1234, '', '');
 		
 		$comments = array(
-			array('data' => 'asdf', 'created' => 1234),
-			array('data' => 'asdf', 'created' => 1234),
+			array('data' => 'asdf', 'created' => 1234, 'approved' => 1),
+			array('data' => 'asdf', 'created' => 1234, 'approved' => 1),
+		);
+		
+		$this->obj->insertComments(2, 'wiki page', $comments);
+	}
+	
+	public function testInsertCommentsShouldConsiderIfCommentIsApprovedOrNot()
+	{
+		global $commentslib; require_once('lib/comments/commentslib.php');
+		
+		$commentslib = $this->getMock('Comments', array('post_new_comment', 'approve_comment'));
+		$commentslib->expects($this->exactly(2))->method('post_new_comment')->with('wiki page:2', 0, null, '', 'asdf', '', '', 'n', '', '', '',
+			'', 1234, '', '')->will($this->returnValue(22));
+		$commentslib->expects($this->once())->method('approve_comment')->with(22, 'n');
+		
+		$comments = array(
+			array('data' => 'asdf', 'created' => 1234, 'approved' => 1),
+			array('data' => 'asdf', 'created' => 1234, 'approved' => 0),
 		);
 		
 		$this->obj->insertComments(2, 'wiki page', $comments);

@@ -363,8 +363,12 @@ class TikiImporter_Blog extends TikiImporter
 				$comment['author_url'] = '';
 			}
 
-			$commentslib->post_new_comment($objRef, 0, null, '', $comment['data'], $message_id, '', 'n', '', '', '',
+			$commentId = $commentslib->post_new_comment($objRef, 0, null, '', $comment['data'], $message_id, '', 'n', '', '', '',
 				$comment['author'], $comment['created'], $comment['author_email'], $comment['author_url']);
+				
+			if ($comment['approved'] == 0) {
+				$commentslib->approve_comment($commentId, 'n');
+			}
 		}
 	}
 	
