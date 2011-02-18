@@ -19,11 +19,12 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
     {
         $parsedData = 'Some text';
 
-        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('validateInput', 'extractBlogInfo', 'parseData', 'insertData'));
+        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('validateInput', 'extractBlogInfo', 'parseData', 'insertData', 'setupTiki'));
         $obj->expects($this->once())->method('validateInput');
         $obj->expects($this->once())->method('extractBlogInfo')->will($this->returnValue(array()));
         $obj->expects($this->once())->method('parseData')->will($this->returnValue($parsedData));
         $obj->expects($this->once())->method('insertData')->with($parsedData);
+        $obj->expects($this->once())->method('setupTiki');
 
         $this->expectOutputString("Loading and validating the XML file\n\nImportation completed!\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>");
         $_FILES['importFile']['type'] = 'text/xml'; 
@@ -38,12 +39,13 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
     {
         $parsedData = 'Some text';
 
-        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('validateInput', 'extractBlogInfo', 'parseData', 'insertData', 'downloadAttachments'));
+        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('validateInput', 'extractBlogInfo', 'parseData', 'insertData', 'downloadAttachments', 'setupTiki'));
         $obj->expects($this->once())->method('validateInput');
         $obj->expects($this->once())->method('extractBlogInfo')->will($this->returnValue(array()));
         $obj->expects($this->once())->method('parseData')->will($this->returnValue($parsedData));
         $obj->expects($this->once())->method('insertData')->with($parsedData);
         $obj->expects($this->once())->method('downloadAttachments');
+        $obj->expects($this->once())->method('setupTiki');
         $_POST['importAttachments'] = 'on';
 
         $obj->import(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
