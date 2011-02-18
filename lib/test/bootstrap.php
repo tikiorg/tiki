@@ -25,7 +25,12 @@ function __autoload( $name ) {
 
 $tikidomain = '';
 $api_tiki = null;
-require 'db/local.php';
+
+if (!is_file(dirname(__FILE__) . '/local.php')) {
+	die("\nYou need setup a new database and create a local.php file for the test suite inside " . dirname(__FILE__) . "\n\n");
+}
+
+require_once(dirname(__FILE__) . '/local.php');
 
 if (extension_loaded("pdo") and $api_tiki == 'pdo' ) {
 	require_once('db/tiki-db-pdo.php');
