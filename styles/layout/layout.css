@@ -536,15 +536,6 @@ ul.jumplinks,
 }
 
 /****** Misc. Global Classes (layout and style) ****/
-.hidden {
-	position: absolute;
-	left: -10000px;
-	top: 0;
-	width: 1px;
-	height: 1px;
-	overflow: hidden;
-}
-
 .floatlist {
 	clear: left;
 	list-style-type: none;
