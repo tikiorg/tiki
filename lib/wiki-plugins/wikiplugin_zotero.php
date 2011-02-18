@@ -39,6 +39,6 @@ function wikiplugin_zotero($data, $params)
 	$content = $info['content'];
 	$content = str_replace('<div', '<span', $content);
 	$content = str_replace('</div>', '</span>', $content);
-	return "{FOOTNOTE(checkDuplicate=y)}~np~{$content}~/np~{FOOTNOTE}";
+	return "{FOOTNOTE()}~np~{$content}~/np~{FOOTNOTE}";
 }
 
