@@ -160,12 +160,27 @@ class Smarty_Tiki extends Smarty
 			$data = $this->fetch($tpl, $_smarty_cache_id, $_smarty_compile_id);//must get the mid because the modules can overwrite smarty variables
 
 			$this->assign('mid_data', $data);
+
+			// Enable AJAX
+			if ( $prefs['feature_ajax'] === 'y' && $prefs['mobile_feature'] === 'y' && $_smarty_display ) {
+				global $ajaxlib; require_once( 'lib/ajax/ajaxlib.php' );
+				$ajaxlib->registerTemplate( $tpl );
+				$ajaxlib->processRequests( $data, $tpl );
+			}
+
 			include_once('tiki-modules.php');
 
 		} elseif ($_smarty_tpl_file == 'confirm.tpl' || $_smarty_tpl_file == 'error.tpl' || $_smarty_tpl_file == 'error_ticket.tpl' || $_smarty_tpl_file == 'error_simple.tpl') {
 			ob_end_clean(); // Empty existing Output Buffer that may have been created in smarty before the call of this confirm / error* template
 			if ( $prefs['feature_obzip'] == 'y' ) {
 				ob_start('ob_gzhandler');
+			}
+
+			// Enable AJAX
+			if ( $prefs['feature_ajax'] === 'y' && $prefs['mobile_feature'] === 'y' && $_smarty_display ) {
+				global $ajaxlib; require_once('lib/ajax/ajaxlib.php');
+				$ajaxlib->registerTemplate($_smarty_tpl_file);
+				$ajaxlib->processRequests();
 			}
 
 			include_once('tiki-modules.php');

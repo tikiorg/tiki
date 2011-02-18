@@ -98,9 +98,6 @@ function smarty_function_button($params, &$smarty) {
 	
 	unset($params['_class']);
 
-	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
-		$params['_rel'] = 'external';	// temporary fix for ajax loading that breaks - jqm 1.0a3
-	}
 
 	if (!$disabled) {
 		$flip_id = '';
