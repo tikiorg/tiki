@@ -321,6 +321,9 @@ class TikiAccessLib extends TikiLib
 			echo "<script>document.location.href='$url';</script>\n";
 		} else {
 			@ob_end_clean(); // clear output buffer
+			if ( $prefs['feature_obzip'] == 'y' ) {
+				@ob_start('ob_gzhandler');
+			}
 			header("HTTP/1.0 $code Found");
 			header( "Location: $url" );
 		}
