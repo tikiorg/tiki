@@ -256,10 +256,7 @@ class CacheLibFileSystem
 
 	function cacheItem($key, $data, $type='') {
 		$key = $type.md5($key);
-		$fw = fopen($this->folder."/$key","w+");
-		fwrite($fw,$data);
-		fclose($fw);
-		chmod($this->folder."/$key", 0644);
+		@file_put_contents($this->folder."/$key",$data);
 		return true;
 	}
 
@@ -270,16 +267,7 @@ class CacheLibFileSystem
 
 	function getCached($key, $type='') {
 		$key = $type.md5($key);
-		if ( !file_exists($this->folder."/$key")) { 	
-			return false;
-		} 
-		$fw = fopen($this->folder."/$key","r");
-		if ($l = filesize($this->folder."/$key"))
-			$data = fread($fw, $l);
-		else
-			$data = '';
-		fclose($fw);
-		return $data;
+		return @file_get_contents($this->folder."/$key");
 	}
 
 	function invalidate($key, $type='') {
