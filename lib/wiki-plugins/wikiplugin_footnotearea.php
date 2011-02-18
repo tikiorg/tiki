@@ -24,6 +24,7 @@ function wikiplugin_footnotearea_info() {
 		'description' => tra('Create automatically numbered footnotes (together with PluginFootnote)'),
 		'prefs' => array('wikiplugin_footnotearea'),
 		'icon' => 'pics/icons/text_horizontalrule.png',
+		'format' => 'html',
 		'params' => array(),
 	);
 }
@@ -33,11 +34,10 @@ function wikiplugin_footnotearea($data, $params) {
 	$html = '<div class="footnotearea">';
 	$html .= '<hr />';
 
-	foreach($GLOBALS["footnotesData"] as $key => $value){
-		$noteId = $key + 1;
-		$html .= '<div class="onefootnote" id="footnote' . $noteId . '">';
-		$html .= '<a href="#ref_footnote' . $noteId . '">'. $noteId . '.</a> ';
-		$html .= $value;
+	foreach($GLOBALS["footnotesData"] as $data => $number){
+		$html .= '<div class="onefootnote" id="footnote' . $number . '">';
+		$html .= '<a href="#ref_footnote' . $number . '">'. $number . '.</a> ';
+		$html .= '~/np~' . $data . '~np~';
 		$html .= '</div>';
 	}
 	$html .= '</div>';

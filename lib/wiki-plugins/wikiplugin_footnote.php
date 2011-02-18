@@ -13,12 +13,6 @@
  *
  * {FOOTNOTE()/}
  */
-function wikiplugin_footnote_help()
-{
-	return tra('Inserts a superscripted footnote number next to text and takes in footnote as parameter')
-						. ':<br />~np~{FOOTNOTE()}insert footnote here{FOOTNOTE}~/np~' 
-						;
-}
 
 function wikiplugin_footnote_info()
 {
@@ -36,18 +30,6 @@ function wikiplugin_footnote_info()
 				'description' => tra('Tag to existing footnote'),
 				'default' => ''
 			),
-			'checkDuplicate' => array(
-				'required' => false,
-				'name' => tra('CheckDuplicate'),
-				'description' => tra('Check for duplicate footnotes'),
-				'filter' => 'alpha',
-				'default' => '',
-				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
-					array('text' => tra('No'), 'value' => 'n')
-				)
-			)
 		)
 	);
 }
@@ -56,31 +38,21 @@ function wikiplugin_footnote($data, $params)
 {
 	if (! isset($GLOBALS['footnoteCount'])) {
 		$GLOBALS['footnoteCount'] = 0;
+		$GLOBALS['footnotesData'] = array();
 	}
 
-	if (empty($params)) {
-		$GLOBALS['footnoteCount']++;
-		$footnoteCount = $GLOBALS['footnoteCount'];
-		$GLOBALS['footnotesData'][] = trim($data);
-	} else {
-		extract($params, EXTR_SKIP);
-		if (!empty($sameas)) {
-			$footnoteCount = $sameas;
-		} else {
-			if (ucfirst($checkDuplicate) == 'Y') {
-				foreach($GLOBALS["footnotesData"] as $key => $value) {
-					if ( strcmp(trim($data), $value) == 0 ) {
-						$footnoteCount = $key + 1;
-						break;
-					}
-				}
-			}
-		}   // else for if (!empty($sameas
-	}    // else for if (empty($params
+	if (! empty($data)) {
+		$data = trim($data);
+		if (! isset($GLOBALS['footnotesData'][$data])) {
+			$GLOBALS['footnotesData'][$data] = ++$GLOBALS['footnoteCount'];
+		}
 
-	$html = '{SUP()}'
-				. "<a id=\"ref_footnote$footnoteCount\" href=\"#footnote$footnoteCount\">$footnoteCount</a>"
-				.	'{SUP}';
+		$number = $GLOBALS['footnotesData'][$data];
+	} elseif (isset($params['sameas'])) {
+		$number = $params['sameas'];
+	}
+
+	$html = '{SUP()}~np~' . "<a id=\"ref_footnote$number\" href=\"#footnote$number\">$number</a>" . '~/np~{SUP}';
 
 	return $html;
 }
