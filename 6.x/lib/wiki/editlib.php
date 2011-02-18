@@ -523,6 +523,8 @@ class EditLib
 		
 		// process a few ckeditor artifacts
 		$inHtml = str_replace('<p></p>', '', $inHtml);	// empty p tags are invisible
+		// Get real URL in case of CKEditor
+		$inHtml = preg_replace('/<a _cke_saved_href="([^"]*)" (.*) href="([^"]*)"/', '<a href="\1" \2', $inHtml);	// empty p tags are invisible
 		
 		// create parser object, insert html code and parse it
 		$htmlparser = new HtmlParser($inHtml, $grammar, '', 0);
