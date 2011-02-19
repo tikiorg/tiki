@@ -39,11 +39,15 @@ header, nav, article, footer, address {
 
 /* when fixed width is set to on */
 .fixed_width .fixedwidth {
+	display: table;
+}
+
+.fixed_width > .fixedwidth {
 	width: 990px;
 	margin-top: 18px;
 	margin-bottom: 5px;
-	display: table;
 }
+
 
 body.fixed_width .fixedwidth .fixedwidth {
 	margin: 0 auto;
