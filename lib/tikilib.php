@@ -6165,13 +6165,6 @@ if( \$('#$id') ) {
 							$button = '';
 						}
 
-						// Use $hdrlevel + 1 because the page title is H1, so none of the other headers should be.
-						// Except when page title is off
-						// Or when in wysiwyg mode
-						$headerInc = 0;
-						if( $prefs['feature_page_title'] == 'y' && ! $options['noheaderinc'] )
-							++$headerInc;
-
 						if ( $prefs['feature_wiki_show_hide_before'] == 'y' ) {
 							$line = $button.'<h'.($hdrlevel+$headerInc).' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.'</h'.($hdrlevel+$headerInc).'>'.$aclose2;
 						} else {
@@ -7861,7 +7854,7 @@ if( \$('#$id') ) {
 	}
 
 	function take_away_accent($str) {
-		$accents = explode(' ', 'À Á Â Ã Ä Å Ç È É Ê Ë Ì Í Î Ï Ð Ñ Ò Ó Ô Õ Ö Ù Ú Û Ü Ý ß à á â ã ä å ç è é ê ë ì í î ï ñ ò ó ô õ ö ù ú û ü ý Æ æ');
+		$accents = explode(' ', 'À ÁEÁEÁEÁEÁEÁEÁEÁEÁEÁEÁEÁEÁEÁEÁEÁEÁEÁEÁEÁEÁEÁEÁEÁEÁEÁEÁEà á â ã ä å ç è é ê ë ì í î ï ñ ò ó ô õ ö ù ú û ü ý ÁEæ');
 		$convs =   explode(' ', 'A A A A A A C E E E E I I I I D N O O O O O U U U U Y s a a a a a a c e e e e i i i i n o o o o o u u u u y AE ae');
 		return str_replace($accents, $convs, $str);
 	}
