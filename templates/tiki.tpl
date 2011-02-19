@@ -28,7 +28,7 @@
 			{include file='tiki-ajax_header.tpl'}
 		{/if}
 		
-		<div class="fixedwidth"> {* enables fixed-width layouts *}
+		<div id="fixedwidth" class="fixedwidth"> {* enables fixed-width layouts *}
 			{if $prefs.feature_layoutshadows eq 'y'}<div id="main-shadow">{eval var=$prefs.main_shadow_start}{/if}
 			<div id="main">
 				{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y') }
@@ -36,7 +36,7 @@
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}
 							<div id="header_outer">
 								<div id="header_container">
-									<div {*id="header_fixedwidth"*} class="fixedwidth">
+									<div id="header_fixedwidth" class="fixedwidth">
 										<header class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 											<div class="content clearfix modules" id="top_modules">
 												{section name=homeix loop=$top_modules}
