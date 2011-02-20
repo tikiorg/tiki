@@ -59,7 +59,7 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 		// work out cookie value if there
 		if( isset($_REQUEST['cookietab']) && $tabset_index === 1) {	// overrides cookie if added to request as in tiki-admin.php?page=look&cookietab=6
 			$cookietab = empty($_REQUEST['cookietab']) ? 1 : $_REQUEST['cookietab'];
-			setCookieSection( $smarty_tabset_name, $cookietab, 'tabs' );
+			setCookieSection( $smarty_tabset_name, $cookietab, 'tabs' );	// too late to set it here as output has started
 		}
 
 
@@ -117,6 +117,13 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 		$ret .= "</div></div>$content";
 
 		// add some jq to initialize the tab, needed when page is cached
+		if ($tabset_index === 1) {		// override cookie with query cookietab
+			$headerlib->add_jq_onready('
+var ctab = location.search.match(/cookietab=(\d+)/);
+if (ctab) {
+	setCookie("'.$smarty_tabset_name.'", ctab[1],"tabs");
+}');
+		}
 		$headerlib->add_jq_onready('tikitabs(getCookie("'.$smarty_tabset_name.'","tabs",1), $("div[data-name='.$smarty_tabset_name.'] .tabmark:first"));');
 
 		$tabset_index--;

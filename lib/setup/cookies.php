@@ -69,11 +69,11 @@ function setCookieSection($name, $value, $section = '', $expire = '', $path = ''
 			} else {
 				$valSection = $valSection + $name2 + $value;
 			}
-			setCookie($section, $valSection, '', $expire, $path, $domain, $secure);
+			setCookieSection($section, $valSection, '', $expire, $path, $domain, $secure);
 		}
 		else {
 			$valSection = $name2 . $value;
-			setCookie($section, $valSection, '', $expire, $path, $domain, $secure);
+			setCookieSection($section, $valSection, '', $expire, $path, $domain, $secure);
 		}
 
 	} else {
