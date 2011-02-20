@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_last_created_faqs_info() {
 	return array(
-		'name' => tra('Last Created FAQs'),
+		'name' => tra('Newest FAQs'),
 		'description' => tra('Displays the specified number of FAQs from newest to oldest.'),
 		'prefs' => array("feature_faqs"),
 		'params' => array(),

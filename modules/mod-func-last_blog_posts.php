@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_last_blog_posts_info() {
 	return array(
-		'name' => tra('Last blog posts'),
+		'name' => tra('Newest Blog Posts'),
 		'description' => tra('Lists the specified number of blogs posts from newest to oldest.'),
 		'prefs' => array("feature_blogs"),
 		'params' => array(
