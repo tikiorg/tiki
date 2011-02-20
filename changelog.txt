@@ -2768,7 +2768,7 @@ r29614 | jonnybradley | 2010-09-25 19:53:04 +0200 (Sat, 25 Sep 2010) | 1 line
 r29613 | jonnybradley | 2010-09-25 19:49:56 +0200 (Sat, 25 Sep 2010) | 1 line
 
 [FIX] trackerlist: implode warning
-----------------------------------------------
+-)--------------------------------------------
 r29612 | jonnybradley | 2010-09-25 19:49:12 +0200 (Sat, 25 Sep 2010) | 1 line
 
 [FIX] ckeditor: Don't try and load the home page as a stylesheet if the style option is not set or doesn't exist (makes things a bit slow)
@@ -18052,7 +18052,7 @@ r21160 | chealer | 2009-08-31 03:35:01 +0200 (lun., 31 août 2009) | 3 lines
 ----------------------------------------------
 r21158 | chealer | 2009-08-30 22:34:11 +0200 (dim., 30 août 2009) | 3 lines
 
-[ENH] change freetags_current and freetag modules to new module style (modules-doc). freetag's UI name is now "Freetags editor", freetags_current's is "Wiki Freetags". freetags_current gets title "Freetags". open to improvements
+[ENH] change freetags_current and freetag modules to new module style (modules-doc). freetag's UI name is now "Tags Editor", freetags_current's is "Wiki Freetags". freetags_current gets title "Freetags". open to improvements
 [FIX] HTML special chars encoding
 
 ----------------------------------------------
@@ -70317,7 +70317,7 @@ Version 1.9.8
 	  his CVS access.
 
 2007-09-05 01:47  marclaporte
-	* templates/tiki-featured_link.tpl: [MOD] Featured links: Changing
+	* templates/tiki-featured_link.tpl: [MOD] Featured Links: Changing
 	  the iframe height from 600 to 800 pixels, which is more
 	  appropriate in my experience. Rollback if you disagree.
 

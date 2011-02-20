@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_freetag_info() {
 	return array(
-		'name' => tra('Freetags editor'),
+		'name' => tra('Tags Editor'),
 		'description' => tra('Shows current freetags and enables to add and remove some if permissions allow.'),
 		'prefs' => array( 'feature_freetags' ),
 		'params' => array()

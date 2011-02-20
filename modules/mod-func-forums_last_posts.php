@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_forums_last_posts_info() {
 	return array(
-		'name' => tra('Last forum posts'),
+		'name' => tra('Newest Forum Posts'),
 		'description' => tra('Displays the latest forum posts.'),
 		'prefs' => array( 'feature_forums' ),
 		'params' => array(

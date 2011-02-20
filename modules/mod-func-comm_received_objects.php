@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_comm_received_objects_info() {
 	return array(
-		'name' => tra('Received objects'),
+		'name' => tra('Received Objects'),
 		'description' => tra('Displays the number of pages received (via Communications).'),
 		'prefs' => array("feature_comm"),
 		'documentation' => 'Module comm_received_objects',

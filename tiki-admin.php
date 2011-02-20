@@ -182,7 +182,7 @@ if (isset($_REQUEST["page"])) {
 	} else if ($adminPage == "fgal") {
 		$admintitle = "File Galleries"; //get_strings tra("File Galleries")
 		$helpUrl = "File+Gallery";
-		$description = "File galleries"; //get_strings tra("File galleries")
+		$description = "File Galleries"; //get_strings tra("File Galleries")
 		include_once ('tiki-admin_include_fgal.php');
 	} else if ($adminPage == "cms") {
 		$admintitle = "Articles"; //get_strings tra("Articles")

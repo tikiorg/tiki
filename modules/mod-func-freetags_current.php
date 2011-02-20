@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_freetags_current_info() {
 	return array(
-		'name' => tra('Freetags Wiki'),
+		'name' => tra('Wiki Page Tags'),
 		'description' => tra('Displays current freetags on wiki pages and enables to add tags if permissions allow.'),
 		'prefs' => array( 'feature_freetags' ),
 		'params' => array()

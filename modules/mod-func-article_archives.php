@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_article_archives_info() {
 	return array(
-		'name' => tra('Article archives'),
+		'name' => tra('Article Archives'),
 		'description' => tra('Shows links to the published articles for each month.'),
 		'prefs' => array( 'feature_articles' ),
 		'params' => array(

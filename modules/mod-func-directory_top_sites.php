@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_directory_top_sites_info() {
 	return array(
-		'name' => tra('Top directory sites'),
+		'name' => tra('Top Directory Sites'),
 		'description' => tra('Displays the specified number of the directory sites from most visited to least visited.'),
 		'prefs' => array( 'feature_directory' ),
 		'params' => array(

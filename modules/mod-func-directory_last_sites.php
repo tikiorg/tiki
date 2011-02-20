@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_directory_last_sites_info() {
 	return array(
-		'name' => tra('Last directory sites'),
+		'name' => tra('Newest Directory Sites'),
 		'description' => tra('Displays the specified number of the directory sites most recently added.'),
 		'prefs' => array( 'feature_directory' ),
 		'params' => array(

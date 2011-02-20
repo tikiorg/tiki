@@ -192,7 +192,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_featuredLinks' => array(
-			'name' => tra('Featured links'),
+			'name' => tra('Featured Links'),
 			'description' => tra('Simple menu system which can optionally add an external web page in an iframe'),
 			'help' => 'Featured+links',
 			'type' => 'flag',
@@ -427,8 +427,8 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_action_calendar' => array(
-			'name' => tra('Action calendar'),
-			'description' => tra('Action calendar'),
+			'name' => tra('Action Calendar'),
+			'description' => tra('Action Calendar'),
 			'help' => 'Action+Calendar',
 			'type' => 'flag',
 		),

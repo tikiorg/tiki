@@ -101,14 +101,14 @@
 
 			{preference name=feature_dump}
 			<div class="adminoptionboxchild" id="feature_dump_childcontainer">
-				<div class="adminoptionbox">
+				<div class="adminoptionbox clearfix">
 					<div class="adminoptionlabel">
 						<label for="tagname">{tr}Tag for current wiki:{/tr}</label>
 						<input maxlength="20" size="20" type="text" name="tagname" id="tagname" />
 						<input type="submit" name="createtag" value="{tr}Create{/tr}" />
 					</div>
 				</div>
-				<div class="adminoptionbox">
+				<div class="adminoptionbox clearfix">
 					<div class="adminoptionlabel">
 						<label for="restoretag">{tr}Restore wiki to tag:{/tr}</label>
 						<select name="tagname" id="restoretag"{if $tags|@count eq '0'} disabled="disabled"{/if}>
@@ -121,7 +121,7 @@
 						<input type="submit" name="restoretag" value="{tr}Restore{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
 					</div>
 				</div>
-				<div class="adminoptionbox">
+				<div class="adminoptionbox clearfix">
 					<div class="adminoptionlabel">
 						<label for="removetag">{tr}Remove a tag:{/tr}</label> 
 						<select name="tagname" id="removetag"{if $tags|@count eq '0'} disabled="disabled"{/if}>
@@ -241,11 +241,11 @@
 			{preference name=feature_wiki_multiprint}
 		</div>
 
-		<div class="adminoptionbox">
+		<div class="adminoptionbox clearfix">
 			<fieldset>
 				<legend>{tr}Wiki watch{/tr}{help url="Watch"}</legend>
 				{if $prefs.feature_user_watches ne 'y'}
-					<div class="adminoptionbox">
+					<div class="adminoptionbox clearfix">
 						{icon _id=information} {tr}Feature disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.
 					</div>
 				{else}
@@ -284,7 +284,7 @@
 
 					<fieldset>
 						<legend>{tr}Freetags{/tr}</legend>
-						<div class="adminoptionbox">
+						<div class="adminoptionbox clearfix">
 							{if $prefs.feature_freetags ne 'y'}
 								<br />
 								{icon _id=information}{tr}Freetags are disabled.{/tr} <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.
@@ -315,10 +315,10 @@
 		{preference name=feature_listorphanStructure}
 		{preference name=gmap_page_list}
 
-		<div class="adminoptionbox">
+		<div class="adminoptionbox clearfix">
 			<fieldset>
 				<legend>{tr}Configuration{/tr}</legend>
-				<div class="adminoptionbox">
+				<div class="adminoptionbox clearfix">
 					{tr}Select which items to display when listing pages:{/tr}
 				</div>
 				{preference name=wiki_list_sortorder}

@@ -6,7 +6,7 @@
 	{button _anchor="site_stats" _text="{tr}Site{/tr}"}
 	{if $wiki_stats}{button _anchor="wiki_stats" _text="{tr}Wiki{/tr}"}{/if}
 	{if $igal_stats}{button _anchor="igal_stats" _text="{tr}Image galleries{/tr}"}{/if}
-	{if $fgal_stats}{button _anchor="fgal_stats" _text="{tr}File galleries{/tr}"}{/if}
+	{if $fgal_stats}{button _anchor="fgal_stats" _text="{tr}File Galleries{/tr}"}{/if}
 	{if $cms_stats}{button _anchor="cms_stats" _text="{tr}CMS{/tr}"}{/if}
 	{if $forum_stats}{button _anchor="forum_stats" _text="{tr}Forums{/tr}"}{/if}
 	{if $blog_stats}{button _anchor="blog_stats" _text="{tr}Blogs{/tr}"}{/if}

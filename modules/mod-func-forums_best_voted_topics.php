@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_forums_best_voted_topics_info() {
 	return array(
-		'name' => tra('Best rated topics'),
+		'name' => tra('Top-Rated Topics'),
 		'description' => tra('Displays the specified number of the forum topics with the best ratings.'),
 		'prefs' => array('feature_forums'),
 		'params' => array(),

@@ -27,10 +27,10 @@ array("feature_articles","Articles","article_read",tra("Read an article"),2,0), 
 array("feature_articles","Articles","article_new",tra("Publish an article"),20,0), 
 array("feature_articles","Articles","article_is_read",tra("Have your article read"),1,0), // tikilib.php
 
-array("feature_file_galleries","File galleries","fgallery_new",tra("Create New File Gallery"),10,0),  // filegallib.php
-array("feature_file_galleries","File galleries","fgallery_new_file",tra("Upload new file to gallery"),10,0),  // filegallib.php
-array("feature_file_galleries","File galleries","fgallery_download",tra("Download other user's file"),5,0),  // tikilib.php
-array("feature_file_galleries","File galleries","fgallery_is_downloaded",tra("Have your file downloaded"),5,0), // tikilib.php
+array("feature_file_galleries","File Galleries","fgallery_new",tra("Create New File Gallery"),10,0),  // filegallib.php
+array("feature_file_galleries","File Galleries","fgallery_new_file",tra("Upload new file to gallery"),10,0),  // filegallib.php
+array("feature_file_galleries","File Galleries","fgallery_download",tra("Download other user's file"),5,0),  // tikilib.php
+array("feature_file_galleries","File Galleries","fgallery_is_downloaded",tra("Have your file downloaded"),5,0), // tikilib.php
 
 array("feature_galleries","Image galleries","igallery_new",tra("Create a new image gallery"),10,0), // imagegallib.php
 array("feature_galleries","Image galleries","igallery_new_img",tra("Upload new image to gallery"),6,0), // imagegallib.php

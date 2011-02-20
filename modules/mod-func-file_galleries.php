@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_file_galleries_info() {
 	return array(
-		'name' => tra('File galleries'),
+		'name' => tra('File Galleries'),
 		'description' => tra('Displays links to file galleries.'),
 		'prefs' => array( 'feature_file_galleries' ),
 		'params' => array(),
