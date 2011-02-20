@@ -56,6 +56,15 @@ body.fixed_width .fixedwidth .fixedwidth {
 .fixed_width .fixedwidth[id] {
 	height: auto;
 }
+/*
+#header_fixedwidth .fixedwidth {
+	height: 100%;
+}*/
+
+/* so header contents stay left rather than centered when wide middle content extends page to the right. */ 
+#header_container .fixedwidth {
+	margin-left: 0;
+}
 
 .fullscreen #c1c2 #wrapper #col1.marginleft {
 	margin-left: 30px;
@@ -2059,6 +2068,10 @@ ul.freetagged li {
 /* special workaround for IE 6 */
 * html .thumbnailcontener {
 	float: left;
+}
+
+.tree li {
+	display: inline-block;
 }
 
 /* jquery-ui dialogs help */

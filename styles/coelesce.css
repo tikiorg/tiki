@@ -205,7 +205,10 @@ label {
 
 #middle {
 	background: white;
-	margin-bottom: 20px;
+}
+
+#topbar_modules {
+	margin-bottom: 20px;	
 }
 
 #c1c2 #wrapper .marginleft {
@@ -262,16 +265,22 @@ body.tiki_wiki_page.manage #c1c2 #wrapper #col1 #tiki-center {
 	text-align: right;
 	font-size: .9em;
 	border-top: 1px solid #517ba5;
-}
-
-.footerbgtrap {
-	border-top: 1px solid #ebf5ff;
+/*	border-top: 1px solid #ebf5ff;*/
 	background: #ccdceb;
 }
 
 /* Site Header & Identity */
-#top_modules {
+#header_container {
 	background: url(coelesce/pagebg.jpg) repeat-x 0 100%;
+}
+
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
+}
+
+#top_modules {
 	position: relative;
 	min-height: 80px;
 	

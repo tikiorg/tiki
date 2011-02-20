@@ -223,21 +223,15 @@ small {
 	color: #d8d8d8;
 }
 
-/*** Type 1 (*litecss-based) layout 
-	(overrides lite.css) ***/
-	
 #main {
 	margin: 0;
 	font-size: 1em;
 }
 
-#header_fixedwidth {
-	text-align: left;
-	background: #0c0c0c;
-}
-
-#top_modules {
-	min-height: 100px;
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
 }
 
 #middle {
@@ -281,7 +275,7 @@ small {
 	padding: 3px;
 }
 
-.footerbgtrap {
+#footer {
 	text-align: center;
 	background: #474747;
 	color: inherit;
@@ -298,15 +292,19 @@ small {
 	font-weight: bold;
 }
 
+#bottom_modules {
+	text-align: left;
+}
+
 #power {
 	margin-top: .5em;
 }
 
 /* Site Header & Identity */
-#header_fixedwidth {
-/*	height: auto;
-	min-height: 50px;*/
+#header_container {
 	padding-top: 2px;
+	text-align: left;
+	background: #0c0c0c;
 }
 
 #top_modules {
@@ -729,10 +727,15 @@ a.tikihelp:hover {
 }
 
 /**help**/
+.help_section {
+	background: #474747;
+	color: #d8d8d8;
+}
+/*
 a.tikihelp, 
 a.tikihelp:hover {
 	color: #292929;
-}
+}*/
 
 /**tree**/
 .ui-icon {
@@ -976,6 +979,10 @@ td.form {
 	padding: .2em .2em 0;
 }
 
+.ui-widget-header {
+	background: #000;
+}
+
 .tabactive {
 	border: solid 1px #696969;
 }
@@ -994,8 +1001,38 @@ td.form {
 	border-bottom-width: 0 !important;
 	padding: 2px 0;
 	margin: 0 .2em -1px 0;*/
-	display: block;
+/*	display: block;*/
 }
+
+.ui-widget {
+    font-family:  "Trebuchet MS", "Bitstream Vera Sans", sans-serif;
+    font-size: 1em;
+}
+.ui-widget-header {
+	color: #d8d8d8;
+}
+
+/*.ui-icon-closethick,*/
+.ui-dialog .ui-dialog-titlebar-close span/*,
+.ui-widget-content .ui-icon*/ {
+background-image: url(../lib/jquery/jquery-ui/themes/dark-hive/images/ui-icons_222222_256x240.png);
+background-image: url(../lib/jquery/jquery-ui/themes/dark-hive/images/ui-icons_cccccc_256x240.png);
+}
+
+.ui-dialog .ui-dialog-titlebar-close span:hover {
+	background: red;
+}
+
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default {
+	background: #4e4e4e url(darkroom/button.png) repeat-x;
+}
+
+.ui-widget-content {
+    background: #474747;
+    border: 1px solid #aaaaaa;
+    color: #d8d8d8;
 
 .tabmark a {
 	border: 1px solid transparent;
@@ -1004,6 +1041,25 @@ td.form {
 	color: #f5f5f5;
 }
 
+.ui-state-default a,
+.ui-state-default a:link,
+.ui-state-default a:visited,
+.ui-widget-content .ui-state-default a,
+.ui-widget-header .ui-state-default a,
+.ui-widget-content .ui-state-default a:visited,
+.ui-widget-header .ui-state-default a:visited {
+	color: #f5f5f5;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a,
+.ui-tabs .ui-tabs-nav li.ui-state-disabled a,
+.ui-tabs .ui-tabs-nav li.ui-state-processing a {
+	color: #f5f5f5 !important;
+}
+
+ui-state-default ui-corner-top ui-tabs-selected ui-state-active {
+	color: #f5f5f5 !important;
+}
 .tabmark a:active {
 	color: #f5f5f5;
 }

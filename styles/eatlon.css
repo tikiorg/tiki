@@ -2,11 +2,9 @@
 	This theme adapted by Gary Cunningham-Lee (chibaguy) for TikiWiki
 	CMS/Groupware is an adaptation of the Eatlon theme by Olle Axelsson
 	(http://eatlon.com). Please retain the link to eatlon.com in the
-	page footer to be in compliance with the terms of use. Because IE7
-	does not support display:table, minimal HTML tables are needed for
-	graphic treatment and column integrity. For more information, please visit
+	page footer to be in compliance with the terms of use.
+	For more information, please visit
 	http://themes.tiki.org or http://zukakakina.com.
-	Adapted for Tiki 7.x
 */
 
 /* Import the default layout properties files: */
@@ -42,6 +40,12 @@ body.fixed_width #main[id] {
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
+		
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
+}
 
 #middle {
 	text-align: left;
@@ -50,7 +54,7 @@ body.fixed_width #main[id] {
 	margin-bottom: 0;
 }
 
-#header_fixedwidth {
+#header_container .fixedwidth {
 	text-align: left;
 	height: 126px;
 	background: #fff url(eatlon/head_bg.gif) repeat-x 0 0;

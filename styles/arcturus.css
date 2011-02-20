@@ -232,6 +232,11 @@ input[type="submit"]:active,
 	position: absolute;
 	right: 10px;
 	top: 0;
+	z-index: 1;
+}
+
+#header {
+	margin: 0;
 }
 	
 /****** Menus, Links ******/

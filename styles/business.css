@@ -274,6 +274,7 @@ hr {
 .siteloginbar_popup .tabmark {
 	background: none;
 	border: none;
+	display: block;
 }
 
 /****** Menus, Links ******/

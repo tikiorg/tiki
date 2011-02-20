@@ -240,10 +240,22 @@ ul span, ol span {
 }
 
 /* Site Header & Identity */
-#header_fixedwidth {
+/*#header_fixedwidth {
+	margin: 0;
+}*/
+
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
+}
+
+#header_container {
 	background: url(feb12/header.jpg) repeat-x bottom;
-	height: auto;
-	min-height: 98px;
+}
+
+#top_modules {
+	min-height: 98px;	
 }
 
 #sitelogo {
@@ -264,12 +276,18 @@ ul span, ol span {
 #bannertopright {
 	padding-right: 1em;
 }
-
+/*
 .box-login_box {
 	float: right;
 	margin-right: 20px;
 	margin-top: 40px;
 	color: #f5f5f5;
+}
+*/
+.siteloginbar_popup {
+	position: absolute;
+	right: 20px;
+	bottom: 0;
 }
 
 /* give every sub-element of #siteloginbar some padding */
@@ -277,37 +295,37 @@ ul span, ol span {
 	padding: 2px;
 }
 
-#siteloginbar a:link,
-#siteloginbar a:visited {
+.siteloginbar a:link,
+.siteloginbar a:visited {
 	color: #fff;
 	text-decoration: none;
 }
 
-#siteloginbar div {
+.siteloginbar div {
 	text-align: right;
 }
 
-#siteloginbar_popup ul li ul {
+.siteloginbar_popup ul li ul {
 	margin-top: -14px;
 }
-
-#siteloginbar_popup .tabcontent {
+/*
+.siteloginbar_popup .tabcontent {
 	background: none;
-}
+}*/
 
 /* Site title and subtitle */
-#sitetitles {
+.box-logo {
+	position: absolute;
+	top: 30%;
+	left: 20px;
 	text-shadow: 0 0 10px #fff;/* text-shadow; CSS3 valid property, values are <offset x> <offset y> <blur> and <color>; ex: 0 0 10px #fff */
 	font-weight: bold;
 	height: 4em;
-	margin: 0;
-	position: relative;
+
 }
 
 #sitetitle {
 	font-size: 2.2em;
-	position: relative;
-	top: 0.5em;
 }
 
 #sitetitle a,
@@ -325,9 +343,7 @@ ul span, ol span {
 #sitesubtitle {
 	color: #fff;
 	font-size: 1.3em;
-	padding-top: 4em;
-	position: relative;
-	margin-top: -3em;
+	line-height: 1.5;
 }
 
 /* tiki-top_bar.tpl - menu and search */
