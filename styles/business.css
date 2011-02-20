@@ -176,6 +176,12 @@ hr {
 }
 
 /***** Site Header & Identity *****/
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
+}
+
 #header {
 	position: relative;
 }
