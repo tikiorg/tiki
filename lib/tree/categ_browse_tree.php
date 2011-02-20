@@ -29,9 +29,13 @@ class CatBrowseTreeMaker extends TreeMaker
 
 	/// Generate HTML code for tree. Need to redefine to add javascript cookies block
 	function make_tree($rootid, $ar) {
-		global $headerlib;
-		
-		$r = '<ul class="tree root">'."\n";
+		global $headerlib, $prefs;
+
+		if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
+			$r = '<ul class="tree root" data-role="listview" data-inset="true">'."\n";
+		} else {
+			$r = '<ul class="tree root">'."\n";
+		}
 
 		$r .= $this->make_tree_r($rootid, $ar) . "</ul>\n";
 
