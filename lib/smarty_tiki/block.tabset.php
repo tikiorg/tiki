@@ -109,7 +109,7 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 		}
 		$ret .= '<div class="container' . $content_class . '"'. $mobile_div_data.'>';
 		foreach ($smarty_tabset[$tabset_index]['tabs'] as $value) {
-			$ret .= '<span class="tabmark tab'.$count.' '.($count == $cookietab ? 'tabactive' : 'tabinactive').'">'.
+			$ret .= '<span class="tabmark tab'.$count.' '.($count == $cookietab ? 'tabactive' : '').'">'.
 				'<a href="#' . ( empty($mobile_a_data) ? 'content'.$count.'"' : '"' ) .
 				' onclick="tikitabs('.$count.',this); return false;"'.$mobile_a_data.'>'.$value.'</a></span>';
 			++$count;
