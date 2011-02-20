@@ -246,6 +246,7 @@
 			<em>{tr}Sample:{/tr} {$now|tiki_short_time}</em>
 
 			{preference name=display_field_order}
+			{preference name=users_prefs_display_12hr_clock}
 			{preference name=tiki_same_day_time_only}
 
 			<div class="adminoptionbox">

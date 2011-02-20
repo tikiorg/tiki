@@ -860,6 +860,7 @@ function get_default_prefs() {
 		'users_prefs_show_mouseover_user_info' => 'n',
 		'users_prefs_tasks_maxRecords' => '10',
 		'users_prefs_user_dbl' => 'n',
+		'users_prefs_display_12hr_clock' => 'n',
 		'users_prefs_user_information' => 'private',
 		'users_prefs_userbreadCrumb' => '4',
 		'users_prefs_mailCharset' => 'utf-8',

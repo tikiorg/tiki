@@ -291,8 +291,13 @@
         </select>
       </td>
     </tr>
-
-    {if $prefs.feature_community_mouseover eq 'y'}
+      <tr>
+        <td>{tr}Use 12-hour clock in time selectors:{/tr}</td>
+        <td>
+          <input type="checkbox" name="display_12hr_clock" {if $user_prefs.display_12hr_clock eq 'y'}checked="checked"{/if} />
+        </td>
+      </tr>
+          {if $prefs.feature_community_mouseover eq 'y'}
       <tr>
         <td>{tr}Display info tooltip on mouseover for every user who allows his/her information to be public{/tr}</td>
         <td>

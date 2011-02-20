@@ -532,7 +532,8 @@
 											 inline 
 										{/if}
 									">
-										{html_select_time prefix="start_" display_seconds=false time=$calitem.start minute_interval=$prefs.calendar_timespan hour_minmax=$hour_minmax}
+										{html_select_time prefix="start_" display_seconds=false time=$calitem.start minute_interval=$prefs.calendar_timespan 
+											hour_minmax=$hour_minmax use_24_hours=$use_24hr_clock}
 									</span>
 								</td>
 								<td style="border:0;padding-top:2px;vertical-align:middle">
@@ -681,7 +682,8 @@
 												 inline 
 											{/if}
 										">
-											{html_select_time prefix="end_" display_seconds=false time=$calitem.end minute_interval=$prefs.calendar_timespan hour_minmax=$hour_minmax}
+											{html_select_time prefix="end_" display_seconds=false time=$calitem.end minute_interval=$prefs.calendar_timespan 
+												hour_minmax=$hour_minmax use_24_hours=$use_24hr_clock}
 										</span>
 									</td>
 									<td style="border:0;padding-top:2px;vertical-align:middle">
@@ -1120,7 +1122,7 @@
 												</td>
 												<td class="html_select_time" style="border:0; vertical-align: middle;">
 													{html_select_time prefix="reminder_fixed_date_" display_seconds=false time=$calitem.reminder_fixed_date 
-													minute_interval=$prefs.calendar_timespan hour_minmax=$hour_minmax}
+													minute_interval=$prefs.calendar_timespan hour_minmax=$hour_minmax use_24_hours=$use_24hr_clock}
 												</td>
 											</tr>
 										</table>

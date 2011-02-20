@@ -72,6 +72,12 @@ function prefs_users_list() {
 				'feature_wiki',
 			),
 		),
+		'users_prefs_display_12hr_clock' => array(
+			'name' => tra('Use 12-hour clock for time selectors'),
+			'type' => 'flag',
+			'description' => tra('Use the 12-hour clock (with AM and PM) for time selectors used in some edit windows 
+									to set the time for publishing new or edited blog posts, articles, etc.')
+		),
 		'users_prefs_diff_versions' => array(
 			'name' => tra('Use new diff any version interface'),
 			'type' => 'flag',
