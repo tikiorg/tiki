@@ -236,7 +236,7 @@ function showDetails( id, domain, profile ) { // {{{
 {tabset name='tabs_admin-profiles'}
 	{tab name="{tr}Apply Profiles{/tr}"}
 	
-		<h3>Configure Tiki in 3 easy steps using Profiles</h3>
+		<h3>{tr}Configure Tiki in 3 easy steps using Profiles{/tr}</h3>
 		{if $prefs.javascript_enabled eq 'y'}
 				{if $openSources == 'some'}
 					{remarksbox type="warning" title="{tr}A Friendly Warning{/tr}"}
@@ -247,7 +247,7 @@ function showDetails( id, domain, profile ) { // {{{
 				<fieldset><legend>{tr}Profiles{/tr}</legend>
 				<form method="get" action="tiki-admin.php">
 					<div class="adminoptionbox">
-						<b>Step 1: Use the Quick or Manual Filter option to see a list of Profiles you can apply</b>
+						<b>{tr}Step 1: Use the Quick or Manual Filter option to see a list of Profiles you can apply{/tr}</b>
 						<table class="normal">
 							<tr>
 								<th width="50%" class="quickmode_notes">{tr}Option 1: Quick Filter{/tr}</th>
@@ -263,26 +263,26 @@ function showDetails( id, domain, profile ) { // {{{
 									
 									<p>
 										{assign var=profilesFilterUrlFeaturedProfiles value='Featured+profiles'}
-										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlFeaturedProfiles}{$profilesFilterUrlEnd}">Featured Profiles</a>
-										<br />Featured Profiles is a list of applications that are maintained by the Tiki community and are a great way to get started.
+										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlFeaturedProfiles}{$profilesFilterUrlEnd}">{tr}Featured Profiles{/tr}</a>
+										<br />{tr}Featured Profiles is a list of applications that are maintained by the Tiki community and are a great way to get started.{/tr}
 									</p>
 									
 									<p>
 										{assign var=profilesFilterUrlFullProfiles value='Full+profile+(out+of+the+box+%26+ready+to+go)'}
-										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlFullProfiles}{$profilesFilterUrlEnd}">Full Profiles</a>
-										<br />Full Profiles are full featured out of the box solutions. 
+										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlFullProfiles}{$profilesFilterUrlEnd}">{tr}Full Profiles{/tr}</a>
+										<br />{tr}Full Profiles are full featured out of the box solutions.{/tr} 
 									</p>
 		
 									<p>
 										{assign var=profilesFilterUrlMiniProfiles value='Mini-profile+(can+be+included+in+other)'}
-										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlMiniProfiles}{$profilesFilterUrlEnd}">Mini Profiles</a>
-										<br />Mini Profiles will configure specific features and are a great way to add more functionality to an existing configuration. 
+										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlMiniProfiles}{$profilesFilterUrlEnd}">{tr}Mini Profiles{/tr}</a>
+										<br />{tr}Mini Profiles will configure specific features and are a great way to add more functionality to an existing configuration.{/tr} 
 									</p>
 		
 									<p>
 										{assign var=profilesFilterUrlLearningProfiles value='Learning+profile+(just+to+show+off+feature)'}
-										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlLearningProfiles}{$profilesFilterUrlEnd}">Learning Profiles</a>
-										<br />Learning Profiles will allow you to quickly evaluate specific features in Tiki.
+										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlLearningProfiles}{$profilesFilterUrlEnd}">{tr}Learning Profiles{/tr}</a>
+										<br />{tr}Learning Profiles will allow you to quickly evaluate specific features in Tiki.{/tr}
 									</p>
 		
 								</td>
