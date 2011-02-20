@@ -215,8 +215,7 @@ label {
 	color: #000;
 }
 
-/*** Type 1 (*litecss-based) layout 
-	(overrides lite.css) ***/
+/*** override lite.css ***/
 #main {
 	text-align: left;
 }
@@ -288,14 +287,13 @@ label {
 }
 
 /* Theme-specific custom footer code */
-#custom_site_footer {
-	width: 100%;
+#bottom_modules {
 	margin-right: auto;
 	margin-left: auto;
 	text-align: center;
 	color: #999;
 }
-
+/*
 .fcol1,
 .fcol2,
 .fcol3 {
@@ -307,17 +305,15 @@ label {
 	padding-top: 30px;
 	padding-bottom: 30px;
 }
-
-.fcol1 ul li,
-.fcol2 ul li,
-.fcol3 ul li {
+*/
+#bottom_modules li {
 	border-bottom: 1px solid #666;
 	padding: 4px 0;
 	list-style: none;
 	margin: 0;
 }
 
-.titlefooter{
+#bottom_modules .box-title {
 	color: #fff;
 	float: left;
 	margin-top: 15px;
@@ -325,14 +321,6 @@ label {
 	letter-spacing: 0.5px;
 	text-transform: uppercase;
 	font: normal 1.2em Arial, Helvetica, sans-serif;
-}
-
-.fcol1 img,
-.fcol2 img,
-.fcol3 img{
-	margin-left: 34px;
-	margin-bottom: 6px;
-	float: left;
 }
 
 #footer a,
@@ -357,6 +345,13 @@ label {
 }
 
 /* Site Header & Identity */
+
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
+}
+
 #header_container {
 	color: #fff;
 	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
