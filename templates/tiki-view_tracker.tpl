@@ -113,7 +113,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr
 {if $tracker_info.useComments eq 'y' and ($tracker_info.showComments eq 'y' || $tracker_info.showLastComment eq 'y') and $tiki_p_tracker_view_comments ne 'n'}
 <th{if $tracker_info.showLastComment ne 'y'} style="width:5%"{/if}>{tr}Coms{/tr}</th>
 {/if}
-{if $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
+{if ($tiki_p_tracker_view_attachments eq 'y' or $tiki_p_admin_trackers eq 'y') and $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
 <th style="width:5%">{tr}atts{/tr}</th>
 {if $tiki_p_admin_trackers eq 'y'}<th style="width:5%">{tr}dls{/tr}</th>{/if}
 {/if}
@@ -183,7 +183,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr
 {if $tracker_info.useComments eq 'y' and ($tracker_info.showComments eq 'y' or $tracker_info.showLastComment eq 'y') and $tiki_p_tracker_view_comments ne 'n'}
 <td  style="text-align:center;">{if $tracker_info.showComments eq 'y'}{$items[user].comments}{/if}{if $tracker_info.showComments eq 'y' and $tracker_info.showLastComment eq 'y'}<br />{/if}{if $tracker_info.showLastComment eq 'y' and !empty($items[user].lastComment)}{$items[user].lastComment.user|escape}-{$items[user].lastComment.posted|tiki_short_date}{/if}</td>
 {/if}
-{if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
+{if ($tiki_p_tracker_view_attachments eq 'y' or $tiki_p_admin_trackers eq 'y') and $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
 <td class="icon"><a href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=att{if $offset}&amp;offset={$offset}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}"
 link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List Attachments{/tr}"
 /></a> {$items[user].attachments}</td>

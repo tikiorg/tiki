@@ -172,8 +172,8 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;
 {/tab}
 {/if}
 
-{* ---------------------------------------- tab with attachements --- *}
-{if $tracker_info.useAttachments eq 'y'}
+{* ---------------------------------------- tab with attachments --- *}
+{if $tracker_info.useAttachments eq 'y' and $tiki_p_tracker_view_attachments eq 'y'}
 	{tab name="{tr}Attachments{/tr} (`$attCount`)"}
 		{include file='attachments_tracker.tpl'}
 	{/tab}
