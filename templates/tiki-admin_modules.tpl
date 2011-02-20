@@ -36,7 +36,7 @@
 	
 {/remarksbox}
 
-{tabset name='tabs_adminmodules'}
+{tabset}
 
 {tab name="{tr}Assigned modules{/tr}"}
 	{remarksbox type="note" title="{tr}Modules Revamp{/tr}" icon="bricks"}
@@ -53,51 +53,49 @@
 	{button edit_assign=0 _auto_args="edit_assign" _text="{tr}Add module{/tr}"}
 
 	<div id="assigned_modules">
-		<ul>
-			{foreach from=$module_zones key=zone_initial item=zone_info}
-				<li><a href="#{$zone_info.id}_modules">{$zone_info.name|capitalize}</a></li>
-			{/foreach}
-		</ul>
+		{tabset}
 		{foreach from=$module_zones key=zone_initial item=zone_info}
-			<div id="{$zone_info.id}_modules">
-				<table class="normal" id="assigned_zone_{$zone_initial}">
-					<tr>
-						<th>{tr}Name{/tr}</th>
-						<th>{tr}Order{/tr}</th>
-						<th>{tr}Cache{/tr}</th>
-						<th>{tr}Rows{/tr}</th>
-						<th>{tr}Parameters{/tr}</th>
-						<th>{tr}Groups{/tr}</th>
-						<th>{tr}Action{/tr}</th>
-					</tr>
-					{cycle print=false values="even,odd"}
-					{foreach from=$assigned_modules[$zone_initial] item=module}
-						<tr class="{cycle}">
-							<td>{$module.name|escape}</td>
-							<td>{$module.ord}</td>
-							<td>{$module.cache_time}</td>
-							<td>{$module.rows}</td>
-							<td style="font-size:smaller;">{$module.params|escape:unescape|replace:"+":" "|replace:"&":"<br />"}</td>
-							<td style="font-size:smaller;">{$module.module_groups}</td>
-							<td>
-								<a class="link" href="tiki-admin_modules.php?edit_assign={$module.moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-								{if $top[0].moduleId ne $module.moduleId}
-									<a class="link" href="tiki-admin_modules.php?modup={$module.moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
-								{/if}
-								{if !$smarty.section.user.last and $top[user.index_next].moduleId}
-									<a class="link" href="tiki-admin_modules.php?moddown={$module.moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
-								{/if}
-								<a class="link" href="tiki-admin_modules.php?unassign={$module.moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
-							</td>
+			{tab name=$zone_info.name|capitalize}
+				<div id="{$zone_info.id}_modules">
+					<table class="normal" id="assigned_zone_{$zone_initial}">
+						<tr>
+							<th>{tr}Name{/tr}</th>
+							<th>{tr}Order{/tr}</th>
+							<th>{tr}Cache{/tr}</th>
+							<th>{tr}Rows{/tr}</th>
+							<th>{tr}Parameters{/tr}</th>
+							<th>{tr}Groups{/tr}</th>
+							<th>{tr}Action{/tr}</th>
 						</tr>
-					{foreachelse}
-						{norecords _colspan=7}
-					{/foreach}
-				</table>
-			</div>
+						{cycle print=false values="even,odd"}
+						{foreach from=$assigned_modules[$zone_initial] item=module}
+							<tr class="{cycle}">
+								<td>{$module.name|escape}</td>
+								<td>{$module.ord}</td>
+								<td>{$module.cache_time}</td>
+								<td>{$module.rows}</td>
+								<td style="font-size:smaller;">{$module.params|escape:unescape|replace:"+":" "|replace:"&":"<br />"}</td>
+								<td style="font-size:smaller;">{$module.module_groups}</td>
+								<td>
+									<a class="link" href="tiki-admin_modules.php?edit_assign={$module.moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+									{if $top[0].moduleId ne $module.moduleId}
+										<a class="link" href="tiki-admin_modules.php?modup={$module.moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
+									{/if}
+									{if !$smarty.section.user.last and $top[user.index_next].moduleId}
+										<a class="link" href="tiki-admin_modules.php?moddown={$module.moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
+									{/if}
+									<a class="link" href="tiki-admin_modules.php?unassign={$module.moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
+								</td>
+							</tr>
+						{foreachelse}
+							{norecords _colspan=7}
+						{/foreach}
+					</table>
+				</div>
+			{/tab}
 		{/foreach}
+		{/tabset}
 	</div>
-	{if $prefs.feature_jquery_ui eq "y"}{jq notonready=true}$("#assigned_modules").tabs();{/jq}{/if}
 	<form method="post" action="#">
 		<input id="module-order" type="hidden" name="module-order" value=""/>
 	</form>

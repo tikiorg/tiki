@@ -26,34 +26,35 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 
 function smarty_block_tab($params, $content, &$smarty, &$repeat) {
-	global $prefs, $smarty_tabset_name, $smarty_tabset, $cookietab, $smarty_tabset_i_tab;
+	global $prefs, $smarty_tabset_name, $smarty_tabset, $cookietab, $smarty_tabset_i_tab, $tabset_index;
 	
 	if ( $repeat ) {
 		return;
 	} else {
 		$print_page = $smarty->get_template_vars('print_page');
+
 		if ($print_page != 'y') {
-			if ( isset($params['name']) and !empty($params['name']) ) {
-				$smarty_tabset[] = $params['name'];
+			$smarty_tabset_i_tab = count($smarty_tabset[$tabset_index]['tabs']) + 1;
+			if ( !empty($params['name'])) {
+				$smarty_tabset[$tabset_index]['tabs'][] = $params['name'];
 			} else {
-				$smarty_tabset[] = $params['name'] = "tab"+$smarty_tabset_i_tab;
+				$smarty_tabset[$tabset_index]['tabs'][] = $params['name'] = "tab"+$smarty_tabset_i_tab;
 			}
 		}
 		
-		$ret = "<a name='tab$smarty_tabset_i_tab'></a>";
+		$ret = "<a name='tab_$smarty_tabset_name_$smarty_tabset_i_tab'></a>";
 		$ret .= "<fieldset ";
-		if ($prefs['feature_tabs'] == 'y' and (!isset($_COOKIE["tabbed_$smarty_tabset_name"]) or $_COOKIE["tabbed_$smarty_tabset_name"] != 'n') && $print_page != 'y') {
-   			$ret .= "id='content$smarty_tabset_i_tab' class='tabcontent' style='clear:both;display:".($smarty_tabset_i_tab == $cookietab ? 'block' : 'none').";'>";
+		if ($prefs['feature_tabs'] == 'y' && $cookietab != 'n' && $print_page != 'y') {
+   			$ret .= "class='tabcontent content$smarty_tabset_i_tab' style='clear:both;display:".($smarty_tabset_i_tab == $cookietab ? 'block' : 'none').";'>";
 		} else {
 			$ret .= "id='content$smarty_tabset_i_tab'>";
 		}
-		if ($prefs['feature_tabs'] != 'y' or (isset($_COOKIE["tabbed_$smarty_tabset_name"]) and $_COOKIE["tabbed_$smarty_tabset_name"] == 'n') or $print_page == 'y') {
-     		$ret .= '<legend class="heading"><a href="#"><span>'.$params['name'].'</span></a></legend>';
+		if ($prefs['feature_tabs'] != 'y' || $cookietab == 'n' || $print_page == 'y') {
+     		$ret .= '<legend class="heading"><a href="#"' . ($prefs['javascript_enabled'] === 'y' ? ' onclick="$(\'>:not(legend)\', $(this).parents(\'fieldset\')).toggle();return false;"' : '') . '><span>'.$params['name'].'</span></a></legend>';
 		}
 	
 		$ret .= "$content</fieldset>";
 		
-		++$smarty_tabset_i_tab;
 		return $ret;
 	}
 }

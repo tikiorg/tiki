@@ -59,31 +59,25 @@ function getCookie($name, $section=null, $default=null) {
 	}
 }
 
-global $cookietab;
-if ($prefs['feature_tabs'] == 'y') {
-	if( isset($_REQUEST['cookietab'])) {
-		$cookietab = $_REQUEST['cookietab'];
-
-	} elseif (isset($_SERVER['HTTP_REFERER']) && preg_replace(array('/\?.*$/','/^http.?:\/\//'),'',$_SERVER['HTTP_REFERER']) == preg_replace('/\?.*$/','',$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) && isset($_COOKIE['tab'])) {
-
-		preg_match('/[\?\&]page=([^\&]*)/', $_SERVER['REQUEST_URI'], $q_match);	// admin & wiki pages
-		preg_match('/[\?\&]page=([^\&]*)/', $_SERVER['HTTP_REFERER'], $ref_match);
-		
-		if ((isset($_COOKIE['tab_last_query']) && $_COOKIE['tab_last_query'] == $_SERVER['SCRIPT_NAME'] . serialize($_GET)) || (count($q_match) == 0 || $q_match == $ref_match)) {	// for admin includes when staying on same panel
-			$cookietab = $_COOKIE['tab'];
+function setCookieSection($name, $value, $section = '', $expire = '', $path = '', $domain = '', $secure = '') {
+	if ($section) {
+		$valSection = getCookie($section);
+		$name2 = "@" . $name . ":";
+		if ($valSection) {
+			if (preg_match( '/' . preg_quote($name2) . '/', $valSection)) {
+				$valSection  = preg_replace( '/' . preg_quote($name2) . '[^@;]*/', $name2 + $value, $valSection );
+			} else {
+				$valSection = $valSection + $name2 + $value;
+			}
+			setCookie($section, $valSection, '', $expire, $path, $domain, $secure);
 		}
+		else {
+			$valSection = $name2 . $value;
+			setCookie($section, $valSection, '', $expire, $path, $domain, $secure);
+		}
+
+	} else {
+		setcookie($name, $value, $expire, $path, $domain, $secure);
 	}
-	setcookie('tab_last_query', $_SERVER['SCRIPT_NAME'] . serialize($_GET));
-	
-	if (empty($cookietab)) {
-		$cookietab = '1';
-	}
-	$smarty->assign('cookietab',$cookietab);
-	setcookie('tab', "$cookietab");
-	$_COOKIE['tab'] = "$cookietab";
-	
-	// add JS to set up current tab
-	$max_tikitabs = 50;
-	//$headerlib->add_jq_onready("tikitabs($cookietab,$max_tikitabs);");
-	
 }
+

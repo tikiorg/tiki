@@ -1022,6 +1022,8 @@ tr.diffheader {
 	position: relative;
 	padding: 4px;
 	top: 0;
+	border-top: none;
+	margin: 0px;
 }
 
 .tabcontent table {
