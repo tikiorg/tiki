@@ -474,13 +474,8 @@ if ($calendar['customlocations'] == 'y') {
 }
 $smarty->assign('listlocs', $listlocs);
 
-$use_24hr_clock = true;
-if ((isset($user_preferences[$user]['display_12hr_clock']) && $user_preferences[$user]['display_12hr_clock'] == 'y')
-	|| (!isset($user_preferences[$user]['display_12hr_clock']) && $prefs['users_prefs_display_12hr_clock'] == 'y')
-) {
-	$use_24hr_clock = false;
-}
-$smarty->assign('use_24hr_clock', $use_24hr_clock);
+include_once ('lib/userprefs/userprefslib.php');
+$smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
 if ($calendar['customcategories'] == 'y') {
 	$listcats = $calendarlib->list_categories($calID);

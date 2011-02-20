@@ -104,5 +104,15 @@ class UserPrefsLib extends TikiLib
 			return(NULL);
 		}
 	}
+	
+	function get_user_clock_pref($user) {
+		global $prefs; global $tikilib;
+		$userclock = $tikilib->get_user_preference($user, 'display_12hr_clock');
+		$use_24hr_clock = true;
+		if ((isset($userclock) && $userclock == 'y') || (!isset($userclock) && $prefs['users_prefs_display_12hr_clock'] == 'y')) {
+			$use_24hr_clock = false;
+		}
+		return $use_24hr_clock;
+	}
 }
 $userprefslib = new UserPrefsLib;
