@@ -382,6 +382,7 @@ if (isset($_REQUEST["comments_previewComment"]) || isset($_REQUEST["comments_pos
 		$smarty->assign('comment_preview', 'y');
 	}
 	$smarty->assign('comment_data', $_REQUEST["comments_data"]);
+	$smarty->assign('comment_title', $comment_preview["title"]);
 	$comments_show = 'y';
 }
 
