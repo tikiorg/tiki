@@ -1362,15 +1362,13 @@ class TrackerLib extends TikiLib
 				}
 				$geo = explode(',', $ins_fields['data'][$i]['value']);
 				if (!empty($geo[0]) && !empty($geo[1])) {
-					$attributelib->set_attribute('trackeritem', $itemId, 'tiki.geo.lon', $geo[0]);
-					$attributelib->set_attribute('trackeritem', $itemId, 'tiki.geo.lat', $geo[1]);
+					$geoattribute = $geo;
 					if ($trackersync && $prefs["user_trackersync_geo"] == 'y') {
 						$trackersync_lon = $geo[0];
 						$trackersync_lat = $geo[1];
 					}
 				}
 				if (!empty($geo[2])) {
-					$attributelib->set_attribute('trackeritem', $itemId, 'tiki.geo.google.zoom', $geo[2]);
 					if ($trackersync && $prefs["user_trackersync_geo"] == 'y') {
 						$trackersync_zoom = $geo[2];
 					}
@@ -1989,6 +1987,13 @@ class TrackerLib extends TikiLib
 			$this->object_post_save( array('type'=>'trackeritem', 'object'=>$itemId, 'name' => "Tracker Item $itemId", 'href'=>"tiki-view_tracker_item.php?itemId=$itemId"), array( 'content' => $parsed ));
 		}
 
+		if (!empty($geoattribute) && $itemId) {
+			$attributelib->set_attribute('trackeritem', $itemId, 'tiki.geo.lon', $geoattribute[0]);
+			$attributelib->set_attribute('trackeritem', $itemId, 'tiki.geo.lat', $geoattribute[1]);
+			if (!empty($geoattribute[2])) {
+				$attributelib->set_attribute('trackeritem', $itemId, 'tiki.geo.google.zoom', $geoattribute[2]);
+			}
+		}
 		return $itemId;
 	}
 
