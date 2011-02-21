@@ -155,7 +155,12 @@ class Language extends TikiDb_Bridge
 			init_language($this->lang);
 		}
 
-		// don't insert anything in the database if the translation hasn't been changed	
+		// don't change anything if $originalStr and $translatedStr are equal
+		if ($originalStr == $translatedStr) {
+			return;
+		}
+		
+		// don't change anything in the database if the translation hasn't been changed
 		if (isset(${"lang_$this->lang"}[$originalStr]) && ${"lang_$this->lang"}[$originalStr] == $translatedStr) {
 			return;
 		}

@@ -129,6 +129,12 @@ class LanguageTest extends TikiTestCase
 		$result = TikiDb::get()->getOne('SELECT `source` FROM `tiki_untranslated` WHERE `lang` = ? AND `source` = ?', array($this->lang, 'New string'));
 		$this->assertFalse($result);
 	}
+	
+	public function testUpdateTransShouldIgnoreWhenSourceAndTranslationAreEqual() {
+		$this->obj->updateTrans('Source and translation are the same', 'Source and translation are the same');
+		$result = TikiDb::get()->getOne('SELECT `source` FROM `tiki_language` WHERE `lang` = ? AND `source` = ?', array($this->lang, 'Source and translation are the same'));
+		$this->assertFalse($result);
+	}
 
 	public function testWriteLanguageFile() {
 		copy(dirname(__FILE__) . '/fixtures/language_orig.php', $this->langDir . '/language.php');
@@ -151,7 +157,7 @@ class LanguageTest extends TikiTestCase
 	}
 
 	public function testWriteLanguageShouldIgnoreEmptyStrings() {
-		TikiDb::get()->query('INSERT INTO `tiki_language` (`source`, `lang`, `tran`) VALUES (?, ?, ?)', array('', $this->lang, ''));
+		TikiDb::get()->query('INSERT INTO `tiki_language` (`source`, `lang`, `tran`, `changed`) VALUES (?, ?, ?, ?)', array('', $this->lang, '', 1));
 		copy(dirname(__FILE__) . '/fixtures/language_orig.php', $this->langDir . '/language.php');
 		$this->obj->writeLanguageFile();
 		$this->assertEquals(file_get_contents(dirname(__FILE__) . '/fixtures/language_modif.php'), file_get_contents($this->langDir . '/language.php'));
@@ -167,5 +173,4 @@ class LanguageTest extends TikiTestCase
 		$this->obj->deleteTranslations();
 		$this->assertFalse(TikiDb::get()->getOne('SELECT * FROM `tiki_language` WHERE `lang` = ?', array($this->obj->lang)));
 	}
-
 }
