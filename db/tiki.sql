@@ -659,7 +659,7 @@ CREATE TABLE `tiki_dynamic_variables` (
   `name` varchar(40) NOT NULL,
   `data` text,
   `lang` VARCHAR(16) NULL
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_extwiki`;
 CREATE TABLE `tiki_extwiki` (
@@ -3282,7 +3282,7 @@ CREATE TABLE `tiki_pages_translation_bits` (
   KEY (`page_id`),
   KEY (`original_translation_bit`),
   KEY (`source_translation_bit`)
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_pages_changes`;
 CREATE TABLE `tiki_pages_changes` (
@@ -3292,7 +3292,7 @@ CREATE TABLE `tiki_pages_changes` (
   `segments_removed` int(10),
   `segments_total` int(10),
   PRIMARY KEY (page_id, version)
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_minichat`;
 CREATE TABLE `tiki_minichat` (
@@ -3304,7 +3304,7 @@ CREATE TABLE `tiki_minichat` (
   `msg` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `channel` (`channel`)
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_profile_symbols`;
 CREATE TABLE `tiki_profile_symbols` (
@@ -3317,7 +3317,7 @@ CREATE TABLE `tiki_profile_symbols` (
   `creation_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY ( `domain`, `profile`, `object` ),
   INDEX(`named`)
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_feature`;
 CREATE TABLE `tiki_feature` (
@@ -3396,7 +3396,7 @@ CREATE TABLE `tiki_sent_newsletters_files` (
   `filename` varchar(256) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `editionId` (`editionId`)
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_sefurl_regex_out`;
 CREATE TABLE `tiki_sefurl_regex_out` (
@@ -3411,7 +3411,7 @@ CREATE TABLE `tiki_sefurl_regex_out` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `left` (`left`(128)),
   INDEX `idx1` (silent, type, feature(30))
-);
+) ENGINE=MyISAM;
 
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-index.php\\?page=(.+)', '$1', 'wiki', 'feature_wiki');
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-slideshow.php\\?page=(.+)', 'show:$1', '', 'feature_wiki');
@@ -3500,7 +3500,7 @@ CREATE TABLE `tiki_plugin_security` (
   `last_objectType` VARCHAR(20) NOT NULL,
   `last_objectId` VARCHAR(200) NOT NULL,
   KEY `last_object` (last_objectType, last_objectId)
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_user_reports`;
 CREATE TABLE `tiki_user_reports` (
@@ -3565,7 +3565,7 @@ CREATE TABLE `tiki_auth_tokens` (
     `groups` VARCHAR(255),
     PRIMARY KEY( `tokenId` ),
     KEY `tiki_auth_tokens_token` (`token`)
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `metrics_assigned`;
 CREATE TABLE `metrics_assigned` (
@@ -3575,7 +3575,7 @@ CREATE TABLE `metrics_assigned` (
     PRIMARY KEY (`assigned_id`),
     KEY `metric_id` (`metric_id`),
     KEY `tab_id` (`tab_id`)
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `metrics_metric`;
 CREATE TABLE `metrics_metric` (
@@ -3588,7 +3588,7 @@ CREATE TABLE `metrics_metric` (
     `metric_dsn` VARCHAR(200) NOT NULL DEFAULT 'local',
     PRIMARY KEY (`metric_id`),
     UNIQUE KEY `metric_name` (`metric_name`)
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `metrics_tab`;
 CREATE TABLE `metrics_tab` (
@@ -3598,7 +3598,7 @@ CREATE TABLE `metrics_tab` (
     `tab_content` longtext NOT NULL,
     PRIMARY KEY (`tab_id`),
     UNIQUE KEY `tab_name` (`tab_name`)
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_file_backlinks`;
 CREATE TABLE `tiki_file_backlinks` (
@@ -3606,7 +3606,7 @@ CREATE TABLE `tiki_file_backlinks` (
        `objectId` int(12) NOT NULL,
        KEY `objectId` (`objectId`),
        KEY `fileId` (`fileId`)
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_payment_requests`;
 CREATE TABLE `tiki_payment_requests` (
@@ -3622,7 +3622,7 @@ CREATE TABLE `tiki_payment_requests` (
     `detail` TEXT,
     `userId` int(8),
     PRIMARY KEY( `paymentRequestId` )
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_payment_received`;
 CREATE TABLE `tiki_payment_received` (
@@ -3635,7 +3635,7 @@ CREATE TABLE `tiki_payment_received` (
     `userId` int(8),
     PRIMARY KEY(`paymentReceivedId`),
     KEY `payment_request_ix` (`paymentRequestId`)
-);
+) ENGINE=MyISAM;
 DROP TABLE IF EXISTS `tiki_discount`;
 CREATE TABLE `tiki_discount`( 
     `id` INT NOT NULL AUTO_INCREMENT,
@@ -3645,7 +3645,7 @@ CREATE TABLE `tiki_discount`(
     `comment` TEXT,
     PRIMARY KEY(`id`),
     KEY `code` (`code`)
-);
+) ENGINE=MyISAM;
 DROP TABLE IF EXISTS `tiki_translations_in_progress`;
 CREATE TABLE IF NOT EXISTS `tiki_translations_in_progress` (
    `page_id` int(14) NOT NULL,
@@ -3653,7 +3653,7 @@ CREATE TABLE IF NOT EXISTS `tiki_translations_in_progress` (
    KEY `page_id` (`page_id`),
    KEY `language` (`language`),
    UNIQUE (`page_id`, `language`)
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_rss_items`;
 CREATE TABLE `tiki_rss_items` (
@@ -3668,7 +3668,7 @@ CREATE TABLE `tiki_rss_items` (
     `content` TEXT,
     KEY `tiki_rss_items_rss` (`rssId`),
     UNIQUE `tiki_rss_items_item` (`rssId`, `guid`)
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_object_attributes`;
 CREATE TABLE `tiki_object_attributes` (
@@ -3679,7 +3679,7 @@ CREATE TABLE `tiki_object_attributes` (
     `value` varchar(100),
     UNIQUE `item_attribute_uq` ( `type`, `itemId`, `attribute` ),
     KEY `attribute_lookup_ix` (`attribute`, `value`)
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_rating_configs`;
 CREATE TABLE `tiki_rating_configs` (
@@ -3688,7 +3688,7 @@ CREATE TABLE `tiki_rating_configs` (
     `expiry` INT NOT NULL DEFAULT 3600,
     `formula` TEXT NOT NULL,
     `callbacks` TEXT
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_rating_obtained`;
 CREATE TABLE `tiki_rating_obtained` (
@@ -3699,7 +3699,7 @@ CREATE TABLE `tiki_rating_obtained` (
     `expire` INT NOT NULL,
     `value` FLOAT NOT NULL,
     UNIQUE `tiki_obtained_rating_uq` (`type`, `object`, `ratingConfigId`)
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_object_relations`;
 CREATE TABLE `tiki_object_relations` (
@@ -3711,7 +3711,7 @@ CREATE TABLE `tiki_object_relations` (
     `target_itemId` varchar(255) NOT NULL,
     KEY `relation_source_ix` (`source_type`, `source_itemId`),
     KEY `relation_target_ix` (`target_type`, `target_itemId`)
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_todo`;
 CREATE TABLE `tiki_todo` (
@@ -3725,7 +3725,7 @@ CREATE TABLE `tiki_todo` (
     PRIMARY KEY (`todoId`),
     KEY `what` (`objectType`, `objectId`),
     KEY `after` (`after`)
-);
+) ENGINE=MyISAM;
 DROP TABLE IF EXISTS `tiki_todo_notif`;
 CREATE TABLE `tiki_todo_notif` (
     `todoId` INT(12) NOT NULL,
@@ -3733,7 +3733,7 @@ CREATE TABLE `tiki_todo_notif` (
     `objectId` VARCHAR(255) default NULL,
     KEY `todoId` (`todoId`),
     KEY `objectId` (`objectId`)
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_url_shortener`;
 CREATE TABLE `tiki_url_shortener` (
@@ -3759,7 +3759,7 @@ CREATE TABLE `tiki_invite` (
   `wikicontent` text,
   `wikipageafter` varchar(255) default NULL,
   PRIMARY KEY  (`id`)
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_invited`;
 CREATE TABLE `tiki_invited` (
@@ -3773,7 +3773,7 @@ CREATE TABLE `tiki_invited` (
   PRIMARY KEY  (`id`),
   KEY `id_invite` (`id_invite`),
   KEY `used_on_user` (`used_on_user`)
-);
+) ENGINE=MyISAM;
 
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES ('tiki_p_invite', 'Can invite users by email, and include them in groups', 'registered', 'tiki', NULL, 'feature_invite');
 
@@ -3789,7 +3789,7 @@ CREATE TABLE `tiki_credits` (
     `product_id` INT( 8 ) NULL ,
     PRIMARY KEY ( `creditId` ) ,
     INDEX ( `userId` , `credit_type` )
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_credits_usage`;
 CREATE TABLE `tiki_credits_usage` (
@@ -3800,7 +3800,7 @@ CREATE TABLE `tiki_credits_usage` (
     `used_amount` FLOAT NOT NULL DEFAULT 0,
     `product_id` INT( 8 ) NULL ,
     PRIMARY KEY ( `usageId` )
-);
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_credits_types`;
 CREATE TABLE `tiki_credits_types` (
@@ -3810,4 +3810,4 @@ CREATE TABLE `tiki_credits_types` (
     `is_static_level` CHAR( 1 ) DEFAULT 'n',
     `scaling_divisor` FLOAT NOT NULL DEFAULT 1,
     PRIMARY KEY ( `credit_type` ) 
-);
+) ENGINE=MyISAM;
