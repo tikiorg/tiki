@@ -25,6 +25,1899 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 6.2
+<http://tiki.org/ReleaseNotes62>
+------------------
+
+----------------------------------------------
+r33020 | sept_7 | 2011-02-21 21:08:01 +0100 (Mon, 21 Feb 2011) | 2 lines
+
+[FIX] Fix for the release process
+
+----------------------------------------------
+r33010 | nyloth | 2011-02-21 18:48:13 +0100 (Mon, 21 Feb 2011) | 9 lines
+
+[QT] Quality Team Backport
+
+r32979 | sept_7 | 2011-02-21 16:45:28 +0100 (lun. 21 f?\195?\169vr. 2011) | 6 lignes
+[FIX/bp 32978] CKEditor+link edition : When in WYSIWYG mode and htmltowiki, URL
+edited with CKEditor get replaced by "javascript:void(0)". 
+Call the right CKEditor callchain to prepare the data to be sent.
+Replace 32891
+
+
+----------------------------------------------
+r33009 | nyloth | 2011-02-21 18:46:33 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32205 | sylvieg | 2011-01-28 16:39:37 +0100 (ven. 28 janv. 2011) | 1 ligne
+[bp/r32204]notice
+
+
+----------------------------------------------
+r33008 | nyloth | 2011-02-21 18:44:02 +0100 (Mon, 21 Feb 2011) | 10 lines
+
+[QT] Quality Team Backport
+
+r32276 | nyloth | 2011-01-30 23:54:50 +0100 (dim. 30 janv. 2011) | 6 lignes
+[bp/r32275][FIX] filegals file download : Fix multiple problems, including :
+ - fix thumbnail format and mime type
+ - .txt files thumbnails ( by using a icon fallback method )
+ - thumbnails cache
+ - mime type detection for files stored in DB
+
+
+----------------------------------------------
+r33006 | nyloth | 2011-02-21 18:38:08 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32543 | changi67 | 2011-02-10 08:52:53 +0100 (jeu. 10 f?\195?\169vr. 2011) | 1 ligne
+[BP/32542][FIX] Force MyISAM Engine - http://dev.tiki.org/wish3790
+
+
+----------------------------------------------
+r33005 | nyloth | 2011-02-21 18:37:06 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32006 | sylvieg | 2011-01-19 14:11:06 +0100 (mer. 19 janv. 2011) | 1 ligne
+[bp/r32002][FIX]share: change only the mail from if it is the user email or the site email
+
+
+----------------------------------------------
+r32999 | nyloth | 2011-02-21 18:15:07 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32106 | sylvieg | 2011-01-24 13:19:22 +0100 (lun. 24 janv. 2011) | 1 ligne
+[FIX]typo in 32076
+
+
+----------------------------------------------
+r32995 | nyloth | 2011-02-21 18:02:00 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32037 | sylvieg | 2011-01-20 17:16:01 +0100 (jeu. 20 janv. 2011) | 1 ligne
+[bp/r32036][FIX]fgal: path can also be null
+
+
+----------------------------------------------
+r32993 | nyloth | 2011-02-21 17:27:00 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32602 | nkoth | 2011-02-12 00:47:48 +0100 (sam. 12 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32601][FIX] The problem with using filtervalue (which allow partial match) on item list field is that the result can be like 34,134,13 or 132,13 so if I filter for "34" I will get ambiguous result. Therefore if the result for purposes of matching is ,34,134,13, instead, I can filter for ,34, without ambiguity.
+
+
+----------------------------------------------
+r32992 | nyloth | 2011-02-21 17:16:20 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32688 | sampaioprimo | 2011-02-15 19:06:17 +0100 (mar. 15 f?\195?\169vr. 2011) | 2 lignes
+[bp/32682][FIX] parse ...page... correctly on blog post print preview
+
+
+----------------------------------------------
+r32991 | nyloth | 2011-02-21 17:14:00 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32665 | sylvieg | 2011-02-14 16:40:20 +0100 (lun. 14 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32664][FIX]i18n: when on url http://mysite.com, be able to switch page lang
+
+
+----------------------------------------------
+r32990 | nyloth | 2011-02-21 17:08:28 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32659 | lindonb | 2011-02-14 01:12:46 +0100 (lun. 14 f?\195?\169vr. 2011) | 2 lignes
+[bp/r32656][FIX] Keep feature_wiki_mandatory_category preference from being set when the user is setting other preferences in the wiki admin panel (flaggedrev_approval_categories doesn't exist in 6x)
+
+
+----------------------------------------------
+r32989 | nyloth | 2011-02-21 17:07:11 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32652 | lindonb | 2011-02-14 00:20:36 +0100 (lun. 14 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32651][FIX] Keep user_trackersync_parentgroup preference from appearing to set when other preferences are set in the login admin panel. Thanks Stephane!
+
+
+----------------------------------------------
+r32988 | nyloth | 2011-02-21 17:06:04 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32647 | lindonb | 2011-02-13 23:20:16 +0100 (dim. 13 f?\195?\169vr. 2011) | 2 lignes
+[bp/r32646][FIX] Keep feature_sefurl_paths preference from setting when user sets other preferences in the sefurl admin panel
+
+
+----------------------------------------------
+r32987 | nyloth | 2011-02-21 17:02:18 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32643 | lindonb | 2011-02-13 22:43:55 +0100 (dim. 13 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32640][FIX] Keep category_jail preference from being set when other preferences are set in the category admin panel
+
+
+----------------------------------------------
+r32986 | nyloth | 2011-02-21 17:01:26 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32638 | lindonb | 2011-02-13 18:54:37 +0100 (dim. 13 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32636][FIX]Keep category_i18n_synced preference from setting when user is setting other preferences in internationalization admin panel. Much simpler fix this time!
+
+
+----------------------------------------------
+r32985 | nyloth | 2011-02-21 16:57:31 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32337 | luciash | 2011-02-01 16:50:27 +0100 (mar. 01 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32301][FIX] webmail: display the actual subject (decoded) instead of encoded garbage in list and message read view
+
+
+----------------------------------------------
+r32984 | nyloth | 2011-02-21 16:53:14 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32671 | sylvieg | 2011-02-14 18:16:14 +0100 (lun. 14 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32670][FIX]intertiki: fix slave tiki6+master tiki4 + confirmation email
+
+
+----------------------------------------------
+r32983 | nyloth | 2011-02-21 16:50:50 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32663 | sept_7 | 2011-02-14 02:12:43 +0100 (lun. 14 f?\195?\169vr. 2011) | 2 lignes
+[FIX/bp 32660] Notice
+
+
+----------------------------------------------
+r32982 | nyloth | 2011-02-21 16:49:40 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32662 | sept_7 | 2011-02-14 02:11:03 +0100 (lun. 14 f?\195?\169vr. 2011) | 2 lignes
+[FIX/bp 32661] Typo missing ending '
+
+
+----------------------------------------------
+r32981 | nyloth | 2011-02-21 16:47:59 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32632 | sept_7 | 2011-02-13 11:14:57 +0100 (dim. 13 f?\195?\169vr. 2011) | 2 lignes
+[MOD/bp 32631] Made title of 2nd tab translatable
+
+
+----------------------------------------------
+r32980 | nyloth | 2011-02-21 16:46:20 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32608 | sept_7 | 2011-02-12 21:20:48 +0100 (sam. 12 f?\195?\169vr. 2011) | 2 lignes
+[FIX/bp32607] Notice
+
+
+----------------------------------------------
+r32975 | nyloth | 2011-02-21 16:37:52 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32878 | sylvieg | 2011-02-17 14:03:32 +0100 (jeu. 17 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32877][FIX]SHARETHIS: replace with headerlib calls to avoid sometimes blank screen
+
+
+----------------------------------------------
+r32974 | nyloth | 2011-02-21 16:30:33 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32604 | nkoth | 2011-02-12 00:54:18 +0100 (sam. 12 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32603][FIX] database error caused by trying to set attribute with missing itemId (before item is created) when first creating tracker item
+
+
+----------------------------------------------
+r32973 | nyloth | 2011-02-21 16:29:26 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32582 | jonnybradley | 2011-02-11 18:17:42 +0100 (ven. 11 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32556][FIX] modules: jQuerify & fix broken icntoggle()
+
+
+----------------------------------------------
+r32972 | nyloth | 2011-02-21 16:28:30 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32579 | sylvieg | 2011-02-11 16:18:21 +0100 (ven. 11 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32578][FIX]TRACKERHELP: display all the fields as no pagination
+
+
+----------------------------------------------
+r32971 | nyloth | 2011-02-21 16:27:36 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32564 | nkoth | 2011-02-11 00:31:55 +0100 (ven. 11 f?\195?\169vr. 2011) | 2 lignes
+[bp/r32563][FIX] Requires r32562. Specific case of r32560 issue: In some (actually could be many) cases there is a need to have a paragraph even if the content being parsed is only one line. In Tiki 5 that was the behavior but someone changed it to not put a paragraph if the content is only one line to solve some problems, but this cause inconsistency on other cases...
+
+
+----------------------------------------------
+r32970 | nyloth | 2011-02-21 16:26:36 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32562 | nkoth | 2011-02-11 00:23:56 +0100 (ven. 11 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32560][FIX] In some (actually could be many) cases there is a need to have a paragraph even if the content being parsed is only one line. In Tiki 5 that was the behavior but someone changed it to not put a paragraph if the content is only one line to solve some problems I can imagine. But this leads to inconsistencies in other cases. For example, when parsing an article heading, if the heading has one line it ends up being not in a para, but it is in a para if there are 2 lines or more, which makes CSS impossible to handle. So this option is to give the option for those cases to have back the Tiki 5 behavior.
+
+
+----------------------------------------------
+r32969 | nyloth | 2011-02-21 16:25:26 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32541 | eromneg | 2011-02-10 00:06:36 +0100 (jeu. 10 f?\195?\169vr. 2011) | 1 ligne
+[MOD] change permission level for allowing use of the wiki import in the editor - trunk v32540
+
+
+----------------------------------------------
+r32968 | nyloth | 2011-02-21 16:22:00 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32921 | jonnybradley | 2011-02-19 21:42:12 +0100 (sam. 19 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32920][FIX] mytiki: missing quotes was breaking in translations (thanks Xavi)
+
+
+----------------------------------------------
+r32967 | nyloth | 2011-02-21 16:21:16 +0100 (Mon, 21 Feb 2011) | 7 lines
+
+[QT] Quality Team Backport
+
+r32901 | sept_7 | 2011-02-18 16:01:26 +0100 (ven. 18 f?\195?\169vr. 2011) | 3 lignes
+[FIX/bp 32900] Fix gzip issue when obzip is on and we are cleanning the output
+buffer.  This should fix regressions in 32280 (trunk) and 32825 (proposals)...
+
+
+----------------------------------------------
+r32966 | nyloth | 2011-02-21 16:20:26 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32899 | jonnybradley | 2011-02-18 14:43:14 +0100 (ven. 18 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32897][FIX] comments: keep title when previewing
+
+
+----------------------------------------------
+r32965 | nyloth | 2011-02-21 16:19:43 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32889 | xavidp | 2011-02-18 11:36:12 +0100 (ven. 18 f?\195?\169vr. 2011) | 2 lignes
+[ENH][bp/r32888]Added command (commented out by default) to easily increase the maximum file size for uploads allowed by php for Tiki upload_max_filesize when server allows such customiztion per directory based on .htaccess
+
+
+----------------------------------------------
+r32964 | nyloth | 2011-02-21 16:19:00 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32881 | sylvieg | 2011-02-17 14:23:29 +0100 (jeu. 17 f?\195?\169vr. 2011) | 1 ligne
+[bp/r31349]official comment:[FIX] tikidate: Patch up muddle between  and (output)  - both of which are effectivley unused anyway.Solves issue of dates appearing as DateTime::__construct(): Failed to parse time string (5) at position 0 (5): Unexpected character (thanks mheller) -> For me it is only notice
+
+
+----------------------------------------------
+r32963 | nyloth | 2011-02-21 16:18:02 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32880 | sylvieg | 2011-02-17 14:09:54 +0100 (jeu. 17 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32879]notice
+
+
+----------------------------------------------
+r32962 | nyloth | 2011-02-21 16:17:14 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32876 | chealer | 2011-02-16 22:57:56 +0100 (mer. 16 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32875][FIX] Admin Banning: broken rule dates (broken pass of time to html_select_date)
+
+
+----------------------------------------------
+r32961 | nyloth | 2011-02-21 16:16:22 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32852 | lindonb | 2011-02-16 05:18:25 +0100 (mer. 16 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32851][FIX] Improve contrast for event text in calendar week view for the darkroom theme
+
+
+----------------------------------------------
+r32960 | nyloth | 2011-02-21 16:15:17 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32677 | nkoth | 2011-02-14 18:59:21 +0100 (lun. 14 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32675][FIX] Google map field was not showing for users with no global tracker view perms because of wrong checking
+
+
+----------------------------------------------
+r32959 | nyloth | 2011-02-21 16:14:31 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32674 | nkoth | 2011-02-14 18:40:05 +0100 (lun. 14 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32673][FIX] Zoom was not being updated on click
+
+
+----------------------------------------------
+r32958 | nyloth | 2011-02-21 16:13:04 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32630 | lindonb | 2011-02-13 07:16:54 +0100 (dim. 13 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32623][FIX]Keep payment_cclite_hashing_algorithm preference from setting when user sets other preferences in the payment admin panel
+
+
+----------------------------------------------
+r32957 | nyloth | 2011-02-21 16:12:05 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32624 | lindonb | 2011-02-13 05:38:09 +0100 (dim. 13 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32472][FIX] Adjust pref settings upon setup so that preferences don't appear to be setting on their own in the editing and plugins and file galleries admin windows. wikiplugin_param not backported as it doesn't exist in 6.x
+
+
+----------------------------------------------
+r32956 | nyloth | 2011-02-21 16:11:10 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32614 | lindonb | 2011-02-13 01:24:45 +0100 (dim. 13 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32613][FIX] Improve contrast in darkroom theme for input widgets used with the edit toolbar
+
+
+----------------------------------------------
+r32955 | nyloth | 2011-02-21 16:10:01 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32570 | eromneg | 2011-02-11 14:54:48 +0100 (ven. 11 f?\195?\169vr. 2011) | 1 ligne
+[FIX] mistyped File Gallery menu permission - trunk v32569
+
+
+----------------------------------------------
+r32954 | nyloth | 2011-02-21 16:09:07 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32566 | nkoth | 2011-02-11 00:58:41 +0100 (ven. 11 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32565][FIX] When format of plugin in info function is set to html, no need to put ~np~ anymore, otherwise it shows to user.
+
+
+----------------------------------------------
+r32953 | nyloth | 2011-02-21 16:08:00 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32538 | sylvieg | 2011-02-09 21:07:26 +0100 (mer. 09 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32537][FIX]tracker: do not show anon and registerd in a usergroups field
+
+
+----------------------------------------------
+r32952 | nyloth | 2011-02-21 16:05:49 +0100 (Mon, 21 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32533 | sylvieg | 2011-02-09 16:55:24 +0100 (mer. 09 f?\195?\169vr. 2011) | 1 ligne
+[bp/r32532][FIX]i18n: translation can contain quote. All html values must be surrounded with doubloe quote
+
+
+----------------------------------------------
+r32850 | pkdille | 2011-02-15 23:53:31 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32524 | sylvieg | 2011-02-09 13:08:03 +0100 (Wed, 09 Feb 2011) | 1 line
+[bp/r32523][FIX]doc: fix link. thx Nelson
+
+
+----------------------------------------------
+r32849 | pkdille | 2011-02-15 23:53:17 +0100 (Tue, 15 Feb 2011) | 7 lines
+
+[QT] Quality Team Backport
+
+r32518 | jonnybradley | 2011-02-09 00:47:43 +0100 (Wed, 09 Feb 2011) | 2 lines
+[bp/r32517][FIX] layout: rollback r28725 [was: Make results scrollable (if over 50 lines returned)]
+Thanks Marc
+
+
+----------------------------------------------
+r32848 | pkdille | 2011-02-15 23:53:04 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32483 | jonnybradley | 2011-02-07 14:54:47 +0100 (Mon, 07 Feb 2011) | 2 lines
+[bp/r32481][FIX] modules: Allow a parameter to be "0" so you can now, for instance, set perspective=0 for modules to appear only in the default perspective (integer 0 is considered "empty")
+
+
+----------------------------------------------
+r32847 | pkdille | 2011-02-15 23:52:52 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32482 | eromneg | 2011-02-07 14:49:38 +0100 (Mon, 07 Feb 2011) | 1 line
+[FIX] add in missing email edit icon to wiki editor only - trunk 32480
+
+
+----------------------------------------------
+r32846 | pkdille | 2011-02-15 23:52:40 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32478 | chibaguy | 2011-02-07 13:26:18 +0100 (Mon, 07 Feb 2011) | 1 line
+[FIX] sitesearchbar button wasn't working in IE7. Thanks, Sylvie.
+
+
+----------------------------------------------
+r32845 | pkdille | 2011-02-15 23:52:26 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32444 | lindonb | 2011-02-05 06:26:12 +0100 (Sat, 05 Feb 2011) | 2 lines
+[bp/r32298][FIX] Use filelist instead of files so users aren't redirected to the files directory. Deleted images rewrite rule for the same reason (galleries goes to the same place).
+
+
+----------------------------------------------
+r32844 | pkdille | 2011-02-15 23:52:14 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32443 | lindonb | 2011-02-05 06:23:33 +0100 (Sat, 05 Feb 2011) | 1 line
+[bp/r30568][FIX] Backport of changes to modlip.php only that seems to have never been made in r31187. Enhancement tp PluginManager don't work without this.
+
+
+----------------------------------------------
+r32843 | pkdille | 2011-02-15 23:52:00 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32434 | sylvieg | 2011-02-04 17:54:09 +0100 (Fri, 04 Feb 2011) | 1 line
+[bp/r32433][FIX]tracker: to really have a no highlight in the edit item tab
+
+
+----------------------------------------------
+r32842 | pkdille | 2011-02-15 23:51:47 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32432 | sylvieg | 2011-02-04 15:52:07 +0100 (Fri, 04 Feb 2011) | 1 line
+[bp/r32431][FIX]tracker: export with a time field with no selection must not filter the items with hour, mn, sec  equals to space
+
+
+----------------------------------------------
+r32841 | pkdille | 2011-02-15 23:51:33 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32430 | sept_7 | 2011-02-04 15:47:08 +0100 (Fri, 04 Feb 2011) | 2 lines
+[FIX/bp 32429] Fix "Preview" button to match other buttons "Cancel" and "Save"
+
+
+----------------------------------------------
+r32840 | pkdille | 2011-02-15 23:51:19 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32428 | sylvieg | 2011-02-04 15:00:35 +0100 (Fri, 04 Feb 2011) | 1 line
+[bp/r32426]typo
+
+
+----------------------------------------------
+r32839 | pkdille | 2011-02-15 23:51:06 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32417 | sylvieg | 2011-02-04 01:09:22 +0100 (Fri, 04 Feb 2011) | 1 line
+[bp/r32416][FIX]tracker: encode also the fieldnames in the ajax export
+
+
+----------------------------------------------
+r32838 | pkdille | 2011-02-15 23:50:53 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32415 | eromneg | 2011-02-04 00:09:08 +0100 (Fri, 04 Feb 2011) | 1 line
+[FIX] correct toolbar label for Box wrongly called Blockquote - trunk v32414
+
+
+----------------------------------------------
+r32837 | pkdille | 2011-02-15 23:50:39 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32410 | sylvieg | 2011-02-03 19:10:49 +0100 (Thu, 03 Feb 2011) | 1 line
+[bp/r32409][FIX]tracker: export ajax must use the tpl to format field like date
+
+
+----------------------------------------------
+r32836 | pkdille | 2011-02-15 23:50:20 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32404 | eromneg | 2011-02-03 18:16:19 +0100 (Thu, 03 Feb 2011) | 2 lines
+[ENH] set the default for useHTML to 'on' if wysiwyg editor is selected - trunk v32403
+
+
+----------------------------------------------
+r32835 | pkdille | 2011-02-15 23:50:08 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32387 | ricks99 | 2011-02-03 03:46:36 +0100 (Thu, 03 Feb 2011) | 1 line
+[FIX]use correct icon for approve submission. use {icon} syntax
+
+
+----------------------------------------------
+r32834 | pkdille | 2011-02-15 23:49:55 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32385 | jonnybradley | 2011-02-02 21:04:33 +0100 (Wed, 02 Feb 2011) | 1 line
+[bp/r32384][MOD] tooltips: Add delay and use hoverIntent on cluetips tooltips defaults
+
+
+----------------------------------------------
+r32833 | pkdille | 2011-02-15 23:49:42 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32379 | luciash | 2011-02-02 18:37:53 +0100 (Wed, 02 Feb 2011) | 1 line
+[bp/r32377][ENH] webmail: use {textarea} smarty block + allow WYSIWYG to compose HTML mails
+
+
+----------------------------------------------
+r32832 | pkdille | 2011-02-15 23:49:25 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32374 | sylvieg | 2011-02-02 17:11:43 +0100 (Wed, 02 Feb 2011) | 1 line
+[bp/r32373][FIX]TRACKERFILTER: displayedFields can be an array and must be implode for the url
+
+
+----------------------------------------------
+r32831 | pkdille | 2011-02-15 23:49:11 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32369 | sept_7 | 2011-02-02 16:01:40 +0100 (Wed, 02 Feb 2011) | 2 lines
+[KIL/bp 32366] Shouldn't be in svn :( test leftover
+
+
+----------------------------------------------
+r32830 | pkdille | 2011-02-15 23:48:58 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32368 | sylvieg | 2011-02-02 15:56:09 +0100 (Wed, 02 Feb 2011) | 1 line
+[bp/r32367][FIX]tracker: filter on time must be empty to have a no filter option when in export filter
+
+
+----------------------------------------------
+r32829 | pkdille | 2011-02-15 23:48:45 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32356 | nyloth | 2011-02-02 10:50:27 +0100 (Wed, 02 Feb 2011) | 2 lines
+[bp/r32355][FIX] filegals: wrong array key
+
+
+----------------------------------------------
+r32828 | pkdille | 2011-02-15 23:46:20 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32353 | luciash | 2011-02-02 02:15:24 +0100 (Wed, 02 Feb 2011) | 1 line
+[bp/r32352][FIX] webmail: allow more of some common tags in html mails by adding them to strip_tags exception
+
+
+----------------------------------------------
+r32827 | pkdille | 2011-02-15 23:46:04 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32323 | sylvieg | 2011-01-31 21:49:06 +0100 (Mon, 31 Jan 2011) | 1 line
+[bp/r32322][FIX]trackerfilter: php in_array behaves strangely is the types are not the same
+
+
+----------------------------------------------
+r32826 | pkdille | 2011-02-15 23:45:51 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32312 | sylvieg | 2011-01-31 17:38:25 +0100 (Mon, 31 Jan 2011) | 1 line
+[bp/r32308][FIX]tracker: take way input boxes, navigation + add link page when printing an item
+
+
+----------------------------------------------
+r32825 | pkdille | 2011-02-15 23:45:35 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32280 | nyloth | 2011-01-31 00:35:04 +0100 (Mon, 31 Jan 2011) | 2 lines
+[bp/r32279][FIX] Smarty nested templates: Empty existing Output Buffer that may have been created in smarty before the call of a confirm / error template (to avoid this buffer content to be displayed above the confirm / error page)
+
+
+----------------------------------------------
+r32824 | pkdille | 2011-02-15 23:27:06 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32272 | nyloth | 2011-01-30 22:51:37 +0100 (Sun, 30 Jan 2011) | 2 lines
+[bp/r32271][FIX] download file: fix notice when fgal_use_dir is not set
+
+
+----------------------------------------------
+r32823 | pkdille | 2011-02-15 23:26:52 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32268 | nyloth | 2011-01-30 21:51:32 +0100 (Sun, 30 Jan 2011) | 2 lines
+[bp/r32267][FIX] file upload: the hit_limit setting send by the browser is now an array since the multiple file upload - the value must not be initialized as 0 or casted into a integer.
+
+
+----------------------------------------------
+r32822 | pkdille | 2011-02-15 23:26:39 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32260 | luciash | 2011-01-30 18:35:47 +0100 (Sun, 30 Jan 2011) | 1 line
+[bp/r32259][FIX] user preferences: when user can read more languages use HTML entity for the multilingual choice selector character, otherwise some browsers think the form ends there and prevent submitting the form on the second tab at all + separate the forms for the first two tabs = valid (x)html
+
+
+----------------------------------------------
+r32821 | pkdille | 2011-02-15 23:26:24 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32255 | nyloth | 2011-01-30 16:18:52 +0100 (Sun, 30 Jan 2011) | 2 lines
+[bp/r32254][FIX] Share this page: fix wrong inverted test for forums feature
+
+
+----------------------------------------------
+r32820 | pkdille | 2011-02-15 23:26:09 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32253 | nyloth | 2011-01-30 15:32:42 +0100 (Sun, 30 Jan 2011) | 2 lines
+[bp/r32243][FIX] filegals: when removing a file, also remove its hit limit preference + check if we really have a fileId in the fileInfo array when deleting a file
+
+
+----------------------------------------------
+r32819 | pkdille | 2011-02-15 23:18:57 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32250 | jonnybradley | 2011-01-30 15:05:14 +0100 (Sun, 30 Jan 2011) | 1 line
+[bp/r32249][FIX] autosave: escape saved original edit text when storing before switching to autosaved version (was breaking with single quote chars)
+
+
+----------------------------------------------
+r32818 | pkdille | 2011-02-15 23:18:43 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32240 | nyloth | 2011-01-29 21:47:48 +0100 (Sat, 29 Jan 2011) | 2 lines
+[bp/r32239][FIX] HomePage content translation: Also add a comment in the code to allow get_strings handle the _HOMEPAGE_CONTENT_ special string.
+
+
+----------------------------------------------
+r32817 | pkdille | 2011-02-15 23:18:31 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32238 | nyloth | 2011-01-29 21:35:57 +0100 (Sat, 29 Jan 2011) | 2 lines
+[bp/r32237][FIX] actionlogs listing: Fix query when using user or action optional params (thanx Pascal St-Jean for reporting this).
+
+
+----------------------------------------------
+r32816 | pkdille | 2011-02-15 23:18:16 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32236 | nyloth | 2011-01-29 20:27:42 +0100 (Sat, 29 Jan 2011) | 2 lines
+[bp/r32235][FIX] HomePage content translation: When the HomePage has not been translated yet (by translating the special string '_HOMEPAGE_CONTENT_'), fallback to the 'en' translation. Also correctly set the language of the HomePage (to the language from prefs if the translation was available, or to 'en' if the fallback occured).
+
+
+----------------------------------------------
+r32815 | pkdille | 2011-02-15 23:18:02 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32234 | jonnybradley | 2011-01-29 19:57:28 +0100 (Sat, 29 Jan 2011) | 1 line
+[bp/r32229 & r32233][FIX] translate: Use no_bl param on translation page links
+
+
+----------------------------------------------
+r32814 | pkdille | 2011-02-15 23:17:50 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32232 | jonnybradley | 2011-01-29 19:48:57 +0100 (Sat, 29 Jan 2011) | 1 line
+[bp/r32230][FIX] translate: Mend "go full screen" when doing translation diff
+
+
+----------------------------------------------
+r32813 | pkdille | 2011-02-15 23:17:38 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32227 | luciash | 2011-01-29 19:10:09 +0100 (Sat, 29 Jan 2011) | 1 line
+[bp/r32226][FIX] (x)html: better to close every tag
+
+
+----------------------------------------------
+r32812 | pkdille | 2011-02-15 23:17:26 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32225 | luciash | 2011-01-29 19:00:43 +0100 (Sat, 29 Jan 2011) | 1 line
+[bp/r32224][FIX] tracker view history: typo was causing to render the table partially broken
+
+
+----------------------------------------------
+r32811 | pkdille | 2011-02-15 23:17:12 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32223 | jonnybradley | 2011-01-29 18:35:37 +0100 (Sat, 29 Jan 2011) | 1 line
+[bp/r32222][FIX] wiki: Fix minutes appearing as undefined following r32148
+
+
+----------------------------------------------
+r32810 | pkdille | 2011-02-15 23:17:00 +0100 (Tue, 15 Feb 2011) | 8 lines
+
+[QT] Quality Team Backport
+
+r32220 | jonnybradley | 2011-01-29 16:13:39 +0100 (Sat, 29 Jan 2011) | 4 lines
+[bp/r32129 & 32206]
+[FIX] gd images: don't load the whole image just to get the width or height, e.g. for the {img} plugin (can save 50MB of RAM on a single image) (rolled back in r32219)
+[FIX] gd images: Better fix for r32129 [6.x r32130] to handle case where image has been loaded and modified already (thanks Nyloth)
+
+
+----------------------------------------------
+r32809 | pkdille | 2011-02-15 23:16:42 +0100 (Tue, 15 Feb 2011) | 7 lines
+
+[QT] Quality Team Backport
+
+r32199 | sept_7 | 2011-01-28 14:24:25 +0100 (Fri, 28 Jan 2011) | 4 lines
+[FIX/bp32128] WebDAV : fix fake empty archive when creating a file with
+tiki-webdav
+
+
+----------------------------------------------
+r32808 | pkdille | 2011-02-15 23:16:30 +0100 (Tue, 15 Feb 2011) | 8 lines
+
+[QT] Quality Team Backport
+
+r32193 | nyloth | 2011-01-27 20:25:23 +0100 (Thu, 27 Jan 2011) | 4 lines
+[bp/r32074][FIX]tracker: same bahavior for blank date and default value for TRACKER an insert item + new option to allow blank date but default to now
+[bp/r32150][FIX]tracker: when editing already existing item with blank date, do not default to blank
+[bp/r32088][FIX] wrongly closed strong tag
+
+
+----------------------------------------------
+r32807 | pkdille | 2011-02-15 23:16:14 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32192 | nyloth | 2011-01-27 20:16:15 +0100 (Thu, 27 Jan 2011) | 2 lines
+[QT] Rollback rejected proposition r32076 (and r32151 which is based on r32076)
+
+
+----------------------------------------------
+r32806 | pkdille | 2011-02-15 23:15:58 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32151 | sylvieg | 2011-01-26 01:10:54 +0100 (Wed, 26 Jan 2011) | 1 line
+[bp/r32150][FIX]tracker: when editing already existing item with blank date, do not default to blank
+
+
+----------------------------------------------
+r32805 | pkdille | 2011-02-15 23:15:45 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32076 | sylvieg | 2011-01-21 20:48:32 +0100 (Fri, 21 Jan 2011) | 1 line
+[bp/r32074][FIX]tracker: same bahavior for blank date and default value for TRACKER an insert item + new option to allow blank date but default to now
+
+
+----------------------------------------------
+r32804 | pkdille | 2011-02-15 23:12:54 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32188 | chibaguy | 2011-01-27 12:59:57 +0100 (Thu, 27 Jan 2011) | 1 line
+[FIX] Rollback of r32158 to remove div from templates/tiki-searchbar.tpl, adding div to Coelesce's tiki-site_header_top.tpl file, and adjusting coelesce.css (so magnifying glass icon displays as before).
+
+
+----------------------------------------------
+r32803 | pkdille | 2011-02-15 23:12:42 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32159 | nyloth | 2011-01-26 14:31:36 +0100 (Wed, 26 Jan 2011) | 1 line
+[bp/r32158][FIX] header search bar: missing DIV around search bar, needed by coelesce theme to display the magnifier icon on the right.
+
+
+----------------------------------------------
+r32802 | pkdille | 2011-02-15 23:09:21 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32182 | nyloth | 2011-01-26 19:12:49 +0100 (Wed, 26 Jan 2011) | 2 lines
+[bp/r32148][FIX] wiki : fix session timeout tip info, expecially when the session is supposed to be expired + rewrite to improve performance + cast session.gc_maxlifetime php config to int in case it returns an empty value
+
+
+----------------------------------------------
+r32801 | pkdille | 2011-02-15 23:09:09 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32181 | nyloth | 2011-01-26 19:10:33 +0100 (Wed, 26 Jan 2011) | 2 lines
+[bp/r31811][FIX] imagegals: don't hardcode the height of the popup content - the image could be bigger than 400px in height.
+
+
+----------------------------------------------
+r32800 | pkdille | 2011-02-15 23:08:54 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32180 | nyloth | 2011-01-26 19:09:32 +0100 (Wed, 26 Jan 2011) | 2 lines
+[bp/r31810][FIX] admin users: don't allow the admin to ask the user to change his password at first login when he can't do this (when change_password pref is disabled)
+
+
+----------------------------------------------
+r32799 | pkdille | 2011-02-15 23:08:41 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32179 | nyloth | 2011-01-26 19:08:31 +0100 (Wed, 26 Jan 2011) | 2 lines
+[bp/r31809][SEC][FIX] user variable : be sure that the user is not already defined by PHP on hosts that still have the php.ini config "register_globals = On". This was causing a lot of side effects, especially in the admin users panel.
+
+
+----------------------------------------------
+r32798 | pkdille | 2011-02-15 23:08:29 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32178 | nyloth | 2011-01-26 19:07:39 +0100 (Wed, 26 Jan 2011) | 2 lines
+[bp/r31808][FIX] silent sessions: the test was not working correctly and the session was sometimes not started even if the cookie was present...
+
+
+----------------------------------------------
+r32797 | pkdille | 2011-02-15 23:08:16 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32177 | nyloth | 2011-01-26 19:06:44 +0100 (Wed, 26 Jan 2011) | 2 lines
+[bp/r31807][FIX] filegals: fix table rows odd/even colors of the gallery listings
+
+
+----------------------------------------------
+r32796 | pkdille | 2011-02-15 23:08:02 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32176 | nyloth | 2011-01-26 19:05:34 +0100 (Wed, 26 Jan 2011) | 2 lines
+[bp/r31806][FIX] jquery popup: fix processed attribute
+
+
+----------------------------------------------
+r32795 | pkdille | 2011-02-15 23:07:46 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32175 | nyloth | 2011-01-26 19:04:35 +0100 (Wed, 26 Jan 2011) | 2 lines
+[bp/r31805][FIX] categories: fix tracker item categorization function, which was using the wrong variable for the itemId
+
+
+----------------------------------------------
+r32794 | pkdille | 2011-02-15 23:07:34 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32174 | nyloth | 2011-01-26 19:01:55 +0100 (Wed, 26 Jan 2011) | 2 lines
+[bp/r31804][FIX] filegals: fix the 'Parent gallery' drop down list when editing a gallery that has no explorer or path shown. In this case the list was just displaying 'None' before this fix.
+
+
+----------------------------------------------
+r32793 | pkdille | 2011-02-15 23:07:22 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32173 | nyloth | 2011-01-26 19:00:54 +0100 (Wed, 26 Jan 2011) | 2 lines
+[bp/r31608][ADD] Module 'Menu structure', which displays a tree menu using cssmenu, based on a wiki structure
+
+
+----------------------------------------------
+r32792 | pkdille | 2011-02-15 23:07:03 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32172 | nyloth | 2011-01-26 18:58:35 +0100 (Wed, 26 Jan 2011) | 2 lines
+[bp/r31561][FIX] Page diff in 'Only with last version' mode was inactive
+
+
+----------------------------------------------
+r32791 | pkdille | 2011-02-15 23:06:50 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32171 | nyloth | 2011-01-26 18:57:17 +0100 (Wed, 26 Jan 2011) | 2 lines
+[bp/r31560][FIX] Fixed QuickEdit in some cases, page search is now made using lowercase
+
+
+----------------------------------------------
+r32790 | pkdille | 2011-02-15 23:06:39 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32170 | nyloth | 2011-01-26 18:54:16 +0100 (Wed, 26 Jan 2011) | 2 lines
+[bp/r31420][MOD] In category listing, the id is displayed if items don't have displayed fields
+
+
+----------------------------------------------
+r32789 | pkdille | 2011-02-15 23:06:26 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32169 | nyloth | 2011-01-26 18:53:00 +0100 (Wed, 26 Jan 2011) | 2 lines
+[bp/r31419][FIX] Redirect plugin doesn't redirect in preview mode or just after saving page
+
+
+----------------------------------------------
+r32788 | pkdille | 2011-02-15 23:06:10 +0100 (Tue, 15 Feb 2011) | 8 lines
+
+[QT] Quality Team Backport
+
+r32168 | nyloth | 2011-01-26 18:46:18 +0100 (Wed, 26 Jan 2011) | 4 lines
+[bp/r31292 partial][MOD] Wiki pages can now be created, edited and deleted from a webdav client (like cadaver) - Only backport the fix for autoload
+[bp/r31630][FIX] Mime type detection when uploading a file in WebDAV
+[bp/r31631][FIX] File renaming in WebDAV using a Nautilus (Gnome file explorer) client
+
+
+----------------------------------------------
+r32787 | pkdille | 2011-02-15 23:05:51 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32167 | nyloth | 2011-01-26 18:34:55 +0100 (Wed, 26 Jan 2011) | 2 lines
+[bp/r31266][FIX] Improved {TRACKERFILTER} : keep filters when sorting and changing page + added a 'reset filters' action
+
+
+----------------------------------------------
+r32786 | pkdille | 2011-02-15 23:05:31 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32166 | nyloth | 2011-01-26 18:31:42 +0100 (Wed, 26 Jan 2011) | 2 lines
+[bp/r31262][FIX] CSS issues in IE with coelesce theme
+
+
+----------------------------------------------
+r32785 | pkdille | 2011-02-15 23:05:19 +0100 (Tue, 15 Feb 2011) | 7 lines
+
+[QT] Quality Team Backport
+
+r32165 | nyloth | 2011-01-26 18:30:08 +0100 (Wed, 26 Jan 2011) | 3 lines
+[bp/r31254][MOD] Fixed PDF printing
+[bp/r31562][FIX] Headers sent while printing PDF did not work using HTTPS with Internet Explorer
+
+
+----------------------------------------------
+r32784 | pkdille | 2011-02-15 23:00:58 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32163 | nyloth | 2011-01-26 18:19:07 +0100 (Wed, 26 Jan 2011) | 2 lines
+[bp/r31581 partial][MOD] Fixed MOVE and implemented COPY in WebDAV + some WebDAV optimizations
+
+
+----------------------------------------------
+r32783 | pkdille | 2011-02-15 23:00:41 +0100 (Tue, 15 Feb 2011) | 9 lines
+
+[QT] Quality Team Backport
+
+r32162 | nyloth | 2011-01-26 17:58:28 +0100 (Wed, 26 Jan 2011) | 5 lines
+[bp/r31229][FIX] Workaround when using CAS in webdav
+[bp/r31565][FIX] CAS checkout, added autologin option for anonymous
+[bp/r31581 partial] [MOD] Fixed MOVE and implemented COPY in WebDAV + some WebDAV optimizations - Just keeping the fixes on CAS and date functions and improvements of the query used in "update_expired_groups"
+[bp/r32149][FIX] CAS authentication: if CAS authentication has failed (for example because the browser did not redirect requests to the CAS server), be able to check CAS again within 5 seconds + fix the wiki preview with CAS (which implies AJAX requests that are not compatible with redirections to a CAS server on another domain, due to browsers security policy) + notice
+
+
+----------------------------------------------
+r32782 | pkdille | 2011-02-15 23:00:07 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32161 | nyloth | 2011-01-26 14:36:30 +0100 (Wed, 26 Jan 2011) | 1 line
+[FIX] date functions : Avoid 'Fatal error: Call to a member function setTZbyID() on a non-object' - This is not a backport from trunk because tikidate is now instanciated in a way that also fixes this problem.
+
+
+----------------------------------------------
+r32781 | pkdille | 2011-02-15 22:59:50 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32145 | chealer | 2011-01-25 22:53:48 +0100 (Tue, 25 Jan 2011) | 1 line
+[bp/r32144][FIX] Wiki: global wiki cache ignored
+
+
+----------------------------------------------
+r32780 | pkdille | 2011-02-15 22:59:37 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32143 | chealer | 2011-01-25 22:33:27 +0100 (Tue, 25 Jan 2011) | 1 line
+[bp/r32142][FIX] Wiki: HTML for cached pages
+
+
+----------------------------------------------
+r32779 | pkdille | 2011-02-15 22:59:23 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32140 | sylvieg | 2011-01-25 21:20:27 +0100 (Tue, 25 Jan 2011) | 1 line
+[bp/r 32138][FIX]intertiki: fix url send in validation email when register on slave
+
+
+----------------------------------------------
+r32778 | pkdille | 2011-02-15 22:59:08 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32138 | sylvieg | 2011-01-25 19:35:16 +0100 (Tue, 25 Jan 2011) | 1 line
+[bp/r32137]FIX]tracker: security mesure not to rename empty field
+
+
+----------------------------------------------
+r32777 | pkdille | 2011-02-15 22:58:54 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32105 | sylvieg | 2011-01-24 13:15:33 +0100 (Mon, 24 Jan 2011) | 1 line
+[bp/r32104][FIX]calendar: can edit personal item
+
+
+----------------------------------------------
+r32776 | pkdille | 2011-02-15 22:54:23 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32097 | lindonb | 2011-01-23 05:08:21 +0100 (Sun, 23 Jan 2011) | 1 line
+[bp/r32094][FIX] Tentative status (status = 0) wasn't sticking because code was checking if empty rather than isset.
+
+
+----------------------------------------------
+r32775 | pkdille | 2011-02-15 22:54:10 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32089 | lphuberdeau | 2011-01-22 15:55:14 +0100 (Sat, 22 Jan 2011) | 1 line
+[FIX]?\194?\160Class not loaded prior to use under certain execution paths. Not a backport as trunk does not have this issue.
+
+
+----------------------------------------------
+r32774 | pkdille | 2011-02-15 22:53:58 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32085 | sylvieg | 2011-01-21 23:46:08 +0100 (Fri, 21 Jan 2011) | 1 line
+[bp/r32084][FIX]tracker: show also header in pretty trackerlist
+
+
+----------------------------------------------
+r32773 | pkdille | 2011-02-15 22:53:43 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32075 | sylvieg | 2011-01-21 20:46:24 +0100 (Fri, 21 Jan 2011) | 1 line
+[bp/r32051][ENH]tracker: level to a header field
+
+
+----------------------------------------------
+r32772 | pkdille | 2011-02-15 22:53:22 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32072 | nkoth | 2011-01-21 19:49:55 +0100 (Fri, 21 Jan 2011) | 1 line
+[bp/r32071][FIX] Rollback was failing when there was a form in the preview data created by wiki plugins e.g. when there is a datachannel plugin; leading to nested form fields applying to the rolling back form.
+
+
+----------------------------------------------
+r32771 | pkdille | 2011-02-15 22:53:07 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32060 | sylvieg | 2011-01-21 14:35:34 +0100 (Fri, 21 Jan 2011) | 1 line
+[bp/r32059][FIX]tracker: take away in the title Tracker Item - because too long and people know where they are below with see item...
+
+
+----------------------------------------------
+r32770 | pkdille | 2011-02-15 22:52:54 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32039 | eromneg | 2011-01-20 18:20:17 +0100 (Thu, 20 Jan 2011) | 2 lines
+[FIX] theme-control: Reset $style_base for new tc_theme. Stops smarty using wrong custom style tpls when in theme controlled mode. Ref trunk revision 32031 (thanks jonny)
+
+
+----------------------------------------------
+r32769 | pkdille | 2011-02-15 22:51:30 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r32005 | sylvieg | 2011-01-19 14:08:42 +0100 (Wed, 19 Jan 2011) | 1 line
+[bp/r32004][FIX]share: warning to activate antibot
+
+
+----------------------------------------------
+r32768 | pkdille | 2011-02-15 22:51:18 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31976 | jonnybradley | 2011-01-18 15:49:12 +0100 (Tue, 18 Jan 2011) | 2 lines
+[bp/r31975][FIX] header: Missing base_uri smarty var
+
+
+----------------------------------------------
+r32761 | pkdille | 2011-02-15 22:24:11 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31961 | marclaporte | 2011-01-17 23:04:11 +0100 (Mon, 17 Jan 2011) | 1 line
+some Inuktitut translations from today's training session
+
+
+----------------------------------------------
+r32760 | pkdille | 2011-02-15 22:23:56 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31955 | nkoth | 2011-01-17 20:48:50 +0100 (Mon, 17 Jan 2011) | 1 line
+[bp/r31954][FIX] Forum posts that are freetagged not showing in browse freetags except for admin
+
+
+----------------------------------------------
+r32758 | pkdille | 2011-02-15 22:20:42 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31912 | sylvieg | 2011-01-14 20:19:52 +0100 (Fri, 14 Jan 2011) | 1 line
+[FIX]calendar: fix personal calendar (partial rollback 22563). A personal calendar is shared by everybody that can see it - but user sees only his events
+
+
+----------------------------------------------
+r32757 | pkdille | 2011-02-15 22:20:28 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31909 | sylvieg | 2011-01-14 19:27:58 +0100 (Fri, 14 Jan 2011) | 1 line
+[bp/r31752][NEW] Preference to prevent from accessing the site outside HTTPS to prevent session hijack
+
+
+----------------------------------------------
+r32756 | pkdille | 2011-02-15 22:20:06 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31908 | sylvieg | 2011-01-14 18:41:34 +0100 (Fri, 14 Jan 2011) | 1 line
+[bp/r 31907][FIX]upgrade: incorporate the fix from http://tiki.org/ReleaseNotes40 about disable accounts as a potential checkbox
+
+
+----------------------------------------------
+r32755 | pkdille | 2011-02-15 22:19:50 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31899 | sylvieg | 2011-01-13 20:25:33 +0100 (Thu, 13 Jan 2011) | 1 line
+[bp/r31898][FIX]permission: when permission when not log-in, encourage to come back to the page where the error occurs
+
+
+----------------------------------------------
+r32754 | pkdille | 2011-02-15 22:19:33 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31896 | sylvieg | 2011-01-13 15:17:59 +0100 (Thu, 13 Jan 2011) | 1 line
+[bp/r31895][FIX]article: sefurl after edit
+
+
+----------------------------------------------
+r32753 | pkdille | 2011-02-15 22:19:20 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31894 | xavidp | 2011-01-13 13:38:31 +0100 (Thu, 13 Jan 2011) | 1 line
+[ENH][bp/r31893]Added param to increase php_value mac_execution_time (commented out by default)
+
+
+----------------------------------------------
+r32752 | pkdille | 2011-02-15 22:19:07 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31890 | chibaguy | 2011-01-13 07:18:52 +0100 (Thu, 13 Jan 2011) | 1 line
+[bp/r31889][FIX] -1px bottom margin on .tabs caused .tabcontent offset to right in Opera.
+
+
+----------------------------------------------
+r32751 | pkdille | 2011-02-15 22:15:58 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31888 | chibaguy | 2011-01-13 03:13:26 +0100 (Thu, 13 Jan 2011) | 1 line
+[bp/r31887][FIX] Slash missing from self-closed element (<br />) - validation error.
+
+
+----------------------------------------------
+r32750 | pkdille | 2011-02-15 22:15:24 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31886 | chibaguy | 2011-01-13 02:47:16 +0100 (Thu, 13 Jan 2011) | 1 line
+[bp/r31885][FIX] Slash missing from self-closed element (<br />). (This was the only XHTML 1.0 Transitional validation error at t.o/tiki-index.php.)
+
+
+----------------------------------------------
+r32749 | pkdille | 2011-02-15 22:15:09 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31869 | jonnybradley | 2011-01-12 14:05:29 +0100 (Wed, 12 Jan 2011) | 2 lines
+[bp/r31868][MOD] toolbars: Use comments toolbar if using _simple textarea mode
+
+
+----------------------------------------------
+r32748 | pkdille | 2011-02-15 22:14:55 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31867 | jonnybradley | 2011-01-12 13:46:17 +0100 (Wed, 12 Jan 2011) | 2 lines
+[bp/r31847][FIX] images: suppress error with exif_thumbnail problems (so it gets built the normal way)
+
+
+----------------------------------------------
+r32747 | pkdille | 2011-02-15 22:14:40 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31866 | chibaguy | 2011-01-12 10:35:23 +0100 (Wed, 12 Jan 2011) | 1 line
+[FIX][bp/r31865] Incorrect background image paths. Thanks, Xavi.
+
+
+----------------------------------------------
+r32746 | pkdille | 2011-02-15 22:14:26 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31852 | xavidp | 2011-01-10 20:18:59 +0100 (Mon, 10 Jan 2011) | 1 line
+[ENH][bp/r31768]tracker: can also download a tracker attachment with itemId and fieldId in the url. Thanks sylvieg
+
+
+----------------------------------------------
+r32745 | pkdille | 2011-02-15 22:14:12 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31849 | jonnybradley | 2011-01-10 18:26:52 +0100 (Mon, 10 Jan 2011) | 1 line
+[bp/r31848][FIX] username: Obey pref user_show_realnames in smarty modifier. Logic was flipped in r29234
+
+
+----------------------------------------------
+r32744 | pkdille | 2011-02-15 22:13:58 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31792 | chealer | 2011-01-06 20:56:25 +0100 (Thu, 06 Jan 2011) | 1 line
+[bp/r31790][FIX] User information: not showing homepage (r8075 regression)
+
+
+----------------------------------------------
+r32743 | pkdille | 2011-02-15 22:13:44 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31777 | xavidp | 2011-01-05 22:08:16 +0100 (Wed, 05 Jan 2011) | 1 line
+[ENH][bp/r31776]Visually separating a little bit more rows (and their input boxes) in a form inside tracker plugin. Thanks ricks99 and luciash for tips.
+
+
+----------------------------------------------
+r32742 | pkdille | 2011-02-15 22:13:30 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31774 | sylvieg | 2011-01-05 18:35:19 +0100 (Wed, 05 Jan 2011) | 1 line
+[bp/r31773][FIX]sefurl: missing image sefurl (used in CATEGORY)
+
+
+----------------------------------------------
+r32741 | pkdille | 2011-02-15 22:13:16 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31764 | sylvieg | 2011-01-04 23:57:58 +0100 (Tue, 04 Jan 2011) | 1 line
+[bp/r 31763][FIX]sefurl: fix item link in search
+
+
+----------------------------------------------
+r32740 | pkdille | 2011-02-15 22:13:00 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31759 | xavidp | 2011-01-04 21:21:35 +0100 (Tue, 04 Jan 2011) | 1 line
+[ENH][bp/r31758]Autocomplete pagenames added to 'edit structures' interface
+
+
+----------------------------------------------
+r32739 | pkdille | 2011-02-15 22:12:46 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31754 | lphuberdeau | 2011-01-04 20:47:12 +0100 (Tue, 04 Jan 2011) | 1 line
+[FIX] tiki-setup_base.php cannot be included in the installer because tiki is not installed at that time, which breaks the shell installer and TRIM [bp/31753]
+
+
+----------------------------------------------
+r32738 | pkdille | 2011-02-15 22:12:31 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31751 | lphuberdeau | 2011-01-04 19:14:10 +0100 (Tue, 04 Jan 2011) | 1 line
+[FIX]?\194?\160Preserve admin rights on user pages and prevent the user page prefix from being empty (which breaks new page creation) [bp/31750]
+
+
+----------------------------------------------
+r32737 | pkdille | 2011-02-15 22:07:29 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31744 | changi67 | 2011-01-04 13:42:17 +0100 (Tue, 04 Jan 2011) | 1 line
+[bp/31743][FIX] Better fix for r31740 When feature multilingual is on and we deactivate user pref to change language using their preferences, we don't want this user pref to be used anymore - thx Nyloth
+
+
+----------------------------------------------
+r32736 | pkdille | 2011-02-15 22:07:17 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31741 | changi67 | 2011-01-03 22:12:29 +0100 (Mon, 03 Jan 2011) | 1 line
+[bp/31740][FIX] When feature multilingual is on and we deactivate user pref to change language using their preferences, we don't want this user pref to be used anymore
+
+
+----------------------------------------------
+r32735 | pkdille | 2011-02-15 22:07:02 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31739 | sylvieg | 2011-01-03 22:02:28 +0100 (Mon, 03 Jan 2011) | 1 line
+[bp/r 31738][FIX]structure: more friendly to search on a part of the name instead full name in add_page_to_current_node
+
+
+----------------------------------------------
+r32734 | pkdille | 2011-02-15 22:06:48 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31736 | sylvieg | 2011-01-03 21:47:24 +0100 (Mon, 03 Jan 2011) | 1 line
+[bp / r31735][FIX]structure: insert in the structure the new page if added from the structure bar
+
+
+----------------------------------------------
+r32733 | pkdille | 2011-02-15 22:06:34 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31721 | chealer | 2011-01-03 04:20:41 +0100 (Mon, 03 Jan 2011) | 1 line
+[bp/r31720][FIX] Communications: Article image width taken as height during transmission
+
+
+----------------------------------------------
+r32732 | pkdille | 2011-02-15 22:06:20 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31717 | changi67 | 2011-01-02 20:21:40 +0100 (Sun, 02 Jan 2011) | 1 line
+[bp/31716][FIX] Don't look after archive when the filegal doesn't have. Divided by 10 the processing time on big filegal like Photo gallery
+
+
+----------------------------------------------
+r32731 | pkdille | 2011-02-15 22:06:05 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31714 | xavidp | 2011-01-02 17:33:26 +0100 (Sun, 02 Jan 2011) | 1 line
+[FIX][bp/r31713]tr missing
+
+
+----------------------------------------------
+r32730 | pkdille | 2011-02-15 22:05:51 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31712 | xavidp | 2011-01-02 16:53:52 +0100 (Sun, 02 Jan 2011) | 1 line
+[ENH][bp/r31711]Added rewrite rule to list users
+
+
+----------------------------------------------
+r32729 | pkdille | 2011-02-15 22:05:39 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31710 | xavidp | 2011-01-02 16:34:46 +0100 (Sun, 02 Jan 2011) | 1 line
+[Fix]{bp/r31709]Fix wrong preference name for the PluginSharethis icon to show up (articles, not cms)
+
+
+----------------------------------------------
+r32728 | pkdille | 2011-02-15 22:05:26 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31708 | xavidp | 2011-01-02 14:23:38 +0100 (Sun, 02 Jan 2011) | 1 line
+[ENH][bp/r31707]Add autocomplete username in the 'find' box at features: list users, friendship network
+
+
+----------------------------------------------
+r32727 | pkdille | 2011-02-15 22:05:05 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31706 | xavidp | 2011-01-02 12:58:03 +0100 (Sun, 02 Jan 2011) | 1 line
+[FIX][bp/r31704]Show the form to subscribe to the indicated newsletter when accessing it through rewrite rules
+
+
+----------------------------------------------
+r32726 | pkdille | 2011-02-15 22:04:50 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31703 | xavidp | 2011-01-01 17:13:22 +0100 (Sat, 01 Jan 2011) | 1 line
+[MOD][bp/r31702]When viewing all posts from all blogs in one tiki site, there are much higher chances that you want to filter posts by selected blog name  than editing each blog settings from there
+
+
+----------------------------------------------
+r32725 | pkdille | 2011-02-15 22:03:39 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31698 | xavidp | 2011-01-01 11:52:35 +0100 (Sat, 01 Jan 2011) | 1 line
+[bp/r31697][FIX]Send user to the right tab to create a newsletter, as the button says
+
+
+----------------------------------------------
+r32724 | pkdille | 2011-02-15 22:03:24 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31653 | marclaporte | 2010-12-25 22:33:43 +0100 (Sat, 25 Dec 2010) | 1 line
+leftover secdb files
+
+
+----------------------------------------------
+r32723 | pkdille | 2011-02-15 22:03:11 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31629 | pkdille | 2010-12-23 10:08:41 +0100 (Thu, 23 Dec 2010) | 1 line
+[bp/r31628][FIX] the category list below wikipages exceeds the catitems zone with Chrome. Also, standardize the look with all other builtin themes
+
+
+----------------------------------------------
+r32722 | pkdille | 2011-02-15 22:02:57 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31624 | sampaioprimo | 2010-12-22 20:05:13 +0100 (Wed, 22 Dec 2010) | 2 lines
+[FIX][bp/31623] profilelib/installlib.php and xmlrpc.php were using wrong param order when calling bloglib::blog_post()
+
+
+----------------------------------------------
+r32721 | pkdille | 2011-02-15 22:02:40 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31618 | nkoth | 2010-12-22 17:29:25 +0100 (Wed, 22 Dec 2010) | 1 line
+[FIX][bp/31617] When creating staging page, if there is already approved page language need not be asked anymore
+
+
+----------------------------------------------
+r32720 | pkdille | 2011-02-15 22:02:25 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31613 | nkoth | 2010-12-22 17:10:36 +0100 (Wed, 22 Dec 2010) | 1 line
+[FIX][bp/31612] If not in the group, edit is always redirected to the staging page edit feature was not working properly
+
+
+----------------------------------------------
+r32719 | pkdille | 2011-02-15 22:02:11 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31610 | changi67 | 2010-12-22 16:16:58 +0100 (Wed, 22 Dec 2010) | 1 line
+[bp/31609][FIX] class form is not the right to use otherwise the selector is not aligned horizontally
+
+
+----------------------------------------------
+r32718 | pkdille | 2011-02-15 22:01:01 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31600 | marclaporte | 2010-12-22 03:55:29 +0100 (Wed, 22 Dec 2010) | 1 line
+[bp/ r31599] [UI] Adding a note about the existence of a staging version of the current page
+
+
+----------------------------------------------
+r32717 | pkdille | 2011-02-15 22:00:50 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31598 | marclaporte | 2010-12-22 03:16:25 +0100 (Wed, 22 Dec 2010) | 1 line
+[bp/ r31597] [MOD]Wiki page name bad characters: remove current nomination - star, as we need for Staging and Approval Ref: http://dev.tiki.org/Bad+characters
+
+
+----------------------------------------------
+r32716 | pkdille | 2011-02-15 22:00:36 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31596 | marclaporte | 2010-12-22 02:32:32 +0100 (Wed, 22 Dec 2010) | 1 line
+[bp/ r31595] Don't link to same page
+
+
+----------------------------------------------
+r32715 | pkdille | 2011-02-15 22:00:24 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31594 | nkoth | 2010-12-21 22:59:06 +0100 (Tue, 21 Dec 2010) | 1 line
+[FIX][bp/r31593] Missing include from last commit
+
+
+----------------------------------------------
+r32714 | pkdille | 2011-02-15 22:00:12 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31591 | sylvieg | 2010-12-21 22:36:16 +0100 (Tue, 21 Dec 2010) | 1 line
+[bp/ r31590][FIX]wiki: error in history if page does not exist + missing include
+
+
+----------------------------------------------
+r32713 | pkdille | 2011-02-15 21:59:58 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31589 | nkoth | 2010-12-21 22:20:23 +0100 (Tue, 21 Dec 2010) | 1 line
+[FIX][bp/r31588] Usability: Show approving/staging interface on page history page as well (not just view page interface)
+
+
+----------------------------------------------
+r32712 | pkdille | 2011-02-15 21:59:35 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31585 | nkoth | 2010-12-21 19:28:00 +0100 (Tue, 21 Dec 2010) | 1 line
+[FIX][bp/r31584] Proper checking of edit perms on a category for approving (staging and approval) rights
+
+
+----------------------------------------------
+r32711 | pkdille | 2011-02-15 21:59:20 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31583 | marclaporte | 2010-12-21 18:29:02 +0100 (Tue, 21 Dec 2010) | 1 line
+[UI] [bp/r31582] Staging and Approval: show diff by default to save a click
+
+
+----------------------------------------------
+r32710 | pkdille | 2011-02-15 21:59:08 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31580 | nkoth | 2010-12-21 17:46:47 +0100 (Tue, 21 Dec 2010) | 1 line
+[FIX][bp/r31579] Prevent "Approved page was last saved after most recent staging edit" error when approving for first time
+
+
+----------------------------------------------
+r32709 | pkdille | 2011-02-15 21:58:55 +0100 (Tue, 15 Feb 2011) | 7 lines
+
+[QT] Quality Team Backport
+
+r31567 | trebly | 2010-12-21 16:10:43 +0100 (Tue, 21 Dec 2010) | 2 lines
+[FIX] Crash : buglist 3481 (since 4.1): Reason during first tiki-setup after version upgrade tra.php can be called when $tikilib is not yet set then the function tra_impl crashes.
+I have justed added a first level isset on $tikilib
+
+
+----------------------------------------------
+r32708 | pkdille | 2011-02-15 21:57:43 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31556 | nkoth | 2010-12-21 01:14:06 +0100 (Tue, 21 Dec 2010) | 1 line
+[FIX][bp/r31555] Prevent "Either staging or approved page cannot be found" error when staging page is created before approved page
+
+
+----------------------------------------------
+r32707 | pkdille | 2011-02-15 21:57:31 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31553 | nkoth | 2010-12-21 00:51:37 +0100 (Tue, 21 Dec 2010) | 1 line
+[FIX][bp/r31552] Put back delete staging page after approval feature that was lost 
+
+
+----------------------------------------------
+r32706 | pkdille | 2011-02-15 21:57:19 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31550 | nkoth | 2010-12-21 00:30:00 +0100 (Tue, 21 Dec 2010) | 1 line
+[FIX][KIL][bp/r31548][bp/r31549] Remove features that never worked and was just confusing users
+
+
+----------------------------------------------
+r32705 | pkdille | 2011-02-15 21:57:02 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31533 | sylvieg | 2010-12-20 22:02:06 +0100 (Mon, 20 Dec 2010) | 1 line
+[bp /r31528][FIX]tracker: dynamic list to work in regsitration
+
+
+----------------------------------------------
+r32704 | pkdille | 2011-02-15 21:56:48 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31520 | sylvieg | 2010-12-20 21:36:07 +0100 (Mon, 20 Dec 2010) | 1 line
+[bp/ r31518][FIX]tracker: show pagination also in the tracker export tab
+
+
+----------------------------------------------
+r32703 | pkdille | 2011-02-15 21:56:34 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31514 | xavidp | 2010-12-20 15:27:04 +0100 (Mon, 20 Dec 2010) | 1 line
+[FIX]Fixing wrong relative path. Thanks jonnyb for reporting.
+
+
+----------------------------------------------
+r32702 | pkdille | 2011-02-15 21:56:21 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31513 | xavidp | 2010-12-20 15:22:20 +0100 (Mon, 20 Dec 2010) | 1 line
+[FIX][br/r31512]Fixing the wrong relative link in r3182 (r31484 in proposals/6x) for the quote plugin image. Thanks jonnyb for reporting
+
+
+----------------------------------------------
+r32701 | pkdille | 2011-02-15 21:56:05 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31484 | xavidp | 2010-12-18 21:46:40 +0100 (Sat, 18 Dec 2010) | 1 line
+[ENH][bp/r31482]Added css style for quote plugin + new simple quote icon created by myself (LGPL'd)
+
+
+----------------------------------------------
+r32700 | pkdille | 2011-02-15 21:48:31 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31511 | nkoth | 2010-12-20 11:42:54 +0100 (Mon, 20 Dec 2010) | 1 line
+[FIX][bp/31510] After datachannel with payment is executed, execution stopped leading to payment not being reflected properly as paid in Tiki Payments.
+
+
+----------------------------------------------
+r32699 | pkdille | 2011-02-15 21:48:15 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31509 | nkoth | 2010-12-20 11:20:25 +0100 (Mon, 20 Dec 2010) | 1 line
+[FIX][bp/31506] If price is set to 0.00 (which is possible if generated from pretty tracker for example), it is not taken as empty, vs. 0, which gives inconsistent results.
+
+
+----------------------------------------------
+r32698 | pkdille | 2011-02-15 21:48:01 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31508 | nkoth | 2010-12-20 11:18:06 +0100 (Mon, 20 Dec 2010) | 1 line
+[FIX][bp/r31507] Validator was not validating an input of "0"
+
+
+----------------------------------------------
+r32697 | pkdille | 2011-02-15 21:44:02 +0100 (Tue, 15 Feb 2011) | 7 lines
+
+[QT] Quality Team Backport
+
+r31466 | jonnybradley | 2010-12-17 14:46:24 +0100 (Fri, 17 Dec 2010) | 2 lines
+[bp/r31465][FIX] articles: When getting a single articleId no need to use list_articles() which does a very slow and complicated query. Was over 2 seconds, now under 0.1
+Only used in wikiplugin_article so far, other uses may be possible.
+
+
+----------------------------------------------
+r32696 | pkdille | 2011-02-15 21:43:44 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31464 | xavidp | 2010-12-17 14:33:31 +0100 (Fri, 17 Dec 2010) | 1 line
+[ENH][bp/r31463]Added label.error for clearer jq validation messages for the end user. Thanks ricks99 and jonnyb for tips
+
+
+----------------------------------------------
+r32695 | pkdille | 2011-02-15 21:43:30 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31462 | xavidp | 2010-12-17 13:07:45 +0100 (Fri, 17 Dec 2010) | 1 line
+[ENH][bp/r31461]Added autocomplete when filtering tracker items, for 'user' field type
+
+
+----------------------------------------------
+r32694 | pkdille | 2011-02-15 21:43:15 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31452 | nkoth | 2010-12-16 17:32:06 +0100 (Thu, 16 Dec 2010) | 1 line
+[FIX][bp/r31451] Freetags were not being applied on new forum topic creation
+
+
+----------------------------------------------
+r32693 | pkdille | 2011-02-15 21:43:01 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31450 | nkoth | 2010-12-16 17:25:28 +0100 (Thu, 16 Dec 2010) | 1 line
+[FIX][bp/r31448][bp/r31449] When tracker is removed with items still in it, the removal of the items in it were not clean.
+
+
+----------------------------------------------
+r32692 | pkdille | 2011-02-15 21:38:20 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31447 | nkoth | 2010-12-16 17:20:27 +0100 (Thu, 16 Dec 2010) | 1 line
+[FIX][bp/r31446] Object was not being removed properly when tracker item is deleted, leading to for example freetagged objects still appearing in browse freetags.
+
+
+----------------------------------------------
+r32691 | pkdille | 2011-02-15 21:37:33 +0100 (Tue, 15 Feb 2011) | 9 lines
+
+[QT] Quality Team Backport
+
+r31444 | marclaporte | 2010-12-16 06:21:30 +0100 (Thu, 16 Dec 2010) | 5 lines
+[FIX] PDO upgrades: Quiet error "This command is not supported in the prepared statement protocol yet" running ALTER DATABASE to change database's default charset in some installations 
+(noticed on MySQL 5.0.77 with PHP 5.1.6)
+"Your database encoding is not in UTF-8." dialog would reappear after running Convert database and tables to UTF-8
+Emulate prepared statements in installer. trunk is not affected after r31039
+
+
+----------------------------------------------
+r32690 | pkdille | 2011-02-15 21:36:41 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31442 | marclaporte | 2010-12-16 05:33:52 +0100 (Thu, 16 Dec 2010) | 2 lines
+[bp/r31441][FIX] typo
+
+
+----------------------------------------------
+r32689 | pkdille | 2011-02-15 21:35:20 +0100 (Tue, 15 Feb 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31438 | jonnybradley | 2010-12-15 19:40:29 +0100 (Wed, 15 Dec 2010) | 1 line
+[bp/r31428][FIX] browsertitle: Restore use of description as title if site_title_breadcrumb eq "desc" - thanks Luci
+
+
+----------------------------------------------
+r32610 | sept_7 | 2011-02-12 21:27:44 +0100 (Sat, 12 Feb 2011) | 2 lines
+
+[LANG] More french translations
+
+----------------------------------------------
+r32547 | xavidp | 2011-02-10 16:57:44 +0100 (Thu, 10 Feb 2011) | 1 line
+
+a few strings translated
+----------------------------------------------
+r32471 | xavidp | 2011-02-06 13:36:25 +0100 (Sun, 06 Feb 2011) | 1 line
+
+a few more strings translated (mainly cclite and a few more)
+----------------------------------------------
+r32215 | gta74 | 2011-01-29 13:56:42 +0100 (Sat, 29 Jan 2011) | 1 line
+
+[FIX] Changed line 12329 to fix german translation error (tracker id: 3733)
+----------------------------------------------
+r32213 | gta74 | 2011-01-29 13:34:20 +0100 (Sat, 29 Jan 2011) | 1 line
+
+[TRA] complete translation of file into german
+----------------------------------------------
+r32007 | sylvieg | 2011-01-19 14:59:49 +0100 (Wed, 19 Jan 2011) | 1 line
+
+[FIX}rollback wrong branch
+----------------------------------------------
+r32003 | sylvieg | 2011-01-19 13:24:09 +0100 (Wed, 19 Jan 2011) | 1 line
+
+[bp/r32002][FIX]share: change only the mail from if it is the user email or the site email
+----------------------------------------------
+r31967 | xavidp | 2011-01-18 09:02:14 +0100 (Tue, 18 Jan 2011) | 1 line
+
+a few more strings transalted (mainly calendar export and recurrence)
+----------------------------------------------
+r31882 | pkdille | 2011-01-12 22:39:48 +0100 (Wed, 12 Jan 2011) | 2 lines
+
+[QT] Rollback rejected commit r31661 (is currently in proposal branch by r31663)
+
+----------------------------------------------
+r31855 | xavidp | 2011-01-11 00:45:54 +0100 (Tue, 11 Jan 2011) | 1 line
+
+a few other strings translated
+----------------------------------------------
+r31853 | xavidp | 2011-01-10 20:32:02 +0100 (Mon, 10 Jan 2011) | 1 line
+
+a few more translations
+----------------------------------------------
+r31851 | xavidp | 2011-01-10 20:07:10 +0100 (Mon, 10 Jan 2011) | 1 line
+
+a few translations added
+----------------------------------------------
+r31688 | yonixxx | 2010-12-30 10:20:32 +0100 (Thu, 30 Dec 2010) | 1 line
+
+[FIX]BiDi.css file to support rtl alignment for hebrew or rtl language
+----------------------------------------------
+r31661 | chealer | 2010-12-26 19:02:04 +0100 (Sun, 26 Dec 2010) | 1 line
+
+[bp/r31660] menus_item_names_raw: add a fake preference on which the real preference depends. admins need to check both to enable for real. the prominent warning is left for the hidden (child) preference
+----------------------------------------------
 Version 6.1
 <http://tiki.org/ReleaseNotes61>
 ------------------
