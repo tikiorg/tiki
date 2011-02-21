@@ -20,22 +20,6 @@ include_once ('lib/webmail/tikimaillib.php');
 
 function handleWebmailRedirect($inUrl) {		// AJAX_TODO
 	global $prefs;
-	
-//	if ($prefs['ajax_xajax'] != 'y' || empty($_REQUEST['xjxfun'])) {
-//		header ('location: tiki-webmail.php?'.$inUrl);
-//		die();
-//	} else {
-//	    global $ajaxlib, $headerlib;
-////			$objResponse = new xajaxResponse('UTF-8');					// should be possible server-side, no?
-////			$objResponse->Redirect('tiki-webmail.php?'.$urlq);
-//	    $headerlib->add_js('window.location.replace("tiki-webmail.php?'.$inUrl.'")');
-//	    $ajaxlib->registerTemplate('tiki-webmail.tpl');
-////   	    $ajaxlib->registerTemplate('error.tpl');
-////	    $ajaxlib->registerFunction('loadComponent');
-//		$ajaxlib->processRequests();
-//		die();
-//	}
-	
 }
 
 $access->check_user($user);
@@ -229,9 +213,9 @@ if ($_REQUEST['locSection'] == 'read') {
 			$aux['delivery-date'] = $aux['date'];
 		}
 		$aux['timestamp'] = strtotime($aux['delivery-date']);
-		
-		//$aux['subject'] = isset($aux['subject']) ? utf8_encode($aux['subject']) : '';
-		$aux['subject'] = isset($aux['subject']) ? mb_decode_mimeheader($aux['subject']) : ''; // the commented out line above doesn't work
+	
+		// the subject needs to be decoded	
+		$aux['subject'] = isset($aux['subject']) ? mb_decode_mimeheader($aux['subject']) : '';
 		$aux['from']    = isset($aux['from'])    ? utf8_encode($aux['from']) : '';
 		$aux['to']      = isset($aux['to'])      ? utf8_encode($aux['to']) : '';
 		$aux['cc']      = isset($aux['cc'])      ? utf8_encode($aux['cc']) : '';
@@ -423,6 +407,7 @@ END;
 
 		for ($i = 0; $i < $mailsum; $i++) {
 			$aux = $webmail_list[$i];
+			$aux['subject'] = mb_decode_mimeheader($aux['subject']); // Lets decode the Subject before going to list it... otherwise it returns garbage for non-ascii subjects
 			$webmaillib->replace_webmail_message($current['accountId'], $user, $aux['realmsgid']);
 			list($aux['isRead'], $aux['isFlagged'], $aux['isReplied'])
 				= $webmaillib->get_mail_flags($current['accountId'], $user, $aux['realmsgid']);
@@ -598,9 +583,6 @@ END;
 		unset($_REQUEST['accountId']);
 	}
 	
-//	if (empty($_REQUEST['accountId']) || isset($_REQUEST['new_acc']) && $webmaillib->count_webmail_accounts($user) > 0) {
-//		$headerlib->add_jq_onready('$("#settingsFormDiv").hide();');
-//	}
 	// The red cross was pressed
 	if (isset($_REQUEST['remove'])) {
 		check_ticket('webmail');
