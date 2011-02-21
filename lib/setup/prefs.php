@@ -676,6 +676,9 @@ function get_default_prefs() {
 		'preset_galleries_info' =>'n',
 		'gal_image_mouseover' => 'n',
 
+		// Geolocation
+		'geo_locate_wiki' => 'n',
+
 		// forums
 		'feature_forums' => 'n',
 		'home_forum' => 0,

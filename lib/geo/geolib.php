@@ -2,6 +2,73 @@
 
 class GeoLib
 {
+	function get_coordinates($type, $itemId) {
+		$attributelib = TikiLib::lib('attribute');
+
+		$attributes = $attributelib->get_attributes($type, $itemId);
+
+		if (isset($attributes['tiki.geo.lat'], $attributes['tiki.geo.lon'])) {
+			$coords = array(
+				'lat' => $attributes['tiki.geo.lat'],
+				'lon' => $attributes['tiki.geo.lon'],
+			);
+
+			if (! empty($attributes['tiki.geo.google.zoom'])) {
+				$coords['zoom'] = $attributes['tiki.geo.google.zoom'];
+			}
+
+			return $coords;
+		}
+	}
+
+	function get_coordinates_string($type, $itemId) {
+		if ($coords = $this->get_coordinates($type, $itemId)) {
+			return $this->build_location_string($coords);
+		}
+	}
+	
+	function build_location_string($coords) {
+		if (! empty($coords['lat']) && ! empty($coords['lon'])) {
+			$string = "{$coords['lat']},{$coords['lon']}";
+
+			if (! empty($coords['zoom'])) {
+				$string .= ",{$coords['zoom']}";
+			}
+
+			return $string;
+		}
+	}
+
+	function set_coordinates($type, $itemId, $coordinates) {
+		if (is_string($coordinates)) {
+			$coordinates = $this->parse_coordinates($coordinates);
+		}
+
+		if (isset($coordinates['lat'], $coordinates['lon'])) {
+			$attributelib = TikiLib::lib('attribute');
+			$attributelib->set_attribute($type, $itemId, 'tiki.geo.lat', $coordinates['lat']);
+			$attributelib->set_attribute($type, $itemId, 'tiki.geo.lon', $coordinates['lon']);
+
+			if (isset($coordinates['zoom'])) {
+				$attributelib->set_attribute($type, $itemId, 'tiki.geo.google.zoom', $coordinates['zoom']);
+			}
+		}
+	}
+
+	function parse_coordinates($string) {
+		if (preg_match("/^(-?\d*(\.\d+)?),(-?\d*(\.\d+)?)(,(\d+))?$/", $string, $parts)) {
+			$coords = array(
+				'lat' => $parts[1],
+				'lon' => $parts[3],
+			);
+
+			if (! empty($parts[6])) {
+				$coords['zoom'] = $parts[6];
+			}
+
+			return $coords;
+		}
+	}
 	
 	function geocode($where) {
 		global $prefs;

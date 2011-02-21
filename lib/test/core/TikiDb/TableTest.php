@@ -158,6 +158,26 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		));
 	}
 
+	function testInsertOrUpdate()
+	{
+		$mock = $this->getMock('TikiDb');
+
+		$query = 'INSERT INTO `my_table` (`title`, `description`, `objectType`, `objectId`) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE `title` = ?, `description` = ?';
+
+		$mock->expects($this->once())
+			->method('query')
+			->with($this->equalTo($query), $this->equalTo(array('hello world', 'foobar', 'wiki page', 'HomePage', 'hello world', 'foobar')));
+
+		$table = new TikiDb_Table($mock, 'my_table');
+		$table->insertOrUpdate(array(
+			'title' => 'hello world',
+			'description' => 'foobar',
+		), array(
+			'objectType' => 'wiki page',
+			'objectId' => 'HomePage',
+		));
+	}
+
 	function testExpressionAssign()
 	{
 		$mock = $this->getMock('TikiDb');

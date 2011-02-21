@@ -26,6 +26,7 @@ function smarty_function_object_link( $params, $smarty ) {
 	case 'wiki page':
 	case 'wikipage':
 	case 'wiki':
+		$type = 'wiki page';
 		$function = 'smarty_function_object_link_default';
 		if (! $title) {
 			$title = $object;
@@ -66,7 +67,15 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 		$escapedHref = smarty_modifier_escape( smarty_modifier_sefurl( $object, $type ) );
 	}
 
-	return '<a href="' . $escapedHref . '">' . $escapedPage . '</a>';
+	$class = '';
+	$metadata = '';
+
+	if ($coordinates = TikiLib::lib('geo')->get_coordinates($type, $object)) {
+		$class = ' class="geolocated"';
+		$metadata = " data-geo-lat=\"{$coordinates['lat']}\" data-geo-lon=\"{$coordinates['lon']}\"";
+	}
+
+	return '<a href="' . $escapedHref . '"' . $class . $metadata . '">' . $escapedPage . '</a>';
 }
 
 function smarty_function_object_link_user( $smarty, $user, $title = null ) {

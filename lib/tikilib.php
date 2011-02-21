@@ -176,6 +176,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'oauth':
 			require_once 'lib/oauthlib.php';
 			return $libraries[$name] = new OAuthLib;
+		case 'geo':
+			global $geolib; require_once 'lib/geo/geolib.php';
+			return $libraries[$name] = $geolib;
 		}
 	}
 

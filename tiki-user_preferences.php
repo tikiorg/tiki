@@ -167,10 +167,12 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 	if (isset($_REQUEST["homePage"])) $tikilib->set_user_preference($userwatch, 'homePage', $_REQUEST["homePage"]);
 
 	if (isset($_REQUEST['location'])) {
-		if (preg_match("/^(-?\d*(\.\d+)?),(-?\d*(\.\d+)?),(\d+)$/", $_REQUEST['location'], $parts)) {
-			$tikilib->set_user_preference($userwatch, 'lat', $parts[1]);
-			$tikilib->set_user_preference($userwatch, 'lon', $parts[3]);
-			$tikilib->set_user_preference($userwatch, 'zoom', $parts[5]);
+		if ($coords = TikiLib::lib('geo')->parse_coordinates($_REQUEST['location'])) {
+			$tikilib->set_user_preference($userwatch, 'lat', $coords['lat']);
+			$tikilib->set_user_preference($userwatch, 'lon', $coords['lon']);
+			if (isset($coords['zoom'])) {
+				$tikilib->set_user_preference($userwatch, 'zoom', $coords['zoom']);
+			}
 		}
 	}
 
@@ -312,19 +314,13 @@ if (isset($_REQUEST['deleteaccount']) && $tiki_p_delete_account == 'y') {
    die();
 } 
 
-$lat = (float) $tikilib->get_user_preference($userwatch, 'lat', '');
-$lon = (float) $tikilib->get_user_preference($userwatch, 'lon', '');
-$zoom = (int) $tikilib->get_user_preference($userwatch, 'zoom', '');
+$location = array(
+	'lat' => (float) $tikilib->get_user_preference($userwatch, 'lat', ''),
+	'lon' => (float) $tikilib->get_user_preference($userwatch, 'lon', ''),
+	'zoom' => (int) $tikilib->get_user_preference($userwatch, 'zoom', ''),
+);
 
-$location = '';
-
-if ($lat || $lon) {
-	$location = "$lat,$lon";
-
-	if ($zoom) {
-		$location .= ",$zoom";
-	}
-}
+$location = TikiLib::lib('geo')->build_location_string($location);
 
 $smarty->assign('location', $location);
 

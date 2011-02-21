@@ -177,9 +177,7 @@
 
 		{if $prefs.wiki_list_name eq 'y'}
 			<td class="text">
-				<a href="{$listpages[changes].pageName|sefurl:'wiki':'':$all_langs}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].pageName|escape}">
-					{$listpages[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true|escape}
-				</a>
+				{object_link type=wiki id=$listpages[changes].pageName url=$listpages[changes].pageName|sefurl:'wiki':'':$all_langs title=$listpages[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true}
 				{if $prefs.wiki_list_description eq 'y' && $listpages[changes].description neq ""}
 					<div class="subcomment">
 						{$listpages[changes].description|truncate:$prefs.wiki_list_description_len:"...":true}

@@ -21,16 +21,24 @@ class TikiDb_Table
 	 */
 	function insert(array $values, $ignore = false)
 	{
-		$fieldDefinition = implode(', ', array_map(array($this, 'escapeIdentifier'), array_keys($values)));
-		$fieldPlaceholders = rtrim(str_repeat('?, ', count($values)), ' ,');
+		$bindvars = array();
+		$query = $this->buildInsert($values, $ignore, $bindvars);
 
-		if ($ignore) {
-			$ignore = ' IGNORE';
-		}
+		$this->db->query($query, $bindvars);
 
-		$query = "INSERT$ignore INTO {$this->escapeIdentifier($this->tableName)} ($fieldDefinition) VALUES ($fieldPlaceholders)";
+		return $this->db->lastInsertId();
+	}
 
-		$this->db->query($query, array_values($values));
+	function insertOrUpdate(array $data, array $keys)
+	{
+		$insertData = array_merge($data, $keys);
+
+		$bindvars = array();
+		$query = $this->buildInsert($insertData, false, $bindvars);
+		$query .= ' ON DUPLICATE KEY UPDATE ';
+		$query .= $this->buildUpdateList($data, $bindvars);
+
+		$this->db->query($query, $bindvars);
 
 		return $this->db->lastInsertId();
 	}
@@ -301,6 +309,16 @@ class TikiDb_Table
 	{
 		$query = "UPDATE {$this->escapeIdentifier($this->tableName)} SET ";
 
+		$query .= $this->buildUpdateList($values, $bindvars);
+		$query .= $this->buildConditions($conditions, $bindvars);
+
+		return $query;
+	}
+
+	private function buildUpdateList($values, & $bindvars)
+	{
+		$query = '';
+
 		foreach ($values as $key => $value) {
 			$field = $this->escapeIdentifier($key);
 			if ($value instanceof TikiDb_Expr) {
@@ -312,9 +330,20 @@ class TikiDb_Table
 			}
 		}
 
-		$query = rtrim($query, ' ,') . $this->buildConditions($conditions, $bindvars);
+		return rtrim($query, ' ,');
+	}
 
-		return $query;
+	private function buildInsert($values, $ignore, & $bindvars)
+	{
+		$fieldDefinition = implode(', ', array_map(array($this, 'escapeIdentifier'), array_keys($values)));
+		$fieldPlaceholders = rtrim(str_repeat('?, ', count($values)), ' ,');
+
+		if ($ignore) {
+			$ignore = ' IGNORE';
+		}
+
+		$bindvars = array_merge($bindvars, array_values($values));
+		return "INSERT$ignore INTO {$this->escapeIdentifier($this->tableName)} ($fieldDefinition) VALUES ($fieldPlaceholders)";
 	}
 
 	private function escapeIdentifier($identifier)

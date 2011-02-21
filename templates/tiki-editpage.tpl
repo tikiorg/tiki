@@ -486,6 +486,11 @@
 									</fieldset>
 								{/if}
 							{/if}
+							{if $prefs.geo_locate_wiki eq 'y'}
+								{$headerlib->add_map()}
+								<div class="map-container" data-target-field="geolocation" style="height: 250px; width: 250px;"></div>
+								<input type="hidden" name="geolocation" value="{$geolocation_string}" />
+							{/if}
 							{if $tiki_p_admin_wiki eq "y"}
 								<a href="tiki-admin.php?page=wiki">{tr}Admin wiki preferences{/tr} {icon _id='wrench'}</a>
 							{/if}

@@ -7,8 +7,17 @@
 
 class AttributeLib extends TikiDb_Bridge
 {
+	private $attributes;
+
+	function __construct() {
+		$this->attributes = $this->table('tiki_object_attributes');
+	}
+
 	function get_attributes( $type, $objectId ) {
-		return $this->fetchMap( 'SELECT `attribute`, `value` FROM `tiki_object_attributes` WHERE `type` = ? AND `itemId` = ?', array( $type, $objectId ) );
+		return $this->attributes->fetchMap('attribute', 'value', array(
+			'type' => $type,
+			'itemId' => $objectId,
+		));
 	}
 	
 	/**
@@ -27,11 +36,17 @@ class AttributeLib extends TikiDb_Bridge
 		}
 
 		if( $value == '' ) {
-			$this->query( 'DELETE FROM `tiki_object_attributes` WHERE `type` = ? AND `itemId` = ? AND `attribute` = ?',
-				array( $type, $objectId, $name ) );
+			$this->attributes->delete(array(
+				'type' => $type,
+				'itemId' => $objectId,
+				'attribute' => $name,
+			));
 		} else {
-			$this->query( 'INSERT INTO `tiki_object_attributes` (`type`, `itemId`, `attribute`, `value`) VALUES( ?, ?, ?, ? ) ON DUPLICATE KEY UPDATE `value` = ?',
-				array( $type, $objectId, $name, $value, $value ) );
+			$this->attributes->insertOrUpdate(array('value' => $value), array(
+				'type' => $type,
+				'itemId' => $objectId,
+				'attribute' => $name,
+			));
 		}
 
 

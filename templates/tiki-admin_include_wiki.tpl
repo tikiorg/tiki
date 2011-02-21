@@ -258,6 +258,7 @@
 			</fieldset>
 		</div>
 		{preference name=wiki_keywords}
+		{preference name=geo_locate_wiki}
 	{/tab}
 
 	{tab name="{tr}Staging &amp; Approval{/tr}"}

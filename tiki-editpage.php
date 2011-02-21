@@ -1146,6 +1146,10 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 		}
 	}
 
+	if ($prefs['geo_locate_wiki'] == 'y' && ! empty($_REQUEST['geolocation'])) {
+		TikiLib::lib('geo')->set_coordinates('wiki page', $page, $_REQUEST['geolocation']);
+	}
+
 	if (!empty($_REQUEST['returnto'])) {	// came from wikiplugin_include.php edit button
 		$url = $wikilib->sefurl($_REQUEST['returnto']);
 	} else if ($page_ref_id) {
@@ -1355,6 +1359,10 @@ if ($prefs['feature_wikiapproval'] === 'y') {
 	}
 }
 
+if( $prefs['geo_locate_wiki'] == 'y' ) {
+	$smarty->assign('geolocation_string', TikiLib::lib('geo')->get_coordinates_string('wiki page', $page));
+}
+
 if( $prefs['feature_multilingual'] === 'y' ) {
 	global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
 	$trads = $multilinguallib->getTranslations('wiki page', $info['page_id'], $page, $info['lang']);
@@ -1381,7 +1389,8 @@ if (($prefs['feature_wiki_templates'] === 'y' && $tiki_p_use_content_templates =
 		($prefs['feature_wiki_description'] === 'y' || $prefs['metatag_pagedesc'] === 'y') ||
 		$prefs['feature_wiki_footnotes'] === 'y' ||
 		($prefs['feature_wiki_ratings'] === 'y' && $tiki_p_wiki_admin_ratings ==='y') ||
-		$prefs['feature_multilingual'] === 'y') {
+		$prefs['feature_multilingual'] === 'y' ||
+		$prefs['geo_locate_wiki'] === 'y') {
 	
 	$smarty->assign('showPropertiesTab', 'y');
 }
