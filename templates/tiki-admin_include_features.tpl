@@ -40,7 +40,7 @@
 		<fieldset>
 			<legend>{tr}Additional{/tr}</legend>
 
-			<div class="admin featurelist">
+			<div class="admin clearfix featurelist">
 				{preference name=feature_surveys}
 				{preference name=feature_directory}
 				{preference name=feature_quizzes}
@@ -60,7 +60,7 @@
 		<fieldset>
 			<legend>{tr}Watches{/tr}</legend>
 
-			<div class="admin featurelist">
+			<div class="admin clearfix featurelist">
 				{preference name=feature_user_watches}
 				{preference name=feature_group_watches}
 				{preference name=feature_daily_report_watches}
@@ -73,14 +73,14 @@
 {/tab}
 			
 {tab name="{tr}Interface{/tr}"}
-			<fieldset class="admin featurelist">
+			<fieldset class="admin clearfix featurelist">
 				<legend> {tr}Ajax{/tr} </legend>	
 				{preference name=feature_ajax}
 				<div class="adminoptionboxchild half_width" id="feature_ajax_childcontainer">
 					{preference name=ajax_autosave}
 				</div>
 			</fieldset>
-			<fieldset class="admin featurelist">
+			<fieldset class="admin clearfix featurelist">
 				<legend> {tr}jQuery plugins and add-ons{/tr} </legend>
 				{preference name=feature_jquery_autocomplete}
 				{preference name=feature_jquery_media}
@@ -90,7 +90,7 @@
 				{preference name=feature_jquery_ui_theme}
 				{preference name=feature_jquery_ui}
 				{preference name=feature_jquery_validation}
-				<hr />
+				<hr class="floatleft" />
 				<div class="floatleft">
 					<div class="adminoptionbox">
 						<em>{tr}Experimental:{/tr}</em> {icon _id=bug_error}
@@ -105,7 +105,7 @@
 {/tab}
 
 {tab name="{tr}Programmer{/tr}"}
-			<div class="admin featurelist clearfix">
+			<div class="admin clearfix featurelist">
 				{preference name=feature_integrator}
 				{preference name=feature_xmlrpc}
 				{preference name=feature_debug_console}
@@ -146,7 +146,7 @@
 
 {* ---------- New features ------------ *}
 {tab name="{tr}New{/tr}"}
-			<div class="admin featurelist">
+			<div class="admin clearfix featurelist">
 				<fieldset>
 					<legend class="heading">{icon _id="star"} <span>{tr}New{/tr}</span></legend>
 					<p class="description">{tr}These features are relatively new, or recently underwent major renovations. You should expect growing pains and possibly a lack of up to date documentation, as you would of a version 1.0 application{/tr}</p>
@@ -183,7 +183,7 @@
 
 {* ---------- Experimental features ------------ *}
 {tab name="{tr}Experimental{/tr}"}
-			<div class="admin featurelist">
+			<div class="admin clearfix featurelist">
 
 				<!--<fieldset>
 					<legend class="heading">{icon _id="bricks"} <span>{tr}Getting there...{/tr}</span></legend>
