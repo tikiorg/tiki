@@ -233,7 +233,8 @@ if ($_REQUEST['locSection'] == 'read') {
 		}
 		$aux['timestamp'] = strtotime($aux['delivery-date']);
 		
-		$aux['subject'] = isset($aux['subject']) ? utf8_encode($aux['subject']) : '';
+		//$aux['subject'] = isset($aux['subject']) ? utf8_encode($aux['subject']) : '';
+		$aux['subject'] = isset($aux['subject']) ? mb_decode_mimeheader($aux['subject']) : ''; // the commented out line above doesn't work
 		$aux['from']    = isset($aux['from'])    ? utf8_encode($aux['from']) : '';
 		$aux['to']      = isset($aux['to'])      ? utf8_encode($aux['to']) : '';
 		$aux['cc']      = isset($aux['cc'])      ? utf8_encode($aux['cc']) : '';
@@ -453,6 +454,7 @@ END;
 			$aux = $filtered[$i];
 		} else {
 			$aux = $webmail_list[$i-1];
+			$aux['subject'] = mb_decode_mimeheader($aux['subject']); // Lets decode the Subject before going to list it... otherwise it returns garbage for non-ascii subjects
 			$webmaillib->replace_webmail_message($current['accountId'], $user, $aux['realmsgid']);
 			list($aux['isRead'], $aux['isFlagged'], $aux['isReplied']) = $webmaillib->get_mail_flags($current['accountId'], $user, $aux['realmsgid']);
 		}
