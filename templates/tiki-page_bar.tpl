@@ -93,7 +93,7 @@
 		{/if}
 
 		{if $prefs.feature_wiki_discuss eq 'y' && $show_page eq 'y' && $beingStaged ne 'y' && $tiki_p_forum_post eq 'y'}
-			{capture name='wiki_discussion_string'}{include file='wiki-discussion.tpl}{/capture}
+			{capture name='wiki_discussion_string'}{include file='wiki-discussion.tpl'}{/capture}
 			{assign var=thiswiki_discussion_string value=$smarty.capture.wiki_discussion_string|escape:"url"}
 			{button href="tiki-view_forum.php?forumId=`$prefs.wiki_forum_id`&amp;comments_postComment=post&amp;comments_title=$thispage&amp;comments_data=$thiswiki_discussion_string%3A+%5Btiki-index.php%3Fpage=$thispage%7C$thispage%5D&amp;comment_topictype=n" _text="{tr}Discuss{/tr}"}
 		{/if}
