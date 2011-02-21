@@ -5773,6 +5773,7 @@ class TikiLib extends TikiDb_Bridge
 		$options['parsetoc'] = isset($options['parsetoc']) ? (bool)$options['parsetoc'] : true;
 		$options['inside_pretty'] = isset($options['inside_pretty']) ? $options['inside_pretty'] : false;
 		$options['process_wiki_paragraphs'] = isset($options['process_wiki_paragraphs']) ? $options['process_wiki_paragraphs'] : true;
+		$options['min_one_paragraph'] = isset($options['min_one_paragraph']) ? $options['min_one_paragraph'] : false;
 		
 		if (empty($options['ck_editor'])) $options['ck_editor'] = false;
 		
@@ -6803,7 +6804,7 @@ class TikiLib extends TikiDb_Bridge
 							$tline = trim(str_replace('&nbsp;', '', $line));
 							
 							if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
-								if (count($lines) > 1) {	// don't apply wiki para if only single line so you can have inline includes
+								if (count($lines) > 1 || $options['min_one_paragraph']) {	// don't apply wiki para if only single line so you can have inline includes
 									$contains_block = $this->contains_html_block( $tline );
 									
 									if (!$contains_block) {	// check inside plugins etc for block elements
