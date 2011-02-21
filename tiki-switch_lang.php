@@ -20,6 +20,11 @@ if ($prefs['feature_sefurl'] == 'y' && !strstr($orig_url, '.php')) {
                 $orig_url = preg_replace('#\/article([0-9]+)(.*)#', '/tiki-read_article.php?articleId=$1', $orig_url);
         }
 }
+if (!strstr($orig_url, '.php')) {
+        $params = parse_url($orig_url);
+        if (empty($params['query']))
+                $orig_url = $prefs['tikiIndex'];
+}
 
 if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.php')) {
 	global $multilinguallib;
