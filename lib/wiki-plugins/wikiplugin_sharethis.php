@@ -137,6 +137,7 @@ function wikiplugin_sharethis($data, $params) {
 
 	extract ($params,EXTR_SKIP);
 	$sharethis_options = array();
+	$iconcode = '';
 	$sep = '&amp;';
 	$comma = '%2C';
 	$lb = '%23';
