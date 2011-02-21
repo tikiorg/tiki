@@ -22,7 +22,8 @@ CKEDITOR.plugins.add('tikiwiki',{
 		this.editor = editor;								// which expects these references too
 		this.dataFilter = editor.dataProcessor.dataFilter;
 			
-		editor.dataProcessor.toDataFormat 	= function ( html, fixForBody ) { return twplugin.toWikiFormat( editor, html ); };
+		oldToDataFormat = editor.dataProcessor.toDataFormat ;
+		editor.dataProcessor.toDataFormat 	= function ( html, fixForBody ) { return twplugin.toWikiFormat( editor, oldToDataFormat( html, fixForBody ) ); };
 		editor.dataProcessor.toHtml			= function ( data, fixForBody ) { return twplugin.toHtmlFormat( editor, data ); };
 		
 		// button stuff goes here?
