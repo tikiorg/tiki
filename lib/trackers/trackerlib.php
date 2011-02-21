@@ -3342,7 +3342,7 @@ class TrackerLib extends TikiLib
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: will display the field name as a html header h2;
-				<dt>Usage: <strong>level/strong>
+				<dt>Usage: <strong>level</strong>
 				<dt>Example: 2
 				<dt>Description:
 				<dd><strong>[level]</strong> level of the html header (default 2)
