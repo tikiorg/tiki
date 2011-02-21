@@ -5,8 +5,12 @@
 		<ul class="results">
 		</ul>
 		<div class="error">
-			{remarksbox type="errors" title="{tr}Oops{/tr}"}
-				<p>{tr}We are not autorized to access the group at this time. If you have access to the Zotero group, you can grant this site read access.{/tr}</p>
+			{remarksbox type="errors" title="{tr}Oops!{/tr}"}
+				{if $zotero_authorized}
+					<p>{tr}No results were found. While we have an authorization from Zotero, it may not grant access to the group. If this search should have results, try re-authenticating with Zotero.{/tr}</p>
+				{else}
+					<p>{tr}We are not autorized to access the group at this time. If you have access to the Zotero group, you can grant this site read access.{/tr}</p>
+				{/if}
 				<p><a href="tiki-ajax_services.php?oauth_request=zotero">{tr}Authenticate with Zotero{/tr}</a></p>
 			{/remarksbox}
 		</div>
@@ -20,7 +24,7 @@
 			e.preventDefault();
 			$.post(this.action, $(this).serialize(), function (data) {
 				var isError = data.type == 'unauthorized';
-				$('.error', form).toggle(isError);
+				$('.error', form).toggle(isError || data.results.length === 0);
 				$('.results', form).toggle(! isError).empty();
 
 				$.each(data.results, function (k, i) {

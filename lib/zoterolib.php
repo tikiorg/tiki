@@ -2,6 +2,12 @@
 
 class ZoteroLib extends TikiDb_Bridge
 {
+	function is_authorized()
+	{
+		$oauthlib = TikiLib::lib('oauth');
+		return $oauthlib->is_authorized('zotero');
+	}
+
 	function get_references($tag)
 	{
 		global $prefs;

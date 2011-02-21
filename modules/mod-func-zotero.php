@@ -13,5 +13,9 @@ function module_zotero_info()
 
 function module_zotero($mod_reference, $module_params)
 {
+	$zoterolib = TikiLib::lib('zotero');
+	$smarty = TikiLib::lib('smarty');
+
+	$smarty->assign('zotero_authorized', $zoterolib->is_authorized());
 }
 

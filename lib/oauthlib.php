@@ -2,6 +2,11 @@
 
 class OAuthLib extends TikiDb_Bridge
 {
+	function is_authorized($provider_key)
+	{
+		return ! is_null($this->retrieve_token($provider_key));
+	}
+
 	function do_request($provider_key, $arguments)
 	{
 		$configuration = $this->get_configuration($provider_key);
