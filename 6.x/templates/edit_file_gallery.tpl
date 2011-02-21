@@ -60,41 +60,56 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2">
-								<input type="checkbox" id="visible" name="visible" {if $gal_info.visible eq 'y'}checked="checked"{/if} /> <label for="visible">{tr}Gallery is visible to non-admin users{/tr}.<label>
+							<td>
+								<label for="visible">{tr}Gallery is visible to non-admin users{/tr}.<label>
+							</td>
+							<td>
+								<input type="checkbox" id="visible" name="visible" {if $gal_info.visible eq 'y'}checked="checked"{/if} />
 							</td>
 						</tr>
 
 						<tr>
-							<td colspan="2">
+							<td>
+								<label for="public">{tr}Gallery is public{/tr}.</label>
+							</td>
+							<td>
 								<input type="checkbox" id="public" name="public" {if $gal_info.public eq 'y'}checked="checked"{/if}/>
- <label for="public">{tr}Gallery is public{/tr}.</label><br />
+								<br />
 								<em>{tr}Any user with permission (not only the gallery owner) can upload files{/tr}.</em>
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2">
+							<td>
+								<label for="backlinkPerms">{tr}Perms of the backlinks are checked to view a file{/tr}</label>
+							</td>
+							<td>
 								<input type="checkbox" id="backlinkPerms" name="backlinkPerms" {if $gal_info.backlinkPerms eq 'y'}checked="checked"{/if}/>
-								<label for="backlinkPerms">{tr}Backlink permissions are checked to view a file{/tr}</label>
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2">
-								<input type="checkbox" id="lockable" name="lockable" {if $gal_info.lockable eq 'y'}checked="checked"{/if}/>
+							<td>
 								<label for="lockable">{tr}Files can be locked at download{/tr}.</label>
 							</td>
+							<td>
+								<input type="checkbox" id="lockable" name="lockable" {if $gal_info.lockable eq 'y'}checked="checked"{/if}/>
+							</td>
 						</tr>
 						<tr>
-							<td colspan="2">
-								<label for="archives">{tr}Maximum number of archives for each file{/tr}:</label>								<input size="5" type="text" id="archives" name="archives" value="{$gal_info.archives|escape}" />
+							<td>
+								<label for="archives">{tr}Maximum number of archives for each file{/tr}:</label>
+							</td>
+							<td>
+								<input size="5" type="text" id="archives" name="archives" value="{$gal_info.archives|escape}" />
 								<br />
 								<em>{tr}Use{/tr} 0={tr}unlimited{/tr}, -1={tr}none{/tr}.</em>
 								{if $galleryId neq $prefs.fgal_root_id}
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2">
+							<td>
 								<label for="parentId">{tr}Parent gallery{/tr}:</label>
+							</td>
+							<td>
 								<select name="parentId" id="parentId">
 									<option value="{$prefs.fgal_root_id}"{if $parentId eq $prefs.fgal_root_id} selected="selected"{/if}>{tr}none{/tr}</option>
 									{foreach from=$all_galleries key=key item=item}
@@ -108,17 +123,19 @@
 								{/if}
 							</td>
 						</tr>
+
 						{if $tiki_p_admin eq 'y' or $tiki_p_admin_file_galleries eq 'y'}
 							<tr>
-								<td colspan="2">
-									<label for="user">{tr}Owner of the gallery{/tr}:</label>
+								<td><label for="user">{tr}Owner of the gallery{/tr}:</label></td>
+								<td>
 									{user_selector user=$creator id='user'}
 								</td>
 							</tr>
 
 							{if $prefs.fgal_quota_per_fgal eq 'y'}
 								<tr>
-									<td colspan="2">{tr}Quota{/tr}:
+									<td>{tr}Quota{/tr}</td>
+									<td>
 										<input type="text" id="quota" name="quota" value="{$gal_info.quota}" size="5" />{tr}Mb{/tr} <i>{tr}(0 for unlimited){/tr}</i>
 										{if $gal_info.usedSize}<br />{tr}Used:{/tr} {$gal_info.usedSize|kbsize}{/if}
 										{if !empty($gal_info.quota)}
@@ -135,7 +152,8 @@
 
 							{if $prefs.feature_groupalert eq 'y'}
 								<tr>
-									<td colspan="2">{tr}Group of users alerted when file gallery is modified{/tr}: 
+									<td>{tr}Group of users alerted when file gallery is modified{/tr}</td>
+									<td>
 										<select id="groupforAlert" name="groupforAlert">
 											<option value="">&nbsp;</option>
 											{foreach key=k item=i from=$groupforAlertList}
@@ -146,38 +164,42 @@
 								</tr>
 
 								<tr>
-									<td colspan="2">
-										<input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}/ >
-										{tr}Allows to select each user for small groups{/tr}</td>
-									</td>
+									<td>{tr}Allows to select each user for small groups{/tr}</td>
+									<td><input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}/ ></td>
 								</tr>
 							{/if}
 
 						{/if}
 
 						<tr>
-							<td colspan="2">
-								<label>{tr}Maximum width for images in gallery{/tr}:
-								<input size="5" type="text" name="image_max_size_x" value="{$gal_info.image_max_size_x|escape}" /> px</label>
+							<td>
+								{tr}Maximum width for images in gallery{/tr}:
+							</td>
+							<td>
+								<input size="5" type="text" name="image_max_size_x" value="{$gal_info.image_max_size_x|escape}" /> px
 								<br />
-								<em>{tr}If an image is wider than this, it will be resized.{/tr} {tr}Attention: In this case, the original image will be lost.{/tr} (0={tr}unlimited{/tr})</em>
+								<i>{tr}If an image is wider than this, it will be resized.{/tr} {tr}Attention: In this case, the original image will be lost.{/tr} (0={tr}unlimited{/tr})</i>
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2">
-								<label>{tr}Maximum height for images in gallery{/tr}:
-								<input size="5" type="text" name="image_max_size_y" value="{$gal_inf co.image_max_size_y|escape}" /> px</label>
+							<td>
+								{tr}Maximum height for images in gallery{/tr}:
+							</td>
+							<td>
+								<input size="5" type="text" name="image_max_size_y" value="{$gal_info.image_max_size_y|escape}" /> px
 								<br />
-								<em>{tr}If an image is higher than this, it will be resized.{/tr} {tr}Attention: In this case, the original image will be lost.{/tr} (0={tr}unlimited{/tr})</em>
+								<i>{tr}If an image is higher than this, it will be resized.{/tr} {tr}Attention: In this case, the original image will be lost.{/tr} (0={tr}unlimited{/tr})</i>
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2">
-								<label>{tr}Wiki markup to enter when image selected from "file gallery manager"{/tr}:
-								<input size="80" type="text" name="wiki_syntax" value="{$gal_info.wiki_syntax|escape}" /></label>
+							<td>
+								{tr}Wiki markup to enter when image selected from "file gallery manager"{/tr}:
+							</td>
+							<td>
+								<input size="80" type="text" name="wiki_syntax" value="{$gal_info.wiki_syntax|escape}" />
 								<br />
-								<em>{tr}The default is {/tr}"{literal}{img fileId="%fileId%" thumb="y" rel="box[g]"}{/literal}")</em>
-								<em>{tr}Field names will be replaced when enclosed in % chars. e.g. %fileId%, %name%, %filename%, %description%{/tr}</em>
+								<i>{tr}The default is {/tr}"{literal}{img fileId="%fileId%" thumb="y" rel="box[g]"}{/literal}")</i>
+								<i>{tr}Field names will be replaced when enclosed in % chars. e.g. %fileId%, %name%, %filename%, %description%{/tr}</i>
 							</td>
 						</tr>
 
