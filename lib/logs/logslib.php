@@ -583,7 +583,7 @@ class LogsLib extends TikiLib
 			$name = $action['action'].'/'.$action['objectType'];
 			if ( ($index = array_search($name,$actions_name)) !== false ) {
 				if ($field == 'object') {
-					$stats[$key]['link'] = $action['link'];
+					$stats[$key]['link'] = isset($action['link']) ? $action['link'] : null;
 				}
 				++$stats[$key][$name];
 			}
