@@ -1,0 +1,118 @@
+This directory contains source code to Tiki Wiki CMS/Groupware
+
+
+Tiki Wiki CMS/Groupware is Free and Open Source Software (FOSS). It is a community-driven project. 
+It exists and improves by the participation of people just like YOU.
+
+
+INSTALLATION
+------------
+The rest of this document includes parts of the online documentation that
+might be enough to get you running Tiki. For more details, please see:
+ http://doc.tiki.org/Install
+
+
+Before you get started, it is a good idea to know:
+
+    * Your database name, database user name and password
+    * Your Apache user and group ID (e.g. www-user and www-data)
+		If not, Tiki will detect
+
+
+These are notes on how to setup and configure Tiki.
+
+
+----------------------------
+Step one: unpack the archive
+----------------------------
+Unpack the Tiki files to the document root of where you want it installed,
+e.g. /var/www/tiki/ 
+
+To unpack the bz2 file, use:
+tar xjf tiki-[version].tar.bz2
+
+
+
+-----------------------------------------
+Step two: run setup.sh to set permissions
+-----------------------------------------
+
+Run setup.sh and follow the instructions
+
+# sh setup.sh
+
+
+
+--------------------------------------------------------------------
+Step three: create the database
+--------------------------------------------------------------------
+* create a database for Tiki
+  - either using PhpMyAdmin and MySQL
+  - or on the command line "mysqladmin create dbname"
+    the database name is usually called "tiki" 
+
+Be sure to record the following items:
+	- The database name 
+	- The user name and password that has admin authority in the database.
+
+
+------------------------------
+Step four: browser-based setup
+------------------------------
+* Point your browser to the web address that corresponds to the file
+  tiki-install.php (e.g. http://localhost/tiki/tiki-install.php)
+* Follow the instructions there
+  you'll need the password and user name for your database 
+* To log into Tiki for the first time:
+  - user: admin
+  - password: admin
+
+
+------------------------------
+Step five: configure your site
+------------------------------
+Next you can configure Tiki to suit your needs:
+
+* Use a profile to populate your database.
+* Choose which features you want enabled
+  - go to tiki-admin.php by clicking on the "Admin" or "Admin Home" link
+  on the left side of your screen 
+* (Optionally) create groups of users that share permissions
+* Assign appropriate permissions 
+
+
+Good luck and have fun with Tiki Wiki CMS/Groupware!
+
+--------------------------------------------------------------------------------
+
+IMPORTANT LINKS
+---------------
+* General information & overview
+  http://info.tiki.org
+
+* Official Tiki documentation website
+  http://doc.tiki.org
+
+* Forums & community
+  http://tiki.org/tiki-forums.php
+
+* Developers
+  http://dev.tiki.org
+
+* Themes & styling
+  http://themes.tiki.org
+
+* Profiles
+  http://profiles.tiki.org
+  
+* Security
+  http://security.tiki.org
+
+* IRC chat channel: #tikiwiki on irc.freenode.net
+  http://irc.tiki.org/
+
+
+
+ps:
+Now you may want to come to http://tiki.org and join the community!
+

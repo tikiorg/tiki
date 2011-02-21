@@ -1,0 +1,131 @@
+<rss version="2.0"
+	xmlns:excerpt="http://wordpress.org/export/1.0/excerpt/"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:wp="http://wordpress.org/export/1.0/">
+		
+	<item>
+		<title>Parte da tela de administração do TinyMCE Advanced</title>
+		<link>http://rodrigo.utopia.org.br/2009/05/04/como-impedir-que-o-editor-do-wordpress-tinymce-remova-quebras-de-linha/tadv2/</link>
+		<pubDate>Mon, 04 May 2009 18:30:50 +0000</pubDate>
+		<dc:creator><![CDATA[rodrigo]]></dc:creator>
+		
+		<category><![CDATA[Uncategorized]]></category>
+
+		<category domain="category" nicename="uncategorized"><![CDATA[Uncategorized]]></category>
+
+		<guid isPermaLink="false">http://rodrigo.utopia.org.br/files/tadv2.jpg</guid>
+		<description></description>
+		<content:encoded><![CDATA[]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>13</wp:post_id>
+		<wp:post_date>2009-05-04 10:30:50</wp:post_date>
+		<wp:post_date_gmt>2009-05-04 18:30:50</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>tadv2</wp:post_name>
+		<wp:status>inherit</wp:status>
+		<wp:post_parent>10</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type>attachment</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+				<wp:attachment_url>http://rodrigo.utopia.org.br/files/tadv2.jpg</wp:attachment_url>
+								<wp:postmeta>
+		<wp:meta_key>_wp_attachment_metadata</wp:meta_key>
+		<wp:meta_value><![CDATA[a:6:{s:5:"width";s:3:"761";s:6:"height";s:3:"434";s:14:"hwstring_small";s:23:"height='72' width='128'";s:4:"file";s:9:"tadv2.jpg";s:5:"sizes";a:2:{s:9:"thumbnail";a:3:{s:4:"file";s:17:"tadv2-150x150.jpg";s:5:"width";s:3:"150";s:6:"height";s:3:"150";}s:6:"medium";a:3:{s:4:"file";s:17:"tadv2-300x171.jpg";s:5:"width";s:3:"300";s:6:"height";s:3:"171";}}s:10:"image_meta";a:10:{s:8:"aperture";s:1:"0";s:6:"credit";s:0:"";s:6:"camera";s:0:"";s:7:"caption";s:0:"";s:17:"created_timestamp";s:1:"0";s:9:"copyright";s:0:"";s:12:"focal_length";s:1:"0";s:3:"iso";s:1:"0";s:13:"shutter_speed";s:1:"0";s:5:"title";s:0:"";}}]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_wp_attached_file</wp:meta_key>
+		<wp:meta_value><![CDATA[2009/05/tadv2.jpg]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_wp_attachment_metadata</wp:meta_key>
+		<wp:meta_value><![CDATA[s:620:"a:6:{s:5:"width";s:3:"761";s:6:"height";s:3:"434";s:14:"hwstring_small";s:23:"height='72' width='128'";s:4:"file";s:17:"2009/05/tadv2.jpg";s:5:"sizes";a:2:{s:9:"thumbnail";a:3:{s:4:"file";s:17:"tadv2-150x150.jpg";s:5:"width";s:3:"150";s:6:"height";s:3:"150";}s:6:"medium";a:3:{s:4:"file";s:17:"tadv2-300x171.jpg";s:5:"width";s:3:"300";s:6:"height";s:3:"171";}}s:10:"image_meta";a:10:{s:8:"aperture";s:1:"0";s:6:"credit";s:0:"";s:6:"camera";s:0:"";s:7:"caption";s:0:"";s:17:"created_timestamp";s:1:"0";s:9:"copyright";s:0:"";s:12:"focal_length";s:1:"0";s:3:"iso";s:1:"0";s:13:"shutter_speed";s:1:"0";s:5:"title";s:0:"";}}";]]></wp:meta_value>
+		</wp:postmeta>
+	</item>
+
+	<item>
+		<title>Hostelaria Las Torres</title>
+		<link>http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/1881232-hostelaria-las-torres-0/</link>
+		<pubDate>Tue, 12 May 2009 02:24:42 +0000</pubDate>
+		<dc:creator><![CDATA[rodrigo]]></dc:creator>
+		
+		<category><![CDATA[Uncategorized]]></category>
+
+		<category domain="category" nicename="uncategorized"><![CDATA[Uncategorized]]></category>
+
+		<guid isPermaLink="false">http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg</guid>
+		<description></description>
+		<content:encoded><![CDATA[No primeiro dia da caminhada, no local que o ônibus deixa para começar a caminhada.]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>45</wp:post_id>
+		<wp:post_date>2009-05-11 18:24:42</wp:post_date>
+		<wp:post_date_gmt>2009-05-12 02:24:42</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>1881232-hostelaria-las-torres-0</wp:post_name>
+		<wp:status>inherit</wp:status>
+		<wp:post_parent>36</wp:post_parent>
+		<wp:menu_order>1</wp:menu_order>
+		<wp:post_type>attachment</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+				<wp:attachment_url>http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg</wp:attachment_url>
+								<wp:postmeta>
+		<wp:meta_key>_wp_attached_file</wp:meta_key>
+		<wp:meta_value><![CDATA[2008/01/20/1881232-hostelaria-las-torres-0.jpg]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_wp_attachment_metadata</wp:meta_key>
+		<wp:meta_value><![CDATA[a:6:{s:5:"width";s:3:"600";s:6:"height";s:3:"450";s:14:"hwstring_small";s:23:"height='96' width='128'";s:4:"file";s:35:"1881232-hostelaria-las-torres-0.jpg";s:5:"sizes";a:2:{s:9:"thumbnail";a:3:{s:4:"file";s:43:"1881232-hostelaria-las-torres-0-150x150.jpg";s:5:"width";s:3:"150";s:6:"height";s:3:"150";}s:6:"medium";a:3:{s:4:"file";s:43:"1881232-hostelaria-las-torres-0-300x225.jpg";s:5:"width";s:3:"300";s:6:"height";s:3:"225";}}s:10:"image_meta";a:10:{s:8:"aperture";s:1:"0";s:6:"credit";s:0:"";s:6:"camera";s:0:"";s:7:"caption";s:0:"";s:17:"created_timestamp";s:1:"0";s:9:"copyright";s:0:"";s:12:"focal_length";s:1:"0";s:3:"iso";s:1:"0";s:13:"shutter_speed";s:1:"0";s:5:"title";s:0:"";}}]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_wp_attachment_metadata</wp:meta_key>
+		<wp:meta_value><![CDATA[s:698:"a:6:{s:5:"width";s:3:"600";s:6:"height";s:3:"450";s:14:"hwstring_small";s:23:"height='96' width='128'";s:4:"file";s:43:"2008/01/1881232-hostelaria-las-torres-0.jpg";s:5:"sizes";a:2:{s:9:"thumbnail";a:3:{s:4:"file";s:43:"1881232-hostelaria-las-torres-0-150x150.jpg";s:5:"width";s:3:"150";s:6:"height";s:3:"150";}s:6:"medium";a:3:{s:4:"file";s:43:"1881232-hostelaria-las-torres-0-300x225.jpg";s:5:"width";s:3:"300";s:6:"height";s:3:"225";}}s:10:"image_meta";a:10:{s:8:"aperture";s:1:"0";s:6:"credit";s:0:"";s:6:"camera";s:0:"";s:7:"caption";s:0:"";s:17:"created_timestamp";s:1:"0";s:9:"copyright";s:0:"";s:12:"focal_length";s:1:"0";s:3:"iso";s:1:"0";s:13:"shutter_speed";s:1:"0";s:5:"title";s:0:"";}}";]]></wp:meta_value>
+		</wp:postmeta>
+	</item>
+	
+	<item>
+		<title>Caminhando no gelo no Vale do Silêncio</title>
+		<link>http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0/</link>
+		<pubDate>Tue, 12 May 2009 02:24:45 +0000</pubDate>
+		<dc:creator><![CDATA[rodrigo]]></dc:creator>
+		
+		<category><![CDATA[Uncategorized]]></category>
+
+		<category domain="category" nicename="uncategorized"><![CDATA[Uncategorized]]></category>
+
+		<guid isPermaLink="false">http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg</guid>
+		<description></description>
+		<content:encoded><![CDATA[Caminhando no gelo no Vale do Silêncio]]></content:encoded>
+		<excerpt:encoded><![CDATA[Caminhando no gelo no Vale do Silêncio]]></excerpt:encoded>
+		<wp:post_id>46</wp:post_id>
+		<wp:post_date>2009-05-11 18:24:45</wp:post_date>
+		<wp:post_date_gmt>2009-05-12 02:24:45</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0</wp:post_name>
+		<wp:status>inherit</wp:status>
+		<wp:post_parent>36</wp:post_parent>
+		<wp:menu_order>2</wp:menu_order>
+		<wp:post_type>attachment</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+				<wp:attachment_url>http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg</wp:attachment_url>
+								<wp:postmeta>
+		<wp:meta_key>_wp_attached_file</wp:meta_key>
+		<wp:meta_value><![CDATA[1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_wp_attachment_metadata</wp:meta_key>
+		<wp:meta_value><![CDATA[a:6:{s:5:"width";s:3:"450";s:6:"height";s:3:"600";s:14:"hwstring_small";s:22:"height='96' width='72'";s:4:"file";s:52:"1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg";s:5:"sizes";a:2:{s:9:"thumbnail";a:3:{s:4:"file";s:60:"1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-150x150.jpg";s:5:"width";s:3:"150";s:6:"height";s:3:"150";}s:6:"medium";a:3:{s:4:"file";s:60:"1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-225x300.jpg";s:5:"width";s:3:"225";s:6:"height";s:3:"300";}}s:10:"image_meta";a:10:{s:8:"aperture";s:1:"0";s:6:"credit";s:0:"";s:6:"camera";s:0:"";s:7:"caption";s:0:"";s:17:"created_timestamp";s:1:"0";s:9:"copyright";s:0:"";s:12:"focal_length";s:1:"0";s:3:"iso";s:1:"0";s:13:"shutter_speed";s:1:"0";s:5:"title";s:0:"";}}]]></wp:meta_value>
+		</wp:postmeta>
+				<wp:postmeta>
+		<wp:meta_key>_wp_attachment_metadata</wp:meta_key>
+		<wp:meta_value><![CDATA[s:748:"a:6:{s:5:"width";s:3:"450";s:6:"height";s:3:"600";s:14:"hwstring_small";s:22:"height='96' width='72'";s:4:"file";s:60:"2008/01/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg";s:5:"sizes";a:2:{s:9:"thumbnail";a:3:{s:4:"file";s:60:"1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-150x150.jpg";s:5:"width";s:3:"150";s:6:"height";s:3:"150";}s:6:"medium";a:3:{s:4:"file";s:60:"1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-225x300.jpg";s:5:"width";s:3:"225";s:6:"height";s:3:"300";}}s:10:"image_meta";a:10:{s:8:"aperture";s:1:"0";s:6:"credit";s:0:"";s:6:"camera";s:0:"";s:7:"caption";s:0:"";s:17:"created_timestamp";s:1:"0";s:9:"copyright";s:0:"";s:12:"focal_length";s:1:"0";s:3:"iso";s:1:"0";s:13:"shutter_speed";s:1:"0";s:5:"title";s:0:"";}}";]]></wp:meta_value>
+		</wp:postmeta>
+	</item>
+		
+</rss>

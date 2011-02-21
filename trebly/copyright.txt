@@ -1,0 +1,2557 @@
+Tiki Copyright
+----------------
+
+The following list attempts to gather the copyright holders for Tiki
+as of version 6.0.
+
+Accounts listed below with commits have contributed source code to CVS or SVN. 
+Please note that even more people contributed on various other aspects (documentation, 
+bug reporting, testing, etc.)
+
+This is how we implement the Tiki Social Contract.
+http://tiki.org/Social+Contract
+
+List of members of the Community
+As of 2010-12-14, the community has:
+  * 494 members on SourceForge.net,
+  * 242 of those people who made at least one code commit
+
+This list is automatically generated and alphabetically sorted
+from subversion repository by the following script:
+  doc/devtools/release_copyright.php
+
+Counting the commits is not as trivial as it may sound. If your number of commits
+seems incorrect, it could be that the script is not detecting them all. This 
+has been reported especially for commits early on in the project. Nonetheless, 
+the list provides a general idea.
+
+====================================================================
+
+Nickname: abbasmousavi
+SF Role: Developer
+
+Nickname: ace_mtp
+Name: Vianney Lecroart
+SF Role: Developer
+
+Nickname: adren67
+Name: Cyril Chaboisseau
+First Commit: 2008-10-09
+Last Commit: 2009-02-03
+Number of Commits: 7
+SF Role: Developer
+
+Nickname: afahlvik
+Name: Arve Fahlvik
+First Commit: 2004-03-25
+Last Commit: 2004-04-21
+Number of Commits: 6
+SF Role: Developer
+
+Nickname: agorski
+Name: Adam Gorski
+SF Role: Developer
+
+Nickname: aigarius
+Name: Aigars Mahinovs
+SF Role: Developer
+
+Nickname: ajd24
+Name: Art
+
+Nickname: akshi
+Name: Akshi Gupta
+First Commit: 2009-12-11
+Last Commit: 2010-02-10
+Number of Commits: 2
+
+Nickname: alain_desilets
+Name: Alain Désilets
+First Commit: 2008-03-11
+Last Commit: 2010-08-20
+Number of Commits: 149
+SF Role: Developer
+
+Nickname: albrown
+Name: Al Brown
+SF Role: Developer
+
+Nickname: alenaernst
+Name: Alena Ernst
+First Commit: 2009-12-10
+Last Commit: 2009-12-10
+Number of Commits: 1
+
+Nickname: alercunha
+Name: Alexandre Cunha
+
+Nickname: alex
+Name: Alexander Meisel
+
+Nickname: alex_freire
+Name: Alexandre Freire
+SF Role: Developer
+
+Nickname: amette
+Name: Alexander Mette
+First Commit: 2005-05-19
+Last Commit: 2010-08-06
+Number of Commits: 114
+SF Role: Developer
+
+Nickname: amotl
+Name: Andreas Motl
+SF Role: Developer
+
+Nickname: andreas_bac
+Name: Andreas Bacouroff
+SF Role: Developer
+
+Nickname: anenga
+Name: Chris Kaleiki
+SF Role: Developer
+
+Nickname: aneuhaus
+Name: Andreas Neuhaus
+First Commit: 2003-12-03
+Last Commit: 2003-12-03
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: ang23
+Name: Lorinc Czegledi
+First Commit: 2004-08-11
+Last Commit: 2008-05-29
+Number of Commits: 23
+SF Role: Doc Writer
+
+Nickname: anope
+Name: Andrzej
+First Commit: 2004-07-13
+Last Commit: 2005-05-06
+Number of Commits: 5
+SF Role: Translator (I18N/L10N)
+
+Nickname: app_maker
+Name: apPmaKer
+SF Role: Translator (I18N/L10N)
+
+Nickname: aproulx
+Name: AndrÃ© Proulx
+First Commit: 2008-11-07
+Last Commit: 2010-12-07
+Number of Commits: 24
+
+Nickname: as6o
+Name: Aaron Siri
+SF Role: Developer
+
+Nickname: atooni
+First Commit: 2005-10-21
+Last Commit: 2005-10-21
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: aurel42
+Name: Marc
+First Commit: 2004-03-01
+Last Commit: 2004-03-15
+Number of Commits: 10
+SF Role: Developer
+
+Nickname: avdwheel
+Name: Andre
+SF Role: Developer
+
+Nickname: awcolley
+First Commit: 2003-06-17
+Last Commit: 2003-11-17
+Number of Commits: 27
+
+Nickname: awolfff
+Name: Andreas Wolff
+First Commit: 2007-01-21
+Last Commit: 2009-05-12
+Number of Commits: 8
+SF Role: Developer
+
+Nickname: axold
+Name: Aldo Bg
+First Commit: 2008-11-19
+Last Commit: 2009-10-10
+Number of Commits: 115
+
+Nickname: axonrg
+First Commit: 2003-05-15
+Last Commit: 2003-06-20
+Number of Commits: 7
+
+Nickname: az3rty
+SF Role: Translator (I18N/L10N)
+
+Nickname: baci
+Name: Chris Bacigalupo
+SF Role: Developer
+
+Nickname: batchman82
+Name: Markus Liljergren
+SF Role: Developer
+
+Nickname: bburgaud
+Name: Baptiste Burgaud
+First Commit: 2003-12-15
+Last Commit: 2003-12-17
+Number of Commits: 8
+SF Role: Developer
+
+Nickname: beastrider
+Name: Wayne Herbert
+SF Role: Developer
+
+Nickname: benoitg
+Name: Benoit GrÃ©goire
+SF Role: Developer
+
+Nickname: bergmann
+Name: Sebastian Bergmann
+First Commit: 2009-10-14
+Last Commit: 2009-10-14
+Number of Commits: 5
+
+Nickname: berryweb
+Name: Berry Parker
+First Commit: 2004-05-14
+Last Commit: 2004-10-25
+Number of Commits: 4
+SF Role: All-Hands Person
+
+Nickname: beuc
+Name: Sylvain BEUCLER
+First Commit: 2006-05-22
+Last Commit: 2008-08-22
+Number of Commits: 5
+
+Nickname: billsos
+First Commit: 2009-01-15
+Last Commit: 2009-01-18
+Number of Commits: 3
+SF Role: Developer
+
+Nickname: bitey
+Name: Bitey McBiterson
+First Commit: 2008-08-27
+Last Commit: 2008-10-26
+Number of Commits: 7
+
+Nickname: bligneri
+Name: Benoit des Ligneris
+First Commit: 2003-09-14
+Last Commit: 2003-09-26
+Number of Commits: 3
+SF Role: Developer
+
+Nickname: bludok
+Name: Bludok Systems Limited
+SF Role: Developer
+
+Nickname: bluestrain
+Name: Dave Thacker
+First Commit: 2006-11-19
+Last Commit: 2008-03-25
+Number of Commits: 8
+SF Role: Developer
+
+Nickname: bluybrink
+Name: Bluy Brink
+SF Role: Translator (I18N/L10N)
+
+Nickname: bobenrieth
+SF Role: Tester
+
+Nickname: bozze
+Name: Bruno Zuzze
+SF Role: Developer
+
+Nickname: brab
+Name: Alan Schmitt
+First Commit: 2004-02-10
+Last Commit: 2004-02-10
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: brian_moore
+Name: Brian Moore
+First Commit: 2008-04-16
+Last Commit: 2008-10-17
+Number of Commits: 6
+
+Nickname: broubrou
+Name: Vincent B
+First Commit: 2004-08-26
+Last Commit: 2004-08-26
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: btallman
+Name: Ben Tallman
+SF Role: Developer
+
+Nickname: btodoroff
+Name: Brian Todoroff
+First Commit: 2004-01-09
+Last Commit: 2004-01-31
+Number of Commits: 9
+SF Role: Developer
+
+Nickname: bubi
+Name: Burghard W.V. Britzke
+First Commit: 2010-05-19
+Last Commit: 2010-06-06
+Number of Commits: 7
+
+Nickname: bulldogtor
+Name: Nick Rapitosovich
+SF Role: Developer
+
+Nickname: c0ldfusi0n
+Name: Pier Luc Petitclerc
+SF Role: Developer
+
+Nickname: c_schmitz
+Name: Carsten Schmitz
+First Commit: 2008-11-06
+Last Commit: 2009-04-12
+Number of Commits: 3
+SF Role: Developer
+
+Nickname: campbe13
+Name: Patricia  M Campbell
+First Commit: 2009-02-19
+Last Commit: 2010-01-06
+Number of Commits: 17
+SF Role: Developer
+
+Nickname: carlom
+SF Role: Developer
+
+Nickname: carolg
+Name: Carol Gauthier
+SF Role: Developer
+
+Nickname: caustin_ats
+Name: Chris Austin
+First Commit: 2003-10-21
+Last Commit: 2003-11-05
+Number of Commits: 5
+SF Role: Developer
+
+Nickname: cbowman
+Name: Christopher
+SF Role: Developer
+
+Nickname: cdrwhite
+Name: JÃ¶rn Ott
+First Commit: 2010-05-10
+Last Commit: 2010-12-07
+Number of Commits: 43
+SF Role: Developer
+
+Nickname: cdx
+Name: Claudio Bustos
+First Commit: 2003-10-08
+Last Commit: 2003-11-11
+Number of Commits: 23
+SF Role: Developer
+
+Nickname: cfreeze
+Name: Chris Freeze
+SF Role: Developer
+
+Nickname: chandi
+Name: Chandi Bernier
+SF Role: Developer
+
+Nickname: changi67
+Name: Jean-FranÃ§ois  B.
+First Commit: 2009-04-23
+Last Commit: 2010-12-14
+Number of Commits: 453
+SF Role: Packager (.rpm, .deb etc)
+
+Nickname: chealer
+Name: Philippe Cloutier
+First Commit: 2003-09-27
+Last Commit: 2010-12-14
+Number of Commits: 903
+SF Role: Developer
+
+Nickname: chessy
+Name: Juanan Pereira
+SF Role: Developer
+
+Nickname: chibaguy
+Name: Gary Cunningham-Lee
+First Commit: 2006-02-04
+Last Commit: 2010-12-09
+Number of Commits: 1441
+SF Role: Web Designer
+
+Nickname: chris_holman
+Name: Chris Holman
+First Commit: 2003-10-08
+Last Commit: 2004-09-06
+Number of Commits: 39
+SF Role: Developer
+
+Nickname: chriscramer
+Name: Chris Cramer
+First Commit: 2008-03-04
+Last Commit: 2008-03-04
+Number of Commits: 5
+
+Nickname: chuck
+Name: Chuck Hagenbuch
+SF Role: Developer
+
+Nickname: claborne
+Name: Chris Claborne
+SF Role: Developer
+
+Nickname: colinmo
+Name: Colin Morris
+SF Role: Developer
+
+Nickname: coloradoweb
+First Commit: 2004-01-10
+Last Commit: 2004-06-29
+Number of Commits: 9
+
+Nickname: conner_bw
+Name: Dac Chartrand
+First Commit: 2009-05-03
+Last Commit: 2009-05-03
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: connermo
+Name: Conner Mo
+First Commit: 2003-07-30
+Last Commit: 2003-08-17
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: cyantree
+First Commit: 2004-08-10
+Last Commit: 2004-08-10
+Number of Commits: 1
+SF Role: Translator (I18N/L10N)
+
+Nickname: cyberdrek
+Name: Daniel Cedilotte
+SF Role: Developer
+
+Nickname: dabright
+Name: D.A. Bright
+First Commit: 2003-11-12
+Last Commit: 2004-03-25
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: damienmckenna
+First Commit: 2003-03-24
+Last Commit: 2003-04-09
+Number of Commits: 7
+
+Nickname: damosoft
+First Commit: 2003-12-07
+Last Commit: 2006-09-17
+Number of Commits: 401
+
+Nickname: daniam
+Name: Daniel Gauthier
+SF Role: Developer
+
+Nickname: darzee
+Name: C. Outteryck
+First Commit: 2007-01-23
+Last Commit: 2007-01-31
+Number of Commits: 5
+
+Nickname: dcengija
+First Commit: 2003-10-07
+Last Commit: 2004-02-04
+Number of Commits: 6
+
+Nickname: dclem
+Name: Daniel Clemente
+First Commit: 2010-11-22
+Last Commit: 2010-11-22
+Number of Commits: 1
+
+Nickname: deragon
+First Commit: 2004-08-27
+Last Commit: 2004-08-27
+Number of Commits: 1
+
+Nickname: derisavi
+Name: Salem Derisavi
+SF Role: Translator (I18N/L10N)
+
+Nickname: devilwct
+Name: Johnny Verstijlen
+
+Nickname: devniv
+Name: Nicolas Vilz
+SF Role: Developer
+
+Nickname: dexl_2000
+Name: Thunder_Dex
+First Commit: 2009-06-02
+Last Commit: 2009-11-09
+Number of Commits: 23
+
+Nickname: dgdaniels
+First Commit: 2003-08-10
+Last Commit: 2004-06-20
+Number of Commits: 152
+
+Nickname: dgreen34
+Name: Douglas Green
+
+Nickname: dheltzel
+First Commit: 2003-07-15
+Last Commit: 2003-12-29
+Number of Commits: 137
+
+Nickname: die
+Name: diE
+SF Role: Developer
+
+Nickname: dim_m
+Name: Dimitris Moraitis
+SF Role: Developer
+
+Nickname: dimaz-z
+Name: dimaz
+SF Role: Developer
+
+Nickname: djnz
+Name: OneOfMany
+First Commit: 2004-03-02
+Last Commit: 2004-04-01
+Number of Commits: 7
+SF Role: Developer
+
+Nickname: djoguet
+Name: Damien Joguet
+SF Role: Developer
+
+Nickname: djst
+Name: David (djst) Tenser
+
+Nickname: dmytro
+Name: Dmytro Kovalov
+SF Role: Translator (I18N/L10N)
+
+Nickname: docekal
+Name: Jan Lindåker
+First Commit: 2003-09-03
+Last Commit: 2003-11-22
+Number of Commits: 3
+SF Role: Developer
+
+Nickname: drieschner
+Name: Christoph Drieschner
+First Commit: 2003-07-01
+Last Commit: 2003-07-04
+Number of Commits: 5
+SF Role: Developer
+
+Nickname: duebel
+First Commit: 2008-11-15
+Last Commit: 2009-08-27
+Number of Commits: 5
+SF Role: Developer
+
+Nickname: eatac
+Name: Emin
+SF Role: Systems Programmer/Analyst
+
+Nickname: eesa
+Name: Abdul-Wahid Paterson
+SF Role: Developer
+
+Nickname: einstine
+Name: Thomas
+SF Role: Developer
+
+Nickname: elecnix
+Name: Nicolas Marchildon
+SF Role: Developer
+
+Nickname: emanuelquintana
+Name: emanuelq
+SF Role: Developer
+
+Nickname: emenems
+Name: Marcel van Groenigen
+SF Role: Developer
+
+Nickname: eoyslebo
+Name: Espen Oyslebo
+First Commit: 2010-01-17
+Last Commit: 2010-01-18
+Number of Commits: 2
+
+Nickname: epolidor
+Name: Eduardo Daniel Polidor
+First Commit: 2002-11-25
+Last Commit: 2003-12-20
+Number of Commits: 12
+SF Role: All-Hands Person
+
+Nickname: eraserhd
+Name: Jason M. Felice
+SF Role: Developer
+
+Nickname: ericisgood
+Name: EricIsGood
+First Commit: 2008-11-02
+Last Commit: 2008-11-02
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: eromneg
+First Commit: 2009-06-07
+Last Commit: 2010-12-12
+Number of Commits: 58
+
+Nickname: essele
+Name: Lee Essen
+SF Role: Developer
+
+Nickname: estheban
+Name: Etienne Lachance
+
+Nickname: etuate
+Name: edagentile
+First Commit: 2008-05-14
+Last Commit: 2008-09-22
+Number of Commits: 12
+SF Role: Developer
+
+Nickname: evanprodromou
+Name: Evan Prodromou
+First Commit: 2008-01-05
+Last Commit: 2008-01-06
+Number of Commits: 5
+SF Role: Developer
+
+Nickname: ewuerfel
+Name: Enrico Würfel
+SF Role: Developer
+
+Nickname: ezago
+Name: Eric Zago
+SF Role: Developer
+
+Nickname: fantoms
+Name: Ephes
+First Commit: 2009-04-30
+Last Commit: 2009-04-30
+Number of Commits: 1
+
+Nickname: fanzila
+Name: Pierre Doleans
+
+Nickname: fbergeron
+Name: Frederic Bergeron
+SF Role: Developer
+
+Nickname: fernao_lopes
+Name: Fernão Lopes
+SF Role: Developer
+
+Nickname: fhcorrea
+Name: Fernando Henrique
+First Commit: 2004-06-15
+Last Commit: 2004-06-15
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: filmil
+Name: Filip Miletic
+First Commit: 2004-03-31
+Last Commit: 2004-05-17
+Number of Commits: 9
+SF Role: Developer
+
+Nickname: floh1111
+Name: Floh1111
+First Commit: 2009-06-11
+Last Commit: 2009-07-31
+Number of Commits: 19
+SF Role: Developer
+
+Nickname: florianlink
+Name: Florian Link
+First Commit: 2004-02-16
+Last Commit: 2004-03-03
+Number of Commits: 4
+
+Nickname: fmathias
+Name: Fabio Rampazzo Mathias
+First Commit: 2006-09-07
+Last Commit: 2006-09-07
+Number of Commits: 1
+
+Nickname: fmjrey
+Name: FranÃ§ois Rey
+SF Role: Developer
+
+Nickname: fmk_ca
+Name: Frank M. Kromann
+First Commit: 2007-01-10
+Last Commit: 2007-01-10
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: fr_rodo
+Name: rodo
+First Commit: 2006-11-28
+Last Commit: 2008-06-15
+Number of Commits: 29
+SF Role: Developer
+
+Nickname: franck
+Name: Franck Martin
+First Commit: 2003-08-06
+Last Commit: 2008-11-13
+Number of Commits: 96
+SF Role: Developer
+
+Nickname: frank_p
+Name: FrankP
+First Commit: 2007-09-14
+Last Commit: 2010-07-12
+Number of Commits: 32
+SF Role: Developer
+
+Nickname: freephile
+Name: Greg Rundlett
+SF Role: Developer
+
+Nickname: freevic
+Name: alain vicet
+SF Role: Developer
+
+Nickname: fukuchi
+Name: Kentaro Fukuchi
+First Commit: 2003-08-10
+Last Commit: 2003-09-23
+Number of Commits: 7
+SF Role: Developer
+
+Nickname: fumphco
+Name: John Bair
+First Commit: 2006-09-27
+Last Commit: 2006-10-28
+Number of Commits: 6
+SF Role: Developer
+
+Nickname: garem
+Name: Alain Gaeremynck
+SF Role: Developer
+
+Nickname: garfield-sf
+Name: Garfield
+
+Nickname: garygriffin
+First Commit: 2007-01-20
+Last Commit: 2007-02-06
+Number of Commits: 2
+
+Nickname: gene203
+Name: Gene
+SF Role: Translator (I18N/L10N)
+
+Nickname: gertdewit
+Name: Gert Dewit
+SF Role: Developer
+
+Nickname: gezzzan
+First Commit: 2009-05-02
+Last Commit: 2009-05-10
+Number of Commits: 4
+SF Role: Translator (I18N/L10N)
+
+Nickname: ggeller
+Name: George Geller
+First Commit: 2003-12-07
+Last Commit: 2005-11-30
+Number of Commits: 161
+SF Role: Developer
+
+Nickname: giak
+Name: Giacomel
+SF Role: Developer
+
+Nickname: gillesm
+Name: Gilles Maire
+First Commit: 2003-11-04
+Last Commit: 2008-11-30
+Number of Commits: 100
+SF Role: Developer
+
+Nickname: gilshwartz
+Name: Gil Shwartz
+First Commit: 2002-12-31
+Last Commit: 2003-07-17
+Number of Commits: 49
+SF Role: Developer
+
+Nickname: gimpster
+First Commit: 2003-08-03
+Last Commit: 2003-08-06
+Number of Commits: 6
+
+Nickname: giottomx
+Name: Giotto
+First Commit: 2004-07-15
+Last Commit: 2004-08-24
+Number of Commits: 15
+SF Role: Developer
+
+Nickname: gmuslera
+Name: Gustavo Muslera
+First Commit: 2003-10-22
+Last Commit: 2004-10-03
+Number of Commits: 33
+SF Role: Analysis / Design
+
+Nickname: gongo
+Name: Dimitri Smits
+First Commit: 2003-11-09
+Last Commit: 2004-02-03
+Number of Commits: 51
+SF Role: Developer
+
+Nickname: gravesweeper
+Name: spider
+First Commit: 2004-01-06
+Last Commit: 2004-01-07
+Number of Commits: 5
+SF Role: Developer
+
+Nickname: gregmartin
+Name: Greg Martin
+First Commit: 2006-12-19
+Last Commit: 2010-10-15
+Number of Commits: 8
+SF Role: Developer
+
+Nickname: grom_3
+Name: Cameron Zemek
+SF Role: Developer
+
+Nickname: gspira
+Name: Greg Spira
+SF Role: Developer
+
+Nickname: guideweb
+Name: Samuel Denis D'Ortun
+First Commit: 2003-08-24
+Last Commit: 2003-08-25
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: guidoscherp
+Name: Guido Scherp
+First Commit: 2007-08-10
+Last Commit: 2007-08-10
+Number of Commits: 4
+SF Role: Developer
+
+Nickname: gunnarre
+Name: Gunnar René Øie
+First Commit: 2004-04-22
+Last Commit: 2004-12-07
+Number of Commits: 7
+SF Role: Developer
+
+Nickname: gunner98
+Name: Sean
+SF Role: Developer
+
+Nickname: guyfr
+Name: Francois Guy
+SF Role: Developer
+
+Nickname: halon
+First Commit: 2004-01-19
+Last Commit: 2004-02-14
+Number of Commits: 27
+
+Nickname: hangerman
+Name: Marc Kalberer
+First Commit: 2006-07-31
+Last Commit: 2007-02-01
+Number of Commits: 27
+SF Role: Developer
+
+Nickname: hans33
+Name: Hans van Ee
+SF Role: Developer
+
+Nickname: hartsa1
+Name: Hartsa1
+
+Nickname: hina
+Name: hinasita
+SF Role: Developer
+
+Nickname: homunq
+Name: Homunq
+SF Role: Developer
+
+Nickname: hsaelens
+Name: Hans Saelens
+First Commit: 2004-01-28
+Last Commit: 2006-12-13
+Number of Commits: 4
+SF Role: Developer
+
+Nickname: hubert_doublev3
+Name: Hubert Sirois
+SF Role: Developer
+
+Nickname: hybridruide
+Name: Peter.Lucius
+SF Role: Translator (I18N/L10N)
+
+Nickname: hyper
+Name: Bobby Joe
+SF Role: Developer
+
+Nickname: ibtubed
+Name: Dennis Cooley
+SF Role: Developer
+
+Nickname: ice8878
+Name: Conrad Rentsch
+First Commit: 2006-03-03
+Last Commit: 2006-03-03
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: idou
+Name: Idou
+First Commit: 2009-12-22
+Last Commit: 2010-06-07
+Number of Commits: 19
+
+Nickname: ikky
+
+Nickname: illori
+First Commit: 2006-09-12
+Last Commit: 2008-03-24
+Number of Commits: 8
+SF Role: Tester
+
+Nickname: ingesol
+Name: Inge Solvoll
+First Commit: 2003-05-28
+Last Commit: 2003-10-05
+Number of Commits: 6
+SF Role: Developer
+
+Nickname: ipso
+Name: Mike Benoit
+SF Role: Developer
+
+Nickname: isotopp
+Name: Kristian KÃ¶hntopp
+First Commit: 2003-07-25
+Last Commit: 2003-07-25
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: isotrol
+Name: Elvira
+SF Role: Developer
+
+Nickname: jaan1024
+Name: Ivan Muravyev
+
+Nickname: jacmoe2
+Name: jacmoe
+First Commit: 2009-12-12
+Last Commit: 2010-06-11
+Number of Commits: 17
+
+Nickname: jahlewis
+Name: John Lewis
+SF Role: Doc Writer
+
+Nickname: jamk
+Name: Djamel Kadi
+SF Role: Developer
+
+Nickname: janptak
+Name: jan ptak
+SF Role: Developer
+
+Nickname: jasondiceman
+Name: Jason Diceman
+SF Role: Developer
+
+Nickname: javaguru1729
+Name: Chandra
+SF Role: Developer
+
+Nickname: jaw959
+First Commit: 2003-02-15
+Last Commit: 2003-02-16
+Number of Commits: 9
+
+Nickname: jaycampbell
+Name: Jay Campbell
+SF Role: Developer
+
+Nickname: jburleyebuilt
+Name: Josh Burley
+First Commit: 2004-12-02
+Last Commit: 2005-01-05
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: jcwinnie
+Name: Jonathan Smith
+SF Role: All-Hands Person
+
+Nickname: jcyrisse
+Name: Jana Sullinger
+First Commit: 2010-11-22
+Last Commit: 2010-11-22
+Number of Commits: 1
+
+Nickname: jdrexler
+Name: Josef Drexler
+First Commit: 2006-02-01
+Last Commit: 2006-02-04
+Number of Commits: 4
+SF Role: Developer
+
+Nickname: jeanhabib
+Name: habib
+SF Role: Developer
+
+Nickname: jenolan1701
+Name: Larry Lewis
+First Commit: 2003-09-02
+Last Commit: 2003-09-06
+Number of Commits: 3
+SF Role: Developer
+
+Nickname: jeremy_lee
+Name: Jeremy Lee
+First Commit: 2009-02-16
+Last Commit: 2009-02-17
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: jfnoubel
+Name: Jean-François Noubel
+
+Nickname: jjolly
+Name: John Jolly
+First Commit: 2004-10-13
+Last Commit: 2004-10-13
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: jjongsma
+Name: Jeremy Jongsma
+SF Role: Developer
+
+Nickname: jkring
+Name: Jim Kring
+First Commit: 2003-10-07
+Last Commit: 2003-10-07
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: jlgordo
+Name: José Luis Gordo Romero
+SF Role: Developer
+
+Nickname: jm0rin
+Name: Joshua Morin
+SF Role: Developer
+
+Nickname: jmaspons
+Name: Joan Maspons
+First Commit: 2006-06-11
+Last Commit: 2006-10-07
+Number of Commits: 7
+
+Nickname: jmjuzan
+Name: Juzan Jean-Michel
+
+Nickname: joeyhartmann
+Name: Johann-Peter Hartmann
+First Commit: 2005-07-13
+Last Commit: 2005-07-13
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: johan_mx
+Name: Johan Hovold
+SF Role: Developer
+
+Nickname: johannesmoser
+Name: Johannes Moser
+First Commit: 2008-11-20
+Last Commit: 2008-11-20
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: jonnybradley
+Name: jonny Bradley
+First Commit: 2007-08-15
+Last Commit: 2010-12-13
+Number of Commits: 2794
+SF Role: Developer
+
+Nickname: jorgercosta
+First Commit: 2004-04-14
+Last Commit: 2004-04-19
+Number of Commits: 13
+
+Nickname: josefgc
+First Commit: 2006-11-20
+Last Commit: 2006-11-20
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: jpgimenez
+Name: Juan Pablo Giménez
+First Commit: 2003-08-04
+Last Commit: 2003-08-04
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: jpowys
+Name: Jason powers
+SF Role: Developer
+
+Nickname: jreyesg
+Name: Javier Reyes
+First Commit: 2006-01-14
+Last Commit: 2007-03-03
+Number of Commits: 21
+
+Nickname: jsocol
+Name: James Socol
+First Commit: 2010-01-22
+Last Commit: 2010-01-22
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: jtpuk
+Name: Suzanne Jones
+SF Role: Developer
+
+Nickname: jujusl
+Name: It is just me
+SF Role: Developer
+
+Nickname: jwigdahl
+Name: James Wigdahl
+First Commit: 2003-08-20
+Last Commit: 2003-10-29
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: jyesbeat
+Name: Jyes Beat
+
+Nickname: jyhem
+Name: Jean-Marc Libs
+First Commit: 2006-12-11
+Last Commit: 2010-12-13
+Number of Commits: 500
+SF Role: Developer
+
+Nickname: k2s
+Name: Martin Minka
+First Commit: 2005-12-18
+Last Commit: 2005-12-20
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: kalendin
+Name: Till
+SF Role: Developer
+
+Nickname: karneevor
+First Commit: 2006-02-16
+Last Commit: 2006-02-22
+Number of Commits: 3
+
+Nickname: kerrnel22
+Name: Mike Kerr
+First Commit: 2007-08-30
+Last Commit: 2009-09-12
+Number of Commits: 71
+SF Role: Developer
+
+Nickname: kfink
+Name: Kimberly Fink
+
+Nickname: killianebel
+Name: Killian EBEL
+First Commit: 2010-12-07
+Last Commit: 2010-12-10
+Number of Commits: 22
+
+Nickname: kissaki
+Name: Kissaki
+First Commit: 2009-07-26
+Last Commit: 2009-12-21
+Number of Commits: 44
+
+Nickname: kodewulf
+Name: KodeWulf
+SF Role: Developer
+
+Nickname: kokohuyb
+Name: koko
+First Commit: 2008-03-25
+Last Commit: 2008-04-06
+Number of Commits: 9
+
+Nickname: koobla
+Name: Simon Vogl
+First Commit: 2004-02-08
+Last Commit: 2004-02-20
+Number of Commits: 4
+SF Role: Developer
+
+Nickname: krose
+Name: Kent Primrose
+SF Role: Developer
+
+Nickname: ksumacgyver
+Name: Scott Harmon
+SF Role: Developer
+
+Nickname: kyori
+Name: Kyori Yaganagi
+SF Role: Developer
+
+Nickname: lack
+Name: Jim Ramsay
+SF Role: Developer
+
+Nickname: lady_6thofau
+Name: lady
+
+Nickname: laetzer
+First Commit: 2004-01-09
+Last Commit: 2004-01-10
+Number of Commits: 6
+SF Role: Developer
+
+Nickname: lauraxthomson
+Name: Laura Thomson
+
+Nickname: lechuckdapirate
+Name: Joan Vilariño
+First Commit: 2003-05-02
+Last Commit: 2003-05-12
+Number of Commits: 15
+SF Role: Developer
+
+Nickname: leehongfay
+Name: Vincent Lee
+SF Role: Developer
+
+Nickname: leyan
+Name: Yan Levasseur
+First Commit: 2008-03-01
+Last Commit: 2008-05-18
+Number of Commits: 8
+SF Role: Developer
+
+Nickname: lfagundes
+Name: Luis Fagundes
+First Commit: 2004-02-23
+Last Commit: 2006-11-30
+Number of Commits: 159
+SF Role: Developer
+
+Nickname: lihaowei2008
+Name: Nathanael
+First Commit: 2007-09-09
+Last Commit: 2007-09-11
+Number of Commits: 2
+SF Role: Support Technician
+
+Nickname: limako
+Name: Steve Brewer
+SF Role: Developer
+
+Nickname: limited1
+Name: Lee Wilson (aka stella12)
+SF Role: Developer
+
+Nickname: lindonb
+First Commit: 2009-05-10
+Last Commit: 2010-12-11
+Number of Commits: 299
+
+Nickname: llunax
+Name: Lluna
+SF Role: Developer
+
+Nickname: lmoss
+Name: Laurent Moss
+First Commit: 2005-12-28
+Last Commit: 2006-11-29
+Number of Commits: 3
+
+Nickname: lnewby
+Name: Lew Newby
+SF Role: Developer
+
+Nickname: lonelyp
+Name: Wells Wang
+SF Role: Developer
+
+Nickname: lorfds
+Name: Jon
+
+Nickname: louis-martin
+Name: Louis-Martin Richard
+
+Nickname: lphuberdeau
+Name: Louis-Philippe Huberdeau
+First Commit: 2004-04-10
+Last Commit: 2010-12-14
+Number of Commits: 1840
+SF Role: Developer
+
+Nickname: lrargerich
+Name: Luis Argerich
+First Commit: 2002-10-08
+Last Commit: 2003-11-28
+Number of Commits: 399
+SF Role: All-Hands Person
+
+Nickname: lsces
+Name: Lester Caine
+SF Role: Developer
+
+Nickname: lucamarletta
+Name: Luca Marletta
+SF Role: Developer
+
+Nickname: lucas
+Name: Lucas Eduardo
+
+Nickname: lucasemanoel
+Name: Lucas Emanoel
+
+Nickname: luciash
+Name: luciash d' being
+First Commit: 2003-08-05
+Last Commit: 2010-12-10
+Number of Commits: 943
+SF Role: Developer
+
+Nickname: lueders
+Name: Ralf E. Lueders
+First Commit: 2003-08-18
+Last Commit: 2005-03-13
+Number of Commits: 24
+SF Role: Developer
+
+Nickname: lukian-dev
+Name: Lukian Tabandjov
+SF Role: Developer
+
+Nickname: m_akat
+Name: loxs
+SF Role: Translator (I18N/L10N)
+
+Nickname: m_stef
+Name: stef
+First Commit: 2008-07-09
+Last Commit: 2010-01-10
+Number of Commits: 23
+
+Nickname: magius
+SF Role: Developer
+
+Nickname: makenai
+Name: Pawel Szymczykowski
+SF Role: Developer
+
+Nickname: mangapower
+Name: Ben Palacios
+First Commit: 2009-04-16
+Last Commit: 2009-10-08
+Number of Commits: 84
+
+Nickname: marc-etienne
+Name: Marc-Etienne M.LÃ©veillÃ©
+First Commit: 2009-06-11
+Last Commit: 2009-06-11
+Number of Commits: 1
+
+Nickname: marcius
+First Commit: 2003-11-25
+Last Commit: 2003-11-29
+Number of Commits: 4
+SF Role: Developer
+
+Nickname: marclaporte
+Name: Marc Laporte
+First Commit: 2003-11-28
+Last Commit: 2010-12-12
+Number of Commits: 1048
+SF Role: Project Manager
+
+Nickname: marcmont
+Name: SnowCrash
+First Commit: 2006-04-18
+Last Commit: 2006-05-16
+Number of Commits: 8
+
+Nickname: marcoaasilva
+Name: Marco AurÃ©lio Silva
+First Commit: 2008-06-18
+Last Commit: 2009-08-15
+Number of Commits: 13
+SF Role: Developer
+
+Nickname: marcop13
+Name: marco parronchi
+SF Role: Developer
+
+Nickname: marianat
+Name: Mariana Tome
+SF Role: Developer
+
+Nickname: markajaroski
+Name: Mark A. Jaroski
+SF Role: Developer
+
+Nickname: marklubin
+Name: Mark Lubin
+SF Role: Developer
+
+Nickname: markusvk
+Name: Markus Gunske von Koelln
+First Commit: 2003-11-12
+Last Commit: 2003-12-03
+Number of Commits: 7
+SF Role: Developer
+
+Nickname: marp2901
+Name: Philippe Marcoux
+SF Role: Developer
+
+Nickname: martincomeau
+Name: Martin Comeau
+First Commit: 2009-06-14
+Last Commit: 2009-06-16
+Number of Commits: 3
+SF Role: Advisor/Mentor/Consultant
+
+Nickname: martinmanyhats
+SF Role: All-Hands Person
+
+Nickname: marylly
+Name: **Mya**
+SF Role: Developer
+
+Nickname: mashmorgan
+Name: Peter "mash" Morgan
+First Commit: 2005-08-18
+Last Commit: 2005-10-31
+Number of Commits: 7
+SF Role: Developer
+
+Nickname: massimoi
+Name: Massimo Infunti
+SF Role: Developer
+
+Nickname: mastre
+SF Role: Developer
+
+Nickname: mattlangley1
+Name: Matt Langley
+SF Role: Developer
+
+Nickname: matwho
+Name: Matthew Bickerton
+First Commit: 2008-08-25
+Last Commit: 2009-05-07
+Number of Commits: 30
+
+Nickname: mbrackeva
+Name: Mario Brackeva
+First Commit: 2008-06-22
+Last Commit: 2008-06-22
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: mcfarland
+First Commit: 2006-02-04
+Last Commit: 2007-07-20
+Number of Commits: 5
+SF Role: Developer
+
+Nickname: mcgucken
+Name: Dr. Elliot McGucken
+SF Role: Developer
+
+Nickname: mchurch
+Name: Mike Churchward
+
+Nickname: melmut
+Name: Yannick Majoros
+First Commit: 2004-02-11
+Last Commit: 2004-04-07
+Number of Commits: 6
+SF Role: Developer
+
+Nickname: mgfeller
+Name: Michael Gfeller
+SF Role: Developer
+
+Nickname: mhausi
+Name: Hausi
+First Commit: 2005-02-08
+Last Commit: 2005-02-25
+Number of Commits: 4
+SF Role: Developer
+
+Nickname: mhryciuk
+Name: Michal Hryciuk
+SF Role: Translator (I18N/L10N)
+
+Nickname: michael_davey
+Name: Michael Davey
+First Commit: 2005-01-31
+Last Commit: 2005-10-11
+Number of Commits: 144
+SF Role: Developer
+
+Nickname: mikelcu
+Name: Mike Culbertson
+First Commit: 2004-02-12
+Last Commit: 2004-02-12
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: mikenielsen
+Name: Mike Nielsen
+SF Role: Developer
+
+Nickname: mikespub
+Name: Mike's Pub
+First Commit: 2003-09-29
+Last Commit: 2004-09-23
+Number of Commits: 16
+
+Nickname: mikewalsh
+Name: MW
+SF Role: Tester
+
+Nickname: millette
+Name: Robin Millette
+SF Role: Developer
+
+Nickname: minger0
+Name: Gergely
+First Commit: 2010-04-30
+Last Commit: 2010-11-30
+Number of Commits: 27
+SF Role: Developer
+
+Nickname: mitchmurphy
+Name: Mitch Murphy
+SF Role: Developer
+
+Nickname: mixolyde
+Name: Brian Williams
+SF Role: Developer
+
+Nickname: mlinton
+Name: Michael Linton
+First Commit: 2004-11-26
+Last Commit: 2005-04-13
+Number of Commits: 14
+SF Role: Developer
+
+Nickname: mlowerison
+Name: Michael Lowerison
+
+Nickname: mlpvolt
+First Commit: 2008-08-19
+Last Commit: 2008-08-19
+Number of Commits: 2
+SF Role: Doc Writer
+
+Nickname: monthorin
+Name: Loïc Monthorin
+SF Role: Developer
+
+Nickname: moresun
+SF Role: Developer
+
+Nickname: morgamic
+Name: Michael Morgan
+SF Role: Developer
+
+Nickname: mortenson
+Name: Leif Mortenson
+SF Role: Developer
+
+Nickname: mose
+First Commit: 2003-06-12
+Last Commit: 2008-03-22
+Number of Commits: 1954
+SF Role: Project Manager
+
+Nickname: mrbuiu
+Name: Renato da Silva Pereira
+SF Role: Translator (I18N/L10N)
+
+Nickname: mrjc
+Name: Martin RJ. Cleaver
+First Commit: 2009-05-11
+Last Commit: 2009-05-19
+Number of Commits: 29
+
+Nickname: muscote
+Name: Torsten Fabricius
+
+Nickname: musus
+First Commit: 2003-12-18
+Last Commit: 2004-02-25
+Number of Commits: 108
+
+Nickname: mwexler
+Name: Michael Wexler
+SF Role: Developer
+
+Nickname: mystic_ca
+Name: Tom A.
+First Commit: 2008-03-02
+Last Commit: 2008-03-02
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: nagendra016
+Name: Nagendra Koilada
+First Commit: 2009-05-05
+Last Commit: 2009-11-03
+Number of Commits: 51
+
+Nickname: najb
+Name: Jan B
+SF Role: Developer
+
+Nickname: nalsar
+Name: prashant
+SF Role: Developer
+
+Nickname: nanoia
+SF Role: Developer
+
+Nickname: natig
+Name: Natalia Golmar
+SF Role: Developer
+
+Nickname: natster
+Name: Nathan Waterhouse
+SF Role: Developer
+
+Nickname: neidhart
+Name: Dietmar Neidhart
+SF Role: Developer
+
+Nickname: nhuffschmid
+Name: Norbert Huffschmid
+First Commit: 2003-06-23
+Last Commit: 2003-12-03
+Number of Commits: 28
+SF Role: Developer
+
+Nickname: niclone
+Name: Nicolas Dimitrijevic
+First Commit: 2006-07-24
+Last Commit: 2010-09-02
+Number of Commits: 415
+SF Role: Developer
+
+Nickname: nikchankov
+Name: Nik Chankov
+First Commit: 2006-02-06
+Last Commit: 2006-02-08
+Number of Commits: 3
+
+Nickname: nkoth
+Name: Nelson
+First Commit: 2007-05-17
+Last Commit: 2010-11-18
+Number of Commits: 806
+SF Role: Developer
+
+Nickname: normandaoust
+Name: Norm
+
+Nickname: notgod
+Name: Brian Nelson
+SF Role: Developer
+
+Nickname: notix
+SF Role: Developer
+
+Nickname: ntavares
+Name: Nuno M. C. Tavares
+First Commit: 2007-11-08
+Last Commit: 2007-11-26
+Number of Commits: 16
+SF Role: Developer
+
+Nickname: nyloth
+Name: Patrice W.
+First Commit: 2006-11-09
+Last Commit: 2010-12-10
+Number of Commits: 1761
+SF Role: Developer
+
+Nickname: obnoxxx
+Name: Michael Adam
+First Commit: 2008-11-05
+Last Commit: 2009-09-26
+Number of Commits: 16
+SF Role: Developer
+
+Nickname: oc73
+Name: Omniscient Colossus
+
+Nickname: ohertel
+Name: Oliver Hertel
+First Commit: 2003-03-16
+Last Commit: 2010-08-29
+Number of Commits: 384
+SF Role: Developer
+
+Nickname: oliland
+Name: Oli Kingshott
+SF Role: Developer
+
+Nickname: oliverscheck
+Name: Oliver Scheck
+SF Role: Developer
+
+Nickname: omstefanov
+Name: Olaf-Michael Stefanov
+First Commit: 2009-07-04
+Last Commit: 2009-07-04
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: opn-tech
+Name: David Bovill
+SF Role: Developer
+
+Nickname: orionrobots
+Name: Danny Staple
+SF Role: Developer
+
+Nickname: otalunak
+Name: Ota Lunak
+SF Role: Developer
+
+Nickname: panathos
+Name: Panathos
+SF Role: Translator (I18N/L10N)
+
+Nickname: papercrane
+Name: Justin Patrin
+First Commit: 2005-05-18
+Last Commit: 2005-06-27
+Number of Commits: 58
+SF Role: Developer
+
+Nickname: parkercroft
+Name: Damian Parker-Croft
+First Commit: 2007-09-02
+Last Commit: 2007-09-02
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: pascalstjean
+Name: Pascal St-Jean
+First Commit: 2009-11-05
+Last Commit: 2010-09-07
+Number of Commits: 110
+SF Role: All-Hands Person
+
+Nickname: patrickallard
+Name: Patrick Allard
+First Commit: 2009-01-26
+Last Commit: 2009-04-22
+Number of Commits: 3
+SF Role: Graphic/Other Designer
+
+Nickname: patvdv
+First Commit: 2003-06-09
+Last Commit: 2004-05-13
+Number of Commits: 4
+
+Nickname: pemen
+SF Role: Developer
+
+Nickname: penny336
+Name: Alex
+SF Role: Developer
+
+Nickname: peoman
+Name: Cedric Fontaine
+SF Role: Developer
+
+Nickname: pgewissen
+Name: Paul
+SF Role: Developer
+
+Nickname: philbaret
+Name: Philippe Baret
+SF Role: Developer
+
+Nickname: philippeback
+Name: Philippe Back
+First Commit: 2008-09-30
+Last Commit: 2010-12-07
+Number of Commits: 7
+
+Nickname: philwhipps
+Name: Phil
+First Commit: 2006-05-22
+Last Commit: 2006-05-22
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: phunkymunky
+SF Role: Developer
+
+Nickname: pingus
+Name: Giancarlo Pinerolo
+First Commit: 2009-03-27
+Last Commit: 2010-01-23
+Number of Commits: 48
+SF Role: Developer
+
+Nickname: pippone
+First Commit: 2003-05-02
+Last Commit: 2003-05-12
+Number of Commits: 2
+
+Nickname: pistoljitsu
+Name: Pete Thompson
+SF Role: Developer
+
+Nickname: pjollans
+Name: Phil Jollans
+First Commit: 2009-02-08
+Last Commit: 2009-02-08
+Number of Commits: 1
+
+Nickname: pkdille
+First Commit: 2007-03-14
+Last Commit: 2010-12-14
+Number of Commits: 1383
+SF Role: Developer
+
+Nickname: plillevold
+Name: Peter Lillevold
+SF Role: Translator (I18N/L10N)
+
+Nickname: plungerman
+Name: Stephen Kurkowski
+SF Role: Support Manager
+
+Nickname: pmichelazzo
+Name: Paulino Michelazzo
+First Commit: 2004-03-23
+Last Commit: 2004-03-23
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: pmorenogarcia
+Name: Pablo Moreno GarcÃ­a
+
+Nickname: pnimish
+Name: Nimish Pachapurkar
+SF Role: Developer
+
+Nickname: popovich
+Name: Peter Popovich
+First Commit: 2004-06-10
+Last Commit: 2004-06-10
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: porsh
+Name: p0r$h
+First Commit: 2008-12-24
+Last Commit: 2008-12-24
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: ppttrr
+Name: Pete Jalajas
+
+Nickname: pratesi
+Name: Marco Pratesi
+SF Role: Developer
+
+Nickname: prezkennedy
+Name: Matthew Kennedy
+SF Role: Developer
+
+Nickname: princessxine
+First Commit: 2008-08-01
+Last Commit: 2008-08-17
+Number of Commits: 9
+
+Nickname: ptalindstrom
+Name: Peter
+SF Role: Developer
+
+Nickname: ptydotcc
+Name: Tom Salter
+SF Role: Developer
+
+Nickname: pyrotknix
+Name: Aaron Holmes
+First Commit: 2003-05-08
+Last Commit: 2003-05-08
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: qoumaq
+Name: Martin KosmÃ¡k
+First Commit: 2010-11-19
+Last Commit: 2010-11-26
+Number of Commits: 3
+
+Nickname: r1_r1
+Name: Erwan
+SF Role: Developer
+
+Nickname: rabiddog
+Name: Everard Brown
+First Commit: 2005-09-18
+Last Commit: 2005-09-19
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: ragnvald
+Name: Ragnvald Larsen
+SF Role: Developer
+
+Nickname: ramiro_v
+Name: Ramiro Vera
+SF Role: Developer
+
+Nickname: raspencer
+Name: Reid Spencer
+SF Role: Developer
+
+Nickname: razorwyre
+Name: Matt E. Patterson
+SF Role: Developer
+
+Nickname: rbschmidt
+Name: Rodrigo B. Schmidt
+SF Role: Developer
+
+Nickname: rcogley
+Name: Rick Cogley
+SF Role: Doc Writer
+
+Nickname: redflo
+Name: Florian Gleixner
+First Commit: 2003-03-04
+Last Commit: 2010-01-14
+Number of Commits: 339
+SF Role: Developer
+
+Nickname: reiknir
+Name: Olafur Gunnlaugsson
+First Commit: 2010-04-03
+Last Commit: 2010-05-24
+Number of Commits: 5
+
+Nickname: renoirb
+Name: Renoir Boulanger
+SF Role: Developer
+
+Nickname: rhwinter
+Name: Roberto H. Winter
+SF Role: Developer
+
+Nickname: richardsnow
+Name: Richard Snow
+
+Nickname: richtl
+Name: Richard Tango-Lowy
+SF Role: Developer
+
+Nickname: ricks99
+Name: Rick Sapir
+First Commit: 2007-07-19
+Last Commit: 2010-12-09
+Number of Commits: 356
+SF Role: Developer
+
+Nickname: ripero
+Name: JosÃ© MarÃ­a EscartÃ­n
+First Commit: 2010-10-02
+Last Commit: 2010-10-02
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: rischconsulting
+Name: mrisch
+First Commit: 2006-06-24
+Last Commit: 2010-08-22
+Number of Commits: 28
+SF Role: Developer
+
+Nickname: rleibman
+Name: Roberto Leibman
+First Commit: 2005-05-03
+Last Commit: 2005-05-03
+Number of Commits: 3
+SF Role: Developer
+
+Nickname: rlopezs
+First Commit: 2009-02-15
+Last Commit: 2009-09-16
+Number of Commits: 29
+SF Role: Developer
+
+Nickname: rlpowell
+Name: Robin Powell
+First Commit: 2003-09-17
+Last Commit: 2010-08-01
+Number of Commits: 194
+SF Role: Developer
+
+Nickname: robertplummer
+Name: Robert Plummer
+First Commit: 2010-06-30
+Last Commit: 2010-11-18
+Number of Commits: 53
+
+Nickname: robferguson
+Name: Rob Ferguson
+First Commit: 2008-08-19
+Last Commit: 2009-10-02
+Number of Commits: 10
+
+Nickname: rockpaper
+Name: Chris Campbell
+SF Role: Developer
+
+Nickname: ronchon
+Name: Patrice ALBARET
+SF Role: Developer
+
+Nickname: rook1666
+Name: Simon Grabher
+First Commit: 2008-11-05
+Last Commit: 2008-11-21
+Number of Commits: 11
+
+Nickname: rossta
+Name: Ross Smith
+First Commit: 2002-12-03
+Last Commit: 2004-03-16
+Number of Commits: 132
+SF Role: Developer
+
+Nickname: roysinn
+Name: Roy Sinn
+First Commit: 2004-08-13
+Last Commit: 2004-08-13
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: rpgoldman
+Name: Robert P. Goldman
+SF Role: Developer
+
+Nickname: rubaiyat
+Name: James Morgan
+SF Role: Doc Writer
+
+Nickname: runix2
+Name: martin sarsale
+SF Role: Developer
+
+Nickname: russwilde
+First Commit: 2004-05-13
+Last Commit: 2004-05-13
+Number of Commits: 2
+
+Nickname: rv540
+Name: Hervé Schoenenberger
+First Commit: 2005-07-20
+Last Commit: 2005-09-01
+Number of Commits: 4
+SF Role: Developer
+
+Nickname: sabdelma
+SF Role: Developer
+
+Nickname: sacados1
+Name: DEUTSCHER Matthieu
+First Commit: 2010-12-10
+Last Commit: 2010-12-10
+Number of Commits: 1
+
+Nickname: sacra
+Name: Paulo Sacramento
+First Commit: 2009-05-21
+Last Commit: 2009-05-27
+Number of Commits: 3
+
+Nickname: sampaioprimo
+Name: Rodrigo Sampaio Primo
+First Commit: 2005-10-17
+Last Commit: 2010-12-14
+Number of Commits: 575
+SF Role: Developer
+
+Nickname: scarle
+Name: Sylvain Carle
+SF Role: Developer
+
+Nickname: sdlee
+Name: Stephen Lee
+SF Role: Developer
+
+Nickname: sdoh
+Name: StÃ©phane DOH
+First Commit: 2010-08-31
+Last Commit: 2010-09-30
+Number of Commits: 20
+
+Nickname: sebpaquet
+Name: Seb
+SF Role: Developer
+
+Nickname: sept_7
+Name: StÃ©phane Casset
+First Commit: 2007-07-03
+Last Commit: 2010-12-07
+Number of Commits: 984
+
+Nickname: sewilco
+Name: Scot Wilcoxon
+First Commit: 2008-09-18
+Last Commit: 2009-04-10
+Number of Commits: 47
+SF Role: Developer
+
+Nickname: sghane
+Name: sameh
+SF Role: Developer
+
+Nickname: shinhan
+Name: Daniyel Sili
+SF Role: Developer
+
+Nickname: shiroitenshi
+Name: Chris White
+
+Nickname: sideshow_bob
+Name: 454abp
+
+Nickname: siegfried1e
+Name: Stephan Champagne
+
+Nickname: sikko23
+Name: Sikko
+SF Role: Translator (I18N/L10N)
+
+Nickname: siridhar
+Name: Sridhar
+
+Nickname: slordjette
+Name: SÃ©bastien Lord-JettÃ©
+First Commit: 2009-04-08
+Last Commit: 2010-04-26
+Number of Commits: 2
+
+Nickname: smacvicar
+Name: Scott MacVicar
+SF Role: Developer
+
+Nickname: soulhunter
+Name: José Ildefonso Camargo Tolosa
+First Commit: 2009-07-21
+Last Commit: 2009-07-21
+Number of Commits: 2
+
+Nickname: sparr
+Name: Clarence Risher
+SF Role: Developer
+
+Nickname: spaztica
+Name: cem gencer
+
+Nickname: spiderr
+Name: Christian Fowler
+SF Role: Developer
+
+Nickname: squareing
+Name: Max Kremmel
+SF Role: Developer
+
+Nickname: squee-d
+Name: Rasheed Abdal-Aziz
+SF Role: Developer
+
+Nickname: starrrider
+Name: Lee L Bell
+SF Role: Doc Writer
+
+Nickname: sthibault-php
+Name: StÃ©phane Thibault
+First Commit: 2009-05-03
+Last Commit: 2009-05-03
+Number of Commits: 1
+SF Role: User Interface (UI) Designer
+
+Nickname: stingtao
+Name: sting tao
+SF Role: Developer
+
+Nickname: stojanovim
+Name: Marta S.
+First Commit: 2009-01-27
+Last Commit: 2009-10-30
+Number of Commits: 50
+SF Role: Developer
+
+Nickname: stuartd
+Name: Stuart Donaldson
+SF Role: Developer
+
+Nickname: subnoodle
+Name: Sam
+SF Role: Developer
+
+Nickname: swayambhu
+Name: Vijay Aswadhati
+SF Role: Developer
+
+Nickname: swillie
+Name: Wil Huijben
+First Commit: 2004-01-30
+Last Commit: 2004-01-30
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: sylvieg
+Name: Sylvie Greverend
+First Commit: 2003-05-28
+Last Commit: 2010-12-14
+Number of Commits: 6256
+SF Role: Developer
+
+Nickname: syracine
+Name: S Racine
+First Commit: 2008-08-17
+Last Commit: 2008-08-17
+Number of Commits: 3
+SF Role: Developer
+
+Nickname: techtonik
+Name: anatoly techtonik
+First Commit: 2004-02-21
+Last Commit: 2004-03-16
+Number of Commits: 11
+SF Role: Developer
+
+Nickname: teedog
+First Commit: 2003-08-07
+Last Commit: 2004-08-18
+Number of Commits: 330
+SF Role: Developer
+
+Nickname: telenieko
+Name: TeLeNiEkO
+First Commit: 2004-04-24
+Last Commit: 2005-01-18
+Number of Commits: 23
+SF Role: Developer
+
+Nickname: terris
+Name: Terris Linenbach
+SF Role: Developer
+
+Nickname: thenano
+Name: Fernando Freire
+SF Role: Developer
+
+Nickname: thraxisp
+Name: Glenn Henshaw
+First Commit: 2010-11-12
+Last Commit: 2010-11-12
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: tibistibi
+Name: tibi stibi
+First Commit: 2007-08-06
+Last Commit: 2007-08-06
+Number of Commits: 4
+SF Role: Developer
+
+Nickname: timedout_net
+Name: TimeO
+SF Role: Developer
+
+Nickname: tna
+First Commit: 2004-07-20
+Last Commit: 2004-07-20
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: todd_here
+Name: toddb
+SF Role: Developer
+
+Nickname: tofreal
+Name: Real
+SF Role: Developer
+
+Nickname: toggg
+Name: bertrand Gugger
+First Commit: 2005-03-23
+Last Commit: 2007-06-16
+Number of Commits: 45
+SF Role: Developer
+
+Nickname: tombombadilom
+First Commit: 2003-11-01
+Last Commit: 2008-07-31
+Number of Commits: 110
+
+Nickname: traivor
+Name: Harold Campbell
+First Commit: 2003-09-09
+Last Commit: 2003-11-13
+Number of Commits: 31
+SF Role: Developer
+
+Nickname: trebly
+Name: Trebly
+
+Nickname: troworld
+First Commit: 2004-05-08
+Last Commit: 2004-08-03
+Number of Commits: 2
+
+Nickname: uid138927
+First Commit: 2006-12-07
+Last Commit: 2006-12-07
+Number of Commits: 1
+
+Nickname: uiprncss
+Name: Toni
+First Commit: 2005-03-22
+Last Commit: 2005-03-22
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: v-woods
+Name: Van Woods
+SF Role: Developer
+
+Nickname: vaguery
+Name: Mickey Mullin
+SF Role: Developer
+
+Nickname: vikasrij
+Name: Vikas Rijsinghani
+SF Role: Developer
+
+Nickname: vinsz
+Name: Vincent Guffens
+SF Role: Developer
+
+Nickname: vradd
+Name: cnd
+SF Role: Developer
+
+Nickname: vranicoff
+Name: Steve Cichosz
+
+Nickname: vulgrin
+Name: Dave Sanders
+First Commit: 2003-12-27
+Last Commit: 2003-12-27
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: wbeaver
+SF Role: Developer
+
+Nickname: wesleywillians
+Name: Wesley Willians
+First Commit: 2005-08-20
+Last Commit: 2006-09-06
+Number of Commits: 10
+SF Role: Developer
+
+Nickname: wggley
+Name: Wallace Goulart Gaudie Ley
+First Commit: 2009-02-11
+Last Commit: 2009-05-22
+Number of Commits: 11
+
+Nickname: whomaj
+Name: Maj
+SF Role: Developer
+
+Nickname: wikiman
+Name: Eric Kelner
+First Commit: 2008-12-21
+Last Commit: 2009-06-30
+Number of Commits: 3
+SF Role: Developer
+
+Nickname: wings-of-glory
+Name: A. Zargamy
+First Commit: 2008-09-07
+Last Commit: 2008-09-18
+Number of Commits: 3
+SF Role: Developer
+
+Nickname: wolff_borg
+First Commit: 2003-08-06
+Last Commit: 2004-02-24
+Number of Commits: 42
+
+Nickname: wu-lee
+Name: Nick Woolley
+SF Role: Developer
+
+Nickname: wvdploeg
+Name: W van der Ploeg
+SF Role: Developer
+
+Nickname: xaman
+SF Role: Developer
+
+Nickname: xavidp
+Name: Xavier de Pedro
+First Commit: 2005-07-08
+Last Commit: 2010-12-14
+Number of Commits: 370
+SF Role: All-Hands Person
+
+Nickname: xbtheria
+Name: Xavier Barnabé-Thériault
+SF Role: Developer
+
+Nickname: xenfasa
+Name: Ben
+First Commit: 2003-11-15
+Last Commit: 2003-11-18
+Number of Commits: 4
+SF Role: Developer
+
+Nickname: xeno_tt
+Name: Martin Zwickel
+SF Role: Developer
+
+Nickname: yanturgeon
+Name: yturgeon
+SF Role: Developer
+
+Nickname: ybey
+Name: Youcef Bey
+SF Role: Developer
+
+Nickname: yonixxx
+Name: Yoni
+First Commit: 2008-02-25
+Last Commit: 2008-06-11
+Number of Commits: 19
+
+Nickname: ysoya
+Name: YongHa Kim
+SF Role: Developer
+
+Nickname: yuzhenxin
+Name: Yu Zhen Xin
+First Commit: 2005-11-21
+Last Commit: 2005-12-05
+Number of Commits: 11
+SF Role: Translator (I18N/L10N)
+
+Nickname: zab-sv
+Name: Zabsv
+First Commit: 2009-09-29
+Last Commit: 2009-09-29
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: zamboni
+Name: Diego Zamboni
+SF Role: Developer
+
+Nickname: zaufi
+First Commit: 2003-06-22
+Last Commit: 2005-04-17
+Number of Commits: 226
+SF Role: Developer
+
+Nickname: zcecil
+Name: Cecil Sheng
+First Commit: 2003-12-20
+Last Commit: 2004-02-19
+Number of Commits: 4
+SF Role: Translator (I18N/L10N)
+
+Nickname: zchermit
+Name: Serg Kravchenko
+First Commit: 2009-05-27
+Last Commit: 2009-11-06
+Number of Commits: 23
+
+Nickname: zcopley
+Name: Zach Copley
+SF Role: Developer
+
+Nickname: zibas
+Name: Ziba
+SF Role: Developer
+
+Nickname: zippy314
+Name: Eric Harris-Braun
+SF Role: Developer
