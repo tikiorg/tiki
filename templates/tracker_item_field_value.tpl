@@ -14,7 +14,7 @@
 	 or $tiki_p_comment_tracker_items eq 'y'
  	 or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerGroupCanModify eq 'y' and $group and $ours eq $group))}
 	{if empty($url) and !empty($item.itemId)}
-		{assign var=urll value="tiki-view_tracker_item.php?itemId=`$item.itemId`&amp;trackerId=`$item.trackerId`&amp;show=view"}
+		{assign var=urll value="tiki-view_tracker_item.php?itemId=`$item.itemId`&amp;show=view"}
 	{elseif strstr($url, 'itemId') and !empty($item.itemId)}
 		{assign var=urll value=$url|regex_replace:"/itemId=?/":"itemId=`$item.itemId`"}
 	{else}
