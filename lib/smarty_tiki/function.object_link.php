@@ -73,6 +73,10 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 	if ($coordinates = TikiLib::lib('geo')->get_coordinates($type, $object)) {
 		$class = ' class="geolocated"';
 		$metadata = " data-geo-lat=\"{$coordinates['lat']}\" data-geo-lon=\"{$coordinates['lon']}\"";
+		
+		if (isset($coordinates['zoom'])) {
+			$metadata .= " data-geo-zoom=\"{$coordinates['zoom']}\"";
+		}
 	}
 
 	return '<a href="' . $escapedHref . '"' . $class . $metadata . '">' . $escapedPage . '</a>';

@@ -26,21 +26,32 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_block_title($params, $content, &$smarty, $repeat) {
 	global $prefs, $tiki_p_view_templates, $tiki_p_edit_templates, $tiki_p_admin;
 
-  if ( $repeat || $content == '' ) return;
-  include_once('lib/smarty_tiki/function.icon.php');
+	if ( $repeat || $content == '' ) return;
+	include_once('lib/smarty_tiki/function.icon.php');
 
-  if ( ! isset($params['help']) ) $params['help'] = '';
-  if ( ! isset($params['admpage']) ) $params['admpage'] = '';
-  if ( ! isset($params['url']) ) {
-	  require_once $smarty->_get_plugin_filepath('function', 'query');
-	  $params['url'] = smarty_function_query(array('_type' => 'absolute_path'), $smarty);
-  }
+	if ( ! isset($params['help']) ) $params['help'] = '';
+	if ( ! isset($params['admpage']) ) $params['admpage'] = '';
+	if ( ! isset($params['url']) ) {
+		require_once $smarty->_get_plugin_filepath('function', 'query');
+		$params['url'] = smarty_function_query(array('_type' => 'absolute_path'), $smarty);
+	}
 
 	// Set the variable for the HTML title tag
 	$smarty->assign( 'headtitle', $content );
   
-  $html = '<h1>';
-  $html .= '<a class="pagetitle" href="' . $params['url'] . '">' . $content . "</a>\n";
+	$class = 'pagetitle';
+	$current = current_object();
+	if ($coordinates = TikiLib::lib('geo')->get_coordinates($current['type'], $current['object'])) {
+		$class = ' geolocated primary';
+		$metadata = " data-geo-lat=\"{$coordinates['lat']}\" data-geo-lon=\"{$coordinates['lon']}\"";
+		
+		if (isset($coordinates['zoom'])) {
+			$metadata .= " data-geo-zoom=\"{$coordinates['zoom']}\"";
+		}
+	}
+
+	$html = '<h1>';
+	$html .= '<a class="' . $class . '"' . $metadata . ' href="' . $params['url'] . '">' . $content . "</a>\n";
   
   if ($smarty->get_template_vars('print_page') != 'y') {
 	  if ( $prefs['feature_help'] == 'y' && $prefs['helpurl'] != '' && $params['help'] != '' ) {

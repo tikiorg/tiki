@@ -1271,6 +1271,9 @@ class TrackerLib extends TikiLib
 					continue;
 				}	
 			}
+
+			$res['geolocation'] = TikiLib::lib('geo')->get_coordinates('trackeritem', $res['itemId']);
+
 			if (empty($kx)) // ex: if the sort field is non visible, $kx is null
 				$ret[] = $res;
 			else

@@ -172,10 +172,15 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 
 		$lat = $userlib->get_user_preference($other_user, 'lat');
 		$lon = $userlib->get_user_preference($other_user, 'lon');
+		$zoom = $userlib->get_user_preference($other_user, 'zoom');
 
 		if ($lat || $lon) {
 			$class .= " geolocated";
 			$metadata .= " data-geo-lat='$lat' data-geo-lon='$lon'";
+			
+			if ($zoom) {
+				$metadata .= " data-geo-zoom='$zoom'";
+			}
 		}
 
 		if (is_numeric($idletime) && empty($mouseover)) {
