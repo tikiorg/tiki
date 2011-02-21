@@ -163,6 +163,6 @@
 	{/if}
 {/section}
 {if !empty($listpages) && $usePagination ne 'n'}
-	{pagination_links cant=$cant step=$maxArticles offset=$offset}{/pagination_links}
+	{pagination_links cant=$cant step=$maxArticles offset=$offset}{$urlnext}{/pagination_links}
 {/if}
 

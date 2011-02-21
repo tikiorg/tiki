@@ -177,7 +177,7 @@ function wikiplugin_articles_info()
 			),
 			'urlparam' => array(
 				'required' => false,
-				'name' => tra('Additional URL Param'),
+				'name' => tra('Additional URL Param to the link to read article'),
 				'filter' => 'striptags',
 				'default' => ''
 			),
@@ -196,6 +196,7 @@ function wikiplugin_articles($data, $params)
 	global $smarty, $tikilib, $prefs, $tiki_p_read_article, $tiki_p_articles_read_heading, $dbTiki, $pageLang;
 	global $artlib; require_once 'lib/articles/artlib.php';
 	$default = array('max' => -1, 'start' => 0, 'usePagination' => 'n', 'topicId' => '', 'topic' => '', 'sort' => 'publishDate_desc', 'type' => '', 'lang' => '', 'quiet' => 'n', 'categId' => '', 'largefirstimage' => 'n', 'urlparam' => '');
+	$auto_args = array('lang', 'topicId', 'topic', 'sort', 'type', 'lang', 'categId');
 	$params = array_merge($default, $params);
 
 	extract($params, EXTR_SKIP);
@@ -204,6 +205,7 @@ function wikiplugin_articles($data, $params)
 		return("");
 	}
 
+	$urlnext = '';
 	if($usePagination == 'y')
 	{
 		//Set offset when pagniation is used
@@ -217,10 +219,18 @@ function wikiplugin_articles($data, $params)
 		if(($max == -1)){
 			$countPagination = 10;
 		}
+		foreach ($auto_args as $arg) {
+			if (!empty($$arg))
+				$paramsnext[$arg] = $$arg;
+		}
+		$paramsnext['_type'] = 'absolute_path';
+		require_once $smarty->_get_plugin_filepath('function', 'query');
+		$urlnext = smarty_function_query($paramsnext, $smarty);
 	}
 
 	$smarty->assign_by_ref('quiet', $quiet);
 	$smarty->assign_by_ref('urlparam', $urlparam);
+	$smarty->assign_by_ref('urlnext', $urlnext);
 	
 	if(!isset($containerClass)) {$containerClass = 'wikiplugin_articles';}
 	$smarty->assign('container_class', $containerClass);
