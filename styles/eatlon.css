@@ -518,10 +518,6 @@ td.even,
 [class].tabinactive {top: 0 !important}
 
 .tabs {
-	list-style-image: none;
-	list-style-position: outside;
-	list-style-type: none;
-	position: relative;
 	padding: .2em .2em 0;
 	margin:0 0.2em 1px 0;
 	border-bottom: 1px solid #ccc}
@@ -536,7 +532,6 @@ td.even,
 }
 
 .tabmark {
-	list-style-image: none;
 	float: left;
 	background: #afafaf url(eatlon/menu_bg.png) 1000px -15px;
 	color: #fff;
@@ -553,7 +548,7 @@ td.even,
 	background: url(eatlon/menu_bg.png) 1000px 0;
 	color: #ececec}
 
-.tabactive a {color: #d7e5f3; font-weight: bold}
+.tabactive a {color: #d7e5f3}
 
 .tabcontent {
 	border-left: 1px solid #a9a9a9;

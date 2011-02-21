@@ -43,6 +43,12 @@ body.fixed_width #main[id] {
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
+		
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
+}
 
 #middle {
 	text-align: left;
@@ -227,7 +233,6 @@ ul, ol {text-align: left}
 tt {font-size: 1.2em}
 
 /***** Site Header & Identity *****/
-#header {position: static}
 	
 #top_modules {
 	height: 140px;
@@ -240,10 +245,10 @@ tt {font-size: 1.2em}
 
 #sitelogo img { margin-top: 0; }
 
-.box-login_box {
+#top_modules .siteloginbar_popup {
 	position: absolute;
 	right: 20px;
-	bottom: 20px;
+	bottom: 0;
 }
 
 input[id="sl-login-user"],
@@ -541,10 +546,6 @@ td.even,
 [class].tabinactive {top: 0 !important}
 
 .tabs {
-	list-style-image: none;
-	list-style-position: outside;
-	list-style-type: none;
-	position: relative;
 	padding: .2em .2em 0;
 	margin:0 0.2em 1px 0;
 	border-bottom: 1px solid #ccc}
@@ -559,7 +560,6 @@ td.even,
 }
 
 .tabmark {
-	list-style-image: none;
 	float: left;
 	background: #afafaf url(teal/menu_bg.png) 1000px -15px;
 	color: #fff;

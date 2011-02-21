@@ -902,12 +902,17 @@ a.forumnameread {
 }
 
 /** Tabs **/
+* reset what's in layout.css */
+.tabactive,
+.tabinactive,
+[class].tabactive,
+[class].tabinactive {top: 0 !important}
+
 .tabs {
-margin: 10px 2px -18px 2px; /* override layout */
+	padding: .2em .2em 0;
+	margin:0 0.2em 1px 0;
 	background: #5a7ea2;
 	border-bottom: solid 1px #4a6a90 !important;
-	padding: 0 5px !important;
-	z-index: 201;
 }
 
 .tabmark {

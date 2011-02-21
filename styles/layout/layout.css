@@ -972,7 +972,7 @@ tr.diffheader {
 
 /** Tabs **/
 .tabs {
-	margin: 10px 3px -1px 3px;
+	margin: 10px 3px 0 3px;
 	padding: 0;
 	position: relative;
 	z-index: 2;
@@ -982,9 +982,24 @@ tr.diffheader {
 	display: none;
 }
 
+.tabstoggle {
+	font-size: .8em;
+	position: relative;
+	width: 15%;
+	margin-top: 2px;
+	clear: none;
+}
+
+.tabstoggle .button {
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	right: 0;
+}
+
 .tabs .container {
 	float: left;
-	width: 92%;
+	width: 84%;
 }
 
 .tabs .full_width {
@@ -996,6 +1011,7 @@ tr.diffheader {
 	margin: 0;
 	margin-right: 5px;
 	padding: 1px 0;
+	white-space: nowrap;
 }
 	
 .tabmark a {
@@ -2014,19 +2030,6 @@ ul.freetagged li {
 	.tikihelp, .navbar, categbar, .tabstoggle, .tabs, #show-errors-button {display:none;}
 }
 
-.tabstoggle {
-	font-size: .8em;
-	position: relative;
-	width: 8%;
-	margin-top: 2px;
-}
-
-.tabstoggle .button {
-	margin: 0;
-	padding: 0;
-	position: absolute;
-	right: 0;
-}
 
 /* treeTable definitions - used in object-perms so far */
 

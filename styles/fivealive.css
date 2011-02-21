@@ -959,10 +959,6 @@ fieldset.admin label,
 [class].tabinactive {top: 0 !important}
 
 .tabs {
-	list-style-image:none;
-	list-style-position:outside;
-	list-style-type:none;
-	position:relative;
 	padding: .2em .2em 0;
 	margin:0 0.2em 0 0;
 	border: none;
@@ -974,10 +970,9 @@ fieldset.admin label,
 }
 
 .tabmark {
-	list-style-image: none;
 	float: left;
 	border: 1px solid #11597e;
-	background: #126692;
+	background: #2098cd;
 	border-bottom-width: 0 !important;
 	margin: 0 .2em 0 0;
 	color: #fff;
@@ -1005,6 +1000,10 @@ a.register_link {
 	padding-bottom: 1px;
 	border: 1px solid #a9d6eb;
 	background: #a9d6eb;
+}
+
+.tabinactive:hover {
+	background: #126692;
 }
 
 .tabinactive:hover a,
