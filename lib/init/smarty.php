@@ -153,6 +153,9 @@ class Smarty_Tikiwiki extends Smarty
 			}
 		} elseif ($_smarty_tpl_file == 'confirm.tpl' || $_smarty_tpl_file == 'error.tpl' || $_smarty_tpl_file == 'error_ticket.tpl' || $_smarty_tpl_file == 'error_simple.tpl') {
 			ob_end_clean(); // Empty existing Output Buffer that may have been created in smarty before the call of this confirm / error* template
+			if ( $prefs['feature_obzip'] == 'y' ) {
+				ob_start('ob_gzhandler');
+			}
 
 			include_once('tiki-modules.php');
 
