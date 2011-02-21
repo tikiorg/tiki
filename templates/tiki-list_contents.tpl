@@ -51,7 +51,7 @@
 		</table>
 		{pagination_links cant=$cant step=$prefs.maxRecords offset=$offset}{/pagination_links}
 	{/tab}
-	{tab name="Create/Edit content block"}
+	{tab name="{tr}Create/Edit content block{/tr}"}
 		<h2>
 		{if $contentId}
 		  {tr}Edit content block{/tr}
