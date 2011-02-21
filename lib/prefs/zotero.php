@@ -13,19 +13,20 @@ function prefs_zotero_list()
 			'name' => tra('Zotero Client Key'),
 			'description' => tra('Required identification key. Registration required.'),
 			'type' => 'text',
-			'size' => 32,
+			'size' => 20,
 		),
 		'zotero_client_secret' => array(
 			'name' => tra('Zotero Client Secret'),
 			'description' => tra('Required identification key. Registration required.'),
 			'type' => 'text',
-			'size' => 32,
+			'size' => 20,
 		),
 		'zotero_group_id' => array(
 			'name' => tra('Zotero Group'),
 			'description' => tra('Numeric ID of the group, can be found in the URL.'),
 			'type' => 'text',
 			'filter' => 'digits',
+			'size' => 7,
 		),
 	);
 }

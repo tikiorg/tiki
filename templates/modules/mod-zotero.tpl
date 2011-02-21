@@ -5,13 +5,13 @@
 		<ul class="results">
 		</ul>
 		<div class="error">
-			{remarksbox type="errors" title="{tr}Oops!{/tr}"}
-				{if $zotero_authorized}
-					<p>{tr}No results were found. While we have an authorization from Zotero, it may not grant access to the group. If this search should have results, try re-authenticating with Zotero.{/tr}</p>
-				{else}
+			{remarksbox type="errors" title="{tr}No results!{/tr}"}
+				<p>{tr}No results were found. Are you sure you searched for a tag?{/tr}</p>
+
+				{if ! $zotero_authorized}
 					<p>{tr}We are not autorized to access the group at this time. If you have access to the Zotero group, you can grant this site read access.{/tr}</p>
+					<p><a href="tiki-ajax_services.php?oauth_request=zotero">{tr}Authenticate with Zotero{/tr}</a></p>
 				{/if}
-				<p><a href="tiki-ajax_services.php?oauth_request=zotero">{tr}Authenticate with Zotero{/tr}</a></p>
 			{/remarksbox}
 		</div>
 	</form>
