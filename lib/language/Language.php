@@ -190,6 +190,8 @@ class Language extends TikiDb_Bridge
 	 * strings (key 'new') or null if not possible to write to file
 	 */
 	public function writeLanguageFile() {
+		set_time_limit(0);
+
 		$filePath = "lang/{$this->lang}/language.php";
 
 		if (is_writable($filePath)) {
