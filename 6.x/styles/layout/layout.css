@@ -1634,10 +1634,6 @@ textarea#editpost2 {
 .subcomment {
 	margin-left: 10px;
 }
-.subcomment_lblogs { /* ### tested on blogs to generalize to all lists with comments */
-	/* margin-left: 10px; */
-	border-bottom:double medium ; /* ### thin;	blogs are not well separated*/
-}
 
 .commentsedithelp {}
 
