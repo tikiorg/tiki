@@ -389,7 +389,11 @@ abstract class Tiki_Profile_InstallHandler // {{{
 		if( empty( $id ) ) {
 			die( 'Handler failure: ' . get_class( $this ) . "\n" );
 		}
-
+		
+		//Helper to return items that were installed - first used with cart items
+		global $record_profile_items_created;
+		$record_profile_items_created[] = $id;
+		
 		$this->obj->setValue( $id );
 	}
 
