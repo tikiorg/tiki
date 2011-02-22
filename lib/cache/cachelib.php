@@ -267,7 +267,11 @@ class CacheLibFileSystem
 
 	function getCached($key, $type='') {
 		$key = $type.md5($key);
-		return @file_get_contents($this->folder."/$key");
+		if (is_readable($this->folder."/$key")) {
+			return @file_get_contents($this->folder."/$key");
+		} else {
+			return false;
+		}
 	}
 
 	function invalidate($key, $type='') {
