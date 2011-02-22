@@ -286,17 +286,6 @@ if ($prefs['javascript_enabled'] != 'n') {
 				isset($_REQUEST['format']) && $_REQUEST['format'] == 'jqs5') ||
 				strpos($_SERVER['PHP_SELF'], 'tiki-slideshow.php') !== false
 				) {
-				$headerlib->add_cssfile( 'lib/jquery/jquery.s5/jquery.s5.css' );
-				//$headerlib->add_cssfile( 'lib/jquery/jqs5/theme/staticfree/style.css' );
-				$headerlib->add_jsfile( 'lib/jquery/jquery.s5/jquery.s5.js' );
-				$headerlib->add_jq_onready( '
-					$("h1,h2,h3,h5,h6").first().parent()
-						.tiki("s5", "", {
-							backgroundUrl: $(".slideshow-background").attr("src")
-						});
-					$(".main").hide();
-					$("#show-errors-button").hide();
-				', 20 );	// late, and tell jqs5 where the page is in tiki
 				$prefs['feature_wiki_description'] = 'n';
 				$prefs['wiki_authors_style'] = 'none';
 				$prefs['feature_page_title'] = 'n';

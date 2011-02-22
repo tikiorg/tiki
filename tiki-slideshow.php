@@ -11,6 +11,30 @@ require_once ('tiki-setup.php');
 include_once ('lib/structures/structlib.php');
 include_once ('lib/wiki/wikilib.php');
 
+$headerlib->add_cssfile( 'lib/jquery/jquery.s5/jquery.s5.css' );
+$headerlib->add_jsfile( 'lib/jquery/jquery.s5/jquery.s5.js' );
+$headerlib->add_jq_onready( '
+	$("h1,h2,h3,h5,h6").first().parent().s5({
+		backgroundUrl: $(".slideshow-background").attr("src"),
+		menu: function() {
+			return $(
+				\'<a href="#" onclick="jQuery.s5.first(); return false;" title="First"><img src="lib/jquery/jquery.s5/images/resultset_first.png" alt="First" /></a> \' + 
+				\'<a href="#" onclick="jQuery.s5.prev(); return false;" title="Prev"><img src="lib/jquery/jquery.s5/images/resultset_previous.png" alt="Prev" /></a> \' + 
+				\'<a href="#" onclick="jQuery.s5.next(); return false;" title="Next"><img src="lib/jquery/jquery.s5/images/resultset_next.png" alt="Next" /></a> \' + 
+				\'<a href="#" onclick="jQuery.s5.last(); return false;" title="Last"><img src="lib/jquery/jquery.s5/images/resultset_last.png" alt="Last" /></a> \' +
+				\'<a href="#" onclick="jQuery.s5.toggleRegularView(); return false;" title="Toggle Regular View"><img src="lib/jquery/jquery.s5/images/application_view_list.png " alt="Toggle Regular View" /></a> \' +
+				\'<a href="#" onclick="jQuery.s5.listSlideTitles(); return false;" title="Jump To Slide" class="listSlideTitlesAnchor"><img src="lib/jquery/jquery.s5/images/layers.png" alt="Jump To Slide" /></a> \' +
+				\'<a href="#" onclick="jQuery.s5.play(); return false;" title="Play"><img src="lib/jquery/jquery.s5/images/control_play_blue.png" alt="Play" /></a> \' +
+				\'<a href="#" onclick="jQuery.s5.pause(); return false;" title="Pause"><img src="lib/jquery/jquery.s5/images/control_pause_blue.png" alt="Pause" /></a> \' +
+				\'<a href="#" onclick="jQuery.s5.stop(); return false;" title="Stop"><img src="lib/jquery/jquery.s5/images/control_stop_blue.png" alt="Stop" /></a> \' +
+				\'<a href="#" onclick="jQuery.s5.getNote(); return false;" title="Notes"><img src="lib/jquery/jquery.s5/images/note.png" alt="Notes" /></a> \' +
+				\'<a href="#" onclick="jQuery.s5.toggleLoop(); return false;" title="Toggle Loop"><img src="lib/jquery/jquery.s5/images/arrow_rotate_clockwise.png" alt="Toggle Loop" /></a>\' +
+				\'<a href="tiki-index.php?page='. $_REQUEST['page'] .'">Close</a>\'
+			);
+		}
+	});
+');	// late, and tell jqs5 where the page is in tiki
+
 if ($prefs['feature_wiki'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
 
@@ -161,5 +185,6 @@ ask_ticket('index-raw');
 // Display the Index Template
 $smarty->assign('dblclickedit', 'y');
 $smarty->assign('mid','tiki-show_page_raw.tpl');
+
 // use tiki_full to include include CSS and JavaScript
 $smarty->display("tiki_full.tpl");
