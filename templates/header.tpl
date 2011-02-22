@@ -53,6 +53,8 @@
 	{else}
 		{if !empty($tracker_item_main_value)}
 			{$tracker_item_main_value|truncate:255|escape}
+		{elseif !empty($title) and !is_array($title)}
+			{$title|escape}
 		{elseif !empty($page)}
 			{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}
 				{$approvedPageName|escape}
@@ -63,8 +65,6 @@
 		{* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
 		{elseif !empty($arttitle)}
 			{$arttitle|escape}
-		{elseif !empty($title) and !is_array($title)}
-			{$title|escape}
 		{elseif !empty($thread_info.title)}
 			{$thread_info.title|escape}
 		{elseif !empty($forum_info.name)}

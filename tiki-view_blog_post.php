@@ -95,6 +95,7 @@ $smarty->assign('postId', $postId);
 $smarty->assign('blog_data', $blog_data);
 $smarty->assign('blogId', $blogId);
 $smarty->assign('headtitle', $post_info['title'] . ' : ' . $blog_data['title']);
+$smarty->assign('title', $post_info['title'] . ' : ' . $blog_data['title']);
 
 if (!isset($_REQUEST['offset'])) $_REQUEST['offset'] = 0;
 if (!isset($_REQUEST['sort_mode'])) $_REQUEST['sort_mode'] = 'created_desc';
