@@ -371,6 +371,14 @@ function prefs_wiki_list() {
 				'asc' => tra('Ascending'),
 			),
 		),
+		'wiki_list_rating' => array(
+			'name' => tra('Rating'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_polls',
+				'feature_wiki_ratings',
+			),
+		),
 		'wiki_feature_3d' => array(
 			'name' => tra('Enable wiki 3D browser'),
 			'type' => 'flag',

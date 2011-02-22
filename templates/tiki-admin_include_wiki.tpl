@@ -355,6 +355,7 @@
 				{preference name=wiki_list_language}
 				{preference name=wiki_list_categories}
 				{preference name=wiki_list_categories_path}
+				{preference name=wiki_list_rating}
 			</fieldset>  
 		</div>
 	{/tab}

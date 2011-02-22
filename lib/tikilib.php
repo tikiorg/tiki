@@ -179,6 +179,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'geo':
 			global $geolib; require_once 'lib/geo/geolib.php';
 			return $libraries[$name] = $geolib;
+		case 'poll':
+			global $polllib; require_once 'lib/polllib.php';
+			return $libraries[$name] = $polllib;
 		}
 	}
 
@@ -2936,7 +2939,7 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $initial = '', $exact_match = true, $onlyName=false, $forListPages=false, $only_orphan_pages = false, $filter='', $onlyCant=false, $ref='') {
-		global $prefs, $user;
+		global $prefs, $user, $tiki_p_wiki_view_ratings;
 
 		$join_tables = '';
 		$join_bindvars = array();
@@ -3080,6 +3083,9 @@ class TikiLib extends TikiDb_Bridge
 			$join_tables .= $ratinglib->convert_rating_sort($sort_mode, 'wiki page', '`page_id`');
 		}
 
+			if ($tiki_p_wiki_view_ratings === 'y' && $prefs['feature_polls'] =='y' && $prefs['feature_wiki_ratings'] == 'y' ) {
+				$select .= ', (select sum(`tiki_poll_options`.`title`*`tiki_poll_options`.`votes`) as rating from `tiki_objects` as tobt, `tiki_poll_objects` as tpo, `tiki_poll_options` where tobt.`itemId`= tp.`pageName` and tobt.`type`=\'wiki page\' and tobt.`objectId`=tpo.`catObjectId` and `tiki_poll_options`.`pollId`=tpo.`pollId` group by `tiki_poll_options`.`pollId`) as rating';
+			}
 
 		if (!empty($join_bindvars)) {
 			$bindvars = empty($bindvars)? $join_bindvars : array_merge($join_bindvars, $bindvars);

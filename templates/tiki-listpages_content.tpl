@@ -150,6 +150,13 @@
 			<th>{tr}Categories{/tr}</th>
 		{/if}
 
+		{if $prefs.wiki_list_rating eq 'y'}
+			{assign var='cntcol' value=$cntcol+1}
+			<th>
+				{self_link _sort_arg='sort_mode' _sort_field='rating' _title="{tr}Ratings{/tr}"}{tr}Ratings{/tr}{/self_link}
+			</th>
+		{/if}
+
 		{if $show_actions eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
 			<th>{tr}Actions{/tr}</th>
@@ -303,6 +310,12 @@
 					{if !$smarty.foreach.categpath.first}<br />{/if}
 					{$categpath|escape}
 				{/foreach}
+			</td>
+		{/if}
+
+		{if $prefs.wiki_list_rating eq 'y'}
+			<td class="integer">
+				{$listpages[changes].rating}
 			</td>
 		{/if}
 
