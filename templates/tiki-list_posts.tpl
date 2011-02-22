@@ -35,7 +35,7 @@
 	{cycle values="odd,even" print=false}
 	{section name=changes loop=$posts}
 		<tr class="{cycle}">
-			<td class="text"><a class="link" href="tiki-view_blog_post.php?postId={$posts[changes].postId}">{$posts[changes].title|escape}</a></td>
+			<td class="text">{object_link type="blog post" id=$posts[changes].postId title=$posts[changes].title}</td>
 			{if !isset($blogId)}
 				<td class="text">
 					<a class="blogname" href="tiki-list_posts.php?blogId={$posts[changes].blogId}" title="{$posts[changes].blogTitle|escape}">{$posts[changes].blogTitle|truncate:$prefs.blog_list_title_len:"...":true|escape}</a>

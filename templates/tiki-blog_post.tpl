@@ -112,6 +112,17 @@
 				{/if}
 			{/if}
 
+			{if $prefs.geo_locate_blogpost eq 'y'}
+				<tr>
+					<td>{tr}Location{/tr}</td>
+					<td>
+						{$headerlib->add_map()}
+						<div class="map-container" data-target-field="geolocation" style="height: 250px; width: 250px;"></div>
+						<input type="hidden" name="geolocation" value="{$geolocation_string}" />
+					</td>
+				</tr>
+			{/if}
+
 			<tr>
 				<td class="editblogform">{tr}Mark entry as private:{/tr}</td>
 				<td class="editblogform"><input type="checkbox" name="blogpriv" {if $blogpriv eq 'y'}checked="checked"{/if} /></td>

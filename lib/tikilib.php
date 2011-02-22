@@ -162,7 +162,7 @@ class TikiLib extends TikiDb_Bridge
 			global $artlib; include_once('lib/articles/artlib.php');
 			return $libraries[$name] = $artlib;
 		case 'blog':
-			global $artlib; include_once('lib/blogs/bloglib.php');
+			global $bloglib; include_once('lib/blogs/bloglib.php');
 			return $libraries[$name] = $bloglib;
 		case 'ratingconfig':
 			global $ratingconfiglib; require_once 'lib/rating/configlib.php';

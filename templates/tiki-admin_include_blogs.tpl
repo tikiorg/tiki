@@ -24,6 +24,8 @@
 				{if $prefs.feature_categories eq 'y'}
 					{preference name=feature_blog_mandatory_category}
 				{/if}
+
+				{preference name=geo_locate_blogpost}
 			</fieldset>
 
 			<fieldset>

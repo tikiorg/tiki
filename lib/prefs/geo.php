@@ -13,6 +13,11 @@ function prefs_geo_list()
 			'description' => tra('Provide controls to geolocate articles from the edit functionality.'),
 			'type' => 'flag',
 		),
+		'geo_locate_blogpost' => array(
+			'name' => tra('Geolocate blog posts'),
+			'description' => tra('Provide controls to geolocate blog posts from the edit functionality.'),
+			'type' => 'flag',
+		),
 	);
 }
 

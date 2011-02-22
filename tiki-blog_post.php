@@ -214,6 +214,10 @@ if (isset($_REQUEST['save']) && !$contribution_needed) {
 		$smarty->assign('postId', $postId);
 	}
 
+	if ($prefs['geo_locate_blogpost'] == 'y' && ! empty($_REQUEST['geolocation'])) {
+		TikiLib::lib('geo')->set_coordinates('blog post', $postId, $_REQUEST['geolocation']);
+	}
+
 	// TAG Stuff
 	$cat_type = 'blog post';
 	$cat_objid = $postId;
@@ -242,6 +246,10 @@ if ($contribution_needed) {
 $cat_type = 'blog post';
 $cat_objid = $postId;
 include_once ("categorize_list.php");
+
+if( $prefs['geo_locate_blogpost'] == 'y' ) {
+	$smarty->assign('geolocation_string', TikiLib::lib('geo')->get_coordinates_string('blog post', $postId));
+}
 
 include_once ('tiki-section_options.php');
 
