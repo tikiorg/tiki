@@ -28,6 +28,18 @@ DIV#tiki-clean {
 	direction: rtl !important;
 }
 
+/* This is used to prevent the text-aera to be rtl
+DIV#edit-zone, {
+	direction: ltr;
+}
+*/
+
+/* This is to keep admin preferences fields in ltr */
+[id^=pref-] {
+	direction: ltr;
+}
+
+
 /* When modules display a list of items each item is enclosed in a cell with the following style */
 TD.module {
 	text-align: right !important;
