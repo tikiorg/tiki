@@ -71,25 +71,27 @@ class GeoLib
 	}
 	
 	function geocode($where) {
-		global $prefs;
-		$where = stripslashes($where);
-		$whereurl = urlencode($where);
-		$googlekey = $prefs["gmap_key"];
-		if (!$googlekey) {
+		$url = 'http://maps.googleapis.com/maps/api/geocode/json?' . http_build_query(array(
+			'address' => $where,
+			'sensor' => 'false',
+		), '', '&');
+
+		$response = TikiLib::lib('tiki')->httprequest($url);
+		$data = json_decode($response);
+
+		if ($data->status !== 'OK') {
 			return false;
 		}
-		$location = file("http://maps.google.com/maps/geo?q=$whereurl&output=csv&key=$googlekey");
-		list ($stat,$acc,$north,$east) = explode(",",$location[0]);
-		$ret = array(
-			'status' => $stat,
-			'accuracy' => $acc,
-			'lat' => $north,
-			'lon' => $east,
+
+		$first = reset($data->results);
+
+		return array(
+			'status' => 'OK',
+			'accuracy' => 500,
+			'label' => $first->formatted_address,
+			'lat' => $first->geometry->location->lat,
+			'lon' => $first->geometry->location->lng,
 		);
-		if ($stat != '200') {
-			return false;
-		}
-		return $ret;
 	}
 	
 	function geofudge($geo) {

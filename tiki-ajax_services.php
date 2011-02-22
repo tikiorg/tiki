@@ -168,6 +168,10 @@ if (isset($_REQUEST['oauth_callback'])) {
 	$access->redirect('');
 }
 
+if (isset($_REQUEST['geocode']) && $access->is_serializable_request()) {
+	$access->output_serialized(TikiLib::lib('geo')->geocode($_REQUEST['geocode']));
+}
+
 function read_icon_dir($dir, &$icons, $max) {
 	$fp = opendir($dir);
 	while(false !== ($f = readdir($fp))) {
