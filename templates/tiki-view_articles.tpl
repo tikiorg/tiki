@@ -33,7 +33,7 @@
 		<div class="article{if !empty($container_class)} {$container_class}{/if}">
 			{if $listpages[ix].show_topline eq 'y' and $listpages[ix].topline}<div class="articletopline">{$listpages[ix].topline|escape}</div>{/if}
 			<div class="articletitle">
-				<h2><a href="{$smarty.capture.href}">{$listpages[ix].title|escape}</a></h2>
+				<h2>{object_link type=article id=$listpages[ix].articleId url=$smarty.capture.href title=$listpages[ix].title}</h2>
 				{if $listpages[ix].show_subtitle eq 'y' and $listpages[ix].subtitle}<div class="articlesubtitle">{$listpages[ix].subtitle|escape}</div>{/if}
 				{if ($listpages[ix].show_author eq 'y')
 				 or ($listpages[ix].show_pubdate eq 'y')

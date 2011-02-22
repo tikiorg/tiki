@@ -92,12 +92,9 @@
 			{if $prefs.art_list_title eq 'y'}
 				<td class="text">
 					{if $tiki_p_read_article eq 'y'}
-						<a class="artname" href="{$listpages[changes].articleId|sefurl:article}" title="{$listpages[changes].title|escape}">
-					{/if}
-					{$listpages[changes].title|truncate:$prefs.art_list_title_len:"...":true|escape}
-					{if $listpages[changes].type eq 'Review'}(r){/if}
-					{if $tiki_p_read_article eq 'y'}
-						</a>
+						{object_link type=article id=$listpages[changes].articleId title=$listpages[changes].title|truncate:$prefs.art_list_title_len:"...":true}
+					{else}
+						{$listpages[changes].title|truncate:$prefs.art_list_title_len:"...":true|escape}
 					{/if}
 				</td>
 			{/if}

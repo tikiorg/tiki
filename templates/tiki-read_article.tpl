@@ -20,7 +20,7 @@
 	{/if}
 	<div class="articletitle">
 		<h2>
-			{$arttitle|escape}
+			{object_link type=article id=$articleId title=$arttitle}
 		</h2>
 		{if $show_subtitle eq 'y' and $subtitle}
 			<div class="articlesubtitle">{$subtitle|escape}</div>

@@ -138,6 +138,16 @@
 				</select>
 			</td>
 		</tr>
+		{if $prefs.geo_locate_article eq 'y'}
+			<tr>
+				<td>{tr}Location{/tr}</td>
+				<td>
+					{$headerlib->add_map()}
+					<div class="map-container" data-target-field="geolocation" style="height: 250px; width: 250px;"></div>
+					<input type="hidden" name="geolocation" value="{$geolocation_string}" />
+				</td>
+			</tr>
+		{/if}
 		<tr id='show_image_1' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Own Image{/tr}</td>
 			<td>

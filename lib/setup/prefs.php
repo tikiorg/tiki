@@ -678,6 +678,7 @@ function get_default_prefs() {
 
 		// Geolocation
 		'geo_locate_wiki' => 'n',
+		'geo_locate_article' => 'n',
 
 		// forums
 		'feature_forums' => 'n',

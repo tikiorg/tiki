@@ -113,11 +113,11 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 	$publishDate = $article_data["publishDate"];
 	$expireDate = $article_data["expireDate"];
 	$smarty->assign('title', $article_data["title"]);
-  $smarty->assign('topline', $article_data["topline"]);
-  $smarty->assign('subtitle', $article_data["subtitle"]);
-  $smarty->assign('linkto', $article_data["linkto"]);
-  $smarty->assign('image_caption', $article_data["image_caption"]);
-  $smarty->assign('lang', $article_data["lang"]);
+	$smarty->assign('topline', $article_data["topline"]);
+	$smarty->assign('subtitle', $article_data["subtitle"]);
+	$smarty->assign('linkto', $article_data["linkto"]);
+	$smarty->assign('image_caption', $article_data["image_caption"]);
+	$smarty->assign('lang', $article_data["lang"]);
 	$smarty->assign('authorName', $article_data["authorName"]);
 	$smarty->assign('topicId', $article_data["topicId"]);
 	$smarty->assign('useImage', $article_data["useImage"]);
@@ -464,6 +464,11 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 		 }
 		 $artlib->set_article_attributes($artid, $attributeArray);
 	}
+
+	if ($prefs['geo_locate_article'] == 'y' && ! empty($_REQUEST['geolocation'])) {
+		TikiLib::lib('geo')->set_coordinates('article', $artid, $_REQUEST['geolocation']);
+	}
+
 	// Remove image cache because image may have changed, and we
 	// don't want to show the old image
 	@$artlib->delete_image_cache("article",$_REQUEST["id"]);
@@ -525,6 +530,10 @@ if ($prefs['feature_multilingual'] == 'y') {
 	$languages = array();
 	$languages = $tikilib->list_languages();
 	$smarty->assign_by_ref('languages', $languages);
+}
+
+if( $prefs['geo_locate_article'] == 'y' ) {
+	$smarty->assign('geolocation_string', TikiLib::lib('geo')->get_coordinates_string('article', $articleId));
 }
 
 $cat_type = 'article';

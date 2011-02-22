@@ -49,6 +49,8 @@
 				{preference name=article_paginate}
 				{preference name=article_custom_attributes}
 
+				{preference name=geo_locate_article}
+
 				<input type="hidden" name="cmsfeatures" />
 			</fieldset>
 			
