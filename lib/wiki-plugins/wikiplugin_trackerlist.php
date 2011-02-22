@@ -508,6 +508,18 @@ function wikiplugin_trackerlist_info() {
 					array('text' => tra('Year'), 'value' => 'year')
 				)
 			),
+			'calendarpopup' => array(
+				'required' => false,
+				'name' => tra('Calendar Popup'),
+				'description' => tra('Calendar items will pop-up, overrides Sticky Popup if turned off. Set to y (Yes) by default.'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				),
+			),
 			'calendarstickypopup' => array(
 				'required' => false,
 				'name' => tra('Sticky Popup'),
@@ -1382,6 +1394,7 @@ function wikiplugin_trackerlist($data, $params) {
 				$smarty->assign('dayend', $dayend['date']);
 				$smarty->assign('today', TikiLib::make_time(0,0,0, TikiLib::date_format('%m'), TikiLib::date_format('%d'), TikiLib::date_format('%Y')));
 				$smarty->assign('sticky_popup', $calendarstickypopup);
+				$smarty->assign('calendar_popup', $calendarpopup);
 				$smarty->assign('showpopup', 'n');
 				global $headerlib; include_once('lib/headerlib.php');
 				$headerlib->add_cssfile('css/calendar.css',20);

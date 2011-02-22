@@ -16,6 +16,9 @@
 					{else}
 						{$item.description|escape}
 					{/if}
+					{if $item.onbehalf}
+						{tr}for{/tr} {$item.onbehalf|escape|truncate:16}
+					{/if}
 				</td>
 				<td style="width:5em;" align="right">{$item.price|escape}</td>
 				<td style="width:2em;"><input type="text" name="cart[{$item.code|escape}]" style="width:2em;text-align:right;" value="{$item.quantity|escape}"/></td>
