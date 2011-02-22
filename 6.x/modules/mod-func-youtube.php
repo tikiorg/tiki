@@ -62,7 +62,7 @@ function module_youtube( $mod_reference, $module_params ) {
 			$params = array('movie' => $id);
 			if ( isset($module_params['width']) ) $params['width'] = $module_params['width'];
 			if ( isset($module_params['height']) ) $params['height'] = $module_params['height'];
-			$data['xhtml'][$id] = wikiplugin_youtube('', $params);
+			$data['xhtml'][$id] = preg_replace('/~np~(.*)~\/np~/', '$1', wikiplugin_youtube('', $params));
 		}
 	}
 	
