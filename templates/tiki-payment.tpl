@@ -3,7 +3,7 @@
 {if $invoice}
 	{payment id=$invoice}
 {/if}
-
+{if $user}
 {tabset}
 	{permission name=payment_view}
 		{tab name="{tr}Outstanding{/tr}"}
@@ -58,3 +58,4 @@
 		{/tab}
 	{/permission}
 {/tabset}
+{/if}

@@ -27,7 +27,7 @@
 					<input type="hidden" name="amount" value="{$payment_info.amount_remaining_raw|escape}" />
 					<input type="hidden" name="currency_code" value="{$prefs.payment_currency|escape}" />
 					<input type="hidden" name="invoice" value="{$prefs.payment_invoice_prefix|escape}{$payment_info.paymentRequestId|escape}" />
-					<input type="hidden" name="return" value="{$payment_info.url|escape}" />
+					<input type="hidden" name="return" value="{$payment_info.returnurl|escape}" />
 					{*<input type="hidden" name="rm" value="2" />*}
 					{if $prefs.payment_paypal_ipn eq 'y'}
 						<input type="hidden" name="notify_url" value="{$payment_info.paypal_ipn|escape}" />
