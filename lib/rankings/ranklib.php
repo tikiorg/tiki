@@ -495,7 +495,7 @@ class RankLib extends TikiLib
 		}
 
 		$retval["data"] = $ret;
-		$retval["title"] = tra("Top articles");
+		$retval["title"] = tra("Top Articles");
 		$retval["y"] = tra("Reads");
 		$retval["type"] = "nb";
 		return $retval;

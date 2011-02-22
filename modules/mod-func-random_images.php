@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_random_images_info() {
 	return array(
-		'name' => tra('Random image'),
+		'name' => tra('Random Image'),
 		'description' => tra('Displays a random image.'),
 		'prefs' => array( 'feature_galleries' ),
 		'documentation' => 'Module random_images',

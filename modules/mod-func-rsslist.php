@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_rsslist_info() {
 	return array(
-		'name' => tra('Feeds List'),
+		'name' => tra('News Feeds'),
 		'description' => tra('List of feeds available on this site.'),
 		'prefs' => array(),
 	);

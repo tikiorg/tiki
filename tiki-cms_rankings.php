@@ -17,7 +17,7 @@ $access->check_permission('tiki_p_read_article');
 
 $allrankings = array(
 	array(
-	'name' => tra('Top articles'),
+	'name' => tra('Top Articles'),
 	'value' => 'cms_ranking_top_articles'
 ),
 	array(

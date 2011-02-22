@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_last_validated_faq_questions_info() {
 	return array(
-		'name' => tra('Last Validated FAQs Questions'),
+		'name' => tra('Newest Validated FAQ Questions'),
 		'description' => tra('Displays the specified number of validated questions FAQs from newest to oldest.'),
 		'prefs' => array("feature_faqs"),
 		'params' => array(

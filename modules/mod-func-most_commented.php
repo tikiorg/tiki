@@ -8,7 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_most_commented_info()  {
 	return array(
-		'name' => tra('Most commented'),
+		'name' => tra('Most-Commented'),
 		'description' => tra('Displays the most commented objects of a certain type.'),
 		'prefs' => array( ),
 		'params' => array(

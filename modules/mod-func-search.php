@@ -199,7 +199,7 @@ function module_search( $mod_reference, $smod_params ) {	// modifies $smod_param
 			$smod_params['show_edit_button']   = 'n';
 			$smod_params['go_submit'] = tra("Go");
 			$smod_params['default_button'] = 'go';
-			$smod_params['title']   = tra('Search Wiki Page');
+			$smod_params['title']   = tra('Search for Wiki Page');
 			break;
 			
 		case '':

@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_last_modif_pages_info() {
 	return array(
-		'name' => tra('Last changes'),
+		'name' => tra('Latest Changes'),
 		'description' => tra('Lists the specified number of pages, starting from the most recently modified.'),
 		'prefs' => array("feature_wiki"),
 		'params' => array(

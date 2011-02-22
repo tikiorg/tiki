@@ -13,8 +13,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_login_box_info() {
 	return array(
-		'name' => tra('Login'),
-		'description' => tra('Login box'),
+		'name' => tra('Log In'),
+		'description' => tra('Log-in box'),
 		'prefs' => array(),
 		'documentation' => 'Module login_box',
 		'params' => array(

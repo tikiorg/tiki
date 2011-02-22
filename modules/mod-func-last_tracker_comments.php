@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_last_tracker_comments_info() {
 	return array(
-		'name' => tra('Last tracker comments'),
+		'name' => tra('Newest Tracker Comments'),
 		'description' => tra('Lists the specified number of tracker comments (optionally restricting to those in a specific tracker or tracker item) starting from the most recently posted.'),
 		'prefs' => array( 'feature_trackers' ),
 		'params' => array(

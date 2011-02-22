@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_live_support_info() {
 	return array(
-		'name' => tra('Live support'),
+		'name' => tra('Live Support'),
 		'description' => tra('Tells users whether a live support operator is present and allows them to request support if possible. If the user is an operator, links to the operator console.'),
 		'prefs' => array( 'feature_live_support' ),
 		'params' => array()

@@ -902,7 +902,7 @@ function prefs_feature_list() {
 			'hint' => 'tiki-listpages.php',
 		),
 		'feature_lastChanges' => array(
-			'name' => tra('Last changes'),
+			'name' => tra('Latest Changes'),
 			'type' => 'flag',
 			'hint' => 'tiki-lastchanges.php',
 		),

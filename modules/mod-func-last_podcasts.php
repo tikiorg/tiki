@@ -8,7 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_last_podcasts_info() {
 	return array(
-		'name' => tra('Last Podcasts'),
+		'name' => tra('Newest Podcasts'),
 		'description' => tra('Displays Podcasts.'),
 		'prefs' => array('feature_file_galleries'),
 		'common_params' => array('nonums', 'rows'),

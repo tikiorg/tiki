@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_since_last_visit_info() {
 	return array(
-		'name' => tra('Since last visit (simple)'),
+		'name' => tra('Since Last Visit (Simple)'),
 		'description' => tra('Displays to logged in users the number of new or updated objects since their last login date and time.')
 	);
 }

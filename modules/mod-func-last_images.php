@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_last_images_info() {
 	return array(
-		'name' => tra('Last Images'),
+		'name' => tra('Newest Images'),
 		'description' => tra('List the specified number of images, starting from the most recently added.'),
 		'prefs' => array("feature_galleries"),
 		'params' => array(

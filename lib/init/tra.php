@@ -88,8 +88,8 @@ function tra_impl($content, $lg='', $no_interactive = false, $args = array()) {
 	} else {
 		// If no translation has been found and if the string ends with a punctuation,
 		//   try to translate punctuation separately (e.g. if the content is 'Login:' or 'Login :',
-		//   then it will try to translate 'Login' and ':' separately).
-		// This should avoid duplicated strings like 'Login' and 'Login:' that were needed before
+		//   then it will try to translate 'Log In' and ':' separately).
+		// This should avoid duplicated strings like 'Log In' and 'Log In:' that were needed before
 		//   (because there is no space before ':' in english, but there is one in others like french)
 		$lastCharacter = $content[strlen($content) - 1];
 		if (in_array($lastCharacter, array(':', '!', ';', '.', ',', '?'))) { // Modify get_strings.php accordingly

@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 // Each element of $events is an array with (dependent features, category, event name, translated description, default score, default expiration)
 $events = array(
-array("","General","login",tra("Login"),2,0), // tiki-login.php
+array("","General","login",tra("Log In"),2,0), // tiki-login.php
 //array("","General","login_remain",tra("Stay logged"),2,60),
 
 array("","General","profile_see",tra("See other users' profiles"),2,0), // tiki-user_information.php

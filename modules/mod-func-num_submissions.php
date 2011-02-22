@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_num_submissions_info() {
 	return array(
-		'name' => tra('Waiting Submissions'),
+		'name' => tra('Pending Article Submissions'),
 		'description' => tra('Displays the number of article submissions waiting examination and a link to the list.'),
 		'prefs' => array( 'feature_submissions' ),
 		'params' => array()

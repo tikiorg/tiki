@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_old_articles_info() {
 	return array(
-		'name' => tra('Old articles'),
+		'name' => tra('Old Articles'),
 		'description' => tra('Displays the specified number of old articles (which do not show on articles home page anymore).'),
 		'prefs' => array( 'feature_articles' ),
 		'params' => array(),

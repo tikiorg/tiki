@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_switch_theme_info() {
 	return array(
-		'name' => tra('Switch theme'),
+		'name' => tra('Switch Theme'),
 		'description' => tra('Enables to quickly change the theme.'),
 		'prefs' => array( 'change_theme' ),
 		'params' => array()

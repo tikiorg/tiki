@@ -57,11 +57,11 @@
 // ### On 2009-03-02, it is: (':', '!', ';', '.', ',', '?')
 // ### For clarity, we explain here only for colons: ':' but it is the same for the rest
 // ###
-// ### Short version: it is not a problem that string "Login:" has no translation. Only "Login" needs to be translated.
+// ### Short version: it is not a problem that string "Log In:" has no translation. Only "Log In" needs to be translated.
 // ###
 // ### Technical justification:
 // ### If a string ending with colon needs translating (like "{tr}Login:{/tr}")
-// ### then TikiWiki tries to translate 'Login' and ':' separately.
+// ### then TikiWiki tries to translate 'Log In' and ':' separately.
 // ### This allows to have only one translation for "{tr}Login{/tr}" and "{tr}Login:{/tr}"
 // ### and it still allows to translate ":" as "&nbsp;:" for languages that
 // ### need it (like french)

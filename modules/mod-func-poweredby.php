@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_poweredby_info() {
 	return array(
-		'name' => tra('Powered By'),
+		'name' => tra('Powered by'),
 		'description' => tra('Powered by Tiki, and others'),
 		'params' => array(
 			'tiki' => array(

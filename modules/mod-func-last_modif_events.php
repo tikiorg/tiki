@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_last_modif_events_info() {
 	return array(
-		'name' => tra('Last modified events'),
+		'name' => tra('Last-Modified Events'),
 		'description' => tra('Displays the specified number of calendar events, starting from the most recently modified.'),
 		'prefs' => array("feature_calendar"),
 		'params' => array(

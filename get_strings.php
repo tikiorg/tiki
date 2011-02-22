@@ -514,7 +514,7 @@ foreach ($languages as $ksel => $sel) {
 		writeFile_and_User ($fw, "// ###\n");
 		writeFile_and_User ($fw, "// ### Technical justification:\n");
 		writeFile_and_User ($fw, "// ### If a string ending with colon needs translating (like \"{tr}Login:{/tr}\")\n");
-		writeFile_and_User ($fw, "// ### then Tiki tries to translate 'Login' and ':' separately.\n");
+		writeFile_and_User ($fw, "// ### then Tiki tries to translate 'Log In' and ':' separately.\n");
 		writeFile_and_User ($fw, "// ### This allows to have only one translation for \"{tr}Login{/tr}\" and \"{tr}Login:{/tr}\"\n");
 		writeFile_and_User ($fw, "// ### and it still allows to translate \":\" as \"&nbsp;:\" for languages that\n");
 		writeFile_and_User ($fw, "// ### need it (like french)\n");
@@ -610,8 +610,8 @@ foreach ($languages as $ksel => $sel) {
 			} else {
 
 				// Handle punctuations at the end of the string (cf. comments in lib/init/tra.php)
-				// For example, if word == 'Login:', we don't keep it if we also have a string 'Login'
-				//   (except if we already have an explicit translation for 'Login:')
+				// For example, if word == 'Login:', we don't keep it if we also have a string 'Log In'
+				//   (except if we already have an explicit translation for 'Log In:')
 				//
 				$word_length = strlen($word);
 				$word_last_char = $word[$word_length - 1];

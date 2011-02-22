@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_menupage_info() {
 	return array(
-		'name' => tra('Menu page'),
+		'name' => tra('Menu Page'),
 		'description' => tra('Displays a Wiki page.'),
 		'prefs' => array( 'feature_wiki' ),
 		'params' => array(

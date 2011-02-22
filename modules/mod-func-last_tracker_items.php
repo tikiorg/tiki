@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_last_tracker_items_info() {
 	return array(
-		'name' => tra('Last tracker items'),
+		'name' => tra('Newest Tracker Items'),
 		'description' => tra('Displays the value of a field of the specified number of tracker items. If the specified tracker has no main field, either Field name or Field identifier is required.'),
 		'prefs' => array( 'feature_trackers' ),
 		'params' => array(

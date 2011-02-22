@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_messages_unread_messages_info() {
 	return array(
-		'name' => tra('Unread inter-user messages'),
+		'name' => tra('Unread Inter-user Messages'),
 		'description' => tra('Displays to users their number of new inter-user messages and a link to their message box.'),
 		'prefs' => array( 'feature_messages' ),
 		'params' => array(

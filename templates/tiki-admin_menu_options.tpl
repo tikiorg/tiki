@@ -148,7 +148,7 @@
 										<select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
 											<option value=",,,">{tr}Choose{/tr} ...</option>
 											<option value="tiki-index.php,{tr}Wiki Home{/tr},feature_wiki,tiki_p_view">{tr}Wiki Home{/tr}</option>
-											<option value="tiki-lastchanges.php,{tr}Last changes{/tr},feature_lastChanges,tiki_p_view">{tr}Last changes{/tr}</option>
+											<option value="tiki-lastchanges.php,{tr}Latest Changes{/tr},feature_lastChanges,tiki_p_view">{tr}Latest Changes{/tr}</option>
 											<option value="tiki-wiki_rankings.php,{tr}Rankings{/tr},feature_wiki_rankings,tiki_p_view">{tr}Rankings{/tr}</option>
 											<option value="tiki-listpages.php,{tr}List pages{/tr},feature_listPages,tiki_p_view">{tr}List pages{/tr}</option>
 											<option value="tiki-index.php?page=SandBox,{tr}Sandbox{/tr},feature_sandbox,tiki_p_view">{tr}Sandbox{/tr}</option>

@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_top_articles_info() {
 	return array(
-		'name' => tra('Top articles'),
+		'name' => tra('Top Articles'),
 		'description' => tra('Lists the specified number of articles with links to them, from the most visited one to the least.'),
 		'prefs' => array( 'feature_articles' ),
 		'params' => array(),
