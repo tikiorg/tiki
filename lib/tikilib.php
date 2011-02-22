@@ -2109,10 +2109,10 @@ class TikiLib extends TikiDb_Bridge
 		global $prefs;
 		$vote = null;
 		if ($user) {
-			$vote = $this->getOne("select `optionId` from `tiki_user_votings` where `user` = ? and `id` = ?",array( $user, $id));
+			$vote = $this->getOne("select `optionId` from `tiki_user_votings` where `user` = ? and `id` = ? order by `time` desc",array( $user, $id));
 		}
 		if ($vote == null && $prefs['ip_can_be_checked'] == 'y') {
-			$vote = $this->getOne("select `optionId` from `tiki_user_votings` where `ip` = ? and `id` = ?",array( $user, $id));
+			$vote = $this->getOne("select `optionId` from `tiki_user_votings` where `ip` = ? and `id` = ? order by `time` desc",array( $user, $id));
 		}
 		return $vote;
 	}
