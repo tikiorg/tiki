@@ -14,7 +14,7 @@ class PreferencesLib
 	function PreferencesLib() {
 		global $prefs;
 		
-		$this->file = 'temp/cache/preference-index-' . $prefs['language'];
+		$this->file = 'temp/preference-index-' . $prefs['language'];
 	}
 
 	function getPreference( $name, $deps = true, $source = null, $get_pages = false ) {
@@ -23,19 +23,20 @@ class PreferencesLib
 		$data = $this->loadData( $name );
 
 		if( isset( $data[$name] ) ) {
-			$defaults = array('type' => '',
-								'helpurl' => '',
-								'help' => '',
-								'dependencies' => array(),
-								'extensions' => array(),
-								'options' => array(),
-								'description' => '',
-								'size' => 40,
-								'detail' => '',
-								'warning' => '',
-								'hint' => '',
-								'shorthint' => '',
-								'perspective' => true,
+			$defaults = array(
+				'type' => '',
+				'helpurl' => '',
+				'help' => '',
+				'dependencies' => array(),
+				'extensions' => array(),
+				'options' => array(),
+				'description' => '',
+				'size' => 40,
+				'detail' => '',
+				'warning' => '',
+				'hint' => '',
+				'shorthint' => '',
+				'perspective' => true,
 			);
 			$info = $data[$name];
 
@@ -234,12 +235,10 @@ class PreferencesLib
 	private function getIndex() {
 		global $prefs;
 		if( $prefs['language'] == 'en' ) {
-			require_once 'StandardAnalyzer/Analyzer/Standard/English.php';
 			Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 				new StandardAnalyzer_Analyzer_Standard_English() );
 		}
 
-		require_once 'Zend/Search/Lucene.php';
 		if( $this->indexNeedsRebuilding() ) {
 			$index = Zend_Search_Lucene::create( $this->file );
 
