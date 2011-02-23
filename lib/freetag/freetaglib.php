@@ -1178,12 +1178,13 @@ class FreetagLib extends ObjectLib
 	 * Once you have enough tags, the results are quite good. It is very organic
 	 * as tagging is human-technology.
 	 */
-	function get_similar( $type, $objectId, $maxResults = 10, $targetType = null, $with = 'freetag' )
+	function get_similar( $type, $objectId, $maxResults = 10, $targetType = null, $with = 'freetag', $minCommon=null )
 	{
 		global $prefs;
 		if ($with == 'category') {
 			$algorithm = $this->get_preference('category_morelikethis_algorithm', 'basic');
-			$minCommon = (int) $this->get_preference( 'category_morelikethis_mincommon', 2 );
+			if (empty($minCommon))
+				$minCommon = (int) $this->get_preference( 'category_morelikethis_mincommon', 2 );
 			$table = 'tiki_category_objects';
 			$column = 'categId';
 			$objectColumn = 'catObjectId';
@@ -1264,7 +1265,11 @@ class FreetagLib extends ObjectLib
 		while( $row = $result->fetchRow() )
 			$tags[] = $row;
 
-		return $tags;
+		if (empty($tags) && $prefs['category_morelikethis_mincommon_orless'] == 'y' && $with == 'category' && $minCommon > 1) {
+			return $this-> get_similar( $type, $objectId, $maxResults, $targetType, $with, $minCommon-1 );
+		} else {
+			return $tags;
+		}
 	}
 
 	/**

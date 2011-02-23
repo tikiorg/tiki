@@ -339,6 +339,7 @@ function get_default_prefs() {
 		'wikiplugin_tracker' => 'y',
 		'wikiplugin_trackerprefill' => 'y',
 		'wikiplugin_trackerstat' => 'y',
+		'wikiplugin_trackerif' => 'y',
 		'wikiplugin_trade' => 'n',
 		'wikiplugin_transclude' => 'y',
 		'wikiplugin_translated' => 'y',
@@ -914,6 +915,8 @@ function get_default_prefs() {
 		'freetags_multilingual' => 'n',
 		'morelikethis_algorithm' => 'basic',
 		'morelikethis_basic_mincommon' => '2',
+		'category_morelikethis_mincommon_orless' => 'y',
+		'category_morelikethis_mincommon_max' => 0,
 		'freetags_show_middle' => 'y',
 
 		// search

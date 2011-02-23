@@ -471,7 +471,7 @@ class WikiRenderer
 			}
 			if ($prefs['category_morelikethis_algorithm'] != '') {
 				global $freetaglib; include_once('lib/freetag/freetaglib.php');
-				$category_related_objects = $freetaglib->get_similar('wiki page', $this->page, $prefs['maxRecords'], null, 'category');
+				$category_related_objects = $freetaglib->get_similar('wiki page', $this->page, empty($prefs['category_morelikethis_mincommon_max'])?$prefs['maxRecords']: $prefs['category_morelikethis_mincommon_max'], null, 'category');
 				$this->smartyassign('category_related_objects', $category_related_objects);
 			}
 			if ($prefs['feature_categorypath'] == 'y') {	

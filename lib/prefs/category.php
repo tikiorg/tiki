@@ -84,6 +84,16 @@ function prefs_category_list() {
 				'10' => tra('10'),
 			),
 		),
+		'category_morelikethis_mincommon_orless' => array(
+			'name' => tra('Or look for the maximum less categories in common if no objects with the above number of common categories'),
+			'type' => 'flag',
+			),
+		'category_morelikethis_mincommon_max' => array(
+			'name' => tra('Maximum of objects more like this, otherwise use the default max records'),
+			'type' => 'text',
+			'size' => 3,
+			'filter' => 'int',
+			),
 	);
 }
 
