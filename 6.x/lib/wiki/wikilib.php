@@ -370,7 +370,7 @@ class WikiLib extends TikiLib
 		} else {
 			return $content;
 		}
-		$wiki_cache = !empty($info['wiki_cache']) ? $info['wiki_cache'] : $prefs['wiki_cache'];
+		$wiki_cache = !is_null($info['wiki_cache']) ? $info['wiki_cache'] : $prefs['wiki_cache'];
 		if ($wiki_cache > 0 && empty($user) ) {
 			$cache_info = $this->get_cache_info($page);
 			if (!empty($cache_info['cache_timestamp']) && $cache_info['cache_timestamp'] + $prefs['wiki_cache'] > $this->now) {
