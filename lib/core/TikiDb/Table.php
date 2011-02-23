@@ -61,16 +61,17 @@ class TikiDb_Table
 	 */
 	function update(array $values, array $conditions)
 	{
-		$bindvars = array();
-		$query = $this->buildUpdate($values, $conditions, $bindvars) . ' LIMIT 1';
-
-		return $this->db->query($query, $bindvars);
+		return $this->updateMultiple($values, $conditions, 1);
 	}
 
-	function updateMultiple(array $values, array $conditions)
+	function updateMultiple(array $values, array $conditions, $limit = null)
 	{
 		$bindvars = array();
 		$query = $this->buildUpdate($values, $conditions, $bindvars);
+
+		if (! is_null($limit)) {
+			$query .= ' LIMIT ' . intval($limit);
+		}
 
 		return $this->db->query($query, $bindvars);
 	}

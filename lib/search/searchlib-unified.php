@@ -2,15 +2,27 @@
 
 class UnifiedSearchLib
 {
-	private $incrementalQueue = array();
+	const INCREMENT_QUEUE = 'search-increment';
 
-	function processUpdateQueue()
+	function processUpdateQueue($count = 10)
 	{
-		if (count($this->incrementalQueue)) {
-			$indexer = $this->buildIndexer($this->getIndex());
-			$indexer->update($this->incrementalQueue);
-			$this->incrementalQueue = array();
+		if ($this->rebuildInProgress()) {
+			return;
 		}
+
+		$toProcess = TikiLib::lib('queue')->pull(self::INCREMENT_QUEUE, $count);
+
+		if (count($toProcess)) {
+			$indexer = $this->buildIndexer($this->getIndex());
+			$indexer->update($toProcess);
+		}
+	}
+
+	private function rebuildInProgress() {
+		global $prefs;
+		$tempName = $prefs['unified_lucene_location'] . '-new';
+
+		return file_exists($tempName);
 	}
 
 	function rebuild()
@@ -44,12 +56,19 @@ class UnifiedSearchLib
 			// Destroy old
 			$this->destroyDirectory($swapName);
 		}
+
+		// Process the documents updated while we were processing the update
+		$this->processUpdateQueue(1000);
+
 		return $stat;
 	}
 
 	function invalidateObject($type, $objectId)
 	{
-		$this->incrementalQueue[] = array('object_type' => $type, 'object_id' => $objectId);
+		TikiLib::lib('queue')->push(self::INCREMENT_QUEUE, array(
+			'object_type' => $type,
+			'object_id' => $objectId
+		));
 	}
 
 	private function buildIndexer($index)

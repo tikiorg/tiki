@@ -79,7 +79,7 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 		}
 	}
 
-	return '<a href="' . $escapedHref . '"' . $class . $metadata . '">' . $escapedPage . '</a>';
+	return '<a href="' . $escapedHref . '"' . $class . $metadata . '>' . $escapedPage . '</a>';
 }
 
 function smarty_function_object_link_user( $smarty, $user, $title = null ) {

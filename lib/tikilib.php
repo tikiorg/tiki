@@ -182,6 +182,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'poll':
 			global $polllib; require_once 'lib/polllib.php';
 			return $libraries[$name] = $polllib;
+		case 'queue':
+			require_once 'lib/queuelib.php';
+			return $libraries[$name] = new QueueLib;
 		}
 	}
 
