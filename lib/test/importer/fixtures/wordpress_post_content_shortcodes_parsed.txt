@@ -1,26 +1,77 @@
-~np~[caption id="attachment_45" align="alignright" width="300" caption="No primeiro dia da caminhada, no local que o ônibus deixa para começar a caminhada."]~/np~<a href="http://example.com/files/1881232-hostelaria-las-torres-0.jpg"><img class="size-medium wp-image-45" src="http://example.com/files/1881232-hostelaria-las-torres-0-300x225.jpg" alt="Hostelaria Las Torres" width="300" height="225" /></a>~np~[/caption]~/np~
+~np~[sosingle]~/np~
 
-<br class="spacer_" />
+<img class="aligncenter size-full wp-image-1304" title="gil21 scopy" src="http://pirex.com.br/wp-content/uploads/2009/10/gil21-scopy.jpg" alt="gil21 scopy" width="956" height="526" />
 
-<address>Originalmente publicado em <a href="http://www.travelblog.org/South-America/Chile/Magallanes/Torres-del-Paine/blog-237739.html" target="_blank">http://www.travelblog.org/South-America/Chile/Magallanes/Torres-del-Paine/blog-237739.html</a>
-</address>Neste post pretendo colocar algumas informações sobre a caminhada que fizemos no Parque Nacional Torres del Paine. Espero que possa ser útil. Se alguém algum dia ler isso e utilizar como fonte de informação para planejar sua viagem me avisa por favor (test em gmail.com) que ficarei feliz :-)
+~np~[/sosingle]~/np~
 
-Comentei por cima os equipamentos mais relevantes que utilizamos e também qual foi o trajeto escolhido. Muitas das opiniões refletem minha experiência de apenas nove dias no parque, aconselho buscar outras fontes de informação. A lista de equipos também não serve como checklist, falta um monte de coisas e tem um monte de checklists bons espalhados pela internet.
+~np~[solistagem]~/np~
 
-~np~[caption id="attachment_46" align="alignleft" width="225" caption="Caminhando na neve no Vale do Silêncio"]~/np~<a href="http://example.com/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg"><img class="size-medium wp-image-46 " src="http://example.com/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-225x300.jpg" alt="Caminhando na neve no Vale do Silêncio" width="225" height="300" /></a>~np~[/caption]~/np~
+<img class="alignnone size-medium wp-image-1304" title="gil21 scopy" src="http://pirex.com.br/wp-content/uploads/2009/10/gil21-scopy-625x344.jpg" alt="gil21 scopy" width="625" height="344" />
 
-O Torres del Paine, localizado na Patagônia Chilena, é um dos principais e mais bonitos parques da América do Sul (e também o mais organizado e com a maior estrutura que já estive). Para minha infelicidade as trilhas são muito bem marcadas (as vezes até demais) o que tornou totalmente inútil o uso da carta topográfica e da bussóla, porém certamente essa é uma preocupação a menos para quem estiver fazendo suas primeiras trilhas. Uma pessoa tem que fazer uma esforço muito grande para se perder no W ou no Circuito (ou então dar o azar de pegar condições climáticas muito ruins, o que não é comum mas acontece). Para maiores informações sobre o parque veja http://es.wikipedia.org/wiki/Torres_del_Paine ou http://www.torresdelpaine.cl/
+~np~[/solistagem]~/np~
 
-Optamos por fazer o "Circuito Grande" uma caminhada de 8 a 10 dias contornando as principais atrações da região. Desde o planejamento no Brasil esse era um dos momentos mais esperados da viagem. Nunca caminhamos antes com um mochilão com comida para tantos dias e também não sabíamos o que esperar do clima da região.
+<em>(vídeos c/celular: Leo Germani - frames: Pedro Bayeux) </em>
 
-No final tudo deu certo, foram oito noites e nove dias de caminhada. A seguir descrevo os equipamentos utilizados e também o roteiro percorrido. Para o nosso planejamento utilizamos principalmente as informações deste site aqui http://www.i-needtoknow.com/paine/
-<h2 style="text-align: center;">Equipamentos:</h2>
-<strong> </strong>
+Dez anos depois da primeira edição brasileira do livro " Cibercultura", de Pierre Lévy, <a href="http://www.cpflcultura.com.br/palestrante/claudio-prado">Cláudio Prado</a> organizou dois dias de debates e oficinas com o autor. Em uma edição do <a href="http://www.cpflcultura.com.br/" target="_blank">Café filosófico da CPFL Cultura</a> no teatro Guarany, em Santos, reuniram-se Lévy, Gilberto Gil, <a href="http://forumpermanente.incubadora.fapesp.br/portal/.convidados/laymert">Laymert Garcia dos Santos</a> (professor da Unicamp, autor de "Politizar as novas tecnologias"), <a href="http://samadeu.blogspot.com">Sergio Amadeu</a>, <a href="www.andrelemos.info">André Lemos</a> (professor da UFBA) e <a href="http://ecodigital.blogspot.com/">José Murilo Júnior</a>.
 
-<p>~np~[gallery link="file"]~/np~</p>
+~np~[solistagem]~/np~Confira vídeos e fotos do evento~np~[/solistagem]~/np~
 
-<p>~np~[gallery]~/np~</p>
+<!--more-->
+
+<img class="size-full wp-image-1302 alignleft" title="pierre" src="http://pirex.com.br/wp-content/uploads/2009/10/pierre.jpg" alt="pierre" width="481" height="260" /><img class="size-full wp-image-1303 alignleft" title="claudio" src="http://pirex.com.br/wp-content/uploads/2009/10/claudio.jpg" alt="claudio" width="471" height="260" />
 
 ~np~[barra]~/np~
-Passei uns vinte minutos em Viena e só o que vi ao lado da estação de trem me impressionou. Bicicletários, aluguel de bicicleta, muita gente passando de bicicleta. A cidade deve ter uma circulação bem grande de bicicletas.
-~np~[/barra]~/np~
+
+Gilberto Gil tenta explicar para a imprensa do que se tratava o evento.
+~np~[youtube width="625" height="517"]~/np~http://www.youtube.com/watch?v=4UCOWCfUkKU~np~[/youtube]~/np~
+
+[--]
+
+No primeiro dia a conversa foi dividida em duas partes. Pela manhã discutiu-se sobre os 10 anos passados e sobre o entendimento que se tinha sobre a cibercultura quando o livro foi escrito. Lévy contou que o livro foi uma encomenda de uma executiva do Conselho da União Europeia, que queria levar as dicussões que Lévy colocava em suas palestras para os outros membros do conselho. Na época quem dava mais atenção às ideias do autor eram os artistas, músicos, ativistas - e demorou algum tempo até que as pessoas entendessem os potenciais da rede que Lévy levantava.
+
+Na segunda metade, a tarde, discutiu-se um pouco sobre o futuro - os próximos 10 anos. O autor francês discorreu sobre sua tese de uma <a href="http://en.wikipedia.org/wiki/Semantic_Web">web semântica</a>, semelhante a ideia de Tim Berners Lee, mas com suas particularidades. No debate, os outros participantes mostraram um certo ceticismo à ideia de Levy de se criar um protocolo universal (e não totalizante) para que as pessoas significassem e dessem sentido à todo o conteúdo da web. De outro lado, também levantaram a questão da exclusão social que ainda assola países como o Brasil e impede que milhares de pessoas participem da revolução digital. "No Brasil, a tecnologia do alfabeto ainda não chegou para milhares de pessoas, e é milenar, então falar que é só uma questão de tempo para que todos tenham acesso rede não me convence".
+
+~np~[/barra]~/np~<strong>
+Por que o Brasil tem um papel de liderança nas discussões de cultura digital no mundo?</strong>
+~np~[colunas]~/np~
+~np~[youtube width="475" height="394"]~/np~http://www.youtube.com/watch?v=2dArLZ6ngt4~np~[/youtube]~/np~
+Claudio: "~np~[citando tese do Laymert]~/np~ O fato de o Brasil ter trazido as discussões de tecnologia e cultura para dentro das estruturas ~np~[governamentais]~/np~ é o que traz ao Brasil a liderança..."
+
+[--]
+~np~[youtube width="475" height="394"]~/np~http://www.youtube.com/watch?v=t32j7A6YM9Y~np~[/youtube]~/np~
+Gilberto Gil:<strong> "Brasil é a civilização da remixagem"</strong>
+
+~np~[/colunas]~/np~
+
+~np~[colunas]~/np~
+
+Bem Gil, Claudio, Cris e Decio se preparando para a oficina do segundo dia.
+~np~[youtube width="475" height="394"]~/np~http://www.youtube.com/watch?v=97bbD1ssiN4~np~[/youtube]~/np~
+
+[--]
+
+No segundo dia do evento a proposta era bem aberta. Uma oficina/show/conversa com Gilberto Gil, onde ele relembraria todas as suas músicas que trataram de alguma maneira do tema da cibercultura. Enquanto isso, as pessoas poderiam gravar e remixar o áudio e vídeo do que estava rolando. Cláudio foi conduzindo uma especie de entrevista e Gil foi contanto historias e cantando algumas músicas. Nos vídeos ao lado um pouco do que rolou.
+
+~np~[issuu layout=http%3A%2F%2Fskin.issuu.com%2Fv%2Flight%2Flayout.xml showflipbtn=true documentid=091021041701-c8726f60a5144718ba085feb4309942c docname=ciber username=pedrobayeux loadinginfotext=Cibercultura%2010%2B10 width=470 height=367 unit=px]~/np~
+
+~np~[/colunas]~/np~
+
+~np~[colunas]~/np~
+
+Cris Scabello executa música com remix de trechos das falas do debate
+~np~[youtube width="475" height="394"]~/np~http://www.youtube.com/watch?v=zJuak0icmNo~np~[/youtube]~/np~
+
+Giberto Gil canta e comenta Cérebro Eletronico.
+~np~[youtube width="475" height="394"]~/np~http://www.youtube.com/watch?v=nFPAb3bncEw~np~[/youtube]~/np~
+
+[--]
+
+Gilberto Gil conta como conheceu os Mutantes e como foi a preparação para a apresentação de "Domingo no Parque"
+~np~[youtube width="475" height="394"]~/np~http://www.youtube.com/watch?v=2HNlvxqe9z0~np~[/youtube]~/np~
+
+Gilberto Gil canta e comenta Futurível
+~np~[youtube width="475" height="394"]~/np~http://www.youtube.com/watch?v=Bx4u5PHNagI~np~[/youtube]~/np~
+
+~np~[/colunas]~/np~
+
+<img class="aligncenter size-full wp-image-1317" title="gil21 qweqweqwcopy" src="http://pirex.com.br/wp-content/uploads/2009/10/gil21-qweqweqwcopy.jpg" alt="gil21 qweqweqwcopy" width="471" height="260" /><img class="aligncenter size-full wp-image-1320" title="gil21qweqw copy" src="http://pirex.com.br/wp-content/uploads/2009/10/gil21qweqw-copy.jpg" alt="gil21qweqw copy" width="471" height="260" /><img class="aligncenter size-full wp-image-1319" title="gil21dfdsfafds copy" src="http://pirex.com.br/wp-content/uploads/2009/10/gil21dfdsfafds-copy.jpg" alt="gil21dfdsfafds copy" width="471" height="260" /><img class="aligncenter size-full wp-image-1322" title="gil21wqwwq copy" src="http://pirex.com.br/wp-content/uploads/2009/10/gil21wqwwq-copy.jpg" alt="gil21wqwwq copy" width="471" height="260" />

@@ -659,7 +659,17 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	{
 		$matches = array();
 		
-		preg_match_all('|\[([^\s\]/]*)\b(.*?)/?](?:(.*?)\[/\1])?|s', $content, $matches, PREG_SET_ORDER);
+		// match all forms of wordpress shortcodes
+		$regex = '|\[([^\s\]/]*)\b(.*?)/?](?:(.*?)\[/\1])?|s';
+		
+		preg_match_all($regex, $content, $matches, PREG_SET_ORDER);
+		
+		// check for shortcodes inside other shortcodes
+		foreach ($matches as $match) {
+			if (!empty($match[3]) && preg_match($regex, $match[3])) {
+				$matches = array_merge($matches, $this->matchWordpressShortcodes($match[3]));
+			}
+		}
 		
 		// order matches array with the biggest shortcode string first
 		// to avoid problems when replacing it (the smallest shortcode string
