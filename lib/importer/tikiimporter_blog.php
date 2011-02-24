@@ -138,10 +138,11 @@ class TikiImporter_Blog extends TikiImporter
 			
 			if (!empty($items)) {
 				//TODO: move this foreach to a function (insertItems())
-				foreach ($items as $item) {
+				foreach ($items as $key => $item) {
 					$methodName = 'insert' . ucfirst($item['type']);
 	
 					if ($objId = $this->$methodName($item)) {
+						$items[$key]['objId'] = $objId;
 						if ($item['type'] == 'page') {
 							$type = 'wiki page';
 							$msg = tra("Page \"${item['name']}\" sucessfully imported");
@@ -162,6 +163,10 @@ class TikiImporter_Blog extends TikiImporter
 							$this->linkObjectWithCategories($objId, $type, $item['categories']);
 						}
 						
+						if (!empty($this->permalinks)) {
+							$this->storeNewLink($objId, $item);
+						}
+						
 						$this->saveAndDisplayLog($msg . "\n");					
 					} else {
 						//TODO: improve feedback reporting the difference between the number of items found and items imported
@@ -174,6 +179,10 @@ class TikiImporter_Blog extends TikiImporter
 						$this->saveAndDisplayLog(tra("Item \"${item['name']}\" NOT imported (there was already a item with the same name)") . "\n");
 					}
 				}
+				
+				if (!empty($this->permalinks)) {
+					$this->replaceInternalLinks($items);
+				}
 			}
 		}
 
@@ -184,7 +193,89 @@ class TikiImporter_Blog extends TikiImporter
 		
 		return $countData;
 	}
-
+	
+	/**
+	 * Map the old WP link with the new Tiki link for a
+	 * given item. This information is stored in 
+	 * $this->permalinks and used later to replace internal
+	 * links in post and page content.
+	 * 
+	 * @param int|string $objId int id when blog post or pageName when page
+	 * @param array $item
+	 * @return void
+	 */
+	function storeNewLink($objId, $item)
+	{
+		global $prefs, $base_url;
+		
+		if (substr($base_url, -1) != '/') {
+			$base_url .= '/';
+		}
+		
+		if (isset($this->permalinks[$item['wp_id']])) {
+			if ($item['type'] == 'page') {
+				if ($prefs['feature_sefurl'] == 'y') {
+					$this->permalinks[$item['wp_id']]['newLink'] = $base_url . $objId;
+				} else {
+					$this->permalinks[$item['wp_id']]['newLink'] = $base_url . 'tiki-index.php?page=' . $objId;
+				}
+			} else {
+				// post
+				if ($prefs['feature_sefurl'] == 'y') {
+					$this->permalinks[$item['wp_id']]['newLink'] = $base_url . 'blogpost' . $objId;
+				} else {
+					$this->permalinks[$item['wp_id']]['newLink'] = $base_url . 'tiki-view_blog_post.php?postId=' . $objId;
+				}
+			} 
+		}
+	}
+	
+	/**
+	 * Replace old WP links with new Tiki links inside
+	 * post or page content directly in the database.
+	 * 
+	 * @param array $items
+	 * @return void
+	 */
+	function replaceInternalLinks($items)
+	{
+		global $tikilib, $bloglib;
+		
+		foreach ($items as $item) {
+			if ($item['hasInternalLinks']) {
+				$changed = false;
+				
+				if ($item['type'] == 'page') {
+					$page = $tikilib->get_page_info($item['objId']);
+					$content = $page['data'];
+				} else {
+					// post
+					$post = $bloglib->get_post($item['objId']);
+					$content = $post['data'];
+				}
+				
+				foreach ($this->permalinks as $key => $links) {
+					foreach ($links['oldLinks'] as $link) {
+						if (strpos($content, $link) !== false) {
+							$newLink = $this->permalinks[$key]['newLink'];
+							$content = str_replace($link, $newLink, $content);
+							$changed = true;
+						}
+					}
+				}
+				
+				if ($changed) {
+					if ($item['type'] == 'page') {
+						TikiDb::get()->query('UPDATE `tiki_pages` SET `data` = ? WHERE `pageName` = ?', array($content, $item['objId']));
+					} else {
+						// post
+						TikiDb::get()->query('UPDATE `tiki_blog_posts` SET `data` = ? WHERE `postId` = ?', array($content, $item['objId']));
+					}
+				}
+			}
+		}
+	}
+	
 	/**
 	 * Create blog based on $this->blogInfo and 
 	 * set new blog as Tiki home page if option selected.

@@ -38,12 +38,22 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	public $newFiles = array();
 
 	/**
+	 * List	of permanent links to pages and posts
+	 * in the blog. Used to identify in the posts and pages 
+	 * contents internal links that will be replaced after
+	 * the refered object is created in Tiki. 
+	 * @var array
+	 */
+	public $permalinks = array();
+	
+	/**
 	 * @see lib/importer/TikiImporter#importOptions()
 	 */
 	static public function importOptions()
 	{
 		$options = array(
 			array('name' => 'importAttachments', 'type' => 'checkbox', 'label' => tra('Import images and other attachments')),
+			array('name' => 'replaceInternalLinks', 'type' => 'checkbox', 'label' => tra('Update internal links (experimental)')),
 		);
 		
 		return $options;
@@ -118,6 +128,10 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 			$this->downloadAttachments();
 		}
 		
+		if (isset($_POST['replaceInternalLinks']) && $_POST['replaceInternalLinks'] == 'on') {
+			$this->permalinks = $this->extractPermalinks();
+		}
+
 		parent::import();
 	}
 
@@ -176,6 +190,52 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	}
 	
 	/**
+	 * Get all the permalinks to posts and pages from
+	 * the XML document. This is used later to replace internal
+	 * links in post and page content.
+	 * 
+	 * @return array permalinks
+	 */
+	function extractPermalinks()
+	{
+		$data = $this->dom->getElementsByTagName('item');
+		$permalinks = array();
+		
+		foreach ($data as $item) {
+			$oldLinks = array();
+			$type = $item->getElementsByTagName('post_type')->item(0)->nodeValue;
+			$status = $item->getElementsByTagName('status')->item(0)->nodeValue;
+
+			if (($type == 'post' || $type == 'page') && $status == 'publish') {
+				foreach ($item->childNodes as $node) {
+					if ($node instanceof DOMElement) {
+						switch ($node->tagName) {
+							case 'wp:post_id':
+								$id = $node->textContent;
+								break;
+							case 'link':
+							case 'guid':
+								$oldLinks[] = $node->textContent;
+								if (strpos($node->textContent, $this->blogInfo['link']) !== false) {
+									$oldLinks[] = str_replace($this->blogInfo['link'], '', $node->textContent);
+								}
+								break;
+							default:
+								break;
+						}
+					}
+				}
+			}
+			
+			if (!empty($oldLinks)) {
+				$permalinks[$id]['oldLinks'] = $oldLinks;
+			}
+		}
+		
+		return $permalinks;
+	}
+	
+	/**
 	 * Extract pages, posts and attachments
 	 * 
 	 * @return array all extract items (pages, posts and attachments)
@@ -195,6 +255,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 			if (($type == 'post' || $type == 'page') && $status == 'publish') {
 				try {
+					$this->currentItem = $item;
 					$items[$type . 's'][] = $this->extractInfo($item);
 				} catch (ImporterParserException $e) {
 					$this->saveAndDisplayLog($e->getMessage(), true);
@@ -434,12 +495,6 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 					case 'wp:post_id':
 						$data['wp_id'] = (int) $node->textContent;
 						break;
-					case 'guid':
-						$data['wp_guid'] = (string) $node->textContent;
-						break;
-					case 'link':
-						$data['wp_link'] = (string) $node->textContent;
-						break;
 					case 'wp:post_type':
 						$data['type'] = (string) $node->textContent;
 						break;
@@ -476,6 +531,10 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 			}
 		}
 
+		if (!empty($this->permalinks)) {
+			$data['hasInternalLinks'] = $this->identifyInternalLinks($data);
+		}
+		
 		// create revision key to reuse TikiImporter_Wiki::insertPage()
 		if ($data['type'] == 'page') {
 			$revision = array();
@@ -683,6 +742,29 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		
 		return $comment;
 	}
+
+	/**
+	 * Search a page or post content for internal links and
+	 * return true if a internal link is found, otherwise
+	 * return false.
+	 * 
+	 * @param array $item a page or post data
+	 * @return bool wheter the item has or not internal links
+	 */
+	function identifyInternalLinks($item)
+	{
+		foreach ($this->permalinks as $links) {
+			// in WP each post or page in general has two different permalinks
+			// one with the item id and other with the title
+			foreach ($links['oldLinks'] as $link) {
+				if (strpos($item['content'], $link) !== false) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
 	
 	/**
 	 * Extract blog information (title, description etc) and
@@ -691,6 +773,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	function extractBlogInfo()
 	{
 		$this->blogInfo['title'] = $this->dom->getElementsByTagName('title')->item(0)->nodeValue;
+		$this->blogInfo['link'] = rtrim($this->dom->getElementsByTagName('link')->item(0)->nodeValue, '/');
 		$this->blogInfo['desc'] = $this->dom->getElementsByTagName('description')->item(0)->nodeValue;
 		$this->blogInfo['lastModif'] = strtotime($this->dom->getElementsByTagName('pubDate')->item(0)->nodeValue);
 		

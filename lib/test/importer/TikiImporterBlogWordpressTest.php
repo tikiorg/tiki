@@ -19,12 +19,13 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
     {
         $parsedData = 'Some text';
 
-        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('validateInput', 'extractBlogInfo', 'parseData', 'insertData', 'setupTiki'));
+        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('validateInput', 'extractBlogInfo', 'parseData', 'insertData', 'setupTiki', 'extractPermalinks'));
         $obj->expects($this->once())->method('validateInput');
         $obj->expects($this->once())->method('extractBlogInfo')->will($this->returnValue(array()));
         $obj->expects($this->once())->method('parseData')->will($this->returnValue($parsedData));
         $obj->expects($this->once())->method('insertData')->with($parsedData);
         $obj->expects($this->once())->method('setupTiki');
+        $obj->expects($this->exactly(0))->method('extractPermalinks');
 
         $this->expectOutputString("Loading and validating the XML file\n\nImportation completed!\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>");
         $_FILES['importFile']['type'] = 'text/xml'; 
@@ -39,18 +40,21 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
     {
         $parsedData = 'Some text';
 
-        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('validateInput', 'extractBlogInfo', 'parseData', 'insertData', 'downloadAttachments', 'setupTiki'));
+        $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('validateInput', 'extractBlogInfo', 'parseData', 'insertData', 'downloadAttachments', 'setupTiki', 'extractPermalinks'));
         $obj->expects($this->once())->method('validateInput');
         $obj->expects($this->once())->method('extractBlogInfo')->will($this->returnValue(array()));
         $obj->expects($this->once())->method('parseData')->will($this->returnValue($parsedData));
         $obj->expects($this->once())->method('insertData')->with($parsedData);
         $obj->expects($this->once())->method('downloadAttachments');
         $obj->expects($this->once())->method('setupTiki');
+        $obj->expects($this->once())->method('extractPermalinks');
         $_POST['importAttachments'] = 'on';
+        $_POST['replaceInternalLinks'] = 'on';
 
         $obj->import(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
         
         unset($_POST['importAttachments']);
+        unset($_POST['replaceInternalLinks']);
     }
 
     public function testParseData()
@@ -62,15 +66,85 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
         $this->assertEquals(4, count($parsedData));
 	}
 	
+	public function testExtractPermalinks()
+	{
+		$this->obj->dom = new DOMDocument;
+        $this->obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
+        $this->obj->blogInfo['link'] = 'http://rodrigo.utopia.org.br';
+        
+        $expectedResult = array(
+        	107 => array(
+        		'oldLinks' => array(
+        			'http://rodrigo.utopia.org.br/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/',
+        			'/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/',
+        			'http://rodrigo.utopia.org.br/?p=107',
+        			'/?p=107',
+        		),
+        	),
+        	36 => array(
+        		'oldLinks' => array(
+	        		'http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/',
+	        		'/2008/01/20/circuito-grande-torres-del-paine/',
+	        		'http://rodrigo.utopia.org.br/?p=36',
+	        		'/?p=36',
+        		),
+        	),
+        	73 => array(
+        		'oldLinks' => array(
+	        		'http://rodrigo.utopia.org.br/2008/02/23/lo-mas-importante-son-los-veinte/',
+	        		'/2008/02/23/lo-mas-importante-son-los-veinte/',
+	        		'http://rodrigo.utopia.org.br/?p=73',
+	        		'/?p=73',
+        		),
+        	),
+        	10 => array(
+        		'oldLinks' => array(
+	        		'http://rodrigo.utopia.org.br/2009/05/04/como-impedir-que-o-editor-do-wordpress-tinymce-remova-quebras-de-linha/',
+	        		'/2009/05/04/como-impedir-que-o-editor-do-wordpress-tinymce-remova-quebras-de-linha/',
+	        		'http://rodrigo.utopia.org.br/?p=10',
+	        		'/?p=10',
+        		),
+        	),
+        );
+        
+        $this->assertEquals($expectedResult, $this->obj->extractPermalinks());
+	}
+
+	public function testIdentifyInternalLinks()
+	{   
+		$this->obj->permalinks = array(
+        	107 => array(
+        		'oldLinks' => array(
+	        		'http://rodrigo.utopia.org.br/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/',
+	        		'http://rodrigo.utopia.org.br/?p=107',
+        		),
+        	),
+        	36 => array(
+        		'oldLinks' => array(
+	        		'http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/',
+	        		'http://rodrigo.utopia.org.br/?p=36',
+        		),
+        	),
+        );
+		
+		$item['wp_id'] = 10;
+        $item['content'] = 'Continuação do post sobre o uso de bicicletas na Europa. <a href="http://rodrigo.utopia.org.br/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/">Teste</a> E continua o texto por aqui.';
+        $this->assertTrue($this->obj->identifyInternalLinks($item));
+        
+        $item['wp_id'] = 11;
+        $item['content'] = 'Continuação do post sobre o uso de bicicletas na Europa. <a href="http://example.com/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/">Teste</a> E continua o texto por aqui.';
+        $this->assertFalse($this->obj->identifyInternalLinks($item));
+	}
+	
 	public function testExtractItems()
 	{
         $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractInfo'));
         $obj->dom = new DOMDocument;
         $obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
-        $obj->expects($this->exactly(5))->method('extractInfo')->will($this->returnValue(array()));
+        $obj->expects($this->exactly(4))->method('extractInfo')->will($this->returnValue(array()));
         
         $expectedResult = array(
-        	'posts' => array(array(), array(), array(), array()),
+        	'posts' => array(array(), array(), array()),
         	'pages' => array(array()),
         );
         
@@ -122,9 +196,12 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 	
 	public function testExtractInfoPost()
 	{
-		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractComment', 'parseContent'));
+		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractComment', 'parseContent', 'identifyInternalLinks'));
 		$obj->expects($this->exactly(3))->method('extractComment')->will($this->returnValue(true));
 		$obj->expects($this->any())->method('parseContent')->will($this->returnValue('Test'));
+		$obj->expects($this->once())->method('identifyInternalLinks')->will($this->returnValue(true));
+		
+		$obj->permalinks = array('not empty');
 		
 		$expectedResult = array(
 			'categories' => array(
@@ -143,14 +220,13 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 				2 => true,
 			),
 			'name' => 'Lo más importante son los veinte',
-			'wp_id' => 73,
-			'wp_guid' => 'http://rodrigo.hacklab.com.br/?p=73',
-			'wp_link' => 'http://rodrigo.utopia.org.br/2008/02/23/lo-mas-importante-son-los-veinte/',
 			'author' => 'rodrigo',
 			'content' => 'Test',
 			'excerpt' => '',
+			'wp_id' => 73,
 			'created' => '1203784780',
 			'type' => 'post',
+			'hasInternalLinks' => true,
 		);
 
 		$obj->dom = new DOMDocument;
@@ -162,8 +238,12 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 
 	public function testExtractInfoPage()
 	{
-		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('parseContent'));
+		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('extractComments', 'parseContent', 'identifyInternalLinks'));
+		$obj->expects($this->exactly(0))->method('extractComment')->will($this->returnValue(true));
 		$obj->expects($this->any())->method('parseContent')->will($this->returnValue('Test'));
+		$obj->expects($this->once())->method('identifyInternalLinks')->will($this->returnValue(true));
+		
+		$obj->permalinks = array('not empty');
 		
 		$expectedResult = array(
 			'categories' => array(
@@ -179,14 +259,13 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 			),
 			'comments' => array(),
 			'name' => 'Matéria sobre a viagem de bicicleta entre as chapadas',
-			'wp_id' => 107,
-			'wp_guid' => 'http://rodrigo.hacklab.com.br/?p=107',
-			'wp_link' => 'http://rodrigo.utopia.org.br/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/',
 			'author' => 'rodrigo',
 			'content' => 'Test',
 			'excerpt' => '',
+			'wp_id' => 107,
 			'created' => 1173636811,
 			'type' => 'page',
+			'hasInternalLinks' => true,
 			'revisions' => array(
 				array(
 					'data' => 'Test',
@@ -261,6 +340,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 	{
 		$expectedResult = array(
 			'title' => 'rodrigo.utopia.org.br',
+			'link' => 'http://rodrigo.utopia.org.br',
 			'desc' => 'Software livre, cicloativismo, montanhismo e quem sabe permacultura',
 			'lastModif' => 1284989827,
 			'created' => 1173636811,
