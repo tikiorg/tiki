@@ -20,3 +20,7 @@ No final tudo deu certo, foram oito noites e nove dias de caminhada. A seguir de
 <p>~np~[gallery link="file"]~/np~</p>
 
 <p>~np~[gallery]~/np~</p>
+
+~np~[barra]~/np~
+Passei uns vinte minutos em Viena e só o que vi ao lado da estação de trem me impressionou. Bicicletários, aluguel de bicicleta, muita gente passando de bicicleta. A cidade deve ter uma circulação bem grande de bicicletas.
+~np~[/barra]~/np~

@@ -143,6 +143,9 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 				2 => true,
 			),
 			'name' => 'Lo más importante son los veinte',
+			'wp_id' => 73,
+			'wp_guid' => 'http://rodrigo.hacklab.com.br/?p=73',
+			'wp_link' => 'http://rodrigo.utopia.org.br/2008/02/23/lo-mas-importante-son-los-veinte/',
 			'author' => 'rodrigo',
 			'content' => 'Test',
 			'excerpt' => '',
@@ -176,6 +179,9 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 			),
 			'comments' => array(),
 			'name' => 'Matéria sobre a viagem de bicicleta entre as chapadas',
+			'wp_id' => 107,
+			'wp_guid' => 'http://rodrigo.hacklab.com.br/?p=107',
+			'wp_link' => 'http://rodrigo.utopia.org.br/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/',
 			'author' => 'rodrigo',
 			'content' => 'Test',
 			'excerpt' => '',
@@ -581,11 +587,13 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 	public function testMatchWordpressShortcodes()
 	{
 		$content = "[my-shortcode] [my-shortcode/] [my-shortcode foo='bar' bar='foo'] [my-shortcode foo='bar'/]
-			[my-shortcode]content[/my-shortcode] [my-shortcode foo='bar' bar='foo']content[/my-shortcode]";
+			[my-shortcode2]content[/my-shortcode2] [my-shortcode2 foo='bar' bar='foo']content[/my-shortcode2] 
+			[my-shortcode2 foo='bar' bar='foo']\n\ncontent\n\n[/my-shortcode2]";
 		
 		$expectedResult = array(
-			array("[my-shortcode foo='bar' bar='foo']content[/my-shortcode]", 'my-shortcode', " foo='bar' bar='foo'", 'content'),
-			array('[my-shortcode]content[/my-shortcode]', 'my-shortcode', '', 'content'),
+			array("[my-shortcode2 foo='bar' bar='foo']\n\ncontent\n\n[/my-shortcode2]", 'my-shortcode2', " foo='bar' bar='foo'", "\n\ncontent\n\n"),
+			array("[my-shortcode2 foo='bar' bar='foo']content[/my-shortcode2]", 'my-shortcode2', " foo='bar' bar='foo'", 'content'),
+			array('[my-shortcode2]content[/my-shortcode2]', 'my-shortcode2', '', 'content'),
 			array("[my-shortcode foo='bar' bar='foo']", 'my-shortcode', " foo='bar' bar='foo'"),
 			array("[my-shortcode foo='bar'/]", 'my-shortcode', " foo='bar'"),
 			array('[my-shortcode/]', 'my-shortcode', ''),

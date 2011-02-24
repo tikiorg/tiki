@@ -117,7 +117,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		if (!empty($_POST['importAttachments']) && $_POST['importAttachments'] == 'on') {
 			$this->downloadAttachments();
 		}
-
+		
 		parent::import();
 	}
 
@@ -156,7 +156,6 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		}
 	}
 
-	//TODO: handle categories
 	/**
 	 * Calls the respective functions to extract and parse (when needed)
 	 * items (pages, posts and attachments), categories and tags.
@@ -176,7 +175,6 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		return $parsedData;
 	}
 	
-	//TODO: handle attachments
 	/**
 	 * Extract pages, posts and attachments
 	 * 
@@ -273,7 +271,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	
 	/**
 	 * Searches for the last version of each attachments in the XML file
-	 * and try to download it to the img/wiki_up/ directory
+	 * and try to download it to a new file gallery
 	 *
 	 * @return void
 	 */
@@ -313,7 +311,6 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 			$mimeType = $response->getHeader('Content-type');
 
 			if ($response->isSuccessful()) {
-				//TODO: option to create a new file gallery for blog attachments
 				$fileId = $filegallib->insert_file($galleryId, $attachment['name'], '', $attachment['fileName'], $data, $size, $mimeType, $attachment['author'], '', '', $attachment['author']);
 				
 				$this->newFiles[] = array('fileId' => $fileId, 'oldUrl' => $attachment['link'], 'sizes' => isset($attachment['sizes']) ? $attachment['sizes'] : '');
@@ -431,10 +428,17 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		foreach ($item->childNodes as $node) {
 			if ($node instanceof DOMElement) {
 				switch ($node->tagName)	{
-					case 'id':
-						break;
 					case 'title':
 						$data['name'] = (string) $node->textContent;
+						break;
+					case 'wp:post_id':
+						$data['wp_id'] = (int) $node->textContent;
+						break;
+					case 'guid':
+						$data['wp_guid'] = (string) $node->textContent;
+						break;
+					case 'link':
+						$data['wp_link'] = (string) $node->textContent;
 						break;
 					case 'wp:post_type':
 						$data['type'] = (string) $node->textContent;
@@ -467,7 +471,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 						} 
 						break;
 					default:
-						break;					
+						break;
 				}
 			}
 		}
@@ -596,7 +600,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	{
 		$matches = array();
 		
-		preg_match_all('|\[([^\s\]/]*)\b(.*?)/?](?:(.*?)\[/\1])?|', $content, $matches, PREG_SET_ORDER);
+		preg_match_all('|\[([^\s\]/]*)\b(.*?)/?](?:(.*?)\[/\1])?|s', $content, $matches, PREG_SET_ORDER);
 		
 		// order matches array with the biggest shortcode string first
 		// to avoid problems when replacing it (the smallest shortcode string

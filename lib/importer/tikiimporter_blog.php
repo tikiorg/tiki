@@ -106,7 +106,7 @@ class TikiImporter_Blog extends TikiImporter
 	/**
 	 * Insert the imported data into Tiki.
 	 * 
-	 * @param array $parsedData the return of $this->parseData()
+	 * @param array $parsedData the return of $this->parseData() (all the data that will be imported)
 	 *
 	 * @return array $countData stats about the content that has been imported
 	 */
