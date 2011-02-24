@@ -244,7 +244,8 @@ $(".trackerfilter form").submit( function () {
 				$params['filtervalue'] = array_merge($params['filtervalue'], $values);
 			}
 		}
-		$params['max'] = $prefs['maxRecords'];
+		if (empty($params['max']))
+			$params['max'] = $prefs['maxRecords'];
 		wikiplugin_trackerFilter_save_session_filters($params);
 		$smarty->assign('urlquery', wikiplugin_trackerFilter_build_urlquery($params));
 		include_once('lib/wiki-plugins/wikiplugin_trackerlist.php');
