@@ -171,7 +171,7 @@ if (!empty($_FILES) && !empty($_FILES['newsletterfile'])) {
 		}
 	}
 }
-$info['files'] = $newsletterfiles;
+$_REQUEST['files'] = $info['files'] = $newsletterfiles;
 foreach($info['files'] as $k => $newsletterfile) {
 	if ($newsletterfile['savestate'] == 'phptmp') {
 		// move it to temp
