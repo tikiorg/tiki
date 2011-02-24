@@ -100,6 +100,15 @@ class PaymentLib extends TikiDb_Bridge
 			$info['url'] = $tikilib->tikiUrl( 'tiki-payment.php', array(
 				'invoice' => $info['paymentRequestId'],
 			) );
+			$info['returnurl'] = $info['url'];
+			// Add token if feature is activated (need prefs
+			if ($prefs['auth_token_access'] == 'y' && (!$user || isset($_SESSION['forceanon']) && $_SESSION['forceanon'] = 'y' && !Perms::get('payment', $info['paymentRequestId'])->manual_payment)) {
+				require_once('lib/wiki-plugins/wikiplugin_getaccesstoken.php');
+				$info['returnurl'] = $tikilib->tikiUrl( 'tiki-payment.php', array(
+					'invoice' => $info['paymentRequestId'],
+					'TOKEN' => wikiplugin_getaccesstoken( '', array('entry' => 'tiki-payment.php', 'keys' => array('invoice'), 'values' => array($info['paymentRequestId'])) ),
+				) );
+			} 
 			$info['paypal_ipn'] = $tikilib->tikiUrl( 'tiki-payment.php', array(
 				'ipn' => 1,
 				'invoice' => $info['paymentRequestId'],
