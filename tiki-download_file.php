@@ -310,10 +310,10 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 				}
 		
 				if ( ! isset($_GET['icon']) || ( isset($_GET['format']) && $_GET['format'] != $format ) ) {
-	  			if ( ! empty($info['path']) ) {
+					if ( ! empty($info['path']) ) {
 						$image = new Image($prefs['fgal_use_dir'].$info['path'], true);
 					} else {
-						$image = new Image($content);
+						$image = new Image($content, false, $format);
 						$content = null; // Explicitely free memory before getting cache
 					}
 					if ( $image->is_empty() ) die;
