@@ -47,15 +47,15 @@
 
 
 {if $prefs.javascript_enabled eq 'y'}
-<div id="upload_progress">
-<iframe id="upload_progress_0" name="upload_progress_0" height="1" width="1" style="border:0px none"></iframe>
-</div>
 <div id='progress'>
-<div id='progress_0'></div>
+	<div id='progress_0'></div>
+</div>
+<div id="upload_progress">
+	<iframe id="upload_progress_0" name="upload_progress_0" height="1" width="1" style="border:0px none"></iframe>
 </div>
 {/if}
 
-{if count($uploads) > 0}
+{if isset($uploads) and count($uploads) > 0}
 	<h2>
 	{if count($uploads) eq 1}
 		{tr}The following file was successfully uploaded:{/tr}
@@ -112,150 +112,158 @@
 {/if}
 
 <div>
+
+
 	{capture name=upload_file assign=upload_str}
-	<hr class="clear"/>
-
-
-
-	<div class="fgal_file">
+		<hr class="clear"/>
+	
+		<div class="fgal_file">
 		<div class="fgal_file_c1">
-		<table width="100%">
-			{if $simpleMode neq 'y'}<tr>
-				<td><label for="name">{tr}File title:{/tr}</label></td>
-				<td width="80%">
-					<input style="width:100%" type="text" id="name" name="name[]" {if isset($fileInfo) and $fileInfo.name}value="{$fileInfo.name}"{/if} size="40" /> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}
-				</td>
-			</tr>
-			<tr>
-				<td><label for="description">{tr}File description:{/tr}</label></td>
-				<td>
-					<textarea style="width:100%" rows="2" cols="40" id="description" name="description[]">{if isset($fileInfo) and $fileInfo.description}{$fileInfo.description}{/if}</textarea>
-				{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}<br /><em>{tr}Required for podcasts{/tr}.</em>{/if}
-				</td>
-			</tr>{/if}
-			<tr>
-	{* File replacement is only here when the javascript upload action is not
-	available in the file listing.
-	This may be moved later in another specific place (e.g. simple popup) for
-	non-javascript browsers since it is not really a "Property" of the file *}
-			{if $prefs.javascript_enabled neq 'y' || !$editFileId}
-				<td><label for="userfile">{tr}Upload from disk:{/tr}</label></td>
-				<td>
-					{if $editFileId}{$fileInfo.filename|escape}{/if}
-					<input id="userfile" name="userfile[]" type="file" size="40"/>
-				</td>
+			<table width="100%">
+				
+				{if $simpleMode neq 'y'}
+					<tr>
+						<td><label for="name">{tr}File title:{/tr}</label></td>
+						<td width="80%">
+							<input style="width:100%" type="text" id="name" name="name[]" {if isset($fileInfo) and $fileInfo.name}value="{$fileInfo.name}"{/if} size="40" /> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}
+						</td>
+					</tr>
+					<tr>
+						<td><label for="description">{tr}File description:{/tr}</label></td>
+						<td>
+							<textarea style="width:100%" rows="2" cols="40" id="description" name="description[]">{if isset($fileInfo) and $fileInfo.description}{$fileInfo.description}{/if}</textarea>
+						{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}<br /><em>{tr}Required for podcasts{/tr}.</em>{/if}
+						</td>
+					</tr>
 				{/if}
-			</tr>
-		</table>
-	</div>
-	{if $simpleMode neq 'y'}<div class="fgal_file_c2">
-	<table width="100%">
-	{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
-		<tr><td>
-			<label for="isbatch">{tr}Unzip zip files:{/tr}</label>
-		</td><td width="80%">
-			<input type="checkbox" id="isbatch" name="isbatch[]" />
-		</td></tr>
-	{/if}
-
-	{if $prefs.fgal_delete_after eq 'y'}
-		<tr><td>
-			<label for="deleteAfter">{tr}File can be deleted after:{/tr}</label>
-		</td><td width="80%">
-			{if $editFileId}
-				{html_select_duration prefix='deleteAfter' default_value=$fileInfo.deleteAfter}
-			{else}
-				{html_select_duration prefix='deleteAfter[]' default_unit=week}
-			{/if}
-		</td></tr>
-	{/if}
-
-		{if $editFileId}
-			<input type="hidden" name="galleryId" value="{$galleryId}"/>
-			<input type="hidden" name="fileId" value="{$editFileId}"/>
-			<input type="hidden" name="lockedby" value="{$fileInfo.lockedby|escape}" \>
-		{else}
-			{if count($galleries) eq 0}
-				<input type="hidden" name="galleryId" value="{$treeRootId}"/>
-			{elseif empty($groupforalert)}
-			<tr><td>
-				<label for="galleryId">{tr}File gallery:{/tr}</label>
-			</td><td width="80%">
-				<select id="galleryId" name="galleryId[]">
-					<option value="{$treeRootId}" {if $treeRootId eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}Root{/tr}</option>
-				{section name=idx loop=$galleries}
-					{if $galleries[idx].id neq $treeRootId and $galleries[idx].perms.tiki_p_upload_files eq 'y'}
-					<option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name|escape}</option>
+				<tr>
+		{* File replacement is only here when the javascript upload action is not
+		available in the file listing.
+		This may be moved later in another specific place (e.g. simple popup) for
+		non-javascript browsers since it is not really a "Property" of the file *}
+				{if $prefs.javascript_enabled neq 'y' || !$editFileId}
+					<td><label for="userfile">{tr}Upload from disk:{/tr}</label></td>
+					<td>
+						{if $editFileId}{$fileInfo.filename|escape}{/if}
+						<input id="userfile" name="userfile[]" type="file" size="40"/>
+					</td>
 					{/if}
-				{/section}
-				</select>
-			</td></tr>
-			{else}
-				<input type="hidden" name="galleryId" value="{$galleryId}"/>
-			{/if}
-		{/if}
-		<tr><td>
-			<label for="user">{tr}Uploaded by:{/tr}</label>
-		</td><td width="80%">
-			{user_selector id='user' name='user[]' select=$fileInfo.user editable=$tiki_p_admin_file_galleries}
-		</td></tr>
-
-		{if $prefs.feature_file_galleries_author eq 'y'}
+				</tr>
+			</table>
+		</div>
+		{if $simpleMode neq 'y'}<div class="fgal_file_c2">
+		<table width="100%">
+		{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
 			<tr><td>
-				<label for="author">{tr}Creator of file, if different from the 'Uploaded by' user:{/tr}</label>
+				<label for="isbatch">{tr}Unzip zip files:{/tr}</label>
 			</td><td width="80%">
-				<input type="text" id="author"name="author[]" value="{$fileInfo.author|escape}" />
+				<input type="checkbox" id="isbatch" name="isbatch[]" />
 			</td></tr>
 		{/if}
-		{if !empty($groupforalert)}
-			{if $showeachuser eq 'y' }
-				<tr><td>
-					{tr}Choose users to alert{/tr}
-				</td><td width="80%">
-			{/if}
-			{section name=idx loop=$listusertoalert}
-				{if $showeachuser eq 'n' }
-					<input type="hidden"  name="listtoalert[]" value="{$listusertoalert[idx].user}">
+
+		{if $prefs.fgal_delete_after eq 'y'}
+			<tr><td>
+				<label for="deleteAfter">{tr}File can be deleted after:{/tr}</label>
+			</td><td width="80%">
+				{if $editFileId}
+					{html_select_duration prefix='deleteAfter' default_value=$fileInfo.deleteAfter}
 				{else}
-					<input type="checkbox" name="listtoalert[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
+					{if $prefs.feature_jscalendar eq 'y'}
+						<input type="text" value="" name="deleteAfter[]" class="datePicker"/>
+					{else}
+						{html_select_duration prefix='deleteAfter[]' default_unit=week}
+					{/if}
 				{/if}
-			{/section}
-			{if $showeachuser eq 'y' }
+			</td></tr>
+		{/if}
+	
+		
+			{if $editFileId}
+				<input type="hidden" name="galleryId" value="{$galleryId}"/>
+				<input type="hidden" name="fileId" value="{$editFileId}"/>
+				<input type="hidden" name="lockedby" value="{$fileInfo.lockedby|escape}" \>
+			{else}
+				{if count($galleries) eq 0}
+					<input type="hidden" name="galleryId" value="{$treeRootId}"/>
+				{elseif empty($groupforalert)}
+				<tr><td>
+					<label for="galleryId">{tr}File gallery:{/tr}</label>
+				</td><td width="80%">
+					<select id="galleryId" name="galleryId[]">
+						<option value="{$treeRootId}" {if $treeRootId eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}Root{/tr}</option>
+					{section name=idx loop=$galleries}
+						{if $galleries[idx].id neq $treeRootId and $galleries[idx].perms.tiki_p_upload_files eq 'y'}
+						<option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name|escape}</option>
+						{/if}
+					{/section}
+					</select>
+				</td></tr>
+				{else}
+					<input type="hidden" name="galleryId" value="{$galleryId}"/>
+				{/if}
+			{/if}
+			<tr><td>
+				<label for="user">{tr}Uploaded by:{/tr}</label>
+			</td><td width="80%">
+				{user_selector id='user' name='user[]' select=$fileInfo.user editable=$tiki_p_admin_file_galleries}
+			</td></tr>
+	
+			{if $prefs.feature_file_galleries_author eq 'y'}
+				<tr><td>
+					<label for="author">{tr}Creator of file, if different from the 'Uploaded by' user:{/tr}</label>
+				</td><td width="80%">
+					<input type="text" id="author"name="author[]" value="{$fileInfo.author|escape}" />
 				</td></tr>
 			{/if}
+			{if !empty($groupforalert)}
+				{if $showeachuser eq 'y' }
+					<tr><td>
+						{tr}Choose users to alert{/tr}
+					</td><td width="80%">
+				{/if}
+				{section name=idx loop=$listusertoalert}
+					{if $showeachuser eq 'n' }
+						<input type="hidden"  name="listtoalert[]" value="{$listusertoalert[idx].user}">
+					{else}
+						<input type="checkbox" name="listtoalert[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
+					{/if}
+				{/section}
+				{if $showeachuser eq 'y' }
+					</td></tr>
+				{/if}
+			{/if}
+			</table>
+		</div>
+		<div class="fgal_file_c3">
+		{if $prefs.fgal_limit_hits_per_file eq 'y'}
+			<label>
+				<label for="hit_limit">{tr}Maximum number of downloads:{/tr}</label>
+				<input type="text" id="hit_limit" name="hit_limit[]" value="{$hit_limit|default:0}"/>
+				<br /><em>{tr}Use{/tr} {tr}0 for no limit{/tr}.</em>
+			</label>
+			<br/>
 		{/if}
-		</table>
+	
+		{* We want comments only on updated files *}
+		{if $prefs.javascript_enabled neq 'y' && $editFileId}
+			<label>
+				<label for="comment">{tr}Comment:{/tr}</label>
+				<input type="text" id="comment" name="comment[]" value="" size="40" />
+			</label>
+			<br/>
+		{/if}
 	</div>
-	<div class="fgal_file_c3">
-	{if $prefs.fgal_limit_hits_per_file eq 'y'}
-		<label>
-			<label for="hit_limit">{tr}Maximum number of downloads:{/tr}</label>
-			<input type="text" id="hit_limit" name="hit_limit[]" value="{$hit_limit|default:0}"/>
-			<br /><em>{tr}Use{/tr} {tr}0 for no limit{/tr}.</em>
-		</label>
-		<br/>
+	</div><br/>
+	{if $prefs.javascript_enabled eq 'y' and !$editFileId}
+		{include file='categorize.tpl' notable='y'}<br/>
 	{/if}
-
-	{* We want comments only on updated files *}
-	{if $prefs.javascript_enabled neq 'y' && $editFileId}
-		<label>
-			<label for="comment">{tr}Comment:{/tr}</label>
-			<input type="text" id="comment" name="comment[]" value="" size="40" />
-		</label>
-		<br/>
+	{else}
+		<input type="hidden" name="galleryId" value="{$galleryId}"/>
+	{/if}{* end if $simpleMode neq 'y'*}
+	{if $prefs.javascript_enabled eq 'y'}
+	<input type="hidden" name="upload" />
 	{/if}
-</div>
-</div><br/>
-{if $prefs.javascript_enabled eq 'y' and !$editFileId}
-	{include file='categorize.tpl' notable='y'}<br/>
-{/if}
-{else}
-	<input type="hidden" name="galleryId" value="{$galleryId}"/>
-{/if}{* end if $simpleMode neq 'y'*}
-{if $prefs.javascript_enabled eq 'y'}
-<input type="hidden" name="upload" />
-{/if}
-{/capture}
+	{/capture}
 <div id="form">
 <form {if $prefs.javascript_enabled eq 'y' and !$editFileId}onsubmit='return false' target='upload_progress_0'{/if} id='file_0' name='file_0' action='tiki-upload_file.php' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
 <input type="hidden" name="formId" value="0"/>
@@ -285,7 +293,9 @@
 <div id="page_bar">
 {if $prefs.javascript_enabled eq 'y'  and  !$editFileId}
 		<input type="button" onclick="upload_files('0', 'loader_0')" value="{tr}Upload{/tr}"/>
-		{if $simpleMode neq 'y'}<input type="button" onclick="javascript:add_upload_file('multiple_upload')" value="{tr}Add File{/tr}"/>{/if}
+		{if $simpleMode neq 'y'}
+			<input type="button" onclick="javascript:add_upload_file('multiple_upload')" value="{tr}Add File{/tr}"/>
+		{/if}
 {/if}
 </div>
 </div>
@@ -305,6 +315,9 @@
 
 {if $prefs.javascript_enabled neq 'y' || ! $editFileId}
 	{jq notonready=true}
+		
+		$('.datePicker').datepicker({minDate: 0, maxDate: '+1m', dateFormat: 'dd/mm/yy'});
+	
 		var nb_upload = 1;
 		function add_upload_file() {
 			tmp = "<form onsubmit='return false' id='file_"+nb_upload+"' name='file_"+nb_upload+"' action='tiki-upload_file.php' target='upload_progress_"+nb_upload+"' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>";
