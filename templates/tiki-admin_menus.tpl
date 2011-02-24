@@ -54,7 +54,7 @@
 							{/if}
 						{/if}
 						{if $tiki_p_edit_menu eq 'y'}
-							{self_link  menuId=$channels[user].menuId clone="y" _title="{tr}Clone this menu and it's options{/tr}" _icon="page_copy"}{/self_link}
+							{self_link  menuId=$channels[user].menuId clone="y" _title="{tr}Clone this menu and its options{/tr}" _icon="page_copy"}{/self_link}
 						{/if}
 					</td>
 				</tr>
