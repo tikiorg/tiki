@@ -1,4 +1,4 @@
-~np~[caption id="attachment_45" align="alignright" width="300" caption="No primeiro dia da caminhada, no local que o ônibus deixa para começar a caminhada."]~/np~<a href="http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg"><img class="size-medium wp-image-45" src="http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0-300x225.jpg" alt="Hostelaria Las Torres" width="300" height="225" /></a>~np~[/caption]~/np~
+~np~[caption id="attachment_45" align="alignright" width="300" caption="No primeiro dia da caminhada, no local que o ônibus deixa para começar a caminhada."]~/np~<a href="http://example.com/files/1881232-hostelaria-las-torres-0.jpg"><img class="size-medium wp-image-45" src="http://example.com/files/1881232-hostelaria-las-torres-0-300x225.jpg" alt="Hostelaria Las Torres" width="300" height="225" /></a>~np~[/caption]~/np~
 
 <br class="spacer_" />
 
@@ -7,7 +7,7 @@
 
 Comentei por cima os equipamentos mais relevantes que utilizamos e também qual foi o trajeto escolhido. Muitas das opiniões refletem minha experiência de apenas nove dias no parque, aconselho buscar outras fontes de informação. A lista de equipos também não serve como checklist, falta um monte de coisas e tem um monte de checklists bons espalhados pela internet.
 
-~np~[caption id="attachment_46" align="alignleft" width="225" caption="Caminhando na neve no Vale do Silêncio"]~/np~<a href="http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg"><img class="size-medium wp-image-46 " src="http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-225x300.jpg" alt="Caminhando na neve no Vale do Silêncio" width="225" height="300" /></a>~np~[/caption]~/np~
+~np~[caption id="attachment_46" align="alignleft" width="225" caption="Caminhando na neve no Vale do Silêncio"]~/np~<a href="http://example.com/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg"><img class="size-medium wp-image-46 " src="http://example.com/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-225x300.jpg" alt="Caminhando na neve no Vale do Silêncio" width="225" height="300" /></a>~np~[/caption]~/np~
 
 O Torres del Paine, localizado na Patagônia Chilena, é um dos principais e mais bonitos parques da América do Sul (e também o mais organizado e com a maior estrutura que já estive). Para minha infelicidade as trilhas são muito bem marcadas (as vezes até demais) o que tornou totalmente inútil o uso da carta topográfica e da bussóla, porém certamente essa é uma preocupação a menos para quem estiver fazendo suas primeiras trilhas. Uma pessoa tem que fazer uma esforço muito grande para se perder no W ou no Circuito (ou então dar o azar de pegar condições climáticas muito ruins, o que não é comum mas acontece). Para maiores informações sobre o parque veja http://es.wikipedia.org/wiki/Torres_del_Paine ou http://www.torresdelpaine.cl/
 

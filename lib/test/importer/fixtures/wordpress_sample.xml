@@ -25,15 +25,15 @@
 >
 
 <channel>
-	<title>rodrigo.utopia.org.br</title>
-	<link>http://rodrigo.utopia.org.br</link>
+	<title>example.com</title>
+	<link>http://example.com</link>
 	<description>Software livre, cicloativismo, montanhismo e quem sabe permacultura</description>
 	<pubDate>Mon, 20 Sep 2010 13:37:07 +0000</pubDate>
 	<generator>http://wordpress.org/?v=3.0.1</generator>
 	<language>en</language>
 	<wp:wxr_version>1.0</wp:wxr_version>
-	<wp:base_site_url>http://rodrigo.utopia.org.br/</wp:base_site_url>
-	<wp:base_blog_url>http://rodrigo.utopia.org.br</wp:base_blog_url>
+	<wp:base_site_url>http://example.com/</wp:base_site_url>
+	<wp:base_blog_url>http://example.com</wp:base_blog_url>
 		<wp:category><wp:category_nicename>bicicleta</wp:category_nicename><wp:category_parent></wp:category_parent><wp:cat_name><![CDATA[bicicleta]]></wp:cat_name><wp:category_description><![CDATA[Qualquer descrição]]></wp:category_description></wp:category>
 		<wp:category><wp:category_nicename>cicloativismo</wp:category_nicename><wp:category_parent>bicicleta</wp:category_parent><wp:cat_name><![CDATA[cicloativismo]]></wp:cat_name></wp:category>
 		<wp:category><wp:category_nicename>cicloturismo</wp:category_nicename><wp:category_parent>bicicleta</wp:category_parent><wp:cat_name><![CDATA[cicloturismo]]></wp:cat_name></wp:category>
@@ -136,11 +136,11 @@
 	<generator>http://wordpress.org/?v=3.0.1</generator>
 		<item>
 		<title>Home</title>
-		<link>http://rodrigo.utopia.org.br/?p=453</link>
+		<link>http://example.com/?p=453</link>
 		<pubDate>Wed, 30 Nov -0001 00:00:00 +0000</pubDate>
 		<dc:creator><![CDATA[rodrigo]]></dc:creator>
 		
-		<guid isPermaLink="false">http://rodrigo.utopia.org.br/?p=453</guid>
+		<guid isPermaLink="false">http://example.com/?p=453</guid>
 		<description></description>
 		<content:encoded><![CDATA[]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
@@ -186,7 +186,7 @@
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_menu_item_url</wp:meta_key>
-		<wp:meta_value><![CDATA[http://rodrigo.utopia.org.br/]]></wp:meta_value>
+		<wp:meta_value><![CDATA[http://example.com/]]></wp:meta_value>
 		</wp:postmeta>
 				<wp:postmeta>
 		<wp:meta_key>_menu_item_orphaned</wp:meta_key>
@@ -195,7 +195,7 @@
 							</item>
 		<item>
 		<title>Matéria sobre a viagem de bicicleta entre as chapadas</title>
-		<link>http://rodrigo.utopia.org.br/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/</link>
+		<link>http://example.com/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/</link>
 		<pubDate>Sun, 11 Mar 2007 21:13:31 +0000</pubDate>
 		<dc:creator><![CDATA[rodrigo]]></dc:creator>
 		
@@ -231,13 +231,13 @@
 
 		<category domain="tag" nicename="youtube"><![CDATA[youtube]]></category>
 
-		<guid isPermaLink="false">http://rodrigo.utopia.org.br/?p=107</guid>
+		<guid isPermaLink="false">http://example.com/?p=107</guid>
 		<description></description>
 		<content:encoded><![CDATA[<p><span>Matéria feita pela TV Norte de Januária (MG) sobre viagem de bicicleta entre a chapada dos Veadereiros e a chapada Diamantina passando pelos parques nacionais Grande Sertão Veredas e Cavernas do Peruaçu e pelo rio São Francisco.</span></p>
 
 <p>Mais informações sobre a viagem:</p>
 
-<p><a href="/cicloturismo/">http://rodrigo.utopia.org.br/cicloturismo/</a></p>
+<p><a href="/cicloturismo/">http://example.com/cicloturismo/</a></p>
 
 <p style="text-align: center">[youtube]http://www.youtube.com/watch?v=_UeaaiSLXcw[/youtube]</p>]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
@@ -264,7 +264,7 @@
 							</item>
 		<item>
 		<title>Matéria sobre a viagem de bicicleta entre as chapadas</title>
-		<link>http://rodrigo.utopia.org.br/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/</link>
+		<link>http://example.com/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/</link>
 		<pubDate>Sun, 11 Mar 2007 21:13:31 +0000</pubDate>
 		<dc:creator><![CDATA[rodrigo]]></dc:creator>
 		
@@ -300,13 +300,13 @@
 
 		<category domain="tag" nicename="youtube"><![CDATA[youtube]]></category>
 
-		<guid isPermaLink="false">http://rodrigo.utopia.org.br/?p=107</guid>
+		<guid isPermaLink="false">http://example.com/?p=107</guid>
 		<description></description>
 		<content:encoded><![CDATA[<p><span>Matéria feita pela TV Norte de Januária (MG) sobre viagem de bicicleta entre a chapada dos Veadereiros e a chapada Diamantina passando pelos parques nacionais Grande Sertão Veredas e Cavernas do Peruaçu e pelo rio São Francisco.</span></p>
 
 <p>Mais informações sobre a viagem:</p>
 
-<p><a href="/cicloturismo/">http://rodrigo.utopia.org.br/cicloturismo/</a></p>
+<p><a href="/cicloturismo/">http://example.com/cicloturismo/</a></p>
 
 <p style="text-align: center">[youtube]http://www.youtube.com/watch?v=_UeaaiSLXcw[/youtube]</p>]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
@@ -334,7 +334,7 @@
 
 		<item>
 		<title>Circuito Grande - Torres del Paine</title>
-		<link>http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/</link>
+		<link>http://example.com/2008/01/20/circuito-grande-torres-del-paine/</link>
 		<pubDate>Sun, 20 Jan 2008 22:31:43 +0000</pubDate>
 		<dc:creator><![CDATA[rodrigo]]></dc:creator>
 		
@@ -370,9 +370,9 @@
 
 		<category domain="tag" nicename="trekking"><![CDATA[trekking]]></category>
 
-		<guid isPermaLink="false">http://rodrigo.utopia.org.br/?p=36</guid>
+		<guid isPermaLink="false">http://example.com/?p=36</guid>
 		<description></description>
-		<content:encoded><![CDATA[[caption id="attachment_45" align="alignright" width="300" caption="No primeiro dia da caminhada, no local que o ônibus deixa para começar a caminhada."]<a href="http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg"><img class="size-medium wp-image-45" src="http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0-300x225.jpg" alt="Hostelaria Las Torres" width="300" height="225" /></a>[/caption]
+		<content:encoded><![CDATA[[caption id="attachment_45" align="alignright" width="300" caption="No primeiro dia da caminhada, no local que o ônibus deixa para começar a caminhada."]<a href="http://example.com/files/1881232-hostelaria-las-torres-0.jpg"><img class="size-medium wp-image-45" src="http://example.com/files/1881232-hostelaria-las-torres-0-300x225.jpg" alt="Hostelaria Las Torres" width="300" height="225" /></a>[/caption]
 
 <br class="spacer_" />
 
@@ -381,7 +381,7 @@
 
 Comentei por cima os equipamentos mais relevantes que utilizamos e também qual foi o trajeto escolhido. Muitas das opiniões refletem minha experiência de apenas nove dias no parque, aconselho buscar outras fontes de informação. A lista de equipos também não serve como checklist, falta um monte de coisas e tem um monte de checklists bons espalhados pela internet.
 
-[caption id="attachment_46" align="alignleft" width="225" caption="Caminhando na neve no Vale do Silêncio"]<a href="http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg"><img class="size-medium wp-image-46 " src="http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-225x300.jpg" alt="Caminhando na neve no Vale do Silêncio" width="225" height="300" /></a>[/caption]
+[caption id="attachment_46" align="alignleft" width="225" caption="Caminhando na neve no Vale do Silêncio"]<a href="http://example.com/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg"><img class="size-medium wp-image-46 " src="http://example.com/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-225x300.jpg" alt="Caminhando na neve no Vale do Silêncio" width="225" height="300" /></a>[/caption]
 
 O Torres del Paine, localizado na Patagônia Chilena, é um dos principais e mais bonitos parques da América do Sul (e também o mais organizado e com a maior estrutura que já estive). Para minha infelicidade as trilhas são muito bem marcadas (as vezes até demais) o que tornou totalmente inútil o uso da carta topográfica e da bussóla, porém certamente essa é uma preocupação a menos para quem estiver fazendo suas primeiras trilhas. Uma pessoa tem que fazer uma esforço muito grande para se perder no W ou no Circuito (ou então dar o azar de pegar condições climáticas muito ruins, o que não é comum mas acontece). Para maiores informações sobre o parque veja http://es.wikipedia.org/wiki/Torres_del_Paine ou http://www.torresdelpaine.cl/
 
@@ -391,7 +391,7 @@ No final tudo deu certo, foram oito noites e nove dias de caminhada. A seguir de
 <h2 style="text-align: center;">Equipamentos:</h2>
 <strong> </strong>
 
-[caption id="attachment_47" align="alignright" width="300" caption="No topo do Paso John Gardner com o Glaciar Grey ao fundo (muito vento!)"]<strong><strong><a href="http://rodrigo.utopia.org.br/files/1881263-paso-john-gardner-1.jpg"><img class="size-medium wp-image-47" src="http://rodrigo.utopia.org.br/files/1881263-paso-john-gardner-1-300x225.jpg" alt="No topo do Paso John Gardner com o Glaciar Grey ao fundo (muito vento!)" width="300" height="225" /></a></strong></strong>[/caption]
+[caption id="attachment_47" align="alignright" width="300" caption="No topo do Paso John Gardner com o Glaciar Grey ao fundo (muito vento!)"]<strong><strong><a href="http://example.com/files/1881263-paso-john-gardner-1.jpg"><img class="size-medium wp-image-47" src="http://example.com/files/1881263-paso-john-gardner-1-300x225.jpg" alt="No topo do Paso John Gardner com o Glaciar Grey ao fundo (muito vento!)" width="300" height="225" /></a></strong></strong>[/caption]
 
 <strong>Barraca:</strong> em alguns acampamentos do parque venta muito (como também em grande parte das trilhas), uma barraca com bons estabilizadores de vento e armação de duralumínio é uma boa idéia. No acampamento Pehoé vimos uma barraca com duas armações de plástico quebrarem por causa do vento. Utilizamos uma Discovery Mountain da Manaslu (a mesma que pretendemos usar no El Plata) e uma Zimba II da Kailash.
 
@@ -401,13 +401,13 @@ No final tudo deu certo, foram oito noites e nove dias de caminhada. A seguir de
 
 <strong> </strong>
 
-[caption id="attachment_48" align="alignleft" width="300" caption="Xuxa e eu com o Glaciar Grey no fundo"]<strong><strong><a href="http://rodrigo.utopia.org.br/files/1881269-glaciar-grey-0.jpg"><img class="size-medium wp-image-48" src="http://rodrigo.utopia.org.br/files/1881269-glaciar-grey-0-300x225.jpg" alt="Xuxa e eu com o Glaciar Grey no fundo" width="300" height="225" /></a></strong></strong>[/caption]
+[caption id="attachment_48" align="alignleft" width="300" caption="Xuxa e eu com o Glaciar Grey no fundo"]<strong><strong><a href="http://example.com/files/1881269-glaciar-grey-0.jpg"><img class="size-medium wp-image-48" src="http://example.com/files/1881269-glaciar-grey-0-300x225.jpg" alt="Xuxa e eu com o Glaciar Grey no fundo" width="300" height="225" /></a></strong></strong>[/caption]
 
 <strong>Fogareiro:</strong> estávamos com dois fogareiros de benzina, um MSR Internationale e um Coleman Dual Fuel 533 (que por sinal parou de funcionar no meio da viagem com menos de um ano de uso). Muita gente estava com fogareiros comuns de cartucho de gás, muito mais baratos e davam conta do recado.
 
 <strong>Mochilas:</strong> como optamos por carregar toda a comida para o circuito (o que não é necessário, nos acampamentos pagos é possível comprar comida para fazer ou então refeições prontas por um preço não muito mais caro que na cidade) utilizamos mochilas grandes (e ainda assim quase não deu para levar tudo): Harpia 75 + 15 da Conquista, Aircontact Pro 70 + 15 da Deuter, Highlander 50 + 10 da Curtlo e Challenger 85 da Kailash (que vive dando problema no ajusta da barrigueira). Dependendo do roteiro pode ser uma boa idéia trazer uma mochila de ataque. Também é indispensável ter uma capa de chuva para a mochila que consiga cobrir ela com toda a carga e esteja bem presa, cansamos de ver capas de chuva de mochila voando com o vento ou então deixando parte da mochila descoberta.
 
-[caption id="attachment_49" align="alignright" width="300" caption="Pernilongos no Dickson"]<a href="http://rodrigo.utopia.org.br/files/1881276-pernilongos-no-dickson-0.jpg"><img class="size-medium wp-image-49" src="http://rodrigo.utopia.org.br/files/1881276-pernilongos-no-dickson-0-300x225.jpg" alt="Pernilongos no Dickson" width="300" height="225" /></a>[/caption]
+[caption id="attachment_49" align="alignright" width="300" caption="Pernilongos no Dickson"]<a href="http://example.com/files/1881276-pernilongos-no-dickson-0.jpg"><img class="size-medium wp-image-49" src="http://example.com/files/1881276-pernilongos-no-dickson-0-300x225.jpg" alt="Pernilongos no Dickson" width="300" height="225" /></a>[/caption]
 
 <strong>Botas: </strong>estávamos todos com botas impermeáveis (duas Trilogia e uma Zodiac, ambas da Snake, e uma da Quechua que não lembro o nome). Foi a primeira vez que fiz uma trilha grande com uma bota impermeável e gostei muito da sensação de não sair com os pés molhados das muitas travessias de rios e de alguns poucos pântanos. O único momento que foi realmente importante ter esse tipo de bota foi nos pequenos trechos de camihada no gelo no Vale do Silêncio, que não faz parte do roteiro tradicional do circuito. Havia muita gente fazendo a travessia com botas ou tênis comuns sem maiores problemas.
 
@@ -415,7 +415,7 @@ No final tudo deu certo, foram oito noites e nove dias de caminhada. A seguir de
 <h2 style="text-align: center;">Roupas:</h2>
 <strong> </strong>
 
-[caption id="attachment_50" align="alignleft" width="300" caption="Mirante no Vale Francês"]<strong><strong><a href="http://rodrigo.utopia.org.br/files/1881281-mirante-no-vale-franc-s-0.jpg"><img class="size-medium wp-image-50" src="http://rodrigo.utopia.org.br/files/1881281-mirante-no-vale-franc-s-0-300x200.jpg" alt="Mirante no Vale Francês" width="300" height="200" /></a></strong></strong>[/caption]
+[caption id="attachment_50" align="alignleft" width="300" caption="Mirante no Vale Francês"]<strong><strong><a href="http://example.com/files/1881281-mirante-no-vale-franc-s-0.jpg"><img class="size-medium wp-image-50" src="http://example.com/files/1881281-mirante-no-vale-franc-s-0-300x200.jpg" alt="Mirante no Vale Francês" width="300" height="200" /></a></strong></strong>[/caption]
 
 <strong>Impermeáveis:</strong> durante as caminhadas é frequente em poucos minutos um Sol forte dar lugar para uma chuva as vezes fina, as vezes forte. Utilizamos a calça impermeável da Conquista e os Anoraks da Trilhas e Rumos e da Conquista, além das polaínas da Conquista. Os materiais impermeáveis feitos no Brasil não são muito respiráveis, no final do dia sempre estavam bem molhados por dentro, mas funcionam muito bem. Nunca usei algo como Goretex para ter uma idéia se faz muita diferença, tudo que sei é que são MUITO mais caros.
 
@@ -425,7 +425,7 @@ No final tudo deu certo, foram oito noites e nove dias de caminhada. A seguir de
 
 <strong> </strong>
 
-[caption id="attachment_51" align="alignright" width="225" caption="No último dia de caminhada"]<strong><strong><a href="http://rodrigo.utopia.org.br/files/1881285-no-ltimo-dia-de-caminhada-0.jpg"><img class="size-medium wp-image-51" src="http://rodrigo.utopia.org.br/files/1881285-no-ltimo-dia-de-caminhada-0-225x300.jpg" alt="No último dia de caminhada" width="225" height="300" /></a></strong></strong>[/caption]
+[caption id="attachment_51" align="alignright" width="225" caption="No último dia de caminhada"]<strong><strong><a href="http://example.com/files/1881285-no-ltimo-dia-de-caminhada-0.jpg"><img class="size-medium wp-image-51" src="http://example.com/files/1881285-no-ltimo-dia-de-caminhada-0-225x300.jpg" alt="No último dia de caminhada" width="225" height="300" /></a></strong></strong>[/caption]
 
 <strong>Outros:</strong> um gorro e pelo menos dois pares de luvas (um par resisente a água ou impermeável) são fundamentais para enfrentar o frio. Meias de coolmax são boas para caminhar e pelo menos uma meia quente para a noite. Sem falar também de camisetas de dryfit (acabei utilizando mais as de manga comprida para me proteger do Sol) e de calças-bermudas de algum tecido que seque rápido (não sei o nome).
 <h2 style="text-align: center;">Roteiro:</h2>
@@ -439,7 +439,7 @@ Optamos por fazer o circuito no sentido anti-horário (a opção mais comum) por
 
 <strong> </strong>
 
-[caption id="attachment_52" align="alignleft" width="225" caption="Um surto de saudades do Kempo"]<strong><strong><a href="http://rodrigo.utopia.org.br/files/1881287-um-surto-de-saudades-do-kempo-0.jpg"><img class="size-medium wp-image-52" src="http://rodrigo.utopia.org.br/files/1881287-um-surto-de-saudades-do-kempo-0-225x300.jpg" alt="Um surto de saudades do Kempo" width="225" height="300" /></a></strong></strong>[/caption]
+[caption id="attachment_52" align="alignleft" width="225" caption="Um surto de saudades do Kempo"]<strong><strong><a href="http://example.com/files/1881287-um-surto-de-saudades-do-kempo-0.jpg"><img class="size-medium wp-image-52" src="http://example.com/files/1881287-um-surto-de-saudades-do-kempo-0-225x300.jpg" alt="Um surto de saudades do Kempo" width="225" height="300" /></a></strong></strong>[/caption]
 
 <strong>4º dia: </strong>Caminhada tranquila, em grande parte ao lado de um rio e sem muitas subidas, de cerca de 6 horas até o acampamento pago Dickson. Ao chegar fomos recebidos pela maior população de pernilongos por ser humano que já vi na vida (ver a foto para ter uma idéia). Repelentes eram praticamente inúteis, o esquema foi fazer uma barreira física com roupas (em especial as impermeáveis). Havia um casal com telas semelhantes as que usam os apicultores, eles eram os únicos que conseguiam ficar tranquilos fora da barraca. Para compensar esse é um dos lugares de campings mais bonitos, ao lado de um grande rio e com vista para um glaciar.
 
@@ -690,7 +690,7 @@ CIALIS OHNE REZEPT BESTELLEN[/b] ]]></wp:comment_content>
 			</item>
 		<item>
 		<title>Lo más importante son los veinte</title>
-		<link>http://rodrigo.utopia.org.br/2008/02/23/lo-mas-importante-son-los-veinte/</link>
+		<link>http://example.com/2008/02/23/lo-mas-importante-son-los-veinte/</link>
 		<pubDate>Sat, 23 Feb 2008 19:39:40 +0000</pubDate>
 		<dc:creator><![CDATA[rodrigo]]></dc:creator>
 		
@@ -718,7 +718,7 @@ CIALIS OHNE REZEPT BESTELLEN[/b] ]]></wp:comment_content>
 
 		<category domain="tag" nicename="montanhismo"><![CDATA[montanhismo]]></category>
 
-		<guid isPermaLink="false">http://rodrigo.utopia.org.br/?p=73</guid>
+		<guid isPermaLink="false">http://example.com/?p=73</guid>
 		<description></description>
 		<content:encoded><![CDATA[<p><em>Originalmente publicado em <a href="http://www.travelblog.org/South-America/Argentina/Mendoza/Mendoza/blog-249321.html" target="_blank">http://www.travelblog.org/South-America/Argentina/Mendoza/Mendoza/blog-249321.html</a> <br />
  </em></p>
@@ -786,7 +786,7 @@ CIALIS OHNE REZEPT BESTELLEN[/b] ]]></wp:comment_content>
 							</item>
 		<item>
 		<title>Como impedir que o editor do WordPress (TinyMCE) remova quebras de linha</title>
-		<link>http://rodrigo.utopia.org.br/2009/05/04/como-impedir-que-o-editor-do-wordpress-tinymce-remova-quebras-de-linha/</link>
+		<link>http://example.com/2009/05/04/como-impedir-que-o-editor-do-wordpress-tinymce-remova-quebras-de-linha/</link>
 		<pubDate>Mon, 04 May 2009 13:29:44 +0000</pubDate>
 		<dc:creator><![CDATA[rodrigo]]></dc:creator>
 		
@@ -814,7 +814,7 @@ CIALIS OHNE REZEPT BESTELLEN[/b] ]]></wp:comment_content>
 
 		<category domain="tag" nicename="wordpress"><![CDATA[wordpress]]></category>
 
-		<guid isPermaLink="false">http://rodrigo.utopia.org.br/?p=10</guid>
+		<guid isPermaLink="false">http://example.com/?p=10</guid>
 		<description></description>
 		<content:encoded><![CDATA[<p><em>Atualização (15/10/2009)</em>: o <a href="http://www.rafaelbiriba.com/" target="_blank">Rafael Biriba</a> deixou um comentário falando do <a href="http://wordpress.org/extend/plugins/ps-disable-auto-formatting/" target="_blank">PS Disable Auto Formatting</a>, um outro plugin do Wordpress que também server para impedir a remoção automática das tags "br" e "p".</p>
 
@@ -827,7 +827,7 @@ CIALIS OHNE REZEPT BESTELLEN[/b] ]]></wp:comment_content>
 <p>Ontem, encontrei o <a href="http://www.laptoptips.ca/projects/tinymce-advanced/" target="_blank">TinyMCE Advanced</a> um plugin que tem uma opção para que as tags "br "<br />
  e "p" não sejam removidas e além disso permite customizar os itens que aparecem na barra de edição. Abaixo um screenshot de parte da tela de administração:</p>
 
-<p style="text-align: center"><a href="http://rodrigo.utopia.org.br/files/tadv2.jpg"><img class="size-thumbnail wp-image-13 aligncenter" src="http://rodrigo.utopia.org.br/files/tadv2-150x150.jpg" alt="Parte da tela de administração do TinyMCE Advanced" width="150" height="150" /></a></p>]]></content:encoded>
+<p style="text-align: center"><a href="http://example.com/files/tadv2.jpg"><img class="size-thumbnail wp-image-13 aligncenter" src="http://example.com/files/tadv2-150x150.jpg" alt="Parte da tela de administração do TinyMCE Advanced" width="150" height="150" /></a></p>]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<wp:post_id>10</wp:post_id>
 		<wp:post_date>2009-05-04 10:29:44</wp:post_date>
@@ -953,7 +953,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 			</item>
 		<item>
 		<title>Parte da tela de administração do TinyMCE Advanced</title>
-		<link>http://rodrigo.utopia.org.br/2009/05/04/como-impedir-que-o-editor-do-wordpress-tinymce-remova-quebras-de-linha/tadv2/</link>
+		<link>http://example.com/2009/05/04/como-impedir-que-o-editor-do-wordpress-tinymce-remova-quebras-de-linha/tadv2/</link>
 		<pubDate>Mon, 04 May 2009 18:30:50 +0000</pubDate>
 		<dc:creator><![CDATA[rodrigo]]></dc:creator>
 		
@@ -961,7 +961,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 
 		<category domain="category" nicename="uncategorized"><![CDATA[Uncategorized]]></category>
 
-		<guid isPermaLink="false">http://rodrigo.utopia.org.br/files/tadv2.jpg</guid>
+		<guid isPermaLink="false">http://example.com/files/tadv2.jpg</guid>
 		<description></description>
 		<content:encoded><![CDATA[]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
@@ -977,7 +977,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 		<wp:post_type>attachment</wp:post_type>
 		<wp:post_password></wp:post_password>
 		<wp:is_sticky>0</wp:is_sticky>
-				<wp:attachment_url>http://rodrigo.utopia.org.br/files/tadv2.jpg</wp:attachment_url>
+				<wp:attachment_url>http://example.com/files/tadv2.jpg</wp:attachment_url>
 								<wp:postmeta>
 		<wp:meta_key>_wp_attachment_metadata</wp:meta_key>
 		<wp:meta_value><![CDATA[a:6:{s:5:"width";s:3:"761";s:6:"height";s:3:"434";s:14:"hwstring_small";s:23:"height='72' width='128'";s:4:"file";s:9:"tadv2.jpg";s:5:"sizes";a:2:{s:9:"thumbnail";a:3:{s:4:"file";s:17:"tadv2-150x150.jpg";s:5:"width";s:3:"150";s:6:"height";s:3:"150";}s:6:"medium";a:3:{s:4:"file";s:17:"tadv2-300x171.jpg";s:5:"width";s:3:"300";s:6:"height";s:3:"171";}}s:10:"image_meta";a:10:{s:8:"aperture";s:1:"0";s:6:"credit";s:0:"";s:6:"camera";s:0:"";s:7:"caption";s:0:"";s:17:"created_timestamp";s:1:"0";s:9:"copyright";s:0:"";s:12:"focal_length";s:1:"0";s:3:"iso";s:1:"0";s:13:"shutter_speed";s:1:"0";s:5:"title";s:0:"";}}]]></wp:meta_value>
@@ -993,7 +993,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 							</item>
 		<item>
 		<title>Hostelaria Las Torres</title>
-		<link>http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/1881232-hostelaria-las-torres-0/</link>
+		<link>http://example.com/2008/01/20/circuito-grande-torres-del-paine/1881232-hostelaria-las-torres-0/</link>
 		<pubDate>Tue, 12 May 2009 02:24:42 +0000</pubDate>
 		<dc:creator><![CDATA[rodrigo]]></dc:creator>
 		
@@ -1001,7 +1001,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 
 		<category domain="category" nicename="uncategorized"><![CDATA[Uncategorized]]></category>
 
-		<guid isPermaLink="false">http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg</guid>
+		<guid isPermaLink="false">http://example.com/files/1881232-hostelaria-las-torres-0.jpg</guid>
 		<description></description>
 		<content:encoded><![CDATA[No primeiro dia da caminhada, no local que o ônibus deixa para começar a caminhada.]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
@@ -1017,7 +1017,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 		<wp:post_type>attachment</wp:post_type>
 		<wp:post_password></wp:post_password>
 		<wp:is_sticky>0</wp:is_sticky>
-				<wp:attachment_url>http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg</wp:attachment_url>
+				<wp:attachment_url>http://example.com/files/1881232-hostelaria-las-torres-0.jpg</wp:attachment_url>
 								<wp:postmeta>
 		<wp:meta_key>_wp_attached_file</wp:meta_key>
 		<wp:meta_value><![CDATA[1881232-hostelaria-las-torres-0.jpg]]></wp:meta_value>
@@ -1033,7 +1033,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 							</item>
 		<item>
 		<title>Caminhando no gelo no Vale do Silêncio</title>
-		<link>http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0/</link>
+		<link>http://example.com/2008/01/20/circuito-grande-torres-del-paine/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0/</link>
 		<pubDate>Tue, 12 May 2009 02:24:45 +0000</pubDate>
 		<dc:creator><![CDATA[rodrigo]]></dc:creator>
 		
@@ -1041,7 +1041,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 
 		<category domain="category" nicename="uncategorized"><![CDATA[Uncategorized]]></category>
 
-		<guid isPermaLink="false">http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg</guid>
+		<guid isPermaLink="false">http://example.com/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg</guid>
 		<description></description>
 		<content:encoded><![CDATA[Caminhando no gelo no Vale do Silêncio]]></content:encoded>
 		<excerpt:encoded><![CDATA[Caminhando no gelo no Vale do Silêncio]]></excerpt:encoded>
@@ -1057,7 +1057,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 		<wp:post_type>attachment</wp:post_type>
 		<wp:post_password></wp:post_password>
 		<wp:is_sticky>0</wp:is_sticky>
-				<wp:attachment_url>http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg</wp:attachment_url>
+				<wp:attachment_url>http://example.com/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg</wp:attachment_url>
 								<wp:postmeta>
 		<wp:meta_key>_wp_attached_file</wp:meta_key>
 		<wp:meta_value><![CDATA[1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg]]></wp:meta_value>
@@ -1073,7 +1073,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 							</item>
 		<item>
 		<title>Paso John Gardner</title>
-		<link>http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/1881263-paso-john-gardner-1/</link>
+		<link>http://example.com/2008/01/20/circuito-grande-torres-del-paine/1881263-paso-john-gardner-1/</link>
 		<pubDate>Tue, 12 May 2009 02:24:47 +0000</pubDate>
 		<dc:creator><![CDATA[rodrigo]]></dc:creator>
 		
@@ -1081,7 +1081,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 
 		<category domain="category" nicename="uncategorized"><![CDATA[Uncategorized]]></category>
 
-		<guid isPermaLink="false">http://rodrigo.utopia.org.br/files/1881263-paso-john-gardner-1.jpg</guid>
+		<guid isPermaLink="false">http://example.com/files/1881263-paso-john-gardner-1.jpg</guid>
 		<description></description>
 		<content:encoded><![CDATA[No topo do Paso John Gardner com o Glaciar Grey ao fundo (muito vento!)]]></content:encoded>
 		<excerpt:encoded><![CDATA[No topo do Paso John Gardner com o Glaciar Grey ao fundo (muito vento!)]]></excerpt:encoded>
@@ -1097,7 +1097,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 		<wp:post_type>attachment</wp:post_type>
 		<wp:post_password></wp:post_password>
 		<wp:is_sticky>0</wp:is_sticky>
-				<wp:attachment_url>http://rodrigo.utopia.org.br/files/1881263-paso-john-gardner-1.jpg</wp:attachment_url>
+				<wp:attachment_url>http://example.com/files/1881263-paso-john-gardner-1.jpg</wp:attachment_url>
 								<wp:postmeta>
 		<wp:meta_key>_wp_attached_file</wp:meta_key>
 		<wp:meta_value><![CDATA[1881263-paso-john-gardner-1.jpg]]></wp:meta_value>
@@ -1113,7 +1113,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 							</item>
 		<item>
 		<title>Glaciar Grey</title>
-		<link>http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/1881269-glaciar-grey-0/</link>
+		<link>http://example.com/2008/01/20/circuito-grande-torres-del-paine/1881269-glaciar-grey-0/</link>
 		<pubDate>Tue, 12 May 2009 02:24:50 +0000</pubDate>
 		<dc:creator><![CDATA[rodrigo]]></dc:creator>
 		
@@ -1121,7 +1121,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 
 		<category domain="category" nicename="uncategorized"><![CDATA[Uncategorized]]></category>
 
-		<guid isPermaLink="false">http://rodrigo.utopia.org.br/files/1881269-glaciar-grey-0.jpg</guid>
+		<guid isPermaLink="false">http://example.com/files/1881269-glaciar-grey-0.jpg</guid>
 		<description></description>
 		<content:encoded><![CDATA[Xuxa e eu com o Glaciar Grey no fundo]]></content:encoded>
 		<excerpt:encoded><![CDATA[Xuxa e eu com o Glaciar Grey no fundo]]></excerpt:encoded>
@@ -1137,7 +1137,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 		<wp:post_type>attachment</wp:post_type>
 		<wp:post_password></wp:post_password>
 		<wp:is_sticky>0</wp:is_sticky>
-				<wp:attachment_url>http://rodrigo.utopia.org.br/files/1881269-glaciar-grey-0.jpg</wp:attachment_url>
+				<wp:attachment_url>http://example.com/files/1881269-glaciar-grey-0.jpg</wp:attachment_url>
 								<wp:postmeta>
 		<wp:meta_key>_wp_attached_file</wp:meta_key>
 		<wp:meta_value><![CDATA[1881269-glaciar-grey-0.jpg]]></wp:meta_value>
@@ -1153,7 +1153,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 							</item>
 		<item>
 		<title>Pernilongos no Dickson</title>
-		<link>http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/1881276-pernilongos-no-dickson-0/</link>
+		<link>http://example.com/2008/01/20/circuito-grande-torres-del-paine/1881276-pernilongos-no-dickson-0/</link>
 		<pubDate>Tue, 12 May 2009 02:24:52 +0000</pubDate>
 		<dc:creator><![CDATA[rodrigo]]></dc:creator>
 		
@@ -1161,7 +1161,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 
 		<category domain="category" nicename="uncategorized"><![CDATA[Uncategorized]]></category>
 
-		<guid isPermaLink="false">http://rodrigo.utopia.org.br/files/1881276-pernilongos-no-dickson-0.jpg</guid>
+		<guid isPermaLink="false">http://example.com/files/1881276-pernilongos-no-dickson-0.jpg</guid>
 		<description></description>
 		<content:encoded><![CDATA[]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
@@ -1177,7 +1177,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 		<wp:post_type>attachment</wp:post_type>
 		<wp:post_password></wp:post_password>
 		<wp:is_sticky>0</wp:is_sticky>
-				<wp:attachment_url>http://rodrigo.utopia.org.br/files/1881276-pernilongos-no-dickson-0.jpg</wp:attachment_url>
+				<wp:attachment_url>http://example.com/files/1881276-pernilongos-no-dickson-0.jpg</wp:attachment_url>
 								<wp:postmeta>
 		<wp:meta_key>_wp_attached_file</wp:meta_key>
 		<wp:meta_value><![CDATA[1881276-pernilongos-no-dickson-0.jpg]]></wp:meta_value>
@@ -1193,7 +1193,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 							</item>
 		<item>
 		<title>Mirante no Vale Francês</title>
-		<link>http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/1881281-mirante-no-vale-franc-s-0/</link>
+		<link>http://example.com/2008/01/20/circuito-grande-torres-del-paine/1881281-mirante-no-vale-franc-s-0/</link>
 		<pubDate>Tue, 12 May 2009 02:24:55 +0000</pubDate>
 		<dc:creator><![CDATA[rodrigo]]></dc:creator>
 		
@@ -1201,7 +1201,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 
 		<category domain="category" nicename="uncategorized"><![CDATA[Uncategorized]]></category>
 
-		<guid isPermaLink="false">http://rodrigo.utopia.org.br/files/1881281-mirante-no-vale-franc-s-0.jpg</guid>
+		<guid isPermaLink="false">http://example.com/files/1881281-mirante-no-vale-franc-s-0.jpg</guid>
 		<description></description>
 		<content:encoded><![CDATA[]]></content:encoded>
 		<excerpt:encoded><![CDATA[Mirante no Vale Francês]]></excerpt:encoded>
@@ -1217,7 +1217,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 		<wp:post_type>attachment</wp:post_type>
 		<wp:post_password></wp:post_password>
 		<wp:is_sticky>0</wp:is_sticky>
-				<wp:attachment_url>http://rodrigo.utopia.org.br/files/1881281-mirante-no-vale-franc-s-0.jpg</wp:attachment_url>
+				<wp:attachment_url>http://example.com/files/1881281-mirante-no-vale-franc-s-0.jpg</wp:attachment_url>
 								<wp:postmeta>
 		<wp:meta_key>_wp_attached_file</wp:meta_key>
 		<wp:meta_value><![CDATA[1881281-mirante-no-vale-franc-s-0.jpg]]></wp:meta_value>
@@ -1233,7 +1233,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 							</item>
 		<item>
 		<title>No último dia de caminhada</title>
-		<link>http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/1881285-no-ltimo-dia-de-caminhada-0/</link>
+		<link>http://example.com/2008/01/20/circuito-grande-torres-del-paine/1881285-no-ltimo-dia-de-caminhada-0/</link>
 		<pubDate>Tue, 12 May 2009 02:24:59 +0000</pubDate>
 		<dc:creator><![CDATA[rodrigo]]></dc:creator>
 		
@@ -1241,7 +1241,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 
 		<category domain="category" nicename="uncategorized"><![CDATA[Uncategorized]]></category>
 
-		<guid isPermaLink="false">http://rodrigo.utopia.org.br/files/1881285-no-ltimo-dia-de-caminhada-0.jpg</guid>
+		<guid isPermaLink="false">http://example.com/files/1881285-no-ltimo-dia-de-caminhada-0.jpg</guid>
 		<description></description>
 		<content:encoded><![CDATA[]]></content:encoded>
 		<excerpt:encoded><![CDATA[No último dia de caminhada]]></excerpt:encoded>
@@ -1257,7 +1257,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 		<wp:post_type>attachment</wp:post_type>
 		<wp:post_password></wp:post_password>
 		<wp:is_sticky>0</wp:is_sticky>
-				<wp:attachment_url>http://rodrigo.utopia.org.br/files/1881285-no-ltimo-dia-de-caminhada-0.jpg</wp:attachment_url>
+				<wp:attachment_url>http://example.com/files/1881285-no-ltimo-dia-de-caminhada-0.jpg</wp:attachment_url>
 								<wp:postmeta>
 		<wp:meta_key>_wp_attached_file</wp:meta_key>
 		<wp:meta_value><![CDATA[1881285-no-ltimo-dia-de-caminhada-0.jpg]]></wp:meta_value>
@@ -1273,7 +1273,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 							</item>
 		<item>
 		<title>Um surto de saudades do Kempo</title>
-		<link>http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/1881287-um-surto-de-saudades-do-kempo-0/</link>
+		<link>http://example.com/2008/01/20/circuito-grande-torres-del-paine/1881287-um-surto-de-saudades-do-kempo-0/</link>
 		<pubDate>Tue, 12 May 2009 02:25:03 +0000</pubDate>
 		<dc:creator><![CDATA[rodrigo]]></dc:creator>
 		
@@ -1281,7 +1281,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 
 		<category domain="category" nicename="uncategorized"><![CDATA[Uncategorized]]></category>
 
-		<guid isPermaLink="false">http://rodrigo.utopia.org.br/files/1881287-um-surto-de-saudades-do-kempo-0.jpg</guid>
+		<guid isPermaLink="false">http://example.com/files/1881287-um-surto-de-saudades-do-kempo-0.jpg</guid>
 		<description></description>
 		<content:encoded><![CDATA[]]></content:encoded>
 		<excerpt:encoded><![CDATA[Um surto de saudades do Kempo]]></excerpt:encoded>
@@ -1297,7 +1297,7 @@ Exatamente o que você está tentando fazer que não consegue?]]></wp:comment_co
 		<wp:post_type>attachment</wp:post_type>
 		<wp:post_password></wp:post_password>
 		<wp:is_sticky>0</wp:is_sticky>
-				<wp:attachment_url>http://rodrigo.utopia.org.br/files/1881287-um-surto-de-saudades-do-kempo-0.jpg</wp:attachment_url>
+				<wp:attachment_url>http://example.com/files/1881287-um-surto-de-saudades-do-kempo-0.jpg</wp:attachment_url>
 								<wp:postmeta>
 		<wp:meta_key>_wp_attached_file</wp:meta_key>
 		<wp:meta_value><![CDATA[1881287-um-surto-de-saudades-do-kempo-0.jpg]]></wp:meta_value>

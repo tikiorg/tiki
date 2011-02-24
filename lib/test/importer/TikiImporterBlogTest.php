@@ -387,14 +387,14 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 		$this->obj->permalinks = array(
 			107 => array(
 				'oldLinks' => array(
-					'http://rodrigo.utopia.org.br/materia/',
-					'http://rodrigo.utopia.org.br/?p=107',
+					'http://example.com/materia/',
+					'http://example.com/?p=107',
 				),
 			),
 			36 => array(
 				'oldLinks' => array(
-					'http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/',
-					'http://rodrigo.utopia.org.br/?p=36',
+					'http://example.com/2008/01/20/circuito-grande-torres-del-paine/',
+					'http://example.com/?p=36',
 				),
 			),
 		);
@@ -418,14 +418,14 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 		$this->obj->permalinks = array(
 			107 => array(
 				'oldLinks' => array(
-					'http://rodrigo.utopia.org.br/materia/',
-					'http://rodrigo.utopia.org.br/?p=107',
+					'http://example.com/materia/',
+					'http://example.com/?p=107',
 				),
 			),
 			36 => array(
 				'oldLinks' => array(
-					'http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/',
-					'http://rodrigo.utopia.org.br/?p=36',
+					'http://example.com/2008/01/20/circuito-grande-torres-del-paine/',
+					'http://example.com/?p=36',
 				),
 			),
 		);
@@ -445,8 +445,8 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 		$this->obj->permalinks = array(
 			36 => array(
 				'oldLinks' => array(
-					'http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/',
-					'http://rodrigo.utopia.org.br/?p=36',
+					'http://example.com/2008/01/20/circuito-grande-torres-del-paine/',
+					'http://example.com/?p=36',
 				),
 				'newLink' => 'http://localhost/tiki/tiki-view_blog_post.php?postId=10',
 			),

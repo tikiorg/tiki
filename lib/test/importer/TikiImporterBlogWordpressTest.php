@@ -70,38 +70,38 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 	{
 		$this->obj->dom = new DOMDocument;
         $this->obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
-        $this->obj->blogInfo['link'] = 'http://rodrigo.utopia.org.br';
+        $this->obj->blogInfo['link'] = 'http://example.com';
         
         $expectedResult = array(
         	107 => array(
         		'oldLinks' => array(
-        			'http://rodrigo.utopia.org.br/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/',
+        			'http://example.com/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/',
         			'/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/',
-        			'http://rodrigo.utopia.org.br/?p=107',
+        			'http://example.com/?p=107',
         			'/?p=107',
         		),
         	),
         	36 => array(
         		'oldLinks' => array(
-	        		'http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/',
+	        		'http://example.com/2008/01/20/circuito-grande-torres-del-paine/',
 	        		'/2008/01/20/circuito-grande-torres-del-paine/',
-	        		'http://rodrigo.utopia.org.br/?p=36',
+	        		'http://example.com/?p=36',
 	        		'/?p=36',
         		),
         	),
         	73 => array(
         		'oldLinks' => array(
-	        		'http://rodrigo.utopia.org.br/2008/02/23/lo-mas-importante-son-los-veinte/',
+	        		'http://example.com/2008/02/23/lo-mas-importante-son-los-veinte/',
 	        		'/2008/02/23/lo-mas-importante-son-los-veinte/',
-	        		'http://rodrigo.utopia.org.br/?p=73',
+	        		'http://example.com/?p=73',
 	        		'/?p=73',
         		),
         	),
         	10 => array(
         		'oldLinks' => array(
-	        		'http://rodrigo.utopia.org.br/2009/05/04/como-impedir-que-o-editor-do-wordpress-tinymce-remova-quebras-de-linha/',
+	        		'http://example.com/2009/05/04/como-impedir-que-o-editor-do-wordpress-tinymce-remova-quebras-de-linha/',
 	        		'/2009/05/04/como-impedir-que-o-editor-do-wordpress-tinymce-remova-quebras-de-linha/',
-	        		'http://rodrigo.utopia.org.br/?p=10',
+	        		'http://example.com/?p=10',
 	        		'/?p=10',
         		),
         	),
@@ -115,24 +115,24 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 		$this->obj->permalinks = array(
         	107 => array(
         		'oldLinks' => array(
-	        		'http://rodrigo.utopia.org.br/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/',
-	        		'http://rodrigo.utopia.org.br/?p=107',
+	        		'http://example.com/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/',
+	        		'http://example.com/?p=107',
         		),
         	),
         	36 => array(
         		'oldLinks' => array(
-	        		'http://rodrigo.utopia.org.br/2008/01/20/circuito-grande-torres-del-paine/',
-	        		'http://rodrigo.utopia.org.br/?p=36',
+	        		'http://example.com/2008/01/20/circuito-grande-torres-del-paine/',
+	        		'http://example.com/?p=36',
         		),
         	),
         );
 		
 		$item['wp_id'] = 10;
-        $item['content'] = 'Continuação do post sobre o uso de bicicletas na Europa. <a href="http://rodrigo.utopia.org.br/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/">Teste</a> E continua o texto por aqui.';
+        $item['content'] = 'Continuação do post sobre o uso de bicicletas na Europa. <a href="http://example.com/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/">Teste</a> E continua o texto por aqui.';
         $this->assertTrue($this->obj->identifyInternalLinks($item));
         
         $item['wp_id'] = 11;
-        $item['content'] = 'Continuação do post sobre o uso de bicicletas na Europa. <a href="http://example.com/2007/03/11/materia-sobre-a-viagem-de-bicicleta-entre-as-chapadas/">Teste</a> E continua o texto por aqui.';
+        $item['content'] = 'Continuação do post sobre o uso de bicicletas na Europa. <a href="http://example.com/2007/03/11/outra-materia/">Teste</a> E continua o texto por aqui.';
         $this->assertFalse($this->obj->identifyInternalLinks($item));
 	}
 	
@@ -339,8 +339,8 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 	public function testExtractBlogInfo()
 	{
 		$expectedResult = array(
-			'title' => 'rodrigo.utopia.org.br',
-			'link' => 'http://rodrigo.utopia.org.br',
+			'title' => 'example.com',
+			'link' => 'http://example.com',
 			'desc' => 'Software livre, cicloativismo, montanhismo e quem sabe permacultura',
 			'lastModif' => 1284989827,
 			'created' => 1173636811,
@@ -361,7 +361,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		$expectedResult = array(
 			array(
 				'name' => 'Parte da tela de administração do TinyMCE Advanced',
-				'link' => 'http://rodrigo.utopia.org.br/files/tadv2.jpg',
+				'link' => 'http://example.com/files/tadv2.jpg',
 				'created' => '1241461850',
 				'author' => 'rodrigo',
 				'fileName' => 'tadv2.jpg',
@@ -380,7 +380,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 			),
 			array(
 				'name' => 'Hostelaria Las Torres',
-				'link' => 'http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg',
+				'link' => 'http://example.com/files/1881232-hostelaria-las-torres-0.jpg',
 				'created' => '1242095082',
 				'author' => 'rodrigo',
 				'fileName' => '1881232-hostelaria-las-torres-0.jpg',
@@ -399,7 +399,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 			),
 			array(
 				'name' => 'Caminhando no gelo no Vale do Silêncio',
-				'link' => 'http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
+				'link' => 'http://example.com/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
 				'created' => '1242095085',
 				'author' => 'rodrigo',
 				'fileName' => '1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
@@ -480,7 +480,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
         $expectedResult = array(
         	array(
         		'fileId' => 1,
-        		'oldUrl' => 'http://rodrigo.utopia.org.br/files/tadv2.jpg',
+        		'oldUrl' => 'http://example.com/files/tadv2.jpg',
         		'sizes' => array(
 					'thumbnail' => array(
 						'name' => 'tadv2-150x150.jpg',
@@ -496,7 +496,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
         	),
         	array(
         		'fileId' => 1,
-        		'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg',
+        		'oldUrl' => 'http://example.com/files/1881232-hostelaria-las-torres-0.jpg',
         		'sizes' => array(
 					'thumbnail' => array(
 						'name' => '1881232-hostelaria-las-torres-0-150x150.jpg',
@@ -512,7 +512,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
         	),
         	array(
         		'fileId' => 1,
-        		'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
+        		'oldUrl' => 'http://example.com/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
         		'sizes' => array(
 					'thumbnail' => array(
 						'name' => '1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-150x150.jpg',
@@ -593,7 +593,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		$this->obj->newFiles = array(
 			array(
 				'fileId' => 2,
-				'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
+				'oldUrl' => 'http://example.com/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
 				'sizes' => array(
 					'thumbnail' => array(
 						'name' => '1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0-150x150.jpg',
@@ -609,7 +609,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 			),
 			array(
 				'fileId' => 1,
-				'oldUrl' => 'http://rodrigo.utopia.org.br/files/1881232-hostelaria-las-torres-0.jpg',
+				'oldUrl' => 'http://example.com/files/1881232-hostelaria-las-torres-0.jpg',
 				'sizes' => array(
 					'thumbnail' => array(
 						'name' => '1881232-hostelaria-las-torres-0-150x150.jpg',
