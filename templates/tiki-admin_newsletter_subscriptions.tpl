@@ -133,6 +133,8 @@
 			<td class="text">
 				{if $channels[user].valid == "n"}
 					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;valid={$channels[user].nlId|urlencode}&amp;{if $channels[user].isUser eq "y"}user{else}email{/if}={$channels[user].email|escape:"url"}" title="{tr}Valid{/tr}">{tr}No{/tr}</a>
+				{elseif $channels[user].valid == "x"}
+					{tr}Unsubscribed{/tr}
 				{else}
 					{tr}Yes{/tr}
 				{/if}
