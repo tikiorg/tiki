@@ -223,6 +223,7 @@ while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $maxRecord
 	$smarty->assign_by_ref('items', $items["data"]);
 
 	$data = $smarty->fetch('tiki-export_tracker_item.tpl');
+	$data = preg_replace("/^\n/", "", $data);
 	if (empty($_REQUEST['encoding']) || $_REQUEST['encoding'] == 'ISO-8859-1') {
 		$data = utf8_decode($data);
 	}
