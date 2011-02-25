@@ -59,7 +59,7 @@ function getCookie($name, $section=null, $default=null) {
 	}
 }
 
-function setCookieSection($name, $value, $section = '', $expire = '', $path = '', $domain = '', $secure = '') {
+function setCookieSection($name, $value, $section = '', $expire = null, $path = '', $domain = '', $secure = '') {
 	if ($section) {
 		$valSection = getCookie($section);
 		$name2 = "@" . $name . ":";
