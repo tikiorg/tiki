@@ -389,6 +389,11 @@ if (isset($_REQUEST["page"])) {
 		$helpUrl = "Social+Networks";
 		$description = "Settings for social networks integration";
 		include_once ('tiki-admin_include_socialnetworks.php');
+	} else if ($adminPage == 'share') {
+		$admintitle = 'Share';
+		$helpUrl = 'share';
+		$description = 'Settings for share preferences';
+		include_once ('tiki-admin_include_share.php');
 	} else {
 		$helpUrl = '';
 	}
