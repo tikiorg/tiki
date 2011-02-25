@@ -74,6 +74,7 @@ function capLock(e, el){
 			<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Log in as admin{/tr}</a>
 		{/if}
 	{else}
+		{capture assign="close_tags"}{/capture}
 		<form name="loginbox" action="{if $prefs.https_login eq 'encouraged' || $prefs.https_login eq 'required' || $prefs.https_login eq 'force_nocheck'}{$base_url_https}{/if}{$prefs.login_url}"
 				method="post" {if $prefs.feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}
 				{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}> 
@@ -102,11 +103,12 @@ function doChallengeResponse() {
 					<li {*class="tabmark" *}id="logout_link_{$module_logo_instance}"><span class="tabmark"><a href="tiki-logout.php" class="login_link">Log in</a></span>
 						<ul class="siteloginbar_poppedup">
 							<li class="tabcontent">
-								{*<div class="cbox">*}
+								{capture assign="close_tags"}</li></ul></li></ul></div>{$close_tags}{/capture}
 		{/if}
 		{if $module_params.nobox neq 'y'}
 			<fieldset>
 				<legend>{tr}Log in as{/tr}&hellip;</legend>
+				{capture assign="close_tags"}</fieldset>{$close_tags}{/capture}
 		{/if}
 		{if !empty($error_login)}
 			{remarksbox type='errors' title="{tr}Error{/tr}"}
@@ -119,12 +121,11 @@ function doChallengeResponse() {
 			<label for="login-user_{$module_logo_instance}">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username:{/tr}{/if}</label>
 			{if $loginuser eq ''}
 				<input type="text" name="user" id="login-user_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" {if !empty($error_login)} value="{$error_user|escape}"{/if} />
-				<script type="text/javascript">document.getElementById('login-user_{$module_logo_instance}').focus();</script>
+				{jq}if ($('#login-user_{$module_logo_instance}:visible').length) {$('#login-user_{$module_logo_instance}')[0].focus();}{/jq}
 			{else}
 				<input type="hidden" name="user" id="login-user_{$module_logo_instance}" value="{$loginuser}" /><b>{$loginuser}</b>
 			{/if}
 		</div>
-		<script type="text/javascript">document.getElementById('login-user_{$module_logo_instance}').focus();</script>
 		{if $prefs.feature_challenge eq 'y'} <!-- quick hack to make challenge/response work until 1.8 tiki auth overhaul -->
 			<div>
 				<label for="login-email_{$module_logo_instance}">{tr}eMail:{/tr}</label>
@@ -170,16 +171,12 @@ function doChallengeResponse() {
 						1 {tr}year{/tr}
 					{/if}
 					)
-				{*</div>*}
+					{capture assign="close_tags"}</div>{$close_tags}{/capture}
 			{/if}
 		{/if}
 		<div style="text-align: center">
 			<input class="button submit" type="submit" name="login" value="{tr}Log in{/tr}" />
 		</div>
-		{if $module_params.nobox neq 'y'}
-			</fieldset>
-		{/if}
-		
 		{if $module_params.show_forgot eq 'y' or $module_params.show_register eq 'y'}
 			<div>
 				{strip}
@@ -211,14 +208,6 @@ function doChallengeResponse() {
 		{if $prefs.feature_show_stay_in_ssl_mode neq 'y' || $show_stay_in_ssl_mode neq 'y'}
 			<input type="hidden" name="stay_in_ssl_mode" value="{$stay_in_ssl_mode|escape}" />
 		{/if}
-		{if $module_params.mode eq "popup"}
-								</div>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			{*</div>*}
-		{/if}
 		
 		{if $use_intertiki_auth eq 'y'}
 			<select name='intertiki'>
@@ -229,6 +218,8 @@ function doChallengeResponse() {
 				{/foreach}
 			</select>
 		{/if}
+		
+		{$close_tags}
 	</form>
 {/if}
 {if $prefs.auth_method eq 'openid' and !$user and (!isset($registration) || $registration neq 'y')}
