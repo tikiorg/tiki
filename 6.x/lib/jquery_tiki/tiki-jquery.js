@@ -1269,6 +1269,10 @@ function displayDialog( ignored, list, area_id ) {
 		var editor = CKEDITOR.instances[area_id];
 		var selection = editor.getSelection();
 		if (selection) { selection.lock(); }
+	} else if ($("#" + area_id)[0].createTextRange) {	// save selection for IE
+		var $el = $("#" + area_id);
+		var sel = $el.selection();
+		$el.attr("selectionStartSaved", sel.start).attr("selectionEndSaved", sel.end);
 	}
 	
 	if (!obj) { obj = {}; }
