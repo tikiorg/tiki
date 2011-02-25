@@ -113,7 +113,6 @@
 
 <div>
 
-
 	{capture name=upload_file assign=upload_str}
 		<hr class="clear"/>
 	
@@ -151,7 +150,8 @@
 				</tr>
 			</table>
 		</div>
-		{if $simpleMode neq 'y'}<div class="fgal_file_c2">
+
+	{if $simpleMode neq 'y'}<div class="fgal_file_c2">
 		<table width="100%">
 		{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
 			<tr><td>
@@ -202,6 +202,7 @@
 					<input type="hidden" name="galleryId" value="{$galleryId}"/>
 				{/if}
 			{/if}
+
 			<tr><td>
 				<label for="user">{tr}Uploaded by:{/tr}</label>
 			</td><td width="80%">
@@ -239,9 +240,11 @@
 			<label>
 				<label for="hit_limit">{tr}Maximum number of downloads:{/tr}</label>
 				<input type="text" id="hit_limit" name="hit_limit[]" value="{$hit_limit|default:0}"/>
-				<br /><em>{tr}Use{/tr} {tr}0 for no limit{/tr}.</em>
+				<br /><em>{tr}Use{/tr} {tr}-1 for no limit{/tr}.</em>
 			</label>
 			<br/>
+		{else}
+			<input type="hidden" id="hit_limit" name="hit_limit[]" value="{$hit_limit|default:-1}"/>
 		{/if}
 	
 		{* We want comments only on updated files *}
@@ -253,7 +256,6 @@
 			<br/>
 		{/if}
 	</div>
-	</div><br/>
 	{if $prefs.javascript_enabled eq 'y' and !$editFileId}
 		{include file='categorize.tpl' notable='y'}<br/>
 	{/if}
@@ -263,29 +265,41 @@
 	{if $prefs.javascript_enabled eq 'y'}
 	<input type="hidden" name="upload" />
 	{/if}
-	{/capture}
+  </div>
+{/capture}
+
 <div id="form">
-<form {if $prefs.javascript_enabled eq 'y' and !$editFileId}onsubmit='return false' target='upload_progress_0'{/if} id='file_0' name='file_0' action='tiki-upload_file.php' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
-<input type="hidden" name="formId" value="0"/>
-{if $filegals_manager neq ''}
-	<input type="hidden" name="filegals_manager" value="{$filegals_manager}"/>
-{/if}
-{if isset($token_id) and $token_id neq ''}
-	<input type="hidden" value="{$token_id}" name="TOKEN" />
-{/if}
-<input type="hidden" name="simpleMode" value="{$simpleMode}"/>
-{$upload_str}
-{if $editFileId}
+<form method="post"
+	action='tiki-upload_file.php' 
+	enctype='multipart/form-data'
+	{if $prefs.javascript_enabled eq 'y' and !$editFileId}
+		onsubmit='return false' target='upload_progress_0'
+	{/if}
+	name="file_0"
+	id="file_0"
+	style='margin:0px; padding:0px'>
+
+	<input type="hidden" name="formId" value="0"/>
+	{if $filegals_manager neq ''}
+		<input type="hidden" name="filegals_manager" value="{$filegals_manager}"/>
+	{/if}
+
+	{if isset($token_id) and $token_id neq ''}
+		<input type="hidden" value="{$token_id}" name="TOKEN" />
+	{/if}
+
+	<input type="hidden" name="simpleMode" value="{$simpleMode}"/>
+	{$upload_str}
+	{if $editFileId}
 	{include file='categorize.tpl' notable='y'}<br/>
 	<input name="upload" type="submit" value="{tr}Save{/tr}"/>
-{/if}
-{if $prefs.javascript_enabled neq 'y' and !$editFileId}
-{$upload_str}
-{$upload_str}
-{include file='categorize.tpl' notable='y'}<br/>
-<hr />
-<input type="submit" name="upload" value="{if $editFileId}{tr}Save{/tr}{else}{tr}Upload{/tr}{/if}"/>
-{/if}
+	{elseif $prefs.javascript_enabled neq 'y'}
+		{$upload_str}
+		{$upload_str}
+	{include file='categorize.tpl' notable='y'}<br/>
+	<hr />
+	<input type="submit" name="upload" value="{if $editFileId}{tr}Save{/tr}{else}{tr}Upload{/tr}{/if}"/>
+	{/if}
 </form>
 <div id="multi_1">
 </div>
