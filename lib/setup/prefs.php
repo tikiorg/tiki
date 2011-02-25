@@ -550,7 +550,7 @@ function get_default_prefs() {
 		'home_blog' => 0,
 		'feature_blog_rankings' => 'n',
 		'blog_comments_default_ordering' => 'commentDate_asc',
-		'blog_comments_per_page' => 10,
+		'blog_comments_per_page' => 0,
 		'feature_blogposts_comments' => 'y',
 		'blog_list_user' => 'text',
 		'blog_list_title' => 'y',
