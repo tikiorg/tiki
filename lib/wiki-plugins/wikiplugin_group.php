@@ -53,7 +53,7 @@ function wikiplugin_group_info() {
 }
 
 function wikiplugin_group($data, $params) {
-	global $user, $prefs, $tikilib;
+	global $user, $prefs, $tikilib, $smarty;
 	$dataelse = '';
 	if (strpos($data,'{ELSE}')) {
 		$dataelse = substr($data,strpos($data,'{ELSE}')+6);
@@ -102,8 +102,10 @@ function wikiplugin_group($data, $params) {
 		foreach ($userGroups as $grp) {
 		    if (in_array($grp, $groups)) {
 				$ok = true;
+				$smarty->assign('groupValid', 'y');
 				break;
 			}
+			$smarty->assign('groupValid', 'n');
 		}
 		if (!$ok)
 			return $dataelse;
@@ -113,12 +115,15 @@ function wikiplugin_group($data, $params) {
 		foreach ($userGroups as $grp) {
 		    if (in_array($grp, $notgroups)) {
 				$ok = false;
+				$smarty->assign('notgroupValid', 'y');
 				break;
 			}
+			$smarty->assign('notgroupValid', 'n');
 		}
 		if (!$ok)
 			return $dataelse;
 	}
 		
+	
 	return $data;
 }

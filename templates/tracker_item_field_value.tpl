@@ -203,7 +203,7 @@
 			{if $field_value.value ne ''}
 			{wiki}{literal}{MEDIAPLAYER(mp3="tiki-download_item_attachment.php?attId={/literal}{$field_value.value}",style="max"){literal}}{/literal}{/wiki}
 			{/if}
-		{else}
+		{else}&nbsp;
 			<a href="tiki-download_item_attachment.php?attId={$field_value.value}" title="{tr}Download{/tr}">{icon _id='disk' alt="{tr}Download{/tr}"}</a>
 		{/if}
 	{/if}
