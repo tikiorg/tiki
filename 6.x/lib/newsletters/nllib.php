@@ -288,7 +288,7 @@ class NlLib extends TikiLib
 			if ( $r['valid'] == 'y' ) $return[] = $r;
 		}
 		
-		$return = array_merge($all_users, $page_included_emails);
+		$return = array_merge($return, $page_included_emails);
 
 		return $return;
 	}
