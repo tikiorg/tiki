@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: File.php 25720 2010-02-25 19:45:26Z changi67 $
+// $Id$
 
 class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 {

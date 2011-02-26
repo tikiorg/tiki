@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: share.php 25210 2010-02-14 20:52:22Z changi67 $
+// $Id$
 
 function prefs_share_list() {
 	return array(

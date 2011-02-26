@@ -1,3 +1,4 @@
+{* $Id$ *}
 <div class="simplebox">
 	{capture name=permType}{$objectType}s{/capture}
 	<a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType={$objectType}&amp;permType={$smarty.capture.permType}&amp;objectId={$objectId}">

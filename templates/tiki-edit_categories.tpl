@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title}{tr}Organizer{/tr}{/title}
 
 <div class="categbar">

@@ -1,6 +1,12 @@
 <?php 
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
-function chkRegName($name) {	// AJAX_TODO
+function chkRegName($name) // AJAX_TODO
+{
 	global $smarty, $userlib;
 	$pre_no = " <img src='pics/icons/exclamation.png' style='vertical-align: middle;' alt='Error' /> ";
 	$pre_yes = " <img src='pics/icons/accept.png' style='vertical-align:middle' alt='Correct' /> ";
@@ -16,7 +22,8 @@ function chkRegName($name) {	// AJAX_TODO
 //	return $objResponse;
 }
 
-function chkRegEmail($mail) {	// AJAX_TODO
+function chkRegEmail($mail) // AJAX_TODO
+{
 	global $smarty;
 	$pre_no = " <img src='pics/icons/exclamation.png' style='vertical-align: middle;' alt='Error' /> ";
 	$pre_yes = " <img src='pics/icons/accept.png' style='vertical-align:middle' alt='Correct' /> ";

@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 <form action="tiki-admin.php?page=share" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="commentssetprefs" value="{tr}Change preferences{/tr}" />

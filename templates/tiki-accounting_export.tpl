@@ -1,4 +1,4 @@
-{* $Id: $ *}
+{* $Id$ *}
 {title help="accounting"}
 	{$book.bookName}: {tr}Export {$what}{/tr}
 {/title}

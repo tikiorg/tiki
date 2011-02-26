@@ -1,4 +1,4 @@
-
+{* $Id$ *}
 {if $prefs.feature_canonical_url eq 'y'}
 	{if $mid eq 'tiki-show_page.tpl'}
 		<link rel="canonical" href="{$base_url}{$page|sefurl}" />

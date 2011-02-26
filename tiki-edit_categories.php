@@ -4,7 +4,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: tiki-index.php 29292 2010-09-16 14:39:15Z sept_7 $
+// $Id$
 
 $inputConfiguration = array(array(
 	'staticKeyFilters' => array(

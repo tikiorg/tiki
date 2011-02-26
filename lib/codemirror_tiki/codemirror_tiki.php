@@ -1,5 +1,12 @@
 <?php
-function tiki_syntax_highlighter_base() {
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
+function tiki_syntax_highlighter_base()
+{
 	global $headerlib, $prefs;
 	
 	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {
@@ -37,7 +44,8 @@ function tiki_syntax_highlighter_base() {
 	}
 }
 
-function tiki_syntax_highlighter_code() {
+function tiki_syntax_highlighter_code()
+{
 	global $headerlib, $prefs;
 	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {
 		$headerlib->add_cssfile( 'lib/codemirror_tiki/docs.css' );

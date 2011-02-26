@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title help="Draw"}{$title}{/title}
 
 <div id="svg_editor">

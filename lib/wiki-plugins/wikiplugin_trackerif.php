@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_tracker.php 29720 2010-09-29 13:57:55Z sylvieg $
+// $Id$
 
 // Test a tracker field value
 // Usage:

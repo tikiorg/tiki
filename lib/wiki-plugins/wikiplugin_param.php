@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_group.php 25177 2010-02-13 17:34:48Z changi67 $
+// $Id$
 
 // Display wiki text if a parameter is set in URL
 // Usage:

@@ -1,4 +1,4 @@
-{* $Id *}
+{* $Id$ *}
 
 <a name="attachments"></a>
 {if $tiki_p_wiki_view_attachments == 'y' || $tiki_p_wiki_admin_attachments == 'y' || $tiki_p_wiki_attach_files == 'y'}
