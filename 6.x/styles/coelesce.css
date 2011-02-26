@@ -311,6 +311,7 @@ body.tiki_wiki_page.manage #c1c2 #wrapper #col1 #tiki-center {
 
 #login_search {
 	display: block;
+	width: 360px; /* fix specific for IE */
 	position: absolute;
 	right: 30px;
 	bottom: 12px;
