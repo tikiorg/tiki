@@ -424,16 +424,16 @@
 			<tr>
 				<td>{tr}Items can be created only during a certain time{/tr}</td>
 				<td>
-					{tr}After:{/tr} 
+					&nbsp;&nbsp;&nbsp;&nbsp;{tr}After:{/tr} 
 					<input type="checkbox" name="start"{if $info.start} checked="checked"{/if} /> 
 					{html_select_date prefix="start_" time=$info.start start_year="0" end_year="+10" field_order=$prefs.display_field_order} 
-					<span dir="ltr">{html_select_time prefix="start_" time=$info.start display_seconds=false}</span>
+					<span dir="ltr">{html_select_time prefix="start_" time=$info.start display_seconds=false use_24_hours=$use_24hr_clock}</span>
 					&nbsp;{$siteTimeZone}
 					<br />
 					{tr}Before:{/tr}
 					<input type="checkbox" name="end"{if $info.end} checked="checked"{/if} /> 
 					{html_select_date prefix="end_" time=$info.end start_year="0" end_year="+10" field_order=$prefs.display_field_order} 
-					<span dir="ltr">{html_select_time prefix="end_" time=$info.end display_seconds=false}</span>
+					<span dir="ltr">{html_select_time prefix="end_" time=$info.end display_seconds=false use_24_hours=$use_24hr_clock}</span>
 					&nbsp;{$siteTimeZone}
 				</td>
 			</tr>

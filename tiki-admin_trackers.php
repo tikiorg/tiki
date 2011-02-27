@@ -68,6 +68,10 @@ $cat_objid = $_REQUEST["trackerId"];
 $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
 
+//Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
+include_once ('lib/userprefs/userprefslib.php');
+$smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
+
 if (isset($_REQUEST["save"])) {
 	if (isset($_REQUEST['import']) and isset($_REQUEST['rawmeat'])) {
 		$raw = $tikilib->read_raw($_REQUEST['rawmeat']);
@@ -307,9 +311,17 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["useExplicitNames"] = 'n';
 	}
 	if (isset($_REQUEST['start']) && $_REQUEST['start'] == 'on') {
+		//Convert 12-hour clock hours to 24-hour scale to compute time
+		if (!empty($_REQUEST['start_Meridian'])) {
+			$_REQUEST['start_Hour'] = date('H', strtotime($_REQUEST['start_Hour'] . ':00 ' . $_REQUEST['start_Meridian']));
+		}
 		$tracker_options['start'] = TikiLib::make_time($_REQUEST["start_Hour"], $_REQUEST["start_Minute"], 0, $_REQUEST["start_Month"], $_REQUEST["start_Day"], $_REQUEST["start_Year"]);
 	}
 	if (isset($_REQUEST['end']) && $_REQUEST['end'] == 'on') {
+		//Convert 12-hour clock hours to 24-hour scale to compute time
+		if (!empty($_REQUEST['end_Meridian'])) {
+			$_REQUEST['end_Hour'] = date('H', strtotime($_REQUEST['end_Hour'] . ':00 ' . $_REQUEST['end_Meridian']));
+		}
 		$tracker_options['end'] = TikiLib::make_time($_REQUEST["end_Hour"], $_REQUEST["end_Minute"], 0, $_REQUEST["end_Month"], $_REQUEST["end_Day"], $_REQUEST["end_Year"]);
 	}
 	if (isset($_REQUEST['doNotShowEmptyField']) && ($_REQUEST['doNotShowEmptyField'] == 'on' || $_REQUEST['doNotShowEmptyField'] == 'y')) {
