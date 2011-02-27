@@ -340,9 +340,9 @@
 	{/if}
 	{if $field_value.options_array[0] ne 'd'}
 		{if $field_value.isMandatory ne 'y' and (isset($field_value.options_array[3]) and ($field_value.options_array[3] eq 'blank' or $field_value.options_array[3] eq 'empty'))or (isset($inExportForm) and $inExportForm eq 'y')}
-			{html_select_time prefix=$field_value.ins_id time=$time display_seconds=false all_empty=" "}
+			{html_select_time prefix=$field_value.ins_id time=$time display_seconds=false all_empty=" " use_24_hours=$use_24hr_clock}
 		{else}
-			{html_select_time prefix=$field_value.ins_id time=$time display_seconds=false}
+			{html_select_time prefix=$field_value.ins_id time=$time display_seconds=false use_24_hours=$use_24hr_clock}
 		{/if}
 	{/if}
 

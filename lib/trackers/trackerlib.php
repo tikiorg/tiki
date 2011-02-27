@@ -4409,6 +4409,10 @@ class TrackerLib extends TikiLib
 			} else {
 				//if (isset($input[$ins_id.'Meridian']) && $input[$ins_id.'Meridian'] == 'pm') $input[$ins_id.'Hour'] += 12;
 				$now = $tikilib->now;
+				//Convert 12-hour clock hours to 24-hour scale to compute time
+				if (isset($input[$ins_id.'Meridian'])) {
+					$input[$ins_id.'Hour'] = date('H', strtotime($input[$ins_id.'Hour'] . ':00 ' . $input[$ins_id.'Meridian']));
+				}
 				$value = $tikilib->make_time($input[$ins_id.'Hour'], $input[$ins_id.'Minute'], 0, $tikilib->date_format("%m", $now), $tikilib->date_format("%d", $now), $tikilib->date_format("%Y", $now));
 			}
 		} else {
@@ -4416,6 +4420,10 @@ class TrackerLib extends TikiLib
 				$value = '';
 			} else {
 				//if (isset($input[$ins_id.'Meridian']) && $input[$ins_id.'Meridian'] == 'pm') $input[$ins_id.'Hour'] += 12;
+				//Convert 12-hour clock hours to 24-hour scale to compute time
+				if (isset($input[$ins_id.'Meridian'])) {
+					$input[$ins_id.'Hour'] = date('H', strtotime($input[$ins_id.'Hour'] . ':00 ' . $input[$ins_id.'Meridian']));
+				}
 				$value = $tikilib->make_time($input[$ins_id.'Hour'], $input[$ins_id.'Minute'], 0, $input[$ins_id.'Month'], $input[$ins_id.'Day'], $input[$ins_id.'Year']);
 			}
 		}
