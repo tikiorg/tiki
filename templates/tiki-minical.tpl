@@ -191,7 +191,7 @@
 			<td>{tr}Start{/tr}</td>
 			<td>
 				{html_select_date time=$ev_pdate end_year="+4" field_order=$prefs.display_field_order} {tr}at{/tr}
-				{html_select_time minute_interval=5 time=$ev_pdate_h display_seconds=false use_24_hours=true}
+				{html_select_time minute_interval=5 time=$ev_pdate_h display_seconds=false use_24_hours=$use_24hr_clock}
 			</td>
 		</tr>
 		<tr>

@@ -63,8 +63,13 @@ if ($_REQUEST["eventId"]) {
 }
 $smarty->assign('ev_pdate', $ev_pdate);
 $smarty->assign('ev_pdate_h', $ev_pdate_h);
+
 if (isset($_REQUEST['save'])) {
 	check_ticket('minical');
+	//Convert 12-hour clock hours to 24-hour scale to compute time
+	if (!empty($_REQUEST['Time_Meridian'])) {
+		$_REQUEST['Time_Hour'] = date('H', strtotime($_REQUEST['Time_Hour'] . ':00 ' . $_REQUEST['Time_Meridian']));
+	}
 	$start = mktime($_REQUEST['Time_Hour'], $_REQUEST['Time_Minute'], 0, $_REQUEST['Date_Month'], $_REQUEST['Date_Day'], $_REQUEST['Date_Year']);
 	$minicallib->minical_replace_event($user, $_REQUEST["eventId"], $_REQUEST["title"], $_REQUEST["description"], $start, ($_REQUEST['duration_hours'] * 60 * 60) + ($_REQUEST['duration_minutes'] * 60), $_REQUEST['topicId']);
 	$info = array();
@@ -150,6 +155,10 @@ if ($_REQUEST['view'] == 'list') {
 }
 $upcoming = $minicallib->minical_list_events_from_date($user, 0, $minical_upcoming, 'start_asc', '', $pdate_h);
 $smarty->assign('upcoming', $upcoming['data']);
+//Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
+include_once ('lib/userprefs/userprefslib.php');
+$smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
+
 $hours = range(0, 23);
 $smarty->assign('hours', $hours);
 $minutes = range(0, 59);
