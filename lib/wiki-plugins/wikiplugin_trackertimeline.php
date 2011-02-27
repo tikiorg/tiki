@@ -133,7 +133,7 @@ function wikiplugin_trackertimeline( $data, $params ) {
 
 	$default = array('scale1'=>'hour');
 	$params = array_merge($default, $params);
-	$formats = array('hour'=>'H:i', 'day'=>'j', 'month'=>'m', 'year'=>'y');
+	$formats = array('hour'=>'H:i', 'day'=>'jS', 'week' => 'jS', 'month'=>'m', 'year'=>'y');
 
 	$start = strtotime( $params['lower'] );
 	$end = strtotime( $params['upper'] );
