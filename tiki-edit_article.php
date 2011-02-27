@@ -205,13 +205,21 @@ else
 // If we are in preview mode then preview it!
 if (isset($_REQUEST["preview"]) or !empty($errors)) {
 	# convert from the displayed 'site' time to 'server' time
-	if (isset($_REQUEST["publish_Hour"])) {
-	$publishDate = $tikilib->make_time($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"], 0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]);
+	if (isset($_REQUEST["_Hour"])) {
+		//Convert 12-hour clock hours to 24-hour scale to compute time
+		if (!empty($_REQUEST['publish_Meridian'])) {
+			$_REQUEST['publish_Hour'] = date('H', strtotime($_REQUEST['publish_Hour'] . ':00 ' . $_REQUEST['publish_Meridian']));
+		}
+		$publishDate = $tikilib->make_time($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"], 0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]);
 	} else {
 		$publishDate = $tikilib->now;
 	}
 	if (isset($_REQUEST["expire_Hour"])) {
-	$expireDate = $tikilib->make_time($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"], 0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]);
+	//Convert 12-hour clock hours to 24-hour scale to compute time
+		if (!empty($_REQUEST['expire_Meridian'])) {
+			$_REQUEST['expire_Hour'] = date('H', strtotime($_REQUEST['expire_Hour'] . ':00 ' . $_REQUEST['expire_Meridian']));
+		}
+		$expireDate = $tikilib->make_time($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"], 0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]);
 	} else {
 		$expireDate = $publishDate;
 	}
