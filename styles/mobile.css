@@ -64,6 +64,24 @@
 	list-style: none;
 }
 
+/* tabs */
+
+.ui-mobile .tabcontent {
+	/* from .ui-bar-c */
+	border: 1px solid 		#B3B3B3;
+	background: 			#e9eaeb;
+	color: 					#3E3E3E;
+	font-weight: bold;
+	text-shadow: 0 1px 1px 	#fff;
+	padding: 1em;
+	-moz-border-radius-bottomleft: 		.6em;
+	-webkit-border-bottom-left-radius: 	.6em;
+	border-bottom-left-radius: 			.6em;
+	-moz-border-radius-bottomright: 	.6em;
+	-webkit-border-bottom-right-radius: .6em;
+	border-bottom-right-radius: 		.6em;
+}
+
 /* reduce visual clutter */
 .cachedStatus {
 	display: none;
