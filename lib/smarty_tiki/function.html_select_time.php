@@ -99,8 +99,12 @@ function smarty_function_html_select_time($params, &$smarty)
 			$hours[$i] = sprintf('%02d', $hours[$i]);
 		if ($prefix == 'end_' && ($time_hr24 == '000000')) {
 			$selected = $latest;
-		} elseif ($prefix == 'duration_') {
-			$selected = floor($time / (60*60));
+		} elseif ($prefix == 'duration_' || $prefix == 'startday_' || $prefix == 'endday_') {
+			if ($use_24_hours) {
+				$selected = floor($time / (60*60));
+			} else {
+				$selected = date('h', strtotime(floor($time / (60*60)) . ':00 '));
+			}
 		} else {
 			$selected = $time == '--' ? $hour_empty : TikiLib::date_format($hour_fmt, $time);
 		}

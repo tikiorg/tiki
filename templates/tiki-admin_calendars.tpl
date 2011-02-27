@@ -82,7 +82,7 @@
 							<a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$cal.name|escape:"url"}&amp;objectType=calendar&amp;permType=calendar&amp;objectId={$id}">{if $cal.individual gt 0}{icon _id='key_active' alt="{tr}Permissions{/tr}"}</a>&nbsp;{$cal.individual}{else}{icon _id='key' alt="{tr}Permissions{/tr}"}</a>{/if}
 						</td>
 						<td class="action">
-							<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}">{icon _id='page_edit'}</a>
+							<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}&cookietab=2">{icon _id='page_edit'}</a>
 							<a title="{tr}View Calendar{/tr}" class="link" href="tiki-calendar.php?calIds[]={$id}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 							<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}&amp;calendarId={$id}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 							<a title="{tr}Add Event{/tr}" class="link" href="tiki-calendar_edit_item.php?calendarId={$id}">{icon _id='add' alt="{tr}Add Event{/tr}"}</a>
@@ -209,21 +209,13 @@
 				<tr>
 					<td>{tr}Start of day:{/tr}</td>
 					<td>
-						<select name="startday_Hour">
-							{foreach key=h item=d from=$hours}
-								<option value="{$h}"{if $h eq $startday} selected="selected"{/if}>{$d}</option>
-							{/foreach}
-						</select>
+						{html_select_time prefix="startday_" time=$info.startday display_minutes=false display_seconds=false use_24_hours=$use_24hr_clock}
 					</td>
 				</tr>
 				<tr>
 					<td>{tr}End of day:{/tr}</td>
 					<td>
-						<select name="endday_Hour">
-							{foreach key=h item=d from=$hours}
-								<option value="{$h}"{if $h eq $endday} selected="selected"{/if}>{$d}</option>
-							{/foreach}
-						</select>
+						{html_select_time prefix="endday_" time=$info.endday display_minutes=false display_seconds=false use_24_hours=$use_24hr_clock}
 					</td>
 				</tr>
 				<tr>
@@ -303,7 +295,7 @@
 				</tr>
 			</table>
 			<br />
-			{if $calendarId}{$name|escape} : {/if}
+			{if $calendarId ne 0}{$name|escape} : {/if}
 			{tr}Delete events older than:{/tr} <input type="text" name="days" value="0"/> {tr}days{/tr} <input type="submit" name="clean" value="{tr}Delete{/tr}" />
 		</form>
 	{/tab}
