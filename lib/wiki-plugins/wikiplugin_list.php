@@ -10,7 +10,7 @@ function wikiplugin_list_info()
 	return array(
 		'name' => tra('List'),
 		'documentation' => 'PluginList',
-		'description' => tra('Pull object lists from the search index based on various search criteria and formatting rules'),
+		'description' => tra('Create lists of Tiki objects based on custom search criteria and formatting'),
 		'prefs' => array('wikiplugin_list'),
 		'body' => tra('List configuration information'),
 		'filter' => 'wikicontent',
