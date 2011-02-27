@@ -51,7 +51,8 @@
 		<tr>
 			<td>{tr}Publishing date:{/tr}</td>
 			<td>
-				{html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order} {tr}at{/tr} {html_select_time time=$publishDate display_seconds=false}</td>
+				{html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order} 
+				{tr}at{/tr} {html_select_time time=$publishDate display_seconds=false use_24_hours=$use_24hr_clock}</td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
