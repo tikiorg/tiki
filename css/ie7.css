@@ -23,7 +23,7 @@
 	padding-bottom: 1.8em;
 }
 
-#editpageform {
+body.fixed_width #editpageform {
 	width: 520px;
 }
 
