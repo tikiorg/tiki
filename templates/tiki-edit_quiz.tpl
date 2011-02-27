@@ -108,7 +108,7 @@
 				{html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order}
 				&nbsp;{tr}at{/tr}&nbsp;
 				<span dir="ltr">
-					{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}
+					{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false use_24_hours=$use_24hr_clock}
 					&nbsp;
 					{$siteTimeZone}
 				</span>
@@ -119,7 +119,7 @@
 			<td>
 				{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order}
 				&nbsp;{tr}at{/tr}&nbsp;
-				<span dir="ltr">{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false}
+				<span dir="ltr">{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false use_24_hours=$use_24hr_clock}
 					&nbsp;{$siteTimeZone}
 				</span>
 			</td>
