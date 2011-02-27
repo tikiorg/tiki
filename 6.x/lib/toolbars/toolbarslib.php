@@ -133,6 +133,8 @@ abstract class Toolbar
 			'switcheditor',
 			'autosave',
 			'nonparsed',
+			'bidiltr',
+			'bidirtl',
 		
 			'sheetsave',	// spreadsheet ones
 			'addrow',
@@ -527,6 +529,10 @@ class ToolbarCkOnly extends Toolbar
 			return new self( 'ShowBlocks' );
 		case 'anchor':
 			return new self( 'Anchor' );
+		case 'bidiltr':
+			return new self( 'BidiLtr' );
+		case 'bidirtl':
+			return new self( 'BidiRtl' );
 		}
 	} // }}}
 
