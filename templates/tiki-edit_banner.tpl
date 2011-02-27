@@ -95,11 +95,11 @@
 			</tr>
 			<tr>
 				<td>{tr}from:{/tr}</td>
-				<td>{html_select_time time=$fromTime display_seconds=false prefix='fromTime'}</td>
+				<td>{html_select_time time=$fromTime display_seconds=false prefix='fromTime' use_24_hours=$use_24hr_clock}</td>
 			</tr>
 			<tr>
 				<td>{tr}to:{/tr}</td>
-				<td>{html_select_time time=$toTime display_seconds=false prefix='toTime'}</td>
+				<td>{html_select_time time=$toTime display_seconds=false prefix='toTime' use_24_hours=$use_24hr_clock}</td>
 			</tr>
 		</table>
 	</div>

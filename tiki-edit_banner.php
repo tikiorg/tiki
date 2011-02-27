@@ -16,6 +16,9 @@ if (!isset($bannerlib)) {
 
 $access->check_feature('feature_banners');
 $access->check_permission('tiki_p_admin_banners');
+//Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
+include_once ('lib/userprefs/userprefslib.php');
+$smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
 if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 	$info = $bannerlib->get_banner($_REQUEST["bannerId"]);
@@ -124,6 +127,13 @@ if (isset($_REQUEST["removeZone"])) {
 // Now assign if the set button was pressed
 if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 	check_ticket('edit-banner');
+	//Convert 12-hour clock hours to 24-hour scale to compute time
+	if (!empty($_REQUEST['fromTimeMeridian'])) {
+		$_REQUEST['fromTimeHour'] = date('H', strtotime($_REQUEST['fromTimeHour'] . ':00 ' . $_REQUEST['fromTimeMeridian']));
+	}
+	if (!empty($_REQUEST['toTimeMeridian'])) {
+		$_REQUEST['toTimeHour'] = date('H', strtotime($_REQUEST['toTimeHour'] . ':00 ' . $_REQUEST['toTimeMeridian']));
+	}
 	$fromDate = mktime(0, 0, 0, $_REQUEST["fromDate_Month"], $_REQUEST["fromDate_Day"], $_REQUEST["fromDate_Year"]);
 	$toDate = mktime(0, 0, 0, $_REQUEST["toDate_Month"], $_REQUEST["toDate_Day"], $_REQUEST["toDate_Year"]);
 	$fromTime = ''.$_REQUEST["fromTimeHour"].$_REQUEST["fromTimeMinute"].'';
