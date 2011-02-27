@@ -708,7 +708,7 @@
 											{/if}
 										">
 											<a href="#" onclick="document.getElementById('end_or_duration').value='duration';flip('end_duration');flip('end_date');return false;return false;">
-												{tr}Duration{/tr}
+												{tr}Show duration{/tr}
 											</a>
 										</span>
 									</td>
@@ -792,7 +792,7 @@
 									</td>
 									<td rowspan="2" style="border:0;padding-top:2px;vertical-align:middle">
 										<a href="#" onclick="document.getElementById('end_or_duration').value='end';flip('end_date');flip('end_duration');return false;">
-											{tr}Date and time of end{/tr}
+											{tr}Show end date and time{/tr}
 										</a>
 									</td>
 								</tr>

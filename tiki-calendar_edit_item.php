@@ -110,8 +110,8 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 		$_REQUEST['end_date_Day'] = TikiLib::date_format("%d", $save['date_end']);
 		$_REQUEST['end_date_Year'] = TikiLib::date_format("%Y", $save['date_end']);
 	}
-
-    $save['allday'] = (isset($_REQUEST['allday']) && $_REQUEST['allday'] == 'true') ? 1 : 0;
+	
+	$save['allday'] = (isset($_REQUEST['allday']) && $_REQUEST['allday'] == 'true') ? 1 : 0;
 	if (isset($_REQUEST['allday']) && $_REQUEST['allday'] == 'true') {
 		$save['start'] = TikiLib::make_time(
 			0,
@@ -139,7 +139,7 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 	} else {
 		//Convert 12-hour clock hours to 24-hour scale to compute time
 		if (!empty($_REQUEST['start_Meridian'])) {
-			$_REQUEST['start_Hour'] = Date_Calc::twelveHrsTo24($_REQUEST['start_Meridian'], $_REQUEST['start_Hour']);
+			$_REQUEST['start_Hour'] = date('H', strtotime($_REQUEST['start_Hour'] . ':00 ' . $_REQUEST['start_Meridian']));
 		}
 		$save['start'] = TikiLib::make_time(
 			$_REQUEST['start_Hour'],
@@ -156,7 +156,7 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 		} else {
 			//Convert 12-hour clock hours to 24-hour scale to compute time
 			if (!empty($_REQUEST['end_Meridian'])) {
-				$_REQUEST['end_Hour'] = Date_Calc::twelveHrsTo24($_REQUEST['end_Meridian'], $_REQUEST['end_Hour']);
+				$_REQUEST['end_Hour'] = date('H', strtotime($_REQUEST['end_Hour'] . ':00 ' . $_REQUEST['end_Meridian']));
 			}
 			$save['end'] = TikiLib::make_time(
 				$_REQUEST['end_Hour'],
@@ -173,7 +173,7 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 
 			//Convert 12-hour clock hours to 24-hour scale to compute time
 			if (!empty($_REQUEST['reminder_fixed_date_Meridian'])) {
-				$_REQUEST['reminder_fixed_date_Hour'] = Date_Calc::twelveHrsTo24($_REQUEST['reminder_fixed_date_Meridian'], $_REQUEST['reminder_fixed_date_Hour']);
+				$_REQUEST['reminder_fixed_date_Hour'] = date('H', strtotime($_REQUEST['reminder_fixed_date_Hour'] . ':00 ' . $_REQUEST['reminder_fixed_date_Meridian']));
 			}
 		$save['reminder_fixed_date'] = TikiLib::make_time(
         $_REQUEST['reminder_fixed_date_Hour'],
@@ -385,7 +385,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 		$calendar = $calendarlib->get_calendar($calitem['calendarId']);
   }
 	$smarty->assign('edit',true);
-	$hour_minmax = ceil(($calendar['startday']-1)/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
+	$hour_minmax = abs(ceil(($calendar['startday']-1)/(60*60))) . '-' . ceil(($calendar['endday'])/(60*60));
 } elseif (isset($_REQUEST['preview']) || $impossibleDates) {
 	$save['parsed'] = $tikilib->parse_data($save['description']);
 	$save['parsedName'] = $tikilib->parse_data($save['name']);
@@ -430,13 +430,36 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
 	$smarty->assign('edit',true);
 	$hour_minmax = ceil(($calendar['startday'])/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
+//Add event buttons - either button on top of page or one of the buttons on a specific day
 } elseif (isset($calID) and $tiki_p_add_events == 'y') {
+	$calendar = $calendarlib->get_calendar($calID);
 	if (isset($_REQUEST['todate'])) {
 		$now = $_REQUEST['todate'];
 	} else {
 		$now = $tikilib->now;
 	}
-	$calendar = $calendarlib->get_calendar($calID);
+	//if current time of day is within the calendar day (between startday and endday), then use now as start, otherwise use beginning of calendar day
+	$now_start = TikiLib::make_time(
+		abs(ceil($calendar['startday']/(60*60))),
+		0,
+		0,
+		TikiLib::date_format('%m', $now),
+		TikiLib::date_format('%d', $now),
+		TikiLib::date_format('%Y', $now)
+	);
+	$now_end = TikiLib::make_time(
+		abs(ceil($calendar['endday']/(60*60))),
+		0,
+		0,
+		TikiLib::date_format('%m', $now),
+		TikiLib::date_format('%d', $now),
+		TikiLib::date_format('%Y', $now)
+	);
+	$now_start = ($now_start <= $now && ($now_start + (60*60)) < $now_end) ? $now : $now_start;
+	
+	//if $now_end is midnight, make it one second before
+	$now_end = TikiLib::date_format('%H%M%s', $now_start + (60*60)) == '000000' ? $now_start + (60*60) -1 : $now_start + (60*60);
+	
 	$calitem = array(
 		'calitemId'=>0,
 		'user'=>$user,
@@ -448,14 +471,14 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 		'locationId'=>0,
 		'categoryId'=>0,
 		'nlId'=>0,
-		'start'=>$now,
-		'end'=>$now+(60*60),
+		'start'=>$now_start,
+		'end'=>$now_end,
 		'duration'=>(60*60),
 		'recurrenceId'=>0,
 		);
+	$hour_minmax = abs(ceil(($calendar['startday']-1)/(60*60))). '-' . ceil(($calendar['endday'])/(60*60));
 	$id = 0;
 	$smarty->assign('edit',true);
-	$hour_minmax = ceil(($calendar['startday']-1)/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
 } else {
   $smarty->assign('errortype', 401);
   $smarty->assign('msg', tra("You do not have permission to view this page"));

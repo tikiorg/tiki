@@ -54,7 +54,7 @@ if (isset($_REQUEST["save"])) {
 	if (!preg_match('/^[0-9a-fA-F]{3,6}$/', $options['customfgcolor'])) $options['customfgcolor'] = '';
 	if (!preg_match('/^[0-9a-fA-F]{3,6}$/', $options['custombgcolor'])) $options['custombgcolor'] = '';
 	$options['startday'] = $_REQUEST['startday_Hour'] * 60 * 60;
-	$options['endday'] = $_REQUEST['endday_Hour'] * 60 * 60 - 1;
+	$options['endday'] = $_REQUEST['endday_Hour'] == 0 ? (24 * 60 * 60) - 1 : ($_REQUEST['endday_Hour'] * 60 * 60) - 1;
 	$extra = array(
 		'calname',
 		'description',

@@ -287,14 +287,5 @@ class Date_Calc
 	function daysInMonth($month,$year) {
 		return cal_days_in_month(CAL_GREGORIAN, $month, $year);
 	}
-	//Convert 12-hour clock hours to 24-hour scale
-	function twelveHrsTo24($am_pm, $hour) {
-		if ($am_pm == 'pm' && $hour != 12) {
-			$hour += 12;
-		}
-		if ($am_pm == 'am' && $hour == 12) {
-			$hour = 0;
-		}
-		return $hour;
-	}
+	
 }
