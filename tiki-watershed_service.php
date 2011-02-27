@@ -3,6 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 // This page should not load tiki-setup.php. Environment loading and access checking is done within the webservice.
 

@@ -3,8 +3,10 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
-function prefs_watershed_list() {
+function prefs_watershed_list()
+{
 	return array(
 		'watershed_log_errors' => array(
 			'name' => tra('Log errors to Tiki log'),

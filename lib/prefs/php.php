@@ -3,9 +3,10 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $$
+// $Id$
 
-function prefs_php_list() {
+function prefs_php_list()
+{
 	return array(
 		'php_libxml' => array(
 			'name' => tra('PHP libxml extension'),

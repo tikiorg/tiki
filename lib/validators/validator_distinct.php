@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function validator_distinct($input, $parameter = '', $message = '') {
+function validator_distinct($input, $parameter = '', $message = '')
+{
 	global $trklib;
 	include_once 'lib/trackers/trackerlib.php';
 	

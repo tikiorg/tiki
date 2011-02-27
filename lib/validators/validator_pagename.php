@@ -5,7 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function validator_pagename($input, $parameter = '', $message = '') {
+function validator_pagename($input, $parameter = '', $message = '')
+{
 	global $tikilib, $prefs;
 	if ($parameter == 'not') {
 		if ($tikilib->page_exists($input)) {

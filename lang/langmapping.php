@@ -1,4 +1,10 @@
 <?php // -*- coding:utf-8 -*-
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 /** \brief this table associates language extension and language name in the current language and language name in the native language
 * CAUTION: it is utf-8 encoding !
 * PLEASE : translators, please, update this file with your language name in your own language
