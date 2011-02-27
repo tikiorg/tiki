@@ -63,7 +63,15 @@ $smarty->assign('headtitle', tra('Edit Post'));
 $smarty->assign('blogId', $blogId);
 $smarty->assign('postId', $postId);
 
+//Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
+include_once ('lib/userprefs/userprefslib.php');
+$smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
+
 if (isset($_REQUEST["publish_Hour"])) {
+	//Convert 12-hour clock hours to 24-hour scale to compute time
+	if (!empty($_REQUEST['publish_Meridian'])) {
+		$_REQUEST['publish_Hour'] = date('H', strtotime($_REQUEST['publish_Hour'] . ':00 ' . $_REQUEST['publish_Meridian']));
+	}
 	$publishDate = $tikilib->make_time($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"], 0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]);
 } else {
 	$publishDate = $tikilib->now;

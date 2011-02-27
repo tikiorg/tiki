@@ -132,7 +132,7 @@
 					<td>{tr}Publish Date{/tr}</td>
 					<td>
 						{html_select_date prefix="publish_" time=$post_info.created start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr} 
-						{html_select_time prefix="publish_" time=$post_info.created display_seconds=false}
+						{html_select_time prefix="publish_" time=$post_info.created display_seconds=false use_24_hours=$use_24hr_clock}
 					</td>
 				</tr>
 			{/if}
