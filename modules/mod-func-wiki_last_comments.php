@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_wiki_last_comments_info() {
 	return array(
-		'name' => tra('Last comments'),
+		'name' => tra('Newest Comments'),
 		'description' => tra('Lists the specified number of comments starting from the most recently posted.'),
 		'prefs' => array( ),
 		'params' => array(

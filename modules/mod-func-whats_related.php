@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_whats_related_info() {
 	return array(
-		'name' => tra('What is related'),
+		'name' => tra('Related Items'),
 		'description' => tra('Lists objects which share a category with the viewed object.'),
 		'prefs' => array(),
 		'params' => array()

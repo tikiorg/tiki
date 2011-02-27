@@ -136,7 +136,7 @@ function wikiplugin_events($data,$params) {
 	if (count($events)<$max) $max = count($events);
 
 	$repl .= '<table class="normal">';
-	$repl .= '<tr class="heading"><td colspan="2">'.tra("Upcoming events").'</td></tr>';
+	$repl .= '<tr class="heading"><td colspan="2">'.tra("Upcoming Events").'</td></tr>';
 	for ($j = 0; $j < $max; $j++) {
 	  if ($datetime!=1) {
 			$eventStart=str_replace(" ","&nbsp;",strftime($tikilib->get_short_date_format(),$events[$j]["start"]));

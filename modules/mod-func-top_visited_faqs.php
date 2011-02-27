@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_top_visited_faqs_info() {
 	return array(
-		'name' => tra('Top Visited FAQs'),
+		'name' => tra('Most-Read FAQs'),
 		'description' => tra('Displays the specified number of FAQs with links to them, from the most visited one to the least.'),
 		'prefs' => array( 'feature_faqs' ),
 		'params' => array(),

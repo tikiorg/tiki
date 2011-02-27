@@ -1,6 +1,6 @@
 {* $Id$ *}
 <table class="normal">
-<tr><th colspan="2">{tr}Upcoming events{/tr}</th></tr>
+<tr><th colspan="2">{tr}Upcoming Events{/tr}</th></tr>
 {cycle values="odd,even" print=false}
 {foreach from=$events item=event}
 	<tr class="{cycle advance=false}">

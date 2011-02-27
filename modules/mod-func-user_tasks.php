@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_user_tasks_info() {
 	return array(
-		'name' => tra('User tasks'),
+		'name' => tra('My Tasks'),
 		'description' => tra('Lightweight interface to user tasks, enabling to view them concisely and do some manipulations'),
 		'prefs' => array("feature_tasks"),
 		'params' => array(),

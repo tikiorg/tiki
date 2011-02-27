@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_upcoming_events_info() {
 	return array(
-		'name' => tra('Upcoming events'),
+		'name' => tra('Upcoming Events'),
 		'description' => tra('Lists the specified number of calendar events, ordered by their start date.'),
 		'prefs' => array("feature_calendar"),
 		'params' => array(

@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_last_actions_info() {
 	return array(
-		'name' => tra('Last actions'),
+		'name' => tra('Last Actions'),
 		'description' => tra('Displays the specified number of last actions.'),
 		'prefs' => array( ),
 		'params' => array(

@@ -42,7 +42,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td>{tr}Upcoming events{/tr}</td>
+			<td>{tr}Upcoming Events{/tr}</td>
 			<td>
 				<select name="minical_upcoming">
 					{html_options output=$upcoming values=$upcoming selected=$minical_upcoming}

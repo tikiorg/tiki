@@ -1039,7 +1039,7 @@ function get_default_prefs() {
 		'feed_blogs_showAuthor' => 'n',
 		'feed_blogs_title' => tra('Tiki RSS feed for weblogs'),
 		'feed_calendar' => 'n',
-		'feed_calendar_desc' => tra('Upcoming events.'),
+		'feed_calendar_desc' => tra('Upcoming Events.'),
 		'feed_calendar_homepage' => '',
 		'feed_calendar_max' => 10,
 		'feed_calendar_showAuthor' => 'n',

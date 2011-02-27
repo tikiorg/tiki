@@ -15,7 +15,7 @@
 <table class="normal" >
 	<tr>
 		<td>
-			<b>{tr}Upcoming events{/tr}</b>
+			<b>{tr}Upcoming Events{/tr}</b>
 			<br />
 			<table class="normal">
 				{section name=ix loop=$upcoming}

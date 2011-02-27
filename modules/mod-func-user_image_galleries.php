@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_user_image_galleries_info() {
 	return array(
-		'name' => tra('User image galleries'),
+		'name' => tra('My Image Galleries'),
 		'description' => tra('Displays to registered users their image galleries.'),
 		'prefs' => array( 'feature_galleries' ),
 		'params' => array(),

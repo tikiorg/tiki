@@ -294,7 +294,7 @@
 			<td style="text-align:right;">{$user_stats.users}</td>
 		</tr>
 		<tr class="{cycle}">
-			<td>{tr}User bookmarks{/tr}</td>
+			<td>{tr}My Bookmarks{/tr}</td>
 			<td style="text-align:right;">{$user_stats.bookmarks}</td>
 		</tr>
 		<tr class="{cycle}">

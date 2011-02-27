@@ -481,8 +481,8 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_user_bookmarks' => array(
-			'name' => tra('User Bookmarks'),
-			'description' => tra('User Bookmarks'),
+			'name' => tra('My Bookmarks'),
+			'description' => tra('My Bookmarks'),
 			'help' => 'Bookmarks',
 			'type' => 'flag',
 		),

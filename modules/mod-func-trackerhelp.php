@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_trackerhelp_info() {
 	return array(
-		'name' => tra('Trackerhelp'),
+		'name' => tra('Tracker Help'),
 		'description' => tra('Display the fieldId of a tracker'),
 		'prefs' => array("feature_trackers"),
 		'params' => array(

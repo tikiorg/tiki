@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_freetags_prefered_info() {
 	return array(
-		'name' => tra('User preferred tags'),
+		'name' => tra('My Preferred Tags'),
 		'description' => tra('Displays to registered users the freetags they prefer, based on the number of objects they added the tag to. More preference is indicated by a larger font.'),
 		'prefs' => array( 'feature_freetags' ),
 		'params' => array(),

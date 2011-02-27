@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_last_modified_blogs_info() {
 	return array(
-		'name' => tra('Last Modified blogs'),
+		'name' => tra('Last-Modified Blogs'),
 		'description' => tra('Displays the specified number of blogs, starting from the most recently modified.'),
 		'prefs' => array("feature_blogs"),
 		'params' => array(),

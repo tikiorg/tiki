@@ -190,7 +190,7 @@
     <div id="content5" class="content">
       <div class="cbox">
         <div class="cbox-title">
-          {if $userwatch eq $user}{tr}My tasks{/tr}{else}{tr}User tasks{/tr}{/if}
+          {if $userwatch eq $user}{tr}My tasks{/tr}{else}{tr}My Tasks{/tr}{/if}
         </div>
         <div class="cbox-data">
           <table class="normal">

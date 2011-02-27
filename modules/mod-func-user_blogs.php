@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_user_blogs_info() {
 	return array(
-		'name' => tra('User Blogs'),
+		'name' => tra('My Blogs'),
 		'description' => tra('Displays to registered users their blogs.'),
 		'prefs' => array( 'feature_blogs' ),
 		'params' => array(),

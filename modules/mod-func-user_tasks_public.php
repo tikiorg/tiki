@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_user_tasks_public_info() {
 	return array(
-		'name' => tra('Public tasks'),
+		'name' => tra('Public Tasks'),
 		'description' => tra('Lists the public user tasks of a chosen group, with links to tasks.'),
 		'prefs' => array("feature_tasks"),
 		'params' => array()

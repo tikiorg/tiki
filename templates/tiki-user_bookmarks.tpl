@@ -1,4 +1,4 @@
-{title help="User+Bookmarks"}{tr}User Bookmarks{/tr}{/title}
+{title help="User+Bookmarks"}{tr}My Bookmarks{/tr}{/title}
 
 {include file='tiki-mytiki_bar.tpl'}
 

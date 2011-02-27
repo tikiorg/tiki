@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_user_bookmarks_info() {
 	return array(
-		'name' => tra('User bookmarks'),
+		'name' => tra('My Bookmarks'),
 		'description' => tra('Lightweight interface to user bookmarks, enabling to view them concisely, do some manipulations and bookmark the page being viewed'),
 		'prefs' => array("feature_user_bookmarks"),
 		'params' => array()
