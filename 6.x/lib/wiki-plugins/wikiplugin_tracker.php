@@ -584,8 +584,6 @@ function wikiplugin_tracker($data, $params)
 						$ins_id = 'track_'.$fl['fieldId'];
 						if (isset($_REQUEST[$ins_id.'Day']) || isset($_REQUEST[$ins_id.'Hour'])) {
 							$_REQUEST['track'][$fl['fieldId']] = $trklib->build_date($_REQUEST, $flds['data'][$cpt], $ins_id);
-						} else {
-							$_REQUEST['track'][$fl['fieldId']] = $tikilib->now;
 						}
 					} elseif ($f['type'] == 'N' && !empty($itemId)) {
 						if (empty($itemUser)) {
