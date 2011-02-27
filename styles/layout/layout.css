@@ -732,12 +732,21 @@ a.toolbar {			/* each tool button */
 	line-height: 12px;
 }
 
+.toolbars-picker.specialchar {	/* colours, smilies etc */
+	width: 25em;
+}
+
 .toolbars-picker a {
 	padding: 0px;
 	margin: 0px;
 	display: inline-block;
 	border: #fff 1px solid;
 	overflow: hidden;
+}
+
+.toolbars-picker.color a {
+	width: 14px;
+	height: 12px;
 }
 
 .toolbars-picker a:hover {
