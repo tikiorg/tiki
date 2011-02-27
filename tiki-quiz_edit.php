@@ -26,6 +26,9 @@ require_once ('tiki-setup.php');
 include_once ('lib/quizzes/quizlib.php');
 
 $access->check_feature('feature_quizzes');
+//Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
+include_once ('lib/userprefs/userprefslib.php');
+$smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
 
 // quizId of 0 is used as a place holder; There should NEVER be a row in the
 //   tiki_quizzes table with an id of zero.
@@ -71,6 +74,14 @@ function quiz_data_load() {
 	} else if ($quiz_data["online"] == "offline") {
 		$quiz_data["online"] = "n";
 	}
+	//Convert 12-hour clock hours to 24-hour scale to compute time
+	if (!empty($_REQUEST['publish_Meridian'])) {
+		$_REQUEST['publish_Hour'] = date('H', strtotime($_REQUEST['publish_Hour'] . ':00 ' . $_REQUEST['publish_Meridian']));
+	}
+	if (!empty($_REQUEST['expire_Meridian'])) {
+		$_REQUEST['expire_Hour'] = date('H', strtotime($_REQUEST['expire_Hour'] . ':00 ' . $_REQUEST['expire_Meridian']));
+	}
+	
 	$quiz_data["datePub"] = TikiLib::make_time($quiz_data["publish_Hour"], $quiz_data["publish_Minute"], 0, $quiz_data["publish_Month"], $quiz_data["publish_Day"], $quiz_data["publish_Year"]);
 	$quiz_data["dateExp"] = TikiLib::make_time($quiz_data["expire_Hour"], $quiz_data["expire_Minute"], 0, $quiz_data["expire_Month"], $quiz_data["expire_Day"], $quiz_data["expire_Year"]);
 	$fields = array('nQuestion', 'shuffleAnswers', 'shuffleQuestions', 'multiSession', 'additionalQuestions', 'limitDisplay', 'timeLimited', 'canRepeat', 'additionalQuestions', 'forum');

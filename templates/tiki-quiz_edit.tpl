@@ -66,13 +66,15 @@
 						<tr>
       				<td>{tr}Publication Date{/tr}</td>
       				<td>
-								{html_select_date prefix="quiz_publish_" time=$quiz->datePub start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at {/tr}{html_select_time prefix="quiz_publish_" time=$quiz->datePub display_seconds=false} HRS&nbsp;{$tpl.siteTimeZone} 
+								{html_select_date prefix="quiz_publish_" time=$quiz->datePub start_year="-5" end_year="+10" field_order=$prefs.display_field_order} 
+								{tr}at {/tr}{html_select_time prefix="quiz_publish_" time=$quiz->datePub display_seconds=false use_24_hours=$use_24hr_clock} HRS&nbsp;{$tpl.siteTimeZone} 
 							</td>
 						</tr>
 						<tr>
 							<td>{tr}Expiration Date{/tr}</td>
 							<td>
-								{html_select_date prefix="quiz_expire_" time=$quiz->dateExp start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at {/tr}{html_select_time prefix="quiz_expire_" time=$quiz->dateExp display_seconds=false} HRS&nbsp;{$tpl.siteTimeZone}
+								{html_select_date prefix="quiz_expire_" time=$quiz->dateExp start_year="-5" end_year="+10" field_order=$prefs.display_field_order} 
+								{tr}at {/tr}{html_select_time prefix="quiz_expire_" time=$quiz->dateExp display_seconds=false use_24_hours=$use_24hr_clock} HRS&nbsp;{$tpl.siteTimeZone}
 							</td>
 						</tr>
 						<tr>
