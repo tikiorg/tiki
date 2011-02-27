@@ -298,6 +298,13 @@ if ((isset($_REQUEST['save'])) || (isset($_REQUEST['preview']))) {
 		$msg_changes_head = '__' . tra("Changes:") . "__\n";
 	}
 	$msg_changes = '';
+	//Convert 12-hour clock hours to 24-hour scale to compute time
+	if (!empty($_REQUEST['start_Meridian'])) {
+		$_REQUEST['start_Hour'] = date('H', strtotime($_REQUEST['start_Hour'] . ':00 ' . $_REQUEST['start_Meridian']));
+	}
+	if (!empty($_REQUEST['end_Meridian'])) {
+		$_REQUEST['end_Hour'] = date('H', strtotime($_REQUEST['end_Hour'] . ':00 ' . $_REQUEST['end_Meridian']));
+	}
 	if (isset($_REQUEST['use_start_date']) and isset($_REQUEST['start_Hour']) and isset($_REQUEST['start_Minute']) and isset($_REQUEST['start_Month']) and isset($_REQUEST['start_Day']) and isset($_REQUEST['start_Year'])) {
 		$start_date = $tikilib->make_time($_REQUEST['start_Hour'], $_REQUEST['start_Minute'], 0, $_REQUEST['start_Month'], $_REQUEST['start_Day'], $_REQUEST['start_Year']);
 	} else $start_date = null;
@@ -619,6 +626,10 @@ $percs = array();
 for ($i = 0; $i <= 100; $i+= 10) {
 	$percs[] = $i;
 }
+//Use 12- or 24-hour clock for $publishDate time selector based on admin and user preferences
+include_once ('lib/userprefs/userprefslib.php');
+$smarty->assign('use_24hr_clock', $userprefslib->get_user_clock_pref($user));
+
 $smarty->assign_by_ref('percs', $percs);
 $img_accepted = "img/icons2/tick.gif";
 $img_accepted_height = "15";
