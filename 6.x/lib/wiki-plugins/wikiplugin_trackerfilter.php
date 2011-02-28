@@ -303,9 +303,9 @@ $(".trackerfilter form").submit( function () {
 	if( $first ) {
 		$first = false;
 		global $headerlib;
-		$headerlib->add_js('$(".trackerfilter-result .prevnext").click( function( e ) {
+		$headerlib->add_jq_onready('$(".prevnext", "#trackerFilter' . $iTrackerFilter . ' + .trackerfilter-result").click( function( e ) {
 			e.preventDefault();
-			$(".trackerfilter-result form")
+			$("#trackerFilter' . $iTrackerFilter . ' form")
 				.attr("action", $(this).attr("href"))
 				.submit();
 		} );' );
