@@ -81,6 +81,9 @@ function smarty_outputfilter_highlight($source, &$smarty) {
 
 	if ( ! $result )
 		return $source;
+	if (strlen($matches[2]) > ini_get('pcre.backtrack_limit')) {
+		return $source;
+	}
 
 	if ( ! isset( $matches[3] ) )
 		$matches[3] = '';
