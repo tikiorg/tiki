@@ -40,7 +40,7 @@ function module_categories_info() {
 			),
 			'categParentIds' => array(
 				'name' => tra('Show these categories and their children'),
-				'description' => tra('Show only these categories and the immediate child categories of these. Example values: 3,5,6.'),
+				'description' => tra('Show only these categories and the immediate child categories of these in the order the parameter specifies. Example values: 3,5,6.'),
 				'filter' => 'striptags'
 			),
 			'selflink' => array(
@@ -87,9 +87,11 @@ function module_categories( $mod_reference, &$module_params ) {
 	if (isset($module_params['categParentIds'])) {
 		$categParentIds = explode(',', $module_params['categParentIds']);
 		$filtered_categories = array();
-		foreach ($categories as $cat) {
-			if (in_array($cat['categId'], $categParentIds) || in_array($cat['parentId'], $categParentIds) ) {
-				$filtered_categories[] = $cat;
+		foreach ($categParentIds as $c) {
+			foreach ($categories as $cat) {
+				if ( $cat['categId'] == $c || $cat['parentId'] == $c ) {
+					$filtered_categories[] = $cat;
+				}
 			}
 		}
 		$categories = $filtered_categories;
