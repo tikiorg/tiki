@@ -28,7 +28,7 @@ function smarty_function_jscalendar($params, &$smarty) {
 		} else {
 			$name = '';
 		}
-		if (!isset($params['date'])) {
+		if (empty($params['date'])) {
 			$params['date'] = $tikilib->now;
 		}
 		$datepicker_options = '{ altField: "#' . $params['id'] . '"';
