@@ -119,7 +119,18 @@ function wikiplugin_trackertimeline_info() {
 				'description' => tra('Tracker Field ID containing the page name for item details.'),
 				'filter' => 'digits',
 				'default' => '',
-			)
+			),
+			'simile_timeline' => array(
+				'required' => false,
+				'name' => tra('SIMILE Timeline'),
+				'description' => tra('Use the SIMILE Timeline Widget.'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
+				),
+			),
 		)
 	);
 }
@@ -131,7 +142,7 @@ function wikiplugin_trackertimeline( $data, $params ) {
 	if( ! isset( $params['tracker'] ) )
 		return "^" . tr("Missing parameter: %0", 'tracker') . "^";
 
-	$default = array('scale1'=>'hour');
+	$default = array('scale1' => 'hour', 'simile_timeline' => 'n');
 	$params = array_merge($default, $params);
 	$formats = array('hour'=>'H:i', 'day'=>'jS', 'week' => 'jS', 'month'=>'m', 'year'=>'y');
 
@@ -209,7 +220,116 @@ function wikiplugin_trackertimeline( $data, $params ) {
 	$smarty->assign( 'layouts', $layouts );
 	$smarty->assign( 'link_group_names', isset($params['link_group']) && $params['link_group'] == 'y' );
 
-	return $smarty->fetch('wiki-plugins/wikiplugin_trackertimeline.tpl');
+	if ($params['simile_timeline'] !== 'y') {
+		return $smarty->fetch('wiki-plugins/wikiplugin_trackertimeline.tpl');
+
+	} else {	// SIMILE Timeline Widget setup
+
+		global $headerlib;
+
+		// the simile api has to be included in the head to work it seems (tiki js files live at end of body now)
+		$headerlib->add_js('
+(function() {
+var head = document.getElementsByTagName("head")[0];
+var script = document.createElement("script");
+script.type = "text/javascript";
+script.language = "JavaScript";
+script.src = "http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=true";
+head.appendChild(script);
+})();
+');
+
+		// prepare the data for SIMILE widget - to be included in the page for now (ajax feed to come)
+		$ttl_data = array();
+		$events = array();
+		foreach( $data as $group => $list ) {	// ignoring group for now
+			foreach( $list as $item) {
+				$event = array(
+					'title' => $item['title'],
+					'start' => date('r', $item['start']),
+					'description' => $item['summary'],
+				);
+				if (!empty( $item['end'])) {
+					$event['end'] = date('r', $item['end']);
+					$event['isDuration'] = true;
+				}
+				if (!empty( $item['link'])) {
+					$event['link'] = $item['link'];
+				}
+				$events[] = $event;
+			}
+			$ttl_data = array(
+				'dateTimeFormat' => '',	// iso8601
+//				'wikiURL' => '',
+//				'wikiSection' => '',
+				'events' => $events,
+			);
+		}
+		$js = 'ajaxLoadingShow("ttl_timeline");';
+		$js .= 'var ttl_eventData = ' . json_encode($ttl_data) . ";\n";
+
+		$js .= '
+var ttlTimeline, ttlInit = function() {
+	// wait for Timeline to be loaded
+	if (typeof window.Timeline === "undefined" ||
+			typeof window.Timeline.createBandInfo === "undefined" ||
+			typeof window.Timeline.DateTime === "undefined" ||
+			typeof window.Timeline.GregorianDateLabeller === "undefined") {
+
+		window.setTimeout( function() { ttlInit(); }, 500);
+		return;
+	}
+
+	var ttl_eventSource = new Timeline.DefaultEventSource();
+	ttl_eventSource.loadJSON(ttl_eventData, ".");	// The data
+	
+	var bandInfos = [
+		window.Timeline.createBandInfo({
+			width:          "' . (empty($params['scale2']) ? '100%' : '70%' ) . '",
+			intervalUnit:   window.Timeline.DateTime.' . (strtoupper($params['scale1'])) . ',
+			eventSource:	ttl_eventSource,
+			intervalPixels: 100
+		})';
+		if (!empty($params['scale2'])) {
+			$js .= ',
+		window.Timeline.createBandInfo({
+			width:          "30%",
+			intervalUnit:   window.Timeline.DateTime.' . (strtoupper($params['scale2'])) . ',
+			eventSource:	ttl_eventSource,
+			intervalPixels: 200,
+			layout:			"overview"
+		})';
+		}
+		$js .= '];';
+		if (!empty($params['scale2'])) {
+			$js .= '
+	bandInfos[1].syncWith = 0;
+	bandInfos[1].highlight = true;
+	//bandInfos[1].eventPainter.setLayout(bandInfos[0].eventPainter.getLayout());
+';
+		}
+		$js .= '
+	ttlTimeline = window.Timeline.create(document.getElementById("ttl_timeline"), bandInfos);
+	ajaxLoadingHide();
+	ttlTimeline.layout(); // display the Timeline
+
+}	// end ttlInit
+ttlInit();
+
+var ttlResizeTimerID = null;
+$(window).resize( function () {
+	if (ttlResizeTimerID == null) {
+		ttlResizeTimerID = window.setTimeout(function() {
+			resizeTimerID = null;
+			ttlTimeline.layout();
+		}, 500);
+	}
+});';
+
+		$headerlib->add_jq_onready( $js, 10);
+		$out = '<div id="ttl_timeline" style="height: 150px; border: 1px solid #aaa"></div>';
+		return $out;
+	}
 }
 
 function wp_ttl_organize( $name, $base, $size, &$list, &$new ) {
