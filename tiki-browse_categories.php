@@ -23,8 +23,10 @@ if (!isset($_REQUEST['parentId'])) {
 	$_REQUEST['parentId'] = 0;
 }
 $smarty->assign('parentId', $_REQUEST['parentId']);
-if (isset($_REQUEST['maxRecords']) && $_REQUEST['maxRecords'] >= 1) {
+if (isset($_REQUEST['maxRecords']) && ($_REQUEST['maxRecords'] >= 1 || $_REQUEST['maxRecords'] == -1)) {
 	$maxRecords = $_REQUEST['maxRecords'];
+} else {
+	$maxRecords = $prefs['maxRecords'];
 }
 if (!isset($_REQUEST['sort_mode'])) {
 	$sort_mode = 'name_asc';
@@ -153,6 +155,7 @@ if ($deep == 'on') {
 
 $smarty->assign_by_ref('objects', $objects['data']);
 $smarty->assign_by_ref('cant_pages', $objects['cant']);
+$smarty->assign_by_ref('maxRecords', $maxRecords);
 include_once ('tiki-section_options.php');
 ask_ticket('browse-categories');
 
