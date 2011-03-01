@@ -73,8 +73,6 @@
 			{$userinfo.login|username}
 		{elseif !empty($tracker_info.name)}
 			{$tracker_info.name|escape}
-		{elseif !empty($gal_info.name)}
-			{$gal_info.name|escape}
 		{elseif !empty($headtitle)}
 			{$headtitle|tr_if|escape}{* use $headtitle last if feature specific title not found *}
 		{/if}
