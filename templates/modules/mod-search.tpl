@@ -80,7 +80,7 @@ function submitSearch{{$search_mod_usage_counter}}() {
 }
     {/jq}
 	{if $smod_params.use_autocomplete eq 'y'}
-		{capture name="selectFn}select: function(event, item) {ldelim}
+		{capture name="selectFn"}select: function(event, item) {ldelim}
 	$('#search-module-form{$search_mod_usage_counter}').attr('page_selected', item.item.value);
 {rdelim}{/capture}
 		{autocomplete element="#search_mod_input_"|cat:$search_mod_usage_counter type="pagename" options=$smarty.capture.selectFn}
