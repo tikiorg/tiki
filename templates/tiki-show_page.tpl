@@ -95,7 +95,7 @@
 		{/if}
 
 		{if $structure eq 'y' and ($prefs.wiki_structure_bar_position ne 'bottom')}
-			{include file=tiki-wiki_structure_bar.tpl}
+			{include file='tiki-wiki_structure_bar.tpl'}
 		{/if}
 
 		{if $prefs.feature_wiki_ratings eq 'y'}
@@ -127,7 +127,7 @@
 	<hr class="hrwikibottom" /> 
 
 	{if $structure eq 'y' and (($prefs.wiki_structure_bar_position eq 'bottom') or ($prefs.wiki_structure_bar_position eq 'both'))}
-		{include file=tiki-wiki_structure_bar.tpl}
+		{include file='tiki-wiki_structure_bar.tpl'}
 	{/if}
 
 	{if $pages > 1 and $prefs.wiki_page_navigation_bar neq 'top'}
@@ -152,10 +152,10 @@
 
 {capture name='editdate_section'}{strip}
 	{if isset($wiki_authors_style) && $wiki_authors_style neq 'none'}
-		{include file=wiki_authors.tpl}
+		{include file='wiki_authors.tpl'}
 	{/if}
 
-	{include file=show_copyright.tpl}
+	{include file='show_copyright.tpl'}
 
 	{if $print_page eq 'y'}
 		<br />
@@ -179,11 +179,11 @@
 {/if}
 
 {if $prefs.wiki_topline_position eq 'bottom' or $prefs.wiki_topline_position eq 'both'}
-	{include file=tiki-wiki_topline.tpl}
+	{include file='tiki-wiki_topline.tpl'}
 {/if}
 
 {if $print_page ne 'y'}
 	{if (!$prefs.page_bar_position or $prefs.page_bar_position eq 'bottom' or $prefs.page_bar_position eq 'both') and $machine_translate_to_lang == ''}
-		{include file=tiki-page_bar.tpl}
+		{include file='tiki-page_bar.tpl'}
 	{/if}
 {/if}

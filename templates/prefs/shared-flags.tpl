@@ -36,7 +36,7 @@ $('.pref-reset')
 	} )
 	.wrap('<span/>')
 	.closest('span')
-		.append('{{icon _id=arrow_undo alt="{tr}Reset to default{/tr}" href=#}}')
+		.append('{{icon _id=arrow_undo alt="{tr}Reset to default{/tr}" href="#"}}')
 		.find('a')
 			.click( function() {
 				var box = $(this).closest('span').find(':checkbox');
