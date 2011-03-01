@@ -516,7 +516,7 @@ class CategLib extends ObjectLib
 			$where .= " AND (`name` LIKE ? OR `description` LIKE ?)";
 		} 
 		if (!empty($type)) {
-			if (array($type)) {
+			if (is_array($type)) {
 				$where .= ' AND `type` in ('.implode(',',array_fill(0,count($type),'?')).')';
 				$bindWhere = array_merge($bindWhere, $type);
 			} else {
