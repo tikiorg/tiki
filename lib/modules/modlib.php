@@ -299,7 +299,9 @@ class ModLib extends TikiLib
 
 		foreach( $list as & $partial ) {
 			$partial = array_map( array( $this, 'augment_module_parameters' ), $partial );
-			$partial = array_values( array_filter( $partial, array( $this, 'filter_active_module' ) ) );
+			if (!$this->is_admin_mode()) {
+				$partial = array_values( array_filter( $partial, array( $this, 'filter_active_module' ) ) );
+			}
 		}
 
 		return $list;
@@ -665,11 +667,9 @@ class ModLib extends TikiLib
 
 		global $smarty, $tikilib, $user;
 		
-		$module_admin_mode = strpos($_SERVER["SCRIPT_NAME"], 'tiki-admin_modules.php') !== false;
-
-		if( ! $cachefile || $this->require_cache_build( $mod_reference, $cachefile ) || $module_admin_mode ) {
+		if( ! $cachefile || $this->require_cache_build( $mod_reference, $cachefile ) || $this->is_admin_mode() ) {
 			
-			if ($module_admin_mode) {
+			if ($this->is_admin_mode()) {
 				require_once ('lib/setup/timer.class.php');
 				$timer = new timer('module');
 				$timer->start('module');
@@ -709,7 +709,8 @@ class ModLib extends TikiLib
 			
 			global $tiki_p_admin, $prefs;
 			$tpl_module_style = '';
-			if ($tiki_p_admin == 'y' && $prefs['modhideanonadmin'] == 'y' && (empty($mod_reference['groups']) || $mod_reference['groups'] == serialize(array('Anonymous'))) && $module_admin_mode) {
+			if ($tiki_p_admin == 'y' && $this->is_admin_mode() && (!$this->filter_active_module($mod_reference) ||
+						$prefs['modhideanonadmin'] == 'y' && (empty($mod_reference['groups']) || $mod_reference['groups'] == serialize(array('Anonymous'))))) {
 				$tpl_module_style .= 'opacity: 0.5;';
 			}
 			if (isset($module_params['overflow']) && $module_params['overflow'] === 'y') {
@@ -729,12 +730,12 @@ class ModLib extends TikiLib
 			$smarty->clear_assign('tpl_module_name');
 			$smarty->clear_assign('tpl_module_style');
 			
-			if ($module_admin_mode && $timer) {
+			if ($this->is_admin_mode() && $timer) {
 				$elapsed = round( $timer->stop('module'), 3);
 				$data = preg_replace('/<div /', '<div title="Module Execution Time ' . $elapsed . 's" ' , $data, 1);
 			}
 						
-			if (!empty($cachefile) && !$module_admin_mode) {
+			if (!empty($cachefile) && !$this->is_admin_mode()) {
 				file_put_contents( $cachefile, $data );
 			}
 		} else {
@@ -742,6 +743,15 @@ class ModLib extends TikiLib
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Returns true if on the admin modules page
+	 *
+	 * @return bool
+	 */
+	private function is_admin_mode() {
+		return strpos($_SERVER["SCRIPT_NAME"], 'tiki-admin_modules.php') !== false;
 	}
 
 	function get_user_module_content( $name ) {
