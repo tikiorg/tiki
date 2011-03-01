@@ -356,7 +356,11 @@ class ModLib extends TikiLib
 
 		if( $prefs['feature_perspective'] == 'y' ) {
 			global $perspectivelib; require_once 'lib/perspectivelib.php';
-			if( isset( $params['perspective'] ) && ! in_array( $perspectivelib->get_current_perspective( $prefs ), (array) $params['perspective'] ) ) {
+			$persp = $perspectivelib->get_current_perspective( $prefs );
+			if (empty($persp)) {
+				$persp = 0;
+			}
+			if( isset( $params['perspective'] ) && !in_array( $persp, (array) $params['perspective'] ) ) {
 				return false;
 			}
 		}
