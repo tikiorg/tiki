@@ -1042,7 +1042,6 @@ class CategLib extends ObjectLib
 			$res["objects"] = $this->getOne($query,array($id));
 			$ret[$categpathforsort] = $res;
 		}
-		ksort($ret);
 		$ret = array_values($ret);
 		if ($showWS)
 			$cachelib->cacheItem("allws",serialize($ret));
