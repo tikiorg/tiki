@@ -204,6 +204,14 @@ class Language extends TikiDb_Bridge
 			$dbTrans = $this->_getDbTranslationsEscaped();
 			$stats = array('modif' => 0, 'new' => 0);
 
+			// add new strings to the language.php
+			$lastStr = array_search("\"###end###\"=>\"###end###\");\n", $langFile);
+
+			if ($lastStr === FALSE) {
+				// file has no line with "###end###\"=>\"###end###\") marking the end of the array
+				throw new Exception(tra("The file lang/$this->lang/language.php is not well formated. Run get_strings.php?lang=$this->lang and then try to export the translations again."));
+			}			
+			
 			// foreach translation in the database check each string in the language.php file
 			// if the original string is present and the translation is diferent replace it
 			//TODO: improve the algorithm (it interact over each entry in language.php file for each entry in the database)
@@ -229,14 +237,6 @@ class Language extends TikiDb_Bridge
 			foreach ($dbTrans as $orig => $trans) {
 				$newTrans[] = '"' . $orig . '" => "' . $trans . "\",\n";
 				$stats['new']++;
-			}
-
-			// add new strings to the language.php
-			$lastStr = array_search("\"###end###\"=>\"###end###\");\n", $langFile);
-
-			if ($lastStr === FALSE) {
-				// file has no line with "###end###\"=>\"###end###\") marking the end of the array
-				throw new Exception(tra("The file lang/$this->lang/language.php is not well formated. Run get_strings.php?lang=$this->lang and then try to export the translations again."));
 			}
 
 			array_splice($langFile, $lastStr, 0, $newTrans);
