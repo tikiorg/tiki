@@ -12,7 +12,7 @@
 {if $nonums != 'y'}<ol>{else}<ul>{/if}
 {section name=ix loop=$modTasks}
 <li class="prio{$modTasks[ix].priority}">
-{if $modTasks[ix].creator ne $user }
+{if $modTasks[ix].creator ne $user}
 &gt;&gt; 
 {else}
 <input type="checkbox" name="modTasks[{$modTasks[ix].taskId}]" />

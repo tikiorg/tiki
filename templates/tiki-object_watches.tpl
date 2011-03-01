@@ -50,7 +50,7 @@
 <form method="post" action="{$smarty.server.REQUEST_URI|escape}">
 <input type="hidden" name="referer" value="{$referer|escape}" />
 <div style="float: left; margin-right: 10px;"><input type="submit" name="assign" value="{tr}Apply{/tr}" /></div>
-{if $isTop ne 'y' }
+{if $isTop ne 'y'}
 	<p>{tr}Groups watching:{/tr} {$group_watches|@count}</p>
 {else}
 	<p>&nbsp;</p>
@@ -59,7 +59,7 @@
 	<tr>
 		{if !empty($cat) && !empty($desc)}
 			<th>{tr}Groups{/tr}</th>
-			{if $isTop ne 'y' }
+			{if $isTop ne 'y'}
 				<th>{tr}This Category{/tr}</th>
 			{/if}
 			<th>{tr}All Descendants{/tr}</th>
@@ -76,7 +76,7 @@
 			<tr class="{cycle}">
 				{if !empty($cat) && !empty($desc)}
 					<td class="text"><label for="group_watch{$i}">{$g|escape}</label></td>
-					{if $isTop ne 'y' }
+					{if $isTop ne 'y'}
 						<td class="checkbox"><input id="group_watch{$i}"type="checkbox" name="checked[]" 
 						value="{$g|escape}"{if in_array($g, $group_watches)} checked="checked"{/if} /></td>
 					{/if}

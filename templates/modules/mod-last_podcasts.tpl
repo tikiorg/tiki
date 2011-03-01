@@ -40,7 +40,7 @@
 			{/section}
 		{if $nonums != 'y'}</ol>{else}</ul>{/if}
 
-		{if $link_url neq "" }
+		{if $link_url neq ""}
 			<div class="lastlinkmodule" >
 				<a class="linkmodule" href="{$link_url}" >{if $link_text neq ""}{tr}{$link_text}{/tr}{else}{$link_url}{/if}</a>
 			</div>

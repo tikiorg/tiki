@@ -37,7 +37,7 @@ function test_xpath(index) {
   <table style="width:100%" >
 		<tr><th colspan="2">{tr}Element to compare (Xpath expression):{/tr}&nbsp;<input type="text" style="width:50%;" id="xpath_{$smarty.foreach.url.index}" name="xpath[{$smarty.foreach.url.index}]" value="{$r.xpath}" />&nbsp;<input type="button" value="{tr}Test Xpath Expression{/tr}" onclick="javascript:test_xpath({$smarty.foreach.url.index}); return false" /></th>
 	</tr>
-	{if isset($r.post) and $show_post and sizeof($r.post) gt 0 }
+	{if isset($r.post) and $show_post and sizeof($r.post) gt 0}
 		<tr>
 			<th colspan="2">{tr}Post Variables{/tr}</th>
 		</tr>

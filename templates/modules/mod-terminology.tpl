@@ -1,4 +1,4 @@
-{tikimodule title=$tpl_module_title name="terminology flip=$module_params.flip decorations=$module_params.decorations}
+{tikimodule title=$tpl_module_title name="terminology" flip=$module_params.flip decorations=$module_params.decorations}
   <div align="left">
     <b>{tr}Find term:{/tr}</b><br />
 	<div id="mod-search_wiki_pager1" style="display: block" class="clearfix box-data">

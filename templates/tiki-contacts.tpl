@@ -14,7 +14,7 @@
 	</div>
 </div>
 
-<form action="tiki-contacts.php" method="post" id="editform" name='editform_contact' style="clear:both;margin:5px;display:{ if $contactId}block{else}none{/if};">
+<form action="tiki-contacts.php" method="post" id="editform" name='editform_contact' style="clear:both;margin:5px;display:{if $contactId}block{else}none{/if};">
 	<input type="hidden" name="locSection" value="contacts" />
 	<input type="hidden" name="contactId" value="{$contactId|escape}" />
 	
@@ -95,18 +95,18 @@
 		{foreach from=$exts item=ext key=k}
 			{if $ext.show eq 'y'}
 				<th>
-					{assign var=numbercol value=`$numbercol+1`}
+					{assign var=numbercol value=$numbercol+1}
 					<a>{$ext.tra}</a>
 				</th>
 			{/if}
 		{/foreach}
 		
 		{if $view eq 'list'}
-			{assign var=numbercol value=`$numbercol+1`}
+			{assign var=numbercol value=$numbercol+1}
 			<th>{tr}Groups{/tr}</th>
 		{/if}
 		
-		{assign var=numbercol value=`$numbercol+1`}
+		{assign var=numbercol value=$numbercol+1}
 		<th>{tr}Action{/tr}</th>
 	</tr>
 	

@@ -373,7 +373,7 @@
 											<div id="showstructs">
 												{if $showstructs|@count gt 0}
 													<ul>
-														{foreach from=$showstructs item=page_info }
+														{foreach from=$showstructs item=page_info}
 															<li>{$page_info.pageName}{if !empty($page_info.page_alias)}({$page_info.page_alias}){/if}</li>
 														{/foreach}  
 													</ul>
@@ -466,7 +466,7 @@
 									<select name="lang" id="lang">
 										<option value="">{tr}Unknown{/tr}</option>
 										{section name=ix loop=$languages}
-											<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value or (not($data.page_id) and $lang eq '' and $languages[ix].value eq $prefs.language)} selected="selected"{/if}>{$languages[ix].name}</option>
+											<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value or (!($data.page_id) and $lang eq '' and $languages[ix].value eq $prefs.language)} selected="selected"{/if}>{$languages[ix].name}</option>
 										{/section}
 									</select>
 									{if $translationOf}

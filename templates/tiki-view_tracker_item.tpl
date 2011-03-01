@@ -127,12 +127,12 @@
 {/tab}
 
 {* -------------------------------------------------- tab with comments --- *}
-{if $tracker_info.useComments eq 'y' and ($tiki_p_tracker_view_comments ne 'n' or $tiki_p_comment_tracker_items ne 'n') }
+{if $tracker_info.useComments eq 'y' and ($tiki_p_tracker_view_comments ne 'n' or $tiki_p_comment_tracker_items ne 'n')}
 
 {if $tiki_p_tracker_view_comments ne 'n'}
 	{assign var=tabcomment_vtrackit value="{tr}Comments{/tr} (`$commentCount`)"}
 {else}
-	{assign var=tabcomment_vtrackit value="{tr}Comments{/tr}}
+	{assign var=tabcomment_vtrackit value="{tr}Comments{/tr}"}
 {/if}
 
 {tab name=$tabcomment_vtrackit}
@@ -182,7 +182,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;
 {* --------------------------------------------------------------- tab with edit --- *}
 {if $print_page ne 'y' && ($tiki_p_modify_tracker_items eq 'y' and $item_info.status ne 'p' and $item_info.status ne 'c') or ($tiki_p_modify_tracker_items_pending eq 'y' and $item_info.status eq 'p') or ($tiki_p_modify_tracker_items_closed eq 'y' and $item_info.status eq 'c') or $special}
 {capture name="editTitle"}{if ($tiki_p_remove_tracker_items eq 'y' and $item_info.status ne 'p' and $item_info.status ne 'c') or ($tiki_p_remove_tracker_items_pending eq 'y' and $item_info.status eq 'p') or ($tiki_p_remove_tracker_items_closed eq 'y' and $item_info.status eq 'c')}{tr}Edit/Delete{/tr}{else}{tr}Edit{/tr}{/if}{/capture}
-{tab name="`$smarty.capture.editTitle`"}
+{tab name=$smarty.capture.editTitle}
 <h2>{tr}Edit Item{/tr}</h2>
 
 <div class="nohighlight">
@@ -315,7 +315,7 @@ $("#user_selector_{{$cur_field.id}}").tiki("autocomplete", "username", {mustMatc
 <select name="ins_{$cur_field.id}" {if !empty($cur_field.http_request)}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
 {if $cur_field.isMandatory ne 'y'}<option value="">{tr}None{/tr}</option>{/if}
 {foreach key=id item=one from=$users}
-{if ( ! isset($cur_field.itemChoices) || $cur_field.itemChoices|@count eq 0 || in_array($one, $cur_field.itemChoices) ) }
+{if ( ! isset($cur_field.itemChoices) || $cur_field.itemChoices|@count eq 0 || in_array($one, $cur_field.itemChoices) )}
 <option value="{$one|escape}" {if ($cur_field.options_array[0] eq '2' and $one eq $user) or ($cur_field.options_array[0] ne '2' and $cur_field.value eq $one) or ($cur_field.isMandatory eq 'y' and empty($cur_field.value) and $one eq $user)}selected="selected"{/if}>{$one|username}</option>
 {/if}
 {/foreach}
@@ -339,7 +339,7 @@ $("#user_selector_{{$cur_field.id}}").tiki("autocomplete", "username", {mustMatc
 <select name="ins_{$cur_field.id}" {if !empty($cur_field.http_request)}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
 {if $cur_field.isMandatory ne 'y'}<option value="">{tr}None{/tr}</option>{/if}
 {section name=ux loop=$groups}
-{if ( ! isset($cur_field.itemChoices) || $cur_field.itemChoices|@count eq 0 || in_array($groups[ux], $cur_field.itemChoices) ) }
+{if ( ! isset($cur_field.itemChoices) || $cur_field.itemChoices|@count eq 0 || in_array($groups[ux], $cur_field.itemChoices) )}
 <option value="{$groups[ux]|escape}" {if $cur_field.value|default:$cur_field.pvalue eq $groups[ux]}selected="selected"{/if}>{$groups[ux]}</option>
 {/if}
 {/section}
@@ -374,14 +374,14 @@ $("#user_selector_{{$cur_field.id}}").tiki("autocomplete", "username", {mustMatc
 	<select name="ins_cat_{$cur_field.fieldId}[]"{if $cur_field.options_array[1] eq 'm'} multiple="multiple"{/if}>
 	{if $cur_field.isMandatory ne 'y'}<option value=""></option>{/if}
 	{foreach key=ku item=iu from=$cur_field.$fca name=foreache}
-	{assign var=fcat value=$iu.categId }
+	{assign var=fcat value=$iu.categId}
 	<option value="{$iu.categId}"{if $cur_field.cat.$fcat eq 'y'} selected="selected"{/if}>{$iu.categpath|escape}</option>
 	{/foreach}
 	</select>
 {else}
 <table width="100%"><tr>{cycle name="2_$fca" values=",</tr><tr>" advance=false}
 {foreach key=ku item=iu from=$cur_field.$fca name=foreache}
-{assign var=fcat value=$iu.categId }
+{assign var=fcat value=$iu.categId}
 <td width="50%" style="white_space:nowrap;"><input type={if $cur_field.options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="ins_cat_{$cur_field.fieldId}[]" value="{$fcat}" {if $cur_field.cat.$fcat eq 'y'}checked="checked"{/if}/>{$iu.name|escape}</td>
 {if !$smarty.foreach.foreache.last}{cycle name="2_$fca"}{else}{if $cur_field.$fca|@count%2}<td></td>{/if}</tr>{/if}
 {/foreach}
@@ -463,9 +463,9 @@ or $cur_field.type eq 'i'}
 	{assign var='Length' value=$prefs.MultimediaDefaultLength}
 
 	{if $cur_field.value ne ''}
-		{if isset($cur_field.options_array[1]) and $cur_field.options_array[1] ne '' } { assign var=Length value=$cur_field.options_array[1] }{/if}
-		{if isset($cur_field.options_array[2]) and $cur_field.options_array[2] ne '' } { assign var=Height value=$cur_field.options_array[2] }{/if}
-		{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$prefs.VideoHeight}{/if}
+		{if isset($cur_field.options_array[1]) and $cur_field.options_array[1] ne ''} {assign var=Length value=$cur_field.options_array[1]}{/if}
+		{if isset($cur_field.options_array[2]) and $cur_field.options_array[2] ne ''} {assign var=Height value=$cur_field.options_array[2]}{/if}
+		{if $ModeVideo eq 'y'} {assign var="Height" value=$Height+$prefs.VideoHeight}{/if}
 		{include file='multiplayer.tpl' url=$cur_field.value w=$Length h=$Height video=$ModeVideo}
 	{/if}
 {/if}
@@ -534,7 +534,7 @@ or $cur_field.type eq 'i'}
 <td>{tr}Choose users to alert{/tr}</td>
 <td>
 {section name=idx loop=$listusertoalert}
-{if $showeachuser eq '' }
+{if $showeachuser eq ''}
 <input type="hidden"  name="listtoalert[]" value="{$listusertoalert[idx].user}">
 {else}
 <input type="checkbox" name="listtoalert[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}

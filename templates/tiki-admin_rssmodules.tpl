@@ -70,7 +70,7 @@
 			</select>
 		</p>
 		<p>
-			{include file=categorize.tpl}
+			{include file='categorize.tpl'}
 		</p>
 		<p>
 			<input type="submit" value="{tr}Configure{/tr}"/>

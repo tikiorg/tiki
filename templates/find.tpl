@@ -61,7 +61,7 @@
 	</label>
 {/if}
 
-{if !empty($types) and ( !isset($types_tag) or $types_tag eq 'select' ) }
+{if !empty($types) and ( !isset($types_tag) or $types_tag eq 'select' )}
 	<select name="type" class="findtypes">
 		<option value='' {if $find_type eq ''}selected="selected"{/if}>{tr}any type{/tr}</option>
 		{section name=t loop=$types}
@@ -160,7 +160,7 @@
 	</div>
 {/if}
 
-{if !empty($types) and isset($types_tag) and $types_tag eq 'checkbox' }
+{if !empty($types) and isset($types_tag) and $types_tag eq 'checkbox'}
 	<div class="findtypes">
 		<ul>
 			<li>

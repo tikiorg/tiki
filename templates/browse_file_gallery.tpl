@@ -52,9 +52,9 @@
             {assign var=propval value=$propval|kbsize:true}
           {/if}
     
-          {if isset($gal_info.$propkey) and $propval neq '' and $propname neq 'name' and ( $gal_info.$propkey eq 'a' or $gal_info.$propkey eq 'o' or ( $gal_info.$propkey eq 'y' and $show_details neq 'y' ) ) }
+          {if isset($gal_info.$propkey) and $propval neq '' and $propname neq 'name' and ( $gal_info.$propkey eq 'a' or $gal_info.$propkey eq 'o' or ( $gal_info.$propkey eq 'y' and $show_details neq 'y' ) )}
             <b>{$fgal_listing_conf.$propname.name}</b>: {$propval}<br />
-            {assign var=nb_over_infos value=`$nb_over_infos+1`}
+            {assign var=nb_over_infos value=$nb_over_infos+1}
           {/if}
         {/foreach}
         </div>
@@ -114,7 +114,7 @@
           {else}
             {assign var=key_name value="show_$propname"}
           {/if}
-          {if isset($gal_info.$key_name) and ( $gal_info.$key_name eq 'y' or $gal_info.$key_name eq 'a' or $gal_info.$key_name eq 'i' or $propname eq 'name' ) }
+          {if isset($gal_info.$key_name) and ( $gal_info.$key_name eq 'y' or $gal_info.$key_name eq 'a' or $gal_info.$key_name eq 'i' or $propname eq 'name' )}
             {assign var=propval value=$files[changes].$propname|truncate:$key_name_len|escape}
         
             {* Format property values *}

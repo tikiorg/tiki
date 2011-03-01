@@ -27,7 +27,7 @@
 					<a href="tiki-print.php?{query display="pdf" page=$page}" title="{tr}PDF{/tr}">{icon _id='page_white_acrobat' alt="{tr}PDF{/tr}"}</a>
 		{/if}
 		{if $prefs.flaggedrev_approval neq 'y' or ! $revision_approval or $lastVersion eq $revision_displayed}
-			{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y' and $machine_translate_to_lang == '' or $canEditStaging eq 'y' }
+			{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y' and $machine_translate_to_lang eq '' or $canEditStaging eq 'y'}
 				<a title="{tr}Edit this page{/tr}" {ajax_href template="tiki-editpage.tpl"}tiki-editpage.php?page={if $needsStaging eq 'y'}{$stagingPageName|escape:"url"}{else}{$page|escape:"url"}{/if}{if !empty($page_ref_id) and $needsStaging neq 'y'}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href}>{icon _id='page_edit' alt="{tr}Edit this page{/tr}"}</a>
 				{if $prefs.wiki_edit_icons_toggle eq 'y' and ($prefs.wiki_edit_plugin eq 'y' or $prefs.wiki_edit_section eq 'y')}
 					{jq}
@@ -75,7 +75,7 @@
 			{else}
 					<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove{if $structure eq 'y'}&amp;structure={$home_info.pageName|escape:'url'}{/if}" class="icon">{icon _id='no_eye' alt="{tr}Page IS being monitored. Click icon to STOP monitoring.{/tr}"}</a>
 			{/if}
-			{if $structure == 'y' and $tiki_p_watch_structure eq 'y'}
+			{if $structure eq 'y' and $tiki_p_watch_structure eq 'y'}
 				{if $user_watching_structure ne 'y'}
 					<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=structure_changed&amp;watch_object={$page_info.page_ref_id}&amp;watch_action=add_desc&amp;structure={$home_info.pageName|escape:'url'}">{icon _id='eye_arrow_down' alt="{tr}Monitor the Sub-Structure{/tr}"}</a>
 				{else}
@@ -86,7 +86,7 @@
 		{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
 			<a href="tiki-object_watches.php?objectId={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;objectType=wiki+page&amp;objectName={$page|escape:"url"}&amp;objectHref={'tiki-index.php?page='|cat:$page|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}"}</a>
 
-			{if $structure == 'y'}
+			{if $structure eq 'y'}
 				<a href="tiki-object_watches.php?objectId={$page_info.page_ref_id|escape:"url"}&amp;watch_event=structure_changed&amp;objectType=structure&amp;objectName={$page|escape:"url"}&amp;objectHref={'tiki-index.php?page_ref_id='|cat:$page_ref_id|escape:"url"}" class="icon">{icon _id=eye_group_arrow_down alt="{tr}Group Monitor on Structure{/tr}"}</a>
 			{/if}
 		{/if}
@@ -105,7 +105,9 @@
 				</form>
 		{/if}
 
-		{if $structure == 'y' and count($showstructs) > 1 or $structure eq 'n' and count($showstructs) ne 0 }
+		{if ( $structure eq 'y' and count($showstructs) gt 1 )
+				or 
+				( $structure eq 'n' and count($showstructs) neq 0 )}
 				<form action="tiki-index.php" method="post" style="float: left">
 					<select name="page_ref_id" onchange="this.form.submit()">
 						<option>{tr}Structures{/tr}...</option>
@@ -122,7 +124,7 @@
 				</form>
 		{/if}
 
-		{if $prefs.feature_multilingual == 'y' && $prefs.show_available_translations eq 'y' && $machine_translate_to_lang == ''}
+		{if $prefs.feature_multilingual eq 'y' && $prefs.show_available_translations eq 'y' && $machine_translate_to_lang eq ''}
 				<div style="float: left">
 			{include file='translated-lang.tpl' td='n'}
 				</div>

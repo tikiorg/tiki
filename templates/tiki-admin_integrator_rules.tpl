@@ -5,7 +5,7 @@
 <div class="navbar">
 	{button href="tiki-admin_integrator.php" _text="{tr}Configure Repositories{/tr}"}
   {button href="tiki-list_integrator_repositories.php" _text="{tr}List Repositories{/tr}</a>"}
-	{assign var=thisrepID value=$repID|escape } 
+	{assign var=thisrepID value=$repID|escape} 
 	{button href="tiki-admin_integrator.php?action=edit&amp;repID=$thisrepID" _text="{tr}Configure this Repository{/tr}"}
 	{button href="tiki-integrator.php?repID=$thisrepID" _text="{tr}View this Repository{/tr}"}
 	{button href="tiki-admin_integrator_rules.php?repID=$thisrepID" _text="{tr}New Rule{/tr}"}

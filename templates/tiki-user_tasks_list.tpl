@@ -48,13 +48,13 @@
 							{icon _id='basket' title="{tr}In the trash{/tr}" alt="{tr}In the trash{/tr}"}
 						{/if}
 					{/if}
-					{if (($tasklist[task_i].creator eq $tasklist[task_i].user) and ($tasklist[task_i].user eq $user)) }
+					{if (($tasklist[task_i].creator eq $tasklist[task_i].user) and ($tasklist[task_i].user eq $user))}
 						{*private task*}
 					{else}
-						{if ($tasklist[task_i].user eq $user) }
+						{if ($tasklist[task_i].user eq $user)}
 							{*received task*}
 							{icon _id='door_in' title="{tr}Task received{/tr}" alt="{tr}Task received{/tr}"} 
-							{if (($tasklist[task_i].accepted_creator eq 'n') or ($tasklist[task_i].accepted_user eq 'n')) }
+							{if (($tasklist[task_i].accepted_creator eq 'n') or ($tasklist[task_i].accepted_user eq 'n'))}
 								{icon _id='cross' title="{tr}Rejected by a user{/tr}" alt="{tr}Rejected by a user{/tr}"}
 							{else}
 								{if ($tasklist[task_i].accepted_user eq '')}
@@ -67,10 +67,10 @@
 									{/if}
 								{/if}
 							{/if}
-						{elseif ($tasklist[task_i].creator eq $user) }
+						{elseif ($tasklist[task_i].creator eq $user)}
 							{*submitted task*}
 							{icon _id='door_out' title="{tr}Task sent{/tr}" alt="{tr}Task sent{/tr}"} 
-							{if (($tasklist[task_i].accepted_creator eq 'n') or ($tasklist[task_i].accepted_user eq 'n')) }
+							{if (($tasklist[task_i].accepted_creator eq 'n') or ($tasklist[task_i].accepted_user eq 'n'))}
 								<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title="{tr}Not Accepted by One User{/tr}" alt="{tr}Not Accepted User{/tr}" />
 							{else}
 								{if ($tasklist[task_i].accepted_user eq '')}
@@ -111,7 +111,7 @@
 				</td>
 				<td style="text-align:right;{if $tasklist[task_i].status eq 'c'}text-decoration:line-through;{/if}" class="prio{$tasklist[task_i].priority}">
 					<select {if $tasklist[task_i].disabled} disabled = "disabled" {/if}  name="task_perc[{$tasklist[task_i].taskId}]">
-						<option value="w" {if $tasklist[task_i].percentage_null } selected = "selected"  {/if}>{tr}Waiting{/tr}</option>	
+						<option value="w" {if $tasklist[task_i].percentage_null} selected = "selected"  {/if}>{tr}Waiting{/tr}</option>	
 						{section name=zz loop=$percs}
 							<option value="{$percs[zz]|escape}" {if $tasklist[task_i].percentage eq $percs[zz] and !$tasklist[task_i].percentage_null} selected = "selected" {/if} >
 								{$percs[zz]}%

@@ -154,7 +154,7 @@
 			{/section}
 		</table>
 
-		{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset }{/pagination_links}
+		{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 	{/tab}
 	
 	{if $parentId !=0}

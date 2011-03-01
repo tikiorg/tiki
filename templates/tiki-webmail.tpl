@@ -3,7 +3,7 @@
 {title help="Webmail" admpage="webmail"}{tr}Webmail{/tr}{/title}
 
 {include file='tiki-mytiki_bar.tpl'}
-<table width="100%" border=0>
+<table width="100%" border="0">
 	<tr>
 		<td>
 			{self_link _icon='img/webmail/mailbox.gif' locSection='mailbox' _width='48' _height='48'}{tr}Mailbox{/tr}{/self_link}

@@ -28,7 +28,7 @@
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
 			<span class="moduleflip" id="moduleflip-{$smarty.capture.name}">
 				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$smarty.capture.name}','module.png');">
-					{icon id="icnmod-"|cat:$smarty.capture.name class="flipmodimage" _id="module" alt="[{tr}toggle{/tr}]"}
+					{icon id="icnmod-"|cat:`$smarty.capture.name` class="flipmodimage" _id="module" alt="[{tr}toggle{/tr}]"}
 				</a>
 			</span>
 			{if $prefs.menus_items_icons eq 'y'}
@@ -37,7 +37,7 @@
 					{capture name=name}
 						icnmodv-{$smarty.capture.name}
 					{/capture}
-					{icon name=icnmod-"|cat:$smarty.capture.name class="flipmodimage" _id="trans" alt="[{tr}Toggle Vertically{/tr}]" _defaultdir="pics"}
+					{icon name="icnmod-"|cat:`$smarty.capture.name` class="flipmodimage" _id="trans" alt="[{tr}Toggle Vertically{/tr}]" _defaultdir="pics"}
 				</a>
 			</span>
 			{/if}

@@ -11,10 +11,10 @@
 				<table style="width: 100%;" id="tiki_sheet_container">
 					<tr>
 						<td>
-							{pagination_links cant=$ver_cant itemname="{tr}Sheet{/tr}" offset_arg="idx_0" offset="`$sheetIndexes[0]`" show_numbers=n}{/pagination_links}
+							{pagination_links cant=$ver_cant itemname="{tr}Sheet{/tr}" offset_arg="idx_0" offset=$sheetIndexes[0] show_numbers=n}{/pagination_links}
 						</td>
 						<td>
-							{pagination_links cant=$ver_cant itemname="{tr}Sheet{/tr}" offset_arg="idx_1" offset="`$sheetIndexes[1]`" show_numbers=n}{/pagination_links}
+							{pagination_links cant=$ver_cant itemname="{tr}Sheet{/tr}" offset_arg="idx_1" offset=$sheetIndexes[1] show_numbers=n}{/pagination_links}
 						</td>
 					</tr>
 					<tr>

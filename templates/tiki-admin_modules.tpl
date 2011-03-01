@@ -198,7 +198,7 @@
 				</td>
 				<td class="even" style="vertical-align:top">
 					<h3>{tr}Objects that can be included{/tr}</h3>
-					{pagination_links cant=$maximum step=$maxRecords offset=$offset }{/pagination_links}
+					{pagination_links cant=$maximum step=$maxRecords offset=$offset}{/pagination_links}
 					<table>
 						{if $polls}
 							<tr>
@@ -365,7 +365,7 @@
 							</tr>
 						{/if}
 					</table>
-					{pagination_links cant=$maximum step=$maxRecords offset=$offset }{/pagination_links}
+					{pagination_links cant=$maximum step=$maxRecords offset=$offset}{/pagination_links}
 					{remarksbox type="tip" title="{tr}Tip{/tr}"}
 						{if $prefs.feature_cssmenus eq 'y'}
 							{tr}To use a <a target="tikihelp" href="http://users.tpg.com.au/j_birch/plugins/superfish/">CSS (Superfish) menu</a>, use one of these syntaxes:{/tr}

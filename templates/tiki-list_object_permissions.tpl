@@ -15,8 +15,8 @@
 			</ul-->
 
 			{tabset}
-				{capture assign="tablabel}{tr}Global Permissions{/tr} ({$content.default|@count}){/capture}
-				{tab name="$tablabel}
+				{capture assign=tablabel}{tr}Global Permissions{/tr} ({$content.default|@count}){/capture}
+				{tab name=$tablabel}
 					<div class="tabs-1">
 					{remarksbox}{tr}If an object is not listed in the section below, then only the global perms are on{/tr}{/remarksbox}
 					<table class="normal">
@@ -28,8 +28,8 @@
 					</table>
 					</div>
 				{/tab}
-				{capture assign="tablabel}{tr}Object Permissions{/tr} ({$content.objects|@count}){/capture}
-				{tab name="$tablabel}
+				{capture assign=tablabel}{tr}Object Permissions{/tr} ({$content.objects|@count}){/capture}
+				{tab name=$tablabel}
 					<div class="tabs-2">
 					{remarksbox}{tr}If an object is not listed in this section, then only the global perms are on{/tr}{/remarksbox}
 					<table class="normal">
@@ -56,8 +56,8 @@
 					</table>
 					</div>
 				{/tab}
-				{capture assign="tablabel}{tr}Category Permissions{/tr} ({$content.category|@count}){/capture}
-				{tab name="$tablabel}
+				{capture assign=tablabel}{tr}Category Permissions{/tr} ({$content.category|@count}){/capture}
+				{tab name=$tablabel}
 					<div class="tabs-3">
 					{remarksbox}{tr}If an object is not listed in this section, then only the global perms are on{/tr}{/remarksbox}
 					<table class="normal">

@@ -20,9 +20,9 @@ close();
 	{else}
 
 		{if $errortype eq 401 && empty($user) and  $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
-			{assign var='errortitle' value="{tr}Please log in{/tr}" }
+			{assign var='errortitle' value="{tr}Please log in{/tr}"}
 		{else}
-			{assign var='errortitle' value="{tr}Error{/tr}" }
+			{assign var='errortitle' value="{tr}Error{/tr}"}
 		{/if}
 
 		{if ($errortype eq "404")}

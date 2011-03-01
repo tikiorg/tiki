@@ -569,7 +569,7 @@
 				</tr>
 				<tr>
 					<th></th>
-					{section name=foo start=0 loop=`$contributionNbCols`}
+					{section name=foo start=0 loop=$contributionNbCols}
 						<th>{$smarty.section.foo.index+1}</th>
 					{/section}
 				</tr>

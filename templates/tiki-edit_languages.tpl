@@ -94,12 +94,12 @@
 							{if isset($item.originalTranslation)}
 								<tr>
 									<td><label for="original_tran_{$smarty.foreach.translations.index}">{tr}Original translation:{/tr}</label></td>
-									<td><input id="original_tran_{$smarty.foreach.translations.index}" name="original_tran_{$smarty.foreach.translations.index}" value="{$item.originalTranslation|escape}" size=65 readonly="readonly" /></td>
+									<td><input id="original_tran_{$smarty.foreach.translations.index}" name="original_tran_{$smarty.foreach.translations.index}" value="{$item.originalTranslation|escape}" size="65" readonly="readonly" /></td>
 								</tr>
 							{/if}
 							<tr>
 								<td><label for="tran_{$smarty.foreach.translations.index}">{tr}Translation:{/tr}</label></td>
-								<td><input id="tran_{$smarty.foreach.translations.index}" name="tran_{$smarty.foreach.translations.index}" value="{$item.tran|escape}" size=65 /></td>
+								<td><input id="tran_{$smarty.foreach.translations.index}" name="tran_{$smarty.foreach.translations.index}" value="{$item.tran|escape}" size="65" /></td>
 							</tr>
 							<tr>
 								<td colspan="2">

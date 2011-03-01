@@ -1,1 +1,1 @@
-{include file=tiki-register.tpl}
+{include file='tiki-register.tpl'}

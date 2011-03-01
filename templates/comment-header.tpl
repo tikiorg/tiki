@@ -2,16 +2,14 @@
 <div class="clearfix postbody-title">
 	{if $prefs.feature_comments_locking neq 'y' or
 		( $forum_mode neq 'y' and $comment.locked neq 'y' and $thread_is_locked neq 'y' )
-		or ( $forum_mode eq 'y' and $comment.locked neq 'y' and $thread_is_locked neq 'y' )
-	}
+		or ( $forum_mode eq 'y' and $comment.locked neq 'y' and $thread_is_locked neq 'y' )}
 		{assign var='this_is_locked' value='n'}
 	{else}
 		{assign var='this_is_locked' value='y'}
 	{/if}
 
 	{if $thread_style != 'commentStyle_headers' and $this_is_locked eq 'n' and $comment.threadId > 0
-		and ( $forum_mode neq 'y' || ( $forum_mode eq 'y' and $forumId > 0 and $comments_parentId > 0 ) )
-	}
+		and ( $forum_mode neq 'y' || ( $forum_mode eq 'y' and $forumId > 0 and $comments_parentId > 0 ) )}
 	<div class="actions">
 		{if $forum_mode neq 'y' && $tiki_p_admin_comments eq 'y'}
 			{if $prefs.feature_comments_moderation eq 'y' && $comment.approved eq 'n'}
@@ -34,8 +32,7 @@
 			|| $forum_mode eq 'y' && (
 				$tiki_p_admin_forum eq 'y'
 				|| ( $comment.userName == $user && $tiki_p_forum_edit_own_posts eq 'y' )
-			)
-		}
+			)}
 		<a title="{tr}Edit{/tr}"
 			{if $first eq 'y'}
 			class="admlink" href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}{$thread_sort_mode_param}&amp;comments_threshold={$smarty.request.topics_threshold}{$comments_find_param}&amp;comments_threadId={$comment.threadId}&amp;openpost=1&amp;forumId={$forum_info.forumId}{$comments_per_page_param}"
@@ -47,8 +44,7 @@
 
 		{if
 			( $forum_mode neq 'y' and $tiki_p_remove_comments eq 'y' )
-			|| ( $forum_mode eq 'y' and $tiki_p_admin_forum eq 'y' )
-		}
+			|| ( $forum_mode eq 'y' and $tiki_p_admin_forum eq 'y' )}
 		<a title="{tr}Delete{/tr}"
 			{if $first eq 'y'}
 			class="admlink" href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}{$thread_sort_mode_param}&amp;comments_threshold={$smarty.request.topics_threshold}{$comments_find_param}&amp;comments_remove=1&amp;comments_threadId={$comment.threadId}&amp;forumId={$forum_info.forumId}{$comments_per_page_param}"

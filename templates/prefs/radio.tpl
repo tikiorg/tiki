@@ -9,11 +9,11 @@
 			 <label for="{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}">{$label|escape}</label>
 		</div>
 	{/foreach}
-	{include file=prefs/shared-flags.tpl}
+	{include file="prefs/shared-flags.tpl"}
 	{if $p.hint}
 		<br/><em>{$p.hint|simplewiki}</em>
 	{/if}
-	{include file=prefs/shared-dependencies.tpl}
+	{include file="prefs/shared-dependencies.tpl"}
 
 {foreach from=$p.options key=value item=label name=loop}
 	{jq}

@@ -10,7 +10,7 @@
 		{button href="tiki-objectpermissions.php?objectId=$bbb_name&amp;objectName=$bbb_name&amp;objectType=bigbluebutton&amp;permType=bigbluebutton"	_text="{tr}Permissions{/tr}"}
 	{/permission}
 
-	{if ! $user }
+	{if ! $user}
 		<div>
 			{tr}Name:{/tr} 
 			<input type="text" name="bbb_name"/>

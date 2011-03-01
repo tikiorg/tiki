@@ -3,7 +3,7 @@
   <tr valign="middle" style="height:36px">
 <td width="1%" class="heading weeks"></td>
 {section name=dn loop=$daysnames}
-		{if in_array($smarty.section.dn.index,$viewdays) }
+		{if in_array($smarty.section.dn.index,$viewdays)}
     	<td id="top_{$smarty.section.dn.index}" class="heading" width="14%">{$daysnames[dn]}</td>
 		{/if}
 {/section}
@@ -13,7 +13,7 @@
   <tr id="row_{$smarty.section.w.index}" style="height:80px">
   <td width="1%" class="heading weeks"><a href="{$url}?viewmode=week&amp;todate={$cell[w][0].day}" title="{tr}View this Week{/tr}">{$weekNumbers[w]}</a></td>
   {section name=d loop=$weekdays}
-	{if in_array($smarty.section.d.index,$viewdays) }
+	{if in_array($smarty.section.d.index,$viewdays)}
 		{if $cell[w][d].focus}
 			{cycle values="odd,even" print=false advance=false}
 		{else}
@@ -32,7 +32,7 @@
 		  {if $myurl neq "tiki-action_calendar.php"}
 		  <td class="focus{if $cell[w][d].day eq $today}on{/if}" style="width:50%;text-align:right">
 {* add additional check to NOT show add event icon if no calendar displayed *} 		  
-			{if $tiki_p_add_events eq 'y' and count($listcals) > 0 and $displayedcals|@count > 0 }
+			{if $tiki_p_add_events eq 'y' and count($listcals) > 0 and $displayedcals|@count > 0}
 			<a href="tiki-calendar_edit_item.php?todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}Add Event{/tr}" class="addevent">{icon _id='calendar_add' alt="{tr}+{/tr}" title="{tr}Add Event{/tr}"}</a>
 			{/if}
 			<a class="viewthisday" href="tiki-calendar.php?viewmode=day&amp;todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}View this Day{/tr}">{icon _id='img/icons/external_link.gif' width=7 height=8 alt="{tr}o{/tr}" title="{tr}View this Day{/tr}"}</a>

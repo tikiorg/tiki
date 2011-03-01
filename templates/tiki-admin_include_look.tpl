@@ -67,14 +67,14 @@
 			{preference name=feature_view_tpl}
 			{if $prefs.feature_view_tpl eq 'y'}
 				<div class="adminoptionboxchild">
-					{button href="tiki-edit_templates.php" _text="{tr}View Templates{/tr}" }
+					{button href="tiki-edit_templates.php" _text="{tr}View Templates{/tr}"}
 				</div>
 			{/if}
 
 			{preference name=feature_edit_templates}
 			{if $prefs.feature_edit_templates eq 'y'}
 				<div class="adminoptionboxchild">
-					{button href="tiki-edit_templates.php" _text="{tr}Edit Templates{/tr}" }
+					{button href="tiki-edit_templates.php" _text="{tr}Edit Templates{/tr}"}
 				</div>
 			{/if}
 

@@ -17,7 +17,7 @@
 {/if}
 
 {if ($info.creator eq $user or $info.user eq $user or $admin_mode) and ($info.task_version eq $info.last_version)}
-{ if ($info.taskId > 0 and $info.creator ne $info.user) }
+	{if ($info.taskId > 0 and $info.creator ne $info.user)}
     <span class="tabbut">
 		{icon _id='tick' title="{tr}Accept{/tr}" alt="{tr}Accept{/tr}"}
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_accept=on" class="tablink">{tr}Accept{/tr}</a>
@@ -26,20 +26,20 @@
 		{icon _id='cross' title="{tr}Reject{/tr}" alt="{tr}Reject{/tr}"}
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_not_accept=on" class="tablink">{tr}NOT accept{/tr}</a>
     </span>
-{/if}
-{ if $info.deleted }
+	{/if}
+	{if $info.deleted}
     <span class="tabbut">
 		<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;remove_from_trash=on" class="tablink">
 			{icon _id='basket_remove' title="{tr}Remove from Trash{/tr}" alt="{tr}Remove from Trash{/tr}"} {tr}Remove from Trash{/tr}
 		</a>
     </span>
-{else}
+	{else}
     <span class="tabbut">
 		<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;move_into_trash=on" class="tablink">
 			{icon _id='basket_put' title="{tr}Move to trash{/tr}" alt="{tr}Move to trash{/tr}"} {tr}Move to Trash{/tr}
 		</a>
     </span>
-{/if}
+	{/if}
 {/if}
 <table class="formcolor">
 <colgroup><col width="25%" span="4" /></colgroup>
@@ -70,13 +70,13 @@
 		<b>{$info.creator|escape}</b>
 		&nbsp;&nbsp; <b>{$info.created|tiki_short_date}&nbsp;--&nbsp;{$info.created|tiki_short_time}</b>
 		&nbsp;&nbsp; 
-		{if ($info.task_version > 0) } 
+		{if ($info.task_version > 0)} 
 			<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version-1}">
 				{icon _id='resultset_previous' align="middle"}
 			</a>
   		{/if}
 		{tr}Version:{/tr} <b>{$info.task_version+1}</b>
-		{if $info.task_version < $info.last_version } 
+		{if $info.task_version < $info.last_version} 
 			<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version+1}">
 				{icon _id='resultset_next' align="middle"}
 			</a>
@@ -98,7 +98,7 @@
   	<td>{tr}Task user{/tr}</td> 
   		<td colspan="3">
 			{if ($receive_users)} 
-				<select name="task_user" {if ($info.taskId > 0 and !$admin_mode) } disabled="disabled">
+				<select name="task_user" {if ($info.taskId > 0 and !$admin_mode)} disabled="disabled">
 					 <option value="{$info.user}">
 						{$info.user}
 					</option>
@@ -108,7 +108,7 @@
 				>
 				{section name=user_i loop=$receive_users} 
 					<option value="{$receive_users[user_i].login|escape}" 
-						{if ( $receive_users[user_i].login eq $info.user) } selected="selected" {/if}>
+						{if ( $receive_users[user_i].login eq $info.user)} selected="selected" {/if}>
 							{$receive_users[user_i].login|escape}
 					</option>
 				{/section}
@@ -117,7 +117,7 @@
 			{else}
 			<input type="text" name="task_user" value="{$info.user|escape}" />
 			{/if}
-			{if (($info.user ne $info.creator) or ($taskId eq 0)) } 
+			{if (($info.user ne $info.creator) or ($taskId eq 0))} 
 				&nbsp;
 				<input {if $info.creator ne $user} disabled="disabled" {/if} 
 				{if $info.rights_by_creator eq 'y'} checked="checked" {/if}  name="rights_by_creator" type="checkbox" />
@@ -185,7 +185,7 @@
 		<td>{tr}Percentage completed{/tr}</td>
 		<td colspan="3">  
 			 <select name="percentage">
-					<option value="w" {if $info.percentage_null } selected = "selected"  {/if}>{tr}Waiting{/tr}</option>	
+					<option value="w" {if $info.percentage_null} selected = "selected"  {/if}>{tr}Waiting{/tr}</option>	
 				{section name=zz loop=$percs}
 					<option value="{$percs[zz]|escape}" {if $info.percentage eq $percs[zz] and !$info.percentage_null} selected = "selected" {/if} > {$percs[zz]}% </option>	
 				{/section}
@@ -198,7 +198,7 @@
 			<option></option>
 		{section name=groups_i loop=$receive_groups} 
 			<option value="{$receive_groups[groups_i].groupName|escape}" 
-				{if ( $receive_groups[groups_i].groupName eq $info.public_for_group) } selected="selected" {/if}>
+				{if ( $receive_groups[groups_i].groupName eq $info.public_for_group)} selected="selected" {/if}>
 					{$receive_groups[groups_i].groupName|escape}
 			</option>
 		{/section}
@@ -246,8 +246,8 @@
 	</tr> 
 	{/if}
 	<tr>
-	{if (($info.creator eq $user) or ($info.user eq $user) or $admin_mode) and ($info.task_version eq $info.last_version) }
-{if $info.taskId eq 0 }
+	{if (($info.creator eq $user) or ($info.user eq $user) or $admin_mode) and ($info.task_version eq $info.last_version)}
+{if $info.taskId eq 0}
 	<td colspan="4">
         <div align="center">
 			<input checked="checked" type="checkbox" name="send_email_newtask" />{tr}Inform task user by email{/tr}

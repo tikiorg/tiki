@@ -15,7 +15,7 @@
 		<legend>{tr}Your Groups{/tr}</legend>
 		<ul >
 		{foreach from=$userGroups key=groupname item=inclusion name=ix}
-			{if $inclusion eq 'included' }
+			{if $inclusion eq 'included'}
 				<li><i>{$groupname|escape}</i></li>
 			{else}
 				<li>{$groupname|escape}</li>
@@ -24,7 +24,7 @@
 		</ul >
 	</fieldset>
 
-	{if $groups_are_emulated eq 'y' }
+	{if $groups_are_emulated eq 'y'}
 		<fieldset>
 			<legend>{tr}Emulated Groups{/tr}</legend>
 			<ul>

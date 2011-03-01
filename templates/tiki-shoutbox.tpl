@@ -66,7 +66,7 @@
 	<div class="shoutboxmsg">
 		<b><a href="tiki-user_information.php?view_user={$channels[user].user}">{$channels[user].user}</a></b>, {$channels[user].timestamp|tiki_long_date}, {$channels[user].timestamp|tiki_long_time}
 
-		{if $tiki_p_admin_shoutbox eq 'y' || $channels[user].user == $user }
+		{if $tiki_p_admin_shoutbox eq 'y' || $channels[user].user == $user}
 			<a href="tiki-shoutbox.php?find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].msgId}" class="link">
 				{icon _id='cross' alt="{tr}Delete{/tr}"}
 			</a>

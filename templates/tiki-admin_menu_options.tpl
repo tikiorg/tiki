@@ -290,24 +290,24 @@
 					{assign var=numbercol value=0}
 					<tr>
 						<th>
-							{assign var=numbercol value=`$numbercol+1`}
+							{assign var=numbercol value=$numbercol+1}
 							{if $channels}
 								{select_all checkbox_names='checked[]'}
 							{/if}
 						</th>
-						{assign var=numbercol value=`$numbercol+1`}
+						{assign var=numbercol value=$numbercol+1}
 						<th>{self_link _sort_arg='sort_mode' _sort_field='optionId'}{tr}ID{/tr}{/self_link}</th>
-						{assign var=numbercol value=`$numbercol+1`}
+						{assign var=numbercol value=$numbercol+1}
 						<th>{self_link _sort_arg='sort_mode' _sort_field='position'}{tr}Position{/tr}{/self_link}</th>
-						{assign var=numbercol value=`$numbercol+1`}
+						{assign var=numbercol value=$numbercol+1}
 						<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
-						{assign var=numbercol value=`$numbercol+1`}
+						{assign var=numbercol value=$numbercol+1}
 						<th>{self_link _sort_arg='sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</th>
 						{if $prefs.feature_userlevels eq 'y'}
-						{assign var=numbercol value=`$numbercol+1`}
+						{assign var=numbercol value=$numbercol+1}
 							<th>{self_link _sort_arg='sort_mode' _sort_field='userlevel'}{tr}Level{/tr}{/self_link}</th>
 						{/if}
-						{assign var=numbercol value=`$numbercol+1`}
+						{assign var=numbercol value=$numbercol+1}
 						<th>{tr}Action{/tr}</th>
 					</tr>
 					{cycle values="odd,even" print=false}

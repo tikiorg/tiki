@@ -77,7 +77,7 @@
 		</span>
 	{/if}
 
-{	if $prefs.feature_directory eq 'y'}
+	{if $prefs.feature_directory eq 'y'}
 		<span class="button">
 			<a {if $type eq 'directory'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=directory&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}Directory{/tr}</a>
 		</span>

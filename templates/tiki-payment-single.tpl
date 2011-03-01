@@ -100,13 +100,13 @@
 			{foreach from=$payment_info.payments item=payment}
 				<li>
 					{if $payment.type eq 'user'}
-						{include file=tiki-payment-user.tpl payment=$payment currency=$payment_info.currency}
+						{include file='tiki-payment-user.tpl' payment=$payment currency=$payment_info.currency}
 					{elseif $payment.type eq 'paypal'}
-						{include file=tiki-payment-paypal.tpl payment=$payment}
+						{include file='tiki-payment-paypal.tpl' payment=$payment}
 					{elseif $payment.type eq 'cclite'}
-						{include file=tiki-payment-cclite.tpl payment=$payment}
+						{include file='tiki-payment-cclite.tpl' payment=$payment}
 					{elseif $payment.type eq 'tikicredits'}
-						{include file=tiki-payment-tikicredits.tpl payment=$payment}
+						{include file='tiki-payment-tikicredits.tpl' payment=$payment}
 					{/if}
 				</li>
 			{/foreach}

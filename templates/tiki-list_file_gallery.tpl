@@ -108,7 +108,7 @@
 
 	{else}
 
-		{if $treeRootId eq $prefs.fgal_root_id && ( $edit_mode eq 'y' or $dup_mode eq 'y') }
+		{if $treeRootId eq $prefs.fgal_root_id && ( $edit_mode eq 'y' or $dup_mode eq 'y')}
 			{button _text="{tr}List Galleries{/tr}" href='?'}
 		{/if}
 
@@ -195,7 +195,7 @@
 			{/if}
 			
 			{if $prefs.fgal_quota_show neq 'text_only'}
-				{quotabar length='100' value=`$smarty.capture.use`}
+				{quotabar length='100' value=$smarty.capture.use}
 			{/if}			
 		</div>
 	{/if}

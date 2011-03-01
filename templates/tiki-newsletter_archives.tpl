@@ -25,7 +25,7 @@
 <h3>{tr}HTML version{/tr}</h3>
 <div class="simplebox wikitext">{$edition.dataparsed}</div>
 
-{if $allowTxt eq 'y' }
+{if $allowTxt eq 'y'}
 	<h3>{tr}Text version{/tr}</h3>
 	{if $edition.datatxt}<div class="simplebox wikitext" >{$info.datatxt|escape|nl2br}</div>{/if}
 	{if $txt}<div class="simplebox wikitext">{$txt|escape|nl2br}</div>{/if}
@@ -61,7 +61,7 @@
       <tr class="{cycle}">
         <td class="email">{$edition_errors[ix].email}</td>
         <td class="username">{$edition_errors[ix].login}</td>
-        <td class="text">{if {$edition_errors[ix].error eq 'y'}{tr}Error{/tr}{else}{tr}Not sent{/tr}{/if}</td>
+        <td class="text">{if $edition_errors[ix].error eq 'y'}{tr}Error{/tr}{else}{tr}Not sent{/tr}{/if}</td>
       </tr>
     {/section}
   </table>

@@ -9,7 +9,7 @@
 		{self_link _icon='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon edit_mode=1 galleryId=$files[changes].id}{tr}Properties{/tr}{/self_link}
 	{/if}
 
-	{if $files[changes].perms.tiki_p_upload_files eq 'y' and ( $files[changes].perms.tiki_p_admin_file_galleries eq 'y' or ($user and $files[changes].user eq $user) or $files[changes].public eq 'y' ) }
+	{if $files[changes].perms.tiki_p_upload_files eq 'y' and ( $files[changes].perms.tiki_p_admin_file_galleries eq 'y' or ($user and $files[changes].user eq $user) or $files[changes].public eq 'y' )}
 		<a href="tiki-upload_file.php?galleryId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='upload'}</a>
 	{/if}
 
@@ -49,7 +49,7 @@
 		{/if}
 	{/if}
 
-	{if $files[changes].type|truncate:6:'':true eq 'image/' }
+	{if $files[changes].type|truncate:6:'':true eq 'image/'}
 		<a href="{$files[changes].id|sefurl:display}">
 		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 		</a>
@@ -102,7 +102,7 @@
 	{* can edit if I am admin or the owner of the file or the locker of the file or if I have the perm to edit file on this gallery *}
 	{if $files[changes].perms.tiki_p_admin_file_galleries eq 'y'
 		or ($files[changes].lockedby and $files[changes].lockedby eq $user)
-		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or $files[changes].perms.tiki_p_edit_gallery_file eq 'y')) }
+		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or $files[changes].perms.tiki_p_edit_gallery_file eq 'y'))}
 		{if $files[changes].archiveId == 0}
 			{if $prefs.feature_file_galleries_save_draft eq 'y' and $files[changes].nbDraft gt 0}
 				{self_link _icon='accept' _menu_text=$menu_text _menu_icon=$menu_icon validate=$files[changes].fileId galleryId=$files[changes].galleryId}{tr}Validate your draft{/tr}{/self_link}
@@ -177,7 +177,7 @@
 	{/if}
 
 	{if $files[changes].perms.tiki_p_admin_file_galleries eq 'y'
-		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or ($files[changes].perms.tiki_p_edit_gallery_file eq 'y' and $files[changes].perms.tiki_p_remove_file eq 'y'))) }
+		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or ($files[changes].perms.tiki_p_edit_gallery_file eq 'y' and $files[changes].perms.tiki_p_remove_file eq 'y')))}
 			{self_link _icon='cross' _menu_text=$menu_text _menu_icon=$menu_icon remove=$files[changes].fileId galleryId=$files[changes].galleryId}{tr}Delete{/tr}{/self_link}
 	{/if}
 

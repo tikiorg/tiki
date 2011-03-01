@@ -95,17 +95,18 @@
 			{if $showimageid=='y'}{tr}ID:{/tr} {$item.galleryId}<br />{/if}
 			{if $showcategories=='y'}
 				{tr}Categories:{/tr}
-                       		{section name=categ loop=item.categories}
-                        		<li>{$item.categories[categ]}</li>
-                		{/section}
-                		</ul><br />
+					<ul>
+					{section name=categ loop=$item.categories}
+						<li>{$item.categories[categ]}</li>
+					{/section}
+					</ul><br />
 			{/if}
 			{if $showdescription=='y'}{$item.description}<br />{/if}
 			{if $showcreated=='y'}{tr}Created:{/tr} {$item.created|tiki_short_date}<br />{/if}
 			{if $showuser=='y'}{tr}User:{/tr} {$item.user|userlink}<br />{/if}
 			{if $showxysize=='y' || $showfilesize=='y'}({$item.images} Images){/if}
 			{if $showhits=='y'}[{$item.hits} {if $item.hits == 1}{tr}Hit{/tr}{else}{tr}Hits{/tr}{/if}]<br />{/if}
-                        </small>
+		</small>
 	  </td>
          {if $key%$rowImages eq $rowImages2}
            </tr><tr>
@@ -181,8 +182,7 @@
   && (($tiki_p_read_comments == 'y'
   && $comments_cant != 0)
   ||  $tiki_p_post_comments  == 'y'
-  ||  $tiki_p_edit_comments  == 'y')
-}
+  ||  $tiki_p_edit_comments  == 'y')}
   <div id="page-bar" class="clearfix">
   	   {include file='comments_button.tpl'}
   </div>

@@ -5,12 +5,12 @@
 		{button href=$postId|sefurl:blogpost _text="{tr}View post{/tr}"}
 	{/if}
 
-	{if $blogId gt 0 }
+	{if $blogId gt 0}
 		{assign var=thisblog value=$blogId|sefurl:blog}
 		{button href=$thisblog _text="{tr}View Blog{/tr}"}
 	{/if}
 
-	{if $blogs|@count gt 1 }
+	{if $blogs|@count gt 1}
 		{* No need for users to go to blog list if they are already looking at the only blog *}
 		{button href="tiki-list_blogs.php" _text="{tr}List Blogs{/tr}"}
 	{/if}

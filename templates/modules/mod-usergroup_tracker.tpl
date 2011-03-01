@@ -24,7 +24,7 @@
 {/tikimodule}
 {/if}
 
-{if $prefs.groupTracker eq 'n' and $prefs.userTracker eq 'n' }
+{if $prefs.groupTracker eq 'n' and $prefs.userTracker eq 'n'}
 <a href="tiki-admin.php?page=login" class="linkmodule">{tr}You need to activate user and/or group trackers.{/tr}</a>
 {/if}
 

@@ -99,7 +99,7 @@
 	<h3>{tr}HTML version{/tr}</h3>
 	<div class="simplebox wikitext">{$previewdata}</div>
 
-	{if $allowTxt eq 'y' }
+	{if $allowTxt eq 'y'}
 		<h3>{tr}Text version{/tr}</h3>
 		{if $info.datatxt}<div class="simplebox wikitext" >{$info.datatxt|escape|nl2br}</div>{/if}
 		{if $txt}<div class="simplebox wikitext">{$txt|escape|nl2br}</div>{/if}
@@ -138,7 +138,7 @@
 		<h3>{tr}HTML version{/tr}</h3>
 		<div class="simplebox wikitext">{$previewdata}</div>
 
-		{if $allowTxt eq 'y' }
+		{if $allowTxt eq 'y'}
 			<h3>{tr}Text version{/tr}</h3>
 			{if $info.datatxt}<div class="simplebox wikitext" >{$info.datatxt|escape|nl2br}</div>{/if}
 			{if $txt}<div class="simplebox wikitext">{$txt|escape|nl2br}</div>{/if}
@@ -305,7 +305,7 @@
 		{assign var=find_bak value=$ed_find}
 		{assign var=tab value=2}
 		<h2>{tr}Drafts{/tr}&nbsp;({$cant_drafts})</h2>
-		{include file='sent_newsletters.tpl' }
+		{include file='sent_newsletters.tpl'}
 	{/tab}
 
 	{tab name="{tr}Sent editions{/tr}&nbsp;($cant_editions)"}
@@ -327,7 +327,7 @@
 		{assign var=find_bak value=$dr_find}
 		{assign var=tab value=3}
 		<h2>{tr}Sent editions{/tr}&nbsp;({$cant_editions})</h2>
-		{include file='sent_newsletters.tpl' }
+		{include file='sent_newsletters.tpl'}
 		{/tab}
 	{/tabset}
 {/if}

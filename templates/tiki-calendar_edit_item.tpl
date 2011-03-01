@@ -10,7 +10,7 @@
 		{if $tiki_p_admin_calendar eq 'y'}
 			{button href="tiki-admin_calendars.php?calendarId=$calendarId" _text="{tr}Edit Calendar{/tr}"}
 		{/if}
-		{if $tiki_p_add_events eq 'y' and $id }
+		{if $tiki_p_add_events eq 'y' and $id}
 			{button href="tiki-calendar_edit_item.php" _text="{tr}New event{/tr}"}
 		{/if}
 		{if $id}
@@ -1268,7 +1268,7 @@
 				</td>
 			</tr>
 			{if $groupforalert ne ''}
-				{if $showeachuser eq 'y' }
+				{if $showeachuser eq 'y'}
 					<tr>
 						<td>
 							{tr}Choose users to alert{/tr}
@@ -1276,7 +1276,7 @@
 						<td>
 				{/if}
 				{section name=idx loop=$listusertoalert}
-					{if $showeachuser eq 'n' }
+					{if $showeachuser eq 'n'}
 						<input type="hidden"  name="listtoalert[]" value="{$listusertoalert[idx].user}">
 					{else}
 						<input type="checkbox" name="listtoalert[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}

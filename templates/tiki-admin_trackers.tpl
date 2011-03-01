@@ -44,7 +44,7 @@
 				<td class="text">
 					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;show=mod" title="{tr}Edit{/tr}">{$channels[user].name|escape}</a>
 				</td>
-				{if $channels[user].descriptionIsParsed eq 'y' }
+				{if $channels[user].descriptionIsParsed eq 'y'}
 					<td class="text">{wiki}{$channels[user].description}{/wiki}</td>
 				{else}
 					<td class="text">{$channels[user].description|escape|nl2br}</td>
@@ -118,7 +118,7 @@
 				<tr>
 					<td>{tr}Auto create corresponding categories{/tr}</td>
 					<td>
-						<input type="checkbox" name="autoCreateCategories" {if $autoCreateCategories eq 'y' }checked="checked"{/if} />
+						<input type="checkbox" name="autoCreateCategories" {if $autoCreateCategories eq 'y'}checked="checked"{/if} />
 					</td>
 				</tr>
 			{/if}
@@ -129,7 +129,7 @@
 						<label for="autoCreateGroup">{tr}Create a group for each item{/tr}</label>
 					</td>
 					<td>
-						<input type="checkbox" id="autoCreateGroup" name="autoCreateGroup" {if $info.autoCreateGroup eq 'y' }checked="checked"{/if} onclick="toggleTrTd('autoCreateGroupOptions');toggleTrTd('autoCreateGroupOptions2');toggleTrTd('autoCreateGroupOptions3');toggleTrTd('autoCreateGroupOptions4');"/>
+						<input type="checkbox" id="autoCreateGroup" name="autoCreateGroup" {if $info.autoCreateGroup eq 'y'}checked="checked"{/if} onclick="toggleTrTd('autoCreateGroupOptions');toggleTrTd('autoCreateGroupOptions2');toggleTrTd('autoCreateGroupOptions3');toggleTrTd('autoCreateGroupOptions4');"/>
 					</td>
 				<tr id="autoCreateGroupOptions"{if $info.autoCreateGroup ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
 					<td></td>
@@ -689,11 +689,11 @@ categories = {$catsdump}
 				<td>{tr}Tracker{/tr}</td>
 				<td>
 					{section name=ix loop=$trackers}
-						{if $smarty.section.ix.first }
+						{if $smarty.section.ix.first}
 							<select name="trackerId">
 						{/if}
 						<option value="{$trackers[ix].trackerId}"{if $trackerId eq $trackers[ix].trackerId} selected="selected"{/if}>{$trackers[ix].name|escape}</option>
-						{if $smarty.section.ix.last }
+						{if $smarty.section.ix.last}
 							</select>
 						{/if}
 					{/section}

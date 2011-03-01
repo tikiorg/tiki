@@ -22,8 +22,8 @@
 			 </a>
 			</span>
 		{/if}
-		{if $module_notitle ne 'y' }
-		<span class="moduletitle">{$module_title}</span>
+		{if $module_notitle ne 'y'}
+			<span class="moduletitle">{$module_title}</span>
 		{/if}
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
 			<span class="moduleflip" id="moduleflip-{$smarty.capture.name}">
@@ -32,18 +32,18 @@
 				</a>
 			</span>
 			{if $prefs.menus_items_icons eq 'y'}
-			<span class="moduleflip moduleflip-vert" id="moduleflip-vert-{$smarty.capture.name}">
-				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:flip_class('main','minimize-modules-left','maximize-modules');icntoggle('modv-{$smarty.capture.name}','vmodule.png');">
-					{capture name=name}
-						icnmodv-{$smarty.capture.name}
-					{/capture}
-					{icon name=icnmod-"|cat:$smarty.capture.name class="flipmodimage" _id="trans" alt="[{tr}Toggle Vertically{/tr}]" _defaultdir="pics"}
-				</a>
-			</span>
+				<span class="moduleflip moduleflip-vert" id="moduleflip-vert-{$smarty.capture.name}">
+					<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:flip_class('main','minimize-modules-left','maximize-modules');icntoggle('modv-{$smarty.capture.name}','vmodule.png');">
+						{capture name='name'}
+							icnmodv-{$smarty.capture.name}
+						{/capture}
+						{icon name="icnmod-"|cat:$smarty.capture.name class="flipmodimage" _id="trans" alt="[{tr}Toggle Vertically{/tr}]" _defaultdir="pics"}
+					</a>
+				</span>
 			{/if}
 		{/if}
 		<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]--></h3>
-	{elseif $module_notitle ne 'y' }
+	{elseif $module_notitle ne 'y'}
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
 			<h3 class="box-title" ondblclick="javascript:icntoggle('mod-{$smarty.capture.name}','module.png');"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
 		{else}
@@ -53,11 +53,11 @@
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
 			<span id="moduleflip-{$smarty.capture.name}">
 				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$smarty.capture.name}','module.png');">
-					{assign var=name value=`icnmod-$smarty.capture.name`}
+					{assign var="name" value="icnmod-"|cat:$smarty.capture.name}
 					{capture name=name}
 						icnmod-{$smarty.capture.name}
 					{/capture}
-					{icon name=icnmod-"|cat:$smarty.capture.name class="flipmodimage" _id="module" alt="[{tr}Hide{/tr}]"}
+					{icon name="icnmod-"|cat:$smarty.capture.name class="flipmodimage" _id="module" alt="[{tr}Hide{/tr}]"}
 				</a>
 			</span>
 		{/if}

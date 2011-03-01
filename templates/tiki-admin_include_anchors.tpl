@@ -140,7 +140,7 @@
 {self_link page="sefurl" _class="icon tips" _title="{tr}Sef URL{/tr}|{tr}Search Engine Friendly URLs{/tr}"}{icon _id="pics/large/goto.png" alt="{tr}Sef URL{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 
-{if $prefs.feature_kaltura eq 'y' || $prefs.feature_watershed eq 'y' }
+{if $prefs.feature_kaltura eq 'y' || $prefs.feature_watershed eq 'y'}
 {self_link page="video" _class="icon tips" _title="{tr}Video{/tr}|{tr}Video integration configuration{/tr}"}{icon _id="pics/large/gnome-camera-video-32.png " alt="{tr}Video{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 

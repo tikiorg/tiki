@@ -33,6 +33,6 @@
 		{/if}
 	{/if}</small>
 		</div>{* bar with location indicator *}
-	{if $trail}{breadcrumbs	type="desc"	loc="site" crumbs=$trail}{
-	 else}{breadcrumbs type="desc" loc="site" crumbs=$crumbs}{/if}
+	{if $trail}{breadcrumbs	type="desc"	loc="site" crumbs=$trail}
+	{else}{breadcrumbs type="desc" loc="site" crumbs=$crumbs}{/if}
 {/if}

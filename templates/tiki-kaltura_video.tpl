@@ -5,28 +5,28 @@
 	{else}{tr}Kaltura Video{/tr}{/if}{/title}
 <div class="navbar">
 	{if $tiki_p_remix_videos eq 'y' or $tiki_p_admin_video_galleries eq 'y' or $tiki_p_admin eq 'y'}
-	{button _text="{tr}Media Entries{/tr}" href="tiki-list_kaltura_entries.php?list=media" }
+	{button _text="{tr}Media Entries{/tr}" href="tiki-list_kaltura_entries.php?list=media"}
 	{/if}
 	{if $kmode ne ''}
 	{if $kmode ne 'edit' and ($tiki_p_edit_videos eq 'y' or $tiki_p_admin_video_galleries eq 'y' or $tiki_p_admin eq 'y')}
 		{if $entryType eq "media"}
-			{button _text="{tr}Change Details{/tr}" href="tiki-kaltura_video.php?mediaId=$videoId&action=edit" }
+			{button _text="{tr}Change Details{/tr}" href="tiki-kaltura_video.php?mediaId=$videoId&action=edit"}
 		{else}
-			{button _text="{tr}Change Details{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=edit" }		
+			{button _text="{tr}Change Details{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=edit"}		
 		{/if}
 	{/if}
 	{if $kmode ne 'remix' and ($tiki_p_remix_videos eq 'y' or $tiki_p_admin_video_galleries eq 'y' or $tiki_p_admin eq 'y')}
 		{if $entryType eq "media"}
-			{button _text="{tr}Remix{/tr}" href="tiki-kaltura_video.php?mediaId=$videoId&action=remix" }
+			{button _text="{tr}Remix{/tr}" href="tiki-kaltura_video.php?mediaId=$videoId&action=remix"}
 		{else}
-			{button _text="{tr}Remix{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=remix" }		
+			{button _text="{tr}Remix{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=remix"}		
 		{/if}
 	{/if}
 	{if $kmode eq 'remix' and $editor eq 'kse'}
-	{button _text="{tr}Advanced Editor{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=remix&editor=kae" }
+	{button _text="{tr}Advanced Editor{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=remix&editor=kae"}
 	{/if}
 	{if $kmode eq 'remix' and $editor eq 'kae'}
-	{button _text="{tr}Simple Editor{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=remix&editor=kse" }
+	{button _text="{tr}Simple Editor{/tr}" href="tiki-kaltura_video.php?mixId=$videoId&action=remix&editor=kse"}
 	{/if}
 	{/if}
 </div>

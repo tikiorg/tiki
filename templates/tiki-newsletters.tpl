@@ -80,7 +80,7 @@
 {if $showlist eq 'y'}
 	<h2>{tr}Available Newsletters{/tr}</h2>
 
-	{if $channels or $find ne''}
+	{if $channels or $find ne ''}
 		{include file='find.tpl'}
 	{/if}
 

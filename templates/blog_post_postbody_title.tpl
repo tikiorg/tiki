@@ -7,7 +7,7 @@
 			<h2>{$post_info.title|escape}</h2>
 		{/if}
 	</div>
-	{if $blog_post_context eq 'preview' }
+	{if $blog_post_context eq 'preview'}
 		{include file='freetag_list.tpl' freetags=$post_info.freetags links_inactive='y'}
 	{else}
 		{include file='freetag_list.tpl' freetags=$post_info.freetags}

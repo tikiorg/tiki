@@ -1,4 +1,4 @@
-{title help=WebHelp url=tiki-create_webhelp.php}{tr}Create WebHelp{/tr}{/title}
+{title help='WebHelp' url='tiki-create_webhelp.php'}{tr}Create WebHelp{/tr}{/title}
 {if  $generated eq 'y'}
 	<div class="navbar">
 		<span class="button">

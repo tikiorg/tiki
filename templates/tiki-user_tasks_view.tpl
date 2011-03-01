@@ -26,11 +26,11 @@
 	{/if}
 	{if ($tiki_view_mode eq 'view')}
 		<div style="text-align:right;">
-		{if ($info.task_version > 0) }
+		{if ($info.task_version > 0)}
 			<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=view&amp;show_history={$info.task_version-1}">{icon _id='resultset_previous' align="middle"}</a>
 		{/if}
 			{tr}version:{/tr} <b>{$info.task_version+1}</b>
-			{if $info.task_version < $info.last_version }
+			{if $info.task_version < $info.last_version}
 				<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=view&amp;show_history={$info.task_version+1}">
 					{icon _id='resultset_next' align="middle"}
 				</a>
@@ -80,7 +80,7 @@
 							{tr}Priority:{/tr}
 						</td>
 						<td >
-							{ $info.priority }
+							{$info.priority}
 						</td>
 					</tr>
 					<tr>
@@ -110,8 +110,8 @@
 		{tr}Last modified by:{/tr} {$info.lasteditor|escape|userlink} on {$info.changes|tiki_short_date}&nbsp;--&nbsp;{$info.changes|tiki_short_time}
 	{/if}
 	<br />
-	{if $info.public_for_group ne '' }
-		{tr}Public for group:{/tr}{ $info.public_for_group|escape }<br />
+	{if $info.public_for_group ne ''}
+		{tr}Public for group:{/tr}{$info.public_for_group|escape}<br />
 	{/if}
 	{if $info.creator ne $info.user}
 		{tr}Accepted by User:{/tr}

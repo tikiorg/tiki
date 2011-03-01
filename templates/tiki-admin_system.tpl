@@ -14,31 +14,31 @@
 	</tr>
 	<tr class="{cycle}">
 		<td colspan="2"><b>{tr}Clear all Tiki caches{/tr}</b></td>
-		<td><a href="tiki-admin_system.php?do=all" class="link" title="{tr}Empty{/tr}">{icon _id=img/icons/del.gif alt="{tr}Empty{/tr}"}</a></td>
+		<td><a href="tiki-admin_system.php?do=all" class="link" title="{tr}Empty{/tr}">{icon _id='img/icons/del.gif' alt="{tr}Empty{/tr}"}</a></td>
 	</tr>
 	<tr class="{cycle}">
 		<td><b>./templates_c/</b></td>
 		<td>({$templates_c.cant} {tr}Files{/tr} / {$templates_c.total|kbsize|default:'0 Kb'})</td>
-		<td><a href="tiki-admin_system.php?do=templates_c" class="link" title="{tr}Empty{/tr}">{icon _id=img/icons/del.gif alt="{tr}Empty{/tr}"}</a></td>
+		<td><a href="tiki-admin_system.php?do=templates_c" class="link" title="{tr}Empty{/tr}">{icon _id='img/icons/del.gif' alt="{tr}Empty{/tr}"}</a></td>
 	</tr>
 	<tr class="{cycle}">
 		<td><b>./modules/cache/</b></td>
 		<td>({$modules.cant} {tr}Files{/tr} / {$modules.total|kbsize|default:'0 Kb'})</td>
-		<td><a href="tiki-admin_system.php?do=modules_cache" class="link" title="{tr}Empty{/tr}">{icon _id=img/icons/del.gif alt="{tr}Empty{/tr}"}</a></td>
+		<td><a href="tiki-admin_system.php?do=modules_cache" class="link" title="{tr}Empty{/tr}">{icon _id='img/icons/del.gif' alt="{tr}Empty{/tr}"}</a></td>
 	</tr>
 	<tr class="{cycle}">
 		<td><b>./temp/cache/</b></td>
 		<td>({$tempcache.cant} {tr}Files{/tr} / {$tempcache.total|kbsize|default:'0 Kb'})</td>
-		<td><a href="tiki-admin_system.php?do=temp_cache" class="link" title="{tr}Empty{/tr}">{icon _id=img/icons/del.gif alt="{tr}Empty{/tr}"}</a></td>
+		<td><a href="tiki-admin_system.php?do=temp_cache" class="link" title="{tr}Empty{/tr}">{icon _id='img/icons/del.gif' alt="{tr}Empty{/tr}"}</a></td>
 	</tr>
 	<tr class="{cycle}">
 		<td><b>./temp/public/</b></td>
 		<td>({$temppublic.cant} {tr}Files{/tr} / {$temppublic.total|kbsize|default:'0 Kb'})</td>
-		<td><a href="tiki-admin_system.php?do=temp_public" class="link" title="{tr}Empty{/tr}">{icon _id=img/icons/del.gif alt="{tr}Empty{/tr}"}</a></td>
+		<td><a href="tiki-admin_system.php?do=temp_public" class="link" title="{tr}Empty{/tr}">{icon _id='img/icons/del.gif' alt="{tr}Empty{/tr}"}</a></td>
 	</tr>
 	<tr class="{cycle}">
 		<td colspan="2"><b>{tr}All user prefs sessions{/tr}</b></td>
-		<td><a href="tiki-admin_system.php?do=prefs" class="link" title="{tr}Empty{/tr}">{icon _id=img/icons/del.gif alt="{tr}Empty{/tr}"}</a></td>
+		<td><a href="tiki-admin_system.php?do=prefs" class="link" title="{tr}Empty{/tr}">{icon _id='img/icons/del.gif' alt="{tr}Empty{/tr}"}</a></td>
 	</tr>
 </table>
 <br />

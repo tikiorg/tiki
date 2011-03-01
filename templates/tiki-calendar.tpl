@@ -39,10 +39,10 @@
 
 		{if $viewlist eq 'list'}
 			{capture name=href}?viewlist=table{if $smarty.request.todate}&amp;todate={$smarty.request.todate}{/if}{/capture}
-			{button href="`$smarty.capture.href`" _text="{tr}Calendar View{/tr}"}
+			{button href=$smarty.capture.href _text="{tr}Calendar View{/tr}"}
 		{else}
 			{capture name=href}?viewlist=list{if $smarty.request.todate}&amp;todate={$smarty.request.todate}{/if}{/capture}
-			{button href="`$smarty.capture.href`" _text="{tr}List View{/tr}"}
+			{button href=$smarty.capture.href _text="{tr}List View{/tr}"}
 		{/if}
 
 		{if count($listcals) >= 1}
@@ -139,7 +139,7 @@
 
 	{include file='tiki-calendar_nav.tpl'}
 	{if $viewlist eq 'list'}
-		{include file='tiki-calendar_listmode.tpl''}
+		{include file='tiki-calendar_listmode.tpl'}
 	{elseif $viewmode eq 'day'}
 		{include file='tiki-calendar_daymode.tpl'}
 	{elseif $viewmode eq 'week'}

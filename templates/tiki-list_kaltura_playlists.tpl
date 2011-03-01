@@ -24,7 +24,7 @@
 {if $action eq 'add_entries'}
 {if $type eq "mix"}
 {title}Create Kaltura Playlist: Add Mix Entries{/title}
-{button _text="{tr}Media Entries{/tr}" href="tiki-list_kaltura_playlists.php?type=media&action=add_entries&playlistId=$playlistId" }
+{button _text="{tr}Media Entries{/tr}" href="tiki-list_kaltura_playlists.php?type=media&action=add_entries&playlistId=$playlistId"}
 {assign var=klist value=$kmixlist->objects}
 {assign var=cant value=$kmixlist->totalCount}
 
@@ -41,7 +41,7 @@
 
 {else}
 {title}Create Kaltura Playlist: Add Media Entries{/title}
-{button _text="{tr}Mix Entries{/tr}" href="tiki-list_kaltura_playlists.php?type=mix&action=add_entries&playlistId=$playlistId" }
+{button _text="{tr}Mix Entries{/tr}" href="tiki-list_kaltura_playlists.php?type=mix&action=add_entries&playlistId=$playlistId"}
 <br /><br />
 {assign var=klist value=$kmedialist->objects}
 {assign var=cant value=$kmedialist->totalCount}
@@ -86,8 +86,8 @@
 {if $count > 0}
 {title}Kaltura Playlists{/title}
 <form action="tiki-list_kaltura_playlists.php?list=media" method="get" class="normal">
-{button _text="{tr}Mix Entries{/tr}" href="tiki-list_kaltura_entries2.php?list=mix" }
-{button _text="{tr}Media Entries{/tr}" href="tiki-list_kaltura_entries2.php?list=media&view=browse" }
+{button _text="{tr}Mix Entries{/tr}" href="tiki-list_kaltura_entries2.php?list=mix"}
+{button _text="{tr}Media Entries{/tr}" href="tiki-list_kaltura_entries2.php?list=media&view=browse"}
 <input type="submit" name="action" value="Create Playlist"/> 
 <input type="submit" name="action" value="Delete"/>
 <br />
@@ -105,14 +105,14 @@
 		{foreach from=$klist key=key item=item}
 		{if $item->id ne ''}
 		<tr {if ($key % 2)}class="odd"{else}class="even"{/if}>	
-			{include file=tiki-list_kaltura_entries_actions.tpl}
+			{include file='tiki-list_kaltura_entries_actions.tpl'}
 			<td class="checkbox"><input type="checkbox" name="playlistId[]" value="{$item->id}" /></td>
 			<td class="text"><a href="tiki-list_kaltura_playlists.php?playlistId={$item->id}">{$item->name}</a></td>
 			<td class="text">{$item->playlistType}</td>
 			<td class="text">{$item->createdAt}<br/><br/>Created By: {$item->userId}</td>
 			<td height="100" class="text">{$item->tags}</td>
 			<td class="text">{$item->version}</td>
-			{include file=tiki-list_kaltura_entries_add_info.tpl}	
+			{include file='tiki-list_kaltura_entries_add_info.tpl'}	
 			<td class="text"><a href="#" {popup trigger="onmouseover" fullhtml="1" text=$smarty.capture.add_info|escape:"javascript"|escape:"html" left=true}>{icon _id='information' class='' title=''}</a></td>
 		</tr>
 		{/if}
@@ -120,7 +120,7 @@
 </table>
 </form>
 {else}
-{remarksbox type="info" title="{tr}No entries{/tr}" }
+{remarksbox type="info" title="{tr}No entries{/tr}"}
 {tr}No playlists found. {/tr}<a href="tiki-kaltura_playlists.php?playlistId=0">{tr}Click here {/tr}</a>{tr}to create a playlist.{/tr}{/remarksbox}
 {/if}
 {/if}

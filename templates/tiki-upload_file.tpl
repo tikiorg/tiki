@@ -217,19 +217,19 @@
 				</td></tr>
 			{/if}
 			{if !empty($groupforalert)}
-				{if $showeachuser eq 'y' }
+				{if $showeachuser eq 'y'}
 					<tr><td>
 						{tr}Choose users to alert{/tr}
 					</td><td width="80%">
 				{/if}
 				{section name=idx loop=$listusertoalert}
-					{if $showeachuser eq 'n' }
+					{if $showeachuser eq 'n'}
 						<input type="hidden"  name="listtoalert[]" value="{$listusertoalert[idx].user}">
 					{else}
 						<input type="checkbox" name="listtoalert[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
 					{/if}
 				{/section}
-				{if $showeachuser eq 'y' }
+				{if $showeachuser eq 'y'}
 					</td></tr>
 				{/if}
 			{/if}

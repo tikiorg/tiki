@@ -5,13 +5,13 @@
 			<option value="{$value|escape}"{if in_array($value, $p.value)} selected="selected"{/if}>{$label|escape}</option>
 		{/foreach}
 	</select>
-	{include file=prefs/shared-flags.tpl}
+	{include file="prefs/shared-flags.tpl"}
 	{if $p.shorthint}
 		<em>{$p.shorthint|simplewiki}</em>
 	{/if}
 	{if $p.hint}
 		<br/><em>{$p.hint|simplewiki}</em>
 	{/if}
-	{include file=prefs/shared-dependencies.tpl}
+	{include file="prefs/shared-dependencies.tpl"}
 	{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 </div>

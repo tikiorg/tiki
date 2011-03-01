@@ -12,7 +12,7 @@
 				<div style="float:right;margin-left:5px;">
 					<div id="mypassword2_text"></div>
 				</div>
-				{if 0 and $prefs.feature_ajax eq'y'}<span id="checkpass"></span>{/if}{* AJAX_TODO *}
+				{if 0 and $prefs.feature_ajax eq 'y'}<span id="checkpass"></span>{/if}{* AJAX_TODO *}
 				{if $prefs.generate_password eq 'y'}
 					<p>
 						<input id='genepass' name="genepass" type="text" tabindex="0" style="display: none" />

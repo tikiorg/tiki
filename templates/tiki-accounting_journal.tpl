@@ -18,12 +18,12 @@
   <th>{tr}Amount{/tr}</th>
   <th>{tr}Text{/tr}</th>
  </tr>
-{foreach from=$journal" item=j}{cycle values="odd,even" assign="style"}
+{foreach from=$journal item=j}{cycle values="odd,even" assign="style"}
  <tr class="{$style}">
   <td class="journal{if $j.journalCancelled==1}deleted{/if}"{if $j.maxcount>1} rowspan="{$j.maxcount}"{/if} style="text-align:right">{$j.journalId}</td>
   <td class="journal{if $j.journalCancelled==1}deleted{/if}"{if $j.maxcount>1} rowspan="{$j.maxcount}"{/if} style="text-align:right">{$j.journalDate|date_format:"%Y-%m-%d"}</td>
   <td class="journal{if $j.journalCancelled==1}deleted{/if}"{if $j.maxcount>1} rowspan="{$j.maxcount}"{/if}>{$j.journalDescription|escape}</td>
-{section name=posts loop=$j.maxcount}{assign var='i' value=`$smarty.section.posts.iteration-1`}
+{section name=posts loop=$j.maxcount}{assign var='i' value=$smarty.section.posts.iteration-1}
  {if !$smarty.section.posts.first}<tr class="{$style}">{/if}
   <td class="journal{if $j.journalCancelled==1}deleted{/if}" style="text-align:right">{if $i<$j.debitcount}{$j.debit[$i].itemAccountId}{/if}&nbsp;</td>
   <td class="journal{if $j.journalCancelled==1}deleted{/if}" style="text-align:right">{if $i<$j.debitcount}{if $book.bookCurrencyPos==-1}{$book.bookCurrency} {/if}{$j.debit[$i].itemAmount|currency}{if $book.bookCurrencyPos==1} {$book.bookCurrency}{/if}&nbsp;{/if}</td>

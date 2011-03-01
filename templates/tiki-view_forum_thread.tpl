@@ -9,7 +9,7 @@
 	{if $tiki_p_admin_forum eq "y"}
 		{button href="tiki-admin_forums.php?forumId=$forumId" _text="{tr}Edit Forum{/tr}"} 
 	{/if}
-	{if $tiki_p_admin_forum eq 'y' or !isset($all_forums) or $all_forums|@count > 1 }
+	{if $tiki_p_admin_forum eq 'y' or !isset($all_forums) or $all_forums|@count > 1}
 		{button href="tiki-forums.php" _text="{tr}Forum List{/tr}"}
 	{/if}
 	{button href="tiki-view_forum.php?forumId=$forumId" _text="{tr}Topic List{/tr}"}

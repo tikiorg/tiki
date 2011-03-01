@@ -33,7 +33,7 @@
 		{assign var=numbercol value=8}
 		<tr>
 			{if $channels}
-				{assign var=numbercol value=`$numbercol+1`}
+				{assign var=numbercol value=$numbercol+1}
 				<th style="text-align:center">
 					{select_all checkbox_names='checked[]'}
 				</th>

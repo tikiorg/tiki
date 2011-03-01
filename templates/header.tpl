@@ -6,42 +6,42 @@
 <meta name="generator" content="Tiki Wiki CMS Groupware - http://tiki.org" />
 
 {* --- Canonical URL --- *}
-{include file='canonical.tpl'}	
+{include file="canonical.tpl"}	
 
 {if !empty($forum_info.name) & $prefs.metatag_threadtitle eq 'y'}
 	<meta name="keywords" content="{tr}Forum{/tr} {$forum_info.name|escape} {$thread_info.title|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if}" />
-{elseif isset($galleryId) && $galleryId ne '' & $prefs.metatag_imagetitle ne 'n'}
+{elseif isset($galleryId) && $galleryId neq '' && $prefs.metatag_imagetitle neq 'n'}
 	<meta name="keywords" content="{tr}Images Galleries{/tr} {$title|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if}" />
-{elseif $prefs.metatag_keywords ne '' or !empty($metatag_local_keywords)}
-	<meta name="keywords" content="{$prefs.metatag_keywords|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if} {$metatag_local_keywords|escape}" />
+{elseif $prefs.metatag_keywords neq '' or !empty($metatag_local_keywords)}
+	<meta name="keywords" content="{$prefs.metatag_keywords|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item="taginfo"}{$taginfo.tag|escape} {/foreach}{/if} {$metatag_local_keywords|escape}" />
 {/if}
-{if $prefs.metatag_author ne ''}
+{if $prefs.metatag_author neq ''}
 	<meta name="author" content="{$prefs.metatag_author|escape}" />
 {/if}
-{if $prefs.metatag_pagedesc eq 'y' and $description ne ''}
+{if $prefs.metatag_pagedesc eq 'y' and $description neq ''}
 	<meta name="description" content="{$description|escape}" />
-{elseif $prefs.metatag_description ne '' or (isset($description) and $description eq '')}
+{elseif $prefs.metatag_description neq '' or (isset($description) and $description eq '')}
 	<meta name="description" content="{$prefs.metatag_description|escape}" />
 {/if}
-{if $prefs.metatag_geoposition ne ''}
+{if $prefs.metatag_geoposition neq ''}
 	<meta name="geo.position" content="{$prefs.metatag_geoposition|escape}" />
 {/if}
-{if $prefs.metatag_georegion ne ''}
+{if $prefs.metatag_georegion neq ''}
 	<meta name="geo.region" content="{$prefs.metatag_georegion|escape}" />
 {/if}
-{if $prefs.metatag_geoplacename ne ''}
+{if $prefs.metatag_geoplacename neq ''}
 	<meta name="geo.placename" content="{$prefs.metatag_geoplacename|escape}" />
 {/if}
-{if $prefs.metatag_robots ne '' && $metatag_robots eq '' }
+{if $prefs.metatag_robots neq '' and $metatag_robots eq ''}
         <meta name="robots" content="{$prefs.metatag_robots|escape}" />
 {/if}
-{if $prefs.metatag_robots eq '' && $metatag_robots ne '' }
+{if $prefs.metatag_robots eq '' and $metatag_robots neq ''}
         <meta name="robots" content="{$metatag_robots|escape}" />
 {/if}
-{if $prefs.metatag_robots ne '' && $metatag_robots ne '' }
+{if $prefs.metatag_robots neq '' and $metatag_robots neq ''}
         <meta name="robots" content="{$prefs.metatag_robots|escape}, {$metatag_robots|escape}" />
 {/if}
-{if $prefs.metatag_revisitafter ne ''}
+{if $prefs.metatag_revisitafter neq ''}
 	<meta name="revisit-after" content="{$prefs.metatag_revisitafter|escape}" />
 {/if}
 

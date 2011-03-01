@@ -8,18 +8,18 @@
 		{/if}
 	{/if}
 
-{include file=tiki-wiki_staging.tpl}
-{include file=tiki-flaggedrev_approval_header.tpl}
+{include file='tiki-wiki_staging.tpl'}
+{include file='tiki-flaggedrev_approval_header.tpl'}
 
 {/if} {*hide_page_header*}
 
 {if !$prefs.wiki_topline_position or $prefs.wiki_topline_position eq 'top' or $prefs.wiki_topline_position eq 'both'}
-	{include file=tiki-wiki_topline.tpl}
+	{include file='tiki-wiki_topline.tpl'}
 {/if}
 
 {if $print_page ne 'y'}
 	{if $prefs.page_bar_position eq 'top'}
-		{include file=tiki-page_bar.tpl}
+		{include file='tiki-page_bar.tpl'}
 	{/if}
 {/if}
 

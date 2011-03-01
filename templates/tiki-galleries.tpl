@@ -236,7 +236,7 @@
 						{/if}
 						{if $prefs.gal_list_parent eq 'y'}
 							<td>
-							{if $galleries[changes].parentgallery ne -1 }
+							{if $galleries[changes].parentgallery ne -1}
 								<a class="galname" href="{$galleries[changes].parentgallery|sefurl:gallery}">{$galleries[changes].parentgalleryName}</a>
 							{/if}
 							{if $galleries[changes].parentgal eq 'y'}<i>{tr}Parent{/tr}</i>{/if}
@@ -261,16 +261,16 @@
 							<td style="text-align:right;">{$galleries[changes].hits}</td>
 						{/if}
 						<td nowrap="nowrap">
-							{if $tiki_p_admin eq 'y' or $galleries[changes].perms.tiki_p_view_image_gallery eq 'y' }
+							{if $tiki_p_admin eq 'y' or $galleries[changes].perms.tiki_p_view_image_gallery eq 'y'}
 								<a class="gallink" href="tiki-list_gallery.php?galleryId={$galleries[changes].galleryId}">{icon _id='table' alt="{tr}List{/tr}"}</a>
 							{/if}
 							{if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
-								{if $tiki_p_admin eq 'y' or $galleries[changes].perms.tiki_p_create_galleries eq 'y' }
+								{if $tiki_p_admin eq 'y' or $galleries[changes].perms.tiki_p_create_galleries eq 'y'}
 									<a class="gallink" title="{tr}Edit{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].galleryId}">{icon _id='page_edit'}</a>
 								{/if}
 							{/if}
 							{if $galleries[changes].perms.tiki_p_upload_images eq 'y'}
-								{if $tiki_p_admin eq 'y' or $galleries[changes].perms.tiki_p_upload_images eq 'y' }
+								{if $tiki_p_admin eq 'y' or $galleries[changes].perms.tiki_p_upload_images eq 'y'}
 									{if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user) or $galleries[changes].public eq 'y'}
 										<a class="gallink" href="tiki-upload_image.php?galleryId={$galleries[changes].galleryId}">{icon _id='upload'}</a>
 										{if ($galleries[changes].geographic eq 'y')}
@@ -287,7 +287,7 @@
 								{/if}
 							{/if}
 							{if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
-								{if ($tiki_p_admin eq 'y') or ($galleries[changes].perms.has_special_perms eq 'n') or ($galleries[changes].perms.tiki_p_create_galleries eq 'y' ) }
+								{if ($tiki_p_admin eq 'y') or ($galleries[changes].perms.has_special_perms eq 'n') or ($galleries[changes].perms.tiki_p_create_galleries eq 'y' )}
 									&nbsp;&nbsp;<a class="gallink" title="{tr}Delete{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].galleryId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 								{/if}
 							{/if}

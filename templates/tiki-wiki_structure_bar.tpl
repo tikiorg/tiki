@@ -33,7 +33,7 @@
 			<input type="text" id="structure_add_page" name="page" />
 			{autocomplete element='#structure_add_page' type='pagename'}
 			{* Cannot add peers to head of structure *}
-			{if $page_info and !$parent_info }
+			{if $page_info and !$parent_info}
 			<input type="hidden" name="add_child" value="checked" /> 
 			{else}
 			<input type="checkbox" name="add_child" /> {tr}Child{/tr}

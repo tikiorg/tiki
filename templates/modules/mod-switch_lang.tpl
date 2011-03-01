@@ -28,9 +28,9 @@
 		{assign var='flag' value=$languages[ix].flag|escape}
 		{assign var='class' value=$languages[ix].class|escape}
 		{if $flag neq ''}
-			{icon href="tiki-switch_lang.php?language=$val" alt="$langname" title="$langname" _id="img/flags/$flag.gif" _type="absolute_uri" height=11 class="icon $class" }
+			{icon href="tiki-switch_lang.php?language=$val" alt="$langname" title="$langname" _id="img/flags/$flag.gif" _type="absolute_uri" height=11 class="icon $class"}
 		{else}
-			{button _text="$langname" href="tiki-switch_lang.php?language=$val" _title="$langname" _class="$class" }
+			{button _text="$langname" href="tiki-switch_lang.php?language=$val" _title="$langname" _class="$class"}
 		{/if}
 	{/section}
 {elseif $mode eq 'words'}

@@ -18,7 +18,7 @@
 						{button	href="tiki-view_forum.php?openpost=1&amp;forumId=$thisforum_info&amp;comments_threadId=0&amp;comments_threshold=$comments_threshold&amp;comments_offset=$comments_offset&amp;thread_sort_mode=$thread_sort_mode&amp;comments_per_page=$comments_per_page" _onclick="javascript:show('forumpost');return false;" _text="{tr}New Topic{/tr}"}
 					{/if}
 				{/if}
-				{if $tiki_p_admin_forum eq 'y' or !isset($all_forums) or $all_forums|@count > 1 }
+				{if $tiki_p_admin_forum eq 'y' or !isset($all_forums) or $all_forums|@count > 1}
 				{* No need for users to go to forum list if they are already looking at the only forum BUT note that all_forums only defined with quickjump feature *}
 					{button href="tiki-forums.php" _text="{tr}Forum List{/tr}"}
 				{/if}
@@ -514,7 +514,7 @@
 						{/if}
 					{/if}
 
-					{if $tiki_p_admin_forum eq 'y' }
+					{if $tiki_p_admin_forum eq 'y'}
 						<a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 					{/if}
 				</td>
@@ -566,13 +566,13 @@
 
 <div id="filteroptions" style="display:none;">
 			<form id='time_control' method="post" action="tiki-view_forum.php">
-				{if $comments_offset neq 0 }
+				{if $comments_offset neq 0}
 					<input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
 				{/if}
-				{if $comments_threadId neq 0 }
+				{if $comments_threadId neq 0}
 					<input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
 				{/if}
-				{if $comments_threshold neq 0 }
+				{if $comments_threshold neq 0}
 					<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
 				{/if}
 				<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}" />
@@ -602,7 +602,7 @@
 							<label for="show_archived">{tr}Show archived posts{/tr}</label>
 						</th>
 						<td>
-							<input style="margin-left:20px" type="checkbox" id="show_archived" name="show_archived" {if $show_archived eq 'y' }checked="checked"{/if} />
+							<input style="margin-left:20px" type="checkbox" id="show_archived" name="show_archived" {if $show_archived eq 'y'}checked="checked"{/if} />
 						</td>
 					</tr>
 				{/if}

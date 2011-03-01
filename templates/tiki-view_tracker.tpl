@@ -50,7 +50,7 @@
 </div>
 
 {if !empty($tracker_info.description)}
-	{if $tracker_info.descriptionIsParsed eq 'y' }
+	{if $tracker_info.descriptionIsParsed eq 'y'}
 		<div class="description">{wiki}{$tracker_info.description}{/wiki}</div>
 	{else}
 		<div class="description">{$tracker_info.description|escape|nl2br}</div>
@@ -93,7 +93,7 @@
 {/if}
 
 {foreach from=$fields key=ix item=field_value}
-{if ( $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $field_value.isTblVisible eq 'y' ) || ( $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') ) and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password') and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y') }
+{if ( $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $field_value.isTblVisible eq 'y' ) || ( $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') ) and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password') and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y')}
 	<th class="auto">
 		{self_link _sort_arg='sort_mode' _sort_field='f_'|cat:$field_value.fieldId}{$field_value.name|truncate:255:"..."|escape|default:"&nbsp;"}{/self_link}
 	</th>
@@ -341,18 +341,18 @@ $("#newItemForm").validate({
 		<option value=""></option>
 	{/if}
 	{foreach key=ku item=iu from=$field_value.categories name=foreache}
-	{assign var=fcat value=$iu.categId }
+	{assign var=fcat value=$iu.categId}
 	<option value="{$iu.categId}"{if $field_value.cat.$fcat eq 'y'} selected="selected"{/if}>{$iu.categpath|escape}</option>
 	{/foreach}
 	</select>
 {else}
 {* {assign var=onePerLine value="y"} *}
-<table class="formcolor" width="100%"><tr>{cycle name=2_$fca values=",</tr><tr>" advance=false print=false}
+<table class="formcolor" width="100%"><tr>{cycle name="2_$fca" values=",</tr><tr>" advance=false print=false}
 {foreach key=ku item=iu from=$field_value.categories name=eforeach}
-{assign var=fcat value=$iu.categId }
+{assign var=fcat value=$iu.categId}
 <td{if $onePerLine ne 'y'} width="50%"{/if}>
 <input type={if $field_value.options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="ins_cat_{$field_value.fieldId}[]" value="{$iu.categId}" id="cat{$iu.categId}" {if $field_value.cat.$fcat eq 'y'}checked="checked"{/if}/><label for="cat{$i.categId}">{$iu.name|escape}</label>
-</td>{if $onePerLine eq 'y'}{if !$smarty.foreach.eforeach.last}</tr><tr>{/if}{elseif !$smarty.foreach.eforeach.last}{cycle name=2_$fca}{else}{if $field_value.categories|@count%2}<td></td>{/if}{/if}
+</td>{if $onePerLine eq 'y'}{if !$smarty.foreach.eforeach.last}</tr><tr>{/if}{elseif !$smarty.foreach.eforeach.last}{cycle name="2_$fca"}{else}{if $field_value.categories|@count%2}<td></td>{/if}{/if}
 {/foreach}
 </tr></table>
 {/if}
@@ -460,13 +460,13 @@ $("#newItemForm").validate({
 {/if}
 
 {if $groupforalert ne ''}
-{if $showeachuser eq 'y' }
+{if $showeachuser eq 'y'}
 <tr>
 <td>{tr}Choose users to alert{/tr}</td>
 <td>
 {/if}
 {section name=idx loop=$listusertoalert}
-{if $showeachuser eq 'n' }
+{if $showeachuser eq 'n'}
 <input type="hidden"  name="listtoalert[]" value="{$listusertoalert[idx].user}">
 {else}
 <input type="checkbox" name="listtoalert[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}

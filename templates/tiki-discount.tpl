@@ -37,7 +37,7 @@
 	{pagination_links cant=$discounts.cant step=$discounts.max offset=$discounts.offset}{/pagination_links}
 {/tab}
 {capture name=tabtitle}{if empty($info.id)}{tr}Create{/tr}{else}{tr}Edit{/tr}{/if}{/capture}
-{tab name="`$smarty.capture.tabtitle`"}
+{tab name=$smarty.capture.tabtitle}
 	<form method="post" action="tiki-discount.php">
 	{if !empty($info.id)}<input type="hidden" name="id" value="{$info.id}" />{/if}
 	<table class="formcolor">

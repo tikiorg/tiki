@@ -105,7 +105,7 @@
 			{/if}
 			
 			{if $prefs.feature_search_show_object_filter eq 'y'}
-				{if $searchStyle eq "menu" }
+				{if $searchStyle eq "menu"}
 					<span class='searchMenu'>
 						{tr}in{/tr}
 						<select name="where">
@@ -169,7 +169,7 @@
 </div><!--nohighlight-->
 	{* do not change the comment above, since smarty 'highlight' outputfilter is hardcoded to find exactly this... instead you may experience white pages as results *}
 
-{if $searchStyle ne 'menu' and ! $searchNoResults }
+{if $searchStyle ne 'menu' and ! $searchNoResults}
 	<div class="nohighlight simplebox" style="width:300px">
 		 {tr}Found{/tr} "{$words|escape}" {tr}in{/tr} 
 			{if $where_forum}
@@ -180,7 +180,7 @@
 	</div><!--nohighlight-->
 {/if}
 
-{if ! $searchNoResults }
+{if ! $searchNoResults}
 	<ul class="searchresults">
 		{section name=search loop=$results}
 		<li>

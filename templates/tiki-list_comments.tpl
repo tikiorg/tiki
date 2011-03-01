@@ -16,27 +16,27 @@
 		{if $comments}
 			<th>
 				{select_all checkbox_names='checked[]'}
-				{assign var=numbercol value=`$numbercol+1`}
+				{assign var=numbercol value=$numbercol+1}
 			</th>
 		{/if}
 		<th></th>
 	
 		{foreach key=headerKey item=headerName from=$headers}
 			<th>
-				{assign var=numbercol value=`$numbercol+1`}
+				{assign var=numbercol value=$numbercol+1}
 				{self_link _sort_arg="sort_mode" _sort_field=$headerKey}{tr}{$headerName}{/tr}{/self_link}
 			</th>
 		{/foreach}
 
 		{if $tiki_p_admin_comments eq 'y' and $prefs.feature_comments_moderation eq 'y'}
 			<th>
-				{assign var=numbercol value=`$numbercol+1`}
+				{assign var=numbercol value=$numbercol+1}
 				{self_link _sort_arg="sort_mode" _sort_field='approved'}{tr}Approval{/tr}{/self_link}
 			</th>
 		{/if}
 		{if $tiki_p_admin_comments eq 'y' and $prefs.comments_archive eq 'y'}
 			<th>
-				{assign var=numbercol value=`$numbercol+1`}
+				{assign var=numbercol value=$numbercol+1}
 				{self_link _sort_arg="sort_mode" _sort_field='archive'}{tr}Archive{/tr}{/self_link}
 			</th>
 		{/if}

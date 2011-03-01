@@ -14,7 +14,7 @@
 		{if $comment.userName ne $user and $comment.approved eq 'y' and (
 			   ( $forum_mode neq 'y' and $tiki_p_vote_comments eq 'y' )
 			or ( $forum_mode eq 'y' and $forum_info.vote_threads eq 'y' and ( $tiki_p_forum_vote eq 'y' or $tiki_p_admin_forum eq 'y' ) )
-		) }
+		)}
 		<b>{tr}Vote{/tr}</b>:
 
 		{if $first eq 'y'}
@@ -41,13 +41,11 @@
 	<div class="actions">
 		{if ( $prefs.feature_comments_locking neq 'y' or $thread_is_locked neq 'y' ) and
 			( ( $forum_mode neq 'y' and $tiki_p_post_comments == 'y' )
-			or ( $forum_mode eq 'y' and $tiki_p_forum_post eq 'y' and ( $forum_is_locked neq 'y' or $prefs.feature_comments_locking neq 'y' ) ) )
-		}
+			or ( $forum_mode eq 'y' and $tiki_p_forum_post eq 'y' and ( $forum_is_locked neq 'y' or $prefs.feature_comments_locking neq 'y' ) ) )}
 			{if $forum_mode neq 'y'}
 				{button href="?post_reply=1&comments_threshold=`$comments_threshold`&comments_reply_threadId=`$comment.threadId`&comments_offset=`$comments_offset`&thread_sort_mode=`$thread_sort_mode`&comments_per_page=`$comments_per_page`&comments_parentId=`$comment.threadId`&thread_style=`$thread_style`#form"
 								_auto_args='*'
-								_text="{tr}Reply{/tr}"
-				}
+								_text="{tr}Reply{/tr}"}
 								
 			{else}
 				{if $first eq 'y'}
@@ -55,13 +53,11 @@
 				{elseif $comments_grandParentId}
 					{button href="?post_reply=1&comments_threshold=`$comments_threshold`&comments_reply_threadId=`$comment.threadId`&comments_offset=`$comments_offset`&thread_sort_mode=`$thread_sort_mode`&comments_per_page=`$comments_per_page`&comments_grandParentId=`$comment_grandParentId`&comments_parentId=`$comments_grandParentId`&thread_style=`$thread_style`#form"
 								_auto_args='*'
-								_text="{tr}Reply{/tr}"
-					}
+								_text="{tr}Reply{/tr}"}
 				{elseif $forum_info.is_flat neq 'y'}
 					{button href="?post_reply=1&comments_threshold=`$comments_threshold`&comments_reply_threadId=`$comment.threadId`&comments_offset=`$comments_offset`&thread_sort_mode=`$thread_sort_mode`&comments_per_page=`$comments_per_page`&comments_grandParentId=`$comment.parentId`&comments_parentId=`$comment.parentId`&thread_style=`$thread_style`#form"
 								_auto_args='*'
-								_text="{tr}Reply{/tr}"
-					}
+								_text="{tr}Reply{/tr}"}
 				{/if}
 			{/if}
 		{/if}

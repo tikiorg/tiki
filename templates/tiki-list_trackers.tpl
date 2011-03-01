@@ -28,7 +28,7 @@
 		{if $channels[user].individual eq 'n' or $channels[user].individual_tiki_p_view_trackers eq 'y'}
 			<tr class="{cycle}">
 				<td class="text"><a class="tablename trackerLink" trackerId="{$channels[user].trackerId}" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}">{$channels[user].name|escape}</a></td>
-				{if $channels[user].descriptionIsParsed eq 'y' }
+				{if $channels[user].descriptionIsParsed eq 'y'}
 					<td class="text">{wiki}{$channels[user].description}{/wiki}</td>
 				{else}
 					<td class="text">{$channels[user].description|escape|nl2br}</td>
