@@ -2231,4 +2231,19 @@ div.aclabel, span.aclabel, label.aclabel {
 	height: 180px;
 }
 
+/* FileGals Flash Upload */
+.flashButton {
+	display: inline;
+	overflow: hidden;
+}
+.flashButtonText {
+	position: absolute;
+	z-index: 1;
+}
+.flashButton object {
+	opacity: 0;
+	position: absolute;
+	z-index: 2;
+}
+
 /* End of File */

@@ -649,6 +649,7 @@ function get_default_prefs() {
 		'fgal_display_replace' => 'y',
 		'fgal_display_zip_option' => 'y',
 		'fgal_checked' => 'y',
+		'fgal_upload_progressbar' => 'n',
 
 		// imagegals
 		'feature_galleries' => 'n',
@@ -2018,7 +2019,3 @@ function initialize_prefs() {
 // PHP fonctionnalities
 $prefs['php_libxml'] = class_exists('DOMDocument') ? 'y' :'n';
 $prefs['php_datetime'] = class_exists('DateTime') ? 'y' :'n';
-
-$prefs['error_reporting_adminonly'] = 'n';
-$prefs['error_reporting_level'] = 2039;
-$prefs['smarty_notice_reporting'] = 'y';

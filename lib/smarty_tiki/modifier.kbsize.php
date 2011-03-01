@@ -19,7 +19,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * Purpose:  returns size in Mb, Kb or bytes.
  * -------------------------------------------------------------
  */
-function smarty_modifier_kbsize($string, $bytes = false, $nb_decimals = 2)
+function smarty_modifier_kbsize($string, $bytes = false, $nb_decimals = 2, $unit_separator = '&nbsp;')
 {
   if ( $string == '' ) return '';
 
@@ -49,5 +49,5 @@ function smarty_modifier_kbsize($string, $bytes = false, $nb_decimals = 2)
   
   $kb_string = $kb_string.(($bytes) ? 'B' : 'b');
 
-  return $string.'&nbsp;'.tra($kb_string);
+  return $string.$unit_separator.tra($kb_string);
 }

@@ -9,7 +9,6 @@
 {else}
 {assign var=alink value=''}
 {/if}
-{capture name=msg assign=msg}
 <table border="0" cellspacing="4" cellpadding="4">
 	<tr>
 		<td style="text-align: center">
@@ -81,7 +80,3 @@
 		</td>
 	</tr>
 </table>
-{/capture}
-<script type='text/javascript'><!--//--><![CDATA[//><!--
-	parent.progress('{$FormId}','{$msg|escape:"javascript"}');
-//--><!]]></script>

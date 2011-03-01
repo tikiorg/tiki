@@ -14,6 +14,10 @@ if ( isset($_GET['upload']) or isset($_REQUEST['upload']) ) {
 	unset($_REQUEST['upload']);
 }
 
+if ( isset($_POST['PHPSESSID']) && $_POST['PHPSESSID'] != '' ){
+	session_id($_POST['PHPSESSID']);
+}
+
 require_once ('tiki-setup.php');
 if ($prefs['feature_categories'] == 'y') {
 	include_once ('lib/categories/categlib.php');
@@ -27,25 +31,9 @@ if ($prefs['feature_groupalert'] == 'y') {
 }
 @ini_set('max_execution_time', 0); //will not work in safe_mode is on
 $auto_query_args = array('galleryId', 'fileId', 'filegals_manager', 'view', 'simpleMode');
-function print_progress($msg) {
-	global $prefs;
-	if ($prefs['javascript_enabled'] == 'y') {
-		echo $msg;
-		ob_flush();
-	}
-}
 
 if ( $prefs['auth_token_access'] == 'y' && $token ) {
 	$smarty->assign('token_id', $token);
-}
-function print_msg($msg, $id) {
-	global $prefs;
-	if ($prefs['javascript_enabled'] == 'y') {
-		echo "<script type='text/javascript'><!--//--><![CDATA[//><!--\n";
-		echo "parent.progress('$id','" . htmlentities($msg, ENT_QUOTES, "UTF-8") . "')\n";
-		echo "//--><!]]></script>\n";
-		ob_flush();
-	}
 }
 
 $requestGalleryId = null;
@@ -189,6 +177,15 @@ if ( empty( $fileId ) ) {
 	$galleries = $filegallib->getSubGalleries( $requestGalleryId, true, 'upload_files' );
 	$smarty->assign_by_ref('galleries', $galleries["data"]);
 	$smarty->assign( 'treeRootId', $galleries['parentId'] );
+
+	if ( $prefs['fgal_upload_progressbar'] == 'ajax_flash' ) {
+		$headerlib->add_jsfile('lib/swfupload/src/swfupload.js');
+		$headerlib->add_jsfile('lib/swfupload/js/swfupload.swfobject.js');
+		$headerlib->add_jsfile('lib/swfupload/js/swfupload.queue.js');
+		$headerlib->add_jsfile('lib/swfupload/js/fileprogress.js');
+		$headerlib->add_jsfile('lib/swfupload/js/handlers.js');								
+		$smarty->assign('PHPSESSID', session_id());
+	}
 }
 
 if ( $prefs['fgal_limit_hits_per_file'] == 'y' ) {

@@ -62,6 +62,15 @@ function prefs_fgal_list() {
 			'description' => tra('Display in the gallery the zip option (in upload and gallery file)'),
 			'help' => 'File+Zip+Gallery+Config',
 		),
+		'fgal_upload_progressbar' => array(
+			'name' => tra('Upload progressbar'),
+			'type' => 'list',
+			'options'=> array(
+				'n'	=>	tra('None'),
+				'ajax_flash' => tra('Ajax / Flash (Browser-based)'),
+			),
+			'help' => 'File+Upload+Gallery+Config',
+		),
 		'fgal_match_regex' => array(
 			'name' => tra('Must match'),
 			'type' => 'text',

@@ -1415,3 +1415,55 @@ label.error {
 	margin-left: 0.5em;
 }
 
+/* FileGals Upload Progress Bar */
+
+.progressName {
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+	font-weight: bold;
+}
+
+.progressBarInProgress,
+.progressBarComplete,
+.progressBarError {
+	width: 0%;
+	height: 20px;
+	background-color: blue;
+	margin-top: 2px;
+	color: white;
+	text-align: center;
+	font-weight: bold;
+}
+
+.progressBarComplete {
+	width: 100%;
+	background-color: green;
+	visibility: hidden;
+}
+
+.progressBarError {
+	width: 100%;
+	background-color: red;
+	visibility: hidden;
+}
+
+.progressBarStatus {
+	margin-top: 2px;
+	width: 337px;
+	text-align: left;
+	white-space: nowrap;
+}
+
+.progressWrapper {
+	width: 357px;
+	overflow: hidden;
+}
+
+.progressContainer {
+	margin: 5px;
+	padding: 4px;
+	border: solid 1px #E8E8E8;
+	background-color: #F7F7F7;
+	overflow: hidden;
+}
