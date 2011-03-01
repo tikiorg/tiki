@@ -135,9 +135,9 @@ class PreferencesLib
 			}
 			$realPref = in_array($pref, $user_overrider_prefs)? "site_$pref": $pref;
 
-			if( $tikilib->get_preference( $realPref ) != $value ) {
+			if( ($old = $tikilib->get_preference( $realPref ) ) != $value ) {
 				$tikilib->set_preference( $pref, $value );
-				$changes[$pref] = $value;
+				$changes[$pref] = array('new'=> $value, 'old' => $old);
 			}
 		}
 
