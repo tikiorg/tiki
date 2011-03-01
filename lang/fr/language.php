@@ -14723,4 +14723,4 @@ $lang=Array(
 "If you have shell (SSH) access, you can also use the following, on the command line, from the root of your Tiki installation:" => "Si vous avez accès à l'invite de commande (SSH), vous pouvez aussi utiliser cette commande, à partir de la racine de votre installation Tiki :",
 "Please create a directory named  to hold your map files." => "Merci d'indiquer un répertoire existant pour recevoir les fichiers cartes",
 "Your database requires an update to match the current Tiki version. Please proceed to <a href=\"tiki-install.php\">the installer</a>. Using Tiki with an incorrect database version usually provoke errors." => "Votre base de données nécessite une mise à jour pour être à niveau avec la version actuelle de Tiki. Merci de lancer <a href=\"tiki-install.php\">l'installateur</a>. Utiliser Tiki avec une version incorrecte de la base de données peut provoquer des erreurs.",
-"###end###" => "###end###",
+"###end###" => "###end###");
