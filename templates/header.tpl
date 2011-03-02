@@ -48,8 +48,13 @@
 {* --- tiki block --- *}
 <title>{strip}
 	{if $prefs.site_title_location eq 'before'}{$prefs.browsertitle|tr_if|escape} {$prefs.site_nav_seper} {/if}
-	{if ($prefs.feature_breadcrumbs eq 'y' or $prefs.site_title_breadcrumb eq "desc") && isset($trail)}
-		{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
+	{capture assign="page_description_title"}{strip}
+		{if ($prefs.feature_breadcrumbs eq 'y' or $prefs.site_title_breadcrumb eq "desc") && isset($trail)}
+			{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
+		{/if}
+	{/strip}{/capture}
+	{if !empty($page_description_title)}
+		{$page_description_title}
 	{else}
 		{if !empty($tracker_item_main_value)}
 			{$tracker_item_main_value|truncate:255|escape}
