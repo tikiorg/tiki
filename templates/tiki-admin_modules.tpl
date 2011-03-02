@@ -50,7 +50,7 @@
 		</legend>
 	{/if}
 	<h2>{tr}Assigned Modules{/tr}</h2>
-	{button edit_assign=0 _auto_args="edit_assign" _text="{tr}Add module{/tr}"}
+	{button edit_assign=0 cookietab=2 _auto_args="edit_assign,cookietab" _text="{tr}Add module{/tr}"}
 
 	<div id="assigned_modules">
 		{tabset}
