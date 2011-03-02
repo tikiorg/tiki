@@ -394,6 +394,13 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'keywords' => 'sheet calculation calculations stats stat graph graphs',
 		),
+		'feature_slideshow' => array(
+			'name' => tra('Slideshow (jQuery.s5)'),
+			'description' => tra('Web based slideshow'),
+			'help' => 'Slideshow',
+			'type' => 'flag',
+			'keywords' => 'slide slides presentation',
+		),
 		'feature_wysiwyg' => array(
 			'name' => tra('Wysiwyg editor'),
 			'description' => tra('WYSIWYG is an acronym for What You See Is What You Get. Uses CKEditor.'),

@@ -97,7 +97,6 @@
 					</div>
 					<div class="adminoptionboxchild">	
 						{preference name=feature_jquery_carousel}
-						{preference name=feature_jquery_jqs5}
 						{preference name=feature_jquery_tablesorter}
 					</div>
 				</div>
@@ -204,6 +203,7 @@
 					{preference name=feature_file_galleries_templates}
 					{preference name=feature_syntax_highlighter}
 					{preference name=feature_draw}
+					{preference name=feature_slideshow}
 					{preference name=mobile_feature}
 					<div class="adminoptionboxchild" id="mobile_feature_childcontainer">
 						{preference name=mobile_perspectives}
