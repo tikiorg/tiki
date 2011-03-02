@@ -105,12 +105,12 @@ function module_categories( $mod_reference, &$module_params ) {
 		
 	include_once ('lib/tree/categ_browse_tree.php');
 	$tree_nodes = array();
+	include_once('tiki-sefurl.php');
 	foreach ($categories as $cat) {
 		if (isset($module_params['selflink']) && $module_params['selflink'] == 'y') {
-			include_once('tiki-sefurl.php');
 			$url = filter_out_sefurl('tiki-index.php?page='.$cat['name'], $smarty);
 		} else {
-			$url = 'tiki-browse_categories.php?parentId=' . $cat['categId'] .$urlEnd;
+			$url = filter_out_sefurl('tiki-browse_categories.php?parentId=' . $cat['categId'], $smarty, 'category', $cat['name']) .$urlEnd;
 		}
 		$tree_nodes[] = array(
 			"id" => $cat["categId"],
