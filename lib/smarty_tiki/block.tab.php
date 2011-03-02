@@ -42,7 +42,7 @@ function smarty_block_tab($params, $content, &$smarty, &$repeat) {
 			}
 		}
 		
-		$ret = "<a name='tab_$smarty_tabset_name_$smarty_tabset_i_tab'></a>";
+		$ret = "<a name='tab_a_$smarty_tabset_i_tab'></a>";
 		$ret .= "<fieldset ";
 		if ($prefs['feature_tabs'] == 'y' && $cookietab != 'n' && $print_page != 'y') {
    			$ret .= "class='tabcontent content$smarty_tabset_i_tab' style='clear:both;display:".($smarty_tabset_i_tab == $cookietab ? 'block' : 'none').";'>";
