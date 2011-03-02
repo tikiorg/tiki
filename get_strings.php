@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -447,7 +447,7 @@ foreach ($languages as $ksel => $sel) {
 	if (!$nohelp && !$completion) {
 		// Good to have instructions for translators in the release file.
 		// The comments get filtered away by Smarty anyway
-		writeFile_and_User ($fw, "// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project\n");
+		writeFile_and_User ($fw, "// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project\n");
 		writeFile_and_User ($fw, "// \n");
 		writeFile_and_User ($fw, "// All Rights Reserved. See copyright.txt for details and a complete list of authors.\n");
 		writeFile_and_User ($fw, "// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.\n");

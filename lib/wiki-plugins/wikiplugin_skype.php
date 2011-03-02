@@ -1,12 +1,12 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 /*
-Name:		SKYPE plugin for Tiki Wiki/CMS/Groupware. 
+Name:		SKYPE plugin for Tiki Wiki CMS Groupware. 
 Description:	Creates an clickable link to call or chat with a Skype user. It will soon indicate if the person is online.
 Author:		Marc Laporte
 License:		LGPL

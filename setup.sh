@@ -1,8 +1,8 @@
-# $Header: /cvsroot/tikiwiki/tiki/fixperms.sh,v 1.9.2.2 2008-02-07 21:59:14 lphuberdeau Exp $
-
-# Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+# (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+# 
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
 # Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+# $Id$
 
 # This file is a replacement for setup.sh
 # in test in 1.9 version
