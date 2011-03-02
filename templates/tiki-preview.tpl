@@ -27,7 +27,16 @@ $("#preview_diff_style").change(function(){
 		{self_link _icon="close" _ajax="n" _onclick="$('#autosave_preview').hide();return false;"}{tr}Close preview{/tr}{/self_link}
 	</div>
 {/if}
-{if $prefs.feature_jquery_ui eq "y"}{jq}$('#autosave_preview').resizable({handles:{'s':'#autosave_preview_grippy'},alsoResize:'#autosave_preview>div' });{/jq}{/if}
+{if $prefs.feature_jquery_ui eq "y"}{jq}
+$('#autosave_preview').resizable({
+	handles:{'s':'#autosave_preview_grippy'},
+	alsoResize:'#autosave_preview>div',
+	resize: function(event, ui) {
+		setCookie("wiki", $('#autosave_preview').height(), "preview");
+	}
+}).height(getCookie("wiki", "preview", ""));
+$("#autosave_preview>div").height(getCookie("wiki", "preview", ""));
+{/jq}{/if}
 <h2>{tr}Preview{/tr} {if $staging_preview eq 'y'}of current staging copy{/if}: {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if}</h2>
 {if $prefs.feature_wiki_description eq 'y'}
 <small>{$description}</small>
