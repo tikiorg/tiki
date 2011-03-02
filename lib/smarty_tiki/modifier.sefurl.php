@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	exit;
 }
 
-function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_langs='', $with_title='y' ) {
+function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_langs='', $with_title='y', $title='' ) {
 	global $prefs, $tikilib, $wikilib, $smarty;
 	require_once('lib/wiki/wikilib.php');
 
@@ -86,6 +86,9 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 	case 'sheet':
 		$href = $sefurl ? "sheet$source" : "tiki-view_sheets.php?sheetId=$source";
 		break;
+	case 'category':
+		$href = $sefurl ? "cat$source": "tiki-browse_categories.php?parentId=$source";
+		break;
 	default:
 		$href = $source;
 		break;
@@ -95,7 +98,7 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 	}
 	if ($prefs['feature_sefurl'] == 'y' && $smarty) {
 		include_once('tiki-sefurl.php');
-		return filter_out_sefurl($href, $smarty, $type, '', $with_next, $with_title);
+		return filter_out_sefurl($href, $smarty, $type, $title, $with_next, $with_title);
 	} else {
 		return $href;
 	}

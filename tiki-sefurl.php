@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 define('PATTERN_TO_CLEAN_TEXT', '/[^0-9a-zA-Z_]/');
 define('CLEAN_CHAR', '-');
 define('TITLE_SEPARATOR', '-');
-function filter_out_sefurl($tpl_output, &$smarty, $type = null, $title = null, $with_next = null, $with_title='y') {
+function filter_out_sefurl($tpl_output, &$smarty, $type = null, $title = '', $with_next = null, $with_title='y') {
 	global $sefurl_regex_out, $tikilib, $prefs, $base_url;
 	if ($prefs['feature_sefurl'] != 'y' or ( preg_match('#^http(|s)://#',$tpl_output) and strpos($tpl_output, $base_url) !== 0 ) ) {
 		return $tpl_output;
@@ -34,7 +34,6 @@ function filter_out_sefurl($tpl_output, &$smarty, $type = null, $title = null, $
 			$cachelib->cacheItem('sefurl_regex_out', serialize($sefurl_regex_out));
 		}
 	}
-	$title = '';
 	if ($type == 'article' && $prefs['feature_sefurl_title_article'] == 'y' && empty($with_next) && $with_title == 'y') {
 		global $artlib;
 		include_once ('lib/articles/artlib.php');
@@ -74,6 +73,11 @@ function filter_out_sefurl($tpl_output, &$smarty, $type = null, $title = null, $
 				$tpl_output = "./tiki-index.php?page=" . $pagealias;
 			}
 		}
+	}
+	if ($type == 'category' && !empty($title)) {
+		$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $tikilib->take_away_accent($title));
+		$title = preg_replace('/' . CLEAN_CHAR . CLEAN_CHAR . '+/', '-', $title);
+		$title = preg_replace('/' . CLEAN_CHAR . '+$/', '', $title);	
 	}
 	foreach($sefurl_regex_out as $regex) {
 		if (empty($type) || $type == $regex['type']) {
