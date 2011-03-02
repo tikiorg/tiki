@@ -114,7 +114,7 @@ RewriteRule ^blog([0-9]+)\-.*$     blog$1
 RewriteRule ^blogpost([0-9]+)\-.*$ blogpost$1
 RewriteRule ^article([0-9]+)(.*)   tiki-read_article.php?articleId=$1$2     [QSA,L]
 RewriteRule ^art([0-9]+)(.*)       tiki-read_article.php?articleId=$1$2     [QSA,L]
-RewriteRule ^cat([0-9]+)\-[^&]*(.*)       tiki-browse_categories.php?parentId=$1$2 [QSA,L]
+RewriteRule ^cat([0-9]+)\-?[^&]*(.*)       tiki-browse_categories.php?parentId=$1$2 [QSA,L]
 RewriteRule ^blog([0-9]+)(.*)      tiki-view_blog.php?blogId=$1$2           [QSA,L]
 RewriteRule ^blogpost([0-9]+)(.*)  tiki-view_blog_post.php?postId=$1$2      [QSA,L]
 RewriteRule ^browseimage([0-9]+)(.*) tiki-browse_image.php?imageId=$1$2     [QSA,L]
