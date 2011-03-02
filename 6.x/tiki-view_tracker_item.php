@@ -816,10 +816,10 @@ if ($_REQUEST["itemId"]) {
 					$ins_fields["data"][$i]["linkId"] = $trklib->get_item_id($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1], $info[$fid]);
 					$ins_fields["data"][$i]["value"] = $info[$fid];
 					if (!isset($fields["data"][$i]["options_array"][3])) {
-						$ins_fields["data"][$i]["list"] = array_unique($trklib->get_all_items($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1], 'poc', false));
+						$ins_fields["data"][$i]["list"] = array_unique($trklib->get_all_items($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1], isset($f['options_array'][4])?$f['options_array'][4]:'poc', false));
 					} 
 					else {	
-						$ins_fields["data"][$i]["list"] = $trklib->get_all_items($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1]);	
+						$ins_fields["data"][$i]["list"] = $trklib->get_all_items($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1], isset($f['options_array'][4])?$f['options_array'][4]:'poc', false);	
 					}
 					if (isset($fields["data"][$i]["options_array"][3])) {
 						$ins_fields["data"][$i]["displayedvalue"] = $trklib->concat_item_from_fieldslist($fields["data"][$i]["options_array"][0], $trklib->get_item_id($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1], $info[$fid]) , $fields["data"][$i]["options_array"][3]);

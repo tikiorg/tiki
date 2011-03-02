@@ -1092,10 +1092,10 @@ function wikiplugin_tracker($data, $params)
 					}
 					if ($f['type'] == 'r') {
 						if (!isset($f['options_array'][3])) {
-						$flds['data'][$i]['list'] = array_unique($trklib->get_all_items($f['options_array'][0], $f['options_array'][1], isset($f['options_array'][4])?$f['options_array'][4]:'poc'));
+							$flds['data'][$i]['list'] = array_unique($trklib->get_all_items($f['options_array'][0], $f['options_array'][1], isset($f['options_array'][4])?$f['options_array'][4]:'poc', false));
 						}
 						else {
-						$flds['data'][$i]['list'] = $trklib->get_all_items($f['options_array'][0], $f['options_array'][1], isset($f['options_array'][4])?$f['options_array'][4]:'poc');
+							$flds['data'][$i]['list'] = $trklib->get_all_items($f['options_array'][0], $f['options_array'][1], isset($f['options_array'][4])?$f['options_array'][4]:'poc', false);
 						}
 						if (isset($f['options_array'][3])) {
 							$flds['data'][$i]['listdisplay'] = array_unique($trklib->concat_all_items_from_fieldslist($f['options_array'][0], $f['options_array'][3], isset($f['options_array'][4])?$f['options_array'][4]:'poc'));
