@@ -6178,9 +6178,9 @@ if( \$('#$id') ) {
 						}
 
 						if ( $prefs['feature_wiki_show_hide_before'] == 'y' ) {
-							$line = $button.'<h'.($hdrlevel+$headerInc).' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.'</h'.($hdrlevel+$headerInc).'>'.$aclose2;
+							$line = $button.'<h'.($hdrlevel).' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.'</h'.($hdrlevel).'>'.$aclose2;
 						} else {
-							$line = $button.'<h'.($hdrlevel+$headerInc).' class="showhide_heading" id="'.$thisid.'">'.$title_text.'</h'.($hdrlevel+$headerInc).'>'.$aclose.$aclose2;
+							$line = $button.'<h'.($hdrlevel).' class="showhide_heading" id="'.$thisid.'">'.$title_text.'</h'.($hdrlevel).'>'.$aclose.$aclose2;
 						}
 					} elseif (!strcmp($line, $prefs['wiki_page_separator'])) {
 						// Close open paragraph, lists, and div's
