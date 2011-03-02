@@ -402,10 +402,10 @@ for ($i = 0; $i < $temp_max; $i++) {
 			}
 			if ($fields["data"][$i]["type"] == 'r') { // item link
 				if (empty($fields["data"][$i]["options_array"][3])) {
-					$fields["data"][$i]["list"] = array_unique($trklib->get_all_items($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1], !empty($fields['data'][$i]['options_array'][4])?$fields['data'][$i]['options_array'][4]:'poc'));
+					$fields["data"][$i]["list"] = array_unique($trklib->get_all_items($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1], !empty($fields['data'][$i]['options_array'][4])?$fields['data'][$i]['options_array'][4]:'poc', false));
 				} 
 				else {	
-					$fields["data"][$i]["list"] = $trklib->get_all_items($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1]);	
+					$fields["data"][$i]["list"] = $trklib->get_all_items($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1], !empty($fields['data'][$i]['options_array'][4])?$fields['data'][$i]['options_array'][4]:'poc', false);	
 				}
 				if (!empty($fields["data"][$i]["options_array"][3])) $fields["data"][$i]["listdisplay"] = array_unique($trklib->concat_all_items_from_fieldslist($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][3], !empty($fields['data'][$i]['options_array'][4])?$fields['data'][$i]['options_array'][4]:'poc'));
 			} elseif (($fields["data"][$i]["type"] == 'M') && ($fields["data"][$i]["options_array"][0] >= '3')) {
