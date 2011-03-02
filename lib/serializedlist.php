@@ -79,7 +79,7 @@ abstract class SerializedList
 	public function loadPref() {
 		global $prefs, $tikilib;
 		
-		$this->data = unserialize($prefs[$this->getPrefName() . $name]);
+		$this->data = unserialize($prefs[$this->getPrefName()]);
 		return $this->data;
 	}
 	public function savePref() {
