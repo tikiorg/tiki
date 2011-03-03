@@ -28,9 +28,9 @@ function wikiplugin_slideshow_info() {
 	return array(
 		'name' => tra('SLIDESHOW'),
 		'documentation' => 'Slideshow',
-		'description' => tra('Configure a slideshow'),
+		'description' => tra('Configure a slideshow.  Extends the existing wiki page slideshow with notes & styles.'),
 		'prefs' => array( 'feature_slideshow' ),
-		'body' => tra('Slideshow notes notes'),
+		'body' => tra('Slideshow notes - Separate with "/////"'),
 		'icon' => 'pics/icons/images.png',
 		'params' => array(
 			'backgroundurl' => array(
@@ -69,7 +69,7 @@ function wikiplugin_slideshow_info() {
 			),
 			'slidefontcolor' => array(
 				'required' => false,
-				'name' => tra('Header font color'),
+				'name' => tra('Slide font color'),
 				'description' => tra('Apply a color to the slides of your slideshow'),
 				'filter' => 'text',
 				'accepted' => 'Any html color',
