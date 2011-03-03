@@ -170,11 +170,13 @@ class LogsLib extends TikiLib
 			}
 		}
 		$actions = array();
-		if ($logObject && !$logCateg) {
+		if ( $logObject ) {
+			$param = substr( $param, 0, '200' );
+			if (!$logCateg) {
 			$query = "insert into `tiki_actionlog` (`action`, `object`, `lastModif`, `user`, `ip`, `comment`, `objectType`, `client`) values(?,?,?,?,?,?,?,?)";
 			$this->query($query, array($action, $object, (int)$date, $who, $ip, $param, $objectType, $client));
 			$actions[] = $this->lastInsertId();
-		} elseif ($logObject) {
+		} else {
 			if (count($categs) > 0) {
 				foreach ($categs as $categ) {
 					$query = "insert into `tiki_actionlog` (`action`, `object`, `lastModif`, `user`, `ip`, `comment`, `objectType`, `categId`, `client`) values(?,?,?,?,?,?,?,?,?)";
@@ -186,6 +188,7 @@ class LogsLib extends TikiLib
 				$this->query($query, array($action, $object, (int)$date, $who, $ip, $param, $objectType, $client));
 				$actions[] = $this->lastInsertId();
 			}
+		}
 		}
 		if (!empty($contributions)) {
 			foreach ($actions as $a) {
