@@ -37,4 +37,31 @@
   {if (!$prefs.page_bar_position or $prefs.page_bar_position eq 'bottom' or $prefs.page_bar_position eq 'both') and $machine_translate_to_lang == ''}
 	  {include file='tiki-page_bar.tpl'}
   {/if}
+  
+  {if $is_slideshow eq 'y'}
+  	<div id="tiki_slideshow_buttons">
+		<a href="#" onclick="jQuery.s5.first(); return false;" title="{tr}First{/tr}">
+			<img src="lib/jquery/jquery.s5/images/resultset_first.png" alt="{tr}First{/tr}" /></a> 
+		<a href="#" onclick="jQuery.s5.prev(); return false;" title="{tr}Prev{/tr}">
+			<img src="lib/jquery/jquery.s5/images/resultset_previous.png" alt="{tr}Prev{/tr}" /></a> 
+		<a href="#" onclick="jQuery.s5.next(); return false;" title="{tr}Next{/tr}">
+			<img src="lib/jquery/jquery.s5/images/resultset_next.png" alt="{tr}Next{/tr}" /></a> 
+		<a href="#" onclick="jQuery.s5.last(); return false;" title="{tr}Last{/tr}">
+			<img src="lib/jquery/jquery.s5/images/resultset_last.png" alt="{tr}Last{/tr}" /></a>
+		<a href="#" onclick="jQuery.s5.listSlideTitles(); return false;" title="{tr}Jump To Slide{/tr}" class="listSlideTitlesAnchor">
+			<img src="lib/jquery/jquery.s5/images/layers.png" alt="{tr}Jump To Slide{/tr}" /></a>
+		<a href="#" onclick="jQuery.s5.play(); return false;" title="{tr}Play{/tr}">
+			<img src="lib/jquery/jquery.s5/images/control_play_blue.png" alt="{tr}Play{/tr}" /></a>
+		<a href="#" onclick="jQuery.s5.pause(); return false;" title="{tr}Pause{/tr}">
+			<img src="lib/jquery/jquery.s5/images/control_pause_blue.png" alt="{tr}Pause{/tr}" /></a>
+		<a href="#" onclick="jQuery.s5.stop(); return false;" title="{tr}Stop{/tr}">
+			<img src="lib/jquery/jquery.s5/images/control_stop_blue.png" alt="{tr}Stop{/tr}" /></a>
+		<a href="#" onclick="jQuery.s5.getNote(); return false;" title="{tr}Notes{/tr}">
+			<img src="lib/jquery/jquery.s5/images/note.png" alt="{tr}Notes{/tr}" /></a>
+		<a href="#" onclick="jQuery.s5.toggleLoop(); return false;" title="{tr}Toggle Loop{/tr}">
+			<img src="lib/jquery/jquery.s5/images/arrow_rotate_clockwise.png" alt="{tr}Toggle Loop{/tr}" /></a>
+		<a href="tiki-index.php?page={$page}" title="{tr}Exit{/tr}">
+			<img src="pics/icons/cross.png" alt="{tr}Exit{/tr}" /></a>
+	</div>
+  {/if}
 {/if}

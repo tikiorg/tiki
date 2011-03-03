@@ -21,7 +21,7 @@
  * wiki page.
  */
 function wikiplugin_slideshow_help() {
-	return tra("SLIDESHOW").':<br />~np~{SLIDESHOW(backgroundurl=>x, simple=>n, height=>h)}'.tra("Slideshow Notes").'{SLIDESHOW}~/np~';
+	return tra("SLIDESHOW").':<br />~np~{SLIDESHOW(backgroundurl=>x, class=>c)}'.tra("Slideshow Notes").'{SLIDESHOW}~/np~';
 }
 
 function wikiplugin_slideshow_info() {
@@ -31,15 +31,22 @@ function wikiplugin_slideshow_info() {
 		'description' => tra('Configure a slideshow'),
 		'prefs' => array( 'feature_slideshow' ),
 		'body' => tra('Slideshow notes notes'),
-		'icon' => 'pics/icons2/i_controlpanel_off.gif',
+		'icon' => 'pics/icons/images.gif',
 		'params' => array(
 			'backgroundurl' => array(
 				'required' => false,
 				'name' => tra('Background Url Location'),
-				'description' => tra('Internal URL of the background image to use in your slideshow'),
+				'description' => tra('URL of the background image to use in your slideshow, overrides backgroundcolor'),
 				'filter' => 'url',
 				'accepted' => 'Valid url',
 				'default' => '',
+				'since' => '7.0'
+			),
+			'backgroundcolor' => array(
+				'required' => false,
+				'name' => tra('Background Color'),
+				'description' => tra('Background color to use in your slideshow, default '),
+				'default' => '#0087BB',
 				'since' => '7.0'
 			),
 			'class' => array(
@@ -51,6 +58,24 @@ function wikiplugin_slideshow_info() {
 				'default' => '',
 				'since' => '7.0',
 			),
+			'headerfontcolor' => array(
+				'required' => false,
+				'name' => tra('Header font color'),
+				'description' => tra('Apply a color to the headers of your slideshow'),
+				'filter' => 'text',
+				'accepted' => 'Any html color',
+				'default' => '#56D0FF',
+				'since' => '7.0',
+			),
+			'slidefontcolor' => array(
+				'required' => false,
+				'name' => tra('Header font color'),
+				'description' => tra('Apply a color to the slides of your slideshow'),
+				'filter' => 'text',
+				'accepted' => 'Any html color',
+				'default' => '#EEFAFF',
+				'since' => '7.0',
+			),
 		),
 	);
 }
@@ -58,9 +83,27 @@ function wikiplugin_slideshow_info() {
 function wikiplugin_slideshow($data, $params) {
 	global $dbTiki, $tiki_p_admin, $prefs, $user, $page, $tikilib, $smarty;
 	extract ($params,EXTR_SKIP);
-	$class = (isset($class)) ? " $class"  : '';
-
-	$ret = '<div id="" class="tiki_slideshow' . $class . '" style="overflow:hidden;' . $style . '"></div>';
+	
+	$backgroundcolor = (isset($backgroundcolor) ? $backgroundcolor : '#0087BB');
+	$backgroundurl = (isset($backgroundurl) ? $backgroundurl : '');
+	$class = (isset($class) ? " $class"  : '');
+	$headerfontcolor = (isset($headerfontcolor) ? $headerfontcolor : '#56D0FF');
+	$slidefontcolor = (isset($slidefontcolor) ? $slidefontcolor : '#EEFAFF');
+	
+	$notes = explode("/////", ($data ? $data : ""));
+	$notesHtml = '';
+	foreach ( $notes as $note ) {
+		$notesHtml .= '<span class="note">'.$note.'</span>';
+	}
+	
+	$ret = "<div id='' class='tiki_slideshow $class'
+		style='display: none;
+			background-image: url(\"$backgroundurl\"); 
+			background-color: $backgroundcolor;'
+			
+		headerFontColor='$headerfontcolor'
+		slideFontColor='$slidefontcolor'
+	>$notesHtml</div>";
 	
 	return '~np~' . $ret . '~/np~';
 }
