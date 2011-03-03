@@ -1,4 +1,3 @@
-{* $Id$ *}
 {if $tiki_p_create_file_galleries eq 'y'}
 	{if $individual eq 'y'}
 		<br />

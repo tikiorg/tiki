@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {* The heading and category path *}
 {if $prefs.feature_breadcrumbs ne 'y'}
   {title help="Directory" url="tiki-directory_browse.php?parent=$parent"}

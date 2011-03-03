@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 <h3>{tr}Download Layer{/tr}</h3>
 {if $nodownload}
 <b>{tr}This layer has been set by the maps administrator to not be downloadable{/tr}</b>

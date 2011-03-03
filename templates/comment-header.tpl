@@ -1,4 +1,3 @@
-{* $Id$ *}
 <div class="clearfix postbody-title">
 	{if $prefs.feature_comments_locking neq 'y' or
 		( $forum_mode neq 'y' and $comment.locked neq 'y' and $thread_is_locked neq 'y' )

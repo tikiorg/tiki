@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {if $forum_mode eq 'y'}
 	<div>
 {else}

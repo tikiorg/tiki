@@ -1,4 +1,3 @@
-{* $Id$ *}
 {* \brief Show spreadsheet help (for jQuery.sheet) 
  * included by toolbarslib *}
 

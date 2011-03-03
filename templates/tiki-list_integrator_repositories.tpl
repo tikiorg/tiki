@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {title}{tr}Available Repositories{/tr}{/title}
 
 {if $tiki_p_admin eq 'y'}

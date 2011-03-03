@@ -1,4 +1,3 @@
-{* $Id$ *}
 <div style="margin:10px 20px 0px 20px">
 
   {title}{tr}Forum:{/tr}&nbsp;{$forum_info.name|escape}{/title}

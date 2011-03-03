@@ -1,5 +1,3 @@
-{*$Id$*}
-
 {self_link page="general" _class="icon tips" _title="{tr}General{/tr}|{tr}Global site configuration, date formats, admin password etc.{/tr}"}{icon _id="pics/large/icon-configuration.png" alt="{tr}General{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
 {self_link page="features" _class="icon tips" _title="{tr}Features{/tr}|{tr}Switches for major features{/tr}"}{icon _id="pics/large/boot.png" alt="{tr}Features{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}

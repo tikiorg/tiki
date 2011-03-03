@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {title help="Articles"}{tr}Received articles{/tr}{/title}
 
 {if $preview eq 'y'}

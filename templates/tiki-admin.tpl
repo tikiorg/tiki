@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {title help="$helpUrl"}{tr}{$admintitle}{/tr}{/title}
 
 {if $smarty.get.page != 'profiles'} {* We don't want on this page because it results in two search boxes *}

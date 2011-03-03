@@ -1,4 +1,3 @@
-{* $Id$ *}
 <input type="hidden" name="no_bl" value="y" />
 <input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Preview your changes.{/tr}" name="preview" id="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
 {if $prefs.ajax_autosave eq "y"}

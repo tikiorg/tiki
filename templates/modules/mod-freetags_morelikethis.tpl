@@ -1,5 +1,3 @@
-{* based on $Id$ *}
-
 {if isset($modMoreLikeThis) && count($modMoreLikeThis) gt 0}
   {tikimodule error=$module_params.error title=$tpl_module_title name="freetags_morelikethis" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
   {if ($nonums eq 'y')}<ul>{else}<ol>{/if}

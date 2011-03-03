@@ -1,4 +1,3 @@
-{* $Id$ *}
 {tabset name='stat' toggle='n'}
 	{foreach from=$stat key=when item=typeStat}
 		{capture name='tabtitle'}

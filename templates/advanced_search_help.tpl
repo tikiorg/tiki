@@ -1,4 +1,3 @@
-{* $Id$ *}
 {strip}
 
 <h3>{tr}Non Advanced Search or Natural Search{/tr}</h3>

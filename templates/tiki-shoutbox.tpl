@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {title help="Shoutbox"}{tr}Shoutbox{/tr}{/title}
 
 {if $tiki_p_admin_shoutbox eq 'y'}

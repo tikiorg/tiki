@@ -1,4 +1,3 @@
-{* $Id$ *}
 {jq notonready=true}
 	function loadMedia(entryId) {
 		$('#mykdp')[0].sendNotification("changeMedia", {entryId:entryId});

@@ -1,4 +1,3 @@
-{* $Id$ *}
 {if $comments_cant gt 0}
 	{assign var=thisbuttonclass value='highlight'}
 {else}

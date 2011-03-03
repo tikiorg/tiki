@@ -1,4 +1,3 @@
-{* $Id$ *}
 <div class="navbar">
 	{button href="tiki-admingroups.php" _text="{tr}Admin Groups{/tr}"}
 	{button href="tiki-adminusers.php" _text="{tr}Admin Users{/tr}"}

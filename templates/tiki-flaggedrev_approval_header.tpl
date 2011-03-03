@@ -1,4 +1,3 @@
-{* $Id$ *}
 {if $prefs.flaggedrev_approval eq 'y' and $revision_approval}
 	{if ($revision_approved or $revision_displayed) and $revision_approved neq $lastVersion}
 		{if $lastVersion eq $revision_displayed}

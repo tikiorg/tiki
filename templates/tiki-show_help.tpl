@@ -1,4 +1,3 @@
-{* $Id$ *}
 <div class="help" id="tikihelp">
 	<div class="help_sections" id="help_sections" style="display:none">
 		<ul>

@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {title}
 	{if $report eq 'y'}
 		{tr}Report to Webmaster{/tr}

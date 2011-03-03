@@ -1,4 +1,3 @@
-{* $Id$ *}
 <div class="postbody clearfix">
 	<a name="postId{$post_info.postId}"></a>
 	<div class="blog_r">

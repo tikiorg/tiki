@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {if $userwatch ne $user}
   {title help="User+Preferences"}{tr}User Preferences:{/tr} {$userwatch}{/title}
 {else}

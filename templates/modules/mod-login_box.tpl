@@ -1,4 +1,3 @@
-{* $Id$ *}
 {jq notonready=true}
 function capLock(e, el){
 	kc = e.keyCode ? e.keyCode : e.which;

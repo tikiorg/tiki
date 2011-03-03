@@ -1,4 +1,3 @@
-{* $Id$ *}
 <div id="tiki-center">
 <br />
 <div class="cbox">

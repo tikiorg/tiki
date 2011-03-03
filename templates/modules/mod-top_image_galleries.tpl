@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {tikimodule error=$module_params.error title="{tr}Top galleries{/tr}" name="top_image_galleries" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {modules_list list=$modTopGalleries nonums=$nonums}
 	{section name=ix loop=$modTopGalleries}

@@ -1,4 +1,3 @@
-{* $Id$ *}
 {include file='blog_post_navigation.tpl'}
 <div class="postbody clearfix">
 	<a name="postId{$post_info.postId}"></a>

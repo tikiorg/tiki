@@ -1,4 +1,3 @@
-{* $Id$ *}
 {title help="Kaltura" admpage="video"}{if $entryType eq "mix"}{tr}Kaltura Remix Entries{/tr}{else}{tr}Kaltura Media Entries{/tr}{/if}{/title}
 
 {capture name=other_sorts}{strip}

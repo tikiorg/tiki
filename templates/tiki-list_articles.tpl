@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {title help="Articles" admpage="cms"}{tr}Articles{/tr}{/title}
 
 <div class="navbar">

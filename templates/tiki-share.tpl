@@ -1,4 +1,3 @@
-{* $Id$ *}
 {title help="share"}
 	{if $report != 'y'}{tr}Share this page{/tr}{else}{tr}Report this page{/tr}{/if}
 {/title}

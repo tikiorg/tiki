@@ -1,4 +1,3 @@
-{* $Id$ *}
 {$showBoxCheck}
 
 {title help="Newsletters"}{tr}Send Newsletters{/tr} {if $nlId ne '0'}{$nlName}{/if}{/title}

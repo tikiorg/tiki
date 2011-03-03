@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 <table  id="log" cellspacing="0" cellpadding="0">
   <caption> {tr}Page generation debugging log{/tr} </caption>
   {section name=i loop=$messages}

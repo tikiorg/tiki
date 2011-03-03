@@ -1,4 +1,3 @@
-{* $Id$ *}
 {if $cant > 0}
 <table class="normal">
 	<tr>

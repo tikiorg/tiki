@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {title help="Users+Management" admpage="login" url="tiki-adminusers.php"}{tr}Admin Users{/tr}{/title}
 
 <div class="navbar">

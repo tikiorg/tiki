@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {title help="Image+Galleries"}{tr}Upload Image{/tr}{/title}
 
 <div class="navbar">

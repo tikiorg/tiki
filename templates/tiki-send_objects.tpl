@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {title help="Communication+Center"}{tr}Send objects{/tr}{/title}
 
 {if $msg}

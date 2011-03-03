@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {assign var=escgroup value=$group|escape:url}
 {title help="Permission" url="tiki-assignpermission.php?group=$escgroup"}{tr}Assign permissions to group:{/tr} {$group|escape}{/title}
 

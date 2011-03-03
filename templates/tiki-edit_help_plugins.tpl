@@ -1,4 +1,3 @@
-{* $Id$ *}
 {* \brief Show plugins help 
  * included by tiki-show_help.tpl via smarty_block_add_help() *}
 

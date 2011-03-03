@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {title}{tr}Print multiple pages{/tr}{/title}
 
 {include file='find.tpl'}

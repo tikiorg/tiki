@@ -1,4 +1,3 @@
-{* $Id$ *}
 <div class="clearfix content">
 
 	<div class="clearfix author">

@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {if $alldone}
 
 {jq}

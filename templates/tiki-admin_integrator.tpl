@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {title help="Integrator"}{tr}Integrator{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}

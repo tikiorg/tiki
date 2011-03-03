@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 <div class="catblock clearfix"> 
 	{if !isset($params.showTitle) or $params.showTitle eq 'y'}
 		<div class="cattitle">

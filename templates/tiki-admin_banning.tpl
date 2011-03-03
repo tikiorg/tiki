@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {* this script (un/)checks all checkboxes with id 'banning-section' *}
 {jq notonready=true}
 	function CheckAll() {

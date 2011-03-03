@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 <strong>{$plugin.name|escape}</strong>
 
 {if $prefs.javascript_enabled eq 'y' && $area_id}

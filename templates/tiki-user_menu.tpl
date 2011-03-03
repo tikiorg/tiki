@@ -1,4 +1,3 @@
-{* $Id$ *}
 {assign var=opensec value='0'}
 {assign var=sep value=''}
 

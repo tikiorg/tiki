@@ -1,4 +1,3 @@
-{* $Id$ *}
 {if not $versioned}
 	{strip}
 

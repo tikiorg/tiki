@@ -1,4 +1,3 @@
-{* $Id$ *}
 {tikimodule error=$module_params.error title=$tpl_module_title name="freetags_most_popular" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {if ($type ne 'cloud')}<ul class="freetag">{/if}
 {foreach from=$most_popular_tags item=tag}

@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {if is_array($fgal_options) and count($fgal_options) gt 0}
 	{foreach key=key item=item from=$fgal_options}
 		{if $key eq 'default_view'}

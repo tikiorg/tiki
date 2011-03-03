@@ -1,4 +1,3 @@
-{* $Id$ *}
 {if !isset($show_heading) or $show_heading neq "n"}
 	{if strlen($heading) > 0 and $prefs.feature_blog_heading eq 'y'}
 		{eval var=$heading}

@@ -1,4 +1,3 @@
-{* $Id$ *}
 <table>
 	<caption>Count: {{$count|escape}}</caption>
 	<tr>

@@ -1,4 +1,3 @@
-{* $Id$ *}
 {title help="Categories" admpage="category"}{tr}Admin Categories{/tr}{/title}
 
 <div class="navbar">

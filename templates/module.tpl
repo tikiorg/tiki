@@ -1,4 +1,3 @@
-{* $Id$ *}
 {* Module layout with controls *}
 {capture name=name}{$module_name|replace:"+":"_"|cat:$module_position|cat:$module_ord|escape}{/capture}
 {if $module_nobox neq 'y'}

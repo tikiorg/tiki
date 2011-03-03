@@ -1,4 +1,3 @@
-{* $Id$ *}
 <div style="text-align: center">
 {if $client}
 {capture name=disparam}

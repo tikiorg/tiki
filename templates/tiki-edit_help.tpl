@@ -1,4 +1,3 @@
-{* $Id$ *}
 {* \brief Show wiki syntax help 
  * included by tiki-show_help.tpl via smarty_block_add_help()
  * TODO: Add links to add samples to edit form *}

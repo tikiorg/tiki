@@ -1,4 +1,3 @@
-{* $Id$ *}
 {title help="accounting"}
 	{$book.bookName}:
 	{tr}View account{/tr} {$account.accountId} {$account.accountName}

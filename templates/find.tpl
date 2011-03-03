@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {*
 	parameters used in this template:
 

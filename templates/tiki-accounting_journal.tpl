@@ -1,4 +1,3 @@
-{* $Id$ *} 
 <a class="icon" href="tiki-accounting_export.php?action=print&what=journal&bookId={$bookId}{if isset($accountId)}&accountId={$accountId}{/if}" target="new">{icon _id="printer" alt="{tr}printable version{/tr}"}</a>
 <a class="icon" href="tiki-accounting_export.php?action=settings&what=journal&bookId={$bookId}{if isset($accountId)}&accountId={$accountId}{/if}">{icon _id="table" alt="{tr}export table{/tr}"}</a>
 <table class="normal">

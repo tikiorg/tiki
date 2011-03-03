@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {title help="Trackers" admpage="trackers"}{tr}Trackers{/tr}{/title}
 
 <div class="navbar">

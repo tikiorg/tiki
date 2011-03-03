@@ -1,4 +1,3 @@
-{* $Id$ *}
 {strip}
 <div class="opaque calBox">
 {if !empty($overs)}

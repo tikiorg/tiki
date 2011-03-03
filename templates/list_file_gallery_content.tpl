@@ -1,4 +1,3 @@
-{* $Id$ *}
 {if empty($sort_arg)}{assign var='sort_arg' value='sort_mode'}{/if}
 <table class="normal">
 	<tr>

@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {if !empty($filegals_manager) and !isset($smarty.request.simpleMode)}
 	{assign var=simpleMode value='y'}
 {else}

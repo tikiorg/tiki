@@ -1,4 +1,3 @@
-{* $Id$ *}
 {tr}A new file was posted to image gallery:{/tr} {$galleryName}
 
 {tr}Posted by:{/tr} {$author|username}

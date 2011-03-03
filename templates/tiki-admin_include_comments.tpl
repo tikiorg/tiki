@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 <div class="navbar">
 	{button href="tiki-list_comments.php" _text="{tr}List comments{/tr}"}
 </div>

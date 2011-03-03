@@ -1,4 +1,3 @@
-{* $Id$ *}
 <table>
 	<caption>{$foo.bar|default:'Count'}: {$count|escape}</caption>
 	<tr>

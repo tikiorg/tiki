@@ -1,4 +1,3 @@
-{* $Id$ *}
 {* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_article.tpl *}
 
 {include file='tiki-articles-js.tpl'}

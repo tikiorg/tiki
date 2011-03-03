@@ -1,4 +1,3 @@
-{* $Id$ *}
 {$title}
 
 {tr}Author:{/tr} {$author|username}

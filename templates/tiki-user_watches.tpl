@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {title help="User+Watches"}{tr}User Watches and preferences{/tr}{/title}
 {include file='tiki-mytiki_bar.tpl'}
 

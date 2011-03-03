@@ -1,4 +1,3 @@
-{* $Id$ *}
 {strip}
 {* params:
 	mode: 'menu' or 'flags' (default=menu)

@@ -1,5 +1,3 @@
-{* based on $Id$ *}
-
 {if isset($modFreetagsCurrent) && count($modFreetagsCurrent) gt 0}
   {tikimodule error=$module_params.error title=$tpl_module_title name="freetags_current" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	{if $modFreetagsCurrent.cant gt 0}

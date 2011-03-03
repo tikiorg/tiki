@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 <h1><a href="tiki-invited.php" class="pagetitle">{tr}Invitation{/tr}</a></h1>
 
 {if $error}

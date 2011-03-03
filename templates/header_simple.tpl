@@ -1,6 +1,5 @@
 {**
  * This file is simplified version of header.tpl intended to be used for pages such as popup windows, print page, etc.
- * $Id$
  *
  *}<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{if isset($pageLang)}{$pageLang}{else}{$prefs.language}{/if}" lang="{if isset($pageLang)}{$pageLang}{else}{$prefs.language}{/if}">

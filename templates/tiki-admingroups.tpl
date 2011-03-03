@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {title help="Groups+Management" admpage="login"}{tr}Admin groups{/tr}{/title}
 
 <div class="navbar">

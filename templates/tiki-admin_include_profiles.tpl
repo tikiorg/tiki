@@ -1,4 +1,3 @@
-{* $Id$ *}
 {jq notonready=true}
 var baseURI = '{$smarty.server.REQUEST_URI}';
 {literal}

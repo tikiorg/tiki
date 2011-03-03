@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {title help="forums" admpage="forums"}{$forum_info.name|escape}{/title}
 
 {if $forum_info.show_description eq 'y'}

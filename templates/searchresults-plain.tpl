@@ -1,4 +1,3 @@
-{* $Id$ *}
 <ul class="searchresults">
 	{foreach item=result from=$results}
 	<li>

@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {if ($type eq 'wiki page' and $prefs.feature_wiki eq 'y')
 	or ($type eq 'article' and $prefs.feature_articles eq 'y')}
 	{tikimodule error=$module_params.error title=$tpl_module_title name="wiki_last_comments" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}

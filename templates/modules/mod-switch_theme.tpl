@@ -1,4 +1,3 @@
-{* $Id$ *}
 {if empty($group_style)}
 {if !isset($tpl_module_title)}
 	{capture assign=tpl_module_title}{tr}Theme:{/tr} <em>{$style|replace:'.css':''|truncate:15|ucwords}</em>{/capture}

@@ -1,4 +1,3 @@
-{* $Id$ *}
 {title help="comments" admpage="comments"}{$title}{/title}
 
 {if $comments or ($find ne '') or count($show_types) gt 0 or isset($smarty.request.findfilter_approved)}

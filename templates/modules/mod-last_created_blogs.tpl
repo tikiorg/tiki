@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {tikimodule error=$module_params.error title=$tpl_module_title name="last_created_blogs" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {modules_list list=$modLastCreatedBlogs nonums=$nonums}
 	{section name=ix loop=$modLastCreatedBlogs}

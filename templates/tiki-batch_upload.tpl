@@ -1,4 +1,3 @@
-{* $Id$ *}
 {title}{tr}Directory batch upload{/tr}{/title}
 
 <div class="navbar">

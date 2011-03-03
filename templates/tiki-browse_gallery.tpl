@@ -1,5 +1,3 @@
-{* $Id$ *}
-
 {title}{tr}Browsing Gallery:{/tr} {$name}{/title}
 
 <div class="navbar">
