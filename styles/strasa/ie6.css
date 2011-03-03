@@ -47,6 +47,10 @@ body {
 	width: 181px !important;
 }
 
+body.fixed_width #col3 .box {
+	width: 178px !important;
+}
+
 #col2 ul.cssmenu_vert,
 #col2 ul.cssmenu_vert li {
 	width: 165px !important;
