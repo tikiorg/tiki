@@ -14,12 +14,8 @@ class TikiFilter_HtmlPurifier implements Zend_Filter_Interface
 	}
 
 	function filter( $data ) {
-		require_once 'lib/htmlpurifier/HTMLPurifier.includes.php';
+		require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
 
-		$config = HTMLPurifier_Config::createDefault();
-		$config->set( 'Cache', 'SerializerPath', $this->cache );
-		$purifier = new HTMLPurifier($config);
-
-		return $purifier->purify( $data );
+		return HTMLPurifier( $data );
 	}
 }
