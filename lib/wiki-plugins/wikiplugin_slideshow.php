@@ -31,7 +31,7 @@ function wikiplugin_slideshow_info() {
 		'description' => tra('Configure a slideshow'),
 		'prefs' => array( 'feature_slideshow' ),
 		'body' => tra('Slideshow notes notes'),
-		'icon' => 'pics/icons/images.gif',
+		'icon' => 'pics/icons/images.png',
 		'params' => array(
 			'backgroundurl' => array(
 				'required' => false,
