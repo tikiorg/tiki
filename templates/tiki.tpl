@@ -3,7 +3,7 @@
 	<head>
 		{include file='header.tpl'}
 	</head>
-	<body {$html_body_attributes}>
+	<body{html_body_attributes}>
 
 		<ul class="jumplinks" style="position:absolute;top:-9000px;left:-9000px;z-index:9;">
 			<li><a href="#tiki-center" title="{tr}Jump to Content{/tr}">{tr}Jump to Content{/tr}</a></li>
