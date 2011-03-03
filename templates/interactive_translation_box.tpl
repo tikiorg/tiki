@@ -5,12 +5,16 @@
 </div>
 <div class="intertrans" id="intertrans-form">
 	<form method="post" action="tiki-interactive_trans.php">
+		<div class="center" id="intertrans-empty" style="display: none">
+			<strong>{tr}Couldn't find any translatable string.{/tr}</strong>
+		</div>
 		<table>
 		</table>
 		<p class="center">
-			<input type="submit" value="{tr}Save translations{/tr}"/>
-			<input type="reset" value="{tr}Cancel{/tr}"/>
+			<input id="intertrans-submit" type="submit" value="{tr}Save translations{/tr}"/>
+			<input id="intertrans-cancel" type="reset" value="{tr}Cancel{/tr}"/>
+			<input id="intertrans-close" type="reset" value="{tr}Close{/tr}" style="display: none;"/>
 		</p>
-		<p class="description center">{tr}Changes will be applied on next page load only.{/tr}</p>
+		<p id="intertrans-help" class="description center">{tr}Changes will be applied on next page load only.{/tr}</p>
 	</form>
 </div>
