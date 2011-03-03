@@ -16,7 +16,10 @@ $headerlib->add_jsfile( 'lib/jquery/jquery.s5/jquery.s5.js' );
 $headerlib->add_jq_onready( '
 	$("h1,h2,h3,h5,h6").first().parent().s5({
 		menu: function() {
-			return $("#tiki_slideshow_buttons");
+			return $("#tiki_slideshow_buttons").show();
+		},
+		noteMenu: function() {
+			return $("#tiki_slideshowNote_buttons").clone().show();
 		}
 	});
 	
