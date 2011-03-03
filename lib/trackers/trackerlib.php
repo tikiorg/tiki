@@ -4866,9 +4866,9 @@ class TrackerLib extends TikiLib
 				}
 				$overs = array();
 				foreach ($items as $item) {
-					$endDay = TikiLib::make_time(0,0,0, $day['month'], $day['day']+1, $day['year']);
-					if ((count($fieldIds) == 1 && $item['field_values'][$iStart]['value'] >= $day['date'] && $item['field_values'][$iStart]['value'] < $endDay)
-						|| (count($fieldIds) > 1 && $item['field_values'][$iStart]['value'] <= $endDay && $item['field_values'][$iEnd]['value'] > $day['date'])) {
+					$endDay = TikiLib::make_time(23,59,59, $day['month'], $day['day'], $day['year']);
+					if ((count($fieldIds) == 1 && $item['field_values'][$iStart]['value'] >= $day['date'] && $item['field_values'][$iStart]['value'] <= $endDay)
+						|| (count($fieldIds) > 1 && $item['field_values'][$iStart]['value'] <= $endDay && $item['field_values'][$iEnd]['value'] >= $day['date'])) {
 							$cell[$i][$j]['items'][] = $item;
 							$overs[] = preg_replace('|(<br /> *)*$|m', '', $item['over']);
 					}
