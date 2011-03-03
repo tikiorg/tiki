@@ -8,7 +8,7 @@
 		{/if}
 		{if $module_params.credits neq 'n'}
 			<span id="credits">
-				| {include file='credits.tpl'}
+				  &nbsp;| {include file='credits.tpl'}
 			</span>
 		{/if}
 	</div>
