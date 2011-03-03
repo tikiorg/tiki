@@ -51,10 +51,18 @@ function smarty_function_interactivetranslation($params, &$smarty) {
 	var interTransDone = false;
 	\$('#intertrans-form form').submit( function( e ) {
 		e.preventDefault();
-
-		\$('#intertrans-form').hide();
-		\$.post( \$(this).attr('action'), \$(this).serialize() );
-		interTransDone = true;
+		\$('body, input[type="submit"]').css('cursor', 'wait');
+		
+		\$.ajax({
+			url: \$(this).attr('action'),
+			data: \$(this).serialize(),
+			success: function() {
+				\$('body').css('cursor', 'default');
+				\$('input[type="submit"]').css('cursor', 'pointer');
+				\$('#intertrans-form').hide();
+				interTransDone = true;
+			}
+		});
 		
 		return false;
 	} );
