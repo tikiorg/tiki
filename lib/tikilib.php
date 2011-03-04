@@ -3725,7 +3725,7 @@ class TikiLib extends TikiDb_Bridge
 	function add_hit($pageName) {
 		$pages = $this->table('tiki_pages');
 		$pages->update(array(
-			'hits' => $pages->increment('hits'),
+			'hits' => $pages->increment(1),
 		), array(
 			'pageName' => $pageName,
 		));
