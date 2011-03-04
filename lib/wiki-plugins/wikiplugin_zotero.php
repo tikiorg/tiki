@@ -24,6 +24,12 @@ function wikiplugin_zotero_info()
 				'required' => false,
 				'filter' => 'alnum',
 			),
+			'note' => array(
+				'name' => tra('Note'),
+				'description' => tra('Append a note to the reference for additional information, like page numbers or other sub-references.'),
+				'required' => false,
+				'filter' => 'text',
+			),
 		),
 	);
 }
@@ -35,6 +41,7 @@ function wikiplugin_zotero($data, $params)
 
 	$tag = null;
 	$key = null;
+	$note = null;
 
 	if (isset($params['key'])) {
 		$key = $params['key'];
@@ -44,6 +51,10 @@ function wikiplugin_zotero($data, $params)
 		$cacheKey = "tag_$tag";
 	} else {
 		return WikiParser_PluginOutput::argumentError(array('key', 'tag'));
+	}
+
+	if (isset($params['note'])) {
+		$note = $params['note'];
 	}
 
 	if ($cached = $cachelib->getCached($cacheKey, 'zotero')) {
@@ -61,6 +72,6 @@ function wikiplugin_zotero($data, $params)
 	$content = $info['content'];
 	$content = str_replace('<div', '<span', $content);
 	$content = str_replace('</div>', '</span>', $content);
-	return "{FOOTNOTE()}~np~{$content}~/np~{FOOTNOTE}";
+	return "{FOOTNOTE()}~np~{$content} {$note}~/np~{FOOTNOTE}";
 }
 
