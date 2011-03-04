@@ -25,3 +25,12 @@ interface Search_ContentSource_Interface
 	 * Returns an array containing the list of field names that can be provided
 	 * by the content source.
 	 */
+	function getProvidedFields();
+
+	/**
+	 * Returns an array containing the list of field names that must be included
+	 * in the global content.
+	 */
+	function getGlobalFields();
+}
+
