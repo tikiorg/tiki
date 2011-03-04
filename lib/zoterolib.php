@@ -48,6 +48,15 @@ class ZoteroLib extends TikiDb_Bridge
 
 		return false;
 	}
+
+	function get_first_entry($tag)
+	{
+		if ($references = $this->get_references($tag)) {
+			return reset($references);
+		}
+
+		return false;
+	}
 	
 	function get_entry($itemId)
 	{

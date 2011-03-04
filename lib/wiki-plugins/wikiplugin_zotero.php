@@ -15,7 +15,13 @@ function wikiplugin_zotero_info()
 			'key' => array(
 				'name' => tra('Reference Key'),
 				'description' => tra('Unique reference for the group associated to the site. Can be retrieved from the Zotero Bibliography module.'),
-				'required' => true,
+				'required' => false,
+				'filter' => 'alnum',
+			),
+			'tag' => array(
+				'name' => tra('Reference Tag'),
+				'description' => tra('Uses the first result using the specified tag. Useful when the tag mechanism is coerced into creating unique human memorizable keys.'),
+				'required' => false,
 				'filter' => 'alnum',
 			),
 		),
@@ -24,21 +30,32 @@ function wikiplugin_zotero_info()
 
 function wikiplugin_zotero($data, $params)
 {
-	if (! isset($params['key'])) {
-		return WikiParser_PluginOutput::argumentError(array('key'));
-	}
-
 	$zotero = TikiLib::lib('zotero');
 	$cachelib = TikiLib::lib('cache');
 
-	$key = $params['key'];
+	$tag = null;
+	$key = null;
 
-	if ($cached = $cachelib->getCached($key, 'zotero')) {
+	if (isset($params['key'])) {
+		$key = $params['key'];
+		$cacheKey = "key_$key";
+	} elseif(isset($params['tag'])) {
+		$tag = $params['tag'];
+		$cacheKey = "tag_$tag";
+	} else {
+		return WikiParser_PluginOutput::argumentError(array('key', 'tag'));
+	}
+
+	if ($cached = $cachelib->getCached($cacheKey, 'zotero')) {
 		$info = unserialize($cached);
 	} else {
-		$info = $zotero->get_entry($key);
+		if ($key) {
+			$info = $zotero->get_entry($key);
+		} else {
+			$info = $zotero->get_first_entry($tag);
+		}
 
-		$cachelib->cacheItem($key, serialize($info), 'zotero');
+		$cachelib->cacheItem($cacheKey, serialize($info), 'zotero');
 	}
 
 	$content = $info['content'];
