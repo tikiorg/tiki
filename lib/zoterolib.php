@@ -30,7 +30,7 @@ class ZoteroLib extends TikiDb_Bridge
 			),
 		));
 
-		if ($response->isSuccessful()) {
+		if ($response && $response->isSuccessful()) {
 			$feed = Zend_Feed_Reader::importString($response->getBody());
 
 			$data = array();

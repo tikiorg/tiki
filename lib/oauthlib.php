@@ -46,16 +46,23 @@ class OAuthLib extends TikiDb_Bridge
 			}
 		}
 
-		return $client->request();
+		try {
+			return $client->request();
+		} catch (Zend_Http_Exception $e) {
+			return null;
+		}
 	}
 
 	function request_token($provider_key)
 	{
-		$consumer = $this->get_consumer($provider_key);
+		try {
+			$consumer = $this->get_consumer($provider_key);
 
-		if ($consumer) {
-			$_SESSION['OAUTH_REQUEST_' . $provider_key] = serialize($consumer->getRequestToken());
-			$consumer->redirect();
+			if ($consumer) {
+				$_SESSION['OAUTH_REQUEST_' . $provider_key] = serialize($consumer->getRequestToken());
+				$consumer->redirect();
+			}
+		} catch (Zend_Oauth_Exception $e) {
 		}
 	}
 
@@ -65,11 +72,14 @@ class OAuthLib extends TikiDb_Bridge
 		$key = 'OAUTH_REQUEST_' . $provider_key;
 
 		if ($consumer && isset($_SESSION[$key])) {
-			$accessToken = $consumer->getAccessToken($_GET, unserialize($_SESSION[$key]));
+			try {
+				$accessToken = $consumer->getAccessToken($_GET, unserialize($_SESSION[$key]));
 
-			$this->store_token($provider_key, $accessToken);
+				$this->store_token($provider_key, $accessToken);
 
-			unset($_SESSION[$key]);
+				unset($_SESSION[$key]);
+			} catch (Zend_Oauth_Exception $e) {
+			}
 		}
 	}
 
