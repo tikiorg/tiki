@@ -76,6 +76,15 @@ function wikiplugin_slideshow_info() {
 				'default' => '#EEFAFF',
 				'since' => '7.0',
 			),
+			'slideseconds' => array(
+				'required' => false,
+				'name' => tra('Slide Seconds'),
+				'description' => tra('How many seconds a slide will be open while playing'),
+				'filter' => 'digits',
+				'accepted' => 'Second count',
+				'default' => '15',
+				'since' => '7.0'
+			),
 		),
 	);
 }
@@ -89,21 +98,25 @@ function wikiplugin_slideshow($data, $params) {
 	$class = (isset($class) ? " $class"  : '');
 	$headerfontcolor = (isset($headerfontcolor) ? $headerfontcolor : '#56D0FF');
 	$slidefontcolor = (isset($slidefontcolor) ? $slidefontcolor : '#EEFAFF');
+	$slideduration = (isset($slideseconds) ? $slideseconds : 15) * 1000;
 	
 	$notes = explode("/////", ($data ? $data : ""));
 	$notesHtml = '';
 	foreach ( $notes as $note ) {
-		$notesHtml .= '<span class="note">'.$note.'</span>';
+		$notesHtml .= '<span class="s5-note">'.$note.'</span>';
 	}
+	global $headerlib;
 	
-	$ret = "<div id='' class='tiki_slideshow $class'
-		style='display: none;
-			background-image: url(\"$backgroundurl\"); 
-			background-color: $backgroundcolor;'
-			
-		headerFontColor='$headerfontcolor'
-		slideFontColor='$slidefontcolor'
-	>$notesHtml</div>";
+	$headerlib->add_js("
+		window.s5Settings = {
+			slideClass: '$class',
+			backgroundImage: '$backgroundurl',
+			backgroundColor: '$backgroundcolor',
+			headerFontColor: '$headerfontcolor',
+			slideFontColor: '$slidefontcolor',
+			slideDuration: $slideduration
+		};
+	");
 	
-	return '~np~' . $ret . '~/np~';
+	return "~np~<div id='' class='tiki_slideshow'>$notesHtml</div>~/np~";
 }

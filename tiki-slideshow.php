@@ -14,24 +14,15 @@ include_once ('lib/wiki/wikilib.php');
 $headerlib->add_cssfile( 'lib/jquery/jquery.s5/jquery.s5.css' );
 $headerlib->add_jsfile( 'lib/jquery/jquery.s5/jquery.s5.js' );
 $headerlib->add_jq_onready( '
-	$("h1,h2,h3,h5,h6").first().parent().s5({
+	window.s5Settings = (window.s5Settings ? window.s5Settings : {});
+	$.s5.start($.extend(window.s5Settings, {
 		menu: function() {
 			return $("#tiki_slideshow_buttons").show();
 		},
 		noteMenu: function() {
 			return $("#tiki_slideshowNote_buttons").clone().show();
 		}
-	});
-	
-	var backgroundColor = $(".tiki_slideshow").css("background-color");
-	var backgroundImage = $(".tiki_slideshow").css("background-image");
-	var headerFontColor = $(".tiki_slideshow").attr("headerFontColor");
-	var slideFontColor = $(".tiki_slideshow").attr("slideFontColor");
-	
-	$("body").css("background-color", backgroundColor);
-	$("body").css("background-image", backgroundImage);
-	$("h1,h2,h3,h5,h6").css("color", headerFontColor);
-	$(".slide").css("color", slideFontColor);
+	}));
 	
 ');	// late, and tell jqs5 where the page is in tiki
 
