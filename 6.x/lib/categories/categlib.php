@@ -36,7 +36,7 @@ class CategLib extends ObjectLib
 			foreach ($back as $cat) {
 				if ($cat['categId'] == $categId)
 					$path = $cat['categpath'].'::';
-				else if (($all == true || $cat['parentId'] == $categId) && ($path != '' && strpos($cat['categpath'], $path) === 0)) {
+				else if (($all == true || $cat['parentId'] == $categId) && ($path == '' || strpos($cat['categpath'], $path) === 0)) {
 					$cat['categpath'] = substr($cat['categpath'], strlen($path));
 					$back2[] = $cat;
 				}
