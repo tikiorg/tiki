@@ -25,15 +25,18 @@
 {if (not $show_form)} 
   {include file='find.tpl'}
 {/if}
-
-<span class="taskcount">{$cant}&nbsp;{tr}Tasks{/tr}</span>
+{if $cant eq 1}
+	<span class="taskcount">{$cant}&nbsp;{tr}Task{/tr}</span>
+{else}
+	<span class="taskcount">{$cant}&nbsp;{tr}Tasks{/tr}</span>
+{/if}
 
 <div class="wiki-edithelp"  id='edithelpzone' >
 <table width="100%">
 {if $tiki_p_tasks_receive eq 'y'}
 <tr>
 	<td>
-		{icon _id='door_in' title="{tr}Task received{/tr}" alt="{tr}Task received{/tr}"} 
+		{icon _id='task_received' title="{tr}Task received{/tr}" alt="{tr}Task received{/tr}"} 
 	</td>
 	<td>
 		{tr}You received this task{/tr}.
@@ -43,7 +46,7 @@
 {if $tiki_p_tasks_send eq 'y'}
 <tr>
 	<td>
-		{icon _id='door_out' title="{tr}Task sent{/tr}" alt="{tr}Task sent{/tr}"} 
+		{icon _id='task_submitted' title="{tr}Task sent{/tr}" alt="{tr}Task sent{/tr}"} 
 	</td>
 	<td>
 		{tr}You sent this task to another user{/tr}.
@@ -62,7 +65,7 @@
 {/if}
 <tr>
 	<td>
-		{icon _id='tick' title="{tr}Accepted by task user and creator{/tr}" alt="{tr}Accepted by task user and creator{/tr}"}
+		{icon _id='accept' title="{tr}Accepted by task user and creator{/tr}" alt="{tr}Accepted by task user and creator{/tr}"}
 	</td>
 	<td>
 		{tr}Task has been accepted by user and creator{/tr}.
@@ -70,10 +73,10 @@
 </tr>
 <tr>
 	<td>
-		{icon _id='cross' title="{tr}Rejected by a user{/tr}" alt="{tr}Rejected by a user{/tr}"}
+		{icon _id='delete' title="{tr}Rejected by a user{/tr}" alt="{tr}Rejected by a user{/tr}"}
 	</td>
 	<td>
-		{tr}Task has been rejected by one user{/tr}.
+		{tr}Task has been rejected by a user{/tr}.
 	</td>
 </tr>
 {if $tiki_p_tasks_receive eq 'y'}
@@ -92,7 +95,7 @@
 		{icon _id='user_comment' title="{tr}Waiting for other user{/tr}" alt="{tr}Waiting for other user{/tr}"}
 	</td>
 	<td>
-		{tr}Task has not yet been accepted or rejected by other user{/tr}.
+		{tr}Task has not yet been accepted or rejected by another user{/tr}.
 	</td>
 </tr>
 {/if}

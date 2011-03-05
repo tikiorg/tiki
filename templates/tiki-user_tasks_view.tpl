@@ -8,10 +8,10 @@
 		{icon _id='page_edit'}
 	</a>&nbsp;
 	<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_accept=on" class="tablink">
-		{icon _id='tick' title="{tr}Accept{/tr}" alt="{tr}Accept{/tr}"}
+		{icon _id='accept' title="{tr}Accept{/tr}" alt="{tr}Accept{/tr}"}
 	</a>&nbsp;
 	<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_not_accept=on" class="tablink">
-		{icon _id='cross' title="{tr}Reject{/tr}" alt="{tr}Reject{/tr}"}
+		{icon _id='delete' title="{tr}Reject{/tr}" alt="{tr}Reject{/tr}"}
 	</a>&nbsp;
 	<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;move_into_trash=on" class="tablink">
 		{icon _id='basket_put' title="{tr}Move to trash{/tr}" alt="{tr}Move to trash{/tr}"}

@@ -43,7 +43,7 @@
 					<input {if $tasklist[task_i].disabled} disabled = "disabled" {/if}  type="checkbox" name="task[{$tasklist[task_i].taskId}]" />
 					{if $tasklist[task_i].deleted} 
 						{if $tasklist[task_i].creator ne $user}
-							{icon _id='delete'}
+							{icon _id='cross'}
 						{else}
 							{icon _id='basket' title="{tr}In the trash{/tr}" alt="{tr}In the trash{/tr}"}
 						{/if}
@@ -53,15 +53,15 @@
 					{else}
 						{if ($tasklist[task_i].user eq $user)}
 							{*received task*}
-							{icon _id='door_in' title="{tr}Task received{/tr}" alt="{tr}Task received{/tr}"} 
+							{icon _id='task_received' title="{tr}Task received{/tr}" alt="{tr}Task received{/tr}"} 
 							{if (($tasklist[task_i].accepted_creator eq 'n') or ($tasklist[task_i].accepted_user eq 'n'))}
-								{icon _id='cross' title="{tr}Rejected by a user{/tr}" alt="{tr}Rejected by a user{/tr}"}
+								{icon _id='delete' title="{tr}Rejected by a user{/tr}" alt="{tr}Rejected by a user{/tr}"}
 							{else}
 								{if ($tasklist[task_i].accepted_user eq '')}
 									{icon _id='hourglass' title="{tr}Waiting for me{/tr}" alt="{tr}Waiting for me{/tr}"}
 								{else}
 									{if ($tasklist[task_i].accepted_creator eq 'y')} 
-										{icon _id='tick' title="{tr}Accepted by task user and creator{/tr}" alt="{tr}Accepted by task user and creator{/tr}"}
+										{icon _id='accept' title="{tr}Accepted by task user and creator{/tr}" alt="{tr}Accepted by task user and creator{/tr}"}
 									{else}
 										{icon _id='user_comment' title="{tr}Waiting for other user{/tr}" alt="{tr}Waiting for other user{/tr}"}
 									{/if}
@@ -69,7 +69,7 @@
 							{/if}
 						{elseif ($tasklist[task_i].creator eq $user)}
 							{*submitted task*}
-							{icon _id='door_out' title="{tr}Task sent{/tr}" alt="{tr}Task sent{/tr}"} 
+							{icon _id='task_submitted' title="{tr}Task sent{/tr}" alt="{tr}Task sent{/tr}"} 
 							{if (($tasklist[task_i].accepted_creator eq 'n') or ($tasklist[task_i].accepted_user eq 'n'))}
 								<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title="{tr}Not Accepted by One User{/tr}" alt="{tr}Not Accepted User{/tr}" />
 							{else}
@@ -81,7 +81,7 @@
 									{/if}
 								{else}
 									{if ($tasklist[task_i].accepted_creator eq 'y')}
-										{icon _id='tick' title="{tr}Accepted by task user and creator{/tr}" alt="{tr}Accepted by task user and creator{/tr}"}
+										{icon _id='accept' title="{tr}Accepted by task user and creator{/tr}" alt="{tr}Accepted by task user and creator{/tr}"}
 									{else}
 										{icon _id='hourglass' title="{tr}Waiting for me{/tr}" alt="{tr}Waiting for me{/tr}"}
 									{/if}

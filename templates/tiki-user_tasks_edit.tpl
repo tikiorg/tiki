@@ -19,11 +19,11 @@
 {if ($info.creator eq $user or $info.user eq $user or $admin_mode) and ($info.task_version eq $info.last_version)}
 	{if ($info.taskId > 0 and $info.creator ne $info.user)}
     <span class="tabbut">
-		{icon _id='tick' title="{tr}Accept{/tr}" alt="{tr}Accept{/tr}"}
+		{icon _id='accept' title="{tr}Accept{/tr}" alt="{tr}Accept{/tr}"}
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_accept=on" class="tablink">{tr}Accept{/tr}</a>
     </span>
     <span class="tabbut">
-		{icon _id='cross' title="{tr}Reject{/tr}" alt="{tr}Reject{/tr}"}
+		{icon _id='delete' title="{tr}Reject{/tr}" alt="{tr}Reject{/tr}"}
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_not_accept=on" class="tablink">{tr}NOT accept{/tr}</a>
     </span>
 	{/if}
@@ -187,7 +187,9 @@
 			 <select name="percentage">
 					<option value="w" {if $info.percentage_null} selected = "selected"  {/if}>{tr}Waiting{/tr}</option>	
 				{section name=zz loop=$percs}
-					<option value="{$percs[zz]|escape}" {if $info.percentage eq $percs[zz] and !$info.percentage_null} selected = "selected" {/if} > {$percs[zz]}% </option>	
+					<option value="{$percs[zz]|escape}" {if $info.percentage eq $percs[zz] and !$info.percentage_null} selected = "selected" {/if} > 
+						{$percs[zz]}% 
+					</option>	
 				{/section}
       		</select>
 		</td>
