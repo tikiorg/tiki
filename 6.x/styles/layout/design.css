@@ -162,6 +162,7 @@ input[type=radio] {
 #sitelocbar {
 	float: left;
 	padding: 2px 2px 3px 10px;
+	font-size: small;
 }
 
 #siteloginbar {

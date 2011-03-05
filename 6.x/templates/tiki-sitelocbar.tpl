@@ -2,7 +2,7 @@
 {* breadcrumbs (site header location) *}
 {if $prefs.feature_siteloc eq 'y' and $prefs.feature_breadcrumbs eq 'y'}
 		<div id="sitelocbar">
-			<small>{if $prefs.feature_siteloclabel eq 'y'}{tr}Location : {/tr}{/if}{if
+			{if $prefs.feature_siteloclabel eq 'y'}{tr}Location : {/tr}{/if}{if
 	$trail}{breadcrumbs
 			type="trail"
 			loc="site"
@@ -31,7 +31,7 @@
 			{elseif $thread_info.title ne ''}{$prefs.site_crumb_seper|escape:"html"} {$thread_info.title}
 			{elseif $forum_info.name ne ''}{$prefs.site_crumb_seper|escape:"html"} {$forum_info.name}{/if}
 		{/if}
-	{/if}</small>
+	{/if}
 		</div>{* bar with location indicator *}
 	{if $trail}{breadcrumbs	type="desc"	loc="site" crumbs=$trail}{
 	 else}{breadcrumbs type="desc" loc="site" crumbs=$crumbs}{/if}
