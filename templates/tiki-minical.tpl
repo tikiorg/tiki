@@ -21,7 +21,7 @@
 				{section name=ix loop=$upcoming}
 					<tr>
 						<td class="even">
-							{$upcoming[ix].start|tiki_date_format:"%b %d %H:%M"}
+							{$upcoming[ix].start|tiki_short_datetime}
 							{if $upcoming[ix].topicId}
 								{if $upcoming[ix].topic.isIcon eq 'y'}
 									<img title="{$upcoming[ix].topic.name}" src="{$upcoming[ix].topic.path}" alt="{tr}topic image{/tr}" />
