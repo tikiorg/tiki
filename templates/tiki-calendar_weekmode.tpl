@@ -17,12 +17,12 @@
 	{/if}
 {/section}
   </tr>
-{foreach key=k item=h from=$hours}
+{foreach key=k item=h from=$hr_display}
   <tr valign="middle" style="height:24px">
-	<td id="rowLeft_{$h}" class="calHours">{if ($h < 10)}0{/if}{$h}:00</td>
+	<td id="rowLeft_{$h[0]}" class="calHours">{$h[1]}</td>
 	{section name=weekday loop=$weekdays}
 		{if in_array($smarty.section.weekday.index,$viewdays)}
-			<td id="row_{$h}_{$smarty.section.weekday.index}" class="calWeek">&nbsp;</td>
+			<td id="row_{$h[0]}_{$smarty.section.weekday.index}" class="calWeek">&nbsp;</td>
 		{/if}
 	{/section}
   </tr>
