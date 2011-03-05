@@ -1898,7 +1898,7 @@ function get_default_prefs() {
 
 		// Unified search
 		'unified_engine' => 'lucene',
-		'unified_incremental_update' => 'n',
+		'unified_incremental_update' => 'y',
 		'unified_lucene_location' => 'temp/unified-index',
 	
 		// Syntax Highlighter
