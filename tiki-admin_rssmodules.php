@@ -57,6 +57,9 @@ $smarty->assign('showPubDate', $info["showPubDate"]);
 if (isset($_REQUEST["refresh"])) {
 	$rsslib->refresh_rss_module($_REQUEST["refresh"]);
 }
+if (isset($_REQUEST['clear'])) {
+	$rsslib->clear_rss_cache($_REQUEST['clear']);
+}
 if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();
 	$rsslib->remove_rss_module($_REQUEST["remove"]);
