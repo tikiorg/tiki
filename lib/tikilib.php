@@ -1488,7 +1488,7 @@ class TikiLib extends TikiDb_Bridge
 			));
 			$ret = $result;
 			foreach ( $result as $res ) {
-				$ret = array_merge($ret, $userlib->get_included_groups($res["groupName"]));
+				$ret = array_merge($ret, $userlib->get_included_groups($res));
 			}
 			$ret[] = "Registered";
 
