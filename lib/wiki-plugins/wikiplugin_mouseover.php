@@ -25,15 +25,15 @@ function wikiplugin_mouseover_info() {
 	return array(
 		'name' => tra('Mouseover'),
 		'documentation' => 'PluginMouseover',
-		'description' => tra('Display hidden content by mousing over a link'),
+		'description' => tra('Display hidden content by mousing over a text'),
 		'prefs' => array( 'wikiplugin_mouseover' ),
-		'body' => tra('Mouseover text if param label exists. Page text if text param exists'),
+		'body' => tra('Hidden content, unless the label parameter is undefined, in which case this is the label.'),
 		'icon' => 'pics/icons/comment_add.png',
 		'params' => array(
 			'label' => array(
 				'required' => true,
 				'name' => tra('Label'),
-				'description' => tra('Text displayed on the page. The body is the mouseover content'),
+				'description' => tra('Text displayed on the page. The body is the hidden content.'),
 				'filter' => 'striptags',
 				'default' => '',
 			),
@@ -47,7 +47,7 @@ function wikiplugin_mouseover_info() {
 			'text' => array(
 				'required' => false,
 				'name' => tra('Text'),
-				'description' => tra('DEPRECATED').' '.tra('Text displayed on the mouseover. The body contains the text of the page.'),
+				'description' => tra('DEPRECATED').' '.tra('Hidden content. The body contains the label.'),
 				'filter' => 'striptags',
 				'default' => '',
 				'advanced' => true,
