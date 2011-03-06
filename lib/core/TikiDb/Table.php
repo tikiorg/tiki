@@ -209,6 +209,11 @@ class TikiDb_Table
 		return $this->expr("MAX(`$field`)");
 	}
 
+	function min($field)
+	{
+		return $this->expr("MIN(`$field`)");
+	}
+
 	function increment($count)
 	{
 		return $this->expr('$$ + ?', array($count));
@@ -260,6 +265,26 @@ class TikiDb_Table
 		} else {
 			return $this->expr(($caseSensitive ? 'BINARY ' : '') . '$$ IN(' . rtrim(str_repeat('?, ', count($values)), ', ') . ')', $values);
 		}
+	}
+
+	function findIn($value, array $fields)
+	{
+		$expr = $this->like("%$value%");
+
+		return $this->any(array_fill_keys($fields, $expr));
+	}
+
+	function any(array $conditions)
+	{
+		$binds = array();
+		$parts = array();
+
+		foreach ($conditions as $field => $expr) {
+			$parts[] = $expr->getQueryPart($this->escapeIdentifier($field));
+			$binds = array_merge($binds, $expr->getValues());
+		}
+
+		return $this->expr('(' . implode(' OR ', $parts) . ')', $binds);
 	}
 
 	function sortMode($sortMode)
