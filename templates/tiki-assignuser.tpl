@@ -22,11 +22,11 @@
 	<tr><td>{tr}Email:{/tr}</td><td>{$user_info.email}</td></tr>
 	<tr>
 		<td>{tr}Groups:{/tr}</td><td>
-			{foreach from=$user_info.groups item=what key=grp}
+			{foreach from=$user_info.groups item=what key=grp name=groups}
 				{if $what eq 'included'}<i>{/if}{$grp|escape}{if $what eq 'included'}</i>{/if}
-				{if $grp != "Anonymous" && $grp != "Registered"}
-					<a class="link" href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}&amp;action=removegroup&amp;group={$grp|escape:url}" title="Remove">{icon _id='cross' alt="{tr}Remove{/tr}" style="vertical-align:middle"}</a>{if !$user_info.groups.last},{/if}
-				{/if}&nbsp;&nbsp;
+				{if $grp != "Anonymous" && $grp != "Registered" and $what neq 'included'}
+					<a class="link" href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}&amp;action=removegroup&amp;group={$grp|escape:url}" title="Remove">{icon _id='cross' alt="{tr}Remove{/tr}" style="vertical-align:middle"}</a>
+				{/if}{if !$smarty.foreach.groups.last},{/if}&nbsp;&nbsp;
 			{/foreach}
 		</td>
 	</tr>
