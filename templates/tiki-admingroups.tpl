@@ -132,7 +132,7 @@
 					{if $indirectly_inherited_groups|@count > 0}
 						{*	PROBLEM WITH FOREACH BELOW... *}
 						{foreach key=num item=gr from=$indirectly_inherited_groups}
-							{$gr};
+							{$gr|escape};
 						{/foreach}
 					{else}
 						{tr}None{/tr}						
