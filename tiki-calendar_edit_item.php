@@ -249,13 +249,6 @@ if (isset($_POST['act'])) {
 					$calRecurrence->setNbRecurrences($_POST['nbRecurrences']);
 				}
 				$calRecurrence->setUser($save['user']);
-				#region reminder
-        $calRecurrence->setReminderType($save['reminder_type']);
-        $calRecurrence->setReminderFixedDate($save['reminder_fixed_date']);
-        $calRecurrence->setReminderTimeOffset($save['reminder_time_offset']);
-        $calRecurrence->setReminderRelatedTo($save['reminder_related_to']);
-        $calRecurrence->setReminderWhenRun($save['reminder_when_run']);
-        #endregion reminder
 				$calRecurrence->save($_POST['affect'] == 'all');
 					// Save the ip at the log for the addition of new calendar items when done by anonymous users
 					if (empty($user) && empty($save['calitemId']) && $caladd["$newcalid"]['tiki_p_add_events']) { 
@@ -547,25 +540,6 @@ $smarty->assign('calendar', $calendar);
 $smarty->assign('calendarId', $calID);
 if (array_key_exists('CalendarViewGroups',$_SESSION) && count($_SESSION['CalendarViewGroups']) == 1)
 	$smarty->assign('calendarView',$_SESSION['CalendarViewGroups'][0]);
-
-#region reminder
-
-$reminder_time_offset_days = 0;
-$reminder_time_offset_hours = 1;
-$reminder_time_offset_minutes = 0;
-
-if ($calitem['reminder_type'] == 2)
-{
-    $reminder_time_offset_days = floor($calitem['reminder_time_offset'] / 86400);
-    $reminder_time_offset_hours = floor(($calitem['reminder_time_offset'] % 86400) / 3600);
-    $reminder_time_offset_minutes = floor(($calitem['reminder_time_offset'] % 3600) / 60);
-}
-
-$smarty->assign('reminder_time_offset_days', $reminder_time_offset_days);
-$smarty->assign('reminder_time_offset_hours', $reminder_time_offset_hours);
-$smarty->assign('reminder_time_offset_minutes', $reminder_time_offset_minutes);
-
-#endregion reminder
 
 global $wikilib; include_once('lib/wiki/wikilib.php');
 $plugins = $wikilib->list_plugins(true, 'editwiki');
