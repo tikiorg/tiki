@@ -153,6 +153,9 @@
 				{if $tiki_p_admin_wiki eq 'y' && $prefs.wiki_keywords eq 'y'}
 					{button href="tiki-admin_keywords.php" page=$page _text="{tr}Keywords{/tr}"}
 				{/if}
+				{if $user and $tiki_p_create_bookmarks eq 'y' and $prefs.feature_user_bookmarks eq 'y'}
+					{button _script="tiki-user_bookmarks.php" urlname=$page urlurl=$page|sefurl addurl="Add" _text="{tr}Bookmark{/tr}" _auto_args="urlname,urlurl,addurl"}
+				{/if}
 			{/if}
 		{/if}
 	{/capture}
