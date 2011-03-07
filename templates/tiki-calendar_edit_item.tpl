@@ -25,25 +25,6 @@
 		{/if}
 	</div>
 	
-	{literal}
-		<script language="javascript">
-			function togglereminderforrecurrence() {
-				if (document.getElementById('id_recurrent').checked) {
-					if (document.getElementById('reminder_type_date').checked)
-					{
-						document.getElementById('reminder_type_none').checked = true;
-						document.getElementById('reminder_type_date').checked = false;
-						document.getElementById('reminder_fixed_date_row').style.display = 'none';
-					}
-					document.getElementById('reminder_fixed_date_option_row').style.display = 'none';
-				}
-				else {
-					document.getElementById('reminder_fixed_date_option_row').style.display = '';
-				}
-			}
-		</script>
-	{/literal}
-	
 	<div class="wikitext">
 		{if $edit}
 			{if $preview}

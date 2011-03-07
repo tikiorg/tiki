@@ -168,29 +168,6 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 			);
 			$save['duration'] = max(0, $save['end'] - $save['start']);
 		}
-		
-		#region reminder
-
-			//Convert 12-hour clock hours to 24-hour scale to compute time
-			if (!empty($_REQUEST['reminder_fixed_date_Meridian'])) {
-				$_REQUEST['reminder_fixed_date_Hour'] = date('H', strtotime($_REQUEST['reminder_fixed_date_Hour'] . ':00 ' . $_REQUEST['reminder_fixed_date_Meridian']));
-			}
-		$save['reminder_fixed_date'] = TikiLib::make_time(
-        $_REQUEST['reminder_fixed_date_Hour'],
-        $_REQUEST['reminder_fixed_date_Minute'],
-        0,
-        $_REQUEST['reminder_fixed_date_Month'],
-        $_REQUEST['reminder_fixed_date_Day'],
-        $_REQUEST['reminder_fixed_date_Year']
-    );
-
-    $rem_offset_days = $_REQUEST['reminder_time_offset_days'];
-    $rem_offset_hours = $_REQUEST['reminder_time_offset_hours'];
-    $rem_offset_minutes = $_REQUEST['reminder_time_offset_minutes'];
-    $save['reminder_time_offset'] = $rem_offset_days * 86400 + $rem_offset_hours * 3600 + $rem_offset_minutes * 60;
-
-    #endregion reminder
-
 	}
 }
 
