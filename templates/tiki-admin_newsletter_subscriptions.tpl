@@ -321,7 +321,7 @@
 					{/section}
 				</select>
 				<br />
-				<i>{tr}Included group, group users and emails will be refreshed at each newsletter sending{/tr}</i>
+				<i>{tr}Including group, group users and emails will be refreshed at each newsletter sending{/tr}</i>
 			</td>
 		</tr>
 		<tr>
