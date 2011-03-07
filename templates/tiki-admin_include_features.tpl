@@ -25,6 +25,7 @@
 				{preference name=feature_forums}
 				{preference name=feature_trackers}
 				{preference name=feature_polls}
+				{preference name=feature_sheet}
 				{preference name=feature_calendar}
 				{preference name=feature_newsletters}
 				{preference name=feature_banners}
@@ -58,6 +59,10 @@
 						{preference name=bigbluebutton_server_salt}
 					</div>
 				{preference name=feature_perspective}
+				{preference name=payment_feature}
+				{preference name=feature_sefurl}
+				{preference name=feature_webmail}
+				{preference name=feature_kaltura}
 			</div>
 		</fieldset>
 
@@ -115,6 +120,7 @@
 				{preference name=feature_tikitests}
 				{preference name=disableJavascript}
 				{preference name=smarty_compilation}
+				{preference name=feature_webservices}
 			</div>
 
 			<div class="adminoptionbox">
@@ -153,19 +159,12 @@
 				<fieldset>
 					<legend class="heading">{icon _id="star"} <span>{tr}New{/tr}</span></legend>
  					<p class="description">{tr}These features are relatively new, or recently underwent major renovations. You should expect growing pains and possibly a lack of up to date documentation, as you would of a version 1.0 application{/tr}</p>
+						{preference name=feature_syntax_highlighter}
 						{preference name=feature_invite}
-						{preference name=feature_kaltura}
-						{preference name=feature_print_indexed}
 						{preference name=feature_quick_object_perms}
-						{preference name=feature_sefurl}
-						{preference name=feature_sheet}
 						{preference name=feature_webdav}
-						{preference name=feature_webmail}
-						{preference name=feature_webservices}
-						{preference name=feature_wiki_mindmap}
 						{preference name=feature_wysiwyg}
 						{preference name=feature_accounting}
-						{preference name=payment_feature}
 						{preference name=zotero_enabled}
 						<div class="adminoptionboxchild" id="zotero_enabled_childcontainer">
 							{if $prefs.zotero_client_key and $prefs.zotero_client_secret and $prefs.zotero_group_id}
@@ -199,7 +198,6 @@
 					{preference name=feature_watershed}
 					{preference name=feature_file_galleries_save_draft}
 					{preference name=feature_file_galleries_templates}
-					{preference name=feature_syntax_highlighter}
 					{preference name=feature_draw}
 					{preference name=feature_slideshow}
 					{preference name=mobile_feature}
@@ -229,6 +227,8 @@
 					{preference name=feature_intertiki}
 					{preference name=feature_mailin}
 					{preference name=feature_morcego}
+					{preference name=feature_wiki_mindmap}
+					{preference name=feature_print_indexed}
 				</fieldset>
 
 				<fieldset>
