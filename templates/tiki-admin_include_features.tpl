@@ -52,6 +52,12 @@
 				{preference name=feature_score}
 				{preference name=feature_fullscreen}
 				{preference name=feature_dynamic_content}
+				{preference name=bigbluebutton_feature}
+					<div class="adminoptionboxchild" id="bigbluebutton_feature_childcontainer">
+						{preference name=bigbluebutton_server_location}
+						{preference name=bigbluebutton_server_salt}
+					</div>
+				{preference name=feature_perspective}
 			</div>
 		</fieldset>
 
@@ -146,15 +152,9 @@
 			<div class="admin clearfix featurelist">
 				<fieldset>
 					<legend class="heading">{icon _id="star"} <span>{tr}New{/tr}</span></legend>
-					<p class="description">{tr}These features are relatively new, or recently underwent major renovations. You should expect growing pains and possibly a lack of up to date documentation, as you would of a version 1.0 application{/tr}</p>
-						{preference name=bigbluebutton_feature}
-						<div class="adminoptionboxchild" id="bigbluebutton_feature_childcontainer">
-							{preference name=bigbluebutton_server_location}
-							{preference name=bigbluebutton_server_salt}
-						</div>
+ 					<p class="description">{tr}These features are relatively new, or recently underwent major renovations. You should expect growing pains and possibly a lack of up to date documentation, as you would of a version 1.0 application{/tr}</p>
 						{preference name=feature_invite}
 						{preference name=feature_kaltura}
-						{preference name=feature_perspective}
 						{preference name=feature_print_indexed}
 						{preference name=feature_quick_object_perms}
 						{preference name=feature_sefurl}

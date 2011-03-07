@@ -87,7 +87,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_file_galleries_templates' => array(
-			'name' => tra('Configuration templates'),
+			'name' => tra('File Galleries configuration templates'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_file_galleries',
@@ -1785,20 +1785,22 @@ function prefs_feature_list() {
         ),
         'feature_accounting' => array(
 			'name' => tra('Accounting'),
-			'description' => tra('Enable accounting system (alpha)'),
+			'description' => tra('Enable accounting system'),
 			'help' => 'Accounting',
 			'type' => 'flag',
 		),
 		'feature_syntax_highlighter' => array(
-			'name' => tra('Syntax Highlighter (codemirror)'),
+			'name' => tra('Syntax Highlighter (CodeMirror)'),
 			'type' => 'flag',
-			'description' => tra('Enables syntax highlighting with the use of codemirror'),
+			'help' => 'CodeMirror',
+			'description' => tra('Enables syntax highlighting with the use of CodeMirror'),
 		),
 		'feature_themegenerator' => array(
 			'name' => tra('Theme Generator'),
 			'type' => 'flag',
 			'warning' => tra('Experimental. This feature is still under development.'),
-			'description' => tra(''),
+			'description' => tra('Permits to adjust colors and fonts via the browser.'),
+			'help' => 'Theme+Generator',
 		),
 	);
 }
