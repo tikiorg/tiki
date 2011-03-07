@@ -703,8 +703,8 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_draw' => array(
-			'name' => tra('Draw - (svg-edit)'),
-			'description' => tra('Draw gives you the ability to edit svg images all around Tiki'),
+			'name' => tra('Draw - (SVG-edit)'),
+			'description' => tra('Draw gives you the ability to edit SVG images all around Tiki'),
 			'help' => 'Draw',
 			'type' => 'flag',
 		),
