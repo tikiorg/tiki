@@ -388,9 +388,9 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_sheet' => array(
-			'name' => tra('SpreadSheet'),
+			'name' => tra('Spreadsheet'),
 			'description' => tra('Datasheets with calculations and charts'),
-			'help' => 'SpreadSheet',
+			'help' => 'Spreadsheet',
 			'type' => 'flag',
 			'keywords' => 'sheet calculation calculations stats stat graph graphs',
 		),
