@@ -29,7 +29,7 @@ function tiki_syntax_highlighter_base()
 					stylesheet: ['lib/codemirror_tiki/css/tikiwikisyntaxcolors.css'],
 					onChange: function() {
 						//Setup codemirror to send the text back to the textarea
-						editwiki.val(editor.getCode());
+						editwiki.val(editor.getCode()).change();
 					}
 				});
 					
