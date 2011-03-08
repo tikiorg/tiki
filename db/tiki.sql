@@ -3711,7 +3711,7 @@ CREATE TABLE `tiki_rss_items` (
     `description` TEXT,
     `content` TEXT,
     KEY `tiki_rss_items_rss` (`rssId`),
-    UNIQUE `tiki_rss_items_item` (`rssId`, `guid`)
+    KEY `tiki_rss_items_item` (`rssId`, `guid`(200))
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_object_attributes`;
