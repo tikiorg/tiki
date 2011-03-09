@@ -1133,11 +1133,6 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'warning' => tra('Obsolete in tiki7'),
 		),
-		'feature_top_bar' => array(
-			'name' => tra('Top Bar'),
-			'type' => 'flag',
-			'warning' => tra('Obsolete in tiki7'),
-		),
 		'feature_left_column' => array(
 			'name' => tra('Left column'),
 			'type' => 'list',
@@ -1204,11 +1199,6 @@ function prefs_feature_list() {
 			'type' => 'textarea',
 			'size' => '6',
 			'filter' => 'rawhtml_unsafe',
-		),
-		'feature_bot_bar' => array(
-			'name' => tra('Bottom bar'),
-			'type' => 'flag',
-			'warning' => tra('Obsolete in tiki7'),
 		),
 		'feature_site_report' => array(
 			'name' => tra('Webmaster Report'),

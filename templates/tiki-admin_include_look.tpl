@@ -103,9 +103,7 @@
 					{preference name=sitesubtitle}
 				</fieldset>
 			</div>
-			{preference name=feature_top_bar}
-		
-		
+
 			{preference name=module_zones_top}
 			{preference name=module_zones_topbar}
 			{preference name=module_zones_pagetop}
@@ -116,10 +114,6 @@
 		
 			{preference name=feature_endbody_code}
 		
-			{preference name=feature_bot_bar}
-			<div class="adminoptionboxchild" id="feature_bot_bar_childcontainer">
-			</div>
-
 			<div class="adminoptionbox">
 				<fieldset>
 					<legend>{tr}Site Report Bar{/tr}</legend>

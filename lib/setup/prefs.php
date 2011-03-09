@@ -1383,8 +1383,6 @@ function get_default_prefs() {
 		// layout
 		'feature_left_column' => 'y',
 		'feature_right_column' => 'y',
-		'feature_top_bar' => 'y',
-		'feature_bot_bar' => 'y',
 		'maxRecords' => 25,
 		'maxArticles' => 10,
 		'maxVersions' => 0,

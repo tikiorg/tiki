@@ -9,11 +9,6 @@
 {/if}
 
 <div id="tiki-main">
-  {if $prefs.feature_top_bar eq 'y'}
-  <div id="tiki-top">
-    {include file='tiki-top_bar.tpl'}
-  </div>
-  {/if}
   <div id="tiki-mid">
     <table border="0" cellpadding="0" cellspacing="0" id="tikimidtbl">
     <tr>
@@ -52,11 +47,6 @@
     </tr>
     </table>
   </div>
-  {if $prefs.feature_bot_bar eq 'y'}
-  <div id="tiki-bot">
-    {* modules revamp: TODO include file='tiki-bot_bar.tpl' *}
-  </div>
-  {/if}
 </div>
 {if $prefs.feature_bidi eq 'y'}
 </td></tr></table>

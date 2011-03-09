@@ -166,7 +166,7 @@
 					{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.middle_shadow_end}</div>{/if}
 				</div>{* end .middle_outer *}
 				{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
-					{if $prefs.module_zones_bottom eq 'fixed' or ($prefs.module_zones_bottom ne 'n' && $bottom_modules|@count > 0)}{* previously if $prefs.feature_bot_bar eq 'y' *}
+					{if $prefs.module_zones_bottom eq 'fixed' or ($prefs.module_zones_bottom ne 'n' && $bottom_modules|@count > 0)}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}
 							<footer id="footer" data-role="footer" data-theme="{$prefs.mobile_theme_footer}">
 								<div class="footer_liner">

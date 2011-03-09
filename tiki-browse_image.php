@@ -188,10 +188,8 @@ if ($prefs['feature_theme_control'] == 'y') {
 }
 // now set it if needed
 if ($popup) {
-	$prefs['feature_top_bar'] = 'n';
 	$prefs['feature_left_column'] = 'n';
 	$prefs['feature_right_column'] = 'n';
-	$prefs['feature_bot_bar'] = 'n';
 }
 ask_ticket('browse-image');
 //add a hit
