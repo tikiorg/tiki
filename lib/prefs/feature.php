@@ -794,7 +794,7 @@ function prefs_feature_list() {
 			),
 		),	
 		'feature_sefurl' => array(
-			'name' => tra('Search engine friendly url'),
+			'name' => tra('Search engine friendly URL'),
 			'description' => tra('If you are using Apache, you can rename _htaccess to .htaccess to get Short URLs'),
 			'help' => 'Clean+URLs',
 			'perspective' => false,
@@ -803,6 +803,7 @@ function prefs_feature_list() {
 			'dependencies' => array(
 				'wiki_badchar_prevent',
 			),
+			'hint' => tra('Do not use if your server is IIS'),
 		),
 		'feature_sefurl_filter' => array(
 			'name' => tra('Search engine friendly url Postfilter'),
