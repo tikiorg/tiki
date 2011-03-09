@@ -46,15 +46,6 @@
 
 			{preference name=useGroupTheme}
 			{preference name=slide_style}
-			{preference name=feature_editcss}
-			{if $prefs.feature_editcss eq 'y'}
-				<div class="adminoptionboxchild">
-					{if $tiki_p_create_css eq 'y'}
-						{button _text="{tr}Edit CSS{/tr}" href="tiki-edit_css.php"}
-					{/if}
-				</div>
-			{/if}
-
 			{preference name=feature_theme_control}
 			{if $prefs.feature_theme_control eq 'y'}
 				<div class="adminoptionboxchild">
@@ -62,28 +53,17 @@
 				</div>
 			{/if}
 
-			{preference name=feature_view_tpl}
-			{if $prefs.feature_view_tpl eq 'y'}
-				<div class="adminoptionboxchild">
-					{button href="tiki-edit_templates.php" _text="{tr}View Templates{/tr}"}
-				</div>
-			{/if}
-
-			{preference name=feature_edit_templates}
-			{if $prefs.feature_edit_templates eq 'y'}
-				<div class="adminoptionboxchild">
-					{button href="tiki-edit_templates.php" _text="{tr}Edit Templates{/tr}"}
-				</div>
-			{/if}
-
-			{preference name=log_tpl}
-			{preference name=smarty_compilation}
-			{preference name=categories_used_in_tpl}
 		{/tab}
 		
 		{tab name="{tr}General Layout{/tr}"}
-			{preference name=feature_html_head_base_tag}
-			{preference name=feature_custom_html_head_content}
+
+			{preference name=module_zones_top}
+			{preference name=module_zones_topbar}
+			{preference name=module_zones_pagetop}
+			{preference name=feature_left_column}
+			{preference name=feature_right_column}
+			{preference name=module_zones_pagebottom}
+			{preference name=module_zones_bottom}
 
 			{preference name=feature_sitelogo}
 			<div class="adminoptionboxchild" id="feature_sitelogo_childcontainer">
@@ -104,16 +84,6 @@
 				</fieldset>
 			</div>
 
-			{preference name=module_zones_top}
-			{preference name=module_zones_topbar}
-			{preference name=module_zones_pagetop}
-			{preference name=feature_left_column}
-			{preference name=feature_right_column}
-			{preference name=module_zones_pagebottom}
-			{preference name=module_zones_bottom}
-		
-			{preference name=feature_endbody_code}
-		
 			<div class="adminoptionbox">
 				<fieldset>
 					<legend>{tr}Site Report Bar{/tr}</legend>
@@ -191,9 +161,9 @@
 			</fieldset>		
 		{/tab}
 
-		{tab name="{tr}Custom CSS{/tr}"}
+		{tab name="{tr}Customization{/tr}"}
 			<fieldset>
-				<legend>{tr}Theme Generator{/tr}</legend>
+				<legend>{tr}Theme Generator{/tr} <em>({tr}Experimental{/tr})</em></legend>
 				{preference name="feature_themegenerator"}
 				<div class="adminoptionboxchild" id="feature_themegenerator_childcontainer">
 					<div class="adminoptionbox">			
@@ -233,16 +203,48 @@
 					</div>
 				</div>
 			</fieldset>
-				
+			
 			<fieldset>
-				<legend>{tr}Custom CSS{/tr}</legend>
+				<legend>{tr}Custom Codes{/tr}</legend>
+				{preference name="header_custom_css"}
 				<div class="adminoptionboxchild">
 					{self_link _onclick="toggle_brosho();return false;" _ajax="n"}{icon _id="bricks"}{tr}Experimental: CSS assistant (work in progress - click the x to remove){/tr}{/self_link}
 				</div>
 				{$headerlib->add_jsfile('lib/jquery/brosho/jquery.brosho.js')}
 				{$headerlib->add_jsfile('lib/jquery_tiki/brosho/tiki_brosho.js')}
-				{preference name="header_custom_css"}
+
+				{preference name=feature_custom_html_head_content}
+				{preference name=feature_endbody_code}
+				
+				{preference name="header_custom_js"}
 			</fieldset>
+
+			<fieldset>
+				<legend>{tr}Editing{/tr}</legend>
+				{preference name=feature_editcss}
+				{if $prefs.feature_editcss eq 'y'}
+					<div class="adminoptionboxchild">
+						{if $tiki_p_create_css eq 'y'}
+							{button _text="{tr}Edit CSS{/tr}" href="tiki-edit_css.php"}
+						{/if}
+					</div>
+				{/if}
+
+				{preference name=feature_view_tpl}
+				{if $prefs.feature_view_tpl eq 'y'}
+					<div class="adminoptionboxchild">
+						{button href="tiki-edit_templates.php" _text="{tr}View Templates{/tr}"}
+					</div>
+				{/if}
+
+				{preference name=feature_edit_templates}
+				{if $prefs.feature_edit_templates eq 'y'}
+					<div class="adminoptionboxchild">
+						{button href="tiki-edit_templates.php" _text="{tr}Edit Templates{/tr}"}
+					</div>
+				{/if}
+			</fieldset>
+
 		{/tab}
 
 		{tab name="{tr}Miscellaneous{/tr}"}
@@ -290,10 +292,12 @@
 				</div>
 			</fieldset>
 
-			<fieldset>
-				<legend>{tr}Custom Code{/tr}</legend>
-				{preference name="header_custom_js"}
-			</fieldset>
+			{preference name=log_tpl}
+			{preference name=smarty_compilation}
+			{preference name=categories_used_in_tpl}
+
+			{preference name=feature_html_head_base_tag}
+
 		{/tab}
 	{/tabset}
 
