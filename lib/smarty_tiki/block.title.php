@@ -41,7 +41,9 @@ function smarty_block_title($params, $content, &$smarty, $repeat) {
   
 	$class = 'pagetitle';
 	$current = current_object();
-	if ($coordinates = TikiLib::lib('geo')->get_coordinates($current['type'], $current['object'])) {
+	$metadata = '';
+	$coordinates = TikiLib::lib('geo')->get_coordinates($current['type'], $current['object']);
+	if ($coordinates) {
 		$class = ' geolocated primary';
 		$metadata = " data-geo-lat=\"{$coordinates['lat']}\" data-geo-lon=\"{$coordinates['lon']}\"";
 		
