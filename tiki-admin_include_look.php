@@ -119,7 +119,7 @@ JS
 
 /* Theme generator for Tiki 7+ */
 $reload = false;
-if ($prefs['feature_themegenerator'] === 'y') {
+if ($prefs['themegenerator_feature'] === 'y') {
 	include_once 'lib/themegenlib.php';
 	
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {

@@ -1786,12 +1786,5 @@ function prefs_feature_list() {
 			'help' => 'CodeMirror',
 			'description' => tra('Enables syntax highlighting with the use of CodeMirror'),
 		),
-		'feature_themegenerator' => array(
-			'name' => tra('Theme Generator'),
-			'type' => 'flag',
-			'warning' => tra('Experimental. This feature is still under development.'),
-			'description' => tra('Permits to adjust colors and fonts via the browser.'),
-			'help' => 'Theme+Generator',
-		),
 	);
 }

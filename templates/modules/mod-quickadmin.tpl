@@ -10,7 +10,7 @@
 {icon _id=world_edit title="{tr}Toggle interactive translation on{/tr}" href="tiki-interactive_trans.php?interactive_translation_mode=on"}
 {/if}
 {/if}
-{if $prefs.feature_themegenerator eq "y" and !empty($prefs.themegenerator_theme)}
+{if $prefs.themegenerator_feature eq "y" and !empty($prefs.themegenerator_theme)}
 	{icon _id="palette" title="{tr}Theme Genrator Editor{/tr}" href="#" onclick="openThemeGenDialog();return false;"}
 {/if}
 </div>  

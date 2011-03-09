@@ -164,11 +164,11 @@
 		{tab name="{tr}Customization{/tr}"}
 			<fieldset>
 				<legend>{tr}Theme Generator{/tr} <em>({tr}Experimental{/tr})</em></legend>
-				{preference name="feature_themegenerator"}
-				<div class="adminoptionboxchild" id="feature_themegenerator_childcontainer">
+				{preference name="themegenerator_feature"}
+				<div class="adminoptionboxchild" id="themegenerator_feature_childcontainer">
 					<div class="adminoptionbox">			
 						{preference name="themegenerator_theme" default=$prefs.site_themegenerator_theme}
-						<div  class="adminoptionboxchild" id="feature_themegenerator_childcontainer">
+						<div  class="adminoptionboxchild" id="themegenerator_feature_childcontainer">
 							
 							<input type="text" name="tg_edit_theme_name" value="{$tg_edit_theme_name|escape}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
 							<input type="submit" name="tg_new_theme" value="{tr}New{/tr}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />

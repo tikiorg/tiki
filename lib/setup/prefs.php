@@ -1376,7 +1376,7 @@ function get_default_prefs() {
 		'feature_fixed_width' => 'y',
 		'layout_fixed_width' => '',
 		'feature_html_head_base_tag' => 'n',
-		'feature_themegenerator' => 'n',
+		'themegenerator_feature' => 'n',
 
 		// Modules
 		'module_zones_top' => 'y',

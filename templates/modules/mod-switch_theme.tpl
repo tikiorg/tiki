@@ -20,7 +20,7 @@
 			{/section}
 		</select>
 		{/if}
-		{if $prefs.feature_themegenerator eq "y"}
+		{if $prefs.themegenerator_feature eq "y"}
 			<select name="theme-themegen" onchange="this.form.submit();"{if !empty($tc_theme)} disabled="disabled"{/if}>
 					<option value="">{tr}None{/tr}</option>
 					{section name=ix loop=$themegen_list}

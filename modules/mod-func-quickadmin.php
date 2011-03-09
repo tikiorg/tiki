@@ -28,7 +28,7 @@ function module_quickadmin_info() {
 function module_quickadmin( $mod_reference, $module_params ) {
 	global $prefs, $themegenlib;
 	// include and setup themegen editor
-	if ($prefs['feature_themegenerator'] === 'y' &&
+	if ($prefs['themegenerator_feature'] === 'y' &&
 			(strpos($_SERVER['SCRIPT_NAME'], 'tiki-admin.php') === false || strpos($_SERVER['QUERY_STRING'], 'page=look') === false)) {
 		include_once 'lib/themegenlib.php';
 		$themegenlib->setupEditor();
