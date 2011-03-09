@@ -229,6 +229,13 @@
 					{preference name=feature_morcego}
 					{preference name=feature_wiki_mindmap}
 					{preference name=feature_print_indexed}
+					{preference name=feature_breadcrumbs}
+					<div class="adminoptionboxchild" id="feature_breadcrumbs_childcontainer">
+						{preference name=feature_siteloclabel}
+						{preference name=feature_siteloc}
+						{preference name=feature_sitetitle}
+						{preference name=feature_sitedesc}
+					</div>
 				</fieldset>
 
 				<fieldset>

@@ -114,14 +114,6 @@
 			{preference name=module_zones_pagebottom}
 			{preference name=module_zones_bottom}
 		
-			{preference name=feature_breadcrumbs}
-			<div class="adminoptionboxchild" id="feature_breadcrumbs_childcontainer">
-				{preference name=feature_siteloclabel}
-				{preference name=feature_siteloc}
-				{preference name=feature_sitetitle}
-				{preference name=feature_sitedesc}
-			</div>
-		
 			{preference name=feature_endbody_code}
 		
 			{preference name=feature_bot_bar}
