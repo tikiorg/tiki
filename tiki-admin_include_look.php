@@ -118,7 +118,7 @@ JS
 }
 
 /* Theme generator for Tiki 7+ */
-
+$reload = false;
 if ($prefs['feature_themegenerator'] === 'y') {
 	include_once 'lib/themegenlib.php';
 	

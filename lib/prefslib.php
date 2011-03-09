@@ -215,8 +215,9 @@ class PreferencesLib
 	private function getDependencies( $dependencies ) {
 		$out = array();
 
-		foreach( $dependencies as $dep ) {
-			if( $info = $this->getPreference( $dep, false ) ) {
+		foreach( (array) $dependencies as $dep ) {
+			$info = $this->getPreference( $dep, false );
+			if( $info ) {
 				$out[] = array(
 					'name' => $dep,
 					'label' => $info['name'],

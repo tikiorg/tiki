@@ -651,6 +651,7 @@ function get_default_prefs() {
 		'fgal_display_zip_option' => 'y',
 		'fgal_checked' => 'y',
 		'fgal_upload_progressbar' => 'n',
+		'fgal_show_checked' => 'y',
 
 		// imagegals
 		'feature_galleries' => 'n',
@@ -1367,15 +1368,19 @@ function get_default_prefs() {
 		'feature_breadcrumbs' => 'n',
 		'feature_siteloclabel' => 'y',
 		'feature_sitetitle' => 'y',
+		'sitetitle' => '',
+		'sitesubtitle' => '',
 		'feature_sitedesc' => 'n',
 		'feature_endbody_code' => '',
 		'feature_custom_html_head_content' => '',
 		'feature_fixed_width' => 'y',
+		'layout_fixed_width' => '',
 		'feature_html_head_base_tag' => 'n',
 		'feature_themegenerator' => 'n',
 
 		// Modules
 		'module_zones_top' => 'y',
+		'module_zones_topbar' => 'y',
 		'module_zones_pagetop' => 'y',
 		'module_zones_pagebottom' => 'y',
 		'module_zones_bottom' => 'y',
