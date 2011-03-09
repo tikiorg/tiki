@@ -15,15 +15,22 @@
 		{preference name=user_assigned_modules}
 		{preference name=user_flip_modules}
 		{preference name=modallgroups}
+		{preference name=modseparateanon}
+		{preference name=modhideanonadmin}
+
+		<fieldset class="labelColumns">
+			{preference name=module_zones_top}
+			{preference name=module_zones_topbar}
+			{preference name=module_zones_pagetop}
+			{preference name=feature_left_column}
+			{preference name=feature_right_column}
+			{preference name=module_zones_pagebottom}
+			{preference name=module_zones_bottom}
+		</fieldset>
 		{remarksbox type="tip" title="{tr}Hint{/tr}"}
 			{tr}If you lose your login module, use tiki-login_scr.php to be able to login!{/tr}
 		{/remarksbox}
-		{preference name=modseparateanon}
-		{preference name=modhideanonadmin}
-		{preference name=feature_left_column}
-		{preference name=feature_right_column}
-
-		</fieldset>
+	</fieldset>
 	<div class="heading input_submit_container" style="text-align: center">
 		<input type="submit" value="{tr}Change preferences{/tr}" />
 	</div>

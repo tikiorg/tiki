@@ -80,7 +80,7 @@ a.admbox.off img {
 	text-align: left;
 }
 
-#look .adminoptionbox > label {
+.labelColumns label {
 	display: block;
 	float: left;
 	width: 25%;
