@@ -51,7 +51,7 @@ function wikiplugin_bigbluebutton_info() {
 			),
 			'logout' => array(
 				'required' => false,
-				'name' => tra('Logout URL'),
+				'name' => tra('Log-out URL'),
 				'description' => tra('URL to which the user will be redirected when logging out from BigBlueButton.'),
 				'filter' => 'url',
 				'default' => ''

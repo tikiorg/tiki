@@ -23,7 +23,7 @@ function prefs_cas_list() {
 				'perspective' => false,
 				),
 			'cas_force_logout' => array(
-				'name' => tra('Force CAS logout when the user logout from tiki'),
+				'name' => tra('Force CAS log-out when the user logs out from Tiki.'),
 				'type' => 'flag',
 				'perspective' => false,
 				),
