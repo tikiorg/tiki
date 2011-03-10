@@ -23,6 +23,24 @@ $headerlib->add_jq_onready( '
 			return $("#tiki_slideshowNote_buttons").clone().show();
 		}
 	}));
+
+	if (window.s5Settings.listItemHighlightColor) {
+		$.s5.slides().find("li").hover(function() {
+			$(this)
+				.css("color", window.s5Settings.listItemHighlightColor)
+				.stop()
+				.animate({
+					fontSize: "1.2em"
+				});
+		}, function() {
+			$(this)
+				.css("color", "")
+				.stop()
+				.animate({
+					fontSize: "1em"
+				});
+		});
+	}
 	
 ');	// late, and tell jqs5 where the page is in tiki
 

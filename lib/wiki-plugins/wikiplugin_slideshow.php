@@ -38,7 +38,7 @@ function wikiplugin_slideshow_info() {
 				'name' => tra('Background Url Location'),
 				'description' => tra('URL of the background image to use in your slideshow, overrides backgroundcolor'),
 				'filter' => 'url',
-				'accepted' => 'Valid url',
+				'accepted' => tra('Valid url'),
 				'default' => '',
 				'since' => '7.0'
 			),
@@ -54,7 +54,7 @@ function wikiplugin_slideshow_info() {
 				'name' => tra('CSS Class'),
 				'description' => tra('Apply custom CSS class to the containing div.'),
 				'filter' => 'text',
-				'accepted' => 'Any valid CSS class',
+				'accepted' => tra('Any valid CSS class'),
 				'default' => '',
 				'since' => '7.0',
 			),
@@ -63,7 +63,7 @@ function wikiplugin_slideshow_info() {
 				'name' => tra('Header font color'),
 				'description' => tra('Apply a color to the headers of your slideshow'),
 				'filter' => 'text',
-				'accepted' => 'Any html color',
+				'accepted' => tra('Any html color'),
 				'default' => '#56D0FF',
 				'since' => '7.0',
 			),
@@ -72,8 +72,17 @@ function wikiplugin_slideshow_info() {
 				'name' => tra('Slide font color'),
 				'description' => tra('Apply a color to the slides of your slideshow'),
 				'filter' => 'text',
-				'accepted' => 'Any html color',
+				'accepted' => tra('Any html color'),
 				'default' => '#EEFAFF',
+				'since' => '7.0',
+			),
+			'listitemhighlightcolor' => array(
+				'required' => false,
+				'name' => tra('Line Item highlight color'),
+				'description' => tra('Apply a color to the line item when mouse over'),
+				'filter' => 'text',
+				'accepted' => tra('Any html color'),
+				'default' => '',
 				'since' => '7.0',
 			),
 			'slideseconds' => array(
@@ -81,9 +90,21 @@ function wikiplugin_slideshow_info() {
 				'name' => tra('Slide Seconds'),
 				'description' => tra('How many seconds a slide will be open while playing'),
 				'filter' => 'digits',
-				'accepted' => 'Second count',
+				'accepted' => tra('Second count'),
 				'default' => '15',
 				'since' => '7.0'
+			),
+			'textside' => array(
+				'required' => false,
+				'name' => tra('Text Side'),
+				'description' => tra('The side on which you would like to display text if there are images that are resized or present'),
+				'filter' => 'text',
+				'default' => tra('Left'),
+				'since' => '7.0',
+				'options' => array(
+					array('text' => tra('Left'), 'value' => 'left'), 
+					array('text' => tra('Right'), 'value' => 'right'), 
+				),
 			),
 		),
 	);
@@ -99,6 +120,8 @@ function wikiplugin_slideshow($data, $params) {
 	$headerfontcolor = (isset($headerfontcolor) ? $headerfontcolor : '#56D0FF');
 	$slidefontcolor = (isset($slidefontcolor) ? $slidefontcolor : '#EEFAFF');
 	$slideduration = (isset($slideseconds) ? $slideseconds : 15) * 1000;
+	$listitemhighlightcolor = (isset($listitemhighlightcolor) ? $listitemhighlightcolor : '');
+	$textside = (isset($textside) ? $textside : 'left');
 	
 	$notes = explode("/////", ($data ? $data : ""));
 	$notesHtml = '';
@@ -114,7 +137,9 @@ function wikiplugin_slideshow($data, $params) {
 			backgroundColor: '$backgroundcolor',
 			headerFontColor: '$headerfontcolor',
 			slideFontColor: '$slidefontcolor',
-			slideDuration: $slideduration
+			slideDuration: $slideduration,
+			listItemHighlightColor: '$listitemhighlightcolor',
+			textSide: '$textside'
 		};
 	");
 	
