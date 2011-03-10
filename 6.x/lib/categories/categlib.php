@@ -36,7 +36,10 @@ class CategLib extends ObjectLib
 			foreach ($back as $cat) {
 				if ($cat['categId'] == $categId)
 					$path = $cat['categpath'].'::';
-				else if (($all == true || $cat['parentId'] == $categId) && ($path == '' || strpos($cat['categpath'], $path) === 0)) {
+			}
+			foreach ($back as $cat) {
+				echo $cat['categId'].':'.$cat['name'].' ';
+				if (($all == true || $cat['parentId'] == $categId) && ($path == '' || strpos($cat['categpath'], $path) === 0)) {
 					$cat['categpath'] = substr($cat['categpath'], strlen($path));
 					$back2[] = $cat;
 				}
@@ -961,6 +964,7 @@ class CategLib extends ObjectLib
 		"children" is the number of categories the category has as children.
 		"objects" is the number of objects directly in the category. */
 	function build_cache($showWS = false) {
+		global $tikilib;
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		$ret = array();
 		
@@ -981,7 +985,7 @@ class CategLib extends ObjectLib
 				$tepath[] = $cat['name'];
 			}
 			$categpath = implode("::",$tepath);
-			$categpathforsort = implode("!!",$tepath); // needed to prevent cat::subcat to be sorted after cat2::subcat
+			$categpathforsort = $tikilib->take_away_accent(implode("!!",$tepath)); // needed to prevent cat::subcat to be sorted after cat2::subcat
 			$res["categpath"] = $categpath;
 			$res["tepath"] = $tepath;
 			$query = "select count(*) from `tiki_categories` where `parentId`=?";
