@@ -971,9 +971,7 @@ jqueryTiki.replection = false;
 jqueryTiki.tablesorter = false;
 jqueryTiki.colorbox = false;
 jqueryTiki.cboxCurrent = "{current} / {total}";
-jqueryTiki.sheet = false;
 jqueryTiki.carousel = false;
-jqueryTiki.jqs5 = false;
 
 jqueryTiki.effect = "";
 jqueryTiki.effect_direction = "";
