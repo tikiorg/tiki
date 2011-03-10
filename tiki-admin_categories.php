@@ -374,8 +374,8 @@ if( $prefs['feature_wiki'] == 'y' ) {
 			$pages_not_in_cat[] = $pg;
 		}
 	}
+	$pages['cant'] = $pages['cant']- count($pages['data']) + count($pages_not_in_cat);
 	$pages['data'] = $pages_not_in_cat;
-	$pages['cant'] = count($pages_not_in_cat);
 }
 
 if( $prefs['feature_faqs'] == 'y' ) {
