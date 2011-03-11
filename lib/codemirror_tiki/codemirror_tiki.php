@@ -12,11 +12,7 @@ function tiki_syntax_highlighter_flex() {
 		$headerlib->add_jsfile( 'lib/codemirror/js/codemirror.js' );
 		$headerlib->add_jsfile( 'lib/codemirror_tiki/codemirror_tiki.js' );
 		$headerlib->add_js("
-			if (window.CKEDITOR) return false;
-			if (!window.CodeMirror) return false;
-			
 			$('textarea')
-				.not('#editwiki')
 				.flexibleCodeMirror({
 					changeText: '".tra("Change Highlighter")."'
 				});
@@ -34,31 +30,11 @@ function tiki_syntax_highlighter_base()
 		$headerlib->add_jsfile( 'lib/codemirror/js/codemirror.js' );		
 
 		$headerlib->add_js("
-			$(function() {
-				var editwiki = $('#editwiki');
-				var toolbar = $('#editwiki_toolbar');
-				//ensure that codemirror is running and CKEditor isn't, if so run
-				if (window.CKEDITOR) return false;
-				if (!editwiki.length) return false;
-				if (!window.CodeMirror) return false;
-					
-				var editor = CodeMirror.fromTextArea(editwiki[0], {
-					height: '350px',
-					path: 'lib/codemirror/js/',
-					parserfile: ['../../codemirror_tiki/js/parsetikisyntax.js'],
-					stylesheet: ['lib/codemirror_tiki/css/tikiwikisyntaxcolors.css'],
-					onChange: function() {
-						//Setup codemirror to send the text back to the textarea
-						editwiki.val(editor.getCode()).change();
-					}
-				});
-					
-				toolbar
+			$(function() {				
+				$('#editwiki_toolbar')
 					.css('width', '100%')
 					.nextAll()
 					.css('width', '100%');
-				
-				addCodeMirrorEditorRelation(editor, editwiki);
 			});
 		");
 	}
@@ -74,25 +50,13 @@ function tiki_syntax_highlighter_code()
 		$headerlib->add_js("
 			$(document)
 				.bind('plugin_code_ready', function(args) {
-					var code = args.container.find('textarea:first').addClass('codeMirror');
-					//ensure that codemirror is running and CKEditor isn't, if so run
-					if (window.CKEDITOR) return false;
-					if (!code.length) return false;
-					if (!CodeMirror) return false;
-
-					var editor = CodeMirror.fromTextArea(code[0], {
-						height: '350px',
-						parserfile: ['parsexml.js', 'parsecss.js', 'tokenizejavascript.js', 'parsejavascript.js', 'parsehtmlmixed.js'],
-						stylesheet: ['lib/codemirror/css/xmlcolors.css', 'lib/codemirror/css/jscolors.css', 'lib/codemirror/css/csscolors.css'],
-						path: 'lib/codemirror/js/',
-						onChange: function() {
-							//Setup codemirror to send the text back to the textarea
-							code.val(editor.getCode());
-						},
-						lineNumbers: true
-					});
+					var code = args.container.find('textarea:first');
 					
-					addCodeMirrorEditorRelation(editor, code);
+					code.flexibleCodeMirror({
+						parse: ['xml', 'css', 'javascript', 'html'],
+						lineNumbers: true,
+						changeText: '".tra("Change Highlighter")."'
+					});
 				});
 		");
 	}
@@ -107,26 +71,13 @@ function tiki_syntax_highlighter_r() {
 		$headerlib->add_js("
 			$(document)
 				.bind('plugin_r_ready', function(args) {
-					var r = args.container.find('textarea:first').addClass('codeMirror');
+					var r = args.container.find('textarea:first');
 				
-					//ensure that codemirror is running and CKEditor isn't, if so run
-					if (window.CKEDITOR) return false;
-					if (!r.length) return false;
-					if (!CodeMirror) return false;
-
-					var editor = CodeMirror.fromTextArea(r[0], {
-						height: '350px',
-						parserfile: ['../../codemirror_tiki/js/parsersplus.js'],
-						stylesheet: ['lib/codemirror_tiki/css/rspluscolors.css'],
-						path: 'lib/codemirror/js/',
-						onChange: function() {
-							//Setup codemirror to send the text back to the textarea
-							r.val(editor.getCode());
-						},
-						lineNumbers: true
+					r.flexibleCodeMirror({
+						parse: ['r'],
+						lineNumbers: true,
+						changeText: '".tra("Change Highlighter")."'
 					});
-					
-					addCodeMirrorEditorRelation(editor, r);
 				});
 		");
 	}
@@ -141,26 +92,13 @@ function tiki_syntax_highlighter_rr() {
 		$headerlib->add_js("
 			$(document)
 				.bind('plugin_rr_ready', function(args) {
-					var rr = args.container.find('textarea:first').addClass('codeMirror');
-				
-					//ensure that codemirror is running and CKEditor isn't, if so run
-					if (window.CKEDITOR) return false;
-					if (!rr.length) return false;
-					if (!CodeMirror) return false;
+					var rr = args.container.find('textarea:first');
 
-					var editor = CodeMirror.fromTextArea(rr[0], {
-						height: '350px',
-						parserfile: ['../../codemirror_tiki/js/parsersplus.js'],
-						stylesheet: ['lib/codemirror_tiki/css/rspluscolors.css'],
-						path: 'lib/codemirror/js/',
-						onChange: function() {
-							//Setup codemirror to send the text back to the textarea
-							rr.val(editor.getCode());
-						},
-						lineNumbers: true
+					rr.flexibleCodeMirror({
+						parse: ['r'],
+						lineNumbers: true,
+						changeText: '".tra("Change Highlighter")."'
 					});
-					
-					addCodeMirrorEditorRelation(editor, rr);
 				});
 		");
 	}
