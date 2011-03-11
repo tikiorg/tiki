@@ -16,6 +16,11 @@ function tiki_syntax_highlighter_flex() {
 				.flexibleCodeMirror({
 					changeText: '".tra("Change Highlighter")."'
 				});
+			
+			$('.plugincode').flexibleCodeMirror({
+				readOnly: true,
+				parse: ['javascript']
+			});
 		");
 		
 	}

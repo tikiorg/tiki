@@ -97,6 +97,7 @@ function wikiplugin_code_info() {
 }
 
 function wikiplugin_code($data, $params) {
+	global $prefs;
 	static $code_count;
 	$default = array('cpy' => 0);
 	$params = array_merge($default, $params);
@@ -123,7 +124,7 @@ function wikiplugin_code($data, $params) {
 	}
 
 	// If 'color' is specified and GeSHI installed, use syntax highlighting with GeSHi
-	if ( isset($colors) && $colors != 'highlights' && class_exists('GeSHI') ) {
+	if ( isset($colors) && $colors != 'highlights' && class_exists('GeSHI') && $prefs['feature_syntax_highlighter'] != 'y') {
 
 		$geshi = new GeSHi($code, $colors);
 
@@ -203,7 +204,9 @@ function wikiplugin_code($data, $params) {
 		.(($cpy && ($code_count < 1)) ? '<script type="text/javascript" src="lib/ZeroClipboard.js"></script>' : '')
 		.(( $cpy ) ? '<script language="JavaScript">var clip = new ZeroClipboard.Client();var elem = document.getElementById ("'.$id.'");clip.setText( elem.innerText || elem.textContent );clip.glue( \'d_clip_button'.$id.'\' );clip.addEventListener( \'complete\', function(client, text) {alert("The code has been copied to the clipboard.");} );</script>' : '');
 
-		$out = '<div class="plugincode">'.((isset($caption)) ? '<div class="codecaption">'.$caption.'</div>' : '').(( $cpy ) ? '<div class="codecaption" id="d_clip_button'.$id.'">Copy To Clipboard</div>' : '').$out.'</div>';
+		$out = '<div class="plugincode" '. (isset($colors) ? 'parse="'.$colors.'"' : '') . '>'.
+			((isset($caption)) ? '<div class="codecaption">'.$caption.'</div>' : '').(( $cpy ) ? '<div class="codecaption" id="d_clip_button'.$id.'">Copy To Clipboard</div>' : '').$out.
+		'</div>';
 	$code_count++;
 	return $out;
 }
