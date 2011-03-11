@@ -236,6 +236,15 @@ div#header {background: url(faulkner/parchmentright.jpg) 100% 0 repeat-y}
 	right: 20px;
 }
 
+#top_modules .siteloginbar_popup .tabmark {
+	float: left;
+	margin-right: 0;
+}
+
+#top_modules .siteloginbar_popup ul ul {
+	margin-top: -10px;
+}
+
 input[id="sl-login-user"],
 input[id="sl-login-pass"] {font-size: 90%}
 
@@ -547,9 +556,16 @@ li.even:hover {
 }
 
 /** Tabs **/
+.tabactive,
+.tabinactive,
+[class].tabactive,
+[class].tabinactive {top: 0 !important}
+
 .tabs {
-	margin: 10px 1px -21px 0 !important;
-	border-bottom: 1px solid #e8d7cc}
+	padding: .2em .2em 0;
+	margin:0 0.2em 0 0;
+	border: none;
+}
 
 .tabmark {
 	background: #fff3d4;
