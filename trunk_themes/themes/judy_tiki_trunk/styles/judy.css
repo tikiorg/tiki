@@ -1,0 +1,641 @@
+/* $Id$
+	Judy theme stylesheet (judy.css), an implementation
+	of the Drupal Garland theme, for TikiWiki CMS/Groupware.
+*/
+
+/* Import foundation CSS files. */
+@import url("lite/lite.css");
+@import url("layout/layout.css");
+@import url("layout/design.css");
+
+/***** XHTML Elements (body tag here,
+			others follow Layout) *****/
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #edf5fa;
+  font: 12px/170% Verdana, sans-serif;
+  color: #494949;
+}
+
+ /***** Layout (overrides layout.css;
+		also styling of page layout divs)  *****/
+#main,
+#main[id] {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+#header {
+	min-height: 80px;
+	background: url(judy/header.png) repeat-x 0 100%;
+}
+
+#topbar_modules {
+	background: #4ba8e2;	
+}
+
+#middle {
+	padding: 0;
+/*	background: url(judy/middle.png) repeat-x;*/
+}
+
+#c1c2 {
+	background: url(judy/middle.png) repeat-x;
+}
+
+#c1c2
+	#wrapper
+		.marginleft {margin-left: 210px}
+#c1c2
+	#wrapper
+		.marginright {margin-right: 210px}
+
+#c1c2
+	#col2 {
+	width: 210px;
+}
+
+#col2 .content {
+	margin: 60px 0 5em;
+}
+
+#col3 {
+	width: 210px;
+	margin-left: -210px;
+}
+
+#col3 .content {
+	margin: 60px 0 5em;
+}
+
+#squeeze {
+  background: #ecf4fa url(judy/bg-content.png) repeat-x 50% 0;
+}
+
+#squeeze .right-corner {
+  background: transparent url(judy/bg-content-right.png) no-repeat 100% 0;
+}
+
+#squeeze .right-corner .left-corner {
+  padding: 60px 25px 5em 35px;
+  background: transparent url(judy/bg-content-left.png) no-repeat;
+  margin-right: 10px;
+  min-height: 400px;
+}
+
+#secondary_site_menu {
+	margin-left: -25px;
+}
+
+#tiki-center {
+	margin-left: -25px;
+	margin-right: -25px;
+	background: #fff url(judy/bg-content.png) repeat-x 50% -60px;
+	padding: 0 20px 20px 20px;
+	min-height: 340px
+}
+
+#footer {
+  float: none;
+  clear: both;
+  text-align: center;
+  margin: 4em 0 -3em;
+  color: #898989;
+}
+
+/***** XHTML Elements (other than body tag) ******/
+input {
+  font: 12px/100% Verdana, sans-serif;
+  color: #494949;
+}
+
+textarea, select {
+  font: 12px/160% Verdana, sans-serif;
+  color: #494949;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+h1 {
+  font-size: 160%;
+}
+
+h2 {
+  font-size: 140%;
+  line-height: 120%;
+}
+
+h3 {
+  font-size: 130%;
+}
+
+h4 {
+  font-size: 120%;
+}
+
+h5 {
+  font-size: 110%;
+}
+
+h6 {
+  font-size: 105%;
+}
+
+legend {
+	color: #494949;
+}
+
+quote, code, fieldset {
+  margin: .5em 0;
+}
+
+p {
+  margin: 0.6em 0 1.2em;
+  padding: 0;
+}
+
+a:link, a:visited {
+  color: #027AC6;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #0062A0;
+  text-decoration: underline;
+}
+
+a:active, a.active {
+  color: #5895be;
+}
+
+.wikitext a.wiki:link,
+.wikitext a.wiki:visited {
+  color: #027AC6 !important;
+  text-decoration: none !important;
+}
+
+.button a,
+.button a:visited,
+button,
+input[type="reset"],
+input[type="submit"],
+.button input,
+.calbuttonBox a {
+	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
+	font-size: 11px;
+	font-weight: normal;
+	color: #fff;
+	background: #298ac6;
+	border: 1px solid;
+	border-color: #58b3ec #223845 #223845 #58b3ec;
+}
+
+.button a:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover,
+.calbuttonBox a:hover {
+	background-color: #1d5f89;
+	color: #fff;
+	text-decoration: none}
+
+.button a:active,
+button:active,
+input[type="reset"]:active,
+input[type="submit"]:active,
+.button input:active,
+.highlight a:link,
+.highlight a:visited {
+	border-color: #223845 #58b3ec #58b3ec #223845;
+	background: #5cbdef !important;
+	color: #000 !important}
+
+hr {
+  margin: 0;
+  padding: 0;
+  border: none;
+  height: 1px;
+  background: #5294c1;
+}
+
+ol,
+ul {
+	list-style-position: inside;
+}
+
+ol {
+  margin: 0.75em 0 1.25em;
+  padding: 0;
+}
+
+ol li/*, ul li*/ {
+  margin: 0.4em 0 0.4em .5em;
+}
+
+/***** Site Header & Identity *****/
+#header a:link,
+#header a:visited {
+	color: #cde3f1;
+}
+
+#header a:hover {
+	color: #cde3f1;
+}
+
+#top_modules {
+	min-height: 80px;
+}
+
+#top_modules #tiki-top {
+	position: absolute;
+	top: 0;
+	width: 100%;
+   background: url(judy/bg-topbar.jpg) repeat-x;
+}
+
+#top_modules #tiki-top nav {
+	float: right;
+	margin-right: 100px;
+}
+
+#top_modules .box-logo {
+	position: absolute;
+	top: 40px;
+	left: 40px;
+}
+
+#sitelogo {
+	padding-top: 0;
+}
+
+#sitetitle {
+	color: #fff;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+#sitesubtitle {
+	font-size: 20px;
+}
+
+#sitetitle a {
+	color: #fff;
+}
+
+#sitetitle,
+#sitesubtitle {
+	display: inline;
+	color: #fff;
+}
+
+#loginlink {
+	position: absolute;
+	top: 60px;
+	right: 20px;
+}
+
+#topbar_modules .box-search {
+	position: absolute;
+	top: 6px;
+	right: 10px;
+}
+
+/****** Menus, Links ******/
+/** CSS (suckerfish) menus **/
+
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: .5em 1em;
+	text-decoration: none;
+}
+
+#header .cssmenu_horiz {
+	position: static;
+	float: right;
+	padding-top: 12px
+}
+
+#siteloginbar_popup .cssmenu li,
+#siteloginbar_popup .cssmenu li a,
+#siteloginbar_popup .tabmark,
+#siteloginbar_popup .tabmark a:hover {
+	background: none;
+}
+
+.cssmenu_horiz ul li,
+.cssmenu_vert li ul li {
+	background: #fff url(judy/gradient-inner.png) repeat-x;
+}
+
+#tiki-top .cssmenu_horiz li {
+	background: url(judy/bg-navigation-item.png) no-repeat 50% 0;
+	color: #fff
+}
+
+#siteloginbar_popup .cssmenu_horiz ul li .cbox {
+	background: url(judy/header.png) repeat-x 0 100%;
+}
+
+#tiki-top .cssmenu_horiz li.menuLevel0:hover,
+.horbaritem a:hover {
+	background: url(judy/bg-navigation-item-hover.png) no-repeat 50% 0;
+	color: #fff
+}
+
+#tiki-top .cssmenu_horiz li.menuLevel0 a {
+	color: #fff;
+	padding-top: 10px;
+}
+
+#tiki-top .cssmenu_horiz li ul li,
+.cssmenu_vert li.menuLevel0:hover ul li  {
+	background: #fff;
+}
+
+#tiki-top .cssmenu_horiz li ul li.menuLevel1 a,
+.cssmenu_vert li ul li a {
+	color: #5895b3;
+}
+
+#col2 .cssmenu_vert li ul li a:hover,
+#tiki-top .cssmenu_horiz li ul li a:hover {
+	text-decoration: underline;
+}
+
+/* left column width */
+#col2 .cssmenu_vert {
+	padding-left: 0;
+}
+
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 192px;
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 192px;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+#col2 .cssmenu_vert > li:hover {background: #97c0da}
+
+.cssmenu_horiz ul .sf-sub-indicator,
+.cssmenu_vert .sf-sub-indicator {
+	background: url(coelesce/arrows-467aa7.png) no-repeat;
+}
+
+
+/** Links in other menus **/
+.menuSection .linkmenu {padding-left: 20px}
+
+/***** Misc. Center Col. *****/
+a.flip {color: #95d4fd; text-decoration: none;font-size: 90%}
+a.flip:hover {color: #027ac6;font-size: 90%}
+
+/****** Misc. Global ****/
+.highlight {
+	background: #6ac4fd;
+}
+
+/***** Boxes *****/
+/** Modules **/
+
+.box {
+	margin-bottom: 2em;
+}
+
+#col2 .box {
+	padding: 0 15px 0 0;
+}
+
+#col3 .box {
+	padding: 0 0 0 15px;
+}
+
+.box-title {
+	font-size: 160%;
+	line-height: 130%;
+}
+
+.box-title a,
+.box-title visited {
+	color: #494949;
+}
+
+.cbox {
+	background: #fff;
+	border: 1px solid #e0e5fb;
+	color: #494949;
+	margin-bottom: 2em;
+}
+
+.cbox-title {
+	border-bottom: 1px solid #e0e5fb;
+	padding: .3em;
+}
+
+.cbox-data {
+	padding: .3em;
+}
+
+.rbox-title,
+.rbox-data {
+	border-color: #e0e5fb;
+}
+
+.rbox-title {
+	background: #e0e5fb;
+	color: #000;
+	line-height: normal;
+}
+
+.simplebox {
+	background: #fff;
+	border: 1px solid #e0e5fb;
+	color: #494949;
+	margin-bottom: 2em;
+	padding: 1em;
+}
+
+/***** Tables, Tabs *****/
+/** Tables **/
+thead th {
+  border-bottom: 2px solid #d3e7f4;
+  color: #494949;
+  font-weight: bold;
+}
+
+th a:link, th a:visited {
+  color: #6f9dbd;
+}
+
+.normal td,
+.normal th {
+  padding: .3em .5em;
+}
+
+tr.even, tr.odd, tbody th {
+  border: solid #d3e7f4;
+  border-width: 1px 0;
+}
+
+tr.odd, tr.info {
+  background-color: #edf5fa;
+}
+
+tr.even {
+  background-color: #fff;
+}
+
+tr.drag {
+  background-color: #fffff0;
+}
+
+tr.drag-previous {
+  background-color: #ffd;
+}
+
+tr.odd td.active {
+  background-color: #ddecf5;
+}
+
+tr.even td.active {
+  background-color: #e6f1f7;
+}
+
+/** Tabs **/
+
+.tabactive,
+.tabinactive,
+[class].tabactive,
+[class].tabinactive {top: 0 !important}
+
+.tabs {
+	padding: .2em .2em 0;
+	margin:0 0.2em 0 0;
+	border: none;
+}
+
+.tabs span {
+	display: block;
+	float: left;
+}
+.tabmark {
+	background: #d3e7f4;
+	color: #fff;
+}
+
+.tabmark a:active {
+	background: #edf5fa
+}
+
+.tabactive {
+	border: 1px solid #027ac6 !important;
+}
+
+.tabmark a:hover {
+	background: #edf5fa;
+	text-decoration: none}
+
+.tabcontent {
+	background: #edf5fa;
+	border: solid 1px #edf5fa !important;
+	border-top: none !important;
+}
+
+
+/***** Wiki *****/
+h1.pagetitle {
+	font-size: 160%;
+	line-height: 130%;
+	color: #494949;
+	font-weight: normal;
+}
+
+h1.pagetitle strong {
+	font-weight: normal;
+}
+
+h1.pagetitle a,
+h1.pagetitle a:visited {
+	color: #494949;
+}
+
+textarea#editwiki {
+	background: #fff url(judy/tikilogo_watermark.jpg) no-repeat 100% 0;
+}
+
+/***** Articles ****/
+body.tiki_cms h1 {
+	margin-bottom: 14px;
+}
+
+.article {
+	border-bottom: 1px solid #e9eff3;
+	margin-bottom: 26px;
+}
+
+.titleb {
+	color: #898989;
+	font-size: 0.92em;
+}
+
+
+/***** Forums *****/
+.post .postbody {
+	background: #fff;
+	border: 1px solid #e0e5fb;
+	color: #494949
+}
+
+.post .postbody-title .actions {
+	padding: 4px;
+}
+
+.post .postbody .content {
+	float: none;
+}
+
+.post .author {
+	float: none;
+	text-align: left;
+	font-size: 10px;
+	margin: -10px 0 10px 0;
+}
+
+/***** File Galleries *****/
+.opaque {
+	background: #fff;
+	border: 1px solid #e0e5fb;
+	color: #494949;
+	padding: 3px}
+
+.opaque .box-title {
+	padding-bottom: 2px;
+	border-bottom: 1px solid #e0e5fb;
+	font-size: 1.2em}
+
+/* End of File */

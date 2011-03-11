@@ -1,0 +1,10 @@
+/* IE7 stylesheet for Judy theme */
+#sitetitles {
+	line-height: normal;
+}
+
+#col2 .cssmenu_vert li ul {
+	margin-left: 10.9em;
+	margin-top: -1.5em;
+}
+
