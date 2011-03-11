@@ -31,7 +31,7 @@
 {* -------------------- user selector -------------------- *}
 {elseif $field_value.type eq 'u'}
 	{if empty($field_value.options_array) or ($field_value.options_array[0] !=1 and $field_value.options_array[0] !=2) or $tiki_p_admin_trackers eq 'y'}
-		{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $field_value.list|@count > $prefs.user_selector_threshold and $field_value.isMandatory ne 'y'}
+		{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $field_value.list|@count > $prefs.user_selector_threshold and $field_value.isMandatory ne 'y' and $field_value.options_array[0] !=1 and $field_value.options_array[0] !=2}
 			{* since autocomplete allows blank entry it can't be used for mandatory selection. *}
 			<input id="user_selector_{$field_value.fieldId}" type="text" size="20" name="{$field_value.ins_id}" value="{if $field_value.options_array[0] eq '2'}{$user}{else}{$field_value.value}{/if}" />
 			{if $prefs.user_selector_realnames_tracker == 'y'}
