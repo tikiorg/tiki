@@ -42,7 +42,7 @@ $headerlib->add_jq_onready( '
 		});
 	}
 	
-');	// late, and tell jqs5 where the page is in tiki
+');
 
 if ($prefs['feature_wiki'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");

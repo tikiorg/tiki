@@ -150,11 +150,6 @@ if ($prefs['feature_credits'] == 'y') {
 	require_once('lib/setup/credits.php');
 }
 
-if ($prefs['feature_syntax_highlighter'] == 'y') {
-	require_once('lib/codemirror_tiki/codemirror_tiki.php');
-	tiki_syntax_highlighter_base();
-}
-
 $smarty->assign_by_ref('phpErrors', $phpErrors);
 $smarty->assign_by_ref('num_queries', $num_queries);
 $smarty->assign_by_ref('elapsed_in_db', $elapsed_in_db);
@@ -218,7 +213,13 @@ if ($prefs['javascript_enabled'] != 'n') {
 	}
 
 	$headerlib->add_jsfile( 'lib/jquery_tiki/tiki-jquery.js' );
-
+	
+	if ($prefs['feature_syntax_highlighter'] == 'y') {
+		require_once('lib/codemirror_tiki/codemirror_tiki.php');
+		tiki_syntax_highlighter_base();
+		tiki_syntax_highlighter_flex();
+	}
+	
 	if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
 
 		$headerlib->add_jsfile( 'lib/jquery_tiki/tiki-jquery.mobile.js' );
@@ -280,20 +281,6 @@ if ($prefs['javascript_enabled'] != 'n') {
 		}
 		if( $prefs['feature_jquery_media'] == 'y' ) {
 			$headerlib->add_jsfile( 'lib/jquery/jquery.media.js');
-		}
-		if( $prefs['feature_jquery_jqs5'] == 'y' ) {
-			if ((strpos($_SERVER['PHP_SELF'], 'tiki-index_raw.php') !== false &&
-				isset($_REQUEST['format']) && $_REQUEST['format'] == 'jqs5') ||
-				strpos($_SERVER['PHP_SELF'], 'tiki-slideshow.php') !== false
-				) {
-				$prefs['feature_wiki_description'] = 'n';
-				$prefs['wiki_authors_style'] = 'none';
-				$prefs['feature_page_title'] = 'n';
-				$prefs['wiki_topline_position'] = 'none';
-				$prefs['page_bar_position'] = 'none';
-				$prefs['wiki_edit_section'] = 'n';
-				$prefs['wiki_edit_plugin'] = 'n';
-			}
 		}
 		if( $prefs['feature_jquery_tablesorter'] == 'y' ) {
 			$headerlib->add_cssfile( 'lib/jquery_tiki/tablesorter/themes/tiki/style.css' );

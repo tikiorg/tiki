@@ -5,6 +5,26 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+function tiki_syntax_highlighter_flex() {
+	global $headerlib, $prefs;
+	if ( $prefs['feature_syntax_highlighter'] == 'y' ) {
+		$headerlib->add_cssfile( 'lib/codemirror_tiki/docs.css' );
+		$headerlib->add_jsfile( 'lib/codemirror/js/codemirror.js' );
+		$headerlib->add_jsfile( 'lib/codemirror_tiki/codemirror_tiki.js' );
+		$headerlib->add_js("
+			if (window.CKEDITOR) return false;
+			if (!window.CodeMirror) return false;
+			
+			$('textarea')
+				.not('#editwiki')
+				.flexableCodeMirror({
+					changeText: '".tra("Change Highlighter")."'
+				});
+		");
+		
+	}
+}
+
 function tiki_syntax_highlighter_base()
 {
 	global $headerlib, $prefs;
