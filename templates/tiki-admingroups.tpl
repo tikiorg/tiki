@@ -58,7 +58,7 @@
 						{$users[user].included[ix]|escape}<br />
 					{/section}
 				</td>
-				<td>{tr}{$users[user].groupHome}{/tr}</td>
+				<td class="text">{tr}{$users[user].groupHome}{/tr}</td>
 				<td class="text">{tr}{$users[user].userChoice}{/tr}</td>
 				<td class="text">
 					<a class="link" href="tiki-objectpermissions.php?group={$users[user].groupName|escape:"url"}" title="{tr}Permissions{/tr}">{icon _id='key' alt="{tr}Permissions{/tr}"} {$users[user].permcant}</a>
