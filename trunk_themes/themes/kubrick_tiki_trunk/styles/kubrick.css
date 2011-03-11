@@ -1,0 +1,1794 @@
+/* $Id$
+	Kubrick theme for TikiWiki CMS, adapted by Gary Cunningham-Lee
+	from the GPLed WordPress Kubrick theme, version 1.5, by
+	Micheal Heilemann. Released under the GPL license.  For updates
+	and other information on this theme, please visit
+	http://themes.tikiwiki.org. or http://zukakakina.com.
+*/
+
+/* Import foundation CSS files. */
+@import url("lite/lite.css");
+@import url("layout/layout.css");
+@import url("layout/design.css");
+
+/***** XHTML Elements (body tag here,
+			others follow Layout) *****/
+body {
+	font-size: .7em;
+	font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif;
+	background: #E7E7E7;
+	color: #333;
+}
+
+html>body {font-size: 62.5% !important}
+
+body.fullscreen {
+	text-align: left;
+	padding: 3em;
+	background: #fff}
+
+/* next two: fixed-width: 960px */
+.fixed_width #fixedwidth {
+	width: 900px;
+	background: #fff;
+}
+
+/***** Layout (overrides layout.css;
+		also styling of page layout divs)  *****/
+#main {
+	font-size: 1.1em;
+	text-align: left;
+}
+
+#header_fixedwidth {
+	background: url(kubrick/headerbg.jpg) no-repeat;
+	background-position: right 0;
+	padding-right: 32px;
+	height: 200px}
+
+#header {
+	background: url(kubrick/headerbg.jpg) no-repeat;
+	height: 200px;
+	margin-bottom: -1px}
+	
+#c1c2 #col2 {
+	width: 180px;
+	background: transparent;
+	padding-top: 1em;
+	overflow: visible;
+}
+
+#tiki-center {
+	padding: 1em}
+
+#col3 {
+	width: 180px;
+	margin-left: -180px;
+	padding-top: 1em}
+
+ 
+.middle_outer {
+	background: #fff url(kubrick/kubrickbg_left.jpg) repeat-y;
+	padding-left: 10px;
+}
+
+#middle {
+	background: #fff url(kubrick/kubrickbg_right.jpg) 100% 0 repeat-y;
+	padding-right: 22px;
+}
+
+#footer {
+	background: url(kubrick/footerbg.jpg) no-repeat 1px 100%;
+	height: 90px;
+}
+
+.footer_liner {
+	background: url(kubrick/footerbg.jpg) no-repeat 100% 100%;
+	margin-left: 20px;
+	height: 90px;
+	text-align: center}
+
+/***** XHTML Elements (other than body tag) ******/
+a,
+a:visited {
+	color: #2277DD;
+	text-decoration: none}
+
+a:hover {
+	color: #000;
+	text-decoration: none}
+
+.wikitext a.wiki:link,
+.wikitext a.wiki:visited {
+	color: #2277DD !important;
+	text-decoration: none !important;
+}
+
+caption {font-weight: bold}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Century Gothic', 'Lucida Grande', 'Trebuchet MS', Verdana, Sans-Serif;
+	line-height: 1.1;
+}
+
+h1 {
+	font-weight: bold;
+	font-size: 1.8em}
+
+h2 {font-size: 1.6em}
+h3 {font-size: 1.5em}
+h4 {font-size: 1.4em}
+
+h5 {
+	font-size: 1.2em;
+	color: #032936}
+
+h6 {
+	font-size: 1.1em;
+	color: #032936}
+
+hr {
+	width: 100%;
+	height: 1px;
+	background: #67ade7;
+	border-width: 0;
+	padding: 0;
+	color: #67ade7}
+
+img {border: 0}
+fieldset {border: 1px solid #67ade7}
+legend {color: #333}
+
+button,
+input,
+textarea,
+select {
+	font-size: 1em;
+	color: #112233;
+	text-indent: 2px;
+	border: thin solid #8cacbb}
+
+
+.button a,
+.button a:visited,
+button,
+.button input,
+.submitbutton,
+.calbuttonBox a {
+	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+	color: #2277DD;
+	background: #fff;
+	border: 1px solid;
+	border-color: #c1d3db #8cacbb #8cacbb #c1d3db}
+
+input[type="reset"],
+input[type="submit"],
+input[name="search"] {
+	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+	color: #2277DD;
+	background: #fff;
+	border: 1px solid;
+	border-color: #c1d3db #8cacbb #8cacbb #c1d3db
+}
+
+.button:hover,
+.button a:hover,
+button:hover,
+.button input:hover,
+.submitbutton:hover {
+	background: #fff;
+	border-color: #8cacbb #c1d3db #c1d3db #8cacbb;
+	color: #000}
+
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+input[name="search"]:hover {
+	background: #fff;
+}
+
+#page-bar .button {line-height: 22px}
+form.admin input[name="features"] {margin-bottom: 3px !important}
+
+select {color: #112233}
+select[name="theme"] {width: 85%}
+
+textarea {
+	font-size: 1.2em;
+	color: #112233;
+	width: 100%}
+
+small {font-size: .9em}
+
+ul {
+	margin-top: 2px;
+	margin-bottom: 6px}
+
+tt {font-size: 1.2em}
+
+/***** Site Header & Identity *****/
+
+#top_modules {
+	height: 180px;
+	padding-top: 20px;
+	margin: 0 25px;
+}
+
+.box-logo {
+	position: absolute;
+	top: 60px;
+	left: 60px;
+}
+
+#topbar_modules .box-search {
+	position: absolute;
+	top: 0;
+	right: 20px;
+}
+
+#top_modules .siteloginbar_popup {
+	position: absolute;
+	bottom: 1px;
+	right: 20px;
+}
+
+#top_modules .siteloginbar_popup .tabmark {
+	float: left;
+	margin-right: 0;
+}
+
+#top_modules .siteloginbar_popup ul ul {
+	margin-top: 0;
+}
+
+#top_modules .siteloginbar a,
+#top_modules .siteloginbar label {color: #fff !important}
+
+#sitelogo img {
+	margin-top: -1px;
+	margin-right: 10px;
+	margin-left: 10px}
+
+#bannertopright {margin-top: 60px}
+
+#customcodewith_ad {
+	text-align: center;
+	float:left;
+	width: auto;
+	clear: none}
+	
+
+
+#customcode {text-align: center}
+
+#header #sitetitle {
+	font-size: 3em;
+}
+
+#tiki-top {
+	text-align: center;
+	position: absolute;
+	bottom: 0;
+	left: 40px;
+}
+
+#topbar_modules .box-search {
+	float: right;
+	margin-right: 10px;
+	padding-top: 3px;
+	clear: both;
+	font-size: 90%;
+	color: #fff}
+
+.siteloginbar input,
+#tiki-top input#fuser {
+	line-height: 90%;
+	background: #4283B9;
+	color: #fff}
+
+.siteloginbar input,
+.box-search input[name=search] {
+	border: solid 1px #fff;
+	background: #4283B9;
+	color: #fff;
+	vertical-align: middle;
+	text-transform: uppercase;
+	font-size: .9em}
+
+.box-search input[name=search]:hover {
+	cursor: pointer;
+	background: #4283B9}
+
+.box-search select[name="where"] {
+	font-size: .9em;
+	background: #4283B9;
+	color: #fff}
+
+#tiki-top .findtable {
+	margin-bottom: 0;
+}
+
+/****** Menus, Links ******/
+/** CSS (suckerfish) menus **/
+
+/* colors */
+.cssmenu_horiz li ul li,
+.cssmenu_vert li ul li {
+	background: #578bb8;
+	border: 1px solid #8cacbb;
+	border-top: 0;
+	margin-bottom: -1px
+}
+
+.cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #8cacbb;
+}
+
+.cssmenu_vert li ul li,
+.cssmenu_horiz li ul li {
+	background: #fff;
+}
+
+.cssmenu_vert li ul li,
+.cssmenu_horiz li ul li {border-top: 1px solid #DEDEDE}
+
+.cssmenu_horiz a,
+.cssmenu_vert a,
+#tiki-top .cssmenu_horiz li a {color: #006699}
+
+.cssmenu_vert a:link,
+.cssmenu_vert a:visited {color: #006699}
+
+.cssmenu_vert a:hover {
+	color: #993300;
+	text-decoration: none}
+
+.cssmenu_vert ul a:link,
+.cssmenu_vert ul a:visited {color: #006699}
+
+.cssmenu_horiz ul a:hover,
+.cssmenu_vert ul a:hover {color: #000}
+
+#tiki-top .cssmenu_horiz {
+	text-align: left;
+	margin-left: 40px;
+}
+
+#tiki-top .cssmenu_horiz li.menuSection a {padding-right: 20px}
+#tiki-top .cssmenu_horiz li a {color: #fff}
+#tiki-top .cssmenu_horiz li ul li a {color: #006699}
+#tiki-top .cssmenu_horiz li:hover {background: #333}
+#tiki-top .cssmenu_horiz li ul li:hover {background: #fff}
+#tiki-top .cssmenu_horiz li ul a:hover {color: #000}
+
+/* ul ul top compensation for padding */
+.cssmenu_horiz li:hover ul,
+.cssmenu_horiz li.sfHover ul {
+	top: 1.9em;
+}
+
+/* default link padding */
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: .4em 1em;
+}
+
+/* left column width */
+td#leftcolumn .cssmenu_vert,
+td#leftcolumn .cssmenu_vert li {
+	width: 160px;
+}
+
+/* offset from left column (matches above) */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul {
+	left: 155px;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li:hover ul,
+td#leftcolumn .cssmenu_vert li.sfHover ul,
+td#leftcolumn .cssmenu_vert li:hover ul li,
+td#leftcolumn .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+td#leftcolumn .cssmenu_vert li li:hover ul,
+td#leftcolumn .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+.cssmenu_vert .sf-sub-indicator,
+#tiki-top .cssmenu_horiz li:hover ul li .sf-sub-indicator {
+	background: url(kubrick/arrows-2277DD.png);
+}
+
+a .sf-sub-indicator {
+	top: 0.5em;
+}
+/** PHP Layers Menus **/
+.horbar table {
+	white-space: nowrap;
+	padding-top: 3px}
+
+.horbaritem a,
+.horbaritem a:visited {
+	padding: 6px 3px 6px 3px;
+	text-decoration: none;
+	font: 1em Verdana, Helvetica, Arial, Sans-Serif;
+	color: white;
+	margin: 0}
+
+.horbaritem a:hover {
+	background: #333;
+	color: #eee !important;
+	text-decoration: none}
+
+.mdksubmenu {
+	background: #fff;
+	border: 1px solid #8cacbb}
+
+.mdkitem {border-top: 1px solid #DEDEDE}
+
+.mdkitem a,
+.mdkitem a:visited {
+	padding: 2px 5px;
+	font-weight: normal;
+	border: 0}
+
+.mdkitem a:link,
+.mdkitem a:visited {text-decoration: none}
+
+.mdkitem a:hover {
+	color: #993300;
+	text-decoration: none}
+
+.phplmnormal,
+a.phplmnormal:hover,
+a.phplm:link,
+a.phplm:visited,
+a.phplm:hover,
+a.phplm:active {
+	font: 100% Verdana, Tahoma, Arial, sans-serif;
+	color: #303030;
+	text-decoration: none;
+	font-weight: bold}
+
+a.phplm:visited {color: #726461}
+a.phplm:hover {color: #808080}
+a.phplm:active {color: #ff0000}
+
+a.phplmselected:link,
+a.phplmselected:visited,
+a.phplmselected:hover,
+a.phplmselected:active {
+	font: 100% Verdana, Tahoma, Arial, sans-serif;
+	color: black;
+	text-decoration: underline;
+	font-weight: bold}
+
+a.phplmselected:hover {color: #808080}
+
+/** Links in other menus **/
+
+.separator {
+	font-size: 1em;
+	color: #2277DD;
+	text-decoration: none;
+	font-weight: normal}
+
+.separator:hover {text-decoration: none}
+
+.option a:link,
+.option a:visited,
+a.linkmenu, .rsslink, .linkmenu:visited, .rsslink:visited {
+	font-size: 1em;
+	text-decoration: none;
+	font-weight: normal}
+
+.linkmodule {
+	font-size: 10px;
+	text-decoration: none;
+	color: #2277DD;
+	text-decoration: none;
+	font-weight: normal}
+
+.linkmodule:hover {
+	text-decoration: underline;
+	color: #2277DD;
+	background: transparent}
+
+.linkmodule a img {
+	padding: 3px;
+	margin: 3px}
+
+.rsslink {
+	font-size: 10px;
+	text-decoration: none;
+	font-weight: normal}
+
+.rsslist {
+	background: #fff;
+	margin: 0;
+	margin-right: 10px;
+	padding: 1px}
+
+.rssitem {
+	font-weight: normal;
+	padding: 1px 6px 1px 6px;
+	border-top: 1px dashed #DADAC9}
+
+.rssitem:first-child {border-top: 0}
+
+.rssdate {
+	color: #999;
+	font-style: italic}
+
+.heading .link {
+	padding: 0;
+	text-decoration: none;
+	color: #fff}
+
+.heading .link:hover {
+	text-decoration: underline;
+	color: #fff}
+
+/***** Misc. Center Col. *****/
+.flip,
+.flip:visited,
+.tellafriend a,
+.tellafriend a:visited {
+	font-size: .9em;
+	text-decoration: none}
+
+/****** Misc. Global ****/
+.mini {color: #000}
+
+/***** Boxes *****/
+/** Modules **/
+.box {
+	overflow: hidden;
+	margin: 3px;
+	padding-bottom: 10px;
+	text-align: center}
+
+#leftcolumn .box,
+#rightcolumn .box {
+	width: 174px;
+}
+
+h3.box-title {
+	color: #444444;
+	font-size: 1.2em;
+	font-weight: bold;
+	margin: 0;
+	margin: 0 12px 0 0}
+
+.box:hover img.flipmodimage {
+	border: 1px solid transparent;
+	height: 12px;
+	width: 12px}
+
+a.flipmodtitle:hover img {border: 1px solid #67ade7 !important}
+
+.box-data {
+	padding: 5px;
+	font-size: 1em;
+	color: #777777;
+	text-align: left}
+
+.halffloat .box,
+.wikitext .halffloat .box {
+	width: 45%;
+}
+
+.thirdfloat .box,
+.wikitext .thirdfloat .box {
+	width: 29%;
+}
+
+.quarterfloat .box,
+.wikitext .quarterfloat .box {
+	width: 20%;
+}
+
+/** Other boxes **/
+.cbox {
+	background: white;
+	margin: 3px;
+   margin-bottom: 6px;
+	border: 1px solid #67ade7}
+
+.cbox-title {
+	color: #fff;
+	background: #67ade7;
+	text-align: center;
+	padding: 0;
+	margin: 0}
+
+.cboxtlink {
+	color: black;
+	text-decoration: none}
+
+.cbox-data {
+	padding: 0 5px;
+	color: black;
+	width: 100%}
+
+.rbox {
+	background: transparent;
+	margin: 6px auto;
+	padding: 5px}
+
+.rbox-data {padding: 2px}
+
+.rbox-title,
+.warning .rbox-title {
+	background: #eeee99;
+	border-color: #DDDDCC}
+
+.rbox-data,
+.warning .rbox-data {
+	background: #eeee99;
+	border-color: #DDDDCC}
+
+.note .rbox-title {
+	background: #CCCCDD}
+
+.note .rbox-data {
+	background: #ECECEF;
+	border-color: #CCCCDD}
+
+.comment .rbox-title,
+.tip .rbox-title {
+	background: #ECECEF;
+	border-color: #CCCCDD}
+
+.comment .rbox-data,
+.tip .rbox-data {
+	background: #ECEFEC;
+	border-color: #CCDDCC}
+
+.simplebox {
+	background: #f8f8f8;
+	border: 1px solid #ddd;
+	padding: 3px}
+
+/***** Tables, Tabs *****/
+/** Tables **/
+
+.normal,
+.admin,
+.sortable {border: 1px solid #67ade7}
+
+td {
+	color: #000;
+	font-size: 1em;
+	vertical-align: top;
+	text-align: left}
+
+th {
+	color: #fff;
+	background: #67ade7;
+	padding: 0 2px}
+
+.formcolor td,
+.editblogform td,
+.normal td {padding: 2px}
+
+.findtable {
+	margin-bottom: 1px;
+	padding-bottom: 10px}
+
+tr.odd {
+	color: black;
+	background: #f7fafd}
+
+tr.odd:hover {background: #FFF7E6}
+
+tr.even {
+	background: #ebf5fa;
+	color: black}
+
+tr.odd td,
+td.odd {
+	border-right: 1px solid #67ade7;
+	border-collapse: collapse;
+	background: #f7fafd}
+
+tr.even td,
+td.even {
+	border-right: 1px solid #67ade7;
+	background: #ebf5fa;
+	color: #000;
+	border-collapse: collapse}
+
+td.third {
+	border-right: 1px solid #67ade7;
+	color: #000;
+	background: #8cacbb}
+
+th, .heading,
+.normal td.heading,
+td.bloglistheading {
+	color: #fff;
+	background: #67ade7;
+	font-weight: bold;
+	text-align: center;
+	padding: 3px 2px}
+
+a.tablename,
+a.galname,
+a.imagename,
+a.blogname,
+a.fgalname,
+a.artname,
+a.forumname {
+	font-weight: bold;
+	color: #000}
+
+a.forumnameread {
+	letter-spacing: 1px;
+	color: #000}
+
+/* links in table headings */
+a.tableheading,
+a.gallistheading,
+a.listgalheading,
+a.bloglistheading,
+a.llisfgalheading,
+a.llistfileslink,
+a.llistart,
+a.lforumheading,
+a.sortheader {color: #fff; text-decoration: none}
+
+.sortable th a.sortheader {color: #fff}
+
+/** Tabs **/
+.tabs {
+	margin-bottom: 0;
+	border-bottom: solid 1px #d9d9d9}
+	
+/* reset what's in layout.css */
+.tabactive,
+.tabinactive,
+[class].tabactive,
+[class].tabinactive {top: 0 !important}
+
+
+.tabmark {
+	font-size: 85%;
+	background: #DDDDDD;
+	border: 1px solid #666;
+	border-bottom: solid 1px #d9d9d9}
+
+.tabmark a {
+	border-bottom: 0;
+	color: #666;
+	font-weight: bold;
+	padding: 1px 5px}
+
+.tabmark a:hover {
+	color: black;
+	background: #ccc}
+
+.tabmark a:active {
+	background: white;
+	color: red}
+
+.tabcontent {
+	border: 1px solid #999;
+	padding: 2px;
+	background: #eee}
+
+.admin div#content1 .tabcontent .cbox {background: transparent}
+
+/***** Wiki *****/
+h1 a.pagetitle,
+h1 a.pagetitle:visited {
+	font-family: 'Century Gothic', 'Lucida Grande', 'Trebuchet MS', Verdana, Sans-Serif;
+	padding-left: 35%;
+	font-size: 1.3em;
+	color: black}
+
+a.pagetitle,
+a.forumspagetitle {
+	text-decoration: none;
+	color: black}
+
+a.pagetitle:hover,
+a.forumspagetitle:hover {
+	text-decoration: underline;
+	background: transparent;
+	color: #06c}
+
+.wikitopline {
+	text-align: left}
+
+.wikitext {
+	text-align: left;
+	line-height: 1.4em;
+	font-size: 1.1em;
+	padding: 10px;
+	clear: both;
+	width: auto;
+	color: #333}
+
+.wikitext h2 {font-size: 1.3em}
+.wikitext h3 {font-size: 1.2em}
+.wikitext h4 {font-size: 1.1em}
+.wikitext h5 {font-size: 1.05em}
+
+.titlebar {
+	font-family: 'Trebuchet MS', 'Lucida Grande', Verdana, Arial, Sans-Serif;
+	font-weight: bold;
+	font-size: 1.2em;
+	border-bottom: 1px solid #b7d9f4;
+	border-top: 1px solid #b7d9f4}
+
+.wikitable {
+	border-collapse: collapse}
+
+td.wikicell {
+	border-collapse: collapse;
+	border: 1px solid #A9B8C2;
+	background: #eff6fc}
+
+.wikitext .box {
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd}
+
+/* The bar below the wiki page where the actions for a page are displayed */
+div#page-bar {
+	margin: 0 5px}
+
+#page-bar span {float: left}
+
+ul.floatleft {
+	display: block;
+	list-style: none;
+	padding: 0;
+	text-align: left;
+	height: 20px;
+	margin-top: 0}
+
+ul.floatleft li {
+	float: left;
+	padding: 4px 2px}
+
+.editdate ul.floatleft {margin-top: 8px}
+
+.cache {
+	background: #DEE7EC;
+	border: 1px solid #8cacbb;
+	padding: 10px;
+	margin: 4px}
+
+.cachedpage {
+	border: 1px solid #8cacbb;
+	padding: 10px;
+	margin: 20px}
+
+.wikicache {
+	font-size: .9em;
+	font-weight: normal;
+	color: #998833;
+	text-decoration: none}
+
+.wikicache:hover {
+	color: #000;
+	background: transparent}
+
+.wiki {
+	text-decoration: none;
+	color: #2277DD;
+	font-weight: normal}
+
+.wiki:hover {
+	text-decoration: underline;
+	color: #2277DD;
+	background: transparent}
+
+.wikinew {color: #CC0000}
+.wiki-edithelp {display: none}
+
+#wikihelp-tab table,
+#wikihelp-tab table td {
+	border: solid 1px #909090;
+	border-collapse: collapse}
+
+#wikihelp-tab table td {padding: 2px}
+textarea.wikiedit {font-size: 1.0em}
+
+.editdate {
+	color: #223344;
+	border-top: 1px solid #8cacbb;
+	font-size: .9em;
+	padding: 0 10px}
+
+textarea.wikiedit {font-size: 1.5em}
+
+.wiki-edithelp {
+	background: white;
+	border: 1px solid #8cacbb;
+	padding: 10px}
+
+img.externallink {margin: 0 2px}
+
+/* Needed esp. for light-on-dark theme */
+.quicktag {}
+.quicktag img,
+#wikihelp-tab td img {}
+div#helptool {}
+
+/* Wiki plugins */
+
+/* Code plugin  */
+.code {
+	font-size: 1em;
+	padding: 3px;
+	border: 1px dashed #67ade7;
+	background: #F4F4F4;
+	font-family: "Courier New", Courier, monospace}
+
+/* Hmm. The auto-scrolling overflow isn't working in IE.
+Maybe need to find updated code for this. */
+.codelisting {
+	margin: 0;
+	padding: 10px;
+	font-family: "Courier New", Courier, monospace;
+	background: #fff;
+	border: 1px solid #67ade7;
+   overflow: auto;
+ 	width: /*100%*/500px} /* FF3 doesn't handle this combination. /
+
+/* Version plugin */
+.versions {
+	border-top: 1px dashed #999;
+	border-bottom: 1px dashed #999;
+	min-height: 142px}
+
+.versionav,
+.versionav:after {
+	display: inline;
+	float: right;
+	border-left: 1px dashed #999}
+
+.versionav .button2 {
+	display: block;
+	border: 0;
+	border-bottom: 1px dashed #8cacbb;
+	background: inherit}
+
+.versionav .button2 .linkbut {
+	border: 0;
+	background: inherit;
+	padding: 0 10px}
+
+.versionav .highlight {
+	background: #ccc;
+	font-weight: bold}
+
+.versiontitle,
+.versiontitle:after {
+	font-weight: bold;
+	border-bottom: 1px dashed #999;
+	border-left: 1px dashed #999;
+	padding: 2px 30px;
+	float: right}
+
+/* Quote plugin */
+.quoteheader {
+	margin: 10px 5px 0 5px;
+	padding: 4px;
+	background: #67ade7;
+	color: #fff;
+	font-weight: bold;
+	font-size: 1em}
+
+.quotebody {
+	margin: 0 5px 10px 5px;
+	padding: 5px;
+	border: 1px solid #67ade7;
+	background: #eff6fc;
+	color: black}
+
+/* fancytable (sortable) plugin */
+.fancysort .header:hover {
+	/*color: #82AC78;*/
+}
+
+/** Wiki tocs **/
+.tocnav {
+	font-size: 1em;
+	color: black;
+	border-top: 1px solid #8cacbb;
+	border-bottom: 1px solid #8cacbb;
+	padding: 2px 0;
+	margin-bottom: 2px}
+
+
+div#tocnavtable {}
+#tocnavicons {float: left}
+#tocnavaddpage {float: right}
+#tocnavlinks {clear: both}
+.fancytoclevel {list-style-image: url(../img/icons/footprint.gif)}
+li.toclevel {margin-left: 2em}
+
+/* TOC */
+ul.toc {}
+.toc li {margin-top: 3px}
+
+.tocnav {
+	background: #eee;
+	margin-bottom: 16px}
+
+.tocnav a {
+	font-size: 1em;
+	color: #424242}
+
+.tocnav table {
+	width: 100%;
+	background: #fff}
+
+.tocnavlink {color: black}
+.tocnavlink:hover {}
+
+/* Wiki diff styles */
+.diff td {border: 1px solid #8cacbb}
+.diff div {border-top: 1px solid #A9B8C2}
+.diffheader {background: #A9B8C2; font-weight: bold}
+.diffadded {background: #CCFFCC}
+.diffdeleted {background: #FFCCCC}
+.diffbody {background: #F2F4F5}
+.diffchar {color: red}
+
+
+/***** Articles ****/
+.article {padding-bottom: 40px}
+
+.articletopline {
+	text-align: right;
+	color: #666;
+	text-decoration: none;
+	float: right;
+	margin-right: 20px}
+
+.articletopline a {text-decoration: none}
+.articletopline a:hover {text-decoration: underline}
+
+.articletitle {
+	clear: both;
+	margin-left: 20px}
+
+.articletitle h2 {
+	font-size: 1.6em;
+	font-weight: bold;
+	letter-spacing: -1px;
+	display: block;
+	padding: 0 20px;
+	margin: 3px 0 6px 0;
+	color: #444}
+
+.articlesubtitle {
+	color: #666;
+	margin: 0 20px}
+
+.titleb,
+.titleb:after {
+	font-size: .9em;
+	color: #666;
+	margin: 5px 20px}
+
+.articleheading {
+	margin: 5px 20px 0 20px;
+	clear: both}
+
+.articleheadingtext {
+	text-align: left;
+	line-height: 1.5em;
+	font-size: 1.0em;
+	color: #333}
+
+img.topicimage {}
+img.articleimagenofloat {}
+img.articleimage {margin-right: 20px}
+
+.articletrailer {
+	float: right;
+	margin: 0 20px 10px 0;
+	clear: both}
+
+.articletrailer {text-align: right}
+.articletrailer .wikitopline {}
+ .trailer {padding: 0 8px 0 0}
+
+.articlebody {
+	text-align: left;
+	line-height: 1.5em;
+	font-size: 1.0em;
+	padding: 10px;
+	width: auto;
+	color: #333;
+	padding: 20px;
+	margin: 10px 0}
+
+.articlesource {
+	padding: 0 20px;
+	margin-bottom: 10px;
+	font-style: italic}
+
+
+/***** Blogs *****/
+.blogheading {
+	display: block;
+	width: 100%;
+	clear: both}
+
+.blogtitle {
+	color: black;
+	font-weight: bold;
+	font-size: 1.6em;
+	margin: 10px}
+
+.bloginfo {
+	font-size: 1em;
+	color: #424242;
+	margin: 10px}
+
+.blogdesc {
+	clear: both;
+	margin: 0 10px;
+	font-style: italic}
+
+.bloginfo {text-align: right}
+
+.blogtools {
+	border-bottom: 1px solid #8cacbb;
+	font-size: 1em;
+	margin: 10px 0;
+	padding: 0 10px}
+
+.blogpost hr {display: none}
+
+.posthead {
+	color: black;
+	overflow: hidden;
+	padding: 0 10px;
+	margin-top: 10px}
+
+.posthead h3 {
+	font-size: 1.7em;
+	font-weight: bold;
+	letter-spacing: -1px;
+	display: inline}
+
+ .posthead {}
+
+.posthead small {
+	font-size: .9em;
+	color: #666;
+	font-weight: normal}
+
+.posthead h3 {font-size: 1.2em}
+
+.postbody {
+	text-align: left;
+	line-height: 1.5em;
+	font-size: 1.0em;
+	padding: 10px;
+	clear: both;
+	width: auto;
+	color: #333}
+
+.postfooter{}
+table#blogpagebar {}
+
+
+/***** Forums *****/
+body.tiki_forums .normal {margin: auto}
+
+.commentinfo {
+	width: 100%;
+	background: #fff}
+
+.post {clear: both}
+
+.post .postbody {
+	clear: both;
+	width: 100%;
+	border: solid 1px #E7EAED;
+	margin: 0;
+	margin-top: 5px;
+	padding: 3px 0px;
+	background: #F9FCFF}
+
+.post .postbody-title {
+	display: block;
+	background: #67ade7;
+	border-bottom: 0;
+	margin-bottom: 4px;
+	padding: 3px}
+
+.post .postbody-title .checkbox {float: left}
+
+.post .postbody-title .title {
+	color: #fff;
+	font-weight: bold;
+	font-size: 1.1em;
+	margin-left: 5px;
+	margin-top: 3px}
+
+.title a.link {color: #fff}
+
+.post .postbody .content {
+	color: #000;
+	height: 100%;
+	padding: 0 3px 3px;
+	text-align: left;
+	width: 100%}
+
+.post .author {
+	float: left;
+	text-align: left;
+	vertical-align: top;
+	width: 30%;
+	margin-left: 0;
+	margin-top: 0}
+
+.post .author_post_info {
+	display: block;
+	background: #E0EAF4;
+	padding: 0 2px 2px 2px}
+
+.post .author_info .icons {display: block}
+.post .author_info .icons .actions {margin-right: 10px}
+.post .author_post_info_on {font-style: italic}
+
+.post .author_info {
+	float: right;
+	background: #F0F8FF;
+	padding: 0 2px 2px 2px;
+	margin-right: 5px;
+	border-right: 1px solid #D7E5F3;
+	border-bottom: 1px solid #D7E5F3}
+
+.commentStyle_headers .author_info {float: left}
+.post .postbody-title .actions {
+	float: right;
+	font-size: 1em}
+
+.post .postbody .content {
+	width: 100%;
+	height: 100%;
+	text-align: left;
+	color: #000}
+
+.postbody .quoteheader {margin-top: 0}
+
+.post .postbody .attachments {
+	clear: both;
+	border-top: 1px dotted #D9D9D9;
+	margin-top: 5px}
+
+.post .postbody .attachments img {vertical-align: text-bottom}
+
+.post .postfooter .actions, .post .postfooter .status {
+	display:inline;
+	margin-left: 5px;
+	vertical-align: top}
+
+.post .postfooter .status {font-size: 10px}
+.post .postfooter {text-align: right}
+.post .inner > .postfooter {clear: both}
+
+.post .contribution {
+	background: #F0F8FF;
+	border: 1px solid #D7E5F3;
+	padding: 0 2px}
+
+.post .avatar {
+	margin-bottom: 5px;
+	margin-left: 4px;
+	padding: 3px;
+	border: 1px solid #ACCCDD;
+	background: #E0EAF4;
+	display: none}
+
+.sub_comment {padding-left: 20px}
+
+.sub_comment_area {
+	clear: both;
+	background: url("../../img/edge.gif") no-repeat top left}
+
+.forum_actions .actions {
+	clear: both;
+	border: 1px solid #A9B8C2;
+	background: #67ade7;
+	padding: 3px;
+	vertical-align: middle;
+	color: #fff}
+
+.forum_actions .actions .action {margin-right: 10px}
+.forum_actions .headers {vertical-align: bottom}
+
+.forum_actions .headers .title {
+	float: left;
+	background: #C7D0D9;
+	border: 1px solid #999;
+	border-bottom: 0;
+	padding: 1px}
+
+.forum_actions .headers .infos {
+	float: right;
+	font-size: smaller;
+	padding-top: 2px}
+
+.thread_pagination {
+	text-align: center;
+	margin-bottom: 10px}
+
+.nb_replies {white-space: nowrap}
+.post_preview, .top_post {margin-bottom: 15px}
+/*.post .postbody .signature {float: left}*/
+
+/* Comments */
+
+.commentstitle {
+	font-weight: bold;
+	font-size: 1.2em}
+
+/* find */
+.subcomment {margin-left: 10px}
+
+/* Help box*/
+.commentsedithelp {background: #ffcfcf; color: black; border: 1px solid #ff0000; text-align: center; font-weight: bold}
+
+/**** Image Galleries ****/
+.galtable {
+	border: 1px solid #8cacbb;
+	width: 100%}
+
+td.oddthumb {
+	background: #E7E9EA;
+	border: 1px solid #8cacbb;
+	border-collapse: collapse;
+	text-align: center}
+
+td.eventhumb {
+	background: #F7F9FA;
+	border: 1px solid #8cacbb;
+	border-collapse: collapse;
+	text-align: center}
+
+img.athumb {border: 1px solid white}
+.caption {color: black}
+p.norecords {font-weight: bold}
+
+.imagetitle {
+	font-weight: bold;
+	font-size: 26px}
+
+.showimage {
+	text-align: center;
+	margin: 5px 0}
+
+.imgaldescr {margin: 10px}
+.sorttitle {margin-left: 10px}
+
+/***** File Galleries *****/
+
+/***** Trackers *****/
+.statuson {
+	padding: 1px;
+	margin: 1px;
+	border: 1px inset #666;
+	vertical-align: middle;
+	background: #BBAA99}
+
+.statusoff {
+	padding: 1px;
+	margin: 2px;
+	vertical-align: middle}
+
+/***** Categories, Tags *****/
+.tcategpath {
+	margin-bottom: 40px;
+	border: 1px solid #8cacbb;
+	width: 100%;
+	border-collapse: collapse}
+
+td.tdcategpath {
+	font-weight: bold;
+	padding: 0 3px;
+	margin: 0;
+	border-spacing: 0}
+
+.subcats {
+	padding: 20px 0;
+	width: 100%;
+	border-spacing: 0;
+	margin-bottom: 10px;
+	border: 1px solid #67ade7;
+	border-collapse: collapse}
+
+td.tdsubcat {width: 25%}
+.cattitle {font-weight: bold}
+ul.catfeatures {list-style: none}
+
+ul.catitems li {
+	display: inline;
+	margin-right: 7px}
+
+ul.catitems li a.link {}
+
+/***** Tags (freetags) *****/
+
+/*****  Polls  *****/
+
+/***** FAQs *****/
+.faqlistquestions {
+	background: #67ade7;
+	color: #fff;
+	padding: 2px;
+	margin-bottom: 20px}
+
+.faqlistquestions a.link,
+.faqlistquestions a.link:visited {
+	color: #fff;
+	text-decoration: none}
+
+.faqlistquestions a.link:hover {text-decoration: underline}
+
+.faqqa {
+	background: #fff;
+	color: black;
+	border: 1px solid #8cacbb;
+	margin-bottom: 20px}
+
+.faqquestion {
+	font-weight: bold;
+	color: #fff;
+	padding: 2px 12px;
+	background: #67ade7}
+
+.faqanswer {
+	padding: 4px 12px;
+	padding-top: 0}
+
+/***** Quizzes *****/
+.questionblock {
+	border: 1px solid #8cacbb;
+	background: white;
+	padding: 4px;
+	margin-bottom: 10px}
+
+.quizquestion {margin-bottom: 5px}
+
+.quizdescription {
+	border: 1px solid #8cacbb;
+	background: white;
+	margin-bottom: 10px}
+
+.quizanswer {
+	border: 1px solid #8cacbb;
+	background: white;
+	margin-bottom: 10px}
+
+/***** Shoutbox *****/
+.shoutboxmsg {
+	border: 1px solid #67ade7;
+	border-bottom: 0;
+	background: white;
+	margin-bottom: 0;
+	padding: 4px;
+	padding-bottom: 1px}
+
+.shoutboxmodmsg {
+	font-size: 1em;
+	margin: 0 5px 4px 5px;
+	padding-top: 5px;
+	padding-bottom: 1px}
+
+textarea.tshoutbox {
+	background: white;
+	border: 1px solid #67ade7;
+	color: #000;
+	font-size: 1.5em;
+	width: 142px}
+
+/***** Directory *****/
+.dircategs {
+	border: 1px solid #67ade7;
+	padding: 5px}
+
+.dirsublink {font-size: 1em}
+
+.dirlistsites {
+	background: white;
+	padding: 5px 0 10px 5px;
+	border: 1px solid #67ade7;
+	margin-top: 10px}
+
+.dirsite {
+	background: #eff6fc;
+	padding: .5em;
+	margin-bottom: 1.5em}
+
+.dirsitedesc {}
+
+.dirsitetrail {
+	font-size: 1em}
+
+.dirsitecats {}
+
+.dirsitelink {font-weight: bold}
+
+.dirrelated {
+	margin-top: 10px;
+	border: 1px solid #67ade7;
+	padding: 5px}
+
+td.dirfooter {font-size: .9em}
+
+.dirfooter {
+	margin-top: 10px;
+	border: 1px solid #67ade7}
+
+/***** Messages *****/
+td.prio1, td.prio2, td.prio3, td.prio4, td.prio5 {
+	border: 1px solid #8cacbb;
+	padding-left: 2px}
+
+td.prio1 {background: #F7F9CA}
+td.prio2 {background: #F7F9EA}
+td.prio3 {background: #F7F9FA}
+td.prio4 {background: #F7F9FD}
+td.prio5 {background: #F7F9FF}
+
+.messureadflag {
+	background: #ccc;
+	padding-left: 5px}
+
+.messureadhead {
+	background: #DEDEDE;
+	margin-top: 2px}
+
+.messureadbody {
+	margin-top: 5px;
+	background: #DEDEDE}
+
+.readlink {
+	font-size: 1em;
+	color: black}
+
+/***** TikiSheets *****/
+
+/***** Calendar *****/
+#calendar {width: 100%}
+
+.Cal0,
+.Cal1,
+.Cal2 {font-size: 1em}
+
+.Calart,
+.Calblog,
+.Calchart,
+.Caldir,
+.Caleph,
+.Calfaq,
+.Calfgal,
+.Calforum,
+.Calgal,
+.Calnl,
+.Calquiz,
+.Calsurv,
+.Caltrack,
+.Calwiki {font-size: 90%}
+
+.Calart,
+.Calart a,
+.Calart a:visited {color: #304F30}
+
+.Calblog,
+.Calblog a,
+.Calblog a:visited {color: #443F39}
+
+.Calchart,
+.Calchart a,
+.Calchart a:visited {color: #304F30}
+
+.Caldir,
+.Caldir a,
+.Caldir a:visited {color: #304F30}
+
+.Caleph,
+.Caleph a,
+.Caleph a:visited {color: #304F30}
+
+.calfaq,
+.calfaq a,
+.Caleph a:visited {color: #304F30}
+
+.Calfgal,
+.Calfgal a,
+.Calfgal a:visited {color: #304F30}
+
+.calfocus {font-size: 90%}
+.calfocuson {font-size: 90%}
+
+.Calforum,
+.Calforum a,
+.Calforum a:visited {color: #304F30}
+
+.Calgal,
+.Calgal a,
+.Calgal a:visited {color: #8B4513}
+
+.Calnl,
+.Calnl a,
+.Calnl a:visited {color: #304F30}
+
+.Calquiz,
+.Calquiz a,
+.Calquiz a:visited {color: #304F30}
+
+.Calsurv,
+.Calsurv a,
+.Calsurv a:visited {color: #304F30}
+
+.Caltrack,
+.Caltrack a,
+.Caltrack a:visited {color: #304F30}
+
+.Calweb {
+	font-size: 90%;
+	font-weight: bold;
+	text-decoration: none;
+	padding-left: 3px;
+	padding-right: 3px;
+	color: #336699}
+
+.Calweb:hover {color: #996633}
+
+.Calwiki,
+.Calwiki a,
+.Calwiki a:visited {color: #443F39}
+
+.calfocus {font-size: 90%}
+.calfocuson {font-size: 90%}
+
+.calprio1 a,
+.calprio2 a,
+.calprio3 a,
+.calprio4 a,
+.calprio5 a,
+.calprio6 a,
+.calprio7 a,
+.calprio8 a,
+.calprio9 a {color: #000}
+
+.caltoggle {font-size: 90%}
+
+.opaque {
+	background: #fff;
+	width: auto;
+	border: 1px solid #666;
+	padding: 5px}
+
+.caltitle {
+	font-weight: bold;
+	color: #425262}
+
+.tabcal, .tabnav {}
+
+.tabrow {
+	margin-left: 29px;
+	background: #eee;
+	border: 1px solid #787878;
+	border-bottom: 0;
+	font-size: 11px}
+
+.box-data .tabrow {
+	background: none;
+	border: none;
+	margin: auto;
+}
+
+td.middle {vertical-align: middle}
+
+.calcheckbox {background: #fff}
+
+.calcontent {
+	min-height: 60px;
+	height: auto !important;
+	height: 60px}
+
+/* for jscalendar */
+.Calendar {
+	z-index: 200}
+
+.daterow {margin-left: 10px}
+
+#caltable {width: 100%; font-size: 1em}
+#caltable td {padding: 0}
+
+.day, .day:visited {
+	font-weight: normal;
+	font-size: 1em;
+	color: black}
+
+.today {
+	font-size: 1em;
+	color: black}
+
+.nav {
+	font-size: 1em;
+	color: black}
+
+.changedate {
+	font-size: .9em;
+	color: black}
+
+.date {
+	font-size: 1em;
+	color: black;
+	font-weight: bold}
+
+.calinput {background: #3f3f3f}
+.calfocuson + .calcontent {background: #F5F5F5}
+.days {color: black}
+#caltable .weeks {color: black}
+.addevent {padding: 0 5px; float: right}
+.calodd, .caleven {border: 1px solid #eee; border-collapse: collapse}
+.calodd {background: white}
+.caleven {background: #eee}
+.caldark {background: #e7e7e7}
+.caldark .calfocus {background: inherit}
+.daterow {}
+.daterow:hover {}
+
+/***** Admin *****/
+a.admbox {
+	background: #4281B7;
+	background-repeat: no-repeat;
+	background-position: center}
+
+a.admbox:hover, a.admbox:focus, a.admbox:active  {
+	background: #6CACE2;
+	background-repeat: no-repeat;
+	background-position: center;
+	/*border: 1px solid #6CACE2;*/
+}
+
+a.admbox span {color: white}
+
+
+a.admbox {
+	border: 1px solid #aaa;
+	background: #a8cce2 center no-repeat}
+
+a.admbox:hover, a.admbox:focus, a.admbox:active  {
+	background: #B2B2B2 center no-repeat;
+	border: 1px solid #292929}
+
+a.admbox.off {
+	border: 1px solid #9f9f9f;
+	color: #9f9f9f}
+
+a.admbox.off:hover,
+a.admbox.off:focus,
+a.admbox.off:active {border: 1px solid #9f9f9f}
+
+/* Fixed width rules */
+#main[id] {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+/* End of File */
