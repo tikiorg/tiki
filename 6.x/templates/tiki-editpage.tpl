@@ -17,6 +17,18 @@
 <div class="floatright">
 	{self_link _icon="magnifier" _class="previewBtn" _ajax="n"}{tr}Preview your changes.{/tr}{/self_link}
 </div>
+{jq} $(".previewBtn").click(function(){
+	if ($('#autosave_preview:visible').length === 0) {
+		auto_save_data['editwiki'] = "";
+		auto_save('editwiki', autoSaveId);
+		if (!ajaxPreviewWindow) {
+			$('#autosave_preview').slideDown('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
+		}
+	} else {
+		$('#autosave_preview').slideUp('slow');
+	}
+	return false;
+});{/jq}
 {/if}
 {if $translation_mode eq 'n'}
 	{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{assign var=pp value=$approvedPageName}{else}{assign var=pp value=$page}{/if}
