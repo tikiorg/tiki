@@ -171,21 +171,37 @@ input[type="submit"]:hover,
 
 /***** Site Header & Identity *****/
 #header {
-	min-height: 40px;
+	min-height: 100%;
+	height: 100% !important;
 }
 
-#sitetitles {
+#header_fixedwidth {
+	height: auto;
+}
+
+#top_modules {
+	height: 100%;
+}
+
+#top_modules .box-logo {
+	height: 62px;
+	line-height: 62px;	
+}
+
+#top_modules #sitetitles {
 	font-weight: bold;
+	margin-left: 20px;
+	line-height: normal;
 }
 
 #sitetitle {
-	margin-top: 20px;
+	padding-top: 10px;
 	font-size: 2.4em;
 }
 
 #sitesubtitle {
 	font-size: 1.2em;
-	margin-top: 10px;
+	padding-top: 5px;
 }
 
 #top_modules .siteloginbar_popup {
