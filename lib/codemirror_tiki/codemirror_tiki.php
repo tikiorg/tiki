@@ -17,7 +17,7 @@ function tiki_syntax_highlighter_flex() {
 			
 			$('textarea')
 				.not('#editwiki')
-				.flexableCodeMirror({
+				.flexibleCodeMirror({
 					changeText: '".tra("Change Highlighter")."'
 				});
 		");
