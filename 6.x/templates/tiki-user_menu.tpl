@@ -40,22 +40,22 @@
 	<a class='separator' href="javascript:icntoggle('menu{$cname}');" title="{tr}Toggle options{/tr}">
 		{if $menu_info.type ne 'd'}
 			{if empty($menu_info.icon)}
-				{icon _id="ofolder" alt='Toggle' name="$icon_name"}
+				{icon _id="ofolder" alt='Toggle' name="$icon_name" id="$icon_name"}
 			{else}
-				<img src="{$menu_info.oicon|escape}" alt="{tr}Toggle{/tr}" name="{$icon_name}" />
+				<img src="{$menu_info.oicon|escape}" alt="{tr}Toggle{/tr}" name="{$icon_name}" id="$icon_name" />
 			{/if}
 		{else}
 			{if empty($menu_info.icon)}
 				{if isset($chdata.open) and $chdata.open}
-					{icon _id="ofolder" alt='Toggle' name="$icon_name"}
+					{icon _id="ofolder" alt='Toggle' name="$icon_name" id="$icon_name"}
 				{else}
-					{icon _id="folder" alt='Toggle' name="$icon_name"}
+					{icon _id="folder" alt='Toggle' name="$icon_name" id="$icon_name"}
 				{/if}
 			{else}
 				{if isset($chdata.open) and $chdata.open}
-					<img src="{$menu_info.oicon|escape}" alt="{tr}Toggle{/tr}" name="{$icon_name}" />
+					<img src="{$menu_info.oicon|escape}" alt="{tr}Toggle{/tr}" name="{$icon_name}" id="$icon_name" />
 				{else}
-					<img src="{$menu_info.icon|escape}" alt="{tr}Toggle{/tr}" name="{$icon_name}" />
+					<img src="{$menu_info.icon|escape}" alt="{tr}Toggle{/tr}" name="{$icon_name}" id="$icon_name" />
 				{/if}
 			{/if}
 		{/if}
