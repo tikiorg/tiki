@@ -55,13 +55,14 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 			$smarty_tabset_i_tab = 1;
 		}
 
-		$cookietab = getCookie($smarty_tabset_name, 'tabs', 1);
+		if (!isset($cookietab) || $tabset_index > 1) {
+			$cookietab = getCookie($smarty_tabset_name, 'tabs', 1);
+		}
 		// work out cookie value if there
 		if( isset($_REQUEST['cookietab']) && $tabset_index === 1) {	// overrides cookie if added to request as in tiki-admin.php?page=look&cookietab=6
 			$cookietab = empty($_REQUEST['cookietab']) ? 1 : $_REQUEST['cookietab'];
 			setCookieSection( $smarty_tabset_name, $cookietab, 'tabs' );	// too late to set it here as output has started
 		}
-
 
 		$smarty_tabset_i_tab = 1;
 
@@ -124,7 +125,11 @@ if (ctab) {
 	setCookie("'.$smarty_tabset_name.'", ctab[1],"tabs");
 }');
 		}
-		$headerlib->add_jq_onready('tikitabs(getCookie("'.$smarty_tabset_name.'","tabs",1), $("div[data-name='.$smarty_tabset_name.'] .tabmark:first"));');
+		if ($cookietab != getCookie($smarty_tabset_name, 'tabs', 1)) {	// has been changed by code but now too late to reset
+			$headerlib->add_jq_onready('setCookie("'.$smarty_tabset_name.'","tabs",'.$cookietab.');');
+		} else {
+			$headerlib->add_jq_onready('tikitabs(getCookie("'.$smarty_tabset_name.'","tabs",1), $("div[data-name='.$smarty_tabset_name.'] .tabmark:first"));');
+		}
 
 		$tabset_index--;
 		if ($tabset_index > 0) {

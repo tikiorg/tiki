@@ -6,7 +6,7 @@
 
 <div class="navbar">
 	{if !empty($calendarId) && $tiki_p_admin_calendar eq 'y'}
-		{button _text="{tr}Create Calendar{/tr}" href="tiki-admin_calendars.php?show=mod"}
+		{button _text="{tr}Create Calendar{/tr}" href="tiki-admin_calendars.php?cookietab=2"}
 	{/if}
 	{button _text="{tr}View Calendars{/tr}" href="tiki-calendar.php"}
 	{if $tiki_p_admin_calendar eq 'y'}
@@ -95,9 +95,13 @@
 
 			{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 	{/tab}
-
-	{tab name="{tr}Create / Edit Calendar{/tr}"}
-		<h2>{tr}Create/Edit Calendars{/tr}</h2>
+	{if $calendarId gt 0}
+		{assign var="edtab" value="{tr}Edit Calendar{/tr}"}
+	{else}
+		{assign var="edtab" value="{tr}Create Calendar{/tr}"}
+	{/if}
+	{tab name=$edtab}
+		<h2>{$edtab}</h2>
 
 		<form action="tiki-admin_calendars.php" method="post">
 			<input type="hidden" name="calendarId" value="{$calendarId|escape}" />

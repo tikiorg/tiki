@@ -37,10 +37,10 @@
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
 				<td class="id">
-					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;show=mod" title="{tr}Edit{/tr}">{$channels[user].trackerId}</a>
+					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;cookietab=2" title="{tr}Edit{/tr}">{$channels[user].trackerId}</a>
 				</td>
 				<td class="text">
-					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;show=mod" title="{tr}Edit{/tr}">{$channels[user].name|escape}</a>
+					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;cookietab=2" title="{tr}Edit{/tr}">{$channels[user].name|escape}</a>
 				</td>
 				{if $channels[user].descriptionIsParsed eq 'y'}
 					<td class="text">{wiki}{$channels[user].description}{/wiki}</td>
@@ -51,7 +51,7 @@
 				<td class="date">{$channels[user].lastModif|tiki_short_date}</td>
 				<td class="integer">{$channels[user].items}</td>
 				<td class="action">
-					<a title="{tr}Edit{/tr}" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;show=mod">{icon _id='page_edit'}</a>
+					<a title="{tr}Edit{/tr}" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;cookietab=2">{icon _id='page_edit'}</a>
 					<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 					<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$channels[user].trackerId}">{icon _id='table' alt="{tr}Fields{/tr}"}</a>
 					{if $channels[user].individual eq 'y'}

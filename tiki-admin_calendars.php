@@ -101,6 +101,8 @@ if (isset($_REQUEST["save"])) {
 		$cat_href = "tiki-calendar.php?calIds[]=" . $_REQUEST["calendarId"];
 		include_once("categorize.php");
 	}
+	$cookietab=1;
+	$_REQUEST['calendarId'] = 0;
 }
 if (isset($_REQUEST['clean']) && isset($_REQUEST['days'])) {
 	check_ticket('admin-calendars');

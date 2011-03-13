@@ -51,9 +51,6 @@ if (!empty($_REQUEST['exportTrackerProfile']) && !empty($_REQUEST['trackerId']))
 	die;
 }
 
-if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
-	$cookietab = '2';
-}
 if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();
 	$trklib->remove_tracker($_REQUEST["remove"]);
@@ -369,6 +366,8 @@ if (isset($_REQUEST["save"])) {
 	$cat_href = "tiki-view_tracker.php?trackerId=" . $_REQUEST["trackerId"];
 	$cat_objid = $_REQUEST["trackerId"];
 	include_once ("categorize.php");
+
+	$cookietab = 1;
 }
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $info = array();
@@ -551,8 +550,6 @@ $urlquery['sort_mode'] = $sort_mode;
 $smarty->assign_by_ref('urlquery', $urlquery);
 $smarty->assign_by_ref('cant', $channels['cant']);
 $smarty->assign_by_ref('channels', $channels["data"]);
-setcookie('tab', $cookietab);
-$smarty->assign('cookietab', $cookietab);
 $smarty->assign('uses_tabs', 'y');
 // block for categorization
 include_once ("categorize_list.php");
