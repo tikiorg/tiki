@@ -4887,6 +4887,8 @@ class TrackerLib extends TikiLib
 
 	function get_field_handler($field_info) {
 		switch ($field_info['type']) {
+		case 'c':
+			return new Tracker_Field_Checkbox($field_info);
 		case 'f':
 			return new Tracker_Field_DateTime($field_info);
 		}
@@ -4900,6 +4902,8 @@ class TrackerLib extends TikiLib
 interface Tracker_Field_Interface
 {
 	function getInsertValues(array $requestData);
+
+	function getDisplayValues(array $requestData);
 }
 
 abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
@@ -4930,6 +4934,27 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 	}
 }
 
+class Tracker_Field_Checkbox extends Tracker_Field_Abstract
+{
+	function getInsertValues(array $requestData)
+	{
+		$ins_id = $this->getInsertId();
+
+		return array(
+			'value' => (isset($requestData[$ins_id]) && $requestData[$ins_id] == 'on') ? 'y' : 'n',
+		);
+	}
+
+	function getDisplayValues(array $requestData)
+	{
+		$filter_id = $this->getFilterId();
+
+		return array(
+			'value' => isset($requestData[$filter_id]) ? $requestData[$filter_id] : '',
+		);
+	}
+}
+
 class Tracker_Field_DateTime extends Tracker_Field_Abstract
 {
 	function getInsertValues(array $requestData)
@@ -4945,6 +4970,11 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract
 		}
 
 		return $data;
+	}
+
+	function getDisplayValues(array $requestData)
+	{
+		return null;
 	}
 }
 

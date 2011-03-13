@@ -311,7 +311,9 @@ $smarty->assign('item', array(
 $cat_objid = $_REQUEST['itemId'];
 $cat_type = 'trackeritem';
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
-if ($t = $trklib->get_tracker_options($_REQUEST["trackerId"])) $tracker_info = array_merge($tracker_info, $t);
+if ($t = $trklib->get_tracker_options($_REQUEST["trackerId"])) {
+	$tracker_info = array_merge($tracker_info, $t);
+}
 if (!isset($tracker_info["writerCanModify"]) or (isset($utid) and ($_REQUEST['trackerId'] != $utid['usersTrackerId']))) {
 	$tracker_info["writerCanModify"] = 'n';
 }

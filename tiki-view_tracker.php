@@ -260,8 +260,15 @@ foreach ($xfields['data'] as $i => $current_field) {
 
 		if ($handler) {
 			$insert_values = $handler->getInsertValues($_REQUEST);
+			$field_values = $handler->getDisplayValues($_REQUEST);
 
-			$current_field_ins = array_merge($current_field_ins, $insert_values);
+			if ($insert_values) {
+				$current_field_ins = array_merge($current_field_ins, $insert_values);
+			}
+
+			if ($field_values) {
+				$current_field_fields = array_merge($current_field_fields, $field_values);
+			}
 		} elseif ($current_field_fields["type"] == 'e' && $prefs['feature_categories'] == 'y') { // category
 			$parentId = $current_field_fields['options_array'][0];
 			$all_descends = isset($current_field_fields['options_array'][3]) && $current_field_fields['options_array'][3] == 1;
@@ -328,17 +335,6 @@ foreach ($xfields['data'] as $i => $current_field) {
 			if ($current_field_fields['options_array'][0] == 1 and !$writergroupfield) {
 				$writergroupfield = $fid;
 			} elseif (isset($_REQUEST[$filter_id])) {
-				$current_field_fields["value"] = $_REQUEST[$filter_id];
-			} else {
-				$current_field_fields["value"] = '';
-			}
-		} elseif ($current_field_fields["type"] == 'c') { // checkbox
-			if (isset($_REQUEST[$ins_id]) && $_REQUEST[$ins_id] == 'on') {
-				$current_field_ins["value"] = 'y';
-			} else {
-				$current_field_ins["value"] = 'n';
-			}
-			if (isset($_REQUEST[$filter_id])) {
 				$current_field_fields["value"] = $_REQUEST[$filter_id];
 			} else {
 				$current_field_fields["value"] = '';
