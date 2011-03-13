@@ -255,12 +255,13 @@ foreach ($xfields['data'] as $i => $current_field) {
 	if ($creatorSelector or $current_field['isHidden'] == 'n' or $current_field['isHidden'] == 'c' or $current_field['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($current_field['type'] == 's' and $current_field['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y')) {
 		$current_field_ins = $current_field;
 		$current_field_fields = $current_field;
-		if ($current_field_fields["type"] == 'f') { // date and time
-			if (isset($_REQUEST[$ins_id.'Month']) || isset($_REQUEST[$ins_id.'Hour'])) {
-				$current_field_ins['value'] = $trklib->build_date($_REQUEST, $current_field_fields, $ins_id);
-			} else {
-				$current_field_ins['value'] = $tikilib->now;
-			}
+
+		$handler = $trklib->get_field_handler($current_field);
+
+		if ($handler) {
+			$insert_values = $handler->getInsertValues($_REQUEST);
+
+			$current_field_ins = array_merge($current_field_ins, $insert_values);
 		} elseif ($current_field_fields["type"] == 'e' && $prefs['feature_categories'] == 'y') { // category
 			$parentId = $current_field_fields['options_array'][0];
 			$all_descends = isset($current_field_fields['options_array'][3]) && $current_field_fields['options_array'][3] == 1;

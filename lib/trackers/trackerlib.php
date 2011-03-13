@@ -4385,7 +4385,11 @@ class TrackerLib extends TikiLib
 		$query = "update `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf on (ttif.fieldId = ttf.fieldId) set ttif.`value`=? where ttif.`value`=? and ttf.`type` = ?";
 		$this->query($query, array($new, $old, 'k'));
 	}
-	function build_date($input, $field, $ins_id) {
+	function build_date($input, $format, $ins_id) {
+		if (is_array($format)) {
+			$format = $format['options_array'][0];
+		}
+
 		$tikilib = TikiLib::lib('tiki');
 		$value = '';
 		$monthIsNull = empty($input[$ins_id.'Month']) || $input[$ins_id.'Month'] == null || $input[$ins_id.'Month'] == 'null'|| $input[$ins_id.'Month'] == '';
@@ -4393,13 +4397,13 @@ class TrackerLib extends TikiLib
 		$yearIsNull = empty($input[$ins_id.'Year']) || $input[$ins_id.'Year'] == null || $input[$ins_id.'Year'] == 'null' || $input[$ins_id.'Year'] == '';
 		$hourIsNull = !isset($input[$ins_id.'Hour']) || $input[$ins_id.'Hour'] == null || $input[$ins_id.'Hour'] == 'null' || $input[$ins_id.'Hour'] == ''|| $input[$ins_id.'Hour'] == ' ';
 		$minuteIsNull = empty($input[$ins_id.'Minute']) || $input[$ins_id.'Minute'] == null || $input[$ins_id.'Minute'] == 'null' || $input[$ins_id.'Minute'] == '' || $input[$ins_id.'Minute'] == ' ';
-		if ($field['options_array'][0] == 'd') {
+		if ($format == 'd') {
 			if ($monthIsNull || $dayIsNull || $yearIsNull) { // all the values must be blank
 				$value = '';
 			} else {
 				$value = $tikilib->make_time(0, 0, 0, $input[$ins_id.'Month'], $input[$ins_id.'Day'], $input[$ins_id.'Year']);
 			}
-		} elseif ($field['options_array'][0] == 't') { // all the values must be blank
+		} elseif ($format == 't') { // all the values must be blank
 			if ($hourIsNull || $minuteIsNull) {
 				$value = '';
 			} else {
@@ -4881,8 +4885,66 @@ class TrackerLib extends TikiLib
 		return $this->trackers()->fetchOne('trackerId', array('name' => $name));
 	}
 
+	function get_field_handler($field_info) {
+		switch ($field_info['type']) {
+		case 'f':
+			return new Tracker_Field_DateTime($field_info);
+		}
+	}
+
 	private function parse_comment($data) {
 		return nl2br(htmlspecialchars($data));
+	}
+}
+
+interface Tracker_Field_Interface
+{
+	function getInsertValues(array $requestData);
+}
+
+abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
+{
+	private $definition;
+
+	function __construct($fieldInfo)
+	{
+		$this->definition = $fieldInfo;
+	}
+
+	protected function getInsertId()
+	{
+		return 'ins_' . $this->definition['fieldId'];
+	}
+
+	protected function getFilterId()
+	{
+		return 'filter_' . $this->definition['fieldId'];
+	}
+
+	/**
+	 * Returns an option from the options array based on the numeric position.
+	 */
+	protected function getOption($number)
+	{
+		return isset($this->definition['options_array'][(int) $number]) ? $this->definition['options_array'][(int) $number] : false;
+	}
+}
+
+class Tracker_Field_DateTime extends Tracker_Field_Abstract
+{
+	function getInsertValues(array $requestData)
+	{
+		$ins_id = $this->getInsertId();
+
+		$data = array(
+			'value' => TikiLib::lib('tiki')->now,
+		);
+
+		if (isset($requestData[$ins_id.'Month']) || isset($requestData[$ins_id.'Hour'])) {
+			$data['value'] = TikiLib::lib('trk')->build_date($requestData, $this->getOption(0), $ins_id);
+		}
+
+		return $data;
 	}
 }
 
