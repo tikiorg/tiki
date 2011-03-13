@@ -1424,9 +1424,6 @@ function get_default_prefs() {
 		'mods_dir' => 'mods',
 		'mods_server' => 'http://mods.tiki.org',
 
-		// dev
-		'feature_experimental' => 'n',
-
 		// Action logs
 		'feature_actionlog' => 'n',
 		'feature_actionlog_bytes' => 'n',
