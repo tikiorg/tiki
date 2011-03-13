@@ -185,6 +185,15 @@ class TikiLib extends TikiDb_Bridge
 		case 'queue':
 			require_once 'lib/queuelib.php';
 			return $libraries[$name] = new QueueLib;
+		case 'captcha':
+			global $captchalib; require_once 'lib/captcha/captchalib.php';
+			return $libraries[$name] = $captchalib;
+		case 'groupalert':
+			global $groupalertlib; require_once ('lib/groupalert/groupalertlib.php');
+			return $libraries[$name] = $groupalertlib;
+		case 'validators':
+			global $validatorslib; include_once('lib/validatorslib.php');
+			return $libraries[$name] = $validatorslib;
 		}
 	}
 
