@@ -1,6 +1,11 @@
 <?php
-/* $Id$
- * 
+// (c) Copyright 2002-2011 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
+/* 
  * Simple script to convert html anchors in smarty templates to self_links for ajax (tiki 6)
  * couldn't work out a clever enough regexp so trying in php
  *
@@ -34,7 +39,8 @@ $count_r = 0;
 //	$access->display_error('', 'no tpl');
 //}
 
-function replace_with_self_links($original, $template_base) {
+function replace_with_self_links($original, $template_base)
+{
 	global $count_r;
 
 	preg_match_all('/<a.*?\s*href=[^\.]*\.php[^>]*?>(.*?)<\/a>/mi', $original, $phplinks);
@@ -46,7 +52,7 @@ function replace_with_self_links($original, $template_base) {
 		preg_match_all('/([^=\s]*?)="([^"]*?)"/i', $ahref, $attrs);
 		
 		$str = '{self_link ';
-		for($i = 0; $i < count($attrs[1]); $i++) {
+		for($i = 0, $icount_attrs = count($attrs[1]); $i < $icount_attrs; $i++) {
 			
 			if (strtolower($attrs[1][$i]) == 'href') {
 				$query = parse_url(urldecode(str_replace('&amp;', '&', $attrs[2][$i])));
@@ -71,7 +77,8 @@ function replace_with_self_links($original, $template_base) {
 	return $replaced;
 }
 
-function process_value ($var) {
+function process_value ($var)
+{
 	if (strpos( $var, '{$' ) === 0) {
 		$var =  trim( $var, '{}');
 		$q = '';
