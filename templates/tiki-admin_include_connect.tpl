@@ -18,6 +18,28 @@
 			{tr}To submit a feature request or to report a bug:{/tr} <a href="http://dev.tiki.org/Report+a+Bug">{tr}Click here to go to our development site{/tr}</a> 
 		</fieldset>
 
+		<fieldset>
+			<legend>{tr}Tiki Connect{/tr}</legend>
+			{remarksbox type="info" title="New Feature" icon="bricks"}
+				{tr}Please note: Work in progress, not functioning as yet (r33357){/tr}
+			{/remarksbox}
+			{preference name="connect_feature"}
+			<div class="adminoptionboxchild" id="connect_feature_childcontainer">
+				{preference name="connect_send_info"}
+				<div class="adminoptionboxchild" id="connect_send_info_childcontainer">
+					{preference name="connect_site_title" default=$prefs.browsertitle}
+					{preference name="connect_site_email" default=$def_admin_email}
+					{preference name="connect_site_url" default=$base_url}
+					{preference name="connect_site_keywords" default=$prefs.metatag_keywords}
+					{preference name="connect_site_location" default=$def_loc}
+				</div>
+				{preference name="connect_frequency"}
+				{preference name="connect_server"}
+				{*preference name="connect_last_post"*}
+			</div>
+
+		</fieldset>
+
 		<div class="heading input_submit_container" style="text-align: center;">
 			<input type="submit" value="{tr}Change preferences{/tr}" />
 		</div>

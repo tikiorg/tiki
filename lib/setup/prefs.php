@@ -1911,6 +1911,19 @@ function get_default_prefs() {
 		'zotero_client_key' => '',
 		'zotero_client_secret' => '',
 		'zotero_group_id' => '',
+
+		// Tiki Connect
+		'connect_feature' => 'n',	// to be enabled by default when working for Tiki 7
+		'connect_frequency' => '168',
+		'connect_server' => 'http://mother.tiki.org/tiki-connect.php',
+		'connect_last_post' => '',
+		'connect_send_info' => 'y',
+		'connect_site_title' => '',
+		'connect_site_email' => '',
+		'connect_site_url' => '',
+		'connect_site_keywords' => '',
+		'connect_site_location' => '',
+
 	);
 
 	// Special default values

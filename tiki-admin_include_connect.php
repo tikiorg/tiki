@@ -14,3 +14,7 @@ if (isset($_REQUEST["connectcomprefs"])) {
 	check_ticket('admin-inc-connect');
 }
 ask_ticket('admin-inc-connect');
+
+global $userlib;
+$smarty->assign('def_admin_email', $userlib->get_admin_email());
+$smarty->assign('def_loc', $prefs['gmap_defaultx'] . ',' . $prefs['gmap_defaulty'] . ',' .$prefs['gmap_defaultz']);

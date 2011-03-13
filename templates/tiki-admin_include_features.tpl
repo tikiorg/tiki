@@ -213,6 +213,7 @@
 						{preference name=mobile_use_latest_lib}
 						</fieldset>
 					</div>
+					{preference name=connect_feature}
 				</fieldset>
 
 				<fieldset>
