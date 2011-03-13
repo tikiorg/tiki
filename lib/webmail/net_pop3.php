@@ -744,10 +744,6 @@ class Net_POP3
                     $headers[$name] = $value;
                 }
             }
-            // Fix up Message-ID header
-			if (!array_key_exists('Message-ID',$headers)) {
-				
-			}
             return $headers;
         }
 

@@ -6262,10 +6262,10 @@ if( \$('#$id') ) {
 											$in_empty_paragraph = 0;
 										}
 										$line = "<br />" . $line;
-									} else {
-										// A normal in-paragraph line or a consecutive blank line.
-										// Leave it as is.
-									}
+									} // else {
+									  // A normal in-paragraph line or a consecutive blank line.
+									  // Leave it as is.
+									  // }
 								}
 							} elseif (($prefs['wysiwyg_htmltowiki'] === 'y' && !empty($tline) && strpos($tline, '<br />') === false) || !$options['is_html']) {
 								$line .= "<br />";

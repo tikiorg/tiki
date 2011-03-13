@@ -160,16 +160,23 @@ class TikiSheet
 	var $rangeBeginCol = -1;
 	var $rangeEndCol = -1;
 	
-	function getRangeBeginRow() {
+	function getRangeBeginRow()
+	{
 		return $this->rangeBeginRow > -1 ? $this->rangeBeginRow : 0;
 	}
-	function getRangeEndRow() {
+
+	function getRangeEndRow()
+	{
 		return $this->rangeEndRow > -1 ? $this->rangeEndRow : $this->getRowCount();
 	}
-	function getRangeBeginCol() {
+
+	function getRangeBeginCol()
+	{
 		return $this->rangeBeginCol > -1 ? $this->rangeBeginCol : 0;
 	}
-	function getRangeEndCol() {
+
+	function getRangeEndCol()
+	{
 		return $this->rangeEndCol > -1 ? $this->rangeEndCol : $this->getColumnCount();
 	}
 	
@@ -332,7 +339,8 @@ class TikiSheet
 	 * @param bool $incsubs Include sub-sheets
 	 * @param timestamp $date Date (revision) to read sub-sheets from
 	 */
-	function getTableHtml( $incsubs = true, $date = null, $fromDb = true ) {
+	function getTableHtml( $incsubs = true, $date = null, $fromDb = true )
+	{
 		global $prefs, $sheetlib;
 		
 		$handler = new TikiSheetOutputHandler(null, ($this->parseValues == 'y' && $_REQUEST['parse'] != 'n'));
@@ -502,7 +510,8 @@ class TikiSheet
 	 * Limits display (so far)
 	 * a given range (ex: A1:B9)
 	 */
-	function setRange( $range ) {
+	function setRange( $range )
+	{
 		if( preg_match( '/^([A-Z]+)([0-9]+):([A-Z]+)([0-9]+)$/', strtoupper($range), $parts ) ) {
 			$this->rangeBeginRow = $parts[2] - 1;
 			$this->rangeEndRow = $parts[4] - 1;
@@ -519,13 +528,15 @@ class TikiSheet
 		return $this->rowCount;
 	}
 	
-	function getTitle() {
+	function getTitle()
+	{
 		global $sheetlib;
 		$info = $sheetlib->get_sheet_info($this->sheetId);
 		return $info['title'];
 	}
 	
-	function getInstance() {
+	function getInstance()
+	{
 		return $this->instance;
 	}
 	
@@ -784,7 +795,8 @@ class TikiSheetDataHandler
 		trigger_error( "Abstract method call. version() not defined in " . get_class( $this ), E_USER_ERROR );
 	}
 	
-	function parseCsv( &$sheet ) {
+	function parseCsv( &$sheet )
+	{
 		$rows = explode("\n", $this->data);
 		for($i = 0; $i < count($rows) && $i < $this->maxrows; $i++) {
 			$cols = preg_split("/[,;](?!(?:[^\\\",;]|[^\\\"],[^\\\"])+\\\")/", $rows[$i]);
@@ -2168,7 +2180,8 @@ class TikiSheetHTMLTableHandler extends TikiSheetDataHandler
 	}
 
 	// _load {{{2
-	function _load( TikiSheet &$sheet ) {
+	function _load( TikiSheet &$sheet )
+	{
 
 		$d = $this->data;
 		
@@ -2359,13 +2372,15 @@ class SheetLib extends TikiLib
 		return $sheetId;
 	}
 	
-	function set_sheet_title( $sheetId, $title ) {
+	function set_sheet_title( $sheetId, $title )
+	{
 		if ( $sheetId ) {
 			$this->query( "UPDATE `tiki_sheets` SET `title` = ? WHERE `sheetId` = ?", array( $title, $sheetId ) );
 		}
 	}
 	
-	function setup_jquery_sheet() {
+	function setup_jquery_sheet()
+	{
 		global $headerlib;
 		if (!$this->setup_jQuery_sheet_files) {
 			$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/jquery.sheet.css' );
@@ -2386,7 +2401,8 @@ class SheetLib extends TikiLib
 		}
 	}
 	
-	function sheet_history( $sheetId ) {
+	function sheet_history( $sheetId )
+	{
 		return $this->fetchAll( "
 			SELECT DISTINCT
 				`tiki_sheet_values`.`begin` as stamp,
@@ -2398,7 +2414,8 @@ class SheetLib extends TikiLib
 			ORDER BY begin DESC", array( $sheetId, $sheetId ) );
 	}
 	
-	function rollback_sheet($id, $readdate=null) {
+	function rollback_sheet($id, $readdate=null)
+	{
 		global $user, $sheetlib;
 		
 		if ($readdate) {
@@ -2437,7 +2454,8 @@ class SheetLib extends TikiLib
 		return $id;
 	}
 	
-	function clone_sheet( $sheetId, $readdate = null, $parentSheetId = 0) {
+	function clone_sheet( $sheetId, $readdate = null, $parentSheetId = 0)
+	{
 		global $user, $prefs;
 		
 		if (!isset($readdate)) {
@@ -2520,7 +2538,8 @@ class SheetLib extends TikiLib
 		return true;
 	}
 	
-	function save_sheet($data, $id, $file, $type = 'db') {
+	function save_sheet($data, $id, $file, $type = 'db')
+	{
 		global $user, $sheetlib;
 		
 		$sheets =  json_decode($data);
@@ -2558,8 +2577,8 @@ class SheetLib extends TikiLib
 					}
 				}
 			}
-		} else {
-			/*
+		} /*else {
+			
 			$grid = new TikiSheet();
 			if ($type == 'csv') {
 				foreach ($sheets as $sheet) {
@@ -2577,8 +2596,8 @@ class SheetLib extends TikiLib
 						$rc .= tra("file - ").$file;
 					}
 				}
-			}*/
-		}
+			}
+		}*/
 		return ($res ?  tra('Saved'). ': ' . $rc : tra('Save failed'));
 	}
 	
@@ -2587,7 +2606,8 @@ class SheetLib extends TikiLib
 	 * @param $style A simple css style string used with an html dom object
 	 * @param $attr The name of the css attribute you'd like to extract from $style
 	 */
-	function get_attr_from_css_string($style, $attr, $default) {
+	function get_attr_from_css_string($style, $attr, $default)
+	{
 		global $sheetlib;
 		$style = strtolower($style);
 		$style = str_replace(' ', '', $style);
@@ -2759,13 +2779,15 @@ class SheetLib extends TikiLib
 		return array($result1, $result2);
 	}
 	
-	function user_can_view($sheetId) {
+	function user_can_view($sheetId)
+	{
 		global $user;
 		$objectperms = Perms::get( 'sheet', $sheetId );
 		return ( $objectperms->view_sheet || $objectperms->admin );
 	}
 	
-	function user_can_edit($sheetId) {
+	function user_can_edit($sheetId)
+	{
 		global $user;
 		$objectperms = Perms::get( 'sheet', $sheetId );
 		return ( $objectperms->edit_sheet || $objectperms->admin );

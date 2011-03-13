@@ -217,7 +217,6 @@ foreach($accs['data'] as $acc) {
 									}
 								}
 								mailin_check_attachments($output, $content, $page, $aux["sender"]["user"]);
-							} elseif ($acc['type'] == 'wiki-put' || ($acc['type'] == 'wiki' && $method == "PUT")) {
 							} elseif ($acc['type'] == 'wiki-append' || $acc['type'] == 'wiki-prepend' || ($acc['type'] == 'wiki' && $method == "APPEND") || ($acc['type'] == 'wiki' && $method == "PREPEND")) {
 								// This is used to UPDATE wiki pages
 								$body = mailin_get_body($output);

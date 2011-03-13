@@ -23,5 +23,3 @@ function smarty_modifier_currency($string, $dec_point=',', $thousands='.')
 {
   return number_format($string, 2, $dec_point, $thousands);
 }
-
-?>

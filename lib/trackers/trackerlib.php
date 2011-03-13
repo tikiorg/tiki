@@ -1756,10 +1756,6 @@ class TrackerLib extends TikiLib
 				}
 				$the_data .=  "\n----------\n";
 
-			} else if (! in_array($array["type"], array('u', 'g', 'I')) && isset($array['isHidden']) && ($array["isHidden"] == 'p' or $array["isHidden"] == 'y')and $tiki_p_admin_trackers != 'y') {
-				// hidden field type require tracker amdin perm
-			} elseif (empty($array["fieldId"])) {
-				// can have been unset for a user field
 			} else {
 				// -----------------------------
 				// save image on disk

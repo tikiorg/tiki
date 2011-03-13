@@ -214,8 +214,6 @@ if (isset($_REQUEST['bothver_idx'])) {
 	$_REQUEST['newver_idx'] = $_REQUEST['bothver_idx'];
 	if ($_REQUEST['show_all_versions'] == 'n' && !empty($history_sessions[$_REQUEST['bothver_idx']])) {
 		$_REQUEST['oldver_idx'] = $_REQUEST['bothver_idx'];
-	} else {
-		//$_REQUEST['oldver_idx'] = $_REQUEST['bothver_idx'] - 2;
 	}
 }
 if (isset($_REQUEST['newver_idx'])) {

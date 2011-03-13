@@ -128,7 +128,6 @@ if (isset($_REQUEST['send'])) {
         }
 		
         $smarty->assign('sentresult', true);
-    } else {
     }
     $smarty->assign('emails', $emails);
 }
