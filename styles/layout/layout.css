@@ -1933,6 +1933,9 @@ ul.freetagged li {
 /***** TikiSheets *****/
 .tiki_sheet table td { /* override .tabcontent table td */
 	padding: 0;
+	border-color: #909090;
+	border-width: 1px;
+	border-style: solid;
 }
 
 .plugin-desc {
