@@ -1,13 +1,7 @@
 {title help="Adding+fields+to+a+tracker" url="tiki-admin_tracker_fields.php?trackerId=$trackerId"}{tr}Admin Tracker:{/tr} {$tracker_info.name|escape}{/title}
 
 <div class="navbar">
-	{button href="tiki-list_trackers.php" _text="{tr}List Trackers{/tr}"}
-	
-	{if $tiki_p_admin_trackers eq 'y'}
-		{button href="tiki-admin_trackers.php" _text="{tr}Admin Trackers{/tr}"}
-		{button href="tiki-admin_trackers.php?trackerId=$trackerId&cookietab=2" _text="{tr}Edit This Tracker{/tr}"}
-	{/if}
-	{button href="tiki-view_tracker.php?trackerId=$trackerId" _text="{tr}View This Tracker's Items{/tr}"}
+	{include file="tracker_actions.tpl"}
 </div>
 
 {tabset}

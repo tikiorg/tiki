@@ -1,13 +1,7 @@
 {title help="Trackers" admpage="trackers"}{tr}Admin Trackers{/tr}{/title}
 
 <div class="navbar">
-	{if  $tiki_p_list_trackers eq 'y'}
-		 {button href="tiki-list_trackers.php" _text="{tr}List Trackers{/tr}"}
-	{/if}
-	{if $trackerId}
-		{button href="tiki-admin_tracker_fields.php?trackerId=$trackerId" _text="{tr}Edit This Tracker's Fields{/tr}"}
-		{button href="tiki-view_tracker.php?trackerId=$trackerId" _text="{tr}View This Tracker's Items{/tr}"}
-	{/if}
+	{include file="tracker_actions.tpl"}
 </div>
 
 {tabset name='tabs_admtrackers'}

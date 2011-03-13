@@ -18,23 +18,7 @@
 		<a href="tiki-tracker_rss.php?trackerId={$trackerId}">{icon _id='feed' align="right" hspace="1" alt="{tr}RSS feed{/tr}"}</a>
 	{/if}
 
-	{if (isset($tiki_p_list_trackers) and $tiki_p_list_trackers eq 'y') or (!isset($tiki_p_list_trackers) and $tiki_p_view_trackers eq 'y')}
-		{button href="tiki-list_trackers.php" _text="{tr}List Trackers{/tr}"}
-	{/if}
-
-	{if $tiki_p_create_tracker_items eq 'y' && $prefs.feature_tabs ne 'y'}
-		{button href="tiki-view_tracker.php?trackerId=$trackerId#content2" _text="{tr}Insert New Item{/tr}"}
-	{/if}
-
-	{if $filtervalue}
-		{button href="tiki-view_tracker.php?trackerId=$trackerId" _text="{tr}View This Tracker's Items{/tr}"}
-	{/if}
-
-	{if $tiki_p_admin_trackers eq 'y'}
-		{button href="tiki-admin_trackers.php" _text="{tr}Admin Trackers{/tr}"}
-		{button href="tiki-admin_trackers.php?trackerId=$trackerId&cookietab=2" _text="{tr}Edit This Tracker{/tr}"}
-		{button href="tiki-admin_tracker_fields.php?trackerId=$trackerId" _text="{tr}Edit Fields{/tr}"}
-	{/if}
+	{include file="tracker_actions.tpl"}
 </div>
 
 <div class="categbar" align="right">

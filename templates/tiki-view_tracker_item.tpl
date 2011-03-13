@@ -6,32 +6,18 @@
 
 {* --------- navigation ------ *}
 <div class="navbar">
-	 {if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-	 	 <a href="tiki-object_watches.php?objectId={$itemId|escape:"url"}&amp;watch_event=tracker_item_modified&amp;objectType=tracker+{$trackerId}&amp;objectName={$tracker_info.name|escape:"url"}&amp;objectHref={'tiki-view_tracker_item.php?trackerId='|cat:$trackerId|cat:'&itemId='|cat:$itemId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}" align='right' hspace='1'}</a>
+	{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+		<a href="tiki-object_watches.php?objectId={$itemId|escape:"url"}&amp;watch_event=tracker_item_modified&amp;objectType=tracker+{$trackerId}&amp;objectName={$tracker_info.name|escape:"url"}&amp;objectHref={'tiki-view_tracker_item.php?trackerId='|cat:$trackerId|cat:'&itemId='|cat:$itemId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}" align='right' hspace='1'}</a>
 	{/if}
-  {if $prefs.feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y'}
-    {if $user_watching_tracker ne 'y'}
-      <a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;watch=add" title="{tr}Monitor{/tr}">{icon _id='eye' align="right" hspace="1" alt="{tr}Monitor{/tr}"}</a>
-    {else}
-      <a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}">{icon _id='no_eye' align="right" hspace="1" alt="{tr}Stop Monitor{/tr}"}</a>
-    {/if}
-  {/if}
+	{if $prefs.feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y'}
+		{if $user_watching_tracker ne 'y'}
+			<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;watch=add" title="{tr}Monitor{/tr}">{icon _id='eye' align="right" hspace="1" alt="{tr}Monitor{/tr}"}</a>
+		{else}
+			<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}">{icon _id='no_eye' align="right" hspace="1" alt="{tr}Stop Monitor{/tr}"}</a>
+		{/if}
+	{/if}
 	{self_link print='y'}{icon _id='printer' align='right' hspace='1' alt="{tr}Print{/tr}"}{/self_link}
-
-  {if $tiki_p_list_trackers eq 'y' or $tiki_p_admin_trackers eq 'y'}
-		{button href="tiki-list_trackers.php" _text="{tr}List Trackers{/tr}"}
-  {/if}
-
-  {if $tiki_p_view_trackers eq 'y'}
-		{button href="tiki-view_tracker.php?trackerId=$trackerId" _auto_args="status,sort_mode" _text="{tr}View This Tracker's Items{/tr}"}
-  {/if}
-
-  {if $tiki_p_admin_trackers eq 'y'}
-    &nbsp;&nbsp;
-		{button href="tiki-admin_trackers.php" _text="{tr}Admin Trackers{/tr}"}
-		{button href="tiki-admin_trackers.php?trackerId=$trackerId&cookietab=2" _text="{tr}Edit This Tracker{/tr}"}
-		{button href="tiki-admin_tracker_fields.php?trackerId=$trackerId" _text="{tr}Edit Fields{/tr}"}
-  {/if}
+	{include file="tracker_actions.tpl"}
 </div>
 
 <div class="categbar" align="right">

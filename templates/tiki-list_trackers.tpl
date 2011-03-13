@@ -1,9 +1,7 @@
 {title help="Trackers" admpage="trackers"}{tr}Trackers{/tr}{/title}
 
 <div class="navbar">
-	{if $tiki_p_admin_trackers eq 'y'}
-		{button href="tiki-admin_trackers.php?cookietab=2" _text="{tr}Create Tracker{/tr}"}
-	{/if}
+	{include file="tracker_actions.tpl"}
 </div>
 
 {if ($channels) or ($find)}
