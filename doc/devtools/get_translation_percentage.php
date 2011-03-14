@@ -61,6 +61,7 @@ if ($return_var == 1) {
 
 // calculate the percentage for each language.php
 $outputData = array();
+$globalStats = array();
 
 // $langmapping is set on lang/langmapping.php
 foreach ($langmapping as $lang => $null) {
@@ -84,12 +85,22 @@ foreach ($langmapping as $lang => $null) {
 			}
 		}
 		
+		$percentage = round($translated / $total, 4) * 100;
+		
 		$outputData[$lang] = array(
 			'total' => $total,
 			'untranslated' => $untranslated,
 			'translated' => $translated,
-			'percentage' => round($translated / $total, 4) * 100,
+			'percentage' => $percentage,
 		);
+		
+		if ($percentage >= 70) {
+			$globalStats['70+']++; 
+		} else if ($percentage >= 30) {
+			$globalStats['30+']++;
+		} else if ($percentage < 30) {
+			$globalStats['0+']++;
+		}
 	}
 }
 
@@ -99,6 +110,7 @@ $output = "! Status of Tiki translations\n";
 $output .= "Page last modified on " . $tikilib->date_format($prefs['long_date_format']) . "\n\n";
 $output .= "This page is generated automatically. Please do not change it.\n\n";
 $output .= "The total number of strings is different for each language due to unused translations present in the language.php files.\n\n";
+$output .= "__Global stats:__\n* {$globalStats['70+']} languages with more than 70% translated\n* {$globalStats['30+']} languages with more than 30% translated\n* {$globalStats['0+']} languages with less than 30% translated\n\n";
 $output .= "{FANCYTABLE(head=\"Language code (ISO)|English name|Native Name|Completion|Percentage|Number of strings\" sortable=\"y\")}\n";
 
 foreach ($outputData as $lang => $data) {
