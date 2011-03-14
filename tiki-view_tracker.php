@@ -269,25 +269,6 @@ foreach ($xfields['data'] as $i => $current_field) {
 			if ($field_values) {
 				$current_field_fields = array_merge($current_field_fields, $field_values);
 			}
-		} elseif ($current_field_fields["type"] == 'e' && $prefs['feature_categories'] == 'y') { // category
-			$parentId = $current_field_fields['options_array'][0];
-			$all_descends = isset($current_field_fields['options_array'][3]) && $current_field_fields['options_array'][3] == 1;
-
-			//affects dropdown list of categories in tiki-view_tracker.php Insert New Item
-			$current_field_fields['categories'] = $categlib->get_viewable_child_categories($parentId, $all_descends);
-			$categId = "ins_cat_$fid";
-			if (isset($_REQUEST[$categId])) {
-				if (is_array($_REQUEST[$categId])) {
-					foreach($_REQUEST[$categId] as $c) {
-						$current_field_fields['cat'][$c] = 'y';
-					}
-					$ins_categs = array_merge($ins_categs, $_REQUEST[$categId]);
-				} else {
-					$current_field_fields['cat'][$_REQUEST[$categId]] = 'y';
-					$ins_categs[] = $_REQUEST[$categId];
-				}
-			}
-			$current_field_ins["value"] = '';
 		} elseif ($current_field_fields["type"] == 'u') { // user selection
 			if (isset($_REQUEST[$ins_id]) and $_REQUEST[$ins_id] and (!$current_field_fields['options_array'][0] or $tiki_p_admin_trackers == 'y')) {
 				$current_field_ins["value"] = $_REQUEST[$ins_id];

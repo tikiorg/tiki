@@ -5208,6 +5208,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 		$parentId = $this->getOption(0);
 
 		return array(
+			'categories' => $this->getApplicableCategories(),
 			$parentId => $this->getApplicableCategories(),
 		);
 	}
