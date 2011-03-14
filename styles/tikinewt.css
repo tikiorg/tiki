@@ -285,6 +285,11 @@ label {
 	padding-top: 2px;
 }
 
+#top_modules #sitetitles {
+	margin-left: 20px;
+	padding-bottom: 10px;
+}
+
 #sitetitles {
 	font-weight: bold;
 }
@@ -310,25 +315,29 @@ label {
 	font-size: 90%;
 }
 
-#siteloginbar.logged-in {
+.siteloginbar.logged-in {
 	bottom: 3px;
 }
 
-#siteloginbar div {
+.siteloginbar div {
 	text-align: right;
 }
 
-#siteloginbar_popup {
+.siteloginbar_popup {
 	bottom: 4px;
 }
 
-#siteloginbar_popup li.login_link {
+.siteloginbar_popup .tabmark {
+	float: left;
+}
+
+.siteloginbar_popup li.login_link {
 	border: 1px solid #8cacbb;
 	padding: 0;
 }
 
-#siteloginbar_popup .cssmenu_horiz li ul {
-	margin-top: -4px;
+.siteloginbar_popup .cssmenu_horiz li ul {
+	margin-top: 5px;
 }
 
 #tiki-top {
@@ -348,6 +357,7 @@ label {
 	font-size: .95em;
 	text-align: right;
 	float: right;
+	margin-right: 20px;
 }
 
 /****** Menus, Links ******/
