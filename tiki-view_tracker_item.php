@@ -384,9 +384,19 @@ foreach($xfields["data"] as $i => $current_field) {
 	} elseif ($current_field['isHidden'] == 'n' or $current_field['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($current_field['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
 		$current_field_ins = $current_field;
 		$current_field_fields = $current_field;
-		if ($current_field_fields["type"] == 'f') {
-			if (isset($_REQUEST[$ins_id.'Month']) || isset($_REQUEST[$ins_id.'Hour'])) { // new value
-				$current_field_ins['value'] = $trklib->build_date($_REQUEST, $current_field_fields, $ins_id);
+
+		$handler = $trklib->get_field_handler($current_field);
+
+		if ($handler) {
+			$insert_values = $handler->getInsertValues($_REQUEST);
+			$field_values = $handler->getDisplayValues($_REQUEST);
+
+			if ($insert_values) {
+				$current_field_ins = array_merge($current_field_ins, $insert_values);
+			}
+
+			if ($field_values) {
+				$current_field_fields = array_merge($current_field_fields, $field_values);
 			}
 		} elseif ($current_field_fields["type"] == 'e') {
 			$categlib = TikiLib::lib('categ');
@@ -397,17 +407,6 @@ foreach($xfields["data"] as $i => $current_field) {
 				$ins_categs = array_merge($ins_categs, $_REQUEST[$categId]);
 			}
 			$current_field_ins["value"] = '';
-		} elseif ($current_field_fields["type"] == 'c') {
-			if (isset($_REQUEST[$ins_id]) && $_REQUEST[$ins_id] == 'on') {
-				$current_field_ins["value"] = 'y';
-			} else {
-				$current_field_ins["value"] = 'n';
-			}
-			if (isset($_REQUEST[$filter_id])) {
-				$current_field_fields["value"] = $_REQUEST[$filter_id];
-			} else {
-				$current_field_fields["value"] = '';
-			}
 		} elseif ($current_field_fields["type"] == 'u' and isset($current_field_fields['options_array'][0]) and $user) {
 			if (isset($_REQUEST[$ins_id]) and ($current_field_fields['options_array'][0] < 1 or $tiki_p_admin_trackers == 'y')) {
 				$current_field_ins["value"] = $_REQUEST[$ins_id];
@@ -512,16 +511,6 @@ foreach($xfields["data"] as $i => $current_field) {
 					}
 				}
 			}
-		} elseif ($current_field_fields["type"] == 'y') { // country list
-			if (isset($_REQUEST[$ins_id])) {
-				$current_field_ins["value"] = $_REQUEST[$ins_id];
-			}
-			// Get flags here
-			if (isset($current_field_ins['options_array'][1]) && $current_field_ins['options_array'][1] == 1) {
-				$current_field_ins['flags'] = $trklib->get_flags(true, true, false); // Sort in english names order
-			} else {
-				$current_field_ins['flags'] = $trklib->get_flags(true, true, true); // Sort in translated names order (default)
-			}
 		} else {
 			if (isset($_REQUEST[$ins_id])) {
 				$current_field_ins["value"] = $_REQUEST[$ins_id];
@@ -571,23 +560,6 @@ foreach($xfields["data"] as $i => $current_field) {
 					$current_field_ins["file_type"] = $_FILES[$ins_id]['type']; //mime_content_type( $_FILES[$ins_id]['tmp_name'] );
 					$current_field_ins["file_size"] = $_FILES[$ins_id]['size'];
 					$current_field_ins["file_name"] = $_FILES[$ins_id]['name'];
-				}
-			}
-			if (($current_field_fields["isMultilingual"] == 'y') && $current_field_fields["type"] == 't') {
-				$current_field_ins['isMultilingual'] = 'y';
-				foreach($prefs['available_languages'] as $num => $lang) {
-					//Case convert normal -> multilingual
-					if (!isset($_REQUEST[$ins_id][$lang]) && isset($_REQUEST[$fid])) {
-						$_REQUEST["$fid$lang"] = $_REQUEST[$fid];
-					}
-					$current_field_ins['lingualvalue'][$num]['lang'] = $lang;
-					if (isset($_REQUEST[$ins_id][$lang])) {
-						$current_field_ins['lingualvalue'][$num]['value'] = $_REQUEST[$ins_id][$lang];
-					}
-					$current_field_ins['lingualpvalue'][$num]['lang'] = $lang;
-					if (isset($_REQUEST[$ins_id][$lang])) {
-						$current_field_ins['lingualpvalue'][$num]['value'] = $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id][$lang]));
-					}
 				}
 			}
 		}

@@ -5000,6 +5000,7 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract
 
 		$data = array(
 			'value' => isset($requestData[$ins_id]) ? $requestData[$ins_id] : '',
+			'flags' => TikiLib::lib('trk')->get_flags(true, true, ($this->getOption(1) != 1)),
 		);
 		
 		return $data;
@@ -5036,12 +5037,14 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
 	protected function processMultilingual($requestData, $id_string) {
 		global $prefs;
 
-		$data = array();
-
 		if (!isset($requestData[$id_string])) {
 			$requestData[$id_string] = '';
 		}
-		$data['value'] = $requestData[$id_string];
+
+		$data = array(
+			'value' => $requestData[$id_string],
+			'pvalue' => TikiLib::lib('tiki')->parse_data(htmlspecialchars($requestData[$id_string])),
+		);
 
 		if ($this->get("isMultilingual") == 'y') {
 			$data['isMultilingual'] = 'y';
@@ -5071,13 +5074,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 
 	function getDisplayValues(array $requestData)
 	{
-		global $textarea_options;
-
 		$data = $this->processMultilingual($requestData, $this->getFilterId());
-
-		if ($this->getOption(0)) {
-			$textarea_options = true;
-		}
 
 		return $data;
 	}
