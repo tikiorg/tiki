@@ -17,7 +17,6 @@ function wikiplugin_tracker_info()
 		'description' => tra('Create a form in a wiki page to populate a tracker'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_tracker' ),
 		'body' => tra('Confirmation message after posting form'),
-		'icon' => 'pics/icons/database.png',
 		'icon' => 'pics/icons/application_form.png',
 		'params' => array(
 			'trackerId' => array(
