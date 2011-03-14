@@ -4893,6 +4893,8 @@ class TrackerLib extends TikiLib
 			return new Tracker_Field_Checkbox($field_info);
 		case 'f':
 			return new Tracker_Field_DateTime($field_info);
+		case 't':
+			return new Tracker_Field_Text($field_info);
 		case 'y':
 			return new Tracker_Field_CountrySelector($field_info);
 		}
@@ -5011,7 +5013,7 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract
 	}
 }
 
-class Tracker_Field_TextArea extends Tracker_Field_Abstract
+class Tracker_Field_Text extends Tracker_Field_Abstract
 {
 	function getInsertValues(array $requestData)
 	{
@@ -5021,19 +5023,13 @@ class Tracker_Field_TextArea extends Tracker_Field_Abstract
 	}
 
 	function getDisplayValues(array $requestData)
-	{
-		global $textarea_options;
-		
+	{		
 		$data = $this->processMultilingual($requestData, $this->getFilterId());
-
-		if ($this->getOption(0)) {
-			$textarea_options = true;
-		}
 
 		return $data;
 	}
 
-	private function processMultilingual($requestData, $id_string) {
+	protected function processMultilingual($requestData, $id_string) {
 		global $prefs;
 
 		$data = array();
@@ -5059,6 +5055,31 @@ class Tracker_Field_TextArea extends Tracker_Field_Abstract
 		return $data;
 	}
 }
+
+class Tracker_Field_TextArea extends Tracker_Field_Text
+{
+	function getInsertValues(array $requestData)
+	{
+		$data = $this->processMultilingual($requestData, $this->getInsertId());
+
+		return $data;
+	}
+
+	function getDisplayValues(array $requestData)
+	{
+		global $textarea_options;
+
+		$data = $this->processMultilingual($requestData, $this->getFilterId());
+
+		if ($this->getOption(0)) {
+			$textarea_options = true;
+		}
+
+		return $data;
+	}
+
+}
+
 
 global $trklib;
 $trklib = new TrackerLib;

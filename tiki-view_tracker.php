@@ -400,24 +400,6 @@ foreach ($xfields['data'] as $i => $current_field) {
 					$current_field_ins["file_size"] = $_FILES[$ins_id]['size'];
 					$current_field_ins["file_name"] = $_FILES[$ins_id]['name'];
 				}
-			} elseif (($current_field_fields["type"] == 't') && ($current_field_fields["isMultilingual"] == 'y')) {
-				$current_field_ins['isMultilingual'] = 'y';
-				foreach($prefs['available_languages'] as $num => $tmplang) {
-					//Case convert normal -> multilingual
-					if (!isset($_REQUEST[$ins_id][$tmplang]) && isset($_REQUEST[$ins_id])) {
-						$_REQUEST[$ins_id][$tmplang] = $_REQUEST[$ins_id];
-					}
-					$current_field_fields['lingualvalue'][$num]['lang'] = $tmplang;
-					if (isset($_REQUEST[$ins_id][$tmplang])) {
-						$current_field_fields['lingualvalue'][$num]['value'] = $_REQUEST[$ins_id][$tmplang];
-					}
-					$current_field_fields['lingualpvalue'][$num]['lang'] = $tmplang;
-					if (isset($_REQUEST[$ins_id][$tmplang])) {
-						$current_field_fields['lingualpvalue'][$num]['value'] = $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id][$tmplang]));
-					}
-				}
-				$current_field_ins['lingualpvalue'] = $current_field_fields['lingualpvalue'];
-				$current_field_ins['lingualvalue'] = $current_field_fields['lingualvalue'];
 			}
 		}
 	}
