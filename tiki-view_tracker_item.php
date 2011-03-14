@@ -355,7 +355,7 @@ $ins_fields = array();
 $usecategs = false;
 $ins_categs = array();
 $textarea_options = false;
-$tabi = 1;
+$cookietab = 1;
 $itemUser = $trklib->get_item_creator($_REQUEST['trackerId'], $_REQUEST['itemId']);
 $smarty->assign_by_ref('itemUser', $itemUser);
 $plugins_loaded = false;
@@ -619,12 +619,12 @@ if (($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item
 			$trklib->categorized_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $mainvalue, $ins_categs);
 		} else {
 			$error = $ins_fields;
-			$tabi = "2";
+			$cookietab = "2";
 			if ($tracker_info['useAttachments'] == 'y') {
-				++$tabi;
+				++$cookietab;
 			}
 			if ($tracker_info['useComments'] == 'y') {
-				++$tabi;
+				++$cookietab;
 			}
 			$smarty->assign('input_err', '1'); // warning to display
 			// can't go back if there are errors
@@ -1018,7 +1018,7 @@ if ($tracker_info["useComments"] == 'y') {
 		$comment_info = $trklib->get_item_comment($_REQUEST["commentId"]);
 		$smarty->assign('comment_title', $comment_info["title"]);
 		$smarty->assign('comment_data', $comment_info["data"]);
-		$tabi = 2;
+		$cookietab = 2;
 	} else {
 		$_REQUEST["commentId"] = 0;
 		$smarty->assign('comment_title', '');
@@ -1125,20 +1125,18 @@ if (isset($_REQUEST['moveto']) && empty($_REQUEST['moveto'])) {
 }
 if (isset($_REQUEST['show'])) {
 	if ($_REQUEST['show'] == 'view') {
-		$tabi = 1;
+		$cookietab = 1;
 	} elseif ($tracker_info["useComments"] == 'y' and $_REQUEST['show'] == 'com') {
-		$tabi = 2;
+		$cookietab = 2;
 	} elseif ($_REQUEST['show'] == "mod") {
-		$tabi = 2;
-		if ($tracker_info["useAttachments"] == 'y') $tabi++;
-		if ($tracker_info["useComments"] == 'y' && $tiki_p_tracker_view_comments == 'y') $tabi++;
+		$cookietab = 2;
+		if ($tracker_info["useAttachments"] == 'y') $cookietab++;
+		if ($tracker_info["useComments"] == 'y' && $tiki_p_tracker_view_comments == 'y') $cookietab++;
 	} elseif ($_REQUEST['show'] == "att") {
-		$tabi = 2;
-		if ($tracker_info["useComments"] == 'y' && $tiki_p_tracker_view_comments == 'y') $tabi = 3;
+		$cookietab = 2;
+		if ($tracker_info["useComments"] == 'y' && $tiki_p_tracker_view_comments == 'y') $cookietab = 3;
 	}
 }
-setcookie("tab", "$tabi");
-$smarty->assign('cookietab', $tabi);
 if (isset($_REQUEST['from'])) {
 	$from = $_REQUEST['from'];
 } else {
