@@ -1954,7 +1954,8 @@ class TrackerLib extends TikiLib
 							'lang' => $linvalue['lang'],
 						);
 
-						if ($old_value = $itemFields->fetchOne('value', $conditions)) {
+						$old_value = $itemFields->fetchOne('value', $conditions);
+						if ($old_value !== false) {
 							$itemFields->update(array('value' => $linvalue['value']), $conditions);
 						}else{
 							$itemFields->insert(array_merge($conditions, array('value' => $linvalue['value'])));
