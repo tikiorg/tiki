@@ -360,17 +360,7 @@ foreach ($xfields['data'] as $i => $current_field) {
 			} else {
 				$current_field_fields["value"] = '';
 			}
-			if ($current_field_fields["type"] == 'r') { // item link
-				if (empty($current_field_fields["options_array"][3])) {
-					$current_field_fields["list"] = array_unique($trklib->get_all_items($current_field_fields["options_array"][0], $current_field_fields["options_array"][1], !empty($current_field_fields['options_array'][4])?$current_field_fields['options_array'][4]:'poc', false));
-				} 
-				else {	
-					$current_field_fields["list"] = $trklib->get_all_items($current_field_fields["options_array"][0], $current_field_fields["options_array"][1], !empty($current_field_fields['options_array'][4])?$current_field_fields['options_array'][4]:'poc', false);	
-				}
-				if (!empty($current_field_fields["options_array"][3])) {
-					$current_field_fields["listdisplay"] = array_unique($trklib->concat_all_items_from_fieldslist($current_field_fields["options_array"][0], $current_field_fields["options_array"][3], !empty($current_field_fields['options_array'][4])?$current_field_fields['options_array'][4]:'poc'));
-				}
-			} elseif (($current_field_fields["type"] == 'M') && ($current_field_fields["options_array"][0] >= '3')) {
+			if (($current_field_fields["type"] == 'M') && ($current_field_fields["options_array"][0] >= '3')) {
 				if (isset($_FILES[$ins_id]) && is_uploaded_file($_FILES[$ins_id]['tmp_name'])) {
 					$data = file_get_contents($_FILES[$ins_id]['tmp_name']);
 					$current_field_ins["value"] = $data;

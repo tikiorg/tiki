@@ -4893,6 +4893,8 @@ class TrackerLib extends TikiLib
 			return new Tracker_Field_Checkbox($field_info);
 		case 'f':
 			return new Tracker_Field_DateTime($field_info);
+		case 'r':
+			return new Tracker_Field_ItemLink($field_info);
 		case 't':
 			return new Tracker_Field_Text($field_info);
 		case 'y':
@@ -4938,9 +4940,11 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 	/**
 	 * Returns an option from the options array based on the numeric position.
 	 */
-	protected function getOption($number)
+	protected function getOption($number, $default = false)
 	{
-		return isset($this->definition['options_array'][(int) $number]) ? $this->definition['options_array'][(int) $number] : false;
+		return isset($this->definition['options_array'][(int) $number]) ?
+			$this->definition['options_array'][(int) $number] :
+			$default;
 	}
 }
 
@@ -5078,6 +5082,54 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		return $data;
 	}
 
+}
+
+class Tracker_Field_ItemLink extends Tracker_Field_Abstract
+{
+	function getInsertValues(array $requestData)
+	{
+		$ins_id = $this->getInsertId();
+
+		return array(
+			'value' => isset($requestData[$ins_id]) ? $requestData[$ins_id] : '',
+		);
+	}
+
+	function getDisplayValues(array $requestData)
+	{
+		$filter_id = $this->getFilterId();
+
+		$data = array(
+			'value' => isset($requestData[$filter_id]) ? $requestData[$filter_id] : '',
+		);
+
+		if (!$this->getOption(3)) {	//no displayedFieldsList
+			$data['list'] = array_unique(
+				TikiLib::lib('trk')->get_all_items(
+					$this->getOption(0),
+					$this->getOption(1),
+					$this->getOption(4, 'poc'),
+					false
+				)
+			);
+		} else {
+			$data['list'] = TikiLib::lib('trk')->get_all_items(
+				$this->getOption(0),
+				$this->getOption(1),
+				$this->getOption(4, 'poc'),
+				false
+			);
+			$data['listdisplay'] = array_unique(
+				TikiLib::lib('trk')->concat_all_items_from_fieldslist(
+					$this->getOption(0),
+					$this->getOption(3),
+					$this->getOption(4, 'poc')
+				)
+			);
+		}
+
+		return $data;
+	}
 }
 
 
