@@ -5,6 +5,14 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+$inputConfiguration = array(
+	array( 'staticKeyFilters' => array(
+		'email' => 'email',
+		'name' => 'text',
+		'pass' => 'text',
+		'passAgain' => 'text', 
+	) )
+);
 require_once ('tiki-setup.php');
 require_once ('lib/registration/registrationlib.php');
 if (is_a($registrationlib->merged_prefs, "RegistrationError")) register_error($registrationlib->merged_prefs->msg);
