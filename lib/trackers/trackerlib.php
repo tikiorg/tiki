@@ -4892,6 +4892,8 @@ class TrackerLib extends TikiLib
 			return new Tracker_Field_TextArea($field_info, $tracker_data);
 		case 'c':
 			return new Tracker_Field_Checkbox($field_info, $tracker_data);
+		case 'e':
+			return new Tracker_Field_Category($field_info, $tracker_data);
 		case 'f':
 			return new Tracker_Field_DateTime($field_info, $tracker_data);
 		case 'r':
@@ -4947,6 +4949,11 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		$value = isset($this->trackerData[$key]) ? $this->trackerData[$key] : null;
 
 		return empty($value) ? $default : $value;
+	}
+
+	protected function getItemId()
+	{
+		return isset($this->trackerData['itemId']) ? $this->trackerData['itemId'] : false;
 	}
 
 	/**
@@ -5162,6 +5169,72 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 	}
 }
 
+class Tracker_Field_Category extends Tracker_Field_Abstract
+{
+	function getInsertValues(array $requestData)
+	{
+		$key = 'ins_cat_' . $this->getConfiguration('fieldId');
+		$parentId = $this->getOption(0);
+
+		if (isset($requestData[$key]) && is_array($requestData[$key])) {
+			$selected = $requestData[$key];
+		} else {
+			$selected = $this->getCategories();
+		}
+
+		$categories = $this->getApplicableCategories($selected);
+
+		$data = array(
+			'value' => '',
+			'selected_categories' => array_intersect($selected, $this->getIds($categories)),
+			$parentId => $categories,
+			'cat' => array(),
+			'categs' => array(),
+		);
+
+		foreach($data[$parentId] as $category) {
+			$id = $category['categId'];
+			if (in_array($id, $selected)) {
+				$data['cat'][$id] = 'y';
+				$data['categs'][] = $category;
+			}
+		}
+
+		return $data;
+	}
+
+	function getDisplayValues(array $requestData)
+	{
+		$parentId = $this->getOption(0);
+
+		return array(
+			$parentId => $this->getApplicableCategories(),
+		);
+	}
+
+	private function getIds($categories)
+	{
+		$validIds = array();
+		foreach ($categories as $c) {
+			$validIds[] = $c['categId'];
+		}
+
+		return $validIds;
+	}
+
+	private function getApplicableCategories()
+	{
+		$parentId = $this->getOption(0);
+		$descends = $this->getOption(3) == 1;
+
+		return TikiLib::lib('categ')->get_viewable_child_categories($parentId, $descends);
+	}
+
+	private function getCategories()
+	{
+		return TikiLib::lib('categ')->get_object_categories('trackeritem', $this->getItemId());
+	}
+}
 
 global $trklib;
 $trklib = new TrackerLib;

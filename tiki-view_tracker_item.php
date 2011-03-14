@@ -398,15 +398,6 @@ foreach($xfields["data"] as $i => $current_field) {
 			if ($field_values) {
 				$current_field_fields = array_merge($current_field_fields, $field_values);
 			}
-		} elseif ($current_field_fields["type"] == 'e') {
-			$categlib = TikiLib::lib('categ');
-			$k = $current_field_ins['options_array'][0];
-			$current_field_fields["$k"] = $categlib->get_viewable_child_categories($k);
-			$categId = "ins_cat_$fid";
-			if (isset($_REQUEST[$categId]) and is_array($_REQUEST[$categId])) {
-				$ins_categs = array_merge($ins_categs, $_REQUEST[$categId]);
-			}
-			$current_field_ins["value"] = '';
 		} elseif ($current_field_fields["type"] == 'u' and isset($current_field_fields['options_array'][0]) and $user) {
 			if (isset($_REQUEST[$ins_id]) and ($current_field_fields['options_array'][0] < 1 or $tiki_p_admin_trackers == 'y')) {
 				$current_field_ins["value"] = $_REQUEST[$ins_id];
@@ -536,6 +527,15 @@ foreach($xfields["data"] as $i => $current_field) {
 		$fields['data'][$i] = $current_field_fields;
 	}
 }
+
+// Collect information from the provided fields
+$ins_categs = array();
+foreach ($ins_fields['data'] as $current_field) {
+	if ($current_field['type'] == 'e' && isset($current_field['selected_categories'])) {
+		$ins_categs = array_merge($ins_categs, $current_field['selected_categories']);
+	}
+}
+
 if (isset($tracker_info["authorfield"])) {
 	$tracker_info['authorindiv'] = $trklib->get_item_value($_REQUEST["trackerId"], $_REQUEST["itemId"], $tracker_info["authorfield"]);
 	if (($user && $tracker_info['authorindiv'] == $user) or ($user && $tracker_info['userCanTakeOwnership'] == 'y' && empty($tracker_info['authorindiv']))) {
@@ -580,11 +580,9 @@ if (($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item
 		// Check field values for each type and presence of mandatory ones
 		$mandatory_missing = array();
 		$err_fields = array();
-		$ins_categs = array();
 		$categorized_fields = array();
 		while (list($postVar, $postVal) = each($_REQUEST)) {
 			if (preg_match("/^ins_cat_([0-9]+)/", $postVar, $m)) {
-				foreach($postVal as $v) $ins_categs[] = $v;
 				$categorized_fields[] = $m[1];
 			}
 		}
@@ -722,45 +720,7 @@ if ($_REQUEST["itemId"]) {
 					} else {
 						if (!isset($info["$fid"])) $info["$fid"] = '';
 					}
-					if ($current_field_fields["type"] == 'e') {
-						$categlib = TikiLib::lib('categ');
-						$k = $current_field_fields['options_array'][0];
-						if (isset($current_field_fields['options_array'][3]) && $current_field_fields['options_array'][3] == 1) {
-							$all_descends = true;
-						} else {
-							$all_descends = false;
-						}
-						$current_field_ins["$k"] = $categlib->get_viewable_child_categories($k, $all_descends);
-						if (!isset($cat)) {
-							$cat = $categlib->get_object_categories('trackeritem', $_REQUEST['itemId']);
-						}
-						if (isset($_REQUEST['save']) || isset($_REQUEST['save_return'])) {
-							foreach($current_field_ins["$k"] as $c) {
-								if (in_array($c['categId'], $ins_categs)) {
-									$current_field_ins['cat'][$c['categId']] = 'y';
-									$current_field_ins['categs'][] = $categlib->get_category($c['categId']);
-									$cpath = $categlib->get_category_path_string($c['categId']);
-									$cpath = substr($cpath, strpos($cpath, '::') + 2, strlen($cpath));	// strip the first bit off
-									$current_field_ins['categs'][count($current_field_ins['categs']) - 1]['categpath'] = $cpath;
-								}
-							}
-						} else {
-							// displayed when viewing tracker item
-							// amazingly, for tiki-view_tracker_item the fields are all rendered out using totally different smarty
-							// but only for the edit tab - view tab uses tracker_item_field_value.tpl as usual!!?!!!
-						
-							foreach($current_field_ins["$k"] as $c) {
-								if (in_array($c['categId'], $cat)) {
-									$current_field_ins['cat'][$c['categId']] = 'y';
-									$current_field_ins['categs'][] = $categlib->get_category($c['categId']);
-									$cpath = $categlib->get_category_path_string($c['categId']);
-									$cpath = substr($cpath, strpos($cpath, '::') + 2, strlen($cpath));	// strip the first bit off
-									$current_field_ins['categs'][count($current_field_ins['categs']) - 1]['categpath'] = $cpath;
-								}
-							}
-							
-						}
-					} elseif ($current_field_fields["type"] == 'l') {
+					if ($current_field_fields["type"] == 'l') {
 						if (isset($current_field_fields["options_array"][3])) {
 							$l = explode(':', $current_field_fields["options_array"][1]);
 							$finalFields = explode('|', $current_field_fields['options_array'][3]);
