@@ -4885,20 +4885,20 @@ class TrackerLib extends TikiLib
 		return $this->trackers()->fetchOne('trackerId', array('name' => $name));
 	}
 
-	function get_field_handler($field_info) {
+	function get_field_handler($field_info, $tracker_data = array()) {
 		switch ($field_info['type']) {
 		case 'a':
-			return new Tracker_Field_TextArea($field_info);
+			return new Tracker_Field_TextArea($field_info, $tracker_data);
 		case 'c':
-			return new Tracker_Field_Checkbox($field_info);
+			return new Tracker_Field_Checkbox($field_info, $tracker_data);
 		case 'f':
-			return new Tracker_Field_DateTime($field_info);
+			return new Tracker_Field_DateTime($field_info, $tracker_data);
 		case 'r':
-			return new Tracker_Field_ItemLink($field_info);
+			return new Tracker_Field_ItemLink($field_info, $tracker_data);
 		case 't':
-			return new Tracker_Field_Text($field_info);
+			return new Tracker_Field_Text($field_info, $tracker_data);
 		case 'y':
-			return new Tracker_Field_CountrySelector($field_info);
+			return new Tracker_Field_CountrySelector($field_info, $tracker_data);
 		}
 	}
 
@@ -4917,10 +4917,12 @@ interface Tracker_Field_Interface
 abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 {
 	private $definition;
+	private $trackerData;
 
-	function __construct($fieldInfo)
+	function __construct($fieldInfo, $trackerData)
 	{
 		$this->definition = $fieldInfo;
+		$this->trackerData = $trackerData;
 	}
 
 	protected function getInsertId()
@@ -4933,8 +4935,17 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		return 'filter_' . $this->definition['fieldId'];
 	}
 
-	protected function get($key) {
+	protected function getConfiguration($key)
+	{
 		return $this->definition[$key];
+	}
+
+	protected function getValue($default = '', $keySuffix = '')
+	{
+		$key = $this->getConfiguration('fieldId') . $keySuffix;
+		$value = isset($this->trackerData[$key]) ? $this->trackerData[$key] : null;
+
+		return empty($value) ? $default : $value;
 	}
 
 	/**
@@ -4955,7 +4966,9 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract
 		$ins_id = $this->getInsertId();
 
 		return array(
-			'value' => (isset($requestData[$ins_id]) && $requestData[$ins_id] == 'on') ? 'y' : 'n',
+			'value' => (isset($requestData[$ins_id]) && $requestData[$ins_id] == 'on')
+				? 'y'
+				: $this->getValue('n'),
 		);
 	}
 
@@ -4964,7 +4977,9 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract
 		$filter_id = $this->getFilterId();
 
 		return array(
-			'value' => isset($requestData[$filter_id]) ? $requestData[$filter_id] : '',
+			'value' => isset($requestData[$filter_id])
+				? $requestData[$filter_id]
+				: $this->getValue(),
 		);
 	}
 }
@@ -4976,7 +4991,7 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract
 		$ins_id = $this->getInsertId();
 
 		$data = array(
-			'value' => TikiLib::lib('tiki')->now,
+			'value' => $this->getValue(TikiLib::lib('tiki')->now),
 		);
 
 		if (isset($requestData[$ins_id.'Month']) || isset($requestData[$ins_id.'Hour'])) {
@@ -4999,7 +5014,9 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract
 		$ins_id = $this->getInsertId();
 
 		$data = array(
-			'value' => isset($requestData[$ins_id]) ? $requestData[$ins_id] : '',
+			'value' => isset($requestData[$ins_id])
+				? $requestData[$ins_id]
+				: $this->getValue(),
 			'flags' => TikiLib::lib('trk')->get_flags(true, true, ($this->getOption(1) != 1)),
 		);
 		
@@ -5011,7 +5028,9 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract
 		$filter_id = $this->getFilterId();
 
 		return array(
-			'value' => isset($requestData[$filter_id]) ? $requestData[$filter_id] : '',
+			'value' => isset($requestData[$filter_id])
+				? $requestData[$filter_id]
+				: $this->getValue(),
 			'flags' => TikiLib::lib('trk')->get_flags(true, true, ($this->getOption(1) != 1)),
 			'defaultvalue' => 'None',
 		);
@@ -5038,7 +5057,7 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
 		global $prefs;
 
 		if (!isset($requestData[$id_string])) {
-			$requestData[$id_string] = '';
+			$requestData[$id_string] = $this->getValue();
 		}
 
 		$data = array(
@@ -5046,19 +5065,26 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
 			'pvalue' => TikiLib::lib('tiki')->parse_data(htmlspecialchars($requestData[$id_string])),
 		);
 
-		if ($this->get("isMultilingual") == 'y') {
+		if ($this->getConfiguration("isMultilingual") == 'y') {
 			$data['isMultilingual'] = 'y';
 			foreach($prefs['available_languages'] as $num => $tmplang) {	// TODO add a limit on number of langs - 40+ makes this blow up
 
 				if (!isset($requestData[$id_string][$tmplang])) {	// Case convert normal -> multilingual
-					$requestData[$id_string][$tmplang] = $data['value'];
+					$requestData[$id_string][$tmplang] = $this->getValue($data['value'], $tmplang);
 				}
+
 				$data['lingualvalue'][$num]['lang'] = $tmplang;
 				$data['lingualvalue'][$num]['value'] = $requestData[$id_string][$tmplang];
 				$data['lingualpvalue'][$num]['lang'] = $tmplang;
 				$data['lingualpvalue'][$num]['value'] = TikiLib::lib('tiki')->parse_data(htmlspecialchars($requestData[$id_string][$tmplang]));
+
+				if ($prefs['language'] == $tmplang) {
+					$data['value'] = $data['lingualvalue'][$num]['value'];
+					$data['pvalue'] = $data['lingualpvalue'][$num]['value'];
+				}
 			}
 		}
+
 		return $data;
 	}
 }
@@ -5085,19 +5111,25 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 {
 	function getInsertValues(array $requestData)
 	{
-		$ins_id = $this->getInsertId();
+		$data = $this->getData($requestData, $this->getInsertId());
 
-		return array(
-			'value' => isset($requestData[$ins_id]) ? $requestData[$ins_id] : '',
-		);
+		$value = $this->getValue();
+		if ($value && $this->getOption(2)) {
+			$data["linkId"] = TikiLib::lib('trk')->get_item_id($this->getOption(0), $this->getOption(1), $value);
+		}
+
+		return $data;
 	}
 
 	function getDisplayValues(array $requestData)
 	{
-		$filter_id = $this->getFilterId();
+		return $this->getData($requestData, $this->getFilterId());
+	}
 
+	private function getData($requestData, $string_id)
+	{
 		$data = array(
-			'value' => isset($requestData[$filter_id]) ? $requestData[$filter_id] : '',
+			'value' => isset($requestData[$string_id]) ? $requestData[$string_id] : $this->getValue(),
 		);
 
 		if (!$this->getOption(3)) {	//no displayedFieldsList

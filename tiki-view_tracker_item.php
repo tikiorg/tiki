@@ -468,49 +468,6 @@ foreach($xfields["data"] as $i => $current_field) {
 			} else {
 				$current_field_fields["value"] = '';
 			}
-		} elseif ($current_field_fields["type"] == 'a') {
-			if (isset($_REQUEST[$ins_id])) {
-				$current_field_ins["value"] = $_REQUEST[$ins_id];
-			} else {
-				$current_field_ins["value"] = '';
-			}
-			if (isset($_REQUEST[$ins_id])) {
-				$current_field_ins["value"] = $_REQUEST[$ins_id];
-			} else {
-				$current_field_ins["value"] = '';
-			}
-			if (isset($_REQUEST[$filter_id])) {
-				$current_field_fields["value"] = $_REQUEST[$filter_id];
-			} else {
-				$current_field_fields["value"] = '';
-			}
-			if ($current_field_fields["options_array"][0]) {
-				$textarea_options = true;
-				if (!$plugins_loaded) {
-					$wikilib = TikiLib::lib('wiki');
-					$plugins = $wikilib->list_plugins(true, 'area_' . $current_field_fields["fieldId"]);
-					$smarty->assign_by_ref('plugins', $plugins);
-					$plugins_loaded = 'y';
-					$smarty->assign('show_wiki_help', 'y');
-				}
-			}
-			if ($current_field_fields["isMultilingual"] == 'y') {
-				$current_field_ins['isMultilingual'] = 'y';
-				foreach($prefs['available_languages'] as $num => $tmplang) {
-					//Case convert normal -> multilingual
-					if (!isset($_REQUEST[$ins_id][$tmplang]) && isset($_REQUEST[$fid])) {
-						$_REQUEST["$fid$lang"] = $_REQUEST[$fid];
-					}
-					$current_field_ins['lingualvalue'][$num]['lang'] = $tmplang;
-					if (isset($_REQUEST[$ins_id][$tmplang])) {
-						$current_field_ins['lingualvalue'][$num]['value'] = $_REQUEST[$ins_id][$tmplang];
-					}
-					$current_field_ins['lingualpvalue'][$num]['lang'] = $tmplang;
-					if (isset($_REQUEST[$ins_id][$tmplang])) {
-						$current_field_ins['lingualpvalue'][$num]['value'] = $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id][$tmplang]));
-					}
-				}
-			}
 		} else {
 			if (isset($_REQUEST[$ins_id])) {
 				$current_field_ins["value"] = $_REQUEST[$ins_id];
@@ -736,256 +693,240 @@ if ($_REQUEST["itemId"]) {
 		$current_field_fields = null;
 		$current_field_ins = array();
 
+		$handler = $trklib->get_field_handler($current_field, $info);
+
 		if ($current_field['isHidden'] == 'n' or $current_field['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($current_field['type'] == 's' and $xfields[$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y') or ($current_field['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
 			$current_field_fields = $current_field;
-			if ($current_field_fields['type'] == 'f' || $current_field_fields['type'] == 'j') {
-				$dateFields[] = $current_field_fields['fieldId'];
-			}
-			if ($current_field_fields["type"] != 'h') {
-				$fid = $current_field_fields["fieldId"];
-				$current_field_ins["id"] = $fid;
-				if ($current_field_fields["type"] == 'c') {
-					if (!isset($info["$fid"])) $info["$fid"] = 'n';
-				} else {
-					if (!isset($info["$fid"])) $info["$fid"] = '';
+
+			if ($handler) {
+				$insert_values = $handler->getInsertValues($_REQUEST);
+				$field_values = $handler->getDisplayValues($_REQUEST);
+
+				if ($insert_values) {
+					$current_field_ins = array_merge($current_field_ins, $insert_values);
 				}
-				if ($current_field_fields["type"] == 'e') {
-					$categlib = TikiLib::lib('categ');
-					$k = $current_field_fields['options_array'][0];
-					if (isset($current_field_fields['options_array'][3]) && $current_field_fields['options_array'][3] == 1) {
-						$all_descends = true;
+
+				if ($field_values) {
+					$current_field_fields = array_merge($current_field_fields, $field_values);
+				}
+			} else {
+
+				if ($current_field_fields['type'] == 'f' || $current_field_fields['type'] == 'j') {
+					$dateFields[] = $current_field_fields['fieldId'];
+				}
+				if ($current_field_fields["type"] != 'h') {
+					$fid = $current_field_fields["fieldId"];
+					$current_field_ins["id"] = $fid;
+					if ($current_field_fields["type"] == 'c') {
+						if (!isset($info["$fid"])) $info["$fid"] = 'n';
 					} else {
-						$all_descends = false;
+						if (!isset($info["$fid"])) $info["$fid"] = '';
 					}
-					$current_field_ins["$k"] = $categlib->get_viewable_child_categories($k, $all_descends);
-					if (!isset($cat)) {
-						$cat = $categlib->get_object_categories('trackeritem', $_REQUEST['itemId']);
-					}
-					if (isset($_REQUEST['save']) || isset($_REQUEST['save_return'])) {
-						foreach($current_field_ins["$k"] as $c) {
-							if (in_array($c['categId'], $ins_categs)) {
-								$current_field_ins['cat'][$c['categId']] = 'y';
-								$current_field_ins['categs'][] = $categlib->get_category($c['categId']);
-								$cpath = $categlib->get_category_path_string($c['categId']);
-								$cpath = substr($cpath, strpos($cpath, '::') + 2, strlen($cpath));	// strip the first bit off
-								$current_field_ins['categs'][count($current_field_ins['categs']) - 1]['categpath'] = $cpath;
-							}
+					if ($current_field_fields["type"] == 'e') {
+						$categlib = TikiLib::lib('categ');
+						$k = $current_field_fields['options_array'][0];
+						if (isset($current_field_fields['options_array'][3]) && $current_field_fields['options_array'][3] == 1) {
+							$all_descends = true;
+						} else {
+							$all_descends = false;
 						}
-					} else {
-						// displayed when viewing tracker item
-						// amazingly, for tiki-view_tracker_item the fields are all rendered out using totally different smarty
-						// but only for the edit tab - view tab uses tracker_item_field_value.tpl as usual!!?!!!
-					
-						foreach($current_field_ins["$k"] as $c) {
-							if (in_array($c['categId'], $cat)) {
-								$current_field_ins['cat'][$c['categId']] = 'y';
-								$current_field_ins['categs'][] = $categlib->get_category($c['categId']);
-								$cpath = $categlib->get_category_path_string($c['categId']);
-								$cpath = substr($cpath, strpos($cpath, '::') + 2, strlen($cpath));	// strip the first bit off
-								$current_field_ins['categs'][count($current_field_ins['categs']) - 1]['categpath'] = $cpath;
-							}
+						$current_field_ins["$k"] = $categlib->get_viewable_child_categories($k, $all_descends);
+						if (!isset($cat)) {
+							$cat = $categlib->get_object_categories('trackeritem', $_REQUEST['itemId']);
 						}
-						
-					}
-				} elseif ($current_field_fields["type"] == 'l') {
-					if (isset($current_field_fields["options_array"][3])) {
-						$l = explode(':', $current_field_fields["options_array"][1]);
-						$finalFields = explode('|', $current_field_fields['options_array'][3]);
-						$current_field_ins['links'] = $trklib->get_join_values($_REQUEST['trackerId'], $_REQUEST['itemId'], array_merge(array(
-							$current_field_fields["options_array"][2]
-						) , $l, array(
-							$current_field_fields["options_array"][3]
-									  )) , $current_field_fields["options_array"][0], $finalFields, ' ', empty($current_field_fields['options_array'][5])?'':$current_field_fields['options_array'][5]);
-						if (count($current_field_ins['links']) == 1) {
-							foreach($current_field_ins['links'] as $linkItemId => $linkValue) {
-								if (is_numeric($current_field_ins['links'][$linkItemId])) { //if later a computed field use this field
-									$info[$current_field_fields['fieldId']] = $linkValue;
+						if (isset($_REQUEST['save']) || isset($_REQUEST['save_return'])) {
+							foreach($current_field_ins["$k"] as $c) {
+								if (in_array($c['categId'], $ins_categs)) {
+									$current_field_ins['cat'][$c['categId']] = 'y';
+									$current_field_ins['categs'][] = $categlib->get_category($c['categId']);
+									$cpath = $categlib->get_category_path_string($c['categId']);
+									$cpath = substr($cpath, strpos($cpath, '::') + 2, strlen($cpath));	// strip the first bit off
+									$current_field_ins['categs'][count($current_field_ins['categs']) - 1]['categpath'] = $cpath;
 								}
 							}
+						} else {
+							// displayed when viewing tracker item
+							// amazingly, for tiki-view_tracker_item the fields are all rendered out using totally different smarty
+							// but only for the edit tab - view tab uses tracker_item_field_value.tpl as usual!!?!!!
+						
+							foreach($current_field_ins["$k"] as $c) {
+								if (in_array($c['categId'], $cat)) {
+									$current_field_ins['cat'][$c['categId']] = 'y';
+									$current_field_ins['categs'][] = $categlib->get_category($c['categId']);
+									$cpath = $categlib->get_category_path_string($c['categId']);
+									$cpath = substr($cpath, strpos($cpath, '::') + 2, strlen($cpath));	// strip the first bit off
+									$current_field_ins['categs'][count($current_field_ins['categs']) - 1]['categpath'] = $cpath;
+								}
+							}
+							
 						}
-						$current_field_ins['trackerId'] = $current_field_fields["options_array"][0];
-						if (!isset($tracker_options_l[$current_field_fields["options_array"][0]])) {
-							$tracker_options_l[$current_field_fields["options_array"][0]] = $trklib->get_tracker_options($current_field_fields["options_array"][0]);
+					} elseif ($current_field_fields["type"] == 'l') {
+						if (isset($current_field_fields["options_array"][3])) {
+							$l = explode(':', $current_field_fields["options_array"][1]);
+							$finalFields = explode('|', $current_field_fields['options_array'][3]);
+							$current_field_ins['links'] = $trklib->get_join_values($_REQUEST['trackerId'], $_REQUEST['itemId'], array_merge(array(
+								$current_field_fields["options_array"][2]
+							) , $l, array(
+								$current_field_fields["options_array"][3]
+										  )) , $current_field_fields["options_array"][0], $finalFields, ' ', empty($current_field_fields['options_array'][5])?'':$current_field_fields['options_array'][5]);
+							if (count($current_field_ins['links']) == 1) {
+								foreach($current_field_ins['links'] as $linkItemId => $linkValue) {
+									if (is_numeric($current_field_ins['links'][$linkItemId])) { //if later a computed field use this field
+										$info[$current_field_fields['fieldId']] = $linkValue;
+									}
+								}
+							}
+							$current_field_ins['trackerId'] = $current_field_fields["options_array"][0];
+							if (!isset($tracker_options_l[$current_field_fields["options_array"][0]])) {
+								$tracker_options_l[$current_field_fields["options_array"][0]] = $trklib->get_tracker_options($current_field_fields["options_array"][0]);
+							}
+							$current_field_ins['tracker_options'] = $tracker_options_l[$current_field_fields["options_array"][0]];
 						}
-						$current_field_ins['tracker_options'] = $tracker_options_l[$current_field_fields["options_array"][0]];
-					}
-				} elseif ($current_field_fields["type"] == 'r') {
-					$current_field_ins["linkId"] = $trklib->get_item_id($current_field_fields["options_array"][0], $current_field_fields["options_array"][1], $info[$fid]);
-					$current_field_ins["value"] = $info[$fid];
-					if (!isset($current_field_fields["options_array"][3])) {
-						$current_field_ins["list"] = array_unique($trklib->get_all_items($current_field_fields["options_array"][0], $current_field_fields["options_array"][1], isset($f['options_array'][4])?$f['options_array'][4]:'poc', false));
-					} else {	
-						$current_field_ins["list"] = $trklib->get_all_items($current_field_fields["options_array"][0], $current_field_fields["options_array"][1], isset($f['options_array'][4])?$f['options_array'][4]:'poc', false);	
-					}
-					if (isset($current_field_fields["options_array"][3])) {
-						$current_field_ins["displayedvalue"] = $trklib->concat_item_from_fieldslist($current_field_fields["options_array"][0], $trklib->get_item_id($current_field_fields["options_array"][0], $current_field_fields["options_array"][1], $info[$fid]) , $current_field_fields["options_array"][3]);
-						$current_field_ins["listdisplay"] = $trklib->concat_all_items_from_fieldslist($current_field_fields["options_array"][0], $current_field_fields["options_array"][3]);
-					}
-				} elseif ($current_field_fields["type"] == 'u') {
-					if (isset($current_field_fields['options_array'][0]) && $current_field_fields['options_array'][0] == 2 and !$info["$fid"]) {
-						$current_field_ins["defvalue"] = $user;
-					}
-					$current_field_ins["value"] = $info["$fid"];
-				} elseif ($current_field_fields["type"] == 'G') {
-					if (!empty($info["$fid"])) {
+					} elseif ($current_field_fields["type"] == 'u') {
+						if (isset($current_field_fields['options_array'][0]) && $current_field_fields['options_array'][0] == 2 and !$info["$fid"]) {
+							$current_field_ins["defvalue"] = $user;
+						}
 						$current_field_ins["value"] = $info["$fid"];
-						$first_comma = strpos($info["$fid"], ',');
-						$second_comma = strpos($info["$fid"], ',', $first_comma + 1);
-						if ($second_comma === false) {
-							$second_comma = strlen($info["$fid"]);
-							$current_field_ins["value"].= ",11";
+					} elseif ($current_field_fields["type"] == 'G') {
+						if (!empty($info["$fid"])) {
+							$current_field_ins["value"] = $info["$fid"];
+							$first_comma = strpos($info["$fid"], ',');
+							$second_comma = strpos($info["$fid"], ',', $first_comma + 1);
+							if ($second_comma === false) {
+								$second_comma = strlen($info["$fid"]);
+								$current_field_ins["value"].= ",11";
+							}
+							$current_field_ins["x"] = substr($current_field_ins["value"], 0, $first_comma);
+							$current_field_ins["y"] = substr($current_field_ins["value"], $first_comma + 1, $second_comma - $first_comma - 1);
+							$current_field_ins["z"] = substr($current_field_ins["value"], $second_comma + 1);
+						} else {
+							$current_field_ins["value"] = null;
+							$current_field_ins["x"] = null;
+							$current_field_ins["y"] = null;
 						}
-						$current_field_ins["x"] = substr($current_field_ins["value"], 0, $first_comma);
-						$current_field_ins["y"] = substr($current_field_ins["value"], $first_comma + 1, $second_comma - $first_comma - 1);
-						$current_field_ins["z"] = substr($current_field_ins["value"], $second_comma + 1);
-					} else {
-						$current_field_ins["value"] = null;
-						$current_field_ins["x"] = null;
-						$current_field_ins["y"] = null;
-					}
-					if (empty($current_field_ins["z"])) {
-						$current_field_ins["z"] = 1;
-					}
-				} elseif ($current_field_fields["type"] == 'U') {
-					$current_field_ins["value"] = $info["$fid"];
-					$temp = $userlib->get_user_info($user);
-					$id_user = $temp['userId'];
-					$id_tiki_user = $temp['userId'];
-					$pattern = "/(\d+)\[(\d+)\]/";
-					preg_match_all($pattern, $current_field_ins["value"], $match);
-					$users_array = array();
-					$current_field_ins["user_subscription"] = FALSE;
-					$U_nb_users = 0;
-					$current_field_ins["user_nb_friends"] = 0;
-					foreach($match[1] as $j => $id_user) {
-						$temp = $userlib->get_userId_info($id_user);
-						array_push($users_array, array(
-							'id' => $id_user,
-							'login' => $temp['login'],
-							'friends' => $match[2][$j]
-						));
-						$U_nb_users+= $match[2][$j] + 1;
-						if ($id_user == $id_tiki_user) {
-							$current_field_ins["user_subscription"] = TRUE;
-							$current_field_ins["user_nb_friends"] = $match[2][$j];
+						if (empty($current_field_ins["z"])) {
+							$current_field_ins["z"] = 1;
 						}
-					}
-					$current_field_ins["users_array"] = array();
-					$current_field_ins["users_array"] = $users_array;
-					$U_maxsubscriptions = substr($info["$fid"], 0, strpos($info["$fid"], '#'));
-					$current_field_ins["maxsubscriptions"] = $U_maxsubscriptions;
-					$U_liste = NULL;
-					$U_othersubscriptions = $current_field_ins["user_nb_friends"];
-					if (!$current_field_ins["user_subscription"]) {
-						$U_othersubscriptions--;
-					}
-					if ($U_maxsubscriptions) {
-						for ($j = 0; $j <= $U_maxsubscriptions - $U_nb_users + $U_othersubscriptions; $j++) {
-							$U_liste[$j] = $j;
+					} elseif ($current_field_fields["type"] == 'U') {
+						$current_field_ins["value"] = $info["$fid"];
+						$temp = $userlib->get_user_info($user);
+						$id_user = $temp['userId'];
+						$id_tiki_user = $temp['userId'];
+						$pattern = "/(\d+)\[(\d+)\]/";
+						preg_match_all($pattern, $current_field_ins["value"], $match);
+						$users_array = array();
+						$current_field_ins["user_subscription"] = FALSE;
+						$U_nb_users = 0;
+						$current_field_ins["user_nb_friends"] = 0;
+						foreach($match[1] as $j => $id_user) {
+							$temp = $userlib->get_userId_info($id_user);
+							array_push($users_array, array(
+								'id' => $id_user,
+								'login' => $temp['login'],
+								'friends' => $match[2][$j]
+							));
+							$U_nb_users+= $match[2][$j] + 1;
+							if ($id_user == $id_tiki_user) {
+								$current_field_ins["user_subscription"] = TRUE;
+								$current_field_ins["user_nb_friends"] = $match[2][$j];
+							}
 						}
-					}
-					$smarty->assign("U_liste", $U_liste);
-				} elseif ($current_field_fields["type"] == 'C') {
-					$calc = preg_replace('/#([0-9]+)/', '$info[\1]', $current_field_fields['options_array'][0]);
-					eval('$computed = ' . $calc . ';');
-					$current_field_ins["value"] = $computed;
-					$info[$current_field_fields['fieldId']] = $computed; // in case a computed field use this one
-					$infoComputed = $trklib->get_computed_info($current_field_fields['options_array'][0], $_REQUEST['trackerId'], $fields['data']);
-					if (!empty($infoComputed)) {
-						$current_field_ins = array_merge($infoComputed, $current_field_ins);
-					}
-				} elseif ($current_field_fields["type"] == 'g') {
-					if (isset($current_field_fields['options_array'][0]) && $current_field_fields['options_array'][0] == 2 and !$info["$fid"]) {
-						$current_field_ins["defvalue"] = $group;
-					}
-					$current_field_ins["value"] = $info["$fid"];
-				} elseif ($current_field_fields["type"] == 'a' || $current_field_fields["type"] == 't') {
-					if ($current_field_fields["isMultilingual"] == 'y') {
-						$multilinguallib = TikiLib::lib('multilingual');
-						$multi_languages = $prefs['available_languages'];
-						$smarty->assign('multi_languages', $multi_languages);
-						$current_field_ins['isMultilingual'] = 'y';
-						$compteur = 0;
-						foreach($multi_languages as $num => $lang) {
-							//Case convert normal -> multilingual
-							if (!isset($info["$fid$lang"]) && isset($info["$fid"])) $info["$fid$lang"] = $info["$fid"];
-							$current_field_ins["lingualvalue"][$num]["lang"] = $lang;
-							$current_field_ins["lingualvalue"][$num]["value"] = $info["$fid$lang"];
-							$current_field_ins["lingualpvalue"][$num]["lang"] = $lang;
-							$current_field_ins["lingualpvalue"][$num]["value"] = $tikilib->parse_data(htmlspecialchars($info["$fid$lang"]));
+						$current_field_ins["users_array"] = array();
+						$current_field_ins["users_array"] = $users_array;
+						$U_maxsubscriptions = substr($info["$fid"], 0, strpos($info["$fid"], '#'));
+						$current_field_ins["maxsubscriptions"] = $U_maxsubscriptions;
+						$U_liste = NULL;
+						$U_othersubscriptions = $current_field_ins["user_nb_friends"];
+						if (!$current_field_ins["user_subscription"]) {
+							$U_othersubscriptions--;
 						}
-						//For display only
-						$current_field_ins["value"] = $info[$fid . $prefs['language']];
-						$current_field_ins["pvalue"] = $tikilib->parse_data(htmlspecialchars($info[$fid . $prefs['language']]));
+						if ($U_maxsubscriptions) {
+							for ($j = 0; $j <= $U_maxsubscriptions - $U_nb_users + $U_othersubscriptions; $j++) {
+								$U_liste[$j] = $j;
+							}
+						}
+						$smarty->assign("U_liste", $U_liste);
+					} elseif ($current_field_fields["type"] == 'C') {
+						$calc = preg_replace('/#([0-9]+)/', '$info[\1]', $current_field_fields['options_array'][0]);
+						eval('$computed = ' . $calc . ';');
+						$current_field_ins["value"] = $computed;
+						$info[$current_field_fields['fieldId']] = $computed; // in case a computed field use this one
+						$infoComputed = $trklib->get_computed_info($current_field_fields['options_array'][0], $_REQUEST['trackerId'], $fields['data']);
+						if (!empty($infoComputed)) {
+							$current_field_ins = array_merge($infoComputed, $current_field_ins);
+						}
+					} elseif ($current_field_fields["type"] == 'g') {
+						if (isset($current_field_fields['options_array'][0]) && $current_field_fields['options_array'][0] == 2 and !$info["$fid"]) {
+							$current_field_ins["defvalue"] = $group;
+						}
+						$current_field_ins["value"] = $info["$fid"];
+					} elseif ($current_field_fields['type'] == 'usergroups' && !empty($itemUser)) {
+						$current_field_ins['value'] = array_diff($tikilib->get_user_groups($itemUser), array('Registered', 'Anonymous'));
+					} elseif ($current_field_fields['type'] == 'p' && !empty($itemUser)) {
+						if ($current_field_fields['options_array'][0] == 'email') {
+							$current_field_ins['value'] = $userlib->get_user_email($itemUser);
+						} else {
+							$current_field_ins['value'] = $userlib->get_user_preference($itemUser, $current_field_fields['options_array'][0]);
+						}
+					} elseif ($current_field_fields['type'] == 'N' && !empty($itemUser)) {
+						$current_field_ins['value'] = $trklib->in_group_value($current_field_fields, $itemUser);
+					} elseif ($current_field_fields['type'] == 'F') {
+						$current_field_ins["value"] = $info["$fid"];
+						$freetaglib = TikiLib::lib('freetag');
+						$current_field_ins["freetags"] = $freetaglib->_parse_tag($info["$fid"]);
+						$current_field_ins["tag_suggestion"] = $freetaglib->get_tag_suggestion($current_field_ins["freetags"],$prefs['freetags_browse_amount_tags_suggestion']);
 					} else {
 						$current_field_ins["value"] = $info["$fid"];
-						$current_field_ins["pvalue"] = $tikilib->parse_data(htmlspecialchars($info["$fid"]));
 					}
-				} elseif ($current_field_fields['type'] == 'usergroups' && !empty($itemUser)) {
-					$current_field_ins['value'] = array_diff($tikilib->get_user_groups($itemUser), array('Registered', 'Anonymous'));
-				} elseif ($current_field_fields['type'] == 'p' && !empty($itemUser)) {
-					if ($current_field_fields['options_array'][0] == 'email') {
-						$current_field_ins['value'] = $userlib->get_user_email($itemUser);
-					} else {
-						$current_field_ins['value'] = $userlib->get_user_preference($itemUser, $current_field_fields['options_array'][0]);
+					if ($current_field_fields['type'] == 'M') {
+						global $filegallib, $prefs;
+						if ($prefs['URLAppend'] == '') {
+							list($val1, $val2) = explode('=', $current_field_ins["value"]);
+						} else {
+							$val2 = $current_field_ins["value"];
+						}
+						$res = $filegallib->get_file_info($val2);
+						if ($res["filetype"] == "video/x-flv") {
+							$ModeVideo = 'y';
+						} else {
+							$ModeVideo = 'n';
+						};
+						$smarty->assign('ModeVideo', $ModeVideo);
 					}
-				} elseif ($current_field_fields['type'] == 'N' && !empty($itemUser)) {
-					$current_field_ins['value'] = $trklib->in_group_value($current_field_fields, $itemUser);
-				} elseif ($current_field_fields['type'] == 'F') {
-					$current_field_ins["value"] = $info["$fid"];
-					$freetaglib = TikiLib::lib('freetag');
-					$current_field_ins["freetags"] = $freetaglib->_parse_tag($info["$fid"]);
-					$current_field_ins["tag_suggestion"] = $freetaglib->get_tag_suggestion($current_field_ins["freetags"],$prefs['freetags_browse_amount_tags_suggestion']);
-				} else {
-					$current_field_ins["value"] = $info["$fid"];
-				}
-				if ($current_field_fields['type'] == 'M') {
-					global $filegallib, $prefs;
-					if ($prefs['URLAppend'] == '') {
-						list($val1, $val2) = explode('=', $current_field_ins["value"]);
-					} else {
-						$val2 = $current_field_ins["value"];
-					}
-					$res = $filegallib->get_file_info($val2);
-					if ($res["filetype"] == "video/x-flv") {
-						$ModeVideo = 'y';
-					} else {
-						$ModeVideo = 'n';
-					};
-					$smarty->assign('ModeVideo', $ModeVideo);
-				}
-				if ($current_field_fields['type'] == 'i' && !empty($current_field_ins['options_array'][2]) && !empty($current_field_ins['value'])) {
-					$imagegallib = TikiLib::lib('imagegal');
+					if ($current_field_fields['type'] == 'i' && !empty($current_field_ins['options_array'][2]) && !empty($current_field_ins['value'])) {
+						$imagegallib = TikiLib::lib('imagegal');
 
-					if ($imagegallib->readimagefromfile($current_field_ins['value'])) {
-						$imagegallib->getimageinfo();
-						if (!isset($current_field_ins['options_array'][3])) {
-							$current_field_ins['options_array'][3] = 0;
+						if ($imagegallib->readimagefromfile($current_field_ins['value'])) {
+							$imagegallib->getimageinfo();
+							if (!isset($current_field_ins['options_array'][3])) {
+								$current_field_ins['options_array'][3] = 0;
+							}
+							$t = $imagegallib->ratio($imagegallib->xsize, $imagegallib->ysize, $current_field_ins['options_array'][2], $current_field_ins['options_array'][3]);
+							$current_field_ins['options_array'][2] = $t * $imagegallib->xsize;
+							$current_field_ins['options_array'][3] = $t * $imagegallib->ysize;
 						}
-						$t = $imagegallib->ratio($imagegallib->xsize, $imagegallib->ysize, $current_field_ins['options_array'][2], $current_field_ins['options_array'][3]);
-						$current_field_ins['options_array'][2] = $t * $imagegallib->xsize;
-						$current_field_ins['options_array'][3] = $t * $imagegallib->ysize;
+					}
+					if (isset($current_field_ins["value"])) {
+						$last[$fid] = $current_field_ins["value"];
 					}
 				}
-				if (isset($current_field_ins["value"])) {
-					$last[$fid] = $current_field_ins["value"];
-				}
-			}
-			if ($current_field_fields['type'] == 'A') {
-				if (!empty($current_field_ins['value'])) {
-					$current_field_ins['info'] = $trklib->get_item_attachment($current_field_ins['value']);
-				}
-			} elseif (($current_field_fields['type'] == 's' && $current_field_fields['name'] == 'Rating') || $current_field_fields['type'] == '*') {
-				$current_field_fields['value'] = $info[$fid];
-				if ($current_field_fields['type'] == '*' && $tiki_p_tracker_vote_ratings == 'y' && !empty($_REQUEST['vote']) && !empty($_REQUEST['itemId']) && isset($_REQUEST['ins_'.$current_field_fields['fieldId']])) {
-					$trklib->replace_star($_REQUEST['ins_'.$current_field_fields['fieldId']], $_REQUEST['trackerId'], $_REQUEST['itemId'], $current_field_ins, $user, true);
-				} else {
-					$trklib->update_star_field($_REQUEST['trackerId'], $_REQUEST['itemId'], $current_field_ins);
-					if (!empty($current_field_ins['numVotes'])) {
-						$smarty->assign('itemHasVotes', 'y');
+				if ($current_field_fields['type'] == 'A') {
+					if (!empty($current_field_ins['value'])) {
+						$current_field_ins['info'] = $trklib->get_item_attachment($current_field_ins['value']);
+					}
+				} elseif (($current_field_fields['type'] == 's' && $current_field_fields['name'] == 'Rating') || $current_field_fields['type'] == '*') {
+					$current_field_fields['value'] = $info[$fid];
+					if ($current_field_fields['type'] == '*' && $tiki_p_tracker_vote_ratings == 'y' && !empty($_REQUEST['vote']) && !empty($_REQUEST['itemId']) && isset($_REQUEST['ins_'.$current_field_fields['fieldId']])) {
+						$trklib->replace_star($_REQUEST['ins_'.$current_field_fields['fieldId']], $_REQUEST['trackerId'], $_REQUEST['itemId'], $current_field_ins, $user, true);
+					} else {
+						$trklib->update_star_field($_REQUEST['trackerId'], $_REQUEST['itemId'], $current_field_ins);
+						if (!empty($current_field_ins['numVotes'])) {
+							$smarty->assign('itemHasVotes', 'y');
+						}
 					}
 				}
 			}
+
 			if ($current_field_fields['isMain'] == 'y') {
 				$tracker_item_main_value .= (empty($tracker_item_main_value) ? '' : ' ') . $current_field_ins['value']; 
 			}
