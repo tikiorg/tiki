@@ -339,39 +339,6 @@ foreach ($xfields['data'] as $i => $current_field) {
 			} else {
 				$current_field_fields["value"] = '';
 			}
-		} elseif ($current_field_fields["type"] == 'a') { // textarea
-			if (isset($_REQUEST[$ins_id])) {
-				$current_field_ins["value"] = $_REQUEST[$ins_id];
-			} else {
-				$current_field_ins["value"] = '';
-			}
-			if (isset($_REQUEST[$filter_id])) {
-				$current_field_fields["value"] = $_REQUEST[$filter_id];
-			} else {
-				$current_field_fields["value"] = '';
-			}
-			if ($current_field_fields["options_array"][0]) {
-				$textarea_options = true;
-			}
-			if ($current_field_fields["isMultilingual"] == 'y') {
-				$current_field_ins['isMultilingual'] = 'y';
-				foreach($prefs['available_languages'] as $num => $tmplang) {
-					//Case convert normal -> multilingual
-					if (!isset($_REQUEST[$ins_id][$tmplang]) && isset($_REQUEST[$ins_id])) {
-						$_REQUEST[$ins_id][$tmplang] = $_REQUEST[$ins_id];
-					}
-					$current_field_fields['lingualvalue'][$num]['lang'] = $tmplang;
-					if (isset($_REQUEST[$ins_id][$tmplang])) {
-						$current_field_fields['lingualvalue'][$num]['value'] = $_REQUEST[$ins_id][$tmplang];
-					}
-					$current_field_fields['lingualpvalue'][$num]['lang'] = $tmplang;
-					if (isset($_REQUEST[$ins_id][$tmplang])) {
-						$current_field_fields['lingualpvalue'][$num]['value'] = $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id][$tmplang]));
-					}
-				}
-				$current_field_ins['lingualpvalue'] = $current_field_fields['lingualpvalue'];
-				$current_field_ins['lingualvalue'] = $current_field_fields['lingualvalue'];
-			}
 		} elseif ($current_field_fields["type"] == 's' and $current_field['name'] == 'Rating') { // rating
 			if (isset($_REQUEST[$ins_id])) {
 				$newItemRate = $_REQUEST[$ins_id];

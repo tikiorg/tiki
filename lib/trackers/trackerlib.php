@@ -4887,6 +4887,8 @@ class TrackerLib extends TikiLib
 
 	function get_field_handler($field_info) {
 		switch ($field_info['type']) {
+		case 'a':
+			return new Tracker_Field_TextArea($field_info);
 		case 'c':
 			return new Tracker_Field_Checkbox($field_info);
 		case 'f':
@@ -4925,6 +4927,10 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 	protected function getFilterId()
 	{
 		return 'filter_' . $this->definition['fieldId'];
+	}
+
+	protected function get($key) {
+		return $this->definition[$key];
 	}
 
 	/**
@@ -4989,8 +4995,7 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract
 		$data = array(
 			'value' => isset($requestData[$ins_id]) ? $requestData[$ins_id] : '',
 		);
-
-
+		
 		return $data;
 	}
 
@@ -5003,6 +5008,55 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract
 			'flags' => TikiLib::lib('trk')->get_flags(true, true, ($this->getOption(1) != 1)),
 			'defaultvalue' => 'None',
 		);
+	}
+}
+
+class Tracker_Field_TextArea extends Tracker_Field_Abstract
+{
+	function getInsertValues(array $requestData)
+	{
+		$data = $this->processMultilingual($requestData, $this->getInsertId());
+
+		return $data;
+	}
+
+	function getDisplayValues(array $requestData)
+	{
+		global $textarea_options;
+		
+		$data = $this->processMultilingual($requestData, $this->getFilterId());
+
+		if ($this->getOption(0)) {
+			$textarea_options = true;
+		}
+
+		return $data;
+	}
+
+	private function processMultilingual($requestData, $id_string) {
+		global $prefs;
+
+		$data = array();
+
+		if (!isset($requestData[$id_string])) {
+			$requestData[$id_string] = '';
+		}
+		$data['value'] = $requestData[$id_string];
+
+		if ($this->get("isMultilingual") == 'y') {
+			$data['isMultilingual'] = 'y';
+			foreach($prefs['available_languages'] as $num => $tmplang) {	// TODO add a limit on number of langs - 40+ makes this blow up
+
+				if (!isset($requestData[$id_string][$tmplang])) {	// Case convert normal -> multilingual
+					$requestData[$id_string][$tmplang] = $data['value'];
+				}
+				$data['lingualvalue'][$num]['lang'] = $tmplang;
+				$data['lingualvalue'][$num]['value'] = $requestData[$id_string][$tmplang];
+				$data['lingualpvalue'][$num]['lang'] = $tmplang;
+				$data['lingualpvalue'][$num]['value'] = TikiLib::lib('tiki')->parse_data(htmlspecialchars($requestData[$id_string][$tmplang]));
+			}
+		}
+		return $data;
 	}
 }
 
