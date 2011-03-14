@@ -379,17 +379,6 @@ foreach ($xfields['data'] as $i => $current_field) {
 			} else {
 				$newItemRate = NULL;
 			}
-		} elseif ($current_field_fields["type"] == 'y') { // country list
-			if (isset($_REQUEST[$ins_id])) {
-				$current_field_ins["value"] = $_REQUEST[$ins_id];
-			}
-			// Get flags here
-			if (isset($current_field_fields["options_array"][1]) && $current_field_fields["options_array"][1] == 1) {
-				$current_field_fields['flags'] = $trklib->get_flags(true, true, false); // Sort in english names order
-			} else {
-				$current_field_fields['flags'] = $trklib->get_flags(true, true, true); // Sort in translated names order (default)
-			}
-			$current_field_fields['defaultvalue'] = 'None';
 		} else {
 			if (isset($_REQUEST[$ins_id])) {
 				$current_field_ins["value"] = $_REQUEST[$ins_id];

@@ -4891,6 +4891,8 @@ class TrackerLib extends TikiLib
 			return new Tracker_Field_Checkbox($field_info);
 		case 'f':
 			return new Tracker_Field_DateTime($field_info);
+		case 'y':
+			return new Tracker_Field_CountrySelector($field_info);
 		}
 	}
 
@@ -4975,6 +4977,32 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract
 	function getDisplayValues(array $requestData)
 	{
 		return null;
+	}
+}
+
+class Tracker_Field_CountrySelector extends Tracker_Field_Abstract
+{
+	function getInsertValues(array $requestData)
+	{
+		$ins_id = $this->getInsertId();
+
+		$data = array(
+			'value' => isset($requestData[$ins_id]) ? $requestData[$ins_id] : '',
+		);
+
+
+		return $data;
+	}
+
+	function getDisplayValues(array $requestData)
+	{
+		$filter_id = $this->getFilterId();
+
+		return array(
+			'value' => isset($requestData[$filter_id]) ? $requestData[$filter_id] : '',
+			'flags' => TikiLib::lib('trk')->get_flags(true, true, ($this->getOption(1) != 1)),
+			'defaultvalue' => 'None',
+		);
 	}
 }
 
