@@ -4914,7 +4914,7 @@ class TrackerLib extends TikiLib
 	function get_rendered_fields()
 	{
 		// FIXME : Kill this function once cleanup is completed
-		return array('t');
+		return array('t', 'e');
 	}
 
 	private function parse_comment($data) {
@@ -5220,6 +5220,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 			'value' => '',
 			'selected_categories' => array_intersect($selected, $this->getIds($categories)),
 			$parentId => $categories,
+			'list' => $categories,
 			'cat' => array(),
 			'categs' => array(),
 		);
@@ -5243,6 +5244,11 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 			'categories' => $this->getApplicableCategories(),
 			$parentId => $this->getApplicableCategories(),
 		);
+	}
+
+	function renderInput()
+	{
+		return $this->renderInputTemplate('trackerinput/category.tpl');
 	}
 
 	private function getIds($categories)

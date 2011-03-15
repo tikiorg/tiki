@@ -399,40 +399,6 @@
 											</div>
 										{/if}
 
-									{elseif $cur_field.type eq 'e'}
-										{if !empty($cur_field.options_array[2]) && ($cur_field.options_array[2] eq '1' or $cur_field.options_array[2] eq 'y')}
-											{select_all checkbox_names=ins_cat_`$cur_field.fieldId`[] label="{tr}Select All{/tr}"}
-										{/if}
-										{assign var=fca value=$cur_field.options_array[0]}
-										{if $cur_field.options_array[1] eq 'm' or $cur_field.options_array[1] eq 'd'}
-											<select name="ins_cat_{$cur_field.fieldId}[]"{if $cur_field.options_array[1] eq 'm'} multiple="multiple"{/if}>
-												{if $cur_field.isMandatory ne 'y'}<option value=""></option>{/if}
-												{foreach key=ku item=iu from=$cur_field.$fca name=foreache}
-													{assign var=fcat value=$iu.categId}
-													<option value="{$iu.categId}"{if $cur_field.cat.$fcat eq 'y'} selected="selected"{/if}>{$iu.categpath|escape}</option>
-												{/foreach}
-											</select>
-										{else}
-											<table width="100%">
-												<tr>
-												{cycle name="2_$fca" values=",</tr><tr>" advance=false}
-												{foreach key=ku item=iu from=$cur_field.$fca name=foreache}
-													{assign var=fcat value=$iu.categId}
-													<td width="50%" style="white_space:nowrap;">
-														<input type={if $cur_field.options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="ins_cat_{$cur_field.fieldId}[]" value="{$fcat}" {if $cur_field.cat.$fcat eq 'y'}checked="checked"{/if}/>{$iu.name|escape}
-													</td>
-													{if !$smarty.foreach.foreache.last}
-														{cycle name="2_$fca"}
-													{else}
-														{if $cur_field.$fca|@count%2}
-															<td></td>
-														{/if}
-														</tr>
-													{/if}
-												{/foreach}
-											</table>
-										{/if}
-
 									{elseif $cur_field.type eq 't'}
 										{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
 
