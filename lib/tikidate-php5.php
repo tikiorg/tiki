@@ -275,10 +275,16 @@ class TikiDate
 
 	// Checks that the string is either a timezone identifier or an abbreviation. display_timezone can be manually set to an identifier in preferences but will be an [uppercase] abbreviation if auto-detected by JavaScript.
 	static function TimezoneIsValidId($id) {
-		return array_key_exists( strtolower($id), DateTimeZone::listAbbreviations() ) ||
-			in_array($id, DateTimeZone::listIdentifiers());
+		static $abbrevs = null, $ids = null;
+
+		if (! $abbrevs) {
+			$abbrevs = DateTimeZone::listAbbreviations();
+			$ids = DateTimeZone::listIdentifiers();
+		}
+
+		return array_key_exists( strtolower($id), $abbrevs ) ||
+			in_array($id, $ids);
 	}
-	
 }
 
 class Date_Calc
