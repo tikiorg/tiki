@@ -5239,10 +5239,11 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 	function getDisplayValues(array $requestData)
 	{
 		$parentId = $this->getOption(0);
+		$categories = $this->getApplicableCategories($selected);
 
 		return array(
-			'categories' => $this->getApplicableCategories(),
-			$parentId => $this->getApplicableCategories(),
+			'categories' => $categories,
+			$parentId => $categories,
 		);
 	}
 
