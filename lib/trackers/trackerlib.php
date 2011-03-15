@@ -4900,6 +4900,8 @@ class TrackerLib extends TikiLib
 			return new Tracker_Field_DateTime($field_info, $tracker_data);
 		case 'i':
 			return new Tracker_Field_Image($field_info, $tracker_data);
+		case 'l':
+			return new Tracker_Field_ItemsList($field_info, $tracker_data);
 		case 'r':
 			return new Tracker_Field_ItemLink($field_info, $tracker_data);
 		case 't':
@@ -5316,8 +5318,56 @@ class Tracker_field_Image extends Tracker_Field_File
 
 		return parent::getInsertValues($requestData);
 	}
-	
 }
+
+class Tracker_Field_ItemsList extends Tracker_Field_Abstract
+{
+	function getInsertValues(array $requestData)
+	{
+		$ins_id = $this->getInsertId();
+
+		$data = array(
+			'value' => isset($requestData[$ins_id])
+				? $requestData[$filter_id]
+				: $this->getValue(),
+		);
+
+		if ($this->getOption(3)) {
+			$l = explode(':', $this->getOption(1));
+			$finalFields = explode('|', $this->getOption(3));
+			$data['links'] = TikiLib::lib('trk')->get_join_values(
+					$requestData['trackerId'], $requestData['itemId'],
+					array_merge( array($this->getOption(2)), $l, array($this->getOption(3))),
+					$this->getOption(0), $finalFields,  ' ', $this->getOption(5)
+			);
+			if (count($data['links']) == 1) {
+				foreach($data['links'] as $linkItemId => $linkValue) {
+					if (is_numeric($data['links'][$linkItemId])) { //if later a computed field use this field
+						$info[$current_field_fields['fieldId']] = $linkValue;
+					}
+				}
+			}
+			$data['trackerId'] = $this->getOption(0);
+			$data['tracker_options'] = TikiLib::lib('trk')->get_tracker_options($this->getOption(0));
+		}
+
+		return $data;
+	}
+
+	function getDisplayValues(array $requestData)
+	{
+		$filter_id = $this->getFilterId();
+
+		return array(
+			'value' => isset($requestData[$filter_id])
+				? $requestData[$filter_id]
+				: $this->getValue(),
+		);
+	}
+}
+
+
+
 
 global $trklib;
 $trklib = new TrackerLib;
