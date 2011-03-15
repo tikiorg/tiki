@@ -1,0 +1,122 @@
+/* 
+	Strasa theme selectors for IE6.
+*/
+
+body {
+	font-size: 72%;
+}
+
+#tiki-top .cssmenu_horiz a,
+#tiki-top .cssmenu_horiz a:visited {
+	border-color: #204a60;
+}
+
+#siteloginbar {
+	text-align: right;
+	width: 100%;
+	padding: 0;
+	background: #fff url(loginlong.jpg) 0 0 no-repeat !important; 
+}
+
+#siteloginbar form {
+	padding-right: 10px !important;
+}
+
+#siteloginbar label {
+	color: #fff;
+}
+
+#tiki-top {
+	font-size: 11px;
+}
+
+#tiki-center {
+	font-size: 1em;
+}
+
+.clearfix {
+	height: 1%;
+}
+
+#tikihelp {
+	position: absolute;
+}
+
+#col2 .box,
+#col3 .box {
+	width: 181px !important;
+}
+
+body.fixed_width #col3 .box {
+	width: 178px !important;
+}
+
+#col2 ul.cssmenu_vert,
+#col2 ul.cssmenu_vert li {
+	width: 165px !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+h3.box-title {
+	position: static;
+}
+
+.moduleflip {
+	position: static;
+	float: right;
+}
+
+.moduleflip {
+	display: block;
+}
+
+img.flipmodimage {
+	border: none;
+}
+
+.normal, 
+.admin,
+.bloglist {
+	width: 97%;
+}
+
+td {
+	font-size: 11px;
+}
+
+.bloginfo table {
+	font-size: 11px;
+}
+
+body.tiki_blogs .postbody-title {
+	height: 46px;
+}
+
+body.tiki_blogs .author_info {
+	height: 24px;
+}
+
+.post .postbody {
+	font-size: 11px;
+}
+
+body .galtable {
+	width: 97%;
+}
+
+.addevent {
+	padding: 0;
+}
+
+.calodd {
+	padding: 0;
+}
+
+.caleven {
+	padding: 0;
+}
+
+.caldark {
+	padding: 0;
+}

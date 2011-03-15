@@ -1,0 +1,72 @@
+/* $Id$
+	Jqui theme (jqui.css), Element theme option (element.css)
+	for Tiki Wiki CMS/Groupware.
+	Thanks to garkpit for the random name.
+	Visit http://themes.tiki.org for more information.
+*/
+
+#col2 a, #col2 a:visited, #col3 a, #col3 a:visited {
+	color: #000;
+}
+ 
+#col2 a:active, #col2 a:hover, #col3 a:active, #col3 a:hover {
+	color: #888;
+}
+
+a, a:visited {
+	color: #2A5385;
+}
+ 
+a:active, a:hover {
+	color: #7195C1;
+}
+
+#top a, #top a:visited {
+	color: #2A5385;
+}
+ 
+#top a:active, #top a:hover {
+	color: #7195C1;
+}
+
+h1,h2,h3,h4,h5,h6, #top .pagetitle a {
+	color: #7195C1;
+}
+
+#top .pagetitle a {
+	color: #4678B4;
+}
+
+.button a,
+.button a:visited,
+button,
+input[type="reset"],
+input[type="submit"],
+.button input,
+.calbuttonBox a {
+    border: 1px solid #777;
+    font-weight: bold;
+    color: #555555;
+}
+
+.button a:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover,
+.calbuttonBox:hover {
+    border: 1px solid #666;
+    font-weight: bold;
+    color: #212121;
+	background-color: #ea6;
+}
+    
+#tiki-top {
+	padding: 0 .3em 0;
+	margin: 0.6em 0.9em 0.6em;
+}
+
+#tiki-top .cssmenu_horiz {
+    line-height: 0;
+}
+

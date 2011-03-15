@@ -1,0 +1,1 @@
+ALTER TABLE `tiki_todo` MODIFY `event` VARCHAR(50) NOT NULL;
