@@ -32,6 +32,7 @@ html > body {
 
 body.fixed_width .fixedwidth .fixedwidth {
 	width: 100%;
+	padding: 0;
 }
 
 #c1c2 {
@@ -96,6 +97,10 @@ body.fixed_width .fixedwidth .fixedwidth {
 	font-size: 85%;
 	min-height: 65px;
 	text-align: center}
+	
+#bottom_modules {
+	margin: 1em;
+}
 
 #header a,
 #header a:visited,
