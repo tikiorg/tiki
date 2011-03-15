@@ -4618,7 +4618,7 @@ class TrackerLib extends TikiLib
 		}
 		static $fields_used_in_item_links;
 
-		$table = $this->itemFields();
+		$table = $this->fields();
 
 		if (!isset($fields_used_in_item_links)) {
 			$fields = $table->fetchAll(array('fieldId', 'options'), array(
@@ -4633,7 +4633,7 @@ class TrackerLib extends TikiLib
 			return;
 		}
 
-		$table->updateMultiple(array(
+		$this->itemFields()->updateMultiple(array(
 			'value' => $new,
 		), array(
 			'value' => $old,
