@@ -662,8 +662,8 @@ if ($_REQUEST["itemId"]) {
 			$current_field_fields = $current_field;
 
 			if ($handler) {
-				$insert_values = $handler->getInsertValues($_REQUEST);
-				$field_values = $handler->getDisplayValues($_REQUEST);
+				$insert_values = $handler->getInsertValues();
+				$field_values = $handler->getDisplayValues();
 
 				if ($insert_values) {
 					$current_field_ins = array_merge($current_field_ins, $insert_values);

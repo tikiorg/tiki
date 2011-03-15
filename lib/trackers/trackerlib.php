@@ -4924,9 +4924,9 @@ class TrackerLib extends TikiLib
 
 interface Tracker_Field_Interface
 {
-	function getInsertValues(array $requestData);
+	function getInsertValues(array $requestData = array());
 
-	function getDisplayValues(array $requestData);
+	function getDisplayValues(array $requestData = array());
 
 	function renderInput();
 }
@@ -4994,9 +4994,15 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 	}
 }
 
+/**
+ * Handler class for Checkboxes
+ * 
+ * Letter key: ~c~
+ *
+ */
 class Tracker_Field_Checkbox extends Tracker_Field_Abstract
 {
-	function getInsertValues(array $requestData)
+	function getInsertValues(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();
 
@@ -5007,7 +5013,7 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract
 		);
 	}
 
-	function getDisplayValues(array $requestData)
+	function getDisplayValues(array $requestData = array())
 	{
 		$filter_id = $this->getFilterId();
 
@@ -5019,9 +5025,15 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract
 	}
 }
 
+/**
+ * Handler class for DateTime
+ * 
+ * Letter key: ~f~
+ *
+ */
 class Tracker_Field_DateTime extends Tracker_Field_Abstract
 {
-	function getInsertValues(array $requestData)
+	function getInsertValues(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();
 
@@ -5036,15 +5048,21 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract
 		return $data;
 	}
 
-	function getDisplayValues(array $requestData)
+	function getDisplayValues(array $requestData = array())
 	{
 		return null;
 	}
 }
 
+/**
+ * Handler class for CountrySelector
+ * 
+ * Letter key: ~y~
+ *
+ */
 class Tracker_Field_CountrySelector extends Tracker_Field_Abstract
 {
-	function getInsertValues(array $requestData)
+	function getInsertValues(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();
 
@@ -5058,7 +5076,7 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract
 		return $data;
 	}
 
-	function getDisplayValues(array $requestData)
+	function getDisplayValues(array $requestData = array())
 	{
 		$filter_id = $this->getFilterId();
 
@@ -5072,16 +5090,22 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract
 	}
 }
 
+/**
+ * Handler class for Text
+ * 
+ * Letter key: ~t~
+ *
+ */
 class Tracker_Field_Text extends Tracker_Field_Abstract
 {
-	function getInsertValues(array $requestData)
+	function getInsertValues(array $requestData = array())
 	{
 		$data = $this->processMultilingual($requestData, $this->getInsertId());
 
 		return $data;
 	}
 
-	function getDisplayValues(array $requestData)
+	function getDisplayValues(array $requestData = array())
 	{		
 		$data = $this->processMultilingual($requestData, $this->getFilterId());
 
@@ -5129,16 +5153,22 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
 	}
 }
 
+/**
+ * Handler class for TextArea
+ * 
+ * Letter key: ~a~
+ *
+ */
 class Tracker_Field_TextArea extends Tracker_Field_Text
 {
-	function getInsertValues(array $requestData)
+	function getInsertValues(array $requestData = array())
 	{
 		$data = $this->processMultilingual($requestData, $this->getInsertId());
 
 		return $data;
 	}
 
-	function getDisplayValues(array $requestData)
+	function getDisplayValues(array $requestData = array())
 	{
 		$data = $this->processMultilingual($requestData, $this->getFilterId());
 
@@ -5147,9 +5177,15 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 
 }
 
+/**
+ * Handler class for ItemLink
+ * 
+ * Letter key: ~r~
+ *
+ */
 class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 {
-	function getInsertValues(array $requestData)
+	function getInsertValues(array $requestData = array())
 	{
 		$data = $this->getData($requestData, $this->getInsertId());
 
@@ -5161,7 +5197,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 		return $data;
 	}
 
-	function getDisplayValues(array $requestData)
+	function getDisplayValues(array $requestData = array())
 	{
 		return $this->getData($requestData, $this->getFilterId());
 	}
@@ -5201,9 +5237,15 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 	}
 }
 
+/**
+ * Handler class for Category
+ * 
+ * Letter key: ~e~
+ *
+ */
 class Tracker_Field_Category extends Tracker_Field_Abstract
 {
-	function getInsertValues(array $requestData)
+	function getInsertValues(array $requestData = array())
 	{
 		$key = 'ins_cat_' . $this->getConfiguration('fieldId');
 		$parentId = $this->getOption(0);
@@ -5236,7 +5278,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 		return $data;
 	}
 
-	function getDisplayValues(array $requestData)
+	function getDisplayValues(array $requestData = array())
 	{
 		$parentId = $this->getOption(0);
 		$categories = $this->getApplicableCategories($selected);
@@ -5276,9 +5318,15 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 	}
 }
 
+/**
+ * Handler class for File
+ * 
+ * Letter key: ~A~
+ *
+ */
 class Tracker_Field_File extends Tracker_Field_Abstract
 {
-	function getInsertValues(array $requestData)
+	function getInsertValues(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();
 
@@ -5292,7 +5340,7 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 		return $data;
 	}
 
-	function getDisplayValues(array $requestData)
+	function getDisplayValues(array $requestData = array())
 	{
 		return array(
 			'value' => $this->getValue(),
@@ -5306,9 +5354,15 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 
 }
 
+/**
+ * Handler class for Image
+ * 
+ * Letter key: ~i~
+ *
+ */
 class Tracker_field_Image extends Tracker_Field_File
 {
-	function getInsertValues(array $requestData)
+	function getInsertValues(array $requestData = array())
 	{
 		global $prefs, $smarty;
 		
@@ -5333,9 +5387,15 @@ class Tracker_field_Image extends Tracker_Field_File
 	}
 }
 
+/**
+ * Handler class for ItemsList
+ * 
+ * Letter key: ~l~
+ *
+ */
 class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 {
-	function getInsertValues(array $requestData)
+	function getInsertValues(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();
 
@@ -5367,7 +5427,7 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 		return $data;
 	}
 
-	function getDisplayValues(array $requestData)
+	function getDisplayValues(array $requestData = array())
 	{
 		$filter_id = $this->getFilterId();
 
