@@ -15,7 +15,7 @@ function smarty_function_trackerfield( $params, $smarty ) {
 	$trklib = TikiLib::lib('trk');
 
 	$field = $params['field'];
-	$item = $params['item'];
+	$item = isset($params['item']) ? $params['item'] : array();
 
 	$handler = $trklib->get_field_handler($field, $item);
 

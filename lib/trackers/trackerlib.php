@@ -4889,7 +4889,7 @@ class TrackerLib extends TikiLib
 	function get_field_handler($field_info, $tracker_data = array()) {
 		switch ($field_info['type']) {
 		case 'A':
-			return new Tracker_Field_File($field_info);
+			return new Tracker_Field_File($field_info, $tracker_data);
 		case 'a':
 			return new Tracker_Field_TextArea($field_info, $tracker_data);
 		case 'c':
