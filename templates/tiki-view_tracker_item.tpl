@@ -250,6 +250,19 @@
 					{if empty($tracker_info.editItemPretty)}
 
 						{foreach from=$ins_fields key=ix item=cur_field}
+						{if in_array($cur_field.type, TikiLib::lib('trk')->get_rendered_fields())}
+							<tr>
+								<td>
+									{$cur_field.name}
+									{if $cur_field.isMandatory eq 'y'}
+										<em class='mandatory_star'>*</em>
+									{/if}
+								</td>
+								<td>
+									{trackerfield field=$cur_field item=$item_info}
+								</td>
+							</tr>
+						{else}
 							{if ($cur_field.isHidden eq 'n' or $tiki_p_admin_trackers eq 'y' or $cur_field.isHidden eq 'c') and (empty($cur_field.visibleBy) or in_array($default_group, $cur_field.visibleBy) or $tiki_p_admin_trackers eq 'y')  and ($cur_field.type ne 'A' or $tiki_p_attach_trackers eq 'y') and ($cur_field.type ne '*')}
 
 								{if $cur_field.type eq 's' and ($cur_field.name eq "Rating" or $cur_field.name eq tra("Rating")) and ($tiki_p_tracker_view_ratings eq 'y' || $tiki_p_tracker_vote_ratings eq 'y') and (empty($cur_field.visibleBy) or in_array($default_group, $cur_field.visibleBy) or $tiki_p_admin_trackers eq 'y')}
@@ -531,6 +544,7 @@
 							{/if}
 
 						{/if}
+					{/if}
 					{/foreach}
 					{trackerheader level=-1 title='' inTable='formcolor'}
 

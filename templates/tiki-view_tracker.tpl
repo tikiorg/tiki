@@ -230,6 +230,20 @@ $("#newItemForm").validate({
 {/if}
 
 {foreach from=$fields key=ix item=field_value}
+{if in_array($field_value.type, TikiLib::lib('trk')->get_rendered_fields())}
+	<tr>
+		<td>
+			{if $field_value.isMandatory eq 'y'}
+				{$field_value.name}<em class='mandatory_star'>*</em>
+			{else}
+				{$field_value.name}
+			{/if}
+		</td>
+		<td>
+			{trackerfield field=$field_value}
+		</td>
+	</tr>
+{else}
 {assign var=fid value=$field_value.fieldId}
 {* -------------------- header and others -------------------- *}
 {if $field_value.isHidden eq 'n' or $field_value.isHidden eq 'c'  or $tiki_p_admin_trackers eq 'y'}
@@ -432,6 +446,7 @@ $("#newItemForm").validate({
 {assign var=stick value="y"}
 {else}
 </tr>{assign var=stick value="n"}
+{/if}
 {/if}
 {/if}
 {/if}

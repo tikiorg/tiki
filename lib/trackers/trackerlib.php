@@ -4909,6 +4909,12 @@ class TrackerLib extends TikiLib
 		}
 	}
 
+	function get_rendered_fields()
+	{
+		// FIXME : Kill this function once cleanup is completed
+		return array('t');
+	}
+
 	private function parse_comment($data) {
 		return nl2br(htmlspecialchars($data));
 	}
@@ -4919,6 +4925,8 @@ interface Tracker_Field_Interface
 	function getInsertValues(array $requestData);
 
 	function getDisplayValues(array $requestData);
+
+	function renderInput();
 }
 
 abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
@@ -4930,6 +4938,11 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 	{
 		$this->definition = $fieldInfo;
 		$this->trackerData = $trackerData;
+	}
+
+	public function renderInput()
+	{
+		return 'Not implemented';
 	}
 
 	protected function getInsertId()
@@ -4968,6 +4981,14 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		return isset($this->definition['options_array'][(int) $number]) ?
 			$this->definition['options_array'][(int) $number] :
 			$default;
+	}
+
+	protected function renderInputTemplate($file)
+	{
+		$smarty = TikiLib::lib('smarty');
+		$smarty->assign('field_value', $this->definition);
+
+		return $smarty->fetch($file);
 	}
 }
 
@@ -5063,6 +5084,11 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
 		$data = $this->processMultilingual($requestData, $this->getFilterId());
 
 		return $data;
+	}
+
+	function renderInput()
+	{
+		return $this->renderInputTemplate('trackerinput/text.tpl');
 	}
 
 	protected function processMultilingual($requestData, $id_string) {
