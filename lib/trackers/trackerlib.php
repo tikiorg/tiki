@@ -4618,7 +4618,7 @@ class TrackerLib extends TikiLib
 		}
 		static $fields_used_in_item_links;
 
-		$table = $this->fields();
+		$table = $this->itemFields();
 
 		if (!isset($fields_used_in_item_links)) {
 			$fields = $table->fetchAll(array('fieldId', 'options'), array(
