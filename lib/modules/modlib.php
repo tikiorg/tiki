@@ -496,6 +496,14 @@ class ModLib extends TikiLib
 			$moduleName = $module;
 		}
 
+		$cachelib = TikiLib::lib('cache');
+		$cacheKey = 'module.' . $moduleName;
+		$info = $cachelib->getSerialized($cacheKey, 'module');
+
+		if ($info) {
+			return $info;
+		}
+
 		$phpfuncfile = 'modules/mod-func-' . $moduleName . '.php';
 		$info_func = "module_{$moduleName}_info";
 		$info = array();
@@ -646,6 +654,9 @@ class ModLib extends TikiLib
 				if (!isset($param['required']))
 					$param['required'] = false;
 		}
+
+		$cachelib->cacheItem($cacheKey, serialize($info), 'module');
+
 		return $info;
 	}
 
