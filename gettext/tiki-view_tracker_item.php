@@ -279,7 +279,9 @@ if (isset($_REQUEST['reloff'])) {
 	if (isset($_REQUEST['cant'])) {
 		$cant = $_REQUEST['cant'];
 	} else {
-		$tryfiltervalue = array_values($tryfiltervalue);
+		if (is_array($tryfiltervalue)) {
+			$tryfiltervalue = array_values($tryfiltervalue);
+		}
 		$trymove = $trklib->list_items($_REQUEST['trackerId'], $offset + $tryreloff, 1, $sort_mode, $listfields, $tryfilterfield, $tryfiltervalue, $trystatus, $tryinitial, $tryexactvalue);
 		if (isset($trymove['data'][0]['itemId'])) {
 			// Autodetect itemId if not specified
@@ -683,29 +685,7 @@ if ($_REQUEST["itemId"]) {
 					} else {
 						if (!isset($info["$fid"])) $info["$fid"] = '';
 					}
-					if ($current_field_fields["type"] == 'l') {
-						if (isset($current_field_fields["options_array"][3])) {
-							$l = explode(':', $current_field_fields["options_array"][1]);
-							$finalFields = explode('|', $current_field_fields['options_array'][3]);
-							$current_field_ins['links'] = $trklib->get_join_values($_REQUEST['trackerId'], $_REQUEST['itemId'], array_merge(array(
-								$current_field_fields["options_array"][2]
-							) , $l, array(
-								$current_field_fields["options_array"][3]
-										  )) , $current_field_fields["options_array"][0], $finalFields, ' ', empty($current_field_fields['options_array'][5])?'':$current_field_fields['options_array'][5]);
-							if (count($current_field_ins['links']) == 1) {
-								foreach($current_field_ins['links'] as $linkItemId => $linkValue) {
-									if (is_numeric($current_field_ins['links'][$linkItemId])) { //if later a computed field use this field
-										$info[$current_field_fields['fieldId']] = $linkValue;
-									}
-								}
-							}
-							$current_field_ins['trackerId'] = $current_field_fields["options_array"][0];
-							if (!isset($tracker_options_l[$current_field_fields["options_array"][0]])) {
-								$tracker_options_l[$current_field_fields["options_array"][0]] = $trklib->get_tracker_options($current_field_fields["options_array"][0]);
-							}
-							$current_field_ins['tracker_options'] = $tracker_options_l[$current_field_fields["options_array"][0]];
-						}
-					} elseif ($current_field_fields["type"] == 'u') {
+					if ($current_field_fields["type"] == 'u') {
 						if (isset($current_field_fields['options_array'][0]) && $current_field_fields['options_array'][0] == 2 and !$info["$fid"]) {
 							$current_field_ins["defvalue"] = $user;
 						}

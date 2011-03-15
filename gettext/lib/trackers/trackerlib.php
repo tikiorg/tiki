@@ -4633,7 +4633,7 @@ class TrackerLib extends TikiLib
 			return;
 		}
 
-		$table->updateMultiple(array(
+		$this->itemFields()->updateMultiple(array(
 			'value' => $new,
 		), array(
 			'value' => $old,
@@ -4889,7 +4889,7 @@ class TrackerLib extends TikiLib
 	function get_field_handler($field_info, $tracker_data = array()) {
 		switch ($field_info['type']) {
 		case 'A':
-			return new Tracker_Field_File($field_info);
+			return new Tracker_Field_File($field_info, $tracker_data);
 		case 'a':
 			return new Tracker_Field_TextArea($field_info, $tracker_data);
 		case 'c':
@@ -4900,6 +4900,8 @@ class TrackerLib extends TikiLib
 			return new Tracker_Field_DateTime($field_info, $tracker_data);
 		case 'i':
 			return new Tracker_Field_Image($field_info, $tracker_data);
+		case 'l':
+			return new Tracker_Field_ItemsList($field_info, $tracker_data);
 		case 'r':
 			return new Tracker_Field_ItemLink($field_info, $tracker_data);
 		case 't':
@@ -4907,6 +4909,12 @@ class TrackerLib extends TikiLib
 		case 'y':
 			return new Tracker_Field_CountrySelector($field_info, $tracker_data);
 		}
+	}
+
+	function get_rendered_fields()
+	{
+		// FIXME : Kill this function once cleanup is completed
+		return array('t', 'e');
 	}
 
 	private function parse_comment($data) {
@@ -4919,6 +4927,8 @@ interface Tracker_Field_Interface
 	function getInsertValues(array $requestData);
 
 	function getDisplayValues(array $requestData);
+
+	function renderInput();
 }
 
 abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
@@ -4930,6 +4940,11 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 	{
 		$this->definition = $fieldInfo;
 		$this->trackerData = $trackerData;
+	}
+
+	public function renderInput()
+	{
+		return 'Not implemented';
 	}
 
 	protected function getInsertId()
@@ -4968,6 +4983,14 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		return isset($this->definition['options_array'][(int) $number]) ?
 			$this->definition['options_array'][(int) $number] :
 			$default;
+	}
+
+	protected function renderInputTemplate($file)
+	{
+		$smarty = TikiLib::lib('smarty');
+		$smarty->assign('field_value', $this->definition);
+
+		return $smarty->fetch($file);
 	}
 }
 
@@ -5063,6 +5086,11 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
 		$data = $this->processMultilingual($requestData, $this->getFilterId());
 
 		return $data;
+	}
+
+	function renderInput()
+	{
+		return $this->renderInputTemplate('trackerinput/text.tpl');
 	}
 
 	protected function processMultilingual($requestData, $id_string) {
@@ -5192,6 +5220,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 			'value' => '',
 			'selected_categories' => array_intersect($selected, $this->getIds($categories)),
 			$parentId => $categories,
+			'list' => $categories,
 			'cat' => array(),
 			'categs' => array(),
 		);
@@ -5210,11 +5239,17 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 	function getDisplayValues(array $requestData)
 	{
 		$parentId = $this->getOption(0);
+		$categories = $this->getApplicableCategories($selected);
 
 		return array(
-			'categories' => $this->getApplicableCategories(),
-			$parentId => $this->getApplicableCategories(),
+			'categories' => $categories,
+			$parentId => $categories,
 		);
+	}
+
+	function renderInput()
+	{
+		return $this->renderInputTemplate('trackerinput/category.tpl');
 	}
 
 	private function getIds($categories)
@@ -5290,8 +5325,56 @@ class Tracker_field_Image extends Tracker_Field_File
 
 		return parent::getInsertValues($requestData);
 	}
-	
 }
+
+class Tracker_Field_ItemsList extends Tracker_Field_Abstract
+{
+	function getInsertValues(array $requestData)
+	{
+		$ins_id = $this->getInsertId();
+
+		$data = array(
+			'value' => isset($requestData[$ins_id])
+				? $requestData[$filter_id]
+				: $this->getValue(),
+		);
+
+		if ($this->getOption(3)) {
+			$l = explode(':', $this->getOption(1));
+			$finalFields = explode('|', $this->getOption(3));
+			$data['links'] = TikiLib::lib('trk')->get_join_values(
+					$requestData['trackerId'], $requestData['itemId'],
+					array_merge( array($this->getOption(2)), $l, array($this->getOption(3))),
+					$this->getOption(0), $finalFields,  ' ', $this->getOption(5)
+			);
+			if (count($data['links']) == 1) {
+				foreach($data['links'] as $linkItemId => $linkValue) {
+					if (is_numeric($data['links'][$linkItemId])) { //if later a computed field use this field
+						$info[$current_field_fields['fieldId']] = $linkValue;
+					}
+				}
+			}
+			$data['trackerId'] = $this->getOption(0);
+			$data['tracker_options'] = TikiLib::lib('trk')->get_tracker_options($this->getOption(0));
+		}
+
+		return $data;
+	}
+
+	function getDisplayValues(array $requestData)
+	{
+		$filter_id = $this->getFilterId();
+
+		return array(
+			'value' => isset($requestData[$filter_id])
+				? $requestData[$filter_id]
+				: $this->getValue(),
+		);
+	}
+}
+
+
+
 
 global $trklib;
 $trklib = new TrackerLib;

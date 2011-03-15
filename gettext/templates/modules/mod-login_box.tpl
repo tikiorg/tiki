@@ -120,7 +120,7 @@ function doChallengeResponse() {
 			<label for="login-user_{$module_logo_instance}">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username:{/tr}{/if}</label>
 			{if $loginuser eq ''}
 				<input type="text" name="user" id="login-user_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" {if !empty($error_login)} value="{$error_user|escape}"{/if} />
-				{jq}if ($('#login-user_{$module_logo_instance}:visible').length) {$('#login-user_{$module_logo_instance}')[0].focus();}{/jq}
+				{jq}if ($('#login-user_{{$module_logo_instance}}:visible').length) {$('#login-user_{{$module_logo_instance}}')[0].focus();}{/jq}
 			{else}
 				<input type="hidden" name="user" id="login-user_{$module_logo_instance}" value="{$loginuser}" /><b>{$loginuser}</b>
 			{/if}

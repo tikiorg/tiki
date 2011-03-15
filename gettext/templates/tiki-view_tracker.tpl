@@ -230,6 +230,20 @@ $("#newItemForm").validate({
 {/if}
 
 {foreach from=$fields key=ix item=field_value}
+{if in_array($field_value.type, TikiLib::lib('trk')->get_rendered_fields())}
+	<tr>
+		<td>
+			{if $field_value.isMandatory eq 'y'}
+				{$field_value.name}<em class='mandatory_star'>*</em>
+			{else}
+				{$field_value.name}
+			{/if}
+		</td>
+		<td>
+			{trackerfield field=$field_value}
+		</td>
+	</tr>
+{else}
 {assign var=fid value=$field_value.fieldId}
 {* -------------------- header and others -------------------- *}
 {if $field_value.isHidden eq 'n' or $field_value.isHidden eq 'c'  or $tiki_p_admin_trackers eq 'y'}
@@ -310,34 +324,6 @@ $("#newItemForm").validate({
 </select>
 {else}
 {$group}
-{/if}
-
-{* -------------------- category -------------------- *}
-{elseif $field_value.type eq 'e'}
-{if !empty($field_value.options_array[2]) && ($field_value.options_array[2] eq '1' or $field_value.options_array[2] eq 'y')}
-	{select_all checkbox_names=ins_cat_`$field_value.fieldId`[] label="{tr}Select All{/tr}"}
-{/if}
-{assign var=fca value=$field_value.options}
-{if $field_value.options_array[1] eq 'm' or $field_value.options_array[1] eq 'd'}
-	<select name="ins_cat_{$field_value.fieldId}[]"{if $field_value.options_array[1] eq 'm'} multiple="multiple"{/if}>
-	{if $field_value.options_array[1] eq 'd'  and (empty($field_value.value[0]) or $field_value.isMandatory ne 'y')}
-		<option value=""></option>
-	{/if}
-	{foreach key=ku item=iu from=$field_value.categories name=foreache}
-	{assign var=fcat value=$iu.categId}
-	<option value="{$iu.categId}"{if $field_value.cat.$fcat eq 'y'} selected="selected"{/if}>{$iu.categpath|escape}</option>
-	{/foreach}
-	</select>
-{else}
-{* {assign var=onePerLine value="y"} *}
-<table class="formcolor" width="100%"><tr>{cycle name="2_$fca" values=",</tr><tr>" advance=false print=false}
-{foreach key=ku item=iu from=$field_value.categories name=eforeach}
-{assign var=fcat value=$iu.categId}
-<td{if $onePerLine ne 'y'} width="50%"{/if}>
-<input type={if $field_value.options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="ins_cat_{$field_value.fieldId}[]" value="{$iu.categId}" id="cat{$iu.categId}" {if $field_value.cat.$fcat eq 'y'}checked="checked"{/if}/><label for="cat{$i.categId}">{$iu.name|escape}</label>
-</td>{if $onePerLine eq 'y'}{if !$smarty.foreach.eforeach.last}</tr><tr>{/if}{elseif !$smarty.foreach.eforeach.last}{cycle name="2_$fca"}{else}{if $field_value.categories|@count%2}<td></td>{/if}{/if}
-{/foreach}
-</tr></table>
 {/if}
 
 {* -------------------- image -------------------- *}
@@ -432,6 +418,7 @@ $("#newItemForm").validate({
 {assign var=stick value="y"}
 {else}
 </tr>{assign var=stick value="n"}
+{/if}
 {/if}
 {/if}
 {/if}

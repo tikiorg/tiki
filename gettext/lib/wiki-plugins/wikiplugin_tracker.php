@@ -667,13 +667,7 @@ function wikiplugin_tracker($data, $params)
 					foreach ($_FILES['track'] as $label=>$w) {
 						foreach ($w as $fld=>$val) {
 							if ($label == 'tmp_name' && is_uploaded_file($val)) {
-								$fp = fopen( $val, 'rb' );
-								$data = '';
-								while (!feof($fp)) {
-									$data .= fread($fp, 8192 * 16);
-								}
-								fclose ($fp);
-								$files[$fld]['value'] = $data;
+								$files[$fld]['value'] = file_get_contents($val);
 							} else {
 								$files[$fld]['file_'.$label] = $val;
 							}
@@ -1261,14 +1255,14 @@ function wikiplugin_tracker($data, $params)
 						$smarty->assign_by_ref('tiki_p_attach_trackers', $perms['tiki_p_attach_trackers']);
 					}
 					if (!empty($tpl) || !empty($wiki)) {
-						$smarty->assign_by_ref('field_value', $f);
-						if (!empty($item)) {
-							$smarty->assign_by_ref('item', $item);
-						}
 						if (!empty($outputPretty) && in_array($f['fieldId'], $outputPretty)) {
+							$smarty->assign('field_value', $f);
+							if (!empty($item)) {
+								$smarty->assign('item', $item);
+							}
 							$smarty->assign('f_'.$f['fieldId'], '<span class="outputPretty" id="track_'.$f['fieldId'].'" name="track_'.$f['fieldId'].'">'. $smarty->fetch('tracker_item_field_value.tpl'). '</span>');
 						} else {
-							$smarty->assign('f_'.$f['fieldId'], $smarty->fetch('tracker_item_field_input.tpl'));
+							$smarty->assign('f_'.$f['fieldId'], wikiplugin_tracker_render_input($f, $item));
 						}
 					} else {
 						if (in_array($f['fieldId'], $optional)) {
@@ -1288,11 +1282,8 @@ function wikiplugin_tracker($data, $params)
 						} else {
 							$smarty->assign('inTable', (empty($tpl) && empty($wiki))?'wikiplugin_tracker':'');
 						}
-						$smarty->assign_by_ref('field_value', $f);
-						if (!empty($item)) {
-							$smarty->assign_by_ref('item', $item);
-						}
-						$back .= $smarty->fetch('tracker_item_field_input.tpl');
+
+						$back .= wikiplugin_tracker_render_input($f, $item);
 					}
 
 					if (!empty($f['description']) && $f['type'] != 'h' && $f['type'] != 'S') {
@@ -1389,3 +1380,21 @@ function wikiplugin_tracker($data, $params)
 		return $back;
 	}
 }
+
+function wikiplugin_tracker_render_input($f, $item) {
+	$trklib = TikiLib::lib('trk');
+	$smarty = TikiLib::lib('smarty');
+
+	// FIXME : Else condition is only transitional
+	if (in_array($f['type'], $trklib->get_rendered_fields())) {
+		$handler = $trklib->get_field_handler($f, $item);
+		return $handler->renderInput();
+	} else {
+		$smarty->assign('field_value', $f);
+		if (!empty($item)) {
+			$smarty->assign('item', $item);
+		}
+		return $smarty->fetch('tracker_item_field_input.tpl');
+	}
+}
+

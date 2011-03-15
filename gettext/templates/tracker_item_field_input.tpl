@@ -99,36 +99,7 @@
 		{$group|escape}
 	{/if}
 
-{* -------------------- category -------------------- *}
-{elseif $field_value.type eq 'e'}
-	{if !empty($field_value.options_array[2]) && ($field_value.options_array[2] eq '1' or $field_value.options_array[2] eq 'y')}
-		{select_all checkbox_names=`$field_value.ins_id`[] label="{tr}Select All{/tr}"}
-	{/if}
-	{if $field_value.options_array[1] eq 'd' || $field_value.options_array[1] eq 'm'}
-		{if $field_value.options_array[1] eq 'm'}<small>{tr}Hold "Ctrl" in order to select multiple values{/tr}</small><br />{/if}
-		<select name="{$field_value.ins_id}[]"{if $field_value.options_array[1] eq 'm'} multiple="multiple"{/if}>
-		{if $field_value.options_array[1] eq 'd' and (empty($field_value.value[0]) or $field_value.isMandatory ne 'y')}
-	   		<option value=""></option>
-		{/if}
-		{foreach key=ku item=cat from=$field_value.list}
-			{assign var=fcat value=$cat.categId}
-			<option value="{$cat.categId}"{if $field_value.cat.$fcat eq 'y'} selected="selected"{/if}>{$cat.categpath|escape}</option>
-		{/foreach}
-		</select>
-	{else}
-	<table width="100%">
-		<tr>
-		{foreach key=ku item=iu from=$field_value.list name=eforeach}
-		{assign var=fcat value=$iu.categId}
-		<td width="50%"  class="trackerCategoryName">
-			<input type={if $field_value.options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="{$field_value.ins_id}[]" value="{$iu.categId}" id="cat{$iu.categId}" {if $field_value.cat.$fcat eq 'y'} checked="checked"{/if}/>
-			{if $field_value.options_array[4] eq 1 && !empty($iu.description)}<a href="{$iu.description|escape}" target="tikihelp" class="tikihelp" title="{$iu.name|escape}:{$iu.description|escape}">{icon _id=help alt=''}</a>{/if}
-			<label for="cat{$iu.categId}">{$iu.name|escape}</label>
-		</td>{if !$smarty.foreach.eforeach.last and $smarty.foreach.eforeach.index % 2}</tr><tr>{elseif $smarty.foreach.eforeach.last and !($smarty.foreach.eforeach.index % 2)}<td width="50%"  class="trackerCategoryName">&nbsp;</td>{/if}
-		{/foreach}
-		</tr>
-	</table>
-	{/if}
+
 
 {* -------------------- image -------------------- *}
 {elseif $field_value.type eq 'i'}
@@ -181,41 +152,6 @@
 		</select>
 	{else}
 			<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" />
-	{/if}
-
-{* -------------------- text field  -------------------- *}
-{elseif $field_value.type eq 't'}
-	{if $field_value.isMultilingual ne 'y'}
-		{*prepend*}{if $field_value.options_array[2]}<span class="formunit">{$field_value.options_array[2]}&nbsp;</span>{/if}
-		<input type="text" id="{$field_value.ins_id|replace:'[':'_'|replace:']':''}" name="{$field_value.ins_id}" {if $field_value.options_array[1]}size="{$field_value.options_array[1]}"{/if} {if $field_value.options_array[4]}maxlength="{$field_value.options_array[4]}"{/if} value="{if $field_value.value}{$field_value.value|escape}{else}{$field_value.defaultvalue|escape}{/if}" />
-		{*append*}{if $field_value.options_array[3]}<span class="formunit">&nbsp;{$field_value.options_array[3]}</span>{/if}
-		{if $field_value.options_array[5] eq 'y' && $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
-			{if !empty($item)}
-				{autocomplete element="#"|cat:$field_value.ins_id|replace:"[":"_"|replace:"]":"" type="trackervalue"
-						options="trackerId:"|cat:$item.trackerId|cat:",fieldId:"|cat:$field_value.fieldId}
-			{else}
-				{autocomplete element="#"|cat:$field_value.ins_id|replace:"[":"_"|replace:"]":"" type="trackervalue"
-						options="trackerId:"|cat:$trackerId|cat:",fieldId:"|cat:$field_value.fieldId}
-			{/if}
-		{/if}
-	{else}
-    	{foreach from=$field_value.lingualvalue item=ling name=multi}
-    		<label for="{$field_value.ins_id|replace:'[':'_'|replace:']':''}_{$ling.lang}">{$ling.lang|langname}</label>
-			<br />
-            {*prepend*}{if $field_value.options_array[2]}<span class="formunit">{$field_value.options_array[2]}&nbsp;</span>{/if}
-        	<input type="text" id="{$field_value.ins_id|replace:'[':'_'|replace:']':''}_{$ling.lang}" name="{$field_value.ins_id}[{$ling.lang}]" value="{$ling.value|escape}" {if $field_value.options_array[1]}size="{$field_value.options_array[1]}"{/if} {if $field_value.options_array[4]}maxlength="{$field_value.options_array[4]}"{/if} /> {*@@ missing value*}
-        	{*append*}{if $field_value.options_array[3]}<span class="formunit">&nbsp;{$field_value.options_array[3]}</span>{/if}
-			{if $field_value.options_array[5] eq 'y' && $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
-				{if !empty($item)}
-					{autocomplete element="#"|cat:$field_value.ins_id|replace:"[":"_"|replace:"]":""|cat:"_"|cat:$ling.lang type="trackervalue"
-							options="trackerId:"|cat:$item.trackerId|cat:",fieldId:"|cat:$field_value.fieldId}
-				{else}
-					{autocomplete element="#"|cat:$field_value.ins_id|replace:"[":"_"|replace:"]":""|cat:"_"|cat:$ling.lang type="trackervalue"
-							options="trackerId:"|cat:$trackerId|cat:",fieldId:"|cat:$field_value.fieldId}
-				{/if}
-			{/if}
-			{if !$smarty.foreach.multi.last}<br />{/if}
-		{/foreach}
 	{/if}
 
 {* -------------------- page selector  -------------------- *}
