@@ -326,10 +326,6 @@ $("#newItemForm").validate({
 {$group}
 {/if}
 
-{* -------------------- image -------------------- *}
-{elseif $field_value.type eq 'i'}
-<input type="file" name="{$field_value.ins_id}" {if $input_err}value="{$field_value.value}"{/if}/>
-
 {* -------------------- page -------------------- *}
 {elseif $field_value.type eq 'k'}
 {include file='tracker_item_field_input.tpl'}

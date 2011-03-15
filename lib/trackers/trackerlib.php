@@ -4914,7 +4914,7 @@ class TrackerLib extends TikiLib
 	function get_rendered_fields()
 	{
 		// FIXME : Kill this function once cleanup is completed
-		return array('t', 'e', 'A');
+		return array('t', 'e', 'A', 'i');
 	}
 
 	private function parse_comment($data) {

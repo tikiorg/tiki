@@ -445,7 +445,7 @@
 									{elseif $cur_field.type eq 'w'}
 										{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
 
-									{elseif $cur_field.type eq 'd' or $cur_field.type eq 'D' or $cur_field.type eq 'R' or $cur_field.type eq 'i'}
+									{elseif $cur_field.type eq 'd' or $cur_field.type eq 'D' or $cur_field.type eq 'R'}
 										{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
 
 									{elseif $cur_field.type eq 'c'}
