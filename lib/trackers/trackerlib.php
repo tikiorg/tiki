@@ -4888,6 +4888,8 @@ class TrackerLib extends TikiLib
 
 	function get_field_handler($field_info, $tracker_data = array()) {
 		switch ($field_info['type']) {
+		case 'A':
+			return new Tracker_Field_File($field_info);
 		case 'a':
 			return new Tracker_Field_TextArea($field_info, $tracker_data);
 		case 'c':
@@ -4896,6 +4898,8 @@ class TrackerLib extends TikiLib
 			return new Tracker_Field_Category($field_info, $tracker_data);
 		case 'f':
 			return new Tracker_Field_DateTime($field_info, $tracker_data);
+		case 'i':
+			return new Tracker_Field_Image($field_info, $tracker_data);
 		case 'r':
 			return new Tracker_Field_ItemLink($field_info, $tracker_data);
 		case 't':
@@ -5235,6 +5239,58 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 	{
 		return TikiLib::lib('categ')->get_object_categories('trackeritem', $this->getItemId());
 	}
+}
+
+class Tracker_Field_File extends Tracker_Field_Abstract
+{
+	function getInsertValues(array $requestData)
+	{
+		$ins_id = $this->getInsertId();
+
+		$data = array( 'value' => '');
+		if (isset($_FILES[$ins_id]) && is_uploaded_file($_FILES[$ins_id]['tmp_name'])) {
+			$data['value'] = file_get_contents($_FILES[$ins_id]['tmp_name']);
+			$data['file_type'] = $_FILES[$ins_id]['type'];
+			$data['file_size'] = $_FILES[$ins_id]['size'];
+			$data['file_name'] = $_FILES[$ins_id]['name'];
+		}
+		return $data;
+	}
+
+	function getDisplayValues(array $requestData)
+	{
+		return array(
+			'value' => $this->getValue(),
+		);
+	}
+}
+
+class Tracker_field_Image extends Tracker_Field_File
+{
+	function getInsertValues(array $requestData)
+	{
+		global $prefs, $smarty;
+		
+		$ins_id = $this->getInsertId();
+
+		if (!empty($prefs['gal_match_regex'])) {
+			if (!preg_match('/' . $prefs['gal_match_regex'] . '/', $_FILES[$ins_id]['name'], $reqs)) {
+				$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
+				$smarty->display("error.tpl");
+				die;
+			}
+		}
+		if (!empty($prefs['gal_nmatch_regex'])) {
+			if (preg_match('/' . $prefs['gal_nmatch_regex'] . '/', $_FILES[$ins_id]['name'], $reqs)) {
+				$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
+				$smarty->display("error.tpl");
+				die;
+			}
+		}
+
+		return parent::getInsertValues($requestData);
+	}
+	
 }
 
 global $trklib;

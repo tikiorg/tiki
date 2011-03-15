@@ -473,43 +473,6 @@ foreach($xfields["data"] as $i => $current_field) {
 			} else {
 				$current_field_fields["value"] = '';
 			}
-			if ($current_field_fields["type"] == 'M') {
-				if ($current_field_fields["options_array"][0] >= '3') {
-					if (isset($_FILES[$ins_id]) && is_uploaded_file($_FILES[$ins_id]['tmp_name'])) {
-						$data = file_get_contents($_FILES[$ins_id]['tmp_name']);
-						$current_field_ins["value"] = $data;
-						$current_field_ins["file_type"] = $_FILES[$ins_id]['type'];
-						$current_field_ins["file_size"] = $_FILES[$ins_id]['size'];
-						$current_field_ins["file_name"] = $_FILES[$ins_id]['name'];
-					}
-				}
-			}
-			if ($current_field_fields['type'] == 'i' || $current_field_fields['type'] == 'A') {
-				if (isset($_FILES[$ins_id]) && is_uploaded_file($_FILES[$ins_id]['tmp_name'])) {
-					if ($current_field_fields['type'] == 'i' && !empty($prefs['gal_match_regex'])) {
-						if (!preg_match('/' . $prefs['gal_match_regex'] . '/', $_FILES[$ins_id]['name'], $reqs)) {
-							$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
-							$smarty->display("error.tpl");
-							die;
-						}
-					}
-					if ($current_field_fields['type'] == 'i' && !empty($prefs['gal_nmatch_regex'])) {
-						if (preg_match('/' . $prefs['gal_nmatch_regex'] . '/', $_FILES[$ins_id]['name'], $reqs)) {
-							$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
-							$smarty->display("error.tpl");
-							die;
-						}
-					}
-					$data = file_get_contents($_FILES[$ins_id]['tmp_name']);
-					if (!empty($_REQUEST['itemId'])) {
-						$current_field_ins['old_value'] = $trklib->get_item_value($_REQUEST['trackerId'], $_REQUEST['itemId'], $current_field_fields['fieldId']);
-					}
-					$current_field_ins["value"] = $data;
-					$current_field_ins["file_type"] = $_FILES[$ins_id]['type']; //mime_content_type( $_FILES[$ins_id]['tmp_name'] );
-					$current_field_ins["file_size"] = $_FILES[$ins_id]['size'];
-					$current_field_ins["file_name"] = $_FILES[$ins_id]['name'];
-				}
-			}
 		}
 	} elseif ($current_field["type"] == "u" and isset($current_field['options_array'][0]) and $user and $current_field['options_array'][0] == 1 and isset($tracker_info["writerCanModify"]) and $tracker_info["writerCanModify"] == 'y') {
 		// even if field is hidden need to pick up user for perm

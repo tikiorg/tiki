@@ -341,37 +341,6 @@ foreach ($xfields['data'] as $i => $current_field) {
 			} else {
 				$current_field_fields["value"] = '';
 			}
-			if (($current_field_fields["type"] == 'M') && ($current_field_fields["options_array"][0] >= '3')) {
-				if (isset($_FILES[$ins_id]) && is_uploaded_file($_FILES[$ins_id]['tmp_name'])) {
-					$data = file_get_contents($_FILES[$ins_id]['tmp_name']);
-					$current_field_ins["value"] = $data;
-					$current_field_ins["file_type"] = $_FILES[$ins_id]['type'];
-					$current_field_ins["file_size"] = $_FILES[$ins_id]['size'];
-					$current_field_ins["file_name"] = $_FILES[$ins_id]['name'];
-				}
-			} elseif ($current_field_fields["type"] == 'i' || $current_field_fields['type'] == 'A') { // image or file
-				if (isset($_FILES[$ins_id]) && is_uploaded_file($_FILES[$ins_id]['tmp_name'])) {
-					if ($current_field_fields['type'] == 'i' && !empty($prefs['gal_match_regex'])) {
-						if (!preg_match('/' . $prefs['gal_match_regex'] . '/', $_FILES[$ins_id]['name'], $reqs)) {
-							$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
-							$smarty->display("error.tpl");
-							die;
-						}
-					}
-					if ($current_field_fields['type'] == 'i' && !empty($prefs['gal_nmatch_regex'])) {
-						if (preg_match('/' . $prefs['gal_nmatch_regex'] . '/', $_FILES[$ins_id]['name'], $reqs)) {
-							$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
-							$smarty->display("error.tpl");
-							die;
-						}
-					}
-					$data = file_get_contents($_FILES[$ins_id]['tmp_name']);
-					$current_field_ins["value"] = $data;
-					$current_field_ins['file_type'] = $_FILES[$ins_id]['type'];
-					$current_field_ins["file_size"] = $_FILES[$ins_id]['size'];
-					$current_field_ins["file_name"] = $_FILES[$ins_id]['name'];
-				}
-			}
 		}
 	}
 	// store values to have them available when there is
