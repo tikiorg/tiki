@@ -1,0 +1,1 @@
+{* $Id$ *}<a href="http://zukakakina.com" title="Adapted by Gary Cunningham-Lee aka chibaguy">{tr}Theme{/tr}</a>: <a href="http://www.ah-68.de" title="{tr}Original design by{/tr} Alexander Hanke">Mittwoch</a>

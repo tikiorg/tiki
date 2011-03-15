@@ -1,0 +1,1341 @@
+/* $Id$
+ * Based on the Mittwoch theme for Joomla by Alexander Hanke (http://www.ah-68.de), which was released under the GNU/GPL license.
+ * This adaptation by Gary Cunningham-Lee (chibaguy) uses the layout methods of lite -
+ * a source ordered layout solution by luci (http://sourceforge.net/projects/litecss).
+ * For more information, please visit http://themes.tikiwiki.org or http://zukakakina.com.
+ * This theme is released under the GPL lincense.
+ */
+
+/* Import foundation CSS files. */
+@import url("lite/lite.css");
+@import url("layout/layout.css");
+@import url("layout/design.css");
+
+/***** XHTML ELEMENTS (body tag here,
+			others follow Layout) *****/
+
+body {
+	color: #666;
+	font-size: 76%;
+	line-height: 120%;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+html > body {
+	font-size: 0.70em;
+}
+
+/***** End XHTML elements (body tag) *****/
+
+ /***** Layout (overrides layout.css;
+		also styling of page layout divs)  *****/
+
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+}
+
+#c1c2 {
+	text-align: left;
+	background: #fff url(mittwoch/bg.gif) repeat-x;
+	padding-top: 16px;
+}
+
+#c1c2 #wrapper .marginleft {
+	margin-left: 225px;
+}
+
+#c1c2 #wrapper .marginright {
+	margin-right: 225px;
+}
+
+#showhide_columns {
+	padding: 2px 2px 0 2px;
+}
+
+.tellafriend {
+	margin-right: 2px;
+}
+
+#c1c2 #col1 {
+	padding-left: 20px;
+	padding-right: 20px}
+
+#c1c2 #col2 {
+	width: 225px;
+	overflow: display}
+
+#c1c2 #col2 > .content {
+	margin: 0;
+	padding-left: 54px;
+	padding-right: 0;
+	text-align: left;
+	margin-top: 21px;
+	font-size: 110%;
+	white-space: normal;
+	margin-right: 0}
+
+#col3 {
+	margin-left: -225px;
+	margin-top: 9px;
+	overflow: hidden;
+	width: 225px}
+
+#col3 > .content {
+	margin: 0;
+	padding-right: 54px;
+	margin-top: 21px;
+	margin-bottom: 20px;
+	margin-right: 10px;
+	text-align: left;
+	white-space: normal}
+
+#footer {
+	background: #1676b8 url(mittwoch/footer.gif) repeat-x;
+	color: #f0f0f0;
+	font-weight: normal;
+	font-size: 85%;
+	min-height: 65px;
+	text-align: center}
+
+#header a,
+#header a:visited,
+#footer a,
+#footer a:visited {
+	color: #f0f0f0;
+	text-decoration: none;
+	font-weight: normal}
+
+#header a:hover,
+#footer a:hover {
+	color: #f0f0f0;
+	text-decoration: underline}
+	
+.footerbgtrap {
+	color: #d0d0d0;
+	padding: 16px 10px 10px;
+}
+
+.fullscreenbutton,
+#fullscreenbutton {
+	color: #f9f9f9;
+}
+
+/***** XHTML Elements (other than body tag) ******/
+a,
+a:visited {
+	color: #003bfe;
+	text-decoration: none}
+
+a:hover {
+	color: #b5d72b;
+	text-decoration: none}
+
+.wikitext a,
+.wikitext a:visited {
+	color: #003bfe;
+	text-decoration: none}
+
+.wikitext a:hover {
+	color: #b5d72b;
+	text-decoration: none}
+
+h1,
+h2,
+h3,
+h4 {
+	color: #606060;
+	font-weight: bold;
+	padding: 0}
+
+h1 {
+	display: block;
+	clear: both;
+	height: 24px;
+	color: #666;
+	margin-bottom: 4px;
+	margin-top: 10px;
+	background: #f0f0f0 url(mittwoch/pathway.gif) repeat-x;
+	border: 1px solid #d0d0d0;
+	line-height: 23px;
+	text-align: left;
+	font-size: 1.2em;
+	font-weight: bold;
+	padding-left: 1em}
+
+h2 {font-size: 1.3em}
+h3 {font-size: 1.2em}
+h4 {font-size: 1.1em}
+h5 {font-size: 1.0em}
+
+hr {
+	background: #d0d0d0;
+	color: #d0d0d0;
+	border-top: 1px solid #d0d0d0}
+
+fieldset {
+	border: solid 1px #a9a9a9;
+	padding: 10px}
+
+p {
+	line-height: 1.5em;
+	margin: 0 0 15px}
+
+ul {
+	margin: 2px;
+	padding: 2px;
+	list-style: none}
+
+.wikitext ul a:hover {
+	list-style: url(mittwoch/arrow_hover.gif)}
+
+ul li {
+	text-align: left;
+	line-height: 14px;
+	padding-left: 18px;
+	background: url(mittwoch/arrow.gif) no-repeat 0 2px;
+}
+
+ul li:hover {
+	text-align: left;
+	line-height: 14px;
+	background: url(mittwoch/arrow_hover.gif) no-repeat 0 2px;
+}
+
+blockquote {
+	padding-left: 10px;
+	padding-right: 15px;
+	margin-left: 25px;
+	margin-right: 25px;
+	font-style: italic;
+}
+
+input {
+	line-height: normal;
+	border: 1px solid #cdcdcd;
+	background: #fbfbfb;
+	color: #666;
+}
+
+input[type="text"],
+input[type="password"] {
+	font-size: 1em}
+
+input[type="text"],
+input[type="password"] {
+	border: 1px solid #cdcdcd;
+	width: 120px;
+}
+
+.button a,
+.button a:visited,
+button,
+.button input,
+.submitbutton,
+.calbuttonBox a {
+	color: #565656;
+	background-image: url(mittwoch/button_bg.png);
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	text-align: center;
+	font-size: 11px;
+	border: 3px double #cdcdcd;
+	width: auto;
+	padding: 0 5px;
+	height: 20px;
+	margin: 4px;
+}
+
+input[type="reset"],
+input[type="submit"] {
+	color: #003bfe;
+	background-image: url(mittwoch/button_bg.png);
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	text-align: center;
+	font-size: 11px;
+	border: 3px double #cdcdcd;
+	height: 20px;
+	cursor: pointer}
+
+.button a:hover,
+button:hover,
+.button input:hover,
+.submitbutton:hover,
+.calbuttonBox a:hover {
+	color: #bada38;
+	padding: 0 5px;
+}
+
+input[type="reset"]:hover,
+input[type="submit"]:hover {
+	color: #bada38;
+}
+
+.button {
+	margin-bottom: 6px;
+}
+
+.button.highlight a {
+	background: #FC0;
+	color: #000;
+}
+
+input[type="submit"],
+input[type="submit"]:hover {
+	padding: 0 5px}
+
+select {
+	text-align: left}
+
+input[id="fuser"] {
+	background-image: url(mittwoch/button_bg.png);
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	text-align: left;
+	border: 3px double;
+}
+
+select[name="theme"] {
+	width: 90%;
+}
+
+small {
+	font-size: 0.8em;
+}
+
+textarea,
+body.cke_show_borders {
+	padding: 2px;
+	margin: 2px;
+	border: 1px solid #cbcbcb;
+	background: #fbfbfb;
+	color: #666;
+	text-align: left}
+
+.editdate ul.floatleft {list-style: none}
+
+/***** End Elements *****/
+
+/***** Site Header & Identity *****/
+#header {
+	margin: 0;
+	padding: 0;
+	color: #fff;
+}
+
+#header_container {
+	min-height: 102px;
+	background: url(mittwoch/headertop.png) repeat-x 0 100%;
+}
+
+#top_modules {
+	min-height: 102px;
+}
+
+#sitetitle {
+	font-size: 2.2em;
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	color: #fff;
+	font-weight: bold;
+	height: 2.2em;
+	line-height: 2.2em}
+
+#sitetitle a,
+#sitetitle a:link,
+#sitetitle a:visited,
+#sitetitle a:hover {
+	color: #fff;
+	font-weight: bold;
+	text-decoration: none}
+
+.floatright {padding: 1em}
+.floatleft {padding: 1em}
+
+#sitead {
+	float: right;
+	clear: none;
+	font-size: 11px;
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	color: #999999;
+	padding-top: 20px;
+	padding-right: 70px;
+	max-width: 460px}
+
+#sitead.floatright {
+	padding-right: 100px}
+
+#sitead.floatleft {padding-left: 100px}
+
+#topbar_modules .box-search {
+	position: absolute;
+	top: 18px;
+	right: 30px;
+	color: #fff;
+	z-index: 5;
+}
+
+.siteloginbar_popup {
+	position: absolute;
+	bottom: 0;
+	right: 40px;
+	color: #fff;
+}
+
+.siteloginbar_popup .tabmark {
+	float: left;
+}
+
+.siteloginbar_popup a,
+.siteloginbar_popup a:visited {
+	color: #fff;
+	font-size: 90%}
+
+.siteloginbar_popup .tabmark a:hover {
+	text-decoration: none;
+}
+
+#header .siteloginbar_popup a:hover {
+	text-decoration: none;
+}
+	
+#header .siteloginbar_popup label {
+	color: #666;
+}
+
+#header .siteloginbar_popup ul ul a,
+#header .siteloginbar_popup ul ul a:visited {
+	color: #08B1FE;	
+}
+
+#header .siteloginbar_popup ul ul li a {
+	padding-left: 18px;
+	background: url(mittwoch/arrow.gif) no-repeat 0 4px;
+	line-height: 160%
+}
+
+#header .siteloginbar_popup ul ul li a:hover {
+	color: #d1e53c;
+	padding-left: 18px;
+	background: url(mittwoch/arrow_hover.gif) no-repeat 0 4px;
+	line-height: 160%
+}
+
+.sitelocbar {
+	height: 32px;
+	line-height: 32px;
+	padding-left: 2em;
+	color: #2F2F2F;
+	font-size: 1em}
+
+#tiki-top {
+	white-space: nowrap;
+	display: block;
+	height: 65px;
+	text-align: left;
+	margin-top: 0;
+	position: relative;
+	background: url(mittwoch/bg_pagenav.gif) repeat-x;
+}
+
+#topbar_modules {
+	background: #ececec;
+}
+
+/****** Menus, Links ******/
+/** CSS (suckerfish) menus **/
+
+#tiki-top .cssmenu_horiz {
+	position: absolute;
+	left: 45px;
+	bottom: 15px;
+	height: 37px;
+}
+
+/* default link padding */
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: .35em 1em .35em 1.5em;
+}
+
+/* override li */
+.cssmenu_vert li,
+.cssmenu_vert li:hover {
+	background-position: 0 6px}
+
+#tiki-top .cssmenu_horiz li a,
+#tiki-top .cssmenu_horiz li a:visited {
+	background: url(mittwoch/top_button.gif) no-repeat;
+	color: #fff;
+	width: 120px;
+	height: 37px;
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	padding-left: 0;
+	padding-right: 0;
+	padding-bottom: 10px;
+	margin: 0;
+	text-align: center;
+	line-height: 37px;
+	font-size: 11px}
+
+#tiki-top .cssmenu_horiz li a:hover {
+	color: #fff;
+	background: url(mittwoch/top_button_hover.gif) no-repeat;
+	text-decoration: none;
+	font-weight: bold;
+	margin: 0;
+	margin-top: 1px;
+	margin-bottom: -1px;
+	line-height: 36px}
+
+#tiki-top .cssmenu_horiz li ul {
+	line-height: 1;
+	margin-top: 22px;}
+
+#tiki-top .cssmenu_horiz li ul li ul {
+	margin-top: -1px;
+}
+
+#tiki-top .cssmenu_horiz li ul li,
+#tiki-top .cssmenu_horiz li ul li:hover,
+.cssmenu_horiz li ul li,
+.cssmenu_vert li ul li {
+	background-color: #fff;
+}
+
+.cssmenu_horiz li ul li,
+.cssmenu_vert li ul li {
+	background-color: #fff;
+	border: 1px solid #aaa;
+	border-top: 0;
+	margin-bottom: -1px
+}
+
+.cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #aaa;
+}
+#tiki-top .cssmenu_horiz li ul li,
+#tiki-top .cssmenu_horiz li ul li:hover {
+	background-image: none;
+}
+#tiki-top .cssmenu_horiz li ul li a,
+#tiki-top .cssmenu_horiz li ul li a:visited {
+	text-decoration: none;
+	text-align: left;
+	color: #003bfe;
+	line-height: 1;
+	height: 17px;
+	padding: 3px 3px 3px 18px;
+	background: url(mittwoch/arrow.gif) no-repeat 0 5px;
+}
+
+#tiki-top .cssmenu_horiz li ul li a:hover {
+	line-height: 1;
+	height: 17px;
+	color: #b5d72b;
+	padding: 3px 3px 3px 18px;
+	background: url(mittwoch/arrow_hover.gif) no-repeat 0 5px;
+}
+
+/* left column width */
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 160px;
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 160px;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 11em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 11em;
+}
+
+#tiki-top .cssmenu_horiz li .sf-sub-indicator {
+	top: 1.5em;
+}
+
+#tiki-top .cssmenu_horiz li ul li .sf-sub-indicator,
+.cssmenu_vert li .sf-sub-indicator {
+	background-image: url(mittwoch/arrows-bada38.png);
+	top: 0.5em;
+	right: 0;
+}
+
+#tiki-top .cssmenu_horiz li ul li .sf-sub-indicator {
+	right: 2em;
+}
+
+#secondary_site_menu {
+	margin-left: 45px;
+}
+
+#secondary_site_menu .cssmenu_horiz li,
+#secondary_site_menu .cssmenu_horiz li:hover {
+	background-position: 0 5px;
+}
+
+
+#secondary_site_menu .cssmenu_horiz li a,
+#secondary_site_menu .cssmenu_horiz li a:visited {
+	color: #fff;
+}
+
+#secondary_site_menu .cssmenu_horiz li ul li a,
+#secondary_site_menu .cssmenu_horiz li ul li a:visited {
+	color: #003bfe;
+}
+
+/** Links in other menus **/
+.separator {
+	width: 170px;
+	background: url(mittwoch/menu_bg.gif) no-repeat;
+	text-align: left;
+	padding-top: 5px;
+	padding-left: 10px;
+	height: 22px;
+	text-decoration: none;
+	vertical-align: middle;
+	font-size: 11px;
+	color: #666;
+	font-weight: normal}
+
+.separator a:link,
+.separator a:visited {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	vertical-align: middle;
+	font-size: 11px;
+	color: #666;
+	font-weight: normal}
+
+.separator:hover {
+	background: url(mittwoch/menu_bg.gif) no-repeat 0 -25px;
+	height: 22px;
+	color: #b5d72b;
+	font-size: 11px;
+	text-align: left;
+	padding-left: 10px;
+	padding-top: 5px;
+	display: block;
+}
+
+.separator a:hover,
+.option a.linkmenu:hover {
+	background-position: 0 -25px;
+}
+
+a.separator img {
+	background: url(mittwoch/star.gif) no-repeat;
+}
+
+.optionline,
+.option a {
+	padding-left: 10px;
+	color: #08b1fe;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+.option a:link,
+.option a:visited,
+a.linkmenu {color: #08b1fe}
+
+a.linkmenu {padding-left: 20px}
+
+.option a:hover,
+.option a:active {
+	color: #b5d72b;
+}
+
+a.linkmodule {
+	color: #08b1fe;
+}
+
+a.linkmodule:hover {
+	color: #b5d72b;
+}
+
+/***** Misc. *****/
+a.crumblink,
+a.crumblink:visited {
+	font-size: .9em;
+	color: #2F2F2F;
+}
+
+a.crumblink:hover {text-decoration: underline}
+
+/****** Misc. Global Classes (layout and style) ****/
+
+/***** Boxes *****/
+/** Modules **/
+#col2 .box,
+#col3 .box,
+.wikitext .box {
+	width: 170px;
+	margin-bottom: 5px}
+
+h3.box-title {
+	overflow: hidden;
+	color: #666;
+	text-decoration: none;
+	background: url(mittwoch/h3.gif) no-repeat;
+	border: 1px solid #d0d0d0;
+	text-align: right;
+	height: 24px;
+	margin: 0;
+	padding: 0;
+	padding-right: 26px;
+	margin-bottom: 2px;
+	font-size: 11px;
+	line-height: 26px;
+}
+
+h3.box-title,
+h3.box-title a:link,
+h3.box-title a:visited {
+	font-weight: normal;
+	font-size: 11px;
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	color: #666}
+
+.box-title a:hover {
+	text-decoration: underline;
+	color: #666}
+
+#col2 .box-title {
+	font-size: 11px;
+	line-height: 24px}
+
+.box:hover a.flipmodtitle img {border: 1px solid transparent}
+a.flipmodtitle:hover img {border: 1px solid #58A7D2 !important}
+
+.box-data {
+	font-size: 0.9em;
+	line-height: 1.4em;
+	margin: 0 0 16px 0}
+
+.box-data select {
+	width: 120px}
+
+/* tables in modules */
+.box-data table {margin: auto}
+
+.box-data table td {
+	padding: 0.2em;
+	text-align: start}
+
+.module li {
+	list-style: none}
+
+.module li a {
+	color: #08B1FE;
+	text-decoration: none;
+	font-weight: normal}
+
+.module li a:hover {
+	color: #D1E53C;
+	text-decoration: none}
+
+/** Other boxes **/
+.cbox {
+	border: 1px solid #999;
+	margin: 6px}
+
+.cbox-title {
+	text-align: center;
+	border-bottom: 1px solid #999;
+	padding: 4px;
+	font-weight: bold}
+
+.cbox-data {padding: 1px 4px 4px 4px}
+.cbox-data ul {padding-left: 1em}
+.cbox-data ul ul {margin: auto}
+
+.rbox-title,
+.rbox-data {
+	border-color: #606060;
+	background: #F1F1F1;}
+
+.rbox-title {
+	text-align: left;
+	padding: 3px;
+	font-weight: bold}
+
+.rbox-data {padding: 3px}
+
+.simplebox {
+	background: url(mittwoch/bg.gif);
+	padding: 6px;
+	margin-left: 1em;
+	margin-right: 1em;
+	border: 1px solid #ECECEC;
+}
+
+/***** Tables, Tabs and Lists *****/
+/** Tables **/
+table {
+	font-size: inherit;
+	width: 100%}
+
+.normal,
+.admin {
+	border: solid 1px #909090;
+	vertical-align: top;
+	border: 1px solid #e9e9e9;
+	border-collapse: collapse;
+	background: #f9f9f9;
+	vertical-align: top;
+	text-align: left}
+/* IE */ * html td {	font-size: 11px}
+
+th,
+.normal td.heading {
+	border: 1px solid #e9e9e9;
+	border-collapse: collapse;
+	font-weight: bold;
+	font-size: 100%;
+	background: #3895d2;
+	color: #fff}
+
+tr.odd td,
+td.odd,
+li.odd {
+	background: #F5F5F5;
+	border-right: 1px solid #ddd}
+
+tr.even td,
+td.even,
+li.even {
+	background: #ECECEC;
+	border-right: 1px solid #ddd}
+
+td.form,
+.normal td,
+td.normal,
+.wikitable td,
+td.odd,
+td.even {
+	margin: 0;
+	padding: 0.2em;
+	vertical-align: top;
+	border: 1px solid #e9e9e9;
+	border-collapse: collapse}
+
+th a,
+th a:visited,
+td.heading a,
+td.heading a:visited,
+a.tableheading,
+a.tableheading:visited {
+	color: #fff;
+	text-decoration: none}
+
+th a:hover,
+td.heading a:hover
+a.tableheading:hover {
+	color: #fff;
+	text-decoration: underline}
+
+/** Tabs **/
+.tabs {
+	margin: 0 2px;
+}
+
+.tabs .container { border-collapse: collapse;}
+
+/* reset what's in layout.css */
+.tabactive,
+.tabinactive,
+[class].tabactive,
+[class].tabinactive {top: 0 !important}
+
+.tabmark {
+	background: url(mittwoch/top_button.gif) no-repeat; 
+	border: none;
+	margin-right: .5em;
+}
+
+.tabmark a {
+	padding: .2em .4em 0;
+	color: #fff;
+}
+
+.tabmark a:hover,
+.tabactive a {
+	background: url(mittwoch/top_button_hover.gif) no-repeat;
+	color: #d1e53c;
+}
+
+.tabcontent {
+	border: .1em solid #ccc !important;
+	padding: .5em;
+	background: #eee;
+}
+
+/***** Wiki *****/
+.pagetitle {
+	height: 24px;
+	color: #666;
+	margin-bottom: 4px;
+	margin-left: 0;
+	margin-right: 5px;
+	line-height: 24px;
+	background: #f0f0f0 url(mittwoch/pathway.gif) repeat-x;
+	border: 1px solid #d0d0d0;
+	padding-left: 1em}
+
+h1 a.pagetitle,
+.pagetitle a,
+.pagetitle a:visited,
+a.pagetitle,
+a.pagetitle:visited {
+	display: block;
+	overflow: hidden;
+	color: #666;
+	text-decoration: none;
+	font-weight: bold}
+
+.pagetitle a:hover,
+a.pagetitle:hover {
+	overflow: hidden;
+	color: #666;
+	text-decoration: underline}
+
+h1 img {
+	float: right;
+	clear: none;
+	margin-top: -18px;
+	margin-right: 10px}
+
+.description {
+	font-size: 1em;
+	font-style: italic}
+
+#description {
+	font-size: .9em;
+	font-weight: normal;
+	color: #2F2F2F;
+	padding-left: 2em}
+
+#cachedpage {
+	float: right;
+	font-size: .9em}
+
+.wikitext {
+	white-space: normal;
+	line-height: 1.5em;
+	width: 100%}
+
+.wikitext h2 {
+	border-bottom: 1px solid #CECECE}
+
+.wikitext h3 {
+	border-bottom: 1px solid #DBDBDB}
+
+.titlebar {
+	background: #3895d2;
+	color: #fff;
+	font-weight: bold;
+	padding: 0.1em;
+	padding-left: 3em;
+	margin-bottom: 0.5em;
+	margin-top: 1em}
+
+.wikitext ul li {
+	padding-left: 18px;
+	background: url(mittwoch/arrow.gif) no-repeat 0 4px;
+	line-height: 160%
+}
+
+.wikitext ul li:hover {
+	padding-left: 18px;
+	background: url(mittwoch/arrow_hover.gif) no-repeat 0 4px;
+	line-height: 160%
+}
+
+.wikitable {
+	border: 1px solid #a9a9a9;
+	border-collapse: collapse;
+	border-top: 1px solid #a9a9a9;
+	border-left: 1px solid #a9a9a9;
+	border-right: 1px solid #696969;
+	border-bottom: 1px solid #696969;
+	vertical-align: top}
+
+td.wikicell {
+	padding: 3px;
+	border: 1px solid #a9a9a9;
+	border-collapse: collapse}
+
+.editdate {
+	padding-bottom: 5px}
+
+
+div#page-bar ul.floatleft li {
+	background: none}
+
+p.editdate {
+	font-size: 95%;
+}
+
+/* Wiki plugins */
+
+/* Code plugin  */
+.code {
+	font-size: 90%;
+	padding: 3px;
+	border: 1px dashed #CCC;
+	background: #F4F4F4;
+	font-family: "Courier New", Courier, monospace}
+
+.codelisting {
+	font-family: "Courier New", Courier, monospace;
+	padding: 10px;
+	background: #FFF;
+	border: 1px dashed #ADACAF;
+	overflow: auto;
+   width: 90%}
+
+pre.codelisting {
+	overflow: auto;
+	width: 90%}
+
+.codecaption {
+	font-size: 90%;
+	padding: 0 10px;
+	background: #FFF;
+	position: relative;
+	bottom: -5px;
+	display: inline;
+	border: 1px solid #ADACAF;
+	border-bottom: 0;
+	margin: 0;
+	color: #666;
+	background: #E9ECEF;
+	font-weight: bold}
+
+/**** quote plugin *****/
+.quoteheader {
+	margin-left: 20px}
+
+.quotebody {
+	padding-left: 10px;
+	padding-right: 15px;
+	margin-left: 25px;
+	margin-right: 25px;
+	font-style: italic}
+
+.wikiplugin-split,
+.wikiplugin-split td,
+td.wikiplugin-split {
+	border: none;
+	background: none;
+	background: transparent}
+
+/* fancytable (sortable) plugin */
+.fancysort .header:hover {
+	/*color: #82AC78;*/
+}
+
+/** Wiki tocs **/
+.tocnav {
+	padding: 3px;
+}
+
+#tocnavlinks {
+	height: 24px;
+	color: #666;
+	margin: 15px 5px 4px 5px;
+	font-size: 11px;
+	line-height: 24px !important;
+	line-height: 22px}
+
+#tocnavlinks a {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	overflow: hidden;
+	display: inline;
+	height: 24px;
+	line-height: 24px !important;
+	line-height: 22px;
+	color: #666}
+
+.tocnavlinks_separator {
+	display: inline;
+	color: #FFFFFF;
+	background: url(mittwoch/arrow.png) no-repeat center}
+
+/***** End Wiki *****/
+
+/***** Articles ****/
+.articletopline {
+	font-size: 90%;
+	font-style: italic}
+
+.articletitle {
+	background: url(mittwoch/compo_head.gif) no-repeat;
+	height: 20px;
+	line-height: 20px;
+	color: #999999;
+	border-bottom: 1px solid #c8c8c8;
+	white-space: nowrap;
+	padding-left: 30px;
+	margin: 4px;
+	padding-top: 6px}
+
+.titlea {
+	font-weight: bold}
+
+.articlesubtitle {
+	font-size: 90%;
+	font-style: italic}
+
+.articleheading {
+	margin-top: 46px;
+	line-height: 1.5em}
+
+img.topicimage,
+img.articleimagenofloat,
+img.articleimage {
+	background: #fafbfc;
+	border: 1px solid #b0b0b0;
+	padding: 5px}
+
+img.articleimagefloat {
+	background: #fafbfc;
+	border: 1px solid #b0b0b0;
+	padding: 5px}
+
+img.articleimage {
+	background: #fafbfc;
+	border: 1px solid #b0b0b0}
+
+.articlebody {
+	line-height: 1.5em}
+
+.articlesource {
+	margin-top: 5px;
+	font-style: italic;
+	font-size: 90%}
+
+/***** End Articles *****/
+
+/***** Blogs *****/
+
+.blogtitle {
+	height: 24px;
+	width: 100%;
+	display: block;
+	color: #666;
+	margin: 10px 5px 4px 5px;
+	background: #f0f0f0 url(mittwoch/pathway.gif) repeat-x;
+	border: 1px solid #d0d0d0;
+	padding-top: .15em;
+	line-height: 200%;
+	font-weight: bold;
+	padding-left: 1em}
+
+.postbody-title h2 {
+	background: url(mittwoch/content_head.gif) no-repeat;
+	padding: 3px 0 5px 26px;
+}
+
+body.tiki_blogs .author_actions {
+	display: block;
+	text-align: right;
+}
+
+.post .author_info {
+	float: right;
+	background: none;
+	padding: 2px;
+	margin-right: 0;
+}
+
+.post .postbody-title {
+	display: block;
+	background: none;
+	border-bottom: 0;
+	padding: 0;
+	padding-bottom: 5px;
+	margin: 0;
+}
+
+/***** End Blogs *****/
+
+/***** Forums *****/
+.post {
+	background: #fbfbfb;
+	border: 1px solid #e7eaed;
+	margin-bottom: 30px;
+	padding: 0 5px 10px;
+}
+
+.post .author {
+	float: right;
+	text-align: left;
+	width: 30%;
+	margin: -3px 3px 3px -3px;
+	background: #f9f9f9;
+	border: 1px solid #e9e9e9;
+	padding: 3px;
+	position: relative}
+
+.post .avatar {
+	display: block;
+	float: none;
+	text-align: left;
+	margin: 0;
+	background: inherit}
+
+.post .author_post_info {
+	display: block;
+	padding: 0}
+
+.post .author_post_info:first-child {
+	text-transform: capitalize;
+}
+
+.post .postbody-title .title a.link {
+	font-size: 1.1em;
+	font-weight: bold}
+
+/**** Image Galleries ****/
+td.oddthumb {
+	background: #f9f9f9;
+	border: 3px solid white;
+	border-collapse: collapse}
+
+td.eventhumb {
+	background: #f9f9f9;
+	border: 3px solid white;
+	border-collapse: collapse}
+
+td.eventhumb img {
+	margin-left: 6px;
+	margin-right: 6px}
+
+img.athumb {
+	border: 0;
+	margin: auto}
+
+div#browse_image {
+	background: white;
+	width: 100%}
+
+.showimage {
+	width: 100%;
+	text-align: center;
+	padding: 6px}
+
+/***** Trackers (etc.) *****/
+
+.statuson {
+	border: 1px inset #666;
+	background: #bbaa99}
+
+/***** Categories, Tags *****/
+.catitems {font-weight: bold}
+
+.catitems li {
+	background-image: none;
+}
+
+/***** Tags (freetags) *****/
+li.freetag {
+	background-image: none;
+}
+
+/***** Shoutbox *****/
+textarea.tshoutbox{
+	font-size: 1em;
+}
+
+/***** Directory *****/
+.dirsite {
+	background: #f9f9f9;
+	border: 1px solid #aaa}
+
+/***** Calendar *****/
+
+.viewmode .button,
+.viewmode .button a {
+	margin-right: 1px !important;
+}
+
+.opaque {
+	background: #fff;
+	border-left: 1px solid #a9a9a9;
+	border-top: 1px solid #a9a9a9;
+	border-right: 1px solid #696969;
+	border-bottom: 1px solid #696969}
+
+.opaque .box-title {
+	background: white;
+	border-bottom: 1px solid black}
+
+.opaque .box-data  {
+	background: white}
+
+.caldark {
+	border: 1px solid #fff;
+	background: #fff;
+}
+
+.caldark .calfocus {
+	background: #fff;
+}
+
+.calodd,
+.caleven {
+	border: 1px solid #ddd;
+}
+
+.calodd {
+	background: #F5F5F5;
+}
+
+.caleven {
+	background: #ECECEC;
+}
+
+.searchresults {
+	display: inline}
+
+#pageheader #description {
+	font-size: 1em;
+	font-style: italic;
+	font-weight: normal;
+	margin-top: 6px;
+	margin-bottom: 6px}
+
+/***** Admin *****/
+
+a.admbox {
+	border: 1px solid #aaa;
+	background-color: #f1f1f1}
+
+a.admbox:hover,
+a.admbox:focus,
+a.admbox:active  {
+	background-color: #b2b2b2;
+	border: 1px solid #292929}
+
+a.admbox.off {border: 1px solid #9f9f9f}
+
+a.admbox.off:hover,
+a.admbox.off:focus,
+a.admbox.off:active {border: 1px solid #9f9f9f}
+
+.adminanchors {background: #fff url(mittwoch/pgbg.jpg) repeat-x}
+/* end of file */

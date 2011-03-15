@@ -1,0 +1,175 @@
+/* $Id$
+	Colors for Mittwoch -150 Yellow theme option
+*/
+
+div.adminanchors,
+#header_container {
+	background: url(yellow/headertop.png) repeat-x bottom;
+}
+
+#tiki-top {
+	background: url(yellow/bg_pagenav.gif) repeat-x;
+}
+
+a, a:visited,
+.option a:link,
+.option a:visited,
+a.linkmenu,
+a.linkmodule,
+.module li a,
+input[type=submit],
+input[type=file],
+select,
+input.wikiaction,
+button {
+	color: #A8952C}
+
+a:hover,
+.option a:hover,
+.option a.linkmenu:hover,
+a.linkmodule:hover,
+.module li a:hover,
+div.option a:hover,
+div.option a:active,
+input[type=submit]:hover,
+input[type=file]:hover,
+select:hover,
+input.wikiaction:hover,
+button:hover {
+	color: #DD6BFF}
+
+.wikitext a:link.wiki,
+.wikitext a.link:visited {
+	color: #A8952C !important;
+	text-decoration: none !important}
+
+.wikitext a.link:hover {
+	color: #DD6BFF !important;
+	text-decoration: none !important}
+
+input[type=submit],
+input[type=file],
+select,
+input.wikiaction,
+button {
+	background-image: url(yellow/button_bg.png)}
+
+input[id="fuser"] {
+	background-image: url(yellow/button_bg.png)}
+
+.wikitext ul a:hover {
+	list-style: url(yellow/arrow_hover.gif)}
+
+ul li,
+.wikicell li {
+	background: url(yellow/arrow.gif) no-repeat 0 2px;
+}
+
+ul li:hover {
+	background: url(yellow/arrow_hover.gif) no-repeat 0 2px;
+}
+
+#header .siteloginbar_popup ul ul a,
+#header .siteloginbar_popup ul ul a:visited {
+	color: #a8952c;	
+}
+
+#header .siteloginbar_popup ul ul li a {
+	padding-left: 18px;
+	background: url(yellow/arrow.gif) no-repeat 0 4px;
+	line-height: 160%
+}
+
+#header .siteloginbar_popup ul ul li a:hover {
+	color: #d1e53c;
+	padding-left: 18px;
+	background: url(yellow/arrow_hover.gif) no-repeat 0 4px;
+	line-height: 160%
+}
+
+#tiki-top .cssmenu_horiz li a,
+#tiki-top .cssmenu_horiz li a:visited {
+	background: url(yellow/top_button.gif) no-repeat;
+}
+
+#tiki-top .cssmenu_horiz li a:hover {
+	background: url(yellow/top_button_hover.gif) no-repeat;
+}
+
+div.box-title {
+	background: url(yellow/h3.gif) no-repeat;
+}
+
+div.separator {
+	background: url(yellow/menu_bg.gif) no-repeat;
+	color: #666}
+
+div.separator a:link,
+div.separator a:visited {
+	color: #666}
+
+div.separator:hover {
+	background: url(yellow/menu_bg.gif) no-repeat 0 -25px;
+}
+
+.separator a:hover,
+.option a.linkmenu:hover {
+	background-position: 0 -25px;
+}
+
+.titlebar {
+	background: #d1b935;
+	color: #fff;
+}
+
+th,
+.normal td.heading {
+	background: #d1b935;
+	color: #fff;
+}
+
+th a,
+th a:visited,
+td.heading a,
+td.heading a:visited,
+a.tableheading,
+a.tableheading:visited {
+	color: #fff;
+	text-decoration: none;
+}
+
+th a:hover,
+td.heading a:hover
+a.tableheading:hover {
+	color: #fff;
+	text-decoration: underline;
+}
+
+.tabmark {
+	background: url(yellow/top_button.gif) no-repeat; 
+}
+
+.tabmark a:hover,
+.tabactive a {
+	background: url(yellow/top_button_hover.gif) no-repeat;
+	color: #d1e53c;
+}
+
+div.articletitle {
+	background: url(yellow/compo_head.gif) no-repeat}
+
+div.postbody-title h2 {
+	background: url(yellow/content_head.gif) no-repeat;
+}
+
+#footer {
+	background: #B7A216 url(yellow/footer.jpg) repeat-x top;
+	color: #f0f0f0;
+}
+
+.tocnavlinks_separator {
+	display: inline;
+	color: #fff;
+	background: url(yellow/arrow.png) no-repeat center}
+
+}

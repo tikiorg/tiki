@@ -1,0 +1,180 @@
+/* $Id$
+	Colors for Mittwoch -120 LightGreen theme option
+*/
+
+.adminanchors,
+#header_container {
+	background: url(lightgreen/headertop.png) repeat-x bottom;
+}
+
+#tiki-top {
+	background: url(lightgreen/bg_pagenav.gif) repeat-x;
+}
+
+a, a:visited,
+.option a:link,
+.option a:visited,
+a.linkmenu,
+a.linkmodule,
+.module li a,
+input[type=submit],
+input[type=file],
+select,
+input.wikiaction,
+button {
+	color: #79B718}
+
+a:hover,
+.option a:hover,
+.option a.linkmenu:hover,
+a.linkmodule:hover,
+.module li a:hover,
+div.option a:hover,
+div.option a:active,
+input[type=submit]:hover,
+input[type=file]:hover,
+select:hover,
+input.wikiaction:hover,
+button:hover {
+	color: #FD32C6}
+
+.wikitext a:link.wiki,
+.wikitext a.link:visited {
+	color: #79B718 !important;
+	text-decoration: none !important}
+
+.wikitext a.link:hover {
+	color: #FD32C6 !important;
+	text-decoration: none !important}
+
+input[type=submit],
+input[type=file],
+select,
+input.wikiaction,
+button {
+	background-image: url(lightgreen/button_bg.png)}
+
+input[id="fuser"] {
+	background-image: url(lightgreen/button_bg.png)}
+
+ul li,
+.wikicell li {
+	background: url(lightgreen/arrow.gif) no-repeat 0 2px;
+}
+
+ul li:hover {
+	background: url(lightgreen/arrow_hover.gif) no-repeat 0 2px;
+}
+
+#header .siteloginbar_popup ul ul a,
+#header .siteloginbar_popup ul ul a:visited {
+	color: #79b718;	
+}
+
+#header .siteloginbar_popup ul ul li a {
+	padding-left: 18px;
+	background: url(lightgreen/arrow.gif) no-repeat 0 4px;
+	line-height: 160%
+}
+
+#header .siteloginbar_popup ul ul li a:hover {
+	color: #d1e53c;
+	padding-left: 18px;
+	background: url(lightgreen/arrow_hover.gif) no-repeat 0 4px;
+	line-height: 160%
+}
+
+#horiz_bar_search .button {
+	background: #f0f0f0 url(lightgreen/menuhover.jpg) top left repeat-x;
+	color: #505050;
+}
+
+#tiki-top .cssmenu_horiz li a,
+#tiki-top .cssmenu_horiz li a:visited {
+	background: url(lightgreen/top_button.gif) no-repeat;
+}
+
+#tiki-top .cssmenu_horiz li a:hover {
+	background: url(lightgreen/top_button_hover.gif) no-repeat;
+}
+
+div.box-title {
+	background: url(lightgreen/h3.gif) no-repeat;
+}
+
+div.separator {
+	background: url(lightgreen/menu_bg.gif) no-repeat;
+	color: #666;
+}
+
+div.separator a:link,
+div.separator a:visited {
+	color: #666;
+}
+
+div.separator:hover {
+	background: url(lightgreen/menu_bg.gif) no-repeat 0 -25px;
+}
+
+.separator a:hover,
+div.option a.linkmenu:hover {
+	background-position: 0 -25px;
+}
+
+.wikitext ul a:hover {
+	list-style: url(lightgreen/arrow_hover.gif)}
+
+.titlebar {
+	background: #93cc31;
+}
+
+th,
+.normal td.heading {
+	background: #93cc31;
+	color: #fff;
+}
+
+th a,
+th a:visited,
+td.heading a,
+td.heading a:visited,
+a.tableheading,
+a.tableheading:visited {
+	color: #fff;
+	text-decoration: none;
+}
+
+th a:hover,
+td.heading a:hover
+a.tableheading:hover {
+	color: #fff;
+	text-decoration: underline;
+}
+
+.tabmark {
+	background: url(lightgreen/top_button.gif) no-repeat; 
+}
+
+.tabmark a:hover,
+.tabactive a {
+	background: url(lightgreen/top_button_hover.gif) no-repeat;
+	color: #d1e53c;
+}
+
+.articletitle {
+	background: url(lightgreen/compo_head.gif) no-repeat;
+}
+
+.postbody-title h2 {
+	background: url(lightgreen/content_head.gif) no-repeat;
+}
+
+#footer {
+	background: #7CB716 url(lightgreen/footer.jpg) repeat-x top;
+	color: #f0f0f0}
+
+.tocnavlinks_separator {
+	display: inline;
+	color: #fff;
+	background: url(lightgreen/arrow.png) no-repeat center;
+}
