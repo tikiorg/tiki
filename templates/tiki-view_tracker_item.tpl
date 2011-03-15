@@ -431,10 +431,6 @@
 											{/if}
 										{/if}
 
-										{* -------------------- textarea -------------------- *}
-									{elseif $cur_field.type eq 'a'}
-										{include file='tracker_item_field_input.tpl' field_value=$cur_field}
-
 										{* --------------------- date ------------------------ *}
 									{elseif $cur_field.type eq 'f'}
 										{include file='tracker_item_field_input.tpl' field_value=$cur_field}

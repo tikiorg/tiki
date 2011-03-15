@@ -354,10 +354,6 @@ $("#newItemForm").validate({
 {elseif $field_value.type eq 'L'}
 {include file='tracker_item_field_input.tpl'}
 
-{* -------------------- textarea -------------------- *}
-{elseif $field_value.type eq 'a'}
-{include file='tracker_item_field_input.tpl'}
-
 {* -------------------- date and time -------------------- *}
 {elseif $field_value.type eq 'f'}
 {include file='tracker_item_field_input.tpl'}
