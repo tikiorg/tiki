@@ -284,6 +284,11 @@
 									<legend>{tr}Allow HTML:{/tr}</legend>
 									<input type="checkbox" id="allowhtml" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/>
 								</fieldset>
+								{if $prefs.ajax_autosave eq "y"}{jq}
+$("#allowhtml").change(function() {
+	auto_save( "editwiki", autoSaveId );
+});
+								{/jq}{/if}
 							{/if}
 							{if $prefs.feature_wiki_import_html eq 'y'}
 								<fieldset>

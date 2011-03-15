@@ -51,7 +51,8 @@ if (isset($_REQUEST['editor_id'])) {
 			$res = $editlib->parseToWysiwyg(urldecode($_REQUEST['data']));
 		} else if ($_REQUEST['command'] == 'auto_save') {
 			include_once 'lib/ajax/autosave.php';
-			$res = auto_save( $_REQUEST['editor_id'], $_REQUEST['data'], $_REQUEST['referer'] );
+			$data = $_REQUEST['allowHtml'] ? $_REQUEST['data'] : htmlspecialchars($_REQUEST['data']);
+			$res = auto_save( $_REQUEST['editor_id'], $data, $_REQUEST['referer'] );
 		} else if ($_REQUEST['command'] == 'auto_remove') {
 			include_once 'lib/ajax/autosave.php';
 			remove_save($_REQUEST['editor_id'], $_REQUEST['referer'] );
