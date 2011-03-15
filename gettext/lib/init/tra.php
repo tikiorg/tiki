@@ -14,13 +14,16 @@
 global $interactive_collected_strings;
 $interactive_collected_strings = array();
 
+global $translate;
+$translate = '';
+
 function tr($content) {
 	$args = func_get_args();
 	return tra( $content, '', false, array_slice( $args, 1 ) );
 }
 
 function tra($content, $lg='', $no_interactive = false, $args = array()) {
-	global $prefs;
+	global $prefs, $translate;
 	static $languages = array();
 
 	if ($lg == '') {
@@ -38,7 +41,8 @@ function tra($content, $lg='', $no_interactive = false, $args = array()) {
 		init_language( $lang );
 	}
 
-	$out = tra_impl( $content, $lang, $no_interactive, $args );
+	$out = $translate->_($content, $lang);
+	//$out = tra_impl( $content, $lang, $no_interactive, $args );
 
 	record_string( $content, $out );
 
@@ -46,8 +50,26 @@ function tra($content, $lg='', $no_interactive = false, $args = array()) {
 }
 
 function init_language( $lg ) {
-	global $tikidomain, $prefs;
-	if( is_file("lang/$lg/language.php")) {
+	global $tikidomain, $prefs, $translate;
+	
+	if (!($translate instanceof Zend_Translate)) {
+		$translate = new Zend_Translate(
+			array(
+				'adapter' => 'gettext',
+				'content' => "lang/$lg/messages.mo",
+				'locale' => $lg,
+			)
+		);
+	} else if (!$translate->isAvailable($lg)) {
+		$translate->addTranslation(
+			array(
+				'content' => "lang/$lg/messages.mo",
+				'locale' => $lg,
+			)
+		);
+	}
+	
+	/*if( is_file("lang/$lg/language.php")) {
 		global ${"lang_$lg"};
 
 		$lang = array();
@@ -71,7 +93,7 @@ function init_language( $lg ) {
 		}
 
 		${"lang_$lg"} = $lang;
-	}
+	}*/
 }
 
 function tra_impl($content, $lg='', $no_interactive = false, $args = array()) {
