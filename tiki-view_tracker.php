@@ -395,6 +395,15 @@ foreach ($xfields['data'] as $i => $current_field) {
 		$fields['data'][$i] = $current_field_fields;
 	}
 }
+
+// Collect information from the provided fields
+$ins_categs = array();
+foreach ($ins_fields['data'] as $current_field) {
+	if ($current_field['type'] == 'e' && isset($current_field['selected_categories'])) {
+		$ins_categs = array_merge($ins_categs, $current_field['selected_categories']);
+	}
+}
+
 if (!$orderkey) {
 	$sort_mode = 'lastModif_asc';
 }
@@ -474,13 +483,9 @@ if (isset($_REQUEST['import'])) {
 		// Check field values for each type and presence of mandatory ones
 		$mandatory_missing = array();
 		$err_fields = array();
-		$ins_categs = array();
 		$categorized_fields = array();
 		while (list($postVar, $postVal) = each($_REQUEST)) {
 			if (!empty($postVal[0]) && preg_match("/^ins_cat_([0-9]+)/", $postVar, $m)) {
-				foreach($postVal as $v) {
-					$ins_categs[] = $v;
-				}
 				$categorized_fields[] = $m[1];
 			}
 		}
