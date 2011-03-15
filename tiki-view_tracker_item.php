@@ -279,7 +279,9 @@ if (isset($_REQUEST['reloff'])) {
 	if (isset($_REQUEST['cant'])) {
 		$cant = $_REQUEST['cant'];
 	} else {
-		$tryfiltervalue = array_values($tryfiltervalue);
+		if (is_array($tryfiltervalue)) {
+			$tryfiltervalue = array_values($tryfiltervalue);
+		}
 		$trymove = $trklib->list_items($_REQUEST['trackerId'], $offset + $tryreloff, 1, $sort_mode, $listfields, $tryfilterfield, $tryfiltervalue, $trystatus, $tryinitial, $tryexactvalue);
 		if (isset($trymove['data'][0]['itemId'])) {
 			// Autodetect itemId if not specified
