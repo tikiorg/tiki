@@ -1453,7 +1453,7 @@ class TrackerLib extends TikiLib
 			case 'G':
 				$vals = preg_split('/ *, */', $fopt['value']);
 				$fopt['x'] = $vals[0];
-				$fopt['y'] = $vals[1];
+				$fopt['y'] = isset($vals[1]) ? $vals[1] : 0;
 				$fopt['z'] = empty($vals[2]) ? 1 : $vals[2];
 				break;
 			case 'F':
@@ -5147,7 +5147,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		return $this->getData('itemId');
 	}
 
-	protected function getData($key, $default)
+	protected function getData($key, $default = false)
 	{
 		return isset($this->itemData[$key]) ? $this->itemData[$key] : $default;
 	}
