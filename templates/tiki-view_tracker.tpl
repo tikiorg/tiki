@@ -386,10 +386,6 @@ $("#newItemForm").validate({
 {* -------------------- freetags -------------------- *}
 {elseif $field_value.type eq 'F'}
 {include file='tracker_item_field_input.tpl'}
-
-{* -------------------- country selector -------------------- *}
-{elseif $field_value.type eq 'y'}
-{include file='tracker_item_field_input.tpl'}
 {/if}
 
 {if $field_value.type ne 'S'}

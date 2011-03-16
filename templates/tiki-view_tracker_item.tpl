@@ -419,10 +419,6 @@
 									{elseif $cur_field.type eq 'c'}
 										<input type="checkbox" name="ins_{$cur_field.id}" {if $cur_field.value eq 'y'}checked="checked"{/if}/>
 
-										{* -------------------- country selector -------------------- *}
-									{elseif $cur_field.type eq 'y'}
-										{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
-
 										{* -------------------- freetags -------------------- *}
 									{elseif $cur_field.type eq 'F'}
 										{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}

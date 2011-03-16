@@ -4914,7 +4914,7 @@ class TrackerLib extends TikiLib
 	function get_rendered_fields()
 	{
 		// FIXME : Kill this function once cleanup is completed
-		return array('t', 'e', 'A', 'i', 'a', 'f', 'r', 'l');
+		return array('t', 'e', 'A', 'i', 'a', 'f', 'r', 'l', 'y');
 	}
 
 	private function parse_comment($data) {
@@ -5092,6 +5092,11 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract
 			'flags' => TikiLib::lib('trk')->get_flags(true, true, ($this->getOption(1) != 1)),
 			'defaultvalue' => 'None',
 		);
+	}
+	
+	function renderInput()
+	{
+		return $this->renderInputTemplate('trackerinput/countryselector.tpl');
 	}
 }
 
