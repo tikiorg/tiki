@@ -2308,7 +2308,7 @@ class TrackerLib extends TikiLib
 			$tikilib->object_post_save( array('type'=>'trackeritem', 'object'=>$itemId, 'name' => "Tracker Item $itemId", 'href'=>"tiki-view_tracker_item.php?itemId=$itemId"), array( 'content' => $parsed ));
 		}
 
-		if ($geo && $itemId) {
+		if (!empty($geo) && $itemId) {
 			TikiLib::lib('geo')->set_coordinates('trackeritem', $itemId, $geo);
 		}
 		return $itemId;
@@ -5118,15 +5118,21 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
 	}
 
 	protected function processMultilingual($requestData, $id_string) {
-		global $prefs;
+		global $prefs, $language;
 
 		if (!isset($requestData[$id_string])) {
 			$requestData[$id_string] = $this->getValue();
 		}
+		
+		if (is_array($requestData[$id_string])) {
+			$thisVal = $requestData[$id_string][$language];
+		} else {
+			$thisVal = $requestData[$id_string];
+		}
 
 		$data = array(
-			'value' => $requestData[$id_string],
-			'pvalue' => TikiLib::lib('tiki')->parse_data(htmlspecialchars($requestData[$id_string])),
+			'value' => $thisVal,
+			'pvalue' => TikiLib::lib('tiki')->parse_data(htmlspecialchars($thisVal)),
 		);
 
 		if ($this->getConfiguration("isMultilingual") == 'y') {
@@ -5285,7 +5291,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 	function getDisplayValues(array $requestData = array())
 	{
 		$parentId = $this->getOption(0);
-		$categories = $this->getApplicableCategories($selected);
+		$categories = $this->getApplicableCategories();
 
 		return array(
 			'categories' => $categories,
@@ -5409,25 +5415,27 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 				: $this->getValue(),
 		);
 
-		if ($this->getOption(3)) {
-			$l = explode(':', $this->getOption(1));
-			$finalFields = explode('|', $this->getOption(3));
-			$data['links'] = TikiLib::lib('trk')->get_join_values(
-					$requestData['trackerId'], $requestData['itemId'],
-					array_merge( array($this->getOption(2)), $l, array($this->getOption(3))),
-					$this->getOption(0), $finalFields,  ' ', $this->getOption(5)
-			);
-			if (count($data['links']) == 1) {
-				foreach($data['links'] as $linkItemId => $linkValue) {
-					if (is_numeric($data['links'][$linkItemId])) { //if later a computed field use this field
-						$info[$current_field_fields['fieldId']] = $linkValue;
+		if (isset($requestData['trackerId'], $requestData['itemId'])) {
+			if ($this->getOption(3)) {
+				$l = explode(':', $this->getOption(1));
+				$finalFields = explode('|', $this->getOption(3));
+				$data['links'] = TikiLib::lib('trk')->get_join_values(
+						$requestData['trackerId'], $requestData['itemId'],
+						array_merge( array($this->getOption(2)), $l, array($this->getOption(3))),
+						$this->getOption(0), $finalFields,  ' ', $this->getOption(5)
+				);
+				if (count($data['links']) == 1) {
+					foreach($data['links'] as $linkItemId => $linkValue) {
+						if (is_numeric($data['links'][$linkItemId])) { //if later a computed field use this field
+							$info[$current_field_fields['fieldId']] = $linkValue;
+						}
 					}
 				}
+				$data['trackerId'] = $this->getOption(0);
+				$data['tracker_options'] = TikiLib::lib('trk')->get_tracker_options($this->getOption(0));
 			}
-			$data['trackerId'] = $this->getOption(0);
-			$data['tracker_options'] = TikiLib::lib('trk')->get_tracker_options($this->getOption(0));
 		}
-
+		
 		return $data;
 	}
 
