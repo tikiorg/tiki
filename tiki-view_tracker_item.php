@@ -385,7 +385,6 @@ foreach($xfields["data"] as $i => $current_field) {
 	if ($current_field['type'] == 's' && $current_field['name'] == 'Rating') {
 		if ($tiki_p_tracker_view_ratings == 'y') {
 			$current_field_ins = $current_field;
-			$rateFieldId = $fid;
 
 		}
 	} elseif ($current_field['isHidden'] == 'n' or $current_field['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($current_field['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
@@ -538,6 +537,7 @@ if ($tiki_p_admin_trackers == 'y' || ($tiki_p_remove_tracker_items == 'y' && $it
 		$trklib->remove_tracker_item($_REQUEST["remove"]);
 	}
 }
+$rateFieldId = $definition->getRateField();
 if (($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c') || ($tiki_p_modify_tracker_items_pending == 'y' && $item_info['status'] == 'p') || ($tiki_p_modify_tracker_items_closed == 'y' && $item_info['status'] == 'c') || $special) {
 	if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
 		$captchalib = TikiLib::lib('captcha');

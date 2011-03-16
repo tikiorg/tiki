@@ -316,7 +316,6 @@ foreach ($xfields['data'] as $i => $current_field) {
 		} elseif ($current_field_fields["type"] == 's' and $current_field['name'] == 'Rating') { // rating
 			if (isset($_REQUEST[$ins_id])) {
 				$newItemRate = $_REQUEST[$ins_id];
-				$newItemRateField = $fid;
 			} else {
 				$newItemRate = NULL;
 			}
@@ -427,6 +426,9 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 		}
 	}
 }
+
+$newItemRateField = $trackerDefinition->getRateField();
+
 if (isset($_REQUEST['import'])) {
 	if (isset($_FILES['importfile']) && is_uploaded_file($_FILES['importfile']['tmp_name'])) {
 		$fp = fopen($_FILES['importfile']['tmp_name'], "rb");

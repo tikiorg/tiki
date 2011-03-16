@@ -5039,6 +5039,15 @@ class Tracker_Definition
 			}
 		}
 	}
+
+	function getRateField()
+	{
+		foreach ($this->getFields() as $field) {
+			if ($field['type'] == 's' && $field['name'] == 'Rating') {
+				return $field['fieldId'];
+			}
+		}
+	}
 }
 
 interface Tracker_Field_Interface
