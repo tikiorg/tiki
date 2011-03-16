@@ -49,162 +49,162 @@
 {tabset name='tabs_view_tracker'}
 	
 	{if $tiki_p_view_trackers eq 'y' or (($tracker_info.writerCanModify eq 'y' or $tracker_info.writerGroupCanModify eq 'y') and $user)}
-	{tab name="{tr}Tracker Items{/tr}"}
-	{* -------------------------------------------------- tab with list --- *}
-	
-	{if (($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y') or $show_filters eq 'y'}
-	{include file='tracker_filter.tpl'}
-	{/if}
-	
-	{if $cant_pages > 1 or $initial}{initials_filter_links}{/if}
-	
-	<div align='left'>{tr}Items found:{/tr} {$item_count}</div>
-	
-	{if $items|@count ge '1'}
-	{* ------- list headings --- *}
-	<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
-	<table class="normal">
-	<tr>
-	{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
-		<th class="auto" style="width:20px;"></th>
-	{/if}
-	
-	{if $tiki_p_admin_trackers eq 'y'}
-		<th width="15">
-			{select_all checkbox_names='action[]'}
-		</th>
-	{/if}
-	
-	{foreach from=$fields key=ix item=field_value}
-	{if ( $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $field_value.isTblVisible eq 'y' ) || ( $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') ) and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password') and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y')}
-		<th class="auto">
-			{self_link _sort_arg='sort_mode' _sort_field='f_'|cat:$field_value.fieldId}{$field_value.name|truncate:255:"..."|escape|default:"&nbsp;"}{/self_link}
-		</th>
-		{if $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating"))}
-			{assign var=rateFieldId value=$field_value.fieldId}
-		{/if}
-	{/if}
-	{/foreach}
-	
-	{if $tracker_info.showCreated eq 'y'}
-	<th><a href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}{if $find}find={$find}&amp;{/if}trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={if
-	$sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></th>
-	{/if}
-	{if $tracker_info.showLastModif eq 'y'}
-	<th><a href="tiki-view_tracker.php?status={$status}&amp;{if $initial}initial={$initial}&amp;{/if}find={$find}&amp;trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}lastModif{/tr}</a></th>
-	{/if}
-	{if $tracker_info.useComments eq 'y' and ($tracker_info.showComments eq 'y' || $tracker_info.showLastComment eq 'y') and $tiki_p_tracker_view_comments ne 'n'}
-	<th{if $tracker_info.showLastComment ne 'y'} style="width:5%"{/if}>{tr}Coms{/tr}</th>
-	{/if}
-	{if ($tiki_p_tracker_view_attachments eq 'y' or $tiki_p_admin_trackers eq 'y') and $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
-	<th style="width:5%">{tr}atts{/tr}</th>
-	{if $tiki_p_admin_trackers eq 'y'}<th style="width:5%">{tr}dls{/tr}</th>{/if}
-	{/if}
-	{if $tiki_p_admin_trackers eq 'y' or $tiki_p_remove_tracker_items eq 'y' or $tiki_p_remove_tracker_items_pending eq 'y' or $tiki_p_remove_tracker_items_closed eq 'y'}
-	<th style="width:20px">{tr}Action{/tr}</th>
-	{/if}
-	</tr>
-	
-	{* ------- Items loop --- *}
-	{assign var=itemoff value=0}
-	{cycle values="odd,even" print=false}
-	{section name=user loop=$items}
-	<tr class="{cycle}">
-	{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
-		<td class="icon">
-		{assign var=ustatus value=$items[user].status|default:"c"}
-		{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}
-		</td>
-	{/if}
-	{if $tiki_p_admin_trackers eq 'y'}
-	  <td class="checkbox">
-	    <input type="checkbox" name="action[]" value='{$items[user].itemId}' style="border:1px;font-size:80%;" />
-	  </td>
-	{/if}
-	
-	{* ------- list values --- *}
-	{foreach from=$items[user].field_values key=ix item=field_value}
-		{if $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' 
-			or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password') 
-			and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y')}
-			<td class={if $field_value.type eq 'n' or $field_value.type eq 'q' or $field_value.type eq 'b'}"numeric"{else}"auto"{/if}>
-				{if $field_value.isMain eq 'y' and ($tiki_p_view_trackers eq 'y' 
-				 or ($tiki_p_modify_tracker_items eq 'y' and $item.status ne 'p' and $item.status ne 'c')
-				 or ($tiki_p_modify_tracker_items_pending eq 'y' and $item.status eq 'p')
-				 or ($tiki_p_modify_tracker_items_closed eq 'y' and $item.status eq 'c')
-				 or $tiki_p_comment_tracker_items eq 'y'
-				 or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group))}
-					{if !empty($tracker_info.showPopup)}
-						{capture name=popup}
-							<div class="cbox">
-								<table>
-									{cycle values="odd,even" print=false}
-									{foreach from=$items[user].field_values item=f}
-										{if in_array($f.fieldId, $popupFields)}
-											 <tr class="{cycle}"><th>{$f.name}</th><td>{include file='tracker_item_field_value.tpl' field_value=$f}</th></tr>
+		{tab name="{tr}Tracker Items{/tr}"}
+			{* -------------------------------------------------- tab with list --- *}
+			
+			{if (($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y') or $show_filters eq 'y'}
+				{include file='tracker_filter.tpl'}
+			{/if}
+			
+			{if $cant_pages > 1 or $initial}{initials_filter_links}{/if}
+			
+			<div align='left'>{tr}Items found:{/tr} {$item_count}</div>
+			
+			{if $items|@count ge '1'}
+				{* ------- list headings --- *}
+				<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
+					<table class="normal">
+						<tr>
+							{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
+								<th class="auto" style="width:20px;"></th>
+							{/if}
+							
+							{if $tiki_p_admin_trackers eq 'y'}
+								<th width="15">
+									{select_all checkbox_names='action[]'}
+								</th>
+							{/if}
+							
+							{foreach from=$fields key=ix item=field_value}
+								{if ( $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $field_value.isTblVisible eq 'y' ) || ( $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') ) and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password') and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y')}
+									<th class="auto">
+										{self_link _sort_arg='sort_mode' _sort_field='f_'|cat:$field_value.fieldId}{$field_value.name|truncate:255:"..."|escape|default:"&nbsp;"}{/self_link}
+									</th>
+									{if $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating"))}
+										{assign var=rateFieldId value=$field_value.fieldId}
+									{/if}
+								{/if}
+							{/foreach}
+							
+							{if $tracker_info.showCreated eq 'y'}
+								<th><a href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}{if $find}find={$find}&amp;{/if}trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={if
+								$sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></th>
+							{/if}
+							{if $tracker_info.showLastModif eq 'y'}
+								<th><a href="tiki-view_tracker.php?status={$status}&amp;{if $initial}initial={$initial}&amp;{/if}find={$find}&amp;trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}lastModif{/tr}</a></th>
+							{/if}
+							{if $tracker_info.useComments eq 'y' and ($tracker_info.showComments eq 'y' || $tracker_info.showLastComment eq 'y') and $tiki_p_tracker_view_comments ne 'n'}
+								<th{if $tracker_info.showLastComment ne 'y'} style="width:5%"{/if}>{tr}Coms{/tr}</th>
+							{/if}
+							{if ($tiki_p_tracker_view_attachments eq 'y' or $tiki_p_admin_trackers eq 'y') and $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
+								<th style="width:5%">{tr}atts{/tr}</th>
+								{if $tiki_p_admin_trackers eq 'y'}<th style="width:5%">{tr}dls{/tr}</th>{/if}
+							{/if}
+							{if $tiki_p_admin_trackers eq 'y' or $tiki_p_remove_tracker_items eq 'y' or $tiki_p_remove_tracker_items_pending eq 'y' or $tiki_p_remove_tracker_items_closed eq 'y'}
+								<th style="width:20px">{tr}Action{/tr}</th>
+							{/if}
+						</tr>
+						
+						{* ------- Items loop --- *}
+						{assign var=itemoff value=0}
+						{cycle values="odd,even" print=false}
+						{section name=user loop=$items}
+							<tr class="{cycle}">
+								{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
+									<td class="icon">
+										{assign var=ustatus value=$items[user].status|default:"c"}
+										{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}
+									</td>
+								{/if}
+								{if $tiki_p_admin_trackers eq 'y'}
+									<td class="checkbox">
+								  		<input type="checkbox" name="action[]" value='{$items[user].itemId}' style="border:1px;font-size:80%;" />
+									</td>
+								{/if}
+								
+								{* ------- list values --- *}
+								{foreach from=$items[user].field_values key=ix item=field_value}
+									{if $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' 
+										or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password') 
+										and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y')}
+										<td class={if $field_value.type eq 'n' or $field_value.type eq 'q' or $field_value.type eq 'b'}"numeric"{else}"auto"{/if}>
+											{if $field_value.isMain eq 'y' and ($tiki_p_view_trackers eq 'y' 
+											 or ($tiki_p_modify_tracker_items eq 'y' and $item.status ne 'p' and $item.status ne 'c')
+											 or ($tiki_p_modify_tracker_items_pending eq 'y' and $item.status eq 'p')
+											 or ($tiki_p_modify_tracker_items_closed eq 'y' and $item.status eq 'c')
+											 or $tiki_p_comment_tracker_items eq 'y'
+											 or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group))}
+												{if !empty($tracker_info.showPopup)}
+													{capture name=popup}
+														<div class="cbox">
+															<table>
+																{cycle values="odd,even" print=false}
+																{foreach from=$items[user].field_values item=f}
+																	{if in_array($f.fieldId, $popupFields)}
+																		 <tr class="{cycle}"><th>{$f.name}</th><td>{include file='tracker_item_field_value.tpl' field_value=$f}</th></tr>
+																	{/if}
+																{/foreach}
+															</table>
+														</div>
+													{/capture}
+													{assign var=showpopup value='y'}
+												{else}
+													{assign var=showpopup value='n'}
+												{/if}
+											{/if}
+											{include file='tracker_item_field_value.tpl' field_value=$field_value list_mode="y" item=$items[user] showlinks="y" reloff=$smarty.section.user.index url=""}
+										</td>
+									{/if}
+								{/foreach}
+								
+								{if $tracker_info.showCreated eq 'y'}
+									<td class="date">{if $tracker_info.showCreatedFormat}{$items[user].created|tiki_date_format:$tracker_info.showCreatedFormat}{else}{$items[user].created|tiki_short_datetime}{/if}</td>
+								{/if}
+								{if $tracker_info.showLastModif eq 'y'}
+									<td class="date">{if $tracker_info.showLastModifFormat}{$items[user].lastModif|tiki_date_format:$tracker_info.showLastModifFormat}{else}{$items[user].lastModif|tiki_short_datetime}{/if}</td>
+								{/if}
+								{if $tracker_info.useComments eq 'y' and ($tracker_info.showComments eq 'y' or $tracker_info.showLastComment eq 'y') and $tiki_p_tracker_view_comments ne 'n'}
+									<td  style="text-align:center;">{if $tracker_info.showComments eq 'y'}{$items[user].comments}{/if}{if $tracker_info.showComments eq 'y' and $tracker_info.showLastComment eq 'y'}<br />{/if}{if $tracker_info.showLastComment eq 'y' and !empty($items[user].lastComment)}{$items[user].lastComment.user|escape}-{$items[user].lastComment.posted|tiki_short_date}{/if}</td>
+								{/if}
+								{if ($tiki_p_tracker_view_attachments eq 'y' or $tiki_p_admin_trackers eq 'y') and $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
+									<td class="icon"><a href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=att{if $offset}&amp;offset={$offset}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}"
+									link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List Attachments{/tr}"
+									/></a> {$items[user].attachments}</td>
+									{if $tiki_p_admin_trackers eq 'y'}<td  style="text-align:center;">{$items[user].hits}</td>{/if}
+								{/if}
+								{if $tiki_p_admin_trackers eq 'y' or ($tiki_p_remove_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($tiki_p_remove_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($tiki_p_remove_tracker_items_closed eq 'y' and $items[user].status eq 'c')}
+									<td class="action">
+										<a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}{if $sort_mode ne ''}&amp;sort_mode={$sort_mode}{/if}&amp;remove={$items[user].itemId}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+										{if $tiki_p_admin_trackers eq 'y'}
+											<a class="link" href="tiki-tracker_view_history.php?itemId={$items[user].itemId}" title="{tr}History{/tr}">{icon _id='database' alt="{tr}History{/tr}"}</a>
 										{/if}
-									{/foreach}
-								</table>
-							</div>
-						{/capture}
-						{assign var=showpopup value='y'}
-					{else}
-						{assign var=showpopup value='n'}
+									</td>
+								{/if}
+							</tr>
+							{assign var=itemoff value=$itemoff+1}
+						{/section}
+					</table>
+					
+					{if $tiki_p_admin_trackers eq 'y'}
+						<div style="text-align:left">
+							{tr}Perform action with checked:{/tr}
+							<select name="batchaction">
+								<option value="">{tr}...{/tr}</option>
+								<option value="delete">{tr}Delete{/tr}</option>
+								{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
+									<option value="c">{tr}Close{/tr}</option>
+									<option value="o">{tr}Open{/tr}</option>
+									<option value="p">{tr}Pending{/tr}</option>
+								{/if}
+							</select>
+							<input type="hidden" name="trackerId" value="{$trackerId}" />
+							<input type="submit" name="act" value="{tr}OK{/tr}" />
+						</div>
 					{/if}
-				{/if}
-				{include file='tracker_item_field_value.tpl' field_value=$field_value list_mode="y" item=$items[user] showlinks="y" reloff=$smarty.section.user.index url=""}
-			</td>
-		{/if}
-	{/foreach}
-	
-	{if $tracker_info.showCreated eq 'y'}
-	<td class="date">{if $tracker_info.showCreatedFormat}{$items[user].created|tiki_date_format:$tracker_info.showCreatedFormat}{else}{$items[user].created|tiki_short_datetime}{/if}</td>
-	{/if}
-	{if $tracker_info.showLastModif eq 'y'}
-	<td class="date">{if $tracker_info.showLastModifFormat}{$items[user].lastModif|tiki_date_format:$tracker_info.showLastModifFormat}{else}{$items[user].lastModif|tiki_short_datetime}{/if}</td>
-	{/if}
-	{if $tracker_info.useComments eq 'y' and ($tracker_info.showComments eq 'y' or $tracker_info.showLastComment eq 'y') and $tiki_p_tracker_view_comments ne 'n'}
-	<td  style="text-align:center;">{if $tracker_info.showComments eq 'y'}{$items[user].comments}{/if}{if $tracker_info.showComments eq 'y' and $tracker_info.showLastComment eq 'y'}<br />{/if}{if $tracker_info.showLastComment eq 'y' and !empty($items[user].lastComment)}{$items[user].lastComment.user|escape}-{$items[user].lastComment.posted|tiki_short_date}{/if}</td>
-	{/if}
-	{if ($tiki_p_tracker_view_attachments eq 'y' or $tiki_p_admin_trackers eq 'y') and $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
-	<td class="icon"><a href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=att{if $offset}&amp;offset={$offset}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}"
-	link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List Attachments{/tr}"
-	/></a> {$items[user].attachments}</td>
-	{if $tiki_p_admin_trackers eq 'y'}<td  style="text-align:center;">{$items[user].hits}</td>{/if}
-	{/if}
-	{if $tiki_p_admin_trackers eq 'y' or ($tiki_p_remove_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($tiki_p_remove_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($tiki_p_remove_tracker_items_closed eq 'y' and $items[user].status eq 'c')}
-	  <td class="action">
-	    <a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}{if $sort_mode ne ''}&amp;sort_mode={$sort_mode}{/if}&amp;remove={$items[user].itemId}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
-		{if $tiki_p_admin_trackers eq 'y'}
-		<a class="link" href="tiki-tracker_view_history.php?itemId={$items[user].itemId}" title="{tr}History{/tr}">{icon _id='database' alt="{tr}History{/tr}"}</a>
-		{/if}
-	  </td>
-	{/if}
-	</tr>
-	{assign var=itemoff value=$itemoff+1}
-	{/section}
-	</table>
-	
-	{if $tiki_p_admin_trackers eq 'y'}
-	<div style="text-align:left">
-	{tr}Perform action with checked:{/tr}
-	<select name="batchaction">
-	<option value="">{tr}...{/tr}</option>
-	<option value="delete">{tr}Delete{/tr}</option>
-	{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
-	<option value="c">{tr}Close{/tr}</option>
-	<option value="o">{tr}Open{/tr}</option>
-	<option value="p">{tr}Pending{/tr}</option>
-	{/if}
-	</select>
-	<input type="hidden" name="trackerId" value="{$trackerId}" />
-	<input type="submit" name="act" value="{tr}OK{/tr}" />
-	</div>
-	{/if}
-	</form>
-	{pagination_links cant=$item_count step=$maxRecords offset=$offset}{/pagination_links}
-	{/if}
-	{/tab}
+				</form>
+				{pagination_links cant=$item_count step=$maxRecords offset=$offset}{/pagination_links}
+			{/if}
+		{/tab}
 	{/if}
 	
 	{if $tiki_p_create_tracker_items eq 'y'}
@@ -228,7 +228,6 @@
 					<td>{include file='tracker_status_input.tpl' tracker=$tracker_info form_status=status}</td>
 				</tr>
 			{/if}
-			
 			{foreach from=$fields key=ix item=field_value}
 				{if in_array($field_value.type, TikiLib::lib('trk')->get_rendered_fields())}
 					<tr>
@@ -341,10 +340,6 @@
 							{elseif $field_value.type eq 'b'}
 								{include file='tracker_item_field_input.tpl'}
 							
-							{* -------------------- static text -------------------- *}
-							{elseif $field_value.type eq 'S'}
-								{include file='tracker_item_field_input.tpl'}
-							
 							{* -------------------- drop down -------------------- *}
 							{elseif $field_value.type eq 'd' or $field_value.type eq 'D'}
 								{include file='tracker_item_field_input.tpl'}
@@ -375,11 +370,6 @@
 								{include file='tracker_item_field_input.tpl'}
 							{/if}
 							
-							{if $field_value.type ne 'S'}
-								{if $field_value.description}
-									<br />{if $field_value.descriptionIsParsed eq 'y'}{wiki}{$field_value.description}{/wiki}{else}<em>{$field_value.description|escape}</em>{/if}
-								{/if}
-							{/if}
 							</td>
 							{if (($field_value.type eq 'c' or $field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'b') and $field_value.options_array[0]) eq '1' and $stick ne 'y'}
 								{assign var=stick value="y"}
