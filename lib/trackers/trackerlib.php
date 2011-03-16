@@ -5048,6 +5048,19 @@ class Tracker_Definition
 			}
 		}
 	}
+
+	function getCategorizedFields()
+	{
+		$out = array();
+
+		foreach ($this->getFields() as $field) {
+			if ($field['type'] == 'e') {
+				$out[] = $field['fieldId'];
+			}
+		}
+
+		return $out;
+	}
 }
 
 interface Tracker_Field_Interface
@@ -5584,7 +5597,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 {
 	function getInsertValues(array $requestData = array())
 	{
-		$key = 'ins_cat_' . $this->getConfiguration('fieldId');
+		$key = 'ins_' . $this->getConfiguration('fieldId');
 		$parentId = $this->getOption(0);
 
 		if (isset($requestData[$key]) && is_array($requestData[$key])) {

@@ -357,8 +357,6 @@ $smarty->assign('status_types', $status_types);
 $fields = array();
 $ins_fields = array();
 $usecategs = false;
-$ins_categs = array();
-$textarea_options = false;
 $cookietab = 1;
 $itemUser = $trklib->get_item_creator($_REQUEST['trackerId'], $_REQUEST['itemId']);
 $smarty->assign_by_ref('itemUser', $itemUser);
@@ -550,12 +548,7 @@ if (($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item
 		// Check field values for each type and presence of mandatory ones
 		$mandatory_missing = array();
 		$err_fields = array();
-		$categorized_fields = array();
-		while (list($postVar, $postVal) = each($_REQUEST)) {
-			if (preg_match("/^ins_cat_([0-9]+)/", $postVar, $m)) {
-				$categorized_fields[] = $m[1];
-			}
-		}
+		$categorized_fields = $definition->getCategorizedFields();
 		$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields, $_REQUEST['trackerId'], empty($_REQUEST['itemId'])?'':$_REQUEST['itemId']);
 		$smarty->assign('err_mandatory', $field_errors['err_mandatory']);
 		$smarty->assign('err_value', $field_errors['err_value']);

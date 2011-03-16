@@ -183,11 +183,9 @@ $xfields = array('data' => $trackerDefinition->getFields());
 $popupFields = $trackerDefinition->getPopupFields();
 $smarty->assign_by_ref('popupFields', $popupFields);
 
-$mainfield = '';
 $orderkey = false;
 $listfields = array();
 $usecategs = false;
-$ins_categs = array();
 $textarea_options = false;
 
 $fieldFactory = new Tracker_Field_Factory($trackerDefinition);
@@ -340,9 +338,6 @@ foreach ($xfields['data'] as $i => $current_field) {
 	if (isset($current_field_fields['fieldId'])) {
 		$current_field_fields['value'] = isset($current_field_ins['value']) ? $current_field_ins['value'] : '';
 	}
-	if (empty($mainfield) and isset($current_field_fields['isMain']) && $current_field_fields["isMain"] == 'y' and !empty($current_field_fields["value"])) {
-		$mainfield = $current_field_fields["value"];
-	}
 
 	if (! empty($current_field_list)) {
 		$listfields[$fid] = $current_field_list;
@@ -447,12 +442,7 @@ if (isset($_REQUEST['import'])) {
 		// Check field values for each type and presence of mandatory ones
 		$mandatory_missing = array();
 		$err_fields = array();
-		$categorized_fields = array();
-		while (list($postVar, $postVal) = each($_REQUEST)) {
-			if (!empty($postVal[0]) && preg_match("/^ins_cat_([0-9]+)/", $postVar, $m)) {
-				$categorized_fields[] = $m[1];
-			}
-		}
+		$categorized_fields = $trackerDefinition->getCategorizedFields();
 		$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields, $_REQUEST['trackerId'], empty($_REQUEST['itemId'])?'':$_REQUEST['itemId']);
 		$smarty->assign('err_mandatory', $field_errors['err_mandatory']);
 		$smarty->assign('err_value', $field_errors['err_value']);
@@ -472,6 +462,13 @@ if (isset($_REQUEST['import'])) {
 			}
 			$cookietab = "1";
 			$smarty->assign('itemId', '');
+			$mainfield = '';
+			foreach ($ins_fields as $f) {
+				if ($f['isMain'] == 'y' && ! empty($f['value'])) {
+					$mainfield = $f['value'];
+					break;
+				}
+			}
 			$trklib->categorized_item($_REQUEST["trackerId"], $itemid, $mainfield, $ins_categs);
 			if (isset($newItemRate)) {
 				$trackerId = $_REQUEST["trackerId"];
