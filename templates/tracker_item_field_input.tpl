@@ -223,12 +223,6 @@
 		{/if}
 	{/if}
 
-{* -------------------- item list -------------------- *}
-{elseif  $field_value.type eq 'l'}
-	{foreach key=id item=label from=$field_value.value}
-		{$label|escape}
-	{/foreach}
-
 {* -------------------- dynamic list -------------------- *}
 {elseif $field_value.type eq 'w'}
 	<script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>

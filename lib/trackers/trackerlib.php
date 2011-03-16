@@ -4914,7 +4914,7 @@ class TrackerLib extends TikiLib
 	function get_rendered_fields()
 	{
 		// FIXME : Kill this function once cleanup is completed
-		return array('t', 'e', 'A', 'i', 'a', 'f', 'r');
+		return array('t', 'e', 'A', 'i', 'a', 'f', 'r', 'l');
 	}
 
 	private function parse_comment($data) {
@@ -5436,8 +5436,8 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 				);
 				if (count($data['links']) == 1) {
 					foreach($data['links'] as $linkItemId => $linkValue) {
-						if (is_numeric($data['links'][$linkItemId])) { //if later a computed field use this field
-							$info[$current_field_fields['fieldId']] = $linkValue;
+						if (is_numeric($data['links'][$linkItemId])) { // if later a computed field use this field
+							$info[$this->getConfiguration('fieldId')] = $linkValue;
 						}
 					}
 				}
@@ -5459,6 +5459,12 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 				: $this->getValue(),
 		);
 	}
+	
+	function renderInput()
+	{
+		return $this->renderInputTemplate('trackerinput/itemslist.tpl');
+	}
+
 }
 
 

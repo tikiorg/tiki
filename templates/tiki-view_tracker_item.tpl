@@ -378,27 +378,6 @@
 											{$cur_field.value}
 										{/if}
 
-									{elseif $cur_field.type eq 'l'}
-										{foreach key=tid item=tlabel from=$cur_field.links}
-											<div style="clear:both">
-												<div style="float:right;text-align:right">
-													<a href="tiki-view_tracker_item.php?trackerId={$cur_field.trackerId}&amp;itemId={$tid}" class="link" title="{tr}View Item{/tr}">{icon _id='magnifier' alt="{tr}View Item{/tr}"}</a>
-												</div>
-												<a href="tiki-view_tracker_item.php?trackerId={$cur_field.trackerId}&amp;itemId={$tid}" class="link" title="{tr}View Item{/tr}">{if $tlabel}{$tlabel}{else}&nbsp;{/if}</a></div>
-										{/foreach}
-										{if $tiki_p_create_tracker_items eq 'y' and !(count($cur_field.links) >= 1 and $cur_field.tracker_options.oneUserItem eq 'y')}
-											<div style="clear:both;text-align:right;">
-												<a href="tiki-view_tracker.php?trackerId={$cur_field.options_array[0]}&amp;vals%5B{$cur_field.options_array[1]}%5D=
-												{assign var="fieldopts" value="|"|explode:$cur_field.options_array[2]}
-												{section name=ox loop=$ins_fields}
-													{if $ins_fields[ox].fieldId eq $fieldopts[0]}
-														{$ins_fields[ox].value}
-													{/if}
-												{/section}
-												">{tr}Insert New Item{/tr}
-											</div>
-										{/if}
-
 									{elseif $cur_field.type eq 't'}
 										{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
 
