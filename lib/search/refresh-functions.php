@@ -295,10 +295,12 @@ function insert_index(&$words, $location, $page) {
 	$query = 'delete from `tiki_searchindex` where `location`=? and `page`=?';
 	$tikilib->query($query, array($location,$page), -1, -1, false);
 
-	foreach ( $words as $key => $value ) {
-		if ( strlen($key) >= $prefs['search_min_wordlength'] ) {
-			$query = 'insert into `tiki_searchindex` (`location`,`page`,`searchword`,`count`,`last_update`) values(?,?,?,?,?)';
-			$tikilib->query($query, array($location,$page,$key,(int)$value,$tikilib->now), -1, -1, false);
+	if (is_array($words)) {
+		foreach ( $words as $key => $value ) {
+			if ( strlen($key) >= $prefs['search_min_wordlength'] ) {
+				$query = 'insert into `tiki_searchindex` (`location`,`page`,`searchword`,`count`,`last_update`) values(?,?,?,?,?)';
+				$tikilib->query($query, array($location,$page,$key,(int)$value,$tikilib->now), -1, -1, false);
+			}
 		}
 	}
 }
