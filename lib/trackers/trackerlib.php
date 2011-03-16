@@ -1789,8 +1789,7 @@ class TrackerLib extends TikiLib
 							file_put_contents($file_name, $array['value']);
 							chmod($file_name, 0644); // seems necessary on some system (see move_uploaded_file doc on php.net
 
-							$ins_fields['data'][$i]['value'] = $file_name;
-
+							$array['value'] = $ins_fields['data'][$i]['value'] = $file_name;
 							if(file_exists($old_file) && $old_file != $file_name) {
 								unlink($old_file);
 							}
