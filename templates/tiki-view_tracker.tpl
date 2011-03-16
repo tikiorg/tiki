@@ -370,10 +370,6 @@ $("#newItemForm").validate({
 {elseif $field_value.type eq 'j'}
 {include file='tracker_item_field_input.tpl'}
 
-{* -------------------- item link -------------------- *}
-{elseif $field_value.type eq 'r'}
-{include file='tracker_item_field_input.tpl'}
-
 {* -------------------- dynamic list -------------------- *}
 {elseif $field_value.type eq 'w'}
 {include file='tracker_item_field_input.tpl'}

@@ -4914,7 +4914,7 @@ class TrackerLib extends TikiLib
 	function get_rendered_fields()
 	{
 		// FIXME : Kill this function once cleanup is completed
-		return array('t', 'e', 'A', 'i', 'a', 'f');
+		return array('t', 'e', 'A', 'i', 'a', 'f', 'r');
 	}
 
 	private function parse_comment($data) {
@@ -5215,6 +5215,11 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 	function getDisplayValues(array $requestData = array())
 	{
 		return $this->getData($requestData, $this->getFilterId());
+	}
+
+	function renderInput()
+	{
+		return $this->renderInputTemplate('trackerinput/itemlink.tpl');
 	}
 
 	private function getData($requestData, $string_id)
