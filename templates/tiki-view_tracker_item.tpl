@@ -431,10 +431,6 @@
 											{/if}
 										{/if}
 
-										{* --------------------- date ------------------------ *}
-									{elseif $cur_field.type eq 'f'}
-										{include file='tracker_item_field_input.tpl' field_value=$cur_field}
-
 									{elseif $cur_field.type eq 'r'}
 										{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
 

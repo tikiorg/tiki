@@ -4914,7 +4914,7 @@ class TrackerLib extends TikiLib
 	function get_rendered_fields()
 	{
 		// FIXME : Kill this function once cleanup is completed
-		return array('t', 'e', 'A', 'i', 'a');
+		return array('t', 'e', 'A', 'i', 'a', 'f');
 	}
 
 	private function parse_comment($data) {
@@ -5051,6 +5051,11 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract
 	function getDisplayValues(array $requestData = array())
 	{
 		return null;
+	}
+	
+	function renderInput()
+	{
+		return $this->renderInputTemplate('trackerinput/datetime.tpl');
 	}
 }
 
