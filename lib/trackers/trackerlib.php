@@ -4935,7 +4935,7 @@ class Tracker_Field_Factory
 			case 'l':
 				return new Tracker_Field_ItemsList($field_info, $this->itemData, $this->trackerDefinition);
 			case 'm':
-				return new Tracker_Field_Email($field_info, $this->itemData, $this->trackerDefinition);
+				return new Tracker_Field_Simple($field_info, $this->itemData, $this->trackerDefinition, 'email');
 			case 'r':
 				return new Tracker_Field_ItemLink($field_info, $this->itemData, $this->trackerDefinition);
 			case 't':
@@ -5207,13 +5207,21 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract
 }
 
 /**
- * Handler class for Emails
+ * Handler class for simple fields:
  * 
- * Letter key: ~m~
- *
+ * - email key ~m~
+ * - url key ~L~
  */
-class Tracker_Field_Email extends Tracker_Field_Abstract
+class Tracker_Field_Simple extends Tracker_Field_Abstract
 {
+	private $type;
+	
+	function __construct($fieldInfo, $itemData, $trackerDefinition, $type)
+	{
+		$this->type = $type;
+		parent::__construct($fieldInfo, $itemData, $trackerDefinition);
+	}
+	
 	function getInsertValues(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();
@@ -5238,9 +5246,10 @@ class Tracker_Field_Email extends Tracker_Field_Abstract
 	
 	function renderInput()
 	{
-		return $this->renderInputTemplate('trackerinput/email.tpl');
+		return $this->renderInputTemplate("trackerinput/{$this->type}.tpl");
 	}
 }
+
 
 /**
  * Handler class for DateTime
