@@ -686,7 +686,7 @@ function wikiplugin_tracker($data, $params)
 				}
 				$ins_categs = array();
 				$categorized_fields = array();
-				while (list($postVar, $postVal) = each($_REQUEST)) {
+				foreach ($_REQUEST as $postVar => $postVal) {
 					if(preg_match("/^ins_cat_([0-9]+)/", $postVar, $m)) {
 						foreach ($postVal as $v) {
  	   						$ins_categs[] = $v;
