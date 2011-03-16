@@ -409,9 +409,6 @@ foreach($xfields["data"] as $i => $current_field) {
 				if ($current_field_fields['options_array'][0] == 2) {
 					$current_field_ins["value"] = $user;
 				} elseif ($current_field_fields['options_array'][0] == 1) {
-					if (isset($tracker_info["writerCanModify"]) and $tracker_info["writerCanModify"] == 'y') {
-						$tracker_info["authorfield"] = $fid;
-					}
 					if (isset($tracker_info['userCanTakeOwnership']) && $tracker_info['userCanTakeOwnership'] == 'y' && empty($current_field_ins['value'])) {
 						$current_field_ins['value'] = $user; // the user appropiate the item
 					} elseif ($tiki_p_admin_trackers != 'y') {
@@ -450,9 +447,6 @@ foreach($xfields["data"] as $i => $current_field) {
 				if ($current_field_fields['options_array'][0] == 2) {
 					$current_field_ins["value"] = $group;
 				} elseif ($current_field_fields['options_array'][0] == 1) {
-					if (isset($tracker_info["writerGroupCanModify"]) and $tracker_info["writerGroupCanModify"] == 'y') {
-						$tracker_info["authorgroupfield"] = $fid;
-					}
 					unset($current_field_ins["fieldId"]);
 				} else {
 					$current_field_ins["value"] = '';
@@ -478,12 +472,6 @@ foreach($xfields["data"] as $i => $current_field) {
 				$current_field_fields["value"] = '';
 			}
 		}
-	} elseif ($current_field["type"] == "u" and isset($current_field['options_array'][0]) and $user and $current_field['options_array'][0] == 1 and isset($tracker_info["writerCanModify"]) and $tracker_info["writerCanModify"] == 'y') {
-		// even if field is hidden need to pick up user for perm
-		$tracker_info["authorfield"] = $fid;
-	} elseif ($current_field["type"] == "g" and isset($current_field['options_array'][0]) and $group and $current_field['options_array'][0] == 1 and isset($tracker_info["writerGroupCanModify"]) and $tracker_info["writerGroupCanModify"] == 'y') {
-		// even if field hidden need to pick up the group for perm
-		$tracker_info["authorgroupfield"] = $fid;
 	}
 
 	if (! empty($current_field_ins)) {
@@ -503,8 +491,9 @@ foreach ($ins_fields['data'] as $current_field) {
 	}
 }
 
-if (isset($tracker_info["authorfield"])) {
-	$tracker_info['authorindiv'] = $trklib->get_item_value($_REQUEST["trackerId"], $_REQUEST["itemId"], $tracker_info["authorfield"]);
+$authorfield = $definition->getAuthorField();
+if ($authorfield) {
+	$tracker_info['authorindiv'] = $trklib->get_item_value($_REQUEST["trackerId"], $_REQUEST["itemId"], $authorfield);
 	if (($user && $tracker_info['authorindiv'] == $user) or ($user && $tracker_info['userCanTakeOwnership'] == 'y' && empty($tracker_info['authorindiv']))) {
 		$tiki_p_modify_tracker_items = 'y';
 		$smarty->assign("tiki_p_modify_tracker_items", "y");

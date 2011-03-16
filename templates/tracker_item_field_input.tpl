@@ -91,7 +91,6 @@
 	{elseif $field_value.options_array[0] eq 1}
 		{if empty($field_value.value)}
 			{$group|escape}
-			<input type="hidden" name="authorgroupfieldid" value="{$field_value.fieldId}" />
 		{else}
 			{$field_value.value|escape}
 		{/if}

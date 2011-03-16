@@ -1243,8 +1243,6 @@ function wikiplugin_tracker($data, $params)
 					$back.= '<input type="hidden" name="authorfieldid" value="'.$f['fieldId'].'" />';
 				} elseif ($f['type'] == 'I' and $f['options_array'][0] == '1') {
 					$back.= '<input type="hidden" name="authoripid" value="'.$f['fieldId'].'" />';
-				} elseif ($f['type'] == 'g' and $f['options_array'][0] == '1') {
-					$back.= '<input type="hidden" name="authorgroupfieldid" value="'.$f['fieldId'].'" />';
 				} elseif ($f['type'] == 'q') {
 					$back .= '<input type="hidden" name="track['.$f['fieldId'].']" />';
 				} elseif (in_array($f['fieldId'], $outf)) {

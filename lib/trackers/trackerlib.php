@@ -5022,6 +5022,18 @@ class Tracker_Definition
 		}
 	}
 
+	function getAuthorField()
+	{
+		foreach ($this->getFields() as $field) {
+			if ($field['type'] == 'u'
+				&& isset($field['options'][0]) && $field['options'][0] == 1
+				&& isset($this->trackerInfo["writerCanModify"]) && $this->trackerInfo["writerCanModify"] == 'y') {
+
+				return $field['fieldId'];
+			}
+		}
+	}
+
 	function getWriterField()
 	{
 		foreach ($this->getFields() as $field) {
