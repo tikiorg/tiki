@@ -147,15 +147,6 @@
 		<span class="formunit">&nbsp;{$field_value.options_array[3]}</span>
 	{/if}
 
-{* -------------------- static text -------------------- *}
-{elseif $field_value.type eq 'S'}
-	{if $field_value.description}
-		{if $field_value.options_array[0] eq 1}
-			{wiki}{$field_value.description}{/wiki}
-		{else}
-			{$field_value.description|escape|nl2br}
-		{/if}
-	{/if}
 
 {* -------------------- drop down -------------------- *}
 {elseif $field_value.type eq 'd' or $field_value.type eq 'D'}

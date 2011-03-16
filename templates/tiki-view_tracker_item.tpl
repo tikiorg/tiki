@@ -59,7 +59,7 @@
 				{assign var=stick value="n"}
 
 				{foreach from=$ins_fields key=ix item=cur_field}
-				{if ($cur_field.isHidden ne 'y' or $tiki_p_admin_trackers eq 'y') and !($tracker_info.doNotShowEmptyField eq 'y' and empty($cur_field.value) and empty($cur_field.cat) and empty($cur_field.links) and $cur_field.type ne 'S' and $cur_field.type ne 's' and $cur_field.type ne 'h') and ($cur_field.type ne 'p' or $cur_field.options_array[0] ne 'password') and (empty($cur_field.visibleBy) or in_array($default_group, $cur_field.visibleBy) or $tiki_p_admin_trackers eq 'y')}
+				{if ($cur_field.isHidden ne 'y' or $tiki_p_admin_trackers eq 'y') and !($tracker_info.doNotShowEmptyField eq 'y' and empty($cur_field.value) and empty($cur_field.cat) and empty($cur_field.links) and $cur_field.type ne 's' and $cur_field.type ne 'h') and ($cur_field.type ne 'p' or $cur_field.options_array[0] ne 'password') and (empty($cur_field.visibleBy) or in_array($default_group, $cur_field.visibleBy) or $tiki_p_admin_trackers eq 'y')}
 					{if in_array($cur_field.type, TikiLib::lib('trk')->get_rendered_fields())}
 						<tr class="field{$cur_field.fieldId}">
 							<td class="formlabel" >
@@ -408,16 +408,6 @@
 										<input type="hidden" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" size="6" maxlength="6" />
 										{$cur_field.value|escape}
 
-										{* -------------------- static text -------------------- *}
-									{elseif $cur_field.type eq 'S'}
-										{if $cur_field.description}
-											{if $cur_field.options_array[0] eq 1}
-												{wiki}{$cur_field.description}{/wiki}
-											{else}
-												{$cur_field.description|escape|nl2br}
-											{/if}
-										{/if}
-
 									{elseif $cur_field.type eq 'w'}
 										{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
 
@@ -438,11 +428,6 @@
 										{include file='tracker_item_field_input.tpl' field_value=$cur_field}
 									{/if}
 
-									{if $cur_field.type ne 'S'}
-										{if $cur_field.description}
-											<br />{if $cur_field.descriptionIsParsed eq 'y'}{wiki}{$cur_field.description}{/wiki}{else}<em>{tr}{$cur_field.description|escape}{/tr}</em>{/if}
-										{/if}
-									{/if}
 								</td>
 								{if (($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n' or $cur_field.type eq 'b') and $cur_field.options_array[0] eq '1') and $stick ne 'y'}
 									{assign var=stick value="y"}

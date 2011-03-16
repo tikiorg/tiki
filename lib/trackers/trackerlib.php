@@ -4888,7 +4888,7 @@ class TrackerLib extends TikiLib
 	function get_rendered_fields()
 	{
 		// FIXME : Kill this function once cleanup is completed
-		return array('t', 'e', 'A', 'i', 'a', 'f', 'r', 'l', 'y', 'c', 'm', 'L');
+		return array('t', 'e', 'A', 'i', 'a', 'f', 'r', 'l', 'y', 'c', 'm', 'L', 'S');
 	}
 
 	function get_field_handler($field, $item = array())
@@ -4940,6 +4940,8 @@ class Tracker_Field_Factory
 				return new Tracker_Field_Simple($field_info, $this->itemData, $this->trackerDefinition, 'email');
 			case 'r':
 				return new Tracker_Field_ItemLink($field_info, $this->itemData, $this->trackerDefinition);
+			case 'S':
+				return new Tracker_Field_StaticText($field_info, $this->itemData, $this->trackerDefinition);
 			case 't':
 				return new Tracker_Field_Text($field_info, $this->itemData, $this->trackerDefinition);
 			case 'y':
@@ -5302,6 +5304,42 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract
 	function renderInput($context = array())
 	{
 		return $this->renderInputTemplate('trackerinput/checkbox.tpl', $context);
+	}
+}
+
+/**
+ * Handler class for Static text
+ * 
+ * Letter key: ~S~
+ *
+ */
+class Tracker_Field_StaticText extends Tracker_Field_Abstract
+{
+	function getInsertValues(array $requestData = array())
+	{
+		$ins_id = $this->getInsertId();
+
+		return array(
+			'value' => (isset($requestData[$ins_id]))
+				? $requestData[$ins_id]
+				: $this->getValue(),
+		);
+	}
+
+	function getDisplayValues(array $requestData = array())
+	{
+		$filter_id = $this->getFilterId();
+
+		return array(
+			'value' => isset($requestData[$filter_id])
+				? $requestData[$filter_id]
+				: $this->getValue(),
+		);
+	}
+	
+	function renderInput($context = array())
+	{
+		return $this->renderInputTemplate('trackerinput/statictext.tpl', $context);
 	}
 }
 
