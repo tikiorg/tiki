@@ -5019,6 +5019,26 @@ class Tracker_Definition
 			return array();
 		}
 	}
+
+	function getWriterField()
+	{
+		foreach ($this->getFields() as $field) {
+			if (in_array($field['type'], array('u', 'I'))
+				&& isset($field['options'][0]) && $field['options'][0] == 1) {
+				return $field['fieldId'];
+			}
+		}
+	}
+
+	function getWriterGroupField()
+	{
+		foreach ($this->getFields() as $field) {
+			if ($field['type'] == 'g'
+				&& isset($field['options'][0]) && $field['options'][0] == 1) {
+				return $field['fieldId'];
+			}
+		}
+	}
 }
 
 interface Tracker_Field_Interface

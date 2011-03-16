@@ -183,8 +183,6 @@ $xfields = array('data' => $trackerDefinition->getFields());
 $popupFields = $trackerDefinition->getPopupFields();
 $smarty->assign_by_ref('popupFields', $popupFields);
 
-$writerfield = '';
-$writergroupfield = '';
 $mainfield = '';
 $orderkey = false;
 $listfields = array();
@@ -280,9 +278,7 @@ foreach ($xfields['data'] as $i => $current_field) {
 					$current_field_ins["value"] = '';
 				}
 			}
-			if ($current_field_fields['options_array'][0] == 1 and !$writerfield) {
-				$writerfield = $fid;
-			} elseif (isset($_REQUEST[$filter_id])) {
+			if (isset($_REQUEST[$filter_id])) {
 				$current_field_fields["value"] = $_REQUEST[$filter_id];
 			} else {
 				$current_field_fields["value"] = '';
@@ -297,9 +293,7 @@ foreach ($xfields['data'] as $i => $current_field) {
 					$current_field_ins["value"] = '';
 				}
 			}
-			if ($current_field_fields['options_array'][0] == 1 and !$writerfield) {
-				$writerfield = $fid;
-			} elseif (isset($_REQUEST[$filter_id])) {
+			if (isset($_REQUEST[$filter_id])) {
 				$current_field_fields["value"] = $_REQUEST[$filter_id];
 			} else {
 				$current_field_fields["value"] = '';
@@ -314,9 +308,7 @@ foreach ($xfields['data'] as $i => $current_field) {
 					$current_field_ins["value"] = '';
 				}
 			}
-			if ($current_field_fields['options_array'][0] == 1 and !$writergroupfield) {
-				$writergroupfield = $fid;
-			} elseif (isset($_REQUEST[$filter_id])) {
+			if (isset($_REQUEST[$filter_id])) {
 				$current_field_fields["value"] = $_REQUEST[$filter_id];
 			} else {
 				$current_field_fields["value"] = '';
@@ -519,6 +511,9 @@ if (isset($_REQUEST["initial"])) {
 	$initial = '';
 }
 $smarty->assign('initial', $initial);
+$writerfield = $definition->getWriterField();
+$writergroupfield = $definition->getWriterGroupField();
+
 if ($my and $writerfield) {
 	$filterfield = $writerfield;
 } elseif ($ours and $writergroupfield) {
