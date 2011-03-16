@@ -134,11 +134,6 @@
 	{else}
 		{$field_value.value|escape}
 	{/if}
-
-{* -------------------- email  -------------------- *}
-{elseif $field_value.type eq 'm'}
-	<input type="text" name="{$field_value.ins_id}" id="{$field_value.ins_id}" value="{$field_value.value|escape}" />
-
 {* -------------------- url  -------------------- *}
 {elseif $field_value.type eq 'L'}
 	<input type="text" name="{$field_value.ins_id}" id="{$field_value.ins_id}" value="{$field_value.value|escape}" />

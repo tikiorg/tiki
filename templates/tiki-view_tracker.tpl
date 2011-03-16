@@ -346,10 +346,6 @@ $("#newItemForm").validate({
 {elseif $field_value.type eq 'S'}
 {include file='tracker_item_field_input.tpl'}
 
-{* -------------------- email -------------------- *}
-{elseif $field_value.type eq 'm'}
-{include file='tracker_item_field_input.tpl'}
-
 {* -------------------- url -------------------- *}
 {elseif $field_value.type eq 'L'}
 {include file='tracker_item_field_input.tpl'}

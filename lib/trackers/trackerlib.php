@@ -4889,7 +4889,7 @@ class TrackerLib extends TikiLib
 	function get_rendered_fields()
 	{
 		// FIXME : Kill this function once cleanup is completed
-		return array('t', 'e', 'A', 'i', 'a', 'f', 'r', 'l', 'y', 'c');
+		return array('t', 'e', 'A', 'i', 'a', 'f', 'r', 'l', 'y', 'c', 'm');
 	}
 
 	function get_field_handler($field, $item = array())
@@ -4935,6 +4935,8 @@ class Tracker_Field_Factory
 				return new Tracker_Field_Image($field_info, $this->itemData, $this->trackerDefinition);
 			case 'l':
 				return new Tracker_Field_ItemsList($field_info, $this->itemData, $this->trackerDefinition);
+			case 'm':
+				return new Tracker_Field_Email($field_info, $this->itemData, $this->trackerDefinition);
 			case 'r':
 				return new Tracker_Field_ItemLink($field_info, $this->itemData, $this->trackerDefinition);
 			case 't':
@@ -5202,6 +5204,42 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract
 	function renderInput()
 	{
 		return $this->renderInputTemplate('trackerinput/checkbox.tpl');
+	}
+}
+
+/**
+ * Handler class for Emails
+ * 
+ * Letter key: ~m~
+ *
+ */
+class Tracker_Field_Email extends Tracker_Field_Abstract
+{
+	function getInsertValues(array $requestData = array())
+	{
+		$ins_id = $this->getInsertId();
+
+		return array(
+			'value' => (isset($requestData[$ins_id]))
+				? $requestData[$ins_id]
+				: $this->getValue(),
+		);
+	}
+
+	function getDisplayValues(array $requestData = array())
+	{
+		$filter_id = $this->getFilterId();
+
+		return array(
+			'value' => isset($requestData[$filter_id])
+				? $requestData[$filter_id]
+				: $this->getValue(),
+		);
+	}
+	
+	function renderInput()
+	{
+		return $this->renderInputTemplate('trackerinput/email.tpl');
 	}
 }
 
