@@ -179,12 +179,10 @@ if (!isset($_REQUEST["sort_mode"])) {
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 //get field settings (no values)
 $xfields = array('data' => $trackerDefinition->getFields());
-if (!empty($tracker_info['showPopup'])) {
-	$popupFields = explode(',', $tracker_info['showPopup']);
-	$smarty->assign_by_ref('popupFields', $popupFields);
-} else {
-	$popupFields = array();
-}
+
+$popupFields = $trackerDefinition->getPopupFields();
+$smarty->assign_by_ref('popupFields', $popupFields);
+
 $writerfield = '';
 $writergroupfield = '';
 $mainfield = '';

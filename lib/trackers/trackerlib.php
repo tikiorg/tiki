@@ -5001,6 +5001,24 @@ class Tracker_Definition
 
 		return $this->fields = $fields['data'];
 	}
+
+	function getField($id)
+	{
+		foreach ($this->getFields() as $f) {
+			if ($f['fieldId'] == $id) {
+				return $f;
+			}
+		}
+	}
+
+	function getPopupFields()
+	{
+		if (!empty($this->trackerInfo['showPopup'])) {
+			return explode(',', $this->trackerInfo['showPopup']);
+		} else {
+			return array();
+		}
+	}
 }
 
 interface Tracker_Field_Interface
@@ -5009,9 +5027,9 @@ interface Tracker_Field_Interface
 
 	function getDisplayValues(array $requestData = array());
 
-	function renderInput();
+	function renderInput($context = array());
 
-	function renderValue();
+	function renderValue($context = array());
 }
 
 abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
@@ -5027,14 +5045,14 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		$this->trackerDefinition = $trackerDefinition;
 	}
 
-	public function renderInput()
+	public function renderInput($context = array())
 	{
 		return 'Not implemented';
 	}
 
-	public function renderValue()
+	public function renderValue($context = array())
 	{
-		if ($this->isLink()) {
+		if ($this->isLink($context)) {
 			$itemId = $this->getItemId();
 			$query = array_merge($_GET, array(
 				'itemId' => $itemId,
@@ -5054,31 +5072,40 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 				$arguments['data-geo-lon'] = $geolocation['lon'];
 			}
 
-			// TODO : Handle the pop-up
-			// {if $showpopup eq 'y'} {popup text=$smarty.capture.popup|escape:"javascript"|escape:"html" fullhtml="1" hauto=true vauto=true sticky=$stickypopup}{/if}
-
 			$pre = '<a';
 			foreach ($arguments as $key => $value) {
 				$pre .= ' ' . $key . '="' . htmlentities($value, ENT_QUOTES, 'UTF-8') . '"';
 			}
+
+			if (isset($context['showpopup']) && $context['showpopup'] == 'y') {
+				$popup = $this->renderPopup();
+
+				if ($popup) {
+					$pre .= " $popup";
+				}
+			}
+
 			$pre .= '>';
 			$post = '</a>';
 
-			return $pre . $this->getInnerValue() . $post;
+			return $pre . $this->getInnerValue($context) . $post;
 		} else {
-			return $this->getInnerValue();
+			return $this->getInnerValue($context);
 		}
 	}
 
-	private function isLink()
+	private function isLink($context = array())
 	{
 		$type = $this->getConfiguration('type');
 		if ($type == 'x' || $type == 'G') {
 			return false;
 		}
 		
-		// TODO : global $showlinks not handled at this time (maybe)
 		if ($this->getConfiguration('showlinks', 'y') == 'n') {
+			return false;
+		}
+
+		if (isset($context['showlinks']) && $context['showlinks'] == 'n') {
 			return false;
 		}
 
@@ -5115,7 +5142,34 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		return false;
 	}
 
-	protected function getInnerValue()
+	private function renderPopup()
+	{
+		$fields = $this->trackerDefinition->getPopupFields();
+
+		if (empty($fields)) {
+			return null;
+		}
+
+		$factory = new Tracker_Field_Factory($this->trackerDefinition, $this->itemData);
+
+		$popupFields = array();
+		foreach ($fields as $id) {
+			$field = $this->trackerDefinition->getField($id);
+			
+			$handler = $factory->getHandler($field);
+
+			if ($handler) {
+				$field = array_merge($field, $handler->getInsertValues());
+				$popupFields[] = $field;
+			}
+		}
+
+		$smarty = TikiLib::lib('smarty');
+		$smarty->assign('popupFields', $popupFields);
+		return trim($smarty->fetch('trackervalue/popup.tpl'));
+	}
+
+	protected function getInnerValue($context = array())
 	{
 		return $this->getConfiguration('value');
 	}
@@ -5163,10 +5217,11 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 			$default;
 	}
 
-	protected function renderInputTemplate($file)
+	protected function renderInputTemplate($file, $context = array())
 	{
 		$smarty = TikiLib::lib('smarty');
 		$smarty->assign('field_value', $this->definition);
+		$smarty->assign('context', $context);
 
 		return $smarty->fetch($file);
 	}
@@ -5202,9 +5257,9 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract
 		);
 	}
 	
-	function renderInput()
+	function renderInput($context = array())
 	{
-		return $this->renderInputTemplate('trackerinput/checkbox.tpl');
+		return $this->renderInputTemplate('trackerinput/checkbox.tpl', $context);
 	}
 }
 
@@ -5246,9 +5301,9 @@ class Tracker_Field_Simple extends Tracker_Field_Abstract
 		);
 	}
 	
-	function renderInput()
+	function renderInput($context = array())
 	{
-		return $this->renderInputTemplate("trackerinput/{$this->type}.tpl");
+		return $this->renderInputTemplate("trackerinput/{$this->type}.tpl", $context);
 	}
 }
 
@@ -5281,9 +5336,9 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract
 		return null;
 	}
 	
-	function renderInput()
+	function renderInput($context = array())
 	{
-		return $this->renderInputTemplate('trackerinput/datetime.tpl');
+		return $this->renderInputTemplate('trackerinput/datetime.tpl', $context);
 	}
 }
 
@@ -5322,9 +5377,9 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract
 		);
 	}
 	
-	function renderInput()
+	function renderInput($context = array())
 	{
-		return $this->renderInputTemplate('trackerinput/countryselector.tpl');
+		return $this->renderInputTemplate('trackerinput/countryselector.tpl', $context);
 	}
 }
 
@@ -5350,9 +5405,9 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
 		return $data;
 	}
 
-	function renderInput()
+	function renderInput($context = array())
 	{
-		return $this->renderInputTemplate('trackerinput/text.tpl');
+		return $this->renderInputTemplate('trackerinput/text.tpl', $context);
 	}
 
 	protected function processMultilingual($requestData, $id_string) {
@@ -5419,9 +5474,9 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		return $data;
 	}
 
-	function renderInput()
+	function renderInput($context = array())
 	{
-		return $this->renderInputTemplate('trackerinput/textarea.tpl');
+		return $this->renderInputTemplate('trackerinput/textarea.tpl', $context);
 	}
 }
 
@@ -5450,9 +5505,9 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 		return $this->getLinkData($requestData, $this->getFilterId());
 	}
 
-	function renderInput()
+	function renderInput($context = array())
 	{
-		return $this->renderInputTemplate('trackerinput/itemlink.tpl');
+		return $this->renderInputTemplate('trackerinput/itemlink.tpl', array());
 	}
 
 	private function getLinkData($requestData, $string_id)
@@ -5543,9 +5598,9 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 		);
 	}
 
-	function renderInput()
+	function renderInput($context = array())
 	{
-		return $this->renderInputTemplate('trackerinput/category.tpl');
+		return $this->renderInputTemplate('trackerinput/category.tpl', $context);
 	}
 
 	private function getIds($categories)
@@ -5601,9 +5656,9 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 		);
 	}
 	
-	function renderInput()
+	function renderInput($context = array())
 	{
-		return $this->renderInputTemplate('trackerinput/file.tpl');
+		return $this->renderInputTemplate('trackerinput/file.tpl', $context);
 	}
 }
 
@@ -5693,9 +5748,9 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 		);
 	}
 	
-	function renderInput()
+	function renderInput($context = array())
 	{
-		return $this->renderInputTemplate('trackerinput/itemslist.tpl');
+		return $this->renderInputTemplate('trackerinput/itemslist.tpl', $context);
 	}
 
 }

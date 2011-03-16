@@ -20,7 +20,11 @@ function smarty_function_trackervalue( $params, $smarty ) {
 	$handler = $trklib->get_field_handler($field, $item);
 
 	if ($handler) {
-		return $handler->renderValue();
+		$context = $params;
+		unset($context['item']);
+		unset($context['field']);
+
+		return $handler->renderValue($context);
 	}
 }
 
