@@ -4914,7 +4914,7 @@ class TrackerLib extends TikiLib
 	function get_rendered_fields()
 	{
 		// FIXME : Kill this function once cleanup is completed
-		return array('t', 'e', 'A', 'i', 'a', 'f', 'r', 'l', 'y');
+		return array('t', 'e', 'A', 'i', 'a', 'f', 'r', 'l', 'y', 'c');
 	}
 
 	private function parse_comment($data) {
@@ -5117,6 +5117,11 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract
 				? $requestData[$filter_id]
 				: $this->getValue(),
 		);
+	}
+	
+	function renderInput()
+	{
+		return $this->renderInputTemplate('trackerinput/checkbox.tpl');
 	}
 }
 

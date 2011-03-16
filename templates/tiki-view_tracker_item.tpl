@@ -427,9 +427,6 @@
 									{elseif $cur_field.type eq 'd' or $cur_field.type eq 'D' or $cur_field.type eq 'R'}
 										{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
 
-									{elseif $cur_field.type eq 'c'}
-										<input type="checkbox" name="ins_{$cur_field.id}" {if $cur_field.value eq 'y'}checked="checked"{/if}/>
-
 										{* -------------------- freetags -------------------- *}
 									{elseif $cur_field.type eq 'F'}
 										{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}

@@ -362,10 +362,6 @@ $("#newItemForm").validate({
 {elseif $field_value.type eq 'R'}
 {include file='tracker_item_field_input.tpl'}
 
-{* -------------------- checkbox -------------------- *}
-{elseif $field_value.type eq 'c'}
-<input type="checkbox" name="{$field_value.ins_id}" {if $input_err}{if $field_value.value eq 'y'}checked="checked"{/if}{elseif $defaultvalues.$fid eq 'y'}checked="checked"{/if}/>
-
 {* -------------------- jscalendar ------------------- *}
 {elseif $field_value.type eq 'j'}
 {include file='tracker_item_field_input.tpl'}
