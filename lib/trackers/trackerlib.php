@@ -5249,7 +5249,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 	protected function renderInputTemplate($file, $context = array())
 	{
 		$smarty = TikiLib::lib('smarty');
-		$smarty->assign('field_value', $this->definition);
+		$smarty->assign('field', $this->definition);
 		$smarty->assign('context', $context);
 
 		return $smarty->fetch($file);

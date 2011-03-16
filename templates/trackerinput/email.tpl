@@ -1,1 +1,1 @@
-<input type="text" name="{$field_value.ins_id}" id="{$field_value.ins_id}" value="{$field_value.value|escape}" />
+<input type="text" name="{$field.ins_id}" id="{$field.ins_id}" value="{$field.value|escape}" />
