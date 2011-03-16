@@ -140,7 +140,10 @@ if (!isset($_REQUEST["trackerId"]) || !$_REQUEST["trackerId"]) {
 	$smarty->display("error.tpl");
 	die;
 }
-$xfields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
+
+$definition = Tracker_Definition::get($_REQUEST['trackerId']);
+$xfields = array('data' => $definition->getFields());
+
 if (!isset($utid) and !isset($gtid) and (!isset($_REQUEST["itemId"]) or !$_REQUEST["itemId"]) and !isset($_REQUEST["offset"])) {
 	$smarty->assign('msg', tra("No item indicated"));
 	$smarty->display("error.tpl");
@@ -312,10 +315,9 @@ $smarty->assign('item', array(
 ));
 $cat_objid = $_REQUEST['itemId'];
 $cat_type = 'trackeritem';
-$tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
-if ($t = $trklib->get_tracker_options($_REQUEST["trackerId"])) {
-	$tracker_info = array_merge($tracker_info, $t);
-}
+
+$tracker_info = $definition->getInformation();
+
 if (!isset($tracker_info["writerCanModify"]) or (isset($utid) and ($_REQUEST['trackerId'] != $utid['usersTrackerId']))) {
 	$tracker_info["writerCanModify"] = 'n';
 }
@@ -361,6 +363,9 @@ $cookietab = 1;
 $itemUser = $trklib->get_item_creator($_REQUEST['trackerId'], $_REQUEST['itemId']);
 $smarty->assign_by_ref('itemUser', $itemUser);
 $plugins_loaded = false;
+
+$fieldFactory = new Tracker_Field_Factory($definition);
+
 foreach($xfields["data"] as $i => $current_field) {
 	$fid = $current_field["fieldId"];
 
@@ -387,7 +392,7 @@ foreach($xfields["data"] as $i => $current_field) {
 		$current_field_ins = $current_field;
 		$current_field_fields = $current_field;
 
-		$handler = $trklib->get_field_handler($current_field);
+		$handler = $fieldFactory->getHandler($current_field);
 
 		if ($handler) {
 			$insert_values = $handler->getInsertValues($_REQUEST);
@@ -652,11 +657,14 @@ if ($_REQUEST["itemId"]) {
 	$last = array();
 	$lst = '';
 	$tracker_item_main_value = '';
+
+	$fieldFactory = new Tracker_Field_Factory($definition, $info);
+
 	foreach($xfields["data"] as $i => $current_field) {
 		$current_field_fields = null;
 		$current_field_ins = array();
 
-		$handler = $trklib->get_field_handler($current_field, $info);
+		$handler = $fieldFactory->getHandler($current_field);
 
 		if ($current_field['isHidden'] == 'n' or $current_field['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($current_field['type'] == 's' and $xfields[$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y') or ($current_field['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
 			$current_field_fields = $current_field;

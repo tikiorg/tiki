@@ -38,15 +38,15 @@ if (!isset($_REQUEST["trackerId"])) {
 	$smarty->display("error.tpl");
 	die;
 }
-$tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
-if (empty($tracker_info)) {
+$trackerDefinition = Tracker_Definition::get($_REQUEST['trackerId']);
+if (! $trackerDefinition) {
 	$smarty->assign('msg', tra("No tracker indicated"));
 	$smarty->display("error.tpl");
 	die;
 }
-if ($t = $trklib->get_tracker_options($_REQUEST["trackerId"])) {
-	$tracker_info = array_merge($tracker_info, $t);
-}
+
+$tracker_info = $trackerDefinition->getInformation();
+
 $tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $tracker_info);
 if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'view') {
 	$cookietab = '1';
@@ -178,7 +178,7 @@ if (!isset($_REQUEST["sort_mode"])) {
 }
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 //get field settings (no values)
-$xfields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc');
+$xfields = array('data' => $trackerDefinition->getFields());
 if (!empty($tracker_info['showPopup'])) {
 	$popupFields = explode(',', $tracker_info['showPopup']);
 	$smarty->assign_by_ref('popupFields', $popupFields);
@@ -193,6 +193,9 @@ $listfields = array();
 $usecategs = false;
 $ins_categs = array();
 $textarea_options = false;
+
+$fieldFactory = new Tracker_Field_Factory($trackerDefinition);
+
 foreach ($xfields['data'] as $i => $current_field) {
 	$current_field_list = array();
 	$current_field_ins = array();
@@ -256,7 +259,7 @@ foreach ($xfields['data'] as $i => $current_field) {
 		$current_field_ins = $current_field;
 		$current_field_fields = $current_field;
 
-		$handler = $trklib->get_field_handler($current_field);
+		$handler = $fieldFactory->getHandler($current_field);
 
 		if ($handler) {
 			$insert_values = $handler->getInsertValues($_REQUEST);

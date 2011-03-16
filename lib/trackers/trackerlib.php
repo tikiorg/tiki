@@ -4886,39 +4886,117 @@ class TrackerLib extends TikiLib
 		return $this->trackers()->fetchOne('trackerId', array('name' => $name));
 	}
 
-	function get_field_handler($field_info, $tracker_data = array()) {
-		switch ($field_info['type']) {
-		case 'A':
-			return new Tracker_Field_File($field_info, $tracker_data);
-		case 'a':
-			return new Tracker_Field_TextArea($field_info, $tracker_data);
-		case 'c':
-			return new Tracker_Field_Checkbox($field_info, $tracker_data);
-		case 'e':
-			return new Tracker_Field_Category($field_info, $tracker_data);
-		case 'f':
-			return new Tracker_Field_DateTime($field_info, $tracker_data);
-		case 'i':
-			return new Tracker_Field_Image($field_info, $tracker_data);
-		case 'l':
-			return new Tracker_Field_ItemsList($field_info, $tracker_data);
-		case 'r':
-			return new Tracker_Field_ItemLink($field_info, $tracker_data);
-		case 't':
-			return new Tracker_Field_Text($field_info, $tracker_data);
-		case 'y':
-			return new Tracker_Field_CountrySelector($field_info, $tracker_data);
-		}
-	}
-
 	function get_rendered_fields()
 	{
 		// FIXME : Kill this function once cleanup is completed
 		return array('t', 'e', 'A', 'i', 'a', 'f', 'r', 'l', 'y', 'c');
 	}
 
+	function get_field_handler($field, $item = array())
+	{
+		$trackerId = (int) $field['trackerId'];
+
+		$definition = Tracker_Definition::get($trackerId);
+
+		$factory = new Tracker_Field_Factory($definition, $item);
+
+		return $factory->getHandler($field);
+	}
+
 	private function parse_comment($data) {
 		return nl2br(htmlspecialchars($data));
+	}
+}
+
+class Tracker_Field_Factory
+{
+	private $trackerDefinition;
+	private $itemData;
+
+	function __construct($trackerDefinition, $itemData = array())
+	{
+		$this->trackerDefinition = $trackerDefinition;
+		$this->itemData = $itemData;
+	}
+
+	function getHandler($field_info) {
+		switch ($field_info['type']) {
+			case 'A':
+				return new Tracker_Field_File($field_info, $this->itemData, $this->trackerDefinition);
+			case 'a':
+				return new Tracker_Field_TextArea($field_info, $this->itemData, $this->trackerDefinition);
+			case 'c':
+				return new Tracker_Field_Checkbox($field_info, $this->itemData, $this->trackerDefinition);
+			case 'e':
+				return new Tracker_Field_Category($field_info, $this->itemData, $this->trackerDefinition);
+			case 'f':
+				return new Tracker_Field_DateTime($field_info, $this->itemData, $this->trackerDefinition);
+			case 'i':
+				return new Tracker_Field_Image($field_info, $this->itemData, $this->trackerDefinition);
+			case 'l':
+				return new Tracker_Field_ItemsList($field_info, $this->itemData, $this->trackerDefinition);
+			case 'r':
+				return new Tracker_Field_ItemLink($field_info, $this->itemData, $this->trackerDefinition);
+			case 't':
+				return new Tracker_Field_Text($field_info, $this->itemData, $this->trackerDefinition);
+			case 'y':
+				return new Tracker_Field_CountrySelector($field_info, $this->itemData, $this->trackerDefinition);
+		}
+	}
+}
+
+class Tracker_Definition
+{
+	static $definitions = array();
+
+	private $trackerInfo;
+	private $fields;
+
+	public static function get($trackerId)
+	{
+		$trackerId = (int) $trackerId;
+
+		if (isset(self::$definitions[$trackerId])) {
+			return self::$definitions[$trackerId];
+		}
+
+		$trklib = TikiLib::lib('trk');
+		$tracker_info = $trklib->get_tracker($trackerId);
+
+		$definition = false;
+
+		if ($tracker_info) {
+			if ($t = $trklib->get_tracker_options($trackerId)) {
+				$tracker_info = array_merge($tracker_info, $t);
+			}
+
+			$definition = new self($tracker_info);
+		}
+
+		return self::$definitions[$trackerId] = $definition;
+	}
+
+	private function __construct($trackerInfo)
+	{
+		$this->trackerInfo = $trackerInfo;
+	}
+
+	function getInformation()
+	{
+		return $this->trackerInfo;
+	}
+
+	function getFields()
+	{
+		if ($this->fields) {
+			return $this->fields;
+		}
+
+		$trklib = TikiLib::lib('trk');
+		$trackerId = $this->trackerInfo['trackerId'];
+		$fields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc');
+
+		return $this->fields = $fields['data'];
 	}
 }
 
@@ -4936,12 +5014,14 @@ interface Tracker_Field_Interface
 abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 {
 	private $definition;
-	private $trackerData;
+	private $itemData;
+	private $trackerDefinition;
 
-	function __construct($fieldInfo, $trackerData)
+	function __construct($fieldInfo, $itemData, $trackerDefinition)
 	{
 		$this->definition = $fieldInfo;
-		$this->trackerData = $trackerData;
+		$this->itemData = $itemData;
+		$this->trackerDefinition = $trackerDefinition;
 	}
 
 	public function renderInput()
@@ -5055,7 +5135,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 	protected function getValue($default = '', $keySuffix = '')
 	{
 		$key = $this->getConfiguration('fieldId') . $keySuffix;
-		$value = isset($this->trackerData[$key]) ? $this->trackerData[$key] : null;
+		$value = isset($this->itemData[$key]) ? $this->itemData[$key] : null;
 
 		return empty($value) ? $default : $value;
 	}
@@ -5067,7 +5147,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 
 	protected function getData($key, $default)
 	{
-		return isset($this->trackerData[$key]) ? $this->trackerData[$key] : $default;
+		return isset($this->itemData[$key]) ? $this->itemData[$key] : $default;
 	}
 
 	/**
