@@ -511,8 +511,8 @@ if (isset($_REQUEST["initial"])) {
 	$initial = '';
 }
 $smarty->assign('initial', $initial);
-$writerfield = $definition->getWriterField();
-$writergroupfield = $definition->getWriterGroupField();
+$writerfield = $trackerDefinition->getWriterField();
+$writergroupfield = $trackerDefinition->getWriterGroupField();
 
 if ($my and $writerfield) {
 	$filterfield = $writerfield;
