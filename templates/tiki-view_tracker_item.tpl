@@ -327,9 +327,6 @@
 												<br /><i>Leave empty if password is to remain unchanged</i>
 											{/if}
 										{/if}
-									{elseif $cur_field.type eq 'L'}
-										{include file='tracker_item_field_input.tpl' field_value=$cur_field}
-
 									{elseif $cur_field.type eq 'u'}
 										{if !$cur_field.options_array[0] or $tiki_p_admin_trackers eq 'y'}
 

@@ -134,10 +134,6 @@
 	{else}
 		{$field_value.value|escape}
 	{/if}
-{* -------------------- url  -------------------- *}
-{elseif $field_value.type eq 'L'}
-	<input type="text" name="{$field_value.ins_id}" id="{$field_value.ins_id}" value="{$field_value.value|escape}" />
-
 {* -------------------- numeric and currency -------------------- *}
 {elseif $field_value.type eq 'n' or $field_value.type eq 'b'}
 	{*prepend*}
