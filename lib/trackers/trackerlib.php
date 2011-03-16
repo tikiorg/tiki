@@ -4929,6 +4929,8 @@ interface Tracker_Field_Interface
 	function getDisplayValues(array $requestData = array());
 
 	function renderInput();
+
+	function renderValue();
 }
 
 abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
@@ -4947,6 +4949,94 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		return 'Not implemented';
 	}
 
+	public function renderValue()
+	{
+		if ($this->isLink()) {
+			$itemId = $this->getItemId();
+			$query = array_merge($_GET, array(
+				'itemId' => $itemId,
+				'show' => 'view',
+			));
+
+			$arguments = array(
+				'class' => 'tablename',
+				'href' => "tiki-view_tracker_item.php?" . http_build_query($query, '', '&'),
+			);
+
+			$geolocation = TikiLib::lib('geo')->get_coordinates('trackeritem', $itemId);
+
+			if ($geolocation) {
+				$arguments['class'] .= ' geolocated';
+				$arguments['data-geo-lat'] = $geolocation['lat'];
+				$arguments['data-geo-lon'] = $geolocation['lon'];
+			}
+
+			// TODO : Handle the pop-up
+			// {if $showpopup eq 'y'} {popup text=$smarty.capture.popup|escape:"javascript"|escape:"html" fullhtml="1" hauto=true vauto=true sticky=$stickypopup}{/if}
+
+			$pre = '<a';
+			foreach ($arguments as $key => $value) {
+				$pre .= ' ' . $key . '="' . htmlentities($value, ENT_QUOTES, 'UTF-8') . '"';
+			}
+			$pre .= '>';
+			$post = '</a>';
+
+			return $pre . $this->getInnerValue() . $post;
+		} else {
+			return $this->getInnerValue();
+		}
+	}
+
+	private function isLink()
+	{
+		$type = $this->getConfiguration('type');
+		if ($type == 'x' || $type == 'G') {
+			return false;
+		}
+		
+		// TODO : global $showlinks not handled at this time (maybe)
+		if ($this->getConfiguration('showlinks', 'y') == 'n') {
+			return false;
+		}
+
+		$itemId = $this->getItemId();
+
+		$perms = Perms::get('trackeritem', $itemId);
+		$status = $this->getData('status');
+
+		if ($this->getConfiguration('isMain', 'n') == 'y' 
+			&& ($perms->view_trackers 
+				|| ($perms->modify_tracker_items && $status != 'p' && $status != 'c')
+				|| ($perms->modify_tracker_items_pending && $status == 'p')
+				|| ($perms->modify_tracker_items_closed && $status == 'c')
+				|| $perms->comment_tracker_items
+				// TODO : Re-introduce conditions, required information not available at this time.
+				// or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user)
+				// or ($tracker_info.writerGroupCanModify eq 'y' and $group and $ours eq $group))
+			)) {
+
+			// TODO : Handle the URL (need to figure out where it originates)
+			/*
+				{if empty($url) and !empty($item.itemId)}
+					{assign var=urll value="tiki-view_tracker_item.php?itemId=`$item.itemId`&amp;show=view"}
+				{elseif strstr($url, 'itemId') and !empty($item.itemId)}
+					{assign var=urll value=$url|regex_replace:"/itemId=?/":"itemId=`$item.itemId`"}
+				{else}
+					{assign var=urll value=$url}
+				{/if}
+			*/
+
+			return ! empty($itemId);
+		}
+
+		return false;
+	}
+
+	protected function getInnerValue()
+	{
+		return $this->getConfiguration('value');
+	}
+
 	protected function getInsertId()
 	{
 		return 'ins_' . $this->definition['fieldId'];
@@ -4957,9 +5047,9 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		return 'filter_' . $this->definition['fieldId'];
 	}
 
-	protected function getConfiguration($key)
+	protected function getConfiguration($key, $default = false)
 	{
-		return $this->definition[$key];
+		return isset($this->definition[$key]) ? $this->definition[$key] : $default;
 	}
 
 	protected function getValue($default = '', $keySuffix = '')
@@ -4972,7 +5062,12 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 
 	protected function getItemId()
 	{
-		return isset($this->trackerData['itemId']) ? $this->trackerData['itemId'] : false;
+		return $this->getData('itemId');
+	}
+
+	protected function getData($key, $default)
+	{
+		return isset($this->trackerData[$key]) ? $this->trackerData[$key] : $default;
 	}
 
 	/**
@@ -5207,7 +5302,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 {
 	function getInsertValues(array $requestData = array())
 	{
-		$data = $this->getData($requestData, $this->getInsertId());
+		$data = $this->getLinkData($requestData, $this->getInsertId());
 
 		$value = $this->getValue();
 		if ($value && $this->getOption(2)) {
@@ -5219,7 +5314,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 
 	function getDisplayValues(array $requestData = array())
 	{
-		return $this->getData($requestData, $this->getFilterId());
+		return $this->getLinkData($requestData, $this->getFilterId());
 	}
 
 	function renderInput()
@@ -5227,7 +5322,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 		return $this->renderInputTemplate('trackerinput/itemlink.tpl');
 	}
 
-	private function getData($requestData, $string_id)
+	private function getLinkData($requestData, $string_id)
 	{
 		$data = array(
 			'value' => isset($requestData[$string_id]) ? $requestData[$string_id] : $this->getValue(),
@@ -5376,7 +5471,6 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 	{
 		return $this->renderInputTemplate('trackerinput/file.tpl');
 	}
-
 }
 
 /**

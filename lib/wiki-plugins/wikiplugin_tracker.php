@@ -1256,11 +1256,7 @@ function wikiplugin_tracker($data, $params)
 					}
 					if (!empty($tpl) || !empty($wiki)) {
 						if (!empty($outputPretty) && in_array($f['fieldId'], $outputPretty)) {
-							$smarty->assign('field_value', $f);
-							if (!empty($item)) {
-								$smarty->assign('item', $item);
-							}
-							$smarty->assign('f_'.$f['fieldId'], '<span class="outputPretty" id="track_'.$f['fieldId'].'" name="track_'.$f['fieldId'].'">'. $smarty->fetch('tracker_item_field_value.tpl'). '</span>');
+							$smarty->assign('f_'.$f['fieldId'], '<span class="outputPretty" id="track_'.$f['fieldId'].'" name="track_'.$f['fieldId'].'">'. wikiplugin_tracker_render_value($f, $item) . '</span>');
 						} else {
 							$smarty->assign('f_'.$f['fieldId'], wikiplugin_tracker_render_input($f, $item));
 						}
@@ -1395,6 +1391,23 @@ function wikiplugin_tracker_render_input($f, $item) {
 			$smarty->assign('item', $item);
 		}
 		return $smarty->fetch('tracker_item_field_input.tpl');
+	}
+}
+
+function wikiplugin_tracker_render_value($f, $item) {
+	$smarty = TikiLib::lib('smarty');
+	$trklib = TikiLib::lib('trk');
+
+	// FIXME : Else condition is only transitional
+	if (in_array($f['type'], $trklib->get_rendered_fields())) {
+		$handler = $trklib->get_field_handler($f, $item);
+		return $handler->renderValue();
+	} else {
+		$smarty->assign('field_value', $f);
+		if (!empty($item)) {
+			$smarty->assign('item', $item);
+		}
+		return $smarty->fetch('tracker_item_field_value.tpl');
 	}
 }
 

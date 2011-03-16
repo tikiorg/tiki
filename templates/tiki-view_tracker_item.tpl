@@ -59,7 +59,17 @@
 				{assign var=stick value="n"}
 
 				{foreach from=$ins_fields key=ix item=cur_field}
-					{if ($cur_field.isHidden ne 'y' or $tiki_p_admin_trackers eq 'y') and !($tracker_info.doNotShowEmptyField eq 'y' and empty($cur_field.value) and empty($cur_field.cat) and empty($cur_field.links) and $cur_field.type ne 'S' and $cur_field.type ne 's' and $cur_field.type ne 'h') and ($cur_field.type ne 'p' or $cur_field.options_array[0] ne 'password') and (empty($cur_field.visibleBy) or in_array($default_group, $cur_field.visibleBy) or $tiki_p_admin_trackers eq 'y')}
+				{if ($cur_field.isHidden ne 'y' or $tiki_p_admin_trackers eq 'y') and !($tracker_info.doNotShowEmptyField eq 'y' and empty($cur_field.value) and empty($cur_field.cat) and empty($cur_field.links) and $cur_field.type ne 'S' and $cur_field.type ne 's' and $cur_field.type ne 'h') and ($cur_field.type ne 'p' or $cur_field.options_array[0] ne 'password') and (empty($cur_field.visibleBy) or in_array($default_group, $cur_field.visibleBy) or $tiki_p_admin_trackers eq 'y')}
+					{if in_array($cur_field.type, TikiLib::lib('trk')->get_rendered_fields())}
+						<tr class="field{$cur_field.fieldId}">
+							<td class="formlabel" >
+								{$cur_field.name|escape}
+							</td>
+							<td class="formcontent">
+								{trackervalue field=$cur_field item=$item_info}
+							</td>
+						</tr>
+					{else}
 						{if $cur_field.type eq 'h'}
 							{include file='tracker_item_field_value.tpl' field_value=$cur_field list_mode=n item=$item_info inTable="formcolor"}
 						{elseif $cur_field.type ne 'x'}
@@ -96,6 +106,7 @@
 							{/if}
 						{/if}
 					{/if}
+				{/if}
 				{/foreach}
 				{trackerheader level=-1 title='' inTable='formcolor'}
 				{if $tracker_info.showCreatedView eq 'y'}
