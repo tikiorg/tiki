@@ -5461,12 +5461,12 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 			$selected = $this->getCategories();
 		}
 
-		$categories = $this->getApplicableCategories($selected);
+		$categories = $this->getApplicableCategories();
 
 		$data = array(
 			'value' => '',
 			'selected_categories' => array_intersect($selected, $this->getIds($categories)),
-			$parentId => $categories,
+			$parentId => $categories,	// TODO kil?
 			'list' => $categories,
 			'cat' => array(),
 			'categs' => array(),
@@ -5489,8 +5489,9 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 		$categories = $this->getApplicableCategories();
 
 		return array(
-			'categories' => $categories,
-			$parentId => $categories,
+			'list' => $categories,
+			'categories' => $categories,	// TODO kil?
+			$parentId => $categories,		// TODO kil?
 		);
 	}
 
