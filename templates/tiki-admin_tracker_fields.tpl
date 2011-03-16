@@ -191,16 +191,21 @@
 				<tr><td>{tr}Field is mandatory?{/tr}</td><td><input type="checkbox" name="isMandatory" {if $isMandatory eq 'y'}checked="checked"{/if} /></td></tr>
 				<tr>
 					<td>{tr}Is column visible when listing tracker items?{/tr}</td>
-					<td><input type="checkbox" name="isTblVisible" {if empty($fieldId) || $isTblVisible eq 'y'}checked="checked"{/if} /></td>
-				</tr>
-				<tr>
-					<td colspan="2">{remarksbox type="info" title="{tr}Important note{/tr}"}{tr}The first field in the tracker to have column links to edit/view item (i.e. isMain) will be what is shown as the name of the item in category and search listings{/tr}{/remarksbox}</td>
+					<td><input type="checkbox" name="isTblVisible" {if $isTblVisible eq 'y'}checked="checked"{/if} /></td>
 				</tr>
 				<tr>
 					<td>{tr}Column links to edit/view item?{/tr}</td>
-					<td><input type="checkbox" name="isMain" {if empty($fieldId) ||$isMain eq 'y'}checked="checked"{/if} /></td>
+					<td><input type="checkbox" name="isMain" {if $isMain eq 'y'}checked="checked"{/if} /></td>
 				</tr>
-				<tr id='multilabelRow'{if $type neq 'a' && $type neq 't' && $type neq 'o' && $type neq '' && $type neq 'C'} style="display:none;"{/if}>
+				<tr>
+					<td>&nbsp;</td>
+					<td>
+						{remarksbox type="info"}
+							{tr}The first field in the tracker to have column links to edit/view item (i.e. isMain) will be what is shown as the name of the item in category and search listings{/tr}
+						{/remarksbox}
+					</td>
+				</tr>
+				<tr id='multilabelRow'{if $type neq 'a' and $type neq 't' and $type neq 'o' and $type neq '' and $type neq 'C'} style="display:none;"{/if}>
 					<td>{tr}Multilingual content:{/tr}</td><td><input type="checkbox" name="isMultilingual" {if $isMultilingual eq 'y'}checked="checked"{/if} /></td>
 				</tr>
 				<tr>
@@ -209,7 +214,7 @@
 				</tr>
 				<tr>
 					<td>{tr}Field is public? (viewed in trackerlist plugin){/tr}</td>
-					<td><input type="checkbox" name="isPublic" {if empty($fieldId) || $isPublic eq 'y'}checked="checked"{/if} /></td>
+					<td><input type="checkbox" name="isPublic" {if $isPublic eq 'y'}checked="checked"{/if} /></td>
 				</tr>
 				<tr>
 					<td>{tr}Field is hidden?{/tr}</td>

@@ -60,16 +60,16 @@ if (!isset($_REQUEST['options'])) {
 if ($_REQUEST["fieldId"]) {
 	$info = $trklib->get_tracker_field($_REQUEST["fieldId"]);
 } else {
-	$info = array();
+	$info = array();	// default values
 	$info["name"] = '';
 	$info["options"] = '';
 	$info["position"] = $trklib->get_last_position($_REQUEST["trackerId"]) + 10;
 	$info["type"] = 't';
-	$info["isMain"] = 'n';
+	$info["isMain"] = 'y';
 	$info["isMultilingual"] = 'n';
-	$info["isSearchable"] = 'n';
-	$info["isTblVisible"] = 'n';
-	$info["isPublic"] = 'n';
+	$info["isSearchable"] = 'y';
+	$info["isTblVisible"] = 'y';
+	$info["isPublic"] = 'y';
 	$info["isHidden"] = 'n';
 	$info["isMandatory"] = 'n';
 	$info['description'] = '';
