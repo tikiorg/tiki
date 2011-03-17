@@ -4901,6 +4901,8 @@ class TrackerLib extends TikiLib
 			'u',
 			'q',
 			'G',
+			'd',
+			'D',
 		);
 	}
 
@@ -4967,6 +4969,10 @@ class Tracker_Field_Factory
 				return new Tracker_Field_UserSelector($field_info, $this->itemData, $this->trackerDefinition);
 			case 'y':
 				return new Tracker_Field_CountrySelector($field_info, $this->itemData, $this->trackerDefinition);
+			case 'd':
+				return new Tracker_Field_dropdown($field_info, $this->itemData, $this->trackerDefinition);
+			case 'D':
+				return new Tracker_Field_dropdown($field_info, $this->itemData, $this->trackerDefinition, 'other');
 		}
 	}
 }
@@ -5302,7 +5308,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		$key = $this->getConfiguration('fieldId') . $keySuffix;
 		$value = isset($this->itemData[$key]) ? $this->itemData[$key] : null;
 
-		return empty($value) ? $default : $value;
+		return $value === null ? $default : $value;
 	}
 
 	protected function getItemId()
@@ -5982,6 +5988,31 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract
 			return smarty_modifier_username( $value ) . '<input type="hidden" name="' . $this->getInsertId() . '">';
 		}
 
+	}
+}
+/**
+ * Handler class for dropdown
+ * 
+ * Letter key: ~d~ ~D~
+ *
+ */
+class Tracker_Field_Dropdown extends Tracker_Field_Abstract
+{
+	function getValues(array $requestData = array())
+	{
+		
+		$ins_id = $this->getInsertId();
+
+		return array(
+			'value' => (isset($requestData[$ins_id]))
+				? $requestData[$ins_id]
+				: $this->getValue(),
+		);
+	}
+	
+	function renderInput($context = array())
+	{
+		return $this->renderInputTemplate('trackerinput/dropdown.tpl', $context);
 	}
 }
 

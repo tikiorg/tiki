@@ -98,23 +98,6 @@
 	{/if}
 
 
-{* -------------------- drop down -------------------- *}
-{elseif $field_value.type eq 'd' or $field_value.type eq 'D'}
-	<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue='+escape(this.value),'{$field_value.http_request[5]}')"{/if}>
-	{assign var=otherValue value=$field_value.value}
-		{if $field_value.isMandatory ne 'y' || empty($field_value.value)}
-			<option value="">&nbsp;</option>
-		{/if}
-		{section name=jx loop=$field_value.options_array}
-			<option value="{$field_value.options_array[jx]|escape}" {if !empty($item.itemId) && ($field_value.value eq $field_value.options_array[jx] or (isset($field_value.isset) && $field_value.isset == 'n' && $field_value.defaultvalue eq $field_value.options_array[jx]))}{assign var=otherValue value=''}selected="selected"{elseif (empty($item.itemId) || !isset($field_value.value)) && $field_value.defaultvalue eq $field_value.options_array[jx]}selected="selected"{/if}>
-				{$field_value.options_array[jx]|tr_if}
-			</option>
-		{/section}
-	</select>
-	{if $field_value.type eq 'D'}
-	<br /><label for="other_{$field_value.ins_id}">{tr}Other:{/tr}</label> <input type="text" name="other_{$field_value.ins_id}" value="{$otherValue|escape}" id="other_{$field_value.ins_id}" />
-	{/if}
-
 {* -------------------- radio buttons -------------------- *}
 {elseif $field_value.type eq 'R'}
 	{section name=jx loop=$field_value.options_array}
