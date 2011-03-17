@@ -200,11 +200,18 @@ $headerlib->add_jq_onready('
 						
 	$("#save_button a")
 		.click( function () {
+			$("#saveState").hide();
+			
 			$.sheet.saveSheet(tikiSheet, function() {
 				$.sheet.manageState(tikiSheet, true, "");
 			});
 			
 			return false;
+		});
+	
+	$("#cancel_button")
+		.click(function() {
+			$("#saveState").hide();
 		});
 ');
 

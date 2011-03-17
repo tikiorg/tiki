@@ -50,3 +50,5 @@ function wikiplugin_html($data, $params) {
 
 	return '~np~' . $html . '~/np~';
 }
+
+tiki_syntax_highlighter_html();
