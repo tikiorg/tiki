@@ -490,8 +490,6 @@ setTimeout(function(){$("#treetable_1_filter").keypress();}, 500);';
 $headerlib->add_jq_onready($js);
 
 ask_ticket('object-perms');
-setcookie('tab', $cookietab);
-$smarty->assign('cookietab', $cookietab);
 
 // setup smarty remarks flags
 
