@@ -346,7 +346,7 @@ class TikiLdapLib
 		$this->get_user_attributes($force_reload);
 
 		// ensure we have a connection to the ldap server
-		if (!$this->bind()) {
+		if ($this->bind() != 'LDAP_SUCCESS') {
 			$this->add_log('ldap', 'Reuse of ldap connection failed: ' . $this->ldaplink->getMessage() . ' at line ' . __LINE__ . ' in ' . __FILE__);
 			return false;
 		}
