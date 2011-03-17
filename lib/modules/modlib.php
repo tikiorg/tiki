@@ -496,11 +496,16 @@ class ModLib extends TikiLib
 			$moduleName = $module;
 		}
 
+		global $prefs;
+
 		$cachelib = TikiLib::lib('cache');
-		$cacheKey = 'module.' . $moduleName;
+		$cacheKey = 'module.' . $moduleName . $prefs['language'];
 		$info = $cachelib->getSerialized($cacheKey, 'module');
 
 		if ($info) {
+			if (! isset($info['cachekeygen'])) {
+				$info['cachekeygen'] = array( $this, 'createDefaultCacheKey' );
+			}
 			return $info;
 		}
 
@@ -527,10 +532,8 @@ class ModLib extends TikiLib
 			'name' => $moduleName,
 			'description' => tra('Description not available'),
 			'type' => 'include',
-			'cachekeygen' => array( $this, 'createDefaultCacheKey' ),
 			'prefs' => array(),
 			'params' => array(),
-			'common_params' => array()
 		);
 
 		$info = array_merge( $defaults, $info );
@@ -644,9 +647,11 @@ class ModLib extends TikiLib
 			)
 		);
 
-		if ($info['type'] == 'function')
-			foreach($info['common_params'] as $common_param)
-				$info['params'][$common_param] = $common_params[$common_param];
+		if ($info['type'] == 'function') {
+			foreach($common_params as $key => $common_param) {
+				$info['params'][$key] = $common_param;
+			}
+		}
 
 		// Parameters are not required, unless specified.
 		if (!empty($info['params'])) {
@@ -656,6 +661,10 @@ class ModLib extends TikiLib
 		}
 
 		$cachelib->cacheItem($cacheKey, serialize($info), 'module');
+
+		if (! isset($info['cachekeygen'])) {
+			$info['cachekeygen'] = array( $this, 'createDefaultCacheKey' );
+		}
 
 		return $info;
 	}
@@ -698,6 +707,11 @@ class ModLib extends TikiLib
 				}
 			} elseif( $info['type'] == 'function' ) {
 				$function = 'module_' . $mod_reference['name'];
+				$phpfuncfile = 'modules/mod-func-' . $mod_reference['name'] . '.php';
+
+				if (file_exists($phpfuncfile)) {
+					include_once $phpfuncfile;
+				}
 
 				if( function_exists( $function ) ) {
 					$function( $mod_reference, $module_params );
