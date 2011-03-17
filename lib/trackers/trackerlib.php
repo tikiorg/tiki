@@ -5079,9 +5079,7 @@ class Tracker_Definition
 
 interface Tracker_Field_Interface
 {
-	function getInsertValues(array $requestData = array());
-
-	function getDisplayValues(array $requestData = array());
+	function getValues(array $requestData = array());
 
 	function renderInput($context = array());
 
@@ -5215,7 +5213,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 			$handler = $factory->getHandler($field);
 
 			if ($handler) {
-				$field = array_merge($field, $handler->getInsertValues());
+				$field = array_merge($field, $handler->getValues());
 				$popupFields[] = $field;
 			}
 		}
@@ -5291,7 +5289,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
  */
 class Tracker_Field_Checkbox extends Tracker_Field_Abstract
 {
-	function getInsertValues(array $requestData = array())
+	function getValues(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();
 
@@ -5302,17 +5300,6 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract
 		);
 	}
 
-	function getDisplayValues(array $requestData = array())
-	{
-		$filter_id = $this->getFilterId();
-
-		return array(
-			'value' => isset($requestData[$filter_id])
-				? $requestData[$filter_id]
-				: $this->getValue(),
-		);
-	}
-	
 	function renderInput($context = array())
 	{
 		return $this->renderInputTemplate('trackerinput/checkbox.tpl', $context);
@@ -5327,24 +5314,13 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract
  */
 class Tracker_Field_StaticText extends Tracker_Field_Abstract
 {
-	function getInsertValues(array $requestData = array())
+	function getValues(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();
 
 		return array(
 			'value' => (isset($requestData[$ins_id]))
 				? $requestData[$ins_id]
-				: $this->getValue(),
-		);
-	}
-
-	function getDisplayValues(array $requestData = array())
-	{
-		$filter_id = $this->getFilterId();
-
-		return array(
-			'value' => isset($requestData[$filter_id])
-				? $requestData[$filter_id]
 				: $this->getValue(),
 		);
 	}
@@ -5371,24 +5347,13 @@ class Tracker_Field_Simple extends Tracker_Field_Abstract
 		parent::__construct($fieldInfo, $itemData, $trackerDefinition);
 	}
 	
-	function getInsertValues(array $requestData = array())
+	function getValues(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();
 
 		return array(
 			'value' => (isset($requestData[$ins_id]))
 				? $requestData[$ins_id]
-				: $this->getValue(),
-		);
-	}
-
-	function getDisplayValues(array $requestData = array())
-	{
-		$filter_id = $this->getFilterId();
-
-		return array(
-			'value' => isset($requestData[$filter_id])
-				? $requestData[$filter_id]
 				: $this->getValue(),
 		);
 	}
@@ -5408,7 +5373,7 @@ class Tracker_Field_Simple extends Tracker_Field_Abstract
  */
 class Tracker_Field_DateTime extends Tracker_Field_Abstract
 {
-	function getInsertValues(array $requestData = array())
+	function getValues(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();
 
@@ -5421,11 +5386,6 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract
 		}
 
 		return $data;
-	}
-
-	function getDisplayValues(array $requestData = array())
-	{
-		return null;
 	}
 	
 	function renderInput($context = array())
@@ -5442,7 +5402,7 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract
  */
 class Tracker_Field_CountrySelector extends Tracker_Field_Abstract
 {
-	function getInsertValues(array $requestData = array())
+	function getValues(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();
 
@@ -5451,22 +5411,10 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract
 				? $requestData[$ins_id]
 				: $this->getValue(),
 			'flags' => TikiLib::lib('trk')->get_flags(true, true, ($this->getOption(1) != 1)),
+			'defaultvalue' => 'None',
 		);
 		
 		return $data;
-	}
-
-	function getDisplayValues(array $requestData = array())
-	{
-		$filter_id = $this->getFilterId();
-
-		return array(
-			'value' => isset($requestData[$filter_id])
-				? $requestData[$filter_id]
-				: $this->getValue(),
-			'flags' => TikiLib::lib('trk')->get_flags(true, true, ($this->getOption(1) != 1)),
-			'defaultvalue' => 'None',
-		);
 	}
 	
 	function renderInput($context = array())
@@ -5483,16 +5431,9 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract
  */
 class Tracker_Field_Text extends Tracker_Field_Abstract
 {
-	function getInsertValues(array $requestData = array())
+	function getValues(array $requestData = array())
 	{
 		$data = $this->processMultilingual($requestData, $this->getInsertId());
-
-		return $data;
-	}
-
-	function getDisplayValues(array $requestData = array())
-	{		
-		$data = $this->processMultilingual($requestData, $this->getFilterId());
 
 		return $data;
 	}
@@ -5552,16 +5493,9 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
  */
 class Tracker_Field_TextArea extends Tracker_Field_Text
 {
-	function getInsertValues(array $requestData = array())
+	function getValues(array $requestData = array())
 	{
 		$data = $this->processMultilingual($requestData, $this->getInsertId());
-
-		return $data;
-	}
-
-	function getDisplayValues(array $requestData = array())
-	{
-		$data = $this->processMultilingual($requestData, $this->getFilterId());
 
 		return $data;
 	}
@@ -5580,7 +5514,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
  */
 class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 {
-	function getInsertValues(array $requestData = array())
+	function getValues(array $requestData = array())
 	{
 		$data = $this->getLinkData($requestData, $this->getInsertId());
 
@@ -5590,11 +5524,6 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 		}
 
 		return $data;
-	}
-
-	function getDisplayValues(array $requestData = array())
-	{
-		return $this->getLinkData($requestData, $this->getFilterId());
 	}
 
 	function renderInput($context = array())
@@ -5645,7 +5574,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
  */
 class Tracker_Field_Category extends Tracker_Field_Abstract
 {
-	function getInsertValues(array $requestData = array())
+	function getValues(array $requestData = array())
 	{
 		$key = 'ins_' . $this->getConfiguration('fieldId');
 		$parentId = $this->getOption(0);
@@ -5676,18 +5605,6 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 		}
 
 		return $data;
-	}
-
-	function getDisplayValues(array $requestData = array())
-	{
-		$parentId = $this->getOption(0);
-		$categories = $this->getApplicableCategories();
-
-		return array(
-			'list' => $categories,
-			'categories' => $categories,	// TODO kil?
-			$parentId => $categories,		// TODO kil?
-		);
 	}
 
 	function renderInput($context = array())
@@ -5727,11 +5644,11 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
  */
 class Tracker_Field_File extends Tracker_Field_Abstract
 {
-	function getInsertValues(array $requestData = array())
+	function getValues(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();
 
-		$data = array( 'value' => '');
+		$data = array('value' => '');
 		if (isset($_FILES[$ins_id]) && is_uploaded_file($_FILES[$ins_id]['tmp_name'])) {
 			$data['value'] = file_get_contents($_FILES[$ins_id]['tmp_name']);
 			$data['file_type'] = $_FILES[$ins_id]['type'];
@@ -5741,13 +5658,6 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 		return $data;
 	}
 
-	function getDisplayValues(array $requestData = array())
-	{
-		return array(
-			'value' => $this->getValue(),
-		);
-	}
-	
 	function renderInput($context = array())
 	{
 		return $this->renderInputTemplate('trackerinput/file.tpl', $context);
@@ -5762,7 +5672,7 @@ class Tracker_Field_File extends Tracker_Field_Abstract
  */
 class Tracker_field_Image extends Tracker_Field_File
 {
-	function getInsertValues(array $requestData = array())
+	function getValues(array $requestData = array())
 	{
 		global $prefs, $smarty;
 		
@@ -5783,8 +5693,9 @@ class Tracker_field_Image extends Tracker_Field_File
 			}
 		}
 
-		return parent::getInsertValues($requestData);
+		return parent::getValues($requestData);
 	}
+
 	function getInnerValue()
 	{
 		global $prefs;
@@ -5844,7 +5755,7 @@ class Tracker_field_Image extends Tracker_Field_File
  */
 class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 {
-	function getInsertValues(array $requestData = array())
+	function getValues(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();
 
@@ -5877,27 +5788,12 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 		
 		return $data;
 	}
-
-	function getDisplayValues(array $requestData = array())
-	{
-		$filter_id = $this->getFilterId();
-
-		return array(
-			'value' => isset($requestData[$filter_id])
-				? $requestData[$filter_id]
-				: $this->getValue(),
-		);
-	}
 	
 	function renderInput($context = array())
 	{
 		return $this->renderInputTemplate('trackerinput/itemslist.tpl', $context);
 	}
-
 }
-
-
-
 
 global $trklib;
 $trklib = new TrackerLib;

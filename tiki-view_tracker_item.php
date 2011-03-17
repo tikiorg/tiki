@@ -392,16 +392,13 @@ foreach($xfields["data"] as $i => $current_field) {
 		$handler = $fieldFactory->getHandler($current_field);
 
 		if ($handler) {
-			$insert_values = $handler->getInsertValues($_REQUEST);
-			$field_values = $handler->getDisplayValues($_REQUEST);
+			$insert_values = $handler->getValues($_REQUEST);
 
 			if ($insert_values) {
 				$current_field_ins = array_merge($current_field_ins, $insert_values);
+				$current_field_fields = array_merge($current_field_fields, $insert_values);
 			}
 
-			if ($field_values) {
-				$current_field_fields = array_merge($current_field_fields, $field_values);
-			}
 		} elseif ($current_field_fields["type"] == 'u' and isset($current_field_fields['options_array'][0]) and $user) {
 			if (isset($_REQUEST[$ins_id]) and ($current_field_fields['options_array'][0] < 1 or $tiki_p_admin_trackers == 'y')) {
 				$current_field_ins["value"] = $_REQUEST[$ins_id];
@@ -652,15 +649,11 @@ if ($_REQUEST["itemId"]) {
 			$current_field_fields = $current_field;
 
 			if ($handler) {
-				$insert_values = $handler->getInsertValues();
-				$field_values = $handler->getDisplayValues();
+				$insert_values = $handler->getValues();
 
 				if ($insert_values) {
 					$current_field_ins = array_merge($current_field_ins, $insert_values);
-				}
-
-				if ($field_values) {
-					$current_field_fields = array_merge($current_field_fields, $field_values);
+					$current_field_fields = array_merge($current_field_fields, $insert_values);
 				}
 			} else {
 
