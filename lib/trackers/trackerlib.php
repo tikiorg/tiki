@@ -6004,8 +6004,15 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract
 			require_once $smarty->_get_plugin_filepath('modifier', 'username');
 			return smarty_modifier_username( $value ) . '<input type="hidden" name="' . $this->getInsertId() . '">';
 		}
-
 	}
+
+	function getInnerValue($context = array())
+	{
+		$value = $this->getValue();
+		require_once TikiLib::lib('smarty')->_get_plugin_filepath('modifier', 'username');
+		return smarty_modifier_username( $value );
+	}
+
 }
 /**
  * Handler class for dropdown
