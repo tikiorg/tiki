@@ -6001,16 +6001,27 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract
  */
 class Tracker_Field_Dropdown extends Tracker_Field_Abstract
 {
+	private $type;
+	
+	function __construct($fieldInfo, $itemData, $trackerDefinition, $type)
+	{
+		$this->type = $type;
+		parent::__construct($fieldInfo, $itemData, $trackerDefinition);
+	}
+
 	function getValues(array $requestData = array())
 	{
 		
 		$ins_id = $this->getInsertId();
 
-		return array(
-			'value' => (isset($requestData[$ins_id]))
-				? $requestData[$ins_id]
-				: $this->getValue(),
-		);
+		if (!empty($requestData['other_'.$this->getInsertId()])) {
+			$value = $requestData['other_'.$this->getInsertId()];
+		} elseif (isset($requestData[$this->getInsertId()])) {
+			$value = $requestData[$this->getInsertId()];
+		} else {
+			$value = $this->getValue();
+		}
+		return array('value' => $value);
 	}
 	
 	function renderInput($context = array())
