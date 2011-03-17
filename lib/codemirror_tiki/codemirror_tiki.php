@@ -15,10 +15,16 @@ function tiki_syntax_highlighter_flex() {
 					changeText: '".tra("Change Highlighter")."'
 				});
 			
-			$('.plugincode').flexibleCodeMirror({
-				readOnly: true,
-				parse: ['javascript']
-			});
+			$('.codelisting')
+				.each(function() {
+					$(this).flexibleCodeMirror({
+						readOnly: true,
+						parse: ['javascript'],
+						width: $(this).width() + 'px',
+						height: $(this).parent().height() + 'px'
+					});
+				})
+				.hide();
 		");
 		
 	}
