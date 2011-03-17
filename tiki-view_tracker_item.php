@@ -402,23 +402,6 @@ foreach($xfields["data"] as $i => $current_field) {
 				$current_field_fields = array_merge($current_field_fields, $insert_values);
 			}
 
-		} elseif ($current_field_fields["type"] == 'g' and isset($current_field_fields['options_array'][0]) and $group) {
-			if (isset($_REQUEST[$ins_id])) {
-				$current_field_ins["value"] = $_REQUEST[$ins_id];
-			} else {
-				if ($current_field_fields['options_array'][0] == 2) {
-					$current_field_ins["value"] = $group;
-				} elseif ($current_field_fields['options_array'][0] == 1) {
-					unset($current_field_ins["fieldId"]);
-				} else {
-					$current_field_ins["value"] = '';
-				}
-			}
-			if (isset($_REQUEST[$filter_id])) {
-				$current_field_fields["value"] = $_REQUEST[$filter_id];
-			} else {
-				$current_field_fields["value"] = '';
-			}
 		} else {
 			if (isset($_REQUEST[$ins_id])) {
 				$current_field_ins["value"] = $_REQUEST[$ins_id];
@@ -706,11 +689,6 @@ if ($_REQUEST["itemId"]) {
 						if (!empty($infoComputed)) {
 							$current_field_ins = array_merge($infoComputed, $current_field_ins);
 						}
-					} elseif ($current_field_fields["type"] == 'g') {
-						if (isset($current_field_fields['options_array'][0]) && $current_field_fields['options_array'][0] == 2 and !$info["$fid"]) {
-							$current_field_ins["defvalue"] = $group;
-						}
-						$current_field_ins["value"] = $info["$fid"];
 					} elseif ($current_field_fields['type'] == 'usergroups' && !empty($itemUser)) {
 						$current_field_ins['value'] = array_diff($tikilib->get_user_groups($itemUser), array('Registered', 'Anonymous'));
 					} elseif ($current_field_fields['type'] == 'p' && !empty($itemUser)) {
@@ -824,8 +802,6 @@ $smarty->assign('tracker_info', $tracker_info);
 $smarty->assign_by_ref('info', $info);
 $smarty->assign_by_ref('fields', $fields["data"]);
 $smarty->assign_by_ref('ins_fields', $ins_fields["data"]);
-$users = $userlib->list_all_users();
-$smarty->assign_by_ref('users', $users);
 $groups = $userlib->list_all_groups();
 $smarty->assign_by_ref('groups', $groups);
 if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {

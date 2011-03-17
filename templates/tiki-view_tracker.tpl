@@ -254,23 +254,8 @@
 								{include file='tracker_item_field_input.tpl'}
 							{/if}
 							
-							{* -------------------- group selector -------------------- *}
-							{if $field_value.type eq 'g'}
-								{if !$field_value.options_array[0] or $tiki_p_admin_trackers eq 'y'}
-									<select name="{$field_value.ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
-										<option value="">{tr}None{/tr}</option>
-										{section name=ux loop=$groups}
-											{if ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($groups[ux], $field_value.itemChoices) )}
-												<option value="{$groups[ux]|escape}" {if $input_err and $field_value.value eq $groups[ux]} selected="selected"{/if}>{$groups[ux]}</option>
-											{/if}
-										{/section}
-									</select>
-								{else}
-									{$group}
-								{/if}
-								
 							{* -------------------- page -------------------- *}
-							{elseif $field_value.type eq 'k'}
+							{if $field_value.type eq 'k'}
 								{include file='tracker_item_field_input.tpl'}
 							
 							{* -------------------- text field / email -------------------- *}

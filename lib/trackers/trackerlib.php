@@ -4889,13 +4889,13 @@ class TrackerLib extends TikiLib
 			'A',
 			'i',
 			'a',
-			'f', 
+			'f',
 			'r',
 			'l',
 			'y',
 			'c',
 			'm',
-			'L', 
+			'L',
 			'S',
 			'I',
 			'u',
@@ -4903,6 +4903,7 @@ class TrackerLib extends TikiLib
 			'G',
 			'd',
 			'D',
+			'g',
 		);
 	}
 
@@ -4947,6 +4948,8 @@ class Tracker_Field_Factory
 				return new Tracker_Field_DateTime($field_info, $this->itemData, $this->trackerDefinition);
 			case 'G':
 				return new Tracker_Field_Location($field_info, $this->itemData, $this->trackerDefinition);
+			case 'g':
+				return new Tracker_Field_GroupSelector($field_info, $this->itemData, $this->trackerDefinition);
 			case 'i':
 				return new Tracker_Field_Image($field_info, $this->itemData, $this->trackerDefinition);
 			case 'I':
@@ -5984,7 +5987,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract
 							'editable' => 'y',
 					), $smarty);
 		} else {
-			require_once $smarty->_get_plugin_filepath('function', 'user_selector');
+			require_once $smarty->_get_plugin_filepath('modifier', 'username');
 			return smarty_modifier_username( $value ) . '<input type="hidden" name="' . $this->getInsertId() . '">';
 		}
 
@@ -6013,6 +6016,55 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract
 	function renderInput($context = array())
 	{
 		return $this->renderInputTemplate('trackerinput/dropdown.tpl', $context);
+	}
+}
+
+/**
+ * Handler class for GroupSelector
+ * 
+ * Letter key: ~g~
+ *
+ *	Options:
+ *		0: auto-assign =
+ *			0 = general
+ *			1 = creator
+ *			2 = modifier
+ *
+ */
+class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
+{
+	function getValues(array $requestData = array())
+	{
+		global $tiki_p_admin_trackers, $group;
+		
+		$ins_id = $this->getInsertId();
+
+		$data = array();
+		
+		if ( isset($requestData[$ins_id])) {
+			if ($this->getOption(0) < 1 || $tiki_p_admin_trackers === 'y') {
+				$data['value'] = $requestData[$ins_id];
+			} else {
+				if ($this->getOption(0) == 2) {
+					$data['defvalue'] = $group;
+					$data['value'] = $group;
+				} elseif ($this->getOption(0) == 1) {
+					$data['value'] = $group;
+				} else {
+					$data['value'] = '';
+				}
+			}
+		} else {
+			$data['defvalue'] = $group;
+			$data['value'] = $this->getValue();		
+		}
+		
+		return $data;
+	}
+	
+	function renderInput($context = array())
+	{
+		return $this->renderInputTemplate('trackerinput/groupselector.tpl', $context);
 	}
 }
 

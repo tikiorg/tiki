@@ -327,22 +327,6 @@
 												<br /><i>Leave empty if password is to remain unchanged</i>
 											{/if}
 										{/if}
-									{elseif $cur_field.type eq 'g'}
-										{if !$cur_field.options or $tiki_p_admin_trackers eq 'y'}
-											<select name="ins_{$cur_field.id}" {if !empty($cur_field.http_request)}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
-												{if $cur_field.isMandatory ne 'y'}
-													<option value="">{tr}None{/tr}</option>
-												{/if}
-												{section name=ux loop=$groups}
-													{if ( ! isset($cur_field.itemChoices) || $cur_field.itemChoices|@count eq 0 || in_array($groups[ux], $cur_field.itemChoices) )}
-														<option value="{$groups[ux]|escape}" {if $cur_field.value|default:$cur_field.pvalue eq $groups[ux]}selected="selected"{/if}>{$groups[ux]}</option>
-													{/if}
-												{/section}
-											</select>
-										{elseif $cur_field.options}
-											{$cur_field.value}
-										{/if}
-
 									{elseif $cur_field.type eq 't'}
 										{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
 
