@@ -5305,13 +5305,15 @@ class Tracker_Field_StaticText extends Tracker_Field_Abstract
 {
 	function getValues(array $requestData = array())
 	{
-		$ins_id = $this->getInsertId();
+		global $tikilib;
+		
+		$value = $this->getConfiguration('description');
 
-		return array(
-			'value' => (isset($requestData[$ins_id]))
-				? $requestData[$ins_id]
-				: $this->getValue(),
-		);
+		if ($this->getOption(0) == 1) {
+			$value = $tikilib->parse_data($value);
+		}
+		
+		return array('value' => $value);
 	}
 	
 	function renderInput($context = array())
