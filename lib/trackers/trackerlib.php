@@ -4883,7 +4883,25 @@ class TrackerLib extends TikiLib
 	function get_rendered_fields()
 	{
 		// FIXME : Kill this function once cleanup is completed
-		return array('t', 'e', 'A', 'i', 'a', 'f', 'r', 'l', 'y', 'c', 'm', 'L', 'S', 'I', 'u', 'q');
+		return array(
+			't',
+			'e',
+			'A',
+			'i',
+			'a',
+			'f', 
+			'r',
+			'l',
+			'y',
+			'c',
+			'm',
+			'L', 
+			'S',
+			'I',
+			'u',
+			'q',
+			'G',
+		);
 	}
 
 	function get_field_handler($field, $item = array())
@@ -4925,6 +4943,8 @@ class Tracker_Field_Factory
 				return new Tracker_Field_Category($field_info, $this->itemData, $this->trackerDefinition);
 			case 'f':
 				return new Tracker_Field_DateTime($field_info, $this->itemData, $this->trackerDefinition);
+			case 'G':
+				return new Tracker_Field_Location($field_info, $this->itemData, $this->trackerDefinition);
 			case 'i':
 				return new Tracker_Field_Image($field_info, $this->itemData, $this->trackerDefinition);
 			case 'I':
@@ -5178,7 +5198,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 	private function isLink($context = array())
 	{
 		$type = $this->getConfiguration('type');
-		if ($type == 'x' || $type == 'G') {
+		if ($type == 'x') {
 			return false;
 		}
 
@@ -5965,9 +5985,48 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract
 	}
 }
 
+class Tracker_Field_Location extends Tracker_Field_Abstract
+{
+	function getValues(array $requestData = array())
+	{
+		if (isset($requestData[$this->getInsertId()])) {
+			$value = $requestData[$this->getInsertId()];
+		} else {
+			$value = $this->getValue();
+		}
+		
+		$parts = explode(',', $value);
+		$parts = array_map('floatval', $parts);
 
+		if (count($parts) >= 2) {
+			return array(
+				'value' => implode(',', $parts),
+				'x' => $parts[0],
+				'y' => $parts[1],
+				'z' => isset($parts[2]) ? $parts[2] : 0,
+			);
+		} else {
+			return array(
+				'value' => '',
+				'x' => null,
+				'y' => null,
+				'z' => null,
+			);
+		}
+	}
 
+	function renderInput($context = array())
+	{
+		TikiLib::lib('header')->add_map();
+		return $this->renderInputTemplate('trackerinput/location.tpl', $context);
+	}
 
+	function renderOutput($context = array())
+	{
+		TikiLib::lib('header')->add_map();
+		return $this->renderInputTemplate('trackeroutput/location.tpl', $context);
+	}
+}
 
 global $trklib;
 $trklib = new TrackerLib;
