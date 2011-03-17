@@ -5072,7 +5072,7 @@ interface Tracker_Field_Interface
 
 	function renderInput($context = array());
 
-	function renderValue($context = array());
+	function renderOutput($context = array());
 }
 
 abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
@@ -5093,7 +5093,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		return 'Not implemented';
 	}
 
-	public function renderValue($context = array())
+	public function renderOutput($context = array())
 	{
 		if ($this->isLink($context)) {
 			$itemId = $this->getItemId();

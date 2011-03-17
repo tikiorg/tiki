@@ -16,7 +16,7 @@ function smarty_function_trackeroutput( $params, $smarty ) {
 
 	$field = $params['field'];
 	$item = isset($params['item']) ? $params['item'] : array();
-
+	
 	$handler = $trklib->get_field_handler($field, $item);
 
 	if ($handler) {
@@ -24,7 +24,7 @@ function smarty_function_trackeroutput( $params, $smarty ) {
 		unset($context['item']);
 		unset($context['field']);
 
-		return $handler->renderValue($context);
+		return $handler->renderOutput($context);
 	}
 }
 

@@ -1399,7 +1399,7 @@ function wikiplugin_tracker_render_value($f, $item) {
 	// FIXME : Else condition is only transitional
 	if (in_array($f['type'], $trklib->get_rendered_fields())) {
 		$handler = $trklib->get_field_handler($f, $item);
-		return $handler->renderValue();
+		return $handler->renderOutput();
 	} else {
 		$smarty->assign('field_value', $f);
 		if (!empty($item)) {
