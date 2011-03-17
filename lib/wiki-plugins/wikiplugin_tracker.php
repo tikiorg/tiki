@@ -412,7 +412,7 @@ function wikiplugin_tracker($data, $params)
 		$params['formtag'] = 'y';
 	}
 
-	$fields_prefix = ($params['formtag'] == 'n') ? 'ins_' : 'track_';
+	$fields_prefix = 'ins_';
 
 	if (isset($values)) {
 		if (!is_array($values)) {
@@ -511,10 +511,11 @@ function wikiplugin_tracker($data, $params)
 				if (!empty($autosavefields)) {
 					$outf = array_merge($outf, $autosavefields);
 				}
-			$outf = array_merge($outf, $trklib->get_field_id_from_type($trackerId, array('q', 'k', 'u', 'g', 'I', 'C', 'n', 'j', 'f'), '', false));
-				//q=auto-increment, k=page selector, u=user selector, g=group selector, I=Ip selector, C=computed, n=numeric, j=calendar, f=date
 			}
-			$flds = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $outf);
+
+			$definition = Tracker_Definition::get($trackerId);
+			$factory = new Tracker_Field_Factory($definition, isset($item_info) ? $item_info : array());
+			$flds = array('data' => $definition->getFields());
 			$bad = array();
 			$embeddedId = false;
 			$onemandatory = false;
@@ -545,14 +546,21 @@ function wikiplugin_tracker($data, $params)
 						if (preg_match('/categories\(([0-9]+)\)/', $autosavevalues[$i], $matches)) {
 							global $categlib; include_once('lib/categories/categlib.php');
 							$categs = $categlib->list_categs($matches[1]);
-							$_REQUEST["ins_cat_$f"][] = $categs[0]['categId'];
+							$_REQUEST["ins_$f"][] = $categs[0]['categId'];
 						} elseif (preg_match('/preference\((.*)\)/', $autosavevalues[$i], $matches)) {
 							$_REQUEST["$ins_id_$f"] = $prefs[$matches[1]];
 						} elseif ($ff['type'] == 'e') {
-							$_REQUEST["ins_cat_$f"][] = $autosavevalues[$i];
+							$_REQUEST["ins_$f"][] = $autosavevalues[$i];
 						} else {
 							$_REQUEST['track'][$f] = $autosavevalues[$i];
 						}
+					}
+				}
+				foreach ($flds['data'] as $k => $field) {
+					$handler = $factory->getHandler($field);
+
+					if ($handler) {
+						$ins_fields['data'][$k] = array_merge($field, $handler->getValues($_REQUEST));
 					}
 				}
 				$cpt = 0;
@@ -564,6 +572,13 @@ function wikiplugin_tracker($data, $params)
 				}
 
 				foreach ($flds['data'] as $fl) {
+					if ($factory->getHandler($fl)) {
+						continue;
+					}
+					// Types that were initially supported by the plugin
+					if (! in_array($fl['type'], array('q', 'k', 'u', 'g', 'I', 'C', 'n', 'j', 'f'))) {
+						continue;
+					}
 					// store value to display it later if form
 					// isn't fully filled.
 					if ($flds['data'][$cpt]['type'] == 's' && $flds['data'][$cpt]['name'] == 'Rating') {
@@ -615,8 +630,8 @@ function wikiplugin_tracker($data, $params)
 						}
 						$flds['data'][$i]['value'] = $trklib->in_group_value($flds['data'][$i], $itemUser);
 					}
-					if (isset($_REQUEST['ins_cat_'.$fl['fieldId']])) { // to remember if error
-						$_REQUEST['track'][$fl['fieldId']] = $_REQUEST['ins_cat_'.$fl['fieldId']];
+					if (isset($_REQUEST['ins_'.$fl['fieldId']])) { // to remember if error
+						$_REQUEST['track'][$fl['fieldId']] = $_REQUEST['ins_'.$fl['fieldId']];
 					}
 
 					if(isset($_REQUEST['track'][$fl['fieldId']])) {
@@ -663,37 +678,16 @@ function wikiplugin_tracker($data, $params)
 					}
 				}
 
-				if (isset($_FILES['track'])) {// image or attachment fields
-					foreach ($_FILES['track'] as $label=>$w) {
-						foreach ($w as $fld=>$val) {
-							if ($label == 'tmp_name' && is_uploaded_file($val)) {
-								$files[$fld]['value'] = file_get_contents($val);
-							} else {
-								$files[$fld]['file_'.$label] = $val;
-							}
-							if (!empty($itemId) && $fl['type'] == 'A') {
-								$files[$fld]['old_value'] = $trklib->get_item_value($trackerId, $itemId, $fld);
-							}
-						}
-					}
-					foreach ($files as $fld=>$file) {
-						$ins_fields['data'][] = array_merge($file, $full_fields[$fld]);
-					}
-				}
-
 				if ($embedded == 'y' && isset($_REQUEST['page'])) {
 					$ins_fields["data"][] = array('fieldId' => $embeddedId, 'value' => $_REQUEST['page']);
 				}
 				$ins_categs = array();
-				$categorized_fields = array();
-				foreach ($_REQUEST as $postVar => $postVal) {
-					if(preg_match("/^ins_cat_([0-9]+)/", $postVar, $m)) {
-						foreach ($postVal as $v) {
- 	   						$ins_categs[] = $v;
-							$categorized_fields[] = $m[1];
-						}
+				foreach ($ins_fields['data'] as $current_field) {
+					if ($current_field['type'] == 'e' && isset($current_field['selected_categories'])) {
+						$ins_categs = array_merge($ins_categs, $current_field['selected_categories']);
 					}
-		 		}
+				}
+				$categorized_fields = $definition->getCategorizedFields();
 				/* ------------------------------------- End recup all values from REQUEST -------------- */
 
 				/* ------------------------------------- Check field values for each type and presence of mandatory ones ------------------- */
@@ -844,7 +838,7 @@ function wikiplugin_tracker($data, $params)
 							$url .= "&ok=y&iTRACKER=$iTRACKER";
 							$url .= "#wikiplugin_tracker$iTRACKER";
 							header("Location: $url");
-							die;
+							exit;
 						} else {
 							return '';
 						}
@@ -865,7 +859,7 @@ function wikiplugin_tracker($data, $params)
 							}
 						}
 						header('Location: '.$url[$key]);
-						die;
+						exit;
 					}
 					/* ------------------------------------- end save the item ---------------------------------- */
 				} elseif (isset($_REQUEST['trackit']) and $_REQUEST['trackit'] == $trackerId) {
@@ -1116,7 +1110,7 @@ function wikiplugin_tracker($data, $params)
 			}
 			foreach ($flds['data'] as $i=>$f) { // collect additional infos
 				if (in_array($f['fieldId'], $outf)) {
-					$flds['data'][$i]['ins_id'] = ($f['type'] == 'e')?'ins_cat_'.$f['fieldId']: $fields_prefix.$f['fieldId'];
+					$flds['data'][$i]['ins_id'] = ($f['type'] == 'e')?'ins_'.$f['fieldId']: $fields_prefix.$f['fieldId'];
 					if (($f['isHidden'] == 'c' || $f['isHidden'] == 'p') && !empty($itemId) && !isset($item['creator'])) {
 						$item['creator'] = $trklib->get_item_creator($trackerId, $itemId);
 					}
