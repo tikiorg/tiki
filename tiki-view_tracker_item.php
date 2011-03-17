@@ -420,23 +420,6 @@ foreach($xfields["data"] as $i => $current_field) {
 			} else {
 				$current_field_fields["value"] = '';
 			}
-		} elseif ($current_field_fields["type"] == 'I' and isset($current_field_fields['options_array'][0]) and isset($IP)) {
-			if (isset($_REQUEST[$ins_id]) and ($current_field_fields['options_array'][0] < 1 or $tiki_p_admin_trackers == 'y')) {
-				$current_field_ins["value"] = $_REQUEST[$ins_id];
-			} else {
-				if ($current_field_fields['options_array'][0] == 2) {
-					$current_field_ins["value"] = $IP;
-				} elseif ($current_field_fields['options_array'][0] == 1) {
-					unset($current_field_ins['fieldId']);
-				} else {
-					$current_field_ins["value"] = '';
-				}
-			}
-			if (isset($_REQUEST[$filter_id])) {
-				$current_field_fields["value"] = $_REQUEST[$filter_id];
-			} else {
-				$current_field_fields["value"] = '';
-			}
 		} elseif ($current_field_fields["type"] == 'g' and isset($current_field_fields['options_array'][0]) and $group) {
 			if (isset($_REQUEST[$ins_id])) {
 				$current_field_ins["value"] = $_REQUEST[$ins_id];

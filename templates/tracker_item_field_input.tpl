@@ -68,15 +68,6 @@
 		{$user|username}
 	{/if}
 
-{* -------------------- IP selector -------------------- *}
-{elseif $field_value.type eq 'I'}
-	{if $field_value.options_array[0] eq 0 or $tiki_p_admin_trackers eq 'y'}
-		<input type="text" name="{$field_value.ins_id}" value="{if $field_value.value}{$field_value.value|escape}{elseif $field_value.defaultvalue}{$field_value.defaultvalue|escape}{else}{$IP|escape}{/if}" />
-	{else}
-		{if $field_value.options_array[0] eq 1 && empty($field_value.value)}<input type="hidden" name="authoripid" value="{$field_value.fieldId}" />{/if}
-		{$IP|escape}
-	{/if}
-
 {* -------------------- group selector -------------------- *}
 {elseif $field_value.type eq 'g'}
 	{if $field_value.options_array[0] eq 0 or $tiki_p_admin_trackers eq 'y'}

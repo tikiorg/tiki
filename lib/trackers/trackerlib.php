@@ -4883,7 +4883,7 @@ class TrackerLib extends TikiLib
 	function get_rendered_fields()
 	{
 		// FIXME : Kill this function once cleanup is completed
-		return array('t', 'e', 'A', 'i', 'a', 'f', 'r', 'l', 'y', 'c', 'm', 'L', 'S');
+		return array('t', 'e', 'A', 'i', 'a', 'f', 'r', 'l', 'y', 'c', 'm', 'L', 'S', 'I');
 	}
 
 	function get_field_handler($field, $item = array())
@@ -4927,6 +4927,8 @@ class Tracker_Field_Factory
 				return new Tracker_Field_DateTime($field_info, $this->itemData, $this->trackerDefinition);
 			case 'i':
 				return new Tracker_Field_Image($field_info, $this->itemData, $this->trackerDefinition);
+			case 'I':
+				return new Tracker_Field_Simple($field_info, $this->itemData, $this->trackerDefinition, 'ip');
 			case 'L':
 				return new Tracker_Field_Simple($field_info, $this->itemData, $this->trackerDefinition, 'url');
 			case 'l':
@@ -5334,6 +5336,7 @@ class Tracker_Field_StaticText extends Tracker_Field_Abstract
  * Handler class for simple fields:
  * 
  * - email key ~m~
+ * - ip key ~I~
  * - url key ~L~
  */
 class Tracker_Field_Simple extends Tracker_Field_Abstract

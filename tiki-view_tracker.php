@@ -280,21 +280,6 @@ foreach ($xfields['data'] as $i => $current_field) {
 			} else {
 				$current_field_fields["value"] = '';
 			}
-		} elseif ($current_field_fields["type"] == 'I') { // IP selection
-			if (isset($_REQUEST[$ins_id]) and $_REQUEST[$ins_id] and (!$current_field_fields['options_array'][0] or $tiki_p_admin_trackers == 'y')) {
-				$current_field_ins["value"] = $_REQUEST[$ins_id];
-			} else {
-				if ($current_field_fields['options_array'][0] == 1 and $tikilib->get_ip_address()) {
-					$current_field_ins["value"] = $tikilib->get_ip_address();
-				} else {
-					$current_field_ins["value"] = '';
-				}
-			}
-			if (isset($_REQUEST[$filter_id])) {
-				$current_field_fields["value"] = $_REQUEST[$filter_id];
-			} else {
-				$current_field_fields["value"] = '';
-			}
 		} elseif ($current_field_fields["type"] == 'g') { // group selection
 			if (isset($_REQUEST[$ins_id]) and $_REQUEST[$ins_id] and (!$current_field_fields['options_array'][0] or $tiki_p_admin_trackers == 'y')) {
 				$current_field_ins["value"] = $_REQUEST[$ins_id];

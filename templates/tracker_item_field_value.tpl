@@ -144,7 +144,7 @@
 
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *} 
 {elseif $field_value.type eq  't' or $field_value.type eq 'n' or $field_value.type eq 'b' or $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R' 
-	or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'I' or $field_value.type eq 'q' or $field_value.type eq 'w' 
+	or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'q' or $field_value.type eq 'w' 
 	or ($field_value.type eq 'C' and $field_value.computedtype ne 'f' and $field_value.computedtype ne 'duration' )}
 	{if $list_mode eq 'y'}
 		{if $field_value.type eq 'u'}

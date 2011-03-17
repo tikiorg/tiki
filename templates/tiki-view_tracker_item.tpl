@@ -362,14 +362,6 @@
 										{elseif $cur_field.options}
 											<a href="tiki-user_information.php?user={$cur_field.value|escape:"url"}" class="link">{$cur_field.value}</a>
 										{/if}
-
-									{elseif $cur_field.type eq 'I'}
-										{if !$cur_field.options or $tiki_p_admin_trackers eq 'y'}
-											<input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" />
-										{elseif $cur_field.options}
-											{$cur_field.value}
-										{/if}
-
 									{elseif $cur_field.type eq 'g'}
 										{if !$cur_field.options or $tiki_p_admin_trackers eq 'y'}
 											<select name="ins_{$cur_field.id}" {if !empty($cur_field.http_request)}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>

@@ -226,7 +226,7 @@
 					{assign var=fid value=$field_value.fieldId}
 					{* -------------------- header and others -------------------- *}
 					{if $field_value.isHidden eq 'n' or $field_value.isHidden eq 'c'  or $tiki_p_admin_trackers eq 'y'}
-						{if $field_value.type ne 'x' and $field_value.type ne 'l' and $field_value.type ne 'q' and (($field_value.type ne 'u' and $field_value.type ne 'g' and $field_value.type ne 'I') or !$field_value.options_array[0] or $tiki_p_admin_trackers eq 'y') and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y')and (empty($field_value.editableBy) or in_array($default_group, $field_value.editableBy) or $tiki_p_admin_trackers eq 'y') and ($field_value.type ne 'A' or $tiki_p_attach_trackers eq 'y') and $field_value.type ne 'N' and $field_value.type ne '*' and !($field_value.type eq 's' and $field_value.name eq 'Rating') and $field_value.type ne 'usergroups'}
+						{if $field_value.type ne 'x' and $field_value.type ne 'l' and $field_value.type ne 'q' and (($field_value.type ne 'u' and $field_value.type ne 'g') or !$field_value.options_array[0] or $tiki_p_admin_trackers eq 'y') and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y')and (empty($field_value.editableBy) or in_array($default_group, $field_value.editableBy) or $tiki_p_admin_trackers eq 'y') and ($field_value.type ne 'A' or $tiki_p_attach_trackers eq 'y') and $field_value.type ne 'N' and $field_value.type ne '*' and !($field_value.type eq 's' and $field_value.name eq 'Rating') and $field_value.type ne 'usergroups'}
 							{if $field_value.type eq 'h'}
 								{include file='tracker_item_field_value.tpl' inTable='formcolor'}
 							{else}
@@ -281,14 +281,6 @@
 									{$user}
 								{/if}
 
-							{* -------------------- IP selector -------------------- *}
-							{elseif $field_value.type eq 'I'}
-								{if !$field_value.options_array[0] or $tiki_p_admin_trackers eq 'y'}
-									<input type="text" name="{$field_value.ins_id}" value="{if $input_err}{$field_value.value}{elseif $defaultvalues.fid}{$defaultvalues.$fid|escape}{else}{$IP}{/if}" />
-								{else}
-									{$IP}
-								{/if}
-							
 							{* -------------------- group selector -------------------- *}
 							{elseif $field_value.type eq 'g'}
 								{if !$field_value.options_array[0] or $tiki_p_admin_trackers eq 'y'}
