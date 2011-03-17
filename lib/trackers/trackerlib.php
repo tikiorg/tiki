@@ -1330,9 +1330,23 @@ class TrackerLib extends TikiLib
 				$itemUser = isset($fil[$fieldId]) ? $fil[$fieldId] : '';
 			}
 		}
+
+		$definition = Tracker_Definition::get($trackerId);
+		$info = $this->get_tracker_item((int) $itemId);
+		$factory = new Tracker_Field_Factory($definition, $info);
+
 		foreach ( $listfields as $fieldId =>$fopt ) {
-			if (empty($fopt['fieldId'])) // to accept listfield as a simple table
+			if (empty($fopt['fieldId'])) { // to accept listfield as a simple table
 				$fopt['fieldId'] = $fieldId;
+			}
+
+			$handler = $factory->getHandler($fopt);
+			if ($handler) {
+				$fopt = array_merge($fopt, $handler->getValues());
+				$fields[] = $fopt;
+				continue;
+			}
+			
 			$fieldId = $fopt['fieldId'];
 			if (isset($fil[$fieldId])) {
 				$fopt['value'] = $fil[$fieldId];
@@ -1365,34 +1379,9 @@ class TrackerLib extends TikiLib
 				$fopt['value'] = '';
 			}
 			switch ( $fopt['type'] ) {
-			case 'r':
-				$fopt['links'] = array();
-				$opts = preg_split('/,/', $fopt['options']);
-				$fopt['linkId'] = $this->get_item_id($opts[0], $opts[1], $fopt['value']);
-				$fopt['trackerId'] = $opts[0];
-				break;
-			case 'a':
-				$fopt['pvalue'] = $this->parse_data(trim($fopt['value']));
-				break;
 			case 's':
 			case '*':
 				$this->update_star_field($trackerId, $itemId, $fopt);
-				break;
-			case 'e':
-				//affects plugin trackerlist and tiki-view_tracker display of category for each item
-				$categlib = TikiLib::lib('categ');
-				$itemcats = $categlib->get_object_categories('trackeritem', $itemId);
-				$all_descends = (isset($fopt['options_array'][3]) && $fopt['options_array'][3] == 1);
-				foreach ($itemcats as $itemcat) {
-					$mycats = $categlib->get_viewable_child_categories($fopt['options_array'][0], $all_descends);
-					foreach ($mycats as $acat) {
-						if ($acat['categId'] == $itemcat) {
-							$fopt['categs'][] = $acat;
-							$fopt['value'] = $itemcat;
-							break;
-						}
-					}
-				}
 				break;
 			case 'l':
 				if ( isset($fopt['options_array'][2]) && isset($fopt['options_array'][2]) && isset($fopt['options_array'][3])) {
