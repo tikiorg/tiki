@@ -66,7 +66,7 @@
 								{$cur_field.name|escape}
 							</td>
 							<td class="formcontent">
-								{trackervalue field=$cur_field item=$item_info showlinks=n}
+								{trackeroutput field=$cur_field item=$item_info showlinks=n}
 							</td>
 						</tr>
 					{else}

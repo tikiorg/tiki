@@ -5220,7 +5220,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 
 		$smarty = TikiLib::lib('smarty');
 		$smarty->assign('popupFields', $popupFields);
-		return trim($smarty->fetch('trackervalue/popup.tpl'));
+		return trim($smarty->fetch('trackeroutput/popup.tpl'));
 	}
 
 	protected function getInnerValue($context = array())

@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;         
 }  
 
-function smarty_function_trackervalue( $params, $smarty ) {
+function smarty_function_trackeroutput( $params, $smarty ) {
 	$trklib = TikiLib::lib('trk');
 
 	$field = $params['field'];

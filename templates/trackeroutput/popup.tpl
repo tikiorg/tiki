@@ -3,7 +3,7 @@
 		<table>
 			{cycle values="odd,even" print=false}
 			{foreach from=$popupFields item=field}
-				 <tr class="{cycle}"><th>{$field.name}</th><td>{trackervalue field=$field item=$item showpopup=n}</th></tr>
+				 <tr class="{cycle}"><th>{$field.name}</th><td>{trackeroutput field=$field item=$item showpopup=n}</th></tr>
 			{/foreach}
 		</table>
 	</div>
