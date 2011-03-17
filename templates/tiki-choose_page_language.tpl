@@ -5,11 +5,7 @@
 	</p>
 	<form method="post" action="tiki-editpage.php?page={$page|escape:'url'}" id='editpageform' name='editpageform'>
 		{* Repeat all arguments from the page creation request *}
-		{foreach from=$_REQUEST key=request_key item=request_val}
-			<input type="hidden" name="{$request_key}" value="{$request_val|escape}"/>
-		{/foreach}
-	
-		<input type="hidden" name="need_lang" value="n"/>
+		{query _type='form_input' _keepall='y' need_lang='n'}
 	
 		<select name="lang">
 			{section name=ix loop=$languages}
