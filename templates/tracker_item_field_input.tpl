@@ -51,29 +51,6 @@
 
 {* -------------------- user groups -------------------- *}
 {elseif $field_value.type eq 'usergroups'}
-	
-{* -------------------- preference --------------------- *}
-{elseif $field_value.type eq 'p'}
-	{if $field_value.options_array[0] eq 'password'}
-		{if ($prefs.auth_method neq 'cas' || ($prefs.cas_skip_admin eq 'y' && $user eq 'admin')) and $prefs.change_password neq 'n'}
-			<input type="password" name="{$field_value.ins_id}" />
-		{/if}
-	{elseif $field_value.options_array[0] eq 'language'}
-		<select name="{$field_value.ins_id}">
-			{section name=ix loop=$languages}
-				{if count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
-					<option value="{$languages[ix].value|escape}"
-					{if $user_prefs.language eq $languages[ix].value}selected="selected"{/if}>
-					{$languages[ix].name}
-					</option>
-				{/if}
-			{/section}
-			<option value='' {if !$user_prefs.language}selected="selected"{/if}>{tr}Site default{/tr}</option>
-		</select>
-	{else}
-			<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" />
-	{/if}
-
 {* -------------------- page selector  -------------------- *}
 {elseif $field_value.type eq 'k'}
 	{if $field_value.options[0] != 1 || $tiki_p_admin_trackers == 'y'}

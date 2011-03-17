@@ -691,12 +691,6 @@ if ($_REQUEST["itemId"]) {
 						}
 					} elseif ($current_field_fields['type'] == 'usergroups' && !empty($itemUser)) {
 						$current_field_ins['value'] = array_diff($tikilib->get_user_groups($itemUser), array('Registered', 'Anonymous'));
-					} elseif ($current_field_fields['type'] == 'p' && !empty($itemUser)) {
-						if ($current_field_fields['options_array'][0] == 'email') {
-							$current_field_ins['value'] = $userlib->get_user_email($itemUser);
-						} else {
-							$current_field_ins['value'] = $userlib->get_user_preference($itemUser, $current_field_fields['options_array'][0]);
-						}
 					} elseif ($current_field_fields['type'] == 'N' && !empty($itemUser)) {
 						$current_field_ins['value'] = $trklib->in_group_value($current_field_fields, $itemUser);
 					} elseif ($current_field_fields['type'] == 'F') {

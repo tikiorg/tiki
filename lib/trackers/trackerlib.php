@@ -5110,6 +5110,20 @@ class Tracker_Definition
 
 		return $out;
 	}
+	
+	/**
+	 * Get the name of the item user if any.
+	 * A item user is defined if a 'user selector' field
+	 * exist for this tracker and it has one user selected.
+	 * 
+	 * @param int $itemId
+	 * @return string item user name
+	 */
+	function getItemUser($itemId)
+	{
+		global $trklib;
+		return $trklib->get_item_creator($this->trackerInfo['trackerId'], $itemId);
+	}
 }
 
 interface Tracker_Field_Interface
