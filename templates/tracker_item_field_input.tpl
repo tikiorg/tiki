@@ -123,12 +123,6 @@
 	<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" />
 
 
-{* -------------------- Google Map -------------------- *}
-{elseif $field_value.type eq 'G'}
-	{$headerlib->add_map()}
-	<div class="map-container" data-target-field="{$field_value.ins_id}" style="height: 250px; width: 250px;"></div>
-	<input type="text" name="{$field_value.ins_id}" id="{$field_value.ins_id}" value="{$field_value.value}" size="60" />
-	<br />{tr}Format: x,y,zoom where x is the longitude, and y is the latitude. Zoom is between 0(view Earth) and 19.{/tr}
 {* -------------------- freetags -------------------- *}
 
 {elseif $field_value.type eq 'F'}
@@ -148,11 +142,6 @@
 	{/foreach}
 	{/if}
 
-{* -------------------- LDAP -------------------- *}
-{elseif $field_value.type eq 'P'}
-	{if $field_value.value ne ''}
-		{$field_value.value}
-	{/if}
 
 {* -------------------- Webservice -------------------- *}
 {elseif $field_value.type eq 'W'}

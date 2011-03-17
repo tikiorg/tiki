@@ -1491,34 +1491,6 @@ class TrackerLib extends TikiLib
 		// Field that need other field value
 		foreach ($fields as $index => $field) {
 			switch ($field['type']) {
-				case 'P':
-					if (count($field['options_array']) == 3) {
-						$adminlib = TikiLib::lib('admin');
-						$ldaplib = TikiLib::lib('ldap');
-
-						// Retrieve DSN
-						$info_ldap = $adminlib->get_dsn_from_name($field['options_array'][2]);
-
-						if ($info_ldap) {
-							$ldap_filter = $field['options_array'][0];
-
-							// Replace %field_name% by real value
-							preg_match('/%([^%]+)%/', $ldap_filter, $ldap_filter_field_names);
-
-							if (isset($ldap_filter_field_names[1])) {
-								foreach ($fields as $sub_field) {
-									if (strcmp($ldap_filter_field_names[1], $sub_field['name']) == 0) {
-										$ldap_filter = preg_replace('/%'. $ldap_filter_field_names[1] .'%/', $sub_field['value'], $ldap_filter);
-										break;
-									}
-								}
-							}
-
-							// Get LDAP field value
-							$fields[$index]['value'] = $ldaplib->get_field($info_ldap['dsn'], $ldap_filter, $field['options_array'][1]);
-						}
-					}
-					break;
 				case 'W':
 					if (count($fopt['options_array']) >= 2) {
 						require_once 'lib/webservicelib.php';
@@ -4918,6 +4890,14 @@ class TrackerLib extends TikiLib
 		return $factory->getHandler($field);
 	}
 
+	function get_field_value($field, $item)
+	{
+		$handler = $this->get_field_handler($field, $item);
+		$values = $handler->getValues();
+
+		return isset($values['value']) ? $values['value'] : null;
+	}
+
 	private function parse_comment($data) {
 		return nl2br(htmlspecialchars($data));
 	}
@@ -4942,6 +4922,10 @@ class Tracker_Field_Factory
 				return new Tracker_Field_TextArea($field_info, $this->itemData, $this->trackerDefinition);
 			case 'c':
 				return new Tracker_Field_Checkbox($field_info, $this->itemData, $this->trackerDefinition);
+			case 'd':
+				return new Tracker_Field_Dropdown($field_info, $this->itemData, $this->trackerDefinition);
+			case 'D':
+				return new Tracker_Field_Dropdown($field_info, $this->itemData, $this->trackerDefinition, 'other');
 			case 'e':
 				return new Tracker_Field_Category($field_info, $this->itemData, $this->trackerDefinition);
 			case 'f':
@@ -4960,6 +4944,8 @@ class Tracker_Field_Factory
 				return new Tracker_Field_ItemsList($field_info, $this->itemData, $this->trackerDefinition);
 			case 'm':
 				return new Tracker_Field_Simple($field_info, $this->itemData, $this->trackerDefinition, 'email');
+			case 'P':
+				return new Tracker_Field_Ldap($field_info, $this->itemData, $this->trackerDefinition);
 			case 'q':
 				return new Tracker_Field_AutoIncrement($field_info, $this->itemData, $this->trackerDefinition);
 			case 'r':
@@ -4972,10 +4958,6 @@ class Tracker_Field_Factory
 				return new Tracker_Field_UserSelector($field_info, $this->itemData, $this->trackerDefinition);
 			case 'y':
 				return new Tracker_Field_CountrySelector($field_info, $this->itemData, $this->trackerDefinition);
-			case 'd':
-				return new Tracker_Field_dropdown($field_info, $this->itemData, $this->trackerDefinition);
-			case 'D':
-				return new Tracker_Field_dropdown($field_info, $this->itemData, $this->trackerDefinition, 'other');
 		}
 	}
 }
@@ -5043,6 +5025,15 @@ class Tracker_Definition
 	{
 		foreach ($this->getFields() as $f) {
 			if ($f['fieldId'] == $id) {
+				return $f;
+			}
+		}
+	}
+
+	function getFieldFromName($name)
+	{
+		foreach ($this->getFields() as $f) {
+			if ($f['name'] == $name) {
 				return $f;
 			}
 		}
@@ -5351,6 +5342,11 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 	protected function getTrackerDefinition()
 	{
 		return $this->trackerDefinition;
+	}
+
+	protected function getItemData()
+	{
+		return $this->itemData;
 	}
 
 	protected function renderInputTemplate($file, $context = array())
@@ -6100,6 +6096,12 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 	}
 }
 
+/**
+ * Handler class for location/map/gmap
+ * 
+ * Letter key: ~G~
+ *
+ */
 class Tracker_Field_Location extends Tracker_Field_Abstract
 {
 	function getValues(array $requestData = array())
@@ -6140,6 +6142,53 @@ class Tracker_Field_Location extends Tracker_Field_Abstract
 	{
 		TikiLib::lib('header')->add_map();
 		return $this->renderInputTemplate('trackeroutput/location.tpl', $context);
+	}
+}
+
+/**
+ * Handler class for LDAP. Was not extensively tested after migration.
+ * 
+ * Letter key: ~P~
+ *
+ */
+class Tracker_Field_Ldap extends Tracker_Field_Abstract
+{
+	function getValues(array $requestData = array())
+	{
+		if ($this->getOption(2)) {
+			$adminlib = TikiLib::lib('admin');
+			$ldaplib = TikiLib::lib('ldap');
+
+			// Retrieve DSN
+			$info_ldap = $adminlib->get_dsn_from_name($this->getOption(2));
+
+			if ($info_ldap) {
+				$ldap_filter = $this->getOption(0);
+
+				// Replace %field_name% by real value
+				preg_match('/%([^%]+)%/', $ldap_filter, $ldap_filter_field_names);
+
+				if (isset($ldap_filter_field_names[1])) {
+					$field = $this->getTrackerDefinition()->getFieldFromName($ldap_filter_field_names[1]);
+
+					if ($field) {
+						$value = TikiLib::lib('trk')->get_field_value($field, $this->getItemData());
+
+						$ldap_filter = preg_replace('/%'. $ldap_filter_field_names[1] .'%/', $value, $ldap_filter);
+
+						// Get LDAP field value
+						return array(
+							'value' => $ldaplib->get_field($info_ldap['dsn'], $ldap_filter, $this->getOption(1)),
+						);
+					}
+				}
+			}
+		}
+	}
+
+	function renderInput($context = array())
+	{
+		return $this->getValue();
 	}
 }
 
