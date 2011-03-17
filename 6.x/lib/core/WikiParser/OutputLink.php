@@ -87,10 +87,10 @@ class WikiParser_OutputLink
 
 		$string = '<a';
 		foreach( $attributes as $attr => $val ) {
-			$string .= " $attr=\"" . htmlentities( $val, ENT_QUOTES, 'UTF-8' ) . '"';
+			$string .= " $attr=\"" . htmlentities( $val, ENT_QUOTES, 'UTF-8', false ) . '"';
 		}
 		
-		$string .= '>' . htmlentities( $text, ENT_QUOTES, 'UTF-8' ) . '</a>';
+		$string .= '>' . htmlentities( $text, ENT_QUOTES, 'UTF-8', false ) . '</a>';
 
 		return $string;
 	}
