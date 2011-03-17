@@ -24,6 +24,7 @@
 function smarty_function_user_selector($params, &$smarty) {
 	global $prefs, $user, $userlib, $headerlib, $tikilib, $tiki_p_admin;
 	require_once 'lib/userslib.php';
+	require_once $smarty->_get_plugin_filepath('modifier', 'username');
 	
 	static $iUserSelector = 0;
 	$iUserSelector++;
@@ -76,9 +77,9 @@ function smarty_function_user_selector($params, &$smarty) {
 		foreach($users as $usr) {
 			if ($params['editable'] == 'y' || $usr == $params['user']) {
 			    if (isset($params['select'])) {
-				$ret .= '<option value="' . $usr . '"' . ($usr == $params['select'] ? ' selected="selected"' : '') . ' >' . $usr .'</option>';
+					$ret .= '<option value="' . $usr . '"' . ($usr == $params['select'] ? ' selected="selected"' : '') . ' >' . smarty_modifier_username( $usr ) .'</option>';
 				} else {
-				$ret .= '<option value="' . $usr . '"' . ($usr == $params['user'] ? ' selected="selected"' : '') . ' >' . $usr .'</option>';
+					$ret .= '<option value="' . $usr . '"' . ($usr == $params['user'] ? ' selected="selected"' : '') . ' >' . smarty_modifier_username( $usr ) .'</option>';
 				}
 			}
 		}
