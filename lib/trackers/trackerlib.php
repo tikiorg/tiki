@@ -5681,8 +5681,11 @@ class Tracker_field_Image extends Tracker_Field_File
 				die;
 			}
 		}
-
-		return parent::getValues($requestData);
+		return array(
+			'value' => (isset($requestData[$ins_id]))
+				? $requestData[$ins_id]
+				: $this->getValue(),
+		);
 	}
 
 	function getInnerValue()
@@ -5733,6 +5736,10 @@ class Tracker_field_Image extends Tracker_Field_File
 		if (!empty($pre))
 			$ret = $pre.$ret.'</a>';
 		return $ret;
+	}
+	function renderInput($context = array())
+	{
+		return $this->renderInputTemplate('trackerinput/image.tpl', $context);
 	}
 }
 
