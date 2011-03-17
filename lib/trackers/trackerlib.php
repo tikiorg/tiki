@@ -1245,6 +1245,10 @@ class TrackerLib extends TikiLib
 			$res['itemUser'] = '';
 			if ($listfields !== null) {
 				$res['field_values'] = $this->get_item_fields($trackerId, $res['itemId'], $listfields, $res['itemUser']);
+
+				foreach ($res['field_values'] as $field) {
+					$res[$field['fieldId'].$field["lang"]] = $field["value"];
+				}
 			}
 			if (!empty($asort_mode)) {
 				foreach ($res['field_values'] as $i=>$field)
@@ -1339,6 +1343,8 @@ class TrackerLib extends TikiLib
 			if (empty($fopt['fieldId'])) { // to accept listfield as a simple table
 				$fopt['fieldId'] = $fieldId;
 			}
+
+			$fopt['trackerId'] = $trackerId;
 
 			$handler = $factory->getHandler($fopt);
 			if ($handler) {
@@ -5143,7 +5149,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		if ($type == 'x' || $type == 'G') {
 			return false;
 		}
-		
+
 		if ($this->getConfiguration('showlinks', 'y') == 'n') {
 			return false;
 		}
@@ -5151,6 +5157,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		if (isset($context['showlinks']) && $context['showlinks'] == 'n') {
 			return false;
 		}
+		
 
 		$itemId = $this->getItemId();
 
@@ -5179,7 +5186,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 				{/if}
 			*/
 
-			return ! empty($itemId);
+			return (bool) $this->getItemId();
 		}
 
 		return false;
@@ -5209,6 +5216,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 
 		$smarty = TikiLib::lib('smarty');
 		$smarty->assign('popupFields', $popupFields);
+		$smarty->assign('popupItem', $this->itemData);
 		return trim($smarty->fetch('trackeroutput/popup.tpl'));
 	}
 

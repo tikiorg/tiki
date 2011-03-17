@@ -128,31 +128,11 @@
 										or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password') 
 										and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y')}
 										<td class={if $field_value.type eq 'n' or $field_value.type eq 'q' or $field_value.type eq 'b'}"numeric"{else}"auto"{/if}>
-											{if $field_value.isMain eq 'y' and ($tiki_p_view_trackers eq 'y' 
-											 or ($tiki_p_modify_tracker_items eq 'y' and $item.status ne 'p' and $item.status ne 'c')
-											 or ($tiki_p_modify_tracker_items_pending eq 'y' and $item.status eq 'p')
-											 or ($tiki_p_modify_tracker_items_closed eq 'y' and $item.status eq 'c')
-											 or $tiki_p_comment_tracker_items eq 'y'
-											 or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group))}
-												{if !empty($tracker_info.showPopup)}
-													{capture name=popup}
-														<div class="cbox">
-															<table>
-																{cycle values="odd,even" print=false}
-																{foreach from=$items[user].field_values item=f}
-																	{if in_array($f.fieldId, $popupFields)}
-																		 <tr class="{cycle}"><th>{$f.name}</th><td>{include file='tracker_item_field_value.tpl' field_value=$f}</th></tr>
-																	{/if}
-																{/foreach}
-															</table>
-														</div>
-													{/capture}
-													{assign var=showpopup value='y'}
-												{else}
-													{assign var=showpopup value='n'}
-												{/if}
+											{if in_array($field_value.type, TikiLib::lib('trk')->get_rendered_fields())}
+												{trackeroutput field=$field_value showlinks=y showpopup=y item=$items[user] list_mode=y}
+											{else}
+												{include file='tracker_item_field_value.tpl' field_value=$field_value list_mode="y" item=$items[user] showlinks="y" reloff=$smarty.section.user.index url=""}
 											{/if}
-											{include file='tracker_item_field_value.tpl' field_value=$field_value list_mode="y" item=$items[user] showlinks="y" reloff=$smarty.section.user.index url=""}
 										</td>
 									{/if}
 								{/foreach}
