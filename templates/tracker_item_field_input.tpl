@@ -169,13 +169,6 @@
 	<div class="map-container" data-target-field="{$field_value.ins_id}" style="height: 250px; width: 250px;"></div>
 	<input type="text" name="{$field_value.ins_id}" id="{$field_value.ins_id}" value="{$field_value.value}" size="60" />
 	<br />{tr}Format: x,y,zoom where x is the longitude, and y is the latitude. Zoom is between 0(view Earth) and 19.{/tr}
-
-{* -------------------- auto increment -------------------- *}
-{elseif $field_value.type eq 'q'}
-	<input type="hidden" name="track[{$field_value.fieldId}]" />
-	<input type="hidden" name="{$field_value.ins_id}" value="{$field_field.value|escape}" />
-	{include file='tracker_item_field_value.tpl'}
-
 {* -------------------- freetags -------------------- *}
 
 {elseif $field_value.type eq 'F'}
