@@ -4883,7 +4883,7 @@ class TrackerLib extends TikiLib
 	function get_rendered_fields()
 	{
 		// FIXME : Kill this function once cleanup is completed
-		return array('t', 'e', 'A', 'i', 'a', 'f', 'r', 'l', 'y', 'c', 'm', 'L', 'S', 'I');
+		return array('t', 'e', 'A', 'i', 'a', 'f', 'r', 'l', 'y', 'c', 'm', 'L', 'S', 'I', 'u');
 	}
 
 	function get_field_handler($field, $item = array())
@@ -4941,6 +4941,8 @@ class Tracker_Field_Factory
 				return new Tracker_Field_StaticText($field_info, $this->itemData, $this->trackerDefinition);
 			case 't':
 				return new Tracker_Field_Text($field_info, $this->itemData, $this->trackerDefinition);
+			case 'u':
+				return new Tracker_Field_UserSelector($field_info, $this->itemData, $this->trackerDefinition);
 			case 'y':
 				return new Tracker_Field_CountrySelector($field_info, $this->itemData, $this->trackerDefinition);
 		}
@@ -4986,6 +4988,11 @@ class Tracker_Definition
 	function getInformation()
 	{
 		return $this->trackerInfo;
+	}
+
+	function getConfiguration($key, $default = false)
+	{
+		return isset($this->trackerInfo[$key]) ? $this->trackerInfo[$key] : $default;
 	}
 
 	function getFields()
@@ -5268,6 +5275,11 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		return isset($this->definition['options_array'][(int) $number]) ?
 			$this->definition['options_array'][(int) $number] :
 			$default;
+	}
+
+	protected function getTrackerDefinition()
+	{
+		return $this->trackerDefinition;
 	}
 
 	protected function renderInputTemplate($file, $context = array())
@@ -5807,6 +5819,81 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 		return $this->renderInputTemplate('trackerinput/itemslist.tpl', $context);
 	}
 }
+
+/**
+ * Handler class for UserSelector
+ * 
+ * Letter key: ~u~
+ *
+ *	Options:
+ *		0: auto-assign =
+ *			0 = general
+ *			1 = creator
+ *			2 = modifier
+ *
+ *		1: email_notify
+ *			0/1
+ */
+class Tracker_Field_UserSelector extends Tracker_Field_Abstract
+{
+	function getValues(array $requestData = array())
+	{
+		global $tiki_p_admin_trackers, $user;
+		
+		$ins_id = $this->getInsertId();
+
+		$data = array();
+		
+		if ( isset($requestData[$ins_id])) {
+			if ($this->getOption(0) < 1 || $tiki_p_admin_trackers === 'y') {
+				$data['value'] = $requestData[$ins_id];
+			} else {
+				if ($this->getOption(0) == 2) {
+					$data['value'] = $user;
+				} elseif ($this->getOption(0) == 1) {
+					if ($this->getTrackerDefinition()->getConfiguration('userCanTakeOwnership')  == 'y' && !$this->getValue()) {
+						$data['value'] = $user; // the user appropiate the item
+					} else {
+						$data['value'] = $this->getValue();
+						// unset($data['fieldId']); hmm?
+					}
+				} else {
+					$data['value'] = '';
+				}
+			}
+		} else {
+			$data['value'] = $this->getValue();
+		}
+		
+		return $data;
+	}
+	
+	function renderInput($context = array())
+	{
+		global $tiki_p_admin_trackers, $user;
+		$smarty = TikiLib::lib('smarty');
+		
+		$value = $this->getValue() ? $this->getValue() : $user;
+		
+		if ($this->getOption(0) == 0 || $tiki_p_admin_trackers === 'y') {
+			require_once $smarty->_get_plugin_filepath('function', 'user_selector');
+			return smarty_function_user_selector(
+					array(	'user' => $value,
+							'id'  => 'user_selector_' . $this->getConfiguration('fieldId'),
+							'name' => $this->getInsertId(),
+							'editable' => 'y',
+					), $smarty);
+		} else {
+			require_once $smarty->_get_plugin_filepath('function', 'user_selector');
+			return smarty_modifier_username( $value ) . '<input type="hidden" name="' . $this->getInsertId() . '">';
+		}
+
+	}
+}
+
+
+
+
 
 global $trklib;
 $trklib = new TrackerLib;

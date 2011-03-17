@@ -362,7 +362,10 @@ $itemUser = $trklib->get_item_creator($_REQUEST['trackerId'], $_REQUEST['itemId'
 $smarty->assign_by_ref('itemUser', $itemUser);
 $plugins_loaded = false;
 
-$fieldFactory = new Tracker_Field_Factory($definition);
+if (empty($tracker_info)) {
+	$item_info = array();
+}
+$fieldFactory = new Tracker_Field_Factory($definition, $item_info);
 
 foreach($xfields["data"] as $i => $current_field) {
 	$fid = $current_field["fieldId"];
@@ -399,27 +402,6 @@ foreach($xfields["data"] as $i => $current_field) {
 				$current_field_fields = array_merge($current_field_fields, $insert_values);
 			}
 
-		} elseif ($current_field_fields["type"] == 'u' and isset($current_field_fields['options_array'][0]) and $user) {
-			if (isset($_REQUEST[$ins_id]) and ($current_field_fields['options_array'][0] < 1 or $tiki_p_admin_trackers == 'y')) {
-				$current_field_ins["value"] = $_REQUEST[$ins_id];
-			} else {
-				if ($current_field_fields['options_array'][0] == 2) {
-					$current_field_ins["value"] = $user;
-				} elseif ($current_field_fields['options_array'][0] == 1) {
-					if (isset($tracker_info['userCanTakeOwnership']) && $tracker_info['userCanTakeOwnership'] == 'y' && empty($current_field_ins['value'])) {
-						$current_field_ins['value'] = $user; // the user appropiate the item
-					} elseif ($tiki_p_admin_trackers != 'y') {
-						unset($current_field_ins['fieldId']);
-					}
-				} else {
-					$current_field_ins["value"] = '';
-				}
-			}
-			if (isset($_REQUEST[$filter_id])) {
-				$current_field_fields["value"] = $_REQUEST[$filter_id];
-			} else {
-				$current_field_fields["value"] = '';
-			}
 		} elseif ($current_field_fields["type"] == 'g' and isset($current_field_fields['options_array'][0]) and $group) {
 			if (isset($_REQUEST[$ins_id])) {
 				$current_field_ins["value"] = $_REQUEST[$ins_id];

@@ -254,35 +254,8 @@
 								{include file='tracker_item_field_input.tpl'}
 							{/if}
 							
-							{* -------------------- user selector -------------------- *}
-							{if $field_value.type eq 'u'}
-								{if !$field_value.options_array[0] or empty($field_value.options_array[0]) or $tiki_p_admin_trackers eq 'y'}
-									{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $users|@count > $prefs.user_selector_threshold and $field_value.isMandatory ne 'y'}
-										{* since autocomplete allows blank entry it can't be used for mandatory selection. *}
-										<input id="user_selector_{$field_value.fieldId}" type="text" size="20" name="{$field_value.ins_id}" value="{if $field_value.options_array[0] eq '2'}{$user}{else}{$field_value.value}{/if}" />
-										{jq}
-											$("#user_selector_{{$field_value.fieldId}}").tiki("autocomplete", "username", {mustMatch: true});
-										{/jq}
-									{else}
-										<select name="{$field_value.ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
-											<option value="">{tr}None{/tr}</option>
-											{foreach key=id item=one from=$users}
-												{if ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($one, $field_value.itemChoices) )}
-													{if $field_value.value}
-														<option value="{$one|escape}"{if $one eq $field_value.value} selected="selected"{/if}>{$one|username}</option>
-													{else}
-														<option value="{$one|escape}"{if $one eq $user and $field_value.options_array[0] ne '2'} selected="selected"{/if}>{$one|username}</option>
-													{/if}
-												{/if}
-											{/foreach}
-										</select>
-									{/if}
-								{else}
-									{$user}
-								{/if}
-
 							{* -------------------- group selector -------------------- *}
-							{elseif $field_value.type eq 'g'}
+							{if $field_value.type eq 'g'}
 								{if !$field_value.options_array[0] or $tiki_p_admin_trackers eq 'y'}
 									<select name="{$field_value.ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 										<option value="">{tr}None{/tr}</option>

@@ -28,46 +28,6 @@
 		<input name="{$field_value.ins_id}"{if $field_value.options_array[i] eq $item.my_rate} checked="checked"{/if} type="radio" value="{$field_value.options_array[i]|escape}" id="{$field_value.ins_id}{$smarty.section.i.index}" /><label for="{$field_value.ins_id}{$smarty.section.i.index}">{$field_value.options_array[i]}</label>
 	{/section}
 
-{* -------------------- user selector -------------------- *}
-{elseif $field_value.type eq 'u'}
-	{if empty($field_value.options_array) or ($field_value.options_array[0] !=1 and $field_value.options_array[0] !=2) or $tiki_p_admin_trackers eq 'y'}
-		{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $field_value.list|@count > $prefs.user_selector_threshold and $field_value.isMandatory ne 'y' and $field_value.options_array[0] !=1 and $field_value.options_array[0] !=2}
-			{* since autocomplete allows blank entry it can't be used for mandatory selection. *}
-			<input id="user_selector_{$field_value.fieldId}" type="text" size="20" name="{$field_value.ins_id}" value="{if $field_value.options_array[0] eq '2'}{$user}{else}{$field_value.value}{/if}" />
-			{if $prefs.user_selector_realnames_tracker == 'y'}
-			{jq}
-				$("#user_selector_{{$field_value.fieldId}}").tiki("autocomplete", "userrealname", {mustMatch: true});
-			{/jq}
-			{else}
-			{jq}
-				$("#user_selector_{{$field_value.fieldId}}").tiki("autocomplete", "username", {mustMatch: true});
-			{/jq}
-			{/if}
-		{else}
-		<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
-		{if $field_value.isMandatory ne 'y'}
-			<option value=""{if empty($field_value.value) && !empty($item.itemId)} selected="selected"{/if}>{tr}None{/tr}</option>
-		{/if}
-		{foreach key=id item=one from=$field_value.list}
-			{if ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($one, $field_value.itemChoices) )}
-				<option value="{$one|escape}"
-				{if empty($item.itemId) and $one eq $user}
-					selected="selected"
-				{elseif $field_value.options_array[0] eq 2 and $one eq $user}
-					selected="selected"
-				{elseif $one eq $field_value.value}
-					selected="selected"
-				{/if}>
-					{$one|username}
-				</option>
-			{/if}
-		{/foreach}
-		</select>
-		{/if}
-	{else}
-		{$user|username}
-	{/if}
-
 {* -------------------- group selector -------------------- *}
 {elseif $field_value.type eq 'g'}
 	{if $field_value.options_array[0] eq 0 or $tiki_p_admin_trackers eq 'y'}
