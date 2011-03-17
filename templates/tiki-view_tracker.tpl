@@ -239,7 +239,7 @@
 							{/if}
 						</td>
 						<td>
-							{trackerfield field=$field_value}
+							{trackervalue field=$field_value}
 						</td>
 					</tr>
 				{else}
