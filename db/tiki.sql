@@ -3718,9 +3718,9 @@ DROP TABLE IF EXISTS `tiki_object_attributes`;
 CREATE TABLE `tiki_object_attributes` (
     `attributeId` INT PRIMARY KEY AUTO_INCREMENT,
     `type` varchar(50) NOT NULL,
-    `itemId` varchar(255) NOT NULL,
-    `attribute` varchar(25) NOT NULL,
-    `value` varchar(100),
+    `itemId` varchar(160) NOT NULL,
+    `attribute` varchar(70) NOT NULL,
+    `value` varchar(255),
     UNIQUE `item_attribute_uq` ( `type`, `itemId`, `attribute` ),
     KEY `attribute_lookup_ix` (`attribute`, `value`)
 ) ENGINE=MyISAM;
@@ -3748,11 +3748,11 @@ CREATE TABLE `tiki_rating_obtained` (
 DROP TABLE IF EXISTS `tiki_object_relations`;
 CREATE TABLE `tiki_object_relations` (
     `relationId` INT PRIMARY KEY AUTO_INCREMENT,
-    `relation` varchar(25) NOT NULL,
+    `relation` varchar(70) NOT NULL,
     `source_type` varchar(50) NOT NULL,
-    `source_itemId` varchar(255) NOT NULL,
+    `source_itemId` varchar(160) NOT NULL,
     `target_type` varchar(50) NOT NULL,
-    `target_itemId` varchar(255) NOT NULL,
+    `target_itemId` varchar(160) NOT NULL,
     KEY `relation_source_ix` (`source_type`, `source_itemId`),
     KEY `relation_target_ix` (`target_type`, `target_itemId`)
 ) ENGINE=MyISAM;
@@ -3994,12 +3994,11 @@ CREATE TABLE `tiki_acct_tax` (
 
 DROP TABLE IF EXISTS `tiki_queue`;
 CREATE TABLE `tiki_queue` (
-	`entryId` INT PRIMARY KEY AUTO_INCREMENT,
-	`queue` VARCHAR(25) NOT NULL,
-	`timestamp` INT NOT NULL,
-	`handler` VARCHAR(20) NULL,
-	`message` TEXT NOT NULL,
-	KEY `queue_name_ix` (`queue`),
-	KEY `queue_handler_ix` (`handler`)
+    `entryId` INT PRIMARY KEY AUTO_INCREMENT,
+    `queue` VARCHAR(25) NOT NULL,
+    `timestamp` INT NOT NULL,
+    `handler` VARCHAR(20) NULL,
+    `message` TEXT NOT NULL,
+    KEY `queue_name_ix` (`queue`),
+    KEY `queue_handler_ix` (`handler`)
 ) ENGINE=MyISAM;
-

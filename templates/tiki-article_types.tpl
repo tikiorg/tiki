@@ -154,7 +154,7 @@
 					</tr>
 				{/foreach}
 				<tr>
-					<td><input type="text" name="new_attribute[{$types[user].type|escape}]" value="" /></td>
+					<td><input type="text" name="new_attribute[{$types[user].type|escape}]" value="" maxlength="56" /></td>
 					<td>&nbsp;</td>
 				</tr>
 			</table>
