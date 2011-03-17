@@ -28,7 +28,17 @@ function smarty_function_user_selector($params, &$smarty) {
 	static $iUserSelector = 0;
 	$iUserSelector++;
 	
-	$defaults = array( 'user' => $user, 'group' => 'all', 'contact'=> 'false','name' => 'user', 'id' => 'user_selector_' . $iUserSelector, 'multiple'=> 'false', 'mustmatch' => 'true', 'style'=> '' ,'editable' => $tiki_p_admin);
+	$defaults = array( 'user' => $user,
+			'group' => 'all',
+			'contact'=> 'false',
+			'name' => 'user',
+			'id' => 'user_selector_' . $iUserSelector,
+			'multiple'=> 'false',
+			'mustmatch' => 'true',
+			'style'=> '' ,
+			'editable' => $tiki_p_admin,
+			'user_selector_threshold' => $prefs['user_selector_threshold'],
+	);
 	$params = array_merge($defaults, $params);
 	if (isset($params['size'])) {
 		$sz = ' size="' . $params['size'] . '"';
@@ -49,7 +59,7 @@ function smarty_function_user_selector($params, &$smarty) {
 	}
 	$ret = '';
 	
-	if ($prefs['feature_jquery_autocomplete'] == 'y' && ($ucant > $prefs['user_selector_threshold'] or $ucant> $params['user_selector_threshold'])) {
+	if ($prefs['feature_jquery_autocomplete'] == 'y' && ($ucant > $prefs['user_selector_threshold'] or $ucant > $params['user_selector_threshold'])) {
 		$ret .= '<input id="' . $params['id'] . '" type="text" name="' . $params['name'] . '" value="' . $params['user'] . '"' . $sz . $ed . ' style="'.$params['style'].'" />';
 		$headerlib->add_jq_onready('$("#' . $params['id'] . '").tiki("autocomplete", "'.(($params['contact'] == 'true')?('usersandcontacts'):('username')).'", {mustMatch: '.$params['mustmatch'].', multiple: '.$params['multiple'].' });');
 	} else {
