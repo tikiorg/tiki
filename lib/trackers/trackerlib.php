@@ -5751,6 +5751,10 @@ class Tracker_field_Image extends Tracker_Field_File
 	{
 		return $this->renderInputTemplate('trackerinput/image.tpl', $context);
 	}
+	function renderOutput($context = array())
+	{
+		return $this->getInnerValue();
+	}
 }
 
 /**
