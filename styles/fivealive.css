@@ -970,6 +970,10 @@ fieldset.admin label,
 	float: left;
 }
 
+.tabcontent .tabmark {
+	border: 1px solid #11597e;
+}
+
 .tabmark {
 	float: left;
 	border: 1px solid #11597e;
