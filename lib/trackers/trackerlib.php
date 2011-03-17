@@ -4883,7 +4883,7 @@ class TrackerLib extends TikiLib
 	function get_rendered_fields()
 	{
 		// FIXME : Kill this function once cleanup is completed
-		return array('t', 'e', 'A', 'i', 'a', 'f', 'r', 'l', 'y', 'c', 'm', 'L', 'S', 'I', 'u');
+		return array('t', 'e', 'A', 'i', 'a', 'f', 'r', 'l', 'y', 'c', 'm', 'L', 'S', 'I', 'u', 'q');
 	}
 
 	function get_field_handler($field, $item = array())
@@ -4935,6 +4935,8 @@ class Tracker_Field_Factory
 				return new Tracker_Field_ItemsList($field_info, $this->itemData, $this->trackerDefinition);
 			case 'm':
 				return new Tracker_Field_Simple($field_info, $this->itemData, $this->trackerDefinition, 'email');
+			case 'q':
+				return new Tracker_Field_AutoIncrement($field_info, $this->itemData, $this->trackerDefinition);
 			case 'r':
 				return new Tracker_Field_ItemLink($field_info, $this->itemData, $this->trackerDefinition);
 			case 'S':
@@ -5367,6 +5369,38 @@ class Tracker_Field_StaticText extends Tracker_Field_Abstract
 	function renderInput($context = array())
 	{
 		return $this->renderInputTemplate('trackerinput/statictext.tpl', $context);
+	}
+}
+
+/**
+ * Handler class for Auto increment
+ * 
+ * Letter key: ~q~
+ *
+ */
+class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract
+{
+	function getValues(array $requestData = array())
+	{
+		$ins_id = $this->getInsertId();
+		$value = isset($requestData[$ins_id]) ? $requestData[$ins_id] : $this->getValue();
+
+		$append = $this->getOption(1);
+		if (!empty($append)) {
+			$value = "<span class='formunit'>$append</span>" . $value;
+		}
+	
+		$prepend = $this->getOption(2);
+		if (!empty($prepend)) {
+			$value .= "<span class='formunit'>$prepend</span>";
+		}
+			
+		return array('value' => $value);
+	}
+	
+	function renderInput($context = array())
+	{
+		return $this->renderInputTemplate('trackerinput/autoincrement.tpl', $context);
 	}
 }
 

@@ -34,9 +34,6 @@
 {if ($field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'c' or $field_value.type eq 'b') and !empty($field_value.options_array[2]) and $field_value.value != ''}
 	<span class="formunit">{$field_value.options_array[2]}</span>
 {/if}
-{if $field_value.type eq 'q' and !empty($field_value.options_array[1])}
-	<span class="formunit">{$field_value.options_array[1]}</span>
-{/if}
 
 {* ******************** field handling emptiness in a specific way  ******************** *}
 {* -------------------- category -------------------- *}
@@ -91,7 +88,7 @@
 
 {* -------------------- empty field -------------------- *}
 {elseif empty($field_value.value) and $field_value.value != '0' and $field_value.type ne 'U' and $field_value.type ne '*' and $field_value.type ne 's' 
-	and $field_value.type ne 'q' and $field_value.type ne 'n' and $field_value.type ne 'C' and $field_value.type ne 'h'}
+	and $field_value.type ne 'n' and $field_value.type ne 'C' and $field_value.type ne 'h'}
 	{if $list_mode ne 'csv' and $is_link eq 'y'}&nbsp;{/if} {* to have something to click on *}
 
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *}
@@ -144,7 +141,7 @@
 
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *} 
 {elseif $field_value.type eq  't' or $field_value.type eq 'n' or $field_value.type eq 'b' or $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R' 
-	or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'q' or $field_value.type eq 'w' 
+	or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'w' 
 	or ($field_value.type eq 'C' and $field_value.computedtype ne 'f' and $field_value.computedtype ne 'duration' )}
 	{if $list_mode eq 'y'}
 		{if $field_value.type eq 'u'}
@@ -499,9 +496,6 @@
 {* ******************** append ******************** *}
 {if ($field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'c' or $field_value.type eq 'b') and $field_value.options_array[3] and $field_value.value != ''}
 	<span class="formunit">{$field_value.options_array[3]}</span>
-{/if}
-{if $field_value.type eq 'q' and !empty($field_value.options_array[2])}
-	<span class="formunit">{$field_value.options_array[2]}</span>
 {/if}
 
 {* ******************** link ******************** *}
