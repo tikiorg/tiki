@@ -51,4 +51,5 @@ function wikiplugin_html($data, $params) {
 	return '~np~' . $html . '~/np~';
 }
 
+include_once 'lib/codemirror_tiki/codemirror_tiki.php';
 tiki_syntax_highlighter_html();
