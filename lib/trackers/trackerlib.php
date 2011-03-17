@@ -5083,11 +5083,32 @@ class Tracker_Definition
 
 interface Tracker_Field_Interface
 {
+
+	/**
+	 * return the values of a field (not necessarily the html that will be displayed) for input or output
+	 * The values come from either the requestData if defined, the database if defined or the default
+	 * @param array something like $_REQUEST
+	 * @return 
+	 */
 	function getValues(array $requestData = array());
 
+	/**
+	 * return the html of the input form for a field
+	 *  either call renderInputTemplate if using a tpl or use php code
+	 * @param
+	 * @return html
+	*/
 	function renderInput($context = array());
 
+	/**
+	 * return the html for the output of a field
+	 *  with the link, prepend, append....
+	 *  Use getInnerValue
+	 * @param
+	 * @return html
+	*/
 	function renderOutput($context = array());
+
 }
 
 abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
@@ -5229,6 +5250,11 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		return trim($smarty->fetch('trackeroutput/popup.tpl'));
 	}
 
+	/**
+	 * return the html for the output of a field without link, preprend...
+	 * @param
+	 * @return html
+	 */
 	protected function getInnerValue($context = array())
 	{
 		return $this->getConfiguration('value');
@@ -5626,6 +5652,24 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 		return $this->renderInputTemplate('trackerinput/category.tpl', $context);
 	}
 
+	function getInnerValue($context = array())
+	{
+		$selected_categories = $this->getConfiguration('selected_categories');
+		$categories = $this->getConfiguration('list');
+		$ret = '';
+		foreach ($selected_categories as $categId) {
+			if (!empty($ret))
+				$ret .= '<br />';
+			foreach ($categories as $category) {
+				if ($category['categId'] == $categId) {
+					$ret .= $category['name'];
+					break;
+				}
+			}
+		}
+		return $ret;
+	}
+
 	private function getIds($categories)
 	{
 		$validIds = array();
@@ -5765,10 +5809,6 @@ class Tracker_field_Image extends Tracker_Field_File
 	function renderInput($context = array())
 	{
 		return $this->renderInputTemplate('trackerinput/image.tpl', $context);
-	}
-	function renderOutput($context = array())
-	{
-		return $this->getInnerValue();
 	}
 }
 
