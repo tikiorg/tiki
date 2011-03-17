@@ -8,8 +8,13 @@
 function prefs_ldap_list() {
 	return array(
 		'ldap_create_user_tiki' => array(
-			'name' => tra('Create user if not in Tiki'),
-			'type' => 'flag',
+			'name' => tra('If user does not exist in Tiki'),
+			'type' => 'list',
+			'perspective' => false,
+			'options' => array(
+				'y' => tra('Create the user'),
+				'n' => tra('Deny access'),
+			),
 		),
 		'ldap_create_user_ldap' => array(
 			'name' => tra('Create user if not in LDAP'),
