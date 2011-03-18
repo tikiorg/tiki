@@ -473,6 +473,7 @@ input[name="search"] {
 /* centercolumn */
 #showhide_columns {
 	min-width: 100%;
+	margin: 0 -30px;
 }
 
 a.flip,
