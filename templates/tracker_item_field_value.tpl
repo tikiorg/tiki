@@ -208,13 +208,6 @@
 			<a href="tiki-download_item_attachment.php?attId={$field_value.value}" title="{tr}Download{/tr}">{icon _id='disk' alt="{tr}Download{/tr}"}</a>
 		{/if}
 	{/if}
-
-{* -------------------- user groups ------------------ *}
-{elseif $field_value.type eq 'usergroups'}
-	{foreach from=$field_value.value item=val name=ix}
-		{$val|escape}{if !$smarty.foreach.ix.last}<br />{/if}
-	{/foreach}
-
 {* -------------------- preference -------------------- *}
 {elseif $field_value.type eq 'p'}
 	{if $list_mode eq 'csv'}

@@ -79,6 +79,8 @@ class Tracker_Field_Factory
 				return new Tracker_Field_Text($field_info, $this->itemData, $this->trackerDefinition);
 			case 'u':
 				return new Tracker_Field_UserSelector($field_info, $this->itemData, $this->trackerDefinition);
+			case 'usergroups':
+				return new Tracker_Field_UserGroups($field_info, $this->itemData, $this->trackerDefinition);
 			case 'x':
 				return new Tracker_Field_Action($field_info, $this->itemData, $this->trackerDefinition);
 			case 'y':

@@ -647,8 +647,6 @@ if ($_REQUEST["itemId"]) {
 							}
 						}
 						$smarty->assign("U_liste", $U_liste);
-					} elseif ($current_field_fields['type'] == 'usergroups' && !empty($itemUser)) {
-						$current_field_ins['value'] = array_diff($tikilib->get_user_groups($itemUser), array('Registered', 'Anonymous'));
 					} else {
 						$current_field_ins["value"] = $info["$fid"];
 					}

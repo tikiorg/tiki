@@ -4826,6 +4826,7 @@ class TrackerLib extends TikiLib
 			'C',
 			'x',
 			'h',
+			'usergroups',
 			'W',
 		);
 	}

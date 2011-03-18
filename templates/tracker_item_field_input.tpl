@@ -22,9 +22,6 @@
 {elseif !empty($field_value.editableBy) and !in_array($default_group, $field_value.editableBy) and !($user eq '' and in_array('Anonymous', $field_value.editableBy)) and $tiki_p_admin_trackers ne 'y'}
 	{include file='tracker_item_field_value.tpl'}
 
-{* -------------------- user groups -------------------- *}
-{elseif $field_value.type eq 'usergroups'}
-
 {* -------------------- dynamic list -------------------- *}
 {elseif $field_value.type eq 'w'}
 	<script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
