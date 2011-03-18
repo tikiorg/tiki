@@ -245,9 +245,6 @@ foreach ($xfields['data'] as $i => $current_field) {
 		if (isset($current_field['otherField'])) {
 			$current_field_list['otherField'] = $current_field['otherField'];
 		}
-		if ($current_field_list['type'] == '*' && $tiki_p_tracker_vote_ratings == 'y' && !empty($_REQUEST['vote']) && !empty($ratedItemId) && isset($_REQUEST['ins_'.$fid])) { // star
-			$trklib->replace_star($_REQUEST['ins_'.$fid], $_REQUEST['trackerId'], $ratedItemId, $current_field_list, $user, true);
-		}
 	}
 	if ($creatorSelector or $current_field['isHidden'] == 'n' or $current_field['isHidden'] == 'c' or $current_field['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($current_field['type'] == 's' and $current_field['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y')) {
 		$current_field_ins = $current_field;
@@ -264,12 +261,6 @@ foreach ($xfields['data'] as $i => $current_field) {
 
 			if ($field_values) {
 				$current_field_fields = array_merge($current_field_fields, $field_values);
-			}
-		} elseif ($current_field_fields["type"] == 's' and $current_field['name'] == 'Rating') { // rating
-			if (isset($_REQUEST[$ins_id])) {
-				$newItemRate = $_REQUEST[$ins_id];
-			} else {
-				$newItemRate = NULL;
 			}
 		} else {
 			if (isset($_REQUEST[$ins_id])) {
@@ -308,9 +299,15 @@ foreach ($xfields['data'] as $i => $current_field) {
 
 // Collect information from the provided fields
 $ins_categs = array();
+$newItemRateField = null;
 foreach ($ins_fields['data'] as $current_field) {
 	if ($current_field['type'] == 'e' && isset($current_field['selected_categories'])) {
 		$ins_categs = array_merge($ins_categs, $current_field['selected_categories']);
+	}
+
+	if ($current_field['type'] == 's' && $current_field['name'] == 'Rating') {
+		$newItemRateField = $current_field;
+		$newItemRate = $current_field['request_rate'];
 	}
 }
 
@@ -375,8 +372,6 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 		}
 	}
 }
-
-$newItemRateField = $trackerDefinition->getRateField();
 
 if (isset($_REQUEST['import'])) {
 	if (isset($_FILES['importfile']) && is_uploaded_file($_FILES['importfile']['tmp_name'])) {

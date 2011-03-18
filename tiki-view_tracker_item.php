@@ -607,37 +607,8 @@ if ($_REQUEST["itemId"]) {
 				if ($current_field_fields["type"] != 'h') {
 					$fid = $current_field_fields["fieldId"];
 					$current_field_ins["id"] = $fid;
-					if ($current_field_fields["type"] == 'c') {
-						if (!isset($info["$fid"])) $info["$fid"] = 'n';
-					} else {
-						if (!isset($info["$fid"])) $info["$fid"] = '';
-					}
-					if ($current_field_fields["type"] == 'u') {
-						if (isset($current_field_fields['options_array'][0]) && $current_field_fields['options_array'][0] == 2 and !$info["$fid"]) {
-							$current_field_ins["defvalue"] = $user;
-						}
-						$current_field_ins["value"] = $info["$fid"];
-					} elseif ($current_field_fields["type"] == 'G') {
-						if (!empty($info["$fid"])) {
-							$current_field_ins["value"] = $info["$fid"];
-							$first_comma = strpos($info["$fid"], ',');
-							$second_comma = strpos($info["$fid"], ',', $first_comma + 1);
-							if ($second_comma === false) {
-								$second_comma = strlen($info["$fid"]);
-								$current_field_ins["value"].= ",11";
-							}
-							$current_field_ins["x"] = substr($current_field_ins["value"], 0, $first_comma);
-							$current_field_ins["y"] = substr($current_field_ins["value"], $first_comma + 1, $second_comma - $first_comma - 1);
-							$current_field_ins["z"] = substr($current_field_ins["value"], $second_comma + 1);
-						} else {
-							$current_field_ins["value"] = null;
-							$current_field_ins["x"] = null;
-							$current_field_ins["y"] = null;
-						}
-						if (empty($current_field_ins["z"])) {
-							$current_field_ins["z"] = 1;
-						}
-					} elseif ($current_field_fields["type"] == 'U') {
+					if (!isset($info["$fid"])) $info["$fid"] = '';
+					if ($current_field_fields["type"] == 'U') {
 						$current_field_ins["value"] = $info["$fid"];
 						$temp = $userlib->get_user_info($user);
 						$id_user = $temp['userId'];
@@ -690,36 +661,8 @@ if ($_REQUEST["itemId"]) {
 					} else {
 						$current_field_ins["value"] = $info["$fid"];
 					}
-					if ($current_field_fields['type'] == 'i' && !empty($current_field_ins['options_array'][2]) && !empty($current_field_ins['value'])) {
-						$imagegallib = TikiLib::lib('imagegal');
-
-						if ($imagegallib->readimagefromfile($current_field_ins['value'])) {
-							$imagegallib->getimageinfo();
-							if (!isset($current_field_ins['options_array'][3])) {
-								$current_field_ins['options_array'][3] = 0;
-							}
-							$t = $imagegallib->ratio($imagegallib->xsize, $imagegallib->ysize, $current_field_ins['options_array'][2], $current_field_ins['options_array'][3]);
-							$current_field_ins['options_array'][2] = $t * $imagegallib->xsize;
-							$current_field_ins['options_array'][3] = $t * $imagegallib->ysize;
-						}
-					}
 					if (isset($current_field_ins["value"])) {
 						$last[$fid] = $current_field_ins["value"];
-					}
-				}
-				if ($current_field_fields['type'] == 'A') {
-					if (!empty($current_field_ins['value'])) {
-						$current_field_ins['info'] = $trklib->get_item_attachment($current_field_ins['value']);
-					}
-				} elseif (($current_field_fields['type'] == 's' && $current_field_fields['name'] == 'Rating') || $current_field_fields['type'] == '*') {
-					$current_field_fields['value'] = $info[$fid];
-					if ($current_field_fields['type'] == '*' && $tiki_p_tracker_vote_ratings == 'y' && !empty($_REQUEST['vote']) && !empty($_REQUEST['itemId']) && isset($_REQUEST['ins_'.$current_field_fields['fieldId']])) {
-						$trklib->replace_star($_REQUEST['ins_'.$current_field_fields['fieldId']], $_REQUEST['trackerId'], $_REQUEST['itemId'], $current_field_ins, $user, true);
-					} else {
-						$trklib->update_star_field($_REQUEST['trackerId'], $_REQUEST['itemId'], $current_field_ins);
-						if (!empty($current_field_ins['numVotes'])) {
-							$smarty->assign('itemHasVotes', 'y');
-						}
 					}
 				}
 			}

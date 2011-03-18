@@ -4842,6 +4842,8 @@ class TrackerLib extends TikiLib
 			'n',
 			'L',
 			'S',
+			's',
+			'*',
 			'I',
 			'u',
 			'q',

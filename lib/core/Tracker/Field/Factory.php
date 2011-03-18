@@ -62,6 +62,9 @@ class Tracker_Field_Factory
 				return new Tracker_Field_AutoIncrement($field_info, $this->itemData, $this->trackerDefinition);
 			case 'r':
 				return new Tracker_Field_ItemLink($field_info, $this->itemData, $this->trackerDefinition);
+			case 's':
+			case '*':
+				return new Tracker_Field_Rating($field_info, $this->itemData, $this->trackerDefinition);
 			case 'S':
 				return new Tracker_Field_StaticText($field_info, $this->itemData, $this->trackerDefinition);
 			case 't':
