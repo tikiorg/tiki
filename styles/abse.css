@@ -822,10 +822,6 @@ h1.blogtitle {
 	margin-top: 2em;
 	margin-bottom: 2em}
  
-.postinfo {
-	margin-bottom: 6px;
-	padding: 2px}
-
 a.blogt,
 a.blog:visited {
 	border: 0;
@@ -838,19 +834,18 @@ a.blogt:hover {
 .postinfo a.linkmodule {}
 .postinfo div {margin-top: 30%}
 
-.posthead {
-	text-align: left;
-	padding: 3px;
-	background: #010101 url(abse/menubg.jpg) repeat-y;
-	margin-bottom: 1em}
-
 .postinfo {
 	margin-bottom: 20px;
 	margin-top: 10px;
+	padding: 2px;
 	font-size: 1.2em}
 
 .posthead {
 	display: block;
+	text-align: left;
+	padding: 3px;
+	background: #010101 url(abse/menubg.jpg) repeat-y;
+	margin-bottom: 1em;
 	font-weight: bold;
 	letter-spacing: .4pt}
  
