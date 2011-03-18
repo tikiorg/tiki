@@ -14,7 +14,7 @@
 {else}
 	{foreach from=$field.lingualvalue item=ling name=multi}
 		<label for="{$field.ins_id|replace:'[':'_'|replace:']':''}_{$ling.lang}">{$ling.lang|langname}</label>
-		<br />
+		<div>
 		{*prepend*}{if $field.options_array[2]}<span class="formunit">{$field.options_array[2]}&nbsp;</span>{/if}
 		<input type="text" id="{$field.ins_id|replace:'[':'_'|replace:']':''}_{$ling.lang}" name="{$field.ins_id}[{$ling.lang}]" value="{$ling.value|escape}" {if $field.options_array[1]}size="{$field.options_array[1]}"{/if} {if $field.options_array[4]}maxlength="{$field.options_array[4]}"{/if} /> {*@@ missing value*}
 		{*append*}{if $field.options_array[3]}<span class="formunit">&nbsp;{$field.options_array[3]}</span>{/if}
@@ -27,6 +27,6 @@
 						options="trackerId:"|cat:$trackerId|cat:",fieldId:"|cat:$field.fieldId}
 			{/if}
 		{/if}
-		{if !$smarty.foreach.multi.last}<br />{/if}
+		</div>
 	{/foreach}
 {/if}

@@ -31,7 +31,7 @@
 	<a class="tablename{if $item.geolocation} geolocated{/if}" {if $item.geolocation}data-geo-lat="{$item.geolocation.lat|escape}" data-geo-lon="{$item.geolocation.lon|escape}"{/if} href="{$urll}{if $offset}&amp;offset={$offset}{/if}{if isset($reloff)}&amp;reloff={$reloff}{/if}{if $item_count}&amp;cant={$item_count}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}"{if $showpopup eq 'y'} {popup text=$smarty.capture.popup|escape:"javascript"|escape:"html" fullhtml="1" hauto=true vauto=true sticky=$stickypopup}{/if}>
 {/if}
 {* ******************** field with prepend ******************** *}
-{if ($field_value.type eq 't' or $field_value.type eq 'c') and !empty($field_value.options_array[2]) and $field_value.value != ''}
+{if $field_value.type eq 'c' and !empty($field_value.options_array[2]) and $field_value.value != ''}
 	<span class="formunit">{$field_value.options_array[2]}</span>
 {/if}
 
@@ -500,7 +500,7 @@
 {/if}
 
 {* ******************** append ******************** *}
-{if ($field_value.type eq 't' or $field_value.type eq 'c') and $field_value.options_array[3] and $field_value.value != ''}
+{if $field_value.type eq 'c' and $field_value.options_array[3] and $field_value.value != ''}
 	<span class="formunit">{$field_value.options_array[3]}</span>
 {/if}
 

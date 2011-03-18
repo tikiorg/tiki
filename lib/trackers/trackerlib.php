@@ -5561,6 +5561,22 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
 		return $this->renderInputTemplate('trackerinput/text.tpl', $context);
 	}
 
+	function getInnerValue($context = array())
+	{
+		$pre = '';
+		$post = '';
+
+		if ($this->getOption(2)) {
+			$pre = '<span class="formunit">' . $this->getOption(2) . '</span>';
+		}
+
+		if ($this->getOption(3)) {
+			$pre = '<span class="formunit">' . $this->getOption(3) . '</span>';
+		}
+
+		return $pre . parent::getInnerValue($context) . $post;
+	}
+
 	protected function processMultilingual($requestData, $id_string) {
 		global $prefs, $language;
 
