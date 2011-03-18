@@ -28,27 +28,6 @@
 		<input name="{$field_value.ins_id}"{if $field_value.options_array[i] eq $item.my_rate} checked="checked"{/if} type="radio" value="{$field_value.options_array[i]|escape}" id="{$field_value.ins_id}{$smarty.section.i.index}" /><label for="{$field_value.ins_id}{$smarty.section.i.index}">{$field_value.options_array[i]}</label>
 	{/section}
 
-{* -------------------- group selector -------------------- *}
-{elseif $field_value.type eq 'g'}
-	{if $field_value.options_array[0] eq 0 or $tiki_p_admin_trackers eq 'y'}
-		<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
-			<option value="">{tr}None{/tr}</option>
-				{foreach from=$field_value.list item=group}
-				{if ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($group, $field_value.itemChoices) )}
-					<option value="{$group|escape}" {if $input_err and $field_value.value eq $group} selected="selected"{/if}>{$group|escape}</option>
-				{/if}
-			{/foreach}
-		</select>
-	{elseif $field_value.options_array[0] eq 1}
-		{if empty($field_value.value)}
-			{$group|escape}
-		{else}
-			{$field_value.value|escape}
-		{/if}
-	{else}
-		{$group|escape}
-	{/if}
-
 {* -------------------- user groups -------------------- *}
 {elseif $field_value.type eq 'usergroups'}
 
@@ -68,25 +47,6 @@
 			{if !$smarty.section.jx.last}{$sepR}{/if}
 		{/if}
 	{/section}
-
-{* -------------------- jscalendar ------------------- *}
-{elseif $field_value.type eq 'j'}
-	{if $field_value.options_array[0] eq 'd'}
-		{if empty($field_value.value) and empty($inForm)}
-			{jscalendar id=$field_value.ins_id fieldname=$field_value.ins_id showtime="n"}
-		{elseif !empty($inForm)}
-			{* inside form set by tiki-export_tracker.tpl - so use a clear date so we can export all by default *}
-			{jscalendar date="" id=$field_value.ins_id fieldname=$field_value.ins_id showtime="n"}
-		{else}
-			{jscalendar date=$field_value.value id=$field_value.ins_id fieldname=$field_value.ins_id showtime="n"}
-		{/if}
-	{else}
-		{if empty($field_value.value)}
-			{jscalendar id=$field_value.ins_id fieldname=$field_value.ins_id showtime="y"}
-		{else}
-			{jscalendar date=$field_value.value id=$field_value.ins_id fieldname=$field_value.ins_id showtime="y"}
-		{/if}
-	{/if}
 
 {* -------------------- dynamic list -------------------- *}
 {elseif $field_value.type eq 'w'}

@@ -240,11 +240,6 @@
 								{/if}
 							{/if}
 							
-							{if $field_value.type eq 'p'}
-								{include file='tracker_item_field_input.tpl'}
-								{if $field_value.type eq 'p' and $field_value.options_array[0] == 'password'}<br /><i>Leave empty if password is to remain unchanged</i>{/if}
-							{/if}
-							
 							{* -------------------- system -------------------- *}
 							{if $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $tiki_p_tracker_vote_ratings eq 'y'}
 								{include file='tracker_item_field_input.tpl'}
@@ -254,30 +249,6 @@
 								{include file='tracker_item_field_input.tpl'}
 							{/if}
 							
-							{* -------------------- text field / email -------------------- *}
-							{if $field_value.type eq 't'}
-								{include file='tracker_item_field_input.tpl'}
-							
-							{* -------------------- numeric field -------------------- *}
-							{elseif $field_value.type eq 'n'}
-								{include file='tracker_item_field_input.tpl'}
-							
-							{* -------------------- currency amount -------------------- *}
-							{elseif $field_value.type eq 'b'}
-								{include file='tracker_item_field_input.tpl'}
-							
-							{* -------------------- drop down -------------------- *}
-							{elseif $field_value.type eq 'd' or $field_value.type eq 'D'}
-								{include file='tracker_item_field_input.tpl'}
-							
-							{* -------------------- radio buttons -------------------- *}
-							{elseif $field_value.type eq 'R'}
-								{include file='tracker_item_field_input.tpl'}
-							
-							{* -------------------- jscalendar ------------------- *}
-							{elseif $field_value.type eq 'j'}
-								{include file='tracker_item_field_input.tpl'}
-							
 							{* -------------------- dynamic list -------------------- *}
 							{elseif $field_value.type eq 'w'}
 								{include file='tracker_item_field_input.tpl'}
@@ -286,10 +257,6 @@
 							{elseif $field_value.type eq 'U'}
 								<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" />
 							
-							
-							{* -------------------- Google Map -------------------- *}
-							{elseif $field_value.type eq 'G'}
-								{include file='tracker_item_field_input.tpl'}
 							{/if}
 							
 							</td>

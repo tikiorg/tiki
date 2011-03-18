@@ -7229,8 +7229,8 @@ if( \$('#$id') ) {
 			$timestamp = $tikilib->now;
 		}
 
-		if ( $_user === false && $is_strftime_format && $timestamp == $tikilib->now && isset( $currentUserDateByFormat[ $format ] ) ) {
-			return $currentUserDateByFormat[ $format ];
+		if ( $_user === false && $is_strftime_format && $timestamp == $tikilib->now && isset( $currentUserDateByFormat[ $format . $timestamp ] ) ) {
+			return $currentUserDateByFormat[ $format . $timestamp ];
 		}
 
 		$tikidate = TikiLib::lib('tikidate');
@@ -7250,7 +7250,7 @@ if( \$('#$id') ) {
 
 		$return = $tikidate->format($format, $is_strftime_format);
 		if ( $is_strftime_format ) {
-			$currentUserDateByFormat[ $format ] = $return;
+			$currentUserDateByFormat[ $format . $timestamp ] = $return;
 		}
 		return $return;
 	}
@@ -7271,7 +7271,7 @@ if( \$('#$id') ) {
 	}
 
 	function get_short_date($timestamp, $user = false) {
-		return $this->date_format($this->get_short_date_format(), $timestamp, $user);
+		return $this->date_format($this->get_short_date_format(), (int) $timestamp, $user);
 	}
 
 	function get_long_time($timestamp, $user = false) {

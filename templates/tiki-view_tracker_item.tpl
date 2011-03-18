@@ -315,36 +315,13 @@
 
 									{if !empty($cur_field.editableBy) and !in_array($default_group, $cur_field.editableBy) and $tiki_p_admin_trackers ne 'y'}
 										{include file='tracker_item_field_value.tpl' field_value=$cur_field}
-									{elseif $cur_field.type eq 't'}
-										{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
-
-									{elseif $cur_field.type eq 'n' or $cur_field.type eq 'b'}
-										{if $cur_field.options_array[2]}
-											<span class="formunit">{$cur_field.options_array[2]}&nbsp;</span>
-										{/if}
-										<input type="text" class="numeric" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}" maxlength="{$cur_field.options_array[1]}"{/if} />
-										{if $cur_field.options_array[3]}
-											<span class="formunit">&nbsp;{$cur_field.options_array[3]}</span>
-										{/if}
-
-									{elseif $cur_field.type eq 'q'}
-										<input type="hidden" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" size="6" maxlength="6" />
-										{$cur_field.value|escape}
 
 									{elseif $cur_field.type eq 'w'}
-										{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
-
-									{elseif $cur_field.type eq 'd' or $cur_field.type eq 'D' or $cur_field.type eq 'R'}
 										{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
 
 									{elseif $cur_field.type eq 'U'}
 										<input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value}" />
 
-									{elseif $cur_field.type eq 'G'}
-										{include file='tracker_item_field_input.tpl' field_value=$cur_field}
-
-									{elseif $cur_field.type eq 'j'}
-										{include file='tracker_item_field_input.tpl' field_value=$cur_field}
 									{/if}
 
 								</td>

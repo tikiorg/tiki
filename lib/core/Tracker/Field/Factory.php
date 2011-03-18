@@ -37,6 +37,8 @@ class Tracker_Field_Factory
 				return new Tracker_Field_GroupSelector($field_info, $this->itemData, $this->trackerDefinition);
 			case 'i':
 				return new Tracker_Field_Image($field_info, $this->itemData, $this->trackerDefinition);
+			case 'j':
+				return new Tracker_Field_JsCalendar($field_info, $this->itemData, $this->trackerDefinition);
 			case 'I':
 				return new Tracker_Field_Simple($field_info, $this->itemData, $this->trackerDefinition, 'ip');
 			case 'L':
