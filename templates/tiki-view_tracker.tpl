@@ -254,12 +254,8 @@
 								{include file='tracker_item_field_input.tpl'}
 							{/if}
 							
-							{* -------------------- page -------------------- *}
-							{if $field_value.type eq 'k'}
-								{include file='tracker_item_field_input.tpl'}
-							
 							{* -------------------- text field / email -------------------- *}
-							{elseif $field_value.type eq 't'}
+							{if $field_value.type eq 't'}
 								{include file='tracker_item_field_input.tpl'}
 							
 							{* -------------------- numeric field -------------------- *}

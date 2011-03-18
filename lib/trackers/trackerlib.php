@@ -4878,6 +4878,7 @@ class TrackerLib extends TikiLib
 			'd',
 			'D',
 			'g',
+			'k',
 		);
 	}
 
@@ -4942,6 +4943,8 @@ class Tracker_Field_Factory
 				return new Tracker_Field_Simple($field_info, $this->itemData, $this->trackerDefinition, 'ip');
 			case 'L':
 				return new Tracker_Field_Simple($field_info, $this->itemData, $this->trackerDefinition, 'url');
+			case 'k':
+				return new Tracker_Field_PageSelector($field_info, $this->itemData, $this->trackerDefinition);
 			case 'l':
 				return new Tracker_Field_ItemsList($field_info, $this->itemData, $this->trackerDefinition);
 			case 'm':
@@ -6244,6 +6247,53 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract
 		return $this->renderInputTemplate('trackerinput/numeric.tpl', $context);
 	}
 }
+
+/**
+ * Handler class for PageSelector
+ * 
+ * Letter key: ~k~
+ * Possibly doesn't need "non-simple" handling apart from defaultvalue?
+ *
+ */
+class Tracker_Field_PageSelector extends Tracker_Field_Abstract
+{
+	function getValues(array $requestData = array())
+	{
+		$ins_id = $this->getInsertId();
+
+		return array(
+			'value' => isset($requestData[$ins_id])
+				? $requestData[$ins_id]
+				: $this->getValue(),
+			'defaultvalue' => $this->getOption(2)
+				? $this->getOption(2)
+				: $this->getValue(),
+		);
+	}
+
+	function renderInput($context = array())
+	{
+		return $this->renderInputTemplate('trackerinput/pageselector.tpl', $context);
+	}
+	
+	function renderOutput($context = array())
+	{
+		$value = $this->getValue();
+		if ($this->getOption(3) === 'n' || (isset($context['list_mode']) && $context['list_mode'] === 'csv')) {
+			return $value;
+		} else {
+			$smarty = TikiLib::lib('smarty');
+			require_once $smarty->_get_plugin_filepath('function', 'object_link');
+			return smarty_function_object_link( array(
+				'type' => 'wikipage',
+				'id' => $value,
+			), $smarty);
+		}
+	}
+}
+
+
+
 
 global $trklib;
 $trklib = new TrackerLib;

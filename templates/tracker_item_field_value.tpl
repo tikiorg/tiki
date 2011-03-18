@@ -230,18 +230,6 @@
 		{$field_value.value|escape}
 	{/if}
 
-{* -------------------- page selector ------------------------- *} 
-{elseif $field_value.type eq  'k'}
-	{if isset($field_value.options_array[3]) && $field_value.options_array[3] eq 'n'}
-		{$field_value.value}
-	{elseif $list_mode eq 'y'}
-		{wiki}(({$field_value.value|escape})){/wiki}
-	{elseif $list_mode eq 'csv'}
-		{$field_value.value}
-	{else}
-		{wiki}(({$field_value.value|escape})){/wiki}
-	{/if}
-
 {* -------------------- textarea -------------------- *}
 {elseif $field_value.type eq 'a'}
 	{if $field_value.options_array[4] ne '' and $field_value.options_array[4] ne 0 and $list_mode eq 'y'}
