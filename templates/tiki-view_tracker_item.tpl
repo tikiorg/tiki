@@ -66,7 +66,7 @@
 								{$cur_field.name|escape}
 							</td>
 							<td class="formcontent">
-								{trackeroutput field=$cur_field item=$item_info showlinks=n list_mode=n}
+								{trackeroutput field=$cur_field item=$item_info showlinks=n list_mode=n inTable=y}
 							</td>
 						</tr>
 					{else}
@@ -108,7 +108,6 @@
 					{/if}
 				{/if}
 				{/foreach}
-				{trackerheader level=-1 title='' inTable='formcolor'}
 				{if $tracker_info.showCreatedView eq 'y'}
 					<tr>
 						<td class="formlabel">{tr}Created{/tr}</td>
@@ -294,23 +293,19 @@
 								{/if}
 
 								{if $cur_field.type ne 'x' and $cur_field.type ne 's'}
-									{if $cur_field.type eq 'h'}
-										{include file='tracker_item_field_value.tpl' field_value=$cur_field list_mode=n item=$item_info inTable="formcolor"}
-									{else}
-										{if ($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n' or $cur_field.type eq 'b') and $cur_field.options_array[0] eq '1'}
-											<tr>
-												<td class="formlabel" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'}<em class='mandatory_star'> *</em>{/if}</td>
-												<td>
-										{elseif $stick eq 'y'}
-											<td class="formlabel right" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'}<em class='mandatory_star'> *</em>{/if}</td>
+									{if ($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n' or $cur_field.type eq 'b') and $cur_field.options_array[0] eq '1'}
+										<tr>
+											<td class="formlabel" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'}<em class='mandatory_star'> *</em>{/if}</td>
 											<td>
-										{else}
-											<tr>
-												<td class="formlabel" >
-													{$cur_field.name}{if $cur_field.isMandatory eq 'y'}<em class='mandatory_star'> *</em>{/if}
-												</td>
-												<td colspan="3" class="formcontent" >
-										{/if}
+									{elseif $stick eq 'y'}
+										<td class="formlabel right" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'}<em class='mandatory_star'> *</em>{/if}</td>
+										<td>
+									{else}
+										<tr>
+											<td class="formlabel" >
+												{$cur_field.name}{if $cur_field.isMandatory eq 'y'}<em class='mandatory_star'> *</em>{/if}
+											</td>
+											<td colspan="3" class="formcontent" >
 									{/if}
 
 									{if !empty($cur_field.editableBy) and !in_array($default_group, $cur_field.editableBy) and $tiki_p_admin_trackers ne 'y'}

@@ -394,13 +394,6 @@
 		<span>
 	{/if}
 
-{* -------------------- header ------------------------- *}
-{elseif $field_value.type eq 'h'}
-	{capture name="level"}{if empty($field_value.options_array[0])}2{else}{$field_value.options_array[0]}{/if}{/capture}
-	{capture name="toggle"}{if empty($field_value.options_array[1])}{else}{$field_value.options_array[1]}{/if}{/capture}
-	{capture name="inTable"}{if !empty($inTable)}{$inTable}{else}{/if}{/capture}
-	{trackerheader level=$smarty.capture.level title=$field_value.name toggle=$smarty.capture.toggle inTable=$smarty.capture.inTable}
-
 {* -------------------- subscription -------------------- *}
 {elseif $field_value.type eq 'U'}
 	{$field_value.value|how_many_user_inscriptions}{if $list_mode ne 'csv'} {tr}Subscriptions{/tr}{/if}

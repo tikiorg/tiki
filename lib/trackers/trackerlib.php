@@ -4857,6 +4857,7 @@ class TrackerLib extends TikiLib
 			'N',
 			'F',
 			'x',
+			'h',
 		);
 	}
 

@@ -35,6 +35,8 @@ class Tracker_Field_Factory
 				return new Tracker_Field_Location($field_info, $this->itemData, $this->trackerDefinition);
 			case 'g':
 				return new Tracker_Field_GroupSelector($field_info, $this->itemData, $this->trackerDefinition);
+			case 'h':
+				return new Tracker_Field_Header($field_info, $this->itemData, $this->trackerDefinition);
 			case 'i':
 				return new Tracker_Field_Image($field_info, $this->itemData, $this->trackerDefinition);
 			case 'j':
