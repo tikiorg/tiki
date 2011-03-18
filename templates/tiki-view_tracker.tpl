@@ -290,6 +290,8 @@
 							{* -------------------- Google Map -------------------- *}
 							{elseif $field_value.type eq 'G'}
 								{include file='tracker_item_field_input.tpl'}
+							{/if}
+							
 							</td>
 							{if (($field_value.type eq 'c' or $field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'b') and $field_value.options_array[0]) eq '1' and $stick ne 'y'}
 								{assign var=stick value="y"}
