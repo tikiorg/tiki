@@ -25,6 +25,8 @@ class Tracker_Field_Factory
 				return new Tracker_Field_Dropdown($field_info, $this->itemData, $this->trackerDefinition, 'other');
 			case 'e':
 				return new Tracker_Field_Category($field_info, $this->itemData, $this->trackerDefinition);
+			case 'F':
+				return new Tracker_Field_Freetags($field_info, $this->itemData, $this->trackerDefinition);
 			case 'f':
 				return new Tracker_Field_DateTime($field_info, $this->itemData, $this->trackerDefinition);
 			case 'G':
