@@ -560,7 +560,7 @@ function wikiplugin_tracker($data, $params)
 					$handler = $factory->getHandler($field);
 
 					if ($handler) {
-						$ins_fields['data'][$k] = array_merge($field, $handler->getValues($_REQUEST));
+						$ins_fields['data'][$k] = array_merge($field, $handler->getFieldData($_REQUEST));
 					}
 				}
 				$cpt = 0;

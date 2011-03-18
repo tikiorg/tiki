@@ -256,7 +256,7 @@ foreach ($xfields['data'] as $i => $current_field) {
 		$handler = $fieldFactory->getHandler($current_field);
 
 		if ($handler) {
-			$field_values = $insert_values = $handler->getValues($_REQUEST);
+			$field_values = $insert_values = $handler->getFieldData($_REQUEST);
 
 			if ($insert_values) {
 				$current_field_ins = array_merge($current_field_ins, $insert_values);
