@@ -52,12 +52,23 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
 		$data = array(
 			'value' => $thisVal,
 			'pvalue' => TikiLib::lib('tiki')->parse_data(htmlspecialchars($thisVal)),
+			'lingualvalue' => array(),
+			'lingualpvalue' => array(),
 		);
 
 		if ($this->getConfiguration("isMultilingual") == 'y') {
-			$data['isMultilingual'] = 'y';
-			foreach($prefs['available_languages'] as $num => $tmplang) {	// TODO add a limit on number of langs - 40+ makes this blow up
+			if (! is_array($requestData[$id_string])) {
+				$out = array();
+				foreach($prefs['available_languages'] as $num => $tmplang) {	// TODO add a limit on number of langs - 40+ makes this blow up
+					if (!isset($out[$tmplang])) {	// Case convert normal -> multilingual
+						$out[$tmplang] = $this->getValue($data['value'], $tmplang);
+					}
+				}
 
+				$requestData[$id_string] = $out;
+			}
+
+			foreach($prefs['available_languages'] as $num => $tmplang) {	// TODO add a limit on number of langs - 40+ makes this blow up
 				if (!isset($requestData[$id_string][$tmplang])) {	// Case convert normal -> multilingual
 					$requestData[$id_string][$tmplang] = $this->getValue($data['value'], $tmplang);
 				}
