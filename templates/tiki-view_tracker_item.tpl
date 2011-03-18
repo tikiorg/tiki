@@ -72,7 +72,7 @@
 					{else}
 						{if $cur_field.type eq 'h'}
 							{include file='tracker_item_field_value.tpl' field_value=$cur_field list_mode=n item=$item_info inTable="formcolor"}
-						{elseif $cur_field.type ne 'x'}
+						{else}
 							{if $stick ne 'y'}
 								<tr class="field{$cur_field.fieldId}">
 									<td class="formlabel" >
@@ -331,32 +331,6 @@
 									</tr>{assign var=stick value="n"}
 								{/if}
 
-							{elseif $cur_field.type eq 'x'}
-
-								{capture name=trkaction}
-									{if $cur_field.options_array[1] eq 'post'}
-										<form action="{$cur_field.options_array[2]}" method="post">
-									{else}
-										<form action="{$cur_field.options_array[2]}" method="get">
-									{/if}
-									{section name=tl loop=$cur_field.options_array start=3}
-										{assign var=valvar value=$cur_field.options_array[tl]|regex_replace:"/^[^:]*:/":""|escape}
-										{if $info.$valvar eq ''}
-											{assign var=valvar value=$cur_field.options_array[tl]|regex_replace:"/^[^\=]*\=/":""|escape}
-											<input type="hidden" name="{$cur_field.options_array[tl]|regex_replace:"/\=.*$/":""|escape}" value="{$valvar|escape}" />
-										{else}
-											<input type="hidden" name="{$cur_field.options_array[tl]|regex_replace:"/:.*$/":""|escape}" value="{$info.$valvar|escape}" />
-										{/if}
-									{/section}
-									<table class="formcolor">
-										<tr>
-											<td>{$cur_field.name}</td>
-											<td><input type="submit" name="trck_act" value="{$cur_field.options_array[0]|escape}" /></td>
-										<tr>
-									</table>
-									</form>
-								{/capture}
-								{assign var=trkact value=$trkact|cat:$smarty.capture.trkaction}
 							{/if}
 
 						{/if}
@@ -417,6 +391,34 @@
 			{* ------------------- *}
 		</form>
 
+		{foreach from=$ins_fields item=cur_field}
+			{if $cur_field.type eq 'x'}
+				{capture name=trkaction}
+					{if $cur_field.options_array[1] eq 'post'}
+						<form action="{$cur_field.options_array[2]}" method="post">
+					{else}
+						<form action="{$cur_field.options_array[2]}" method="get">
+					{/if}
+					{section name=tl loop=$cur_field.options_array start=3}
+						{assign var=valvar value=$cur_field.options_array[tl]|regex_replace:"/^[^:]*:/":""|escape}
+						{if $info.$valvar eq ''}
+							{assign var=valvar value=$cur_field.options_array[tl]|regex_replace:"/^[^\=]*\=/":""|escape}
+							<input type="hidden" name="{$cur_field.options_array[tl]|regex_replace:"/\=.*$/":""|escape}" value="{$valvar|escape}" />
+						{else}
+							<input type="hidden" name="{$cur_field.options_array[tl]|regex_replace:"/:.*$/":""|escape}" value="{$info.$valvar|escape}" />
+						{/if}
+					{/section}
+					<table class="formcolor">
+						<tr>
+							<td>{$cur_field.name}</td>
+							<td><input type="submit" name="trck_act" value="{$cur_field.options_array[0]|escape}" /></td>
+						<tr>
+					</table>
+					</form>
+				{/capture}
+				{assign var=trkact value=$trkact|cat:$smarty.capture.trkaction}
+			{/if}
+		{/foreach}
 		{if $trkact}
 			<h2>{tr}Special Operations{/tr}</h2>
 			{$trkact}
