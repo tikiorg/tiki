@@ -202,54 +202,7 @@ if (isset($_REQUEST['filterfield'])) {
 		$tryexactvalue = preg_split('/\s*:\s*/', $_REQUEST['exactvalue']);
 	}
 }
-//Management of the field type 'User subscribe' (U)
-//when user clic on (un)subscribe
-if (isset($_REQUEST['user_subscribe']) || isset($_REQUEST['user_unsubscribe'])) {
-	$temp = $userlib->get_user_info($user);
-	$id_user = $temp['userId'];
-	$id_tiki_user = $temp['userId'];
-	$U_itemId = (int) $_REQUEST['U_itemId'];
-	$U_fieldId = (int) $_REQUEST['U_fieldId'];
-	$U_value = $trklib->get_item_value(null, $U_itemId, (int) $U_fieldId);
-	$U_maxsubscriptions = substr($U_value, 0, strpos($U_value, '#'));
-	$pattern = "/(\d+)\[(\d+)\]/";
-	preg_match_all($pattern, $U_value, $match);
-	$users_array2 = array();
-	$user_subscription = FALSE;
-	foreach($match[1] as $i => $id_user) {
-		$temp = $userlib->get_userId_info($id_user);
-		if ($id_user == $id_tiki_user) {
-			$user_subscription = TRUE;
-		} else {
-			$users_array2[] = array(
-				'id' => $id_user,
-				'login' => $temp['login'],
-				'friends' => $match[2][$i]
-			);
-		}
-	}
-	$match = NULL;
-	if (isset($_REQUEST['user_subscribe'])) {
-		$users_array2[] = array(
-			'id' => $id_tiki_user,
-			'login' => $user,
-			'friends' => intval($_POST['user_friends'])
-		);
-	}
-	$sql_value = $U_maxsubscriptions . "#";
-	$sql_value2 = "";
-	foreach($users_array2 as $U) {
-		$sql_value2.= $U['id'] . "[" . $U['friends'] . "],";
-	}
-	$sql_value.= $sql_value2 ? substr($sql_value2, 0, strlen($sql_value2) - 1) : "";
-	$xfield = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '', true, array(
-		'fieldId' => array(
-			$U_fieldId
-		)
-	));
-	$xfield['data'][0]['value'] = $sql_value;
-	$trklib->replace_item($_REQUEST['trackerId'], $_REQUEST['itemId'], $xfield);
-}
+
 //*********** handle prev/next links *****************
 if (isset($_REQUEST['reloff'])) {
 	if (isset($_REQUEST['move'])) {

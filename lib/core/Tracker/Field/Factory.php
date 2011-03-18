@@ -85,6 +85,8 @@ class Tracker_Field_Factory
 				return new Tracker_Field_Action($field_info, $this->itemData, $this->trackerDefinition);
 			case 'y':
 				return new Tracker_Field_CountrySelector($field_info, $this->itemData, $this->trackerDefinition);
+			case 'U':
+				return new Tracker_Field_UserSubscription($field_info, $this->itemData, $this->trackerDefinition);
 			case 'W':
 				return new Tracker_Field_WebService($field_info, $this->itemData, $this->trackerDefinition);
 		}

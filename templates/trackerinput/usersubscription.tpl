@@ -1,0 +1,1 @@
+	<input type="text" name="{$field.ins_id}" value="{$field.value}" />
