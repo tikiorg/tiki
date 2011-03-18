@@ -604,10 +604,6 @@ if ($_REQUEST["itemId"]) {
 					$current_field_fields = array_merge($current_field_fields, $insert_values);
 				}
 			} else {
-
-				if ($current_field_fields['type'] == 'f' || $current_field_fields['type'] == 'j') {
-					$dateFields[] = $current_field_fields['fieldId'];
-				}
 				if ($current_field_fields["type"] != 'h') {
 					$fid = $current_field_fields["fieldId"];
 					$current_field_ins["id"] = $fid;
