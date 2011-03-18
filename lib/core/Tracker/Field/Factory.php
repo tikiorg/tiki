@@ -17,6 +17,8 @@ class Tracker_Field_Factory
 				return new Tracker_Field_File($field_info, $this->itemData, $this->trackerDefinition);
 			case 'a':
 				return new Tracker_Field_TextArea($field_info, $this->itemData, $this->trackerDefinition);
+			case 'C':
+				return new Tracker_Field_Computed($field_info, $this->itemData, $this->trackerDefinition);
 			case 'c':
 				return new Tracker_Field_Checkbox($field_info, $this->itemData, $this->trackerDefinition);
 			case 'd':

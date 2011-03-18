@@ -235,13 +235,6 @@ foreach ($xfields['data'] as $i => $current_field) {
 			}			
 			$current_field_list['categories'] = $categlib->get_viewable_child_categories($parentId, $all_descends);
 		}
-		if ($current_field_list['type'] == 'C') {
-			$allfields=null;
-			$infoComputed = $trklib->get_computed_info($current_field_list['options'], $_REQUEST['trackerId'], $allfields);
-			if (!empty($infoComputed)) {
-				$current_field_list = array_merge($infoComputed , $current_field_list);
-			}
-		}
 		if (isset($current_field['otherField'])) {
 			$current_field_list['otherField'] = $current_field['otherField'];
 		}

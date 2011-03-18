@@ -88,7 +88,7 @@
 
 {* -------------------- empty field -------------------- *}
 {elseif empty($field_value.value) and $field_value.value != '0' and $field_value.type ne 'U' and $field_value.type ne '*' and $field_value.type ne 's' 
-	and $field_value.type ne 'n' and $field_value.type ne 'C' and $field_value.type ne 'h'}
+	and $field_value.type ne 'n' and $field_value.type ne 'h'}
 	{if $list_mode ne 'csv' and $is_link eq 'y'}&nbsp;{/if} {* to have something to click on *}
 
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *}
@@ -147,14 +147,13 @@
 
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *} 
 {elseif $field_value.type eq  't' or $field_value.type eq 'n' or $field_value.type eq 'b' or $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R' 
-	or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'w' 
-	or ($field_value.type eq 'C' and $field_value.computedtype ne 'f' and $field_value.computedtype ne 'duration' )}
+	or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'w'}
 	{if $list_mode eq 'y'}
 		{if $field_value.type eq 'u'}
 			{$field_value.value|username:true:true:false|truncate:255:"..."|escape|default:"&nbsp;"}
 		{elseif !empty($field_value.value) || $is_link eq 'y'}			
 			{$field_value.value|truncate:255:"..."|escape|default:"&nbsp;"}
-		{elseif empty($field_value.value) && ($field_value.type eq 'n' or $field_value.type eq 'b' or ($field_value.type eq 'C' and $field_value.computedtype ne 'f'))}
+		{elseif empty($field_value.value) && ($field_value.type eq 'n' or $field_value.type eq 'b')}
 			{$field_value.value}
 		{/if}		
 	{elseif $list_mode eq 'csv'}
@@ -249,7 +248,7 @@
 	{/if}
 
 {* -------------------- date -------------------- *}
-{elseif $field_value.type eq 'f' or $field_value.type eq 'j' or $field_value.computedtype eq 'f'}
+{elseif $field_value.type eq 'f' or $field_value.type eq 'j'}
 	{if $field_value.value}
 		{if $field_value.options_array[0] eq 'd'}
 			{$field_value.value|tiki_short_date}
@@ -265,7 +264,7 @@
 	{else}&nbsp;{/if}
 
 {* -------------------- duration -------------------- *}
-{elseif $field_value.type eq 'duration' or $field_value.computedtype eq 'duration'}
+{elseif $field_value.type eq 'duration'}
 	{if $field_value.value}
 		{if isset($field_value.operator) and $field_value.operator eq 'sum'}
 			{$field_value.value|duration:false:'hour'}

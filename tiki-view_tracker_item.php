@@ -647,15 +647,6 @@ if ($_REQUEST["itemId"]) {
 							}
 						}
 						$smarty->assign("U_liste", $U_liste);
-					} elseif ($current_field_fields["type"] == 'C') {
-						$calc = preg_replace('/#([0-9]+)/', '$info[\1]', $current_field_fields['options_array'][0]);
-						eval('$computed = ' . $calc . ';');
-						$current_field_ins["value"] = $computed;
-						$info[$current_field_fields['fieldId']] = $computed; // in case a computed field use this one
-						$infoComputed = $trklib->get_computed_info($current_field_fields['options_array'][0], $_REQUEST['trackerId'], $fields['data']);
-						if (!empty($infoComputed)) {
-							$current_field_ins = array_merge($infoComputed, $current_field_ins);
-						}
 					} elseif ($current_field_fields['type'] == 'usergroups' && !empty($itemUser)) {
 						$current_field_ins['value'] = array_diff($tikilib->get_user_groups($itemUser), array('Registered', 'Anonymous'));
 					} else {
