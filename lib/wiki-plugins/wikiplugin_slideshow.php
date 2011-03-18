@@ -185,9 +185,9 @@ function getSlideshowTheme($theme) {
 			$result['listitemhighlightcolor'] = '';
 			break;
 		case "start":
-			$result['backgroundcolor'] = '#2191C0';
+			$result['backgroundcolor'] = '#2191c0';
 			$result['backgroundurl'] = '';
-			$result['headerfontcolor'] = 'white';
+			$result['headerfontcolor'] = '#acdd4a';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = 'white';
 			$result['listitemhighlightcolor'] = '#77D5F7';
@@ -396,6 +396,9 @@ function wikiplugin_slideshow($data, $params) {
 			color: $headerfontcolor ! important;
 			background-color: $backgroundcolor ! important;
 			border: solid 1px $headerfontcolor ! important;
+		}
+		a {
+			color: $headerfontcolor ! important;
 		}
 	</style>";
 	
