@@ -53,7 +53,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 		}
 
 		$response = $webservice->performRequest( $ws_params );
-		$output = $template->render( $response, 'tikiwiki' );
+		$output = $template->render( $response, 'html' );
 					
 		return $output;
 	}
