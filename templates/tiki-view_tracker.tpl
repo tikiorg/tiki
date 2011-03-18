@@ -247,7 +247,6 @@
 							{* -------------------- system -------------------- *}
 							{if $field_value.type eq '*'}
 								{include file='tracker_item_field_input.tpl'}
-							{/if}
 							
 							{* -------------------- dynamic list -------------------- *}
 							{elseif $field_value.type eq 'w'}
