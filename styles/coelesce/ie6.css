@@ -73,12 +73,9 @@ h3.box-title {
 }
 
 .moduleflip {
+	display: block;
 	position: static;
 	float: right;
-}
-
-.moduleflip {
-	display: block;
 }
 
 img.flipmodimage {

@@ -226,16 +226,13 @@ input[type=submit]:hover {
 }
 
 .separator {
+	color: #b1b299;
+	text-decoration: none;
+	font-size: 14px;
 	margin-top: 4px;
 	margin-bottom: 2px;
 	padding-bottom: 2px;
 	border-bottom: 1px dashed #2255aa;
-}
-
-.separator {
-	color: #b1b299;
-	text-decoration: none;
-	font-size: 14px;
 }
 
 .separator:hover {

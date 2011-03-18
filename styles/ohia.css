@@ -763,11 +763,11 @@ a.blogt:hover {
 .postinfo div {margin-top: 30%}
 
 .posthead {
+	display: block;
 	text-align: left;
-	padding: 3px}
+	padding: 3px;
+}
 
-.posthead {display: block}
-	
 .posthead small {font-size: 95%}
 
 .posthead h3 {

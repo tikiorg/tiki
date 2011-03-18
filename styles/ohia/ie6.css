@@ -21,10 +21,11 @@ input[type="submit"] {
 .findtable input {font-size: 1em}
 
 #sitetitle {
+	margin-top: 10px;
 	font-size: 26px;
-	height: 34px}
+	height: 34px;
+}
 	
-#sitetitle {margin-top: 10px}
 #tiki-top {font-size: 11px}
 
 #col2 .cssmenu_vert {

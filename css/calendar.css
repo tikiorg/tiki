@@ -2,14 +2,6 @@
 #calendar {
 }
 
-.tabrow {
-	position: relative;
-	left: 0;
-	font-size: 1em;
-	height: 24px !important;
-	padding-top: 11px;
-}
-
 .tabrowLeft {
 	position: absolute;
 	top: 0;
@@ -27,7 +19,10 @@
 }
 
 .tabrow {
+	position: relative;
+	left: 0;
 	margin: 0;
+	height: 24px !important;
 	font-size: 11px;
 	padding: 1px 10px 4px 10px;
 	clear: both;
@@ -124,11 +119,6 @@
 .caltoggle {
 	font-size: 9px;
 	margin-bottom: 7px;
-}
-
-.calfocus {
-	font-size: 9px;
-	background: transparent;
 }
 
 .calfocus a,
@@ -513,11 +503,6 @@ a.viewmodeoff img {
 	background: #DEF;
 }
 
-.caldark {
-	background: #E0E0E0;
-	border: 1px dotted #D6DBDe;
-}
-
 .calodd
 	, .caleven {
 	background: none;
@@ -531,11 +516,6 @@ a.viewmodeoff img {
 	border-width: 0;
 	padding-top: 2px;
 	padding-left: 2px;
-}
-
-.caldark .calfocus {
-	background: none;
-	border-width: 0;
 }
 
 #configlinks {
@@ -670,6 +650,7 @@ a.addevent:hover {}
 .calfocus {
 	border-bottom: 1px dotted #8CACBB;
 	background: #b4d0ec;
+	font-size: 9px;
 }
 
 .caldark a {
@@ -683,6 +664,7 @@ a.addevent:hover {}
 
 .caldark .calfocus {
 	background: #DEF;
+	border-width: 0;
 }
 
 .calfocuson + .calcontent {
@@ -692,9 +674,6 @@ a.addevent:hover {}
 .html_select_time {
 	white-space: nowrap;
 }
-
-.tabrowLeft {  }
-.tabrowRight {  }
 
 .viewmode {
 	line-height: 1em;
