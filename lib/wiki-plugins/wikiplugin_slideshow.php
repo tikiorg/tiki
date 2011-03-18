@@ -397,7 +397,7 @@ function wikiplugin_slideshow($data, $params) {
 			background-color: $backgroundcolor ! important;
 			border: solid 1px $headerfontcolor ! important;
 		}
-		a {
+		.s5-slide a {
 			color: $headerfontcolor ! important;
 		}
 	</style>";
