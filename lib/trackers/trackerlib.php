@@ -5516,6 +5516,33 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract
 	{
 		return $this->renderInputTemplate('trackerinput/datetime.tpl', $context);
 	}
+
+	function getInnerValue($context = array())
+	{
+		$tikilib = TikiLib::lib('tiki');
+		$value = $this->getValue();
+
+		if ($value) {
+			$date = $tikilib->get_short_date($value);
+			if ($this->getOption(0) == 'd') {
+				return $date;
+			} elseif ($this->getOption(0) == 't') {
+				return $tikilib->get_short_time($value);
+			} else {
+				if (isset($context['list_mode']) && $context['list_mode'] == 'csv') {
+					return $tikilib->get_short_datetime($value, false);
+				} else {
+					$current = $tikilib->get_short_date($tikilib->now);
+
+					if ($date == $current) {
+						return $tikilib->get_short_time($value);
+					} else {
+						return $tikilib->get_short_datetime($value, false);
+					}
+				}
+			}
+		}
+	}
 }
 
 /**
