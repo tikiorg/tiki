@@ -4878,6 +4878,7 @@ class TrackerLib extends TikiLib
 			'd',
 			'D',
 			'g',
+			'p',
 			'k',
 		);
 	}
@@ -4954,6 +4955,8 @@ class Tracker_Field_Factory
 				return new Tracker_Field_Numeric($field_info, $this->itemData, $this->trackerDefinition);
 			case 'P':
 				return new Tracker_Field_Ldap($field_info, $this->itemData, $this->trackerDefinition);
+			case 'p':
+				return new Tracker_Field_UserPreference($field_info, $this->itemData, $this->trackerDefinition);			
 			case 'q':
 				return new Tracker_Field_AutoIncrement($field_info, $this->itemData, $this->trackerDefinition);
 			case 'r':
@@ -5816,6 +5819,48 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 	function renderInput($context = array())
 	{
 		return $this->renderInputTemplate('trackerinput/file.tpl', $context);
+	}
+}
+
+/**
+ * Handler class for User preference
+ * 
+ * Letter key: ~p~
+ *
+ */
+class Tracker_Field_UserPreference extends Tracker_Field_Abstract
+{
+	function getValues(array $requestData = array())
+	{
+		$ins_id = $this->getInsertId();
+		
+		if (isset($requestData[$ins_id])) {
+			$value = $requestData[$ins_id];
+		} else {
+			global $trklib, $userlib;
+	
+			$value = '';
+			$itemId = $this->getItemId();
+			
+			if ($itemId) {
+				$itemUser = $this->getTrackerDefinition()->getItemUser($itemId);
+		
+				if (!empty($itemUser)) {
+					if ($this->getOption(0) == 'email') {
+						$value = $userlib->get_user_email($itemUser);
+					} else {
+						$value = $userlib->get_user_preference($itemUser, $this->getOption(0));
+					}
+				}
+			}
+		}
+					
+		return array('value' => $value);
+	}
+
+	function renderInput($context = array())
+	{
+		return $this->renderInputTemplate('trackerinput/userpreference.tpl', $context);
 	}
 }
 
