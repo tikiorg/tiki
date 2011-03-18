@@ -315,8 +315,6 @@
 
 									{if !empty($cur_field.editableBy) and !in_array($default_group, $cur_field.editableBy) and $tiki_p_admin_trackers ne 'y'}
 										{include file='tracker_item_field_value.tpl' field_value=$cur_field}
-									{elseif $cur_field.type eq 'N'}
-										{include file='tracker_item_field_value.tpl' field_value=$cur_field}
 									{elseif $cur_field.type eq 't'}
 										{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
 

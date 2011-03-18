@@ -624,11 +624,6 @@ function wikiplugin_tracker($data, $params)
 						if (isset($_REQUEST[$ins_id.'Day']) || isset($_REQUEST[$ins_id.'Hour'])) {
 							$_REQUEST['track'][$fl['fieldId']] = $trklib->build_date($_REQUEST, $flds['data'][$cpt], $ins_id);
 						}
-					} elseif ($flds['data'][$cpt]['type'] == 'N' && !empty($itemId)) {
-						if (empty($itemUser)) {
-							$itemUser = $this->get_item_creator($trackerId, $itemId);
-						}
-						$flds['data'][$i]['value'] = $trklib->in_group_value($flds['data'][$i], $itemUser);
 					}
 					if (isset($_REQUEST['ins_'.$fl['fieldId']])) { // to remember if error
 						$_REQUEST['track'][$fl['fieldId']] = $_REQUEST['ins_'.$fl['fieldId']];

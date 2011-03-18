@@ -467,16 +467,6 @@
 		{tr}Freetags is not enabled.{/tr}
 	{/if}
 
-{* -------------------- in group -------------------- *}
-{elseif $field_value.type eq 'N'}
-	{if isset($field_value.options_array[1]) and $field_value.options_array[1] eq 'date'}
-		{if !empty($field_value.value)}
-			{$field_value.value|tiki_short_date}
-		{/if}
-	{else}
-		{tr}{$field_value.value}{/tr}
-	{/if}
-
 {* -------------------- other field -------------------- *}
 {* w *}
 {else}

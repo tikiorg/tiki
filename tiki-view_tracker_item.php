@@ -687,8 +687,6 @@ if ($_REQUEST["itemId"]) {
 						}
 					} elseif ($current_field_fields['type'] == 'usergroups' && !empty($itemUser)) {
 						$current_field_ins['value'] = array_diff($tikilib->get_user_groups($itemUser), array('Registered', 'Anonymous'));
-					} elseif ($current_field_fields['type'] == 'N' && !empty($itemUser)) {
-						$current_field_ins['value'] = $trklib->in_group_value($current_field_fields, $itemUser);
 					} elseif ($current_field_fields['type'] == 'F') {
 						$current_field_ins["value"] = $info["$fid"];
 						$freetaglib = TikiLib::lib('freetag');

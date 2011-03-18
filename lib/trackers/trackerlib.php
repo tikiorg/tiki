@@ -1434,12 +1434,6 @@ class TrackerLib extends TikiLib
 					$fopt['value'] = $userlib->get_user_preference($itemUser, $fopt['options_array'][0]);
 				}
 				break;
-			case 'N':
-				if (empty($itemUser)) {
-					$itemUser = $this->get_item_creator($trackerId, $itemId);
-				}
-				$fopt['value'] = $this->in_group_value($fopt, $itemUser);
-				break;
 			case 'A':
 				if (!empty($fopt['options_array'][0]) && !empty($fopt['value'])) {
 					$fopt['info'] = $this->get_item_attachment($fopt['value']);
@@ -1523,30 +1517,6 @@ class TrackerLib extends TikiLib
 
 		return($fields);
 	}
-	function in_group_value($field, $itemUser) {
-		if (empty($itemUser)) {
-			return '';
-		}
-		if (!isset($this->tracker_infocache['users_group'][$field['options_array'][0]])) {
-			$userlib = TikiLib::lib('user');
-			$this->tracker_infocache['users_group'][$field['options_array'][0]] = $userlib->get_users_created_group($field['options_array'][0]);
-		}
-		if (isset($this->tracker_infocache['users_group'][$field['options_array'][0]][$itemUser])) {
-			if (isset($field['options_array'][1]) && $field['options_array'][1] == 'date') {
-				$value = $this->tracker_infocache['users_group'][$field['options_array'][0]][$itemUser];
-			} else {
-				$value = 'Yes';
-			}
-		} else {
-			if (isset($field['options_array'][1]) && $field['options_array'][1] == 'date') {
-				$value = '';
-			} else {
-				$value = 'No';
-			}
-		}
-		return $value;
-	}
-
 	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = 0, $bulk_import = false, $tracker_info='') {
 		global $user, $prefs, $tiki_p_admin_trackers, $tiki_p_admin_users;
 		$categlib = TikiLib::lib('categ');
@@ -4880,6 +4850,7 @@ class TrackerLib extends TikiLib
 			'g',
 			'p',
 			'k',
+			'N',
 		);
 	}
 
@@ -4950,6 +4921,8 @@ class Tracker_Field_Factory
 				return new Tracker_Field_ItemsList($field_info, $this->itemData, $this->trackerDefinition);
 			case 'm':
 				return new Tracker_Field_Simple($field_info, $this->itemData, $this->trackerDefinition, 'email');
+			case 'N':
+				return new Tracker_Field_InGroup($field_info, $this->itemData, $this->trackerDefinition);
 			case 'n':
 			case 'b':
 				return new Tracker_Field_Numeric($field_info, $this->itemData, $this->trackerDefinition);
@@ -6364,6 +6337,57 @@ class Tracker_Field_PageSelector extends Tracker_Field_Abstract
 	}
 }
 
+/**
+ * Handler class for InGroup
+ * 
+ * Letter key: ~N~
+ *
+ */
+class Tracker_Field_InGroup extends Tracker_Field_Abstract
+{
+	function getValues(array $requestData = array())
+	{
+		return array();
+	}
+
+	function renderInput($context = array())
+	{
+		$this->renderOutput($context);	// read only
+	}
+	
+	function renderOutput($context = array()) {
+		$trklib = TikiLib::lib('trk');
+		$itemUser = $trklib->get_item_creator($this->getConfiguration('trackerId'), $this->getItemId());
+		
+		if (!empty($itemUser)) {
+			if (!isset($trklib->tracker_infocache['users_group'][$this->getOption(0)])) {
+				$userlib = TikiLib::lib('user');
+				$trklib->tracker_infocache['users_group'][$this->getOption(0)] = $userlib->get_users_created_group($this->getOption(0));
+			}
+			if (isset($trklib->tracker_infocache['users_group'][$this->getOption(0)][$itemUser])) {
+				if ($this->getOption(1) == 'date') {
+					$value = $trklib->tracker_infocache['users_group'][$this->getOption(0)][$itemUser];
+				} else {
+					$value = 'Yes';
+				}
+			} else {
+				if ($this->getOption(1) == 'date') {
+					$value = '';
+				} else {
+					$value = 'No';
+				}
+			}
+		}
+		
+		if ($this->getOption(1) === 'date') {
+			if (!empty($value)) {
+				return TikiLib::lib('tiki')->get_short_date($value);
+			}
+		} else {
+			return tra($value);
+		}
+	}
+}
 
 
 
