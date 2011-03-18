@@ -774,6 +774,7 @@ function get_default_prefs() {
 		'groupTracker' => 'n',
 		'userTracker' => 'n',
 		'trackerCreatorGroupName' => ' ',
+		'tracker_field_computed' => 'n',
 
 		// user
 		'user_selector_threshold' => 50,

@@ -10,6 +10,11 @@ class Tracker_Field_Computed extends Tracker_Field_Abstract
 {
 	function getFieldData(array $requestData = array())
 	{
+		global $prefs;
+		if ($prefs['tracker_field_computed'] != 'y') {
+			return array();
+		}
+
 		$ins_id = $this->getInsertId();
 		$data = array();
 		
