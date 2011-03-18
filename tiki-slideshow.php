@@ -23,14 +23,15 @@ $headerlib->add_jq_onready( '
 			return $("#tiki_slideshowNote_buttons").clone().show();
 		}
 	}));
-
+	$("#main").hide();
+	
 	if (window.s5Settings.listItemHighlightColor) {
 		$.s5.slides().find("li").hover(function() {
 			$(this)
 				.css("color", window.s5Settings.listItemHighlightColor)
 				.stop()
 				.animate({
-					fontSize: "1.2em"
+					fontSize: $.s5.sizeDetector.width() * 1.2
 				});
 		}, function() {
 			$(this)
