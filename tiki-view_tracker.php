@@ -211,19 +211,7 @@ foreach ($xfields['data'] as $i => $current_field) {
 	}
 	//exclude fields that should not be listed
 	if (($current_field['isTblVisible'] == 'y' or in_array($fid, $popupFields)) and ($current_field['isHidden'] == 'n' or $current_field['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($current_field['type'] == 's' and $current_field['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y'))) {
-		$current_field_list['fieldId'] = $fid;
-		$current_field_list['type'] = $current_field["type"];
-		$current_field_list['name'] = $current_field["name"];
-		$current_field_list['options'] = $current_field["options"];
-		$current_field_list['options_array'] = $current_field['options_array'];
-		$current_field_list['isMain'] = $current_field["isMain"];
-		$current_field_list['isTblVisible'] = $current_field["isTblVisible"];
-		$current_field_list['isHidden'] = $current_field["isHidden"];
-		$current_field_list['isSearchable'] = $current_field["isSearchable"];
-		$current_field_list['isMandatory'] = $current_field["isMandatory"];
-		$current_field_list['description'] = $current_field["description"];
-		$current_field_list['visibleBy'] = $current_field['visibleBy'];
-		$current_field_list['editableBy'] = $current_field['editableBy'];
+		$current_field_list = $current_field;
 		//get category choices available based on option settings
 		if ($current_field_list['type'] == 'e' && $prefs['feature_categories'] == 'y') {
 			$parentId = $current_field_list['options_array'][0];

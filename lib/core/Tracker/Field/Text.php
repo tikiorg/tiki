@@ -37,10 +37,12 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
 	}
 
 	protected function processMultilingual($requestData, $id_string) {
-		global $prefs, $language;
+		global $prefs;
+		$language = $prefs['language'];
+		$multilingual = $this->getConfiguration('isMultilingual') == 'y';
 
 		if (!isset($requestData[$id_string])) {
-			$requestData[$id_string] = $this->getValue();
+			$requestData[$id_string] = $this->getValue('', $multilingual ? $language : '');
 		}
 		
 		if (is_array($requestData[$id_string])) {
