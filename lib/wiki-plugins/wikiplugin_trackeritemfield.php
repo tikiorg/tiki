@@ -158,6 +158,8 @@ function wikiplugin_trackeritemfield($data, $params) {
 					if ($perms["tiki_p_$perm"] != 'y') {
 						return false;
 					}
+				} else {
+					return false;
 				}
 			}
 			$perms = Perms::get(array('type'=>'trackeritem', 'object'=>$itemId));
