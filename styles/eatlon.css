@@ -241,15 +241,19 @@ tt {font-size: 1.2em}
 input[id="sl-login-user"],
 input[id="sl-login-pass"] {background: #e1e1e2}
 
-#siteloginbar input.wikiaction {cursor: pointer}
+.siteloginbar input.wikiaction {cursor: pointer}
 
-#siteloginbar_popup {
+.siteloginbar_popup {
 	bottom: 2px;
 }
 
-#siteloginbar_popup .tabcontent a,
-#siteloginbar_popup .tabcontent a:visited {
-	color: #6d819d;
+.siteloginbar_popup ul ul {
+	margin-top: -6px;
+}
+
+.siteloginbar_popup .tabcontent a,
+.siteloginbar_popup .tabcontent a:visited {
+	color: #fff;
 }
 
 #sitetitle,
@@ -424,9 +428,6 @@ a.flip:hover,
 .tellafriend a:hover,
 .share a:hover {color: #505050}
 
-.tellafriend,
-.share {padding-right: 6px}
-.actions .share {padding-right: 0;}
 #tiki-center {font-size: 1.1em}
 
 /****** Misc. Global ****/

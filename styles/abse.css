@@ -620,6 +620,9 @@ li.tabmark {
 
 .tabmark a:active {color: #636466}
 
+.tabs .tabmark a {
+	text-decoration: none;
+}
 
 .tabmark a:hover,
 .tabactive {

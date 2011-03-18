@@ -518,8 +518,7 @@ a.flip:hover {
 .share {
 	font-size: 80%;
 	text-align: right;
-	margin-right: 1em;
-	margin: 3px 1em -1px 3px;
+	margin: 3px 3px -1px 3px;
 }
 
 .tellafriend a,
