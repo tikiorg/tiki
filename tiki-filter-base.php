@@ -101,5 +101,6 @@ Zend_Loader_Autoloader::getInstance()
 	->registerNamespace('Category')
 	->registerNamespace('WikiParser')
 	->registerNamespace('StandardAnalyzer')
+	->registerNamespace('Tracker')
 	->registerNamespace('TikiDb');
 
