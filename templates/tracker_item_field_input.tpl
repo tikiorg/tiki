@@ -61,19 +61,6 @@
 	{else}
 		{$field_value.value|escape}
 	{/if}
-{* -------------------- numeric and currency -------------------- *}
-{elseif $field_value.type eq 'n' or $field_value.type eq 'b'}
-	{*prepend*}
-	{if $field_value.options_array[2]}
-		<span class="formunit">{$field_value.options_array[2]}&nbsp;</span>
-	{/if}
-	<input type="text" class="numeric" name="{$field_value.ins_id}" {if $field_value.options_array[1]}size="{$field_value.options_array[1]}" 
-		 maxlength="{$field_value.options_array[1]}"{/if} value="{$field_value.value|escape}" id="{$field_value.ins_id}" />
-	{*append*}
-	{if $field_value.options_array[3]}
-		<span class="formunit">&nbsp;{$field_value.options_array[3]}</span>
-	{/if}
-
 
 {* -------------------- radio buttons -------------------- *}
 {elseif $field_value.type eq 'R'}

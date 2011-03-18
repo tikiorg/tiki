@@ -701,21 +701,6 @@ if ($_REQUEST["itemId"]) {
 					} else {
 						$current_field_ins["value"] = $info["$fid"];
 					}
-					if ($current_field_fields['type'] == 'M') {
-						global $filegallib, $prefs;
-						if ($prefs['URLAppend'] == '') {
-							list($val1, $val2) = explode('=', $current_field_ins["value"]);
-						} else {
-							$val2 = $current_field_ins["value"];
-						}
-						$res = $filegallib->get_file_info($val2);
-						if ($res["filetype"] == "video/x-flv") {
-							$ModeVideo = 'y';
-						} else {
-							$ModeVideo = 'n';
-						};
-						$smarty->assign('ModeVideo', $ModeVideo);
-					}
 					if ($current_field_fields['type'] == 'i' && !empty($current_field_ins['options_array'][2]) && !empty($current_field_ins['value'])) {
 						$imagegallib = TikiLib::lib('imagegal');
 

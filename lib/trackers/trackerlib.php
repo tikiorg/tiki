@@ -4861,12 +4861,14 @@ class TrackerLib extends TikiLib
 			'A',
 			'i',
 			'a',
+			'b',
 			'f',
 			'r',
 			'l',
 			'y',
 			'c',
 			'm',
+			'n',
 			'L',
 			'S',
 			'I',
@@ -4944,6 +4946,9 @@ class Tracker_Field_Factory
 				return new Tracker_Field_ItemsList($field_info, $this->itemData, $this->trackerDefinition);
 			case 'm':
 				return new Tracker_Field_Simple($field_info, $this->itemData, $this->trackerDefinition, 'email');
+			case 'n':
+			case 'b':
+				return new Tracker_Field_Numeric($field_info, $this->itemData, $this->trackerDefinition);
 			case 'P':
 				return new Tracker_Field_Ldap($field_info, $this->itemData, $this->trackerDefinition);
 			case 'q':
@@ -6189,6 +6194,38 @@ class Tracker_Field_Ldap extends Tracker_Field_Abstract
 	function renderInput($context = array())
 	{
 		return $this->getValue();
+	}
+}
+
+/**
+ * Handler class for numeric and currency field
+ * 
+ * Letter key: 
+ *  numeric: ~n~
+ *  currency: ~b~
+ *
+ */
+class Tracker_Field_Numeric extends Tracker_Field_Abstract
+{
+	function getValues(array $requestData = array())
+	{
+		$ins_id = $this->getInsertId();
+
+		return array(
+			'value' => (isset($requestData[$ins_id]))
+				? $requestData[$ins_id]
+				: $this->getValue(),
+		);
+	}
+
+	function getInnerValue($context = array())
+	{
+		return $this->renderInputTemplate('trackeroutput/numeric.tpl', $context);
+	}
+
+	function renderInput($context = array())
+	{
+		return $this->renderInputTemplate('trackerinput/numeric.tpl', $context);
 	}
 }
 
