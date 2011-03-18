@@ -388,9 +388,14 @@ function wikiplugin_slideshow($data, $params) {
 	}
 	
 	$notesHtml .= "<style>
-		.s5-footer,.s5-menu,#tiki_slideshow_buttons {
-			background-color: $headerfontcolor ! important;
+		.s5-footer,.s5-menu,#tiki_slideshow_buttons,.s5-outlook-close {
+			background: $headerfontcolor ! important;
 			color: $backgroundcolor ! important;
+		}
+		.s5-outline {
+			color: $headerfontcolor ! important;
+			background-color: $backgroundcolor ! important;
+			border: solid 1px $headerfontcolor ! important;
 		}
 	</style>";
 	
