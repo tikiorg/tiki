@@ -36,6 +36,7 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 				$userlib = TikiLib::lib('user');
 				$temp = $userlib->get_user_info($user);
 				$current_field_ins['users_array'][] = array('id' => $temp['userId'], 'login' => $user, 'friends' => $nb);
+				$current_field_ins['user_subscription'] = true;
 			}
 			$value = $this->encodeUsers($current_field_ins);
 			$this->save($value);
@@ -48,12 +49,13 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 					$value = $this->encodeUsers($current_field_ins);
 					$this->save($value);
 					$current_field_ins = $this->parseUsers($value);
+					$current_field_ins['user_subscription'] = true;
 					break;
 				}
 			}
 		}
-		$U_liste = $this->parseShortcut($current_field_ins);
-		$smarty->assign('U_liste', $U_liste);
+		$current_field_ins['list'] = $this->parseShortcut($current_field_ins);
+		$smarty->assign('current_field_ins', $current_field_ins);
 		return $current_field_ins;
 	}
 	
@@ -81,7 +83,7 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 		$userlib = TikiLib::lib('user');
 		$current_field_ins['value'] = $value; // encoded value
 		$temp = $userlib->get_user_info($user);
-		$id_user = $temp['userId'];
+		$id_tiki_user = $temp['userId'];
 		$pattern = "/(\d+)\[(\d+)\]/";
 		preg_match_all($pattern, $value, $match);
 		$users_array = array();
