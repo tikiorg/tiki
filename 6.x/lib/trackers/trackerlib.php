@@ -867,8 +867,12 @@ class TrackerLib extends TikiLib
 				} elseif ($ev) {
 					if (is_array($ev)) {
 						$keys = array_keys($ev);
-						if (in_array((string)$keys[0], array('<', '>', '<=', '>='))) {
-							$mid .= " AND ttif$i.`value`".$keys[0].'?';
+						if (in_array((string)$keys[0], array('<', '>'))) {
+							$mid .= " AND ttif$i.`value`".$keys[0]."? + 0";
+							$bindvars[] = $ev[$keys[0]];
+						} elseif (in_array((string)$keys[0], array('<=', '>='))) {
+							$mid .= " AND (ttif$i.`value`".$keys[0]."? + 0 OR ttif$i.`value` = ?)";
+							$bindvars[] = $ev[$keys[0]];
 							$bindvars[] = $ev[$keys[0]];
 						} elseif ($keys[0] == 'not') {
 							$mid .= " AND ttif$i.`value` not in (".implode(',', array_fill(0,count($ev),'?')).")";
