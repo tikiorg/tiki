@@ -1482,39 +1482,6 @@ class TrackerLib extends TikiLib
 			$fields[] = $fopt;
 		}
 
-		// Field that need other field value
-		foreach ($fields as $index => $field) {
-			switch ($field['type']) {
-				case 'W':
-					if (count($fopt['options_array']) >= 2) {
-						require_once 'lib/webservicelib.php';
-
-						if (!($webservice = Tiki_Webservice::getService($fopt['options_array'][0]))  ||
-							!($template = $webservice->getTemplate($fopt['options_array'][1]))) {
-							break;
-						}
-
-						$ws_params = array();
-						if ( isset( $fopt['options_array'][2] )) {
-							parse_str($fopt['options_array'][2], $ws_params);
-							foreach ($ws_params as $ws_param_name => $ws_param_value) {
-								foreach ($fields as $sub_field) {
-									if (strcmp($ws_param_value, '%' . $sub_field['name'] . '%') == 0) {
-										$ws_params[$ws_param_name] = $sub_field['value'];
-									}
-								}
-							}
-						}
-
-						$response = $webservice->performRequest( $ws_params );
-						$fields[$index]['value'] = $template->render( $response, 'tikiwiki' );
-					}
-					break;
-				default:
-					break;
-			}
-		}
-
 		return($fields);
 	}
 	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = 0, $bulk_import = false, $tracker_info='') {
@@ -4859,6 +4826,7 @@ class TrackerLib extends TikiLib
 			'C',
 			'x',
 			'h',
+			'W',
 		);
 	}
 

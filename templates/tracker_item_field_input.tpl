@@ -35,11 +35,6 @@
 {* -------------------- User subscription -------------------- *}
 {elseif $field_value.type eq 'U'}
 	<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" />
-{* -------------------- Webservice -------------------- *}
-{elseif $field_value.type eq 'W'}
-	{if $field_value.value ne ''}
-                {$field_value.value}
-        {/if}
 
 {/if}
 
