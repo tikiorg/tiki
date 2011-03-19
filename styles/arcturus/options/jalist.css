@@ -20,19 +20,12 @@ h3.box-title,
 	background: none;
 }
 
-.box {
-	border: none;
-}
-
 /* may need to change these 
 #tiki-top {
 color:#FFFFFF;
 font-size:1.1em;
 }
 */
-h1, h2, h3, h4, h5 {
-	font-family: Arial, Helvetica, sans-serif;
-}
 
 #secondary_site_menu li,
 #secondary_site_menu li a,
@@ -198,13 +191,6 @@ h3.box-title {
 	color: #fff;
 }
 
-
-.cbox-title {
-	color: #fff;
-	border-bottom: 1px solid #676767;
-	overflow: hidden;
-}
-
 .simplebox {
 	margin-left: 5px;
 	margin-right: 5px;
@@ -229,6 +215,8 @@ h3.box-title {
 	padding-left: 0;
 	padding-right: 0;
 	margin-bottom: 0;
+	color: #fff;
+	overflow: hidden;
 }
 
 .cssmenu_horiz a,

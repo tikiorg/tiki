@@ -734,8 +734,6 @@ a.sortheader:visited {
 	color: #fff;
 	text-decoration: underline}
 
-.form {padding: 0.2em}
-
 .findtable {
 	margin-bottom: 20px;
 	padding-bottom: 10px;
@@ -1201,7 +1199,6 @@ Caltrack a:visited {color: #00BD02}
 	padding: 0}
 
 .calfocus {font-size: 90%}
-.calfocuson {font-size: 100%}
 
 .calprio1 a,
 .calprio2 a,
@@ -1217,7 +1214,6 @@ Caltrack a:visited {color: #00BD02}
 .opaque .box-title {border-bottom: 1px solid black}
 .searchresults {display: inline}
 
-.calnavigation a:hover {background: red}
 #caltable .calfocuson,
 .box-data .fc a.today,
 .box-data td a.today {
@@ -1257,6 +1253,7 @@ Caltrack a:visited {color: #00BD02}
 
 .calfocuson {
 	background: #D4D0C8;
+	font-size: 100%;
 }
 
 .calfocuson a {

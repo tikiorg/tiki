@@ -111,6 +111,7 @@ legend {
 }
 
 .navbar {
+	margin: 5px 0;
 	line-height: 220%;
 }
 
@@ -390,14 +391,9 @@ h3.box-title,
 	color: #363636;
 }
 
-.rbox-title {
-	border-bottom: none !important;
-}
-	
-
-
 .errors {
 	background: none;
+	color: #cd0a0a;
 }
 
 .errors .rbox-title,
@@ -418,10 +414,6 @@ h3.box-title,
 	border: 1px solid #666;
 	background-color: #cccccc;
 	color: #363636;
-}
-
-.errors {
-	color: #cd0a0a;
 }
 
 /***** Tables, Tabs *****/
@@ -582,16 +574,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 	border: 1px solid #aaa;
 	padding: 6px;
 }
-/*
-.post .author {}
-	
-.post .author_post_info:first-child {}
-.post .postbody-title .title a.link {}
-*/
 
-.navbar {
-	margin: 5px 0;
-}
 .postbody-title {
 	padding: .5em .3em .3em 1em;
 	position: relative;
@@ -793,6 +776,7 @@ a.admbox.off {
 .rbox-title {
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
+	border-bottom: none !important;
 	-moz-border-radius-topleft: 4px;
 	-moz-border-radius-topright: 4px;
 	-webkit-border-top-left-radius: 4px;

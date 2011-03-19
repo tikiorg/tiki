@@ -861,10 +861,6 @@ img.articleimage {
 
 .postinfo div {margin-top: 30%}
 
-.posthead {
-	text-align: left;
-	padding: 3px}
-
 .postinfo {
 	margin-bottom: 20px;
 	margin-top: 10px;
@@ -872,6 +868,8 @@ img.articleimage {
 
 .posthead {
 	display: block;
+	text-align: left;
+	padding: 3px;
 	font-weight: bold;
 	letter-spacing: .4pt}
 
@@ -1114,6 +1112,7 @@ img.athumb {
 	padding: 0}
 
 .calfocus {
+	border-bottom: 0;
 	font-size:90%;
 	background: transparent}
 
@@ -1205,7 +1204,6 @@ img.athumb {
 .caldark {background: #dcdcdc}
 * html .caldark {padding: 0}
 .caldark .calfocus {background: #dcdcdc}
-.calfocus {border-bottom: 0}
 /*today focus*/
 .calfocuson {
 	font-size: 100%;

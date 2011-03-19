@@ -513,8 +513,7 @@ a.flip:hover,
 }
 
 /* default link padding */
-.cssmenu_horiz a,
-.cssmenu_vert a {
+.cssmenu_horiz a {
 	padding: .75em 1em;
 }
 
@@ -981,10 +980,6 @@ td.form {
 	padding: .2em .2em 0;
 }
 
-.ui-widget-header {
-	background: #000;
-}
-
 .tabactive {
 	border: solid 1px #696969;
 }
@@ -1011,6 +1006,7 @@ td.form {
     font-size: 1em;
 }
 .ui-widget-header {
+	background: #000;
 	color: #d8d8d8;
 }
 

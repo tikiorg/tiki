@@ -685,10 +685,6 @@ p.editdate {
 	border-top: 1px solid #696969;
 }
 
-.diffbody {
-	color: #000;
-}
-
 .diffadded {
 	background: #ccffcc;
 	color: #000;
@@ -719,10 +715,6 @@ p.editdate {
 
 .diffadded .diffchar {
 	color: blue;
-}
-
-.plugin-desc {
-	padding: 5px;
 }
 
 /***** Articles ****/

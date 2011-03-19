@@ -22,6 +22,9 @@ h3.box-title,
 
 .box {
 	border: none;
+	background: #e1ebf0;
+	margin: 0.2em;
+	padding-bottom: 0; /* overrides padding-bottom: 10px of the arcturus.css */
 }
 
 h1, h2, h3, h4, h5 {
@@ -109,8 +112,9 @@ hr {
 }
 
 fieldset {
-	padding: 0.2em;
+	padding: 0.9em;
 	margin-bottom: 0.2em;
+	border: solid 1px #99ccff;
 }
 
 input {
@@ -177,11 +181,6 @@ input[type=submit]:hover,
 	vertical-align: middle;
 }
 
-fieldset {
-	border: solid 1px #99ccff;
-	padding: 0.9em
-}
-
 select {text-align: start}
 
 textarea {
@@ -206,13 +205,6 @@ textarea {
 	color: #000;
 }
 	
-.box {
-	background: #e1ebf0;
-	border: 0;
-	margin: 0.2em;
-	padding-bottom: 0; /* overrides padding-bottom: 10px of the arcturus.css */
-}
-
 h3.box-title {
 	color: #0077cc;
 	background: #abcdef;

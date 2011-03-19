@@ -75,7 +75,9 @@ body.fixed_width .fixedwidth {
 }
 
 #tiki-top {
+	height: 50px;
 	width: 100%;
+	background: #000 url('fivealive/topbar.jpg') repeat-x;
 }
 
 #topbar_modules {
@@ -221,10 +223,6 @@ body.fixed_width .fixedwidth {
 	text-align: left !important;
 	margin-bottom: 24px;
 	padding-top: 8px;
-}
-
-#footer .box {
-
 }
 
 #footer .box:first-child {
@@ -665,10 +663,6 @@ li.login_link ul li a {
 }
 /* end Sitelogin Popup */
 
-#tiki-top {
-	height: 50px;
-	background: #000 url('fivealive/topbar.jpg') repeat-x;
-}
 #tiki-top[id] {height: auto; min-height: 50px;}
 
 /****** Menus, Links ******/
