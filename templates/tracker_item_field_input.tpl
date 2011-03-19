@@ -28,11 +28,6 @@
 <select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue='+escape(this.value),'{$field_value.http_request[5]}')"{/if}>
 	</select>
 
-
-{* -------------------- User subscription -------------------- *}
-{elseif $field_value.type eq 'U'}
-	<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" />
-
 {/if}
 
 {if $field_value.isMandatory eq 'y' and $showmandatory eq 'y'}
