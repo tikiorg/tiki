@@ -220,7 +220,7 @@ function prefs_global_list() {
 			'name' => tra('Passcode'),
 			'type' => 'text',
 			'size' => 15,
-			'hint' =>  tra('Alphanumeric code requierd to complete the registration'),
+			'hint' =>  tra('Alphanumeric code required to complete the registration'),
 		),
 		'userTracker' => array(
 			'name' => tra('Use tracker to collect more user information'),

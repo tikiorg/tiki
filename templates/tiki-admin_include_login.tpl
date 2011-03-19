@@ -1,3 +1,16 @@
+{jq}		
+	$("#genPass span").click(function () {
+		var passcodeId = $("input[name=registerPasscode]").attr('id');
+		genPass(passcodeId);
+		return false
+	});
+
+	$("input[name=useRegisterPasscode]").change(function () {
+		document.LogForm.registerPasscode.value='';
+		return false
+	});
+{/jq}
+
 <div class="navbar">
 	{button href="tiki-admingroups.php" _text="{tr}Admin Groups{/tr}"}
 	{button href="tiki-adminusers.php" _text="{tr}Admin Users{/tr}"}
@@ -8,7 +21,7 @@
 	{/remarksbox}
 {/if}
 
-<form action="tiki-admin.php?page=login" class="admin" method="post">
+<form action="tiki-admin.php?page=login" class="admin" method="post" name="LogForm">
 	<input type="hidden" name="loginprefs" />
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" value="{tr}Change preferences{/tr}" />
@@ -32,6 +45,9 @@
 					{preference name=useRegisterPasscode}
 					<div class="adminoptionboxchild" id="useRegisterPasscode_childcontainer">
 						{preference name=registerPasscode}
+						<span id="genPass">
+								{button href="#" _onclick="" _text="{tr}Generate a passcode{/tr}"}
+						</span>
 					</div>
 
 					{if $gd_lib_found neq 'y'}
