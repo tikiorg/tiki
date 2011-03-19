@@ -561,48 +561,7 @@ if ($_REQUEST["itemId"]) {
 					$fid = $current_field_fields["fieldId"];
 					$current_field_ins["id"] = $fid;
 					if (!isset($info["$fid"])) $info["$fid"] = '';
-					if ($current_field_fields["type"] == 'U') {
-						$current_field_ins["value"] = $info["$fid"];
-						$temp = $userlib->get_user_info($user);
-						$id_user = $temp['userId'];
-						$id_tiki_user = $temp['userId'];
-						$pattern = "/(\d+)\[(\d+)\]/";
-						preg_match_all($pattern, $current_field_ins["value"], $match);
-						$users_array = array();
-						$current_field_ins["user_subscription"] = FALSE;
-						$U_nb_users = 0;
-						$current_field_ins["user_nb_friends"] = 0;
-						foreach($match[1] as $j => $id_user) {
-							$temp = $userlib->get_userId_info($id_user);
-							array_push($users_array, array(
-								'id' => $id_user,
-								'login' => $temp['login'],
-								'friends' => $match[2][$j]
-							));
-							$U_nb_users+= $match[2][$j] + 1;
-							if ($id_user == $id_tiki_user) {
-								$current_field_ins["user_subscription"] = TRUE;
-								$current_field_ins["user_nb_friends"] = $match[2][$j];
-							}
-						}
-						$current_field_ins["users_array"] = array();
-						$current_field_ins["users_array"] = $users_array;
-						$U_maxsubscriptions = substr($info["$fid"], 0, strpos($info["$fid"], '#'));
-						$current_field_ins["maxsubscriptions"] = $U_maxsubscriptions;
-						$U_liste = NULL;
-						$U_othersubscriptions = $current_field_ins["user_nb_friends"];
-						if (!$current_field_ins["user_subscription"]) {
-							$U_othersubscriptions--;
-						}
-						if ($U_maxsubscriptions) {
-							for ($j = 0; $j <= $U_maxsubscriptions - $U_nb_users + $U_othersubscriptions; $j++) {
-								$U_liste[$j] = $j;
-							}
-						}
-						$smarty->assign("U_liste", $U_liste);
-					} else {
-						$current_field_ins["value"] = $info["$fid"];
-					}
+					$current_field_ins["value"] = $info["$fid"];
 					if (isset($current_field_ins["value"])) {
 						$last[$fid] = $current_field_ins["value"];
 					}
