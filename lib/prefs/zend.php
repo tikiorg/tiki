@@ -18,12 +18,18 @@ function prefs_zend_list() {
 			'type' => 'text',
 			'size' => '20',
 			'perspective' => false,
+			'parameters' => array(
+				'autocomplete' => 'off'
+			),
 		),
 		'zend_mail_smtp_pass' => array(
 			'name' => tra('Password'),
 			'type' => 'password',
 			'size' => '20',
 			'perspective' => false,
+			'parameters' => array(
+				'autocomplete' => 'off'
+			),
 		),
 		'zend_mail_smtp_port' => array(
 			'name' => tra('Port'),

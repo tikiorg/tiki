@@ -58,7 +58,7 @@
 
 					{preference name=zend_mail_smtp_auth}
 					<div class="adminoptionboxchild zend_mail_smtp_auth_childcontainer login plain crammd5">
-						<p>{tr}These values will be stored in plain text in the database.{/tr}</p>
+						<p>{tr}These values will be stored in plain text in the database:{/tr}</p>
 						{preference name=zend_mail_smtp_user}
 						{preference name=zend_mail_smtp_pass}
 					</div>

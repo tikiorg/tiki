@@ -37,6 +37,7 @@ class PreferencesLib
 				'hint' => '',
 				'shorthint' => '',
 				'perspective' => true,
+				'parameters' => array(),
 			);
 			$info = $data[$name];
 
@@ -70,6 +71,13 @@ class PreferencesLib
 
 			if( $deps && isset( $info['dependencies'] ) ) {
 				$info['dependencies'] = $this->getDependencies( $info['dependencies'] );
+			}
+
+			$info['params'] = '';
+			if (!empty($info['parameters'])) {
+				foreach ($info['parameters'] as $param => $value) {
+					$info['params'] .= ' ' . $param . '="' . $value . '"';
+				}
 			}
 
 			$info['available'] = true;
