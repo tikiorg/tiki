@@ -598,12 +598,6 @@ $id_fields = array();
 foreach($xfields['data'] as $sid => $onefield) {
 	$id_fields[$xfields['data'][$sid]['fieldId']] = $sid;
 }
-foreach($ins_fields['data'] as $sid => $onefield) {
-	if ($ins_fields['data'][$sid]['type'] == 'w') {
-		$trklib->prepare_dynamic_items_list($ins_fields['data'][$sid], $ins_fields['data']);
-	}
-}
-
 // Pull realname for user.
 $info["createdByReal"] = $tikilib->get_user_preference($info["createdBy"], 'realName', '');
 $info["lastModifByReal"] = $tikilib->get_user_preference($info["lastModifBy"], 'realName', '');

@@ -541,12 +541,6 @@ foreach($xfields['data'] as $xfd) {
 		}
 	}
 }
-// dynamic list process
-foreach($listfields as $sfid => $oneitem) {
-	if ($listfields[$sfid]['type'] == 'w') { // need to set the httprequest on item link
-		$trklib->prepare_dynamic_items_list($listfields[$sfid], $fields['data']);
-	}
-}
 
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $smarty->assign('tracker_info', $tracker_info);

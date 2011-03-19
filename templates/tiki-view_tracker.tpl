@@ -1,4 +1,3 @@
-<script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 
 {title url="tiki-view_tracker.php?trackerId=$trackerId" adm="trackers"}{tr}Tracker:{/tr} {$tracker_info.name|escape}{/title}
 
@@ -242,10 +241,6 @@
 							{/if}
 							{* -------------------- system -------------------- *}
 							{if $field_value.type eq '*'}
-								{include file='tracker_item_field_input.tpl'}
-							
-							{* -------------------- dynamic list -------------------- *}
-							{elseif $field_value.type eq 'w'}
 								{include file='tracker_item_field_input.tpl'}
 							
 							{* -------------------- User subscription -------------------- *}

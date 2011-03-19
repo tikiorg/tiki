@@ -1172,13 +1172,6 @@ function wikiplugin_tracker($data, $params)
 						$opts[1] = preg_split('/:/', $f['options_array'][1]);
 						$finalFields = explode('|', $f['options_array'][3]);
 						$flds['data'][$i]['value'] = $trklib->get_join_values($trackerId, $itemId, array_merge(array($f['options_array'][2]), array($f['options_array'][1]), array($finalFields[0])), $f['options_array'][0], $finalFields, ' ', empty($f['options_array'][5])?'':$f['options_array'][5]);
-					} elseif ($f['type'] == 'w') {
-						$trklib->prepare_dynamic_items_list($f, $flds['data']);
-						if ($flds['data'][$i]['type'] == 'r') {
-							// we prentended it was an item link
-							$bindingValue = $trklib->get_item_value($trackerId, $itemId, $f['options_array'][2]);
-							$flds['data'][$i]['list'] = $trklib->get_filtered_item_values($f['options_array'][1], $bindingValue, $f['options_array'][3]);
-						}
 					} elseif ($f['type'] == 'f' && empty($itemId) && (empty($f['options_array'][3]) || $f['options_array'][3] != 'blank')) {
 						$flds['data'][$i]['value'] = $tikilib->now;
 					} elseif ($f['type'] == 'F') {

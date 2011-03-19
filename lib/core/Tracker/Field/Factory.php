@@ -89,6 +89,8 @@ class Tracker_Field_Factory
 				return new Tracker_Field_UserSubscription($field_info, $this->itemData, $this->trackerDefinition);
 			case 'W':
 				return new Tracker_Field_WebService($field_info, $this->itemData, $this->trackerDefinition);
+			case 'w':
+				return new Tracker_Field_DynamicList($field_info, $this->itemData, $this->trackerDefinition);
 		}
 	}
 }

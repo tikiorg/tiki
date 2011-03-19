@@ -1,4 +1,3 @@
-<script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 
 {title help="trackers"}{$tracker_info.name|escape}{/title}
 
@@ -311,9 +310,6 @@
 									{if !empty($cur_field.editableBy) and !in_array($default_group, $cur_field.editableBy) and $tiki_p_admin_trackers ne 'y'}
 										{include file='tracker_item_field_value.tpl' field_value=$cur_field}
 
-									{elseif $cur_field.type eq 'w'}
-										{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
-
 									{elseif $cur_field.type eq 'U'}
 										<input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value}" />
 
@@ -429,11 +425,3 @@
 	{capture name=url}{$base_url}{$itemId|sefurl:trackeritem}{/capture}
 	{tr}The original document is available at{/tr} <a href="{$smarty.capture.url}">{$smarty.capture.url}</a>
 {/if}
-
-{foreach from=$ins_fields key=ix item=cur_field}
-	{if !empty($cur_field.http_request)}
-		{jq}
-			selectValues('trackerIdList={{$cur_field.http_request[0]}}&fieldlist={{$cur_field.http_request[3]}}&filterfield={{$cur_field.http_request[1]}}&status={{$cur_field.http_request[4]}}&mandatory={{$cur_field.http_request[6]}}&filtervalue={{$cur_field.http_request[7]|escape:"url"}}&selected={{$cur_field.http_request[8]|escape:"url"}}','{{$cur_field.http_request[5]}}')
-		{/jq}
-	{/if}
-{/foreach}
