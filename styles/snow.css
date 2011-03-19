@@ -167,14 +167,10 @@ input[type="password"] {
 	width: 120px;
 	cursor: text}
 
-select {
-	font-weight: normal;
-	border: 1px solid #788596;
-}
-
 input[type=wikiaction] {margin-bottom: 2px}
 
 select {
+	font-weight: normal;
 	border: 1px solid #6c7b8c;
 	color: #000; 
 	background: #ECEEF2;
@@ -256,10 +252,10 @@ body.fixed_width .fixedwidth .fixedwidth {
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
 
-/* default link padding */
 .cssmenu_horiz a,
 .cssmenu_vert a {
 	padding: .3em 1em;
+	font-size: 12px;
 }
 
 .cssmenu_horiz a,
@@ -274,12 +270,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 .cssmenu_vert a:hover {
 	color: #6c7b8c;
 	text-decoration: none;
-}
-
-/* typography, colors */
-.cssmenu_horiz a,
-.cssmenu_vert a {
-	font-size: 12px;
 }
 
 .cssmenu_vert li ul li,
@@ -465,16 +455,6 @@ h3.box-title {
 .wikitext .halffloat .box {
 	width: 48%;
  }
-
-.thirdfloat .box,
-.wikitext .thirdfloat .box {
-	width: 33%;
-}
-
-.quarterfloat .box,
-.wikitext .quarterfloat .box {
-	width: 24%;
-}
 
 /** Other boxes **/
 .wikitext .cbox {
@@ -740,12 +720,18 @@ ul.floatleft li {
 .wikicache:hover {}
 .wiki {}
 .wikinew {}
-.wiki-edithelp {display: none}
+
+.wiki-edithelp {
+	display: none;
+}
 #wikihelp-tab table{}
-#wikihelp-tab table td {padding: 2px}
+
+#wikihelp-tab table td {
+padding: 2px;
+}
+
 textarea.wikiedit {}
 p.editdate {}
-.wiki-edithelp {}
 img.externallink {}
 
 /* Needed esp. for light-on-dark theme */
@@ -1173,7 +1159,9 @@ Caltrack a:visited {color: #00BD02}
 
 .calfocus {font-size: 90%}
 
-.calfocuson {font-size: 100%}
+.calfocuson {
+	font-size: 100%;
+}
 
 .calprio1 a,
 .calprio2 a,
@@ -1238,10 +1226,6 @@ Caltrack a:visited {color: #00BD02}
 
 #calscreen .calfocuson {
 	background: #cde4f3;
-}
-
-.calfocuson {
-	font-size: 100%;
 }
 
 .calfocuson a {

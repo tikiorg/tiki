@@ -381,6 +381,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 .logged-in {
 	width: 120px;
+	padding-right: 20px;
 }
 
 .siteloginbar label,
@@ -429,10 +430,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 	font-size: 90%;
 	background: #204c65;
 	font-weight: normal;
-}
-
-.logged-in {
-	padding-right: 20px;
 }
 
 #sitelocbar {
@@ -1350,6 +1347,7 @@ body.tiki_blogs .postbody-title {
 	min-width: 100%; /* IE7 */
 	min-height: 46px;
 	border: 0;
+	color: #fff;
 }
 
 body.tiki_blogs .postbody-title img {
@@ -1391,11 +1389,6 @@ body.tiki_blogs .author_info img {
 	vertical-align: top;
 }
 
-body.tiki_blogs .postbody-title {
-	border: 0;
-	color: #fff;
-}
-	
 body.tiki_blogs .postbody .postfooter {
 	width: 100%;
 }
@@ -1750,10 +1743,6 @@ body.tiki_blogs .post .author_actions {
 .calfocus {
 	font-size: 90%;
 	background: #cce5ff;
-}
-
-.calfocuson {
-	font-size: 100%;
 }
 
 .calprio1 a,

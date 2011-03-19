@@ -21,6 +21,8 @@ h3.box-title,
 
 .box {
 	border: none;
+	padding-top: 3px;
+	margin-top: 13px;
 }
 
 #secondary_site_menu li,
@@ -187,9 +189,6 @@ h1, .pagetitle {
 	margin-bottom: 2px;
 	padding-bottom: 2px;
 	background: none;
-}
-
-.separator {
 	color: #b1b299;
 	text-decoration: none;
 	font-size: 1em;
@@ -211,11 +210,6 @@ h1, .pagetitle {
 .option a:hover,
 .separator a:hover {
 	color: #000;
-}
-
-.box {
-	padding-top: 3px;
-	margin-top: 13px;
 }
 
 h3.box-title {

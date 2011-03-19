@@ -990,10 +990,6 @@ Caltrack a:visited {color: #00BD02}
 	font-size: 90%;
 	background: inherit}
 
-.caldark .calfocus {background: inherit}
-
-.calfocuson + .calcontent {background: #e6eff8}
-
 .calprio1 a,
 .calprio2 a,
 .calprio3 a,
@@ -1014,7 +1010,6 @@ Caltrack a:visited {color: #00BD02}
 
 .opaque .box-title {border-bottom: 1px solid black}
 .searchresults {display: inline}
-.calnavigation a:hover {background: red}
 
 #caltable .calfocuson,
 .box-data .fc a.today,
@@ -1055,7 +1050,6 @@ Caltrack a:visited {color: #00BD02}
 .caleven {background: #f5f5f5}
 * html .caleven {padding: 0}
 .caldark {background: #c4cdda}
-.caldark .calfocus {background: #c4cdda}
 * html .caldark {padding: 0}
 .caldark .calfocus {background: #c4cdda}
 

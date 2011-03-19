@@ -606,13 +606,6 @@ img.flipmodimage:hover {
 	border: 1px solid #aaa !important;
 }
 
-.opaque {
-	border-top: 1px solid #d3d3d3;
-	border-bottom: 1px solid #d3d3d3;
-	padding: 7px;
-	margin: 0;
-}
-
 .box-data {
 	padding-bottom: 8px;
 }
@@ -1123,14 +1116,11 @@ body.tiki_blogs .post .title h2 {
 }
 
 body.tiki_blogs .post .postbody {
+	background: none;
+	border: 0;
 	margin-right: 8px;
 	line-height: 1.4em;
 	margin-bottom: 1em;
-}
-
-body.tiki_blogs .post .postbody {
-	background: none;
-	border: 0;
 }
 
 body.tiki_blogs .actions {
@@ -1138,11 +1128,6 @@ body.tiki_blogs .actions {
 }
 
 body.tiki_blogs .author_info {
-}
-
-.postbody-title {
-	background: none;
-	border: 0;
 }
 
 body.tiki_blogs .postbody-title {
@@ -1179,6 +1164,7 @@ body.tiki_blogs .postfooter .actions {
 	float: none;
 	margin-top: 0;
 	margin-bottom: auto;
+	border: 0;
 	border-bottom: 1px solid #acccdd;
 	background: #e0eaf4;
 }
@@ -1477,6 +1463,8 @@ caltrack a:visited {
 }
 
 .opaque {
+	padding: 7px;
+	margin: 0;
 	background: #fff;
 	border-left: 1px solid #a9a9a9;
 	border-top: 1px solid #a9a9a9;
@@ -1521,13 +1509,10 @@ caltrack a:visited {
 
 /*****  Polls  *****/
 .pollresults {
+	width: 100%;
 	margin-top: 5px;
 	font-size: 1.2em;
 	padding: 0 5px;
-}
-
-.pollresults {
-	width: 100%;
 }
 
 .pollr {

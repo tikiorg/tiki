@@ -1185,10 +1185,6 @@ img.externallink {
 	margin-bottom: 2px;
 }
 
-.tocnavlink {
-	color: #000;
-}
-
 .toc {
 	list-style-type: none;
 	margin-left: 0;
@@ -1467,23 +1463,12 @@ body.tiki_blogs .post {
 }
 
 body.tiki_blogs .post .postbody {
-	border: 1px solid #AEAEAE;
-	border-bottom: 1px solid #AEAEAE;
-	color: black;
-	padding: 10px;
-}
-
-body.tiki_blogs .post .postbody {
 	background: #f9fcff;
 	border: 1px solid #8cacbb;
+	border-bottom: 1px solid #AEAEAE;
 	color: #000;
 	padding: 0;
 	margin: 5px 0;
-}
-
-.postbody-title {
-	background: none;
-	border: 0;
 }
 
 body.tiki_blogs .postbody-title {
@@ -1527,6 +1512,7 @@ body.tiki_blogs .postfooter {
 	display: block;
 	clear: both;
 	background: #e0eaf4;
+	border: 0;
 	border-bottom: 1px solid #8cacbb;
 	padding-bottom: 4px;
 }
@@ -1951,13 +1937,10 @@ ul.catitems li {
 
 /*****  Polls  *****/
 .pollresults {
+	width: 100%;
 	margin-top: 5px;
 	font-size: 1.2em;
 	padding: 0 5px;
-}
-
-.pollresults {
-	width: 100%;
 }
 
 .pollr {

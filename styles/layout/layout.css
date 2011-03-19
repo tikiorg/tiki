@@ -1474,9 +1474,6 @@ body.tiki_forums .normal {
 
 .postfooter-nav {
 	width: 100%;
-}
-
-.postfooter-nav {
 	display: block;
 	margin-top: 1em;
 }
@@ -1646,10 +1643,6 @@ img.athumb {
 
 .sorttitle {
 	margin-left: 10px;
-}
-
-#browse_image {
-	width: 100%
 }
 
 /* Random image module - top and bottom margin better
