@@ -842,7 +842,7 @@ class Comments extends TikiLib
 			'topics_list_author' => $topics_list_author,
 			'topics_list_author_avatar' => $topics_list_author_avatar,
 			'topicsPerPage' => (int) $topicsPerPage,
-			'topicsOrdering' => $topicOrdering,
+			'topicOrdering' => $topicOrdering,
 			'threadOrdering' => $threadOrdering,
 			'pruneMaxAge' => (int) $pruneMaxAge,
 			'forum_last_n' => (int) $forum_last_n,
