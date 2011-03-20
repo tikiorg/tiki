@@ -5817,7 +5817,8 @@ if( \$('#$id') ) {
 			$data = preg_replace('/<\/([a-z]+)><h([1-6])>/im', "</\\1>\n<h\\2>", $data);
 			$htmlheadersearch = '/<h([1-6])>\s*([^<]+)\s*<\/h[1-6]>/im';
 			preg_match_all($htmlheadersearch, $data, $htmlheaders);
-			for ($i = 0; $i < count($htmlheaders[1]); $i++) {
+			$nbhh=count($htmlheaders[1]);
+			for ($i = 0; $i < $nbhh; $i++) {
 				$htmlheaderreplace = '';
 				for ($j = 0; $j < $htmlheaders[1][$i]; $j++) {
 					$htmlheaderreplace .= '!';

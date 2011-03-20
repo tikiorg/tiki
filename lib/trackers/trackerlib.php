@@ -4114,10 +4114,12 @@ class TrackerLib extends TikiLib
 	}
 	// look for default value: a default value is 2 consecutive same value
 	function set_default_dropdown_option($field) {
-		for ($io = 0; $io < count($field['options_array']); ++$io) {
+		$nbio = count($field['options_array']);
+		for ($io = 0; $io < $nbio; ++$io) {
 			if ($io > 0 && $field['options_array'][$io] == $field['options_array'][$io - 1]) {
 				$field['defaultvalue'] = $field['options_array'][$io];
-				for (; $io < count($field['options_array']) - 1; ++$io) {
+				$nbprevio = count($field['options_array']) - 1;
+				for (; $io < $nbprevio; ++$io) {
 					$field['options_array'][$io] = $field['options_array'][$io + 1];
 				}
 				unset($field['options_array'][$io]);

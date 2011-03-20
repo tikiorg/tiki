@@ -2842,15 +2842,16 @@ class Tiki_Profile_InstallHandler_Sheet extends Tiki_Profile_InstallHandler // {
 			//here we convert the array to that of what is acceptable to the sheet lib
 			$parentSheetId;
 			$sheets = array();
-			
-			for ($sheetI = 0; $sheetI < count($this->data); $sheetI++)
+			$nbsheets = count($this->data);	
+			for ($sheetI = 0; $sheetI < $nbsheets; $sheetI++)
 			{
 				$title = $this->data[$sheetI]['title'];
 				$title = ($title ? $title : "Untitled - From Profile Import");
-				
-				for ($r = 0; $r < count($this->data[$sheetI]); $r++)
+				$nbdatasheetI = count($this->data[$sheetI]);	
+				for ($r = 0; $r < $nbdatasheetI; $r++)
 				{
-					for ($c = 0; $c < count($this->data[$sheetI][$r]); $c++)
+					$nbdatasheetIr = count($this->data[$sheetI][$r]);
+					for ($c = 0; $c < $nbdatasheetIr; $c++)
 					{
 						$value = "";
 						$formula = "";
