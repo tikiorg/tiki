@@ -77,7 +77,6 @@ body.fixed_width .fixedwidth {
 #tiki-top {
 	height: 50px;
 	width: 100%;
-	background: #000 url('fivealive/topbar.jpg') repeat-x;
 }
 
 #topbar_modules {
@@ -426,7 +425,9 @@ select {
 	background: url(fivealive/options/blueberry/siteheader.jpg) no-repeat;
 }
 
-#quickadmin {
+#top_modules .box-quickadmin {
+	position: absolute;
+	right: 10px;
 	background: #fff;
 	border: 1px solid #696969;
 	border-top: 0;
@@ -513,6 +514,11 @@ select {
 	color: #000;
 } /* end search form filter dropdown */
 
+#top_modules .box-logo{
+	position: absolute;
+	left: 10px;
+}
+
 #sitelogo img {
 	margin-top: 16px;
 }
@@ -522,6 +528,7 @@ select {
 	top: 75px;
 	left: 415px;
 	font-family: Paneuropa, "Bitstream Vera Sans", Arial, Helvetica, sans-serif;
+	white-space: nowrap;
 }
 
 #sitetitle,
@@ -557,12 +564,6 @@ select {
 	z-index: 1;
 }
 
-/*.siteloginbar_popup {
-	position: inherit;
-	right: auto;
-	bottom: auto;
-}*/
-
 .siteloginbar_popup fieldset {
 	border: none;
 	margin: 0; padding: 0;
@@ -588,14 +589,14 @@ select {
 	background-color: #070707;
 }
 
-.siteloginbar_popup .cbox {
+.siteloginbar_poppedup li {
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	color: #2098CD;
 }
 
-#header .siteloginbar_popup .cbox a {
+.siteloginbar_poppedup a {
 	color: #2098CD !important;
 }
 
@@ -605,6 +606,10 @@ select {
 
 #sl-openid {
 	background-color: #fff;
+}
+
+.siteloginbar_poppedup input.button {
+	margin: 6px 0;
 }
 
 /* new modules revamp login */
@@ -940,6 +945,7 @@ fieldset.admin label,
 	color: #1174a5;
 }
 
+.admin .button a,
 .tabstoggle .button a,
 .tabstoggle .button a:visited {
 	color: #fff;
