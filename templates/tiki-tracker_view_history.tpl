@@ -36,8 +36,8 @@
 		<td class="text">
 			{if $fieldId eq -1}_{tr}Status{/tr}_{else}{$field_option[$fieldId].name}{/if}
 		</td>
-		<td class="text">{assign var='field_value.value' value=$hist.value}{include file='tracker_item_field_value.tpl' field_value=$field_value list_mode=n item=$item_info history=y}</td>
-		<td class="text">{assign var='field_value.value' value=$hist.new}{include file='tracker_item_field_value.tpl' field_value=$field_value list_mode=n item=$item_info history=y}</td>
+		<td class="text">{assign var='field_value.value' value=$hist.value}{trackeroutput field=$field_value list_mode=n item=$item_info history=y}</td>
+		<td class="text">{assign var='field_value.value' value=$hist.new}{trackeroutput field=$field_value list_mode=n item=$item_info history=y}</td>
 		{if $prefs.feature_multilingual eq 'y'}
 			<td class="text">{$hist.lang|escape}</td>
 		{/if}

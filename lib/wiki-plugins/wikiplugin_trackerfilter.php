@@ -12,10 +12,7 @@ function wikiplugin_trackerfilter_info() {
 		'filters' => array(
 			'required' => true,
 			'name' => tra('Filters'),
-			'description' => tra('The list of fields that can be used as filters along with their formats. The field number and format are separated by a / 
-								 and multile fields are separated by ":". Format choices are: d - dropdown; r - radio buttons; m - multiple choice dropdown;
-								 c - checkbox; t - text with wild characters; T - exact text match; i - initials; sqlsearch - advanced search; >, <, >=, <= -
-								 greater than, less than, greater than or equal, less than or equal. Example:') . '2/d:4/r:5:(6:7)/sqlsearch',
+			'description' => tra('The list of fields that can be used as filters along with their formats. The field number and format are separated by a / and multile fields are separated by ":". Format choices are: d - dropdown; r - radio buttons; m - multiple choice dropdown; c - checkbox; t - text with wild characters; T - exact text match; i - initials; sqlsearch - advanced search; >, <, >=, <= - greater than, less than, greater than or equal, less than or equal. Example:') . '2/d:4/r:5:(6:7)/sqlsearch',
 			'default' => ''
 		),
 		'action' => array(
@@ -81,7 +78,7 @@ function wikiplugin_trackerfilter_info() {
 		)
 	), $list['params'] );
 
-return array(
+	return array(
 		'name' => tra('Tracker Filter'),
 		'documentation' => 'PluginTrackerFilter',
 		'description' => tra('Create a form to filter tracker fields'),
@@ -90,7 +87,7 @@ return array(
 		'icon' => 'pics/icons/application_form_magnify.png',
 		'params' => $params,
 		'extraparams' => true,
-);
+	);
 }
 
 function wikiplugin_trackerfilter($data, $params) {

@@ -21,7 +21,7 @@
 {if isset($item)}
 {tr}User Tracker{/tr}
 {foreach item=field_value from=$item.field_values}
-	{$field_value.name}: {include file="tracker_item_field_value.tpl" list_mode='csv' showlinks='n'}
+	{$field_value.name}: {trackeroutput field=$field_value item=$item list_mode='csv' showlinks='n'}
 {/foreach}
 {/if}
 

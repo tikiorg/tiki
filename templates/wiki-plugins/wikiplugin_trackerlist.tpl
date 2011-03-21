@@ -113,7 +113,7 @@
 				{cycle values="odd,even" print=false}
 				{foreach from=$items[user].field_values item=f}
 					{if in_array($f.fieldId, $popupfields)}
-						{capture name=popupl}{include file='tracker_item_field_value.tpl' field_value=$f item=$items[user]}{/capture}
+						{capture name=popupl}{trackeroutput field=$f item=$items[user]}{/capture}
 						{if !empty($smarty.capture.popupl)}
 							<tr>{if count($popupfields) > 1}<th class="{cycle advance=false}">{$f.name}</th>{/if}<td class="{cycle}">{$smarty.capture.popupl}</td></tr>
 						{/if}
@@ -211,8 +211,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 						<td class="numeric" style="padding-right:2px">
 						{foreach from=$computedFields[$ix.fieldId] item=computedField name=computedField}
 							{if $computedField.operator eq 'avg'}{tr}Average{/tr}{else}{tr}Total{/tr}{/if}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$computedField list_mode=$list_mode}<br />
-							{if !$smarty.foreach.computedField.last}{/if}
+							{trackeroutput field=$computedField item=$items[user] list_mode=$list_mode}<br/>
 						{/foreach}
 						</td>
 					{else}

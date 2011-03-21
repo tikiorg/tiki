@@ -4126,11 +4126,10 @@ class TrackerLib extends TikiLib
 		$result = $this->query($query, $bindVars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			$field_value = $this->get_tracker_field($res['fieldId']);
 			$field_value['value'] = $res['value'];
-			$field_value['showlinks'] = 'n';
-			$smarty->assign('field_value', $field_value);
-			$ret[$res['itemId']] = $smarty->fetch('tracker_item_field_value.tpl');
+			$ret[$res['itemId']] = $this->get_field_handler($field_value, $res)->renderOutput(array(
+				'showlinks' => 'n',
+			));
 			if (is_array($finalFields) && count($finalFields)) {
 				$i = 0;
 				foreach ($finalFields as $f) {
@@ -4139,9 +4138,9 @@ class TrackerLib extends TikiLib
 					$field_value = $this->get_tracker_field($f);
 					$ff = $this->get_item_value($finalTrackerId, $res['itemId'], $f);;
 					$field_value['value'] = $ff;
-					$field_value['showlinks'] = 'n';
-					$smarty->assign('field_value', $field_value);
-					$ret[$res['itemId']] .= $separator.$smarty->fetch('tracker_item_field_value.tpl');
+					$ret[$res['itemId']] = $this->get_field_handler($field_value, $res)->renderOutput(array(
+						'showlinks' => 'n',
+					));
 				}
 			}
 		}

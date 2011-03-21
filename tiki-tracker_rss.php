@@ -106,9 +106,7 @@ if ($output["data"] == "EMPTY") {
 		$aux_subject = null;
 		foreach($data["field_values"] as $data2) {
 			if (isset($data2["name"])) {
-				$smarty->assign_by_ref('field_value', $data2);
-				$smarty->assign_by_ref('item', $data);
-				$data2['value'] = $smarty->fetch('tracker_item_field_value.tpl');
+				$data2['value'] = $trklib->get_field_handler($field, $item)->renderOutput();
 				if ($data2['value'] == '') {
 					$data2['value'] = '(' . tra('empty') . ')';
 				} else {

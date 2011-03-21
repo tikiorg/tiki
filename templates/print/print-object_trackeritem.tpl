@@ -6,7 +6,7 @@
 				{$field.name|escape}
 			</td>
 			<td class="formcontent">
-				{include file='tracker_item_field_value.tpl' field_value=$field}
+				{trackeroutput field=$field}
 			</td>
 		</tr>
 	{/foreach}

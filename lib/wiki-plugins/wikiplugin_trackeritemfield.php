@@ -246,12 +246,8 @@ function wikiplugin_trackeritemfield($data, $params) {
 			} elseif ($test) { 
 				return $data;
 			} else {
-				$field['value'] = $val;
-				$field['itemId'] = $itemId;
-				$smarty->assign('field_value', $field);
-				$smarty->assign('list_mode', 'n');
-				$smarty->assign('showlinks', 'n');
-				return $smarty->fetch('tracker_item_field_value.tpl');
+				$handler = $trklib->get_field_handler($field, $info);
+				return $handler->renderInput();
 			}
 		} elseif ($test) { // testing the value of a field that does not exist yet
 			return $dataelse;

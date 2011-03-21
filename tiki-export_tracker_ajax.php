@@ -298,7 +298,6 @@ while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $chunkSize
 			$str .= $delimitorL.smarty_modifier_tiki_short_datetime($item['lastModif'], '', 'n').$delimitorL;
 		}
 		if (count($item['field_values']) > 0) {
-			$smarty->assign('list_mode', 'csv');
 			foreach ($item['field_values'] as $field_value) {
 				$data = '';
 				if ($field_value['isHidden'] == 'n' || $field_value['isHidden'] == 'p' || ($field_value['isHidden'] == 'c' && ($item['itemUser'] == $user || $tiki_p_admin_trackers == 'y')) || ($field_value['isHidden'] == 'y' &&  $tiki_p_admin_trackers == 'y')) {
@@ -309,7 +308,6 @@ while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $chunkSize
 //						$data = implode('%%%', $data);
 //					}
 //					$data = str_replace(array("\r\n", "\n", '<br />', $delimitorL, $delimitorR), array($CR, $CR, $CR, $delimitorL.$delimitorL, $delimitorR.$delimitorR), $data);
-					$smarty->assign_by_ref('field_value', $field_value);
 					switch($field_value['type']) {
 						case 'd': // text etc
 							$data = $field_value['value'];
@@ -319,7 +317,9 @@ while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $chunkSize
 							$data = str_replace(array("\r\n", "\n", '<br />', $delimitorL, $delimitorR), array($CR, $CR, $CR, $delimitorL.$delimitorL, $delimitorR.$delimitorR), $data);
 							break;
 					default: 
-						$data = $smarty->fetch('tracker_item_field_value.tpl');
+						$data = $trklib->get_field_handler($field_value, $item)->renderOutput(array(
+							'list_mode' => 'csv',
+						));
 					}
 
 				}
