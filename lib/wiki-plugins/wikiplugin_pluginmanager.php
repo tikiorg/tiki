@@ -5,28 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_pluginmanager_help() {
-	return tra('Displays a list of plugins available in this wiki') . ':<br />~np~{PLUGINMANAGER(info=>version|description|arguments)}{PLUGINMANAGER}~/np~';
-}
-/**
-* Include the library {@link PluginsLib}
-*/
 require_once 'lib/wiki/pluginslib.php';
-/**
-* Plugin Manager
-* Displays a list of plugins available in this wiki.
-*
-* Params:
-* <ul>
-* <li>info (allows multiple columns, joined by '|') : version,description,arguments
-*           . By default, selected all.
-* </ul>
-*
-* @package Tikiwiki
-* @subpackage TikiPlugins
-* @author Claudio Bustos
-* @version $Revision: 1.11 $
-*/
+
 class WikiPluginPluginManager extends PluginsLib
 {
     var $expanded_params = array('info');

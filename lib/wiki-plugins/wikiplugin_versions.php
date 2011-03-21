@@ -5,28 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/*
- * Versions plugin: Split the text in parts visible only under some conditions:
- * 
- * Syntax:
- * {VERSIONS(nav=>y| n, title=>y| n, default=>)}text{VERSIONS}
- * 
- * Documentation
- * http://doc.tiki.org/PluginVersions
- */
-function wikiplugin_versions_help()
-{
-	return tra("Split the text in parts visible only under some conditions") . ":<br />"
-            . "~np~{VERSIONS(nav=>y|n,title=>y|n,default=>)}"
-            . tra("This is the default text") . "<br />"
-            . "---" . tra("(version 3)") . "-----------------------------" . "<br />" 
-            . tra("This is version 3 info") . "<br />"
-            . "---" . tra("(version 2)") . "-----------------------------" . "<br />"
-            . tra("This is version 2 info") . "<br />"
-            . "---" . tra("(version 1)") . "-----------------------------" . "<br />"
-            . tra("This is version 1 info") ."{VERSIONS}~/np~";
-}
-
 function wikiplugin_versions_info()
 {
 	return array(

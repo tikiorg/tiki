@@ -5,25 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/* Tiki-Wiki Countdown plugin
- *
- * This is an example plugin to indicate a countdown to a date.
- * Plugins are called using the syntax
- * {COUNTDOWN(end=>string date)} to reach all targets!{COUNTDOWN}
- * Name must be in uppercase!
- * params is in the form: name=>value,name2=>value2 (don't use quotes!)
- * If the plugin doesn't use params use {NAME()}content{NAME}
- *
- * The function will receive the plugin content in $data and the params
- * in the asociative array $params (using extract to pull the arguments
- * as in the example is a good practice)
- * The function returns some text that will replace the content in the
- * wiki page.
- */
-function wikiplugin_countdown_help() {
-	return tra("Example").":<br />~np~{COUNTDOWN(enddate=>April 1 2004[,locatetime=>on])}".tra("text")."{COUNTDOWN}~/np~";
-}
-
 function wikiplugin_countdown_info() {
 	return array(
 		'name' => tra('Countdown'),

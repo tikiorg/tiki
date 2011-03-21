@@ -5,14 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// \brief Wiki plugin to output something like <a_tag style=a_style>...</a_tag>
-// ex: {TAG(tag=STRIKE, style=color:#FF0000)}toto{TAG}
-//	would produce <STRIKE style="color:#FF0000">toto</STRIKE>
-
-function wikiplugin_tag_help() {
-	return tra("Displays text between HTML tags").":<br />~np~{TAG(tag=a_tag, style=a_style)}text{TAG}~/np~";
-}
-
 function wikiplugin_tag_info() {
 	return array(
 		'name' => tra('Tag'),

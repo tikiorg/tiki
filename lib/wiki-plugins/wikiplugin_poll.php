@@ -5,16 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Includes a poll
-// Usage:
-// {POLL(pollId=>1)}Title{POLL}
-
-function wikiplugin_poll_help() {
-	$help = tra("Displays the output of a poll, fields are indicated with numeric ids.").":\n";
-	$help.= "~np~{POLL(pollId=>1)}Good Poll{POLL}~/np~";
-	return $help;
-}
-
 function wikiplugin_poll_info() {
 	return array(
 		'name' => tra('Poll'),

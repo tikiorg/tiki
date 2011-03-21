@@ -5,16 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/*
- * Google Docs plugin. Creates an iframe and loads the Google Doc within the frame.
- *
- * MatWho 13/09/08
- */
-
-function wikiplugin_googledoc_help() {
-	return tra("googledoc").":~np~{GOOGLEDOC(type=sheet|doc|pres|spreadsheet|document|presentation, key=XXXXX name=xxx, size=small|medium|large, width=100, height=100, align=top|middle|bottom|left|right, frameborder=1|0, marginheight=0, marginwidth=0, scrolling=yes|no|auto, editLink=top|bottom|both)}{GOOGLEDOC}~/np~";
-}
-
 function wikiplugin_googledoc_info() {
 	return array(
 		'name' => tra('Google Doc'),

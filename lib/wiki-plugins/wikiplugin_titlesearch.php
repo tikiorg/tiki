@@ -5,74 +5,53 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/**
-* Include the library {@link PluginsLib}
-*/
 require_once "lib/wiki/pluginslib.php";
-/**
-* Title Search Plugin
-* Search the titles of all pages in this wiki
-* Params
-* <ul>
-* <li> search: required
-* <li> info (allows multiple columns, joined by '|') : hits,lastModif,user,ip,len,comment,
-* creator, version, flag, versions,links,backlinks
-* <li> exclude (allows multiple pagenames) : HomePage|RecentChanges
-* <li> noheader         : by default, false
-* </ul>    
-* @package Tikiwiki
-* @subpackage TikiPlugins
-* @author Claudio Bustos
-* @version $Revision: 1.25 $
-*/
-function wikiplugin_titlesearch_help() {
-    return tra("Search the titles of all pages in this wiki").":<br />~np~{TITLESEARCH(search=>Admin,info=>hits|user,exclude=>HomePage|SandBox,noheader=>0)}{TITLESEARCH}~/np~";
+
+function wikiplugin_titlesearch_info() {
+	return array(
+		'name' => tra('Title Search'),
+		'documentation' => 'PluginTitleSearch',
+		'description' => tra('Search page titles'),
+		'prefs' => array( 'feature_wiki', 'wikiplugin_titlesearch' ),
+		'icon' => 'pics/icons/page_find.png',
+		'params' => array(
+			'search' => array(
+				'required' => true,
+				'name' => tra('Search Criteria'),
+				'description' => tra('Portion of a page name.'),
+				'default' => '',
+			),
+			'info' => array(
+				'required' => false,
+				'name' => tra('Information'),
+				'description' => tra('Also show page hits or user'),
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Hits'), 'value' => 'hits'), 
+					array('text' => tra('User'), 'value' => 'user')
+				)
+			),
+			'exclude' => array(
+				'required' => false,
+				'name' => tra('Exclude'),
+				'description' => tra('Pipe-separated list of page names to exclude from results.'),
+				'default' => '',
+			),
+			'noheader' => array(
+				'required' => false,
+				'name' => tra('No Header'),
+				'description' => tra('Set to 1 (Yes) to have no header for the search results.'),
+				'default' => 0,
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 1), 
+					array('text' => tra('No'), 'value' => 0)
+				)
+			),
+		),
+	);
 }
-    function wikiplugin_titlesearch_info() {
-    	return array(
-    		'name' => tra('Title Search'),
-    		'documentation' => 'PluginTitleSearch',
-    		'description' => tra('Search page titles'),
-    		'prefs' => array( 'feature_wiki', 'wikiplugin_titlesearch' ),
-			'icon' => 'pics/icons/page_find.png',
-    		'params' => array(
-    			'search' => array(
-    				'required' => true,
-    				'name' => tra('Search Criteria'),
-    				'description' => tra('Portion of a page name.'),
-    				'default' => '',
-    			),
-    			'info' => array(
-    				'required' => false,
-    				'name' => tra('Information'),
-    				'description' => tra('Also show page hits or user'),
-					'default' => '',
-					'options' => array(
-						array('text' => '', 'value' => ''), 
-						array('text' => tra('Hits'), 'value' => 'hits'), 
-						array('text' => tra('User'), 'value' => 'user')
-					)
-    			),
-    			'exclude' => array(
-    				'required' => false,
-    				'name' => tra('Exclude'),
-    				'description' => tra('Pipe-separated list of page names to exclude from results.'),
-					'default' => '',
-    			),
-    			'noheader' => array(
-    				'required' => false,
-    				'name' => tra('No Header'),
-    				'description' => tra('Set to 1 (Yes) to have no header for the search results.'),
-					'default' => 0,
-					'options' => array(
-						array('text' => '', 'value' => ''), 
-						array('text' => tra('Yes'), 'value' => 1), 
-						array('text' => tra('No'), 'value' => 0)
-					)
-    			),
-    		),
-    	);
-    }
 class WikiPluginTitleSearch extends PluginsLib
 {
     var $expanded_params = array("exclude", "info");

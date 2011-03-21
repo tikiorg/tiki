@@ -5,17 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Displays the user Avatar
-// Use:
-// {AVATAR()}username{AVATAR}
-//  (page=>some)         Avatar is a link to "some"
-//  (float=>left|right)  Avatar is floated to left or right
-//
-// If no avatar nothing is displayed
-function wikiplugin_avatar_help() {
-	return tra("Displays the user Avatar").":<br />~np~{AVATAR(page=>SomeWikiPage,float=>left|right)}".tra("username")."{AVATAR}~/np~";
-}
-
 function wikiplugin_avatar_info() {
 	return array(
 		'name' => tra('Avatar'),

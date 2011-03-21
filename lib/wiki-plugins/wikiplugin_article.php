@@ -5,21 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Includes an article field
-// Usage:
-// {ARTICLE(Id=>articleId, Field=>FieldName)}{ARTICLE}
-// FieldName can be any field in the tiki_articles table, but title,heading, or body are probably the most useful.
-
-function wikiplugin_article_help() {
-        $help = tra("Includes an article");
-        $help .="<br />";
-        $help .= tra("~np~{ARTICLE(Field=>[,Id=>])}{ARTICLE}~/np~");
-        $help .= "<br />";
-        $help .= tra("Id is optional. If not given, last article is used. Default field is heading.");
-
-        return $help;
-}
-
 function wikiplugin_article_info() {
 	return array(
 		'name' => tra('Article'),

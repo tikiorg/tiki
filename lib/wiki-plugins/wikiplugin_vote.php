@@ -5,16 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/* A plugin vote based on tracker
- */
-/* fields is optionnal - all the fields except the type suer, group, ip will be used
- */
-function wikiplugin_vote_help() {
-	$help = tra("Displays some stat of a tracker content, fields are indicated with numeric ids.").":\n";
-	$help.= "~np~{VOTE(trackerId=>1,fields=>2:4:5,show_percent=>n|y,show_bar=>n|y,status=>o|c|p|op|oc|pc|opc,float=>right|left, show_stat=n|y, show_stat_only_after=n|y, show_creator=y|n)}Title{VOTE}~/np~";
-	return $help;
-}
-
 function wikiplugin_vote_info() {
 	return array(
 		'name' => tra('Vote'),

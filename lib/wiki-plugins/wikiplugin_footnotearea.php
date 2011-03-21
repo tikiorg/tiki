@@ -5,18 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/* by robferguson
- *
- * FOOTNOTEAREA plugin. Inserts a section for collected footnotes created with the FOOTNOTES plugin .
- * 
- * Syntax:
- * 
- * {FOOTNOTEAREA()/}
- */
-function wikiplugin_footnotearea_help() {
-	return tra("Inserts a section for collected footnotes in the wiki page").":<br />~np~{FOOTNOTEAREA()/}~/np~";
-}
-
 function wikiplugin_footnotearea_info() {
 	return array(
 		'name' => tra( 'Footnote Area' ),

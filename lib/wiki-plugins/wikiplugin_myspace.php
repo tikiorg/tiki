@@ -5,12 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Wiki plugin to display a SWF myspace playlist in a wiki page  
-
-function wikiplugin_myspace_help() {
-        return tra("Displays a MySpace Flash mp3 playlist in the wiki page").":<br />~np~{MYSPACE(page=>myspace_page)}{MYSPACE}~/np~";
-}
-
 function wikiplugin_myspace_info() {
 	return array(
 		'name' => tra('MySpace'),

@@ -5,18 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Display wiki text if a parameter is set in URL
-// Usage:
-// {PARAM(name=>Date|Version)}wiki text{PARAM}
-
 define('WIKIPLUGIN_PARAM_REQUEST', 'request');
-
-function wikiplugin_param_help() {
-	$help = tra("Display wiki text if all keys are existing URL parameters").":\n";
-	$help.= "~np~<br />{param(name=>Date|Version)}wiki text{param}<br />
-	{PARAM(name=>Date|Version)}wiki text{ELSE}alternate text when parameters do not exist{PARAM}~/np~";
-	return $help;
-}
 
 function wikiplugin_param_info() {
 	return array(

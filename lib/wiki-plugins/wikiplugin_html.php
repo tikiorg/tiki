@@ -5,9 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Include literal HTML in a Wiki page
-// Jeremy Lee  2009-02-16
-
 function wikiplugin_html_info() {
 	return array(
 		'name' => tra('HTML'),

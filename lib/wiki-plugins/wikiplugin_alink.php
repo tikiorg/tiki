@@ -5,30 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/*
- * Tiki ALINK plugin. 
- *
- * DESCRIPTION: Creates a link to an anchor in a wiki page. Use in conjunction with the ANAME plugin, which specifies the location and name of the anchor.
- * 
- * INSTALLATION: Just put this file into your Tikiwiki site's lib/wiki-plugins folder.
- * 
- * USAGE SYNTAX:
- * 
- * 	{ALINK(
- *		aname=>anchorname	the name of the anchor you created using the ANAME plugin!
- * 	)}
- *	 	yourlinktext		the text of the link
- *	 {ALINK}
- *
- * EXAMPLE:  {ALINK(aname=myanchor)}click here{ALINK}
- * 
-  */
-
-
-function wikiplugin_alink_help() {
-        return tra("Creates a link to an anchor. Use in conjunction with the ANAME plugin, which specifies the location and name of the anchor").":<br />~np~{ALINK(aname=>anchorname,pagename=>Wiki Page Name)}".tra("linktext")."{ALINK}~/np~<br />pagename is optional; if it is not present, links into the current file.";
-}
-
 function wikiplugin_alink_info() {
 	return array(
 		'name' => tra('Anchor Link'),

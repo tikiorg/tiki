@@ -5,17 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/* Tiki-Wiki plugin SNARF
- * 
- * This plugin replaces itself with the body (HTML) text at the URL given in the url argument.
- *
- */
-
-
-function wikiplugin_snarf_help() {
-    return tra("The SNARF plugin replaces itself with the HTML body of a URL.  Arbitrary regex replacement can be done on this content using regex and regexres, the latter being used as the second argument to preg_replace.").":<br />~np~{SNARF(url=>http://www.lojban.org,regex=>;.*<!-- Content -->(.*)<!-- /Content -->.*;, regexres=>$1)}".tra("This data is put in a CODE caption.")."{SNARF}~/np~";
-}
-
 function wikiplugin_snarf_info() {
 	return array(
 		'name' => tra('Snarf'),

@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Wiki plugin to display a proposal acceptance widget
-
 function wikiplugin_proposal_info() {
 	return array(
 		'name' => tra('Proposal'),

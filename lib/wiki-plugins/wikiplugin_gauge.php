@@ -5,28 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Displays a graphical GAUGE
-// Usage:
-// {GAUGE(params)}description{GAUGE}
-// Description is optional and will be displayed below the gauge if present
-// Parameters:
-//   color      bar color
-//   bgcolor	background color
-//   max	    maximum possible value (default=100, when value > max, max=value)   
-//   value	    current value (REQUIRED)
-//   size	    Bar size 
-//   label      label leftside of bar
-//   labelsize  labelsize
-//   perc	    If true then a percentage is displayed
-//   height	    Bar height
-// EXAMPLE:
-//
-// {GAUGE(perc=>true,label=>happy users,labelsize=>90,value=>35,bgcolor=>#EEEEEE,height=>20)}happy users over total{GAUGE}
-
-function wikiplugin_gauge_help() {
-	return tra("Displays a graphical GAUGE").":<br />~np~{GAUGE(color=>,bgcolor=>,max=>,value=>,size=>,label=>,labelsize=>,perc=>,height=>)}".tra("description")."{GAUGE}~/np~";
-}
-
 function wikiplugin_gauge_info() {
 	return array(
 		'name' => tra('Gauge'),

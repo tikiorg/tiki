@@ -5,12 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_trackeritemfield_help() {
-	$help = tra("Displays the value of a tracker item field or the wiki text if the value of the field is set or has a value(if itemId not specified, use the itemId of the url or the user tracker).").":\n";
-	$help .= "~np~{TRACKERITEMFIELD(trackerId=1, itemId=1, fieldId=1, fields=1:2, status=o|p|c|op|oc|pc|opc, test=1|0, value=x)}".tra('Wiki text')."{ELSE}".tra('Wiki text')."{TRACKERITEMFIELD}~/np~";
-	return $help;
-}
-
 function wikiplugin_trackeritemfield_info() {
 	return array(
 		'name' => tra('Tracker Item Field'),

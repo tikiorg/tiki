@@ -5,41 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/* wikiplugin_wantedpages.php
- * Tikiwiki plugin to display wanted Wiki pages
- * <grk@ducked.net> and <gray@ritualmagick.org>
- * Minor tweaks by avgasse <amedee@amedee.be>
-*/
-
 require_once 'lib/wiki/pluginslib.php';
-
-function wikiplugin_wantedpages_help() {
-	$help = tra("Lists ''wanted'' Wiki pages: ")."\n";
-	$help .= "~np~{WANTEDPAGES(";
-	$help .= "ignore=>".tra("Page-Pattern")."'splitby'".tra("Page-Pattern").", splitby=>+, ";
-	$help .= "skipext=>0|1, collect=>from|to, debug=>0|1, table=>sep|co|br, ";
-	$help .= "level=>strict|full|complete|custom)}".tra("Custom-Level-Regex");
-	$help .= "{WANTEDPAGES}~/np~".tra("^Parameters: key=>value,...\n")."||\n";
-	$help .= tra("__key__ | __default__ | __comments__\n");
-	$help .= "ignore | ".tra("empty string")." | " . tra("A wildcard pattern of originating pages to be ignored.") . "<br />";
-	$help .= tra("(refer to PHP function fnmatch() for details)\n");
-	$help .= "splitby | '+' | " . tra("The character, by which ignored patterns are separated.") . "<br />";
-	$help .= tra("possible values: characters\n");
-	$help .= "skipext | 0 | " . tra("Whether to include external wikis in the list.") . "<br />";
-	$help .= tra("possible values: ")."0 / 1\n";
-	$help .= "collect | \"from\" | " . tra("Collect either originating or wanted pages in a cell and display them in the second column.") . "<br />";
-	$help .= tra("possible values: ")."from / to\n";
-	$help .= "debug | 0 | " . tra("Switch-on debug output with details about the items.") . "<br />";
-	$help .= tra("possible values: ")."0 / 1 / 2 \n";
-	$help .= "table | \"sep\" | " . tra("Multiple collected items are separated in distinct table rows, or by comma or line break in one cell.") . "<br />";
-	$help .= tra("possible values: ")."sep / co / br\n";
-	$help .= "level | ".tra("empty string")." | " . tra("Filter the list of wanted pages according to page_regex or custom filter. The default value is the site's __current__ page_regex.") . "<br />";
-	$help .= tra("possible values: ")."strict / full / complete / custom\n";
-	$help .= tra("Custom-Level-Regex") . " | ".tra("empty string")." | " . tra("A custom filter for wanted pages to be listed (only used when level=>custom).") . "<br />";
-	$help .= tra("possible values: ") . tra("a valid regex-expression (PCRE)") . "\n";
-	$help .= "||^";
-    return $help;
-}
 
 function wikiplugin_wantedpages_info() {
 	return array(

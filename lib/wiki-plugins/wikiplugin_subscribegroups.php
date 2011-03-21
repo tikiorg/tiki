@@ -5,12 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_subscribegroups_help() {
-	$help = tra('Subscribe or unsubscribe to a group').":\n";
-	$help.= "~np~<br />{SUBSCRIBEGROUPS(subscribe=text,groups=g1:g2) /}<br />~/np~";
-	return $help;
-}
-
 function wikiplugin_subscribegroups_info() {
 	return array(
 		'name' => tra('Subscribe Groups'),

@@ -5,10 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_dl_help() {
-	return tra("Creates a definition list").":<br />~np~{DL()}".tra("term").":".tra("definition")."{DL}~/np~ - ''".tra("one definition per line")."''";
-}
-
 function wikiplugin_dl_info() {
 	return array(
 		'name' => tra('Definition List'),

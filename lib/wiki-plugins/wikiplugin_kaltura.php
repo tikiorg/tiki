@@ -5,10 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_kaltura_help() {
-        return tra("Displays a KALTURA video on the wiki page").":<br />~np~{KALTURA(id=\"entry_id_of_video\")}{KALTURA}~/np~";
-}
-
 function wikiplugin_kaltura_info() {
 	return array(
 		'name' => tra('Kaltura Video'),

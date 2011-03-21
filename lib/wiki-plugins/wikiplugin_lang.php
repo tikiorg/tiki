@@ -4,14 +4,6 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-/*
- * Displays the content data only if the language matched the current language or the language is the URI
- * {LANG(lang=fr)}Bon appétit{LANG}
- * tra("Displays the text only if the requested language matches (lang) or not (notlang) the + separated list of lang codes")
- */
-function wikiplugin_lang_help() {
-	return tra("Displays the text only if the language matchs")." lang/notlang:<br />~np~{LANG([not]lang=>code[+code+...])}".tra("text")."{LANG}~/np~";
-}
 
 function wikiplugin_lang_info() {
 	return array(

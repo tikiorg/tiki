@@ -5,10 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Wiki plugin to output something like <a_tag style=a_style>...</a_tag>
-//ex: {TAG(tag=STRIKE, style=color:#FF0000)}toto{TAG}
-//	would produce <STRIKE style="color:#FF0000">toto</STRIKE>
-
 function wikiplugin_annotation_info() {
 	return array(
 		'name' => tra('Image Annotation'),

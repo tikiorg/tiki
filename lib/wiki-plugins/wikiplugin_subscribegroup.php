@@ -5,16 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Display wiki text if user is in one of listed groups
-// Usage:
-// {GROUP(groups=>Admins|Developers)}wiki text{GROUP}
-
-function wikiplugin_subscribegroup_help() {
-	$help = tra('Subscribe or unsubscribe to a group').":\n";
-	$help.= "~np~<br />{SUBSCRIBEGROUP(group=, subscribe=text, unsubscribe=text, subscribe_action=Name of subscribe submit button, unsubscribe_action=Name of unsubscribe submit button) /}<br />~/np~";
-	return $help;
-}
-
 function wikiplugin_subscribegroup_info() {
 	return array(
 		'name' => tra('Subscribe Group'),

@@ -5,16 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Sorts the surrounded lines
-// Usage
-// {SORT(sort=>[asc|desc|reverse|shuffle])}line 1	# defaults to "asc"
-// line 2
-// line 3
-// line 4{SORT}
-function wikiplugin_sort_help() {
-	return tra("Sorts the plugin content in the wiki page").":<br />~np~{SORT(sort=>asc|desc|reverse|shuffle)}".tra("data")."{SORT}~/np~ - ''".tra("one data per line")."''";
-}
-
 function wikiplugin_sort_info() {
 	return array(
 		'name' => tra('Sort'),

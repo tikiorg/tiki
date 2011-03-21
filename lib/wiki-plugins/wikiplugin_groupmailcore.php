@@ -5,13 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Wiki plugin to display controls etc for GroupMail 
-// Started: jonnybradley July 2009
-
-function wikiplugin_groupmailcore_help() {
-        return tra("Displays GroupMail functions on a wiki page").":<br />~np~{groupmail_core()}{groupmail}~/np~";
-}
-
 function wikiplugin_groupmailcore_info() {
 	return array(
 		'name' => tra('GroupMail Core'),

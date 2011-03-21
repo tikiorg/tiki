@@ -5,12 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_groupexpiry_help() {
-	$help = tra('Shows the expiry date of a group membership').":\n";
-	$help.= "~np~<br />{GROUPEXPIRY(group=Name of group) /}<br />~/np~";
-	return $help;
-}
-
 function wikiplugin_groupexpiry_info() {
 	return array(
 		'name' => tra('Group Expiry'),

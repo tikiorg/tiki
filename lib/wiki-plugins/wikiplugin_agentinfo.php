@@ -5,13 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Wiki plugin to display a browser client information
-// damian aka damosoft May 2004
-
-function wikiplugin_agentinfo_help() {
-        return tra("Displays browser client info").":<br />~np~{AGENTINFO(info=>IP or SVRSW or BROWSER)/}~/np~";
-}
-
 function wikiplugin_agentinfo_info() {
 	return array(
 		'name' => tra( 'User Agent Info' ),

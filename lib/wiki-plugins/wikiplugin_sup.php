@@ -5,13 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Wiki plugin to output superscript <sup>...</sup>
-// based on sub plugin
-
-function wikiplugin_sup_help() {
-        return tra("Displays text in superscript.").":<br />~np~{SUP()}text{SUP}~/np~";
-}
-
 function wikiplugin_sup_info() {
 	return array(
 		'name' => tra( 'Superscript' ),

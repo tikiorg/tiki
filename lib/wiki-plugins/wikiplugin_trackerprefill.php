@@ -5,12 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_trackerprefill_help() {
-	$help = tra('Displays a button to link to a page with a tracker plugin with prefilled tracker fields.');
-	$help .= '~np~{TRACKERPREFILL(page=trackerpage,label=text,field1=id,value1=, field2=id,value2=... /)}';
-	return $help;
-}
-
 function wikiplugin_trackerprefill_info() {
 	return array(
 		'name' => tra('Tracker Prefill'),

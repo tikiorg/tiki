@@ -5,27 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/**
- *  Tikiwiki MCALENDAR plugin.
- *  Convert date from Gregorian to Mayan Calendars: Tzolkin, Haab, Long Count.
- *  
- *  More information about Maya Calendar: 
- *   english: http://library.thinkquest.org/C004577/calendar.php3
- *   russian: http://yamaya.ru/maya1320/ 
- *  
- *  Syntax:
- *  
- *   {MCALENDAR([template=>template_string,][grdate=>convert_date])}
- *   {MCALENDAR}
- *  
- *  @package Tikiwiki
- *  @subpackage TikiPlugins
- *  @version $Revision: 0.1 $
- *  @author Serg Kravchenko aka HERMiT, zchermit@gmail.com
- *
- */
-
-
 class MCalendar
 {
 
@@ -151,10 +130,6 @@ class MCalendar
    }
 
  };
-
-function wikiplugin_mcalendar_help() {
-        return tra("Mayan Calendars").":<br />~np~{MCALENDAR(template=>Output format; grdate=>Gregorian date)/}~/np~";
-}
 
 function wikiplugin_mcalendar_info() {
 	return array(

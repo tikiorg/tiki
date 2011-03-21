@@ -5,10 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_fancylist_help() {
-	return tra("Creates a fancy-looking list").": ~np~{FANCYLIST()}".tra("num").")".tra("item text")."{FANCYLIST}~/np~ - ''".tra("one item per line")."''";
-}
-
 function wikiplugin_fancylist_info() {
 	return array(
 		'name' => tra('Fancy List'),

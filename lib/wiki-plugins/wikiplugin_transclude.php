@@ -5,9 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-//Includes the content of a wiki page and replaces values in the body of the included page. 
-//All additional parameters will be replaced. For example %%%title%%% will be replaced with the parameter title in the plugin.
-
 function wikiplugin_transclude_info() {
 	return array(
 		'name' => tra('Transclude'),

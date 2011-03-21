@@ -5,15 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/**
- * Freetagged plugin (derived from Title Search Plugin)
- * Find all similar tagged objects
- */
-
-function wikiplugin_freetagged_help() {
-	return tra("Search the titles of all pages in this wiki").":<br />~np~{FREETAGGED(search=>Admin,info=>hits|user,exclude=>HomePage|SandBox,noheader=>0)}{FREETAGGED}~/np~";
-}
-
 function wikiplugin_freetagged_info() {
 	return array(
 		'name' => tra('Freetagged'),

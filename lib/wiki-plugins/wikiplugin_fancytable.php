@@ -5,24 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Displays the data using the Tikiwiki odd/even table style
-//
-// Usage:
-//	- The data is given one row per line, with columns
-//   separated by |. (~|~ was used as a separator before 4.0 and is also accepted)
-//	- Head rows separated by >> 
-//  - In any cell, indicate number of columns to span with forward slashes at the beginning, number of rows to span with backslashes.	
-//
-// Example:
-// {FANCYTABLE( head=" head r1c1 | head r1c2 | head r1c3>>head r2c1 | head r2c2 | head r2c3", headclass=xx, 
-// 				headaligns= , headvaligns= , colwidths= , colaligns= , colvaligns= , sortable= , sortList= )}
-// row 1 column 1 | row 1 column 2 | row 1 column 3
-// row 2 column 1 | row 2 column 2 | row 2 column 3
-// {FANCYTABLE}
-function wikiplugin_fancytable_help() {
-	return tra("Displays the data using the Tikiwiki odd/even table style").":<br />~np~{FANCYTABLE(head=>,headclass=>)}".tra("cells")."{FANCYTABLE}~/np~ - ''".tra("heads and cells separated by |")."''";
-}
-
 function wikiplugin_fancytable_info() {
 	return array(
 		'name' => tra('Fancy Table'),

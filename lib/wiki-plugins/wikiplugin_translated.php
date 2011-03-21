@@ -5,16 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Links to another page that provides a translation
-// Use:
-// {TRANSLATED()}url{TRANSLATED}
-//  (flag=>France)       indicates the flag to use. default empty (no flag)
-//  (lang=>xx)           iso code of the lang of the translated content
-//
-function wikiplugin_translated_help() {
-	return tra("Links to a translated content").":<br />~np~{TRANSLATED(flag=>France,lang=>fr)}[url] or ((wikiname)) or ((inter:interwiki)) (use wiki syntax){TRANSLATED}~/np~";
-}
-
 function wikiplugin_translated_info() {
 	return array(
 		'name' => tra('Translated'),

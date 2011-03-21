@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Displays a snippet of code
-
 function wikiplugin_code_info() {
 	return array(
 		'name' => tra('Code'),

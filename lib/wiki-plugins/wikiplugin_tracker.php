@@ -5,10 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Includes a tracker field
-// Usage:
-// {TRACKER()}{TRACKER}
-
 function wikiplugin_tracker_info()
 {
 	return array(

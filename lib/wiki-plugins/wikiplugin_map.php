@@ -5,16 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Displays an inline map
-// Use:
-// {MAP()}
-//  (mapfile=>) 
-//  (extents=>)
-
-function wikiplugin_map_help() {
-	return tra("Displays a map").":<br />~np~{MAP(mapfile=>,extents=>,size=>,width=>,height=>) /}~/np~";
-}
-
 function wikiplugin_map_info() {
 	return array(
 		'name' => tra('Map'),

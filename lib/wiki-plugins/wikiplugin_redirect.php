@@ -5,13 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// \brief Wiki plugin to redirect to another page.
-// @author damian aka damosoft 30 March 2004
-
-function wikiplugin_redirect_help() {
-        return tra("Redirects you to another wiki page").":<br />~np~{REDIRECT(page=pagename [,url=http://foobar])/}~/np~";
-}
-
 function wikiplugin_redirect_info() {
 	return array(
 		'name' => tra('Redirect'),

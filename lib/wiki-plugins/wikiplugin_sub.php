@@ -5,13 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Wiki plugin to output <sub>...</sub>
-// - rlpowell
-
-function wikiplugin_sub_help() {
-        return tra("Displays text in subscript.").":<br />~np~{SUB()}text{SUB}~/np~";
-}
-
 function wikiplugin_sub_info() {
 	return array(
 		'name' => tra( 'Subscript' ),

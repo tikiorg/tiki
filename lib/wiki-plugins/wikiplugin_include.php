@@ -5,44 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/**
- * INCLUDE plugin
- * Includes a wiki page in another.
- *
- * Usage:
- * {INCLUDE(page=>name [,start=>start-marker] [,stop=>stop-marker])}{INCLUDE}
- *
- * Params:
- * @param	page	Gives the name of the page to include
- * @param	start	Gives a string to search for to begin the include. Text
- *			before that marker (and the marker itself) will not be included.
- *			Default is the beginning of the included page.
- *			The marker must appear on a line by itself; white space
- *			before or after the marker is ignored.
- * @param	stop		Gives a string to search for to end the include. Text
- *			after that marker (and the marker itself) will not be included.
- *			Default is the beginning of the included page.
- *			The marker must appear on a line by itself; white space
- *			before or after the marker is ignored.
- *
- * If both start and stop are specified and the pair of strings occurs
- * multiple times in the included page, each section so delimited will
- * be included in the calling page.
- *
- * NOTE: The design and implementation of the start/stop feature is experimental
- *	 and needs some feedback (and, no doubt, improvement) from the community. 
- *       In order to prevent infinite loops, any page can only be included
- *   directly or indirectly 5 times (set in $max_times).
- *
- * @package Tikiwiki
- * @subpackage TikiPlugins
- * @version $Revision: 1.11 $
- */
-
-function wikiplugin_include_help() {
-	return tra("Include a page").":<br />~np~{INCLUDE(page=> [,start=>] [,stop=>])}{INCLUDE}~/np~";
-}
-
 function wikiplugin_include_info() {
 	return array(
 		'name' => tra('Include'),

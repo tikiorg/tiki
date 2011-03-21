@@ -5,12 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_trackerfilter_help() {
-  $help = tra("Filters the items of a tracker, fields are indicated with numeric ids.").":\n";
-  $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,action=>Name of submit button,displayList=y|n,line=y|n,TRACKERLIST_params )}Notice{TRACKERFILTER}~/np~";
-  return $help;
-}
-
 function wikiplugin_trackerfilter_info() {
 	require_once 'lib/wiki-plugins/wikiplugin_trackerlist.php';
 	$list = wikiplugin_trackerlist_info();

@@ -5,9 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Wiki plugin to display a SWF file
-// damian aka damosoft 30 March 2004
-
 function wikiplugin_flash_info() {
 	return array(
 		'name' => tra('Flash Video'),

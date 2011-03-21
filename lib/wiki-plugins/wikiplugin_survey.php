@@ -5,19 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/*
- *
- * SURVEY plugin. Display a survey.
- *
- * Syntax:
- *
- * {SURVEY(id=xxx, lang=xxx)}{SURVEY}
- *
- */
-function wikiplugin_survey_help() {
-	return tra("survey").":~np~{SURVEY(id=xxx, lang=xxx)}{SURVEY}~/np~";
-}
-
 function wikiplugin_survey_info() {
 	return array(
 		'name' => tra('Survey'),

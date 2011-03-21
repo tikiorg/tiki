@@ -5,12 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_tr_help() {
-	$help = tra("Translate a string");
-	$help .= "~np~{TR()}string{TR}~/np~";
-	return $help;
-}
-
 function wikiplugin_tr_info() {
 	return array(
 		'name' => tra('Translate'),

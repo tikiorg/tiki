@@ -5,23 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/*
- *
- * IFRAME plugin. Creates an iframe and loads the specified page within the frame.
- *
- * Syntax:
- *
- *  {IFRAME(some parameters)}$data{IFRAME}
- *
- * Syntax:
- *
- * {IFRAME(name=>name, longdescription=>, width=>, height=>, align=>, frameborder=>, marginheight=> marginwidth=> scrolling=>)}source_URL{IFRAME}
- *
- */
-function wikiplugin_iframe_help() {
-	return tra("iframe").":~np~{IFRAME(name=xxx, width=100, height=100, align=top|middle|bottom|left|right, frameborder=1|0, marginheight=0, marginwidth=0, scrolling=auto)}".tra('URL')."{IFRAME}~/np~";
-}
-
 function wikiplugin_iframe_info() {
 	return array(
 		'name' => tra('Iframe'),

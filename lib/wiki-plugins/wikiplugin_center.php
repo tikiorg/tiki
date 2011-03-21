@@ -5,15 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Centers the plugin content in the wiki page
-// Usage
-// {CENTER()}
-//  data
-// {CENTER}
-function wikiplugin_center_help() {
-	return tra("Centers the plugin content in the wiki page").":<br />~np~{CENTER()}".tra("text")."{CENTER}~/np~";
-}
-
 function wikiplugin_center_info() {
 	return array(
 		'name' => tra('Center'),

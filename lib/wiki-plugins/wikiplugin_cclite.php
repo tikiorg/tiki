@@ -5,10 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/**
- * General purpose cclite utility plugin
- * To perform transaction list and summary     
- */
 function wikiplugin_cclite_info() {
 	global $prefs;
 

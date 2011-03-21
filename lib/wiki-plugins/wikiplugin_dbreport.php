@@ -5,12 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// wikiplugin_dbreport v1.0
-//
-// Generates a html report from a database query.
-// Jeremy Lee  2009-02-16
-
-// plugin globals
 $wikiplugin_dbreport_errors;
 $wikiplugin_dbreport_fields;
 $wikiplugin_dbreport_fields_allowed;

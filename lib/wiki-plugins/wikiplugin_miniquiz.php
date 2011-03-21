@@ -5,30 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/*
-DEV NOTE
-that plugin is not finished !! -- mose
-\todo put message in an external file or source
-\todo use smarty templates rather than hardcode html
-*/
-
-// Includes a miniquiz form
-
-// fields to use in trackers to prepare miniquiz
-// Question   the question
-// Answer     correct answer
-// Option a   false answer 
-// Option b   false answer 
-// Option c   false answer 
-// Option d   false answer 
-// Valid      indicates that the tracker item is to be used as a quiz item
-
-function wikiplugin_miniquiz_help() {
-	$help = tra("Displays a miniquiz").":\n";
-	$help.= "~np~{MINIQUIZ(trackerId=>1)}Instructions::Feedback{MINIQUIZ}~/np~";
-	return $help;
-}
-
 function wikiplugin_miniquiz_info() {
 	return array(
 		'name' => tra('Mini Quiz'),

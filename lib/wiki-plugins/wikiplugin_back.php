@@ -5,20 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/*
- * $Header$
- *
- * Tiki-Wiki BACK plugin.
- * 
- * Syntax:
- * 
- *  {BACK()}{BACK}
- * 
- */
-function wikiplugin_back_help() {
-	return tra("Insert back link on wiki page").":<br />~np~{BACK()/}~/np~";
-}
-
 function wikiplugin_back_info() {
 	return array(
 		'name' => tra('Back'),

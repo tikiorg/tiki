@@ -5,12 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_ftp_help() {
-	$help = tra('Download box for a file on ftp server.');
-	$help .= "~np~{FTP(server=, user=, password=, title=)}file{FTP}~/np~";
-	return $help;
-}
-
 function wikiplugin_ftp_info() {
 	return array(
 		'name' => tra('FTP'),

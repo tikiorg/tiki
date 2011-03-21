@@ -5,10 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_googlemap_help() {
-	return tra("googlemap").":~np~{GOOGLEMAP(type=locator|user|item|objectlist,trackerfield, mode=normal|satellite|hybrid, key=XXXXX name=xxx, width=500, height=400, frameborder=1|0, defaultx=-79.4, defaulty=43.707, defaultz=14, setdefaultxyz=1|0, locateitemtype=wiki page|..., locateitemid=xxx, hideifnone=0|1, togglehidden=0|1, starthidden=0|1, autozoom=14, controls=n, trackerfieldid=xxx, trackerinputid=xxx)}{GOOGLEMAP}~/np~";
-}
-
 function wikiplugin_googlemap_info() {
 	return array(
 		'name' => tra('Google Map'),

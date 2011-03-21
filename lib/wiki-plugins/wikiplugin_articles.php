@@ -5,19 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Includes articles listing in a wiki page
-// Usage:
-// {ARTICLES(max=>3,topic=>topicId)}{ARTICLES}
-
-function wikiplugin_articles_help()
-{
-        $help = tra("Includes articles listing into a wiki page");
-        $help .= "<br />";
-        $help .= tra("~np~{ARTICLES(max=>3, topic=>topicName, topicId=>id, type=>type, categId=>Category parent ID, lang=>en, sort=>columnName_asc|columnName_desc), quiet=>y|n, titleonly=>y|n}{ARTICLES}~/np~");
-
-        return $help;
-}
-
 function wikiplugin_articles_info()
 {
 	return array(

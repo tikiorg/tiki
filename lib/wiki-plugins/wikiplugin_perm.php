@@ -5,15 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Usage:
-// {PERM(perms=>tiki_p_someperm|tiki_p_otherperm)}wiki text{PERM}
-
-function wikiplugin_perm_help() {
-	$help = tra("Display wiki text if user has one of listed permissions").":\n";
-	$help.= "~np~{PERM(perms=>tiki_p_someperm|tiki_p_otherperm)}wiki text{PERM}~/np~";
-	return $help;
-}
-
 function wikiplugin_perm_info() {
 	return array(
 		'name' => tra('Permissions'),

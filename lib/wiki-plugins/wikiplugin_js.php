@@ -5,15 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/*
- * file = external javascript file
- * data is the javascript code
- * if you need the data to be interpreted before the file use the JS plugin 2 times
- */
-function wikiplugin_js_help() {
-	return tra("Insert a javascript file or/and some javascript code.")."<br />~np~{JS(file=file.js)}".tra("javascript code")."{JS}~/np~";
-}
-
 function wikiplugin_js_info() {
 		return array(
 			'name' => tra('Javascript'),

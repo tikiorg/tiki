@@ -5,16 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Displays a list of users
-// Use:
-// {USERLIST(sep=>", ",max=>10,sort=>asc|desc,layout=>table)}substring{USERLIST}
-//
-// If no pattern is given returns all users or all that contain 'substring'
-
-function wikiplugin_userlist_help() {
-        return tra("Displays a list of registered users").":<br />~np~{USERLIST(sep=>\"SEPARATOR\",max=>MAXROWS,sort=>asc|desc,layout=>table)}substring{USERLIST}~/np~";
-}
-
 function wikiplugin_userlist_info() {
 	return array(
 		'name' => tra('User List'),

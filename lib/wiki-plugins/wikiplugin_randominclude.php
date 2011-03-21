@@ -5,22 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/**
- * RANDOMINCLUDE plugin
- * Includes a random wiki page in another.
- *
- * Usage:
- * {RANDOMINCLUDE()}{RANDOMINCLUDE}
- *
- * @package Tiki
- * @subpackage TikiPlugins
- * @version $Revision: 1.00 $
- */
-
-function wikiplugin_randominclude_help() {
-	return tra("Include a random page").":<br />~np~{RANDOMINCLUDE()}{RANDOMINCLUDE}~/np~";
-}
-
 function wikiplugin_randominclude_info() {
 	return array(
 		'name' => tra('Random Include'),

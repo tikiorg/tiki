@@ -5,38 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/*
-Displays a module inline in a wiki page
-
-Parameters
-module name : module=>lambda
-float : float=>(left|none|right)
-max : max=>20
-np : np=>(0|1) # (for non-parsed content)
-flip : flip=>(n|y)
-decorations : decorations=>(y|n)
-module args : arg=>value (depends on module)
-
-Example:
-{MODULE(module=>last_modified_pages,float=>left,max=>3,maxlen=>22)}
-{MODULE}
-
-about module params : all params are passed in $module_params
-so if you need to use params just add them in MODULE()
-
-*/
-
-/**
- * \warning zaufi: using cached module template is break the idea of
- *   having different (than system default) parameters for modules...
- *   so cache checking and maintaining currently commented out
- *   'till another solution will be implemented :)
- */
-
-function wikiplugin_module_help() {
-	return tra("Displays a module inline in a wiki page").":<br />~np~{MODULE(module=>,float=>left|right|none,decorations=>y|n,flip=>y|n,max=>,np=>0|1,notitle=y|n,args...)}{MODULE}~/np~";
-}
-
 function wikiplugin_module_info() {
 	global $modlib, $smarty;
 	require_once ('lib/modules/modlib.php');

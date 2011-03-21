@@ -5,18 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Display wiki text if user is in one of listed groups or group of friends
-// Usage:
-// {GROUP(groups=>Admins|Developers,friends=>foo|johndoe)}wiki text{GROUP}
-
-function wikiplugin_group_help() {
-	$help = tra("Display wiki text if user is in one of listed groups or group of friends").":\n";
-	$help.= "~np~<br />{GROUP(groups=>Admins|Developers)}wiki text{GROUP}<br />
-	{GROUP(notgroups=>Developers)}wiki text for other groups{GROUP}<br />	
-	{GROUP(groups=>Registered,friends=johndoe)}wiki text{ELSE}alternate text for other groups{GROUP}~/np~";
-	return $help;
-}
-
 function wikiplugin_group_info() {
 	return array(
 		'name' => tra('Group'),

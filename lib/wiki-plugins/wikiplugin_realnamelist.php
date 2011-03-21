@@ -5,21 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Displays a list of users by their realName
-// Use:
-// {REALNAMELIST(sep=>", ",max=>10,sort=>asc|desc,layout=>table)}groupname{REALNAMELIST}
-//
-// If no pattern is given returns all users, else all that belong to 'groupname' or groupnames
-// 2009-06-27: omstefanov: written on base model of plugin USERLIST with group selection possibilities from USERCOUNT
-//                         For all users selected who have no realName login names are returned, but in italics.
-//                         All these sort before users who have a realName.
-// 2009-06-30: omstefanov: added option to surpress users with login values 'admin' and/or containing 'test'
-//                         using 'exclude=test|admin|test-admin|admin-test'.
-
-function wikiplugin_realnamelist_help() {
-	return tra("Displays a list of users showing their real name").":<br />~np~{REALNAMELIST(sep=>\"SEPARATOR\",max=>MAXROWS,sort=>asc|desc,layout=>table)}groupname{REALNAMELIST}~/np~";
-}
-
 function wikiplugin_realnamelist_info() {
 	return array(
 		'name' => tra('User List with Real Names)'),

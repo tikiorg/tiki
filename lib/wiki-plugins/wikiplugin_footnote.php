@@ -5,15 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/* by robferguson
- *
- * FOOTNOTE plugin. Inserts a superscripted number where the plugin is written starting with one and counting up as the additional footnotes are added.
- *
- * Syntax:
- *
- * {FOOTNOTE()/}
- */
-
 function wikiplugin_footnote_info()
 {
 	return array(

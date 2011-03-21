@@ -5,15 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Includes rss feed output in a wiki page
-// Usage:
-// {RSS(id=>feedId,max=>3,date=>1,author=>1,desc=>1)}{RSS}
-//
-
-function wikiplugin_events_help() {
-	return tra("~np~{~/np~EVENTS(calendarid=1|2,maxdays=365,max=-1,datetime=1,desc=1)}{EVENTS} Insert rss feed output into a wikipage");
-}
-
 function wikiplugin_events_info() {
 	return array(
 		'name' => tra('Events'),

@@ -5,17 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/* Insert the bookmark button from ShareThis (www.sharethis.com). ShareThis account is not necessary.
-// Developed by Andrew Hafferman for Tiki CMS
-//
-// 2008-11-25 SEWilco
-//   Convert comments to WikiSyntax comments.
-// 2009-07-11 lindon
-//   Update for changes in ShareThis and fix bugs
-*/
-function wikiplugin_sharethis_help() {
-	return tra('Insert a ShareThis button from www.sharethis.com').":<br />~np~{SHARETHIS(sendsvcs=> , postfirst=> ,  rotateimage=> y|n, buttontext=> , headertitle=> , headerbg=> , headertxtcolor=> , linkfg=> , popup=> true|false, embed=> true|false)}{SHARETHIS} ~/np~ <br /> ";
-}
 function wikiplugin_sharethis_info() {
 	return array(
 		'name' => tra('ShareThis'),

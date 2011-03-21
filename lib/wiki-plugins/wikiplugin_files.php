@@ -5,15 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/*	list files of galleries
- * galleryId
- * categId
- * 
-*/
-function wikiplugin_files_help() {
-	return tra("List files in a file gallery (with a category) or in a category or a file gallery od this category.")
-		."<br />~np~{FILES(galleryId=id,categId=id,sort=name_asc,showaction=n,showfind=n,slideshow=n)}Title{FILES}~/np~";
-}
 function wikiplugin_files_info() {
 	return array(
 		'name' => tra('Files'),

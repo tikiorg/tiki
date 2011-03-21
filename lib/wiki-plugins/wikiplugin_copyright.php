@@ -5,20 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-//require_once ('lib/tikilib.php');
-//require_once ('tiki-setup.php');
 require_once ("lib/copyrights/copyrightslib.php");
-
-// Insert copyright notices
-// Usage:
-// {COPYRIGHT()}
-// text
-// ~title~ &copy; ~year~ ; ~authors~
-// text
-// {COPYRIGHT}
-function wikiplugin_copyright_help() {
-	return tra("Insert copyright notices").":<br />~np~{COPYRIGHT()}~title~~year~~authors~".tra("text")."{COPYRIGHT}~/np~";
-}
 
 function wikiplugin_copyright_info() {
 	return array(

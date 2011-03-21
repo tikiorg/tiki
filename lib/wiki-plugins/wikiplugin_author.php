@@ -4,9 +4,7 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-function wikiplugin_author_help() {
-	return tra("Shows which author created/deleted which text.").":<br />~np~{AUTHOR(author=username,deleted_by=username)}".tra('text')."{AUTHOR}~/np~";
-}
+
 function wikiplugin_author_info() {
 	return array(
 		'name' => tra('Author'),

@@ -5,13 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Wiki plugin to display the number of hits per object
-// Franck Martin 2005
-
-function wikiplugin_objecthits_help() {
-        return tra("Displays object hit info by object and days").":<br />~np~{OBJECTHITS(object=>,type=>,days=>)/}~/np~";
-}
-
 function wikiplugin_objecthits_info() {
 	return array(
 		'name' => tra('Object Hits'),

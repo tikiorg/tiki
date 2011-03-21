@@ -5,20 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/*
- * Tikiwiki QUOTE plugin.
- * 
- * Syntax:
- * 
- *  {QUOTE([replyto=>name])}
- *   Content inside box
- *  {QUOTE}
- * 
- */
-function wikiplugin_quote_help() {
-	return tra("Quote text by surrounding the text with a box, like the [QUOTE] BBCode").":<br />~np~{QUOTE(replyto=>name)}".tra("text")."{QUOTE}~/np~";
-}
-
 function wikiplugin_quote_info() {
 	return array(
 		'name' => tra('Quote'),

@@ -5,13 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Wiki plugin to display last modification information.
-// rlpowell 31 Dec 2006
-
-function wikiplugin_lastmod_help() {
-        return tra("The last_mod plugin replaces itself with last modification time of the named wiki page, or the current page if no name given").":<br />~np~{LASTMOD(page=>pagename)/}~/np~";
-}
-
 function wikiplugin_lastmod_info() {
 	return array(
 		'name' => tra('Last Modification'),

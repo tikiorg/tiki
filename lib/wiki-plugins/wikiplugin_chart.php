@@ -5,14 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/* Tiki-Wiki plugin chart
- *
- * Displays a chart from a tikisheet.
- */
-function wikiplugin_chart_help() {
-	return tra("Chart").":<br />~np~{CHART(id=>, type=>, width=>, height=>, value=> )}".tra("title")."{CHART}~/np~";
-}
-
 function wikiplugin_chart_info() {
 	return array(
 		'name' => tra('Chart'),
