@@ -64,30 +64,31 @@
 			<img src="pics/icons/cross.png" alt="{tr}Exit{/tr}" /></a>
 		<select id="tiki-slideshow-theme">
 			<option value="">{tr}Change Theme{/tr}</option>
-			<option value="UI lightness">UI lightness</option>
-			<option value="UI darkness">UI darkness</option>
-			<option value="Smoothness">Smoothness</option>
-			<option value="Start">Start</option>
-			<option value="Redmond">Redmond</option>
-			<option value="Sunny">Sunny</option>
-			<option value="Overcast">Overcast</option>
-			<option value="Le Frog">Le Frog</option>
-			<option value="Flick">Flick</option>
-			<option value="Pepper Grinder">Pepper Grinder</option>
-			<option value="Eggplant">Eggplant</option>
-			<option value="Dark Hive">Dark Hive</option>
-			<option value="Cupertino">Cupertino</option>
-			<option value="South Street">South Street</option>
-			<option value="Blitzer">Blitzer</option>
-			<option value="Humanity">Humanity</option>
-			<option value="Hot sneaks">Hot sneaks</option>
-			<option value="Excite Bike">Excite Bike</option>
-			<option value="Vader">Vader</option>
-			<option value="Dot Luv">Dot Luv</option>
-			<option value="Mint Choc">Mint Choc</option>
-			<option value="Black Tie">Black Tie</option>
-			<option value="Trontastic">Trontastic</option>
-			<option value="Swanky Purse">Swanky Purse</option>
+			<option value="default">default</option>
+			<option value="ui-lightness">ui-lightness</option>
+			<option value="ui-darkness">ui-darkness</option>
+			<option value="smoothness">smoothness</option>
+			<option value="start">start</option>
+			<option value="redmond">redmond</option>
+			<option value="sunny">sunny</option>
+			<option value="overcast">overcast</option>
+			<option value="le-frog">le-frog</option>
+			<option value="flick">flick</option>
+			<option value="pepper-grinder">pepper-grinder</option>
+			<option value="eggplant">rggplant</option>
+			<option value="dark-hive">dark-hive</option>
+			<option value="cupertino">cupertino</option>
+			<option value="south-street">south-street</option>
+			<option value="blitzer">blitzer</option>
+			<option value="humanity">humanity</option>
+			<option value="hot-sneaks">hot-sneaks</option>
+			<option value="excite-bike">excite-bike</option>
+			<option value="vader">vader</option>
+			<option value="dot-luv">dot-luv</option>
+			<option value="mint-choc">mint-choc</option>
+			<option value="black-tie">black-tie</option>
+			<option value="trontastic">trontastic</option>
+			<option value="swanky-purse">swanky-purse</option>
 		</select>
 	</div>
 	<div id="tiki_slideshowNote_buttons" style="display: none;">

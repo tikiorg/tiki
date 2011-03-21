@@ -38,33 +38,33 @@ function wikiplugin_slideshow_info() {
 				'name' => tra('Theme'),
 				'description' => tra('The side on which you would like to display text if there are images that are resized or present'),
 				'filter' => 'text',
-				'default' => tra('UI lightness'),
+				'default' => tra('Tiki jQuery UI Theme'),
 				'since' => '7.0',
 				'options' => array(					
-					array('text' => 'UI lightness', 'value' => 'UI lightness'),
-					array('text' => 'UI darkness', 'value' => 'UI darkness'),
-					array('text' => 'Smoothness', 'value' => 'Smoothness'),
-					array('text' => 'Start', 'value' => 'Start'),
-					array('text' => 'Redmond', 'value' => 'Redmond'),
-					array('text' => 'Sunny', 'value' => 'Sunny'),
-					array('text' => 'Overcast', 'value' => 'Overcast'),
-					array('text' => 'Le Frog', 'value' => 'Le Frog'),
-					array('text' => 'Flick', 'value' => 'Flick'),
-					array('text' => 'Pepper Grinder', 'value' => 'Pepper Grinder'),
-					array('text' => 'Eggplant', 'value' => 'Eggplant'),
-					array('text' => 'Dark Hive', 'value' => 'Dark Hive'),
-					array('text' => 'Cupertino', 'value' => 'Cupertino'),
-					array('text' => 'South Street', 'value' => 'South Street'),
-					array('text' => 'Blitzer', 'value' => 'Blitzer'),
-					array('text' => 'Humanity', 'value' => 'Humanity'),
-					array('text' => 'Hot sneaks', 'value' => 'Hot sneaks'),
-					array('text' => 'Excite Bike', 'value' => 'Excite Bike'),
-					array('text' => 'Vader', 'value' => 'Vader'),
-					array('text' => 'Dot Luv', 'value' => 'Dot Luv'),
-					array('text' => 'Mint Choc', 'value' => 'Mint Choc'),
-					array('text' => 'Black Tie', 'value' => 'Black Tie'),
-					array('text' => 'Trontastic', 'value' => 'Trontastic'),
-					array('text' => 'Swanky Purse', 'value' => 'Swanky Purse'),
+					array('text' => 'ui-lightness', 'value' => 'ui-lightness'),
+					array('text' => 'ui-darkness', 'value' => 'ui-darkness'),
+					array('text' => 'smoothness', 'value' => 'smoothness'),
+					array('text' => 'start', 'value' => 'start'),
+					array('text' => 'redmond', 'value' => 'redmond'),
+					array('text' => 'sunny', 'value' => 'sunny'),
+					array('text' => 'overcast', 'value' => 'overcast'),
+					array('text' => 'le-frog', 'value' => 'le-frog'),
+					array('text' => 'flick', 'value' => 'flick'),
+					array('text' => 'pepper Grinder', 'value' => 'pepper-grinder'),
+					array('text' => 'eggplant', 'value' => 'eggplant'),
+					array('text' => 'dark-hive', 'value' => 'dark-hive'),
+					array('text' => 'cupertino', 'value' => 'cupertino'),
+					array('text' => 'south-street', 'value' => 'south-street'),
+					array('text' => 'blitzer', 'value' => 'blitzer'),
+					array('text' => 'humanity', 'value' => 'humanity'),
+					array('text' => 'hot-sneaks', 'value' => 'hot-sneaks'),
+					array('text' => 'excite-bike', 'value' => 'excite-bike'),
+					array('text' => 'vader', 'value' => 'vader'),
+					array('text' => 'dot-Luv', 'value' => 'dot-luv'),
+					array('text' => 'mint-choc', 'value' => 'mint-shoc'),
+					array('text' => 'black-tie', 'value' => 'black-tie'),
+					array('text' => 'trontastic', 'value' => 'trontastic'),
+					array('text' => 'swanky-purse', 'value' => 'swanky-purse'),
 				),
 			),
 			'backgroundurl' => array(
@@ -153,14 +153,17 @@ function wikiplugin_slideshow_info() {
 }
 
 function getSlideshowTheme($theme, $makeJson) {
+	global $prefs;
+
 	$result = array();
-	
 	//this makes it so that any input so long as the characters are the same can be used
 	$theme = strtolower($theme);
 	$theme = str_replace(' ', '', $theme);
+	$theme = ($theme == 'default' ? $prefs['feature_jquery_ui_theme'] : $theme);
 	
+	$result['themename'] = $theme;
 	switch ($theme) {
-		case "uilightness":
+		case "ui-lightness":
 			$result['backgroundcolor'] = '#F6A828';
 			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#1C94C4';
@@ -168,7 +171,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slidefontcolor'] = '#333';
 			$result['listitemhighlightcolor'] = '#363636';
 			break;
-		case "uidarkness":
+		case "ui-darkness":
 			$result['backgroundcolor'] = '#333';
 			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = 'white';
@@ -232,7 +235,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slidefontcolor'] = '#444';
 			$result['listitemhighlightcolor'] = '#FF0084';
 			break;
-		case "peppergrinder": 
+		case "pepper-grinder": 
 			$result['backgroundcolor'] = '#ECEADF';
 			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#654B24';
@@ -248,7 +251,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slidefontcolor'] = 'white';
 			$result['listitemhighlightcolor'] = '#FFDB1F';
 			break;
-		case "darkhive": 
+		case "dark-hive": 
 			$result['backgroundcolor'] = '#444';
 			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#0972A5';
@@ -264,7 +267,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slidefontcolor'] = '#362B36';
 			$result['listitemhighlightcolor'] = '#2694E8';
 			break;
-		case "southstreet": 
+		case "south-street": 
 			$result['backgroundcolor'] = '#F5F3E5';
 			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#459E00';
@@ -288,7 +291,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slidefontcolor'] = '#1E1B1D';
 			$result['listitemhighlightcolor'] = '#592003';
 			break;
-		case "hotsneaks": 
+		case "hot-sneaks": 
 			$result['backgroundcolor'] = '#35414F';
 			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#E1E463';
@@ -296,7 +299,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slidefontcolor'] = '#93C3CD';
 			$result['listitemhighlightcolor'] = '#DB4865';
 			break;
-		case "excitebike": 
+		case "excite-bike": 
 			$result['backgroundcolor'] = '#EEE';
 			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#E69700';
@@ -312,7 +315,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slidefontcolor'] = '#EEE';
 			$result['listitemhighlightcolor'] = '#ADADAD';
 			break;
-		case "dotluv": 
+		case "dot-luv": 
 			$result['backgroundcolor'] = '#111';
 			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#0b3e6f';
@@ -320,7 +323,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slidefontcolor'] = '#D9D9D9';
 			$result['listitemhighlightcolor'] = '#0b58a2';
 			break;
-		case "mintchoc": 
+		case "mint-choc": 
 			$result['backgroundcolor'] = '#453326';
 			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#BAEC7E';
@@ -328,7 +331,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slidefontcolor'] = '#ffffff';
 			$result['listitemhighlightcolor'] = '#619226';
 			break;
-		case "blacktie": 
+		case "black-tie": 
 			$result['backgroundcolor'] = '#333333';
 			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#a3a3a3';
@@ -344,7 +347,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slidefontcolor'] = '#ffffff';
 			$result['listitemhighlightcolor'] = '#f1fbe5';
 			break;
-		case "swankypurse": 
+		case "swanky-purse": 
 			$result['backgroundcolor'] = '#261803';
 			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#eacd86';
@@ -362,27 +365,30 @@ function getSlideshowTheme($theme, $makeJson) {
 function wikiplugin_slideshow($data, $params) {
 	global $dbTiki, $tiki_p_admin, $prefs, $user, $page, $tikilib, $smarty;
 	extract ($params,EXTR_SKIP);
+
+	$theme = (isset($theme) ? $theme : 'default');
+	$themeName = '';
 	
-	if ($theme) {
-		$theme = getSlideshowTheme($theme);
-		$backgroundcolor = $theme['backgroundcolor'];
-		$backgroundurl = (isset($backgroundurl) ? $backgroundurl : $theme['backgroundurl']);
-		$headerfontcolor = $theme['headerfontcolor'];
-		$headerbackgroundcolor = $theme['headerbackgroundcolor'];
-		$slidefontcolor = $theme['slidefontcolor'];
-		$listitemhighlightcolor = $theme['listitemhighlightcolor'];
-	} else {
-		$backgroundcolor = (isset($backgroundcolor) ? $backgroundcolor : '');
-		$backgroundurl = (isset($backgroundurl) ? $backgroundurl : '');
-		$headerfontcolor = (isset($headerfontcolor) ? $headerfontcolor : '');
-		$headerbackgroundcolor = (isset($headerbackgroundcolor) ? $headerbackgroundcolor : '');
-		$slidefontcolor = (isset($slidefontcolor) ? $slidefontcolor : '');
-		$listitemhighlightcolor = (isset($listitemhighlightcolor) ? $listitemhighlightcolor : '');
-	}
-	
+	$backgroundcolor = (isset($backgroundcolor) ? $backgroundcolor : '');
+	$backgroundurl = (isset($backgroundurl) ? $backgroundurl : '');
+	$headerfontcolor = (isset($headerfontcolor) ? $headerfontcolor : '');
+	$headerbackgroundcolor = (isset($headerbackgroundcolor) ? $headerbackgroundcolor : '');
+	$slidefontcolor = (isset($slidefontcolor) ? $slidefontcolor : '');
+	$listitemhighlightcolor = (isset($listitemhighlightcolor) ? $listitemhighlightcolor : '');
 	$class = (isset($class) ? " $class"  : '');
 	$slideduration = (isset($slideseconds) ? $slideseconds : 15) * 1000;
 	$textside = (isset($textside) ? $textside : 'left');
+	
+	if ($theme) {
+		$theme = getSlideshowTheme($theme);
+		$backgroundcolor = ($backgroundcolor ? $backgroundcolor : $theme['backgroundcolor']);
+		$backgroundurl = ($backgroundurl ? $backgroundurl : $theme['backgroundurl']);
+		$headerfontcolor = ($headerfontcolor ? $headerfontcolor : $theme['headerfontcolor']);
+		$headerbackgroundcolor = ($headerbackgroundcolor ? $headerbackgroundcolor : $theme['headerbackgroundcolor']);
+		$slidefontcolor = ($slidefontcolor ? $slidefontcolor : $theme['slidefontcolor']);
+		$listitemhighlightcolor = ($listitemhighlightcolor ? $listitemhighlightcolor : $theme['listitemhighlightcolor']);
+		$themeName = $theme['themename'];
+	}
 	
 	$notes = explode("/////", ($data ? $data : ""));
 	$notesHtml = '';
@@ -402,7 +408,8 @@ function wikiplugin_slideshow($data, $params) {
 			slideFontColor: '$slidefontcolor',
 			slideDuration: $slideduration,
 			listItemHighlightColor: '$listitemhighlightcolor',
-			textSide: '$textside'
+			textSide: '$textside',
+			themeName: '$themeName'
 		};
 	");
 	
