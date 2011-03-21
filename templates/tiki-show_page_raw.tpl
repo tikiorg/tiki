@@ -40,14 +40,18 @@
   
   {if $is_slideshow eq 'y'}
   	<div id="tiki_slideshow_buttons" style="display: none;">
-		<a href="#" onclick="$.s5.first(); return false;" title="{tr}First{/tr}">
-			<img src="lib/jquery/jquery.s5/images/resultset_first.png" alt="{tr}First{/tr}" /></a> 
-		<a href="#" onclick="$.s5.prev(); return false;" title="{tr}Prev{/tr}">
-			<img src="lib/jquery/jquery.s5/images/resultset_previous.png" alt="{tr}Prev{/tr}" /></a> 
-		<a href="#" onclick="$.s5.next(); return false;" title="{tr}Next{/tr}">
-			<img src="lib/jquery/jquery.s5/images/resultset_next.png" alt="{tr}Next{/tr}" /></a> 
-		<a href="#" onclick="$.s5.last(); return false;" title="{tr}Last{/tr}">
-			<img src="lib/jquery/jquery.s5/images/resultset_last.png" alt="{tr}Last{/tr}" /></a>
+		<a href="#" onclick="$.s5.first(); return false;" title="{tr}First Slide{/tr}">
+			<img src="lib/jquery/jquery.s5/images/resultset_first.png" alt="{tr}First Slide{/tr}" /></a> 
+		<a href="#" onclick="$.s5.prev(); return false;" title="{tr}Previous Slide{/tr}">
+			<img src="lib/jquery/jquery.s5/images/resultset_previous.png" alt="{tr}Previous Slide{/tr}" /></a>
+		<a href="#" onclick="$.s5.goLI('prev'); return false;" title="{tr}Previous Point{/tr}">
+			<img src="pics/icons/resultset_up.png" alt="{tr}Previous Point{/tr}" /></a>
+		<a href="#" onclick="$.s5.goLI('next'); return false;" title="{tr}Next Point{/tr}">
+			<img src="pics/icons/resultset_down.png" alt="{tr}Next Point{/tr}" /></a> 
+		<a href="#" onclick="$.s5.next(); return false;" title="{tr}Next Slide{/tr}">
+			<img src="lib/jquery/jquery.s5/images/resultset_next.png" alt="{tr}Next Slide{/tr}" /></a> 
+		<a href="#" onclick="$.s5.last(); return false;" title="{tr}Last Slide{/tr}">
+			<img src="lib/jquery/jquery.s5/images/resultset_last.png" alt="{tr}Last Slide{/tr}" /></a>
 		<a href="#" onclick="$.s5.listSlideTitles(this); return false;" title="{tr}Jump To Slide{/tr}">
 			<img src="lib/jquery/jquery.s5/images/layers.png" alt="{tr}Jump To Slide{/tr}" /></a>
 		<a href="#" onclick="$.s5.play(); return false;" title="{tr}Play{/tr}">
@@ -62,7 +66,7 @@
 			<img src="lib/jquery/jquery.s5/images/arrow_rotate_clockwise.png" alt="{tr}Toggle Loop{/tr}" /></a>
 		<a href="tiki-index.php?page={$page}" title="{tr}Exit{/tr}">
 			<img src="pics/icons/cross.png" alt="{tr}Exit{/tr}" /></a>
-		<select id="tiki-slideshow-theme">
+		<select class="tiki-slideshow-theme">
 			<option value="">{tr}Change Theme{/tr}</option>
 			<option value="default">default</option>
 			<option value="ui-lightness">ui-lightness</option>
@@ -75,7 +79,7 @@
 			<option value="le-frog">le-frog</option>
 			<option value="flick">flick</option>
 			<option value="pepper-grinder">pepper-grinder</option>
-			<option value="eggplant">rggplant</option>
+			<option value="eggplant">eggplant</option>
 			<option value="dark-hive">dark-hive</option>
 			<option value="cupertino">cupertino</option>
 			<option value="south-street">south-street</option>
@@ -92,16 +96,60 @@
 		</select>
 	</div>
 	<div id="tiki_slideshowNote_buttons" style="display: none;">
-		<a href="#" onclick="window.opener.$.s5.first(); return false;" title="{tr}First{/tr}">{tr}First{/tr}</a> 
-		<a href="#" onclick="window.opener.$.s5.prev(); return false;" title="{tr}Prev{/tr}">{tr}Prev{/tr}</a> 
-		<a href="#" onclick="window.opener.$.s5.next(); return false;" title="{tr}Next{/tr}">{tr}Next{/tr}</a> 
-		<a href="#" onclick="window.opener.$.s5.last(); return false;" title="{tr}Last{/tr}">{tr}Last{/tr}</a>
-		<a href="#" onclick="window.opener.$.s5.listSlideTitles(this, document.body, true); return false;" title="{tr}Jump To Slide{/tr}">{tr}Jump To Slide{/tr}</a>
-		<a href="#" onclick="window.opener.$.s5.play(); return false;" title="{tr}Play{/tr}">{tr}Play{/tr}</a>
-		<a href="#" onclick="window.opener.$.s5.pause(); return false;" title="{tr}Pause{/tr}">{tr}Pause{/tr}</a>
-		<a href="#" onclick="window.opener.$.s5.stop(); return false;" title="{tr}Stop{/tr}">{tr}Stop{/tr}</a>
-		<a href="#" onclick="window.opener.$.s5.toggleLoop(); return false;" title="{tr}Toggle Loop{/tr}">{tr}Toggle Loop{/tr}</a>
-		<a href="#" onclick="window.opener.window.location = 'tiki-index.php?page={$page}'" title="{tr}Exit{/tr}">{tr}Exit{/tr}</a>
+		<a href="#" onclick="window.opener.$.s5.first(); return false;" title="{tr}First Slide{/tr}">
+			<img src="lib/jquery/jquery.s5/images/resultset_first.png" alt="{tr}First Slide{/tr}" /></a> 
+		<a href="#" onclick="window.opener.$.s5.prev(); return false;" title="{tr}Previous Slide{/tr}">
+			<img src="lib/jquery/jquery.s5/images/resultset_previous.png" alt="{tr}Previous Slide{/tr}" /></a>
+		<a href="#" onclick="window.opener.$.s5.goLI('prev'); return false;" title="{tr}Previous Point{/tr}">
+			<img src="pics/icons/resultset_up.png" alt="{tr}Previous Point{/tr}" /></a>
+		<a href="#" onclick="window.opener.$.s5.goLI('next'); return false;" title="{tr}Next Point{/tr}">
+			<img src="pics/icons/resultset_down.png" alt="{tr}Next Point{/tr}" /></a> 
+		<a href="#" onclick="window.opener.$.s5.next(); return false;" title="{tr}Next Slide{/tr}">
+			<img src="lib/jquery/jquery.s5/images/resultset_next.png" alt="{tr}Next Slide{/tr}" /></a> 
+		<a href="#" onclick="window.opener.$.s5.last(); return false;" title="{tr}Last Slide{/tr}">
+			<img src="lib/jquery/jquery.s5/images/resultset_last.png" alt="{tr}Last Slide{/tr}" /></a>
+		<a href="#" onclick="window.opener.$.s5.listSlideTitles(this); return false;" title="{tr}Jump To Slide{/tr}">
+			<img src="lib/jquery/jquery.s5/images/layers.png" alt="{tr}Jump To Slide{/tr}" /></a>
+		<a href="#" onclick="window.opener.$.s5.play(); return false;" title="{tr}Play{/tr}">
+			<img src="lib/jquery/jquery.s5/images/control_play_blue.png" alt="{tr}Play{/tr}" /></a>
+		<a href="#" onclick="window.opener.$.s5.pause(); return false;" title="{tr}Pause{/tr}">
+			<img src="lib/jquery/jquery.s5/images/control_pause_blue.png" alt="{tr}Pause{/tr}" /></a>
+		<a href="#" onclick="window.opener.$.s5.stop(); return false;" title="{tr}Stop{/tr}">
+			<img src="lib/jquery/jquery.s5/images/control_stop_blue.png" alt="{tr}Stop{/tr}" /></a>
+		<a href="#" onclick="window.opener.$.s5.getNote(); return false;" title="{tr}Notes{/tr}">
+			<img src="lib/jquery/jquery.s5/images/note.png" alt="{tr}Notes{/tr}" /></a>
+		<a href="#" onclick="window.opener.$.s5.toggleLoop(); return false;" title="{tr}Toggle Loop{/tr}">
+			<img src="lib/jquery/jquery.s5/images/arrow_rotate_clockwise.png" alt="{tr}Toggle Loop{/tr}" /></a>
+		<a href="tiki-index.php?page={$page}" title="{tr}Exit{/tr}">
+			<img src="pics/icons/cross.png" alt="{tr}Exit{/tr}" /></a>
+		<select class="tiki-slideshow-theme">
+			<option value="">{tr}Change Theme{/tr}</option>
+			<option value="default">default</option>
+			<option value="ui-lightness">ui-lightness</option>
+			<option value="ui-darkness">ui-darkness</option>
+			<option value="smoothness">smoothness</option>
+			<option value="start">start</option>
+			<option value="redmond">redmond</option>
+			<option value="sunny">sunny</option>
+			<option value="overcast">overcast</option>
+			<option value="le-frog">le-frog</option>
+			<option value="flick">flick</option>
+			<option value="pepper-grinder">pepper-grinder</option>
+			<option value="eggplant">eggplant</option>
+			<option value="dark-hive">dark-hive</option>
+			<option value="cupertino">cupertino</option>
+			<option value="south-street">south-street</option>
+			<option value="blitzer">blitzer</option>
+			<option value="humanity">humanity</option>
+			<option value="hot-sneaks">hot-sneaks</option>
+			<option value="excite-bike">excite-bike</option>
+			<option value="vader">vader</option>
+			<option value="dot-luv">dot-luv</option>
+			<option value="mint-choc">mint-choc</option>
+			<option value="black-tie">black-tie</option>
+			<option value="trontastic">trontastic</option>
+			<option value="swanky-purse">swanky-purse</option>
+		</select>
 	</div>
   {/if}
 {/if}

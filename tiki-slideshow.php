@@ -126,20 +126,14 @@ $headerlib->add_jq_onready( '
 	
 	$("#main").hide();
 
-	$("#tiki-slideshow-theme")
+	$(".tiki-slideshow-theme")
 		.val(window.s5Settings.themeName)
 		.change(function() {
 			var theme = $(this).val();
 			if (theme) {
 				$.get("tiki-slideshow.php", {theme: theme}, function(o) {
 					theme = $.parseJSON(o);
-					$.s5.makeTheme(
-						theme.slidefontcolor, 
-						theme.headerfontcolor, 
-						theme.backgroundcolor, 
-						theme.backgroundimage, 
-						theme.listitemhighlightcolor
-					);
+					$.s5.makeTheme(theme);
 				}); 
 			}
 		});
