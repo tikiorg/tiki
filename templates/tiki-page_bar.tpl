@@ -85,10 +85,10 @@
 
 			{if $prefs.wiki_uses_slides eq 'y'}
 				{if $show_slideshow eq 'y'}
-					{button href="tiki-slideshow.php?page=$thispage" _text="{tr}Slides{/tr}"}
+					{button href="tiki-slideshow.php?page=$thispage" _text="{tr}Slideshow{/tr}"}
 				{elseif $structure eq 'y'}
 					{assign var=thispage_info value=$page_info.page_ref_id}
-					{button href="tiki-slideshow2.php?page_ref_id=$thispage_info" _text="{tr}Slides{/tr}"}
+					{button href="tiki-slideshow2.php?page_ref_id=$thispage_info" _text="{tr}Slideshow{/tr}"}
 				{/if}
 			{/if}
 
