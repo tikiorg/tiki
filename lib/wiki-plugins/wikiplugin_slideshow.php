@@ -162,7 +162,7 @@ function getSlideshowTheme($theme) {
 	switch ($theme) {
 		case "uilightness":
 			$result['backgroundcolor'] = '#F6A828';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#1C94C4';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = '#333';
@@ -170,7 +170,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "uidarkness":
 			$result['backgroundcolor'] = '#333';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = 'white';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = 'white';
@@ -178,7 +178,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "smoothness": 
 			$result['backgroundcolor'] = '#E6E6E6';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#212121';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = '#222';
@@ -186,7 +186,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "start":
 			$result['backgroundcolor'] = '#2191c0';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#acdd4a';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = 'white';
@@ -194,7 +194,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "redmond": 
 			$result['backgroundcolor'] = '#C5DBEC';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#2E6E9E';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = '#222';
@@ -202,7 +202,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "sunny": 
 			$result['backgroundcolor'] = '#FEEEBD';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#0074C7';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = '#383838';
@@ -210,7 +210,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "overcast": 
 			$result['backgroundcolor'] = '#C9C9C9';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#212121';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = '#333';
@@ -218,7 +218,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "lefrog": 
 			$result['backgroundcolor'] = '#285C00';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = 'white';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = 'white';
@@ -226,7 +226,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "flick": 
 			$result['backgroundcolor'] = '#DDD';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#0073EA';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = '#444';
@@ -234,7 +234,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "peppergrinder": 
 			$result['backgroundcolor'] = '#ECEADF';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#654B24';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = '#1F1F1F';
@@ -242,7 +242,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "eggplant": 
 			$result['backgroundcolor'] = '#3D3644';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = 'white';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = 'white';
@@ -250,7 +250,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "darkhive": 
 			$result['backgroundcolor'] = '#444';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#0972A5';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = 'white';
@@ -258,7 +258,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "cupertino": 
 			$result['backgroundcolor'] = '#D7EBF9';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#2694E8';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = '#362B36';
@@ -266,7 +266,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "southstreet": 
 			$result['backgroundcolor'] = '#F5F3E5';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#459E00';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = '#312E25';
@@ -274,7 +274,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "blitzer": 
 			$result['backgroundcolor'] = '#EEE';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#C00';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = '#333';
@@ -282,7 +282,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "humanity": 
 			$result['backgroundcolor'] = '#EDE4D4';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#B85700';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = '#1E1B1D';
@@ -290,7 +290,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "hotsneaks": 
 			$result['backgroundcolor'] = '#35414F';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#E1E463';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = '#93C3CD';
@@ -298,7 +298,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "excitebike": 
 			$result['backgroundcolor'] = '#EEE';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#E69700';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = '#1484E6';
@@ -306,7 +306,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "vader": 
 			$result['backgroundcolor'] = '#121212';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#ADADAD';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = '#EEE';
@@ -314,7 +314,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "dotluv": 
 			$result['backgroundcolor'] = '#111';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#0b3e6f';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = '#D9D9D9';
@@ -322,7 +322,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "mintchoc": 
 			$result['backgroundcolor'] = '#453326';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#BAEC7E';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = '#ffffff';
@@ -330,7 +330,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "blacktie": 
 			$result['backgroundcolor'] = '#333333';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#a3a3a3';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = '#eeeeee';
@@ -338,7 +338,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "trontastic": 
 			$result['backgroundcolor'] = '#222222';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#9fda58';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = '#ffffff';
@@ -346,7 +346,7 @@ function getSlideshowTheme($theme) {
 			break;
 		case "swankypurse": 
 			$result['backgroundcolor'] = '#261803';
-			$result['backgroundurl'] = '';
+			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = '#eacd86';
 			$result['headerbackgroundcolor'] = '';
 			$result['slidefontcolor'] = '#efec9f';
@@ -363,17 +363,17 @@ function wikiplugin_slideshow($data, $params) {
 	if ($theme) {
 		$theme = getSlideshowTheme($theme);
 		$backgroundcolor = $theme['backgroundcolor'];
-		$backgroundurl = $theme['backgroundurl'];
+		$backgroundurl = (isset($backgroundurl) ? $backgroundurl : $theme['backgroundurl']);
 		$headerfontcolor = $theme['headerfontcolor'];
 		$headerbackgroundcolor = $theme['headerbackgroundcolor'];
 		$slidefontcolor = $theme['slidefontcolor'];
 		$listitemhighlightcolor = $theme['listitemhighlightcolor'];
 	} else {
-		$backgroundcolor = (isset($backgroundcolor) ? $backgroundcolor : '#0087BB');
+		$backgroundcolor = (isset($backgroundcolor) ? $backgroundcolor : '');
 		$backgroundurl = (isset($backgroundurl) ? $backgroundurl : '');
-		$headerfontcolor = (isset($headerfontcolor) ? $headerfontcolor : '#56D0FF');
+		$headerfontcolor = (isset($headerfontcolor) ? $headerfontcolor : '');
 		$headerbackgroundcolor = (isset($headerbackgroundcolor) ? $headerbackgroundcolor : '');
-		$slidefontcolor = (isset($slidefontcolor) ? $slidefontcolor : '#EEFAFF');
+		$slidefontcolor = (isset($slidefontcolor) ? $slidefontcolor : '');
 		$listitemhighlightcolor = (isset($listitemhighlightcolor) ? $listitemhighlightcolor : '');
 	}
 	
