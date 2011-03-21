@@ -62,7 +62,8 @@ if (!empty($_REQUEST['edit_assign'])) {
     check_ticket('admin-modules');
     $info = $modlib->get_assigned_module($_REQUEST['edit_assign']);
     $grps = '';
-    if ($info["groups"]) {
+	if (empty($info['params'])) $info['params'] = array();
+    if (!empty($info['groups'])) {
         $module_groups = unserialize($info["groups"]);
         foreach($module_groups as $amodule) {
             $grps = $grps . ' $amodule ';
