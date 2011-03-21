@@ -18,15 +18,94 @@ class CartLib
 		$this->update_quantity( $code, $current );
 	}
 
+	function get_tracker_item_id_custom( $trackerName, $fieldName, $value ) {
+		global $tikilib;
+
+		$itemId = $tikilib->getOne("
+			SELECT tiki_tracker_item_fields.itemId
+			FROM tiki_tracker_item_fields
+			LEFT JOIN tiki_tracker_fields ON tiki_tracker_fields.fieldId = tiki_tracker_item_fields.fieldId
+			LEFT JOIN tiki_trackers ON tiki_trackers.trackerId = tiki_tracker_fields.trackerId
+			LEFT JOIN tiki_tracker_items ON tiki_tracker_items.itemId = tiki_tracker_item_fields.itemId
+			WHERE tiki_trackers.name = ? AND
+			tiki_tracker_fields.name = ? AND
+			tiki_tracker_item_fields.value = ?
+		", array($trackerName, $fieldName, $value));
+		
+		return $itemId;
+	}
+	
+	function get_tracker_value_custom( $trackerName, $fieldName, $itemId ) {
+		global $tikilib;
+
+		$value = $tikilib->getOne("
+			SELECT tiki_tracker_item_fields.value
+			FROM tiki_tracker_item_fields
+			LEFT JOIN tiki_tracker_fields ON tiki_tracker_fields.fieldId = tiki_tracker_item_fields.fieldId
+			LEFT JOIN tiki_trackers ON tiki_trackers.trackerId = tiki_tracker_fields.trackerId
+			LEFT JOIN tiki_tracker_items ON tiki_tracker_items.itemId = tiki_tracker_item_fields.itemId
+			WHERE tiki_trackers.name = ? AND
+			tiki_tracker_fields.name = ? AND
+			tiki_tracker_item_fields.itemId = ?
+		", array($trackerName, $fieldName, $itemId));
+		
+		return $value;
+	}
+	
+	
+	function get_gift_certificate( $code ) {
+		$code = ( $code ? $code : $_COOKIE["tiki-gc"] );
+		if ( $code ) { //TODO: need to do check here to ensure that gift certs can be added
+			$itemId = $this->get_tracker_item_id_custom( "Gift Certificates", "Redeem Code", $code );
+			$value = $this->get_tracker_value_custom( "Gift Certificates", "Balance Current", $itemId);
+		}
+		
+		if ($value) $this->gift_certificate_amount = $value;
+		return $value;
+	}
+	
+	function remove_gift_certificate() {
+		setcookie( "tiki-gc", '', time() - 3600 );
+	}
+	
+	function add_gift_certificate( $code ) {
+		$this->remove_gift_certificate();
+		
+		$value = $this->get_gift_certificate( $code );
+		if ( $value ) {
+			setcookie( "tiki-gc", $code, time() + 3600 );
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function has_gift_certificate() {
+		global $trklib;
+		require_once('lib/trackers/trackerlib.php');
+		return ( $trklib->get_tracker_by_name( "Gift Certificates" ) ? true : false );
+	}
+	
 	function get_total() {
 		$this->init_cart();
-
+		$this->get_gift_certificate();
+		
 		$total = 0;
 
 		foreach( $_SESSION['cart'] as $info ) {
 			$total += floatval( $info['quantity'] ) * floatval( $info['price'] );
 		}
-
+		
+		$this->total_no_dicount = $total;
+		
+		if ( isset($this->gift_certificate_amount) && is_numeric($this->gift_certificate_amount)) {
+			if ($this->gift_certificate_amount <= $total) { //total is more or equal to cert
+				$total -= $this->gift_certificate_amount;
+			} else { //cert is valued for more than the order total
+				$total = 0;
+			}
+		}
+		
 		return number_format( $total, 2, '.', '' );
 	}
 
@@ -106,7 +185,7 @@ class CartLib
 
 		$total = $this->get_total();
 
-		if( $total > 0 ) {
+		if( $total > 0 || $this->total_no_dicount ) {
 			// if anonymous shopping to set pref as to which shopperinfo to show in description
 			if (empty($user)) {
 				$shopperinfo_descvar = 'email'; // this needs to be a pref
