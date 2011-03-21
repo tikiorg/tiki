@@ -138,13 +138,15 @@ function getSlideshowTheme($theme, $makeJson) {
 
 	$result = array();
 	//this makes it so that any input so long as the characters are the same can be used
+	$theme = ($theme == 'default' ? $prefs['feature_jquery_ui_theme'] : $theme);
+	
 	$theme = strtolower($theme);
 	$theme = str_replace(' ', '', $theme);
-	$theme = ($theme == 'default' ? $prefs['feature_jquery_ui_theme'] : $theme);
+	$theme = str_replace('-', '', $theme);
 	
 	$result['themename'] = $theme;
 	switch ($theme) {
-		case "ui-lightness":
+		case "uilightness":
 			$result['backgroundColor'] = '#F6A828';
 			$result['backgroundImage'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerFontColor'] = '#1C94C4';
@@ -152,7 +154,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slideFontColor'] = '#333';
 			$result['listItemHighlightColor'] = '#363636';
 			break;
-		case "ui-darkness":
+		case "uidarkness":
 			$result['backgroundColor'] = '#333';
 			$result['backgroundImage'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerFontColor'] = 'white';
@@ -200,7 +202,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slideFontColor'] = '#333';
 			$result['listItemHighlightColor'] = '#599FCF';
 			break;
-		case "le-frog": 
+		case "lefrog": 
 			$result['backgroundColor'] = '#285C00';
 			$result['backgroundImage'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerFontColor'] = 'white';
@@ -216,7 +218,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slideFontColor'] = '#444';
 			$result['listItemHighlightColor'] = '#FF0084';
 			break;
-		case "pepper-grinder": 
+		case "peppergrinder": 
 			$result['backgroundColor'] = '#ECEADF';
 			$result['backgroundImage'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerFontColor'] = '#654B24';
@@ -232,7 +234,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slideFontColor'] = 'white';
 			$result['listItemHighlightColor'] = '#FFDB1F';
 			break;
-		case "dark-hive": 
+		case "darkhive": 
 			$result['backgroundColor'] = '#444';
 			$result['backgroundImage'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerFontColor'] = '#0972A5';
@@ -248,7 +250,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slideFontColor'] = '#362B36';
 			$result['listItemHighlightColor'] = '#2694E8';
 			break;
-		case "south-street": 
+		case "southstreet": 
 			$result['backgroundColor'] = '#F5F3E5';
 			$result['backgroundImage'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerFontColor'] = '#459E00';
@@ -272,7 +274,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slideFontColor'] = '#1E1B1D';
 			$result['listItemHighlightColor'] = '#592003';
 			break;
-		case "hot-sneaks": 
+		case "hotsneaks": 
 			$result['backgroundColor'] = '#35414F';
 			$result['backgroundImage'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerFontColor'] = '#E1E463';
@@ -280,7 +282,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slideFontColor'] = '#93C3CD';
 			$result['listItemHighlightColor'] = '#DB4865';
 			break;
-		case "excite-bike": 
+		case "excitebike": 
 			$result['backgroundColor'] = '#EEE';
 			$result['backgroundImage'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerFontColor'] = '#E69700';
@@ -296,7 +298,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slideFontColor'] = '#EEE';
 			$result['listItemHighlightColor'] = '#ADADAD';
 			break;
-		case "dot-luv": 
+		case "dotluv": 
 			$result['backgroundColor'] = '#111';
 			$result['backgroundImage'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerFontColor'] = '#0b3e6f';
@@ -304,7 +306,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slideFontColor'] = '#D9D9D9';
 			$result['listItemHighlightColor'] = '#0b58a2';
 			break;
-		case "mint-choc": 
+		case "mintchoc": 
 			$result['backgroundColor'] = '#453326';
 			$result['backgroundImage'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerFontColor'] = '#BAEC7E';
@@ -312,7 +314,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slideFontColor'] = '#ffffff';
 			$result['listItemHighlightColor'] = '#619226';
 			break;
-		case "black-tie": 
+		case "blacktie": 
 			$result['backgroundColor'] = '#333333';
 			$result['backgroundImage'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerFontColor'] = '#a3a3a3';
@@ -328,7 +330,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slideFontColor'] = '#ffffff';
 			$result['listItemHighlightColor'] = '#f1fbe5';
 			break;
-		case "swanky-purse": 
+		case "swankypurse": 
 			$result['backgroundColor'] = '#261803';
 			$result['backgroundImage'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerFontColor'] = '#eacd86';
