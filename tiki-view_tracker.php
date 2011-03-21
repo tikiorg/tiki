@@ -243,20 +243,6 @@ foreach ($xfields['data'] as $i => $current_field) {
 			if ($field_values) {
 				$current_field_fields = array_merge($current_field_fields, $field_values);
 			}
-		} else {
-			if (isset($_REQUEST[$ins_id])) {
-				$current_field_ins["value"] = $_REQUEST[$ins_id];
-			} else {
-				$current_field_ins["value"] = '';
-			}
-			if ($current_field_fields['type'] == 'D' && !empty($_REQUEST['other_' . $ins_id])) { // drop down with other
-				$current_field_ins['value'] = $_REQUEST['other_' . $ins_id];
-			}
-			if (isset($_REQUEST[$filter_id])) {
-				$current_field_fields["value"] = $_REQUEST[$filter_id];
-			} else {
-				$current_field_fields["value"] = '';
-			}
 		}
 	}
 	// store values to have them available when there is

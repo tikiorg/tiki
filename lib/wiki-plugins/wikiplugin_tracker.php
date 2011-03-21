@@ -1361,33 +1361,15 @@ function wikiplugin_tracker_render_input($f, $item) {
 	$trklib = TikiLib::lib('trk');
 	$smarty = TikiLib::lib('smarty');
 
-	// FIXME : Else condition is only transitional
-	if (in_array($f['type'], $trklib->get_rendered_fields())) {
-		$handler = $trklib->get_field_handler($f, $item);
-		return $handler->renderInput();
-	} else {
-		$smarty->assign('field_value', $f);
-		if (!empty($item)) {
-			$smarty->assign('item', $item);
-		}
-		return $smarty->fetch('tracker_item_field_input.tpl');
-	}
+	$handler = $trklib->get_field_handler($f, $item);
+	return $handler->renderInput();
 }
 
 function wikiplugin_tracker_render_value($f, $item) {
 	$smarty = TikiLib::lib('smarty');
 	$trklib = TikiLib::lib('trk');
 
-	// FIXME : Else condition is only transitional
-	if (in_array($f['type'], $trklib->get_rendered_fields())) {
-		$handler = $trklib->get_field_handler($f, $item);
-		return $handler->renderOutput();
-	} else {
-		$smarty->assign('field_value', $f);
-		if (!empty($item)) {
-			$smarty->assign('item', $item);
-		}
-		return $smarty->fetch('tracker_item_field_value.tpl');
-	}
+	$handler = $trklib->get_field_handler($f, $item);
+	return $handler->renderOutput();
 }
 

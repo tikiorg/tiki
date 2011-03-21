@@ -58,8 +58,7 @@
 				{assign var=stick value="n"}
 
 				{foreach from=$ins_fields key=ix item=cur_field}
-				{if ($cur_field.isHidden ne 'y' or $tiki_p_admin_trackers eq 'y') and !($tracker_info.doNotShowEmptyField eq 'y' and empty($cur_field.value) and empty($cur_field.cat) and empty($cur_field.links) and $cur_field.type ne 's' and $cur_field.type ne 'h') and ($cur_field.options_array[0] ne 'password') and (empty($cur_field.visibleBy) or in_array($default_group, $cur_field.visibleBy) or $tiki_p_admin_trackers eq 'y')}
-					{if in_array($cur_field.type, TikiLib::lib('trk')->get_rendered_fields())}
+					{if ($cur_field.isHidden ne 'y' or $tiki_p_admin_trackers eq 'y') and !($tracker_info.doNotShowEmptyField eq 'y' and empty($cur_field.value) and empty($cur_field.cat) and empty($cur_field.links) and $cur_field.type ne 's' and $cur_field.type ne 'h') and ($cur_field.options_array[0] ne 'password') and (empty($cur_field.visibleBy) or in_array($default_group, $cur_field.visibleBy) or $tiki_p_admin_trackers eq 'y')}
 						<tr class="field{$cur_field.fieldId}">
 							<td class="formlabel" >
 								{$cur_field.name|escape}
@@ -68,44 +67,7 @@
 								{trackeroutput field=$cur_field item=$item_info showlinks=n list_mode=n inTable=y}
 							</td>
 						</tr>
-					{else}
-						{if $cur_field.type eq 'h'}
-							{include file='tracker_item_field_value.tpl' field_value=$cur_field list_mode=n item=$item_info inTable="formcolor"}
-						{else}
-							{if $stick ne 'y'}
-								<tr class="field{$cur_field.fieldId}">
-									<td class="formlabel" >
-							{else}
-								<td class="formlabel right" >
-							{/if}
-							{$cur_field.name|escape}
-							{if ($cur_field.type eq 'l' and $cur_field.options_array[4] eq '1') and $cur_field.tracker_options.oneUserItem ne 'y'}
-								{assign var="fieldopts" value="|"|explode:$cur_field.options_array[2]}
-								<br />
-								<a href="tiki-view_tracker.php?trackerId={$cur_field.options_array[0]}&amp;filterfield={$cur_field.options_array[1]}&amp;filtervalue={section name=ox loop=$ins_fields}{if $ins_fields[ox].fieldId eq $fieldopts[0]}{$ins_fields[ox].value}{/if}{/section}">{tr}Filter Tracker Items{/tr}</a>
-							{/if}
-							</td>
-
-							{if ($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n' or $cur_field.type eq 'b') and $cur_field.options_array[0] eq '1'}
-								{assign var=stick value="y"}
-							{else}
-								{assign var=stick value="n"}
-							{/if}
-							{if $stick eq 'y'}
-								<td class="formcontent">
-							{else}
-								<td colspan="3" class="formcontent">
-							{/if}
-
-							{include file='tracker_item_field_value.tpl' field_value=$cur_field list_mode=n item=$item_info}
-
-							</td>
-							{if $stick ne 'y'}
-								</tr>
-							{/if}
-						{/if}
 					{/if}
-				{/if}
 				{/foreach}
 				{if $tracker_info.showCreatedView eq 'y'}
 					<tr>
@@ -259,7 +221,6 @@
 					{if empty($tracker_info.editItemPretty)}
 
 						{foreach from=$ins_fields key=ix item=cur_field}
-						{if in_array($cur_field.type, TikiLib::lib('trk')->get_rendered_fields())}
 							<tr>
 								<td>
 									{$cur_field.name}
@@ -271,71 +232,17 @@
 									{trackerinput field=$cur_field item=$item_info}
 								</td>
 							</tr>
-						{else}
-							{if ($cur_field.isHidden eq 'n' or $tiki_p_admin_trackers eq 'y' or $cur_field.isHidden eq 'c') and (empty($cur_field.visibleBy) or in_array($default_group, $cur_field.visibleBy) or $tiki_p_admin_trackers eq 'y')  and ($cur_field.type ne 'A' or $tiki_p_attach_trackers eq 'y') and ($cur_field.type ne '*')}
+						{/foreach}
 
-								{if $cur_field.type eq 's' and ($cur_field.name eq "Rating" or $cur_field.name eq tra("Rating")) and ($tiki_p_tracker_view_ratings eq 'y' || $tiki_p_tracker_vote_ratings eq 'y') and (empty($cur_field.visibleBy) or in_array($default_group, $cur_field.visibleBy) or $tiki_p_admin_trackers eq 'y')}
-									<tr>
-										<td>
-											{$cur_field.name}
-										</td>
-										{if $tiki_p_tracker_view_ratings eq 'y' and $tiki_p_tracker_vote_ratings neq 'y'}
-											<td>
-												{$cur_field.value}
-											</td>
-										{elseif $tiki_p_tracker_vote_ratings eq 'y'}
-											<td>
-												{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
-											</td>
-										{/if}
-									</tr>
-								{/if}
+						{trackerheader level=-1 title='' inTable='formcolor'}
 
-								{if $cur_field.type ne 'x' and $cur_field.type ne 's'}
-									{if ($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n' or $cur_field.type eq 'b') and $cur_field.options_array[0] eq '1'}
-										<tr>
-											<td class="formlabel" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'}<em class='mandatory_star'> *</em>{/if}</td>
-											<td>
-									{elseif $stick eq 'y'}
-										<td class="formlabel right" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'}<em class='mandatory_star'> *</em>{/if}</td>
-										<td>
-									{else}
-										<tr>
-											<td class="formlabel" >
-												{$cur_field.name}{if $cur_field.isMandatory eq 'y'}<em class='mandatory_star'> *</em>{/if}
-											</td>
-											<td colspan="3" class="formcontent" >
-									{/if}
-
-									{if !empty($cur_field.editableBy) and !in_array($default_group, $cur_field.editableBy) and $tiki_p_admin_trackers ne 'y'}
-										{include file='tracker_item_field_value.tpl' field_value=$cur_field}
-
-									{elseif $cur_field.type eq 'U'}
-										<input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value}" />
-
-									{/if}
-
-								</td>
-								{if (($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n' or $cur_field.type eq 'b') and $cur_field.options_array[0] eq '1') and $stick ne 'y'}
-									{assign var=stick value="y"}
-								{else}
-									</tr>{assign var=stick value="n"}
-								{/if}
-
-							{/if}
-
-						{/if}
+					{else}
+						<tr>
+							<td colspan="4">
+								{wikiplugin _name=tracker trackerId=$trackerId itemId=$itemId view=page wiki=$tracker_info.editItemPretty formtag='n'}{/wikiplugin}
+							</td>
+						</tr>
 					{/if}
-					{/foreach}
-					{trackerheader level=-1 title='' inTable='formcolor'}
-
-				{else}
-					<tr>
-						<td colspan="4">
-							{wikiplugin _name=tracker trackerId=$trackerId itemId=$itemId view=page wiki=$tracker_info.editItemPretty formtag='n'}{/wikiplugin}
-						</td>
-					</tr>
-				{/if}
 
 				{if $groupforalert ne ''}
 

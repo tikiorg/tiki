@@ -127,11 +127,7 @@
 										or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password') 
 										and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y')}
 										<td class={if $field_value.type eq 'n' or $field_value.type eq 'q' or $field_value.type eq 'b'}"numeric"{else}"auto"{/if}>
-											{if in_array($field_value.type, TikiLib::lib('trk')->get_rendered_fields())}
-												{trackeroutput field=$field_value showlinks=y showpopup="y" item=$items[user] list_mode=y inTable=formcolor}
-											{else}
-												{include file='tracker_item_field_value.tpl' field_value=$field_value list_mode="y" item=$items[user] showlinks="y" reloff=$smarty.section.user.index url=""}
-											{/if}
+											{trackeroutput field=$field_value showlinks=y showpopup="y" item=$items[user] list_mode=y inTable=formcolor}
 										</td>
 									{/if}
 								{/foreach}
@@ -208,54 +204,20 @@
 				</tr>
 			{/if}
 			{foreach from=$fields key=ix item=field_value}
-				{if in_array($field_value.type, TikiLib::lib('trk')->get_rendered_fields())}
-					<tr>
-						<td>
-							{if $field_value.isMandatory eq 'y'}
-								{$field_value.name}<em class='mandatory_star'>*</em>
-							{else}
-								{$field_value.name}
-							{/if}
-						</td>
-						<td>
-							{trackerinput field=$field_value}
-						</td>
-					</tr>
-				{else}
-					{assign var=fid value=$field_value.fieldId}
-					{* -------------------- header and others -------------------- *}
-					{if $field_value.isHidden eq 'n' or $field_value.isHidden eq 'c'  or $tiki_p_admin_trackers eq 'y'}
-						{if $field_value.type ne 'x' and $field_value.type ne 'l' and $field_value.type ne 'q' and (($field_value.type ne 'u' and $field_value.type ne 'g') or !$field_value.options_array[0] or $tiki_p_admin_trackers eq 'y') and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y')and (empty($field_value.editableBy) or in_array($default_group, $field_value.editableBy) or $tiki_p_admin_trackers eq 'y') and ($field_value.type ne 'A' or $tiki_p_attach_trackers eq 'y') and $field_value.type ne 'N' and $field_value.type ne '*' and !($field_value.type eq 's' and $field_value.name eq 'Rating')}
-							{if ($field_value.type eq 'c' or $field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'b') and $field_value.options_array[0] eq '1'}
-								<tr><td class="formlabel" >{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *</strong>{/if}</td><td class="formcontent">
-							{elseif $stick eq 'y'}
-								<td class="formlabel right">{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *</strong>{/if}</td><td >
-							{else}
-								<tr><td class="formlabel" >{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *</strong>{/if}
-								</td><td colspan="3" class="formcontent" >
-							{/if}
-							
-							{* -------------------- system -------------------- *}
-							{if $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $tiki_p_tracker_vote_ratings eq 'y'}
-								{include file='tracker_item_field_input.tpl'}
-							{/if}
-							{* -------------------- system -------------------- *}
-							{if $field_value.type eq '*'}
-								{include file='tracker_item_field_input.tpl'}
-							
-							{* -------------------- User subscription -------------------- *}
-							{elseif $field_value.type eq 'U'}
-								<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" />
-							
-							{/if}
-							
+				{if $field_value.isHidden eq 'n' or $field_value.isHidden eq 'c'  or $tiki_p_admin_trackers eq 'y'}
+					{if $field_value.type ne 'x' and $field_value.type ne 'l' and $field_value.type ne 'q' and (($field_value.type ne 'u' and $field_value.type ne 'g') or !$field_value.options_array[0] or $tiki_p_admin_trackers eq 'y') and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y')and (empty($field_value.editableBy) or in_array($default_group, $field_value.editableBy) or $tiki_p_admin_trackers eq 'y') and ($field_value.type ne 'A' or $tiki_p_attach_trackers eq 'y') and $field_value.type ne 'N' and $field_value.type ne '*' and !($field_value.type eq 's' and $field_value.name eq 'Rating')}
+						<tr>
+							<td>
+								{if $field_value.isMandatory eq 'y'}
+									{$field_value.name}<em class='mandatory_star'>*</em>
+								{else}
+									{$field_value.name}
+								{/if}
 							</td>
-							{if (($field_value.type eq 'c' or $field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'b') and $field_value.options_array[0]) eq '1' and $stick ne 'y'}
-								{assign var=stick value="y"}
-							{else}
-								</tr>{assign var=stick value="n"}
-							{/if}
-						{/if}
+							<td>
+								{trackerinput field=$field_value}
+							</td>
+						</tr>
 					{/if}
 				{/if}
 			{/foreach}

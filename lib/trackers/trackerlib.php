@@ -1354,140 +1354,12 @@ class TrackerLib extends TikiLib
 			if ($handler) {
 				$fopt = array_merge($fopt, $handler->getFieldData());
 				$fields[] = $fopt;
-				continue;
 			}
-			
-			$fieldId = $fopt['fieldId'];
-			if (isset($fil[$fieldId])) {
-				$fopt['value'] = $fil[$fieldId];
-			}
-			if (isset($sup[$fieldId]['lingualvalue'])) {
-				$fopt['lingualvalue'] = $sup[$fieldId]['lingualvalue'];
-				$fopt['isMultilingual'] = 'y';
-			}
-			if ($tiki_p_admin_trackers != 'y') {
-				if ($fopt['isHidden'] == 'y') {
-					$fopt['value'] = '';
-				} elseif ($fopt['isHidden'] == 'c') {
-					if (empty($itemUser)) {
-						$itemUser = $this->get_item_creator($trackerId, $itemId);
-					}
-					if ($itemUser != $user) {
-						$fopt['value'] = '';
-					}
-				}
-			}
-			$fopt['linkId'] = '';
-			if (!empty($fopt['options'])) {
-				$fopt['options_array'] = preg_split('/\s*,\s*/', $fopt['options']);
-			}
-			if ($fopt['isHidden'] == 'c' && empty($itemUser)) { // need itemUser
-				$itemUser = $this->get_item_creator($trackerId, $itemId);
-			}
-			if (!isset($fopt['value'])) {
-				$fopt['isset'] = 'n';
-				$fopt['value'] = '';
-			}
-			switch ( $fopt['type'] ) {
-			case 's':
-			case '*':
-				$this->update_star_field($trackerId, $itemId, $fopt);
-				break;
-			case 'l':
-				if ( isset($fopt['options_array'][2]) && isset($fopt['options_array'][2]) && isset($fopt['options_array'][3])) {
-					$opts[1] = preg_split('/:/', $fopt['options_array'][1]);
-					$finalFields = explode('|', $fopt['options_array'][3]);
-					$fopt['links'] = $this->get_join_values($trackerId, $itemId, array_merge(array($fopt['options_array'][2]), array($fopt['options_array'][1]), array($finalFields[0])), $fopt['options_array'][0], $finalFields, ' ', empty($fopt['options_array'][5])?'':$fopt['options_array'][5]);
-					$fopt['trackerId'] = $fopt['options_array'][0];
-				}
-				if (isset($fopt['links']) && count($fopt['links']) == 1) { //if a computed field use it
-					foreach ($fopt['links'] as $linkItemId=>$linkValue) {
-						if (is_numeric($linkValue)) {
-							$fil[$fieldId] = $linkValue;
-						}
-					}
-				}
-				break;
-			case 'u':
-				if ($fopt['options_array'][0] == 1) {
-					$itemUser = $fopt['value'];
-				}
-				break;
-			case 'usergroups':
-				if (empty($itemUser)) {
-					$itemUser = $this->get_item_creator($trackerId, $itemId);
-				}
-				if (!empty($itemUser)) {
-					$tikilib = TikiLib::lib('tiki');
-					$fopt['value'] = array_diff($tikilib->get_user_groups($itemUser), array('Registered', 'Anonymous'));
-				}
-				break;
-			case 'p':
-				if (empty($itemUser)) {
-					$itemUser = $this->get_item_creator($trackerId, $itemId);
-				}
-				if ($fopt['options_array'][0] == 'password') {
-				} elseif ($fopt['options_array'][0] == 'email' && !empty($itemUser)) {
-					$userlib = TikiLib::lib('user');
-					$fopt['value'] = $userlib->get_user_email($itemUser);
-				} elseif ($fopt['options_array'][0] == 'language' && !empty($itemUser)) {
-					$userlib = TikiLib::lib('user');
-					$fopt['value'] = $userlib->get_language($itemUser);
-				} elseif (!empty($itemUser)) {
-					$userlib = TikiLib::lib('user');
-					$fopt['value'] = $userlib->get_user_preference($itemUser, $fopt['options_array'][0]);
-				}
-				break;
-			case 'A':
-				if (!empty($fopt['options_array'][0]) && !empty($fopt['value'])) {
-					$fopt['info'] = $this->get_item_attachment($fopt['value']);
-				}
-				break;
-			case 'G':
-				$vals = preg_split('/ *, */', $fopt['value']);
-				$fopt['x'] = $vals[0];
-				$fopt['y'] = isset($vals[1]) ? $vals[1] : 0;
-				$fopt['z'] = empty($vals[2]) ? 1 : $vals[2];
-				break;
-			case 'F':
-				$freetaglib = TikiLib::lib('freetag');
-				$fopt["freetags"] = $freetaglib->_parse_tag($fopt['value']);
-			default:
-				break;
-			}
-
-			if ( isset($fopt['options']) ) {
-				if ( $fopt['type'] == 'i' ) {
-					$imagegallib = TikiLib::lib('imagegal');
-					if ( $imagegallib->readimagefromfile($fopt['value']) ) {
-						$imagegallib->getimageinfo();
-						if ( ! isset($fopt['options_array'][1]) ) $fopt['options_array'][1] = 0;
-						$t = $imagegallib->ratio($imagegallib->xsize, $imagegallib->ysize, $fopt['options_array'][0], $fopt['options_array'][1] );
-						$fopt['options_array'][0] = round($t * $imagegallib->xsize);
-						$fopt['options_array'][1] = round($t * $imagegallib->ysize);
-						if ( isset($fopt['options_array'][2]) ) {
-							if ( ! isset($fopt['options_array'][3]) ) $fopt['options_array'][3] = 0;
-							$t = $imagegallib->ratio($imagegallib->xsize, $imagegallib->ysize, $fopt['options_array'][2], $fopt['options_array'][3] );
-							$fopt['options_array'][2] = round($t * $imagegallib->xsize);
-							$fopt['options_array'][3] = round($t * $imagegallib->ysize);
-						}
-					}
-				} elseif ( $fopt['type'] == 'r' && isset($fopt['options_array'][3]) ) {
-					$fopt['displayedvalue'] = $this->concat_item_from_fieldslist(
-						$fopt['options_array'][0],
-						$this->get_item_id($fopt['options_array'][0], $fopt['options_array'][1], $fopt['value']),
-						$fopt['options_array'][3]
-					);
-					$fopt = $this->set_default_dropdown_option($fopt);
-				} elseif (in_array($fopt['type'], array('d', 'D', 'R'))) {
-					$fopt = $this->set_default_dropdown_option($fopt);
-				}
-			}
-			$fields[] = $fopt;
 		}
 
 		return($fields);
 	}
+
 	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = 0, $bulk_import = false, $tracker_info='') {
 		global $user, $prefs, $tiki_p_admin_trackers, $tiki_p_admin_users;
 		$categlib = TikiLib::lib('categ');
@@ -4752,50 +4624,6 @@ class TrackerLib extends TikiLib
 	}
 	function get_tracker_by_name($name) {
 		return $this->trackers()->fetchOne('trackerId', array('name' => $name));
-	}
-
-	function get_rendered_fields()
-	{
-		// FIXME : Kill this function once cleanup is completed
-		return array(
-			't',
-			'e',
-			'A',
-			'i',
-			'j',
-			'a',
-			'b',
-			'f',
-			'r',
-			'l',
-			'y',
-			'c',
-			'm',
-			'n',
-			'L',
-			'S',
-			's',
-			'*',
-			'I',
-			'u',
-			'q',
-			'G',
-			'd',
-			'D',
-			'R',
-			'g',
-			'p',
-			'k',
-			'N',
-			'F',
-			'U',
-			'C',
-			'x',
-			'h',
-			'usergroups',
-			'W',
-			'w',
-		);
 	}
 
 	function get_field_handler($field, $item = array())

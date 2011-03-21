@@ -155,21 +155,11 @@
 					{if $field.type eq 'b'} style="padding-right:5px"{/if}>
 					{if $field.isHidden eq 'c' and $fieldr and $tiki_p_admin_trackers ne 'y'}
 					{elseif isset($perms)}
-						{if in_array($field.type, TikiLib::lib('trk')->get_rendered_fields())}
-							{trackeroutput item=$items[user] field=$field list_mode=$list_mode showlinks=$showlinks showpopup=$showpopup
+						{trackeroutput item=$items[user] field=$field list_mode=$list_mode showlinks=$showlinks showpopup=$showpopup
 								tiki_p_view_trackers=$perms.tiki_p_view_trackers tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items tiki_p_modify_tracker_items_pending=$perms.tiki_p_modify_tracker_items_pending 
 								tiki_p_modify_tracker_items_closed=$perms.tiki_p_modify_tracker_items_closed tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items reloff=$itemoff}
-						{else}
-							{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$field list_mode=$list_mode
-								tiki_p_view_trackers=$perms.tiki_p_view_trackers tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items tiki_p_modify_tracker_items_pending=$perms.tiki_p_modify_tracker_items_pending 
-								tiki_p_modify_tracker_items_closed=$perms.tiki_p_modify_tracker_items_closed tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items reloff=$itemoff}
-						{/if}
 					{else}
-						{if in_array($field.type, TikiLib::lib('trk')->get_rendered_fields())}
-							{trackeroutput item=$items[user] field=$field list_mode=$list_mode reloff=$itemoff showlinks=$showlinks showpopup=$showpopup}
-						{else}
-							{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$field list_mode=$list_mode reloff=$itemoff}
-						{/if}
+						{trackeroutput item=$items[user] field=$field list_mode=$list_mode reloff=$itemoff showlinks=$showlinks showpopup=$showpopup}
 					{/if}
 		</td>
 				{/if}
