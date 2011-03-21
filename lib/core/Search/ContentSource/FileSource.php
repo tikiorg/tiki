@@ -31,6 +31,7 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface
 			'modification_date' => $typeFactory->timestamp($file['lastModif']),
 			'contributors' => $typeFactory->multivalue(array_unique(array($file['author'], $file['user'], $file['lastModifUser']))),
 			'description' => $typeFactory->plaintext($file['description']),
+			'filename' => $typeFactory->sortable($file['filename']),
 
 			'gallery_id' => $typeFactory->identifier($file['galleryId']),
 			'file_comment' => $typeFactory->plaintext($file['comment']),
@@ -52,6 +53,7 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface
 			'modification_date',
 			'contributors',
 			'description',
+			'filename',
 
 			'gallery_id',
 			'file_comment',
@@ -68,6 +70,7 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface
 		return array(
 			'title' => true,
 			'description' => true,
+			'filename' => true,
 
 			'file_comment' => false,
 			'file_content' => false,
