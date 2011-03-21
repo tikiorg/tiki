@@ -219,7 +219,7 @@ function getSlideshowTheme($theme, $makeJson) {
 			$result['slidefontcolor'] = '#333';
 			$result['listitemhighlightcolor'] = '#599FCF';
 			break;
-		case "lefrog": 
+		case "le-frog": 
 			$result['backgroundcolor'] = '#285C00';
 			$result['backgroundurl'] = 'lib/jquery/jquery.s5/images/bg.png';
 			$result['headerfontcolor'] = 'white';

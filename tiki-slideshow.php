@@ -123,25 +123,8 @@ $headerlib->add_jq_onready( '
 			return $("#tiki_slideshowNote_buttons").clone().show();
 		}
 	}));
-	$("#main").hide();
 	
-	if (window.s5Settings.listItemHighlightColor) {
-		$.s5.slides().find("li").hover(function() {
-			$(this)
-				.css("color", window.s5Settings.listItemHighlightColor)
-				.stop()
-				.animate({
-					fontSize: $.s5.sizeDetector.width() * 1.2
-				});
-		}, function() {
-			$(this)
-				.css("color", "")
-				.stop()
-				.animate({
-					fontSize: "1em"
-				});
-		});
-	}
+	$("#main").hide();
 
 	$("#tiki-slideshow-theme")
 		.val(window.s5Settings.themeName)
@@ -150,7 +133,13 @@ $headerlib->add_jq_onready( '
 			if (theme) {
 				$.get("tiki-slideshow.php", {theme: theme}, function(o) {
 					theme = $.parseJSON(o);
-					$.s5.makeTheme(theme.slidefontcolor, theme.headerfontcolor, theme.backgroundcolor, theme.backgroundimage);
+					$.s5.makeTheme(
+						theme.slidefontcolor, 
+						theme.headerfontcolor, 
+						theme.backgroundcolor, 
+						theme.backgroundimage, 
+						theme.listitemhighlightcolor
+					);
 				}); 
 			}
 		});
