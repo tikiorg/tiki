@@ -142,7 +142,7 @@ $headerlib->add_jq_onready( '
 				});
 		});
 	}
-	alert(window.s5Settings.themeName);
+
 	$("#tiki-slideshow-theme")
 		.val(window.s5Settings.themeName)
 		.change(function() {
