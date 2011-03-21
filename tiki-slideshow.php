@@ -10,6 +10,7 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/structures/structlib.php');
 include_once ('lib/wiki/wikilib.php');
+include_once ('lib/wiki-plugins/wikiplugin_slideshow.php');
 
 $headerlib->add_cssfile( 'lib/jquery/jquery.s5/jquery.s5.css' );
 $headerlib->add_jsfile( 'lib/jquery/jquery.s5/jquery.s5.js' );
@@ -43,6 +44,16 @@ $headerlib->add_jq_onready( '
 		});
 	}
 	
+	$("#tiki-slideshow-theme").change(function() {
+		var theme = $(this).val();
+		if (theme) {
+			$.get("tiki-slideshow.php", {theme: theme}, function(o) {
+				theme = $.parseJSON(o);
+				$.s5.makeTheme(theme.slidefontcolor, theme.headerfontcolor, theme.backgroundcolor, theme.backgroundimage);
+			}); 
+		}
+	});
+	
 ');
 
 if ($prefs['feature_wiki'] != 'y') {
@@ -75,6 +86,11 @@ if (!($info = $tikilib->get_page_info($page))) {
 	$smarty->assign('msg', tra("Page cannot be found"));
 	$smarty->display("error_raw.tpl");
 	die;
+}
+
+if (isset($_REQUEST['theme'])) {
+	print_r(getSlideshowTheme($_REQUEST['theme'], true));
+	die; 
 }
 
 // Now check permissions to access this page

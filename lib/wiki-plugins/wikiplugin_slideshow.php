@@ -152,7 +152,7 @@ function wikiplugin_slideshow_info() {
 	);
 }
 
-function getSlideshowTheme($theme) {
+function getSlideshowTheme($theme, $makeJson) {
 	$result = array();
 	
 	//this makes it so that any input so long as the characters are the same can be used
@@ -353,6 +353,9 @@ function getSlideshowTheme($theme) {
 			$result['listitemhighlightcolor'] = '#d5ac5d';
 			break;
 	}
+	
+	if ($makeJson) return json_encode($result);
+	
 	return $result;
 }
 
@@ -386,21 +389,6 @@ function wikiplugin_slideshow($data, $params) {
 	foreach ( $notes as $note ) {
 		$notesHtml .= '<span class="s5-note">'.$note.'</span>';
 	}
-	
-	$notesHtml .= "<style>
-		.s5-footer,.s5-menu,#tiki_slideshow_buttons,.s5-outlook-close {
-			background: $headerfontcolor ! important;
-			color: $backgroundcolor ! important;
-		}
-		.s5-outline {
-			color: $headerfontcolor ! important;
-			background-color: $backgroundcolor ! important;
-			border: solid 1px $headerfontcolor ! important;
-		}
-		.s5-slide a {
-			color: $headerfontcolor ! important;
-		}
-	</style>";
 	
 	global $headerlib;
 	

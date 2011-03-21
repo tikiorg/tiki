@@ -62,13 +62,40 @@
 			<img src="lib/jquery/jquery.s5/images/arrow_rotate_clockwise.png" alt="{tr}Toggle Loop{/tr}" /></a>
 		<a href="tiki-index.php?page={$page}" title="{tr}Exit{/tr}">
 			<img src="pics/icons/cross.png" alt="{tr}Exit{/tr}" /></a>
+		<select id="tiki-slideshow-theme">
+			<option value="">{tr}Change Theme{/tr}</option>
+			<option value="UI lightness">UI lightness</option>
+			<option value="UI darkness">UI darkness</option>
+			<option value="Smoothness">Smoothness</option>
+			<option value="Start">Start</option>
+			<option value="Redmond">Redmond</option>
+			<option value="Sunny">Sunny</option>
+			<option value="Overcast">Overcast</option>
+			<option value="Le Frog">Le Frog</option>
+			<option value="Flick">Flick</option>
+			<option value="Pepper Grinder">Pepper Grinder</option>
+			<option value="Eggplant">Eggplant</option>
+			<option value="Dark Hive">Dark Hive</option>
+			<option value="Cupertino">Cupertino</option>
+			<option value="South Street">South Street</option>
+			<option value="Blitzer">Blitzer</option>
+			<option value="Humanity">Humanity</option>
+			<option value="Hot sneaks">Hot sneaks</option>
+			<option value="Excite Bike">Excite Bike</option>
+			<option value="Vader">Vader</option>
+			<option value="Dot Luv">Dot Luv</option>
+			<option value="Mint Choc">Mint Choc</option>
+			<option value="Black Tie">Black Tie</option>
+			<option value="Trontastic">Trontastic</option>
+			<option value="Swanky Purse">Swanky Purse</option>
+		</select>
 	</div>
 	<div id="tiki_slideshowNote_buttons" style="display: none;">
 		<a href="#" onclick="window.opener.$.s5.first(); return false;" title="{tr}First{/tr}">{tr}First{/tr}</a> 
 		<a href="#" onclick="window.opener.$.s5.prev(); return false;" title="{tr}Prev{/tr}">{tr}Prev{/tr}</a> 
 		<a href="#" onclick="window.opener.$.s5.next(); return false;" title="{tr}Next{/tr}">{tr}Next{/tr}</a> 
 		<a href="#" onclick="window.opener.$.s5.last(); return false;" title="{tr}Last{/tr}">{tr}Last{/tr}</a>
-		<a href="#" onclick="window.opener.$.s5.listSlideTitles(this, document.body); return false;" title="{tr}Jump To Slide{/tr}">{tr}Jump To Slide{/tr}</a>
+		<a href="#" onclick="window.opener.$.s5.listSlideTitles(this, document.body, true); return false;" title="{tr}Jump To Slide{/tr}">{tr}Jump To Slide{/tr}</a>
 		<a href="#" onclick="window.opener.$.s5.play(); return false;" title="{tr}Play{/tr}">{tr}Play{/tr}</a>
 		<a href="#" onclick="window.opener.$.s5.pause(); return false;" title="{tr}Pause{/tr}">{tr}Pause{/tr}</a>
 		<a href="#" onclick="window.opener.$.s5.stop(); return false;" title="{tr}Stop{/tr}">{tr}Stop{/tr}</a>
