@@ -13,7 +13,8 @@ $access->check_feature('feature_ajax');
 /**
  * Lib class for new ajax component loading in Tiki 7+
  */
-class AjaxLib {
+class AjaxLib
+{
 
 	/**
 	 * Array of templates that are allowed to be served
