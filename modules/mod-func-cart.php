@@ -37,7 +37,25 @@ function module_cart( $mod_reference, $module_params ) {
 			$access->redirect( 'tiki-payment.php?invoice=' . intval( $invoice ), tr('The order was recorded and is now awaiting payment. Reference number is %0.', $invoice) );
 		}
 	}
-
+	
+	if ( isset( $_POST['gift_certificate_redeem_code'] ) ) {
+		$added = $cartlib->add_gift_certificate( $_POST['gift_certificate_redeem_code'] );
+		if ($added) {
+			$access->redirect( $_SERVER['REQUEST_URI'], tra('Gift card added') );
+		} else {
+			$access->redirect( $_SERVER['REQUEST_URI'], tra('Gift card not found') );
+		}
+	}
+	
+	if ( isset( $_POST['remove_gift_certificate']) ) {
+		$cartlib->add_gift_certificate();
+		$access->redirect( $_SERVER['REQUEST_URI'], tra('Gift card removed') );
+	}
+	
+	$smarty->assign( 'has_gift_certificate', $cartlib->has_gift_certificate() );
+	$smarty->assign( 'gift_certificate_reedem_code', $_COOKIE["tiki-gc"] );
+	$smarty->assign( 'gift_certificate_amount', $cartlib->get_gift_certificate() );
+	
 	$smarty->assign( 'cart_total', $cartlib->get_total() );
 	$smarty->assign( 'cart_content', $cartlib->get_content() );
 }
