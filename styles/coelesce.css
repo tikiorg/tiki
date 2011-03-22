@@ -903,7 +903,7 @@ a.forumnameread {
 }
 
 /** Tabs **/
-* reset what's in layout.css */
+/* reset what's in layout.css */
 .tabactive,
 .tabinactive,
 [class].tabactive,
