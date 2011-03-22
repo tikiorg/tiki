@@ -1181,8 +1181,9 @@ img.externallink {
 	border-top: 1px solid #8cacbb;
 	border-bottom: 1px solid #8cacbb;
 	color: #000;
+	background: #eee;
 	padding: 2px 0;
-	margin-bottom: 2px;
+	margin-bottom: 16px;
 }
 
 .toc {
@@ -1195,11 +1196,6 @@ img.externallink {
 	background: url(../img/icons2/corner-dots.gif) no-repeat;
 	margin-top: 3px;
 	padding-left: 16px;
-}
-
-.tocnav {
-	background: #eee;
-	margin-bottom: 16px;
 }
 
 .tocnav a {
