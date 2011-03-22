@@ -300,7 +300,8 @@ li#logout_link a {
 }
 
 .siteloginbar_popup .cbox label {
-	clear: both; float: left;
+	clear: both;
+	float: left;
 }
 
 .siteloginbar_popup .cbox div {

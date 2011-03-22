@@ -18,7 +18,8 @@ body {
 			expand to the right and at the same time it will not overflow the last column but rather gently push it further aside */
 	font-family: sans-serif;
 	font-size: 80%;/* the body font-size must be in percents to scale the fonts in IE properly */
-	margin: 0; padding: 0;
+	margin: 0;
+	padding: 0;
 	width: 100%;/* this is needed to keep the width to the maximum available */
 }
 html>body {
@@ -121,7 +122,10 @@ html>/*leave this comment here - it acts as an universal anti-IE hack !*/body
 }
 
 /* next comes footer */
-#footer {clear: both; width: 100%;}
+#footer {
+	clear: both;
+	width: 100%;
+}
 .footerbgtrap {background-color: transparent;}/* this is needed as a little workaround because MSIE tends to display the footer partly without the background specified */
 
 /*div {border-width: 1px; border-style: solid; padding: 10px; margin: 5px}*/ /* <- if you want to debug with outlines, put this at the bottom of your stylesheet  */

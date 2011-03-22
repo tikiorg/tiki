@@ -523,12 +523,19 @@ a.forumnameread {color: #fd0006}
 	border: solid 1px #666 !important;
 	border-bottom: 0 !important;
 	border-top-width: 2px !important;
-	position: relative; top: -2px}
+	position: relative;
+	top: -2px;
+}
 
 [class].tabactive {top: -1px}
-.tabactive a {background: #5e0000; color: #f4f4f4}
+.tabactive a {
+	background: #5e0000;
+	color: #f4f4f4;
+}
 
-.tabinactive {border: solid 1px #666 !important}
+.tabinactive {
+	border: solid 1px #666 !important;
+}
 
 .tabcontent {
 	border-color: #990000;

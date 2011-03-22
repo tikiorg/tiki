@@ -89,8 +89,13 @@ html>body {
 #tiki-center {padding: 5px 0}
 
 
-.footerbgtrap {background: transparent; color: #000}
+.footerbgtrap {
+	background: transparent;
+	color: #000;
+}
+
 .content {padding: 1em}
+
 div {font-size: 1em}
 
 a,
@@ -631,15 +636,27 @@ body.wikitext {
 
 .admbox {
 	border: 2px solid #abcdef;
-	height: 100px; width: 100px;
-	text-align: center; float: left; margin: 5px}
+	height: 100px;
+	width: 100px;
+	text-align: center;
+	float: left;
+	margin: 5px;
+}
 
 .admbox:hover {background: #ddeeff;}
 .admbox img {margin-top: 20px;}
 
 /* structures toc */
-.toc {margin-left: 0.5em; padding-left: 0.5em; list-style-type: none}
-.toc li {margin-left: .2em; padding-left: .2em}
+.toc {
+	margin-left: 0.5em;
+	padding-left: 0.5em;
+	list-style-type: none;
+}
+
+.toc li {
+	margin-left: .2em;
+	padding-left: .2em;
+}
 
 /* jscalendar */
 .daterow {

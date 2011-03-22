@@ -15,32 +15,32 @@ table {
 }
 
 /* This div encloses the whole Tiki application */
-DIV#tiki-main {
+div#tiki-main {
 	direction: rtl !important
 }
 
 /* This div encloses the "clean" Tiki screens */
-DIV#tiki-clean {
+div#tiki-clean {
 	direction: rtl !important
 }
 
 /* When modules display a list of items each item is enclosed in a cell with the following style */
-TD.module {
+td.module {
 	text-align: right !important
 }
 
 /* Cells in forms without background color (inside a div for example) */
-TD.form {
+td.form {
 	text-align: right !important
 }
 
 /* Cells in forms using a background color */
-TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform {
+td.formcolor, td.galform, td.editblogform, td.editfgalform, td.comform, td.forumform {
 	text-align: right !important
 }
 
 /* Odd rows in several listings */
-TD.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.gallistlastModifodd, td.gallistuserodd,
+td.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.gallistlastModifodd, td.gallistuserodd,
 	td.gallistimagesodd, td.gallisthitsodd, td.gallistactionsodd, td.listgalidodd, td.listgalnameodd, td.listgalcreatedodd,
 	td.listgalhitsodd, td.listgaluserodd, td.listgalfilesizeodd, td.bloglistnameodd, td.bloglistdescriptionodd,
 	td.bloglistcreatedodd, td.bloglistlastModifodd, td.bloglistuserodd, td.bloglistpublicodd, td.bloglistpostsodd,
@@ -56,7 +56,7 @@ TD.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.ga
 }
 
 /* Even rows in several listings */
-TD.even, td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven, td.gallistlastModifeven, td.gallistusereven,
+td.even, td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven, td.gallistlastModifeven, td.gallistusereven,
 	td.gallistimageseven, td.gallisthitseven, td.gallistactionseven, td.listgalideven, td.listgalnameeven, td.listgalcreatedeven,
 	td.listgalhitseven, td.listgalusereven, td.listgalfilesizeeven, td.bloglistnameeven, td.bloglistdescriptioneven,
 	td.bloglistcreatedeven, td.bloglistlastModifeven, td.bloglistusereven, td.bloglistpubliceven, td.bloglistpostseven,
@@ -71,7 +71,7 @@ TD.even, td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven, t
 	text-align: right !important
 }
 
-TD.third {
+td.third {
 	text-align: right !important
 }
 
@@ -87,8 +87,27 @@ td.tdchatform {
 .tellafriend,
 .share {text-align:right;}
 
-.highlight_word_0{color:black;background-color: #ffff66;}
-.highlight_word_1{color:black;background-color: #ff9999;}
-.highlight_word_2{color:black;background-color: #A0FFFF;}
-.highlight_word_3{color:black;background-color: #ff66ff;}
-.highlight_word_4{color:black;background-color: #99ff99;}
+.highlight_word_0{
+	color:black;
+	background-color: #ffff66;
+}
+
+.highlight_word_1{
+	color:black;
+	background-color: #ff9999;
+}
+
+.highlight_word_2{
+	color:black;
+	background-color: #A0FFFF;
+}
+
+.highlight_word_3{
+	color:black;
+	background-color: #ff66ff;
+}
+
+.highlight_word_4{
+	color:black;
+	background-color: #99ff99;
+}

@@ -1039,7 +1039,13 @@ body.tiki_forums .normal {margin: auto}
 .subcomment {margin-left: 10px}
 
 /* Help box*/
-.commentsedithelp {background: #ffcfcf; color: black; border: 1px solid #ff0000; text-align: center; font-weight: bold}
+.commentsedithelp {
+	background: #ffcfcf;
+	color: black;
+	border: 1px solid #ff0000;
+	text-align: center;
+	font-weight: bold;
+}
 
 /**** Image Galleries ****/
 .oddthumb {border-collapse: collapse}
@@ -1154,7 +1160,10 @@ img.athumb {
 	color: #fff;
 	padding: 3px}
 
-.opaque .box-data  {background: white; padding: 3px}
+.opaque .box-data {
+	background: white;
+	padding: 3px;
+}
 
 .searchresults {display: inline}
 

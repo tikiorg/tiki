@@ -566,7 +566,8 @@ select {
 
 .siteloginbar_popup fieldset {
 	border: none;
-	margin: 0; padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 .siteloginbar_popup .tabmark {
@@ -668,7 +669,10 @@ li.login_link ul li a {
 }
 /* end Sitelogin Popup */
 
-#tiki-top[id] {height: auto; min-height: 50px;}
+#tiki-top[id] {
+	height: auto;
+	min-height: 50px;
+}
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/

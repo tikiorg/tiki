@@ -358,7 +358,8 @@ a .sf-sub-indicator {
 
 h3.box-title,
 .cbox-title {
-	padding: .5em .3em .3em 1em; position: relative;
+	padding: .5em .3em .3em 1em;
+	position: relative;
 	border: 1px solid #aaa;
 	background: #cccccc url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
 	color: #363636;

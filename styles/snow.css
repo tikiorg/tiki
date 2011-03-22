@@ -1033,9 +1033,18 @@ a.blogt:hover {
 	background: #C7D0D9;
 	border: 1px solid #999}
 
-.forum_actions .headers .infos {font-size: smaller}
-input#comments-title {font-size: 1.1em; width: 300px}
-.subcomment {margin-left: 10px}
+.forum_actions .headers .infos {
+	font-size: smaller;
+}
+
+input#comments-title {
+	font-size: 1.1em;
+	width: 300px:
+}
+
+.subcomment {
+	margin-left: 10px;
+}
 
 .commentsedithelp {
 	background: #ffcfcf;
@@ -1203,13 +1212,17 @@ Caltrack a:visited {color: #00BD02}
 
 #caltable .calfocus a,
 #caltable .calfocuson a {
-  text-decoration:none}
+  text-decoration:none;
+}
 
 .calinput {background: #3f3f3f}
 .calfocuson + .calcontent {background: #f8fafb}
 .days {color: #D8D8D8}
 #caltable .weeks {color: #D8D8D8}
-.addevent {padding: 0 5px; float: right}
+.addevent {
+	padding: 0 5px;
+	float: right;
+}
 * html .addevent {padding: 0}
 .calodd, .caleven {border: 1px solid #999}
 .calodd {background: #f7f9fa}

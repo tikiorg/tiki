@@ -65,18 +65,72 @@ h6 {
 	font-size: 1.05em;
 }
 
-.wikitext h1 {color: #000; line-height: .9em;}
-.wikitext h2 {color: #309FC0; line-height: .9em; border-bottom: solid 1px #3090C0; text-transform: uppercase}
-.wikitext h3 {color: #303030; line-height: .8em; font-style: italic}
-.wikitext h4 {border-bottom: dashed 1px #CCF0FF; color: #3F3F3F}
-.wikitext h5 {color: #6F6F6F; font-style: italic}
-.wikitext h6 {color: #909090}
+.wikitext h1 {
+	color: #000;
+	line-height: .9em;
+}
 
-.wikitext.nopagetitle h1 {font-size: 1.8em; color: #309FC0; line-height: .9em; border-bottom: solid 1px #3090C0; text-transform: uppercase}
-.wikitext.nopagetitle h2 {font-size: 1.6em; color: #303030; line-height: .8em; font-style: italic; border-bottom: none; text-transform: none}
-.wikitext.nopagetitle h3 {font-size: 1.4em; border-bottom: dashed 1px #CCF0FF; color: #3F3F3F; font-style: normal}
-.wikitext.nopagetitle h4 {font-size: 1.2em; color: #6F6F6F; font-style: italic; border-bottom: none;}
-.wikitext.nopagetitle h5 {font-size: 1.05em; color: #909090}
+.wikitext h2 {
+	color: #309FC0;
+	line-height: .9em;
+	border-bottom: solid 1px #3090C0;
+	text-transform: uppercase;
+}
+
+.wikitext h3 {
+	color: #303030;
+	line-height: .8em; 
+	font-style: italic;
+}
+
+.wikitext h4 {
+	border-bottom: dashed 1px #CCF0FF;
+	color: #3F3F3F;
+}
+
+.wikitext h5 {
+	color: #6F6F6F; font-style: italic;
+}
+
+.wikitext h6 {
+	color: #909090;
+}
+
+.wikitext.nopagetitle h1 {
+	font-size: 1.8em;
+	color: #309FC0;
+	line-height: .9em;
+	border-bottom: solid 1px #3090C0;
+	text-transform: uppercase;
+}
+
+.wikitext.nopagetitle h2 {
+	font-size: 1.6em;
+	color: #303030; 
+	line-height: .8em;
+	font-style: italic;
+	border-bottom: none;
+	text-transform: none;
+}
+
+.wikitext.nopagetitle h3 {
+	font-size: 1.4em;
+	border-bottom: dashed 1px #CCF0FF;
+	color: #3F3F3F;
+	font-style: normal;
+}
+
+.wikitext.nopagetitle h4 {
+	font-size: 1.2em;
+	color: #6F6F6F;
+	font-style: italic;
+	border-bottom: none;
+}
+
+.wikitext.nopagetitle h5 {
+	font-size: 1.05em;
+	color: #909090;
+}
 
 hr {
 	background: #aaa;

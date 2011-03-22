@@ -688,8 +688,14 @@ textarea.wikiedit {font-size: 1.25em}
 	color: #fff;
 	background: #000}
 
-#helptool {background: #86a48a; padding: 2px}
-#helptool a.link {color: #000}
+#helptool {
+	background: #86a48a;
+	padding: 2px;
+}
+
+#helptool a.link {
+	color: #000;
+}
 
 /** Wiki plugins **/
 /* Code plugin  */

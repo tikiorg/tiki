@@ -173,12 +173,16 @@ input[type=radio] {border: 0}
 input[type="text"],
 input[type="password"] {
 	background-color: #d2d9e3;
-	color: #000}
+	color: #000;
+}
 
 input[type="submit"],
 input[type="file"],
 input[type="reset"],
-select {background: #d2d9e3; color: #000}
+select {
+	background: #d2d9e3;
+	color: #000;
+}
 
 
 .button a,
@@ -283,7 +287,10 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 #sitetitle a,
 #sitetitle a:visited {color: #8f8f8f}
 
-#sitetitle a:hover {color: #8f8f8f; text-decoration: none}
+#sitetitle a:hover {
+	color: #8f8f8f;
+	text-decoration: none;
+}
 
 #sitesubtitle {
 	font-size: 1em;
@@ -572,15 +579,14 @@ td.even,
 	border-right: 1px solid #878689;
 	color: #fff}
 
-/*.tabmark a:active {
-	background: url(teal/menu_bg.png) 1000px -15px;
-	color: red}*/
-
 .tabmark a:hover {
 	background: url(teal/menu_bg.png) 1000px 0;
 	color: #ececec}
 
-.tabactive a {color: #d7e5f3; font-weight: bold}
+.tabactive a {
+	color: #d7e5f3;
+	font-weight: bold;
+}
 
 .tabcontent {
 	border-left: 1px solid #a9a9a9;
@@ -1042,16 +1048,47 @@ Caltrack a:visited {color: #00BD02}
 	font-size: 1em}
 
 .event {background: #f5f5f5}
-.addevent {padding: 0 5px; float: right}
-* html .addevent {padding: 0}
-.calodd, .caleven {border: 1px solid #a9a9a9}
-.calodd {background: #ececec}
-* html .calodd {padding: 0}
-.caleven {background: #f5f5f5}
-* html .caleven {padding: 0}
-.caldark {background: #c4cdda}
-* html .caldark {padding: 0}
-.caldark .calfocus {background: #c4cdda}
+
+.addevent {
+	padding: 0 5px;
+	float: right;
+}
+
+* html .addevent {
+	padding: 0;
+}
+
+.calodd, .caleven {
+	border: 1px solid #a9a9a9;
+}
+
+.calodd {
+	background: #ececec;
+}
+
+* html .calodd {
+	padding: 0;
+}
+
+.caleven {
+	background: #f5f5f5;
+}
+
+* html .caleven {
+	padding: 0;
+}
+
+.caldark {
+	background: #c4cdda;
+}
+
+* html .caldark {
+	padding: 0;
+}
+
+.caldark .calfocus {
+	background: #c4cdda;
+}
 
 div#calscreen .calfocuson {
 	background: #d2d9e3;

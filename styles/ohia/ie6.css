@@ -40,7 +40,12 @@ input[type="submit"] {
 
 h3.box-title {position: static}
 img.flipmodimage {border: 0}
-td {	font-size: 11px; color: #f4f4f4}
+
+td {
+	font-size: 11px;
+	color: #f4f4f4;
+}
+
 .postbody table {font-size: 11px}
 body .galtable {width: 97%}
 .addevent {padding: 0}
