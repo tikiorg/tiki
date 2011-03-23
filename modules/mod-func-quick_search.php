@@ -12,6 +12,11 @@ function module_quick_search_info()
 				'description' => tra('Limit search results to a specific object type. Enter an object type to use a static filter or write "selector" to provide an input.'),
 				'filter' => 'text',
 			),
+			'filter_category' => array(
+				'name' => tra('Filter category'),
+				'description' => tra('Limit search results to a specific category. Enter the comma separated list of category IDs to include in the selector. Single category will display no controls.'),
+				'filter' => 'digits',
+				'separator' => ',',
 			),
 		),
 		'common_params' => array('rows'),
@@ -20,13 +25,17 @@ function module_quick_search_info()
 
 function module_quick_search($mod_reference, $module_params)
 {
+	global $prefs;
+
 	$smarty = TikiLib::lib('smarty');
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+	$categlib = TikiLib::lib('categ');
 
 	$prefill = array(
 		'trigger' => false,
 		'content' => '',
 		'type' => '',
+		'categories' => '',
 	);
 
 	$types = null;
@@ -37,6 +46,14 @@ function module_quick_search($mod_reference, $module_params)
 			$types = $unifiedsearchlib->getSupportedTypes();
 		} else {
 			$prefill['type'] = $module_params['filter_type'];
+		}
+	}
+
+	if (isset ($module_params['filter_category']) && $prefs['feature_categories'] == 'y') {
+		foreach ($module_params['filter_category'] as $categId) {
+			if (Perms::get('category', $categId)->view_category) {
+				$categories[$categId] = $categlib->get_category_name($categId);
+			}
 		}
 	}
 
@@ -52,9 +69,19 @@ function module_quick_search($mod_reference, $module_params)
 		if (isset($session['filter']['type'])) {
 			$prefill['type'] = $session['filter']['type'];
 		}
+
+		if (isset($session['filter']['categories'])) {
+			$selected = $session['filter']['categories'];
+
+			if (isset ($categories[$selected])) {
+				$prefill['categories'] = $selected;
+			}
+		}
 	}
 
 	$smarty->assign('qs_prefill', $prefill);
+	$smarty->assign('qs_categories', $categories);
+	$smarty->assign('qs_all_categories', implode(' or ', array_keys($categories)));
 	$smarty->assign('qs_types', $types);
 }
 
