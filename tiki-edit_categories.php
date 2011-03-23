@@ -47,7 +47,7 @@ if (isset($_POST['action'])) {
 	}
 
 	$objects = $categlib->list_category_objects($_REQUEST['categId'], 0, 1, 'name_asc');
-	echo json_encode(array(
+	$access->output_serialized(array(
 		'count' => $objects['cant'],
 	));
 	exit;

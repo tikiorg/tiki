@@ -79,7 +79,8 @@ array_unshift($inputConfiguration,array(
   'staticKeyFilters' => array(
 		'cookietab'	=>	'int',
 		'xjxfun'	=> 'striptags',
-		'xjxr'		=>	'int'
+		'xjxr'		=>	'int',
+		'callback'  => 'word',
   ),
 	'staticKeyFiltersForArrays' => array(
 		'xjxargs' => 'xss',
