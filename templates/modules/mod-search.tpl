@@ -57,13 +57,13 @@
 		    	<input type = "submit" class = "wikiaction tips{if $smod_params.default_button eq 'go'} button_default{/if}"
 		    			name = "go" value = "{tr}{$smod_params.go_submit}{/tr}"
 		    			title="{tr}Search{/tr}|{tr}Go directly to a page, or search in page titles if exact match is not found.{/tr}"
-		    			onclick = "$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.go_action}');" />
+		    			onclick = "$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.go_action}').attr('page_selected','');" />
 		    {/if}
 		    {if $smod_params.show_edit_button eq 'y' and $tiki_p_edit eq 'y'}
 		    	<input type = "submit" class = "wikiaction tips{if $smod_params.default_button eq 'edit'} button_default{/if}"
 		    			name = "edit" value = "{tr}{$smod_params.edit_submit}{/tr}"
 		    			title="{tr}Search{/tr}|{tr}Edit existing page or create a new one.{/tr}"
-		    			onclick = "$('#search-module-form{$search_mod_usage_counter} input[name!=find]').attr('name', ''); $('#search-module-form{$search_mod_usage_counter} input[name=find]').attr('name', 'page'); $('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.edit_action}');" />
+		    			onclick = "$('#search-module-form{$search_mod_usage_counter} input[name!=find]').attr('name', ''); $('#search-module-form{$search_mod_usage_counter} input[name=find]').attr('name', 'page'); $('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.edit_action}').attr('page_selected','');" />
 		    {/if}
 	    </div>
     </form>
