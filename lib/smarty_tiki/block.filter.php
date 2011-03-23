@@ -12,37 +12,15 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function smarty_block_filter($params, $content, &$smarty, $repeat) {
-	global $prefs, $tikilib;
+	global $prefs;
+	$tikilib = TikiLib::lib('tiki');
+	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 	
 	if (! isset($params['action'])) {
 		$params['action'] = '';
 	}
 
-	$types = array();
-
-	if ($prefs['feature_wiki'] == 'y') {
-		$types[] = 'wiki page';
-	}
-
-	if ($prefs['feature_blogs'] == 'y') {
-		$types[] = 'blog post';
-	}
-	
-	if ($prefs['feature_articles'] == 'y') {
-		$types[] = 'article';
-	}
-
-	if ($prefs['feature_forums'] == 'y') {
-		$types[] = 'forum post';
-	}
-
-	if ($prefs['feature_trackers'] == 'y') {
-		$types[] = 'trackeritem';
-	}
-
-	if ($prefs['feature_sheet'] == 'y') {
-		$types[] = 'sheet';
-	}
+	$types = $unifiedsearchlib->getSupportedTypes();
 
 	$filter = isset($_REQUEST['filter']) ? $_REQUEST['filter'] : array();
 
@@ -51,7 +29,7 @@ function smarty_block_filter($params, $content, &$smarty, $repeat) {
 
 	$smarty->assign('filter_content', isset($filter['content']) ? $filter['content'] : '');
 	$smarty->assign('filter_type', isset($filter['type']) ? $filter['type'] : '');
-	$smarty->assign('filter_types', array_combine($types, array_map('tra', $types)));
+	$smarty->assign('filter_types', $types);
 
 	// Categories
 	if ($prefs['feature_categories'] == 'y') {

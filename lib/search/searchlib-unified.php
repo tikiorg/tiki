@@ -76,6 +76,38 @@ class UnifiedSearchLib
 		));
 	}
 
+	public function getSupportedTypes()
+	{
+		global $prefs;
+		$types = array();
+
+		if ($prefs['feature_wiki'] == 'y') {
+			$types['wiki page'] = tra('wiki page');
+		}
+
+		if ($prefs['feature_blogs'] == 'y') {
+			$types['blog post'] = tra('blog post');
+		}
+		
+		if ($prefs['feature_articles'] == 'y') {
+			$types['article'] = tra('article');
+		}
+
+		if ($prefs['feature_forums'] == 'y') {
+			$types['forum post'] = tra('forum post');
+		}
+
+		if ($prefs['feature_trackers'] == 'y') {
+			$types['trackeritem'] = tra('trackeritem');
+		}
+
+		if ($prefs['feature_sheet'] == 'y') {
+			$types['sheet'] = tra('sheet');
+		}
+
+		return $types;
+	}
+
 	private function buildIndexer($index)
 	{
 		$indexer = new Search_Indexer($index);
@@ -86,36 +118,38 @@ class UnifiedSearchLib
 
 	private function addSources($aggregator, $mode = 'indexing')
 	{
-		global $prefs;
+		$types = $this->getSupportedTypes();
 
 		// Content Sources
-		if ($prefs['feature_wiki'] == 'y') {
+		if (isset ($types['wiki page'])) {
 			$aggregator->addContentSource('wiki page', new Search_ContentSource_WikiSource);
 		}
 
-		if ($prefs['feature_forums'] == 'y') {
+		if (isset ($types['forum post'])) {
 			$aggregator->addContentSource('forum post', new Search_ContentSource_ForumPostSource);
 		}
 
-		if ($prefs['feature_blogs'] == 'y') {
+		if (isset ($types['blog post'])) {
 			$aggregator->addContentSource('blog post', new Search_ContentSource_BlogPostSource);
 		}
 
-		if ($prefs['feature_articles'] == 'y') {
+		if (isset ($types['article'])) {
 			$aggregator->addContentSource('article', new Search_ContentSource_ArticleSource);
 		}
 
-		if ($prefs['feature_file_galleries'] == 'y') {
+		if (isset ($types['file'])) {
 			$aggregator->addContentSource('file', new Search_ContentSource_FileSource);
 		}
 
-		if ($prefs['feature_trackers'] == 'y') {
+		if (isset ($types['trackeritem'])) {
 			$aggregator->addContentSource('trackeritem', new Search_ContentSource_TrackerItemSource);
 		}
 
-		if ($prefs['feature_sheet'] == 'y') {
+		if (isset ($types['sheet'])) {
 			$aggregator->addContentSource('sheet', new Search_ContentSource_SheetSource);
 		}
+
+		global $prefs;
 
 		// Global Sources
 		if ($prefs['feature_categories'] == 'y') {
