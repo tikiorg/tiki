@@ -196,7 +196,7 @@ $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 	language: "'.$prefs['language'].'",
 	customConfig: "",
 	autoSaveSelf: "'.addcslashes($auto_save_referrer, '"').'",		// unique reference for each page set up in ensureReferrer()
-	font_names: "' . $prefs['wysiwyg_fonts'] . '",
+	font_names: "' . trim($prefs['wysiwyg_fonts']) . '",
 	stylesSet: "tikistyles:' . $tikiroot . 'lib/ckeditor_tiki/tikistyles.js",
 	templates_files: "' . $tikiroot . 'lib/ckeditor_tiki/tikitemplates.js",
 	contentsCss: ["' . $ckstyle . '"],

@@ -1,3 +1,4 @@
+{strip}
 <div class="adminoptionbox clearfix{if isset($smarty.request.highlight) and $smarty.request.highlight eq $p.preference} highlight{/if}" style="text-align: left;">
 	<label for="{$p.id|escape}">{$p.name|escape}:</label>
 	{include file="prefs/shared-flags.tpl"}
@@ -9,3 +10,4 @@
 	{/if}
 	{include file="prefs/shared-dependencies.tpl"}
 </div>
+{/strip}
