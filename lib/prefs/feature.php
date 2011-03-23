@@ -136,9 +136,8 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_search' => array(
-			'name' => tra('Tiki-indexed Search'),
+			'name' => tra('Search'),
 			'description' => tra('Enables searching for content on the website, using Tiki-managed index.'),
-			'hint' => tra('Unless you have a reason to, you should use MySQL Full-Text Search feature instead.'),
 			'help' => 'Search',
 			'type' => 'flag',
 		),

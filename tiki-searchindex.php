@@ -37,28 +37,49 @@ if (empty($_REQUEST['filter']) && !empty($_REQUEST['find'])) {
 $filter = isset($_REQUEST['filter']) ? $_REQUEST['filter'] : array();
 
 if (count($filter)) {
+	if (isset($_REQUEST['save_query'])) {
+		$_SESSION['quick_search'][(int) $_REQUEST['save_query']] = $_REQUEST;
+	}
+
 	$query = $unifiedsearchlib->buildQuery($filter);
 
 	$query->setRange(isset($_REQUEST['offset']) ? $_REQUEST['offset'] : 0, $prefs['maxRecords']);
 
 	$results = $query->search($unifiedsearchlib->getIndex());
 
-	$plugin = new Search_Formatter_Plugin_SmartyTemplate(realpath('templates/searchresults-plain.tpl'));
-	$plugin->setData(array(
-		'prefs' => $prefs,
-	));
-	$plugin->setFields(array(
-		'title' => null,
-		'modification_date' => null,
-		'highlight' => null,
-	));
+	$dataSource = $unifiedsearchlib->getDataSource('formatting');
 
-	$formatter = new Search_Formatter($plugin);
-	$formatter->setDataSource($unifiedsearchlib->getDataSource('formatting'));
+	if ($access->is_serializable_request()) {
+		$results = $dataSource->getInformation($results, array('title', 'modification_date', 'url'));
 
-	$wiki = $formatter->format($results);
+		require_once 'lib/smarty_tiki/function.object_link.php';
+		foreach ($results as &$res) {
+			$res['link'] = smarty_function_object_link(array(
+				'type' => $res['object_type'],
+				'id' => $res['object_id'],
+				'title' => $res['title'],
+			));
+		}
+		$access->output_serialized($results);
+		exit;
+	} else {
+		$plugin = new Search_Formatter_Plugin_SmartyTemplate(realpath('templates/searchresults-plain.tpl'));
+		$plugin->setData(array(
+			'prefs' => $prefs,
+		));
+		$plugin->setFields(array(
+			'title' => null,
+			'modification_date' => null,
+			'highlight' => null,
+		));
 
-	$smarty->assign('results', $tikilib->parse_data($wiki));
+		$formatter = new Search_Formatter($plugin);
+		$formatter->setDataSource($dataSource);
+
+		$wiki = $formatter->format($results);
+
+		$smarty->assign('results', $tikilib->parse_data($wiki));
+	}
 }
 
 // disallow robots to index page:
