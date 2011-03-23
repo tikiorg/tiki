@@ -4,6 +4,13 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
+$inputConfiguration = array(
+	array( 'staticKeyFilters' => array(
+		'user' => 'text',
+		'username' => 'text',
+		'pass' => 'text',
+	) )
+);
 
 $bypass_siteclose_check = 'y';
 require_once ('tiki-setup.php');
