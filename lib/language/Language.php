@@ -22,10 +22,15 @@ class Language extends TikiDb_Bridge
 {
 
 	/**
-	 * @var string
+	 * @var string language code
 	 */
 	public $lang;
 
+	/**
+	 * @var string path to the language file
+	 */
+	protected $filePath;
+	
 	/**
 	 * Whether or not there is translations saved in the
 	 * database for this particular language 
@@ -49,6 +54,8 @@ class Language extends TikiDb_Bridge
 			global $prefs;
 			$this->lang = $prefs['language'];
 		}
+		
+		$this->filePath = "lang/{$this->lang}/language.php";
 	}
 
 	/**
@@ -196,11 +203,9 @@ class Language extends TikiDb_Bridge
 	 */
 	public function writeLanguageFile() {
 		set_time_limit(0);
-
-		$filePath = "lang/{$this->lang}/language.php";
-
-		if (is_writable($filePath)) {
-			$langFile = file($filePath);
+		
+		if (is_writable($this->filePath)) {
+			$langFile = file($this->filePath);
 			$dbTrans = $this->_getDbTranslationsEscaped();
 			$stats = array('modif' => 0, 'new' => 0);
 
@@ -217,9 +222,13 @@ class Language extends TikiDb_Bridge
 			//TODO: improve the algorithm (it interact over each entry in language.php file for each entry in the database)
 			foreach ($dbTrans as $dbOrig => $dbNewStr) {
 				foreach ($langFile as $key => $line) {
+					// match a translate or untranslated string in a language.php file
 					if (preg_match('|^/?/?\s*?"(.+)"\s*=>\s*"(.+)".*|', $line, $matches) && $matches[1] == $dbOrig) {
+						// do something only if the new translation is different from the old translation
 						if ($matches[2] != $dbNewStr) {
 							$langFile[$key] = '"' . $matches[1] . '" => "' . $dbNewStr . "\",\n";
+							
+							// count number of new and updated strings
 							if (strpos($line, '//') === 0) {
 								$stats['new']++;
 							} else {
@@ -242,7 +251,7 @@ class Language extends TikiDb_Bridge
 			array_splice($langFile, $lastStr, 0, $newTrans);
 
 			// write the new language.php file
-			$f = fopen($filePath, 'w');
+			$f = fopen($this->filePath, 'w');
 
 			foreach ($langFile as $line) {
 				fwrite($f, $line);
@@ -498,6 +507,29 @@ class Language extends TikiDb_Bridge
 	}
 	
 	/**
+	 * Get all translations (db + custom.php + language.php) plus
+	 * untranslated strings from language.php
+	 * 
+	 * @param int $maxRecords
+	 * @param int $offset
+	 * @param string $search return only results that matches the searched string
+	 * @return array translations and untranslated strings
+	 */
+	public function getAllStrings(/*$maxRecord, $offset, $search = null*/)
+	{
+		$translations = $this->getAllTranslations(100, 0);
+		$untranslated = $this->getUntranslatedFromFile();
+		
+		// merge the two arrays overwriting untranslated strings that
+		// have been translated in the database
+		$strings = array_merge($untranslated, $translations);
+		
+		ksort($strings);
+		
+		return $strings;
+	}
+	
+	/**
 	 * Convert the translations array from the format used all over Tiki (where
 	 * the source string is the key and the translation is the value of one entry of an
 	 * array) to the format used on tiki-edit_languages.php (a two dimensional array with 
@@ -526,5 +558,51 @@ class Language extends TikiDb_Bridge
 		}
 		
 		return $newFormat;
+	}
+
+	/**
+	 * Return a Cachelib object. Used to be able to
+	 * mock cachelib por test purposes.
+	 * 
+	 * @return Cachelib cachelib object
+	 */
+	protected function getCacheLib()
+	{
+		return TikiLib::lib('cache');
+	}
+	
+	/**
+	 * Parse a language.php file to get the untranslated strings,
+	 * store the strings in a cache file and return them.
+	 * 
+	 * The untranslated strings are store in the keys of an array
+	 * that has null values.
+	 * 
+	 * @return array untranslated strings
+	 */
+	public function getUntranslatedFromFile()
+	{
+		$cachelib = $this->getCacheLib();
+		$hash = md5_file($this->filePath);
+		$cacheKey = 'untranslatedStrings.' . $this->lang . $hash;
+		$info = $cachelib->getSerialized($cacheKey, 'untranslatedStrings');
+
+		if ($info) {
+			return $info;
+		}
+		
+		$contents = file($this->filePath);
+		$untranslated = array();
+		
+		foreach ($contents as $line) {
+			// match untranslated string in a language.php file
+			if (preg_match('|^//\s*?"(.+)"\s*=>\s*".+".*|', $line, $matches)) {
+				$untranslated[$matches[1]] = null;
+			}
+		}
+		
+		$cachelib->cacheItem($cacheKey, serialize($untranslated), 'untranslatedStrings');
+		
+		return $untranslated;
 	}
 }

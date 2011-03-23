@@ -178,4 +178,66 @@ class LanguageTest extends TikiTestCase
 		$this->obj->deleteTranslations();
 		$this->assertFalse(TikiDb::get()->getOne('SELECT * FROM `tiki_language` WHERE `lang` = ?', array($this->obj->lang)));
 	}
+	
+	public function testGetUntranslatedFromFile()
+	{
+		$cachelib = $this->getMock('Cachelib', array('getSerialized', 'cacheItem'));
+		$cachelib->expects($this->once())->method('getSerialized')->will($this->returnValue(null));
+		$cachelib->expects($this->once())->method('cacheItem');
+		
+		$obj = $this->getMock('Language', array('getCacheLib'), array($this->lang));
+		$obj->expects($this->once())->method('getCacheLib')->will($this->returnValue($cachelib));
+		
+		$expectedResult = array("Kalture Video" => null, "Communication error" => null, "Invalid response provided by the Kaltura server. Please retry" => null,
+			"Delete comments" => null, "Approved Status" => null, "Queued" => null, "The file is already locked by %s" => null, "WARNING: The file is used in" => null,
+			"You do not have permission to edit this file" => null, "Not modified since" => null, "Not downloaded since" => null);
+		
+		$this->assertEquals($expectedResult, $obj->getUntranslatedFromFile());
+	}
+	
+	public function testGetUnstranslatedFromFileCache()
+	{
+		$expectedResult = array("Kalture Video" => null, "Communication error" => null, "Invalid response provided by the Kaltura server. Please retry" => null,
+			"Delete comments" => null, "Approved Status" => null, "Queued" => null, "The file is already locked by %s" => null, "WARNING: The file is used in" => null,
+			"You do not have permission to edit this file" => null, "Not modified since" => null, "Not downloaded since" => null);
+		$this->assertEquals($expectedResult, $this->obj->getUntranslatedFromFile());
+		
+		// change file to check if the cache is ignored when the file changes
+		copy(dirname(__FILE__) . '/fixtures/language_untranslated.php', $this->langDir . '/language.php');
+		$expectedResult = array("Kalture Video" => null, "Invalid response provided by the Kaltura server. Please retry" => null,
+			"Delete comments" => null, "Queued" => null, "The file is already locked by %s" => null, "WARNING: The file is used in" => null,
+			"You do not have permission to edit this file" => null);
+		$this->assertEquals($expectedResult, $this->obj->getUntranslatedFromFile());
+	}
+	
+	public function testGetAllStrings()
+	{
+		$translations = array(
+			"categorize" => "categorizar",
+			"Set prefs" => "Definir preferências",
+			"Contributions by author" => "Contribuições por autor",
+			"Delete comments" => "Deletar comentários",
+		);
+		
+		$untranslated = array(
+			"Kalture Video" => null,
+			"Delete comments" => null,
+			"The file is already locked by %s" => null,
+		);
+		
+		$expectedResult = array(
+			"categorize" => "categorizar",
+			"Contributions by author" => "Contribuições por autor",
+			"Delete comments" => "Deletar comentários",
+			"Kalture Video" => null,
+			"Set prefs" => "Definir preferências",
+			"The file is already locked by %s" => null,
+		);
+		
+		$obj = $this->getMock('Language', array('getAllTranslations', 'getUntranslatedFromFile'));
+		$obj->expects($this->once())->method('getAllTranslations')->will($this->returnValue($translations));
+		$obj->expects($this->once())->method('getUntranslatedFromFile')->will($this->returnValue($untranslated));
+		
+		$this->assertEquals($expectedResult, $obj->getAllStrings());
+	}
 }
