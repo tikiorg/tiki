@@ -191,6 +191,7 @@ ul.sf-shadow ul.sf-shadow-off {
 	, #col3
 	, #rightcolumn
 	, .cssmenubox
+	, .box-menustructure
 	, .box-data ul.cssmenu_vert
 	, .box-data ul.cssmenu_vert li ul {
 	overflow: visible !important;
