@@ -50,7 +50,7 @@
 		    	<input type = "submit" class = "wikiaction tips{if $smod_params.default_button eq 'search'} button_default{/if}"
 		    			name = "search" value = "{tr}{$smod_params.search_submit}{/tr}"
 		    			title="{tr}Search{/tr}|{tr}Search for text throughout the site.{/tr}"
-		    			onclick = "$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.search_action}');" />
+		    			onclick = "$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.search_action}').attr('page_selected','');" />
 		    {/if}
 		    {if $smod_params.show_go_button eq 'y'}
 		    	<input type="hidden" name="exact_match" />
