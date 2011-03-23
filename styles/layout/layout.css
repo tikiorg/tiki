@@ -2082,7 +2082,12 @@ ul.freetagged li {
 }
 
 .tree li {
-	display: inline-block;
+	display: block;
+	width: 98%;
+}
+
+.tree li ul li {
+	width: auto;
 }
 
 /* jquery-ui dialogs help */
