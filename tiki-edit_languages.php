@@ -127,9 +127,10 @@ if ($action == "edit_rec_sw" || $action == "edit_tran_sw") {
 			$data = $translations->getDbTranslations($sort_mode, $maxRecords, $offset, $find);
 		} else {
 			// display all available translations (db + custom.php + language.php)
-			$data = $translations->getAllTranslations($maxRecords, $offset, $find);
+			$data = $translations->getAllStrings($maxRecords, $offset, $find);
 		}
 	}
+
 	$smarty->assign_by_ref('translations', $data['translations']);
 	$smarty->assign('total', $data['total']);
 	$smarty->assign('hasDbTranslations', $translations->hasDbTranslations);
