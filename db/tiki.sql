@@ -2668,7 +2668,8 @@ CREATE TABLE `users_grouppermissions` (
 ) ENGINE=MyISAM;
 
 
-INSERT INTO users_grouppermissions (`groupName`,`permName`) VALUES('Anonymous','tiki_p_view');
+INSERT INTO users_grouppermissions (`groupName`,`permName`)
+	VALUES('Anonymous','tiki_p_view'),('Anonymous','tiki_p_search'),('Anonymous','tiki_p_download_files');
 
 DROP TABLE IF EXISTS `users_groups`;
 CREATE TABLE `users_groups` (
