@@ -745,7 +745,7 @@ a.toolbar {			/* each tool button */
 	overflow: hidden;
 }
 
-.toolbars-picker.color a {
+.toolbars-picker.color a ,.toolbars-picker.bgcolor a {
 	width: 14px;
 	height: 12px;
 }
