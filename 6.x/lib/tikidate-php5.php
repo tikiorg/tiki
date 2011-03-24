@@ -279,10 +279,16 @@ class TikiDate
 	}
 
 	static function TimezoneIsValidId($id) {
-		return array_key_exists( strtolower($id), timezone_abbreviations_list() ) ||
-			in_array($id, timezone_identifiers_list());
-	}
+		static $abbrevs = null, $ids = null;
+
+		if (! $abbrevs) {
+			$abbrevs = DateTimeZone::listAbbreviations();
+			$ids = DateTimeZone::listIdentifiers();
+		}
 	
+		return array_key_exists( strtolower($id), $abbrevs ) ||
+			in_array($id, $ids);
+	}
 }
 
 class Date_Calc
