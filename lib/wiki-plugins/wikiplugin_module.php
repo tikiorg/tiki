@@ -14,7 +14,7 @@ function wikiplugin_module_info() {
 		$all_modules, 
 		array_map( array( $modlib, 'get_module_info' ), $all_modules ) 
 	);
-	asort($all_modules_info);
+	uasort($all_modules_info, 'compare_names');
 	$modules_options = array();
 	foreach($all_modules_info as $module => $module_info) {
 		$modules_options[] = array('text' => $module_info['name'] . ' (' . $module . ')', 'value' => $module);

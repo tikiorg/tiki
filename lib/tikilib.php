@@ -8203,6 +8203,10 @@ function r_compare_changed($ar1, $ar2) {
 	return $ar2["lastChanged"] - $ar1["lastChanged"];
 }
 
+function compare_names($ar1, $ar2) {
+	return strcasecmp(tra($ar1["name"]), tra($ar2["name"]));
+}
+
 function chkgd2() {
 	if (!isset($_SESSION['havegd2'])) {
 #   TODO test this logic in PHP 4.3
