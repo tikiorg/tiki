@@ -1498,7 +1498,7 @@ class ToolbarSheet extends Toolbar
 			case 'sheetgetrange':
 				$label = tra('Get Cell Range');
 				$icon = tra('pics/icons/sheet_get_range.png');
-				$syntax = 'sheetInstance.appendToFormula(sheetInstance.getTdRange());';
+				$syntax = 'sheetInstance.getTdRange(null, sheetInstance.obj.formula().val()); return false;';
 				break;
 			case 'sheetfind':
 				$label = tra('Find');
