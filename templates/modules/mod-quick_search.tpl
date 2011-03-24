@@ -16,9 +16,9 @@
 	{/if}
 
 	{if $prefs.feature_categories eq 'y'}
-		{if $qs_categories|count eq 1}
+		{if $qs_categories|@count == 1}
 			<input type="hidden" name="filter~categories" value="{$qs_prefill.categories|escape}"/>
-		{elseif $qs_categories|count > 1}
+		{elseif $qs_categories|@count > 1}
 			<label>{tr}Categories{/tr}
 				<select name="filter~categories">
 					<option value="{$qs_all_categories|escape}">{tr}Any{/tr}</option>
