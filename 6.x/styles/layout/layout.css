@@ -421,7 +421,7 @@ ul.tree {
 ul.tree li {
 	white-space: nowrap;
 }
-	
+
 /** Links in other menus **/
 
 .linkmenu,
@@ -1760,8 +1760,18 @@ body.filegal_popup #tiki-center {
 	padding: 0;
 }
 
-.multiselect li {
-	margin-left: 3em;
+.multiselect li,
+.multiselect ul {
+	margin-left: 2em;
+}
+
+.multiselect > ul {
+	margin-left: 0;
+}
+
+.multiselect .categflipper {
+	display: inline-block;
+	width: 2em;
 }
 
 .multiselect  ul.root > li {

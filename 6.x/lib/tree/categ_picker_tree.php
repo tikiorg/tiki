@@ -84,7 +84,7 @@ class CatPickerTreeMaker extends TreeMaker
 		$this->itemID = $this->prefix . 'id' . $nodeinfo["id"];
 
 		$this->jsscriptblock .= "setFlipWithSign('" . $this->itemID . "'); ";
-		return '<a class="link categflipper" id="flipper' . $this->itemID . '" href="#" onclick="flipWithSign(\'' . $this->itemID . '\');return false;">[+]</a>&nbsp;';
+		return $this->node_start_code($nodeinfo) . '<a class="link categflipper" id="flipper' . $this->itemID . '" href="#" onclick="flipWithSign(\'' . $this->itemID . '\');return false;">[+]</a>&nbsp;';
 	}
 
 	//
