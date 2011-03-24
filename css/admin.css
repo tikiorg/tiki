@@ -281,14 +281,14 @@ a.admbox.off img {
 	opacity: .4;
 }
 
-#toolbar_edit_div label
-	, #toolbar_edit_div input
-	, #toolbar_edit_div select {
+#toolbar_edit_div label,
+	#toolbar_edit_div input,
+	#toolbar_edit_div select {
 		display:block;
 }
 
-#toolbar_edit_div input
-	, #toolbar_edit_div select {
+#toolbar_edit_div input,
+	#toolbar_edit_div select {
 		clear: right;
 }
 
