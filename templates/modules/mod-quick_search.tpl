@@ -15,17 +15,19 @@
 		<input type="hidden" name="filter~type" value="{$qs_prefill.type|escape}"/>
 	{/if}
 
-	{if $qs_categories|count eq 1}
-		<input type="hidden" name="filter~categories" value="{$qs_prefill.categories|escape}"/>
-	{elseif $qs_categories|count > 1}
-		<label>{tr}Categories{/tr}
-			<select name="filter~categories">
-				<option value="{$qs_all_categories|escape}">{tr}Any{/tr}</option>
-				{foreach from=$qs_categories item=label key=categId}
-					<option value="{$categId|escape}"{if $qs_prefill.categories eq $categId} selected="selected"{/if}>{$label|escape}</option>
-				{/foreach}
-			</select>
-		</label>
+	{if $prefs.feature_categories eq 'y'}
+		{if $qs_categories|count eq 1}
+			<input type="hidden" name="filter~categories" value="{$qs_prefill.categories|escape}"/>
+		{elseif $qs_categories|count > 1}
+			<label>{tr}Categories{/tr}
+				<select name="filter~categories">
+					<option value="{$qs_all_categories|escape}">{tr}Any{/tr}</option>
+					{foreach from=$qs_categories item=label key=categId}
+						<option value="{$categId|escape}"{if $qs_prefill.categories eq $categId} selected="selected"{/if}>{$label|escape}</option>
+					{/foreach}
+				</select>
+			</label>
+		{/if}
 	{/if}
 
 	<div class="submit">
