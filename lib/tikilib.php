@@ -1897,6 +1897,8 @@ class TikiLib extends TikiDb_Bridge
 				if (!$perms->view && !$perms->wiki_view_ref) {
 					continue;
 				}
+			} else {
+				$res['sefurl'] = '';
 			}
 			if (!$full) {
 				$display = true;

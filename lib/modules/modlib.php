@@ -675,7 +675,7 @@ class ModLib extends TikiLib
 	}
 
 	function execute_module( $mod_reference ) {
-		$module_params = $mod_reference['params'];
+		$module_params = array_merge( array( 'style' => '' ), $mod_reference['params']);	// not sure why style doesn't get set sometime but is used in the tpl
 
 		if ( empty($mod_reference['rows']) ) {
 			$mod_reference['rows'] = 10;
