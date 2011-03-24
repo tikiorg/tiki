@@ -155,15 +155,17 @@ class Search_Index_Lucene implements Search_Index_Interface
 
 	function walkCallback($node, $childNodes)
 	{
+		$term = null;
+
 		if ($node instanceof Search_Expr_And) {
-			return $this->buildCondition($childNodes, true);
+			$term = $this->buildCondition($childNodes, true);
 		} elseif ($node instanceof Search_Expr_Or) {
-			return $this->buildCondition($childNodes, null);
+			$term = $this->buildCondition($childNodes, null);
 		} elseif ($node instanceof Search_Expr_Not) {
 			$result = new Zend_Search_Lucene_Search_Query_Boolean;
 			$result->addSubquery($childNodes[0], false);
 
-			return $result;
+			$term = $result;
 		} elseif ($node instanceof Search_Expr_Range) {
 			$from = $node->getToken('from');
 			$to = $node->getToken('to');
@@ -173,10 +175,16 @@ class Search_Index_Lucene implements Search_Index_Interface
 				true // inclusive
 			);
 
-			return $range;
+			$term = $range;
 		} elseif ($node instanceof Search_Expr_Token) {
-			return $this->buildTerm($node);
+			$term = $this->buildTerm($node);
 		}
+
+		if ($term) {
+			$term->setBoost($node->getWeight());
+		}
+
+		return $term;
 	}
 
 	private function buildCondition($childNodes, $required)

@@ -3,14 +3,10 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id$
+// $Id: Query.php 33195 2011-03-02 17:43:40Z changi67 $
 
-interface Search_Expr_Interface
+interface Search_Query_WeightCalculator_Interface
 {
-	function setField($field = 'global');
-	function setType($type);
-	function setWeight($weight);
-	function getWeight();
-	function walk($callback);
+	function calculate(Search_Expr_Interface $expr);
 }
 

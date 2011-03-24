@@ -8,6 +8,7 @@
 class Search_Expr_Not implements Search_Expr_Interface
 {
 	private $expression;
+	private $weight = 1.0;
 
 	function __construct($expression)
 	{
@@ -22,6 +23,16 @@ class Search_Expr_Not implements Search_Expr_Interface
 	function setField($field = 'global')
 	{
 		$this->expression->setField($field);
+	}
+
+	function setWeight($weight)
+	{
+		$this->weight = (float) $weight;
+	}
+
+	function getWeight()
+	{
+		return $this->weight;
 	}
 
 	function walk($callback)

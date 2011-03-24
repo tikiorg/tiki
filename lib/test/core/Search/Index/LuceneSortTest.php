@@ -19,9 +19,9 @@ class Search_Index_LuceneSortTest extends PHPUnit_Framework_TestCase
 		$this->tearDown();
 
 		$index = new Search_Index_Lucene($this->dir);
-		$this->add($index, 'A', '1', 'Hello');
-		$this->add($index, 'B', '10', 'foobar');
-		$this->add($index, 'C', '2', 'Baz');
+		$this->add($index, 'A', '1', 'Hello', 'foobar');
+		$this->add($index, 'B', '10', 'foobar', 'Hello');
+		$this->add($index, 'C', '2', 'Baz', 'Baz');
 
 		$this->index = $index;
 	}
@@ -56,6 +56,25 @@ class Search_Index_LuceneSortTest extends PHPUnit_Framework_TestCase
 
 		$results = $query->search($this->index);
 
+		$this->assertOrderIs($expected, $results);
+	}
+
+	function testWeightImpact()
+	{
+		$query = new Search_Query;
+		$query->setWeightCalculator(new Search_Query_WeightCalculator_Field(array(
+			'text_field' => 100,
+			'other_field' => 0.0001,
+		)));
+		$query->filterContent('foobar', array('text_field', 'other_field'));
+
+		$results = $query->search($this->index);
+		
+		$this->assertOrderIs('BA', $results);
+	}
+
+	private function assertOrderIs($expected, $results)
+	{
 		$str = '';
 		foreach ($results as $row) {
 			$str .= $row['object_id'];
@@ -64,7 +83,7 @@ class Search_Index_LuceneSortTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($expected, $str);
 	}
 
-	private function add($index, $page, $numeric, $text)
+	private function add($index, $page, $numeric, $text, $text2)
 	{
 		$typeFactory = $index->getTypeFactory();
 
@@ -73,6 +92,7 @@ class Search_Index_LuceneSortTest extends PHPUnit_Framework_TestCase
 			'object_id' => $typeFactory->identifier($page),
 			'numeric_field' => $typeFactory->sortable($numeric),
 			'text_field' => $typeFactory->sortable($text),
+			'other_field' => $typeFactory->sortable($text2),
 		));
 	}
 }

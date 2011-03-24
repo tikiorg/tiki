@@ -12,6 +12,7 @@ class Search_Query
 	private $sortOrder;
 	private $start = 0;
 	private $count = 50;
+	private $weightCalculator = null;
 
 	function __construct($query = null)
 	{
@@ -80,10 +81,19 @@ class Search_Query
 
 	private function addPart($query, $type, $field)
 	{
-		$query = $this->parse($query);
-		$query->setType($type);
-		$query->setField($field);
-		$this->expr->addPart($query);
+		$parts = array();
+		foreach ((array) $field as $f) {
+			$part = $this->parse($query);
+			$part->setType($type);
+			$part->setField($f);
+			$parts[] = $part;
+		}
+		
+		if (count($parts) === 1) {
+			$this->expr->addPart($parts[0]);
+		} else {
+			$this->expr->addPart(new Search_Expr_Or($parts));
+		}
 	}
 
 	function setOrder($order)
@@ -104,12 +114,21 @@ class Search_Query
 		}
 	}
 
+	function setWeightCalculator(Search_Query_WeightCalculator_Interface $calculator)
+	{
+		$this->weightCalculator = $calculator;
+	}
+
 	function search(Search_Index_Interface $index)
 	{
 		if ($this->sortOrder) {
 			$sortOrder = $this->sortOrder;
 		} else {
 			$sortOrder = Search_Query_Order::getDefault();
+		}
+
+		if ($this->weightCalculator) {
+			$this->expr->walk(array($this->weightCalculator, 'calculate'));
 		}
 
 		return $index->find($this->expr, $sortOrder, $this->start, $this->count);

@@ -10,12 +10,14 @@ class Search_Expr_Token implements Search_Expr_Interface
 	private $string;
 	private $type;
 	private $field;
+	private $weight;
 
-	function __construct($string, $type = null, $field = null)
+	function __construct($string, $type = null, $field = null, $weight = 1.0)
 	{
 		$this->string = $string;
 		$this->type = $type;
 		$this->field = $field;
+		$this->setWeight($weight);
 	}
 
 	function setType($type)
@@ -26,6 +28,16 @@ class Search_Expr_Token implements Search_Expr_Interface
 	function setField($field = 'global')
 	{
 		$this->field = $field;
+	}
+
+	function setWeight($weight)
+	{
+		$this->weight = (float) $weight;
+	}
+
+	function getWeight()
+	{
+		return $this->weight;
 	}
 
 	function walk($callback)

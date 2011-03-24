@@ -11,6 +11,7 @@ class Search_Expr_Range implements Search_Expr_Interface
 	private $to;
 	private $type;
 	private $field;
+	private $weight = 1.0;
 
 	function __construct($from, $to, $type = null, $field = null)
 	{
@@ -37,6 +38,16 @@ class Search_Expr_Range implements Search_Expr_Interface
 	function setField($field = 'global')
 	{
 		$this->field = $field;
+	}
+
+	function setWeight($weight)
+	{
+		$this->weight = (float) $weight;
+	}
+
+	function getWeight()
+	{
+		return $this->weight;
 	}
 
 	function walk($callback)

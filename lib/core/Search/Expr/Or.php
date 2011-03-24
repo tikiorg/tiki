@@ -8,6 +8,7 @@
 class Search_Expr_Or implements Search_Expr_Interface
 {
 	private $parts;
+	private $weight = 1.0;
 
 	function __construct(array $parts)
 	{
@@ -31,6 +32,16 @@ class Search_Expr_Or implements Search_Expr_Interface
 		foreach ($this->parts as $part) {
 			$part->setField($field);
 		}
+	}
+
+	function setWeight($weight)
+	{
+		$this->weight = (float) $weight;
+	}
+
+	function getWeight()
+	{
+		return $this->weight;
 	}
 
 	function walk($callback)
