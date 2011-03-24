@@ -176,10 +176,10 @@ input[type="password"] {
 	background-color: #d2d9e3;
 	color: #000}
 
-input[type="submit"]
-	, input[type="file"]
-	, input[type="reset"]
-	, select {
+input[type="submit"],
+	input[type="file"],
+	input[type="reset"],
+	select {
 	background: #d2d9e3;
 	color: #000;
 }
