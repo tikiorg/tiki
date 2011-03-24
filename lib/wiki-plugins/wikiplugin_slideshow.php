@@ -144,7 +144,7 @@ function getSlideshowTheme($theme, $makeJson) {
 	$theme = str_replace(' ', '', $theme);
 	$theme = str_replace('-', '', $theme);
 	
-	$result['themename'] = $theme;
+	$result['themeName'] = $theme;
 	switch ($theme) {
 		case "uilightness":
 			$result['backgroundColor'] = '#F6A828';
@@ -370,7 +370,7 @@ function wikiplugin_slideshow($data, $params) {
 		$headerbackgroundcolor = ($headerbackgroundcolor ? $headerbackgroundcolor : $theme['headerBackgroundColor']);
 		$slidefontcolor = ($slidefontcolor ? $slidefontcolor : $theme['slideFontColor']);
 		$listitemhighlightcolor = ($listitemhighlightcolor ? $listitemhighlightcolor : $theme['listItemHighlightColor']);
-		$themeName = $theme['themename'];
+		$themeName = $theme['themeName'];
 	}
 	
 	$notes = explode("/////", ($data ? $data : ""));
@@ -381,7 +381,7 @@ function wikiplugin_slideshow($data, $params) {
 	
 	global $headerlib;
 	
-	$headerlib->add_js("
+	$headerlib->add_js("	
 		window.s5Settings = {
 			slideClass: '$class',
 			backgroundImage: '$backgroundurl',

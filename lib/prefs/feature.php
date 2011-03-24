@@ -1296,12 +1296,6 @@ function prefs_feature_list() {
 			'description' => tra('Provides various validation possibilities like in Trackers.'),
 			'help' => 'JQuery#Validation',
 		),
-		'feature_jquery_jqs5' => array(
-			'name' => tra('JQuery JQS5'),
-			'type' => 'flag',
-			'help' => 'JQuery#JQS5',
-			'description' => tra('jQuery Simple Standards-Based Slide Show System'),
-		),
 		'feature_jquery_carousel' => array(
 			'name' => tra('JQuery Infinite Carousel'),
 			'type' => 'flag',

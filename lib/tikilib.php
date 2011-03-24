@@ -7481,26 +7481,6 @@ if( \$('#$id') ) {
 		return $path;
 	}
 
-	/**
-	 * list_slide_styles 
-	 * 
-	 * @access public
-	 * @return array. List of the slide styles located in styles/slideshow
-	 */
-	function list_slide_styles()
-	{
-	  $slide_styles = array();
-	  $h = opendir("styles/slideshows");
-	  while ($file = readdir($h)) {
-		if (strstr($file, "css")) {
-		  $slide_styles[] = $file;
-		}
-	  }
-	  closedir($h);
-	  return $slide_styles;
-	}
-
-
 	// Comparison function used to sort languages by their name in the
 	// current locale.
 	static function formatted_language_compare($a, $b) {

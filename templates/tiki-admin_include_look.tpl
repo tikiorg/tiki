@@ -45,7 +45,6 @@
 			</div>
 
 			{preference name=useGroupTheme}
-			{preference name=slide_style}
 			{preference name=feature_theme_control}
 			{if $prefs.feature_theme_control eq 'y'}
 				<div class="adminoptionboxchild">

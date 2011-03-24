@@ -115,29 +115,56 @@ $headerlib->add_cssfile( 'lib/jquery/jquery.s5/jquery.s5.css' );
 $headerlib->add_jsfile( 'lib/jquery/jquery.s5/jquery.s5.js' );
 $headerlib->add_jq_onready( '
 	window.s5Settings = (window.s5Settings ? window.s5Settings : {});
+	
 	$.s5.start($.extend(window.s5Settings, {
 		menu: function() {
 			return $("#tiki_slideshow_buttons").show();
 		},
 		noteMenu: function() {
-			return $("#tiki_slideshowNote_buttons").clone().show();
-		}
+			var menu =  $("#tiki_slideshowNote_buttons").clone().show();
+			
+			menu.find(".tiki-slideshow-theme")
+				.s5ThemeHandler()
+				.change(function() {
+					$(".tiki-slideshow-theme").val($(this).val());
+				});
+			
+			return menu;
+		},
+		themeName: "default"
 	}));
 	
 	$("#main").hide();
-
+	
+	$.fn.extend({
+		s5ThemeHandler: function(s) {
+			return this
+				.val(window.s5Settings.themeName)
+				.change(function() {
+					var theme = $(this).val();
+					theme = (theme ? theme : "default");
+					
+					window.s5Settings.themeName = theme;
+					$.get("tiki-slideshow.php", {theme: theme}, function(o) {
+						theme = $.parseJSON(o);
+						$.s5.makeTheme(theme);
+					}); 
+				});
+		}
+	});
+	
 	$(".tiki-slideshow-theme")
-		.val(window.s5Settings.themeName)
+		.s5ThemeHandler()
 		.change(function() {
-			var theme = $(this).val();
-			if (theme) {
-				$.get("tiki-slideshow.php", {theme: theme}, function(o) {
-					theme = $.parseJSON(o);
-					$.s5.makeTheme(theme);
-				}); 
-			}
+			if (!$.s5.note) return;
+			if (!$.s5.note.document) return;
+			
+			$($.s5.note.document).find(".tiki-slideshow-theme").val($(this).val());
 		});
 	
+	if (window.s5Settings.themeName == "default") {
+		$(".tiki-slideshow-theme").change();
+	}
 ');
 
 ask_ticket('index-raw');
