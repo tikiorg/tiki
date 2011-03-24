@@ -1897,6 +1897,8 @@ class TikiLib extends TikiDb_Bridge
 				if (!$perms->view && !$perms->wiki_view_ref) {
 					continue;
 				}
+			} else {
+				$res['sefurl'] = '';
 			}
 			if (!$full) {
 				$display = true;
@@ -8199,6 +8201,10 @@ function compare_changed($ar1, $ar2) {
 
 function r_compare_changed($ar1, $ar2) {
 	return $ar2["lastChanged"] - $ar1["lastChanged"];
+}
+
+function compare_names($ar1, $ar2) {
+	return strcasecmp(tra($ar1["name"]), tra($ar2["name"]));
 }
 
 function chkgd2() {

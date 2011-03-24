@@ -308,7 +308,7 @@ foreach ($all_modules_info as &$mod) {
 		}
 	}
 }
-asort($all_modules_info);
+uasort($all_modules_info, 'compare_names');
 $smarty->assign_by_ref( 'all_modules_info', $all_modules_info);
 if (!empty($_REQUEST['module_list_show_all'])) {
 	$smarty->assign('module_list_show_all', true);

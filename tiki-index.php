@@ -54,8 +54,9 @@ if ($prefs['feature_categories'] == 'y') {
 
 if (!empty($_REQUEST['machine_translate_to_lang'])) {
 	$smarty->assign('machine_translate_to_lang', $_REQUEST['machine_translate_to_lang']);
+} else {
+	$smarty->assign('machine_translate_to_lang', '');
 }
-
 $access->check_feature( 'feature_wiki' );
 
 if(!isset($_SESSION['thedate'])) {
@@ -94,9 +95,9 @@ $use_best_language = $multilinguallib->useBestLanguage();
 $info = null;
 
 $structs_with_perm = array(); 
+$structure = 'n';
+$smarty->assign('structure',$structure);
 if( $prefs['feature_wiki_structure'] == 'y' ) {
-	$structure = 'n';
-	$smarty->assign('structure',$structure);
 	// Feature checks made in the function for structure language
 	if (!$use_best_language) {
 		$info = $tikilib->get_page_info($_REQUEST["page"]);
