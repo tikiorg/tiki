@@ -24,6 +24,9 @@
 					{preference name="unified_lucene_location"}
 				</div>
 
+				{preference name=unified_field_weight}
+				{preference name=unified_default_content}
+
 				<a href="tiki-admin.php?page=search&amp;rebuild=now">{tr}Rebuild Index{/tr}</a>
 				{if !empty($stat)}
 					{remarksbox type='feedback' title="{tr}Indexation{/tr}"}<ul>

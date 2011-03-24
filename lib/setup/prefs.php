@@ -1897,6 +1897,8 @@ function get_default_prefs() {
 		'unified_engine' => 'lucene',
 		'unified_incremental_update' => 'y',
 		'unified_lucene_location' => 'temp/unified-index',
+		'unified_field_weight' => "title:2.5\nallowed_groups:0.0001\ncategories:0.0001\ndeep_categories:0.0001",
+		'unified_default_content' => array('contents', 'title'),
 	
 		// Syntax Highlighter
 		'feature_syntax_highlighter' => 'y',

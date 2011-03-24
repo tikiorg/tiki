@@ -22,11 +22,14 @@ function wikiplugin_list_info()
 
 function wikiplugin_list($data, $params)
 {
+	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+
 	$alternate = null;
 	$output = null;
 	$subPlugins = array();
 
 	$query = new Search_Query;
+	$query->setWeightCalculator($unifiedsearchlib->getWeightCalculator());
 
 	if (isset($_REQUEST['offset'])) {
 		$query->setRange($_REQUEST['offset']);
@@ -67,7 +70,6 @@ function wikiplugin_list($data, $params)
 		$query->setOrder($_REQUEST['sort_mode']);
 	}
 
-	global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';
 	$index = $unifiedsearchlib->getIndex();
 
 	$result = $query->search($index);
@@ -129,7 +131,7 @@ function wpquery_filter_deepcategories($query, $value)
 
 function wpquery_filter_content($query, $value)
 {
-	$query->filterContent($value);
+	$query->filterContent($value, TikiLib::lib('tiki')->get_preference('unified_default_content', array('contents'), true));
 }
 
 function wpquery_filter_language($query, $value)

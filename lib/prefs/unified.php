@@ -27,6 +27,21 @@ function prefs_unified_list()
 			'description' => tra('Update the index incrementally as the site content is modified. This may lead to lower performance and accuracy than processing the index on a periodic basis.'),
 			'type' => 'flag',
 		),
+		'unified_field_weight' => array(
+			'name' => tra('Field Weights'),
+			'description' => tra('Allows to set the field weights that apply when ranking the pages for search listing. The weight only applies when the field is in the query. To nullify the value of a field, use an insignificant amount, not 0, which may lead to unexpected behaviors, such as stripping results.'),
+			'hint' => tra('One field per line, \'\'field_name\'\'__:__\'\'5.3\'\''),
+			'type' => 'textarea',
+			'size' => 5,
+			'filter' => 'text',
+		),
+		'unified_default_content' => array(
+			'name' => tra('Default content fields'),
+			'description' => tra('All of the content is aggregated in the contents field. For custom weighting to apply, the fields must be included in the query. This option allows to include other fields in the default content search.'),
+			'type' => 'text',
+			'separator' => ',',
+			'filter' => 'word',
+		),
 	);
 }
 

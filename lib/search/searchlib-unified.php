@@ -192,11 +192,31 @@ class UnifiedSearchLib
 		return $dataSource;
 	}
 
+	function getWeightCalculator()
+	{
+		global $prefs;
+
+		$lines = explode("\n", $prefs['unified_field_weight']);
+
+		$weights = array();
+		foreach ($lines as $line) {
+			$parts = explode(':', $line, 2);
+			if (count($parts) == 2) {
+				$parts = array_map('trim', $parts);
+
+				$weights[$parts[0]] = $parts[1];
+			}
+		}
+
+		return new Search_Query_WeightCalculator_Field($weights);
+	}
+
 	function buildQuery(array $filter)
 	{
-		global $categlib; require_once 'lib/categories/categlib.php';
+		$categlib = TikiLib::lib('categ');
 
 		$query = new Search_Query;
+		$query->setWeightCalculator($this->getWeightCalculator());
 		$query->filterPermissions(Perms::get()->getGroups());
 
 		if ($jail = $categlib->get_jail()) {
@@ -216,7 +236,7 @@ class UnifiedSearchLib
 		}
 
 		if (isset($filter['content']) && $filter['content']) {
-			$query->filterContent($filter['content']);
+			$query->filterContent($filter['content'], TikiLib::lib('tiki')->get_preference('unified_default_content', array('contents'), true));
 		}
 
 		if (isset($filter['language']) && $filter['language']) {
