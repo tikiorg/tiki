@@ -93,6 +93,10 @@ class UnifiedSearchLib
 			$types['article'] = tra('article');
 		}
 
+		if ($prefs['feature_file_galleries'] == 'y') {
+			$types['file'] = 'file';
+		}
+
 		if ($prefs['feature_forums'] == 'y') {
 			$types['forum post'] = tra('forum post');
 		}
