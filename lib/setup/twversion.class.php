@@ -26,7 +26,7 @@ class TWVersion
 		$this->branch 	= 'unstable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '7.0 SVN trunk';
+		$this->version 	= '7.0 SVN';	// needs to have no spaces for releases
 		$this->star	= '';
 		$this->releases	= array();
 
@@ -49,24 +49,25 @@ class TWVersion
 	// Returns an array of all used Tiki stars.
 	function tikiStars() {
 		return array(
-				1=>'Spica',
-				2=>'Shaula',
-				3=>'Ras Algheti',
-				4=>'Capella',
-				5=>'Antares',
-				6=>'Pollux',
-				7=>'Mira',
-				8=>'Regulus',
-				9=>'Tau Ceti',
-				10=>'Era Carinae',
-				11=>'Polaris',
-				12=>'Sirius',
-				13=>'Arcturus',
-				14=>'Betelgeuse',
-				15=>'Aldebaran',
-				16=>'Vulpeculae',
-				17=>'Rigel'
-				);
+				1=>'Spica',			// 0.9
+				2=>'Shaula',		// 0.95
+				3=>'Ras Algheti',	// 1.0.x
+				4=>'Capella',		// 1.1.x
+				5=>'Antares',		// 1.2.x
+				6=>'Pollux',		// 1.3.x
+				7=>'Mira',			// 1.4.x
+				8=>'Regulus',		// 1.5.x
+				9=>'Tau Ceti',		// 1.6.x
+				10=>'Era Carinae',	// 1.7.x
+				11=>'Polaris',		// 1.8.x
+				12=>'Sirius',		// 1.9.x
+				13=>'Arcturus',		// 2.x
+				14=>'Betelgeuse',	// 3.x
+				15=>'Aldebaran',	// 4.x
+				16=>'Vulpeculae',	// 5.x
+				17=>'Rigel',		// 6.x
+				18=>'Electra',		// 7.x
+		);
 	}
 
 	// Returns an array of all valid versions of Tikiwiki.

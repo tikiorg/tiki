@@ -1,6 +1,6 @@
 #admin_metrics_add,
-	#admin_metrics_add_tab,
-	#admin_metrics_add_template {
+#admin_metrics_add_tab,
+#admin_metrics_add_template {
 	width: 100%;
 }
 
@@ -98,6 +98,6 @@ textarea#metric_query, textarea#tab_content {
 }
 
 .range-date-from,
-	.range-date-to {
+.range-date-to {
 	width: 80px;
 }

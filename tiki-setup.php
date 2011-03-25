@@ -174,7 +174,7 @@ $smarty->assign('show_stay_in_ssl_mode', $show_stay_in_ssl_mode);
 $smarty->assign('stay_in_ssl_mode', $stay_in_ssl_mode);
 $smarty->assign('tiki_version', $TWV->version);
 $smarty->assign('tiki_branch', $TWV->branch);
-$smarty->assign('tiki_star', $TWV->star);
+$smarty->assign('tiki_star', $TWV->getStar());
 $smarty->assign('tiki_uses_svn', $TWV->svn);
 
 if( isset( $_GET['msg'] ) ) {

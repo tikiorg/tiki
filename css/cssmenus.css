@@ -1,10 +1,10 @@
 /*** CSS (suckerfish) menus ***/
 /** essential styles **/
 .cssmenu_horiz,
-	.cssmenu_horiz *,
-	.cssmenu_vert,
-	.cssmenu_vert *,
-	.cssmenu_vert ul {
+.cssmenu_horiz *,
+.cssmenu_vert,
+.cssmenu_vert *,
+.cssmenu_vert ul {
 	margin: 0;
 	padding: 0;
 	padding-left: 0;
@@ -13,12 +13,12 @@
 }
 
 .cssmenu_horiz,
-	.cssmenu_vert {
+.cssmenu_vert {
 	line-height: 1.0em;
 }
 
-.cssmenu_horiz ul
-, .cssmenu_vert ul {
+.cssmenu_horiz ul,
+.cssmenu_vert ul {
 	position: absolute;
 	top: -999em;
 	width: 10em; /* left offset of submenus need to match (see below) */
@@ -26,74 +26,74 @@
 }
 
 .cssmenu_horiz ul li,
-	.cssmenu_vert ul li {
+.cssmenu_vert ul li {
 	width: 100%;
 }
 
 .cssmenu_horiz li:hover,
-	.cssmenu_vert li:hover {
+.cssmenu_vert li:hover {
 	visibility: inherit; /* fixes IE7 'sticky bug' */
 }
 
 .cssmenu_horiz li,
-	.cssmenu_vert li {
+.cssmenu_vert li {
 	float: left;
 	position: relative;
 }
 
 .cssmenu_horiz a,
-	.cssmenu_vert a {
+.cssmenu_vert a {
 	display: block;
 	position: relative;
 }
 
 .cssmenu_horiz li:hover ul,
-	.cssmenu_horiz li.sfHover ul,
-	.cssmenu_vert li:hover ul,
-	.cssmenu_vert li.sfHover ul {
+.cssmenu_horiz li.sfHover ul,
+.cssmenu_vert li:hover ul,
+.cssmenu_vert li.sfHover ul {
 	left: 0;
 	top: 2.5em; /* match top ul list item height */
 	z-index: 752;
 }
 
 .cssmenu_horiz li:hover li ul,
-	.cssmenu_horiz li.sfHover li ul,
-	.cssmenu_vert li:hover li ul,
-	.cssmenu_vert li.sfHover li ul {
+.cssmenu_horiz li.sfHover li ul,
+.cssmenu_vert li:hover li ul,
+.cssmenu_vert li.sfHover li ul {
 	top: -999em;
 }
 
 .cssmenu_horiz li li:hover ul,
-	.cssmenu_horiz li li.sfHover ul,
-	.cssmenu_vert li li:hover ul,
-	.cssmenu_vert li li.sfHover ul {
+.cssmenu_horiz li li.sfHover ul,
+.cssmenu_vert li li:hover ul,
+.cssmenu_vert li li.sfHover ul {
 	left: 10em; /* match ul width */
 	top: 0;
 }
 
 .cssmenu_horiz li li:hover li ul,
-	.cssmenu_horiz li li.sfHover li ul,
-	.cssmenu_vert li li:hover li ul,
-	.cssmenu_vert li li.sfHover li ul {
+.cssmenu_horiz li li.sfHover li ul,
+.cssmenu_vert li li:hover li ul,
+.cssmenu_vert li li.sfHover li ul {
 	top: -999em;
 }
 
 .cssmenu_horiz li li li:hover ul,
-	.cssmenu_horiz li li li.sfHover ul,
-	.cssmenu_vert li li li:hover ul,
-	.cssmenu_vert li li li.sfHover ul {
+.cssmenu_horiz li li li.sfHover ul,
+.cssmenu_vert li li li:hover ul,
+.cssmenu_vert li li li.sfHover ul {
 	left: 10em; /* match ul width */
 	top: 0;
 }
 
 /* Suggested style */
 .cssmenu_horiz li.selected a,
-	.cssmenu_vert li.selected a {
+.cssmenu_vert li.selected a {
 	font-style: italic;
 }
 
 .cssmenu_horiz li.selected ul li a,
-	.cssmenu_vert li.selected ul li a {
+.cssmenu_vert li.selected ul li a {
 	font-style: normal;
 }
 
@@ -101,7 +101,7 @@
 
 /*** arrows **/
 .cssmenu_horiz a.sf-with-ul,
-	.cssmenu_vert a.sf-with-ul {
+.cssmenu_vert a.sf-with-ul {
 	padding-right: 2.25em;
 	min-width: 1px; /* trigger IE7 hasLayout so spans position accurately */
 }
@@ -126,10 +126,10 @@ a > .sf-sub-indicator {  /* give all except IE6 the correct values */
 
 /* apply hovers to modern browsers */
 a:focus > .sf-sub-indicator,
-	a:hover > .sf-sub-indicator,
-	a:active > .sf-sub-indicator,
-	li:hover > a > .sf-sub-indicator,
-	li.sfHover > a > .sf-sub-indicator {
+a:hover > .sf-sub-indicator,
+a:active > .sf-sub-indicator,
+li:hover > a > .sf-sub-indicator,
+li.sfHover > a > .sf-sub-indicator {
 	background-position: -10px -100px; /* arrow hovers for modern browsers*/
 }
 
@@ -139,10 +139,10 @@ a:focus > .sf-sub-indicator,
 
 /* apply hovers to modern browsers */
 .cssmenu_horiz ul a:focus > .sf-sub-indicator,
-	.cssmenu_horiz ul a:hover > .sf-sub-indicator,
-	.cssmenu_horiz ul a:active > .sf-sub-indicator,
-	.cssmenu_horiz ul li:hover > a > .sf-sub-indicator,
-	.cssmenu_horiz ul li.sfHover > a > .sf-sub-indicator {
+.cssmenu_horiz ul a:hover > .sf-sub-indicator,
+.cssmenu_horiz ul a:active > .sf-sub-indicator,
+.cssmenu_horiz ul li:hover > a > .sf-sub-indicator,
+.cssmenu_horiz ul li.sfHover > a > .sf-sub-indicator {
 	background-position: -10px 0; /* arrow hovers for modern browsers*/
 }
 
@@ -163,7 +163,7 @@ ul.sf-shadow ul.sf-shadow-off {
 }
 
 .cssmenu_vert li:hover ul,
-	.cssmenu_vert li.sfHover ul {
+.cssmenu_vert li.sfHover ul {
 	left: 10em; /* match ul width */
 	top: 0;
 }
@@ -179,21 +179,21 @@ ul.sf-shadow ul.sf-shadow-off {
 
 /* hover arrow direction for modern browsers*/
 .cssmenu_vert a:focus > .sf-sub-indicator,
-	.cssmenu_vert a:hover > .sf-sub-indicator,
-	.cssmenu_vert a:active > .sf-sub-indicator,
-	.cssmenu_vert li:hover > a > .sf-sub-indicator,
-	.cssmenu_vert li.sfHover > a > .sf-sub-indicator {
+.cssmenu_vert a:hover > .sf-sub-indicator,
+.cssmenu_vert a:active > .sf-sub-indicator,
+.cssmenu_vert li:hover > a > .sf-sub-indicator,
+.cssmenu_vert li.sfHover > a > .sf-sub-indicator {
 	background-position: -10px 0; /* arrow hovers for modern browsers*/
 }
 
 #col2,
-	#leftcolumn,
-	#col3,
-	#rightcolumn,
-	.cssmenubox,
-	.box-menustructure,
-	.box-data ul.cssmenu_vert,
-	.box-data ul.cssmenu_vert li ul {
+#leftcolumn,
+#col3,
+#rightcolumn,
+.cssmenubox,
+.box-menustructure,
+.box-data ul.cssmenu_vert,
+.box-data ul.cssmenu_vert li ul {
 	overflow: visible !important;
 }
 
@@ -237,7 +237,7 @@ ul.sf-shadow ul.sf-shadow-off {
 }
 
 .navbar .cssmenu_horiz a,
-	.navbar .cssmenu_horiz a:visited {
+.navbar .cssmenu_horiz a:visited {
 	border: none;
 }
 
@@ -246,36 +246,36 @@ ul.sf-shadow ul.sf-shadow-off {
 }
 
 .navbar .cssmenu_horiz li:hover,
-	.navbar .cssmenu_horiz li.sfHover,
-	.navbar .cssmenu_horiz li li.current,
-	.navbar .cssmenu_horiz a:focus,
-	.navbar .cssmenu_horiz a:hover,
-	.navbar .cssmenu_horiz a:active {
+.navbar .cssmenu_horiz li.sfHover,
+.navbar .cssmenu_horiz li li.current,
+.navbar .cssmenu_horiz a:focus,
+.navbar .cssmenu_horiz a:hover,
+.navbar .cssmenu_horiz a:active {
 	background: #BDD2FF;
 }
 
 .navbar .cssmenu_horiz ul li:hover,
-	.navbar .cssmenu_horiz ul li.sfHover,
-	.navbar .cssmenu_horiz ul li:hover li,
-	.navbar .cssmenu_horiz ul li.sfHover li,
-	.navbar .cssmenu_horiz ul a:focus,
-	.navbar .cssmenu_horiz ul a:hover,
-	.navbar .cssmenu_horiz ul a:active {
+.navbar .cssmenu_horiz ul li.sfHover,
+.navbar .cssmenu_horiz ul li:hover li,
+.navbar .cssmenu_horiz ul li.sfHover li,
+.navbar .cssmenu_horiz ul a:focus,
+.navbar .cssmenu_horiz ul a:hover,
+.navbar .cssmenu_horiz ul a:active {
 	background: #D1DFFF;
 }
 
 .navbar ul.cssmenu_horiz li li li:hover,
-	.navbar ul.cssmenu_horiz li li li.sfHover,
-	.navbar .cssmenu_horiz li li.current li.current,
-	.navbar .cssmenu_horiz ul li li a:focus,
-	.navbar .cssmenu_horiz ul li li a:hover,
-	.navbar .cssmenu_horiz ul li li a:active {
+.navbar ul.cssmenu_horiz li li li.sfHover,
+.navbar .cssmenu_horiz li li.current li.current,
+.navbar .cssmenu_horiz ul li li a:focus,
+.navbar .cssmenu_horiz ul li li a:hover,
+.navbar .cssmenu_horiz ul li li a:active {
 	background: #E6EEFF;
 }
 
 .navbar ul.cssmenu_horiz .current ul,
-	.navbar ul.cssmenu_horiz ul li:hover ul,
-	.navbar ul.cssmenu_horiz ul li.sfHover ul {
+.navbar ul.cssmenu_horiz ul li:hover ul,
+.navbar ul.cssmenu_horiz ul li.sfHover ul {
 	left: 0;
 	top: 2.5em; /* match top ul list item height */
 }
@@ -300,10 +300,10 @@ ul.sf-shadow ul.sf-shadow-off {
 
 /* apply hovers to modern browsers */
 .navbar .cssmenu_horiz ul a:focus > .sf-sub-indicator,
-	.navbar .cssmenu_horiz ul a:hover > .sf-sub-indicator,
-	.navbar .cssmenu_horiz ul a:active > .sf-sub-indicator,
-	.navbar .cssmenu_horiz ul li:hover > a > .sf-sub-indicator,
-	.navbar .cssmenu_horiz ul li.sfHover > a > .sf-sub-indicator {
+.navbar .cssmenu_horiz ul a:hover > .sf-sub-indicator,
+.navbar .cssmenu_horiz ul a:active > .sf-sub-indicator,
+.navbar .cssmenu_horiz ul li:hover > a > .sf-sub-indicator,
+.navbar .cssmenu_horiz ul li.sfHover > a > .sf-sub-indicator {
 	background-position: -10px -100px; /* arrow hovers for modern browsers*/
 }
 

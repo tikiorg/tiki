@@ -90,8 +90,8 @@
 }
 
 .Cal0,
-	.Cal1,
-	.Cal2 {
+.Cal1,
+.Cal2 {
 	color: #425262;
 	font-size: 10px;
 	padding-right: 0;
@@ -101,8 +101,8 @@
 }
 
 .Cal0 a,
-	.Cal1 a,
-	.Cal2 a {
+.Cal1 a,
+.Cal2 a {
 	font-weight: normal;
 	text-decoration: none;
 }
@@ -140,18 +140,18 @@
 }
 
 .Calwiki,
-	.Calblog,
-	.Calgal,
-	.Calart,
-	.Calforum,
-	.Caldir,
-	.Calfgal,
-	.Calfaq,
-	.Calquiz,
-	.Caltrack,
-	.Calsurv,
-	.Calnl,
-	.Calchart {
+.Calblog,
+.Calgal,
+.Calart,
+.Calforum,
+.Caldir,
+.Calfgal,
+.Calfaq,
+.Calquiz,
+.Caltrack,
+.Calsurv,
+.Calnl,
+.Calchart {
 	border-top: 1px dashed #CCCCCC;
 	font-size: 10px;
 	padding: 0 3px;
@@ -357,14 +357,14 @@
 }
 
 .calprio1 a,
-	.calprio2 a,
-	.calprio3 a,
-	.calprio4 a,
-	.calprio5 a,
-	.calprio6 a,
-	.calprio7 a,
-	.calprio8 a,
-	.calprio9 a {
+.calprio2 a,
+.calprio3 a,
+.calprio4 a,
+.calprio5 a,
+.calprio6 a,
+.calprio7 a,
+.calprio8 a,
+.calprio9 a {
 	color: #000000;
 	font-weight: normal;
 }
@@ -414,7 +414,7 @@
 }
 
 .opaque .box-title,
-	.opaque .box-data {
+.opaque .box-data {
 	width: auto;
 }
 
@@ -479,7 +479,7 @@ a.viewmodeoff img {
 }
 
 .caltable .odd,
-	.caltable .even {
+.caltable .even {
 	margin: 1px !important;
 	border: 0 !important;
 }
@@ -490,8 +490,8 @@ a.viewmodeoff img {
 }
 
 .caldark,
-	.calfocus,
-	.calfocuson {
+.calfocus,
+.calfocuson {
 	height: 20px;
 }
 
@@ -504,14 +504,14 @@ a.viewmodeoff img {
 }
 
 .calodd,
-	.caleven {
+.caleven {
 	background: none;
 }
 
 .calodd .calfocus,
-	.calodd .calfocuson,
-	.caleven .calfocus,
-	.caleven .calfocuson {
+.calodd .calfocuson,
+.caleven .calfocus,
+.caleven .calfocuson {
 	background: none;
 	border-width: 0;
 	padding-top: 2px;
@@ -524,9 +524,9 @@ a.viewmodeoff img {
 }
 
 * html .addevent,
-	* html .calodd,
-	* html .caleven,
-	* html .caldark {
+* html .calodd,
+* html .caleven,
+* html .caldark {
 	padding: 0;
 }
 
@@ -539,8 +539,8 @@ a.viewmodeoff img {
 }
 
 #filtercal .caltitle,
-	#filtercal .caltoggle,
-	#filtercal .calcheckbox {
+#filtercal .caltoggle,
+#filtercal .calcheckbox {
 	padding: 0 10px;
 }
 
@@ -557,8 +557,8 @@ a.viewmodeoff img {
 }
 
 #exportcal .caltitle,
-	#exportcal .caltoggle,
-	#exportcal .calcheckbox {
+#exportcal .caltoggle,
+#exportcal .calcheckbox {
 	padding: 0 10px;
 }
 
@@ -595,14 +595,14 @@ a.viewmodeoff img {
 }
 
 select[name=start_Hour],
-	select[name=start_Minute],
-	select[name=end_Hour],
-	select[name=end_Minute] {
+select[name=start_Minute],
+select[name=end_Hour],
+select[name=end_Minute] {
 		min-width: 40px;
 }
 
 .caltable,
-	#calscreen .normal {
+#calscreen .normal {
 		clear: both;
 		border-collapse: collapse;
 		margin-top: 5px;
@@ -643,7 +643,7 @@ select[name=start_Hour],
 a.addevent:hover {}
 
 .calfocus,
-	.calfocuson {
+.calfocuson {
 	padding-bottom: 4px;
 }
 
@@ -693,9 +693,9 @@ a.addevent:hover {}
 .calbuttonRight {  }
 
 .calbuttonoff,
-	.calbuttonon,
-	a.prev img,
-	a.next img {
+.calbuttonon,
+a.prev img,
+a.next img {
 	vertical-align: middle;
 }
 

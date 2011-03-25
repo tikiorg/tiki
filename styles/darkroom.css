@@ -1904,15 +1904,15 @@ caltrack a:visited {
 }
 
 .searchresults li .objecttype,
-	.searchresults li .parentname ,
-	.searchresults li .objectname {
+.searchresults li .parentname ,
+.searchresults li .objectname {
 	font-size: 120%;
 	font-weight: bold;
 }
 
 .searchresults .itemhits,
-	.searchresults .itemrelevance,
-	.searchresults .searchdate {
+.searchresults .itemrelevance,
+.searchresults .searchdate {
 	color: #fff;
 	font-size: .95em;
 }
