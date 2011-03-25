@@ -19,15 +19,15 @@ class Tracker_field_Image extends Tracker_Field_File
 		
 		$ins_id = $this->getInsertId();
 
-		if (!empty($prefs['gal_match_regex'])) {
-			if (!preg_match('/' . $prefs['gal_match_regex'] . '/', $_FILES[$ins_id]['name'], $reqs)) {
+		if (!empty($prefs['fgal_match_regex'])) {
+			if (!preg_match('/' . $prefs['fgal_match_regex'] . '/', $_FILES[$ins_id]['name'], $reqs)) {
 				$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
 				$smarty->display("error.tpl");
 				die;
 			}
 		}
-		if (!empty($prefs['gal_nmatch_regex'])) {
-			if (preg_match('/' . $prefs['gal_nmatch_regex'] . '/', $_FILES[$ins_id]['name'], $reqs)) {
+		if (!empty($prefs['fgal_nmatch_regex'])) {
+			if (preg_match('/' . $prefs['fgal_nmatch_regex'] . '/', $_FILES[$ins_id]['name'], $reqs)) {
 				$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
 				$smarty->display("error.tpl");
 				die;
