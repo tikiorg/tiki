@@ -1251,7 +1251,9 @@ class TrackerLib extends TikiLib
 				$res['field_values'] = $this->get_item_fields($trackerId, $res['itemId'], $listfields, $res['itemUser']);
 
 				foreach ($res['field_values'] as $field) {
-					$res[$field['fieldId'].$field["lang"]] = $field["value"];
+					if (isset($field['lang'])) {	// seems odd, not sure what this achieves?
+						$res[$field['fieldId'].$field["lang"]] = $field["value"];
+					}
 				}
 			}
 			if (!empty($asort_mode)) {
@@ -1648,7 +1650,7 @@ class TrackerLib extends TikiLib
 				} else {
 					$name = $fields->fetchOne('name', array('fieldId' => (int) $fieldId));
 				}
-				$value = $array["value"];
+				$value = isset($array["value"]) ? $array["value"] : null;
 
 				if ($array['type'] == 'C') {
 					$calc = preg_replace('/#([0-9]+)/', '$fil[\1]', $array['options']);

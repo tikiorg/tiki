@@ -544,7 +544,8 @@ if ($_REQUEST["itemId"]) {
 			}
 
 			if ($current_field_fields['isMain'] == 'y') {
-				$tracker_item_main_value .= (empty($tracker_item_main_value) ? '' : ' ') . $current_field_ins['value']; 
+				$tracker_item_main_value .= (empty($tracker_item_main_value) ? '' : ' ') .
+						(isset($current_field_ins['value']) ? $current_field_ins['value'] : ''); 
 			}
 		}
 
