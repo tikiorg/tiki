@@ -18,24 +18,30 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 		$ins_id = $this->getInsertId();
 
 		$data = array(
-			'value' => isset($requestData[$ins_id])
-				? $requestData[$filter_id]
-				: $this->getValue(),
+			'value' => $this->getValue(),
 		);
 
-		if (isset($requestData['trackerId'], $requestData['itemId'])) {
+		$trackerId = isset($requestData['trackerId'])
+				? $requestData['trackerId']
+				: $this->getConfiguration('trackerId');
+
+		$itemId = isset($requestData['itemId'])
+				? $requestData['itemId']
+				: $this->getItemId();
+
+		if ( $trackerId && $itemId ) {
 			if ($this->getOption(3)) {
 				$l = explode(':', $this->getOption(1));
 				$finalFields = explode('|', $this->getOption(3));
 				$data['links'] = TikiLib::lib('trk')->get_join_values(
-						$requestData['trackerId'], $requestData['itemId'],
+						$trackerId, $itemId,
 						array_merge( array($this->getOption(2)), $l, array($this->getOption(3))),
 						$this->getOption(0), $finalFields,  ' ', $this->getOption(5)
 				);
 				if (count($data['links']) == 1) {
 					foreach($data['links'] as $linkItemId => $linkValue) {
 						if (is_numeric($data['links'][$linkItemId])) { // if later a computed field use this field
-							$info[$this->getConfiguration('fieldId')] = $linkValue;
+							$info[$this->getConfiguration('fieldId')] = $linkValue;	// TODO $info not defined in this scope?
 						}
 					}
 				}
@@ -50,6 +56,10 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 	function renderInput($context = array())
 	{
 		return $this->renderTemplate('trackerinput/itemslist.tpl', $context);
+	}
+
+	function renderOutput( $context = array() ) {
+		return $this->renderInput( $context );
 	}
 }
 
