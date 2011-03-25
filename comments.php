@@ -19,9 +19,8 @@
 //this script may only be included - so its better to err & die if called directly.
 //smarty is not there - we need setup
 require_once('tiki-setup.php');  
+global $access, $tikilib, $headerlib;
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
-
-require_once ('lib/tikilib.php'); # httpScheme()
 
 /* 
  * Determine the settings used to display the thread

@@ -13,6 +13,7 @@ $access->check_feature('feature_print_indexed');
 $inputConfiguration = array(
 	array( 'staticKeyFilters' => array(
 		'list' => 'alpha',
+		'comments' => 'alpha',
 	) ),
 	array( 'staticKeyFiltersForArrays' => array(
 		'languages' => 'alpha',
@@ -213,6 +214,15 @@ class ObjectRenderer_Wiki extends ObjectRenderer // {{{
 		$options['display_template'] = 'print/print-' . $options['display'] . '_wiki.tpl';
 		$smarty->assign( 'info', $this->info );
 
+		if (isset($options['comments']) && $options['comments']) {
+			global $comments_objectId, $forum_mode, $comments_per_page;
+			$comments_objectId = 'wiki page:' . $this->info['pageName'];
+			$forum_mode = 'n';
+			$comments_per_page = 100;
+			$smarty->assign('tiki_p_post_comments', 'n');
+			include 'comments.php';
+		}
+
 		return $smarty->fetch( $options['display_template'] );
 	}
 
@@ -369,6 +379,7 @@ foreach($indexPages as $page) {
 $objectList->render( $smarty, null, array(
 	'decorator' => 'indexed',
 	'display' => 'object',
+	'comments' => $_REQUEST['comments'] == 'y',
 ) );
  
 $smarty->display('print/print-page_footer.tpl');
