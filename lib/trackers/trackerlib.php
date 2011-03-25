@@ -4127,6 +4127,10 @@ class TrackerLib extends TikiLib
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$field_value['value'] = $res['value'];
+			$field_value['trackerId'] = $trackerId;
+			$field_value['type'] = $this->fields()->fetchOne('type', array(
+				'fieldId' => (int) $res['fieldId'],
+			));
 			$ret[$res['itemId']] = $this->get_field_handler($field_value, $res)->renderOutput(array(
 				'showlinks' => 'n',
 			));
