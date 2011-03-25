@@ -33,42 +33,42 @@ class Tracker_field_Image extends Tracker_Field_File
 				die;
 			}
 		}
-		return array(
-			'value' => (isset($requestData[$ins_id]))
-				? $requestData[$ins_id]
-				: $this->getValue(),
-		);
+		if (!empty($requestData)) {
+			return parent::getFieldData($requestData);
+		} else {
+			return array( 'value' => $this->getValue() );
+		}
 	}
 
-	function renderInnerOutput()
+	function renderInnerOutput( $context )
 	{
 		global $prefs;
 		$smarty = TikiLib::lib('smarty');
 
 		$val = $this->getValue();
-		$list_mode = $smarty->get_template_vars('list_mode'); // to be fixed
+		$list_mode = $context['list_mode'];
 		if ($list_mode == 'csv') {
 			return $val; // return the filename
 		}
 		$pre = '';
-		if (!empty($val)) {
+		if ( !empty($val) && file_exists($val) ) {
 			$params['file'] = $val;
-			if ($list_mode != 'n') {
-				$shadowtype = $this->getOption(5);
-				if ($prefs['feature_shadowbox'] == 'y' && !empty($shadowtype)) {
-					switch ($shadowtype) {
-					case 'item':
-						$rel = '['.$this->getItemId().']';
-						break;
-					case 'individual':
-						$rel = '';
-						break;
-					default:
-						$rel = '['.$this->getConfiguration('fieldId').']';
-						break;
-					}
-					$pre = "<a href=\"$val\" rel=\"shadowbox$rel;type=img\">"; 
+			$shadowtype = $this->getOption(5);
+			if ($prefs['feature_shadowbox'] == 'y' && !empty($shadowtype)) {
+				switch ($shadowtype) {
+				case 'item':
+					$rel = '['.$this->getItemId().']';
+					break;
+				case 'individual':
+					$rel = '';
+					break;
+				default:
+					$rel = '['.$this->getConfiguration('fieldId').']';
+					break;
 				}
+				$pre = "<a href=\"$val\" rel=\"shadowbox$rel;type=img\">";
+			}
+			if ($list_mode != 'n') {
 				if ($this->getOption(0))
 					$params['width'] = $this->getOption(0);
 				if ($this->getOption(1))

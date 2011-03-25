@@ -1549,7 +1549,7 @@ class TrackerLib extends TikiLib
 						if(file_exists($old_file)) {
 							unlink($old_file);
 						}
-						$ins_fields["data"][$i]["value"] = '';
+						$array["value"] = $ins_fields["data"][$i]["value"] = '';
 					} else if( $array['value'] != '' && $this->check_image_type( $array['file_type'] ) ) {
 						$opts = preg_split('/,/', $array["options"]);
 						if (!empty($opts[4])) {
