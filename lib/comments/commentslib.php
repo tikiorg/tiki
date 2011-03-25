@@ -1324,6 +1324,7 @@ class Comments extends TikiLib
 		if ( $object[0] == 'topic' ) {
 			$conditions['parentId'] = $object[1];
 		} else {
+			$conditions['objectType'] = $object[0];
 			$conditions['object'] = $object[1];
 		}
 
