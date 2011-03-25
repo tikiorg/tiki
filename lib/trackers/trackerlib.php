@@ -1207,7 +1207,12 @@ class TrackerLib extends TikiLib
 				}
 			}
 		} else {
-			list($csort_mode, $corder) = preg_split('/_/', $sort_mode);
+			if (strpos($sort_mode, '_') !== false) {
+				list($csort_mode, $corder) = preg_split('/_/', $sort_mode);
+			} else {
+				$csort_mode = $sort_mode;
+				$corder = 'asc';
+			}
 			$csort_mode = "`" . $csort_mode . "`";
 			if ($csort_mode == '`itemId`')
 				$csort_mode = 'tti.`itemId`';
