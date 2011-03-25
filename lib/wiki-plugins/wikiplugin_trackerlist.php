@@ -1000,6 +1000,8 @@ function wikiplugin_trackerlist($data, $params) {
 			foreach ($filtervalue as $i=>$f) {
 				if ($f == '#user') {
 					$filtervalue[$i] = $user;
+				} else if ($f == '#default_group') {
+					$filtervalue[$i] = $_SESSION['u_info']['group'];
 				}
 			}
 		}
