@@ -7,5 +7,7 @@
 		<link rel="canonical" href="{$base_url}tiki-view_forum_thread.php?comments_parentId={$comments_parentId}" />
 	{elseif $mid eq 'tiki-view_blog_post.tpl'}
 		<link rel="canonical" href="{$base_url}{$postId|sefurl:blogpost}" />
+	{elseif $mid eq 'tiki-read_article.tpl'}
+		<link rel="canonical" href="{$base_url}{$articleId|sefurl:article}" />
 	{/if}
 {/if}
