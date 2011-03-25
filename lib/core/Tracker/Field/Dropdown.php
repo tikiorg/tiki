@@ -15,7 +15,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract
 {
 	private $type;
 	
-	function __construct($fieldInfo, $itemData, $trackerDefinition, $type)
+	function __construct($fieldInfo, $itemData, $trackerDefinition, $type = '')
 	{
 		$this->type = $type;
 		parent::__construct($fieldInfo, $itemData, $trackerDefinition);
