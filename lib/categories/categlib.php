@@ -1274,7 +1274,7 @@ class CategLib extends ObjectLib
 		foreach ($catids as $id) {
 			$titles["$id"] = $this->get_category_name($id);
 			$objectcat = array();
-			$objectcat = $this->list_category_objects($id, $offset, $and? -1: $maxRecord, $sort, $types == '*'? '': $typesallowed, $find, $sub);
+			$objectcat = $this->list_category_objects($id, $offset, $and? -1: $maxRecords, $sort, $types == '*'? '': $typesallowed, $find, $sub);
 
 			$acats = $andcat = array();
 			foreach ($objectcat["data"] as $obj) {
@@ -1302,8 +1302,8 @@ class CategLib extends ObjectLib
 				$smarty->assign("titles", $titles);
 				$smarty->assign("listcat", $listcat);
 				$smarty->assign("one", count($listcat));
-				// ###trebly:B01229 test sur display des objets de même catégorie
-				//$out .= echo('<br />Titre de la liste des objets de catégories <br />').$smarty->fetch("categobjects.tpl");
+				// ###trebly:B01229 test sur display des objets de mï¿½me catï¿½gorie
+				//$out .= echo('<br />Titre de la liste des objets de catï¿½gories <br />').$smarty->fetch("categobjects.tpl");
 				$out .= $smarty->fetch("categobjects.tpl");
 				$listcat = array();
 				$titles = array();
