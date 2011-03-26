@@ -370,13 +370,14 @@ class TikiLib extends TikiDb_Bridge
 		if ($user == 'admin')
 			return false;
 
-		$ips = $this->get_ip_address();
+		$fullip = $this->get_ip_address();
+		$ips = split('\.', $fullip);
 		$query = "select tb.`message`,tb.`user`,tb.`ip1`,tb.`ip2`,tb.`ip3`,tb.`ip4`,tb.`mode` from `tiki_banning` tb, `tiki_banning_sections` tbs where tbs.`banId`=tb.`banId` and tbs.`section`=? and ( (tb.`use_dates` = ?) or (tb.`date_from` <= ? and tb.`date_to` >= ?))";
 		$result = $this->fetchAll($query,array($section,'n',(int)$this->now,(int)$this->now));
 
 		foreach ( $result as $res ) {
 			if (!$res['message']) {
-				$res['message'] = tra('You are banned from'). ':' . $section;
+				$res['message'] = tra('You are banned from'). ': ' . $section;
 			}
 
 			if ($user && $res['mode'] == 'user') {
