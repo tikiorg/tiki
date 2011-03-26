@@ -107,9 +107,6 @@ if (!empty($prefs['freetags_cloud_colors'])) {
 			$i = 0;
 		} elseif (count($colors) == 2) {
 			$i = $prev ? 0 : 1;
-		} else {
-			while (($i = rand(0, count($colors) - 1)) == $prev) {
-			}
 		}
 		$most_popular_tags[$id]['color'] = $colors[$i];
 		$prev = $i;

@@ -110,7 +110,7 @@ if (is_array($result)) {
 	    $debitAccount=array();
 	    $debitAmount=array();
 	    $debitText=array();
-	    for($i=0;$i<count($stackEntry['debit']);$i++) {
+	    for($i=0, $iCountStackEntryDebit = count($stackEntry['debit']); $i<$iCountStackEntryDebit; $i++) {
 	    	$debitAccount[]=$stackEntry['debit'][$i]['stackItemAccountId'];
 	    	$debitAmount[]=$stackEntry['debit'][$i]['stackItemAmount'];
 	    	$debitText[]=$stackEntry['debit'][$i]['stackItemText'];
@@ -118,7 +118,7 @@ if (is_array($result)) {
 	    $creditAccount=array();
 	    $creditAmount=array();
 	    $creditText=array();
-	    for($i=0;$i<count($stackEntry['credit']);$i++) {
+	    for($i=0, $iCountStackEntryCredit = count($stackEntry['credit']);$i<$iCountStackEntryCredit; $i++) {
 	    	$creditAccount[]=$stackEntry['credit'][$i]['stackItemAccountId'];
 	    	$creditAmount[]=$stackEntry['credit'][$i]['stackItemAmount'];
 	    	$creditText[]=$stackEntry['credit'][$i]['stackItemText'];
