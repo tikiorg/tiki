@@ -1,0 +1,64 @@
+/* $Id$ - Orainge theme option for Milkyway */
+body {background: #ac5419}
+a:link, a:visited, .cssmenu_vert li a, .cssmenu_vert li a:visited {color: #cd6620}
+a:hover {color: #ac5419}
+table#main {background: #fff url(orange/borderl.png) repeat-y;}
+table#main > tbody {background: url(orange/borderr.png) repeat-y 100% 0;}
+td#leftborder {background: url(orange/borderl.png) repeat-y}
+td#rightborder {background: url(orange/borderr.png) repeat-y}
+td#footer_td {background: url(orange/footer_bottom.jpg) no-repeat 100% 100%;}
+#footer {background: url(orange/footer_bottom.jpg) no-repeat 0 100%}
+.footer_liner {background: url(orange/footer_top.jpg) no-repeat 100% 0}
+.footerbgtrap {background: url(orange/footer_top.jpg) no-repeat 0 0;}
+#header {background: url(orange/header.jpg) no-repeat 100% 0}
+#header .wrapper {background: url(orange/header.jpg) no-repeat; margin-right: 32px}
+.topbar_modules_container {background: url(orange/topbar.jpg) no-repeat 100% 0}
+.topbar_modules_container > .wrapper {background: url(orange/topbar.jpg) no-repeat;}
+#Milkyway_topbar_menu .cssmenu_horiz li.menuLevel0 a:hover {background: url(orange/mw_menu_active_bg.png) 0 0 repeat-x;color: #fff}
+.bt {background: url(orange/modbox.jpg) no-repeat 100% 0}
+.bt div {background: url(orange/modbox.jpg) no-repeat 0 0}
+.bb {background: url(orange/modbox.jpg) no-repeat 100% 100%}
+.bb div {background: url(orange/modbox.jpg) no-repeat 0 100%}
+.i1 {background: url(orange/modboxl.jpg) repeat-y 0 0}
+.i2 {background: url(orange/modboxr.jpg) repeat-y 100% 0}
+.box-titlebottom {background: url(orange/modboxtitlebottom.jpg) no-repeat 100% 0}
+.box-titlebottom div {background: url(orange/modboxtitlebottom.jpg) no-repeat 0 0}
+
+h3.box-title,
+span.highlight {
+	background: #d4641a;
+	color: #fff}
+
+.sf-sub-indicator {background: url(orange/arrows-a04e17.png) no-repeat -10px -100px}
+
+.button a:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover,
+.submitbutton:hover,
+.calbuttonBox:hover {
+	background: url(orange/mw_menu_active_bg.png) 0 0 repeat-x;
+	color: #fff}
+
+.adminanchors,
+th,
+td.heading,
+tr.diffheader,
+th a:link,
+th a:visited,
+td.heading a:link,
+td.heading a:visited,
+tr.diffheader a:link,
+tr.diffheader a:visited {
+	background: #d4641a;
+	color: #fff
+}
+
+.tabmark a:hover,
+.tabactive a:link,
+.tabactive a:visited {
+	background: url(orange/mw_menu_active_bg.png) 0 0 repeat-x;
+	color: #fff;
+	text-decoration: none;
+}

@@ -1,0 +1,64 @@
+/* $Id$ - Red theme option for Milkyway */
+body {background: #640b0f}
+a:link, a:visited, .cssmenu_vert li a, .cssmenu_vert li a:visited {color: #a10f15}
+a:hover {color: #7b0b12}
+table#main {background: #fff url(red/borderl.png) repeat-y;}
+table#main > tbody {background: url(red/borderr.png) repeat-y 100% 0;}
+td#leftborder {background: #5e0d15 url(red/borderl.png) repeat-y}
+td#rightborder {background: #5e0d15 url(red/borderr.png) repeat-y}
+td#footer_td {background: url(red/footer_bottom.jpg) no-repeat 100% 100%;}
+#footer {background: url(red/footer_bottom.jpg) no-repeat 0 100%;}
+.footer_liner {background: url(red/footer_top.jpg) no-repeat 100% 0;}
+.footerbgtrap {background: url(red/footer_top.jpg) no-repeat 0 0;}
+#header {background: url(red/header.jpg) no-repeat 100% 0}
+#header .wrapper {background: url(red/header.jpg) no-repeat; margin-right: 32px}
+.topbar_modules_container {background: url(red/topbar.jpg) no-repeat 100% 0}
+.topbar_modules_container > .wrapper {background: url(red/topbar.jpg) no-repeat;}
+#Milkyway_topbar_menu .cssmenu_horiz li.menuLevel0 a:hover {background: /*#2b2b2b*/ url(red/mw_menu_active_bg.png) 0 0 repeat-x;color: #fff}
+.bt {background: url(red/modbox.jpg) no-repeat 100% 0}
+.bt div {background: url(red/modbox.jpg) no-repeat 0 0}
+.bb {background: url(red/modbox.jpg) no-repeat 100% 100%}
+.bb div {background: url(red/modbox.jpg) no-repeat 0 100%}
+.i1 {background: url(red/modboxl.jpg) repeat-y 0 0}
+.i2 {background: url(red/modboxr.jpg) repeat-y 100% 0}
+.box-titlebottom {background: url(red/modboxtitlebottom.jpg) no-repeat 100% 0}
+.box-titlebottom div {background: url(red/modboxtitlebottom.jpg) no-repeat 0 0}
+
+h3.box-title,
+span.highlight {
+	background: #a10e16;
+	color: #fff}
+
+.sf-sub-indicator {background: url(red/arrows-5d0a03.png) no-repeat -10px -100px}
+
+.button a:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover,
+.submitbutton:hover,
+.calbuttonBox:hover {
+	background: /*#2b2b2b*/ url(red/mw_menu_active_bg.png) 0 0 repeat-x;
+	color: #fff}
+
+.adminanchors,
+th,
+td.heading,
+tr.diffheader,
+th a:link,
+th a:visited,
+td.heading a:link,
+td.heading a:visited,
+tr.diffheader a:link,
+tr.diffheader a:visited {
+	background: #a10e16;
+	color: #fff
+}
+
+.tabmark a:hover,
+.tabactive a:link,
+.tabactive a:visited {
+	background: url(red/mw_menu_active_bg.png) 0 0 repeat-x;
+	color: #fff;
+	text-decoration: none;
+}

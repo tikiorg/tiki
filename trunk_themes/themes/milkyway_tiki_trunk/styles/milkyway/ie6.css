@@ -1,0 +1,37 @@
+/* $Id$
+	IE6 rules for Milkyway theme for TikiWiki CMS/Groupware */
+
+#tiki-top {font-size: 11px}
+
+td#leftcolumn .cssmenu_vert {
+	margin-left: -8px;
+	padding-left: 0;
+}
+
+td#leftcolumn .cssmenu_vert li.menuLevel0 {
+	width: 160px;
+}
+
+
+#tiki-top .cssmenu_horiz li a:hover {
+	background: #fff url(milkyway/options/white/mw_menu_active_bg.png) repeat-x;
+}
+
+#leftcolumn .box,
+#rightcolumn .box {
+	width: 216px;
+}
+
+.box a.flipmodtitle img,
+.box:hover a.flipmodtitle img {
+	display: block;
+	position: absolute;
+	right: 6px;
+	top: 0;
+	border: 1px solid transparent;
+}
+
+
+.box a.flipmodtitle img {border: 0}
+.box-titlebottom {margin-bottom: -8px}
+

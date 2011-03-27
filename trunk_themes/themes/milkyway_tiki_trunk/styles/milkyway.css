@@ -1,0 +1,814 @@
+/* $Id$
+	MilkyWay stylesheet (milkyway.css) for Tiki Wiki CMS Groupware.
+	This is an implementation of the GPL Joomla theme by Rhuk.
+*/
+/* Import foundation CSS files. */
+@import url("layout/layout.css");
+@import url("layout/design.css");
+
+/***** XHTML Elements (body tag here,
+			others follow Layout) *****/
+body {
+	background: #fff;
+	text-align: left;
+	width: 100%;
+	color: #333;
+	font: 76%/1.3em Helvetica,Arial,sans-serif;
+}
+
+html>body {font-size: .76em !important}
+body.fullscreen {background: #fff}
+
+ /***** Layout (overrides layout.css;
+		also styling of page layout divs)  *****/
+table#main {
+	background: #fff url(milkyway/options/white/borderl.png) repeat-y;
+	color: #333;
+}
+	
+table#main > tbody {
+	background: url(milkyway/options/white/borderr.png) repeat-y 100% 0;
+}
+
+td#leftmargin {width: 0}
+
+td#main-header {
+	margin: 0;
+	padding: 0;
+}
+
+td#leftcolumn {
+	width: 220px;
+	padding: 8px;
+	background: #fff;
+	text-align: center;
+	overflow: visible;
+}
+
+.colwrapper {
+	margin: 0;
+	padding: 0;
+	text-align: left
+}
+
+td#centercolumn {background: #fff}
+div#centerwrapper {padding: 1em}
+*:first-child+html td#centercolumn {padding: 0}
+
+td#rightcolumn {
+	width: 220px;
+	padding: 8px;
+	background: #fff;
+	text-align: center;
+	overflow: visible;
+}
+
+td#footer_td {
+	background: url(milkyway/options/white/footer_bottom.jpg) no-repeat 100% 100%;
+
+}
+
+#footer {
+	text-align: center;
+	background: url(milkyway/options/white/footer_bottom.jpg) no-repeat 0 100%;
+	padding: 0;
+	margin-right: 30px;
+
+}
+
+.footer_liner {
+	background: url(milkyway/options/white/footer_top.jpg) no-repeat 100% 0;
+	margin-right: -30px;
+	padding-right: 30px;
+}
+
+.footerbgtrap {
+	background: url(milkyway/options/white/footer_top.jpg) no-repeat 0 0;
+
+}
+
+td#footer .content {padding-top: 20px}
+
+#bottom_modules {
+	margin: 30px 30px 20px;
+}
+
+/***** XHTML Elements (other than body tag) ******/
+
+a,
+a:visited {
+	color: #135cae;
+	font-weight: normal;
+	text-decoration: none}
+
+a:hover {
+	text-decoration: underline;
+	font-weight: normal;
+	color: #0b3768}
+
+.wikitext a.wiki,
+.wikitext a.wiki:visited {
+	color: #135cae !important;
+	font-weight: normal !important;
+	text-decoration: none !important}
+
+.wikitext a.wiki:hover {
+	text-decoration: underline !important;
+	font-weight: normal !important;
+	color: #0b3768 !important}
+	
+h1, h2, h3, h4, h5 {
+	line-height: 1.1;
+}
+
+h1 {
+	padding: 0;
+	font-family:Helvetica ,Arial,sans-serif;
+	font-size: 1.3em;
+	font-weight: bold;
+	vertical-align: bottom;
+	color: #135cae;
+	text-align: left;
+	width: 100%}
+
+h2 {padding: 0;
+	font-family: Arial, Helvetica,sans-serif;
+	font-size: 1.4em;
+	font-weight: normal;
+	vertical-align: bottom;
+	color: #333;
+	text-align: left;
+	width: 100%}
+
+h3 {
+	margin: 0;
+	font-weight: bold;
+	font-family: Helvetica,Arial,sans-serif;
+	font-size: 1.5em;
+	padding-left: 0px;
+	margin-bottom: 10px;
+	text-align: left;
+	font-size: 1.3em
+}
+
+h4 {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #333;
+	font-size: 1.2em;
+}
+
+h5 {font-size: 1.1em}
+h6 {font-size: 1.05em}
+
+hr {
+	background: #aaa;
+	color: #333;
+}
+
+fieldset {border: solid 1px #333}
+
+input, select {
+	border: 1px solid #ccc;
+	background: #fff;
+}
+
+.button a,
+button,
+.button input,
+.submitbutton,
+.calbuttonBox a {
+	background: url(milkyway/mw_menu_normal_bg.png) repeat-x;
+	background-position: 0 -2px;
+	margin-right: 4px;
+	margin-bottom: 3px;
+	border-left: 1px solid #dedede;
+	border-right: 1px solid #dedede;
+	color: #000;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	height: 24px;
+	line-height: 24px;
+	padding: 2px 4px;
+}
+
+input[type="reset"],
+input[type="submit"] {
+	background: url(milkyway/mw_menu_normal_bg.png) repeat-x;
+	margin-right: 4px;
+	margin-bottom: 3px;
+	border-left: 1px solid #dedede;
+	border-right: 1px solid #dedede;
+	color: #000;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	height: 24px;
+	line-height: 24px;
+	padding: 2px 4px;
+}
+
+.button a:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover,
+.submitbutton:hover,
+.calbuttonBox a:hover {
+	background: transparent url(milkyway/options/white/mw_menu_active_bg.png) repeat-x;
+	text-decoration: none;
+	color: #000;
+	padding: 2px 4px;
+	margin-right: 4px;
+}
+
+form.admin input[name="features"] {margin-bottom: 3px !important}
+select[name="theme"] {width: 145px}
+small {font-size: .9em}
+label {margin: 0 2px}
+
+textarea,
+body.cke_show_borders {
+	background: #fff;
+	color: #333;
+	font-family: Helvetica,Arial,sans-serif;
+	font-size: 100% !important;
+	margin: 1px}
+
+/***** Site Header & Identity *****/
+#header {
+	background: url(milkyway/options/white/header.jpg) no-repeat;
+	background-position: right 0;
+	position: relative;
+}
+
+#header .wrapper {
+	background: url(milkyway/options/white/header.jpg) no-repeat;
+	margin-right: 32px;
+	margin-bottom: -1px;
+	padding: 20px 0 0 20px}
+
+#header #secondary_site_menu .wrapper {
+	background: none;
+	margin: auto;
+	padding: inherit;
+}
+
+#header-top {
+	position: relative;
+	min-height: 102px;
+}
+
+.siteloginbar_popup {
+	position: absolute;
+	bottom: 0;
+	right: 0}
+
+/* #header text selectors, if needed */
+
+#top_modules #sitetitles {
+	margin-top: 30px;
+	margin-left: 30px;
+}
+
+#sitetitle,
+#sitesubtitle {}
+
+#sitetitle {
+	font-size: 300%;
+}
+
+#sitesubtitle {
+	margin-top: 10px;
+}
+
+#header a,
+#header a:visited,
+#header a:hover {text-decoration: none}
+
+/* tiki-top_bar.tpl - menu and search */
+.topbar_modules_container {
+	min-height: 77px;
+	background: url(milkyway/options/white/topbar.jpg) no-repeat;
+	background-position: right 0;
+	padding: 0;
+	margin: 0}
+
+.topbar_modules_container > .wrapper {
+	background: url(milkyway/options/white/topbar.jpg) no-repeat;
+	min-height: 77px;
+	margin-right: 32px;
+	margin-bottom: -1px;
+	text-align: center;
+	padding-top: 2px;
+	padding-bottom: 0}
+	
+#topbar_modules {
+	margin: 0 32px;
+}
+
+#tiki-top a {}
+#tiki-top table {
+	width: auto;
+	margin: auto;
+	margin-bottom: -15px;
+	text-align: left}
+
+.sitesearchbar,
+#search-module-form1 {
+	position: absolute;
+	right: 4px;
+	top: 15px;
+}
+
+input#fuser,
+select[name="where"],
+input[name="search"] {}
+
+/****** Menus, Links ******/
+
+/* horizontal pill menu */
+.pill {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  padding: 0}
+
+td.pill_l {
+  background: url(milkyway/mw_menu_cap_l.png) no-repeat;
+  width: 20px;
+  height: 32px;
+  padding: 0;
+  margin: 0}
+
+.pill table {
+	margin: 0;
+	padding: 0}
+
+td.pill_m {
+  background: url(milkyway/mw_menu_normal_bg.png) repeat-x;
+  padding: 0;
+  margin: 0;
+  width: auto}
+
+td.pill_r {
+  background: url(milkyway/mw_menu_cap_r.png) no-repeat 0 0;
+  width:  19px;
+  height: 32px;
+  padding: 0;
+  margin: 0}
+
+/** CSS (suckerfish) menus **/
+#topbar_custom_code .cssmenu_horiz li,
+#header .cssmenu_horiz li,
+.cssmenu_vert li {
+	padding: .3em 1em;
+	font-size: 12px;
+}
+
+#header .cssmenu_horiz li.login_link a {
+	background: url(milkyway/mw_menu_normal_bg.png) repeat-x;
+}
+
+#header .cssmenu_horiz li.login_link a:hover {
+	background: url(milkyway/mw_menu_active_bg.png) repeat-x;
+}
+
+.siteloginbar_popup .cssmenu_horiz #logout_link ul {
+	margin-left: -10em;
+}
+
+.siteloginbar_popup .cssmenu_horiz li {
+	padding: 0;
+}
+
+.siteloginbar_popup .cssmenu_horiz li ul li {
+	padding: 0;
+}
+
+
+#header .cssmenu_horiz li.login_link {
+	padding: 0;
+}
+
+/* left column width */
+.box-data ul.cssmenu_vert {
+	padding-left: 0;
+}
+
+.box-data .cssmenu_vert,
+.box-data .cssmenu_vert li {
+	width: 170px;
+}
+
+/* offset from left column (matches above) */
+.box-data .cssmenu_vert li:hover ul,
+.box-data .cssmenu_vert li.sfHover ul {
+	left: 170px;
+}
+
+/* return ul ul ... to default */
+.box-data .cssmenu_vert li:hover ul,
+.box-data .cssmenu_vert li.sfHover ul,
+.box-data .cssmenu_vert li:hover ul li,
+.box-data .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+.box-data .cssmenu_vert li li:hover ul,
+.box-data .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+.cssmenu_horiz li ul li,
+.cssmenu_vert li ul li {
+	border: 1px solid #dfdfdf;
+	background: #fff;
+	border-top: 0;
+	margin-bottom: -1px;
+}
+
+.cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #dfdfdf;
+}
+
+.cssmenu_vert li a {
+	font-weight: normal;
+	color: #135cae;
+}
+
+#Milkyway_topbar_menu {
+	margin-bottom: 40px;
+}
+
+#Milkyway_topbar_menu .cssmenu_horiz {
+	text-align: left;
+	margin-top: 1px;
+}
+
+#Milkyway_topbar_menu .cssmenu_horiz li ul li {
+	background: #fff;
+}
+
+#Milkyway_topbar_menu .cssmenu_horiz li a {
+	padding: 6px 1em;
+}
+
+#Milkyway_topbar_menu .cssmenu_horiz ul li a {
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+#Milkyway_topbar_menu .cssmenu_horiz li.menuSection a {
+	padding-right: 2.6em;
+}
+
+#Milkyway_topbar_menu .cssmenu_horiz li a,
+#Milkyway_topbar_menu .cssmenu_horiz li:visited,
+#Milkyway_topbar_menu .cssmenu_horiz li:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #000;
+	text-decoration: none}
+
+#Milkyway_topbar_menu .cssmenu_horiz li.menuLevel0:hover {
+	background: #fff url(milkyway/options/white/mw_menu_active_bg.png) repeat-x;
+}
+
+#Milkyway_topbar_menu .cssmenu_horiz li.menuLevel0:hover {
+	background: #fff url(milkyway/options/white/mw_menu_active_bg.png) repeat-x;
+}
+
+#Milkyway_topbar_menu .cssmenu_horiz li ul {
+	margin-top: -7px;
+}
+
+#Milkyway_topbar_menu .cssmenu_horiz li ul ul {
+	margin-top: -1px;
+}
+
+#Milkyway_topbar_menu .cssmenu_horiz ul li:hover > a {
+	text-decoration: underline;
+}
+
+.cssmenu_horiz .sf-sub-indicator,
+.cssmenu_vert .sf-sub-indicator {
+	background: url(milkyway/arrows-000000.png) no-repeat -10px -100px;
+}
+
+a .sf-sub-indicator {
+	top: .5em;
+}
+
+.cssmenu_vert li a .sf-sub-indicator {
+	top: .2em;
+}
+
+/*.cssmenu_horiz ul .sf-sub-indicator,
+.cssmenu_vert .sf-sub-indicator {
+	background: url(milkyway/arrows-ffffff.png) no-repeat;
+}*/
+
+
+/** Links in other menus **/
+
+.separator a:link,
+.separator a:visited,
+.separator a:hover {color: #0b3768}
+
+.linkmenu:hover {color: #0b3768}
+
+a.linkmodule:hover {color: #0b3768}
+
+/****** Misc. Global ****/
+
+.highlight {
+	background: #e7e7e7;
+}
+
+/***** Boxes *****/
+/** Modules **/
+
+.cb,
+.box {text-align: left;
+	margin-bottom: 10px}
+
+.bt {
+	background: url(milkyway/options/white/modbox.jpg) no-repeat 100% 0;
+	margin: 0 0 0 14px;
+	height: 14px}
+
+/* Top left corner -- function replaced by .topleft */
+.bt div {
+	height: 14px;
+	width: 14px;
+	position: relative;
+	left: -14px;
+	background: url(milkyway/options/white/modbox.jpg) no-repeat 0 0}
+
+/* Bottom border and right corner */
+.bb {
+	background: url(milkyway/options/white/modbox.jpg) no-repeat 100% 100%;
+	margin: 0 0 0 14px;
+	height: 14px}
+
+/* Bottom left corner */
+.bb div {
+	height: 14px;
+	width: 14px;
+	position: relative;
+	left: -14px;
+	background: url(milkyway/options/white/modbox.jpg) no-repeat 0 100%}
+
+/* Left border */
+.i1 {
+	padding: 0 0 0 14px !important;
+	background: url(milkyway/options/white/modboxl.jpg) repeat-y 0 0}
+
+/* Right border */
+.i2 {
+	padding: 0 14px 0 0 !important;
+	background: url(milkyway/options/white/modboxr.jpg) repeat-y 100% 0}
+
+.i3 {
+	padding: 0}
+
+.box {
+	overflow: hidden;
+	margin: 0;
+	margin-bottom: 10px;
+	padding: 0;
+	/*position: relative*/}
+
+#leftcolumn .box,
+#rightcolumn .box {width: 204px}
+
+.halffloat .box,
+.wikitext .halffloat .box {
+	margin: 0 2% 1em 0;
+}
+
+.thirdfloat .box,
+.wikitext .thirdfloat .box {
+	margin: 0 2% 1em 0;
+}
+
+.quarterfloat .box,
+.wikitext .quarterfloat .box {
+	margin: 0 2% 1em 0;
+}
+
+#footer .box {
+	max-width: 90%;
+}
+
+h3.box-title {
+	display: block;
+	position: relative;
+	background: #e7e7e7;
+	padding-top: 0;
+	padding-bottom: 4px;
+	padding-left: 10px;
+	margin-top: 0;
+	margin-bottom: 0;
+	color: #000;
+	font-size: 1em}
+
+.box a.flipmodtitle img {display: none}
+
+.box:hover a.flipmodtitle img {
+	display: block;
+	position: absolute;
+	right: 6px;
+	top: 0;
+	border: 1px solid transparent}
+
+a.flipmodtitle:hover img {border: 1px solid #fff !important}
+
+.box-title a,
+.box-title a:link {
+	color: white;
+	font-weight: bold;
+	text-decoration: underline}
+
+.box-title a:hover {text-decoration: underline}
+
+.box-titlebottom {
+	background: url(milkyway/options/white/modboxtitlebottom.jpg) no-repeat 100% 0;
+	margin: 0 0 0 14px;
+	height: 6px}
+
+.box-titlebottom div {
+	background: url(milkyway/options/white/modboxtitlebottom.jpg) no-repeat 0 0;
+	height: 6px;
+	width: 14px;
+	position: relative;
+	left: -14px}
+
+.box-data {background: #fff}
+
+/** Other boxes **/
+.cbox {
+	color: #909090;
+	background: #fff;
+	border: 1px solid #d1d1d1}
+
+.cbox-title {
+	padding: 3px 3px 0 3px;
+	font-weight: bold}
+
+.cbox-data {padding: 0 3px 3px 3px}
+
+.rbox {margin: 5px 10px 5px}
+
+.rbox-title,
+.rbox-data {
+	padding: 1px 3px;
+	background: #f6f6f6}
+
+.rbox-title {
+	border: 1px solid #d1d1d1;
+	font-weight: bold}
+
+.rbox-data {
+	border: 1px solid #d1d1d1}
+
+
+.simplebox {
+	margin-bottom: 8px;
+	padding: 3px;
+	border: 1px solid #d1d1d1;
+	background: #f9f9f9;
+	color: #333}
+
+
+/***** Tables, Tabs *****/
+/** Tables **/
+.normal,
+.admin {
+	margin: 5px;
+	border: 1px solid #ccc;
+	padding: 5px;
+}
+
+.normal td,
+.admin td {
+	border: 1px solid #ccc;
+}
+
+th,
+td.heading,
+tr.diffheader,
+th a:link,
+th a:visited,
+td.heading a:link,
+td.heading a:visited,
+tr.diffheader a:link,
+tr.diffheader a:visited {
+	font-weight: bold;
+}
+
+
+/** Tabs **/
+/* reset what's in layout.css */
+
+.tabactive,
+.tabinactive,
+[class].tabactive,
+[class].tabinactive {top: 0 !important}
+
+.tabs {
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	position: relative;
+	padding: .2em .2em 0;
+	margin:0 0.2em 1px 0;
+	border: 1px solid #aaa;
+	background: #ccc url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
+}
+
+.tabs br {
+	display: none;
+}
+
+.tabs span {
+	display: block;
+	float: left;
+}
+
+.tabmark {
+	list-style-image: none;
+	float: left;
+	border: 1px solid #dedede;
+	background: #fff url(milkyway/options/white/mw_menu_active_bg.png) repeat-x;
+	outline: none;
+	border-bottom-width: 0 !important;
+	margin: 0 .2em -1px 0;
+}
+
+.tabmark a {
+	padding: 0.5em 1em;
+	color: #000;
+	font-size: 11px;
+	font-family: Arial,Helvetica,sans-serif;
+	font-weight: bold;
+}
+
+tabmark a:hover,
+.tabactive {
+	background: url(milkyway/mw_menu_normal_bg.png) repeat-x;
+	border-bottom-width: 0;
+	padding-bottom: 1px;
+	border: 1px solid #aaa;
+	color: #212121;
+	outline: none;
+}
+
+#siteloginbar_popup .cssmenu_horiz li.tabmark:hover {
+	background: url(milkyway/mw_menu_normal_bg.png) repeat-x;
+	color: #212121;
+}
+
+.tabcontent {
+	border: 1px solid #dcdcdc;
+	background: #f4f4f4;
+}
+/***** Wiki *****/
+
+body.tiki_wiki #comments {padding: 1em}
+
+h1 a.pagetitle,
+h1 a.pagetitle:visited {
+	font-size: 1.2em;
+	color: #333}
+
+h1 a.pagetitle:hover {
+	text-decoration: none}
+
+.wikitopline {}
+
+div#description,
+.description {
+	font-size: .9em;
+	font-style: italic}
+
+.titlebar {
+	padding: 0.1em;
+	border-top: 1px solid #909090;
+	border-bottom: 1px solid #909090;
+	margin: 10px 0}
+
+.wikitable {
+	border: 1px solid #a9a9a9;
+	border-collapse: collapse}
+
+td.wikicell {
+	padding: 3px;
+	border: 1px solid #a9a9a9;
+	border-collapse: collapse}
+
+/* End of File */

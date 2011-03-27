@@ -1,0 +1,1 @@
+{* $Id$ *}<a href="http://zukakakina.com" title="Adapted by Gary Cunningham-Lee aka chibaguy">{tr}Theme{/tr}</a>: <a href="http://www.rockettheme.com/" Title="{tr}Original design by{/tr} Rhuk">Rhuk Milkyway</a>

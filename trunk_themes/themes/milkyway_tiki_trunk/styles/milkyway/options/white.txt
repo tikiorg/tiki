@@ -1,0 +1,49 @@
+/* $Id$ - White theme option for Milkyway */
+body {background: #fff}
+a:link, a:visited {color: #135cae}
+a:hover {color: #0b3768}
+td#leftborder {background: #2b2b2b url(white/borderl.png) repeat-y}
+td#rightborder {background: url(white/borderr.png) repeat-y}
+td#footer {background: url(white/footer.jpg) no-repeat}
+td#footer .wrapper {background: url(white/footer.jpg) no-repeat 100% 0}
+div#header {background: url(white/header.jpg) no-repeat 100% 0}
+#header .wrapper {background: url(white/header.jpg) no-repeat; margin-right: 32px}
+#tiki-top {background: url(white/topbar.jpg) no-repeat 100% 0;
+	padding: 0;
+	margin: 0}
+#tiki-top .wrapper {background: url(white/topbar.jpg) no-repeat 0 0;
+	margin-right: 32px;}
+#topbar_custom_code {background: white url(white/borderr.png) 100% 0 repeat-y}
+#topbar_cc_liner {background: white url(white/borderl.png) repeat-y 0 0}
+.horbaritem a:hover {background: /*#2b2b2b*/ url(white/mw_menu_active_bg.png) 0 0 repeat-x;color: #fff} 
+.bt {background: url(white/modbox.jpg) no-repeat 100% 0}
+.bt div {background: url(white/modbox.jpg) no-repeat 0 0}
+.bb {background: url(white/modbox.jpg) no-repeat 100% 100%}
+.bb div {background: url(white/modbox.jpg) no-repeat 0 100%}
+.i1 {background: url(white/modboxl.jpg) repeat-y 0 0}
+.i2 {background: url(white/modboxr.jpg) repeat-y 100% 0}
+.box-titlebottom {background: url(white/modboxtitlebottom.jpg) no-repeat 100% 0}
+.box-titlebottom div {background: url(white/modboxtitlebottom.jpg) no-repeat 0 0}	
+.sf-sub-indicator {background: url(black/arrows-000.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */}
+
+span.highlight,
+th,
+td.heading,
+tr.diffheader,
+th a:link,
+th a:visited,
+td.heading a:link,
+td.heading a:visited,
+tr.diffheader a:link,
+tr.diffheader a:visited {
+	color: #000;
+	background: #e7e7e7;
+}
+
+.tabmark a:hover,
+.tabactive a:link,
+.tabactive a:visited {
+	background: url(black/mw_menu_active_bg.png) 0 0 repeat-x;
+	color: #fff;
+	text-decoration: none;
+}
