@@ -371,7 +371,7 @@ class TikiLib extends TikiDb_Bridge
 			return false;
 
 		$fullip = $this->get_ip_address();
-		$ips = split('\.', $fullip);
+		$ips = explode(".", $fullip);
 		$query = "select tb.`message`,tb.`user`,tb.`ip1`,tb.`ip2`,tb.`ip3`,tb.`ip4`,tb.`mode` from `tiki_banning` tb, `tiki_banning_sections` tbs where tbs.`banId`=tb.`banId` and tbs.`section`=? and ( (tb.`use_dates` = ?) or (tb.`date_from` <= ? and tb.`date_to` >= ?))";
 		$result = $this->fetchAll($query,array($section,'n',(int)$this->now,(int)$this->now));
 
