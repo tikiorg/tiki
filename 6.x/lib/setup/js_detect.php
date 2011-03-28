@@ -66,7 +66,7 @@ if ($prefs['javascript_enabled'] == 'y') {	// we have JavaScript
 	}
 	
 	// setup timezone array
-	$timezones = extension_loaded('date') ? array_keys(DateTimeZone::listAbbreviations()) : array("A","ACDT","ACST","ADT","AEDT","AEST","AKDT","AKST","AST","AWDT","AWST","B","BST","C","CDT","CDT","CEDT","CEST","CET","CST","CST","CST","CXT","D","E","EDT","EDT","EEDT","EEST","EET","EST","EST","EST","F","G","GMT","H","HAA","HAC","HADT","HAE","HAP","HAR","HAST","HAT","HAY","HNA","HNC","HNE","HNP","HNR","HNT","HNY","HST","I","IST","K","L","M","MDT","MESZ","MEZ","MSD","MSK","MST","N","NDT","NFT","NST","O","P","PDT","PST","Q","R","S","T","U","UTC","V","W","WDT","WEDT","WEST","WET","WST","WST","X","Y","Z");
+	$timezones = (version_compare(PHP_VERSION, '5.2.0', '>=') && function_exists("date_create")) ? array_keys(DateTimeZone::listAbbreviations()) : array("A","ACDT","ACST","ADT","AEDT","AEST","AKDT","AKST","AST","AWDT","AWST","B","BST","C","CDT","CDT","CEDT","CEST","CET","CST","CST","CST","CXT","D","E","EDT","EDT","EEDT","EEST","EET","EST","EST","EST","F","G","GMT","H","HAA","HAC","HADT","HAE","HAP","HAR","HAST","HAT","HAY","HNA","HNC","HNE","HNP","HNR","HNT","HNY","HST","I","IST","K","L","M","MDT","MESZ","MEZ","MSD","MSK","MST","N","NDT","NFT","NST","O","P","PDT","PST","Q","R","S","T","U","UTC","V","W","WDT","WEDT","WEST","WET","WST","WST","X","Y","Z");
 	$headerlib->add_js('
 function inArray(item, array) {
     for (var i in array) {
