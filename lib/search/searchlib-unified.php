@@ -53,6 +53,7 @@ class UnifiedSearchLib
 		}
 
 		// Build in -new
+		TikiLib::lib('queue')->clear(self::INCREMENT_QUEUE);
 		$indexer = $this->buildIndexer($index);
 		$stat = $indexer->rebuild();
 
