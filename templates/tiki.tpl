@@ -97,7 +97,7 @@
 												<a title="{tr}Email this page{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Email this page{/tr}</a>
 											</div>
 										{/if}
-										
+											{error_report}
 											{if $display_msg}
 												{remarksbox type="note" title="{tr}Notice{/tr}"}{$display_msg|escape}{/remarksbox}
 											{/if}

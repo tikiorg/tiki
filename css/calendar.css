@@ -505,7 +505,7 @@ a.viewmodeoff img {
 
 .calodd,
 .caleven {
-	background: none;
+	border: 1px solid #8CACBB;
 }
 
 .calodd .calfocus,
@@ -626,10 +626,6 @@ select[name=end_Minute] {
 	font-size: 11px;
 	font-weight: bold;
 	color: #555555;
-}
-
-.calodd, .caleven {
-	border: 1px solid #8CACBB;
 }
 
 .calfocus a:hover {

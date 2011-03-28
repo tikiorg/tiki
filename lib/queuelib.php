@@ -23,6 +23,13 @@ class QueueLib extends TikiDb_Bridge
 		));
 	}
 
+	function clear($queue)
+	{
+		$this->queue->deleteMultiple(array(
+			'queue' => $queue,
+		));
+	}
+
 	function pull($queue, $count = 1)
 	{
 		$handler = uniqid();
