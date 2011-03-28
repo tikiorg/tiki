@@ -197,6 +197,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'unifiedsearch':
 			global $unifiedsearchlib; include_once('lib/search/searchlib-unified.php');
 			return $libraries[$name] = $unifiedsearchlib;
+		case 'errorreport':
+			require_once 'lib/errorreportlib.php';
+			return $libraries[$name] = new ErrorReportLib;
 		}
 	}
 

@@ -15,11 +15,21 @@ class UnifiedSearchLib
 			return;
 		}
 
-		$toProcess = TikiLib::lib('queue')->pull(self::INCREMENT_QUEUE, $count);
+		$queuelib = TikiLib::lib('queue');
+		$toProcess = $queuelib->pull(self::INCREMENT_QUEUE, $count);
 
 		if (count($toProcess)) {
-			$indexer = $this->buildIndexer($this->getIndex());
-			$indexer->update($toProcess);
+			try {
+				$indexer = $this->buildIndexer($this->getIndex());
+				$indexer->update($toProcess);
+			} catch (Zend_Search_Lucene_Exception $e) {
+				// Re-queue pulled messages for next update
+				foreach ($toProcess as $message) {
+					$queuelib->push(self::INCREMENT_QUEUE, $message);
+				}
+
+				TikiLib::lib('errorreport')->report(tr('Search index could not be updated. The site is misconfigured. Contact an administrator.'));
+			}
 		}
 	}
 
