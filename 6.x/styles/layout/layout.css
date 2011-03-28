@@ -1760,18 +1760,8 @@ body.filegal_popup #tiki-center {
 	padding: 0;
 }
 
-.multiselect li,
-.multiselect ul {
-	margin-left: 2em;
-}
-
-.multiselect > ul {
-	margin-left: 0;
-}
-
-.multiselect .categflipper {
-	display: inline-block;
-	width: 2em;
+.multiselect li {
+	margin-left: 3em;
 }
 
 .multiselect  ul.root > li {
