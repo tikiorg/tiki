@@ -81,7 +81,10 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		if (isset($context['showlinks']) && $context['showlinks'] == 'n') {
 			return false;
 		}
-		
+
+		if (isset($context['list_mode']) && $context['list_mode'] == 'csv') {
+			return false;
+		}
 
 		$itemId = $this->getItemId();
 
