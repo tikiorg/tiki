@@ -7774,6 +7774,15 @@ if( \$('#$id') ) {
 	}
 
 	function get_flags($with_names = false, $translate = false, $sort_names = false) {
+		global $prefs;
+
+		$cachelib = TikiLib::lib('cache');
+		$cacheKey = serialize(func_get_args()) . $prefs['language'];
+
+		if ($data = $cachelib->getSerialized($cacheKey, 'flags')) {
+			return $data;
+		}
+
 		$flags = array();
 		$h = opendir("img/flags/");
 		while ($file = readdir($h)) {
@@ -7800,8 +7809,12 @@ if( \$('#$id') ) {
 			if ( $sort_names ) {
 				array_multisort($names, $ret);
 			}
-			return $ret;
+
+			$flags = $ret;
 		}
+
+		$cachelib->cacheItem($cacheKey, serialize($flags), 'flags');
+
 		return $flags;
 	}
 
