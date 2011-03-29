@@ -1524,7 +1524,7 @@ function wikiplugin_trackerlist($data, $params) {
 					$smarty->force_compile = $save_fc;	// presumably will be false but put it back anyway
 				}
 				
-				return "~np~".$str."~/np~";
+				return $str;
 			}
 		} else {
 			$smarty->assign('msg', tra("No field indicated"));
