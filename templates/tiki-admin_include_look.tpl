@@ -197,7 +197,9 @@
 									<input type="submit" name="tg_preview" value="{tr}Preview Theme{/tr}">
 								</div>
 							</div>
-							{jq}initThemeGenDialog();{/jq}
+							{if $prefs.themegenerator_feature eq 'y'}
+								{jq}initThemeGenDialog();{/jq}
+							{/if}
 						{/if}
 					</div>
 				</div>
