@@ -289,11 +289,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 	margin-bottom: 0;
 }
 
-/* Middle */
-#middle {
-
-}
-
 #c1c2 {
 	text-align: left;
 	font-size: 1em;
@@ -1125,9 +1120,6 @@ body.tiki_blogs .post .postbody {
 
 body.tiki_blogs .actions {
 	background: none;
-}
-
-body.tiki_blogs .author_info {
 }
 
 body.tiki_blogs .postbody-title {

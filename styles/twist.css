@@ -38,10 +38,6 @@ body.cke_show_borders {
 	margin-left: 0;
 	padding-left: 0}
 
-#middle {
-	
-}
-	
 #c1c2 {
 	text-align: left;
 	background: #fff;
@@ -74,10 +70,6 @@ body.cke_show_borders {
 	vertical-align: top;
 	width: 190px;
 }
-
-#c1c2 #col2 .content {
-	/*margin: 0;
-	padding: 0 4px 4px*/}
 
 #col3 {
 	background: #efefef;
@@ -1054,8 +1046,6 @@ body.tiki_blogs .postbody {
 	margin: 0px;
 	border-spacing: 0px}
 
-.categpath {}
-
 .subcats {
 	padding: 20px 0;
 	width: 100%;
@@ -1162,10 +1152,6 @@ td.dirfooter {font-size: .95em}
 .Calfaq,
 .Calfaq a,
 .Calfaq a:visited {color: #822222}
-
-.Calfgal,
-.Calfgal a,
-.Calfgal a:visited {}
 
 .Calforum,
 .Calforum a,

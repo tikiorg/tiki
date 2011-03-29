@@ -956,13 +956,6 @@ td.third {
 .tabs span {
 	display: block;
 	float: left;
-}
-
-.tabmark {
-/*	font-size: .95em;
-	background: #ddd;
-	border: 1px solid #666;
-*/}
 
 .tabmark a,
 .tabmark a:visited {
