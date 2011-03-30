@@ -317,41 +317,7 @@ function replaceLimon(vec) {
 }
 
 function setSelectionRange(textarea, selectionStart, selectionEnd) {
-	if (typeof textarea.setSelectionRange != 'undefined') {
-		textarea.focus();
-		textarea.setSelectionRange(selectionStart, selectionEnd);
-	} else if (document.selection.createRange) {	// IE
-		var val = textarea.value, c = 0;
-		var isWin = val.indexOf("\r") > -1;
-		textarea.focus();
-		var range =  document.selection.createRange();
-		range.collapse();
-		if (selectionEnd > 1) {
-			if (isWin) {
-				for (var i = 0; i < selectionEnd; i++) {
-					if (val[i] == "\n") {
-						c++;
-					}
-				}
-			}
-			range.moveEnd('character', selectionEnd - c);
-		}
-		range.collapse(false);
-		if (selectionStart < selectionEnd) {
-			c = 0;
-			if (isWin) {
-				for (i = selectionEnd; i > selectionStart; i--) {
-					if (val[i] == "\n") {
-						c++;
-					}
-				}
-			}
-			range.moveStart('character', selectionStart - selectionEnd - c);
-		}
-		try {
-			range.select();
-		} catch (e) {}
-	}
+	$(textarea).selection(selectionStart, selectionEnd);
 }
 
 function getTASelection( textarea ) {
@@ -379,6 +345,19 @@ function getTASelection( textarea ) {
 			r = document.selection.createRange();
 			return r.text;
 		}
+	}
+}
+
+var ieFirstTimeInsertKludge = null;
+
+function storeTASelection( area_id ) {
+	var $el = $("#" + area_id);
+	var sel = $el.selection();
+	$el.attr("selectionStartSaved", sel.start)
+			.attr("selectionEndSaved", sel.end)
+			.attr("scrollTopSaved", $el.attr("scrollTop"));
+	if (ieFirstTimeInsertKludge === null) {
+		ieFirstTimeInsertKludge = true;
 	}
 }
 
@@ -494,41 +473,57 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 	$textarea[0].focus();
 	var val = $textarea.val();
 	var selection = $textarea.selection();
-
+	var scrollTop=$textarea[0].scrollTop;
+	
 	if (selection.start === 0 && selection.end === 0 &&
 					typeof $textarea.attr("selectionStartSaved") != 'undefined') {	// get saved textarea selection
 		if ($textarea.attr("selectionStartSaved")) {	// forgetful firefox/IE
 			selection.start = $textarea.attr("selectionStartSaved");
 			selection.end = $textarea.attr("selectionEndSaved");
+			if ($textarea.attr("scrollTopSaved")) {
+				scrollTop = $textarea.attr("scrollTopSaved");
+				$textarea.attr("scrollTopSaved", "");
+			}
+			$textarea.attr("selectionStartSaved", "").attr("selectionEndSaved", "");
 		} else {
 			selection.start = getCaretPos($textarea[0]);
 			selection.end = selection.start;
 		}
 	}
+
+	// deal with IE's two char line ends
+	var lines, startoff = 0, endoff = 0;
 	if ($textarea[0].createTextRange && $textarea[0].value !== val) {
-		var lines = val.substring(0, selection.start).match(/\n/g);
+		val = $textarea[0].value;	// use raw value of the textarea
+		if (val.substring(selection.start, selection.start + 1) === "\n") {
+			selection.start++;
+		}
+		lines = val.substring(0, selection.start).match(/\r\n/g);
 		if (lines) {
-			selection.start -= lines.length;	// remove one char per line for IE
-			selection.end -= lines.length;
+			startoff -= lines.length;	// remove one char per line for IE
 		}
 	}
 	var selectionStart = selection.start;
 	var selectionEnd = selection.end;
-	var scrollTop=$textarea[0].scrollTop;
 
 	if( blockLevel ) {
 		// Block level operations apply to entire lines
 
 		// +1 and -1 to handle end of line caret position correctly
 		selectionStart = val.lastIndexOf( "\n", selectionStart - 1 ) + 1;
-		selectionEnd = val.indexOf( "\n", selectionEnd );
+		var blockEnd = val.indexOf( "\r", selectionEnd ); // check for IE first
+		if (blockEnd < 0) {
+			selectionEnd = val.indexOf( "\n", selectionEnd );
+		} else {
+			selectionEnd = blockEnd;
+		}
 		if (selectionEnd < 0) {
 			selectionEnd = val.length;
 		}
 	}
 
-	if (selectionStart != selectionEnd) { // has there been a selection
-		var newString = '';
+	var newString = '';
+	if ((selectionStart != selectionEnd)) { // has there been a selection
 		if( perLine ) {
 			lines = val.substring(selectionStart, selectionEnd).split("\n");
 			for( k = 0; lines.length > k; ++k ) {
@@ -548,23 +543,45 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 				newString = replaceString + '\n' + val.substring(selectionStart, selectionEnd);
 			}
 		}
+		
 		$textarea.val(val.substring(0, selectionStart)
 						+ newString
 						+ val.substring(selectionEnd)
 					);
-		setSelectionRange($textarea[0], selectionStart, selectionStart + newString.length);
+		lines = newString.match(/\r\n/g);
+		if (lines) {
+			endoff   -= lines.length;	// lines within the replacement for IE
+		}
+		setSelectionRange($textarea[0], selectionStart + startoff, selectionStart + startoff + newString.length + endoff);
+		
 	} else { // insert at caret
 		$textarea.val(val.substring(0, selectionStart)
 						+ replaceString
 						+ val.substring(selectionEnd)
 					);
-		setCaretToPos($textarea[0], selectionStart + replaceString.length);
+		lines = replaceString.match(/\r\n/g);
+		if (lines) {
+			endoff   -= lines.length;	// lines within the replacement for IE
+		}
+		setCaretToPos($textarea[0], selectionStart + startoff + replaceString.length + endoff);
+
 	}
-	$textarea[0].scrollTop=scrollTop;
+	$textarea.attr("scrollTop", scrollTop);
+	if ($.browser.msie && ieFirstTimeInsertKludge) {
+		setTimeout(function(){		// not only does IE reset the scrollTop and selection the first time a dialog is used
+			if (newString.length) {	// but somehow all the ints have been converted into strings...
+				setSelectionRange($textarea[0], parseInt(selectionStart,10) + parseInt(startoff,10),
+						parseInt(selectionStart,10) + parseInt(startoff,10) + newString.length + parseInt(endoff,10));
+			}
+			$textarea.attr("scrollTop", scrollTop);
+		}, 1000);
+		ieFirstTimeInsertKludge = false;
+	}
 
 	if (hiddenParents.length) { hiddenParents.hide(); }
-	if (typeof auto_save_id != "undefined" && auto_save_id.length > 0 && typeof auto_save == 'function') {  auto_save(); }
-
+	if (typeof auto_save_id != "undefined" && auto_save_id.length > 0 && typeof auto_save == 'function') {
+		auto_save( elementId, auto_save_id[0]);
+	}
 }
 
 function setUserModuleFromCombo(id, textarea) {
