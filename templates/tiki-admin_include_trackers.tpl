@@ -3,6 +3,7 @@
 <fieldset class="admin">
     <form action="tiki-admin.php?page=trackers" method="post">
 	{preference name=user_selector_threshold}
+	{preference name=tracker_field_computed}
 	{preference name=user_selector_realnames_tracker}
    	<div class="heading input_submit_container" style="text-align: right">
 	<input type="submit" name="trkset" value="{tr}Change preferences{/tr}" />
