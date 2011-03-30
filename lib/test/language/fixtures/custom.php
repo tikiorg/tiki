@@ -5,11 +5,10 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-$lang_custom = array(
+$lang=array (
 'Approved Status' => 'Aprovado',
 'Contributions by author' => 'Contribuições por autor',
 'Remove' => 'Novo remover',
 'Something' => 'Algo',
+'Trying to insert malicious PHP code back to the language.php file' => 'asff"); echo \'teste\'; $dois = array(\'\',"',
 );
-
-$lang = array_merge($lang, $lang_custom);

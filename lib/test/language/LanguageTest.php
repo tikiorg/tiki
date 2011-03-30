@@ -25,8 +25,4 @@ class LanguageTest extends TikiTestCase
 		$expectedResult = "\n \t \r " . '\\ $ "';
 		$this->assertEquals($expectedResult, Language::removePhpSlashes($string));
 	}
-	
-	// TODO: We need a way to create a Tiki database just for the tests
-	/*public function testGetDbTranslatedLanguages() {
-	}*/
 }
