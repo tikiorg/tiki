@@ -56,10 +56,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 .fixed_width .fixedwidth[id] {
 	height: auto;
 }
-/*
-#header_fixedwidth .fixedwidth {
-	height: 100%;
-}*/
 
 /* so header contents stay left rather than centered when wide middle content extends page to the right. */ 
 #header_container .fixedwidth {
@@ -161,36 +157,12 @@ img {
 	float: left;
 	clear: none;
 }
-/*
-.siteloginbar div {
-	display: inline;
-}
-
-.siteloginbar #register,
-.siteloginbar #pass {
-	float: right;
-	padding-left: 5px;
-}
-	
-.siteloginbar * {
-	white-space: nowrap;
-}
-
-.siteloginbar form {
-	padding-right: 0;
-}*/
 
 /* Sitelogin Popup */
 .tiki_register_login {
 	bottom: 3px;
 	position: absolute;
 	right: 10px;
-}
-
-.siteloginbar_popup {
-/*	bottom: 0;
-	position: absolute;
-	right: 4em;*/
 }
 
 .siteloginbar_poppedup {
@@ -267,22 +239,13 @@ li#register_link {
 #sitesubtitle { 
 	line-height: 0.9em;
 }
-	/*
-li#login_link .register {
-	display: none;
-}*/
 
 li#logout_link a {
 	padding-right: 40px;
 }
 
-/* from r27359 */
 .siteloginbar_popup #logout_link .cbox {
 	text-align: center;
-}
-
-.siteloginbar_popup .cssmenu_horiz div {
-	
 }
 
 .siteloginbar_popup .cssmenu_horiz div a {
@@ -366,16 +329,6 @@ li#logout_link a {
 	white-space: nowrap;
 }
 
-/****** Menus_links ******/
-/** CSS (suckerfish) menus **/
-
-/** Links in other menus **/
-
-.linkmenu,
-.linkmenu:visited {
-	/*display: block;*/
-}
-
 /***** Misc. *****/
 /* Minimize Menus */
 .minimize-modules-left #col1 {
@@ -400,12 +353,6 @@ li#logout_link a {
 .minimize-modules-right #col3 .box .menuLevel1 .menuText,
 .minimize-modules-right #col3 .separatoricon-url {
   display: inline !important;
-  /* overflow: visible !important;      /* ###trebly:B10115: -> test pb overflow menulvel1     */
-}
-
-.minimize-modules-left #col2 .box,
-.minimize-modules-right #col3 .box {
-	/*      overflow: hidden;*/ /* This conflicts with CSS Menus */
 }
 
 .moduleflip-vert {
@@ -772,12 +719,6 @@ a.toolbar {			/* each tool button */
 	height: 500px;
 }
 
-.help_section {
-}
-
-.help_sections h3 {
-}
-
 .help_sections > div {
 	font-size: .9em;
 	height: 90%;
@@ -819,10 +760,6 @@ a.toolbar {			/* each tool button */
 /* use default col width from *lite.css for modules in centre section */
 #role_main .module {
 	max-width: 180px;
-}
-
-.box {
-/*	overflow: hidden; */
 }
 
 h3.box-title {
@@ -1595,11 +1532,6 @@ textarea#editpost2 {
 	margin-left: 10px;
 }
 
-/*
-.subcomment_lblogs {}
-.commentsedithelp {}
-*/
-
 /**** Image Galleries ****/
 .galtable {
 	width: 100%;
@@ -1761,9 +1693,6 @@ body.filegal_popup #tiki-center {
 	padding: 10px 5px 5px 0px;
 	display: block;
 }
-/*
-.cattitle {
-}*/
 
 .categpath {
 	display: block;
@@ -2115,11 +2044,6 @@ img.pref_dependency {
 }
 
 /* Perspectives (edit) */
-.dropzone {
-}
-
-.dropzone > div:hover {
-} 
 
 .podcast {
 	margin-left: -25px;

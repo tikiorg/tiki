@@ -25,7 +25,8 @@ fieldset {
 	border: solid 1px #444444;
 }
 
-legend {color: #444444} /* IE7 */
+legend {
+	color: #444444} /* IE7 */
 
 input,
 textarea,
@@ -441,7 +442,8 @@ a.flipmodtitle:hover img {
 	background: #fff;
 }
 
-.highlight {background: #e5e5e5;
+.highlight {
+	background: #e5e5e5;
 }
 
 /***** Tables, Tabs and Lists ****/
@@ -449,9 +451,6 @@ a.flipmodtitle:hover img {
 
 tr.odd {
 	background: #f0f0f0;
-}
-
-tr.odd:hover {
 }
 
 tr.even {
@@ -638,8 +637,6 @@ a.pagetitle:hover {
 }
 
 /* Needed esp. for light-on-dark theme */
-.toolbar {
-}
 
 /* Wiki plugins */
 /* Code plugin  */

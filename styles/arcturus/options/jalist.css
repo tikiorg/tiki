@@ -149,9 +149,6 @@ input[type="submit"]:hover,
 	overflow: visible
 }
 
-#c1c2 #col2 .content {
-}
-
 #col3 {
 	width: 180px;
 	margin-left: -180px;
@@ -349,31 +346,6 @@ body.cke_show_borders,
 
 .wiki:hover {
 	color: #636363;
-}
-
-.titleb {
-
-}
-
-.articleheading {
-
-}
-
-.articletrailer {
-
-}
-
-.articlebody {
-
-}
-
-.oddthumb {
-
-}
-
-.eventhumb,
-.thumbnailcontener {
-
 }
 
 .post .postbody {

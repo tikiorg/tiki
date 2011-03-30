@@ -42,11 +42,7 @@ body.fixed_width .fixedwidth {
 	margin: 0;
 }
 
-/* fixed width */
-.fixed_width .fixedwidth .fixedwidth
-/*.fixed_width #header_fixedwidth,
-.fixed_width #middle,
-.fixed_width .footerbgtrap*/ {
+.fixed_width .fixedwidth .fixedwidth {
 	width: 990px;
 	margin: 0 auto;
 }
@@ -61,10 +57,6 @@ body.fixed_width .fixedwidth {
 
 }
 
-#header_fixedwidth {			/* main whole width div */
-/*	height: 220px;*/
-}
-	
 #header {	/* inner <header> element that gets .fixedwidth class applied */
 	background: url(fivealive/options/blueberry/siteheader.jpg) 0 0 no-repeat;
 /*	height: 220px;*/
@@ -226,9 +218,6 @@ body.fixed_width .fixedwidth {
 
 #footer .box:first-child {
 	margin-left: 0;
-}
-
-#custom_site_footer {
 }
 
 #custom_site_footer h3 {
@@ -410,7 +399,9 @@ input[type="password"],
 select {
 	margin: 2px;
 }
-#newItemForm input[type="text"], #editItemForm input[type="text"], .wikiplugin_tracker  input[type="text"] {
+#newItemForm input[type="text"],
+#editItemForm input[type="text"],
+.wikiplugin_tracker  input[type="text"] {
         width: 99%;
 }
 .wikiplugin_tracker, #editItemForm .formcolor {width: 100%;}
@@ -1034,14 +1025,6 @@ a.register_link {
 legend.heading {
 	background: transparent;
 }
-/*	
-.admin a.link,
-.admin a,
-.admin label,
-fieldset.admin label,
-.cbox fieldset.admin a {
-	color: #fff;
-}*/
 
 fieldset.admin .adminoptionbox label,
 fieldset.admin .adminoptionlabel {
@@ -1157,28 +1140,11 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 /***** File Galleries *****/
 /***** Trackers *****/
 /***** Categories, Tags *****/
-.catlist_title {
-/* Moved to layout.css some features can be altered here to fit with the particular style
-//	padding: 9px 5px 5px 0px;
-//	display: block;
-//	font-weight: bold;
-//	font-size: 110%;
-//	border: 1px solid #d7d7d7;
-//	border-bottom: 1px solid #ededed;
-//	background: #ededed;
-*/
-}
 
 .cattitle {
-/* Moved to layout.css some features can be altered here to fit with the particular style
-//	padding: 9px 5px 5px 0px;
-//	display: block;
-//	font-weight: bold;
-//	font-size: 110%;
-//	border: 1px solid #d7d7d7;
-//	border-bottom: 1px solid #ededed;
-*/	background: #ededed;
+	background: #ededed;
 }
+
 /***** Tags (freetags) *****/
 /*****  Polls  *****/
 /***** FAQs *****/
@@ -1210,18 +1176,6 @@ a.dirsublink {
 }
 
 /***** Admin *****/
-
-a.admbox.off:hover,
-a.admbox.off:focus,
-a.admbox.off:active {}
-
-.toolbars-admin .full li,
-.toolbars-admin .rows .row,
-.textarea-toolbar,
-.toolbar-list,
-.toolbar-list,
-a.toolbar,
-a.qt-inline {}
 
 /***** Ajax, jquery. etc. *****/
 /***** Ajax *****/
