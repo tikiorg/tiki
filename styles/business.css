@@ -714,15 +714,6 @@ body.tiki_blogs .post {
 body.tiki_blogs .postbody {
 	padding: 0 1em 1em;
 }
-/*
-body.tiki_blogs .author_actions {
-	width: 40%;
-	float: right;
-	border: 2px solid #fff;
-	background: #fbfbfb;
-	margin-right: -1em;
-	margin-top: -6px;
-}*/
 
 /***** Forums *****/
 
@@ -735,9 +726,6 @@ body.tiki_blogs .author_actions {
 .post .author {
 	border: 2px solid #fff;
 	background: #fbfbfb;
-}
-
-.post .author_post_info:first-child {
 }
 
 .post .postbody-title .title a.link {

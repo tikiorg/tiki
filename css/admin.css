@@ -312,9 +312,6 @@ a.admbox.off img {
 
 /* tiki 7 modules revamp */
 
-#assigned_modules {
-}
-
 #assigned_modules tr {
 	cursor: pointer;
 	border: 1px solid transparent;
@@ -375,7 +372,6 @@ a.admbox.off img {
 	padding: 4px 10px 6px;
 	font-weight: bold;
 	text-decoration: underline;
-/*	width: 100px;*/
 	white-space: nowrap;
 }
 

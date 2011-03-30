@@ -76,18 +76,6 @@ input#fuser {
 	color: #111155;
 }
 
-.postbody-content h4,
-.wikitext h4 {
-}
-
-.postbody-content h5,
-.wikitext h5 {
-}
-
-.postbody-content h6,
-.wikitext h6 {
-}
-
 body.tiki_wiki_page h1.pagetitle a,
 body.tiki_wiki_page h1.pagetitle a:link,
 body.tiki_wiki_page h1.pagetitle a:visited,

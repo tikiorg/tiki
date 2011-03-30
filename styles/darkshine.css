@@ -395,28 +395,6 @@ li#register_link {
 	margin-left: 2px;
 	margin-right: 6px}
 
-/*
-#contenttop ul li a, #contenttop ul li,
-#topcontent li {
-	text-decoration: none;
-	font: bold 12px/normal arial, verdana, helvetica, sans-serif;
-}
-
-#topcontent li#blue a,
-#topcontent li#blue a:visited {
-	display: block;
-	background: #0086EE url(darkshine/blue.png) no-repeat}
-
-#topcontent li#red a,
-#topcontent li#red a:visited {
-	display: block;
-	background: #F41100 url(darkshine/red.png) no-repeat}
-
-#topcontent li#orange a,
-#topcontent li#orange a:visited {
-	display: block;
-	background: #ED700D url(darkshine/orange.png) no-repeat}
-*/
 #search a,
 #sitesearchbar,
 #topbar_modules .box-search {
@@ -768,8 +746,6 @@ a.pagetitle {
 #tocnavicons {float: left}
 #tocnavaddpage{float: right}
 #tocnavlinks {clear: both}
-.fancytoclevel {}
-li.toclevel {}
 
 /* TOC */
 .toc {
@@ -799,7 +775,6 @@ li.toclevel {}
 .titleb {font-size: 1.0em}
 .articlesubtitle {font-size: 0.9em}
 .articleheading {margin-top: 6px}
-.articleheadingtext {}
 
 img.topicimage,
 img.articleimagenofloat,
@@ -927,7 +902,6 @@ body.tiki_forums .normal {margin: auto}
 .postbody-title .title a,
 .postbody-title .title a:visited {color: #000}
 	
-.post .postbody-title .title a.link {}
 .postbody-title br.clear {display: none}
 
 .post .author {

@@ -197,11 +197,6 @@ label {
 	color: #2d2d2d;
 	font-size: 1.05em;
 }
-/*
-#header {
-	text-align: left;
-	background: #96bce3;
-}*/
 
 #middle {
 	background: white;
@@ -265,7 +260,6 @@ body.tiki_wiki_page.manage #c1c2 #wrapper #col1 #tiki-center {
 	text-align: right;
 	font-size: .9em;
 	border-top: 1px solid #517ba5;
-/*	border-top: 1px solid #ebf5ff;*/
 	background: #ccdceb;
 }
 
@@ -309,30 +303,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 #top_modules .box-login_box a:visited {
 	color: #fff;
 }
-/*
-#topbar_modules .box-search {
-	position: absolute;
-	right: 30px;
-	top: 0;
-	text-align: right;
-	color: #fff;
-	padding: 0;
-	padding-right: 0;
-	text-align: left;
-	background: url(coelesce/search_wide4.png) 0 100% no-repeat;
-	color: #517ea7;
-	height: 32px;
-}
 
-#topbar_modules .box-search form {
-	background: url(coelesce/search_wide4.png) 100% 0 no-repeat;
-	padding-right: 40px;
-	padding-top: 6px;
-	margin-left: 15px;
-	margin-right: -15px;
-	height: 32px;
-}
-*/
 #top_modules .box-search,
 #topbar_modules .box-search {
 	position: absolute;
@@ -1020,9 +991,6 @@ h1 a:hover {
 
 body.tiki_wiki_page .wikitopline {
 	margin-bottom: 10px;
-}
-
-.wikitopline .content br {
 }
 
 #description,

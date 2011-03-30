@@ -251,12 +251,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 	bottom: 0;
 }
 
-/*.siteloginbar_popup ul.cssmenu_horiz li ul {
-	padding: 0;
-	background: none;
-	margin-top: -12px;
-}*/
-
 #sitetitles {
 	padding-left: 20px;
 	margin-bottom: 14px;}
@@ -837,7 +831,6 @@ a.blogt:hover {
 	color: #FFF;
 	border-bottom: 1px dotted #FFF}
 
-.postinfo a.linkmodule {}
 .postinfo div {margin-top: 30%}
 
 .postinfo {

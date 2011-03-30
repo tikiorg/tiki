@@ -323,16 +323,9 @@ a.flip:hover {color: #006699}
 	color: #000000;
 }
 
-.option a:link,
-.option a:visited,
-a.linkmenu, .rsslink, .linkmenu:visited, .rsslink:visited {}
-
 .linkmenu:hover {
 	color: #000000;
 }
-
-.option a:hover,
-.option a:active {}
 
 a.linkmodule:hover {
 	color: #000000;
@@ -378,8 +371,6 @@ a.linkmodule:hover {
 	border-bottom: 1px solid #cfcfcf;
 }
 
-.box a.flipmodtitle img {}
-
 a.flipmodtitle:hover img {
 	border: 1px solid #58A7D2 !important;
 }
@@ -421,9 +412,6 @@ a.flipmodtitle:hover img {
 	background: #fff;
 }
 
-.highlight {
-}
-
 /***** Tables, Tabs and Lists ****/
 /** Tables **/
 .normal, 
@@ -433,14 +421,8 @@ tr.odd {
 	background: #f0f0f0;
 }
 
-tr.odd:hover {
-}
-
 tr.even {
 	background: #dcdcdc;
-}
-
-tr.even:hover {
 }
 
 td.odd {
@@ -452,11 +434,6 @@ td.even {
 	background: #dcdcdc;
 	color: #000;
 }
-
-tr.even td.even,
-tr.odd td.odd {}
-
-td.third {}
 
 /* headings */
 
@@ -618,8 +595,6 @@ a.pagetitle:hover {
 }
 
 /* Needed esp. for light-on-dark theme */
-.toolbar {
-}
 
 /* Wiki plugins */
 /* Code plugin  */
@@ -861,10 +836,6 @@ body.tiki_blogs .postbody-title,
 	color: #822222;
 }
 
-.Calfgal,
-.Calfgal a,
-.Calfgal a:visited {}
-
 .Calforum,
 .Calforum a,
 .Calforum a:visited {
@@ -900,8 +871,6 @@ body.tiki_blogs .postbody-title,
 .Caltrack a:visited {
 	color: #00BD02;
 }
-
-.Calweb {}
 
 .Calwiki,
 .Calwiki a,
@@ -962,8 +931,6 @@ body.tiki_blogs .postbody-title,
 .calprio9 a {
 	color: #006699;
 }
-
-.caltoggle {}
 
 .opaque {
 	border: 1px solid #1b3a50;
@@ -1110,7 +1077,6 @@ body.tiki_blogs .postbody-title,
 }
 
 /***** Ajax *****/
-#ajaxLoading {}
 
 /***** TikiSheet Default Style *****/
 .default thead td,
