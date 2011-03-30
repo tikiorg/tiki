@@ -23,9 +23,9 @@ function wikiplugin_tracker_info()
 				'default' => '',
 			),
 			'fields' => array(
-				'required' => true,
+				'required' => false,
 				'name' => tra('Fields'),
-				'description' => tra('Colon-separated list of field IDs to be displayed. Example: 2:4:5'),
+				'description' => tra('Colon-separated list of field IDs to be displayed. Example: 2:4:5  If empty, all fields will be shown'),
 				'default' => '',
 			),
 			'action' => array(
