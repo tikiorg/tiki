@@ -42,6 +42,10 @@ class LanguageTranslationsTest extends TikiTestCase
 		TikiDb::get()->query('INSERT INTO `tiki_language` (`source`, `lang`, `tran`, `changed`) VALUES (?, ?, ?, ?)', array('Trying to insert malicious PHP code back to the language.php file', $this->lang, 'asff"); echo \'teste\'; $dois = array(\'\',"', 1));
 		TikiDb::get()->query('INSERT INTO `tiki_language` (`source`, `lang`, `tran`, `changed`) VALUES (?, ?, ?, ?)', array('Should escape "double quotes" in the source string', $this->lang, 'Deve escapar "aspas duplas" na string original', 1));
 		TikiDb::get()->query('INSERT INTO `tiki_language` (`source`, `lang`, `tran`) VALUES (?, ?, ?)', array('Not changed', $this->lang, 'Translation not changed'));
+		
+		TikiDb::get()->query('INSERT INTO `tiki_untranslated` (`source`, `lang`) VALUES (?, ?)', array('Untranslated string 1', $this->lang));
+		TikiDb::get()->query('INSERT INTO `tiki_untranslated` (`source`, `lang`) VALUES (?, ?)', array('Untranslated string 2', $this->lang));
+		TikiDb::get()->query('INSERT INTO `tiki_untranslated` (`source`, `lang`) VALUES (?, ?)', array('Untranslated string 3', $this->lang));
 
 		global ${"lang_$this->lang"};
 
@@ -66,6 +70,8 @@ class LanguageTranslationsTest extends TikiTestCase
 
 		TikiDb::get()->query('DELETE FROM `tiki_language` WHERE `lang` = ?', array($this->lang));
 		TikiDb::get()->query('DELETE FROM `tiki_untranslated` WHERE `lang` = ?', array($this->lang));
+		
+		unset($GLOBALS['prefs']['record_untranslated']);
 	}
 
 	public function testUpdateTransShouldInsertNewTranslation() {
@@ -163,7 +169,7 @@ class LanguageTranslationsTest extends TikiTestCase
 		$this->assertFalse(TikiDb::get()->getOne('SELECT * FROM `tiki_language` WHERE `lang` = ?', array($this->obj->lang)));
 	}
 	
-	public function testGetUntranslatedFromFile()
+	public function testGetFileUntranslated()
 	{
 		$cachelib = $this->getMock('Cachelib', array('getSerialized', 'cacheItem'));
 		$cachelib->expects($this->once())->method('getSerialized')->will($this->returnValue(null));
@@ -186,10 +192,10 @@ class LanguageTranslationsTest extends TikiTestCase
 			"Not downloaded since" => array('source' => "Not downloaded since", 'tran' => null),
 		);
 		
-		$this->assertEquals($expectedResult, $obj->getUntranslatedFromFile());
+		$this->assertEquals($expectedResult, $obj->getFileUntranslated());
 	}
 	
-	public function testGetUnstranslatedFromFileCache()
+	public function testGetFileUntranslated_checkCache()
 	{
 		$expectedResult = array(
 			"Kalture Video" => array('source' => "Kalture Video", 'tran' => null),
@@ -204,7 +210,7 @@ class LanguageTranslationsTest extends TikiTestCase
 			"Not modified since" => array('source' => "Not modified since", 'tran' => null),
 			"Not downloaded since" => array('source' => "Not downloaded since", 'tran' => null),
 		);
-		$this->assertEquals($expectedResult, $this->obj->getUntranslatedFromFile());
+		$this->assertEquals($expectedResult, $this->obj->getFileUntranslated());
 		
 		// change file to check if the cache is ignored when the file changes
 		copy(dirname(__FILE__) . '/fixtures/language_untranslated.php', $this->langDir . '/language.php');
@@ -217,10 +223,10 @@ class LanguageTranslationsTest extends TikiTestCase
 			"WARNING: The file is used in" => array('source' => "WARNING: The file is used in", 'tran' => null),
 			"You do not have permission to edit this file" => array('source' => "You do not have permission to edit this file", 'tran' => null),
 		);
-		$this->assertEquals($expectedResult, $this->obj->getUntranslatedFromFile());
+		$this->assertEquals($expectedResult, $this->obj->getFileUntranslated());
 	}
 	
-	public function testGetAllStrings()
+	public function getAllTranslations_dataProvider()
 	{
 		$fileTranslations = array(
 			"categorize" => array("source" => "categorize", "tran" => "categorizar"),
@@ -235,12 +241,16 @@ class LanguageTranslationsTest extends TikiTestCase
 			"Post" => array("id" => "16133", "source" => "Post", "lang" => "test_language", "tran" => "Enviar", "changed" => "1"),
 		);
 		
-		$untranslated = array(
-			"Delete comments" => array('source' => "Delete comments", 'tran' => null),
-			"Queued" => array('source' => "Queued", 'tran' => null),
-			"Post" => array('source' => "Post", 'tran' => null),
+		return array(
+			array($fileTranslations, $dbTranslations)
 		);
-		
+	}
+	
+	/**
+	 * @dataProvider getAllTranslations_dataProvider
+	 */
+	public function testGetAllTranslations($fileTranslations, $dbTranslations)
+	{
 		$expectedResult = array(
 			'translations' => array(
 				"Approved Status" => array("id" => "16131", "source" => "Approved Status", "lang" => "test_language", "tran" => "Aprovado", "changed" => "1"),
@@ -248,18 +258,74 @@ class LanguageTranslationsTest extends TikiTestCase
 				"creation date" => array("id" => "16132", "source" => "creation date", "lang" => "test_language", "tran" => "data de criação nova", "changed" => "1"),
 				"Delete comments" => array("source" => "Delete comments", "tran" => "Deletar comentários"),
 				"Post" => array("id" => "16133", "source" => "Post", "lang" => "test_language", "tran" => "Enviar", "changed" => "1"),
-				"Queued" => array('source' => "Queued", 'tran' => null),
 				"Set prefs" => array("source" => "Set prefs", "tran" => "Definir preferências"),
 			),
-			'total' => 7,
+			'total' => 6,
 		);
 		
-		$obj = $this->getMock('LanguageTranslations', array('getFileTranslations', 'getUntranslatedFromFile', '_getDbTranslations'));
+		$obj = $this->getMock('LanguageTranslations', array('getFileTranslations', '_getDbTranslations'));
 		$obj->expects($this->once())->method('getFileTranslations')->will($this->returnValue($fileTranslations));
-		$obj->expects($this->once())->method('getUntranslatedFromFile')->will($this->returnValue($untranslated));
 		$obj->expects($this->once())->method('_getDbTranslations')->will($this->returnValue($dbTranslations));
 		
-		$this->assertEquals($expectedResult, $obj->getAllStrings());
+		$this->assertEquals($expectedResult, $obj->getAllTranslations());
+	}
+	
+	/**
+	 * @dataProvider getAllTranslations_dataProvider
+	 */
+	public function testGetAllTranslations_filterByMaxRecordsAndOffset($fileTranslations, $dbTranslations)
+	{
+		$expectedResult = array(
+			'translations' => array(
+				"Delete comments" => array("source" => "Delete comments", "tran" => "Deletar comentários"),
+				"Post" => array("id" => "16133", "source" => "Post", "lang" => "test_language", "tran" => "Enviar", "changed" => "1"),
+			),
+			'total' => 6,
+		);
+		
+		$obj = $this->getMock('LanguageTranslations', array('getFileTranslations', '_getDbTranslations'));
+		$obj->expects($this->once())->method('getFileTranslations')->will($this->returnValue($fileTranslations));
+		$obj->expects($this->once())->method('_getDbTranslations')->will($this->returnValue($dbTranslations));
+		
+		$this->assertEquals($expectedResult, $obj->getAllTranslations(2, 3));
+	}
+	
+	/**
+	 * @dataProvider getAllTranslations_dataProvider
+	 */
+	public function testGetAllTranslations_filterByMaxRecordsOffsetAndSearch($fileTranslations, $dbTranslations)
+	{
+		$expectedResult = array(
+			'translations' => array(
+				"Set prefs" => array("source" => "Set prefs", "tran" => "Definir preferências"),
+			),
+			'total' => 2,
+		);
+		
+		$obj = $this->getMock('LanguageTranslations', array('getFileTranslations', '_getDbTranslations'));
+		$obj->expects($this->once())->method('getFileTranslations')->will($this->returnValue($fileTranslations));
+		$obj->expects($this->once())->method('_getDbTranslations')->will($this->returnValue($dbTranslations));
+		
+		$this->assertEquals($expectedResult, $obj->getAllTranslations(2, 1, 're'));
+	}
+	
+	/**
+	 * @dataProvider getAllTranslations_dataProvider
+	 */
+	public function testGetAllTranslations_searchByTranslation($fileTranslations, $dbTranslations)
+	{
+		$expectedResult = array(
+			'translations' => array(
+				"Set prefs" => array("source" => "Set prefs", "tran" => "Definir preferências"),
+			),
+			'total' => 1,
+		);
+		
+		$obj = $this->getMock('LanguageTranslations', array('getFileTranslations', '_getDbTranslations'));
+		$obj->expects($this->once())->method('getFileTranslations')->will($this->returnValue($fileTranslations));
+		$obj->expects($this->once())->method('_getDbTranslations')->will($this->returnValue($dbTranslations));
+		
+		$this->assertEquals($expectedResult, $obj->getAllTranslations(-1, 0, 'rê'));
 	}
 	
 	public function testGetFileTranslations()
@@ -296,5 +362,98 @@ class LanguageTranslationsTest extends TikiTestCase
 		$dbTranslations = $obj->getDbTranslations('source_asc', -1, 0, 'Approved');
 		$this->assertEquals(1, $dbTranslations['total']);
 		$this->assertEquals('Aprovado', $dbTranslations['translations']['Approved Status']['tran']);
+	}
+	
+	public function testGetDbUntranslated()
+	{
+		global $prefs;
+		$prefs['record_untranslated'] = 'y';
+		
+		$expectedResult = array(
+			'translations' => array(
+				'Untranslated string 1' => array('source' => 'Untranslated string 1', 'tran' => null),
+				'Untranslated string 2' => array('source' => 'Untranslated string 2', 'tran' => null),
+				'Untranslated string 3' => array('source' => 'Untranslated string 3', 'tran' => null),
+			),
+			'total' => 3
+		);
+		
+		$this->assertEquals($expectedResult, $this->obj->getDbUntranslated());
+	}
+	
+	public function testGetDbUntranslated_filterByMaxRecordsAndOffset()
+	{
+		global $prefs;
+		$prefs['record_untranslated'] = 'y';
+		
+		$expectedResult = array(
+			'translations' => array(
+				'Untranslated string 3' => array('source' => 'Untranslated string 3', 'tran' => null),
+			),
+			'total' => 3,
+		);
+		
+		$this->assertEquals($expectedResult, $this->obj->getDbUntranslated(1, 2));
+	}
+	
+	public function testGetDbUntranslated_filterBySearch()
+	{
+		global $prefs;
+		$prefs['record_untranslated'] = 'y';
+		
+		$expectedResult = array(
+			'translations' => array(
+				'Untranslated string 3' => array('source' => 'Untranslated string 3', 'tran' => null),
+			),
+			'total' => 1,
+		);
+		
+		$this->assertEquals($expectedResult, $this->obj->getDbUntranslated(-1, 0, 'string 3'));
+	}
+	
+	public function getAllUntranslated_dataProvider()
+	{
+		$dbUntranslated = array(
+			'Untranslated string 1' => array('source' => 'Untranslated string 1', 'tran' => null),
+			'Untranslated string 2' => array('source' => 'Untranslated string 2', 'tran' => null),
+			"Communication error" => array('source' => "Communication error", 'tran' => null),
+		);
+		
+		$fileUntranslated = array(
+			"Kalture Video" => array('source' => "Kalture Video", 'tran' => null),
+			"Communication error" => array('source' => "Communication error", 'tran' => null),
+			"Invalid response provided by the Kaltura server. Please retry" => array('source' => "Invalid response provided by the Kaltura server. Please retry", 'tran' => null),
+			"Delete comments" => array('source' => "Delete comments", 'tran' => null),
+			"Approved Status" => array('source' => "Approved Status", 'tran' => null),
+		);
+		
+		return array(
+			array($dbUntranslated, $fileUntranslated),
+		);
+	}
+	
+	/**
+	 * @dataProvider getAllUntranslated_dataProvider
+	 */
+	public function testGetAllUntranslated($dbUntranslated, $fileUntranslated)
+	{
+		$obj = $this->getMock('LanguageTranslations', array('getFileUntranslated', '_getDbUntranslated'));
+		$obj->expects($this->once())->method('getFileUntranslated')->will($this->returnValue($fileUntranslated));
+		$obj->expects($this->once())->method('_getDbUntranslated')->will($this->returnValue($dbUntranslated));
+		
+		$expectedResult = array(
+			'translations' => array(
+				"Approved Status" => array('source' => "Approved Status", 'tran' => null),
+				"Communication error" => array('source' => "Communication error", 'tran' => null),
+				"Delete comments" => array('source' => "Delete comments", 'tran' => null),
+				"Invalid response provided by the Kaltura server. Please retry" => array('source' => "Invalid response provided by the Kaltura server. Please retry", 'tran' => null),
+				"Kalture Video" => array('source' => "Kalture Video", 'tran' => null),
+				'Untranslated string 1' => array('source' => 'Untranslated string 1', 'tran' => null),
+				'Untranslated string 2' => array('source' => 'Untranslated string 2', 'tran' => null),
+			),
+			'total' => 7
+		);
+		
+		$this->assertEquals($expectedResult, $obj->getAllUntranslated());
 	}
 }

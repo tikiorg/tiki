@@ -42,6 +42,14 @@ $smarty->assign('action', $_REQUEST["action"]);
 
 if (isset($_REQUEST['only_db_translations'])) {
 	$smarty->assign('only_db_translations', 'y');
+} else {
+	$smarty->assign('only_db_translations', 'n');
+}
+
+if (isset($_REQUEST['only_db_untranslated'])) {
+	$smarty->assign('only_db_untranslated', 'y');
+} else {
+	$smarty->assign('only_db_untranslated', 'n');
 }
 
 // Adding strings
@@ -81,7 +89,7 @@ if ($action == "edit_rec_sw" || $action == "edit_tran_sw") {
 	
 	//check if user has translated something
 	for ($i = 0; $i < $maxRecords; $i++) {
-		// Handle edits in translate recorded
+		// Handle edits in untranslated strings
 		if (isset($_REQUEST["edit_tran_$i"]) || isset($_REQUEST['translate_all'])) {
 			// Handle edits in edit translations
 			if (strlen($_REQUEST["tran_$i"]) > 0 && strlen($_REQUEST["source_$i"]) > 0) {
@@ -120,14 +128,20 @@ if ($action == "edit_rec_sw" || $action == "edit_tran_sw") {
 	$data = array();
 
 	if ($action == "edit_rec_sw") {
-		$data = $translations->getRecordedUntranslated($sort_mode, $maxRecords, $offset, $find);
+		if (isset($_REQUEST['only_db_untranslated'])) {
+			// display only database stored untranslated strings
+			$data = $translations->getDbUntranslated($maxRecords, $offset, $find);
+		} else {
+			// display all untranslated strings (language.php + db)
+			$data = $translations->getAllUntranslated($maxRecords, $offset, $find);
+		}
 	} elseif ($action == "edit_tran_sw") {
 		if (isset($_REQUEST['only_db_translations'])) {
 			// display only database stored translations
 			$data = $translations->getDbTranslations($sort_mode, $maxRecords, $offset, $find);
 		} else {
 			// display all available translations (db + custom.php + language.php)
-			$data = $translations->getAllStrings($maxRecords, $offset, $find);
+			$data = $translations->getAllTranslations($maxRecords, $offset, $find);
 		}
 	}
 

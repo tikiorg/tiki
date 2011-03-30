@@ -38,12 +38,16 @@
 				</div>
 			</div>
 
-			{if $prefs.record_untranslated eq 'y'}
-				<div class="adminoptionbox">
-					<input id="edit_rec_sw" class="translation_action" align="right" type="radio" name="action" value="edit_rec_sw" {if $action eq 'edit_rec_sw'}checked="checked"{/if}/>
-					<label for="edit_rec_sw">{tr}Translate recorded{/tr}</label>
-				</div>
-			{/if}
+			<div class="adminoptionbox">
+				<input id="edit_rec_sw" class="translation_action" align="right" type="radio" name="action" value="edit_rec_sw" {if $action eq 'edit_rec_sw'}checked="checked"{/if}/>
+				<label for="edit_rec_sw">{tr}Untranslated strings{/tr}</label>
+				{if $prefs.record_untranslated eq 'y'}
+					<div class="adminoptionboxchild">
+						<input id="only_db_untranslated" class="translation_action" type="checkbox" name="only_db_untranslated" {if $only_db_untranslated eq 'y'}checked="checked"{/if}>
+						<label for="only_db_untranslated">{tr}Show only database stored untranslated strings{/tr}</label>
+					</div>
+				{/if}
+			</div>
 		</form>
 
 		<form action="tiki-edit_languages.php" method="post">
@@ -51,6 +55,9 @@
 			<input type="hidden" name="action" value="{$action}" />
 			{if isset($only_db_translations)}
 				<input type="hidden" name="only_db_translations" value="{$only_db_translations}" />
+			{/if}
+			{if isset($only_db_untranslated)}
+				<input type="hidden" name="only_db_untranslated" value="{$only_db_untranslated}" />
 			{/if}
 			{if $action eq 'add_tran_sw'}
 				<div class="simplebox">
@@ -68,7 +75,7 @@
 			{/if}
 			{if $action eq 'edit_tran_sw' || $action eq 'edit_rec_sw'}
 				<div class="simplebox">
-					<h4>{if $action eq 'edit_tran_sw'}{tr}Edit translations:{/tr}{else}{tr}Translate recorded:{/tr}{/if}</h4>
+					<h4>{if $action eq 'edit_tran_sw'}{tr}Edit translations:{/tr}{else}{tr}Untranslated strings:{/tr}{/if}</h4>
 					<table class="formcolor" id="edit_translations">
 						<tr>
 							<td align="center" colspan=3>
@@ -122,10 +129,10 @@
 							<td colspan="3">
 								{if !empty($translations)}
 									<input type="submit" name="translate_all" value="{tr}Translate all{/tr}" />
-									{if $action eq 'edit_rec_sw'}
+									{if $action eq 'edit_rec_sw' && $only_db_untranslated eq 'y'}
 										<input type="submit" name="tran_reset" value="{tr}Delete all{/tr}" onclick="confirm('{tr}Are you sure you want to delete all untranslated strings from database?{/tr}')" />
 									{/if}
-									{if $action eq 'edit_tran_sw' && $hasDbTranslations == true && $tiki_p_admin eq 'y'}
+									{if $action eq 'edit_tran_sw' && $only_db_translations eq 'y' && $tiki_p_admin eq 'y'}
 										<input type="submit" name="delete_all" value="{tr}Delete all{/tr}" onclick="confirm('{tr}Are you sure you want to delete all translations from database?{/tr}')" />
 									{/if}
 								{/if}								
