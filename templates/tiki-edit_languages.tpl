@@ -123,10 +123,10 @@
 								{if !empty($translations)}
 									<input type="submit" name="translate_all" value="{tr}Translate all{/tr}" />
 									{if $action eq 'edit_rec_sw'}
-										<input type="submit" name="tran_reset" value="{tr}Delete all{/tr}" onclick="confirm('{tr}Are you sure you want to delete all untranslated strings from database?{/tr}')" />
+										<input type="submit" name="tran_reset" value="{tr}Delete all{/tr}" onclick="return confirm('{tr}Are you sure you want to delete all untranslated strings from database?{/tr}')" />
 									{/if}
 									{if $action eq 'edit_tran_sw' && $hasDbTranslations == true && $tiki_p_admin eq 'y'}
-										<input type="submit" name="delete_all" value="{tr}Delete all{/tr}" onclick="confirm('{tr}Are you sure you want to delete all translations from database?{/tr}')" />
+										<input type="submit" name="delete_all" value="{tr}Delete all{/tr}" onclick="return confirm('{tr}Are you sure you want to delete all translations from database?{/tr}')" />
 									{/if}
 								{/if}								
 							</td>
