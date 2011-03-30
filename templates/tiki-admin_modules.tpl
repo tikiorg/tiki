@@ -75,7 +75,7 @@
 								<td style="font-size:smaller;">{$module.params|escape:unescape|replace:"+":" "|replace:"&":"<br />"}</td>
 								<td style="font-size:smaller;">{$module.module_groups}</td>
 								<td>
-									<a class="link" href="tiki-admin_modules.php?edit_assign={$module.moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+									<a class="link" href="tiki-admin_modules.php?edit_assign={$module.moduleId}&cookietab=2" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 									{if $top[0].moduleId ne $module.moduleId}
 										<a class="link" href="tiki-admin_modules.php?modup={$module.moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
 									{/if}
