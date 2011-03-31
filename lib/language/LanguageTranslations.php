@@ -324,7 +324,8 @@ class LanguageTranslations extends TikiDb_Bridge
 		$searchQuery = '';
 
 		if ($search) {
-			$searchQuery = " and (`source` like '%$search%' or `tran` like '%$search%')";
+			$search = $this->qstr("%$search%");
+			$searchQuery = " and (`source` like $search or `tran` like $search)";
 		}
 
 		$translations = $this->_getDbTranslations($sort_mode, $maxRecords, $offset, true, $searchQuery);

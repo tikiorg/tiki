@@ -78,6 +78,9 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 			$metadata .= " data-geo-zoom=\"{$coordinates['zoom']}\"";
 		}
 	}
+	
+	if ( $type == "blog post" )
+		$class = ' class="link"';
 
 	return '<a href="' . $escapedHref . '"' . $class . $metadata . '>' . $escapedPage . '</a>';
 }

@@ -38,10 +38,10 @@ function capLock(e, el){
 		{elseif $module_params.mode eq "popup"}
 			<div class="siteloginbar_popup">
 				<ul class="clearfix cssmenu_horiz">
-					<li {*class="tabmark" *}id="logout_link_{$module_logo_instance}"><span class="tabmark"><a href="tiki-logout.php" class="login_link">Log out</a></span>
+					<li {*class="tabmark" *}id="logout_link_{$module_logo_instance}"><span class="tabmark"><a href="tiki-logout.php" class="login_link">{tr}Log out{/tr}</a></span>
 						<ul class="siteloginbar_poppedup">
 							<li class="tabcontent">
-								{*<div class="cbox">*}{$user|userlink} <a href="tiki-logout.php" title="Log out">Log out</a>{*</div>*}
+								{*<div class="cbox">*}{$user|userlink} <a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>{*</div>*}
 							</li>
 						</ul>
 					</li>
@@ -99,7 +99,7 @@ function doChallengeResponse() {
 		{if $module_params.mode eq "popup"}
 			<div class="siteloginbar_popup">
 				<ul class="clearfix cssmenu_horiz">
-					<li {*class="tabmark" *}id="logout_link_{$module_logo_instance}"><span class="tabmark"><a href="tiki-logout.php" class="login_link">Log in</a></span>
+					<li {*class="tabmark" *}id="logout_link_{$module_logo_instance}"><span class="tabmark"><a href="tiki-logout.php" class="login_link">{tr}Log in{/tr}</a></span>
 						<ul class="siteloginbar_poppedup">
 							<li class="tabcontent">
 								{capture assign="close_tags"}</li></ul></li></ul></div>{$close_tags}{/capture}
