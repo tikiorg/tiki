@@ -11,7 +11,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
 	exit;
 }
-if (version_compare(PHP_VERSION, '5.1.0', '<')) {
+if (version_compare(PHP_VERSION, '5.2.0', '<')) {
 	header('location: tiki-install.php');
 	exit;
 }
