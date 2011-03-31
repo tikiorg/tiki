@@ -169,6 +169,7 @@ window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",
 window.CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
 window.CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;			// RefreshTime
 window.CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;			// Sensitivity to key strokes
+window.CKEDITOR.config.contentsLangDirection = ' . ($prefs['feature_bidi'] === 'y' ? '"rtl"' : '"ui"') . '
 register_id("'.$as_id.'","'.addcslashes($auto_save_referrer, '"').'");	// Register auto_save so it gets removed on submit
 ajaxLoadingShow("'.$as_id.'");
 ', 5);	// before dialog tools init (10)
