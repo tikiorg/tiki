@@ -77,9 +77,9 @@
     {if !empty($importErrors)}
         <br />
         <p><b>{tr}Errors:{/tr}</b></p>
-        <textarea rows="15" cols="100">{$importErrors}</textarea> 
+        <textarea rows="15" cols="100" codemirror="false">{$importErrors}</textarea> 
     {/if}
     <br /><br />
     <p><b>{tr}Importer log:{/tr}</b></p>
-    <textarea rows="15" cols="100">{$importLog}</textarea>
+    <textarea rows="15" cols="100" codemirror="false">{$importLog}</textarea>
 {/if}
