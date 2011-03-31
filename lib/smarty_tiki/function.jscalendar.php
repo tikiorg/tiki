@@ -35,6 +35,14 @@ function smarty_function_jscalendar($params, &$smarty) {
 		if (!empty($params['goto'])) {
 			$datepicker_options .= ', onSelect: function(dateText, inst) { window.location="'.$params['goto'].'".replace("%s",$("#'.$params['id'].'").val()/1000); }';
 		}
+		$first = $prefs['calendar_firstDayofWeek'] == 'user'? tra('First day of week: Sunday (its ID is 0) - translators you need to localize this string!'): $prefs['calendar_firstDayofWeek'];
+		if (!is_numeric($first) || !in_array($first, array(0,1,2,3,4,5,6))) {
+			$first = 0;
+		}
+		$datepicker_options .= ', firstDay: '.$first;
+		$datepicker_options .= ", dayNames: ['".tra('Sunday')."','".tra('Monday')."','".tra('Tuesday')."','".tra('Wednesday')."','".tra('Thursday')."','".tra('Friday')."','".tra('Saturday')."']";
+		$datepicker_options .= ", dayNamesMin: ['".substr(tra('Sunday'),0,2)."','".substr(tra('Monday'),0,2)."','".substr(tra('Tuesday'),0,2)."','".substr(tra('Wednesday'),0,2)."','".substr(tra('Thursday'),0,2)."','".substr(tra('Friday'),0,2)."','".substr(tra('Saturday'),0,2)."']";
+		$datepicker_options .= ", monthNames: ['".tra('January')."','".tra('February')."','".tra('March')."','".tra('April')."','".tra('May')."','".tra('June')."','".tra('July')."','".tra('August')."','".tra('September')."','".tra('October')."','".tra('November')."','".tra('December')."']";
 		$datepicker_options .= '}';
 		$html = '<input type="hidden" id="' . $params['id'] . '"' . $name  . ' value="'.$params['date'].'" />';
 		$html .= '<input type="text" id="' . $params['id'] . '_dptxt" value="" />';	// text version of datepicker date
