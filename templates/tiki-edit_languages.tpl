@@ -129,7 +129,7 @@
 							<td colspan="3">
 								{if !empty($translations)}
 									<input type="submit" name="translate_all" value="{tr}Translate all{/tr}" />
-									{if $action eq 'edit_rec_sw' && $only_db_untranslated eq 'y'}
+									{if $action eq 'edit_rec_sw' && $hasDbTranslations == true && $only_db_untranslated eq 'y'}
 										<input type="submit" name="tran_reset" value="{tr}Delete all{/tr}" onclick="return confirm('{tr}Are you sure you want to delete all untranslated strings from database?{/tr}')" />
 									{/if}
 									{if $action eq 'edit_tran_sw' && $only_db_translations eq 'y' && $tiki_p_admin eq 'y'}

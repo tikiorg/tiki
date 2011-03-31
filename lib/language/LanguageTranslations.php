@@ -425,8 +425,9 @@ class LanguageTranslations extends TikiDb_Bridge
 		
 		if ($prefs['record_untranslated'] == 'y') {
 			$searchQuery = '';
-			if (is_string($search)) {
-				$searchQuery = " AND `source` like '%$search%' ";
+			if ($search) {
+				$search = $this->qstr("%$search%");
+				$searchQuery = " AND `source` like $search ";
 			}
 			
 			$untranslated = $this->_getDbUntranslated($maxRecords, $offset, $searchQuery);
