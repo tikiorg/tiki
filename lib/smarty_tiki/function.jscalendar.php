@@ -40,9 +40,16 @@ function smarty_function_jscalendar($params, &$smarty) {
 			$first = 0;
 		}
 		$datepicker_options .= ', firstDay: '.$first;
-		$datepicker_options .= ", dayNames: ['".tra('Sunday')."','".tra('Monday')."','".tra('Tuesday')."','".tra('Wednesday')."','".tra('Thursday')."','".tra('Friday')."','".tra('Saturday')."']";
-		$datepicker_options .= ", dayNamesMin: ['".substr(tra('Sunday'),0,2)."','".substr(tra('Monday'),0,2)."','".substr(tra('Tuesday'),0,2)."','".substr(tra('Wednesday'),0,2)."','".substr(tra('Thursday'),0,2)."','".substr(tra('Friday'),0,2)."','".substr(tra('Saturday'),0,2)."']";
-		$datepicker_options .= ", monthNames: ['".tra('January')."','".tra('February')."','".tra('March')."','".tra('April')."','".tra('May')."','".tra('June')."','".tra('July')."','".tra('August')."','".tra('September')."','".tra('October')."','".tra('November')."','".tra('December')."']";
+		$datepicker_options .= ", closeText: '".smarty_function_jscalendar_tra('Done')."'";
+		$datepicker_options .= ", prevText: '".smarty_function_jscalendar_tra('Prev')."'";
+		$datepicker_options .= ", nextText: '".smarty_function_jscalendar_tra('Next')."'";
+		$datepicker_options .= ", currentText: '".smarty_function_jscalendar_tra('Today')."'";
+		$datepicker_options .= ", weekHeader: '".smarty_function_jscalendar_tra('Wk')."'";
+		$datepicker_options .= ", dayNames: ['".smarty_function_jscalendar_tra('Sunday')."','".smarty_function_jscalendar_tra('Monday')."','".smarty_function_jscalendar_tra('Tuesday')."','".smarty_function_jscalendar_tra('Wednesday')."','".smarty_function_jscalendar_tra('Thursday')."','".smarty_function_jscalendar_tra('Friday')."','".smarty_function_jscalendar_tra('Saturday')."']";
+		$datepicker_options .= ", dayNamesMin: ['".smarty_function_jscalendar_tra('Su')."','".smarty_function_jscalendar_tra('Mo')."','".smarty_function_jscalendar_tra('Tu')."','".smarty_function_jscalendar_tra('We')."','".smarty_function_jscalendar_tra('Th')."','".smarty_function_jscalendar_tra('Fr')."','".smarty_function_jscalendar_tra('Sa')."']";
+		$datepicker_options .= ", dayNamesShort: ['".smarty_function_jscalendar_tra('Sun')."','".smarty_function_jscalendar_tra('Mon')."','".smarty_function_jscalendar_tra('Tue')."','".smarty_function_jscalendar_tra('Wed')."','".smarty_function_jscalendar_tra('Thu')."','".smarty_function_jscalendar_tra('Fri')."','".smarty_function_jscalendar_tra('Sat')."']";
+		$datepicker_options .= ", monthNames: ['".smarty_function_jscalendar_tra('January')."','".smarty_function_jscalendar_tra('February')."','".smarty_function_jscalendar_tra('March')."','".smarty_function_jscalendar_tra('April')."','".smarty_function_jscalendar_tra('May')."','".smarty_function_jscalendar_tra('June')."','".smarty_function_jscalendar_tra('July')."','".smarty_function_jscalendar_tra('August')."','".smarty_function_jscalendar_tra('September')."','".smarty_function_jscalendar_tra('October')."','".smarty_function_jscalendar_tra('November')."','".smarty_function_jscalendar_tra('December')."']";
+		$datepicker_options .= ", monthNamesShort: ['".smarty_function_jscalendar_tra('Jan')."','".smarty_function_jscalendar_tra('Feb')."','".smarty_function_jscalendar_tra('Mar')."','".smarty_function_jscalendar_tra('Apr')."','".smarty_function_jscalendar_tra('May')."','".smarty_function_jscalendar_tra('Jun')."','".smarty_function_jscalendar_tra('Jul')."','".smarty_function_jscalendar_tra('Aug')."','".smarty_function_jscalendar_tra('Sep')."','".smarty_function_jscalendar_tra('Oct')."','".smarty_function_jscalendar_tra('Nov')."','".smarty_function_jscalendar_tra('Dec')."']";
 		$datepicker_options .= '}';
 		$html = '<input type="hidden" id="' . $params['id'] . '"' . $name  . ' value="'.$params['date'].'" />';
 		$html .= '<input type="text" id="' . $params['id'] . '_dptxt" value="" />';	// text version of datepicker date
@@ -54,6 +61,9 @@ function smarty_function_jscalendar($params, &$smarty) {
 	} else {
 		echo smarty_function_jscalendar_body($params, $smarty);
 	}
+}
+function smarty_function_jscalendar_tra($str) {
+	return str_replace("'", "\\'", tra($str));
 }
 
 function smarty_function_jscalendar_body($params, &$smarty) {
