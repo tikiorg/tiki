@@ -53,10 +53,10 @@
 		<form action="tiki-edit_languages.php" method="post">
 			<input type="hidden" name="edit_language" value="{$edit_language}" />
 			<input type="hidden" name="action" value="{$action}" />
-			{if isset($only_db_translations)}
+			{if $only_db_translations eq 'y'}
 				<input type="hidden" name="only_db_translations" value="{$only_db_translations}" />
 			{/if}
-			{if isset($only_db_untranslated)}
+			{if $only_db_untranslated eq 'y'}
 				<input type="hidden" name="only_db_untranslated" value="{$only_db_untranslated}" />
 			{/if}
 			{if $action eq 'add_tran_sw'}
