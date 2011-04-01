@@ -59,6 +59,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 	function find(Search_Expr_Interface $query, Search_Query_Order $sortOrder, $resultStart, $resultCount)
 	{
 		$query = $this->buildQuery($query);
+		//echo 'FIND:'.$query;
 
 		$hits = $this->lucene->find($query, $this->getSortField($sortOrder), $this->getSortType($sortOrder), $this->getSortOrder($sortOrder));
 		$result = array();
@@ -131,17 +132,9 @@ class Search_Index_Lucene implements Search_Index_Interface
 			'Search_Type_MultivalueText' => 'UnStored',
 			'Search_Type_ShortText' => 'Text',
 		);
-		$fieldBoost = array(
-			'objectId' => 5,
-			'title' => 3,
-			'description' => 2,
-		);
 		foreach ($data as $key => $value) {
 			$luceneType = $typeMap[get_class($value)];
 			$field = Zend_Search_Lucene_Field::$luceneType($key, $value->getValue());
-			if (!empty($fieldBoost[$key])) {
-				$field->boost = $fieldBoost[$key];
-			}
 			$document->addField($field);
 		}
 
