@@ -99,7 +99,7 @@ function doChallengeResponse() {
 		{if $module_params.mode eq "popup"}
 			<div class="siteloginbar_popup">
 				<ul class="clearfix cssmenu_horiz">
-					<li {*class="tabmark" *}id="logout_link_{$module_logo_instance}"><span class="tabmark"><a href="tiki-logout.php" class="login_link">{tr}Log in{/tr}</a></span>
+					<li {*class="tabmark" *}id="logout_link_{$module_logo_instance}"><span class="tabmark"><a href="tiki-login.php" class="login_link">{tr}Log in{/tr}</a></span>
 						<ul class="siteloginbar_poppedup">
 							<li class="tabcontent">
 								{capture assign="close_tags"}</li></ul></li></ul></div>{$close_tags}{/capture}
