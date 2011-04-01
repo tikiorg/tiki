@@ -10,6 +10,8 @@ class Search_Expr_Tokenizer
 	const QUOTE = '"';
 	const OPEN = '(';
 	const CLOSE = ')';
+	const PLUS = '+';
+	const MINUS = '-';
 
 	function tokenize($string)
 	{
@@ -31,11 +33,17 @@ class Search_Expr_Tokenizer
 			} else {
 				if ($char === self::QUOTE) {
 					$open = true;
-				} elseif ($char === self::OPEN || $char === self::CLOSE) {
+				} elseif ($char === self::OPEN || $char === self::CLOSE || $char === self::PLUS || $char === self::MINUS) {
 					$this->addToken($tokens, $current);
 					$this->addToken($tokens, $char);
 				} elseif (ctype_space($char)) {
 					$this->addToken($tokens, $current);
+				} elseif ($char === '^') {
+					$this->addToken($tokens, $current);
+					for ($num = $char, $j = $i + 1; $length > $j && is_numeric($string{$j}); ++$j, ++$i) {
+						$num .= $string{$j};
+					}
+					$this->addToken($tokens, $num);
 				} else {
 					$current .= $char;
 				}
