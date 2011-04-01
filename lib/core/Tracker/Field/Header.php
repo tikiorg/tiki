@@ -30,6 +30,7 @@ class Tracker_Field_Header extends Tracker_Field_Abstract
 		global $prefs;
 		$headerlib = TikiLib::lib('header');
 
+		$class = null;
 		$level = $this->getOption(0, 2);
 		$toggle = $this->getOption(1);
 		$inTable = isset($context['inTable']) ? $context['inTable'] : '';
