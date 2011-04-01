@@ -33,6 +33,7 @@ class Search_Expr_Parser
 		$tokens = $this->applyOperator($tokens, 'OR', 'buildOr');
 		$tokens = $this->applyOperator($tokens, 'AND', 'buildAnd');
 		$tokens = $this->applyOperator($tokens, '+', 'buildAnd');
+		$tokens = array_values($tokens);
 
 		if (count($tokens) === 1) {
 			return reset($tokens);
