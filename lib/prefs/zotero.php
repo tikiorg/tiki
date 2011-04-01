@@ -33,6 +33,13 @@ function prefs_zotero_list()
 			'filter' => 'digits',
 			'size' => 7,
 		),
+		'zotero_style' => array(
+			'name' => tra('Zotero Reference Style'),
+			'description' => tra('Use an alternate Zotero reference style when formatting the references. The reference formats must be installed on the Zotero server.'),
+			'type' => 'text',
+			'filter' => 'text',
+			'size' => 20,
+		),
 	);
 }
 

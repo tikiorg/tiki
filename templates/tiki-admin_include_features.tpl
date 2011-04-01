@@ -174,6 +174,7 @@
 							{preference name=zotero_client_key}
 							{preference name=zotero_client_secret}
 							{preference name=zotero_group_id}
+							{preference name=zotero_style}
 						</div>
 				</fieldset>
 			</div>

@@ -22,12 +22,18 @@ class ZoteroLib extends TikiDb_Bridge
 			$subset = '/tags/' . rawurlencode($tag);
 		}
 
+		$arguments = array(
+			'content' => 'bib',
+		);
+
+		if (! empty($prefs['zotero_style'])) {
+			$arguments['style'] = $prefs['zotero_style'];
+		}
+
 		$oauthlib = TikiLib::lib('oauth');
 		$response = $oauthlib->do_request('zotero', array(
 			'url' => "https://api.zotero.org/groups/{$prefs['zotero_group_id']}$subset/items",
-			'get' => array(
-				'content' => 'bib',
-			),
+			'get' => $arguments,
 		));
 
 		if ($response && $response->isSuccessful()) {
@@ -62,12 +68,18 @@ class ZoteroLib extends TikiDb_Bridge
 	{
 		global $prefs;
 
+		$arguments = array(
+			'content' => 'bib',
+		);
+
+		if (! empty($prefs['zotero_style'])) {
+			$arguments['style'] = $prefs['zotero_style'];
+		}
+
 		$oauthlib = TikiLib::lib('oauth');
 		$response = $oauthlib->do_request('zotero', array(
 			'url' => "https://api.zotero.org/groups/{$prefs['zotero_group_id']}/items/" . urlencode($itemId),
-			'get' => array(
-				'content' => 'bib',
-			),
+			'get' => $arguments,
 		));
 
 		if ($response->isSuccessful()) {

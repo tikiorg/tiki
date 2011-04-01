@@ -1910,6 +1910,7 @@ function get_default_prefs() {
 		'zotero_client_key' => '',
 		'zotero_client_secret' => '',
 		'zotero_group_id' => '',
+		'zotero_style' => '',
 
 		// Tiki Connect
 		'connect_feature' => 'n',	// to be enabled by default when working for Tiki 7
