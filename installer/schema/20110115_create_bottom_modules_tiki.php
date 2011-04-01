@@ -31,6 +31,20 @@ function upgrade_20110115_create_bottom_modules_tiki( $installer ) {
 	global $prefs, $user_overrider_prefs;
 	include_once 'lib/setup/prefs.php';
 	
+	$prefs = array_merge( array(	// merge in relevant defaults from 6.x as they are no longer defined in 7.x+
+		'feature_site_report' => 'n',
+		'feature_site_send_link' => 'n',
+		'feature_tell_a_friend' => 'n',
+		'feature_share' => 'n',
+		'feature_bot_bar_power_by_tw' => 'y',
+		'feature_bot_bar_icons' => 'n',
+		'feature_topbar_version' => 'n',
+		'feature_bot_bar_rss' => 'y',
+		'feature_babelfish' => 'n',
+		'feature_babelfish_logo' => 'n',
+		'feature_bot_bar_debug' => 'n',
+	), $prefs);
+	
 	// add site report
 	if( $prefs['feature_site_report'] === 'y' || ($prefs['feature_site_send_link'] === 'y' && $prefs['feature_tell_a_friend'] === 'y') ) {
 		$params = '';
@@ -46,7 +60,7 @@ function upgrade_20110115_create_bottom_modules_tiki( $installer ) {
 	if( $prefs['feature_bot_bar_power_by_tw'] !== 'n' || $prefs['feature_bot_bar_icons'] === 'y' ) {
 		$params = '';
 		$params .= $prefs['feature_bot_bar_power_by_tw'] !== 'y'	? '&tiki=n' : '';
-		$params .= $prefs['feature_bot_bar_icons'] !== 'y'		 	? '&icon=n' : '';
+		$params .= $prefs['feature_bot_bar_icons'] !== 'y'		 	? '&icons=n' : '';
 		$params .= $prefs['feature_topbar_version'] !== 'y'			? '&version=n' : '';
 		
 		$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
