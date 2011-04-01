@@ -7,10 +7,16 @@
 
 interface Search_Type_Factory_Interface
 {
+	// tokenized - indexed - unstored in database
 	function plaintext($value);
+	// wiki parsed before indexed - tokenized - indexed - unstored in database
 	function wikitext($value);
+	// not tokenized - indexed - stored in database
 	function timestamp($value);
+	// not tokenized - indexed - stored in database
 	function identifier($value);
+	// tokenized - indexed - unstored in database
 	function multivalue($values);
+	// tokenized - indexed - stored in database
 	function sortable($value);
 }
