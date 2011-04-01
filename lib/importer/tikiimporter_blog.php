@@ -127,7 +127,7 @@ class TikiImporter_Blog extends TikiImporter
 		$countTags = count($this->parsedData['tags']);
 		$countCategories = count($this->parsedData['categories']);
 		
-		$this->saveAndDisplayLog("\n" . tra("Found $countPosts posts, $countPages pages, $countTags tags and $countCategories categories. Inserting them into Tiki:") . "\n");
+		$this->saveAndDisplayLog("\n" . tr("Found %0 posts, %1 pages, %2 tags and %3 categories. Inserting them into Tiki:", $countPosts, $countPages, $countTags, $countCategories) . "\n");
 
 		if (!empty($this->parsedData['posts'])) {
 			$this->createBlog();
@@ -158,7 +158,7 @@ class TikiImporter_Blog extends TikiImporter
 							$countPosts--;
 						}
 						
-						$this->saveAndDisplayLog(tra("Item \"${item['name']}\" NOT imported (there was already a item with the same name)") . "\n");
+						$this->saveAndDisplayLog(tr('Item "%0" NOT imported (there was already a item with the same name)', $item['name']) . "\n");
 					}
 				}
 			}
@@ -186,10 +186,10 @@ class TikiImporter_Blog extends TikiImporter
 		if ($objId = $this->$methodName($item)) {
 			if ($item['type'] == 'page') {
 				$type = 'wiki page';
-				$msg = tra("Page \"${item['name']}\" sucessfully imported");
+				$msg = tr('Page "%0" sucessfully imported', $item['name']);
 			} else if ($item['type'] == 'post') {
 				$type = 'blog post';
-				$msg = tra("Post \"${item['name']}\" sucessfully imported");
+				$msg = tr('Post "%0" sucessfully imported', $item['name']);
 			}
 			
 			if (!empty($item['comments'])) {

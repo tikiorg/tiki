@@ -383,15 +383,18 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 				
 				$this->newFiles[] = array('fileId' => $fileId, 'oldUrl' => $attachment['link'], 'sizes' => isset($attachment['sizes']) ? $attachment['sizes'] : '');
 				
-				$this->saveAndDisplayLog(tra("Attachment ${attachment['fileName']} successfully imported!") . "\n");
+				$this->saveAndDisplayLog(tr("Attachment %0 successfully imported!", $attachment['fileName']) . "\n");
 				$feedback['success']++;
 			} else {
-				$this->saveAndDisplayLog("Unable to download attachment " . $attachment['fileName'] . ". Error message was: " . $response->getStatus() . ' ' . $response->getMessage() . "\n", true);
+				$this->saveAndDisplayLog(
+					tr("Unable to download attachment %0. Error message was: %1 %2", $attachment['fileName'], $response->getStatus(), $response->getMessage()) . "\n",
+					true
+				);
 				$feedback['error']++;
 			}
 		}
 		
-		$this->saveAndDisplayLog(tra("${feedback['success']} attachments imported and ${feedback['error']} errors.") . "\n");
+		$this->saveAndDisplayLog(tr("%0 attachments imported and %1 errors.", $feedback['success'], $feedback['error']) . "\n");
 		
 		// close connection
 		$adapter = $client->getAdapter();
@@ -555,9 +558,9 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		}
 
 		if ($data['type'] == 'page') {
-			$msg = tra("Page \"${data['name']}\" successfully extracted.") . "\n";
+			$msg = tr('Page "%0" successfully extracted.', $data['name']) . "\n";
 		} else if ($data['type'] == 'post') {
-			$msg = tra("Post \"${data['name']}\" successfully extracted.") . "\n";
+			$msg = tr('Post "%0" successfully extracted.', $data['name']) . "\n";
 		}
 		
 		$this->saveAndDisplayLog($msg);

@@ -154,7 +154,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 	    			$xmlDtdFile = dirname(__FILE__) . "/mediawiki_dump_v$xmlVersion.xsd";
 	    			break;
 	    		default:
-	    			throw new DOMException(tra("Mediawiki XML file version $xmlVersion is not supported."));
+	    			throw new DOMException(tr("Mediawiki XML file version %0 is not supported.", $xmlVersion));
 	    			break;
 	    	}
 	    	
@@ -187,10 +187,14 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
         }
 
         if (!file_exists($this->attachmentsDestDir)) {
-            $this->saveAndDisplayLog(tra("ABORTING: destination directory for attachments ($this->attachmentsDestDir) does no exist. Fix the problem or try to import without the attachments.") . "\n");
+            $this->saveAndDisplayLog(
+            	tr("ABORTING: destination directory for attachments (%0) does no exist. Fix the problem or try to import without the attachments.", $this->attachmentsDestDir) . "\n"
+            );
             die;
         } elseif (!is_writable($this->attachmentsDestDir)) {
-            $this->saveAndDisplayLog(tra("ABORTING: destination directory for attachments ($this->attachmentsDestDir) is not writable. Fix the problem or try to import without attachments.") . "\n");
+            $this->saveAndDisplayLog(
+            	tr("ABORTING: destination directory for attachments (%0) is not writable. Fix the problem or try to import without attachments.", $this->attachmentsDestDir) . "\n"
+            );
             die;
         }
     }
@@ -260,7 +264,7 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
                 $fileUrl = $lastVersion->getElementsByTagName('src')->item(0)->nodeValue;
 
                 if (file_exists($this->attachmentsDestDir . $fileName)) {
-                    $this->saveAndDisplayLog(tra("NOT importing file $fileName as there is already a file with the same name in the destination directory ($this->attachmentsDestDir)") . "\n", true);
+                    $this->saveAndDisplayLog(tr("NOT importing file %0 as there is already a file with the same name in the destination directory (%1)", $fileName, $this->attachmentsDestDir) . "\n", true);
                     continue;
                 }
 
@@ -268,9 +272,9 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
                     $attachmentContent = @file_get_contents($fileUrl);
                     $newFile = fopen($this->attachmentsDestDir . $fileName, 'w');
                     fwrite($newFile, $attachmentContent);
-                    $this->saveAndDisplayLog(tra("File $fileName successfully imported!") . "\n");
+                    $this->saveAndDisplayLog(tr("File %0 successfully imported!", $fileName) . "\n");
                 } else {
-                    $this->saveAndDisplayLog(tra("Unable to download file $fileName. File not found.") . "\n", true);
+                    $this->saveAndDisplayLog(tr("Unable to download file %0. File not found.", $fileName) . "\n", true);
                 }
             }
         }
@@ -316,7 +320,10 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
                         try {
                             $data['revisions'][] = $this->extractRevision($node);
                         } catch (ImporterParserException $e) {
-                            $this->saveAndDisplayLog(tra("Error while parsing revision $i of the page \"${data['name']}\". Or there is a problem on the page syntax or on the Text_Wiki parser (the parser used by the importer).") . "\n", true);
+                            $this->saveAndDisplayLog(
+                            	tr('Error while parsing revision %0 of the page "%1". Or there is a problem on the page syntax or on the Text_Wiki parser (the parser used by the importer).', $i, $data['name']) . "\n",
+                            	true
+                            );
                         }
                     }
                     break;
@@ -328,11 +335,11 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
 
         $countRevisions = count($data['revisions']); 
         if ($countRevisions > 0) {
-            $msg = tra("Page \"${data['name']}\" successfully parsed with $countRevisions revisions (from a total of $totalRevisions revisions).") . "\n";
+            $msg = tr('Page "%0" successfully parsed with %1 revisions (from a total of %2 revisions).', $data['name'], $countRevisions, $totalRevisions) . "\n";
             $this->saveAndDisplayLog($msg);
             return $data;
         } else {
-            throw new ImporterParserException(tra("Page \"${data['name']}\" is NOT going to be imported. It was not possible to parse any of the page revisions.") . "\n", true);
+            throw new ImporterParserException(tr('Page "%0" is NOT going to be imported. It was not possible to parse any of the page revisions.', $data['name']) . "\n", true);
         }
     }
 
