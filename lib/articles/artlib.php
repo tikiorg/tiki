@@ -1354,9 +1354,9 @@ class ArtLib extends TikiLib
 	function list_submissions($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '')
 	{
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findPattern = '%' . $find . '%';
 			$mid = " where (`title` like ? or `heading` like ? or `body` like ?) ";
-			$bindvars = array($findesc, $findesc, $findesc);
+			$bindvars = array($findPattern, $findPattern, $findPattern);
 		} else {
 			$mid = '';
 			$bindvars = array();
