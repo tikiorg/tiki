@@ -1961,7 +1961,7 @@ function initialize_prefs() {
 	if (isset($_SESSION['s_prefs'])) {
 
 		// lastUpdatePrefs pref is retrived in tiki-setup_base
-		$lastUpdatePrefs = $prefs['lastUpdatePrefs'];
+		$lastUpdatePrefs = isset($prefs['lastUpdatePrefs']) ? $prefs['lastUpdatePrefs'] : 1;
 
 		// Reload if there was an update of some prefs
 		if ( empty($_SESSION['s_prefs']['lastReadingPrefs']) || $lastUpdatePrefs > $_SESSION['s_prefs']['lastReadingPrefs'] ) {
