@@ -1910,6 +1910,7 @@ function get_default_prefs() {
 		'zotero_client_key' => '',
 		'zotero_client_secret' => '',
 		'zotero_group_id' => '',
+		'zotero_style' => '',
 
 		// Tiki Connect
 		'connect_feature' => 'n',	// to be enabled by default when working for Tiki 7
@@ -1960,7 +1961,7 @@ function initialize_prefs() {
 	if (isset($_SESSION['s_prefs'])) {
 
 		// lastUpdatePrefs pref is retrived in tiki-setup_base
-		$lastUpdatePrefs = $prefs['lastUpdatePrefs'];
+		$lastUpdatePrefs = isset($prefs['lastUpdatePrefs']) ? $prefs['lastUpdatePrefs'] : 1;
 
 		// Reload if there was an update of some prefs
 		if ( empty($_SESSION['s_prefs']['lastReadingPrefs']) || $lastUpdatePrefs > $_SESSION['s_prefs']['lastReadingPrefs'] ) {

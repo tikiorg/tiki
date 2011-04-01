@@ -194,8 +194,7 @@
 
 				<table class="formcolor">
 					<tr>
-						<td class="formcontent">&nbsp;</td>
-						<td colspan="3" class="formcontent">
+						<td colspan="2">
 							{if count($fields) >= 5}
 								<input type="submit" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false" />
 								{* --------------------------- to return to tracker list after saving --------- *}
@@ -266,8 +265,7 @@
 					{include file='antibot.tpl'}
 				{/if}
 				<tr>
-					<td class="formlabel">&nbsp;</td>
-					<td colspan="3" class="formcontent">
+					<td colspan="2">
 						<input type="submit" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false" />
 						{* --------------------------- to return to tracker list after saving --------- *}
 						{if $tiki_p_view_trackers eq 'y'}

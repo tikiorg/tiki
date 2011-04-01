@@ -108,8 +108,6 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
         		'oldLinks' => array(
 	        		'http://example.com/2009/05/04/como-impedir-que-o-editor-do-wordpress-tinymce-remova-quebras-de-linha/',
 	        		'/2009/05/04/como-impedir-que-o-editor-do-wordpress-tinymce-remova-quebras-de-linha/',
-	        		'http://example.com/?p=10',
-	        		'/?p=10',
         		),
         	),
         );

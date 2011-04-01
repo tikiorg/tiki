@@ -26,6 +26,17 @@ function upgrade_20101230_create_top_modules_tiki( $installer ) {
 	global $prefs, $user_overrider_prefs;
 	include_once 'lib/setup/prefs.php';
 	
+	$prefs = array_merge( array(	// merge in relevant defaults from 6.x as they are no longer defined in 7.x+
+		'feature_sitelogo' => 'y',
+		'feature_site_login' => 'y',
+		'feature_top_bar' => 'y',
+		'feature_sitemenu' => 'n',
+		'feature_sitesearch' => 'y',
+		'feature_sitemycode' => 'y',
+		'feature_breadcrumbs' => 'n',
+		'feature_topbar_id_menu' => '42',
+	), $prefs);
+	
 	// add site logo
 	if( $prefs['feature_sitelogo'] === 'y' ) {
 		$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
@@ -40,7 +51,7 @@ function upgrade_20101230_create_top_modules_tiki( $installer ) {
 	if ( $prefs['feature_top_bar'] === 'y') {
 		// main site menu
 		if ($prefs['feature_sitemenu'] === 'y') {
-			$menuId = $installer->getOne( "SELECT `value` FROM `tiki_preferences` WHERE `name` = 'feature_topbar_id_menu'");
+			$menuId = $prefs['feature_topbar_id_menu'];
 			$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
 									"('menu','o',2,7200,'id=$menuId&type=horiz&menu_id=tiki-top&menu_class=clearfix&nobox=y','a:1:{i:0;s:9:\"Anonymous\";}');");
 		}
