@@ -246,7 +246,7 @@
 			
 			<tr>
 				<td class="formlabel">&nbsp;</td>
-				<td colspan="3" class="formcontent">
+				<td class="formcontent">
 					<input type="submit" name="save" value="{tr}Save{/tr}" onclick="needToConfirm = false;" /> 
 					<input type="radio" name="viewitem" value="view" /> {tr}View inserted item{/tr}
 					{* --------------------------- to continue inserting items after saving --------- *}
