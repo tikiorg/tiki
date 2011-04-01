@@ -4517,12 +4517,19 @@ class TrackerLib extends TikiLib
 
 	/* copy the fields of one item ($from) to another one ($to) of the same tracker - except/only for some fields */
 	/* note: can not use the generic function as they return not all the multilingual fields */
-	function copy_item($from, $to, $except=null, $only=null) {
+	function copy_item($from, $to, $except=null, $only=null, $status=null) {
 		global $user, $prefs;
 
 		if ($prefs['feature_categories'] == 'y') {
 			$categlib = TikiLib::lib('categ');
 			$cats = $categlib->get_object_categories('trackeritem', $from);
+		}
+		if (empty($to)) {
+			$info_to['trackerId'] = $this->items()->fetchOne('trackerId', array('itemId' => $from));
+			$info_to['status'] = empty($status)? $this->items()->fetchOne('status', array('itemId' => $from)): $status;
+			$info_to['created'] = $info_to['lastModif'] = $this->now;
+			$info_to['createdBy'] = $info_to['lastModifBy'] = $user;
+			$to = $this->items()->insert($info_to);
 		}
 
 		$query = 'select ttif.*, ttf.`type`, ttf.`options` from `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf on (ttif.`fieldId` = ttf.`fieldId`) where `itemId`=?';
@@ -4578,6 +4585,7 @@ class TrackerLib extends TikiLib
 			$trackerId = $this->items()->fetchOne('trackerId', array('itemId' => $from));
 			$this->categorized_item($trackerId, $to, "item $to", $cats);
 		}
+		return $to;
 	}
 	function export_attachment($itemId, $archive) {
 		global $prefs;
