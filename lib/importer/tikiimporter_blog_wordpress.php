@@ -222,9 +222,14 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 								break;
 							case 'link':
 							case 'guid':
-								$oldLinks[] = $node->textContent;
+								if (!in_array($node->textContent, $oldLinks)) {
+									$oldLinks[] = $node->textContent;
+								}
 								if (strpos($node->textContent, $this->blogInfo['link']) !== false) {
-									$oldLinks[] = str_replace($this->blogInfo['link'], '', $node->textContent);
+									$relativePath = str_replace($this->blogInfo['link'], '', $node->textContent);
+									if (!in_array($relativePath, $oldLinks)) {
+										$oldLinks[] = $relativePath;
+									}
 								}
 								break;
 							default:
