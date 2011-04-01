@@ -19,14 +19,6 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 		$this->obj = new TikiImporter_Blog();
 	}
 	
-	protected function tearDown()
-	{
-		TikiDb::get()->query('DELETE FROM tiki_pages WHERE pageName = "materia"');
-		TikiDb::get()->query('DELETE FROM tiki_blog_posts WHERE postId = 10');
-		unset($GLOBALS['prefs']['feature_sefurl']);
-		unset($GLOBALS['base_url']);
-	}
-	
     public function testImportShouldCallMethodsToStartImportProcess()
     {
         $obj = $this->getMock('TikiImporter_Blog', array('parseData', 'insertData'));
@@ -52,17 +44,15 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
         $this->assertEquals('some log string', $_SESSION['tiki_importer_log']);
     }
 
-    public function testInsertDataCallInsertPageFourTimes()
+    public function testInsertData_shouldCallInsertItemSixTimes()
     {
-        $obj = $this->getMock('TikiImporter_Blog', array('insertPage', 'insertPost', 'createBlog', 'replaceInternalLinks'));
+        $obj = $this->getMock('TikiImporter_Blog', array('insertItem', 'createBlog'));
         $obj->expects($this->once())->method('createBlog');
-        $obj->expects($this->exactly(2))->method('insertPage');
-        $obj->expects($this->exactly(4))->method('insertPost');
-        $obj->expects($this->once())->method('replaceInternalLinks');
+        $obj->expects($this->exactly(6))->method('insertItem');
         
         $obj->permalinks = array('not empty');
         
-		$parsedData = array(
+		$obj->parsedData = array(
 			'pages' => array(
 				array('type' => 'page', 'name' => 'Any name'),
 				array('type' => 'page', 'name' => 'Any name'),
@@ -77,34 +67,31 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 			'categories' => array(),
 		);
 		
-        $obj->insertData($parsedData);
+        $obj->insertData();
     }
 
-    public function testInsertDataShouldNotCallInsertPage()
+    public function testInsertData_shouldNotCallInsertItem()
     {
-        $obj = $this->getMock('TikiImporter_Blog', array('insertPage'));
-        $obj->expects($this->never())->method('insertPage');
-        $parsedData = array(
+        $obj = $this->getMock('TikiImporter_Blog', array('insertItem'));
+        $obj->expects($this->never())->method('insertItem');
+        $obj->parsedData = array(
         	'pages' => array(),
         	'posts' => array(),
         	'tags' => array(),
         	'categories' => array(),
         );
-        $obj->insertData($parsedData);
+        $obj->insertData();
     }
 
-    public function testInsertDataShouldReturnCountData()
+    public function testInsertData_shouldReturnCountData()
     {
-        $obj = $this->getMock('TikiImporter_Blog', array('insertPage', 'insertPost', 'createBlog', 'storeNewLink', 'replaceInternalLinks'));
+        $obj = $this->getMock('TikiImporter_Blog', array('insertItem', 'createBlog'));
         $obj->expects($this->once())->method('createBlog');
-        $obj->expects($this->exactly(2))->method('insertPage')->will($this->onConsecutiveCalls(true, true));
-        $obj->expects($this->exactly(4))->method('insertPost')->will($this->onConsecutiveCalls(true, true, false, true));
-        $obj->expects($this->exactly(5))->method('storeNewLink');
-        $obj->expects($this->once())->method('replaceInternalLinks');
+        $obj->expects($this->exactly(6))->method('insertItem')->will($this->onConsecutiveCalls(true, true, true, true, false, true));
 
         $obj->permalinks = array('not empty');
         
-		$parsedData = array(
+		$obj->parsedData = array(
 			'pages' => array(
 				array('type' => 'page', 'name' => 'Any name'),
 				array('type' => 'page', 'name' => 'Any name'),
@@ -119,118 +106,77 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 			'categories' => array(),
 		);
 
-        $countData = $obj->insertData($parsedData);
-        $expectedResult = array('importedPages' => 2, 'importedPosts' => 3, 'importedTags' => 0, 'importedCategories' => 0);
-
-        $this->assertEquals($expectedResult, $countData);
-	}
-	
-	public function testInsertDataShouldCallInsertComments()
-	{
-        $obj = $this->getMock('TikiImporter_Blog', array('insertPage', 'insertComments', 'storeNewLink', 'replaceInternalLinks'));
-        $obj->expects($this->exactly(6))->method('insertPage')->will($this->onConsecutiveCalls('Any name', 'Any name', false, 'Any name', false, 'Any name'));
-        $obj->expects($this->exactly(3))->method('insertComments')->with('Any name', 'wiki page');
-        $obj->expects($this->exactly(4))->method('storeNewLink');
-        $obj->expects($this->once())->method('replaceInternalLinks');
-
-        $obj->permalinks = array('not empty');
-        
-		$parsedData = array(
-			'pages' => array(
-				array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2, 3)),
-				array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2)),
-				array('type' => 'page', 'name' => 'Any name'),
-				array('type' => 'page', 'name' => 'Any name', 'comments' => array()),
-				array('type' => 'page', 'name' => 'Any name'),
-				array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2, 3)),
-			),
-			'posts' => array(),
-			'tags' => array(),
-			'categories' => array(),
-		);
-
-        $countData = $obj->insertData($parsedData);
-        $expectedResult = array('importedPages' => 4, 'importedPosts' => 0, 'importedTags' => 0, 'importedCategories' => 0);
-
-        $this->assertEquals($expectedResult, $countData);
-		
-        $obj2 = $this->getMock('TikiImporter_Blog', array('insertPost', 'createBlog', 'insertComments', 'storeNewLink', 'replaceInternalLinks'));
-        $obj2->expects($this->once())->method('createBlog');
-        $obj2->expects($this->exactly(2))->method('insertPost')->will($this->onConsecutiveCalls('Any name', 'Any name'));
-        $obj2->expects($this->exactly(2))->method('insertComments')->with('Any name', 'blog post');
-        $obj2->expects($this->exactly(2))->method('storeNewLink');
-        $obj2->expects($this->once())->method('replaceInternalLinks');
-
-        $obj2->permalinks = array('not empty');
-        
-		$parsedData = array(
-			'posts' => array(
-				array('type' => 'post', 'name' => 'Any name', 'comments' => array(1, 2, 3)),
-				array('type' => 'post', 'name' => 'Any name', 'comments' => array(1, 2)),
-			),
-			'pages' => array(),
-			'tags' => array(),
-			'categories' => array(),
-		);
-
-        $countData = $obj2->insertData($parsedData);
-        $expectedResult = array('importedPages' => 0, 'importedPosts' => 2, 'importedTags' => 0, 'importedCategories' => 0);
+        $countData = $obj->insertData();
+        $expectedResult = array('importedPages' => 1, 'importedPosts' => 4, 'importedTags' => 0, 'importedCategories' => 0);
 
         $this->assertEquals($expectedResult, $countData);
 	}
 
-	public function testInsertDataShouldNotCreateBlogIfNoPosts()
+	public function testInsertData_shouldNotCreateBlogIfNoPosts()
 	{
-		$obj = $this->getMock('TikiImporter_Blog', array('insertPage', 'insertComments', 'createTags', 'createCategories', 'createBlog', 'storeNewLink'));
-        $obj->expects($this->exactly(0))->method('insertPage');
-        $obj->expects($this->exactly(0))->method('insertComments');
+		$obj = $this->getMock('TikiImporter_Blog', array('insertItem', 'createTags', 'createCategories', 'createBlog'));
+        $obj->expects($this->exactly(0))->method('insertItem');
         $obj->expects($this->exactly(0))->method('createTags');
         $obj->expects($this->exactly(0))->method('createCategories');
         $obj->expects($this->exactly(0))->method('createBlog');
-        $obj->expects($this->exactly(0))->method('storeNewLink');
 
-		$parsedData = array(
+		$obj->parsedData = array(
 			'pages' => array(),
 			'posts' => array(),
 			'tags' => array(),
 			'categories' => array(),
 		);
 
-        $countData = $obj->insertData($parsedData);
+        $countData = $obj->insertData();
         $expectedResult = array('importedPages' => 0, 'importedPosts' => 0, 'importedTags' => 0, 'importedCategories' => 0);
 
         $this->assertEquals($expectedResult, $countData);
+	}
 		
+	public function testInsertItem_shouldCallInsertCommentsForPage()
+	{
+        $obj = $this->getMock('TikiImporter_Blog', array('insertComments', 'insertPage'));
+        $obj->expects($this->once())->method('insertComments')->with('Any name', 'wiki page');
+        $obj->expects($this->once())->method('insertPage')->will($this->onConsecutiveCalls(true));
+
+		$page = array('type' => 'page', 'name' => 'Any name', 'comments' => array(1, 2, 3));
+
+        $obj->insertItem($page);
+	}
+
+	public function testInsertItem_shouldCallInsertCommentsForPost()
+	{
+        $obj = $this->getMock('TikiImporter_Blog', array('insertComments', 'insertPost'));
+        $obj->expects($this->once())->method('insertComments')->with('Any name', 'blog post');
+        $obj->expects($this->once())->method('insertPost')->will($this->onConsecutiveCalls(true));
+        
+		$post = array('type' => 'post', 'name' => 'Any name', 'comments' => array(1, 2));
+
+        $obj->insertItem($post);
 	}
 	
-	public function testInsertDataShouldSetObjIdOnItemsArray()
+	public function testInsertItem_shouldReturnObjId()
 	{
-        $obj = $this->getMock('TikiImporter_Blog', array('insertPage', 'insertPost', 'createBlog', 'storeNewLink', 'replaceInternalLinks'));
-        $obj->expects($this->once())->method('createBlog');
-        $obj->expects($this->once())->method('insertPage')->will($this->onConsecutiveCalls('Name 1'));
-        $obj->expects($this->once())->method('insertPost')->will($this->onConsecutiveCalls(2));
-        $obj->expects($this->exactly(2))->method('storeNewLink');
-
-        $obj->permalinks = array('not empty');
+		$obj = $this->getMock('TikiImporter_Blog', array('insertComments', 'insertPost'));
+        $obj->expects($this->once())->method('insertComments')->with(22, 'blog post', array(1, 2));
+        $obj->expects($this->once())->method('insertPost')->will($this->onConsecutiveCalls(22));
         
-		$parsedData = array(
-			'pages' => array(
-				array('type' => 'page', 'name' => 'Any name'),
-			),
-			'posts' => array(
-				array('type' => 'post', 'name' => 'Any name'),
-			),
-			'tags' => array(),
-			'categories' => array(),
-		);
+		$post = array('type' => 'post', 'name' => 'Any name', 'comments' => array(1, 2));
 
-		$expectedResult = array(
-			array('type' => 'post', 'name' => 'Any name', 'objId' => 2),
-			array('type' => 'page', 'name' => 'Any name', 'objId' => 'Name 1'),
-		);
-		$obj->expects($this->once())->method('replaceInternalLinks')->with($expectedResult);
-		
-        $countData = $obj->insertData($parsedData);
+        $objId = $obj->insertItem($post);
+		$this->assertEquals(22, $objId);
+	}
+	
+	public function testInsertItem_shoudReturnNull()
+	{
+		$obj = $this->getMock('TikiImporter_Blog', array('insertComments', 'insertPost'));
+        $obj->expects($this->exactly(0))->method('insertComments');
+        $obj->expects($this->once())->method('insertPost')->will($this->onConsecutiveCalls(null));
+        
+		$post = array('type' => 'post', 'name' => 'Any name', 'comments' => array(1, 2));
+
+        $objId = $obj->insertItem($post);
+		$this->assertEquals(null, $objId);
 	}
 	
 	public function testInsertComments()
@@ -381,103 +327,5 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
 		$this->obj->createBlog();
 		
 		unset($_REQUEST['setAsHomePage']);
-	}
-	
-	public function testStoreNewLinkWithSefUrlEnabled()
-	{
-		global $prefs, $base_url;
-		$prefs['feature_sefurl'] = 'y';
-		$base_url = 'http://localhost/tiki';
-		
-		$this->obj->permalinks = array(
-			107 => array(
-				'oldLinks' => array(
-					'http://example.com/materia/',
-					'http://example.com/?p=107',
-				),
-			),
-			36 => array(
-				'oldLinks' => array(
-					'http://example.com/2008/01/20/circuito-grande-torres-del-paine/',
-					'http://example.com/?p=36',
-				),
-			),
-		);
-		
-		$expectedResult = $this->obj->permalinks;
-		$expectedResult[107]['newLink'] = 'http://localhost/tiki/materia';
-		$expectedResult[36]['newLink'] =  'http://localhost/tiki/blogpost10';
-		
-		$this->obj->storeNewLink('materia', array('wp_id' => 107, 'type' => 'page'));
-		$this->obj->storeNewLink(10, array('wp_id' => 36, 'type' => 'post'));
-		
-		$this->assertEquals($expectedResult, $this->obj->permalinks);
-	}
-	
-	public function testStoreNewLinkWithSefUrlDisabled()
-	{
-		global $prefs, $base_url;
-		$prefs['feature_sefurl'] = 'n';
-		$base_url = 'http://localhost/tiki';
-		
-		$this->obj->permalinks = array(
-			107 => array(
-				'oldLinks' => array(
-					'http://example.com/materia/',
-					'http://example.com/?p=107',
-				),
-			),
-			36 => array(
-				'oldLinks' => array(
-					'http://example.com/2008/01/20/circuito-grande-torres-del-paine/',
-					'http://example.com/?p=36',
-				),
-			),
-		);
-		
-		$expectedResult = $this->obj->permalinks;
-		$expectedResult[107]['newLink'] = 'http://localhost/tiki/tiki-index.php?page=materia';
-		$expectedResult[36]['newLink'] =  'http://localhost/tiki/tiki-view_blog_post.php?postId=10';
-		
-		$this->obj->storeNewLink('materia', array('wp_id' => 107, 'type' => 'page'));
-		$this->obj->storeNewLink(10, array('wp_id' => 36, 'type' => 'post'));
-		
-		$this->assertEquals($expectedResult, $this->obj->permalinks);
-	}
-	
-	public function testReplaceInternalLinks()
-	{
-		$this->obj->permalinks = array(
-			36 => array(
-				'oldLinks' => array(
-					'http://example.com/2008/01/20/circuito-grande-torres-del-paine/',
-					'http://example.com/?p=36',
-				),
-				'newLink' => 'http://localhost/tiki/tiki-view_blog_post.php?postId=10',
-			),
-		);
-
-		$items = array(
-			array('type' => 'page', 'name' => 'materia', 'hasInternalLinks' => true, 'objId' => 'materia'),
-			array('type' => 'post', 'name' => 'Any name', 'hasInternalLinks' => true, 'objId' => 10),
-			array('type' => 'post', 'name' => 'Any name', 'hasInternalLinks' => false, 'objId' => 11),
-		);
-		
-		$content = file_get_contents(dirname(__FILE__) . '/fixtures/wordpress_post_content_internal_links.txt');
-		
-		TikiDb::get()->query('INSERT INTO tiki_pages (pageName, data) VALUES (?, ?)',
-			array('materia', $content));
-		TikiDb::get()->query('INSERT INTO tiki_blog_posts (postId, data) VALUES (?, ?)',
-			array(10, $content));
-		
-		$this->obj->replaceInternalLinks($items);
-        
-		$newPageContent = TikiDb::get()->getOne('SELECT data FROM tiki_pages WHERE pageName = "materia"');
-		$newPostContent = TikiDb::get()->getOne('SELECT data FROM tiki_blog_posts WHERE postId = 10');
-		
-		$this->assertEquals(file_get_contents(dirname(__FILE__) . '/fixtures/wordpress_post_content_internal_links_replaced.txt'),
-			$newPageContent);
-		$this->assertEquals(file_get_contents(dirname(__FILE__) . '/fixtures/wordpress_post_content_internal_links_replaced.txt'),
-			$newPostContent);
 	}
 }

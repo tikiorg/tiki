@@ -10,9 +10,9 @@ if (!isset($title)) $title = 'Tiki Installer';
 if (!isset($content)) $content = 'No content specified. Something went wrong.<br/>Please tell your administrator.<br/>If you are the administrator, you may want to check for / file a bug report.';
 if (!isset($dberror)) $dberror = false;
 
-// Check that PHP version is at least 5
-if (version_compare(PHP_VERSION, '5.1.0', '<')) {
-	$title = 'PHP 5.1 is required';
+// Check that PHP version is sufficient
+if (version_compare(PHP_VERSION, '5.2.0', '<')) {
+	$title = 'PHP 5.2 is required';
 	$content = '<p>Please contact your system administrator ( if you are not the one ;) ).</p>';
 	createPage($title, $content);
 }

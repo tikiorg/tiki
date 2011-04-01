@@ -54,6 +54,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		$options = array(
 			array('name' => 'importAttachments', 'type' => 'checkbox', 'label' => tra('Import images and other attachments')),
 			array('name' => 'replaceInternalLinks', 'type' => 'checkbox', 'label' => tra('Update internal links (experimental)')),
+			array('name' => 'htaccessRules', 'type' => 'checkbox', 'label' => tra('Suggest .htaccess rules to redirect from old WP URLs to new Tiki URLs (experimental)'))
 		);
 		
 		return $options;
@@ -99,7 +100,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * @see lib/importer/TikiImporter_Blog#import()
 	 *
 	 * @param string $filePath path to the XML file
-	 * @return void 
+	 * @return null 
 	 * @throws UnexpectedValueException if invalid file mime type
 	 */
 	function import($filePath)
@@ -128,11 +129,15 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 			$this->downloadAttachments();
 		}
 		
-		if (isset($_POST['replaceInternalLinks']) && $_POST['replaceInternalLinks'] == 'on') {
-			$this->permalinks = $this->extractPermalinks();
-		}
+		$this->permalinks = $this->extractPermalinks();
 
 		parent::import();
+		
+		if (!empty($_POST['htaccessRules']) && $_POST['htaccessRules'] == 'on'
+			&& !empty($this->permalinks))
+		{
+			$_SESSION['tiki_importer_wordpress_urls'] = $this->getHtaccessRules();
+		}
 	}
 
 	/**
@@ -172,27 +177,29 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 	/**
 	 * Calls the respective functions to extract and parse (when needed)
-	 * items (pages, posts and attachments), categories and tags.
+	 * items (pages, posts and attachments), categories and tags. Set
+	 * $this->parsedData with each key of this array containing
+	 * one set of data (items, categories and tags).
 	 * 
-	 * @return array each key of this array contain one set of data (items, categories and tags)
+	 * @return null
 	 */
 	function parseData()
 	{
 		$this->saveAndDisplayLog("\n" . tra("Extracting data from XML file:") . "\n");
 		
 		// extractItems return array with two keys: 'posts' and 'pages'
-		$parsedData = $this->extractItems();
+		$this->parsedData = $this->extractItems();
 		
-		$parsedData['tags'] = $this->extractTags();
-		$parsedData['categories'] = $this->extractCategories();
-
-		return $parsedData;
+		$this->parsedData['tags'] = $this->extractTags();
+		$this->parsedData['categories'] = $this->extractCategories();
 	}
 	
 	/**
 	 * Get all the permalinks to posts and pages from
-	 * the XML document. This is used later to replace internal
-	 * links in post and page content.
+	 * the XML document. This is used to give the user
+	 * a list of old WP URLs and their equivalent in Tiki
+	 * and to replace internal links in post and page 
+	 * content if the option is set.
 	 * 
 	 * @return array permalinks
 	 */
@@ -376,15 +383,18 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 				
 				$this->newFiles[] = array('fileId' => $fileId, 'oldUrl' => $attachment['link'], 'sizes' => isset($attachment['sizes']) ? $attachment['sizes'] : '');
 				
-				$this->saveAndDisplayLog(tra("Attachment ${attachment['fileName']} successfully imported!") . "\n");
+				$this->saveAndDisplayLog(tr("Attachment %0 successfully imported!", $attachment['fileName']) . "\n");
 				$feedback['success']++;
 			} else {
-				$this->saveAndDisplayLog("Unable to download attachment " . $attachment['fileName'] . ". Error message was: " . $response->getStatus() . ' ' . $response->getMessage() . "\n", true);
+				$this->saveAndDisplayLog(
+					tr("Unable to download attachment %0. Error message was: %1 %2", $attachment['fileName'], $response->getStatus(), $response->getMessage()) . "\n",
+					true
+				);
 				$feedback['error']++;
 			}
 		}
 		
-		$this->saveAndDisplayLog(tra("${feedback['success']} attachments imported and ${feedback['error']} errors.") . "\n");
+		$this->saveAndDisplayLog(tr("%0 attachments imported and %1 errors.", $feedback['success'], $feedback['error']) . "\n");
 		
 		// close connection
 		$adapter = $client->getAdapter();
@@ -548,9 +558,9 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		}
 
 		if ($data['type'] == 'page') {
-			$msg = tra("Page \"${data['name']}\" successfully extracted.") . "\n";
+			$msg = tr('Page "%0" successfully extracted.', $data['name']) . "\n";
 		} else if ($data['type'] == 'post') {
-			$msg = tra("Post \"${data['name']}\" successfully extracted.") . "\n";
+			$msg = tr('Post "%0" successfully extracted.', $data['name']) . "\n";
 		}
 		
 		$this->saveAndDisplayLog($msg);
@@ -832,5 +842,145 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		Zend_Loader::loadClass('Zend_Http_Client');
 
 		return new Zend_Http_Client();
+	}
+	
+	/**
+	 * Call $this->storeNewLink and leave the rest
+	 * with the parent method.
+	 * 
+	 * @see lib/importer/TikiImporter_Blog#insertItem($item)
+	 */
+	function insertItem($item)
+	{
+		$objId = parent::insertItem($item);
+		
+		$this->storeNewLink($objId, $item);
+		
+		return $objId;
+	}
+	
+	/**
+	 * Map the old WP link with the new Tiki link for a
+	 * given item. This information is stored in 
+	 * $this->permalinks and used later to replace internal
+	 * links in post and page content.
+	 * 
+	 * @param int|string $objId int id when blog post or pageName when page
+	 * @param array $item
+	 * @return void
+	 */
+	function storeNewLink($objId, $item)
+	{
+		global $prefs, $base_url;
+		
+		if (substr($base_url, -1) != '/') {
+			$base_url .= '/';
+		}
+		
+		if (isset($this->permalinks[$item['wp_id']])) {
+			if ($item['type'] == 'page') {
+				if ($prefs['feature_sefurl'] == 'y') {
+					$this->permalinks[$item['wp_id']]['newLink'] = $base_url . $objId;
+				} else {
+					$this->permalinks[$item['wp_id']]['newLink'] = $base_url . 'tiki-index.php?page=' . $objId;
+				}
+			} else {
+				// post
+				if ($prefs['feature_sefurl'] == 'y') {
+					$this->permalinks[$item['wp_id']]['newLink'] = $base_url . 'blogpost' . $objId;
+				} else {
+					$this->permalinks[$item['wp_id']]['newLink'] = $base_url . 'tiki-view_blog_post.php?postId=' . $objId;
+				}
+			} 
+		}
+	}
+	
+	/**
+	 * Call $this->replaceInternalLinks() and leave the
+	 * rest with the parent method.
+	 * 
+	 * @see lib/importer/TikiImporter_Blog#insertData()
+	 */
+	function insertData()
+	{
+		$countData = parent::insertData();
+		
+		if (isset($_POST['replaceInternalLinks']) && $_POST['replaceInternalLinks'] == 'on') {
+			$items = array_merge($this->parsedData['posts'], $this->parsedData['pages']);
+			$this->replaceInternalLinks($items);
+		}
+		
+		return $countData;
+	}
+	
+	/**
+	 * Replace old WP links with new Tiki links inside
+	 * post or page content directly in the database.
+	 * 
+	 * @param array $items
+	 * @return void
+	 */
+	function replaceInternalLinks($items)
+	{
+		global $tikilib, $bloglib;
+		
+		foreach ($items as $item) {
+			if ($item['hasInternalLinks']) {
+				$changed = false;
+				
+				if ($item['type'] == 'page') {
+					$page = $tikilib->get_page_info($item['objId']);
+					$content = $page['data'];
+				} else {
+					// post
+					$post = $bloglib->get_post($item['objId']);
+					$content = $post['data'];
+				}
+				
+				foreach ($this->permalinks as $key => $links) {
+					foreach ($links['oldLinks'] as $link) {
+						if (strpos($content, $link) !== false) {
+							$newLink = $this->permalinks[$key]['newLink'];
+							$content = str_replace($link, $newLink, $content);
+							$changed = true;
+						}
+					}
+				}
+				
+				if ($changed) {
+					if ($item['type'] == 'page') {
+						TikiDb::get()->query('UPDATE `tiki_pages` SET `data` = ? WHERE `pageName` = ?', array($content, $item['objId']));
+					} else {
+						// post
+						TikiDb::get()->query('UPDATE `tiki_blog_posts` SET `data` = ? WHERE `postId` = ?', array($content, $item['objId']));
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Format $this->permalinks and return a string
+	 * with suggested htaccess rules to redirect
+	 * from old WP URLs to new Tiki URLs.
+	 *  
+	 * @return array
+	 */
+	function getHtaccessRules()
+	{
+		$rules = '';
+		
+		foreach ($this->permalinks as $link) {
+			foreach ($link['oldLinks'] as $oldLink) {
+				// oldLinks contain both the absolute and relative URLs
+				// in this case we want only relative
+				if (strpos($oldLink, '/') === 0) {
+					//TODO: properly filter Tiki URLs with non-English characters and spaces
+					$rules .= "Redirect 301 $oldLink " . str_replace(' ', '+', $link['newLink']) . "\n";
+				}
+			}
+		}
+		
+		return $rules;
 	}
 }

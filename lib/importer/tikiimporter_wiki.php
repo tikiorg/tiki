@@ -98,15 +98,15 @@ class TikiImporter_Wiki extends TikiImporter
 
         $countParsedData = count($parsedData);
         
-        $this->saveAndDisplayLog("\n" . tra("$countParsedData pages parsed. Starting to insert those pages into Tiki:") . "\n");
+        $this->saveAndDisplayLog("\n" . tr("%0 pages parsed. Starting to insert those pages into Tiki:", $countParsedData) . "\n");
 
         if (!empty($parsedData)) {
             foreach ($parsedData as $page) {
                 if ($this->insertPage($page)) {
                     $countPages++;
-                    $this->saveAndDisplayLog(tra("Page ${page['name']} sucessfully imported") . "\n");
+                    $this->saveAndDisplayLog(tr('Page %0 sucessfully imported', $page['name']) . "\n");
                 } else {
-                    $this->saveAndDisplayLog(tra("Page ${page['name']} NOT imported (there was already a page with the same name)") . "\n");
+                    $this->saveAndDisplayLog(tr('Page %0 NOT imported (there was already a page with the same name)', $page['name']) . "\n");
                 }
             }
         }
