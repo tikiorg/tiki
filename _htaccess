@@ -177,6 +177,6 @@ RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA
 #Require valid-user 
 
 <IfModule mod_dir.c>
-	DirectoryIndex tiki-index.php
+	DirectoryIndex index.php
 </IfModule>
 
