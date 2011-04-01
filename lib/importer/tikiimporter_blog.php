@@ -75,7 +75,7 @@ class TikiImporter_Blog extends TikiImporter
 	 * and start the importing proccess by calling the functions to
 	 * validate, parse and insert the data.
 	 *  
-	 * @return void 
+	 * @return null 
 	 */
 	function import()
 	{

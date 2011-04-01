@@ -54,6 +54,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		$options = array(
 			array('name' => 'importAttachments', 'type' => 'checkbox', 'label' => tra('Import images and other attachments')),
 			array('name' => 'replaceInternalLinks', 'type' => 'checkbox', 'label' => tra('Update internal links (experimental)')),
+			array('name' => 'htaccessRules', 'type' => 'checkbox', 'label' => tra('Suggest .htaccess rules to redirect from old WP URLs to new Tiki URLs (experimental)'))
 		);
 		
 		return $options;
@@ -99,7 +100,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 * @see lib/importer/TikiImporter_Blog#import()
 	 *
 	 * @param string $filePath path to the XML file
-	 * @return void 
+	 * @return null 
 	 * @throws UnexpectedValueException if invalid file mime type
 	 */
 	function import($filePath)
@@ -128,11 +129,15 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 			$this->downloadAttachments();
 		}
 		
-		if (isset($_POST['replaceInternalLinks']) && $_POST['replaceInternalLinks'] == 'on') {
-			$this->permalinks = $this->extractPermalinks();
-		}
+		$this->permalinks = $this->extractPermalinks();
 
 		parent::import();
+		
+		if (!empty($_POST['htaccessRules']) && $_POST['htaccessRules'] == 'on'
+			&& !empty($this->permalinks))
+		{
+			$_SESSION['tiki_importer_wordpress_urls'] = $this->getHtaccessRules();
+		}
 	}
 
 	/**
@@ -191,8 +196,10 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	
 	/**
 	 * Get all the permalinks to posts and pages from
-	 * the XML document. This is used later to replace internal
-	 * links in post and page content.
+	 * the XML document. This is used to give the user
+	 * a list of old WP URLs and their equivalent in Tiki
+	 * and to replace internal links in post and page 
+	 * content if the option is set.
 	 * 
 	 * @return array permalinks
 	 */
@@ -895,7 +902,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	{
 		$countData = parent::insertData();
 		
-		if (!empty($this->permalinks)) {
+		if (isset($_POST['replaceInternalLinks']) && $_POST['replaceInternalLinks'] == 'on') {
 			$items = array_merge($this->parsedData['posts'], $this->parsedData['pages']);
 			$this->replaceInternalLinks($items);
 		}
@@ -947,5 +954,30 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 				}
 			}
 		}
+	}
+
+	/**
+	 * Format $this->permalinks and return a string
+	 * with suggested htaccess rules to redirect
+	 * from old WP URLs to new Tiki URLs.
+	 *  
+	 * @return array
+	 */
+	function getHtaccessRules()
+	{
+		$rules = '';
+		
+		foreach ($this->permalinks as $link) {
+			foreach ($link['oldLinks'] as $oldLink) {
+				// oldLinks contain both the absolute and relative URLs
+				// in this case we want only relative
+				if (strpos($oldLink, '/') === 0) {
+					//TODO: properly filter Tiki URLs with non-English characters and spaces
+					$rules .= "Redirect 301 $oldLink " . str_replace(' ', '+', $link['newLink']) . "\n";
+				}
+			}
+		}
+		
+		return $rules;
 	}
 }

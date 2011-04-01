@@ -82,4 +82,10 @@
     <br /><br />
     <p><b>{tr}Importer log:{/tr}</b></p>
     <textarea rows="15" cols="100" codemirror="false">{$importLog}</textarea>
+    
+    {if isset($wordpressUrls)}
+    	<br /><br />
+    	<p><b>{tr}Suggested .htaccess rules:{/tr}</b></p>
+    	<textarea rows="15" cols="100" codemirror="false">{$wordpressUrls}</textarea>
+    {/if}
 {/if}

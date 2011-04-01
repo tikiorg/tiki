@@ -36,7 +36,7 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
         $obj->expects($this->once())->method('parseData');
         $obj->expects($this->once())->method('insertData');
         $obj->expects($this->once())->method('setupTiki');
-        $obj->expects($this->exactly(0))->method('extractPermalinks');
+        $obj->expects($this->once())->method('extractPermalinks');
 
         $this->expectOutputString("Loading and validating the XML file\n\nImportation completed!\n\n<b><a href=\"tiki-importer.php\">Click here</a> to finish the import process</b>");
         $_FILES['importFile']['type'] = 'text/xml'; 
@@ -58,12 +58,10 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
         $obj->expects($this->once())->method('setupTiki');
         $obj->expects($this->once())->method('extractPermalinks');
         $_POST['importAttachments'] = 'on';
-        $_POST['replaceInternalLinks'] = 'on';
 
         $obj->import(dirname(__FILE__) . '/fixtures/wordpress_sample.xml');
         
         unset($_POST['importAttachments']);
-        unset($_POST['replaceInternalLinks']);
     }
 
     public function testParseData()
@@ -775,6 +773,8 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 	
 	public function testInsertData_shouldSetObjIdOnItemsArray()
 	{
+		$_POST['replaceInternalLinks'] = 'on';
+		
         $obj = $this->getMock('TikiImporter_Blog_Wordpress', array('insertItem', 'createBlog', 'replaceInternalLinks'));
         $obj->expects($this->once())->method('createBlog');
         $obj->expects($this->exactly(2))->method('insertItem')->will($this->onConsecutiveCalls(2, 'Page name'));
@@ -799,6 +799,29 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		
 		$obj->expects($this->once())->method('replaceInternalLinks')->with($expectedResult);
 		
+        $obj->insertData();
+        
+		unset($_POST['replaceInternalLinks']);
+	}
+	
+	public function testInsertData_shouldNotCallReplaceInternalLinks()
+	{
+		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('insertItem', 'createBlog', 'replaceInternalLinks'));
+        $obj->expects($this->once())->method('createBlog');
+        $obj->expects($this->exactly(2))->method('insertItem')->will($this->onConsecutiveCalls(2, 'Page name'));
+        $obj->expects($this->exactly(0))->method('replaceInternalLinks');
+		
+        $obj->parsedData = array(
+			'pages' => array(
+				array('type' => 'page', 'name' => 'Page name'),
+			),
+			'posts' => array(
+				array('type' => 'post', 'name' => 'Post title'),
+			),
+			'tags' => array(),
+			'categories' => array(),
+		);
+        
         $obj->insertData();
 	}
 	
@@ -836,5 +859,33 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 			$newPageContent);
 		$this->assertEquals(file_get_contents(dirname(__FILE__) . '/fixtures/wordpress_post_content_internal_links_replaced.txt'),
 			$newPostContent);
-	}	
+	}
+	
+	public function testGetHtaccessRules()
+	{
+		$this->obj->permalinks = array(
+			array(
+				'oldLinks' => array(
+					'http://example.com/2008/01/20/circuito-grande-torres-del-paine/',
+					'/2008/01/20/circuito-grande-torres-del-paine/',
+					'http://example.com/?p=36',
+					'/?p=36',
+				),
+				'newLink' => 'http://localhost/tiki/tiki-view_blog_post.php?postId=10',
+			),
+			array(
+				'oldLinks' => array(
+					'http://example.com/contato/',
+					'/contato-tiki/',
+				),
+				'newLink' => 'http://localhost/tiki70/tiki-index.php?page=contato tiki',
+			),
+		);
+
+		$expectedResult = "Redirect 301 /2008/01/20/circuito-grande-torres-del-paine/ http://localhost/tiki/tiki-view_blog_post.php?postId=10\n"
+			. "Redirect 301 /?p=36 http://localhost/tiki/tiki-view_blog_post.php?postId=10\n"
+			. "Redirect 301 /contato-tiki/ http://localhost/tiki70/tiki-index.php?page=contato+tiki\n";
+		
+		$this->assertEquals($expectedResult, $this->obj->getHtaccessRules());
+	}
 }

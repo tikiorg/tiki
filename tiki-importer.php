@@ -28,6 +28,12 @@ if (isset($_SESSION['tiki_importer_feedback'])) {
     unset($_SESSION['tiki_importer_feedback']);
     unset($_SESSION['tiki_importer_log']);
     unset($_SESSION['tiki_importer_errors']);
+    
+    // wordpress specific
+    if (isset($_SESSION['tiki_importer_wordpress_urls'])) {
+    	$smarty->assign('wordpressUrls', $_SESSION['tiki_importer_wordpress_urls']);
+    	unset($_SESSION['tiki_importer_wordpress_urls']);
+    }
 } else if (!empty($_FILES['importFile'])) {
     // third step: start the importing process
 
