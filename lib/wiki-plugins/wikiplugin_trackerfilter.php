@@ -500,7 +500,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 			case '*': // stars
 				$cumul = '';
 				foreach ($field['options_array'] as $val) {
-					$sval = strip_tags($tikilib->parse_data($val));
+					$sval = strip_tags($tikilib->parse_data($val, array('parsetoc' => false)));
 					$opt['id'] = $val;
 					if ($field['type'] == '*') {
 						$cumul = $opt['name'] = "$cumul*";
