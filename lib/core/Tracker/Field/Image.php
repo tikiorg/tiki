@@ -68,16 +68,19 @@ class Tracker_field_Image extends Tracker_Field_File
 				}
 				$pre = "<a href=\"$val\" rel=\"shadowbox$rel;type=img\">";
 			}
+			if ( $this->getOption(0) || $this->getOption(1) || $this->getOption(2) || $this->getOption(3)) {
+				$image_size_info = getimagesize($val);
+			}
 			if ($list_mode != 'n') {
-				if ($this->getOption(0))
-					$params['width'] = $this->getOption(0);
-				if ($this->getOption(1))
-					$params['height'] = $this->getOption(1);
+				if ($this->getOption(0) || $this->getOption(1)) {
+					list( $params['width'], $params['height']) = $this->get_resize_dimensions( $image_size_info[0], $image_size_info[1],
+																			$this->getOption(0), $this->getOption(1));
+				}
 			} else {
-				if ($this->getOption(2))
-					$params['width'] = $this->getOption(2);
-				if ($this->getOption(3))
-					$params['height'] = $this->getOption(3);
+				if ($this->getOption(2) || $this->getOption(3)) {
+					list( $params['width'], $params['height']) = $this->get_resize_dimensions( $image_size_info[0], $image_size_info[1],
+																			$this->getOption(2), $this->getOption(3));
+				}
 			}
 		} else {
 			$params['file'] = 'img/icons/na_pict.gif';
@@ -93,6 +96,27 @@ class Tracker_field_Image extends Tracker_Field_File
 	function renderInput($context = array())
 	{
 		return $this->renderTemplate('trackerinput/image.tpl', $context);
+	}
+
+	/**
+	 * Calculate the size of a resized image
+	 * 
+	 * TODO move to a lib (Images depends on Imagick or GD which this doesn't need)
+	 * 
+	 * @param int $image_width (existing image width)
+	 * @param int $image_height	(existing image height)
+	 * @param int $max_width (max width to scale to)
+	 * @param int $max_height (optional max height)
+	 * 
+	 * @return array(int $resized_width, int $resized_height)
+	 */
+	private function get_resize_dimensions( $image_width, $image_height, $max_width = null, $max_height = null) {
+		if ( !$max_height || ($max_width && $image_width > $image_height && $image_height < $max_height)) {
+			$ratio = $max_width / $image_width;
+		} else {
+			$ratio = $max_height / $image_height;
+		}
+		return array(round($image_width * $ratio), round($image_height * $ratio));
 	}
 }
 
