@@ -27,6 +27,14 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract
 		
 		return $data;
 	}
+
+	function renderInnerOutput($context = array())
+	{
+		$flags = $this->getConfiguration('flags');
+		$current = $this->getConfiguration('value');
+
+		return $flags[$current];
+	}
 	
 	function renderInput($context = array())
 	{
