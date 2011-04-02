@@ -51,7 +51,7 @@ class Tracker_Field_Factory
 			case 'I':
 				return new Tracker_Field_Simple($field_info, $this->itemData, $this->trackerDefinition, 'ip');
 			case 'L':
-				return new Tracker_Field_Simple($field_info, $this->itemData, $this->trackerDefinition, 'url');
+				return new Tracker_Field_Url($field_info, $this->itemData, $this->trackerDefinition);
 			case 'k':
 				return new Tracker_Field_PageSelector($field_info, $this->itemData, $this->trackerDefinition);
 			case 'l':
