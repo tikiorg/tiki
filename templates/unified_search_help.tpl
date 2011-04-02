@@ -22,7 +22,7 @@
 
 	<h4>{tr}Grouping terms{/tr}</h4>
 	<p>{tr}Use parenthesis ( ) to group terms into subexpressions.{/tr}&nbsp;
-	{tr}Example: <strong>+wiki +(forum blog)</strong> will find objects that contain <strong>wiki</strong> and <strong>forum</strong> or that contain <strong>wiki</strong> and <strong>blog</strong> in any order.{/tr}</p>
+	{tr}Example: <strong>wiki and (forum blog)</strong> will find objects that contain <strong>wiki</strong> and <strong>forum</strong> or that contain <strong>wiki</strong> and <strong>blog</strong> in any order.{/tr}</p>
 		
 	<h4>{tr}Finding phrases{/tr}</h4>
 	<p>{tr}Use double quotes ( " " ) around a phrase to find terms in the exact order, next to each other.{/tr}&nbsp;
