@@ -1233,6 +1233,13 @@ class TrackerLib extends TikiLib
 			.' INNER JOIN `tiki_tracker_fields` ttf ON ttf.`fieldId` = ttif.`fieldId`'
 			.')'.$join;
 
+		$fieldIds = array();
+		foreach ($listfields as $f) {
+			$fieldIds[] = $f['fieldId'];
+		}
+
+		$mid .= ' AND ' . $this->in('ttif.fieldId', $fieldIds, $bindvars);
+
 		$query = 'SELECT tti.*, ttif.`value`, ttf.`type`'
 				.', '.( ($numsort) ? "right(lpad($csort_mode,40,'0'),40)" : $csort_mode).' as `sortvalue`'
 			.' FROM '.$base_tables.$sort_tables.$cat_table
