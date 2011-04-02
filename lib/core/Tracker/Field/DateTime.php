@@ -36,7 +36,7 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract
 	function renderInnerOutput($context = array())
 	{
 		$tikilib = TikiLib::lib('tiki');
-		$value = $this->getValue();
+		$value = $this->getConfiguration('value');
 
 		if ($value) {
 			$date = $tikilib->get_short_date($value);

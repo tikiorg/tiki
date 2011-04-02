@@ -45,7 +45,7 @@ class Tracker_field_Image extends Tracker_Field_File
 		global $prefs;
 		$smarty = TikiLib::lib('smarty');
 
-		$val = $this->getValue();
+		$val = $this->getConfiguration('value');
 		$list_mode = $context['list_mode'];
 		if ($list_mode == 'csv') {
 			return $val; // return the filename

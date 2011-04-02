@@ -35,7 +35,7 @@ class Tracker_Field_PageSelector extends Tracker_Field_Abstract
 	
 	function renderOutput($context = array())
 	{
-		$value = $this->getValue();
+		$value = $this->getConfiguration('value');
 		if ($this->getOption(3) === 'n' || (isset($context['list_mode']) && $context['list_mode'] === 'csv')) {
 			return $value;
 		} else {
