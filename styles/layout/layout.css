@@ -366,6 +366,12 @@ li#logout_link a {
 	white-space: nowrap;
 }
 
+#top_modules .box-quickadmin {
+	position: absolute;
+	right: 1em;
+	padding: 0 .5em .2em 0;
+}
+
 /****** Menus_links ******/
 /** CSS (suckerfish) menus **/
 
