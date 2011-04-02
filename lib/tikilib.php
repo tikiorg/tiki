@@ -5062,7 +5062,6 @@ if( \$('#$id') ) {
 
 	function protect_email($name, $domain, $sep = '@') {
 		TikiLib::lib('header')->add_jq_onready('$(".convert-mailto").removeClass("convert-mailto").each(function () {
-			console.log($(this).data("name"));
 			var address = $(this).data("encode-name") + "@" + $(this).data("encode-domain");
 			$(this).attr("href", "mailto:" + address).text(address);
 		});');
