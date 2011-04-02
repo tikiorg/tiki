@@ -3635,17 +3635,15 @@ class TrackerLib extends TikiLib
 				<dd>Old field may have "#" or "#2[0]" in it.  Making it "20#2[0]" will set the max number to 20.
 				</dl>'));
 		$type['G'] = array(
-			'label'=>tra('Google Maps'),
+			'label'=>tra('Location'),
 			'opt'=>true,
 			'help'=>tra('<dl>
-				<dt>Function: Use Google Maps.
-				<dt>Will display a Google Maps around a point.
-				<dt>Usage: <strong>use_as_item_location,bubble_fieldId,icon</strong>
-				<dt>Example: y,23|24,img/icons2/icn_members.gif
+				<dt>Function: Use geolocation.
+				<dt>Will display a map around a point.
+				<dt>Usage: <strong>use_as_item_location</strong>
+				<dt>Example: y
 				<dt>Description:
 				<dd><strong>[use_as_item_location]</strong> if set to y, this google map field will be used as item location and object geo attributes are set when field value is changed.
-				<dd><strong>[bubble_fieldid]</strong> is the fieldId(s) (separated by |) that contains the text that will be displayed in the bubble of the map marker. The first field will be used as the link.
-				<dd><strong>[icon]</strong> is the url of the default icon to use for markers of items on the map.
 				</dl>'));
 		$type['s'] = array(
 			'label'=>tra('system'),
