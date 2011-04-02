@@ -36,15 +36,17 @@ class Tracker_Field_PageSelector extends Tracker_Field_Abstract
 	function renderOutput($context = array())
 	{
 		$value = $this->getConfiguration('value');
-		if ($this->getOption(3) === 'n' || (isset($context['list_mode']) && $context['list_mode'] === 'csv')) {
-			return $value;
-		} else {
-			$smarty = TikiLib::lib('smarty');
-			require_once $smarty->_get_plugin_filepath('function', 'object_link');
-			return smarty_function_object_link( array(
-				'type' => 'wikipage',
-				'id' => $value,
-			), $smarty);
+		if ($value) {
+			if ($this->getOption(3) === 'n' || (isset($context['list_mode']) && $context['list_mode'] === 'csv')) {
+				return $value;
+			} else {
+				$smarty = TikiLib::lib('smarty');
+				require_once $smarty->_get_plugin_filepath('function', 'object_link');
+				return smarty_function_object_link( array(
+					'type' => 'wikipage',
+					'id' => $value,
+				), $smarty);
+			}
 		}
 	}
 }
