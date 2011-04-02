@@ -76,7 +76,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract
 
 	function renderInnerOutput($context = array())
 	{
-		$value = $this->getValue();
+		$value = $this->getConfiguration('value');
 		require_once TikiLib::lib('smarty')->_get_plugin_filepath('modifier', 'username');
 		return smarty_modifier_username( $value );
 	}
