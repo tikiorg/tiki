@@ -5061,15 +5061,12 @@ if( \$('#$id') ) {
 	}
 
 	function protect_email($name, $domain, $sep = '@') {
-		$sep_encode = $mt_encode = '';
-		for ($x=0, $csep = strlen($sep); $x < $csep ; $x++) {
-			$sep_encode .= '%' . bin2hex($sep[$x]);
-		}
-		$mt = "mailto:";
-		for ($x=0, $cmt = strlen($mt); $x < $cmt ; $x++) {
-			$mt_encode .= '%' . bin2hex($mt[$x]);
-		}
-		return "<script language=\"Javascript\" type=\"text/javascript\">document.write('<a class=\"wiki\" href=\"'+unescape('$mt_encode')+'$name'+unescape('$sep_encode')+'$domain\">$name'+unescape('$sep_encode')+'$domain</a>');</script><noscript>$name ".tra("at","",true)." $domain</noscript>";
+		TikiLib::lib('header')->add_jq_onready('$(".convert-mailto").removeClass("convert-mailto").each(function () {
+			console.log($(this).data("name"));
+			var address = $(this).data("encode-name") + "@" + $(this).data("encode-domain");
+			$(this).attr("href", "mailto:" + address).text(address);
+		});');
+		return "<a class=\"convert-mailto\" href=\"mailto:nospam@example.com\" data-encode-name=\"$name\" data-encode-domain=\"$domain\">$name ".tra("at","",true)." $domain</a>";
 	}
 	
 	//Updates a dynamic variable found in some object
