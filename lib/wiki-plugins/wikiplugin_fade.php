@@ -88,7 +88,6 @@ function wikiplugin_fade( $body, $params )
 	$body = trim($body);
 	$body = $tikilib->parse_data( $body );
 	$jq = '
-				var icon = "'. $params['icon'] . '";
 				$(document).ready(function(){
 					$(\'#' . $unique_link . '\').toggle(
 						function() {
