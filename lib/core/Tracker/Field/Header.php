@@ -32,6 +32,9 @@ class Tracker_Field_Header extends Tracker_Field_Abstract
 
 		$class = null;
 		$level = $this->getOption(0, 2);
+		if (! is_numeric($level)) {
+			$level = 2;
+		}
 		$toggle = $this->getOption(1);
 		$inTable = isset($context['inTable']) ? $context['inTable'] : '';
 		$id = 'hdrField_' . $this->getConfiguration('fieldId') . '_' . $this->getData('itemId', 'new');

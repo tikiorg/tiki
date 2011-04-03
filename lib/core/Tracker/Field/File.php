@@ -17,12 +17,15 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 	{
 		$ins_id = $this->getInsertId();
 
-		$data = array('value' => '');
-		if (isset($_FILES[$ins_id]) && is_uploaded_file($_FILES[$ins_id]['tmp_name'])) {
+		if (empty($requestData)) {
+			$data = array('value' => $this->getValue());
+		} elseif (isset($_FILES[$ins_id]) && is_uploaded_file($_FILES[$ins_id]['tmp_name'])) {
 			$data['value'] = file_get_contents($_FILES[$ins_id]['tmp_name']);
 			$data['file_type'] = $_FILES[$ins_id]['type'];
 			$data['file_size'] = $_FILES[$ins_id]['size'];
 			$data['file_name'] = $_FILES[$ins_id]['name'];
+		} else {
+			$data = array('value' => '');
 		}
 		return $data;
 	}

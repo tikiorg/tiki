@@ -91,6 +91,14 @@ class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 		)), $result);
 	}
 
+	function testEquivalenceBetweenPlusAndAnd()
+	{
+		$result = $this->parser->parse('a php + framework');
+		$expect = $this->parser->parse('a php and framework');
+
+		$this->assertEquals($expect, $result);
+	}
+
 	function testSequenceWithOr()
 	{
 		$result = $this->parser->parse('1 or 2 or 3');

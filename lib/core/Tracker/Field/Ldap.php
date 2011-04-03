@@ -48,7 +48,7 @@ class Tracker_Field_Ldap extends Tracker_Field_Abstract
 
 	function renderInput($context = array())
 	{
-		return $this->getValue();
+		return $this->getConfiguration('value');
 	}
 }
 

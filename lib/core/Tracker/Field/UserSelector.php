@@ -58,7 +58,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract
 		global $tiki_p_admin_trackers, $user;
 		$smarty = TikiLib::lib('smarty');
 		
-		$value = $this->getValue() ? $this->getValue() : $user;
+		$value = $this->getConfiguration('value',  $user);
 		
 		if ($this->getOption(0) == 0 || $tiki_p_admin_trackers === 'y') {
 			require_once $smarty->_get_plugin_filepath('function', 'user_selector');
@@ -76,7 +76,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract
 
 	function renderInnerOutput($context = array())
 	{
-		$value = $this->getValue();
+		$value = $this->getConfiguration('value');
 		require_once TikiLib::lib('smarty')->_get_plugin_filepath('modifier', 'username');
 		return smarty_modifier_username( $value );
 	}

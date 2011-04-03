@@ -53,7 +53,7 @@ $("select[name=ins_' . $this->getOption(2) . ']").change(function(e, val) {
 			}
 		}
 	);
-}).trigger("change", ["' . $this->getValue() . '"]);
+}).trigger("change", ["' . $this->getConfiguration('value') . '"]);
 		');
 		
 		return '<select name="' . $this->getInsertId() . '"></select>';

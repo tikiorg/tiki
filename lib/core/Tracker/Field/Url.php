@@ -6,21 +6,12 @@
 // $Id$
 
 /**
- * Handler class for simple fields:
+ * Handler class for url fields:
  * 
- * - email key ~m~
- * - ip key ~I~
+ * - url key ~L~
  */
-class Tracker_Field_Simple extends Tracker_Field_Abstract
+class Tracker_Field_Url extends Tracker_Field_Abstract
 {
-	private $type;
-	
-	function __construct($fieldInfo, $itemData, $trackerDefinition, $type)
-	{
-		$this->type = $type;
-		parent::__construct($fieldInfo, $itemData, $trackerDefinition);
-	}
-	
 	function getFieldData(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();
@@ -32,9 +23,22 @@ class Tracker_Field_Simple extends Tracker_Field_Abstract
 		);
 	}
 	
+	function renderOutput($context = array())
+	{
+		$url = $this->getConfiguration('value');
+		require_once TikiLib::lib('smarty')->_get_plugin_filepath('function', 'object_link');
+
+		if ($url) {
+			return smarty_function_object_link(array(
+				'type' => 'external',
+				'id' => $url,
+			));
+		}
+	}
+
 	function renderInput($context = array())
 	{
-		return $this->renderTemplate("trackerinput/{$this->type}.tpl", $context);
+		return $this->renderTemplate("trackerinput/url.tpl", $context);
 	}
 }
 

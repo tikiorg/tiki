@@ -187,6 +187,7 @@ $orderkey = false;
 $listfields = array();
 $usecategs = false;
 $textarea_options = false;
+$all_descends = false;
 
 $fieldFactory = new Tracker_Field_Factory($trackerDefinition);
 

@@ -23,9 +23,8 @@ class RefererLib extends TikiLib
 	function list_referer_stats($offset, $maxRecords, $sort_mode, $find) {
 		$bindvars = array();
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
 			$mid = " where (`referer` like ?)";
-			$bindvars = array($findesc);
+			$bindvars[] = '%' . $find . '%';
 		} else {
 			$mid = "";
 		}

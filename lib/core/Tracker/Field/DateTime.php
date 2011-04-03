@@ -18,7 +18,7 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract
 		$ins_id = $this->getInsertId();
 
 		$data = array(
-			'value' => $this->getValue(TikiLib::lib('tiki')->now),
+			'value' => $this->getValue($this->getOption(3) == 'blank' ? '' : TikiLib::lib('tiki')->now),
 		);
 
 		if (isset($requestData[$ins_id.'Month']) || isset($requestData[$ins_id.'Hour'])) {
@@ -36,7 +36,7 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract
 	function renderInnerOutput($context = array())
 	{
 		$tikilib = TikiLib::lib('tiki');
-		$value = $this->getValue();
+		$value = $this->getConfiguration('value');
 
 		if ($value) {
 			$date = $tikilib->get_short_date($value);
