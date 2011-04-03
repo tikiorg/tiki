@@ -601,6 +601,37 @@ p.editdate {
 	font-style: italic;
 }
 
+/* wikiplugin_fade */
+.wpfade-hidden {
+	background-repeat: no-repeat; background-image: url(../../img/toggle-expand-dark.png);
+	margin-left: -19px; 
+	padding-left: 19px;
+}
+
+.wpfade-shown {
+	background-repeat: no-repeat; background-image: url(../../img/toggle-collapse-dark.png);
+	margin-left: -19px; 
+	padding-left: 19px;
+}
+
+.wpfade-span-plain {
+	cursor:pointer;
+}
+
+.wpfade-span-icon {
+	cursor:pointer;
+	margin-left:19px;	
+}
+
+.wpfade-div-plain {
+	display: none;
+}
+
+.wpfade-div-icon {
+	display: none;
+	margin-left:19px;
+}
+
 /* wikiplugin_fancylist */
 .wikitext .fancylist {
 	margin: .5em 0;
