@@ -117,7 +117,7 @@ class TikiLdapLib
 		foreach(array('basedn','username','password','userdn','useroc','userattr',
 				'fullnameattr','emailattr','groupdn','groupattr','groupoc','groupnameattr',
 				'groupdescattr','groupmemberattr','usergroupattr','groupgroupattr') as $n) {
-			if(isset($options[$n]) && !empty($options[$n]) && preg_match('#\s#',$options[$n])==0) {
+			if(isset($options[$n]) && !empty($options[$n])) {
 				$this->options[$n] = $options[$n];
 			}
 		}
