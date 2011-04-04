@@ -144,14 +144,12 @@ function prefs_user_list() {
 			),
 		),
 		'user_trackersync_geo' => array(
-			'name' => tra('Synchronize long/lat/zoom to google maps field'),
-			'description' => tra('Synchronize user geolocation prefs to main google maps field'),
+			'name' => tra('Synchronize long/lat/zoom to location field'),
+			'description' => tra('Synchronize user geolocation prefs to main location field'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'userTracker',
 				'user_trackersync_trackers',
-				'feature_ajax',
-				'feature_gmap',
 			),
 		),
 		'user_trackersync_groups' => array(
