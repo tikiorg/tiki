@@ -282,7 +282,11 @@ function wikiplugin_img_info() {
 				'filter' => 'text',
 				'description' => tra('Display the image metadata (IPTC and EXIF information).'),
 				'default' => '',
-				'advanced' => true
+				'advanced' => true,
+				'options' => array(
+					array('text' => tra('None'), 'value' => ''), 
+					array('text' => tra('View'), 'value' => 'view'), 
+				),
 			),
 			'alt' => array(
 				'required' => false,
