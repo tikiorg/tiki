@@ -121,7 +121,7 @@ class TrackerLib extends TikiLib
 		return $this->attachments()->fetchOne('user', array('attId' => (int) $attId));
 	}
 
-	function list_item_attachments($itemId, $offset, $maxRecords, $sort_mode, $find) {
+	function list_item_attachments($itemId, $offset = 0, $maxRecords = -1, $sort_mode = 'attId_asc', $find = '') {
 		$attachments = $this->attachments();
 
 		$order = $attachments->sortMode($sort_mode);
@@ -207,22 +207,26 @@ class TrackerLib extends TikiLib
 	function remove_item_attachment($attId=0, $itemId=0) {
 		global $prefs;
 		$attachments = $this->attachments();
+		$paths = array();
 
-		if (empty($attId)) {
-			$paths = $attachments->fetchColumn('path', array('itemId' => $itemId));
+		if (empty($attId) && !empty($itemId)) {
+			if ($prefs['t_use_db'] === 'n') {
+				$paths = $attachments->fetchColumn('path', array('itemId' => $itemId));
+			}
 
 			$this->query('update `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf using (`fieldId`) set `value`=? where ttif.`itemId`=? and ttf.`type`=?', array('', (int) $itemId, 'A'));
-		} else {
-			$paths = $attachments->fetchColumn('path', array('attId' => (int) $attId));
+			$attachments->deleteMultiple(array('itemId' => $itemId));
 
+		} else if (!empty($attId)) {
+			if ($prefs['t_use_db'] === 'n') {
+				$paths = $attachments->fetchColumn('path', array('attId' => (int) $attId));
+			}
 			$this->query('update `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf using (`fieldId`) set `value`=? where ttif.`value`=? and ttf.`type`=?', array('', (int) $attId, 'A'));
+			$attachments->delete(array('attId' => (int) $attId));
 		}
-
 		foreach (array_filter($paths) as $path) {
 			@unlink ($prefs['t_use_dir'] . $path);
 		}
-
-		$attachments->deleteMultiple(array('itemId' => $itemId));
 	}
 
 	function replace_item_attachment($attId, $filename, $type, $size, $data, $comment, $user, $fhash, $version, $longdesc, $trackerId=0, $itemId=0,$options='', $notif=true) {
@@ -1610,7 +1614,7 @@ class TrackerLib extends TikiLib
 						} else {
 							$fhash = 0;
 						}
-						$ins_fields['data'][$i]['value'] = $this->replace_item_attachment($array['old_value'], $array['file_name'], $array['file_type'], $array['file_size'], $array['value'], '', $user, $fhash, '', '', $trackerId, $currentItemId, '', false);
+						$array['value'] = $ins_fields['data'][$i]['value'] = $this->replace_item_attachment($array['old_value'], $array['file_name'], $array['file_type'], $array['file_size'], $array['value'], '', $user, $fhash, '', '', $trackerId, $currentItemId, '', false);
 					} else {
 						continue;
 					}

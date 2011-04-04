@@ -1,7 +1,7 @@
 {if $tiki_p_attach_trackers ne 'y'}
 	{tr}Permission denied{/tr}
 {else}
-	<input type="file" name="{$field.ins_id}"{if isset($input_err)} value="{$field.value}"{/if} />
+	<input type="file" name="{$field.ins_id}"{if isset($input_err)} value=""{/if} />
 {/if}
 {if $field.value ne ''}
 	<br />
