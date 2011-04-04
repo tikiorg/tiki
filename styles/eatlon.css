@@ -304,8 +304,8 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 	margin-top: 8px;
 }
 
-input#fuser,
-#search_mod_input_1 {
+#topbar_modules input#fuser,
+#topbar_modules #search_mod_input_1 {
 	border: 1px solid;
 	border-color: #878689 #f3f3f4 #f3f3f4 #878689;
 	background: #afafaf;
@@ -552,6 +552,10 @@ td.even,
 	color: #ececec}
 
 .tabactive a {color: #d7e5f3}
+
+.statuson {
+	border: 1px solid #8cacbb;
+}
 
 .tabcontent {
 	border-left: 1px solid #a9a9a9;
@@ -810,7 +814,7 @@ a.blogt:hover {
 
 textarea.tshoutbox{
 	font-size: 1.3em;
-	width: 132px}
+	width: 90%}
 
 /***** Directory *****/
 .dircategs {

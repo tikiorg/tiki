@@ -945,6 +945,11 @@ a.forumnameread {
 	background: #fff;
 }
 
+.statuson {
+	background: #ecf5ff;
+	border: 1px inset #ecf5ff;	
+}
+
 /*** Feature-specific selectors ***/
 /***** Wiki *****/
 body.tiki_wiki_page #comments {

@@ -724,7 +724,9 @@ a.sortheader:visited {
 	text-decoration: underline;
 	font-weight: bold}
 	
-
+th a,
+td.heading a,
+tr.diffheader a,
 .heading a.link,
 .heading a.link:visited {
 	color: #fff;
@@ -762,6 +764,11 @@ a.sortheader:visited {
 
 .tabcontent {
 	border: 1px solid #abcdef;
+}
+
+.statuson {
+	background: #abcdef;,
+	border: 1px inset #abcdef
 }
 
 /***** Wiki *****/

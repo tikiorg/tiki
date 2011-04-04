@@ -850,6 +850,10 @@ tr.diffheader {
 	text-align: left;
 }
 
+.statuson {
+	background: #bfbfbf;	
+}
+
 /*** Feature-specific selectors ***/
 /***** Wiki *****/
 h1 a.pagetitle {

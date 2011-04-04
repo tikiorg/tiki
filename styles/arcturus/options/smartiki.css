@@ -255,6 +255,13 @@ tr.diffheader {
   padding-right: 5px;
 }
 
+th a,
+th a.link,
+td.heading a,
+tr.diffheader a {
+    color: #000;
+}
+
 tr.odd td,
 td.odd,
 li.odd {
@@ -320,6 +327,9 @@ li.even:hover {
 	background: #f0ead8;
 }
 
+.statuson {
+	background: #f0c040;
+}
 
 .titleb,
 .articletrailer {

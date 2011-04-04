@@ -603,6 +603,10 @@ td.odd a, td.odd a:visited {
 	margin: 0 2px;
 }
 
+.tabs .container {
+	margin-right: 35px;
+}
+
 /* reset layout.css */
 .tabactive,
 .tabinactive,
@@ -641,6 +645,10 @@ td.odd a, td.odd a:visited {
 .tabinactive {
 	border: solid .1em #abcdef !important;
 	border-bottom: 1px solid #dddddd !important;
+}
+
+.statuson {
+	background: #3778c9;
 }
 
 .tabcontent {

@@ -184,6 +184,13 @@ select {
 	color: #000;
 }
 
+#topbar_modules input#fuser,
+#topbar_modules #search_mod_input_1 {
+	background: #5e9b9b;
+	color: #fff;
+}
+
+
 
 .button a,
 .button a:visited,

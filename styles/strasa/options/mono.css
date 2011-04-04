@@ -582,6 +582,11 @@ a.forumnameread {
 	background-color: #f8f8f8;
 }
 
+.statuson {
+	background: #565656;
+	border: 1px inset #343434;
+	
+}
 /*** Feature-specific selectors ***/
 /***** Wiki *****/
 

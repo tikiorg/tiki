@@ -992,7 +992,8 @@ td.form {
 	border: solid 1px #666 !important;
 }
 
-.tabmark {
+.tabmark,
+.statuson {
 	background: #4e4e4e url(darkroom/button.png) repeat-x;/*
 	border: 1px solid #666;
 	border-bottom-width: 0 !important;

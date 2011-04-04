@@ -1021,6 +1021,10 @@ a.register_link {
 	-moz-border-radius-topright: 4px;
 	padding: 4px;
 }
+
+.statuson {
+	background: white;
+}
 	
 legend.heading {
 	background: transparent;

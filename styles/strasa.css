@@ -1139,6 +1139,12 @@ a.forumnameread {
 	background: transparent;
 }
 
+.statuson {
+	background: #1d9ccf;
+	border: 1px inset #223845;
+
+}
+
 /*** Feature-specific selectors ***/
 /***** Wiki *****/
 body.tiki_wiki #comments {
