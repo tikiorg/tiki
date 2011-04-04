@@ -2620,7 +2620,7 @@ class FileGalLib extends TikiLib
 			}
 
 			global $access;
-			$confirmationText = ( empty( $info['name'] ) ? '' : htmlspecialchars( $info['name']) . ' - ' ) . $info['filename'];
+			$confirmationText = ( empty( $info['name'] ) ? '' : htmlspecialchars( $info['name']) . ' - ' ) . htmlspecialchars($info['filename']);
 			if ( $params['draft'] ) {
 				$access->check_authenticity( tra( 'Remove file draft: ') . $confirmationText );
 				$this->remove_draft( $info['fileId'], $user );
