@@ -46,7 +46,7 @@ class Tracker_field_Image extends Tracker_Field_File
 		$smarty = TikiLib::lib('smarty');
 
 		$val = $this->getConfiguration('value');
-		$list_mode = $context['list_mode'];
+		$list_mode = !empty($context['list_mode']) ? $context['list_mode'] : 'n';
 		if ($list_mode == 'csv') {
 			return $val; // return the filename
 		}
@@ -99,6 +99,7 @@ class Tracker_field_Image extends Tracker_Field_File
 
 	function renderInput($context = array())
 	{
+		$context['image_tag'] = $this->renderInnerOutput($context);
 		return $this->renderTemplate('trackerinput/image.tpl', $context);
 	}
 
