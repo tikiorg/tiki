@@ -43,9 +43,6 @@ class Tracker_Field_Header extends Tracker_Field_Abstract
 		if ($prefs['javascript_enabled'] === 'y' && ($toggle === 'o' || $toggle === 'c')) {
 			$class = ' ' . ($toggle === 'c' ? 'trackerHeaderClose' : 'trackerHeaderOpen');
 			$data_toggle = 'data-toggle="' . $toggle . '"';
-			$js = "\$('#$id').click(function(event){";
-			
-		
 		}
 		if ($inTable) {
 			$js = '
