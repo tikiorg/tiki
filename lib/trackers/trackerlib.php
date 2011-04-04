@@ -4539,6 +4539,7 @@ class TrackerLib extends TikiLib
 			$cats = $categlib->get_object_categories('trackeritem', $from);
 		}
 		if (empty($to)) {
+			$is_new = 'y';
 			$info_to['trackerId'] = $this->items()->fetchOne('trackerId', array('itemId' => $from));
 			$info_to['status'] = empty($status)? $this->items()->fetchOne('status', array('itemId' => $from)): $status;
 			$info_to['created'] = $info_to['lastModif'] = $this->now;
@@ -4565,10 +4566,12 @@ class TrackerLib extends TikiLib
 			
 			if ((!empty($except) && in_array($res['fieldId'], $except))
 				|| (!empty($only) && !in_array($res['fieldId'], $only))
-				|| (in_array($res['type'], array('u', 'g', 'I')) && $res['options_array'][0] == 1)
 				|| ($res['type'] == 'q')
 				) {
 				continue;
+			}
+			if (!empty($is_new) && in_array($res['type'], array('u', 'g', 'I')) && ($res['options_array'][0] == 1 || $res['options_array'][0] == 2)) {
+				$res['value'] = ($res['type'] == 'u')?$user: (($res['type'] =='g')? $_SESSION['u_info']['group']: TikiLib::get_ip_address());
 			}
 			if (in_array($res['type'], array('A', 'N'))) {// attachment - image
 				continue; //not done yet
