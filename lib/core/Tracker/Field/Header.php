@@ -37,7 +37,6 @@ class Tracker_Field_Header extends Tracker_Field_Abstract
 		}
 		$toggle = $this->getOption(1);
 		$inTable = isset($context['inTable']) ? $context['inTable'] : '';
-		$id = 'hdrField_' . $this->getConfiguration('fieldId') . '_' . $this->getData('itemId', 'new');
 		$name =  htmlspecialchars(tra($this->getConfiguration('name')));
 
 		$data_toggle = '';
@@ -58,7 +57,7 @@ class Tracker_Field_Header extends Tracker_Field_Abstract
 				var $this = $(this);
 				var $sibs = $this.nextAll("tr");
 				var level = $(".hdrField:first", this).data("level");
-				var name = $(".formlabel:first", this).text();
+				var name = $("td:first", this).text();
 				$hdr = $("<h" + level + ">").text($.trim(name));
 				var toggle = $(".hdrField:first", this).data("toggle");
 				if (toggle) {
@@ -80,7 +79,9 @@ class Tracker_Field_Header extends Tracker_Field_Abstract
 			processTableForHeaders($newtable);	// recurse until done
 		}
 	}
-	processTableForHeaders($(".hdrField").parents("table:first"));
+	$(".hdrField").parents("table").each(function() {
+		processTableForHeaders($(this));
+	});
 })();';
 		} else {
 			$js = '';	// TODO div mode for plugins or something
@@ -88,7 +89,7 @@ class Tracker_Field_Header extends Tracker_Field_Abstract
 		$headerlib->add_jq_onready($js);
 		
 		// just a marker for jQ to find
-		$html = '<span id=' . $id . ' class="hdrField' . $class . '" data-level="' . $level . '" ' .
+		$html = '<span class="hdrField' . $class . '" data-level="' . $level . '" ' .
 				$data_toggle .' style="display:none;"></span>';
 		
 		return $html;

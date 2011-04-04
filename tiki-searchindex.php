@@ -58,7 +58,7 @@ if (count($filter)) {
 				'type' => $res['object_type'],
 				'id' => $res['object_id'],
 				'title' => $res['title'],
-			));
+			), $smarty);
 		}
 		$access->output_serialized($results);
 		exit;

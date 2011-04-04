@@ -1149,18 +1149,12 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 	background: #ededed;
 }
 
-/***** Tags (freetags) *****/
-/*****  Polls  *****/
-/***** FAQs *****/
-/***** Quizzes *****/
-/***** Shoutbox *****/
 /***** Directory *****/
 a.dirsitelink,
 a.dirsublink {
 	font-weight: bold;
 }
-/***** Messages *****/
-/***** TikiSheets *****/
+
 /***** Calendar *****/
 .caltable .days {
 	color: #fff;

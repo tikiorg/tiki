@@ -95,6 +95,10 @@ function smarty_function_object_link_external( $smarty, $link, $title = null ) {
 	global $cachelib; require_once 'lib/cache/cachelib.php';
 	global $tikilib;
 
+	if (substr($link, 0, 4) === 'www.') {
+		$link = 'http://' . $link;
+	}
+
 	if( ! $title ) {
 		if( ! $title = $cachelib->getCached( $link, 'object_link_ext_title' ) ) {
 			$body = $tikilib->httprequest( $link );

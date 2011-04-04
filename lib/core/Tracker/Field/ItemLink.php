@@ -32,16 +32,18 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 
 	function renderOutput($context = array())
 	{
+		$smarty = TikiLib::lib('smarty');
+
 		$item = $this->getConfiguration('linkId');
 		$label = $this->getConfiguration('value');
-		require_once TikiLib::lib('smarty')->_get_plugin_filepath('function', 'object_link');
+		require_once $smarty->_get_plugin_filepath('function', 'object_link');
 
 		if ($item) {
 			return smarty_function_object_link(array(
 				'type' => 'trackeritem',
 				'id' => $item,
 				'title' => $label,
-			));
+			), $smarty);
 		}
 	}
 
