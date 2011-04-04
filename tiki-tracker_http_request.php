@@ -54,6 +54,7 @@ for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count
 			}
 		}
 		$listfields = array();
+		$listfields[$fid]['fieldId'] = $fid;
 		$listfields[$fid]['type'] = $xfields["data"][$dfid]["type"];
 		$listfields[$fid]['name'] = $xfields["data"][$dfid]["name"];
 		$listfields[$fid]['options'] = $xfields["data"][$dfid]["options"];
