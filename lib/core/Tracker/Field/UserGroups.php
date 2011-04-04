@@ -37,7 +37,7 @@ class Tracker_Field_UserGroups extends Tracker_Field_Abstract
 	
 	function renderInput($context = array())
 	{
-		return null;		
+		return $this->renderOutput($context);		
 	}
 	
 	function renderOutput($context = array())
