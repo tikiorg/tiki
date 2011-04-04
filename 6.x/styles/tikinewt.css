@@ -1876,15 +1876,7 @@ a.namealias {
 
 /***** Trackers (etc.) *****/
 .statuson {
-	border: 1px inset #666;
-	vertical-align: middle;
-	background: #bbaa99;
-}
-
-.statusoff {
-	padding: 1px;
-	margin: 2px;
-	vertical-align: middle;
+	border: 1px solid #8cacbb;
 }
 
 /***** Categories, Tags *****/

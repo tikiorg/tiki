@@ -1715,16 +1715,11 @@ body.filegal_popup #tiki-center {
 }
 
 /***** Trackers (etc.) *****/
-.statuson {
-	padding: 1px;
-	margin: 1px;
-	vertical-align: middle;
-}
-
+.statuson,
 .statusoff {
-	padding: 1px;
-	margin: 2px;
+	padding: 3px 2px 0px 2px;
 	vertical-align: middle;
+	height: 15px;
 }
 	
 /* also for categorize.tpl */

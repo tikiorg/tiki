@@ -506,6 +506,10 @@ li.even,
 	color: #000 !important;	
 }
 
+.statuson {
+	background: #676767;
+}
+
 .tabcontent {
 	background: none;
 }

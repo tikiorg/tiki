@@ -487,6 +487,10 @@ li.even {
 	outline: none;
 }
 
+.statuson {
+	background: #ccc;
+}
+
 /***** Wiki *****/
 
 /* code plugin */

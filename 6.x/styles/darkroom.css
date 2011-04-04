@@ -1073,7 +1073,8 @@ td.form {
 	border: solid 1px #666 !important;
 }
 
-.tabmark {
+.tabmark,
+.statuson {
 	font-size: 10px;
 	background: #4e4e4e url(darkroom/button.png);
 	border: 1px solid #666;

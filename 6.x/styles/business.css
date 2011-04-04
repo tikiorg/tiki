@@ -732,6 +732,10 @@ td.odd a, td.odd a:visited {
 	border-bottom: 1px solid #dddddd !important;
 }
 
+.statuson {
+	background: #3778c9;
+}
+
 .tabcontent {
 	border: 1px solid #abcdef;
 	background: #fff;
