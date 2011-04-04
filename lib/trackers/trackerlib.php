@@ -3486,7 +3486,7 @@ class TrackerLib extends TikiLib
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Allows user to upload an image into the tracker item.
-				<dt>Usage: <strong>xListSize,yListSize,xDetailsSize,yDetailsSize,uploadLimitScale,shadowBox</strong>
+				<dt>Usage: <strong>xListSize,yListSize,xDetailsSize,yDetailsSize,uploadLimitScale,shadowBox,imageMissingIcon</strong>
 				<dt>Example: 30,30,100,100,1000,item
 				<dt>Description:
 				<dd><strong>[xListSize]</strong> sets the pixel width of the image in the list view;
@@ -3495,6 +3495,7 @@ class TrackerLib extends TikiLib
 				<dd><strong>[yDetailSize]</strong> sets the pixel height of the image in the item view;
 				<dd><strong>[uploadLimitScale]</strong> sets the maximum total size of the image, in pixels (width or height);
 				<dd><strong>[shadowbox]</strong> actives a shadowbox(if feature on) = \'item\': to use the same shadowbox for an item, =\'individual\': to use a shadowbox only for this image, other value= to set the group of images of the shadowbox ;
+				<dd><strong>[imageMissingIcon]</strong> use and icon for missing images - e.g. img/icons/na_pict.gif;
 				<dd>images are stored in img/trackers;
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));

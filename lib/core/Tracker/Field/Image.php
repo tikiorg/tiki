@@ -83,8 +83,12 @@ class Tracker_field_Image extends Tracker_Field_File
 				}
 			}
 		} else {
-			$params['file'] = 'img/icons/na_pict.gif';
-			$params['alt'] = 'n/a';
+			if ($this->getOption(5)) {
+				$params['file'] = $this->getOption(6);
+				$params['alt'] = 'n/a';
+			} else {
+				return '';
+			}
 		}
 		require_once $smarty->_get_plugin_filepath('function', 'html_image');
 		$ret = smarty_function_html_image($params, $smarty);
