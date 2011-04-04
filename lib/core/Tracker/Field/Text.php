@@ -30,12 +30,14 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
 		$pre = '';
 		$post = '';
 
-		if ($this->getOption(2)) {
-			$pre = '<span class="formunit">' . $this->getOption(2) . '</span>';
-		}
+		if ($this->getConfiguration('type') == 't') {
+			if ($this->getOption(2)) {
+				$pre = '<span class="formunit">' . $this->getOption(2) . '</span>';
+			}
 
-		if ($this->getOption(3)) {
-			$pre = '<span class="formunit">' . $this->getOption(3) . '</span>';
+			if ($this->getOption(3)) {
+				$pre = '<span class="formunit">' . $this->getOption(3) . '</span>';
+			}
 		}
 
 		return $pre . parent::renderInnerOutput($context) . $post;
