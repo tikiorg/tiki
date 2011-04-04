@@ -1234,10 +1234,14 @@ class TrackerLib extends TikiLib
 			.')'.$join;
 
 		$fieldIds = array();
-		foreach ($listfields as $f) {
-			$fieldIds[] = $f['fieldId'];
+		foreach ($listfields as $k => $f) {
+			if (isset($f['fieldId'])) {
+				$fieldIds[] = $f['fieldId'];
+			} else {
+				$fieldIds[] = $k;	// sometimes filterfields are provided with the fieldId only on the array keys
+			}
 		}
-
+				
 		$mid .= ' AND ' . $this->in('ttif.fieldId', $fieldIds, $bindvars);
 
 		$query = 'SELECT tti.*, ttif.`value`, ttf.`type`'
