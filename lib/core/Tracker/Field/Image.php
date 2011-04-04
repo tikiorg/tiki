@@ -107,14 +107,21 @@ class Tracker_field_Image extends Tracker_Field_File
 	 * @param int $image_height	(existing image height)
 	 * @param int $max_width (max width to scale to)
 	 * @param int $max_height (optional max height)
+	 * @param bool $upscale (whether to make images larger - default = false)
 	 * 
 	 * @return array(int $resized_width, int $resized_height)
 	 */
-	private function get_resize_dimensions( $image_width, $image_height, $max_width = null, $max_height = null) {
+	private function get_resize_dimensions( $image_width, $image_height, $max_width = null, $max_height = null, $upscale = false) {
+		if (!$upscale && $image_width <= $max_width && $image_height <= $max_height) {
+			return array($image_width, $image_height);
+		}
 		if ( !$max_height || ($max_width && $image_width > $image_height && $image_height < $max_height)) {
 			$ratio = $max_width / $image_width;
 		} else {
 			$ratio = $max_height / $image_height;
+			if (round($image_width * $ratio) > $max_width) {
+				$ratio = $max_width / $image_width;
+			}
 		}
 		return array(round($image_width * $ratio), round($image_height * $ratio));
 	}
