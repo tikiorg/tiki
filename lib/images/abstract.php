@@ -15,6 +15,10 @@ class ImageAbstract
 	var $filename = null;
 	var $thumb = null;
 	var $loaded = false;
+	var $header = null;
+	var $otherinfo = null;
+	var $iptc = null;
+	var $exif = null;
 
 	function __construct($image, $isfile = false) {
 		if ( ! empty($image) || $this->filename !== null ) {
@@ -207,5 +211,94 @@ class ImageAbstract
 			$this->width = $this->_get_width();
 		}
 		return $this->width;
+	}
+
+	function set_img_info($image, $isfile = true) {
+		$tempfile = '';
+		if (!$isfile) {
+	 		$cwd = getcwd(); 								//get current working directory
+	 		$tempfile = tempnam("$cwd/tmp", 'temp_image_');	//create tempfile and return the path/name (make sure you have created tmp directory under $cwd
+	 		$temphandle = fopen($tempfile, 'w');			//open for writing
+	 		fwrite($temphandle, $image); 					//write image to tempfile
+	 		fclose($temphandle);
+	 		$image = $tempfile;
+		}
+		$this->header = getimagesize($image, $otherinfo);
+		$this->width = $this->header[0];
+		$this->height = $this->header[1];
+		$this->otherinfo = $otherinfo;
+		$this->exif = exif_read_data($image, 0, true);
+		if (!empty($tempfile)) {
+			unlink($tempfile);								// remove tempfile
+		}
+	}
+	
+	function get_iptc($otherinfo) {
+		if (!empty($otherinfo['APP13'])) {
+			$iptc = iptcparse($otherinfo['APP13']);
+			$tags = $this->get_iptc_tags();
+			foreach ($iptc as $key => $value) {
+				if (array_key_exists($key, $tags)) {
+					trim($iptc[$key][0]);
+					$iptc[$key][1] = trim($tags[$key]);
+					$this->iptc = $iptc;
+				} else {
+					$iptc[$key][1] = '';
+					$this->iptc = $iptc;
+				}
+			}
+		} else {
+			$this->iptc = null;
+		}
+		return $this->iptc;
+	}
+
+	function get_iptc_tags() {
+		$tags = array(
+			'2#000' => tra('Application Record Version'),
+			'2#003' => tra('Object Type Reference'),
+			'2#004' => tra('Object Attribute Reference'),
+			'2#005' => tra('Object Name'),
+			'2#007' => tra('Edit Status'),
+			'2#008' => tra('Editorial Update'),
+			'2#010' => tra('Urgency'),
+			'2#012' => tra('Subject Reference'),
+			'2#015' => tra('Category'),
+			'2#020' => tra('Supplemental Categories'),
+			'2#022' => tra('Fixture Identifier'),
+			'2#025' => tra('Keywords'),
+			'2#026' => tra('Content Location Code'),
+			'2#027' => tra('Content Location Name'),
+			'2#030' => tra('Release Date'),
+			'2#035' => tra('Release Time'),
+			'2#037' => tra('Expiration Date'),
+			'2#038' => tra('Expiration Time'),
+			'2#040' => tra('Special Instructions'),
+			'2#042' => tra('Action Advised'),
+			'2#045' => tra('Reference Service'),
+			'2#047' => tra('Reference Date'),
+			'2#050' => tra('Reference Number'),
+			'2#055' => tra('Date Created'),
+			'2#060' => tra('Time Created'),
+			'2#062' => tra('Digital Creation Date'),
+			'2#063' => tra('Digital Creation Time'),
+			'2#065' => tra('Originating Program'),
+			'2#070' => tra('Program Version'),
+			'2#075' => tra('Object Cycle'),
+			'2#080' => tra('Byline'),
+			'2#085' => tra('Byline Title'),
+			'2#090' => tra('City'),
+			'2#095' => tra('Province/State'),
+			'2#100' => tra('Country Code'),
+			'2#101' => tra('Country'),
+			'2#103' => tra('Original Transmission Reference'),
+			'2#105' => tra('Headline'),
+			'2#110' => tra('Credit'),
+			'2#115' => tra('Source'),
+			'2#116' => tra('Copyright String'),
+			'2#120' => tra('Caption'),
+			'2#121' => tra('Local Caption')
+		);
+		return $tags;
 	}
 }
