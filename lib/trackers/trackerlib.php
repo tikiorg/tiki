@@ -121,7 +121,7 @@ class TrackerLib extends TikiLib
 		return $this->attachments()->fetchOne('user', array('attId' => (int) $attId));
 	}
 
-	function list_item_attachments($itemId, $offset, $maxRecords, $sort_mode, $find) {
+	function list_item_attachments($itemId, $offset = 0, $maxRecords = -1, $sort_mode = 'attId_asc', $find = '') {
 		$attachments = $this->attachments();
 
 		$order = $attachments->sortMode($sort_mode);
@@ -207,22 +207,26 @@ class TrackerLib extends TikiLib
 	function remove_item_attachment($attId=0, $itemId=0) {
 		global $prefs;
 		$attachments = $this->attachments();
+		$paths = array();
 
-		if (empty($attId)) {
-			$paths = $attachments->fetchColumn('path', array('itemId' => $itemId));
+		if (empty($attId) && !empty($itemId)) {
+			if ($prefs['t_use_db'] === 'n') {
+				$paths = $attachments->fetchColumn('path', array('itemId' => $itemId));
+			}
 
 			$this->query('update `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf using (`fieldId`) set `value`=? where ttif.`itemId`=? and ttf.`type`=?', array('', (int) $itemId, 'A'));
-		} else {
-			$paths = $attachments->fetchColumn('path', array('attId' => (int) $attId));
+			$attachments->deleteMultiple(array('itemId' => $itemId));
 
+		} else if (!empty($attId)) {
+			if ($prefs['t_use_db'] === 'n') {
+				$paths = $attachments->fetchColumn('path', array('attId' => (int) $attId));
+			}
 			$this->query('update `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf using (`fieldId`) set `value`=? where ttif.`value`=? and ttf.`type`=?', array('', (int) $attId, 'A'));
+			$attachments->delete(array('attId' => (int) $attId));
 		}
-
 		foreach (array_filter($paths) as $path) {
 			@unlink ($prefs['t_use_dir'] . $path);
 		}
-
-		$attachments->deleteMultiple(array('itemId' => $itemId));
 	}
 
 	function replace_item_attachment($attId, $filename, $type, $size, $data, $comment, $user, $fhash, $version, $longdesc, $trackerId=0, $itemId=0,$options='', $notif=true) {
@@ -1234,10 +1238,14 @@ class TrackerLib extends TikiLib
 			.')'.$join;
 
 		$fieldIds = array();
-		foreach ($listfields as $f) {
-			$fieldIds[] = $f['fieldId'];
+		foreach ($listfields as $k => $f) {
+			if (isset($f['fieldId'])) {
+				$fieldIds[] = $f['fieldId'];
+			} else {
+				$fieldIds[] = $k;	// sometimes filterfields are provided with the fieldId only on the array keys
+			}
 		}
-
+				
 		$mid .= ' AND ' . $this->in('ttif.fieldId', $fieldIds, $bindvars);
 
 		$query = 'SELECT tti.*, ttif.`value`, ttf.`type`'
@@ -1606,7 +1614,7 @@ class TrackerLib extends TikiLib
 						} else {
 							$fhash = 0;
 						}
-						$ins_fields['data'][$i]['value'] = $this->replace_item_attachment($array['old_value'], $array['file_name'], $array['file_type'], $array['file_size'], $array['value'], '', $user, $fhash, '', '', $trackerId, $currentItemId, '', false);
+						$array['value'] = $ins_fields['data'][$i]['value'] = $this->replace_item_attachment($array['old_value'], $array['file_name'], $array['file_type'], $array['file_size'], $array['value'], '', $user, $fhash, '', '', $trackerId, $currentItemId, '', false);
 					} else {
 						continue;
 					}
@@ -3486,7 +3494,7 @@ class TrackerLib extends TikiLib
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Allows user to upload an image into the tracker item.
-				<dt>Usage: <strong>xListSize,yListSize,xDetailsSize,yDetailsSize,uploadLimitScale,shadowBox</strong>
+				<dt>Usage: <strong>xListSize,yListSize,xDetailsSize,yDetailsSize,uploadLimitScale,shadowBox,imageMissingIcon</strong>
 				<dt>Example: 30,30,100,100,1000,item
 				<dt>Description:
 				<dd><strong>[xListSize]</strong> sets the pixel width of the image in the list view;
@@ -3495,6 +3503,7 @@ class TrackerLib extends TikiLib
 				<dd><strong>[yDetailSize]</strong> sets the pixel height of the image in the item view;
 				<dd><strong>[uploadLimitScale]</strong> sets the maximum total size of the image, in pixels (width or height);
 				<dd><strong>[shadowbox]</strong> actives a shadowbox(if feature on) = \'item\': to use the same shadowbox for an item, =\'individual\': to use a shadowbox only for this image, other value= to set the group of images of the shadowbox ;
+				<dd><strong>[imageMissingIcon]</strong> use and icon for missing images - e.g. img/icons/na_pict.gif;
 				<dd>images are stored in img/trackers;
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));

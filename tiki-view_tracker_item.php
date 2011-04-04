@@ -661,7 +661,7 @@ if ($tracker_info["useAttachments"] == 'y') {
 		check_ticket('view-trackers-items');
 		$owner = $trklib->get_item_attachment_owner($_REQUEST["removeattach"]);
 		if (($user && ($owner == $user)) || ($tiki_p_admin_trackers == 'y')) {
-			$access->check_authenticity();
+			$access->check_authenticity(tra('Are you sure you want to remove this attachment?'));
 			$trklib->remove_item_attachment($_REQUEST["removeattach"]);
 		}
 		$_REQUEST["show"] = "att";

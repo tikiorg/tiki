@@ -44,6 +44,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 				'id' => $item,
 				'title' => $label,
 			), $smarty);
+		} elseif ($label) {
+			return $label;
 		}
 	}
 
