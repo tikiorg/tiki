@@ -3033,7 +3033,7 @@ class TrackerLib extends TikiLib
 
 		$conditions = array(
 			'itemId' => (int) $itemId,
-			'fieldId' => (int) $fieldId,
+			'fieldId' => (int) $field['fieldId'],
 		);
 
 		$this->register_user_vote($user, $key, $userValue, array(), true);
@@ -3045,7 +3045,7 @@ class TrackerLib extends TikiLib
 			$itemFields->insert(array(
 				'value' => $field['value'],
 				'itemId' => (int) $itemId,
-				'fieldId' => (int) $fieldId,
+				'fieldId' => (int) $field['fieldId'],
 			));
 		} else {
 			$votings = $this->table('tiki_user_votings');
