@@ -603,6 +603,10 @@ td.odd a, td.odd a:visited {
 	margin: 0 2px;
 }
 
+.tabs .container {
+	margin-right: 35px;
+}
+
 /* reset layout.css */
 .tabactive,
 .tabinactive,
@@ -641,6 +645,10 @@ td.odd a, td.odd a:visited {
 .tabinactive {
 	border: solid .1em #abcdef !important;
 	border-bottom: 1px solid #dddddd !important;
+}
+
+.statuson {
+	background: #3778c9;
 }
 
 .tabcontent {
@@ -714,15 +722,6 @@ body.tiki_blogs .post {
 body.tiki_blogs .postbody {
 	padding: 0 1em 1em;
 }
-/*
-body.tiki_blogs .author_actions {
-	width: 40%;
-	float: right;
-	border: 2px solid #fff;
-	background: #fbfbfb;
-	margin-right: -1em;
-	margin-top: -6px;
-}*/
 
 /***** Forums *****/
 
@@ -735,9 +734,6 @@ body.tiki_blogs .author_actions {
 .post .author {
 	border: 2px solid #fff;
 	background: #fbfbfb;
-}
-
-.post .author_post_info:first-child {
 }
 
 .post .postbody-title .title a.link {

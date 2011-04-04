@@ -551,6 +551,11 @@ a.forumnameread {color: #fd0006}
 
 .tabcontent table td {padding: 5px}
 
+.statuson {
+	background: #5e0000;
+	border: 1px inset #990000;	
+}
+
 /***** Wiki *****/
 body.tiki_wiki #comments {padding: 1em}
 
@@ -561,8 +566,6 @@ h1 a.pagetitle:visited {
 
 h1 a.pagetitle:hover {
 	text-decoration: none}
-
-.wikitopline {}
 
 #description,
 .description {

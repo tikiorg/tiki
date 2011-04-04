@@ -251,12 +251,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 	bottom: 0;
 }
 
-/*.siteloginbar_popup ul.cssmenu_horiz li ul {
-	padding: 0;
-	background: none;
-	margin-top: -12px;
-}*/
-
 #sitetitles {
 	padding-left: 20px;
 	margin-bottom: 14px;}
@@ -837,7 +831,6 @@ a.blogt:hover {
 	color: #FFF;
 	border-bottom: 1px dotted #FFF}
 
-.postinfo a.linkmodule {}
 .postinfo div {margin-top: 30%}
 
 .postinfo {
@@ -1027,8 +1020,8 @@ a.blogt:hover {
 /***** Trackers *****/
 
 .statuson {
-	border: 1px inset #666;
-	background: #bbaa99}
+	border: 1px inset #b5b5c3;
+	background: #586858}
 
 /***** Categories *****/
 .categpath {font-size: x-small}

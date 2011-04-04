@@ -958,12 +958,6 @@ td.third {
 	float: left;
 }
 
-.tabmark {
-/*	font-size: .95em;
-	background: #ddd;
-	border: 1px solid #666;
-*/}
-
 .tabmark a,
 .tabmark a:visited {
 	padding: 0.5em 1em;
@@ -1774,15 +1768,7 @@ a.namealias {
 
 /***** Trackers (etc.) *****/
 .statuson {
-	border: 1px inset #666;
-	vertical-align: middle;
-	background: #bbaa99;
-}
-
-.statusoff {
-	padding: 1px;
-	margin: 2px;
-	vertical-align: middle;
+	border: 1px solid #8cacbb;
 }
 
 /***** Categories, Tags *****/

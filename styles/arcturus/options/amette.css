@@ -352,6 +352,13 @@ tr.diffheader {
 	width: 15px;
 }
 
+th a,
+th a.link,
+td.heading a,
+tr.diffheader a {
+    color: #fff;
+}
+
 
 h1.pagetitle a,
 h1.pagetitle a:visited,

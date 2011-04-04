@@ -532,12 +532,13 @@ li.even,
 
 .tabmark a,
 .tabmark a:visited {
-	padding: 0.5em 1em;
+/*	padding: 0.5em 1em;*/
+	display: block;
 	color: #555555;
 	font-weight: normal;
 }
 
-.tabinactive:hover,
+/*.tabinactive:hover,*/
 .tabactive {
 	border-bottom-width: 0;
 	padding-bottom: 1px;
@@ -547,15 +548,19 @@ li.even,
 	color: #212121;
 	outline: none;
 }
-
+/*
 .tabactive a:hover,
 .tabinactive a:hover {
 	background: none;
-}
+}*/
 
 .tabcontent {
 	background: #fff;
 	border-top: none !important;
+}
+
+.statuson {
+	background: #e6e6e6;
 }
 
 /***** Wiki *****/

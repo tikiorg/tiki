@@ -235,7 +235,8 @@ li.even {
 	background:#9fda58 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
 }
 
-.tabmark {
+.tabmark,
+.statuson {
 	border: 1px solid #1b1613;
 	background: #0a0a0a url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_glass_40_0a0a0a_1x400.png) 50% 50% repeat-x;
 	font-weight: bold;

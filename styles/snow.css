@@ -82,8 +82,6 @@ h1 {
 	margin-top: 0;
 	margin-bottom: 0}
 	
-*:first-child+html body h1 {}
-
 h2 {font-size: 1.6em}
 h3 {font-size: 1.5em}
 h4 {font-size: 1.3em}
@@ -128,7 +126,7 @@ input[type="submit"] {
 	border-top: 1px solid #818181;
 	margin: 2px;
 	padding: 2px 4px;
-/*	border: 1px solid #788596;*/}
+}
 
 .button a:hover,
 button a:hover,
@@ -462,9 +460,6 @@ h3.box-title {
 	border: 2px solid #a1adc7;
 	padding: 2px}
 	
-.cbox-title {}
-.cbox-data {}
-
 .rbox {margin: 3px}
 
 .rbox-title,
@@ -503,8 +498,6 @@ tr.odd {
 	background: #F7F9FA;
 	border-collapse: collapse;
 	color: #393e51}
-
-tr.odd:hover {}
 
 td.even,
 tr.even {
@@ -587,15 +580,13 @@ td.heading,
 	padding-bottom: 1px;
 	background: #b1c1db url(snow/flakesptn3.jpg);
 }
-/*
-.tabinactive {
-	border: solid 1px #bbb !important;
-	border-bottom: 1px solid #ddd !important;
-}*/
 
 .admin #content1 .tabcontent .cbox {background: transparent}
 
-
+.statuson {
+	background: url(snow/flakesptn.jpg);
+	border: 1px inset #6c7b8c;	
+}
 
 /***** Wiki *****/
 body.tiki_wiki #c1c2 #wrapper #col1 > .content {
@@ -630,8 +621,7 @@ a.pagetitle:hover {
 .wikitopline {
 	display: block;
 	position: relative;
-	/*top: -56px;
-	z-index: 1*/}
+	}
 	
 .wikitopline .content {
 	background: transparent !important;
@@ -649,11 +639,7 @@ a.pagetitle:hover {
 	float: right;
 	font-size: small}
 
-.catpaths {} /* <-- Check (andreas09.css) ?? */
-.categpath {}
-
 .wikitext {
-	/*background: url(snow/pagetitle-bg.jpg) repeat-x;*/
 	line-height: 1.5em;
 	padding: .5em}
 
@@ -662,10 +648,6 @@ a.pagetitle:hover {
 	padding: 0}
 
 .wikitext h2 {margin-bottom: 10px}
-
-.wikitext ul li {} 
-.wikitext ul li ul li {}
-.wikitext ol {}
 
 .titlebar {
 	padding: 0.1em;
@@ -713,32 +695,13 @@ ul.floatleft li {
 	white-space: nowrap;
 	font-weight: normal}
 
-.linkbut:hover {}
-.cache {}
-.cachedpage {}
-.wikicache, .wikicache:visited {}
-.wikicache:hover {}
-.wiki {}
-.wikinew {}
-
 .wiki-edithelp {
 	display: none;
 }
-#wikihelp-tab table{}
 
 #wikihelp-tab table td {
 padding: 2px;
 }
-
-textarea.wikiedit {}
-p.editdate {}
-img.externallink {}
-
-/* Needed esp. for light-on-dark theme */
-.quicktag {}
-.quicktag img,
-#wikihelp-tab td img {}
-#helptool {}
 
 /* Wiki plugins */
 
@@ -792,8 +755,6 @@ img.externallink {}
 #tocnavicons {float: left}
 #tocnavaddpage {float: right}
 #tocnavlinks {clear: both}
-.fancytoclevel {}
-li.toclevel {}
 
 .toc {
 	padding-left: 2em;
@@ -837,11 +798,6 @@ body.tiki_cms #tiki-center > h1 {
 	text-indent: 34px;
 	padding-top: 4px}
 	
-/*
-
-html > body .articletitle {
-	text-indent: 38px}*/
-
 .titleb {
 	float: right;
 	font-size: 1.0em;
@@ -853,10 +809,10 @@ html > body .articletitle {
 .articleheading {
 	margin-top: 6px;
 	padding: 20px 5px 6px}
-/* From han.css - Check ?? */.articleheading table {
-	width: auto}
 
-.articleheadingtext {}
+/* From han.css - Check ?? */
+.articleheading table {
+	width: auto}
 
 img.topicimage,
 img.articleimagenofloat,
@@ -876,8 +832,6 @@ img.articleimage {
 	clear: right;
 	padding: 2px 0;
 	margin-bottom: 10px}
-
-.articletrailer {}
 
 .articletrailer .wikitopline {float: right} 
  
@@ -1078,7 +1032,6 @@ textarea.tshoutbox{
 	font-size: .95em;
 	width: 162px}
 
-.wiki-table {}
 .wiki-tr-a td {border: 0}
 .wiki-tr-b td {border: 0}
 
