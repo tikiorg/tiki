@@ -411,7 +411,7 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 		$api = 'adodb';
 		$dbTiki = ADONewConnection( $driver );
 		$db = new TikiDb_Adodb( $dbTiki );
-		if ( $dbcon = (bool) @$dbTiki->Connect($host, $user, $pass, $dbname) ) {
+		if (! $dbcon = (bool) @$dbTiki->Connect($host, $user, $pass, $dbname) ) {
 			$tikifeedback[] = array( 'num' => 1, 'mes' => $dbTiki->ErrorMsg() );
 		}
 	} else {
