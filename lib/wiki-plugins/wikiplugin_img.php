@@ -1217,7 +1217,7 @@ function wikiplugin_img_info() {
 		$jq = '$(document).ready(function() {
 					$("#' . $id . '").dialog({
 							autoOpen: false,
-							width: 700,
+							width: 700
 					});				
 						
 					$("#' . $id_link . '").click(function() {
