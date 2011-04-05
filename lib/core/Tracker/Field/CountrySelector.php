@@ -33,7 +33,7 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract
 		$flags = $this->getConfiguration('flags');
 		$current = $this->getConfiguration('value');
 
-		return $flags[$current];
+		return empty($current) ? '' : $flags[$current];
 	}
 	
 	function renderInput($context = array())
