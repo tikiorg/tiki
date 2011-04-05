@@ -1618,6 +1618,10 @@ body.filegal_popup #tiki-center {
 	vertical-align: middle;
 	height: 15px;
 }
+
+.attachmentlist {
+	list-style: none;
+}
 	
 /* also for categorize.tpl */
 .multiselect {

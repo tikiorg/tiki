@@ -35,15 +35,26 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 	}
 	
 	function renderInnerOutput( $context ) {
+		$smarty = TikiLib::lib('smarty');
+		require_once $smarty->_get_plugin_filepath('block', 'self_link');
+		require_once $smarty->_get_plugin_filepath('function', 'icon');
+		
 		$list = TikiLib::lib('trk')->list_item_attachments($this->getItemId(), 0, -1, 'attId_asc');
+		
 		if (empty($list['data'])) {
 			return '';
-		} else if (count($list['data']) === 1) {
-			return $list['data'][0]['filename'];
 		} else {
-			$ul = '<ul>';
+			$ul = '<ul class="attachmentlist">';
 			foreach ( $list['data'] as $item ) {
-				$ul .= '<li>' . $item['filename'] . '</li>';
+				$ul .= '<li>' . smarty_block_self_link(array(
+							'script' => 'tiki-download_item_attachment.php',
+							'attId' => $item['attId'],
+							'title' => tra('Download'),
+						),
+						smarty_function_icon(array('_id' => 'disk', 'alt' => tra('Download')), $smarty) . ' ' .
+							$item['filename'],
+						$smarty) .
+					'</li>';
 			}
 			$ul .= '</ul>';
 			return $ul;
