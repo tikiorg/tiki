@@ -23,6 +23,7 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 
 		if (isset($requestData[$this->getInsertId()])) {
 			$value = $requestData[$this->getInsertId()];
+			return array( 'value' => $value);
 		} else {
 			$value = $this->getValue();
 		}
