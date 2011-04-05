@@ -1572,7 +1572,7 @@ class TrackerLib extends TikiLib
 							unlink($old_file);
 						}
 						$array["value"] = $ins_fields["data"][$i]["value"] = '';
-					} else if( $array['value'] != '' && $this->check_image_type( $array['file_type'] ) ) {
+					} else if( !empty($array['value']) && !empty($array['file_type']) && $this->check_image_type( $array['file_type'] ) ) {
 						$opts = preg_split('/,/', $array["options"]);
 						if (!empty($opts[4])) {
 							$imagegallib = TikiLib::lib('imagegal');
@@ -3033,7 +3033,7 @@ class TrackerLib extends TikiLib
 
 		$conditions = array(
 			'itemId' => (int) $itemId,
-			'fieldId' => (int) $fieldId,
+			'fieldId' => (int) $field['fieldId'],
 		);
 
 		$this->register_user_vote($user, $key, $userValue, array(), true);
@@ -3045,7 +3045,7 @@ class TrackerLib extends TikiLib
 			$itemFields->insert(array(
 				'value' => $field['value'],
 				'itemId' => (int) $itemId,
-				'fieldId' => (int) $fieldId,
+				'fieldId' => (int) $field['fieldId'],
 			));
 		} else {
 			$votings = $this->table('tiki_user_votings');
