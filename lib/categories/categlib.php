@@ -431,42 +431,44 @@ class CategLib extends ObjectLib
 
 	// Returns a hash indicating which permission is needed for viewing an object of desired type.
 	function map_object_type_to_permission() {
-	    return array('wiki page' => 'tiki_p_view',
-			 'wiki' => 'tiki_p_view',
-			 'forum' => 'tiki_p_forum_read',
-	    	 'forum post' => 'tiki_p_forum_read',
-			 'image gallery' => 'tiki_p_view_image_gallery',
-			 'file gallery' => 'tiki_p_view_file_gallery',
-			 'tracker' => 'tiki_p_view_trackers',
-			 'blog' => 'tiki_p_read_blog',
-			 'blog post' => 'tiki_p_read_blog',
-			 'quiz' => 'tiki_p_take_quiz',
+		return array(
+			'wiki page' => 'tiki_p_view',
+			'wiki' => 'tiki_p_view',
+			'wiki' => 'tiki_p_view',
+			'forum' => 'tiki_p_forum_read',
+			'forum post' => 'tiki_p_forum_read',
+			'image gallery' => 'tiki_p_view_image_gallery',
+			'file gallery' => 'tiki_p_view_file_gallery',
+			'tracker' => 'tiki_p_view_trackers',
+			'blog' => 'tiki_p_read_blog',
+			'blog post' => 'tiki_p_read_blog',
+			'quiz' => 'tiki_p_take_quiz',
 
-			 // overhead - we are checking individual permission on types below, but they
-			 // can't have individual permissions, although they can be categorized.
-			 // should they have permissions too?
-			 'poll' => 'tiki_p_vote_poll',
-			 'survey' => 'tiki_p_take_survey',
-			 'directory' => 'tiki_p_view_directory',
-			 'faq' => 'tiki_p_view_faqs',
-			 'sheet' => 'tiki_p_view_sheet',
+			// overhead - we are checking individual permission on types below, but they
+			// can't have individual permissions, although they can be categorized.
+			// should they have permissions too?
+			'poll' => 'tiki_p_vote_poll',
+			'survey' => 'tiki_p_take_survey',
+			'directory' => 'tiki_p_view_directory',
+			'faq' => 'tiki_p_view_faqs',
+			'sheet' => 'tiki_p_view_sheet',
 
-			 // these ones are tricky, because permission type is for container, not object itself.
-			 // I think we need to refactor permission schemes for them to be wysiwyca - lfagundes
-			 //
-			 // by now they're not showing, list_category_objects needs support for ignoring permissions
-			 // for a type.
-			 'article' => 'tiki_p_read_article',
-			 'submission' => 'tiki_p_approve_submission',
-			 'image' => 'tiki_p_view_image_gallery',
-			 'calendar' => 'tiki_p_view_calendar',
-			 'file' => 'tiki_p_download_files',
-			 'trackeritem' => 'tiki_p_view_trackers',
-			 
-			 // newsletters can't be categorized, although there's some code in tiki-admin_newsletters.php
-			 // 'newsletter' => ?,
-			 // 'events' => ?,
-			 );
+			// these ones are tricky, because permission type is for container, not object itself.
+			// I think we need to refactor permission schemes for them to be wysiwyca - lfagundes
+			//
+			// by now they're not showing, list_category_objects needs support for ignoring permissions
+			// for a type.
+			'article' => 'tiki_p_read_article',
+			'submission' => 'tiki_p_approve_submission',
+			'image' => 'tiki_p_view_image_gallery',
+			'calendar' => 'tiki_p_view_calendar',
+			'file' => 'tiki_p_download_files',
+			'trackeritem' => 'tiki_p_view_trackers',
+
+			// newsletters can't be categorized, although there's some code in tiki-admin_newsletters.php
+			// 'newsletter' => ?,
+			// 'events' => ?,
+		);
 	}
 
 	function list_category_objects($categId, $offset, $maxRecords, $sort_mode='pageName_asc', $type='', $find='', $deep=false, $and=false) {

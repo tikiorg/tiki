@@ -69,6 +69,7 @@ if (count($filter)) {
 		));
 		$plugin->setFields(array(
 			'title' => null,
+			'url' => null,
 			'modification_date' => null,
 			'highlight' => null,
 		));
