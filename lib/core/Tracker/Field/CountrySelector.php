@@ -32,8 +32,26 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract
 	{
 		$flags = $this->getConfiguration('flags');
 		$current = $this->getConfiguration('value');
-
-		return empty($current) ? '' : $flags[$current];
+		
+		if (empty($current)) {
+			return '';
+		}
+		$label = $flags[$current];
+		$out = '';
+		
+		if ($context['list_mode'] != 'csv') {
+			if ($this->getOption(0) != 1) {
+				$out .= '<img src="img/flags/'.$current.'.gif" title="'.$label.'" alt="'.$label.'" />';
+			}
+			if ($this->getOption(0) == 0) {
+				$out .= '&nbsp;';
+			}
+		}
+		if ($this->getOption(0) != 2) {
+			$out .= $label;
+		}
+		
+		return $out;
 	}
 	
 	function renderInput($context = array())
