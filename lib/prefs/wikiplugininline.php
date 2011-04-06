@@ -5,8 +5,12 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_wikiplugininline_list() {
+function prefs_wikiplugininline_list($partial = false) {
 	global $tikilib;
+
+	if ($partial) {
+		return array();
+	}
 
 	$prefs = array();
 

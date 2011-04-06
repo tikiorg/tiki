@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_jquery_list() {
+function prefs_jquery_list($partial = false) {
 
 	global $prefs;
 
@@ -16,7 +16,7 @@ function prefs_jquery_list() {
 		'fade'  => tra('Fade'),
 	);	
 
-	if ($prefs['feature_jquery_ui'] == 'y') {
+	if (! $partial && $prefs['feature_jquery_ui'] == 'y') {
 		$jquery_effect_options['blind_ui'] = tra('Blind (UI)');
 		$jquery_effect_options['clip_ui'] = tra('Clip (UI)');
 		$jquery_effect_options['drop_ui'] = tra('Drop (UI)');
@@ -32,12 +32,15 @@ function prefs_jquery_list() {
 			'type' => 'list',
 			'options' => $jquery_effect_options,
 			'help' => 'JQuery#Effects',
+			'default' => '',				// Default effect for general show/hide: ['' | 'slide' | 'fade' | and
+											// see http://docs.jquery.com/UI/Effects: 'blind' | 'clip' | 'explode' etc]
 		),
 		'jquery_effect_tabs' => array(
 			'name' => tra('Effect for tabs'),
 			'type' => 'list',
 			'options' => $jquery_effect_options,
 			'help' => 'JQuery#Effects',
+			'default' => 'slide',	// Different effect for tabs (['none' | 'normal' (for jq) | 'slide' etc]
 		),
 		'jquery_effect_speed' => array(
 			'name' => tra('Speed'),
@@ -47,6 +50,7 @@ function prefs_jquery_list() {
 				'normal' => tra('Normal'),
 				'slow' => tra('Slow'),
 			),
+			'default' => 'normal', 	// ['slow' | 'normal' | 'fast' | milliseconds (int) ]
 		),
 		'jquery_effect_direction' => array(
 			'name' => tra('Direction'),
@@ -59,6 +63,7 @@ function prefs_jquery_list() {
 				'up' => tra('Up'),
 				'down' => tra('Down'),
 			),
+			'default' => 'vertical', 	// ['horizontal' | 'vertical' | 'left' | 'right' | 'up' | 'down' ]
 		),
 		'jquery_effect_tabs_speed' => array(
 			'name' => tra('Speed'),
@@ -68,6 +73,7 @@ function prefs_jquery_list() {
 				'normal' => tra('Normal'),
 				'slow' => tra('Slow'),
 			),
+			'default' => 'fast',
 		),
 		'jquery_effect_tabs_direction' => array(
 			'name' => tra('Direction'),
@@ -80,6 +86,7 @@ function prefs_jquery_list() {
 				'up' => tra('Up'),
 				'down' => tra('Down'),
 			),
+			'default' => 'vertical',
 		),
 	);	
 }

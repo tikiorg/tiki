@@ -24,6 +24,7 @@ function prefs_art_list() {
 			'description' => tra('Default sort mode for the articles on the article listing'),
 			'type' => 'list',
 			'options' => $article_sort_orders,
+			'default' => 'publishDate_desc',
 		),
 		'art_home_title' => array(
 			'name' => tra('Title of articles home page'),
@@ -34,64 +35,79 @@ function prefs_art_list() {
 				'type' => tra('Type'),
 				'articles' => tra('Articles'),
 			),
+			'default' => '',
 		),
 		'art_list_title' => array(
 			'name' => tra('Title'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'art_list_title_len' => array(
 			'name' => tra('Title length'),
 			'type' => 'text',
 			'size' => '5',
 			'filter' => 'digits',
+			'default' => '50',
 		),
 		'art_list_type' => array(
 			'name' => tra('Type'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'art_list_topic' => array(
 			'name' => tra('Topic'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'art_list_date' => array(
 			'name' => tra('Publication date'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'art_list_expire' => array(
 			'name' => tra('Expiration date'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'art_list_visible' => array(
 			'name' => tra('Visible'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'art_list_lang' => array(
 			'name' => tra('Language'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'art_list_author' => array(
 			'name' => tra('Author'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'art_list_rating' => array(
 			'name' => tra('Author Rating'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'art_list_reads' => array(
 			'name' => tra('Reads'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'art_list_size' => array(
 			'name' => tra('Size'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'art_list_img' => array(
 			'name' => tra('Images'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'art_list_id' => array(
 			'name' => tra('Id'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'art_trailer_pos' => array(
 			'name' => tra('Trailer position'),
@@ -101,7 +117,7 @@ function prefs_art_list() {
 				'top' => tra('Top'),
 				'between' => tra('Between heading and body'),
 			),
-			'default' => 'top'
+			'default' => 'top',
 		),
 		'art_header_text_pos' => array(
 			'name' => tra('Header text position'),

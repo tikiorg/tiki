@@ -9,7 +9,8 @@ function prefs_share_list() {
 	return array(
 		'share_display_links' => array(
 			'name' => tra('Display links in the share page'),
-			'type' => 'flag'
+			'type' => 'flag',
+			'default' => 'y',
 		),
 		'share_token_notification' => array(
 			'name' => tra('Token notification'),
@@ -19,6 +20,7 @@ function prefs_share_list() {
 			'dependencies' => array(
 				'auth_token_access'
 			),
+			'default' => 'y',
 		),
 		'share_contact_add_non_existant_contact' => array(
 			'name'	=> tra('Add contact'),
@@ -28,11 +30,13 @@ function prefs_share_list() {
 			'dependencies' => array(
 				'feature_contacts',
 			),
+			'default' => 'n',
 		),
 		'share_display_name_and_email' => array(
 			'name' => tra('Display name and email'),
 			'description' => tra('If user is connect, name and email display in the page'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'share_can_choose_how_much_time_access' => array(
 			'name' => tra('How much time access'),
@@ -41,11 +45,13 @@ function prefs_share_list() {
 			'dependencies' => array(
 				'auth_token_access',
 			),
+			'default' => 'n',
 		),
 		'share_max_access_time' => array(
 			'name' => tra('Max how much time access'),
 			'description' => tra('Maximum for select how much time the share page can be consult'),
 			'type' => 'text',
+			'default' => '-1',
 		),
 		
 	);

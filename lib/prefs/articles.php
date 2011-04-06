@@ -13,6 +13,7 @@ function prefs_articles_list() {
 			'dependencies' => array(
 				'feature_articles',
 			),
+			'default' => 'n',
 		),
 	);
 }

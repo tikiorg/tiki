@@ -11,6 +11,7 @@ function prefs_error_list() {
 			'name' => tra('PHP errors visible to admin only'),
 			'description' => tra('For development purposes, it\'s better to display errors for all users. However, in production settings, they should only be displayed to administrators.'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'error_reporting_level' => array(
 			'name' => tra('PHP Error reporting level'),
@@ -23,6 +24,7 @@ function prefs_error_list() {
 				2039 => tra('Report all PHP errors except notices'),
 				1 => tra('According to PHP configuration')
 			),
+			'default' => 2039,	//	E_ALL & ~E_NOTICE
 		),
 	);
 }

@@ -26,21 +26,25 @@ function prefs_article_list() {
 			'type' => 'text',
 			'size' => '5',
 			'filter' => 'digits',
+			'default' => 10,
 		),
 		'article_comments_default_ordering' => array(
 			'name' => tra('Default Ordering'),
 			'type' => 'list',
 			'options' => $comment_sort_orders,
+			'default' => 'points_desc',
 		),
 		'article_paginate' => array(
 			'name' => tra('Paginate articles'),
 			'description' => tra('Divide articles into multiple pages with pagebreak markers.'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'article_user_rating' => array(
 			'name' => tra('User ratings on articles'),
 			'description' => tra('Allows users to rate the articles.'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'article_user_rating_options' => array(
 			'name' => tra('Article rating options'),
@@ -48,6 +52,7 @@ function prefs_article_list() {
 			'type' => 'text',
 			'separator' => ',',
 			'filter' => 'int',
+			'default' => range( 1, 5 ),
 		),
 		'article_image_size_x' => array(
 			'name' => tra('Default article image width'),
@@ -55,6 +60,7 @@ function prefs_article_list() {
 			'size' => 3,
 			'filter' => 'int',
 			'hint' => tra('0 for original image size'),
+			'default' => '0',
 		),
 		'article_image_size_y' => array(
 			'name' => tra('Default article image height'),
@@ -62,16 +68,19 @@ function prefs_article_list() {
 			'size' => 3,
 			'filter' => 'int',
 			'hint' => tra('0 for original image size.') ,
+			'default' => '0',
 		),
 		'article_custom_attributes' => array(
 			'name' => tra('Custom attributes for article types'),
 			'description' => tra('Allow additional custom fields for article types'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'article_sharethis_publisher' => array(
 			'name' => tra('Your ShareThis publisher identifier (optional)'),
 			'type' => 'text',
 			'size' => '40',
+			'default' => '',
 		),
 
 	);

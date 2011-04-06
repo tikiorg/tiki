@@ -10,6 +10,7 @@ function prefs_webmail_list() {
 		'webmail_view_html' => array(
 			'name' => tra('Allow viewing HTML mails?'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'webmail_max_attachment' => array(
 			'name' => tra('Maximum size for each attachment'),
@@ -23,10 +24,12 @@ function prefs_webmail_list() {
 				'3000000' => tra('3Mb'),
 				'100000000' => tra('Unlimited'),
 			),
+			'default' => 1500000,
 		),
 		'webmail_quick_flags' => array(
 			'name' => tra('Include a flag by each e-mail to quickly flag/un-flag them?'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 	);
 }

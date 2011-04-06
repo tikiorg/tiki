@@ -15,14 +15,17 @@ function prefs_ldap_list() {
 				'y' => tra('Create the user'),
 				'n' => tra('Deny access'),
 			),
+			'default' => 'y',
 		),
 		'ldap_create_user_ldap' => array(
 			'name' => tra('Create user if not in LDAP'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'ldap_skip_admin' => array(
 			'name' => tra('Use Tiki authentication for Admin login'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 	);	
 }

@@ -11,6 +11,7 @@ function prefs_count_list() {
 			'name' => tra('Count admin pageviews'),
 			'description' => tra('Include pageviews by the Admin when reporting stats.'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 	);
 }

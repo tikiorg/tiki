@@ -13,18 +13,21 @@ function prefs_zotero_list()
 			'help' => 'Zotero',
 			'description' => tra('Connect Tiki to the Zotero online bibliography management system.'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'zotero_client_key' => array(
 			'name' => tra('Zotero Client Key'),
 			'description' => tra('Required identification key. Registration required.'),
 			'type' => 'text',
 			'size' => 20,
+			'default' => '',
 		),
 		'zotero_client_secret' => array(
 			'name' => tra('Zotero Client Secret'),
 			'description' => tra('Required identification key. Registration required.'),
 			'type' => 'text',
 			'size' => 20,
+			'default' => '',
 		),
 		'zotero_group_id' => array(
 			'name' => tra('Zotero Group'),
@@ -32,6 +35,7 @@ function prefs_zotero_list()
 			'type' => 'text',
 			'filter' => 'digits',
 			'size' => 7,
+			'default' => '',
 		),
 		'zotero_style' => array(
 			'name' => tra('Zotero Reference Style'),
@@ -39,6 +43,7 @@ function prefs_zotero_list()
 			'type' => 'text',
 			'filter' => 'text',
 			'size' => 20,
+			'default' => '',
 		),
 	);
 }

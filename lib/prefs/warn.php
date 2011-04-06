@@ -19,6 +19,7 @@ function prefs_warn_list() {
 				'15' => tra('15'),
 				'30' => tra('30'),
 			),
+			'default' => 2,
 		),
 	);
 	

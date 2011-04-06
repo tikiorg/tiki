@@ -15,6 +15,7 @@ function prefs_unsuccessful_list() {
 			'shorthint' => tra('unsuccessful login attempts'),
 			'hint' => tra('Use "-1" for never'),
 			'description' => tra('After a certain number of consecutive unsuccessfull login attempts, the user will receive a mail with instruction to validate his account. However the user can still log-in with his old password.'),
+			'default' => 20,
 		),
 		'unsuccessful_logins_invalid' => array(
 			'name' => tra('Suspend account after'),
@@ -24,6 +25,7 @@ function prefs_unsuccessful_list() {
 			'description' => tra('After a certain number of consecutive unsuccessfull login attempts, the account is suspended . An admin must revalidate the account before the user can use it again.'),
 			'shorthint' => tra('unsuccessful login attempts'),
 			'hint' => tra('Use "-1" for never'),
+			'default' => -1,
 		),
 	);	
 }

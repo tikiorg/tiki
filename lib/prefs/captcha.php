@@ -11,13 +11,13 @@ function prefs_captcha_list() {
 			'name' => tra('Word length of the captcha image'),
 			'type' => 'text',
             'description' => tra('Word length of the captcha image.').' '.tra('Default:'). '6',
-			'default' => '6',
+			'default' => 6,
 		),
 		'captcha_width' => array(
 			'name' => tra('Width of the captcha image in pixels'),
 			'type' => 'text',
             'description' => tra('Width of the captcha image in pixels.').' '.tra('Default:'). '180',
-			'default' => '180',
+			'default' => 180,
 		),
 		'captcha_noise' => array(
 			'name' => tra('Level of noise of the captcha image'),

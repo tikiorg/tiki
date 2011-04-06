@@ -11,15 +11,18 @@ function prefs_change_list() {
 			'name' => tra('Users can change site language'),
 			'description' => tra('Allow users to change the language of the menus and labels.'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'change_theme' => array(
 			'name' => tra('Users can change theme'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'change_password' => array(
 			'name' => tra('Users can change their password'),
 			'type' => 'flag',
 			'help' => 'User+Preferences',
+			'default' => 'y',
 		),
 	);
 }

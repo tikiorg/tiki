@@ -16,6 +16,7 @@ function prefs_load_list() {
 			'dependencies' => array(
 				'use_load_threshold',
 			),
+			'default' => 3,
 		),
 	);
 }

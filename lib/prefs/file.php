@@ -11,6 +11,7 @@ function prefs_file_list() {
 			'name' => tra('Default number per page'),
 			'type' => 'text',
 			'size' => '5',
+			'default' => 10,
 		),
 		'file_galleries_comments_default_ordering' => array(
 			'name' => tra('Default ordering'),
@@ -20,6 +21,7 @@ function prefs_file_list() {
 				'commentDate_asc' => tra('Oldest first'),
 				'points_desc' => tra('Points'),
 			),
+			'default' => 'points_desc',
 		),
 	);
 }

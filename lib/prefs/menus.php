@@ -11,10 +11,12 @@ function prefs_menus_list() {
 			'name' => tra('Menu icons'),
 			'description' => tra('Allows to define icons for menu entries'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'menus_items_icons_path' => array(
 			'name' => tra('Default path for the icons'),
 			'type' => 'text',
+			'default' => 'pics/large',
 		),
 		'menus_item_names_raw_teaser' => array(
 			'name' => tra('Allow HTML in menu option names and URLs'),
@@ -30,6 +32,7 @@ function prefs_menus_list() {
 				'menus_item_names_raw_teaser',
 			),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 	);
 }

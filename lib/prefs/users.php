@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_users_list() {
+function prefs_users_list($partial = false) {
 
 	// retrieve language list for users_prefs_language preference
 	global $tikilib, $prefs;
@@ -15,10 +15,12 @@ function prefs_users_list() {
 
 	$list_languages = array('' => tra('Default'));
 
-	foreach ($languages as $one_lang) {
-		if ( in_array($one_lang['value'], $prefs['available_languages']) ) {
-			// only availables languages are proposed to users
-			$list_languages[ $one_lang['value'] ] = $one_lang['name'];
+	if (! $partial) {
+		foreach ($languages as $one_lang) {
+			if ( in_array($one_lang['value'], $prefs['available_languages']) ) {
+				// only availables languages are proposed to users
+				$list_languages[ $one_lang['value'] ] = $one_lang['name'];
+			}
 		}
 	}
 	
@@ -36,6 +38,7 @@ function prefs_users_list() {
 			'description' => tra('When enabled, feature checks and permission checks will be skipped.'),
 			'type' => 'flag',
 			'perspective' => false,
+			'default' => 'y',
 		),
 		'users_prefs_display_timezone' => array(
 			'name' => tra('Displayed time zone'),
@@ -44,6 +47,7 @@ function prefs_users_list() {
 				'Site' => tra('Always the site default time zone.'),
 				'Local' => tra('Use time zone set from user preferences, or the automatically detected time zone for anonymous (if browser allows). Site default is used as fallback.'),
 			),
+			'default' => 'Local',
 		),
 		'users_prefs_userbreadCrumb' => array(
 			'name' => tra('Number of visited pages to remember'),
@@ -56,6 +60,7 @@ function prefs_users_list() {
 				'5' => tra('5'),
 				'10' => tra('10'),
 			),
+			'default' => '4',
 		),
 		'users_prefs_user_information' => array(
 			'name' => tra('User information'),
@@ -64,6 +69,7 @@ function prefs_users_list() {
 				'private' => tra('Private'),
 				'public' => tra('Public'),
 			),
+			'default' => 'private',
 		),
 		'users_prefs_user_dbl' => array(
 			'name' => tra('Use double-click to edit pages'),
@@ -71,12 +77,14 @@ function prefs_users_list() {
 			'dependencies' => array(
 				'feature_wiki',
 			),
+			'default' => 'n',
 		),
 		'users_prefs_display_12hr_clock' => array(
 			'name' => tra('Use 12-hour clock for time selectors'),
 			'type' => 'flag',
 			'description' => tra('Use the 12-hour clock (with AM and PM) for time selectors used in some edit windows 
-									to set the time for publishing new or edited blog posts, articles, etc.')
+									to set the time for publishing new or edited blog posts, articles, etc.'),
+			'default' => 'n',
 		),
 		'users_prefs_diff_versions' => array(
 			'name' => tra('Use new diff any version interface'),
@@ -84,6 +92,7 @@ function prefs_users_list() {
 			'dependencies' => array(
 				'feature_wiki',
 			),
+			'default' => 'n',
 		),
 		'users_prefs_show_mouseover_user_info' => array(
 			'name' => tra("Show user's info on mouseover"),
@@ -91,6 +100,7 @@ function prefs_users_list() {
 			'dependencies' => array(
 				'feature_community_mouseover',
 			),
+			'default' => 'n',
 		),
 		'users_prefs_tasks_maxRecords' => array(
 			'name' => tra('Tasks per page'),
@@ -108,6 +118,7 @@ function prefs_users_list() {
 				'feature_tasks',
 			),
 			'help' => 'Tasks',
+			'default' => '10',
 		),
 		'users_prefs_mess_maxRecords' => array(
 			'name' => tra('Messages per page'),
@@ -124,6 +135,7 @@ function prefs_users_list() {
 				'40' => tra('40'),
 				'50' => tra('50'),
 			),
+			'default' => '10',
 		),
 		'users_prefs_allowMsgs' => array(
 			'name' => tra('Allow messages from other users'),
@@ -131,6 +143,7 @@ function prefs_users_list() {
 			'dependencies' => array(
 				'feature_messages',
 			),
+			'default' => 'y',
 		),
 		'users_prefs_mess_sendReadStatus' => array(
 			'name' => tra('Notify sender when reading mail'),
@@ -138,6 +151,7 @@ function prefs_users_list() {
 			'dependencies' => array(
 				'feature_messages',
 			),
+			'default' => 'n',
 		),
 		'users_prefs_minPrio' => array(
 			'name' => tra('Send me an email for messages with priority equal or greater than'),
@@ -153,6 +167,7 @@ function prefs_users_list() {
 				'5' => tra('5'),
 				'6' => tra('None'),
 			),
+			'default' => '3',
 		),
 		'users_prefs_mess_archiveAfter' => array(
 			'name' => tra('Auto-archive read messages after'),
@@ -173,6 +188,7 @@ function prefs_users_list() {
 				'60' => tra('60'),
 			),
 			'shorthint' => tra('days'),
+			'default' => '0',
 		),
 		'users_prefs_mytiki_pages' => array(
 			'name' => tra('My pages'),
@@ -180,6 +196,7 @@ function prefs_users_list() {
 			'dependencies' => array(
 				'feature_wiki',
 			),
+			'default' => 'y',
 		),
 		'users_prefs_mytiki_blogs' => array(
 			'name' => tra('My blogs'),
@@ -187,6 +204,7 @@ function prefs_users_list() {
 			'dependencies' => array(
 				'feature_blogs',
 			),
+			'default' => 'y',
 		),
 		'users_prefs_mytiki_gals' => array(
 			'name' => tra('My galleries'),
@@ -194,6 +212,7 @@ function prefs_users_list() {
 			'dependencies' => array(
 				'feature_galleries',
 			),
+			'default' => 'y',
 		),
 		'users_prefs_mytiki_msgs' => array(
 			'name' => tra('My messages'),
@@ -201,6 +220,7 @@ function prefs_users_list() {
 			'dependencies' => array(
 				'feature_messages',
 			),
+			'default' => 'y',
 		),
 		'users_prefs_mytiki_tasks' => array(
 			'name' => tra('My tasks'),
@@ -208,6 +228,7 @@ function prefs_users_list() {
 			'dependencies' => array(
 				'feature_tasks',
 			),
+			'default' => 'y',
 		),
 		'users_prefs_mytiki_forum_topics' => array(
 			'name' => tra('My forum topics'),
@@ -215,6 +236,7 @@ function prefs_users_list() {
 			'dependencies' => array(
 				'feature_forums',
 			),
+			'default' => 'y',
 		),
 		'users_prefs_mytiki_forum_replies' => array(
 			'name' => tra('My forum replies'),
@@ -222,6 +244,7 @@ function prefs_users_list() {
 			'dependencies' => array(
 				'feature_forums',
 			),
+			'default' => 'y',
 		),
 		'users_prefs_mytiki_items' => array(
 			'name' => tra('My items'),
@@ -229,6 +252,7 @@ function prefs_users_list() {
 			'dependencies' => array(
 				'feature_trackers',
 			),
+			'default' => 'y',
 		),
 		'users_prefs_mailCharset' => array(
 			'name' => tra('Character set for mail'),
@@ -238,6 +262,7 @@ function prefs_users_list() {
 				'utf-8' => 'utf-8',
 				'iso-8859-1' => 'iso-8859-1',
 			),
+			'default' => 'utf-8',
 		),
 	);
 }

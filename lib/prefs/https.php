@@ -11,12 +11,14 @@ function prefs_https_list() {
 			'name' => tra('Use HTTPS when building user-specific links'),
 			'description' => tra('When building notification emails, RSS feeds or other externally available links, use HTTPS when the content applies to a specific user. HTTPS must be configured on the server.'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'https_port' => array(
 			'name' => tra('HTTPS port'),
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'default' => 443,
 		),
 		'https_login' => array(
 			'name' => tra('Use HTTPS login'),
@@ -29,6 +31,7 @@ function prefs_https_list() {
 				'force_nocheck' => tra('Consider we are always in HTTPS, but do not check'),
 				'required' => tra('Require secure (https) login'),
 			),
+			'default' => 'allowed',
 		),
 	);
 }

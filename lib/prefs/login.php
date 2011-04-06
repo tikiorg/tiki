@@ -11,6 +11,7 @@ function prefs_login_list() {
 			'name' => tra('Use email as username'),
 			'description' => tra('Instead of creating new usernames, use the user\'s email address for authentication.'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'login_is_email_obscure' => array(
 			'name' => tra('Obscure email when using email as username if possible (coverage will not be complete)'),
@@ -19,6 +20,7 @@ function prefs_login_list() {
 			'dependencies' => array(
 				'login_is_email',
 			),
+			'default' => 'n',
 		),
 	);
 }

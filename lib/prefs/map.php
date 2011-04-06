@@ -11,16 +11,19 @@ function prefs_map_list() {
 			'name' => tra('full path to mapfiles'),
 			'type' => 'text',
 			'size' => '50',
+			'default' => '',
 		),
 		'map_help' => array(
 			'name' => tra('Wiki Page for Help'),
 			'type' => 'text',
 			'size' => '50',
+			'default' => 'MapsHelp',
 		),
 		'map_comments' => array(
 			'name' => tra('Wiki Page for Comments'),
 			'type' => 'text',
 			'size' => '25',
+			'default' => 'MapsComments',
 		),
 	);
 }

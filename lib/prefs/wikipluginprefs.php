@@ -12,6 +12,7 @@ function prefs_wikipluginprefs_list() {
 			'description' => tra('Alert by e-mail users with permission to approve plugin when a plugin is pending approval'),
 			'dependencies' => array('sender_email'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 	);
 }

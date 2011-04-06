@@ -12,6 +12,7 @@ function prefs_section_list() {
 			'type' => 'flag',
 			'help' => 'Wiki+Syntax',
 			'hint' => tra('Use "Accept wiki syntax" for forums in admin forums page'),
+			'default' => 'y',		// parse wiki markup on comments in all sections
 		),
 	);
 }

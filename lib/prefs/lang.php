@@ -12,6 +12,7 @@ function prefs_lang_list() {
 			'description' => tra('Use the database to store the translated strings and allow using interactive translation'),
 			'type' => 'flag',
 			'help' => 'Translating+Tiki+interface',
+			'default' => 'n',
 		),
 	);
 }

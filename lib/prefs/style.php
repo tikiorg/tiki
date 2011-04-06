@@ -5,16 +5,18 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_style_list() {
+function prefs_style_list($partial = false) {
 	global $tikilib, $prefs;
 
 	$style_options = array(
 		'' => tra('None'),
 	);
-	$list = $tikilib->list_style_options($prefs['site_style']);
-	if (!empty($list)) {
-		foreach ($list as $opt) {
-			$style_options[$opt] = $opt;
+	if (! $partial) {
+		$list = $tikilib->list_style_options($prefs['site_style']);
+		if (!empty($list)) {
+			foreach ($list as $opt) {
+				$style_options[$opt] = $opt;
+			}
 		}
 	}
 
@@ -34,6 +36,7 @@ function prefs_style_list() {
 			'help' => 'Theme options',
 			'description' => tra('Style options'),
 			'options' => $style_options,
+			'default' => '',
 		),
 	);	
 }

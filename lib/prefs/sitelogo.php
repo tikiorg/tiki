@@ -10,15 +10,18 @@ function prefs_sitelogo_list() {
 		'sitelogo_src' => array(
 			'name' => tra('Logo source (image path)'),
 			'type' => 'text',
+			'default' => 'img/tiki/Tiki_WCG.png',
 		),
 		'sitelogo_bgcolor' => array(
 			'name' => tra('Logo background color'),
 			'hint' => tra('Examples:') . ' ' .  '1) silver - 2) #fff',
 			'type' => 'text',
 			'size' => '15',
+			'default' => 'transparent',
 		),
 		'sitelogo_bgstyle' => array(
 			'name' => tra('Logo background style'),
+			'default' => '',
 			'hint' => tra('Examples:') . ' ' . '1) silver url(myStyle/img.gif) repeat - 2) padding: 30px 10px; background: #fff',
 			'type' => 'text',
 			'size' => '20',
@@ -31,16 +34,19 @@ function prefs_sitelogo_list() {
 				'center' => tra('Center'),
 				'right' => tra('Right'),
 			),
+			'default' => 'left',
 		),
 		'sitelogo_title' => array(
 			'name' => tra('Logo title (on mouse over)'),
 			'type' => 'text',
 			'size' => '50',
+			'default' => 'Tiki powered site',
 		),
 		'sitelogo_alt' => array(
 			'name' => tra('Alt. description (e.g. for text browsers)'),
 			'type' => 'text',
 			'size' => '50',
+			'default' => 'Site Logo',
 		),
 	);	
 }

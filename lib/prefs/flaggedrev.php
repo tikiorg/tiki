@@ -13,6 +13,7 @@ function prefs_flaggedrev_list()
 			'description' => tra('Uses flagged revisions to hide unapproved wiki page revisions from users with lower privileges.'),
 			'type' => 'flag',
 			'perspective' => false,
+			'default' => 'n',
 		),
 		'flaggedrev_approval_categories' => array(
 			'name' => tra('Revision Approval Categories'),
@@ -23,6 +24,7 @@ function prefs_flaggedrev_list()
 			'dependencies' => array(
 				'feature_categories',
 			),
+			'default' => array(''), //empty string needed to keep preference from setting unexpectedly
 		),
 	);
 }

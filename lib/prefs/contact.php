@@ -15,6 +15,7 @@ function prefs_contact_list() {
 			'dependencies' => array(
 				'feature_contact',
 			),
+			'default' => 'n',
 		),
 		'contact_user' => array(
 			'name' => tra('Contact user'),
@@ -24,6 +25,7 @@ function prefs_contact_list() {
 			'dependencies' => array(
 				'feature_contact',
 			),
+			'default' => 'admin',
 		),
 	);
 }

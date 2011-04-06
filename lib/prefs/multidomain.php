@@ -16,6 +16,7 @@ function prefs_multidomain_list() {
 			'dependencies' => array(
 				'feature_perspective',
 			),
+			'default' => 'n',
 		),
 		'multidomain_config' => array(
 			'name' => tra('Multi-domain Configuration'),
@@ -24,6 +25,7 @@ function prefs_multidomain_list() {
 			'type' => 'textarea',
 			'size' => 10,
 			'hint' => tra('One domain per line. Comma separated with perspective ID. Ex.: tiki.org,1'),
+			'default' => '',
 		),
 	);
 }

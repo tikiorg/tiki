@@ -11,6 +11,7 @@ function prefs_metatag_list() {
 			'name' => tra('Keywords'),
 			'type' => 'textarea',
 			'size' => '4',
+			'default' => '',
 		),
 		'metatag_freetags' => array(
 			'name' => tra('Include freetags'),
@@ -18,6 +19,7 @@ function prefs_metatag_list() {
 			'dependencies' => array(
 				'feature_freetags',
 			),
+			'default' => 'n',
 		),
 		'metatag_threadtitle' => array(
 			'name' => tra('Use thread title instead'),
@@ -25,6 +27,7 @@ function prefs_metatag_list() {
 			'dependencies' => array(
 				'feature_forums',
 			),
+			'default' => 'n',
 		),
 		'metatag_imagetitle' => array(
 			'name' => tra('Use image title instead'),
@@ -32,45 +35,54 @@ function prefs_metatag_list() {
 			'dependencies' => array(
 				'feature_galleries',
 			),
+			'default' => 'n',
 		),
 		'metatag_description' => array(
 			'name' => tra('Description'),
 			'type' => 'textarea',
 			'size' => '5',
+			'default' => '',
 		),
 		'metatag_pagedesc' => array(
 			'name' => tra('Use individual page description for Wiki pages instead'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'metatag_author' => array(
 			'name' => tra('Author'),
 			'type' => 'text',
 			'size' => '50',
+			'default' => '',
 		),
 		'metatag_geoposition' => array(
 			'name' => tra('geo.position'),
 			'type' => 'text',
 			'size' => '50',
+			'default' => '',
 		),
 		'metatag_georegion' => array(
 			'name' => tra('geo.region'),
 			'type' => 'text',
 			'size' => '50',
+			'default' => '',
 		),
 		'metatag_geoplacename' => array(
 			'name' => tra('geo.placename'),
 			'type' => 'text',
 			'size' => '50',
+			'default' => '',
 		),
 		'metatag_robots' => array(
 			'name' => tra('Meta robots'),
 			'type' => 'text',
 			'size' => '50',
+			'default' => '',
 		),
 		'metatag_revisitafter' => array(
 			'name' => tra('Revisit after'),
 			'type' => 'text',
 			'size' => '50',
+			'default' => '',
 		),
 	);
 }

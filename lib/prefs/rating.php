@@ -12,6 +12,7 @@ function prefs_rating_list() {
 			'description' => tra('Rating system allowing for options and calculation method to be configured.'),
 			'type' => 'flag',
 			'help' => 'Advanced+Rating',
+			'default' => 'n',
 		),
 		'rating_recalculation' => array(
 			'name' => tra('Rating recalculation mode'),
@@ -23,6 +24,7 @@ function prefs_rating_list() {
 				'randomvote' => tra('Randomly recalculate oldest ratings (on vote)'),
 				'period' => tra('Cron job (must be set manually)'),
 			),
+			'default' => 'vote',
 		),
 		'rating_recalculation_odd' => array(
 			'name' => tra('Recalculation odds (1 in X)'),
@@ -30,6 +32,7 @@ function prefs_rating_list() {
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'default' => '100',
 		),
 		'rating_recalculation_count' => array(
 			'name' => tra('Recalculation count'),
@@ -37,6 +40,7 @@ function prefs_rating_list() {
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'default' => '100',
 		),
 	);
 }

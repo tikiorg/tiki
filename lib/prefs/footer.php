@@ -11,11 +11,13 @@ function prefs_footer_list() {
 			'name' => tra('Footer shadow start'),
 			'type' => 'textarea',
 			'size' => '2',
+			'default' => '',
 		),
 		'footer_shadow_end' => array(
 			'name' => tra('Footer shadow end'),
 			'type' => 'textarea',
 			'size' => '2',
+			'default' => '',
 		),
 	);	
 }

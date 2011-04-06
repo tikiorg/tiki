@@ -11,10 +11,12 @@ function prefs_permission_list() {
 			'name' => tra('Send to URL'),
 			'type' => 'text',
 			'size' => '50',
+			'default' => '',
 		),
 		'permission_denied_login_box' => array(
 			'name' => tra('On permission denied, display login module (for Anonymous)'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 	);
 }

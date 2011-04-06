@@ -200,6 +200,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'errorreport':
 			require_once 'lib/errorreportlib.php';
 			return $libraries[$name] = new ErrorReportLib;
+		case 'prefs':
+			global $prefslib; include_once('lib/prefslib.php');
+			return $libraries[$name] = $prefslib;
 		}
 	}
 

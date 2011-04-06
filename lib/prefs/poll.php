@@ -12,6 +12,7 @@ function prefs_poll_list() {
 			'type' => 'text',
 			'size' => '5',
 			'filter' => 'digits',
+			'default' => 10,
 		),
 		'poll_comments_default_ordering' => array(
 			'name' => tra('Default Ordering'),
@@ -21,6 +22,7 @@ function prefs_poll_list() {
 				'commentDate_asc' => tra('Oldest first'),
 				'points_desc' => tra('Points'),
 			),
+			'default' => 'points_desc',
 		),
 		'poll_list_categories' => array(
 			'name' => tra('Show categories'),
@@ -28,15 +30,18 @@ function prefs_poll_list() {
 			'dependencies' => array(
 				'feature_categories',
 			),
+			'default' => 'n',
 		),
 		'poll_list_objects' => array(
 			'name' => tra('Show objects'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'poll_multiple_per_object' => array(
 			'name' => tra('Multiple polls per object'),
 			'description' => tra('When used with the rating features, allow multiple polls to be attached to a single object.'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 	);
 }

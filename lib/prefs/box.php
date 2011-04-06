@@ -11,11 +11,13 @@ function prefs_box_list() {
 			'name' => tra('Module (box) shadow start'),
 			'type' => 'textarea',
 			'size' => '2',
+			'default' => '',
 		),
 		'box_shadow_end' => array(
 			'name' => tra('Module (box) shadow end'),
 			'type' => 'textarea',
 			'size' => '2',
+			'default' => '',
 		),
 	);	
 }

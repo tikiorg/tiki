@@ -16,6 +16,7 @@ function prefs_messu_list() {
 			'dependencies' => array(
 				'feature_messages',
 			),
+			'default' => '0',
 		),
 		'messu_archive_size' => array(
 			'name' => tra('Maximum mail archive size (messages, 0=unlimited)'),
@@ -26,6 +27,7 @@ function prefs_messu_list() {
 			'dependencies' => array(
 				'feature_messages',
 			),
+			'default' => '200',
 		),
 		'messu_sent_size' => array(
 			'name' => tra('Maximum sent box size (messages, 0=unlimited)'),
@@ -36,6 +38,7 @@ function prefs_messu_list() {
 			'dependencies' => array(
 				'feature_messages',
 			),
+			'default' => '200',
 		),
 	);
 }

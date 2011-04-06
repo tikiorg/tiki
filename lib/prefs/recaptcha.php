@@ -13,18 +13,21 @@ function prefs_recaptcha_list() {
 			'hint' => tra('You will need to register at [http://www.google.com/recaptcha]'),
 			'help' => 'Spam+protection',
 			'type' => 'flag',
+			'default' => 'n',
         ),
 		'recaptcha_pubkey' => array(
 			'name' => tra('Public Key'),
             'type' => 'text',
             'description' => tra('ReCaptcha public key.'),
         	'size' => 60,
+			'default' => '',
 		),
 		'recaptcha_privkey' => array(
 			'name' => tra('Private Key'),
 			'type' => 'text',
             'description' => tra('ReCaptcha private key.'),
 			'size' => 60,
+			'default' => '',
 		),
 	);
 }

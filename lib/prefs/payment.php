@@ -12,6 +12,7 @@ function prefs_payment_list() {
 			'description' => tra('Feature to manage and track payment requests.'),
 			'type' => 'flag',
 			'help' => 'Payment',
+			'default' => 'n',
 		),
 		'payment_system' => array(
 			'name' => tra('Payment System'),
@@ -24,6 +25,7 @@ function prefs_payment_list() {
 				'tikicredits' => tra('Tiki User Credits'),
 			),
 			'dependencies' => array( 'payment_feature' ),
+			'default' => 'paypal',
 		),
 		'payment_paypal_business' => array(
 			'name' => tra('Paypal Business ID'),
@@ -43,12 +45,14 @@ function prefs_payment_list() {
 				'https://www.sandbox.paypal.com/cgi-bin/webscr' => tra('Sandbox'),
 			),
 			'dependencies' => array( 'payment_paypal_business' ),
+			'default' => 'https://www.paypal.com/cgi-bin/webscr',
 		),
 		'payment_paypal_ipn' => array(
 			'name' => tra('Paypal Instant Payment Notification (IPN)'),
 			'description' => tra('Enable IPN for automatic payment completion. When enabled, Paypal will ping back the site when a payment is confirmed. The payment will then be entered automatically. This may not be possible if the server is not on a public server.'),
 			'type' => 'flag',
 			'dependencies' => array( 'payment_paypal_business' ),
+			'default' => 'y',
 		),
 		'payment_currency' => array(
 			'name' => tra('Currency'),
@@ -56,6 +60,7 @@ function prefs_payment_list() {
 			'type' => 'text',
 			'size' => 3,
 			'filter' => 'alpha',
+			'default' => 'USD',
 		),
 		'payment_default_delay' => array(
 			'name' => tra('Default acceptable payment delay'),
@@ -64,6 +69,7 @@ function prefs_payment_list() {
 			'type' => 'text',
 			'filter' => 'digits',
 			'size' => 3,
+			'default' => 30,
 		),
 		'payment_cclite_registries' => array(
 			'name' => tra('Cclite Registries'),
@@ -73,6 +79,7 @@ function prefs_payment_list() {
 			'dependencies' => array( 'payment_feature' ),
 			'size' => 40,
 			'separator' => ',',
+			'default' => '',
 		),
 		'payment_cclite_currencies' => array(
 			'name' => tra('Cclite Registry Currencies'),
@@ -82,6 +89,7 @@ function prefs_payment_list() {
 			'dependencies' => array( 'payment_feature' ),
 			'size' => 40,
 			'separator' => ',',
+			'default' => '',
 		),
 		'payment_cclite_gateway' => array(
 			'name' => tra('Cclite Server URL'),
@@ -90,18 +98,21 @@ function prefs_payment_list() {
 			'type' => 'text',
 			'size' => 60,
 		'dependencies' => array( 'payment_cclite_registries' ),
+			'default' => '',
 		),
 		'payment_cclite_merchant_key' => array(
 			'name' => tra('Cclite Merchant Key'),
 			'description' => tra('Corresponds with Merchant Key setting in Cclite'),
 			'type' => 'text',
 			'dependencies' => array( 'payment_cclite_registries' ),
+			'default' => '',
 		),
 		'payment_cclite_merchant_user' => array(
 			'name' => tra('Cclite Merchant User'),
 			'description' => tra('User name in Cclite representing "the management". Defaults to "manager"'),
 			'type' => 'text',
 			'dependencies' => array( 'payment_cclite_registries' ),
+			'default' => 'manager',
 		),
 		'payment_cclite_mode' => array(
 			'name' => tra('Cclite Enable Payments'),
@@ -112,6 +123,7 @@ function prefs_payment_list() {
 				'test' => tra('Test'),
 			),
 			'dependencies' => array( 'payment_cclite_registries' ),
+			'default' => 'test',
 		),
 		'payment_cclite_hashing_algorithm' => array(
 			'name' => tra('Hashing Algorithm'),
@@ -123,12 +135,14 @@ function prefs_payment_list() {
 				'sha512' => tra('SHA512'),
 			),
 			'dependencies' => array( 'payment_cclite_registries' ),
+			'default' => 'sha1',
 		),
 		'payment_cclite_notify' => array(
 			'name' => tra('Cclite Payment Notification'),
 			'description' => tra('TODO'),
 			'type' => 'flag',
 			'dependencies' => array( 'payment_cclite_registries' ),
+			'default' => 'y',
 		),
 		'payment_manual' => array(
 			'name' => tra('Wiki page containing the instruction to send manual payment like check'),
@@ -162,11 +176,13 @@ function prefs_payment_list() {
 			'name' => tra('User can only see his own outstanding payments'),
 			'description' => tra('Unless with administer payment permissions, a user can only see his own outstanding payments'),
 			'type' => 'flag', 
+			'default' => 'n',
 		),
 		'payment_user_only_his_own_past' => array(
 			'name' => tra('User can only see his own past or cancelled payments'),
 			'description' => tra('Unless with administer payment permissions, a user can only see his own past or cancelled payments'),
 			'type' => 'flag',
+			'default' => 'n',
 		), 
 	);
 }

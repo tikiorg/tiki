@@ -13,6 +13,7 @@ function prefs_faqs_list() {
 			'dependencies' => array(
 				'feature_faqs',
 			),
+			'default' => 'n',
 		),
 	);
 }

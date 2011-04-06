@@ -12,18 +12,21 @@ function prefs_cookie_list() {
 			'type' => 'text',
 			'size' => 35,
 			'perspective' => false,
+			'default' => 'tikiwiki',
 		),
 		'cookie_domain' => array(
 			'name' => tra('Domain'),
 			'type' => 'text',
 			'size' => 35,
 			'perspective' => false,
+			'default' => '',
 		),
 		'cookie_path' => array(
 			'name' => tra('Path'),
 			'type' => 'text',
 			'size' => 35,
 			'perspective' => false,
+			'default' => $GLOBALS['tikiroot'],
 		),
 	);
 }

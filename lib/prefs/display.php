@@ -18,6 +18,7 @@ function prefs_display_list() {
 				'YDM' => tra('Year')  . ' ' . tra('Day') . ' ' . tra('Month'),
 				'YMD' => tra('Year')  . ' ' . tra('Month') . ' ' . tra('Day'),
 			),
+			'default' => 'MDY',
 		),
 	);
 }

@@ -11,6 +11,7 @@ function prefs_faq_list() {
 			'name' => tra('Default number of comments per page'),
 			'type' => 'text',
 			'size' => '5',
+			'default' => 10,
 		),
 		'faq_comments_default_ordering' => array(
 			'name' => tra('Comments default ordering'),
@@ -20,6 +21,7 @@ function prefs_faq_list() {
 				'commentDate_asc' => tra('Oldest first'),
 				'points_desc' => tra('Points'),
 			),
+			'default' => 'points_desc',
 		),
 		'faq_prefix' => array(
 			'name' => tra('Question and Answer prefix on Answers'),
@@ -29,6 +31,7 @@ function prefs_faq_list() {
 				'QA' => tra('Q and A'),
 				'question_id' => tra('Question ID'),
 			),
+			'default' => 'QA',
 		),
 	);
 }

@@ -16,6 +16,7 @@ function prefs_morelikethis_list() {
 				'basic' => tra('Basic'),
 				'weighted' => tra('Weighted'),
 			),
+			'default' => 'basic',
 		),
 		'morelikethis_basic_mincommon' => array(
 			'name' => tra('Minimum amount of tags in common'),
@@ -32,6 +33,7 @@ function prefs_morelikethis_list() {
 				'9' => tra('9'),
 				'10' => tra('10'),
 			),
+			'default' => '2',
 		),
 	);	
 }

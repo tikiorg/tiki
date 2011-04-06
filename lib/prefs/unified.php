@@ -15,17 +15,20 @@ function prefs_unified_list()
 			'options' => array(
 				'lucene' => tra('Lucene (PHP Implementation)'),
 			),
+			'default' => 'lucene',
 		),
 		'unified_lucene_location' => array(
 			'name' => tra('Lucene Index Location'),
 			'description' => tra('Path to the location of the Lucene search index. The index must be on a local filesystem with enough space to contain the volume of the database.'),
 			'type' => 'text',
 			'size' => 35,
+			'default' => 'temp/unified-index',
 		),
 		'unified_incremental_update' => array(
 			'name' => tra('Incremental Index Update'),
 			'description' => tra('Update the index incrementally as the site content is modified. This may lead to lower performance and accuracy than processing the index on a periodic basis.'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'unified_field_weight' => array(
 			'name' => tra('Field Weights'),
@@ -34,6 +37,7 @@ function prefs_unified_list()
 			'type' => 'textarea',
 			'size' => 5,
 			'filter' => 'text',
+			'default' => "title:2.5\nallowed_groups:0.0001\ncategories:0.0001\ndeep_categories:0.0001",
 		),
 		'unified_default_content' => array(
 			'name' => tra('Default content fields'),
@@ -41,6 +45,7 @@ function prefs_unified_list()
 			'type' => 'text',
 			'separator' => ',',
 			'filter' => 'word',
+			'default' => array('contents', 'title'),
 		),
 	);
 }

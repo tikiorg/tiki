@@ -16,7 +16,7 @@ class ThemeGenLib
 	private $currentTheme;	// ThemeGenTheme
 	private $tg_data;
 
-	public function ThemeGenLib() {
+	public function __construct() {
 		global $prefs;
 		
 		// array containing customisable elements
@@ -369,7 +369,7 @@ class ThemeGenTheme extends SerializedList
 {
 	var $initDone;
 	
-	public function ThemeGenTheme($name) {
+	public function __construct($name) {
 
 		parent::__construct($name);
 	}

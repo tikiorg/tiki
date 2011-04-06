@@ -31,6 +31,7 @@ function prefs_available_list() {
 				'feature_multilingual',
 			),
 			'options' => $map,
+			'default' => array(),
 		),
 		'available_styles' => array(
 			'name' => tra('Available styles'),
@@ -39,6 +40,7 @@ function prefs_available_list() {
 			'dependencies' => array(
 				'change_theme',
 			),
+			'default' => array(),
 		),
 	);
 }
