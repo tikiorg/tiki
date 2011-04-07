@@ -101,7 +101,7 @@ function smarty_function_jscalendar_body($params, &$smarty) {
 		} else {
 			$minutes_interval = 5;
 		}
-		if ($minutes_interval > 1) {
+		if ($minutes_interval > 1 && !empty($date)) {
 			$sec = $minutes_interval*60;
 			$date = (ceil($date/$sec))*$sec;
 		}
@@ -118,7 +118,11 @@ function smarty_function_jscalendar_body($params, &$smarty) {
 		}
 	}
 
-	$formatted_date = $tikilib->date_format($format,(int)$date);
+	if (!empty($date)) {
+		$formatted_date = $tikilib->date_format($format,(int)$date);
+	} else {
+		$formatted_date = '';
+	}
 	
 	if (isset($params['id'])) {
 		$id =  preg_replace('/"/','\"',$params['id']);
