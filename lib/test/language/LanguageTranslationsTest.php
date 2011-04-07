@@ -172,11 +172,12 @@ class LanguageTranslationsTest extends TikiTestCase
 	public function testGetFileUntranslated()
 	{
 		$cachelib = $this->getMock('Cachelib', array('getSerialized', 'cacheItem'));
-		$cachelib->expects($this->once())->method('getSerialized')->will($this->returnValue(null));
+		$cachelib->expects($this->once())->method('getSerialized')->with('untranslatedStrings.test_language.1234', 'untranslatedStrings')->will($this->returnValue(null));
 		$cachelib->expects($this->once())->method('cacheItem');
 		
-		$obj = $this->getMock('LanguageTranslations', array('_getCacheLib'), array($this->lang));
+		$obj = $this->getMock('LanguageTranslations', array('_getCacheLib', '_getFileHash'), array($this->lang));
 		$obj->expects($this->once())->method('_getCacheLib')->will($this->returnValue($cachelib));
+		$obj->expects($this->once())->method('_getFileHash')->will($this->returnValue(1234));
 		
 		$expectedResult = array(
 			"Kalture Video" => array('source' => "Kalture Video", 'tran' => null),
@@ -427,23 +428,27 @@ class LanguageTranslationsTest extends TikiTestCase
 			"Approved Status" => array('source' => "Approved Status", 'tran' => null),
 		);
 		
+		$dbTranslations = array(
+			"Approved Status" => array('source' => "Approved Status", 'tran' => 'Aprovado'),
+		);
+		
 		return array(
-			array($dbUntranslated, $fileUntranslated),
+			array($dbUntranslated, $fileUntranslated, $dbTranslations),
 		);
 	}
 	
 	/**
 	 * @dataProvider getAllUntranslated_dataProvider
 	 */
-	public function testGetAllUntranslated($dbUntranslated, $fileUntranslated)
+	public function testGetAllUntranslated($dbUntranslated, $fileUntranslated, $dbTranslations)
 	{
-		$obj = $this->getMock('LanguageTranslations', array('getFileUntranslated', '_getDbUntranslated'));
+		$obj = $this->getMock('LanguageTranslations', array('getFileUntranslated', '_getDbUntranslated', '_getDbTranslations'));
 		$obj->expects($this->once())->method('getFileUntranslated')->will($this->returnValue($fileUntranslated));
 		$obj->expects($this->once())->method('_getDbUntranslated')->will($this->returnValue($dbUntranslated));
+		$obj->expects($this->once())->method('_getDbTranslations')->will($this->returnValue($dbTranslations));
 		
 		$expectedResult = array(
 			'translations' => array(
-				"Approved Status" => array('source' => "Approved Status", 'tran' => null),
 				"Communication error" => array('source' => "Communication error", 'tran' => null),
 				"Delete comments" => array('source' => "Delete comments", 'tran' => null),
 				"Invalid response provided by the Kaltura server. Please retry" => array('source' => "Invalid response provided by the Kaltura server. Please retry", 'tran' => null),
@@ -451,7 +456,7 @@ class LanguageTranslationsTest extends TikiTestCase
 				'Untranslated string 1' => array('source' => 'Untranslated string 1', 'tran' => null),
 				'Untranslated string 2' => array('source' => 'Untranslated string 2', 'tran' => null),
 			),
-			'total' => 7
+			'total' => 6
 		);
 		
 		$this->assertEquals($expectedResult, $obj->getAllUntranslated());

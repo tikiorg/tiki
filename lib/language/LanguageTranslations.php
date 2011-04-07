@@ -357,8 +357,7 @@ class LanguageTranslations extends TikiDb_Bridge
 	public function getFileUntranslated()
 	{
 		$cachelib = $this->_getCacheLib();
-		$hash = md5_file($this->filePath);
-		$cacheKey = 'untranslatedStrings.' . $this->lang . $hash;
+		$cacheKey = 'untranslatedStrings.' . $this->lang . '.' . $this->_getFileHash();
 		$info = $cachelib->getSerialized($cacheKey, 'untranslatedStrings');
 
 		if ($info) {
@@ -380,6 +379,16 @@ class LanguageTranslations extends TikiDb_Bridge
 		return $untranslated;
 	}	
 
+	/**
+	 * Get the md5 hash for the language file.
+	 * 
+	 * @return string md5 hash for the language file
+	 */
+	protected function _getFileHash()
+	{
+		return md5_file($this->filePath);
+	}
+	
 	/**
 	 * Return untranslated strings recorded in the 
 	 * database (if feature "record_untranslated is enabled)
@@ -452,9 +461,18 @@ class LanguageTranslations extends TikiDb_Bridge
 	public function getAllUntranslated($maxRecords = -1, $offset = 0, $search = null)
 	{
 		$fileUntranslated = $this->getFileUntranslated();
+		
+		// remove from $fileUntranslated strings translated in the database
+		$dbTranslations = $this->_getDbTranslations();
+		foreach ($fileUntranslated as $key => $value) {
+			if (array_key_exists($key, $dbTranslations)) {
+				unset($fileUntranslated[$key]);
+			}
+		}
+		
 		$dbUntranslated = $this->_getDbUntranslated();
 		$untranslatedStrings = array_merge($fileUntranslated, $dbUntranslated);
-		
+
 		return $this->_filterStrings($untranslatedStrings, $maxRecords, $offset, $search);
 	}
 	
