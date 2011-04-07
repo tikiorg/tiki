@@ -4216,11 +4216,6 @@ class TikiLib extends TikiDb_Bridge
 		if( ! is_array( $pluginskiplist ) )
 			$pluginskiplist = array();
 
-		if ($options['inside_pretty'] === true) {
-			$trklib = TikiLib::lib('trk');
-			$trklib->replace_pretty_tracker_refs($data);
-		}
-		
 		$matches = WikiParser_PluginMatcher::match($this->htmldecode($data));
 		$argumentParser = new WikiParser_PluginArgumentParser;
 
