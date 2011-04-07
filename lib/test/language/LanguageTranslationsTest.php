@@ -332,7 +332,7 @@ class LanguageTranslationsTest extends TikiTestCase
 	public function testGetFileTranslations()
 	{
 		copy(dirname(__FILE__) . '/fixtures/custom.php', $this->langDir . '/custom.php');
-		$this->assertEquals(27, count($this->obj->getFileTranslations()));
+		$this->assertEquals(26, count($this->obj->getFileTranslations()));
 	}
 	
 	public function testGetDbTranslations()

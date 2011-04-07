@@ -500,6 +500,11 @@ class LanguageTranslations extends TikiDb_Bridge
 			require("lang/$this->lang/$tikidomain/custom.php");
 		}
 		
+		// remove last entry from language.php used only for get_strings.php
+		if (isset($lang['###end###'])) {
+			unset($lang['###end###']);
+		}
+		
 		$lang = $this->_convertTranslationsArray($lang);
 		
 		return $lang;
