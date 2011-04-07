@@ -970,6 +970,10 @@ class UsersLib extends TikiLib
 
 	// validate the user via ldap and get a ldap connection
 	function validate_user_ldap($user, $pass) {
+		if (!$pass) {
+			return PASSWORD_INCORRECT;
+		}
+		
 		global $prefs;
 		global $logslib;
 
