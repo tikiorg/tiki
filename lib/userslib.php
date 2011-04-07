@@ -964,6 +964,10 @@ class UsersLib extends TikiLib
 
 	// validate the user via ldap and get a ldap connection
 	function validate_user_ldap($user, $pass) {
+		if (!$pass) { // An LDAP password cannot be empty. Treat specially so that Tiki does *NOT* unintentionally request an unauthenticated bind.
+			return PASSWORD_INCORRECT;
+		}
+		
 		global $prefs;
 		global $logslib;
 
