@@ -361,6 +361,18 @@ class WikiParser_PluginMatcherTest extends TikiTestCase
 			'a=4Hello World',
 		), $obtained);
 	}
+
+	function testWithPrettyVariablePrior()
+	{
+		$strings = '{$f_13}{foo hello=world}';
+
+		$matches = WikiParser_PluginMatcher::match($strings);
+		foreach($matches as $m) {
+			$m->replaceWith('X');
+		}
+
+		$this->assertEquals('{$f_13}X', $matches->getText());
+	}
 /*
 	// TODO : Replacement re-find existing
 	// TODO : Replacement original vs generated

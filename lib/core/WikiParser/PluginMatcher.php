@@ -53,13 +53,25 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 
 	function findMatches( $start, $end )
 	{
+		static $passes;
+
+		if ($this->level === 0) {
+			$passes = 0;
+		}
+
+		if (++$passes > 500) {
+			return;
+		}
+
+
 		$this->findNoParseRanges( $start, $end );
 
 		$pos = $start;
 		while( false !== $pos = strpos( $this->text, '{', $pos ) ) {
 			// Shortcut {$var} syntax
 			if (substr($this->text, $pos + 1, 1) === '$') {
-				return;
+				++$pos;
+				continue;
 			}
 
 			if( $pos >= $end ) {
