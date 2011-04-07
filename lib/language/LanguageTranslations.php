@@ -370,12 +370,13 @@ class LanguageTranslations extends TikiDb_Bridge
 		foreach ($contents as $line) {
 			// match untranslated string in a language.php file
 			if (preg_match('|^//\s*?"(.+)"\s*=>\s*".+".*|', $line, $matches)) {
-				$untranslated[$matches[1]] = array('source' => $matches[1], 'tran' => null);
+				$source = Language::removePhpSlashes($matches[1]);
+				$untranslated[$source] = array('source' => $source, 'tran' => null);
 			}
 		}
 		
 		$cachelib->cacheItem($cacheKey, serialize($untranslated), 'untranslatedStrings');
-		
+
 		return $untranslated;
 	}	
 
@@ -563,7 +564,7 @@ class LanguageTranslations extends TikiDb_Bridge
 			// join matches against source string and translation
 			$strings = array_merge($translations, $sources);
 		}
-		
+
 		$total = count($strings);
 		
 		uksort($strings, 'strcasecmp');

@@ -137,28 +137,28 @@ class LanguageTranslationsTest extends TikiTestCase
 		$this->assertEquals(file_get_contents(dirname(__FILE__) . '/fixtures/language_modif.php'), file_get_contents($this->langDir . '/language.php'));
 	}
 
-	public function testWriteLanguageFileCallingTwoTimesShouldNotDuplicateStringsInTheFile() {
+	public function testWriteLanguageFileCallingTwoTimes_shouldNotDuplicateStringsInTheFile() {
 		copy(dirname(__FILE__) . '/fixtures/language_orig.php', $this->langDir . '/language.php');
 		$this->obj->writeLanguageFile();
 		$this->obj->writeLanguageFile();
 		$this->assertEquals(file_get_contents(dirname(__FILE__) . '/fixtures/language_modif.php'), file_get_contents($this->langDir . '/language.php'));
 	}
 
-	public function testWriteLanguageShouldReturnTheNumberOfNewStringsInLanguageFile() {
+	public function testWriteLanguage_shouldReturnTheNumberOfNewStringsInLanguageFile() {
 		copy(dirname(__FILE__) . '/fixtures/language_orig.php', $this->langDir . '/language.php');
 		$expectedResult = array('modif' => 2, 'new' => 4);
 		$return = $this->obj->writeLanguageFile();
 		$this->assertEquals($expectedResult, $return);
 	}
 
-	public function testWriteLanguageShouldIgnoreEmptyStrings() {
+	public function testWriteLanguage_shouldIgnoreEmptyStrings() {
 		TikiDb::get()->query('INSERT INTO `tiki_language` (`source`, `lang`, `tran`, `changed`) VALUES (?, ?, ?, ?)', array('', $this->lang, '', 1));
 		copy(dirname(__FILE__) . '/fixtures/language_orig.php', $this->langDir . '/language.php');
 		$this->obj->writeLanguageFile();
 		$this->assertEquals(file_get_contents(dirname(__FILE__) . '/fixtures/language_modif.php'), file_get_contents($this->langDir . '/language.php'));
 	}
 
-	public function testWriteLanguageShouldRaiseExceptionForInvalidLanguagePhp() {
+	public function testWriteLanguage_shouldRaiseExceptionForInvalidLanguagePhp() {
 		$this->setExpectedException('Exception');
 		copy(dirname(__FILE__) . '/fixtures/language_invalid.php', $this->langDir . '/language.php');
 		$this->obj->writeLanguageFile();
@@ -190,7 +190,7 @@ class LanguageTranslationsTest extends TikiTestCase
 			"WARNING: The file is used in" => array('source' => "WARNING: The file is used in", 'tran' => null),
 			"You do not have permission to edit this file" => array('source' => "You do not have permission to edit this file", 'tran' => null),
 			"Not modified since" => array('source' => "Not modified since", 'tran' => null),
-			"Not downloaded since" => array('source' => "Not downloaded since", 'tran' => null),
+			'Test special "characters" escaping' => array('source' => 'Test special "characters" escaping', 'tran' => null),
 		);
 		
 		$this->assertEquals($expectedResult, $obj->getFileUntranslated());
@@ -209,7 +209,7 @@ class LanguageTranslationsTest extends TikiTestCase
 			"WARNING: The file is used in" => array('source' => "WARNING: The file is used in", 'tran' => null),
 			"You do not have permission to edit this file" => array('source' => "You do not have permission to edit this file", 'tran' => null),
 			"Not modified since" => array('source' => "Not modified since", 'tran' => null),
-			"Not downloaded since" => array('source' => "Not downloaded since", 'tran' => null),
+			'Test special "characters" escaping' => array('source' => 'Test special "characters" escaping', 'tran' => null),
 		);
 		$this->assertEquals($expectedResult, $this->obj->getFileUntranslated());
 		
@@ -332,7 +332,13 @@ class LanguageTranslationsTest extends TikiTestCase
 	public function testGetFileTranslations()
 	{
 		copy(dirname(__FILE__) . '/fixtures/custom.php', $this->langDir . '/custom.php');
-		$this->assertEquals(26, count($this->obj->getFileTranslations()));
+		$this->assertEquals(27, count($this->obj->getFileTranslations()));
+	}
+	
+	public function testGetFileTranslations_shouldEscapeSpecialCharacters()
+	{
+		$trans = $this->obj->getFileTranslations();
+		$this->assertArrayHasKey('Second test special "characters" escaping', $trans);
 	}
 	
 	public function testGetDbTranslations()

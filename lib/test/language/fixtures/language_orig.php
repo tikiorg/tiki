@@ -91,7 +91,7 @@ $lang=Array(
 // "WARNING: The file is used in" => "WARNING: The file is used in",
 // "You do not have permission to edit this file" => "You do not have permission to edit this file",
 // "Not modified since" => "Not modified since",
-// "Not downloaded since" => "Not downloaded since",
+// "Test special \"characters\" escaping" => "Test special \"characters\" escaping",
 // ### end of untranslated words
 // ###
 
@@ -117,5 +117,6 @@ $lang=Array(
 "Error deleting the file" => "Erro ao deletar o arquivo",
 "The page is empty" => "A página está vazia",
 "You do not have permissions to view the maps" => "Você não possui permissões para ver os mapas",
+"Second test special \"characters\" escaping" => "Alguma tradução \"characters\"",
 "###end###"=>"###end###");
 
