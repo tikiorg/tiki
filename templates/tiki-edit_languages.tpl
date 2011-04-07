@@ -19,7 +19,7 @@
 			{/if}
 			<div class="adminoptionbox">
 				<label for="edit_language">{tr}Select the language to edit:{/tr}</label>
-				<select id="edit_language" class="translation_action"name="edit_language">
+				<select id="edit_language" class="translation_action" name="edit_language">
 					{section name=ix loop=$languages}
 						<option value="{$languages[ix].value|escape}" {if $edit_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
 					{/section}
@@ -142,7 +142,7 @@
 					<input type="hidden" name="offset" value="{$offset|escape}" />
 
 					{pagination_links cant=$total step=$maxRecords offset=$offset _ajax='n'}{strip}
-						tiki-edit_languages.php?edit_language={$edit_language}&action={$action}&maxRecords={$maxRecords}&only_db_translations={$only_db_translations}&only_db_untranslated={$only_db_untranslated}
+						tiki-edit_languages.php?edit_language={$edit_language}&action={$action}&maxRecords={$maxRecords}&only_db_translations={$only_db_translations}&only_db_untranslated={$only_db_untranslated}{if isset($find)}&find={$find}{/if}
 					{/strip}{/pagination_links}
 				</div>
 			{/if}
