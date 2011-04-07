@@ -40,13 +40,13 @@ if (!isset($_REQUEST["action"])) {
 }
 $smarty->assign('action', $_REQUEST["action"]);
 
-if (isset($_REQUEST['only_db_translations'])) {
+if (isset($_REQUEST['only_db_translations']) && $_REQUEST['only_db_translations'] != 'n') {
 	$smarty->assign('only_db_translations', 'y');
 } else {
 	$smarty->assign('only_db_translations', 'n');
 }
 
-if (isset($_REQUEST['only_db_untranslated'])) {
+if (isset($_REQUEST['only_db_untranslated']) && $_REQUEST['only_db_untranslated'] != 'n') {
 	$smarty->assign('only_db_untranslated', 'y');
 } else {
 	$smarty->assign('only_db_untranslated', 'n');
@@ -128,7 +128,7 @@ if ($action == "edit_rec_sw" || $action == "edit_tran_sw") {
 	$data = array();
 
 	if ($action == "edit_rec_sw") {
-		if (isset($_REQUEST['only_db_untranslated'])) {
+		if (isset($_REQUEST['only_db_untranslated']) && $_REQUEST['only_db_untranslated'] != 'n') {
 			// display only database stored untranslated strings
 			$data = $translations->getDbUntranslated($maxRecords, $offset, $find);
 		} else {
@@ -136,7 +136,7 @@ if ($action == "edit_rec_sw" || $action == "edit_tran_sw") {
 			$data = $translations->getAllUntranslated($maxRecords, $offset, $find);
 		}
 	} elseif ($action == "edit_tran_sw") {
-		if (isset($_REQUEST['only_db_translations'])) {
+		if (isset($_REQUEST['only_db_translations']) && $_REQUEST['only_db_translations'] != 'n') {
 			// display only database stored translations
 			$data = $translations->getDbTranslations($sort_mode, $maxRecords, $offset, $find);
 		} else {

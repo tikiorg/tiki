@@ -140,8 +140,10 @@
 						</tr>
 					</table>
 					<input type="hidden" name="offset" value="{$offset|escape}" />
-										
-					{pagination_links cant=$total step=$maxRecords offset=$offset _ajax='n'}{/pagination_links}
+
+					{pagination_links cant=$total step=$maxRecords offset=$offset _ajax='n'}{strip}
+						tiki-edit_languages.php?edit_language={$edit_language}&action={$action}&maxRecords={$maxRecords}&only_db_translations={$only_db_translations}&only_db_untranslated={$only_db_untranslated}
+					{/strip}{/pagination_links}
 				</div>
 			{/if}
 		</form>
