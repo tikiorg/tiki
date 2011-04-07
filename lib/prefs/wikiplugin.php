@@ -84,13 +84,13 @@ function prefs_wikiplugin_list($partial = false) {
 			'vote' => 'y',
 			'youtube' => 'y',
 			'zotero' => 'y',
-		}
+		);
 
 		$out = array();
 		foreach( $tikilib->plugin_get_list() as $plugin ) {
-			$preference = 'wikiplugin_' . $plugin );
+			$preference = 'wikiplugin_' . $plugin;
 			$out[$preference] = array(
-				'default' => isset($defaultPlugins[$plugin]) ? 'y' : 'n';
+				'default' => isset($defaultPlugins[$plugin]) ? 'y' : 'n'
 			);
 		}
 
