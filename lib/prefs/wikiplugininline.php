@@ -9,7 +9,29 @@ function prefs_wikiplugininline_list($partial = false) {
 	global $tikilib;
 
 	if ($partial) {
-		return array();
+		$defaultInline = array(
+			'file' => 'y',
+			'getaccesstoken' => 'y',
+			'googleanalytics' => 'y',
+			'group' => 'y',
+			'grouplist' => 'y',
+			'mail' => 'y',
+			'perm' => 'y',
+			'smarty' => 'y',
+			'trackeritemfield' => 'y',
+			'transclude' => 'y',
+			'zotero' => 'y',
+		);
+
+		$out = array();
+		foreach( $tikilib->plugin_get_list() as $plugin ) {
+			$preference = 'wikiplugininline_' . $plugin );
+			$out[$preference] = array(
+				'default' => isset($defaultInline[$plugin]) ? 'y' : 'n';
+			);
+		}
+
+		return $out;
 	}
 
 	$prefs = array();

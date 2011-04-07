@@ -9,7 +9,92 @@ function prefs_wikiplugin_list($partial = false) {
 	global $tikilib;
 
 	if ($partial) {
-		return array();
+		// Note that most of these will be disabled by an other feature check.
+		$defaultPlugins = array(
+			'article' => 'y',
+			'articles' => 'y',
+			'attach' => 'y',
+			'author' => 'y',
+			'bigbluebutton' => 'y',
+			'box' => 'y',
+			'calendar' => 'y',
+			'category' => 'y',
+			'catorphans' => 'y',
+			'catpath' => 'y',
+			'center' => 'y',
+			'chart' => 'y',
+			'code' => 'y',
+			'content' => 'y',
+			'copyright' => 'y',
+			'div' => 'y',
+			'dl' => 'y',
+			'draw' => 'y',
+			'events' => 'y',
+			'fade' => 'y',
+			'fancylist' => 'y',
+			'fancytable' => 'y',
+			'file' => 'y',
+			'files' => 'y',
+			'flash' => 'y',
+			'googlemap' => 'y',
+			'group' => 'y',
+			'html' => 'y',
+			'img' => 'y',
+			'include' => 'y',
+			'invite' => 'y',
+			'kaltura' => 'y',
+			'lang' => 'y',
+			'map' => 'y',
+			'mediaplayer' => 'y',
+			'memberpayment' => 'y',
+			'miniquiz' => 'y',
+			'module' => 'y',
+			'mouseover' => 'y',
+			'payment' => 'y',
+			'poll' => 'y',
+			'quote' => 'y',
+			'rcontent' => 'y',
+			'remarksbox' => 'y',
+			'rss' => 'y',
+			'sheet' => 'y',
+			'snarf_cache' => 0,
+			'sort' => 'y',
+			'split' => 'y',
+			'sub' => 'y',
+			'sup' => 'y',
+			'survey' => 'y',
+			'tabs' => 'y',
+			'thumb' => 'y',
+			'toc' => 'y',
+			'topfriends' => 'y',
+			'trackercomments' => 'y',
+			'trackerfilter' => 'y',
+			'trackeritemfield' => 'y',
+			'trackerlist' => 'y',
+			'trackertimeline' => 'y',
+			'tracker' => 'y',
+			'trackerprefill' => 'y',
+			'trackerstat' => 'y',
+			'trackerif' => 'y',
+			'transclude' => 'y',
+			'translated' => 'y',
+			'twitter' => 'y',
+			'userlink' => 'y',
+			'vimeo' => 'y',	
+			'vote' => 'y',
+			'youtube' => 'y',
+			'zotero' => 'y',
+		}
+
+		$out = array();
+		foreach( $tikilib->plugin_get_list() as $plugin ) {
+			$preference = 'wikiplugin_' . $plugin );
+			$out[$preference] = array(
+				'default' => isset($defaultPlugins[$plugin]) ? 'y' : 'n';
+			);
+		}
+
+		return $out;
 	}
 
 	$prefs = array();
