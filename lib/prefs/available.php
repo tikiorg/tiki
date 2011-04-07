@@ -5,20 +5,22 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function prefs_available_list() {
+function prefs_available_list($partial = false) {
 	global $tikilib;
-	$languages = $tikilib->list_languages( false, null, true);
 	$map = array();
-	
-	foreach( $languages as $lang ) {
-		$map[ $lang['value'] ] = $lang['name'];
-	}
-
-	$all_styles = $tikilib->list_styles();
 	$styles = array('' => tra('All'));
+	
+	if (! $partial) {
+		$languages = $tikilib->list_languages( false, null, true);
+		foreach( $languages as $lang ) {
+			$map[ $lang['value'] ] = $lang['name'];
+		}
 
-	foreach ($all_styles as $style) {
-		$styles[$style] = substr( $style, 0, strripos($style, '.css'));
+		$all_styles = $tikilib->list_styles();
+
+		foreach ($all_styles as $style) {
+			$styles[$style] = substr( $style, 0, strripos($style, '.css'));
+		}
 	}
 
 	return array(

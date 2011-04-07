@@ -90,6 +90,7 @@ function prefs_wikiplugin_list($partial = false) {
 		foreach( $tikilib->plugin_get_list() as $plugin ) {
 			$preference = 'wikiplugin_' . $plugin;
 			$out[$preference] = array(
+				'default' => isset($defaultPlugins[$plugin]) ? 'y' : 'n',
 				'default' => isset($defaultPlugins[$plugin]) ? 'y' : 'n'
 			);
 		}

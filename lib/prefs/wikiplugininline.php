@@ -27,7 +27,7 @@ function prefs_wikiplugininline_list($partial = false) {
 		foreach( $tikilib->plugin_get_list() as $plugin ) {
 			$preference = 'wikiplugininline_' . $plugin;
 			$out[$preference] = array(
-				'default' => isset($defaultInline[$plugin]) ? 'y' : 'n'
+				'default' => isset($defaultInline[$plugin]) ? 'y' : 'n',
 			);
 		}
 
