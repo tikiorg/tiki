@@ -510,7 +510,7 @@
 					<label>
 						{tr}From{/tr}
 						<select name="todo_from">
-							<option value="" />
+							<option value=""></option>
 							{foreach key=st item=stdata from=$status_types}
 								<option value="{$st|escape}">{$stdata.label|escape}</option>
 							{/foreach}
@@ -519,7 +519,7 @@
 					<label>
 						{tr}To{/tr}
 						<select name="todo_to">
-							<option value="" />
+							<option value=""></option>
 							{foreach key=st item=stdata from=$status_types}
 								<option value="{$st|escape}">{$stdata.label|escape}</option>
 							{/foreach}
@@ -547,7 +547,7 @@
 	</form>
 {/tab}
 
-{jq}if ($.ui && $(".tabs").length) { $("#content3").tiki("accordion", {heading: "h2"});}{/jq}
+{jq}if ($.ui && $(".tabs").length) { $(".content3").tiki("accordion", {heading: "h2"});}{/jq}
 {tab name="{tr}Import/Export{/tr}"}
 {* --- tab with raw form --- *}
 <h2>{tr}Import/export trackers{/tr}</h2>

@@ -6,16 +6,19 @@
 // $Id$
 
 require_once('tiki-setup.php');
-global $monitor_filename, $stat_array;
+global $monitor_filename, $stat_array, $access;
 
 if ($prefs['feature_trackers'] != 'y') {
-	die(json_encode(array('msg' => tra('This feature is disabled').': feature_trackers')));
+	$access->output_serialized(array('msg' => tra('This feature is disabled').': feature_trackers'));
+	die();
 }
 if ($prefs['feature_ajax'] != 'y') {
-	die(json_encode(array('msg' => tra('This feature is disabled').': feature_ajax')));
+	$access->output_serialized(array('msg' => tra('This feature is disabled').': feature_ajax'));
+	die();
 }
 if (!isset($_REQUEST['trackerId'])) {
-	die(json_encode(array('msg' => tra('No tracker indicated'))));
+	$access->output_serialized(array('msg' => tra('No tracker indicated')));
+	die();
 }
 
 function saveStatus($in_vals = array()) {
@@ -32,7 +35,8 @@ if (isset($_REQUEST['trackerId']) && isset($_REQUEST['xuser'])) {
 	if (is_file($monitor_filename)) {
 		$stat_array = unserialize(file_get_contents($monitor_filename));
 	} else {
-		die(json_encode(array('msg' => 'No monitor file found')));
+		$access->output_serialized(array('msg' => 'No monitor file found'));
+		die();
 	}
 	
 	$stat_array = unserialize(file_get_contents($monitor_filename));
@@ -48,5 +52,5 @@ if (isset($_REQUEST['trackerId']) && isset($_REQUEST['xuser'])) {
 		}
 	}
 	
-	die(json_encode($json_data));
+	$access->output_serialized($json_data);
 }
