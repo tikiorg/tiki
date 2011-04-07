@@ -44,6 +44,14 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 			$groups = array_merge($groups, $this->getAllowedGroups($objectType, $objectId, $viewPermission));
 		}
 
+		// Used for comments - must see the parent view permission in addition to a global permission to view comments
+		if (isset($data['global_view_permission'])) {
+			$globalPermission = $data['global_view_permission'];
+			$globalPermission = is_object($globalPermission) ? $globalPermission->getValue() : $globalPermission;
+			$groups = $this->getGroupExpansion($groups);
+			$groups = $this->filterWithGlobalPermission($groups, $globalPermission);
+		}
+
 		return array(
 			'allowed_groups' => $typeFactory->multivalue(array_unique($groups)),
 		);
@@ -68,6 +76,22 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 		return $groups;
 	}
 
+	private function filterWithGlobalPermission($groups, $permission)
+	{
+		$out = array();
+		$accessor = $this->perms->getAccessor();
+
+		foreach ($groups as $group) {
+			$accessor->setGroups(array($group));
+
+			if ($accessor->$permission) {
+				$out[] = $group;
+			}
+		}
+
+		return $out;
+	}
+
 	private function getCheckList($accessor)
 	{
 		$toCheck = $accessor->getResolver()->applicableGroups();
@@ -77,6 +101,24 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 		}
 
 		return $toCheck;
+	}
+
+	private function getGroupExpansion($groups)
+	{
+		static $expansions = array();
+		$tikilib = TikiLib::lib('tiki');
+
+		$out = $groups;
+
+		foreach ($groups as $group) {
+			if (! isset($expansions[$group])) {
+				$expansions[$group] = $tikilib->get_groups_all($group);
+			}
+
+			$out = array_merge($out, $expansions[$group]);
+		}
+
+		return $out;
 	}
 }
 

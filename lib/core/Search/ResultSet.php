@@ -50,6 +50,8 @@ class Search_ResultSet extends ArrayObject
 			foreach ($content as $key => $value) {
 				if ($key != 'object_type' // Skip internal values
 				 && $key != 'object_id'
+				 && $key != 'parent_object_type'
+				 && $key != 'parent_object_id'
 				 && $key != 'relevance'
 				 && $key != 'url'
 				 && ! empty($value) // Skip empty

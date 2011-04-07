@@ -120,6 +120,13 @@ class UnifiedSearchLib
 			$types['sheet'] = tra('sheet');
 		}
 
+		if ($prefs['feature_wiki_comments'] == 'y'
+			|| $prefs['feature_article_comments'] == 'y'
+			|| $prefs['feature_poll_comments'] == 'y'
+			|| $prefs['feature_file_galleries_comments'] == 'y') {
+			$types['comment'] = tra('comment');
+		}
+
 		return $types;
 	}
 
@@ -133,6 +140,8 @@ class UnifiedSearchLib
 
 	private function addSources($aggregator, $mode = 'indexing')
 	{
+		global $prefs;
+
 		$types = $this->getSupportedTypes();
 
 		// Content Sources
@@ -164,7 +173,23 @@ class UnifiedSearchLib
 			$aggregator->addContentSource('sheet', new Search_ContentSource_SheetSource);
 		}
 
-		global $prefs;
+		if (isset($types['comment'])) {
+			$commentTypes = array();
+			if ($prefs['feature_wiki_comments'] == 'y') {
+				$commentTypes[] = 'wiki page';
+			}
+			if ($prefs['feature_article_comments'] == 'y') {
+				$commentTypes[] = 'article';
+			}
+			if ($prefs['feature_poll_comments'] == 'y') {
+				$commentTypes[] = 'poll';
+			}
+			if ($prefs['feature_file_galleries_comments'] == 'y') {
+				$commentTypes[] = 'file gallery';
+			}
+
+			$aggregator->addContentSource('comment', new Search_ContentSource_CommentSource($commentTypes));
+		}
 
 		// Global Sources
 		if ($prefs['feature_categories'] == 'y') {

@@ -181,7 +181,7 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 			function make_prevnext_link($url, $content, $params, $class = 'prevnext') {
 				global $smarty;
 				
-				$link = "\n".'<a class="'.$class.'" ';
+				$link = '<a class="'.$class.'" ';
 				if ($params['_ajax'] == 'y') {
 					$link .= smarty_block_ajax_href(
 						array('template' => $params['template'], 'htmlelement' => $params['htmlelement'], '_ajax' => $params['_ajax'],),
@@ -246,12 +246,12 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 		}
 
 		if ( $prefs['direct_pagination'] == 'y' && $nb_pages > 1 && $params['show_numbers'] == 'y' ) {
-			$html .= "\n<br />";
+			$html .= "<br />";
 			$last_dots = false;
 			$page_num = floor($real_offset / $params['step']);
 			foreach ( range(0, $nb_pages - 1) as $k ) {
 				if ( $k + $zero_based_min == $page_num ) {
-					$html .= "\n".'<span class="prevnext" style="font-weight:bold">'.($k + 1).'</span>';
+					$html .= '<span class="prevnext" style="font-weight:bold">'.($k + 1).'</span>';
 					$last_dots = false;
 				} elseif ( $params['usedots'] != 'y' ||
 					( $params['usedots'] == 'y' &&
@@ -272,12 +272,12 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 					$html .= make_prevnext_link($url.$url_k, $k+1, $params);
 					$last_dots = false;
 				} elseif ( ! $last_dots )  {
-					$html .= "\n".'<span class="prevnext" style="font-weight:bold">&hellip;</span>';
+					$html .= '<span class="prevnext" style="font-weight:bold">&hellip;</span>';
 					$last_dots = true;
 				}
 			}
 		}
-		$html .= "\n</div>";
+		$html .= "</div>";
 	}
 	return $html;
 }

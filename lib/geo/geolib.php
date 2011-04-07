@@ -34,7 +34,7 @@ class GeoLib
 	
 	function build_location_string($coords) {
 		if (! empty($coords['lat']) && ! empty($coords['lon'])) {
-			$string = "{$coords['lat']},{$coords['lon']}";
+			$string = "{$coords['lon']},{$coords['lat']}";
 
 			if (! empty($coords['zoom'])) {
 				$string .= ",{$coords['zoom']}";
@@ -63,8 +63,8 @@ class GeoLib
 	function parse_coordinates($string) {
 		if (preg_match("/^(-?\d*(\.\d+)?),(-?\d*(\.\d+)?)(,(\d+))?$/", $string, $parts)) {
 			$coords = array(
-				'lat' => $parts[1],
-				'lon' => $parts[3],
+				'lat' => $parts[3],
+				'lon' => $parts[1],
 			);
 
 			if (! empty($parts[6])) {

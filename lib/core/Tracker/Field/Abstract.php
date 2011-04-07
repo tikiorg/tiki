@@ -34,7 +34,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 
 			$arguments = array(
 				'class' => 'tablename',
-				'href' => "tiki-view_tracker_item.php?" . http_build_query($query, '', '&'),
+				'href' => 'tiki-view_tracker_item.php?' . http_build_query($query, '', '&'),
 			);
 
 			$geolocation = TikiLib::lib('geo')->get_coordinates('trackeritem', $itemId);
@@ -43,6 +43,11 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 				$arguments['class'] .= ' geolocated';
 				$arguments['data-geo-lat'] = $geolocation['lat'];
 				$arguments['data-geo-lon'] = $geolocation['lon'];
+			}
+			
+			if (!empty($context['url']) && strpos($context['url'], 'itemId') !== false) {
+				$context['url'] = preg_replace('/&itemId=[^&]*/', '&itemId=' . $itemId, $context['url']);
+				$arguments['href'] = $context['url'];
 			}
 
 			$pre = '<a';
@@ -101,17 +106,6 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 				// or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user)
 				// or ($tracker_info.writerGroupCanModify eq 'y' and $group and $ours eq $group))
 			)) {
-
-			// TODO : Handle the URL (need to figure out where it originates)
-			/*
-				{if empty($url) and !empty($item.itemId)}
-					{assign var=urll value="tiki-view_tracker_item.php?itemId=`$item.itemId`&amp;show=view"}
-				{elseif strstr($url, 'itemId') and !empty($item.itemId)}
-					{assign var=urll value=$url|regex_replace:"/itemId=?/":"itemId=`$item.itemId`"}
-				{else}
-					{assign var=urll value=$url}
-				{/if}
-			*/
 
 			return (bool) $this->getItemId();
 		}
