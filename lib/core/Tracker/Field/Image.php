@@ -83,7 +83,7 @@ class Tracker_field_Image extends Tracker_Field_File
 				}
 			}
 		} else {
-			if ($this->getOption(5)) {
+			if ($this->getOption(6)) {
 				$params['file'] = $this->getOption(6);
 				$params['alt'] = 'n/a';
 			} else {
