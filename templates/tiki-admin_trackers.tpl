@@ -130,7 +130,7 @@
 						<select id="autoCreateGroupInc" name="autoCreateGroupInc">
 							<option value="">{tr}None{/tr}</option>
 							{foreach item=gr from=$all_groupIds}
-								<option value="{$gr.id|escape}" {if $gr.id eq $info.autoCreateGroupInc} selected="selected"{/if}>{$gr.groupName|truncate:"52":" ..."}</option>
+								<option value="{$gr.id|escape}" {if $gr.id eq $info.autoCreateGroupInc} selected="selected"{/if}>{$gr.groupName|truncate:"52":" ..."|escape}</option>
 							{/foreach}
 						</select>
 					</td>
