@@ -59,7 +59,11 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 	}
 
 	function renderOutput( $context = array() ) {
-		return $this->renderInput( $context );
+		if ($context['list_mode'] === 'csv') {
+			return $this->getConfiguration('value');	// FIXME
+		} else {
+			return $this->renderInput( $context );
+		}
 	}
 }
 

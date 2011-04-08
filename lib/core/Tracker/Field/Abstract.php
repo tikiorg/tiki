@@ -148,7 +148,11 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 	 */
 	protected function renderInnerOutput($context = array())
 	{
-		return $this->getConfiguration('pvalue', $this->getConfiguration('value'));
+		if ($context['list_mode'] === 'csv') {
+			return $this->getConfiguration('value');
+		} else {
+			return $this->getConfiguration('pvalue', $this->getConfiguration('value'));
+		}
 	}
 
 	protected function getInsertId()

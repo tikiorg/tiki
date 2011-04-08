@@ -49,8 +49,12 @@ class Tracker_Field_Location extends Tracker_Field_Abstract
 
 	function renderOutput($context = array())
 	{
-		TikiLib::lib('header')->add_map();
-		return $this->renderTemplate('trackeroutput/location.tpl', $context);
+		if ($context['list_mode'] === 'csv') {
+			return $this->getConfiguration('value');
+		} else {
+			TikiLib::lib('header')->add_map();
+			return $this->renderTemplate('trackeroutput/location.tpl', $context);
+		}
 	}
 }
 

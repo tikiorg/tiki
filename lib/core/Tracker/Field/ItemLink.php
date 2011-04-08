@@ -36,9 +36,9 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 
 		$item = $this->getConfiguration('linkId');
 		$label = $this->getConfiguration('value');
-		require_once $smarty->_get_plugin_filepath('function', 'object_link');
+		if ($item && $context['list_mode'] !== 'csv') {
+			require_once $smarty->_get_plugin_filepath('function', 'object_link');
 
-		if ($item) {
 			return smarty_function_object_link(array(
 				'type' => 'trackeritem',
 				'id' => $item,
