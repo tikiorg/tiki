@@ -106,6 +106,8 @@ class BigBlueButtonLib
 		}
 		if( isset( $params['voicebridge'] ) ) {
 			$request['voiceBridge'] = $params['voicebridge'];
+		} else {
+			$request['voiceBridge'] = '7' . rand(0,9999);
 		}
 		if( isset( $params['logout'] ) ) {
 			$request['logoutURL'] = $params['logout'];
