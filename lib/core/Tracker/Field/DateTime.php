@@ -45,7 +45,7 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract
 			} elseif ($this->getOption(0) == 't') {
 				return $tikilib->get_short_time($value);
 			} else {
-				if (isset($context['list_mode']) && $context['list_mode'] == 'csv') {
+				if ($context['list_mode'] == 'csv') {
 					return $tikilib->get_short_datetime($value, false);
 				} else {
 					$current = $tikilib->get_short_date($tikilib->now);

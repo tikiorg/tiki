@@ -23,8 +23,11 @@ function smarty_function_trackeroutput( $params, $smarty ) {
 		$context = $params;
 		unset($context['item']);
 		unset($context['field']);
-
-		return $handler->renderOutput($context);
+		if (!isset($context['list_mode'])) {
+			$context['list_mode'] = 'n';
+		} 
+		$r = $handler->renderOutput($context);
+		return $r;
 	}
 }
 

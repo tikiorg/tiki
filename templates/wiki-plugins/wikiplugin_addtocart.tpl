@@ -10,7 +10,35 @@
 		</select>
 		<br />
 	{/if}
-	<input type="text" name="quantity" value="1" size="2"/>
-	<input type="submit" value="{$add_label|escape}"/>
+	
+	<table>
+		{if $gift_certificate_error}
+			<tr>
+				<th style="text-align: right;">{$gift_certificate_error}</th>
+				<td>{$gift_certificate}</td>
+			</tr>
+		{/if}
+		
+		{if $giftcertificate == 'y'}
+			<tr>
+				<th style="text-align: right;">{tr}Gift Certificate:{/tr}</th>
+				<td><input type="text" name="gift_certificate" size="2"/></td>
+			</tr>
+		{/if}
+
+		{if $hideamountfield eq 'y'}
+		<input type="hidden" name="quantity" value="1" />
+		{else}			
+		<tr>
+			<th style="text-align: right;">{tr}Qty:{/tr}</th>
+			<td><input type="text" name="quantity" value="1" size="2"/></td>
+		</tr>
+		{/if}
+	</table>
+	<input type="submit" value="{$add_label|escape}" class="addProductToCartSubmit" />
+	{if $exchangeorderitemid && $exchangetoproductid}
+		<input type="hidden" value="{$exchangeorderitemid|escape}" name="exchangeorderitemid" />
+		<input type="hidden" value="{$exchangetoproductid|escape}" name="exchangetoproductid" />
+	{/if}
 </form>
 

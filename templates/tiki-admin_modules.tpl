@@ -19,8 +19,8 @@
 	{/remarksbox}
 {/if}
 
-{remarksbox type="note" title="{tr}Modules Revamp{/tr}" icon="bricks"}
-	<em>{tr}Experimental. This feature is still under development{/tr}</em><br />
+{remarksbox type="note" title="{tr}Modules Revamp{/tr}" icon="star"}
+	<em>{tr}New. This feature is still under development{/tr}</em><br />
 	<ul>
 		<li>{tr}Drag the modules around to re-order then click save when ready{/tr}</li>
 		<li>{tr}Double click them to edit{/tr}</li>
@@ -37,9 +37,6 @@
 {tabset}
 
 {tab name="{tr}Assigned modules{/tr}"}
-	{remarksbox type="note" title="{tr}Modules Revamp{/tr}" icon="bricks"}
-		<em>{tr}This tab remains for legacy purposes to allow editing "the old way"{/tr}</em>
-	{/remarksbox}
 	{if $prefs.feature_tabs neq 'y'}
 		<legend class="heading">
 			<span>

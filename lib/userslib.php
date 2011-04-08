@@ -364,10 +364,6 @@ class UsersLib extends TikiLib
 		$shib_create_tiki = ($prefs['shib_create_user_tiki'] == 'y');
 		$shib_skip_admin = ($prefs['shib_skip_admin'] == 'y');
 
-		if ( strlen($pass) < $prefs['min_pass_length'] and ($user === 'admin' or (!$auth_cas and !$auth_shib )) ) {
-			return array(false, $user, $this->user_exists($user)?PASSWORD_INCORRECT:USER_NOT_FOUND);
-		}
-
 		// first attempt a login via the standard Tiki system
 		//
 		if (!($auth_shib || $auth_cas) || $user == 'admin') { //redflo: does this mean, that users in cas and shib are not replicated to tiki tables? Does this work well?
@@ -964,6 +960,10 @@ class UsersLib extends TikiLib
 
 	// validate the user via ldap and get a ldap connection
 	function validate_user_ldap($user, $pass) {
+		if (!$pass) { // An LDAP password cannot be empty. Treat specially so that Tiki does *NOT* unintentionally request an unauthenticated bind.
+			return PASSWORD_INCORRECT;
+		}
+		
 		global $prefs;
 		global $logslib;
 

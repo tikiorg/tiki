@@ -2259,7 +2259,7 @@ class TrackerLib extends TikiLib
 					'itemId' => (int) $itemId,
 				));
 				$replace = true;
-			} elseif ($itemId && !$t) {
+			} elseif ($itemId && !$t & $t === $trackerId) {
 				$items->insert(array(
 					'trackerId' => (int) $trackerId,
 					'created' => (int) $created,
@@ -2331,6 +2331,9 @@ class TrackerLib extends TikiLib
 							} elseif ($dateFormat == 'dd/mm/yyyy') {
 								list($d, $m, $y) = preg_split('#/#', $data[$i]);
 								$data[$i] = $tikilib->make_time(0, 0, 0, $m, $d, $y);
+							} elseif ($dateFormat == 'yyyy-mm-dd') {
+								list($y, $m, $d) = preg_split('#-#', $data[$i]);
+								$data[$i] = $tikilib->make_time(0, 0, 0, $m, $d, $y);
 							}
 							break;
 						case 'q':
@@ -2341,12 +2344,12 @@ class TrackerLib extends TikiLib
 						if ($this->get_item_value($trackerId, $itemId, $field['fieldId']) !== false) {
 							$itemFields->update(array('value' => $data[$i]), array(
 								'itemId' => (int) $itemId,
-								'fieldId' => (int) $fieldId,
+								'fieldId' => (int) $field['fieldId'],
 							));
 						} else {
 							$itemFields->insert(array(
 								'itemId' => (int) $itemId,
-								'fieldId' => (int) $fieldId,
+								'fieldId' => (int) $field['fieldId'],
 								'value' => $data[$i],
 							));
 						}

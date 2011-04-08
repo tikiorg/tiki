@@ -19,7 +19,7 @@ include_once ('lib/webmail/class.rc4crypt.php');
 include_once ('lib/webmail/tikimaillib.php');
 
 function handleWebmailRedirect($inUrl) {		// AJAX_TODO
-	global $prefs;
+	header ('location: tiki-webmail.php?'.$inUrl);
 }
 
 $access->check_user($user);

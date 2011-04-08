@@ -131,6 +131,13 @@ function wikiplugin_trackertimeline_info() {
 					array('text' => tra('No'), 'value' => 'n'),
 				),
 			),
+			'image_field' => array(
+				'required' => false,
+				'name' => tra('Image Field'),
+				'description' => tra('Tracker Field ID containing in image.'),
+				'filter' => 'digits',
+				'default' => '',
+			),
 		)
 	);
 }
@@ -163,6 +170,10 @@ function wikiplugin_trackertimeline( $data, $params ) {
 
 	if( isset($params['link_page']) ) {
 		$fieldIds[ $params['link_page'] ] = 'link';
+	}
+
+	if( !empty($params['image_field']) ) {
+		$fieldIds[ $params['image_field'] ] = 'image';
 	}
 
 	$fields = array();
@@ -256,6 +267,9 @@ head.appendChild(script);
 				if (!empty( $item['link'])) {
 					$event['link'] = $item['link'];
 				}
+				if (!empty( $item['image'])) {
+					$event['image'] = $item['image'];
+				}
 				$events[] = $event;
 			}
 			$ttl_data = array(
@@ -269,17 +283,24 @@ head.appendChild(script);
 		$js .= 'var ttl_eventData = ' . json_encode($ttl_data) . ";\n";
 
 		$js .= '
-var ttlTimeline, ttlInit = function() {
+var ttlTimelineReady = false, ttlTimeline, ttlInit = function() {
 	// wait for Timeline to be loaded
 	if (typeof window.Timeline === "undefined" ||
 			typeof window.Timeline.createBandInfo === "undefined" ||
 			typeof window.Timeline.DateTime === "undefined" ||
-			typeof window.Timeline.GregorianDateLabeller === "undefined") {
+			typeof window.Timeline.GregorianDateLabeller === "undefined" ||
+			typeof window.Timeline.GregorianDateLabeller.getMonthName === "undefined" ) {
 
 		window.setTimeout( function() { ttlInit(); }, 500);
 		return;
 	}
 
+	if (!ttlTimelineReady) {	// just seems to need a little bit longer...
+		ttlTimelineReady = true;
+		window.setTimeout( function() { ttlInit(); }, 500);
+		return;
+	}
+	
 	var ttl_eventSource = new Timeline.DefaultEventSource();
 	ttl_eventSource.loadJSON(ttl_eventData, ".");	// The data
 	
@@ -318,7 +339,7 @@ ttlInit();
 
 var ttlResizeTimerID = null;
 $(window).resize( function () {
-	if (ttlResizeTimerID == null) {
+	if (ttlTimeline && ttlResizeTimerID == null) {
 		ttlResizeTimerID = window.setTimeout(function() {
 			resizeTimerID = null;
 			ttlTimeline.layout();

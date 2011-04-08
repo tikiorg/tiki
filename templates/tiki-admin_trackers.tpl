@@ -547,11 +547,13 @@
 	</form>
 {/tab}
 
-{jq}if ($.ui && $(".tabs").length) { $(".content3").tiki("accordion", {heading: "h2"});}{/jq}
 {tab name="{tr}Import/Export{/tr}"}
+<h2>{tr}Tracker Import/Export{/tr}</h2>
+{tabset}
 {* --- tab with raw form --- *}
-<h2>{tr}Import/export trackers{/tr}</h2>
-	<div>
+{tab name="{tr}Import/export trackers{/tr}"}
+	
+	<h3>{tr}Tracker Definition{/tr}</h3>
 	<form action="tiki-admin_trackers.php" method="post">
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 		<input type="hidden" name="import" value="1" />
@@ -590,16 +592,17 @@ categories = {$catsdump}
 		<br />
 		<input type="submit" name="save" value="{tr}Import{/tr}" />
 	</form>
-	</div>
+	{if $trackerId}
+		<h3>{tr}Export for profile{/tr}</h3>
+		{button href="tiki-admin_trackers.php?trackerId=$trackerId&exportTrackerProfile=y" _text="{tr}Export tracker{/tr}"}
+	{/if}
+	{/tab}
 	
 	{if $trackerId}
-		<h2>Export for profile</h2>
-		{button href="tiki-admin_trackers.php?trackerId=$trackerId&exportTrackerProfile=y" _text="{tr}Export tracker{/tr}"}
-
 		{include file='tiki-export_tracker.tpl'}
 
-		<h2>{tr}Import CSV data{/tr}</h2>
-		<div>
+		{tab name="{tr}Import CSV data{/tr}"}
+		<h3>{tr}Tracker Items Import{/tr}</h3>
 		<form action="tiki-import_tracker.php?trackerId={$trackerId}" method="post" enctype="multipart/form-data">
 			<table class="formcolor">
 				<tr>
@@ -614,6 +617,9 @@ categories = {$catsdump}
 						<br />
 						<input type="radio" name="dateFormat" value="dd/mm/yyyy" />
 						{tr}day{/tr}/{tr}month{/tr}/{tr}year{/tr}(31/01/2008)
+						<br />
+						<input type="radio" name="dateFormat" value="yyyy-mm-dd" />
+						{tr}year{/tr}-{tr}month{/tr}-{tr}day{/tr}(2008-01-31)
 						<br />
 						<input type="radio" name="dateFormat" value="" />{tr}timestamp{/tr}
 					</td>
@@ -648,8 +654,9 @@ categories = {$catsdump}
 				<li>{tr}Auto-incremented itemid fields shall be included with no matter what values{/tr}</li>
 			</ul>
 		{/remarksbox}
-		</div>
+		{/tab}
 	{/if}
+{/tabset}
 {/tab}
 
 {tab name="{tr}Duplicate Tracker{/tr}"}

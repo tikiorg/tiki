@@ -35,11 +35,16 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 	}
 	
 	function renderInnerOutput( $context ) {
+		
+		$list = TikiLib::lib('trk')->list_item_attachments($this->getItemId(), 0, -1, 'attId_asc');
+		
+		if ($context['list_mode'] === 'csv') {
+			return explode('%%%', $list);	// should something to do with export_attachment() happen here?
+		}
 		$smarty = TikiLib::lib('smarty');
 		require_once $smarty->_get_plugin_filepath('block', 'self_link');
 		require_once $smarty->_get_plugin_filepath('function', 'icon');
 		
-		$list = TikiLib::lib('trk')->list_item_attachments($this->getItemId(), 0, -1, 'attId_asc');
 		
 		if (empty($list['data'])) {
 			return '';

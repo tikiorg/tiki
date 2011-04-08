@@ -37,7 +37,7 @@ class Tracker_Field_PageSelector extends Tracker_Field_Abstract
 	{
 		$value = $this->getConfiguration('value');
 		if ($value) {
-			if ($this->getOption(3) === 'n' || (isset($context['list_mode']) && $context['list_mode'] === 'csv')) {
+			if ($this->getOption(3) === 'n' || $context['list_mode'] === 'csv') {
 				return $value;
 			} else {
 				$smarty = TikiLib::lib('smarty');
