@@ -547,11 +547,11 @@
 	</form>
 {/tab}
 
-{jq}if ($.ui && $(".tabs").length) { $(".content3").tiki("accordion", {heading: "h2"});}{/jq}
 {tab name="{tr}Import/Export{/tr}"}
+{tabset}
 {* --- tab with raw form --- *}
-<h2>{tr}Import/export trackers{/tr}</h2>
-	<div>
+{tab name="{tr}Import/export trackers{/tr}"}
+	
 	<form action="tiki-admin_trackers.php" method="post">
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 		<input type="hidden" name="import" value="1" />
@@ -590,16 +590,16 @@ categories = {$catsdump}
 		<br />
 		<input type="submit" name="save" value="{tr}Import{/tr}" />
 	</form>
-	</div>
+	{/tab}
 	
 	{if $trackerId}
-		<h2>Export for profile</h2>
-		{button href="tiki-admin_trackers.php?trackerId=$trackerId&exportTrackerProfile=y" _text="{tr}Export tracker{/tr}"}
-
+		{tab name="{tr}Export for profile{/tr}"}
+			{button href="tiki-admin_trackers.php?trackerId=$trackerId&exportTrackerProfile=y" _text="{tr}Export tracker{/tr}"}
+		{/tab}
+		
 		{include file='tiki-export_tracker.tpl'}
 
-		<h2>{tr}Import CSV data{/tr}</h2>
-		<div>
+		{tab name="{tr}Import CSV data{/tr}"}
 		<form action="tiki-import_tracker.php?trackerId={$trackerId}" method="post" enctype="multipart/form-data">
 			<table class="formcolor">
 				<tr>
@@ -648,8 +648,9 @@ categories = {$catsdump}
 				<li>{tr}Auto-incremented itemid fields shall be included with no matter what values{/tr}</li>
 			</ul>
 		{/remarksbox}
-		</div>
+		{/tab}
 	{/if}
+{/tabset}
 {/tab}
 
 {tab name="{tr}Duplicate Tracker{/tr}"}

@@ -259,10 +259,8 @@
 	{/if}
 	
 	{if $tiki_p_export_tracker eq 'y'}
-		{tab name="{tr}Export Tracker Items{/tr}"}
-		{* -------------------------------------------------- tab with export --- *}
-			{include file='tiki-export_tracker.tpl'}
-		{/tab}
+		{* -------------------------------------------------- tab with export (and dump if perms) --- *}
+		{include file='tiki-export_tracker.tpl'}
 	{/if}
 {/tabset}
 

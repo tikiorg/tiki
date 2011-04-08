@@ -1,5 +1,4 @@
-<h2>{tr}Export Tracker Items{/tr}</h2>
-<div>
+{tab name="{tr}Export Tracker Items{/tr}"}
 <form action="tiki-view_tracker.php?trackerId={$trackerId}&amp;cookietab=3" method="post">
 <table class="formcolor">
 <tr>
@@ -153,11 +152,11 @@ exportProgress = function () {
 	});
 }
 {/jq}
-{remarksbox type="note" title="Note"}Please note: Using AJAX export function - please report any issues{/remarksbox}
+{remarksbox type="note" title="Note"}Using AJAX export function - please report any issues{/remarksbox}
 {/if}
-</div>
+{/tab}
 {if $tiki_p_tracker_dump eq "y" or $tiki_p_admin eq "y"}
-	<h2>{tr}Dump All Tracker Items{/tr}</h2>
+	{tab name="{tr}Dump All Tracker Items{/tr}"}
 	<div>
 		<form action="{$smarty.server.PHP_SELF}" method="post">
 			<table class="formcolor">
@@ -192,4 +191,5 @@ exportProgress = function () {
 			</table>
 		</form>
 	</div>
+	{/tab}
 {/if}
