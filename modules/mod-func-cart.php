@@ -38,24 +38,30 @@ function module_cart( $mod_reference, $module_params ) {
 		}
 	}
 	
-	if ( isset( $_POST['gift_certificate_redeem_code'] ) ) {
-		$added = $cartlib->add_gift_certificate( $_POST['gift_certificate_redeem_code'] );
-		if ($added) {
-			$access->redirect( $_SERVER['REQUEST_URI'], tra('Gift card added') );
-		} else {
-			$access->redirect( $_SERVER['REQUEST_URI'], tra('Gift card not found') );
+	if ( $cartlib->has_gift_certificate() ) {
+		if ( !empty( $_POST['gift_certificate_redeem_code'] ) ) {
+			$added = $cartlib->add_gift_certificate( $_POST['gift_certificate_redeem_code'] );
+			if ($added) {
+				$access->redirect( $_SERVER['REQUEST_URI'], tra('Gift card added') );
+			} else {
+				$access->redirect( $_SERVER['REQUEST_URI'], tra('Gift card not found') );
+			}
 		}
+	
+		if ( isset( $_POST['remove_gift_certificate']) ) {
+			$cartlib->add_gift_certificate();
+			$access->redirect( $_SERVER['REQUEST_URI'], tra('Gift card removed') );
+		}
+	
+		$cartlib->get_gift_certificate();
+	
+		$smarty->assign( 'has_gift_certificate', true );
+		$smarty->assign( 'gift_certificate_redeem_code', $cartlib->gift_certificate_code );
+		$smarty->assign( 'gift_certificate_amount', $cartlib->gift_certificate_amount );
+		$smarty->assign( 'gift_certificate_mode_symbol_before', $cartlib->gift_certificate_mode_symbol_before );
+		$smarty->assign( 'gift_certificate_mode_symbol_after', $cartlib->gift_certificate_mode_symbol_after );
 	}
-	
-	if ( isset( $_POST['remove_gift_certificate']) ) {
-		$cartlib->add_gift_certificate();
-		$access->redirect( $_SERVER['REQUEST_URI'], tra('Gift card removed') );
-	}
-	
-	$smarty->assign( 'has_gift_certificate', $cartlib->has_gift_certificate() );
-	$smarty->assign( 'gift_certificate_reedem_code', $_COOKIE["tiki-gc"] );
-	$smarty->assign( 'gift_certificate_amount', $cartlib->get_gift_certificate() );
-	
+
 	$smarty->assign( 'cart_total', $cartlib->get_total() );
 	$smarty->assign( 'cart_content', $cartlib->get_content() );
 }
