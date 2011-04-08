@@ -35,7 +35,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 		$smarty = TikiLib::lib('smarty');
 
 		$item = $this->getConfiguration('linkId');
-		$label = $this->getConfiguration('value');
+		$ls = $this->getConfiguration('listdisplay');
+		$label = $ls[$item];
 		if ($item && $context['list_mode'] !== 'csv') {
 			require_once $smarty->_get_plugin_filepath('function', 'object_link');
 
