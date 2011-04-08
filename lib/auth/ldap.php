@@ -117,7 +117,7 @@ class TikiLdapLib
 		foreach(array('basedn','username','password','userdn','useroc','userattr',
 				'fullnameattr','emailattr','groupdn','groupattr','groupoc','groupnameattr',
 				'groupdescattr','groupmemberattr','usergroupattr','groupgroupattr') as $n) {
-			if(isset($options[$n]) && !empty($options[$n]) && preg_match('#\s#',$options[$n])==0) {
+			if(isset($options[$n]) && !empty($options[$n])) {
 				$this->options[$n] = $options[$n];
 			}
 		}
@@ -247,7 +247,7 @@ class TikiLdapLib
 
 		$userdn=$this->user_dn();
 		// ensure we have a connection to the ldap server
-		 if(!$this->bind()) {
+		 if($this->bind() != 'LDAP_SUCCESS') {
 			$this->add_log('ldap','Reuse of ldap connection failed: '.$this->ldaplink->getMessage().' at line '.__LINE__.' in '.__FILE__);
 			return false;
 		}
