@@ -4156,9 +4156,13 @@ class TrackerLib extends TikiLib
 			$field_value['type'] = $this->fields()->fetchOne('type', array(
 				'fieldId' => (int) $res['fieldId'],
 			));
-			$ret[$res['itemId']] = $this->get_field_handler($field_value, $res)->renderOutput(array(
-				'showlinks' => 'n',
-			));
+			if (!$field_value['type']) {
+				$ret[$res['itemId']] = tra('Tracker field setup error - display field not found: ') . '#' . $res['fieldId'];
+			} else {
+				$ret[$res['itemId']] = $this->get_field_handler($field_value, $res)->renderOutput(array(
+					'showlinks' => 'n',
+				));
+			}
 			if (is_array($finalFields) && count($finalFields)) {
 				$i = 0;
 				foreach ($finalFields as $f) {
