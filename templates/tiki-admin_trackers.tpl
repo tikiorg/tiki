@@ -618,6 +618,9 @@ categories = {$catsdump}
 						<input type="radio" name="dateFormat" value="dd/mm/yyyy" />
 						{tr}day{/tr}/{tr}month{/tr}/{tr}year{/tr}(31/01/2008)
 						<br />
+						<input type="radio" name="dateFormat" value="yyyy-mm-dd" />
+						{tr}year{/tr}-{tr}month{/tr}-{tr}day{/tr}(2008-01-31)
+						<br />
 						<input type="radio" name="dateFormat" value="" />{tr}timestamp{/tr}
 					</td>
 				</tr>
