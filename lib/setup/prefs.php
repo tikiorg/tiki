@@ -27,7 +27,7 @@ function get_default_prefs() {
 	if( $prefs = $cachelib->getSerialized("tiki_default_preferences_cache") ) {
 		return $prefs;
 	}
-	global $tikidate, $tikilib, $url_host;
+
 	$prefslib = TikiLib::lib('prefs');
 	$prefs = $prefslib->getDefaults();
 	$prefs = array_merge($prefs, array(
