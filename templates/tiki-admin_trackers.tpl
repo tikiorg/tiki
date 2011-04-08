@@ -548,10 +548,12 @@
 {/tab}
 
 {tab name="{tr}Import/Export{/tr}"}
+<h2>{tr}Tracker Import/Export{/tr}</h2>
 {tabset}
 {* --- tab with raw form --- *}
 {tab name="{tr}Import/export trackers{/tr}"}
 	
+	<h3>{tr}Tracker Definition{/tr}</h3>
 	<form action="tiki-admin_trackers.php" method="post">
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 		<input type="hidden" name="import" value="1" />
@@ -590,16 +592,17 @@ categories = {$catsdump}
 		<br />
 		<input type="submit" name="save" value="{tr}Import{/tr}" />
 	</form>
+	{if $trackerId}
+		<h3>{tr}Export for profile{/tr}</h3>
+		{button href="tiki-admin_trackers.php?trackerId=$trackerId&exportTrackerProfile=y" _text="{tr}Export tracker{/tr}"}
+	{/if}
 	{/tab}
 	
 	{if $trackerId}
-		{tab name="{tr}Export for profile{/tr}"}
-			{button href="tiki-admin_trackers.php?trackerId=$trackerId&exportTrackerProfile=y" _text="{tr}Export tracker{/tr}"}
-		{/tab}
-		
 		{include file='tiki-export_tracker.tpl'}
 
 		{tab name="{tr}Import CSV data{/tr}"}
+		<h3>{tr}Tracker Items Import{/tr}</h3>
 		<form action="tiki-import_tracker.php?trackerId={$trackerId}" method="post" enctype="multipart/form-data">
 			<table class="formcolor">
 				<tr>
