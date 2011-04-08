@@ -7,9 +7,9 @@
 
 function wikiplugin_addtocart_info() {
 	return array(
-		'name' => tra('Add to Cart'),
-		'documentation' => 'PluginAddToCart',
-		'description' => tra(' Display a button for adding items to the shopping cart'),
+		'name' => tra('Add to cart'),
+		'documentation' => tra('PluginAddToCart'),
+		'description' => tra('Adds a product to the virtual cart. The cart can be manipulated using the cart module.'),
 		'prefs' => array( 'wikiplugin_addtocart', 'payment_feature' ),
 		'filter' => 'wikicontent',
 		'format' => 'html',
@@ -26,6 +26,34 @@ function wikiplugin_addtocart_info() {
 				'required' => true,
 				'name' => tra('Description'),
 				'description' => tra('Label for the product in the cart.'),
+				'filter' => 'text',
+				'default' => ''
+			),
+			'producttype' => array(
+				'required' => false,
+				'name' => tra('Product Type'),
+				'description' => tra('The product type that is being sold, which will affect fulfillment, e.g. standard product, gift certificate, event ticket'),
+				'filter' => 'text',
+				'default' => '',
+			),
+			'productclass' => array(
+				'required' => false,
+				'name' => tra('Product Class'),
+				'description' => tra('The class the product belongs to, can be used to limit how gift cards are used'),
+				'filter' => 'text',
+				'default' => ''
+			),
+			'productbundle' => array(
+				'required' => false,
+				'name' => tra('Product Bundle'),
+				'description' => tra('The bundle the product belongs to, can be used to limit how gift cards are used, will automatically add other products in same class to cart'),
+				'filter' => 'text',
+				'default' => ''
+			),
+			'bundleclass' => array(
+				'required' => false,
+				'name' => tra('Bundle Class'),
+				'description' => tra('The class the bundle belongs to, can be used to limit how gift cards are used'),
 				'filter' => 'text',
 				'default' => ''
 			),
@@ -60,7 +88,7 @@ function wikiplugin_addtocart_info() {
 			'autocheckout' => array(
 				'required' => false,
 				'name' => tra('Automatically checkout'),
-				'description' => tra('Automatically checkout for purchase and send user to pay'),
+				'description' => tra('Automatically checkout for purchase and send user to pay (this is disabled when there is already something in the cart)'),
 				'filter' => 'text',
 				'default' => 'n'
 			),
@@ -85,6 +113,39 @@ function wikiplugin_addtocart_info() {
 				'filter' => 'url',
 				'default' => ''
 			),
+			'giftcertificate'=> array(
+				'required' => false,
+				'name' => tra('Gift certificate'),
+				'description' => tra('Allows user to add gift certificate from the product view'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
+			'exchangeorderitemid' => array( 
+				'required' => false,
+				'name' => tra('Order Item ID to exchange product'),
+				'description' => tra('Used in conjunction with exchange feature'),
+				'filter' => 'int',
+				'default' => ''
+			),
+			'exchangetoproductid' => array(
+				'required' => false,
+				'name' => tra('Product ID to exchange to'),
+				'desctiption' => tra('Used in conjunction with exchange feature'),
+				'filter' => 'int',
+				'default' => ''
+			),
+			'exchangeorderamount' => array(
+				'required' => false,
+				'name' => tra('Amount of new product to exchange for'),
+				'description' => tra('Should normally be set to the amount of products in the order being exchanged'),
+				'filter' => 'int',
+				'default' => 1
+			),
 		),
 	);
 }
@@ -92,12 +153,10 @@ function wikiplugin_addtocart_info() {
 function wikiplugin_addtocart( $data, $params ) {
 	if( ! session_id() ) {
 		return WikiParser_PluginOutput::internalError( tra('A session must be active to use the cart.') );
-	}
-	
+	} 
 	if( ! isset( $params['code'], $params['description'], $params['price'] ) ) {
 		return WikiParser_PluginOutput::argumentError( array_diff( array( 'code', 'description', 'price' ), array_keys( $params ) ) );
 	}
-
 	if( ! isset( $params['href'] ) ) {
 		$params['href'] = null;
 	}
@@ -115,15 +174,20 @@ function wikiplugin_addtocart( $data, $params ) {
 		$p = trim($p);			// remove some line ends picked up in pretty tracker
 	}
 
-	require_once 'lib/smarty_tiki/modifier.escape.php';
-	require_once 'lib/smarty_tiki/function.query.php';
-	
-	$code = smarty_modifier_escape( $params['code'] );
+	$code = $params['code'];
+	$product_class = $params['productclass'];
+	$product_type = $params['producttype'];
+	$product_bundle = $params['productbundle'];
+	$bundle_class = $params['bundleclass'];
+	$gift_certificate = $params['giftcertificate'];
+	$eventcode = $params['eventcode'];
 	$price = preg_replace( '/[^\d^\.^,]/', '', $params['price']);
 	$add_label = $params['label'];
-
+// Custom2
 	global $smarty;
 	$smarty->assign('code', $code);
+	$smarty->assign('productclass', $product_class );
+	$smarty->assign('giftcertificate', $gift_certificate);
 	$smarty->assign('price', $price);
 	$smarty->assign('add_label', $add_label);
 
@@ -136,14 +200,103 @@ function wikiplugin_addtocart( $data, $params ) {
 	if ($params['onbehalf'] == 'y' && $globalperms->payment_admin) {
 		$smarty->assign('onbehalf', 'y');
 	}
-	$form = $smarty->fetch('wiki-plugins/wikiplugin_addtocart.tpl');
+
+	if (!empty($params['exchangeorderitemid']) && !empty($params['exchangetoproductid'])) {
+		$smarty->assign('exchangeorderitemid', $params['exchangeorderitemid']); 
+		$smarty->assign('exchangetoproductid', $params['exchangetoproductid']); 
+		$smarty->assign('hideamountfield', 'y');
+	} else {
+		$smarty->assign('hideamountfield', 'n');
+	}
+
+	if ( is_numeric($product_class) ) {
+		global $cartlib, $headerlib; require_once 'lib/payment/cartlib.php';
+		$information_form = $cartlib->get_missing_user_information_form( $product_class, 'required' );
+		$missing_information = $cartlib->get_missing_user_information_fields( $product_class, 'required');
+		$skip_information_form = $cartlib->skip_user_information_form_if_not_missing( $product_class ) && empty($missing_information); 
+		if ( $information_form && !$skip_information_form ) {
+			$headerlib->add_jq_onready("
+				$('form.addProductToCartForm" . $product_class . "').each(function(i) {
+					$(this)
+						.unbind('submit')
+						.submit(function() {
+							var o = $('<div />')
+								.load('tiki-index_raw.php?page=".urlencode($information_form)."', function() {
+									o.dialog({
+										title: '$information_form',
+										modal: true,
+										height: $(window).height() * 0.8,
+										width: $(window).width() * 0.8
+									});
+									
+									var loading = $('<div><span>Loading...</span><img src=\"img/loading.gif\" /></div>')
+										.hide()
+										.appendTo(o);
+									
+									var forms = o.find('form');
+									forms.each(function() {
+										var form = $(this).submit(function() {
+											
+											var satisfied = true;
+											$('.mandatory_field').each(function() {
+												var field = $(this).children().first();
+												if (!field.val()) {
+													$(this).addClass('ui-state-error');
+													satisfied = false;
+												}
+											});
+											if (!satisfied) return false;
+											
+											$.post(form.attr('action'), form.serialize(), function() {
+												form.slideUp(function() {
+													o.animate({
+														scrollTop: form.next().offset().top
+													});
+												}).attr('satisfied', true);
+												
+												satisfied = true;
+												
+												forms.each(function() {
+													if (!$(this).attr('satisfied')) {
+														satisfied = false;
+													}
+												});
+												
+												if (satisfied) {
+													loading
+														.show()
+														.prevAll().hide();
+														
+													$('form.addProductToCartForm').eq(i)
+														.unbind('submit')
+														.submit();
+												}
+											});
+											
+											return false;
+										});
+									});
+								});
+							return false;
+						});
+				});
+			");
+		} 
+	}
 
 	if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-		global $jitPost, $access, $user;
-
+		global $jitPost, $access, $user; 
+		if (!empty($params['exchangeorderitemid']) && !empty($params['exchangetoproductid'])) {	
+			if ( $jitPost->exchangeorderitemid->int() == $params['exchangeorderitemid'] && $jitPost->exchangetoproductid->int() == $params['exchangetoproductid'] ) {
+				$correct_exchange = true;
+			} else {
+				$correct_exchange = false;
+			}
+		} else {
+			$correct_exchange = true;
+		}
 		$quantity = $jitPost->quantity->int();
-
-		if( $jitPost->code->text() == $params['code'] && $quantity > 0 ) {
+		if( $jitPost->code->text() == $params['code'] && $quantity > 0 && $correct_exchange ) {
 			global $cartlib; require_once 'lib/payment/cartlib.php';
 
 			$behaviors = array();
@@ -157,17 +310,58 @@ function wikiplugin_addtocart( $data, $params ) {
 			} else {
 				$onbehalf = '';
 			}
-			$cartlib->add_product( $params['code'], $quantity, array(
+			
+			$gift_certificate_error = tra("Invalid gift certificate: ");
+			if ( $_REQUEST['gift_certificate'] && isset($gift_certificate) ) {
+				if ( !$cartlib->add_gift_certificate( $_REQUEST['gift_certificate'] ) ) {
+					$smarty->assign('gift_certificate', $_REQUEST['gift_certificate']);
+					$smarty->assign('gift_certificate_error', $gift_certificate_error);
+					return $smarty->fetch('wiki-plugins/wikiplugin_addtocart.tpl');//TODO: Notify user if gift certificate is invalid
+				}
+			}
+
+			$product_info = array(
 				'description' => $params['description'],
-				'price' => $price,
-				'href' => $params['href'],
-				'behaviors' => $behaviors,
-				'eventcode' => $eventcode,
-				'onbehalf' => $onbehalf,
-			) );
+                'price' => $price,
+                'href' => $params['href'],
+                'behaviors' => $behaviors,
+                'eventcode' => $eventcode,
+                'onbehalf' => $onbehalf,
+				'producttype' => $product_type,
+				'productclass' => $product_class,
+				'productbundle' => $product_bundle,
+				'bundleclass' => $bundle_class
+			);
+
+			// Generate behavior for exchanges
+			if (!empty($params['exchangeorderitemid']) && !empty($params['exchangetoproductid'])) {
+				$product_info['behaviors'][] = array('event' => 'complete', 'behavior' => 'cart_exchange_product', 'arguments' => array($params["exchangeorderitemid"], $params["exchangetoproductid"])); 
+				$product_info['exchangeorderitemid'] = $params["exchangeorderitemid"];
+				$product_info['exchangetoproductid'] = $params["exchangetoproductid"];
+				if (!isset($params['exchangeorderamount']) || !$params['exchangeorderamount']) {
+					$exchangeorderamount = 1;
+				} else {
+					$exchangeorderamount = $params["exchangeorderamount"];
+				}
+				$product_info['exchangeorderamount'] = $exchangeorderamount;
+			}
+			// Generate behavior for gift certificate purchase
+			if (strtolower($product_type) == 'gift certificate') {
+				if ($onbehalf) {
+					$giftcert_email = $userlib->get_user_email($onbehalf);
+				} elseif (!$user && !empty($_SESSION['shopperinfo']['email'])) {
+					$giftcert_email = $_SESSION['shopperinfo']['email'];
+				} elseif ($user) {
+					$giftcert_email = $userlib->get_user_email($user);
+				}
+				$product_info['behaviors'][] = array('event' => 'complete', 'behavior' => 'cart_gift_certificate_purchase', 'arguments' => array($code, $giftcert_email)); 
+			}
+			// Now add product to cart
+			$previous_cart_content = $cartlib->get_content();
+			$cartlib->add_product( $params['code'], $quantity, $product_info );
 
 			global $access, $tikilib, $tikiroot, $prefs;
-			if ($params['autocheckout'] == 'y') {
+			if ($params['autocheckout'] == 'y' && empty($previous_cart_content)) {
 				$invoice = $cartlib->request_payment();
 				if( $invoice ) {
 					$paymenturl = 'tiki-payment.php?invoice=' . intval( $invoice );
@@ -195,9 +389,9 @@ function wikiplugin_addtocart( $data, $params ) {
 				die;
 			}
 			$access->redirect( $_SERVER['REQUEST_URI'], tr('%0 (%1) was added to your cart', $params['description'], $quantity ) );
-		}
+		} 
 	}
 	
-	return $form;
+	return $smarty->fetch('wiki-plugins/wikiplugin_addtocart.tpl');
 }
 
