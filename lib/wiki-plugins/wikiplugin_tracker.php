@@ -1133,7 +1133,7 @@ function wikiplugin_tracker($data, $params)
 							$flds['data'][$i]['value'] = $user;
 					} elseif ($f['type'] == 'g') {
 						$handler = $factory->getHandler($f);
-						$flds['data'][$i] = array_merge($f, $handler->getFieldData(null));
+						$flds['data'][$i] = array_merge($flds['data'][$i], $handler->getFieldData(array()));
 					} elseif ($f['type'] == 'k') {
 						if ($f['options_array'][0] == 1) {
 							if (isset($page)) {
