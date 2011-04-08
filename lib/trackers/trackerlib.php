@@ -3421,11 +3421,12 @@ class TrackerLib extends TikiLib
 			'itemChoicesList' => $all_groups,
 			'help'=>tra('<dl>
 				<dt>Function: Allows a selection from a specified list of usergroups.
-				<dt>Usage: <strong>auto-assign</strong>
+				<dt>Usage: <strong>auto-assign, groupId</strong>
 				<dt>Example: 1
 				<dt>Description:
 				<dd><strong>[auto-assign]</strong> will auto-assign the field to the usergroup of the creator if set to 1, or will set the selection to the group of the user who last modified the item if set to 2, or will give the choice between all the groups for other values;
 				<dd>if the user does not have a default group set, the first group the user belongs to will be chosen, otherwise Registered group will be used.
+				<dd><strong>groupId</strong> will limit the groups including this group
 				</dl>'));
 		$type['I'] = array(
 			'label'=>tra('IP selector'),

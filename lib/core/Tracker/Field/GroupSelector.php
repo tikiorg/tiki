@@ -27,9 +27,17 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 
 		$data = array();
 		
+		$groupId = $this->getOption(1);
+		if (empty($groupId)) {
+			$data['list'] = TikiLib::lib('user')->list_all_groups();
+		} else {
+			$group_info = TikiLib::lib('user')->get_groupId_info($groupId);
+			$data['list'] =	TikiLib::lib('user')->get_including_groups($group_info['groupName']);
+		}
+
 		if ( isset($requestData[$ins_id])) {
 			if ($this->getOption(0) < 1 || $tiki_p_admin_trackers === 'y') {
-				$data['value'] = $requestData[$ins_id];
+				$data['value'] = in_array($requestData[$ins_id], $data['list'])? $requestData[$ins_id]: '';
 			} else {
 				if ($this->getOption(0) == 2) {
 					$data['defvalue'] = $group;
@@ -45,7 +53,6 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 			$data['value'] = $this->getValue();		
 		}
 		
-		$data['list'] = TikiLib::lib('user')->list_all_groups();
 		return $data;
 	}
 	
