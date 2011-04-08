@@ -1132,12 +1132,8 @@ function wikiplugin_tracker($data, $params)
 						elseif ($f['options_array'][0] == 1)
 							$flds['data'][$i]['value'] = $user;
 					} elseif ($f['type'] == 'g') {
-						if ($perms['tiki_p_admin_trackers'] == 'y' || ($f['options_array'][0] != 1 && $f['options_array'][0] != 2)) {
-							$flds['data'][$i]['list'] = $userlib->list_all_groups();
-						} elseif ($f['options_array'][0] == 1) {
-							global $group;
-							$flds['data'][$i]['value'] = $group;
-						}
+						$handler = $factory->getHandler($f);
+						$flds['data'][$i] = array_merge($f, $handler->getFieldData(null));
 					} elseif ($f['type'] == 'k') {
 						if ($f['options_array'][0] == 1) {
 							if (isset($page)) {
