@@ -741,17 +741,14 @@ function wikiplugin_img_info() {
 				} elseif (!class_exists('Image')) {
 					return '^' . tra('Server does not support image manipulation.') . '^';
 				} elseif ($id['type'] == 'fileId') {
-//					if ( $perms['tiki_p_admin_file_galleries'] != 'y' && !$userlib->user_has_perm_on_object($user, $dbinfo['galleryId'], 'file gallery', 'tiki_p_download_files')) {
 					if (!$userlib->user_has_perm_on_object($user, $dbinfo['galleryId'], 'file gallery', 'tiki_p_download_files')) {
 						return $notice;
 					}
 				} elseif ($id['type'] == 'id') {
-//					if ( $perms['tiki_p_admin_galleries'] != 'y' && !$userlib->user_has_perm_on_object($user, $dbinfo['galleryId'], 'image gallery', 'tiki_p_view_image_gallery')) {
 					if (!$userlib->user_has_perm_on_object($user, $dbinfo['galleryId'], 'image gallery', 'tiki_p_view_image_gallery')) {
 						return $notice;
 					}
 				} elseif ($id['type'] == 'attId') {
-//					if ( $perms['tiki_p_admin_attachments'] != 'y' && !$userlib->user_has_perm_on_object($user, $dbinfo['page'], 'wiki page', 'tiki_p_wiki_view_attachments')) {
 					if (!$userlib->user_has_perm_on_object($user, $dbinfo['page'], 'wiki page', 'tiki_p_wiki_view_attachments')) {
 						return $notice;
 					}
@@ -1187,32 +1184,34 @@ function wikiplugin_img_info() {
 		$id = 'imgdialog-' . ++$lastval;
 		$id_link = $id . '-link';
 		//start the dialog box
-		$dialog = '<div id="' . $id . '" title="Image Metadata for ' . $dbinfo['filename'] . '" style="display:none">';
+		$dialog = "\r" . '<div id="' . $id . '" title="Image Metadata for ' . htmlspecialchars($dbinfo['filename']) . '" style="display:none">';
 		//iptc section
-		$dialog .= '<h3><a href="#">Photographer Data (IPTC)</a></h3>';
+		$dialog .= "\r\t" . '<h3><a href="#">Photographer Data (IPTC)</a></h3>';
 		if ($iptc == null) {
-			$dialog .= '<div>' . tra('No IPTC data') . '</div>';
+			$dialog .= "\r\t" . '<div>' . tra('No IPTC data') . '</div>';
 		} else {
-			$dialog .= '<table>';
+			$dialog .= "\r\t" . '<table>';
 			foreach (array_keys($iptc) as $key => $s) {
-				$dialog .= '<tr><td><div style="text-align:right; font-weight:bold; width:175px; margin-right:5px">' . $iptc[$s][1] . '</div></td><td><div style="width:425px">' . $iptc[$s][0] . '</div></td></tr>';
+				$dialog .= "\r\t\t" . '<tr>' . "\r\t\t\t" . '<td>' . '<div style="text-align:right; font-weight:bold; width:175px; margin-right:5px">'
+					. $iptc[$s][1] . '</div>' . '</td>' . "\r\t\t\t" . '<td>' . '<div style="width:425px">' . htmlspecialchars($iptc[$s][0]) . '</div>' . '</td>' . "\r\t\t" . '</tr>';
 			}
-			$dialog .= '</table>'; 
+			$dialog .= "\r\t" . '</table>'; 
 		}
 		//exif section
-		$dialog .= '<h3><a href="#">File Data (EXIF)</a></h3>';
+		$dialog .= "\r\t" . '<h3><a href="#">File Data (EXIF)</a></h3>';
 		if ($imageObj->exif === false) {
-			$dialog .= '<div>' . tra('No EXIF data') . '</div>';
+			$dialog .= "\r\t" . '<div>' . tra('No EXIF data') . '</div>';
 		} else {
-			$dialog .= '<table>';
+			$dialog .= "\r\t" . '<table>';
 			foreach ($imageObj->exif as $cat => $fields) {
 				foreach ($fields as $name => $val) {
-					$dialog .= '<tr><td><div style="text-align:right; font-weight:bold; width:175px; margin-right:5px;">' . $name . '</div></td><td><div style="width:525px;">' . $val . '</div></td></tr>';
+					$dialog .= "\r\t\t" . '<tr>' . "\r\t\t\t" . '<td>' . '<div style="text-align:right; font-weight:bold; width:175px; margin-right:5px">'
+					. $name . '</div>' . '</td>' . "\r\t\t\t" . '<td>' . '<div style="width:425px">' . htmlspecialchars($val) . '</div>' . '</td>' . "\r\t\t" . '</tr>';
 				}
 			}
-			$dialog .= '</table>'; 
+			$dialog .= "\r\t" . '</table>'; 
 		}
-		$dialog .= '</div>';
+		$dialog .= "\r" . '</div>';
 		$repl .= $dialog;
 		$jq = '$(document).ready(function() {
 					$("#' . $id . '").dialog({
