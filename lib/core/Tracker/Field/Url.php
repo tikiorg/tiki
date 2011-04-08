@@ -28,9 +28,11 @@ class Tracker_Field_Url extends Tracker_Field_Abstract
 		$smarty = TikiLib::lib('smarty');
 
 		$url = $this->getConfiguration('value');
-		require_once $smarty->_get_plugin_filepath('function', 'object_link');
-
-		if ($url) {
+		
+		if (empty($url) || $context['list_mode'] == 'csv') {
+			return $url;
+		} else {
+			require_once $smarty->_get_plugin_filepath('function', 'object_link');
 			return smarty_function_object_link(array(
 				'type' => 'external',
 				'id' => $url,

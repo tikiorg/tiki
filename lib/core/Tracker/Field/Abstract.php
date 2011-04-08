@@ -87,7 +87,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 			return false;
 		}
 
-		if (isset($context['list_mode']) && $context['list_mode'] == 'csv') {
+		if ($context['list_mode'] == 'csv') {
 			return false;
 		}
 
