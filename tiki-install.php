@@ -14,9 +14,8 @@ if (!isset($dberror)) $dberror = false;
 
 if (version_compare(PHP_VERSION, '5.2.0', '<')) {
 	$title = 'PHP 5.2 is required';
-	$content = '<p>Please contact your system administrator ( if you are not the one ;) ) Your version: '.PHP_VERSION.'</p>';
+	$content = '<p>Please contact your system administrator ( if you are not the one ;) ). Your version: '.PHP_VERSION.'.</p>';
 	createPage($title, $content);
-echo PHP_VERSION;
 }
 
 include_once('db/tiki-db.php');	// to set up multitiki etc if there
