@@ -3,9 +3,9 @@
 		{if $field.isMandatory ne 'y'}
 			<option value="">{tr}None{/tr}</option>
 		{/if}
-		{section name=ux loop=$groups}
-			{if !isset($field.itemChoices) or $field.itemChoices|@count eq 0 or in_array($groups[ux], $field.itemChoices)}
-				<option value="{$groups[ux]|escape}" {if $field.value eq $groups[ux]}selected="selected"{/if}>{$groups[ux]}</option>
+		{section name=ux loop=$field.list}
+			{if !isset($field.itemChoices) or $field.itemChoices|@count eq 0 or in_array($field.list[ux], $field.itemChoices)}
+				<option value="{$field.list[ux]|escape}" {if $field.value eq $field.list[ux]}selected="selected"{/if}>{$field.list[ux]}</option>
 			{/if}
 		{/section}
 	</select>

@@ -45,6 +45,7 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 			$data['value'] = $this->getValue();		
 		}
 		
+		$data['list'] = TikiLib::lib('user')->list_all_groups();
 		return $data;
 	}
 	

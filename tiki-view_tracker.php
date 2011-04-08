@@ -536,9 +536,7 @@ $smarty->assign_by_ref('items', $items["data"]);
 $smarty->assign_by_ref('item_count', $items['cant']);
 $smarty->assign_by_ref('listfields', $listfields);
 $users = $userlib->list_all_users();
-$groups = $userlib->list_all_groups();
 $smarty->assign_by_ref('users', $users);
-$smarty->assign_by_ref('groups', $groups);
 if ($tiki_p_export_tracker == 'y') {
 	$trackers = $trklib->list_trackers();
 	$smarty->assign_by_ref('trackers', $trackers['data']);
