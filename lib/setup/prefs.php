@@ -1721,7 +1721,7 @@ function get_default_prefs() {
 
 		// Experimental new mobile feature for Tiki 7
 		'mobile_feature' => 'n',
-		'mobile_perspectives' => array(),
+		'mobile_perspectives' => array(''),
 		'mobile_theme_header' => '',
 		'mobile_theme_content' => '',
 		'mobile_theme_footer' => '',
