@@ -94,6 +94,13 @@ class NotificationLib extends TikiLib
 			'url' => '',
 			'available' => $prefs['feature_articles'] == 'y'
 		);
+		$watches['blog_post'] = array(
+			'label' => tra('A new blog post is published') ,
+			'type' => 'blog',
+			'url' => '',
+			'available' => $prefs['feature_blogs'] == 'y',
+			'object' => '*'
+		);
 		$watches['wiki_page_changes'] = array(
 			'label' => tra('A wiki page is created, deleted or edited, except for minor changes.') ,
 			'type' => 'wiki page',
