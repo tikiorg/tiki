@@ -280,7 +280,6 @@ class Comments extends TikiLib
 
 		require_once ("lib/mail/mimelib.php");
 		//require_once ("lib/webmail/mimeDecode.php");
-		include_once ("lib/webmail/class.rc4crypt.php");
 		include_once ("lib/webmail/htmlMimeMail.php");
 		$info = $this->get_forum($forumId);
 
