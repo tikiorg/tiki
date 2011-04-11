@@ -109,7 +109,7 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 	$smarty->assign('Dsun', 'y');
 	$smarty->assign('bannerId', 0);
 	$smarty->assign('zone', '');
-	$smarty->assing('onlyInURIS', '');
+	$smarty->assign('onlyInURIS', '');
 	$smarty->assign('use', 'useHTML');
 	$smarty->assign('HTMLData', '');
 	$smarty->assign('fixedURLData', '');
