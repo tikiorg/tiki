@@ -63,8 +63,8 @@ function smarty_function_jscalendar($params, &$smarty) {
 		$html .= '<input type="text" id="' . $params['id'] . '_dptxt" value="" />';	// text version of datepicker date
 		// TODO use a parsed version of $prefs['short_date_format']
 		// Note: JS timestamp is in milliseconds - php is seconds
-		$js_val = empty($params['date']) ? '' : '$.datepicker.formatDate( "yy-mm-dd", new Date('.$params['date'].'* 1000))';
-		$headerlib->add_jq_onready('$("#'.$params['id'].'_dptxt").val("'.$js_val.'").tiki("datepicker", "jscalendar", '.$datepicker_options.');');
+		$js_val = empty($params['date']) ? '""' : '$.datepicker.formatDate( "yy-mm-dd", new Date('.$params['date'].'* 1000))';
+		$headerlib->add_jq_onready('$("#'.$params['id'].'_dptxt").val('.$js_val.').tiki("datepicker", "jscalendar", '.$datepicker_options.');');
 		return $html;
 		
 	} else {
