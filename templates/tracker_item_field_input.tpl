@@ -387,7 +387,7 @@
 		{/if}
 		{if !$smarty.section.jx.first or $sepR ne '<br />'}
 			<input type="radio" name="{$field_value.ins_id}" value="{$field_value.options_array[jx]|escape}" {if $field_value.value eq $field_value.options_array[jx] or $field_value.defaultvalue eq $field_value.options_array[jx]}checked="checked"{/if} id="{$field_value.ins_id[jx]}" />
-			<label for="{$field_value.ins_id[jx]}">{$field_value.options_array[jx]|tr_if}</label>
+			<label {*for="{$field_value.ins_id[jx]}"*}>{$field_value.options_array[jx]|tr_if}</label>
 			{if !$smarty.section.jx.last}{$sepR}{/if}
 		{/if}
 	{/section}
