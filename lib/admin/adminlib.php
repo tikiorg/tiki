@@ -63,9 +63,6 @@ class AdminLib extends TikiLib
 	function remove_dsn($dsnId) {
 		$info = $this->get_dsn($dsnId);
 
-		$perm_name = 'tiki_p_dsn_' . $info['name'];
-		$query = "delete from `users_permissions` where `permName`=?";
-		$this->query($query,array($perm_name));
 		$query = "delete from `tiki_dsn` where `dsnId`=?";
 		$this->query($query,array($dsnId));
 		return true;
@@ -135,22 +132,12 @@ class AdminLib extends TikiLib
 			$result = $this->query($query,array($name, $extwiki));
 		}
 
-		// And now replace the perm if not created
-		$perm_name = 'tiki_p_extwiki_' . $name;
-		$query = "delete from `users_permissions`where `permName`=?";
-		$this->query($query,array($perm_name));
-		$query = "insert into `users_permissions`(`permName`,`permDesc`,`type`,`level`) values
-    			(?,?,?,?)";
-		$this->query($query,array($perm_name,'Can use extwiki $extwiki','extwiki','editor'));
 		return true;
 	}
 
 	function remove_extwiki($extwikiId) {
 		$info = $this->get_extwiki($extwikiId);
 
-		$perm_name = 'tiki_p_extwiki_' . $info['name'];
-		$query = "delete from `users_permissions` where `permName`=?";
-		$this->query($query,array($perm_name));
 		$query = "delete from `tiki_extwiki` where `extwikiId`=?";
 		$this->query($query,array($extwikiId));
 		return true;

@@ -35,24 +35,9 @@ if (empty($info)) {
 }
 
 $smarty->assign('nlId', $_REQUEST["nlId"]);
-$smarty->assign('individual', 'n');
 
-if ($userlib->object_has_one_permission($_REQUEST["nlId"], 'newsletter')) {
-	$smarty->assign('individual', 'y');
-	if ($tiki_p_admin != 'y') {
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'newsletters');
-		foreach($perms["data"] as $perm) {
-			$permName = $perm["permName"];
-			if ($userlib->object_has_permission($user, $_REQUEST["nlId"], 'newsletter', $permName)) {
-				$$permName = 'y';
-				$smarty->assign("$permName", 'y');
-			} else {
-				$$permName = 'n';
-				$smarty->assign("$permName", 'n');
-			}
-		}
-	}
-}
+$tikilib->get_perm_object($_REQUEST['nlId'], 'newsletter');
+
 $access->check_permission('tiki_p_admin_newsletters');
 
 if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {

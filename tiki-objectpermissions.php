@@ -369,8 +369,8 @@ $candidates = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["pe
 // list of all features
 $ftemp = $userlib->get_permission_types();
 $features = array();
-foreach($ftemp['data'] as $f) {
-	$features[] = array('featureName' => $f['type'], 'in_feature_filter' => $feature_filter === false || in_array($f['type'], $feature_filter) ? 'y' : 'n');
+foreach($ftemp as $f) {
+	$features[] = array('featureName' => $f, 'in_feature_filter' => $feature_filter === false || in_array($f, $feature_filter) ? 'y' : 'n');
 }
 $features_enabled = array();
 

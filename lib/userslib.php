@@ -124,24 +124,6 @@ class UsersLib extends TikiLib
 		return true;
 	}
 
-	// assign permissions for an individual object according to the global permissions for that object type
-	function inherit_global_permissions($objectId, $objectType) {
-		global $cachelib;
-
-		$groups = $this->get_groups();
-		if (! $perms = $cachelib->getSerialized($objectType . "_permission_names")) {
-			$perms = $this->get_permissions(0, -1, 'permName_desc', '', $objectType);
-			$cachelib->cacheItem($objectType . "_permission_names",serialize($perms));
-		}
-		foreach ($groups['data'] as $group) {
-			foreach ($perms['data'] as $perm) {
-				if (in_array($perm['permName'], $group['perms'])) {
-					$this->assign_object_permission($group['groupName'], $objectId, $objectType, $perm['permName']);
-				}
-			}
-		}
-	}
-
 	function get_object_permissions($objectId, $objectType, $group='', $perm='') {
 		$objectId = md5($objectType . strtolower($objectId));
 
@@ -2306,7 +2288,6 @@ class UsersLib extends TikiLib
 		$this->query($query, array($level, $perm));
 
 		global $cachelib;
-		$cachelib->invalidate("allperms");
 		$cachelib->empty_type_cache("fgals_perms");
 
 		global $menulib; include_once('lib/menubuilder/menulib.php');
@@ -2323,7 +2304,6 @@ class UsersLib extends TikiLib
 		}
 
 		global $cachelib;
-		$cachelib->invalidate("allperms");
 		$cachelib->empty_type_cache("fgals_perms");
 		$cachelib->invalidate("groupperms_$group");
 
@@ -2341,7 +2321,6 @@ class UsersLib extends TikiLib
 		}
 
 		global $cachelib;
-		$cachelib->invalidate("allperms");
 		$cachelib->empty_type_cache("fgals_perms");
 		$cachelib->invalidate("groupperms_$group");
 
@@ -2352,11 +2331,10 @@ class UsersLib extends TikiLib
 	function create_dummy_level($level) {
 		$query = "delete from `users_permissions` where `permName` = ?";
 		$result = $this->query($query, array(''));
-		$query = "insert into `users_permissions`(`permName`, `permDesc`, `type`, `level`) values('','','',?)";
+		$query = "insert into `users_permissions`(`permName`, `level`) values('', ?)";
 		$this->query($query, array($level));
 
 		global $cachelib;
-		$cachelib->invalidate("allperms");
 		$cachelib->empty_type_cache("fgals_perms");
 
 		global $menulib; include_once('lib/menubuilder/menulib.php');
@@ -2447,6 +2425,45 @@ class UsersLib extends TikiLib
 			}
 			return $utr;
 		}
+	}
+
+	function get_enabled_permissions()
+	{
+		global $prefs;
+
+		$raw = $this->get_raw_permissions();
+		$out = array();
+
+		foreach ($raw as $permission) {
+			$valid = empty($permission['prefs']);
+
+			foreach ($permission['prefs'] as $name) {
+				if ($prefs[$name] == 'y') {
+					$valid = true;
+					break;
+				}
+			}
+
+			if ($valid) {
+				$out[$permission['name']] = $permission;
+			}
+		}
+
+		return $out;
+	}
+
+	function get_permission_names_for($type)
+	{
+		$raw = $this->get_raw_permissions();
+		$out = array();
+
+		foreach ($raw as $permission) {
+			if ($permission['type'] == $type) {
+				$out[] = $permission['name'];
+			}
+		}
+
+		return $out;
 	}
 
 	private function get_raw_permissions()
@@ -4705,50 +4722,29 @@ class UsersLib extends TikiLib
 	function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_asc', $find = '', $type = '', $group = '', $enabledOnly = false) {
 		global $prefs;
 
-		$values = array();
-		$sort_mode = $this->convertSortMode($sort_mode);
-		$mid = '';
-		if ($type && $type != 'all') {
-			$mid = ' where `type`= ? ';
-			$values[] = $type;
-		}
-
-		if ($find) {
-			if ($mid) {
-				$mid .= " and `permName` like ?";
-				$values[] = '%'.$find.'%';
-			} else {
-				$mid .= " where `permName` like ?";
-				$values[] = '%'.$find.'%';
-			}
+		if ($enabledOnly) {
+			$raw = $this->get_enabled_permissions();
 		} else {
-			if ($mid) {
-				$mid .= " and `permName` > ''";
-			} else {
-				$mid .= " where `permName` > ''";
-			}
+			$raw = $this->get_raw_permissions();
 		}
-		$query = "select * from `users_permissions` $mid order by $sort_mode ";
-		$ret = $this->fetchAll($query, $values, $maxRecords, $offset);
-		$cant = 0;
 
-		foreach ( $ret as &$res ) {
-			if( $enabledOnly && $res['feature_check'] ) {	// only list enabled features
-				$feats = preg_split('/,/', $res['feature_check']);
-				$got_one = false;
-				foreach ($feats as $feat) {
-					if ( $prefs[ trim($feat) ] == 'y') {
-						$got_one = true;
-					}
-				}
-				if (!$got_one) {
-					continue;
-				}
+		$ret = array();
+
+		foreach ($raw as $permission) {
+			if ($type && $type != 'all' && $permission['type'] != $type) {
+				continue;
 			}
 
-			$cant++;
-			if ($group) {
-				if (is_string($group)) {
+			if ($find && stripos($permission['name'], $find) === false) {
+				continue;
+			}
+
+			$ret[] = $this->permission_compatibility($permission);
+		}
+
+		if ($group) {
+			if (is_string($group)) {
+				foreach ( $ret as &$res ) {
 					if ($this->group_has_permission($group, $res['permName'])) {
 						$res['hasPerm'] = 'y';
 						$res[count($res)/2] = 'y';	// keep indexed key too
@@ -4756,7 +4752,9 @@ class UsersLib extends TikiLib
 						$res['hasPerm'] = 'n';
 						$res[count($res)/2] = 'n';
 					}
-				} else if (is_array($group)) {
+				}
+			} else if (is_array($group)) {
+				foreach ( $ret as &$res ) {
 					foreach( $group as $groupName) {
 						if ($this->group_has_permission($groupName, $res['permName'])) {
 							$res[$groupName.'_hasPerm'] = 'y';
@@ -4772,21 +4770,28 @@ class UsersLib extends TikiLib
 
 		return array(
 			'data' => $ret,
-			'cant' => $cant,
+			'cant' => count($ret),
 		);
 	}
 
+	private function permission_compatibility($newFormat) {
+		$newFormat['permName'] = $newFormat['name'];
+		$newFormat['permDesc'] = $newFormat['description'];
+		$newFormat['feature_checks'] = implode(',', $newFormat['prefs']);
+
+		return $newFormat;
+	}
+
 	function get_permission_types() {
-		global $prefs;
+		$ret = array();
 
-		$query = "select distinct `type` from `users_permissions`";
-		$ret = $this->fetchAll($query);
-		$cant = count($ret);
+		foreach ($this->get_raw_permissions() as $perm) {
+			if (! isset($ret[$perm['type']])) {
+				$ret[$perm['type']] = true;
+			}
+		}
 
-		return array(
-			'data' => $ret,
-			'cant' => $cant,
-		);
+		return array_keys($ret);
 	}
 
 	function get_group_permissions($group) {
@@ -4807,17 +4812,6 @@ class UsersLib extends TikiLib
 		return $ret;
 	}
 
-	function get_user_detailled_permissions($user) {
-
-		$groups = $this->get_user_groups($user);
-
-		// Use group cache if only one group
-		//if ( count($groups) == 1 ) return $this->get_group_permissions($groups[0]);
-
-		$query = 'select distinct up.* from `users_permissions` as up, `users_grouppermissions` as ug where ug.`groupName` in ('.implode(',',array_fill(0,count($groups),'?')).') and up.`permName`=ug.`permName`';
-		return $this->fetchAll($query, $groups);
-	}
-
 	function assign_permission_to_group($perm, $group) {
 		$query = "delete from `users_grouppermissions` where `groupName` = ? and `permName` = ?";
 		$result = $this->query($query, array($group, $perm));
@@ -4825,7 +4819,6 @@ class UsersLib extends TikiLib
 		$result = $this->query($query, array($group, $perm));
 
 		global $cachelib;
-		$cachelib->invalidate("allperms");
 		$cachelib->empty_type_cache("fgals_perms");
 		$cachelib->invalidate("groupperms_$group");
 
@@ -4884,7 +4877,6 @@ class UsersLib extends TikiLib
 		$result = $this->query($query, array($perm, $group));
 
 		global $cachelib;
-		$cachelib->invalidate("allperms");
 		$cachelib->empty_type_cache("fgals_perms");
 		$cachelib->invalidate("groupperms_$group");
 
@@ -5668,13 +5660,6 @@ class UsersLib extends TikiLib
 		return true;
 	}
 
-	function get_permissions_types() {
-		$query = "select `type` from `users_permissions` group by `type`";
-		$result = $this->query($query,array());
-		$ret = array();
-		while ($res = $result->fetchRow()) { $ret[] = $res['type']; }
-		return $ret;
-	}
 	function send_validation_email($name, $apass, $email, $again='', $second='', $chosenGroup='', $mailTemplate = '', $pass = '') {
 		// TODO: CLEANUP duplicates code in callback_tikiwiki_send_email() in registrationlib?
 		global $tikilib, $prefs, $smarty;

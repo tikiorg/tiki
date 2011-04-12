@@ -3240,12 +3240,10 @@ class TikiLib extends TikiDb_Bridge
 		$userlib = TikiLib::lib('user');
 
 		$perms = Perms::get( array( 'type' => $objectType, 'object' => $objectId ) );
-		$permDescs = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
+		$permNames = $userlib->get_permission_names_for($this->get_permGroup_from_objectType($objectType));
 
 		$ret = array();
-		foreach( $permDescs['data'] as $perm ) {
-			$perm = $perm['permName'];
-
+		foreach( $permNames as $perm ) {
 			$ret[$perm] = $perms->$perm ? 'y' : 'n';
 
 			if( $global ) {
@@ -3342,14 +3340,12 @@ class TikiLib extends TikiDb_Bridge
 		switch ($objectType) {
 			case 'wiki page': case 'wiki':
 				if ( $prefs['wiki_creator_admin'] == 'y' && !empty($user) && isset($info) && $info['creator'] == $user ) { //can admin his page
-					$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
-					foreach ($perms['data'] as $perm) {
-						$perm = $perm['permName'];
+					$perms = $userlib->get_permission_names_for($this->get_permGroup_from_objectType($objectType));
+					foreach ($perms as $perm) {
 						$ret[$perm] = 'y';
 						if ($global) {
-							global $$perm;
-							$$perm = 'y';
-							$smarty->assign("$perm", 'y');
+							$GLOBALS[$perm] = 'y';
+							$smarty->assign($perm, 'y');
 						}
 					}
 					return $ret;
@@ -3358,13 +3354,12 @@ class TikiLib extends TikiDb_Bridge
 				if ($prefs['feature_wiki_userpage'] == 'y' && !empty($prefs['feature_wiki_userpage_prefix']) && !empty($user) && strcasecmp($prefs['feature_wiki_userpage_prefix'], substr($objectId, 0, strlen($prefs['feature_wiki_userpage_prefix']))) == 0) {
 					if (strcasecmp($objectId, $prefs['feature_wiki_userpage_prefix'].$user) == 0) { //can edit his page
 						if (!$global) {
-							$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
-							foreach ($perms['data'] as $perm) {
-								global $$perm['permName'];
-								if ($perm['permName'] == 'tiki_p_view' || $perm['permName'] == 'tiki_p_edit') {
-									$ret[$perm['permName']] = 'y';
+							$perms = $userlib->get_permission_names_for($this->get_permGroup_from_objectType($objectType));
+							foreach ($perms as $perm) {
+								if ($perm == 'tiki_p_view' || $perm == 'tiki_p_edit') {
+									$ret[$perm] = 'y';
 								} else {
-									$ret[$perm['permName']] = $$perm['permName'];
+									$ret[$perm] = $GLOBALS[$perm];
 								}
 							}
 						} else {
