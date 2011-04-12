@@ -101,7 +101,7 @@
 				{include file='categorize.tpl'}
 				<tr>
 					<td>{tr}Creator:{/tr}</td><td>
-						{user_selector name="creator" editable=$tiki_p_admin_sheet}
+						{user_selector name="creator" editable=$tiki_p_admin_sheet user=$creator}
 					</td>
 				</tr>
 				<tr>
