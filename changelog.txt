@@ -25,6 +25,74 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 6.3
+<http://tiki.org/ReleaseNotes63>
+------------------
+
+----------------------------------------------
+r33924 | pkdille | 2011-04-12 21:32:43 +0200 (Tue, 12 Apr 2011) | 1 line
+
+[QT] Rollback commit 33909 done in stable branch
+----------------------------------------------
+r33909 | chealer | 2011-04-10 21:48:06 +0200 (Sun, 10 Apr 2011) | 2 lines
+
+revert r31271 "[FIX] Bug with radio button in ie due to a quote forgot inside a tag"
+Ref: http://article.gmane.org/gmane.comp.cms.tiki.cvs/60761 (no answer)
+----------------------------------------------
+r33905 | chealer | 2011-04-08 21:12:01 +0200 (Fri, 08 Apr 2011) | 1 line
+
+oops, revert change involuntarily committed in r33904
+----------------------------------------------
+r33904 | chealer | 2011-04-08 21:08:58 +0200 (Fri, 08 Apr 2011) | 1 line
+
+[FIX] LDAP: Do not ignore value of options with space. Fixes attempts to login with a password with spaces trying the empty string as a password
+----------------------------------------------
+r33874 | bajur | 2011-04-07 23:37:45 +0200 (Thu, 07 Apr 2011) | 1 line
+
+Updated Polish translation.
+----------------------------------------------
+r33872 | bajur | 2011-04-07 23:24:37 +0200 (Thu, 07 Apr 2011) | 1 line
+
+Polish translation for 6.0 merged with changes done on trunk.
+----------------------------------------------
+r33865 | chealer | 2011-04-07 21:02:32 +0200 (Thu, 07 Apr 2011) | 1 line
+
+[bp/r33864][SEC] LDAP: reject invalid empty passwords instead of attempting an unauthenticated bind
+----------------------------------------------
+r33409 | bajur | 2011-03-16 00:11:21 +0100 (Wed, 16 Mar 2011) | 2 lines
+
+Calendar, forum - a few trnslations into Polish.
+
+----------------------------------------------
+r33349 | xavidp | 2011-03-12 19:32:05 +0100 (Sat, 12 Mar 2011) | 1 line
+
+One string re-added for i18n on registration (missing)
+----------------------------------------------
+r33347 | xavidp | 2011-03-12 19:03:26 +0100 (Sat, 12 Mar 2011) | 1 line
+
+One string re-added for i18n on registration
+----------------------------------------------
+r33257 | yonixxx | 2011-03-06 10:53:41 +0100 (Sun, 06 Mar 2011) | 1 line
+
+[LANG] he/language.php hebrew translation improvment
+----------------------------------------------
+r33054 | sept_7 | 2011-02-22 22:56:07 +0100 (Tue, 22 Feb 2011) | 6 lines
+
+QT Rollback Commit 33050
+
+[bp/33048][FIX]BiDi.css modification to improve rtl alignment and fix direction
+to ltr in admin preferences fields
+
+
+----------------------------------------------
+r33051 | yonixxx | 2011-02-22 22:04:56 +0100 (Tue, 22 Feb 2011) | 1 line
+
+[bp/33048][FIX]he/language.php hebrew translation improvment 
+----------------------------------------------
+r33050 | yonixxx | 2011-02-22 22:04:21 +0100 (Tue, 22 Feb 2011) | 1 line
+
+[bp/33048][FIX]BiDi.css modification to improve rtl alignment and fix direction to ltr in admin preferences fields
+----------------------------------------------
 Version 6.2
 <http://tiki.org/ReleaseNotes62>
 ------------------
