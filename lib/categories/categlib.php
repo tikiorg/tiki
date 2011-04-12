@@ -471,7 +471,7 @@ class CategLib extends ObjectLib
 		);
 	}
 
-	function list_category_objects($categId, $offset, $maxRecords, $sort_mode='pageName_asc', $type='', $find='', $deep=false, $and=false) {
+	function list_category_objects($categId, $offset, $maxRecords, $sort_mode='pageName_asc', $type='', $find='', $deep=false, $and=false, $filter=null) {
 		global $userlib, $prefs;
 		if ($prefs['feature_sefurl'] == 'y') {include_once('tiki-sefurl.php');}
 		if ($prefs['feature_trackers'] == 'y') {global $trklib;require_once('lib/trackers/trackerlib.php');}
@@ -528,6 +528,16 @@ class CategLib extends ObjectLib
 				$bindWhere[] = $type;
 			}
 		}
+		if (!empty($filter['language']) && !empty($type) && ($type == 'wiki' || $type == 'wiki page')) {
+			$join .= 'LEFT JOIN `tiki_pages` tp ON (o.`itemId` = tp.`pageName`)';
+			if (!empty($filter['language_unspecified'])) {
+				$where .= ' AND (tp.`lang` IS NULL OR tp.`lang` = ? OR tp.`lang`=?)';
+				$bindWhere[] = '';
+			} else {
+				$where .= ' AND  tp.`lang`=?';
+			}
+			$bindWhere[] = $filter['language'];
+		}
 
 		$bindVars = $bindWhere;
 
@@ -539,7 +549,7 @@ class CategLib extends ObjectLib
 		}
 
 		// Fetch all results as was done before, but only do it once
-		$query_cant = "SELECT DISTINCT c.*, o.* FROM `tiki_category_objects` c, `tiki_categorized_objects` co, `tiki_objects` o WHERE c.`catObjectId`=o.`objectId` AND o.`objectId`=co.`catObjectId` $where";
+		$query_cant = "SELECT DISTINCT c.*, o.* FROM `tiki_category_objects` c, `tiki_categorized_objects` co, `tiki_objects` o $join WHERE c.`catObjectId`=o.`objectId` AND o.`objectId`=co.`catObjectId` $where";
 		$query = $query_cant . $orderBy;
 		$result = $this->fetchAll($query,$bindVars);
 		$cant = count($result);
