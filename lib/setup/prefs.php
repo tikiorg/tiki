@@ -358,6 +358,7 @@ function get_default_prefs() {
 		'wikiplugin_webservice' => 'n',
 		'wikiplugin_youtube' => 'y',
 		'wikiplugin_zotero' => 'y',
+		'wikiplugin_zoterolist' => 'y',
 
 		// Inline wiki plugins have their edit plugin icon disabled
 		'wikiplugininline_addtocart' => 'n',
@@ -514,6 +515,7 @@ function get_default_prefs() {
 		'wikiplugininline_youtube' => 'n',
 		'wikiplugininline_author' => 'n',
 		'wikiplugininline_zotero' => 'y',
+		'wikiplugininline_zoterolist' => 'n',
 
 		// wikiplugin preferences
 		'wikipluginprefs_pending_notification' => 'n',
