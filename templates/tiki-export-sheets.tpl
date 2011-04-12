@@ -1,8 +1,8 @@
 
-{title}{tr}{$title}{/tr}{/title}
+{title}{tr}{$title|escape}{/tr}{/title}
 
 <div>
-	{$description}
+	{$description|escape}
 </div>
 
 <div class="navbar">

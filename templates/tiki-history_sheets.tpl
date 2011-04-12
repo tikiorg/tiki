@@ -1,8 +1,8 @@
 
-{title help="Spreadsheet"}Spreadsheet History: {$title}{/title}
+{title help="Spreadsheet"}{tr}Spreadsheet History:{/tr} {$title|escape}{/title}
 
 <div>
-  {$description}
+  {$description|escape}
 </div>
 <form>
 	{tabset}

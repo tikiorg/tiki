@@ -1,7 +1,7 @@
-{title help="Spreadsheet"}{$title}{/title}
+{title help="Spreadsheet"}{$title|escape}{/title}
 
 <p>
-  {$description}
+  {$description|escape}
 </p>
 
 {if ($mode eq 'graph')}

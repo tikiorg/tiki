@@ -1,8 +1,8 @@
 
-{title help="Spreadsheet"}{$title}{/title}
+{title help="Spreadsheet"}{$title|escape}{/title}
 
 <div>
-  {$description}
+  {$description|escape}
 </div>
 
 <div class="navbar">

@@ -1,4 +1,4 @@
-{title help="Spreadsheet"}{$title}{/title}
+{title help="Spreadsheet"}{$title|escape}{/title}
 
 <div class="description">
 	{$description|escape}
