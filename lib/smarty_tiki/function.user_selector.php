@@ -61,7 +61,7 @@ function smarty_function_user_selector($params, &$smarty) {
 	$ret = '';
 	
 	if ($prefs['feature_jquery_autocomplete'] == 'y' && ($ucant > $prefs['user_selector_threshold'] or $ucant > $params['user_selector_threshold'])) {
-		$ret .= '<input id="' . $params['id'] . '" type="text" name="' . $params['name'] . '" value="' . $params['user'] . '"' . $sz . $ed . ' style="'.$params['style'].'" />';
+		$ret .= '<input id="' . $params['id'] . '" type="text" name="' . $params['name'] . '" value="' . htmlspecialchars($params['user']) . '"' . $sz . $ed . ' style="'.$params['style'].'" />';
 		$headerlib->add_jq_onready('$("#' . $params['id'] . '").tiki("autocomplete", "'.(($params['contact'] == 'true')?('usersandcontacts'):('username')).'", {mustMatch: '.$params['mustmatch'].', multiple: '.$params['multiple'].' });');
 	} else {
 		if ($params['group'] == 'all') {
@@ -77,9 +77,9 @@ function smarty_function_user_selector($params, &$smarty) {
 		foreach($users as $usr) {
 			if ($params['editable'] == 'y' || $usr == $params['user']) {
 			    if (isset($params['select'])) {
-					$ret .= '<option value="' . $usr . '"' . ($usr == $params['select'] ? ' selected="selected"' : '') . ' >' . smarty_modifier_username( $usr ) .'</option>';
+					$ret .= '<option value="' . htmlspecialchars($usr) . '"' . ($usr == $params['select'] ? ' selected="selected"' : '') . ' >' . smarty_modifier_username( $usr ) .'</option>';
 				} else {
-					$ret .= '<option value="' . $usr . '"' . ($usr == $params['user'] ? ' selected="selected"' : '') . ' >' . smarty_modifier_username( $usr ) .'</option>';
+					$ret .= '<option value="' . htmlspecialchars($usr) . '"' . ($usr == $params['user'] ? ' selected="selected"' : '') . ' >' . smarty_modifier_username( $usr ) .'</option>';
 				}
 			}
 		}
