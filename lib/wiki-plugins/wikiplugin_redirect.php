@@ -40,6 +40,8 @@ function wikiplugin_redirect($data, $params, $offset, $options) {
 	$location = isset($page) ? $page : $url;
 	if ($just_saved) {
 		$areturn = sprintf(tra("REDIRECT plugin: The redirection to '%s' is disabled just after saving the page."), $location);
+	} else if ($options['indexing']) {
+		return;
 	} else if ($options['preview_mode']) {
 		$areturn = sprintf(tra("REDIRECT plugin: The redirection to '%s' is disabled in preview mode. "), $location);
 	} else if ((isset($_REQUEST['redirectpage']))) {
