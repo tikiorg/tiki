@@ -23,25 +23,45 @@ body {
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
+#top_modules {
+	margin-left: 10px;
+}
+
+.middle_outer .fixedwidth {
+	margin: 0 40px;
+	width: auto;
+}
+
+body.fixed_width .fixedwidth,
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	margin: 0;
+}
+
+.fixed_width > .fixedwidth {
+	margin-top: 0;
+}
+.fixed_width .fixedwidth,
+.fixed_width .fixedwidth .fixedwidth/*
+body.fixed_width .fixedwidth header.fixedwidth*/ {
+	width: 800px;
+}
+
+.middle_outer {
+	background: url(clubcard/img01.jpg) repeat-x;
+	background-position: 0 -150px;
+}
 
 #c1c2 {
 	text-align: left;
 	font-size: 1.0em}
 
-#col1 {padding: 0 17px}
+#col1 {padding: 0}
 
-/*#col1 > .content,
-#showhide_columns,
-.tellafriend {
-	margin-right: 140px
-}*/
-
-#showhide_columns,
-.tellafriend,
 #tiki-center {
 	color: #b0b0b0;
 	background: #3e3c3d;
-	padding: 4px 20px;
+	padding: 4px 8px;
 }
 
 body.fullscreen #col1 {
@@ -53,18 +73,20 @@ body.fullscreen #col1 {
 
 #c1c2 #col2 {
 	width: 235px;
-	}
-/*
+}
+
 #c1c2 #col2 .content {
-	padding-left: 155px}
-*/
+	margin-right: 17px;
+}
+
 #col3 {
 	margin-left: -235px;
 	width: 235px;
-	text-align: center}
+	text-align: center;
+}
 
 #col3 .content {
-	margin: 0;
+	margin-left: 17px;
 	text-align: center}
 
 #footer {
@@ -72,14 +94,18 @@ body.fullscreen #col1 {
  	font-size: .9em;
 	min-height: 40px;
 	padding: 0;
-	margin: 0}
-
-* html #footer {height: 40px}
+	margin-top: 10px;
+}
 
 .footerbgtrap {
-	margin: 20px 155px 0 155px;
-	background: #E5E5E5;
+	margin-top: 20px;
+	background: #e5e5e5;
 	padding: 10px;
+}
+
+body.fixed_width .fixedwidth #footer .fixedwidth {
+	width: 800px;
+	margin: 0 auto;
 }
 
 #power {
@@ -98,34 +124,29 @@ h3 {font-size: 130%}
 h4 {font-size: 120%}
 h5 {font-size: 110%}
 
-/*p, ul, ol {
-	margin: 0 0 2em 0;
-	text-align: justify;
-	line-height: 26px;
-	list-style: none}*/
-
-a {color: #29A0C8}
+a {color: #29a0c8}
 
 a:hover {
 	text-decoration: none;
-	color: #29A0C8}
+	color: #29a0c8;
+}
 
-a:visited {color: #29A0C8}
+a:visited {color: #29a0c8}
 
 hr {
 	background: #29a0c8;
 	color: #29a0c8}
 
-/* Form */
-
 fieldset {
-	border: none}
+	border: none;
+}
 
 legend {color: #285c00}
 
 input, textarea, select {
 	font-size: 13px;
-	color: #333333}
+	color: #333;
+}
 
 .button a,
 .button a:visited,
@@ -140,8 +161,7 @@ input[type=submit],
 	text-transform: uppercase;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10px;
-	color: #FFFFFF;
-	/*margin: 1px;*/
+	color: #fff;
 }
 
 .button a:hover,
@@ -150,10 +170,13 @@ input[type=reset]:hover,
 input[type=submit]:hover,
 .button input:hover,
 .calbuttonBox:hover {
+	padding: 3px;
 	border-top: 1px solid #1e647d;
 	border-left: 1px solid #1e647d;
 	padding-right: 2px;
-	padding-bottom: 2px}
+	padding-bottom: 2px;
+	text-decoration: none;
+}
 
 .box-data .button a,
 .box-data .button a:visited,
@@ -161,7 +184,13 @@ input[type=submit]:hover,
 .box-data input[type=reset],
 .box-data input[type=submit],
 .box-data .button input {
-	background: #678B1D;
+	background: #678b1d;
+	color: #fff;
+	text-decoration: none;
+}
+
+.box-data .button a:hover {
+	text-decoration: none;
 }
 
 #header input[type=text],
@@ -169,6 +198,10 @@ input[type=submit]:hover,
 	background: #29a0c8;
 	border: 2px inset #3e3e3e;
 	color: #fff;
+}
+
+font [size="smaller"] {
+	font-size: 11px;
 }
 
 
@@ -187,7 +220,7 @@ input[type=submit]:hover,
 	
 .fixed_width #header_fixedwidth,
 .fixed_width #middle {
-	width: 700px;
+	width: 800px;
 	margin: 0 auto;
 }
 
@@ -216,32 +249,34 @@ input[type=submit]:hover,
 	color: #29A0C8;
 }
 
-#sitetitle a:hover { text-decoration: none; }
+#sitetitle a:hover {text-decoration: none;}
 
 #sitesubtitle {
 	padding: 50px 0 0 5px;
 	font: 12px Arial, Helvetica, sans-serif;
-	color: #8E8C8D;
+	color: #8e8c8c;
 }
 
-.siteloginbar_popup {
+#top_modules .siteloginbar_popup {
 	position: absolute;
 	bottom: 58px;
 	right: 10px;
 }
 
-#top_modules #tiki-top {
-	position: absolute;
-	bottom: 10px;
-	left: 0;
+.siteloginbar_poppedup {
+	margin-top: -11px;
+}
+
+#topbar_modules #tiki-top {
 	height: 50px;
 	width: 100%;
 	background: url(clubcard/img02.jpg) repeat-x left top;
-
+	margin-bottom: 24px;
 }
 
 #topbar_modules {
 	min-height: 40px;
+	margin-bottom: 24px;
 }
 
 #topbar_modules .box-search {
@@ -275,12 +310,12 @@ input[type=submit]:hover,
 
 #tiki-top ul.cssmenu_horiz li.menuLevel0 a {
 	display: block;
-	padding: 17px 20px 17px 20px;
+	padding: 17px 20px;
 	background: url(clubcard/img03.jpg) no-repeat right 18px;
 	text-decoration: none;
 	text-transform: uppercase;
 	font-size: 11px;
-	color: #FFFFFF;
+	color: #fff;
 }
 
 #tiki-top ul.cssmenu_horiz li ul li {
@@ -309,7 +344,7 @@ input[type=submit]:hover,
 
 /* special arrows and arrow top padding */
 #tiki-top .cssmenu_horiz li.menuSection a .sf-sub-indicator {top: 1.8em}
-#tiki-top .cssmenu_horiz li.menuSection ul li a .sf-sub-indicator {top: 1em}
+#tiki-top .cssmenu_horiz li.menuSection ul li a .sf-sub-indicator {top: .5em}
 
 a > .sf-sub-indicator {
 	top: .4em;
@@ -319,32 +354,28 @@ a > .sf-sub-indicator {
 /** Links in other menus **/
 .separator,
 .option {
-	margin-bottom: 5px}
-
-.menusection .option {}
-
-.option a,
-.separator a {}
+	margin-bottom: 5px;
+}
 
 .option {padding-left: 10px}
+
 .option a {
 	padding: 0 10px;
-	background: url(clubcard/img04.jpg) no-repeat left 5px}
+	background: url(clubcard/img04.jpg) no-repeat left 5px;
+}
 
 /***** Misc. Center Col. *****/
-
 /****** Misc. Global ****/
-
 /***** Boxes *****/
 /** Modules **/
 #col2 .box,
 #col3 .box {
-	width: 235px;
 	margin-bottom: 10px;
-	text-align: left}
+	text-align: left;
+}
 
 h3.box-title {
-	height: 35px;
+	min-height: 35px;
 	margin: 0;
 	padding: 16px 0px 0px 20px;
 	background: #678b1d;
@@ -352,23 +383,37 @@ h3.box-title {
 	text-transform: uppercase;
 	font-size: 14px;
 	font-weight: bold;
-	color: #fff;}
+	color: #fff;
+}
 
 .box-title a,
 .box-title a:link,
-.box-title a:visited {color: #fff !important}
+.box-title a:visited {color: #fff}
 
 .box-data {
 	background: #95c72a;
 	color: #06005b;
-	padding: 10px 20px 20px}
+	padding: 10px 20px 20px;
+}
 
 .box a,
-.box a:visited {
+.box a:visited,
+.siteloginbar_poppedup a,
+.siteloginbar_poppedup a:visited,
+.upform a {
 	color: #285c00;
-	text-decoration: none}
+	text-decoration: none;
+}
 
-.box a:hover {text-decoration: underline}
+.box a:hover,
+.siteloginbar_poppedup a:hover,
+.upform a:hover {
+	text-decoration: underline
+}
+
+.siteloginbar_poppedup label {
+	color: #fff;
+}
 
 .cbox {
 	border: none;
@@ -405,10 +450,17 @@ h3.box-title {
 	padding-bottom: 2px !important;
 }
 
+textarea.tshoutbox {
+	font-size: 1.2em;
+}
+
+.shoutboxmodmsg {
+	font-size: 1em;
+}
+
 /***** Tables, Tabs *****/
 /** Tables **/
-.normal/*,
-.admin*/ {
+.normal {
 	border-collapse: collapse;
 	background: #3e3c3d;
 	color: #fff;
@@ -433,26 +485,54 @@ td.heading a:visited	{color: #fff !important}
 .admin a,
 .admin label,
 fieldset.admin label,
-.cbox fieldset.admin a {color:#285C00}
+.cbox fieldset.admin a,
+.adminoptionbox,
+.adminoptionbox label,
+.tiki_admin .tabcontent {color: #285C00}
 
+.odd,
 tr.odd td,
 td.odd {
 	color: #3e3c3d;
 	background: #b0b0b0;
 	border-right: 1px solid #3e3c3d}
 
+.even,
 tr.even td,
-td.even {background: #5b5b5b;
-border-right: 1px solid #3e3c3d}
+td.even {
+	background: #5b5b5b;
+	border-right: 1px solid #3e3c3d;
+	color: #b0b0b0}
 
 /** Tabs **/
+
+.tabactive,
+.tabinactive,
+[class].tabactive,
+[class].tabinactive {top: 0 !important}
+
+.tabs {
+	padding: .2em .2em 0;
+	margin:0 0.2em 0 0;
+	border: none;
+}
+/*
+.tabs span {
+	display: block;
+	float: left;
+}*/
 
 .tabmark {
 	background: #678b1d;
 	text-transform: uppercase;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10px;
-	color: #FFFFFF;
+	color: #fff;
+}
+
+.tabmark a,
+.tabmark a:visited {
+	color: #fff;
 }
 
 .tabmark a:active {
@@ -472,13 +552,14 @@ border-right: 1px solid #3e3c3d}
 	color: #fff;
 }
 
+.statuson {
+	background: #678b1d;
+}
+
 /***** Wiki *****/
 h1.pagetitle a,
 h1.pagetitle a:visited,
 h1.pagetitle a:hover,
-/*a.pagetitle,
-a.pagetitle:visited,
-a.pagetitle:hover,*/
 div.article h2 {
 	display: block;
 	margin-bottom: 20px;
@@ -524,20 +605,24 @@ body.tiki_blogs .author_info {
 	text-align: right;
 }
 
-.actions {text-align: right}
+.actions {
+	text-align: right;
+}
 
 .author_info {
 	font-size: 10px;
-	margin: 0 10px 0 0}
+	margin: 0 10px 0 0;
+}
 
 div#page-bar {
-	clear: both
+	clear: both;
 }
 
 /***** Forums *****/
 .navbar {
 	margin: 5px 0;
 }
+
 .postbody-title {
 	display: block;
 	margin-bottom: 20px;
@@ -546,10 +631,12 @@ div#page-bar {
 	text-transform: uppercase;
 	text-decoration: none;
 	font-weight: bold;
-	color: #fff}
+	color: #fff;
+}
 
 .post .postbody .content {
-	float: none}
+	float: none;
+}
 
 .post .author {
 	float: none;
@@ -566,59 +653,35 @@ div#page-bar {
 	background: #333;
 	padding: 3px;
 }
+
 .forum_actions .title {
 	font-weight: bold;
 }
-/**** Image Galleries ****/
-
-/***** File Galleries *****/
-
-/***** Trackers *****/
-
-/***** Categories, Tags *****/
-
-/***** Tags (freetags) *****/
-
-/*****  Polls  *****/
-
-/***** FAQs *****/
-
-/***** Quizzes *****/
-
-/***** Shoutbox *****/
-
-/***** Directory *****/
-
-/***** Messages *****/
-
-/***** TikiSheets *****/
 
 
 /***** Calendar *****/
 .calodd {
 	background: #b0b0b0;
 }
+
 .caleven {
 	background: #5b5b5b;
 }
+
 .caldark {
 	border: 1px solid #3e3c3d;
 }
+
 .caldark .calfocus {
 	background: inherit !important
 }
+
 /***** Admin *****/
 a.admbox span {
-	color: #fff
+	color: #fff;
 }
 a.admbox:hover span {
-	color: #29a0c8
+	color: #29a0c8;
 }
-/***** Ajax, jquery. etc. *****/
-/***** Ajax *****/
-
-/***** New (unsorted) *****/
-
-/***** End New (unsorted) *****/
 
 /* End of File */
