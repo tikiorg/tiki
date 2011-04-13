@@ -1880,7 +1880,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 
 		$class = empty( $sheet->cssName ) ? "" : " class='{$sheet->cssName}'";
 		$id = empty( $sheet->sheetId ) ? '' : " rel='sheetId{$sheet->sheetId}'";
-		$title = " title='{$sheet->getTitle()}'";
+		$title = " title='" . htmlspecialchars($sheet->getTitle(), ENT_QUOTES) . "'";
 		$sub = $sheet->isSubSheet ? ' style="display:none;"' : '';
 		echo "<table{$class}{$id}{$sub}{$title}>\n";
 
