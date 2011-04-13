@@ -3309,8 +3309,8 @@ class TrackerLib extends TikiLib
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Allows alphanumeric text input in a multi-line field of arbitrary size.
-				<dt>Usage: <strong>toolbars,width,height,max,listmax,wordmax,distinct</strong>
-				<dt>Example: 0,80,5,200,30
+				<dt>Usage: <strong>toolbars,width,height,max,listmax,wordmax,distinct,wysiwyg</strong>
+				<dt>Example: 0,80,5,200,30,n
 				<dt>Description:
 				<dd><strong>[toolbars]</strong> enables toolbars if a 1 is specified;
 				<dd><strong>[width]</strong> is the width of the box, in chars;
@@ -3319,6 +3319,7 @@ class TrackerLib extends TikiLib
 				<dd><strong>[listmax]</strong> is the maximum number of characters that are displayed in list mode;
 				<dd><strong>[wordmax]</strong> will alert if word count exceeded with a positive number (1+) or display a word count with a negative number (-1);
 				<dd><strong>[distinct]</strong> is y or n. y = all values of the field must be different
+				<dd><strong>[wysiwyg]</strong>is y use a wysiwyg editor - default n
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
 		$type['c'] = array(

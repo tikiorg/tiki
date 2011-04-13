@@ -8,13 +8,18 @@
 	{else}
 		{capture name=textarea_id}area_{$field.fieldId}{/capture}
 		{capture name=textarea_toolbars}{if $field.options_array[0] eq 1}y{else}n{/if}{/capture}
-		{capture name=textarea_simple}y{/capture}
 		{capture name=textarea_cols}{if $field.options_array[1] >= 1}{$field.options_array[1]}{else}50{/if}{/capture}
 		{capture name=textarea_rows}{if $field.options_array[2] >= 1}{$field.options_array[2]}{else}4{/if}{/capture}
 		{capture name=textarea_onkeyup}{if $field.options_array[5]}wordCount({$field.options_array[5]}, this, 'cpt_{$field.fieldId}', '{tr}Word Limit Exceeded{/tr}'){elseif $field.options_array[3]}charCount({$field.options_array[3]}, this, 'cpt_{$field.fieldId}', '{tr}Character Limit Exceeded{/tr}'){/if}{/capture}
-		{textarea id=$smarty.capture.textarea_id name=$field.ins_id _toolbars=$smarty.capture.textarea_toolbars _simple=$smarty.capture.textarea_simple cols=$smarty.capture.textarea_cols rows=$smarty.capture.textarea_rows onkeyup=$smarty.capture.textarea_onkeyup _wysiwyg='n' section="trackers"}
-			{$field.value}
-		{/textarea}
+		{if $field.options_array[7] == 'y'}
+			{textarea id=$smarty.capture.textarea_id name=$field.ins_id cols=$smarty.capture.textarea_cols rows=$smarty.capture.textarea_rows onkeyup=$smarty.capture.textarea_onkeyup _wysiwyg='y' section="trackers"}
+				{$field.value}
+			{/textarea}
+		{else}
+			{textarea id=$smarty.capture.textarea_id name=$field.ins_id _toolbars=$smarty.capture.textarea_toolbars _simple='y' cols=$smarty.capture.textarea_cols rows=$smarty.capture.textarea_rows onkeyup=$smarty.capture.textarea_onkeyup _wysiwyg='n' section="trackers"}
+				{$field.value}
+			{/textarea}
+		{/if}
 	{/if}
 	{if $field.options_array[3]}
 		<div class="charCount">
