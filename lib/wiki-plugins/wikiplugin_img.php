@@ -567,21 +567,17 @@ function wikiplugin_img_info() {
 		}
 		//apply mandatory settings, overriding user settings
 		if(!empty($imgdata['mandatory'])) $imgdata = apply_default_and_mandatory($imgdata, 'mandatory');
-	}		
+	}
 
 //////////////////////////////////////////////////// Error messages and clean javascript //////////////////////////////
 	// Must set at least one image identifier
-	if (empty($imgdata['fileId']) and empty($imgdata['id']) and empty($imgdata['src']) and empty($imgdata['attId']) 
-			and empty($imgdata['randomGalleryId']) and empty($imgdata['fgalId']) ) 
-	{
+	$set = !empty($imgdata['fileId']) + !empty($imgdata['id']) + !empty($imgdata['src']) + !empty($imgdata['attId']) 
+		+ !empty($imgdata['randomGalleryId']) + !empty($imgdata['fgalId']);
+	if ($set == 0) {
 		return tra("''No image specified. One of the following parameters must be set: fileId, randomGalleryId, fgalId, attId, id.''");
-	}
-	// Can't set more than one image identifier
-	if (! (!empty($imgdata['fileId']) Xor !empty($imgdata['id']) Xor !empty($imgdata['src']) Xor !empty($imgdata['attId']) 
-		Xor !empty($imgdata['randomGalleryId']) Xor !empty($imgdata['fgalId'])))
-	{
+	} elseif ($set >1) {
 		return tra("''Use one and only one of the following parameters: fileId, randomGalleryId, fgalId, attId, id, or src.''");
-	}	
+	}
 	// Clean up src URLs to exclude javascript
 	if (stristr(str_replace(' ', '', $imgdata['src']),'javascript:')) {
 		$imgdata['src']  = '';
@@ -591,8 +587,8 @@ function wikiplugin_img_info() {
 	}
 	
  	if (!isset($data) or !$data) {
-			$data = '&nbsp;';
-		}
+		$data = '&nbsp;';
+	}
 
 	include_once('tiki-sefurl.php');
 	//////////////////////Process multiple images //////////////////////////////////////
