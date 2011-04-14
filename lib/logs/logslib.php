@@ -100,7 +100,7 @@ class LogsLib extends TikiLib
 	}
 	function clean_logs($date)
 	{
-		$query = "delete from `tiki_actionlog` where `object`='system' and `objectType`='system' and `lastModif`<=?";
+		$query = "delete from `tiki_actionlog` where `objectType`='system' and `lastModif`<=?";
 		$this->query($query, array((int)$date));
 	}
 
