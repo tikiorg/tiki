@@ -107,7 +107,7 @@
 								<td>{tr}Recipient(s){/tr}</td>
 								<td>
 									{if $prefs.feature_jquery_autocomplete == 'y'}
-										{user_selector contact='true' user = '' multiple='true' editable='y' mustmatch='false' group='all' name='addresses' id='addresses' style='width:95%' user_selector_threshold=1}
+										{user_selector contact='true' user = '' multiple='true' editable='y' mustmatch='false' group='all' name='addresses' id='addresses' style='width:95%' user_selector_threshold=0}
 										<br />
 										<em>{tr}Separate multiple email addresses with a comma and a space{/tr}</em>
 									{else}
