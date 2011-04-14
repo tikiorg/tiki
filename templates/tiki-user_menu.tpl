@@ -87,7 +87,7 @@
 {/if}
 {* ----------------------------- option *}
 {elseif $chdata.type eq 'o'}
-<div class="option{$sep}{if isset($chdata.selected) and $chdata.selected} selected{/if}">
+<div class="option{$chdata.optionId} option{$sep}{if isset($chdata.selected) and $chdata.selected} selected{/if}">
 	<a href="{if $prefs.feature_sefurl eq 'y' and !empty($chdata.sefurl)}{$chdata.sefurl|escape}{else}{if $prefs.menus_item_names_raw eq 'n'}{$chdata.url|escape}{else}{$chdata.url}{/if}{/if}" class="linkmenu">
 		{if $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and ($opensec eq 0 or $chdata.icon neq '')}
 			{icon _id=$chdata.icon alt='' _defaultdir=$prefs.menus_items_icons_path}
