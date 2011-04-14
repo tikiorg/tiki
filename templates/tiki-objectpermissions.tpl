@@ -241,6 +241,7 @@ if ($("#assignstructure").attr("checked")) {
 				{tr}There is also no undo - <strong>Use with care!</strong>{/tr}
 			{/remarksbox}
 		{/if}
+		</div>
 	</form>
 	{/tab}
 	{/if}
