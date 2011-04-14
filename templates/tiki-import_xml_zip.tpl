@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title}{tr}XML Zip Import{/tr}{/title}
 
 <div class="navbar">

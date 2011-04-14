@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 <div class="navbar">
 	{button href="messu-mailbox.php" _text="{tr}Mailbox{/tr}"}
 	{button href="messu-compose.php" _text="{tr}Compose{/tr}"}

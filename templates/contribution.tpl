@@ -1,3 +1,4 @@
+{* $Id$ *}
 {if $prefs.feature_contribution eq 'y'}
 	{if count($contributions) gt 0}
 		<tr>

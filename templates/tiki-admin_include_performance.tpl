@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Please see the <a class='rbox-link' target='tikihelp' href='http://dev.tiki.org/Performance'>Performance page</a> on Tiki's developer site.{/tr}{/remarksbox}
 
 <form class="admin" id="performance" name="performance" action="tiki-admin.php?page=performance" method="post">

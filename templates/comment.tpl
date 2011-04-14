@@ -1,3 +1,4 @@
+{* $Id$ *}
 {if $comment.doNotShow != 1}
 <div class="post {$thread_style}{if $prefs.feature_comments_moderation eq 'y'} post-approved-{$comment.approved}{/if} {if $prefs.comments_archive eq 'y' && $comment.archived eq 'y'}archived_comment{/if}" id="threadId{$comment.threadId}" {if $prefs.comments_archive eq 'y' && $comment.archived eq 'y'}style="display: none;"{/if}>
 	<div class="inner"><span class="corners-top"><span></span></span>

@@ -1,3 +1,4 @@
+{* $Id$ *}
 {jq notonready=true} {* test for caps lock*}
 		function regCapsLock(e){
 			kc = e.keyCode?e.keyCode:e.which;

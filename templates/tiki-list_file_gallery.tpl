@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title help="File+Galleries" admpage="fgal"}
 	{strip}
 		{if $edit_mode eq 'y' and $galleryId eq 0}

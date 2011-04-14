@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {tikimodule error=$module_params.error title=$tpl_module_title name="top_quizzes" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {modules_list list=$modTopQuizzes nonums=$nonums}
 	{section name=ix loop=$modTopQuizzes}

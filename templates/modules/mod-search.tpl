@@ -1,3 +1,4 @@
+{* $Id$ *}
 {compact}
 {if $tiki_p_search eq 'y'}
 {tikimodule error=$module_error title=$tpl_module_title name="search" flip=$smod_params.flip decorations=$smod_params.decorations nobox=$smod_params.nobox notitle=$smod_params.notitle}

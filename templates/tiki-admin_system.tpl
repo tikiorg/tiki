@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title help="System+Admin"}{tr}Tiki Cache/System Admin{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}If your Tiki is acting weird, first thing to try is to clear your cache below. Also very important is to clear your cache after an upgrade (by FTP/SSH when needed).{/tr}{/remarksbox}

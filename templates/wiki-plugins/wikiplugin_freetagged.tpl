@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {if isset($objects) && count($objects) gt 0}
 <ul class="freetagged clearfix">
 	{foreach item=row from=$objects}

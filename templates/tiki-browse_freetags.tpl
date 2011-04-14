@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title admpage=freetags}{tr}Browse related tags{/tr}{/title}
 
 {if $prefs.feature_morcego eq 'y' and $prefs.freetags_feature_3d eq 'y'}

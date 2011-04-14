@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {if !( $searchStyle eq "menu" )}
 	{title admpage="search" help="Search"}{tr}Search{/tr}{/title}
 {/if}

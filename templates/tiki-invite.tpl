@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title url="tiki-invite.php"}{tr}Invitation{/tr}{/title}
 
 <div class="navbar">

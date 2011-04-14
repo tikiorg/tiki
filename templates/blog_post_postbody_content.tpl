@@ -1,3 +1,4 @@
+{* $Id$ *}
 {if $blog_post_context eq 'view_blog' && $use_excerpt eq 'y' && !empty($post_info.excerpt)}
 	<div class="postbody-content postbody-excerpt">
 	{$post_info.excerpt}

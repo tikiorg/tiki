@@ -1,4 +1,6 @@
+{* $Id$ *}
 {* Debug console tab -- to display result of command *}
+
 
 {* Display command results if we have smth to show... *}
 {if $result_type ne 0} {*NO_RESULT *}

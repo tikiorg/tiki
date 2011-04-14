@@ -1,3 +1,4 @@
+{* $Id$ *}
 {if $showtitle eq 'y'}
 <div class="poll-title">
     <strong>{$poll_info.title|escape}</strong>

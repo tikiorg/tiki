@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 	{tr}Look under "Articles" on the application menu for links to{/tr} "<a class="rbox-link" href="tiki-admin_topics.php">{tr}Admin topics{/tr}</a>" {tr}and{/tr} "<a class="rbox-link" href="tiki-article_types.php">{tr}Admin types{/tr}</a>".
 {/remarksbox}

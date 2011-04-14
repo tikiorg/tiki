@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title url="tiki-article_types.php" help=Articles}{tr}Admin Article Types{/tr}{/title}
 
 <div class="navbar">

@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Copyright allows to determine a copyright for all the objects of tikiwiki{/tr}.{/remarksbox}
 
 <form action="tiki-admin.php?page=copyright" method="post">

@@ -1,3 +1,4 @@
+{* $Id$ *}
 <style>
 {literal}a {behavior: url(#default#AnchorClick);}{/literal}
 </style>

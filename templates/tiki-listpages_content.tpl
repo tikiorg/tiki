@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {if $cant_pages > 1 or $initial or $find}
 	{initials_filter_links}
 {/if}

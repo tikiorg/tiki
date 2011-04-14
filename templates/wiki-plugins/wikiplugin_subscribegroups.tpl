@@ -1,3 +1,4 @@
+{* $Id$ *}
 {if !empty($userGroups)}
 {cycle values="odd,even" print=false}
 <table class="normal">

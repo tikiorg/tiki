@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {if $prefs.feature_file_galleries eq 'y'}
 	{if !isset($tpl_module_title)}
 		{if isset($module_rows) && $module_rows gt 0 }

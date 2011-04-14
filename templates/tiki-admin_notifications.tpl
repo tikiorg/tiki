@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title help="Mail+Notifications"}{tr}Mail notifications{/tr}{/title}
 
 {if empty($prefs.sender_email)}

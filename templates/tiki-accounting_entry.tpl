@@ -1,3 +1,4 @@
+{* $Id$ *}
 {literal}
 <script language="javascript">
 

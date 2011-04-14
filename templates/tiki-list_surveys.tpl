@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title help="Surveys"}{tr}Surveys{/tr}{/title}
 
 <div class="navbar">

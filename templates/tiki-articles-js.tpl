@@ -1,3 +1,4 @@
+{* $Id$ *}
 {jq notonready=true}
 	var articleTypes = new Array();
 {{foreach from=$types key=type item=properties}

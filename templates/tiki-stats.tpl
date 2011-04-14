@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title help="Stats"}{tr}Stats{/tr}{/title}
 
 <div class="navbar">

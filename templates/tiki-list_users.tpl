@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title help="UserList"}{tr}User List{/tr}{/title}
 
 {$cant_users} {if !$find}{tr}users registered{/tr}{else} {tr}Users{/tr} {tr}like{/tr} "{$find}"{/if}

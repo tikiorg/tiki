@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title help="Polls" admpage="polls"}{tr}Admin Polls{/tr}{/title}
 
 <div class="navbar">

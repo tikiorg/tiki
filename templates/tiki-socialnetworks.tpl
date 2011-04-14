@@ -1,3 +1,5 @@
+{* $Id $ *}
+
 {title help="Social+networks"}{tr}Social networks{/tr}{/title}
 
 {include file='tiki-mytiki_bar.tpl'}

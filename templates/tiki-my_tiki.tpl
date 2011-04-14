@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title help="MyTiki"}{tr}My Tiki{/tr}{/title}
 
   {include file='tiki-mytiki_bar.tpl'}

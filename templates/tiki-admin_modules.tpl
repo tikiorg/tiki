@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {strip}
 {title help="Modules" admpage="module"}{tr}Admin Modules{/tr}{/title}
 

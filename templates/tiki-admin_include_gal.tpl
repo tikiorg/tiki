@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 {tr}To add/remove image galleries, go to "Image Galleries" on the application menu, or{/tr} <a class="rbox-link" href="tiki-galleries.php">{tr}Click Here{/tr}</a>.
 <hr />

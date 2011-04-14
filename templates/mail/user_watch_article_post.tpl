@@ -1,3 +1,4 @@
+{* $Id$ *}
 {tr}{$mail_action} article post:{/tr} {tr}{$mail_title} by {$mail_user|username} at{/tr} {$mail_date|tiki_short_datetime}
 {*get_strings {tr}New article post:{/tr} *}
 {*get_strings {tr}Edited article post:{/tr} *}

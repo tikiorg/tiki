@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title help="Spreadsheet"}{$title|escape}{/title}
 
 <div class="description">

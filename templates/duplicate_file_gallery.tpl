@@ -1,3 +1,4 @@
+{* $Id$ *}
 {if $tiki_p_create_file_galleries eq 'y'}
 	<h2>{tr}Duplicate File Gallery{/tr}</h2>
 	<form action="tiki-list_file_gallery.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager}{/if}" method="post">

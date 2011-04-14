@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title help="Banners"}{tr}Edit or create banners{/tr}{/title}
 
 <div class="navbar">

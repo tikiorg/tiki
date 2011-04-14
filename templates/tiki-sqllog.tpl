@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title admpage="general"}{tr}Log SQL{/tr}{/title}
 
 {if $prefs.log_sql ne 'y'}

@@ -1,3 +1,4 @@
+{* $Id$ *}
 {if !empty($errors)}
 	{remarksbox type="errors" title="{tr}Errors{/tr}"}
 		{foreach from=$errors item=error}

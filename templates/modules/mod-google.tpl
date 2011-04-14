@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {tikimodule error=$module_params.error title=$tpl_module_title name="google" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 <form method="get" action="http://www.google.com/search" target="Google" style="margin-bottom:2px;">
   <input type="hidden" name="hl" value="en"/>

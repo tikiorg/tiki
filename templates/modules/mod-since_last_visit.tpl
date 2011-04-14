@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {if $user}
 {tikimodule error=$module_params.error title=$tpl_module_title name="since_last_visit" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {tr}Since your last visit on{/tr}<br />

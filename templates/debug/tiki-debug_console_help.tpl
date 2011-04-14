@@ -1,3 +1,4 @@
+{* $Id$ *}
 {* Show help for debugger commands *}
 
 {if $command_result.action eq 'one'}

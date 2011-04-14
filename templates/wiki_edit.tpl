@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {if isset($zoom_mode) and $zoom_mode eq 'y'}
 <form id='editpageform' name='editpageform' method='post' action='tiki-editpage.php' enctype='multipart/form-data'>
 {* The line below is used to generate all input hidden tags needed to keep modifications (e.g. categories, freetags, ...) between zoom mode and normal mode *}

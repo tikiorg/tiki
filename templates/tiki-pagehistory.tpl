@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title admpage="wiki"}{tr}History:{/tr} {$page|escape}{/title}
 
 <div class="navbar">

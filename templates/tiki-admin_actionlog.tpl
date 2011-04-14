@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title help="Action log"}{tr}Action Log{/tr}{/title}
 
 {tabset name="admin_actionlog"}

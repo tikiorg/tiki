@@ -1,3 +1,4 @@
+{* $Id$ *}
 {strip}
 {title help="mods"}{tr}Tiki Mods{/tr}{/title}
 <div class="navbar">

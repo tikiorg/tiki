@@ -1,3 +1,4 @@
+{* $Id$ *}
 {if $wpSubscribe eq 'y'}
 	{if empty($subscribeThanks)}
 		{tr}Subscription confirmed!{/tr}

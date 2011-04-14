@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title admpage="wiki" help="Using+Wiki+Pages#Backlinks_amp_Orphan_Pages"}{tr}Orphan Pages{/tr}{/title}
 
 {if $listpages or ($find ne '')}

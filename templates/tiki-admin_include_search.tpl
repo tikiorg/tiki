@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {if $prefs.feature_search_stats eq 'y'}
 	{remarksbox type="tip" title="{tr}Tip{/tr}"}
 		{tr}Search stats{/tr} {tr}can be seen on page{/tr} <a class='rbox-link' target='tikihelp' href='tiki-search_stats.php'>{tr}Search stats{/tr}</a> {tr}in Admin menu{/tr}

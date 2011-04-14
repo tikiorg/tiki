@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title help="Contribution"}{tr}Admin Contributions{/tr}{/title}
 
 {if $contribution}

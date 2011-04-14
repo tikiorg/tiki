@@ -1,3 +1,4 @@
+{* $Id$ *}
 {strip}
 	{if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 	{if $showdesc eq 'y'}

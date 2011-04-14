@@ -1,4 +1,5 @@
 {strip}
+{* $Id$ *}
 {* param item, fields, wiki(wiki:page or tpl:tpl), list_mode, perms, default_group, listfields *}
 {if !isset($list_mode)}{assign var=list_mode value="n"}{/if}
 {foreach from=$fields item=field}

@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 <form class="admin" id="performance" name="performance" action="tiki-admin.php?page=rating" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" value="{tr}Apply{/tr}" />

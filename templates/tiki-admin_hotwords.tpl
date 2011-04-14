@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title help="Hotwords"}{tr}Admin Hotwords{/tr}{/title}
 
 <h2>{tr}Add Hotword{/tr}</h2>

@@ -1,3 +1,4 @@
+{* $Id$ *}
 {tikimodule error=$module_params.error title=$tpl_module_title name=$tpl_module_name flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	{if $prefs.mobile_mode neq "y"}
 		{self_link _ajax="n" _onclick="setCookie('mobile_mode','y');return true;"}{$module_params.to_label}{/self_link}

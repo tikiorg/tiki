@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title help="Permission"}{if $objectType eq 'global'}{tr}Assign global permissions{/tr}{else}{tr}Assign permissions to {/tr}{tr}{$objectType|escape}:{/tr} {$objectName|escape}{/if}{/title}
 
 <div class="navbar">

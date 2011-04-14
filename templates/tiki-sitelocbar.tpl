@@ -1,3 +1,4 @@
+{* $Id$ *}
 {* breadcrumbs (site header location) *}
 {if $prefs.feature_siteloc eq 'y' and $prefs.feature_breadcrumbs eq 'y'}
 		<div id="sitelocbar">

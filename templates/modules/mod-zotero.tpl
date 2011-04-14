@@ -1,3 +1,4 @@
+{* $Id$ *}
 {tikimodule error=$module_params.error title=$tpl_module_title name="zotero" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	<form class="zoterosearch" method="post" action="tiki-ajax_services.php">
 		<input type="text" name="zotero_tags"/>

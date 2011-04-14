@@ -1,3 +1,4 @@
+{* $Id$ *}
 {strip}
 <div id="themegenerator_content">
 	<div class="box-data">			

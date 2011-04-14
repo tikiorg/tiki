@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 <div class="catlists">
     <div class="cbox-title">{$title}</div>
     <div class="cbox-data">

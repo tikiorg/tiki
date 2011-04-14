@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {if $tiki_p_admin_tikitests eq 'y' or  $tiki_p_play_tikitests eq 'y' or $tiki_p_edit_tikitests eq 'y'}
 {if !isset($tpl_module_title)}
 {eval var="{tr}TikiTests Menu{/tr}" assign="tpl_module_title"}

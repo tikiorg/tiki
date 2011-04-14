@@ -1,3 +1,4 @@
+{* $Id$ *}
 <div class="navbar">
 	 {button href="tiki-payment.php" _text="{tr}Payments{/tr}"}
 </div>

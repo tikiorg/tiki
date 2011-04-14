@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title help="Structures"}{tr}Structures{/tr}{/title}
 
 {if $tiki_p_admin eq 'y'}

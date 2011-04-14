@@ -1,3 +1,4 @@
+{* $Id$ *}
 {assign var=nlId_urlencoded value=$nlId|urlencode}
 {title url="tiki-admin_newsletter_subscriptions.php?nlId=$nlId_urlencoded"}{tr}Admin newsletter subscriptions{/tr}{/title}
 

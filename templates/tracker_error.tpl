@@ -1,4 +1,5 @@
 {strip}
+{* $Id$ *}
 {****  Display warnings about incorrect values and missing mandatory fields ***}
 {if count($err_mandatory) > 0}
 {remarksbox type='errors' title="{tr}Errors{/tr}"}

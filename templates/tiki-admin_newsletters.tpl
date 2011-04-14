@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title help="Newsletters"}{tr}Admin newsletters{/tr}{/title}
 
 <div class="navbar">

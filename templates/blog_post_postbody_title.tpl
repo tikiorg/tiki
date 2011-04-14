@@ -1,3 +1,4 @@
+{* $Id$ *}
 <div class="clearfix postbody-title">
 	<div class="title">
 		{if $blog_post_context eq 'view_blog'}

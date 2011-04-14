@@ -1,3 +1,4 @@
+{* $Id$ *}
 {if $page|lower neq 'sandbox' and $prefs.feature_contribution eq 'y' and $prefs.feature_contribution_mandatory eq 'y'}
 	{remarksbox type='tip' title="{tr}Tip{/tr}"}
 		<strong class='mandatory_note'>{tr}Fields marked with a * are mandatory.{/tr}</strong>

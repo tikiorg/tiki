@@ -1,3 +1,4 @@
+{* $Id$ *}
 <form method="post" action="{query _type=relative _keepall=y}" style="display: inline;">
 	<input type="hidden" name="code" value="{$code|escape}"/>
 	{if $onbehalf == 'y'}

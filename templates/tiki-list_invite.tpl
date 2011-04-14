@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title}{tr}Invitations list{/tr}{/title}
 
 <div class="navbar">

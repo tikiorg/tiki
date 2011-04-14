@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title help="accounting"}
 	{$book.bookName}:
 	{if $action=="new"}{tr}Create new account{/tr}{else}{tr}Edit Account{/tr}{/if}

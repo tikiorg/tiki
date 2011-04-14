@@ -1,4 +1,5 @@
-{* 
+{* $Id$ 
+ *
  * MOD-SINCE_LAST_VISIT_NEW
  * Template for the module mod-since_last_visit_new. 
  *}

@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title}
   {tr}File Archive:{/tr} {if empty($file_info.name)}{$file_info.filename|escape}{else}{$file_info.name}{/if}
 {/title}

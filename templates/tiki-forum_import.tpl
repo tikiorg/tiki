@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title help="Forums" admpage="forums"}{tr}Forum Importer{/tr}{/title}
 
 <div class="navbar">

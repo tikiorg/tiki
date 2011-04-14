@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title}
   {if $user ne $userwatch}
     {tr}Avatar:{/tr} {$userwatch}

@@ -1,4 +1,4 @@
-
+{* $Id$ *}
 {title url="tiki-view_tracker.php?trackerId=$trackerId" adm="trackers"}{tr}Tracker:{/tr} {$tracker_info.name|escape}{/title}
 
 <div class="navbar">

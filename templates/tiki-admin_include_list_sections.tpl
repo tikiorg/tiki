@@ -1,3 +1,4 @@
+{* $Id$ *}
 {*
  * If you want to change this page, check http://tiki.org/AdministrationDev
  * there you"ll find attached a gimp image containing this page with icons in separated layers

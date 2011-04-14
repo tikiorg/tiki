@@ -1,3 +1,4 @@
+{* $Id$ *}
 {if $cant > 0}
 	<table class="normal" id="selectable">
 		<tr>

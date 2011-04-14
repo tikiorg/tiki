@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title help="Integrator"}{tr}Edit Rules for Repository:{/tr} {$name}{/title}
 
 <div class="navbar">

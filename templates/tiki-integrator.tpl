@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 <div class="integrated-page">
   {$data}
 </div>

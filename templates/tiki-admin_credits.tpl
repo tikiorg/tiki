@@ -1,3 +1,4 @@
+{* $Id$ *}
 {if isset($msg)}{$msg|escape}{/if}
 
 {title help="Credits"}{tr}Manage Credits{/tr}{/title}

@@ -1,3 +1,4 @@
+{* $Id$ *}
 {if !empty($errors)}
 	<div class="simplebox highlight">
 		{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}

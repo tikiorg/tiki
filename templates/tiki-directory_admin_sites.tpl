@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title help="Directory" url="tiki-directory_admin_sites.php?parent=$parent"}{tr}Admin sites{/tr}{/title}
 
 {include file='tiki-directory_admin_bar.tpl'}

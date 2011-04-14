@@ -1,3 +1,4 @@
+{* $Id$ *}
 <h1 class="pagetitle"><strong><a href="tiki-index.php?page={$page}">{tr}Contributions to{/tr} {$page}
 ({if $lastversion==0}{tr}current version{/tr}{else}{tr}version{/tr} {$lastversion}{/if})</a></strong></h1>
 {include file='tiki-page_contribution_form.tpl'}

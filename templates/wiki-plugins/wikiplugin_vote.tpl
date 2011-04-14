@@ -1,3 +1,4 @@
+{* $Id$ *}
 {strip}
 <span style="display:inline;{if $float}float:{$float}{/if}" class="poll">
 

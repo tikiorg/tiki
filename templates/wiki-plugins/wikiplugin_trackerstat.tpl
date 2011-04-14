@@ -1,3 +1,4 @@
+{* $Id$ *}
 <table class="normal wikiplugin_trackerstat">
 {cycle values="even,odd" print=false}
 {section name=istat loop=$stats}

@@ -1,3 +1,4 @@
+{* $Id$ *}
 <div class="navbar">
 	{button href="tiki-browse_categories.php" _text="{tr}Browse categories{/tr}"}
 	{button href="tiki-admin_categories.php" _text="{tr}Administer categories{/tr}"}

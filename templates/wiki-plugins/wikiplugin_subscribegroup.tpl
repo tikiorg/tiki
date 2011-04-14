@@ -1,3 +1,4 @@
+{* $Id$ *}
 {strip}
 <form method="post">
 <input type="hidden" name="group" value="{$subscribeGroup|escape}" />

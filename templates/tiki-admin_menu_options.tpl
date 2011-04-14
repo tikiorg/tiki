@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title help="Menus" url="tiki-admin_menu_options.php?menuId=$menuId" admpage="general&amp;cookietab=3"}{tr}Admin Menu:{/tr} {$editable_menu_info.name|escape}{/title}
 
 <div class="navbar">

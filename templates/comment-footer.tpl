@@ -1,3 +1,4 @@
+{* $Id$ *}
 <div class="postfooter">
 	<div class="status">
 	{if $prefs.feature_contribution eq 'y' and $prefs.feature_contribution_display_in_comment eq 'y'}

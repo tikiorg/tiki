@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title help="System+Log"}{tr}Tiki Logs{/tr}{/title}
 
 <div class="navbar">

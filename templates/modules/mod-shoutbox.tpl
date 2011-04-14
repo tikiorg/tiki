@@ -1,3 +1,4 @@
+{* $Id$ *}
 {if $tiki_p_view_shoutbox eq 'y'}
   {tikimodule title=$tpl_module_title name="shoutbox" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
     {if $tiki_p_post_shoutbox eq 'y'}

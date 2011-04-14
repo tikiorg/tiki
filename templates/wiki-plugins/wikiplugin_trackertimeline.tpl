@@ -1,3 +1,4 @@
+{* $Id$ *}
 {jq notonready=true}
 ttl_showdetails = function( data ) {
 	$.colorbox({

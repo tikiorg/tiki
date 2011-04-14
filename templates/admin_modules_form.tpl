@@ -1,4 +1,6 @@
+{* $Id$ *}
 {* include file for module edit form - to be called by ajax *}
+
 			
 <div id="module_params">
 	<div class="cbox-data">

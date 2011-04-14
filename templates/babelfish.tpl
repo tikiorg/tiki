@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {if $prefs.feature_babelfish eq 'y' and $prefs.feature_babelfish_logo eq 'y'}
 
 {assign var=links value=0}

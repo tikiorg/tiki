@@ -1,3 +1,4 @@
+{* $Id$ *}
 <div>
 	<div class='box-title'>{if $file_backlinks_title}{tr}{$file_backlinks_title}{/tr}{else}{tr}Backlinks{/tr}{/if}</div>
 	<div class='box-data'>

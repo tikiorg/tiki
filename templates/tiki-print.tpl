@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{* $Id$ *}<!DOCTYPE html>
 <html id="print" xmlns="http://www.w3.org/1999/xhtml" xml:lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}" lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}"{if !empty($page_id)} id="page_{$page_id}"{/if}>
 	<head>
 {include file='header.tpl'}

@@ -1,3 +1,4 @@
+{* $Id$ *}
 <form method="post" action="tiki-page_contribution.php">
 	<input type="hidden" name="page" id="page" value="{$page}" />
 	<fieldset>

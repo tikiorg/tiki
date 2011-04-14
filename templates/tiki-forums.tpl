@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title help="forums" admpage="forums"}{tr}Forums{/tr}{/title}
 
 {if $tiki_p_admin_forum eq 'y'}

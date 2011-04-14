@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title admpage='login'}{tr}I forgot my password{/tr}{/title}
 
 {if $showmsg ne 'n'}

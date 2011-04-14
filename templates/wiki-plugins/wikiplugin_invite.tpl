@@ -1,3 +1,4 @@
+{* $Id$ *}
 {if $errors}
 	{remarksbox type="feedback"}
 		{foreach from=$errors item=error}

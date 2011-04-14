@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title help="accounting"}
 	{$book.bookName}
 {/title}

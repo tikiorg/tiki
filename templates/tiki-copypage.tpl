@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title}{tr}Copy page:{/tr}&nbsp;{$page|escape}{/title}
 
 <div class="navbar">

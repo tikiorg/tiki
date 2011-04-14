@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 <div class="nohighlight">
 	{if $searchStyle neq "menu" && $prefs.feature_search_show_object_filter eq 'y'}
 		{title admpage="search" help="Search"}{tr}Search{/tr}{/title}

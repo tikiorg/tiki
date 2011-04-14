@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {tikimodule error=$module_params.error title=$tpl_module_title name="directory_top_sites" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {modules_list list=$modTopdirSites nonums=$nonums}
 	{section name=ix loop=$modTopdirSites}

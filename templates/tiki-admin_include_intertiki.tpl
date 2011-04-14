@@ -1,3 +1,4 @@
+{* $Id$ *}
 {tabset name="admin_interwiki"}
 	{tab name="{tr}Intertiki client{/tr}"}
 		<form action="tiki-admin.php?page=intertiki" method="post" name="intertiki">

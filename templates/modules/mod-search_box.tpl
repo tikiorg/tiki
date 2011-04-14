@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {if $tiki_p_search eq 'y'}
 {tikimodule error=$module_error title=$tpl_module_title name="search_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {if $type neq 'none'}

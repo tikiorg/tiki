@@ -1,3 +1,4 @@
+{* $Id$ *}
 {strip}
 {if $print_page ne 'y' and $tiki_p_attach_trackers eq 'y'}
 	<h2>{tr}Attach a file to this item{/tr}</h2>

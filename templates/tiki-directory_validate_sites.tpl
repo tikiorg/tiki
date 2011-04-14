@@ -1,3 +1,4 @@
+{* $Id$ *}
 {title help="Directory"}{tr}Validate sites{/tr}{/title}
 
 {* Display the title using parent *}

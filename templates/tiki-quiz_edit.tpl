@@ -1,3 +1,9 @@
+{* $Id$ *}
+
+{* Copyright (c) 2004 George G. Geller et. al. *}
+{* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
+{* Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details. *}
+
 {title help="Quiz"}{tr}Edit quiz:{/tr} {$quiz->name}{/title}
 
 <div class="navbar">

@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title help="Trackers" admpage="trackers"}{tr}Admin Trackers{/tr}{/title}
 
 <div class="navbar">

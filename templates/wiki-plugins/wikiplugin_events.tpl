@@ -1,3 +1,4 @@
+{* $Id$ *}
 <table class="normal">
 <tr><th colspan="2">{tr}Upcoming Events{/tr}</th></tr>
 {cycle values="odd,even" print=false}

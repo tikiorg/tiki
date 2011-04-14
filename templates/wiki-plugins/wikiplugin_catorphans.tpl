@@ -1,3 +1,5 @@
+ {* $Id$ *}
+
 {foreach from=$pages item=pg}
 		 <a href="{$pg.pageName|sefurl}">{$pg.pageName|escape}</a><br />
 {/foreach}

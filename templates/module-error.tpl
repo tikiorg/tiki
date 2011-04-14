@@ -1,3 +1,4 @@
+{* $Id$ *}
 {* Error module rendering *}
 
 <div class="box" id="module_error">

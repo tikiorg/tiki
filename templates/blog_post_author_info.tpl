@@ -1,3 +1,4 @@
+{* $Id$ *}
 <div class="author_info">
 	{if $blog_data.use_author eq 'y' || $blog_data.add_date eq 'y'}
 		{tr}Published {/tr}

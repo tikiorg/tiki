@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title}{tr}Stats for surveys{/tr}{/title}
 
 <div class="navbar">

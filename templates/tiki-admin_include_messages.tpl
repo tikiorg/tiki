@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 <form action="tiki-admin.php?page=messages" method="post" name="messages">
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="messagesprefs" value="{tr}Change preferences{/tr}" />
