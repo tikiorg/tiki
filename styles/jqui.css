@@ -621,9 +621,11 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 }
 
 .forum_actions {
-	background: #363636;
-	color: #fff;
+	background: #ddd url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png) 0% 0% repeat-x;
+	border: 1px solid #aaa;
+	color: #333;
 	padding: 3px;
+	margin: 10px 0 0;
 }
 .forum_actions .title {
 	font-weight: bold;
@@ -784,7 +786,8 @@ h3.box-title,
 .post .postbody,
 body.tiki_admin .simplebox,
 a.admbox,
-a.admbox.off {
+a.admbox.off,
+.forum_actions {
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
