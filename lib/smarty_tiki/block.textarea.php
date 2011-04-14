@@ -48,6 +48,13 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$params['id'] = isset($params['id']) ? $params['id'] : 'editwiki';
 	$params['area_id'] = isset($params['area_id']) ? $params['area_id'] : $params['id'];	// legacy param for toolbars?
 	$params['class'] = isset($params['class']) ? $params['class'] : 'wikiedit';
+
+	//codemirror integration
+	$params['data-codemirror'] = isset($params['codemirror']) ? $params['codemirror'] : '';
+	$params['data-syntax'] = isset($params['syntax']) ? $params['syntax'] : '';
+	//keep params html5 friendly
+	unset($params['codemirror']);
+	unset($params['syntax']);
 	
 	// mainly for modules admin - preview is for the module, not the user module so don;t need to confirmExit
 	$params['_previewConfirmExit'] = isset($params['_previewConfirmExit']) ? $params['_previewConfirmExit'] : 'y';
