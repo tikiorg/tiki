@@ -4742,6 +4742,10 @@ if( \$('#$id') ) {
 
 			// Parameter order needs to be stable
 			ksort( $validateArgs );
+			
+			if (empty($validateArgs)) {
+				$validateArgs = array( '' => '' );	// maintain compatibility with pre-Tiki 7 fingerprints
+			}
 		} else
 			$validateArgs = array();
 
