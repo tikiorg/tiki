@@ -200,8 +200,8 @@ $(".trackerfilter form").submit( function () {
 	if (empty($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
+	$filters = wikiplugin_trackerFilter_get_filters($trackerId, $listfields, $formats, $status);
 	if (empty($export_action)) {
-		$filters = wikiplugin_trackerFilter_get_filters($trackerId, $listfields, $formats, $status);
 		if (!is_array($filters)) {
 			return $filters;
 		}
