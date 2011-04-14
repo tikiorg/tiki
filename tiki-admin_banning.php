@@ -10,13 +10,14 @@ include_once ('lib/ban/banlib.php');
 $access->check_feature('feature_banning');
 $access->check_permission('tiki_p_admin_banning');
 
-if (isset($_REQUEST['banId'])) {
+if (!empty($_REQUEST['banId'])) {
 	$info = $banlib->get_rule($_REQUEST['banId']);
 } else {
 	$_REQUEST['banId'] = 0;
 	$info['sections'] = array();
 	$info['title'] = '';
 	$info['mode'] = 'user';
+	$info['user'] = '';
 	$info['ip1'] = 255;
 	$info['ip2'] = 255;
 	$info['ip3'] = 255;
@@ -43,7 +44,7 @@ if (isset($_REQUEST['save'])) {
 	$_REQUEST['use_dates'] = isset($_REQUEST['use_dates']) ? 'y' : 'n';
 	$_REQUEST['date_from'] = $tikilib->make_time(0, 0, 0, $_REQUEST['date_fromMonth'], $_REQUEST['date_fromDay'], $_REQUEST['date_fromYear']);
 	$_REQUEST['date_to'] = $tikilib->make_time(0, 0, 0, $_REQUEST['date_toMonth'], $_REQUEST['date_toDay'], $_REQUEST['date_toYear']);
-	$sections = array_keys($_REQUEST['section']);
+	$sections = isset($_REQUEST['section']) ? array_keys($_REQUEST['section']) : array();
 	$banlib->replace_rule($_REQUEST['banId'], $_REQUEST['mode'], $_REQUEST['title'], $_REQUEST['ip1'], $_REQUEST['ip2'], $_REQUEST['ip3'], $_REQUEST['ip4'], $_REQUEST['userreg'], $_REQUEST['date_from'], $_REQUEST['date_to'], $_REQUEST['use_dates'], $_REQUEST['message'], $sections);
 	$info['sections'] = array();
 	$info['title'] = '';

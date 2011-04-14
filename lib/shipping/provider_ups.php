@@ -126,66 +126,10 @@ class ShippingProvider_Ups implements ShippingProvider
 		$type->appendChild( $dom->createElement( 'Code', '00' ) );
 		$package->appendChild( $packageWeight = $dom->createElement( 'PackageWeight' ) );
 		$packageWeight->appendChild( $unit = $dom->createElement( 'UnitOfMeasurement' ) );
-		$unit->appendChild( $code = $dom->createElement( 'Code', 'KGS' ) );
+		$unit->appendChild( $code = $dom->createElement( 'Code', 'LBS' ) );
 		$packageWeight->appendChild( $weight = $dom->createElement( 'Weight' ) );
 
-		$weight->appendChild( $dom->createTextNode( $data['weight'] ) );
+		$weight->appendChild( $dom->createTextNode( $data['weight'] * 2.20462262 ) );
 	}
-
-	/*
-	function getRates( array $from, array $to, array $packages ) {
-		if( ! class_exists( 'SoapClient' ) ) {
-			return array();
-		}
-
-		$wsdl = dirname(__FILE__) . '/ups-wsdl/RateWS.wsdl';
-
-		try {
-			$client = new SoapClient( $wsdl, array('trace' => 1) );
-			$client->__setSoapHeaders( new SoapHeader( 'http://www.ups.com/XMLSchema/XOLTWS/UPSS/v1.0', 'UPSSecurity', array(
-				'UsernameToken' => array(
-					'Username' => $this->username,
-					'Password' => $this->password,
-				),
-				'ServiceAccessToken' => array(
-					'AccessLicenseNumber' => $this->license,
-				),
-			) ) );
-
-			$rates = $client->ProcessRate( array(
-				'Request' => array(
-					'RequestOption' => 'Rate',
-				),
-				'Shipment' => array(
-					'Shipper' => array(
-						'Address' => array(
-							'CountryCode' => 'CA',
-							'PostalCode' => 'H2J 1L8',
-						),
-					),
-					'ShipTo' => array(
-						'Address' => array(
-							'CountryCode' => 'CA',
-							'PostalCode' => 'J7P 1T3',
-						),
-					),
-					'Package' => array(
-						array( 'PackagingType' => array( 'Code' => '00' ), 'PackageWeight' => array( 'Weight' => 3, 'UnitOfMeasurement' => array( 'Code' => 'KGS' ) ) ),
-					),
-				),
-			) );
-
-			var_dump($client->__getLastRequest());
-			var_dump($client->__getLastResponse());
-
-			var_dump( $rates );
-		} catch( SoapFault $e ) {
-			var_dump($client->__getLastRequest());
-			var_dump($client->__getLastResponse());
-			echo $e;
-			return array();
-		}
-	}
-	*/
 }
 

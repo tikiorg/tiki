@@ -266,7 +266,7 @@ CREATE TABLE `tiki_blog_posts` (
   `trackbacks_to` text,
   `trackbacks_from` text,
   `title` varchar(255) default NULL,
-  `priv` varchar(1) default NULL,
+  `priv` varchar(1) default 'n',
   `wysiwyg` varchar(1) default NULL,
   PRIMARY KEY (`postId`),
   KEY `data` (`data`(255)),
