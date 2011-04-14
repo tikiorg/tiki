@@ -39,7 +39,7 @@ function prefs_mobile_list() {
 			'dependencies' => array(
 				'mobile_feature',
 			),
-			'default' => array(),
+			'default' => array(''),
 		),
 		'mobile_theme_header' => array(
 			'name' => tra('Header Theme'),
