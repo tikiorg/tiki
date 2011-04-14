@@ -16,8 +16,21 @@ include_once ('tiki-section_options.php');
 ask_ticket('draw');
 
 //Obtain fileId, DO NOT LET ANYTHING OTHER THAN NUMBERS BY (for injection free code)
-if ( isset($_REQUEST['fileId']) && is_numeric($_REQUEST['fileId']) ) {
+if (
+		isset($_REQUEST['fileId']) && 
+		is_numeric($_REQUEST['fileId']) &&
+		isset($_REQUEST['galleryId']) && 
+		is_numeric($_REQUEST['galleryId'])
+	) {
+	
 	$fileId = $_REQUEST['fileId'];
+	$galleryId = $_REQUEST['galleryId'];
+	
+	$smarty->assign( "fileId", $fileId );
+	$smarty->assign( "galleryId", $galleryId );
+	
+} else {
+	die;
 }
 
 $headerlib->add_jsfile("lib/svg-edit/embedapi.js");
@@ -33,11 +46,11 @@ $headerlib->add_jq_onready("
 	
 	$('body').css('overflow', 'hidden');
 	
-	var svgCanvas = null;
+	window.svgCanvas = null;
 
-	function init_embed() {
+	window.init_embed = function() {
 		var frame = document.getElementById('svgedit');
-		svgCanvas = new embedded_svg_edit(frame);
+		window.svgCanvas = new embedded_svg_edit(frame);
 		
 		// Hide main button, as we will be controlling new/load/save etc from the host document
 		var doc;
@@ -49,29 +62,31 @@ $headerlib->add_jq_onready("
 		
 		var mainButton = doc.getElementById('main_button');
 		mainButton.style.display = 'none';			
-	}
+	};
 	
-	function handleSvgData(data, error) {
+	window.handleSvgData = function(data, error) {
 		if (error) {
 			alert('error ' + error);
 		} else {
-			alert('Congratulations. Your SVG string is back in the host page, do with it what you will ' + data);
+			$('#file').val(data);
+			$('#upform').submit();
 		}			
 	}
 	
-	function loadSvg(svgexample) {
-		svgCanvas.setSvgString(svgexample);
-	}
+	window.loadSvg = function(svg) {
+		window.svgCanvas.setSvgString(svg);
+		$('#file').val(svg);
+	};
 	
-	function saveSvg() {			
-		svgCanvas.getSvgString()(handleSvgData);
-	}
+	window.saveSvg = function() {
+		window.svgCanvas.getSvgString()(window.handleSvgData);
+	};
 	
-	init_embed();
+	window.init_embed();
 	
 	if ('$fileId') {
 		$('<div />').load('tiki-download_file.php?fileId=$fileId', function(o) {
-			loadSvg(o);
+			window.loadSvg(o);
 		});
 	}
 ");
