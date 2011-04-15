@@ -12,7 +12,7 @@ ini_set( 'include_path', ini_get( 'include_path' ) . ":lib/svg-edit_tiki" );
  */
 class TikiDraw
 {
-	function setup_draw() {
+	function TikiDraw() {
 		global $headerlib;
 		if (!$this->setup_draw_files) {
 			$p = "lib/svg-edit/";
@@ -41,11 +41,14 @@ class TikiDraw
 			$headerlib->add_jsfile( $p. 'draw.js' );
 			$headerlib->add_jsfile( $p. 'path.js' );
 			$headerlib->add_jsfile( $p. 'svgcanvas.js' );
-			//$headerlib->add_jsfile( $p. 'svg-editor.js' );
-			//$headerlib->add_jsfile( $p. 'locale/locale.js' );
+			$svgEditor = file_get_contents( $p. 'svg-editor.js' );
+			$svgEditor.= file_get_contents( $p. 'local/local.js' );
+			
+			$svgEditor = str_replace("$(svgEditor.init);", "", $svgEditor);
+			
 			//Work around for svg-editor's configs, they are note editable with externals
 			//$headerlib->add_jsfile( 'lib/svg-edit/svg-editor.js' );
-			
+			/*
 			$svgEditor = file_get_contents( $p. 'svg-editor.js' ) . '';
 			
 			$svgEditor = str_replace("imgPath: 'images", 					"imgPath: 'lib/svg-edit/images", 					$svgEditor);
@@ -102,11 +105,15 @@ class TikiDraw
 			$svgEditor = str_replace("'arrow_down':'dropdown.gif'","'arrow_down':'".$p."dropdown.gif'", $svgEditor);
 			
 			$svgEditor .= file_get_contents( $p. 'locale/locale.js' );
-			
+			*/
 			$headerlib->add_js($svgEditor);
+			
 			
 			$headerlib->add_jsfile( 'lib/svg-edit/jquery-ui/jquery-ui-1.8.custom.min.js', true );
 			$headerlib->add_jsfile( 'lib/svg-edit/jgraduate/jpicker.min.js', true ); 
+			
+			//add Tiki customizations
+			$headerlib->add_jsfile( 'lib/svg-edit_tiki/draw.js' );
 			
 			$this->setup_draw_files = true;
 		}

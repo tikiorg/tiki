@@ -60,7 +60,8 @@ function tiki_syntax_highlighter_html()
 					code.flexibleCodeMirror({
 						parse: ['xml', 'css', 'javascript', 'html'],
 						lineNumbers: true,
-						changeText: '".tra("Change Highlighter")."'
+						changeText: '".tra("Change Highlighter")."',
+						force: true
 					});
 				});
 		");
@@ -79,7 +80,8 @@ function tiki_syntax_highlighter_code()
 					code.flexibleCodeMirror({
 						parse: ['xml', 'css', 'javascript', 'html'],
 						lineNumbers: true,
-						changeText: '".tra("Change Highlighter")."'
+						changeText: '".tra("Change Highlighter")."',
+						force: true
 					});
 				});
 		");
@@ -97,7 +99,8 @@ function tiki_syntax_highlighter_r() {
 					r.flexibleCodeMirror({
 						parse: ['r'],
 						lineNumbers: true,
-						changeText: '".tra("Change Highlighter")."'
+						changeText: '".tra("Change Highlighter")."',
+						force: true
 					});
 				});
 		");
@@ -115,7 +118,8 @@ function tiki_syntax_highlighter_rr() {
 					rr.flexibleCodeMirror({
 						parse: ['r'],
 						lineNumbers: true,
-						changeText: '".tra("Change Highlighter")."'
+						changeText: '".tra("Change Highlighter")."',
+						force: true
 					});
 				});
 		");

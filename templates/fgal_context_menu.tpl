@@ -54,7 +54,7 @@
 		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 		</a>
 		{if $files[changes].type eq 'image/svg+xml'}
-			<a href="tiki-edit_draw.php?paramurl=tiki-download_file.php?fileId={$files[changes].id}">
+			<a href="tiki-edit_draw.php?fileId={$files[changes].id}&galleryId={$files[changes].galleryId}">
 			{icon _id='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Edit{/tr}"}
 			</a>
 		{/if}

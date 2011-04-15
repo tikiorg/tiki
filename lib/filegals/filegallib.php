@@ -2732,7 +2732,12 @@ class FileGalLib extends TikiLib
 					$name = $aFiles["userfile"]["name"][$key];
 					if (isset($params["isbatch"][$key]) && $params["isbatch"][$key] == 'on' && strtolower(substr($name, strlen($name) - 3)) == 'zip') {
 						if ($tiki_p_batch_upload_files == 'y') {
-							if (!$this->process_batch_file_upload($params["galleryId"][$key], $aFiles["userfile"]['tmp_name'][$key], $user, isset($params["description"][$key]) ? $params["description"][$key] : '', $errors)) {
+							try {
+								$this->process_batch_file_upload($params["galleryId"][$key], $aFiles["userfile"]['tmp_name'][$key], $user, isset($params["description"][$key]) ? $params["description"][$key] : '', $errors);
+							} catch (Exception $e) {
+								$errors[] = tra('An exception occurred:') . ' '  . $e->getMessage();
+							}
+							if (!empty($errors)) {
 								continue;
 							}
 							$batch_job = true;

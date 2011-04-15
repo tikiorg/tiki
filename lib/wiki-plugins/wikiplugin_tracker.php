@@ -328,6 +328,8 @@ function wikiplugin_tracker($data, $params)
 	global $tikilib, $userlib, $dbTiki, $user, $group, $page, $tiki_p_admin_trackers, $smarty, $prefs, $trklib, $tiki_p_view, $captchalib;
 	static $iTRACKER = 0;
 	++$iTRACKER;
+	if (isset($params['itemId']) && empty($params['itemId']))
+		return;
 	include_once('lib/trackers/trackerlib.php');
 	$default = array('overwrite' => 'n', 'embedded' => 'n', 'showtitle' => 'n', 'showdesc' => 'n', 'sort' => 'n', 'showmandatory'=>'y', 'status' => '', 'registration' => 'n', 'emailformat' => 'text');
 	$params = array_merge($default, $params);

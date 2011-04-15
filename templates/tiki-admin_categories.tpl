@@ -111,7 +111,7 @@
 		{/tab}
 	{/if}
 	{tab name="{tr}Objects in category{/tr}"}
-		<h2>{tr}Objects in category:{/tr} {$categ_name|escape}</b></h2>
+		<h2>{tr}Objects in category:{/tr} {$categ_name|escape}</h2>
 		{if $objects}
 			<table class="findtable">
 				<tr>
