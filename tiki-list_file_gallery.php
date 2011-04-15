@@ -393,6 +393,12 @@ if (isset($_REQUEST['edit'])) {
 	$_REQUEST['sortorder'] = isset($_REQUEST['sortorder']) ? $_REQUEST['sortorder'] : 'created';
 	$_REQUEST['sortdirection'] = isset($_REQUEST['sortdirection']) && $_REQUEST['sortdirection'] == 'asc' ? 'asc' : 'desc';
 	if (isset($_REQUEST['fileId'])) {
+		$infoOverride = $filegallib->get_file_info( $_REQUEST['fileId'] );
+		
+		$_REQUEST['fname'] = (isset($_REQUEST['fname']) ? $_REQUEST['fname'] : $infoOverride['name']);
+		$_REQUEST['fdescription'] = (isset($_REQUEST['fdescription']) ? $_REQUEST['fdescription'] : $infoOverride['description']);
+		$info['data'] = (isset($_REQUEST['data']) ? $_REQUEST['data'] : $info['data']);
+		
 		$fid = $filegallib->replace_file( $_REQUEST['fileId']
 																		, $_REQUEST['fname']
 																		, $_REQUEST['fdescription']
