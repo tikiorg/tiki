@@ -2,9 +2,9 @@
 	{if !isset($params.showTitle) or $params.showTitle eq 'y'}
 		<div class="cattitle">
 			<span class="label">{tr}Category:{/tr}&nbsp&nbsp</span>
-			{foreach name=for key=id item=title from=$titles}
+			{foreach name=for key=id item=cattitle from=$titles}
 				{if $params.categoryshowlink ne 'n'}<a href="tiki-browse_categories.php?parentId={$id}">{/if}
-				{$title|tr_if|escape}
+				{$cattitle|tr_if|escape}
 				{if $params.categoryshowlink ne 'n'}</a>{/if}
 				{if !$smarty.foreach.for.last} &amp; {/if}
 			{/foreach}
