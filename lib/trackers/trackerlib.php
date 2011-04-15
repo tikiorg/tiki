@@ -4161,6 +4161,7 @@ class TrackerLib extends TikiLib
 			} else {
 				$ret[$res['itemId']] = $this->get_field_handler($field_value, $res)->renderOutput(array(
 					'showlinks' => 'n',
+					'list_mode' => 'n',
 				));
 			}
 			if (is_array($finalFields) && count($finalFields)) {
