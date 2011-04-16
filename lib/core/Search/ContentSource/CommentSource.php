@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: CommentSource.php 33841 2011-04-06 15:23:06Z lphuberdeau $
+// $Id$
 
 class Search_ContentSource_CommentSource implements Search_ContentSource_Interface
 {
