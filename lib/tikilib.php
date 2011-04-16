@@ -4227,8 +4227,14 @@ class TikiLib extends TikiDb_Bridge
 			if ($options['parseimgonly'] && $this->getName() != 'img') {
 				continue;
 			}
-
+			
+			//note parent plugin in case of plugins nested in an include - to suppress plugin edit icons below
+			$plugin_parent = isset($plugin_name) ? $plugin_name : false;
 			$plugin_name = $match->getName();
+			//suppress plugin edit icons for plugins within includes since edit doesn't work for these yet
+			$options['suppress_icons'] = $plugin_name != 'include' && $plugin_parent && $plugin_parent == 'include' ? 
+				true : $options['suppress_icons'];
+			
 			$plugin_data = $match->getBody();
 			$arguments = $argumentParser->parse($match->getArguments());
 			$start = $match->getStart();
