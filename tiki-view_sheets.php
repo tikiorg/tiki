@@ -90,8 +90,6 @@ if (isset($_REQUEST['s']) && !empty($_REQUEST['s']) ) { //save
 	if ( $_REQUEST['sheetId'] ) {
 		$result = $sheetlib->save_sheet( $_REQUEST['s'], $_REQUEST["sheetId"] );
 		
-	} elseif ( $_REQUEST['file'] ) {
-		//$result = $sheetlib->save_sheet( $_REQUEST['s'], null, $_REQUEST['file'], $_REQUEST['type'] );
 	}
 	die($result);
 //Clone

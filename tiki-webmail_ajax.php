@@ -130,10 +130,7 @@ function showWebmailMessage(inMsg) {
 });
 ");
 	
-} else {	// end if (!isset($_REQUEST['callback'])) - AJAX call
-
 }
-
 if (!empty($_REQUEST['action'])) {
 	switch ($_REQUEST['action']) {	// placeholder: more to do
 		default:

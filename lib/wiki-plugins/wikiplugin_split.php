@@ -263,8 +263,7 @@ function  wikiplugin_split_cell($data, $pos, $cell)
 		} else {
 			$end = $pos + strpos(substr($data, $pos), $matches[1]);
 			$start_next_tag = $end + strlen($matches[1]);
-			if (substr($matches[1], 0, 4) == '----') {
-			} else if (substr($matches[1], 0, 3) == '@@@' || $matches[1] == '---') {
+			if (substr($matches[1], 0, 3) == '@@@' || $matches[1] == '---') {
 				if (!$cell)
 					break;
 				--$cell;

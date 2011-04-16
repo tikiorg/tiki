@@ -1795,9 +1795,7 @@ class TrackerLib extends TikiLib
 
 					$is_visible = !isset($array["isHidden"]) || $array["isHidden"] == 'n';
 
-					if ($itemId && $array['type'] == 'q') {
-						// do not change autoincrement of an item
-					} else {
+					if ($itemId && $array['type'] != 'q') {
 						$conditions = array(
 							'itemId' => (int) $currentItemId,
 							'fieldId' => (int) $fieldId,
