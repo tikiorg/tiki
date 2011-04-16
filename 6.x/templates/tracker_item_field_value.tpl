@@ -159,7 +159,7 @@
 		{$field_value.value}
 	{else}
 		{if $field_value.type eq 'u' }
-			{$field_value.value|username}
+			{$field_value.value|username|userlink}
 		{else}
 			{$field_value.value|escape}
 		{/if}		
