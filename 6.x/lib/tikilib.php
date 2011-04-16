@@ -4934,6 +4934,10 @@ class TikiLib extends TikiDb_Bridge
 	
 					if( ! $skip ) {
 						// Handle pre- & no-parse sections and plugins inserted by this plugin
+
+						//Suppress plugin edit for plugins within an include since edit doesn't work for these
+						$options['suppress_icons'] = $plugin_name == 'include' ? true : $options['suppress_icons'];
+
 						$this->parse_first($ret, $preparsed, $noparsed, $options);
 						//$ret = $this->parse_data($ret);
 	
