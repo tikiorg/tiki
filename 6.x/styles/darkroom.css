@@ -825,6 +825,10 @@ a.tikihelp:hover {
 	color: white;
 }
 
+.ac_input {
+	color: whiteSmoke;	
+}
+
 /**infinite carousel**/
 #carousel {
         color: #black;
@@ -841,7 +845,7 @@ a.tikihelp:hover {
 }
 
 /** input widget **/
-.ui-widget input {
+input.ui-widget-content {
 	color: #000;
 }
 
