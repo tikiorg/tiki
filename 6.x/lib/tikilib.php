@@ -5890,7 +5890,9 @@ class TikiLib extends TikiDb_Bridge
 		if (!$simple_wiki) {
 			$this->parse_htmlchar($data);
 		}
-
+		//needs to be before text color syntax because of use of htmlentities in lib/core/WikiParser/OutputLink.php
+		$data = $this->parse_data_wikilinks( $data, $simple_wiki );
+		
 		if (!$simple_wiki) {
 			// Replace colors ~~foreground[,background]:text~~
 			// must be done before []as the description may contain color change
@@ -5945,8 +5947,6 @@ class TikiLib extends TikiDb_Bridge
 				$data = preg_replace("/::(.+?)::/", "<div style=\"text-align: center;\">$1</div>", $data);
 			}
 		}
-
-		$data = $this->parse_data_wikilinks( $data, $simple_wiki );
 
 		// reinsert hash-replaced links into page
 		foreach ($noparsedlinks as $np) {
