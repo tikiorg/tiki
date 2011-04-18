@@ -2437,10 +2437,12 @@ class UsersLib extends TikiLib
 		foreach ($raw as $permission) {
 			$valid = empty($permission['prefs']);
 
-			foreach ($permission['prefs'] as $name) {
-				if ($prefs[$name] == 'y') {
-					$valid = true;
-					break;
+			if (! $valid) {
+				foreach ($permission['prefs'] as $name) {
+					if ($prefs[$name] == 'y') {
+						$valid = true;
+						break;
+					}
 				}
 			}
 
@@ -2476,6 +2478,7 @@ class UsersLib extends TikiLib
 				'type' => 'calendar',
 				'admin' => true,
 				'prefs' => array('feature_calendar'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_add_events',
@@ -2484,6 +2487,7 @@ class UsersLib extends TikiLib
 				'type' => 'calendar',
 				'admin' => false,
 				'prefs' => array('feature_calendar'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_change_events',
@@ -2492,6 +2496,7 @@ class UsersLib extends TikiLib
 				'type' => 'calendar',
 				'admin' => false,
 				'prefs' => array('feature_calendar'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_calendar',
@@ -2500,6 +2505,7 @@ class UsersLib extends TikiLib
 				'type' => 'calendar',
 				'admin' => false,
 				'prefs' => array('feature_calendar'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_events',
@@ -2508,6 +2514,7 @@ class UsersLib extends TikiLib
 				'type' => 'calendar',
 				'admin' => false,
 				'prefs' => array('feature_calendar'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_calendar_add_my_particip',
@@ -2516,6 +2523,7 @@ class UsersLib extends TikiLib
 				'type' => 'calendar',
 				'admin' => false,
 				'prefs' => array('feature_calendar'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_calendar_add_guest_particip',
@@ -2524,6 +2532,7 @@ class UsersLib extends TikiLib
 				'type' => 'calendar',
 				'admin' => false,
 				'prefs' => array('feature_calendar'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_tiki_calendar',
@@ -2532,6 +2541,7 @@ class UsersLib extends TikiLib
 				'type' => 'calendar',
 				'admin' => false,
 				'prefs' => array('feature_calendar'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_chat',
@@ -2540,6 +2550,7 @@ class UsersLib extends TikiLib
 				'type' => 'chat',
 				'admin' => true,
 				'prefs' => array('feature_minichat', 'feature_live_support'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_chat',
@@ -2548,6 +2559,7 @@ class UsersLib extends TikiLib
 				'type' => 'chat',
 				'admin' => false,
 				'prefs' => array('feature_minichat', 'feature_live_support'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_cms',
@@ -2556,6 +2568,7 @@ class UsersLib extends TikiLib
 				'type' => 'cms',
 				'admin' => true,
 				'prefs' => array('feature_articles'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_approve_submission',
@@ -2564,6 +2577,7 @@ class UsersLib extends TikiLib
 				'type' => 'cms',
 				'admin' => false,
 				'prefs' => array('feature_articles'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_articles_admin_topics',
@@ -2572,6 +2586,7 @@ class UsersLib extends TikiLib
 				'type' => 'cms',
 				'admin' => false,
 				'prefs' => array('feature_articles'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_articles_admin_types',
@@ -2580,6 +2595,7 @@ class UsersLib extends TikiLib
 				'type' => 'cms',
 				'admin' => false,
 				'prefs' => array('feature_articles'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_articles_read_heading',
@@ -2588,6 +2604,7 @@ class UsersLib extends TikiLib
 				'type' => 'cms',
 				'admin' => false,
 				'prefs' => array('feature_articles'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_autoapprove_submission',
@@ -2596,6 +2613,7 @@ class UsersLib extends TikiLib
 				'type' => 'cms',
 				'admin' => false,
 				'prefs' => array('feature_articles'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_edit_article',
@@ -2604,6 +2622,7 @@ class UsersLib extends TikiLib
 				'type' => 'cms',
 				'admin' => false,
 				'prefs' => array('feature_articles'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_edit_submission',
@@ -2612,6 +2631,7 @@ class UsersLib extends TikiLib
 				'type' => 'cms',
 				'admin' => false,
 				'prefs' => array('feature_articles'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_read_article',
@@ -2620,6 +2640,7 @@ class UsersLib extends TikiLib
 				'type' => 'cms',
 				'admin' => false,
 				'prefs' => array('feature_articles'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_remove_article',
@@ -2628,6 +2649,7 @@ class UsersLib extends TikiLib
 				'type' => 'cms',
 				'admin' => false,
 				'prefs' => array('feature_articles'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_remove_submission',
@@ -2636,6 +2658,7 @@ class UsersLib extends TikiLib
 				'type' => 'cms',
 				'admin' => false,
 				'prefs' => array('feature_articles'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_submit_article',
@@ -2644,6 +2667,7 @@ class UsersLib extends TikiLib
 				'type' => 'cms',
 				'admin' => false,
 				'prefs' => array('feature_articles'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_rate_article',
@@ -2652,6 +2676,7 @@ class UsersLib extends TikiLib
 				'type' => 'cms',
 				'admin' => false,
 				'prefs' => array('feature_articles'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_topic_read',
@@ -2660,6 +2685,7 @@ class UsersLib extends TikiLib
 				'type' => 'cms',
 				'admin' => false,
 				'prefs' => array('feature_articles'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_admin_contribution',
@@ -2668,6 +2694,7 @@ class UsersLib extends TikiLib
 				'type' => 'contribution',
 				'admin' => true,
 				'prefs' => array('feature_contribution'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_directory',
@@ -2676,6 +2703,7 @@ class UsersLib extends TikiLib
 				'type' => 'directory',
 				'admin' => true,
 				'prefs' => array('feature_directory'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_directory_cats',
@@ -2684,6 +2712,7 @@ class UsersLib extends TikiLib
 				'type' => 'directory',
 				'admin' => false,
 				'prefs' => array('feature_directory'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_directory_sites',
@@ -2692,6 +2721,7 @@ class UsersLib extends TikiLib
 				'type' => 'directory',
 				'admin' => false,
 				'prefs' => array('feature_directory'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_autosubmit_link',
@@ -2700,6 +2730,7 @@ class UsersLib extends TikiLib
 				'type' => 'directory',
 				'admin' => false,
 				'prefs' => array('feature_directory'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_submit_link',
@@ -2708,6 +2739,7 @@ class UsersLib extends TikiLib
 				'type' => 'directory',
 				'admin' => false,
 				'prefs' => array('feature_directory'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_validate_links',
@@ -2716,6 +2748,7 @@ class UsersLib extends TikiLib
 				'type' => 'directory',
 				'admin' => false,
 				'prefs' => array('feature_directory'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_view_directory',
@@ -2724,6 +2757,7 @@ class UsersLib extends TikiLib
 				'type' => 'directory',
 				'admin' => false,
 				'prefs' => array('feature_directory'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_faqs',
@@ -2732,6 +2766,7 @@ class UsersLib extends TikiLib
 				'type' => 'faqs',
 				'admin' => true,
 				'prefs' => array('feature_faqs'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_suggest_faq',
@@ -2740,6 +2775,7 @@ class UsersLib extends TikiLib
 				'type' => 'faqs',
 				'admin' => false,
 				'prefs' => array('feature_faqs'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_view_faqs',
@@ -2748,6 +2784,7 @@ class UsersLib extends TikiLib
 				'type' => 'faqs',
 				'admin' => false,
 				'prefs' => array('feature_faqs'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin',
@@ -2756,6 +2793,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => true,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_users',
@@ -2764,6 +2802,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_access_closed_site',
@@ -2772,6 +2811,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_banners',
@@ -2780,6 +2820,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_banning',
@@ -2788,6 +2829,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_dynamic',
@@ -2796,6 +2838,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_integrator',
@@ -2804,6 +2847,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_mailin',
@@ -2812,6 +2856,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_objects',
@@ -2820,6 +2865,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_rssmodules',
@@ -2828,6 +2874,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_clean_cache',
@@ -2836,6 +2883,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_create_css',
@@ -2844,6 +2892,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_detach_translation',
@@ -2852,6 +2901,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_edit_cookies',
@@ -2860,6 +2910,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_edit_languages',
@@ -2868,6 +2919,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_edit_menu',
@@ -2876,6 +2928,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_edit_menu_option',
@@ -2884,6 +2937,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_edit_templates',
@@ -2892,6 +2946,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_search',
@@ -2900,6 +2955,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_site_report',
@@ -2908,6 +2964,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_subscribe_groups',
@@ -2916,6 +2973,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_tell_a_friend',
@@ -2924,6 +2982,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_share',
@@ -2932,6 +2991,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_use_HTML',
@@ -2940,6 +3000,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_actionlog',
@@ -2948,6 +3009,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_view_actionlog_owngroups',
@@ -2956,6 +3018,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_view_integrator',
@@ -2964,6 +3027,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_view_referer_stats',
@@ -2972,6 +3036,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_view_stats',
@@ -2980,6 +3045,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_view_templates',
@@ -2988,6 +3054,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_blog_admin',
@@ -2996,6 +3063,7 @@ class UsersLib extends TikiLib
 				'type' => 'blogs',
 				'admin' => true,
 				'prefs' => array('feature_blogs'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_assign_perm_blog',
@@ -3004,6 +3072,7 @@ class UsersLib extends TikiLib
 				'type' => 'blogs',
 				'admin' => false,
 				'prefs' => array('feature_blogs'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_blog_post',
@@ -3012,6 +3081,7 @@ class UsersLib extends TikiLib
 				'type' => 'blogs',
 				'admin' => false,
 				'prefs' => array('feature_blogs'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_create_blogs',
@@ -3020,6 +3090,7 @@ class UsersLib extends TikiLib
 				'type' => 'blogs',
 				'admin' => false,
 				'prefs' => array('feature_blogs'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_read_blog',
@@ -3028,6 +3099,7 @@ class UsersLib extends TikiLib
 				'type' => 'blogs',
 				'admin' => false,
 				'prefs' => array('feature_blogs'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_blog_post_view_ref',
@@ -3036,6 +3108,7 @@ class UsersLib extends TikiLib
 				'type' => 'blogs',
 				'admin' => false,
 				'prefs' => array('feature_blogs'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_blog_view_ref',
@@ -3044,6 +3117,7 @@ class UsersLib extends TikiLib
 				'type' => 'blogs',
 				'admin' => false,
 				'prefs' => array('feature_blogs'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_admin_file_galleries',
@@ -3052,6 +3126,7 @@ class UsersLib extends TikiLib
 				'type' => 'file galleries',
 				'admin' => true,
 				'prefs' => array('feature_file_galleries'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_assign_perm_file_gallery',
@@ -3060,6 +3135,7 @@ class UsersLib extends TikiLib
 				'type' => 'file galleries',
 				'admin' => false,
 				'prefs' => array('feature_file_galleries'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_batch_upload_file_dir',
@@ -3068,6 +3144,7 @@ class UsersLib extends TikiLib
 				'type' => 'file galleries',
 				'admin' => false,
 				'prefs' => array('feature_file_galleries'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_batch_upload_files',
@@ -3076,6 +3153,7 @@ class UsersLib extends TikiLib
 				'type' => 'file galleries',
 				'admin' => false,
 				'prefs' => array('feature_file_galleries'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_create_file_galleries',
@@ -3084,6 +3162,7 @@ class UsersLib extends TikiLib
 				'type' => 'file galleries',
 				'admin' => false,
 				'prefs' => array('feature_file_galleries'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_download_files',
@@ -3092,6 +3171,7 @@ class UsersLib extends TikiLib
 				'type' => 'file galleries',
 				'admin' => false,
 				'prefs' => array('feature_file_galleries'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_edit_gallery_file',
@@ -3100,6 +3180,7 @@ class UsersLib extends TikiLib
 				'type' => 'file galleries',
 				'admin' => false,
 				'prefs' => array('feature_file_galleries'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_list_file_galleries',
@@ -3108,6 +3189,7 @@ class UsersLib extends TikiLib
 				'type' => 'file galleries',
 				'admin' => false,
 				'prefs' => array('feature_file_galleries'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_upload_files',
@@ -3116,6 +3198,7 @@ class UsersLib extends TikiLib
 				'type' => 'file galleries',
 				'admin' => false,
 				'prefs' => array('feature_file_galleries'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_remove_files',
@@ -3124,6 +3207,7 @@ class UsersLib extends TikiLib
 				'type' => 'file galleries',
 				'admin' => false,
 				'prefs' => array('feature_file_galleries'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_fgal_explorer',
@@ -3132,6 +3216,7 @@ class UsersLib extends TikiLib
 				'type' => 'file galleries',
 				'admin' => false,
 				'prefs' => array('feature_file_galleries'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_fgal_path',
@@ -3140,6 +3225,7 @@ class UsersLib extends TikiLib
 				'type' => 'file galleries',
 				'admin' => false,
 				'prefs' => array('feature_file_galleries'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_file_gallery',
@@ -3148,6 +3234,7 @@ class UsersLib extends TikiLib
 				'type' => 'file galleries',
 				'admin' => false,
 				'prefs' => array('feature_file_galleries'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_admin_forum',
@@ -3156,6 +3243,7 @@ class UsersLib extends TikiLib
 				'type' => 'forums',
 				'admin' => true,
 				'prefs' => array('feature_forums'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_forum_attach',
@@ -3164,6 +3252,7 @@ class UsersLib extends TikiLib
 				'type' => 'forums',
 				'admin' => false,
 				'prefs' => array('feature_forums'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_forum_autoapp',
@@ -3172,6 +3261,7 @@ class UsersLib extends TikiLib
 				'type' => 'forums',
 				'admin' => false,
 				'prefs' => array('feature_forums'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_forum_edit_own_posts',
@@ -3180,6 +3270,7 @@ class UsersLib extends TikiLib
 				'type' => 'forums',
 				'admin' => false,
 				'prefs' => array('feature_forums'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_forum_post',
@@ -3188,6 +3279,7 @@ class UsersLib extends TikiLib
 				'type' => 'forums',
 				'admin' => false,
 				'prefs' => array('feature_forums'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_forum_post_topic',
@@ -3196,6 +3288,7 @@ class UsersLib extends TikiLib
 				'type' => 'forums',
 				'admin' => false,
 				'prefs' => array('feature_forums'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_forum_read',
@@ -3204,6 +3297,7 @@ class UsersLib extends TikiLib
 				'type' => 'forums',
 				'admin' => false,
 				'prefs' => array('feature_forums'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_forums_report',
@@ -3212,6 +3306,7 @@ class UsersLib extends TikiLib
 				'type' => 'forums',
 				'admin' => false,
 				'prefs' => array('feature_forums'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_forum_vote',
@@ -3220,6 +3315,7 @@ class UsersLib extends TikiLib
 				'type' => 'forums',
 				'admin' => false,
 				'prefs' => array('feature_forums'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_admin_freetags',
@@ -3228,6 +3324,7 @@ class UsersLib extends TikiLib
 				'type' => 'freetags',
 				'admin' => true,
 				'prefs' => array('feature_freetags'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_admin_galleries',
@@ -3236,6 +3333,7 @@ class UsersLib extends TikiLib
 				'type' => 'image galleries',
 				'admin' => true,
 				'prefs' => array('feature_galleries'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_assign_perm_image_gallery',
@@ -3244,6 +3342,7 @@ class UsersLib extends TikiLib
 				'type' => 'image galleries',
 				'admin' => false,
 				'prefs' => array('feature_galleries'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_batch_upload_image_dir',
@@ -3252,6 +3351,7 @@ class UsersLib extends TikiLib
 				'type' => 'image galleries',
 				'admin' => false,
 				'prefs' => array('feature_galleries'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_batch_upload_images',
@@ -3260,6 +3360,7 @@ class UsersLib extends TikiLib
 				'type' => 'image galleries',
 				'admin' => false,
 				'prefs' => array('feature_galleries'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_create_galleries',
@@ -3268,6 +3369,7 @@ class UsersLib extends TikiLib
 				'type' => 'image galleries',
 				'admin' => false,
 				'prefs' => array('feature_galleries'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_freetags_tag',
@@ -3276,6 +3378,7 @@ class UsersLib extends TikiLib
 				'type' => 'freetags',
 				'admin' => false,
 				'prefs' => array('feature_freetags'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_list_image_galleries',
@@ -3284,6 +3387,7 @@ class UsersLib extends TikiLib
 				'type' => 'image galleries',
 				'admin' => false,
 				'prefs' => array('feature_galleries'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_unassign_freetags',
@@ -3292,6 +3396,7 @@ class UsersLib extends TikiLib
 				'type' => 'freetags',
 				'admin' => false,
 				'prefs' => array('feature_freetags'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_upload_images',
@@ -3300,6 +3405,7 @@ class UsersLib extends TikiLib
 				'type' => 'image galleries',
 				'admin' => false,
 				'prefs' => array('feature_galleries'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_freetags',
@@ -3308,6 +3414,7 @@ class UsersLib extends TikiLib
 				'type' => 'freetags',
 				'admin' => false,
 				'prefs' => array('feature_freetags'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_image_gallery',
@@ -3316,6 +3423,7 @@ class UsersLib extends TikiLib
 				'type' => 'image galleries',
 				'admin' => false,
 				'prefs' => array('feature_galleries'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_admin_newsletters',
@@ -3324,6 +3432,7 @@ class UsersLib extends TikiLib
 				'type' => 'newsletters',
 				'admin' => true,
 				'prefs' => array('feature_newsletters'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_batch_subscribe_email',
@@ -3332,6 +3441,7 @@ class UsersLib extends TikiLib
 				'type' => 'newsletters',
 				'admin' => false,
 				'prefs' => array('feature_newsletters'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_send_newsletters',
@@ -3340,6 +3450,7 @@ class UsersLib extends TikiLib
 				'type' => 'newsletters',
 				'admin' => false,
 				'prefs' => array('feature_newsletters'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_subscribe_email',
@@ -3348,6 +3459,7 @@ class UsersLib extends TikiLib
 				'type' => 'newsletters',
 				'admin' => false,
 				'prefs' => array('feature_newsletters'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_subscribe_newsletters',
@@ -3356,6 +3468,7 @@ class UsersLib extends TikiLib
 				'type' => 'newsletters',
 				'admin' => false,
 				'prefs' => array('feature_newsletters'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_view_newsletter',
@@ -3364,6 +3477,7 @@ class UsersLib extends TikiLib
 				'type' => 'newsletters',
 				'admin' => false,
 				'prefs' => array('feature_newsletters'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_list_newsletters',
@@ -3372,6 +3486,7 @@ class UsersLib extends TikiLib
 				'type' => 'newsletters',
 				'admin' => false,
 				'prefs' => array('feature_newsletters'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_polls',
@@ -3380,6 +3495,7 @@ class UsersLib extends TikiLib
 				'type' => 'polls',
 				'admin' => true,
 				'prefs' => array('feature_polls'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_view_poll_results',
@@ -3388,6 +3504,7 @@ class UsersLib extends TikiLib
 				'type' => 'polls',
 				'admin' => false,
 				'prefs' => array('feature_polls'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_vote_poll',
@@ -3396,6 +3513,7 @@ class UsersLib extends TikiLib
 				'type' => 'polls',
 				'admin' => false,
 				'prefs' => array('feature_polls'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_poll_voters',
@@ -3404,6 +3522,7 @@ class UsersLib extends TikiLib
 				'type' => 'polls',
 				'admin' => false,
 				'prefs' => array('feature_polls'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_admin_toolbars',
@@ -3412,6 +3531,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_quizzes',
@@ -3420,6 +3540,7 @@ class UsersLib extends TikiLib
 				'type' => 'quizzes',
 				'admin' => true,
 				'prefs' => array('feature_quizzes'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_take_quiz',
@@ -3428,6 +3549,7 @@ class UsersLib extends TikiLib
 				'type' => 'quizzes',
 				'admin' => false,
 				'prefs' => array('feature_quizzes'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_view_quiz_stats',
@@ -3436,6 +3558,7 @@ class UsersLib extends TikiLib
 				'type' => 'quizzes',
 				'admin' => false,
 				'prefs' => array('feature_quizzes'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_view_user_results',
@@ -3444,6 +3567,7 @@ class UsersLib extends TikiLib
 				'type' => 'quizzes',
 				'admin' => false,
 				'prefs' => array('feature_quizzes'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_sheet',
@@ -3452,6 +3576,7 @@ class UsersLib extends TikiLib
 				'type' => 'sheet',
 				'admin' => true,
 				'prefs' => array('feature_sheet'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_edit_sheet',
@@ -3460,6 +3585,7 @@ class UsersLib extends TikiLib
 				'type' => 'sheet',
 				'admin' => false,
 				'prefs' => array('feature_sheet'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_sheet',
@@ -3468,6 +3594,7 @@ class UsersLib extends TikiLib
 				'type' => 'sheet',
 				'admin' => false,
 				'prefs' => array('feature_sheet'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_sheet_history',
@@ -3476,6 +3603,7 @@ class UsersLib extends TikiLib
 				'type' => 'sheet',
 				'admin' => false,
 				'prefs' => array('feature_sheet'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_admin_shoutbox',
@@ -3484,6 +3612,7 @@ class UsersLib extends TikiLib
 				'type' => 'shoutbox',
 				'admin' => true,
 				'prefs' => array('feature_shoutbox'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_post_shoutbox',
@@ -3492,6 +3621,7 @@ class UsersLib extends TikiLib
 				'type' => 'shoutbox',
 				'admin' => false,
 				'prefs' => array('feature_shoutbox'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_view_shoutbox',
@@ -3500,6 +3630,7 @@ class UsersLib extends TikiLib
 				'type' => 'shoutbox',
 				'admin' => false,
 				'prefs' => array('feature_shoutbox'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_surveys',
@@ -3508,6 +3639,7 @@ class UsersLib extends TikiLib
 				'type' => 'surveys',
 				'admin' => true,
 				'prefs' => array('feature_surveys'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_take_survey',
@@ -3516,6 +3648,7 @@ class UsersLib extends TikiLib
 				'type' => 'surveys',
 				'admin' => false,
 				'prefs' => array('feature_surveys'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_survey_stats',
@@ -3524,6 +3657,7 @@ class UsersLib extends TikiLib
 				'type' => 'surveys',
 				'admin' => false,
 				'prefs' => array('feature_surveys'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_admin_trackers',
@@ -3532,6 +3666,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => true,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_attach_trackers',
@@ -3540,6 +3675,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_tracker_view_attachments',
@@ -3548,6 +3684,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_comment_tracker_items',
@@ -3556,6 +3693,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_tracker_view_comments',
@@ -3564,6 +3702,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_create_tracker_items',
@@ -3572,6 +3711,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_list_trackers',
@@ -3580,6 +3720,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_modify_tracker_items',
@@ -3588,6 +3729,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_modify_tracker_items_pending',
@@ -3596,6 +3738,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_modify_tracker_items_closed',
@@ -3604,6 +3747,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_remove_tracker_items',
@@ -3612,6 +3756,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_remove_tracker_items_pending',
@@ -3620,6 +3765,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_remove_tracker_items_closed',
@@ -3628,6 +3774,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_tracker_view_ratings',
@@ -3636,6 +3783,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_tracker_vote_ratings',
@@ -3644,6 +3792,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_tracker_revote_ratings',
@@ -3652,6 +3801,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_trackers',
@@ -3660,6 +3810,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_view_trackers_closed',
@@ -3668,6 +3819,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view_trackers_pending',
@@ -3676,6 +3828,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_watch_trackers',
@@ -3684,6 +3837,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_export_tracker',
@@ -3692,6 +3846,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_admin_wiki',
@@ -3700,6 +3855,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => true,
 				'prefs' => array('feature_wiki'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_assign_perm_wiki_page',
@@ -3708,6 +3864,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_edit',
@@ -3716,6 +3873,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_edit_copyrights',
@@ -3724,6 +3882,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('wiki_feature_copyrights'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_edit_dynvar',
@@ -3732,6 +3891,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_edit_structures',
@@ -3740,6 +3900,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki_structure'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_export_wiki',
@@ -3748,6 +3909,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki_export'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_lock',
@@ -3756,6 +3918,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_minor',
@@ -3764,6 +3927,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_remove',
@@ -3772,6 +3936,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_rename',
@@ -3780,6 +3945,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_rollback',
@@ -3788,6 +3954,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_upload_picture',
@@ -3796,6 +3963,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki_pictures'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_use_as_template',
@@ -3804,6 +3972,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_view',
@@ -3812,6 +3981,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_wiki_view_ref',
@@ -3820,6 +3990,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_watch_structure',
@@ -3828,6 +3999,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki_structure'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_wiki_admin_attachments',
@@ -3836,6 +4008,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki_attachments'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_wiki_admin_ratings',
@@ -3844,6 +4017,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki_ratings'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_wiki_attach_files',
@@ -3852,6 +4026,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki_attachments'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_wiki_view_attachments',
@@ -3860,6 +4035,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki_attachments'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_wiki_view_comments',
@@ -3868,6 +4044,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki_comments'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_wiki_view_history',
@@ -3876,6 +4053,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_history'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_wiki_view_ratings',
@@ -3884,6 +4062,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki_ratings'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_wiki_view_source',
@@ -3892,6 +4071,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_source'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_wiki_vote_ratings',
@@ -3900,6 +4080,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki_ratings'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_wiki_view_similar',
@@ -3908,6 +4089,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_admin_received_articles',
@@ -3916,6 +4098,7 @@ class UsersLib extends TikiLib
 				'type' => 'comm',
 				'admin' => false,
 				'prefs' => array('feature_comm'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_received_pages',
@@ -3924,6 +4107,7 @@ class UsersLib extends TikiLib
 				'type' => 'comm',
 				'admin' => false,
 				'prefs' => array('feature_comm'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_send_articles',
@@ -3932,6 +4116,7 @@ class UsersLib extends TikiLib
 				'type' => 'comm',
 				'admin' => false,
 				'prefs' => array('feature_comm'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_sendme_articles',
@@ -3940,6 +4125,7 @@ class UsersLib extends TikiLib
 				'type' => 'comm',
 				'admin' => false,
 				'prefs' => array('feature_comm'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_sendme_pages',
@@ -3948,6 +4134,7 @@ class UsersLib extends TikiLib
 				'type' => 'comm',
 				'admin' => false,
 				'prefs' => array('feature_comm'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_send_pages',
@@ -3956,6 +4143,7 @@ class UsersLib extends TikiLib
 				'type' => 'comm',
 				'admin' => false,
 				'prefs' => array('feature_comm'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_tikitests',
@@ -3964,6 +4152,7 @@ class UsersLib extends TikiLib
 				'type' => 'tikitests',
 				'admin' => false,
 				'prefs' => array('feature_tikitests'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_edit_tikitests',
@@ -3972,6 +4161,7 @@ class UsersLib extends TikiLib
 				'type' => 'tikitests',
 				'admin' => false,
 				'prefs' => array('feature_tikitests'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_play_tikitests',
@@ -3980,6 +4170,7 @@ class UsersLib extends TikiLib
 				'type' => 'tikitests',
 				'admin' => false,
 				'prefs' => array('feature_tikitests'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_cache_bookmarks',
@@ -3988,6 +4179,7 @@ class UsersLib extends TikiLib
 				'type' => 'user',
 				'admin' => false,
 				'prefs' => array('feature_user_bookmarks'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_configure_modules',
@@ -3996,6 +4188,7 @@ class UsersLib extends TikiLib
 				'type' => 'user',
 				'admin' => false,
 				'prefs' => array('feature_modulecontrols'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_create_bookmarks',
@@ -4004,6 +4197,7 @@ class UsersLib extends TikiLib
 				'type' => 'user',
 				'admin' => false,
 				'prefs' => array('feature_user_bookmarks'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_minical',
@@ -4012,6 +4206,7 @@ class UsersLib extends TikiLib
 				'type' => 'user',
 				'admin' => false,
 				'prefs' => array('feature_minical'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_notepad',
@@ -4020,6 +4215,7 @@ class UsersLib extends TikiLib
 				'type' => 'user',
 				'admin' => false,
 				'prefs' => array('feature_notepad'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_tasks_admin',
@@ -4028,6 +4224,7 @@ class UsersLib extends TikiLib
 				'type' => 'user',
 				'admin' => false,
 				'prefs' => array('feature_tasks'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_tasks',
@@ -4036,6 +4233,7 @@ class UsersLib extends TikiLib
 				'type' => 'user',
 				'admin' => false,
 				'prefs' => array('feature_tasks'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_tasks_receive',
@@ -4044,6 +4242,7 @@ class UsersLib extends TikiLib
 				'type' => 'user',
 				'admin' => false,
 				'prefs' => array('feature_tasks'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_tasks_send',
@@ -4052,6 +4251,7 @@ class UsersLib extends TikiLib
 				'type' => 'user',
 				'admin' => false,
 				'prefs' => array('feature_tasks'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_userfiles',
@@ -4060,6 +4260,7 @@ class UsersLib extends TikiLib
 				'type' => 'user',
 				'admin' => false,
 				'prefs' => array('feature_userfiles'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_usermenu',
@@ -4068,6 +4269,7 @@ class UsersLib extends TikiLib
 				'type' => 'user',
 				'admin' => false,
 				'prefs' => array('feature_usermenu'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_broadcast_all',
@@ -4076,6 +4278,7 @@ class UsersLib extends TikiLib
 				'type' => 'messu',
 				'admin' => false,
 				'prefs' => array('feature_messages'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_broadcast',
@@ -4084,6 +4287,7 @@ class UsersLib extends TikiLib
 				'type' => 'messu',
 				'admin' => false,
 				'prefs' => array('feature_messages'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_messages',
@@ -4092,6 +4296,7 @@ class UsersLib extends TikiLib
 				'type' => 'messu',
 				'admin' => false,
 				'prefs' => array('feature_messages'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_comments',
@@ -4100,6 +4305,7 @@ class UsersLib extends TikiLib
 				'type' => 'comments',
 				'admin' => true,
 				'prefs' => array('feature_wiki_comments', 'feature_blogposts_comments', 'feature_file_galleries_comments', 'feature_image_galleries_comments', 'feature_article_comments', 'feature_faq_comments', 'feature_poll_comments', 'map_comments'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_edit_comments',
@@ -4108,6 +4314,7 @@ class UsersLib extends TikiLib
 				'type' => 'comments',
 				'admin' => false,
 				'prefs' => array('feature_wiki_comments', 'feature_blogposts_comments', 'feature_file_galleries_comments', 'feature_image_galleries_comments', 'feature_article_comments', 'feature_faq_comments', 'feature_poll_comments', 'map_comments'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_post_comments',
@@ -4116,6 +4323,7 @@ class UsersLib extends TikiLib
 				'type' => 'comments',
 				'admin' => false,
 				'prefs' => array('feature_wiki_comments', 'feature_blogposts_comments', 'feature_file_galleries_comments', 'feature_image_galleries_comments', 'feature_article_comments', 'feature_faq_comments', 'feature_poll_comments', 'map_comments'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_read_comments',
@@ -4124,6 +4332,7 @@ class UsersLib extends TikiLib
 				'type' => 'comments',
 				'admin' => false,
 				'prefs' => array('feature_wiki_comments', 'feature_blogposts_comments', 'feature_file_galleries_comments', 'feature_image_galleries_comments', 'feature_article_comments', 'feature_faq_comments', 'feature_poll_comments', 'map_comments'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_remove_comments',
@@ -4132,6 +4341,7 @@ class UsersLib extends TikiLib
 				'type' => 'comments',
 				'admin' => false,
 				'prefs' => array('feature_wiki_comments', 'feature_blogposts_comments', 'feature_file_galleries_comments', 'feature_image_galleries_comments', 'feature_article_comments', 'feature_faq_comments', 'feature_poll_comments', 'map_comments'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_vote_comments',
@@ -4140,6 +4350,7 @@ class UsersLib extends TikiLib
 				'type' => 'comments',
 				'admin' => false,
 				'prefs' => array('feature_wiki_comments', 'feature_blogposts_comments', 'feature_file_galleries_comments', 'feature_image_galleries_comments', 'feature_article_comments', 'feature_faq_comments', 'feature_poll_comments', 'map_comments'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_admin_content_templates',
@@ -4148,6 +4359,7 @@ class UsersLib extends TikiLib
 				'type' => 'content templates',
 				'admin' => true,
 				'prefs' => array('feature_wiki_templates', 'feature_cms_templates'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_edit_content_templates',
@@ -4156,6 +4368,7 @@ class UsersLib extends TikiLib
 				'type' => 'content templates',
 				'admin' => false,
 				'prefs' => array('feature_wiki_templates', 'feature_cms_templates'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_use_content_templates',
@@ -4164,6 +4377,7 @@ class UsersLib extends TikiLib
 				'type' => 'content templates',
 				'admin' => false,
 				'prefs' => array('feature_wiki_templates', 'feature_cms_templates'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_edit_html_pages',
@@ -4172,6 +4386,7 @@ class UsersLib extends TikiLib
 				'type' => 'html pages',
 				'admin' => false,
 				'prefs' => array('feature_html_pages'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_view_html_pages',
@@ -4180,6 +4395,7 @@ class UsersLib extends TikiLib
 				'type' => 'html pages',
 				'admin' => false,
 				'prefs' => array('feature_html_pages'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_list_users',
@@ -4188,6 +4404,7 @@ class UsersLib extends TikiLib
 				'type' => 'user',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_live_support_admin',
@@ -4196,6 +4413,7 @@ class UsersLib extends TikiLib
 				'type' => 'support',
 				'admin' => true,
 				'prefs' => array('feature_live_support'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_live_support',
@@ -4204,6 +4422,7 @@ class UsersLib extends TikiLib
 				'type' => 'support',
 				'admin' => false,
 				'prefs' => array('feature_live_support'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_map_create',
@@ -4212,6 +4431,7 @@ class UsersLib extends TikiLib
 				'type' => 'maps',
 				'admin' => false,
 				'prefs' => array('feature_maps'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_map_delete',
@@ -4220,6 +4440,7 @@ class UsersLib extends TikiLib
 				'type' => 'maps',
 				'admin' => false,
 				'prefs' => array('feature_maps'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_map_edit',
@@ -4228,6 +4449,7 @@ class UsersLib extends TikiLib
 				'type' => 'maps',
 				'admin' => false,
 				'prefs' => array('feature_maps'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_map_view',
@@ -4236,6 +4458,7 @@ class UsersLib extends TikiLib
 				'type' => 'maps',
 				'admin' => false,
 				'prefs' => array('feature_maps'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_map_view_mapfiles',
@@ -4244,6 +4467,7 @@ class UsersLib extends TikiLib
 				'type' => 'maps',
 				'admin' => false,
 				'prefs' => array('feature_maps'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_use_webmail',
@@ -4252,6 +4476,7 @@ class UsersLib extends TikiLib
 				'type' => 'webmail',
 				'admin' => false,
 				'prefs' => array('feature_webmail', 'feature_contacts'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_use_group_webmail',
@@ -4260,6 +4485,7 @@ class UsersLib extends TikiLib
 				'type' => 'webmail',
 				'admin' => false,
 				'prefs' => array('feature_webmail', 'feature_contacts'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_group_webmail',
@@ -4268,6 +4494,7 @@ class UsersLib extends TikiLib
 				'type' => 'webmail',
 				'admin' => false,
 				'prefs' => array('feature_webmail', 'feature_contacts'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_use_personal_webmail',
@@ -4276,6 +4503,7 @@ class UsersLib extends TikiLib
 				'type' => 'webmail',
 				'admin' => false,
 				'prefs' => array('feature_webmail', 'feature_contacts'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_personal_webmail',
@@ -4284,6 +4512,7 @@ class UsersLib extends TikiLib
 				'type' => 'webmail',
 				'admin' => false,
 				'prefs' => array('feature_webmail', 'feature_contacts'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_plugin_viewdetail',
@@ -4292,14 +4521,17 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki'),
+				'scope' => 'global',
 			),
 			array(
-				'name' => 'tiki_p_plugin_preview', 'Can execute unapproved plugin',
-				'description' => tra('registered'),
+				'name' => 'tiki_p_plugin_preview',
+				'description' => tra('Can execute unapproved plugin registered'),
 				'level' => 'wiki',
 				'type' => NULL,
 				'admin' => 'feature_wiki',
-			'prefs' => array()),
+				'prefs' => array(),
+				'scope' => 'global',
+			),
 			array(
 				'name' => 'tiki_p_plugin_approve',
 				'description' => tra('Can approve plugin execution'),
@@ -4307,6 +4539,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_trust_input',
@@ -4315,6 +4548,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_view_backlink',
@@ -4323,6 +4557,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_notifications',
@@ -4331,6 +4566,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_invite_to_my_groups',
@@ -4339,6 +4575,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_invite',
@@ -4347,6 +4584,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array('feature_invite'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_delete_account',
@@ -4355,6 +4593,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_importer',
@@ -4363,6 +4602,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_categories',
@@ -4371,6 +4611,7 @@ class UsersLib extends TikiLib
 				'type' => 'category',
 				'admin' => true,
 				'prefs' => array('feature_categories'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_view_category',
@@ -4379,6 +4620,7 @@ class UsersLib extends TikiLib
 				'type' => 'category',
 				'admin' => false,
 				'prefs' => array('feature_categories'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_modify_object_categories',
@@ -4387,6 +4629,8 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'object',
+				'apply_to' => array('wiki', 'trackers'),
 			),
 			array(
 				'name' => 'tiki_p_add_object',
@@ -4395,6 +4639,7 @@ class UsersLib extends TikiLib
 				'type' => 'category',
 				'admin' => false,
 				'prefs' => array('feature_categories'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_remove_object',
@@ -4403,6 +4648,7 @@ class UsersLib extends TikiLib
 				'type' => 'category',
 				'admin' => false,
 				'prefs' => array('feature_categories'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_create_category',
@@ -4411,6 +4657,7 @@ class UsersLib extends TikiLib
 				'type' => 'category',
 				'admin' => false,
 				'prefs' => array('feature_categories'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_perspective_view',
@@ -4419,6 +4666,7 @@ class UsersLib extends TikiLib
 				'type' => 'perspective',
 				'admin' => false,
 				'prefs' => array('feature_perspective'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_perspective_edit',
@@ -4427,6 +4675,7 @@ class UsersLib extends TikiLib
 				'type' => 'perspective',
 				'admin' => false,
 				'prefs' => array('feature_perspective'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_perspective_create',
@@ -4435,6 +4684,7 @@ class UsersLib extends TikiLib
 				'type' => 'perspective',
 				'admin' => false,
 				'prefs' => array('feature_perspective'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_perspective_admin',
@@ -4443,6 +4693,7 @@ class UsersLib extends TikiLib
 				'type' => 'perspective',
 				'admin' => true,
 				'prefs' => array('feature_perspective'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_group_view',
@@ -4451,6 +4702,7 @@ class UsersLib extends TikiLib
 				'type' => 'group',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_group_view_members',
@@ -4459,6 +4711,7 @@ class UsersLib extends TikiLib
 				'type' => 'group',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_group_add_member',
@@ -4467,6 +4720,7 @@ class UsersLib extends TikiLib
 				'type' => 'group',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_group_remove_member',
@@ -4475,6 +4729,7 @@ class UsersLib extends TikiLib
 				'type' => 'group',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_group_join',
@@ -4483,6 +4738,7 @@ class UsersLib extends TikiLib
 				'type' => 'group',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_trigger_transition',
@@ -4491,6 +4747,7 @@ class UsersLib extends TikiLib
 				'type' => 'transition',
 				'admin' => false,
 				'prefs' => array('feature_group_transition', 'feature_category_transition'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_admin_kaltura',
@@ -4499,6 +4756,7 @@ class UsersLib extends TikiLib
 				'type' => 'kaltura',
 				'admin' => true,
 				'prefs' => array('feature_kaltura'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_upload_videos',
@@ -4507,6 +4765,7 @@ class UsersLib extends TikiLib
 				'type' => 'kaltura',
 				'admin' => false,
 				'prefs' => array('feature_kaltura'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_edit_videos',
@@ -4515,6 +4774,7 @@ class UsersLib extends TikiLib
 				'type' => 'kaltura',
 				'admin' => false,
 				'prefs' => array('feature_kaltura'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_remix_videos',
@@ -4523,6 +4783,7 @@ class UsersLib extends TikiLib
 				'type' => 'kaltura',
 				'admin' => false,
 				'prefs' => array('feature_kaltura'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_delete_videos',
@@ -4531,6 +4792,7 @@ class UsersLib extends TikiLib
 				'type' => 'kaltura',
 				'admin' => false,
 				'prefs' => array('feature_kaltura'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_download_videos',
@@ -4539,6 +4801,7 @@ class UsersLib extends TikiLib
 				'type' => 'kaltura',
 				'admin' => false,
 				'prefs' => array('feature_kaltura'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_list_videos',
@@ -4547,6 +4810,7 @@ class UsersLib extends TikiLib
 				'type' => 'kaltura',
 				'admin' => false,
 				'prefs' => array('feature_kaltura'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_view_videos',
@@ -4555,6 +4819,7 @@ class UsersLib extends TikiLib
 				'type' => 'kaltura',
 				'admin' => false,
 				'prefs' => array('feature_kaltura'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_dsn_query',
@@ -4563,6 +4828,7 @@ class UsersLib extends TikiLib
 				'type' => 'dsn',
 				'admin' => false,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_payment_admin',
@@ -4571,6 +4837,7 @@ class UsersLib extends TikiLib
 				'type' => 'payment',
 				'admin' => true,
 				'prefs' => array('payment_feature'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_payment_view',
@@ -4579,6 +4846,7 @@ class UsersLib extends TikiLib
 				'type' => 'payment',
 				'admin' => false,
 				'prefs' => array('payment_feature'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_payment_manual',
@@ -4587,6 +4855,7 @@ class UsersLib extends TikiLib
 				'type' => 'payment',
 				'admin' => false,
 				'prefs' => array('payment_feature'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_payment_request',
@@ -4595,6 +4864,7 @@ class UsersLib extends TikiLib
 				'type' => 'payment',
 				'admin' => false,
 				'prefs' => array('payment_feature'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_admin_modules',
@@ -4603,6 +4873,7 @@ class UsersLib extends TikiLib
 				'type' => 'tiki',
 				'admin' => true,
 				'prefs' => array(),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_tracker_dump',
@@ -4611,6 +4882,7 @@ class UsersLib extends TikiLib
 				'type' => 'trackers',
 				'admin' => false,
 				'prefs' => array('feature_trackers'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_bigbluebutton_join',
@@ -4619,6 +4891,7 @@ class UsersLib extends TikiLib
 				'type' => 'bigbluebutton',
 				'admin' => false,
 				'prefs' => array('bigbluebutton_feature'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_bigbluebutton_moderate',
@@ -4627,6 +4900,7 @@ class UsersLib extends TikiLib
 				'type' => 'bigbluebutton',
 				'admin' => false,
 				'prefs' => array('bigbluebutton_feature'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_bigbluebutton_create',
@@ -4635,6 +4909,7 @@ class UsersLib extends TikiLib
 				'type' => 'bigbluebutton',
 				'admin' => false,
 				'prefs' => array('bigbluebutton_feature'),
+				'scope' => 'object',
 			),
 			array(
 				'name' => 'tiki_p_socialnetworks',
@@ -4643,6 +4918,7 @@ class UsersLib extends TikiLib
 				'type' => 'socialnetworks',
 				'admin' => false,
 				'prefs' => array('feature_socialnetworks'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_admin_socialnetworks',
@@ -4651,6 +4927,7 @@ class UsersLib extends TikiLib
 				'type' => 'socialnetworks',
 				'admin' => true,
 				'prefs' => array('feature_socialnetworks'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_page_contribution_view',
@@ -4659,6 +4936,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('feature_wiki'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_acct_create_book',
@@ -4667,6 +4945,7 @@ class UsersLib extends TikiLib
 				'type' => 'accounting',
 				'admin' => true,
 				'prefs' => array('feature_accounting'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_acct_manage_accounts',
@@ -4675,6 +4954,7 @@ class UsersLib extends TikiLib
 				'type' => 'accounting',
 				'admin' => true,
 				'prefs' => array('feature_accounting' ),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_acct_book',
@@ -4683,6 +4963,7 @@ class UsersLib extends TikiLib
 				'type' => 'accounting',
 				'admin' => false,
 				'prefs' => array('feature_accounting'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_acct_view',
@@ -4691,6 +4972,7 @@ class UsersLib extends TikiLib
 				'type' => 'accounting',
 				'admin' => false,
 				'prefs' => array('feature_accounting' ),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_acct_book_stack',
@@ -4699,6 +4981,7 @@ class UsersLib extends TikiLib
 				'type' => 'accounting',
 				'admin' => false,
 				'prefs' => array('feature_accounting'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_acct_book_import',
@@ -4707,6 +4990,7 @@ class UsersLib extends TikiLib
 				'type' => 'accounting',
 				'admin' => false,
 				'prefs' => array('feature_accounting' ),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_acct_manage_template',
@@ -4715,6 +4999,7 @@ class UsersLib extends TikiLib
 				'type' => 'accounting',
 				'admin' => false,
 				'prefs' => array('feature_accounting'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_wiki_view_latest',
@@ -4723,6 +5008,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('flaggedrev_approval'),
+				'scope' => 'global',
 			),
 			array(
 				'name' => 'tiki_p_wiki_approve',
@@ -4731,6 +5017,7 @@ class UsersLib extends TikiLib
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('flaggedrev_approval'),
+				'scope' => 'global',
 			),
 		);
 	}
@@ -4747,15 +5034,19 @@ class UsersLib extends TikiLib
 		$ret = array();
 
 		foreach ($raw as $permission) {
-			if ($type && $type != 'all' && $permission['type'] != $type) {
-				continue;
-			}
-
 			if ($find && stripos($permission['name'], $find) === false) {
 				continue;
 			}
 
-			$ret[] = $this->permission_compatibility($permission);
+			if ($type === 'global') {
+				$ret[] = $this->permission_compatibility($permission);
+			} elseif ($type == $permission['type'] && $permission['scope'] == 'object') {
+				$ret[] = $this->permission_compatibility($permission);
+			} elseif ($type == 'category' && $permission['scope'] != 'global') {
+				$ret[] = $this->permission_compatibility($permission);
+			} elseif ($permission['scope'] == 'object' && isset($permission['apply_to']) && in_array($type, $permission['apply_to'])) {
+				$ret[] = $this->permission_compatibility($permission);
+			}
 		}
 
 		if ($group) {

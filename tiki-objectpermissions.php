@@ -72,7 +72,7 @@ if (isset($_REQUEST["referer"])) {
 }
 $_REQUEST["objectId"] = urldecode($_REQUEST["objectId"]);
 $_REQUEST["objectType"] = urldecode($_REQUEST["objectType"]);
-$_REQUEST["permType"] = !empty($_REQUEST['permType']) ? urldecode($_REQUEST["permType"]) : 'all';
+$_REQUEST["permType"] = !empty($_REQUEST['permType']) ? urldecode($_REQUEST["permType"]) : 'global';
 $smarty->assign('objectName', $_REQUEST["objectName"]);
 $smarty->assign('objectId', $_REQUEST["objectId"]);
 $smarty->assign('objectType', $_REQUEST["objectType"]);
@@ -131,10 +131,6 @@ if (isset($_REQUEST['feature_select'])) {
 	}
 	$tikilib->set_user_preference($user, 'objectperm_admin_features', serialize($_REQUEST['feature_filter']));
 	$cookietab = '1';
-	if ($_REQUEST['permType'] != 'all' && (count($_REQUEST['feature_filter']) > 1 || !in_array($_REQUEST['permType'], $_REQUEST['feature_filter']))) {
-		$_REQUEST['permType'] = 'all';
-		$_GET['permType'] = 'all';		// for auto_query_args?
-	}
 }
 
 $feature_filter = unserialize($tikilib->get_user_preference($user, 'objectperm_admin_features'));
