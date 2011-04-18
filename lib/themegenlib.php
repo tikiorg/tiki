@@ -327,6 +327,10 @@ class ThemeGenLib
 	}
 	
 	public function saveNewTheme($name) {
+		global $headerlib;
+
+		$headerlib->remove_themegen_files();
+
 		$this->currentTheme = new ThemeGenTheme($name);
 		$this->currentTheme->savePref();
 		if (!empty($_SESSION['tg_preview'])) {
@@ -335,6 +339,10 @@ class ThemeGenLib
 	}
 	
 	public function updateCurrentTheme($css_file, $swaps) {
+		global $headerlib;
+
+		$headerlib->remove_themegen_files();
+		
 		$this->currentTheme->setData(array($swaps, $css_file));
 		$this->currentTheme->savePref();
 		if (!empty($_SESSION['tg_preview'])) {

@@ -28,23 +28,40 @@ function __autoload( $name ) {
 	@ include_once( $path );
 }
 
-$tikidomain = '';
-$api_tiki = null;
-
 if (!is_file(dirname(__FILE__) . '/local.php')) {
 	die("\nYou need setup a new database, install Tiki on it and create a local.php file for the test suite inside " . dirname(__FILE__) . "\n\n");
 }
 
 require_once(dirname(__FILE__) . '/local.php');
 
-if (extension_loaded("pdo") and $api_tiki == 'pdo' ) {
-	require_once('db/tiki-db-pdo.php');
-} else {
-	require_once('db/tiki-db-adodb.php');
+require_once ('lib/adodb/adodb.inc.php');
+include_once ('lib/adodb/adodb-pear.inc.php');
+
+$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
+
+// for now the unit test suite only works with adodb
+// using pdo generate an error when phpunit tries to serialize the globals variables
+// since it is not possible to serialize a PDO object
+$dbTiki = ADONewConnection($db_tiki);
+
+if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
+	die("\nUnable to connect to the database\n\n");
 }
 
-$db = TikiDb::get();
-$db->setServerType( $db_tiki );
+require_once('lib/core/TikiDb/Adodb.php');
+TikiDb::set(new TikiDb_Adodb($dbTiki));
+
+// update db if needed
+include_once ('installer/installlib.php');
+$installer = new Installer;
+
+if (!$installer->tableExists('tiki_preferences')) {
+	echo "Installing Tiki database...\n";
+	$installer->cleanInstall();
+} else if ($installer->requiresUpdate()) {
+	echo "Updating Tiki database...\n";
+	$installer->update();
+}
 
 $pwd = getcwd();
 chdir( dirname(__FILE__) . '/../..' );
@@ -71,11 +88,3 @@ require_once 'lib/setup/prefs.php';
 
 ini_set( 'display_errors', 'on' );
 error_reporting( CUSTOM_ERROR_LEVEL );
-
-// update db if needed
-include_once ('installer/installlib.php');
-$installer = new Installer;
-
-if ($installer->requiresUpdate()) {
-	$installer->update();
-}

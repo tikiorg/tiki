@@ -91,7 +91,18 @@ if (isset($_REQUEST['editor_id'])) {
 							$info['data'] = substr($info['data'], $real_start, $real_len);
 						}
 						require_once('lib/diff/difflib.php');
-						$data = diff2( html_entity_decode($info['data'], ENT_COMPAT, 'UTF-8'), $data, $_REQUEST["diff_style"]);
+						if ($info['is_html'] == 1) {
+							$diffold = $tikilib->htmldecode($info['data']);
+						} else {
+							$diffold = $info['data'];
+						}
+						$_REQUEST['allowHtml'] = isset($_REQUEST['allowHtml']) ? $_REQUEST['allowHtml'] : $info['is_html'];
+						if ($_REQUEST['allowHtml']) {
+							$diffnew = $tikilib->htmldecode($data);
+						} else {
+							$diffnew = $data;
+						}
+						$data = diff2( $diffold, $diffnew, $_REQUEST["diff_style"]);
 						$smarty->assign_by_ref('diffdata', $data);
 						
 						$smarty->assign( 'translation_mode', 'y' );

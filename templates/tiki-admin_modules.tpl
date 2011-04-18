@@ -65,7 +65,7 @@
 							<th>{tr}Action{/tr}</th>
 						</tr>
 						{cycle print=false values="even,odd"}
-						{foreach from=$assigned_modules[$zone_initial] item=module}
+						{foreach from=$assigned_modules[$zone_initial] item=module name=assigned_foreach}
 							<tr class="{cycle}">
 								<td>{$module.name|escape}</td>
 								<td>{$module.ord}</td>
@@ -75,10 +75,10 @@
 								<td style="font-size:smaller;">{$module.module_groups}</td>
 								<td>
 									<a class="link" href="tiki-admin_modules.php?edit_assign={$module.moduleId}&cookietab=2" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-									{if $top[0].moduleId ne $module.moduleId}
+									{if !$smarty.foreach.assigned_foreach.first}
 										<a class="link" href="tiki-admin_modules.php?modup={$module.moduleId}" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
 									{/if}
-									{if !$smarty.section.user.last and $top[user.index_next].moduleId}
+									{if !$smarty.foreach.assigned_foreach.last}
 										<a class="link" href="tiki-admin_modules.php?moddown={$module.moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
 									{/if}
 									<a class="link" href="tiki-admin_modules.php?unassign={$module.moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>

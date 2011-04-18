@@ -102,9 +102,9 @@ class MenuLib extends TikiLib
 			$menuoptions = $this->table('tiki_menu_options');
 			$menuoptions->deleteMultiple( array( 'menuId' => 42 ));
 			
-			$query = implode( '', $matches[0] );
-			$this->query($query);
-
+			foreach ($matches[0] as $query) {
+				$this->query($query);
+			}
 			$this->empty_menu_cache($menuId);
 		}
 	}

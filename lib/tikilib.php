@@ -4214,7 +4214,13 @@ class TikiLib extends TikiDb_Bridge
 		if( ! is_array( $pluginskiplist ) )
 			$pluginskiplist = array();
 
-		$matches = WikiParser_PluginMatcher::match($this->htmldecode($data));
+		$data = $this->htmldecode($data);
+		if (! $options['is_html']) {
+			// Decode partially, leave the < and > as HTML entities
+			$data = str_replace(array('<', '>'), array('&lt;', '&gt;'), $data);
+		}
+
+		$matches = WikiParser_PluginMatcher::match($data);
 		$argumentParser = new WikiParser_PluginArgumentParser;
 
 		if (!isset($options['parseimgonly'])) {
@@ -4361,7 +4367,8 @@ if( \$('#$id') ) {
 			$noparsed["data"][] = '<pre>'.$content.'</pre>';
 
 			$data = substr($data, 0, $start) . $key . substr($data, $end + 5);
-		}	}
+		}
+	}
 
 	function plugin_get_list( $includeReal = true, $includeAlias = true ) {
 		$real = array();
@@ -5264,46 +5271,6 @@ if( \$('#$id') ) {
 			$this->parse_wiki_argvariable($data, $options);
 		}
 
-		// Handle |# anchor links by turning them into ALINK module calls.
-		preg_match_all("/\(\(([^)]*\|#[^)]*)\)\)/", $data, $anchors);
-
-		foreach( array_unique($anchors[1]) as $anchor_line ) {
-			$parts1 = explode( "|#", $anchor_line );
-			$anchor_page = "";
-			$anchor_desc = "";
-			$anchor = "";
-
-			// Break out |desc bits from whatever section they happen to be in
-			if( strpos( $parts1[0], "|" ) ) {
-				$parts2 = explode( "|", $parts1[0] );
-				$anchor_page = $parts2[0];
-				$anchor_desc = $parts2[1];
-				$anchor = $parts1[1];
-			} elseif( strpos( $parts1[1], "|" ) ) {
-				$parts2 = explode( "|", $parts1[1] );
-				$anchor_page = $parts1[0];
-				$anchor = $parts2[0];
-				$anchor_desc = $parts2[1];
-			} else {
-				// No |desc bit
-				$anchor_page = $parts1[0];
-				$anchor_desc = $parts1[0];
-				$anchor = $parts1[1];
-			}
-
-			if ( !$anchor_page && $options['page'] ) {
-				$anchor_page = $options['page'];
-				if ( !$anchor_desc )  $anchor_desc = $options['page'];
-			}
-			$repl = "{ALINK(pagename=>".$anchor_page.",aname=>".$anchor.")}".$anchor_desc."{ALINK}";
-			$data = str_replace( "((".$anchor_line."))", $repl, $data);
-		}
-
-		if ($noparseplugins) {
-			$data = preg_replace('/\{(.*?)\}/', '~np~{$1}~/np~', $data);
-		}
-		$this->parse_first($data, $preparsed, $noparsed, $options);
-		
 		// Handle ~pre~...~/pre~ sections
 		$data = preg_replace(';~pre~(.*?)~/pre~;s', '<pre>$1</pre>', $data);
 
@@ -5458,9 +5425,20 @@ if( \$('#$id') ) {
 		$temp_max = count($pages[1]);
 		for ($i = 0; $i < $temp_max; $i++) {
 			$exactMatch = $pages[0][$i];
+			$description = $pages[6][$i];
+			$anchor = null;
+
+			if ($description{0} == '#') {
+				$temp = $description;
+				$anchor = strtok($temp, '|');
+				$description = strtok('|');
+			}
+
 			$replacement = $this->get_wiki_link_replacement( $pages[2][$i], array( 
-				'description' => $pages[6][$i], 
-				'reltype' => $pages[1][$i] ) );
+				'description' => $description, 
+				'reltype' => $pages[1][$i],
+				'anchor' => $anchor,
+			) );
 
 			$data = str_replace($exactMatch, $replacement, $data);
 		}
@@ -6432,7 +6410,9 @@ if( \$('#$id') ) {
 									$maketoc .= str_repeat('*', $shift).$tocentry_title;
 							}
 						}
-						$maketoc = $this->parse_data($maketoc);
+						$maketoc = $this->parse_data($maketoc, array(
+							'noparseplugins' => true,
+						));
 						if (preg_match("/^<ul>/", $maketoc)) {
 							$maketoc = preg_replace("/^<ul>/", '<ul class="toc">', $maketoc);
 							$maketoc .= '<!--toc-->';
@@ -6506,6 +6486,7 @@ if( \$('#$id') ) {
 		$description = null;
 		$reltype = null;
 		$processPlural = false;
+		$anchor = null;
 		
 		if( array_key_exists( 'description', $extra ) )
 			$description = $extra['description'];
@@ -6513,6 +6494,8 @@ if( \$('#$id') ) {
 			$reltype = $extra['reltype'];
 		if( array_key_exists( 'plural', $extra ) )
 			$processPlural = (boolean) $extra['plural'];
+		if( array_key_exists( 'anchor', $extra ) )
+			$anchor = $extra['anchor'];
 
 		$link = new WikiParser_OutputLink;
 		$link->setIdentifier( $pageLink );
@@ -6522,6 +6505,7 @@ if( \$('#$id') ) {
 		$link->setWikiLinkBuilder( array( $this, 'parser_helper_wiki_link_builder' ) );
 		$link->setExternals( $externals );
 		$link->setHandlePlurals( $processPlural );
+		$link->setAnchor($anchor);
 
 		if( $prefs['feature_multilingual'] == 'y' && isset( $GLOBALS['pageLang'] ) ) {
 			$link->setLanguage( $GLOBALS['pageLang'] );
@@ -7851,29 +7835,15 @@ if( \$('#$id') ) {
 	}
 
 	static function htmldecode($string, $quote_style = ENT_COMPAT, $translation_table = HTML_ENTITIES) {
-		if ( $translation_table == HTML_ENTITIES && version_compare(phpversion(), '5', '>=') ) {
+		if ( $translation_table == HTML_ENTITIES ) {
 			// Use html_entity_decode with UTF-8 only with PHP 5.0 or later, since
 			//   this function was available in PHP4 but _without_ multi-byte charater sets support
 			$string = html_entity_decode($string, $quote_style, 'utf-8');
 
-		} elseif ( $translation_table == HTML_SPECIALCHARS && version_compare(phpversion(), '5.1.0', '>=') ) {
+		} elseif ( $translation_table === HTML_SPECIALCHARS ) {
 			// Only available in PHP 5.1.0 or later
 			$string = htmlspecialchars_decode($string, $quote_style);
 
-		} else {
-			// For compatibility purposes with php < 5
-			$trans_tbl = array_flip(get_html_translation_table($translation_table));
-
-			// Not translating double quotes
-			if ($quote_style & ENT_NOQUOTES) {
-				// Remove double quote from translation table
-				unset($trans_tbl['&quot;']);
-			}
-
-			$string = strtr($string, $trans_tbl);
-			if (function_exists('recode_string')) {
-				$string = recode_string('iso-8859-15..utf-8', $string);
-			}
 		}
 
 		$string = preg_replace('~&#x([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $string);

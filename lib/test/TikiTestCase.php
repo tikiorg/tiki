@@ -13,7 +13,7 @@
  * 
  */
  
-require_once('PHPUnit/Framework/TestCase.php'); 
+require_once('PHPUnit/Framework.php'); 
  
 abstract class TikiTestCase extends PHPUnit_Framework_TestCase
 {

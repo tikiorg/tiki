@@ -11,6 +11,7 @@ class WikiParser_OutputLink
 	private $identifier;
 	private $language;
 	private $qualifier;
+	private $anchor;
 
 	private $externals = array();
 	private $handlePlurals = false;
@@ -50,6 +51,10 @@ class WikiParser_OutputLink
 		$this->handlePlurals = (bool) $handle;
 	}
 
+	function setAnchor( $anchor ) {
+		$this->anchor = $anchor;
+	}
+
 	function getHtml() {
 		$page = $this->identifier;
 		$description = $this->identifier;
@@ -59,7 +64,7 @@ class WikiParser_OutputLink
 
 		if( $link = $this->handleExternal( $page, $description ) ) {
 			return $this->outputLink( $description, array(
-				'href' => $link,
+				'href' => $link . $this->anchor,
 				'class' => 'wiki external',
 			) );
 		} elseif( $info = $this->findWikiPage( $page ) ) {
@@ -72,7 +77,7 @@ class WikiParser_OutputLink
 			}
 
 			return $this->outputLink( $description, array(
-				'href' => call_user_func( $this->wikiBuilder, $page ),
+				'href' => call_user_func( $this->wikiBuilder, $page ) . $this->anchor,
 				'title' => $title,
 				'class' => 'wiki',
 			) );

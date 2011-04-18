@@ -235,6 +235,9 @@ class CCLiteLib extends TikiDb_Bridge
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+
+		//curl_setopt($ch, CURLOPT_VERBOSE, true);
+
 		// this switch statement needs to map to the Rewrites in the cclite .htaccess file, so if you're
 		// doing something custom-made, you need to think about:
 		// -here-, .htaccess and various bits of login in the cclite motor
@@ -278,7 +281,7 @@ class CCLiteLib extends TikiDb_Bridge
 		curl_setopt($ch, CURLOPT_URL, $REST_url);
 		$result = curl_exec($ch);
 		curl_close($ch);
-		return $result;
+		return strip_tags($result);
 	}
 
 	/**
@@ -312,7 +315,10 @@ class CCLiteLib extends TikiDb_Bridge
 			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
 			curl_setopt($ch, CURLOPT_URL, $REST_url);
 			
+//			curl_setopt($ch, CURLOPT_VERBOSE, true);
+			
 			$logon = curl_exec($ch);
+			curl_close($ch);
 			
 			$results = array();	// for response & cookies on success
 			$err_msg = '';		// error message on failure
@@ -341,17 +347,12 @@ class CCLiteLib extends TikiDb_Bridge
 				}
 			}
 			if ($logon && $logon != 'failed') {
-				curl_close($ch);
-				$ch = null;
 				preg_match_all('|Set-Cookie: (.*);|U', $logon, $results);
 				$cookies = implode("; ", $results[1]);
 				return array($logon, $cookies);
 			}
 		} else {
 			$err_msg = 'No result from cclite server.';
-		}
-		if ($ch) {
-			curl_close($ch);
 		}
 		// fall through failed
 		return array('failed', $err_msg);
