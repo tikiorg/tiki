@@ -4597,6 +4597,22 @@ class UsersLib extends TikiLib
 				'prefs' => array('payment_feature'),
 			),
 			array(
+				'name' => 'tiki_p_admin_modules',
+				'description' => tra('User can administer modules'),
+				'level' => 'admin',
+				'type' => 'tiki',
+				'admin' => true,
+				'prefs' => array(),
+			),
+			array(
+				'name' => 'tiki_p_tracker_dump',
+				'description' => tra('Can save a .CSV backup of entire tracekrs'),
+				'level' => 'admin',
+				'type' => 'trackers',
+				'admin' => false,
+				'prefs' => array('feature_trackers'),
+			),
+			array(
 				'name' => 'tiki_p_bigbluebutton_join',
 				'description' => tra('Can join a meeting'),
 				'level' => 'basic',
