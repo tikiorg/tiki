@@ -92,13 +92,13 @@ if (isset($_REQUEST['editor_id'])) {
 						}
 						require_once('lib/diff/difflib.php');
 						if ($info['is_html'] == 1) {
-							$diffold = html_entity_decode($info['data'], ENT_COMPAT, 'UTF-8');
+							$diffold = $tikilib->htmldecode($info['data']);
 						} else {
 							$diffold = $info['data'];
 						}
 						$_REQUEST['allowHtml'] = isset($_REQUEST['allowHtml']) ? $_REQUEST['allowHtml'] : $info['is_html'];
 						if ($_REQUEST['allowHtml']) {
-							$diffnew = html_entity_decode($data, ENT_COMPAT, 'UTF-8');
+							$diffnew = $tikilib->htmldecode($data);
 						} else {
 							$diffnew = $data;
 						}
