@@ -4216,7 +4216,13 @@ class TikiLib extends TikiDb_Bridge
 		if( ! is_array( $pluginskiplist ) )
 			$pluginskiplist = array();
 
-		$matches = WikiParser_PluginMatcher::match($this->htmldecode($data));
+		$data = $this->htmldecode($data);
+		if (! $options['is_html']) {
+			// Decode partially, leave the < and > as HTML entities
+			$data = str_replace(array('<', '>'), array('&lt;', '&gt;'), $data);
+		}
+
+		$matches = WikiParser_PluginMatcher::match($data);
 		$argumentParser = new WikiParser_PluginArgumentParser;
 
 		if (!isset($options['parseimgonly'])) {
@@ -7853,29 +7859,15 @@ if( \$('#$id') ) {
 	}
 
 	static function htmldecode($string, $quote_style = ENT_COMPAT, $translation_table = HTML_ENTITIES) {
-		if ( $translation_table == HTML_ENTITIES && version_compare(phpversion(), '5', '>=') ) {
+		if ( $translation_table == HTML_ENTITIES ) {
 			// Use html_entity_decode with UTF-8 only with PHP 5.0 or later, since
 			//   this function was available in PHP4 but _without_ multi-byte charater sets support
 			$string = html_entity_decode($string, $quote_style, 'utf-8');
 
-		} elseif ( $translation_table == HTML_SPECIALCHARS && version_compare(phpversion(), '5.1.0', '>=') ) {
+		} elseif ( $translation_table === HTML_SPECIALCHARS ) {
 			// Only available in PHP 5.1.0 or later
 			$string = htmlspecialchars_decode($string, $quote_style);
 
-		} else {
-			// For compatibility purposes with php < 5
-			$trans_tbl = array_flip(get_html_translation_table($translation_table));
-
-			// Not translating double quotes
-			if ($quote_style & ENT_NOQUOTES) {
-				// Remove double quote from translation table
-				unset($trans_tbl['&quot;']);
-			}
-
-			$string = strtr($string, $trans_tbl);
-			if (function_exists('recode_string')) {
-				$string = recode_string('iso-8859-15..utf-8', $string);
-			}
 		}
 
 		$string = preg_replace('~&#x([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $string);
