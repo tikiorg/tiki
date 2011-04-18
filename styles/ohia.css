@@ -13,7 +13,6 @@
 /***** XHTML Elements (body tag here,
 			others follow Layout) *****/
 body {
-	text-align: center;
 	font: 67%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;
 	background: #242424;
 }
@@ -27,7 +26,6 @@ body.cke_show_borders {
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
 #main {
-	text-align: left;
 	background: transparent;
 	color: #f4f4f4}
 	
@@ -211,8 +209,8 @@ label {margin: 0 2px}
 .siteloginbar a:visited {color: #f4f4f4}
 
 #top_modules .box-logo {
-	margin-top: 30px;
-	margin-left: 30px;
+	padding-top: 30px;
+	padding-left: 30px;
 }
 
 #sitetitle,
