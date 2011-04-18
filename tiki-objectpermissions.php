@@ -242,29 +242,7 @@ if (!empty($_SESSION['perms_clipboard'])) {
 
 }
 
-
-// Prepare display
-// Get the individual object permissions if any
-
-$displayedPermissions = get_displayed_permissions();
-
-if (isset($_REQUEST['used_groups'])) {
-	$group_filter = array();
-	foreach ( $displayedPermissions->getPermissionArray() as $group => $perms ) {
-		$group_filter[] = $group;
-		$group_filter = array_merge($group_filter, $userlib->get_including_groups($group, 'y'));
-	}
-	if (empty($group_filter)) {
-		$group_filter = array('Anonymous', 'Registered', 'Admins');
-	}
-	foreach ( $group_filter as $i=>$group) {
-		$ginfo = $userlib->get_group_info($group);
-		$group_filter[$i] = $ginfo['id'];
-	}
-	$cookietab = 1;
-}
-
-//Quickperms {{{
+//Quickperms apply {{{
 //Test to map permissions of ile galleries into read write admin admin levels.
 if( $prefs['feature_quick_object_perms'] == 'y' ) {
 	require_once 'lib/core/Perms/Reflection/Quick.php';
@@ -297,6 +275,31 @@ if( $prefs['feature_quick_object_perms'] == 'y' ) {
 		$permissionApplier->apply( $newPermissions );
 	}
 }
+// }}}
+
+// Prepare display
+// Get the individual object permissions if any
+
+$displayedPermissions = get_displayed_permissions();
+
+if (isset($_REQUEST['used_groups'])) {
+	$group_filter = array();
+	foreach ( $displayedPermissions->getPermissionArray() as $group => $perms ) {
+		$group_filter[] = $group;
+		$group_filter = array_merge($group_filter, $userlib->get_including_groups($group, 'y'));
+	}
+	if (empty($group_filter)) {
+		$group_filter = array('Anonymous', 'Registered', 'Admins');
+	}
+	foreach ( $group_filter as $i=>$group) {
+		$ginfo = $userlib->get_group_info($group);
+		$group_filter[$i] = $ginfo['id'];
+	}
+	$cookietab = 1;
+}
+
+
+// Quick perms load {{{
 //Quickperm groups stuff
 if( $prefs['feature_quick_object_perms'] == 'y' ) {
 	$groupNames = array();
@@ -304,6 +307,15 @@ if( $prefs['feature_quick_object_perms'] == 'y' ) {
 		$groupNames[] = $group['groupName'];
 	}
 
+	$qperms = quickperms_get_data();
+	$smarty->assign('quickperms', $qperms);
+	$quickperms = new Perms_Reflection_Quick;
+
+	foreach( $qperms as $type => $data ) {
+		$quickperms->configure( $type, $data['data'] );
+	}
+
+	$displayedPermissions = get_displayed_permissions();
 	$map = $quickperms->getAppliedPermissions( $displayedPermissions, $groupNames );
 		
 	foreach($groups['data'] as $key=>$group) {
