@@ -619,23 +619,35 @@ class HeaderLib
 			$themename = $themegenlib->getCurrentTheme()->getName();
 			if (count($data['files'])) {
 				foreach ($data['files'] as $file => $swaps) {
-					$i = array_search($file, $files['screen']);
-					if ($i !== false) {
-						$css = $themegenlib->processCSSFile($file, $swaps);
-					
-						$hash = md5( $file );
-						$target = 'temp/public/'.$tikidomainslash;
-						$ofile = $target . "themegen_{$themename}_$hash.css";
-						
-						file_put_contents( $ofile, $css );
-						chmod($ofile, 0644);
-						
-						$files['screen'][$i] = $ofile;
+					$hash = md5( $file );
+					$target = 'temp/public/'.$tikidomainslash;
+					$ofile = $target . "themegen_{$themename}_$hash.css";
+
+					if (!file_exists($ofile) || !empty($_SESSION['tg_preview'])) {
+						$i = array_search($file, $files['screen']);
+						if ($i !== false) {
+							$css = $themegenlib->processCSSFile($file, $swaps);
+
+							file_put_contents( $ofile, $css );
+							chmod($ofile, 0644);
+
+							$files['screen'][$i] = $ofile;
+						}
 					}
 				}
 			}
 		}
 		return $files;
+	}
+
+	function remove_themegen_files( $all = true ) {
+		global $tikidomainslash;
+		$target = 'temp/public/'.$tikidomainslash;
+		if ( $all ) {
+			foreach( glob( $target . 'themegen_*' ) as $file ) {
+				unlink($file);
+			}
+		}
 	}
 
 	function add_map() {
