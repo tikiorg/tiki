@@ -215,7 +215,7 @@ $(".trackerfilter form").submit( function () {
 		wikiplugin_trackerfilter_build_trackerlist_filter($_REQUEST, $formats, $ffs, $values, $exactValues);
 		// echo '<pre>BUILD_FILTER'; print_r($ffs); print_r($exactValues); echo '</pre>';
 
-		$params['fields'] = $fields;
+		$params['fields'] = isset($fields) ? $fields : array();
 		if (empty($params['trackerId'] )) {
 			$params['trackerId'] = $trackerId;
 		}

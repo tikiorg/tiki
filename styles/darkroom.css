@@ -732,6 +732,7 @@ a.tikihelp:hover {
 	background: #474747;
 	color: #d8d8d8;
 }
+
 /*
 a.tikihelp, 
 a.tikihelp:hover {
@@ -745,7 +746,11 @@ background-image: url('../lib/jquery/jquery-ui/themes/ui-darkness/images/ui-icon
 
 /** input widget **/
 .ui-widget input {
-	color: #000;
+	color: whiteSmoke;
+}
+
+.ui-button-text {
+	color: #b2b2b2;
 }
 
 /**** Boxes *****/
@@ -973,6 +978,63 @@ td.form {
 	color: #292929;
 }
 
+/***** Admin *****/
+.highlight_word_0,
+.highlight_word_1,
+.highlight_word_2,
+.highlight_word_3,
+.highlight_word_4 {
+	background: #000;
+}
+
+a.admbox {
+	border: 1px solid #aaa;
+	background-color: #6c6c6c;
+}
+
+a.admbox:hover,
+a.admbox:focus,
+a.admbox:active {
+	background-color: #b2b2b2;
+	border: 1px solid #292929;
+}
+
+a.admbox.off {
+	border: 1px solid #9f9f9f;
+}
+
+a.admbox.off:hover,
+a.admbox.off:focus,
+a.admbox.off:active {
+	border: 1px solid #9f9f9f;
+}
+
+.multiselect {
+	border: 1px solid #606060;
+}
+
+.multiselect li.odd {
+	background: #3f3f3f;
+	color: #fff;
+}
+
+.multiselect li.even {
+	background: #3f3f3f;
+	color: #fff;
+}
+
+.help_section table {
+	color: #fff;
+}
+
+.button .iconmenu {
+	display: inline;
+}
+
+.categflipper {
+	float: right;
+}
+
 /** Tabs **/
 .tabs {
 	border-bottom: 0;
@@ -1003,8 +1065,8 @@ td.form {
 }
 
 .ui-widget {
-    font-family:  "Trebuchet MS", "Bitstream Vera Sans", sans-serif;
-    font-size: 1em;
+	font-family:  "Trebuchet MS", "Bitstream Vera Sans", sans-serif;
+	font-size: 1em;
 }
 .ui-widget-header {
 	background: #000;
@@ -2134,61 +2196,5 @@ div.dirfooter {
 	background: #000;
 }
 
-/***** Admin *****/
-.highlight_word_0,
-.highlight_word_1,
-.highlight_word_2,
-.highlight_word_3,
-.highlight_word_4 {
-	background: #000;
-}
-
-a.admbox {
-	border: 1px solid #aaa;
-	background-color: #6c6c6c;
-}
-
-a.admbox:hover,
-a.admbox:focus,
-a.admbox:active {
-	background-color: #b2b2b2;
-	border: 1px solid #292929;
-}
-
-a.admbox.off {
-	border: 1px solid #9f9f9f;
-}
-
-a.admbox.off:hover,
-a.admbox.off:focus,
-a.admbox.off:active {
-	border: 1px solid #9f9f9f;
-}
-
-.multiselect {
-	border: 1px solid #606060;
-}
-
-.multiselect li.odd {
-	background: #3f3f3f;
-	color: #fff;
-}
-
-.multiselect li.even {
-	background: #3f3f3f;
-	color: #fff;
-}
-
-.help_section table {
-	color: #fff;
-}
-
-.button .iconmenu {
-	display: inline;
-}
-
-.categflipper {
-	float: right;
-}
 
 /* end of css file */

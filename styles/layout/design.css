@@ -591,13 +591,15 @@ p.editdate {
 
 /* wikiplugin_fade */
 .wpfade-hidden {
-	background-repeat: no-repeat; background-image: url(../../img/toggle-expand-dark.png);
+	background-repeat: no-repeat;
+	background-image: url(../../img/toggle-expand-dark.png);
 	margin-left: -19px; 
 	padding-left: 19px;
 }
 
 .wpfade-shown {
-	background-repeat: no-repeat; background-image: url(../../img/toggle-collapse-dark.png);
+	background-repeat: no-repeat;
+	background-image: url(../../img/toggle-collapse-dark.png);
 	margin-left: -19px; 
 	padding-left: 19px;
 }

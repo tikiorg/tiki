@@ -4225,8 +4225,14 @@ class TikiLib extends TikiDb_Bridge
 			if ($options['parseimgonly'] && $this->getName() != 'img') {
 				continue;
 			}
-
+			
+			//note parent plugin in case of plugins nested in an include - to suppress plugin edit icons below
+			$plugin_parent = isset($plugin_name) ? $plugin_name : false;
 			$plugin_name = $match->getName();
+			//suppress plugin edit icons for plugins within includes since edit doesn't work for these yet
+			$options['suppress_icons'] = $plugin_name != 'include' && $plugin_parent && $plugin_parent == 'include' ? 
+				true : $options['suppress_icons'];
+			
 			$plugin_data = $match->getBody();
 			$arguments = $argumentParser->parse($match->getArguments());
 			$start = $match->getStart();
@@ -5320,7 +5326,9 @@ if( \$('#$id') ) {
 		if (!$simple_wiki) {
 			$this->parse_htmlchar($data);
 		}
-
+		//needs to be before text color syntax because of use of htmlentities in lib/core/WikiParser/OutputLink.php
+		$data = $this->parse_data_wikilinks( $data, $simple_wiki );
+		
 		if (!$simple_wiki) {
 			// Replace colors ~~foreground[,background]:text~~
 			// must be done before []as the description may contain color change
@@ -5375,8 +5383,6 @@ if( \$('#$id') ) {
 				$data = preg_replace("/::(.+?)::/", "<div style=\"text-align: center;\">$1</div>", $data);
 			}
 		}
-
-		$data = $this->parse_data_wikilinks( $data, $simple_wiki );
 
 		// reinsert hash-replaced links into page
 		foreach ($noparsedlinks as $np) {
