@@ -35,7 +35,7 @@ function wikiplugin_zoterolist($data, $params)
 
 	if ($cached = $cachelib->getSerialized($cacheKey, 'zotero')) {
 		if (($cached['created'] + 3600) > $tikilib->now) {
-			return $cached['data'];
+			return WikiParser_PluginOutput::html($cached['data']);
 		}
 	}
 	
