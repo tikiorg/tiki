@@ -153,23 +153,22 @@ class ModLib extends TikiLib
 		}
 		$section_map = array_flip($this->module_zones);
 		$bindvars = array();
-		$query = '';
+		$query = 'UPDATE `tiki_modules` SET `ord`=?, `position`=? WHERE `moduleId`=?;';
 		foreach ($module_order as $zone => $contents) {
     		$section_initial = $section_map[$zone];
     		foreach ($contents as $index => $moduleId) {
     			if ($moduleId) {
 	    			if ($all_modules[$zone][$index]['moduleId'] != $moduleId || ($all_modules[$zone][$index]['ord'] != $index + 1 || $all_modules[$zone][$index]['position'] != $section_initial)) {
-	    				$query .= 'UPDATE `tiki_modules` SET `ord`=?, `position`=? WHERE `moduleId`=?;';
-						$bindvars[] = $index + 1;
-						$bindvars[] = $section_initial;
-						$bindvars[] = $moduleId;
+						$bindvars = array(
+							$index + 1,
+							$section_initial,
+							$moduleId,
+						);
+						$this->query($query, $bindvars);
 	    			}
     			}
     		}
     	}
-		if ($query) {
-			$result = $this->query($query, $bindvars);
-		}
 	}
 
 	function get_all_modules() {
