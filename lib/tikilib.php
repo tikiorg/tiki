@@ -6412,7 +6412,9 @@ if( \$('#$id') ) {
 									$maketoc .= str_repeat('*', $shift).$tocentry_title;
 							}
 						}
-						$maketoc = $this->parse_data($maketoc);
+						$maketoc = $this->parse_data($maketoc, array(
+							'noparseplugins' => true,
+						));
 						if (preg_match("/^<ul>/", $maketoc)) {
 							$maketoc = preg_replace("/^<ul>/", '<ul class="toc">', $maketoc);
 							$maketoc .= '<!--toc-->';
