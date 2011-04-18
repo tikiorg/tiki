@@ -143,37 +143,18 @@ small {font-size: .9em}
 label {margin: 0 2px}
 
 /***** Site Header & Identity *****/
-#header-top {
-	position: static;
-}
 
-#siteheader {
-	text-align: left;
-	background: transparent;
+#top_modules {
 	vertical-align: middle;
 	padding: 0;
 	margin: 0 0 27px;
 	background: #7996A4 url(cornflower/header.png) repeat-x 0 100%;
-	height: 114px;
 }
 
-div#sioptions {
-	width: 100%;
-	margin: 0}
-
-div#sitelogo {
-	margin: auto}
-
-div#sitead {margin: auto}
-#sitead.floatright {padding-right: 100px}
-#sitead.floatleft {padding-left: 100px}
-
-#siteloginbar {
-	top: 0px;
-	right: 0px;
-	bottom: auto;
-	color: #fff;
-	padding: 6px 20px;
+#top_modules .box-login_box {
+	position: absolute;
+	bottom: 9px;
+	right: 0;
 }
 
 #siteloginbar a,
@@ -181,24 +162,6 @@ div#sitead {margin: auto}
 	color: #fff;
 	font-weight: bold;
 }
-
-.sl-login, .rme, .pass, .register, #siteloginbar .wikiaction {
-    display: block;
-    clear: both;
-    float: right;
-    margin-right: 0;
-}
-
-#sl-login-user, #sl-login-pass {
-	width: 8em;
-}
-
-#siteloginbar_popup {
-	bottom: 9px;
-}
-
-#sitelocbar {float: left}
-#customcodewith_ad {width: 400px}
 
 #sitetitle,
 #sitesubtitle {
@@ -209,44 +172,20 @@ div#sitead {margin: auto}
 #sitetitle a,
 #sitetitle a:visited {color: #fff}
 
-#sitetitle {
-	display: block;
-	font-size: 28px;
-	margin-top: 20px;
-	margin-bottom: 2px}
-
-#sitesubtitle {
-	display: block;
-	margin-top: 3px;
-	padding-top: 6px}
-
-#tiki-top {
-	text-align: left;
-	position: absolute;
-	top: 114px;
-	width: 100%;
-	background: #FF8C26;
-}
-
 #tiki-top ul.cssmenu_horiz {
 	float: left;
 	background: #FF8C26;
-	padding: 0}
+	padding: 0;
+	width: 100%;
+}
 
-#tiki-top table {width: auto}
-
-#sitesearchbar {
+#top_modules .box-search {
 	padding: 2px;
 	text-decoration: none;
 	/*font: 1.1em Verdana, Helvetica, Arial, Sans-Serif;*/
 	color: #fff;
 	background: transparent;
 	border: none}
-
-#sitesearchbar form {
-	margin-right: 15px;
-	margin-top: 1px !important;
-}
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
