@@ -186,13 +186,34 @@ label {margin: 0 2px}
 }
 
 #top_modules .siteloginbar_popup {
+	position: absolute;
 	bottom: 9px;
+	right: 10px;
+}
+
+#top_modules .siteloginbar_popup > .tabmark {
+	display: block;
+}
+
+#top_modules .siteloginbar_popup a.login_link {
+	display; block;
+	padding: 4px 6px;
+}
+
+
+.siteloginbar_poppedup {
+	margin-top: 10px;
 }
 
 .siteloginbar {padding: 6px 3px}
 
 .siteloginbar a,
 .siteloginbar a:visited {color: #f4f4f4}
+
+#top_modules .box-logo {
+	margin-top: 30px;
+	margin-left: 30px;
+}
 
 #sitetitle,
 #sitesubtitle {
@@ -214,7 +235,11 @@ label {margin: 0 2px}
 	margin-top: 3px;
 	padding-top: 6px}
 	
-#tiki-top {text-align: left}
+#tiki-top {
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-align: left}
 
 #tiki-top ul.cssmenu_horiz {
 	float: left;
@@ -224,6 +249,9 @@ label {margin: 0 2px}
 #tiki-top table {width: auto}
 
 #top_modules .box-search {
+	position: absolute;
+	top: 0;
+	right: 0;
 	padding: 2px;
 	text-decoration: none;
 	font: 1.1em Verdana, Helvetica, Arial, Sans-Serif;
