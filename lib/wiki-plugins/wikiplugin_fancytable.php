@@ -81,57 +81,66 @@ function wikiplugin_fancytable($data, $params) {
 	global $tikilib, $prefs;
 	static $iFancytable = 0;
 	++$iFancytable;
-	//Patterns to keep | within external and internal links from being treated as column separators
-	$patterns[0] = '/(\[[^\](~|~)]+)\~\|\~([^\[(~|~)]+\])/'; //for [ | ]
-	$patterns[1] = '/(\(\([^(~|~)]+)\~\|\~([^(~|~)]+\)\))/'; // for (( | ))
-	$patterns[2] = '/(\[[^\](~|~)]+)\~\|\~([^\[(~|~)]+)\~\|\~([^(~|~)]+\])/'; // for [ | | ]
-	$patterns[3] = '/(\(\([^(~|~)]+)\~\|\~([^(~|~)]+)\~\|\~([^(~|~)]+\)\))/'; // for (( | | ))
-	$replace[0] = '$1|$2';
-	$replace[1] = '$1|$2';
-	$replace[2] = '$1|$2|$3';
-	$replace[3] = '$1|$2|$3';
 	extract ($params,EXTR_SKIP);
 	if (empty($sortable)) $sortable = 'n';
-	$tdend = '</td>';
-	$trbeg = "\r\t\t<tr>";
-	$trend = "\r\t\t</tr>";
 
 	// Start the table
 	$wret = '<table class="normal'.($sortable=='y'? ' fancysort':'').'" id="fancytable_'.$iFancytable.'">' . "\r\t";
 	
-	//header rows
-  	if (isset($head)) {
-  		//Although user can set | as column separators, program uses only ~|~
-		//If | is being used, first replace all | with ~|~, then revert back to | for those (up to 2) inside links
-		if (strpos($head, '~|~') == FALSE) {
-			$head = str_replace('|', '~|~', $head);
-			$head = preg_replace($patterns, $replace , $head);	
-		}	
+	//if | is used as separator, mask tiki tags during processing and bring back at the end so that any pipes (|) 
+	//aren't mistaken for cell dividers
+	//pattern covers (( )), [ ], ~np~ /~np~, ~tc~ /~tc~, ~hc~ /~hc~, { = } (plugins with parameters)
+	$pattern = '/(\(\([^\)\)]+\)\)|\[[^\]]+\]|~np~(?:(?!~\/np~).)*~\/np~|~tc~(?:(?!~\/tc~).)*~\/tc~'
+				. '|~hc~(?:(?!~\/hc~).)*~\/hc~|\{[^\=]+[\=]+[^\=\}]+\})/';
+	//process header
+	if (isset($head)) {
 		if (!empty($headclass)) {
 			$tdhdr = "\r\t\t\t<th class=\"$headclass\"";
 		} else {
 			$tdhdr = "\r\t\t\t<th";
 		}
-		$colsw = isset($colwidths) ?  explode('|', $colwidths) : '';
-		$haligns = isset($headaligns) ?  explode('|', $headaligns) : '';
-		$hvaligns = isset($headvaligns)?  explode('|', $headvaligns) : '';
-		$hlines = explode('>>', $head);
-		$rowheads = process_lines($hlines, '~|~', 'h', $tdhdr, '</th>', $colsw, $haligns, $hvaligns);
-		$wret .= '<thead>' . $rowheads . "\r\t" . '</thead>' . "\r\t" . '<tbody>' ;
-	} 
-	
-	//table body rows
-	//Although user can set | as column separators, program uses only ~|~
-	//If | is being used, first replace all | with ~|~, then revert back to | for those (up to 2) inside links
-	if (strpos($data, '~|~') == FALSE) {
-		$data = str_replace('|', '~|~', $data);
-		$data = preg_replace($patterns, $replace , $data);
-	}	
-	$lines = explode("\n", $data);
-	$colsw = isset($colwidths) ?  explode('|', $colwidths) : '';
-	$caligns = isset($colaligns) ?  explode('|', $colaligns) : '';
-	$cvaligns = isset($colvaligns)?  explode('|', $colvaligns) : '';
-	$wret .= process_lines($lines, '~|~', 'r', '', '</td>', $colsw, $caligns, $cvaligns);
+		$separator = strpos($head, '~|~') === false ? '|' : '~|~';
+		//skip the preg matching if ~|~ is used
+		if ($separator != '~|~') {
+			preg_match_all($pattern, $head, $head_matches);
+			//replace all tiki tags in the header with numbered strings while being processed
+			$head = preg_replace_callback($pattern, 'replace_head', $head);
+		}
+		//process header rows
+		$headrows = process_section($head, 'h', $separator, '>>', $tdhdr, '</th>', isset($colwidths) ? $colwidths : '', 
+					isset($headaligns) ? $headaligns : '', isset($headvaligns) ? $headvaligns : '');
+		//skip the preg matching if ~|~ is used
+		if ($separator != '~|~') {
+			//bring the tiki tags back into the header. static veriable needed in case of multiple tables
+			static $hh = 0;
+			foreach ($head_matches[0] as $head_match) {
+				$headrows = str_replace('~~~head' . $hh . '~~~', $head_match, $headrows);
+				$hh++;
+			}
+		}
+		$wret .= '<thead>' . $headrows . "\r\t" . '</thead>' . "\r\t" . '<tbody>';
+	}
+	//process body
+	$separator = strpos($data, '~|~') === false ? '|' : '~|~';
+	//skip the preg matching if ~|~ is used
+	if ($separator != '~|~') {
+		preg_match_all($pattern, $data, $body_matches);
+		//replace all tiki tags in the body with numbered strings while being processed
+		$data = preg_replace_callback($pattern, 'replace_body', $data);
+	}
+	//process table body rows
+	$bodyrows = process_section($data, 'r', $separator, "\n", '', '</td>', isset($colwidths) ? $colwidths : '', 
+				isset($colaligns) ? $colaligns : '', isset($colvaligns) ? $colvaligns : '');
+	//skip the preg matching if ~|~ is used
+	if ($separator != '~|~') {
+		//bring the tiki tags back into the body. static veriable needed in case of multiple tables
+		static $bb = 0;
+		foreach ($body_matches[0] as $body_match) {
+			$bodyrows = str_replace('~~~body' . $bb . '~~~', $body_match, $bodyrows);
+			$bb++;
+		}
+	}
+	$wret .= $bodyrows;
 
 	// End the table
 	if (isset($head)) {
@@ -153,8 +162,28 @@ function wikiplugin_fancytable($data, $params) {
 	return $wret;
 }
 
-//Header and body rows are processed with this function
- function process_lines($lines, $separator, $type, $cellbeg, $cellend, $widths, $aligns, $valigns) {
+//preg_replace_callback functions to number replacements so they can be identified and undone later
+//for the header
+function replace_head($matches) {
+	static $h = 0;
+	$ret = '~~~head' . $h . '~~~';
+	$h++;
+	return $ret;
+}
+//for the body
+function replace_body($matches) {
+	static $b = 0;
+	$ret = '~~~body' . $b . '~~~';
+	$b++;
+	return $ret;
+}
+//function to process header and body
+function process_section ($data, $type, $separator, $line_sep, $cellbeg, $cellend, $widths, $aligns, $valigns) {
+//	$separator = strpos($data, '~|~') === FALSE ? '|' : '~|~';
+	$lines = explode($line_sep, $data);
+	$widths = !empty($widths) ?  explode('|', $widths) : '';
+	$aligns = !empty($aligns) ?  explode('|', $aligns) : '';
+	$valigns = !empty($valigns)?  explode('|', $valigns) : '';
 	$trbeg = "\r\t\t<tr>";
 	$trend = "\r\t\t</tr>";
 	$l = 0;
@@ -211,7 +240,8 @@ function wikiplugin_fancytable($data, $params) {
 						${$colnum}['span'] = $rnum;
 					}
 				}
-				if (isset($widths) || isset($aligns) || isset($valigns)) {
+				$colstyle = '';
+				if (!empty($widths) || !empty($aligns) || !empty($valigns)) {
 					//If there's another rowspan still in force, bump up the column number
 					if (isset(${$colnum}['col']) && ${$colnum}['col'] == $c && ($l > ${$colnum}['line'])) {
 						if ((${$colnum}['span'] - ($l - ${$colnum}['line'])) > 0) $c++;
@@ -230,4 +260,4 @@ function wikiplugin_fancytable($data, $params) {
 		$l++;   //increment row number
 	}
 	return $wret;
-}  
+}
