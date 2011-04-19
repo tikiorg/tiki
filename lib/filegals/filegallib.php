@@ -227,7 +227,7 @@ class FileGalLib extends TikiLib
 		if (empty($id)) {
 			$fileId = $filesTable->insert($fileData);
 		} else {
-			$filesTables->update($fileData, array(
+			$filesTable->update($fileData, array(
 				'fileId' => $id,
 			));
 			$fileId = $id;
@@ -433,6 +433,8 @@ class FileGalLib extends TikiLib
 
 			if ($archives['cant'] >= $count_archives) {
 				$toRemove = array();
+
+                $savedir = $this->get_gallery_save_dir($galleryId);
 
 				foreach ($archives['data'] as $i => $values) {
 					$toRemove[] = $values['fileId'];
@@ -710,7 +712,7 @@ class FileGalLib extends TikiLib
 
 				if (false !== $savedir) {
 					// Store on disk
-					$fhash = $this->find_unique_name($name);
+                    $fhash = $this->find_unique_name($savedir, $file);
 
 					if (false === @file_put_contents($savedir . $fhash, $data)) {
 						$errors[] = tra('Cannot write to this file:'). $fhash;
@@ -1785,7 +1787,7 @@ class FileGalLib extends TikiLib
 
 		return $files->fetchOne('fileId', array(
 			'anyOf' => $files->expr('(`fileId`=? or `archiveId`=?)', array($archiveId, $archiveId)),
-			'created' => $files->lesserThan($data+1),
+			'created' => $files->lesserThan($date+1),
 		), 1, 0, array('created' => 'DESC'));
 	}
 
@@ -2498,7 +2500,7 @@ class FileGalLib extends TikiLib
 
 		if (! empty($find) ) {
 			$findesc = '%' . $find . '%';
-			$conditions['search'] = $fileGalleries->expr('(`name` like ? or `description` like ?)', array($finddesc, $finddesc));
+			$conditions['search'] = $fileGalleries->expr('(`name` like ? or `description` like ?)', array($findesc, $findesc));
 		}
 
 		$sort = $this->convertSortMode($sort_mode);
@@ -2602,7 +2604,7 @@ class FileGalLib extends TikiLib
 			}
 
 			global $tiki_p_admin_file_galleries, $user;
-			if ( $tiki_p_admin_file_galleries != 'y' && ( ! $user || $user != $gal_info['user'] ) ) {
+			if ( $tiki_p_admin_file_galleries != 'y' && ( ! $user || $user != $params['gal_info']['user'] ) ) {
 				if ( $user != $info['user'] ) {
 					$smarty->assign('errortype', 401);
 					$smarty->assign('msg', tra('You do not have permission to remove files from this gallery'));
@@ -2626,7 +2628,7 @@ class FileGalLib extends TikiLib
 				$this->remove_draft( $info['fileId'], $user );
 			} else {
 				$access->check_authenticity( tra('Remove file: ') . $confirmationText );
-				$this->remove_file( $info, $gal_info );
+				$this->remove_file( $info, $params['gal_info'] );
 			}
 		}
 	}
@@ -3035,7 +3037,7 @@ class FileGalLib extends TikiLib
 
 	function handle_file_upload($fileKey, $file)
 	{
-		global $prefs, $user;
+		global $prefs, $user, $tiki_p_edit_gallery_file, $tiki_p_admin_file_galleries, $smarty;
 
 		$savedir = $prefs['fgal_use_dir'];
 
@@ -3094,7 +3096,7 @@ class FileGalLib extends TikiLib
 		);
 	}
 
-	function handle_batch_upload($galleryId, $info)
+	function handle_batch_upload($galleryId, $info, $ext = '')
 	{
 		$savedir = $this->get_gallery_save_dir($galleryId);
 
