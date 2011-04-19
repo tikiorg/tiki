@@ -217,7 +217,7 @@ input[type="submit"]:hover,
 
 #topbar_modules .box-search {
 	position: absolute;
-	top: 10px;
+	top: 0px;
 	right: 20px;
 	height: 34px;
 	line-height: 34px;
