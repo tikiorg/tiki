@@ -58,7 +58,7 @@ body.cke_show_borders {
 #footer {
 	text-align: center;
 	font-size: .9em;
-	background: #d10000 url(ohia/header.png) 0 100px;
+	background: #7d0000 url(ohia/header.png) 0 100px;
 	min-height: 90px;
 	color: #f4f4f4;
 	position: relative}
@@ -180,7 +180,7 @@ label {margin: 0 2px}
 	background: transparent;
 	min-height: 122px;
 	position: relative;
-	background: #d40000 url(ohia/header.png) repeat-x 0 100%;
+	background: #7d0000 url(ohia/header.png) repeat-x 0 100%;
 }
 
 #top_modules .siteloginbar_popup {
