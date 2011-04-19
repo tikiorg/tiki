@@ -184,10 +184,6 @@ input[type="submit"]:hover,
 	height: 100%;
 }
 
-#top_modules .box-logo {
-	height: 150px;
-}
-
 #top_modules #sitetitles {
 	font-weight: bold;
 	margin-left: 20px;
