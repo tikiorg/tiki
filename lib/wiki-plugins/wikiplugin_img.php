@@ -588,7 +588,7 @@ function wikiplugin_img_info() {
 	if (!empty($imgdata['height']) || !empty($imgdata['width']) || !empty($imgdata['max']) 
 		|| !empty($imgdata['desc']) || strpos($imgdata['rel'], 'box') !== false 
 		|| !empty($imgdata['stylebox']) || !empty($imgdata['styledesc']) || !empty($imgdata['button']) 
-		|| !empty($imgdata['thumb'])  || !empty($imgdata['align'])
+		|| !empty($imgdata['thumb'])  || !empty($imgdata['align'])  || !empty($imgdata['fileId'])
 	) {
 		//Get ID numbers for images in galleries and attachments included in src parameter as url
 		//So we can get db info for these too
@@ -685,11 +685,11 @@ function wikiplugin_img_info() {
 			//set to null first because Image class will place exif_thumbnail dimensions here if thumbnail exists
 			$imageObj->height = NULL;
 			$imageObj->width = NULL;
-			$fwidth = $imageObj->get_width();
-			$fheight = $imageObj->get_height();
+			$width = $fwidth = $imageObj->get_width();
+			$height = $fheight = $imageObj->get_height();
 		} else {  
-			$fwidth = $imagesize[0];
-			$fheight = $imagesize[1];
+			$width = $fwidth = $imagesize[0];
+			$height = $fheight = $imagesize[1];
 			//description from image iptc
 			$idesc = isset($iptc['2#120'][0]) ? trim($iptc['2#120'][0]) : '';	
 			//title from image iptc	
