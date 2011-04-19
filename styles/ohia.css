@@ -1126,7 +1126,9 @@ td.dirfooter {font-size: .95em}
 
 .opaque {
 	background: #990000;
-   border: 1px solid #990000}
+    border: 1px solid #990000;
+    color: #fff;
+}
 
 .opaque .box-title {border-bottom: 1px solid black}
 .searchresults {display: inline}
