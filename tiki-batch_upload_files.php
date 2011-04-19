@@ -166,7 +166,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 			'size' => $filesize,
 			'type' => $type,
 			'name' => $path_parts['basename'],
-		));
+		), $ext);
 
 		if (isset($result['error'])) {
 			$feedback[] = "!!!" . tr('Upload was not successful for %0 (%1)', $path_parts['basename'], $result['error']);
