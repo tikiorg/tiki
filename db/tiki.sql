@@ -1902,36 +1902,6 @@ CREATE TABLE `tiki_rss_feeds` (
   PRIMARY KEY (`name`,`rssVer`)
 ) ENGINE=MyISAM;
 
-DROP TABLE IF EXISTS `tiki_searchindex`;
-CREATE TABLE tiki_searchindex(
-  `searchword` varchar(80) NOT NULL default '',
-  `location` varchar(80) NOT NULL default '',
-  `page` varchar(255) NOT NULL default '',
-  `count` int(11) NOT NULL default '1',
-  `last_update` int(11) NOT NULL default '0',
-  PRIMARY KEY (`searchword`,`location`,`page`(80)),
-  KEY `last_update` (last_update),
-  KEY `location` (location(50), page(200))
-) ENGINE=MyISAM;
-
--- LRU (last recently used) list for searching parts of words
-DROP TABLE IF EXISTS `tiki_searchsyllable`;
-CREATE TABLE tiki_searchsyllable(
-  `syllable` varchar(80) NOT NULL default '',
-  `lastUsed` int(11) NOT NULL default '0',
-  `lastUpdated` int(11) NOT NULL default '0',
-  PRIMARY KEY (`syllable`),
-  KEY `lastUsed` (`lastUsed`)
-) ENGINE=MyISAM;
-
--- searchword caching table for search syllables
-DROP TABLE IF EXISTS `tiki_searchwords`;
-CREATE TABLE tiki_searchwords(
-  `syllable` varchar(80) NOT NULL default '',
-  `searchword` varchar(80) NOT NULL default '',
-  PRIMARY KEY (`syllable`,`searchword`)
-) ENGINE=MyISAM;
-
 DROP TABLE IF EXISTS `tiki_search_stats`;
 CREATE TABLE `tiki_search_stats` (
   `term` varchar(50) NOT NULL default '',
