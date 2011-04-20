@@ -87,7 +87,25 @@ function prefs_wikiplugin_list($partial = false) {
 		);
 
 		$out = array();
-		foreach( $tikilib->plugin_get_list() as $plugin ) {
+		$list = array();
+		$alias = array();
+		foreach( glob( 'lib/wiki-plugins/wikiplugin_*.php' ) as $file )
+		{
+			$base = basename( $file );
+			$plugin = substr( $base, 11, -4 );
+
+			$list[] = $plugin;
+		}
+
+		global $prefs;
+		if( isset($prefs['pluginaliaslist']) ) {
+			$alias = @unserialize($prefs['pluginaliaslist']);
+			$alias = array_filter($alias);
+		}
+		$list = array_merge( $list, $alias );
+		sort(array_filter($list));
+
+		foreach( $list as $plugin ) {
 			$preference = 'wikiplugin_' . $plugin;
 			$out[$preference] = array(
 				'default' => isset($defaultPlugins[$plugin]) ? 'y' : 'n',
