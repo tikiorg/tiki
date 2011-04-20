@@ -983,7 +983,7 @@ class TikiLib extends TikiDb_Bridge
 
 		if ( ! empty($find) ) {
 			$findesc = '%' . $find . '%';
-			$conditions['search'] = $quizzes->expr('(`name` like ? or `description` like ?)', array($finddesc, $finddesc));
+			$conditions['search'] = $quizzes->expr('(`name` like ? or `description` like ?)', array($findesc, $findesc));
 		}
 
 		$result = $quizzes->fetchColumn('quizId', $conditions);
