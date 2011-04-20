@@ -11,11 +11,12 @@ function prefs_users_list($partial = false) {
 	global $tikilib, $prefs;
 
 	$languages = array();
-	$languages = $tikilib->list_languages(false, null, true);
 
 	$list_languages = array('' => tra('Default'));
 
 	if (! $partial) {
+		$languages = $tikilib->list_languages(false, null, true);
+
 		foreach ($languages as $one_lang) {
 			if ( in_array($one_lang['value'], $prefs['available_languages']) ) {
 				// only availables languages are proposed to users
