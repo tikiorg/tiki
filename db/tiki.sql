@@ -1556,6 +1556,7 @@ CREATE TABLE `tiki_newsletter_groups` (
   `nlId` int(12) NOT NULL default '0',
   `groupName` varchar(255) NOT NULL default '',
   `code` varchar(32) default NULL,
+  `include_groups` char(1) DEFAULT 'y',
   PRIMARY KEY (`nlId`,`groupName`)
 ) ENGINE=MyISAM;
 
