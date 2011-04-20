@@ -8,14 +8,20 @@
 function prefs_global_list($partial = false) {
 	global $tikilib, $prefs, $url_host;
 
-	$all_styles = $tikilib->list_styles();
+	$all_styles = array();
+	$languages = array();
+
+	if (! $partial) {
+		$all_styles = $tikilib->list_styles();
+		$languages = $tikilib->list_languages( false, null, true);
+	}
+
 	$styles = array();
 
 	foreach ($all_styles as $style) {
 		$styles[$style] = substr( $style, 0, strripos($style, '.css'));
 	}
 	
-	$languages = $tikilib->list_languages( false, null, true);
 	$map = array();
 
 	foreach( $languages as $lang ) {
@@ -93,7 +99,7 @@ function prefs_global_list($partial = false) {
 			'type' => 'text',
 			'description' => tra('Tiki requires full read and write access to this directory.'),
 			'size' => 30,
-			'default' => TikiSetup::tempdir(),
+			'default' => TikiInit::tempdir(),
 			'perspective' => false,
 			'default' => 'temp',
 		),

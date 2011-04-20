@@ -18,6 +18,7 @@ require_once( 'tiki-filter-base.php' );
 
 // Define and load Smarty components
 require_once ( 'lib/smarty/libs/Smarty.class.php');
+require_once 'lib/init/initlib.php';
 require_once ('installer/installlib.php');
 
 class InstallerDatabaseErrorHandler implements TikiDb_ErrorHandler
