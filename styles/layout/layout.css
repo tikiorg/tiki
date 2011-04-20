@@ -48,6 +48,11 @@ header, nav, article, footer, address {
 	margin-bottom: 5px;
 }
 
+/* avoid table-like height properties in #header_fixedwidth */
+#header_container .fixedwidth {
+	display: block;
+	width: 100%;
+}
 
 body.fixed_width .fixedwidth .fixedwidth {
 	margin: 0 auto;
