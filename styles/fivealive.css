@@ -57,6 +57,11 @@ body.fixed_width .fixedwidth {
 
 }
 
+/* keep header content in page center (override layout.css)*/
+#header_container .fixedwidth {
+    margin-left: auto;
+}
+
 #header {	/* inner <header> element that gets .fixedwidth class applied */
 	background: url(fivealive/options/blueberry/siteheader.jpg) 0 0 no-repeat;
 /*	height: 220px;*/
