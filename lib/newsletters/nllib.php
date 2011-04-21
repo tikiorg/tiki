@@ -974,7 +974,7 @@ class NlLib extends TikiLib
 	// browser: true if on the browser
 	function send($nl_info, $info, $browser=true, &$sent, &$errors, &$logFileName) {
 		global $prefs, $smarty, $userlib, $tikilib;
-		global $headerlib; include_once('lib\headerlib.php');
+		global $headerlib; include_once('lib/headerlib.php');
 		if (empty($info['editionId'])) {
 			$info['editionId'] = $this->replace_edition($nl_info['nlId'], $info['subject'], $info['data'], 0, 0, true, $info['datatxt'], $info['files'], $info['wysiwyg']);
 		}
@@ -1121,7 +1121,7 @@ class NlLib extends TikiLib
 				@ob_end_flush();
 			}
 		}
-		$info['editionId'] = $this->replace_edition($nl_info['nlId'], $info['subject'], $info['data'], count($sent), $info['editionId'], false, !empty($info['datatxt']) ? $txt : '', $info['files'], $info['wysiwyg']);
+		$info['editionId'] = $this->replace_edition($nl_info['nlId'], $info['subject'], $info['data'], count($sent), $info['editionId'], false, $info['datatxt'], $info['files'], $info['wysiwyg']);
 		foreach($info['files'] as $k => $f) {
 			if ($f['savestate'] == 'tikitemp') {
 				$newpath = $prefs['tmpDir'] . '/newsletterfile-' . $f['filename'];
