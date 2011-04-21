@@ -139,9 +139,10 @@ function wikiplugin_include($data, $params, $offset) {
 		global $smarty;
 		require_once $smarty->_get_plugin_filepath('block', 'ajax_href');
 		require_once $smarty->_get_plugin_filepath('function', 'icon');
-		$text .= '<a class="editplugin" title="'.tra('Edit this page').'" '.	// ironically smarty_block_self_link doesn't work for this! ;)
+		$tip = tra('Include Plugin'). ' | ' . tra('Edit the included page:').' &quot;' . $page . '&quot;';
+		$text .= '<a class="editplugin tips" '.	// ironically smarty_block_self_link doesn't work for this! ;)
 				smarty_block_ajax_href( array('template' => 'tiki-editpage.tpl'), 'tiki-editpage.php?page='.urlencode($page).'&returnto='.urlencode($GLOBALS['page']),$smarty, false) .
-				smarty_function_icon(array( '_id' => 'page_edit', 'alt' => tra('Edit this page')), $smarty) . '</a>';
+				smarty_function_icon(array( '_id' => 'page_edit', 'title' => $tip, 'class' => 'icon tips'), $smarty) . '</a>';
 	}
 	return $text;
 }
