@@ -283,7 +283,7 @@ head.appendChild(script);
 		$js .= 'var ttl_eventData = ' . json_encode($ttl_data) . ";\n";
 
 		$js .= '
-var ttlTimelineReady = false, ttlTimeline, ttlInit = function() {
+var ttlTimelineReady = false, ttlInitCount = 0, ttlTimeline, ttlInit = function() {
 	// wait for Timeline to be loaded
 	if (typeof window.Timeline === "undefined" ||
 			typeof window.Timeline.createBandInfo === "undefined" ||
@@ -291,7 +291,11 @@ var ttlTimelineReady = false, ttlTimeline, ttlInit = function() {
 			typeof window.Timeline.GregorianDateLabeller === "undefined" ||
 			typeof window.Timeline.GregorianDateLabeller.getMonthName === "undefined" ) {
 
+		if (ttlInitCount > 10) {	// at least 5 secs - reload
+			location.replace(location.href);
+		}
 		window.setTimeout( function() { ttlInit(); }, 500);
+		ttlInitCount++;
 		return;
 	}
 
