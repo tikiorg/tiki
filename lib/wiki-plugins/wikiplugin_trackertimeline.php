@@ -74,7 +74,7 @@ function wikiplugin_trackertimeline_info() {
 			'scale1' => array(
 				'required' => false,
 				'name' => tra('Primary Scale Unit'),
-				'description' => tra('Unit of time to use for the primary scale (default to hour)'),
+				'description' => tra('Unit of time to use for the primary scale (default to hour - * denotes SIMILE only)'),
 				'filter' => 'alpha',
 				'default' => 'hour',
 				'options' => array(
@@ -83,13 +83,15 @@ function wikiplugin_trackertimeline_info() {
 					array('text' => tra('Day'), 'value' => 'day'), 
 					array('text' => tra('Week'), 'value' => 'week'), 
 					array('text' => tra('Month'), 'value' => 'month'), 
-					array('text' => tra('Year'), 'value' => 'year')
+					array('text' => tra('Year'), 'value' => 'year'),
+					array('text' => tra('Decade *'), 'value' => 'decade'),
+					array('text' => tra('Century *'), 'value' => 'century'),
 				)
 			),
 			'scale2' => array(
 				'required' => false,
 				'name' => tra('Secondary Scale Unit'),
-				'description' => tra('Unit of time to use for the secondary scale (default to empty)'),
+				'description' => tra('Unit of time to use for the secondary scale (default to empty - * denotes SIMILE only)'),
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
@@ -98,7 +100,9 @@ function wikiplugin_trackertimeline_info() {
 					array('text' => tra('Day'), 'value' => 'day'), 
 					array('text' => tra('Week'), 'value' => 'week'), 
 					array('text' => tra('Month'), 'value' => 'month'), 
-					array('text' => tra('Year'), 'value' => 'year')
+					array('text' => tra('Year'), 'value' => 'year'),
+					array('text' => tra('Decade *'), 'value' => 'decade'),
+					array('text' => tra('Century *'), 'value' => 'century'),
 				)
 			),
 			'link_group' => array(
@@ -159,12 +163,12 @@ function wikiplugin_trackertimeline( $data, $params ) {
 
 	if( $size <= 0 )
 		return "^" . tr("Start date after end date.") . "^";
-	
-	$fieldIds = array( 
-		$params['title'] => 'title', 
-		$params['summary'] => 'summary', 
-		$params['start'] => 'start', 
-		$params['end'] => 'end', 
+
+	$fieldIds = array(
+		$params['title'] => 'title',
+		$params['summary'] => 'summary',
+		$params['start'] => 'start',
+		$params['end'] => 'end',
 		$params['group'] => 'group',
 	);
 
@@ -219,19 +223,15 @@ function wikiplugin_trackertimeline( $data, $params ) {
 	$data = array_merge( $data, $new );
 	ksort($data);
 
-	$smarty->assign( 'wp_ttl_data', $data );
-
-	$layouts = array();
-
-	if( isset( $params['scale2'] ) && $layout = wp_ttl_genlayout( $start, $end, $size, $params['scale2'] ) )
-		$layouts[] = $layout;
-	
-	$layouts[] = wp_ttl_genlayout( $start, $end, $size, isset($params['scale1']) ? $params['scale1'] : 'hour' );
-
-	$smarty->assign( 'layouts', $layouts );
-	$smarty->assign( 'link_group_names', isset($params['link_group']) && $params['link_group'] == 'y' );
-
 	if ($params['simile_timeline'] !== 'y') {
+		$smarty->assign( 'wp_ttl_data', $data );
+		$layouts = array();
+		if( isset( $params['scale2'] ) && $layout = wp_ttl_genlayout( $start, $end, $size, $params['scale2'] ) ) {
+			$layouts[] = $layout;
+		}
+		$layouts[] = wp_ttl_genlayout( $start, $end, $size, isset($params['scale1']) ? $params['scale1'] : 'hour' );
+		$smarty->assign( 'layouts', $layouts );
+		$smarty->assign( 'link_group_names', isset($params['link_group']) && $params['link_group'] == 'y' );
 		return $smarty->fetch('wiki-plugins/wikiplugin_trackertimeline.tpl');
 
 	} else {	// SIMILE Timeline Widget setup
