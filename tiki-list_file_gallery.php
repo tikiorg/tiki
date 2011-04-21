@@ -593,13 +593,17 @@ if (!empty($_FILES)) {
 			exit;
 		}
 
+        if (empty($fileInfo) && !empty($_REQUEST['fileId'])) {
+			$fileInfo = $filegallib->get_file_info($_REQUEST['fileId']);
+        }
+
 		$fileId = $filegallib->replace_file($fileInfo['fileId']
 											, $fileInfo['name']
 											, $fileInfo['description']
-											, $result['name']
+											, $result['filename']
 											, $result['data']
 											, $result['size']
-											, $type['type']
+											, $result['type']
 											, $user
 											, $result['fhash']
 											, $fileInfo['comment']

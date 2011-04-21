@@ -79,7 +79,9 @@ if (count($filter)) {
 
 		$wiki = $formatter->format($results);
 
-		$smarty->assign('results', $tikilib->parse_data($wiki));
+		$smarty->assign('results', $tikilib->parse_data($wiki, array(
+			'is_html' => true,
+		)));
 	}
 }
 

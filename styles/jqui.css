@@ -184,10 +184,6 @@ input[type="submit"]:hover,
 	height: 100%;
 }
 
-#top_modules .box-logo {
-	height: 150px;
-}
-
 #top_modules #sitetitles {
 	font-weight: bold;
 	margin-left: 20px;
@@ -221,7 +217,7 @@ input[type="submit"]:hover,
 
 #topbar_modules .box-search {
 	position: absolute;
-	top: 10px;
+	top: 0px;
 	right: 20px;
 	height: 34px;
 	line-height: 34px;

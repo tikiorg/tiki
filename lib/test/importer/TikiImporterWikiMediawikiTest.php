@@ -419,15 +419,6 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
         $this->assertEquals($expectedResult, $this->obj->convertMarkup($mediawikiText));
     }
     
-    public function testConvertMarkupParserWikipediaSamplePage()
-    {
-    	$this->obj->dom = new DOMDocument;
-        $this->obj->configureParser();
-        $mediawikiText = file_get_contents(dirname(__FILE__) . '/fixtures/wikipedia_train_article.txt');
-        $expectedResult = file_get_contents(dirname(__FILE__) . '/fixtures/wikipedia_train_article_parsed.txt');
-        $this->assertEquals($expectedResult, $this->obj->convertMarkup($mediawikiText));
-    }
-
     public function testConvertMarkupShouldReturnNullIfEmptyMediawikiText()
     {
         $this->obj->dom = new DOMDocument;

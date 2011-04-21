@@ -686,7 +686,7 @@ function wikiplugin_img_info() {
 	if (!empty($imgdata['height']) || !empty($imgdata['width']) || !empty($imgdata['max']) 
 		|| !empty($imgdata['desc']) || strpos($imgdata['rel'], 'box') !== false 
 		|| !empty($imgdata['stylebox']) || !empty($imgdata['styledesc']) || !empty($imgdata['button']) 
-		|| !empty($imgdata['thumb'])  || !empty($imgdata['align']) || !empty($imgdata['metadata'])
+		|| !empty($imgdata['thumb'])  || !empty($imgdata['align']) || !empty($imgdata['metadata'])  || !empty($imgdata['fileId'])
 	) {
 		//Get ID numbers for images in galleries and attachments included in src as url parameter
 		//So we can get db info for these too
@@ -770,7 +770,7 @@ function wikiplugin_img_info() {
 			$imageObj->set_img_info($src, true);
 		}
 		if (isset($imageObj->exif['FILE']['FileDateTime'])) {
-			$imageObj->exif['FILE']['FileDateTime'] = $tikilib->get_long_datetime($imageObj->exif['FILE']['FileDateTime'], $user) . 
+			$imageObj->exif['FILE']['FileDateTime'] = $tikilib->get_long_datetime($imageObj->exif['FILE']['FileDateTime'], $user) .
 				' (Unixtime: ' . $imageObj->exif['FILE']['FileDateTime'] . ')';
 		}
 		//if we need iptc data
@@ -790,6 +790,8 @@ function wikiplugin_img_info() {
 			$fwidth = $imageObj->width;
 			$fheight = $imageObj->height;
 		}
+		$width = $fwidth;
+		$height = $fheight;
 		//get image gal thumbnail image for height and width
 		if (!empty($dbinfot['data']) || !empty($dbinfot['path'])) {
 			if (!empty($dbinfot['data'])) {
