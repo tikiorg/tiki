@@ -150,7 +150,7 @@ if (((isset($_REQUEST["addbatch"]) && isset($_FILES['batch_subscription'])) || (
 
 if (isset($_REQUEST["addgroup"]) && isset($_REQUEST['group']) && $_REQUEST['group'] != "") {
 	check_ticket('admin-nl-subsriptions');
-	$nllib->add_group($_REQUEST["nlId"], $_REQUEST['group']);
+	$nllib->add_group($_REQUEST["nlId"], $_REQUEST['group'], isset($_REQUEST['include_groups']) ? 'y' : 'n');
 }
 
 if (isset($_REQUEST["addincluded"]) && isset($_REQUEST['included']) && $_REQUEST['included'] != "") {

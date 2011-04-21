@@ -144,10 +144,14 @@ class NlLib extends TikiLib
 		// Get list of the root groups (groups explicitely subscribed to this newsletter)
 		//
 		$groups = array();
-		$query = "select `groupName` from `tiki_newsletter_groups` where `nlId`=?";
-		$result = $this->query($query, array((int)$nlId));
-		while ( $res = $result->fetchRow() ) {
-			$groups = array_merge($groups, array($res["groupName"]), $userlib->get_including_groups($res["groupName"]));
+		$query = "select `groupName`,`include_groups` from `tiki_newsletter_groups` where `nlId`=?";
+		$result = $this->fetchAll($query, array((int)$nlId));
+		foreach ($result as $res) {
+			$groups[] = $res['groupName'];
+
+			if ($res['include_groups'] == 'y') {
+				$groups = array_merge($groups, $userlib->get_including_groups($res["groupName"], 'y'));
+			}
 		}
 
 		// If some groups are subscribed to this newsletter, get the list of users from those groups to be able to add them as subscribers
@@ -503,12 +507,12 @@ class NlLib extends TikiLib
 		}
 	}
 
-	function add_group($nlId, $group) {
+	function add_group($nlId, $group, $include_groups = 'n') {
 		$query = "delete from `tiki_newsletter_groups` where `nlId`=? and `groupName`=?";
 		$result = $this->query($query,array((int)$nlId,$group), -1, -1, false);
 		$code = $this->genRandomString($group);
-		$query = "insert into `tiki_newsletter_groups`(`nlId`,`groupName`,`code`) values(?,?,?)";
-		$result = $this->query($query,array((int)$nlId,$group,$code));
+		$query = "insert into `tiki_newsletter_groups`(`nlId`,`groupName`,`code`,`include_groups`) values(?,?,?,?)";
+		$result = $this->query($query,array((int)$nlId,$group,$code,$include_groups));
 	}
 
 	function add_included($nlId, $includedId) {
@@ -730,7 +734,12 @@ class NlLib extends TikiLib
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
+		$userlib = TikiLib::lib('user');
 		while ($res = $result->fetchRow()) {
+			$res['additional_groups'] = array();
+			if ($res['include_groups'] == 'y') {
+				$res['additional_groups'] = $userlib->get_including_groups($res["groupName"], 'y');
+			}
 			$ret[] = $res;
 		}
 		$retval = array();
