@@ -106,7 +106,10 @@ function module_search_info() {
 				'name' => tra('Category identifier'),
 				'description' => tra('If set to a category identifier, pages created through the module are automatically categorized in the specified category.') . " " . tra('Not set by default.')
 			),
-			
+			'compact' => array(
+				'name' => tra('Compact mode'),
+				'description' => tra('Makes the three buttons only appear on mouse-over.') . " " . tra('Default:') . ' "n"'
+			),
 			
 		)
 	);
@@ -159,6 +162,7 @@ function module_search( $mod_reference, $smod_params ) {	// modifies $smod_param
 		'search_heading' => '',
 		'templateId' => '',
 		'categId' => '',
+		'compact' => 'n',
 	);
 	
 	$smod_params = array_merge($defaults, $smod_params);
