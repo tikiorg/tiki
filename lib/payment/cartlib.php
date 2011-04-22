@@ -7,30 +7,42 @@
 
 class CartLib
 {
-	function add_product( $code, $quantity, $info, $parentCode ) {
+	//Used for putting new items in the cart, to modify an already existing item in the cart, use update_quantity
+	function add_product( $code, $quantity, $info, $parentCode = 0 ) {
 		$this->init_cart();
 
-		$this->init_product( $code, $info, $parentCode );
-		
-		if (isset($parentCode)) return false;
-		
+		if ($parentCode) {
+			$this->init_product( $code, $info, $parentCode, $quantity );
+			$currentInventory = $this->get_inventory($code);	
+			if ($currentInventory < $quantity) {
+				// Abort entire bundle if one of the child products is out of stock
+				$this->update_quantity( $parentCode, 0, $info );
+			}
+			return false;
+		} else {
+			$this->init_product( $code, $info, $parentCode );
+		}
+
 		$current = $this->get_quantity( $code );
 		$current += $quantity;
 		
 		$this->add_bundle( $code, $quantity, $info );
 		
-		$this->update_quantity( $code, $current, $info, $fromBundle );
+		$this->update_quantity( $code, $current, $info );
 	}
 	
 	function get_product_info( $code ) {
 		$productId = $this->get_tracker_item_id_custom( "Products", "Product ID", $code );
 		$array = $this->get_tracker_values_custom( "Products", $productId);
-		$info = array();
 		
+		$info = array();		
+		$info['code'] = $code;
 		while($result = current($array)) {
 			$key = str_replace(" ", "", strtolower(key($array)));
 			switch ($key) {
 				case "productname": $key = "description"; break;	
+				case "associatedeventid": $key = "eventcode"; break;
+				case "productclassid": $key = "productclass"; break;
 			}
 			$info[$key] = $result;
 			next($array);
@@ -43,12 +55,16 @@ class CartLib
 		$moreInfo = $this->get_product_info( $code );
 		if ($moreInfo['productsinbundle']) {
 			$products = explode(",", $moreInfo['productsinbundle']);
-			$price = 0;
 			foreach($products as $product) {
-				if (is_numeric($product)) {
-					$infoProduct = $this->get_product_info($product);
+				$p = explode(":", $product);
+				if (count($p) == 1) {
+					$p[1] = 1;
+				}
+				list($productId, $productQuantity) = $p;
+				if (is_numeric($productId)) {
+					$infoProduct = $this->get_product_info($productId);
 					$infoProduct['price'] = 0;
-					$this->add_product( $product, $quantity, $infoProduct, $code );
+					$this->add_product( $productId, $productQuantity, $infoProduct, $code );
 				}
 			}
 		}
@@ -300,6 +316,11 @@ class CartLib
 		}
 		
 		$this->gift_certificate_discount = $this->total_no_discount - $total;
+
+		// CUSTOM feature not complete for group discount
+		if ($groupDiscount = $this->get_group_discount()) {
+			$total = (1 - $groupDiscount) * $total;
+		}
 		
 		return number_format( $total, 2, '.', '' );
 	}
@@ -324,6 +345,27 @@ class CartLib
 		}
 	}
 
+	function generate_item_description( $item, $parentCode = 0 ) {
+		if( $item['href'] ) {
+			$label = "[{$item['href']}|{$item['description']}]";
+		} else {
+			$label = $item['description'];
+		}
+		if ( !empty($item['onbehalf']) ) {
+			$label .= " " . tra('for') . " " . $item['onbehalf'];
+		}
+		if ($parentCode) {
+			$label = tra('Bundled Product') . ' - ' . $label;
+			if ($item['quantity'] > 1) {
+				$label .= ' (x' . $item['quantity'] . ')';
+			}
+			$item['quantity'] = ' ';
+			$item['price'] = ' ';
+		}
+		$wiki .= "{$item['code']}|{$label}|{$item['quantity']}|{$item['price']}\n";
+		return $wiki;
+	}
+
 	function get_description() {
 		$id_label = tra('ID');
 		$product_label = tra('Product');
@@ -336,17 +378,12 @@ class CartLib
 
 		foreach( $this->get_content() as $item ) {
 			if ( !$item['is_gift_certificate'] ) {
-				if( $item['href'] ) {
-					$label = "[{$item['href']}|{$item['description']}]";
-				} else {
-					$label = $item['description'];
-				}
-				if ( !empty($item['onbehalf']) ) {
-					//Custom2
-					$label .= " " . tra('for') . " " . $item['onbehalf'];
-				}
-				
-				$wiki .= "{$item['code']}|{$label}|{$item['quantity']}|{$item['price']}\n";
+				$wiki .= $this->generate_item_description( $item );
+				if ($bundledProducts = $this->get_bundled_products( $item['code'] )) { 
+					foreach ($bundledProducts as $b) {
+						$wiki .= $this->generate_item_description( $b, $item['code'] );
+					}
+				} 
 			}
 		}
 
@@ -356,11 +393,20 @@ class CartLib
 			$wiki .= $gift_certificate_label . $this->gift_certificate_code . " " . $this->gift_certificate_name . "\n";
 			$wiki .= $gift_certificate_amount_used_label . $this->gift_certificate_discount;
 		}
+
+		if ( $groupDiscount = $this->get_group_discount() ) {
+			$wiki .= "\nSpecial Group Discount: " . $groupDiscount * 100 . "%";
+		}
 		
 		return $wiki;
 	}
-
-	function update_quantity( $code, $quantity, $info = array('exchangetoproductid' => 0, 'exchangeorderamount' => 0), $skipRedirect = false ) {		
+	
+	function product_in_cart( $code ) {
+		return isset( $_SESSION['cart'][$code] );
+	}
+	
+ 	//Used for adjusting already added items in the cart
+	function update_quantity( $code, $quantity, $info = array('exchangetoproductid' => 0, 'exchangeorderamount' => 0) ) {		
 		$currentQuantity = $this->get_quantity( $code );
 		// Prevent going below 0 inventory TODO check feature
 		$currentInventory = $this->get_inventory($code);
@@ -370,8 +416,7 @@ class CartLib
 			}
 			global $access;
 			
-			if (!$skipRedirect)
-				$access->redirect( $_SERVER['REQUEST_URI'], tra('There is not enough inventory left for your request') );
+			$access->redirect( $_SERVER['REQUEST_URI'], tra('There is not enough inventory left for your request') );
 		}
 
 		if ($currentQuantity > 0) {
@@ -452,6 +497,9 @@ class CartLib
 				global $record_profile_items_created;
 				$record_profile_items_created = array();
 				$shopperprofile = Tiki_Profile::fromDb( 'shopper_prf' );
+				if (!empty($_SESSION['shopperinfoprofile'])) {
+					$shopperprofile = $_SESSION['shopperinfoprofile'];
+				}
 				$profileinstaller = new Tiki_Profile_Installer();
 				$profileinstaller->forget ($shopperprofile ); // profile can be installed multiple times
 				$profileinstaller->setUserData( $_SESSION['shopperinfo'] );
@@ -468,16 +516,20 @@ class CartLib
 		}
 	
 		$userInput = array(
-			'user' => $user,
+			'user' => $cartuser,
 			'time' => $tikilib->now,
 			'total' => $total,
 			'invoice' => $invoice, 
 		);
-		$orderprofile = Tiki_Profile::fromDb( 'order_prf' );
-		$orderitemprofile = Tiki_Profile::fromDb( 'orderitem_prf' );
+		if (!$user || isset($_SESSION['forceanon']) && $_SESSION['forceanon'] == 'y') {
+			$orderprofile = Tiki_Profile::fromDb( 'anon_order_prf' );
+			$orderitemprofile = Tiki_Profile::fromDb( 'anon_orderitem_prf' );
+		} else {
+			$orderprofile = Tiki_Profile::fromDb( 'order_prf' );
+			$orderitemprofile = Tiki_Profile::fromDb( 'orderitem_prf' );
+		}
 		$profileinstaller = new Tiki_Profile_Installer();
 		$profileinstaller->forget( $orderprofile ); // profile can be installed multiple times
-		$profileinstaller->forget( $orderitemprofile );
 		$profileinstaller->setUserData( $userInput );
 		
 		global $record_profile_items_created;
@@ -486,43 +538,12 @@ class CartLib
 		$profileinstaller->install( $orderprofile );
 		
 		$content = $this->get_content();
+
 		foreach( $content as $info ) {
-			if ($info['productclass']) {
-				$product_classes[] = $info['productclass'];
-			}
-			if (!empty($info['onbehalf'])) {
-				$itemuser = $info['onbehalf'];
-			} elseif (!$user || isset($_SESSION['forceanon']) && $_SESSION['forceanon'] == 'y') {
-				$itemuser = $cartuser;
-			} else {
-				$itemuser = $user;
-			}
-			// TODO get discounted price	
-			$userInput = array(
-				'user' => $itemuser,
-				'quantity' => $info['quantity'],
-				'price' => $info['price'],
-				'product' => $info['code'],
-				'eventcode' => $info['eventcode'],
-				'eventstart' => $this->get_tracker_value_custom('Events','Event Date',$info['eventcode']),
-				'eventend' => $this->get_tracker_value_custom('Events','Event End Date',$info['eventcode']),
-			);
-			$profileinstaller->setUserData( $userInput );	
-			$profileinstaller->forget( $orderitemprofile );
-			$profileinstaller->install( $orderitemprofile );
-			$this->change_inventory($info['code'], -1 * $info['quantity'], false);
-			if ($info['exchangetoproductid'] && $info['exchangeorderamount']) {	
-				$this->change_inventory($info['exchangetoproductid'], -1 * $info['exchangeorderamount'], false);
-			}
-			if ($total > 0) {
-				$paymentlib->register_behavior( $invoice, 'cancel', 'replace_inventory', array( $info['code'], $info['quantity'] ) );
-				if ($info['exchangetoproductid'] && $info['exchangeorderamount']) {
-					$paymentlib->register_behavior( $invoice, 'cancel', 'replace_inventory', array( $info['exchangetoproductid'], $info['exchangeorderamount'] ) );
-				}
-			}
+			$process_info = $this->process_item($invoice, $total, $info, $userInput, $cartuser, $profileinstaller, $orderitemprofile);
 		}
 		$email_template_ids = array();
-		$product_classes = array_unique($product_classes);
+		$product_classes = array_unique($process_info['product_classes']);
 		foreach ($product_classes as $pc) {
 			if ($email_template_id = $this->get_tracker_value_custom( 'Product Classes', 'Email Template ID', $pc)) {
 				$email_template_ids[] = $email_template_id;
@@ -558,11 +579,16 @@ class CartLib
 				require_once('lib/webmail/tikimaillib.php');
 				global $smarty;
 				$smarty->assign('shopperurl', $shopperurl);
+				$smarty->assign('email_template_ids', $email_template_ids);
 				$mail_subject = $smarty->fetch('mail/cart_order_received_anon_subject.tpl');
 				$mail_data = $smarty->fetch('mail/cart_order_received_anon.tpl');
 				$mail = new TikiMail();
 				$mail->setSubject($mail_subject);
-				$mail->setText($mail_data);
+				if ($mail_data == strip_tags($mail_data)) {
+					$mail->setText($mail_data);
+				} else {
+					$mail->setHtml($mail_data);
+				} 
 				$mail->setHeader("From", $prefs['sender_email']);
 				$mail->send($_SESSION['shopperinfo']['email']); // the field to use probably needs to be configurable as well 
 			} 
@@ -573,6 +599,67 @@ class CartLib
 		return $invoice;
 	}
 
+	function process_item($invoice, $total, $info, $userInput, $cartuser, $profileinstaller, $orderitemprofile, $parentQuantity = 0 ) {
+		global $user, $userlib, $paymentlib;
+		if ($bundledProducts = $this->get_bundled_products( $info['code'] ) ) {
+			foreach ($bundledProducts as $i) {
+				$this->process_item($invoice, $total, $i, $userInput, $cartuser, $profileinstaller, $orderitemprofile, $info['quantity'] );
+			}
+		}
+		if ($parentQuantity) {
+			$info['quantity'] = $info['quantity'] * $parentQuantity;
+		}
+		if ($info['productclass']) {
+			$product_classes[] = $info['productclass'];
+		}
+		if (!empty($info['onbehalf'])) {
+			$itemuser = $info['onbehalf'];
+		} elseif (!$user || isset($_SESSION['forceanon']) && $_SESSION['forceanon'] == 'y') {
+			$itemuser = $cartuser;
+		} else {
+			$itemuser = $user;
+		}
+		// TODO get discounted price	
+		$userInput = array(
+			'user' => $itemuser,
+			'quantity' => $info['quantity'],
+			'price' => $info['price'],
+			'product' => $info['code'],
+			'eventcode' => $info['eventcode'],
+			'eventstart' => $this->get_tracker_value_custom('Events','Event Date',$info['eventcode']),
+			'eventend' => $this->get_tracker_value_custom('Events','Event End Date',$info['eventcode']),
+		);
+		$profileinstaller->setUserData( $userInput );	
+		$profileinstaller->forget( $orderitemprofile );
+		$profileinstaller->install( $orderitemprofile );
+		$this->change_inventory($info['code'], -1 * $info['quantity'], false);
+		if ($info['exchangetoproductid'] && $info['exchangeorderamount']) {	
+			$this->change_inventory($info['exchangetoproductid'], -1 * $info['exchangeorderamount'], false);
+		}
+		if ($total > 0) {
+			$paymentlib->register_behavior( $invoice, 'cancel', 'replace_inventory', array( $info['code'], $info['quantity'] ) );
+			if ($info['exchangetoproductid'] && $info['exchangeorderamount']) {
+				$paymentlib->register_behavior( $invoice, 'cancel', 'replace_inventory', array( $info['exchangetoproductid'], $info['exchangeorderamount'] ) );
+			}
+		}
+		// Generate behavior for gift certificate purchase
+		if ($info['producttype'] == 'gift certificate') {
+			if (!$user && !empty($_SESSION['shopperinfo']['email'])) {
+				$giftcert_email = $_SESSION['shopperinfo']['email'];
+			} else {
+				$giftcert_email = $userlib->get_user_email($itemuser);
+			}
+			if (!empty($giftcert_email) && $total > 0) {
+				$paymentlib->register_behavior($invoice, 'complete', 'cart_gift_certificate_purchase', array($info['code'], $giftcert_email, $info['quantity']));
+			} elseif (!empty($giftcert_email)) {
+				require_once('lib/payment/behavior/cart_gift_certificate_purchase.php');
+				payment_behavior_cart_gift_certificate_purchase( $info['code'], $giftcert_email, $info['quantity'] );
+			}					
+		}
+		$ret = array('product_classes' => $product_classes);
+		return $ret;
+	}
+	
 	function empty_cart() {
 		$this->clear_onhold_list();
 		$_SESSION['cart'] = array(); 
@@ -600,23 +687,32 @@ class CartLib
 		}
 	}
 
-	private function init_product( $code, $info, $parentCode ) {
+	private function init_product( $code, $info, $parentCode = 0, $quantity = 0 ) {
 	
 		if( ! isset( $_SESSION['cart'][ $code ] ) ||  ! isset( $_SESSION['cart'][ $parentCode ][ 'bundledproducts' ][ $code ] ) ) {
 			$info['hash'] = md5($code.time());
 			$info['code'] = $code;
-			$info['quantity'] = 0;
+			$info['quantity'] = $quantity;
 			$info['price'] = number_format( abs($info['price']), 2, '.', '' );
 
 			if( ! isset( $info['href'] ) ) {
 				$info['href'] = null;
 			}
 
-			if( ! isset( $parentCode ) ) {
+			if( !$parentCode ) {
 				$_SESSION['cart'][ $code ] = $info;
 			} else {
 				 $_SESSION['cart'][ $parentCode ][ 'bundledproducts' ][ $code ] = $info;
 			}
+		}
+	}
+
+	function get_bundled_products( $parentCode ) {
+		$cart = $this->get_content();
+		if (isset($cart[$parentCode]['bundledproducts'])) {
+			return $cart[$parentCode]['bundledproducts'];
+		} else {
+			return false;
 		}
 	}
 
@@ -678,6 +774,11 @@ class CartLib
 	}
 
 	function hold_inventory( $productId, $amount = 1) {	
+		if ($bundledProducts = $this->get_bundled_products( $productId ) ) {
+			foreach ($bundledProducts as $b) {
+				$this->hold_inventory( $b['code'], $amount * $b['quantity'] );
+			}
+		}
 		$inventoryType = $this->get_inventory_type( $productId );
 		if ($inventoryType == 'none') {
 			return false;
@@ -689,6 +790,11 @@ class CartLib
 	}
 
 	function unhold_inventory( $productId, $amount = 1) {
+		if ($bundledProducts = $this->get_bundled_products( $productId ) ) {
+			foreach ($bundledProducts as $b) {
+				$this->unhold_inventory( $b['code'], $amount * $b['quantity'] );				
+			}
+		}
 		$inventoryType = $this->get_inventory_type( $productId );
 		if ($inventoryType == 'none') {
 			return false;
@@ -871,6 +977,16 @@ class CartLib
 		}
 	} 
 
+	function get_group_discount() {
+		// TOTALLY CUSTOM until proper feature is ready
+		global $user, $userlib;
+		if (!$user) return 0;
+		$userGroups = $userlib->get_user_groups($user);
+		if (in_array('Shop Free', $userGroups)) {
+			return 1;
+		}
+		return 0;
+	}
 }
 
 global $cartlib;
