@@ -592,7 +592,7 @@ function wikiplugin_img_info() {
 
 	include_once('tiki-sefurl.php');
 	//////////////////////Process multiple images //////////////////////////////////////
-	//Determine source first (also used later to check permissions)
+	//Determine source first
 	$id = array();
 	if (!empty($imgdata['fileId'])) {
 		$id['type'] = 'fileId';
@@ -612,15 +612,25 @@ function wikiplugin_img_info() {
 	$srcmash = $imgdata['fileId'] . $imgdata['id'] . $imgdata['attId'] . $imgdata['src'];
 	if (( strpos($srcmash, '|') !== false ) || (strpos($srcmash, ',') !== false ) || !empty($imgdata['fgalId']))  {
 		$separator = '';
-		if ( strpos($imgdata[$id['type']], '|') !== false ) {
+		$id = '';
+		if (!empty($imgdata['id'])) {
+			$id = 'id';
+		} elseif (!empty($imgdata['fileId'])) {
+			$id = 'fileId';
+		} elseif (!empty($imgdata['attId'])) {
+			$id = 'attId';
+		} else {
+			$id = 'src';
+		}		
+		if ( strpos($imgdata[$id], '|') !== false ) {
 			$separator = '|';
-		} elseif ( strpos($imgdata[$id['type']], ',') !== false )  {
+		} elseif ( strpos($imgdata[$id], ',') !== false )  {
 			$separator = ',';
 		}
 		$repl = '';
 		$id_list = array();
 		if (!empty($separator)) {
-			$id_list = explode($separator,$imgdata[$id['type']]);
+			$id_list = explode($separator,$imgdata[$id]);
 		} else {
 			$filegallib = TikiLib::lib('filegal');
 			$galdata = $filegallib->get_files(0, -1, 'created_desc', '', $imgdata['fgalId'], false, false, false, true, false, false, false, false, '', true, false, false);
@@ -629,11 +639,11 @@ function wikiplugin_img_info() {
 					$id_list[] = $dbinfo['id'];
 				}
 			}
-			$id['type'] = 'fileId';
+			$id = 'fileId';
 		}
-		$params[$id['type']] = '';
+		$params[$id] = '';
 		foreach ($id_list as $i => $value) {
-			$params[$id['type']] = trim($value);
+			$params[$id] = trim($value);
 			$params['fgalId'] = '';
 			$repl .= wikiplugin_img( $data, $params, $offset, $parseOptions );
 		}
@@ -691,12 +701,13 @@ function wikiplugin_img_info() {
 		//Get ID numbers for images in galleries and attachments included in src as url parameter
 		//So we can get db info for these too
 		global $base_host;
-		if (strpos($imgdata['src'], $base_host) !== false) {
-			if (strlen(strstr($imgdata['src'], $imagegalpath)) !== false) {
+		//don't pick up links to other tiki sites
+		if (strpos($imgdata['src'], 'http') === false || (strpos($imgdata['src'], 'http') === 0 && strpos($imgdata['src'], $base_host) !== false)) {
+			if (strlen(strstr($imgdata['src'], $imagegalpath)) > 0) {
 				$imgdata['id'] = substr(strstr($imgdata['src'], $imagegalpath), strlen($imagegalpath));
-			} elseif (strlen(strstr($imgdata['src'], $filegalpath)) !== false) {
+			} elseif (strlen(strstr($imgdata['src'], $filegalpath)) > 0) {
 				$imgdata['fileId'] = substr(strstr($imgdata['src'], $filegalpath), strlen($filegalpath)); 	
-			} elseif (strlen(strstr($imgdata['src'], $attachpath)) !== false) {
+			} elseif (strlen(strstr($imgdata['src'], $attachpath)) > 0) {
 				$imgdata['attId'] = substr(strstr($imgdata['src'], $attachpath), strlen($attachpath));
 			}
 		}
@@ -729,22 +740,22 @@ function wikiplugin_img_info() {
 				$basepath = $prefs['w_use_dir'];
 			}		
 			//Give error messages if file doesn't exist, isn't an image. Display nothing if user lacks permission
-			if ($id['type'] != 'src') {
+			if (!empty($imgdata['fileId']) || !empty($imgdata['id']) || !empty($imgdata['attId'])) {
 				if( ! $dbinfo ) {
 					return '^' . tra('File not found.') . '^';
 				} elseif( substr($dbinfo['filetype'], 0, 5) != 'image' AND !preg_match('/thumbnail/i', $imgdata['fileId'])) {
 					return '^' . tra('File is not an image.') . '^';
 				} elseif (!class_exists('Image')) {
 					return '^' . tra('Server does not support image manipulation.') . '^';
-				} elseif ($id['type'] == 'fileId') {
+				} elseif (!empty($imgdata['fileId'])) {
 					if (!$userlib->user_has_perm_on_object($user, $dbinfo['galleryId'], 'file gallery', 'tiki_p_download_files')) {
 						return $notice;
 					}
-				} elseif ($id['type'] == 'id') {
+				} elseif (!empty($imgdata['id'])) {
 					if (!$userlib->user_has_perm_on_object($user, $dbinfo['galleryId'], 'image gallery', 'tiki_p_view_image_gallery')) {
 						return $notice;
 					}
-				} elseif ($id['type'] == 'attId') {
+				} elseif (!empty($imgdata['attId'])) {
 					if (!$userlib->user_has_perm_on_object($user, $dbinfo['page'], 'wiki page', 'tiki_p_wiki_view_attachments')) {
 						return $notice;
 					}
@@ -1376,4 +1387,4 @@ function wikiplugin_img_info() {
 		$repl = '{img src=' . $src . "\"}\n<p>" . $imgdata['desc'] . '</p>'; 
 	}
 	return '~np~' . $repl. "\r" . '~/np~';
-}
+ }
