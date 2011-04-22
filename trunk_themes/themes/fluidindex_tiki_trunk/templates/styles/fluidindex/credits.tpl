@@ -1,0 +1,1 @@
+{* $Id$ *}<a href="http://zukakakina.com" title="Creative Commons Attribution 2.5 derivative by Gary Cunningham-Lee aka chibaguy">{tr}Theme{/tr}</a>: <a href="http://www.2yi.net/pwp_themes.html" title="{tr}Design by{/tr} Your Index">Fluid Index by Your Index</a>
