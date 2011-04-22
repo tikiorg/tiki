@@ -313,6 +313,11 @@ function check_smarty_syntax(&$error_msg) {
 	);
 
 	// Load Tiki Smarty
+	$prefs['smarty_compilation'] = 'always';
+	$prefs['smarty_security'] = 'y';
+	$prefs['maxRecords'] = 25;
+	$prefs['log_tpl'] = 'y';
+	$prefs['feature_sefurl_filter'] = 'y';
 	require_once 'lib/init/smarty.php';
 	set_error_handler('check_smarty_syntax_error_handler');
 
