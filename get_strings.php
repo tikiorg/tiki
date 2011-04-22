@@ -267,6 +267,7 @@ if ( $script_mode ) {
 		require_once('db/tiki-db.php');
 		$tikilib = TikiDb::get();
 	} else {
+		require_once('lib/init/tra.php');
 		require_once('lib/setup/prefs.php'); // Used to get default prefs
 	}
 
