@@ -17,6 +17,7 @@ class UnifiedSearchLib
 
 		$queuelib = TikiLib::lib('queue');
 		$toProcess = $queuelib->pull(self::INCREMENT_QUEUE, $count);
+		$errlib = TikiLib::lib('errorreport');
 
 		if (count($toProcess)) {
 			try {
@@ -28,7 +29,8 @@ class UnifiedSearchLib
 					$queuelib->push(self::INCREMENT_QUEUE, $message);
 				}
 
-				TikiLib::lib('errorreport')->report(tr('Search index could not be updated. The site is misconfigured. Contact an administrator.'));
+				$errlib->report(tr('Search index could not be updated. The site is misconfigured. Contact an administrator.') .
+								'<br />' . $e->getMessage());
 			}
 		}
 	}
