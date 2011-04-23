@@ -182,18 +182,18 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding: 0;
 }
 
-#header {
+.header {
 	position: relative;
 }
 
-#header_fixedwidth {
+.header_fixedwidth {
 	background: #003371 url(business/header.png) repeat-x bottom;
 	color: #91bef5;
 	padding: 0;
 }
 
-#header a,
-#header a:visited {
+.header a,
+.header a:visited {
 	color: #91bef5;
 }
 
@@ -299,7 +299,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 .cssmenu_horiz a:hover,
 .cssmenu_vert a:hover,
-#header .cssmenu_horiz li ul li a:hover {
+.header .cssmenu_horiz li ul li a:hover {
 	text-decoration: underline;
 	color: #0082e0;
 }

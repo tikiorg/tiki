@@ -20,7 +20,7 @@ body {
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
-#header {text-align: left}
+.header {text-align: left}
 #middle {text-align: left}
 
 #c1c2 {
@@ -229,8 +229,8 @@ body.fixed_width .fixedwidth .fixedwidth {
 	font-size: 1.6em;
 	margin-left: 20px}
 
-#header a,
-#header a:visited {
+.header a,
+.header a:visited {
 	color: #714952;
 	text-decoration: none}
 

@@ -185,12 +185,12 @@ input[type=password] {
 	width: 110px;
 }
 
-#header .box-search {
+.header .box-search {
 	position: absolute;
 	top: 45px;
 	right: 20px;
 }
-#header .box-search input.ac_input {
+.header .box-search input.ac_input {
 	background: #E7F8FD;
 	border: 1px solid #3CF;
 	color: #517298;
@@ -407,7 +407,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding: 0;
 }
 
-#header_container {
+.header_container {
 	color: #fff;
 	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
 }
@@ -656,7 +656,7 @@ a.flip:hover {
 	border-top: 1px solid #233039;
 }
 
-#header .cssmenu_horiz li:hover {
+.header .cssmenu_horiz li:hover {
 	background: #1b3a50;
 }
 
@@ -736,8 +736,8 @@ a.flip:hover {
 	text-align: left;
 }
 
-#header .cssmenu_horiz a,
-#header .cssmenu_horiz a:visited {
+.header .cssmenu_horiz a,
+.header .cssmenu_horiz a:visited {
 	padding: 3px 3px 6px 3px;
 	text-decoration: none;
 	font: normal 1em Verdana, Helvetica, Arial, Sans-Serif;
@@ -749,11 +749,11 @@ a.flip:hover {
 	text-align: center;
 }
 
-#header .cssmenu_horiz li.menuSection a {
+.header .cssmenu_horiz li.menuSection a {
 	padding-right: 2em;
 }
 
-#header .cssmenu_horiz a:hover {
+/header .cssmenu_horiz a:hover {
 	text-decoration: none;
 	background: url(strasa/headermenuitem-hover.png) bottom center repeat-x;
 	border-color: #336699;
@@ -762,26 +762,26 @@ a.flip:hover {
 	color: #fff;
 }
 
-#header .cssmenu_horiz li ul li a,
-#header .cssmenu_horiz li ul li a:link,
-#header .cssmenu_horiz li ul li a:visited,
-#header .cssmenu_horiz li ul li a:hover {
+.header .cssmenu_horiz li ul li a,
+.header .cssmenu_horiz li ul li a:link,
+.header .cssmenu_horiz li ul li a:visited,
+.header .cssmenu_horiz li ul li a:hover {
 	text-align: left;
 	border: 0;
 }
 
-#header .cssmenu_horiz li ul li a:hover {
+.header .cssmenu_horiz li ul li a:hover {
 	background: none;	
 }
 
-#header .cssmenu_horiz li ul li {
+.header .cssmenu_horiz li ul li {
 	border: 1px solid #08698f;
 	background: #1b3a50;
 	border-top: 0;
 	margin-bottom: -1px
 }
 
-#header .cssmenu_horiz li ul li:first-child,
+.header .cssmenu_horiz li ul li:first-child,
 .cssmenu_vert li ul li:first-child {
 	border-top: 1px solid #08698f;
 }

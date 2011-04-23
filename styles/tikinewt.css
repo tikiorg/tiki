@@ -271,12 +271,12 @@ label {
 }
 
 /***** Site Header & Identity *****/
-#header {
+.header {
 	background: #e9ecef;
 }
 
-#header a,
-#header a:visited {
+.header a,
+.header a:visited {
 	text-decoration: none;
 }
 

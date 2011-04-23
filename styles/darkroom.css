@@ -303,7 +303,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 /* Site Header & Identity */
-#header_container {
+.header_container {
 	padding-top: 2px;
 	text-align: left;
 	background: #0c0c0c;

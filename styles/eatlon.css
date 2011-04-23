@@ -54,7 +54,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	margin-bottom: 0;
 }
 
-#header_container .fixedwidth {
+.header_container .fixedwidth {
 	text-align: left;
 	height: 126px;
 	background: #fff url(eatlon/head_bg.gif) repeat-x 0 0;

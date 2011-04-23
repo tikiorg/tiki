@@ -34,10 +34,10 @@
 				{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y') }
 					{if $prefs.module_zones_top eq 'fixed' or ($prefs.module_zones_top ne 'n' && $top_modules|@count > 0)}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}
-							<div id="header_outer">
-								<div id="header_container">
-									<div id="header_fixedwidth" class="fixedwidth">
-										<header class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+							<div class="header_outer">
+								<div class="header_container">
+									<div class="fixedwidth header_fixedwidth">
+										<header class="clearfix header" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 											<div class="content clearfix modules" id="top_modules">
 												{section name=homeix loop=$top_modules}
 													{$top_modules[homeix].data}
@@ -52,7 +52,7 @@
 				{/if}
 				<div class="middle_outer">
 					{if $prefs.feature_layoutshadows eq 'y'}<div id="middle-shadow">{eval var=$prefs.middle_shadow_start}{/if}
-						<div class="clearfix fixedwidth" id="middle">
+						<div class="clearfix fixedwidth middle" id="middle">
 							<div class="content clearfix modules" id="topbar_modules">
 								{section name=homeix loop=$topbar_modules}
 									{$topbar_modules[homeix].data}
@@ -159,7 +159,7 @@
 				{if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 					{if $prefs.module_zones_bottom eq 'fixed' or ($prefs.module_zones_bottom ne 'n' && $bottom_modules|@count > 0)}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}
-							<footer id="footer">
+							<footer class="footer" id="footer">
 								<div class="footer_liner">
 									<div class="fixedwidth footerbgtrap">
 										<div id="bottom_modules" class="content modules"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>

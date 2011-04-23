@@ -29,11 +29,11 @@ hr {
 	background: #ffc506;
 }
 
-#header_outer {
+.header_outer {
 	background: url(lemon/siteheadertile.png) 0 0 no-repeat;
 }
 
-#header {
+.header {
 	background: url(lemon/siteheader.png) -250px 0 no-repeat;
 }
 
@@ -104,8 +104,8 @@ span#genPass .button a:hover,
 
 .cssmenu_vert li ul a,
 .cssmenu_horiz li ul a,
-#header .cssmenu_horiz li ul a,
-#header .cssmenu_horiz li:hover ul a,
+.header .cssmenu_horiz li ul a,
+.header .cssmenu_horiz li:hover ul a,
 #topbar_modules .cssmenu_horiz li ul a,
 #topbar_modules .cssmenu_horiz li:hover ul a  {
 	background: #c75a29;
@@ -113,19 +113,19 @@ span#genPass .button a:hover,
 
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
-#header .cssmenu_horiz li ul a:hover,
+.header .cssmenu_horiz li ul a:hover,
 #topbar_modules .cssmenu_horiz li ul a:hover  {
 	background: #f68c1a;
 }
 
-#header .cssmenu_horiz li.selected a,
+.header .cssmenu_horiz li.selected a,
 #topbar_modules .cssmenu_horiz li.selected a,
 .cssmenu_horiz li.selected a,
 .cssmenu_vert li.selected a {
 	color: #fcebbc;
 }
 
-#header .cssmenu_horiz li.selected li a,
+.header .cssmenu_horiz li.selected li a,
 #topbar_modules .cssmenu_horiz li.selected li a,
 .cssmenu_horiz li.selected li a,
 .cssmenu_vert li.selected li a {

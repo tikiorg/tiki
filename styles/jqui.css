@@ -171,12 +171,12 @@ input[type="submit"]:hover,
 
 
 /***** Site Header & Identity *****/
-#header {
+.header {
 	min-height: 100%;
 	height: 100% !important;
 }
 
-#header_fixedwidth {
+.header_fixedwidth {
 	height: auto;
 }
 
