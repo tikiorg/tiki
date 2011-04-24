@@ -201,16 +201,15 @@ table textarea {font-size: 1.3em}
 ul, ol {text-align: left}
 
 /***** Site Header & Identity *****/
-#header {
-	background: url(andreas09/options/black/header.jpg) repeat-x bottom}
+.header {
+	background: url(andreas09/options/black/header.jpg) repeat-x bottom;
+	color: #fff;
+	margin: 0;
+	text-align: left;
+}
 
 * html #header-top {height: 101px}
 
-#header {
-	color: #fff;
-	margin: 0;
-	text-align: left}
-	
 #top_modules {
 	min-height: 101px;
 }
@@ -219,8 +218,12 @@ ul, ol {text-align: left}
 	position: absolute;
 	bottom: 2px;
 	right: 10px;
-	font-size: 95%}
+}
 	
+.siteloginbar_popup ul ul {
+	margin-top: -10px;
+}
+
 .box-logo {
 	position: absolute;
 	top: 20px;
@@ -241,8 +244,8 @@ ul, ol {text-align: left}
 
 #sitesubtitle {font-size: 1.6em}
 
-#header a,
-#header a:visited {color: #fff}
+.header a,
+.header a:visited {color: #fff}
 
 #topbar_modules {
 	min-height: 38px;
@@ -692,15 +695,16 @@ td.even {
 	list-style-image: none;
 	float: left;
 	font-size: .95em;
-	background: #f0f0f0 url(andreas09/options/black/menuhover.jpg) 0 -20px repeat-x;
+	background: #f0f0f0 url(andreas09/options/black/menuhover.jpg) 0 -14px repeat-x;
 	border: 1px solid #666;
 	outline: none;
 	border-bottom-width: 0 !important;
 	margin: 0 .2em -1px 0;
 }
 
-.tabmark a {
-	padding: 0.5em 1em;
+.tabmark a, 
+.header .siteloginbar_popup a {
+	/*	padding: 0.5em 1em;*/
 	color: #666;
 	font-weight: bold;
 }
@@ -710,7 +714,9 @@ td.even {
 .tabmark a:hover,
 .tabactive {
 	color: black;
-	background: #f0f0f0 url(andreas09/options/black/menuhover.jpg) top left repeat-x}
+	background: #f0f0f0 url(andreas09/options/black/menuhover.jpg) top left repeat-x;
+	text-decoration: none;
+}
 
 .tabcontent {
 	padding: 2px;

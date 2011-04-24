@@ -7,11 +7,11 @@ table#main > tbody {background: url(red/borderr.png) repeat-y 100% 0;}
 td#leftborder {background: #5e0d15 url(red/borderl.png) repeat-y}
 td#rightborder {background: #5e0d15 url(red/borderr.png) repeat-y}
 td#footer_td {background: url(red/footer_bottom.jpg) no-repeat 100% 100%;}
-#footer {background: url(red/footer_bottom.jpg) no-repeat 0 100%;}
+.footer {background: url(red/footer_bottom.jpg) no-repeat 0 100%;}
 .footer_liner {background: url(red/footer_top.jpg) no-repeat 100% 0;}
 .footerbgtrap {background: url(red/footer_top.jpg) no-repeat 0 0;}
-#header {background: url(red/header.jpg) no-repeat 100% 0}
-#header .wrapper {background: url(red/header.jpg) no-repeat; margin-right: 32px}
+.header {background: url(red/header.jpg) no-repeat 100% 0}
+.header .wrapper {background: url(red/header.jpg) no-repeat; margin-right: 32px}
 .topbar_modules_container {background: url(red/topbar.jpg) no-repeat 100% 0}
 .topbar_modules_container > .wrapper {background: url(red/topbar.jpg) no-repeat;}
 #Milkyway_topbar_menu .cssmenu_horiz li.menuLevel0 a:hover {background: /*#2b2b2b*/ url(red/mw_menu_active_bg.png) 0 0 repeat-x;color: #fff}

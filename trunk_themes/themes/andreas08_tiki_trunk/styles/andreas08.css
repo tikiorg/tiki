@@ -26,7 +26,7 @@ body {
 	color: #303030;
 	border: 1px solid #a0a0a0}
 
-#header_fixedwidth {
+.header_fixedwidth {
 	background: #467aa7;
 	color: #fff}
 	
@@ -220,9 +220,9 @@ input[id="sl-login-pass"] {
 	letter-spacing: -1px;
 	font-weight: normal}
 
-#header a,
-#header a:link,
-#header a:visited {color: white}
+.header a,
+.header a:link,
+.header a:visited {color: white}
 
 #tiki-top {
 	width: 100%;
@@ -509,7 +509,8 @@ tabactive,
 	color: black;
 	background: #f0f9ff}
 	*/
-.tabactive {
+.tabactive,
+.statuson {
 	background: #67ade7;
 	border: solid 1px #696969;
 	border-bottom: solid 3px #d2e5f5}
@@ -518,6 +519,10 @@ tabactive,
 	border: 1px solid #abcdef;
 	background: #f0f9ff;
 	color: #000;
+}
+
+.statuson {
+	border-style: inset;
 }
 
 /***** Wiki *****/

@@ -1,0 +1,64 @@
+/* $Id$
+ * LiteJazz Green theme option for TikiWiki CMS/Groupware,
+ * uses visual elements of the LiteJazz theme for
+ * Drupal by roopletheme, which was released under
+ * the GNU/GPL license.
+*/
+
+body {
+  color: #292929;
+  background: #adadad url(green/bg.png) 0 0 repeat-x;
+}
+
+a,
+a:visited,
+a:hover,
+.titleb { color: #047504}
+
+.highlight,
+span.button.highlight a {
+	background: #41b61c;
+	color: #fff;
+}
+
+#middle h1,
+#middle h2,
+#middle h3,
+h3.box-title {color:#166F00}
+
+/* LiteJazz top section */
+#topbar_modules {
+	background: #41b61c url(green/topbar_custcode.png) 0 0 repeat-x !important;
+	color: #F0F0F0}
+
+#topbar_modules a,
+#topbar_modules a:visited {color: #9EFBA0}
+
+
+#footer h2,
+#footer h3,
+#footer h4 {color: #DEDEDE}
+
+#footer a,
+#footer a:link,
+#footer a:visited {color: #9EFBA0;
+}
+
+.cssmenu_vert li ul li:hover a,
+#secondary_site_menu .cssmenu_horiz li:hover,
+#tiki-top .cssmenu_horiz li ul li:hover,
+.cssmenu_vert li ul li:hover,
+.cssmenu_vert li ul li.sfHover {
+	background: #41b61c !important;
+ 	color: #fff;
+}
+
+#tiki-top .cssmenu_horiz ul li a:hover,
+.cssmenu_vert li ul li a:hover {
+	text-decoration: underline !important;
+}
+
+.days {
+	color: #D8D8D8;
+	background-color: #047504;
+}

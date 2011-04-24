@@ -10,8 +10,8 @@ td#footer_td {background: url(green/footer_bottom.jpg) no-repeat 100% 100%;}
 #footer {background: url(green/footer_bottom.jpg) no-repeat 0 100%;}
 .footer_liner {background: url(green/footer_top.jpg) no-repeat 100% 0;}
 .footerbgtrap {background: url(green/footer_top.jpg) no-repeat 0 0;}
-#header {background: url(green/header.jpg) no-repeat 100% 0}
-#header .wrapper {background: url(green/header.jpg) no-repeat}
+.header {background: url(green/header.jpg) no-repeat 100% 0}
+.header .wrapper {background: url(green/header.jpg) no-repeat}
 .topbar_modules_container {background: url(green/topbar.jpg) no-repeat 100% 0}
 .topbar_modules_container > .wrapper {background: url(green/topbar.jpg) no-repeat;}
 #Milkyway_topbar_menu .cssmenu_horiz li.menuLevel0 a:hover {background: url(green/mw_menu_active_bg.png) 0 0 repeat-x;color: #fff}

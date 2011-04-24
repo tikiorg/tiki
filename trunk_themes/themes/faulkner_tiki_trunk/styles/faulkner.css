@@ -48,24 +48,31 @@ body.fullscreen {
 #main {
 	background: url(faulkner/parchmentright.jpg) repeat-y 100% 0}
 
-#header_outer,
+.header_outer,
 .middle_outer,
 #footer {
 	background: url(faulkner/parchmentleft.jpg) repeat-y;
+}
+
+#pagetop_modules,
+#tiki-center {
+	margin: 0 8px;
 }
 
 #c1c2 #col2 {
 	width: 180px;
 }
 
-
 #col3 {
 	width: 180px;
 }
 
-#c1c2 #col2 > .content,
+#c1c2 #col2 > .content {
+	margin: 0 6px 0 10px;
+}
+
 #col3 > .content {
-	margin: 0 10px;
+	margin: 0 10px 0 6px;
 }
 
 #footer {
@@ -211,8 +218,8 @@ ol li {padding: 4px 0}
 
 /***** Site Header & Identity *****/
 #main-header {background: url(faulkner/parchmentleft.jpg) repeat-y}
-div#header {background: url(faulkner/parchmentright.jpg) 100% 0 repeat-y}
-
+.header {background: url(faulkner/parchmentright.jpg) 100% 0 repeat-y}
+/*
 #header-top {
 	position: relative;
 	text-align: center;
@@ -222,10 +229,10 @@ div#header {background: url(faulkner/parchmentright.jpg) 100% 0 repeat-y}
 	text-align: center;
 	min-height: 70px;
 	margin: 0 auto;
-	padding-top: 30px}
+	padding-top: 30px}*/
 	
 #top_modules {
-	min-height: 160px;
+	min-height: 70px;
 	text-align: center;
 	padding-top: 30px;
 }
@@ -283,8 +290,8 @@ input[id="sl-login-pass"] {font-size: 90%}
 #sitetitle a:visited,
 #customcode a:visited {color: #663300}
 
-#header a,
-#header a:visited {text-decoration: none}
+.header a,
+.header a:visited {text-decoration: none}
 
 #faulkner_topbar_menu {
 	margin: 0 auto;
@@ -299,10 +306,16 @@ input[id="sl-login-pass"] {font-size: 90%}
 	margin: auto;
 	text-align: left}
 	
+#faulkner_topbar_menu br {
+	display: none;
+}
+	
 #topbar_modules .box-search {
-	position: absolute;
+	/*position: absolute;
 	right: 10px;
-	bottom: 0px;
+	bottom: 0;*/
+	text-align: right;
+	height: 2em;
 }
 
 /****** Menus, Links ******/
@@ -327,7 +340,7 @@ input[id="sl-login-pass"] {font-size: 90%}
 	display: block;
 	background: transparent url(faulkner/menu.gif) no-repeat scroll left center;
 	color: #660000;
-	font-size: 0.9em;
+/*	font-size: 0.9em;*/
 	padding: 5px 5px 5px 22px;
 	text-decoration: none}
 
@@ -351,35 +364,35 @@ input[id="sl-login-pass"] {font-size: 90%}
 
 .cssmenu_vert ul a:hover {color: #880000}
 
-#tiki-top .cssmenu_horiz > li > a {
+#faulkner_topbar_menu .cssmenu_horiz > li > a {
 	/*padding: 10px 15px 5px 15px;*/
 	font: 600 1.2em garamond,times,'times new romans',serif;
 	color: #990000}
 
-#tiki-top .cssmenu_horiz > li > a:hover {
+#faulkner_topbar_menu .cssmenu_horiz > li > a:hover {
 	/*padding: 10px 15px 5px 15px;*/
 	color: #C90;
 	text-decoration: none;
 	background: url(faulkner/menuhover.jpg) repeat-x bottom left}
 	
-#tiki-top .cssmenu_horiz li ul {
+#faulkner_topbar_menu .cssmenu_horiz li ul {
 	margin-top: -9px;
 }
 
-#tiki-top .cssmenu_horiz li ul ul {
+#faulkner_topbar_menu .cssmenu_horiz li ul ul {
 	margin-top: -1px;
 }
 
 /* left column width */
 #col2 .cssmenu_vert,
 #col2 .cssmenu_vert li {
-	width: 170px;
+	width: 160px;
 }
 
 /* offset from left column (matches above) */
 #col2 .cssmenu_vert li:hover ul,
 #col2 .cssmenu_vert li.sfHover ul {
-	left: 170px;
+	left: 160px;
 }
 
 /* return ul ul ... to default */
@@ -401,11 +414,11 @@ a .sf-sub-indicator {
 	top: .5em;
 }
 
-#tiki-top .cssmenu_horiz li a .sf-sub-indicator {
+#faulkner_topbar_menu .cssmenu_horiz li a .sf-sub-indicator {
 	top: 0.7em;
 }
 
-#tiki-top .cssmenu_horiz li ul li a .sf-sub-indicator {
+#faulkner_topbar_menu .cssmenu_horiz li ul li a .sf-sub-indicator {
 	top: .5em;
 }
 
@@ -480,6 +493,10 @@ h3.box-title {
 .box-title a,
 .box-title a:link {color: #a80}
 .flipmodimage:hover {border: 1px solid #eccaa3 !important}
+
+.box-data ul {
+	padding-left: 0;
+}
 
 .box-data ol li a,
 .box-data ol li:hover {
@@ -594,6 +611,10 @@ form fieldset.tabcontent {
 	border-right: 1px solid #ffe399;
 	border-bottom: 1px solid #ffe399;
 	border-top: 0 !important}
+
+.statuson {
+	background: #eacca7;
+}
 
 /***** Wiki *****/
 h1 a.pagetitle {

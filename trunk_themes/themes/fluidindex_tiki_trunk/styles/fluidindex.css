@@ -252,7 +252,7 @@ ol li {
 tt {font-size: 1.2em}
 
 /***** Site Header & Identity *****/
-#header {
+.header {
 	background: #8c9eaa url(fluidindex/bg.gif) repeat-x 0 100%;
 	min-height: 75px;
 }
@@ -282,7 +282,7 @@ tt {font-size: 1.2em}
 
 #sitelocbar {float: left;}
 
-/* #header text selectors, if needed */
+/* .header text selectors, if needed */
 
 #top_modules #sitetitle,
 #top_modules #sitesubtitle {

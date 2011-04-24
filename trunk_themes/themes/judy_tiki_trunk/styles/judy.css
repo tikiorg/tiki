@@ -27,7 +27,7 @@ body {
 	margin-top: 0;
 }
 
-#header {
+.header {
 	min-height: 80px;
 	background: url(judy/header.png) repeat-x 0 100%;
 }
@@ -92,7 +92,7 @@ body {
 #tiki-center {
 	margin-left: -25px;
 	margin-right: -25px;
-	background: #fff url(judy/bg-content.png) repeat-x 50% -60px;
+	background: #fff url(judy/bg-content.png) repeat-x 50% -12px;
 	padding: 0 20px 20px 20px;
 	min-height: 340px
 }
@@ -241,12 +241,12 @@ ol li/*, ul li*/ {
 }
 
 /***** Site Header & Identity *****/
-#header a:link,
-#header a:visited {
+.header a:link,
+.header a:visited {
 	color: #cde3f1;
 }
 
-#header a:hover {
+.header a:hover {
 	color: #cde3f1;
 }
 
@@ -302,10 +302,10 @@ ol li/*, ul li*/ {
 	right: 20px;
 }
 
-#topbar_modules .box-search {
+#top_modules .box-search {
 	position: absolute;
-	top: 6px;
 	right: 10px;
+	bottom: 0;
 }
 
 /****** Menus, Links ******/
@@ -317,7 +317,7 @@ ol li/*, ul li*/ {
 	text-decoration: none;
 }
 
-#header .cssmenu_horiz {
+.header .cssmenu_horiz {
 	position: static;
 	float: right;
 	padding-top: 12px
@@ -543,7 +543,8 @@ tr.even td.active {
 	display: block;
 	float: left;
 }
-.tabmark {
+.tabmark,
+.statuson {
 	background: #d3e7f4;
 	color: #fff;
 }

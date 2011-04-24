@@ -10,8 +10,8 @@ td#footer_td {background: url(blue/footer_bottom.jpg) no-repeat 100% 100%;}
 #footer {background: url(blue/footer_bottom.jpg) no-repeat 0 100%;}
 .footer_liner {background: url(blue/footer_top.jpg) no-repeat 100% 0;}
 .footerbgtrap {background: url(blue/footer_top.jpg) no-repeat 0 0;}
-#header {background: url(blue/header.jpg) no-repeat 100% 0}
-#header .wrapper {background: url(blue/header.jpg) no-repeat}
+.header {background: url(blue/header.jpg) no-repeat 100% 0}
+.header .wrapper {background: url(blue/header.jpg) no-repeat}
 .topbar_modules_container {background: url(blue/topbar.jpg) no-repeat;
 	background-position: right 0}
 .topbar_modules_container > .wrapper {background: url(blue/topbar.jpg) no-repeat;}

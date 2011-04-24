@@ -1,22 +1,20 @@
-/* $Id: green.css 29560 2010-09-22 19:35:55Z Jyhem $ - Green theme option for Milkyway */
+/* $Id: green.css 33678 2011-03-27 03:42:21Z chibaguy $ - Green theme option for Milkyway */
 body {background: #346b17}
 a:link, a:visited, .cssmenu_vert li a, .cssmenu_vert li a:visited {color: #4ba123}
 a:hover {color: #316b16}
+table#main {background: #fff url(green/borderl.png) repeat-y;}
+table#main > tbody {background: url(green/borderr.png) repeat-y 100% 0;}
 td#leftborder {background: url(green/borderl.png) repeat-y}
 td#rightborder {background: url(green/borderr.png) repeat-y}
-td#footer {background: url(green/footer.jpg) no-repeat}
-td#footer .wrapper {background: url(green/footer.jpg) no-repeat 100% 0}
-div#header {background: url(green/header.jpg) no-repeat 100% 0}
-#header .wrapper {background: url(green/header.jpg) no-repeat; margin-right: 32px}
-#tiki-top {background: url(green/topbar.jpg) no-repeat 100% 0;
-	padding: 0;
-	margin: 0}
-#tiki-top .wrapper {background: url(green/topbar.jpg) no-repeat 0 0;
-	margin-right: 32px;}
-#topbar_custom_code {background: white url(green/borderr.png) 100% 0 repeat-y}
-#topbar_cc_liner {background: white url(green/borderl.png) repeat-y 0 0}
-#tiki-top .cssmenu_horiz li.menuLevel0 a:hover,
-.horbaritem a:hover {background: /*#2b2b2b*/ url(green/mw_menu_active_bg.png) 0 0 repeat-x;color: #fff}
+td#footer_td {background: url(green/footer_bottom.jpg) no-repeat 100% 100%;}
+#footer {background: url(green/footer_bottom.jpg) no-repeat 0 100%;}
+.footer_liner {background: url(green/footer_top.jpg) no-repeat 100% 0;}
+.footerbgtrap {background: url(green/footer_top.jpg) no-repeat 0 0;}
+#header {background: url(green/header.jpg) no-repeat 100% 0}
+#header .wrapper {background: url(green/header.jpg) no-repeat}
+.topbar_modules_container {background: url(green/topbar.jpg) no-repeat 100% 0}
+.topbar_modules_container > .wrapper {background: url(green/topbar.jpg) no-repeat;}
+#Milkyway_topbar_menu .cssmenu_horiz li.menuLevel0 a:hover {background: url(green/mw_menu_active_bg.png) 0 0 repeat-x;color: #fff}
 .bt {background: url(green/modbox.jpg) no-repeat 100% 0}
 .bt div {background: url(green/modbox.jpg) no-repeat 0 0}
 .bb {background: url(green/modbox.jpg) no-repeat 100% 100%}

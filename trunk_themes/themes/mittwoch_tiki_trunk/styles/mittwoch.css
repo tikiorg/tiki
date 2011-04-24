@@ -50,12 +50,9 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 #showhide_columns {
-	padding: 2px 2px 0 2px;
+	padding: 2px 0;
 }
 
-.tellafriend {
-	margin-right: 2px;
-}
 
 #c1c2 #col1 {
 	padding-left: 20px;
@@ -102,16 +99,16 @@ body.fixed_width .fixedwidth .fixedwidth {
 	margin: 1em;
 }
 
-#header a,
-#header a:visited,
-#footer a,
-#footer a:visited {
+.header a,
+.header a:visited,
+.footer a,
+.footer a:visited {
 	color: #f0f0f0;
 	text-decoration: none;
 	font-weight: normal}
 
-#header a:hover,
-#footer a:hover {
+.header a:hover,
+.footer a:hover {
 	color: #f0f0f0;
 	text-decoration: underline}
 	
@@ -319,13 +316,13 @@ body.cke_show_borders {
 /***** End Elements *****/
 
 /***** Site Header & Identity *****/
-#header {
+.header {
 	margin: 0;
 	padding: 0;
 	color: #fff;
 }
 
-#header_container {
+.header_container {
 	min-height: 102px;
 	background: url(mittwoch/headertop.png) repeat-x 0 100%;
 }
@@ -396,26 +393,26 @@ body.cke_show_borders {
 	text-decoration: none;
 }
 
-#header .siteloginbar_popup a:hover {
+.header .siteloginbar_popup a:hover {
 	text-decoration: none;
 }
 	
-#header .siteloginbar_popup label {
+.header .siteloginbar_popup label {
 	color: #666;
 }
 
-#header .siteloginbar_popup ul ul a,
-#header .siteloginbar_popup ul ul a:visited {
+.header .siteloginbar_popup ul ul a,
+.header .siteloginbar_popup ul ul a:visited {
 	color: #08B1FE;	
 }
 
-#header .siteloginbar_popup ul ul li a {
+.header .siteloginbar_popup ul ul li a {
 	padding-left: 18px;
 	background: url(mittwoch/arrow.gif) no-repeat 0 4px;
 	line-height: 160%
 }
 
-#header .siteloginbar_popup ul ul li a:hover {
+.header .siteloginbar_popup ul ul li a:hover {
 	color: #d1e53c;
 	padding-left: 18px;
 	background: url(mittwoch/arrow_hover.gif) no-repeat 0 4px;

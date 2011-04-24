@@ -3,7 +3,7 @@
 */
 
 .adminanchors,
-#header_container {
+.header_container {
 	background: url(darkblue/headertop.png) repeat-x bottom;
 }
 
@@ -65,18 +65,18 @@ ul li:hover {
 	background: url(darkblue/arrow_hover.gif) no-repeat 0 2px;
 }
 
-#header .siteloginbar_popup ul ul a,
-#header .siteloginbar_popup ul ul a:visited {
+.header .siteloginbar_popup ul ul a,
+.header .siteloginbar_popup ul ul a:visited {
 	color: #003bfe;	
 }
 
-#header .siteloginbar_popup ul ul li a {
+.header .siteloginbar_popup ul ul li a {
 	padding-left: 18px;
 	background: url(darkblue/arrow.gif) no-repeat 0 4px;
 	line-height: 160%
 }
 
-#header .siteloginbar_popup ul ul li a:hover {
+.header .siteloginbar_popup ul ul li a:hover {
 	color: #d1e53c;
 	padding-left: 18px;
 	background: url(darkblue/arrow_hover.gif) no-repeat 0 4px;

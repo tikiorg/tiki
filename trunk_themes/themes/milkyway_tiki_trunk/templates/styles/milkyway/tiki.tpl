@@ -33,7 +33,7 @@
 	<table width="100%" height="100%" cellpadding="0" cellspacing="0" id="main">
 	<tr>
 		<td id="main-header" colspan="5">
-			<header class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+			<header class="clearfix header" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 				<div class="wrapper">
 					<div class="content clearfix modules" id="top_modules">
 						{section name=homeix loop=$top_modules}

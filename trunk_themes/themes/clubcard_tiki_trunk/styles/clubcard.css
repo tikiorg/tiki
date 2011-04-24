@@ -193,8 +193,8 @@ input[type=submit]:hover,
 	text-decoration: none;
 }
 
-#header input[type=text],
-#header input[type=password] {
+.header input[type=text],
+.header input[type=password] {
 	background: #29a0c8;
 	border: 2px inset #3e3e3e;
 	color: #fff;
@@ -211,14 +211,14 @@ font [size="smaller"] {
 	width: auto;
 }
 
-#header_outer {
+.header_outer {
 		background: #fff url(clubcard/img01.jpg) repeat-x;
 }
 
-#header_fixedwidth {
+.header_fixedwidth {
 	color: #8e8c8d}
 	
-.fixed_width #header_fixedwidth,
+.fixed_width .header_fixedwidth,
 .fixed_width #middle {
 	width: 800px;
 	margin: 0 auto;

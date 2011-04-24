@@ -40,13 +40,13 @@ body.fullscreen {
 	text-align: left;
 }
 
-#header_fixedwidth {
+.header_fixedwidth {
 	background: url(kubrick/headerbg.jpg) no-repeat;
 	background-position: right 0;
 	padding-right: 32px;
 	height: 200px}
 
-#header {
+.header {
 	background: url(kubrick/headerbg.jpg) no-repeat;
 	height: 200px;
 	margin-bottom: -1px}
@@ -252,19 +252,7 @@ tt {font-size: 1.2em}
 	margin-right: 10px;
 	margin-left: 10px}
 
-#bannertopright {margin-top: 60px}
-
-#customcodewith_ad {
-	text-align: center;
-	float:left;
-	width: auto;
-	clear: none}
-	
-
-
-#customcode {text-align: center}
-
-#header #sitetitle {
+.header #sitetitle {
 	font-size: 3em;
 }
 

@@ -197,11 +197,11 @@ u {
 	text-decoration: none}
 
 /***** Site Header & Identity *****/
-#header_fixedwidth {
+.header_fixedwidth {
 	padding: 10px;
 }
 
-#header {
+.header {
 	background: url(candiiclouds/banstars.gif);
 
 }
@@ -221,7 +221,7 @@ div#sitelogo {
 #top_modules .siteloginbar_popup {
 	position: absolute;
 	right: 13px;
-	bottom: 8px;
+	bottom: 0;
 }
 
 #sitetitle {
@@ -295,28 +295,28 @@ input[name="search"] {
 }
 
 /* left column width */
-td#leftcolumn .cssmenu_vert,
-td#leftcolumn .cssmenu_vert li {
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
 	width: 170px;
 }
 
 /* offset from left column (matches above) */
-td#leftcolumn .cssmenu_vert li:hover ul,
-td#leftcolumn .cssmenu_vert li.sfHover ul {
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
 	left: 170px;
 }
 
 /* return ul ul ... to default */
-td#leftcolumn .cssmenu_vert li:hover ul,
-td#leftcolumn .cssmenu_vert li.sfHover ul,
-td#leftcolumn .cssmenu_vert li:hover ul li,
-td#leftcolumn .cssmenu_vert li.sfHover ul li {
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
 	width: 10em;
 }
 
 /* return ul ul ... to default */
-td#leftcolumn .cssmenu_vert li li:hover ul,
-td#leftcolumn .cssmenu_vert li li.sfHover ul {
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
 	left: 10em;
 }
 
@@ -487,16 +487,12 @@ h3.box-title {
 	padding: 10px;
 }
 
-* html .box-data {
-	margin-left: 10px;
-	margin-right: 10px}
-
 .box-data ul,
 ul.module,
-ol.module {margin-left: -1em}
-
-* html .box-data ul {margin-left: 1em }
-*:first-child+html .box-data ul {margin-left: 1em}
+ol.module {
+	margin-left: -1em;
+	padding-left: 0;
+}
 
 .box-data ul.cssmenu_vert {margin-left: 0}
 
@@ -619,6 +615,11 @@ th, .normal td.heading {
 .tabmark a:hover {
 	color: #f06ea9;
 	background: #ffcce2}*/
+	
+.statuson {
+	background: #a7e6ff;
+	border: 1px inset #223845;
+}
 
 .tabcontent {
 	padding: 2px;

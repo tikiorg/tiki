@@ -236,19 +236,19 @@ body.cke_show_borders {
 	margin: 1px}
 
 /***** Site Header & Identity *****/
-#header {
+.header {
 	background: url(milkyway/options/white/header.jpg) no-repeat;
 	background-position: right 0;
 	position: relative;
 }
 
-#header .wrapper {
+.header .wrapper {
 	background: url(milkyway/options/white/header.jpg) no-repeat;
 	margin-right: 32px;
 	margin-bottom: -1px;
 	padding: 20px 0 0 20px}
 
-#header #secondary_site_menu .wrapper {
+.header #secondary_site_menu .wrapper {
 	background: none;
 	margin: auto;
 	padding: inherit;
@@ -282,9 +282,9 @@ body.cke_show_borders {
 	margin-top: 10px;
 }
 
-#header a,
-#header a:visited,
-#header a:hover {text-decoration: none}
+.header a,
+.header a:visited,
+.header a:hover {text-decoration: none}
 
 /* tiki-top_bar.tpl - menu and search */
 .topbar_modules_container {
@@ -366,11 +366,11 @@ td.pill_r {
 	font-size: 12px;
 }
 
-#header .cssmenu_horiz li.login_link a {
+.header .cssmenu_horiz li.login_link a {
 	background: url(milkyway/mw_menu_normal_bg.png) repeat-x;
 }
 
-#header .cssmenu_horiz li.login_link a:hover {
+.header .cssmenu_horiz li.login_link a:hover {
 	background: url(milkyway/mw_menu_active_bg.png) repeat-x;
 }
 
@@ -387,7 +387,7 @@ td.pill_r {
 }
 
 
-#header .cssmenu_horiz li.login_link {
+.header .cssmenu_horiz li.login_link {
 	padding: 0;
 }
 
@@ -776,6 +776,11 @@ tabmark a:hover,
 .tabcontent {
 	border: 1px solid #dcdcdc;
 	background: #f4f4f4;
+}
+
+.statuson {
+	background: #ccc;
+	border: 1px inset #aaa; 
 }
 /***** Wiki *****/
 

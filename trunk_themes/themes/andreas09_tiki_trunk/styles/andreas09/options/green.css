@@ -22,7 +22,7 @@ input[type="submit"]:hover,
 .button input:hover,
 .submitbutton:hover {background: #f0f0f0 url(green/menuhover.jpg) 0 0 repeat-x;}
 
-#header-top {background: url(green/header.jpg) repeat-x bottom}
+.header {background: url(green/header.jpg) repeat-x bottom}
 #tiki-top {background: url(green/header.jpg) repeat-x}
 
 #sitesearchbar .button {
@@ -30,20 +30,11 @@ input[type="submit"]:hover,
 	background: #f0f0f0 url(green/menuhover.jpg) top left repeat-x;
 	color: #505050}
 
-.horbaritem a:hover,
 #tiki-top .cssmenu_horiz li a:hover {
 	background: #f0f0f0 url(green/menuhover.jpg) top repeat-x;
 	color: #505050}
 
 #middle {background: url(green/mid.jpg) repeat-x}
-
-a.phplmselected:link,
-a.phplmselected:visited,
-a.phplmselected:hover,
-a.phplmselected:active {
-	font: 100% Verdana, Tahoma, Arial, sans-serif;
-	color: black;
-	background: url(green/menuhover.jpg)}
 
 div.adminanchors {background: url(green/header.jpg) repeat-x bottom !important}
 

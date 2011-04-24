@@ -8,11 +8,11 @@ table#main > tbody {background: url(black/borderr.png) repeat-y 100% 0;}
 td#leftborder {background: #2b2b2b url(black/borderl.png) repeat-y}
 td#rightborder {background: url(black/borderr.png) repeat-y}
 td#footer_td {background: url(black/footer_bottom.jpg) no-repeat 100% 100%;}
-#footer {background: url(black/footer_bottom.jpg) no-repeat 0 100%;}
+.footer {background: url(black/footer_bottom.jpg) no-repeat 0 100%;}
 .footer_liner {background: url(black/footer_top.jpg) no-repeat 100% 0;}
 .footerbgtrap {background: url(black/footer_top.jpg) no-repeat 0 0;}
-#header {background: url(black/header.jpg) no-repeat 100% 0}
-#header .wrapper {background: url(black/header.jpg) no-repeat}
+.header {background: url(black/header.jpg) no-repeat 100% 0}
+.header .wrapper {background: url(black/header.jpg) no-repeat}
 .topbar_modules_container {background: url(black/topbar.jpg) no-repeat;
 	background-position: right 0}
 .topbar_modules_container > .wrapper {background: url(black/topbar.jpg) no-repeat;}

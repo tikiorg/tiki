@@ -34,9 +34,9 @@
 				{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y') }
 					{if $prefs.module_zones_top eq 'fixed' or ($prefs.module_zones_top ne 'n' && $top_modules|@count > 0)}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}
-							<div id="header_outer">
-								<div id="header_container">
-									<div id="header_fixedwidth" class="fixedwidth">
+							<div class="header_outer">
+								<div class="header_container">
+									<div class="header_fixedwidth fixedwidth">
 										<header class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 											<div class="content clearfix modules" id="top_modules">
 												{section name=homeix loop=$top_modules}
@@ -67,7 +67,8 @@
 											<div class="right-corner">
 													<div class="left-corner" {if $prefs.feature_secondary_sitemenu_custom_code}style="padding-top: 12px"{/if}>
 													{* End top of extra divs for Garland-style center *}
-
+													{if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
+										<div id="tiki-center" {*id needed for ajax editpage link*} class="clearfix content">
 										
 										{if $smarty.session.fullscreen neq 'y'}
 											{if $prefs.feature_left_column eq 'user' or $prefs.feature_right_column eq 'user'}
@@ -103,8 +104,7 @@
 												<a title="{tr}Email this page{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Email this page{/tr}</a>
 											</div>
 										{/if}
-										{if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
-										<div id="tiki-center" {*id needed for ajax editpage link*} class="clearfix content">
+										
 											{if $display_msg}
 												{remarksbox type="note" title="{tr}Notice{/tr}"}{$display_msg|escape}{/remarksbox}
 											{/if}
