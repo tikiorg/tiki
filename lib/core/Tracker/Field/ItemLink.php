@@ -27,7 +27,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 
 	function renderInput($context = array())
 	{
-		return $this->renderTemplate('trackerinput/itemlink.tpl', array());
+		return $this->renderTemplate('trackerinput/itemlink.tpl', $context);
 	}
 
 	function renderOutput($context = array())

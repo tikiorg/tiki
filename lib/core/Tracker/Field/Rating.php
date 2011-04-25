@@ -40,13 +40,13 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 
 	function renderOutput($context = array())
 	{
-		return $this->renderTemplate('trackeroutput/rating.tpl');
+		return $this->renderTemplate('trackeroutput/rating.tpl', $context);
 	}
 
 	function renderInput($context = array())
 	{
 		if ($this->getConfiguration('type') == 's') {
-			return $this->renderTemplate('trackerinput/rating.tpl');
+			return $this->renderTemplate('trackerinput/rating.tpl', $context);
 		}
 
 		return null;

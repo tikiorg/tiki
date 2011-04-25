@@ -20,7 +20,7 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 
 	function renderInput($context = array())
 	{
-		return $this->renderTemplate('trackerinput/jscalendar.tpl');
+		return $this->renderTemplate('trackerinput/jscalendar.tpl', $context);
 	}
 }
 
