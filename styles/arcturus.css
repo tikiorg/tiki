@@ -194,7 +194,7 @@ input[type="submit"]:active,
 	margin-top: 10px;
 }
 
-#header .box-login_box {
+.header .box-login_box {
 	float: right;
 	margin-right: 10px;
 }
@@ -231,7 +231,7 @@ input[type="submit"]:active,
 	z-index: 1;
 }
 
-#header {
+.header {
 	margin: 0;
 }
 	

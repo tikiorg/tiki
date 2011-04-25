@@ -1,20 +1,22 @@
-<div id="outer_wrapper">
-		<div id="header_outer">
-			<div id="header_container">
-				<header id="header">
-					<div id="header_fixedwidth" class="clearfix fixedwidth">
-						<div class="content clearfix modules" id="top_modules">
-							<div id="sitelogo" style="padding-left:0; padding-top: 0px"><h1 style="margin: 0"><img style="border:none;vertical-align:middle" alt="{tr}Tiki Wiki CMS Groupware{/tr}" src="{if isset($ie6)}img/tiki/tikisitelogo.gif{else}img/tiki/Tiki_WCG.png{/if}" />
-								<span style="vertical-align:middle; margin-left: 120px; color: #fff; padding-top: 30px;">{tr}Tiki installer{/tr} {$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></span></h1>
-							</div>
+<div id="fixedwidth" class="fixedwidth"> {* enables fixed-width layouts *}
+	<div class="header_outer">
+		<div class="header_container">
+			<div class="header_fixedwidth fixedwidth">
+				<header class="header" id="header">
+					<div class="content clearfix modules" id="top_modules" >
+						<div id="sitelogo" style="padding-left:0; padding-top: 0px"><h1 style="margin: 0"><img style="border:none;vertical-align:middle" alt="{tr}Tiki Wiki CMS Groupware{/tr}" src="{if isset($ie6)}img/tiki/tikisitelogo.gif{else}img/tiki/Tiki_WCG.png{/if}" />
+							<span style="vertical-align:middle; margin-left: 120px; color: #fff; padding-top: 30px;">{tr}Tiki installer{/tr} {$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></span></h1>
+						</div>
 						<div id="tiki-top" style="position: absolute; top: 168px;"></div> {* added for background image consistency *}
 						</div>
 					</div>
 				</header>
 			</div>
 		</div>
+	</div>
 <div class="middle_outer">
-<div id="middle" class="clearfix" style="padding-top: 55px">
+<div class="fixedwidth">
+<div id="middle" class="clearfix fixedwidth" style="padding-top: 55px">
 	<div id="c1c2" class="clearfix">
 		<div id="wrapper" class="clearfix">
 			<div id="col1" class="marginleft">
@@ -737,6 +739,7 @@
 </div>			
 </div>			
 	  	</div>
+	</div>
 </div>
 <footer id="footer">
 	<div class="footer_liner">
@@ -747,4 +750,5 @@
 </footer>
 
 		</div>{* -- END of main -- *}
-	</div> {* -- END of puterwrapper -- *}
+	</div> {* -- END of outerwrapper -- *}
+</div> {* -- END of fixedwidth -- *}

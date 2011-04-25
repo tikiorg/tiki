@@ -264,7 +264,7 @@ body.tiki_wiki_page.manage #c1c2 #wrapper #col1 #tiki-center {
 }
 
 /* Site Header & Identity */
-#header_container {
+.header_container {
 	background: url(coelesce/pagebg.jpg) repeat-x 0 100%;
 }
 
@@ -547,8 +547,8 @@ small.date {
 	color: #5a7ea2;
 }
 
-#header .cssmenu_horiz li a:link,
-#header .cssmenu_horiz li a:visited {
+.header .cssmenu_horiz li a:link,
+.header .cssmenu_horiz li a:visited {
 	text-decoration: none;
 	background: inherit;
 	color: #cfe3fb;

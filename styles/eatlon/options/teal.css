@@ -55,7 +55,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	min-height: 450px/*;
 	height: auto !important*/}
 
-#header_fixedwidth {
+.header_fixedwidth {
 	text-align: left;
 	height: 190px;
 	background: #fff url(teal/head_bg.gif);

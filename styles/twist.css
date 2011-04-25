@@ -188,20 +188,20 @@ form.admin input[name="features"] {margin-bottom: 3px !important}
 select[name="theme"] {width: 125px}
 
 /***** Site Header & Identity *****/
-#header_fixedwidth {
+.header_fixedwidth {
 	background: url(twist/header.jpg) no-repeat 100% 100%;
 	color: #fff;
 }
 	
-#header {
+.header {
 	background: url(twist/header.jpg) no-repeat 0 100%;
 	margin-right: 22px;
 	padding-left: 30px;
 	width: inherit;
 }
 
-#header a,
-#header a:visited {color: #fff}
+.header a,
+.header a:visited {color: #fff}
 
 #top_modules {
 	min-height: 82px;

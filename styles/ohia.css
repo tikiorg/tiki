@@ -317,13 +317,13 @@ label {margin: 0 2px}
 }
 
 /* ul ul top compensation for padding */
-#header .cssmenu_horiz li:hover ul,
-#header .cssmenu_horiz li.sfHover ul {
+.header .cssmenu_horiz li:hover ul,
+.header .cssmenu_horiz li.sfHover ul {
 	top: 2.25em;
 }
 
-#header .cssmenu_horiz li li:hover ul,
-#header .cssmenu_horiz li li.sfHover ul {
+.header .cssmenu_horiz li li:hover ul,
+.header .cssmenu_horiz li li.sfHover ul {
 	top: 0;
 }
 

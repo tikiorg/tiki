@@ -34,10 +34,10 @@
 				{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y')}
 					{if $prefs.module_zones_top eq 'fixed' or ($prefs.module_zones_top ne 'n' && $top_modules|@count > 0)}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}
-							<div id="header_outer" data-role="header" data-theme="{$prefs.mobile_theme_header}">
-								<div id="header_container">
-									<div id="header_fixedwidth">
-										<header class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+							<div class="header_outer" data-role="header" data-theme="{$prefs.mobile_theme_header}">
+								<div class="header_container">
+									<div class="header_fixedwidth">
+										<header class="header clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 											<div class="content clearfix modules" id="top_modules">
 												{section name=homeix loop=$top_modules}
 													{$top_modules[homeix].data}

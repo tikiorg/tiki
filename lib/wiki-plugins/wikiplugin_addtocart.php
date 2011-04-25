@@ -146,11 +146,26 @@ function wikiplugin_addtocart_info() {
 				'filter' => 'int',
 				'default' => 1
 			),
+			'ajaxaddtocart' => array(
+				'required' => false,
+				'name' => tra('Ajax add to cart feature'),
+				'description' => tra('Attempts to turn ajax for cart on'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
 		),
 	);
 }
 
 function wikiplugin_addtocart( $data, $params ) {
+	global $cartlib, $headerlib; require_once 'lib/payment/cartlib.php';
+	$headerlib->add_jsfile('lib/payment/cartlib.js');
+	
 	if( ! session_id() ) {
 		return WikiParser_PluginOutput::internalError( tra('A session must be active to use the cart.') );
 	} 
@@ -170,6 +185,9 @@ function wikiplugin_addtocart( $data, $params ) {
 	if ($params['forceanon'] == 'y') {
 		$_SESSION['forceanon'] = 'y'; 
 	}
+	if (! isset($params['ajaxaddtocart'])) {
+		$params['ajaxaddtocart'] = 'y'; 
+	}
 	foreach($params as &$p) {
 		$p = trim($p);			// remove some line ends picked up in pretty tracker
 	}
@@ -183,6 +201,8 @@ function wikiplugin_addtocart( $data, $params ) {
 	$eventcode = $params['eventcode'];
 	$price = preg_replace( '/[^\d^\.^,]/', '', $params['price']);
 	$add_label = $params['label'];
+	$ajax_add_to_cart = $params['ajaxaddtocart'];
+	
 // Custom2
 	global $smarty;
 	$smarty->assign('code', $code);
@@ -208,80 +228,25 @@ function wikiplugin_addtocart( $data, $params ) {
 	} else {
 		$smarty->assign('hideamountfield', 'n');
 	}
-
+	
 	if ( is_numeric($product_class) ) {
-		global $cartlib, $headerlib; require_once 'lib/payment/cartlib.php';
 		$information_form = $cartlib->get_missing_user_information_form( $product_class, 'required' );
 		$missing_information = $cartlib->get_missing_user_information_fields( $product_class, 'required');
 		$skip_information_form = $cartlib->skip_user_information_form_if_not_missing( $product_class ) && empty($missing_information); 
 		if ( $information_form && !$skip_information_form ) {
 			$headerlib->add_jq_onready("
-				$('form.addProductToCartForm" . $product_class . "').each(function(i) {
-					$(this)
-						.unbind('submit')
-						.submit(function() {
-							var o = $('<div />')
-								.load('tiki-index_raw.php?page=".urlencode($information_form)."', function() {
-									o.dialog({
-										title: '$information_form',
-										modal: true,
-										height: $(window).height() * 0.8,
-										width: $(window).width() * 0.8
-									});
-									
-									var loading = $('<div><span>Loading...</span><img src=\"img/loading.gif\" /></div>')
-										.hide()
-										.appendTo(o);
-									
-									var forms = o.find('form');
-									forms.each(function() {
-										var form = $(this).submit(function() {
-											
-											var satisfied = true;
-											$('.mandatory_field').each(function() {
-												var field = $(this).children().first();
-												if (!field.val()) {
-													$(this).addClass('ui-state-error');
-													satisfied = false;
-												}
-											});
-											if (!satisfied) return false;
-											
-											$.post(form.attr('action'), form.serialize(), function() {
-												form.slideUp(function() {
-													o.animate({
-														scrollTop: form.next().offset().top
-													});
-												}).attr('satisfied', true);
-												
-												satisfied = true;
-												
-												forms.each(function() {
-													if (!$(this).attr('satisfied')) {
-														satisfied = false;
-													}
-												});
-												
-												if (satisfied) {
-													loading
-														.show()
-														.prevAll().hide();
-														
-													$('form.addProductToCartForm').eq(i)
-														.unbind('submit')
-														.submit();
-												}
-											});
-											
-											return false;
-										});
-									});
-								});
-							return false;
-						});
-				});
+				$('form.addProductToCartForm$product_class')
+					.cartProductClassMissingForm({
+						informationForm: '$information_form'
+					});
 			");
 		} 
+	}
+	
+	if ( $ajax_add_to_cart == 'y' ) {
+			$headerlib->add_jq_onready("
+				$('form.addProduct').cartAjaxAdd();
+			");
 	}
 
 	if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
@@ -297,7 +262,6 @@ function wikiplugin_addtocart( $data, $params ) {
 		}
 		$quantity = $jitPost->quantity->int();
 		if( $jitPost->code->text() == $params['code'] && $quantity > 0 && $correct_exchange ) {
-			global $cartlib; require_once 'lib/payment/cartlib.php';
 
 			$behaviors = array();
 			// Custom++ If not logged in require to submit user information before shopping

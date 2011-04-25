@@ -47,22 +47,22 @@ body.fixed_width .fixedwidth {
 	margin: 0 auto;
 }
 
-#header_outer {		/* whole width div containing the header strip */
+.header_outer {		/* whole width div containing the header strip */
 	background: url(fivealive/options/blueberry/headertile.png) 0 0 no-repeat;
 /*	height: 220px;*/
 }
 
-#header_container {	/* 2nd whole width div for background image tricks */
+.header_container {	/* 2nd whole width div for background image tricks */
 	background: url(fivealive/header_left.png) 0 100% no-repeat;
 
 }
 
 /* keep header content in page center (override layout.css)*/
-#header_container .fixedwidth {
+.header_container .fixedwidth {
     margin-left: auto;
 }
 
-#header {	/* inner <header> element that gets .fixedwidth class applied */
+.header {	/* inner <header> element that gets .fixedwidth class applied */
 	background: url(fivealive/options/blueberry/siteheader.jpg) 0 0 no-repeat;
 /*	height: 220px;*/
 }
@@ -415,11 +415,11 @@ select {
 
 /***** Site Header & Identity *****/
 
-#header-top {
+/*#header-top {
 	min-height: 170px;
 	position: relative;
 	background: url(fivealive/options/blueberry/siteheader.jpg) no-repeat;
-}
+}*/
 
 #top_modules .box-quickadmin {
 	position: absolute;
@@ -710,7 +710,7 @@ li.login_link ul li a {
 	color: #fff;
 }
 
-#header #secondary_site_menu .cssmenu_horiz li a {
+.header #secondary_site_menu .cssmenu_horiz li a {
 	font-weight: 400;
 	padding: 8px .7em;
 }

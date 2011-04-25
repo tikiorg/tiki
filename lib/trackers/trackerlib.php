@@ -1394,7 +1394,7 @@ class TrackerLib extends TikiLib
 
 		$items = $this->items();
 		$itemFields = $this->itemFields();
-		$fields = $this->itemFields();
+		$fields = $this->fields();
 
 		$fil = array();
 		if (!empty($itemId)) { // prefill with current value - in case a computed use some other fields

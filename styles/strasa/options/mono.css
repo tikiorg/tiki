@@ -167,7 +167,7 @@ ul.jumplinks a:active {
 }
 
 /* Site Header & Identity */
-#header_fixedwidth {
+.header_fixedwidth {
 	color: #fff;
 	background: #444 url(mono/headerbg.jpg) repeat-x 0 100%;
 
@@ -259,7 +259,7 @@ a.flip:hover {
 	border-top: 1px solid #233039;
 }
 
-#header .cssmenu_horiz li:hover {
+.header .cssmenu_horiz li:hover {
 	background: #212121;
 }
 
@@ -291,31 +291,31 @@ a.flip:hover {
 	color: #000000;
 }
 
-#header .cssmenu_horiz a,
-#header .cssmenu_horiz a:visited {
+.header .cssmenu_horiz a,
+.header .cssmenu_horiz a:visited {
 	background: none;
 	border: none;
 	color: #fff;
 	padding: 3px 5px 6px 
 }
 
-#header .cssmenu_horiz a:hover {
+.header .cssmenu_horiz a:hover {
 	background: #000;
 	border: none;
 	color: #fff;
 }
 
-#header .cssmenu_horiz li ul li {
+.header .cssmenu_horiz li ul li {
 	border: 1px solid #a9a9a9;
 	background: #4c4c4c;
 }
 
-#header .cssmenu_horiz li ul li:first-child,
+.header .cssmenu_horiz li ul li:first-child,
 .cssmenu_vert li ul li:first-child {
 	border-top: 1px solid #a9a9a9;
 }
 
-#header .cssmenu_horiz li ul li a:hover {
+.header .cssmenu_horiz li ul li a:hover {
 	background: #000;
 }
 
@@ -331,11 +331,11 @@ a.flip:hover {
 	background: url(mono/arrows-000000.png) no-repeat 0 0;	
 }
 
-#header .cssmenu_horiz li a .sf-sub-indicator {
+.header .cssmenu_horiz li a .sf-sub-indicator {
 	background: url(../../../lib/jquery/superfish/images/arrows-ffffff.png) no-repeat -10px -100px;
 }
 
-#header .cssmenu_horiz li ul li a .sf-sub-indicator {
+.header .cssmenu_horiz li ul li a .sf-sub-indicator {
 	background: url(../../../lib/jquery/superfish/images/arrows-ffffff.png) no-repeat 0 0;
 }
 

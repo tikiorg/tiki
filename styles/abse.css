@@ -230,7 +230,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding: 0;
 }
 
-#header {
+.header {
 	background: transparent;
 	padding-top: 0}
 
@@ -266,7 +266,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	font-size: 1em;
 	padding-left: 3em}
 
-#header .box-login_box,
+.header .box-login_box,
 #topbar_modules .box-search {
 	float: right;
 	margin-right: 10px;

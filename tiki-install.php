@@ -99,13 +99,12 @@ function createPage($title, $content){
 		<title>$title</title>
 	</head>
 	<body class="tiki_wiki fixed_width">
-	<div id="fixedwidth">
-	<div id="outer_wrapper">
-		<div id="header_outer">
-			<div id="header_container">
-				<header id="header">
-					<div id="header_fixedwidth" class="clearfix fixedwidth">
-						<div class="content clearfix modules" id="top_modules">
+	<div id="fixedwidth" class="fixedwidth">
+		<div class="header_outer">
+			<div class="header_container">
+				<div class="clearfix fixedwidth header_fixedwidth">
+					<header id="header" class="header">
+						<div class="content clearfix modules" id="top_modules" style="display: table; width: 990px;">
 							<div id="sitelogo">
 								<img alt="Site Logo" src="img/tiki/Tiki_WCG.png"  />
 							</div>
@@ -113,20 +112,19 @@ function createPage($title, $content){
 								<h1 style="color: #fff; text-shadow: 3px 2px 0 #781437; margin: 0; padding: 0; line-height: 1.6;">$title</h1>
 							</div>
 						</div>
-					</div>
-				</header>
+					</header>
+				</div>
 			</div>
 		</div>	
 			<div class="middle_outer">
-			<div id="middle" >
+			<div id="middle" class="fixedwidth">
 				<div id="tiki-top"></div>
 					<div id="tiki-center" style="display: table; width: 990px; text-align: center;">
 						$content
 					</div>
 				</div>
-				</div>
 			</div><!--
-		<footer id="footer" style="margin-top: 50px;">
+		<footer id="footer" class="footer" style="margin-top: 50px;">
 	<div class="footer_liner">
 		<div class="footerbgtrap fixedwidth" style="padding: 10px 0;">
 			<a href="http://tiki.org" target="_blank" title="Powered by Tiki Wiki CMS Groupware"><img src="img/tiki/tikibutton.png" alt="Powered by Tiki Wiki CMS Groupware" /></a>
