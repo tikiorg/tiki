@@ -285,11 +285,11 @@ head.appendChild(script);
 		$js .= '
 var ttlTimelineReady = false, ttlInitCount = 0, ttlTimeline, ttlInit = function() {
 	// wait for Timeline to be loaded
-	if (typeof window.Timeline === "undefined" ||
+	if (ttlInitCount < 12 && (typeof window.Timeline === "undefined" ||
 			typeof window.Timeline.createBandInfo === "undefined" ||
 			typeof window.Timeline.DateTime === "undefined" ||
 			typeof window.Timeline.GregorianDateLabeller === "undefined" ||
-			typeof window.Timeline.GregorianDateLabeller.getMonthName === "undefined" ) {
+			typeof window.Timeline.GregorianDateLabeller.getMonthName === "undefined" )) {
 
 		if (ttlInitCount > 10) {	// at least 5 secs - reload
 			location.replace(location.href);
