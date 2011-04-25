@@ -1803,9 +1803,11 @@ class UsersLib extends TikiLib
 	}
 
 	function list_all_users() {
-		global $cachelib, $tiki_p_list_users;
+		global $cachelib, $tiki_p_list_users, $tiki_p_admin;
 
-		if ( $tiki_p_list_users	!== 'y') return array();
+		if ($tiki_p_list_users	!== 'y' && $tiki_p_admin != 'y') {
+			return array();
+		}
 
 		if (! $users = $cachelib->getSerialized("userslist")) {
 			$users = array();
