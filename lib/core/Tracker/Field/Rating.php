@@ -35,6 +35,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 			'request_rate' => (isset($requestData[$ins_id]))
 				? $requestData[$ins_id]
 				: null,
+			'value' => $data['value'],
 		);
 	}
 
