@@ -74,6 +74,10 @@
 	<div style="text-align: left;">{toolbars area_id="jSheetControls_formula_0"}</div>
 </div>
 
+<div id="sheetMenu" style="display: none;">
+	{$menu}
+</div>
+
 <div class="switchSheet" style="display: none;" title="{tr}What would you like to add?{/tr}">
 	<input class="newSpreadsheet" type="button" value="{tr}New spreadsheet{/tr}" style="width: 100%;" /><br />
 	<input class="addSpreadsheet" type="button" value="{tr}Existing spreadsheet{/tr}" style="width: 100%;" /><br />
