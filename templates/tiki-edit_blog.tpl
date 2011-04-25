@@ -44,7 +44,7 @@
           <td>{tr}Creator{/tr}</td>
           <td>
             <select name="creator">
-              {if $tiki_p_admin eq 'y' or $tiki_p_blog_admin eq 'y'}
+              {if ($tiki_p_admin eq 'y' or $tiki_p_blog_admin eq 'y') and !empty($users)}
                 {foreach from=$users key=userId item=u}
                   <option value="{$u|escape}"{if $u eq $creator} selected="selected"{/if}>{$u|escape}</option>
                 {/foreach}
