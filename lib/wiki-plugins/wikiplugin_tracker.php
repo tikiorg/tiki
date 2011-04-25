@@ -1053,9 +1053,9 @@ function wikiplugin_tracker($data, $params)
 			}
 			if ($params['formtag'] == 'y') {
 				$back .= '<form name="editItemForm' . $iTRACKER . '" id="editItemForm' . $iTRACKER . '" enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').' action="'. $_SERVER['REQUEST_URI'] .'"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
-				$back .= '<input type="hidden" name="iTRACKER" value="'.$iTRACKER.'" />';
 				$back .= '<input type="hidden" name="refresh" value="1" />';
 			}
+			$back .= '<input type="hidden" name="iTRACKER" value="'.$iTRACKER.'" />';
 			if (isset($_REQUEST['page']))
 				$back.= '<input type="hidden" name="page" value="'.$_REQUEST["page"].'" />';
 			 // for registration
@@ -1294,7 +1294,7 @@ function wikiplugin_tracker($data, $params)
 			include_once('lib/smarty_tiki/function.trackerheader.php');
 			$back .= smarty_function_trackerheader(array('level'=>-1, 'title'=>'', 'inTable' =>(empty($tpl) && empty($wiki))?'wikiplugin_tracker':'' ), $smarty);
 
-			if ($prefs['feature_antibot'] == 'y' && empty($user)) {
+			if ($prefs['feature_antibot'] == 'y' && empty($user) && $formtag != 'n') {
 				// in_tracker session var checking is for tiki-register.php
 				$smarty->assign('showmandatory', $showmandatory);
 				$smarty->assign('antibot_table', empty($wiki) && empty($tpl)?'n': 'y');
