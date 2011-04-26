@@ -36,7 +36,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract
 				if ($this->getOption(0) == 2) {
 					$data['value'] = $user;
 				} elseif ($this->getOption(0) == 1) {
-					if ($this->getTrackerDefinition()->getConfiguration('userCanTakeOwnership')  == 'y' && !$this->getValue()) {
+					if (!$this->getItemId() || ($this->getTrackerDefinition()->getConfiguration('userCanTakeOwnership')  == 'y' && !$this->getValue())) {
 						$data['value'] = $user; // the user appropiate the item
 					} else {
 						$data['value'] = $this->getValue();
@@ -47,7 +47,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract
 				}
 			}
 		} else {
-			$data['value'] = $this->getValue();
+			$data['value'] = $this->getValue(false);
 		}
 		
 		return $data;
@@ -58,7 +58,10 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract
 		global $tiki_p_admin_trackers, $user;
 		$smarty = TikiLib::lib('smarty');
 		
-		$value = $this->getConfiguration('value',  $user);
+		$value = $this->getConfiguration('value');
+		if ($value === false) {
+			$value = $user;
+		}
 		
 		if ($this->getOption(0) == 0 || $tiki_p_admin_trackers === 'y') {
 			require_once $smarty->_get_plugin_filepath('function', 'user_selector');
@@ -70,15 +73,19 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract
 					), $smarty);
 		} else {
 			require_once $smarty->_get_plugin_filepath('modifier', 'username');
-			return smarty_modifier_username( $value ) . '<input type="hidden" name="' . $this->getInsertId() . '">';
+			return smarty_modifier_username( $value ) . '<input type="hidden" name="' . $this->getInsertId() . '" value="' . $value . '">';
 		}
 	}
 
 	function renderInnerOutput($context = array())
 	{
 		$value = $this->getConfiguration('value');
-		require_once TikiLib::lib('smarty')->_get_plugin_filepath('modifier', 'username');
-		return smarty_modifier_username( $value );
+		if (empty($value)) {
+			return '';
+		} else {
+			require_once TikiLib::lib('smarty')->_get_plugin_filepath('modifier', 'username');
+			return smarty_modifier_username( $value );
+		}
 	}
 
 }
