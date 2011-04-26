@@ -143,11 +143,11 @@ function wikiplugin_articles_info()
 				'required' => false,
 				'name' => tr('Period unit'),
 				'description' => tr('Time unit used with "Period quantity"'),
-				'filter' => 'int',
+				'filter' => 'word',
 				'options' => array(
-					array('text' => tr('Day'), 'value' => 86400),
-					array('text' => tr('Week'), 'value' => 604800),
-					array('text' => tr('Month'), 'value' => 2628000),
+					array('text' => tr('Day'), 'value' => 'day'),
+					array('text' => tr('Week'), 'value' => 'week'),
+					array('text' => tr('Month'), 'value' => 'month'),
 				),
 			),
 			'overrideDates' => array(
@@ -250,21 +250,36 @@ function wikiplugin_articles($data, $params)
 	if(!isset($containerClass)) {$containerClass = 'wikiplugin_articles';}
 	$smarty->assign('container_class', $containerClass);
 
+	$dateStartTS = 0;
+	$dateEndTS = 0;
+	
 	// if a period of time is set, date start and end are ignored
 	if (isset($periodQuantity)) {
-		$dateStartTS = $tikilib->now - ($periodQuantity * $periodUnit);
-		$dateEndTS = $tikilib->now;
+		switch ($periodUnit) {
+			case 'day':
+				$periodUnit = 86400;
+				break;
+			case 'week':
+				$periodUnit = 604800;
+				break;
+			case 'month':
+				$periodUnit = 2628000;
+				break;
+			default:
+				break;
+		}
+		
+		if (is_int($periodUnit)) {
+			$dateStartTS = $tikilib->now - ($periodQuantity * $periodUnit);
+			$dateEndTS = $tikilib->now;
+		}
 	} else {
 		if (isset($dateStart)) {
 			$dateStartTS = strtotime($dateStart);
-		} else {
-			$dateStartTS = 0;
 		}
 		
 		if (isset($dateEnd)) {
 			$dateEndTS = strtotime($dateEnd);
-		} else {
-			$dateEndTS = 0;
 		}
 	}
 	
