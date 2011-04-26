@@ -70,6 +70,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract
 							'id'  => 'user_selector_' . $this->getConfiguration('fieldId'),
 							'name' => $this->getInsertId(),
 							'editable' => 'y',
+							'allowNone' => $this->getConfiguration('isMandatory') === 'y' ? 'n' : 'y',
 					), $smarty);
 		} else {
 			require_once $smarty->_get_plugin_filepath('modifier', 'username');
