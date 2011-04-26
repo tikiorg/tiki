@@ -87,6 +87,12 @@ class QuantifyLib extends TikiLib
 
 		return floor( $value * 100 ); 
 	}
+
+	function wiki_update($arguments)
+	{
+		$tikilib = TikiLib::lib('tiki');
+		$this->recordChangeSize($arguments['page_id'], $arguments['version'], $arguments['old_data'], $arguments['data']);
+	}
 }
 $quantifylib = new QuantifyLib;
 

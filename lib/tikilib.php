@@ -206,6 +206,17 @@ class TikiLib extends TikiDb_Bridge
 		}
 	}
 
+	public static function events()
+	{
+		static $eventManager = null;
+
+		if (! $eventManager) {
+			$eventManager = new Event_Manager;
+		}
+
+		return $eventManager;
+	}
+
 	// DB param left for interface compatibility, although not considered
 	function __construct( $db = null ) {
 		$this->now = time();
@@ -6778,10 +6789,6 @@ if( \$('#$id') ) {
 		$willDoHistory = ($prefs['feature_wiki_history_full'] == 'y' || $data != $edit_data || $description != $edit_description || $comment != $edit_comment );
 		$version = $old_version + ($willDoHistory?1:0);
 
-		if( $prefs['quantify_changes'] == 'y' && $prefs['feature_multilingual'] == 'y' ) {
-			TikiLib::lib('quantify')->recordChangeSize( $info['page_id'], $version, $info['data'], $edit_data );
-		}
-
 		if ($is_html === null) {
 			$html = $info['is_html'];
 		} else {
@@ -6935,8 +6942,14 @@ if( \$('#$id') ) {
 
 		}
 
-		require_once('lib/search/refresh-functions.php');
-		refresh_index('pages', $pageName);
+		TikiLib::events()->trigger('tiki.wiki.update', array(
+			'type' => 'wiki page',
+			'object' => $pageName,
+			'page_id' => $info['page_id'],
+			'version' => $version,
+			'data' => $edit_data,
+			'old_data' => $info['data'],
+		));
 
 		$this->object_post_save( array( 'type' => 'wiki page', 'object' => $pageName ), array(
 			'content' => $edit_data,
