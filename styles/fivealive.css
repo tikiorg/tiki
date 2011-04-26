@@ -436,14 +436,16 @@ select {
 	padding: 0 6px 2px 0;
 }
 
-#secondary_site_menu {
+#top_modules #secondary_site_menu {
 	height: 30px;
 	line-height: 30px;
-	float: right;
+	position: absolute;
+	top: 0;
+	right: 30px;
 }
 
-#secondary_site_menu a,
-#secondary_site_menu a:visited {
+#top_modules #secondary_site_menu a,
+#top_modules #secondary_site_menu a:visited {
 	color: #fff;
 	font-weight: bold;
 	text-decoration: none;
