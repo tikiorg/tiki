@@ -194,7 +194,7 @@ class TikiSheet
 			'TikiSheetSerializeHandler',
 			'TikiSheetCSVHandler',
             'TikiSheetCSVExcelHandler',
-			'TikiSheetExcelHandler'
+			//'TikiSheetExcelHandler'
 		);
 	}// }}}2
 	
@@ -1557,7 +1557,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 class TikiSheetExcelHandler extends TikiSheetDataHandler
 {
 	var $file;
-	
+	var $disabled = true;
 	/** Constructor {{{2
 	 * Initializes the the serializer on a file.
 	 * @param $file The file path to save or load from.
