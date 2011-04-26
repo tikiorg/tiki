@@ -26,7 +26,7 @@ function wikiplugin_button_info() {
 				'required' => false,
 				'name' => tra('Label'),
 				'description' => tra('Label for the button'),
-				'filter' => 'word',
+				'filter' => 'text',
 				'default' => '',
 			),
 		),

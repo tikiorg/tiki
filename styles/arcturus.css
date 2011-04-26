@@ -179,6 +179,15 @@ input[type="submit"]:active,
 
 /***** Site Header & Identity *****/
 
+#top_modules #secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 30px;
+}
+
+#top_modules #secondary_site_menu .cssmenu_horiz li ul {
+	margin-top: -16px;
+}
 
 #sitetitles {
 	font-weight: bold;

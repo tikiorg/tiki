@@ -15,6 +15,7 @@
  *     contact = 'false'
  *     multiple = 'false'
  *     editable = $tiki_p_admin
+ * 	   allowNone = 'n'
  *  }
  * 
  * Display a drop down menu of all users or
@@ -39,6 +40,7 @@ function smarty_function_user_selector($params, &$smarty) {
 			'style'=> '' ,
 			'editable' => $tiki_p_admin,
 			'user_selector_threshold' => $prefs['user_selector_threshold'],
+			'allowNone' => 'n',
 	);
 	$params = array_merge($defaults, $params);
 	if (isset($params['size'])) {
@@ -74,6 +76,9 @@ function smarty_function_user_selector($params, &$smarty) {
 			$users = $userlib->get_group_users($params['group']);
 		}
 		$ret .= '<select name="' . $params['name'] . '" id="' . $params['id'] . '"' . $sz . $ed . ' style="'.$params['style'].'">';
+		if ($params['allowNone'] === 'y') {
+			$ret .= '<option value=""' . (empty($params['user']) ? ' selected="selected"' : '') . ' >' . tra( 'None' ) .'</option>';
+		}
 		foreach($users as $usr) {
 			if ($params['editable'] == 'y' || $usr == $params['user']) {
 			    if (isset($params['select'])) {

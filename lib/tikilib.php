@@ -2105,7 +2105,7 @@ class TikiLib extends TikiDb_Bridge
 		} else {
 			if ($prefs['ip_can_be_checked'] == 'y') {
 				$userVotings->delete(array(
-					'user' => $ip,
+					'user' => $user,
 					'id' => $id,
 				));
 				$userVotings->delete(array(
@@ -2114,7 +2114,7 @@ class TikiLib extends TikiDb_Bridge
 				));
 			} else {
 				$userVotings->delete(array(
-					'user' => $ip,
+					'user' => $user,
 					'id' => $id,
 				));
 			}

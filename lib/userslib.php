@@ -1484,9 +1484,11 @@ class UsersLib extends TikiLib
 	
 	function get_users_light($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $group = '') {
 		// This is a lighter version of get_users_names designed for ajax checking of userrealnames
-		global $prefs, $tiki_p_list_users;
+		global $prefs, $tiki_p_list_users, $tiki_p_admin;
 
-		if ( $tiki_p_list_users	!== 'y') return array();
+		if ($tiki_p_list_users	!== 'y' && $tiki_p_admin != 'y') {
+			return array();
+		}
 
 		$mid = '';
 		$bindvars = array();
@@ -1529,8 +1531,11 @@ class UsersLib extends TikiLib
 	
 	function get_users_names($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '') {
 
-		global $tiki_p_list_users;
-		if ( $tiki_p_list_users	!== 'y') return array();
+		global $tiki_p_list_users, $tiki_p_admin;
+		
+		if ($tiki_p_list_users	!== 'y' && $tiki_p_admin != 'y') {
+			return array();
+		}
 
 		// This function gets an array of user login names.
 		if ( !empty($find) ) {
@@ -1555,8 +1560,11 @@ class UsersLib extends TikiLib
 
 	function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $initial = '', $inclusion=false, $group='', $email='') {
 
-		global $tiki_p_list_users;
-		if ( $tiki_p_list_users	!== 'y') return array();
+		global $tiki_p_list_users, $tiki_p_admin;
+		
+		if ($tiki_p_list_users	!== 'y' && $tiki_p_admin != 'y') { 
+			return array();
+		}
 
 		$mid = '';
 		$bindvars = array();
@@ -1785,9 +1793,11 @@ class UsersLib extends TikiLib
 	}
 
 	function list_all_users() {
-		global $cachelib, $tiki_p_list_users;
+		global $cachelib, $tiki_p_list_users, $tiki_p_admin;
 
-		if ( $tiki_p_list_users	!== 'y') return array();
+		if ($tiki_p_list_users	!== 'y' && $tiki_p_admin != 'y') {
+			return array();
+		}
 
 		if (! $users = $cachelib->getSerialized("userslist")) {
 			$users = array();

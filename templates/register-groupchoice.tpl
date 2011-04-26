@@ -19,6 +19,15 @@
 	{/if}
 {else}
 	{* Groups *}
+	{jq}
+	$("input[name='chosenGroup']").change(function() {
+		var gr = $("input[name='chosenGroup']:checked").val();
+		$.getJSON('group_tracker_ajax.php',{chosenGroup:gr}, function(data) {
+		//console.debug(data);
+		$("#registerTracker").html(data['res']);
+		});
+	});
+	{/jq}
 	{if isset($theChoiceGroup)}
 		<input type="hidden" name="chosenGroup" value="{$theChoiceGroup|escape}" />
 	{elseif isset($listgroups)}
@@ -41,5 +50,6 @@
 				{/foreach}
 			</td>
 		</tr>
+		<tr><td colspan="2"><div id="registerTracker"></div></td></tr>
 	{/if}
 {/if}

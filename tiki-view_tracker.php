@@ -118,8 +118,6 @@ if ($prefs['feature_groupalert'] == 'y') {
 	$smarty->assign_by_ref('groupforalert', $groupforalert);
 	$smarty->assign_by_ref('showeachuser', $showeachuser);
 }
-$field_types = $trklib->field_types();
-$smarty->assign('field_types', $field_types);
 $status_types = array();
 $status_raw = $trklib->status_types();
 if (isset($_REQUEST['status'])) {

@@ -161,21 +161,6 @@ input[type=reset] {
 	font-weight: normal;
 	padding: 0 4px}
 
-* html input#sl-login-user,
-* html input#sl-login-pass,
-* html input#fuser,
-* html input#login-user,
-* html input#login-pass,
-* html input#login-switchuser {
-	background: #586858;
-	border: 1px solid;
-	border-color: #5a5a62 #b5b5c3 #b5b5c3 #5a5a62;
-	color: #b2b2b2;
-	padding: 0 4px;
-	margin-right: 3px}
-	
-* html .wikitopline select {font-size: .9em}
-
 select {
 	background: #586858 url(abse/titlebgoff.png) repeat-x;
 	color: #BDCEC3;
@@ -235,6 +220,12 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding-top: 0}
 
 .floatright img {margin-right: 40px}
+
+#top_modules #secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 30px;
+}
 
 /* id is no longer used but this is retained as possible reference for banner module CSS */
 #sitead {

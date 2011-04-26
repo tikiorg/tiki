@@ -2,19 +2,19 @@
 	{if $context.list_mode eq 'csv'}
 		{$field.value}/{$field.voteavg}
 	{else}
-		{capture name=stat}
-			{if empty($field.numvotes)}
-				{tr}Number of votes:{/tr} 0
-			{else}
-				{tr}Number of votes:{/tr} {$field.numvotes|default:"0"}, {tr}Average:{/tr} {$field.voteavg|default:"0"}
-				{if $tiki_p_tracker_vote_ratings eq 'y'}
-					, {if isset($field.my_rate) && $field.my_rate !== false}{tr}Your rating:{/tr} {$field.my_rate}{else}{tr}You did not vote yet{/tr}{/if}
+		{strip}
+			{capture name=stat}
+				{if empty($field.numvotes)}
+					{tr}Number of votes:{/tr} 0
+				{else}
+					{tr}Number of votes:{/tr} {$field.numvotes|default:"0"}, {tr}Average:{/tr} {$field.voteavg|default:"0"}
+					{if $tiki_p_tracker_vote_ratings eq 'y'}
+						, {if isset($field.my_rate) && $field.my_rate !== false}{tr}Your rating:{/tr} {$field.my_rate}{else}{tr}You did not vote yet{/tr}{/if}
+					{/if}
 				{/if}
-			{/if}
-		{/capture}
-		{capture name=myvote}
-			{tr}My rating:{/tr} {$field.my_rate}
-		{/capture}
+			{/capture}
+		{/strip}
+		{capture name=myvote}{tr}My rating:{/tr} {$field.my_rate}{/capture}
 		<span class="rating">
 		<span style="white-space:nowrap">
 		{section name=i loop=$field.options_array}
@@ -52,7 +52,7 @@
 			{icon _id='help' title=$smarty.capture.stat}
 		{/if}
 		{if $tiki_p_tracker_revote_ratings eq 'y' and  isset($field.my_rate) and in_array($field.my_rate, $field.options_array)}
-			<a href="{$smarty.server.REQUEST_URI}{if empty($smarty.server.QUERY_STRING)}?{else}&amp;{/if}itemId={$item.itemId}&amp;ins_{$field.fieldId}=NULL&amp;vote=y" title="{tr}Clik to delete your vote{/tr}">x</a>
+			<a href="{$smarty.server.REQUEST_URI}{if empty($smarty.server.QUERY_STRING)}?{else}&amp;{/if}itemId={$item.itemId}&amp;ins_{$field.fieldId}=NULL&amp;vote=y" title="{tr}Click to delete your vote{/tr}">x</a>
 		{/if}
 		<span>
 	{/if}

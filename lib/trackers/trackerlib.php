@@ -500,13 +500,11 @@ class TrackerLib extends TikiLib
 				if ($row['lang'] == $prefs['language']) {
 					return $row['value'];
 				}
-
-				$ret = $res['value'];
 			}
-		} else {
-			if ($res = reset($result)) {
-				$ret = $res['value'];
-			}
+		}
+		
+		if ($res = reset($result)) {
+			$ret = $res['value'];
 		}
 		return $ret;
 	}
@@ -3094,7 +3092,7 @@ class TrackerLib extends TikiLib
 			$categlib->remove_category($currentCategId);
 		}
 
-		foreach ($this->get_all_tracker_items() as $itemId) {
+		foreach ($this->get_all_tracker_items($trackerId) as $itemId) {
 			$this->remove_tracker_item($itemId);
 		}
 
@@ -3917,6 +3915,7 @@ class TrackerLib extends TikiLib
 	function get_user_item(&$trackerId, $trackerOptions, $userparam=null, $user= null, $status='') {
 		global $prefs;
 		$tikilib = TikiLib::lib('tiki');
+		$userlib = TikiLib::lib('user');
 		if (empty($user)) {
 			$user = $GLOBALS['user'];
 		}
@@ -4313,7 +4312,7 @@ class TrackerLib extends TikiLib
 		return false;
 	}
 	function fieldId_is_editable($field, $item) {
-		global $tiki_p_admin_trackers;
+		global $tiki_p_admin_trackers, $user;
 		if ($tiki_p_admin_trackers == 'y') {
 			return true;
 		}

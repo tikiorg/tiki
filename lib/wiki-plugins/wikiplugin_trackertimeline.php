@@ -195,10 +195,19 @@ function wikiplugin_trackertimeline( $data, $params ) {
 		}
 
 		// Filter elements
-		if( $detail['start'] >= $detail['end'] )
-			continue;
-		if( $detail['end'] <= $start || $detail['start'] > $end )
-			continue;
+		if ($params['simile_timeline'] !== 'y') {
+			if( $detail['start'] >= $detail['end'] )
+				continue;
+			if( $detail['end'] <= $start || $detail['start'] > $end )
+				continue;
+		} else {
+			if( !empty($detail['end']) && $detail['start'] > $detail['end'] ) {
+				continue;
+			}
+			if( (!empty($detail['end']) && $detail['end'] < $start) || $detail['start'] > $end ) {
+				continue;
+			}
+		}
 
 		$detail['lstart'] = max( $start, $detail['start'] );
 		$detail['lend'] = min( $end, $detail['end'] );
@@ -216,14 +225,14 @@ function wikiplugin_trackertimeline( $data, $params ) {
 		$data[ $detail['group'] ][] = $detail;
 	}
 
-	$new = array();
-	foreach( $data as $group => &$list ) {
-		wp_ttl_organize( $group, $start, $size, $list, $new );
-	}
-	$data = array_merge( $data, $new );
-	ksort($data);
-
 	if ($params['simile_timeline'] !== 'y') {
+		$new = array();
+		foreach( $data as $group => &$list ) {
+			wp_ttl_organize( $group, $start, $size, $list, $new );
+		}
+		$data = array_merge( $data, $new );
+		ksort($data);
+
 		$smarty->assign( 'wp_ttl_data', $data );
 		$layouts = array();
 		if( isset( $params['scale2'] ) && $layout = wp_ttl_genlayout( $start, $end, $size, $params['scale2'] ) ) {
@@ -285,11 +294,11 @@ head.appendChild(script);
 		$js .= '
 var ttlTimelineReady = false, ttlInitCount = 0, ttlTimeline, ttlInit = function() {
 	// wait for Timeline to be loaded
-	if (typeof window.Timeline === "undefined" ||
+	if (ttlInitCount < 12 && (typeof window.Timeline === "undefined" ||
 			typeof window.Timeline.createBandInfo === "undefined" ||
 			typeof window.Timeline.DateTime === "undefined" ||
 			typeof window.Timeline.GregorianDateLabeller === "undefined" ||
-			typeof window.Timeline.GregorianDateLabeller.getMonthName === "undefined" ) {
+			typeof window.Timeline.GregorianDateLabeller.getMonthName === "undefined" )) {
 
 		if (ttlInitCount > 10) {	// at least 5 secs - reload
 			location.replace(location.href);
@@ -352,7 +361,7 @@ $(window).resize( function () {
 });';
 
 		$headerlib->add_jq_onready( $js, 10);
-		$out = '<div id="ttl_timeline" style="height: 150px; border: 1px solid #aaa"></div>';
+		$out = '<div id="ttl_timeline" style="height: 250px; border: 1px solid #aaa"></div>';
 		return $out;
 	}
 }

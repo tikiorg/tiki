@@ -30,23 +30,24 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 
 		return array(
 			'my_rate' => $data['my_rate'],
-			'numvotes' => $data['numvotes'],
-			'voteavg' => $data['voteavg'],
+			'numvotes' => empty($data['numvotes']) ? 0 : $data['numvotes'],
+			'voteavg' => empty($data['voteavg']) ? 0 : $data['voteavg'],
 			'request_rate' => (isset($requestData[$ins_id]))
 				? $requestData[$ins_id]
 				: null,
+			'value' => $data['value'],
 		);
 	}
 
 	function renderOutput($context = array())
 	{
-		return $this->renderTemplate('trackeroutput/rating.tpl');
+		return $this->renderTemplate('trackeroutput/rating.tpl', $context);
 	}
 
 	function renderInput($context = array())
 	{
 		if ($this->getConfiguration('type') == 's') {
-			return $this->renderTemplate('trackerinput/rating.tpl');
+			return $this->renderTemplate('trackerinput/rating.tpl', $context);
 		}
 
 		return null;

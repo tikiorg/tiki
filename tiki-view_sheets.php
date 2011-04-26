@@ -175,11 +175,13 @@ if (isset($_REQUEST['sheetonly']) && $_REQUEST['sheetonly'] == 'y') {
 }
 
 $smarty->assign('grid_content', $tableHtml);
+$smarty->assign('menu', $smarty->fetch('tiki-view_sheets_menu.tpl'));
 
 $sheetlib->setup_jquery_sheet();
 $headerlib->add_jq_onready('
 	$.sheet.tikiOptions = $.extend($.sheet.tikiOptions, {
-		editable: ("'. $_REQUEST['parse'] .'" == "edit" ? true : false)
+		editable: ("'. $_REQUEST['parse'] .'" == "edit" ? true : false),
+		menu: $("#sheetMenu").html()
 	});
 	
 	var tikiSheet = $("div.tiki_sheet").sheet($.sheet.tikiOptions);
