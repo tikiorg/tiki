@@ -670,7 +670,8 @@ class ModLib extends TikiLib
 
 	function createDefaultCacheKey( $mod_reference ) {
 		global $prefs;
-		return $mod_reference['moduleId'] . '-' . $mod_reference['name'] . '-'. $prefs['language'] . '-' . serialize($mod_reference['params']);
+		return $mod_reference['moduleId'] . '-' . $mod_reference['name'] . '-'. $prefs['language'] . '-' .
+			   serialize($mod_reference['params']) . (isset($_SESSION['current_perspective']) ? '-p' . $_SESSION['current_perspective'] : '');
 	}
 
 	function execute_module( $mod_reference ) {
