@@ -6,27 +6,6 @@
 // $Id$// (c) Copyright 2002-2009 by authors of the Tiki Wiki CMS Groupware Project
 
 //this script may only be included - so its better to die if called directly.
-$permissionList = array();
-$adminPermissions = array();
-
-$allperms = $userlib->get_enabled_permissions();
-$permissionList = array_keys($allperms);
-
-foreach( $allperms as $permName => $row ) {
-	if( $row['admin'] ) {
-		$adminPermissions[ $row['type'] ] = substr($permName, strlen( 'tiki_p_' ));
-	}
-}
-
-// Create a map from the permission to the admin permission
-$map = array();
-foreach( $allperms as $permName => $row ) {
-	$type = $row['type'];
-	if( isset( $adminPermissions[$type] ) && ! $row['admin'] ) {
-		$permName = substr( $permName, strlen( 'tiki_p_' ) );
-		$map[ $permName ] = $adminPermissions[$type];
-	}
-}
 
 $groupList = $tikilib->get_user_groups( $user );
 $is_token_access = false;
@@ -123,32 +102,17 @@ if( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 	}
 }
 
-$sequence = array(
-	$globalAdminCheck = new Perms_Check_Alternate( 'admin' ),
-	new Perms_Check_Direct,
-	new Perms_Check_Indirect( $map ),
-);
+$allperms = $userlib->get_enabled_permissions();
+$permissionList = array_keys($allperms);
 
-if( $user ) {
-	$sequence[] = new Perms_Check_Creator( $user );
-}
+$builder = new Perms_Builder;
+$perms = $builder
+	->withCategories($prefs['feature_categories'] == 'y')
+	->withDefinitions($allperms)
+	->build();
 
-$factories = array();
-$factories[] = new Perms_ResolverFactory_ObjectFactory;
-if( $prefs['feature_categories'] == 'y' ) {
-	$factories[] = new Perms_ResolverFactory_CategoryFactory;
-}
-$factories[] = new Perms_ResolverFactory_GlobalFactory;
-
-$perms = new Perms;
 $perms->setGroups( $groupList );
-$perms->setPrefix( 'tiki_p_' );
-$perms->setCheckSequence( $sequence );
-$perms->setResolverFactories( $factories );
 Perms::set( $perms );
-
-$globalperms = Perms::get();
-$globalAdminCheck->setResolver( $globalperms->getResolver() );
 
 function remove_tiki_p_prefix( $name ) {
 	return substr( $name, 7 );
@@ -156,8 +120,9 @@ function remove_tiki_p_prefix( $name ) {
 
 $shortPermList = array_map( 'remove_tiki_p_prefix', $permissionList );
 
+$globalperms = Perms::get();
 $globalperms->globalize( $shortPermList, $smarty, false );
-$smarty->assign( 'globalperms', $globalperms );
+$smarty->assign('globalperms', $globalperms);
 
 unset($allperms);
 unset($tokenParams);
