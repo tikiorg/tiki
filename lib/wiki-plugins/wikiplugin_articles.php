@@ -132,6 +132,24 @@ function wikiplugin_articles_info()
 				'filter' => 'date',
 				'default' => ''
 			),
+			'periodQuantity' => array(
+				'required' => false,
+				'name' => tr('Period quantity'),
+				'description' => tr('Display only articles published since a user defined period of time until now. Used with "Period unit". If this option is set, "Start Date" and "End date" are ignored.'),
+				'filter' => 'int',
+				'default' => '',
+			),
+			'periodUnit' => array(
+				'required' => false,
+				'name' => tr('Period unit'),
+				'description' => tr('Time unit used with "Period quantity"'),
+				'filter' => 'int',
+				'options' => array(
+					array('text' => tr('Day'), 'value' => 86400),
+					array('text' => tr('Week'), 'value' => 604800),
+					array('text' => tr('Month'), 'value' => 2628000),
+				),
+			),
 			'overrideDates' => array(
 				'required' => false,
 				'name' => tra('Override Dates'),
@@ -231,11 +249,24 @@ function wikiplugin_articles($data, $params)
 	
 	if(!isset($containerClass)) {$containerClass = 'wikiplugin_articles';}
 	$smarty->assign('container_class', $containerClass);
-	
-	if (isset($dateStart)) 	$dateStartTS = strtotime($dateStart);
-	if (isset($dateEnd))	$dateEndTS = strtotime($dateEnd);
-	$dateStartTS = !empty($dateStartTS) ? $dateStartTS : 0;
-	$dateEndTS = !empty($dateEndTS) ? $dateEndTS : 0;
+
+	// if a period of time is set, date start and end are ignored
+	if (isset($periodQuantity)) {
+		$dateStartTS = $tikilib->now - ($periodQuantity * $periodUnit);
+		$dateEndTS = $tikilib->now;
+	} else {
+		if (isset($dateStart)) {
+			$dateStartTS = strtotime($dateStart);
+		} else {
+			$dateStartTS = 0;
+		}
+		
+		if (isset($dateEnd)) {
+			$dateEndTS = strtotime($dateEnd);
+		} else {
+			$dateEndTS = 0;
+		}
+	}
 	
 	if (isset($fullbody) && $fullbody == 'y') {
 		$smarty->assign('fullbody', 'y');
