@@ -21,7 +21,6 @@ abstract class Math_Formula_Function
 	}
 
 	protected function error( $message ) {
-		require_once 'Math/Formula/Exception.php';
 		throw new Math_Formula_Exception( $message );
 	}
 }

@@ -31,7 +31,6 @@ class Math_Formula_Runner
 			$this->inspectElement( $this->element );		
 			return $this->collected;
 		} else {
-			require_once 'Math/Formula/Runner/Exception.php';
 			throw new Math_Formula_Runner_Exception( tra('No formula provided.') );
 		}
 	}
@@ -49,7 +48,6 @@ class Math_Formula_Runner
 		} elseif( isset( $this->variables[$data] ) ) {
 			return $this->variables[$data];
 		} else {
-			require_once 'Math/Formula/Exception.php';
 			throw new Math_Formula_Exception( tr('Variable not found "%0".', $data) );
 		}
 	}
@@ -72,7 +70,6 @@ class Math_Formula_Runner
 
 	private function getElement( $element ) {
 		if( is_string( $element ) ) {
-			require_once 'Math/Formula/Parser.php';
 			$parser = new Math_Formula_Parser;
 			$element = $parser->parse( $element );
 		}
@@ -87,7 +84,6 @@ class Math_Formula_Runner
 			return $this->known[$name];
 		}
 
-		require_once 'Zend/Filter/Word/DashToCamelCase.php';
 		$filter = new Zend_Filter_Word_DashToCamelCase;
 		$ucname = $filter->filter( ucfirst( $name ) );
 
@@ -103,7 +99,6 @@ class Math_Formula_Runner
 			}
 		}
 
-		require_once 'Math/Formula/Runner/Exception.php';
 		throw new Math_Formula_Runner_Exception( tr('Unknown operation "%0".', $element->getType() ) );
 	}
 }

@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/core/TikiFilter.php';
-
 class JitFilter implements ArrayAccess, Iterator, Countable
 {
 	private $stored;
@@ -201,7 +199,6 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 
 	function __get( $key )
 	{
-		require_once 'JitFilter/Element.php';
 		if( ! isset( $this->stored[$key] ) )
 			return new JitFilter_Element( null );
 

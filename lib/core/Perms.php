@@ -126,7 +126,6 @@ class Perms
 	}
 
 	public function getAccessor( array $context = array() ) {
-		require_once 'lib/core/Perms/Accessor.php';
 		$accessor = new Perms_Accessor;
 		$accessor->setContext( $context );
 

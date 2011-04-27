@@ -5,7 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'Math/Formula/Exception.php';
 class Math_Formula_Parser_Exception extends Math_Formula_Exception
 {
 	function __construct( $message, array $tokens, $code = null ) {

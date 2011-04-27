@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/core/DeclFilter/Rule.php';
-
 abstract class DeclFilter_FilterRule implements DeclFilter_Rule
 {
 	private $composite = false;

@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/core/Perms/ResolverFactory.php';
-
 /**
  * Factory used in test cases to test fallbacks.
  */

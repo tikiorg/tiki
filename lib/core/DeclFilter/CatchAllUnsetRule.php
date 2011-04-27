@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/core/DeclFilter/UnsetRule.php';
-
 class DeclFilter_CatchAllUnsetRule extends DeclFilter_UnsetRule
 {
 	function match( $key )

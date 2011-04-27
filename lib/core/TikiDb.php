@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/core/TikiDb/ErrorHandler.php';
-
 abstract class TikiDb
 {
 	private static $instance;
@@ -149,7 +147,6 @@ abstract class TikiDb
 		if( $this->errorHandler )
 			$this->errorHandler->handle( $this, $query, $values, $result );
 		else {
-			require_once 'TikiDb/Exception.php';
 			throw new TikiDb_Exception( $this->getErrorMessage() );
 		}
 	} // }}}

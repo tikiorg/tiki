@@ -5,7 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'Math/Formula/Function.php';
 class Math_Formula_Function_Add extends Math_Formula_Function
 {
 	function evaluate( $element ) {

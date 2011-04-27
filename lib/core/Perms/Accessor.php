@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/core/Perms/Resolver.php';
-
 /**
  * Interface providing convenient access to permissions in
  * a resolver for a set of groups. The permissions can be

@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/core/Perms/ResolverFactory.php';
-
 /**
  * The global ResolverFactory is used as the fallback factory. It provides
  * a constant hash (so it will be queries only once) and obtains the global
@@ -36,7 +34,6 @@ class Perms_ResolverFactory_GlobalFactory implements Perms_ResolverFactory
 			$perms[$group][] = $perm;
 		}
 
-		require_once 'lib/core/Perms/Resolver/Static.php';
 		return new Perms_Resolver_Static( $perms );
 	}
 

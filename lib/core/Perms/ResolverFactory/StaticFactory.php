@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/core/Perms/ResolverFactory.php';
-
 /**
  * Simple factory always providing the same resolver. Used to provide
  * a grant-all resolver to admin users.

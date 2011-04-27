@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/core/Perms/Check.php';
-
 class Perms_Check_Indirect implements Perms_Check
 {
 	private $map;

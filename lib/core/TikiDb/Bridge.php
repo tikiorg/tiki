@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/core/TikiDb.php';
-
 class TikiDb_Bridge extends TikiDb
 {
 	function startTimer() // {{{

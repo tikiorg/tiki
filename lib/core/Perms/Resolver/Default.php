@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/core/Perms/Resolver.php';
-
 /**
  * Simple resolver always providing the same answer. Primarly
  * used for testing purposes, but also used as the administrator

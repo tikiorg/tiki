@@ -5,9 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/core/Perms/Reflection/Container.php';
-require_once 'lib/core/Perms/Reflection/PermissionSet.php';
-
 class Perms_Reflection_Object implements Perms_Reflection_Container
 {
 	protected $factory;

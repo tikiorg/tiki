@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'lib/core/Perms/ResolverFactory.php';
-
 /**
  * Obtains the object permissions for each object. Bulk loading provides
  * loading for multiple objects in a single query.
@@ -87,7 +85,6 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 		if( count( $perms ) == 0 ) {
 			return null;
 		} else {
-			require_once 'lib/core/Perms/Resolver/Static.php';
 			return new Perms_Resolver_Static( $perms, 'object' );
 		}
 	}
