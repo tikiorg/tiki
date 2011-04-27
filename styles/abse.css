@@ -221,6 +221,10 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 .floatright img {margin-right: 40px}
 
+#top_modules .box-logo {
+	float: left;
+}
+
 #top_modules #secondary_site_menu {
 	position: absolute;
 	top: 0;
@@ -236,7 +240,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	max-width: 460px;
 	margin-top: .8em}
 
-#top_modules .siteloginbar_popup {
+#top_modules .box-login {
 	position: absolute;
 	right: 10px;
 	bottom: 0;

@@ -277,11 +277,17 @@ body.fixed_width .fixedwidth .fixedwidth {
 #top_modules {
 	position: relative;
 	min-height: 80px;
-	
 }
 
-#sitelogo {
-	padding: 8px 0 0 0;
+#top_modules .box-secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 30px;
+}
+
+#top_modules .box-logo {
+	float: left;
+	padding: 8px 0;
 	white-space: nowrap;
 	overflow: hidden;
 }
@@ -289,6 +295,11 @@ body.fixed_width .fixedwidth .fixedwidth {
 #sitelogo,
 #sitelogo * {
 	float: left;
+}
+
+#sitelogo,
+#sitetitles {
+	margin-left: 8px;
 }
 
 #top_modules .box-login_box {
@@ -340,19 +351,21 @@ body.fixed_width .fixedwidth .fixedwidth {
 	background: none;
 }
 
-#sitesearchbar form {
+.box-search form {
 	padding-top: 8px;
 	margin-right: 8px;
 	font-size: 12px;
 	white-space: nowrap;
 }
 
-#sitesearchbar ul.cssmenu * {
+.box-search ul.cssmenu * {
 	width: 40px;
 }
 
-#sitesearchbar .findtitle input {
+.box-search .findtitle input,
+.box-search input#search_mod_input_1 {
 	border: none;
+	background: none;
 }
 
 select[name="where"] {
@@ -601,6 +614,7 @@ small.date {
 	border-left: 1px solid #acc4e0;
 	border-right: 1px solid #2e5276;
 	padding: 9px 1em 10px 1em;
+	color: #ccdceb;
 }
 
 #tiki-top .cssmenu_horiz li.menuSection a {

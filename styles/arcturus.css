@@ -179,7 +179,11 @@ input[type="submit"]:active,
 
 /***** Site Header & Identity *****/
 
-#top_modules #secondary_site_menu {
+.header {
+	margin: 0;
+}
+
+#top_modules .box-secondary_site_menu {
 	position: absolute;
 	top: 0;
 	right: 30px;
@@ -187,6 +191,10 @@ input[type="submit"]:active,
 
 #top_modules #secondary_site_menu .cssmenu_horiz li ul {
 	margin-top: -16px;
+}
+
+#top_modules .box-logo {
+	float: left;
 }
 
 #sitetitles {
@@ -203,15 +211,14 @@ input[type="submit"]:active,
 	margin-top: 10px;
 }
 
-.header .box-login_box {
-	float: right;
-	margin-right: 10px;
-}
-
-#top_modules .siteloginbar_popup {
+#top_modules .box-login_box {
 	position: absolute;
 	right: 30px;
 	bottom: 0;
+}
+
+.box-login_box .siteloginbar_poppedup {
+	margin-top: -14px;
 }
 
 #tiki-top {
@@ -240,10 +247,6 @@ input[type="submit"]:active,
 	z-index: 1;
 }
 
-.header {
-	margin: 0;
-}
-	
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
 

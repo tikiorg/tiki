@@ -313,6 +313,16 @@ body.fixed_width .fixedwidth .fixedwidth {
 	min-height: 100px;
 }
 
+#top_modules .box-secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 30px;
+}
+
+#top_modules .box-logo {
+	float: left;
+}
+
 #sitelogo {
 	margin: auto !important;
 	padding: 1em;
@@ -350,10 +360,14 @@ body.fixed_width .fixedwidth .fixedwidth {
 	font-size: 1.6em;
 }
 
-#top_modules .siteloginbar_popup {
+#top_modules .box-login_box {
 	position: absolute;
 	right: 10px;
 	bottom: 0;
+}
+
+#top_modules .siteloginbar_popup > ul > li {
+	line-height: 50%;
 }
 
 .siteloginbar_poppedup {

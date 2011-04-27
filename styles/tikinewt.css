@@ -285,6 +285,16 @@ label {
 	padding-top: 2px;
 }
 
+#top_modules .box-secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 40px;
+}
+
+#top_modules .box-logo {
+	margin-left: 10px;
+}
+
 #top_modules #sitetitles {
 	margin-left: 20px;
 	padding-bottom: 10px;

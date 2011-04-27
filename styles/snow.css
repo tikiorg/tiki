@@ -199,7 +199,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding: 0;
 }
 
-#top_modules {min-height: 102px}
+#top_modules {min-height: 45px}
 
 #top_modules .box-login_box {
 	position: absolute;
@@ -210,6 +210,25 @@ body.fixed_width .fixedwidth .fixedwidth {
 	
 #siteloginbar_popup .cssmenu_horiz li ul {
 	margin-top: -8px;	
+}
+
+#top_modules .box-secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 30px;
+}
+
+#top_modules #secondary_site_menu .cssmenu_horiz li ul {
+	margin-top: -10px;
+}
+
+#top_modules #secondary_site_menu .cssmenu_horiz li ul ul {
+	margin-top: 0;
+}
+
+#top_modules .box-logo {
+	float: left;
+	margin: 10px;
 }
 
 #sitetitle,
@@ -344,6 +363,10 @@ body.fixed_width .fixedwidth .fixedwidth {
 .cssmenu_vert li a .sf-sub-indicator,
 .cssmenu_horiz li ul li a .sf-sub-indicator {
 	top: .3em;
+}
+
+.box-secondary_site_menu .cssmenu_horiz li a .sf-sub-indicator {
+	bottom: .5em;
 }
 
 /** Links in other menus **/

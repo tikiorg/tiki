@@ -178,7 +178,7 @@ label {margin: 0 2px}
 #top_modules {
 	text-align: left;
 	background: transparent;
-	min-height: 122px;
+/*	min-height: 122px;*/
 	position: relative;
 	background: #7d0000 url(ohia/header.png) repeat-x 0 100%;
 }
