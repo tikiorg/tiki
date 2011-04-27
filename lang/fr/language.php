@@ -8848,7 +8848,6 @@ $lang=Array(
 "Create user if not in Tiki" => "Créer l'utilisateur s'il n'existe pas dans Tiki",
 "Use Tiki authentication for Admin login" => "Utiliser l'authentification Tiki pour le compte Admin",
 "phpBB Version" => "Version de phpBB",
-"3" => "4",
 "phpBB Database Hostname" => "Serveur de base de données de phpBB",
 "phpBB Database Username" => "Nom d'utilisateur de la base de données de phpBB",
 "phpBB Database Password" => "Mot de passe de la base de données de phpBB",
