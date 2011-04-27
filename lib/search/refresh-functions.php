@@ -19,9 +19,17 @@ function refresh_index($object_type, $object_id = null) {
 	if( $prefs['unified_incremental_update'] == 'y' && $object_id ) {
 		$unified_type = refresh_index_convert_type($object_type);
 
-		global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';
-		$unifiedsearchlib->invalidateObject( $unified_type, $object_id );
-		$unifiedsearchlib->processUpdateQueue();
+		$errlib = TikiLib::lib('errorreport');
+		try {
+			global $unifiedsearchlib; require_once 'lib/search/searchlib-unified.php';
+			$unifiedsearchlib->invalidateObject( $unified_type, $object_id );
+			$unifiedsearchlib->processUpdateQueue();
+
+		} catch (Zend_Search_Lucene_Exception $e) {
+
+			$errlib->report(tr('Search index could not be updated.') .
+							'<br />' . $e->getMessage());
+		}
 	}
 
 	return true;
