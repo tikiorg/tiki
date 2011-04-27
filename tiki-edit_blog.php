@@ -26,7 +26,7 @@ $tikilib->get_perm_object($blogId, 'blog');
 $smarty->assign('blogId', $blogId);
 $smarty->assign('title', '');
 $smarty->assign('description', '');
-$smarty->assign('public', 'n');
+$smarty->assign('public', 'y');
 $smarty->assign('use_find', 'y');
 $smarty->assign('add_date', 'y');
 $smarty->assign('use_title', 'y');
