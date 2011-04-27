@@ -26,7 +26,6 @@ if ($prefs['feature_groupalert'] == 'y') {
 }
 
 $auto_query_args = array( 'galleryId'
-												, 'fileId'
 												, 'offset'
 												, 'find'
 												, 'find_creator'
