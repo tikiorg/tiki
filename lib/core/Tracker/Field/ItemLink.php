@@ -17,7 +17,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 	{
 		$data = $this->getLinkData($requestData, $this->getInsertId());
 
-		$value = $this->getValue();
+		$value = $data['value'];
+
 		if ($value) {
 			$data["linkId"] = TikiLib::lib('trk')->get_item_id($this->getOption(0), $this->getOption(1), $value);
 		}
