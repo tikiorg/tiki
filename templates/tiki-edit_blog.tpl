@@ -146,11 +146,11 @@
             </td>
           </tr>
 
-          {if strlen($heading) > 0 and $blogId > 0}
+          {if strlen($heading) > 0 and $show_blog_heading_preview eq 'y'}
             <tr class="editblogform">
               <td colspan="2">
                 {button href="#" _flip_id='blog_heading_preview' _class='link' _text="{tr}Heading preview{/tr}" _flip_default_open='n'}
-                <div id="blog_heading_preview" style="display: {if isset($smarty.session.tiki_cookie_jar.show_blog_heading_preview) and $smarty.session.tiki_cookie_jar.show_blog_heading_preview eq 'y'}block{else}none{/if};">
+                <div id="blog_heading_preview" style="display: {if $show_blog_heading_preview eq 'y'}block{else}none{/if};">
                   {eval var=$heading}
                 </div>
               </td>
