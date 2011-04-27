@@ -390,13 +390,14 @@ class ModLib extends TikiLib
 
 		if( isset( $params['theme'] ) ) {
 			global $tc_theme;
-			
+
+			$ok = false;
 			foreach ((array) $params['theme'] as $t) {
 				if( $t{0} != '!' ) { // usual behavior
-					if( !empty($tc_theme) && $t !== $tc_theme ) {
-						return false;
-					} elseif( $t !== $prefs['style'] && empty($tc_theme)) {
-						return false;
+					if( !empty($tc_theme) && $t === $tc_theme ) {
+						$ok = true;
+					} elseif( $t === $prefs['style'] && empty($tc_theme)) {
+						$ok = true;
 					}
 				} else { // negation behavior
 					$excluded_theme = substr($t,1);
@@ -406,6 +407,9 @@ class ModLib extends TikiLib
 						return false;
 					}
 				}
+			}
+			if (!$ok) {
+				return false;
 			}
 		}
 
