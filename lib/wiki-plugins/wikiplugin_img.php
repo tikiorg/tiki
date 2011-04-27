@@ -592,12 +592,15 @@ function wikiplugin_img_info() {
 	) {
 		//Get ID numbers for images in galleries and attachments included in src parameter as url
 		//So we can get db info for these too
-		if (strlen(strstr($imgdata['src'], $imagegalpath)) > 0) {                                     
-			$imgdata['id'] = substr(strstr($imgdata['src'], $imagegalpath), strlen($imagegalpath));   
-		} elseif (strlen(strstr($imgdata['src'], $filegalpath)) > 0) {                                
-			$imgdata['fileId'] = substr(strstr($imgdata['src'], $filegalpath), strlen($filegalpath)); 	
-		} elseif (strlen(strstr($imgdata['src'], $attachpath)) > 0) {                                 
-			$imgdata['attId'] = substr(strstr($imgdata['src'], $attachpath), strlen($attachpath));   
+		$parsed = parse_url($imgdata['src']);
+		if (empty($parsed['host']) || (!empty($parsed['host']) && strstr($base_url, $parsed['host']))) {
+			if (strlen(strstr($imgdata['src'], $imagegalpath)) > 0) {                                     
+				$imgdata['id'] = substr(strstr($imgdata['src'], $imagegalpath), strlen($imagegalpath));   
+			} elseif (strlen(strstr($imgdata['src'], $filegalpath)) > 0) {                                
+				$imgdata['fileId'] = substr(strstr($imgdata['src'], $filegalpath), strlen($filegalpath)); 	
+			} elseif (strlen(strstr($imgdata['src'], $attachpath)) > 0) {                                 
+				$imgdata['attId'] = substr(strstr($imgdata['src'], $attachpath), strlen($attachpath));   
+			}
 		}
 		
 		//Deal with images in tiki databases (file and image galleries and attachments)
