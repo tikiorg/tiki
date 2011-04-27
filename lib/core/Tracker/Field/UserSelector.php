@@ -59,7 +59,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract
 		$smarty = TikiLib::lib('smarty');
 		
 		$value = $this->getConfiguration('value');
-		if ($value === false) {
+		if ($value === false && ($this->getOption(0) == 1 || $this->getOption(0) == 2)) {
 			$value = $user;
 		}
 		
@@ -68,7 +68,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract
 			return smarty_function_user_selector(
 					array(	'user' => $value,
 							'id'  => 'user_selector_' . $this->getConfiguration('fieldId'),
-							'select' => $this->getOption(0) == 0? '': ($this->getOption(0) == 1? $value: $user),
+							'select' => $value,
 							'name' => $this->getInsertId(),
 							'editable' => 'y',
 							'allowNone' => $this->getConfiguration('isMandatory') === 'y' ? 'n' : 'y',
