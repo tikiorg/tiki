@@ -78,6 +78,34 @@ class Event_ManagerTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(16, $this->called);
 	}
 
+	function testGenerateInheritenceGraph()
+	{
+		$manager = new Event_Manager;
+
+		$manager->bind('tiki.wiki.update', 'tiki.wiki.save');
+		$manager->bind('tiki.wiki.save', 'tiki.save');
+		$manager->bind('tiki.file.save', 'tiki.save');
+
+		$manager->bind('tiki.wiki.save', array($this, 'callbackMultiply'));
+		$manager->bind('tiki.wiki.update', array($this, 'callbackMultiply'));
+		$manager->bind('tiki.pageload', array($this, 'callbackMultiply'));
+
+		$this->assertEquals(array(
+			'nodes' => array(
+				'tiki.wiki.update',
+				'tiki.wiki.save',
+				'tiki.file.save',
+				'tiki.pageload',
+				'tiki.save',
+			),
+			'edges' => array(
+				array('from' => 'tiki.wiki.update', 'to' => 'tiki.wiki.save'),
+				array('from' => 'tiki.wiki.save', 'to' => 'tiki.save'),
+				array('from' => 'tiki.file.save', 'to' => 'tiki.save'),
+			),
+		), $manager->getEventGraph());
+	}
+
 	function callbackAdd($arguments)
 	{
 		$this->called += isset($arguments['amount']) ? $arguments['amount'] : 1;

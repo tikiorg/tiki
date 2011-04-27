@@ -32,5 +32,29 @@ class Event_Manager
 			}
 		}
 	}
+
+	function getEventGraph()
+	{
+		$edges = array();
+		$nodes = array_keys($this->eventRegistry);
+
+		foreach ($this->eventRegistry as $from => $callbackList) {
+			foreach ($callbackList as $callback) {
+				if (is_array($callback['callback']) && $callback['callback'][0] instanceof Event_Chain) {
+					$eventName = $callback['callback'][0]->getEventName();
+					$edges[] = array(
+						'from' => $from,
+						'to' => $eventName,
+					);
+					$nodes[] = $eventName;
+				}
+			}
+		}
+
+		return array(
+			'nodes' => array_values(array_unique($nodes)),
+			'edges' => $edges,
+		);
+	}
 }
 

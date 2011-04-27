@@ -3846,10 +3846,6 @@ class TikiLib extends TikiDb_Bridge
 
 		$this->replicate_page_to_history($name);
 
-		if( $prefs['quantify_changes'] == 'y' && $prefs['feature_multilingual'] == 'y' ) {
-			TikiLib::lib('quantify')->recordChangeSize( $page_id, 1, '', $data );
-		}
-
 		$this->clear_links($name);
 
 		// Pages are collected before adding slashes
@@ -3885,8 +3881,14 @@ class TikiLib extends TikiDb_Bridge
 			$this->score_event($user, 'wiki_new');
 		}
 
-		require_once('lib/search/refresh-functions.php');
-		refresh_index('pages', $name);
+		TikiLib::events()->trigger('tiki.wiki.create', array(
+			'type' => 'wiki page',
+			'object' => $name,
+			'page_id' => $page_id,
+			'version' => 1,
+			'data' => $data,
+			'old_data' => '',
+		));
 
 		$this->object_post_save( array( 'type'=> 'wiki page', 'object'=> $name, 'description'=> $description, 'name'=>$name, 'href'=>"tiki-index.php?page=$name" ), array(
 			'content' => $data,

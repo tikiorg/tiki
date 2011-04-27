@@ -8,7 +8,7 @@
 $events = TikiLib::events();
 
 if( $prefs['quantify_changes'] == 'y' && $prefs['feature_multilingual'] == 'y' ) {
-	$events->bind('tiki.wiki.update', Event_Lib::defer('quantify', 'wiki_update'));
+	$events->bind('tiki.wiki.save', Event_Lib::defer('quantify', 'wiki_update'));
 }
 
 if ($prefs['unified_incremental_update'] == 'y') {

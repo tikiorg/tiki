@@ -20,5 +20,10 @@ class Event_Chain
 	{
 		$this->manager->trigger($this->event, $arguments);
 	}
+
+	function getEventName()
+	{
+		return $this->event;
+	}
 }
 
