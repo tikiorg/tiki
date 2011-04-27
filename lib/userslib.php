@@ -2480,7 +2480,14 @@ class UsersLib extends TikiLib
 
 	private function get_raw_permissions()
 	{
-		return array(
+		global $prefs;
+		$cachelib = TikiLib::lib('cache');
+
+		if ($permissions = $cachelib->getSerialized('rawpermissions' . $prefs['language'])) {
+			return $permissions;
+		}
+
+		$permissions = array(
 			array(
 				'name' => 'tiki_p_admin_calendar', 
 				'description' => array('Can create/admin calendars'),
@@ -5030,6 +5037,9 @@ class UsersLib extends TikiLib
 				'scope' => 'global',
 			),
 		);
+
+		$cachelib->cacheItem('rawpermissions' . $prefs['language'], serialize($permissions));
+		return $permissions;
 	}
 
 	function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_asc', $find = '', $type = '', $group = '', $enabledOnly = false) {
