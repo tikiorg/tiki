@@ -23,7 +23,7 @@
 		{/if}
 		
 			<label class="findtitle">
-				{tr}Search{/tr} <input id="highlight{$iSearch}" name="words" style="width:300px" type="text" accesskey="s" value="{$words|escape}" />
+				{tr}Search{/tr} <input id="highlight{$iSearch}" name="highlight" style="width:300px" type="text" accesskey="s" value="{$words|escape}" />
 			</label>
 			{if $prefs.search_autocomplete eq 'y'}
 				{autocomplete element="#highlight$iSearch" type='pagename'}
