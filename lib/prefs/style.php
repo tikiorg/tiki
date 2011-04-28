@@ -31,7 +31,7 @@ function prefs_style_list() {
 		'style_option' => array(
 			'name' => tra('Theme options'),
 			'type' => 'list',
-			'help' => 'Theme options',
+			'help' => 'Theme+options',
 			'description' => tra('Style options'),
 			'options' => $style_options,
 		),

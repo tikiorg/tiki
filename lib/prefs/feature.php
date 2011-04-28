@@ -1373,7 +1373,7 @@ function prefs_feature_list() {
 		'feature_wiki_pictures' => array(
 			'name' => tra('Pictures'),
 			'type' => 'flag',
-			'help' => 'Wiki-Syntax Images',
+			'help' => 'Wiki-Syntax+Images',
 			'description' => tra('Allow users to upload images (pictures) to a page.'),
 		),
 		'feature_wiki_export' => array(
