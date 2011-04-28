@@ -18,6 +18,18 @@ if (version_compare(PHP_VERSION, '5.2.0', '<')) {
 	createPage($title, $content);
 }
 
+require_once('lib/init/initlib.php');
+$tikipath = dirname(__FILE__) . '/';
+TikiInit::prependIncludePath($tikipath.'lib/pear');
+TikiInit::appendIncludePath($tikipath.'lib/core');
+TikiInit::appendIncludePath($tikipath);
+require_once 'Zend/Loader/Autoloader.php';
+Zend_Loader_Autoloader::getInstance()
+	->registerNamespace('TikiFilter')
+	->registerNamespace('DeclFilter')
+	->registerNamespace('JitFilter')
+	->registerNamespace('TikiDb');
+
 include_once('db/tiki-db.php');	// to set up multitiki etc if there
 
 // if tiki installer is locked (probably after previous installation) display notice
