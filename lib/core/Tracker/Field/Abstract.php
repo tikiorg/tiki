@@ -72,6 +72,29 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 		}
 	}
 
+	function watchCompare($old, $new)
+	{
+		$name = $this->getConfiguration('name');
+		$is_visible = $this->getConfiguration('isHidden', 'n') == 'n';
+
+		if (! $is_visible) {
+			return;
+		}
+
+		if ($old) {
+			// split old value by lines
+			$lines = explode("\n", $old);
+			// mark every old value line with standard email reply character
+			$old_value_lines = '';
+			foreach ($lines as $line) {
+				$old_value_lines .= '> '.$line;
+			}
+			return "[-[$name]-]:\n--[Old]--:\n$old_value_lines\n\n*-[New]-*:\n$new";
+		} else {
+			return "[-[$name]-]:\n$new";
+		}
+	}
+
 	private function isLink($context = array())
 	{
 		$type = $this->getConfiguration('type');

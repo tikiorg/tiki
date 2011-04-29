@@ -1380,7 +1380,7 @@ class TrackerLib extends TikiLib
 		return($fields);
 	}
 
-	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = 0, $bulk_import = false, $tracker_info='') {
+	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = 0, $bulk_import = false) {
 		global $user, $prefs, $tiki_p_admin_trackers, $tiki_p_admin_users;
 		$final_event = 'tiki.trackeritem.update';
 
@@ -1401,18 +1401,18 @@ class TrackerLib extends TikiLib
 			$fil = $itemFields->fetchMap('fieldId', 'value', array('itemId' => $itemId));
 		}
 
-		if (empty($tracker_info)) {
-			$tracker_info = $this->get_tracker($trackerId);
-			if ($options = $this->get_tracker_options($trackerId)) {
-				$tracker_info = array_merge($tracker_info, $options);
-			}
-		}
+		$old_values = $fil;
+
+		$tracker_definition = Tracker_Definition::get($trackerId);
+		$tracekr_info = $tracker_definition->getInformation();
 
 		if (!empty($itemId)) {
 			$new_itemId = 0;
 			$oldStatus = $this->items()->fetchOne('status', array('itemId' => $itemId));
 
 			$status = $status ? $status : $oldStatus;
+			$fil['status'] = $status;
+			$old_values['status'] = $oldStatus;
 
 			$items->update(array(
 				'status' => $status,
@@ -1426,15 +1426,14 @@ class TrackerLib extends TikiLib
 				$version = 0;
 			}
 		} else {
-			if (!$status) {
-				$status = $this->options()->fetchOne('value', array(
-					'trackerId' => (int) $trackerId,
-					'name' => 'newItemStatus',
-				));
+			if (isset($tracker_info['newItemStatus'])) {
+				$status = $tracker_info['newItemStatus'];
 			}
 			if (empty($status)) {
 				$status = 'o';
 			}
+			$fil['status'] = $status;
+			$old_values['status'] = '';
 
 			$new_itemId = $items->insert(array(
 				'trackerId' => (int) $trackerId,
@@ -1453,32 +1452,10 @@ class TrackerLib extends TikiLib
 
 		$currentItemId = $itemId ? $itemId : $new_itemId;
 
-		if ($prefs['feature_categories'] == 'y') {
-			$old_categs = $categlib->get_object_categories('trackeritem', $currentItemId);
-			if (is_array($ins_categs)) {
-				$new_categs = array_diff($ins_categs, $old_categs);
-				$del_categs = array_diff($old_categs, $ins_categs);
-				$remain_categs = array_diff($old_categs, $new_categs, $del_categs);
-			} else {
-				$new_categs = array();
-				$del_categs = array();
-				$remain_categs = $old_categs;
-			}
-		}
 		if (!empty($oldStatus) || !empty($status)) {
-			$the_data = '-[Status]-: ';
-			$statusTypes = $this->status_types();
-			if (isset($oldStatus) && $oldStatus != $status) {
-				$the_data .= $statusTypes[$oldStatus]['label'] . ' -> ';
-			}
-			if (!empty($status)) {
-				$the_data .= $statusTypes[$status]['label'] . "\n\n";
-			}
 			if (!empty($itemId) && $oldStatus != $status) {
 			   $this->log($version, $itemId, -1, $oldStatus);
 			}
-		} else {
-			$the_data = '';
 		}
 
 		$trackersync = false;
@@ -1554,15 +1531,7 @@ class TrackerLib extends TikiLib
 				// system type, do nothing
 				continue;
 			} else if ($array["type"] == 'S' && !empty($array['description'])) {	// static text
-
-				$the_data .= '[-[' . $array['name'] . "]-] -[(unchanged)]-:\n";
-				if (isset($array['options_array'][0]) && $array['options_array'][0] == 1) {
-					$the_data .= strip_tags($tikilib->parse_data( $array['description']));	// parse then strip wiki markup
-				} else {
-					$the_data .= $array['description'];
-				}
-				$the_data .=  "\n----------\n";
-
+				// do nothing
 			} else {
 				// -----------------------------
 				// save image on disk
@@ -1707,35 +1676,12 @@ class TrackerLib extends TikiLib
 					}
 					$my_categs = $aux;
 
-					$my_new_categs = array_intersect($new_categs, $my_categs);
-					$my_del_categs = array_intersect($del_categs, $my_categs);
-					$my_remain_categs = array_intersect($remain_categs, $my_categs);
 					if (!empty($itemId) && (!empty($my_new_categs) || !empty($my_del_categs))) {
-						$this->log($version, $itemId, $array['fieldId'], implode(',', $old_categs));
+						$this->log($version, $itemId, $array['fieldId'], $old_value);
 					}
 
-
-					if (count($my_new_categs) + count($my_del_categs) == 0) {
-						$the_data .= "$name -[(unchanged)]-:\n";
-					} else {
-						$the_data .= "$name :\n";
-					}
-
-					if (count($my_new_categs) > 0) {
-						$the_data .= "  -[Added]-:\n";
-						$the_data .= $this->_describe_category_list($my_new_categs);
-					}
-					if (count($my_del_categs) > 0) {
-						$the_data .= "  -[Removed]-:\n";
-						$the_data .= $this->_describe_category_list($my_del_categs);
-					}
-					if (count($my_remain_categs) > 0) {
-						$the_data .= "  -[Remaining]-:\n";
-						$the_data .= $this->_describe_category_list($my_remain_categs);
-					}
-					$the_data .= "\n";
-
-					$this->modify_field($currentItemId, $fieldId, '');
+					$fil[$fieldId] = implode(',', array_intersect($ins_categs, $my_categs));
+					$this->modify_field($currentItemId, $fieldId, $fil[$fieldId]);
 				} elseif ((isset($array['isMultilingual']) && $array['isMultilingual'] == 'y') && in_array($array['type'], array('a', 't'))){
 
 					if (!isset($multi_languages))
@@ -1775,14 +1721,12 @@ class TrackerLib extends TikiLib
 						}
 					}
 				} else {
-
 					$is_date = in_array($array["type"], array('f', 'j'));
-
 					$is_visible = !isset($array["isHidden"]) || $array["isHidden"] == 'n';
 
 					if ($currentItemId || $array['type'] != 'q') {
 						$this->modify_field($currentItemId, $fieldId, $value);
-						if (! is_null($old_value)) {
+						if ($old_value) {
 							if ($is_visible) {
 								if ($is_date) {
 									$dformat = $prefs['short_date_format'].' '.$prefs['short_time_format'];
@@ -1791,34 +1735,12 @@ class TrackerLib extends TikiLib
 								} else {
 									$new_value = $value;
 								}
-								if ($old_value != $new_value) {
-									// split old value by lines
-									$lines = preg_split("/\n/", $old_value);
-									// mark every old value line with standard email reply character
-									$old_value_lines = '';
-									foreach ($lines as $line) {
-										$old_value_lines .= '> '.$line;
-									}
-									$the_data .= "[-[$name]-]:\n--[Old]--:\n$old_value_lines\n\n*-[New]-*:\n$new_value\n----------\n";
-									if (!empty($itemId)) {
-										$this->log($version, $itemId, $array['fieldId'], $old_value);
-									}
-								} else {
-									$the_data .= "[-[$name]-] -[(unchanged)]-:\n$new_value\n----------\n";
+								if ($old_value != $new_value && !empty($itemId)) {
+									$this->log($version, $itemId, $array['fieldId'], $old_value);
 								}
 							}
 
 							$this->update_item_link_value($trackerId, $fieldId, $old_value, $value);
-						} else {
-							if ($is_visible) {
-								if ($is_date) {
-									$dformat = $prefs['short_date_format'].' '.$prefs['short_time_format'];
-									$new_value = $this->date_format($dformat, (int)$value);
-								} else {
-									$new_value = $value;
-								}
-								$the_data .= "[-[$name]-]:\n$new_value\n----------\n";
-							}
 						}
 					}
 
@@ -1860,127 +1782,6 @@ class TrackerLib extends TikiLib
 			if ($tracker_info['autoAssignCreatorGroupDefault'] == 'y') {
 				$userlib->set_default_group($user, $groupName);
 				$_SESSION['u_info']['group'] = $groupName;
-			}
-		}
-
-		// Don't send a notification if this operation is part of a bulk import
-		if(!$bulk_import) {
-			$options = $this->get_tracker_options( $trackerId );
-			$watchers = $this->get_notification_emails($trackerId, $itemId, $options, $new_itemId, $status, isset($oldStatus)?$oldStatus: '');
-
-			if (count($watchers) > 0) {
-				if( array_key_exists( "simpleEmail", $options ) ) {
-					$simpleEmail = $options["simpleEmail"];
-				} else {
-					$simpleEmail = "n";
-				}
-				$trackerName = $this->trackers()->fetchOne('name', array('trackerId' => (int) $trackerId));
-				if (!isset($_SERVER["SERVER_NAME"])) {
-					$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
-				}
-				include_once('lib/webmail/tikimaillib.php');
-				if( $simpleEmail == "n" ) {
-					if (empty($desc)) {
-						$desc = $this->get_isMain_value($trackerId, $currentItemId);
-					}
-					if ($options['doNotShowEmptyField'] === 'y') {	// remove empty fields if tracker says so
-						$the_data = preg_replace('/\[-\[.*?\]-\] -\[\(.*?\)\]-:\n\n----------\n/', '', $the_data);
-					}
-					$smarty->assign('mail_date', $this->now);
-					$smarty->assign('mail_user', $user);
-					$smarty->assign('mail_itemId', $currentItemId);
-					$smarty->assign('mail_item_desc', $desc);
-					$smarty->assign('mail_trackerId', $trackerId);
-					$smarty->assign('mail_trackerName', $trackerName);
-					$smarty->assign('server_name', $_SERVER['SERVER_NAME']);
-					$foo = parse_url($_SERVER["REQUEST_URI"]);
-					$machine = $this->httpPrefix( true ). $foo["path"];
-					$smarty->assign('mail_machine', $machine);
-					$parts = explode('/', $foo['path']);
-					if (count($parts) > 1)
-						unset ($parts[count($parts) - 1]);
-					$smarty->assign('mail_machine_raw', $this->httpPrefix( true ). implode('/', $parts));
-					$smarty->assign_by_ref('status', $status);
-					foreach ($watchers as $watcher) {
-						$label = $itemId ? tra('Item Modification', $watcher['language']) : tra('Item creation', $watcher['language']);
-						$mail_action = "\r\n$label\r\n\r\n";
-						$mail_action.= tra('Tracker', $watcher['language']).":\n   $trackerName\r\n";
-						$mail_action.= tra('Item', $watcher['language']).":\n   $currentItemId $desc";
-
-						$smarty->assign('mail_action', $mail_action);
-						$smarty->assign('mail_data', $the_data);
-						if (isset($watcher['action']))
-							$smarty->assign('mail_action', $watcher['action']);
-						$smarty->assign('mail_to_user', $watcher['user']);
-						$mail_data = $smarty->fetchLang($watcher['language'], 'mail/tracker_changed_notification.tpl');
-						$mail = new TikiMail($watcher['user']);
-						$mail->setSubject($smarty->fetchLang($watcher['language'], 'mail/tracker_changed_notification_subject.tpl'));
-						$mail->setText($mail_data);
-						$mail->setHeader("From", $prefs['sender_email']);
-						$mail->send(array($watcher['email']));
-					}
-				} else {
-			    		// Use simple email
-					$foo = parse_url($_SERVER["REQUEST_URI"]);
-					$machine = $this->httpPrefix( true ). $foo["path"];
-					$parts = explode('/', $foo['path']);
-					if (count($parts) > 1) {
-						unset ($parts[count($parts) - 1]);
-					}
-					$machine = $this->httpPrefix( true ). implode('/', $parts);
-					$itemId = $currentItemId;
-
-					$userlib = TikiLib::lib('user');
-
-					if (!empty($user)) {
-						$my_sender = $userlib->get_user_email($user);
-					} else { // look if a email field exists
-						$fieldId = $this->get_field_id_from_type($trackerId, 'm');
-						if (!empty($fieldId)) {
-							$my_sender = $this->get_item_value($trackerId, $itemId, $fieldId);
-						}
-					}
-
-			    	// Try to find a Subject in $the_data looking for strings marked "-[Subject]-" TODO: remove the tra (language translation by submitter)
-			    	$the_string = '/^\[-\['.tra('Subject').'\]-\] -\[[^\]]*\]-:\n(.*)/m';
-			    	$subject_test_unchanged = preg_match( $the_string, $the_data, $unchanged_matches );
-			    	$the_string = '/^\[-\['.tra('Subject').'\]-\]:\n(.*)\n(.*)\n\n(.*)\n(.*)/m';
-			    	$subject_test_changed = preg_match( $the_string, $the_data, $matches );
-						$subject = '';
-
-			    	if( $subject_test_unchanged == 1 ) {
-						$subject = $unchanged_matches[1];
-			    	}
-			    	if( $subject_test_changed == 1 ) {
-						$subject = $matches[1].' '.$matches[2].' '.$matches[3].' '.$matches[4];
-			    	}
-
-					$i = 0;
-					foreach ($watchers as $watcher) {
-						$mail = new TikiMail($watcher['user']);
-						// first we look for strings marked "-[...]-" to translate by watcher language
-						$translate_strings[$i] = preg_match_all( '/-\[([^\]]*)\]-/', $the_data, $tra_matches );
-						$watcher_subject = $subject;
-						$watcher_data = $the_data;
-						if ($translate_strings[$i] > 0) {
-							foreach ($tra_matches[1] as $match) {
-								// now we replace the marked strings with correct translations
-								$tra_replace = tra($match, $watcher['language']);
-								$tra_match = "/-\[".preg_quote($match)."\]-/m";
-								$watcher_subject = preg_replace($tra_match, $tra_replace, $watcher_subject);
-								$watcher_data = preg_replace($tra_match, $tra_replace, $watcher_data);
-							}
-						}
-
-						$mail->setSubject('['.$trackerName.'] '.str_replace('> ','',$watcher_subject).' ('.tra('Tracker was modified at ', $watcher['language']). $_SERVER["SERVER_NAME"].' '.tra('by', $watcher['language']).' '.$user.')');
-						$mail->setText(tra('View the tracker item at:', $watcher['language'])."  $machine/tiki-view_tracker_item.php?itemId=$itemId\n\n" . $watcher_data);
-						if( ! empty( $my_sender ) ) {
-							$mail->setHeader("Reply-To", $my_sender);
-						}
-						$mail->send(array($watcher['email']));
-						$i++;
-					}
-				}
 			}
 		}
 
@@ -2090,6 +1891,11 @@ class TrackerLib extends TikiLib
 		TikiLib::events()->trigger($final_event, array(
 			'type' => 'trackeritem',
 			'object' => $itemId,
+			'version' => $version,
+			'trackerId' => $trackerId,
+			'values' => $fil,
+			'old_values' => $old_values,
+			'bulk_import' => $bulk_import,
 		));
 		return $itemId;
 	}
@@ -2488,16 +2294,6 @@ class TrackerLib extends TikiLib
 		header("Expires: 0");
 		header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
 		header("Pragma: public");
-	}
-	
-	function _describe_category_list($categs) {
-	    $categlib = TikiLib::lib('categ');
-	    $res = '';
-	    foreach ($categs as $cid) {
-			$info = $categlib->get_category($cid);
-			$res .= '    ' . $info['name'] . "\n";
-	    }
-	    return $res;
 	}
 
 	// check the validity of each field values of a tracker item
@@ -4022,10 +3818,10 @@ class TrackerLib extends TikiLib
 		}
 		return $field;
 	}
-	function get_notification_emails($trackerId, $itemId, $options, $newItemId=0, $status='', $oldStatus='') {
+	function get_notification_emails($trackerId, $itemId, $options, $status='', $oldStatus='') {
 		global $prefs;
 		$watchers_global = $this->get_event_watches('tracker_modified',$trackerId);
-		$watchers_local = $this->get_local_notifications($itemId, $newItemId, $status, $oldStatus);
+		$watchers_local = $this->get_local_notifications($itemId, $status, $oldStatus);
 		$watchers_item = $itemId? $this->get_event_watches('tracker_item_modified',$itemId, array('trackerId'=>$trackerId)): array();
 		$watchers_outbound = array();
 		if( array_key_exists( "outboundEmail", $options ) && $options["outboundEmail"] ) {
@@ -4092,13 +3888,13 @@ class TrackerLib extends TikiLib
 		return $ret;
 	}
 	/* return all the emails that are locally watching an item */
-	function get_local_notifications($itemId, $newItemId=0, $status='', $oldStatus='') {
+	function get_local_notifications($itemId, $status='', $oldStatus='') {
 		global $user_preferences, $prefs;
 		$tikilib = TikiLib::lib('tiki');
 		$userlib = TikiLib::lib('user');
 		$emails = array();
 		// user field watching item
-		$res = $this->get_item_values_by_type($itemId?$itemId:$newItemId, 'u');
+		$res = $this->get_item_values_by_type($itemId, 'u');
 		if (is_array($res)) {
 			foreach ($res as $f) {
 				if (isset($f['options_array'][1]) && $f['options_array'][1] == 1) {
@@ -4109,7 +3905,7 @@ class TrackerLib extends TikiLib
 		}
 		// email field watching status change
 		if ($status != $oldStatus) {
-			$res = $this->get_item_values_by_type($itemId?$itemId:$newItemId, 'm');
+			$res = $this->get_item_values_by_type($itemId, 'm');
 			if (is_array($res)) {
 				foreach ($res as $f) {
 					if ((isset($f['options_array'][1]) && $f['options_array'][1] == 'o' && $status == 'o')
@@ -4688,6 +4484,180 @@ class TrackerLib extends TikiLib
 
 	private function parse_comment($data) {
 		return nl2br(htmlspecialchars($data));
+	}
+
+	function send_replace_item_notifications($args)
+	{
+		global $prefs;
+
+		// Don't send a notification if this operation is part of a bulk import
+		if($args['bulk_import']) {
+			return;
+		}
+
+		$trackerId = $args['trackerId'];
+		$itemId = $args['itemId'];
+
+		$new_values = $args['values'];
+		$old_values = $args['old_values'];
+
+		$the_data = $this->generate_watch_data($old_values, $new_values, $trackerId, $itemId, $args['version']);
+
+		$tracker_definition = Tracker_Definition::get($trackerId);
+		$tracekr_info = $tracker_definition->getInformation();
+
+		$watchers = $this->get_notification_emails($trackerId, $itemId, $tracker_info, $new_values['status'], $old_values['status']);
+
+		if (count($watchers) > 0) {
+			$simpleEmail = isset($tracker_info['simpleEmail']) ? $tracker_info['simpleEmail'] : "n";
+
+			$trackerName = $tracker_info['name'];
+			if (!isset($_SERVER["SERVER_NAME"])) {
+				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+			}
+			include_once('lib/webmail/tikimaillib.php');
+			if( $simpleEmail == "n" ) {
+				$desc = $this->get_isMain_value($trackerId, $itemId);
+				if ($tracker_info['doNotShowEmptyField'] === 'y') {	// remove empty fields if tracker says so
+					$the_data = preg_replace('/\[-\[.*?\]-\] -\[\(.*?\)\]-:\n\n----------\n/', '', $the_data);
+				}
+				$smarty->assign('mail_date', $this->now);
+				$smarty->assign('mail_user', $user);
+				$smarty->assign('mail_itemId', $itemId);
+				$smarty->assign('mail_item_desc', $desc);
+				$smarty->assign('mail_trackerId', $trackerId);
+				$smarty->assign('mail_trackerName', $trackerName);
+				$smarty->assign('server_name', $_SERVER['SERVER_NAME']);
+				$foo = parse_url($_SERVER["REQUEST_URI"]);
+				$machine = $this->httpPrefix( true ). $foo["path"];
+				$smarty->assign('mail_machine', $machine);
+				$parts = explode('/', $foo['path']);
+				if (count($parts) > 1)
+					unset ($parts[count($parts) - 1]);
+				$smarty->assign('mail_machine_raw', $this->httpPrefix( true ). implode('/', $parts));
+				$smarty->assign_by_ref('status', $new_values['status']);
+				foreach ($watchers as $watcher) {
+					$label = $itemId ? tra('Item Modification', $watcher['language']) : tra('Item creation', $watcher['language']);
+					$mail_action = "\r\n$label\r\n\r\n";
+					$mail_action.= tra('Tracker', $watcher['language']).":\n   $trackerName\r\n";
+					$mail_action.= tra('Item', $watcher['language']).":\n   $itemId $desc";
+
+					$smarty->assign('mail_action', $mail_action);
+					$smarty->assign('mail_data', $the_data);
+					if (isset($watcher['action']))
+						$smarty->assign('mail_action', $watcher['action']);
+					$smarty->assign('mail_to_user', $watcher['user']);
+					$mail_data = $smarty->fetchLang($watcher['language'], 'mail/tracker_changed_notification.tpl');
+					$mail = new TikiMail($watcher['user']);
+					$mail->setSubject($smarty->fetchLang($watcher['language'], 'mail/tracker_changed_notification_subject.tpl'));
+					$mail->setText($mail_data);
+					$mail->setHeader("From", $prefs['sender_email']);
+					$mail->send(array($watcher['email']));
+				}
+			} else {
+					// Use simple email
+				$foo = parse_url($_SERVER["REQUEST_URI"]);
+				$machine = $this->httpPrefix( true ). $foo["path"];
+				$parts = explode('/', $foo['path']);
+				if (count($parts) > 1) {
+					unset ($parts[count($parts) - 1]);
+				}
+				$machine = $this->httpPrefix( true ). implode('/', $parts);
+
+				$userlib = TikiLib::lib('user');
+
+				if (!empty($user)) {
+					$my_sender = $userlib->get_user_email($user);
+				} else { // look if a email field exists
+					$fieldId = $this->get_field_id_from_type($trackerId, 'm');
+					if (!empty($fieldId)) {
+						$my_sender = $this->get_item_value($trackerId, $itemId, $fieldId);
+					}
+				}
+
+				// Try to find a Subject in $the_data looking for strings marked "-[Subject]-" TODO: remove the tra (language translation by submitter)
+				$the_string = '/^\[-\['.tra('Subject').'\]-\] -\[[^\]]*\]-:\n(.*)/m';
+				$subject_test_unchanged = preg_match( $the_string, $the_data, $unchanged_matches );
+				$the_string = '/^\[-\['.tra('Subject').'\]-\]:\n(.*)\n(.*)\n\n(.*)\n(.*)/m';
+				$subject_test_changed = preg_match( $the_string, $the_data, $matches );
+				$subject = '';
+
+				if( $subject_test_unchanged == 1 ) {
+					$subject = $unchanged_matches[1];
+				}
+				if( $subject_test_changed == 1 ) {
+					$subject = $matches[1].' '.$matches[2].' '.$matches[3].' '.$matches[4];
+				}
+
+				$i = 0;
+				foreach ($watchers as $watcher) {
+					$mail = new TikiMail($watcher['user']);
+					// first we look for strings marked "-[...]-" to translate by watcher language
+					$translate_strings[$i] = preg_match_all( '/-\[([^\]]*)\]-/', $the_data, $tra_matches );
+					$watcher_subject = $subject;
+					$watcher_data = $the_data;
+					if ($translate_strings[$i] > 0) {
+						foreach ($tra_matches[1] as $match) {
+							// now we replace the marked strings with correct translations
+							$tra_replace = tra($match, $watcher['language']);
+							$tra_match = "/-\[".preg_quote($match)."\]-/m";
+							$watcher_subject = preg_replace($tra_match, $tra_replace, $watcher_subject);
+							$watcher_data = preg_replace($tra_match, $tra_replace, $watcher_data);
+						}
+					}
+
+					$mail->setSubject('['.$trackerName.'] '.str_replace('> ','',$watcher_subject).' ('.tra('Tracker was modified at ', $watcher['language']). $_SERVER["SERVER_NAME"].' '.tra('by', $watcher['language']).' '.$user.')');
+					$mail->setText(tra('View the tracker item at:', $watcher['language'])."  $machine/tiki-view_tracker_item.php?itemId=$itemId\n\n" . $watcher_data);
+					if( ! empty( $my_sender ) ) {
+						$mail->setHeader("Reply-To", $my_sender);
+					}
+					$mail->send(array($watcher['email']));
+					$i++;
+				}
+			}
+		}
+	}
+
+	private function generate_watch_data($old, $new, $trackerId, $itemId, $version)
+	{
+		$tracker_definition = Tracker_Definition::get($trackerId);
+
+		$oldStatus = $old['status'];
+		$newStatus = $new['status'];
+
+		$the_data = '';
+		if (!empty($oldStatus) || !empty($status)) {
+			if (!empty($itemId) && $oldStatus != $status) {
+			   $this->log($version, $itemId, -1, $oldStatus);
+			}
+			$the_data .= '-[Status]-: ';
+			$statusTypes = $this->status_types();
+			if (isset($oldStatus) && $oldStatus != $status) {
+				$the_data .= $statusTypes[$oldStatus]['label'] . ' -> ';
+			}
+
+			if (!empty($status)) {
+				$the_data .= $statusTypes[$status]['label'];
+			}
+			$the_data .=  "\n----------\n";
+		}
+
+		foreach ($tracker_definition->getFields() as $field) {
+			$fieldId = $field['fieldId'];
+
+			$old_value = isset($old[$fieldId]) ? $old[$fieldId] : '';
+			$new_value = isset($new[$fieldId]) ? $new[$fieldId] : '';
+
+			if ($old_value == $new_value) {
+				continue;
+			}
+
+			$handler = $this->get_field_handler($field);
+			$the_data .= $handler->watchCompare($old_value, $new_value);
+			$the_data .=  "\n----------\n";
+		}
+
+		return $the_data;
 	}
 }
 

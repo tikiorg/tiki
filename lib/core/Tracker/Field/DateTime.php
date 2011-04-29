@@ -59,5 +59,15 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract
 			}
 		}
 	}
+
+	function watchCompare($old, $new)
+	{
+		global $prefs;
+		$dformat = $prefs['short_date_format'].' '.$prefs['short_time_format'];
+		$old = TikiLib::lib('tiki')->date_format($dformat, (int)$old);
+		$new = TikiLib::lib('tiki')->date_format($dformat, (int)$new);
+
+		return parent::watchCompare($old, $new);
+	}
 }
 

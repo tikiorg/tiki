@@ -33,5 +33,10 @@ interface Tracker_Field_Interface
 	*/
 	function renderOutput($context = array());
 
+	/**
+	 * Generate the plain text comparison to include in the watch email.
+	 */
+	function watchCompare($old, $new);
+
 }
 

@@ -14,6 +14,7 @@ if ($prefs['feature_wiki'] == 'y') {
 }
 
 if ($prefs['feature_trackers'] == 'y') {
+	$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'send_replace_item_notifications'));
 }
 
 if ($prefs['unified_incremental_update'] == 'y') {
