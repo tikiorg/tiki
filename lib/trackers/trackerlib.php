@@ -1382,6 +1382,8 @@ class TrackerLib extends TikiLib
 
 	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = 0, $bulk_import = false, $tracker_info='') {
 		global $user, $prefs, $tiki_p_admin_trackers, $tiki_p_admin_users;
+		$final_event = 'tiki.trackeritem.update';
+
 		$categlib = TikiLib::lib('categ');
 		$cachelib = TikiLib::lib('cache');
 		$smarty = TikiLib::lib('smarty');
@@ -1445,6 +1447,8 @@ class TrackerLib extends TikiLib
 
 			$logslib->add_action('Created', $new_itemId, 'trackeritem');
 			$version = 0;
+
+			$final_event = 'tiki.trackeritem.create';
 		}
 
 		$currentItemId = $itemId ? $itemId : $new_itemId;
@@ -1510,6 +1514,9 @@ class TrackerLib extends TikiLib
 		}
 		
 		foreach($ins_fields["data"] as $i=>$array) {
+			// Old values were prefilled at the begining of the function and only replaced at the end of the iteration
+			$old_value = isset($fil[$array['fieldId']]) ? $fil[$array['fieldId']] : null;
+
 			if ($trackersync) {
 				if (isset($trackersync_realnamefields)) {
 					foreach ($trackersync_realnamefields as $index => $realnamefieldset) {
@@ -1728,16 +1735,7 @@ class TrackerLib extends TikiLib
 					}
 					$the_data .= "\n";
 
-					$conditions = array(
-						'itemId' => (int) $currentItemId,
-						'fieldId' => (int) $fieldId,
-					);
-
-					if ($itemFields->fetchCount($conditions)) {
-						$itemFields->update(array('value' => ''), $conditions);
-					} else {
-						$itemFields->insert(array_merge($conditions, array('value' => '')));
-					}
+					$this->modify_field($currentItemId, $fieldId, '');
 				} elseif ((isset($array['isMultilingual']) && $array['isMultilingual'] == 'y') && in_array($array['type'], array('a', 't'))){
 
 					if (!isset($multi_languages))
@@ -1747,18 +1745,7 @@ class TrackerLib extends TikiLib
 					}
 
 					foreach ($array['lingualvalue'] as $linvalue) {
-						$conditions = array(
-							'itemId' => (int) $currentItemId,
-							'fieldId' => (int) $fieldId,
-							'lang' => $linvalue['lang'],
-						);
-
-						$old_value = $itemFields->fetchOne('value', $conditions);
-						if ($old_value !== false) {
-							$itemFields->update(array('value' => $linvalue['value']), $conditions);
-						}else{
-							$itemFields->insert(array_merge($conditions, array('value' => $linvalue['value'])));
-						}
+						$this->modify_field($currentItemId, $fieldId, $linvalue['value'], $linvalue['lang']);
 
 						if (!empty($itemId) && $old_value != $linvalue['value']) {
 							$this->log($version, $itemId, $array['fieldId'], $old_value, $linvalue['lang']);
@@ -1794,11 +1781,8 @@ class TrackerLib extends TikiLib
 					$is_visible = !isset($array["isHidden"]) || $array["isHidden"] == 'n';
 
 					if ($currentItemId || $array['type'] != 'q') {
-						$conditions = array(
-							'itemId' => (int) $currentItemId,
-							'fieldId' => (int) $fieldId,
-						);
-						if (false !== $old_value = $itemFields->fetchOne('value', $conditions)) {
+						$this->modify_field($currentItemId, $fieldId, $value);
+						if (! is_null($old_value)) {
 							if ($is_visible) {
 								if ($is_date) {
 									$dformat = $prefs['short_date_format'].' '.$prefs['short_time_format'];
@@ -1824,7 +1808,6 @@ class TrackerLib extends TikiLib
 								}
 							}
 
-							$itemFields->update(array('value' => $value), $conditions);
 							$this->update_item_link_value($trackerId, $fieldId, $old_value, $value);
 						} else {
 							if ($is_visible) {
@@ -1836,7 +1819,6 @@ class TrackerLib extends TikiLib
 								}
 								$the_data .= "[-[$name]-]:\n$new_value\n----------\n";
 							}
-							$itemFields->insert(array_merge($conditions, array('value' => $value)));
 						}
 					}
 
@@ -2040,9 +2022,6 @@ class TrackerLib extends TikiLib
 			$categlib->categorize($catObjectId, $currentCategId);
 		}
 
-		require_once('lib/search/refresh-functions.php');
-		refresh_index('tracker_items', $itemId);
-
 		$parsed = '';
 		foreach($ins_fields["data"] as $i=>$array) {
 			if ($array['type'] == 'a') {
@@ -2108,7 +2087,27 @@ class TrackerLib extends TikiLib
 		if (!empty($geo) && $itemId) {
 			TikiLib::lib('geo')->set_coordinates('trackeritem', $itemId, $geo);
 		}
+		TikiLib::events()->trigger($final_event, array(
+			'type' => 'trackeritem',
+			'object' => $itemId,
+		));
 		return $itemId;
+	}
+
+	private function modify_field($itemId, $fieldId, $value, $language = null)
+	{
+		$conditions = array(
+			'itemId' => (int) $itemId,
+			'fieldId' => (int) $fieldId,
+		);
+
+		if ($language) {
+			$conditions['lang'] = $language;
+		}
+
+		$this->itemFields()->insertOrUpdate(array(
+			'value' => $value,
+		), $conditions);
 	}
 
 	function groupName($tracker_info, $itemId, &$groupInc) {
