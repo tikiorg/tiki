@@ -7,10 +7,12 @@
 	</div>
 	
 	<div id="svg-editHeaderRight" style="position: absolute; right: 15px;top: 5px;">
-		<button id="tiki-draw_back" onclick="document.location = 'tiki-list_file_gallery.php?galleryId={$galleryId}'">{tr}Back{/tr}</button>
+		{if $isFromPage eq 'true'}
+			<button id="tiki-draw_back" onclick="document.location = 'tiki-index.php?page={$page}'">{tr}Back{/tr}</button>
+		{else}
+			<button id="tiki-draw_back" onclick="document.location = 'tiki-list_file_gallery.php?galleryId={$galleryId}'">{tr}Back{/tr}</button>
+		{/if}
 	</div>
 	
 	<iframe src="lib/svg-edit/svg-editor.html" id="svgedit"></iframe>
-	
-	
 </div>    

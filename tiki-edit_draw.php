@@ -22,10 +22,34 @@ if (is_numeric($_REQUEST['galleryId']) == false) die;
 $fileId = $_REQUEST['fileId'];
 $galleryId = $_REQUEST['galleryId'];
 
+$label = $_REQUEST['label'];
+$index = $_REQUEST['index'];
+$page = $_REQUEST['page'];
+
+$smarty->assign( "page", $page );
+$smarty->assign( "isFromPage", isset($page) );
+
 $smarty->assign( "fileId", $fileId );
 $smarty->assign( "galleryId", $galleryId );
 
 $headerlib->add_jsfile("lib/svg-edit/embedapi.js");
+
+if (
+	isset($_REQUEST['label']) && 
+	isset($_REQUEST['index']) &&
+	isset($_REQUEST['page'])
+) {
+	$headerlib->add_jq_onready("	
+		window.wikiTracking = {
+			label: '$label',
+			index: '$index',
+			page: '$page',
+			type: 'draw',
+			content: ''
+		};
+	");
+}
+
 $headerlib->add_jq_onready("
 	window.svgFileId = $fileId;
 	var win = $(window);
@@ -38,7 +62,7 @@ $headerlib->add_jq_onready("
 		.resize();
 	
 	$('body').css('overflow', 'hidden');
-
+	
 	window.svgCanvas = null;
 	
 	window.handleSvgDataUpdate = function(data, error) {
@@ -70,6 +94,14 @@ $headerlib->add_jq_onready("
 			}, function(id) {
 				alert('".tr("Saved file id ' + id + '!")."');
 				window.svgFileId = id;
+				
+				if (window.wikiTracking) {
+					window.wikiTracking['params[id]'] = id;
+					
+					$.post('tiki-wikiplugin_edit.php', window.wikiTracking, function() {
+						window.wikiTracking = null;
+					});
+				}
 			});
 		}			
 	}
