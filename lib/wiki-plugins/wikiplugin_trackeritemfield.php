@@ -13,6 +13,7 @@ function wikiplugin_trackeritemfield_info() {
 		'prefs' => array( 'wikiplugin_trackeritemfield', 'feature_trackers' ),
 		'body' => tra('Wiki text containing an {ELSE} marker.'),
 		'icon' => 'pics/icons/database_go.png',
+		'filter' => 'wikicontent',
 		'params' => array(
 			'trackerId' => array(
 				'required' => false,
@@ -40,6 +41,7 @@ function wikiplugin_trackeritemfield_info() {
 				'name' => tra('Fields'),
 				'description' => tra('Colon separated list of field IDs. Default is all fields'),
 				'default' => '',
+				'filter' => 'text',
 			),
 			'status' => array(
 				'required' => false,
@@ -63,6 +65,7 @@ function wikiplugin_trackeritemfield_info() {
 				'name' => tra('Test'),
 				'description' => tra('Set to 1 (Yes) to test whether a field is empty (if value parameter is empty) or has a value the same as the value parameter.'),
 				'default' => '',
+				'filter' => 'digits',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
@@ -74,6 +77,7 @@ function wikiplugin_trackeritemfield_info() {
 				'name' => tra('Value'),
 				'description' => tra('Value to compare against.'),
 				'default' => '',
+				'filter' => 'text',
 			),
 		),
 	);
