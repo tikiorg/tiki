@@ -687,6 +687,23 @@ p.editdate {
 	font-size: 90%;
 }
 
+.wpimg-meta-col1 {
+	text-align: right;
+	font-weight: bold;
+	width: 225px;
+	margin-right: 5px;
+}
+
+.wpimg-meta-col2 {
+	width: 375px;
+}
+
+.wpimg-meta-section {
+	border-bottom: solid 1px lightgray;
+	width: 600px;
+	margin-right: 5px;
+}
+
 /* TOC */
 .toc {
 	padding-left: 2em;

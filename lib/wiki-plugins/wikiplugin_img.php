@@ -592,21 +592,6 @@ function wikiplugin_img_info() {
 
 	include_once('tiki-sefurl.php');
 	//////////////////////Process multiple images //////////////////////////////////////
-	//Determine source first
-	$id = array();
-	if (!empty($imgdata['fileId'])) {
-		$id['type'] = 'fileId';
-		$id['id'] = $imgdata['fileId'];
-	} elseif (!empty($imgdata['id'])) {
-		$id['type'] = 'id';
-		$id['id'] = $imgdata['id'];
-	} elseif (!empty($imgdata['attId'])) {
-		$id['type'] = 'attId';
-		$id['id'] = $imgdata['attId'];
-	} else {
-		$id['type'] = 'src';
-		$id['id'] = '';
-	}		
 	//Process "|" or "," separated images
 	$notice = '<!--' . tra('PluginImg: User lacks permission to view image') . '-->';
 	$srcmash = $imgdata['fileId'] . $imgdata['id'] . $imgdata['attId'] . $imgdata['src'];
@@ -631,7 +616,7 @@ function wikiplugin_img_info() {
 		$id_list = array();
 		if (!empty($separator)) {
 			$id_list = explode($separator,$imgdata[$id]);
-		} else {
+		} else { //fgalId parameter - show all images in a file gallery
 			$filegallib = TikiLib::lib('filegal');
 			$galdata = $filegallib->get_files(0, -1, 'created_desc', '', $imgdata['fgalId'], false, false, false, true, false, false, false, false, '', true, false, false);
 			foreach($galdata as $filedata) {
@@ -762,34 +747,36 @@ function wikiplugin_img_info() {
 			}
 		} //finished getting info from db for images in image or file galleries or attachments
 		
+		$xmpview = !empty($imgdata['metadata']) ? true : false;
 		//get image to get height and width and iptc data
 		if (!empty($dbinfo['data'])) {
 			$imageObj = new Image($dbinfo['data'], false);
-			$imageObj->set_img_info($imageObj->data, false);
+			$imageObj->set_img_info($imageObj->data, false, $xmpview);
 			if (isset($imageObj->exif['FILE']['FileName'])) {
 				$imageObj->exif['FILE']['FileName'] = $dbinfo['filename'];
 			}
 		} elseif (!empty($dbinfo['path'])) {
 			$imageObj = new Image($basepath . $dbinfo['path'], true);	
-			$imageObj->set_img_info($basepath . $dbinfo['path'], true);
+			$imageObj->set_img_info($basepath . $dbinfo['path'], true, $xmpview);
 			if (isset($imageObj->exif['FILE']['FileName'])) {
 				$imageObj->exif['FILE']['FileName'] = $dbinfo['filename'];
 			}
 		} else {
 			$imageObj = new Image($src, true);
-			$imageObj->set_img_info($src, true);
+			$imageObj->set_img_info($src, true, $xmpview);
 		}
 		if (isset($imageObj->exif['FILE']['FileDateTime'])) {
 			$imageObj->exif['FILE']['FileDateTime'] = $tikilib->get_long_datetime($imageObj->exif['FILE']['FileDateTime'], $user) .
 				' (Unixtime: ' . $imageObj->exif['FILE']['FileDateTime'] . ')';
 		}
 		//if we need iptc data
-		if ($imgdata['desc'] == 'idesc' || $imgdata['desc'] == 'ititle' || isset($imgdata['metadata'])) {
-			$iptc = $imageObj->get_iptc($imageObj->otherinfo);
+		if ($imgdata['desc'] == 'idesc' || $imgdata['desc'] == 'ititle' || !empty($imgdata['metadata'])) {
+			include_once('lib/metadata.php');
+			$imageObj->iptc = get_iptc($imageObj->otherinfo);
 			//description from image iptc
-			$idesc = isset($iptc['2#120'][0]) ? $iptc['2#120'][0] : '';	
+			$idesc = isset($imageObj->iptc['2#120'][0]) ? $imageObj->iptc['2#120'][0] : '';	
 			//title from image iptc	
-			$ititle = isset($iptc['2#005'][0]) ? $iptc['2#005'][0] : '';
+			$ititle = isset($imageObj->iptc['2#005'][0]) ? $imageObj->iptc['2#005'][0] : '';
 		}
 		$fwidth = '';
 		$fheight = '';
@@ -980,7 +967,7 @@ function wikiplugin_img_info() {
 					$height = $fheight;
 					$imgdata_dim .= ' width="' . $width . '"';
 					$imgdata_dim .= ' height="' . $height . '"';
-				} elseif (!empty($heigth) && (empty($urly[0]) && empty($urlthumb) && empty($urlscale[0]))) {
+				} elseif (!empty($height) && (empty($urly[0]) && empty($urlthumb) && empty($urlscale[0]))) {
 					$src .= '&y=' . $height;
 					$imgdata_dim = '';
 					$width = $fwidth;
@@ -1191,35 +1178,7 @@ function wikiplugin_img_info() {
 		static $lastval = 0;
 		$id = 'imgdialog-' . ++$lastval;
 		$id_link = $id . '-link';
-		//start the dialog box
-		$dialog = "\r" . '<div id="' . $id . '" title="Image Metadata for ' . htmlspecialchars($dbinfo['filename']) . '" style="display:none">';
-		//iptc section
-		$dialog .= "\r\t" . '<h3><a href="#">Photographer Data (IPTC)</a></h3>';
-		if ($iptc == null) {
-			$dialog .= "\r\t" . '<div>' . tra('No IPTC data') . '</div>';
-		} else {
-			$dialog .= "\r\t" . '<table>';
-			foreach (array_keys($iptc) as $key => $s) {
-				$dialog .= "\r\t\t" . '<tr>' . "\r\t\t\t" . '<td>' . '<div style="text-align:right; font-weight:bold; width:175px; margin-right:5px">'
-					. $iptc[$s][1] . '</div>' . '</td>' . "\r\t\t\t" . '<td>' . '<div style="width:425px">' . htmlspecialchars($iptc[$s][0]) . '</div>' . '</td>' . "\r\t\t" . '</tr>';
-			}
-			$dialog .= "\r\t" . '</table>'; 
-		}
-		//exif section
-		$dialog .= "\r\t" . '<h3><a href="#">File Data (EXIF)</a></h3>';
-		if ($imageObj->exif === false) {
-			$dialog .= "\r\t" . '<div>' . tra('No EXIF data') . '</div>';
-		} else {
-			$dialog .= "\r\t" . '<table>';
-			foreach ($imageObj->exif as $cat => $fields) {
-				foreach ($fields as $name => $val) {
-					$dialog .= "\r\t\t" . '<tr>' . "\r\t\t\t" . '<td>' . '<div style="text-align:right; font-weight:bold; width:175px; margin-right:5px">'
-					. $name . '</div>' . '</td>' . "\r\t\t\t" . '<td>' . '<div style="width:425px">' . htmlspecialchars($val) . '</div>' . '</td>' . "\r\t\t" . '</tr>';
-				}
-			}
-			$dialog .= "\r\t" . '</table>'; 
-		}
-		$dialog .= "\r" . '</div>';
+		$dialog = metaview_dialog($imageObj, $id, $dbinfo['filename']);
 		$repl .= $dialog;
 		$jq = '$(document).ready(function() {
 					$("#' . $id . '").dialog({
@@ -1240,7 +1199,7 @@ function wikiplugin_img_info() {
 	}
 	//////////////////////  Create enlarge button, metadata icon, description and their divs////////////////////
 	//Start div that goes around button and description if these are set
-	if ((!empty($imgdata['button'])) || (!empty($imgdata['desc'])) || (!empty($imgdata['styledesc']))) {
+	if (!empty($imgdata['button']) || !empty($imgdata['desc']) || !empty($imgdata['styledesc']) || !empty($imgdata['metadata'])) {
 		//To set room for enlarge button under image if there is no description
 		$descheightdef = 'height:17px;clear:left;';						
 		$repl .= "\r\t" . '<div class="mini" style="width:' . $width . 'px;';
@@ -1278,11 +1237,6 @@ function wikiplugin_img_info() {
 			}
 			//Set button rel
 			!empty($imgdata['rel']) ? $linkrel_button = ' rel="'.$imgdata['rel'].'"' : $linkrel_button = '';
-/*			if (empty($linkrel) || !empty($javaset)) {
-					$linkrel_button = '';
-			} else {
-				$linkrel_button = $linkrel;
-			}*/
 			//Set button target
 			if (empty($imgtarget) && (empty($imgdata['thumb']) || !empty($javaset))) {
 				if (($imgdata['button'] == 'popup') || ($imgdata['button'] == 'browsepopup')) {
@@ -1358,7 +1312,7 @@ function wikiplugin_img_info() {
 			} else {
 				$styleboxplus = $alignbox . ' width:' . $boxwidth . 'px;';
 			}
-		} elseif (!empty($imgdata['button']) || !empty($imgdata['desc'])) {
+		} elseif (!empty($imgdata['button']) || !empty($imgdata['desc']) || !empty($imgdata['metadata'])) {
 		$styleboxplus = ' width:' . $boxwidth . 'px;';
 		}
 	}
