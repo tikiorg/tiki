@@ -4900,7 +4900,7 @@ if( \$('#$id') ) {
 		$data = $this->htmldecode($data);
 		$data = $filter->filter($data);
 
-		if (! $options['is_html']) {
+		if (isset($options) && !$options['is_html']) {
 			$data = str_replace(array('<', '>'), array('&lt;', '&gt;'), $data);
 		}
 
