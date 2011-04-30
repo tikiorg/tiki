@@ -12,7 +12,7 @@ function capLock(e, el){
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Log in{/tr}"}{/if}{* Left for performance, since tiki-login_scr.php includes this template directly. *}
 {tikimodule error=$module_params.error title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	{if $module_params.mode eq "header"}<div class="siteloginbar{if $user} logged-in{/if}">{/if}
-	{if $user}
+	{if isset($user) and $user}
 		{if empty($module_params.mode) or $module_params.mode eq "module"}
 			<div>{tr}Logged in as:{/tr} <span style="white-space: nowrap">{$user|userlink}</span></div>
 			<div style="text-align: center;">
@@ -118,7 +118,7 @@ function doChallengeResponse() {
 		{/if}
 		<div>
 			<label for="login-user_{$module_logo_instance}">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username:{/tr}{/if}</label>
-			{if $loginuser eq ''}
+			{if !isset($loginuser) or $loginuser eq ''}
 				<input type="text" name="user" id="login-user_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" {if !empty($error_login)} value="{$error_user|escape}"{/if} />
 				{jq}if ($('#login-user_{{$module_logo_instance}}:visible').length) {$('#login-user_{{$module_logo_instance}}')[0].focus();}{/jq}
 			{else}
@@ -208,7 +208,7 @@ function doChallengeResponse() {
 			<input type="hidden" name="stay_in_ssl_mode" value="{$stay_in_ssl_mode|escape}" />
 		{/if}
 		
-		{if $use_intertiki_auth eq 'y'}
+		{if isset($use_intertiki_auth) and $use_intertiki_auth eq 'y'}
 			<select name='intertiki'>
 				<option value="">{tr}local account{/tr}</option>
 				<option value="">-----------</option>
