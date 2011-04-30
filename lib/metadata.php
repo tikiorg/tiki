@@ -62,12 +62,16 @@ function metaview_dialog($imageObj, $id, $filename) {
 	$col2_end = '</div>' . '</td>' . "\r\t\t" . '</tr>';
 	$beg_header = "\r\t" . '<h3><a href="#">';
 	$end_header = '</a></h3>';
+	$beg_section = "\r\t\t" . '<tr><td colspan="2"><div class="wpimg-meta-section"><em>';
+	$end_section = '</em></div></td></tr>';
+	$beg_false = "\r\t" . '<div>';
+	$end_false = '</div>';
 	//start the dialog box
 	$dialog = "\r" . '<div id="' . $id . '" title="Image Metadata for ' . $filename . '" style="display:none">';
 	//iptc section
 	$dialog .= $beg_header . tra('Photographer Data (IPTC)') . $end_header;
 	if ($imageObj->iptc == null) {
-		$dialog .= "\r\t" . '<div>' . tra('No IPTC data') . '</div>';
+		$dialog .= $beg_false . tra('No IPTC data') . $end_false;
 	} else {
 		$dialog .= $beg_table;
 		foreach (array_keys($imageObj->iptc) as $key => $s) {
@@ -79,12 +83,11 @@ function metaview_dialog($imageObj, $id, $filename) {
 	$name_array = array('ComponentsConfiguration', 'FileSource', 'SceneType', 'CFAPattern', 'GPSVersion');
 	$dialog .= $beg_header . tra('File Data (EXIF)') . $end_header;
 	if ($imageObj->exif === false) {
-		$dialog .= "\r\t" . '<div>' . tra('No EXIF data') . '</div>';
+		$dialog .= $beg_false . tra('No EXIF data') . $end_false;
 	} else {
 		$dialog .= $beg_table;
 		foreach ($imageObj->exif as $cat => $fields) {
-			$dialog .= "\r\t\t" . '<tr><td colspan="2"><div class="wpimg-meta-section"><em>' 
-				. ucfirst(strtolower($cat)) . '</em></div></td></tr>' ;
+			$dialog .= $beg_section . ucfirst(strtolower($cat)) . $end_section;
 			foreach ($fields as $name => $val) {
 				$clean_val = trim($val);
 				if (in_array($name, $name_array)) {
@@ -100,14 +103,13 @@ function metaview_dialog($imageObj, $id, $filename) {
 	//xmp section
 	$dialog .= $beg_header . tra('XMP Data') . $end_header;
 	if ($imageObj->xmp === false) {
-		$dialog .= "\r\t" . '<div>' . tra('No XMP data') . '</div>';
+		$dialog .= $beg_false . tra('No XMP data') . $end_false;
 	} else {	
 		include_once ('lib/xml.php');
 		$imageObj->xmp_array = xml2array($imageObj->xmp);
 		$dialog .= $beg_table;
 		foreach ($imageObj->xmp_array['children'][0]['children'] as $level_1) {
-			$dialog .= "\r\t\t" . '<tr><td colspan="2"><div class="wpimg-meta-section"><em>' 
-				. ucfirst($level_1['children'][0]['namespace']) . '</em></div></td></tr>' ;
+			$dialog .= $beg_section . ucfirst($level_1['children'][0]['namespace']) . $end_section;
 			foreach ($level_1['children'] as $level_2) {
 				if (isset($level_2['content'])) {
 					$clean_content = trim($level_2['content']);
