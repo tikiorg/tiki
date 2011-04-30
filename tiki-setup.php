@@ -54,7 +54,7 @@ if( $prefs['tiki_domain_prefix'] == 'strip' && substr( $host, 0, 4 ) == 'www.' )
 	$domain_map[$host] = 'www.' . $host;
 }
 
-if( !empty($prefs['tiki_domain_redirects']) ) {
+if (strpos($prefs['tiki_domain_redirects'], ',') !== false) {
 	foreach( explode("\n", $prefs['tiki_domain_redirects']) as $row ) {
 		list($old, $new) = array_map('trim', explode(',', $row, 2));
 		$domain_map[$old] = $new;
