@@ -44,15 +44,8 @@ function wikiplugin_tabs($data, $params) {
 	} else {
 		return "''".tra("No tab title specified. At least one has to be set to make the tabs appear.")."''";
 	}
-	$data = $tikilib->parse_data($data);
 	if (!empty($data)) {
 		$tabData = explode('/////', $data);
-		foreach ($tabData as &$d) {
-			if (strpos( $d, '</p>') === 0) {
-				$d = substr( 4, $d);
-			}
-			$d = '~np~' . $tikilib->parse_data($d) . '~/np~';
-		}
 	}
 	
 	$smarty->assign( 'tabsetname', $tabsetname );

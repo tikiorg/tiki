@@ -159,6 +159,11 @@ img {
 	clear: none;
 }
 
+/* Siteloginbar (no popup, items arranged horizontally) */
+.siteloginbar div {
+	display: inline-block;
+}
+
 /* Sitelogin Popup */
 .tiki_register_login {
 	bottom: 3px;

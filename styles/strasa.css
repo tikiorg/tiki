@@ -282,7 +282,7 @@ label {
 
 #middle {
 	background: #fff;
-	padding: 40px 0;
+	padding: 0;
 }
 
 #c1c2 {
@@ -416,15 +416,26 @@ body.fixed_width .fixedwidth .fixedwidth {
 	min-height: 121px;
 }
 
+#top_modules .box-secondary_site_menu {
+	position: absolute;
+	top: 0;
+	left: 30%
+}
+
+#top_modules .box-logo {
+	float: left;
+	margin: 10px;
+}
+
 #sitelogo {
 	padding: 8px 0 0 0;
 	overflow: hidden;
 }
 
-.siteloginbar {
-	position: absolute;
-	bottom: -24px;
-	right: 0;
+#topbar_modules .box-login_box {
+	float: right;
+	margin-top: 0;
+	margin-right: 0;
 	height: 24px;
 	/*width: 600px;*/
 	line-height: 24px;
@@ -439,35 +450,35 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding-right: 20px;
 }
 
-.siteloginbar label,
-.siteloginbar a,
-.siteloginbar a:visited,
-.siteloginbar a:hover {
+.box-login_box label,
+.box-login_box a,
+.box-login_box a:visited,
+.box-login_box a:hover {
 	color: #fff;
 	text-decoration: none;
 }
 
-.siteloginbar input[type="text"],
-.siteloginbar input[type="password"] {
+.box-login_box input[type="text"],
+.box-login_box input[type="password"] {
 	background: transparent; /*#1b98c6*/
 	color: #fff;
 	border: solid 1px #fff;
 	width: 8em !important;
 }
 
-.siteloginbar #pass {
+.box-login_box #pass {
 	float: right;
 	padding-left: 5px;
 }
 
-.siteloginbar .rme,
-.siteloginbar .pass {
+.box-login_box .rme,
+.box-login_box .pass {
 	display: inline;
 	margin-left: 1em;
 	padding-right: 10px;
 }
 
-.siteloginbar .register {
+.box-login_box .register {
 	float: right;
 	height: 24px !important;
 	line-height: 22px;
@@ -478,7 +489,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	background: url(strasa/register.jpg) no-repeat;
 }
 
-.siteloginbar input.wikiaction {
+.box-login_box input.wikiaction {
 	border: 0;
 	margin-left: .7em;
 	color: #5ae0ff;

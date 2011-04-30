@@ -1176,7 +1176,7 @@ function wikiplugin_trackerlist($data, $params) {
 					$allfields["data"][$i]['isPublic'] == 'n'; //don't show it
 				$check['ix'] = count($passfields) -1;
 			}
-			if ($allfields["data"][$i]['name'] == 'page' && empty($filterfield) && empty($displayList)) {
+			if ($allfields["data"][$i]['name'] == 'page' && empty($filterfield) && empty($displayList) && !empty($view) && $view == 'page') {
 				$filterfield = $allfields["data"][$i]['fieldId'];
 				$filtervalue = $_REQUEST['page'];
 			}

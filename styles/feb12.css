@@ -258,6 +258,21 @@ body.fixed_width .fixedwidth .fixedwidth {
 	min-height: 98px;	
 }
 
+#top_modules .box-secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 30px;
+}
+
+#top_modules .box-secondary_site_menu .cssmenu_horiz li ul {
+	margin-top: -20px;
+}
+
+#top_modules .box-secondary_site_menu .cssmenu_horiz li ul ul {
+	margin-top: 0;
+}
+
+
 #sitelogo {
 	margin-top: 0;
 }
@@ -265,17 +280,11 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding: 0 10px;
 }
 
-#sitead {
-	margin-top: 10px;
-}
 
 .floatright img {
 	margin-right: 40px;
 }
 
-#bannertopright {
-	padding-right: 1em;
-}
 /*
 .box-login_box {
 	float: right;
@@ -284,7 +293,8 @@ body.fixed_width .fixedwidth .fixedwidth {
 	color: #f5f5f5;
 }
 */
-.siteloginbar_popup {
+
+.box-login_box {
 	position: absolute;
 	right: 20px;
 	bottom: 0;
@@ -314,18 +324,19 @@ body.fixed_width .fixedwidth .fixedwidth {
 }*/
 
 /* Site title and subtitle */
-.box-logo {
-	position: absolute;
-	top: 30%;
-	left: 20px;
-	text-shadow: 0 0 10px #fff;/* text-shadow; CSS3 valid property, values are <offset x> <offset y> <blur> and <color>; ex: 0 0 10px #fff */
-	font-weight: bold;
-	height: 4em;
-
+#top_modules .box-logo {
+/*	margin-top: 30px;*/
+	margin-left: 20px;
+/*	float: left;*/
 }
 
 #sitetitle {
 	font-size: 2.2em;
+	text-shadow: 0 0 10px #fff;/* text-shadow; CSS3 valid property, values are <offset x> <offset y> <blur> and <color>; ex: 0 0 10px #fff */
+	font-weight: bold;
+	line-height: 1;
+	padding: 0;
+	margin: 0;
 }
 
 #sitetitle a,

@@ -196,9 +196,32 @@ body.fixed_width .fixedwidth .fixedwidth {
 .header a:visited {
 	color: #91bef5;
 }
-
+/*
 #top_modules {
 	min-height: 130px;
+}*/
+
+#top_modules .box-secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 30px;
+}
+
+#top_modules #secondary_site_menu .cssmenu_horiz li ul {
+	margin-top: -6px;
+}
+
+#top_modules #secondary_site_menu .cssmenu_horiz li ul ul {
+	margin-top: 0;
+}
+
+#top_modules #secondary_site_menu .cssmenu_horiz > li > a {
+	background: none;
+}
+
+#top_modules .box-logo {
+	float: left;
+	margin-left: 10px;
 }
 
 #sitetitle,
@@ -271,10 +294,10 @@ body.fixed_width .fixedwidth .fixedwidth {
 	background: url(business/input.gif) repeat-x;
 }
 
-#top_modules .siteloginbar_popup {
+#top_modules .box-login_box {
 	position: absolute;
 	right: 10px;
-	bottom: 0;
+	bottom: 1px;
 }
 
 .siteloginbar_popup .tabmark {
@@ -315,7 +338,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	margin-left: 48px;
 }
 
-#tiki-top .cssmenu_horiz li a {
+#tiki-top .cssmenu_horiz > li > a {
 	text-decoration: none;
 	color: #fff;
 	font-size: 10px;
@@ -327,7 +350,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	text-transform: uppercase;
 }
 
-#tiki-top .cssmenu_horiz li:hover a {
+#tiki-top .cssmenu_horiz > li:hover > a {
 	color: #fff;
 	background: url(business/nav_h.gif) repeat-x;
 	text-decoration: none;
@@ -403,7 +426,12 @@ body.fixed_width .fixedwidth .fixedwidth {
 	top: 1.8em;
 }
 
-#tiki-top .cssmenu_horiz li ul li .sf-sub-indicator {
+#secondary_site_menu .cssmenu_horiz .sf-sub-indicator {
+	bottom: .4em;
+}
+
+#tiki-top .cssmenu_horiz li ul li .sf-sub-indicator,
+#secondary_site_menu .cssmenu_horiz li ul li .sf-sub-indicator {
 	top: .5em;
 	background: url(business/arrows-467aa7.png) no-repeat;
 }

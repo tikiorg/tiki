@@ -233,6 +233,10 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 /* #Header */
 
+#top_modules .box-logo {
+	margin: 10px;
+}
+
 #sitetitle,
 #sitesubtitle {
 	padding-left: 20px;
@@ -254,7 +258,13 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 /* Look & Feel options */
 #top_modules {
-	padding: 26px 0 0 0;
+	padding: 0;
+}
+
+#top_modules .box-secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 30px;
 }
 
 #top_modules .box-login_box {
@@ -301,12 +311,11 @@ body.fixed_width .fixedwidth .fixedwidth {
 #c1c2 #wrapper .marginright {
 	margin-right: 214px;
 }
-
-#showhide_columns,
+/*
 #tiki-columns {
 	border-top: 1px solid #aaa;
 	padding: 2px 2px 0 2px;
-}
+}*/
 
 a.flip,
 a.flip:visited {
@@ -514,7 +523,8 @@ a.flip:hover {
 	background: url(thenews/arrows-005faa.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */
 }
 
-#tiki-top a > .sf-sub-indicator {
+#tiki-top a > .sf-sub-indicator,
+.box-secondary_site_menu a > .sf-sub-indicator {
 	bottom: 0.5em;
 }
 

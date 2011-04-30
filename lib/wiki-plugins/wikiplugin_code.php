@@ -102,6 +102,7 @@ function wikiplugin_code($data, $params) {
 	extract($params, EXTR_SKIP);
 
 	$code = trim($data);
+	$code = str_replace('&lt;x&gt;', '', $code);
 
 	$parse_wiki = ( isset($wiki) && $wiki == 1 );
 	$escape_html = ( ! isset($ishtml) || $ishtml != 1 );

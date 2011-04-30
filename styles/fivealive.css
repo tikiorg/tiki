@@ -68,7 +68,7 @@ body.fixed_width .fixedwidth {
 }
 
 #top_modules {		/* inner div that contains the modules */
-	height: 168px;
+/*	height: 168px;*/
 }
 
 #tiki-top {
@@ -512,9 +512,10 @@ select {
 	color: #000;
 } /* end search form filter dropdown */
 
-#top_modules .box-logo{
-	position: absolute;
-	left: 10px;
+#top_modules .box-logo {
+	float: left;
+	margin-left: 10px;
+	margin-bottom: 18px;
 }
 
 #sitelogo img {

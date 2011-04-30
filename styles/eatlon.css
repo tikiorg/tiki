@@ -54,13 +54,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 	margin-bottom: 0;
 }
 
-.header_container .fixedwidth {
-	text-align: left;
-	height: 126px;
-	background: #fff url(eatlon/head_bg.gif) repeat-x 0 0;
-	margin-bottom: 0;
-	}
-
 #c1c2 #wrapper #col1.marginleft  {
 	margin-left: 180px;
 }
@@ -74,7 +67,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 #col2 .content {padding: 0 20px}
 
-#col1 .content {
+#col1 #tiki-center {
 	border-left: 1px solid #e0e0e0;
 	border-right: 1px solid #e0e0e0;
 	padding: 0 30px}
@@ -184,7 +177,6 @@ select {
 	color: #000;
 }
 
-
 .button a,
 .button a:visited,
 button,
@@ -223,11 +215,40 @@ ul, ol {text-align: left}
 tt {font-size: 1.2em}
 
 /***** Site Header & Identity *****/
+
+.header_container .fixedwidth {
+	text-align: left;
+	min-height: 126px;
+	background: #fff url(eatlon/head_bg.gif) repeat-x 0 0;
+	margin-bottom: 0;
+}
+
+.header {
+	background: url(eatlon/banner.gif) no-repeat 100% 100%;	
+}
 	
 #top_modules {
-	min-height: 126px;
-	background: url(eatlon/banner.gif) no-repeat 100% 0}
+/*	min-height: 126px;*/
+/*	background: url(eatlon/banner.gif) no-repeat 100% 0*/}
 
+#top_modules .box-secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 30px;
+}
+
+#top_modules .box-secondary_site_menu .cssmenu_horiz li ul {
+	margin-top: -6px;
+}
+
+#top_modules .box-secondary_site_menu .cssmenu_horiz li ul ul {
+	margin-top: 0;
+}
+
+#top_modules .box-logo {
+	float: left;
+	margin-left: 10px;
+}
 
 #sitelogo a,
 #sitelogo a:visited,
@@ -235,7 +256,7 @@ tt {font-size: 1.2em}
 
 .floatright img {margin-right: 10px}
 
-#top_modules .siteloginbar_popup {
+#top_modules .box-login_box {
 	position: absolute;
 	right: 20px;
 	bottom: 0;
@@ -327,13 +348,13 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 
 #col2 .cssmenu_vert,
 #col2 .cssmenu_vert li {
-	width: 170px;
+	width: 160px;
 }
 
 /* offset from left column (matches above) */
 #col2 .cssmenu_vert li:hover ul,
 #col2 .cssmenu_vert li.sfHover ul {
-	left: 170px;
+	left: 160px;
 }
 
 /* return ul ul ... to default */
@@ -381,7 +402,6 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 	color: #fff;
 }
 
-
 .cssmenu_vert li ul li a:hover,
 #tiki-top .cssmenu_horiz li a:hover,
 #secondary_site_menu .cssmenu_horiz ul li a:hover {
@@ -392,8 +412,14 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 .cssmenu_horiz ul li,
 .cssmenu_vert ul li {background: #9faec2 url(eatlon/body_bg.gif) 0 -300px repeat-x}
 
-.cssmenu_vert .sf-sub-indicator {background: url(eatlon/arrows-6d819d.png) no-repeat 10px 0}
-* html .cssmenu_vert ul .sf-sub-indicator {background: url(eatlon/arrows-6d819d.png) no-repeat -10px 0}
+.cssmenu_vert .sf-sub-indicator {
+	background: url(eatlon/arrows-6d819d.png) no-repeat 10px 0;
+}
+
+.cssmenu_vert .sf-sub-indicator,
+#secondary_site_menu .cssmenu_horiz .sf-sub-indicator {
+	background: url(eatlon/arrows-6d819d.png) no-repeat 10px 0;
+}
 
 .cssmenu_vert li ul li a .sf-sub-indicator {
 	background: url(../lib/jquery/superfish/images/arrows-ffffff.png);

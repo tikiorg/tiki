@@ -4806,7 +4806,7 @@ if( \$('#$id') ) {
 		$func_name = 'wikiplugin_' . $name;
 		
 		if( ! $validationPerformed ) {
-			$this->plugin_apply_filters( $name, $data, $args );
+			$this->plugin_apply_filters( $name, $data, $args, $parseOptions );
 		}
 
 		if( function_exists( $func_name ) ) {
@@ -4902,7 +4902,7 @@ if( \$('#$id') ) {
 		return 	$ret;
 	}
 
-	private function plugin_apply_filters( $name, & $data, & $args ) {
+	private function plugin_apply_filters( $name, & $data, & $args, $parseOptions ) {
 		$info = $this->plugin_info( $name );
 		$default = TikiFilter::get( isset( $info['defaultfilter'] ) ? $info['defaultfilter'] : 'xss');
 
@@ -4910,6 +4910,10 @@ if( \$('#$id') ) {
 		$filter = isset($info['filter']) ? TikiFilter::get($info['filter']) : $default;
 		$data = $this->htmldecode($data);
 		$data = $filter->filter($data);
+
+		if (! $options['is_html']) {
+			$data = str_replace(array('<', '>'), array('&lt;', '&gt;'), $data);
+		}
 
 		// Make sure all arguments are declared
 		$params = $info['params'];
