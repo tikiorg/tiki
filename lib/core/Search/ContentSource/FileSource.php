@@ -16,7 +16,10 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface
 
 	function getDocuments()
 	{
-		return $this->db->table('tiki_files')->fetchColumn('fileId', array());
+		$files = $this->db->table('tiki_files');
+		return $files->fetchColumn('fileId', array(
+			'archiveId' => 0,
+		));
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
