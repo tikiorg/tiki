@@ -10,8 +10,9 @@ function capLock(e, el){
 }
 {/jq}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Log in{/tr}"}{/if}{* Left for performance, since tiki-login_scr.php includes this template directly. *}
+{if !isset($module_params)}{assign var=module_params value=' '}{/if}
 {tikimodule error=$module_params.error title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-	{if $module_params.mode eq "header"}<div class="siteloginbar{if $user} logged-in{/if}">{/if}
+	{if isset ($module_params.mode) and $module_params.mode eq "header"}<div class="siteloginbar{if $user} logged-in{/if}">{/if}
 	{if isset($user) and $user}
 		{if empty($module_params.mode) or $module_params.mode eq "module"}
 			<div>{tr}Logged in as:{/tr} <span style="white-space: nowrap">{$user|userlink}</span></div>
@@ -117,6 +118,7 @@ function doChallengeResponse() {
 			{/remarksbox}
 		{/if}
 		<div>
+			{if !isset($module_logo_instance)}{assign var=module_logo_instance value=' '}{/if}
 			<label for="login-user_{$module_logo_instance}">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username:{/tr}{/if}</label>
 			{if !isset($loginuser) or $loginuser eq ''}
 				<input type="text" name="user" id="login-user_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" {if !empty($error_login)} value="{$error_user|escape}"{/if} />
