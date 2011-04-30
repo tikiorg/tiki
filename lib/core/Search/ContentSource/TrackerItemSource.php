@@ -44,23 +44,33 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 			'parent_view_permission' => $typeFactory->identifier('tiki_p_view_trackers'),
 		);
 
-		$fields = $this->db->fetchAll("SELECT tif.fieldId, tif.value, tf.isMain, isSearchable, type FROM tiki_tracker_item_fields tif INNER JOIN tiki_tracker_fields tf ON tif.fieldId = tf.fieldId WHERE tif.itemId = ?", array($objectId));
+		$itemData = $this->db->table('tiki_tracker_item_fields')->fetchMap('fieldId', 'value', array(
+			'itemId' => $objectId,
+		));
 
+		$fields = Tracker_Definition::get($item['trackerId'])->getFields();
+
+		$title = '';
 		foreach ($fields as $field) {
-			if ($field['isMain'] == 'y') {
-				$data['title'] = $typeFactory->sortable($field['value']);
-			}
+			$fieldId = $field['fieldId'];
+			$value = isset($itemData[$fieldId]) ? $itemData[$fieldId] : null;
 
 			if (in_array($field['type'], array('A', 'i'))) {
 				// Skip attachments and images
 				continue;
 			}
 
+			if ($field['isMain'] == 'y') {
+				$title .= ' ' . $value;
+			}
+
 			// Make all fields sortable, except for textarea
 			$type = ($field['type'] == 'a') ? 'wikitext' : 'sortable';
 
-			$data['tracker_field_' . $field['fieldId']] = $typeFactory->$type($field['value']);
+			$data['tracker_field_' . $fieldId] = $typeFactory->$type($value);
 		}
+
+		$data['title'] = $typeFactory->sortable(trim($title));
 
 		return $data;
 	}
