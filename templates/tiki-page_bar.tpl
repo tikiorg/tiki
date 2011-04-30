@@ -11,7 +11,7 @@
 		{if $edit_page neq 'y'}
 			{* Check that page is not locked and edit permission granted. SandBox can be edited w/o perm *}
 			{if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') or ((!isset($user) or !$user) and $prefs.wiki_encourage_contribution eq 'y')) or $tiki_p_admin_wiki eq 'y' or (isset($canEditStaging) and $canEditStaging eq 'y')}
-				{if $needsStaging eq 'y'}
+				{if isset($needsStaging) and $needsStaging eq 'y'}
 					{assign var=thisPageName value=$stagingPageName|escape:"url"}
 				{else}
 					{assign var=thisPageName value=$thispage}
@@ -43,7 +43,7 @@
 				{/if}
 
 				{if $tiki_p_rename eq 'y' && $editable}
-					{if $beingStaged eq 'y'}
+					{if isset($beingStaged) and $beingStaged eq 'y'}
 						{button href="tiki-rename_page.php?page=$thisapprovedPageName" _text="{tr}Rename{/tr}"}
 					{else}
 						{button href="tiki-rename_page.php?page=$thispage" _text="{tr}Rename{/tr}"}
@@ -153,7 +153,7 @@
 				{if $tiki_p_admin_wiki eq 'y' && $prefs.wiki_keywords eq 'y'}
 					{button href="tiki-admin_keywords.php" page=$page _text="{tr}Keywords{/tr}"}
 				{/if}
-				{if (isset($user) and $user) and $tiki_p_create_bookmarks eq 'y' and $prefs.feature_user_bookmarks eq 'y'}
+				{if (isset($user) and $user) and (isset($tiki_p_create_bookmarks) and $tiki_p_create_bookmarks eq 'y') and $prefs.feature_user_bookmarks eq 'y'}
 					{button _script="tiki-user_bookmarks.php" urlname=$page urlurl=$page|sefurl addurl="Add" _text="{tr}Bookmark{/tr}" _auto_args="urlname,urlurl,addurl"}
 				{/if}
 			{/if}
