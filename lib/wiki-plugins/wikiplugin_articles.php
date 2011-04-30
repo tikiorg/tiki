@@ -135,7 +135,7 @@ function wikiplugin_articles_info()
 			'periodQuantity' => array(
 				'required' => false,
 				'name' => tr('Period quantity'),
-				'description' => tr('Display only articles published since a user defined period of time until now. Used with "Period unit". If this option is set, "Start Date" and "End date" are ignored.'),
+				'description' => tr('Numeric value to display only last articles published within a user defined time-frame. Used in conjunction with the next parameter "Period unit", this parameter indicates how many of those units are to be considered to define the time frame. If this parameter is set, "Start Date" and "End date" are ignored.'),
 				'filter' => 'int',
 				'default' => '',
 			),
