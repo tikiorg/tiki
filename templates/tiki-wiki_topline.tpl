@@ -1,6 +1,6 @@
 <div class="wikitopline clearfix" style="clear: both;">
 	<div class="content">
-		{if !$hide_page_header}
+		{if isset($hide_page_header) and !$hide_page_header}
 		<div class="wikiinfo" style="float: left">
 
 {if $prefs.wiki_page_name_above eq 'y' and $print_page ne 'y'}
