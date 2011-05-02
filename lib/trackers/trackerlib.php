@@ -1494,17 +1494,6 @@ class TrackerLib extends TikiLib
 			// Old values were prefilled at the begining of the function and only replaced at the end of the iteration
 			$old_value = isset($fil[$array['fieldId']]) ? $fil[$array['fieldId']] : null;
 
-			if ($trackersync) {
-				if (isset($trackersync_realnamefields)) {
-					foreach ($trackersync_realnamefields as $index => $realnamefieldset) {
-						foreach ($realnamefieldset as $index2 => $realnamefield) {
-							if ($realnamefield == $array["fieldId"]) {
-								$trackersync_realnames[$index][$index2] = $array['value']; 
-							}
-						}
-					}
-				}
-			}
 			if ($prefs['user_selector_realnames_tracker'] == 'y' && $array['type'] == 'u') {
 				if (!$userlib->user_exists($array['value'])) {
 					$finalusers = $userlib->find_best_user(array($array['value']), '' , 'login');
@@ -1824,33 +1813,14 @@ class TrackerLib extends TikiLib
 			$categlib->categorize($catObjectId, $currentCategId);
 		}
 
-		if (!empty($trackersync_realnames)) {
-			ksort($trackersync_realnames);
-			$trackersync_realnames = array_reverse($trackersync_realnames);
-			foreach ($trackersync_realnames as $realname) {
-				$t_r = '';
-				foreach($realname as $r) {
-					if ($t_r && $r) {
-						$t_r .= " ";
-					}
-					$t_r .= $r;
-				}
-				if ($t_r) {
-					$trackersync_realname = $t_r;
-				}
-			}
-			if (!empty($trackersync_realname)) {
-				$tikilib->set_user_preference($trackersync_user, 'realName', $trackersync_realname);
-			}
-			if (!empty($trackersync_lon)) {
-				$tikilib->set_user_preference($trackersync_user, 'lon', $trackersync_lon);
-			}
-			if (!empty($trackersync_lat)) {
-				$tikilib->set_user_preference($trackersync_user, 'lat', $trackersync_lat);
-			}
-			if (!empty($trackersync_zoom)) {
-				$tikilib->set_user_preference($trackersync_user, 'zoom', $trackersync_zoom);
-			}
+		if (!empty($trackersync_lon)) {
+			$tikilib->set_user_preference($trackersync_user, 'lon', $trackersync_lon);
+		}
+		if (!empty($trackersync_lat)) {
+			$tikilib->set_user_preference($trackersync_user, 'lat', $trackersync_lat);
+		}
+		if (!empty($trackersync_zoom)) {
+			$tikilib->set_user_preference($trackersync_user, 'zoom', $trackersync_zoom);
 		}
 		if ($trackersync && $prefs['user_trackersync_groups'] == 'y') {
 			$sig_catids = $categlib->get_category_descendants($prefs['user_trackersync_parentgroup']);
@@ -4644,6 +4614,71 @@ class TrackerLib extends TikiLib
 		}
 
 		return $the_data;
+	}
+
+	private function tracker_is_syncable($trackerId)
+	{
+		global $prefs;
+		if (!empty($prefs["user_trackersync_trackers"])) {
+			$trackersync_trackers = preg_split('/\s*,\s*/', $prefs["user_trackersync_trackers"]);
+			return in_array($trackerId, $trackersync_trackers);
+		}
+
+		return false;
+	}
+
+	private function get_tracker_item_user($trackerId, $values)
+	{
+		global $user, $prefs;
+		$userlib = TikiLib::lib('user');
+		$trackersync_user = $user;
+		
+		$definition = Tracker_Definition::get($trackerId);
+		$fieldId = $definition->getUserField();
+		$value = isset($values[$fieldId]) ? $values[$fieldId] : '';
+
+		if ($value) {
+			$trackersync_user = $value;
+		}
+
+		return $trackersync_user;
+	}
+
+	function sync_realname($args)
+	{
+		global $prefs;
+
+		$trackerId = $args['trackerId'];
+
+		if (! $this->tracker_is_syncable($trackerId)) {
+			return;
+		}
+
+		if (false === $trackersync_user = $this->get_tracker_item_user($trackerId, $args['values'])) {
+			return;
+		}
+
+		if (!empty($prefs["user_trackersync_realname"])) {
+			// Fields to concatenate are delimited by + and priority sets are delimited by , 
+			$trackersync_realnamefields = preg_split('/\s*,\s*/', $prefs["user_trackersync_realname"]);
+
+			foreach ($trackersync_realnamefields as $fields) {
+				$parts = array();
+				$fields = preg_split('/\s*\+\s*/', $fields);
+				foreach ($fields as $field) {
+					$field = (int) $field;
+					if (isset($args['values'][$field])) {
+						$parts[] = $args['values'][$field];
+					}
+				}
+
+				$realname = implode(' ', $parts);
+
+				if (! empty($realname)) {
+					TikiLib::lib('tiki')->set_user_preference($trackersync_user, 'realName', $realname);
+				}
+			}
+		}
 	}
 }
 

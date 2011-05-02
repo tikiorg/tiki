@@ -113,6 +113,17 @@ class Tracker_Definition
 		}
 	}
 
+	function getUserField()
+	{
+		foreach ($this->getFields() as $field) {
+			if ($field['type'] == 'u'
+				&& isset($field['options'][0]) && $field['options'][0] == 1) {
+
+				return $field['fieldId'];
+			}
+		}
+	}
+
 	function getWriterGroupField()
 	{
 		foreach ($this->getFields() as $field) {
