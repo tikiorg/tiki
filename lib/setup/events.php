@@ -32,6 +32,8 @@ if ($prefs['feature_trackers'] == 'y') {
 	if ($prefs['user_trackersync_geo'] == 'y') {
 		$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'sync_user_geo'));
 	}
+
+	$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'invalidate_item_cache'));
 }
 
 if ($prefs['unified_incremental_update'] == 'y') {

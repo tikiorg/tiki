@@ -1715,13 +1715,6 @@ class TrackerLib extends TikiLib
 					}
 
 					$fil[$fieldId] = $value;
-					$cachelib->invalidate(md5('trackerfield'.$fieldId.'o'));
-					$cachelib->invalidate(md5('trackerfield'.$fieldId.'c'));
-					$cachelib->invalidate(md5('trackerfield'.$fieldId.'p'));
-					$cachelib->invalidate(md5('trackerfield'.$fieldId.'op'));
-					$cachelib->invalidate(md5('trackerfield'.$fieldId.'oc'));
-					$cachelib->invalidate(md5('trackerfield'.$fieldId.'pc'));
-					$cachelib->invalidate(md5('trackerfield'.$fieldId.'opc'));
 				}
 			}
 		}
@@ -1730,11 +1723,8 @@ class TrackerLib extends TikiLib
 			if (!empty($creatorGroupFieldId) && !empty($tracker_info['autoAssignGroupItem']) && $tracker_info['autoAssignGroupItem'] == 'y') {
 				if (!empty($tracker_info['autoCopyGroup'])) {
 					global $group;
-					$itemFields->insert(array(
-						'itemId' => $new_itemId,
-						'fieldId' => $tracker_info['autoCopyGroup'],
-						'value' => $group,
-					));
+					$this->modify_field($new_itemId, $tracker_info['autoCopyGroup'], $group);
+					$fil[$tracker_info['autoCopyGroup']] = $group;
 				}
 				
 			}
@@ -1761,9 +1751,6 @@ class TrackerLib extends TikiLib
 		));
 
 		$itemId = $currentItemId;
-
-		$cachelib = TikiLib::lib('cache');
-		$cachelib->invalidate('trackerItemLabel'.$itemId);
 
 		TikiLib::events()->trigger($final_event, array(
 			'type' => 'trackeritem',
@@ -4741,6 +4728,32 @@ class TrackerLib extends TikiLib
 			$groupName = $categlib->get_category_name($c, true);
 			if (in_array($groupName, $groupList)) {
 				$userlib->remove_user_from_group($trackersync_user, $groupName);
+			}
+		}
+	}
+
+	function invalidate_item_cache($args)
+	{
+		$itemId = $args['object'];
+
+		$cachelib = TikiLib::lib('cache');
+		$cachelib->invalidate('trackerItemLabel'.$itemId);
+
+		$fields = array_merge(array_keys($args['values']), array_keys($args['old_values']));
+		$fields = array_unique($fields);
+		
+		foreach ($fields as $fieldId) {
+			$old = isset($args['old_values'][$fieldId]) ? $args['old_values'][$fieldId] : null;
+			$new = isset($args['values'][$fieldId]) ? $args['values'][$fieldId] : null;
+
+			if ($old !== $new) {
+				$cachelib->invalidate(md5('trackerfield'.$fieldId.'o'));
+				$cachelib->invalidate(md5('trackerfield'.$fieldId.'c'));
+				$cachelib->invalidate(md5('trackerfield'.$fieldId.'p'));
+				$cachelib->invalidate(md5('trackerfield'.$fieldId.'op'));
+				$cachelib->invalidate(md5('trackerfield'.$fieldId.'oc'));
+				$cachelib->invalidate(md5('trackerfield'.$fieldId.'pc'));
+				$cachelib->invalidate(md5('trackerfield'.$fieldId.'opc'));
 			}
 		}
 	}
