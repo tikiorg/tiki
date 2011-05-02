@@ -1765,34 +1765,6 @@ class TrackerLib extends TikiLib
 		$cachelib = TikiLib::lib('cache');
 		$cachelib->invalidate('trackerItemLabel'.$itemId);
 
-		if ( isset($tracker_info['autoCreateCategories']) && $tracker_info['autoCreateCategories'] == 'y' && $prefs['feature_categories'] == 'y' ) {
-			$tracker_item_desc = $this->get_isMain_value($trackerId, $itemId);
-
-			// Verify that parentCat exists Or Create It
-			$parentcategId = $categlib->get_category_id("Tracker $trackerId");
-			if ( ! isset($parentcategId) ) {
-				$parentcategId = $categlib->add_category(0,"Tracker $trackerId",$tracker_info['description']);
-			}
-			// Verify that the sub Categ doesn't already exists
-			$currentCategId = $categlib->get_category_id("Tracker Item $itemId");
-			if ( ! isset($currentCategId) || $currentCategId == 0 ) {
-				$currentCategId = $categlib->add_category($parentcategId,"Tracker Item $itemId",$tracker_item_desc);
-			} else {
-				$categlib->update_category($currentCategId, "Tracker Item $itemId", $tracker_item_desc, $parentcategId);
-			}
-			$cat_type = "trackeritem";
-			$cat_objid = $itemId;
-			$cat_desc = '';
-			$cat_name = "Tracker Item $itemId";
-			$cat_href = "tiki-view_tracker_item.php?trackerId=$trackerId&itemId=$itemId";
-			// ?? HAS to do it ?? $categlib->uncategorize_object($cat_type, $cat_objid);
-			$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
-			if ( ! $catObjectId ) {
-				$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
-			}
-			$categlib->categorize($catObjectId, $currentCategId);
-		}
-
 		if ($trackersync && $prefs['user_trackersync_groups'] == 'y') {
 			$sig_catids = $categlib->get_category_descendants($prefs['user_trackersync_parentgroup']);
 			$sig_add = array_intersect($sig_catids, $new_categs);
@@ -4694,6 +4666,42 @@ class TrackerLib extends TikiLib
 			if ($geo && $itemId) {
 				TikiLib::lib('geo')->set_coordinates('trackeritem', $itemId, $geo);
 			}
+		}
+	}
+
+	function sync_item_auto_categories($args)
+	{
+		$trackerId = $args['trackerId'];
+		$itemId = $args['itemId'];
+		$definition = Tracker_Definition::get($trackerId);
+
+		if ($definition->isEnabled('autoCreateCategories')) {
+			$categlib = TikiLib::lib('categ');
+			$tracker_item_desc = $this->get_isMain_value($trackerId, $itemId);
+
+			// Verify that parentCat exists Or Create It
+			$parentcategId = $categlib->get_category_id("Tracker $trackerId");
+			if ( ! isset($parentcategId) ) {
+				$parentcategId = $categlib->add_category(0, "Tracker $trackerId", $definition->getConfiguration('description'));
+			}
+			// Verify that the sub Categ doesn't already exists
+			$currentCategId = $categlib->get_category_id("Tracker Item $itemId");
+			if ( ! isset($currentCategId) || $currentCategId == 0 ) {
+				$currentCategId = $categlib->add_category($parentcategId,"Tracker Item $itemId",$tracker_item_desc);
+			} else {
+				$categlib->update_category($currentCategId, "Tracker Item $itemId", $tracker_item_desc, $parentcategId);
+			}
+			$cat_type = "trackeritem";
+			$cat_objid = $itemId;
+			$cat_desc = '';
+			$cat_name = "Tracker Item $itemId";
+			$cat_href = "tiki-view_tracker_item.php?trackerId=$trackerId&itemId=$itemId";
+			// ?? HAS to do it ?? $categlib->uncategorize_object($cat_type, $cat_objid);
+			$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
+			if ( ! $catObjectId ) {
+				$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
+			}
+			$categlib->categorize($catObjectId, $currentCategId);
 		}
 	}
 }

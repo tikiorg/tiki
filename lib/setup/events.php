@@ -16,6 +16,10 @@ if ($prefs['feature_wiki'] == 'y') {
 if ($prefs['feature_trackers'] == 'y') {
 	$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'send_replace_item_notifications'));
 	$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'sync_item_geo'));
+
+	if ($prefs['feature_categories'] == 'y') {
+		$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'sync_item_auto_categories'));
+	}
 	
 	if (! empty($prefs['user_trackersync_realname'])) {
 		$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'sync_user_realname'));

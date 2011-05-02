@@ -51,6 +51,11 @@ class Tracker_Definition
 		return isset($this->trackerInfo[$key]) ? $this->trackerInfo[$key] : $default;
 	}
 
+	function isEnabled($key)
+	{
+		return $this->getConfiguration($key) === 'y';
+	}
+
 	function getFields()
 	{
 		if ($this->fields) {
