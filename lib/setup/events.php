@@ -15,9 +15,14 @@ if ($prefs['feature_wiki'] == 'y') {
 
 if ($prefs['feature_trackers'] == 'y') {
 	$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'send_replace_item_notifications'));
+	$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'sync_item_geo'));
 	
-	if (! empty($prefs['user_trackersync_trackers']) && ! empty($prefs['user_trackersync_realname'])) {
-		$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'sync_realname'));
+	if (! empty($prefs['user_trackersync_realname'])) {
+		$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'sync_user_realname'));
+	}
+
+	if ($prefs['user_trackersync_geo'] == 'y') {
+		$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'sync_user_geo'));
 	}
 }
 

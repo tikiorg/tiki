@@ -1465,13 +1465,6 @@ class TrackerLib extends TikiLib
 				$trackersync = true;
 			}
 		}
-		if ($trackersync && !empty($prefs["user_trackersync_realname"])) {
-			// Fields to concatenate are delimited by + and priority sets are delimited by , 
-			$trackersync_realnamefields = preg_split('/\s*,\s*/', $prefs["user_trackersync_realname"]);
-			foreach ($trackersync_realnamefields as &$r) {
-				$r = preg_split('/\s*\+\s*/', $r);
-			}
-		}
 		
 		// If this is a user tracker it needs to be detected right here before actual looping of fields happen
 		$trackersync_user = $user;
@@ -1503,19 +1496,6 @@ class TrackerLib extends TikiLib
 					}
 				}
 			}
-			if ($array['type'] == 'G' && isset($array['options_array'][0]) && $array['options_array'][0] == 'y') {
-				// Set geo attributes if google map field is set as item
-				if ($geo = TikiLib::lib('geo')->parse_coordinates($array['value'])) {
-					if ($trackersync && $prefs["user_trackersync_geo"] == 'y') {
-						$trackersync_lon = $geo['lat'];
-						$trackersync_lat = $geo['lon'];
-						
-						if (isset($geo['zoom'])) {
-							$trackersync_zoom = $geo['zoom'];
-						}
-					}
-				}
-			}				
 			if (!isset($array["type"]) or $array["type"] == 's') {
 				// system type, do nothing
 				continue;
@@ -1813,15 +1793,6 @@ class TrackerLib extends TikiLib
 			$categlib->categorize($catObjectId, $currentCategId);
 		}
 
-		if (!empty($trackersync_lon)) {
-			$tikilib->set_user_preference($trackersync_user, 'lon', $trackersync_lon);
-		}
-		if (!empty($trackersync_lat)) {
-			$tikilib->set_user_preference($trackersync_user, 'lat', $trackersync_lat);
-		}
-		if (!empty($trackersync_zoom)) {
-			$tikilib->set_user_preference($trackersync_user, 'zoom', $trackersync_zoom);
-		}
 		if ($trackersync && $prefs['user_trackersync_groups'] == 'y') {
 			$sig_catids = $categlib->get_category_descendants($prefs['user_trackersync_parentgroup']);
 			$sig_add = array_intersect($sig_catids, $new_categs);
@@ -1841,9 +1812,6 @@ class TrackerLib extends TikiLib
 			}
 		}
 
-		if (!empty($geo) && $itemId) {
-			TikiLib::lib('geo')->set_coordinates('trackeritem', $itemId, $geo);
-		}
 		TikiLib::events()->trigger($final_event, array(
 			'type' => 'trackeritem',
 			'object' => $itemId,
@@ -4644,7 +4612,18 @@ class TrackerLib extends TikiLib
 		return $trackersync_user;
 	}
 
-	function sync_realname($args)
+	private function get_tracker_item_coordinates($trackerId, $values)
+	{
+		$definition = Tracker_Definition::get($trackerId);
+
+		if ($fieldId = $definition->getGeolocationField()) {
+			if (isset($values[$fieldId])) {
+				return TikiLib::lib('geo')->parse_coordinates($values[$fieldId]);
+			}
+		}
+	}
+
+	function sync_user_realname($args)
 	{
 		global $prefs;
 
@@ -4677,6 +4656,43 @@ class TrackerLib extends TikiLib
 				if (! empty($realname)) {
 					TikiLib::lib('tiki')->set_user_preference($trackersync_user, 'realName', $realname);
 				}
+			}
+		}
+	}
+
+	function sync_user_geo($args)
+	{
+		global $prefs;
+
+		$trackerId = $args['trackerId'];
+
+		if (! $this->tracker_is_syncable($trackerId)) {
+			return;
+		}
+
+		if (false === $trackersync_user = $this->get_tracker_item_user($trackerId, $args['values'])) {
+			return;
+		}
+
+		if ($geo = $this->get_tracker_item_coordinates($trackerId, $args['values'])) {
+			$tikilib = TikiLib::lib('tiki');
+
+			$tikilib->set_user_preference($trackersync_user, 'lon', $geo['lon']);
+			$tikilib->set_user_preference($trackersync_user, 'lat', $geo['lat']);
+			if (!empty($geo['zoom'])) {
+				$tikilib->set_user_preference($trackersync_user, 'zoom', $geo['zoom']);
+			}
+		}
+	}
+
+	function sync_item_geo($args)
+	{
+		$trackerId = $args['trackerId'];
+		$itemId = $args['object'];
+
+		if ($geo = $this->get_tracker_item_coordinates($trackerId, $args['values'])) {
+			if ($geo && $itemId) {
+				TikiLib::lib('geo')->set_coordinates('trackeritem', $itemId, $geo);
 			}
 		}
 	}

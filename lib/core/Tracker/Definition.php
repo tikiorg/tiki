@@ -124,6 +124,15 @@ class Tracker_Definition
 		}
 	}
 
+	function getGeolocationField()
+	{
+		foreach ($this->getFields() as $field) {
+			if ($field['type'] == 'G' && isset($field['options_array'][0]) && $field['options_array'][0] == 'y') {
+				return $field['fieldId'];
+			}
+		}
+	}
+
 	function getWriterGroupField()
 	{
 		foreach ($this->getFields() as $field) {
