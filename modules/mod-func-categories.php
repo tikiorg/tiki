@@ -115,7 +115,7 @@ function module_categories( $mod_reference, &$module_params ) {
 		$tree_nodes[] = array(
 			"id" => $cat["categId"],
 			"parent" => $cat["parentId"],
-			"data" => '<a class="catname" href="'.$url.'">' . tra($cat['name']) . '</a><br />'
+			"data" => '<a class="catname" href="'.$url.'">' . $cat['name'] . '</a><br />'
 		);
 	}
 	$tm = new CatBrowseTreeMaker("mod_categ");

@@ -121,7 +121,7 @@ class CategLib extends ObjectLib
 			$catpath = $this->get_category_path($res["categId"]);
 			$tepath = array();	
 			foreach ($catpath as $cat) {
-				$tepath[] = $cat['name'];
+				$tepath[] = tra($cat['name']);
 			}
 			$categpath = implode("::",$tepath);
 			$categpathforsort = implode("!!",$tepath); // needed to prevent cat::subcat to be sorted after cat2::subcat 
@@ -1097,7 +1097,15 @@ class CategLib extends ObjectLib
 				}
 			}
 		}
-
+		global $prefs;
+		if ($prefs['feature_multilingual'] == 'y' && $prefs['language'] != 'en') {
+			foreach ($ret as $res) {
+				$res['name'] = tra($res['name']);
+				$rett[$res['name']] = $res;
+			}
+			ksort($rett);
+			$ret = array_values($rett);
+		}
 		return $ret;
 	}
 
