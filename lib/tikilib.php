@@ -3890,10 +3890,6 @@ class TikiLib extends TikiDb_Bridge
 			'old_data' => '',
 		));
 
-		$this->object_post_save( array( 'type'=> 'wiki page', 'object'=> $name, 'description'=> $description, 'name'=>$name, 'href'=>"tiki-index.php?page=$name" ), array(
-			'content' => $data,
-		) );
-
 		// Update HTML wanted links when wysiwyg is in use - this is not an elegant fix
 		// but will do for now until the "use wiki syntax in WYSIWYG" feature is ready 
 		if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_htmltowiki'] != 'y') {
@@ -6956,10 +6952,6 @@ if( \$('#$id') ) {
 			'data' => $edit_data,
 			'old_data' => $info['data'],
 		));
-
-		$this->object_post_save( array( 'type' => 'wiki page', 'object' => $pageName ), array(
-			'content' => $edit_data,
-		) );
 	}
 
 	function object_post_save( $context, $data ) {
@@ -6987,8 +6979,19 @@ if( \$('#$id') ) {
 	 * @param array $data
 	 * @return void
 	 */
-	private function plugin_post_save_actions( $context, $data ) {
+	function plugin_post_save_actions( $context, $data = null ) {
 		global $prefs;
+
+		if (is_null($data)) {
+			$content = array();
+			if (isset($context['values'])) {
+				$content = $context['values'];
+			}
+			if (isset($context['data'])) {
+				$content[] = $context['data'];
+			}
+			$data = implode(' ', $content);
+		}
 
 		$argumentParser = new WikiParser_PluginArgumentParser;
 

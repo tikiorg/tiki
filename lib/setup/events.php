@@ -21,6 +21,12 @@ if ($prefs['unified_incremental_update'] == 'y') {
 	$events->bind('tiki.save', 'tiki_save_refresh_index');
 }
 
+if ($prefs['feature_file_galleries'] == 'y') {
+	$events->bind('tiki.save', Event_Lib::defer('filegal', 'save_sync_file_backlinks'));
+}
+
+$events->bind('tiki.save', Event_Lib::defer('tiki', 'plugin_post_save_actions'));
+
 // Chain events
 $events->bind('tiki.wiki.update', 'tiki.wiki.save');
 $events->bind('tiki.wiki.create', 'tiki.wiki.save');

@@ -1653,6 +1653,21 @@ class FileGalLib extends TikiLib
 		$this->replaceBacklinks($context, $fileIds);
 		return $fileIds;
 	}
+
+	function save_sync_file_backlinks($args)
+	{
+		$content = array();
+		if (isset($args['values'])) {
+			$content = $args['values'];
+		}
+		if (isset($args['data'])) {
+			$content[] = $args['data'];
+		}
+		$content = implode(' ', $content);
+
+		$this->syncFileBacklinks($content, $args);
+	}
+
 	function getLinkFileId($url) {
 		if (preg_match('/^tiki-download_file.php\?.*fileId=([0-9]+)/', $url, $matches)) {
 			return $matches[1];

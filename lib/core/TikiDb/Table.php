@@ -274,6 +274,19 @@ class TikiDb_Table
 		return $this->any(array_fill_keys($fields, $expr));
 	}
 
+	function concatFields(array $fields)
+	{
+		$fields = array_map(array($this, 'escapeIdentifier'), $fields);
+		$fields = implode(', ', $fields);
+
+		$expr = '';
+		if ($fields) {
+			$expr = "CONCAT($fields)";
+		}
+
+		return $this->expr($expr);
+	}
+
 	function any(array $conditions)
 	{
 		$binds = array();

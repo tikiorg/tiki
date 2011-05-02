@@ -1397,8 +1397,8 @@ class TrackerLib extends TikiLib
 		$fields = $this->fields();
 
 		$fil = array();
-		if (!empty($itemId)) { // prefill with current value - in case a computed use some other fields
-			$fil = $itemFields->fetchMap('fieldId', 'value', array('itemId' => $itemId));
+		if (!empty($itemId)) {
+			$fil = $itemFields->fetchMap($itemFields->concatFields(array('fieldId', 'lang')), 'value', array('itemId' => $itemId));
 		}
 
 		$old_values = $fil;
@@ -1692,6 +1692,7 @@ class TrackerLib extends TikiLib
 
 					foreach ($array['lingualvalue'] as $linvalue) {
 						$this->modify_field($currentItemId, $fieldId, $linvalue['value'], $linvalue['lang']);
+						$fil[$fieldId . $linvalue['lang']] = $linvalue['value'];
 
 						if (!empty($itemId) && $old_value != $linvalue['value']) {
 							$this->log($version, $itemId, $array['fieldId'], $old_value, $linvalue['lang']);
@@ -1823,17 +1824,6 @@ class TrackerLib extends TikiLib
 			$categlib->categorize($catObjectId, $currentCategId);
 		}
 
-		$parsed = '';
-		foreach($ins_fields["data"] as $i=>$array) {
-			if ($array['type'] == 'a') {
-				$parsed .= $array['value']."\n";
-				if (!empty($array['lingualvalue'])) {
-					foreach ($array['lingualvalue'] as $linvalue) {
-						$parsed .= $linvalue['value']."\n";
-					}
-				}
-			}
-		}
 		if (!empty($trackersync_realnames)) {
 			ksort($trackersync_realnames);
 			$trackersync_realnames = array_reverse($trackersync_realnames);
@@ -1879,10 +1869,6 @@ class TrackerLib extends TikiLib
 					$userlib->remove_user_from_group($trackersync_user, $groupName);
 				}
 			}
-		}
-		if (!empty($parsed)) {
-			$tikilib = TikiLib::lib('tiki');
-			$tikilib->object_post_save( array('type'=>'trackeritem', 'object'=>$itemId, 'name' => "Tracker Item $itemId", 'href'=>"tiki-view_tracker_item.php?itemId=$itemId"), array( 'content' => $parsed ));
 		}
 
 		if (!empty($geo) && $itemId) {

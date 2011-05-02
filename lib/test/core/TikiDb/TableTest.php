@@ -512,5 +512,19 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals($table->expr('(`a` LIKE ? OR `b` LIKE ? OR `c` LIKE ?)', array("%X%", "%X%", "%X%")), $table->findIn('X', array('a', 'b', 'c')));
 	}
+	
+	function testEmptyConcat()
+	{
+		$mock = $this->getMock('TikiDb');
+		$table = new TikiDb_Table($mock, 'my_table');
+		$this->assertEquals($table->expr('', array()), $table->concatFields(array()));
+	}
+	
+	function testEmptyConcatWithMultiple()
+	{
+		$mock = $this->getMock('TikiDb');
+		$table = new TikiDb_Table($mock, 'my_table');
+		$this->assertEquals($table->expr('CONCAT(`a`, `b`, `c`)', array()), $table->concatFields(array('a', 'b', 'c')));
+	}
 }
 
