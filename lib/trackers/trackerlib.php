@@ -1765,25 +1765,6 @@ class TrackerLib extends TikiLib
 		$cachelib = TikiLib::lib('cache');
 		$cachelib->invalidate('trackerItemLabel'.$itemId);
 
-		if ($trackersync && $prefs['user_trackersync_groups'] == 'y') {
-			$sig_catids = $categlib->get_category_descendants($prefs['user_trackersync_parentgroup']);
-			$sig_add = array_intersect($sig_catids, $new_categs);
-			$sig_del = array_intersect($sig_catids, $del_categs);
-			$groupList = $userlib->list_all_groups();
-			foreach ($sig_add as $c) {
-				$groupName = $categlib->get_category_name($c, true);
-				if (in_array($groupName, $groupList)) {
-					$userlib->assign_user_to_group($trackersync_user, $groupName);
-				}
-			}
-			foreach ($sig_del as $c) {
-				$groupName = $categlib->get_category_name($c, true);
-				if (in_array($groupName, $groupList)) {
-					$userlib->remove_user_from_group($trackersync_user, $groupName);
-				}
-			}
-		}
-
 		TikiLib::events()->trigger($final_event, array(
 			'type' => 'trackeritem',
 			'object' => $itemId,
@@ -1793,6 +1774,7 @@ class TrackerLib extends TikiLib
 			'old_values' => $old_values,
 			'bulk_import' => $bulk_import,
 		));
+
 		return $itemId;
 	}
 
@@ -4702,6 +4684,64 @@ class TrackerLib extends TikiLib
 				$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
 			}
 			$categlib->categorize($catObjectId, $currentCategId);
+		}
+	}
+
+	private function get_item_categories($trackerId, $values)
+	{
+		$definition = Tracker_Definition::get($trackerId);
+		$categories = array();
+
+		foreach ($definition->getFields() as $field) {
+			if ($field['type'] == 'e') {
+				$fieldId = $field['fieldId'];
+				$value = isset($values[$fieldId]) ? $values[$fieldId] : null;
+
+				if ($value) {
+					$categories = array_merge($categories, explode(',', $value));
+				}
+			}
+		}
+
+		return array_unique(array_filter($categories));
+	}
+
+	function sync_user_groups($args)
+	{
+		$trackerId = $args['trackerId'];
+
+		if (! $this->tracker_is_syncable($trackerId)) {
+			return;
+		}
+
+		if (false === $trackersync_user = $this->get_tracker_item_user($trackerId, $args['values'])) {
+			return;
+		}
+
+		$userlib = TikiLib::lib('user');
+		$categlib = TikiLib::lib('categ');
+
+		$old_categories = $this->get_item_categories($trackerId, $args['old_values']);
+		$current_categories = $this->get_item_categories($trackerId, $args['values']);
+
+		$new_categs = array_diff($current_categories, $old_categories);
+		$del_categs = array_diff($old_categories, $current_categories);
+		
+		$sig_catids = $categlib->get_category_descendants($prefs['user_trackersync_parentgroup']);
+		$sig_add = array_intersect($sig_catids, $new_categs);
+		$sig_del = array_intersect($sig_catids, $del_categs);
+		$groupList = $userlib->list_all_groups();
+		foreach ($sig_add as $c) {
+			$groupName = $categlib->get_category_name($c, true);
+			if (in_array($groupName, $groupList)) {
+				$userlib->assign_user_to_group($trackersync_user, $groupName);
+			}
+		}
+		foreach ($sig_del as $c) {
+			$groupName = $categlib->get_category_name($c, true);
+			if (in_array($groupName, $groupList)) {
+				$userlib->remove_user_from_group($trackersync_user, $groupName);
+			}
 		}
 	}
 }
