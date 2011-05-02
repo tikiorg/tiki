@@ -368,18 +368,16 @@ class MenuLib extends TikiLib
 			$channels = array('data'=>$subMenu, 'cant'=>$cant);
 		}
 		// set sections open/close according to cookie
-		if (!empty($params['id'])) {
-			global $prefs;
-			foreach ($channels['data'] as $position => &$option) {
-				$option['open'] = false;
-				if (!empty($params['menu_cookie']) && $params['menu_cookie'] == 'n') {
-					if (!empty($option['selected']) || !empty($option['selectedAscendant'])) {
-						$option['open'] = true;
-					}
-				} elseif ($option['type'] == 's') {
-					$ck = getCookie('menu'.$params['id'].'__'.$option['position'], 'menu', 'o');
-					$option['open'] = ($prefs['javascript_enabled'] == 'n' || $ck == 'o');
+		global $prefs;
+		foreach ($channels['data'] as $position => &$option) {
+			$option['open'] = false;
+			if (!empty($params['menu_cookie']) && $params['menu_cookie'] == 'n') {
+				if (!empty($option['selected']) || !empty($option['selectedAscendant'])) {
+					$option['open'] = true;
 				}
+			} elseif ($option['type'] == 's') {
+				$ck = getCookie('menu'.$params['id'].'__'.$option['position'], 'menu', 'o');
+				$option['open'] = ($prefs['javascript_enabled'] == 'n' || $ck == 'o');
 			}
 		}
 		return $channels;
