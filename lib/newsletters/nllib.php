@@ -384,12 +384,17 @@ class NlLib extends TikiLib
 			if (!isset($_SERVER["SERVER_NAME"])) {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 			}
-			$mail = new TikiMail($user);
-			$mail->setSubject(tra('Newsletter subscription information at').' '. $_SERVER["SERVER_NAME"]);
-			$mail->setText($mail_data);
-			if (!$mail->send(array($email)))
+			$zmail = tiki_get_basic_mail();
+			$zmail->setSubject(tra('Newsletter subscription information at').' '. $_SERVER["SERVER_NAME"]);
+			$zmail->setBodyText($mail_data);
+			$zmail->addTo($email);
+			try {
+				$zmail->send();
+
+				return true;
+			} catch (Zend_Mail_Exception $e) {
 				return false;
-			return true;
+			}
 		} else {
 			if (!empty($res) && $res["valid"] == 'n') {
 				$query = "update `tiki_newsletter_subscriptions` set `valid` = 'y' where `nlId` = ? and `email` = ? and `isUser` = ?";
@@ -433,15 +438,21 @@ class NlLib extends TikiLib
 		if (!isset($_SERVER["SERVER_NAME"])) {
 			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 		}
-		$mail = new TikiMail($user);
+		$zmail = tiki_get_basic_mail();
 		$lg = ! $user ? $prefs['site_language']: $this->get_user_preference($user, "language", $prefs['site_language']);
 		$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_welcome_subject.tpl');
-		$mail->setSubject(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]));
+		$zmail->setSubject(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]));
 		$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_welcome.tpl');
-		$mail->setText($mail_data);
-		if (!$mail->send(array($email)))
-				return false;
-		return $this->get_newsletter($res["nlId"]);
+		$zmail->setBodyText($mail_data);
+		$zmail->addTo($email);
+
+		try {
+			$zmail->send();
+
+			return $this->get_newsletter($res["nlId"]);
+		} catch (Zend_Mail_Exception $e) {
+			return false;
+		}
 	}
 
 	function unsubscribe($code,$mailit=false) {
@@ -479,12 +490,17 @@ class NlLib extends TikiLib
 			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 		}
 		if ($mailit) {
-			$mail = new TikiMail();
+			$zmail = tiki_get_basic_mail();
 			$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_byebye_subject.tpl');
-			$mail->setSubject(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]));
+			$zmail->setSubject(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]));
 			$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_byebye.tpl');
-			$mail->setText($mail_data);
-			$mail->send(array($email));
+			$zmail->setBodyText($mail_data);
+			$zmail->addTo($email);
+
+			try {
+				$zmail->send();
+			} catch (Zend_Mail_Exception $e) {
+			}
 		}
 		/*$this->update_users($res["nlId"]);*/
 		return $this->get_newsletter($res["nlId"]);
@@ -995,7 +1011,6 @@ class NlLib extends TikiLib
 		}
 		include_once ('lib/webmail/tikimaillib.php');
 		include_once 'lib/mail/maillib.php';
-		$mail = new TikiMail();
 		$zmail = tiki_get_basic_mail();
 
 		// build the html
