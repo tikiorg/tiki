@@ -46,7 +46,7 @@ function tf_export_submit(fm) {
 			<select id="f_{$filter.fieldId}" name="f_{$filter.fieldId}{if $filter.format eq "m"}[]{/if}" {if $filter.format eq "m"} size="5" multiple="multiple"{/if}> 
 			<option value=""{if !$filter.selected} selected="selected"{/if}>{tr}Any{/tr}</option>
 			{section name=io loop=$filter.opts}
-				<option value="{$filter.opts[io].id|escape:url}"{if $filter.opts[io].selected eq "y"} selected="selected"{/if}>
+				<option value="{$filter.opts[io].id}"{if $filter.opts[io].selected eq "y"} selected="selected"{/if}>
 					{$filter.opts[io].name|tr_if|escape}
 				</option>
 			{/section}
