@@ -357,6 +357,13 @@ if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) || $resend 
 	exit; // Stop here since we are in an iframe and don't want to use smarty display
 }
 
+if (isset($_REQUEST['resume'])) {
+	$edition_info = $nllib->get_edition($_REQUEST['resume']);
+	$nl_info = $nllib->get_newsletter($edition_info['nlId']);
+	$nllib->send($nl_info, $edition_info, true, $sent, $errors, $logFileName);
+	exit;
+}
+
 // Article Clipping
 $articleClip = '';
 if (isset($nl_info) && $nl_info["allowArticleClip"] == 'y' && empty($articleClip)) {

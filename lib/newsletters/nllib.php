@@ -860,8 +860,8 @@ class NlLib extends TikiLib
 		}
 	}
 	function delete_edition_subscriber($editionId, $user) {
-		$query = 'delete from `tiki_sent_newsletters_errors` where `editionId`=? and `email`=? and `login`=?';
-		$this->query($query, array((int)$editionId, $user['email'], $user['login']));
+		$query = 'delete from `tiki_sent_newsletters_errors` where `editionId`=? and `email`=?';
+		$this->query($query, array((int)$editionId, $user['email']));
 	}
 	function mark_edition_subscriber($editionId, $user) {
 		$query = 'update `tiki_sent_newsletters_errors` set `error`= ? where `editionId`=? and `email`=? and `login`=?';
@@ -1158,6 +1158,7 @@ class NlLib extends TikiLib
 			@ini_set('zlib.output_compression', 0);
 		}
 		foreach ($users as $us) {
+			$email = $us['email'];
 			if ($browser) {
 				if (@ob_get_level() == 0)
 					@ob_start();
@@ -1179,7 +1180,7 @@ class NlLib extends TikiLib
 				if ($browser) {
 					print "'red'>" . tra('Error') . " - {$e->getMessage()}";
 				}
-				$errors[] = array("user" => $userEmail, "email" => $email, "msg" => $e->getMessage());
+				$errors[] = array("user" => $us['user'], "email" => $email, "msg" => $e->getMessage());
 				$this->mark_edition_subscriber($info['editionId'], $us);
 				$logStatus = 'Error';
 			}
