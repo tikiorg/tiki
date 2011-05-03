@@ -995,11 +995,114 @@ class NlLib extends TikiLib
 		$retval["cant"] = $cant;
 		return $retval;
 	}
+
+	private function get_edition_mail($editionId, $target)
+	{
+		global $prefs;
+		static $mailcache = array();
+
+		if (! isset($mailcache[$editionId])) {
+			$tikilib = TikiLib::lib('tiki');
+			$headerlib = TikiLib::lib('header');
+
+			$info = $this->get_edition($editionId);
+			$nl_info = $this->get_newsletter($info['nlId']);
+
+
+			// build the html
+			$beginHtml = '<body><div id="tiki-center" class="clearfix content"><div class="wikitext">';
+			$endHtml = '</div></div></body>';
+			if (stristr($info['data'], '<body') === false) {
+				$html = "<html>$beginHtml" . $tikilib->parse_data($info['data'], array('absolute_links' => true, 'suppress_icons' => true)) . "$endHtml</html>";
+			} else {
+				$html = str_ireplace('<body>', $beginHtml,$info['data']);
+				$html = str_ireplace('</body>', $endHtml, $html);
+			}
+
+			if ($nl_info['allowArticleClip'] == 'y' && $nl_info['autoArticleClip'] == 'y') {
+				$articleClip = $this->clip_articles($nl_info['nlId']);
+				$txtArticleClip = generateTxtVersion($articleClip);
+				$info['datatxt'] = str_replace('~~~articleclip~~~', $txtArticleClip, $info['datatxt']);
+				$html = str_replace('~~~articleclip~~~', $articleClip, $html);
+			}
+
+			if (stristr($html, '<base') === false) {
+				if (stristr($html, '<head') === false) {
+					$news_cssfile = $tikilib->get_style_path($prefs['style'], '', 'newsletter.css');
+					$news_cssfile_option = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'newsletter.css');
+					$news_css = '';
+					if (!empty($news_cssfile)) {
+						$news_css .= $headerlib->minify_css($news_cssfile);
+					}
+					if (!empty($news_cssfile_option) && $news_cssfile_option !== $news_cssfile) {
+						$news_css .= $headerlib->minify_css($news_cssfile_option);
+					}
+					if (empty($news_css)) {
+						$news_css = $headerlib->get_all_css_content();
+					}
+					$news_head = "<html><head><base href=\"$base_url\" /><style type=\"text/css\">$news_css</style></head>";
+					$html = str_ireplace('<html>', $news_head, $html);
+				} else {
+					$html = str_ireplace('<head>', "<head><base href=\"$base_url\" />", $html);
+				}
+			}
+
+			$info['files'] = $this->get_edition_files($edition['editionId']);
+
+			include_once 'lib/mail/maillib.php';
+			$zmail = tiki_get_basic_mail();
+
+			if (!empty($info['replyto'])) {
+				$zmail->setReplyTo($info['replyto']);
+			}
+
+			foreach($info['files'] as $f) {
+				$fpath = isset($f['path']) ? $f['path'] : $prefs['tmpDir'] . '/newsletterfile-' . $f['filename'];
+				$att = $zmail->createAttachment(file_get_contents($fpath));
+				$att->filename = $f['name'];
+				$att->mimeType = $f['type'];
+			}
+
+			$zmail->setSubject($info['subject']); // htmlMimeMail memorised the encoded subject
+
+			$mailcache[$editionId] = array(
+				'zmail' => $zmail,
+				'text' => $info['datatxt'],
+				'html' => $html,
+				'unsubMsg' => $nl_info['unsubMsg'],
+				'nlId' => $nl_info['nlId'],
+			);
+		}
+
+		$cache = $mailcache[$editionId];
+
+		$html = $cache['html'];
+		$unsubmsg = '';
+		if ($cache["unsubMsg"] == 'y' && !empty($target["code"])) {
+			$unsubmsg = $this->get_unsub_msg($cache["nlId"], $target['email'], $target['language'], $target["code"], $target['user']);
+			if (stristr($html, '</body>') === false) {
+				$html .= $unsubmsg;
+			} else {
+				$html = str_replace("</body>", nl2br($unsubmsg) . "</body>", $html);
+			}
+		}
+
+		$zmail = $cache['zmail'];
+		$zmail->setBodyHtml($html);
+		$zmail->setBodyText($cache['text'] . strip_tags($unsubmsg));
+		$zmail->clearRecipients();
+		$zmail->addTo($target['email']);
+
+		return $zmail;
+	}
+
 	// info: subject, data, datatxt, dataparsed, wysiwyg, sendingUniqId, files, errorEditionId, editionId
 	// browser: true if on the browser
 	function send($nl_info, $info, $browser=true, &$sent, &$errors, &$logFileName) {
-		global $prefs, $smarty, $userlib, $tikilib;
-		global $headerlib; include_once('lib/headerlib.php');
+		global $prefs, $smarty;
+		$headerlib = TikiLib::lib('header');
+		$tikilib = TikiLib::lib('tiki');
+		$userlib = TikiLib::lib('user');
 		if (empty($info['editionId'])) {
 			$info['editionId'] = $this->replace_edition($nl_info['nlId'], $info['subject'], $info['data'], 0, 0, true, $info['datatxt'], $info['files'], $info['wysiwyg']);
 		}
@@ -1009,66 +1112,10 @@ class NlLib extends TikiLib
 		if (($logFileHandle = fopen( $logFileName, 'a' )) == false) {
 			$logFileName = '';
 		}
-		include_once ('lib/webmail/tikimaillib.php');
-		include_once 'lib/mail/maillib.php';
-		$zmail = tiki_get_basic_mail();
 
-		// build the html
-		$beginHtml = '<body><div id="tiki-center" class="clearfix content"><div class="wikitext">';
-		$endHtml = '</div></div></body>';
-		if (stristr($info['dataparsed'], '<body') === false) {
-			$html = "<html>$beginHtml" . $tikilib->parse_data($info['dataparsed'], array('absolute_links' => true, 'suppress_icons' => true)) . "$endHtml</html>";
-		} else {
-			$html = str_ireplace('<body>', $beginHtml,$info['dataparsed']);
-			$html = str_ireplace('</body>', $endHtml, $html);
-		}
-
-		if ($nl_info['allowArticleClip'] == 'y' && $nl_info['autoArticleClip'] == 'y') {
-			$articleClip = $this->clip_articles($nl_info['nlId']);
-			$txtArticleClip = generateTxtVersion($articleClip);
-			$info['datatxt'] = str_replace('~~~articleclip~~~', $txtArticleClip, $info['datatxt']);
-			$html = str_replace('~~~articleclip~~~', $articleClip, $html);
-		}
-
-		if (stristr($html, '<base') === false) {
-			if (stristr($html, '<head') === false) {
-				$news_cssfile = $tikilib->get_style_path($prefs['style'], '', 'newsletter.css');
-				$news_cssfile_option = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'newsletter.css');
-				$news_css = '';
-				if (!empty($news_cssfile)) {
-					$news_css .= $headerlib->minify_css($news_cssfile);
-				}
-				if (!empty($news_cssfile_option) && $news_cssfile_option !== $news_cssfile) {
-					$news_css .= $headerlib->minify_css($news_cssfile_option);
-				}
-				if (empty($news_css)) {
-					$news_css = $headerlib->get_all_css_content();
-				}
-				$news_head = "<html><head><base href=\"$base_url\" /><style type=\"text/css\">$news_css</style></head>";
-				$html = str_ireplace('<html>', $news_head, $html);
-			} else {
-				$html = str_ireplace('<head>', "<head><base href=\"$base_url\" />", $html);
-			}
-		}
-
-		//users
-		if (isset($edition_info['errorEditionId'])) {
-			$users = $this->get_edition_errors($edition_info['errorEditionId']);
-		} else {
-			$users = $this->get_all_subscribers($nl_info['nlId'], $nl_info['unsubMsg'] == 'y');
-		}
+		$users = $this->get_all_subscribers($nl_info['nlId'], $nl_info['unsubMsg'] == 'y');
 		$this->memo_subscribers_edition($info['editionId'], $users);
 	
-		// files
-		if (!isset($info['files']) || $info['files'] === null || count($info['files']) <= 0) {
-			$info['files'] = $this->get_edition_files($edition['editionId']);
-		}
-		foreach($info['files'] as $f) {
-			$fpath = isset($f['path']) ? $f['path'] : $prefs['tmpDir'] . '/newsletterfile-' . $f['filename'];
-			$att = $zmail->createAttachment(file_get_contents($fpath));
-			$att->filename = $f['name'];
-			$att->mimeType = $f['type'];
-		}
 		$smarty->assign('sectionClass', empty( $section ) ? '' : "tiki_$section " );
 		if ($browser) {
 			echo $smarty->fetch('send_newsletter_header.tpl');
@@ -1079,36 +1126,17 @@ class NlLib extends TikiLib
 		}
 		foreach ($users as $us) {
 			$userEmail = $us['login'];
-			$email = $us['email'];
+			$email = trim($us['email']);
 			if ($userEmail == '') {
 				$userEmail = $userlib->get_user_by_email($email);
 			}
-			$email = trim($email);
+			$us['user'] = $userEmail;
 			if (in_array($email, $sent))
 				continue; // do not send the mail again
 			if (!preg_match('/([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+/', trim($email))) {
 				$errors[] = array("user" => $userEmail, "email" => $email, "msg" => tra("invalid email"));
 				continue;
 			}
-			$zmail->clearRecipients();
-			$zmail->addTo($email);
-			if (!empty($info['replyto'])) {
-				$zmail->setReplyTo($info['replyto']);
-			}
-			$zmail->setSubject($info['subject']); // htmlMimeMail memorised the encoded subject
-			$languageEmail = !$userEmail ? $prefs['site_language'] : $tikilib->get_user_preference($userEmail, "language", $prefs['site_language']);
-			if ($nl_info["unsubMsg"] == 'y' && !empty($us["code"])) {
-				$unsubmsg = $this->get_unsub_msg($_REQUEST["nlId"], $email, $languageEmail, $us["code"], $userEmail);
-				if (stristr($html, '</body>') === false) {
-					$msg = $html . $unsubmsg;
-				} else {
-					$msg = str_replace("</body>", nl2br($unsubmsg) . "</body>", $html);
-				}
-			} else {
-				$msg = $html;
-			}
-			$zmail->setBodyHtml($msg);
-			$zmail->setBodyText($info['datatxt'] . strip_tags($unsubmsg));
 
 			if ($browser) {
 				if (@ob_get_level() == 0)
@@ -1119,6 +1147,9 @@ class NlLib extends TikiLib
 			}
 
 			try {
+				$us['language'] = !$userEmail ? $prefs['site_language'] : $tikilib->get_user_preference($userEmail, "language", $prefs['site_language']);
+
+				$zmail = $this->get_edition_mail($info['editionId'], $us);
 				$zmail->send();
 				$sent[] = $email;
 				if ($browser) {
