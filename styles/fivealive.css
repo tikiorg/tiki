@@ -518,35 +518,38 @@ select {
 	margin-bottom: 18px;
 }
 
-#sitelogo img {
+#top_modules #sitelogo {
+	width: 235px;
+}
+
+#top_modules #sitelogo img {
 	margin-top: 16px;
 }
 
-#sitetitles {
-	position: absolute;
-	top: 75px;
-	left: 415px;
+#top_modules #sitetitles {
+	margin-top: 70px;
+	margin-left: 135px;
 	font-family: Paneuropa, "Bitstream Vera Sans", Arial, Helvetica, sans-serif;
 	white-space: nowrap;
 }
 
-#sitetitle,
-#sitesubtitle {
+#top_modules #sitetitle,
+#top_modules #sitesubtitle {
 	color: #fff;
 	text-shadow: #143c64 3px 2px 0;
 }
 
-#sitetitle {
+#top_modules #sitetitle {
 	font-size: 52px;
 }
 
-#sitetitle a,
-#sitetitle a:visited {
+#top_modules #sitetitle a,
+#top_modules #sitetitle a:visited {
 	color: #fff;
 	text-decoration: none;
 }
 
-#sitesubtitle {
+#top_modules #sitesubtitle {
 	font-size: 30px;
 	margin-top: 24px;
 }

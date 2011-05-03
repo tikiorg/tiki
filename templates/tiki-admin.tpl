@@ -2,7 +2,7 @@
 
 {title help="$helpUrl"}{tr}{$admintitle}{/tr}{/title}
 
-{if $smarty.get.page != 'profiles'} {* We don't want on this page because it results in two search boxes *}
+{if !isset($smarty.get.page) or $smarty.get.page != 'profiles'} {* We don't want on this page because it results in two search boxes *}
 <form method="post" action="">
 	{*remarksbox type="note" title="{tr}Development Notice{/tr}"}
 		{tr}This search feature and the <a href="tiki-edit_perspective.php">perspectives GUI</a> need <a href="http://dev.tiki.org/Dynamic+Preferences">dev.tiki.org/Dynamic+Preferences</a>. If you search for something and it's not appearing, please help improve keywords/descriptions.{/tr}

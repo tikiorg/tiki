@@ -1,5 +1,5 @@
 {* $Id$ *} 
-{if !$hide_page_header}
+{if isset($hide_page_header) and !$hide_page_header}
 	{if $prefs.feature_siteloc eq 'page' and $prefs.feature_breadcrumbs eq 'y'}
 		{if $prefs.feature_siteloclabel eq 'y'}{tr}Location : {/tr}{/if}
 		{breadcrumbs type="trail" loc="page" crumbs=$crumbs}
@@ -27,7 +27,7 @@
 	{remarksbox type="note" title="{tr}Note{/tr}"}{$saved_msg}{/remarksbox}
 {/if}
 
-{if $user and $prefs.feature_user_watches eq 'y' and $category_watched eq 'y'}
+{if isset($user) and $user and $prefs.feature_user_watches eq 'y' and $category_watched eq 'y'}
 	<div class="categbar" style="clear: both; text-align: right">
 		{tr}Watched by categories:{/tr}
 		{section name=i loop=$watching_categories}
@@ -71,7 +71,7 @@
 {/if}
 
 <article id="top" class="wikitext clearfix{if $prefs.feature_page_title neq 'y'} nopagetitle{/if}">
-	{if !$hide_page_header}
+	{if isset($hide_page_header) and !$hide_page_header}
 		{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0]) and $prefs.freetags_show_middle eq 'y'}
 			{include file='freetag_list.tpl'}
 		{/if}
@@ -115,7 +115,7 @@
 		{/remarksbox}
 	{/if}
 
-	{if $pageLang eq 'ar' or $pageLang eq 'he'}
+	{if isset($pageLang) and ($pageLang eq 'ar' or $pageLang eq 'he')}
 		<div style="direction:RTL; unicode-bidi:embed; text-align: right; {if $pageLang eq 'ar'}font-size: large;{/if}">
 			{$parsed}
 		</div>

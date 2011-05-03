@@ -32,13 +32,13 @@
 {if $prefs.metatag_geoplacename neq ''}
 	<meta name="geo.placename" content="{$prefs.metatag_geoplacename|escape}" />
 {/if}
-{if $prefs.metatag_robots neq '' and $metatag_robots eq ''}
+{if (isset($prefs.metatag_robots) and $prefs.metatag_robots neq '') and (!isset($metatag_robots) or $metatag_robots eq '')}
         <meta name="robots" content="{$prefs.metatag_robots|escape}" />
 {/if}
-{if $prefs.metatag_robots eq '' and $metatag_robots neq ''}
+{if (!isset($prefs.metatag_robots) or $prefs.metatag_robots eq '') and (isset($metatag_robots) and $metatag_robots neq '')}
         <meta name="robots" content="{$metatag_robots|escape}" />
 {/if}
-{if $prefs.metatag_robots neq '' and $metatag_robots neq ''}
+{if (isset($prefs.metatag_robots) and $prefs.metatag_robots neq '') and (isset($metatag_robots) and $metatag_robots neq '')}
         <meta name="robots" content="{$prefs.metatag_robots|escape}, {$metatag_robots|escape}" />
 {/if}
 {if $prefs.metatag_revisitafter neq ''}
@@ -61,7 +61,7 @@
 		{elseif !empty($title) and !is_array($title)}
 			{$title|escape}
 		{elseif !empty($page)}
-			{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}
+			{if isset($beingStaged) and $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}
 				{$approvedPageName|escape}
 			{else}
 				{$page|escape}

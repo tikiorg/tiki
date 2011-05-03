@@ -1,18 +1,18 @@
 {* $Id$ *}
-{if not $versioned}
+{if !isset($versioned) or not $versioned}
 	{strip}
 
 	{assign var=thispage value=$page|escape:"url"}
 
-	{if $beingStaged eq 'y'}
+	{if isset($beingStaged) and $beingStaged eq 'y'}
 		{assign var=thisapprovedPageName value=$approvedPageName|escape:"url"}
 	{/if}
 
 	{capture assign=page_bar}
 		{if $edit_page neq 'y'}
 			{* Check that page is not locked and edit permission granted. SandBox can be edited w/o perm *}
-			{if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') or (!$user and $prefs.wiki_encourage_contribution eq 'y')) or $tiki_p_admin_wiki eq 'y' or $canEditStaging eq 'y'}
-				{if $needsStaging eq 'y'}
+			{if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') or ((!isset($user) or !$user) and $prefs.wiki_encourage_contribution eq 'y')) or $tiki_p_admin_wiki eq 'y' or (isset($canEditStaging) and $canEditStaging eq 'y')}
+				{if isset($needsStaging) and $needsStaging eq 'y'}
 					{assign var=thisPageName value=$stagingPageName|escape:"url"}
 				{else}
 					{assign var=thisPageName value=$thispage}
@@ -44,14 +44,14 @@
 				{/if}
 
 				{if $tiki_p_rename eq 'y' && $editable}
-					{if $beingStaged eq 'y'}
+					{if isset($beingStaged) and $beingStaged eq 'y'}
 						{button href="tiki-rename_page.php?page=$thisapprovedPageName" _text="{tr}Rename{/tr}"}
 					{else}
 						{button href="tiki-rename_page.php?page=$thispage" _text="{tr}Rename{/tr}"}
 					{/if}
 				{/if}
 
-				{if $prefs.feature_wiki_usrlock eq 'y' and ( $tiki_p_admin_wiki eq 'y' or ($user and $user eq $page_user and $tiki_p_lock eq 'y') )}
+				{if $prefs.feature_wiki_usrlock eq 'y' and ( $tiki_p_admin_wiki eq 'y' or (isset($user) and $user and $user eq $page_user and $tiki_p_lock eq 'y') )}
 					{if $lock}
 						{button href="tiki-index.php?page=$thispage&amp;action=unlock" _text="{tr}Unlock{/tr}"}
 					{else}
@@ -143,7 +143,7 @@
 					{button href="#attachments" _flip_id="attzone$pagemd5" _class=$thisbuttonclass _text=$thistext _flip_default_open=$prefs.w_displayed_default}
 				{/if}{* attachments *}
 
-				{if $prefs.feature_multilingual eq 'y' and ($tiki_p_edit eq 'y' or (!$user and $prefs.wiki_encourage_contribution eq 'y')) and !$lock}
+				{if $prefs.feature_multilingual eq 'y' and ($tiki_p_edit eq 'y' or ((!isset($user) or !$user) and $prefs.wiki_encourage_contribution eq 'y')) and !$lock}
 					{if $beingStaged == 'y'}
 						{button href="tiki-edit_translation.php?page=$thisapprovedPageName" _text="{tr}Translate{/tr}"}
 					{else}
@@ -154,7 +154,7 @@
 				{if $tiki_p_admin_wiki eq 'y' && $prefs.wiki_keywords eq 'y'}
 					{button href="tiki-admin_keywords.php" page=$page _text="{tr}Keywords{/tr}"}
 				{/if}
-				{if $user and $tiki_p_create_bookmarks eq 'y' and $prefs.feature_user_bookmarks eq 'y'}
+				{if (isset($user) and $user) and (isset($tiki_p_create_bookmarks) and $tiki_p_create_bookmarks eq 'y') and $prefs.feature_user_bookmarks eq 'y'}
 					{button _script="tiki-user_bookmarks.php" urlname=$page urlurl=$page|sefurl addurl="Add" _text="{tr}Bookmark{/tr}" _auto_args="urlname,urlurl,addurl"}
 				{/if}
 			{/if}
