@@ -511,6 +511,8 @@ foreach($xfields["data"] as $i => $array) {
 		} else {
 			if (isset($_REQUEST["$ins_id"])) {
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
+			} elseif (!empty($ins_fields['data'][$i]['editableBy']) && !in_array($default_group, $ins_fields['data'][$i]['editableBy'])) {
+				$ins_fields["data"][$i]["value"] = $trklib->get_item_value($_REQUEST['trackerId'], $_REQUEST['itemId'], $ins_fields['data'][$i]['fieldId']);
 			} else {
 				$ins_fields["data"][$i]["value"] = '';
 			}
