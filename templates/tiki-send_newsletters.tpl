@@ -126,7 +126,20 @@
 
 	<div id="sendingArea" style="display:none">
 		<h3>{tr}Sending Newsletter{/tr} ...</h3>
+		<div id="confirmed"></div>
 		<iframe id="resultIframe" name="resultIframe" frameborder="0" style="width: 600px; height: 400px"></iframe>
+		{jq}
+			$('#resultIframe').bind('load', function () {
+				var root = this.contentDocument.documentElement, iframe = this;
+				$('#confirmed').append($('.confirmation', root));
+				$('.throttle', root).each(function () {
+					var url = 'tiki-send_newsletters.php?resume=' + $(this).data('edition');
+					setTimeout(function () {
+						$(iframe).attr('src', url);
+					}, parseInt($(this).data('rate'), 10) * 1000);
+				});
+			});
+		{/jq}
 	</div>
 
 {else}

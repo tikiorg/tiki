@@ -332,6 +332,7 @@ if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) || $resend 
 		}
 	}
 	
+	$_REQUEST['begin'] = true;
 	$nllib->send($nl_info, $_REQUEST, true, $sent, $errors, $logFileName);
 
 	$nb_sent = count($sent);

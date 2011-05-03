@@ -1047,7 +1047,7 @@ class NlLib extends TikiLib
 				}
 			}
 
-			$info['files'] = $this->get_edition_files($edition['editionId']);
+			$info['files'] = $this->get_edition_files($editionId);
 
 			include_once 'lib/mail/maillib.php';
 			$zmail = tiki_get_basic_mail();
@@ -1108,7 +1108,11 @@ class NlLib extends TikiLib
 
 		if (empty($info['editionId'])) {
 			$info['editionId'] = $this->replace_edition($nl_info['nlId'], $info['subject'], $info['data'], 0, 0, true, $info['datatxt'], $info['files'], $info['wysiwyg']);
+		} else {
+			$this->replace_edition($nl_info['nlId'], $info['subject'], $info['data'], 0, $info['editionId'], true, $info['datatxt'], $info['files'], $info['wysiwyg']);
+		}
 
+		if (isset($info['begin'])) {
 			$this->memo_subscribers_edition($info['editionId'], $users);
 		}
 
@@ -1157,6 +1161,9 @@ class NlLib extends TikiLib
 		if ($browser) {
 			@ini_set('zlib.output_compression', 0);
 		}
+
+		$throttleLimit = (int) $prefs['newsletter_batch_size'];
+
 		foreach ($users as $us) {
 			$email = $us['email'];
 			if ($browser) {
@@ -1164,7 +1171,7 @@ class NlLib extends TikiLib
 					@ob_start();
 				// Browsers needs a certain amount of data, for each flush, to display something
 				print str_repeat(' ', 4096) . "\n";
-				print tra("Sending to") . " '<b>$email</b>': <font color=";
+				print '<div class="confirmation">' . tra("Sending to") . "'<b>$email</b>': <font color=";
 			}
 
 			try {
@@ -1190,13 +1197,19 @@ class NlLib extends TikiLib
 			}
 
 			if ($browser) {
-				print "</font><br />\n";
+				print "</font></div>\n";
 
 				// Flush output to force the browser to display email addresses as soon as emails are sent
 				// This should avoid CGI and/or proxy and/or browser timeouts when sending to a lot of emails
 				@ob_flush();
 				@flush();
 				@ob_end_flush();
+			}
+
+			if ($prefs['newsletter_throttle'] === 'y' && 0 >= --$throttleLimit) {
+				$rate = (int) $prefs['newsletter_pause_length'];
+				print '<div class="throttle" data-edition="' . $info['editionId'] . '" data-rate="' . $rate . '">' . tr('Limiting the email send rate. Resuming in %0 seconds.', $rate) . '</div>';
+				exit;
 			}
 		}
 		$info['editionId'] = $this->replace_edition($nl_info['nlId'], $info['subject'], $info['data'], count($sent), $info['editionId'], false, $info['datatxt'], $info['files'], $info['wysiwyg']);
