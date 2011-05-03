@@ -236,6 +236,7 @@ $smarty->assign('presend', 'n');
 if (isset($_REQUEST["save"])) {
 	check_ticket('send-newsletter');
 	// Now send the newsletter to all the email addresses and save it in sent_newsletters
+	$info['datatxt'] = $_REQUEST['datatxt'];
 	$smarty->assign('presend', 'y');
 	$subscribers = $nllib->get_all_subscribers($_REQUEST["nlId"], "");
 	$smarty->assign('nlId', $_REQUEST["nlId"]);
