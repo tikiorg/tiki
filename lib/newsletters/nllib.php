@@ -1103,18 +1103,51 @@ class NlLib extends TikiLib
 		$headerlib = TikiLib::lib('header');
 		$tikilib = TikiLib::lib('tiki');
 		$userlib = TikiLib::lib('user');
+
+		$users = $this->get_all_subscribers($nl_info['nlId'], $nl_info['unsubMsg'] == 'y');
+
 		if (empty($info['editionId'])) {
 			$info['editionId'] = $this->replace_edition($nl_info['nlId'], $info['subject'], $info['data'], 0, 0, true, $info['datatxt'], $info['files'], $info['wysiwyg']);
+
+			$this->memo_subscribers_edition($info['editionId'], $users);
 		}
+
+		$remaining = $this->table('tiki_sent_newsletters_errors')->fetchColumn('email', array(
+			'editionId' => $info['editionId'],
+		));
+
 		$sent = array();
 		$errors = array();
+		$toSend = array();
+		foreach ($users as $uInfo) {
+			$userEmail = $uInfo['login'];
+			$email = trim($uInfo['email']);
+			if ($userEmail == '') {
+				$userEmail = $userlib->get_user_by_email($email);
+			}
+			$language = !$userEmail ? $prefs['site_language'] : $tikilib->get_user_preference($userEmail, "language", $prefs['site_language']);
+
+			if (preg_match('/([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+/', $email)) {
+				if (in_array($email, $remaining)) {
+					$uInfo['user'] = $userEmail;
+					$uInfo['email'] = $email;
+					$uInfo['language'] = $language;
+
+					$toSend[$email] = $uInfo;
+				} else {
+					$sent[] = $email;
+				}
+			} else {
+				$errors[] = array("user" => $userEmail, "email" => $email, "msg" => tra("invalid email"));
+			}
+		}
+
+		$users = array_values($toSend);
+
 		$logFileName = $prefs['tmpDir'] . '/public/newsletter-log-' . $info['editionId'] . '.txt';
 		if (($logFileHandle = fopen( $logFileName, 'a' )) == false) {
 			$logFileName = '';
 		}
-
-		$users = $this->get_all_subscribers($nl_info['nlId'], $nl_info['unsubMsg'] == 'y');
-		$this->memo_subscribers_edition($info['editionId'], $users);
 	
 		$smarty->assign('sectionClass', empty( $section ) ? '' : "tiki_$section " );
 		if ($browser) {
@@ -1125,19 +1158,6 @@ class NlLib extends TikiLib
 			@ini_set('zlib.output_compression', 0);
 		}
 		foreach ($users as $us) {
-			$userEmail = $us['login'];
-			$email = trim($us['email']);
-			if ($userEmail == '') {
-				$userEmail = $userlib->get_user_by_email($email);
-			}
-			$us['user'] = $userEmail;
-			if (in_array($email, $sent))
-				continue; // do not send the mail again
-			if (!preg_match('/([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+/', trim($email))) {
-				$errors[] = array("user" => $userEmail, "email" => $email, "msg" => tra("invalid email"));
-				continue;
-			}
-
 			if ($browser) {
 				if (@ob_get_level() == 0)
 					@ob_start();
@@ -1147,8 +1167,6 @@ class NlLib extends TikiLib
 			}
 
 			try {
-				$us['language'] = !$userEmail ? $prefs['site_language'] : $tikilib->get_user_preference($userEmail, "language", $prefs['site_language']);
-
 				$zmail = $this->get_edition_mail($info['editionId'], $us);
 				$zmail->send();
 				$sent[] = $email;
