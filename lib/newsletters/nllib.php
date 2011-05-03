@@ -994,7 +994,9 @@ class NlLib extends TikiLib
 			$logFileName = '';
 		}
 		include_once ('lib/webmail/tikimaillib.php');
+		include_once 'lib/mail/maillib.php';
 		$mail = new TikiMail();
+		$zmail = tiki_get_basic_mail();
 
 		// build the html
 		$beginHtml = '<body><div id="tiki-center" class="clearfix content"><div class="wikitext">';
@@ -1048,7 +1050,9 @@ class NlLib extends TikiLib
 		}
 		foreach($info['files'] as $f) {
 			$fpath = isset($f['path']) ? $f['path'] : $prefs['tmpDir'] . '/newsletterfile-' . $f['filename'];
-			$mail->addAttachment(file_get_contents($fpath), $f['name'], $f['type']);
+			$att = $zmail->createAttachment(file_get_contents($fpath));
+			$att->filename = $f['name'];
+			$att->mimeType = $f['type'];
 		}
 		$smarty->assign('sectionClass', empty( $section ) ? '' : "tiki_$section " );
 		if ($browser) {
@@ -1071,15 +1075,12 @@ class NlLib extends TikiLib
 				$errors[] = array("user" => $userEmail, "email" => $email, "msg" => tra("invalid email"));
 				continue;
 			}
-			if ($userEmail) {
-				$mail->setUser($userEmail);
-			} else {
-				$userEmail = '';
-			}
+			$zmail->clearRecipients();
+			$zmail->addTo($email);
 			if (!empty($info['replyto'])) {
-				$mail->setHeader('Reply-To', $info['replyto']);
+				$zmail->setReplyTo($info['replyto']);
 			}
-			$mail->setSubject($info['subject']); // htmlMimeMail memorised the encoded subject
+			$zmail->setSubject($info['subject']); // htmlMimeMail memorised the encoded subject
 			$languageEmail = !$userEmail ? $prefs['site_language'] : $tikilib->get_user_preference($userEmail, "language", $prefs['site_language']);
 			if ($nl_info["unsubMsg"] == 'y' && !empty($us["code"])) {
 				$unsubmsg = $this->get_unsub_msg($_REQUEST["nlId"], $email, $languageEmail, $us["code"], $userEmail);
@@ -1091,9 +1092,8 @@ class NlLib extends TikiLib
 			} else {
 				$msg = $html;
 			}
-			$mail->setHtml($msg, $txt . strip_tags($unsubmsg));
-			$mail->buildMessage(array('text_encoding' => '8bit'));
-
+			$zmail->setBodyHtml($msg);
+			$zmail->setBodyText($info['datatxt'] . strip_tags($unsubmsg));
 
 			if ($browser) {
 				if (@ob_get_level() == 0)
@@ -1103,22 +1103,26 @@ class NlLib extends TikiLib
 				print tra("Sending to") . " '<b>$email</b>': <font color=";
 			}
 
-			if ( $mail->send(array($email)) ) {
+			try {
+				$zmail->send();
 				$sent[] = $email;
-				if ($browser)
+				if ($browser) {
 					print "'green'>" . tra('OK');
+				}
 				$this->delete_edition_subscriber($info['editionId'], $us);
 				$logStatus = 'OK';
-			} else {
-				if ($browser)
-					print "'red'>" . tra('Error') . " - {$mail->errors}";
-				$errors[] = array("user" => $userEmail, "email" => $email, "msg" => $mail->errors);
+			} catch (Zend_Mail_Exception $e) {
+				if ($browser) {
+					print "'red'>" . tra('Error') . " - {$e->getMessage()}";
+				}
+				$errors[] = array("user" => $userEmail, "email" => $email, "msg" => $e->getMessage());
 				$this->mark_edition_subscriber($info['editionId'], $us);
 				$logStatus = 'Error';
 			}
 
-			if ( $logFileHandle )
+			if ( $logFileHandle ) {
 				@fwrite( $logFileHandle, "$email : $logStatus\n" );
+			}
 
 			if ($browser) {
 				print "</font><br />\n";
