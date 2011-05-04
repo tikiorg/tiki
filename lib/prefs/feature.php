@@ -816,6 +816,10 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Draw',
 			'type' => 'flag',
 			'default' => 'n',
+			'dependencies' => array(
+				'feature_file_galleries_batch',
+				'feature_file_galleries',				
+			),
 		),
 		'feature_dynamic_content' => array(
 			'name' => tra('Dynamic Content System'),
