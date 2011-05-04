@@ -61,7 +61,7 @@ function wikiplugin_sheet_info() {
 				'description' => tra('Height in pixels or percentage. Default value is complete spreadsheet height.'),
 				'filter' => 'striptags',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
-				'default' => 'Spreadsheet heigth',
+				'default' => 'Spreadsheet height',
 				'since' => '5.0'
 			),
 			'editable' => array(

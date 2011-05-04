@@ -94,6 +94,7 @@
 
 			{preference name=users_prefs_show_mouseover_user_info}
 			{preference name=users_prefs_tasks_maxRecords}
+			{preference name=users_prefs_diff_versions}
 
 
 		</fieldset>

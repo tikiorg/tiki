@@ -424,6 +424,7 @@ select {
 #top_modules .box-quickadmin {
 	position: absolute;
 	right: 10px;
+	top: 30px;
 	background: #fff;
 	border: 1px solid #696969;
 	border-top: 0;
@@ -929,8 +930,9 @@ th,
 td.heading,
 tr.diffheader,
 .calHeading,
-.weeks {
-	background: #1d90c5;
+.weeks,
+th.header {
+	background-color: #1d90c5;
 	color: #d6f3fa;
 }
 
@@ -939,7 +941,8 @@ th a:visited,
 td.heading a,
 td.heading a:visited,
 .normal th a.link, 
-.normal th a {
+.normal th a,
+th.header {
 	color: #fff
 }
 

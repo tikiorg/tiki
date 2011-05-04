@@ -8,7 +8,7 @@
 function wikiplugin_trackertoggle_info() {
 	return array(
 		'name' => tra('trackertoggle'),
-		'documentation' => 'PluginTrackertoggle',
+		'documentation' => 'PluginTrackerToggle',
 		'description' => tra('Toggle element display on a field value'),
 		'prefs' => array('feature_jquery', 'feature_trackers'),
 		'params' => array(

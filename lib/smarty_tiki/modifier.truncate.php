@@ -35,7 +35,8 @@ function smarty_modifier_truncate($string, $length = 80, $etc = '...',
     if ($length == 0)
         return '';
 
-    if (strlen($string) > $length) {
+    $strlength = (function_exists('mb_strlen') ? 'mb_strlen' : 'strlen');
+    if ($strlength($string) > $length) {
         $length -= min($length, strlen($etc));
 		if (function_exists('mb_substr'))
 			$func = 'mb_substr';

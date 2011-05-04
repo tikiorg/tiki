@@ -216,6 +216,7 @@
 				{preference name=auth_ldap_group_debug}
 				{preference name=auth_ldap_group_ssl}
 				{preference name=auth_ldap_group_starttls}
+				{preference name=auth_ldap_group_type}
 				{preference name=auth_ldap_group_scope}
 				{preference name=auth_ldap_group_version}
 				{preference name=auth_ldap_group_basedn}

@@ -183,7 +183,8 @@ th,
 td.heading,
 tr.diffheader,
 .calHeading,
-.weeks {
+.weeks,
+th.header {
 	background: #ffc506;
 	color: #fdf1d0;
 }

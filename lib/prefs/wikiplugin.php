@@ -75,6 +75,7 @@ function prefs_wikiplugin_list($partial = false) {
 			'tracker' => 'y',
 			'trackerprefill' => 'y',
 			'trackerstat' => 'y',
+			'trackertoggle' => 'y',
 			'trackerif' => 'y',
 			'transclude' => 'y',
 			'translated' => 'y',

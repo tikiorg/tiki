@@ -1030,7 +1030,7 @@ class Spreadsheet_Excel_Writer_Worksheet extends Spreadsheet_Excel_Writer_BIFFwr
     *
     * @access public
     * @param  integer $width  Maximun width of printed area in pages
-    * @param  integer $height Maximun heigth of printed area in pages
+    * @param  integer $height Maximun height of printed area in pages
     * @see setPrintScale()
     */
     function fitToPages($width, $height)
