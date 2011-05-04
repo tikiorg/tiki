@@ -12,7 +12,7 @@ function wikiplugin_trackerif_info()
 {
 	return array(
 		'name' => tra('Tracker If'),
-		'documentation' => 'PluginTrackerif',
+		'documentation' => 'PluginTrackerIf',
 		'description' => tra('Display content based on results of a tracker field test'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_tracker' ),
 		'icon' => 'pics/icons/database_table.png',
