@@ -424,6 +424,7 @@ select {
 #top_modules .box-quickadmin {
 	position: absolute;
 	right: 10px;
+	top: 30px;
 	background: #fff;
 	border: 1px solid #696969;
 	border-top: 0;
