@@ -144,28 +144,39 @@ if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && (!isset($_R
 	$_REQUEST["preview"] = 1;
 	$smarty->assign("templateId", $_REQUEST["templateId"]);
 }
-$newsletterfiles_post = isset($_REQUEST['newsletterfile']) && is_array($_REQUEST['newsletterfile']) ? $_REQUEST['newsletterfile'] : array();
 $newsletterfiles = array();
-foreach($newsletterfiles_post as $k => $id) {
-	$f = array();
-	if ((strlen($id) == 32) && preg_match('/^[0-9a-f]{32}$/', $id)) { // this is a valid md5 hash, so the file was just saved at preview time
-		$fpath = $prefs['tmpDir'] . '/newsletterfile-preview-' . $id;
-		$f = unserialize(file_get_contents($fpath . '.infos'));
-		$f['path'] = $fpath;
-		$newsletterfiles[] = $f;
-	} else if ((int)$_REQUEST['nlId'] > 0) {
-		foreach($info['files'] as $f) {
-			if ($f['id'] == (int)$id) {
-				$newsletterfiles[] = $f;
-				break;
+if (isset($_REQUEST['newsletterfile'])) {
+	$newsletterfiles_post = isset($_REQUEST['newsletterfile']) && is_array($_REQUEST['newsletterfile']) ? $_REQUEST['newsletterfile'] : array();
+	foreach($newsletterfiles_post as $k => $id) {
+		$f = array();
+		if ((strlen($id) == 32) && preg_match('/^[0-9a-f]{32}$/', $id)) { // this is a valid md5 hash, so the file was just saved at preview time
+			$fpath = $prefs['tmpDir'] . '/newsletterfile-' . $id;
+			$f = unserialize(file_get_contents($fpath . '.infos'));
+			$f['path'] = $fpath;
+			$newsletterfiles[] = $f;
+		} else if ((int)$_REQUEST['nlId'] > 0) {
+			foreach($info['files'] as $f) {
+				if ($f['id'] == (int)$id) {
+					$newsletterfiles[] = $f;
+					break;
+				}
 			}
 		}
 	}
+} else {
+	$newsletterfiles = $info['files'];
 }
 if (!empty($_FILES) && !empty($_FILES['newsletterfile'])) {
 	foreach($_FILES['newsletterfile']['name'] as $i => $v) {
 		if ($_FILES['newsletterfile']['error'][$i] == UPLOAD_ERR_OK) {
-			$newsletterfiles[] = array('name' => $_FILES['newsletterfile']['name'][$i], 'type' => $_FILES['newsletterfile']['type'][$i], 'path' => $_FILES['newsletterfile']['tmp_name'][$i], 'error' => $_FILES['newsletterfile']['error'][$i], 'size' => $_FILES['newsletterfile']['size'][$i], 'savestate' => 'phptmp');
+			$newsletterfiles[] = array(
+				'name' => $_FILES['newsletterfile']['name'][$i],
+				'type' => $_FILES['newsletterfile']['type'][$i],
+				'path' => $_FILES['newsletterfile']['tmp_name'][$i],
+				'error' => $_FILES['newsletterfile']['error'][$i],
+				'size' => $_FILES['newsletterfile']['size'][$i],
+				'savestate' => 'phptmp',
+			);
 		} else {
 			$smarty->assign('upload_err_msg', tra('A problem occured during file uploading') . '<br />' . tra('File which was causing trouble was at rank') . '&nbsp;' . ($i + 1) . '<br />' . tra('The error was:') . '&nbsp;<strong>' . $tikilib->uploaded_file_error($_FILES['newsletterfile']['error'][$i]) . '</strong>');
 		}
@@ -176,7 +187,7 @@ foreach($info['files'] as $k => $newsletterfile) {
 	if ($newsletterfile['savestate'] == 'phptmp') {
 		// move it to temp
 		$tmpfnamekey = md5(rand() . time() . $newsletterfile['path'] . $newsletterfile['name'] . $newsletterfile['type']);
-		$tmpfname = $prefs['tmpDir'] . '/newsletterfile-preview-' . $tmpfnamekey;
+		$tmpfname = $prefs['tmpDir'] . '/newsletterfile-' . $tmpfnamekey;
 		if (move_uploaded_file($newsletterfile['path'], $tmpfname)) {
 			$info['files'][$k]['savestate'] = 'tikitemp';
 			$info['files'][$k]['path'] = $tmpfname;
@@ -392,11 +403,8 @@ if (isset($_REQUEST["save_only"])) {
 	$editionId = $nllib->replace_edition($_REQUEST['nlId'], $_REQUEST['subject'], $_REQUEST['data'], -1, $_REQUEST['editionId'], true, $txt, $info['files'], $_REQUEST['wysiwyg']);
 	foreach($info['files'] as $k => $f) {
 		if ($f['savestate'] == 'tikitemp') {
-			$newpath = $prefs['tmpDir'] . '/newsletterfile-' . $f['filename'];
-			rename($f['path'], $newpath);
 			unlink($f['path'] . '.infos');
 			$info['files'][$k]['savestate'] = 'tiki';
-			$info['files'][$k]['path'] = $newpath;
 		}
 	}
 	$info = $nllib->get_edition($editionId);
