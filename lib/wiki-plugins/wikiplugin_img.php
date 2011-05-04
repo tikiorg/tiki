@@ -879,7 +879,7 @@ function wikiplugin_img_info() {
 					$height = $fheight;
 					$imgdata_dim .= ' width="' . $width . '"';
 					$imgdata_dim .= ' height="' . $height . '"';
-				} elseif (!empty($heigth) && (empty($urly[0]) && empty($urlthumb) && empty($urlscale[0]))) {
+				} elseif (!empty($height) && (empty($urly[0]) && empty($urlthumb) && empty($urlscale[0]))) {
 					$src .= '&y=' . $height;
 					$imgdata_dim = '';
 					$width = $fwidth;
