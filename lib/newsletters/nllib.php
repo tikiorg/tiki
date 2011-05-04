@@ -384,7 +384,8 @@ class NlLib extends TikiLib
 			if (!isset($_SERVER["SERVER_NAME"])) {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 			}
-			$zmail = tiki_get_basic_mail();
+			include_once 'lib/mail/maillib.php';
+			$zmail = tiki_get_admin_mail();
 			$zmail->setSubject(tra('Newsletter subscription information at').' '. $_SERVER["SERVER_NAME"]);
 			$zmail->setBodyText($mail_data);
 			$zmail->addTo($email);
@@ -438,7 +439,8 @@ class NlLib extends TikiLib
 		if (!isset($_SERVER["SERVER_NAME"])) {
 			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 		}
-		$zmail = tiki_get_basic_mail();
+		include_once 'lib/mail/maillib.php';
+		$zmail = tiki_get_admin_mail();
 		$lg = ! $user ? $prefs['site_language']: $this->get_user_preference($user, "language", $prefs['site_language']);
 		$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_welcome_subject.tpl');
 		$zmail->setSubject(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]));
@@ -490,7 +492,8 @@ class NlLib extends TikiLib
 			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 		}
 		if ($mailit) {
-			$zmail = tiki_get_basic_mail();
+			include_once 'lib/mail/maillib.php';
+			$zmail = tiki_get_admin_mail();
 			$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_byebye_subject.tpl');
 			$zmail->setSubject(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]));
 			$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_byebye.tpl');
@@ -1050,7 +1053,7 @@ class NlLib extends TikiLib
 			$info['files'] = $this->get_edition_files($editionId);
 
 			include_once 'lib/mail/maillib.php';
-			$zmail = tiki_get_basic_mail();
+			$zmail = tiki_get_admin_mail();
 
 			if (!empty($info['replyto'])) {
 				$zmail->setReplyTo($info['replyto']);
