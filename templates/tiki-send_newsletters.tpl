@@ -20,6 +20,13 @@
 	{/remarksbox}
 {/if}
 
+{if $mailto_link}
+	{remarksbox type=info title="External Client"}
+		{tr}You can also send newsletters using an external client:{/tr}
+		<a href="{$mailto_link|escape}">{tr}Compose{/tr}</a>
+	{/remarksbox}
+{/if}
+
 {if $emited eq 'y'}
 	{remarksbox type="note" title="{tr}Notice{/tr}" icon="lock"}
 		{tr}The newsletter was sent to {$sent} email addresses{/tr}

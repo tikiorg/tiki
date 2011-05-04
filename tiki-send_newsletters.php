@@ -56,6 +56,16 @@ if ($_REQUEST["nlId"]) {
 		$info['wysiwyg'] = 'n';
 	}
 	$smarty->assign_by_ref('info', $info);
+
+	if ($prefs['newsletter_external_client'] == 'y') {
+		$subscribers = $nllib->get_all_subscribers($_REQUEST["nlId"], "");
+		$email_list = array();
+		foreach ($subscribers as $subscriber) {
+			$email_list[] = $subscriber['email'];
+		}
+
+		$smarty->assign('mailto_link', 'mailto:' . $prefs['sender_email'] . '?bcc=' . urlencode(implode(',', $email_list)));
+	}
 } else {
 	//No newsletter selected -> Check if the textarea for the first has to be displayed
 	$smarty->assign('allowTxt', $newsletters['data'][0]['allowTxt']);
@@ -249,7 +259,7 @@ if (isset($_REQUEST["save"])) {
 	// Now send the newsletter to all the email addresses and save it in sent_newsletters
 	$info['datatxt'] = $_REQUEST['datatxt'];
 	$smarty->assign('presend', 'y');
-	$subscribers = $nllib->get_all_subscribers($_REQUEST["nlId"], "");
+	$subscribers = isset($subscribers) ? $subscribers : $nllib->get_all_subscribers($_REQUEST["nlId"], "");
 	$smarty->assign('nlId', $_REQUEST["nlId"]);
 	$smarty->assign('data', $_REQUEST["data"]);
 	$smarty->assign('datatxt', $_REQUEST["datatxt"]);

@@ -25,5 +25,15 @@ function prefs_newsletter_list()
 			'filter' => 'digits',
 			'default' => 5,
 		),
+		'newsletter_external_client' => array(
+			'name' => tra('Allow sending newsletters through external clients'),
+			'description' => tra('Generate mailto links using the recipients as the BCC list.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'warning' => tra('This will expose the list if email addresses to all users allowed to send newsletters.'),
+			'dependencies' => array(
+				'feature_newsletters',
+			),
+		),
 	);
 }
