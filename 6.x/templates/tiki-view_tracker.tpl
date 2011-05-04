@@ -296,7 +296,7 @@ $("#newItemForm").validate({
 {if $field_value.value}
 <option value="{$one|escape}"{if $one eq $field_value.value} selected="selected"{/if}>{$one|username}</option>
 {else}
-<option value="{$one|escape}"{if $one eq $user and $field_value.options_array[0] ne '2'} selected="selected"{/if}>{$one|username}</option>
+<option value="{$one|escape}"{if $one eq $user and ($field_value.options_array[0] eq '1' or $field_value.options_array[0] eq '2')} selected="selected"{/if}>{$one|username}</option>
 {/if}
 {/if}
 {/foreach}

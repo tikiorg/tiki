@@ -51,8 +51,8 @@
 		{foreach key=id item=one from=$field_value.list}
 			{if ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($one, $field_value.itemChoices) )}
 				<option value="{$one|escape}"
-				{if empty($item.itemId) and $one eq $user}
-					selected="selected"
+				{if empty($item.itemId)}
+					{if ($field_value.options_array[0] eq 1 or $field_value.options_array[0] eq 2) and $one eq $user} selected="selected"{/if}
 				{elseif $field_value.options_array[0] eq 2 and $one eq $user}
 					selected="selected"
 				{elseif $one eq $field_value.value}
