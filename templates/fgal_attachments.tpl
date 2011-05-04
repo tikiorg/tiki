@@ -33,9 +33,9 @@
 			<table class="formcolor">
 				<tr>
 					<td>
-						<label for="attach-upload">{tr}Upload file{/tr}:</label>
+						<label for="attach-upload">{tr}Upload file:{/tr}</label>
 						<input size="16" name="userfile[0]" type="file" id="attach-upload" />
-						<label for="attach-comment">{tr}Comment{/tr}:</label><input type="text" name="s_f_attachments-comment" maxlength="250" id="attach-comment" />
+						<label for="attach-comment">{tr}Comment:{/tr}</label><input type="text" name="s_f_attachments-comment" maxlength="250" id="attach-comment" />
 						<input type="submit" name="s_f_attachments-upload" value="{tr}Attach{/tr}"/>
 						{query _type='form_input' page=$page}
 					</td>

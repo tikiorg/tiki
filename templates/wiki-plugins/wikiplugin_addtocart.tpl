@@ -1,7 +1,7 @@
 <form method="post" action="{query _type=relative _keepall=y}" style="display: inline;">
 	<input type="hidden" name="code" value="{$code|escape}"/>
 	{if $onbehalf == 'y'}
-		{tr}Buy on behalf of{/tr}:
+		{tr}Buy on behalf of:{/tr}
 		<select name="buyonbehalf">
 			<option value="">{tr}None{/tr}</option>
 			{foreach key=id item=one from=$cartuserlist}
