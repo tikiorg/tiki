@@ -15,7 +15,7 @@ function wikiplugin_draw_info() {
 		'params' => array(
 			'id' => array(
 				'required' => false,
-				'name' => tra('Sheet ID'),
+				'name' => tra('Drawing ID'),
 				'description' => tra('Internal ID of the file id'),
 				'filter' => 'digits',
 				'accepted' => ' ID number',
@@ -34,10 +34,10 @@ function wikiplugin_draw_info() {
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
-				'description' => tra('Height in pixels or percentage. Default value is complete spreadsheet height.'),
+				'description' => tra('Height in pixels or percentage. Default value is complete drawing height.'),
 				'filter' => 'striptags',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
-				'default' => 'Image heigth',
+				'default' => 'Image height',
 				'since' => '8.0'
 			),
 		),
