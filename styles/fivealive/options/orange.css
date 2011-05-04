@@ -180,7 +180,8 @@ th,
 td.heading,
 tr.diffheader,
 .calHeading,
-.weeks {
+.weeks,
+th.header {
 	background: #e77d4f;
 	color: #f8e4dd;
 }
