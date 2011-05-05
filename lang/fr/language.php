@@ -77,10 +77,6 @@ $lang=Array(
 " The connection failed, so check the server names" => " Connexion échouée, vérifier le nom du serveur",
 "!" => " !",
 "#FFFFFF" => "#FFFFFF",
-"%A %d of %B, %Y" => "%A %d de %B, %Y",
-"%a %d of %b, %Y" => "%e/%m/%y",
-"%a %d of %b, %Y[%H:%M %Z]" => "%e/%m/%y [%Hh%M]",
-"%A %d of %B, %Y[%H:%M:%S %Z]" => "%A %d de %B, %Y[%H:%M:%S %Z]",
 "%B %e" => "%e %B",
 "%H:%M:%S %Z" => "%Hh%M",
 "%s <b>%s</b> assigned to %s <b>%s</b>." => "%s <b>%s</b> mis dans le groupe %s <b>%s</b>.",
@@ -8199,6 +8195,13 @@ $lang=Array(
 // ###
 // ### end of possibly untranslated words
 // ###
+
+"%A %d of %B, %Y" => "%A %d %B %Y",
+"%a %d of %b, %Y" => "%e/%m/%y",
+"%a %d of %b, %Y[%H:%M %Z]" => "%e/%m/%y [%Hh%M]",
+"%a %d of %b, %Y %H:%M %Z" => "%e/%m/%y %Hh%M",
+"%A %d of %B, %Y[%H:%M:%S %Z]" => "%A %d %B %Y[%H:%M:%S %Z]",
+"%A %d of %B, %Y %H:%M:%S %Z" => "%A %d %B %Y %H:%M:%S %Z",
 
 "This forum is flat and doesn't allow replies to other replies" => "Ce Forum ne permet répondre individuellement aux réponses.",
 "This script cannot be called directly" => "Ce script ne peut pas être appelé directement",
