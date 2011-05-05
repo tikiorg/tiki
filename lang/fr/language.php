@@ -10226,6 +10226,7 @@ $lang=Array(
 "Invalid property" => "Propriété invalide",
 "Unknown variables referenced: %0" => "Variables référencées inconnues : %0",
 "Registered" => "Inscrit",
+"Registered %0 ago" => "Inscrit depuis %0",
 "You must choose a group" => "Vous devez choisir un groupe",
 "You will receive an email with information to login for the first time into this site" => "Vous allez recevoir un email avec les informations vous expliquant comment activer votre compte.",
 "Username is required" => "Nom d'utilisateur requis",

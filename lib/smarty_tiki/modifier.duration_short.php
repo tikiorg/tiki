@@ -23,15 +23,15 @@ function smarty_modifier_duration_short($string) {
   $result='';
   if ($string > 60*60*24) {
     $days = floor($string/(60*60*24));
-    $result ="$days days";
+    $result = "$days ".tra('days');
   } elseif ($string > 60*60) {
     $hours = floor($string/(60*60));
-    $result = "$hours hours";
+    $result = "$hours ".tra('hours');
   } elseif ($string > 60) {
     $mins = floor($string/(60));
-    $result = "$mins minutes";
+    $result = "$mins ".tra('minutes');
   } else {
-    $result = "$string seconds";
+	  $result = "$string ".tra('seconds');
   }
   return $result;
 }

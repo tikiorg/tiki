@@ -160,7 +160,8 @@
 						{/if}	
 						<td class="text">
 							{if $users[user].currentLogin eq ''}
-								{tr}Never{/tr} <em>({tr}Registered{/tr} {$users[user].age|duration_short} {tr}ago{/tr})</em>
+								{capture name=when}{$users[user].age|duration_short}{/capture}
+								{tr}Never{/tr} <em>({tr 0=$smarty.capture.when}Registered %0 ago{/tr})</em>
 							{else}
 								{$users[user].currentLogin|tiki_long_datetime}
 							{/if}
