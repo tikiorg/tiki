@@ -524,12 +524,14 @@ class RSSLib extends TikiDb_Bridge
 		
 		$actions = json_decode( $actions, true );
 
-		foreach( $actions as $action ) {
-			$method = 'process_action_' . $action['type'];
-			unset( $action['type'] );
+		if (!empty($actions)) {
+			foreach( $actions as $action ) {
+				$method = 'process_action_' . $action['type'];
+				unset( $action['type'] );
 
-			if( $action['active'] ) {
-				$this->$method( $action, $data );
+				if( $action['active'] ) {
+					$this->$method( $action, $data );
+				}
 			}
 		}
 	}
