@@ -1718,13 +1718,6 @@ class TrackerLib extends TikiLib
 			}
 		}
 
-
-		$cant_items = $items->fetchCount(array('trackerId' => (int) $trackerId));
-		$this->trackers()->update(array('items' => (int) $cant_items, 'lastModif' => $this->now), array(
-			'trackerId' => (int) $trackerId,
-		));
-
-
 		TikiLib::events()->trigger($final_event, array(
 			'type' => 'trackeritem',
 			'object' => $currentItemId,
@@ -4775,6 +4768,15 @@ class TrackerLib extends TikiLib
 				$_SESSION['u_info']['group'] = $groupName;
 			}
 		}
+	}
+
+	function update_tracker_summary($args)
+	{
+		$trackerId = (int) $args['trackerId'];
+		$cant_items = $items->fetchCount(array('trackerId' => $trackerId));
+		$this->trackers()->update(array('items' => (int) $cant_items, 'lastModif' => $this->now), array(
+			'trackerId' =>  $trackerId,
+		));
 	}
 }
 
