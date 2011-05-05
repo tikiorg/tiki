@@ -1992,9 +1992,12 @@ class TrackerLib extends TikiLib
 			$total++;
 		}
 
-		require_once('lib/search/refresh-functions.php');
-		foreach ( $need_reindex as $id ) refresh_index('tracker_items', $id);
-		unset($need_reindex);
+		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+
+		foreach ( $need_reindex as $id ) {
+			$unifiedsearchlib->invalidateObject('trackeritem', $id);
+		}
+		$unifiedsearchlib->processUpdateQueue();
 
 		$cant_items = $items->fetchCount(array('trackerId' => (int) $trackerId));
 		$this->trackers()->update(array('items' => (int) $cant_items, 'lastModif' => $this->now), array(
