@@ -1,5 +1,5 @@
 {* $Id$ *} 
-{if isset($hide_page_header) and !$hide_page_header}
+{if !isset($hide_page_header) or !$hide_page_header}
 	{if $prefs.feature_siteloc eq 'page' and $prefs.feature_breadcrumbs eq 'y'}
 		{if $prefs.feature_siteloclabel eq 'y'}{tr}Location : {/tr}{/if}
 		{breadcrumbs type="trail" loc="page" crumbs=$crumbs}
@@ -71,7 +71,7 @@
 {/if}
 
 <article id="top" class="wikitext clearfix{if $prefs.feature_page_title neq 'y'} nopagetitle{/if}">
-	{if isset($hide_page_header) and !$hide_page_header}
+	{if !isset($hide_page_header) or !$hide_page_header}
 		{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0]) and $prefs.freetags_show_middle eq 'y'}
 			{include file='freetag_list.tpl'}
 		{/if}

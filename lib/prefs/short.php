@@ -12,12 +12,15 @@ function prefs_short_list() {
 			'type' => 'text',
 			'size' => '30',
 			'default' => '%Y-%m-%d',
+			//get_strings tra("%Y-%m-%d");
 		),
 		'short_time_format' => array(
 			'name' => tra('Short time format'),
 			'type' => 'text',
 			'size' => '30',
 			'default' => '%H:%M',
+			//get_strings tra("%H:%M");
 		),
+		//get_strings tra("%Y-%m-%d %H:%M");
 	);
 }

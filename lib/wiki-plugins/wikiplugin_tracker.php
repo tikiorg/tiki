@@ -1238,37 +1238,30 @@ function wikiplugin_tracker($data, $params)
 						if (in_array($f['fieldId'], $optional)) {
 							$f['name'] = "<i>".$f['name']."</i>";
 						}
-						if ($f['type'] != 'h') {
-							$back.= "<tr><td";
-							if (!empty($colwidth)){
-								$back .= " width='".$colwidth."'";
-							}
-							$back .= '><label for="' . $f['ins_id'] . '">' 
-										. wikiplugin_tracker_name($f['fieldId'], tra($f['name'] . ':'), $field_errors) . '</label>';
-							if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
-								$back.= "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;";
-							}
-							$back.= '</td><td>';
-						} else {
-							$smarty->assign('inTable', (empty($tpl) && empty($wiki))?'wikiplugin_tracker':'');
+						$back.= "<tr><td";
+						if (!empty($colwidth)){
+							$back .= " width='".$colwidth."'";
 						}
+						$back .= '><label for="' . $f['ins_id'] . '">' 
+									. wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors) . '</label>';
+						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
+							$back.= "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;";
+						}
+						$back.= '</td><td>';
 
 						$back .= wikiplugin_tracker_render_input($f, $item);
 					}
 
-					if (!empty($f['description']) && $f['type'] != 'h' && $f['type'] != 'S') {
+					if ($f['type'] != 'S') {
 						$back .= '<div class="trackerplugindesc">';
-						if ($f['descriptionIsParsed'] == 'y') {
-							$back .= $tikilib->parse_data($f['description']);
-						} else {
-							$back .= tra($f['description']);
-						}
-						$back .= '</div>';
 					}
-					if (empty($tpl) && empty($wiki)) {
-					if ($f['type'] != 'h'){
-						$back.= "</td></tr>";
-						}
+					if ($f['descriptionIsParsed'] == 'y') {
+						$back .= $tikilib->parse_data($f['description']);
+					} else {
+						$back .= tra($f['description']);
+					}
+					if ($f['type'] != 'S') {
+						$back .= '</div>';
 					}
 					if (!empty($f['http_request']) && !empty($itemId)) {
 						$js .= 'selectValues("trackerIdList=' . $f['http_request'][0] 
@@ -1356,7 +1349,9 @@ function wikiplugin_tracker_render_input($f, $item) {
 	$smarty = TikiLib::lib('smarty');
 
 	$handler = $trklib->get_field_handler($f, $item);
-	return $handler->renderInput();
+	return $handler->renderInput(array(
+		'inTable' => 'y',
+	));
 }
 
 function wikiplugin_tracker_render_value($f, $item) {
@@ -1364,6 +1359,8 @@ function wikiplugin_tracker_render_value($f, $item) {
 	$trklib = TikiLib::lib('trk');
 
 	$handler = $trklib->get_field_handler($f, $item);
-	return $handler->renderOutput();
+	return $handler->renderOutput(array(
+		'inTable' => 'y',
+	));
 }
 

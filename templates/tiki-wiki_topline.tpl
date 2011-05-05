@@ -1,6 +1,6 @@
 <div class="wikitopline clearfix" style="clear: both;">
 	<div class="content">
-		{if isset($hide_page_header) and !$hide_page_header}
+		{if !isset($hide_page_header) or !$hide_page_header}
 			<div class="wikiinfo" style="float: left">
 				{if $prefs.wiki_page_name_above eq 'y' and $print_page ne 'y'}
 				    <a href="javascript:self.location=self.location;" class="titletop" title="{tr}refresh{/tr}">{$page}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{* The hard-coded spaces help selecting the page name for inclusion in a wiki link *}

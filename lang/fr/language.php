@@ -8202,6 +8202,13 @@ $lang=Array(
 // ### end of possibly untranslated words
 // ###
 
+"%A %d of %B, %Y" => "%A %d %B %Y",
+"%a %d of %b, %Y" => "%e/%m/%y",
+"%a %d of %b, %Y[%H:%M %Z]" => "%e/%m/%y [%Hh%M]",
+"%a %d of %b, %Y %H:%M %Z" => "%e/%m/%y %Hh%M",
+"%A %d of %B, %Y[%H:%M:%S %Z]" => "%A %d %B %Y[%H:%M:%S %Z]",
+"%A %d of %B, %Y %H:%M:%S %Z" => "%A %d %B %Y %H:%M:%S %Z",
+
 "This forum is flat and doesn't allow replies to other replies" => "Ce Forum ne permet répondre individuellement aux réponses.",
 "This script cannot be called directly" => "Ce script ne peut pas être appelé directement",
 "Copyright management" => "Gestion des droits d'auteur",

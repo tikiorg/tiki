@@ -136,7 +136,7 @@
 	{/tab}
 
 	{if $tiki_p_edit_structures == 'y'}
-		{tab name="{tr}Create New structure{/tr}"}
+		{tab name="{tr}Create New Structure{/tr}"}
 			<form action="tiki-admin_structures.php" method="post">
 				<table class="formcolor">
 					<tr>

@@ -113,6 +113,7 @@ function wikiplugin_subscribegroups($data, $params) {
 		}
 	}
 
+	$userGroups = $userlib->get_user_groups_inclusion($user);
 	if (!empty($_REQUEST['assign']) && !isset($userGroups[$group])) {
 		$userlib->assign_user_to_group($user, $group);
 	}
