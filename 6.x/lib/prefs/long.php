@@ -11,11 +11,14 @@ function prefs_long_list() {
 			'name' => tra('Long date format'),
 			'type' => 'text',
 			'size' => '30',
+			//get_strings tra("%A %d of %B, %Y");
 		),
 		'long_time_format' => array(
 			'name' => tra('Long time format'),
 			'type' => 'text',
 			'size' => '30',
+			//get_strings tra("%H:%M:%S %Z");
 		),
+		//get_strings tra("%A %d of %B, %Y %H:%M:%S %Z");
 	);	
 }
