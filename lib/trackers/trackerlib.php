@@ -1590,9 +1590,8 @@ class TrackerLib extends TikiLib
 				}
 
 				if ($array['type'] == 'g' && $array['options_array'][0] == 1) {
-					$creatorGroupFieldId = $array['fieldId'];
 					if ($prefs['groupTracker'] == 'y' && isset($tracker_info['autoCreateGroup']) && $tracker_info['autoCreateGroup'] == 'y' && empty($itemId)) {
-						$groupName = $this->groupName($tracker_info, $new_itemId, $groupInc);
+						$groupName = $this->groupName($tracker_info, $new_itemId);
 						$ins_fields['data'][$i]['value'] = $groupName;
 					}
 				}
@@ -1719,42 +1718,16 @@ class TrackerLib extends TikiLib
 			}
 		}
 
-		if ($prefs['groupTracker'] == 'y' && isset($tracker_info['autoCreateGroup']) && $tracker_info['autoCreateGroup'] == 'y' && empty($itemId)) {
-			if (!empty($creatorGroupFieldId) && !empty($tracker_info['autoAssignGroupItem']) && $tracker_info['autoAssignGroupItem'] == 'y') {
-				if (!empty($tracker_info['autoCopyGroup'])) {
-					global $group;
-					$this->modify_field($new_itemId, $tracker_info['autoCopyGroup'], $group);
-					$fil[$tracker_info['autoCopyGroup']] = $group;
-				}
-				
-			}
-			$desc = $this->get_isMain_value($trackerId, $new_itemId);
-			if (empty($desc))
-				$desc = $tracker_info['description'];
-			if ($userlib->add_group($groupName, $desc, '', 0, $trackerId, '', 'y', 0, '', '', $creatorGroupFieldId)) {
-				if (!empty($tracker_info['autoCreateGroupInc'])) {
-					$userlib->group_inclusion($groupName, $groupInc);
-				}
-			}
-			if ($tracker_info['autoAssignCreatorGroup'] == 'y') {
-				$userlib->assign_user_to_group($user, $groupName);
-			}
-			if ($tracker_info['autoAssignCreatorGroupDefault'] == 'y') {
-				$userlib->set_default_group($user, $groupName);
-				$_SESSION['u_info']['group'] = $groupName;
-			}
-		}
 
 		$cant_items = $items->fetchCount(array('trackerId' => (int) $trackerId));
 		$this->trackers()->update(array('items' => (int) $cant_items, 'lastModif' => $this->now), array(
 			'trackerId' => (int) $trackerId,
 		));
 
-		$itemId = $currentItemId;
 
 		TikiLib::events()->trigger($final_event, array(
 			'type' => 'trackeritem',
-			'object' => $itemId,
+			'object' => $currentItemId,
 			'version' => $version,
 			'trackerId' => $trackerId,
 			'values' => $fil,
@@ -1781,13 +1754,13 @@ class TrackerLib extends TikiLib
 		), $conditions);
 	}
 
-	function groupName($tracker_info, $itemId, &$groupInc) {
+	function groupName($tracker_info, $itemId) {
 		if (empty($tracker_info['autoCreateGroupInc'])) {
 			$groupName = $tracker_info['name'];
 		} else {
 			$userlib = TikiLib::lib('user');
 			$group_info = $userlib->get_groupId_info($tracker_info['autoCreateGroupInc']);
-			$groupInc = $groupName = $group_info['groupName'];
+			$groupName = $group_info['groupName'];
 		}
 		return "$groupName $itemId";
 	}
@@ -2353,7 +2326,7 @@ class TrackerLib extends TikiLib
 		$this->remove_object("trackeritem", $itemId);
 		if (isset($options['autoCreateGroup']) && $options['autoCreateGroup'] == 'y') {
 			$userlib = TikiLib::lib('user');
-			$groupName = $this->groupName($options, $itemId, $groupInc);
+			$groupName = $this->groupName($options, $itemId);
 			$userlib->remove_group($groupName);
 		}
 		$this->remove_item_log($itemId);
@@ -4760,6 +4733,46 @@ class TrackerLib extends TikiLib
 				$cachelib->invalidate(md5('trackerfield'.$fieldId.'oc'));
 				$cachelib->invalidate(md5('trackerfield'.$fieldId.'pc'));
 				$cachelib->invalidate(md5('trackerfield'.$fieldId.'opc'));
+			}
+		}
+	}
+	
+	function group_tracker_create($args)
+	{
+		global $user, $group;
+		$trackerId = $args['trackerId'];
+		$itemId = $args['object'];
+		$definition = Tracker_Definition::get($trackerId);
+
+		if ($definition->isEnabled('autoCreateGroup')) {
+			$creatorGroupFieldId = $definition->getWriterGroupField();
+
+			if (!empty($creatorGroupFieldId) && $definition->isEnabled('autoAssignGroupItem')) {
+				$autoCopyGroup = $definition->getConfiguration('autoCopyGroup');
+				if ($autoCopyGroup) {
+					$this->modify_field($new_itemId, $tracker_info['autoCopyGroup'], $group);
+					$fil[$tracker_info['autoCopyGroup']] = $group;
+				}
+				
+			}
+			$desc = $this->get_isMain_value($trackerId, $itemId);
+			if (empty($desc)) {
+				$desc = $definition->getConfiguration('description');
+			}
+
+			$userlib = TikiLib::lib('user');
+			$groupName = $args['values'][$creatorGroupFieldId];
+			if ($userlib->add_group($groupName, $desc, '', 0, $trackerId, '', 'y', 0, '', '', $creatorGroupFieldId)) {
+				if ($groupId = $definition->getConfiguration('autoCreateGroupInc')) {
+					$userlib->group_inclusion($groupName, $this->table('users_groups')->fetchOne('groupName', array('id' => $groupId)));
+				}
+			}
+			if ($definition->isEnabled('autoAssignCreatorGroup')) {
+				$userlib->assign_user_to_group($user, $groupName);
+			}
+			if ($definition->isEnabled('autoAssignCreatorGroupDefault')) {
+				$userlib->set_default_group($user, $groupName);
+				$_SESSION['u_info']['group'] = $groupName;
 			}
 		}
 	}

@@ -33,6 +33,10 @@ if ($prefs['feature_trackers'] == 'y') {
 		$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'sync_user_geo'));
 	}
 
+	if ($prefs['groupTracker'] == 'y') {
+		$events->bind('tiki.trackeritem.create', Event_Lib::defer('trk', 'group_tracker_create'));
+	}
+
 	$events->bind('tiki.trackeritem.save', Event_Lib::defer('trk', 'invalidate_item_cache'));
 }
 
