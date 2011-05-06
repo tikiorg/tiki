@@ -221,8 +221,10 @@ if (isset($_REQUEST["preview"])) {
         }
     }
     if (!empty($_REQUEST['moduleId'])) {
-        $smarty->assign_by_ref('moduleId', $_REQUEST['moduleId']);
-    }
+        $smarty->assign('moduleId', $_REQUEST['moduleId']);
+    } else {
+		$smarty->assign('moduleId', 0);
+	}
     $smarty->assign_by_ref('assign_name', $_REQUEST["assign_name"]);
     $smarty->assign_by_ref('assign_params', $_REQUEST["assign_params"]);
     $smarty->assign_by_ref('assign_position', $_REQUEST["assign_position"]);
