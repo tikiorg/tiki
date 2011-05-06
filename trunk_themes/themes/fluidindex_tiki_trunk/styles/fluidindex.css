@@ -262,9 +262,17 @@ tt {font-size: 1.2em}
 #top_modules .box-logo {
 	margin-left: 10px;
 	margin-bottom: 10px;
+	float: left;
 }
 
-#top_modules .siteloginbar_popup {
+#top_modules #sitetitles {
+	margin-left: 20px;
+	line-height: normal;
+	margin-top: 5%;
+	margin-bottom: 1%;
+}
+
+#top_modules .box-login_box {
 	text-align: right;
 	position: absolute;
 	bottom: 6px;
@@ -295,6 +303,11 @@ tt {font-size: 1.2em}
 
 #top_modules #sitetitle {font-size: 1.9em;}
 
+#top_modules #sitesubtitle {
+	font-size: 1.2em;
+	margin-top: 11px;
+}
+
 #top_modules #sitetitle a,
 #top_modules a {
 	color: #dfdac3;
@@ -309,11 +322,6 @@ tt {font-size: 1.2em}
 #top_modules a:hover {
 	color: #cfcdb5;
 	text-decoration: none;
-}
-
-#top_modules #sitesubtitle {
-	font-size: 1.2em;
-	margin-top: 11px;
 }
 
 #tiki-top {

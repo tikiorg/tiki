@@ -60,12 +60,6 @@ body {
 	border-left: 2px solid #a0a0a0;
 	border-right: 2px solid #a0a0a0}
 	
-#showhide_columns {
-	border-left: 2px solid #a0a0a0;
-	border-right: 2px solid #a0a0a0
-}
-
-
 .footerbgtrap {
  	text-align: center;
 	padding: 5px 0;
@@ -173,6 +167,43 @@ td textarea {font-size: 1.3em}
 
 /***** Site Header & Identity *****/
 #top_modules {min-height: 80px}
+#top_modules a,
+#top_modules a:visited {color: white}
+
+#top_modules .box-logo {
+	float: left;
+	margin: 10px;
+}
+
+#top_modules #sitelogo img {
+	margin-left: 10px;
+}
+
+#top_modules #sitetitles {
+	margin-left: 20px;
+	line-height: normal;
+	margin-top: 10%;
+	margin-bottom: 10%;
+	height: 100%;
+}
+
+#sitetitle {
+	line-height: 1em;
+	font-size: 2.4em;
+	background: inherit;
+	color: #fff;
+	letter-spacing: -2px;
+	font-weight: normal;
+}
+
+#sitesubtitle {
+	margin-top: 10px;;
+	font-size: 1.4em;
+	background: inherit;
+	color: #f0f2f4;
+	letter-spacing: -1px;
+	font-weight: normal;
+}
 
 input[id="fuser"] {
 	background: #578bb8;
@@ -202,29 +233,7 @@ input[id="sl-login-pass"] {
 	right: 10px;
 }
 
-
-#sitetitle {
-	padding-left: 20px;
-	line-height: 1em;
-	font-size: 2.4em;
-	background: inherit;
-	color: #fff;
-	letter-spacing: -2px;
-	font-weight: normal}
-
-#sitesubtitle {
-	margin: 10px 0 0 40px;
-	font-size: 1.4em;
-	background: inherit;
-	color: #f0f2f4;
-	letter-spacing: -1px;
-	font-weight: normal}
-
-.header a,
-.header a:link,
-.header a:visited {color: white}
-
-#tiki-top {
+#topbar_modules #tiki-top {
 	width: 100%;
 	background: #578bb8;
 	color: #fff;
@@ -342,6 +351,12 @@ td#leftcolumn .cssmenu_vert li li.sfHover ul {
 
 .cssmenu_vert li a .sf-sub-indicator {
 	top: .3em;
+}
+
+#top_modules #secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 30px;
 }
 
 #secondary_site_menu .cssmenu_horiz a {

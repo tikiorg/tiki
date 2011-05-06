@@ -203,14 +203,23 @@ input[type="submit"]:hover,
 
 
 /***** Site Header & Identity *****/
-#tiki-top {
+#top_modules #tiki-top {
 	height: 59px;
 	margin: 0 auto;
 	padding: 0 0 0 30px;
 	color: #fff;
-	background:  url(greenblog/menu_panel_bg.jpg) no-repeat 0 100%;}
+	background:  url(greenblog/menu_panel_bg.jpg) no-repeat 0 100%;
+}
 
-#sitetitles {padding: 30px 0 30px 30px}
+#top_modules .box-search {
+	position: absolute;
+	right: 20px;
+	top: 20px;
+}
+
+#sitetitles {
+	margin: 5% 0 3% 30px;
+}
 
 #sitetitle,
 #sitesubtitle {}
@@ -221,7 +230,7 @@ input[type="submit"]:hover,
 	margin-top: 1em;
 	font-size: 1.8em}
 
-#top_modules .siteloginbar_popup {
+#top_modules .box-login_box {
 	position: absolute;
 	right: 10px;
 	bottom: 0;

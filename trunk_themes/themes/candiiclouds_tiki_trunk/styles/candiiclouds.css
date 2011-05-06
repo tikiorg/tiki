@@ -16,13 +16,12 @@
 html {background: #ffe0ee}
 
 body {
-	display: table;
 	background: #ffe0ee url(candiiclouds/piink.gif);
 	font-family: Tahoma;
 	font-size: 72%;
 	font-weight: bold;
 	color: #0076a3;
-	width: 100%}
+}
 
 html>body {font-size: .7em !important}
 
@@ -36,11 +35,8 @@ html>body {font-size: .7em !important}
 
 .fixed_width #fixedwidth {
 	width: 900px;
-
 }
 		
-td#header {background: #fff}
-
 #c1c2 #wrapper #col1.marginleft  {
 	margin-left: 210px;
 }
@@ -203,18 +199,17 @@ u {
 
 .header {
 	background: url(candiiclouds/banstars.gif);
-
 }
 
 #top_modules  {
 	background: url(candiiclouds/bcloud.gif) no-repeat;
-	min-height: 120px;
+/*	min-height: 120px;*/
 }
 
-div#sitelogo {
+#sitelogo {
 	float: left;
 	clear: none;
-	margin: 0;
+	margin: 0 0 0 150px;
 	padding: 0}
 
 
@@ -224,17 +219,18 @@ div#sitelogo {
 	bottom: 0;
 }
 
+#top_modules #sitetitles {
+	margin: 3% 10px 3% 20px;
+}
+
 #sitetitle {
-	text-indent: 42px;
 	font-size: 3em;
-	padding-top: 20px}
+}
 
 #sitetitle a,
 #sitetitle a:visited {
 	border-bottom: none;
 }
-
-#sitesubtitle {text-indent: 42px}
 
 #topbar_modules .box-search {
 	border-left: 1px solid #fff;

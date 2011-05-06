@@ -201,14 +201,12 @@ table textarea {font-size: 1.3em}
 ul, ol {text-align: left}
 
 /***** Site Header & Identity *****/
-.header {
+#header {
 	background: url(andreas09/options/black/header.jpg) repeat-x bottom;
 	color: #fff;
 	margin: 0;
 	text-align: left;
 }
-
-* html #header-top {height: 101px}
 
 #top_modules {
 	min-height: 101px;
@@ -225,9 +223,20 @@ ul, ol {text-align: left}
 }
 
 .box-logo {
-	position: absolute;
-	top: 20px;
-	left: 20px;
+	float: left;
+}
+
+
+#top_modules #sitelogo img {
+	margin: 10px;
+}
+
+#top_modules #sitetitles {
+	margin-left: 20px;
+	line-height: normal;
+	margin-top: 15%;
+	margin-bottom: 5%;
+	height: 100%;
 }
 
 #sitetitle,
@@ -242,7 +251,10 @@ ul, ol {text-align: left}
 	font-size: 2.6em;
 }
 
-#sitesubtitle {font-size: 1.6em}
+#sitesubtitle {
+	font-size: 1.6em;
+	margin-top: 4px;
+}
 
 .header a,
 .header a:visited {color: #fff}
@@ -393,8 +405,10 @@ a .sf-sub-indicator {
 	top: .4em;
 }
 
-#secondary_site_menu {
-	float: right;
+#top_modules #secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 30px;
 }
 
 #secondary_site_menu .cssmenu_horiz ul {

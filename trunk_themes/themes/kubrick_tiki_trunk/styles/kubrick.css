@@ -49,7 +49,8 @@ body.fullscreen {
 .header {
 	background: url(kubrick/headerbg.jpg) no-repeat;
 	height: 200px;
-	margin-bottom: -1px}
+	margin-bottom: -1px;
+}
 	
 #c1c2 #col2 {
 	width: 180px;
@@ -217,10 +218,21 @@ tt {font-size: 1.2em}
 	margin: 0 25px;
 }
 
-.box-logo {
-	position: absolute;
-	top: 60px;
-	left: 60px;
+#top_modules .box-logo {
+	display: block;
+	margin: 1% 0;
+}
+
+#top_modules #sitelogo img {
+	margin: 10px 0 10px 10px
+}
+	
+#top_modules #sitetitles {
+	margin: 5% 0;
+}
+
+#top_modules #sitetitle {
+	font-size: 3em;
 }
 
 #topbar_modules .box-search {
@@ -246,15 +258,6 @@ tt {font-size: 1.2em}
 
 #top_modules .siteloginbar a,
 #top_modules .siteloginbar label {color: #fff !important}
-
-#sitelogo img {
-	margin-top: -1px;
-	margin-right: 10px;
-	margin-left: 10px}
-
-.header #sitetitle {
-	font-size: 3em;
-}
 
 #tiki-top {
 	text-align: center;
