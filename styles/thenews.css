@@ -234,12 +234,16 @@ body.fixed_width .fixedwidth .fixedwidth {
 /* #Header */
 
 #top_modules .box-logo {
+	float: left;
 	margin: 10px;
 }
 
-#sitetitle,
-#sitesubtitle {
-	padding-left: 20px;
+#top_modules #sitetitles {
+	margin-left: 20px;
+	line-height: normal;
+	margin-top: 10%;
+	margin-bottom: 10%;
+	padding-left: 15px;
 }
 
 #sitetitle {

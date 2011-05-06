@@ -338,6 +338,7 @@ li#logout_link a {
 #top_modules .box-quickadmin {
 	position: absolute;
 	right: 1em;
+	top: 40%;
 	padding: 0 .5em .2em 0;
 }
 

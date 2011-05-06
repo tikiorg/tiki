@@ -310,8 +310,9 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 #top_modules {
-	min-height: 100px;
+	min-height: 40px;
 }
+
 
 #top_modules .box-secondary_site_menu {
 	position: absolute;
@@ -321,6 +322,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 #top_modules .box-logo {
 	float: left;
+	height: 100%;
 }
 
 #sitelogo {
@@ -328,14 +330,12 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding: 1em;
 }
 
-/* id is no longer used but this is retained as possible reference for banner module CSS */
-#sitead {
-	clear: none;
-	color: #999;
-	max-width: 460px;
-	margin-top: .8em;
-	padding: 1em;
-	font: 11px Geneva, Arial, Helvetica, sans-serif;
+#top_modules #sitetitles {
+	margin-left: 20px;
+	line-height: normal;
+	margin-top: 10%;
+	margin-bottom: 10%;
+	padding-left: 20px;
 }
 
 .floatright img {
@@ -353,7 +353,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 #sitetitle {
 	font-size: 2.4em;
-	padding-top: 20px;
 }
 
 #sitesubtitle {
@@ -395,6 +394,17 @@ input[id="sl-login-pass"] {
 	margin: 0;
 }
 */
+
+/* id is no longer used but this is retained as possible reference for banner module CSS */
+#sitead {
+	clear: none;
+	color: #999;
+	max-width: 460px;
+	margin-top: .8em;
+	padding: 1em;
+	font: 11px Geneva, Arial, Helvetica, sans-serif;
+}
+
 #tiki-top {
 	width: 100%;
 	border-top: 1px solid #818181;

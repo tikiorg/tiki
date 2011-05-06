@@ -184,14 +184,20 @@ input[type="submit"]:hover,
 	height: 100%;
 }
 
+#top_modules .box-logo {
+	height: 100%;
+}
+
 #top_modules #sitetitles {
 	font-weight: bold;
 	margin-left: 20px;
 	line-height: normal;
+	margin-top: 2.35%;
+	margin-bottom: 2%;
+	height: 100%;
 }
 
 #sitetitle {
-	padding-top: 10px;
 	font-size: 2.4em;
 }
 

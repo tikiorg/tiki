@@ -40,10 +40,12 @@ h1, h2, h3, h4, h5 {
 	font-family: Arial, Helvetica, sans-serif;
 }
 
-#secondary_site_menu li,
+/*#secondary_site_menu li,
 #secondary_site_menu li a,
 #tiki-top .cssmenu_horiz li,
-#tiki-top .cssmenu_horiz li a {
+#tiki-top .cssmenu_horiz li a*/
+.cssmenu_horiz li,
+.cssmenu_horiz li a {
 	background: none;
 }
 
@@ -191,8 +193,8 @@ h3.box-title {
 
 .cssmenu_horiz a,
 .cssmenu_vert ul a,
-#tiki-top .cssmenu_horiz li ul li a,
-#tiki-top .cssmenu_horiz li:hover ul li a {
+.modules .cssmenu_horiz li ul li a,
+.modules .cssmenu_horiz li:hover ul li a {
 	background: #d1d2a9;
 	text-decoration: none;
 	padding: .2em 1em;
