@@ -209,6 +209,11 @@ textarea {
 #tiki-top label {
 	color: #000;
 }
+
+#topbar_modules .box-search {
+    top: 1.1em;
+    right: 1em;
+}
 	
 h3.box-title {
 	color: #0077cc;

@@ -224,19 +224,23 @@ body.fixed_width .fixedwidth .fixedwidth {
 	margin-left: 10px;
 }
 
+#top_modules .box-logo {
+	height: 100%;
+}
+
+#top_modules #sitetitles {
+	margin-top: 10%;
+	margin-bottom: 10%;
+	height: 100%;
+}
+
 #sitetitle,
 #sitesubtitle {
 	display: inline-block;
 }
 
-* html #sitetitle,
-* html #sitesubtitle {
-	display: inline;
-}
-
 #sitetitle {
 	margin-left: 23px;
-	padding-top: 30px;
 	font: bold 24px helvetica,arial,sans-serif;
 }
 

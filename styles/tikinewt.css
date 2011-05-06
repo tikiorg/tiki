@@ -292,15 +292,16 @@ label {
 }
 
 #top_modules .box-logo {
-	margin-left: 10px;
+	float: left;
+	margin: 10px;
 }
 
 #top_modules #sitetitles {
 	margin-left: 20px;
-	padding-bottom: 10px;
-}
-
-#sitetitles {
+	line-height: normal;
+	margin-top: 10%;
+	margin-bottom: 10%;
+	padding-left: 15px;
 	font-weight: bold;
 }
 
@@ -310,11 +311,6 @@ label {
 
 #sitesubtitle {
 	font-size: 1.2em;
-}
-
-#sitelogo {
-	margin: auto;
-	overflow: hidden;
 }
 
 #top_modules .box-login_box {

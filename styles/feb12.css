@@ -330,6 +330,18 @@ body.fixed_width .fixedwidth .fixedwidth {
 /*	float: left;*/
 }
 
+#top_modules .box-logo {
+	height: 100%;
+}
+
+#top_modules #sitetitles {
+	margin-left: 20px;
+	line-height: normal;
+	margin-top: 2.35%;
+	margin-bottom: 2%;
+	height: 100%;
+}
+
 #sitetitle {
 	font-size: 2.2em;
 	text-shadow: 0 0 10px #fff;/* text-shadow; CSS3 valid property, values are <offset x> <offset y> <blur> and <color>; ex: 0 0 10px #fff */

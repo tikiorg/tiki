@@ -193,22 +193,39 @@ input[type="submit"]:active,
 	margin-top: -16px;
 }
 
+#top_modules #secondary_site_menu .cssmenu_horiz li ul ul {
+	margin-top: 8px;
+}
+
 #top_modules .box-logo {
 	float: left;
+	height: 100%;
+}
+
+#top_modules #sitetitles {
+	margin-left: 20px;
+	line-height: normal;
+	margin-top: 10%;
+	margin-bottom: 10%;
+	padding-left: 20px;
 }
 
 #sitetitles {
 	font-weight: bold;
-	padding-bottom: 15px;
 }
 
 #sitetitle {
 	font-size: 2.4em;
 }
 
+#sitetitle a,
+#sitetitle a:hover {
+	text-decoration: none;
+}
+
 #sitesubtitle {
 	font-size: 1.2em;
-	margin-top: 10px;
+/*	margin-top: 10px;*/
 }
 
 #top_modules .box-login_box {
@@ -293,25 +310,25 @@ input[type="submit"]:active,
 	bottom: 0;
 }*/
 
-#tiki-top .cssmenu_horiz li a {
+#topbar_modules .cssmenu_horiz li a {
 	padding: 3px 1em;
 	font-size: 12px;
 	text-decoration: none;
 }
 
-#tiki-top .cssmenu_horiz ul {
+#topbar_modules .cssmenu_horiz ul {
 	margin-top: -14px;
 }
 
-#tiki-top .cssmenu_horiz ul ul {
+#topbar_modules .cssmenu_horiz ul ul {
 	margin-top: -1px;
 }
-#tiki-top .cssmenu_horiz ul li a {
+#topbar_modules .cssmenu_horiz ul li a {
 	color: #222;
 	text-decoration: none;
 }
 
-#tiki-top .cssmenu_horiz li.menuSection a {
+.cssmenu_horiz li.menuSection a {
 	padding-right: 20px !important;
 }
 

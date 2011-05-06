@@ -89,12 +89,9 @@ h5 {font-size: 1em}
 h6 {font-size: 1em}
 
 hr {
-	width: 100%;
-	height: 1px;
 	background: #aaa;
-	border-width: 0;
-	padding: 0;
-	color: #6c7b8c}
+	color: #6c7b8c;
+}
 
 fieldset {
 	border: solid 1px #a9a9a9;
@@ -102,7 +99,6 @@ fieldset {
 
 form {color: black}
 legend {color: #000}
-
 
 .button a,
 .button a:visited,
@@ -153,8 +149,6 @@ input[type="submit"]:hover  {
 	margin: 2px;
 	padding: 2px 4px;
 }
-
-* html .wikitopline select {font-size: .9em}
 
 input[type="text"],
 input[type="password"] {
@@ -231,25 +225,32 @@ body.fixed_width .fixedwidth .fixedwidth {
 	margin: 10px;
 }
 
+#top_modules #sitetitles {
+	margin-left: 20px;
+	line-height: normal;
+	margin-top: 10%;
+	margin-bottom: 10%;
+	padding-left: 15px;
+}
+
 #sitetitle,
 #sitesubtitle {
 	display: block;
 	color: #714952;
 	font-weight: 400;
 	letter-spacing: -.5px;
-	margin: 0}
+}
 
 #sitetitle {
 	font-size: 2.4em;
-	padding-top: 20px;
-	margin-left: 20px}
+}
 
 #sitesubtitle {
 	font-size: 1.6em;
-	margin-left: 20px}
+}
 
-.header a,
-.header a:visited {
+.header_fixedwidth .header a,
+.header_fixedwidth .header a:visited {
 	color: #714952;
 	text-decoration: none}
 

@@ -218,7 +218,7 @@ tt {font-size: 1.2em}
 
 .header_container .fixedwidth {
 	text-align: left;
-	min-height: 126px;
+/*	min-height: 126px;*/
 	background: #fff url(eatlon/head_bg.gif) repeat-x 0 0;
 	margin-bottom: 0;
 }
@@ -256,6 +256,34 @@ tt {font-size: 1.2em}
 
 .floatright img {margin-right: 10px}
 
+#top_modules #sitetitles {
+	margin-left: 20px;
+	line-height: normal;
+	margin-top: 10%;
+	margin-bottom: 10%;
+	padding-left: 15px;
+}
+
+#sitetitle {
+	font-family: georgia, serif;
+	font-size: 320%;
+	font-weight: 100;
+}
+	
+#sitetitle a,
+#sitetitle a:visited {color: #8f8f8f}
+
+#sitetitle a:hover {
+	color: #8f8f8f;
+	text-decoration: none;
+}
+
+#sitesubtitle {
+	font-size: 1em;
+	font-style: italic;
+	font-weight: 100;
+}
+
 #top_modules .box-login_box {
 	position: absolute;
 	right: 20px;
@@ -279,29 +307,6 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 .siteloginbar_popup .tabcontent a:visited {
 	color: #fff;
 }
-
-#sitetitle,
-#sitesubtitle {margin-left: 30px}
-
-#sitetitle {
-	font-family: georgia, serif;
-	font-size: 320%;
-	font-weight: 100;
-	margin-top: 40px}
-	
-#sitetitle a,
-#sitetitle a:visited {color: #8f8f8f}
-
-#sitetitle a:hover {
-	color: #8f8f8f;
-	text-decoration: none;
-}
-
-#sitesubtitle {
-	font-size: 1em;
-	font-style: italic;
-	font-weight: 100;
-	margin-top: 18px}
 
 #tiki-top {
 	background: url(eatlon/menu_bg.png) no-repeat right;
