@@ -401,6 +401,7 @@ class ModLib extends TikiLib
 					}
 				} else { // negation behavior
 					$excluded_theme = substr($t,1);
+					$ok = true;
 					if( !empty($tc_theme) && $excluded_theme === $tc_theme ) {
 						return false;
 					} elseif( $excluded_theme === $prefs['style'] && empty( $tc_theme )) {
