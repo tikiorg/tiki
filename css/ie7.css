@@ -27,18 +27,18 @@ body.fixed_width #editpageform {
 	width: 520px;
 }
 
-#header-top {
+#header {
 	z-index: 5;
 }
 
-#tiki-top {
+#top_modules {
 	position: relative;
-	z-index: 4;
+	z-index: 5
 }
 
-#middle {
-	z-index: 3;
+#topbar_modules {
 	position: relative;
+	z-index: 4;
 }
 
 #col2,
@@ -65,4 +65,11 @@ h3.box-title {
 	position: relative;
 }
 
+#middle {
+	display: table;
+}
+
+h3.box-title {
+	line-height: 1;
+}
 
