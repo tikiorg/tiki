@@ -50,7 +50,6 @@ function wikiplugin_listpages_info() {
 				'name' => tra('Category filter'),
 				'description' => tra('If set to a category identifier, restrict the pages displayed to those in the specified category.').' ' . tra('Example value:') . ' 42. ' . tra('If set to a list of category identifiers separated by colons (:), restrict the pages to those in any of the specified categories.') . ' ' . tra('Example value:') . ' 1:2. ' . tra('If set to a list of category identifiers separated by plus signs (+), only display a page if it is in all of the specified categories.') . ' ' . tra('Example value:') . ' 1+2. ' .  tra('If set to a list of category identifiers separated by minus signs (-), only display a page if it is in the first specified category and not in any of the following categories.') . ' ' . tra('Example value:') . ' 1-2-3.', 
 				'filter' => 'striptags', 
-				'separator' => ':',
 				'default' => '',
 			),
 			'structHead' => array(
