@@ -55,6 +55,12 @@
 		{/tab}
 		
 		{tab name="{tr}General Layout{/tr}"}
+		
+			{remarksbox type="tip" title="{tr}Tip{/tr}"}
+				{tr}&quot;Modules&quot; are the items of content at the top &amp; bottom and in the right &amp; left columns of the site.{/tr} {tr}Select{/tr}
+				<a class="rbox-link" href="tiki-admin_modules.php">{tr}Admin &gt; Modules{/tr}</a> {tr}from the menu to create and edit modules{/tr}.
+			{/remarksbox}
+		
 
 			{preference name=module_zones_top}
 			{preference name=module_zones_topbar}
