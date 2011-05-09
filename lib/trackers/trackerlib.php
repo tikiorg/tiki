@@ -1486,16 +1486,6 @@ class TrackerLib extends TikiLib
 		foreach($ins_fields["data"] as $i=>$array) {
 			// Old values were prefilled at the begining of the function and only replaced at the end of the iteration
 			$old_value = isset($fil[$array['fieldId']]) ? $fil[$array['fieldId']] : null;
-
-			if ($prefs['user_selector_realnames_tracker'] == 'y' && $array['type'] == 'u') {
-				if (!$userlib->user_exists($array['value'])) {
-					$finalusers = $userlib->find_best_user(array($array['value']), '' , 'login');
-					if (!empty($finalusers[0]) && !(isset($_REQUEST['register']) && isset($_REQUEST['name']) && $_REQUEST['name'] == $array['value'])) {
-						// It could be in fact that a new user is required (when no match is found or during registration even if match is found)
-						$ins_fields['data'][$i]['value'] = $finalusers[0];
-					}
-				}
-			}
 			if (!isset($array["type"]) or $array["type"] == 's') {
 				// system type, do nothing
 				continue;
