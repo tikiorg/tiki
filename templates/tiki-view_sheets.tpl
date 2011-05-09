@@ -1,5 +1,5 @@
 {* $Id$ *}
-{title help="Spreadsheet"}{$title|escape}{/title}
+{title help="Spreadsheet"}{$title}{/title}
 
 <div class="description">
 	{$description|escape}

@@ -1,5 +1,5 @@
 {* $Id$ *}
-{capture}{if isset($smarty.request.objectName)}{tr}Object Watches:{/tr} {$smarty.request.objectName|escape}{else}{tr}Object Watches{/tr}{/if}{/capture}
+{capture}{if isset($smarty.request.objectName)}{tr}Object Watches:{/tr} {$smarty.request.objectName}{else}{tr}Object Watches{/tr}{/if}{/capture}
 {title help="Mail notifications"}{$smarty.capture.default}{/title}
 
 {if isset($referer)}

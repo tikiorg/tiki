@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title admpage="wiki"}{tr}History:{/tr} {$page|escape}{/title}
+{title admpage="wiki"}{tr}History:{/tr} {$page}{/title}
 
 <div class="navbar">
 	{assign var=thispage value=$page|escape:url}

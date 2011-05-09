@@ -1,5 +1,5 @@
 
-{title help="forums" admpage="forums"}{tr}Message queue for forum{/tr} {$forum_info.name|escape}{/title}
+{title help="forums" admpage="forums"}{tr}Message queue for forum{/tr} {$forum_info.name}{/title}
 
 <div class="navbar">
 	{button href="tiki-view_forum.php?forumId=$forumId" _text="{tr}Back to forum{/tr}"}

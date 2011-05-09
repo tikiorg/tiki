@@ -1,4 +1,4 @@
-{title help="FAQs"}{tr}{$faq_info.title|escape}{/tr}{/title}
+{title help="FAQs"}{tr}{$faq_info.title}{/tr}{/title}
 <div class="description">{$faq_info.description|escape}</div>
 
 <div class="navbar">

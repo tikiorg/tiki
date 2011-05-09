@@ -15,7 +15,7 @@
 					{tr}Files of $user{/tr}
 				{/if}
 			{else}
-				{$name|escape}
+				{$name}
 			{/if}
 		{/if}
 	{/strip}

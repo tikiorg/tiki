@@ -1,5 +1,5 @@
 
-{title help="Spreadsheet"}{tr}Spreadsheet History:{/tr} {$title|escape}{/title}
+{title help="Spreadsheet"}{tr}Spreadsheet History:{/tr} {$title}{/title}
 
 <div>
   {$description|escape}

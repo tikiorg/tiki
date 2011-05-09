@@ -7,7 +7,7 @@
 {/if}
 
 {if $subId}
-	{title help="Articles" url="tiki-edit_submission.php?subId=$subId"}{tr}Edit:{/tr} {$title|escape}{/title}
+	{title help="Articles" url="tiki-edit_submission.php?subId=$subId"}{tr}Edit:{/tr} {$title}{/title}
 {else}
 	{title help="Articles"}{tr}Submit article{/tr}{/title}
 {/if}

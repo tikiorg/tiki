@@ -1,4 +1,4 @@
-{title help="Newsletters"}{tr}Sent editions{/tr}{if $nl_info}: {$nl_info.name|escape}{/if}{/title}
+{title help="Newsletters"}{tr}Sent editions{/tr}{if $nl_info}: {$nl_info.name}{/if}{/title}
 
 <div class="navbar">
 	{if $tiki_p_list_newsletters eq "y"}

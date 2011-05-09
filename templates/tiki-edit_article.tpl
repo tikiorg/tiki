@@ -5,7 +5,7 @@
 
 {title help="Articles"}
 	{if $articleId}
-		{tr}Edit:{/tr} {$title|escape}
+		{tr}Edit:{/tr} {$title}
 	{else}
 		{tr}Edit article{/tr}
 	{/if}
