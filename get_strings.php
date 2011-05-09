@@ -510,7 +510,7 @@ foreach ($languages as $ksel => $sel) {
 		writeFile_and_User ($fw, "// ###\n");
 		writeFile_and_User ($fw, "// ### Technical justification:\n");
 		writeFile_and_User ($fw, "// ### If a string ending with colon needs translating (like \"{tr}Login:{/tr}\")\n");
-		writeFile_and_User ($fw, "// ### then Tiki tries to translate 'Log In' and ':' separately.\n");
+		writeFile_and_User ($fw, "// ### then Tiki tries to translate 'Login' and ':' separately.\n");
 		writeFile_and_User ($fw, "// ### This allows to have only one translation for \"{tr}Login{/tr}\" and \"{tr}Login:{/tr}\"\n");
 		writeFile_and_User ($fw, "// ### and it still allows to translate \":\" as \"&nbsp;:\" for languages that\n");
 		writeFile_and_User ($fw, "// ### need it (like french)\n");
