@@ -295,7 +295,7 @@ if (!empty($_REQUEST['moveto']) && $tiki_p_admin_trackers == 'y') { // mo to ano
 	$perms = Perms::get('tracker', $_REQUEST['moveto']);
 	if ($perms->create_tracker_items) {
 		$trklib->move_item($_REQUEST['trackerId'], $_REQUEST['itemId'], $_REQUEST['moveto']);
-		header('Location: '.filter_out_sefurl('tiki-view_tracker_item.php?itemId=' . $_REQUEST['itemId']));
+		header('Location: '.filter_out_sefurl('tiki-view_tracker_item.php?itemId=' . $_REQUEST['itemId'], $smarty));
 		exit;
 	} else {
 		$smarty->assign('errortype', 401);
