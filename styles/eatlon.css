@@ -231,17 +231,17 @@ tt {font-size: 1.2em}
 /*	min-height: 126px;*/
 /*	background: url(eatlon/banner.gif) no-repeat 100% 0*/}
 
-#top_modules .box-secondary_site_menu {
+#top_modules .module.secondary_site_menu {
 	position: absolute;
 	top: 0;
 	right: 30px;
 }
 
-#top_modules .box-secondary_site_menu .cssmenu_horiz li ul {
+#top_modules .secondary_site_menu .cssmenu_horiz li ul {
 	margin-top: -6px;
 }
 
-#top_modules .box-secondary_site_menu .cssmenu_horiz li ul ul {
+#top_modules .secondary_site_menu .cssmenu_horiz li ul ul {
 	margin-top: 0;
 }
 
@@ -257,10 +257,7 @@ tt {font-size: 1.2em}
 .floatright img {margin-right: 10px}
 
 #top_modules #sitetitles {
-	margin-left: 20px;
-	line-height: normal;
-	margin-top: 10%;
-	margin-bottom: 10%;
+	margin: 10% 20px;
 	padding-left: 15px;
 }
 
@@ -399,17 +396,17 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 	padding-top: 3px;
 	padding-bottom: 3px}
 	
-#secondary_site_menu li.menuLevel0 a:hover {
+.secondary_site_menu li.menuLevel0 a:hover {
 	color: #506887;
 }
 
-#secondary_site_menu li.menuLevel0 ul li a {
+.secondary_site_menu li.menuLevel0 ul li a {
 	color: #fff;
 }
 
 .cssmenu_vert li ul li a:hover,
 #tiki-top .cssmenu_horiz li a:hover,
-#secondary_site_menu .cssmenu_horiz ul li a:hover {
+.secondary_site_menu .cssmenu_horiz ul li a:hover {
 	color: #d7e5f3
 }
 
@@ -422,7 +419,7 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 }
 
 .cssmenu_vert .sf-sub-indicator,
-#secondary_site_menu .cssmenu_horiz .sf-sub-indicator {
+.secondary_site_menu .cssmenu_horiz .sf-sub-indicator {
 	background: url(eatlon/arrows-6d819d.png) no-repeat 10px 0;
 }
 

@@ -314,10 +314,10 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 
-#top_modules .box-secondary_site_menu {
+#top_modules .module.secondary_site_menu {
 	position: absolute;
 	top: 0;
-	right: 30px;
+	right: 20px;
 }
 
 #top_modules .box-logo {
@@ -331,10 +331,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 #top_modules #sitetitles {
-	margin-left: 20px;
-	line-height: normal;
-	margin-top: 10%;
-	margin-bottom: 10%;
+	margin: 10% 20px;
 	padding-left: 20px;
 }
 
@@ -347,8 +344,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 	color: #a7a7a7;
 	font-weight: 400;
 	letter-spacing: -2px;
-	margin: 0;
-	padding: 0;
 }
 
 #sitetitle {
@@ -361,7 +356,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 #top_modules .box-login_box {
 	position: absolute;
-	right: 10px;
+	right: 20px;
 	bottom: 0;
 }
 

@@ -542,8 +542,8 @@ select {
 
 #top_modules #sitetitle {
 	font-size: 52px;
-	/*margin-top: 2%;*/
-	line-height: 1;
+	/*margin-top: 2%;
+	line-height: 1;*/
 }
 
 #top_modules #sitetitle a,
@@ -554,8 +554,8 @@ select {
 
 #top_modules #sitesubtitle {
 	font-size: 30px;
-/*	margin-top: 24px;*/
-	line-height: 1.2;
+/*	margin-top: 24px;
+	line-height: 1.2;*/
 }
 
 /* Sitelogin Popup */

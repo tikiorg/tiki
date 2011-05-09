@@ -178,26 +178,30 @@ label {margin: 0 2px}
 #top_modules {
 	text-align: left;
 	background: transparent;
-/*	min-height: 122px;*/
 	position: relative;
 	background: #7d0000 url(ohia/header.png) repeat-x 0 100%;
 }
 
-#top_modules .siteloginbar_popup {
+#top_modules .module.secondary_site_menu {
 	position: absolute;
-	bottom: 9px;
+	bottom: 5px;
+	right: 30px;
+}
+
+#top_modules .box-login_box {
+	position: absolute;
+	bottom: 10px;
 	right: 10px;
 }
 
-#top_modules .siteloginbar_popup > .tabmark {
-	display: block;
+#top_modules .box-login_box > .tabmark {
+	float: left;
 }
 
 #top_modules .siteloginbar_popup a.login_link {
 	display; block;
 	padding: 4px 6px;
 }
-
 
 .siteloginbar_poppedup {
 	margin-top: 10px;
@@ -279,14 +283,14 @@ label {margin: 0 2px}
 	border-top: 1px solid #313131;
 }
 
-#secondary_site_menu a,
-#secondary_site_menu a:visited {
+.secondary_site_menu a,
+.secondary_site_menu a:visited {
 	color: #fff;
 	font-size: 95%
 }
 
-#secondary_site_menu ul li ul a,
-#secondary_site_menu ul li ul a:visited {
+.secondary_site_menu ul li ul a,
+.secondary_site_menu ul li ul a:visited {
 	color: #fd0006;
 }
 

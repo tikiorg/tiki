@@ -327,7 +327,6 @@ label {
 
 #col3 .content {
 	margin-right: 58px;
-	border-top: 1px solid #cfcfcf;
 }
 
 #footer {
@@ -416,10 +415,10 @@ body.fixed_width .fixedwidth .fixedwidth {
 	min-height: 121px;
 }
 
-#top_modules .box-secondary_site_menu {
+#top_modules .module.secondary_site_menu {
 	position: absolute;
 	top: 0;
-	left: 30%
+	left: 25%
 }
 
 #top_modules .box-logo {
@@ -452,6 +451,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 .box-login_box label,
 .box-login_box a,
+.box-login_box a.link,
 .box-login_box a:visited,
 .box-login_box a:hover {
 	color: #fff;
@@ -518,6 +518,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	display: inline;
 	height: 97px;
 	line-height: 97px;
+	margin-top: 3%;
 	overflow: hidden;
 	vertical-align: bottom;
 }

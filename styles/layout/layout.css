@@ -242,8 +242,9 @@ li#register_link {
 	margin-bottom: 4px;
 }
 
+#sitetitle,
 #sitesubtitle { 
-	line-height: 0.9em;
+	line-height: 1;
 }
 
 li#logout_link a {

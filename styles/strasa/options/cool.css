@@ -111,10 +111,6 @@ ul.jumplinks a:active {
 	background: url(cool/box_bottom.gif) no-repeat 0 100%;
 }
 
-#col3 .content {
-	border-top: 1px solid #cfcfcf;
-}
-
 #footer {
 	color: #999;
 	background: #2e3035;
@@ -163,10 +159,10 @@ ul.jumplinks a:active {
 .header_fixedwidth {
 	background: #f5f5f5 url(cool/headerbg.jpg) repeat-x 0 100%;
 }
-
+/*
 .siteloginbar {
 	background: url(cool/login.jpg) 0 0 no-repeat;
-}
+}*/
 
 * html .siteloginbar {
 	text-align: right;

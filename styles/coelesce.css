@@ -279,7 +279,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	min-height: 80px;
 }
 
-#top_modules .box-secondary_site_menu {
+#top_modules .module.secondary_site_menu {
 	position: absolute;
 	top: 0;
 	right: 30px;

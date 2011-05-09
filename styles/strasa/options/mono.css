@@ -119,10 +119,6 @@ ul.jumplinks a:active {
 	background: url('mono/box_bottom.gif') no-repeat 0 100%;
 }
 
-#col3 .content {
-	border-top: 1px solid #cfcfcf;
-}
-
 #footer {
 	color: #999;
 	background: #2e3035;
@@ -172,14 +168,9 @@ ul.jumplinks a:active {
 
 }
 
-.siteloginbar {
+#topbar_modules .box-login_box {
 	background: url('mono/login.jpg') 0 0 no-repeat;
 }
-
-* html .siteloginbar {
-	text-align: right;
-	width: 100%;
-	background: #fff url(mono/loginlong.jpg) 0 0 no-repeat}
 
 .siteloginbar .register {
 	background: url('mono/register.jpg') no-repeat;

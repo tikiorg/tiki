@@ -206,17 +206,17 @@ body.fixed_width .fixedwidth .fixedwidth {
 	margin-top: -8px;	
 }
 
-#top_modules .box-secondary_site_menu {
+#top_modules .module.secondary_site_menu {
 	position: absolute;
 	top: 0;
 	right: 30px;
 }
 
-#top_modules #secondary_site_menu .cssmenu_horiz li ul {
+#top_modules .secondary_site_menu .cssmenu_horiz li ul {
 	margin-top: -10px;
 }
 
-#top_modules #secondary_site_menu .cssmenu_horiz li ul ul {
+#top_modules .secondary_site_menu .cssmenu_horiz li ul ul {
 	margin-top: 0;
 }
 
@@ -226,10 +226,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 #top_modules #sitetitles {
-	margin-left: 20px;
-	line-height: normal;
-	margin-top: 10%;
-	margin-bottom: 10%;
+	margin: 10% 20px;
 	padding-left: 15px;
 }
 
@@ -366,7 +363,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	top: .3em;
 }
 
-.box-secondary_site_menu .cssmenu_horiz li a .sf-sub-indicator {
+.secondary_site_menu .cssmenu_horiz li a .sf-sub-indicator {
 	bottom: .5em;
 }
 
