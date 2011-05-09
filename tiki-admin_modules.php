@@ -34,7 +34,7 @@ if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y') {
     $smarty->assign('wysiwyg', 'y');
 }
 $access->check_permission(array('tiki_p_admin_modules'));
-$auto_query_args = array();
+$auto_query_args = array('show_hidden_modules');
 
 $access->check_feature( array('feature_jquery_ui') );
 

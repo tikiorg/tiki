@@ -6,6 +6,11 @@
 	{if $tiki_p_edit_menu eq 'y'}
 		{button href="tiki-admin_menus.php" _text="{tr}Admin Menus{/tr}"}
 	{/if}
+	{if empty($smarty.request.show_hidden_modules)}
+		{button show_hidden_modules="y" _text="{tr}Show hidden modules{/tr}"}
+	{else}
+		{button show_hidden_modules="" _text="{tr}Hide hidden modules{/tr}"}
+	{/if}
 	{button save_modules="y" _text="{tr}Save{/tr}" _style="display:none;" _id="save_modules" _ajax="n"}
 </div>
 
