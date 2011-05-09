@@ -258,17 +258,17 @@ body.fixed_width .fixedwidth .fixedwidth {
 	min-height: 98px;	
 }
 
-#top_modules .box-secondary_site_menu {
+#top_modules .module.secondary_site_menu {
 	position: absolute;
 	top: 0;
 	right: 30px;
 }
 
-#top_modules .box-secondary_site_menu .cssmenu_horiz li ul {
+#top_modules .secondary_site_menu .cssmenu_horiz li ul {
 	margin-top: -20px;
 }
 
-#top_modules .box-secondary_site_menu .cssmenu_horiz li ul ul {
+#top_modules .secondary_site_menu .cssmenu_horiz li ul ul {
 	margin-top: 0;
 }
 
@@ -294,7 +294,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 */
 
-.box-login_box {
+#top_modules .box-login_box {
 	position: absolute;
 	right: 20px;
 	bottom: 0;
@@ -328,22 +328,20 @@ body.fixed_width .fixedwidth .fixedwidth {
 /*	margin-top: 30px;*/
 	margin-left: 20px;
 /*	float: left;*/
+}
+
+#top_modules .box-logo {
 	height: 100%;
 }
 
 #top_modules #sitetitles {
-	margin-left: 20px;
-	line-height: normal;
-	margin-top: 2.35%;
-	margin-bottom: 2%;
-	height: 100%;
+	margin: 3% 20px 2% 20px;
 }
 
 #sitetitle {
 	font-size: 2.2em;
 	text-shadow: 0 0 10px #fff;/* text-shadow; CSS3 valid property, values are <offset x> <offset y> <blur> and <color>; ex: 0 0 10px #fff */
 	font-weight: bold;
-	line-height: 1;
 	padding: 0;
 	margin: 0;
 }
