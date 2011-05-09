@@ -62,7 +62,6 @@ if (!empty($_REQUEST['edit_assign'])) {
     check_ticket('admin-modules');
     $info = $modlib->get_assigned_module($_REQUEST['edit_assign']);
     $grps = '';
-	if (empty($info['params'])) $info['params'] = array();
     if (!empty($info['groups'])) {
         $module_groups = unserialize($info["groups"]);
         foreach($module_groups as $amodule) {
@@ -87,13 +86,15 @@ if (!empty($_REQUEST['edit_assign'])) {
     }
 
 	$modinfo = $modlib->get_module_info( $info['name'] );
-	$modlib->dispatchValues( $info['params'], $modinfo['params'] );
 	if ($modinfo["type"] != "function") {
 		$smarty->assign_by_ref('assign_rows', $info["rows"]);
-		$smarty->assign_by_ref('assign_params', $info["params"]); // For old-style modules
+		$smarty->assign_by_ref('assign_params', $info["params"]); // For old-style (user) modules
 	} else {
-		if (isset($modinfo['params']['rows']))
+		if (empty($info['params'])) $info['params'] = array();
+		$modlib->dispatchValues( $info['params'], $modinfo['params'] );
+		if (isset($modinfo['params']['rows'])) {
 			$modinfo['params']['rows']['value'] = $info["rows"];
+		}
 	}
 	$smarty->assign('assign_info', $modinfo);
 }
