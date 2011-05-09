@@ -166,7 +166,7 @@ class WikiLib extends TikiLib
 		global $prefs, $tikilib;
 		// if page already exists, stop here
 		$newName = trim($newName);
-		if ($this->page_exists($newName)) {
+		if ($this->get_page_info($newName, false, true)) {
 			// if it is a case change of same page: allow it, else stop here
 			if (strcasecmp(trim($oldName), $newName) <> 0 ) throw new Exception("Page already exists", 2);
 		}
