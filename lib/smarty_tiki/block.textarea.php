@@ -74,7 +74,8 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$as_id = $params['id'];
 	
 	include_once('lib/smarty_tiki/block.remarksbox.php');
-	if ($params['_simple'] === 'n' && isset($smarty->_tpl_vars['page']) && $smarty->_tpl_vars['page'] != 'sandbox') {
+	$editWarning = $prefs['wiki_timeout_warning'] == 'y' && isset($smarty->_tpl_vars['page']) && $smarty->_tpl_vars['page'] != 'sandbox';
+	if ($params['_simple'] === 'n' && $editWarning) {
 		$html .= smarty_block_remarksbox( array( 'type'=>'tip', 'title'=>tra('Tip')),
 			tra('This edit session will expire in') .
 				' <span id="edittimeout">' . (ini_get('session.gc_maxlifetime') / 60) .'</span> '. tra('minutes') . '. ' .
@@ -384,7 +385,7 @@ function switchEditor(mode, form) {
 ";
 		}
 			
-		if( $prefs['wiki_timeout_warning'] == 'y' ) {
+		if( $editWarning ) {
 			$headerlib->add_js($js_editlock);
 		}
 		$headerlib->add_js($js_editconfirm);
