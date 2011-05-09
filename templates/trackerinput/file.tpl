@@ -5,8 +5,10 @@
 {/if}
 {if $field.value ne ''}
 	<br />
-	{$field.info.filename}&nbsp;
-	<a href="tiki-download_item_attachment.php?attId={$field.value}" title="{tr}Download{/tr}">{icon _id='disk' alt="{tr}Download{/tr}"}</a>
+	<a href="tiki-download_item_attachment.php?attId={$field.value}" title="{tr}Download{/tr}">
+		{$field.filename}&nbsp;
+		{icon _id='disk' alt="{tr}Download{/tr}"}
+	</a>
 	{if ($tiki_p_admin_trackers eq 'y' or $field.info.user eq $user) and $field.isMandatory ne 'y'}
 		<a href="{$smarty.server.PHP_SELF}?{query removeattach=$field.value}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 	{/if}
