@@ -98,10 +98,10 @@
 				{preference name=wiki_edit_icons_toggle}
 			</fieldset>
 			
-			<fieldset class="admin">
+			<fieldset class="admin" id="plugins">
 				<legend>{tr}Plugins{/tr}</legend>
 				<fieldset class="admin donthide">
-					{listfilter selectors='#content2 .admin fieldset' exclude=".donthide"}
+					{listfilter selectors='#plugins fieldset.admin' exclude=".donthide"}
 				</fieldset>
 				{foreach from=$plugins key=plugin item=info}
 					<fieldset class="admin">
