@@ -3,7 +3,7 @@
 {title}{if $parentId ne 0}{tr}Category{/tr} {$p_info.name|tr_if}{else}{tr}Categories{/tr}{/if}{/title}
 
 {if $parentId and $p_info.description}
-	<div class="description">{$p_info.description}</div>
+	<div class="description">{$p_info.description|escape|nl2br}</div>
 {/if}
 <div class="categbar">
 	{button href="tiki-edit_categories.php" _text="{tr}Organize Objects{/tr}" _title="{tr}Organize Objects{/tr}"}
@@ -176,7 +176,7 @@
 						<tr class="{cycle}">
 							<td class="text">
 								<a href={if empty($objects[ix].sefurl)}"{$objects[ix].href}"{else}"{$objects[ix].sefurl}"{/if} class="catname">{$objects[ix].name|escape|default:'&nbsp;'}</a>
-								<div class="subcomment">{$objects[ix].description}</div>
+								<div class="subcomment">{$objects[ix].description|escape|nl2br}</div>
 							</td>
 							<td class="text">
 								{tr}{$objects[ix].type|replace:"wiki page":"wiki"|replace:"trackeritem":"tracker item"}{/tr}
