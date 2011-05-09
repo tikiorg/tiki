@@ -153,7 +153,7 @@
 				<td class="text">{$user_modules[user].title|escape}</td>
 				<td class="action">
 					<a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}&amp;cookietab=2#editcreate" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-					<a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name|escape:'url'}&amp;cookietab=1#assign" title="{tr}Assign{/tr}">{icon _id='add' alt="{tr}Assign{/tr}"}</a>
+					<a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name|escape:'url'}&amp;cookietab=2#assign" title="{tr}Assign{/tr}">{icon _id='add' alt="{tr}Assign{/tr}"}</a>
 					<a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name|escape:'url'}&amp;cookietab=2" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 				</td>
 			</tr>
