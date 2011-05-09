@@ -38,5 +38,6 @@ interface Tracker_Field_Interface
 	 */
 	function watchCompare($old, $new);
 
+	//function handleSave($value, $oldValue);
 }
 

@@ -39,16 +39,6 @@ class TrackerLib extends TikiLib
 
 	var $trackerinfo_cache;
 
-	// allowed types for image fields
-	var $imgMimeTypes;
-	var $imgMaxSize;
-
-	function __construct() {
-		parent::__construct();
-		$this->imgMimeTypes = array('image/jpeg', 'image/gif', 'image/png', 'image/pjpeg', 'image/bmp');
-		$this->imgMaxSize = (1048576 * 4); // 4Mo
-	}
-
 	private function attachments() {
 		return $this->table('tiki_tracker_item_attachments');
 	}
@@ -79,19 +69,6 @@ class TrackerLib extends TikiLib
 
 	private function logs() {
 		return $this->table('tiki_tracker_item_field_logs');
-	}
-
-	// check that the image type is good
-	function check_image_type($mimeType) {
-		return in_array( $mimeType, $this->imgMimeTypes );
-	}
-
-	function get_image_filename($imageFileName, $itemId, $fieldId) {
-		do {
-			$name = md5( uniqid("$imageFileName.$itemId.$fieldId"));
-		} while (file_exists("img/trackers/$name"));
-
-		return "img/trackers/$name";
 	}
 
 	function remove_field_images($fieldId) {
@@ -1486,225 +1463,196 @@ class TrackerLib extends TikiLib
 		foreach($ins_fields["data"] as $i=>$array) {
 			// Old values were prefilled at the begining of the function and only replaced at the end of the iteration
 			$old_value = isset($fil[$array['fieldId']]) ? $fil[$array['fieldId']] : null;
-			if (!isset($array["type"]) or $array["type"] == 's') {
-				// system type, do nothing
-				continue;
-			} else if ($array["type"] == 'S' && !empty($array['description'])) {	// static text
-				// do nothing
-			} else {
-				// -----------------------------
-				// save image on disk
-				if ( $array["type"] == 'i' && empty($array['value'])) {
-					continue;
-				}
-				if ( $array["type"] == 'i' && isset($array['value'])) {
-					$old_file = $this->get_item_value($trackerId, $itemId, $array['fieldId']);
 
-					if($array["value"] == 'blank') {
-						if(file_exists($old_file)) {
-							unlink($old_file);
-						}
-						$array["value"] = $ins_fields["data"][$i]["value"] = '';
-					} else if( !empty($array['value']) && !empty($array['file_type']) && $this->check_image_type( $array['file_type'] ) ) {
-						$opts = preg_split('/,/', $array["options"]);
-						if (!empty($opts[4])) {
-							$imagegallib = TikiLib::lib('imagegal');
-							$imagegallib->image = $array['value'];
-							$imagegallib->readimagefromstring();
-							$imagegallib->getimageinfo();
-							if ($imagegallib->xsize > $opts[4] || $imagegallib->xsize > $opts[4]) {
-								$imagegallib->rescaleImage($opts[4], $opts[4]);
-								$ins_fields["data"][$i]['value'] = $imagegallib->image;
-							}
-						}
-						if ($array['file_size'] <= $this->imgMaxSize) {
+			$handler = $this->get_field_handler($array, $fil);
 
-							$file_name = $this->get_image_filename(	$array['file_name'], $itemId, $array['fieldId']);
+			if (method_exists($handler, 'handleSave')) {
+				$array = array_merge($array, $handler->handleSave($array['value'], $old_value));
+				$value = $array['value'];
 
-							file_put_contents($file_name, $array['value']);
-							chmod($file_name, 0644); // seems necessary on some system (see move_uploaded_file doc on php.net
+				if ($value !== false) {
+					$this->modify_field($currentItemId, $array['fieldId'], $value);
 
-							$array['value'] = $ins_fields['data'][$i]['value'] = $file_name;
-							if(file_exists($old_file) && $old_file != $file_name) {
-								unlink($old_file);
-							}
-						}
-					}
-					else {
-						continue;
-					}
-				} elseif ($array['type'] == 'A') { //attachment
-					$perms = $tikilib->get_perm_object($trackerId, 'tracker', '', false);
-					if ($perms['tiki_p_attach_trackers'] == 'y' && !empty($array['file_name'])) {
-						if ($prefs['t_use_db'] == 'n') {
-							$fhash = md5($array['file_name'].$this->now);
-							if (file_put_contents($prefs['t_use_dir'] . $fhash, $array['value']) === false) {
-								$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
-								$smarty->display("error.tpl");
-								die;
-							}
-							$ins_fields['data'][$i]['value'] = '';
-						} else {
-							$fhash = 0;
-						}
-						$array['value'] = $ins_fields['data'][$i]['value'] = $this->replace_item_attachment($array['old_value'], $array['file_name'], $array['file_type'], $array['file_size'], $array['value'], '', $user, $fhash, '', '', $trackerId, $currentItemId, '', false);
-					} else {
-						continue;
-					}
-				} elseif ($array['type'] == 'k') { //page selector
-					if ($array['value'] != '') {
-						if (!$this->page_exists($array['value'])) {
-							$opts = preg_split('/,/', $array['options']);
-							if (!empty($opts[2])) {
-								$IP = $this->get_ip_address();
-								$info = $this->get_page_info($opts[2]);
-								$this->create_page($array['value'], 0, $info['data'], $this->now, '', $user, $IP, $info['description'], $info['lang'], $info['is_html'], array(), $info['wysiwyyg'], $info['wiki_authors_style']);
-							}
-						}
-					}
-				}
-
-				// Handle truncated fields. Only for textareas which have option 3 set
-				if ( $array["type"] == 'a' && isset($array["options_array"][3]) && ($array['options_array'][3]) ) {
-					$f_len = function_exists('mb_strlen') ? 'mb_strlen' : 'strlen';
-					$f_substr = function_exists('mb_substr') ? 'mb_substr' : 'substr';
-
-					if ( $f_len($array['value']) > $array['options_array'][3] ) {
-						$ins_fields['data'][$i]['value'] = $f_substr($array['value'],0,$array['options_array'][3]);
-					}
-				}
-
-				// Normalize on/y on a checkbox
-				if ($array["type"] == 'c' && $array['value'] == 'on') {
-					$ins_fields['data'][$i]['value'] = 'y';
-				}
-
-				if ($array['type'] == 'g' && $array['options_array'][0] == 1) {
-					if ($prefs['groupTracker'] == 'y' && isset($tracker_info['autoCreateGroup']) && $tracker_info['autoCreateGroup'] == 'y' && empty($itemId)) {
-						$groupName = $this->groupName($tracker_info, $new_itemId);
-						$ins_fields['data'][$i]['value'] = $groupName;
-					}
-				}
-
-				// Handle freetagging
-				if ($array["type"] == 'F') {
-					if ($prefs['feature_freetags'] == 'y') {
-						$freetaglib = TikiLib::lib('freetag');
-						$freetaglib->update_tags($user, $currentItemId, 'trackeritem', $array["value"]);
-					}
-				}
-
-				// ---------------------------
-				if (isset($array["fieldId"]))
-					$fieldId = $array["fieldId"];
-				if (isset($array["name"])) {
-					$name = $array["name"];
-				} else {
-					$name = $fields->fetchOne('name', array('fieldId' => (int) $fieldId));
-				}
-				$value = isset($array["value"]) ? $array["value"] : null;
-
-				if ($array['type'] == 'C') {
-					$calc = preg_replace('/#([0-9]+)/', '$fil[\1]', $array['options']);
-					eval('$value = '.$calc.';');
-
-				} elseif ($array["type"] == 'q') {
-					if (isset($array['options_array'][3]) && $array['options_array'][3] == 'itemId') {
-						$value = $currentItemId;
-					} elseif ($itemId == false) {
-						$value = $this->itemFields()->fetchOne($this->itemFields()->expr('MAX(CAST(`value` as UNSIGNED))'), array('fieldId' => (int) $fieldId));
-						if ($value == NULL) {
-							$value = isset($array['options_array'][0]) ? $array['options_array'][0] : 1;
-						} else {
-							$value += 1;
-						}
-					}
-				}
-				if ($array['type']=='*') {
-					$this->replace_star($array['value'], $trackerId, $itemId, $ins_fields['data'][$i], $user, false);
-				}
-
-				if ($array["type"] == 'e' && $prefs['feature_categories'] == 'y') {
-					// category type
-
-					$my_categs = $categlib->get_child_categories($array["options"]);
-					$aux = array();
-					foreach ($my_categs as $cat) {
-						$aux[] = $cat['categId'];
-					}
-					$my_categs = $aux;
-
-					if (!empty($itemId) && (!empty($my_new_categs) || !empty($my_del_categs))) {
+					if ($itemId) {
+						// On update, save old value
 						$this->log($version, $itemId, $array['fieldId'], $old_value);
 					}
-
-					$fil[$fieldId] = implode(',', array_intersect($ins_categs, $my_categs));
-					$this->modify_field($currentItemId, $fieldId, $fil[$fieldId]);
-				} elseif ((isset($array['isMultilingual']) && $array['isMultilingual'] == 'y') && in_array($array['type'], array('a', 't'))){
-
-					if (!isset($multi_languages))
-						$multi_languages=$prefs['available_languages'];
-					if (empty($array['lingualvalue'])) {
-						$ins_fields["data"][$i]['lingualvalue'][] = array('lang'=>$prefs['language'], 'value'=>$array['value']);
-					}
-
-					foreach ($array['lingualvalue'] as $linvalue) {
-						$this->modify_field($currentItemId, $fieldId, $linvalue['value'], $linvalue['lang']);
-						$fil[$fieldId . $linvalue['lang']] = $linvalue['value'];
-
-						if (!empty($itemId) && $old_value != $linvalue['value']) {
-							$this->log($version, $itemId, $array['fieldId'], $old_value, $linvalue['lang']);
-						}
-					}
-				} elseif ($array['type']=='p' && ($user == $trackersync_user || $tiki_p_admin_users == 'y')) {
-					if ($array['options_array'][0] == 'password') {
-						if (!empty($array['value']) && $prefs['change_password'] == 'y' && ($e = $userlib->check_password_policy($array['value'])) == '') {
-							$userlib->change_user_password($trackersync_user, $array['value']);
-						}
-						if (!empty($itemId)) {
-							$this->log($version, $itemId, $array['fieldId'], '?');
-						}
-					} elseif ($array['options_array'][0] == 'email') {
-						if (!empty($array['value']) && validate_email($array['value'])) {
-							$old_value = $userlib->get_user_email($trackersync_user);
-							$userlib->change_user_email($trackersync_user, $array['value']);
-						}
-						if (!empty($itemId) && $old_value != $array['value']) {
-							$this->log($version, $itemId, $array['fieldId'], $old_value);
-						}
-					} else {
-						$old_value = $tikilib->get_user_preference($trackersync_user, $array['options_array'][0]);
-						$tikilib->set_user_preference($trackersync_user, $array['options_array'][0], $array['value']);
-						if (!empty($itemId) && $old_value != $array['value']) {
-							$this->log($version, $itemId, $array['fieldId'], $array['value']);
-						}
-					}
-				} else {
-					$is_date = in_array($array["type"], array('f', 'j'));
-					$is_visible = !isset($array["isHidden"]) || $array["isHidden"] == 'n';
-
-					if ($currentItemId || $array['type'] != 'q') {
-						$this->modify_field($currentItemId, $fieldId, $value);
-						if ($old_value) {
-							if ($is_visible) {
-								if ($is_date) {
-									$dformat = $prefs['short_date_format'].' '.$prefs['short_time_format'];
-									$old_value = $this->date_format($dformat, (int)$old_value);
-									$new_value = $this->date_format($dformat, (int)$value);
-								} else {
-									$new_value = $value;
-								}
-								if ($old_value != $new_value && !empty($itemId)) {
-									$this->log($version, $itemId, $array['fieldId'], $old_value);
-								}
-							}
-
-							$this->update_item_link_value($trackerId, $fieldId, $old_value, $value);
-						}
-					}
-
 					$fil[$fieldId] = $value;
 				}
+				continue;
+			}
+
+			if ($array['type'] == 'A') { //attachment
+				$perms = $tikilib->get_perm_object($trackerId, 'tracker', '', false);
+				if ($perms['tiki_p_attach_trackers'] == 'y' && !empty($array['file_name'])) {
+					if ($prefs['t_use_db'] == 'n') {
+						$fhash = md5($array['file_name'].$this->now);
+						if (file_put_contents($prefs['t_use_dir'] . $fhash, $array['value']) === false) {
+							$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
+							$smarty->display("error.tpl");
+							die;
+						}
+						$ins_fields['data'][$i]['value'] = '';
+					} else {
+						$fhash = 0;
+					}
+					$array['value'] = $ins_fields['data'][$i]['value'] = $this->replace_item_attachment($array['old_value'], $array['file_name'], $array['file_type'], $array['file_size'], $array['value'], '', $user, $fhash, '', '', $trackerId, $currentItemId, '', false);
+				} else {
+					continue;
+				}
+			} elseif ($array['type'] == 'k') { //page selector
+				if ($array['value'] != '') {
+					if (!$this->page_exists($array['value'])) {
+						$opts = preg_split('/,/', $array['options']);
+						if (!empty($opts[2])) {
+							$IP = $this->get_ip_address();
+							$info = $this->get_page_info($opts[2]);
+							$this->create_page($array['value'], 0, $info['data'], $this->now, '', $user, $IP, $info['description'], $info['lang'], $info['is_html'], array(), $info['wysiwyyg'], $info['wiki_authors_style']);
+						}
+					}
+				}
+			}
+
+			// Handle truncated fields. Only for textareas which have option 3 set
+			if ( $array["type"] == 'a' && isset($array["options_array"][3]) && ($array['options_array'][3]) ) {
+				$f_len = function_exists('mb_strlen') ? 'mb_strlen' : 'strlen';
+				$f_substr = function_exists('mb_substr') ? 'mb_substr' : 'substr';
+
+				if ( $f_len($array['value']) > $array['options_array'][3] ) {
+					$ins_fields['data'][$i]['value'] = $f_substr($array['value'],0,$array['options_array'][3]);
+				}
+			}
+
+			// Normalize on/y on a checkbox
+			if ($array["type"] == 'c' && $array['value'] == 'on') {
+				$ins_fields['data'][$i]['value'] = 'y';
+			}
+
+			if ($array['type'] == 'g' && $array['options_array'][0] == 1) {
+				if ($prefs['groupTracker'] == 'y' && isset($tracker_info['autoCreateGroup']) && $tracker_info['autoCreateGroup'] == 'y' && empty($itemId)) {
+					$groupName = $this->groupName($tracker_info, $new_itemId);
+					$ins_fields['data'][$i]['value'] = $groupName;
+				}
+			}
+
+			// Handle freetagging
+			if ($array["type"] == 'F') {
+				if ($prefs['feature_freetags'] == 'y') {
+					$freetaglib = TikiLib::lib('freetag');
+					$freetaglib->update_tags($user, $currentItemId, 'trackeritem', $array["value"]);
+				}
+			}
+
+			// ---------------------------
+			if (isset($array["fieldId"]))
+				$fieldId = $array["fieldId"];
+			if (isset($array["name"])) {
+				$name = $array["name"];
+			} else {
+				$name = $fields->fetchOne('name', array('fieldId' => (int) $fieldId));
+			}
+			$value = isset($array["value"]) ? $array["value"] : null;
+
+			if ($array['type'] == 'C') {
+				$calc = preg_replace('/#([0-9]+)/', '$fil[\1]', $array['options']);
+				eval('$value = '.$calc.';');
+
+			} elseif ($array["type"] == 'q') {
+				if (isset($array['options_array'][3]) && $array['options_array'][3] == 'itemId') {
+					$value = $currentItemId;
+				} elseif ($itemId == false) {
+					$value = $this->itemFields()->fetchOne($this->itemFields()->expr('MAX(CAST(`value` as UNSIGNED))'), array('fieldId' => (int) $fieldId));
+					if ($value == NULL) {
+						$value = isset($array['options_array'][0]) ? $array['options_array'][0] : 1;
+					} else {
+						$value += 1;
+					}
+				}
+			}
+			if ($array['type']=='*') {
+				$this->replace_star($array['value'], $trackerId, $itemId, $ins_fields['data'][$i], $user, false);
+			}
+
+			if ($array["type"] == 'e' && $prefs['feature_categories'] == 'y') {
+				// category type
+
+				$my_categs = $categlib->get_child_categories($array["options"]);
+				$aux = array();
+				foreach ($my_categs as $cat) {
+					$aux[] = $cat['categId'];
+				}
+				$my_categs = $aux;
+
+				if (!empty($itemId) && (!empty($my_new_categs) || !empty($my_del_categs))) {
+					$this->log($version, $itemId, $array['fieldId'], $old_value);
+				}
+
+				$fil[$fieldId] = implode(',', array_intersect($ins_categs, $my_categs));
+				$this->modify_field($currentItemId, $fieldId, $fil[$fieldId]);
+			} elseif ((isset($array['isMultilingual']) && $array['isMultilingual'] == 'y') && in_array($array['type'], array('a', 't'))){
+
+				if (!isset($multi_languages))
+					$multi_languages=$prefs['available_languages'];
+				if (empty($array['lingualvalue'])) {
+					$ins_fields["data"][$i]['lingualvalue'][] = array('lang'=>$prefs['language'], 'value'=>$array['value']);
+				}
+
+				foreach ($array['lingualvalue'] as $linvalue) {
+					$this->modify_field($currentItemId, $fieldId, $linvalue['value'], $linvalue['lang']);
+					$fil[$fieldId . $linvalue['lang']] = $linvalue['value'];
+
+					if (!empty($itemId) && $old_value != $linvalue['value']) {
+						$this->log($version, $itemId, $array['fieldId'], $old_value, $linvalue['lang']);
+					}
+				}
+			} elseif ($array['type']=='p' && ($user == $trackersync_user || $tiki_p_admin_users == 'y')) {
+				if ($array['options_array'][0] == 'password') {
+					if (!empty($array['value']) && $prefs['change_password'] == 'y' && ($e = $userlib->check_password_policy($array['value'])) == '') {
+						$userlib->change_user_password($trackersync_user, $array['value']);
+					}
+					if (!empty($itemId)) {
+						$this->log($version, $itemId, $array['fieldId'], '?');
+					}
+				} elseif ($array['options_array'][0] == 'email') {
+					if (!empty($array['value']) && validate_email($array['value'])) {
+						$old_value = $userlib->get_user_email($trackersync_user);
+						$userlib->change_user_email($trackersync_user, $array['value']);
+					}
+					if (!empty($itemId) && $old_value != $array['value']) {
+						$this->log($version, $itemId, $array['fieldId'], $old_value);
+					}
+				} else {
+					$old_value = $tikilib->get_user_preference($trackersync_user, $array['options_array'][0]);
+					$tikilib->set_user_preference($trackersync_user, $array['options_array'][0], $array['value']);
+					if (!empty($itemId) && $old_value != $array['value']) {
+						$this->log($version, $itemId, $array['fieldId'], $array['value']);
+					}
+				}
+			} else {
+				$is_date = in_array($array["type"], array('f', 'j'));
+				$is_visible = !isset($array["isHidden"]) || $array["isHidden"] == 'n';
+
+				if ($currentItemId || $array['type'] != 'q') {
+					$this->modify_field($currentItemId, $fieldId, $value);
+					if ($old_value) {
+						if ($is_visible) {
+							if ($is_date) {
+								$dformat = $prefs['short_date_format'].' '.$prefs['short_time_format'];
+								$old_value = $this->date_format($dformat, (int)$old_value);
+								$new_value = $this->date_format($dformat, (int)$value);
+							} else {
+								$new_value = $value;
+							}
+							if ($old_value != $new_value && !empty($itemId)) {
+								$this->log($version, $itemId, $array['fieldId'], $old_value);
+							}
+						}
+
+						$this->update_item_link_value($trackerId, $fieldId, $old_value, $value);
+					}
+				}
+
+				$fil[$fieldId] = $value;
 			}
 		}
 
@@ -4765,6 +4713,7 @@ class TrackerLib extends TikiLib
 
 	function update_tracker_summary($args)
 	{
+		$items = $this->items();
 		$trackerId = (int) $args['trackerId'];
 		$cant_items = $items->fetchCount(array('trackerId' => $trackerId));
 		$this->trackers()->update(array('items' => (int) $cant_items, 'lastModif' => $this->now), array(

@@ -30,5 +30,12 @@ class Tracker_Field_StaticText extends Tracker_Field_Abstract
 	{
 		return $this->renderTemplate('trackerinput/statictext.tpl', $context);
 	}
+
+	function handleSave($value, $oldValue)
+	{
+		return array(
+			'value' => false,
+		);
+	}
 }
 

@@ -13,6 +13,15 @@
  */
 class Tracker_field_Image extends Tracker_Field_File
 {
+	private $imgMimeTypes;
+	private $imgMaxSize;
+
+	function __construct() {
+		parent::__construct();
+		$this->imgMimeTypes = array('image/jpeg', 'image/gif', 'image/png', 'image/pjpeg', 'image/bmp');
+		$this->imgMaxSize = (1048576 * 4); // 4Mo
+	}
+
 	function getFieldData(array $requestData = array())
 	{
 		global $prefs, $smarty;
@@ -103,6 +112,60 @@ class Tracker_field_Image extends Tracker_Field_File
 		return $this->renderTemplate('trackerinput/image.tpl', $context);
 	}
 
+	function handleSave($value, $oldValue)
+	{
+		if (! empty($value)) {
+			$old_file = $oldValue;
+
+			if ($value == 'blank') {
+				if (file_exists($old_file)) {
+					unlink($old_file);
+				}
+
+				return array(
+					'value' => '',
+				);
+			}
+
+			$type = $this->getConfiguration('file_type');
+
+			if ($this->isImageType($type)) {
+				if ($maxSize = $this->getOption(4)) {
+					$imagegallib = TikiLib::lib('imagegal');
+					$imagegallib->image = $array['value'];
+					$imagegallib->readimagefromstring();
+					$imagegallib->getimageinfo();
+					if ($imagegallib->xsize > $maxSize || $imagegallib->xsize > $maxSize) {
+						$imagegallib->rescaleImage($maxSize, $maxSize);
+						return array(
+							'value' => $imagegallib->image,
+						);
+					}
+				}
+				$filesize = $this->getConfiguration('file_size');
+				if ($filesize <= $this->imgMaxSize) {
+					$itemId = $this->getItemId();
+					$file_name = $this->getImageFilename($this->getConfiguration('file_name'), $itemId, $this->getConfiguration('fieldId'));
+
+					file_put_contents($file_name, $value);
+					chmod($file_name, 0644); // seems necessary on some system (see move_uploaded_file doc on php.net
+
+					if(file_exists($old_file) && $old_file != $file_name) {
+						unlink($old_file);
+					}
+
+					return array(
+						'value' => $file_name,
+					);
+				}
+			}
+		}
+
+		return array(
+			'value' => false,
+		);
+	}
+
 	/**
 	 * Calculate the size of a resized image
 	 * 
@@ -116,7 +179,8 @@ class Tracker_field_Image extends Tracker_Field_File
 	 * 
 	 * @return array(int $resized_width, int $resized_height)
 	 */
-	private function get_resize_dimensions( $image_width, $image_height, $max_width = null, $max_height = null, $upscale = false) {
+	private function get_resize_dimensions( $image_width, $image_height, $max_width = null, $max_height = null, $upscale = false)
+	{
 		if (!$upscale && $image_width <= $max_width && $image_height <= $max_height) {
 			return array($image_width, $image_height);
 		}
@@ -130,5 +194,20 @@ class Tracker_field_Image extends Tracker_Field_File
 		}
 		return array(round($image_width * $ratio), round($image_height * $ratio));
 	}
+
+	function getImageFilename($name, $itemId, $fieldId)
+	{
+		do {
+			$name = md5(uniqid("$name.$itemId.$fieldId"));
+		} while (file_exists("img/trackers/$name"));
+
+		return "img/trackers/$name";
+	}
+
+	function isImageType($mimeType)
+	{
+		return in_array($mimeType, $this->imgMimeTypes);
+	}
+
 }
 
