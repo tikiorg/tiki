@@ -86,6 +86,7 @@ function wikiplugin_trackerfilter_info() {
 		'body' => tra('notice'),
 		'icon' => 'pics/icons/application_form_magnify.png',
 		'params' => $params,
+		'format' => 'html',
 		'extraparams' => true,
 	);
 }

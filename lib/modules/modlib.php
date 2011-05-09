@@ -298,7 +298,7 @@ class ModLib extends TikiLib
 
 		foreach( $list as & $partial ) {
 			$partial = array_map( array( $this, 'augment_module_parameters' ), $partial );
-			if (!$this->is_admin_mode()) {
+			if (!$this->is_admin_mode() || empty($_REQUEST['show_hidden_modules'])) {
 				$partial = array_values( array_filter( $partial, array( $this, 'filter_active_module' ) ) );
 			}
 		}

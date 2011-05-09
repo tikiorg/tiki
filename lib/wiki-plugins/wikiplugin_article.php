@@ -12,6 +12,7 @@ function wikiplugin_article_info() {
 		'description' => tra('Display a field of an article'),
 		'prefs' => array( 'feature_articles', 'wikiplugin_article' ),
 		'icon' => 'pics/icons/layout_content.png',
+		'format' => 'html',
 		'params' => array(
 			'Field' => array(
 				'required' => false,
@@ -55,6 +56,6 @@ function wikiplugin_article($data, $params) {
 	global $artlib; require_once 'lib/articles/artlib.php';
 	$article_data = $artlib->get_article($Id);
 	if (isset($article_data[$Field])) {
-		return $article_data[$Field].$add;
+		return $tikilib->parse_data($article_data[$Field]) . $add;
 	}
 }

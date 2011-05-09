@@ -40,12 +40,12 @@ function upgrade_20101230_create_top_modules_tiki( $installer ) {
 	// add site logo
 	if( $prefs['feature_sitelogo'] === 'y' ) {
 		$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-								"('logo','t',1,7200,'nobox=y&style=float%3Aleft%3Bmargin%3A0+30px%3B','a:1:{i:0;s:9:\"Anonymous\";}');");
+								"('logo','t',1,7200,'nobox=y','a:1:{i:0;s:9:\"Anonymous\";}');");
 	}
 	// add site login
 	if( $prefs['feature_site_login'] === 'y' ) {
 		$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-								"('login_box','t',2,0,'mode=header&nobox=y&style=position%3Aabsolute%3Bright%3A30px%3Btop%3A5px%3B','a:1:{i:0;s:9:\"Anonymous\";}');");
+								"('login_box','t',2,0,'mode=popup&nobox=y','a:1:{i:0;s:9:\"Anonymous\";}');");
 	}
 	// deal with top bar
 	if ( $prefs['feature_top_bar'] === 'y') {
@@ -58,7 +58,7 @@ function upgrade_20101230_create_top_modules_tiki( $installer ) {
 		// add site search
 		if($prefs['feature_sitesearch'] === 'y' ) {
 			$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-									"('search','o',1,7200,'nobox=y&style=float%3Aright%3Bclear%3Aright%3B','a:1:{i:0;s:9:\"Anonymous\";}');");
+									"('search','o',1,7200,'nobox=y','a:1:{i:0;s:9:\"Anonymous\";}');");
 		}
 	}
 	// add quickadmin but prefs feature_sitemycode, sitemycode stay and will need manual upgrading
@@ -66,7 +66,7 @@ function upgrade_20101230_create_top_modules_tiki( $installer ) {
 		$sitemycode = $installer->getOne( "SELECT `value` FROM `tiki_preferences` WHERE `name` = 'sitemycode'");
 		if (strpos($sitemycode, 'quickadmin') !== false) {
 			$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-									"('quickadmin','t',3,7200,'nobox=y&style=position%3A+absolute%3B+right%3A+200px%3B','a:1:{i:0;s:6:\"Admins\";}');");
+									"('quickadmin','t',3,7200,'nobox=y','a:1:{i:0;s:6:\"Admins\";}');");
 		}
 	}
 	// add breadcrumb module - feature_breadcrumbs stays for now

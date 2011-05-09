@@ -34,7 +34,7 @@ if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y') {
     $smarty->assign('wysiwyg', 'y');
 }
 $access->check_permission(array('tiki_p_admin_modules'));
-$auto_query_args = array();
+$auto_query_args = array('show_hidden_modules');
 
 $access->check_feature( array('feature_jquery_ui') );
 
@@ -62,7 +62,6 @@ if (!empty($_REQUEST['edit_assign'])) {
     check_ticket('admin-modules');
     $info = $modlib->get_assigned_module($_REQUEST['edit_assign']);
     $grps = '';
-	if (empty($info['params'])) $info['params'] = array();
     if (!empty($info['groups'])) {
         $module_groups = unserialize($info["groups"]);
         foreach($module_groups as $amodule) {
@@ -87,13 +86,15 @@ if (!empty($_REQUEST['edit_assign'])) {
     }
 
 	$modinfo = $modlib->get_module_info( $info['name'] );
-	$modlib->dispatchValues( $info['params'], $modinfo['params'] );
 	if ($modinfo["type"] != "function") {
 		$smarty->assign_by_ref('assign_rows', $info["rows"]);
-		$smarty->assign_by_ref('assign_params', $info["params"]); // For old-style modules
+		$smarty->assign_by_ref('assign_params', $info["params"]); // For old-style (user) modules
 	} else {
-		if (isset($modinfo['params']['rows']))
+		if (empty($info['params'])) $info['params'] = array();
+		$modlib->dispatchValues( $info['params'], $modinfo['params'] );
+		if (isset($modinfo['params']['rows'])) {
 			$modinfo['params']['rows']['value'] = $info["rows"];
+		}
 	}
 	$smarty->assign('assign_info', $modinfo);
 }
@@ -221,8 +222,10 @@ if (isset($_REQUEST["preview"])) {
         }
     }
     if (!empty($_REQUEST['moduleId'])) {
-        $smarty->assign_by_ref('moduleId', $_REQUEST['moduleId']);
-    }
+        $smarty->assign('moduleId', $_REQUEST['moduleId']);
+    } else {
+		$smarty->assign('moduleId', 0);
+	}
     $smarty->assign_by_ref('assign_name', $_REQUEST["assign_name"]);
     $smarty->assign_by_ref('assign_params', $_REQUEST["assign_params"]);
     $smarty->assign_by_ref('assign_position', $_REQUEST["assign_position"]);

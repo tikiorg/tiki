@@ -820,7 +820,7 @@ dl.note-list {
 }
 
 #note-editor-comment {
-	background: #fff;
+	background: yellow;
 	color: #000;
 	border: #999 1px solid;
 }

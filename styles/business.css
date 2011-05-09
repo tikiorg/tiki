@@ -201,7 +201,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	min-height: 130px;
 }*/
 
-#top_modules .box-secondary_site_menu {
+#top_modules .module.secondary_site_menu {
 	position: absolute;
 	top: 0;
 	right: 30px;
@@ -229,8 +229,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 #top_modules #sitetitles {
-	margin-top: 10%;
-	margin-bottom: 10%;
+	margin: 10% 10px 10% 23px;
 	height: 100%;
 }
 
@@ -240,7 +239,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 #sitetitle {
-	margin-left: 23px;
 	font: bold 24px helvetica,arial,sans-serif;
 }
 

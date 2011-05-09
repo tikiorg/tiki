@@ -126,10 +126,11 @@
 						<a {popup text="{tr}Params: specific params to the module and/or general params ('lang', 'flip', 'title', 'decorations', 'section', 'overflow', 'page', 'nobox', 'bgcolor', 'color', 'theme', 'notitle', 'nopage'). Separator between params:'&amp;'. E.g. maxlen=15&amp;nonums=y.{/tr}" width=200 center=true}>
 							<label for="assign_params">{tr}Parameters{/tr}</label>
 						</a>
+						&nbsp;{help url="Module+Parameters" desc="{tr}Enter the parameters in URL format, e.g. 'nobox=y&class=rbox-data'{/tr}"}
 					</div>
-					<div class="description q234">
+					<div class="q234">
 						<textarea id="assign_params" name="assign_params" rows="1" cols="60" >{$assign_params|escape}</textarea>
-						{help url="Module+Parameters"}
+						{self_link um_edit=$assign_name cookietab="2" _anchor="editcreate"}{tr}Edit user module{/tr} {icon _id="arrow_right"}{/self_link}
 					</div>
 				</div>
 			{/if}

@@ -183,7 +183,7 @@ input[type="submit"]:active,
 	margin: 0;
 }
 
-#top_modules .box-secondary_site_menu {
+#top_modules .module.secondary_site_menu {
 	position: absolute;
 	top: 0;
 	right: 30px;
@@ -203,10 +203,7 @@ input[type="submit"]:active,
 }
 
 #top_modules #sitetitles {
-	margin-left: 20px;
-	line-height: normal;
-	margin-top: 10%;
-	margin-bottom: 10%;
+	margin: 10% 20px;
 	padding-left: 20px;
 }
 
@@ -225,7 +222,7 @@ input[type="submit"]:active,
 
 #sitesubtitle {
 	font-size: 1.2em;
-/*	margin-top: 10px;*/
+	margin-top: 10px;
 }
 
 #top_modules .box-login_box {

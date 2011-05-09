@@ -5,7 +5,7 @@
 {if $smod_params.tiki_search neq 'none'}
     <form id="search-module-form{$search_mod_usage_counter}" method="get" action="#"{if $smod_params.use_autocomplete eq 'y'} onsubmit="return submitSearch{$search_mod_usage_counter}()"{/if}>
     	<div>
-		    <input id="search_mod_input_{$search_mod_usage_counter}" name="find"{if !empty($smod_params.input_size)} style="width:{$smod_params.input_size}em"{/if} type="text" accesskey="s" value="{$smod_params.input_value}" /> 
+		    <input id="search_mod_input_{$search_mod_usage_counter}" name="find"{if !empty($smod_params.input_size)} style="width:{$smod_params.input_size}em"{/if} type="text" accesskey="s" value="{$smod_params.input_value}" />
 			
 		 	{if $smod_params.show_object_filter eq 'y'}
 				{tr}in:{/tr}
@@ -80,7 +80,9 @@
 						});
 				}).click( function () {
 					$(this).parents("form").submit();
-				});{/jq}
+				});
+				$("#search_mod_input_{{$search_mod_usage_counter}}")
+					.keydown( function () { $(".search_mod_magnifier", $(this).parent()).mouseover();} );{/jq}
 			{/if}
 	    </div>
     </form>
@@ -98,6 +100,10 @@ function submitSearch{{$search_mod_usage_counter}}() {
 	{if $smod_params.use_autocomplete eq 'y'}
 		{capture name="selectFn"}select: function(event, item) {ldelim}
 	$('#search-module-form{$search_mod_usage_counter}').attr('page_selected', item.item.value);
+{rdelim}, open: function(event, item) {ldelim}
+	$(".search_mod_buttons", "#search-module-form{$search_mod_usage_counter}").hide();
+{rdelim}, close: function(event, item) {ldelim}
+	$(".search_mod_buttons", "#search-module-form{$search_mod_usage_counter}").show();
 {rdelim}{/capture}
 		{autocomplete element="#search_mod_input_"|cat:$search_mod_usage_counter type="pagename" options=$smarty.capture.selectFn}
 	{/if}

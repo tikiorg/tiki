@@ -265,7 +265,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding: 0;
 }
 
-#top_modules .box-secondary_site_menu {
+#top_modules .module.secondary_site_menu {
 	position: absolute;
 	top: 0;
 	right: 30px;

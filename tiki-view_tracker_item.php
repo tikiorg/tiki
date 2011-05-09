@@ -295,7 +295,7 @@ if (!empty($_REQUEST['moveto']) && $tiki_p_admin_trackers == 'y') { // mo to ano
 	$perms = Perms::get('tracker', $_REQUEST['moveto']);
 	if ($perms->create_tracker_items) {
 		$trklib->move_item($_REQUEST['trackerId'], $_REQUEST['itemId'], $_REQUEST['moveto']);
-		header('Location: '.filter_out_sefurl('tiki-view_tracker_item.php?itemId=' . $_REQUEST['itemId']));
+		header('Location: '.filter_out_sefurl('tiki-view_tracker_item.php?itemId=' . $_REQUEST['itemId'], $smarty));
 		exit;
 	} else {
 		$smarty->assign('errortype', 401);
@@ -654,14 +654,16 @@ if ($tracker_info["useComments"] == 'y') {
 	$smarty->assign_by_ref('comments', $comments["data"]);
 	$smarty->assign_by_ref('commentCount', $comments["cant"]);
 }
+if (isset($_REQUEST["removeattach"])) {
+	check_ticket('view-trackers-items');
+	$owner = $trklib->get_item_attachment_owner($_REQUEST["removeattach"]);
+	if (($user && ($owner == $user)) || ($tiki_p_admin_trackers == 'y')) {
+		$access->check_authenticity(tra('Are you sure you want to remove this attachment?'));
+		$trklib->remove_item_attachment($_REQUEST["removeattach"]);
+	}
+}
 if ($tracker_info["useAttachments"] == 'y') {
 	if (isset($_REQUEST["removeattach"])) {
-		check_ticket('view-trackers-items');
-		$owner = $trklib->get_item_attachment_owner($_REQUEST["removeattach"]);
-		if (($user && ($owner == $user)) || ($tiki_p_admin_trackers == 'y')) {
-			$access->check_authenticity(tra('Are you sure you want to remove this attachment?'));
-			$trklib->remove_item_attachment($_REQUEST["removeattach"]);
-		}
 		$_REQUEST["show"] = "att";
 	}
 	if (isset($_REQUEST["editattach"])) {

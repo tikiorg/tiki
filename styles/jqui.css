@@ -184,6 +184,12 @@ input[type="submit"]:hover,
 	height: 100%;
 }
 
+#top_modules .module.secondary_site_menu {
+	position: absolute;
+	top: 20px;
+	right: 30px;
+}
+
 #top_modules .box-logo {
 	height: 100%;
 }
@@ -191,17 +197,15 @@ input[type="submit"]:hover,
 #top_modules #sitetitles {
 	font-weight: bold;
 	margin-left: 20px;
-	line-height: normal;
-	margin-top: 2.35%;
+	margin-top: 3%;
 	margin-bottom: 2%;
-	height: 100%;
 }
 
-#sitetitle {
+#top_modules #sitetitle {
 	font-size: 2.4em;
 }
 
-#sitesubtitle {
+#top_modules #sitesubtitle {
 	font-size: 1.2em;
 	padding-top: 5px;
 }
@@ -231,13 +235,9 @@ input[type="submit"]:hover,
 
 #top_modules .box-quickadmin {
 	border: 1px solid #999;
-	border-top: 0;
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
-	-webkit-border-bottom-left-radius: 5px;
-	-webkit-border-bottom-right-radius: 5px;
-	-moz-border-radius-bottomleft: 5px;
-	-moz-border-radius-bottomright: 5px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
 }
 
 
@@ -288,15 +288,15 @@ input[type="submit"]:hover,
 	top: 44px;
 }
 
-#secondary_site_menu .cssmenu_horiz li:hover ul,
-#secondary_site_menu .cssmenu_horiz li.sfHover ul {
+.secondary_site_menu .cssmenu_horiz li:hover ul,
+.secondary_site_menu .cssmenu_horiz li.sfHover ul {
 	top: 22px;
 }
 
 #tiki-top .cssmenu_horiz li:hover ul ul,
 #tiki-top .cssmenu_horiz li.sfHover ul ul,
-#secondary_site_menu .cssmenu_horiz li:hover ul ul,
-#secondary_site_menu .cssmenu_horiz li.sfHover ul ul {
+.secondary_site_menu .cssmenu_horiz li:hover ul ul,
+.secondary_site_menu .cssmenu_horiz li.sfHover ul ul {
 	top: -1px;
 }
 
@@ -349,7 +349,7 @@ a .sf-sub-indicator {
 	top: 7px;
 }
 
-#secondary_site_menu a .sf-sub-indicator {
+.secondary_site_menu a .sf-sub-indicator {
 	top: 8px;
 }
 

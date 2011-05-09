@@ -242,8 +242,9 @@ li#register_link {
 	margin-bottom: 4px;
 }
 
+#sitetitle,
 #sitesubtitle { 
-	line-height: 0.9em;
+	line-height: 1;
 }
 
 li#logout_link a {
@@ -1626,10 +1627,6 @@ body.filegal_popup #tiki-center {
 	height: 15px;
 }
 
-.attachmentlist {
-	list-style: none;
-}
-	
 /* also for categorize.tpl */
 .multiselect {
 	vertical-align: middle;

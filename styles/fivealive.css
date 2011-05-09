@@ -528,7 +528,7 @@ select {
 }
 
 #top_modules #sitetitles {
-	margin-top: 70px;
+	margin-top: 55px;
 	margin-left: 135px;
 	font-family: Paneuropa, "Bitstream Vera Sans", Arial, Helvetica, sans-serif;
 	white-space: nowrap;
@@ -542,6 +542,8 @@ select {
 
 #top_modules #sitetitle {
 	font-size: 52px;
+	/*margin-top: 2%;
+	line-height: 1;*/
 }
 
 #top_modules #sitetitle a,
@@ -552,7 +554,8 @@ select {
 
 #top_modules #sitesubtitle {
 	font-size: 30px;
-	margin-top: 24px;
+/*	margin-top: 24px;
+	line-height: 1.2;*/
 }
 
 /* Sitelogin Popup */

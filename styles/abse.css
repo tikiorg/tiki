@@ -223,14 +223,13 @@ body.fixed_width .fixedwidth .fixedwidth {
 	height: 100%;
 }
 
-#top_modules #secondary_site_menu {
+#top_modules .module.secondary_site_menu {
 	position: absolute;
 	top: 0;
 	right: 30px;
 }
 
-/* id is no longer used but this is retained as possible reference for banner module CSS */
-#top_modules .box-login {
+#top_modules .box-login_box {
 	position: absolute;
 	right: 10px;
 	bottom: 0;
@@ -257,7 +256,6 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 #sitesubtitle {font-size: 1.6em}
 
-.header .box-login_box,
 #topbar_modules .box-search {
 	float: right;
 	margin-right: 10px;
