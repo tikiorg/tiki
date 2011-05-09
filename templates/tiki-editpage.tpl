@@ -32,9 +32,9 @@
 {/if}
 {if $translation_mode eq 'n'}
 	{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{assign var=pp value=$approvedPageName}{else}{assign var=pp value=$page}{/if}
-	{title}{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}{tr}Edit Section{/tr}{else}{tr}Edit{/tr}{/if}: {$pp|escape}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}{/title}
+	{title}{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}{tr}Edit Section{/tr}{else}{tr}Edit{/tr}{/if}: {$pp}{if $pageAlias ne ''}&nbsp;({$pageAlias}){/if}{/title}
 {else}
-   {title}{tr}Update '{$page|escape}'{/tr}{/title}
+   {title}{tr}Update '{$page}'{/tr}{/title}
 {/if}
    
 {if $beingStaged eq 'y'}

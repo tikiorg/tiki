@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {assign var=escuser value=$assign_user|escape:url}
-{title}{tr}Assign User {$assign_user|escape} to Groups{/tr}{/title}
+{title}{tr}Assign User {$assign_user} to Groups{/tr}{/title}
 
 <div class="navbar">
 	{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}

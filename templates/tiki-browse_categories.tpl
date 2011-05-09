@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title}{if $parentId ne 0}{tr}Category{/tr} {$p_info.name|tr_if|escape}{else}{tr}Categories{/tr}{/if}{/title}
+{title}{if $parentId ne 0}{tr}Category{/tr} {$p_info.name|tr_if}{else}{tr}Categories{/tr}{/if}{/title}
 
 {if $parentId and $p_info.description}
 	<div class="description">{$p_info.description}</div>

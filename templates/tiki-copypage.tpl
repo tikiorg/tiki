@@ -1,5 +1,5 @@
 {* $Id$ *}
-{title}{tr}Copy page:{/tr}&nbsp;{$page|escape}{/title}
+{title}{tr}Copy page:{/tr}&nbsp;{$page}{/title}
 
 <div class="navbar">
 	{assign var=thispage value=$page|escape:url}

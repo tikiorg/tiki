@@ -1,5 +1,5 @@
 
-{title}{tr}{$title|escape}{/tr}{/title}
+{title}{tr}{$title}{/tr}{/title}
 
 <div>
 	{$description|escape}
