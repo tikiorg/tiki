@@ -1492,11 +1492,7 @@ class TrackerLib extends TikiLib
 			}
 			$value = isset($array["value"]) ? $array["value"] : null;
 
-			if ($array['type'] == 'C') {
-				$calc = preg_replace('/#([0-9]+)/', '$fil[\1]', $array['options']);
-				eval('$value = '.$calc.';');
-
-			} elseif ($array["type"] == 'q') {
+			if ($array["type"] == 'q') {
 				if (isset($array['options_array'][3]) && $array['options_array'][3] == 'itemId') {
 					$value = $currentItemId;
 				} elseif ($itemId == false) {
@@ -1608,7 +1604,7 @@ class TrackerLib extends TikiLib
 		return $itemId;
 	}
 
-	private function modify_field($itemId, $fieldId, $value, $language = null)
+	function modify_field($itemId, $fieldId, $value, $language = null)
 	{
 		$conditions = array(
 			'itemId' => (int) $itemId,

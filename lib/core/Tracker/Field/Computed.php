@@ -64,4 +64,28 @@ class Tracker_Field_Computed extends Tracker_Field_Abstract
 	{
 		return $this->renderOutput($context);
 	}
+
+	function handleSave($value, $oldValue)
+	{
+		return array(
+			'value' => false,
+		);
+	}
+
+	public static function computeFields($args)
+	{
+		$trklib = TikiLib::lib('trk');
+		$definition = Tracker_Definition::get($args['trackerId']);
+
+		foreach ($definition->getFields() as $field) {
+			$fieldId = $field['fieldId'];
+
+			if ($field['type'] == 'C') {
+				$calc = preg_replace('/#([0-9]+)/', '$args[\'values\'][\1]', $field['options'][0]);
+				eval('$value = '.$calc.';');
+				$args['values'][$fieldId] = $value;
+				$trklib->modify_field($args['itemId'], $fieldId, $value);
+			}
+		}
+	}
 }
