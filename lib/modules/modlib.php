@@ -781,7 +781,9 @@ class ModLib extends TikiLib
 	 * @return bool
 	 */
 	private function is_admin_mode() {
-		return strpos($_SERVER["SCRIPT_NAME"], 'tiki-admin_modules.php') !== false;
+		global $tiki_p_admin_modules;
+		
+		return $tiki_p_admin_modules === 'y' && strpos($_SERVER["SCRIPT_NAME"], 'tiki-admin_modules.php') !== false;
 	}
 
 	function get_user_module_content( $name ) {
