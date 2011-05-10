@@ -179,7 +179,7 @@ tt {font-size: 110%}
 	float: none !important;
 }
 
-#sitetitle {
+#top_modules #sitetitle {
 	display: block;
 	margin: 0 auto;
 	padding-top: 30px;
@@ -188,207 +188,20 @@ tt {font-size: 110%}
 	font-family: 'trebuchet ms',georgia,'lucidia grande';
 	font-size: 3.6em;
 	color: #FE9B27;
-	letter-spacing: 8px}
+	letter-spacing: 8px;
+}
 	
-#sitetitle a {
+#top_modules #sitetitle a {
 	color: #FE9B27;
 }
 
-#sitesubtitle {
+#top_modules #sitesubtitle {
 	font-size: 13px;
 	font-weight: bold;
 	letter-spacing: 1px;
 	color: #4f0000;
 	margin: 10px auto auto;
 	text-align: center}
-
-#top_modules .box-menu {
-	text-align: center;
-	background: #000;
-	height: 40px;
-	width: 100%;
-}
-
-#topbar_modules .box-login_box {
-	position: static;
-	float: right;
-	height: 28px !important;
-	padding: 0 4px;
-}
-
-#topbar_modules .box-login_box
-/*.siteloginbar_popup .tabmark a*/ {
-	background: url(darkshine/orange.png) repeat-x;
-	border: none;
-	padding: 7px;
-	line-height: normal;
-	color: #fff;
-}
-
-#topbar_modules .box-search input {
-	background: transparent;
-	color: #fff;
-	border: none;
-}
-
-.box-search .search_mod_magnifier {
-	margin-bottom: -4px;
-}
-.sitesearchbar .findtable {
-	margin: 0 !important;
-}
-
-.siteloginbar_popup .cssmenu_horiz ul li {
-	background: #f3f3f3;
-	color: #000;
-	height: auto !important;
-}
-
-.siteloginbar_popup .tabcontent {
-	border: none;
-}
-
-.siteloginbar_popup .cssmenu_horiz ul li a {
-	color: #600000;
-	font-weight: bold;
-	text-decoration: none;
-}
-
-li#register_link {
-	margin-right: 0;
-}
-
-.siteloginbar_popup .tabmark {
-	border: 0;
-	background: none;
-}
-
-/****** Menus, Links ******/
-/** CSS (suckerfish) menus **/
-.cssmenu ul li,
-.cssmenu_vert li ul li,
-.cssmenu_horiz li ul li {
-	background: #f3f3f3}
-	
-/* left column width */
-#col2 ul.cssmenu_vert {
-	padding-left: 0;
-}
-
-#col2 .cssmenu_vert,
-#col2 .cssmenu_vert li {
-	width: 160px;
-}
-
-/* offset from left column (matches above) */
-#col2 .cssmenu_vert li:hover ul,
-#col2 .cssmenu_vert li.sfHover ul {
-	left: 160px;
-}
-
-/* return ul ul ... to default */
-#col2 .cssmenu_vert li:hover ul,
-#col2 .cssmenu_vert li.sfHover ul,
-#col2 .cssmenu_vert li:hover ul li,
-#col2 .cssmenu_vert li.sfHover ul li {
-	width: 10em;
-}
-
-/* return ul ul ... to default */
-#col2 .cssmenu_vert li li:hover ul,
-#col2 .cssmenu_vert li li.sfHover ul {
-	left: 10em;
-}
-
-#tiki-top ul.cssmenu_horiz {
-	display: inline-block;
-	margin: auto;
-	text-align: left;
-}
-
-#tiki-top ul.cssmenu_horiz li a,
-#listcontainer ul.cssmenu_horiz li a {
-	color: #fff;
-	text-decoration: none;
-	font: bold 11px verdana, arial, helvetica, sans-serif;
-	padding: 12px 10px;
-	margin: 0}
-
-#tiki-top ul.cssmenu_horiz li a:hover,
-#listcontainer ul.cssmenu_horiz li a:hover {
-	color: #fff;
-	background: #101010 url(darkshine/nav.gif) repeat-x;
-	background-position: 0 -40px}
-
-#tiki-top ul.cssmenu_horiz li ul a,
-#listcontainer ul.cssmenu_horiz li ul a {color: #000}
-
-#tiki-top ul.cssmenu_horiz li ul a:hover,
-#listcontainer ul.cssmenu_horiz li ul a:hover {color: #fff}
-
-#tiki-top ul.cssmenu_horiz li.menuSection a {padding-right: 26px}
-#tiki-top .cssmenu_horiz li.menuSection a .sf-sub-indicator {top: 14px}
-#col2 .cssmenu_vert a .sf-sub-indicator {top: 0.6em}
-
-/* special arrows and arrow top padding */
-.cssmenu_vert li a .sf-sub-indicator,
-.cssmenu_horiz ul li a .sf-sub-indicator {
-	background: url(darkshine/arrows-000000.png) no-repeat 0 0;
-}
-
-/* ul ul top compensation for padding */
-.cssmenu_horiz li:hover ul,
-.cssmenu_horiz li.sfHover ul {
-	top: 3.2em;
-}
-
-#secondary_site_menu .cssmenu_horiz li a,
-#secondary_site_menu .cssmenu_horiz li a:visited {
-	color: #fff;
-	background: none;
-	padding: 7px 1em 3px;
-}
-
-#secondary_site_menu .cssmenu_horiz li.menuSection a {
-	padding-right: 20px;
-}
-
-#secondary_site_menu ul.cssmenu_horiz ul li a,
-#secondary_site_menu ul.cssmenu_horiz ul li a:visited {
-	color: #000;
-}
-
-#secondary_site_menu .cssmenu_horiz li ul,
-#siteloginbar_popup .cssmenu_horiz li ul {
-	margin-top: -7px;
-}
-
-#secondary_site_menu .cssmenu_horiz li ul ul {
-	margin-top: 0;
-}
-
-
-/** Links in other menus **/
-.separator, .separatorline {
-	color: #600000;
-	display: block;
-	line-height: 2em;
-	border: 1px solid #783C1C;
-	border-width: 0 0 1px 0;
-	color: #600000;
-	padding-left: .25em}
-
-.separator a:link,
-.separator a:visited {color: #600000}
-
-.separator a:hover {color: #fff}
-
-.separator:hover,
-* html .separator a:hover {
-	background: #FD9339 url(darkshine/hover_list.jpg) repeat-x;
-	color: #fff}
-
-.menuSection .option {padding-left: 22px}
 
 /***** Dark Shine-specific page top *****/
 	
@@ -438,49 +251,249 @@ li#register_link {
 	margin-top: 4px;
 }
 
+.darkshine_adspace {
+	background: #71201b url(darkshine/ad.gif) repeat-x;
+	border-bottom: 0;
+	text-align: center;
+	width: 100%;
+	position: absolute;
+	top: 28px;
+}
+
+.darkshine_adspace .wrapper {
+	border-left: 1px solid #A5514B;
+	border-right: 1px solid #5B1D1B;
+	border-top: 1px solid #CA807C;
+	border-bottom: 1px solid #3E1B19;
+}
+
+.darkshine_adspace img {margin: .7em auto}
+
+.darkshine_sitead {
+	border-left: 1px solid #A5514B;
+	border-right: 1px solid #5B1D1B;
+	border-top: 1px solid #CA807C;
+	border-bottom: 1px solid #3E1B19}
+	
+#top_modules .box-menu {
+	text-align: center;
+	background: #000;
+	height: 40px;
+	width: 100%;
+}
+
+#topbar_modules .module.secondary_site_menu {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#topbar_modules .box-login_box {
+	position: static;
+	float: right;
+	height: 28px !important;
+	padding: 0 4px;
+}
+
+#topbar_modules .box-login_box
+/*.siteloginbar_popup .tabmark a*/ {
+	background: url(darkshine/orange.png) repeat-x;
+	border: none;
+	padding: 7px;
+	line-height: normal;
+	color: #fff;
+}
+
+#topbar_modules .box-search input {
+	background: transparent;
+	color: #fff;
+	border: none;
+}
+
+.box-search .search_mod_magnifier {
+	margin-bottom: -4px;
+}
+
+.sitesearchbar .findtable {
+	margin: 0 !important;
+}
+
+.siteloginbar_popup .cssmenu_horiz ul li {
+	background: #f3f3f3;
+	color: #000;
+	height: auto !important;
+}
+
+.siteloginbar_popup .tabcontent {
+	border: none;
+}
+
+.siteloginbar_popup .cssmenu_horiz ul li a {
+	color: #600000;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+li#register_link {
+	margin-right: 0;
+}
+
+.siteloginbar_popup .tabmark {
+	border: 0;
+	background: none;
+}
+
 input[id="fuser"],
 select[name="where"],
 #sitesearchbar input.wikiaction,
 #topbar_modules .box-search .ac_input {
 	background: #21C336;
 	color: #fff;
-	border: none;}
-	
-#topbar_modules .siteloginbar_popup {
-	background: url(darkshine/orange.png) no-repeat;
+	border: none;
 }
 
 #topbar_modules .box-login_box .tabmark {
 	background: none;
 	border: none;
+	margin-top: -4px;
 }
 
 #topbar_modules .box-login_box .tabmark a.login_link {
 	color: #fff;
 }
 
-#adspace {
-	background: #71201b url(darkshine/ad.gif) repeat-x;
-	border-bottom: 0;
-	text-align: center;
-	width: 100%;
-	padding-top: 28px;
+#topbar_modules .box-login_box .siteloginbar_poppedup {
+	margin-top: -12px;
 }
 
-#adspace .wrapper {
-	border-left: 1px solid #A5514B;
-	border-right: 1px solid #5B1D1B;
-	border-top: 1px solid #CA807C;
-	border-bottom: 1px solid #3E1B19;
-}
+/****** Menus, Links ******/
+/** CSS (suckerfish) menus **/
+.cssmenu ul li,
+.cssmenu_vert li ul li,
+.cssmenu_horiz li ul li {
+	background: #f3f3f3}
 	
-#adspace img {margin: .7em auto}
+/* left column width */
+#col2 ul.cssmenu_vert {
+	padding-left: 0;
+}
 
-#sitead {
-	border-left: 1px solid #A5514B;
-	border-right: 1px solid #5B1D1B;
-	border-top: 1px solid #CA807C;
-	border-bottom: 1px solid #3E1B19}
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 160px;
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 160px;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+#tiki-top ul.cssmenu_horiz {
+	display: inline-block;
+	margin: auto;
+	text-align: left;
+}
+
+#tiki-top ul.cssmenu_horiz li a {
+	color: #fff;
+	text-decoration: none;
+	font: bold 11px verdana, arial, helvetica, sans-serif;
+	padding: 12px 10px;
+	margin: 0}
+
+#tiki-top ul.cssmenu_horiz li a:hover {
+	color: #fff;
+	background: #101010 url(darkshine/nav.gif) repeat-x;
+	background-position: 0 -40px}
+
+#tiki-top ul.cssmenu_horiz li ul a,
+#listcontainer ul.cssmenu_horiz li ul a {color: #000}
+
+#tiki-top ul.cssmenu_horiz li ul a:hover,
+#listcontainer ul.cssmenu_horiz li ul a:hover {color: #fff}
+
+#tiki-top ul.cssmenu_horiz li.menuSection a {padding-right: 26px}
+#tiki-top .cssmenu_horiz li.menuSection a .sf-sub-indicator {top: 14px}
+#col2 .cssmenu_vert a .sf-sub-indicator {top: 0.6em}
+
+/* special arrows and arrow top padding */
+.cssmenu_vert li a .sf-sub-indicator,
+.cssmenu_horiz ul li a .sf-sub-indicator {
+	background: url(darkshine/arrows-000000.png) no-repeat 0 0;
+}
+
+/* ul ul top compensation for padding */
+.cssmenu_horiz li:hover ul,
+.cssmenu_horiz li.sfHover ul {
+	top: 3.2em;
+}
+
+.secondary_site_menu .cssmenu_horiz li a,
+.secondary_site_menu .cssmenu_horiz li a:visited {
+	color: #fff;
+	background: none;
+	padding-top: 7px;
+	padding-left: 1em;
+	padding-bottom: 7px;
+}
+
+.secondary_site_menu .cssmenu_horiz ul li a,
+.secondary_site_menu .cssmenu_horiz ul li a:visited {
+	color: #000;
+}
+
+.secondary_site_menu .cssmenu_horiz li ul,
+.siteloginbar_popup .cssmenu_horiz li ul {
+	margin-top: -7px;
+}
+
+.secondary_site_menu .cssmenu_horiz li ul ul {
+	margin-top: 0;
+}
+
+.secondary_site_menu .sf-sub-indicator {
+	bottom: .5em;
+}
+
+
+/** Links in other menus **/
+.separator,
+.separatorline {
+	color: #600000;
+	display: block;
+	line-height: 2em;
+	border: 1px solid #783C1C;
+	border-width: 0 0 1px 0;
+	color: #600000;
+	padding-left: .25em}
+
+.separator a:link,
+.separator a:visited {color: #600000}
+
+.separator a:hover {color: #fff}
+
+.separator:hover,
+* html .separator a:hover {
+	background: #FD9339 url(darkshine/hover_list.jpg) repeat-x;
+	color: #fff}
+
+.menuSection .option {padding-left: 22px}
+
 
 /***** Misc. Center Col. *****/
 #tiki-center {background: #F3F3F3;}
