@@ -54,6 +54,7 @@ body.fixed_width #editpageform {
 
 h3.box-title {
 	z-index: 2;
+	line-height: 1;
 }
 
 .cssmenu_vert ul li {
@@ -68,8 +69,3 @@ h3.box-title {
 #middle {
 	display: table;
 }
-
-h3.box-title {
-	line-height: 1;
-}
-
