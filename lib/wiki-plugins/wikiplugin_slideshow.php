@@ -7,7 +7,7 @@
 
 function wikiplugin_slideshow_info() {
 	return array(
-		'name' => tra('SLIDESHOW'),
+		'name' => tra('Slideshow'),
 		'documentation' => 'Slideshow',
 		'description' => tra('Configure a slideshow.  Extends the existing wiki page slideshow with notes & styles.'),
 		'prefs' => array( 'feature_slideshow' ),
