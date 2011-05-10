@@ -39,7 +39,8 @@ body.fullscreen #tiki-center {
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
 
-.fixed_width #main {
+.fixed_width #main,
+#fixedwidth {
     margin-top: 0;
 }
 
@@ -208,22 +209,31 @@ tt {font-size: 110%}
 	width: 100%;
 }
 
-.siteloginbar,
-.siteloginbar_popup {
+#topbar_modules .box-login_box {
 	position: static;
 	float: right;
 	height: 28px !important;
 	padding: 0 4px;
 }
 
-.siteloginbar_popup .tabmark a {
-	background: url(darkshine/orange.jpg) repeat-x;
+#topbar_modules .box-login_box
+/*.siteloginbar_popup .tabmark a*/ {
+	background: url(darkshine/orange.png) repeat-x;
 	border: none;
 	padding: 7px;
 	line-height: normal;
 	color: #fff;
 }
 
+#topbar_modules .box-search input {
+	background: transparent;
+	color: #fff;
+	border: none;
+}
+
+.box-search .search_mod_magnifier {
+	margin-bottom: -4px;
+}
 .sitesearchbar .findtable {
 	margin: 0 !important;
 }
