@@ -257,14 +257,10 @@ body.fixed_width .fixedwidth .fixedwidth {
 #sitesubtitle {font-size: 1.6em}
 
 #topbar_modules .box-search {
-	float: right;
-	margin-right: 10px;
-	font-size: 90%;
-}
-
-#topbar_modules .box-search {
 	float: none;
 	position: absolute;
+	font-size: 90%;
+	margin-right: 10px;
 	right: 10px;
 	top: 0;
 }

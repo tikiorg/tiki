@@ -4849,7 +4849,7 @@ if( \$('#$id') ) {
 			$ck_editor_plugin .= '}';
 		}
 		// work out if I'm a nested plugin and return empty if so
-		$stack = debug_backtrace(true);
+		$stack = debug_backtrace();
 		$plugin_nest_level = 0;
 		foreach ($stack as $st) {
 			if ($st['function'] === 'parse_first') {
@@ -4866,8 +4866,8 @@ if( \$('#$id') ) {
 		if (in_array($name, array('trackerlist', 'kaltura', 'toc', 'freetagged'))) {
 			$plugin_result = str_replace(array('{', '}'), array('%7B' , '%7D'), $ck_editor_plugin);
 		} else {
-			// Tiki 7+ wraps plugin output with ~np~ so remove them
-			$plugin_result = preg_replace('/^~np~(.*)~\/np~$/ms', '$1', $plugin_result);
+			// Tiki 7+ adds ~np~ to plugin output so remove them
+			$plugin_result = preg_replace('/~[\/]?np~/ms', '', $plugin_result);
 
 			// pre-parse the output so nested plugins don't fall out all over the place
 			$plugin_result = $this->parse_data($plugin_result, array('is_html' => false, 'suppress_icons' => true, 'ck_editor' => true, 'noparseplugins' => true));

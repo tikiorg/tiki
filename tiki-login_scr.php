@@ -20,5 +20,7 @@ $headerlib->add_js( '$(document).ready( function() {$("#login-user").focus().sel
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('headtitle', tra('Log In'));
+$smarty->assign('module_params', array( 'mode' => 'module' ));
 $smarty->assign('mid', 'tiki-login.tpl');
+$smarty->assign('module_params', array());
 $smarty->display("tiki.tpl");
