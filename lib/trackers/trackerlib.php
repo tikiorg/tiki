@@ -1492,10 +1492,6 @@ class TrackerLib extends TikiLib
 			}
 			$value = isset($array["value"]) ? $array["value"] : null;
 
-			if ($array['type']=='*') {
-				$this->replace_star($array['value'], $trackerId, $itemId, $ins_fields['data'][$i], $user, false);
-			}
-
 			if ($array["type"] == 'e' && $prefs['feature_categories'] == 'y') {
 				// category type
 
@@ -2524,35 +2520,16 @@ class TrackerLib extends TikiLib
 			return;
 		}
 		
-		$itemFields = $this->itemFields();
-
-		$conditions = array(
-			'itemId' => (int) $itemId,
-			'fieldId' => (int) $field['fieldId'],
-		);
-
 		$this->register_user_vote($user, $key, $userValue, array(), true);
+
+		$votings = $this->table('tiki_user_votings');
+		$data = $votings->fetchRow(array(
+			'count' => $votings->count(),
+			'total' => $votings->sum('optionId'),
+		), array('id' => $key));
+		$field['numvotes'] = $data['count'];
 		$field['my_rate'] = $userValue;
-		if (! $itemFields->fetchCount($conditions)) {
-			$field['voteavg'] = $field['value'] = $userValue;
-			$field['numvotes'] = 1;
-
-			$itemFields->insert(array(
-				'value' => $field['value'],
-				'itemId' => (int) $itemId,
-				'fieldId' => (int) $field['fieldId'],
-			));
-		} else {
-			$votings = $this->table('tiki_user_votings');
-			$data = $votings->fetchRow(array(
-				'count' => $votings->count(),
-				'total' => $votings->sum('optionId'),
-			), array('id' => $key));
-			$field['numvotes'] = $data['count'];
-			$field['voteavg'] = $field['value'] = $data['total'] / $field['numvotes'];
-
-			$itemFields->update(array('value' => $field['value']), $conditions);
-		}
+		$field['voteavg'] = $field['value'] = $data['total'] / $field['numvotes'];
 	}
 	function update_star_field($trackerId, $itemId, &$field) {
 		global $user;
