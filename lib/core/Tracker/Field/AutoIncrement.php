@@ -35,5 +35,24 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract
 	{
 		return $this->renderTemplate('trackerinput/autoincrement.tpl', $context);
 	}
+
+	function handleSave($value, $oldValue)
+	{
+		$value = false;
+		if ($this->getOption(3) == 'itemId') {
+			$value = $this->getItemId();
+		} elseif (is_null($oldValue)) {
+			$value = TikiLib::lib('trk')->get_maximum_value($this->getConfiguration('fieldId'));
+			if (! $value) {
+				$value = $this->getOption(0, 1);
+			} else {
+				$value += 1;
+			}
+		}
+
+		return array(
+			'value' => $value,
+		);
+	}
 }
 

@@ -1492,18 +1492,6 @@ class TrackerLib extends TikiLib
 			}
 			$value = isset($array["value"]) ? $array["value"] : null;
 
-			if ($array["type"] == 'q') {
-				if (isset($array['options_array'][3]) && $array['options_array'][3] == 'itemId') {
-					$value = $currentItemId;
-				} elseif ($itemId == false) {
-					$value = $this->itemFields()->fetchOne($this->itemFields()->expr('MAX(CAST(`value` as UNSIGNED))'), array('fieldId' => (int) $fieldId));
-					if ($value == NULL) {
-						$value = isset($array['options_array'][0]) ? $array['options_array'][0] : 1;
-					} else {
-						$value += 1;
-					}
-				}
-			}
 			if ($array['type']=='*') {
 				$this->replace_star($array['value'], $trackerId, $itemId, $ins_fields['data'][$i], $user, false);
 			}
@@ -4685,6 +4673,11 @@ class TrackerLib extends TikiLib
 				}
 			}
 		}
+	}
+
+	public function get_maximum_value($fieldId)
+	{
+		return $this->itemFields()->fetchOne($this->itemFields()->expr('MAX(CAST(`value` as UNSIGNED))'), array('fieldId' => (int) $fieldId));
 	}
 }
 
