@@ -1013,8 +1013,7 @@ if( isset( $_POST['fix_double_encoding'] ) && ! empty($_POST['previous_encoding'
 
 if( $install_step == '4' ) {
 	$value = '';
-	if ($db = TikiDB::get()) {
-		$result = $db->fetchAll( 'show variables like "character_set_database"' );
+	if ( ($db = TikiDB::get()) && ($result = $db->fetchAll( 'show variables like "character_set_database"') )) {
 		$res = reset( $result );
 		$variable = array_shift( $res );
 		$value = array_shift( $res );
