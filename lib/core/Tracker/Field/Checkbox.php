@@ -28,5 +28,16 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract
 	{
 		return $this->renderTemplate('trackerinput/checkbox.tpl', $context);
 	}
+
+	function handleSave($value, $oldValue)
+	{
+		if ($value == 'on') {
+			$value = 'y';
+		}
+
+		return array(
+			'value' => $value,
+		);
+	}
 }
 

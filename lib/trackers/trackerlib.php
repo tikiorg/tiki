@@ -1495,28 +1495,6 @@ class TrackerLib extends TikiLib
 				}
 			}
 
-			// Handle truncated fields. Only for textareas which have option 3 set
-			if ( $array["type"] == 'a' && isset($array["options_array"][3]) && ($array['options_array'][3]) ) {
-				$f_len = function_exists('mb_strlen') ? 'mb_strlen' : 'strlen';
-				$f_substr = function_exists('mb_substr') ? 'mb_substr' : 'substr';
-
-				if ( $f_len($array['value']) > $array['options_array'][3] ) {
-					$ins_fields['data'][$i]['value'] = $f_substr($array['value'],0,$array['options_array'][3]);
-				}
-			}
-
-			// Normalize on/y on a checkbox
-			if ($array["type"] == 'c' && $array['value'] == 'on') {
-				$ins_fields['data'][$i]['value'] = 'y';
-			}
-
-			if ($array['type'] == 'g' && $array['options_array'][0] == 1) {
-				if ($prefs['groupTracker'] == 'y' && isset($tracker_info['autoCreateGroup']) && $tracker_info['autoCreateGroup'] == 'y' && empty($itemId)) {
-					$groupName = $this->groupName($tracker_info, $new_itemId);
-					$ins_fields['data'][$i]['value'] = $groupName;
-				}
-			}
-
 			// Handle freetagging
 			if ($array["type"] == 'F') {
 				if ($prefs['feature_freetags'] == 'y') {

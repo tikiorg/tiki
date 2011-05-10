@@ -60,5 +60,21 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 	{
 		return $this->renderTemplate('trackerinput/groupselector.tpl', $context);
 	}
+
+	function handleSave($value, $oldValue)
+	{
+		global $prefs;
+
+		if ($this->getOption(0) && is_null($oldValue)) {
+			$definition = $this->getTrackerDefinition();
+			if ($prefs['groupTracker'] == 'y' && $definition->isEnabled('autoCreateGroup')) {
+				$value = TikiLib::lib('trk')->groupName($definition->getInformation(), $this->getItemId());
+			}
+		}
+
+		return array(
+			'value' => $value,
+		);
+	}
 }
 
