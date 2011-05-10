@@ -325,7 +325,7 @@ class CreditsLib extends TikiLib
 
 			return 0;
 		} else {
-			$this->query( "UPDATE `tiki_credits` SET `used_amount` = `total_amount` WHERE `creditId `= ?", 
+			$this->query( "UPDATE `tiki_credits` SET `used_amount` = `total_amount` WHERE `creditId`= ?", 
 				array( $creditId ) );
 
 			return $amount - $available;
