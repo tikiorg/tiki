@@ -5389,7 +5389,7 @@ class TikiLib extends TikiDb_Bridge
 			$ck_editor_plugin .= '}';
 		}
 		// work out if I'm a nested plugin and return empty if so
-		$stack = debug_backtrace(true);
+		$stack = debug_backtrace();
 		$plugin_nest_level = 0;
 		foreach ($stack as $st) {
 			if ($st['function'] === 'parse_first') {
