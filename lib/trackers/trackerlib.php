@@ -1495,14 +1495,6 @@ class TrackerLib extends TikiLib
 				}
 			}
 
-			// Handle freetagging
-			if ($array["type"] == 'F') {
-				if ($prefs['feature_freetags'] == 'y') {
-					$freetaglib = TikiLib::lib('freetag');
-					$freetaglib->update_tags($user, $currentItemId, 'trackeritem', $array["value"]);
-				}
-			}
-
 			// ---------------------------
 			if (isset($array["fieldId"]))
 				$fieldId = $array["fieldId"];
@@ -4679,6 +4671,17 @@ class TrackerLib extends TikiLib
 		$this->trackers()->update(array('items' => (int) $cant_items, 'lastModif' => $this->now), array(
 			'trackerId' =>  $trackerId,
 		));
+	}
+
+	function sync_freetags($args)
+	{
+		$definition = Tracker_Definition::get($args['trackerId']);
+
+		if ($field = $definition->getFreetagField()) {
+			global $user;
+			$freetaglib = TikiLib::lib('freetag');
+			$freetaglib->update_tags($user, $args['object'], 'trackeritem', $args['values'][$field]);
+		}
 	}
 }
 

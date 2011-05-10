@@ -157,6 +157,15 @@ class Tracker_Definition
 		}
 	}
 
+	function getFreetagField()
+	{
+		foreach ($this->getFields() as $field) {
+			if ($field['type'] == 'F') {
+				return $field['fieldId'];
+			}
+		}
+	}
+
 	function getCategorizedFields()
 	{
 		$out = array();
