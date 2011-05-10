@@ -8,8 +8,8 @@
 function prefs_proxy_list() {
 	return array (
 		'proxy_host' => array(
-			'name' => tra('Host'),
-			'description' => tra('Proxy host'),
+			'name' => tra('Host name'),
+			'description' => tra('Proxy host - without http:// or similar, just the host name'),
 			'type' => 'text',
 			'size' => '20',
 			'dependencies' => array(
