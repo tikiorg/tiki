@@ -1482,19 +1482,6 @@ class TrackerLib extends TikiLib
 				continue;
 			}
 
-			if ($array['type'] == 'k') { //page selector
-				if ($array['value'] != '') {
-					if (!$this->page_exists($array['value'])) {
-						$opts = preg_split('/,/', $array['options']);
-						if (!empty($opts[2])) {
-							$IP = $this->get_ip_address();
-							$info = $this->get_page_info($opts[2]);
-							$this->create_page($array['value'], 0, $info['data'], $this->now, '', $user, $IP, $info['description'], $info['lang'], $info['is_html'], array(), $info['wysiwyyg'], $info['wiki_authors_style']);
-						}
-					}
-				}
-			}
-
 			// ---------------------------
 			if (isset($array["fieldId"]))
 				$fieldId = $array["fieldId"];
@@ -4681,6 +4668,26 @@ class TrackerLib extends TikiLib
 			global $user;
 			$freetaglib = TikiLib::lib('freetag');
 			$freetaglib->update_tags($user, $args['object'], 'trackeritem', $args['values'][$field]);
+		}
+	}
+
+	function update_create_missing_pages($args)
+	{
+		global $user;
+		$tikilib = TikiLib::lib('tiki');
+
+		$definition = Tracker_Definition::get($args['trackerId']);
+
+		foreach ($definition->getFields() as $field) {
+			$fieldId = $field['fieldId'];
+			$value = $args['values'][$fieldId];
+			if ($field['type'] == 'k' && $value != '' && !empty($field['options'][2])) {
+				if (!$this->page_exists($value)) {
+					$IP = $this->get_ip_address();
+					$info = $this->get_page_info($field['options'][2]);
+					$tikilib->create_page($value, 0, $info['data'], $tikilib->now, '', $user, $IP, $info['description'], $info['lang'], $info['is_html'], array(), $info['wysiwyyg'], $info['wiki_authors_style']);
+				}
+			}
 		}
 	}
 }
