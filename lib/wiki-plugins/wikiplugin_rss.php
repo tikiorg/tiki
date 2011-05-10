@@ -99,7 +99,7 @@ function wikiplugin_rss($data,$params) {
 		'desc' => 0,
 		'author' => 0,
 		'icon' => '',
-                'showtitle' => 1,
+		'showtitle' => 1,
 	), $params );
 
 	if ( ! isset( $params['id'] ) ) {
