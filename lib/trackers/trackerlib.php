@@ -1482,25 +1482,7 @@ class TrackerLib extends TikiLib
 				continue;
 			}
 
-			if ($array['type'] == 'A') { //attachment
-				$perms = $tikilib->get_perm_object($trackerId, 'tracker', '', false);
-				if ($perms['tiki_p_attach_trackers'] == 'y' && !empty($array['file_name'])) {
-					if ($prefs['t_use_db'] == 'n') {
-						$fhash = md5($array['file_name'].$this->now);
-						if (file_put_contents($prefs['t_use_dir'] . $fhash, $array['value']) === false) {
-							$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
-							$smarty->display("error.tpl");
-							die;
-						}
-						$ins_fields['data'][$i]['value'] = '';
-					} else {
-						$fhash = 0;
-					}
-					$array['value'] = $ins_fields['data'][$i]['value'] = $this->replace_item_attachment($array['old_value'], $array['file_name'], $array['file_type'], $array['file_size'], $array['value'], '', $user, $fhash, '', '', $trackerId, $currentItemId, '', false);
-				} else {
-					continue;
-				}
-			} elseif ($array['type'] == 'k') { //page selector
+			if ($array['type'] == 'k') { //page selector
 				if ($array['value'] != '') {
 					if (!$this->page_exists($array['value'])) {
 						$opts = preg_split('/,/', $array['options']);

@@ -67,5 +67,38 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 		}
 		return $link;
 	}
+
+	function handleSave($value, $oldValue)
+	{
+		global $prefs, $user;
+		$tikilib = TikiLib::lib('tiki');
+
+		$trackerId = $this->getConfiguration('trackerId');
+		$file_name = $this->getConfiguration('file_name');
+		$file_size = $this->getConfiguration('file_size');
+		$file_type = $this->getConfiguration('file_type');
+
+		$perms = Perms::get('tracker', $trackerId);
+		if ($perms->attach_trackers && $file_name) {
+			if ($prefs['t_use_db'] == 'n') {
+				$fhash = md5($file_name.$tikilib->now);
+				if (file_put_contents($prefs['t_use_dir'] . $fhash, $value) === false) {
+					$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
+					$smarty->display("error.tpl");
+					die;
+				}
+				return array(
+					'value' => '',
+				);
+			} else {
+				$fhash = 0;
+			}
+
+			$trklib = TikiLib::lib('trk');
+			return array(
+				'value' => $trklib->replace_item_attachment($oldValue, $file_name, $file_type, $file_size, $value, '', $user, $fhash, '', '', $trackerId, $this->getItemId(), '', false),
+			);
+		}
+	}
 }
 
