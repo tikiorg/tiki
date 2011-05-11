@@ -20,6 +20,7 @@ body {
 
 /* next two: fixed-width: 800px */
 .fixed_width #fixedwidth {
+	margin-top: 0;
 	margin-bottom: 20px;
 	width: 800px;
 	background: #0F1644 url(twist/background.gif);
@@ -222,10 +223,18 @@ input[type=checkbox] {border: 0}
 	height: 100%;
 }
 
-#top_modules .secondary_site_menu {
+#top_modules #sitelogo img {
+	margin: 10px;
+}
+
+#top_modules #sitetitles {
+	margin: 4% 0 2% 10px;
+}
+
+#top_modules .module.secondary_site_menu {
 	position: absolute;
-	top: 0;
-	left: 10px;
+	bottom: 4px;
+	right: 10px;
 }
 
 #top_modules .box-login_box {
@@ -286,9 +295,15 @@ input[type=checkbox] {border: 0}
 	height: 26px}
 
 #tiki-top a,
-#tiki-top a:visited {
+#tiki-top a:visited,
+.secondary_site_menu .cssmenu_horiz ul li a,
+.secondary_site_menu .cssmenu_horiz ul li a:visited {
 	color: black !important;
 	text-decoration: none !important}
+	
+#secondary_site_menu .cssmenu_horiz > li:hover {
+	background: none;
+}
 	
 #tiki-top .findtable {
 	margin-bottom: 0;
