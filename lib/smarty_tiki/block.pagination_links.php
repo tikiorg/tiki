@@ -166,7 +166,6 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 			$images[$ik] = smarty_function_icon(
 				array(
 					'_id' => 'resultset_'.$ik,
-					'border' => '0',
 					'alt' => $iv,
 					'style' => 'vertical-align:middle;'
 				),
