@@ -65,7 +65,7 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
 			'lingualpvalue' => array(),
 		);
 		// Trim ending \n added by parsing
-		$data['pvalue'] = trim($data['value'], "\n");
+		$data['pvalue'] = trim($data['pvalue'], "\n");
 
 		if ($this->getConfiguration("isMultilingual") == 'y') {
 			if (! is_array($requestData[$id_string])) {
