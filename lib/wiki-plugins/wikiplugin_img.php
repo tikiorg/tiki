@@ -688,8 +688,8 @@ function wikiplugin_img_info() {
 			//set to null first because Image class will place exif_thumbnail dimensions here if thumbnail exists
 			$imageObj->height = NULL;
 			$imageObj->width = NULL;
-			$width = $fwidth = $imageObj->get_width();
-			$height = $fheight = $imageObj->get_height();
+			$fwidth = $imageObj->get_width();
+			$fheight = $imageObj->get_height();
 		} else {  
 			$width = $fwidth = $imagesize[0];
 			$height = $fheight = $imagesize[1];
@@ -888,6 +888,8 @@ function wikiplugin_img_info() {
 				$imgdata_dim = '';
 				$height = $fheight;
 				$width = $fwidth;
+				$imgdata_dim .= ' width="' . $width . '"';
+				$imgdata_dim .= ' height="' . $height . '"';
 			}
 		} else {
 			if (!empty($height)) {
