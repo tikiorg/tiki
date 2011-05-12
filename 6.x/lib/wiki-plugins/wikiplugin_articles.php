@@ -200,7 +200,7 @@ function wikiplugin_articles($data, $params)
 	$params = array_merge($default, $params);
 
 	extract($params, EXTR_SKIP);
-	if (($prefs['feature_articles'] !=  'y') || (($tiki_p_read_article != 'y') && ($tiki_p_articles_read_heading != 'y'))) {
+	if ($prefs['feature_articles'] !=  'y') {
 		//	the feature is disabled or the user can't read articles, not even article headings
 		return("");
 	}
