@@ -42,6 +42,14 @@
 
  */
 
+require_once('lib/init/initlib.php');
+$tikipath = dirname(__FILE__) . '/';
+TikiInit::prependIncludePath($tikipath.'lib/pear');
+TikiInit::appendIncludePath($tikipath.'lib/core');
+TikiInit::appendIncludePath($tikipath);
+require_once 'Zend/Loader/Autoloader.php';
+Zend_Loader_Autoloader::getInstance()->registerNamespace('TikiDb');
+
 require_once('lib/language/Language.php');
 
 ////////////////////////////////////////////////////////////////////////////
