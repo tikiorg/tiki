@@ -197,7 +197,7 @@ function wikiplugin_articles($data, $params)
 
 	extract($params, EXTR_SKIP);
 	$filter = '';
-	if (($prefs['feature_articles'] !=  'y') || (($tiki_p_read_article != 'y') && ($tiki_p_articles_read_heading != 'y'))) {
+	if ($prefs['feature_articles'] !=  'y') {
 		//	the feature is disabled or the user can't read articles, not even article headings
 		return("");
 	}
