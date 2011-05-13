@@ -24,6 +24,12 @@ function prefs_unified_list()
 			'size' => 35,
 			'default' => 'temp/unified-index',
 		),
+		'unified_lucene_highlight' => array(
+			'name' => tra('Highlight results snippets'),
+			'description' => tra('Highlight the result snippet based on the search query. Enabling this option will impact performance, but improve user experience.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'unified_incremental_update' => array(
 			'name' => tra('Incremental Index Update'),
 			'description' => tra('Update the index incrementally as the site content is modified. This may lead to lower performance and accuracy than processing the index on a periodic basis.'),

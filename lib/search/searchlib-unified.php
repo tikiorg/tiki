@@ -219,7 +219,7 @@ class UnifiedSearchLib
 		global $prefs;
 
 		if ($prefs['unified_engine'] == 'lucene') {
-			$index = new Search_Index_Lucene($prefs['unified_lucene_location']);
+			$index = new Search_Index_Lucene($prefs['unified_lucene_location'], $prefs['language'], $prefs['unified_lucene_highlight'] == 'y');
 
 			return $index;
 		}
