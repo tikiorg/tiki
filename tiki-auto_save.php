@@ -63,7 +63,6 @@ if (isset($_REQUEST['editor_id'])) {
 		send_ajax_response( $_REQUEST['command'], $res );
 	} else if (isset($_REQUEST['autoSaveId'])) {	// wiki page previews
 		
-		$_REQUEST['autoSaveId'] = urldecode($_REQUEST['autoSaveId']);
 		$autoSaveIdParts = explode(':', $_REQUEST['autoSaveId']);	// user, section, object id
 		
 		if (count($autoSaveIdParts) === 3 && !empty($user) && $user === $autoSaveIdParts[0] && $autoSaveIdParts[1] === 'wiki_page') {
