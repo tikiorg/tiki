@@ -2075,7 +2075,8 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'help' => 'CodeMirror',
 			'description' => tra('Enables syntax highlighting with the use of CodeMirror'),
-			'default' => 'y',
+			'default' => 'n',
+			'warning' => tra('Experimental. This feature is still under development.'),
 		),
 	);
 }

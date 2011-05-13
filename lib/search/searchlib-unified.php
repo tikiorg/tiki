@@ -210,7 +210,10 @@ class UnifiedSearchLib
 		}
 
 		if ($mode == 'indexing') {
-			$aggregator->addGlobalSource(new Search_GlobalSource_PermissionSource(Perms::getInstance(), 'Admins'));
+			$adminGroups = TikiDb::get()->table('users_grouppermissions')->fetchColumn('groupName', array(
+				'permName' => 'tiki_p_admin',
+			));
+			$aggregator->addGlobalSource(new Search_GlobalSource_PermissionSource(Perms::getInstance(), $adminGroups));
 		}
 	}
 
