@@ -125,13 +125,12 @@ function module_calendar_new( $mod_reference, $module_params ) {
 	}
 
 	if ( !empty($calIds) ) {
-		$tc_infos = $calendarlib->getCalendar($calIds, $viewstart, $viewend, 'day');
+		$tc_infos = $calendarlib->getCalendar($calIds, $viewstart, $viewend, 'day', 'events', true);
 		if ($_REQUEST['viewlistmodule'] == 'list') {
 			foreach ($tc_infos['listevents'] as $i=>$e) {
 				$tc_infos['listevents'][$i]['head'] = '';
 				$tc_infos['listevents'][$i]['group_description'] ='';
 			}
-			$tc_infos['listevents'] = array_unique($tc_infos['listevents']);	
 		}
 
 		foreach ( $tc_infos as $tc_key => $tc_val ) {
