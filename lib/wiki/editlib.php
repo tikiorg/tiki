@@ -252,7 +252,7 @@ class EditLib
 		$ret = preg_replace('/<p>!(.*)<\/p>/iu', "!$1\n", $ret);
 		
 		// strip totally empty <p> tags generated in ckeditor 3.4
-		$ret = preg_replace('/\s*<p>[\s]*<\/p>\s*/iu', "!$1\n", $ret);
+		$ret = preg_replace('/\s*<p>[\s]*<\/p>\s*/iu', "$1\n", $ret);
 		return $ret;
 	}
 	
