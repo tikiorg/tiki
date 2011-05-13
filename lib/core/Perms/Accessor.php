@@ -121,4 +121,17 @@ class Perms_Accessor implements ArrayAccess
 	public function offsetExists( $name ) {
 		return true;
 	}
+
+	public function applicableGroups() {
+		if( $this->checkSequence ) {
+			$groups = array();
+			foreach( $this->checkSequence as $check ) {
+				$groups = array_merge( $groups, $check->applicableGroups( $this->resolver ) );
+			}
+
+			return array_unique($groups);
+		} else {
+			return $this->resolver->applicableGroups();
+		}
+	}
 }

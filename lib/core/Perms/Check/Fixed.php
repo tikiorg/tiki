@@ -25,4 +25,8 @@ class Perms_Check_Fixed implements Perms_Check
 	function setResolver( $resolver ) {
 		$this->resolver = $resolver;
 	}
+
+	function applicableGroups( Perms_Resolver $resolver ) {
+		return $this->resolver->applicableGroups();
+	}
 }

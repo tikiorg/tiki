@@ -59,7 +59,6 @@ class Search_Index_Lucene implements Search_Index_Interface
 	function find(Search_Expr_Interface $query, Search_Query_Order $sortOrder, $resultStart, $resultCount)
 	{
 		$query = $this->buildQuery($query);
-		//echo 'FIND:'.$query;
 
 		$hits = $this->lucene->find($query, $this->getSortField($sortOrder), $this->getSortType($sortOrder), $this->getSortOrder($sortOrder));
 		$result = array();
