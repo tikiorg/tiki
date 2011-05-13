@@ -318,19 +318,10 @@ body.fixed_width .fixedwidth .fixedwidth {
 .siteloginbar_popup ul li ul {
 	margin-top: -14px;
 }
-/*
-.siteloginbar_popup .tabcontent {
-	background: none;
-}*/
 
 /* Site title and subtitle */
 #top_modules .box-logo {
-/*	margin-top: 30px;*/
 	margin-left: 20px;
-/*	float: left;*/
-}
-
-#top_modules .box-logo {
 	height: 100%;
 }
 
