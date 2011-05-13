@@ -110,7 +110,10 @@ function module_calendar_new( $mod_reference, $module_params ) {
 
 
 	$_REQUEST['gbi'] = 'y';
-	if ( !empty($module_params['viewlist']) ) {
+	if ( !empty($module_params['viewlist']) && $module_params['viewlist'] == 'list') {
+		// TODO: add a parameter to CalendarLib::getCalendar() to return itens as list 
+		// instead of using a session variable for this purpose. 
+		$_SESSION['CalendarViewList'] = 'list';
 		$_REQUEST['viewlistmodule'] = $module_params['viewlist'];
 	} else {
 		$_REQUEST['viewlistmodule'] = 'table';
@@ -125,11 +128,11 @@ function module_calendar_new( $mod_reference, $module_params ) {
 	if ( !empty($calIds) ) {
 		$tc_infos = $calendarlib->getCalendar($calIds, $viewstart, $viewend, 'day');
 		if ($_REQUEST['viewlistmodule'] == 'list') {
+			unset($_SESSION['CalendarViewList']);
 			foreach ($tc_infos['listevents'] as $i=>$e) {
 				$tc_infos['listevents'][$i]['head'] = '';
 				$tc_infos['listevents'][$i]['group_description'] ='';
 			}
-			$tc_infos['listevents'] = array_unique($tc_infos['listevents']);	
 		}
 
 		foreach ( $tc_infos as $tc_key => $tc_val ) {
