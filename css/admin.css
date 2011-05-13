@@ -350,6 +350,10 @@ a.admbox.off img {
 	display: none;
 }
 
+#save_modules {
+	display: none;
+}
+
 /* end modules revamp */
 
 /* tiki 7 theme generator *

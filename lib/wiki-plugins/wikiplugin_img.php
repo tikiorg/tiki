@@ -787,8 +787,6 @@ function wikiplugin_img_info() {
 			$fwidth = $imageObj->width;
 			$fheight = $imageObj->height;
 		}
-		$width = $fwidth;
-		$height = $fheight;
 		//get image gal thumbnail image for height and width
 		if (!empty($dbinfot['data']) || !empty($dbinfot['path'])) {
 			if (!empty($dbinfot['data'])) {
@@ -976,6 +974,8 @@ function wikiplugin_img_info() {
 				$imgdata_dim = '';
 				$height = $fheight;
 				$width = $fwidth;
+				$imgdata_dim .= ' width="' . $width . '"';
+				$imgdata_dim .= ' height="' . $height . '"';
 			}
 		} else {
 			if (!empty($height)) {

@@ -33,7 +33,7 @@ class EditLib
 			             "<b>$page</b>.\n<p>\n";
 			$error_msg .= tra("That page is an alias for the following pages").": ";
 			foreach ($aliases as $an_alias) {
-				$error_msg .= '<a href="'.$wikilib->editpage_url($an_alias['fromPage']).'">'.$an_alias['fromPage'].'</a>, ';
+				$error_msg .= '<a href="'.$wikilib->editpage_url($an_alias['fromPage'], false).'">'.$an_alias['fromPage'].'</a>, ';
 			}
 			$error_msg .= "\n<p>\n";
 			$error_msg .= tra("If you want to create the page, you must first edit each the pages above, and remove the alias link it may contain. This link should look something like this");
@@ -273,6 +273,7 @@ class EditLib
 	                       ['first_tr'] = flag: 'is <table> was just before this <tr>'
 	 */
 	function walk_and_parse(&$c, &$src, &$p, $head_url ) {
+		global $prefs;
 		// If no string
 		if(!$c) { return; }
 		

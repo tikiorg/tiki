@@ -450,6 +450,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 				break;
 			case 'd': // drop down list
 			case 'y': // country
+			case 'g': // group selector
 				$formats[$fieldId] = 'd';
 				break;
 			case 'R': // radio
