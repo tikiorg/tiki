@@ -120,5 +120,38 @@ class Perms_AccessorTest extends TikiTestCase
 		$this->assertTrue( $accessor['tiki_p_view'] );
 		$this->assertFalse( $accessor['tiki_p_view_history'] );
 	}
+
+	function testApplicableGroupsInsideAccessor() {
+		$accessor = new Perms_Accessor;
+		$static = new Perms_Resolver_Static( array(
+			'Anonymous' => array( 'view' ),
+			'Registered' => array( 'view', 'edit' ),
+		) );
+
+		$accessor->setResolver($static);
+
+		$this->assertEquals(array('Anonymous', 'Registered'), $accessor->applicableGroups());
+	}
+
+	function testApplicableGroupsThroughCheckSequence() {
+		$accessor = new Perms_Accessor;
+		$static = new Perms_Resolver_Static( array(
+			'Anonymous' => array( 'view' ),
+			'Registered' => array( 'view', 'edit' ),
+		) );
+		$global = new Perms_Resolver_Static( array(
+			'Admins' => array( 'admin' ),
+		) );
+
+		$accessor->setResolver($static);
+		$accessor->setCheckSequence(array(
+			$g = new Perms_Check_Alternate('admin'),
+			new Perms_Check_Direct,
+		));
+
+		$g->setResolver($global);
+
+		$this->assertEquals(array('Admins', 'Anonymous', 'Registered'), $accessor->applicableGroups());
+	}
 }
 

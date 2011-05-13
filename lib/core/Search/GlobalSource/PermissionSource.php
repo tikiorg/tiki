@@ -8,12 +8,10 @@
 class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interface
 {
 	private $perms;
-	private $additionalCheck;
 
-	function __construct(Perms $perms, $additionalCheck = array())
+	function __construct(Perms $perms)
 	{
 		$this->perms = $perms;
-		$this->additionalCheck = (array) $additionalCheck;
 	}
 
 	function getProvidedFields()
@@ -94,12 +92,7 @@ class Search_GlobalSource_PermissionSource implements Search_GlobalSource_Interf
 
 	private function getCheckList($accessor)
 	{
-		$toCheck = $accessor->getResolver()->applicableGroups();
-
-		if (count($this->additionalCheck)) {
-			$toCheck = array_merge($toCheck, $this->additionalCheck);
-			$toCheck = array_unique($toCheck);
-		}
+		$toCheck = $accessor->applicableGroups();
 
 		return $toCheck;
 	}

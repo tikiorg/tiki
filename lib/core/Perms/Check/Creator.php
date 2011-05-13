@@ -26,4 +26,8 @@ class Perms_Check_Creator implements Perms_Check
 
 		return false;
 	}
+
+	function applicableGroups( Perms_Resolver $resolver ) {
+		return $resolver->applicableGroups();
+	}
 }
