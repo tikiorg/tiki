@@ -159,7 +159,6 @@
 				<fieldset>
 					<legend class="heading">{icon _id="star"} <span>{tr}New{/tr}</span></legend>
  					<p class="description">{tr}These features are relatively new, or recently underwent major renovations. You should expect growing pains and possibly a lack of up to date documentation, as you would of a version 1.0 application{/tr}</p>
-						{preference name=feature_syntax_highlighter}
 						{preference name=feature_invite}
 						{preference name=feature_quick_object_perms}
 						{preference name=feature_webdav}
@@ -193,6 +192,7 @@
 
 				<fieldset>
 					<legend class="heading">{icon _id="new"} <span>{tr}Fresh out of the oven{/tr}</span></legend>
+					{preference name=feature_syntax_highlighter}
 					{preference name=feature_credits}
 					{preference name=feature_loadbalancer}
 					{preference name=feature_socialnetworks}

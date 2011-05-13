@@ -1906,7 +1906,7 @@ function get_default_prefs() {
 		'unified_default_content' => array('contents', 'title'),
 	
 		// Syntax Highlighter
-		'feature_syntax_highlighter' => 'y',
+		'feature_syntax_highlighter' => 'n',
 
 		'feature_accounting' => 'n',
 
