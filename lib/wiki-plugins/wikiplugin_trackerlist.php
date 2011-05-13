@@ -1019,8 +1019,9 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 
 		if (isset($itemId)) {
-			if (strstr($itemId, ':'))
-				$itemId = explode(':', $itemId);
+			if (is_string($itemId) && strstr($itemId, ':')) {	// JB Tiki7: This doesn't quite make sense as itemId is an array
+				$itemId = explode(':', $itemId);				//			 Probably just some redundant code TOKIL
+			}
 			$filter = array('tti.`itemId`'=> $itemId);
 		} else {
 			$filter = '';
