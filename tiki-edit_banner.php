@@ -60,6 +60,7 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 	$smarty->assign("Dsun", $info["sun"]);
 	$smarty->assign("use", $info["which"]);
 	$smarty->assign('onlyInURIs', $info['onlyInURIs']);
+	$smarty->assign('exceptInURIs', $info['exceptInURIs']);
 	$smarty->assign("zone", $info["zone"]);
 	if ($info["which"] == 'useFlash') {
 		$movie = unserialize($info['HTMLData']);
@@ -110,6 +111,7 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 	$smarty->assign('bannerId', 0);
 	$smarty->assign('zone', '');
 	$smarty->assign('onlyInURIS', '');
+	$smarty->assign('exceptInURIS', '');
 	$smarty->assign('use', 'useHTML');
 	$smarty->assign('HTMLData', '');
 	$smarty->assign('fixedURLData', '');
@@ -158,6 +160,7 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 		$smarty->assign('zone', '');
 	}
 	$smarty->assign('onlyInURIs', $_REQUEST['onlyInURIs']);
+	$smarty->assign('exceptInURIs', $_REQUEST['exceptInURIs']);
 	$smarty->assign('url', $_REQUEST["url"]);
 
 	if (isset($_REQUEST["use"])) {
@@ -307,7 +310,7 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 		$bannerId = $bannerlib->replace_banner($_REQUEST["bannerId"], $_REQUEST["client"], $_REQUEST["url"], '',
 			'', $_REQUEST["use"], $_REQUEST["imageData"], $_REQUEST["imageType"], $_REQUEST["imageName"], $_REQUEST["HTMLData"],
 			$_REQUEST["fixedURLData"], $_REQUEST["textData"], $fromDate, $toDate, $useDates, $Dmon, $Dtue, $Dwed, $Dthu, $Dfri,
-			$Dsat, $Dsun, $fromTime, $toTime, $_REQUEST["maxImpressions"],$_REQUEST["maxClicks"], $_REQUEST["zone"], $_REQUEST["maxUserImpressions"], $_REQUEST['onlyInURIs']);
+			$Dsat, $Dsun, $fromTime, $toTime, $_REQUEST["maxImpressions"],$_REQUEST["maxClicks"], $_REQUEST["zone"], $_REQUEST["maxUserImpressions"], $_REQUEST['onlyInURIs'], $_REQUEST['exceptInURIs']);
 
 		header("location:tiki-list_banners.php");
 		

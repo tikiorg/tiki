@@ -216,6 +216,7 @@ CREATE TABLE `tiki_banners` (
   `clicks` int(8) default NULL,
   `zone` varchar(40) default NULL,
   `onlyInURIs` text,
+  `exceptInURIs` text,
   PRIMARY KEY (`bannerId`),
   INDEX ban1(zone,`useDates`,impressions,`maxImpressions`,`hourFrom`,`hourTo`,`fromDate`,`toDate`,mon,tue,wed,thu,fri,sat,sun)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;

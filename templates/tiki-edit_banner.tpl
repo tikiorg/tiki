@@ -48,6 +48,10 @@
 				<td><input type="text" name="onlyInURIs" value="{$onlyInURIs|escape}" /><br /><i>Type each URI enclosed with the # character. Exemple:#/this_page#/tiki-index.php?page=this_page#</i>
 			</tr>
 			<tr>
+				<td>{tr}URIs where the banner will not appear {/tr}</td>
+				<td><input type="text" name="exceptInURIs" value="{$exceptInURIs|escape}" /><br /><i>Type each URI enclosed with the # character. Exemple:#/this_page#/tiki-index.php?page=this_page#</i>
+			</tr>
+			<tr>
 				<td>{tr}Zone:{/tr}</td>
 				<td>
 					<select name="zone"{if !$zones} disabled="disabled"{/if}>
