@@ -4282,7 +4282,12 @@ class TikiLib extends TikiDb_Bridge
 						$smarty->assign( 'plugin_index', $current_index );
 
 						$smarty->assign( 'plugin_status', $status );
-						$smarty->assign( 'plugin_details', $details );
+						
+						if (!$options['inside_pretty']) {
+							$smarty->assign( 'plugin_details', $details );
+						} else {
+							$smarty->assign( 'plugin_details', '' );
+						}
 						$smarty->assign( 'plugin_preview', $preview );
 						$smarty->assign( 'plugin_approve', $approve );
 
