@@ -135,7 +135,7 @@ function ajax_preview(editorId, autoSaveId, inPage) {
 					h = h && h.length ? h[1] : "";
 					$.get("tiki-auto_save.php", {
 						editor_id: editorId,
-						autoSaveId: escape(autoSaveId),
+						autoSaveId: autoSaveId,
 						inPage: true,
 						hdr: h
 					}, function(data) {
