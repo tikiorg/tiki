@@ -116,6 +116,24 @@ class Search_GlobalSource_PermissionSourceTest extends PHPUnit_Framework_TestCas
 		$this->assertEquals($typeFactory->multivalue(array('Anonymous', 'Registered', 'Admins')), $document['allowed_groups']);
 	}
 
+	function testWithMultipleAdditionalGroups()
+	{
+		$contentSource = new Search_ContentSource_Static(array(
+			'HomePage' => array('view_permission' => 'tiki_p_view'),
+		), array('view_permission' => 'identifier'));
+
+		$this->globalAlternate->setResolver(new Perms_Resolver_Default(true));
+
+		$this->indexer->addGlobalSource(new Search_GlobalSource_PermissionSource($this->perms, array('SubAdmins', 'Admins', 'Registered')));
+		$this->indexer->addContentSource('wiki page', $contentSource);
+		$this->indexer->rebuild();
+
+		$document = $this->index->getDocument(0);
+
+		$typeFactory = $this->index->getTypeFactory();
+		$this->assertEquals($typeFactory->multivalue(array('Anonymous', 'Registered', 'SubAdmins', 'Admins')), $document['allowed_groups']);
+	}
+
 	function testWithParentPermissionSpecified()
 	{
 		$contentSource = new Search_ContentSource_Static(array(
