@@ -20,7 +20,7 @@ class Tracker_Field_Checkbox extends Tracker_Field_Abstract
 		return array(
 			'value' => (isset($requestData[$ins_id]) && $requestData[$ins_id] == 'on')
 				? 'y'
-				: $this->getValue('n'),
+				: 'n',
 		);
 	}
 
