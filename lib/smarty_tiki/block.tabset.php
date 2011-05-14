@@ -102,20 +102,28 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 
 		$count = 1;
 		if ($prefs['mobile_feature'] === 'y' && $prefs['mobile_mode'] === 'y') {
-			$mobile_div_data = ' data-role="controlgroup" data-type="horizontal"';
-			$mobile_a_data = ' data-role="button"';
-		} else {
-			$mobile_div_data = '';
-			$mobile_a_data = '';
+
+			$ret .= '<div class="container' . $content_class . '" data-role="navbar"><ul>';
+			foreach ($smarty_tabset[$tabset_index]['tabs'] as $value) {
+				$ret .= '<li>'.
+					'<a href="#" class="tabmark tab'.$count.' '.($count == $cookietab ? 'ui-btn-active' : '').'"' .
+					' onclick="tikitabs('.$count.',this); return false;">'.$value.'</a></li>';
+				++$count;
+			}
+			$ret .= '</ul></div>';
+
+		} else {	// notmal non-mobile rendering
+			
+			$ret .= '<div class="container' . $content_class . '">';
+			foreach ($smarty_tabset[$tabset_index]['tabs'] as $value) {
+				$ret .= '<span class="tabmark tab'.$count.' '.($count == $cookietab ? 'tabactive' : '').'">'.
+					'<a href="#content'.$count.'"' .
+					' onclick="tikitabs('.$count.',this); return false;">'.$value.'</a></span>';
+				++$count;
+			}
+			$ret .= '</div>';
 		}
-		$ret .= '<div class="container' . $content_class . '"'. $mobile_div_data.'>';
-		foreach ($smarty_tabset[$tabset_index]['tabs'] as $value) {
-			$ret .= '<span class="tabmark tab'.$count.' '.($count == $cookietab ? 'tabactive' : '').'">'.
-				'<a href="#' . ( empty($mobile_a_data) ? 'content'.$count.'"' : '"' ) .
-				' onclick="tikitabs('.$count.',this); return false;"'.$mobile_a_data.'>'.$value.'</a></span>';
-			++$count;
-		}
-		$ret .= "</div></div>$content";
+		$ret .= "</div>$content";
 
 		// add some jq to initialize the tab, needed when page is cached
 		if ($tabset_index === 1) {		// override cookie with query cookietab
