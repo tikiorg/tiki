@@ -693,10 +693,17 @@ p.editdate {
 .imgbox {
 	border: 1px solid #a9a9a9;
   background-color: #f9f9f9;
+	padding: 5px;
 }
 
 .thumbcaption {
 	font-size: 90%;
+	padding: 2px;
+}
+
+.magnify {
+	float: right;
+	padding-top: 2px;
 }
 
 /* TOC */
