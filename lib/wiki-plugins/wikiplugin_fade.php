@@ -21,7 +21,8 @@ function wikiplugin_fade_info()
 				'name' => tra('Label'),
 				'filter' => 'striptags',
 				'description' => tra('Label for link that shows and hides the content when clicked'),
-				'default' => tra('Unspecified label')
+				'default' => tra('Unspecified label'),
+				'since' => '3.0',
 			),
 			'icon' => array(
 				'required' => false,
@@ -29,6 +30,7 @@ function wikiplugin_fade_info()
 				'filter' => 'alpha',
 				'description' => tra('Arrow icon showing that content can be hidden or shown.'),
 				'default' => '',
+				'since' => '7.0',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
@@ -41,6 +43,7 @@ function wikiplugin_fade_info()
 				'filter' => 'digits',
 				'description' => tra('Speed of animation in milliseconds when showing content (200 is fast and 600 is slow. 1000 equals 1 second).'),
 				'default' => 400,
+				'since' => '7.0',
 				'advanced' => true,
 			),
 			'hide_speed' => array(
@@ -49,6 +52,7 @@ function wikiplugin_fade_info()
 				'filter' => 'digits',
 				'description' => tra('Speed of animation in milliseconds when hiding content (200 is fast and 600 is slow. 1000 equals 1 second).'),
 				'default' => 400,
+				'since' => '7.0',
 				'advanced' => true,
 			),
 		)
