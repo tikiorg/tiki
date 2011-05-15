@@ -117,8 +117,13 @@ function wikiplugin_fancytable($data, $params) {
 	preg_match_all($pattern, $data, $body_matches);
 	//replace all tiki tags in the body with numbered strings while being processed
 	$data = preg_replace_callback($pattern, 'replace_body', $data);
+	if ($sortable == 'y' && $prefs['disableJavascript'] == 'n' && $prefs['feature_jquery_tablesorter'] == 'y') {
+		$type = 's';	//sortable rows - do not assign odd/even class to these since jquery will do it
+	} else {
+		$type = 'r';	//plain rows
+	}
 	//process table body rows
-	$bodyrows = process_section($data, 'r', "\n", '', '</td>', isset($colwidths) ? $colwidths : '', 
+	$bodyrows = process_section($data, $type, "\n", '', '</td>', isset($colwidths) ? $colwidths : '', 
 				isset($colaligns) ? $colaligns : '', isset($colvaligns) ? $colvaligns : '');
 	//bring the tiki tags back into the body. static veriable needed in case of multiple tables
 	static $bb = 0;
@@ -133,7 +138,7 @@ function wikiplugin_fancytable($data, $params) {
 		$wret .= "\r\t" . '</tbody>';
 	}
 	$wret .= "\r" . '</table>' . "\r";
-	if ($sortable == 'y' && $prefs['javascript_enabled'] == 'y') {
+	if ($sortable == 'y' && $prefs['disableJavascript'] == 'n') {
 		if ($prefs['feature_jquery_tablesorter'] != 'y') {
 			$wret .= tra('The feature must be activated:').' feature_jquery_tablesorter';
 		}
@@ -192,7 +197,11 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 					$cellbeg = "\r\t\t\t" . '<td class="even"';
 					$row_is_odd = true;
 				}
-			}	
+			//don't set odd/even class if tablesorter is on because jquery will add it
+			//and the classes won't alternate correctly if added here too
+			} elseif ($type == 's') {
+				$cellbeg = "\r\t\t\t" . '<td';
+			}
 			$c = 0;
 			$row = '';
 			$parts = explode($separator, $line);
