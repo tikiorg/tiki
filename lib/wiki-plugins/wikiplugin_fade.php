@@ -44,7 +44,7 @@ function wikiplugin_fade_info()
 				'description' => tra('Speed of animation in milliseconds when showing content (200 is fast and 600 is slow. 1000 equals 1 second).'),
 				'default' => 400,
 				'since' => '7.0',
-				'accepted' => tra('digits greater than 0 and less than or equal to 1000, or \'fast\' or \'slow\''),
+				'accepted' => tra('Integer greater than 0 and less than or equal to 1000, or \'fast\' or \'slow\''),
 				'advanced' => true,
 			),
 			'hide_speed' => array(
@@ -54,7 +54,7 @@ function wikiplugin_fade_info()
 				'description' => tra('Speed of animation in milliseconds when hiding content (200 is fast and 600 is slow. 1000 equals 1 second).'),
 				'default' => 400,
 				'since' => '7.0',
-				'accepted' => tra('digits greater than 0 and less than or equal to 1000, or \'fast\' or \'slow\''),
+				'accepted' => tra('Integer greater than 0 and less than or equal to 1000, or \'fast\' or \'slow\''),
 				'advanced' => true,
 			),
 		)
@@ -111,7 +111,7 @@ function wikiplugin_fade( $body, $params )
 	$headerlib->add_jq_onready($jq);
 	//wrapping in an extra div makes animation smoother	
 	return '~np~<div>' . "\r\t" . '<span class="' . $span_class . '">' . "\r\t\t" 
-		. '<a id="' . $unique_link . '" class=' . $a_class_hidden . '>' . "\r\t\t\t" . $params['label'] . "\r\t\t" 
+		. '<a id="' . $unique_link . '" class=' . $a_class_hidden . '>' . "\r\t\t\t" . htmlspecialchars($params['label']) . "\r\t\t" 
 		. '</a>' . "\r\t" . '</span>' . "\r\t" . '<div id="' . $unique . '" class="' . $div_class . '">' . "\r\t\t\t" 
 		. $body . "\r\t" . '</div>' . "\r" . '</div>' . "\r" . '~/np~';
 }
