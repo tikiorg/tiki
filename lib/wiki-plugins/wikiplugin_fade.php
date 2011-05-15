@@ -40,7 +40,7 @@ function wikiplugin_fade_info()
 			'show_speed' => array(
 				'required' => false,
 				'name' => tra('Show Speed'),
-				'filter' => 'digits',
+				'filter' => 'striptags',
 				'description' => tra('Speed of animation in milliseconds when showing content (200 is fast and 600 is slow. 1000 equals 1 second).'),
 				'default' => 400,
 				'since' => '7.0',
@@ -49,7 +49,7 @@ function wikiplugin_fade_info()
 			'hide_speed' => array(
 				'required' => false,
 				'name' => tra('Hide Speed'),
-				'filter' => 'digits',
+				'filter' => 'striptags',
 				'description' => tra('Speed of animation in milliseconds when hiding content (200 is fast and 600 is slow. 1000 equals 1 second).'),
 				'default' => 400,
 				'since' => '7.0',
@@ -95,11 +95,11 @@ function wikiplugin_fade( $body, $params )
 				$(document).ready(function(){
 					$(\'#' . $unique_link . '\').toggle(
 						function() {
-							$(\'#' . $unique . '\').show(\'blind\', {}, ' . $params['show_speed'] . ');
+							$(\'#' . $unique . '\').show(\'blind\', {}, \'' . $params['show_speed'] . '\');
 							$(\'#' . $unique_link . '\').addClass(' . $a_class_shown . ').removeClass(' . $a_class_hidden . ');
 						},
 						function() {
-							$(\'#' . $unique . '\').hide(\'blind\', {}, ' . $params['hide_speed'] . ');
+							$(\'#' . $unique . '\').hide(\'blind\', {}, \'' . $params['hide_speed'] . '\');
 							$(\'#' . $unique_link . '\').addClass(' . $a_class_hidden . ').removeClass(' . $a_class_shown . ');
 						}
 					);
