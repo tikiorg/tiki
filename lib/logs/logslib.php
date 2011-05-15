@@ -171,6 +171,7 @@ class LogsLib extends TikiLib
 		}
 		if ($logObject && !$logCateg) {
 			$query = "insert into `tiki_actionlog` (`action`, `object`, `lastModif`, `user`, `ip`, `comment`, `objectType`, `client`) values(?,?,?,?,?,?,?,?)";
+			$param = substr( $param, 0, '200' ); //fixes bugs  3629, 3661, 3710
 			$this->query($query, array($action, $object, (int)$date, $who, $ip, $param, $objectType, $client));
 		} elseif ($logObject) {
 			if (count($categs) > 0) {
