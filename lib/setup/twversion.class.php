@@ -141,6 +141,7 @@ class TWVersion
 				'6.1RC1',
 				'6.1',
 				'7.0beta1',
+				'7.0beta2',
 			);
 	}
 

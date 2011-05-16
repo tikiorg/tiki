@@ -30,6 +30,482 @@ Version 7.0
 ------------------
 
 ----------------------------------------------
+r34434 | chealer | 2011-05-15 20:08:59 +0100 (Sun, 15 May 2011) | 2 lines
+
+[FIX] HTML
+[FIX] Colons inside tr blocks
+----------------------------------------------
+r34433 | chealer | 2011-05-15 19:54:24 +0100 (Sun, 15 May 2011) | 2 lines
+
+[FIX] HTML special characters encoding
+improve speed parameters value description
+----------------------------------------------
+r34432 | lindonb | 2011-05-15 19:02:01 +0100 (Sun, 15 May 2011) | 1 line
+
+[FIX] Use better filter speed params and validate them (thanks chealer)
+----------------------------------------------
+r34430 | jonnybradley | 2011-05-15 14:36:00 +0100 (Sun, 15 May 2011) | 1 line
+
+[FIX] tabs: Enclose tabsets in a div to be able to separate multiple sets on a single page. Also rework $smarty_tabset_name calculation to make sure unique id are used. Fixes too for tikitabs function for when called externally (thanks Lindon)
+----------------------------------------------
+r34429 | jonnybradley | 2011-05-15 13:16:33 +0100 (Sun, 15 May 2011) | 1 line
+
+[FIX] modules: List rss feeds in a row when in bottom modules zone
+----------------------------------------------
+r34428 | lindonb | 2011-05-15 05:31:49 +0100 (Sun, 15 May 2011) | 1 line
+
+[FIX] Wrong filter as speed parameters can be letters as well as digits. Also, speed parameter need to be enclosed in quotes in case fast or slow is used for speed.
+----------------------------------------------
+r34427 | lindonb | 2011-05-15 05:03:20 +0100 (Sun, 15 May 2011) | 1 line
+
+[FIX] Don't include empty accepted values and always have a since column.
+----------------------------------------------
+r34426 | lindonb | 2011-05-15 04:58:21 +0100 (Sun, 15 May 2011) | 1 line
+
+[FIX] Add since  item to plugin info for easy documentation using PluginManager
+----------------------------------------------
+r34425 | lindonb | 2011-05-15 04:19:32 +0100 (Sun, 15 May 2011) | 1 line
+
+[FIX] Maintain alternating odd/even class even when rows are sorted. Fixed by not assigning an odd/even class here if sortable parameter is set since javascript will set it automatically and the alternation will get messed up if set here too. 
+----------------------------------------------
+r34424 | nkoth | 2011-05-14 23:42:19 +0100 (Sat, 14 May 2011) | 2 lines
+
+[FIX] (refix, previous fix no good) Unchecking checkbox not saving changed state[D
+
+----------------------------------------------
+r34423 | lindonb | 2011-05-14 21:52:00 +0100 (Sat, 14 May 2011) | 1 line
+
+[FIX] Fix regression from r32212 - restore class definitions used for PluginImg that were lost in cleanup of layout.css. Hopefully safe in design.css
+----------------------------------------------
+r34422 | nkoth | 2011-05-14 21:08:02 +0100 (Sat, 14 May 2011) | 2 lines
+
+[FIX] Unchecking checkbox not saving changed state
+
+----------------------------------------------
+r34421 | jonnybradley | 2011-05-14 13:27:31 +0100 (Sat, 14 May 2011) | 1 line
+
+[FIX] mobile: Make logo link "external" so it always takes you back to the "full" non-ajax loaded index page
+----------------------------------------------
+r34420 | jonnybradley | 2011-05-14 13:16:21 +0100 (Sat, 14 May 2011) | 1 line
+
+[FIX] mobile: Use data-role="navbar" for mobile tabs, and separate rendering loops for mobile and normal tabs as the logic was getting unnecessarily complicated.
+----------------------------------------------
+r34419 | jonnybradley | 2011-05-14 13:13:52 +0100 (Sat, 14 May 2011) | 1 line
+
+[FIX] mobile: Set pref feature_html_head_base_tag on as it is now required by jqm navigation
+----------------------------------------------
+r34418 | jonnybradley | 2011-05-14 12:21:34 +0100 (Sat, 14 May 2011) | 1 line
+
+[FIX] mobile: Link to better "latest build" jqm lib instead of the "test" repo, also obey minified prefs
+----------------------------------------------
+r34417 | lindonb | 2011-05-14 05:01:40 +0100 (Sat, 14 May 2011) | 1 line
+
+[FIX] Need to mask tiki tag content (like ~np~ content ~/np~) in all cases, not just when cell divider is |, otherwise tag content could be mistaken for cell divider
+----------------------------------------------
+r34413 | pkdille | 2011-05-13 21:37:43 +0100 (Fri, 13 May 2011) | 1 line
+
+Remove some duplicated style definitions
+----------------------------------------------
+r34412 | jonnybradley | 2011-05-13 21:10:42 +0100 (Fri, 13 May 2011) | 1 line
+
+[FIX] wysiwyg: Remove rogue ! char (probably a typo) from wysiwyg parse function (should solve long running mystery ! appearance issues, thanks Geoff)
+----------------------------------------------
+r34410 | sampaioprimo | 2011-05-13 20:36:01 +0100 (Fri, 13 May 2011) | 2 lines
+
+rollback 34407. I will fix calendar_new problem properly on trunk.
+
+----------------------------------------------
+r34409 | jonnybradley | 2011-05-13 20:35:24 +0100 (Fri, 13 May 2011) | 1 line
+
+[FIX] trackers: Use get_isMain_value() to get main value for browser title
+----------------------------------------------
+r34407 | sampaioprimo | 2011-05-13 20:25:28 +0100 (Fri, 13 May 2011) | 2 lines
+
+[FIX] module calendar_new display items when in list mode
+
+----------------------------------------------
+r34406 | lphuberdeau | 2011-05-13 20:07:17 +0100 (Fri, 13 May 2011) | 1 line
+
+[MOD] Fixing the root cause behind the issue regarding tiki_p_admin and removing workarounds
+----------------------------------------------
+r34402 | jonnybradley | 2011-05-13 19:41:23 +0100 (Fri, 13 May 2011) | 1 line
+
+[FIX] autosave/preview: Don't double encode and decode the autoSaveId - was breaking preview etc on pages with accented chars in the pagename. (thanks Burghard and devels)
+----------------------------------------------
+r34400 | lphuberdeau | 2011-05-13 19:06:54 +0100 (Fri, 13 May 2011) | 1 line
+
+[FIX] Test broken by this change
+----------------------------------------------
+r34399 | lphuberdeau | 2011-05-13 17:00:44 +0100 (Fri, 13 May 2011) | 1 line
+
+[FIX]?\194?\160Dynamically fetch the list of groups with tiki_p_admin to work properly on sites that do not use Admins as the main admin group
+----------------------------------------------
+r34398 | lphuberdeau | 2011-05-13 16:54:25 +0100 (Fri, 13 May 2011) | 1 line
+
+[ENH] Avoid rework when formatting search results
+----------------------------------------------
+r34397 | jonnybradley | 2011-05-13 16:53:32 +0100 (Fri, 13 May 2011) | 1 line
+
+[FIX] plugins: Don't render plugin approval form if inside_pretty as untreated jQuery syntax messes up Smarty and you should approve it in the template (thanks luciash)
+----------------------------------------------
+r34396 | jonnybradley | 2011-05-13 16:30:55 +0100 (Fri, 13 May 2011) | 1 line
+
+[FIX] modules: No need to warn when saving newly dropped module
+----------------------------------------------
+r34395 | jonnybradley | 2011-05-13 16:26:40 +0100 (Fri, 13 May 2011) | 1 line
+
+[FIX] code plugin: De-sanitise unescaped code
+----------------------------------------------
+r34394 | jonnybradley | 2011-05-13 16:08:29 +0100 (Fri, 13 May 2011) | 1 line
+
+[FIX] trackerlist: Avoid error as itemId is an array, and add comment as a reminder to remove or fix suspect code after 7.0
+----------------------------------------------
+r34393 | jonnybradley | 2011-05-13 15:37:38 +0100 (Fri, 13 May 2011) | 1 line
+
+[FIX] trackers: Fix item link label to show concatenated values on output (thanks Geoff)
+----------------------------------------------
+r34391 | jonnybradley | 2011-05-13 14:38:19 +0100 (Fri, 13 May 2011) | 1 line
+
+[MOD] Move feature_syntax_highlighter (code mirror) into experimental and default to off for 7.0
+----------------------------------------------
+r34390 | sylvieg | 2011-05-12 23:24:12 +0100 (Thu, 12 May 2011) | 1 line
+
+[FIX]TRACKERFILTER: choose the dropdown for group selector
+----------------------------------------------
+r34388 | sylvieg | 2011-05-12 20:56:52 +0100 (Thu, 12 May 2011) | 1 line
+
+[FIX]ARTICLES: perm can be check only on individual article and not globally
+----------------------------------------------
+r34387 | jonnybradley | 2011-05-12 20:05:40 +0100 (Thu, 12 May 2011) | 1 line
+
+[FIX] modules: Make sure save button is hidden in all themes (some have styling on the outer span as well as the anchor)
+----------------------------------------------
+r34386 | jonnybradley | 2011-05-12 19:56:41 +0100 (Thu, 12 May 2011) | 1 line
+
+[FIX] modules: Warn about lost module positioning changes
+----------------------------------------------
+r34384 | jonnybradley | 2011-05-12 18:00:07 +0100 (Thu, 12 May 2011) | 1 line
+
+[FIX] img: Partial rollback of r34037 and alternative fix to add the width and height attributes to the tag, but without adding &x= &y= params to the src as it destroys the alpha channel unnecessarily (thanks SLJ)
+----------------------------------------------
+r34379 | jonnybradley | 2011-05-11 15:20:10 +0100 (Wed, 11 May 2011) | 1 line
+
+[FIX] editlib: Missing global and parameter
+----------------------------------------------
+r34378 | chibaguy | 2011-05-11 12:51:41 +0100 (Wed, 11 May 2011) | 1 line
+
+[NEW] Twist theme updated for Tiki 7.
+----------------------------------------------
+r34376 | nkoth | 2011-05-11 04:08:12 +0100 (Wed, 11 May 2011) | 2 lines
+
+[FIX] Redo (corrected)  Prevent extra \n from appearing at then of pretty tracker var output
+
+----------------------------------------------
+r34375 | nkoth | 2011-05-11 04:04:12 +0100 (Wed, 11 May 2011) | 2 lines
+
+[FIX] Prevent extra \n from appearing at then of pretty tracker var output
+
+----------------------------------------------
+r34374 | nkoth | 2011-05-11 00:20:46 +0100 (Wed, 11 May 2011) | 2 lines
+
+[FIX] db error
+
+----------------------------------------------
+r34366 | lphuberdeau | 2011-05-10 18:49:57 +0100 (Tue, 10 May 2011) | 1 line
+
+[FIX] Date for RSS feeds not displaying correctly
+----------------------------------------------
+r34363 | jonnybradley | 2011-05-10 17:22:44 +0100 (Tue, 10 May 2011) | 1 line
+
+[FIX] wysiwyg: Remove unnecessary parameter for debug_backtrace (causes errors on php < 5.2 so mainly for backporting to 6.x)
+----------------------------------------------
+r34362 | jonnybradley | 2011-05-10 17:16:34 +0100 (Tue, 10 May 2011) | 1 line
+
+[FIX] wysiwyg: Clean all ~np~ tags from plugin_result before rendering for ckeditor, not just ones at start and end.
+----------------------------------------------
+r34359 | jonnybradley | 2011-05-10 17:03:57 +0100 (Tue, 10 May 2011) | 1 line
+
+[FIX] wysiwyg: Better fix than in r34285 using preg_last_error() which fails on php < 5.2 (mainly for backporting to 6.x but it's a cleaner fix anyway)
+----------------------------------------------
+r34354 | xavidp | 2011-05-10 16:23:51 +0100 (Tue, 10 May 2011) | 1 line
+
+[MOD][bp/r34353] Avoid potential confusion between proxy host name and proxy host url. Thanks lph for feedback
+----------------------------------------------
+r34348 | jonnybradley | 2011-05-10 14:09:33 +0100 (Tue, 10 May 2011) | 1 line
+
+[MOD] Link html5shim to the new one in third_party (and add required type attribute)
+----------------------------------------------
+r34347 | jonnybradley | 2011-05-10 13:46:51 +0100 (Tue, 10 May 2011) | 1 line
+
+[MOD] Link html5shim into libs
+----------------------------------------------
+r34344 | jonnybradley | 2011-05-10 13:25:29 +0100 (Tue, 10 May 2011) | 1 line
+
+[FIX] logout: When using group home pages redirect to anonymous's home instead of the logged in user's one (thanks Geoff)
+----------------------------------------------
+r34343 | lphuberdeau | 2011-05-10 13:16:43 +0100 (Tue, 10 May 2011) | 1 line
+
+[FIX]?\194?\160Use autoload in jsplugin
+----------------------------------------------
+r34342 | jonnybradley | 2011-05-10 13:15:06 +0100 (Tue, 10 May 2011) | 1 line
+
+[FIX] modules: Check perm for modules admin mode
+----------------------------------------------
+r34341 | sept_7 | 2011-05-10 13:02:58 +0100 (Tue, 10 May 2011) | 2 lines
+
+[FIX] SVN properties
+
+----------------------------------------------
+r34340 | jonnybradley | 2011-05-10 12:58:59 +0100 (Tue, 10 May 2011) | 1 line
+
+[FIX] log_tpl: Suppress log comment for error.tpl also (which includes tiki.tpl which generates the DOCTYPE)
+----------------------------------------------
+r34339 | sept_7 | 2011-05-10 12:58:42 +0100 (Tue, 10 May 2011) | 2 lines
+
+[FIX] Dos2unix 
+
+----------------------------------------------
+r34336 | chibaguy | 2011-05-10 12:22:29 +0100 (Tue, 10 May 2011) | 1 line
+
+[FIX] More adjustments for site header modules (Dark Shine theme).
+----------------------------------------------
+r34335 | pkdille | 2011-05-10 06:13:09 +0100 (Tue, 10 May 2011) | 1 line
+
+Un-duplicate some style definitions
+----------------------------------------------
+r34334 | marclaporte | 2011-05-10 05:25:03 +0100 (Tue, 10 May 2011) | 1 line
+
+lowercase
+----------------------------------------------
+r34333 | chibaguy | 2011-05-10 03:59:38 +0100 (Tue, 10 May 2011) | 1 line
+
+[FIX] More adjustments for site header modules.
+----------------------------------------------
+r34332 | nkoth | 2011-05-10 03:50:18 +0100 (Tue, 10 May 2011) | 2 lines
+
+[FIX] Allow underscore and dash in attribute name
+
+----------------------------------------------
+r34331 | jonnybradley | 2011-05-09 21:25:24 +0100 (Mon, 09 May 2011) | 1 line
+
+[FIX] login: Show login box contents when on tiki-login_scr.php
+----------------------------------------------
+r34327 | jonnybradley | 2011-05-09 19:03:06 +0100 (Mon, 09 May 2011) | 1 line
+
+[FIX] search: Make buttons appear automatically after typing (in compact mode)
+----------------------------------------------
+r34326 | jonnybradley | 2011-05-09 18:45:31 +0100 (Mon, 09 May 2011) | 1 line
+
+[MOD] modules: Link to user module edit form from popup
+----------------------------------------------
+r34325 | jonnybradley | 2011-05-09 18:13:04 +0100 (Mon, 09 May 2011) | 1 line
+
+[FIX] modules: Link assign user modules icons to correct tab as a new tab appears when edit_assign is set (thanks again marclaporte)
+----------------------------------------------
+r34324 | jonnybradley | 2011-05-09 17:18:18 +0100 (Mon, 09 May 2011) | 1 line
+
+[FIX] modules: Avoid user modules params showing as Array when empty (thanks marclaporte)
+----------------------------------------------
+r34322 | jonnybradley | 2011-05-09 16:54:42 +0100 (Mon, 09 May 2011) | 1 line
+
+[MOD] modules: Add a show/hide hidden modules button to avoid interface chaos and unusability when module visibility is used extensively, as seen on themes.t.o
+----------------------------------------------
+r34321 | jonnybradley | 2011-05-09 16:26:58 +0100 (Mon, 09 May 2011) | 1 line
+
+[FIX] modules: Move editcreate anchor to where the user module textarea is (from the top of the um list)
+----------------------------------------------
+r34320 | jonnybradley | 2011-05-09 15:30:21 +0100 (Mon, 09 May 2011) | 1 line
+
+[FIX] trackers: Fix missing smarty param
+----------------------------------------------
+r34319 | jonnybradley | 2011-05-09 15:28:47 +0100 (Mon, 09 May 2011) | 1 line
+
+[FIX] trackers: Fix removing attachments when useAttachments == n
+----------------------------------------------
+r34318 | jonnybradley | 2011-05-09 15:25:07 +0100 (Mon, 09 May 2011) | 1 line
+
+[FIX] trackers: Hopefully fix confusion with File (attachment) fields and "item" attachments (thanks marclaporte)
+----------------------------------------------
+r34317 | nkoth | 2011-05-09 15:24:05 +0100 (Mon, 09 May 2011) | 2 lines
+
+[FIX] Credits not showing
+
+----------------------------------------------
+r34316 | lphuberdeau | 2011-05-09 14:16:47 +0100 (Mon, 09 May 2011) | 1 line
+
+[FIX] Page already exists exception caused by stale cache, fixed by using a lower level function and forcing cache to be skipped
+----------------------------------------------
+r34315 | chibaguy | 2011-05-09 10:49:40 +0100 (Mon, 09 May 2011) | 1 line
+
+[FIX] Adjust stylesheets site title and secondary site menu positions (Secondary site menu uses menu module with module parameter for style: class="secondary_site_menu".)
+----------------------------------------------
+r34308 | marclaporte | 2011-05-09 06:16:11 +0100 (Mon, 09 May 2011) | 1 line
+
+[DOC] Documenting how to use get_strings.php from the command line, which is useful to avoid timeouts
+----------------------------------------------
+r34307 | marclaporte | 2011-05-09 05:03:16 +0100 (Mon, 09 May 2011) | 1 line
+
+typo? or is get_strings smarter than I think?
+----------------------------------------------
+r34305 | chealer | 2011-05-09 04:40:46 +0100 (Mon, 09 May 2011) | 1 line
+
+[FIX] Text area admin panel: fix generally broken plugin filter (wrong selector, r32931 regression)
+----------------------------------------------
+r34304 | nkoth | 2011-05-09 03:25:24 +0100 (Mon, 09 May 2011) | 2 lines
+
+[FIX] Allow numbers in attribute and relation names
+
+----------------------------------------------
+r34303 | nkoth | 2011-05-09 01:14:33 +0100 (Mon, 09 May 2011) | 2 lines
+
+[FIX] Prevent extra line breaks or paragraphing from being created on parsing of pretty tracker and other output
+
+----------------------------------------------
+r34302 | marclaporte | 2011-05-08 20:16:28 +0100 (Sun, 08 May 2011) | 1 line
+
+[DOC] Experienced Tiki users are used to come to this page to administer the look & feel, thus giving them a link to the new awesome drag & drop method
+----------------------------------------------
+r34300 | pkdille | 2011-05-08 19:57:57 +0100 (Sun, 08 May 2011) | 1 line
+
+Un-duplicate style definitions (fixes r34273)
+----------------------------------------------
+r34299 | marclaporte | 2011-05-08 19:42:48 +0100 (Sun, 08 May 2011) | 1 line
+
+[MOD] changing color of comment box to be sure they are seen. http://doc.tiki.org/Inline+Comments 
+----------------------------------------------
+r34298 | marclaporte | 2011-05-08 17:10:09 +0100 (Sun, 08 May 2011) | 1 line
+
+rollback. Tks chealer
+----------------------------------------------
+r34297 | nkoth | 2011-05-07 18:10:38 +0100 (Sat, 07 May 2011) | 2 lines
+
+[FIX] Prevent extra line breaks or paragraphing from being created on parsing of plugin
+
+----------------------------------------------
+r34295 | jonnybradley | 2011-05-07 16:42:47 +0100 (Sat, 07 May 2011) | 1 line
+
+[FIX] modules: Remove style definitions from upgrade script and add schema to also remove them from previously upgraded sites (thanks chibaguy)
+----------------------------------------------
+r34294 | chibaguy | 2011-05-07 07:30:06 +0100 (Sat, 07 May 2011) | 1 line
+
+[FIX] Specifying line-height for site titles so full height of text shows in IE7.
+----------------------------------------------
+r34293 | chibaguy | 2011-05-07 07:27:39 +0100 (Sat, 07 May 2011) | 1 line
+
+[FIX] z-index fix for login popup; module title line-height so full height of text shows.
+----------------------------------------------
+r34292 | marclaporte | 2011-05-07 04:38:57 +0100 (Sat, 07 May 2011) | 1 line
+
+[FIX] Category filter for listing pages: it can accept more than one value. TODO: also add + as a valid separator
+----------------------------------------------
+r34290 | jonnybradley | 2011-05-06 18:28:02 +0100 (Fri, 06 May 2011) | 1 line
+
+[FIX] modules: Fix legacy "add module" form (thanks again chibaguy)
+----------------------------------------------
+r34288 | jonnybradley | 2011-05-06 17:21:03 +0100 (Fri, 06 May 2011) | 1 line
+
+[FIX] wysiwyg: Remove ~np~ tags from around plugin result before parsing for ckeditor
+----------------------------------------------
+r34287 | sylvieg | 2011-05-06 16:00:40 +0100 (Fri, 06 May 2011) | 1 line
+
+[FIX]unified: set perms for unuified too
+----------------------------------------------
+r34285 | jonnybradley | 2011-05-06 15:52:18 +0100 (Fri, 06 May 2011) | 1 line
+
+[FIX] wysiwyg: Catch preg_replace error returning null when too many plugins cause a PREG_BACKTRACK_LIMIT_ERROR resulting in empty editor (thanks Geoff)
+----------------------------------------------
+r34283 | jonnybradley | 2011-05-06 13:40:35 +0100 (Fri, 06 May 2011) | 1 line
+
+[FIX] modules: Correct behaviour for excluded themes again (thanks chibaguy)
+----------------------------------------------
+r34275 | chibaguy | 2011-05-06 06:47:46 +0100 (Fri, 06 May 2011) | 1 line
+
+[FIX] Some value for top distance is needed for quick admin link. "0" will conflict with secondary site menu, so maybe midway down or so (at right margin) is good.
+----------------------------------------------
+r34273 | chibaguy | 2011-05-06 03:36:44 +0100 (Fri, 06 May 2011) | 1 line
+
+[FIX] Better vertical positioning of site titles.
+----------------------------------------------
+r34263 | sylvieg | 2011-05-05 18:04:10 +0100 (Thu, 05 May 2011) | 1 line
+
+[FIX]wrong notice fix in 34196
+----------------------------------------------
+r34262 | sylvieg | 2011-05-05 17:55:09 +0100 (Thu, 05 May 2011) | 1 line
+
+[FIX]wrong notice fix in 34187
+----------------------------------------------
+r34260 | lphuberdeau | 2011-05-05 16:00:33 +0100 (Thu, 05 May 2011) | 1 line
+
+[FIX]?\194?\160Header and static text would not display in TRACKER plugin
+----------------------------------------------
+r34256 | sylvieg | 2011-05-05 15:10:56 +0100 (Thu, 05 May 2011) | 1 line
+
+[FIX]date translation
+----------------------------------------------
+r34255 | sylvieg | 2011-05-05 14:59:30 +0100 (Thu, 05 May 2011) | 1 line
+
+[FIX]i18n: add instructions for get_strings to translate the date formats
+----------------------------------------------
+r34253 | chealer | 2011-05-04 23:53:56 +0100 (Wed, 04 May 2011) | 1 line
+
+[FIX] SUBSCRIBEGROUPS: removal from group (r18957 regression)
+----------------------------------------------
+r34252 | sylvieg | 2011-05-04 23:18:00 +0100 (Wed, 04 May 2011) | 1 line
+
+[FIX]i18n: : must be in the {tr}
+----------------------------------------------
+r34250 | sylvieg | 2011-05-04 22:12:35 +0100 (Wed, 04 May 2011) | 1 line
+
+[FIX]structure: wrong notice fix 34191 - structure was not showing
+----------------------------------------------
+r34249 | chealer | 2011-05-04 21:11:52 +0100 (Wed, 04 May 2011) | 1 line
+
+[FIX] "Create New structure" => "Create New Structure" (consistent capitalization, avoid strings duplication
+----------------------------------------------
+r34245 | sylvieg | 2011-05-04 18:24:47 +0100 (Wed, 04 May 2011) | 1 line
+
+[FIX]smarty: multibyte for truncate - thx yoni and  Gil Shwartz)
+----------------------------------------------
+r34239 | chibaguy | 2011-05-04 10:08:56 +0100 (Wed, 04 May 2011) | 1 line
+
+[FIX] Top position missing for Quick Admin module (thanks Chealer).
+----------------------------------------------
+r34238 | chibaguy | 2011-05-04 06:45:14 +0100 (Wed, 04 May 2011) | 1 line
+
+[FIX] Fancytable was missing the table header background color property.
+----------------------------------------------
+r34237 | marclaporte | 2011-05-04 05:38:40 +0100 (Wed, 04 May 2011) | 1 line
+
+More consistency but trackerif and trackertoggle are still not optional in Tiki7 Sylvie?
+----------------------------------------------
+r34236 | marclaporte | 2011-05-04 04:22:24 +0100 (Wed, 04 May 2011) | 1 line
+
+[FIX] missing prefs in admin panels as reported via doc/devtools/lessermagicreport.php
+----------------------------------------------
+r34235 | marclaporte | 2011-05-04 03:44:42 +0100 (Wed, 04 May 2011) | 1 line
+
+better doc
+----------------------------------------------
+r34226 | sylvieg | 2011-05-03 18:01:45 +0100 (Tue, 03 May 2011) | 1 line
+
+[FIX]TRACKERFILTER: do not url encode option as it is a POST and create problem with option with space for instance (spaces are transformed into %20
+----------------------------------------------
+r34215 | marclaporte | 2011-05-02 20:34:58 +0100 (Mon, 02 May 2011) | 1 line
+
+typo. Good catch by Jean-Luc
+----------------------------------------------
+r34208 | sylvieg | 2011-05-02 16:55:24 +0100 (Mon, 02 May 2011) | 1 line
+
+[FIX]menu fix 25503: menu_cookie must also apply for structure
+----------------------------------------------
+r34200 | sylvieg | 2011-05-02 14:17:49 +0100 (Mon, 02 May 2011) | 1 line
+
+[FIX]menu: match url find the selected 1/ with url with &amp; 2/ with option =tiki-index.php
+----------------------------------------------
+r34199 | chibaguy | 2011-05-02 14:08:37 +0100 (Mon, 02 May 2011) | 1 line
+
+[FIX] Site header height isn't set since its content (and content height) at user sites isn't known in advance, so let logo image and titles be part of content flow to cause header height rather than be positioned absolute.
+----------------------------------------------
 r34083 | jonnybradley | 2011-04-22 16:59:44 +0100 (Fri, 22 Apr 2011) | 1 line
 
 [FIX] codemirror: Fix block (h1, h2 etc) tools

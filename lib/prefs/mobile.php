@@ -98,9 +98,9 @@ function prefs_mobile_list() {
 		),
 		'mobile_use_latest_lib' => array(
 			'name' => tra('Use Latest Library'),
-			'description' => tra('Use latest test version of the jquery.mobile'),
+			'description' => tra('Use latest version of the jquery.mobile'),
 			'help' => 'Mobile',
-			'warning' => tra('Caution: Uses jqm development server, please use sparingly.'),
+			'warning' => tra('Uses latest build from jquery.com CDN.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'mobile_feature',

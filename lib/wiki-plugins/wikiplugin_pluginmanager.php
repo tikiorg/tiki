@@ -223,16 +223,20 @@ class WikiPluginPluginManager extends PluginsLib
         				$optcounter = 1;
         				$numoptions = count($paraminfo['options']);
 						foreach($paraminfo['options'] as $oplist => $opitem) {
-							if (isset($opitem['value'])) {
-								$rows .= $opitem['value'];
-							} else {
-								$rows .=  $opitem['text'];
-							}
-							if ($optcounter < $numoptions) {	
-								if ($numoptions > 10) {
-									$rows .= ' | ';
+							if ((isset($opitem['value']) && !empty($opitem['value'])) &&
+									(isset($opitem['text']) && !empty($opitem['text'])))
+							{
+								if (isset($opitem['value']) && !empty($opitem['value'])) {
+									$rows .= $opitem['value'];
 								} else {
-									$rows .= '<br />';
+									$rows .=  $opitem['text'];
+								}
+								if ($optcounter < $numoptions) {	
+									if ($numoptions > 10) {
+										$rows .= ' | ';
+									} else {
+										$rows .= '<br />';
+									}
 								}
 							}
 							$optcounter++;
@@ -258,12 +262,11 @@ class WikiPluginPluginManager extends PluginsLib
         				$paraminfo['default'] = '';
         			}
 					$rows .= $cellbegin . $paraminfo['default'] . '</td>';
-        		    if (isset($paraminfo['since'])) {
-        				if ($rowCounter == 1) {
-        					$header .= $headbegin . tra('Since') . '</td>';
-        				}
-						$rows .= $cellbegin . $paraminfo['since'] . '</td>';
+					//Since column
+        			if ($rowCounter == 1) {
+        				$header .= $headbegin . tra('Since') . '</td>';
         			}
+					$rows .= $cellbegin . $paraminfo['since'] . '</td>';
  		       		$rows .= "\n\t" . '</tr>';
  		       		$rowCounter++;
         		}

@@ -543,10 +543,6 @@ if ($_REQUEST["itemId"]) {
 				}
 			}
 
-			if ($current_field_fields['isMain'] == 'y') {
-				$tracker_item_main_value .= (empty($tracker_item_main_value) ? '' : ' ') .
-						(isset($current_field_ins['value']) ? $current_field_ins['value'] : ''); 
-			}
 		}
 
 		if ($current_field_fields) {
@@ -557,9 +553,7 @@ if ($_REQUEST["itemId"]) {
 			$ins_fields['data'][$i] = array_merge($ins_fields['data'][$i], $current_field_ins);
 		}
 	}
-	if (!empty($tracker_item_main_value)) {
-		$smarty->assign('tracker_item_main_value', $tracker_item_main_value);
-	}
+	$smarty->assign('tracker_item_main_value', $trklib->get_isMain_value($_REQUEST['trackerId'], $_REQUEST['itemId']));
 }
 //restore types values if there is an error
 if (isset($error)) {

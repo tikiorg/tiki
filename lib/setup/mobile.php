@@ -33,10 +33,12 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 		$prefs['feature_sefurl'] = 'n';
 		$prefs['feature_wysiwyg'] = 'n';
 		$prefs['ajax_autosave'] = 'n';
+		$prefs['change_theme'] = 'n';
 
 		$headerlib->add_js('function sfHover() {alert("not working?");}', 100);	// try and override the css menu func
 
-		$prefs['change_theme'] = 'n';
+		// a few requirements
+		$prefs['feature_html_head_base_tag'] = 'y';
 		$prefs['style'] = 'mobile.css'; // set in prespective but seems to need a nudge here
 		//$_SESSION['s_prefs']['style'] = 'mobile.css';
 

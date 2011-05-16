@@ -87,9 +87,9 @@ function wikiplugin_fancytable($data, $params) {
 	// Start the table
 	$wret = '<table class="normal'.($sortable=='y'? ' fancysort':'').'" id="fancytable_'.$iFancytable.'">' . "\r\t";
 	
-	//if | is used as separator, mask tiki tags during processing and bring back at the end so that any pipes (|) 
-	//aren't mistaken for cell dividers
-	//pattern covers (( )), [ ], ~np~ /~np~, ~tc~ /~tc~, ~hc~ /~hc~, { = } (plugins with parameters)
+	//mask tiki tag content during processing and bring back at the end so that any pipes (| or ~|~) 
+	//inside of tags aren't mistaken for cell dividers
+	//pattern covers (( )), [ ], ~np~ ~/np~, ~tc~ ~/tc~, ~hc~ ~/hc~, { = } (plugins with parameters)
 	$pattern = '/(\(\([^\)\)]+\)\)|\[[^\]]+\]|~np~(?:(?!~\/np~).)*~\/np~|~tc~(?:(?!~\/tc~).)*~\/tc~'
 				. '|~hc~(?:(?!~\/hc~).)*~\/hc~|\{[^\=]+[\=]+[^\=\}]+\})/';
 	//process header
@@ -99,55 +99,46 @@ function wikiplugin_fancytable($data, $params) {
 		} else {
 			$tdhdr = "\r\t\t\t<th";
 		}
-		$separator = strpos($head, '~|~') === false ? '|' : '~|~';
-		//skip the preg matching if ~|~ is used
-		if ($separator != '~|~') {
-			preg_match_all($pattern, $head, $head_matches);
-			//replace all tiki tags in the header with numbered strings while being processed
-			$head = preg_replace_callback($pattern, 'replace_head', $head);
-		}
+		preg_match_all($pattern, $head, $head_matches);
+		//replace all tiki tags in the header with numbered strings while being processed
+		$head = preg_replace_callback($pattern, 'replace_head', $head);
 		//process header rows
-		$headrows = process_section($head, 'h', $separator, '>>', $tdhdr, '</th>', isset($colwidths) ? $colwidths : '', 
+		$headrows = process_section($head, 'h', '>>', $tdhdr, '</th>', isset($colwidths) ? $colwidths : '', 
 					isset($headaligns) ? $headaligns : '', isset($headvaligns) ? $headvaligns : '');
-		//skip the preg matching if ~|~ is used
-		if ($separator != '~|~') {
-			//bring the tiki tags back into the header. static veriable needed in case of multiple tables
-			static $hh = 0;
-			foreach ($head_matches[0] as $head_match) {
-				$headrows = str_replace('~~~head' . $hh . '~~~', $head_match, $headrows);
-				$hh++;
-			}
+		//bring the tiki tags back into the header. static veriable needed in case of multiple tables
+		static $hh = 0;
+		foreach ($head_matches[0] as $head_match) {
+			$headrows = str_replace('~~~head' . $hh . '~~~', $head_match, $headrows);
+			$hh++;
 		}
 		$wret .= '<thead>' . $headrows . "\r\t" . '</thead>' . "\r\t" . '<tbody>';
 	}
 	//process body
-	$separator = strpos($data, '~|~') === false ? '|' : '~|~';
-	//skip the preg matching if ~|~ is used
-	if ($separator != '~|~') {
-		preg_match_all($pattern, $data, $body_matches);
-		//replace all tiki tags in the body with numbered strings while being processed
-		$data = preg_replace_callback($pattern, 'replace_body', $data);
+	preg_match_all($pattern, $data, $body_matches);
+	//replace all tiki tags in the body with numbered strings while being processed
+	$data = preg_replace_callback($pattern, 'replace_body', $data);
+	if ($sortable == 'y' && $prefs['disableJavascript'] == 'n' && $prefs['feature_jquery_tablesorter'] == 'y') {
+		$type = 's';	//sortable rows - do not assign odd/even class to these since jquery will do it
+	} else {
+		$type = 'r';	//plain rows
 	}
 	//process table body rows
-	$bodyrows = process_section($data, 'r', $separator, "\n", '', '</td>', isset($colwidths) ? $colwidths : '', 
+	$bodyrows = process_section($data, $type, "\n", '', '</td>', isset($colwidths) ? $colwidths : '', 
 				isset($colaligns) ? $colaligns : '', isset($colvaligns) ? $colvaligns : '');
-	//skip the preg matching if ~|~ is used
-	if ($separator != '~|~') {
-		//bring the tiki tags back into the body. static veriable needed in case of multiple tables
-		static $bb = 0;
-		foreach ($body_matches[0] as $body_match) {
-			$bodyrows = str_replace('~~~body' . $bb . '~~~', $body_match, $bodyrows);
-			$bb++;
-		}
+	//bring the tiki tags back into the body. static veriable needed in case of multiple tables
+	static $bb = 0;
+	foreach ($body_matches[0] as $body_match) {
+		$bodyrows = str_replace('~~~body' . $bb . '~~~', $body_match, $bodyrows);
+		$bb++;
 	}
 	$wret .= $bodyrows;
 
-	// End the table
+	//end the table
 	if (isset($head)) {
 		$wret .= "\r\t" . '</tbody>';
 	}
 	$wret .= "\r" . '</table>' . "\r";
-	if ($sortable == 'y' && $prefs['javascript_enabled'] == 'y') {
+	if ($sortable == 'y' && $prefs['disableJavascript'] == 'n') {
 		if ($prefs['feature_jquery_tablesorter'] != 'y') {
 			$wret .= tra('The feature must be activated:').' feature_jquery_tablesorter';
 		}
@@ -178,8 +169,8 @@ function replace_body($matches) {
 	return $ret;
 }
 //function to process header and body
-function process_section ($data, $type, $separator, $line_sep, $cellbeg, $cellend, $widths, $aligns, $valigns) {
-//	$separator = strpos($data, '~|~') === FALSE ? '|' : '~|~';
+function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, $aligns, $valigns) {
+	$separator = strpos($data, '~|~') === false ? '|' : '~|~';
 	$lines = explode($line_sep, $data);
 	$widths = !empty($widths) ?  explode('|', $widths) : '';
 	$aligns = !empty($aligns) ?  explode('|', $aligns) : '';
@@ -206,7 +197,11 @@ function process_section ($data, $type, $separator, $line_sep, $cellbeg, $cellen
 					$cellbeg = "\r\t\t\t" . '<td class="even"';
 					$row_is_odd = true;
 				}
-			}	
+			//don't set odd/even class if tablesorter is on because jquery will add it
+			//and the classes won't alternate correctly if added here too
+			} elseif ($type == 's') {
+				$cellbeg = "\r\t\t\t" . '<td';
+			}
 			$c = 0;
 			$row = '';
 			$parts = explode($separator, $line);

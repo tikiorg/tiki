@@ -21,7 +21,8 @@ function wikiplugin_fade_info()
 				'name' => tra('Label'),
 				'filter' => 'striptags',
 				'description' => tra('Label for link that shows and hides the content when clicked'),
-				'default' => tra('Unspecified label')
+				'default' => tra('Unspecified label'),
+				'since' => '3.0',
 			),
 			'icon' => array(
 				'required' => false,
@@ -29,6 +30,7 @@ function wikiplugin_fade_info()
 				'filter' => 'alpha',
 				'description' => tra('Arrow icon showing that content can be hidden or shown.'),
 				'default' => '',
+				'since' => '7.0',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
@@ -38,17 +40,21 @@ function wikiplugin_fade_info()
 			'show_speed' => array(
 				'required' => false,
 				'name' => tra('Show Speed'),
-				'filter' => 'digits',
+				'filter' => 'alnum',
 				'description' => tra('Speed of animation in milliseconds when showing content (200 is fast and 600 is slow. 1000 equals 1 second).'),
 				'default' => 400,
+				'since' => '7.0',
+				'accepted' => tra('Integer greater than 0 and less than or equal to 1000, or \'fast\' or \'slow\''),
 				'advanced' => true,
 			),
 			'hide_speed' => array(
 				'required' => false,
 				'name' => tra('Hide Speed'),
-				'filter' => 'digits',
+				'filter' => 'alnum',
 				'description' => tra('Speed of animation in milliseconds when hiding content (200 is fast and 600 is slow. 1000 equals 1 second).'),
 				'default' => 400,
+				'since' => '7.0',
+				'accepted' => tra('Integer greater than 0 and less than or equal to 1000, or \'fast\' or \'slow\''),
 				'advanced' => true,
 			),
 		)
@@ -66,10 +72,10 @@ function wikiplugin_fade( $body, $params )
 	}
 	//apply user parameter settings
 	$params = array_merge($default, $params);
-	
-	if (!isset($params['label'])) {
-		$params['label'] = tra('Unspecified label');
-	}
+	//validate speed parameters
+	$params['show_speed'] = validate_speed($params['show_speed']);
+	$params['hide_speed'] = validate_speed($params['hide_speed']);
+
 	$unique = 'wpfade-' . ++$id;
 	$unique_link = $unique . '-link';
 
@@ -91,11 +97,11 @@ function wikiplugin_fade( $body, $params )
 				$(document).ready(function(){
 					$(\'#' . $unique_link . '\').toggle(
 						function() {
-							$(\'#' . $unique . '\').show(\'blind\', {}, ' . $params['show_speed'] . ');
+							$(\'#' . $unique . '\').show(\'blind\', {}, \'' . $params['show_speed'] . '\');
 							$(\'#' . $unique_link . '\').addClass(' . $a_class_shown . ').removeClass(' . $a_class_hidden . ');
 						},
 						function() {
-							$(\'#' . $unique . '\').hide(\'blind\', {}, ' . $params['hide_speed'] . ');
+							$(\'#' . $unique . '\').hide(\'blind\', {}, \'' . $params['hide_speed'] . '\');
 							$(\'#' . $unique_link . '\').addClass(' . $a_class_hidden . ').removeClass(' . $a_class_shown . ');
 						}
 					);
@@ -105,9 +111,15 @@ function wikiplugin_fade( $body, $params )
 	$headerlib->add_jq_onready($jq);
 	//wrapping in an extra div makes animation smoother	
 	return '~np~<div>' . "\r\t" . '<span class="' . $span_class . '">' . "\r\t\t" 
-		. '<a id="' . $unique_link . '" class=' . $a_class_hidden . '>' . "\r\t\t\t" . $params['label'] . "\r\t\t" 
+		. '<a id="' . $unique_link . '" class=' . $a_class_hidden . '>' . "\r\t\t\t" . htmlspecialchars($params['label']) . "\r\t\t" 
 		. '</a>' . "\r\t" . '</span>' . "\r\t" . '<div id="' . $unique . '" class="' . $div_class . '">' . "\r\t\t\t" 
 		. $body . "\r\t" . '</div>' . "\r" . '</div>' . "\r" . '~/np~';
+}
 
-
+function validate_speed($speed_param) {
+	if (!(($speed_param > 0 && $speed_param <= 1000)
+		|| $speed_param == 'fast' || $speed_param == 'slow')) {
+			$speed_param = 400;
+	}
+	return $speed_param;
 }

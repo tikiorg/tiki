@@ -343,6 +343,10 @@ li#logout_link a {
 	padding: 0 .5em .2em 0;
 }
 
+#bottom_modules .box-rsslist br {
+	display: none;
+}
+
 /***** Misc. *****/
 /* Minimize Menus */
 .minimize-modules-left #col1 {
