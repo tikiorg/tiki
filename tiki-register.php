@@ -61,7 +61,7 @@ if (isset($_REQUEST['register'])) {
 
 	$result=$registrationlib->register_new_user($_REQUEST);
 	if (is_a($result,"RegistrationError")) {
-		if ($result->field == 'email' && $result->field == 'email_not_valid') // i'm not sure why email is a special case..
+		if ($result->field == 'email') // i'm not sure why email is a special case..
 			$email_valid='n';
 		else
 			register_error($result->msg);
