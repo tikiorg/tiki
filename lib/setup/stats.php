@@ -21,7 +21,8 @@ if ( $prefs['feature_referer_stats'] == 'y' ) {
 //if ( $prefs['feature_stats'] == 'y' ) {
 	if ( $prefs['count_admin_pvs'] == 'y' || $user != 'admin' ) {
 		if ( ! isset($section) or ( $section != 'chat' and $section != 'livesupport' ) ) {
-			$tikilib->add_pageview();
+			$statslib = TikiLib::lib('stats');
+			$statslib->add_pageview();
 		}
 	}
 //}

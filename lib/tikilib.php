@@ -203,6 +203,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'prefs':
 			global $prefslib; include_once('lib/prefslib.php');
 			return $libraries[$name] = $prefslib;
+		case 'stats':
+			global $statslib; require_once('lib/stats/statslib.php');
+			return $libraries[$name] = $statslib;
 		}
 	}
 
@@ -1372,52 +1375,6 @@ class TikiLib extends TikiDb_Bridge
 			return preg_replace('/^(.+?)(\s*--.+)?$/','<em>"$1"</em>$2',$cookie);
 		} else {
 			return "";
-		}
-	}
-
-	function get_pv_chart_data($days) {
-		$now = $this->make_time(0, 0, 0, $this->date_format("%m"), $this->date_format("%d"), $this->date_format("%Y"));
-		$dfrom = 0;
-		if ($days != 0) $dfrom = $now - ($days * 24 * 60 * 60);
-
-		$query = "select `day`, `pageviews` from `tiki_pageviews` where `day`<=? and `day`>=?";
-		$result = $this->fetchAll($query,array((int)$now,(int)$dfrom));
-		$ret = array();
-		$n = ceil(count($result) / 10);
-		$i = 0;
-		$xdata=array();
-		$ydata=array();
-		foreach ( $result as $res ) {
-			if ($i % $n == 0) {
-				$xdata[] = $this->date_format("%e %b", $res["day"]);
-			} else {
-				$xdata = '';
-			}
-			$ydata[] = $res["pageviews"];
-		}
-		$ret['xdata']=$xdata;
-		$ret['ydata']=$ydata;
-		return $ret;
-	}
-
-	function add_pageview() {
-		$dayzero = $this->make_time(0, 0, 0, $this->date_format("%m",$this->now), $this->date_format("%d",$this->now), $this->date_format("%Y",$this->now));
-		$conditions = array(
-			'day' => (int) $dayzero,
-		);
-
-		$pageviews = $this->table('tiki_pageviews');
-		$cant = $pageviews->fetchCount($conditions);
-
-		if ($cant) {
-			$pageviews->update(array(
-				'pageviews' => $pageviews->increment(1),
-			), $conditions);
-		} else {
-			$pageviews->insert(array(
-				'day' => (int) $dayzero,
-				'pageviews' => 1,
-			));
 		}
 	}
 

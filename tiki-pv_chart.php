@@ -17,7 +17,10 @@ $graph = new MultilineGraphic;
 $graph->setTitle(tra('Pageviews'));
 //Set some data
 if (!isset($_REQUEST["days"])) $_REQUEST["days"] = 7;
-$data = $tikilib->get_pv_chart_data($_REQUEST["days"]);
+
+$statslib = TikiLib::lib('stats');
+$data = $statslib->get_pv_chart_data($_REQUEST["days"]);
+
 foreach($data['xdata'] as $key => $date) {
 	 $data['xdata'][$key] = strtotime($date) / 24 / 3600;
 }
