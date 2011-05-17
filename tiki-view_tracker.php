@@ -277,7 +277,7 @@ foreach ($ins_fields['data'] as $current_field) {
 	}
 }
 
-if (!$orderkey) {
+if (!$orderkey && $sort_mode == '') {
 	$sort_mode = 'lastModif_asc';
 }
 if (!empty($_REQUEST['remove'])) {
