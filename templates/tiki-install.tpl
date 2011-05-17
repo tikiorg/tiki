@@ -3,11 +3,17 @@
 		<div class="header_container">
 			<div class="header_fixedwidth fixedwidth">
 				<header class="header" id="header">
-					<div class="content clearfix modules" id="top_modules" >
-						<div id="sitelogo" style="padding-left:0; padding-top: 0px"><h1 style="margin: 0"><img style="border:none;vertical-align:middle" alt="{tr}Tiki Wiki CMS Groupware{/tr}" src="{if isset($ie6)}img/tiki/tikisitelogo.gif{else}img/tiki/Tiki_WCG.png{/if}" />
-							<span style="vertical-align:middle; margin-left: 120px; color: #fff; padding-top: 30px;">{tr}Tiki installer{/tr} {$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></span></h1>
+					<div class="content clearfix modules" id="top_modules" style="min-height: 168px;">
+						<div id="sitelogo" style="float: left">
+							<img alt="{tr}Tiki Wiki CMS Groupware{/tr}" src="{if isset($ie6)}img/tiki/tikisitelogo.gif{else}img/tiki/Tiki_WCG.png{/if}" />
 						</div>
-						<div id="tiki-top" style="position: absolute; top: 168px;"></div> {* added for background image consistency *}
+						<div id="sitetitles" style="float: left;">
+							<div id="sitetitle" style="font-size: 42px;">
+								{tr}Tiki installer{/tr}
+							</div>
+							<div id="sitesubtitle" style="font-size: 30px; margin-top: 16px;">
+								{$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a>
+							</div>
 						</div>
 					</div>
 				</header>
