@@ -168,8 +168,10 @@ Perms::set( $perms );
 $globalperms = Perms::get();
 $globalAdminCheck->setResolver( $globalperms->getResolver() );
 
-function remove_tiki_p_prefix( $name ) {
-	return substr( $name, 7 );
+if (! function_exists('remove_tiki_p_prefix')) {
+	function remove_tiki_p_prefix( $name ) {
+		return substr( $name, 7 );
+	}
 }
 
 $shortPermList = array_map( 'remove_tiki_p_prefix', $permissionList );
