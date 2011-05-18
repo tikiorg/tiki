@@ -18,7 +18,7 @@ class PreferencesLib
 	}
 
 	function getPreference( $name, $deps = true, $source = null, $get_pages = false ) {
-		global $prefs;
+		global $prefs, $systemConfiguration;
 		static $id = 0;
 		$data = $this->loadData( $name );
 
@@ -58,6 +58,8 @@ class PreferencesLib
 				$info['value'] = $value;
 			}
 
+			$info['notes'] = array();
+
 			$info['raw'] = $source[$name];
 			$info['id'] = 'pref-' . ++$id;
 
@@ -83,13 +85,21 @@ class PreferencesLib
 			$info['available'] = true;
 
 			if( isset( $info['extensions'] ) ) {
-				$info['available'] = $this->checkExtensions( $info['extensions'] );
+				if  (! $this->checkExtensions( $info['extensions'] ) ) {
+					$info['available'] = false;
+					$info['notes'][] = tr('Unmatched system requirement. Missing php extension among %0', implode(', ', $info['extensions']));
+				}
 			}
 			$defprefs = get_default_prefs();
 			$info['default_val'] = $defprefs[$name];
 			
 			if ($get_pages) {
 				$info['pages'] = $this->getPreferenceLocations( $name );
+			}
+
+			if( isset( $systemConfiguration->preference->$name ) ) {
+				$info['available'] = false;
+				$info['notes'][] = tr('Configuration forced by host.');
 			}
 			
 			$info = array_merge($defaults, $info);

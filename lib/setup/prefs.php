@@ -411,7 +411,8 @@ function initialize_prefs() {
 	}
 
 	$prefs = empty($modified) ? $defaults : array_merge( $defaults, $modified );
-
+	global $systemConfiguration;
+	$prefs = array_merge($prefs, $systemConfiguration->preference->toArray());
 }
 
 // PHP fonctionnalities
