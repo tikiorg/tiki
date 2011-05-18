@@ -607,7 +607,7 @@ function wikiplugin_trackerlist_info() {
 			'periodQuantity' => array(
 				'required' => false,
 				'name' => tr('Period quantity'),
-				'description' => tr('Numeric value to display only last tracker items created within a user defined time-frame. Used in conjunction with the next parameter "Period unit", this parameter indicates how many of those units are to be considered to define the time frame.'),
+				'description' => tr('Numeric value to display only last tracker items created within a user defined time-frame. Used in conjunction with the next parameter "Period unit", this parameter indicates how many of those units are to be considered to define the time frame. Use in conjunction with "max=-1" to list all items (by default "max" is set to 10).'),
 				'filter' => 'int',
 				'default' => '',
 			),
