@@ -680,7 +680,7 @@ As of $now, the community has:
 
 This list is automatically generated and alphabetically sorted
 from subversion repository by the following script:
-  doc/devtools/release_copyright.php
+  doc/devtools/release.php
 
 Counting the commits is not as trivial as it may sound. If your number of commits
 seems incorrect, it could be that the script is not detecting them all. This 
