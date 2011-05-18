@@ -318,13 +318,13 @@ while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $chunkSize
 							if (is_array($data)) {			// TODO handle other types of field better here (preferably in a function in $trklib)
 								$data = implode('%%%', $data);
 							}
-							$data = str_replace(array("\r\n", "\n", '<br />', $delimitorL, $delimitorR), array($CR, $CR, $CR, $delimitorL.$delimitorL, $delimitorR.$delimitorR), $data);
 							break;
 					default: 
 						$data = $trklib->get_field_handler($field_value, $item)->renderOutput(array(
 							'list_mode' => 'csv',
 						));
 					}
+					$data = str_replace(array("\r\n", "\n", '<br />', $delimitorL, $delimitorR), array($CR, $CR, $CR, $delimitorL.$delimitorL, $delimitorR.$delimitorR), $data);
 
 				}
 				$str .= needs_separator($str) ? '' : $separator;
