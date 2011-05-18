@@ -5,7 +5,7 @@ function wikiplugin_trackeritemcopy_info() {
 		'name' => tra('Copy Tracker Item'),
 		'documentation' => tra('PluginTrackerItemCopy'),
 		'description' => tra('Will not work with category or certain special fields, copies only data from specified fields'),
-		'prefs' => array(), // TODO
+		'prefs' => array('wikiplugin_trackeritemcopy', 'feature_trackers'),
 		'validate' => 'all',
 		'filter' => 'wikicontent',
 		'params' => array(

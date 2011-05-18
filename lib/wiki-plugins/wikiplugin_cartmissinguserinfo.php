@@ -5,16 +5,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function wikiplugin_cartmissinguserinfo_help() {
-	return 'no documentation available at this time';
-}
 
 function wikiplugin_cartmissinguserinfo_info() {
 	return array(
 		'name' => tra('Cart Missing User Info'),
 		'documentation' => tra('PluginCartMissingUserInfo'),		
 		'description' => tra('Check if user still has missing info to enter'),
-		'prefs' => array('wikiplugin_cartmissinguserinfo', 'feature_wiki'),
+		'prefs' => array('wikiplugin_cartmissinguserinfo', 'payment_feature'),
 		'params' => array(
 			'info_type' => array(
 				'required' => true,

@@ -10,7 +10,7 @@ function wikiplugin_kaltura_info() {
 		'name' => tra('Kaltura Video'),
 		'documentation' => 'PluginKaltura',
 		'description' => tra('Display a video created through the Kaltura feature'),
-		'prefs' => array('wikiplugin_kaltura'),
+		'prefs' => array('wikiplugin_kaltura', 'feature_kaltura'),
 		'extraparams' => true,
 		'icon' => 'pics/icons/film_edit.png',
 		'params' => array(
