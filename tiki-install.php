@@ -84,8 +84,7 @@ if (isset($_SESSION['accessible'])) {
 	// Thus, display a form.
 	$title = 'Tiki Installer Security Precaution';
 	$content = '
-							<p>&nbsp;</p>
-							<p>You are attempting to run the Tiki Installer. For your protection, this installer can be used only by a site administrator.</p>
+							<p style="margin-top: 24px;">You are attempting to run the Tiki Installer. For your protection, this installer can be used only by a site administrator.</p>
 							<p>To verify that you are a site administrator, enter your <strong><em>database</em></strong> credentials (database username and password) here.</p>
 							<p>If you have forgotten your database credentials, find the directory where you have unpacked your Tiki and have a look inside the <strong><code>db</code></strong> folder into the <strong><code>local.php</code></strong> file.</p>
 							<form method="post" action="' . $_SERVER['REQUEST_URI'] . '">
@@ -118,19 +117,21 @@ function createPage($title, $content){
 					<header id="header" class="header">
 						<div class="content clearfix modules" id="top_modules" style="display: table; width: 990px;">
 							<div id="sitelogo">
-								<img alt="Site Logo" src="img/tiki/Tiki_WCG.png"  />
-							</div>
-							<div id="tiki-top" class="clearfix" style="position: absolute; top: 166px;">
-								<h1 style="color: #fff; text-shadow: 3px 2px 0 #781437; margin: 0; padding: 0; line-height: 1.6;">$title</h1>
+								<img alt="Site Logo" src="img/tiki/Tiki_WCG.png" style="margin-bottom: 10px;" />
 							</div>
 						</div>
 					</header>
-				</div>
+				</div>	
 			</div>
-		</div>	
-			<div class="middle_outer">
+		</div>
+		<div class="middle_outer">
 			<div id="middle" class="fixedwidth">
-				<div id="tiki-top"></div>
+				<div id="tiki-top" class="clearfix">
+								<h1 style="font-size: 30px; line-height: 30px; color: #fff; text-shadow: 3px 2px 0 #781437; margin: 8px 0 0 10px; padding: 0;">
+									$title
+								</h1>
+							</div>
+				</div>
 					<div id="tiki-center" style="display: table; width: 990px; text-align: center;">
 						$content
 					</div>

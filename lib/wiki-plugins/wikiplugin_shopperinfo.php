@@ -10,7 +10,7 @@ function wikiplugin_shopperinfo_info() {
 		'name' => tra('Collect Anonymous Shopper Info'),
 		'documentation' => tra('PluginShopperinfo'),
 		'description' => tra('Collect Anonymous Shopper Info for Shopping Cart'),
-		'prefs' => array(), // TODO
+		'prefs' => array('wikiplugin_shopperinfo', 'payment_feature'),
 		'filter' => 'wikicontent',
 		'format' => 'html',
 		'params' => array(

@@ -1203,7 +1203,7 @@ class Comments extends TikiLib
 				'objectType' => 'forum',
 				'object' => (int) $forumId,
 			));
-			$comments->update(array('comments' => $count), array('forumId' => (int) $forumId));
+			$this->table('tiki_forums')->update(array('comments' => $count), array('forumId' => (int) $forumId));
 		}
 		return true;
 	}

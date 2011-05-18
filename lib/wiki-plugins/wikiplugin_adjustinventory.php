@@ -10,7 +10,7 @@ function wikiplugin_adjustinventory_info() {
 		'name' => tra('Adjust Inventory'),
 		'documentation' => tra('PluginAdjustInventory'),
 		'description' => tra('Modifies inventory of a product'),
-		'prefs' => array(), // TODO
+		'prefs' => array( 'wikiplugin_adjustinventory', 'payment_feature' ),
 		'filter' => 'wikicontent',
 		'format' => 'html',
 		'params' => array(

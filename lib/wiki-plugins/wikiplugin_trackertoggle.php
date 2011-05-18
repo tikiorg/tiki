@@ -10,7 +10,7 @@ function wikiplugin_trackertoggle_info() {
 		'name' => tra('trackertoggle'),
 		'documentation' => 'PluginTrackerToggle',
 		'description' => tra('Toggle element display on a field value'),
-		'prefs' => array('feature_jquery', 'feature_trackers'),
+		'prefs' => array('wikiplugin_trackertoggle', 'feature_jquery', 'feature_trackers'),
 		'params' => array(
 			'fieldId' => array(
 				'required' => true,

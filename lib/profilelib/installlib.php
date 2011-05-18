@@ -597,7 +597,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 			$res = array_merge($res, $prof->_export($field));
 		}
 		return implode("\n", $res);
-	} // {{{
+	} // }}}
 
 } // }}}
 
@@ -703,7 +703,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			'mandatory' => 'isMandatory',
 			'multilingual' => 'isMultilingual',
 		);
-	} //{{{
+	} // }}}
 
 	function canInstall()
 	{

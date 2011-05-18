@@ -5,7 +5,7 @@ function wikiplugin_hasticket_info() {
 		'name' => tra('Check if user has bought certain item or if it is in cart'),
 		'documentation' => tra('PluginTrackerpasscode'),
 		'description' => tra('Set'),
-		'prefs' => array(), // TODO
+		'prefs' => array('wikiplugin_hasticket', 'payment_feature'),
 		'filter' => 'wikicontent',
 		'params' => array(
 			'key' => array(

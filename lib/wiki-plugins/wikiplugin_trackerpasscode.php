@@ -5,7 +5,7 @@ function wikiplugin_trackerpasscode_info() {
 		'name' => tra('Check Tracker Passcodes'),
 		'documentation' => tra('PluginTrackerpasscode'),
 		'description' => tra('Set'),
-		'prefs' => array(), // TODO
+		'prefs' => array('wikiplugin_trackerpasscode', 'feature_trackers'),
 		'filter' => 'wikicontent',
 		'params' => array(
 			'key' => array(

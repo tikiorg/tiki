@@ -11,7 +11,7 @@ function wikiplugin_prettytrackerviews_info() {
 		'name' => tra('Pretty Tracker View Tracking'),
 		'documentation' => tra('PluginPrettyTrackerViews'),			
 		'description' => tra('Stores tiki.tracker.pretty.views attribute for trackeritem'),
-		//'prefs' => array( '' ),
+		'prefs' => array('wikiplugin_prettytrackerviews', 'feature_trackers'),
 		'defaultfilter' => 'text',
 		'params' => array (
 			'record' => array (
