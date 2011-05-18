@@ -357,6 +357,10 @@ a.admbox.off img {
 	display: none;
 }
 
+.modules {
+	min-height: 1em;
+}
+
 /* end modules revamp */
 
 /* tiki 7 theme generator *
