@@ -300,9 +300,6 @@ function get_default_prefs() {
 		// SefUrl
 		'feature_sefurl_paths' => array(''), //empty string needed to keep preference from setting unexpectedly
 
-		// Pear::Date
-		'feature_pear_date' => 'y',
-
 		'feature_bidi' => 'n',
 		'feature_lastup' => 'y',
 

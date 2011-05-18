@@ -685,13 +685,6 @@ function prefs_feature_list($partial = false) {
 			'perspective' => false,
 			'default' => 'y',
 		),
-		'feature_pear_date' => array(
-			'name' => tra('Use PEAR::Date library'),
-			'description' => tra('Use PEAR::Date library'),
-			'type' => 'flag',
-			'perspective' => false,
-			'default' => 'y',
-		),
 		'feature_ticketlib' => array(
 			'name' => tra('Require confirmation if possible CSRF detected'),
 			'description' => tra('Require confirmation if possible CSRF detected'),

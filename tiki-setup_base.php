@@ -50,7 +50,6 @@ $needed_prefs = array(
 	'tiki_cdn_ssl' => '',
 	'language' => 'en',
 	'lang_use_db' => 'n',
-	'feature_pear_date' => 'y',
 	'lastUpdatePrefs' => - 1,
 	'feature_fullscreen' => 'n',
 	'error_reporting_level' => 0,
