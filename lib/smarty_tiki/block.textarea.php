@@ -213,10 +213,10 @@ $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 	language: "' . ($prefs['feature_detect_language'] === 'y' ? '' : $prefs['language']) . '",
 	'. (empty($params['cols']) ? 'height: 400,' : '') .'
 	contentsLangDirection: "' . ($prefs['feature_bidi'] === 'y' ? 'rtl' : 'ltr') . '"
-}).data("nocodemirror", true);
+});
 ', 20);	// after dialog tools init (10)
 
-		$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;';	// missing closing quotes, closed in condition
+		$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" data-nocodemirror="y" style="visibility:hidden;';	// missing closing quotes, closed in condition
 		if (empty($params['cols'])) {	
 			$html .= 'width:100%;'. (empty($params['cols']) ? 'height:500px;' : '') .'"';
 		} else {
