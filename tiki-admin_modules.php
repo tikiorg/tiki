@@ -388,13 +388,13 @@ foreach( $modlib->module_zones as $initial => $zone) {
 $smarty->assign_by_ref( 'assigned_modules', $assigned_modules );
 $smarty->assign_by_ref( 'module_zones', $module_zones );
 
-$prefs['module_zones_top'] = 'y';
-$prefs['module_zones_topbar'] = 'y';
-$prefs['module_zones_pagetop'] = 'y';
-$prefs['feature_left_column'] = 'y';
-$prefs['feature_right_column'] = 'y';
-$prefs['module_zones_pagebottom'] = 'y';
-$prefs['module_zones_bottom'] = 'y';
+$prefs['module_zones_top'] = 'fixed';
+$prefs['module_zones_topbar'] = 'fixed';
+$prefs['module_zones_pagetop'] = 'fixed';
+$prefs['feature_left_column'] = 'fixed';
+$prefs['feature_right_column'] = 'fixed';
+$prefs['module_zones_pagebottom'] = 'fixed';
+$prefs['module_zones_bottom'] = 'fixed';
 
 $headerlib->add_css('.module:hover {
 	cursor: move;
