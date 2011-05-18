@@ -80,7 +80,6 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 				$categories[$i]["incat"] = 'y';
 				// allow to preselect categories when creating a new article
 				// like this: /tiki-edit_article.php?cat_categories[]=1&cat_categorize=on
-				$smarty->assign('categ_checked', 'y');
 			} else {
 				$categories[$i]["incat"] = 'n';
 			}

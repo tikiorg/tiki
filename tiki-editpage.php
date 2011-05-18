@@ -1298,13 +1298,6 @@ if ($structlib->page_is_in_structure($_REQUEST["page"])) {
 // so no need to show comments & attachments, but need
 // to show 'wiki quick help'
 $smarty->assign('edit_page', 'y');
-$smarty->assign('categ_checked', 'n');
-// Set variables so the preview page will keep the newly inputted category information
-if (isset($_REQUEST['cat_categorize'])) {
-	if ($_REQUEST['cat_categorize'] === 'on') {
-		$smarty->assign('categ_checked', 'y');
-	}
-}
 if ($prefs['wiki_feature_copyrights'] === 'y' && $tiki_p_edit_copyrights === 'y') {
 	include_once ('lib/copyrights/copyrightslib.php');
 	$copyrightslib = new CopyrightsLib;
