@@ -96,7 +96,7 @@ function prefs_feature_list() {
 		'feature_articles' => array(
 			'name' => tra('Articles'),
 			'description' => tra('Articles can be used for date-specific news and announcements. You can configure articles to automatically publish and expire at specific times or to require that submissions be approved before becoming "live."'),
-			'help' => 'Article',
+			'help' => 'Articles',
 			'type' => 'flag',
 		),
 		'feature_polls' => array(
@@ -416,7 +416,7 @@ function prefs_feature_list() {
 			'name' => tra('Friendship Network'),
 			'description' => tra('Users can identify other users as their friends'),
 			'warning' => tra('Neglected feature'),
-			'help' => 'Friendship',
+			'help' => 'Friendship+Network',
 			'type' => 'flag',
 		),	
 		'feature_banning' => array(
@@ -836,7 +836,7 @@ function prefs_feature_list() {
 		),
 		'feature_modulecontrols' => array(
 			'name' => tra('Show module controls'),
-			'help' => 'Module+Control',
+			'help' => 'Module',
 			'type' => 'flag',
 		),	
 		'feature_perspective' => array(

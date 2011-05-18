@@ -32,13 +32,13 @@ function prefs_fgal_list() {
 		'fgal_prevent_negative_score' => array(
 			'name' => tra('Prevent download if score becomes negative'),
 			'type' => 'text',
-			'help' => 'File+Gallery+Config',
+			'help' => 'File+Gallery+config',
 			'size' => 50,
 		),
 		'fgal_limit_hits_per_file' => array(
 			'name' => tra('Allow download limit per file'),
 			'type' => 'flag',
-			'help' => 'File+Gallery+Config',
+			'help' => 'File+Gallery+config',
 		),
 		'fgal_prevent_negative_score' => array(
 			'name' => tra('Prevent download if score becomes negative'),
@@ -48,7 +48,7 @@ function prefs_fgal_list() {
 		'fgal_allow_duplicates' => array(
 			'name' => tra('Allow same file to be uploaded more than once'),
 			'type' => 'list',
-			'help' => 'File+Gallery+Config',
+			'help' => 'File+Gallery+config',
 			'perspective' => false,
 			'options' => array(
 							  'n' => tra('Never'),
@@ -60,7 +60,7 @@ function prefs_fgal_list() {
 			'name' => tra('Display zip option in gallery'),
 			'type' => 'flag',
 			'description' => tra('Display in the gallery the zip option (in upload and gallery file)'),
-			'help' => 'File+Zip+Gallery+Config',
+			'help' => 'File+Gallery+config',
 		),
 		'fgal_upload_progressbar' => array(
 			'name' => tra('Upload progressbar'),
@@ -69,7 +69,7 @@ function prefs_fgal_list() {
 				'n'	=>	tra('None'),
 				'ajax_flash' => tra('Ajax / Flash (Browser-based)'),
 			),
-			'help' => 'File+Upload+Gallery+Config',
+			'help' => 'File+Gallery+config',
 		),
 		'fgal_match_regex' => array(
 			'name' => tra('Must match'),
