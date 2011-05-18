@@ -18,11 +18,6 @@ $catobjperms = Perms::get( array( 'type' => $cat_type, 'object' => $cat_objid ) 
 $smarty->assign('mandatory_category', '-1');
 if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)) {
 	global $categlib, $user; include_once ('lib/categories/categlib.php');
-	$smarty->assign('cat_categorize', 'n');
-
-	if (isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on') {
-		$smarty->assign('cat_categorize', 'y');
-	}
 
 	if( ! isset( $cat_object_exists ) ) {
 		$cat_object_exists = (bool) $cat_objid;
@@ -91,12 +86,4 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 	if (!empty($cats))
 		$smarty->assign('catsdump', implode(',',$cats));
 	$smarty->assign_by_ref('categories', $categories);
-
-	// check if this page is categorized
-	if ($categlib->is_categorized($cat_type, $cat_objid)) {
-		$cat_categorize = 'y';
-	} else {
-		$cat_categorize = 'n';
-	}
-	$smarty->assign('cat_categorize', $cat_categorize);
 }

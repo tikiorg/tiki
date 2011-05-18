@@ -19,16 +19,12 @@ $catobjperms = Perms::get( array( 'type' => $cat_type, 'object' => $cat_objid ) 
 if ($prefs['feature_categories'] == 'y' && $catobjperms->modify_object_categories ) {
 	global $categlib; include_once('lib/categories/categlib.php');
 
-	$smarty->assign('cat_categorize', 'n');
-
 	if (isset($_REQUEST['import']) and isset($_REQUEST['categories'])) {
 		$_REQUEST["cat_categories"] = explode(',',$_REQUEST['categories']);
 		$_REQUEST["cat_categorize"] = 'on';
 	}
 
-	if ( isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on' && ! (isset($_REQUEST["cat_clearall"]) && $_REQUEST["cat_clearall"] == 'on') ) {
-		$smarty->assign('cat_categorize', 'y');
-	} else {
+	if ( !isset($_REQUEST["cat_categorize"]) || $_REQUEST["cat_categorize"] != 'on' || (isset($_REQUEST["cat_clearall"]) && $_REQUEST["cat_clearall"] == 'on') ) {
 		$_REQUEST['cat_categories'] = NULL;
 	}
 	if ( $cat_type == 'wiki page' && $tikilib->get_approved_page($cat_objid) ) {		
