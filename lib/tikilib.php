@@ -74,11 +74,7 @@ class TikiLib extends TikiDb_Bridge
 			global $filegallib; require_once 'lib/filegals/filegallib.php';
 			return $libraries[$name] = $filegallib;
 		case 'tikidate':
-			if (version_compare(PHP_VERSION, '5.1.0', '>=') && function_exists("date_create"))  {
-				require_once('lib/tikidate-php5.php');
-			} else {
-				require_once('lib/tikidate-pear-date.php');
-			}
+			require_once('lib/tikidate.php');
 			return $libraries[$name] = new TikiDate;
 		case 'css':
 			global $csslib; include_once("lib/csslib.php");
