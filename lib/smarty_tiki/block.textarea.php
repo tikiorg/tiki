@@ -218,7 +218,7 @@ $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 
 		$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" data-nocodemirror="y" style="visibility:hidden;';	// missing closing quotes, closed in condition
 		if (empty($params['cols'])) {	
-			$html .= 'width:100%;'. (empty($params['cols']) ? 'height:500px;' : '') .'"';
+			$html .= 'width:100%;'. (empty($params['rows']) ? 'height:500px;' : '') .'"';
 		} else {
 			$html .= '" cols="'.$params['cols'].'"';
 		}
