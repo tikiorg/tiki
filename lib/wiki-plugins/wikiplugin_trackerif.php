@@ -14,7 +14,7 @@ function wikiplugin_trackerif_info()
 		'name' => tra('Tracker If'),
 		'documentation' => 'PluginTrackerIf',
 		'description' => tra('Display content based on results of a tracker field test'),
-		'prefs' => array( 'wikiplugin_trackerif', 'feature_trackers', 'wikiplugin_tracker' ),
+		'prefs' => array( 'wikiplugin_trackerif', 'feature_trackers', 'wikiplugin_tracker' ), // ML: is wikiplugin_tracker necessary?
 		'icon' => 'pics/icons/database_table.png',
 		'params' => array(
 			'test' => array(
