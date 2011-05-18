@@ -133,13 +133,13 @@
 	{/tab}
 {/if}
 
-{tab name="{tr}User Modules{/tr}"}
+{tab name="{tr}Custom Modules{/tr}"}
 	{if $prefs.feature_tabs neq 'y'}
 		<legend class="heading">
-			<a href="#usertheme" name="usertheme"><span>{tr}User Modules{/tr}</span></a>
+			<a href="#usertheme" name="usertheme"><span>{tr}Custom Modules{/tr}</span></a>
 		</legend>
 	{/if}
-	<h2>{tr}User Modules{/tr}</h2>
+	<h2>{tr}Custom Modules{/tr}</h2>
 	<table class="normal">
 		<tr>
 			<th>{tr}Name{/tr}</th>
@@ -163,9 +163,9 @@
 	</table>
 	<br />
 	{if $um_name eq ''}
-		<h2>{tr}Create new user module{/tr}</h2>
+		<h2>{tr}Create new custom module{/tr}</h2>
 	{else}
-		<h2>{tr}Edit this user module:{/tr} {$um_name}</h2>
+		<h2>{tr}Edit this custom module:{/tr} {$um_name}</h2>
 	{/if}
 	{remarksbox type="tip" title="{tr}Tip{/tr}"}
 		{tr}Create your new custom module below. Make sure to preview first and make sure all is OK before <a href="#assign">assigning it</a>. Using html, you will be fine. However, if you improperly use wiki syntax or Smarty code, you could lock yourself out of the site.{/tr}
@@ -176,7 +176,7 @@
 			<tr valign="top">
 				<td valign="top" class="odd">
 					{if $um_name ne ''}
-						<a href="tiki-admin_modules.php#editcreate">{tr}Create new user module{/tr}</a>
+						<a href="tiki-admin_modules.php#editcreate">{tr}Create new custom module{/tr}</a>
 					{/if}
 					<table>
 						<tr>

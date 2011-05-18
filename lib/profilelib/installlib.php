@@ -1410,7 +1410,7 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler // {{
 		$modtitle = $data['title'];
 		}		
 		
-		// Set up module only as a user module if position is set to 'none'
+		// Set up module only as a custom module if position is set to 'none'
 		if( $data['position'] == 'none' )
 		{
 		// but still allow module_arguments	but keep it simple and don't include the $key=
