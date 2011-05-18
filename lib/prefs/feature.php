@@ -901,7 +901,7 @@ function prefs_feature_list() {
 			'name' => tra('Ignore category viewing restrictions'),
 			'hint' => tra('Will improve performance, but may show forbidden results'),
 			'type' => 'flag',
-			'help' => 'WYSIWYCA+Search',
+			'help' => 'Search',
 		),
 		'feature_listPages' => array(
 			'name' => tra('List pages'),
