@@ -77,8 +77,6 @@
 					<legend>{tr}Logo{/tr}</legend>
 					{preference name=sitelogo_src}
 					{preference name=sitelogo_bgcolor}
-					{preference name=sitelogo_bgstyle}
-					{preference name=sitelogo_align}
 					{preference name=sitelogo_title}
 					{preference name=sitelogo_alt}
 				</fieldset>

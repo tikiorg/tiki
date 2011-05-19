@@ -27,10 +27,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function upgrade_20110115_create_bottom_modules_tiki( $installer ) {
 	
-	// set up prefs array only
-	global $prefs, $user_overrider_prefs;
-	include_once 'lib/setup/prefs.php';
-	
+	$prefs = array();
+	$result = $installer->table('tiki_preferences')->fetchAll(array('name', 'value'), array());
+	foreach ( $result as $res ) {
+		$prefs[$res['name']] = $res['value'];
+	}
+
 	$prefs = array_merge( array(	// merge in relevant defaults from 6.x as they are no longer defined in 7.x+
 		'feature_site_report' => 'n',
 		'feature_site_send_link' => 'n',

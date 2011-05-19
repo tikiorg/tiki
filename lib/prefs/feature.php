@@ -1316,7 +1316,7 @@ function prefs_feature_list($partial = false) {
 		'feature_sitelogo' => array(
 			'name' => tra('Site Logo and Title'),
 			'type' => 'flag',
-			'warning' => tra('Obsolete in tiki7'),
+			'warning' => tra('Will be obsolete in Tiki 8 and migrated to modules entirely.'),
 			'default' => 'y',
 		),
 		'feature_left_column' => array(

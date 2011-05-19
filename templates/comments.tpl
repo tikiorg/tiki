@@ -309,7 +309,7 @@
 					<input type="hidden" name="{$comments_request_data[i].name|escape}" value="{$comments_request_data[i].value|escape}" />
 				{/section}
 
-				<table class="formcolor">
+				<table class="formcolor" width="100%">
 					{if !$user}
 						<tr>
 							<td><label for="anonymous_name">{tr}Name{/tr}</span></label></td>
