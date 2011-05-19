@@ -59,10 +59,11 @@ class PreferencesLib
 			}
 
 			if (! isset($info['tags'])) {
-				$info['tags'] = array();
+				$info['tags'] = array('advanced');
 			}
 
 			$info['tags'][] = $name;
+			$info['tags'][] = 'all';
 
 			$info['notes'] = array();
 
