@@ -1087,7 +1087,7 @@ class NlLib extends TikiLib
 
 
 			if ($browser) {
-				if (ob_get_level() == 0)
+				if (@ob_get_level() == 0)
 					@ob_start();
 				// Browsers needs a certain amount of data, for each flush, to display something
 				print str_repeat(' ', 4096) . "\n";
