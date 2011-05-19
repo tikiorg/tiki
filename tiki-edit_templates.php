@@ -107,18 +107,13 @@ if (isset($_REQUEST["template"])) {
 if ($mode == 'listing') {
 	// Get templates from the templates directory
 	$local = 'styles/'.str_replace('.css', '', $prefs['style']).'/';
-	$where = array('', 'modules/', 'mail/', 'map/', $local);
+	$where = array('', 'mail/', 'map/', 'modules/', $local);
 	$files = array();
+	chdir($smarty->template_dir);
 	foreach ($where as $w) {
-		$h = opendir($smarty->template_dir.$w);
-		while (($file = readdir($h)) !== false) {
-			if (substr($file,-4,4) == '.tpl' && ($w != $local || !in_array($file, $files))) {
-				$files[] = $w.$file;
-			}
-		}
-		closedir ($h);
+		$files = array_merge($files, glob($w . '*.tpl'));
 	}
-	sort ($files);
+	chdir($tikipath);
 	$smarty->assign('files', $files);
 }
 $smarty->assign('mode', $mode);

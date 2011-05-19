@@ -6684,7 +6684,7 @@ if( \$('#$id') ) {
 		$links->insert(array(
 			'fromPage' => $pageFrom,
 			'toPage' => $pageTo,
-		));
+		), true);
 
 		$relationlib = TikiLib::lib('relation');
 		foreach( $types as $type ) {

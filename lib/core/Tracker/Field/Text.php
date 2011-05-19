@@ -60,7 +60,8 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
 
 		$data = array(
 			'value' => $thisVal,
-			'pvalue' => TikiLib::lib('tiki')->parse_data(htmlspecialchars($thisVal)),
+			//'pvalue' => TikiLib::lib('tiki')->parse_data(htmlspecialchars($thisVal)),
+			'pvalue' => $thisVal,
 			'lingualvalue' => array(),
 			'lingualpvalue' => array(),
 		);

@@ -3498,7 +3498,6 @@ CREATE TABLE `tiki_invited` (
   KEY `used_on_user` (`used_on_user`)
 ) ENGINE=MyISAM;
 
-
 DROP TABLE IF EXISTS `tiki_credits`;
 CREATE TABLE `tiki_credits` (
     `creditId` INT UNSIGNED NOT NULL AUTO_INCREMENT ,

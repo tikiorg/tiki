@@ -172,7 +172,11 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 	protected function renderInnerOutput($context = array())
 	{
 		if ($context['list_mode'] === 'csv') {
-			return $this->getConfiguration('value');
+			$val = $this->getConfiguration('value');
+			$default = array('CR'=>'%%%', 'delimitorL'=>'"', 'delimitorR'=>'"');
+			$context = array_merge($default, $context);
+			$val = str_replace(array("\r\n", "\n", '<br />', $context['delimitorL'], $context['delimitorR']), array($context['CR'], $context['CR'], $context['CR'], $context['delimitorL'].$context['delimitorL'], $context['delimitorR'].$context['delimitorR']), $val);
+			return $val;
 		} else {
 			return $this->getConfiguration('pvalue', $this->getConfiguration('value'));
 		}

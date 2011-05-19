@@ -56,7 +56,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	unset($params['codemirror']);
 	unset($params['syntax']);
 	
-	// mainly for modules admin - preview is for the module, not the user module so don;t need to confirmExit
+	// mainly for modules admin - preview is for the module, not the custom module so don;t need to confirmExit
 	$params['_previewConfirmExit'] = isset($params['_previewConfirmExit']) ? $params['_previewConfirmExit'] : 'y';
 	
 	$params['_simple'] = isset($params['_simple']) ? $params['_simple'] : 'n';
@@ -217,9 +217,9 @@ $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 });
 ', 20);	// after dialog tools init (10)
 
-		$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;';	// missing closing quotes, closed in condition
+		$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" data-nocodemirror="y" style="visibility:hidden;';	// missing closing quotes, closed in condition
 		if (empty($params['cols'])) {	
-			$html .= 'width:100%;'. (empty($params['cols']) ? 'height:500px;' : '') .'"';
+			$html .= 'width:100%;'. (empty($params['rows']) ? 'height:500px;' : '') .'"';
 		} else {
 			$html .= '" cols="'.$params['cols'].'"';
 		}

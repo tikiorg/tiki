@@ -130,7 +130,7 @@
 					</div>
 					<div class="q234">
 						<textarea id="assign_params" name="assign_params" rows="1" cols="60" >{$assign_params|escape}</textarea>
-						{self_link um_edit=$assign_name cookietab="2" _anchor="editcreate"}{tr}Edit user module{/tr} {icon _id="arrow_right"}{/self_link}
+						{self_link um_edit=$assign_name cookietab="2" _anchor="editcreate"}{tr}Edit custom module{/tr} {icon _id="arrow_right"}{/self_link}
 					</div>
 				</div>
 			{/if}

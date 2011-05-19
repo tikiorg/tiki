@@ -11,7 +11,7 @@ function prefs_contact_list() {
 			'name' => tra('Allow anonymous visitors to use the "Contact Us" feature.'),
 			'description' => tra('Allow anonymous visitors to use the "Contact Us" feature.'),
 			'type' => 'flag',
-			'help' => 'Contact+Us',
+			'help' => 'Contact+us',
 			'dependencies' => array(
 				'feature_contact',
 			),

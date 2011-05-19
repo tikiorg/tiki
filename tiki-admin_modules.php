@@ -148,7 +148,7 @@ if (isset($_REQUEST["um_update"])) {
     $smarty->assign_by_ref('um_data', $_REQUEST["um_data"]);
     $smarty->assign_by_ref('um_parse', $_REQUEST["um_parse"]);
     $modlib->replace_user_module($_REQUEST["um_name"], $_REQUEST["um_title"], $_REQUEST["um_data"], $_REQUEST["um_parse"]);
-    $logslib->add_log('adminmodules', 'changed user module ' . $_REQUEST["um_name"]);
+    $logslib->add_log('adminmodules', 'changed custom module ' . $_REQUEST["um_name"]);
 }
 if (!isset($_REQUEST["groups"])) {
     $_REQUEST["groups"] = array();
@@ -279,9 +279,9 @@ if (isset($_REQUEST["assign"])) {
 
 if (isset($_REQUEST["um_remove"])) {
     $_REQUEST["um_remove"] = urldecode($_REQUEST["um_remove"]);
-	$access->check_authenticity(tra('Are you sure you want to delete this User Module?') . '&nbsp;&nbsp;(&quot;' . $_REQUEST["um_remove"] . '&quot;)');
+	$access->check_authenticity(tra('Are you sure you want to delete this Custom Module?') . '&nbsp;&nbsp;(&quot;' . $_REQUEST["um_remove"] . '&quot;)');
     $modlib->remove_user_module($_REQUEST["um_remove"]);
-    $logslib->add_log('adminmodules', 'removed user module ' . $_REQUEST["um_remove"]);
+    $logslib->add_log('adminmodules', 'removed custom module ' . $_REQUEST["um_remove"]);
 	$cookietab = 1;
 }
 if (isset($_REQUEST["um_edit"])) {
@@ -388,13 +388,13 @@ foreach( $modlib->module_zones as $initial => $zone) {
 $smarty->assign_by_ref( 'assigned_modules', $assigned_modules );
 $smarty->assign_by_ref( 'module_zones', $module_zones );
 
-$prefs['module_zones_top'] = 'y';
-$prefs['module_zones_topbar'] = 'y';
-$prefs['module_zones_pagetop'] = 'y';
-$prefs['feature_left_column'] = 'y';
-$prefs['feature_right_column'] = 'y';
-$prefs['module_zones_pagebottom'] = 'y';
-$prefs['module_zones_bottom'] = 'y';
+$prefs['module_zones_top'] = 'fixed';
+$prefs['module_zones_topbar'] = 'fixed';
+$prefs['module_zones_pagetop'] = 'fixed';
+$prefs['feature_left_column'] = 'fixed';
+$prefs['feature_right_column'] = 'fixed';
+$prefs['module_zones_pagebottom'] = 'fixed';
+$prefs['module_zones_bottom'] = 'fixed';
 
 $headerlib->add_css('.module:hover {
 	cursor: move;

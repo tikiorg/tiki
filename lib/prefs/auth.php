@@ -11,7 +11,7 @@ function prefs_auth_list() {
 			'name' => tra('Authentication method'),
 			'description' => tra('Multiple authentication backends are supported by Tikiwiki. The default value is to use the internal user database.'),
 			'type' => 'list',
-			'help' => 'Login+Authentication+Method',
+			'help' => 'External+Authentication',
 			'perspective' => false,
 			'options' => array(
 				'tiki' => tra('Tiki'),

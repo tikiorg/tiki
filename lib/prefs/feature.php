@@ -26,12 +26,13 @@ function prefs_feature_list($partial = false) {
 
 	return array(
 		'feature_blog_mandatory_category' => array(
-			'name' => tra('Force and limit categorization to within subtree of'),
+			'name' =>  tra('Blog:').' '.tra('Force and limit categorization to within subtree of'),
 			'description' => tra('If you get an error message indicating a mandatory category is required when editing a blog post, this is the option to blame. Set it to None.'),
 			'type' => 'list',
 			'options' => $catree,
 			'dependencies' => array(
 				'feature_categories',
+				'feature_blogs',
 			),
 			'default' => '-1',
 		),
@@ -105,7 +106,7 @@ function prefs_feature_list($partial = false) {
 		'feature_articles' => array(
 			'name' => tra('Articles'),
 			'description' => tra('Articles can be used for date-specific news and announcements. You can configure articles to automatically publish and expire at specific times or to require that submissions be approved before becoming "live."'),
-			'help' => 'Article',
+			'help' => 'Articles',
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -477,7 +478,7 @@ function prefs_feature_list($partial = false) {
 			'name' => tra('Friendship Network'),
 			'description' => tra('Users can identify other users as their friends'),
 			'warning' => tra('Neglected feature'),
-			'help' => 'Friendship',
+			'help' => 'Friendship+Network',
 			'type' => 'flag',
 			'default' => 'n',
 		),	
@@ -963,7 +964,7 @@ function prefs_feature_list($partial = false) {
 		),
 		'feature_modulecontrols' => array(
 			'name' => tra('Show module controls'),
-			'help' => 'Module+Control',
+			'help' => 'Module',
 			'type' => 'flag',
 			'default' => 'n',
 		),	
@@ -1040,7 +1041,7 @@ function prefs_feature_list($partial = false) {
 			'name' => tra('Ignore category viewing restrictions'),
 			'hint' => tra('Will improve performance, but may show forbidden results'),
 			'type' => 'flag',
-			'help' => 'WYSIWYCA+Search',
+			'help' => 'Search',
 			'default' => 'n',
 		),
 		'feature_listPages' => array(
@@ -1783,14 +1784,25 @@ function prefs_feature_list($partial = false) {
 			'default' => 'n',
 		),
 		'feature_wiki_mandatory_category' => array(
-			'name' => tra('Force and limit categorization to within subtree of'),
+			'name' =>  tra('Wiki:').' '.tra('Force and limit categorization to within subtree of'),
 			'description' => tra('If you get an error message indicating a mandatory category is required when editing a wiki page, this is the option to blame. Set it to None.'),
 			'type' => 'list',
 			'options' => $catree,
 			'dependencies' => array(
 				'feature_categories',
+				'feature_wiki',
 			),
 			'default' => -1,
+		),
+		'feature_image_gallery_mandatory_category' => array(
+			'name' =>  tra('Image Gallery:').' '.tra('Force and limit categorization to within subtree of'),
+			'description' => tra('If you get an error message indicating a mandatory category is required when editing an image (in an image gallery), this is the option to blame. Set it to None.'),
+			'type' => 'list',
+			'options' => $catree,
+			'dependencies' => array(
+				'feature_categories',
+				'feature_galleries',
+			),
 		),
 		'feature_wiki_show_hide_before' => array(
 			'name' => tra('Display show/hide icon displayed before headings'),

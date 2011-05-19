@@ -74,7 +74,6 @@ function prefs_wiki_list($partial = false) {
 			'description' => tra('Character to use as a delimiter in the page name. The portion of the name after this character will not be displayed.'),
 			'type' => 'text',
 			'size' => 5,
-			'help' => '#',
 			'default' => '',
 		),
 		'wiki_authors_style' => array(

@@ -680,7 +680,7 @@ As of $now, the community has:
 
 This list is automatically generated and alphabetically sorted
 from subversion repository by the following script:
-  doc/devtools/release_copyright.php
+  doc/devtools/release.php
 
 Counting the commits is not as trivial as it may sound. If your number of commits
 seems incorrect, it could be that the script is not detecting them all. This 
@@ -905,63 +905,7 @@ function display_howto() {
    HOWTO release Tiki
 --------------------------
 
-0/ When branching for 5.x, name it branches/5.x to be 
-   clearer than branches/3.0, because branches/5.x is 
-   indeed 5.1, 5.2, etc.
-   http://dev.tiki.org/SVNTips#Handling_branches
-   
-1/ Preliminary manual tasks
-   - Check that all JavaScript can be safely minified with [http://www.jslint.com/|JSLint]
-   - Check DB structure to make sure fresh install and upgrade from previous version have the same structure
-   -- Checkout a fresh Tiki 4.0, upgrade to Tiki5.0 
-   -- Checkout a fresh Tiki5.0
-   -- Compare the mysqldump files of each and resolve any differences 
-   - Run the tiki installer and correct anything obviously wrong
-   - The "function update_readme_file" in this script will output to the top-level README:
-   -- Check if anyone has committed anything manually to README that needs to be brought back into this script
-   -- Check links
-   - Run doc/devtools/securitycheck.php and check each "potentially unsafe" file.
-   - in lib/setup/twversion.class.php
-     - increment the version number in the constructor
-     - update list of valid releases in getVersions()
-		- Make sure you add all Tiki versions (not just the one you are doing now). Ex.: when 5.0 is released, 4.2 will probably exist, and this was added to branches/4.x but not merged by script. 
-     - change the version branch to "unstable", "stable", or "head" as explained in that file
-   - Delete tiki-secdb_x.y_mysql.sql files from previous versions
-   - Commit your changes with this commit message (change \$VERSION by the version of the release):
-	[REL] Preparing \$VERSION release
-
-2/ Create and test pre-release packages by executing the script with the release
-   version as argument, using the format major.minor.sub 
-   Use the --help option of the release script for advanced help on options (like using a web proxy)
-
-   >>  php doc/devtools/release.php 3.0 preRC4
-
-3/ Test the produced "tarballs" and share the testing
-   In case of a major version (x.0), you need at least 3 installations from 3 different people
-
-4/ After testing, launch the release script and follow the answer 'y' to every steps
-   ( This will make automated tests, update README / copyrights / changelog / languages files,
-       tag the release, build the release "tarballs" ... )
-
-   >>  php doc/devtools/release.php 3.0 RC4
-   
-5/ Test the produced "tarballs" and share the testing
-   In case of a major version (x.0), you need at least 3 installations from 3 different people
-
-6/ When the "tarballs" are tested, follow the steps to upload on SourceForge:
-   http://sourceforge.net/apps/trac/sourceforge/wiki/Release%20files%20for%20download
-
-7/ Announce the good news on devel mailing-list
-   and ask the Communications Team to launch the announce-spreading process as described on
-   http://tiki.org/Communications+Team+Release
-
-post/
-   Update appropriate http://tiki.org/stable.version file with new release version
-   (or ask the TAG to do this)
-   Increment/update lib/setup/twversion.class.php (depending if major or minor release)
-
-All that process has to be relayed on live irc channel : 
-irc://irc.freenode.net/#tikiwiki
+Please see: http://dev.tiki.org/How+to+release
 
 EOS;
 	exit;

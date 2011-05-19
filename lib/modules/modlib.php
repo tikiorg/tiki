@@ -798,8 +798,8 @@ class ModLib extends TikiLib
 			}
 
 			if (isset($info['parse']) && $info['parse'] == 'y') {
-				$info['data'] = $tikilib->parse_data($info['data']);
-				$info['title'] = $tikilib->parse_data($info['title'], array('noparseplugins' => true));
+				$info['data'] = $tikilib->parse_data($info['data'], array('is_html' => true));
+				$info['title'] = $tikilib->parse_data($info['title'], array('noparseplugins' => true, 'is_html' => true));
 			}
 
 			$smarty->assign('user_title', tra($info['title']));

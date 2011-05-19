@@ -63,7 +63,7 @@ function prefs_global_list($partial = false) {
 			'name' => tra('Use group homepages'),
 			'description' => tra('Users can be sent to different pages upon login, depending on their default group.'),
 			'type' => 'flag',
-			'help' => 'Group',
+			'help' => 'Groups',
 			'keywords' => 'group home page pages',
 			'default' => 'n',
 		),
