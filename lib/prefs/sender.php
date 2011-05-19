@@ -13,6 +13,7 @@ function prefs_sender_list() {
 			'type' => 'text',
 			'size' => 40,
 			'default' => '',
+			'tags' => array('basic'),
 		),
 	);
 }

@@ -33,6 +33,7 @@ function prefs_users_list($partial = false) {
 			'dependencies' => array(
 				'change_language',
 			),
+			'tags' => array('basic'),
 		),
 		'users_serve_avatar_static' => array(
 			'name' => tra('Serve avatar images statically'),
@@ -49,6 +50,7 @@ function prefs_users_list($partial = false) {
 				'Local' => tra('Use time zone set from user preferences, or the automatically detected time zone for anonymous (if browser allows). Site default is used as fallback.'),
 			),
 			'default' => 'Local',
+			'tags' => array('basic'),
 		),
 		'users_prefs_userbreadCrumb' => array(
 			'name' => tra('Number of visited pages to remember'),
@@ -71,6 +73,7 @@ function prefs_users_list($partial = false) {
 				'public' => tra('Public'),
 			),
 			'default' => 'private',
+			'tags' => array('basic'),
 		),
 		'users_prefs_user_dbl' => array(
 			'name' => tra('Use double-click to edit pages'),

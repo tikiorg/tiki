@@ -34,6 +34,7 @@ function prefs_server_list($partial = false) {
 			'type' => 'list',
 			'options' => array_combine( $timezones, $timezones ),
 			'default' => isset($tikidate) ? $tikidate->getTimezoneId() : 'UTC',
+			'tags' => array('basic'),
 		),
 	);
 }

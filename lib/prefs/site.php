@@ -12,6 +12,7 @@ function prefs_site_list() {
 			'description' => tra('Close site (except for those with permission)'),
 			'type' => 'flag',
 			'perspective' => false,
+			'tags' => array('basic'),
 		),
 		'site_closed_msg' => array(
 			'name' => tra('Message to display'),
@@ -22,6 +23,7 @@ function prefs_site_list() {
 				'site_closed',
 			),
 			'default' => 'Site is closed for maintenance; please come back later.',
+			'tags' => array('basic'),
 		),
 		'site_busy_msg' => array(
 			'name' => tra('Message to display'),
@@ -74,6 +76,7 @@ function prefs_site_list() {
 			'type' => 'text',
 			'size' => '15',
 			'default' => 'favicon.png',
+			'tags' => array('basic'),
 		),
 		'site_favicon_type' => array(
 			'name' => tra('Favicon icon MIME type'),
@@ -84,6 +87,7 @@ function prefs_site_list() {
 				'image/x-icon' => tra('image/x-icon'),
 			),
 			'default' => 'image/png',
+			'tags' => array('basic'),
 		),
 		'site_terminal_active' => array(
 			'name' => tra('Site Terminal'),

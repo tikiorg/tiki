@@ -20,6 +20,7 @@ function prefs_tiki_list() {
 				'feature_version_checks',
 			),
 			'default' => 604800,
+			'tags' => array('basic'),
 		),
 		'tiki_minify_javascript' => array(
 			'name' => tra('Minify JavaScript'),
@@ -27,6 +28,7 @@ function prefs_tiki_list() {
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'tiki_minify_css' => array(
 			'name' => tra('Minify CSS'),
@@ -34,6 +36,7 @@ function prefs_tiki_list() {
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'tiki_minify_css_single_file' => array(
 			'name' => tra('Minify CSS into a single file'),
@@ -42,12 +45,14 @@ function prefs_tiki_list() {
 			'perspective' => false,
 			'warning' => tra('This setting may not work out of the box for all styles. import needs to use @import url("...") and not @import "..."'),
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'tiki_same_day_time_only' => array(
 			'name' => tra('Skip date for same day'),
 			'description' => tra('When displaying short date and time, skip date for today. Only time will be displayed.'),
 			'type' => 'flag',
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'tiki_cachecontrol_session' => array(
 			'name' => tra('Cache-Control header'),
@@ -95,6 +100,7 @@ function prefs_tiki_list() {
 				'force' => tra('Add the www'),
 			),
 			'default' => 'unchanged',
+			'tags' => array('basic'),
 		),
 		'tiki_domain_redirects' => array(
 			'name' => tra('Domain redirects'),

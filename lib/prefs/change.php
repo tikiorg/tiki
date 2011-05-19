@@ -12,6 +12,7 @@ function prefs_change_list() {
 			'description' => tra('Allow users to change the language of the menus and labels.'),
 			'type' => 'flag',
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'change_theme' => array(
 			'name' => tra('Users can change theme'),
@@ -23,6 +24,7 @@ function prefs_change_list() {
 			'type' => 'flag',
 			'help' => 'User+Preferences',
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 	);
 }

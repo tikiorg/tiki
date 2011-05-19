@@ -42,6 +42,7 @@ function prefs_global_list($partial = false) {
 			'description' => tra('Label visible in the browser\'s title bar on all pages. Also appears in search engines.'),
 			'type' => 'text',
 			'default' => '',
+			'tags' => array('basic'),
 		),
 		'validateUsers' => array(
 			'name' => tra('Validate new user registrations by email'),
@@ -196,6 +197,7 @@ function prefs_global_list($partial = false) {
 			'type' => 'flag',
 			'description' => tra('If passwords <em>are not</em> plain text, reset instructions will be emailed to the user.').' '. tra('If passwords <em>are stored</em> as plain text, the password will be emailed to the user'),
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'useGroupTheme' => array(
 			'name' => tra('Each group can have its theme'),
@@ -231,6 +233,7 @@ function prefs_global_list($partial = false) {
 			'name' => tra('Users can register'),
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'validateEmail' => array(
 			'name' => tra("Validate user's email server"),
@@ -252,6 +255,7 @@ function prefs_global_list($partial = false) {
 			'type' => 'flag',
 			'description' => tra('Users must enter a code to register.  You must inform users of this code. Use to restrict registration to invited users only.'),
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'registerPasscode' => array(
 			'name' => tra('Passcode'),
@@ -259,6 +263,7 @@ function prefs_global_list($partial = false) {
 			'size' => 15,
 			'hint' =>  tra('Alphanumeric code required to complete the registration'),
 			'default' => '',
+			'tags' => array('basic'),
 		),
 		'userTracker' => array(
 			'name' => tra('Use tracker to collect more user information'),
@@ -310,6 +315,7 @@ function prefs_global_list($partial = false) {
 				'always'	=> tra('Always'),
 			),
 			'default' => 'disabled',
+			'tags' => array('basic'),
 		),
 		'remembertime' => array(
 			'name' => tra('Duration'),
@@ -328,18 +334,21 @@ function prefs_global_list($partial = false) {
 				'31556926'	=> '1 ' . tra('year'),
 			),
 			'default' => 7200,
+			'tags' => array('basic'),
 		),
 		'urlIndex' => array(
 			'name' => tra('Use different URL as homepage'),
 			'type' => 'text',
 			'size' => 50,
 			'default' => '',
+			'tags' => array('basic'),
 		),
 		'useUrlIndex' => array(
 			'name' => tra('Use URL Index'),
 			'description' => tra('Use a Tiki feature homepage or another homepage'),
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'tikiIndex' => array(
 			'name' => tra('Use Tiki feature as homepage'),
@@ -347,6 +356,7 @@ function prefs_global_list($partial = false) {
 			'options' => feature_home_pages($partial),
 			'description' => tra('Select the Tiki feature to use as the site homepage. Only enabled features are listed.'),
 			'default' => 'tiki-index.php',
+			'tags' => array('basic'),
 		),
 		'disableJavascript' => array(
 			'name' => tra('Disable JavaScript'),
