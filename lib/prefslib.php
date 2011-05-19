@@ -171,11 +171,14 @@ class PreferencesLib
 		return true;
 	}
 
-	function getMatchingPreferences( $criteria ) {
+	function getMatchingPreferences( $criteria, $filters = null ) {
 		$index = $this->getIndex();
 
-		$filters = $this->buildPreferenceFilter();
-		$results = $index->find( "+($criteria) +($filters)" );
+		// No input means it was a likely a query from a dependency, meaning every result should show
+		if ($filters) {
+			$criteria = $this->buildPreferenceFilter($criteria, $filters);
+		}
+		$results = $index->find( $criteria );
 
 		$prefs = array();
 		foreach( $results as $hit ) {
@@ -599,9 +602,11 @@ class PreferencesLib
 		return $filters;
 	}
 
-	function getFilters()
+	function getFilters($filters = null)
 	{
-		$filters = $this->getEnabledFilters();
+		if (! $filters) {
+			$filters = $this->getEnabledFilters();
+		}
 
 		$out = array(
 			'basic' => array(
@@ -633,9 +638,9 @@ class PreferencesLib
 		return $out;
 	}
 
-	private function buildPreferenceFilter()
+	private function buildPreferenceFilter($criteria, $input = null)
 	{
-		$filters = $this->getFilters();
+		$filters = $this->getFilters($input);
 		$positive = array();
 		$negative = array();
 
@@ -647,7 +652,8 @@ class PreferencesLib
 			}
 		}
 
-		return '+(' . implode(' ', $positive) .') ' . implode(' ', $negative);
+		$filters = '+(' . implode(' ', $positive) .') ' . implode(' ', $negative);
+		return "+($criteria) +($filters)";
 	}
 }
 

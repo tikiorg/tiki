@@ -157,7 +157,8 @@ if( isset ($_REQUEST['pref_filters']) ) {
 	$prefslib->setFilters( $_REQUEST['pref_filters'] );
 }
 
-$smarty->assign('pref_filters', $prefslib->getFilters());
+$temp_filters = isset($_REQUEST['filters']) ? explode(' ', $_REQUEST['filters']) : null;
+$smarty->assign('pref_filters', $prefslib->getFilters($temp_filters));
 
 if( isset( $_REQUEST['lm_preference'] ) ) {
 	
@@ -181,7 +182,7 @@ if( isset( $_REQUEST['lm_criteria'] ) ) {
 	set_time_limit(0);
 	try {
 		$smarty->assign( 'lm_criteria', $_REQUEST['lm_criteria'] );
-		$results = $prefslib->getMatchingPreferences( $_REQUEST['lm_criteria'] );
+		$results = $prefslib->getMatchingPreferences( $_REQUEST['lm_criteria'], $temp_filters );
 		$results = array_slice( $results, 0, 10 );
 		$smarty->assign( 'lm_searchresults', $results );
 		$smarty->assign( 'lm_error', '' );

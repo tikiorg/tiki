@@ -18,16 +18,20 @@
 
 {jq}
 	var updateVisible = function() {
+		var filters = [];
 		$('.adminoptionbox').hide();
 		$('.preffilter').each(function () {
 			var targets = $('.adminoptionbox.' + $(this).val());
 			if ($(this).is(':checked')) {
+				filters.push($(this).val());
 				targets.show();
 			} else if ($(this).is('.negative:not(:checked)')) {
 				targets.hide();
 			}
 		});
 		$('.adminoptionbox.modified').show();
+
+		$('input[name="filters"]').val(filters.join(' '));
 	};
 
 	updateVisible();
@@ -42,6 +46,7 @@
 	<p>
 		<label>{tr}Configuration search:{/tr} <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"/></label>
 		<input type="submit" value="{tr}Search{/tr}" {if $indexNeedsRebuilding} class="tips" title="{tr}Configuration search{/tr}|{tr}Note: The search index needs rebuilding, this will take a few minutes.{/tr}"{/if} />
+		<input type="hidden" name="filters"/>
 	</p>
 </form>
 {if $lm_error}
