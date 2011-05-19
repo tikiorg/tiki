@@ -86,6 +86,7 @@ function prefs_feature_list($partial = false) {
 			'description' => tra('Computer files, videos or software for downloading. With check-in & check-out (lock)'),
 			'help' => 'File+Gallery',
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'feature_file_galleries_save_draft' => array(
 			'name' => tra('Save files as drafts'),

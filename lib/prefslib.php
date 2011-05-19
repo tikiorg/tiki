@@ -97,8 +97,8 @@ class PreferencesLib
 					$info['notes'][] = tr('Unmatched system requirement. Missing php extension among %0', implode(', ', $info['extensions']));
 				}
 			}
-			$defprefs = get_default_prefs();
-			$info['default_val'] = $defprefs[$name];
+
+			$info['modified'] = str_replace("\r\n", "\n", $info['value']) != $info['default'];
 			
 			if ($get_pages) {
 				$info['pages'] = $this->getPreferenceLocations( $name );
@@ -116,6 +116,10 @@ class PreferencesLib
 
 			if( ! $info['available'] ) {
 				$info['tags'][] = 'unavailable';
+			}
+
+			if ($info['modified'] && $info['available']) {
+				$info['tags'][] = 'modified';
 			}
 
 			$info['tagstring'] = implode(' ', $info['tags']);

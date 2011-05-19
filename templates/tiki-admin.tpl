@@ -27,6 +27,7 @@
 				targets.hide();
 			}
 		});
+		$('.adminoptionbox.modified').show();
 	};
 
 	updateVisible();
