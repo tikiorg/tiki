@@ -506,6 +506,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'description' => tra('Deny access to specific users based on username, IP, and date/time range.'),
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_stats' => array(
 			'name' => tra('Stats'),
