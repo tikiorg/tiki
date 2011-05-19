@@ -50,6 +50,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'help' => 'Blogs',
 			'default' => 'n',
+			'tags' => array('basic'),			
 		),
 		'feature_galleries' => array(
 			'name' => tra('Image Gallery'),
@@ -114,6 +115,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Articles',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_polls' => array(
 			'name' => tra('Polls'),
@@ -121,6 +123,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Poll',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),			
 		),
 		'feature_newsletters' => array(
 			'name' => tra('Newsletters'),
@@ -128,6 +131,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Newsletters',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),			
 		),
 		'feature_calendar' => array(
 			'name' => tra('Calendar'),
@@ -243,6 +247,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Shoutbox',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),			
 		),
 		'feature_maps' => array(
 			'name' => tra('Maps'),
@@ -460,6 +465,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'keywords' => 'sheet calculation calculations stats stat graph graphs',
 			'default' => 'n',
+			'tags' => array('basic'),			
 		),
 		'feature_slideshow' => array(
 			'name' => tra('Slideshow (jQuery.s5)'),
@@ -590,6 +596,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'User+Watches',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),			
 		),
 		'feature_group_watches' => array(
 			'name' => tra('Group Watches'),
@@ -638,6 +645,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Inter-user+Messages',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),			
 		),
 		'feature_userfiles' => array(
 			'name' => tra('User Files'),
@@ -792,6 +800,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'User+Preferences',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),			
 		),
 		'feature_babelfish' => array(
 			'name' => tra('Yahoo! Babel Fish Translation URLs'),
@@ -813,6 +822,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Smileys',
 			'type' => 'flag',
 			'default' => 'y',
+			'tags' => array('basic'),			
 		),
 		'feature_draw' => array(
 			'name' => tra('Draw - (SVG-edit)'),
@@ -824,6 +834,7 @@ function prefs_feature_list($partial = false) {
 				'feature_file_galleries_batch',
 				'feature_file_galleries',				
 			),
+			'tags' => array('experimental'),			
 		),
 		'feature_dynamic_content' => array(
 			'name' => tra('Dynamic Content System'),
@@ -886,6 +897,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Spam+protection',
 			'type' => 'flag',
 			'default' => 'y',
+			'tags' => array('basic'),			
 		),	
 		'feature_wiki_protect_email' => array(
 			'name' => tra('Protect email against spam'),
@@ -1059,12 +1071,14 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'hint' => 'tiki-listpages.php',
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'feature_lastChanges' => array(
 			'name' => tra('Latest Changes'),
 			'type' => 'flag',
 			'hint' => 'tiki-lastchanges.php',
 			'default' => 'y',
+			'tags' => array('basic'),			
 		),
 		'feature_listorphanPages' => array(
 			'name' => tra('Orphan pages'),
@@ -1090,6 +1104,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'help' => 'Search+Stats',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_search_show_forbidden_obj' => array(
 			'name' => tra('Ignore individual object permissions'),
@@ -1326,6 +1341,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'warning' => tra('Will be obsolete in Tiki 8 and migrated to modules entirely.'),
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'feature_left_column' => array(
 			'name' => tra('Left column'),
@@ -1340,6 +1356,7 @@ function prefs_feature_list($partial = false) {
 				'n' => tra('Never'),
 			),
 			'default' => 'y',
+			'tags' => array('basic'),			
 		),
 		'feature_right_column' => array(
 			'name' => tra('Right Column'),
@@ -1354,6 +1371,7 @@ function prefs_feature_list($partial = false) {
 				'n' => tra('Never'),
 			),
 			'default' => 'y',
+			'tags' => array('basic'),			
 		),
 		'feature_siteloclabel' => array(
 			'name' => tra('Prefix breadcrumbs with "Location : "'),
@@ -1534,6 +1552,7 @@ function prefs_feature_list($partial = false) {
 			'name' => tra('Use Tabs'),
 			'type' => 'flag',
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'feature_iepngfix' => array(
 			'name' => tra('Correct PNG images alpha transparency in IE6 (experimental)'),
@@ -1559,6 +1578,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'description' => tra('Tiki will warn users who attempt to edit a page that another user is currenly editing.'),
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'feature_wiki_undo' => array(
 			'name' => tra('Undo'),
@@ -1575,6 +1595,7 @@ function prefs_feature_list($partial = false) {
 			'name' => tra('Allow HTML'),
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_actionlog_bytes' => array(
 			'name' => tra('Log bytes changes (+/-) in action logs'),
@@ -1597,6 +1618,7 @@ function prefs_feature_list($partial = false) {
 				'feature_wiki',
 			),
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_wiki_pictures' => array(
 			'name' => tra('Pictures'),
@@ -1631,6 +1653,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'help' => 'History',
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'feature_wiki_history_ip' => array(
 			'name' => tra('Display IP address'),
@@ -1679,6 +1702,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'help' => 'Backlinks',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_likePages' => array(
 			'name' => tra('Similar (like pages)'),
@@ -2094,7 +2118,7 @@ function prefs_feature_list($partial = false) {
 			'description' => tra('Enables syntax highlighting with the use of CodeMirror'),
 			'default' => 'n',
 			'warning' => tra('Experimental. This feature is still under development.'),
-			'tags' => array('experimental'),			
+			'tags' => array('experimental'),		
 		),
 	);
 }
