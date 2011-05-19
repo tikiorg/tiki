@@ -242,7 +242,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 	}
 	
 	if( $prefs['feature_jquery_tooltips'] == 'y' ) {
-		$headerlib->add_jsfile( 'lib/jquery/cluetip/lib/jquery.hoverIntent.js' );
+		$headerlib->add_jsfile( 'lib/jquery_tiki/6.x_only/jquery.hoverIntent.js' );
 		$headerlib->add_jsfile( 'lib/jquery/cluetip/lib/jquery.bgiframe.min.js' );
 		$headerlib->add_jsfile( 'lib/jquery/cluetip/jquery.cluetip.js' );
 		$headerlib->add_cssfile( 'lib/jquery/cluetip/jquery.cluetip.css' );
