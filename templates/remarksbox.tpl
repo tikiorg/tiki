@@ -11,7 +11,7 @@
 	{capture name='alt'}{tr}{$remarksbox_type}{/tr}{/capture}
 	{icon _id=$remarksbox_icon alt=$smarty.capture.alt}
 {/if}
-		<span>{$remarksbox_title}</span>
+		<span>{$remarksbox_title|escape}</span>
 	</div>
 {/if}
 	<div class="rbox-data{$remarksbox_highlight}"{if !empty($remarksbox_width)} style="width:{$remarksbox_width}"{/if}>
