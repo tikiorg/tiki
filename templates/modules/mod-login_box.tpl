@@ -125,7 +125,7 @@ function doChallengeResponse() {
 				<input type="text" name="user" id="login-user_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" {if !empty($error_login)} value="{$error_user|escape}"{/if} />
 				{jq}if ($('#login-user_{{$module_logo_instance}}:visible').length) {$('#login-user_{{$module_logo_instance}}')[0].focus();}{/jq}
 			{else}
-				<input type="hidden" name="user" id="login-user_{$module_logo_instance}" value="{$loginuser}" /><b>{$loginuser}</b>
+				<input type="hidden" name="user" id="login-user_{$module_logo_instance}" value="{$loginuser|escape}" /><b>{$loginuser|escape}</b>
 			{/if}
 		</div>
 		{if $prefs.feature_challenge eq 'y'} <!-- quick hack to make challenge/response work until 1.8 tiki auth overhaul -->
