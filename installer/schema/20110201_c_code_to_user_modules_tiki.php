@@ -25,9 +25,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
 	
-	// set up prefs array only
-	global $prefs, $user_overrider_prefs;
-	include_once 'lib/setup/prefs.php';
 
 	$defaultsitemycode = '{if $tiki_p_admin == "y"}
 <div id="quickadmin" style="text-align: left; padding-left: 12px;"><small>{tr}Quick Admin{/tr}</small>:
@@ -36,6 +33,12 @@ function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
 {if $prefs.lang_use_db eq "y"}{icon _id=world_edit title="{tr}Show interactive translation settings{/tr}" href="tiki-edit_languages.php?interactive_translation_mode=on"}{/if}
 </div>  
 {/if}';
+
+	$prefs = array();
+	$result = $installer->table('tiki_preferences')->fetchAll(array('name', 'value'), array());
+	foreach ( $result as $res ) {
+		$prefs[$res['name']] = $res['value'];
+	}
 
 	$prefs = array_merge( array(	// merge in relevant defaults from 6.x as they are no longer defined in 7.x+
 		'feature_sitemycode' => 'y',
@@ -48,7 +51,7 @@ function upgrade_20110201_c_code_to_user_modules_tiki( $installer ) {
 		'bot_logo_code' => '',
 		'feature_bot_logo' => 'n',
 	), $prefs);
-	
+
 	// add quickadmin but prefs feature_sitemycode, sitemycode stay and will need manual upgrading
 	if( $prefs['feature_sitemycode'] === 'y' ) {
 		$custom_code = $prefs['sitemycode'];
