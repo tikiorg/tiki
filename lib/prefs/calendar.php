@@ -33,6 +33,7 @@ function prefs_calendar_list() {
 				'year' => tra('Year'),
 			),
 			'default' => 'month',
+			'tags' => array('basic'),
 		),
 		'calendar_list_begins_focus' => array(
 			'name' => tra('View list begins'),

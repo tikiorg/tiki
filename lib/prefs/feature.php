@@ -928,11 +928,13 @@ function prefs_feature_list($partial = false) {
 			'name' => tra('Anonymous voting'),
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),	
 		'feature_poll_revote' => array(
 			'name' => tra('Allow re-voting'),
 			'type' => 'flag',
 			'default' => 'y',
+			'tags' => array('basic'),
 		),	
 		'feature_poll_comments' => array(
 			'name' => tra('Comments for polls'),
@@ -1037,6 +1039,7 @@ function prefs_feature_list($partial = false) {
 				'feature_articles',
 			),
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_cms_templates' => array(
 			'name' => tra('Content Templates'),
@@ -1049,6 +1052,7 @@ function prefs_feature_list($partial = false) {
 			'name' => tra('Print'),
 			'type' => 'flag',
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'feature_cms_emails' => array(
 			'name' => tra('Specify notification emails when creating articles'),
@@ -1135,6 +1139,7 @@ function prefs_feature_list($partial = false) {
 			'name' => tra('Search box'),
 			'type' => 'flag',
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'feature_search_show_visit_count' => array(
 			'name' => tra('Visits'),
@@ -1155,6 +1160,7 @@ function prefs_feature_list($partial = false) {
 			'name' => tra('Last modified date'),
 			'type' => 'flag',
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'feature_blog_rankings' => array(
 			'name' => tra('Rankings'),
@@ -1253,6 +1259,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'hint' => tra('If disabled, replies will quote the original post'),
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_forums_allow_thread_titles' => array(
 			'name' => tra('First post of a thread can have an empty body'),
