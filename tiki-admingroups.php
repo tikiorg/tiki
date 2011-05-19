@@ -113,7 +113,7 @@ if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUES
 // Process a form to remove a group
 if (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'delete') {
-		$access->check_authenticity(tra('Remove group: ') . htmlspecialchars($_REQUEST['group']));
+		$access->check_authenticity(tra('Remove group: ') . $_REQUEST['group']);
 		$userlib->remove_group($_REQUEST["group"]);
 		$logslib->add_log('admingroups', 'removed group ' . $_REQUEST["group"]);
 		unset($_REQUEST['group']);

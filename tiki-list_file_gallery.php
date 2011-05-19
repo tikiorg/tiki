@@ -234,7 +234,7 @@ if (!empty($_REQUEST['validate']) && $prefs['feature_file_galleries_save_draft']
 		}
 	}
 
-	$access->check_authenticity(tra('Validate draft: ') . (!empty($info['name']) ? htmlspecialchars($info['name']) . ' - ' : '') . $info['filename']);
+	$access->check_authenticity(tra('Validate draft: ') . (!empty($info['name']) ? $info['name'] . ' - ' : '') . $info['filename']);
 	$filegallib->validate_draft($info['fileId']);
 }
 
@@ -569,7 +569,7 @@ if (!empty($_REQUEST['removegal'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
-	$access->check_authenticity(tra('Remove file gallery: ') . ' ' . htmlspecialchars($gal_info['name']));
+	$access->check_authenticity(tra('Remove file gallery: ') . $gal_info['name']);
 	$filegallib->remove_file_gallery($_REQUEST['removegal'], $_REQUEST['removegal']);
 }
 

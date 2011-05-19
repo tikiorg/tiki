@@ -24,7 +24,7 @@ if (!isset($_REQUEST["parentId"])) {
 $smarty->assign('parentId', $_REQUEST["parentId"]);
 
 if (!empty($_REQUEST['unassign'])) {
-	$access->check_authenticity(tra('Are you sure you want to unassign the objects of this category: ') . htmlspecialchars($info['name']));
+	$access->check_authenticity(tra('Are you sure you want to unassign the objects of this category: ') . $info['name']);
 	$categlib->unassign_all_objects($_REQUEST['parentId']);
 }
 if (!empty($_REQUEST['move_to']) && !empty($_REQUEST['toId'])) {
@@ -175,7 +175,7 @@ if (isset($_REQUEST["removeObject"])) {
 	$categlib->notify($values);
 }
 if (isset($_REQUEST["removeCat"]) && ($info = $categlib->get_category($_REQUEST['removeCat']))) {
-	$access->check_authenticity(tra('Click here to delete the category:') . ' ' . htmlspecialchars($info['name']));
+	$access->check_authenticity(tra('Click here to delete the category:') . ' ' . $info['name']);
 	$categlib->remove_category($_REQUEST["removeCat"]);
 }
 if (isset($_REQUEST["save"]) && isset($_REQUEST["name"]) && strlen($_REQUEST["name"]) > 0) {
