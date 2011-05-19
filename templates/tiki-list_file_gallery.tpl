@@ -1,13 +1,13 @@
 {* $Id$ *}
 
 {title help="File+Galleries" admpage="fgal"}
-	{strip}
-		{if $edit_mode eq 'y' and $galleryId eq 0}
-			{tr}Create a File Gallery{/tr}
-		{else}
-			{if $edit_mode eq 'y'}
-				{tr}Edit Gallery:{/tr}&nbsp;
-			{/if}
+	{if $edit_mode eq 'y' and $galleryId eq 0}
+		{tr}Create a File Gallery{/tr}
+	{else}
+		{if $edit_mode eq 'y'}
+			{tr}Edit Gallery:{/tr}
+		{/if}
+		{strip} 
 			{if $gal_info.type eq 'user'}
 				{if $gal_info.user eq $user}
 					{tr}My Files{/tr}
@@ -17,8 +17,8 @@
 			{else}
 				{$name}
 			{/if}
-		{/if}
-	{/strip}
+		{/strip}
+	{/if}
 {/title}
 
 {if $edit_mode neq 'y' and $gal_info.description neq ''}
