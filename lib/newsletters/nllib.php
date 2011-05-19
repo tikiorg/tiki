@@ -1088,7 +1088,7 @@ class NlLib extends TikiLib
 
 			if ($browser) {
 				if (ob_get_level() == 0)
-//					ob_start();
+					@ob_start();
 				// Browsers needs a certain amount of data, for each flush, to display something
 				print str_repeat(' ', 4096) . "\n";
 				print tra("Sending to") . " '<b>$email</b>': <font color=";
@@ -1116,9 +1116,9 @@ class NlLib extends TikiLib
 
 				// Flush output to force the browser to display email addresses as soon as emails are sent
 				// This should avoid CGI and/or proxy and/or browser timeouts when sending to a lot of emails
-//				ob_flush();
-//				flush();
-//				ob_end_flush();
+				@ob_flush();
+				@flush();
+				@ob_end_flush();
 			}
 		}
 		$info['editionId'] = $this->replace_edition($nl_info['nlId'], $info['subject'], $info['data'], count($sent), $info['editionId'], false, !empty($info['datatxt']) ? $txt : '', $info['files'], $info['wysiwyg']);
