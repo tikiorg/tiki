@@ -85,7 +85,10 @@ chdir($pwd);
 
 global $systemConfiguration;
 $systemConfiguration = new Zend_Config(
-	array('preference' => array()),
+	array(
+		'preference' => array(),
+		'rules' => array(),
+	),
 	array('readOnly' => false)
 );
 
