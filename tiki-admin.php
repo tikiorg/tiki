@@ -49,16 +49,18 @@ function simple_set_toggle($feature)
 	if (isset($_REQUEST[$feature]) && $_REQUEST[$feature] == 'on') {
 		if ((!isset($prefs[$feature]) || $prefs[$feature] != 'y')) {
 			// not yet set at all or not set to y
-			$tikilib->set_preference($feature, 'y');
-			add_feedback( $feature, tr('%0 enabled', $feature), 1, 1 );
-			$logslib->add_action('feature', $feature, 'system', 'enabled');
+			if ($tikilib->set_preference($feature, 'y')) {
+				add_feedback( $feature, tr('%0 enabled', $feature), 1, 1 );
+				$logslib->add_action('feature', $feature, 'system', 'enabled');
+			}
 		}
 	} else {
 		if ((!isset($prefs[$feature]) || $prefs[$feature] != 'n')) {
 			// not yet set at all or not set to n
-			$tikilib->set_preference($feature, 'n');
-			add_feedback($feature, tr('%0 disabled', $feature), 0, 1);
-			$logslib->add_action('feature', $feature, 'system', 'disabled');
+			if ($tikilib->set_preference($feature, 'n')) {
+				add_feedback($feature, tr('%0 disabled', $feature), 0, 1);
+				$logslib->add_action('feature', $feature, 'system', 'disabled');
+			}
 		}
 	}
 	global $cachelib;
@@ -81,8 +83,9 @@ function simple_set_value($feature, $pref = '', $isMultiple = false)
 	$old = $prefs[$feature];
 	if (isset($_REQUEST[$feature])) {
 		if ($pref != '') {
-			$tikilib->set_preference($pref, $_REQUEST[$feature]);
-			$prefs[$feature] = $_REQUEST[$feature];
+			if ($tikilib->set_preference($pref, $_REQUEST[$feature])) {
+				$prefs[$feature] = $_REQUEST[$feature];
+			}
 		} else {
 			$tikilib->set_preference($feature, $_REQUEST[$feature]);
 		}
@@ -90,8 +93,9 @@ function simple_set_value($feature, $pref = '', $isMultiple = false)
 		// Multiple selection controls do not exist if no item is selected.
 		// We still want the value to be updated.
 		if ($pref != '') {
-			$tikilib->set_preference($pref, array());
-			$prefs[$feature] = $_REQUEST[$feature];
+			if ($tikilib->set_preference($pref, array())) {
+				$prefs[$feature] = $_REQUEST[$feature];
+			}
 		} else {
 			$tikilib->set_preference($feature, array());
 		}

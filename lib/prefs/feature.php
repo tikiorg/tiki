@@ -466,6 +466,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Wysiwyg',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('experimental'),
 		),
 		'feature_kaltura' => array(
 			'name' => tra('Kaltura'),

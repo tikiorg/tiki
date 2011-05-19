@@ -58,6 +58,12 @@ class PreferencesLib
 				$info['value'] = $value;
 			}
 
+			if (! isset($info['tags'])) {
+				$info['tags'] = array();
+			}
+
+			$info['tags'][] = $name;
+
 			$info['notes'] = array();
 
 			$info['raw'] = $source[$name];
@@ -101,10 +107,42 @@ class PreferencesLib
 				$info['available'] = false;
 				$info['notes'][] = tr('Configuration forced by host.');
 			}
+
+			if( $this->preferenceDisabled( $info['tags'] ) ) {
+				$info['available'] = false;
+				$info['notes'][] = tr('Disabled by host.');
+			}
 			
 			$info = array_merge($defaults, $info);
 
 			return $info;
+		}
+
+		return false;
+	}
+
+	private function preferenceDisabled($tags) {
+		static $rules = null;
+
+		if (is_null($rules)) {
+			global $systemConfiguration;
+			$rules = $systemConfiguration->rules->toArray();
+			krsort($rules, SORT_NUMERIC);
+
+			foreach ($rules as & $rule) {
+				$parts = explode(' ', $rule);
+				$type = array_shift($parts);
+				$rule = array($type, $parts);
+			}
+		}
+
+
+		foreach ($rules as $rule) {
+			$intersect = array_intersect($rule[1], $tags);
+
+			if (count($intersect)) {
+				return $rule[0] == 'deny';
+			}
 		}
 
 		return false;
@@ -155,8 +193,9 @@ class PreferencesLib
 			$realPref = in_array($pref, $user_overrider_prefs)? "site_$pref": $pref;
 
 			if( ($old = $tikilib->get_preference( $realPref ) ) != $value ) {
-				$tikilib->set_preference( $pref, $value );
-				$changes[$pref] = array('new'=> $value, 'old' => $old);
+				if ($tikilib->set_preference( $pref, $value )) {
+					$changes[$pref] = array('new'=> $value, 'old' => $old);
+				}
 			}
 		}
 

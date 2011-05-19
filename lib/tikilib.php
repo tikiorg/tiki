@@ -3454,6 +3454,14 @@ class TikiLib extends TikiDb_Bridge
 	function set_preference($name, $value) {
 		global $user_overrider_prefs, $user_preferences, $user, $prefs;
 
+		$prefslib = TikiLib::lib('prefs');
+
+		$definition = $prefslib->getPreference($name);
+
+		if ($definition && ! $definition['available']) {
+			return false;
+		}
+
 		$cachelib = TikiLib::lib('cache');
 		$cachelib->invalidate('tiki_preferences_cache');
 
@@ -3463,12 +3471,10 @@ class TikiLib extends TikiDb_Bridge
 		$this->set_lastUpdatePrefs();
 
 		$preferences = $this->table('tiki_preferences');
-		$preferences->delete(array(
-			'name' => $name,
-		));
-		$preferences->insert(array(
-			'name' => $name,
+		$preferences->insertOrUpdate(array(
 			'value' => is_array($value) ? serialize($value) : $value,
+		), array(
+			'name' => $name,
 		));
 
 		if ( isset($prefs) ) {

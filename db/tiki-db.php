@@ -105,6 +105,7 @@ if ( file_exists($local_php) ) {
 global $systemConfiguration;
 $systemConfiguration = new Zend_Config(array(
 	'preference' => array(),
+	'rules' => array(),
 ), array(
 	'readOnly' => false,
 ));
