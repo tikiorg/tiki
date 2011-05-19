@@ -26,12 +26,13 @@ function prefs_feature_list() {
 
 	return array(
 		'feature_blog_mandatory_category' => array(
-			'name' => tra('Force and limit categorization to within subtree of'),
+			'name' => tra('Blog:'.' '.'Force and limit categorization to within subtree of'),
 			'description' => tra('If you get an error message indicating a mandatory category is required when editing a blog post, this is the option to blame. Set it to None.'),
 			'type' => 'list',
 			'options' => $catree,
 			'dependencies' => array(
 				'feature_categories',
+				'feature_blogs',
 			),
 		),
 		'feature_wiki' => array(
@@ -1534,12 +1535,23 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_wiki_mandatory_category' => array(
-			'name' => tra('Force and limit categorization to within subtree of'),
+			'name' => tra('Wiki:'.' '.'Force and limit categorization to within subtree of'),
 			'description' => tra('If you get an error message indicating a mandatory category is required when editing a wiki page, this is the option to blame. Set it to None.'),
 			'type' => 'list',
 			'options' => $catree,
 			'dependencies' => array(
 				'feature_categories',
+				'feature_wiki',
+			),
+		),
+		'feature_image_gallery_mandatory_category' => array(
+			'name' => tra('Image Gallery:'.' '.'Force and limit categorization to within subtree of'),
+			'description' => tra('If you get an error message indicating a mandatory category is required when editing an image (in an image gallery), this is the option to blame. Set it to None.'),
+			'type' => 'list',
+			'options' => $catree,
+			'dependencies' => array(
+				'feature_categories',
+				'feature_galleries',
 			),
 		),
 		'feature_wiki_show_hide_before' => array(
