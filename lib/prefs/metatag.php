@@ -12,6 +12,7 @@ function prefs_metatag_list() {
 			'type' => 'textarea',
 			'size' => '4',
 			'default' => '',
+			'tags' => array('basic'),
 		),
 		'metatag_freetags' => array(
 			'name' => tra('Include freetags'),
@@ -42,6 +43,7 @@ function prefs_metatag_list() {
 			'type' => 'textarea',
 			'size' => '5',
 			'default' => '',
+			'tags' => array('basic'),
 		),
 		'metatag_pagedesc' => array(
 			'name' => tra('Use individual page description for Wiki pages instead'),
@@ -53,6 +55,7 @@ function prefs_metatag_list() {
 			'type' => 'text',
 			'size' => '50',
 			'default' => '',
+			'tags' => array('basic'),
 		),
 		'metatag_geoposition' => array(
 			'name' => tra('geo.position'),

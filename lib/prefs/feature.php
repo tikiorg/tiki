@@ -336,6 +336,7 @@ function prefs_feature_list($partial = false) {
 			'description' => tra('Display the page description below the heading when viewing the page.'),
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_page_title' => array(
 			'name' => tra('Display page name as page title'),
@@ -1570,6 +1571,7 @@ function prefs_feature_list($partial = false) {
 			'description' => tra("If a requested page doesn't exist, redirect to a similarly named page"),
 			'help' => 'Redirect+to+similar+wiki+page',
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'feature_wiki_templates' => array(
 			'name' => tra('Content templates'),

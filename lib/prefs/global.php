@@ -59,6 +59,7 @@ function prefs_global_list($partial = false) {
 			'type' => 'text',
 			'size' => 20,
 			'default' => 'HomePage',
+			'tags' => array('basic'),
 		),
 		'useGroupHome' => array(
 			'name' => tra('Use group homepages'),

@@ -88,6 +88,7 @@ function prefs_wiki_list($partial = false) {
 				'none' => tra('none (disabled)'),
 			),
 			'default' => 'none',
+			'tags' => array('basic'),
 		),
 		'wiki_authors_style_by_page' => array(
 			'name' => tra('Specify wiki author list style per page'),
@@ -176,6 +177,7 @@ function prefs_wiki_list($partial = false) {
 			'description' => tra('Some characters may prevent the pages from being easily accessible from the URL or through wiki links. This option prevents from creating pages with such characters.'),
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'wiki_ranking_reload_probability' => array(
 			'name' => tra('Page ranking reload probability'),
@@ -196,6 +198,7 @@ function prefs_wiki_list($partial = false) {
 			'description' => tra('Provide a JavaScript alert before the user\'s lock on a page times out.'),
 			'type' => 'flag',
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'wiki_dynvar_style' => array(
 			'name' => tra('Dynamic variables'),
@@ -222,6 +225,7 @@ function prefs_wiki_list($partial = false) {
 			'name' => tra('Edit section'),
 			'type' => 'flag',
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'wiki_edit_section_level' => array(
 			'name' => tra('Edit section level'),
@@ -269,6 +273,7 @@ function prefs_wiki_list($partial = false) {
 			'type' => 'flag',
 			'help' => 'Slideshow',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'wiki_creator_admin' => array(
 			'name' => tra('Page creators are admin of their pages'),
