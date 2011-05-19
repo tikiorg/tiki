@@ -2975,6 +2975,8 @@ INSERT INTO `users_permissions` (`permName` , `permDesc` , `level` , `type` , `a
 INSERT INTO `users_permissions` (`permName` , `permDesc` , `level` , `type` , `admin` , `feature_check` ) VALUES ( 'tiki_p_acct_manage_template', 'Can manage templates for recurring transactions', 'editor', 'accounting', 'n', 'feature_accounting');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_wiki_view_latest', 'Can view unapproved revisions of pages', 'registered', 'wiki', NULL, 'flaggedrev_approval');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_wiki_approve', 'Can approve revisions of pages', 'editor', 'wiki', NULL, 'flaggedrev_approval');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES ('tiki_p_invite', 'Can invite users by email, and include them in groups', 'registered', 'tiki', NULL, 'feature_invite');
+
 
 DROP TABLE IF EXISTS `users_usergroups`;
 CREATE TABLE `users_usergroups` (
@@ -3790,8 +3792,6 @@ CREATE TABLE `tiki_invited` (
   KEY `id_invite` (`id_invite`),
   KEY `used_on_user` (`used_on_user`)
 ) ENGINE=MyISAM;
-
-INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES ('tiki_p_invite', 'Can invite users by email, and include them in groups', 'registered', 'tiki', NULL, 'feature_invite');
 
 DROP TABLE IF EXISTS `tiki_credits`;
 CREATE TABLE `tiki_credits` (
