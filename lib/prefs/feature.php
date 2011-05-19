@@ -300,6 +300,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Contact+us',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),				
 		),
 		'feature_minichat' => array(
 			'name' => tra('Minichat'),
@@ -512,6 +513,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Stats',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_action_calendar' => array(
 			'name' => tra('Action Calendar'),
@@ -533,6 +535,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Redirect+On+Error',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_comm' => array(
 			'name' => tra('Communications (send/receive objects)'),
