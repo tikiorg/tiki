@@ -12,7 +12,7 @@
 				{if $gal_info.user eq $user}
 					{tr}My Files{/tr}
 				{else}
-					{tr}Files of $user{/tr}
+					{tr}Files of {$gal_info.user}{/tr}
 				{/if}
 			{else}
 				{$name}
