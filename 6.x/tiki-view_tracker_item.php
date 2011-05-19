@@ -1209,8 +1209,10 @@ if ($prefs['ajax_xajax'] == 'y') {
 	require_once ("lib/ajax/ajaxlib.php");
 	$ajaxlib->registerTemplate('tiki-view_tracker_item.tpl');
 }
-global $logslib; include_once('lib/logs/logslib.php');
-$logslib->add_action('Viewed', $_REQUEST['itemId'], 'trackeritem');
+if ($prefs['feature_actionlog'] == 'y') {
+	global $logslib; include_once('lib/logs/logslib.php');
+	$logslib->add_action('Viewed', $_REQUEST['itemId'], 'trackeritem');
+}
 
 // Generate validation js
 if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_validation'] == 'y') {
