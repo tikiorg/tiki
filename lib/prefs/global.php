@@ -120,6 +120,7 @@ function prefs_global_list($partial = false) {
 			'name' => tra('Open external links in new window'),
 			'type' => 'flag',
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'wikiLicensePage' => array(
 			'name' => tra('License page'),
@@ -210,18 +211,21 @@ function prefs_global_list($partial = false) {
 			'type' => 'text',
 			'size' => '50',
 			'default' => '',
+			'tags' => array('basic'),
 		),
 		'sitesubtitle' => array(
 			'name' => tra('Subtitle'),
 			'type' => 'text',
 			'size' => '50',
 			'default' => '',
+			'tags' => array('basic'),
 		),
 		'maxRecords' => array(
 			'name' => tra('Maximum number of records in listings'),
 			'type' => 'text',
 			'size' => '3',
 			'default' => 25,
+			'tags' => array('basic'),
 		),
 		'maxVersions' => array(
 			'name' => tra('Maximum number of versions:'),

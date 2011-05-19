@@ -197,6 +197,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Internationalization',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_faqs' => array(
 			'name' => tra('FAQ'),
@@ -212,6 +213,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Surveys',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_directory' => array(
 			'name' => tra('Directory'),
@@ -285,6 +287,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Share',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_html_pages' => array(
 			'name' => tra('HTML pages'),
@@ -316,6 +319,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Comments',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_comments_locking' => array(
 			'name' => tra('Comments Locking'),
@@ -323,6 +327,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Comments',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_comments_post_as_anonymous' => array(
 			'name' => tra('Allow posting of comments as Anonymous'),
@@ -813,6 +818,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'hint' => tra('You need to assign somewhere on the page via a module'),
 			'default' => 'n',
+			'tags' => array('experimental'),
 		),
 		'feature_babelfish_logo' => array(
 			'name' => tra('Yahoo! Babel Fish Translation icons'),
@@ -859,6 +865,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'description' => tra('External links will be identifed with an icon. Use the ../img/icons/external_link.gif image to customize the icon.'),
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'feature_wiki_ext_rel_nofollow' => array(
 			'name' => tra('Add "rel=nofollow" on external links'),
@@ -866,6 +873,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'keywords' => 'no follow spam',
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'feature_semantic' => array(
 			'name' => tra('Semantic links'),
@@ -994,6 +1002,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Module',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),	
 		'feature_perspective' => array(
 			'name' => tra('Perspectives'),

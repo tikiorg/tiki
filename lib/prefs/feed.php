@@ -90,6 +90,7 @@ function prefs_feed_list() {
 				'feature_articles',
 			),
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feed_blogs' => array(
 			'name' => tra('Blogs'),
@@ -99,6 +100,7 @@ function prefs_feed_list() {
 				'feature_blogs',
 			),
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feed_blog' => array(
 			'name' => tra('Individual Blogs'),
@@ -108,6 +110,7 @@ function prefs_feed_list() {
 				'feature_blogs',
 			),
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feed_image_galleries' => array(
 			'name' => tra('Image galleries'),
@@ -162,6 +165,7 @@ function prefs_feed_list() {
 				'feature_forums',
 			),
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feed_forum' => array(
 			'name' => tra('Individual Forums'),
@@ -171,6 +175,7 @@ function prefs_feed_list() {
 				'feature_forums',
 			),
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feed_trackers' => array(
 			'name' => tra('Trackers'),
@@ -198,6 +203,7 @@ function prefs_feed_list() {
 				'feature_calendar',
 			),
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feed_directories' => array(
 			'name' => tra('Directories'),
