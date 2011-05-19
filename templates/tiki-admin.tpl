@@ -2,6 +2,37 @@
 
 {title help="$helpUrl"}{tr}{$admintitle}{/tr}{/title}
 
+<form method="post" action="">
+	<fieldset>
+		<legend>{tr}Preference Filters{/tr}</legend>
+		{foreach from=$pref_filters key=name item=info}
+			<label>
+				<input type="checkbox" class="preffilter {$info.type|escape}" name="pref_filters[]" value="{$name|escape}" {if $info.selected}checked="checked"{/if}/>
+				{$info.label|escape}
+			</label>
+		{/foreach}
+
+		<input type="submit" value="{tr}Set as my default{/tr}"/>
+	</fieldset>
+</form>
+
+{jq}
+	var updateVisible = function() {
+		$('.adminoptionbox').hide();
+		$('.preffilter').each(function () {
+			var targets = $('.adminoptionbox.' + $(this).val());
+			if ($(this).is(':checked')) {
+				targets.show();
+			} else if ($(this).is('.negative:not(:checked)')) {
+				targets.hide();
+			}
+		});
+	};
+
+	updateVisible();
+	$('.preffilter').change(updateVisible);
+{/jq}
+
 {if !isset($smarty.get.page) or $smarty.get.page != 'profiles'} {* We don't want on this page because it results in two search boxes *}
 <form method="post" action="">
 	{*remarksbox type="note" title="{tr}Development Notice{/tr}"}

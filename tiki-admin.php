@@ -152,6 +152,13 @@ $url = 'tiki-admin.php';
 $adminPage = '';
 
 global $prefslib; require_once 'lib/prefslib.php';
+
+if( isset ($_REQUEST['pref_filters']) ) {
+	$prefslib->setFilters( $_REQUEST['pref_filters'] );
+}
+
+$smarty->assign('pref_filters', $prefslib->getFilters());
+
 if( isset( $_REQUEST['lm_preference'] ) ) {
 	
 	$changes = $prefslib->applyChanges( (array) $_REQUEST['lm_preference'], $_REQUEST );
@@ -171,8 +178,6 @@ if( isset( $_REQUEST['lm_preference'] ) ) {
 }
 
 if( isset( $_REQUEST['lm_criteria'] ) ) {
-	global $prefslib; require_once 'lib/prefslib.php';
-
 	set_time_limit(0);
 	try {
 		$smarty->assign( 'lm_criteria', $_REQUEST['lm_criteria'] );

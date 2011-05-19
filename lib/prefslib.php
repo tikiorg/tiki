@@ -113,6 +113,12 @@ class PreferencesLib
 				$info['available'] = false;
 				$info['notes'][] = tr('Disabled by host.');
 			}
+
+			if( ! $info['available'] ) {
+				$info['tags'][] = 'unavailable';
+			}
+
+			$info['tagstring'] = implode(' ', $info['tags']);
 			
 			$info = array_merge($defaults, $info);
 
@@ -566,6 +572,56 @@ class PreferencesLib
 		}
 
 		return $files;
+	}
+
+	function setFilters($tags)
+	{
+		global $user;
+		$tikilib = TikiLib::lib('tiki');
+		$tikilib->set_user_preference($user, 'pref_filters', implode(',', $tags));
+	}
+
+	private function getEnabledFilters()
+	{
+		global $user;
+		$tikilib = TikiLib::lib('tiki');
+		$filters = $tikilib->get_user_preference($user, 'pref_filters', 'basic,advanced,new');
+		$filters = explode(',', $filters);
+		return $filters;
+	}
+
+	function getFilters()
+	{
+		$filters = $this->getEnabledFilters();
+
+		$out = array(
+			'basic' => array(
+				'label' => tra('Basic'),
+				'type' => 'positive',
+			),
+			'advanced' => array(
+				'label' => tra('Advanced'),
+				'type' => 'positive',
+			),
+			'new' => array(
+				'label' => tra('New'),
+				'type' => 'negative',
+			),
+			'experimental' => array(
+				'label' => tra('Experimental'),
+				'type' => 'negative',
+			),
+			'unavailable' => array(
+				'label' => tra('Unavailable'),
+				'type' => 'negative',
+			),
+		);
+		
+		foreach ($out as $key => & $info) {
+			$info['selected'] = in_array($key, $filters);
+		}
+
+		return $out;
 	}
 }
 
