@@ -1358,8 +1358,6 @@ function get_default_prefs() {
 		'site_nav_seper' => '|',
 		'feature_sitelogo' => 'y',
 		'sitelogo_bgcolor' => 'transparent',
-		'sitelogo_bgstyle' => '',
-		'sitelogo_align' => 'left',
 		'sitelogo_title' => 'Tiki powered site',
 		'sitelogo_src' => 'img/tiki/Tiki_WCG.png',
 		'sitelogo_alt' => 'Site Logo',

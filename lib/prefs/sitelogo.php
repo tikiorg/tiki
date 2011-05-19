@@ -17,21 +17,6 @@ function prefs_sitelogo_list() {
 			'type' => 'text',
 			'size' => '15',
 		),
-		'sitelogo_bgstyle' => array(
-			'name' => tra('Logo background style'),
-			'hint' => tra('Examples:') . ' ' . '1) silver url(myStyle/img.gif) repeat - 2) padding: 30px 10px; background: #fff',
-			'type' => 'text',
-			'size' => '20',
-		),
-		'sitelogo_align' => array(
-			'name' => tra('Logo alignment'),
-			'type' => 'list',
-			'options' => array(
-				'left' => tra('Left'),
-				'center' => tra('Center'),
-				'right' => tra('Right'),
-			),
-		),
 		'sitelogo_title' => array(
 			'name' => tra('Logo title (on mouse over)'),
 			'type' => 'text',
