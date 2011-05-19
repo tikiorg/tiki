@@ -1007,7 +1007,7 @@ class NlLib extends TikiLib
 		}
 
 		if ($nl_info['allowArticleClip'] == 'y' && $nl_info['autoArticleClip'] == 'y') {
-			$articleClip = $tis->clip_articles($nl_info['nlId']);
+			$articleClip = $this->clip_articles($nl_info['nlId']);
 			$txtArticleClip = generateTxtVersion($articleClip);
 			$info['datatxt'] = str_replace('~~~articleclip~~~', $txtArticleClip, $info['datatxt']);
 			$html = str_replace('~~~articleclip~~~', $articleClip, $html);
