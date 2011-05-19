@@ -174,7 +174,8 @@ class PreferencesLib
 	function getMatchingPreferences( $criteria ) {
 		$index = $this->getIndex();
 
-		$results = $index->find( $criteria );
+		$filters = $this->buildPreferenceFilter();
+		$results = $index->find( "+($criteria) +($filters)" );
 
 		$prefs = array();
 		foreach( $results as $hit ) {
@@ -321,6 +322,7 @@ class PreferencesLib
 				$data = $this->getFileData( $file );
 
 				foreach( $data as $pref => $info ) {
+					$info = $this->getPreference($pref);
 					$doc = $this->indexPreference( $pref, $info );
 					$index->addDocument( $doc );
 				}
@@ -410,6 +412,8 @@ class PreferencesLib
 			$doc->addField( Zend_Search_Lucene_Field::Text('options', implode( ' ', $info['options'] ) ) );
 		}
 
+		$doc->addField( Zend_Search_Lucene_Field::Text('tags', implode( ' ', $info['tags'] ) ) );
+
 		return $doc;
 	}
 
@@ -489,6 +493,7 @@ class PreferencesLib
 
 		return array_intersect( $value, $options );
 	}
+
 	private function _getRadioValue( $info, $data ) {
 		$name = $info['preference'];
 		$value = isset($data[$name]) ? $data[$name]: null;
@@ -626,6 +631,23 @@ class PreferencesLib
 		}
 
 		return $out;
+	}
+
+	private function buildPreferenceFilter()
+	{
+		$filters = $this->getFilters();
+		$positive = array();
+		$negative = array();
+
+		foreach ($filters as $tag => $info) {
+			if ($info['selected']) {
+				$positive[] = "tags:$tag";
+			} elseif ($info['type'] == 'negative') {
+				$negative[] = "-tags:$tag";
+			}
+		}
+
+		return '+(' . implode(' ', $positive) .') ' . implode(' ', $negative);
 	}
 }
 
