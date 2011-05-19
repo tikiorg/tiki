@@ -42,6 +42,7 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'help' => 'Wiki',
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'feature_blogs' => array(
 			'name' => tra('Blog'),
@@ -63,6 +64,7 @@ function prefs_feature_list($partial = false) {
 			'description' => tra('Uses Google Translate to translate the content of wiki pages to other languages.'),
 			'help' => 'Machine+Translation',
 			'warning' => tra('Experimental. This feature is still under development.'),
+			'tags' => array('experimental'),
 			'type' => 'flag',
 			'default' => 'n',
 		),	
@@ -80,6 +82,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Forums',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_file_galleries' => array(
 			'name' => tra('File Gallery'),
@@ -87,6 +90,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'File+Gallery',
 			'type' => 'flag',
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'feature_file_galleries_save_draft' => array(
 			'name' => tra('Save files as drafts'),
@@ -131,6 +135,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Calendar',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),			
 		),
 		'feature_banners' => array(
 			'name' => tra('Banners'),
@@ -159,6 +164,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Search',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_freetags' => array(
 			'name' => tra('Freetags'),
@@ -296,6 +302,7 @@ function prefs_feature_list($partial = false) {
 			'help' => 'Minichat',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),			
 		),
 		'feature_comments_moderation' => array(
 			'name' => tra('Comments Moderation'),
@@ -354,6 +361,7 @@ function prefs_feature_list($partial = false) {
 			'description' => tra('This enables HTML Purifier on outputs to filter potential remaining security problems like XSS.'),
 			'help' => 'Purifier',
 			'warning' => tra('Experimental. This feature is still under development.'),
+			'tags' => array('experimental'),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
@@ -1529,6 +1537,7 @@ function prefs_feature_list($partial = false) {
 		),
 		'feature_iepngfix' => array(
 			'name' => tra('Correct PNG images alpha transparency in IE6 (experimental)'),
+			'tags' => array('experimental'),			
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -1765,6 +1774,7 @@ function prefs_feature_list($partial = false) {
                                 'feature_categories'
                         ),
 			'warning' => tra('This feature is experimental'),
+			'tags' => array('experimental'),
 			'description' => tra('Allows wiki pages to be staged (drafted) before they are approved (published)'),
 			'default' => 'n',
 		),
@@ -2084,6 +2094,7 @@ function prefs_feature_list($partial = false) {
 			'description' => tra('Enables syntax highlighting with the use of CodeMirror'),
 			'default' => 'n',
 			'warning' => tra('Experimental. This feature is still under development.'),
+			'tags' => array('experimental'),			
 		),
 	);
 }
