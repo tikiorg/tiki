@@ -35,12 +35,15 @@ class Perms_Check_Alternate implements Perms_Check
 			return $this->applicableCache;
 		}
 
-		$groups = $this->resolver->applicableGroups();
 		$this->applicableCache = array();
 
-		foreach( $groups as $group ) {
-			if( $this->resolver->check( $this->permission, array($group) ) ) {
-				$this->applicableCache[] = $group;
+		if ($this->resolver) {
+			$groups = $this->resolver->applicableGroups();
+
+			foreach( $groups as $group ) {
+				if( $this->resolver->check( $this->permission, array($group) ) ) {
+					$this->applicableCache[] = $group;
+				}
 			}
 		}
 
