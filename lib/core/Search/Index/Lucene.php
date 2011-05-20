@@ -208,7 +208,11 @@ class Search_Index_Lucene implements Search_Index_Interface
 		case 'Search_Type_WikiText':
 		case 'Search_Type_PlainText':
 		case 'Search_Type_MultivalueText':
-			$parts = explode(' ', $value->getValue());
+			$whole = $value->getValue();
+			$whole = str_replace(array('*', '?', '~', '+', '-'), '', $whole);
+			$whole = str_replace(array('[', ']', '{', '}', '(', ')', ':'), '', $whole);
+
+			$parts = explode(' ', $whole);
 			if (count($parts) === 1) {
 				return new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($parts[0], $field), true);
 			} else {
