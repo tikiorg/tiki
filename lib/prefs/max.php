@@ -12,6 +12,7 @@ function prefs_max_list() {
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
+			'default' => 50,
 		),
 	);	
 }

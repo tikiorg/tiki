@@ -157,8 +157,6 @@ function get_default_prefs() {
 		'feature_community_friends_permission' => 'n',
 		'feature_community_friends_permission_dep' => '2',
 		'lowercase_username' => 'n',
-		'max_username_length' => '50',
-		'min_username_length' => '1',
 		'users_prefs_country' => '',
 		'users_prefs_email_is_public' => 'n',
 		'users_prefs_homePage' => '',
