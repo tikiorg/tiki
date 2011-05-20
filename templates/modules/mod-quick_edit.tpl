@@ -4,7 +4,7 @@
 {if $templateId}<input type="hidden" name="templateId" value="{$templateId}" />{/if}
 {if $customTip}<input type="hidden" name="customTip" value="{$customTip}" />{/if}
 {if $customTipTitle}<input type="hidden" name="customTipTitle" value="{$customTipTitle}" />{/if}
-{if $wikiTplHeader}<input type="hidden" name="wikiTplHeader" value="{$wikiTplHeader}" />{/if}
+{if $wikiHeaderTpl}<input type="hidden" name="wikiHeaderTpl" value="{$wikiHeaderTpl}" />{/if}
 {if $mod_quickedit_heading}<div class="box-data">{$mod_quickedit_heading}</div>{/if}
 <input id="{$qefield}" size="{$size}" type="text" name="page" />
 {if $categId}<input type="hidden" name="categId" value="{$categId}" />{/if}
