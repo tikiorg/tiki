@@ -54,6 +54,7 @@ function module_login_box( $mod_reference, &$module_params ) {
 	$module_logo_instance++;
 	
 	$smarty->assign('module_logo_instance', $module_logo_instance);
+	$smarty->assign('mode', isset($module_params['mode']) ? $module_params['mode'] : 'module');
 	
 	$smarty->assign('registration', 'n');	// stops the openid form appearing in the module, only on tiki-login_scr.php
 	

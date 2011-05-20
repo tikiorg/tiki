@@ -13,9 +13,9 @@ function capLock(e, el){
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Log in{/tr}"}{/if}{* Left for performance, since tiki-login_scr.php includes this template directly. *}
 {if !isset($module_params)}{assign var=module_params value=' '}{/if}
 {tikimodule error=$module_params.error title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-	{if isset ($module_params.mode) and $module_params.mode eq "header"}<div class="siteloginbar{if $user} logged-in{/if}">{/if}
+	{if $mode eq "header"}<div class="siteloginbar{if $user} logged-in{/if}">{/if}
 	{if isset($user) and $user}
-		{if empty($module_params.mode) or $module_params.mode eq "module"}
+		{if $mode eq "module"}
 			<div>{tr}Logged in as:{/tr} <span style="white-space: nowrap">{$user|userlink}</span></div>
 			<div style="text-align: center;">
 				{button href="tiki-logout.php" _text="{tr}Log out{/tr}"}
@@ -35,9 +35,9 @@ function capLock(e, el){
 					</fieldset>
 				</form>
 			{/if}
-		{elseif $module_params.mode eq "header"}
+		{elseif $mode eq "header"}
 			<span style="white-space: nowrap">{$user|userlink}</span> <a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>
-		{elseif $module_params.mode eq "popup"}
+		{elseif $mode eq "popup"}
 			<div class="siteloginbar_popup">
 				<ul class="clearfix cssmenu_horiz">
 					<li {*class="tabmark" *}id="logout_link_{$module_logo_instance}"><span class="tabmark"><a href="tiki-logout.php" class="login_link">{tr}Log out{/tr}</a></span>
@@ -98,7 +98,7 @@ function doChallengeResponse() {
 			<input type="hidden" name="response" value="" />
 		{/if}
 		{if !empty($urllogin)}<input type="hidden" name="url" value="{$urllogin|escape}" />{/if}
-		{if $module_params.mode eq "popup"}
+		{if $mode eq "popup"}
 			<div class="siteloginbar_popup">
 				<ul class="clearfix cssmenu_horiz">
 					<li {*class="tabmark" *}id="logout_link_{$module_logo_instance}"><span class="tabmark"><a href="tiki-login.php" class="login_link">{tr}Log in{/tr}</a></span>
@@ -237,5 +237,5 @@ function doChallengeResponse() {
 {if $prefs.socialnetworks_facebook_login eq 'y'}
 	<div style="text-align: center"><a href="tiki-socialnetworks.php?request_facebook=true"><img src="http://developers.facebook.com/images/devsite/login-button.png" /></a></div>
 {/if}
-{if $module_params.mode eq "header"}</div>{/if}
+{if $mode eq "header"}</div>{/if}
 {/tikimodule}
