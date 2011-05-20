@@ -750,8 +750,10 @@ if (isset($_REQUEST['status'])) $smarty->assign_by_ref('status', $_REQUEST['stat
 include_once ('tiki-section_options.php');
 $smarty->assign('uses_tabs', 'y');
 ask_ticket('view-trackers-items');
-$logslib = TikiLib::lib('logs');
-$logslib->add_action('Viewed', $_REQUEST['itemId'], 'trackeritem');
+if ($prefs['feature_actionlog'] == 'y') {
+	$logslib = TikiLib::lib('logs');
+	$logslib->add_action('Viewed', $_REQUEST['itemId'], 'trackeritem');
+}
 
 // Generate validation js
 if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_validation'] == 'y') {

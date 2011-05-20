@@ -53,26 +53,12 @@ function module_quick_edit_info() {
 				'name' => tra('Custom header template'),
 				'description' => tra('Wiki page to be used as a template to show content on top of edit page'),
 			),
-			'pastetext' => array(
-				'name' => tra('input field for copy/paste'),
-				'description' => tra('If set to 1 , a text area for copy/paste page content is shown') . " " . tra('Default:') . ' 0',
-				'filter' => 'int',
-			),
-			'enterdescription' => array(
-				'name' => tra('show description field'),
-				'description' => tra('If set to 1, a text field to enter the page description is shown (requires feature_wiki_description)') . " " . tra('Default:') . ' 0',
-			),
-			'chooseCateg' => array(
-				'name' => tra('choose category'),
-				'description' => tra('If set to 1, this allows the user to choose a category instead of preselecting one') . " " . tra('Default:') . ' 0',
-			),
 		)
 	);
 }
 
 function module_quick_edit( $mod_reference, $module_params ) {
 	global $smarty, $prefs;
-	global $categlib; include_once 'lib/categories/categlib.php';
 	
 	$smarty->assign('tpl_module_title', tra("Quick Edit a Wiki Page"));
 	
@@ -122,27 +108,7 @@ function module_quick_edit( $mod_reference, $module_params ) {
 	} else {
 		$wikiHeaderTpl = '';
 	}
-	if (isset($module_params["pastetext"])) {
-		$pastetext=$module_params["pastetext"];
-	} else {
-		$pastetext=0;
-	}
-	if (isset($module_params["enterdescription"])) {
-		$enterdescription=$module_params["enterdescription"];
-	} else {
-		$enterdescription=0;
-	}
-		if (isset($module_params["chooseCateg"])) {
-		$chooseCateg=$module_params["chooseCateg"];
-		$cats=$categlib->list_categs();
-		$smarty->assign('qcats',$cats);
-	} else {
-		$chooseCateg=0;
-	}
-	
-	$smarty->assign('chooseCateg',$chooseCateg);
-	$smarty->assign('enterdescription',$enterdescription);
-	$smarty->assign('pastetext',$pastetext);
+
 	$smarty->assign('wikiHeaderTpl', $wikiHeaderTpl);
 	$smarty->assign('customTip', $customTip);
 	$smarty->assign('customTipTitle', $customTipTitle);

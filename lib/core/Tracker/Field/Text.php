@@ -36,7 +36,7 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
 			}
 
 			if ($this->getOption(3)) {
-				$pre = '<span class="formunit">' . $this->getOption(3) . '</span>';
+				$post = '<span class="formunit">' . $this->getOption(3) . '</span>';
 			}
 		}
 
@@ -60,11 +60,14 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
 
 		$data = array(
 			'value' => $thisVal,
-			//'pvalue' => TikiLib::lib('tiki')->parse_data(htmlspecialchars($thisVal)),
 			'pvalue' => $thisVal,
 			'lingualvalue' => array(),
 			'lingualpvalue' => array(),
 		);
+
+		if ($this->getConfiguration('type') != 't') {	// textareas are parsed, text not
+			$data['pvalue'] = TikiLib::lib('tiki')->parse_data(htmlspecialchars($thisVal));
+		}
 		// Trim ending \n added by parsing
 		$data['pvalue'] = trim($data['pvalue'], "\n");
 
@@ -88,7 +91,11 @@ class Tracker_Field_Text extends Tracker_Field_Abstract
 				$data['lingualvalue'][$num]['lang'] = $tmplang;
 				$data['lingualvalue'][$num]['value'] = $requestData[$id_string][$tmplang];
 				$data['lingualpvalue'][$num]['lang'] = $tmplang;
-				$data['lingualpvalue'][$num]['value'] = TikiLib::lib('tiki')->parse_data(htmlspecialchars($requestData[$id_string][$tmplang]));
+				if ($this->getConfiguration('type') != 't') {	// textareas are parsed, text not
+					$data['lingualpvalue'][$num]['value'] = TikiLib::lib('tiki')->parse_data(htmlspecialchars($requestData[$id_string][$tmplang]));
+				} else {
+					$data['lingualpvalue'][$num]['value'] = $requestData[$id_string][$tmplang];
+				}
 
 				if ($prefs['language'] == $tmplang) {
 					$data['value'] = $data['lingualvalue'][$num]['value'];
