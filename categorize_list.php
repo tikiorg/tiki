@@ -70,7 +70,7 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 			$categories[$i]["incat"] = 'n';
 			$categories[$i]['canchange'] = $can && $catperms->add_object;
 		}
-		if (isset($_REQUEST["cat_categories"]) && isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on') {
+		if (!$cat_object_exists && isset($_REQUEST["cat_categories"]) && isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on') {
 			if (in_array($categories[$i]["categId"], $_REQUEST["cat_categories"])) {
 				$categories[$i]["incat"] = 'y';
 				// allow to preselect categories when creating a new article
