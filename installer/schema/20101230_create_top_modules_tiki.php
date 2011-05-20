@@ -42,12 +42,12 @@ function upgrade_20101230_create_top_modules_tiki( $installer ) {
 	// add site logo
 	if( $prefs['feature_sitelogo'] === 'y' ) {
 		$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-								"('logo','t',1,7200,'nobox=y','a:1:{i:0;s:9:\"Anonymous\";}');");
+								"('logo','t',1,7200,'nobox=y','a:0:{}');");
 	}
 	// add site login
 	if( $prefs['feature_site_login'] === 'y' ) {
 		$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-								"('login_box','t',2,0,'mode=popup&nobox=y','a:1:{i:0;s:9:\"Anonymous\";}');");
+								"('login_box','t',2,0,'mode=popup&nobox=y','a:0:{}');");
 	}
 	// deal with top bar
 	if ( $prefs['feature_top_bar'] === 'y') {
@@ -55,12 +55,12 @@ function upgrade_20101230_create_top_modules_tiki( $installer ) {
 		if ($prefs['feature_sitemenu'] === 'y') {
 			$menuId = $prefs['feature_topbar_id_menu'];
 			$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-									"('menu','o',2,7200,'id=$menuId&type=horiz&menu_id=tiki-top&menu_class=clearfix&nobox=y','a:1:{i:0;s:9:\"Anonymous\";}');");
+									"('menu','o',2,7200,'id=$menuId&type=horiz&menu_id=tiki-top&menu_class=clearfix&nobox=y','a:0:{}');");
 		}
 		// add site search
 		if($prefs['feature_sitesearch'] === 'y' ) {
 			$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-									"('search','o',1,7200,'nobox=y','a:1:{i:0;s:9:\"Anonymous\";}');");
+									"('search','o',1,7200,'nobox=y','a:0:{}');");
 		}
 	}
 	// add quickadmin but prefs feature_sitemycode, sitemycode stay and will need manual upgrading
@@ -74,7 +74,7 @@ function upgrade_20101230_create_top_modules_tiki( $installer ) {
 	// add breadcrumb module - feature_breadcrumbs stays for now
 	if( $prefs['feature_breadcrumbs'] === 'y' ) {
 		$installer->query( "INSERT INTO `tiki_modules` (name,position,ord,cache_time,params,groups) VALUES ".
-								"('breadcrumbs','t',6,0,'nobox=y','a:1:{i:0;s:9:\"Anonymous\";}');");
+								"('breadcrumbs','t',6,0,'nobox=y','a:0:{}');");
 	}
 
 //	TODO uncomment when stable (pre Tiki 7 release)
