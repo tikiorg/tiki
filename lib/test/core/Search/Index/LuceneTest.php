@@ -144,6 +144,12 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 		$this->assertNotContains('<body>', $output);
 	}
 
+	function testInvalidQueries()
+	{
+		$this->assertResultCount(0, 'filterContent', 'in*lid');
+		$this->assertResultCount(0, 'filterContent', 'i?lid');
+	}
+
 	private function assertResultCount($count, $filterMethod, $argument)
 	{
 		$arguments = func_get_args();
