@@ -28,7 +28,6 @@
 </select>
 </div>
 {else}
-{if $categId}<input type="hidden" name="categId" value="{$categId}" />{/if}
 {/if}
 {if $addcategId}<input type="hidden" name="cat_categories[]" value="{$addcategId}" />
 <input type="hidden" name="cat_categorize" value="on" />{/if}
