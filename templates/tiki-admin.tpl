@@ -19,9 +19,9 @@
 {jq}
 	var updateVisible = function() {
 		var filters = [];
-		$('.adminoptionbox').hide();
+		$('.adminoptionbox.preference').hide();
 		$('.preffilter').each(function () {
-			var targets = $('.adminoptionbox.' + $(this).val());
+			var targets = $('.adminoptionbox.preference.' + $(this).val());
 			if ($(this).is(':checked')) {
 				filters.push($(this).val());
 				targets.show();
@@ -29,7 +29,7 @@
 				targets.hide();
 			}
 		});
-		$('.adminoptionbox.modified').show();
+		$('.adminoptionbox.preference.modified').show();
 
 		$('input[name="filters"]').val(filters.join(' '));
 	};
