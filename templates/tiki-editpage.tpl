@@ -4,12 +4,12 @@
 		<strong class='mandatory_note'>{tr}Fields marked with a * are mandatory.{/tr}</strong>
 	{/remarksbox}
 {/if}
-{if $customTip}
+{if isset($customTip)}
 	{remarksbox type='tip' title=$customTipTitle}
 	{tr}{$customTip|escape}{/tr}
 	{/remarksbox}
 {/if}
-{if $wikiHeaderTpl}
+{if isset($wikiHeaderTpl)}
 	{include file="wiki:$wikiHeaderTpl"}
 {/if}
 	
