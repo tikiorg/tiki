@@ -440,10 +440,20 @@ function wikiplugin_googlemap($data, $params) {
 			// tracker item perms checked below so no need to check here
 			return '';
 		}
+		global $trklib;
+		if (!is_object($trklib)) {
+			include_once('lib/trackers/trackerlib.php');
+		}	
+			
+		$item = $trklib->get_tracker_item($locateitemid);
+		$tracker_info = $trklib->get_tracker_options($item['trackerId']);
+		
 		if ($type == 'locator') {
 			$editPermNeeded = $objectlib->get_needed_perm($locateitemtype, 'edit');
-			if (!$tikilib->user_has_perm_on_object($user, $locateitemid, $locateitemtype, $editPermNeeded) && !($locateitemtype == 'trackeritem' && !empty($params["trackerfieldid"]))) {
-				// if no perm to edit, even if type is set to locator, locator is disabled
+			// if no perm to edit, even if type is set to locator, locator is disabled
+			// additional check for writerCanModify and createdBy=$user added by eromneg 21May'11
+			// using createdBy is a stop gap which doesn't allow for the record owner being changed from the original creator - should really check what the current user selector value is			
+			if ( !($tikilib->user_has_perm_on_object($user, $locateitemid, $locateitemtype, $editPermNeeded) || ($tracker_info['writerCanModify'] == 'y' && $item['createdBy'] == $user))  && !($locateitemtype == 'trackeritem' && !empty($params["trackerfieldid"]))) {
 				$type = 'item';
 			}
 		}
@@ -452,12 +462,6 @@ function wikiplugin_googlemap($data, $params) {
 		$attributes = $attributelib->get_attributes( $locateitemtype, $locateitemid );
 		if ($locateitemtype == 'trackeritem' && !empty($params["trackerfieldid"])) {
 			// There could be more than one googlemap field in trackers, thus we are not using object attributes for this purpose
-			global $trklib;
-			if (!is_object($trklib)) {
-				include_once('lib/trackers/trackerlib.php');
-			}
-			$item = $trklib->get_tracker_item($locateitemid);
-				
 			// double check tracker perms
 			if ($item['status'] == 'p' && !$tikilib->user_has_perm_on_object($user, $item['trackerId'], 'tracker', 'tiki_p_view_trackers_pending')
 				|| $item['status'] == 'c' && !$tikilib->user_has_perm_on_object($user, $item['trackerId'], 'tracker', 'tiki_p_view_trackers_closed')
@@ -466,11 +470,14 @@ function wikiplugin_googlemap($data, $params) {
 			}
 			if ($type == 'locator') {
 			// if no perm to edit, even if type is set to locator, locator is disabled
-				if ($item['status'] == 'p' && !$tikilib->user_has_perm_on_object($user, $item['trackerId'], 'tracker', 'tiki_p_modify_tracker_items_pending')
-					|| $item['status'] == 'c' && !$tikilib->user_has_perm_on_object($user, $item['trackerId'], 'tracker', 'tiki_p_modify_tracker_items_closed')
-					|| $item['status'] == 'o' && !$tikilib->user_has_perm_on_object($user, $item['trackerId'], 'tracker', 'tiki_p_modify_tracker_items')) {
+			// additional check for writerCanModify and createdBy=$user added by eromneg 21May'11
+			// using createdBy is a stop gap which doesn't allow for the record owner being changed from the original creator - should really check what the current user selector value is
+				if ($item['status'] == 'p' && !($tikilib->user_has_perm_on_object($user, $item['trackerId'], 'tracker', 'tiki_p_modify_tracker_items_pending') || ($tracker_info['writerCanModify'] == 'y' && $item['createdBy'] == $user) )
+					|| $item['status'] == 'c' && !($tikilib->user_has_perm_on_object($user, $item['trackerId'], 'tracker', 'tiki_p_modify_tracker_items_closed') || ($tracker_info['writerCanModify'] == 'y' && $item['createdBy'] == $user) )
+					|| $item['status'] == 'o' && !($tikilib->user_has_perm_on_object($user, $item['trackerId'], 'tracker', 'tiki_p_modify_tracker_items') || ($tracker_info['writerCanModify'] == 'y' && $item['createdBy'] == $user) ) ) {
+
 						$type = 'trackerfield';
-				}
+				}				
 			}
 			$f_value = explode(',',$item[$params["trackerfieldid"]]);
 			if ( !empty($f_value[0]) && !empty($f_value[1]) ) {
