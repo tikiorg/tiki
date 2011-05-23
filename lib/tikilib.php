@@ -6870,7 +6870,6 @@ if( \$('#$id') ) {
 		$this->table('tiki_pages')->update($queryData, array(
 			'pageName' => $pageName,
 		));
-		$this->replicate_page_to_history($pageName);
 
 		// Parse edit_data updating the list of links from this page
 		$this->clear_links($pageName);
@@ -6902,6 +6901,7 @@ if( \$('#$id') ) {
 
 		// This if no longer checks for minor-ness of the change; sendWikiEmailNotification does that.
 		if( $willDoHistory ) {
+			$this->replicate_page_to_history($pageName);
 			if (strtolower($pageName) != 'sandbox') {
 				if ($prefs['feature_contribution'] == 'y') {// transfer page contributions to the history
 					$contributionlib = TikiLib::lib('contribution');
