@@ -671,6 +671,8 @@ class BlogLib extends TikiDb_Bridge
 		}
 		
 		$data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre><strong>');
+		$excerpt = TikiFilter::get('purifier')->filter($excerpt);
+		
 		$query = "insert into `tiki_blog_posts`(`blogId`,`data`,`excerpt`,`created`,`user`,`title`,`priv`,`wysiwyg`) values(?,?,?,?,?,?,?,?)";
 		$result = $this->query($query, array((int) $blogId, $data, $excerpt, (int) $created, $user, $title, $priv, $wysiwyg));
 		$query = "select max(`postId`) from `tiki_blog_posts` where `created`=? and `user`=?";
@@ -908,6 +910,9 @@ class BlogLib extends TikiDb_Bridge
 	function update_post($postId, $blogId, $data, $excerpt, $user, $title = '', $contributions = '', $priv='n', $created = 0, $is_wysiwyg=FALSE) {
 		global $tikilib, $prefs;
 
+		$data = TikiFilter::get('purifier')->filter($data);
+		$excerpt = TikiFilter::get('purifier')->filter($excerpt);
+		
 		$wysiwyg=$is_wysiwyg==TRUE?'y':'n';
 		if ($prefs['feature_blog_edit_publish_date'] == 'y') {
 			if(!$created) {
