@@ -551,7 +551,7 @@ class BlogLib extends TikiDb_Bridge
 			$res['avatar'] = $tikilib->get_user_avatar($res['user']);
 
 			if (isset($res['excerpt'])) {
-				$res['excerpt'] = $tikilib->parse_data($res['excerpt']);
+				$res['excerpt'] = $tikilib->parse_data($res['excerpt'], array('is_html' => true));
 			}
 
 			$ret[] = $res;
@@ -698,6 +698,8 @@ class BlogLib extends TikiDb_Bridge
 		}
 		
 		$data = TikiFilter::get('purifier')->filter($data);
+		$excerpt = TikiFilter::get('purifier')->filter($excerpt);
+		
 		$query = "insert into `tiki_blog_posts`(`blogId`,`data`,`excerpt`,`created`,`user`,`title`,`priv`,`wysiwyg`) values(?,?,?,?,?,?,?,?)";
 		$result = $this->query($query, array((int) $blogId, $data, $excerpt, (int) $created, $user, $title, $priv, $wysiwyg));
 		$query = "select max(`postId`) from `tiki_blog_posts` where `created`=? and `user`=?";
@@ -930,6 +932,9 @@ class BlogLib extends TikiDb_Bridge
 	)  {
 		global $tikilib, $prefs;
 
+		$data = TikiFilter::get('purifier')->filter($data);
+		$excerpt = TikiFilter::get('purifier')->filter($excerpt);
+		
 		$wysiwyg=$is_wysiwyg==TRUE?'y':'n';
 		if ($prefs['feature_blog_edit_publish_date'] == 'y') {
 			if(!$created) {
