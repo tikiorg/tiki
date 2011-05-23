@@ -591,8 +591,7 @@ select {
 	background-color: #969696;
 }
 
-.siteloginbar_popup .cssmenu_horiz #login_link,
-.siteloginbar_popup .cssmenu_horiz #logout_link {
+.siteloginbar_popup .cssmenu_horiz .tabmark {
 	background-color: #070707;
 }
 

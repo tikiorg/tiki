@@ -1683,7 +1683,7 @@ function prefs_feature_list($partial = false) {
 			'default' => 'n',
 		),
 		'feature_wiki_history_full' => array(
-			'name' => tra('History all instead of only page data, description, and change comment'),
+			'name' => tra('Record all versions, rather than only when page content or description changes or when an edit comment is given'),
 			'type' => 'flag',
 			'default' => 'n',
 		),

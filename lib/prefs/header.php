@@ -32,6 +32,7 @@ function prefs_header_list() {
 			'type' => 'textarea',
 			'size' => 5,
 			'default' => '',
+			'hint' => tra('Do not include the <script> and </script> tags.'),
 		),
 	);	
 }

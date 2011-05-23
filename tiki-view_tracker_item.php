@@ -685,11 +685,11 @@ if ($tracker_info["useAttachments"] == 'y') {
 				}
 			}
 			while (!feof($fp)) {
-				if ($prefs['t_use_db'] == 'y') {
-					$data.= fread($fp, 8192 * 16);
-				} else {
+				if ($prefs['t_use_db'] == 'n') {
 					$data = fread($fp, 8192 * 16);
 					fwrite($fw, $data);
+				} else {
+					$data.= fread($fp, 8192 * 16);
 				}
 			}
 			fclose($fp);
