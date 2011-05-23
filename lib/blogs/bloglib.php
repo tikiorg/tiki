@@ -551,7 +551,7 @@ class BlogLib extends TikiDb_Bridge
 			$res['avatar'] = $tikilib->get_user_avatar($res['user']);
 
 			if (isset($res['excerpt'])) {
-				$res['excerpt'] = $tikilib->parse_data($res['excerpt']);
+				$res['excerpt'] = $tikilib->parse_data($res['excerpt'], array('is_html' => true));
 			}
 
 			$ret[] = $res;
