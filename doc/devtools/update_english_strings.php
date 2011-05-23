@@ -11,7 +11,7 @@
 // committing.
 
 if ($argc < 3) {
-	die("Usage: php doc/devtools/update_english_strings.php \"oldString\" \"newString\"");
+	die("\nUsage: php doc/devtools/update_english_strings.php \"oldString\" \"newString\"\n\n");
 }
 
 set_include_path(get_include_path() . PATH_SEPARATOR . '../../');
@@ -39,7 +39,7 @@ while (($dir = readdir($dirHandle)) !== false) {
  
 		$langFile = file_get_contents($filePath);
 		$fileHandle = fopen($filePath, 'w');
-		$langFile = str_replace("\"$oldString\"", "\"$newString\"", $langFile);
+		$langFile = str_replace("\n\"$oldString\" => ", "\n\"$newString\" => ", $langFile);
 		fwrite($fileHandle, $langFile);
 		fclose($fileHandle);
 	}
