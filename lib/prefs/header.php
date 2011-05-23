@@ -28,6 +28,7 @@ function prefs_header_list() {
 			'description' => tra('Includes a custom block of inline JavaScript in all pages.'),
 			'type' => 'textarea',
 			'size' => 5,
+			'hint' => tra('Do not include the <script> and </script> tags.'),
 		),
 	);	
 }
