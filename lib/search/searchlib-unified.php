@@ -137,8 +137,13 @@ class UnifiedSearchLib
 
 	private function buildIndexer($index)
 	{
+		global $prefs;
 		$indexer = new Search_Indexer($index);
 		$this->addSources($indexer);
+		
+		if ($prefs['unified_tokenize_version_numbers'] == 'y') {
+			$indexer->addContentFilter(new Search_ContentFilter_VersionNumber);
+		}
 
 		return $indexer;
 	}

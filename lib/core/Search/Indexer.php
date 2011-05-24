@@ -14,6 +14,8 @@ class Search_Indexer
 	private $cacheGlobals = null;
 	private $cacheTypes = array();
 
+	private $contentFilters = array();
+
 	function __construct(Search_Index_Interface $searchIndex)
 	{
 		$this->searchIndex = $searchIndex;
@@ -27,6 +29,11 @@ class Search_Indexer
 	function addGlobalSource(Search_GlobalSource_Interface $globalSource)
 	{
 		$this->globalSources[] = $globalSource;
+	}
+
+	function addContentFilter(Zend_Filter_Interface $filter)
+	{
+		$this->contentFilters[] = $filter;
 	}
 
 	/**
@@ -104,7 +111,25 @@ class Search_Indexer
 			'contents' => $typeFactory->plaintext($this->getGlobalContent($data, $globalFields)),
 		);
 
-		$this->searchIndex->addDocument(array_merge(array_filter($data), $base));
+		$data = array_merge(array_filter($data), $base);
+		$data = $this->applyFilters($data);
+
+		$this->searchIndex->addDocument($data);
+	}
+
+	private function applyFilters($data)
+	{
+		$keys = array_keys($data);
+
+		foreach ($keys as $key) {
+			$value = $data[$key];
+
+			if (is_callable(array($value, 'filter'))) {
+				$data[$key] = $value->filter($this->contentFilters);
+			}
+		}
+
+		return $data;
 	}
 
 	private function getGlobalContent(array & $data, $globalFields)

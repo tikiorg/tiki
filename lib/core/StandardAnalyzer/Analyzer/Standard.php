@@ -89,7 +89,7 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
         }
 
         do {
-            if (! preg_match('/[a-zA-Z0-9]+/', $this->_input, $match, PREG_OFFSET_CAPTURE, $this->_position)) {
+            if (! preg_match('/[a-zA-Z0-9]+(\.[0-9]+)*/', $this->_input, $match, PREG_OFFSET_CAPTURE, $this->_position)) {
                 // It covers both cases a) there are no matches (preg_match(...) === 0)
                 // b) error occured (preg_match(...) === FALSE)
                 return null;

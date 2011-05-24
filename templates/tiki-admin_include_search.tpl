@@ -28,6 +28,8 @@
 						{preference name="unified_lucene_location"}
 						{preference name="unified_lucene_highlight"}
 					</div>
+					
+					{preference name=unified_tokenize_version_numbers}
 
 					{preference name=unified_field_weight}
 					{preference name=unified_default_content}

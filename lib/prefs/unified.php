@@ -53,6 +53,12 @@ function prefs_unified_list()
 			'filter' => 'word',
 			'default' => array('contents', 'title'),
 		),
+		'unified_tokenize_version_numbers' => array(
+			'name' => tra('Tokenize version numbers'),
+			'description' => tra('Tokenize version number strings so that major versions are found when sub-versions are mentionned. For example, searching for 2.7 would return documents containing 2.7.4, but not 1.2.7.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }
 
