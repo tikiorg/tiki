@@ -13043,7 +13043,7 @@ $lang=Array(
 "<a href=\"tiki-importer.php\">Click here</a> to finish the import process" => "<a href=\"tiki-importer.php\">Clica aquí</a> per finalitzar el procés d'importació",
 "Class DOMDocument not available, check your PHP installation. For more information see http://php.net/manual/en/book.dom.php" => "No es troba disponible la classe DOMDocument, comprova la teva instal·lació de PHP. Per a més informació, consulta http://php.net/manual/en/book.dom.php",
 "Invalid file mime type" => "El tipus mime de l'arxiu és invàlid",
-"Number of page revisions to import (0 for all revisions)" => "Nombre de revisions de pàgines a importar (0 per a totes les revisions)",
+"Number of page revisions to import (0 for all revisions):" => "Nombre de revisions de pàgines a importar (0 per a totes les revisions):",
 "What to do with page names that already exists in TikiWiki" => "Què fer amb els noms de pàgina que ja existeixen a Tiki",
 "Do not import" => "No importar",
 "Override" => "Sobreescriure",
