@@ -221,9 +221,6 @@ function get_default_prefs() {
 		'expanded_category_jail_key' => '',
 		'ws_container' => 0,
 
-		// i18n
-		'feature_homePage_if_bl_missing' => 'n',
-
 		// html header
 		'head_extra_js' => array(),
 
