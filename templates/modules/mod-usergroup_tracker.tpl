@@ -9,7 +9,7 @@
 {if $prefs.userTracker eq 'y'}
 <div>{tr}User information:{/tr} </div>
 <div>
-&nbsp;&nbsp;<a href="tiki-view_tracker_item.php?view=+user" class="linkmodule">{$user}</a>
+&nbsp;&nbsp;<a href="tiki-view_tracker_item.php?view=+user" class="linkmodule">{$user|escape}</a>
 </div>
 {/if}
 
@@ -17,7 +17,7 @@
 {if $prefs.groupTracker eq 'y'}
 <div>{tr}Group information:{/tr}</div>
 <div class="box-data">
-&nbsp;&nbsp;<a href="tiki-view_tracker_item.php?view=+group" class="linkmodule">{$default_group}</a>
+&nbsp;&nbsp;<a href="tiki-view_tracker_item.php?view=+group" class="linkmodule">{$default_group|escape}</a>
 </div>
 {/if}
 
