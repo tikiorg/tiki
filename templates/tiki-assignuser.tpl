@@ -32,17 +32,17 @@
 			{/foreach}
 		</td>
 	</tr>
-	<form method="post" action="tiki-assignuser.php{if $assign_user}?assign_user={$assign_user}{/if}">
+	<form method="post" action="tiki-assignuser.php{if $assign_user}?assign_user={$assign_user|escape:'url'}{/if}">
 		<tr>
 			<td>{tr}Default Group:{/tr}</td>
 			<td>
 				<select name="defaultgroup">
 					<option value=""></option>
 					{foreach from=$user_info.groups key=name item=included}
-						<option value="{$name}" {if $name eq $user_info.default_group}selected="selected"{/if}>{$name|escape}</option>
+						<option value="{$name|escape}" {if $name eq $user_info.default_group}selected="selected"{/if}>{$name|escape}</option>
 					{/foreach}
 				</select>
-				<input type="hidden" value="{$user_info.login}" name="login" />
+				<input type="hidden" value="{$user_info.login|escape}" name="login" />
 				<input type="hidden" value="{$prefs.maxRecords}" name="maxRecords" />
 				<input type="hidden" value="{$offset}" name="offset" />
 				<input type="hidden" value="{$sort_mode}" name="sort_mode" />
