@@ -11,7 +11,7 @@
 				{/if}
 			{/if}
 			{if $prefs.themegenerator_feature eq "y" and !empty($prefs.themegenerator_theme)}
-				{icon _id="palette" title="{tr}Theme Genrator Editor{/tr}" href="#" onclick="openThemeGenDialog();return false;"}
+				{icon _id="palette" title="{tr}Theme Generator Editor{/tr}" href="#" onclick="openThemeGenDialog();return false;"}
 			{/if}
 		</div>  
 	{/if}
