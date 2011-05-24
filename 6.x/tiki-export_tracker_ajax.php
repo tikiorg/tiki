@@ -21,7 +21,11 @@ include_once 'tiki-export_tracker_monitor.php';
 $monitor_filename = $prefs['tmpDir'].'/tracker_'.$_REQUEST['trackerId'].'_monitor.json';
 if (is_file($monitor_filename)) {
 	$stat_array = unserialize(file_get_contents($monitor_filename));
-} else {
+	if ($stat_array['status'] === 'finish') {
+		unset($stat_array);
+	}
+}
+if (empty($stat_array)) {
 	$stat_array = array();
 	saveStatus(array('user' => $user, 'status' => 'init', 'msg' => 'Starting...'));
 }
