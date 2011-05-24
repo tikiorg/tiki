@@ -1462,7 +1462,8 @@ class TrackerLib extends TikiLib
 		
 		foreach($ins_fields["data"] as $i=>$array) {
 			// Old values were prefilled at the begining of the function and only replaced at the end of the iteration
-			$old_value = isset($fil[$array['fieldId']]) ? $fil[$array['fieldId']] : null;
+			$fieldId = $array['fieldId'];
+			$old_value = isset($fil[$fieldId]) ? $fil[$fieldId] : null;
 
 			$handler = $this->get_field_handler($array, $fil);
 
@@ -1482,33 +1483,9 @@ class TrackerLib extends TikiLib
 				continue;
 			}
 
-			// ---------------------------
-			if (isset($array["fieldId"]))
-				$fieldId = $array["fieldId"];
-			if (isset($array["name"])) {
-				$name = $array["name"];
-			} else {
-				$name = $fields->fetchOne('name', array('fieldId' => (int) $fieldId));
-			}
 			$value = isset($array["value"]) ? $array["value"] : null;
 
-			if ($array["type"] == 'e' && $prefs['feature_categories'] == 'y') {
-				// category type
-
-				$my_categs = $categlib->get_child_categories($array["options"]);
-				$aux = array();
-				foreach ($my_categs as $cat) {
-					$aux[] = $cat['categId'];
-				}
-				$my_categs = $aux;
-
-				if (!empty($itemId) && (!empty($my_new_categs) || !empty($my_del_categs))) {
-					$this->log($version, $itemId, $array['fieldId'], $old_value);
-				}
-
-				$fil[$fieldId] = implode(',', array_intersect($ins_categs, $my_categs));
-				$this->modify_field($currentItemId, $fieldId, $fil[$fieldId]);
-			} elseif ((isset($array['isMultilingual']) && $array['isMultilingual'] == 'y') && in_array($array['type'], array('a', 't'))){
+			if ((isset($array['isMultilingual']) && $array['isMultilingual'] == 'y') && in_array($array['type'], array('a', 't'))){
 
 				if (!isset($multi_languages))
 					$multi_languages=$prefs['available_languages'];
@@ -3290,15 +3267,14 @@ class TrackerLib extends TikiLib
 				$cat_name = $mainfield;
 		$cat_href = "tiki-view_tracker_item.php?trackerId=$trackerId&itemId=$itemId";
 		// The following needed to ensure category field exist for item (to be readable by list_items)
-		$tracker_fields_info = $this->list_tracker_fields($trackerId);
-		foreach($tracker_fields_info['data'] as $t) {
-			if ( $t['type'] == 'e' ) {
-				$this->itemFields()->insert(array(
-					'itemId' => $itemId,
-					'fieldId' => $t['fieldId'],
-					'value' => '',
-				), true);
-			}
+
+		$definition = Tracker_Definition::get($trackerId);
+		foreach($definition->getCategorizedFields() as $t) {
+			$this->itemFields()->insert(array(
+				'itemId' => $itemId,
+				'fieldId' => $t,
+				'value' => '',
+			), true);
 		}
 		$categlib->update_object_categories($ins_categs, $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href);
 	}
@@ -4655,6 +4631,20 @@ class TrackerLib extends TikiLib
 	public function get_maximum_value($fieldId)
 	{
 		return $this->itemFields()->fetchOne($this->itemFields()->expr('MAX(CAST(`value` as UNSIGNED))'), array('fieldId' => (int) $fieldId));
+	}
+
+	function sync_categories($args)
+	{
+		$definition = Tracker_Definition::get($args['trackerId']);
+		$ins_categs = array();
+
+		foreach ($definition->getCategorizedFields() as $fieldId) {
+			if (isset($args['values'][$fieldId])) {
+				$ins_categs = array_merge($ins_categs, array_filter(explode(',', $args['values'][$fieldId])));
+			}
+		}
+
+		$this->categorized_item($args['trackerId'], $args['object'], "item {$args['object']}", $ins_categs);
 	}
 }
 

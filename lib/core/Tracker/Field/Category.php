@@ -25,10 +25,11 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 		}
 
 		$categories = $this->getApplicableCategories();
+		$selected = array_intersect($selected, $this->getIds($categories));
 
 		$data = array(
-			'value' => '',
-			'selected_categories' => array_intersect($selected, $this->getIds($categories)),
+			'value' => implode(',', $selected),
+			'selected_categories' => $selected,
 			$parentId => $categories,	// TODO kil?
 			'list' => $categories,
 			'cat' => array(),
@@ -67,6 +68,13 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 			}
 		}
 		return $ret;
+	}
+
+	function handleSave($value, $oldValue)
+	{
+		return array(
+			'value' => $value,
+		);
 	}
 
 	function watchCompare($old, $new)

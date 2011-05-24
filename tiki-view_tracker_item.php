@@ -366,14 +366,6 @@ foreach($xfields["data"] as $i => $current_field) {
 	}
 }
 
-// Collect information from the provided fields
-$ins_categs = array();
-foreach ($ins_fields['data'] as $current_field) {
-	if ($current_field['type'] == 'e' && isset($current_field['selected_categories'])) {
-		$ins_categs = array_merge($ins_categs, $current_field['selected_categories']);
-	}
-}
-
 $authorfield = $definition->getAuthorField();
 if ($authorfield) {
 	$tracker_info['authorindiv'] = $trklib->get_item_value($_REQUEST["trackerId"], $_REQUEST["itemId"], $authorfield);
@@ -434,7 +426,7 @@ if (($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item
 			if (!isset($_REQUEST["edstatus"]) or ($tracker_info["showStatus"] != 'y' and $tiki_p_admin_trackers != 'y')) {
 				$_REQUEST["edstatus"] = $tracker_info["modItemStatus"];
 			}
-			$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST["edstatus"], $ins_categs);
+			$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST["edstatus"]);
 			if (isset($rateFieldId) && isset($_REQUEST["ins_$rateFieldId"])) {
 				$trklib->replace_rating($_REQUEST["trackerId"], $_REQUEST["itemId"], $rateFieldId, $user, $_REQUEST["ins_$rateFieldId"]);
 			}
@@ -449,7 +441,6 @@ if (($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item
 			}
 			$item_info = $trklib->get_tracker_item($_REQUEST["itemId"]);
 			$smarty->assign('item_info', $item_info);
-			$trklib->categorized_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $mainvalue, $ins_categs);
 		} else {
 			$error = $ins_fields;
 			$cookietab = "2";
