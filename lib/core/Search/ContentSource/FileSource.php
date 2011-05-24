@@ -29,12 +29,12 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface
 		$file = $filegallib->get_file_info($objectId, true, false);
 
 		$data = array(
-			'title' => $typeFactory->sortable($file['name']),
+			'title' => $typeFactory->sortable(empty($file['name'])?$file['filename']:$file['name']),
 			'language' => $typeFactory->identifier('unknown'),
 			'modification_date' => $typeFactory->timestamp($file['lastModif']),
 			'contributors' => $typeFactory->multivalue(array_unique(array($file['author'], $file['user'], $file['lastModifUser']))),
 			'description' => $typeFactory->plaintext($file['description']),
-			'filename' => $typeFactory->sortable($file['filename']),
+			'filename' => $typeFactory->identifier($file['filename']),
 
 			'gallery_id' => $typeFactory->identifier($file['galleryId']),
 			'file_comment' => $typeFactory->plaintext($file['comment']),
