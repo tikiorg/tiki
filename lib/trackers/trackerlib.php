@@ -1562,7 +1562,7 @@ class TrackerLib extends TikiLib
 			'bulk_import' => $bulk_import,
 		));
 
-		return $itemId;
+		return $currentItemId;
 	}
 
 	function modify_field($itemId, $fieldId, $value, $language = null)

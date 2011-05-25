@@ -211,17 +211,6 @@ foreach ($xfields['data'] as $i => $current_field) {
 	//exclude fields that should not be listed
 	if (($current_field['isTblVisible'] == 'y' or in_array($fid, $popupFields)) and ($current_field['isHidden'] == 'n' or $current_field['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($current_field['type'] == 's' and $current_field['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y'))) {
 		$current_field_list = $current_field;
-		//get category choices available based on option settings
-		if ($current_field_list['type'] == 'e' && $prefs['feature_categories'] == 'y') {
-			$parentId = $current_field_list['options_array'][0];
-			//get all category descendants if true, only first level children if false
-			if (isset($current_field_list['options_array'][3]) && $current_field_list['options_array'][3] == 1) {
-				$all_descends = true;
-			} else {
-				$all_descends = false;
-			}			
-			$current_field_list['categories'] = $categlib->get_viewable_child_categories($parentId, $all_descends);
-		}
 		if (isset($current_field['otherField'])) {
 			$current_field_list['otherField'] = $current_field['otherField'];
 		}
@@ -264,13 +253,8 @@ foreach ($xfields['data'] as $i => $current_field) {
 }
 
 // Collect information from the provided fields
-$ins_categs = array();
 $newItemRateField = null;
 foreach ($ins_fields['data'] as $current_field) {
-	if ($current_field['type'] == 'e' && isset($current_field['selected_categories'])) {
-		$ins_categs = array_merge($ins_categs, $current_field['selected_categories']);
-	}
-
 	if ($current_field['type'] == 's' && $current_field['name'] == 'Rating') {
 		$newItemRateField = $current_field;
 		$newItemRate = $current_field['request_rate'];
@@ -371,7 +355,7 @@ if (isset($_REQUEST['import'])) {
 			if (empty($_REQUEST["itemId"]) && $tracker_info['oneUserItem'] == 'y') { // test if one item per user
 				$_REQUEST['itemId'] = $trklib->get_user_item($_REQUEST['trackerId'], $tracker_info);
 			}
-			$itemid = $trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST['status'], $ins_categs);
+			$itemid = $trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST['status']);
 			if (isset($_REQUEST['listtoalert']) && $prefs['feature_groupalert'] == 'y') {
 				$groupalertlib->Notify($_REQUEST['listtoalert'], "tiki-view_tracker_item.php?itemId=$itemid");
 			}
@@ -384,7 +368,6 @@ if (isset($_REQUEST['import'])) {
 					break;
 				}
 			}
-			$trklib->categorized_item($_REQUEST["trackerId"], $itemid, $mainfield, $ins_categs);
 			if (isset($newItemRate)) {
 				$trackerId = $_REQUEST["trackerId"];
 				$trklib->replace_rating($trackerId, $itemid, $newItemRateField, $user, $newItemRate);
@@ -517,10 +500,6 @@ foreach($xfields['data'] as $xfd) {
 		$listfields[$fid]['description'] = $xfd["description"];
 		$listfields[$fid]['visibleBy'] = $xfd['visibleBy'];
 		$listfields[$fid]['editableBy'] = $xfd['editableBy'];
-		if ($listfields[$fid]['type'] == 'e' && $prefs['feature_categories'] == 'y') { //category
-			$parentId = $listfields[$fid]['options_array'][0];
-			$listfields[$fid]['categories'] = $categlib->get_viewable_child_categories($parentId, $all_descends);
-		}
 		if (isset($xfd['otherField'])) {
 			$listfields[$fid]['otherField'] = $xfd['otherField'];
 		}
