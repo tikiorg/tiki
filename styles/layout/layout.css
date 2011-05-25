@@ -56,6 +56,7 @@ header, nav, article, footer, address {
 }
 
 body.fixed_width .fixedwidth .fixedwidth {
+	width: auto; /* Encourage header and footer content to widen when middle has wide content. */ 
 	margin: 0 auto;
 }
 
