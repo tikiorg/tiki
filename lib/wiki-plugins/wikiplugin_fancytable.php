@@ -242,9 +242,9 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 						if ((${$colnum}['span'] - ($l - ${$colnum}['line'])) > 0) $c++;
 					}
 					$colstyle = ' style="';
-					$colstyle .= !empty($widths) ? ' width: ' . $widths[$c] . ';' : '';
-					$colstyle .= !empty($aligns) ? ' text-align: ' . $aligns[$c] . ';' : '';
-					$colstyle .= !empty($valigns) ? ' vertical-align: ' . $valigns[$c] : '';
+					$colstyle .= !empty($widths[$c]) ? ' width: ' . $widths[$c] . ';' : '';
+					$colstyle .= !empty($aligns[$c]) ? ' text-align: ' . $aligns[$c] . ';' : '';
+					$colstyle .= !empty($valigns[$c]) ? ' vertical-align: ' . $valigns[$c] : '';
 					$colstyle .= '"';
 					$c++;   //increment column number
 				}

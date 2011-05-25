@@ -940,6 +940,30 @@ function wikiplugin_tracker($data, $params)
 					}
 					$outf[] = $l;
 				}
+				$auto_fieldId = $trklib->get_field_id_from_type($trackerId, 'u', '1%');	// user owner
+				if (!empty($auto_fieldId) && !in_array($auto_fieldId, $outf)) {
+					$outf[] = $auto_fieldId;
+				}
+				$auto_fieldId = $trklib->get_field_id_from_type($trackerId, 'u', '2%');	// user modifier
+				if (!empty($auto_fieldId) && !in_array($auto_fieldId, $outf)) {
+					$outf[] = $auto_fieldId;
+				}
+				$auto_fieldId = $trklib->get_field_id_from_type($trackerId, 'g', '1%');	// owner group
+				if (!empty($auto_fieldId) && !in_array($auto_fieldId, $outf)) {
+					$outf[] = $auto_fieldId;
+				}
+				$auto_fieldId = $trklib->get_field_id_from_type($trackerId, 'g', '2%');	// owner modifier
+				if (!empty($auto_fieldId) && !in_array($auto_fieldId, $outf)) {
+					$outf[] = $auto_fieldId;
+				}
+				$auto_fieldId = $trklib->get_field_id_from_type($trackerId, 'I', '1%');	// IP auto-assign
+				if (!empty($auto_fieldId) && !in_array($auto_fieldId, $outf)) {
+					$outf[] = $auto_fieldId;
+				}
+				$auto_fieldId = $trklib->get_field_id_from_type($trackerId, 'k', '1%');	// page creator
+				if (!empty($auto_fieldId) && !in_array($auto_fieldId, $outf)) {
+					$outf[] = $auto_fieldId;
+				}
 			} elseif (empty($fields) && !empty($wiki)) {
 				$wiki_info = $tikilib->get_page_info($wiki);
 				preg_match_all('/\$f_([0-9]+)/', $wiki_info['data'], $matches);

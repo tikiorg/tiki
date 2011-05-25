@@ -601,7 +601,7 @@ select[name=end_Minute] {
 	padding: 2px;
 }
 
-#calscreen td {
+#calscreen td.odd, #calscreen td.even {
 	vertical-align: top;
 }
 

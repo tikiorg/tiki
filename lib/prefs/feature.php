@@ -769,7 +769,7 @@ function prefs_feature_list($partial = false) {
 		),
 		'feature_translation_incomplete_notice' => array(
 			'name' => tra('Incomplete translation notice'),
-			'description' => tra('When a page is translated to a new language, a notice will be automatically be inserted into the page to indicate that the translation is not yet complete.'),
+			'description' => tra('When a page is translated to a new language, a notice will be automatically inserted into the page to indicate that the translation is not yet complete.'),
 			'type' => 'flag',
 			'default' => 'y',
 		),

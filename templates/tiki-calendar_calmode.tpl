@@ -1,5 +1,5 @@
 {* $id$ *}
-<table border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse">
+<table border="0" cellpadding="0" cellspacing="0" class="caltable" tyle="width:100%;border-collapse:collapse">
   <tr valign="middle" style="height:36px">
 <td width="1%" class="heading weeks"></td>
 {section name=dn loop=$daysnames}
