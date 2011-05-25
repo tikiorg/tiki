@@ -62,11 +62,11 @@ function module_change_category_info() {
 			),
 			'imgUrlNotIn' => array(
 				'name' => tra('Image URL not in category'),
-				'description' => tra('Very particular parameter. If both this and "Image URL in the category" are set and the root category contains a single child category, the module only displays an image with this URL if the object is not in the category.') . ' ' . tra('Example value:') . ' http://www.organization.org/img/redcross.png.',
+				'description' => tra('Very particular parameter. If both this and "Image URL in category" are set and the root category contains a single child category, the module only displays an image with this URL if the object is not in the category.') . ' ' . tra('Example value:') . ' http://www.organization.org/img/redcross.png.',
 			),
 			'imgUrlIn' => array(
 				'name' => tra('Image URL in category'),
-				'description' => tra('Very particular parameter. If both this and "Image URL not in the category" are set and the root category contains a single child category, the module only displays an image with this URL if the object is in the category.') . ' ' . tra('Example value:') . ' http://www.organization.org/img/bigplus.png.',
+				'description' => tra('Very particular parameter. If both this and "Image URL not in category" are set and the root category contains a single child category, the module only displays an image with this URL if the object is in the category.') . ' ' . tra('Example value:') . ' http://www.organization.org/img/bigplus.png.',
 			),
 		),
 	);
