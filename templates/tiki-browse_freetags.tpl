@@ -26,7 +26,7 @@
 			<param name="eletrostaticConstant" value="{$prefs.freetags_3d_eletrostatic_constant|default:"1000f"}">
 			<param name="springSize" value="{$prefs.freetags_3d_spring_size|default:"100"}">
 			<param name="nodeMass" value="{$prefs.freetags_3d_node_mass|default:"5"}">
-			<param name="nodeCharge" value="{$freetags_3d_node_charde|default:"1"}">
+			<param name="nodeCharge" value="{$prefs.freetags_3d_node_charge|default:"1"}">
 		</applet>
 	</div>
 {/if}
