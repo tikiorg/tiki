@@ -2836,7 +2836,7 @@ class UsersLib extends TikiLib
 				'level' => 'admin',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_banners'),
 				'scope' => 'global',
 			),
 			array(
@@ -2845,7 +2845,7 @@ class UsersLib extends TikiLib
 				'level' => 'admin',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_banning'),
 				'scope' => 'global',
 			),
 			array(
@@ -2854,7 +2854,7 @@ class UsersLib extends TikiLib
 				'level' => 'editors',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_dynamic_content'),
 				'scope' => 'global',
 			),
 			array(
@@ -2863,7 +2863,7 @@ class UsersLib extends TikiLib
 				'level' => 'admin',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_integrator'),
 				'scope' => 'global',
 			),
 			array(
@@ -2872,7 +2872,7 @@ class UsersLib extends TikiLib
 				'level' => 'admin',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_mailin'),
 				'scope' => 'global',
 			),
 			array(
@@ -2908,7 +2908,7 @@ class UsersLib extends TikiLib
 				'level' => 'registered',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_editcss'),
 				'scope' => 'global',
 			),
 			array(
@@ -2917,7 +2917,7 @@ class UsersLib extends TikiLib
 				'level' => 'registered',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_multilingual'),
 				'scope' => 'global',
 			),
 			array(
@@ -2962,7 +2962,7 @@ class UsersLib extends TikiLib
 				'level' => 'admin',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_edit_templates'),
 				'scope' => 'global',
 			),
 			array(
@@ -2980,7 +2980,7 @@ class UsersLib extends TikiLib
 				'level' => 'basic',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_site_report'),
 				'scope' => 'object',
 			),
 			array(
@@ -2998,7 +2998,7 @@ class UsersLib extends TikiLib
 				'level' => 'Basic',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_tell_a_friend'),
 				'scope' => 'global',
 			),
 			array(
@@ -3007,7 +3007,7 @@ class UsersLib extends TikiLib
 				'level' => 'basic',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_share'),
 				'scope' => 'global',
 			),
 			array(
@@ -3016,7 +3016,7 @@ class UsersLib extends TikiLib
 				'level' => 'editors',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_wiki_allowhtml'),
 				'scope' => 'object',
 			),
 			array(
@@ -3025,7 +3025,7 @@ class UsersLib extends TikiLib
 				'level' => 'registered',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_actionlog'),
 				'scope' => 'global',
 			),
 			array(
@@ -3034,7 +3034,7 @@ class UsersLib extends TikiLib
 				'level' => 'registered',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_actionlog'),
 				'scope' => 'global',
 			),
 			array(
@@ -3043,7 +3043,7 @@ class UsersLib extends TikiLib
 				'level' => 'basic',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_integrator'),
 				'scope' => 'global',
 			),
 			array(
@@ -3052,7 +3052,7 @@ class UsersLib extends TikiLib
 				'level' => 'editors',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_referer_stats'),
 				'scope' => 'global',
 			),
 			array(
@@ -3061,7 +3061,7 @@ class UsersLib extends TikiLib
 				'level' => 'basic',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_stats'),
 				'scope' => 'global',
 			),
 			array(
@@ -3070,7 +3070,7 @@ class UsersLib extends TikiLib
 				'level' => 'admin',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_edit_templates'),
 				'scope' => 'global',
 			),
 			array(
@@ -4645,7 +4645,7 @@ class UsersLib extends TikiLib
 				'level' => 'editors',
 				'type' => 'tiki',
 				'admin' => false,
-				'prefs' => array(),
+				'prefs' => array('feature_categories'),
 				'scope' => 'object',
 				'apply_to' => array('wiki', 'trackers'),
 			),
