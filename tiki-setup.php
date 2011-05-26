@@ -84,6 +84,7 @@ require_once ('lib/setup/language.php');
 require_once ('lib/setup/wiki.php');
 if ($prefs['feature_polls'] == 'y') require_once ('lib/setup/polls.php');
 if ($prefs['feature_mailin'] == 'y') require_once ('lib/setup/mailin.php');
+require_once ('lib/setup/tikiIndex.php');
 if ($prefs['useGroupHome'] == 'y') require_once ('lib/setup/default_homepage.php');
 
 // change $prefs['tikiIndex'] if feature_sefurl is enabled (e.g. tiki-index.php?page=HomePage becomes HomePage)
