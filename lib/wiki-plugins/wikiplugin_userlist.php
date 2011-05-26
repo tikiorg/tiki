@@ -106,12 +106,6 @@ function wikiplugin_userlist($data, $params) {
         $mid = '1';
         $bindvars=array();
     }
-    if (isset($sort)) {
-    	$sort=strtolower($sort);
-        if (($sort=='asc') || ($sort=='desc')) {
-            $mid .= ' ORDER BY `login` '.$sort;
-        }
-    }
     $pre=''; $post='';
     if (isset($layout)) {
         if ($layout=='table') {
@@ -125,6 +119,12 @@ function wikiplugin_userlist($data, $params) {
 		$mid .= ' and uug.`groupName` = ? and uu.`userId` = uug.`userId`';
 		$bindvars[] = $group;
 	}
+    if (isset($sort)) {
+    	$sort=strtolower($sort);
+        if (($sort=='asc') || ($sort=='desc')) {
+            $mid .= ' ORDER BY `login` '.$sort;
+        }
+    }
     
     $query = "select `login`, uu.`userId` from `users_users` uu $from where $mid";
     $result = $tikilib->query($query, $bindvars, $numRows);
