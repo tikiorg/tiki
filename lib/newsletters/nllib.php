@@ -953,7 +953,7 @@ class NlLib extends TikiLib
 				preg_match('/[a-z0-9\-_.]+?@[\w\-\.]+/i', $a, $m);
 				if (count($m) > 0) {
 					if (validate_email($m[0])) {
-						$emails[] = $m[0];
+						$emails[] = strtolower($m[0]);
 					}
 				}
 			}
