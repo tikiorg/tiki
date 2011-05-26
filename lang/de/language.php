@@ -12216,7 +12216,7 @@ $lang=Array(
 "Change" => "Ändern",
 "No preferences were found for your search query." => "Es wurden keine Einstellungen gefunden, die Deinen Suchbegriff enthalten.",
 "Database Version Problem" => "Datenbank Versionsproblem",
-"Your database requires an update to match the current Tiki version. Please proceed to <a href=\"tiki-install.php\">the installer</a>. Using Tiki with an incorrect database version usually provoke errors." => "Deine Datenbank benötigt ein Update, um mit der aktuellen Tiki Version zusammenzupassen. Bitte fahre mit <a href=\"tiki-install.php\">dem Installer</a> fort. Tiki mit einer falschen Datenbankversion zu benutzen verursacht Fehler.",
+"Your database requires an update to match the current Tiki version. Please proceed to <a href=\"tiki-install.php\">the installer</a>. Using Tiki with an incorrect database version usually provokes errors." => "Deine Datenbank benötigt ein Update, um mit der aktuellen Tiki Version zusammenzupassen. Bitte fahre mit <a href=\"tiki-install.php\">dem Installer</a> fort. Tiki mit einer falschen Datenbankversion zu benutzen verursacht Fehler.",
 "A new version of Tiki, <b>{\$prefs.tiki_release}</b>, is available. You are currently running <b>{\$tiki_version}</b>. Please visit <a href=\"http://tiki.org/Download\">tiki.org/Download</a>" => "Eine neue Version von Tiki, <b>{\$prefs.tiki_release}</b>, ist verfügbar. Aktuell nutzt Du <b>{\$tiki_version}</b>. Besuche bitte <a href=\"http://tiki.org/Download\">tiki.org/Download</a>",
 "The following list of changes has been applied:" => "Folgende Änderungen wurden übernommen:",
 "Enabled" => "Aktiviert",
