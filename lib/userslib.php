@@ -2557,7 +2557,7 @@ class UsersLib extends TikiLib
 				'level' => 'basic',
 				'type' => 'calendar',
 				'admin' => false,
-				'prefs' => array('feature_calendar'),
+				'prefs' => array('feature_action_calendar'),
 				'scope' => 'global',
 			),
 			array(
