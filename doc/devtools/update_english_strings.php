@@ -39,7 +39,7 @@ while (($dir = readdir($dirHandle)) !== false) {
  
 		$langFile = file_get_contents($filePath);
 		$fileHandle = fopen($filePath, 'w');
-		$langFile = str_replace("\n\"$oldString\" => ", "\n\"$newString\" => ", $langFile);
+		$langFile = str_replace("\"$oldString\" => ", "\n\"$newString\" => ", $langFile);
 		fwrite($fileHandle, $langFile);
 		fclose($fileHandle);
 	}
