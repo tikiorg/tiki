@@ -4573,7 +4573,7 @@ class UsersLib extends TikiLib
 				'level' => 'basic',
 				'type' => 'wiki',
 				'admin' => false,
-				'prefs' => array('feature_wiki'),
+				'prefs' => array('feature_backlinks'),
 				'scope' => 'global',
 			),
 			array(
@@ -4952,7 +4952,7 @@ class UsersLib extends TikiLib
 				'level' => 'basic',
 				'type' => 'wiki',
 				'admin' => false,
-				'prefs' => array('feature_wiki'),
+				'prefs' => array('feature_page_contribution'),
 				'scope' => 'global',
 			),
 			array(
