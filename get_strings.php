@@ -63,44 +63,6 @@ $script_mode = ! isset( $_SERVER['REQUEST_METHOD'] ) && isset($_SERVER['argc']);
 
 $punctuations = array(':', '!', ';', '.', ',', '?'); // Modify lib/init/tra.php accordingly
 
-/**
- * Get all preferences names from get_default_prefs() function or reads them all from tiki database
- * and writes it to the file $file. All the strings will be surrounded by smarty translate tags
- *     ex: {tr}preference name{/tr}
- *
- * @param $file string: target file for the pref names
- * @returns: nothing but creates the file with the pref names (take care about the acl's in the target directory !)
- */
-function collect_prefs_names($file) {
-
-	global $tikilib;
-	if ( isset($tikilib) ) {
-
-		$prefs_strings = array();
-		$result = $tikilib->query("select `name` from `tiki_preferences`");
-		while ( $row = $result->fetchRow() ) $prefs_strings[] = $row['name'];
-
-	} elseif ( function_exists('get_default_prefs') ) {
-
-		// Used when called in $script_mode if no DB has been found
-		$prefs_strings = array_keys(get_default_prefs());
-
-	} else {
-		die("No 'get_default_prefs' function is available");
-	}
-
-	$pstr = fopen($file,'w');
-	if (!$pstr) {
-		echo "The file $file can not be written";
-	} else {
-		foreach ($prefs_strings as $strg)
-		{
-			fwrite ($pstr,  "{tr}" . str_replace('_',' ',$strg) . "{/tr}" . "\n");
-		}
-		fclose($pstr);
-	}
-}
-
 function hardwire_file ($file) {
 	global $files, $completion, $script_mode, $quiet;
 	$files[] = $file;
@@ -306,10 +268,6 @@ hardwire_file ('./img/flags/flagnames.php');
 ## This file is called prefnames.tpl. The extension has to be .tpl in order to be
 ##   taken in charge by the script (tpl or php)
 ## This file is, of course, temporary and will be deleted during the next cache clear !
-
-$prefsfile = "./temp/prefnames.tpl";
-collect_prefs_names($prefsfile);
-hardwire_file ($prefsfile);
 
 // Sort files to make generated strings appear in language.php in the same 
 // order across different systems
