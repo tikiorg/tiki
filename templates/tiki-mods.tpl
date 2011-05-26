@@ -16,7 +16,7 @@
 {/remarksbox}
 {remarksbox type="note" title="{tr}Note{/tr}"}
 	<p><strong>{tr}Tiki "mods" are undergoing refurbishment.{/tr}</strong></p>
-	<p>{tr}You will probably some find mods shown as being compatible with older versions of Tiki will work with later versions with little or no modification.{/tr}</p>
+	<p>{tr}You will probably find mods shown as being compatible with older versions of Tiki will work with later versions with little or no modification.{/tr}</p>
 	<p><em>{tr}Your help is needed! Please visit <a href="http://dev.tiki.org/Mods">dev.tiki.org</a> to find out more.{/tr}</em></p>
 {/remarksbox}
 
