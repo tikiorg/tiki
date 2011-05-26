@@ -6,10 +6,6 @@
 // $Id$
 
 include_once('tiki-setup.php');
-include_once("lib/init/initlib.php");
-require_once('db/tiki-db.php');
-require_once('lib/tikilib.php');
-require_once('lib/userslib.php');
 require_once("XML/Server.php");
 require_once("lib/freetag/freetaglib.php");
 
