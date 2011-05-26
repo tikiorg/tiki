@@ -92,7 +92,7 @@ function prefs_tiki_list() {
 		),
 		'tiki_domain_prefix' => array(
 			'name' => tra('Domain prefix handling'),
-			'description' => tra('Strip or automatically add the www. prefix on domain names to unify URLs.'),
+			'description' => tra('Strip or automatically add the "www." prefix on domain names to standardize URLs.'),
 			'type' => 'list',
 			'options' => array(
 				'unchanged' => tra('Leave as-is'),

@@ -563,7 +563,7 @@ select {
 #top_modules .siteloginbar_popup {
 	position: absolute;
 	right: 10px;
-	bottom: 0;
+	bottom: -5px;
 	width: 10em;
 	height: 26px;
 	line-height: 26px;
