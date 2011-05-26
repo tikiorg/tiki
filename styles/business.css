@@ -137,8 +137,8 @@ input[type="submit"],
 
 .button a:hover,
 button:hover,
-input[type="reset"] :hover,
-input[type="submit"] :hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
 .button input:hover,
 .calbuttonBox a:hover {
 	background: url(business/nav_h.gif) repeat-x;
@@ -299,10 +299,22 @@ body.fixed_width .fixedwidth .fixedwidth {
 	bottom: 1px;
 }
 
-.siteloginbar_popup .tabmark {
+.siteloginbar_popup .tabmark,
+.siteloginbar_popup .tabmark:hover {
 	background: none;
 	border: none;
 	display: block;
+}
+
+.siteloginbar_popup .cssmenu_horiz > li > div > a {
+	background: url(business/nav_h.gif) repeat-x;
+	color: #fff;
+}
+
+.siteloginbar_popup .cssmenu_horiz > li > div > a:hover {
+	background: url(business/nav_h.gif) 0 100% repeat-x;
+	color: #fff;
+	text-decoration: underline;
 }
 
 /****** Menus, Links ******/
