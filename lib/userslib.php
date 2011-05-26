@@ -3934,7 +3934,7 @@ class UsersLib extends TikiLib
 				'level' => 'editors',
 				'type' => 'wiki',
 				'admin' => false,
-				'prefs' => array('feature_wiki'),
+				'prefs' => array('feature_wiki_usrlock'),
 				'scope' => 'object',
 			),
 			array(
@@ -3943,7 +3943,7 @@ class UsersLib extends TikiLib
 				'level' => 'registered',
 				'type' => 'wiki',
 				'admin' => false,
-				'prefs' => array('feature_wiki'),
+				'prefs' => array('wiki_edit_minor'),
 				'scope' => 'object',
 			),
 			array(
@@ -4105,7 +4105,7 @@ class UsersLib extends TikiLib
 				'level' => 'registered',
 				'type' => 'wiki',
 				'admin' => false,
-				'prefs' => array('feature_wiki'),
+				'prefs' => array('feature_likePages'),
 				'scope' => 'object',
 			),
 			array(
