@@ -239,8 +239,8 @@ class Search_Index_Lucene_HighlightHelper implements Zend_Filter_Interface
 
 	function filter($content)
 	{
-		$content = substr($content, 0, 240);
-		return trim(strip_tags($this->query->highlightMatches($content), '<b>'));
+		$content = substr(strip_tags($content), 0, 240);
+		return trim($this->query->highlightMatches($content));
 	}
 }
 
