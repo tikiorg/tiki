@@ -1,4 +1,4 @@
-{* $Id $ *}
+{* $Id$ *}
 
 {if $params.showtitle eq 'y'}
 {if $data}<h4>{$data|escape}</h4>{else}

@@ -1,4 +1,4 @@
-{* $Id $ *}
+{* $Id$ *}
 
 {title help="Social+networks"}{tr}Social networks{/tr}{/title}
 

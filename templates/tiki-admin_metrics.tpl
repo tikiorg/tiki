@@ -1,4 +1,4 @@
-{* $Id $ *}
+{* $Id$ *}
 
 {title help="Metrics" admpage="metrics"}{tr}Admin Metrics{/tr}{/title}
 
