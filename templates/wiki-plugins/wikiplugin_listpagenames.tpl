@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/listpages/templates/wikiplugin_listpagenames.tpl,v 1.3 2007-04-19 16:33:25 sylvieg Exp $ *}
+{* $Id $ *}
 {strip}
 <ul>
 {section name=ix loop=$listpages}

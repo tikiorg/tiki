@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_metrics.tpl,v 1.62.2.8 2007/11/14 15:41:15 sylvieg Exp $ *}
+{* $Id $ *}
 
 {title help="Metrics" admpage="metrics"}{tr}Admin Metrics{/tr}{/title}
 
