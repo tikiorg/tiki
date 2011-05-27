@@ -1665,6 +1665,13 @@ function group_watch_category_and_descendants($group, $categId, $categName, $top
 			}
 		}
 
+		$this->notify_add($new_categories, $name, $objType, $href);
+		$this->notify_remove($removed_categories, $name, $objType, $href);
+	}
+
+	function notify_add($new_categories, $name, $objType, $href)
+	{
+		global $prefs;
 		if ($prefs['feature_user_watches'] == 'y' && !empty($new_categories)) {
 			foreach ($new_categories as $categId) {			
 		   		$category = $this->get_category($categId);
@@ -1674,6 +1681,11 @@ function group_watch_category_and_descendants($group, $categId, $categName, $top
 				$this->notify($values);								
 			}
 		}
+	}
+
+	function notify_remove($removed_categories, $name, $objType, $href)
+	{
+		global $prefs;
 		if ($prefs['feature_user_watches'] == 'y' && !empty($removed_categories)) {
 			foreach ($removed_categories as $categId) {
 				$category = $this->get_category($categId);	
