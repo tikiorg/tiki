@@ -470,6 +470,9 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 	if (!$textarea.length && elementId === "fgal_picker") {	// ckeditor file browser
 		$(".cke_dialog_contents").find("input:first").val(replaceString);
 		return;
+	} else if ($textarea.is(":input") && elementId === "fgal_picker_id") {
+		$textarea.val(replaceString);
+		return;
 	}
 
 	$textarea[0].focus();
