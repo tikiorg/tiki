@@ -138,6 +138,7 @@ class ObjectLib extends TikiLib
 		}	
 	}
 	function get_info($objectType, $object) {
+			echo $type;
 		switch ($objectType) {
 			case 'wiki': case 'wiki page':
 				global $tikilib; include_once('lib/tikilib.php');
@@ -147,7 +148,15 @@ class ObjectLib extends TikiLib
 				global $artlib; require_once 'lib/articles/artlib.php';
 				$info = $artlib->get_article($object);
 				return (array('title'=>$info['title'], 'data'=>$info['body']));
-		}
+			case 'file gallery':
+				$info = TikiLib::lib('filegal')->get_file_gallery_info($object);
+				return ( array('title' => $info['name']));
+			case 'blog':
+				$info = TikiLib::lib('blog')->get_blog($object);
+				return ( array('title' => $info['title']));
+			case 'forum':
+				$info = TikiLib::lib('comments')->get_forum($object);
+				return ( array('title' => $info['name']));		}
 		return (array('error'=>'true'));
 	}
 	function set_data($objectType, $object, $data) {

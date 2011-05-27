@@ -12,6 +12,8 @@
 		{if $prefs.feature_search_show_pertinence eq 'y' && !empty($result.relevance)}
 			<span class="itemrelevance">({tr}Relevance:{/tr} {$result.relevance|escape})</span>
 		{/if}
+
+		{if !empty($result.parent_object_id)} {tr}in{/tr} {object_link type=$result.parent_object_type id=$result.parent_object_id}{/if}
 		</strong>
 
 		<blockquote>

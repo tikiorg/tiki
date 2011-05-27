@@ -59,6 +59,13 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 		require_once 'lib/smarty_tiki/modifier.escape.php';
 	}
 
+	if (empty($title)) {
+		$info = TikiLib::lib('object')->get_info($type, $object);
+		if (!empty($info['title'])) {
+			$title = $info['title'];
+		}
+	}
+
 	$escapedPage = smarty_modifier_escape( $title ? $title : tra('No title specified') );
 
 	if ($url) {
