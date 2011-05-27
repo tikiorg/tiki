@@ -120,11 +120,6 @@ if (isset($_REQUEST["filegalhandlers"])) {
 	if (!empty($_REQUEST['newMime']) && !empty($_REQUEST['newCmd'])) {
 		$filegallib->change_file_handler($_REQUEST['newMime'], $_REQUEST['newCmd']);
 	}
-	if (isset($_REQUEST["fgal_enable_auto_indexing"])) {
-		$tikilib->set_preference("fgal_enable_auto_indexing", 'y');
-	} else {
-		$tikilib->set_preference("fgal_enable_auto_indexing", 'n');
-	}
 }
 if (isset($_REQUEST["filegalredosearch"])) {
 	$filegallib->reindex_all_files_for_search_text();
@@ -149,7 +144,15 @@ $smarty->assign_by_ref('options_sortorder', $options_sortorder);
 $handlers = $filegallib->get_file_handlers();
 ksort($handlers);
 $smarty->assign("fgal_handlers", $handlers);
-$missingHandlers = $filegallib->getFiletype(array_keys($handlers));
+$usedTypes = $filegallib->getFiletype();
+$missingHandlers = array();
+
+foreach ($usedTypes as $type) {
+	if (! $filegallib->get_parse_app($type, true)) {
+		$missingHandlers[] = $type;
+	}
+}
+
 $smarty->assign_by_ref('missingHandlers', $missingHandlers);
 include_once ('fgal_listing_conf.php');
 ask_ticket('admin-inc-fgal');

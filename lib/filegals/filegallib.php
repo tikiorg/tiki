@@ -964,9 +964,58 @@ class FileGalLib extends TikiLib
 		return (bool) $handlers->delete(array('mime_type' => $mime_type));
 	}
 
-	function get_file_handlers() {
+	function get_file_handlers($for_execution = false) {
+		$cachelib = TikiLib::lib('cache');
+
+		if ($for_execution && ! $default = $cachelib->getSerialized('file_handlers')) {
+			$possibilities = array(
+				'application/ms-excel' => array('xls2csv %1'),
+				'application/ms-powerpoint' => array('catppt %1'),
+				'application/msword' => array('catdoc %1', 'strings %1'),
+				'application/pdf' => array('pstotext %1', 'pdftotext %1 -'),
+				'application/postscript' => array('pstotext %1'),
+				'application/ps' => array('pstotext %1'),
+				'application/rtf' => array('catdoc %1'),
+				'application/sgml' => array('col -b %1', 'strings %1'),
+				'application/vnd.ms-excel' => array('xls2csv %1'),
+				'application/vnd.ms-powerpoint' => array('catppt %1'),
+				'application/x-msexcel' => array('xls2csv %1'),
+				'application/x-pdf' => array('pstotext %1'),
+				'application/x-troff-man' => array('man -l %1'),
+				'text/enriched' => array('col -b %1', 'strings %1'),
+				'text/html' => array('elinks -dump -no-home %1'),
+				'text/plain' => array('col -b %1', 'strings %1'),
+				'text/richtext' => array('col -b %1', 'strings %1'),
+				'text/sgml' => array('col -b %1', 'strings %1'),
+				'text/tab-separated-values' => array('col -b %1', 'strings %1'),
+			);
+
+			$default = array();
+			$executables = array();
+			foreach ($possibilities as $type => $options) {
+				foreach ($options as $opt) {
+					$exec = reset(explode(' ', $opt, 2));
+
+					if (! isset($executables[$exec])) {
+						$executables[$exec] = (bool) `which $exec`;
+					}
+
+					if ($executables[$exec]) {
+						$default[$type] = $opt;
+						break;
+					}
+				}
+			}
+
+			$cachelib->cacheItem('file_handlers', serialize($default));
+		} elseif (! $for_execution) {
+			$default = array();
+		}
+
 		$handlers = $this->table('tiki_file_handlers');
-		return $handlers->fetchMap('mime_type', 'cmd', array() );
+		$database = $handlers->fetchMap('mime_type', 'cmd', array() );
+
+		return array_merge($default, $database);
 	}
 
 	function reindex_all_files_for_search_text() {
@@ -990,6 +1039,28 @@ class FileGalLib extends TikiLib
 		refresh_index('files');
 	}
 
+	function get_parse_app($type, $skipDefault = true) {
+		static $fileParseApps;
+		
+		if (! $fileParseApps) {
+			$fileParseApps = $this->get_file_handlers(true);
+		}
+
+		$partial = $type;
+
+		if (false !== $p = strpos($partial, ';')) {
+			$partial = substr($partial, 0, $p);
+		}
+
+		if (isset($fileParseApps[$type])) {
+			return $fileParseApps[$type];
+		} elseif (isset($fileParseApps[$partial])) {
+			return $fileParseApps[$partial];
+		} elseif (! $skipDefault && isset($fileParseApps['default'])) {
+			return $fileParseApps['default'];
+		}
+	}
+
 	function get_search_text_for_data($data,$path,$type, $galleryId) {
 		global $prefs;
 
@@ -997,13 +1068,7 @@ class FileGalLib extends TikiLib
 			return false;
 		}
 
-		$fileParseApps = $this->get_file_handlers();
-
-		$parseApp = '';
-		if (array_key_exists($type,$fileParseApps))
-			$parseApp = $fileParseApps[$type];
-		elseif (array_key_exists('default',$fileParseApps))
-			$parseApp = $fileParseApps['default'];
+		$parseApp = $this->get_parse_app($type);
 
 		if (empty($parseApp))
 			return '';
