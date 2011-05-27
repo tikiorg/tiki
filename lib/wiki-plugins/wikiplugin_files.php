@@ -374,7 +374,7 @@ function wikiplugin_files($data, $params) {
 		if (!empty($slideshow) && $slideshow == 'y') {
 			if ($prefs['javascript_enabled'] != 'y') return;
 			if (empty($data)) $data = tra('Slideshow');
-			return "~np~<a onclick=\"javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId&find_creator=$creator&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');\" href=\"#\">".tra($data).'</a>~/np~';
+			return "~np~<a onclick=\"javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId&amp;find_creator=" . urlencode($creator) . "&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');\" href=\"#\">".tra($data).'</a>~/np~';
 		}
 		$find = isset($_REQUEST['find'])?  $_REQUEST['find']: '';
 		$fs = $filegallib->get_files(0, -1, $sort, $find, $galleryId, false, true, true, true, false, false, true, false, '', true, false, false, $filter);
