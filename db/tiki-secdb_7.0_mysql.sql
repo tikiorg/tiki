@@ -106,7 +106,7 @@ INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/cs/index.php', '2239837ec2a2acbb080d7f65b17c8b0b', '7.0RC1', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/cs/language.php', '5b7c5e9a29953c1cd07fb76a6fc082fc', '7.0RC1', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/cy/index.php', '2239837ec2a2acbb080d7f65b17c8b0b', '7.0RC1', 0);
-INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/cy/language.php', 'dee45f130a3915d135cd5a9cce9897af', '7.0RC1', 0);
+INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/cy/language.php', '200df8bea9d0c535f024e9825cacc0ca', '7.0RC1', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/da/index.php', '2239837ec2a2acbb080d7f65b17c8b0b', '7.0RC1', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/da/language.php', '60f92960d8d833e911f178a9a7ddc04f', '7.0RC1', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/de/index.php', '2239837ec2a2acbb080d7f65b17c8b0b', '7.0RC1', 0);
@@ -128,7 +128,7 @@ INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/fj/language.php', '80564bbd46525a970630ee99602ea0af', '7.0RC1', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/flagmapping.php', 'a6ac4a40d61287ef77afa5a06f5883d3', '7.0RC1', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/fr/index.php', '2239837ec2a2acbb080d7f65b17c8b0b', '7.0RC1', 0);
-INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/fr/language.php', '32022e8c50565f21e75c55dbc87d2199', '7.0RC1', 0);
+INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/fr/language.php', '90e7ab1708d9eb4127e559a7026c721a', '7.0RC1', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/fy-NL/index.php', '2239837ec2a2acbb080d7f65b17c8b0b', '7.0RC1', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/fy-NL/language.php', '771ef12e55ba4357383759f09a9d4ada', '7.0RC1', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/gl/index.php', '2239837ec2a2acbb080d7f65b17c8b0b', '7.0RC1', 0);
@@ -151,7 +151,7 @@ INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/ja/index.php', '2239837ec2a2acbb080d7f65b17c8b0b', '7.0RC1', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/ja/language.php', 'f59ca1c5f6564d00fc423a5ead30e5cc', '7.0RC1', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/ko/index.php', '541085698d3d1cd01573b73a675f469f', '7.0RC1', 0);
-INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/ko/language.php', '64aa478992c00405f505fc4ca7e537d1', '7.0RC1', 0);
+INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/ko/language.php', '1463dc22ef33c59b0e007af7d360f9c2', '7.0RC1', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/langmapping.php', '15b461d559705b83290188ea89000032', '7.0RC1', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/lt/index.php', '2239837ec2a2acbb080d7f65b17c8b0b', '7.0RC1', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lang/lt/language.php', '2687705ab613d0c10a0708d2c173a074', '7.0RC1', 0);
