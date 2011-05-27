@@ -30,6 +30,274 @@ Version 7.0
 ------------------
 
 ----------------------------------------------
+r34666 | marclaporte | 2011-05-27 20:30:03 +0100 (Fri, 27 May 2011) | 1 line
+
+[MOD] remove extra actions below rename page because user testing has demostrated confused users. Some were clicking 'edit'. Leaving 'View page' as a way to get back
+----------------------------------------------
+r34664 | sylvieg | 2011-05-27 20:22:06 +0100 (Fri, 27 May 2011) | 1 line
+
+[FIX]search: need to strip all html tags - to have a well formed snippet
+----------------------------------------------
+r34661 | lphuberdeau | 2011-05-27 18:51:56 +0100 (Fri, 27 May 2011) | 1 line
+
+[MOD]?\194?\160Default search should use unified search
+----------------------------------------------
+r34656 | lphuberdeau | 2011-05-27 16:09:39 +0100 (Fri, 27 May 2011) | 1 line
+
+[FIX]?\194?\160Send notifications when categorizing from the category module
+----------------------------------------------
+r34653 | jonnybradley | 2011-05-27 15:21:09 +0100 (Fri, 27 May 2011) | 1 line
+
+[FIX] fgal_picker:  Fix for IE not seeing checkClose function due to var declaration (which should be right, but isn't for IE)
+----------------------------------------------
+r34651 | lphuberdeau | 2011-05-27 15:20:04 +0100 (Fri, 27 May 2011) | 1 line
+
+[FIX] Trailing spaces in page names can cause permissions not to apply as expected
+----------------------------------------------
+r34650 | jonnybradley | 2011-05-27 15:19:29 +0100 (Fri, 27 May 2011) | 1 line
+
+[FIX] fgal_picker:  Fix for IE click on image thumbnail when selecting file gallery files in img plugin editor
+----------------------------------------------
+r34643 | chealer | 2011-05-27 02:45:52 +0100 (Fri, 27 May 2011) | 1 line
+
+[FIX] FILES plugin: creator parameter popup field takes a boolean rather than a string (r31132/r29843 regression)
+----------------------------------------------
+r34638 | luciash | 2011-05-26 22:59:39 +0100 (Thu, 26 May 2011) | 1 line
+
+[FIX] Freetags Morcego 3D browser: make the actionUrl work when feature_ajax is on; there does no such js function called browseToTag() exist
+----------------------------------------------
+r34635 | luciash | 2011-05-26 21:18:01 +0100 (Thu, 26 May 2011) | 1 line
+
+[ENH] Freetags Morcego 3D browser: remove redundant includes and requires -- thanks chealer
+----------------------------------------------
+r34633 | luciash | 2011-05-26 20:19:36 +0100 (Thu, 26 May 2011) | 1 line
+
+[FIX] Freetags Morcego 3D browser: wrong preference name for nodeCharge applet param
+----------------------------------------------
+r34632 | luciash | 2011-05-26 20:13:01 +0100 (Thu, 26 May 2011) | 1 line
+
+[FIX] Freetags Morcego 3D browser: did not work because of missing include
+----------------------------------------------
+r34630 | eromneg | 2011-05-26 18:22:29 +0100 (Thu, 26 May 2011) | 1 line
+
+[FIX] [bp34625] sorry - did this to trunk first. Convert emails to lower case when using a wiki page subscription in newsletters so that the same emails in different cases can be de-duped even when in multiple wiki pages
+----------------------------------------------
+r34628 | sylvieg | 2011-05-26 17:37:23 +0100 (Thu, 26 May 2011) | 1 line
+
+typo= sorry
+----------------------------------------------
+r34626 | sylvieg | 2011-05-26 17:19:31 +0100 (Thu, 26 May 2011) | 1 line
+
+[FIX]prefs: useUrl was not working since ... 4
+----------------------------------------------
+r34624 | chibaguy | 2011-05-26 15:07:20 +0100 (Thu, 26 May 2011) | 1 line
+
+[FIX] Inconsistent padding on header login button's normal and hover states; nicer background.
+----------------------------------------------
+r34621 | chibaguy | 2011-05-26 13:38:04 +0100 (Thu, 26 May 2011) | 1 line
+
+[FIX] Remove gap between bottom of header login button and menu bar.
+----------------------------------------------
+r34620 | chibaguy | 2011-05-26 13:18:32 +0100 (Thu, 26 May 2011) | 1 line
+
+[FIX] Default positioning for header-mode login form.
+----------------------------------------------
+r34619 | chibaguy | 2011-05-26 13:17:04 +0100 (Thu, 26 May 2011) | 1 line
+
+[FIX] Reinstate span for down-arrow on popup login link button.
+----------------------------------------------
+r34618 | chealer | 2011-05-26 07:03:12 +0100 (Thu, 26 May 2011) | 1 line
+
+French: review r32951 (TikiFestQuebec7) - Part 1: Unused words
+----------------------------------------------
+r34617 | chealer | 2011-05-26 06:14:14 +0100 (Thu, 26 May 2011) | 1 line
+
+tiki_domain_prefix description: s/unify URLs/standardize URLs/
+----------------------------------------------
+r34616 | chealer | 2011-05-26 04:40:35 +0100 (Thu, 26 May 2011) | 2 lines
+
+[FIX] Change "Using Tiki with an incorrect database version usually provoke errors."
+to                  "Using Tiki with an incorrect database version usually provokes errors."
+----------------------------------------------
+r34615 | chealer | 2011-05-26 04:29:40 +0100 (Thu, 26 May 2011) | 2 lines
+
+[FIX] Change "You will probably some find mods shown as being compatible with older versions of Tiki will work with later versions with little or no modification"
+to                  "You will probably find mods shown as being compatible with older versions of Tiki will work with later versions with little or no modification" (guessed)
+----------------------------------------------
+r34614 | xen216 | 2011-05-26 03:49:45 +0100 (Thu, 26 May 2011) | 1 line
+
+[FIX] #3850 fixed sql syntax error when using sort and group parameters together
+----------------------------------------------
+r34607 | sylvieg | 2011-05-25 14:23:55 +0100 (Wed, 25 May 2011) | 1 line
+
+[FIX]calendar: calendar.css a caltable class + align middle the week number not to be aligned with day
+----------------------------------------------
+r34606 | jonnybradley | 2011-05-25 13:51:09 +0100 (Wed, 25 May 2011) | 1 line
+
+[FIX] search module: Add nocache file as search requires javascript to be added via {jq} tags in the template which doesn't (yet) get cached for anonymous
+----------------------------------------------
+r34605 | sylvieg | 2011-05-25 13:31:46 +0100 (Wed, 25 May 2011) | 1 line
+
+[FIX]menu: do not put a link if there is no url on the section
+----------------------------------------------
+r34604 | chibaguy | 2011-05-25 12:53:41 +0100 (Wed, 25 May 2011) | 1 line
+
+[FIX] Encourage header and footer content to widen when middle has wide content.
+----------------------------------------------
+r34602 | jonnybradley | 2011-05-25 11:53:45 +0100 (Wed, 25 May 2011) | 2 lines
+
+[FIX] tracker plugin: Add special creator/modifier fields to tracker form if they're not specified in the field list
+ Currently they show in the form, unlike in Tiki 6, but at least the data will get saved (Tiki 8 will address presentation)
+----------------------------------------------
+r34601 | chealer | 2011-05-25 07:10:18 +0100 (Wed, 25 May 2011) | 1 line
+
+[FIX] "will be automatically be inserted" -> "will be automatically inserted"
+----------------------------------------------
+r34600 | chealer | 2011-05-25 04:04:34 +0100 (Wed, 25 May 2011) | 1 line
+
+[FIX] Change category module URL parameters description: reference to previous parameter names
+----------------------------------------------
+r34599 | lphuberdeau | 2011-05-24 21:06:02 +0100 (Tue, 24 May 2011) | 1 line
+
+[FIX] Notices in fancytable
+----------------------------------------------
+r34598 | lphuberdeau | 2011-05-24 21:03:50 +0100 (Tue, 24 May 2011) | 1 line
+
+[FIX] Potential crash in parser if ~np~ is not properly closed in some circumstances, thanks to chibaguy for highlighting this in forum post 358 of themes.t.o
+----------------------------------------------
+r34593 | lphuberdeau | 2011-05-24 19:02:37 +0100 (Tue, 24 May 2011) | 1 line
+
+[bp] Applying changes that were made in trunk to keep indexing behavior consistant
+----------------------------------------------
+r34586 | ricks99 | 2011-05-24 02:52:39 +0100 (Tue, 24 May 2011) | 1 line
+
+[FIX]corrected typo/misspelling of english text
+----------------------------------------------
+r34583 | sampaioprimo | 2011-05-23 22:18:43 +0100 (Mon, 23 May 2011) | 2 lines
+
+[FIX] filter blog post excerpt
+
+----------------------------------------------
+r34582 | sampaioprimo | 2011-05-23 22:15:13 +0100 (Mon, 23 May 2011) | 2 lines
+
+[FIX] restore blog post excerpt behavior (allow html) after r34013 fixed parse_data()
+
+----------------------------------------------
+r34581 | sampaioprimo | 2011-05-23 22:10:46 +0100 (Mon, 23 May 2011) | 2 lines
+
+[FIX] restore blog post behavior (allow html) after r34013 fixed parse_data()
+
+----------------------------------------------
+r34580 | sampaioprimo | 2011-05-23 21:22:10 +0100 (Mon, 23 May 2011) | 2 lines
+
+[FIX] filter content when updating a blog post
+
+----------------------------------------------
+r34576 | chealer | 2011-05-23 19:01:22 +0100 (Mon, 23 May 2011) | 1 line
+
+[FIX] Wiki admin: description of feature_wiki_history_full
+----------------------------------------------
+r34575 | sylvieg | 2011-05-23 18:59:35 +0100 (Mon, 23 May 2011) | 1 line
+
+[FIX]tracker: attachment : if the pref t_use_db is by error not n and not y, long attachments were truncated
+----------------------------------------------
+r34574 | chealer | 2011-05-23 18:54:39 +0100 (Mon, 23 May 2011) | 1 line
+
+[FIX] Wiki history: All versions archived even when "History all instead of only page data, description, and change comment" is disabled (r31737 regression)
+----------------------------------------------
+r34573 | jonnybradley | 2011-05-23 12:55:39 +0100 (Mon, 23 May 2011) | 1 line
+
+[FIX] modules: Don't make redundant custom module for the Application Menu
+----------------------------------------------
+r34572 | marclaporte | 2011-05-23 08:37:20 +0100 (Mon, 23 May 2011) | 1 line
+
+dedicated to Jean-Luc
+----------------------------------------------
+r34571 | marclaporte | 2011-05-23 08:29:09 +0100 (Mon, 23 May 2011) | 1 line
+
+better doc for transitions
+----------------------------------------------
+r34568 | chibaguy | 2011-05-21 11:16:09 +0100 (Sat, 21 May 2011) | 1 line
+
+[FIX] Update/fix site header login button background color. Thanks, chealer.
+----------------------------------------------
+r34565 | lphuberdeau | 2011-05-20 19:28:38 +0100 (Fri, 20 May 2011) | 1 line
+
+[FIX] Strip out lucene special characters from tokens to avoid unpredictable crashes
+----------------------------------------------
+r34564 | lphuberdeau | 2011-05-20 19:27:34 +0100 (Fri, 20 May 2011) | 1 line
+
+[FIX]?\194?\160Broken test
+----------------------------------------------
+r34559 | chealer | 2011-05-20 17:16:44 +0100 (Fri, 20 May 2011) | 1 line
+
+[FIX] Quick Edit module: Custom header template parameter (from r27746)
+----------------------------------------------
+r34555 | sylvieg | 2011-05-20 16:10:45 +0100 (Fri, 20 May 2011) | 1 line
+
+[FIX]TRACKERFILTER: preserve order of fields of the filter param
+----------------------------------------------
+r34551 | jonnybradley | 2011-05-20 13:37:05 +0100 (Fri, 20 May 2011) | 1 line
+
+[FIX] user prefs: Merge the first two tabs into one form, otherwise things on the hidden tab get reset to their defaults, making the page unusable (thanks SiL3NC3-de)
+----------------------------------------------
+r34549 | jonnybradley | 2011-05-20 13:21:45 +0100 (Fri, 20 May 2011) | 1 line
+
+[FIX] trackers: Remove obsolete warning
+----------------------------------------------
+r34547 | jonnybradley | 2011-05-20 12:41:29 +0100 (Fri, 20 May 2011) | 2 lines
+
+[FIX] trackers: Parse value for TextArea fields (including multilungual values), but not Text
+Also fix small pre/post typo correction on append text
+----------------------------------------------
+r34546 | jonnybradley | 2011-05-20 11:19:04 +0100 (Fri, 20 May 2011) | 1 line
+
+[FIX] modules: Set newly created top modules to have no group (were assigned to Anonymous so may be hidden from registered and/or admins)
+----------------------------------------------
+r34537 | chealer | 2011-05-19 22:49:09 +0100 (Thu, 19 May 2011) | 4 lines
+
+[MOD] Quick Edit module: remove parameters pastetext, enterdescription and chooseCateg introduced in Tiki 6 (r28084)
+These fields overlap with those in page edition.
+http://article.gmane.org/gmane.comp.cms.tiki.cvs/63827/match=28084
+Sorry if this affects anyone, please speak up
+----------------------------------------------
+r34533 | changi67 | 2011-05-19 22:17:32 +0100 (Thu, 19 May 2011) | 1 line
+
+[FIX] Don't log if feature actionlog is not enabled
+----------------------------------------------
+r34523 | yonixxx | 2011-05-19 19:54:54 +0100 (Thu, 19 May 2011) | 1 line
+
+[FIX]Autoclipping feature - Error in typo
+----------------------------------------------
+r34519 | jonnybradley | 2011-05-19 19:28:09 +0100 (Thu, 19 May 2011) | 1 line
+
+[FIX] comments: Stop comments box being "super small"
+----------------------------------------------
+r34514 | jonnybradley | 2011-05-19 18:44:38 +0100 (Thu, 19 May 2011) | 1 line
+
+[FIX] versions plugin: Add new line before default content so it gets parsed correctly (thanks ricks99)
+----------------------------------------------
+r34513 | jonnybradley | 2011-05-19 18:21:41 +0100 (Thu, 19 May 2011) | 1 line
+
+[FIX] modules revamp: Remove orphaned prefs and change warning on site logo feature
+----------------------------------------------
+r34508 | jonnybradley | 2011-05-19 16:43:43 +0100 (Thu, 19 May 2011) | 2 lines
+
+[bp/r34223][FIX] Shell installer did not have autoload
+
+----------------------------------------------
+r34506 | jonnybradley | 2011-05-19 16:14:02 +0100 (Thu, 19 May 2011) | 1 line
+
+[FIX] modules revamp: Remove dependency on lib/setup/prefs.php and get modified prefs from the database directly. Should now reliably convert all custom look & feel prefs to custom modules.
+----------------------------------------------
+r34505 | luciash | 2011-05-19 15:37:42 +0100 (Thu, 19 May 2011) | 1 line
+
+[FIX] Freetags: the clear button link onclick attribute needed "return false" to prevent going away from the page (while it just should clear the form input)
+----------------------------------------------
+r34501 | sylvieg | 2011-05-19 13:57:23 +0100 (Thu, 19 May 2011) | 1 line
+
+[FIX]wiki: cache time can be redefined for a page
+----------------------------------------------
 r34434 | chealer | 2011-05-15 20:08:59 +0100 (Sun, 15 May 2011) | 2 lines
 
 [FIX] HTML
