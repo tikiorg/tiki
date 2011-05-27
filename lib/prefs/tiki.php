@@ -110,5 +110,12 @@ function prefs_tiki_list() {
 			'size' => 8,
 			'default' => '',
 		),
+		'tiki_check_file_content' => array(
+			'name' => tra('Validate uploaded file content'),
+			'description' => tra('Do not trust user input and open the files to verify their content.'),
+			'type' => 'flag',
+			'extensions' => array('fileinfo'),
+			'default' => 'n',
+		),
 	);
 }

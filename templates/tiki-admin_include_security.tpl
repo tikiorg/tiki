@@ -24,6 +24,8 @@
 			{tr}Please also see:{/tr} <a href="tiki-admin.php?page=login">{tr}HTTPS (SSL) and other login preferences{/tr}</a>
 
 			{preference name=newsletter_external_client}
+
+			{preference name=tiki_check_file_content}
 			
 		<fieldset>
 			<legend>{tr}CSRF Security{/tr}{help url="Security"}</legend>
