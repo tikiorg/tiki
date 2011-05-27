@@ -34,8 +34,3 @@
     </tr>
   </table>
 </form>
-
-<br />
-
-{include file='tiki-page_bar.tpl'}
-
