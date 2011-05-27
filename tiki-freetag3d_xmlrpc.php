@@ -50,8 +50,7 @@ function getSubGraph($params) {
 
 	    $node = array();
 
-	    if ( $prefs['feature_ajax'] == 'y' ) $actionUrl = "javascript:browseToTag('$nodeName');";
-	    else $actionUrl = $base_url.'tiki-browse_freetags.php?tag='.$nodeName;
+	    $actionUrl = $base_url.'tiki-browse_freetags.php?tag='.$nodeName;
 
 	    $node['neighbours'] = new XML_RPC_Value($neighbours, "array");
 	    if (!empty($color)) {

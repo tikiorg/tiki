@@ -15,7 +15,7 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 
 	function getHash( array $context ) {
 		if( isset( $context['type'], $context['object'] ) ) {
-			return 'object:' . $context['type'] . ':' . strtolower( $context['object'] );
+			return 'object:' . $context['type'] . ':' . $this->cleanObject( $context['object'] );
 		} else {
 			return '';
 		}
@@ -38,7 +38,7 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 			$hash = $this->getHash( array_merge( $baseContext, array( 'object' => $v ) ) );
 			if( ! isset( $this->known[$hash] ) ) {
 				$this->known[$hash] = array();
-				$key = md5( $baseContext['type'] . strtolower( $v ) );
+				$key = md5( $baseContext['type'] . $this->cleanObject( $v ) );
 				$objects[$key] = $v;
 				$hashes[$key] = $hash;
 			}
@@ -95,5 +95,9 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 		} else {
 			return $name;
 		}
+	}
+
+	private function cleanObject($name) {
+		return strtolower(trim($name));
 	}
 }

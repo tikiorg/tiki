@@ -295,13 +295,7 @@ function wikiplugin_files_info() {
 				'required' => false,
 				'name' => tra('Creator'),
 				'description' => tra('Show only files created by this user'),
-				'default' => 'n',
 				'advanced' => true,
-				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
-					array('text' => tra('No'), 'value' => 'n')
-				)
 			),
 			'showupload' => array(
 				'required' => false,
