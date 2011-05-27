@@ -41,10 +41,18 @@ class Search_Query
 		$this->addPart($query, 'plaintext', $field);
 	}
 
-	function filterType($type)
+	function filterType($types)
 	{
-		$token = new Search_Expr_Token($type);
-		$this->addPart($token, 'identifier', 'object_type');
+		if (is_array($types)) {
+			foreach ($types as $type) {
+				$tokens[] = new Search_Expr_Token($type);
+			}
+			$or =  new Search_Expr_Or($tokens);
+			$this->addPart($or, 'identifier', 'object_type');
+		} else {
+			$token = new Search_Expr_Token($types);
+			$this->addPart($token, 'identifier', 'object_type');
+		}
 	}
 
 	function filterCategory($query, $deep = false)
