@@ -1,4 +1,4 @@
-{* $id$ *}
+{* $Id$ *}
 <div class="adminoptionbox preference clearfix {$p.tagstring|escape}{if isset($smarty.request.highlight) and $smarty.request.highlight eq $p.preference} highlight{/if}" style="text-align: left;">
   <label for="{$p.id|escape}">{$p.name|escape|breakline}:</label>
 	<select name="{$p.preference|escape}" id="{$p.id|escape}">
