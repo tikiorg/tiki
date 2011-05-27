@@ -31,7 +31,7 @@
 				{preference name=feature_banners}
 				{preference name=feature_categories}
 				{preference name=feature_freetags}
-				{preference name=feature_search_fulltext}
+				{preference name=feature_search}
 			</div>
 
 		</fieldset>
