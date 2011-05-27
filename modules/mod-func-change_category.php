@@ -163,10 +163,12 @@ function module_change_category( $mod_reference, $module_params ) {
 			$objectperms = Perms::get( array( 'type' => $cat_type, 'object' => $cat_objid ) );
 			if ($objectperms->modify_object_categories) {
 				$assignedCategs = Perms::filter( array( 'type' => 'category' ), 'object', $assignedCategs, array( 'object' => 'category' ), 'add_object' );
-
+				global $wikilib;
 				$categlib->categorize_page($cat_objid, $assignedCategs);
+				$categlib->notify_add($assignedCategs, $cat_objid, 'wiki page', $wikilib->sefurl($cat_objid));
 				if ($catObjectId = $categlib->is_categorized($cat_type, $cat_objid)) {
 					$categlib->remove_object_from_categories($catObjectId, Perms::filter( array( 'type' => 'category' ), 'object', $unassignedCategs, array( 'object' => 'category' ), 'remove_object' ));
+					$categlib->notify_remove($unassignedCategs, $cat_objid, 'wiki page', $wikilib->sefurl($cat_objid));
 				}
 			}
 			header('Location: '.$_SERVER['REQUEST_URI']);
