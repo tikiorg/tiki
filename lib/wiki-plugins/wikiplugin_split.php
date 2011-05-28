@@ -98,7 +98,7 @@ function wikiplugin_split($data, $params, $pos)
 {
 	global $tikilib, $tiki_p_admin_wiki, $tiki_p_admin, $section;
 	global $replacement;
-	preg_match_all('/{SPLIT.+{SPLIT}/imU', $data, $matches);
+	preg_match_all('/{(SPLIT|CODE|HTML|FADE|JQ|JS|MOUSEOVER|VERSIONS).+{\1}/ismU', $data, $matches);
 	$hashes = array();
 	foreach ($matches[0] as $match) {
 		if (empty($match)) continue;
