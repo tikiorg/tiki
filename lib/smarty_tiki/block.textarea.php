@@ -50,8 +50,10 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$params['class'] = isset($params['class']) ? $params['class'] : 'wikiedit';
 
 	//codemirror integration
-	$params['data-codemirror'] = isset($params['codemirror']) ? $params['codemirror'] : '';
-	$params['data-syntax'] = isset($params['syntax']) ? $params['syntax'] : '';
+	if ($prefs['feature_syntax_highlighter'] === 'y') {
+		$params['data-codemirror'] = isset($params['codemirror']) ? $params['codemirror'] : '';
+		$params['data-syntax'] = isset($params['syntax']) ? $params['syntax'] : '';
+	}
 	//keep params html5 friendly
 	unset($params['codemirror']);
 	unset($params['syntax']);
@@ -266,7 +268,7 @@ function CKeditor_OnComplete() {
 	$js_editconfirm = '';
 	$js_editlock = '';
 
-	if ($params['_simple'] == 'n') {
+	if ($params['_simple'] == 'n' && $params['comments'] !== 'y') {
 // Display edit time out
 
 		$js_editlock .= "
