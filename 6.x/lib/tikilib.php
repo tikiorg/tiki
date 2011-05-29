@@ -1484,7 +1484,14 @@ class TikiLib extends TikiDb_Bridge
 //			$ret[] = "Anonymous";
 
 			if (isset($_SESSION["groups_are_emulated"]) && $_SESSION["groups_are_emulated"]=="y"){
-				$ret = array_intersect($ret,unserialize($_SESSION['groups_emulated']));
+				if (in_array('Admins',$ret)) {
+					// Members of group 'Admins' can emulate being in any list of groups
+					$ret = unserialize($_SESSION['groups_emulated']);
+				}else{
+					// For security purposes, user can only emulate a subset of user's list of groups
+					// This prevents privilege escalation
+					$ret = array_intersect($ret,unserialize($_SESSION['groups_emulated']));
+				}
 			}
 			$ret = array_values(array_unique($ret));
 			$this->usergroups_cache[$user] = $ret;
