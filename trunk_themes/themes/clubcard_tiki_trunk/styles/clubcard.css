@@ -225,11 +225,16 @@ font [size="smaller"] {
 }
 
 #top_modules {
-	height: 160px;
+	min-height: 110px;
 	position: relative;
 }
 
-#sitetitles {
+#top_modules #sitelogo img {
+	margin: 10px;
+}
+
+#top_modules #sitetitles {
+	margin: 4% 0 2% 10px;
 	text-transform: uppercase;
 }
 
@@ -239,7 +244,6 @@ font [size="smaller"] {
 }
 
 #sitetitle {
-	padding: 40px 0 10px 0;
 	font-size: 24px;
 	font-weight: bold;
 }
@@ -252,15 +256,19 @@ font [size="smaller"] {
 #sitetitle a:hover {text-decoration: none;}
 
 #sitesubtitle {
-	padding: 50px 0 0 5px;
+	padding: 12px 0 0 5px;
 	font: 12px Arial, Helvetica, sans-serif;
 	color: #8e8c8c;
 }
 
-#top_modules .siteloginbar_popup {
+#top_modules .box-login_box {
 	position: absolute;
-	bottom: 58px;
-	right: 10px;
+	bottom: 0;
+	right: 100px;
+}
+
+#top_modules .box-login_box .tabmark {
+	float: left;
 }
 
 .siteloginbar_poppedup {
