@@ -32,12 +32,20 @@ body.fullscreen #tiki-center {
 	margin: 1em;
 	margin-top: 0}
 	
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
+}
+	
 .fixed_width .fixedwidth {
 	width: 880px;
 }
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
+		
+
 
 .fixed_width #main,
 #fixedwidth {
