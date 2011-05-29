@@ -200,7 +200,7 @@
 				{preference name=tikiIndex defaul=$prefs.site_tikiIndex}
 
 				{preference name=useUrlIndex}
-				<div class="adminoptionboxchild">
+				<div class="adminoptionboxchild" id="useUrlIndex_childcontainer">
 					{preference name=urlIndex}
 				</div>
 			</fieldset>
