@@ -281,9 +281,13 @@
 	{tr}A new install will populate the database.{/tr}
 {/if}
 </p>
-	  {if $database_charset neq 'utf8' and $tikidb_created}
+	  {if ($database_charset neq 'utf8' or isset($legacy_collation)) and $tikidb_created}
 	  	{remarksbox icon=error title="{tr}Encoding Issue{/tr}"}
-			{tr 0=$database_charset}<p>Your database encoding is <strong>not</strong> in UTF-8.</p><p>Current encoding is <em>%0</em>. The languages that will be available for content on the site will be limited. If you plan on using languages not covered by the character set, you should re-create or alter the database so the default encoding is <em>utf8</em>.</p>{/tr}
+			{if isset($legacy_collation)}
+				<strong style="color: red">Something is wrong with the database encoding.</strong> The schema has UTF-8 as default encoding but some tables in the schema have a different collation, {$legacy_collation}. Converting to UTF-8 may solve this but may also make matters worse. You should investigate what happened or only proceed with backups.
+			{else}
+				{tr 0=$database_charset}<p>Your database encoding is <strong>not</strong> in UTF-8.</p><p>Current encoding is <em>%0</em>. The languages that will be available for content on the site will be limited. If you plan on using languages not covered by the character set, you should re-create or alter the database so the default encoding is <em>utf8</em>.</p>{/tr}
+			{/if}
 			<p><a href="http://doc.tiki.org/Understanding+Encoding">{tr}More information{/tr}</a></p>
 
 			<form method="post" action="">
@@ -591,7 +595,7 @@
 {if $install_type eq 'update'}
 	{if $double_encode_fix_attempted eq 'y'}
 		<p>{tr}You can now access the site normally. Report back any issues that you might find (if any) to the Tiki forums or bug tracker{/tr}</p>
-	{else}
+	{elseif not isset($legacy_collation)}
 		<form method="post" action="#" onsubmit="return confirm('{tr}Are you sure you want to attempt to fix the encoding of your entire database?{/tr}');" style="padding-top: 100px;">
 			<fieldset>
 				<legend>{tr}Upgrading and running into encoding issues?{/tr}</legend>

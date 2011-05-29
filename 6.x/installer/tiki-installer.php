@@ -1013,6 +1013,14 @@ if( $install_step == '4' ) {
 	$smarty->assign( 'database_charset', $value );
 	
 }
+
+if (((isset($value) && $value == 'utf8') || $install_step == '7') && $db = TikiDB::get()) {
+	$result = $db->fetchAll( 'SELECT TABLE_COLLATION FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ? AND TABLE_COLLATION NOT LIKE "utf8%"', $dbs_tiki );
+	if(!empty ($result) ) {
+		$smarty->assign('legacy_collation', $result[0]['TABLE_COLLATION']);
+	}
+}
+
 if ($install_step == '6') {
 	$smarty->assign('disableAccounts', list_disable_accounts());
 }
