@@ -18,7 +18,7 @@ function prefs_morelikethis_list() {
 			),
 		),
 		'morelikethis_basic_mincommon' => array(
-			'name' => tra('Minimum amount of tags in common'),
+			'name' => tra('Minimum number of tags in common'),
 			'type' => 'list',
 			'options' => array(
 				'1' => tra('1'),
