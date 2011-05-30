@@ -34,9 +34,87 @@ class Services_Comment_Controller
 		return array(
 			'template' => 'tiki-services-comments.tpl',
 			'comments' => $comments_coms['data'],
+			'type' => $type,
+			'objectId' => $objectId,
+			'parentId' => 0,
 			'cant' => $comments_coms['cant'],
 			'offset' => $offset,
 			'per_page' => $per_page,
+			'allow_post' => $this->canPost($type, $objectId),
+		);
+	}
+
+	function action_post($input)
+	{
+		global $prefs, $user;
+
+		$type = $input->type->text();
+		$objectId = $input->objectId->pagename();
+		$parentId = $input->parentId->int();
+
+		// Check general permissions
+
+		if (! $this->isEnabled($type, $object)) {
+			throw new Services_Exception(tr('Comments not allowed on this page.'), 403);
+		}
+
+		if (! $this->canPost($type, $objectId)) {
+			throw new Services_Exception(tr('Permission denied.'), 403);
+		}
+
+		$commentslib = TikiLib::lib('comments');
+		if ( $parentId && $prefs['feature_comments_locking'] == 'y') {
+			$parent = $commentslib->get_comment($parentId);
+
+			if ($parent['locked'] == 'y') {
+				throw new Services_Exception(tr('Parent is locked.'), 403);
+			}
+		}
+
+		$errors = array();
+
+		$title = trim($input->title->text());
+		$data = trim($input->data->wikicontent());
+		$contributions = array();
+		$anonymous_name = '';
+		$anonymous_email = '';
+		$anonymous_website = '';
+
+		if ($input->post->int()) {
+			// Validate 
+			if ($prefs['comments_notitle'] != 'y' && empty($title)) {
+				$errors['title'] = tr('Title is empty');
+			}
+
+			if (empty($data)) {
+				$errors['data'] = tr('Content is empty');
+			}
+
+			if (count($errors) === 0) {
+				$message_id = ''; // By ref
+				$threadId = $commentslib->post_new_comment("$type:$objectId", $parentId, $user, $title, $data, $message_id, $parent ? $parent['message_id'] : '', 'n', '', '', $contributions, $anonymous_name, '', $anonymous_email, $anonymous_website);
+				return array(
+					'template' => 'tiki-services-comment-post.tpl',
+					'threadId' => $threadId,
+					'parentId' => $parentId,
+					'type' => $type,
+					'objectId' => $objectId,
+				);
+			}
+		}
+
+		return array(
+			'template' => 'tiki-services-comment-post.tpl',
+			'parentId' => $parentId,
+			'type' => $type,
+			'objectId' => $objectId,
+			'title' => $title,
+			'data' => $data,
+			'contributions' => $contributions,
+			'anonymous_name' => $anonymous_name,
+			'anonymous_email' => $anonymous_email,
+			'anonymous_website' => $anonymous_website,
+			'errors' => $errors,
 		);
 	}
 
@@ -51,6 +129,22 @@ class Services_Comment_Controller
 		switch ($type) {
 		case 'wiki page':
 			return $perms->wiki_view_comments;
+		}
+
+		return true;
+	}
+
+	private function canPost($type, $objectId)
+	{
+		global $prefs;
+
+		$perms = Perms::get($type, $objectId);
+		if (! $perms->post_comments) {
+			return false;
+		}
+
+		if ($prefs['feature_comments_locking'] == 'y' &&  TikiLib::lib('comments')->is_object_locked("$type:$objectId")) {
+			return false;
 		}
 
 		return true;

@@ -6,10 +6,14 @@
 				<div class="body">
 					<span class="avatar">{comment.userName|avatarize}</span>
 					{$comment.parsed}
+
+					{if $allow_post && $comment.locked neq 'y'}
+						<div class="button comment-form">{self_link controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}{tr}Post new comment{/tr}{/self_link}</div>
+					{/if}
 				</div>
 
 				{if $comment.replies_info.numReplies gt 0}
-					{include file=$template comments=$comment.replies_info.replies cant=$comment.replies_info.numReplies}
+					{include file=$template comments=$comment.replies_info.replies cant=$comment.replies_info.numReplies parentId=$comment.threadId}
 				{/if}
 			</li>
 		{/foreach}
@@ -19,3 +23,8 @@
 		{tr}There are no comments at this time. Come back later or start a discussion.{/tr}
 	{/remarksbox}
 {/if}
+
+{if ! $parentId && $allow_post}
+	<div class="button comment-form">{self_link controller=comment action=post type=$type objectId=$objectId}{tr}Post new comment{/tr}{/self_link}</div>
+{/if}
+
