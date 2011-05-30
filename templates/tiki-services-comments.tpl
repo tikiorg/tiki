@@ -9,7 +9,7 @@
 				</div>
 
 				{if $comment.replies_info.numReplies gt 0}
-					{include file=tiki-services-comments.tpl comments=$comment.replies_info.replies cant=$comment.replies_info.numReplies}
+					{include file=$template comments=$comment.replies_info.replies cant=$comment.replies_info.numReplies}
 				{/if}
 			</li>
 		{/foreach}

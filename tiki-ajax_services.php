@@ -31,20 +31,8 @@ if (isset($_REQUEST['controller'], $_REQUEST['action'])) {
 	$controller = $_REQUEST['controller'];
 	$action = $_REQUEST['action'];
 
-	if (isset($controllerMap[$controller])) {
-		$controllerClass = $controllerMap[$controller];
-		$handler = new $controllerClass;
-
-		if (method_exists($handler, $action)) {
-			$output = $handler->$action($jitRequest);
-			$access->output_serialized($output);
-		} else {
-			$access->display_error('', tr('Controller not found'), 404, true, tr('Controller: %0, Action %1', $controller, $action));
-		}
-	} else {
-		$access->display_error('', tr('Controller not found'), 404, true, tr('Controller: %0, Action %1', $controller, $action));
-	}
-
+	$broker = new Services_Broker($controllerMap);
+	$broker->process($controller, $action, $jitRequest);
 	exit;
 }
 

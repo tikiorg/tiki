@@ -202,6 +202,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'stats':
 			global $statslib; require_once('lib/stats/statslib.php');
 			return $libraries[$name] = $statslib;
+		case 'access':
+			global $access; require_once 'lib/tikiaccesslib.php';
+			return $libraries[$name] = $access;
 		}
 	}
 

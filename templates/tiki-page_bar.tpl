@@ -115,6 +115,10 @@
 					||$tiki_p_edit_comments == 'y')}
 					{assign var=pagemd5 value=$page|@md5}
 					{include file='comments_button.tpl'}
+					<a id="comment-toggle" href="#comment-container">{tr}New Comments{/tr}</a>
+					{jq}
+						$('#comment-toggle').comment_toggle('wiki page', '{{$page|escape}}');
+					{/jq}
 				{/if}
 
 				{* don't show attachments button if feature disabled or no corresponding rights or no attached files and r/o*}
@@ -179,6 +183,7 @@
 	{if $prefs.feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments == 'y' and $edit_page ne 'y' and $comments_allowed_on_page == 'y'}
 		<a name="comments"></a>
 		{include file='comments.tpl'}
+		<div id="comment-container"></div>
 	{/if}
 
 	{/strip}

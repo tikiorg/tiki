@@ -12,17 +12,17 @@
 
 class Services_Comment_Controller
 {
-	function render($input)
+	function action_list($input)
 	{
 		$type = $input->type->text();
 		$objectId = $input->objectId->pagename();
 
 		if (! $this->isEnabled($type, $object)) {
-			return tr('Comments not allowed on this page.');
+			throw new Services_Exception(tr('Comments not allowed on this page.'), 403);
 		}
 
 		if (! $this->canView($type, $objectId)) {
-			return tr('Permission denied.');
+			throw new Services_Exception(tr('Permission denied.'), 403);
 		}
 
 		$commentslib = TikiLib::lib('comments');
@@ -31,13 +31,13 @@ class Services_Comment_Controller
 		$per_page = 100;
 		$comments_coms = $commentslib->get_comments("$type:$objectId", null, $offset, $per_page);
 
-		$smarty = TikiLib::lib('smarty');
-		$smarty->assign('comments', $comments_coms['data']);
-		$smarty->assign('cant', $comments_coms['cant']);
-		$smarty->assign('offset', $offset);
-		$smarty->assign('per_page', $per_page);
-		
-		return $smarty->fetch('tiki-services-comments.tpl');
+		return array(
+			'template' => 'tiki-services-comments.tpl',
+			'comments' => $comments_coms['data'],
+			'cant' => $comments_coms['cant'],
+			'offset' => $offset,
+			'per_page' => $per_page,
+		);
 	}
 
 	private function canView($type, $objectId)

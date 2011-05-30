@@ -481,6 +481,10 @@ class TikiAccessLib extends TikiLib
 		return false;
 	}
 
+	function is_xml_http_request() {
+		return ! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+	}
+
 	function output_serialized( $data ) {
 		foreach( $this->get_accept_types() as $name => $full ) {
 			switch( $name ) {
