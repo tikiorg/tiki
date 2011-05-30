@@ -266,7 +266,11 @@
 									{/if}
 								{/if}
 	
-								{if $smarty.capture.over_preview neq '' and $files[changes].perms.tiki_p_download_files eq 'y'}
+								{if $smarty.capture.over_preview neq ''
+								    and (((isset($files[changes].p_download_files)
+								           and $files[changes].p_download_files eq 'y')
+									  or (!isset($files[changes].p_download_files)
+									      and $files[changes].perms.tiki_p_download_files eq 'y')))}
 									{literal} {/literal}{popup fullhtml="1" text=$smarty.capture.over_preview|escape:"javascript"|escape:"html"}
 								{/if}
 							{/if}
