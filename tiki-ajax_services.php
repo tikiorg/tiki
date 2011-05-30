@@ -9,9 +9,10 @@
 
 require_once ('tiki-setup.php');
 
-$access->check_feature( array( 'feature_ajax', 'feature_jquery_autocomplete' ) );
 
 if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
+	$access->check_feature( array( 'feature_ajax', 'feature_jquery_autocomplete' ) );
+
 	$sep = '|';
 	if( isset( $_REQUEST['separator'] ) ) {
 		$sep = $_REQUEST['separator'];
@@ -136,7 +137,8 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 }
 
 // Handle Zotero Requests
-if ($prefs['zotero_enabled'] == 'y' && $access->is_serializable_request() && isset($_REQUEST['zotero_tags'])) {
+if ($access->is_serializable_request() && isset($_REQUEST['zotero_tags'])) {
+	$access->check_feature( array( 'zotero_enabled' ) );
 	$zoterolib = TikiLib::lib('zotero');
 
 	$references = $zoterolib->get_references($_REQUEST['zotero_tags']);
