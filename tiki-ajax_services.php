@@ -5,10 +5,48 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// To contain data services for ajax calls (autocomplete calls sa far)
+// To contain data services for ajax calls
+//
+// If controller and action are specified in the request, the controller class matching the
+// controller key in the $contollerMap registry will be instanciated. The method matching the
+// action name will be called. The input to the method is a JitFilter. The output of the method
+// will be serialized and sent to the browser.
+//
+// Otherwise, the procedural script remains
+
+$controllerMap = array(
+	'comment' => 'Services_Comment_Controller',
+);
+
+$inputConfiguration = array(array(
+	'staticKeyFilters' => array(
+		'action' => 'word',
+		'controller' => 'word',
+	),
+));
 
 require_once ('tiki-setup.php');
 
+if (isset($_REQUEST['controller'], $_REQUEST['action'])) {
+	$controller = $_REQUEST['controller'];
+	$action = $_REQUEST['action'];
+
+	if (isset($controllerMap[$controller])) {
+		$controllerClass = $controllerMap[$controller];
+		$handler = new $controllerClass;
+
+		if (method_exists($handler, $action)) {
+			$output = $handler->$action($jitRequest);
+			$access->output_serialized($output);
+		} else {
+			$access->display_error('', tr('Controller not found'), 404, true, tr('Controller: %0, Action %1', $controller, $action));
+		}
+	} else {
+		$access->display_error('', tr('Controller not found'), 404, true, tr('Controller: %0, Action %1', $controller, $action));
+	}
+
+	exit;
+}
 
 if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 	$access->check_feature( array( 'feature_ajax', 'feature_jquery_autocomplete' ) );
