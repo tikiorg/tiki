@@ -80,14 +80,39 @@ class Services_Comment_Controller
 		$anonymous_email = '';
 		$anonymous_website = '';
 
+		if (empty($user) || $prefs['feature_comments_post_as_anonymous'] == 'y') {
+			$anonymous_name = $input->anonymous_name->text();
+			$anonymous_email = $input->anonymous_email->email();
+			$anonymous_website = $input->anonymous_website->website();
+		}
+
 		if ($input->post->int()) {
 			// Validate 
+
+			if (empty($user)) {
+				if (empty($anonymous_name)) {
+					$errors['anonymous_name'] = tr('Pseudonym must be specified');
+				}
+			}
+
+			if (! empty($anonymous_name) && empty($anonymous_email)) {
+				$errors['anonymous_emal'] = tr('Email must be specified');
+			}
+
 			if ($prefs['comments_notitle'] != 'y' && empty($title)) {
 				$errors['title'] = tr('Title is empty');
 			}
 
 			if (empty($data)) {
 				$errors['data'] = tr('Content is empty');
+			}
+
+			if (empty($user) && $prefs['feature_antibot'] == 'y') {
+				$captchalib = TikiLib::lib('captcha');
+
+				if (! $captchalib->validate()) {
+					$errors[] = $captchalib->getErrors();
+				}
 			}
 
 			if (count($errors) === 0) {

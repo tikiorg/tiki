@@ -2177,14 +2177,11 @@ class Comments extends TikiLib
 		// Check for duplicates.
 		$title = strip_tags($title);
 
-		if (!$userName) {
-			if ($anonymous_name) {
-				//$userName = $anonymous_name . ' ' . tra('(not registered)');
-				$userName = $anonymous_name;
-			} else {
-				$userName = tra('Anonymous');
-			}
-		} else {
+		if ($anonymous_name) {
+			$userName = $anonymous_name;
+		} elseif (! $userName) {
+			$userName = tra('Anonymous');
+		} elseif ($userName) {
 			$postings = $this->table('tiki_user_postings');
 			$count = $postings->fetchCount(array('user' => $userName));
 
