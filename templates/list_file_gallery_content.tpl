@@ -257,7 +257,8 @@
 								{if $filegals_manager neq ''}
 									href="#" onclick="window.opener.insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');checkClose();return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
 		
-								{elseif $files[changes].perms.tiki_p_download_files eq 'y'}
+								{elseif (isset($files[changes].p_download_files) and $files[changes].p_download_files eq 'y')
+	 							or (!isset($files[changes].p_download_files) and $files[changes].perms.tiki_p_download_files eq 'y')}
 									{if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
 										href="{$prefs.fgal_podcast_dir}{$files[changes].path}" title="{tr}Download{/tr}"
 									{else}
