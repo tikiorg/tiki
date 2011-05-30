@@ -9,8 +9,7 @@
 
 {if !empty($smarty.session.trackerhelp_text)}
 	{tr}ID:{/tr} {$smarty.session.trackerhelp_id}<div style="float:right"><a onclick="insertAt('editwiki', '{foreach from=$smarty.session.trackerhelp_pretty item=line}{$line|escape} {/foreach}')">{icon _id='add' alt="{tr}Insert fields in wiki textarea{/tr}"}</a></div><br />
-	{textarea _simple='y' _toolbars='n' cols=$module_params.cols rows=$module_params.rows}{foreach from=$smarty.session.trackerhelp_text item=line}{$line|escape}
-{/foreach}
-	{/textarea}
+	{textarea _simple='y' _toolbars='n' cols=$module_params.cols rows=$module_params.height}{foreach from=$smarty.session.trackerhelp_text item=line}{$line|escape}
+{/foreach}{/textarea}
 {/if}
 {/tikimodule}
