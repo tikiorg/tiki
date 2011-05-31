@@ -1,7 +1,7 @@
 <div class="catblock clearfix"> 
 	{if !isset($params.showTitle) or $params.showTitle eq 'y'}
 		<div class="cattitle">
-			<span class="label">{tr}Category:{/tr}&nbsp;&nbsp;</span>
+			<span class="label">{tr}Category:{/tr} </span>
 			{foreach name=for key=id item=cattitle from=$titles}
 				{if $params.categoryshowlink ne 'n'}<a href="tiki-browse_categories.php?parentId={$id}">{/if}
 				{$cattitle|tr_if|escape}
@@ -11,7 +11,6 @@
 		</div>
 	{/if}
   <div class="catlists">
-   {* ajout BTy:B01103 ### see better ? *} <span class='simple_title'>{tr}Other objects of the category can be reached by the following links:{/tr}</span>
     <ul class="{if $params.showtype ne 'n'}catfeatures{elseif $params.one eq 'y'}catitemsone{else}catitems{/if}">
    {foreach key=t item=i from=$listcat}
    	{if $params.showtype ne 'n'}
@@ -23,9 +22,9 @@
         <li>
 			{if $params.showlinks ne 'n'}
 				{if $prefs.feature_sefurl eq 'y'}
-					<a href="{$i[o].itemId|sefurl:$i[o].type}" class="link">{* ###trebly:B01221-13 *}<span class='inline_list_separator '> &nbsp;•&nbsp;</span>
+					<a href="{$i[o].itemId|sefurl:$i[o].type}" class="link">
 				{else}
-					<a href="{$i[o].href}" class="link"><span class='inline_list_separator '> &nbsp;•&nbsp;</span>
+					<a href="{$i[o].href}" class="link">
 				{/if}
 			{/if}
 			{if $params.showname ne 'n' or empty($i[o].description)}
