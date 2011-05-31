@@ -23,11 +23,6 @@ function module_switch_lang_info()
 				'description' => tra('Changes how the list of languages is displayed. Possible values are droplist, flags and words. Defaults to droplist.'),
 				'filter' => 'alpha',
 			),
-			'prefix' => array(
-				'name' => tra('Prefix'),
-				'description' => tra('Changes the default displayed prefix from \"Site Language:\"'),
-				'filter' => 'striptags',
-			),
 		),
 	);
 }
@@ -67,6 +62,5 @@ function module_switch_lang( $mod_reference, $module_params )
 		}
 	}
 	$smarty->assign_by_ref('languages', $languages);
-	$smarty->clear_assign('tpl_module_title'); // TPL overrides default title
 }
 
