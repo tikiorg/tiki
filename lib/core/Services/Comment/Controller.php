@@ -32,7 +32,6 @@ class Services_Comment_Controller
 		$comments_coms = $commentslib->get_comments("$type:$objectId", null, $offset, $per_page);
 
 		return array(
-			'template' => 'tiki-services-comments.tpl',
 			'comments' => $comments_coms['data'],
 			'type' => $type,
 			'objectId' => $objectId,
@@ -119,7 +118,6 @@ class Services_Comment_Controller
 				$message_id = ''; // By ref
 				$threadId = $commentslib->post_new_comment("$type:$objectId", $parentId, $user, $title, $data, $message_id, $parent ? $parent['message_id'] : '', 'n', '', '', $contributions, $anonymous_name, '', $anonymous_email, $anonymous_website);
 				return array(
-					'template' => 'tiki-services-comment-post.tpl',
 					'threadId' => $threadId,
 					'parentId' => $parentId,
 					'type' => $type,
@@ -129,7 +127,6 @@ class Services_Comment_Controller
 		}
 
 		return array(
-			'template' => 'tiki-services-comment-post.tpl',
 			'parentId' => $parentId,
 			'type' => $type,
 			'objectId' => $objectId,

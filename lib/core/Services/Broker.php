@@ -24,7 +24,7 @@ class Services_Broker
 			if ($access->is_serializable_request()) {
 				echo $access->output_serialized($output);
 			} else {
-				echo $this->render($output);
+				echo $this->render($controller, $action, $output);
 			}
 		} catch (Services_Exception $e) {
 			$access->display_error('', $e->getMessage(), $e->getCode());
@@ -48,12 +48,10 @@ class Services_Broker
 		}
 	}
 
-	private function render($output)
+	private function render($controller, $action, $output)
 	{
-		if (! isset($output['template'])) {
-			throw new Services_Exception(tr('Template not specified for action render'), 500);
-		}
-		
+		$template = "$controller/$action.tpl";
+
 		$smarty = TikiLib::lib('smarty');
 		$access = TikiLib::lib('access');
 		foreach ($output as $key => $value) {
@@ -61,9 +59,9 @@ class Services_Broker
 		}
 
 		if ($access->is_xml_http_request()) {
-			return $smarty->fetch($output['template']);
+			return $smarty->fetch($template);
 		} else {
-			$smarty->assign('mid', $output['template']);
+			$smarty->assign('mid', $template);
 			return $smarty->fetch('tiki.tpl');
 		}
 	}
