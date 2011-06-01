@@ -115,9 +115,9 @@
 					||$tiki_p_edit_comments == 'y')}
 					{assign var=pagemd5 value=$page|@md5}
 					{include file='comments_button.tpl'}
-					<a id="comment-toggle" href="#comment-container">{tr}New Comments{/tr}</a>
+					<a id="comment-toggle" href="tiki-ajax_services.php?controller=comment&amp;action=list&amp;type=wiki+page&amp;objectId={$page|escape:'url'}#comment-container">{tr}New Comments{/tr}</a>
 					{jq}
-						$('#comment-toggle').comment_toggle('wiki page', '{{$page|escape}}');
+						$('#comment-toggle').comment_toggle();
 					{/jq}
 				{/if}
 
