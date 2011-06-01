@@ -144,7 +144,7 @@ class Services_Comment_Controller
 	{
 		$threadId = $input->threadId->int();
 		$confirmation = $input->confirm->int();
-		$status = 'unchanged';
+		$status = '';
 
 		if (! $threadId) {
 			throw new Services_Exception(tr('Thread not specified.'), 500);
@@ -168,10 +168,10 @@ class Services_Comment_Controller
 
 			if ($confirmation) {
 				$commentslib->remove_comment($threadId);
-				$status = 'removed';
+				$status = 'DONE';
 			}
 		} else {
-			$status = 'removed'; // Already gone
+			$status = 'DONE'; // Already gone
 		}
 
 

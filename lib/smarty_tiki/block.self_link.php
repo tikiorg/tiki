@@ -153,6 +153,10 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 			}
 			$link .= $ret;
 
+			if (isset($params['_confirm'])) {
+				$link .= ' data-confirm="' . smarty_modifier_escape($params['_confirm']) . '"';
+			}
+
 			$ret = "<a $link>".$content.'</a>';
 
 			if ( !empty($params['_sort_field']) ) {
