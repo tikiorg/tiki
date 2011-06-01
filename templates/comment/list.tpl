@@ -2,6 +2,9 @@
 	<ol>
 		{foreach from=$comments item=comment}
 			<li class="comment" data-comment-thread-id="{$comment.threadId|escape}">
+				<div style="float: right;">
+					{self_link action=remove threadId=$comment.threadId _icon=cross _class=confirm-prompt}{tr}Remove{/tr}{/self_link}
+				</div>
 				<h6>{tr 0=$comment.userName|userlink 1=$comment.commentDate|tiki_long_datetime}Comment posted by %0 on %1{/tr}</h6>
 				<div class="body">
 					<span class="avatar">{comment.userName|avatarize}</span>

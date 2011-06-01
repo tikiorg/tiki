@@ -140,6 +140,50 @@ class Services_Comment_Controller
 		);
 	}
 
+	function action_remove($input)
+	{
+		$threadId = $input->threadId->int();
+		$confirmation = $input->confirm->int();
+		$status = 'unchanged';
+
+		if (! $threadId) {
+			throw new Services_Exception(tr('Thread not specified.'), 500);
+		}
+
+		$commentslib = TikiLib::lib('comments');
+		$comment = $commentslib->get_comment($threadId);
+
+		if ($comment) {
+			$type = $comment['objectType'];
+			$object = $comment['object'];
+
+			if (! $this->isEnabled($type, $object)) {
+				throw new Services_Exception(tr('Comments not allowed on this page.'), 403);
+			}
+
+			$perms = Perms::get($type, $object);
+			if (! $perms->remove_comments) {
+				throw new Services_Exception(tr('Permission denied.'), 403);
+			}
+
+			if ($confirmation) {
+				$commentslib->remove_comment($threadId);
+				$status = 'removed';
+			}
+		} else {
+			$status = 'removed'; // Already gone
+		}
+
+
+		return array(
+			'threadId' => $threadId,
+			'status' => $status,
+			'objectType' => $type,
+			'objectId' => $object,
+			'parsed' => $comment['parsed'],
+		);
+	}
+
 	private function canView($type, $objectId)
 	{
 		$perms = Perms::get($type, $objectId);
