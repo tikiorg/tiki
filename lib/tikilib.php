@@ -4376,15 +4376,15 @@ if( \$('#$id') ) {
 		$start = -1;
 		while (false !== $start = strpos($data, '~pp~', $start + 1)) {
 			if (false !== $end = strpos($data, '~/pp~', $start)) {
-				$content = substr($data, $start + 4, $end - $start - 4);
-
-				// ~pp~ type "plugins"
-				$key = "§".md5($this->genPass())."§";
-				$noparsed["key"][] = preg_quote($key);
-				$noparsed["data"][] = '<pre>'.$content.'</pre>';
-
-				$data = substr($data, 0, $start) . $key . substr($data, $end + 5);
+				break;
 			}
+			$content = substr($data, $start + 4, $end - $start - 4);
+
+			// ~pp~ type "plugins"
+			$key = "§".md5($this->genPass())."§";
+			$noparsed["key"][] = preg_quote($key);
+			$noparsed["data"][] = '<pre>'.$content.'</pre>';
+			$data = substr($data, 0, $start) . $key . substr($data, $end + 5);
 		}
 	}
 
