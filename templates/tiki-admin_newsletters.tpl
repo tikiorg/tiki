@@ -63,7 +63,7 @@
 {/tab}
 
 {tab name="{tr}Create/Edit Newsletters{/tr}"}
-{if $individual eq 'y'}
+{if isset($individual) && $individual eq 'y'}
 	<a class="link" href="tiki-objectpermissions.php?objectName={$info.name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$info.nlId}">{tr}There are individual permissions set for this newsletter{/tr}</a><br /><br />
 {/if}
 
