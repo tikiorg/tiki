@@ -2153,6 +2153,9 @@ div.aclabel, span.aclabel, label.aclabel {
 /* Fancy filter */
 .filter .fancyfilter {
 	min-height: 1.5em;
+	min-width: 20em;
+	float: left;
+	margin-right: 5px;
 	border: thin solid black;
 	padding: 0.1em;
 	cursor: text;

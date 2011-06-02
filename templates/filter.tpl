@@ -2,6 +2,9 @@
 	<label>
 		{tr}Content{/tr}
 		<input type="text" name="filter~content" value="{$filter_content|escape}"/>
+		{add_help show='y' title="{tr}Search Help{/tr}" id="unified_search_help"}
+			{include file='unified_search_help.tpl'}
+		{/add_help}
 	</label>
 	<label>
 		{tr}Type{/tr}
@@ -12,15 +15,14 @@
 			{/foreach}
 		</select>
 	</label>
-	<input type="submit" value="{tr}Search{/tr}"/>
 	{if $prefs.feature_categories eq 'y'}
 		<fieldset>
 			<legend>{tr}Categories{/tr}</legend>
 
-			<input type="text" name="filter~categories" class="category-wizard" value="{$filter_categories|escape}"/>
-
 			<a class="category-lookup" href="#">{tr}Lookup{/tr}</a>
 			
+			<input type="text" name="filter~categories" class="category-wizard" value="{$filter_categories|escape}"/>
+
 			<label>
 				<input type="checkbox" name="filter~deep"{if $filter_deep} checked="checked"{/if}/>
 				{tr}Deep search{/tr}
@@ -59,6 +61,7 @@
 			</label>
 		</fieldset>
 	{/if}
+	<input type="submit" value="{tr}Search{/tr}"/>
 </form>
 {jq}
 	$('.filter:not(.init)').addClass('init').each(function () {
