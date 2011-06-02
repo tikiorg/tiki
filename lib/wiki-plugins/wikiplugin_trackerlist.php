@@ -1555,6 +1555,8 @@ function wikiplugin_trackerlist($data, $params) {
 					$smarty->force_compile = true;
 				}
 				
+				
+				//this options preloads the javascript for displaying sheets
 				if (!empty($displaysheet) && $displaysheet == 'y') {
 					global $headerlib;
 					
@@ -1567,7 +1569,13 @@ function wikiplugin_trackerlist($data, $params) {
 							minSize: {rows: 0, cols: 0}
 						}));
 					');
+					
 					$smarty->assign('displaysheet', 'true');
+				}
+				
+				//this method sets up the sheet just like it would for jquery.sheet, but assumes that the javascript will be handled elsewere
+				if (!empty($tableassheet) && $tableassheet == 'y') {
+					$smarty->assign('tableassheet', 'true');
 				}
 				
 				$str = $smarty->fetch('wiki-plugins/wikiplugin_trackerlist.tpl');

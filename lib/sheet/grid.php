@@ -2296,7 +2296,7 @@ class SheetLib extends TikiLib
 		$trackerHtml = '';
 		require_once ('lib/wiki-plugins/wikiplugin_trackerlist.php');
 		foreach($this->get_related_tracker_ids($sheetId) as $trackerId) {
-			$trackerHtml .= wikiplugin_trackerlist(null, array("trackerId" => $trackerId));
+			$trackerHtml .= wikiplugin_trackerlist(null, array("trackerId" => $trackerId, "tableassheet" => "y"));
 		}
 		return $trackerHtml;
 	}
