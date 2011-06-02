@@ -342,14 +342,17 @@ function prefs_global_list($partial = false) {
 			'tags' => array('basic'),
 		),
 		'urlIndex' => array(
-			'name' => tra('Use different URL as homepage'),
+			'name' => tra('Homepage URL'),
 			'type' => 'text',
 			'size' => 50,
 			'default' => '',
 			'tags' => array('basic'),
+			'dependencies' => array(
+				'useUrlIndex',
+			),
 		),
 		'useUrlIndex' => array(
-			'name' => tra('Use URL Index'),
+			'name' => tra('Use custom homepage'),
 			'description' => tra('Use a Tiki feature homepage or another homepage'),
 			'type' => 'flag',
 			'default' => 'n',

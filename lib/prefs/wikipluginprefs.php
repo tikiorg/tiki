@@ -8,7 +8,7 @@
 function prefs_wikipluginprefs_list() {
 	return array(
 		'wikipluginprefs_pending_notification' => array(
-			'name' => tra('Plugin pending notification'),
+			'name' => tra('Plugin pending approval notification'),
 			'description' => tra('Alert by e-mail users with permission to approve plugin when a plugin is pending approval'),
 			'dependencies' => array('sender_email'),
 			'type' => 'flag',

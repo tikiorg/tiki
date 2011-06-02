@@ -74,7 +74,7 @@
 			</p>
 			{jq}$("input[name='assign'],input[name='remove']").click(function(){
 if ($("#propagate_category").attr("checked")) {
-	return confirm("{tr}Are you sure you want to effect all child categories?\nThere is no undo.{/tr}");
+	return confirm("{tr}Are you sure you want to affect all child categories?\nThere is no undo.{/tr}");
 } }); {/jq}
 		{/if}
 		
@@ -83,7 +83,7 @@ if ($("#propagate_category").attr("checked")) {
 			<label for="assignstructure">{tr}Assign or remove permissions on all pages of the sub-structure{/tr}</label>
 			{jq}$("input[name='assign'],input[name='remove']").click(function(){
 if ($("#assignstructure").attr("checked")) {
-	return confirm("{tr}Are you sure you want to effect all pages in this sub-structure?\nThere is no undo.{/tr}");
+	return confirm("{tr}Are you sure you want to affect all pages in this sub-structure?\nThere is no undo.{/tr}");
 } }); {/jq}
 		{/if}
 		

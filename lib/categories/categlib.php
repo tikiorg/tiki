@@ -1221,9 +1221,7 @@ class CategLib extends ObjectLib
     }
     
     //Moved from tikilib.php
-    // ###trebly:B01229:Test change $sort to name_asc : pb which other case than listcats
-   // function get_categoryobjects($catids,$types="*",$sort='created_desc',$split=true,$sub=false,$and=false, $maxRecords = 500) {
-	function get_categoryobjects($catids,$types="*",$sort='name_asc',$split=true,$sub=false,$and=false, $maxRecords = 500, $filter=null) {
+    function get_categoryobjects($catids,$types="*",$sort='created_desc',$split=true,$sub=false,$and=false, $maxRecords = 500) {
 		global $smarty, $prefs;
 
 		$typetokens = array(
@@ -1289,7 +1287,6 @@ class CategLib extends ObjectLib
 		} elseif (isset($typetitles["$types"])) {
 			$typesallowed = array($types);
 		}
-		// ###trebly:B01229:Test of a title of the lists
 		$out=$smarty->fetch("categobjects_title.tpl");
 		foreach ($catids as $id) {
 			$titles["$id"] = $this->get_category_name($id);
@@ -1322,8 +1319,6 @@ class CategLib extends ObjectLib
 				$smarty->assign("titles", $titles);
 				$smarty->assign("listcat", $listcat);
 				$smarty->assign("one", count($listcat));
-				// ###trebly:B01229 test sur display des objets de m�me cat�gorie
-				//$out .= echo('<br />Titre de la liste des objets de cat�gories <br />').$smarty->fetch("categobjects.tpl");
 				$out .= $smarty->fetch("categobjects.tpl");
 				$listcat = array();
 				$titles = array();

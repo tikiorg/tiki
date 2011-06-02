@@ -623,16 +623,14 @@ class HeaderLib
 					$target = 'temp/public/'.$tikidomainslash;
 					$ofile = $target . "themegen_{$themename}_$hash.css";
 
-					if (!file_exists($ofile) || !empty($_SESSION['tg_preview'])) {
-						$i = array_search($file, $files['screen']);
-						if ($i !== false) {
+					$i = array_search($file, $files['screen']);
+					if ($i !== false) {
+						if (!file_exists($ofile) || !empty($_SESSION['tg_preview'])) {
 							$css = $themegenlib->processCSSFile($file, $swaps);
-
 							file_put_contents( $ofile, $css );
 							chmod($ofile, 0644);
-
-							$files['screen'][$i] = $ofile;
 						}
+						$files['screen'][$i] = $ofile;
 					}
 				}
 			}

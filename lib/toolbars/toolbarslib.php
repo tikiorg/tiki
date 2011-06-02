@@ -1453,7 +1453,11 @@ class ToolbarSheet extends Toolbar
 			case 'sheetsave':
 				$label = tra('Save Sheet');
 				$icon = tra('pics/icons/disk.png');
-				$syntax = '$.sheet.saveSheet();';
+				$syntax = '
+					$("#saveState").hide();
+					$.sheet.saveSheet($.sheet.tikiSheet, function() {
+						$.sheet.manageState($.sheet.tikiSheet, true);
+					});';
 				break;
 			case 'addrow':
 				$label = tra('Add Row After Selection Or To End If No Selection');

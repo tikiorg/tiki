@@ -199,17 +199,17 @@ $headerlib->add_jq_onready('
 		menu: $("#sheetMenu").html()
 	});
 	
-	var tikiSheet = $("div.tiki_sheet").sheet($.sheet.tikiOptions);
+	$.sheet.tikiSheet = $("div.tiki_sheet").sheet($.sheet.tikiOptions);
 	
-	tikiSheet.id = "'.$_REQUEST['sheetId'].'";
-	tikiSheet.file = "'.$_REQUEST['file'].'";
+	$.sheet.tikiSheet.id = "'.$_REQUEST['sheetId'].'";
+	$.sheet.tikiSheet.file = "'.$_REQUEST['file'].'";
 	
-	$.sheet.link.setupUI(tikiSheet);
-	$.sheet.manageState(tikiSheet);
+	$.sheet.link.setupUI($.sheet.tikiSheet);
+	$.sheet.manageState($.sheet.tikiSheet);
 	
 	$("#edit_button a")
 		.click(function() {
-			$.sheet.manageState(tikiSheet, true, "edit");
+			$.sheet.manageState($.sheet.tikiSheet, true, "edit");
 			return false;
 		});
 						
@@ -217,8 +217,8 @@ $headerlib->add_jq_onready('
 		.click( function () {
 			$("#saveState").hide();
 			
-			$.sheet.saveSheet(tikiSheet, function() {
-				$.sheet.manageState(tikiSheet, true, "");
+			$.sheet.saveSheet($.sheet.tikiSheet, function() {
+				$.sheet.manageState($.sheet.tikiSheet, true, "");
 			});
 			
 			return false;
