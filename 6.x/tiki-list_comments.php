@@ -82,7 +82,7 @@ if (isset($_REQUEST['checked'])) {
 	check_ticket('list_comments');
 	$checked = is_array($_REQUEST['checked']) ? $_REQUEST['checked'] : array($_REQUEST['checked']);
 	// Delete comment(s)
-	if (isset($_REQUEST['remove'])) {
+	if (isset($_REQUEST['remove']) || isset($_REQUEST['remove_x'])) {
 		$access->check_authenticity(tra('Delete comments'));
 		foreach($checked as $id) {
 			$commentslib->remove_comment($id);
