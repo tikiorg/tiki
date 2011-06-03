@@ -1,5 +1,5 @@
 <div class="nohighlight">
-	{if $searchStyle neq "menu" && $prefs.feature_search_show_object_filter eq 'y'}
+	{if ( isset($searchStyle) && $searchStyle != "menu") && $prefs.feature_search_show_object_filter eq 'y'}
 		{title admpage="search" help="Search"}{tr}Search{/tr}{/title}
 		<div class="navbar">
 			{tr}Search in:{/tr}
@@ -15,5 +15,7 @@
 </div><!--nohighlight-->
 	{* do not change the comment above, since smarty 'highlight' outputfilter is hardcoded to find exactly this... instead you may experience white pages as results *}
 
-{$results}
+{if isset($results)}
+	{$results}
+{/if}
 
