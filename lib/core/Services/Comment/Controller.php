@@ -44,6 +44,7 @@ class Services_Comment_Controller
 			'allow_lock' => $this->canLock($type, $objectId),
 			'allow_unlock' => $this->canUnlock($type, $objectId),
 			'allow_archive' => $this->canArchive($type, $objectId),
+			'allow_moderate' => $this->canModerate($type, $objectId),
 		);
 	}
 
@@ -230,6 +231,52 @@ class Services_Comment_Controller
 		);
 	}
 
+	function action_moderate($input)
+	{
+		$threadId = $input->threadId->int();
+		$confirmation = $input->confirm->int();
+		$do = $input->do->alpha();
+		$status = '';
+
+		if (! $comment = $this->getCommentInfo($threadId)) {
+			throw new Services_Exception(tr('Comment not found.'), 404);
+		}
+		$type = $comment['objectType'];
+		$object = $comment['object'];
+
+		if ($comment['approved'] == 'y') {
+			throw new Services_Exception(tr('Comment already approved.'), 403);
+		}
+
+		if (! $this->canModerate($type, $object)) {
+			throw new Services_Exception(tr('Permission denied.'), 403);
+		}
+
+		$commentslib = TikiLib::lib('comments');
+
+		if ($do == 'approve') {
+			if ($confirmation) {
+				$status = 'DONE';
+				$commentslib->approve_comment($threadId);
+			}
+		} elseif ($do == 'reject') {
+			if ($confirmation) {
+				$status = 'DONE';
+				$commentslib->reject_comment($threadId);
+			}
+		} else {
+			throw new Exception(tr('Invalid argument.'), 500);
+		}
+
+		return array(
+			'threadId' => $threadId,
+			'type' => $type,
+			'objectId' => $object,
+			'status' => $status,
+			'do' => $do,
+		);
+	}
+
 	function action_archive($input)
 	{
 		$threadId = $input->threadId->int();
@@ -393,6 +440,18 @@ class Services_Comment_Controller
 	private function canRemove($type, $objectId) {
 		$perms = Perms::get($type, $objectId);
 		return $perms->remove_comments;
+	}
+
+	private function canModerate($type, $objectId) {
+		global $prefs;
+
+		if ($prefs['feature_comments_moderation'] != 'y') {
+			return false;
+		}
+
+		$perms = Perms::get($type, $objectId);
+
+		return $perms->admin_comments;
 	}
 }
 

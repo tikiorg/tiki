@@ -21,6 +21,10 @@
 							{self_link action=archive do=archive threadId=$comment.threadId _icon=folder _class=confirm-prompt _confirm="{tr}Are you sure you want to archive this comment?{/tr}"}{tr}Archive{/tr}{/self_link}
 						{/if}
 					{/if}
+					{if $allow_moderate and $comment.approved neq 'y'}
+						{self_link action=moderate do=approve threadId=$comment.threadId _icon=comment_approve _class=confirm-prompt _confirm="{tr}Are you sure you want to approve this comment?{/tr}"}{tr}Approve{/tr}{/self_link}
+						{self_link action=moderate do=reject threadId=$comment.threadId _icon=comment_reject _class=confirm-prompt _confirm="{tr}Are you sure you want to reject this comment?{/tr}"}{tr}Reject{/tr}{/self_link}
+					{/if}
 				</div>
 				<h6>{tr 0=$comment.userName|userlink 1=$comment.commentDate|tiki_long_datetime}Comment posted by %0 on %1{/tr}</h6>
 				<div class="body">
