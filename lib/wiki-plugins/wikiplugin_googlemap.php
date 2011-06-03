@@ -11,7 +11,7 @@ function wikiplugin_googlemap_info() {
 		'documentation' => 'PluginGoogleMap',
 		'description' => tra('Display a Google map'),
 		'prefs' => array( 'wikiplugin_googlemap' ),
-//		'validate' => 'all',
+		'format' => 'html',
 		'icon' => 'pics/icons/google.png',
 		'params' => array(
 			'type' => array(
@@ -596,7 +596,7 @@ function wikiplugin_googlemap($data, $params) {
 		$smarty->assign('gmaphidden', 1);
 	}
 			
-	$ret = '~np~' . $smarty->fetch('wiki-plugins/wikiplugin_googlemap.tpl') . '~/np~';
+	$ret = $smarty->fetch('wiki-plugins/wikiplugin_googlemap.tpl');
 	return $ret;
 
 }
