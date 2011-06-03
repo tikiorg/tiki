@@ -40,6 +40,8 @@ class Services_Comment_Controller
 			'offset' => $offset,
 			'per_page' => $per_page,
 			'allow_post' => $this->canPost($type, $objectId),
+			'allow_lock' => $this->canLock($type, $objectId),
+			'allow_unlock' => $this->canUnlock($type, $objectId),
 		);
 	}
 
@@ -146,20 +148,9 @@ class Services_Comment_Controller
 		$confirmation = $input->confirm->int();
 		$status = '';
 
-		if (! $threadId) {
-			throw new Services_Exception(tr('Thread not specified.'), 500);
-		}
-
-		$commentslib = TikiLib::lib('comments');
-		$comment = $commentslib->get_comment($threadId);
-
-		if ($comment) {
+		if ($comment = $this->getCommentInfo($threadId)) {
 			$type = $comment['objectType'];
 			$object = $comment['object'];
-
-			if (! $this->isEnabled($type, $object)) {
-				throw new Services_Exception(tr('Comments not allowed on this page.'), 403);
-			}
 
 			$perms = Perms::get($type, $object);
 			if (! $perms->remove_comments) {
@@ -167,6 +158,7 @@ class Services_Comment_Controller
 			}
 
 			if ($confirmation) {
+				$commentslib = TikiLib::lib('comments');
 				$commentslib->remove_comment($threadId);
 				$status = 'DONE';
 			}
@@ -181,6 +173,47 @@ class Services_Comment_Controller
 			'objectType' => $type,
 			'objectId' => $object,
 			'parsed' => $comment['parsed'],
+		);
+	}
+
+	function action_lock($input)
+	{
+		return $this->_action_lock($input, 'lock');
+	}
+
+	function action_unlock($input)
+	{
+		return $this->_action_lock($input, 'unlock');
+	}
+
+	private function _action_lock($input, $mode)
+	{
+		$type = $input->type->text();
+		$objectId = $input->objectId->pagename();
+		$confirmation = $input->confirm->int();
+		$status = '';
+
+		if (! $this->isEnabled($type, $objectId)) {
+			throw new Services_Exception(tr('Comments not allowed on this page.'), 403);
+		}
+
+		$method = 'can' . ucfirst($mode);
+		if (! $this->$method($type, $objectId)) {
+			throw new Services_Exception(tr('Permissions denied.'), 403);
+		}
+
+		if ($confirmation) {
+			$method = $mode . '_object_thread';
+
+			$commentslib = TikiLib::lib('comments');
+			$commentslib->$method("$type:$objectId");
+			$status = 'DONE';
+		}
+
+		return array(
+			'type' => $type,
+			'objectId' => $objectId,
+			'status' => $status,
 		);
 	}
 
@@ -237,6 +270,61 @@ class Services_Comment_Controller
 		default:
 			return false;
 		}
+	}
+
+	private function getCommentInfo($threadId)
+	{
+		if (! $threadId) {
+			throw new Services_Exception(tr('Thread not specified.'), 500);
+		}
+
+		$commentslib = TikiLib::lib('comments');
+		$comment = $commentslib->get_comment($threadId);
+
+		if ($comment) {
+			$type = $comment['objectType'];
+			$object = $comment['object'];
+
+			if (! $this->isEnabled($type, $object)) {
+				throw new Services_Exception(tr('Comments not allowed on this page.'), 403);
+			}
+
+			return $comment;
+		}
+	}
+
+	private function canLock($type, $objectId) {
+		global $prefs;
+
+		if ($prefs['feature_comments_locking'] != 'y') {
+			return false;
+		}
+
+		$perms = Perms::get($type, $objectId);
+
+		if (! $perms->lock_comments) {
+			return false;
+		}
+
+		$commentslib = TikiLib::lib('comments');
+		return ! $commentslib->is_object_locked("$type:$objectId");
+	}
+
+	private function canUnlock($type, $objectId) {
+		global $prefs;
+
+		if ($prefs['feature_comments_locking'] != 'y') {
+			return false;
+		}
+
+		$perms = Perms::get($type, $objectId);
+
+		if (! $perms->lock_comments) {
+			return false;
+		}
+
+		$commentslib = TikiLib::lib('comments');
+		return $commentslib->is_object_locked("$type:$objectId");
 	}
 }
 

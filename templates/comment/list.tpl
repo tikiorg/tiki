@@ -1,3 +1,11 @@
+{if ! $parentId && $allow_lock}
+	{self_link controller=comment action=lock type=$type objectId=$objectId _icon=lock _class=confirm-prompt _confirm="{tr}Do you really want to lock comments?{/tr}}{tr}Lock{/tr}{/self_link}
+{/if}
+
+{if ! $parentId && $allow_unlock}
+	{self_link controller=comment action=unlock type=$type objectId=$objectId _icon=lock_break _class=confirm-prompt _confirm="{tr}Do you really want to unlock comments?{/tr}"}{tr}Unlock{/tr}{/self_link}
+{/if}
+
 {if $cant gt 0}
 	<ol>
 		{foreach from=$comments item=comment}
