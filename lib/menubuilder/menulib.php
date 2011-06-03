@@ -345,6 +345,15 @@ class MenuLib extends TikiLib
 				}
 			}
 			if (!empty($subMenu) && $findUrl && $cant) {
+				$lower = false;
+				foreach ($subMenu as $i=>$option) {// begin all the secrtion at 0 to have a nice display
+					if (is_numeric($option['type'])) {
+						if ($lower === false) {
+							$lower = $option['type'];
+						}
+						$subMenu[$i]['type'] -= $lower;
+					}
+					}
 				$channels['data'] = $subMenu;
 				$channels['cant'] = $cant;
 			} else {
