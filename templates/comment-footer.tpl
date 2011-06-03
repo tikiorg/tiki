@@ -8,11 +8,10 @@
 		{/section}
 		</span>
 	{/if}
-	{if ($forum_info.vote_threads eq 'y' and $tiki_p_forum_vote eq 'y')}
+	{if $forum_info.vote_threads eq 'y' and $tiki_p_forum_vote eq 'y'}
 		<span class="score">
 		<b>{tr}Score{/tr}</b>: {$comment.average|string_format:"%.2f"}
-		{if $comment.userName ne $user and $comment.approved eq 'y' and
-			( $forum_info.vote_threads eq 'y' and ( $tiki_p_forum_vote eq 'y' or $tiki_p_admin_forum eq 'y' ) )}
+		{if $comment.userName ne $user and $comment.approved eq 'y' and $forum_info.vote_threads eq 'y' and ( $tiki_p_forum_vote eq 'y' or $tiki_p_admin_forum eq 'y' )}
 		<b>{tr}Vote{/tr}</b>:
 
 		{if $first eq 'y'}

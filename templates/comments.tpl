@@ -1,28 +1,6 @@
 {* $Id$ *}
 
-<div id="comments">
-{if $pagemd5}
-	{assign var=cookie_key value="show_comzone$pagemd5"}
-{else}
-	{assign var=cookie_key value="show_comzone"}
-{/if}
-
-<div {*do not missed up with the space*}
-	{if $pagemd5}
-		id="comzone{$pagemd5}"
-	{else}
-		id="comzone"
-	{/if}
-	{if $show_comzone eq 'y' or $comments_show eq 'y'} {* force it *}
-		style="display: block;"
-	{elseif (isset($smarty.session.tiki_cookie_jar.$cookie_key) and $smarty.session.tiki_cookie_jar.$cookie_key neq 'y')} {* cookie gets stored here with JS only *}
-		style="display: none;"
-	{elseif ((!isset($smarty.session.tiki_cookie_jar.$cookie_key) and $prefs.wiki_comments_displayed_default neq 'y'))}
-		style="display: none;"
-	{else}
-		style="display: block;"
-	{/if}
->
+<div>
 
 {if $tiki_p_forum_read eq 'y'}
 
@@ -111,7 +89,7 @@
 								<select name="thread_sort_mode" id="comments-sort">
 									<option value="commentDate_desc" {if $thread_sort_mode eq 'commentDate_desc'}selected="selected"{/if}>{tr}Newest first{/tr}</option>
 									<option value="commentDate_asc" {if $thread_sort_mode eq 'commentDate_asc'}selected="selected"{/if}>{tr}Oldest first{/tr}</option>
-									{if $forum_info.vote_threads eq 'y'}	
+									{if $forum_info.vote_threads eq 'y'}
 										<option value="points_desc" {if $thread_sort_mode eq 'points_desc'}selected="selected"{/if}>{tr}Score{/tr}</option>
 									{/if}
 									<option value="title_desc" {if $thread_sort_mode eq 'title_desc'}selected="selected"{/if}>{tr}Title (desc){/tr}</option>
@@ -208,9 +186,6 @@
 	{if $thread_is_locked eq 'y'}
 		{assign var='lock_text' value="{tr}This thread is locked{/tr}"}
 		{remarksbox type="note" title="{tr}Note{/tr}" icon="lock"}{$lock_text}{/remarksbox}
-	{elseif $forum_is_locked eq 'y'}
-		{assign var='lock_text' value="{tr}This forum is locked{/tr}"}
-		{remarksbox type="note" title="{tr}Note{/tr}" icon="lock"}{$lock_text}{/remarksbox}
 	{else}
 		<div id="form">
 			{if $post_reply > 0 || $edit_reply > 0 || $comment_preview}
@@ -276,28 +251,6 @@
 						</tr>
 					{/if}
 
-					{if $comment_can_rate_article eq 'y'}
-						<tr>
-							<td><label for="comments-rating">{tr}Rating{/tr} </label></td>
-							<td>
-								<select name="comment_rating" id="comments-rating">
-									<option value="" {if $comment_rating eq ''}selected="selected"{/if}>No</option>
-									<option value="0" {if $comment_rating eq 0}selected="selected"{/if}>0</option>
-									<option value="1" {if $comment_rating eq 1}selected="selected"{/if}>1</option>
-									<option value="2" {if $comment_rating eq 2}selected="selected"{/if}>2</option>
-									<option value="3" {if $comment_rating eq 3}selected="selected"{/if}>3</option>
-									<option value="4" {if $comment_rating eq 4}selected="selected"{/if}>4</option>
-									<option value="5" {if $comment_rating eq 5}selected="selected"{/if}>5</option>
-									<option value="6" {if $comment_rating eq 6}selected="selected"{/if}>6</option>
-									<option value="7" {if $comment_rating eq 7}selected="selected"{/if}>7</option>
-									<option value="8" {if $comment_rating eq 8}selected="selected"{/if}>8</option>
-									<option value="9" {if $comment_rating eq 9}selected="selected"{/if}>9</option>
-									<option value="10" {if $comment_rating eq 10}selected="selected"{/if}>10</option>
-								</select>{tr}Rate this Article (10=best, 0=worse){/tr}
-							</td>
-						</tr>
-					{/if}
-
 					<tr>
 						<td>
 							<label for="editpost2">{tr}Reply{/tr}</label>
@@ -305,7 +258,7 @@
 						<td>
 							{assign var=codemirror value=""}
 							{assign var=syntax value=""}
-							{textarea id="editpost2" name="comments_data" rows=$rows cols=$cols comments="y" codemirror=$codemirror syntax=$syntax}{if $prefs.feature_forum_replyempty ne 'y' || $edit_reply > 0 || $comment_preview eq 'y' || !empty($errors)}{$comment_data}{/if}{/textarea}
+							{textarea id="editpost2" name="comments_data" rows=$rows cols=$cols comments="y" codemirror=$codemirror syntax=$syntax}{if ($prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || $comment_preview eq 'y' || !empty($errors)}{$comment_data}{/if}{/textarea}
 							<input type="hidden" name="rows" value="{$rows}" />
 							<input type="hidden" name="cols" value="{$cols}" />
 							{if $prefs.feature_wiki_paragraph_formatting eq 'y'}
@@ -374,6 +327,7 @@
 			<br />
 			{assign var=tips_title value="{tr}Posting replies{/tr}"}
 
+			</div>
 		</div>
 	{/if}
 {/if}

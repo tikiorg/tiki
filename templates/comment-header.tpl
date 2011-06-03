@@ -7,13 +7,10 @@
 		{assign var='this_is_locked' value='y'}
 	{/if}
 
-	{if $thread_style != 'commentStyle_headers' and $this_is_locked eq 'n' and $comment.threadId > 0
-		and ( $forumId > 0 and $comments_parentId > 0 )}
+	{if $thread_style != 'commentStyle_headers' and $this_is_locked eq 'n' and $comment.threadId > 0}
 	<div class="actions">
-		{if	(
-				$tiki_p_admin_forum eq 'y'
-				|| ( $comment.userName == $user && $tiki_p_forum_edit_own_posts eq 'y' )
-			)}
+		{if	$tiki_p_admin_forum eq 'y'
+			|| ( $comment.userName == $user && $tiki_p_forum_edit_own_posts eq 'y' )}
 		<a title="{tr}Edit{/tr}"
 			{if $first eq 'y'}
 			class="admlink" href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}{$thread_sort_mode_param}&amp;comments_threshold={$smarty.request.topics_threshold}{$comments_find_param}&amp;comments_threadId={$comment.threadId}&amp;openpost=1&amp;forumId={$forum_info.forumId}{$comments_per_page_param}"
@@ -75,14 +72,6 @@
 	<div class="title">
 	{if $first eq 'y'}
 		<h2>{$comment.title|escape}</h2>
-	{elseif $prefs.forum_reply_notitle neq 'y'}
-		{if $comments_reply_threadId == $comment.threadId}
-		{icon _id='flag_blue'}<span class="highlight">
-		{/if}
-		<a class="link" href="{$comments_complete_father}comments_parentId={$comment.threadId}&amp;comments_per_page=1&amp;thread_style={$thread_style}">{$comment.title|escape}</a>
-		{if $comments_reply_threadId == $comment.threadId}
-		</span>
-		{/if}
 	{/if}
 
 	</div>

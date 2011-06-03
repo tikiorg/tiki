@@ -30,6 +30,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 $handled_requests = array('comments_per_page', 'thread_style', 'thread_sort_mode');
 
 // Then determine the final value for thread display settings
+// If we are in a forum thread
 
 if ( $prefs['forum_thread_user_settings'] == 'y' && $prefs['forum_thread_user_settings_keep'] == 'y' ) {
 	// If 'forum_thread_user_settings' is enabled (allow user to change thread display settings)
@@ -187,6 +188,7 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 		header('location: ' . $url);
 		die;
 	}
+
 	$smarty->assign_by_ref('errors', $errors);
 	$smarty->assign_by_ref('feedbacks', $feedbacks);
 
@@ -377,10 +379,10 @@ if ($comments_offset > 0) {
 $smarty->assign('comments_coms', $comments_coms["data"] );
 
 // Grab the parent comment to show.  -rlpowell
-if (isset($_REQUEST["comments_parentId"]) &&
-		$_REQUEST["comments_parentId"] > 0 && 
-		($tiki_p_forum_post == 'y' &&
-		(isset($_REQUEST['comments_previewComment']) || isset($_REQUEST['post_reply'])))) {
+if (isset($_REQUEST["comments_parentId"])
+		&& $_REQUEST["comments_parentId"] > 0
+		&& $tiki_p_forum_post == 'y'
+		&& (isset($_REQUEST['comments_previewComment']) || isset($_REQUEST['post_reply']))) {
 	$parent_com = $commentslib->get_comment($_REQUEST["comments_parentId"]);
 	$smarty->assign_by_ref('parent_com', $parent_com);
 }
@@ -401,6 +403,24 @@ if (!empty($_REQUEST['post_reply'])) {
 if ($prefs['feature_contribution'] == 'y') {
 	$contributionItemId = $_REQUEST["comments_threadId"];
 	include_once('contribution.php');
+}
+// see if comments are allowed on this specific wiki page
+global $section;
+if ($section == 'wiki page') {
+	if ($prefs['wiki_comments_allow_per_page'] != 'n') {
+		global $info;
+		if (!empty($info['comments_enabled'])) {
+			$smarty->assign('comments_allowed_on_page', $info['comments_enabled']);
+		} else {
+			if ($prefs['wiki_comments_allow_per_page'] == 'y') {
+				$smarty->assign('comments_allowed_on_page', 'y');
+			} else {
+				$smarty->assign('comments_allowed_on_page', 'n');
+			}
+		}
+	} else {
+		$smarty->assign('comments_allowed_on_page', 'y');
+	}
 }
 
 $headerlib->add_jsfile('lib/comments/commentslib.js');
