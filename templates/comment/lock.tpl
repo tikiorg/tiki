@@ -1,6 +1,6 @@
 {if $status neq 'DONE'}
 	<form method="post" action="tiki-ajax_services.php">
-		<p>{tr}Are you sure you want to lock comments on this obbject?{/tr}</p>
+		<p>{tr}Are you sure you want to lock comments on this object?{/tr}</p>
 		<p>
 			<input type="hidden" name="controller" value="comment"/>
 			<input type="hidden" name="action" value="lock"/>

@@ -40,8 +40,10 @@ class Services_Comment_Controller
 			'offset' => $offset,
 			'per_page' => $per_page,
 			'allow_post' => $this->canPost($type, $objectId),
+			'allow_remove' => $this->canRemove($type, $objectId),
 			'allow_lock' => $this->canLock($type, $objectId),
 			'allow_unlock' => $this->canUnlock($type, $objectId),
+			'allow_archive' => $this->canArchive($type, $objectId),
 		);
 	}
 
@@ -152,8 +154,7 @@ class Services_Comment_Controller
 			$type = $comment['objectType'];
 			$object = $comment['object'];
 
-			$perms = Perms::get($type, $object);
-			if (! $perms->remove_comments) {
+			if (! $this->canRemove($type, $object)) {
 				throw new Services_Exception(tr('Permission denied.'), 403);
 			}
 
@@ -214,6 +215,44 @@ class Services_Comment_Controller
 			'type' => $type,
 			'objectId' => $objectId,
 			'status' => $status,
+		);
+	}
+
+	function action_archive($input)
+	{
+		$threadId = $input->threadId->int();
+		$do = $input->do->alpha();
+		$confirmation = $input->confirm->int();
+		$status = '';
+
+		if (! $comment = $this->getCommentInfo($threadId)) {
+			throw new Services_Exception(tr('Comment not found.'), 404);
+		}
+
+		$type = $comment['objectType'];
+		$object = $comment['object'];
+
+		if (! $this->canArchive($type, $object)) {
+			throw new Services_Exception(tr('Permission denied.'), 403);
+		}
+
+		if ($confirmation) {
+			$status = 'DONE';
+
+			$commentslib = TikiLib::lib('comments');
+			if ($do == 'archive') {
+				$commentslib->archive_thread($threadId);
+			} else {
+				$commentslib->unarchive_thread($threadId);
+			}
+		}
+
+		return array(
+			'threadId' => $threadId,
+			'type' => $type,
+			'objectId' => $object,
+			'status' => $status,
+			'do' => $do,
 		);
 	}
 
@@ -325,6 +364,23 @@ class Services_Comment_Controller
 
 		$commentslib = TikiLib::lib('comments');
 		return $commentslib->is_object_locked("$type:$objectId");
+	}
+
+	private function canArchive($type, $objectId) {
+		global $prefs;
+
+		if ($prefs['comments_archive'] != 'y') {
+			return false;
+		}
+
+		$perms = Perms::get($type, $objectId);
+
+		return $perms->admin_comments;
+	}
+
+	private function canRemove($type, $objectId) {
+		$perms = Perms::get($type, $objectId);
+		return $perms->remove_comments;
 	}
 }
 

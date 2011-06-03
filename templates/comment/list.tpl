@@ -9,9 +9,18 @@
 {if $cant gt 0}
 	<ol>
 		{foreach from=$comments item=comment}
-			<li class="comment" data-comment-thread-id="{$comment.threadId|escape}">
+			<li class="comment {if $comment.archived eq 'y'}archived{/if}" data-comment-thread-id="{$comment.threadId|escape}">
 				<div style="float: right;">
-					{self_link action=remove threadId=$comment.threadId _icon=cross _class=confirm-prompt _confirm="{tr}Are you sure you want to remove this comment?{/tr}"}{tr}Remove{/tr}{/self_link}
+					{if $allow_remove}
+						{self_link action=remove threadId=$comment.threadId _icon=cross _class=confirm-prompt _confirm="{tr}Are you sure you want to remove this comment?{/tr}"}{tr}Remove{/tr}{/self_link}
+					{/if}
+					{if $allow_archive}
+						{if $comment.archived eq 'y'}
+							{self_link action=archive do=unarchive threadId=$comment.threadId _icon=ofolder _class=confirm-prompt _confirm="{tr}Are you sure you want to unarchive this comment?{/tr}"}{tr}Unarchive{/tr}{/self_link}
+						{else}
+							{self_link action=archive do=archive threadId=$comment.threadId _icon=folder _class=confirm-prompt _confirm="{tr}Are you sure you want to archive this comment?{/tr}"}{tr}Archive{/tr}{/self_link}
+						{/if}
+					{/if}
 				</div>
 				<h6>{tr 0=$comment.userName|userlink 1=$comment.commentDate|tiki_long_datetime}Comment posted by %0 on %1{/tr}</h6>
 				<div class="body">

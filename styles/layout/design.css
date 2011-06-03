@@ -1526,4 +1526,12 @@ label.error {
 	overflow: hidden;
 }
 
+.comment.archived {
+	display: none;
+}
+
+.all .comment.archived {
+	display: block;
+}
+
 /* End of file */
