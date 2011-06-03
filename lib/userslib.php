@@ -1981,7 +1981,6 @@ class UsersLib extends TikiLib
 			$this->query("update `tiki_friendship_requests` set `userTo`=? where `userTo`=?", array($to,$from));
 			$this->query("update `tiki_freetagged_objects` set `user`=? where `user`=?", array($to,$from));
 
-			$this->query("update `tiki_tracker_item_comments` set `user`=? where `user`=?", array($to,$from));
 			$this->query('update `tiki_tracker_item_fields`ttif left join `tiki_tracker_fields` ttf on (ttif.`fieldId`=ttf.`fieldId`) set `value`=? where ttif.`value`=? and ttf.`type`=?', array($to, $from, 'u'));
 			$this->query('update `tiki_tracker_items` set `createdBy`=? where `createdBy`=?', array($to, $from));
 			$this->query('update `tiki_tracker_items` set `lastModifBy`=? where `lastModifBy`=?', array($to, $from));

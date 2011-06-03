@@ -601,44 +601,6 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 		}
 	}
 }
-if ($tracker_info["useComments"] == 'y') {
-	if ($tiki_p_admin_trackers == 'y' and isset($_REQUEST["remove_comment"])) {
-		$access->check_authenticity();
-		$trklib->remove_item_comment($_REQUEST["remove_comment"]);
-	}
-	if (isset($_REQUEST["commentId"])) {
-		$comment_info = $trklib->get_item_comment($_REQUEST["commentId"]);
-		$smarty->assign('comment_title', $comment_info["title"]);
-		$smarty->assign('comment_data', $comment_info["data"]);
-		$cookietab = 2;
-	} else {
-		$_REQUEST["commentId"] = 0;
-		$smarty->assign('comment_title', '');
-		$smarty->assign('comment_data', '');
-	}
-	$smarty->assign('commentId', $_REQUEST["commentId"]);
-	if ($_REQUEST["commentId"] && $tiki_p_admin_trackers != 'y') {
-		$_REQUEST["commentId"] = 0;
-	}
-	if ($tiki_p_comment_tracker_items == 'y') {
-		if (isset($_REQUEST["save_comment"])) {
-			check_ticket('view-trackers-items');
-			if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
-				$smarty->assign('msg', $captchalib->getErrors());
-				$smarty->assign('errortype', 'no_redirect_login');
-				$smarty->display("error.tpl");
-				die;
-			}
-			$trklib->replace_item_comment($_REQUEST["commentId"], $_REQUEST["itemId"], $_REQUEST["comment_title"], $_REQUEST["comment_data"], $user, $tracker_info);
-			$smarty->assign('comment_title', '');
-			$smarty->assign('comment_data', '');
-			$smarty->assign('commentId', 0);
-		}
-	}
-	$comments = $trklib->list_item_comments($_REQUEST["itemId"], 0, -1, 'posted_desc', '');
-	$smarty->assign_by_ref('comments', $comments["data"]);
-	$smarty->assign_by_ref('commentCount', $comments["cant"]);
-}
 if (isset($_REQUEST["removeattach"])) {
 	check_ticket('view-trackers-items');
 	$owner = $trklib->get_item_attachment_owner($_REQUEST["removeattach"]);

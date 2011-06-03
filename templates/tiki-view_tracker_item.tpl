@@ -92,54 +92,16 @@
 	{* -------------------------------------------------- tab with comments --- *}
 	{if $tracker_info.useComments eq 'y' and ($tiki_p_tracker_view_comments ne 'n' or $tiki_p_comment_tracker_items ne 'n')}
 
-		{if $tiki_p_tracker_view_comments ne 'n'}
-			{assign var=tabcomment_vtrackit value="{tr}Comments{/tr} (`$commentCount`)"}
-		{else}
-			{assign var=tabcomment_vtrackit value="{tr}Comments{/tr}"}
-		{/if}
-
 		{tab name=$tabcomment_vtrackit}
 
-		{if $print_page ne 'y' and $tiki_p_comment_tracker_items eq 'y'}
-			<h2>{tr}Add a Comment{/tr}</h2>
-			<form action="tiki-view_tracker_item.php" method="post" id="commentform" name="commentform">
-				<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-				<input type="hidden" name="itemId" value="{$itemId|escape}" />
-				<input type="hidden" name="commentId" value="{$commentId|escape}" />
-				<table class="formcolor">
-					<tr>
-						<td>{tr}Title:{/tr}</td>
-						<td><input type="text" name="comment_title" value="{$comment_title|escape}"/></td>
-					</tr>
-					<tr>
-						<td>{tr}Comment:{/tr}</td>
-						<td><textarea rows="{if empty($rows)}4{else}{$rows}{/if}" cols="{if empty($cols)}50{else}{$cols}{/if}" name="comment_data" id="comment_data">{$comment_data|escape}</textarea></td>
-					</tr>
-					{if !$user and $prefs.feature_antibot eq 'y'}
-						{include file='antibot.tpl'}
-					{/if}
-					<tr>
-						<td>&nbsp;</td>
-						<td><input type="submit" name="save_comment" value="{tr}Save{/tr}" /></td>
-					</tr>
-				</table>
-			</form>
-		{/if}
-		{if $tiki_p_tracker_view_comments ne 'n'}
-			<h2>{tr}Comments{/tr}</h2>
-			{section name=ix loop=$comments}
-				<div class="commentbloc">
-					<b>{$comments[ix].title|escape}</b> {if $comments[ix].user}{tr}by{/tr} {$comments[ix].user|userlink}{/if}
-					{if $print_page ne 'y' and $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>|&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;]{/if}
-					<br />
-					<small>{tr}posted on:{/tr} {$comments[ix].posted|tiki_short_datetime}</small><br />
-					{$comments[ix].parsed}
-					<hr />
-				</div>
-			{/section}
-		{/if}
-	{/tab}
-{/if}
+			<div id="comment-container" data-target="tiki-ajax_services.php?controller=comment&amp;action=list&amp;type=trackeritem&amp;objectId={$itemId|escape:'url'}"></div>
+			{jq}
+				var id = '#comment-container';
+				$(id).comment_load($(id).data('target'));
+			{/jq}
+
+		{/tab}
+	{/if}
 
 {* ---------------------------------------- tab with attachments --- *}
 {if $tracker_info.useAttachments eq 'y' and $tiki_p_tracker_view_attachments eq 'y'}

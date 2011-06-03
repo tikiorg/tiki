@@ -2233,17 +2233,6 @@ CREATE TABLE `tiki_tracker_item_attachments` (
   INDEX `itemId` (`itemId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
-DROP TABLE IF EXISTS `tiki_tracker_item_comments`;
-CREATE TABLE `tiki_tracker_item_comments` (
-  `commentId` int(12) NOT NULL auto_increment,
-  `itemId` int(12) NOT NULL default '0',
-  `user` varchar(200) default NULL,
-  `data` text,
-  `title` varchar(200) default NULL,
-  `posted` int(14) default NULL,
-  PRIMARY KEY (`commentId`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-
 DROP TABLE IF EXISTS `tiki_tracker_item_fields`;
 CREATE TABLE `tiki_tracker_item_fields` (
   `itemId` int(12) NOT NULL default '0',

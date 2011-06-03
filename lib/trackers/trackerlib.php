@@ -44,7 +44,7 @@ class TrackerLib extends TikiLib
 	}
 
 	private function comments() {
-		return $this->table('tiki_tracker_item_comments');
+		return $this->table('tiki_comments');
 	}
 
 	private function itemFields() {
@@ -130,7 +130,10 @@ class TrackerLib extends TikiLib
 	}
 
 	function get_item_nb_comments($itemId) {
-		return $this->comments()->fetchCount(array('itemId' => (int) $itemId));
+		return $this->comments()->fetchCount(array(
+			'object' => (int) $itemId,
+			'objectType' => 'trackeritem',
+		));
 	}
 
 	function list_all_attachements($offset=0, $maxRecords=-1, $sort_mode='created_desc', $find='') {
@@ -296,95 +299,6 @@ class TrackerLib extends TikiLib
 		return $attId;
 	}
 
-	function replace_item_comment($commentId, $itemId, $title, $data, $user, $options) {
-		global $prefs;
-		$smarty = TikiLib::lib('smarty');
-		$notificationlib = TikiLib::lib('notification');
-
-		$title = strip_tags($title);
-		$data = strip_tags($data, "<a>");
-
-		$comments = $this->comments();
-		if ($commentId) {
-			$comments->update(array(
-				'title' => $title,
-				'data' => $data,
-				'user' => $user,
-			), array('commentId' => (int) $commentId));
-		} else {
-			$commentId = $comments->insert(array(
-				'itemId' => (int) $itemId,
-				'title' => $title,
-				'data' => $data,
-				'user' => $user,
-				'posted' => $this->now,
-			));
-		}
-
-		$trackerId = $this->items()->fetchOne('trackerId', array('itemId' => (int) $itemId));
-
-		$watchers = $this->get_notification_emails($trackerId, $itemId, $options);
-
-		if (count($watchers > 0)) {
-			$trackerName = $this->trackers()->fetchOne('name', array('trackerId' => (int) $trackerId));
-			$smarty->assign('mail_date', $this->now);
-			$smarty->assign('mail_user', $user);
-			$smarty->assign('mail_action', 'New comment added for item:' . $itemId . ' at tracker ' . $trackerName);
-			$smarty->assign('mail_data', $title . "\n\n" . $data);
-			$smarty->assign('mail_itemId', $itemId);
-			$smarty->assign('mail_trackerId', $trackerId);
-			$smarty->assign('mail_trackerName', $trackerName);
-			$foo = parse_url($_SERVER["REQUEST_URI"]);
-			$machine = $this->httpPrefix( true ). $foo["path"];
-			$smarty->assign('mail_machine', $machine);
-			$parts = explode('/', $foo['path']);
-			if (count($parts) > 1)
-				unset ($parts[count($parts) - 1]);
-			$smarty->assign('mail_machine_raw', $this->httpPrefix( true ). implode('/', $parts));
-			if (!isset($_SERVER["SERVER_NAME"])) {
-				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
-			}
-			include_once ('lib/webmail/tikimaillib.php');
-			$smarty->assign('server_name', $_SERVER['SERVER_NAME']);
-			$desc = $this->get_isMain_value($trackerId, $itemId);
-			$smarty->assign('mail_item_desc', $desc);
-			foreach ($watchers as $w) {
-				$mail = new TikiMail($w['user']);
-				$mail->setHeader("From", $prefs['sender_email']);
-				$mail->setSubject($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification_subject.tpl'));
-				$mail->setText($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification.tpl'));
-				$mail->send(array($w['email']));
-			}
-		}
-
-		return $commentId;
-	}
-
-	function remove_item_comment($commentId) {
-		$this->comments()->delete(array('commentId' => (int) $commentId));
-	}
-
-	function list_item_comments($itemId, $offset=0, $maxRecords=-1, $sort_mode='posted_des', $find='') {
-		$comments = $this->comments();
-		$conditions = array('itemId' => (int) $itemId);
-
-		if ($find) {
-			$conditions['search'] = $comments->expr('(`title` LIKE ? OR `data` LIKE ?)', array("%$find%", "%$find%"));
-		}
-
-		$ret = $comments->fetchAll($comments->all(), $conditions, $maxRecords, $offset, $comments->sortMode($sort_mode));
-		$cant = $comments->fetchCount($conditions);
-
-		foreach ( $ret as &$res ) {
-			$res["parsed"] = $this->parse_comment($res["data"]);
-		}
-
-		return array(
-			'data' => $ret,
-			'cant' => $cant,
-		);
-	}
-
 	function list_last_comments($trackerId = 0, $itemId = 0, $offset = -1, $maxRecords = -1) {
 		global $user;
 	    $mid = "1=1";
@@ -396,16 +310,16 @@ class TrackerLib extends TikiLib
 	    }
 
 	    if ($trackerId != 0) {
-			$query = "select t.* from `tiki_tracker_item_comments` t left join `tiki_tracker_items` a on t.`itemId`=a.`itemId` where $mid and a.`trackerId`=? order by t.`posted` desc";
+			$query = "select t.*, t.object itemId from `tiki_comments` t left join `tiki_tracker_items` a on t.`object`=a.`itemId` where $mid and a.`trackerId`=? and t.`objectType = 'trackeritem' order by t.`posted` desc";
 			$bindvars[] = $trackerId;
-			$query_cant = "select count(*) from `tiki_tracker_item_comments` t left join `tiki_tracker_items` a on t.`itemId`=a.`itemId` where $mid and a.`trackerId`=? order by t.`posted` desc";
+			$query_cant = "select count(*) from `tiki_comments` t left join `tiki_tracker_items` a on t.`object`=a.`itemId` where $mid and a.`trackerId`=? AND t.`objectType` = 'trackeritem' order by t.`posted` desc";
 	    } else {
 			if (!$this->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers') ) {
 				return array('cant'=>0);
 			}
 
-			$query = "select t.*, a.`trackerId` from `tiki_tracker_item_comments` t left join `tiki_tracker_items` a on t.`itemId`=a.`itemId` where $mid order by `posted` desc";
-			$query_cant = "select count(*) from `tiki_tracker_item_comments` where $mid";
+			$query = "select t.*, t.object itemId, a.`trackerId` from `tiki_comments` t left join `tiki_tracker_items` a on t.`object`=a.`itemId` where $mid AND t.`objectType` = 'trackeritem' order by `posted` desc";
+			$query_cant = "select count(*) from `tiki_comments` where $mid AND t.`objectType` = 'trackeritem'";
 	    }
 
 	    $ret = $this->fetchAll($query,$bindvars,$maxRecords,$offset);
@@ -423,10 +337,6 @@ class TrackerLib extends TikiLib
 			'data' => $ret,
 			'cant' => $cant,
 		);
-	}
-
-	function get_item_comment($commentId) {
-		return $this->comments()->fetchFullRow(array('commentId' => (int) $commentId));
 	}
 
 	function get_last_position($id) {
@@ -573,7 +483,10 @@ class TrackerLib extends TikiLib
 				$fields[] = $res2;
 			}
 			$res["field_values"] = $fields;
-			$res["comments"] = $this->table('tiki_tracker_item_comments')->fetchCount(array('itemId' => (int) $itid));
+			$res["comments"] = $this->table('tiki_comments')->fetchCount(array(
+				'object' => (int) $itid,
+				'objectType' => 'trackeritem',
+			));
 			if ($pass) {
 				$kl = $kx.$itid;
 				$ret["$kl"] = $res;
@@ -2119,7 +2032,10 @@ class TrackerLib extends TikiLib
 		), array('trackerId' => (int) $trackerId));
 
 		$this->itemFields()->deleteMultiple(array('itemId' => (int) $itemId));
-		$this->comments()->deleteMultiple(array('itemId' => (int) $itemId));
+		$this->comments()->deleteMultiple(array(
+			'object' => (int) $itemId,
+			'objectType' => 'trackeritem',
+		));
 		$this->attachments()->deleteMultiple(array('itemId' => (int) $itemId));
 		$this->items()->delete(array('itemId' => (int) $itemId));
 
@@ -3747,7 +3663,10 @@ class TrackerLib extends TikiLib
 	}
 
 	function nbComments($user) {
-		return $this->comments()->fetchCount(array('user' => $user));
+		return $this->comments()->fetchCount(array(
+			'user' => $user,
+			'objectType' => 'trackeritem',
+		));
 	}
 	function lastModif($trackerId) {
 		return $this->items()->fetchOne($this->items()->max('lastModif'), array('trackerId' => (int) $trackerId));
