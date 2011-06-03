@@ -39,7 +39,14 @@ function module_menu_info() {
 				'name' => tra('CSS class'),
 				'description' => tra('Class of the menu container'),
 			),
-		)
+			'sectionLevel' => array(
+				'name' => tra('Limit low visibles levels'),
+				'description' => tra('All the submenus beginning at this level will be displayed if the url matches one of the option of this level or above or below.'),
+			),
+			'toLevel' => array(
+				'name' => tra('Limit top visible levels'),
+				'description' => tra('Do not display options higher than this level.'),
+			),		)
 	);
 }
 

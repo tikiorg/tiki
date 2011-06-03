@@ -220,7 +220,7 @@ function showDetails( id, domain, profile ) { // {{{
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://profiles.tiki.org">{tr}Tiki Profiles{/tr}</a>{/remarksbox}
 
-{if $profilefeedback}
+{if isset($profilefeedback)}
 	{remarksbox type="note" title="{tr}Note{/tr}"}
 		{cycle values="odd,even" print=false}
 		{tr}The following list of changes has been applied:{/tr}
@@ -291,7 +291,7 @@ function showDetails( id, domain, profile ) { // {{{
 										<div class="adminoptionlabel">{tr}Filter the list of profiles:{/tr}</div>
 										<div class="adminoptionlabel">
 											<label for="profile">{tr}Profile:{/tr} </label>
-											<input type="text" name="profile" id="profile" value="{$profile|escape}" /></div>
+											<input type="text" name="profile" id="profile" value="{if isset($profile)}{$profile|escape}{/if}" /></div>
 											{if isset($category_list) and count($category_list) gt 0}
 												<div class="adminoptionlabel"><label for="categories">{tr}Categories:{/tr} </label>
 													<select multiple="multiple" name="categories[]" id="categories" style="max-height: 10em">
@@ -306,7 +306,7 @@ function showDetails( id, domain, profile ) { // {{{
 											<select name="repository" id="repository">
 												<option value="">{tr}All{/tr}</option>
 												{foreach item=source from=$sources}
-													<option value="{$source.url|escape}"{if $repository eq $source.url} selected="selected"{/if}>{$source.short|escape}</option>
+													<option value="{$source.url|escape}"{if isset($repository) && $repository eq $source.url} selected="selected"{/if}>{$source.short|escape}</option>
 												{/foreach}
 											</select>
 										</div>
@@ -336,7 +336,7 @@ $("#repository, #categories").change(function(){
 	        <a name="step2"></a>
 	<br />	
 		
-	       {if $result|@count neq '0'}
+	       {if isset($result) && $result|@count != '0'}
 	
 	        <b>Step 2: Click on a Profile to review and see description</b>
 			<table class="normal">

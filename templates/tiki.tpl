@@ -63,7 +63,7 @@
 									<div id="col1" class="{if $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}marginleft{/if}{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n')} marginright{/if}"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 									{if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
 										<div id="tiki-center" {*id needed for ajax editpage link*} class="clearfix content">
-										{if $smarty.session.fullscreen neq 'y'}
+										{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y')}
 											{if $prefs.feature_left_column eq 'user' or $prefs.feature_right_column eq 'user'}
 												<div class="clearfix" id="showhide_columns">
 													{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column eq 'user' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}

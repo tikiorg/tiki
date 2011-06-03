@@ -26,6 +26,10 @@ function smarty_function_menu($params, &$smarty)
 	global $tikilib, $user, $headerlib, $prefs;
 	global $menulib; include_once('lib/menubuilder/menulib.php');
 	$default = array('css' => 'y');
+	if (isset($params['params'])) {
+		$params = array_merge($params, $params['params']);
+		unset($params['params']);
+	}
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
 
