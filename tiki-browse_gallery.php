@@ -261,18 +261,6 @@ if ($prefs['gal_image_mouseover'] != 'n') {
 	}
 	$smarty->assign_by_ref('over_info', $over_info);
 }
-if ($prefs['feature_image_galleries_comments'] == 'y') {
-	$comments_per_page = $prefs['image_galleries_comments_per_page'];
-	$thread_sort_mode = $prefs['image_galleries_comments_default_order'];
-	$comments_vars = array(
-		'galleryId',
-		'offset',
-		'sort_mode'
-	);
-	$comments_prefix_var = 'image gallery:';
-	$comments_object_var = 'galleryId';
-	include_once ("comments.php");
-}
 include_once ('tiki-section_options.php');
 if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'image gallery';

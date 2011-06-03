@@ -124,12 +124,14 @@
 
 {*---------------------- comments *}
 {if $prefs.feature_poll_comments == 'y' && !empty($pollId)
-  && (($tiki_p_read_comments  == 'y'
-    && $comments_cant != 0)
+  && ($tiki_p_read_comments  == 'y'
   ||  $tiki_p_post_comments  == 'y'
   ||  $tiki_p_edit_comments  == 'y')}
   <div id="page-bar" class="clearfix">
-  	   {include file='comments_button.tpl'}
+		<span class="button"><a id="comment-toggle" href="tiki-ajax_services.php?controller=comment&amp;action=list&amp;type=poll&amp;objectId={$pollId|escape:'url'}#comment-container">{tr}Comments{/tr}</a></span>
+		{jq}
+			$('#comment-toggle').comment_toggle();
+		{/jq}
   </div>
-  {include file='comments.tpl'}
+  <div id="comment-container"></div>
 {/if}

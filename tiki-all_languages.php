@@ -91,13 +91,6 @@ foreach( array_reverse( $pages ) as $id => $info )
 	if( $tiki_p_view == 'y' ) {
 		$renderer->runSetups();
 
-		$comments_per_page = $prefs['wiki_comments_per_page'];
-		$thread_sort_mode = $prefs['wiki_comments_default_ordering'];
-		$comments_vars=Array('page');
-		$comments_objectId = 'wiki page:' . $info['pageName'];
-		$_REQUEST['page'] = $info['pageName'];
-		include('comments.php');
-
 		$contents[] = $smarty->fetch('tiki-show_page.tpl');
 
 		if( $id === count($pages) - 1 )

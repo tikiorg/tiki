@@ -214,15 +214,6 @@ class ObjectRenderer_Wiki extends ObjectRenderer // {{{
 		$options['display_template'] = 'print/print-' . $options['display'] . '_wiki.tpl';
 		$smarty->assign( 'info', $this->info );
 
-		if (isset($options['comments']) && $options['comments']) {
-			global $comments_objectId, $forum_mode, $comments_per_page;
-			$comments_objectId = 'wiki page:' . $this->info['pageName'];
-			$forum_mode = 'n';
-			$comments_per_page = 100;
-			$smarty->assign('tiki_p_post_comments', 'n');
-			include 'comments.php';
-		}
-
 		return $smarty->fetch( $options['display_template'] );
 	}
 

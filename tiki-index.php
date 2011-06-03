@@ -324,15 +324,6 @@ if ($prefs['flaggedrev_approval'] == 'y' && isset($_REQUEST['latest']) && $objec
 	$pageRenderer->forceLatest();
 }
 
-if ($prefs['feature_wiki_comments'] == 'y' and $objectperms->wiki_view_comments ) {
-    $comments_per_page = $prefs['wiki_comments_per_page'];
-    $thread_sort_mode = $prefs['wiki_comments_default_ordering'];
-    $comments_vars=Array('page');
-    $comments_prefix_var='wiki page:';
-    $comments_object_var='page';
-    include_once('comments.php');
-}
-
 require_once 'lib/cache/pagecache.php';
 $pageCache = Tiki_PageCache::create()
 	->disableForRegistered()

@@ -803,15 +803,6 @@ if (isset($_GET['slideshow'])) {
 // Browse view
 $smarty->assign('thumbnail_size', $prefs['fgal_thumb_max_size']);
 $smarty->assign('show_details', isset($_REQUEST['show_details']) ? $_REQUEST['show_details'] : 'n');
-// Set comments config
-if ($prefs['feature_file_galleries_comments'] == 'y') {
-	$comments_per_page = $prefs['file_galleries_comments_per_page'];
-	$thread_sort_mode = $prefs['file_galleries_comments_default_ordering'];
-	$comments_vars = array('galleryId', 'offset', 'sort_mode', 'find');
-	$comments_prefix_var = 'file gallery:';
-	$comments_object_var = 'galleryId';
-	include_once ('comments.php');
-}
 
 $options_sortorder = array( tra('Creation Date') => 'created'
 													, tra('Name') => 'name'

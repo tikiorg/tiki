@@ -365,6 +365,16 @@ class Services_Comment_Controller
 			}
 
 			return true;
+		case 'image gallery':
+			return $prefs['feature_image_galleries_comments'] == 'y';
+		case 'file gallery':
+			return $prefs['feature_file_galleries_comments'] == 'y';
+		case 'poll':
+			return $prefs['feature_poll_comments'] == 'y';
+		case 'faq':
+			return $prefs['feature_faq_comments'] == 'y';
+		case 'blog post':
+			return $prefs['feature_blogposts_comments'] == 'y';
 		default:
 			return false;
 		}

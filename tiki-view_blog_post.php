@@ -126,25 +126,6 @@ $post_info['last_page'] = $pages;
 $post_info['pagenum'] = $_REQUEST['page'];
 $smarty->assign('post_info', $post_info);
 
-if ($prefs['feature_blogposts_comments'] == 'y') {
-	if (isset($_REQUEST['comments_per_page'])) {
-		$comments_per_page = $_REQUEST['comments_per_page']; 
-	} else {
-		$comments_per_page = $prefs['blog_comments_per_page'];
-	}
-	$thread_sort_mode = $prefs['blog_comments_default_ordering'];
-	$comments_vars = array(
-		'postId',
-		'offset',
-		'find',
-		'sort_mode',
-		'blogId'
-	);
-	$comments_prefix_var = 'blog post:';
-	$comments_object_var = 'postId';
-	include_once ("comments.php");
-}
-
 $cat_type = 'blog';
 $cat_objid = $blogId;
 include_once ('tiki-section_options.php');

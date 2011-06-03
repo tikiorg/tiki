@@ -107,15 +107,13 @@
 
 				{* don't show comments if feature disabled or not enough rights *}
 				{if $prefs.feature_wiki_comments == 'y'
-					&& $comments_allowed_on_page == 'y'
+					&& ($prefs.wiki_comments_allowed_per_page neq 'y' or $info.comments_enabled eq 'y')
 					&& $tiki_p_wiki_view_comments == 'y'
 					&& (($tiki_p_read_comments == 'y'
 					&& $comments_cant != 0)
 					|| $tiki_p_post_comments == 'y'
 					||$tiki_p_edit_comments == 'y')}
-					{assign var=pagemd5 value=$page|@md5}
-					{include file='comments_button.tpl'}
-					<a id="comment-toggle" href="tiki-ajax_services.php?controller=comment&amp;action=list&amp;type=wiki+page&amp;objectId={$page|escape:'url'}#comment-container">{tr}New Comments{/tr}</a>
+					<span class="button"><a id="comment-toggle" href="tiki-ajax_services.php?controller=comment&amp;action=list&amp;type=wiki+page&amp;objectId={$page|escape:'url'}#comment-container">{tr}Comments{/tr}</a></span>
 					{jq}
 						$('#comment-toggle').comment_toggle();
 					{/jq}
@@ -180,9 +178,7 @@
 		{/if}
 	{/if}
 
-	{if $prefs.feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments == 'y' and $edit_page ne 'y' and $comments_allowed_on_page == 'y'}
-		<a name="comments"></a>
-		{include file='comments.tpl'}
+	{if $prefs.feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments == 'y' and $edit_page ne 'y'}
 		<div id="comment-container"></div>
 	{/if}
 

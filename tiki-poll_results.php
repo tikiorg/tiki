@@ -132,15 +132,6 @@ if ($tiki_p_view_poll_voters == 'y' && !empty($_REQUEST['list']) && isset($_REQU
 	$smarty->assign_by_ref('list_votes', $list_votes['data']);
 	$smarty->assign_by_ref('cant_pages', $list_votes['cant']);
 }
-// Poll comments
-if ($prefs['feature_poll_comments'] == 'y' && isset($_REQUEST['pollId'])) {
-	$comments_per_page = $prefs['poll_comments_per_page'];
-	$thread_sort_mode = $prefs['poll_comments_default_ordering'];
-	$comments_vars = array('pollId');
-	$comments_prefix_var = 'poll:';
-	$comments_object_var = 'pollId';
-	include_once ('comments.php');
-}
 $smarty->assign_by_ref('poll_info_arr', $poll_info_arr);
 $smarty->assign_by_ref('start_year', $start_year);
 $smarty->assign_by_ref('vote_from_date', $vote_from_date);

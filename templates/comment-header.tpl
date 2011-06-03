@@ -1,35 +1,16 @@
 {* $Id$ *}
 <div class="clearfix postbody-title">
 	{if $prefs.feature_comments_locking neq 'y' or
-		( $forum_mode neq 'y' and $comment.locked neq 'y' and $thread_is_locked neq 'y' )
-		or ( $forum_mode eq 'y' and $comment.locked neq 'y' and $thread_is_locked neq 'y' )}
+		( $comment.locked neq 'y' and $thread_is_locked neq 'y' )}
 		{assign var='this_is_locked' value='n'}
 	{else}
 		{assign var='this_is_locked' value='y'}
 	{/if}
 
 	{if $thread_style != 'commentStyle_headers' and $this_is_locked eq 'n' and $comment.threadId > 0
-		and ( $forum_mode neq 'y' || ( $forum_mode eq 'y' and $forumId > 0 and $comments_parentId > 0 ) )}
+		and ( $forumId > 0 and $comments_parentId > 0 )}
 	<div class="actions">
-		{if $forum_mode neq 'y' && $tiki_p_admin_comments eq 'y'}
-			{if $prefs.feature_comments_moderation eq 'y' && $comment.approved eq 'n'}
-				{self_link comments_approve='y' comments_threadId=$comment.threadId _icon='comment_approve'}{tr}Approve{/tr}{/self_link}
-				{self_link comments_approve='n' comments_threadId=$comment.threadId _icon='comment_reject'}{tr}Reject{/tr}{/self_link}
-			{/if}
-			{if $prefs.comments_archive eq 'y'}
-				{assign var='anchor' value=$comment.threadId}
-				{if $comment.archived eq 'y'}
-					{self_link comment_archive='n' comments_threadId=$comment.threadId _anchor="threadId$anchor" _icon='ofolder'}{tr}Unarchive{/tr}{/self_link}
-				{else}
-					{self_link comment_archive='y' comments_threadId=$comment.threadId _anchor="comments" _icon='folder'}{tr}Archive{/tr}{/self_link}
-				{/if}
-			{/if}
-		{/if}
-		{if	$forum_mode neq 'y' && (
-				$tiki_p_edit_comments eq 'y'
-				|| $comment.userName == $user
-			)
-			|| $forum_mode eq 'y' && (
+		{if	(
 				$tiki_p_admin_forum eq 'y'
 				|| ( $comment.userName == $user && $tiki_p_forum_edit_own_posts eq 'y' )
 			)}
@@ -42,9 +23,7 @@
 		>{icon _id='page_edit'}</a>
 		{/if}
 
-		{if
-			( $forum_mode neq 'y' and $tiki_p_remove_comments eq 'y' )
-			|| ( $forum_mode eq 'y' and $tiki_p_admin_forum eq 'y' )}
+		{if $tiki_p_admin_forum eq 'y'}
 		<a title="{tr}Delete{/tr}"
 			{if $first eq 'y'}
 			class="admlink" href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}{$thread_sort_mode_param}&amp;comments_threshold={$smarty.request.topics_threshold}{$comments_find_param}&amp;comments_remove=1&amp;comments_threadId={$comment.threadId}&amp;forumId={$forum_info.forumId}{$comments_per_page_param}"
@@ -54,7 +33,7 @@
 		>{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 		{/if}
 					
-		{if $tiki_p_forums_report eq 'y' and $forum_mode eq 'y'}
+		{if $tiki_p_forums_report eq 'y'}
 			{self_link report=$comment.threadId _icon='delete' _alt="{tr}Report this post{/tr}" _title="{tr}Report this post{/tr}"}{/self_link}
 		{/if}
 					
@@ -63,7 +42,7 @@
 		{/if}
 	
 		{if $user and $prefs.feature_user_watches eq 'y' and $display eq ''}
-		{if $forum_mode eq 'y' and $first eq 'y'}
+		{if $first eq 'y'}
 		{if $user_watching_topic eq 'n'}
 			{self_link watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='add' _icon='eye' _alt="{tr}Monitor this Topic{/tr}" _title="{tr}Monitor this Topic{/tr}"}{/self_link}
 		{else}
@@ -86,7 +65,7 @@
 
 	{if $first neq 'y'}
 	<div class="checkbox">
-		{if $tiki_p_admin_forum eq 'y' and $forum_mode eq 'y' and $comment.threadId > 0}
+		{if $tiki_p_admin_forum eq 'y' and $comment.threadId > 0}
 		<input type="checkbox" name="forumthread[]" value="{$comment.threadId|escape}" {if $smarty.request.forumthread and in_array($comment.threadId,$smarty.request.forumthread)}checked="checked"{/if} />
 		{/if}
 	</div>
@@ -96,7 +75,7 @@
 	<div class="title">
 	{if $first eq 'y'}
 		<h2>{$comment.title|escape}</h2>
-	{elseif ( $forum_mode neq 'y' and $prefs.comments_notitle neq 'y' ) or ($forum_mode eq 'y' and $prefs.forum_reply_notitle neq 'y')}
+	{elseif $prefs.forum_reply_notitle neq 'y'}
 		{if $comments_reply_threadId == $comment.threadId}
 		{icon _id='flag_blue'}<span class="highlight">
 		{/if}
