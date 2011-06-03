@@ -1,5 +1,5 @@
 <div class="nohighlight">
-	{if ( isset($searchStyle) && $searchStyle != "menu") && $prefs.feature_search_show_object_filter eq 'y'}
+	{if ( !isset($searchStyle) || $searchStyle != "menu") && $prefs.feature_search_show_object_filter eq 'y'}
 		{title admpage="search" help="Search"}{tr}Search{/tr}{/title}
 		<div class="navbar">
 			{tr}Search in:{/tr}
