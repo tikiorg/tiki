@@ -2863,7 +2863,7 @@ class TrackerLib extends TikiLib
 	}
 	function update_star_field($trackerId, $itemId, &$field) {
 		global $user;
-		if ($field['type'] == 's' && $field['name'] == 'Rating') { // global rating to an item - value is the sum of the votes
+		if ($field['type'] == 's' && $field['name'] == tra('Rating')) { // global rating to an item - value is the sum of the votes
 			$key = 'tracker.'.$trackerId.'.'.$itemId;
 			$field['numvotes'] = $this->getOne('select count(*) from `tiki_user_votings` where `id` = ?', array($key));
 			$field['voteavg'] = ( $field['numvotes'] > 0 ) ? round(($field['value'] / $field['numvotes'])) : '';
