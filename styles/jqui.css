@@ -231,6 +231,10 @@ input[type="submit"]:hover,
 	font-size: 1.1em;
 }
 
+#topbar_modules {
+	min-height: 34px;
+} 
+
 #topbar_modules .box-search {
 	position: absolute;
 	top: 0px;
