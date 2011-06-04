@@ -480,14 +480,15 @@ class CategLib extends ObjectLib
 	    $join = '';
 	    if (is_array($categId) && $and) {
 			$categId = $this->get_jailed( $categId );
-			$i = count($categId);
-			$bindWhere = $categId;
+			$i = count($categId)+1;
+			$bindWhere = array();
 			foreach ($categId as $c) {
-				if (--$i)
-					$join .= " INNER JOIN tiki_category_objects tco$i on (tco$i.`catObjectId`=o.`catObjectId` and tco$i.`categId`=?) ";
+				if (--$i) {
+					$join .= " INNER JOIN tiki_category_objects tco$i on tco$i.`catObjectId`=o.`objectId` and tco$i.`categId`=? ";
+					$bindWhere[] = $c;
+				}
 			}
-			$where = ' AND c.`categId`=? ';
-	   } elseif (is_array($categId)) {
+		} elseif (is_array($categId)) {
 			$bindWhere = $categId;
 			if ($deep) {
 				foreach ($categId as $c) {
@@ -539,7 +540,7 @@ class CategLib extends ObjectLib
 		}
 
 		// Fetch all results as was done before, but only do it once
-		$query_cant = "SELECT DISTINCT c.*, o.* FROM `tiki_category_objects` c, `tiki_categorized_objects` co, `tiki_objects` o WHERE c.`catObjectId`=o.`objectId` AND o.`objectId`=co.`catObjectId` $where";
+		$query_cant = "SELECT DISTINCT c.*, o.* FROM `tiki_category_objects` c, `tiki_categorized_objects` co, `tiki_objects` o $join WHERE c.`catObjectId`=o.`objectId` AND o.`objectId`=co.`catObjectId` $where";
 		$query = $query_cant . $orderBy;
 		$result = $this->fetchAll($query,$bindVars);
 		$cant = count($result);
@@ -1273,7 +1274,7 @@ class CategLib extends ObjectLib
 		foreach ($catids as $id) {
 			$titles["$id"] = $this->get_category_name($id);
 			$objectcat = array();
-			$objectcat = $this->list_category_objects($id, $offset, $and? -1: $maxRecords, $sort, $types == '*'? '': $typesallowed, $find, $sub);
+			$objectcat = $this->list_category_objects($id, $offset, $maxRecords, $sort, $types == '*'? '': $typesallowed, $find, $sub);
 
 			$acats = $andcat = array();
 			foreach ($objectcat["data"] as $obj) {
