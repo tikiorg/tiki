@@ -19,6 +19,10 @@ if ($prefs['feature_wiki'] != 'y') {
 	die;
 }
 
+//make the other things know we are loading a slideshow
+$tikilib->is_slideshow = true;
+$smarty->assign('is_slideshow' , 'y');
+
 // Create the HomePage if it doesn't exist
 if (!$tikilib->page_exists($prefs['wikiHomePage'])) {
 	$tikilib->create_page($prefs['wikiHomePage'], 0, '', date("U"), 'Tiki initialization');
@@ -169,7 +173,6 @@ $headerlib->add_jq_onready( '
 
 ask_ticket('index-raw');
 
-$smarty->assign('is_slideshow' , 'y');
 // Display the Index Template
 $smarty->assign('dblclickedit', 'y');
 $smarty->assign('mid','tiki-show_page_raw.tpl');
