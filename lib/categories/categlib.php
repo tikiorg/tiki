@@ -1274,7 +1274,7 @@ class CategLib extends ObjectLib
 		foreach ($catids as $id) {
 			$titles["$id"] = $this->get_category_name($id);
 			$objectcat = array();
-			$objectcat = $this->list_category_objects($id, $offset, $maxRecords, $sort, $types == '*'? '': $typesallowed, $find, $sub);
+			$objectcat = $this->list_category_objects($id, $offset, $maxRecords, $sort, $types == '*'? '': $typesallowed, $find, $sub, $and);
 
 			$acats = $andcat = array();
 			foreach ($objectcat["data"] as $obj) {
