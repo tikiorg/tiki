@@ -10,6 +10,10 @@ class PreferencesLib
 	private $data = array();
 	private $usageArray;
 	private $file = '';
+	// prefs modified by the system etc
+	private $system_modified = array( 'tiki_release', 'tiki_version_last_check', 'lastUpdatePrefs', 'case_patched' );
+	// prefs with system info etc
+	private $system_info = array( 'fgal_use_dir', 'sender_email' );
 	
 	function PreferencesLib() {
 		global $prefs;
@@ -261,6 +265,7 @@ class PreferencesLib
 	}
 
 	private function loadData( $name ) {
+		if (in_array( $name , $this->system_modified) or in_array( $name , $this->system_info)) return null;
 		if( false !== $pos = strpos( $name, '_' ) ) {
 			$file = substr( $name, 0, $pos );
 		} else {
@@ -538,10 +543,9 @@ class PreferencesLib
 
 		foreach($prefs as $pref => $val) {
 			if (( $added && !isset($defaults[$pref])) || (isset($defaults[$pref]) && $val !== $defaults[$pref] )) {
-				if (!in_array($pref, array( 'tiki_release', 'tiki_version_last_check', 'lastUpdatePrefs',
-											'case_patched' ))) {	// prefs modified by the system etc
+				if (!in_array($pref, $this->system_modified )) {	// prefs modified by the system etc
 					
-					if (!in_array($pref, array( 'fgal_use_dir', 'sender_email' ))) {	// prefs with system info etc
+					if (!in_array($pref, $this->system_info)) {	// prefs with system info etc
 						$modified[$pref] = array(
 							'cur' => $prefs[$pref],
 						);
