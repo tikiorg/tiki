@@ -2120,9 +2120,9 @@ class UsersLib extends TikiLib
 		global $prefs;
 		if ($prefs['useGroupHome'] == 'y') {
 			$groupHome = $this->get_user_default_homepage($user);
-			if ($groupHome)
+			if (!empty($groupHome))
 				$p = $groupHome;
- 			else
+			else
 				$p = $prefs['wikiHomePage'];
 		} else {
 			$p = $prefs['wikiHomePage'];
