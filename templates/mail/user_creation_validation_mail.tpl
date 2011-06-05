@@ -12,5 +12,5 @@
 	{tr}Password:{/tr} {$mail_pass}
 {/if}
 
-{tr}Welcome on the site!{/tr}
+{tr}Welcome to the site!{/tr}
 
