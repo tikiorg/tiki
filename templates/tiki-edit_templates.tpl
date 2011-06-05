@@ -1,5 +1,12 @@
 {if $template}
-	{title help="Edit+Templates" url="tiki-edit_templates.php?mode=listing&template=$template"}{tr}Edit template:{/tr} {$template}{/title}
+	{title help="Edit+Templates" url="tiki-edit_templates.php?mode=listing&template=$template"}
+		{if $prefs.feature_edit_templates ne 'y' or $tiki_p_edit_templates ne 'y'}
+			{tr}View template:{/tr}
+		{else}
+			{tr}Edit template:{/tr}
+		{/if}
+		{$template}
+	{/title}
 {else}
 	{title help="Edit+Templates"}{tr}Edit templates{/tr}{/title}
 {/if}
@@ -38,24 +45,28 @@
 {if $mode eq 'editing'}
 	{if $prefs.feature_edit_templates eq 'y' and $tiki_p_edit_templates eq 'y'}
 		{remarksbox type="warning" title="{tr}Important!{/tr}" highlight="y"}
-		<p>
-			{tr}If you go to edit this (or any other TPL file) file via the Tiki built-in TPL editor below, all the javascript can be sanitized or completely stripped out by Tiki security filtering.{/tr}
-			{tr}This would cause you problems (e.g. menus can stop collapsing/expanding).{/tr}
-		</p>
-	
-		<p>
-			{tr}You should only modify default header.tpl and other important files via text code editor, through console, or SSH, or FTP edit commands. And only if you know what you are doing ! ;-){/tr}
-		</p>
-	
-		<p>
-			{tr}Maybe You just want to modify the top of your Tiki site?{/tr}<br />
-			{tr}Please consider using the Look & Feel preferences custom code areas or modify tiki-top_bar.tpl which you can do safely via the web-based interface.{/tr}
-		</p>
+		<ul>
+			<li>
+				{tr}If you edit this (or any TPL) file via the built-in editor below, any javascript may be sanitized or completely stripped out 
+					by Tiki security filtering, which would cause certain functions to stop working (e.g. menus no longer collapse or expand){/tr}
+			</li>
+			<li>
+				{tr}You should only modify default header.tpl and other important files via a text code editor, through console, 
+					or SSH, or FTP edit commands--and only if you know what you are doing! ;-){/tr}
+			</li>
+			<li>
+				{tr}Extensive customization can be made safely through the <a href="tiki-admin.php?page=look" class="titletips" title="Look & Feel">Look & Feel</a> admin panel custom code or general layout areas.{/tr}
+			</li>
+		</ul>
 		{/remarksbox}
 	{/if}
 
 	<form action="tiki-edit_templates.php" method="post">
-		<textarea name="data" rows="20" cols="80">
+		<textarea name="data" rows="20" cols="80"
+			{if $prefs.feature_edit_templates ne 'y' or $tiki_p_edit_templates ne 'y'}
+				class="readonly" readonly="readonly"
+			{/if}
+		>
 			{$data|escape}
 		</textarea>
 		<div align="center">

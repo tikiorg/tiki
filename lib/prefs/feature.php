@@ -1340,6 +1340,9 @@ function prefs_feature_list($partial = false) {
 			'type' => 'flag',
 			'help' => 'Edit+Templates',
 			'perspective' => false,
+			'dependencies' => array(
+				'feature_view_tpl',
+			),
 			'default' => 'n',
 		),
 		'feature_custom_html_head_content' => array(
