@@ -55,7 +55,13 @@
 					or SSH, or FTP edit commands--and only if you know what you are doing! ;-){/tr}
 			</li>
 			<li>
-				{tr}Extensive customization can be made safely through the <a href="tiki-admin.php?page=look" class="titletips" title="Look & Feel">Look & Feel</a> admin panel custom code or general layout areas.{/tr}
+				{tr}Extensive customizations can be made safely through the <a href="tiki-admin.php?page=look" class="titletips" 
+					title="Look & Feel">Look & Feel</a> admin panel custom code or general layout areas.{/tr}
+			</li>
+			<li>
+				{tr}To be safe and to make upgrades easier, it is recommended that you create a custom theme before modifying tpl files.
+					See <a href="http://doc.tiki.org/Customizing+Themes" class="titletips" title="Customizing Themes help page">
+					doc.tiki.org/Customizing+Themes</a> for how to do that.{/tr}
 			</li>
 		</ul>
 		{/remarksbox}
