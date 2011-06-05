@@ -103,8 +103,8 @@ function prefs_wikiplugin_list($partial = false) {
 			$alias = @unserialize($prefs['pluginaliaslist']);
 			$alias = array_filter($alias);
 		}
-		$list = array_merge( $list, $alias );
-		sort(array_filter($list));
+		$list = array_filter(array_merge( $list, $alias ));
+		sort($list);
 
 		foreach( $list as $plugin ) {
 			$preference = 'wikiplugin_' . $plugin;

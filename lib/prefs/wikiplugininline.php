@@ -39,8 +39,8 @@ function prefs_wikiplugininline_list($partial = false) {
 			$alias = @unserialize($prefs['pluginaliaslist']);
 			$alias = array_filter($alias);
 		}
-		$list = array_merge( $list, $alias );
-		sort(array_filter($list));
+		$list = array_filter( array_merge( $list, $alias ) );
+		sort( $list );
 
 		foreach( $list as $plugin ) {
 			$preference = 'wikiplugininline_' . $plugin;
