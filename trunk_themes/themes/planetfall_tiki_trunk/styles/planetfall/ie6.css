@@ -1,0 +1,39 @@
+/* $Id$
+	Planetfall CSS for Internet Explorer 6.
+*/
+
+.wikitopline select {font-size: .9em}
+input[type=reset],
+input[type=submit] {
+	color: #ff6600;
+	font-size: 11px;
+	border: thin solid #9DA6B3;
+	background: #000;
+	text-decoration: none;
+	font-weight: bold}
+
+.findtable input {font-size: 1em}
+#tiki-top {font-size: 11px}
+.horbaritem a {font-size: .8em}
+#tiki-center {
+	font-size: 1em;
+	width: auto}
+
+div.box-data table {
+	font-size: 11px}
+div.wiki-edithelp table {font-size: .9em}
+.bloginfo table {font-size: 11px}
+.blogtools table {font-size: 11px}
+.postbody table {font-size: 11px}
+
+.post .postbody {font-size: 11px}
+body table.galtable {width: 97%}
+.dircategs table td {font-size: 12px}
+.messureadhead table {font-size: 11px}
+.addevent {padding: 0}
+.calodd {padding: 0}
+.caldark {padding: 0}
+.caldark {padding: 0}
+
+td#centercolumn {
+}

@@ -1,0 +1,1679 @@
+/* $Id$ 
+	Planetfall theme for TikiWiki CMS/Groupware.
+	This is an adaptation of the original GPL-licensed theme by Rhuk.
+	See http://zukakakina.com or http://themes.tikiwiki.org for further
+	information about and upgrades for this theme.
+*/
+
+/* Import foundation CSS files. */
+@import url("layout/layout.css");
+@import url("layout/design.css");
+
+/***** XHTML Elements (body tag here,
+			others follow Layout) *****/ 
+body,
+body.fullscreen {
+	background: #121a1d url(planetfall/back_fade.jpg) repeat-x;
+	padding: 20px 0;
+	font-family: Trebuchet MS, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 62.5%;
+	color: #ccc;
+}
+
+html>body {font-size: .7em !important}
+
+body.fullscreen {
+	margin: 3em;
+	color: #ccc;
+	padding-right: 10em;
+}
+	
+body.cke_show_borders {
+	color: #ccc !important;
+	background: #121a1d url(planetfall/back_fade.jpg) repeat-x !important;
+}
+
+ /***** Layout (overrides layout.css;
+		also styling of page layout divs)  *****/
+		
+.fixed_width #fixedwidth {
+	display: table;
+	margin: 0 auto 0;
+	width: 810px;
+}
+		
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
+}
+		
+#middle {
+	padding: 0;
+}
+
+table#midtable {
+	font-size: 1em;
+	text-align: left;
+	color: #ccc;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+.fixed_width #fixedwidth table#midtable {
+	width: 100%;
+}
+
+#header {
+	background: url(planetfall/top_bar.jpg) repeat-x center top;
+	padding-top: 9px;
+}
+
+#top_modules {
+	background: #04030b url(planetfall/header_bg.jpg) no-repeat;
+	border: 1px solid #9da6b3;
+}
+
+#col1 {
+	width: auto !important;
+	vertical-align: top;
+	text-align: left;
+	padding: 1em;
+	border-left: solid 1px #9da6b3;
+	border-right: solid 1px #9da6b3;
+}
+
+/* In this theme, the left column is placed between the center and right columns. */
+#col2 {
+	padding-left: 0;
+	padding-right: 0;
+	vertical-align: top;
+	width: 180px;
+	height: 100%;
+	border-left: solid 1px #9da6b3;
+	background: #2e4452 url(planetfall/menu2_fade.jpg) repeat-x;
+}
+
+#col3 {
+	padding-right: 0;
+	padding-left: 0;
+	vertical-align: top;
+	width: 180px;
+	min-height: 100% !important;
+	margin-right: 0;
+	background: #293c43;
+	border-left: solid 1px #9da6b3;
+	border-right: solid 1px #9da6b3;
+	display: table-cell;
+}
+	
+#bottom_modules {
+	padding: 10px 10px 5px 10px;
+	margin-top: 0;
+	background: #293c43;
+	border: 1px solid;
+	border-color: #87acbb #9da6b3 #87acbb #9da6b3;
+}
+	
+#footer a,
+#footer a:visited {
+	color: #ccc;
+	border-bottom: 1px solid #ff6600;
+}
+	
+#footer a:hover {border-bottom: 1px solid #9ab6c2}
+
+/***** XHTML Elements (other than body tag) ******/
+a,
+a:visited {
+	color: #ff6600;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+a:hover {
+	color: #9ab6c2;
+	text-decoration: none;
+	font-weight: bold;
+}
+	
+.wikitext a.wiki,
+.wikitext a:visited {
+	color: #ff6600;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.wikitext a:hover {
+	color: #9ab6c2;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+caption {
+  font-size: .9em;
+  font-weight: bold;
+}	
+
+h1, h2, h3, h4, h5, h6 {color: #9ab6c2}
+
+h1 {
+	font-size: 1.4em;
+	margin: 6px 0 8px 0;
+}
+
+h2 {
+	font-size: 1.6em;
+	margin: 3px 0 1px 0;
+}
+
+h3 {
+	font-size: 1.5em;
+	margin: 1px 0;
+}
+
+h4 {
+	font-size: 1.4em;
+	margin: 1px 0;
+}
+
+h5 {
+	font-size: 1.2em;
+	margin: 1px 0;
+}
+	
+h6 {
+	font-size: 1.1em;
+	margin: 1px 0;
+}
+
+hr  {
+	background: #999;
+	color: #999;
+}
+
+fieldset {
+	color: #9da6b3;
+	border: 1px solid #9da6b3;
+}
+
+legend {color: #9da6b3}
+
+input,
+textarea,
+option,
+select {
+	background: #000;
+	color: #ccc;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 1em;
+	border: thin solid #9da6b3;
+}
+
+option {
+	border: none;
+	border-bottom: thin solid #9da6b3;
+}
+
+input {text-indent: 2px}
+
+input[type=checkbox],
+input[type=radio] {border: none}
+
+input[type="submit"]:hover {cursor: pointer}
+
+input[type="submit"],
+input[type="file"],
+input[type="reset"] {
+	color: #ff6600;
+	background: #293b42;
+	border: 1px solid #9da6b3;
+}
+
+input.wikiaction {
+	color: #ff6600;
+	background: #293b42;
+	border: 1px solid #9da6b3;
+}
+
+.button a,
+.button a:visited,
+button,
+input[type="reset"],
+input[type="submit"],
+input[type="button"],
+.button input,
+.calbuttonbox {
+	color: #ff6600;
+	font-size: 11px;
+	border: thin solid #9da6b3;
+	background: #40515d;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.button a:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+.button input:hover,
+.calbuttonbox:hover  {
+	color: #9ab6c2;
+	background: #2b3941;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+input.icon {
+	border: none;
+	background: none;
+	cursor: pointer;
+}
+
+button,
+.button, 
+.button.highlight {
+}
+	
+input[type=checkbox] {border: none}
+/*
+select {
+	background: #293b42;
+	color: #ff6600;
+	border: none;
+	font-size: 10px;
+}*/
+
+select[multiple] {height: 10em}
+select[name="theme"] {width: 90%}
+small {font-size: .8em}
+label {cursor: pointer}
+
+ul {
+	margin-top: 2px;
+	margin-bottom: 6px;
+}
+
+li {
+	line-height: 15px;
+	padding-top: 0;
+}
+	
+span p {
+	display: inline;
+}
+
+/***** Site Header & Identity *****/
+
+#top_modules .box-logo {
+	margin-left: 10px;
+	float: left;
+}
+
+#top_modules #sitetitles {
+	margin-left: 20px;
+	line-height: normal;
+	margin-top: 8%;
+	margin-bottom: 1%;
+}
+
+#top_modules #sitetitle,
+#top_modules #sitesubtitle {
+	color: #ff6600;
+	font-weight: bold;
+	padding-left: 30px;
+}
+
+#sitetitle {font-size: 2.6em}
+#sitesubtitle {font-size: 1.3em}
+
+#top_modules .box-login_box {
+	text-align: right;
+	position: absolute;
+	bottom: 6px;
+	right: 60px;
+	font-size: 80%;
+}
+#top_modules .module.secondary_site_menu {
+	position: absolute;
+	top: 8px;
+	right: 160px;
+}
+
+/* Theme-specific selector to style header module */
+.header_module {
+	float: right;
+	margin: 0;
+	padding-left: 0;
+	vertical-align: top;
+	border-left: 1px solid #c0c0c0;
+	min-height: 111px;
+}
+
+#top_modules #sitelogo {
+	margin: auto;
+}
+
+#sitelogo img {
+	margin-bottom: 10px;
+}
+
+#top_modules .box-search {
+	position: absolute;
+	bottom: 2px;
+	right: 0;
+}
+
+.siteloginbar_popup .tabmark {
+	float: left;
+}
+
+.siteloginbar_popup .cssmenu_horiz li a,
+.siteloginbar_popup .cssmenu_horiz li a:visited {
+	color: #ff6600;
+}
+
+.siteloginbar_popup .cssmenu_horiz li a:hover {
+	color: #9ab6c2;
+}
+
+.siteloginbar input.wikiaction {
+	margin: 1px 3px;
+}
+
+.siteloginbar_popup #logout_link .cbox {
+	text-align: left;
+}
+
+.siteloginbar_popup .cssmenu_horiz div {
+	border: none;
+}
+
+li#logout_link a {
+	padding-right: 0;
+}
+
+#tiki-top {
+	bottom: 0;
+	height: 26px;
+	background: url(planetfall/silver_bg.jpg) repeat-x;
+}
+
+#topbar_modules {
+	border-left: 1px solid #aaa;
+	border-right: 1px solid #aaa;
+	width: 100%;
+}
+
+#topbar_modules .box-search {
+	float: right;
+	margin-top: 4px;
+	color: #304651;
+}
+	
+/****** Menus, Links ******/
+/** CSS (suckerfish) menus **/
+
+/* default link padding */
+.cssmenu_horiz li a,
+.cssmenu_vert li a {
+	padding: 2px 5px;
+}
+
+/* typography, colors, etc. */
+.cssmenu_horiz li a,
+.cssmenu_vert li a {
+	color: #ccc;
+}
+
+.cssmenu_vert li a:hover {
+	color: #ff6600;
+}
+
+#col2 .cssmenu_vert li a {
+	color: #ff6600;
+}
+
+#col2 .cssmenu_vert li a:hover {
+	color: #9ab6c2;
+}
+
+#col2 .cssmenu_vert li ul li a {
+	color: #304651;
+}
+
+/* #header (topbar) menu top level */
+#tiki-top .cssmenu_horiz li a {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-size: 12px;
+	color: #293c43;
+	border-right: 1px solid #9da6b3;
+}
+
+.secondary_site_menu .cssmenu_horiz li a {
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.secondary_site_menu .cssmenu_horiz li ul {
+	margin-top: -5px;
+}
+
+.secondary_site_menu .cssmenu_horiz li ul ul {
+	margin-top: 0;
+}
+
+.secondary_site_menu .cssmenu_horiz li a:hover,
+#tiki-top .cssmenu_horiz li a:hover {
+	color: #7196a3;
+}
+
+.secondary_site_menu .cssmenu_horiz ul li a:hover,
+#tiki-top .cssmenu_horiz ul li a:hover {
+	color: #e9f3f5;
+}
+
+.secondary_site_menu .cssmenu_horiz ul li a,
+#tiki-top .cssmenu_horiz ul li a,
+#col2 .cssmenu_vert li ul li a {
+	border-right: 0;
+	color: #ccc;
+}
+
+/* No shadow in planetfall since bg is dark */
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {
+	background: #2e4452 url(planetfall/menu2_fade.jpg) repeat-x;
+	border: 1px solid #999;
+}
+
+/* default link padding */
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	padding: .75em 1em;
+}
+
+/* ul ul top compensation for padding */
+.cssmenu_horiz li:hover ul,
+.cssmenu_horiz li.sfHover ul {
+	top: 2.3em;
+}
+
+/* compensate for 1px border */
+.cssmenu_horiz li ul li:hover ul,
+.cssmenu_horiz li ul li.sfHover ul,
+.cssmenu_vert li ul li:hover ul,
+.cssmenu_vert li ul li.sfHover ul {
+	top: -1px;
+}
+
+#col2 .cssmenu_vert {
+	margin-left: 0;
+	padding-left: 0;
+}
+
+/* left column width */
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 170px;
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 170px;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+#col2 .cssmenu_vert a {
+	padding: .3em 1em;
+	font-weight: normal;
+}
+
+/* special arrows and arrow top padding */
+.cssmenu_vert li a .sf-sub-indicator {
+	background: url(andreas08/arrows-467aa7.png) no-repeat 0 0;
+}
+
+.cssmenu_vert li ul li a .sf-sub-indicator {
+	background: url(../lib/jquery/superfish/images/arrows-ffffff.png) no-repeat 0 0;
+}
+
+.cssmenu_vert li a .sf-sub-indicator {
+	top: .5em;
+}
+
+.secondary_site_menu li a .sf-sub-indicator {
+	top: .5em;
+}
+
+/** Links in other menus **/
+.separator + div {padding-left: 20px}
+
+.separator a:link,
+.separator a:visited {
+	font-size: 1em;
+	font-weight: bold;
+	color: #ff6600;
+	text-align: left;
+}
+
+.separator a:hover {
+	color: #9ab6c2;
+}
+
+.separator a.separator img {margin-top: -9px;}
+
+.linkmenu {
+	font-size: 1em;
+	color: #ff6600;
+	text-decoration: none;
+}
+
+.linkmenu:hover {
+	color: #9ab6c2;
+	text-decoration: none;
+}
+/***** Misc. Center Col. *****/
+
+a.flip,
+a.flip:visited,
+.tellafriend a,
+.tellafriend a:visited {
+	font-size: .9em;
+	color: #3a5461;
+	text-decoration: none;
+}
+
+a.flip:hover,
+.tellafriend a:hover {
+	color: #ff6600;
+}
+
+.tellafriend {text-align: right}
+
+.fullscreen .tellafriend {
+	margin-right: 100px;
+	margin-top: 2px;
+}
+
+/***** Boxes *****/
+/** Modules **/
+#col2 .box,
+#col3 .box {
+	width: 180px;
+}
+
+h3.box-title {
+	background: url(planetfall/module_title_bg.png) no-repeat 0 100%;
+	vertical-align: middle;
+	font-size: 1em;
+	font-weight: bold;
+	color: #ccc;
+	text-align: left;
+	text-transform: uppercase;
+	padding-bottom: 6px;
+	padding-top: 4px;
+}
+
+h3.box-title .moduletitle {
+	margin-left: 4px;
+	padding-left: 17px;
+	background: url(planetfall/module_bullet.png) no-repeat 0 3px;
+}
+
+img.flipmodimage:hover {border: 1px solid #ff6600 !important}
+
+.box-title a,
+.box-title a:visited {color: #ccc}
+
+.box-data {
+	text-align: left;
+	font-size: 1em;
+	padding: 5px 5px 5px 10px;
+	font-weight: normal;
+}
+	
+.box-data ol,
+.box-data ul {
+	margin-left: .5em;
+	padding-left: 2em;
+}
+	
+ul.module,
+ol.module {
+	list-style: none;
+}
+
+/** Other boxes **/
+.cbox { 
+  margin: 4px 4px 0 4px;
+  border: 1px solid #8cacbb;
+  padding-bottom: 10px;
+  font-size: 1em;
+}
+
+.cbox-title {
+  background: #293c43;
+  color: #ccc;
+  border-bottom: 1px solid #8cacbb;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  text-align: center;
+  padding-left: 0;
+  padding-right: 0;
+  margin-bottom: 0;
+}
+
+.cboxtlink,
+.cboxtlink:hover {
+	color: #000;
+	text-decoration: none;
+}
+
+.cbox-data {
+	background: #293c43;
+	color: #ccc;
+	overflow: hidden;
+	padding-left: 5px;
+	padding-right: 5px;
+	width: 100%;
+}
+
+.rbox-title,
+.rbox-data {
+	border-color: #ff6600;
+	color: #9ab6c2;
+	background: #2e4452;
+}
+
+.rbox-title {
+	background: #ff6600;
+	color: #000;
+	font-weight: bold;
+}
+
+.simplebox  { 
+	padding: 1ex;
+	border: 1px solid #9da6b3;  
+	background: #293c43;  
+	font-size: 1em;
+}
+
+/***** Tables, Tabs *****/
+/** Tables **/
+
+.normal,
+.admin, 
+.sortable {
+	background: #223138;
+	border: solid 1px #43626d;
+	width: 100%;
+	margin-top: 6px;
+}
+
+body.tiki_webmail .normal {color: #436976}
+
+/*.normal td,
+td.normal,*/
+.wikitable td,
+.odd,
+.even {
+	background: #293c43;
+	font-size: 1em;
+	vertical-align: top;
+	text-align: left;
+}
+
+tr.odd {
+	background: #0d1315;
+	color: #ccc;
+	padding: 2px;
+}
+
+tr.even {
+	background: #151e22;
+	color: #ccc;
+	padding: 2px;
+}
+
+tr.odd,
+tr.odd td,
+td.odd,
+li.odd {
+	background: #0d1315;
+	color: #ccc;
+	vertical-align: top;
+	text-align: left;
+}
+
+tr.even,
+td.even,
+tr.even td,
+li.even {
+	background: #151e22;
+	color: #ccc;
+	vertical-align: top;
+	text-align: left;
+}
+
+td.third,
+th,
+td.heading,
+tr.diffheader {
+	background: #3d5963;
+	color: #ccc;
+	font-weight: bold;
+	padding: 3px;
+	font-size: 1em;
+}
+	
+td.third {
+	font-size: .9em;
+	text-align: left;
+}
+
+/** Tabs **/
+/* reset what's in layout.css */
+
+.tabactive,
+.tabinactive,
+[class].tabactive,
+[class].tabinactive {top: 0 !important}
+
+
+.tabs {
+	position: relative;
+	padding: .2em .2em 0;
+	margin:0 0.2em 1px 0;
+	border-bottom: solid 1px #256 !important;
+}
+
+.tabs br {
+	display: none;
+}
+
+.tabmark {
+	display: inline;
+	font-size: 85%;
+	border: 1px solid #256;
+	background: #151e22;
+	outline: none;
+	border-bottom-width: 0 !important;
+	margin: 0 .2em -1px 0;
+}
+
+.tabmark a {
+	color: #f60;
+	padding: 0.5em 1em;
+	text-decoration: none;
+}
+
+.tabmark a:hover {
+	color: #9ab6c2;
+}
+
+.tabactive {
+	border-bottom-width: 0;
+	padding-bottom: 1px;
+	border: solid 1px #abcdef;
+	background: #293c43;
+}
+
+.tabactive a {
+	color: #9ab6c2;
+}
+
+.tabcontent {
+	border: 1px solid #293c43;
+	background: #293c43;
+}
+
+.tabcontent h2 {color: #ff6600}
+
+.statuson {
+	border: 1px inset #9da6b3;
+	background: #40515d;
+}
+
+/***** Wiki *****/
+h1.pagetitle,
+.post .postbody-title .title {
+	background: url(planetfall/title_background.png) no-repeat 0 4px;
+	padding-left: 15px;
+	padding-top: 4px;
+	font-size: 1.2em;
+	font-weight: bold;
+	color: #ccc;
+	width: 100%;
+}
+
+h1.pagetitle a,
+h1.pagetitle a:visited {
+	color: #ccc;
+	text-decoration: none;
+	font-size: 1.2em;
+}
+
+h1 a.pagetitle:hover {
+	text-decoration: none;
+}
+
+#description,
+.description {
+	font-size: 1em;
+	font-style: italic;
+	padding-left: 22px;
+}
+	
+#pageid {
+	float: left;
+	clear: both;
+}
+
+#cachedpage {
+	float: right;
+	font-size: small;
+}
+
+.wikitext {
+	font-size: 1em;
+	border: 1px solid #256;
+	clear: both;
+	padding: 1em 2em;
+	margin-top: 1em;
+}
+
+.titlebar {
+	background: #9da7B3 url(planetfall/top_bar.jpg) center repeat-y;
+	text-align: center;
+	color: #234956;
+  	font-size: 1em;
+	font-style: italic;
+	font-weight: bolder;
+}
+
+/* Be sure this doesn't conflict w/ other boxes.*/
+.wikitext .box {
+	background: #2c434b;
+}
+
+.wikitable {
+	border-collapse: collapse;
+	background: #121a1d;
+}
+
+td.wikicell {
+	border-collapse: collapse;
+	border: 1px solid #8cacbb;
+	background: #121a1d;
+}
+
+p.editdate {
+	font-size: .9em;
+}
+
+.wiki {
+	color: #f60;
+	font-weight: normal;
+}
+
+.wiki:hover {
+	color: #9ab6c2;
+	font-weight: normal;
+}
+	
+.wikinew,
+.wikinew:hover {
+	color: #c00;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+.wiki-edithelp {
+	background: #121a1d;
+	border: 1px solid #000;
+	font-size: .9em;
+	padding: 1em;
+}
+
+textarea.wikiedit {width: 100%}
+a.toolbar img.icon {background: #ccc}
+
+img.externallink {
+	margin-left: 3px;
+	margin-right: 2px;
+}
+
+/* Wiki plugins */
+
+/* Code plugin  */
+.codelisting {
+	font-family: "Courier New", Courier, monospace;
+	padding: 2ex;
+	padding-top: 2.5ex;
+	background: #293c43;
+	margin: 1ex;
+	border: 1px dashed #adacaf;
+	overflow: auto;
+	width: 400px;
+}
+
+.codecaption {
+	padding: .5ex 2ex;
+	background: #121a1d;
+	position: relative;
+	bottom: -2ex;
+	display: inline;
+	border: 1px dashed #adacaf;
+}
+
+/* Quote plugin */
+.quoteheader {
+	margin: 10px 5px 0 5px;
+	padding: 4px;
+	border: 1px solid #a9b8c2;
+	border-bottom: 0;
+	color: #ccc;
+	font-weight: bold;
+	background: #293c43;
+	font-size: 1em;
+}
+
+.quotebody {
+	margin: 0 5px 10px 5px;
+	padding: 5px;
+	border: 1px solid #a9b8c2;
+	border-top: 0;
+	color: #ccc;
+	background: #3d5963;
+}
+
+/** Wiki tocs **/
+.tocnav {
+	width: 100%;
+	font-size: .9em;
+	border: 1px solid #8cacbb;
+	color: black;
+	background: #ededed;
+	padding-bottom: 2px;
+	padding-top: 2px;
+	margin-bottom: 2px;
+	margin-bottom: 16px;
+}
+
+.tocnav table {background: #1f363a}
+
+.tocnavlink,
+.tocnavlink:hover {
+	font-size: .9em;
+	color: #000;
+	text-decoration: underline;
+}
+
+.tocnav a {
+	font-size: 90%;
+	color: #424242;
+}
+
+/***** Articles ****/
+.articletopline {
+	color: #ccc;
+	padding-bottom: 3px;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: .9em;
+}
+
+.articletitle h2 {
+	background: url(planetfall/title_background.png) no-repeat 0 1px;
+	vertical-align: middle;
+	font-size: 1.2em;
+	font-weight: bold;
+	color: #ccc;
+	text-align: left;
+	text-indent: 15px;
+	width: 100%;
+	text-transform: uppercase;
+	padding-bottom: 6px;
+	padding-top: 4px;
+}
+
+.titleb {
+	font-size: .9em;
+	color: #676767;
+}
+
+.articlesubtitle {
+	font-family: Georgia, Times, serif;
+	font-style: italic;
+	font-weight: lighter;
+	text-indent: 20px;
+	font-size: 1.1em;
+	line-height: 14px;
+	color: #404040;
+}
+
+.articleheading {
+	padding-right: 0.8em; 
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+
+.articleheadingtext {
+	font-size: 1em; 
+}
+
+.articleheading img {
+	margin-right: 22px;
+	margin-left: 9px;
+}
+
+img.articleimagefloat {
+	margin-right: 4px;
+	float: left;
+	padding: 2px 0;
+	margin-bottom: 10px;
+}
+
+img.articleimage {
+	margin-right: 4px;
+	float: left;
+	clear: right;
+	padding: 2px 0;
+	margin-bottom: 10px;
+}
+
+.articletrailer {
+	margin-bottom: 10px;
+	font-size: .9em;
+	width: 100%;
+}
+
+.articletrailer .wikitopline {float: left} 
+
+
+.trailer {font-size: .95em}
+
+/**** Forums ****/
+.post .author {
+	border: solid 1px #9da6b3;
+	border-top: none;
+	background: #2e4452 url(planetfall/menu2_fade.jpg) repeat-x;
+	color: #293c43;	
+}
+
+.postbody .actions {
+	text-align: right;
+}
+
+.post .postbody-title .title h2,
+.post .postbody-title .title a {
+	font-size: 1.2em;	
+	font-weight: bold;
+	padding-top: 0;
+	margin-top: 0;
+}
+
+.post .postbody-title .title h2 {
+	font-size: 1.2em;
+	margin-bottom: 0;
+	padding-bottom: 2px;
+}
+
+.post .postbody-title br {
+	display: none;
+}
+
+.post .postbody .content {
+	width: 100%;
+}
+
+/**** Image Galleries ****/
+.galtable {
+	border-collapse: collapse;
+	border: 1px solid #8cacbb;
+	width: 100%;
+}
+
+body.tiki_galleries .findtable {display: inline}
+
+
+td.oddthumb {
+	background: #0d1315;
+	border-collapse: collapse;
+}
+	
+td.eventhumb {
+	background: #151e22;
+	border-collapse: collapse;
+}
+
+td.eventhumb img {
+	margin-left: 6px;
+	margin-right: 6px;
+}
+	
+.thumbnails .galtable td.eventhumb a img.athumb {
+	border: 1px solid #121a1d;
+	padding: 3px;
+	margin: 3px;
+}
+
+.thumbnails .galtable td.oddthumb a img.athumb {
+	border: 1px solid #151e22;
+	padding: 3px;
+	margin: 3px;
+}
+
+.thumbnails .galtable td.eventhumb a:hover img.athumb,
+.thumbnails .galtable td.oddthumb a:hover img.athumb {
+	border: 1px solid #f60;
+}
+
+img.athumb {
+	border: none;
+	margin: auto;
+}
+
+.caption {color: #ccc}
+p.norecords {font-weight: bold}
+
+.imagetitle {
+	font-weight: bold;
+	font-size: 2.6em; 
+	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #ccc;
+}
+
+.showimage {
+	text-align: center;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.imgaldescr {margin: 10px}
+.sorttitle {margin-left: 10px}
+
+/***** File Galleries *****/
+
+.thumbnailcontener {
+	border: 1px solid #256;
+	margin: 0 7px 8px 0;
+	padding: 5px;
+}
+
+/***** Trackers *****/
+
+/***** Categories, Tags *****/
+.navbar {
+	font-size: .9em;
+}
+
+.tcategpath {
+	margin-bottom: 40px;
+	border-color: #99bec6;
+	border-style: solid;
+	border-width: 1px;
+	width: 97%;
+}
+
+td.tdcategpath {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #256;
+	font-size: 1.1em;
+	font-weight: bold;
+	background: #293c43;
+	padding-left: 2px;
+	margin: 0;
+	padding-right: 5px;
+}
+
+.categpath,
+.categpath:hover {
+	color: #256
+}
+
+.subcats {
+	width: 97%;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-right: 0;
+	margin-bottom: 10px;
+	border: 1px solid #99bec6;
+	background: #293c43;
+	border-collapse: collapse;
+}
+
+td.tdsubcat {
+	width: 25%;
+	background: #293c43;
+}
+
+.categlink {
+	font-size: 1em;
+	color: #256;
+	font-weight: bold;
+}
+
+.categlink:active {
+	font-size: 1em;
+	color: #256;
+	font-weight: bold;
+}
+
+.categlink:hover {
+	font-size: 1em;
+	color: #256;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+.catobjects {
+	width: 97%;
+	border-spacing: 0;
+	padding-right: 0;
+	margin-bottom: 10px;
+	border: 1px solid #8cacbb;
+	border-collapse: collapse;
+}
+
+td.categobjectsnameeven,
+td.categobjectsnameodd {
+  font-size: 1em;
+  color: #000;
+}
+
+td.categobjectsdataeven,
+td.categobjectsdataodd {
+  font-size: 1em;
+  background: #f7f9fa;
+  color: #000;
+}
+
+.catname {
+	font-size: 1em;
+	color: #ff6600;
+	text-decoration: none;
+}
+
+.catname:active {
+	font-size: 1em;
+	color: #ff6600;
+	text-decoration: none;
+}
+
+.catname:hover {
+	font-size: 1em;
+	color: #9ab6c2;
+	text-decoration: underline;
+}
+
+.catblock {
+	background: #293c43;
+	padding-left: 4px;
+}
+
+ul.catfeatures {
+	list-style: none;
+}
+
+ul.catitems li {
+	display: inline;
+	margin-right: 7px;
+}
+
+ul.catitems li a:link {color: #f60}
+ul.catitems li a:hover {color: #9ab6c2}
+
+.multiselect li.even,
+.multiselect .even,
+.multiselect li.even:hover,
+.multiselect .even:hover {
+	background: #293c43;
+	color: #ccc;
+}
+
+.multiselect li.odd,
+.multiselect .odd,
+.multiselect li.odd:hover,
+.multiselect .odd:hover {
+	background: #2e4452;
+	color: #ccc;
+}
+	
+/*****  Polls  *****/
+.pollresults {
+	background: #1f363a;
+	border: 1px solid black;
+	margin-top: 5px;
+	font-size: 14px;
+	padding-left: 5px;
+}
+
+.pollresults {width: 97%}
+
+td.pollr {
+	font-size: 1em;
+	color: #000;
+}
+
+/***** FAQs *****/
+.faqlistquestions {
+
+	background: #1f363a;
+	color: #000;
+	font-size: 1em;
+	border: 1px solid #000;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.faqqa {
+	background: #1f363a;
+	color: #000;
+	font-size: 12px;
+	border: 1px solid #000;
+	margin-bottom: 20px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+}
+
+.faqquestion {
+	margin-bottom: 5px;
+	font-size: 12px;
+	background: #293c43;
+}
+
+.faqanswer {font-size: 12px}
+
+/***** Quizzes *****/
+.questionblock {
+	border: 1px solid #000;
+	background: #1f363a;
+	margin-bottom: 10px;
+}
+
+.quizquestion {
+	font-size: 1.2em;
+	margin-bottom: 5px;
+}
+
+.quizoptions {font-size: 1.2em}
+
+.quizdescription,
+.quizanswer {
+	font-size: 1.2em;
+	border: 1px solid #000;
+	background: #1f363a;
+	margin-bottom: 10px;
+}
+
+/***** Shoutbox *****/
+.shoutboxmsg {
+	border: 1px solid #000;
+	background: #1f363a;
+	margin-bottom: 0;
+	padding-bottom: 1px;
+}
+
+.shoutboxmodmsg {
+	font-size: 1em;
+	margin-bottom: 4px;
+	margin-left: 5px;
+	margin-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 1px;
+}
+
+textarea.tshoutbox {
+	background: #000;
+	border: thin solid #9da6b3;
+	color: #ccc;
+	font-size: 1em;
+	margin-bottom: 3px;
+}
+
+/***** Directory *****/
+.dircategs {
+	border:  1px solid #99bec6;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	padding-left: 5px;
+}
+
+.dirlink {
+	font-size: 1.1em;
+	color: #f60;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+.dirlink:hover {
+	color: #636363;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+.dirsublink {
+	font-size: .9em;
+	color: #f60;
+}
+
+.dirsublink:hover {
+	font-size: .9em;
+	color: #636363;
+	text-decoration: underline;
+}
+
+.dirlistsites {
+	padding-left: 5px;
+	padding-top: 5px;
+	padding-bottom: 10px;
+	border:  1px solid #ff4500;
+	margin-top: 10px;
+}
+
+.dirsite {
+	background: #0a0917;
+	margin-bottom: 10px;
+	padding: 5px;
+}
+
+.dirsitetrail {font-size: .9em}
+
+.dirsitelink {
+	color: #436976;
+	font-size: 1.2em;
+	text-decoration: none;
+}
+
+.dirsitelink:hover {
+	color: #636363;
+	text-decoration: underline;
+}
+
+.dirrelated {
+	background: #1f363a;
+	margin-top: 10px;
+	border:  1px solid #99bec6;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+}
+
+td.dirfooter {font-size: .9em}
+
+.dirfooter {
+	margin-top: 10px;
+	border:  1px solid #99bec6;
+}
+
+/***** Messages *****/
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {
+	font-size: 1em;
+	border: 1px solid #8cacbb;
+	padding-left: 2px;
+}
+
+td.prio1 {background: #2d444c}
+td.prio2 {background: #4e7682}
+td.prio3 {background: #38545d}
+td.prio4 {background: #2d444c}
+td.prio5 {background: #a66a79}
+
+.messureadflag {padding-left: 5px}
+.messureadhead {margin-top: 2px}
+.messureadbody {margin-top: 5px}
+
+/***** Calendar *****/
+.Cal0, 
+.Cal1, 
+.Cal2 {
+	border-top: 1px dashed #ccc;
+	color: #425262;
+	font-size:10px;
+	padding-right: 0;
+}
+
+.caltitle {
+	font-weight: bold;
+	color: #425262;
+}
+
+/* checkboxes background is required for rollover display */
+.calcheckbox {background: #1f363a}
+
+.caltoggle {
+	font-size: 9px;
+	margin-bottom: 7px;
+}
+
+.opaque {
+	background: #1f363a;
+	color: #ccc;
+	width: auto;
+	border: 1px solid #666;
+	padding: 1px; 
+}
+
+.calfocus {
+	font-size: 9px;
+	background: inherit;
+}
+
+.calfocus a {
+	color: #ff6600;
+	font-size: 1.2em;
+}
+	
+.calfocus a:hover {
+	border: none;
+	color: #9ab6c2;
+	text-decoration: none;
+}
+
+.calfocuson {
+	font-size: 9px;
+	background: #638697;
+}
+
+.calfocuson a {	
+	color: #000;
+	font-size: 1.2em;
+}
+
+.calcontent {min-height: 60px}
+
+#caltable {
+	width: 100%;
+	font-size: 1.2em;
+}
+	
+#caltable td {padding: 0}
+
+.calinput {background: #121a1d}
+.calfocuson + .calcontent {background: #597a8a}
+
+.days {
+	color: #ccc;
+	text-align: center;
+}
+
+#caltable .weeks {
+	background: #3d5963;
+	color: #ccc;
+}
+
+.addevent {
+	padding: 0 5px;
+	float: right;
+}
+
+.calodd, .caleven {border: 1px solid #a9a9a9}
+.calodd {background: #2e4452}
+.caleven {background: #435f6d}
+.caldark {background: #121a1d}
+.caldark .calfocus {background: #121a1d}
+
+.daterow {
+	display: block;
+	color: #ff6600;
+	font-size: 11px;
+	border: thin solid #9da6b3;
+	background: #151e22;
+	font-weight: bold;
+}
+
+.daterow:hover {
+	color: #9ab6c2;
+	text-decoration: none;
+	font-weight: bold;
+	background: #151e22;
+}
+
+.calnavigation a:hover {background: #9ab6c2;}
+.viewmode {line-height: 1.5em;}
+
+/***** Admin *****/
+a.admbox {
+	border: 1px solid #9da6b3;
+	color: #ff6600;
+	background: #40515d center no-repeat;
+}
+
+a.admbox:hover,
+a.admbox:focus,
+a.admbox:active  {
+	background: #43626d center no-repeat;
+	border: 1px solid #9da6b3;
+}
+
+a.admbox.off,
+a.admbox.off:hover {
+	color: #9ab6c2;
+	background: #2b3941 center no-repeat;
+	border: 1px solid #292929;
+}
+/* End of File */
