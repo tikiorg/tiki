@@ -1534,9 +1534,20 @@ label.error {
 	display: block;
 }
 
+.tracker-item-files li {
+	clear: right;
+}
+
 .tracker-item-files label {
 	clear: right;
 	float: right;
+}
+
+.tracker-item-files {
+	-moz-column-count: 2;
+	-moz-column-gap: 30px;
+	-webkit-column-count: 2;
+	-webkit-column-gap: 30px;
 }
 
 .file-drop {

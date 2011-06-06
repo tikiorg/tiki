@@ -296,6 +296,19 @@ class UnifiedSearchLib
 			$query->filterLanguage($q);
 		}
 
+		unset($filter['type']);
+		unset($filter['categories']);
+		unset($filter['deep']);
+		unset($filter['tags']);
+		unset($filter['content']);
+		unset($filter['language']);
+
+		foreach ($filter as $key => $value) {
+			if ($value) {
+				$query->filterContent($value, $key);
+			}
+		}
+
 		return $query;
 	}
 

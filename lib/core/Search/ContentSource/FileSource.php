@@ -35,6 +35,7 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface
 			'contributors' => $typeFactory->multivalue(array_unique(array($file['author'], $file['user'], $file['lastModifUser']))),
 			'description' => $typeFactory->plaintext($file['description']),
 			'filename' => $typeFactory->identifier($file['filename']),
+			'filetype' => $typeFactory->sortable(preg_replace('/^([\w-]+)\/([\w-]+).*$/', '$1/$2', $file['filetype'])),
 
 			'gallery_id' => $typeFactory->identifier($file['galleryId']),
 			'file_comment' => $typeFactory->plaintext($file['comment']),
@@ -57,6 +58,7 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface
 			'contributors',
 			'description',
 			'filename',
+			'filetype',
 
 			'gallery_id',
 			'file_comment',

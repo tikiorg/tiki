@@ -17,11 +17,18 @@
 		<input type="file" name="{$field.ins_id|escape}[]" accept="{$field.filter|escape}" multiple="multiple"/>
 	</fieldset>
 {/if}
+<fieldset>
+	<legend>Existing files</legend>
+	<input type="text" id="{$field.ins_id|escape}-search" placeholder="{tr}Search query{/tr}"/>
+	<ol class="results tracker-item-files">
+	</ol>
+</fieldset>
 {jq}
 (function () {
 var $drop = $('#{{$field.ins_id|escape}}-drop');
 var $files = $('#{{$field.ins_id|escape}}-files');
 var $field = $('#{{$field.ins_id|escape}}-input');
+var $search = $('#{{$field.ins_id|escape}}-search');
 
 var handleFiles = function (files) {
 	$.each(files, function (k, file) {
@@ -129,6 +136,40 @@ $drop.find('input').change(function () {
 	if (this.files) {
 		handleFiles(this.files);
 		$(this).val('');
+	}
+});
+
+$search.keypress(function (e) {
+	if (e.which === 13) {
+		var results = $(this).parent().find('.results');
+		results.empty();
+
+		$.getJSON('tiki-searchindex.php', {
+			"filter~type": "file",
+			"filter~content": $(this).val(),
+			"filter~filetype": "{{$field.filter|escape}}",
+			"filter~gallery_id": "{{$field.galleryId|escape}}",
+		}, function (data) {
+			$.each(data, function () {
+				var item = $('<li/>').append(this.link), icon = $('<label>{{icon _id=add}}</label>'), data = this;
+				item.append(icon);
+				icon.click(function () {
+					var li = $('<li/>');
+					li.text(item.text());
+					li.append($('<label>{{icon _id=cross}}</label>'));
+					li.find('img').click(function () {
+						$field.input_csv('delete', ',', data.object_id);
+						$(this).closest('li').remove();
+					});
+
+					$files.append(li);
+					$field.input_csv('add', ',', data.object_id);
+				});
+
+				results.append(item);
+			});
+		});
+		return false;
 	}
 });
 }());
