@@ -1534,7 +1534,7 @@ class FileGalLib extends TikiLib
 	}
 	// update backlinks of an object
 	function replaceBacklinks($context, $fileIds=array()) {
-		global $objectlib; include_once('lib/objectlib.php');
+		$objectlib = TikiLib::lib('object');
 		$objectId = $objectlib->get_object_id($context['type'], $context['object']);
 		if (empty($objectId) && !empty( $fileIds)) {
 			$objectId = $objectlib->add_object($context['type'], $context['object'], $context['description'], $context['name'], $context['href']);
@@ -1558,7 +1558,7 @@ class FileGalLib extends TikiLib
 	// delete backlinks associated to an object
 	function deleteBacklinks($context, $fileId=null) {
 		if (empty($fileId)) {
-			global $objectlib; include_once('lib/objectlib.php');
+			$objectlib = TikiLib::lib('object');
 			$objectId = $objectlib->get_object_id($context['type'], $context['object']);
 			if (!empty($objectId)) {
 				$this->_deleteBacklinks($objectId);
