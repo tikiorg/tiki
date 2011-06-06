@@ -541,7 +541,7 @@ CREATE TABLE `tiki_comments` (
   `hash` varchar(32) default NULL,
   `email` varchar(200) default NULL,
   `website` varchar(200) default NULL,
-  `user_ip` varchar(15) default NULL,
+  `user_ip` varchar(39) default NULL,
   `summary` varchar(240) default NULL,
   `smiley` varchar(80) default NULL,
   `message_id` varchar(128) default NULL,
@@ -1029,7 +1029,7 @@ CREATE TABLE `tiki_history` (
   `lastModif` int(14) default NULL,
   `description` varchar(200) default NULL,
   `user` varchar(200) not null default '',
-  `ip` varchar(15) default NULL,
+  `ip` varchar(39) default NULL,
   `comment` varchar(200) default NULL,
   `data` longblob,
   `type` varchar(50) default NULL,
@@ -1620,7 +1620,7 @@ CREATE TABLE `tiki_pages` (
   `version` int(8) NOT NULL default '0',
   `version_minor` int(8) NOT NULL default '0',
   `user` varchar(200) default '',
-  `ip` varchar(15) default NULL,
+  `ip` varchar(39) default NULL,
   `flag` char(1) default NULL,
   `points` int(8) default NULL,
   `votes` int(8) default NULL,
@@ -2145,7 +2145,7 @@ CREATE TABLE `tiki_tags` (
   `comment` varchar(200) default NULL,
   `version` int(8) NOT NULL default '0',
   `user` varchar(200) NOT NULL default '',
-  `ip` varchar(15) default NULL,
+  `ip` varchar(39) default NULL,
   `flag` char(1) default NULL,
   PRIMARY KEY (`tagName`,`pageName`)
 ) ENGINE=MyISAM;
@@ -2505,7 +2505,7 @@ CREATE TABLE `tiki_user_tasks` (
 DROP TABLE IF EXISTS `tiki_user_votings`;
 CREATE TABLE `tiki_user_votings` (
   `user` varchar(200) NOT NULL default '',
-  `ip` varchar(15) default NULL,
+  `ip` varchar(39) default NULL,
   `id` varchar(255) NOT NULL default '',
   `optionId` int(10) NOT NULL default 0,
   `time` int(14) NOT NULL default 0,
