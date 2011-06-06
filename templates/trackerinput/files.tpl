@@ -53,13 +53,14 @@ var handleFiles = function (files) {
 					xhr: provider,
 					dataType: 'json',
 					success: function (data) {
+						var fileId = data.fileId;
 						li.text(data.name);
 
-						$field.input_csv('add', ',', data.fileId);
+						$field.input_csv('add', ',', fileId);
 
 						li.append($('<label>{{icon _id=cross}}</label>'));
 						li.find('img').click(function () {
-							$field.input_csv('delete', ',', data.fileId);
+							$field.input_csv('delete', ',', fileId);
 							$(this).closest('li').remove();
 						});
 					},
@@ -84,7 +85,7 @@ var handleFiles = function (files) {
 	$(window).dequeue('process-upload');
 };
 
-$files.find('input').remove();
+$files.find('input').hide();
 $files.find('img').click(function () {
 	var fileId = $(this).parent().find('input').val();
 	$field.input_csv('delete', ',', fileId);

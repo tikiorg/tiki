@@ -52,6 +52,27 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 	function handleSave($value, $oldValue)
 	{
+		$new = array_diff(explode(',', $value), explode(',', $oldValue));
+		$remove = array_diff(explode(',', $oldValue), explode(',', $value));
+
+		$itemId = $this->getItemId();
+
+		$relationlib = TikiLib::lib('relation');
+		$relations = $relationlib->get_relations_from('trackeritem', $itemId, 'tiki.file.attach');
+		foreach ($relations as $existing) {
+			if ($existing['type'] != 'file') {
+				continue;
+			}
+
+			if (in_array($existing['itemId'])) {
+				$relationlib->remove_relation($existing['relationId']);
+			}
+		}
+
+		foreach ($new as $fileId) {
+			$relationlib->add_relation('tiki.file.attach', 'trackeritem', $itemId, 'file', $fileId);
+		}
+
 		return array(
 			'value' => $value,
 		);

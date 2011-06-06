@@ -1341,6 +1341,7 @@ class TrackerLib extends TikiLib
 		}
 
 		$currentItemId = $itemId ? $itemId : $new_itemId;
+		$item_info = $this->get_item_info($currentItemId);
 
 		if (!empty($oldStatus) || !empty($status)) {
 			if (!empty($itemId) && $oldStatus != $status) {
@@ -1378,7 +1379,7 @@ class TrackerLib extends TikiLib
 			$fieldId = $array['fieldId'];
 			$old_value = isset($fil[$fieldId]) ? $fil[$fieldId] : null;
 
-			$handler = $this->get_field_handler($array, $fil);
+			$handler = $this->get_field_handler($array, array_merge($item_info, $fil));
 
 			if (method_exists($handler, 'handleSave')) {
 				$array = array_merge($array, $handler->handleSave($array['value'], $old_value));

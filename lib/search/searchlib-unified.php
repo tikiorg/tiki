@@ -173,6 +173,7 @@ class UnifiedSearchLib
 
 		if (isset ($types['file'])) {
 			$aggregator->addContentSource('file', new Search_ContentSource_FileSource);
+			$aggregator->addGlobalSource(new Search_GlobalSource_FileAttachment);
 		}
 
 		if (isset ($types['trackeritem'])) {
