@@ -543,9 +543,11 @@ if ($prefs['tiki_check_file_content'] == 'y' && count($_FILES)) {
 		foreach ($_FILES as $key => & $upload_file_info) {
 			if (is_array($upload_file_info['tmp_name'])) {
 				foreach ($upload_file_info['tmp_name'] as $k => $tmp_name) {
-					$upload_file_info['type'][$k] = $finfo->file($tmp_name);
+					if ($tmp_name) {
+						$upload_file_info['type'][$k] = $finfo->file($tmp_name);
+					}
 				}
-			} else {
+			} elseif ($upload_file_info['tmp_name']) {
 				$upload_file_info['type'] = $finfo->file($upload_file_info['tmp_name']);
 			}
 		}

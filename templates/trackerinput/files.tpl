@@ -18,6 +18,7 @@
 	</fieldset>
 {/if}
 {jq}
+(function () {
 var $drop = $('#{{$field.ins_id|escape}}-drop');
 var $files = $('#{{$field.ins_id|escape}}-files');
 var $field = $('#{{$field.ins_id|escape}}-input');
@@ -83,7 +84,7 @@ var handleFiles = function (files) {
 	$(window).dequeue('process-upload');
 };
 
-$files.find('input:visible').remove();
+$files.find('input').remove();
 $files.find('img').click(function () {
 	var fileId = $(this).parent().find('input').val();
 	$field.input_csv('delete', ',', fileId);
@@ -129,5 +130,5 @@ $drop.find('input').change(function () {
 		$(this).val('');
 	}
 });
-
+}());
 {/jq}
