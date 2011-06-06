@@ -28,11 +28,15 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			$fileInfo = $this->getFileInfo($fileIds);
 		}
 
+		$perms = Perms::get('file gallery', $galleryId);
+
 		return array(
 			'galleryId' => $galleryId,
+			'canUpload' => $perms->upload_files,
 			'limit' => $count,
 			'files' => $fileInfo,
 			'value' => $value,
+			'filter' => $this->getOption(1),
 		);
 	}
 

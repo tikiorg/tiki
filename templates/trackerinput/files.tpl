@@ -1,43 +1,29 @@
-<input id="{$field.ins_id|escape}-input" type="text" name="{$field.ins_id|escape}" value="{$field.value|escape}"/>
-<div id="{$field.ins_id|escape}-drop" style="width: 200px; height: 200px; background: red;">{tr}Drop files here{/tr}</div>
-<ol id="{$field.ins_id|escape}-files">
+<ol class="tracker-item-files" id="{$field.ins_id|escape}-files">
 	{foreach from=$field.files item=info}
-		<li>{$info.name|escape}</li>
+		<li>
+			{$info.name|escape}
+			<label>
+				<input type="checkbox" name="{$field.ins_id|escape}_remove" value="{$info.fileId|escape}"/>
+				{icon _id=cross}
+			</label>
+		</li>
 	{/foreach}
 </ol>
+<input id="{$field.ins_id|escape}-input" type="hidden" name="{$field.ins_id|escape}" value="{$field.value|escape}"/>
+{if $field.canUpload}
+	<fieldset id="{$field.ins_id|escape}-drop" class="file-drop">
+		<legend>{tr}Upload files{/tr}</legend>
+		<p>{tr}Drop files from your desktop here or browse for them{/tr}</p>
+		<input type="file" name="{$field.ins_id|escape}[]" accept="{$field.filter|escape}" multiple="multiple"/>
+	</fieldset>
+{/if}
 {jq}
 var $drop = $('#{{$field.ins_id|escape}}-drop');
 var $files = $('#{{$field.ins_id|escape}}-files');
 var $field = $('#{{$field.ins_id|escape}}-input');
 
-$drop.bind('dragenter', function (e) {
-	e.preventDefault();
-	e.stopPropagation();
-	$drop.css('background', 'orange');
-	return false;
-});
-$drop.bind('dragexit', function (e) {
-	e.preventDefault();
-	e.stopPropagation();
-	$drop.css('background', 'red');
-	return false;
-});
-$drop.bind('dragover', function (e) {
-	e.preventDefault();
-	e.stopPropagation();
-	return false;
-});
-$drop.bind('drop', function (e) {
-	e.preventDefault();
-	e.stopPropagation();
-	$drop.css('background', 'red');
-
-	var dataTransfer = e.dataTransfer;
-	if (! dataTransfer) {
-		dataTransfer = e.originalEvent.dataTransfer;
-	}
-
-	$.each(dataTransfer.files, function (k, file) {
+var handleFiles = function (files) {
+	$.each(files, function (k, file) {
 		var reader = new FileReader();
 		var li = $('<li/>').appendTo($files);
 
@@ -68,12 +54,13 @@ $drop.bind('drop', function (e) {
 					success: function (data) {
 						li.text(data.name);
 
-						var values = $field.val().split(',');
-						if (values[0] === '') {
-							values.shift();
-						}
-						values.push(data.fileId);
-						$field.val(values.join(','));
+						$field.input_csv('add', ',', data.fileId);
+
+						li.append($('<label>{{icon _id=cross}}</label>'));
+						li.find('img').click(function () {
+							$field.input_csv('delete', ',', data.fileId);
+							$(this).closest('li').remove();
+						});
 					},
 					error: function () {
 						li.remove();
@@ -94,7 +81,53 @@ $drop.bind('drop', function (e) {
 		});
 	});
 	$(window).dequeue('process-upload');
+};
+
+$files.find('input:visible').remove();
+$files.find('img').click(function () {
+	var fileId = $(this).parent().find('input').val();
+	$field.input_csv('delete', ',', fileId);
+	$(this).closest('li').remove();
+});
+
+$drop.bind('dragenter', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	$drop.addClass('highlight');
 	return false;
+});
+$drop.bind('dragexit', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	$drop.removeClass('highlight');
+	return false;
+});
+$drop.bind('dragover', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	return false;
+});
+$drop.bind('drop', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	$drop.removeClass('highlight');
+
+	var dataTransfer = e.dataTransfer;
+	if (! dataTransfer) {
+		dataTransfer = e.originalEvent.dataTransfer;
+	}
+
+	if (dataTransfer && dataTransfer.files) {
+		handleFiles(dataTransfer.files);
+	}
+	return false;
+});
+
+$drop.find('input').change(function () {
+	if (this.files) {
+		handleFiles(this.files);
+		$(this).val('');
+	}
 });
 
 {/jq}
