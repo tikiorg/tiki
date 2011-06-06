@@ -23,7 +23,7 @@ class FileGalLib extends TikiLib
 		}
 	}
 
-	private function get_gallery_save_dir($galleryId, $galInfo = null) {
+	function get_gallery_save_dir($galleryId, $galInfo = null) {
 		global $prefs;
 
 		$podCastException = $this->isPodCastGallery($galleryId, $galInfo);

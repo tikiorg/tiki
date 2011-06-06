@@ -3145,6 +3145,23 @@ class TrackerLib extends TikiLib
 				<dd><strong>[template]</strong> The template name;
                                 <dd><strong>[params]</strong> List of parameters, formated like a query. %field_name% can be used, and will be replaced by the tracker field %field_name% current value.
 				</dl>'));
+		$type['FG'] = array(
+			'label' => tra('files'),
+			'opt' => true,
+			'options' => array(
+				'galleryId' => array('type' => 'int', 'label' => tra('Gallery ID')),
+				'filter' => array('type' => 'str', 'label' => tra('Mime Type Filter')),
+				'count' => array('type' => 'int', 'label' => tra('Maximum File Count')),
+			),
+			'help' => tra('<dl>
+				<dt>Function: Attach files from the file gallery on the item</dt>
+				<dt>Usage: Example: 2,image/*,4</dt>
+				<dt>Description:</dt>
+				<dd><strong>[galleryId]</strong> Gallery ID</dd>
+				<dd><strong>[filter]</strong> Accepted mime type</dd>
+				<dd><strong>[count]</strong> Accepted amount of files</dd>
+			</dl>'),
+		);
 
 		return $type;
 	}

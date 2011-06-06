@@ -16,6 +16,7 @@
 
 $controllerMap = array(
 	'comment' => 'Services_Comment_Controller',
+	'file' => 'Services_File_Controller',
 );
 
 $inputConfiguration = array(array(
