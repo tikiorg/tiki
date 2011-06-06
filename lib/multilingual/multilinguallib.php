@@ -937,7 +937,7 @@ class MultilingualLib extends TikiLib
 		}
 		if (!empty($mid)) $mid .= ' AND ';
 		$mid .= "($translationOrphan_mid)";
-		if (sizeof($langs) == 1) {
+		if (count($langs) == 1) {
 			$mid .= " AND ($sqlObjectId.`lang` != ? OR $sqlObjectId.`lang` IS NULL) ";
 			$bindvars[] = $langs[0];
 		}

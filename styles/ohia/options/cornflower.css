@@ -376,13 +376,18 @@ a.forumnameread {color: #0B7698}
 
 .tabmark a:hover {
 	color: #004354;
-	background: #87B5BE}
+	background: #87B5BE
+}
 
-.tabactive a {background: #87B5BF; color: #004354}
+.tabactive a {
+	background: #87B5BF; 
+	color: #004354
+}
 
 .tabcontent {
 	border-color: #528D9C;
-	background: #94BBC4}
+	background: #94BBC4
+}
 
 /***** Wiki *****/
 

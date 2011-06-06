@@ -1115,7 +1115,7 @@ class AccountingLib extends LogsLib
 		if ($res === false) {
 			$errors[] = tra('Error deleting entry from stack') . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";		
 		}
-		if (sizeof($errors) != 0) {
+		if (count($errors) != 0) {
 			return $errors;
 		}
 		return true;
@@ -1247,7 +1247,7 @@ class AccountingLib extends LogsLib
 		$cols = explode($defs['bankDelimeter'], $header);
 		$columns = array();
 
-		for ($i=0, $isizeof_cols = sizeof($cols); $i < $isizeof_cols; $i++) {
+		for ($i=0, $isizeof_cols = count($cols); $i < $isizeof_cols; $i++) {
 			switch($cols[$i]) {
 				case $defs['fieldNameAccount'] : $columns['accountId'] = $i;
 													break;
