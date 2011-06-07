@@ -46,19 +46,8 @@ class Services_File_Controller
 
 	private function uploadFile($gal_info, $name, $size, $type, $data)
 	{
-		global $prefs, $user;
-
 		$filegallib = TikiLib::lib('filegal');
-		$savedir = $filegallib->get_gallery_save_dir($gal_info['galleryId'], $galInfo);
-		$fhash = '';
-
-		if ($savedir) {
-			$fhash = $filegallib->find_unique_name($savedir, $name);
-			file_put_contents($savedir . $fhash, $data);
-			$data = null;
-		}
-
-		return $filegallib->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $user, $fhash, '');
+		return $filegallib->upload_single_file($gal_info, $name, $size, $type, $data);
 	}
 }
 

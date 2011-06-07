@@ -23,7 +23,7 @@ class FileGalLib extends TikiLib
 		}
 	}
 
-	function get_gallery_save_dir($galleryId, $galInfo = null) {
+	private function get_gallery_save_dir($galleryId, $galInfo = null) {
 		global $prefs;
 
 		$podCastException = $this->isPodCastGallery($galleryId, $galInfo);
@@ -3212,6 +3212,20 @@ class FileGalLib extends TikiLib
 			'data' => $data,
 			'fhash' => $fhash,
 		);
+	}
+
+	function upload_single_file($gal_info, $name, $size, $type, $data)
+	{
+		$savedir = $this->get_gallery_save_dir($gal_info['galleryId'], $galInfo);
+		$fhash = '';
+
+		if ($savedir) {
+			$fhash = $this->find_unique_name($savedir, $name);
+			file_put_contents($savedir . $fhash, $data);
+			$data = null;
+		}
+
+		return $this->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $user, $fhash, '');
 	}
 }
 $filegallib = new FileGalLib;

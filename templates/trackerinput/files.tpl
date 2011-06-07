@@ -1,20 +1,22 @@
 <ol class="tracker-item-files" id="{$field.ins_id|escape}-files">
 	{foreach from=$field.files item=info}
-		<li>
+		<li data-file-id="{$info.fileId|escape}">
 			{$info.name|escape}
-			<label>
-				<input type="checkbox" name="{$field.ins_id|escape}_remove" value="{$info.fileId|escape}"/>
-				{icon _id=cross}
-			</label>
+			<label>{icon _id=cross}</label>
 		</li>
 	{/foreach}
 </ol>
-<input id="{$field.ins_id|escape}-input" type="hidden" name="{$field.ins_id|escape}" value="{$field.value|escape}"/>
+<input id="{$field.ins_id|escape}-input" type="text" name="{$field.ins_id|escape}" value="{$field.value|escape}"/>
 {if $field.canUpload}
 	<fieldset id="{$field.ins_id|escape}-drop" class="file-drop">
 		<legend>{tr}Upload files{/tr}</legend>
+		{if $field.limit}
+			{remarksbox _type=info title="{tr}Attached files limitation{/tr}"}
+				{tr 0=$field.limit}The amount of files that can be attached is limited to <strong>%0</strong>. Additional files uploaded will still be uploaded to the server and searchable, but they will not be attached to this item. Make sure you remove the files no longer required before you save your changes.{/tr}
+			{/remarksbox}
+		{/if}
 		<p>{tr}Drop files from your desktop here or browse for them{/tr}</p>
-		<input type="file" name="{$field.ins_id|escape}[]" accept="{$field.filter|escape}" multiple="multiple"/>
+		<input class="ignore" type="file" name="{$field.ins_id|escape}[]" accept="{$field.filter|escape}" multiple="multiple"/>
 	</fieldset>
 {/if}
 <fieldset>
@@ -29,6 +31,8 @@ var $drop = $('#{{$field.ins_id|escape}}-drop');
 var $files = $('#{{$field.ins_id|escape}}-files');
 var $field = $('#{{$field.ins_id|escape}}-input');
 var $search = $('#{{$field.ins_id|escape}}-search');
+
+$field.hide();
 
 var handleFiles = function (files) {
 	$.each(files, function (k, file) {
@@ -94,7 +98,7 @@ var handleFiles = function (files) {
 
 $files.find('input').hide();
 $files.find('img').click(function () {
-	var fileId = $(this).parent().find('input').val();
+	var fileId = $(this).closest('li').data('file-id');
 	$field.input_csv('delete', ',', fileId);
 	$(this).closest('li').remove();
 });
