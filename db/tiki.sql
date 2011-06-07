@@ -3972,3 +3972,11 @@ CREATE TABLE `tiki_queue` (
     KEY `queue_name_ix` (`queue`),
     KEY `queue_handler_ix` (`handler`)
 ) ENGINE=MyISAM;
+
+DROP TABLE IF EXISTS `tiki_queue`;
+CREATE TABLE `tiki_cart_inventory_hold` (
+    `productId` INT( 14 ) NOT NULL,
+    `quantity` INT( 14 ) NOT NULL,
+    `timeHeld` INT( 14 ) NOT NULL,
+    `hash` CHAR( 32 ) NOT NULL
+);
