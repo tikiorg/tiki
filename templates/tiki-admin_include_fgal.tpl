@@ -81,6 +81,7 @@
 				{preference name='feature_use_fgal_for_user_files'}
 				{preference name='feature_use_fgal_for_wiki_attachments'}
 				{preference name='fgal_upload_progressbar'}
+				{preference name='fgal_upload_from_source'}
 			</fieldset>
 
 			<fieldset>

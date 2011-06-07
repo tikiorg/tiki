@@ -3227,5 +3227,31 @@ class FileGalLib extends TikiLib
 
 		return $this->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $user, $fhash, '');
 	}
+
+	function get_info_from_url($url)
+	{
+		if (! $url) {
+			return false;
+		}
+
+		$data = parse_url($url);
+		$name = basename($data['path']);
+
+		$result = TikiLib::lib('tiki')->httprequest($url);
+		if (! $result) {
+			return false;
+		}
+
+		$finfo = new finfo(FILEINFO_MIME);
+		$type = $finfo->buffer($result);
+		$size = function_exists('mb_strlen') ? mb_strlen($result, '8bit') : strlen($result);
+
+		return array(
+			'data' => $result,
+			'size' => $size,
+			'type' => $type,
+			'name' => $name,
+		);
+	}
 }
 $filegallib = new FileGalLib;

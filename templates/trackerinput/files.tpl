@@ -20,17 +20,24 @@
 	</fieldset>
 {/if}
 <fieldset>
-	<legend>Existing files</legend>
+	<legend>{tr}Existing files{/tr}</legend>
 	<input type="text" id="{$field.ins_id|escape}-search" placeholder="{tr}Search query{/tr}"/>
 	<ol class="results tracker-item-files">
 	</ol>
 </fieldset>
+{if $prefs.fgal_upload_from_source eq 'y' and $field.canUpload}
+	<fieldset>
+		<legend>{tr}Upload from URL{/tr}</legend>
+		<label>{tr}URL:{/tr} <input id="{$field.ins_id|escape}-url" type="url"/></label>
+	</fieldset>
+{/if}
 {jq}
 (function () {
 var $drop = $('#{{$field.ins_id|escape}}-drop');
 var $files = $('#{{$field.ins_id|escape}}-files');
 var $field = $('#{{$field.ins_id|escape}}-input');
 var $search = $('#{{$field.ins_id|escape}}-search');
+var $url = $('#{{$field.ins_id|escape}}-url');
 
 $field.hide();
 
@@ -140,6 +147,43 @@ $drop.find('input').change(function () {
 	if (this.files) {
 		handleFiles(this.files);
 		$(this).val('');
+	}
+});
+
+$url.keypress(function (e) {
+	if (e.which === 13) {
+		var url = $(this).val();
+		$(this).attr('disabled', 1);
+
+		$.ajax({
+			type: 'POST',
+			url: 'tiki-ajax_services.php',
+			dataType: 'json',
+			data: {
+				controller: 'file',
+				action: 'remote',
+				galleryId: "{{$field.galleryId|escape}}",
+				url: url
+			},
+			success: function (data) {
+				var fileId = data.fileId, li = $('<li/>');
+				li.text(data.name);
+
+				$field.input_csv('add', ',', fileId);
+
+				li.append($('<label>{{icon _id=cross}}</label>'));
+				li.find('img').click(function () {
+					$field.input_csv('delete', ',', fileId);
+					$(this).closest('li').remove();
+				});
+				$files.append(li);
+			},
+			complete: function () {
+				$url.attr('disabled', 0);
+			}
+		});
+
+		return false;
 	}
 });
 

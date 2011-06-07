@@ -202,5 +202,13 @@ function prefs_fgal_list() {
 			'default' => 'y',
 			'type' => 'flag',
 		),
+		'fgal_upload_from_source' => array(
+			'name' =>  tra('Upload files from remote source'),
+			'description' => tra('Allow to create files in file galleries using a URL that will be polled for new revisions.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('advanced', 'new'),
+			'dependencies' => array('fgal_keep_fileId', 'tiki_check_file_content'),
+		),
 	);
 }
