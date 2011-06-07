@@ -843,10 +843,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	 */
 	function getHttpClient()
 	{
-		require_once('Zend/Loader.php');
-		Zend_Loader::loadClass('Zend_Http_Client');
-
-		return new Zend_Http_Client();
+		return TikiLib::lib('tiki')->get_http_client();
 	}
 	
 	/**

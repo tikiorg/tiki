@@ -446,7 +446,9 @@ class SocialNetworksLib extends LogsLib
 		if ($key=='') {
 			return false;
 		}
-		$httpclient = new Zend_Http_Client("http://api.bit.ly/$action");
+
+		$httpclient = TikiLib::lib('tiki')->get_http_client();
+		$httpclient->setUri("http://api.bit.ly/$action");
 		
 		$params['login']=$login;
 		$params['apiKey']=$key;

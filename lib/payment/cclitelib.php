@@ -85,11 +85,6 @@ class CCLiteLib extends TikiDb_Bridge
 	public function is_valid( $ipn_data, $payment_info ) {
 		global $prefs;
 
-		// Make sure this is not a fake, must be verified even if discarded, otherwise will be resent
-		if( ! $this->confirmed_by_cclite( $ipn_data ) ) {
-			return false;
-		}
-
 		if( ! is_array( $payment_info ) ) {
 			return false;
 		}
@@ -170,24 +165,6 @@ class CCLiteLib extends TikiDb_Bridge
 		$r = $this->cclite_send_request('logoff');
 		
 		return $res;
-	}
-
-	private function confirmed_by_cclite( $ipn_data ) {
-		global $prefs;
-
-		return true;	// for now TODO
-
-		require_once 'lib/core/Zend/Http/Client.php';
-		$client = new Zend_Http_Client( $prefs['payment_cclite_environment'] );
-
-		$base = array( 'cmd' => '_notify-validate' );
-
-		$client->setParameterPost( array_merge( $base, $ipn_data ) );
-		$response = $client->request( 'POST' );
-
-		$body = $response->getBody();
-
-		return 'VERIFIED' === $body;
 	}
 
 	/**

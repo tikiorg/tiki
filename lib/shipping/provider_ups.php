@@ -38,8 +38,8 @@ class ShippingProvider_Ups implements ShippingProvider
 			$auth = $this->getAuth();
 			$request = $this->getRequest( $from, $to, $packages, $service );
 
-			require_once 'Zend/Http/Client.php';
-			$client = new Zend_Http_Client( 'https://www.ups.com/ups.app/xml/Rate' );
+			$client = TikiLib::lib('tiki')->get_http_client();
+			$client->setUri( 'https://www.ups.com/ups.app/xml/Rate' );
 			$client->setRawData( $auth . $request );
 
 			$response = $client->request( 'POST' );

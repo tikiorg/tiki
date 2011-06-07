@@ -31,17 +31,7 @@ if ( !empty($module_params['id']) ) {
 	$feedUrl = 'http://gdata.youtube.com/feeds/api/playlists/' . $id . '?orderby=published';
 	$yt = new Zend_Gdata_YouTube();
 	$yt->setMajorProtocolVersion(2);
-
-	if ( $prefs['use_proxy'] == 'y' ) {
-		// Configure the proxy connection
-		$config = array(
-		    'adapter'    => 'Zend_Http_Client_Adapter_Proxy',
-		    'proxy_host' => $prefs['proxy_host'],
-		    'proxy_port' => $prefs['proxy_port']
-		);
-		$proxiedHttpClient = new Zend_Http_Client($feedUrl, $config);
-		$yt->setHttpClient($proxiedHttpClient);
-	}
+	$yt->setHttpClient($tikilib->get_http_client());
 
 	try {
 		$playlistVideoFeed = $yt->getPlaylistVideoFeed($feedUrl);
