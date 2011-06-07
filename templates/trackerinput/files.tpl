@@ -191,6 +191,7 @@ $url.keypress(function (e) {
 $search.keypress(function (e) {
 	if (e.which === 13) {
 		var results = $(this).parent().find('.results');
+		$search.attr('disabled', 1);
 		results.empty();
 
 		$.getJSON('tiki-searchindex.php', {
@@ -199,6 +200,7 @@ $search.keypress(function (e) {
 			"filter~filetype": "{{$field.filter|escape}}",
 			"filter~gallery_id": "{{$field.galleryId|escape}}",
 		}, function (data) {
+			$search.attr('disabled', 0);
 			$.each(data, function () {
 				var item = $('<li/>').append(this.link), icon = $('<label>{{icon _id=add}}</label>'), data = this;
 				item.append(icon);
