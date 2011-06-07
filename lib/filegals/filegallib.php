@@ -3237,21 +3237,36 @@ class FileGalLib extends TikiLib
 		$data = parse_url($url);
 		$name = basename($data['path']);
 
-		$result = TikiLib::lib('tiki')->httprequest($url);
-		if (! $result) {
+		try {
+			$client = TikiLib::lib('tiki')->get_http_client();
+			$client->setUri($url);
+
+			$response = $client->request();
+
+			if ($response->isError()) {
+				return false;
+			}
+
+			$result = $response->getBody();
+			if ($disposition = $response->getHeader('Content-Disposition')) {
+				if (preg_match('/filename=[\'"]?([^;\'"]+)[\'"]?/i', $disposition, $parts)) {
+					$name = $parts[1];
+				}
+			}
+
+			$finfo = new finfo(FILEINFO_MIME);
+			$type = $finfo->buffer($result);
+			$size = function_exists('mb_strlen') ? mb_strlen($result, '8bit') : strlen($result);
+
+			return array(
+				'data' => $result,
+				'size' => $size,
+				'type' => $type,
+				'name' => $name,
+			);
+		} catch (Zend_Http_Exception $e) {
 			return false;
 		}
-
-		$finfo = new finfo(FILEINFO_MIME);
-		$type = $finfo->buffer($result);
-		$size = function_exists('mb_strlen') ? mb_strlen($result, '8bit') : strlen($result);
-
-		return array(
-			'data' => $result,
-			'size' => $size,
-			'type' => $type,
-			'name' => $name,
-		);
 	}
 }
 $filegallib = new FileGalLib;
