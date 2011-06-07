@@ -102,6 +102,9 @@
 				<div class="adminoptionboxchild" id="use_proxy_childcontainer">
 					{preference name=proxy_host}
 					{preference name=proxy_port}
+
+					{preference name=proxy_user}
+					{preference name=proxy_pass}
 				</div>
 			</fieldset>
 

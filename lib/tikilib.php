@@ -224,6 +224,30 @@ class TikiLib extends TikiDb_Bridge
 		$this->now = time();
 	}
 
+	function get_http_client()
+	{
+		global $prefs;
+		
+		$config = array(
+			'timeout' => 5,
+		);
+
+
+		if ($prefs['use_proxy'] == 'y') {
+			$config['adapter'] = 'Zend_Http_Client_Adapter_Proxy';
+			$config["proxy_host"] = $prefs['proxy_host'];
+			$config["proxy_port"] = $prefs['proxy_port'];
+
+			if ($prefs['proxy_user'] || $prefs['proxy_pass']) {
+				$config["proxy_user"] = $prefs['proxy_user'];
+				$config["proxy_pass"] = $prefs['proxy_pass'];
+			}
+		}
+
+		$client = new Zend_Http_Client(null, $config);
+
+		return $client;
+	}
 
 	function httprequest($url, $reqmethod = "GET") {
 		global $prefs;
@@ -234,58 +258,21 @@ class TikiLib extends TikiDb_Bridge
 			 ) {
 			$url = "http://" . $url;
 		}
-		// (cdx) params for HTTP_Request.
-		// The timeout may be defined by a DEFINE("HTTP_TIMEOUT",5) in some file...
-		$aSettingsRequest=array("method"=>$reqmethod,"timeout"=>5);
 
-		if (substr_count($url, "/") < 3) {
-			$url .= "/";
+		try {
+			$client = $this->get_http_client();
+			$client->setUri($url);
+
+			$response = $client->request($reqmethod);
+
+			if ($response->isError()) {
+				return false;
+			}
+
+			return $response->getBody();
+		} catch (Zend_Http_Exception $e) {
+			return false;
 		}
-
-		//handle url embedded user:pass
-		$spliturl=parse_url($url);
-		if(!empty($spliturl['user']) && !empty($spliturl['pass'])) {
-			$aSettingsRequest["pass"]=$spliturl['pass'];
-			$aSettingsRequest["user"]=$spliturl['user'];
-			$url=str_replace($spliturl['user'].":".$spliturl['pass']."@", null, $url);
-		}
-
-		if (!preg_match("/^[-_a-zA-Z0-9:\/\.\?&;=\+~%,]*$/",$url)) return false;
-
-		// Proxy settings
-		if ($prefs['use_proxy'] == 'y') {
-			$aSettingsRequest["proxy_host"]=$prefs['proxy_host'];
-			$aSettingsRequest["proxy_port"]=$prefs['proxy_port'];
-		}
-		include_once ('lib/pear/HTTP/Request.php');
-		$aSettingsRequest['allowRedirects'] = true;
-		$req = new HTTP_Request($url, $aSettingsRequest);
-		$data="";
-		// (cdx) return false when can't connect
-		// I prefer throw a PEAR_Error. You decide ;)
-		if (PEAR::isError($oError=$req->sendRequest())) {
-			return(false);
-			/* Please people, don't use fopen. It's potentially unsafe
-			 * because if any form does not check the url, you can upload
-			 * /etc/passwd and other file from the local host.
-			 * it's also more safe to use httprequest, because the admin can set
-			 * a proxy so that noone can upload files in tiki from behind a
-			 * firewall (safes the net where tiki runs in).
-			 $fp = fopen($url, "r");
-
-			 if ($fp) {
-			 $data = '';
-			 while(!feof($fp)) {
-			 $data .= fread($fp,4096);
-			 }
-			 fclose ($fp);
-			 }
-			 if ($data =="") return false;
-			 */
-		} else {
-			$data = $req->getResponseBody();
-		}
-		return $data;
 	}
 
 	/*shared*/
