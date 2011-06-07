@@ -3216,6 +3216,12 @@ class FileGalLib extends TikiLib
 
 	function upload_single_file($gal_info, $name, $size, $type, $data)
 	{
+		$this->convert_from_data($gal_info, $fhash, $data);
+
+		return $this->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $user, $fhash, '');
+	}
+
+	private function convert_from_data($gal_info, & $fhash, & $data) {
 		$savedir = $this->get_gallery_save_dir($gal_info['galleryId'], $galInfo);
 		$fhash = '';
 
@@ -3224,8 +3230,6 @@ class FileGalLib extends TikiLib
 			file_put_contents($savedir . $fhash, $data);
 			$data = null;
 		}
-
-		return $this->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $user, $fhash, '');
 	}
 
 	function get_info_from_url($url)
@@ -3271,6 +3275,70 @@ class FileGalLib extends TikiLib
 		} catch (Zend_Http_Exception $e) {
 			return false;
 		}
+	}
+
+	function attach_file_source($fileId, $url)
+	{
+		$attributelib = TikiLib::lib('attribute');
+		$attributelib->set_attribute('file', $fileId, 'tiki.content.source', $url);
+		$attributelib->set_attribute('file', $fileId, 'tiki.content.lastcheck', time());
+	}
+
+	function refresh_file($fileId)
+	{
+		global $prefs;
+
+		$attributelib = TikiLib::lib('attribute');
+		$attributes = $attributelib->get_attributes('file', $fileId);
+
+		// Must have a source to begin with
+		if (! isset($attributes['tiki.content.source'], $attributes['tiki.content.lastcheck'])) {
+			return false;
+		}
+
+		// Make sure not to flood the remote server with update requests
+		if ($attributes['tiki.content.lastcheck'] + $prefs['fgal_source_refresh_frequency'] > time()) {
+			return false;
+		}
+
+		$files = $this->table('tiki_files');
+		$info = $files->fetchRow(array('galleryId', 'name', 'filename', 'description', 'hash'), array(
+			'fileId' => $fileId,
+			'archiveId' => 0,
+		));
+
+		if (! $info) {
+			// Either a missing file or an archive, in both cases, we don't process
+			return false;
+		}
+
+		// Record as a check before checking in the case the server is overloaded and times out
+		$attributelib->set_attribute('file', $fileId, 'tiki.content.lastcheck', time());
+		$remote = $this->get_info_from_url($attributes['tiki.content.source']);
+
+		if (! $remote) {
+			return false;
+		}
+		
+		$sum = md5($remote['data']);
+
+		if ($sum === $info['hash']) {
+			// Content is the same, no new version to create
+			return false;
+		}
+
+		$name = $remote['name'];
+		$data = $remote['data'];
+		if ($info['name'] != $info['filename']) {
+			// Name was changed on the file, preserve the manually entered one
+			$name = $info['name'];
+		}
+
+		$gal_info = $this->get_file_gallery_info($info['galleryId']);
+		$this->convert_from_data($gal_info, $fhash, $data);
+		$this->replace_file($fileId, $name, $info['description'], $remote['name'], $data, $remote['size'], $remote['type'], null, $fhash, tra('Automatic revision from source'), $gal_info, true);
+
+		return true;
 	}
 }
 $filegallib = new FileGalLib;

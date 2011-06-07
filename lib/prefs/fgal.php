@@ -210,5 +210,14 @@ function prefs_fgal_list() {
 			'tags' => array('advanced', 'new'),
 			'dependencies' => array('fgal_keep_fileId'),
 		),
+		'fgal_source_refresh_frequency' => array(
+			'name' => tra('Remote source refresh frequency limit'),
+			'description' => tra('Minimum amount of seconds to be ellapsed between source checks to prevent flooding servers.'),
+			'type' => 'text',
+			'filter' => 'int',
+			'size' => 5,
+			'default' => 3600,
+			'shorthint' => tra('seconds'),
+		),
 	);
 }

@@ -82,6 +82,10 @@
 				{preference name='feature_use_fgal_for_wiki_attachments'}
 				{preference name='fgal_upload_progressbar'}
 				{preference name='fgal_upload_from_source'}
+
+				<div class="adminoptionboxchild" id="fgal_upload_from_source_childcontainer">
+					{preference name='fgal_source_refresh_frequency'}
+				</div>
 			</fieldset>
 
 			<fieldset>

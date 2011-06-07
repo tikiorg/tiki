@@ -32,15 +32,17 @@ class Services_File_Controller
 	function action_remote($input)
 	{
 		$gal_info = $this->checkTargetGallery($input);
+		$url = $input->url->url();
 		
 		$filegallib = TikiLib::lib('filegal');
-		$info = $filegallib->get_info_from_url($input->url->url());
+		$info = $filegallib->get_info_from_url($url);
 
 		if (! $info) {
 			throw new Services_Exception(tr('Data could not be obtained.'), 412);
 		}
 
 		$fileId = $this->uploadFile($gal_info, $info['name'], $info['size'], $info['type'], $info['data']);
+		$filegallib->attach_file_source($fileId, $url);
 
 		return array(
 			'size' => $info['size'],
@@ -49,6 +51,16 @@ class Services_File_Controller
 			'fileId' => $fileId,
 			'galleryId' => $gal_info['galleryId'],
 			'md5sum' => md5($info['data']),
+		);
+	}
+
+	function action_refresh($input)
+	{
+		$filegallib = TikiLib::lib('filegal');
+		$ret = $filegallib->refresh_file($input->fileId->int());
+
+		return array(
+			'success' => $ret,
 		);
 	}
 
