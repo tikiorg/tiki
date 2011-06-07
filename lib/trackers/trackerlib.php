@@ -2429,7 +2429,7 @@ class TrackerLib extends TikiLib
 		global $user;
 		$votings = $this->table('tiki_user_votings');
 
-		if ($field['type'] == 's' && $field['name'] == 'Rating') { // global rating to an item - value is the sum of the votes
+		if ($field['type'] == 's' && $field['name'] == tra('Rating')) { // global rating to an item - value is the sum of the votes
 			$key = 'tracker.'.$trackerId.'.'.$itemId;
 			$field['numvotes'] = $votings->fetchCount(array('id' => $key));
 			$field['voteavg'] = ( $field['numvotes'] > 0 ) ? round(($field['value'] / $field['numvotes'])) : '';

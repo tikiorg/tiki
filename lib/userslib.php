@@ -596,6 +596,7 @@ class UsersLib extends TikiLib
 						}
 						else
 						{
+							$vaffils = '';
 							foreach($validaffiliarray as $vaffil){
 								$vaffils = $vaffils . $vaffil . ", ";
 							}
@@ -781,6 +782,7 @@ class UsersLib extends TikiLib
 		// Read page AuthPAM at tw.o, it says about a php module required.
 		// maybe and if extension line could be added here... module requires $error
 		// as reference.
+		$error = '';
 		if (pam_auth($user, $pass, $error)) {
 			return USER_VALID;
 		} else {
@@ -2071,6 +2073,7 @@ class UsersLib extends TikiLib
 		$query = "select g.`groupHome`, g.`groupName` from `users_usergroups` as gu, `users_users` as u, `users_groups`as g where gu.`userId`= u.`userId` and u.`login`=? and gu.`groupName`= g.`groupName` and g.`groupHome` != '' and g.`groupHome` is not null";
 		$result = $this->query($query,array($user));
 		$home = '';
+		$group = '';
 		while ($res = $result->fetchRow()) {
 			if ($home != '') {
 				$groups = $this->get_included_groups($res["groupName"]);
@@ -2101,9 +2104,9 @@ class UsersLib extends TikiLib
 		global $prefs;
 		if ($prefs['useGroupHome'] == 'y') {
 			$groupHome = $this->get_user_default_homepage($user);
-			if ($groupHome)
+			if (!empty($groupHome))
 				$p = $groupHome;
- 			else
+			else
 				$p = $prefs['wikiHomePage'];
 		} else {
 			$p = $prefs['wikiHomePage'];
@@ -5702,7 +5705,7 @@ class UsersLib extends TikiLib
 		}
 
 		if ( ! $this->group_exists($olgroup) ) {
-			return $this->add_group($group, $desc, $home, $utracker,$gtracker, $userChoice, $defcat, $theme, $isExternal, $expireAfter, $emailPattern);
+			return $this->add_group($group, $desc, $home, $utracker,$gtracker, $userChoice, $defcat, $theme, $isexternal, $expireAfter, $emailPattern);
 		}
 
 		global $cachelib;

@@ -131,7 +131,7 @@ function wikiplugin_trackeritemfield($data, $params) {
 			$trackerId = $item['trackerId'];
 		}
 
-		if (empty($itemId) || empty($test) || empty($status)) {// need an item
+		if (empty($itemId) && empty($test) && empty($status)) {// need an item
 			return tra('Incorrect param').': itemId';
 		}
 
@@ -250,8 +250,13 @@ function wikiplugin_trackeritemfield($data, $params) {
 			} elseif ($test) { 
 				return $data;
 			} else {
+				$info[$fieldId] = $val;
 				$handler = $trklib->get_field_handler($field, $info);
-				return $handler->renderInput();
+				$field = array_merge($field, $handler->getFieldData($field));
+				$handler = $trklib->get_field_handler($field, $info);	// gets the handler to blend back the value into the definitions array
+				$out = $handler->renderInnerOutput();
+
+				return $out;
 			}
 		} elseif ($test) { // testing the value of a field that does not exist yet
 			return $dataelse;

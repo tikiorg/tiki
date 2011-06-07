@@ -48,7 +48,12 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 			'itemId' => $objectId,
 		));
 
-		$fields = Tracker_Definition::get($item['trackerId'])->getFields();
+		$definition = Tracker_Definition::get($item['trackerId']);
+		if (! $definition) {
+			return $data;
+		}
+
+		$fields = $definition->getFields();
 
 		$title = '';
 		foreach ($fields as $field) {

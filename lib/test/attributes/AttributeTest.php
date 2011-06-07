@@ -69,7 +69,7 @@ class AttributeTest extends TikiTestCase
 		$this->assertTrue( $lib->set_attribute( 'test', 'HelloWorld', 'tiki . test . aaa55bBb', 121.22 ) );
 		
 		$this->assertEquals( array(
-			'tiki.test.aaabbb' => 121.22,
+			'tiki.test.aaa55bbb' => 121.22,
 		), $lib->get_attributes( 'test', 'HelloWorld' ) );
 	}
 

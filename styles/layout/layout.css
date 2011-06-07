@@ -159,6 +159,11 @@ img {
 	clear: none;
 }
 
+/* default minimum height in case only login, etc. (absolutely positioned) is assigned */
+#top_modules {
+	min-height: 20px;
+}
+
 /* Siteloginbar (no popup, items arranged horizontally) */
 #top_modules .box-login_box {
 	position: absolute;

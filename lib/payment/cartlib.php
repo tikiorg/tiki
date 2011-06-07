@@ -53,7 +53,7 @@ class CartLib
 	
 	function add_bundle( $code, $quantity, $info ) {
 		$moreInfo = $this->get_product_info( $code );
-		if ($moreInfo['productsinbundle']) {
+		if (!empty($moreInfo['productsinbundle'])) {
 			$products = explode(",", $moreInfo['productsinbundle']);
 			foreach($products as $product) {
 				$p = explode(":", $product);
@@ -170,12 +170,12 @@ class CartLib
 		$paymentlib->register_behavior( $invoice, 'cancel', 'cart_gift_certificate_refund', array( $this->gift_certificate_id, $this->gift_certificate_mode, $this->gift_certificate_amount, $this->gift_certificate_discount) );
 	}
 	
-	function get_gift_certificate_code($code) {
+	function get_gift_certificate_code( $code = null ) {
 		$code = ( $code ? $code : $_SESSION["cart"]["tiki-gc"]["code"] ); //TODO: needs to be a little less dirty
 		return $code;
 	}
 	
-	function get_gift_certificate( $code ) {
+	function get_gift_certificate( $code = null ) {
 		$this->gift_certificate_code = $code = ( $code ? $code : $this->get_gift_certificate_code() );
 		if (!$code) return false;
 		

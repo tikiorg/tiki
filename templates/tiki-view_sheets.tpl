@@ -26,7 +26,7 @@
 			{button _id="edit_button" _text="{tr}Edit{/tr}" _htmlelement="role_main" _template="tiki-view_sheets.tpl" parse="edit" _auto_args="*"  _class=""}
 			
 			{if $tiki_p_view_sheet eq 'y' || $tiki_p_admin eq 'y'}
-				{button href="tiki-sheets.php" _text="{tr}List Sheets{/tr}"}
+				{button href="tiki-sheets.php" _text="{tr}List Spreadsheets{/tr}"}
 			{/if}
 		
 			{if $objectperms->edit_sheet}

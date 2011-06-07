@@ -480,14 +480,15 @@ class CategLib extends ObjectLib
 	    $join = '';
 	    if (is_array($categId) && $and) {
 			$categId = $this->get_jailed( $categId );
-			$i = count($categId);
-			$bindWhere = $categId;
+			$i = count($categId)+1;
+			$bindWhere = array();
 			foreach ($categId as $c) {
-				if (--$i)
-					$join .= " INNER JOIN tiki_category_objects tco$i on (tco$i.`catObjectId`=o.`catObjectId` and tco$i.`categId`=?) ";
+				if (--$i) {
+					$join .= " INNER JOIN tiki_category_objects tco$i on tco$i.`catObjectId`=o.`objectId` and tco$i.`categId`=? ";
+					$bindWhere[] = $c;
+				}
 			}
-			$where = ' AND c.`categId`=? ';
-	   } elseif (is_array($categId)) {
+		} elseif (is_array($categId)) {
 			$bindWhere = $categId;
 			if ($deep) {
 				foreach ($categId as $c) {
@@ -1291,7 +1292,7 @@ class CategLib extends ObjectLib
 		foreach ($catids as $id) {
 			$titles["$id"] = $this->get_category_name($id);
 			$objectcat = array();
-			$objectcat = $this->list_category_objects($id, $offset, $and? -1: $maxRecords, $sort, $types == '*'? '': $typesallowed, $find, $sub , false, $filter);
+			$objectcat = $this->list_category_objects($id, $offset, $and? -1: $maxRecords, $sort, $types == '*'? '': $typesallowed, $find, $sub);
 
 			$acats = $andcat = array();
 			foreach ($objectcat["data"] as $obj) {
