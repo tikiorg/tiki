@@ -31,6 +31,15 @@ class Services_File_Controller
 
 	function action_remote($input)
 	{
+		global $prefs;
+		if ($prefs['fgal_upload_from_source'] != 'y') {
+			return false;
+		}
+
+		if ($prefs['fgal_source_show_refresh'] != 'y') {
+			return false;
+		}
+
 		$gal_info = $this->checkTargetGallery($input);
 		$url = $input->url->url();
 		

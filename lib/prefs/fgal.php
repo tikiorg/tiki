@@ -219,5 +219,11 @@ function prefs_fgal_list() {
 			'default' => 3600,
 			'shorthint' => tra('seconds'),
 		),
+		'fgal_source_show_refresh' => array(
+			'name' => tra('Display controls to attempt refresh'),
+			'description' => tra('Let users trigger a refresh attempt from the remote host.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }

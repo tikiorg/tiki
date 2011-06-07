@@ -85,6 +85,7 @@
 
 				<div class="adminoptionboxchild" id="fgal_upload_from_source_childcontainer">
 					{preference name='fgal_source_refresh_frequency'}
+					{preference name='fgal_source_show_refresh'}
 				</div>
 			</fieldset>
 
