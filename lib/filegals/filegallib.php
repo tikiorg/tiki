@@ -3254,9 +3254,13 @@ class FileGalLib extends TikiLib
 				}
 			}
 
-			$finfo = new finfo(FILEINFO_MIME);
-			$type = $finfo->buffer($result);
-			$size = function_exists('mb_strlen') ? mb_strlen($result, '8bit') : strlen($result);
+			if (class_exists('finfo')) {
+				$finfo = new finfo(FILEINFO_MIME);
+				$type = $finfo->buffer($result);
+				$size = function_exists('mb_strlen') ? mb_strlen($result, '8bit') : strlen($result);
+			} else {
+				$type = $response->getHeader('Content-Type');
+			}
 
 			return array(
 				'data' => $result,

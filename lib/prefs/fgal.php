@@ -208,7 +208,7 @@ function prefs_fgal_list() {
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('advanced', 'new'),
-			'dependencies' => array('fgal_keep_fileId', 'tiki_check_file_content'),
+			'dependencies' => array('fgal_keep_fileId'),
 		),
 	);
 }
