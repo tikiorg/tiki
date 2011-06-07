@@ -1061,6 +1061,10 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 		  $option['sefurl'] = smarty_function_sefurl(array('page'=>$channel['pageName'], 'structure'=>$structure, 'page_ref_id'=>$channel['page_ref_id']), $smarty);
 		  $option['position'] = $cant + $cumul;
 		  $option['sectionLevel'] = $sectionLevel;
+		  
+		  $option['url'] = str_replace('&amp;', '&', $option['url']);			// as of Tiki 7 menu items get encoded later
+		  $option['sefurl'] = str_replace('&amp;', '&', $option['sefurl']);
+		  
 		  ++$cant;
 		  $options[] = $option;
 		  if (!empty($channel['sub'])) {
