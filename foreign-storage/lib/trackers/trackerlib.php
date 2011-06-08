@@ -1049,6 +1049,17 @@ class TrackerLib extends TikiLib
 						$mid .= " AND ttif$i.`value`*1<? ";
 						$bindvars[] = $filter['options_array'][$j+1];
 					}
+				} elseif ($filter['type'] == 'r' && ($fv || $ev)) {
+					$cv = $fv ? $fv : $ev;
+
+					if (is_numeric($cv)) {
+						$mid .= " AND ttif$i.`value` = ? ";
+						$bindvars[] = $cv;
+					} else {
+						$cat_table .= " INNER JOIN tiki_tracker_item_fields ttif{$i}_remote ON ttif$i.`value` = ttif{$i}_remote.`itemId` AND ttif{$i}_remote.`fieldId` = " . intval($filter['options_array'][1]) . ' ';
+						$mid .= " AND ttif{$i}_remote.`value` LIKE ? ";
+						$bindvars[] = $ev ? $ev : "%$fv%";
+					}
 				} elseif ($ev) {
 					if (is_array($ev)) {
 						$keys = array_keys($ev);

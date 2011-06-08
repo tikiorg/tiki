@@ -585,13 +585,15 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 				$opts = array();
 				$handler = $trklib->get_field_handler($field);
 				$add = $handler->getFieldData();
+				$selected = empty($_REQUEST['f_'.$fieldId])? '': $_REQUEST['f_'.$fieldId];
 				foreach ($add['list'] as $id => $option) {
 					$opts[] = array(
 						'id' => $id,
 						'name' => $option,
-						'selected' => ! empty($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId] == $id,
+						'selected' => $selected == $id,
 					);
 				}
+				break;
 		
 			case 'f':
 			case 'j':
