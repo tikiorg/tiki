@@ -3308,6 +3308,10 @@ class FileGalLib extends TikiLib
 		$attributelib->set_attribute('file', $fileId, 'tiki.content.source', $url);
 		$attributelib->set_attribute('file', $fileId, 'tiki.content.lastcheck', time());
 		$attributelib->set_attribute('file', $fileId, 'tiki.content.expires', $info['expires']);
+
+		if ($info['etag']) {
+			$attributelib->set_attribute('file', $fileId, 'tiki.content.etag', $info['etag']);
+		}
 	}
 
 	function refresh_file($fileId)
