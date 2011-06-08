@@ -1,7 +1,7 @@
 {* $Id$ *}
 -=Theme details=-
 * __Name:__ Green Blog (greenblog.css)
-* __Author and maintainer:__  Adapted for TikiWiki by Gary Cunningham-Lee (chibaguy); original HTML template is by TemplateMo.com.
+* __Author and maintainer:__  Adapted for Tiki Wiki CMS Groupware by Gary Cunningham-Lee (chibaguy); original HTML template is by TemplateMo.com.
 * __License:__ GNU/LGPL
 * __Author URL:__ http://zukakakina.com (adapter); http://TemplateMo.com (original designer)
 * __Description__: Green look and uses the *litecss source-ordered layout method ([http://sourceforge.net/projects/litecss]) and imports layout.css. Column spacing is designed primarily for a two-column (center and right) configuration. For more information, please see the documentation pages for this theme. If possible, retain the link to TemplateMo.com in the page footer.
@@ -32,9 +32,11 @@
 * styles/greenblog/thumb_04.png
 * styles/greenblog/thumb_05.png
 * styles/greenblog/thumb_06.png
+* templates/styles/greenblog/credits.tpl
+* templates/styles/greenblog/index.tpl
  
 -=Documentation=-
-http://themes.tikiwiki.org/Green Blog
+http://themes.tiki.org/Green Blog
 http://zukakakina.com/Green Blog
 See http://themes.tiki.org/Upgrading for overview of changes in this Tiki version related to themes.
  
@@ -42,7 +44,7 @@ See http://themes.tiki.org/Upgrading for overview of changes in this Tiki versio
 * Tiki 7
  
 -=Changelog=-
-5 updated for Tiki 7
+5 updated for Tiki 7 (support for modules used as containers for page header content,etc.)
 4 updated for Tiki 6
 3 updated for Tiki 5
 2 updated for Tiki 4

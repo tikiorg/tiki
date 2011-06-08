@@ -1,5 +1,5 @@
 /*	$Id$
-	Greenblog stylesheet template (greenblog.css) for Tikiwiki CMS/Groupware.
+	Greenblog stylesheet template (greenblog.css) for Tiki Wiki CMS Groupware.
 	Visit http://themes.tikiwiki.org for more information.
 */
 
@@ -22,17 +22,16 @@ body.fullscreen * {
 	background: #fff;
 	background-image: none;
 	border: none;
-	color: #000}
-
-body.fullscreen a:link,
-body.fullscreen a:visited {
-	color: blue;
-	text-decoration: underline}
-
+	color: #000;
+}
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
-		
+
+.fixed_width > .fixedwidth {
+	margin-top: 0;
+}
+
 /* Enable header and footer content to widen when middle has wide content. */ 
 body.fixed_width .fixedwidth .fixedwidth {
 	width: 100%;
@@ -50,42 +49,44 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 #c1c2	#wrapper	#col1.marginleft  {margin-left: 200px}
 #c1c2	#wrapper	#col1.marginright {margin-right: 300px}
+
 #c1c2	#wrapper	#col1	.content {
-	background: transparent}
+	background: transparent;
+}
 
 #c1c2	#wrapper	#col1	.content {background: transparent}
 
 #c1c2 #wrapper #col1 #tiki-center {
-	padding: 0 40px}
+	padding: 0 40px;
+}
 
 #c1c2 #col2 {
 	width: 200px;
-	overflow: visible}
-
-#c1c2 #col2 .content {
-	/*margin: 0;
-	padding: 0 4px 4px*/}
+	overflow: visible;
+}
 
 #col3 {
 	width: 300px;
 	margin-left: -300px;
 	margin-bottom: 15px;
-	font-size: 1em}
+	font-size: 1em;
+}
 
-#col3 .content {}
-
-#bottom_panel {
+/* check the original for this */
+#bottom_modules {
 	background: #050702 url(greenblog/content_bottom.jpg) no-repeat center bottom;
 	border-top: 1px solid #050702;
 	margin: 0 auto;
-	min-height: 250px}
+	min-height: 250px;
+}
 
 #footer {
 	background: #040500 url(greenblog/footer_bg.jpg) no-repeat scroll center top;
 	border-top: 1px solid #141204;
 	height: 50px;
 	margin: 0 auto;
-	width: 100%}
+	width: 100%;
+}
 
 #credits {display: inline}
 
@@ -95,16 +96,19 @@ body.fixed_width .fixedwidth .fixedwidth {
 /***** XHTML Elements (other than body tag) ******/
 a, a:visited {
 	color: #ffc64a;
-	text-decoration: none}
+	text-decoration: none;
+}
 
 a:active, a:hover {
-color: #ffff00;
-text-decoration: underline}
+	color: #ffff00;
+	text-decoration: underline;
+}
 
 .wikitext a.wiki,
 .wikitext a.wiki:visited {
 	color: #ffc64a !important;
-	text-decoration: none}
+	text-decoration: none;
+}
 	
 h1, h2, h3, h4, h5 {
 	line-height: 1.1;
@@ -115,30 +119,35 @@ h1 {
 	padding: 10px 0;
 	font-size: 26px;
 	color: #d77707;
-	font-weight: normal}
+	font-weight: normal;
+}
 
 h2 {
 	margin: 0 0 15px 0;
 	padding: 0 0 10px 0;
 	font-size: 20px;
 	color: #ff9d11;
-	border-bottom: 1px dotted #663e17}
+	border-bottom: 1px dotted #663e17;
+}
 
 h3 {
 	margin: 0 0 15px 0;
 	padding: 0 0 10px 0;
 	font-size: 20px;
 	color: #ffc64a;
-	border-bottom: 1px dotted #663e17}
+	border-bottom: 1px dotted #663e17;
+}
 
 hr {
 	background: #000;
-	color: #b6ba63}
+	color: #b6ba63;
+}
 
 p {
 	margin: 0px;
 	padding: 0 0 10px 0;
-	text-align: justify}
+	text-align: justify;
+}
 
 input[type="text"],
 input[type="password"] {
@@ -149,14 +158,16 @@ input[type="password"] {
 	font-variant: normal;
 	height: 15px;
 	line-height: normal;
-	padding: 1px 4px}
+	padding: 1px 4px;
+}
 
 textarea,
 fieldset {
 	background: none;
 	border: 1px solid #b6ba63;
 	color: #fff;
-	font-size: 1em}
+	font-size: 1em;
+}
 	
 textarea.tshoutbox {font-size: 1em;}
 textarea.wikiedit {font-size: 1.2em;}
@@ -164,7 +175,8 @@ textarea.wikiedit {font-size: 1.2em;}
 select {
 	background: #2f320e;
 	color: #b6ba63;
-	border: 1px solid #b6ba63}
+	border: 1px solid #b6ba63;
+}
 
 legend {color: #f2e7ce}
 
@@ -182,7 +194,12 @@ input[type="submit"],
 	border: 1px solid;
 	border-color: #b6ba63 #7d8135 #7d8135 #b6ba63;
 	padding: 1px 4px;
-	margin: 1px}
+	margin: 1px;
+}
+	
+#top_modules .siteloginbar_popup .tabmark > a > .sf-sub-indicator {
+	bottom: 2px;
+}	
 
 input[type="reset"],
 input[type="submit"] {
@@ -191,7 +208,8 @@ input[type="submit"] {
 	border: 1px solid;
 	border-color: #b6ba63 #7d8135 #7d8135 #b6ba63;
 	padding: 1px 4px;
-	margin-right: 1px}
+	margin-right: 1px;
+}
 
 .button a:hover,
 button:hover,
@@ -203,18 +221,30 @@ input[type="submit"]:hover,
 #top_modules .siteloginbar_popup .tabmark > a:hover {
 	color: #ffff00;
 	border-color: #b6ba63;
-	text-decoration: none}
+	text-decoration: none;
+}
 
-.highlight {background: inherit; border: 1px solid yellow}
+.highlight {background: inherit; border: 1px solid #ffff00}
 
 
 /***** Site Header & Identity *****/
-#top_modules #tiki-top {
+#top_modules .tiki-top {
+	position: absolute;
+	top: 0;
+	left: 0;
 	height: 59px;
 	margin: 0 auto;
 	padding: 0 0 0 30px;
+	width: 100%;
 	color: #fff;
 	background:  url(greenblog/menu_panel_bg.jpg) no-repeat 0 100%;
+}
+
+#top_modules .box-logo {
+	margin-left: 10px;
+	margin-bottom: 10px;
+	float: left;
+	margin-top: 59px;
 }
 
 #top_modules .box-search {
@@ -227,14 +257,12 @@ input[type="submit"]:hover,
 	margin: 5% 0 3% 30px;
 }
 
-#sitetitle,
-#sitesubtitle {}
-
 #sitetitle {font-size: 3em}
 
 #sitesubtitle {
 	margin-top: 1em;
-	font-size: 1.8em}
+	font-size: 1.8em;
+}
 
 #top_modules .box-login_box {
 	position: absolute;
@@ -248,7 +276,7 @@ input[type="submit"]:hover,
 }
 
 /****** Menus, Links ******/
-/** CSS (suckerfish) and PHP Layers menus **/
+
 #tiki-top > .cssmenu_horiz {padding-left: 20px}
 
 /* default link padding */
@@ -273,6 +301,7 @@ input[type="submit"]:hover,
 	color: #fff;
 	text-decoration: none;
 }
+
 /* ul ul top compensation for padding */
 .cssmenu_horiz li:hover ul,
 .cssmenu_horiz li.sfHover ul {
@@ -339,23 +368,21 @@ input[type="submit"]:hover,
 .menuSection .linkmenu {padding-left: 20px}
 
 /***** Misc. Center Col. *****/
-/*
-a.flip {color: #505603; text-decoration: none;font-size: 90%}
-a.flip:hover {color: #ffc64a}*/
-
 /****** Misc. Global ****/
-
 /***** Boxes *****/
 /** Modules **/
+
 .box {
 	padding: 15px 15px 10px 15px;
 	margin-bottom: 30px;
 	background: #0b0c04 url(greenblog/right_section_bg.jpg) top right no-repeat;
-	border: 1px solid #191a0d}
+	border: 1px solid #191a0d;
+}
 
 #col2 .box {
 	width: 178px;
-	padding: 15px 0 10px 0}
+	padding: 15px 0 10px 0;
+}
 
 #col3 .box {width: 248px}
 a.flipmodtitle:hover img {border: 1px solid #ffc64a !important}
@@ -363,17 +390,21 @@ a.flipmodtitle:hover img {border: 1px solid #ffc64a !important}
 .cbox {
 	border: 1px solid #ffc64a;
 	background: #2f320e;
-	color: #ffc64a}
+	color: #ffc64a;
+}
 
 .cbox-title {
 	border-bottom: 1px solid #ffc64a;
-	padding: 3px 3px 0 3px}
+	padding: 3px 3px 0 3px;
+}
 
 .rbox-title,
 .rbox-data {border-color: #d77707}
-.rbox-title {
+.
+rbox-title {
 	background: #d77707;
-	color: #000}
+	color: #000;
+}
 	
 .rbox-data {
 	color: #ffc64a;
@@ -383,7 +414,8 @@ a.flipmodtitle:hover img {border: 1px solid #ffc64a !important}
 .simplebox {
 	color: #ffc64a;
 	background: #2f320e;
-	border: 1px dotted #ffc64a}
+	border: 1px dotted #ffc64a;
+}
 
 .halffloat .box,
 .wikitext .halffloat .box {
@@ -403,13 +435,11 @@ a.flipmodtitle:hover img {border: 1px solid #ffc64a !important}
 /***** Tables, Tabs *****/
 /** Tables **/
 
-.normal/*,
-.admin*/ {
+.normal {
 	border: 1px solid #B6BA63;
 	border-collapse: collapse}
 
-.normal td/*,
-.admin td*/ {
+.normal td {
 	  border: 1px dotted #663e17;
 	  padding: 2px 3px}
 
@@ -433,7 +463,6 @@ tr.even td,
 	color: #f2e7ce;
 }
 
-
 /** Tabs **/
 .tabactive,
 .tabinactive,
@@ -452,7 +481,8 @@ tr.even td,
 }
 .tabcontent {
 	background: #0b0c04 url(greenblog/post_bg.jpg) no-repeat right top;
-	border: 1px solid #191a0d}
+	border: 1px solid #191a0d;
+}
 	
 .statuson {
 	border: 1px solid #b6ba63;
@@ -465,19 +495,22 @@ h1.pagetitle {
 	font-weight: bold;
 	height: 50px;
 	margin: 0 0 10px;
-	padding: 20px 0 5px 0}
+	padding: 20px 0 5px 0;
+}
 
 h1.pagetitle a,
 h1.pagetitle a:visited,
 h1.pagetitle a:hover {
 	color: #d77707;
-	text-decoration: none}
+	text-decoration: none;
+}
 
 .wikitext {
 	background: #0b0c04 url(greenblog/post_bg.jpg) no-repeat right top;
 	border: 1px solid #191A0D;
 	margin-bottom: 30px;
-	padding: 0 30px 15px}
+	padding: 0 30px 15px;
+}
 
 .code {
 	font-size: 90%;
@@ -485,7 +518,8 @@ h1.pagetitle a:hover {
 	background: #2f320e;
 	color: #b6ba63;
 	border: 1px solid #b6ba63;
-	font-family: "Courier New", Courier, monospace}
+	font-family: "Courier New", Courier, monospace;
+}
 
 .codecaption {
 	display: inline-block;
@@ -497,7 +531,8 @@ h1.pagetitle a:hover {
 	font-size: 90%;
 	color: #b6ba63;
 	background: #2f320e;
-	font-weight: bold}
+	font-weight: bold;
+}
 
 .codelisting {
 	position: relative;
@@ -509,11 +544,13 @@ h1.pagetitle a:hover {
 	border: 1px solid #b6ba63;
 	margin: 4px;
 	overflow: auto;
-   width: 500px}
+   width: 500px;
+ }
 
 div#textarea-toolbar {
 	background: #fae371;
-	border: 1px solid #b6ba63}
+	border: 1px solid #b6ba63;
+}
 
 .help_sections {background: #656201}
 
@@ -522,46 +559,53 @@ div#textarea-toolbar {
 	background: #0b0c04 url(greenblog/post_bg.jpg) no-repeat right top;
 	border: 1px solid #191A0D;
 	margin-bottom: 30px;
-	padding: 0 0 10px}
+	padding: 0 0 10px;
+}
 
 .articletrailer span {
 	display: inline-block;
-	background: transparent url(greenblog/comment_icon.gif) no-repeat scroll left bottom;
+	background: transparent url(greenblog/comment_icon.gif) no-repeat left bottom;
 	margin-left: 5px;
-	padding-left: 20px;}
+	padding-left: 20px;
+}
 
 /***** Blogs *****/
 
 .post {
 	background: #0b0c04 url(greenblog/post_bg.jpg) no-repeat right top;
-	border: 1px solid #191A0D;
+	border: 1px solid #191a0d;
 	margin-bottom: 30px;
-	padding: 0 5px 10px}
+	padding: 0 5px 10px;
+}
 
 body.tiki_blogs .author_actions {
 	display: block;
-	text-align: right}
+	text-align: right;
+}
 
 .post .author_info {
 	float: none;
 	background: none;
 	padding: 2px;
-	margin-right: 0}
+	margin-right: 0;
+}
 
 .post .postbody-title {
 	display: block;
 	background: none;
 	border-bottom: 0;
 	padding: 0;
-	margin: 0}
+	margin: 0;
+}
 
 
 /***** Forums *****/
 .post {
 	background: #0b0c04 url(greenblog/post_bg.jpg) no-repeat right top;
-	border: 1px solid #191A0D;
+	border: 1px solid #191a0d;
 	margin-bottom: 30px;
-	padding: 0 5px 10px}
+	padding: 0 5px 10px;
+}
 
 .post .author {
 	float: left;
@@ -570,31 +614,34 @@ body.tiki_blogs .author_actions {
 	margin: -3px 3px 3px -3px;
 	background: url(greenblog/right_section_bg.jpg) 100% 0;
 	padding: 3px;
-	position: relative}
+	position: relative;
+}
 
 .post .avatar {
 	display: block;
 	float: none;
 	text-align: left;
 	margin: 0;
-	background: inherit}
+	background: inherit;
+}
 
 .post .author_post_info {
 	display: block;
-	padding: 0}
+	padding: 0;
+}
 
 .post .author_post_info:first-child {text-transform: capitalize}
 
 .post .postbody-title .title a.link {
 	font-size: 1.1em;
-	font-weight: bold}
+	font-weight: bold;
+}
 
 .post .author .icons {
 	position: absolute;
 	top: 3px;
-	left: 50px}
-
-/**** Image Galleries ****/
+	left: 50px;
+}
 
 /***** File Galleries *****/
 .thumbnailcontener {
@@ -613,29 +660,27 @@ body.tiki_blogs .author_actions {
 	border-bottom: 1px solid #b6ba63;
 }
 
-/***** Trackers *****/
-
-/***** Categories, Tags *****/
-
 /***** Tags (freetags) *****/
 .freetagitemlist {
 	  background: #0b0c04 url(greenblog/post_bg.jpg) no-repeat right top;
 	border: 1px solid #191A0D;
 	margin-bottom: 30px;
-	padding: 0 0 10px}
+	padding: 0 0 10px;
+}
 
 /***** Directory *****/
 .dirsite {
 	background: #0b0c04 url(greenblog/post_bg.jpg) no-repeat right top;
 	border: 1px solid #191A0D;
 	margin-bottom: 30px;
-	padding: 0 0 10px}
-
+	padding: 0 0 10px;
+}
 
 /***** Calendar *****/
 .caldark {
 	background: none;
-	border: 0}
+	border: 0;
+}
 
 .caldark .calfocus {background: none;}
 .calodd, .caleven {border: 1px solid #b6ba63}
@@ -645,12 +690,14 @@ body.tiki_blogs .author_actions {
 /***** Admin *****/
 a.admbox {
 	background: #14160a no-repeat center center;
-	border: 1px solid #b6ba63}
+	border: 1px solid #b6ba63;
+}
 
 a.admbox:hover {
 	background: #585400 no-repeat center center;
 	border: 1px solid #b6ba63;
 	color: #ffff00;
-	text-decoration: none}
+	text-decoration: none;
+}
 
 /* End of File */
