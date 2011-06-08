@@ -920,9 +920,9 @@ class TrackerLib extends TikiLib
 					$numsort = true;
 					break;
 				case 'l':
-					$optsl = $field['options_array'];
-					$optsl[1] = preg_split('/:/', $optsl[1]);
-					$sort_tables = $this->get_left_join_sql(array_merge(array($optsl[2]), $optsl[1], array($optsl[3])));
+					// Do nothing, value is dynamic and thus cannot be sorted on
+					$csort_mode = 1;
+					$csort_tables = '';
 					break;
 				case 'r':
 					$link_field = intval($field['fieldId']);
@@ -1195,8 +1195,10 @@ class TrackerLib extends TikiLib
 					foreach ($linkfilter as $lf) {
 						if ($field['fieldId'] == $lf["filterfield"]) {
 							// extra comma at the front and back of filtervalue to avoid ambiguity in partial match
-							if ($lf["filtervalue"] && strpos(',' . implode(',',$field['links']) . ',', $lf["filtervalue"]) === false
-							|| $lf["exactvalue"] && implode(',',$field['links']) != $lf["exactvalue"] && implode(':',$field['links']) != $lf["exactvalue"] ) {
+							if ($lf["filtervalue"] && strpos(',' . implode(',',$field['items']) . ',', $lf["filtervalue"]) === false) {
+								$filterout = true;
+								break 2;
+							} elseif ($lf["exactvalue"] && !in_array($lf['exactvalue'], $field['items'])) {
 								$filterout = true;
 								break 2;
 							}
