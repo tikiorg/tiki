@@ -1,0 +1,2219 @@
+/*
+ * The Darkroom theme for TikiWiki CMS/Groupware.
+ * Released under the LGPL license. 
+ * For more information on Darkroom, please visit http://themes.tiki.org.
+ */
+ 
+ /* import *lite as the base: */
+@import url("lite/lite.css"); 
+
+/* Then import the default layout properties file: */
+@import url("layout/layout.css");
+
+/* And design defaults: */
+@import url("layout/design.css");
+
+/***** XHTML Elements ******/ 
+
+html {
+	background: #474747 url(darkroom/474747_5e5e5e_40.png);
+}
+
+body {
+	background: #474747;
+	color: #d8d8d8;
+	font: 74% "Trebuchet MS", "Bitstream Vera Sans", sans-serif;
+}
+
+body.cke_show_borders {
+	color: #d8d8d8;
+	background: #474747;
+}
+
+body.fixed_width {
+	background-color: transparent;
+}
+
+a,
+a:link,
+a:visited {
+	color: #d8d8d8;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #d8d8d8;
+	text-decoration: underline;
+}
+
+h1,
+h2,
+h3,
+h4 {
+	color: #b2b2b2;
+	font-weight: bold;
+	margin: 0 0 15px;
+	padding: 0;
+	line-height: 1.1;
+	letter-spacing: -1px;
+}
+
+h1 {
+	font-size: 1.7em;
+	margin: 0 10px 3px;
+}
+
+h2 {
+	font-size: 1.6em;
+}
+
+h3 {
+	font-size: 1.4em;
+}
+
+h4 {
+	font-size: 1.2em;
+}
+
+h5 {
+	font-size: 1.1em;
+}
+
+p {
+	line-height: 1.5em;
+	margin: 0 0 15px;
+}
+
+fieldset {
+	border: solid 1px #a9a9a9;
+	padding: 10px;
+}
+
+form {
+	color: #f5f5f5;
+}
+
+legend {
+	color: #d8d8d8;
+}
+
+input,
+textarea,
+option,
+select {
+	margin: 2px;
+	vertical-align: middle;
+	font-size: 0.9em;
+	cursor: pointer;
+}
+
+textarea {
+	border: solid 1px #aaa;
+	background: #292929;
+	color: #f5f5f5;
+	font-size: 1.1em;
+	cursor: text;
+}
+
+input[type=text],
+input[type=password] {
+	border: solid 1px #aaa;
+	background-color: #292929; /* use background-color here; background only shorthand property overrides the background image of .openid_url login field specified in styles/layout/design.css */
+	color: #f5f5f5;
+	font-size: 0.9em;
+	cursor: text;
+}
+
+input.button,
+button,
+.button input,
+.button,
+input.wikiaction,
+.calbuttonbox {
+	background: #4e4e4e url(darkroom/button.png) top left repeat-x;
+	color: #b2b2b2;
+	font-weight: bold;
+	border: 1px solid transparent;
+	border-top: 1px solid #818181;
+	vertical-align: middle;
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+.calbuttonbox {
+	margin: 0 2px 0 2px;
+}
+
+#next {
+	margin-left: 0;
+}
+
+#page-bar .button {
+	margin: 0 2px;
+}
+
+/* do not put this rule with button rule for IE6 */
+input[type=submit],
+input[type=reset] {
+	background: #4e4e4e url(darkroom/button.png) top left repeat-x;
+	color: #b2b2b2;
+	font-weight: bold;
+	border: 1px solid transparent;
+	border-top: 1px solid #818181;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+input.button:hover,
+button:hover,
+input[type=submit]:hover,
+.button input:hover,
+.button:hover,
+.calbuttonbox a:hover {
+	border: 1px solid #b2b2b2;
+}
+
+.button a:hover {
+	text-decoration: none;
+	padding: 0 4px;
+}
+
+.button {
+	font-size: 0.8em;
+}
+
+input[type=file] {
+	color: #000;
+}
+
+select {
+	border: solid 1px #aaa;
+	color: #f5f5f5;
+	font-size: 1em;
+	vertical-align: middle;
+	background: #292929;
+}
+
+option {
+	border: 0;
+}
+
+select[name="theme"] {
+	border-top: 1px solid #a9a9a9;
+	border-left: 1px solid #a9a9a9;
+	border-right: 1px solid #696969;
+	border-bottom: 1px solid #696969;
+}
+
+#col1 select[type=file] {
+	font-size: .95em;
+}
+
+input[type=wikiaction] {
+	margin-bottom: 2px;
+}
+
+small {
+	font-size: 0.8em;
+}
+
+/***** Page Layout *****/
+
+.fullscreenbutton:hover,
+#fullscreenbutton:hover {
+	color: #d8d8d8;
+}
+
+#main {
+	margin: 0;
+	font-size: 1em;
+}
+
+/* Enable header and footer content to widen when middle has wide content. */ 
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
+}
+
+#middle {
+	text-align: left;
+	font-size: 1.2em;
+	background: #0c0c0c;
+}
+
+#c1c2 {
+	text-align: left;
+	font-size: 1em;
+}
+					
+#c1c2 #wrapper .marginleft {
+	margin-left: 200px;
+}
+
+#c1c2 #wrapper .marginright {
+	margin-right: 200px;
+}
+
+#c1c2 #col2 {
+	width: 200px;
+	font-size: 1em;
+	overflow: visible;
+}
+
+#c1c2 #col2 .content {
+	margin: 0;
+	padding: 3px;
+}
+
+#col3 {
+	width: 200px;
+	font-size: 1em;
+	margin-left: -200px;
+	margin-top: 10px;
+}
+
+#col3 .content {
+	padding: 3px;
+}
+
+#footer {
+	text-align: center;
+	background: #474747;
+	color: inherit;
+	font-weight: bold;
+	font-size: 0.9em;
+}
+
+#footer .content {
+	padding: 20px 0;
+}
+
+#footer a:link,
+#footer a:visited {
+	font-weight: bold;
+}
+
+#bottom_modules {
+	text-align: left;
+}
+
+#power {
+	margin-top: .5em;
+}
+
+/* Site Header & Identity */
+.header_container {
+	padding-top: 2px;
+	text-align: left;
+	background: #0c0c0c;
+}
+
+#top_modules {
+	min-height: 40px;
+}
+
+
+#top_modules .module.secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 20px;
+}
+
+#top_modules .box-logo {
+	float: left;
+	height: 100%;
+}
+
+#sitelogo {
+	margin: auto !important;
+	padding: 1em;
+}
+
+#top_modules #sitetitles {
+	margin: 10% 20px;
+	padding-left: 20px;
+}
+
+.floatright img {
+	margin-right: 40px;
+}
+	
+#sitetitle,
+#sitesubtitle {
+	color: #a7a7a7;
+	font-weight: 400;
+	letter-spacing: -2px;
+}
+
+#sitetitle {
+	font-size: 2.4em;
+}
+
+#sitesubtitle {
+	font-size: 1.6em;
+}
+
+#top_modules .box-login_box {
+	position: absolute;
+	right: 20px;
+	bottom: 0;
+}
+
+#top_modules .siteloginbar_popup > ul > li {
+	line-height: 50%;
+}
+
+.siteloginbar_poppedup {
+    width: 13em !important;
+}
+/*
+.siteloginbar * {
+	padding: 2px;
+}
+
+.siteloginbar.logged-in {
+	bottom: 2px;
+}
+
+input[id="sl-login-user"],
+input[id="sl-login-pass"] {
+	font-size: 1.1em;
+}
+
+.siteloginbar_popup ul.cssmenu_horiz li ul {
+	margin-top: -6px;
+}
+
+.siteloginbar_popup .tabcontent {
+	margin: 0;
+}
+*/
+
+/* id is no longer used but this is retained as possible reference for banner module CSS */
+#sitead {
+	clear: none;
+	color: #999;
+	max-width: 460px;
+	margin-top: .8em;
+	padding: 1em;
+	font: 11px Geneva, Arial, Helvetica, sans-serif;
+}
+
+#tiki-top {
+	width: 100%;
+	border-top: 1px solid #818181;
+	height: 34px;
+	background: url(darkroom/button.png) repeat-x;
+	padding-top: 0;
+}
+
+#tiki-top .cssmenu_horiz {
+	margin-top: 0;
+}
+
+#topbar_modules {
+	position: relative;
+}
+
+#topbar_modules .box-search {
+	position: absolute;
+	right: 10px;
+	top: 4px;
+	z-index: 2;
+}
+
+/* centercolumn */
+#showhide_columns {
+	padding: 0 10px;
+}
+
+a.flip,
+a.flip:visited,
+.tellafriend a,
+.share a,
+.tellafriend a:visited,
+.share a:visited {
+	font-size: .7em;
+	color: #6c6c6c;
+}
+
+a.flip:hover,
+.tellafriend a:hover,
+.share a:hover {
+	font-size: .7em;
+	color: #b2b2b2;
+}
+
+.tellafriend,
+.share {
+	padding: 0;
+}
+
+.actions .share {
+	padding: 0;
+}
+
+#tiki-center {
+	background: #3f3f3f;
+	margin: 10px;
+	margin-top: 0;
+	padding: 10px;
+}
+
+/** Border boxes (if any) **/
+	
+/****** Menus ******/
+/** CSS (suckerfish) menus **/
+
+/* typography, colors */
+.cssmenu_horiz li,
+.cssmenu_vert li {
+	background: #474747;
+}
+
+.cssmenu_horiz li ul li,
+.cssmenu_vert li ul li {
+	border: 1px solid #6a6a6a;
+	border-top: 0;
+	margin-bottom: -1px;
+}
+
+.cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #6a6a6a;
+}
+
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	text-decoration: none;
+	font-weight: bold;
+	color: #d8d8d8;
+}
+
+.cssmenu_vert a:hover,	
+.cssmenu_horiz a:hover,
+#tiki-top .cssmenu_horiz li ul li a:hover {
+	color: #3f3f3f;
+}
+
+.cssmenu_horiz li:hover,
+.cssmenu_vert li:hover,
+.cssmenu_horiz li.sfhover,
+.cssmenu_vert li.sfhover {
+	background: #b2b2b2;
+}
+
+#tiki-top .cssmenu_horiz li a:hover {
+	/*border: 1px solid #909090;*/
+	color: #909090;
+}
+
+#tiki-top .cssmenu_horiz li {
+	background: url(darkroom/button.png) repeat-x;
+}
+
+#tiki-top .cssmenu_horiz li ul li {
+	background: #474747;
+}
+
+#tiki-top .cssmenu_horiz li ul li:hover {
+	background: #b2b2b2;
+}
+
+
+#tiki-top .cssmenu_horiz li a {
+	border: 1px solid transparent;
+	border-right: 1px solid #6a6a6a;
+	color: #a6a68d;
+	font-weight: bold;
+	font-size: 12px;
+	padding: 5px 1em 6px;
+}
+
+/* default link padding */
+.cssmenu_horiz a {
+	padding: .75em 1em;
+}
+
+#tiki-top .cssmenu_horiz li li a {
+	padding: 4px 1em;
+	border-right: none;
+}
+
+#tiki-top .cssmenu_horiz li.menuSection0 a {
+	padding-right: 2.6em;
+}
+
+#tiki-top .cssmenu_horiz li.menuSection1 a {
+	padding-right: 1em;
+}
+
+.cssmenu_vert a {
+	padding: 3px 2px 3px 8px;
+}
+
+/* left column width */
+#col2 ul.cssmenu_vert {
+	padding-left: 0;
+}
+
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 166px;
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 166px;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+/* less padding in topbar so move ul ul up */
+#tiki-top ul.cssmenu_horiz li:hover ul,
+#tiki-top ul.cssmenu_horiz li.sfHover ul {
+	top: 2.2em;
+}
+
+/* but not ul ul ul */
+#tiki-top ul.cssmenu_horiz li li:hover ul,
+#tiki-top ul.cssmenu_horiz li li.sfHover ul {
+	top: 0;
+}
+
+/* special arrow top padding */
+#tiki-top .cssmenu_horiz li a > .sf-sub-indicator {
+	top: 1em;
+}
+
+#tiki-top .cssmenu_horiz li ul li a .sf-sub-indicator,
+.cssmenu_vert li a > .sf-sub-indicator {
+	top: .4em;
+}
+
+/** Links in other menus **/
+.separator,
+.separatorline {
+	color: #f5f5f5;
+	padding: 5px 0px 4px 5px;
+}
+
+.separator:hover,
+.option a.linkmenu:hover {
+	text-decoration: none;
+	color: #303030;
+	background: #b2b2b2;
+}
+
+a.separator:hover {
+	text-decoration: none;
+	color: #303030;
+	background: #b2b2b2;
+}
+
+.menuSection .menuSection,
+.menuSection .separator {
+	padding-left: 5px;
+}
+
+a.linkmodule {
+	font-weight: bold;
+}
+ 
+.option,
+.optionline {
+	color: #5F5F5F;
+	margin: 0;
+	padding: 4px 2px 2px 8px;
+}
+
+.option:hover,
+.option:active {
+	color: #303030;
+	background: #b2b2b2;
+}
+
+.linkmenu,
+.rsslink,
+.rsslink:visited {
+	font-size: .95em;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+.linkmenu:hover {
+	letter-spacing: 0;
+}
+
+.rsslist {
+	margin: 0;
+	margin-right: 10px;
+	padding: 1px;
+	list-style-position: inside;
+}
+
+.rssitem {
+	font-weight: normal;
+	padding: 1px 6px;
+	border-top: 1px dashed #dadac9;
+}
+
+.rssitem:first-child {
+	border-top: 0;
+}
+
+.rssdate {
+	color: #999;
+	font-style: italic;
+	font-size: .95em;
+}
+
+/****** Misc. Global Classes (layout and style) ****/
+.highlight,
+#highlight {
+	background: #474747;
+	color: #fff;
+}
+
+.bannertext {
+	color: #f5f5f5;
+	background: #aaa;
+}
+
+.bannertext:hover {
+	color: #fff;
+}
+
+.link,
+.gallink,
+.bloglink,
+.fgallink,
+.trailer,
+.opencomlink,
+.commentslink,
+.admlink,
+.forumbutlink {
+	font-weight: normal;
+	padding: 0;
+}
+
+.mini {
+	color: #fff;
+}
+
+a.tikihelp:hover {
+	color: #f5f5f5;
+}
+
+.icon_edit_section {
+	float: right;
+}
+
+.inline_syntax {
+	color: orange;
+}
+
+/**** Jquery ****/
+/**autocomplete **/
+.ac_even, .ac_odd {
+	color: #292929;
+}
+
+.ac_over {
+	color: white;
+}
+
+/**infinite carousel**/
+#carousel {
+        color: black;
+}
+
+#carousel a {
+        color: #292929;
+}
+
+/**help**/
+.help_section {
+	background: #474747;
+	color: #d8d8d8;
+}
+
+/*
+a.tikihelp, 
+a.tikihelp:hover {
+	color: #292929;
+}*/
+
+/**tree**/
+.ui-icon {
+background-image: url('../lib/jquery/jquery-ui/themes/ui-darkness/images/ui-icons_cccccc_256x240.png');
+}
+
+/** input widget **/
+.ui-widget input {
+	color: whiteSmoke;
+}
+
+.ui-button-text {
+	color: #b2b2b2;
+}
+
+/**** Boxes *****/
+/** Modules **/
+.box {
+	background: #292929;
+	margin-bottom: 8px;
+	padding-bottom: 2px;
+/*	width: 190px;*/
+}
+
+h3.box-title {
+	color: #9d9d9d;
+	font-size: 1.4em;
+	font-weight: bold;
+	margin: 0 0 12px;
+	padding: 4px;
+}
+
+.box-title a {
+	color: #9d9d9d;
+}
+
+img.flipmodimage:hover {
+	border: 1px solid #818181 !important;
+}
+
+.box-data {
+	background: #474747;
+	padding: 2px 2px;
+	color: #dcdcdc;
+	line-height: 1.4em;
+	margin: 8px;
+}
+
+.box-data select {
+	width: 120px;
+}
+
+.box-data .selected {
+	font-style: italic;
+}
+
+.box-data table td {
+	padding: 0.2em;
+	text-align: left;
+}
+
+.box-data li {
+	padding: 0.2em;
+}
+
+/** Other boxes **/
+.cbox {
+	border: 1px solid #909090;
+	margin: 6px;
+}
+
+.cbox-title {
+	text-align: left;
+	text-indent: 1em;
+	border-bottom: 1px solid #999;
+	padding: 4px 4px 0 4px;
+	color: #d8d8d8;
+	font-weight: bold;
+}
+
+.cbox-data {
+	padding: 1px 4px 4px 4px;
+}
+
+.cbox-data ul {
+	margin-top: -20px;
+	padding-left: 1em;
+}
+
+.cbox-data ul ul {
+	margin: auto;
+}
+
+.rbox {
+	overflow: hidden;
+	border: 0;
+	color: #fffff0;
+}
+
+.rbox-title {
+	text-align: left;
+	padding: 3px;
+	font-weight: bold;
+	color: #fffff0;
+	background: #000;
+	border: 1px solid #606060;
+	border-bottom: none;
+	margin-bottom: 0;
+}
+
+.rbox-data {
+	padding: 3px;
+	color: #fffff0;
+	background: #000;
+	border: 1px solid #606060;
+}
+
+.error .rbox-data a:link,
+.error .rbox-data a:hover,
+.error .rbox-data a:visited {
+	color: #000;
+}
+
+.errors .rbox-data a:link,
+.errors .rbox-data a:hover,
+.errors .rbox-data a:visited {
+	color: #000;
+}
+
+.warning .rbox-data a:link,
+.warning .rbox-data a:hover,
+.warning .rbox-data a:visited {
+	color: #000;
+}
+
+.warning .rbox-title {
+	color: #000;
+}
+
+.tip .rbox-title,
+.tip .rbox-data,
+.note .rbox-data {
+	background: #000;
+	color: #fffff0;
+}
+
+.simplebox {
+	background: #696969;
+	padding: 4px;
+}
+
+.odd {
+	color: #fff;
+	background: #292929;
+}
+
+.even {
+	color: #fff;
+	background: #232323;
+}
+
+/***** Tables, Tabs and Lists ****/
+/** Tables **/
+table {
+	font-size: 1em;
+	border-collapse: collapse;
+}
+
+.normal, 
+.admin {
+	border: solid 1px #696969;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+.normal td,
+.wikitable td,
+td.odd,
+td.even,
+.form,
+.formcolor td,
+.editblogform td {
+	padding: 0.2em;
+}
+
+.formcolor td,
+.galform td,
+.editblogform td,
+.editfgalform td,
+.comform td,
+.forumform td {
+	color: #fff;
+	background: #292929;
+	padding: 3px;
+}
+
+th,
+td.heading,
+tr.diffheader {
+	padding: 0 2px;
+	background: #292929;
+	text-align: center;
+	color: #f5f5f5;
+}
+
+tr.odd {
+	background: #292929;
+}
+
+tr.even {
+	background: #3f3f3f;
+}
+
+tr.odd td,
+td.odd {
+	color: #fff;
+	background: #292929;
+	border-right: 1px solid #696969;
+}
+
+tr.even td,
+td.even {
+	color: #fff;
+	background: #232323;
+	border-right: 1px solid #696969;
+}
+
+td.form {
+	color: #f5f5f5;
+}
+
+.toolbar img,
+#wikihelp-tab td img {
+	background: #e4e4e4;
+}
+
+.xdebug-error tr td {
+	color: #292929;
+}
+
+/***** Admin *****/
+.highlight_word_0,
+.highlight_word_1,
+.highlight_word_2,
+.highlight_word_3,
+.highlight_word_4 {
+	background: #000;
+}
+
+a.admbox {
+	border: 1px solid #aaa;
+	background-color: #6c6c6c;
+}
+
+a.admbox:hover,
+a.admbox:focus,
+a.admbox:active {
+	background-color: #b2b2b2;
+	border: 1px solid #292929;
+}
+
+a.admbox.off {
+	border: 1px solid #9f9f9f;
+}
+
+a.admbox.off:hover,
+a.admbox.off:focus,
+a.admbox.off:active {
+	border: 1px solid #9f9f9f;
+}
+
+.multiselect {
+	border: 1px solid #606060;
+}
+
+.multiselect li.odd {
+	background: #3f3f3f;
+	color: #fff;
+}
+
+.multiselect li.even {
+	background: #3f3f3f;
+	color: #fff;
+}
+
+.help_section table {
+	color: #fff;
+}
+
+.button .iconmenu {
+	display: inline;
+}
+
+.categflipper {
+	float: right;
+}
+
+/** Tabs **/
+.tabs {
+	border-bottom: 0;
+	margin: 10px 5px 0;
+	padding: .2em .2em 0;
+}
+
+.tabactive {
+	border: solid 1px #696969;
+}
+
+.tabactive a {
+	background: #232323;
+}
+
+.tabinactive {
+	border: solid 1px #666 !important;
+}
+
+.tabmark,
+.statuson {
+	background: #4e4e4e url(darkroom/button.png) repeat-x;/*
+	border: 1px solid #666;
+	border-bottom-width: 0 !important;
+	padding: 2px 0;
+	margin: 0 .2em -1px 0;*/
+/*	display: block;*/
+}
+
+.ui-widget {
+	font-family:  "Trebuchet MS", "Bitstream Vera Sans", sans-serif;
+	font-size: 1em;
+}
+.ui-widget-header {
+	background: #000;
+	color: #d8d8d8;
+}
+
+/*.ui-icon-closethick,*/
+.ui-dialog .ui-dialog-titlebar-close span/*,
+.ui-widget-content .ui-icon*/ {
+background-image: url(../lib/jquery/jquery-ui/themes/dark-hive/images/ui-icons_222222_256x240.png);
+background-image: url(../lib/jquery/jquery-ui/themes/dark-hive/images/ui-icons_cccccc_256x240.png);
+}
+
+.ui-dialog .ui-dialog-titlebar-close span:hover {
+	background: red;
+}
+
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default {
+	background: #4e4e4e url(darkroom/button.png) repeat-x;
+}
+
+.ui-widget-content {
+    background: #474747;
+    border: 1px solid #aaaaaa;
+    color: #d8d8d8;
+
+.tabmark a {
+	border: 1px solid transparent;
+	font-weight: bold;
+	padding: 3px 5px;
+	color: #f5f5f5;
+}
+
+.ui-state-default a,
+.ui-state-default a:link,
+.ui-state-default a:visited,
+.ui-widget-content .ui-state-default a,
+.ui-widget-header .ui-state-default a,
+.ui-widget-content .ui-state-default a:visited,
+.ui-widget-header .ui-state-default a:visited {
+	color: #f5f5f5;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a,
+.ui-tabs .ui-tabs-nav li.ui-state-disabled a,
+.ui-tabs .ui-tabs-nav li.ui-state-processing a {
+	color: #f5f5f5 !important;
+}
+
+ui-state-default ui-corner-top ui-tabs-selected ui-state-active {
+	color: #f5f5f5 !important;
+}
+.tabmark a:active {
+	color: #f5f5f5;
+}
+
+.tabmark a:hover {
+	color: #f5f5f5;
+	text-decoration: none;
+	border: 1px solid #a9a9a9;
+	border-bottom-color: transparent;
+}
+
+.tabcontent {
+	padding: 2px;
+	margin: 5px;
+	margin-top: 1px;
+	border: 1px solid #666;
+	background: #232323;
+}
+
+form.admin {
+	background: #292929;
+}
+
+/***** Feature-specific styles ****/
+/***** Wiki *****/
+h1 a.pagetitle {
+	font-size: 1.2em;
+}
+
+#description,
+.description {
+	font-size: .95em;
+	font-style: italic;
+}
+
+.wikitext {
+	line-height: 1.5em;
+}
+
+a.wiki {
+	text-decoration: underline;
+}
+
+.wikitext h2 {
+	font-size: 1.6em;
+	margin-bottom: 10px;
+}
+
+.titlebar {
+	background: #4e4e4e url(darkroom/button.png) top left repeat-x;
+	color: #b2b2b2;
+	font-weight: bold;
+	border-top: 1px solid #818181;
+	text-indent: 1em;
+	padding: 0.1em;
+	margin-bottom: 0.5em;
+	margin-top: 1em;
+}
+
+.wikitext .box {
+	width: auto;
+}
+
+.wikitopline table {
+	width: 100%;
+}
+
+.wikitable {
+	border-top: 1px solid #a9a9a9;
+	border-left: 1px solid #a9a9a9;
+	border-right: 1px solid #696969;
+	border-bottom: 1px solid #696969;
+	vertical-align: top;
+}
+
+.wikicell {
+	padding: 3px;
+	border-right: 1px solid #a9a9a9;
+	border-bottom: 1px solid #a9a9a9;
+}
+
+.editdate {
+	padding-bottom: 5px;
+}
+
+.textarea-toolbar {
+	background: #e4e4e4;
+}
+
+#page-bar {
+	text-align: center;
+	line-height: 150%;
+}
+
+.navbar {
+	line-height: 150%;
+	margin-bottom: 10px;
+	margin-top: 5px;
+}
+
+.categbar {
+	line-height: 150%;
+	margin-bottom: 10px;
+	margin-top: 5px;
+}
+
+.wikinew {
+	color: #fff;
+}
+
+textarea.wikiedit {
+	font-size: 1.1em;
+}
+
+/* Wiki plugins */
+/* Code plugin  */
+.code {
+	padding: 3px;
+	border: 1px dashed #ccc;
+	background: #000;
+	font: 90% "Courier New", Courier, monospace;
+}
+
+.codelisting {
+	font-family: "Courier New", Courier, monospace;
+	padding: 10px;
+	background: #696969;
+	color: #f5f5f5;
+	margin: 4px;
+	border: 1px dashed #adacaf;
+	overflow: auto;
+	width: 90%;
+}
+
+.codecaption {
+	font-size: 90%;
+	padding: 0 10px;
+	position: relative;
+	bottom: -5px;
+	display: inline;
+	border: 1px solid #adacaf;
+	border-bottom: 0;
+	margin: 0;
+	color: #666;
+	background: #e9ecef;
+	font-weight: bold;
+}
+
+/* Quote plugin */
+.quoteheader {
+	margin-left: 20px;
+	margin-right: 10px;
+}
+
+.quotebody {
+	font-style: italic;
+	margin: 0 10px 10px 5px;
+	padding: 5px;
+	background: #696969;
+	color: #f5f5f5;
+}
+
+#tiki-center .versioncontent {
+	border: 1px solid #818181;
+	background: #3f3f3f;
+}
+
+/* Img plugin */
+.imgbox {
+	border: 1px solid #818181;
+    background-color: transparent;
+}
+
+/* wikiplugin edit */
+form.wikiplugin_edit div {
+	color: #292929;
+}
+
+form.wikiplugin_edit table#plugin_params.normal div,
+form.wikiplugin_edit table#plugin_params_advanced.normal div {
+	color: #fff;
+}
+
+/** Wiki tocs **/
+.tocnav {
+	background: #474747;
+	padding: 3px;
+}
+
+/* TOC */
+.toc {
+	list-style-type: none;
+	margin-left: 0;
+	padding-left: 0;
+}
+
+/* Wiki diff styles */
+.diff td {
+	border: 1px solid #a9b8c2;
+}
+
+.diff div {
+	border-top: 1px solid #a9b8c2;
+}
+
+.diffheader {
+	background: #a9b8c2;
+	color: #000;
+	font-weight: bold;
+}
+
+.diffinldel {
+	background: #ffcccc;
+	color: #000;
+	text-decoration: line-through;
+}
+
+.diffbody {
+	color: #000;
+}
+
+/***** Articles ****/
+.wikitext .article {
+	font-size: 1em;
+}
+
+.articletopline {
+	font-size: 90%;
+	font-style: italic;
+}
+
+.articletitle {
+	color: #d8d8d8;
+	margin: 0 0 15px;
+	padding: 0;
+}
+
+ .articletitle h2 {
+	font-size: 1.6em;
+	font-weight: bold;
+	margin: 0;
+}
+
+.titleb {
+	font-size: 1.0em;
+}
+ 
+.articlesubtitle {
+	font-size: 90%;
+	font-style: italic;
+}
+
+.articleheading {
+	margin-top: 6px;
+	line-height: 1.5em;
+}
+
+.articleheadingtext {
+	color: #d8d8d8;
+}
+
+img.topicimage,
+img.articleimagenofloat,
+img.articleimage {
+	background: #fafbfc;
+	border: 1px solid #b0b0b0;
+	padding: 3px;
+}
+
+img.articleimagefloat {
+	background: #000;
+	border: 1px solid #989898;
+	padding: 3px;
+}
+
+img.articleimage {
+	background: #000;
+	border: 1px solid #989898;
+}
+
+.articletrailer .wikitopline {
+	background: #4e4e4e url(darkroom/button.png) top left repeat-x;
+	width: 100%;
+}
+
+/***** Blogs *****/
+.blogtitle {
+	font-size: 1.8em;
+	font-weight: bold;
+	padding: 3px;
+	letter-spacing: .4pt;
+	line-height: 80%;
+}
+
+.bloginfo {
+	text-align: right;
+	padding: 3px;
+	font-size: 95%;
+	background: none;
+}
+
+.blogtools {
+	margin-right: 4px;
+}
+
+.blogpost {
+	margin-bottom: 2em;
+}
+
+.postinfo {
+	background: #474747;
+	margin-bottom: 6px;
+	padding: 2px;
+}
+
+.posthead {
+	display: block;
+	font-weight: bold;
+	letter-spacing: .4pt;
+	border-bottom: 1px solid #b0b0b0;
+}
+
+body.tiki_blogs .post {
+	margin-bottom: 20px;
+}
+
+/*
+body.tiki_blogs .post .title {
+	width: 100%;
+}*/
+
+body.tiki_blogs .post .title h2 {
+	background: #343434 url(darkroom/button.png) repeat-x;
+	color: #d8d8d8;
+	text-align: left;
+	margin-bottom: 10px;
+	margin-left: 0;
+	padding-left: 6px;
+	font-size: 1.1em;
+}
+
+body.tiki_blogs .post .postbody {
+	margin-right: 8px;
+	padding: 6px 0;
+}
+
+body.tiki_blogs .actions {
+	background: none;
+	text-align: right;
+}
+
+body.tiki_blogs .actions .share {
+	padding: 0;
+}
+
+.author_actions {
+	text-align: left;
+}
+
+body.tiki_blogs .author_info {
+	background: none;
+}
+
+/* .postbpdy-title in Forums below also applies to blogs */
+/*
+body.tiki_blogs .postbody-title {
+	float: none;
+	width: 100%;
+	background: none;
+	border: 0;
+}*/
+
+
+body.tiki_blogs .postfooter {
+	width: 100%;
+}
+	
+body.tiki_blogs .postfooter .actions {
+	float: left;
+}
+
+/***** Forums *****/
+.post {
+	background: #3f3f3f;
+	color: #d8d8d8;
+	width: 100%;
+}
+
+.post .postbody {
+	background: #343434;
+}
+
+.post .postbody .content {
+	color: #d8d8d8;
+	border-color: transparent;
+	background: transparent !important;
+/*	width: 100%;
+	min-width: 100% !important;
+	height: 100%;*/
+}
+	
+.post .postbody .content p {
+	margin: 5px 10px;
+}
+
+/* also applies to blogs */
+.postbody-title {
+	background: #343434 url(darkroom/button.png) repeat-x;
+	border-bottom: 0;
+	color: #d8d8d8;
+	line-height: 1.4;
+}
+
+.post .postbody-title .title {
+	float: left;
+	color: #d8d8d8;
+	font-weight: bold;
+	font-size: 1.1em;
+	margin-left: 5px;
+	height: 26px;
+}
+
+.post .postbody-title .title h2 {
+	font-size: 1em;
+}
+
+.post .postbody-title .title a.link {
+	font-size: 90%;
+	padding-top: 8px;
+}
+
+.post .author {
+	float: left;
+	background: #575757;
+	color: #d8d8d8;
+	margin-left: 4px;
+	margin-bottom: 6px;
+	margin-top: 6px;
+	width: 99%;
+	min-height: 22px;
+	_height: 22px; /*for IE6*/
+	text-align: left;
+	font-size: 90%;
+}
+
+.post .author_info {
+	border: 0;
+	background: #575757;
+}
+
+.post .author_post_info {
+	background: #575757;
+	border: none;
+}
+
+.post .author_post_info_on {
+	font-style: italic;
+}
+
+.post .postbody-title .actions {
+	font-size: .9em;
+}
+
+.post .postbody .attachments {
+	border-top: 1px dotted #d9d9d9;
+}
+
+.post .postfooter .status {
+	font-size: 10px;
+}
+
+.post .contribution {
+	border: 1px solid #D7E5F3;
+	padding: 0 2px;
+	background: #f0f8ff;
+}
+
+.post .avatar {
+	border: 1px solid #d8d8d8;
+	background: #303030;
+}
+
+.forum_actions .actions {
+	border: 1px solid #999;
+	background: #3f3f3f;
+}
+
+.forum_actions .headers .title {
+	border: 1px solid #999;
+	background: #696969;
+}
+
+.forum_actions .headers .infos {
+	font-size: .9em;
+}
+
+.subcomment {
+	margin-left: 10px;
+}
+
+#tiki-center .findtable {
+	padding: 15px 0;
+}
+
+.findtable ul {
+	padding: 0;
+	margin: 0;
+	float: left;
+}
+
+.commentsedithelp {
+	background: #ffcfcf;
+	color: #d8d8d8;
+	border: 1px solid #ff0000;
+	text-align: center;
+	font-weight: bold;
+}
+
+textarea#editpost2 {
+	font-size: 1em;
+}
+
+/***** Categories *****/
+ul.catitems li {
+	margin-right: 10px;
+}
+
+/***** Tags (freetags) *****/
+
+/***** Image Galleries *****/
+.galtable {
+	border-collapse: collapse;
+	border: 1px solid #999;
+}
+
+.oddthumb {
+	background: #696969;
+	border: 1px solid #474747;
+}
+
+.eventhumb {
+	background: #3f3f3f;
+	border: 1px solid #6a6a6a;
+}
+
+.caption {
+	color: #fff;
+}
+
+/***** File Galleries *****/
+.thumbnailcontener {
+	border: 1px solid #292929;
+	overflow: hidden;
+	margin: 2px;
+	text-align: center;
+	height: 100% !important;
+}
+
+#thumbnails {
+	padding: 1px;
+}
+
+.thumbname,
+.thumbimage {
+	padding: 4px;
+}
+
+.thumbinfosothers {
+	font-size: 80%;
+}
+
+.thumbname {
+	border-top: 1px dotted #292929;
+	border-bottom: 1px dotted #292929;
+}
+
+.thumbactions {
+	text-align: right;
+}
+
+.fgalexplorer {
+	background: #999;
+}
+
+.fgallisting table td {
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+/***** Trackers *****/
+.statuson {
+	border: 1px inset #666;
+	background: #bbaa99;
+}
+
+/***** Calendar *****/
+.cal,
+.cal0, 
+.cal1, 
+.cal2 {
+	color: #fff;
+	font-size: 1em;
+}
+
+.cal0:before {
+	content: "? ";
+	background: #ff6347;
+}
+ 
+.cal1:before {
+	content: "+ ";
+	background: #FFCC77;
+}
+
+.cal2:before {
+	content: "X ";
+	background: #3f3f3f;
+}
+
+.calart,
+.calblog,
+.calchart,
+.caldir,
+.caleph,
+.calfaq,
+.calfgal,
+.calforum,
+.calgal,
+.calnl,
+.calquiz,
+.calsurv,
+.caltrack,
+.calwiki {
+	font-size: 1em;
+	border-top: none;
+}
+
+.calart,
+.calart a,
+.calart a:visited {
+	color: #fa8072;
+}
+
+.calblog,
+.calblog a,
+.calblog a:visited {
+	color: #edbfe7;
+}
+
+.calchart,
+.calchart a,
+.calchart a:visited {
+	color: #304f30;
+}
+
+.caldir,
+.caldir a,
+.caldir a:visited {
+	color: #800080;
+}
+
+.caleph,
+.caleph a,
+.caleph a:visited {
+	color: #008000;
+}
+
+.calfaq,
+.calfaq a,
+.calfaq a:visited {
+	color: #822222;
+}
+
+.calfgal,
+.calfgal a,
+.calfgal a:visited {
+	color: #8b4513;
+}
+
+.calforum,
+.calforum a,
+.calforum a:visited {
+	color: #808000;
+}
+
+.calgal,
+.calgal a,
+.calgal a:visited {
+	color: #8b4513;
+}
+
+.calnl,
+.calnl a,
+.calnl a:visited {
+	color: #708090;
+}
+
+.calquiz,
+.calquiz a,
+.calquiz a:visited {
+	color: #5f9ea0;
+}
+
+.calsurv,
+.calsurv a,
+.calsurv a:visited {
+	color: #daa520;
+}
+
+caltrack,
+caltrack a,
+caltrack a:visited {
+	color: #00bd02;
+}
+
+.calweb {
+	color: #336699;
+}
+
+.calweb:hover {
+	color: #996633;
+}
+
+.calwiki,
+.calwiki a,
+.calwiki a:visited {
+	color: #bdcec3;
+}
+
+.calart a:hover,
+.calblog a:hover,
+.calchart a:hover,
+.caldir a:hover,
+.caleph a:hover,
+.calfaq a:hover,
+.calfgal a:hover,
+.calforum a:hover,
+.calgal a:hover,
+.calnl a:hover,
+.calquiz a:hover,
+.calsurv a:hover,
+.caltrack a:hover,
+.calwiki a:hover {
+	color: #f5f5f5;
+}
+
+.calart:before,
+.calblog:before,
+.calchart:before,
+.caldir:before,
+.caleph:before,
+.calfaq:before,
+.calfgal:before,
+.calforum:before,
+.calgal:before,
+.calnl:before,
+.calquiz:before,
+.calsurv:before,
+.caltrack:before,
+.calwiki:before {
+	background: #292929;
+}
+
+.calcheckbox {
+	background: #3f3f3f;
+}
+
+.calcontent {
+	min-height: 60px;
+	height: 60px;
+}
+
+.calcontent a.linkmenu,
+.calcontent a.linkmenu:hover {
+	background: none;
+	padding: 0;
+}
+
+.calfocus {
+	font-size: 1em;
+	background: inherit;
+	border-bottom: none;
+}
+
+#calscreen .calfocus a {
+	color: #f5f5f5;
+}
+
+.calodd .calfocuson,
+.caleven .calfocuson,
+.calfocuson {
+	font-size: 90%;
+	background: #292929;
+}
+
+.calprio1 a,
+.calprio2 a,
+.calprio3 a,
+.calprio4 a,
+.calprio5 a,
+.calprio6 a,
+.calprio7 a,
+.calprio8 a,
+.calprio9 a {
+	color: #393e51;
+}
+
+.caltitle {
+	font-weight: bold;
+	color: #f5f5f5;
+	background: #3f3f3f;
+}
+
+.caltoggle {
+	font-size: 90%;
+	background: #3f3f3f;
+}
+
+.buttonon a,
+.calbuttonon a {
+	text-decoration: underline;
+}
+
+.calheadingon a {
+	text-decoration: underline !important;
+	color: #d8d8d8 !important;
+}
+
+.opaque {
+	font-size: .9em;
+	background: #3f3f3f;
+	border-left: 1px solid #a9a9a9;
+	border-top: 1px solid #a9a9a9;
+	border-right: 1px solid #696969;
+	border-bottom: 1px solid #696969;
+}
+
+.opaque .box-title {
+	border-bottom: 1px solid #d8d8d8;
+}
+
+.opaque .box-data {
+	background: #3f3f3f;
+}
+
+.searchresults li .objecttype,
+.searchresults li .parentname ,
+.searchresults li .objectname {
+	font-size: 120%;
+	font-weight: bold;
+}
+
+.searchresults .itemhits,
+.searchresults .itemrelevance,
+.searchresults .searchdate {
+	color: #fff;
+	font-size: .95em;
+}
+
+.caltable .calfocuson,
+.box-data .fc a.today,
+.box-data td a.today {
+	background: #292929;
+	border: solid 1px #696969;
+}
+
+.caltable, .calfocuson a {
+	color: #d8d8d8;
+}
+
+.caltable .calfocus a,
+.caltable .calfocuson a {
+	text-decoration: none;
+}
+
+.calinput {
+	background: #3f3f3f;
+}
+
+.calfocuson + .calcontent {
+	background: #7b7b7b;
+}
+
+.days {
+	color: #d8d8d8;
+}
+
+.caltable .weeks {
+	color: #d8d8d8;
+}
+
+.addevent {
+	padding: 0 5px;
+	float: right;
+}
+
+.calodd, .caleven {
+	border: none;
+}
+
+.calodd {
+	background: #474747;
+}
+
+.caleven {
+	background: #3f3f3f;
+}
+
+.calhours,
+.calweek {
+	border-color: #a9a9a9;
+}
+
+.caldark {
+	background: #696969;
+	border: 1px solid #999;
+}
+
+.caldark .calfocus {
+	background: #696969;
+}
+
+.calfocuson, .calHeadingOn {
+	background: #292929;
+}
+
+.daterow {
+	margin: 2px;
+	padding: 0 4px;
+	background: #4e4e4e url(darkroom/button.png) top left repeat-x;
+	color: #b2b2b2;
+	font-weight: bold;
+	border: 1px solid #3f3f3f;
+	border-top: 1px solid #818181;
+}
+
+.daterow:hover {
+	border: 1px solid #aaa;
+}
+
+a.viewmodeon img.icon {
+	border: white solid 1px !important;
+	padding: 0 0 0 2px;
+}
+
+.tabrow .viewmode {
+	float: left;
+}
+
+.viewmode div {
+	display: inline;
+}
+
+.dtstart {
+	color: #D8D8D8;
+}
+/*****  Polls  *****/
+.pollresults {
+	margin-top: 5px;
+	font-size: 1.2em;
+	padding: 0 5px;
+}
+
+.pollr {
+	color: #d8d8d8;
+}
+
+/***** FAQs *****/
+
+/***** Quizzes *****/
+.questionblock {
+	padding: 4px;
+}
+
+/***** Shoutbox *****/
+
+/***** Directory *****/
+.dircategs {
+	border: 1px solid #d8d8d8;
+	padding: 5px;
+}
+
+.dirlistsites {
+	padding: 5px 0 10px 5px;
+	margin-top: 10px;
+}
+
+.dirsite {
+	background: #696969;
+	border: 1px solid #aaa;
+}
+
+.dirrelated {
+	margin-top: 10px;
+	padding: 5px;
+}
+
+td.dirfooter {
+	font-size: .95em;
+}
+
+div.dirfooter {
+	margin-top: 10px;
+}
+
+/***** Messages *****/
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {
+	border: 1px solid #999;
+}
+
+.prio1 {
+	background: #696969;
+}
+
+.prio2 {
+	background: #3f3f3f;
+}
+
+.prio3 {
+	background: #474747;
+}
+
+.prio4 {
+	background: #292929;
+}
+
+.prio5 {
+	background: #000;
+}
+
+.messureadflag {
+	background: inherit;
+}
+
+.messureadhead {
+	background: #3f3f3f;
+}
+
+.messureadbody {
+	background: #3f3f3f;
+}
+
+.readlink {
+	color: #d8d8d8;
+}
+
+/***** Ajax *****/
+/* Ajax Loading Overlay */
+#ajaxLoadingBG {
+	background: transparent url(../img/overlay-85.png);
+}
+
+#ajaxLoading {
+	background: transparent url(../img/loading.gif) no-repeat 50% 50%;
+	color: #ccc;
+}
+
+/***** TikiSheet *****/
+.default thead td,
+.default tfoot td {
+	font-weight: bold;
+	text-align: center;
+	color: #d8d8d8;
+	background: #000;
+}
+
+.default td {
+	border: solid 1px #a9a9a9;
+	background: #000;
+}
+
+
+/* end of css file */

@@ -1,0 +1,54 @@
+/* $Id$ 
+	Ohia theme for TikiWiki CMS/Groupware rules for IE6.
+*/
+
+body {font-size: 11px !important}
+
+.header {height: 122px}
+
+#footer {height: 90px}
+.wikitopline select {font-size: .9em}
+
+input[type="reset"],
+input[type="submit"] {
+	padding: 1px 4px;
+	margin: 2px;
+	font-size: 11px;
+	border: 1px solid #5f5f5f;
+	border-right: 1px solid #474747;
+	border-bottom: 1px solid #474747}
+	
+.findtable input {font-size: 1em}
+
+#sitetitle {
+	margin-top: 10px;
+	font-size: 26px;
+	height: 34px;
+}
+	
+#tiki-top {font-size: 11px}
+
+#col2 .cssmenu_vert {
+	margin-left: 0;
+	padding-left: 0;
+}
+
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 142px;
+}
+
+h3.box-title {position: static}
+img.flipmodimage {border: 0}
+
+td {
+	font-size: 11px;
+	color: #f4f4f4;
+}
+
+.postbody table {font-size: 11px}
+body .galtable {width: 97%}
+.addevent {padding: 0}
+.calodd {padding: 0}
+.caleven {padding: 0}
+.caldark {padding: 0}
