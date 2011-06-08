@@ -19,10 +19,6 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 
 		$value = $data['value'];
 
-		if ($value) {
-			$data["linkId"] = TikiLib::lib('trk')->get_item_id($this->getOption(0), $this->getOption(1), $value);
-		}
-
 		return $data;
 	}
 
@@ -35,12 +31,13 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 	{
 		$smarty = TikiLib::lib('smarty');
 
-		$item = $this->getConfiguration('linkId');
+		$item = $this->getConfiguration('value');
 		$dlist = $this->getConfiguration('listdisplay');
+		$list = $this->getConfiguration('list');
 		if (!empty($dlist)) {
 			$label = $dlist[$item];
 		} else {
-			$label = $this->getConfiguration('value');
+			$label = $list[$item];
 		}
 		if ($item && $context['list_mode'] !== 'csv' && $this->getOption(2)) {
 			require_once $smarty->_get_plugin_filepath('function', 'object_link');
