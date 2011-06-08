@@ -33,10 +33,6 @@ Perms::bulk( array( 'type' => 'tracker' ), 'object', $arrayTrackerId );
 for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count_arrayTrackerId; $index++) {
 	$tikilib->get_perm_object( $arrayTrackerId[$index], 'tracker' );
 
-	if ($arrayMandatory[$index] == 'y') {
-		echo "tracker_dynamic_options[$index][0] = new Option('','');\n";
-	}
-	// behaviour differ between smarty encoding and javascript encoding
 	if (!isset($_GET['selected'])) {
 		$selected = '';
 		$filtervalue = utf8_encode(rawurldecode($_GET["filtervalue"]));
@@ -66,6 +62,10 @@ for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count
 		$items = $trklib->list_items($arrayTrackerId[$index], 0, -1, $sort_mode, $listfields, $arrayFilterfield[$index], $filtervalue, $arrayStatus[$index]);
 		
 		$json_return = array();
+		if ($arrayMandatory[$index] != 'y') {
+			$json_return[] = "";		
+		}
+	// behaviour differ between smarty encoding and javascript encoding
 		foreach ($items['data'] as $field) {
 			$json_return[] = $field['field_values'][0]['value'];
 		}
