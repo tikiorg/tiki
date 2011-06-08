@@ -668,7 +668,7 @@ class TrackerLib extends TikiLib
 			$tmp=$this->get_item_value($trackerId,$itemId,$field);
 			if ($is_trackerlink){
 				$options = preg_split('/,/', $myfield["options"]);
-				$tmp=$this->concat_item_from_fieldslist($options[0],$this->get_item_id($options[0],$options[1],$tmp),$options[3]);
+				$tmp=$this->concat_item_from_fieldslist($options[0],$tmp,$options[3]);
 			}
 			if ($is_date) $tmp=$this->date_format("%e/%m/%y",$tmp);
 			$res.=$separator.$tmp;
@@ -689,7 +689,7 @@ class TrackerLib extends TikiLib
 			foreach ($tmp as $key=>$value){
 				if ($is_date) $value=$this->date_format("%e/%m/%y",$value);
 				if ($is_trackerlink){
-					$value=$this->concat_item_from_fieldslist($options[0],$this->get_item_id($options[0],$options[1],$value),$options[3]);
+					$value=$this->concat_item_from_fieldslist($options[0],$value,$options[3]);
 				}
 				if (!empty($res[$key])) {
 					$res[$key].=$separator.$value;
@@ -1457,8 +1457,6 @@ class TrackerLib extends TikiLib
 								$this->log($version, $itemId, $array['fieldId'], $old_value);
 							}
 						}
-
-						$this->update_item_link_value($trackerId, $fieldId, $old_value, $value);
 					}
 				}
 
@@ -2163,21 +2161,6 @@ class TrackerLib extends TikiLib
 					}
 				}
 				$res = $this->set_default_dropdown_option($res);
-			}
-			if (in_array($res['type'], array('l', 'r'))) { // get the last field type
-				if (!empty($res['options_array'][3])) {
-					if (is_numeric($res['options_array'][3]))
-						$fieldId = $res['options_array'][3];
-					else
-						$fieldId = 0;
-				} elseif (is_numeric($res['options_array'][1])) {
-					$fieldId = $res['options_array'][1];
-				} elseif ($fields = preg_split('/:/', $res['options_array'][1])) {
-					$fieldId = $fields[count($fields) - 1];
-				}
-				if (!empty($fieldId)) {
-					$res['otherField'] = $this->get_tracker_field($fieldId);
-				}
 			}
 			if ($res['type'] == 'p' && $res['options_array'][0] == 'language') {
 				$smarty->assign('languages', $this->list_languages());	
@@ -3768,34 +3751,6 @@ class TrackerLib extends TikiLib
 		} else {
 			return array('computedtype'=>'f', 'options'=>$info['options'] ,'options_array'=>$info['options_array']);
 		}
-	}
-	function update_item_link_value($trackerId, $fieldId, $old, $new) {
-		if ($old == $new || empty($old)) {
-			return;
-		}
-		static $fields_used_in_item_links;
-
-		$table = $this->fields();
-
-		if (!isset($fields_used_in_item_links)) {
-			$fields = $table->fetchAll(array('fieldId', 'options'), array(
-				'type' => $table->exactly('r'),
-			));
-			foreach ($fields as $field) {
-				$field['options_array'] = preg_split('/\s*,\s*/', $field['options']);
-				$fields_used_in_item_links[$field['options_array'][1]][] = $field['fieldId'];
-			}
-		}
-		if (empty($fields_used_in_item_links[$fieldId])) {// field not use in a ref of item link
-			return;
-		}
-
-		$this->itemFields()->updateMultiple(array(
-			'value' => $new,
-		), array(
-			'value' => $old,
-			'fieldId' => $table->in($fields_used_in_item_links[$fieldId]),
-		));
 	}
 	function change_status($items, $status) {
 		if (!count($items)) {

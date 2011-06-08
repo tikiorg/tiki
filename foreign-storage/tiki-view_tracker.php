@@ -211,9 +211,6 @@ foreach ($xfields['data'] as $i => $current_field) {
 	//exclude fields that should not be listed
 	if (($current_field['isTblVisible'] == 'y' or in_array($fid, $popupFields)) and ($current_field['isHidden'] == 'n' or $current_field['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($current_field['type'] == 's' and $current_field['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y'))) {
 		$current_field_list = $current_field;
-		if (isset($current_field['otherField'])) {
-			$current_field_list['otherField'] = $current_field['otherField'];
-		}
 	}
 	if ($creatorSelector or $current_field['isHidden'] == 'n' or $current_field['isHidden'] == 'c' or $current_field['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($current_field['type'] == 's' and $current_field['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y')) {
 		$current_field_ins = $current_field;
@@ -500,9 +497,6 @@ foreach($xfields['data'] as $xfd) {
 		$listfields[$fid]['description'] = $xfd["description"];
 		$listfields[$fid]['visibleBy'] = $xfd['visibleBy'];
 		$listfields[$fid]['editableBy'] = $xfd['editableBy'];
-		if (isset($xfd['otherField'])) {
-			$listfields[$fid]['otherField'] = $xfd['otherField'];
-		}
 	}
 }
 
