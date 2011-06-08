@@ -586,14 +586,14 @@ class TrackerLib extends TikiLib
 
 	/* experimental shared */
 	function get_items_list($trackerId, $fieldId, $value, $status='o') {
-		$query = "select distinct tti.`itemId`, tti.`itemId` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif ";
+		$query = "select distinct tti.`itemId`, tti.`itemId` i from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif ";
 		$query.= " where tti.`itemId`=ttif.`itemId` and ttif.`fieldId`=? and ttif.`value`=?";
-		$bindVars = array((int)$fieldId, $value);
+		$bindvars = array((int)$fieldId, $value);
 		if (!empty($status)) {
-			$query .= ' and tti.`status`=?';
-			$bindVars[] = $status;
+			$query .= ' and ' . $this->in('tti.status', str_split($status, 1), $bindvars);
 		}
-		return array_values($this->fetchMap($query, $bindVars));
+		$items = $this->fetchMap($query, $bindvars);
+		return array_values($items);
 	}
 
 	function get_tracker($trackerId) {
@@ -2954,8 +2954,8 @@ class TrackerLib extends TikiLib
 				<dt>Example: 5,3,4,10|11
 				<dt>Description:
 				<dd><strong>[trackerId]</strong> is the tracker ID of the fields you want to display;
-				<dd><strong>[fieldIdThere]</strong> is the field (multiple fields can be separated with a ":") you want to link with;
-				<dd><strong>[fieldIdHere]</strong> is the field in this tracker you want to link with;
+				<dd><strong>[fieldIdThere]</strong> the fieldId of the item link in the other tracker
+				<dd><strong>[unused]</strong> empty, legacy field
 				<dd><strong>[displayFieldIdThere]</strong> the field(s) in [trackerId] you want to display, multiple fields can be separated by "|";
 				<dd><strong>[linkToItems]</strong> if set to 0 will simply display the value, but if set to 1 will provide a link directly to that values item in the other tracker;
 				<dd><strong>[status]</strong> filter on status (o, p, c, op, oc, pc or opc);
