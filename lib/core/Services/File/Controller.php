@@ -51,7 +51,7 @@ class Services_File_Controller
 		}
 
 		$fileId = $this->uploadFile($gal_info, $info['name'], $info['size'], $info['type'], $info['data']);
-		$filegallib->attach_file_source($fileId, $url);
+		$filegallib->attach_file_source($fileId, $url, $info);
 
 		return array(
 			'size' => $info['size'],
