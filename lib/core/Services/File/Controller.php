@@ -36,10 +36,6 @@ class Services_File_Controller
 			return false;
 		}
 
-		if ($prefs['fgal_source_show_refresh'] != 'y') {
-			return false;
-		}
-
 		$gal_info = $this->checkTargetGallery($input);
 		$url = $input->url->url();
 		
@@ -65,6 +61,14 @@ class Services_File_Controller
 
 	function action_refresh($input)
 	{
+		if ($prefs['fgal_upload_from_source'] != 'y') {
+			return false;
+		}
+
+		if ($prefs['fgal_source_show_refresh'] != 'y') {
+			return false;
+		}
+
 		$filegallib = TikiLib::lib('filegal');
 		$ret = $filegallib->refresh_file($input->fileId->int());
 
