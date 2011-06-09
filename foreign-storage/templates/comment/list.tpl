@@ -37,7 +37,7 @@
 				</div>
 
 				{if $comment.replies_info.numReplies gt 0}
-					{include file=$template comments=$comment.replies_info.replies cant=$comment.replies_info.numReplies parentId=$comment.threadId}
+					{include file='comment/list.tpl' comments=$comment.replies_info.replies cant=$comment.replies_info.numReplies parentId=$comment.threadId}
 				{/if}
 			</li>
 		{/foreach}

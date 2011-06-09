@@ -8,21 +8,21 @@
 function prefs_wikiplugininline_list($partial = false) {
 	global $tikilib;
 
-	if ($partial) {
-		$defaultInline = array(
-			'file' => 'y',
-			'getaccesstoken' => 'y',
-			'googleanalytics' => 'y',
-			'group' => 'y',
-			'grouplist' => 'y',
-			'mail' => 'y',
-			'perm' => 'y',
-			'smarty' => 'y',
-			'trackeritemfield' => 'y',
-			'transclude' => 'y',
-			'zotero' => 'y',
-		);
+	$defaultInline = array(
+		'file' => 'y',
+		'getaccesstoken' => 'y',
+		'googleanalytics' => 'y',
+		'group' => 'y',
+		'grouplist' => 'y',
+		'mail' => 'y',
+		'perm' => 'y',
+		'smarty' => 'y',
+		'trackeritemfield' => 'y',
+		'transclude' => 'y',
+		'zotero' => 'y',
+	);
 
+	if ($partial) {
 		$out = array();
 		$list = array();
 		$alias = array();
@@ -61,6 +61,7 @@ function prefs_wikiplugininline_list($partial = false) {
 			'name' => tr('Inline plugin %0', $info['name'] ),
 			'description' => '',
 			'type' => 'flag',
+			'default' => isset($defaultInline[$plugin]) ? 'y' : 'n',
 		);
 	}
 

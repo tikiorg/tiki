@@ -13,6 +13,7 @@ function prefs_site_list() {
 			'type' => 'flag',
 			'perspective' => false,
 			'tags' => array('basic'),
+			'default' => 'n',
 		),
 		'site_closed_msg' => array(
 			'name' => tra('Message to display'),

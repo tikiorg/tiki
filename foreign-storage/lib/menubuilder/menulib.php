@@ -345,15 +345,7 @@ class MenuLib extends TikiLib
 				}
 			}
 			if (!empty($subMenu) && $findUrl && $cant) {
-				$lower = false;
-				foreach ($subMenu as $i=>$option) {// begin all the secrtion at 0 to have a nice display
-					if (is_numeric($option['type'])) {
-						if ($lower === false) {
-							$lower = $option['type'];
-						}
-						$subMenu[$i]['type'] -= $lower;
-					}
-					}
+				$subMenu = $this->lower($subMenu);
 				$channels['data'] = $subMenu;
 				$channels['cant'] = $cant;
 			} else {
@@ -412,6 +404,34 @@ class MenuLib extends TikiLib
 			}
 			$channels = array('data'=>$subMenu, 'cant'=>$cant);
 		}
+		if (!empty($params['subMenu'])) {
+			$subMenu = array();
+			$cant = 0;
+			$in = false;
+			$optionLevel = $level = 0;
+			foreach ($channels['data'] as $position=>$option) {
+				if (is_numeric($option['type'])) {
+					$optionLevel = $option['type'];
+				} else if ($option['type'] == '-') {
+					$optionLevel = $optionLevel - 1;
+				} else if ($option['type'] == 'r' || $option['type'] == 's') {
+					$optionLevel = 0;
+				}
+				if ($in && $optionLevel <= $level) {
+					break;
+				} elseif ($in) {
+					$subMenu[] = $option;
+					$cant++;
+				} elseif (!$in && $option['optionId'] == $params['subMenu']) {
+					$level = $optionLevel;
+					$in = true;
+				} 
+				if ($option['type'] != '-' && $option['type'] != 'o') {
+					++$optionLevel;
+				}
+			}
+			$channels = array('data'=>$this->lower($subMenu), 'cant'=>$cant);
+		}
 		// set sections open/close according to cookie
 			global $prefs;
 		foreach ($channels['data'] as $position => &$option) {
@@ -426,6 +446,19 @@ class MenuLib extends TikiLib
 			}
 		}
 		return $channels;
+	}
+	function lower($subMenu)
+	{
+		$lower = false;
+		foreach ($subMenu as $i=>$option) {// begin all the secrtion at 0 to have a nice display
+			if (is_numeric($option['type'])) {
+				if ($lower === false) {
+					$lower = $option['type'];
+				}
+				$subMenu[$i]['type'] -= $lower;
+			}
+		}
+		return $subMenu;
 	}
 	
 	// check if a option belongs to a menu

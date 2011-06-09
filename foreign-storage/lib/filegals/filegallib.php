@@ -3232,7 +3232,7 @@ class FileGalLib extends TikiLib
 		}
 	}
 
-	function get_info_from_url($url)
+	function get_info_from_url($url, $lastCheck = false, $eTag = false)
 	{
 		if (! $url) {
 			return false;
@@ -3245,16 +3245,39 @@ class FileGalLib extends TikiLib
 			$client = TikiLib::lib('tiki')->get_http_client();
 			$client->setUri($url);
 
+			if ($lastCheck) {
+				$client->setHeaders('If-Modified-Since', gmdate('D, d M Y H:i:s T', $lastCheck));
+			}
+
+			if ($eTag) {
+				$client->setHeaders('If-None-Match', $eTag);
+			}
+
 			$response = $client->request();
 
-			if ($response->isError()) {
+			if (! $response->isSuccessful()) {
 				return false;
 			}
+
+			$expiryDate = time();
 
 			$result = $response->getBody();
 			if ($disposition = $response->getHeader('Content-Disposition')) {
 				if (preg_match('/filename=[\'"]?([^;\'"]+)[\'"]?/i', $disposition, $parts)) {
 					$name = $parts[1];
+				}
+			}
+
+			// Check expires
+			if ($expires = $response->getHeader('Expires')) {
+				$potential = strtotime($expires);
+				$expiryDate = max($expiryDate, $potential);
+			}
+
+			// Check cache-control for max-age, which has priority
+			if ($cacheControl = $response->getHeader('Cache-Control')) {
+				if (preg_match('/max-age=(\d+)/', $cacheControl, $parts)) {
+					$expiryDate = time() + $parts[1];
 				}
 			}
 
@@ -3271,17 +3294,43 @@ class FileGalLib extends TikiLib
 				'size' => $size,
 				'type' => $type,
 				'name' => $name,
+				'expires' => $expiryDate,
+				'etag' => $response->getHeader('Etag'),
 			);
 		} catch (Zend_Http_Exception $e) {
 			return false;
 		}
 	}
 
-	function attach_file_source($fileId, $url)
+	function attach_file_source($fileId, $url, $info)
 	{
 		$attributelib = TikiLib::lib('attribute');
 		$attributelib->set_attribute('file', $fileId, 'tiki.content.source', $url);
 		$attributelib->set_attribute('file', $fileId, 'tiki.content.lastcheck', time());
+		$attributelib->set_attribute('file', $fileId, 'tiki.content.expires', $info['expires']);
+
+		if ($info['etag']) {
+			$attributelib->set_attribute('file', $fileId, 'tiki.content.etag', $info['etag']);
+		}
+	}
+
+	function lookup_source($url)
+	{
+		$attributelib = TikiLib::lib('attribute');
+		$objects = $attributelib->find_objects_with('tiki.content.source', $url);
+
+		foreach ($objects as $object) {
+			if ($object['type'] == 'file') {
+				return $this->table('tiki_files')->fetchRow(array(
+					'fileId',
+					'size' => 'filesize',
+					'name',
+					'type' => 'filetype',
+					'galleryId',
+					'md5sum' => 'hash',
+				), array('fileId' => $object['itemId']));
+			}
+		}
 	}
 
 	function refresh_file($fileId)
@@ -3292,12 +3341,21 @@ class FileGalLib extends TikiLib
 		$attributes = $attributelib->get_attributes('file', $fileId);
 
 		// Must have a source to begin with
-		if (! isset($attributes['tiki.content.source'], $attributes['tiki.content.lastcheck'])) {
+		if (! isset($attributes['tiki.content.source'])) {
 			return false;
 		}
 
+		$lastCheck = false;
 		// Make sure not to flood the remote server with update requests
-		if ($attributes['tiki.content.lastcheck'] + $prefs['fgal_source_refresh_frequency'] > time()) {
+		if (isset($attributes['tiki.content.lastcheck'])) {
+			$lastCheck = $attributes['tiki.content.lastcheck'];
+			if ($lastCheck + $prefs['fgal_source_refresh_frequency'] > time()) {
+				return false;
+			}
+		}
+
+		// Respect cache headers too
+		if (isset($attributes['tiki.content.expires']) && $attributes['tiki.content.expires'] > time()) {
 			return false;
 		}
 
@@ -3312,9 +3370,19 @@ class FileGalLib extends TikiLib
 			return false;
 		}
 
+		$eTag = false;
+		if (isset($attributes['tiki.content.etag'])) {
+			$eTag = $attributes['tiki.content.etag'];
+		}
+
 		// Record as a check before checking in the case the server is overloaded and times out
 		$attributelib->set_attribute('file', $fileId, 'tiki.content.lastcheck', time());
-		$remote = $this->get_info_from_url($attributes['tiki.content.source']);
+		$remote = $this->get_info_from_url($attributes['tiki.content.source'], $lastCheck, $eTag);
+		$attributelib->set_attribute('file', $fileId, 'tiki.content.expires', $remote['expires']);
+
+		if ($remote['etag']) {
+			$attributelib->set_attribute('file', $fileId, 'tiki.content.etag', $remote['etag']);
+		}
 
 		if (! $remote) {
 			return false;

@@ -33,17 +33,18 @@ class Services_File_Controller
 	{
 		global $prefs;
 		if ($prefs['fgal_upload_from_source'] != 'y') {
-			return false;
-		}
-
-		if ($prefs['fgal_source_show_refresh'] != 'y') {
-			return false;
+			throw new Services_Exception(tr('Upload from source disabled.'), 403);
 		}
 
 		$gal_info = $this->checkTargetGallery($input);
 		$url = $input->url->url();
-		
+
 		$filegallib = TikiLib::lib('filegal');
+
+		if ($file = $filegallib->lookup_source($url)) {
+			return $file;
+		}
+		
 		$info = $filegallib->get_info_from_url($url);
 
 		if (! $info) {
@@ -51,7 +52,7 @@ class Services_File_Controller
 		}
 
 		$fileId = $this->uploadFile($gal_info, $info['name'], $info['size'], $info['type'], $info['data']);
-		$filegallib->attach_file_source($fileId, $url);
+		$filegallib->attach_file_source($fileId, $url, $info);
 
 		return array(
 			'size' => $info['size'],
@@ -65,6 +66,14 @@ class Services_File_Controller
 
 	function action_refresh($input)
 	{
+		if ($prefs['fgal_upload_from_source'] != 'y') {
+			throw new Services_Exception(tr('Upload from source disabled.'), 403);
+		}
+
+		if ($prefs['fgal_source_show_refresh'] != 'y') {
+			throw new Services_Exception(tr('Manual refresh disabled.'), 403);
+		}
+
 		$filegallib = TikiLib::lib('filegal');
 		$ret = $filegallib->refresh_file($input->fileId->int());
 

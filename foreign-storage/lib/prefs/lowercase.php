@@ -11,6 +11,7 @@ function prefs_lowercase_list() {
 			'name' => tra('Force lowercase'),
 			'type' => 'flag',
 			'help' => 'Login+Config#Case_Sensitivity',
+			'default' => 'n',
 		),
 	);	
 }

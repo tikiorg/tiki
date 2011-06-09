@@ -145,6 +145,7 @@ function prefs_fgal_list() {
 		'fgal_list_ratio_hits' => array(
 			'name' => tra('Display hits with a ratio between hits / maxhits'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'fgal_display_properties' => array(
 			'name' => tra('Display properties in the context menu'),

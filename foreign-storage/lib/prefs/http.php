@@ -12,7 +12,7 @@ function prefs_http_list() {
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
-			'default' => 80,
+			'default' => '80',
 		),
 	);	
 }
