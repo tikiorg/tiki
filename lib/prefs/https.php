@@ -32,6 +32,8 @@ function prefs_https_list() {
 				'required' => tra('Require secure (https) login'),
 			),
 			'default' => 'allowed',
+			'warning' => tra('Do not require HTTPS until you have setup and tested the connection, otherwise, you will make your whole site unaccessible'),
+			'keywords' => 'SSL', 
 		),
 	);
 }
