@@ -15,7 +15,7 @@ class Search_ResultSet_SnippetHelper implements Zend_Filter_Interface
 
 	function filter($content)
 	{
-		return substr(strip_tags($content), 0, $this->length);
+		return substr(strip_tags(str_replace(array('~np~', '~/np~'), '', $content)), 0, $this->length);
 	}
 }
 
