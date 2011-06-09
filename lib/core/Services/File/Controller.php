@@ -38,8 +38,13 @@ class Services_File_Controller
 
 		$gal_info = $this->checkTargetGallery($input);
 		$url = $input->url->url();
-		
+
 		$filegallib = TikiLib::lib('filegal');
+
+		if ($file = $filegallib->lookup_source($url)) {
+			return $file;
+		}
+		
 		$info = $filegallib->get_info_from_url($url);
 
 		if (! $info) {

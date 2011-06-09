@@ -3314,6 +3314,25 @@ class FileGalLib extends TikiLib
 		}
 	}
 
+	function lookup_source($url)
+	{
+		$attributelib = TikiLib::lib('attribute');
+		$objects = $attributelib->find_objects_with('tiki.content.source', $url);
+
+		foreach ($objects as $object) {
+			if ($object['type'] == 'file') {
+				return $this->table('tiki_files')->fetchRow(array(
+					'fileId',
+					'size' => 'filesize',
+					'name',
+					'type' => 'filetype',
+					'galleryId',
+					'md5sum' => 'hash',
+				), array('fileId' => $object['itemId']));
+			}
+		}
+	}
+
 	function refresh_file($fileId)
 	{
 		global $prefs;
