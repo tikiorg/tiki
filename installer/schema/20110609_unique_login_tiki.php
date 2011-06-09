@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function upgrade_20110609_unique_login_tiki( $installer )
 {
-	$result = $installer->query( "select count(*) nb from users_users having count(*) > 1" );
+	$result = $installer->query( "select count(*) nb from users_users group by login having count(*) > 1" );
 	$row = $result->fetchRow();
 
 	if (intval($row['nb']) == 0) {
