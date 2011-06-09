@@ -33,7 +33,7 @@ class Services_File_Controller
 	{
 		global $prefs;
 		if ($prefs['fgal_upload_from_source'] != 'y') {
-			return false;
+			throw new Services_Exception(tr('Upload from source disabled.'), 403);
 		}
 
 		$gal_info = $this->checkTargetGallery($input);
@@ -62,11 +62,11 @@ class Services_File_Controller
 	function action_refresh($input)
 	{
 		if ($prefs['fgal_upload_from_source'] != 'y') {
-			return false;
+			throw new Services_Exception(tr('Upload from source disabled.'), 403);
 		}
 
 		if ($prefs['fgal_source_show_refresh'] != 'y') {
-			return false;
+			throw new Services_Exception(tr('Manual refresh disabled.'), 403);
 		}
 
 		$filegallib = TikiLib::lib('filegal');

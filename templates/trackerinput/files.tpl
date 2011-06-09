@@ -177,7 +177,7 @@ $url.keypress(function (e) {
 					$(this).closest('li').remove();
 				});
 				$files.append(li);
-				$url.val();
+				$url.val('');
 			},
 			complete: function () {
 				$url.attr('disabled', 0);
