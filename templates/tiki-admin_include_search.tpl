@@ -34,14 +34,22 @@
 					{preference name=unified_field_weight}
 					{preference name=unified_default_content}
 
-					<a href="tiki-admin.php?page=search&amp;rebuild=now">{tr}Rebuild Index{/tr}</a>
-					{if !empty($stat)}
-						{remarksbox type='feedback' title="{tr}Indexation{/tr}"}<ul>
-						{foreach from=$stat key=what item=nb}
-							<li>{$what|escape}: {$nb|escape}</li>
-						{/foreach}
-						</ul>{/remarksbox}
-					{/if}
+					<h4>{tr}Index maintenance{/tr}</h4>
+					<ul>
+						<li><a href="tiki-admin.php?page=search&amp;optimize=now">{tr}Optimize{/tr}</a></li>
+						<li>
+							<a href="tiki-admin.php?page=search&amp;rebuild=now">{tr}Rebuild Index{/tr}</a>
+							{if !empty($stat)}
+								{remarksbox type='feedback' title="{tr}Indexation{/tr}"}
+									<ul>
+										{foreach from=$stat key=what item=nb}
+											<li>{$what|escape}: {$nb|escape}</li>
+										{/foreach}
+									</ul>
+								{/remarksbox}
+							{/if}
+						</li>
+					</ul>
 				</div>
 			</fieldset>
 			<fieldset>
