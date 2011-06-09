@@ -30,6 +30,7 @@ function prefs_smarty_list() {
 				'never' => tra('Never check (performance)'),
 				'always' => tra('Always (development, slow)'),
 			),
+			'default' => 'modified',
 		),
 	);
 }

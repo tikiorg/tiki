@@ -23,6 +23,7 @@ function prefs_menus_list() {
 			'description' => tra('If enabled, menu option names and URL-s are treated as HTML content and they are not escaped (no replacement of HTML special characters). This allows the use of HTML to insert images for example. Code must be valid. This allows menu item editors to put arbitrary HTML; only enable if you know what you are doing.'),
 			'help' => 'Menus',
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'menus_item_names_raw' => array(
 			'name' => tra('REALLY allow HTML (INSECURE)'),

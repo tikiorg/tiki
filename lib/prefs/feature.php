@@ -962,7 +962,7 @@ function prefs_feature_list($partial = false) {
 			'dependencies' => array(
 				'wiki_badchar_prevent',
 			),
-			'hint' => tra('Do not use if your server is IIS'),
+			'warning' => tra('Do not use if your server is IIS'),
 			'default' => 'n',
 		),
 		'feature_sefurl_filter' => array(
