@@ -99,6 +99,10 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 				'value' => $trklib->replace_item_attachment($oldValue, $file_name, $file_type, $file_size, $value, '', $user, $fhash, '', '', $trackerId, $this->getItemId(), '', false),
 			);
 		}
+
+		return array(
+			'value' => '',
+		);
 	}
 }
 
