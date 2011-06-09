@@ -239,7 +239,7 @@ class Search_Index_Lucene_HighlightHelper implements Zend_Filter_Interface
 
 	function filter($content)
 	{
-		$content = substr(strip_tags($content), 0, 240);
+		$content = substr(strip_tags(str_replace(array('~np~', '~/np~'), '', $content)), 0, 240);
 		return trim($this->query->highlightMatches($content));
 	}
 }
