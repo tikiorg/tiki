@@ -1,7 +1,7 @@
 -- Create a temporary table to join everything on from the options selected
 DROP TABLE IF EXISTS temp_tracker_field_options;
 
-CREATE TABLE temp_tracker_field_options (
+CREATE TEMPORARY TABLE temp_tracker_field_options (
 	trackerIdThere INT,
 	trackerIdHere INT,
 	fieldIdThere INT,
@@ -81,47 +81,6 @@ SET
 WHERE
 	LENGTH(items_right.value) > 0 AND
 	tiki_tracker_fields.type = 'l';
-
-
-
-SELECT
-	items_left.itemId,
-	tiki_tracker_items.status,
-	tiki_tracker_item_fields.itemId,
-	tiki_tracker_fields.trackerId,
-	tiki_tracker_item_fields.value
-	
-FROM tiki_tracker_item_fields 
-LEFT JOIN tiki_tracker_fields ON 
-	tiki_tracker_fields.fieldId = tiki_tracker_item_fields.fieldId
-LEFT JOIN tiki_trackers ON 
-	tiki_trackers.trackerId = tiki_tracker_fields.trackerId
-LEFT JOIN temp_tracker_field_options items_left_display ON
-	items_left_display.displayFieldIdHere = tiki_tracker_item_fields.fieldId
-
-LEFT JOIN tiki_tracker_item_fields items_left ON (
-	items_left.fieldId = items_left_display.fieldIdHere AND
-	items_left.itemId = tiki_tracker_item_fields.itemId
-)
-
-LEFT JOIN tiki_tracker_item_fields items_middle ON (
-	items_middle.value = items_left.value AND
-	items_left_display.fieldIdThere = items_middle.fieldId
-)
-
-LEFT JOIN tiki_tracker_item_fields items_right ON (
-	items_right.itemId = items_middle.itemId AND
-	items_right.fieldId = items_left_display.displayFieldIdThere
-)
-
-LEFT JOIN tiki_tracker_items ON (
-	tiki_tracker_items.itemId = tiki_tracker_item_fields.itemId
-)
-	
-GROUP BY 
-	tiki_tracker_item_fields.itemId
-ORDER BY 
-	tiki_tracker_items.lastModif;
 
 DROP TABLE temp_tracker_field_options;
 
