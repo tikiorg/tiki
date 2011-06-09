@@ -1,4 +1,4 @@
---Create a temporary table to join everything on from the options selected
+-- Create a temporary table to join everything on from the options selected
 DROP TABLE IF EXISTS temp_tracker_field_options;
 
 CREATE TABLE temp_tracker_field_options (
@@ -45,7 +45,7 @@ SELECT
 FROM tiki_tracker_fields
 WHERE tiki_tracker_fields.type = 'l';
 
---Now create the update/join script
+-- Now create the update/join script
 UPDATE
 	tiki_tracker_item_fields
 
@@ -80,7 +80,7 @@ SET
 	
 WHERE
 	LENGTH(items_right.value) > 0 AND
-	tiki_tracker_fields.type = 'l'
+	tiki_tracker_fields.type = 'l';
 
 
 
@@ -121,4 +121,7 @@ LEFT JOIN tiki_tracker_items ON (
 GROUP BY 
 	tiki_tracker_item_fields.itemId
 ORDER BY 
-	tiki_tracker_items.lastModif
+	tiki_tracker_items.lastModif;
+
+DROP TABLE temp_tracker_field_options;
+
