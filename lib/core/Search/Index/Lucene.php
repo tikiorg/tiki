@@ -216,8 +216,8 @@ class Search_Index_Lucene implements Search_Index_Interface
 		case 'Search_Type_PlainText':
 		case 'Search_Type_MultivalueText':
 			$whole = $value->getValue();
-			$whole = str_replace(array('*', '?', '~', '+', '-'), '', $whole);
-			$whole = str_replace(array('[', ']', '{', '}', '(', ')', ':'), '', $whole);
+			$whole = str_replace(array('*', '?', '~', '+'), '', $whole);
+			$whole = str_replace(array('[', ']', '{', '}', '(', ')', ':', '-'), ' ', $whole);
 
 			$parts = explode(' ', $whole);
 			if (count($parts) === 1) {
