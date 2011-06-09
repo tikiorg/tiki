@@ -4,7 +4,7 @@
 * __Author and maintainer:__  Adapted for Tiki Wiki CMS Groupware by Gary Cunningham-Lee (chibaguy).
 * __License:__ GNU/LPGL. This theme is a derived work using visual elements of the Garland theme for Drupal, which was released under the GPL license.
 * __Author URL:__ http://zukakakina.com
-* __Description__: Judy is an implementation of the Garland theme for Drupal, for TikiWiki CMS/Groupware. For more information, please see the documentation pages for this theme.
+* __Description__: Judy is an implementation of the Garland theme for Drupal, for TikiWiki CMS/Groupware. For more information, please see the documentation pages for this theme. 
 
 -=Files=-
 * styles/judy/Readme.txt
@@ -28,9 +28,6 @@
 * templates/styles/judy/credits.tpl
 * templates/styles/judy/index.php
 * templates/styles/judy/tiki.tpl
-* templates/styles/judy/tiki-site_header.tpl
-* templates/styles/judy/tiki-site_header_top.tpl
-
  
 -=Documentation=-
 http://themes.tikiwiki.org/Judy
@@ -38,9 +35,10 @@ http://zukakakina.com/Judy
 See http://themes.tiki.org/Upgrading for overview of changes in this Tiki version related to themes.
  
 -=Version=-
-* Tiki 6
+* Tiki 7
  
 -=Changelog=-
+5 updated for Tiki 7
 4 updated for Tiki 6
 3 updated for Tiki 5
 2 updated for Tiki 4

@@ -28,13 +28,17 @@ body.fixed_width .fixedwidth .fixedwidth {
 	padding: 0;
 }
 
+.fixed_width > .fixedwidth {
+	margin-top: 0;
+}
+
 #main,
 #main[id] {
 	margin-bottom: 0;
 	margin-top: 0;
 }
 
-.header {
+#header {
 	min-height: 80px;
 	background: url(judy/header.png) repeat-x 0 100%;
 }
@@ -65,7 +69,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 #col2 .content {
-	margin: 60px 0 5em;
+	margin: 60px 10px 5em;
 }
 
 #col3 {
@@ -74,7 +78,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 #col3 .content {
-	margin: 60px 0 5em;
+	margin: 60px 10px 5em;
 }
 
 #squeeze {
@@ -92,8 +96,10 @@ body.fixed_width .fixedwidth .fixedwidth {
   min-height: 400px;
 }
 
-#secondary_site_menu {
-	margin-left: -25px;
+#top_modules .module.secondary_site_menu {
+	position: absolute;
+	right: 100px;
+	top: 100px;
 }
 
 #tiki-center {
@@ -101,7 +107,15 @@ body.fixed_width .fixedwidth .fixedwidth {
 	margin-right: -25px;
 	background: #fff url(judy/bg-content.png) repeat-x 50% -12px;
 	padding: 0 20px 20px 20px;
-	min-height: 340px
+	min-height: 340px;
+	position: relative;
+}
+
+#showhide_columns {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
 }
 
 #footer {
@@ -248,12 +262,12 @@ ol li/*, ul li*/ {
 }
 
 /***** Site Header & Identity *****/
-.header a:link,
-.header a:visited {
+#header a:link,
+#header a:visited {
 	color: #cde3f1;
 }
 
-.header a:hover {
+#header a:hover {
 	color: #cde3f1;
 }
 
@@ -261,7 +275,7 @@ ol li/*, ul li*/ {
 	min-height: 80px;
 }
 
-#top_modules #tiki-top {
+#top_modules .tiki-top {
 	position: absolute;
 	top: 0;
 	width: 100%;
@@ -271,16 +285,25 @@ ol li/*, ul li*/ {
 #top_modules #tiki-top nav {
 	float: right;
 	margin-right: 100px;
+	margin-top: 12px;
 }
 
 #top_modules .box-logo {
-	position: absolute;
-	top: 40px;
-	left: 40px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	float: left;
+	margin-top: 20px;
 }
 
 #sitelogo {
 	padding-top: 0;
+}
+
+#top_modules #sitetitles {
+	margin-left: 20px;
+	line-height: normal;
+	margin-top: 5%;
+	margin-bottom: 1%;
 }
 
 #sitetitle {
@@ -432,14 +455,6 @@ a.flip:hover {color: #027ac6;font-size: 90%}
 
 .box {
 	margin-bottom: 2em;
-}
-
-#col2 .box {
-	padding: 0 15px 0 0;
-}
-
-#col3 .box {
-	padding: 0 0 0 15px;
 }
 
 .box-title {
