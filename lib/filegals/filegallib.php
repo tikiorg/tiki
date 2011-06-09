@@ -3134,7 +3134,7 @@ class FileGalLib extends TikiLib
 			$msg = tra('Could not find the file requested');
 		} elseif (!empty($fileInfo['lockedby']) && $fileInfo['lockedby'] != $user && $tiki_p_admin_file_galleries != 'y') {
 			// if locked, user must be the locker
-			$msg = tra(sprintf('The file is locked by %s', $fileInfo['lockedby']));
+			$msg = sprintf(tra('The file is locked by %s'), $fileInfo['lockedby']);
 		} elseif (!($tiki_p_edit_gallery_file == 'y' || (!empty($user) && ($user == $fileInfo['user'] || $user == $fileInfo['lockedby'])))) {
 			// must be the owner or the locker or have the perms
 			$smarty->assign('errortype', 401);
