@@ -48,7 +48,9 @@ $base_url_https = 'https://'.$url_host.(($prefs['https_port']!='')?':'.$prefs['h
 // for <base> tag, which needs the " absolute URI that acts as the base URI for resolving relative URIs", not just the root of the site
 $base_uri = !empty($_SERVER['REDIRECT_SCRIPT_URI']) ? $_SERVER['REDIRECT_SCRIPT_URI'] : isset($_SERVER['SCRIPT_URI']) ? $_SERVER['SCRIPT_URI'] : $base_url;
 global $smarty;
-$smarty->assign('base_uri', $base_uri);
+if (is_object($smarty)) {
+	$smarty->assign('base_uri', $base_uri);
+}
 
 // SSL options
 

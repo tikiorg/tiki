@@ -177,7 +177,9 @@ if (! function_exists('remove_tiki_p_prefix')) {
 $shortPermList = array_map( 'remove_tiki_p_prefix', $permissionList );
 
 $globalperms->globalize( $shortPermList, $smarty, false );
-$smarty->assign( 'globalperms', $globalperms );
+if (is_object($smarty)) {
+	$smarty->assign( 'globalperms', $globalperms );
+}
 
 unset($allperms);
 unset($tokenParams);
