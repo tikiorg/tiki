@@ -105,7 +105,6 @@ function get_default_prefs() {
 		'fgal_list_lastDownload_admin' => 'n',
 		'fgal_list_lockedby_admin' => 'n',
 		'fgal_list_backlinks_admin' => 'y',
-		'fgal_list_ratio_hits' => 'n',
 		'fgal_show_checked' => 'y',
 
 		// imagegals
