@@ -2183,6 +2183,10 @@ div.aclabel, span.aclabel, label.aclabel {
 	cursor: pointer;
 }
 
+.filter .category-picker {
+	display:none;
+}
+
 .Zend_Tag_Cloud li, .Zend_Tag_Cloud {
 	display: inline-block;
 	padding: 0;
