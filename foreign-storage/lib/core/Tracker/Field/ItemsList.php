@@ -21,8 +21,29 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 		$generateLinks = (bool) $this->getOption(4);
 		$status = $this->getOption(5, 'opc');
 
+		$tracker = Tracker_Definition::get($trackerId);
+		$technique = 'value';
+
+		if ($tracker && $field = $tracker->getField($remoteField)) {
+			if ($field['type'] == 'r') {
+				$technique = 'id';
+			}
+		}
+
 		$trklib = TikiLib::lib('trk');
-		$items = $trklib->get_items_list($trackerId, $remoteField, $this->getItemId(), $status);
+		if ($technique == 'id') {
+			$items = $trklib->get_items_list($trackerId, $remoteField, $this->getItemId(), $status);
+		} else {
+			$localField = (int) $this->getOption(2);
+			$localValue = $this->getData($localField);
+
+			// Skip nulls
+			if ($localValue) {
+				$items = $trklib->get_items_list($trackerId, $remoteField, $localValue, $status);
+			} else {
+				$items = array();
+			}
+		}
 
 		$list = array();
 		foreach ($items as $itemId) {

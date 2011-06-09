@@ -2957,7 +2957,7 @@ class TrackerLib extends TikiLib
 				<dt>Description:
 				<dd><strong>[trackerId]</strong> is the tracker ID of the fields you want to display;
 				<dd><strong>[fieldIdThere]</strong> the fieldId of the item link in the other tracker
-				<dd><strong>[unused]</strong> empty, legacy field
+				<dd><strong>[fieldIdHere]</strong> used only if the remote field is not an item link
 				<dd><strong>[displayFieldIdThere]</strong> the field(s) in [trackerId] you want to display, multiple fields can be separated by "|";
 				<dd><strong>[linkToItems]</strong> if set to 0 will simply display the value, but if set to 1 will provide a link directly to that values item in the other tracker;
 				<dd><strong>[status]</strong> filter on status (o, p, c, op, oc, pc or opc);
