@@ -10,12 +10,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function upgrade_20101207_unique_login_tiki( $installer )
+function upgrade_20110609_unique_login_tiki( $installer )
 {
-	$result = $installer->query( "select count(*) nb from users_users having count(*) > 1" );
+	$result = $installer->query( "select count(*) nb from users_users group by login having count(*) > 1" );
 	$row = $result->fetchRow();
 
 	if (intval($row['nb']) == 0) {
+		$result = $installer->query( "drop index login on users_users" );
 		$result = $installer->query( "alter table users_users add unique login (login)" );
 	}
 }
