@@ -4,13 +4,12 @@
 * __Author and maintainer:__ Gary Cunningham-Lee (chibaguy)
 * __License:__ GNU/GPL
 * __Author URL:__ http://zukakakina.com (see http://roopletheme.com for Drupal original)
-* __Description__: Adaptation for TikiWiki CMS/Groupware of the GPL-licensed LiteJazz theme for Drupal by Roopletheme (http://roopletheme.com). Styling is provided for the topbar and bottombar custom code page sections, and there are three color variations, with red and green available as theme options. As of Tiki 4, LiteJazz uses the *lite.css layout method.
+* __Description__: Adaptation for Tiki Wiki CMS Groupware of the GPL-licensed LiteJazz theme for Drupal by Roopletheme (http://roopletheme.com). Styling is provided for the topbar and bottombar custom code page sections, and there are three color variations, with red and green available as theme options. As of Tiki 4, LiteJazz uses the *lite.css layout method.
 
 -=Template Files=-
 (All file paths from Tiki root directory.)
 * templates/styles/litejazz/credits.tpl
 * templates/styles/litejazz/index.php
-* templates/styles/litejazz/tiki-site_header_top.tpl
 
 -=Stylesheet and background images=-
 * styles/litejazz.css
@@ -39,14 +38,15 @@
 
  
 -=Documentation=-
-http://themes.tikiwiki.org/LiteJazz
+http://themes.tiki.org/LiteJazz
 http://zukakakina.com/LiteJazz
 See http://themes.tiki.org/Upgrading for overview of changes in this Tiki version related to themes.
  
 -=Version=-
-Tiki 6
+Tiki 7
  
 -=Changelog=-
+6 updated for Tiki 7
 5 updated for Tiki 6
 4 updated for Tiki 5
 3 updated for Tiki 4
