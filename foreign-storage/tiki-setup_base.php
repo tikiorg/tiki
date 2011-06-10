@@ -457,7 +457,10 @@ if (isset($_SESSION["$user_cookie_site"])) {
 	// }
 	
 }
-$smarty->assign( 'CSRFTicket', isset( $_SESSION['ticket'] ) ? $_SESSION['ticket'] : null);
+
+if (is_object($smarty)) {
+	$smarty->assign( 'CSRFTicket', isset( $_SESSION['ticket'] ) ? $_SESSION['ticket'] : null);
+}
 require_once ('lib/setup/perms.php');
 // --------------------------------------------------------------
 // deal with register_globals
@@ -577,4 +580,6 @@ if (!isset($_SERVER['QUERY_STRING'])) $_SERVER['QUERY_STRING'] = '';
 if (!isset($_SERVER['REQUEST_URI']) || empty($_SERVER['REQUEST_URI'])) {
 	$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
 }
-$smarty->assign("tikidomain", $tikidomain);
+if (is_object($smarty)) {
+	$smarty->assign("tikidomain", $tikidomain);
+}

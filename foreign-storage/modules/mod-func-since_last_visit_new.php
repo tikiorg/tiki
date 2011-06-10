@@ -40,6 +40,11 @@ function module_since_last_visit_new_info() {
 				'name' => tra('Use jQuery presentation'),
 				'description' => tra('If set to "y", use jQuery to show the result.') . ' ' . tra('Default:') . ' "n"'
 			),
+			'daysAtLeast' =>  array(
+				'name' => tra('Minimum timespan'),
+				'description' => tra('Instead of the last login time, go back this minimum time, specified in days, in case the last login time is more recent.') . ' ' . tra('Default value:') . ' "0"',
+				'filter' => 'int'
+			),
 		),
 		'common_params' => array( 'nonums', 'rows' ),
 	);
@@ -89,8 +94,15 @@ function module_since_last_visit_new($mod_reference, $params = null)
 		$smarty->assign('tpl_module_title', tra('Changes since'));
 	} else {
 		$last = $tikilib->getOne("select `lastLogin` from `users_users` where `login`=?",array($user));
-		if (!$last) $last = time();
 		$smarty->assign('tpl_module_title', tra('Since your last visit...'));
+		if (!$last || !empty($params['daysAtLeast'])) {
+			$now = TikiLib::lib('tiki')->now;
+			if (!$last) $last = $now;
+			if (!empty($params['daysAtLeast']) && $now - $last < $params['daysAtLeast']*60*60*24) {
+				$last = $now - $params['daysAtLeast']*60*60*24;
+				$smarty->assign('tpl_module_title', tr('Since %0 days...', $params['daysAtLeast']));
+			}
+		}
 	}
 	$ret["lastLogin"] = $last;
 

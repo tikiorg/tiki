@@ -30,6 +30,212 @@ Version 7.0
 ------------------
 
 ----------------------------------------------
+r34873 | changi67 | 2011-06-09 22:35:38 +0200 (Thu, 09 Jun 2011) | 1 line
+
+[FIX] Group by clause was missing, Thx chealer
+----------------------------------------------
+r34871 | changi67 | 2011-06-09 22:11:44 +0200 (Thu, 09 Jun 2011) | 1 line
+
+[FIX] Difference between fresh and upgrade from Tiki3 or Tiki6
+----------------------------------------------
+r34870 | changi67 | 2011-06-09 22:06:48 +0200 (Thu, 09 Jun 2011) | 1 line
+
+[FIX] Upgrade in command line was not working - This is a work arround to get it work - Thx Nelson
+----------------------------------------------
+r34852 | sylvieg | 2011-06-09 14:29:33 +0200 (Thu, 09 Jun 2011) | 1 line
+
+[bp/r34850][FIX]search: take away ~np~ in snippet to avoid parser bug about included np
+----------------------------------------------
+r34841 | sylvieg | 2011-06-08 23:42:55 +0200 (Wed, 08 Jun 2011) | 1 line
+
+[FIX]category: to avoid flip/flop in category picker in unified search
+----------------------------------------------
+r34837 | changi67 | 2011-06-08 22:11:47 +0200 (Wed, 08 Jun 2011) | 1 line
+
+[FIX] Difference between fresh install and upgrade from 6
+----------------------------------------------
+r34826 | sylvieg | 2011-06-08 16:14:34 +0200 (Wed, 08 Jun 2011) | 1 line
+
+[FIX]tracker: fix optional/mandatory dynamic field
+----------------------------------------------
+r34811 | sylvieg | 2011-06-07 16:56:33 +0200 (Tue, 07 Jun 2011) | 1 line
+
+[FIX]sefurl: mising another sefurl for group homepage
+----------------------------------------------
+r34806 | jonnybradley | 2011-06-07 14:04:17 +0200 (Tue, 07 Jun 2011) | 1 line
+
+[FIX] jquery libs: Update fixed revision for lib/jquery to update jquery.validate (thanks nkoth & robertplummer)
+----------------------------------------------
+r34804 | jonnybradley | 2011-06-07 13:52:05 +0200 (Tue, 07 Jun 2011) | 1 line
+
+[FIX] menustructure module: Replace &amp; with & in structure urls for menus (thanks ricks99)
+----------------------------------------------
+r34803 | sept_7 | 2011-06-07 11:47:43 +0200 (Tue, 07 Jun 2011) | 4 lines
+
+[FIX] Fix typo in the test :
+  set_attribute( 'test', 'HelloWorld', 'tiki . test . aaa55bBb', 121.22 )
+does not match assertion... So correct it...
+
+----------------------------------------------
+r34802 | sept_7 | 2011-06-07 11:45:59 +0200 (Tue, 07 Jun 2011) | 2 lines
+
+[FIX] WikiParser : Fix handling of ~pp~ 
+
+----------------------------------------------
+r34800 | nkoth | 2011-06-07 04:47:16 +0200 (Tue, 07 Jun 2011) | 1 line
+
+[FIX] Return to usable state by disabling non-functioning old ajax checking
+----------------------------------------------
+r34798 | nkoth | 2011-06-07 02:31:21 +0200 (Tue, 07 Jun 2011) | 1 line
+
+[FIX] obvious cut and paste typo from prev commit
+----------------------------------------------
+r34797 | sept_7 | 2011-06-07 02:03:13 +0200 (Tue, 07 Jun 2011) | 6 lines
+
+[FIX] Fix Payment::Payment_CartTest
+ o missing table from tiki.sql added in 20110224_tiki_cart_inventory_hold_tiki.sql
+ o added default value for CartLib::get_gift_certificate_code() and CartLib::get_gift_certificate
+ o change suspicious test this !empty()
+Should fix pb reported by quality.t.o test suite
+
+----------------------------------------------
+r34796 | sylvieg | 2011-06-06 21:28:49 +0200 (Mon, 06 Jun 2011) | 1 line
+
+[FIX]sefurl: aarticle and blog title was lost since object_link
+----------------------------------------------
+r34788 | lphuberdeau | 2011-06-06 14:38:30 +0200 (Mon, 06 Jun 2011) | 1 line
+
+[FIX] Check if the definition is present to prevent crash when index does not match the database
+----------------------------------------------
+r34781 | sept_7 | 2011-06-06 11:56:47 +0200 (Mon, 06 Jun 2011) | 2 lines
+
+[FIX] Fix showstopper bug reported by Lucias while trying to apply profile
+
+----------------------------------------------
+r34780 | sept_7 | 2011-06-06 11:51:06 +0200 (Mon, 06 Jun 2011) | 5 lines
+
+[FIX] Fix different warning from quality.t.o
+ o Duplicate class definition found in CSS
+ o Missing Subversion property "svn:keywords" = "Id"
+ o The use of function sizeof() is forbidden; use count() instead
+
+----------------------------------------------
+r34779 | jonnybradley | 2011-06-05 21:16:31 +0200 (Sun, 05 Jun 2011) | 1 line
+
+[FIX] userslib: Typos and missing var declarations
+----------------------------------------------
+r34778 | jonnybradley | 2011-06-05 20:43:16 +0200 (Sun, 05 Jun 2011) | 1 line
+
+[FIX] HomePage: Fix home page naming when being recreated (was being generated as a random md5 string)
+----------------------------------------------
+r34777 | jonnybradley | 2011-06-05 20:18:59 +0200 (Sun, 05 Jun 2011) | 1 line
+
+[FIX] HomePage: Fix featured profiles links version to 7.x on default HomePage(s)
+----------------------------------------------
+r34772 | chibaguy | 2011-06-05 13:14:54 +0200 (Sun, 05 Jun 2011) | 1 line
+
+[FIX] Better English usage in new user validation email.
+----------------------------------------------
+r34768 | robertplummer | 2011-06-04 23:04:54 +0200 (Sat, 04 Jun 2011) | 2 lines
+
+[FIX] Made new load method for tabs when being displayed as slideshow
+[FIX] tiki-slideshow.php to tell tiki that a slideshow is running earlier so recursive plugins can know
+----------------------------------------------
+r34766 | sylvieg | 2011-06-04 21:24:23 +0200 (Sat, 04 Jun 2011) | 1 line
+
+[FIX]tracker: fix system rating for other lang thatn  En
+----------------------------------------------
+r34764 | yonixxx | 2011-06-04 19:58:38 +0200 (Sat, 04 Jun 2011) | 1 line
+
+[bp/34668]Rollback -  Added the share this feature to list file gallery
+----------------------------------------------
+r34762 | yonixxx | 2011-06-04 18:39:13 +0200 (Sat, 04 Jun 2011) | 1 line
+
+[bp/3468]Added the share this feature to list file gallery
+----------------------------------------------
+r34760 | jonnybradley | 2011-06-04 17:20:46 +0200 (Sat, 04 Jun 2011) | 1 line
+
+[FIX] categories: Missing $and param from previous commit
+----------------------------------------------
+r34759 | jonnybradley | 2011-06-04 16:59:43 +0200 (Sat, 04 Jun 2011) | 1 line
+
+[FIX] categories: Fix getting multiple categories in "and" mode and stop ignoring maxRecords in get_categoryobjects (previous workaround)
+----------------------------------------------
+r34757 | jonnybradley | 2011-06-04 15:20:08 +0200 (Sat, 04 Jun 2011) | 1 line
+
+[FIX] category plugin: Allow "plus" characters required for multiple object types
+----------------------------------------------
+r34756 | chibaguy | 2011-06-04 08:37:27 +0200 (Sat, 04 Jun 2011) | 1 line
+
+[FIX] Default minimum height in case only login, etc. (absolutely positioned) is assigned.
+----------------------------------------------
+r34755 | xen216 | 2011-06-04 07:08:14 +0200 (Sat, 04 Jun 2011) | 1 line
+
+[FIX] added min-height to #topbar_modules to avoid overlapping elements in some cases
+----------------------------------------------
+r34754 | robertplummer | 2011-06-03 23:11:12 +0200 (Fri, 03 Jun 2011) | 3 lines
+
+[FIX] Removed decommissioned tiki-sheet, and added jQuery.sheet to render spreadsheet output for tiki-graph-sheets.tpl
+[MOD] Changed names from "Sheet" to "Spreadsheet" for better user experience
+[NEW] Added buttons to bottom of tiki-graph-sheets.tpl to that user can edit sheet and list sheets
+----------------------------------------------
+r34750 | changi67 | 2011-06-03 20:05:18 +0200 (Fri, 03 Jun 2011) | 1 line
+
+betternotice - thx jb
+----------------------------------------------
+r34748 | jonnybradley | 2011-06-03 19:09:34 +0200 (Fri, 03 Jun 2011) | 1 line
+
+[FIX] trackers trackeritemfield: Fix incorrect logic testing for itemId (or test or status), and replace tracker input with output as the result.
+----------------------------------------------
+r34746 | nkoth | 2011-06-03 18:30:25 +0200 (Fri, 03 Jun 2011) | 1 line
+
+[FIX] Map not showing, showing html code instead
+----------------------------------------------
+r34741 | sylvieg | 2011-06-03 15:34:41 +0200 (Fri, 03 Jun 2011) | 1 line
+
+[FIX]menu: to have sectionLevel working when using a section level i intstead of option in the menu + to be able to display the submenu as a main menu
+----------------------------------------------
+r34738 | changi67 | 2011-06-02 23:02:44 +0200 (Thu, 02 Jun 2011) | 1 line
+
+better notice killer
+----------------------------------------------
+r34732 | sylvieg | 2011-06-02 19:10:36 +0200 (Thu, 02 Jun 2011) | 1 line
+
+[FIX]menu: paramtoLevel, sectionLevel were lost
+----------------------------------------------
+r34731 | sylvieg | 2011-06-02 18:12:08 +0200 (Thu, 02 Jun 2011) | 1 line
+
+[FIX]menu: missing params sectionLevel and toLevel
+----------------------------------------------
+r34729 | sylvieg | 2011-06-02 16:39:28 +0200 (Thu, 02 Jun 2011) | 1 line
+
+[FIX]comments: fix for FF4
+----------------------------------------------
+r34728 | sylvieg | 2011-06-02 16:07:07 +0200 (Thu, 02 Jun 2011) | 1 line
+
+[FIX]search: submit button at the end as last action: categ input size for IE
+----------------------------------------------
+r34726 | sylvieg | 2011-06-02 14:35:49 +0200 (Thu, 02 Jun 2011) | 1 line
+
+[bp/r34725][FIX]tree: odd or even switch on the same level elt
+----------------------------------------------
+r34720 | sylvieg | 2011-06-01 18:32:19 +0200 (Wed, 01 Jun 2011) | 1 line
+
+[FIX]parsing: fix 34598 - need to go out the loop if no more ~/pp~
+----------------------------------------------
+r34716 | jonnybradley | 2011-05-31 19:42:10 +0200 (Tue, 31 May 2011) | 1 line
+
+[FIX] rollback r32152 which adversely affected the output of wikiplugin_category which also uses this function. This restores 6.x behaviour.
+----------------------------------------------
+r34715 | chealer | 2011-05-31 08:57:30 +0200 (Tue, 31 May 2011) | 1 line
+
+French: review r32951 (TikiFestQuebec7) - Finish (completes r34618)
+----------------------------------------------
+r34714 | chealer | 2011-05-31 07:15:50 +0200 (Tue, 31 May 2011) | 2 lines
+
+[FIX] Change "Are you sure you want to effect all pages in this sub-structure?" to "Are you sure you want to affect all pages in this sub-structure?"
+I presume "effect" was some kind of typo. Native English speakers: please check
+----------------------------------------------
 r34666 | marclaporte | 2011-05-27 20:30:03 +0100 (Fri, 27 May 2011) | 1 line
 
 [MOD] remove extra actions below rename page because user testing has demostrated confused users. Some were clicking 'edit'. Leaving 'View page' as a way to get back

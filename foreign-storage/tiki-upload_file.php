@@ -32,7 +32,7 @@ if ($prefs['feature_groupalert'] == 'y') {
 @ini_set('max_execution_time', 0); //will not work in safe_mode is on
 $auto_query_args = array('galleryId', 'fileId', 'filegals_manager', 'view', 'simpleMode');
 
-if ( $prefs['auth_token_access'] == 'y' && $token ) {
+if ( $prefs['auth_token_access'] == 'y' && !empty($token) ) {
 	$smarty->assign('token_id', $token);
 }
 
