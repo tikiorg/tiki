@@ -1,5 +1,4 @@
-ALTER TABLE `tiki_sefurl_regex_out` ADD UNIQUE `left` (`left`(128));
-ALTER TABLE `tiki_blog_posts` CHANGE `priv` `priv` varchar(1) DEFAULT 'n';
+ALTER TABLE `tiki_blog_posts` CHANGE `priv` `priv` varchar(1) DEFAULT 'n'; # Forgotten in r33946
 ALTER TABLE `tiki_polls` ADD `anonym` ENUM( 'a', 'u', 'i', 'c' ) NOT NULL DEFAULT 'u';
 CREATE TABLE IF NOT EXISTS `tiki_poll_votes` (
   `pollId` int(11) NOT NULL,
