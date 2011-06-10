@@ -27,7 +27,9 @@ if (isset($_FILES['importfile']) && is_uploaded_file($_FILES['importfile']['tmp_
 				isset($_REQUEST['add_items']) ? false : true,
 				isset($_REQUEST['dateFormat'])? $_REQUEST['dateFormat']: '',
 				isset($_REQUEST['encoding'])? $_REQUEST['encoding']: 'UTF8',
-				isset($_REQUEST['separator'])? $_REQUEST['separator']:',');
+				isset($_REQUEST['separator'])? $_REQUEST['separator']:',',
+				isset($_REQUEST['updateLastModif']) ? true : false
+				);
 	}
 	fclose($fp);
 	if (!is_numeric($total)) {

@@ -644,6 +644,10 @@ categories = {$catsdump}
 					<td><input type="checkbox" name="add_items" /></td>
 				</tr>
 				<tr>
+					<td>{tr}Update lastModif date if updating items (status and created are updated only if the fields are specified in the csv):{/tr}</td>
+					<td><input type="checkbox" name="updateLastModif" checked="checked" /></td>
+				</tr>
+				<tr>
 					<td>&nbsp;</td>
 					<td><input type="submit" name="save" value="{tr}Import{/tr}" /></td>
 				</tr>

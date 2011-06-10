@@ -1614,7 +1614,7 @@ class TrackerLib extends TikiLib
 	 * @param string	$csvDelimiter 	defaults to ","
 	 * @return number	items imported
 	 */
-	function import_csv($trackerId, $csvHandle, $replace_rows = true, $dateFormat='', $encoding='UTF8', $csvDelimiter=',') {
+	function import_csv($trackerId, $csvHandle, $replace_rows = true, $dateFormat='', $encoding='UTF8', $csvDelimiter=',', $updateLastModif = true) {
 		$tikilib = TikiLib::lib('tiki');
 		$items = $this->items();
 		$itemFields = $this->itemFields();
@@ -1666,13 +1666,16 @@ class TrackerLib extends TikiLib
 				}
 			}
 			if ($itemId && ($t = $this->get_tracker_for_item($itemId)) && $t == $trackerId && $replace_rows) {
-				$items->update(array(
-					'created' => (int) $created,
-					'lastModif' => (int) $lastModif,
-					'status' => $status,
-				), array(
-					'itemId' => (int) $itemId,
-				));
+				if (in_array('status', $header))
+					$update['status'] = $status;
+				if (in_array('created', $header))
+					$update['created'] = (int) $created;
+				if ($updateLastModif) {
+					$update['lastModif'] = (int) $lastModif;
+				}
+				if (!empty($update)) {
+					$items->update($update, array('itemId' => (int) $itemId));
+				}
 				$replace = true;
 			} elseif ($itemId && !$t & $t === $trackerId) {
 				$items->insert(array(
@@ -2166,7 +2169,9 @@ class TrackerLib extends TikiLib
 		$smarty = TikiLib::lib('smarty');
 		$fieldsTable = $this->fields();
 
-		$conditions = array('trackerId' => (int) $trackerId);
+		if (!empty($trackerId)) {
+			$conditions = array('trackerId' => (int) $trackerId);
+		}
 		if ($find) {
 			$conditions['name'] = $fieldsTable->like("%$find%");
 		}
