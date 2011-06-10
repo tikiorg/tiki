@@ -1438,7 +1438,24 @@ class TrackerLib extends TikiLib
 						$this->log($version, $itemId, $array['fieldId'], $array['value']);
 					}
 				}
-			} else {
+			} elseif ($array['type'] == 'k') { //page selector
+				if ($array['value'] != '') {
+					$this->modify_field($currentItemId, $array['fieldId'], $value);
+					if ($itemId) {
+						// On update, save old value
+						$this->log($version, $itemId, $array['fieldId'], $old_value);
+					}
+					$fil[$fieldId] = $value;
+					if (!$this->page_exists($array['value'])) {
+						$opts = preg_split('/,/', $array['options']);
+						if (!empty($opts[2])) {
+							$IP = $this->get_ip_address();
+							$info = $this->get_page_info($opts[2]);
+							$this->create_page($array['value'], 0, $info['data'], $this->now, '', $user, $IP, $info['description'], $info['lang'], $info['is_html'], array(), $info['wysiwyyg'], $info['wiki_authors_style']);
+						}
+					}
+				}
+			}	else {
 				$is_date = in_array($array["type"], array('f', 'j'));
 				$is_visible = !isset($array["isHidden"]) || $array["isHidden"] == 'n';
 
