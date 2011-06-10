@@ -15,54 +15,63 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 {
 	function getFieldData(array $requestData = array())
 	{
-		$ins_id = $this->getInsertId();
+		$trackerId = (int) $this->getOption(0);
+		$remoteField = (int) $this->getOption(1);
+		$displayFields = $this->getOption(3);
+		$generateLinks = (bool) $this->getOption(4);
+		$status = $this->getOption(5, 'opc');
 
-		$data = array(
-			'value' => $this->getValue(),
-		);
+		$tracker = Tracker_Definition::get($trackerId);
+		$technique = 'value';
 
-		$trackerId = isset($requestData['trackerId'])
-				? $requestData['trackerId']
-				: $this->getConfiguration('trackerId');
+		if ($tracker && $field = $tracker->getField($remoteField)) {
+			if ($field['type'] == 'r') {
+				$technique = 'id';
+			}
+		}
 
-		$itemId = isset($requestData['itemId'])
-				? $requestData['itemId']
-				: $this->getItemId();
+		$trklib = TikiLib::lib('trk');
+		if ($technique == 'id') {
+			$items = $trklib->get_items_list($trackerId, $remoteField, $this->getItemId(), $status);
+		} else {
+			$localField = (int) $this->getOption(2);
+			$localValue = $this->getData($localField);
 
-		if ( $trackerId && $itemId ) {
-			if ($this->getOption(3)) {
-				$l = explode(':', $this->getOption(1));
-				$finalFields = explode('|', $this->getOption(3));
-				$data['links'] = TikiLib::lib('trk')->get_join_values(
-						$trackerId, $itemId,
-						array_merge( array($this->getOption(2)), $l, array($this->getOption(3))),
-						$this->getOption(0), $finalFields,  ' ', $this->getOption(5)
-				);
-				if (count($data['links']) == 1) {
-					foreach($data['links'] as $linkItemId => $linkValue) {
-						if (is_numeric($data['links'][$linkItemId])) { // if later a computed field use this field
-							$info[$this->getConfiguration('fieldId')] = $linkValue;	// TODO $info not defined in this scope?
-						}
-					}
-				}
-				$data['trackerId'] = $this->getOption(0);
-				$data['tracker_options'] = TikiLib::lib('trk')->get_tracker_options($this->getOption(0));
+			// Skip nulls
+			if ($localValue) {
+				$items = $trklib->get_items_list($trackerId, $remoteField, $localValue, $status);
+			} else {
+				$items = array();
+			}
+		}
+
+		$list = array();
+		foreach ($items as $itemId) {
+			if ($displayFields) {
+				$list[$itemId] = $trklib->concat_item_from_fieldslist($trackerId, $itemId, $displayFields, $status, ' ');
+			} else {
+				$list[$itemId] = $trklib->get_isMain_value($trackerId, $itemId);
 			}
 		}
 		
-		return $data;
+		return array(
+			'value' => '',
+			'itemIds' => implode(',', $items),
+			'items' => $list,
+			'links' => $generateLinks,
+		);
 	}
 	
 	function renderInput($context = array())
 	{
-		return $this->renderTemplate('trackerinput/itemslist.tpl', $context);
+		return tr('Read Only');
 	}
 
 	function renderOutput( $context = array() ) {
 		if ($context['list_mode'] === 'csv') {
-			return $this->getConfiguration('value');	// FIXME
+			return $this->getConfiguration('value');
 		} else {
-			return $this->renderInput( $context );
+			return $this->renderTemplate('trackeroutput/itemslist.tpl', $context);
 		}
 	}
 }

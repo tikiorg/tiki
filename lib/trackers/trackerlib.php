@@ -586,14 +586,14 @@ class TrackerLib extends TikiLib
 
 	/* experimental shared */
 	function get_items_list($trackerId, $fieldId, $value, $status='o') {
-		$query = "select distinct tti.`itemId`, tti.`itemId` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif ";
+		$query = "select distinct tti.`itemId`, tti.`itemId` i from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif ";
 		$query.= " where tti.`itemId`=ttif.`itemId` and ttif.`fieldId`=? and ttif.`value`=?";
-		$bindVars = array((int)$fieldId, $value);
+		$bindvars = array((int)$fieldId, $value);
 		if (!empty($status)) {
-			$query .= ' and tti.`status`=?';
-			$bindVars[] = $status;
+			$query .= ' and ' . $this->in('tti.status', str_split($status, 1), $bindvars);
 		}
-		return array_values($this->fetchMap($query, $bindVars));
+		$items = $this->fetchMap($query, $bindvars);
+		return array_values($items);
 	}
 
 	function get_tracker($trackerId) {
@@ -668,7 +668,7 @@ class TrackerLib extends TikiLib
 			$tmp=$this->get_item_value($trackerId,$itemId,$field);
 			if ($is_trackerlink){
 				$options = preg_split('/,/', $myfield["options"]);
-				$tmp=$this->concat_item_from_fieldslist($options[0],$this->get_item_id($options[0],$options[1],$tmp),$options[3]);
+				$tmp=$this->concat_item_from_fieldslist($options[0],$tmp,$options[3]);
 			}
 			if ($is_date) $tmp=$this->date_format("%e/%m/%y",$tmp);
 			$res.=$separator.$tmp;
@@ -689,7 +689,7 @@ class TrackerLib extends TikiLib
 			foreach ($tmp as $key=>$value){
 				if ($is_date) $value=$this->date_format("%e/%m/%y",$value);
 				if ($is_trackerlink){
-					$value=$this->concat_item_from_fieldslist($options[0],$this->get_item_id($options[0],$options[1],$value),$options[3]);
+					$value=$this->concat_item_from_fieldslist($options[0],$value,$options[3]);
 				}
 				if (!empty($res[$key])) {
 					$res[$key].=$separator.$value;
@@ -906,16 +906,10 @@ class TrackerLib extends TikiLib
 			$cat_table = '';
 			if ( substr($sort_mode, 0, 2) == 'f_' ) {
 				$csort_mode = 'sttif.`value` ';
-				if (isset($listfields[$asort_mode]['type']) && $listfields[$asort_mode]['type'] == 'l') {// item list
-					$optsl = preg_split('/,/', $listfields[$asort_mode]['options']);
-					$optsl[1] = preg_split('/:/', $optsl[1]);
-					$sort_tables = $this->get_left_join_sql(array_merge(array($optsl[2]), $optsl[1], array($optsl[3])));
-				} else {
-					$sort_tables = ' LEFT JOIN (`tiki_tracker_item_fields` sttif)'
-						.' ON (tti.`itemId` = sttif.`itemId`'
-						." AND sttif.`fieldId` = $asort_mode"
-						.')';
-				}
+				$sort_tables = ' LEFT JOIN (`tiki_tracker_item_fields` sttif)'
+					.' ON (tti.`itemId` = sttif.`itemId`'
+					." AND sttif.`fieldId` = $asort_mode"
+					.')';
 				// Do we need a numerical sort on the field ?
 				$field = $this->get_tracker_field($asort_mode);
 				switch ($field['type']) {
@@ -924,6 +918,19 @@ class TrackerLib extends TikiLib
 				case 'q':
 				case 'n':
 					$numsort = true;
+					break;
+				case 'l':
+					// Do nothing, value is dynamic and thus cannot be sorted on
+					$csort_mode = 1;
+					$csort_tables = '';
+					break;
+				case 'r':
+					$link_field = intval($field['fieldId']);
+					$remote_field = intval($field['options_array'][1]);
+					$sort_tables = '
+						LEFT JOIN `tiki_tracker_item_fields` itemlink ON tti.itemId = itemlink.itemId AND itemlink.fieldId = ' . $link_field . '
+						LEFT JOIN `tiki_tracker_item_fields` sttif ON itemlink.value = sttif.itemId AND sttif.fieldId = ' . $remote_field . '
+					';
 					break;
 				case 's':
 					if ($field['name'] == 'Rating' || $field['name'] == tra('Rating')) {
@@ -1048,6 +1055,17 @@ class TrackerLib extends TikiLib
 					if (($j = array_search($ev, $filter['options_array'])) !== false && $j+1 < count($filter['options_array'])) {
 						$mid .= " AND ttif$i.`value`*1<? ";
 						$bindvars[] = $filter['options_array'][$j+1];
+					}
+				} elseif ($filter['type'] == 'r' && ($fv || $ev)) {
+					$cv = $fv ? $fv : $ev;
+
+					if (is_numeric($cv)) {
+						$mid .= " AND ttif$i.`value` = ? ";
+						$bindvars[] = $cv;
+					} else {
+						$cat_table .= " INNER JOIN tiki_tracker_item_fields ttif{$i}_remote ON ttif$i.`value` = ttif{$i}_remote.`itemId` AND ttif{$i}_remote.`fieldId` = " . intval($filter['options_array'][1]) . ' ';
+						$mid .= " AND ttif{$i}_remote.`value` LIKE ? ";
+						$bindvars[] = $ev ? $ev : "%$fv%";
 					}
 				} elseif ($ev) {
 					if (is_array($ev)) {
@@ -1177,8 +1195,10 @@ class TrackerLib extends TikiLib
 					foreach ($linkfilter as $lf) {
 						if ($field['fieldId'] == $lf["filterfield"]) {
 							// extra comma at the front and back of filtervalue to avoid ambiguity in partial match
-							if ($lf["filtervalue"] && strpos(',' . implode(',',$field['links']) . ',', $lf["filtervalue"]) === false
-							|| $lf["exactvalue"] && implode(',',$field['links']) != $lf["exactvalue"] && implode(':',$field['links']) != $lf["exactvalue"] ) {
+							if ($lf["filtervalue"] && strpos(',' . implode(',',$field['items']) . ',', $lf["filtervalue"]) === false) {
+								$filterout = true;
+								break 2;
+							} elseif ($lf["exactvalue"] && !in_array($lf['exactvalue'], $field['items'])) {
 								$filterout = true;
 								break 2;
 							}
@@ -1474,8 +1494,6 @@ class TrackerLib extends TikiLib
 								$this->log($version, $itemId, $array['fieldId'], $old_value);
 							}
 						}
-
-						$this->update_item_link_value($trackerId, $fieldId, $old_value, $value);
 					}
 				}
 
@@ -2180,21 +2198,6 @@ class TrackerLib extends TikiLib
 					}
 				}
 				$res = $this->set_default_dropdown_option($res);
-			}
-			if (in_array($res['type'], array('l', 'r'))) { // get the last field type
-				if (!empty($res['options_array'][3])) {
-					if (is_numeric($res['options_array'][3]))
-						$fieldId = $res['options_array'][3];
-					else
-						$fieldId = 0;
-				} elseif (is_numeric($res['options_array'][1])) {
-					$fieldId = $res['options_array'][1];
-				} elseif ($fields = preg_split('/:/', $res['options_array'][1])) {
-					$fieldId = $fields[count($fields) - 1];
-				}
-				if (!empty($fieldId)) {
-					$res['otherField'] = $this->get_tracker_field($fieldId);
-				}
 			}
 			if ($res['type'] == 'p' && $res['options_array'][0] == 'language') {
 				$smarty->assign('languages', $this->list_languages());	
@@ -2970,8 +2973,8 @@ class TrackerLib extends TikiLib
 				<dt>Example: 5,3,4,10|11
 				<dt>Description:
 				<dd><strong>[trackerId]</strong> is the tracker ID of the fields you want to display;
-				<dd><strong>[fieldIdThere]</strong> is the field (multiple fields can be separated with a ":") you want to link with;
-				<dd><strong>[fieldIdHere]</strong> is the field in this tracker you want to link with;
+				<dd><strong>[fieldIdThere]</strong> the fieldId of the item link in the other tracker
+				<dd><strong>[fieldIdHere]</strong> used only if the remote field is not an item link
 				<dd><strong>[displayFieldIdThere]</strong> the field(s) in [trackerId] you want to display, multiple fields can be separated by "|";
 				<dd><strong>[linkToItems]</strong> if set to 0 will simply display the value, but if set to 1 will provide a link directly to that values item in the other tracker;
 				<dd><strong>[status]</strong> filter on status (o, p, c, op, oc, pc or opc);
@@ -3785,34 +3788,6 @@ class TrackerLib extends TikiLib
 		} else {
 			return array('computedtype'=>'f', 'options'=>$info['options'] ,'options_array'=>$info['options_array']);
 		}
-	}
-	function update_item_link_value($trackerId, $fieldId, $old, $new) {
-		if ($old == $new || empty($old)) {
-			return;
-		}
-		static $fields_used_in_item_links;
-
-		$table = $this->fields();
-
-		if (!isset($fields_used_in_item_links)) {
-			$fields = $table->fetchAll(array('fieldId', 'options'), array(
-				'type' => $table->exactly('r'),
-			));
-			foreach ($fields as $field) {
-				$field['options_array'] = preg_split('/\s*,\s*/', $field['options']);
-				$fields_used_in_item_links[$field['options_array'][1]][] = $field['fieldId'];
-			}
-		}
-		if (empty($fields_used_in_item_links[$fieldId])) {// field not use in a ref of item link
-			return;
-		}
-
-		$this->itemFields()->updateMultiple(array(
-			'value' => $new,
-		), array(
-			'value' => $old,
-			'fieldId' => $table->in($fields_used_in_item_links[$fieldId]),
-		));
 	}
 	function change_status($items, $status) {
 		if (!count($items)) {

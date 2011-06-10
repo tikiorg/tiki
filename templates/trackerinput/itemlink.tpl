@@ -3,8 +3,12 @@
 		<option value=""></option>
 	{/if}
 	{foreach key=id item=label from=$field.list}
-		<option value="{$label|escape}" {if $field.value eq $label or $defaultvalues.$fid eq $label or $field.defaultvalue eq $label}selected="selected"{/if}>
-			{if $field.listdisplay[$id] eq ""}{$label}{else}{$field.listdisplay[$id]}{/if}
+		<option value="{$id|escape}" {if $field.value eq $id}selected="selected"{/if}>
+			{if $field.listdisplay[$id] eq ""}
+				{$label|escape}
+			{else}
+				{$field.listdisplay[$id]|escape}
+			{/if}
 		</option>
 	{/foreach}
 </select>
