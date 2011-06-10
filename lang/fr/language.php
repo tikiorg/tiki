@@ -11283,6 +11283,7 @@ $lang=Array(
 "Unless set to \"ignore\", the module changes the reference point in time from the user\\'s last login date and time to a day where users browse to using the calendar" => "A moins d'^tre réglé sur \"ignore\", le module change le point de référence temporel à partir des date et heure de dernière connexion de l'utilisateur jusqu'au jour où l'utilisateur parcourt le calendrier",
 "Changes since" => "Modifications depuis",
 "Since your last visit..." => "Depuis dernière visite...",
+"Since %0 days..." => "Depuis %0 jours...",
 "new comments" => "nouveau(x) commentaire(s)",
 " (archived)" => " (archivé(e))",
 "new posts" => "nouveau(x) article(s) de forum",
