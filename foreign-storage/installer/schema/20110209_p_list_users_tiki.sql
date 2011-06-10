@@ -1,1 +1,0 @@
-update `users_permissions` set `feature_check` = null where `permName`='tiki_p_list_users';

@@ -1,1 +1,0 @@
-<a href="http://celo.wordpress.com/" title="Inspired by Crimeboy's Openbox design">Theme</a>: <a href="http://zukakakina.com" title="By Gary Cunningham-Lee aka chibaguy">{tr}absE{/tr}</a>
