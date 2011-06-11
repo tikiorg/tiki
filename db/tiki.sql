@@ -3900,7 +3900,7 @@ CREATE TABLE `tiki_acct_journal` (
   `journalDescription` varchar(255) NOT NULL,
   `journalCancelled` int(1) NOT NULL DEFAULT '0',
   `journalTs` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`journalBookId`,`journalId`)
+  PRIMARY KEY (`journalId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_acct_stack`; 
@@ -3910,7 +3910,7 @@ CREATE TABLE `tiki_acct_stack` (
   `stackDate` date NOT NULL DEFAULT '0000-00-00',
   `stackDescription` varchar(255) NOT NULL,
   `stackTs` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`stackBookId`,`stackId`)
+  PRIMARY KEY (`stackId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_acct_stackitem`; 
@@ -3939,7 +3939,7 @@ CREATE TABLE `tiki_acct_statement` (
   `statementAmount` double NOT NULL,
   `statementJournalId` int(10) unsigned NOT NULL DEFAULT '0',
   `statementStackId` int(11) NOT NULL,
-  PRIMARY KEY (`statementBookId`,`statementAccountId`,`statementId`)
+  PRIMARY KEY (`statementId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_acct_tax`; 
@@ -3949,7 +3949,7 @@ CREATE TABLE `tiki_acct_tax` (
   `taxText` varchar(63) NOT NULL,
   `taxAmount` double NOT NULL DEFAULT '0',
   `taxIsFix` enum('y','n') NOT NULL DEFAULT 'n',
-  PRIMARY KEY (`taxBookId`,`taxId`)
+  PRIMARY KEY (`taxId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_queue`;
