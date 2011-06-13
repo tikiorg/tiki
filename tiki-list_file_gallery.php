@@ -470,7 +470,8 @@ if (isset($_REQUEST['edit'])) {
 											'image_max_size_y'	=> $_REQUEST['image_max_size_y'],
 											'backlinkPerms'			=> isset($_REQUEST['backlinkPerms'])? 'y': 'n',
 											'show_backlinks'		=> $_REQUEST['fgal_list_backlinks'],
-											'wiki_syntax'			=> $_REQUEST['wiki_syntax']
+											'wiki_syntax'			=> $_REQUEST['wiki_syntax'],
+											'show_source'			=> $_REQUEST['fgal_list_source'],
 										);
 
 		if ($prefs['feature_file_galleries_templates'] == 'y' && isset($_REQUEST['fgal_template']) && !empty($_REQUEST['fgal_template'])) {
