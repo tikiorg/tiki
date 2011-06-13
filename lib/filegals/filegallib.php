@@ -1428,7 +1428,7 @@ class FileGalLib extends TikiLib
 		$galleryPathHtml = '';
 		foreach ( $galleryPath as $dir_id ) {
 			if ( $galleryPathHtml != '' ) $galleryPathHtml .= ' &nbsp;&gt;&nbsp;';
-			$galleryPathHtml .= '<a href="' . $script . '?galleryId=' . $dir_id[0] . $fgal_mgr_param . '">' . $dir_id[1] . '</a>';
+			$galleryPathHtml .= '<a href="' . $script . '?galleryId=' . $dir_id[0] . $fgal_mgr_param . '">' . htmlspecialchars($dir_id[1]) . '</a>';
 		}
 
 		return array(
