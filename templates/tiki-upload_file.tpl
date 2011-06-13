@@ -551,4 +551,41 @@
 			}
 		{/jq}
 	{/if}
+
+	{if $prefs.fgal_upload_from_source eq 'y' and $tiki_p_upload_files eq 'y'}
+		<form class="remote-upload" method="post" action="tiki-ajax_services.php">
+			<h3>{tr}Upload from URL{/tr}</h3>
+			<p>
+				<input type="hidden" name="controller" value="file"/>
+				<input type="hidden" name="action" value="remote"/>
+				<input type="hidden" name="galleryId" value="{$galleryId|escape}"/>
+				<label>{tr}URL:{/tr} <input type="url" name="url" placeholder="http://"/></label>
+				<input type="submit" value="{tr}Add{/tr}"/>
+			</p>
+			<div class="result"></div>
+		</form>
+		{jq}
+			$('.remote-upload').submit(function () {
+				var form = this;
+				$.ajax({
+					method: 'POST',
+					url: $(form).attr('action'),
+					data: $(form).serialize(),
+					dataType: 'html',
+					success: function (data) {
+						$('.result', form).html(data);
+						$(form.url).val('');
+					},
+					complete: function () {
+						$('input', form).attr('disabled', 0);
+					}
+				});
+
+				$('input', this).attr('disabled', 1);
+				return false;
+			});
+		{/jq}
+	{/if}
+
 {/if}
+

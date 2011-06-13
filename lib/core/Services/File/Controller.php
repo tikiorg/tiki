@@ -39,6 +39,12 @@ class Services_File_Controller
 		$gal_info = $this->checkTargetGallery($input);
 		$url = $input->url->url();
 
+		if (! $url) {
+			return array(
+				'galleryId' => $gal_info['galleryId'],
+			);
+		}
+
 		$filegallib = TikiLib::lib('filegal');
 
 		if ($file = $filegallib->lookup_source($url)) {
