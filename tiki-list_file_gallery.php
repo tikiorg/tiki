@@ -40,6 +40,14 @@ $auto_query_args = array( 'galleryId'
 												, 'show_details'
 												, 'view'
 												);
+if (!empty($_REQUEST['find_other'])) {
+	$info = $filegallib->get_file_info($_REQUEST['find_other']);
+	if (!empty($info)) {
+		$_REQUEST['galleryId'] = $info['galleryId'];
+		$smarty->assign('find_other_val', $_REQUEST['find_other']);
+	}
+}
+
 $gal_info = '';
 
 if ( empty($_REQUEST['galleryId']) && isset($_REQUEST['parentId']) ) {

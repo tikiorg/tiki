@@ -174,7 +174,7 @@
 	{include file='duplicate_file_gallery.tpl'}
 {else}
 	{if $prefs.fgal_search eq 'y'}
-		{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y'}
+		{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y' find_other="Gallery of this fileId"}
 	{/if}
 	{if $prefs.fgal_search_in_content eq 'y' and $galleryId > 0}
 		<div class="findtable">
