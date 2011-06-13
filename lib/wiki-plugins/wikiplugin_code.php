@@ -13,6 +13,7 @@ function wikiplugin_code_info() {
 		'prefs' => array('wikiplugin_code'),
 		'body' => tra('Code'),
 		'icon' => 'pics/icons/page_white_code.png',
+		'filter' => 'rawhtml_unsafe',
 		'params' => array(
 			'caption' => array(
 				'required' => false,
