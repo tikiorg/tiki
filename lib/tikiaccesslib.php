@@ -254,6 +254,10 @@ class TikiAccessLib extends TikiLib
 			if( $this->is_machine_request() )
 				header ("HTTP/1.0 503 Service Unavailable");
 			break;
+		default:
+			if( $this->is_machine_request() )
+				header("HTTP/1.0 $errortype {$detail['errortitle']}");
+			break;
 		}
 
 		if( $this->is_serializable_request() ) {
