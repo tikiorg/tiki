@@ -2456,6 +2456,13 @@ class FileGalLib extends TikiLib
 			$object_type = ( $res['isgal'] == 1 ? 'file gallery' : 'file');
 			$galleryId = $res['isgal'] == 1 ? $res['id'] : $res['galleryId'];
 
+			if ($prefs['fgal_upload_from_source'] == 'y' && $object_type == 'file') {
+				$attributes = TikiLib::lib('attribute')->get_attributes('file', $res['id']);
+				if (isset($attributes['tiki.content.source'])) {
+					$res['source'] = $attributes['tiki.content.source'];
+				}
+			}
+
 			// if file is categorized uses category permisions, otherwise uses parent file gallery permissions
 			// note that the file will not be displayed if categorized but its categories has no file gallery related permissions
 			if ($object_type == 'file' && $categlib->is_categorized($object_type, $res['id'])) {
