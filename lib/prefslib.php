@@ -208,14 +208,16 @@ class PreferencesLib
 
 	private function getFileData( $file ) {
 		if( ! isset( $this->files[$file] ) ) {
-			require_once 'lib/prefs/' . $file . '.php';
-			$function = "prefs_{$file}_list";
-			if( function_exists( $function ) ) {
-				$this->files[$file] = $function();
-			} else {
-				$this->files[$file] = array();
-			}
-		}
+            $this->files[$file] = array();
+            $inc_file = "lib/prefs/{$file}.php";
+            if (file_exists( $inc_file )) {
+                require_once $inc_file;
+                $function = "prefs_{$file}_list";
+                if( function_exists( $function ) ) {
+                    $this->files[$file] = $function();
+                }
+            }
+        }
 
 		return $this->files[$file];
 	}
