@@ -13,7 +13,7 @@
 
 {if count($feedback)}<div class="simplebox highlight">{section name=i loop=$feedback}{$feedback[i]}<br />{/section}</div>{/if}
 
-<h2>{$totimg} {tr}Available Files{/tr} {$dirsize}</h2>
+<h2>{$totfile} {tr}Available Files{/tr} {$totalsize|kbsize}</h2>
 <form method="post" action="tiki-batch_upload_files.php" name="f">
 	<table class="formcolor" id="filelist" width="100%">
 		<tr>
