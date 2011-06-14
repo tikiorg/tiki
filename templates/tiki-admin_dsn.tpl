@@ -81,6 +81,7 @@
 			{tr}Type:{/tr}
 			<select name="method">
 				<option value="basic">{tr}HTTP Basic{/tr}</option>
+				<option value="post">{tr}HTTP Session / Login{/tr}</option>
 			</select>
 		</label>
 	</fieldset>
@@ -89,6 +90,24 @@
 		<label>{tr}Username:{/tr} <input type="text" name="basic_username"/></label>
 		<label>{tr}Password:{/tr} <input type="password" name="basic_password"/></label>
 	</fieldset>
+	<fieldset class="method post">
+		<legend>{tr}HTTP Session / Login{/tr}</legend>
+		<label>{tr}URL:{/tr} <input type="url" name="post_url"/></label>
+		<table>
+			<thead>
+				<tr><th>{tr}Name{/tr}</th><th>{tr}Value{/tr}</th></tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<td><input type="text" name="post_new_field"/></td>
+					<td><input type="text" name="post_new_value"/></td>
+					<td><input type="submit" name="post_new_add" value="{tr}Add{/tr}"/></td>
+				</tr>
+			</tfoot>
+			<tbody>
+			</tbody>
+		</table>
+	</fieldset>
 	<fieldset>
 		<input type="submit" name="save" value="{tr}Save{/tr}"/>
 		<input type="submit" name="delete" value="{tr}Delete{/tr}"/>
@@ -96,17 +115,28 @@
 </form>
 {jq}
 $('#source-form').each(function () {
-	var form = this, reload = function () {
-		$('option.added', form).remove();
-		$.getJSON('tiki-ajax_services.php', {
-			controller: 'auth_source',
-			action: 'list',
-		}, function (entries) {
-			$.each(entries, function (k, v) {
-				$(form.existing).append($('<option class="added"/>').text(v));
+	var form = this, 
+		reload = function () {
+			$('option.added', form).remove();
+			$.getJSON('tiki-ajax_services.php', {
+				controller: 'auth_source',
+				action: 'list',
+			}, function (entries) {
+				$.each(entries, function (k, v) {
+					$(form.existing).append($('<option class="added"/>').text(v));
+				});
 			});
-		});
-	};
+		},
+		addPostRow = function (name, value) {
+			var row = $('<tr/>');
+			row.append($('<td/>').text(name));
+			row.append($('<td/>').text(value));
+			row.append($('<td>{{icon _id=cross}}</td>').css('cursor', 'pointer').click(function () {
+				$(this).closest('tr').remove();
+				return false;
+			}));
+			$('fieldset.method.post tbody', form).append(row);
+		};
 
 	$(form).submit(function () {
 		return false;
@@ -131,19 +161,27 @@ $('#source-form').each(function () {
 					$(form.basic_username).val(data.arguments.username);
 					$(form.basic_password).val(data.arguments.password);
 					break;
+				case 'post':
+					$(form.post_url).val(data.arguments.post_url);
+					$.each(data.arguments, function (key, value) {
+						if (key !== 'post_url') {
+							addPostRow(key, value);
+						}
+					});
+					break;
 				}
 			});
 		} else {
 			$(form.identifier).show().val('').focus();
 			$('input:not(:submit)', form).val('');
+			$('fieldset.method.post tbody').empty();
 		}
 	});
 
-	$(form.type).change(function () {
+	$(form.method).change(function () {
 		$('fieldset.method', form).hide();
 		$('fieldset.method.' + $(this).val(), form).show();
-	});
-
+	}).change();
 
 	reload();
 
@@ -161,6 +199,13 @@ $('#source-form').each(function () {
 			data['arguments~username'] = $(form.basic_username).val();
 			data['arguments~password'] = $(form.basic_password).val();
 			break;
+		case 'post':
+			data['arguments~post_url'] = $(form.post_url).val();
+
+			$('fieldset.method.post tbody tr').each(function () {
+				var name = this.childNodes[0], value = this.childNodes[1];
+				data['arguments~' + $(name).text()] = $(value).text();
+			});
 		}
 
 		$(form.existing).val('').change();
@@ -187,6 +232,12 @@ $('#source-form').each(function () {
 		return false;
 	});
 
-	$(form.type).change();
+	$(form.post_new_add).click(function () {
+		addPostRow($(form.post_new_field).val(), $(form.post_new_value).val());
+
+		$(form.post_new_field).val('').focus();
+		$(form.post_new_value).val('');
+		return false;
+	});
 });
 {/jq}
