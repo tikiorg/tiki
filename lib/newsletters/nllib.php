@@ -384,12 +384,18 @@ class NlLib extends TikiLib
 			if (!isset($_SERVER["SERVER_NAME"])) {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 			}
-			$mail = new TikiMail($user);
-			$mail->setSubject(tra('Newsletter subscription information at').' '. $_SERVER["SERVER_NAME"]);
-			$mail->setText($mail_data);
-			if (!$mail->send(array($email)))
+			include_once 'lib/mail/maillib.php';
+			$zmail = tiki_get_admin_mail();
+			$zmail->setSubject(tra('Newsletter subscription information at').' '. $_SERVER["SERVER_NAME"]);
+			$zmail->setBodyText($mail_data);
+			$zmail->addTo($email);
+			try {
+				$zmail->send();
+
+				return true;
+			} catch (Zend_Mail_Exception $e) {
 				return false;
-			return true;
+			}
 		} else {
 			if (!empty($res) && $res["valid"] == 'n') {
 				$query = "update `tiki_newsletter_subscriptions` set `valid` = 'y' where `nlId` = ? and `email` = ? and `isUser` = ?";
@@ -433,15 +439,22 @@ class NlLib extends TikiLib
 		if (!isset($_SERVER["SERVER_NAME"])) {
 			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 		}
-		$mail = new TikiMail($user);
+		include_once 'lib/mail/maillib.php';
+		$zmail = tiki_get_admin_mail();
 		$lg = ! $user ? $prefs['site_language']: $this->get_user_preference($user, "language", $prefs['site_language']);
 		$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_welcome_subject.tpl');
-		$mail->setSubject(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]));
+		$zmail->setSubject(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]));
 		$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_welcome.tpl');
-		$mail->setText($mail_data);
-		if (!$mail->send(array($email)))
-				return false;
-		return $this->get_newsletter($res["nlId"]);
+		$zmail->setBodyText($mail_data);
+		$zmail->addTo($email);
+
+		try {
+			$zmail->send();
+
+			return $this->get_newsletter($res["nlId"]);
+		} catch (Zend_Mail_Exception $e) {
+			return false;
+		}
 	}
 
 	function unsubscribe($code,$mailit=false) {
@@ -479,12 +492,18 @@ class NlLib extends TikiLib
 			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 		}
 		if ($mailit) {
-			$mail = new TikiMail();
+			include_once 'lib/mail/maillib.php';
+			$zmail = tiki_get_admin_mail();
 			$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_byebye_subject.tpl');
-			$mail->setSubject(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]));
+			$zmail->setSubject(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]));
 			$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_byebye.tpl');
-			$mail->setText($mail_data);
-			$mail->send(array($email));
+			$zmail->setBodyText($mail_data);
+			$zmail->addTo($email);
+
+			try {
+				$zmail->send();
+			} catch (Zend_Mail_Exception $e) {
+			}
 		}
 		/*$this->update_users($res["nlId"]);*/
 		return $this->get_newsletter($res["nlId"]);
@@ -844,8 +863,8 @@ class NlLib extends TikiLib
 		}
 	}
 	function delete_edition_subscriber($editionId, $user) {
-		$query = 'delete from `tiki_sent_newsletters_errors` where `editionId`=? and `email`=? and `login`=?';
-		$this->query($query, array((int)$editionId, $user['email'], $user['login']));
+		$query = 'delete from `tiki_sent_newsletters_errors` where `editionId`=? and `email`=?';
+		$this->query($query, array((int)$editionId, $user['email']));
 	}
 	function mark_edition_subscriber($editionId, $user) {
 		$query = 'update `tiki_sent_newsletters_errors` set `error`= ? where `editionId`=? and `email`=? and `login`=?';
@@ -979,77 +998,164 @@ class NlLib extends TikiLib
 		$retval["cant"] = $cant;
 		return $retval;
 	}
+
+	private function get_edition_mail($editionId, $target)
+	{
+		global $prefs;
+		static $mailcache = array();
+
+		if (! isset($mailcache[$editionId])) {
+			$tikilib = TikiLib::lib('tiki');
+			$headerlib = TikiLib::lib('header');
+
+			$info = $this->get_edition($editionId);
+			$nl_info = $this->get_newsletter($info['nlId']);
+
+
+			// build the html
+			$beginHtml = '<body><div id="tiki-center" class="clearfix content"><div class="wikitext">';
+			$endHtml = '</div></div></body>';
+			if (stristr($info['data'], '<body') === false) {
+				$html = "<html>$beginHtml" . $tikilib->parse_data($info['data'], array('absolute_links' => true, 'suppress_icons' => true)) . "$endHtml</html>";
+			} else {
+				$html = str_ireplace('<body>', $beginHtml,$info['data']);
+				$html = str_ireplace('</body>', $endHtml, $html);
+			}
+
+			if ($nl_info['allowArticleClip'] == 'y' && $nl_info['autoArticleClip'] == 'y') {
+				$articleClip = $this->clip_articles($nl_info['nlId']);
+				$txtArticleClip = generateTxtVersion($articleClip);
+				$info['datatxt'] = str_replace('~~~articleclip~~~', $txtArticleClip, $info['datatxt']);
+				$html = str_replace('~~~articleclip~~~', $articleClip, $html);
+			}
+
+			if (stristr($html, '<base') === false) {
+				if (stristr($html, '<head') === false) {
+					$news_cssfile = $tikilib->get_style_path($prefs['style'], '', 'newsletter.css');
+					$news_cssfile_option = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'newsletter.css');
+					$news_css = '';
+					if (!empty($news_cssfile)) {
+						$news_css .= $headerlib->minify_css($news_cssfile);
+					}
+					if (!empty($news_cssfile_option) && $news_cssfile_option !== $news_cssfile) {
+						$news_css .= $headerlib->minify_css($news_cssfile_option);
+					}
+					if (empty($news_css)) {
+						$news_css = $headerlib->get_all_css_content();
+					}
+					$news_head = "<html><head><base href=\"$base_url\" /><style type=\"text/css\">$news_css</style></head>";
+					$html = str_ireplace('<html>', $news_head, $html);
+				} else {
+					$html = str_ireplace('<head>', "<head><base href=\"$base_url\" />", $html);
+				}
+			}
+
+			$info['files'] = $this->get_edition_files($editionId);
+
+			include_once 'lib/mail/maillib.php';
+			$zmail = tiki_get_admin_mail();
+
+			if (!empty($info['replyto'])) {
+				$zmail->setReplyTo($info['replyto']);
+			}
+
+			foreach($info['files'] as $f) {
+				$fpath = isset($f['path']) ? $f['path'] : $prefs['tmpDir'] . '/newsletterfile-' . $f['filename'];
+				$att = $zmail->createAttachment(file_get_contents($fpath));
+				$att->filename = $f['name'];
+				$att->mimeType = $f['type'];
+			}
+
+			$zmail->setSubject($info['subject']); // htmlMimeMail memorised the encoded subject
+
+			$mailcache[$editionId] = array(
+				'zmail' => $zmail,
+				'text' => $info['datatxt'],
+				'html' => $html,
+				'unsubMsg' => $nl_info['unsubMsg'],
+				'nlId' => $nl_info['nlId'],
+			);
+		}
+
+		$cache = $mailcache[$editionId];
+
+		$html = $cache['html'];
+		$unsubmsg = '';
+		if ($cache["unsubMsg"] == 'y' && !empty($target["code"])) {
+			$unsubmsg = $this->get_unsub_msg($cache["nlId"], $target['email'], $target['language'], $target["code"], $target['user']);
+			if (stristr($html, '</body>') === false) {
+				$html .= $unsubmsg;
+			} else {
+				$html = str_replace("</body>", nl2br($unsubmsg) . "</body>", $html);
+			}
+		}
+
+		$zmail = $cache['zmail'];
+		$zmail->setBodyHtml($html);
+		$zmail->setBodyText($cache['text'] . strip_tags($unsubmsg));
+		$zmail->clearRecipients();
+		$zmail->addTo($target['email']);
+
+		return $zmail;
+	}
+
 	// info: subject, data, datatxt, dataparsed, wysiwyg, sendingUniqId, files, errorEditionId, editionId
 	// browser: true if on the browser
 	function send($nl_info, $info, $browser=true, &$sent, &$errors, &$logFileName) {
-		global $prefs, $smarty, $userlib, $tikilib;
-		global $headerlib; include_once('lib/headerlib.php');
+		global $prefs, $smarty;
+		$headerlib = TikiLib::lib('header');
+		$tikilib = TikiLib::lib('tiki');
+		$userlib = TikiLib::lib('user');
+
+		$users = $this->get_all_subscribers($nl_info['nlId'], $nl_info['unsubMsg'] == 'y');
+
 		if (empty($info['editionId'])) {
 			$info['editionId'] = $this->replace_edition($nl_info['nlId'], $info['subject'], $info['data'], 0, 0, true, $info['datatxt'], $info['files'], $info['wysiwyg']);
+		} else {
+			$this->replace_edition($nl_info['nlId'], $info['subject'], $info['data'], 0, $info['editionId'], true, $info['datatxt'], $info['files'], $info['wysiwyg']);
 		}
+
+		if (isset($info['begin'])) {
+			$this->memo_subscribers_edition($info['editionId'], $users);
+		}
+
+		$remaining = $this->table('tiki_sent_newsletters_errors')->fetchColumn('email', array(
+			'editionId' => $info['editionId'],
+		));
+
 		$sent = array();
 		$errors = array();
+		$toSend = array();
+		foreach ($users as $uInfo) {
+			$userEmail = $uInfo['login'];
+			$email = trim($uInfo['email']);
+			if ($userEmail == '') {
+				$userEmail = $userlib->get_user_by_email($email);
+			}
+			$language = !$userEmail ? $prefs['site_language'] : $tikilib->get_user_preference($userEmail, "language", $prefs['site_language']);
+
+			if (preg_match('/([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+/', $email)) {
+				if (in_array($email, $remaining)) {
+					$uInfo['user'] = $userEmail;
+					$uInfo['email'] = $email;
+					$uInfo['language'] = $language;
+
+					$toSend[$email] = $uInfo;
+				} else {
+					$sent[] = $email;
+				}
+			} else {
+				$errors[] = array("user" => $userEmail, "email" => $email, "msg" => tra("invalid email"));
+			}
+		}
+
+		$users = array_values($toSend);
+
 		$logFileName = $prefs['tmpDir'] . '/public/newsletter-log-' . $info['editionId'] . '.txt';
 		if (($logFileHandle = fopen( $logFileName, 'a' )) == false) {
 			$logFileName = '';
 		}
-		include_once ('lib/webmail/tikimaillib.php');
-		$mail = new TikiMail();
-
-		// build the html
-		$beginHtml = '<body><div id="tiki-center" class="clearfix content"><div class="wikitext">';
-		$endHtml = '</div></div></body>';
-		if (stristr($info['dataparsed'], '<body') === false) {
-			$html = "<html>$beginHtml" . $tikilib->parse_data($info['dataparsed'], array('absolute_links' => true, 'suppress_icons' => true)) . "$endHtml</html>";
-		} else {
-			$html = str_ireplace('<body>', $beginHtml,$info['dataparsed']);
-			$html = str_ireplace('</body>', $endHtml, $html);
-		}
-
-		if ($nl_info['allowArticleClip'] == 'y' && $nl_info['autoArticleClip'] == 'y') {
-			$articleClip = $this->clip_articles($nl_info['nlId']);
-			$txtArticleClip = generateTxtVersion($articleClip);
-			$info['datatxt'] = str_replace('~~~articleclip~~~', $txtArticleClip, $info['datatxt']);
-			$html = str_replace('~~~articleclip~~~', $articleClip, $html);
-		}
-
-		if (stristr($html, '<base') === false) {
-			if (stristr($html, '<head') === false) {
-				$news_cssfile = $tikilib->get_style_path($prefs['style'], '', 'newsletter.css');
-				$news_cssfile_option = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'newsletter.css');
-				$news_css = '';
-				if (!empty($news_cssfile)) {
-					$news_css .= $headerlib->minify_css($news_cssfile);
-				}
-				if (!empty($news_cssfile_option) && $news_cssfile_option !== $news_cssfile) {
-					$news_css .= $headerlib->minify_css($news_cssfile_option);
-				}
-				if (empty($news_css)) {
-					$news_css = $headerlib->get_all_css_content();
-				}
-				$news_head = "<html><head><base href=\"$base_url\" /><style type=\"text/css\">$news_css</style></head>";
-				$html = str_ireplace('<html>', $news_head, $html);
-			} else {
-				$html = str_ireplace('<head>', "<head><base href=\"$base_url\" />", $html);
-			}
-		}
-
-		//users
-		if (isset($edition_info['errorEditionId'])) {
-			$users = $this->get_edition_errors($edition_info['errorEditionId']);
-		} else {
-			$users = $this->get_all_subscribers($nl_info['nlId'], $nl_info['unsubMsg'] == 'y');
-		}
-		$this->memo_subscribers_edition($info['editionId'], $users);
 	
-		// files
-		if (!isset($info['files']) || $info['files'] === null || count($info['files']) <= 0) {
-			$info['files'] = $this->get_edition_files($edition['editionId']);
-		}
-		foreach($info['files'] as $f) {
-			$fpath = isset($f['path']) ? $f['path'] : $prefs['tmpDir'] . '/newsletterfile-' . $f['filename'];
-			$mail->addAttachment(file_get_contents($fpath), $f['name'], $f['type']);
-		}
 		$smarty->assign('sectionClass', empty( $section ) ? '' : "tiki_$section " );
 		if ($browser) {
 			echo $smarty->fetch('send_newsletter_header.tpl');
@@ -1058,76 +1164,55 @@ class NlLib extends TikiLib
 		if ($browser) {
 			@ini_set('zlib.output_compression', 0);
 		}
+
+		$throttleLimit = (int) $prefs['newsletter_batch_size'];
+
 		foreach ($users as $us) {
-			$userEmail = $us['login'];
 			$email = $us['email'];
-			if ($userEmail == '') {
-				$userEmail = $userlib->get_user_by_email($email);
-			}
-			$email = trim($email);
-			if (in_array($email, $sent))
-				continue; // do not send the mail again
-			if (!preg_match('/([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+/', trim($email))) {
-				$errors[] = array("user" => $userEmail, "email" => $email, "msg" => tra("invalid email"));
-				continue;
-			}
-			if ($userEmail) {
-				$mail->setUser($userEmail);
-			} else {
-				$userEmail = '';
-			}
-			if (!empty($info['replyto'])) {
-				$mail->setHeader('Reply-To', $info['replyto']);
-			}
-			$mail->setSubject($info['subject']); // htmlMimeMail memorised the encoded subject
-			$languageEmail = !$userEmail ? $prefs['site_language'] : $tikilib->get_user_preference($userEmail, "language", $prefs['site_language']);
-			if ($nl_info["unsubMsg"] == 'y' && !empty($us["code"])) {
-				$unsubmsg = $this->get_unsub_msg($_REQUEST["nlId"], $email, $languageEmail, $us["code"], $userEmail);
-				if (stristr($html, '</body>') === false) {
-					$msg = $html . $unsubmsg;
-				} else {
-					$msg = str_replace("</body>", nl2br($unsubmsg) . "</body>", $html);
-				}
-			} else {
-				$msg = $html;
-			}
-			$mail->setHtml($msg, $txt . strip_tags($unsubmsg));
-			$mail->buildMessage(array('text_encoding' => '8bit'));
-
-
 			if ($browser) {
 				if (@ob_get_level() == 0)
 					@ob_start();
 				// Browsers needs a certain amount of data, for each flush, to display something
 				print str_repeat(' ', 4096) . "\n";
-				print tra("Sending to") . " '<b>$email</b>': <font color=";
+				print '<div class="confirmation">' . tra("Sending to") . "'<b>$email</b>': <font color=";
 			}
 
-			if ( $mail->send(array($email)) ) {
+			try {
+				$zmail = $this->get_edition_mail($info['editionId'], $us);
+				$zmail->send();
 				$sent[] = $email;
-				if ($browser)
+				if ($browser) {
 					print "'green'>" . tra('OK');
+				}
 				$this->delete_edition_subscriber($info['editionId'], $us);
 				$logStatus = 'OK';
-			} else {
-				if ($browser)
-					print "'red'>" . tra('Error') . " - {$mail->errors}";
-				$errors[] = array("user" => $userEmail, "email" => $email, "msg" => $mail->errors);
+			} catch (Zend_Mail_Exception $e) {
+				if ($browser) {
+					print "'red'>" . tra('Error') . " - {$e->getMessage()}";
+				}
+				$errors[] = array("user" => $us['user'], "email" => $email, "msg" => $e->getMessage());
 				$this->mark_edition_subscriber($info['editionId'], $us);
 				$logStatus = 'Error';
 			}
 
-			if ( $logFileHandle )
+			if ( $logFileHandle ) {
 				@fwrite( $logFileHandle, "$email : $logStatus\n" );
+			}
 
 			if ($browser) {
-				print "</font><br />\n";
+				print "</font></div>\n";
 
 				// Flush output to force the browser to display email addresses as soon as emails are sent
 				// This should avoid CGI and/or proxy and/or browser timeouts when sending to a lot of emails
 				@ob_flush();
 				@flush();
 				@ob_end_flush();
+			}
+
+			if ($prefs['newsletter_throttle'] === 'y' && 0 >= --$throttleLimit) {
+				$rate = (int) $prefs['newsletter_pause_length'];
+				print '<div class="throttle" data-edition="' . $info['editionId'] . '" data-rate="' . $rate . '">' . tr('Limiting the email send rate. Resuming in %0 seconds.', $rate) . '</div>';
+				exit;
 			}
 		}
 		$info['editionId'] = $this->replace_edition($nl_info['nlId'], $info['subject'], $info['data'], count($sent), $info['editionId'], false, $info['datatxt'], $info['files'], $info['wysiwyg']);

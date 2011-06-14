@@ -120,6 +120,14 @@
 				{preference name=session_silent}
 				{preference name=tiki_cachecontrol_nosession}
 		{/tab}
+
+		{tab name="{tr}Newsletter{/tr}"}
+			{preference name=newsletter_throttle}
+			<div class="adminoptionboxchild" id="newsletter_throttle_childcontainer">
+				{preference name=newsletter_pause_length}
+				{preference name=newsletter_batch_size}
+			</div>
+		{/tab}
 {/tabset}
 		
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">

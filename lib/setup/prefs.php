@@ -1927,6 +1927,11 @@ function get_default_prefs() {
 		'connect_site_keywords' => '',
 		'connect_site_location' => '',
 
+		'newsletter_throttle' => 'n',
+		'newsletter_pause_length' => 60,
+		'newsletter_batch_size' => 5,
+		'newsletter_external_client' => 'n',
+
 	);
 
 	// Special default values
