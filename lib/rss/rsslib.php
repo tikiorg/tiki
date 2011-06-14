@@ -460,7 +460,8 @@ class RSSLib extends TikiDb_Bridge
 		$guidFilter = TikiFilter::get('url');
 
 		try {
-			$feed = Zend_Feed_Reader::import( $url );
+			$content = $tikilib->httprequest($url);
+			$feed = Zend_Feed_Reader::importString( $content );
 		} catch( Zend_Exception $e ) {
 			$this->modules->update(array(
 				'lastUpdated' => $tikilib->now,
