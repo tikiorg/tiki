@@ -310,8 +310,12 @@ class TikiLib extends TikiDb_Bridge
 		));
 		$client->setCookieJar();
 		$client->setUri($url);
+		$response = $client->request(Zend_Http_Client::GET);
+		$client->resetParameters();
+
+		$client->setUri($url);
 		$client->setParameterPost($arguments);
-		$client->request(Zend_Http_Client::POST);
+		$response = $client->request(Zend_Http_Client::POST);
 		$client->resetParameters();
 
 		return $client;
