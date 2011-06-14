@@ -1117,7 +1117,7 @@ tr.diffheader {
 
 /* wikiplugin tracker */
 table.wikiplugin_tracker td {
-	vertical-align: middle;
+	vertical-align: top;
 	padding-bottom:1.2em;
 }
 	
