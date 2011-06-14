@@ -3249,9 +3249,23 @@ class FileGalLib extends TikiLib
 		$data = parse_url($url);
 		$name = basename($data['path']);
 
+		if (empty ($name)) {
+			$name = tr('unknown');
+		}
+
+		switch ($data['scheme']) {
+		case 'http':
+		case 'https':
+			return $this->get_info_from_http($url, $name, $lastCheck, $eTag);
+		default:
+			return false;
+		}
+	}
+
+	private function get_info_from_http($url, $name, $lastCheck, $eTag)
+	{
 		try {
-			$client = TikiLib::lib('tiki')->get_http_client();
-			$client->setUri($url);
+			$client = TikiLib::lib('tiki')->get_http_client($url);
 
 			if ($lastCheck) {
 				$client->setHeaders('If-Modified-Since', gmdate('D, d M Y H:i:s T', $lastCheck));

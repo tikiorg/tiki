@@ -72,6 +72,7 @@ class Services_File_Controller
 
 	function action_refresh($input)
 	{
+		global $prefs;
 		if ($prefs['fgal_upload_from_source'] != 'y') {
 			throw new Services_Exception(tr('Upload from source disabled.'), 403);
 		}

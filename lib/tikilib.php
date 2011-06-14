@@ -224,14 +224,13 @@ class TikiLib extends TikiDb_Bridge
 		$this->now = time();
 	}
 
-	function get_http_client()
+	function get_http_client($url = false)
 	{
 		global $prefs;
 		
 		$config = array(
 			'timeout' => 5,
 		);
-
 
 		if ($prefs['use_proxy'] == 'y') {
 			$config['adapter'] = 'Zend_Http_Client_Adapter_Proxy';
@@ -245,6 +244,58 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		$client = new Zend_Http_Client(null, $config);
+
+		if ($url) {
+			$client = $this->prepare_http_client($client, $url);
+
+			$client->setUri($url);
+		}
+
+		return $client;
+	}
+
+	private function prepare_http_client($client, $url)
+	{
+		$info = parse_url($url);
+
+		// Obtain all methods matching the scheme and domain
+		$table = $this->table('tiki_source_auth');
+		$authentications = $table->fetchAll(array('path', 'method', 'arguments'), array(
+			'scheme' => $info['scheme'],
+			'domain' => $info['host'],
+		));
+
+		// Obtain the method with the longest path matching
+		$max = -1;
+		$method = false;
+		$arguments = false;
+	 	foreach ($authentications as $auth) {
+			if (0 === strpos($info['path'], $auth['path'])) {
+				$len = strlen($auth['path']);
+
+				if ($len > $max) {
+					$max = $len;
+					$method = $auth['method'];
+					$arguments = $auth['arguments'];
+				}
+			}
+		}
+
+		if ($method) {
+			$functionName = 'prepare_http_auth_' . $method;
+			if (method_exists($this, $functionName)) {
+				$arguments = json_decode($arguments, true);
+				return $this->$functionName($client, $arguments);
+			}
+		} else {
+			// Nothing special to do
+			return $client;
+		}
+	}
+	
+	private function prepare_http_auth_basic($client, $arguments)
+	{
+		$client->setAuth($arguments['username'], $arguments['password'], Zend_Http_Client::AUTH_BASIC);
 
 		return $client;
 	}
@@ -260,9 +311,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		try {
-			$client = $this->get_http_client();
-			$client->setUri($url);
-
+			$client = $this->get_http_client($url);
 			$response = $client->request($reqmethod);
 
 			if ($response->isError()) {
