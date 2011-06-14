@@ -22,6 +22,7 @@
 	*		filter_names          : array( filter_field1 => filter_field1_name, ... )
 	*		filter_values         : array( filter_fieldX => filter_fieldX_selected_value, ... )
 	* autocomplete						: name of the variable you want for autocomplete of the input field (only for <input type="text" ... />
+	* find_other : If value != '', show an input box label with find_other
 	*
 	* Usage examples : {include file='find.tpl'}
 	*                  {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'} 
@@ -202,6 +203,13 @@
 	<label class="find_orphans" for="find_orphans">
 		   {tr}Orphans{/tr}
 		   <input type="checkbox" name="find_orphans" id="find_orphans" {if $find_orphans eq 'y'}checked="checked"{/if}/>
+	</label>
+{/if}
+
+{if !empty($find_other) }
+	<label class="find_other" for="find_other">
+		   {tr}{$find_other}{/tr}
+		   <input type="text" name="find_other" id="find_other" value="{$find_other_val|escape}"/>
 	</label>
 {/if}
 
