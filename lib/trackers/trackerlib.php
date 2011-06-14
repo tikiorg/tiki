@@ -4109,6 +4109,9 @@ class TrackerLib extends TikiLib
 				if ($tracker_info['doNotShowEmptyField'] === 'y') {	// remove empty fields if tracker says so
 					$the_data = preg_replace('/\[-\[.*?\]-\] -\[\(.*?\)\]-:\n\n----------\n/', '', $the_data);
 				}
+				
+				$smarty = TikiLib::lib('smarty');
+				
 				$smarty->assign('mail_date', $this->now);
 				$smarty->assign('mail_user', $user);
 				$smarty->assign('mail_itemId', $itemId);
