@@ -26,7 +26,6 @@
 			{preference name=newsletter_external_client}
 
 			{preference name=tiki_check_file_content}
-			
 		<fieldset>
 			<legend>{tr}CSRF Security{/tr}{help url="Security"}</legend>
 			<div class="adminoptionbox">

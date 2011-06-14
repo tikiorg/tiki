@@ -46,7 +46,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface
 			}
 			
 			if (!empty($context['url']) && strpos($context['url'], 'itemId') !== false) {
-				$context['url'] = preg_replace('/&itemId=[^&]*/', '&itemId=' . $itemId, $context['url']);
+				$context['url'] = preg_replace('/([&|\?])itemId=?[^&]*/', '\\1itemId=' . $itemId, $context['url']);
 				$arguments['href'] = $context['url'];
 			}
 
