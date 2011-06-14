@@ -100,7 +100,7 @@ function module_since_last_visit_new($mod_reference, $params = null)
 			if (!$last) $last = $now;
 			if (!empty($params['daysAtLeast']) && $now - $last < $params['daysAtLeast']*60*60*24) {
 				$last = $now - $params['daysAtLeast']*60*60*24;
-				$smarty->assign('tpl_module_title', tr('Since %0 days...', $params['daysAtLeast']));
+				$smarty->assign('tpl_module_title', tr('In the last %0 days...', $params['daysAtLeast']));
 			}
 		}
 	}
