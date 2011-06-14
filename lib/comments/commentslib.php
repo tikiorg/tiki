@@ -2098,7 +2098,7 @@ class Comments extends TikiLib
 		$existingThread = $comments->fetchColumn('threadId', array('hash' => $hash));
 
 		// if exactly same title and data comment does not already exist, and is not the current thread
-		if (!$result->numRows() || in_array($threadId, $existingThread))
+		if (empty($existingThread) || in_array($threadId, $existingThread))
 		{
 			$object = explode( ":", $objectId, 2);
 			if ($prefs['feature_actionlog'] == 'y') {
