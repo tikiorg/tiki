@@ -172,6 +172,11 @@ class FileGalLib extends TikiLib
 
 	function insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='', $author=null, $created='', $lockedby=NULL, $deleteAfter=NULL, $id=0) {
 		global $prefs, $user;
+
+		if (! $this->is_filename_valid($filename)) {
+			return false;
+		}
+
 		$tikilib = TikiLib::lib('tiki');
 		$smarty = TikiLib::lib('smarty');
 		$filesTable = $this->table('tiki_files');
@@ -679,18 +684,9 @@ class FileGalLib extends TikiLib
 		while (($file = readdir($h)) !== false) {
 			if ($file != '.' && $file != '..' && is_file($extract_dir.'/'.$file)) {
 
-				if (!empty($prefs['fgal_match_regex'])) {
-					if (!preg_match('/'.$prefs['fgal_match_regex'].'/', $file, $reqs)) {
-						$errors[] = tra('Invalid filename (using filters for filenames)') . ': ' . $file;
-						$upl = 0;
-					}
-				}
-
-				if (!empty($prefs['fgal_nmatch_regex'])) {
-					if (preg_match('/'.$prefs['fgal_nmatch_regex'].'/', $file, $reqs)) {
-						$errors[] = tra('Invalid filename (using filters for filenames)') . ': ' . $file;
-						$upl = 0;
-					}
+				if (! $this->is_filename_valid($file)) {
+					$errors[] = tra('Invalid filename (using filters for filenames)') . ': ' . $file;
+					$upl = 0;
 				}
 
 				if (!$this->checkQuota(filesize($extract_dir.$file), $galleryId, $error)) {
@@ -832,6 +828,10 @@ class FileGalLib extends TikiLib
 
 	function replace_file($id, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='', $gal_info, $didFileReplace, $author='', $created='', $lockedby=NULL, $deleteAfter=NULL) {
 		global $prefs, $tikilib, $user;
+
+		if (! $this->is_filename_valid($filename)) {
+			return false;
+		}
 
 		$filesTable = $this->table('tiki_files');
 		$fileDraftsTable = $this->table('tiki_file_drafts');
@@ -2807,17 +2807,9 @@ class FileGalLib extends TikiLib
 						continue;
 					}
 					// Check the name
-					if (!empty($prefs['fgal_match_regex'])) {
-						if (!preg_match('/' . $prefs['fgal_match_regex'] . '/', $aFiles["userfile"]['name'][$key])) {
-							$errors[] = tra('Invalid filename (using filters for filenames)') . ': ' . $aFiles["userfile"]["name"][$key];
-							continue;
-						}
-					}
-					if (!empty($prefs['fgal_nmatch_regex'])) {
-						if (preg_match('/' . $prefs['fgal_nmatch_regex'] . '/', $aFiles["userfile"]["name"][$key])) {
-							$errors[] = tra('Invalid filename (using filters for filenames)') . ': ' . $aFiles["userfile"]["name"][$key];
-							continue;
-						}
+					if (! $this->is_filename_valid($aFiles['userfile']['name'][$key])) {
+						$errors[] = tra('Invalid filename (using filters for filenames)') . ': ' . $aFiles["userfile"]["name"][$key];
+						continue;
 					}
 					$name = $aFiles["userfile"]["name"][$key];
 					if (isset($params["isbatch"][$key]) && $params["isbatch"][$key] == 'on' && strtolower(substr($name, strlen($name) - 3)) == 'zip') {
@@ -3136,7 +3128,7 @@ class FileGalLib extends TikiLib
 			$msg = tra('Warning: Empty file:') . '  ' . htmlentities($file['name']) . '. ' . tra('Please re-upload your file');
 		} elseif (empty($file['name']) || !preg_match('/^upfile(\d+)$/', $fileKey, $regs) || !($fileInfo = $this->get_file_info($regs[1]))) {
 			$msg = tra('Could not upload the file') . ': ' . htmlentities($file['name']);
-		} elseif ((!empty($prefs['fgal_match_regex']) && (!preg_match('/' . $prefs['fgal_match_regex'] . '/', $file['name']))) || (!empty($prefs['fgal_nmatch_regex']) && (preg_match('/' . $prefs['fgal_nmatch_regex'] . '/', $file['name'])))) {
+		} elseif (! $this->is_filename_valid($file['name'])) {
 			$msg = tra('Invalid filename (using filters for filenames)') . ': ' . htmlentities($file['name']);
 		} elseif ($_REQUEST['galleryId'] != $fileInfo['galleryId']) {
 			$msg = tra('Could not find the file requested');
@@ -3426,7 +3418,22 @@ class FileGalLib extends TikiLib
 
 		$gal_info = $this->get_file_gallery_info($info['galleryId']);
 		$this->convert_from_data($gal_info, $fhash, $data);
-		$this->replace_file($fileId, $name, $info['description'], $remote['name'], $data, $remote['size'], $remote['type'], null, $fhash, tra('Automatic revision from source'), $gal_info, true);
+		return (bool) $this->replace_file($fileId, $name, $info['description'], $remote['name'], $data, $remote['size'], $remote['type'], null, $fhash, tra('Automatic revision from source'), $gal_info, true);
+	}
+
+	private function is_filename_valid($filename)
+	{
+		global $prefs;
+		if (!empty($prefs['fgal_match_regex'])) {
+			if (! preg_match('/' . $prefs['fgal_match_regex'] . '/', $filename)) {
+				return false;
+			}
+		}
+		if (!empty($prefs['fgal_nmatch_regex'])) {
+			if (preg_match('/' . $prefs['fgal_nmatch_regex'] . '/', $filename)) {
+				return false;
+			}
+		}
 
 		return true;
 	}
