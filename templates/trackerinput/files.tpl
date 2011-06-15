@@ -155,7 +155,7 @@ $drop.find('input').change(function () {
 $url.keypress(function (e) {
 	if (e.which === 13) {
 		var url = $(this).val();
-		$(this).attr('disabled', 1);
+		$(this).attr('disabled', 1).clearError();
 
 		$.ajax({
 			type: 'POST',
@@ -181,6 +181,10 @@ $url.keypress(function (e) {
 				$files.append(li);
 				$url.val('');
 			},
+			error: function (jqxhr) {
+				var data = $.parseJSON(jqxhr.responseText);
+				$url.showError(data.message);
+			},
 			complete: function () {
 				$url.attr('disabled', 0);
 			}
@@ -202,7 +206,7 @@ $search.keypress(function (e) {
 			"filter~filetype": "{{$field.filter|escape}}",
 			"filter~gallery_id": "{{$field.galleryId|escape}}",
 		}, function (data) {
-			$search.attr('disabled', 0);
+			$search.attr('disabled', 0).clearError();
 			$.each(data, function () {
 				var item = $('<li/>').append(this.link), icon = $('<label>{{icon _id=add}}</label>'), data = this;
 				item.append(icon);
@@ -221,6 +225,10 @@ $search.keypress(function (e) {
 
 				results.append(item);
 			});
+
+			if (results.is(':empty')) {
+				$search.showError(tr('No results'));
+			}
 		});
 		return false;
 	}
