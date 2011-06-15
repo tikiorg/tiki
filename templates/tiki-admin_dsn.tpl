@@ -82,6 +82,7 @@
 			<select name="method">
 				<option value="basic">{tr}HTTP Basic{/tr}</option>
 				<option value="post">{tr}HTTP Session / Login{/tr}</option>
+				<option value="get">{tr}HTTP Session / Visit{/tr}</option>
 			</select>
 		</label>
 	</fieldset>
@@ -107,6 +108,10 @@
 			<tbody>
 			</tbody>
 		</table>
+	</fieldset>
+	<fieldset class="method get">
+		<legend>{tr}HTTP Session / Visit{/tr}</legend>
+		<label>{tr}URL:{/tr} <input type="url" name="get_url"/></label>
 	</fieldset>
 	<fieldset>
 		<input type="submit" name="save" value="{tr}Save{/tr}"/>
@@ -161,6 +166,9 @@ $('#source-form').each(function () {
 					$(form.basic_username).val(data.arguments.username);
 					$(form.basic_password).val(data.arguments.password);
 					break;
+				case 'get':
+					$(form.get_url).val(data.arguments.url);
+					break;
 				case 'post':
 					$(form.post_url).val(data.arguments.post_url);
 					$.each(data.arguments, function (key, value) {
@@ -198,6 +206,9 @@ $('#source-form').each(function () {
 		case 'basic':
 			data['arguments~username'] = $(form.basic_username).val();
 			data['arguments~password'] = $(form.basic_password).val();
+			break;
+		case 'get':
+			data['arguments~url'] = $(form.get_url).val();
 			break;
 		case 'post':
 			data['arguments~post_url'] = $(form.post_url).val();

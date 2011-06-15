@@ -300,6 +300,21 @@ class TikiLib extends TikiDb_Bridge
 		return $client;
 	}
 
+	private function prepare_http_auth_get($client, $arguments)
+	{
+		$url = $arguments['url'];
+
+		$client->setConfig(array(
+			'keepalive' => true,
+		));
+		$client->setCookieJar();
+		$client->setUri($url);
+		$response = $client->request(Zend_Http_Client::GET);
+		$client->resetParameters();
+
+		return $client;
+	}
+
 	private function prepare_http_auth_post($client, $arguments)
 	{
 		$url = $arguments['post_url'];
