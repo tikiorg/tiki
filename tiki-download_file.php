@@ -105,34 +105,22 @@ if (!$skip) {
 	} elseif ( !empty($_REQUEST['randomGalleryId'])) {
 		$info =  $filegallib->get_file(0, $_REQUEST['randomGalleryId']);
 	} else {
-		$smarty->assign('msg', tra('Incorrect param'));
-		$smarty->display('error.tpl');
-		die;
+		$access->display_error('', tra('Incorrect param'), 400);
 	}
 	if ( ! is_array($info) ) {
-		$smarty->assign('errortype', 404);
-		$smarty->assign('msg', tra('Incorrect param').' '.tra($error));
-		$smarty->assign('file_error', tra('Error: this file has been deleted'));
-		$smarty->display('error.tpl');
-		die;
+		$access->display_error('', tra('File has been deleted'), 404);
 	}
 
 	if ( $prefs['auth_tokens'] == 'n' || !$is_token_access ) {
 		// Check permissions except if the user comes with a valid Token
 
 		if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files') && !($info['backlinkPerms'] == 'y' && !$filegallib->hasOnlyPrivateBacklinks($info['fileId']))) {
-			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra('Permission denied'));
-			$smarty->display('error.tpl');
-			die;
+			$access->display_error('', tra('Permission denied'), 401);
 		}
 		if ( isset($_GET['thumbnail']) && is_numeric($_GET['thumbnail'])) { //check also perms on thumb 
 			$info_thumb = $filegallib->get_file($_GET['thumbnail']);
 			if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info_thumb['galleryId'], 'file gallery', 'tiki_p_download_files') && !($info['backlinkPerms'] == 'y' && !$filegallib->hasOnlyPrivateBacklinks($info_thumb['fileId']))) {
-				$smarty->assign('errortype', 401);
-				$smarty->assign('msg', tra('Permission denied'));
-				$smarty->display('error.tpl');
-				die;
+				$access->display_error('', tra('Permission denied'), 401);
 			}
 		}
 	}
@@ -144,9 +132,7 @@ if ( ! isset($_GET['thumbnail']) && ! isset($_GET['icon']) ) {
 	require_once('lib/stats/statslib.php');
 	$filegallib = TikiLib::lib('filegal');
 	if( ! $filegallib->add_file_hit($info['fileId']) )	{
-		$smarty->assign('msg', tra('You cannot download this file right now. Your score is low or file limit was reached.'));
-		$smarty->display('error.tpl');
-		die;
+		$access->display_error('', tra('You cannot download this file right now. Your score is low or file limit was reached.'), 401);
 	}
 	$statslib->stats_hit($info['filename'], 'file', $info['fileId']);
 
@@ -157,10 +143,7 @@ if ( ! isset($_GET['thumbnail']) && ! isset($_GET['icon']) ) {
 
 	if ( ! empty($_REQUEST['lock']) ) {
 		if (!empty($info['lockedby']) && $info['lockedby'] != $user) {
-			$smarty->assign('msg', tra(sprintf('The file is locked by %s', $info['lockedby'])));
-			$smarty->assign('close_window', 'y');
-			$smarty->display('error.tpl');
-			die;
+			$access->display_error('', tra(sprintf('The file is locked by %s', $info['lockedby'])), 401);
 		}
 		$filegallib->lock_file($info['fileId'], $user);
 	}

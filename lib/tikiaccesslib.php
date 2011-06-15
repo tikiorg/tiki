@@ -247,16 +247,14 @@ class TikiAccessLib extends TikiLib
 			$detail['message'] .= ' (404)';
 			break;
 		case '403':
-			if( $this->is_machine_request() )
-				header ("HTTP/1.0 403 Forbidden");
+			header ("HTTP/1.0 403 Forbidden");
 			break;
 		case '503':
-			if( $this->is_machine_request() )
-				header ("HTTP/1.0 503 Service Unavailable");
+			header ("HTTP/1.0 503 Service Unavailable");
 			break;
 		default:
-			if( $this->is_machine_request() )
-				header("HTTP/1.0 $errortype {$detail['errortitle']}");
+			$errortype = (int) $errortype;
+			header("HTTP/1.0 $errortype {$detail['errortitle']}");
 			break;
 		}
 
