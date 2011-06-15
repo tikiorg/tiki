@@ -30,8 +30,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 class TrackerQueryLib extends TikiLib {
+	
+	/* In the construct we put the field options for "items list" (type 'l') into a table to be joined upon, 
+	 * so instead of running a query for every row, we use simple joins to get the job done.  We use a temporary
+	 * table so that it is removed once the connection is closed or after the page loads.
+	 */
 	function __construct() {
-		global $tikilib, $tikilib;
+		global $tikilib, $tikilib;	
 		$tikilib->query("
 		 	DROP TABLE IF EXISTS temp_tracker_field_options;
 			CREATE TEMPORARY TABLE temp_tracker_field_options (
@@ -82,7 +87,10 @@ class TrackerQueryLib extends TikiLib {
 			
 			SET group_concat_max_len = 4294967295;
 		");
-	
+		
+		/*For eany fields that have multi items, we use php to parse those out, there shouldn't be too many
+		 */
+		
 		foreach($tikilib->fetchAll("SELECT * FROM temp_tracker_field_options WHERE options LIKE '%|%'") as $row) {
 			$option = explode(",", $row["options"]);
 			$displayFieldIdsThere = explode("|", $option["3"]);
@@ -106,10 +114,10 @@ class TrackerQueryLib extends TikiLib {
 			}
 		}
 	}
-
+	
+	/*Adds the field names to the beginning of the array of tracker items*/
 	function prepend_field_header(&$trackerPrimary = array(), $nameOrder = array()) {
 		global $tikilib;
-		//You will see a few 'LIMIT 1' here, this is just to help with memory, only 1 should be returned
 		$result = $tikilib->fetchAll("
 			SELECT fieldId, trackerId, name FROM tiki_tracker_fields
 		");
@@ -148,6 +156,8 @@ class TrackerQueryLib extends TikiLib {
 		return $joinedTrackerHeader + $trackerPrimary;
 	}
 
+	/*Simple direction parsing from string to type
+	 */
 	private function sort_direction($dir) {
 		switch( $dir ) {
 			case "asc":
@@ -204,6 +214,20 @@ class TrackerQueryLib extends TikiLib {
 	    return 0;
 	}
 
+	/*Queries & filters trackers from mysql, orders results in a way that is human understandable and can be manipulated easily
+	 * The end result is a very simple array setup as follows:
+	 * array( //tracker(s)
+	 * 		array( //items
+	 * 			[itemId] => array (
+	 * 				[fieldId] => value,
+	 * 				[fieldId] => array( //items list
+	 * 					[0] => '',
+	 * 					[1] => ''
+	 * 				)
+	 * 			)
+	 * 		)
+	 * )
+	 */
 	function tracker_query($trackerId, $start, $end, $itemId, $equals, $search, $fields, $status = "opc", $sort, $limit, $offset, $delimiter = "[{|!|}]") {
 		global $tikilib;
 		$debug = false;
@@ -359,7 +383,9 @@ class TrackerQueryLib extends TikiLib {
 		unset($result);
 		return $newResult;
 	}
-
+	
+	/*Removes fields from an array of items, can use either fields to show, or fields to remove, but not both
+	 */
 	function filter_fields_from_tracker_query($tracker, $fieldIdsToRemove = array(), $fieldIdsToShow = array()) {
 		if (empty($fieldIdsToShow) == false) {
 			$newTracker = array();
@@ -384,6 +410,8 @@ class TrackerQueryLib extends TikiLib {
 		return $tracker;
 	}
 
+	/* Joins tracker arrays together.
+	 */
 	function join_trackers($trackerLeft, $trackerRight, $fieldLeftId, $joinType) {
 		$joinedTracker = array();
 		switch ($joinType) {
@@ -393,19 +421,23 @@ class TrackerQueryLib extends TikiLib {
 					foreach($trackerLeft as $itemLeft) {
 						if ($key == $itemLeft[$fieldLeftId]) {
 							$match = true;
-							$joinedTracker[] = $itemLeft + $itemRight;
+							$joinedTracker[$key] = $itemLeft + $itemRight;
+						} else {
+							$joinedTracker[$key] = $itemLeft;
 						}
 					}
 					
 					if ($match == false) {
-						$joinedTracker[] = $itemRight;
+						$joinedTracker[$key] = $itemRight;
 					}
 				}
 				break;
 			default:
-				foreach($trackerLeft as $itemLeft) {
+				foreach($trackerLeft as $key => $itemLeft) {
 					if (isset($trackerRight[$itemLeft[$fieldLeftId]]) == true) {
-						$joinedTracker[] = $itemLeft + $trackerRight[$itemLeft[$fieldLeftId]];
+						$joinedTracker[$key] = $itemLeft + $trackerRight[$itemLeft[$fieldLeftId]];
+					} else {
+						$joinedTracker[$key] = $itemLeft;
 					}
 				}
 		}
@@ -414,15 +446,15 @@ class TrackerQueryLib extends TikiLib {
 	}
 
 
-	function to_csv($array, $header = false, $col_sep = ",", $row_sep = "\n", $qut = '"')
-	{
+	function to_csv($array, $header = false, $col_sep = ",", $row_sep = "\n", $qut = '"', $fileName = 'file.csv') {
+		
 		header("Content-type: application/csv");
-		header("Content-Disposition: attachment; filename=".$_REQUEST['csvFileName']);
+		header("Content-Disposition: attachment; filename=".$fileName);
 		header("Pragma: no-cache");
 		header("Expires: 0");
 		
-		if (!is_array($array) or !is_array($array[0])) return false;
-		
+		if (!is_array($array)) return false;
+
 		//Header row.
 		if ($header == true) {
 			foreach ($array[0] as $key => $val)
