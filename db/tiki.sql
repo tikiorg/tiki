@@ -2031,7 +2031,7 @@ CREATE TABLE `tiki_structures` (
   `parent_id` int(14) default NULL,
   `page_id` int(14) NOT NULL,
   `page_version` int(8) default NULL,
-  `page_alias` varchar(240) NOT NULL default '',
+  `page_alias` varchar(240) default '',
   `pos` int(4) default NULL,
   PRIMARY KEY (`page_ref_id`),
   KEY `pidpaid` (page_id,parent_id),
