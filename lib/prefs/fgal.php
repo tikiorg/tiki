@@ -226,5 +226,12 @@ function prefs_fgal_list() {
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'fgal_tracker_existing_search' => array(
+			'name' => tra('Allow searching for existing files in the tracker files field'),
+			'description' => tra('Search files using the search index.'),
+			'type' => 'flag',
+			'default' => 'y',
+			'dependencies' => array('feature_search'),
+		),
 	);
 }

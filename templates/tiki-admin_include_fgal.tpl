@@ -82,6 +82,7 @@
 				{preference name='feature_use_fgal_for_wiki_attachments'}
 				{preference name='fgal_upload_progressbar'}
 				{preference name='fgal_upload_from_source'}
+				{preference name='fgal_tracker_existing_search'}
 
 				<div class="adminoptionboxchild" id="fgal_upload_from_source_childcontainer">
 					{preference name='fgal_source_refresh_frequency'}

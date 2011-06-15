@@ -19,12 +19,14 @@
 		<input class="ignore" type="file" name="{$field.ins_id|escape}[]" accept="{$field.filter|escape}" multiple="multiple"/>
 	</fieldset>
 {/if}
-<fieldset>
-	<legend>{tr}Existing files{/tr}</legend>
-	<input type="text" id="{$field.ins_id|escape}-search" placeholder="{tr}Search query{/tr}"/>
-	<ol class="results tracker-item-files">
-	</ol>
-</fieldset>
+{if $prefs.fgal_tracker_existing_search eq 'y'}
+	<fieldset>
+		<legend>{tr}Existing files{/tr}</legend>
+		<input type="text" id="{$field.ins_id|escape}-search" placeholder="{tr}Search query{/tr}"/>
+		<ol class="results tracker-item-files">
+		</ol>
+	</fieldset>
+{/if}
 {if $prefs.fgal_upload_from_source eq 'y' and $field.canUpload}
 	<fieldset>
 		<legend>{tr}Upload from URL{/tr}</legend>
