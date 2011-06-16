@@ -106,6 +106,8 @@
 					{preference name=proxy_user}
 					{preference name=proxy_pass}
 				</div>
+
+				{preference name=http_skip_frameset}
 			</fieldset>
 
 			<fieldset>

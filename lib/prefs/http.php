@@ -14,5 +14,11 @@ function prefs_http_list() {
 			'filter' => 'digits',
 			'default' => '80',
 		),
+		'http_skip_frameset' => array(
+			'name' => tra('HTTP Lookup Skip Framesets'),
+			'description' => tra('When performing and HTTP request to an external source, verify if the result is a frameset and use heuristic to provide the real content.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);	
 }

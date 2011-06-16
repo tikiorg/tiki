@@ -3240,22 +3240,17 @@ class FileGalLib extends TikiLib
 		}
 
 		$data = parse_url($url);
-		$name = basename($data['path']);
-
-		if (empty ($name)) {
-			$name = tr('unknown');
-		}
 
 		switch ($data['scheme']) {
 		case 'http':
 		case 'https':
-			return $this->get_info_from_http($url, $name, $lastCheck, $eTag);
+			return $this->get_info_from_http($url, $lastCheck, $eTag);
 		default:
 			return false;
 		}
 	}
 
-	private function get_info_from_http($url, $name, $lastCheck, $eTag)
+	private function get_info_from_http($url, $lastCheck, $eTag)
 	{
 		try {
 			$client = TikiLib::lib('tiki')->get_http_client($url);
@@ -3268,12 +3263,13 @@ class FileGalLib extends TikiLib
 				$client->setHeaders('If-None-Match', $eTag);
 			}
 
-			$response = $client->request();
+			$response = TikiLib::lib('tiki')->http_perform_request($client);
 
 			if (! $response->isSuccessful()) {
 				return false;
 			}
 
+			$name = basename($client->getUri()->getPath());
 			$expiryDate = time();
 
 			$result = $response->getBody();
@@ -3302,6 +3298,10 @@ class FileGalLib extends TikiLib
 				$size = function_exists('mb_strlen') ? mb_strlen($result, '8bit') : strlen($result);
 			} else {
 				$type = $response->getHeader('Content-Type');
+			}
+
+			if (empty ($name)) {
+				$name = tr('unknown');
 			}
 
 			return array(

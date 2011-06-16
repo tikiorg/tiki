@@ -230,6 +230,7 @@ class TikiLib extends TikiDb_Bridge
 		
 		$config = array(
 			'timeout' => 5,
+			'keepalive' => true,
 		);
 
 		if ($prefs['use_proxy'] == 'y') {
@@ -304,9 +305,6 @@ class TikiLib extends TikiDb_Bridge
 	{
 		$url = $arguments['url'];
 
-		$client->setConfig(array(
-			'keepalive' => true,
-		));
 		$client->setCookieJar();
 		$client->setUri($url);
 		$response = $client->request(Zend_Http_Client::GET);
@@ -320,9 +318,6 @@ class TikiLib extends TikiDb_Bridge
 		$url = $arguments['post_url'];
 		unset($arguments['post_url']);
 
-		$client->setConfig(array(
-			'keepalive' => true,
-		));
 		$client->setCookieJar();
 		$client->setUri($url);
 		$response = $client->request(Zend_Http_Client::GET);
@@ -336,7 +331,73 @@ class TikiLib extends TikiDb_Bridge
 		return $client;
 	}
 
-	function httprequest($url, $reqmethod = "GET") {
+	function http_perform_request($client)
+	{
+		global $prefs;
+		$response = $client->request();
+
+		if ($prefs['http_skip_frameset'] == 'y') {
+			if ($outcome = $this->http_perform_request_skip_frameset($client, $response)) {
+				return $outcome;
+			}
+		}
+
+		return $response;
+	}
+
+	private function http_perform_request_skip_frameset($client, $response)
+	{
+		// Only attempt if document is declared as HTML
+		if (0 === strpos($response->getHeader('Content-Type'), 'text/html')) {
+			$dom = new DOMDocument;
+			if ($dom->loadHTML($response->getBody())) {
+				$frames = $dom->getElementsByTagName('frame');
+				
+				if (count($frames)) {
+					// Frames were found
+					foreach ($frames as $f) {
+						// Request with the first frame where scrolling is not disabled (likely to be a menu or some other web 2.0 helper)
+						if ($f->getAttribute('scrolling') != 'no') {
+							$client->setUri($this->http_get_uri($client->getUri(), $f->getAttribute('src')));
+							return $client->request();
+						}
+					}
+				}
+			}
+		}
+	}
+
+	function http_get_uri(Zend_Uri_Http $uri, $relative)
+	{
+		if (strpos($relative, 'http://') === 0 || strpos($relative, 'https://') === 0) {
+			$uri = Zend_Uri_Http::fromString($relative);
+		} else {
+			$uri = clone $uri;
+			$uri->setQuery(array());
+			$parts = explode('?', $relative, 2);
+			$relative = $parts[0];
+
+			if ($relative{0} === '/') {
+				$uri->setPath($relative);
+			} else {
+				$path = dirname($uri->getPath());
+				if ($path === '/') {
+					$path = '';
+				}
+
+				$uri->setPath("$path/$relative");
+			}
+
+			if (isset($parts[1])) {
+				$uri->setQuery($parts[1]);
+			}
+		}
+
+		return $uri;
+	}
+
+	function httprequest($url, $reqmethod = "GET")
+	{
 		global $prefs;
 		// test url :
 		// rewrite url if sloppy # added a case for https urls
@@ -348,7 +409,7 @@ class TikiLib extends TikiDb_Bridge
 
 		try {
 			$client = $this->get_http_client($url);
-			$response = $client->request($reqmethod);
+			$response = $this->http_perform_request($client);
 
 			if ($response->isError()) {
 				return false;
