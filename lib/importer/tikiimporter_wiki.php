@@ -163,22 +163,22 @@ class TikiImporter_Wiki extends TikiImporter
                     $tikilib->create_page($page['name'], 0, $rev['data'], $rev['lastModif'],
 						$rev['comment'], $rev['user'], $rev['ip'], '', '',
 						isset($rev['is_html']) ? $rev['is_html'] : false);
-                    if (!empty($rev['categories'])) {
-                        global $categlib; include_once('lib/categories/categlib.php');
-                        foreach ($rev['categories'] as $cat) {
-                            $categId = $categlib->get_category_id($cat);
-                            if (empty($categId)) {
-                                $categId = $categlib->add_category(0, $cat, '');
-                            }
-                            $categlib->categorize_page( $page['name'], $categId);
-                        }
-                    }
                 } else {
                     $tikilib->cache_page_info = null;
                     $tikilib->update_page($page['name'], $rev['data'], $rev['comment'], $rev['user'],
                         $rev['ip'], '', $rev['minor'], '', false, null, $rev['lastModif']);
                 }
                 $first = false;
+            }
+            if (!empty($rev['categories'])) {
+                global $categlib; include_once('lib/categories/categlib.php');
+                foreach ($rev['categories'] as $cat) {
+                    $categId = $categlib->get_category_id($cat);
+                    if (empty($categId)) {
+                       $categId = $categlib->add_category(0, $cat, '');
+                    }
+                    $categlib->categorize_page( $page['name'], $categId);
+                }
             }
         }
 
