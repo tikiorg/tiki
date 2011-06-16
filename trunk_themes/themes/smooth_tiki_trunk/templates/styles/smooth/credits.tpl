@@ -1,0 +1,1 @@
+{* $Id$ *}<a href="http://zukakakina.com" title="Adapted by Gary Cunningham-Lee aka chibaguy">{tr}Theme{/tr}</a>: <a href="http://zukakakina.com" title="{tr}Design by{/tr} Free CSS Templates (www.freecsstemplates.org)">Smooth</a>
