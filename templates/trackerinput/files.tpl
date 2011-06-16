@@ -40,10 +40,12 @@ var $files = $('#{{$field.ins_id|escape}}-files');
 var $field = $('#{{$field.ins_id|escape}}-input');
 var $search = $('#{{$field.ins_id|escape}}-search');
 var $url = $('#{{$field.ins_id|escape}}-url');
+var $fileinput = $drop.find('input');
 
 $field.hide();
 
 var handleFiles = function (files) {
+	$fileinput.clearError();
 	$.each(files, function (k, file) {
 		var reader = new FileReader();
 		var li = $('<li/>').appendTo($files);
@@ -84,7 +86,9 @@ var handleFiles = function (files) {
 							$(this).closest('li').remove();
 						});
 					},
-					error: function () {
+					error: function (jqxhr) {
+						var data = $.parseJSON(jqxhr.responseText);
+						$fileinput.showError(data.message);
 						li.remove();
 					},
 					complete: function () {
@@ -145,7 +149,7 @@ $drop.bind('drop', function (e) {
 	return false;
 });
 
-$drop.find('input').change(function () {
+$fileinput.change(function () {
 	if (this.files) {
 		handleFiles(this.files);
 		$(this).val('');
