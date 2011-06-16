@@ -174,6 +174,7 @@ class FileGalLib extends TikiLib
 		global $prefs, $user;
 
 		if (! $this->is_filename_valid($filename)) {
+			TikiLib::lib('errorreport')->report(tr('`%0` does not match acceptable naming patterns.', $filename));
 			return false;
 		}
 

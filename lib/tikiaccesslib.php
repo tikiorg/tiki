@@ -259,6 +259,9 @@ class TikiAccessLib extends TikiLib
 		}
 
 		if( $this->is_serializable_request() ) {
+			require_once 'lib/smarty_tiki/function.error_report.php';
+			TikiLib::lib('errorreport')->report($errortitle);
+			header('X-Tiki-Error: ' . smarty_function_error_report(array(), TikiLib::lib('smarty')));
 			$this->output_serialized( $detail );
 		} else {
 			if (($errortype == 401 || $errortype == 403) && empty($user) && ($prefs['permission_denied_login_box'] == 'y' || !empty($prefs['permission_denied_url']))) {
