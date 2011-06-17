@@ -46,7 +46,7 @@ function wikiplugin_redirect($data, $params, $offset, $options) {
 
 	if (!isset($page)) {$areturn = "REDIRECT plugin: No page specified!";}
 	if (!isset($url)) {$areturn .= "REDIRECT plugin: No url specified!";}
-	$location = isset($page) ? $page : $url;
+	$location = isset($page) ? $page : isset($url) ? $url : isset($perspective) ? tra('perspective ') . $perspective : tra('nowhere');
 	if ($just_saved) {
 		$areturn = sprintf(tra("REDIRECT plugin: The redirection to '%s' is disabled just after saving the page."), $location);
 	} else if ($options['indexing']) {
