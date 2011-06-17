@@ -37,7 +37,7 @@ function smarty_function_interactivetranslation($params, &$smarty) {
 JS;
 
 	$headerlib->add_jq_onready($jq);
-	$headerlib->add_jq_onready(file_get_contents('lib/language/interactive_translation.js'));
+	$headerlib->add_jq_onready(file_get_contents('lib/language/js/interactive_translation.js'));
 
 	return $smarty->fetch('interactive_translation_box.tpl');
 }

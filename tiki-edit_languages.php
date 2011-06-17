@@ -193,7 +193,7 @@ ask_ticket('edit-languages');
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $headerlib->add_cssfile('css/admin.css');
-$headerlib->add_jsfile('lib/language/tiki-edit_languages.js');
+$headerlib->add_jsfile('lib/language/js/tiki-edit_languages.js');
 
 $headtitle = tra('Edit languages');
 $description = tra('Edit or export languages');
