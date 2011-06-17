@@ -6292,7 +6292,7 @@ if( \$('#$id') ) {
 									  // Leave it as is.
 									  // }
 								}
-							} elseif (($prefs['wysiwyg_htmltowiki'] === 'y' && !empty($tline) && strpos($tline, '<br />') === false) || !$options['is_html']) {
+							} else {
 								$line .= "<br />";
 							}
 						}
