@@ -223,6 +223,7 @@
 				{preference name=feature_endbody_code}
 				
 				{preference name="header_custom_js"}
+				{preference name="layout_add_body_group_class"}
 			</fieldset>
 
 			<fieldset>
