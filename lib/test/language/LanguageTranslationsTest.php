@@ -159,7 +159,7 @@ class LanguageTranslationsTest extends TikiTestCase
 	}
 
 	public function testWriteLanguage_shouldRaiseExceptionForInvalidLanguagePhp() {
-		$this->setExpectedException('Exception');
+		$this->setExpectedException('Language_Exception');
 		copy(dirname(__FILE__) . '/fixtures/language_invalid.php', $this->langDir . '/language.php');
 		$this->obj->writeLanguageFile();
 	}

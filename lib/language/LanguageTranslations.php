@@ -11,6 +11,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
+require_once('Exception.php');
+
 class LanguageTranslations extends TikiDb_Bridge
 {
 	/**
@@ -131,7 +133,7 @@ class LanguageTranslations extends TikiDb_Bridge
 
 			if ($lastStr === FALSE) {
 				// file has no line with "###end###\"=>\"###end###\") marking the end of the array
-				throw new Exception(tra("The file lang/$this->lang/language.php is not well formated. Run get_strings.php?lang=$this->lang and then try to export the translations again."));
+				throw new Language_Exception(tra("The file lang/$this->lang/language.php is not well formated. Run get_strings.php?lang=$this->lang and then try to export the translations again."));
 			}			
 			
 			// foreach translation in the database check each string in the language.php file
