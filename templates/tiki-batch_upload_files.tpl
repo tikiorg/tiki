@@ -13,12 +13,12 @@
 
 {if count($feedback)}<div class="simplebox highlight">{section name=i loop=$feedback}{$feedback[i]}<br />{/section}</div>{/if}
 
-<h2>{$totimg} {tr}Available Files{/tr} {$dirsize}</h2>
+<h2>{$totfile} {tr}Available Files{/tr} {$totalsize|kbsize}</h2>
 <form method="post" action="tiki-batch_upload_files.php" name="f">
 	<table class="formcolor" id="filelist" width="100%">
 		<tr>
-			<th width="80">
-				{select_all checkbox_names='files[]' label="{tr}Select All{/tr}"}
+			<th>
+				{select_all checkbox_names='files[]'}
 			</th>
 			<th><a href="javascript:void(0);">{tr}Filename{/tr}</a></th>
 			<th width="80"><a href="javascript:void(0);">{tr}Filesize{/tr}</a></th>
@@ -27,7 +27,7 @@
 		{cycle print=false values="even,odd"}
 		{foreach key=k item=it from=$filestring}
 			<tr class="{cycle}">
-				<td>
+				<td class="checkbox">
 					<input type="checkbox" name="files[]" value="{$it[0]}" id="box_{$k}" />
 				</td>
 				<td><label for="box_{$k}">{$it[0]}</label></td>

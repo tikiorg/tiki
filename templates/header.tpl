@@ -81,7 +81,7 @@
 		{elseif !empty($tracker_info.name)}
 			{$tracker_info.name|escape}
 		{elseif !empty($headtitle)}
-			{$headtitle|escape}{* use $headtitle last if feature specific title not found *}
+			{$headtitle|stringfix:"&nbsp;"|escape}{* use $headtitle last if feature specific title not found *}
 		{/if}
 	{/if}
 	{if $prefs.site_title_location eq 'after'} {$prefs.site_nav_seper} {$prefs.browsertitle|tr_if|escape}{/if}

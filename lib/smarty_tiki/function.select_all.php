@@ -35,6 +35,11 @@ function smarty_function_select_all($params, &$smarty) {
 	if (!is_array($checkbox_names)) {
 		$checkbox_names = explode(',', $checkbox_names);
 	}
+
+   if (! function_exists('smarty_modifier_escape')) {
+      require_once 'lib/smarty_tiki/modifier.escape.php';
+   }
+
 	foreach ( $checkbox_names as $cn ) $onclick .= "switchCheckboxes(this.form,'" . htmlspecialchars(smarty_modifier_escape($cn, 'javascript')) . "',this.checked);";
 
 	return "<div>\n"

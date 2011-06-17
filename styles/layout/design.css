@@ -1526,6 +1526,15 @@ label.error {
 	overflow: hidden;
 }
 
+#fgalexplorer > div > ul {
+	padding: 0;
+	margin: 0;
+}
+#fgalexplorer > div > ul ul {
+	padding-left: 16px;
+}
+
+
 .comment.archived {
 	display: none;
 }

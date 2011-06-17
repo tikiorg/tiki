@@ -17,7 +17,7 @@ require_once ("Net/LDAP2.php");
 class TikiLdapLib
 {
 
-	// var to hold a esablished connection
+	// var to hold a established connection
 	protected $ldaplink = NULL;
 
 	// var for ldap configuration parameters
@@ -44,12 +44,10 @@ class TikiLdapLib
 		'groupoc' => 'groupOfNames',
 		'groupnameattr' => '',
 		'groupdescattr' => '',
-		//neu
 		'groupmemberattr' => '',
 		'groupmemberisdn' => true,
 		'usergroupattr' => '',
 		'groupgroupattr' => '',
-		// end neu
 		'debug' => false
 	);
 
@@ -173,7 +171,7 @@ class TikiLdapLib
 				}
 		}
 
-		// Set the bindnpw with the options['password']
+		// Set the bindpw with the options['password']
 		if ($this->options['bind_type'] != 'explicit') {
 			$this->options['bindpw'] = $this->options['password'];
 		}
@@ -463,7 +461,7 @@ class TikiLdapLib
 	}
 
 	/**
-	 * Setter to set an otpion value
+	 * Setter to set an option value
 	 * @param string $name The name of the option
 	 * @param mixed $value The value
 	 * @return void
