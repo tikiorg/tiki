@@ -15,7 +15,10 @@
 			{preference name=smarty_security}
 			{preference name=feature_purifier}
 			{preference name=feature_htmlpurifier_output}
-			{preference name=menus_item_names_raw}
+			{preference name=menus_item_names_raw_teaser}
+			<div class="adminoptionboxchild" id="menus_item_names_raw_teaser_childcontainer">	
+				{preference name=menus_item_names_raw}
+			</div>
 			
 			{preference name=session_protected}
 
