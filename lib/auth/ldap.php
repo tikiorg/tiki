@@ -471,13 +471,11 @@ class TikiLdapLib
 	 */
 	public function setOption ($name, $value = null)
 	{
-		try {
-			if (isset($this->options[$name])) {
-				$this->options[$name] = $value;
-			} else {
-				throw new Exception(sprintf("Undefined option: %s \n", $name), E_USER_WARNING);
-			}
-		} catch (Exception $e) { }
+		if (isset($this->options[$name])) {
+			$this->options[$name] = $value;
+		} else {
+			throw new Exception(sprintf("Undefined option: %s \n", $name), E_USER_WARNING);
+		}
 	}
 
 	/**
