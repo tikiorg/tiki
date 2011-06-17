@@ -11,7 +11,7 @@
  */
 
 function smarty_function_html_body_attributes($params, &$smarty) {
-	global $section, $prefs, $cookietab, $page, $smarty, $tiki_p_edit, $section_class;
+	global $section, $prefs, $cookietab, $page, $smarty, $tiki_p_edit, $section_class, $user;
 	
 	$back = '';
 	$onload = '';
@@ -22,9 +22,6 @@ function smarty_function_html_body_attributes($params, &$smarty) {
 	if (isset($section) && $section == 'wiki page' && $prefs['user_dbl'] == 'y' and $dblclickedit == 'y' and $tiki_p_edit == 'y') {
 		$back .= ' ondblclick="location.href=\'tiki-editpage.php?page='.rawurlencode($page).'\';"';
 	}
-	
-	// this appears to be unused - smarty var $msgError is never assigned 
-	// {if $msgError} javascript:location.hash='msgError'{/if}"
 	
 	if (isset($section_class)) {
 		$class .= 'tiki '.$section_class;
@@ -41,6 +38,17 @@ function smarty_function_html_body_attributes($params, &$smarty) {
 	if (isset($_SESSION['fullscreen']) && $_SESSION['fullscreen'] == 'y') {
 		$class .= empty($class) ? ' ' : '';
 		$class .= 'fullscreen';
+	}
+
+	if ($prefs['layout_add_body_group_class'] === 'y') {
+		if (empty($user)) {
+			$class .= ' grp_Anonymous';
+		} else if (TikiLib::lib('user')->user_is_in_group($user, 'Registered')) {
+			$class .= ' grp_Registered';
+			if (TikiLib::lib('user')->user_is_in_group($user, 'Admins')) {
+				$class .= ' grp_Admins';
+			}
+		}
 	}
 	
 	if (!empty($onload)) {
