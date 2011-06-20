@@ -6920,9 +6920,9 @@ if( \$('#$id') ) {
 					$contributionlib->change_assigned_contributions($pageName, 'wiki page', $historyId, 'history', '', $pageName.'/'.$old_version, "tiki-pagehistory.php?page=$pageName&preview=$old_version");
 				}
 			}
+			include('lib/diff/difflib.php');
 			if (strtolower($pageName) != 'sandbox') {
 				$logslib = TikiLib::lib('logs');
-				include_once('lib/diff/difflib.php');
 				$bytes = diff2($data , $edit_data, 'bytes');
 				$logslib->add_action('Updated', $pageName, 'wiki page', $bytes, $edit_user, $edit_ip, '', $this->now, $hash['contributions'], $hash2);
 				if ($prefs['feature_contribution'] == 'y') {
@@ -6948,7 +6948,6 @@ if( \$('#$id') ) {
 				$old = $histlib->get_version($pageName, $old_version);
 				$foo = parse_url($_SERVER["REQUEST_URI"]);
 				$machine = $this->httpPrefix( true ). dirname( $foo["path"] );
-				require_once('lib/diff/difflib.php');
 				$diff = diff2($old["data"] , $edit_data, "unidiff");
 				sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, $diff, $edit_minor, $hash['contributions'], 0, 0, $lang);
 			}
