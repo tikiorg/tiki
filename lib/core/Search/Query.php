@@ -87,6 +87,11 @@ class Search_Query
 		$this->expr->addPart(new Search_Expr_Range($from, $to, 'timestamp', $field));
 	}
 
+	function filterInitial($initial, $field = 'title')
+	{
+		$this->expr->addPart(new Search_Expr_Range($initial, substr($initial, 0, -1) . chr(ord(substr($initial, -1)) + 1), 'plaintext', $field));
+	}
+
 	private function addPart($query, $type, $field)
 	{
 		$parts = array();

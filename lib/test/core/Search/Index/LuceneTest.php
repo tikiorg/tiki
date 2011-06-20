@@ -24,6 +24,7 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 		$index->addDocument(array(
 			'object_type' => $typeFactory->identifier('wiki page'),
 			'object_id' => $typeFactory->identifier('HomePage'),
+			'title' => $typeFactory->sortable('HomePage'),
 			'language' => $typeFactory->identifier('en'),
 			'modification_date' => $typeFactory->timestamp(self::DOCUMENT_DATE),
 			'description' => $typeFactory->plaintext('a description for the page'),
@@ -148,6 +149,15 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 	{
 		$this->assertResultCount(0, 'filterContent', 'in*lid');
 		$this->assertResultCount(0, 'filterContent', 'i?lid');
+	}
+
+	function testMatchInitial()
+	{
+		$this->assertResultCount(1, 'filterInitial', 'HomePage');
+		$this->assertResultCount(1, 'filterInitial', 'Home');
+		$this->assertResultCount(0, 'filterInitial', 'Fuzzy');
+		$this->assertResultCount(0, 'filterInitial', 'Ham');
+		$this->assertResultCount(0, 'filterInitial', 'HomePagd');
 	}
 
 	private function assertResultCount($count, $filterMethod, $argument)

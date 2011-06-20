@@ -286,6 +286,10 @@ class UnifiedSearchLib
 			$query->filterContent($filter['content'], TikiLib::lib('tiki')->get_preference('unified_default_content', array('contents'), true));
 		}
 
+		if (isset($filter['autocomplete']) && $filter['autocomplete']) {
+			$query->filterInitial($filter['autocomplete']);
+		}
+
 		if (isset($filter['language']) && $filter['language']) {
 			$q = "\"{$filter['language']}\"";
 
@@ -302,6 +306,7 @@ class UnifiedSearchLib
 		unset($filter['tags']);
 		unset($filter['content']);
 		unset($filter['language']);
+		unset($filter['autocomplete']);
 
 		foreach ($filter as $key => $value) {
 			if ($value) {
