@@ -215,7 +215,7 @@ EOF;
 			$ret = file_get_contents( $url );
 		}
 	} else {
-		$ret = strip_tags($sheet->getTableHtml( $subsheets ));
+		$ret = ($sheet->getTableHtml( $subsheets ));
 	}
 	
 	
