@@ -3193,12 +3193,16 @@ class TrackerLib extends TikiLib
 			'opt' => true,
 			'options' => array(
 				'relation' => array('type' => 'str', 'label' => tra('Relation')),
+				'filter' => array('type' => 'str', 'label' => tra('Filters')),
+				'readonly' => array('type' => 'int', 'label' => tra('Read-only')),
 			),
 			'help' => tra('<dl>
 				<dt>Function: Record relations between the tracker item and other objects</dt>
 				<dt>Usage: Example: mysite.people.friend</dt>
 				<dt>Description:</dt>
 				<dd><strong>[relation]</strong> Unique identifier for the relation, use translation afterwards to render the label</dd>
+				<dd><strong>[filter]</strong> URL-encoded list of filters to be used for the drop list</dd>
+				<dd><strong>[readonly]</strong> 0|1, default 0</dd>
 			</dl>'),
 		);
 
