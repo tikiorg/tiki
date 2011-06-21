@@ -444,22 +444,22 @@ body.fixed_width .fixedwidth .fixedwidth {
 	background: #fff url(strasa/login.jpg) 0 0 no-repeat;
 }
 
-.logged-in {
+#topbar_modules .logged-in {
 	width: 120px;
 	padding-right: 20px;
 }
 
-.box-login_box label,
-.box-login_box a,
-.box-login_box a.link,
-.box-login_box a:visited,
-.box-login_box a:hover {
+#topbar_modules .box-login_box label,
+#topbar_modules .box-login_box a,
+#topbar_modules .box-login_box a.link,
+#topbar_modules .box-login_box a:visited,
+#topbar_modules .box-login_box a:hover {
 	color: #fff;
 	text-decoration: none;
 }
 
-.box-login_box input[type="text"],
-.box-login_box input[type="password"] {
+#topbar_modules .box-login_box input[type="text"],
+#topbar_modules .box-login_box input[type="password"] {
 	background: transparent; /*#1b98c6*/
 	color: #fff;
 	border: solid 1px #fff;
@@ -513,7 +513,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 	color: #000 !important;
 }
 
-#sitetitles {
+#top_modules #sitetitles {
 	color: #fff;
 	display: inline;
 	height: 97px;
@@ -529,20 +529,20 @@ body.fixed_width .fixedwidth .fixedwidth {
 	font-weight: bold;
 }
 
-#sitetitle {
+#top_modules #sitetitle {
 	font-size: 220%;
 	display: inline;
 	letter-spacing: -0.05em;
 }
 
-#sitetitle a,
-#sitetitle a:link,
-#sitetitle a:hover {
+#top_modules #sitetitle a,
+#top_modules #sitetitle a:link,
+#top_modules #sitetitle a:hover {
 	color: #fff;
 	text-decoration: none;
 }
 
-#sitesubtitle {
+#top_modules #sitesubtitle {
 	font-size: 110%;
 	display: inline;
 	margin-left: 0.2em;
@@ -553,17 +553,17 @@ body.fixed_width .fixedwidth .fixedwidth {
 	text-align: left;
 }
 
-#tiki-top a,
-#tiki-top a:visited {
+#top_modules #tiki-top a,
+#top_modules #tiki-top a:visited {
 	color: #5AE0FF;
 	text-decoration: none;
 }
 
-#tiki-top a:hover {
+#top_modules #tiki-top a:hover {
 	color: #fff;
 }
 
-#sitesearchbar {
+#top_modules #sitesearchbar {
 	float: none;
 	position: absolute;
 	right: 10px;
