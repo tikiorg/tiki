@@ -139,7 +139,6 @@ class ObjectLib extends TikiLib
 	}
 
 	function get_info($objectType, $object) {
-			echo $type;
 		switch ($objectType) {
 			case 'wiki': case 'wiki page':
 				global $tikilib; include_once('lib/tikilib.php');
