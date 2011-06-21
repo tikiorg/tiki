@@ -13,12 +13,17 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_function_object_link( $params, $smarty ) {
 
-	if( ! isset( $params['type'], $params['id'] ) ) {
+	if( ! isset( $params['type'], $params['id'] ) && ! isset( $params['identifier'] ) ) {
 		return tra('No object information provided.');
 	}
 
-	$type = $params['type'];
-	$object = $params['id'];
+	if( isset( $params['type'], $params['id'] ) ) {
+		$type = $params['type'];
+		$object = $params['id'];
+	} else {
+		list($type, $object) = explode(':', $params['identifier'], 2);
+	}
+
 	$title = isset( $params['title'] ) ? $params['title'] : null;
 	$url = isset( $params['url'] ) ? $params['url'] : null;
 
@@ -60,10 +65,7 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 	}
 
 	if (empty($title)) {
-		$info = TikiLib::lib('object')->get_info($type, $object);
-		if (!empty($info['title'])) {
-			$title = $info['title'];
-		}
+		$title = TikiLib::lib('object')->get_title($type, $object);
 	}
 
 	$escapedPage = smarty_modifier_escape( $title ? $title : tra('No title specified') );

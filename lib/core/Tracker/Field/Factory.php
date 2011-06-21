@@ -94,6 +94,8 @@ class Tracker_Field_Factory
 				return new Tracker_Field_WebService($field_info, $this->itemData, $this->trackerDefinition);
 			case 'w':
 				return new Tracker_Field_DynamicList($field_info, $this->itemData, $this->trackerDefinition);
+			case 'REL':
+				return new Tracker_Field_Relation($field_info, $this->itemData, $this->trackerDefinition);
 		}
 	}
 }

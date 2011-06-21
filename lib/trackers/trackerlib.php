@@ -3188,6 +3188,19 @@ class TrackerLib extends TikiLib
 				<dd><strong>[count]</strong> Accepted amount of files</dd>
 			</dl>'),
 		);
+		$type['REL'] = array(
+			'label' => tra('relations'),
+			'opt' => true,
+			'options' => array(
+				'relation' => array('type' => 'str', 'label' => tra('Relation')),
+			),
+			'help' => tra('<dl>
+				<dt>Function: Record relations between the tracker item and other objects</dt>
+				<dt>Usage: Example: mysite.people.friend</dt>
+				<dt>Description:</dt>
+				<dd><strong>[relation]</strong> Unique identifier for the relation, use translation afterwards to render the label</dd>
+			</dl>'),
+		);
 
 		return $type;
 	}

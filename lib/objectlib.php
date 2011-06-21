@@ -184,6 +184,29 @@ class ObjectLib extends TikiLib
 		$result = $this->query($query,array((int) $objectId));
 		return $result->fetchRow();
 	}	
+
+	function get_title($type, $id)
+	{
+		switch ($type) {
+		case 'trackeritem':
+			return TikiLib::lib('trk')->get_isMain_value(null, $id);
+		}
+
+		$title = $this->table('tiki_objects')->fetchOne('name', array(
+			'type' => $type,
+			'itemId' => $id,
+		));
+		
+		if ($title) {
+			return $title;
+		}
+
+		$info = $this->get_info($type, $id);
+
+		if ($info) {
+			return $info['title'];
+		}
+	}
 	
 }
 $objectlib = new ObjectLib;
