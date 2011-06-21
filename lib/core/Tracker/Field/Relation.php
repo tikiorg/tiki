@@ -7,12 +7,16 @@
 
 class Tracker_Field_Relation extends Tracker_Field_Abstract
 {
+	const OPT_RELATION = 0;
+	const OPT_FILTER = 1;
+	const OPT_READONLY = 2;
+
 	function getFieldData(array $requestData = array())
 	{
 		$insertId = $this->getInsertId();
 
 		$data = array();
-		if (isset($requestData[$insertId])) {
+		if (! $this->getOption(self::OPT_READONLY) && isset($requestData[$insertId])) {
 			if (is_string($requestData[$insertId])) {
 				$data = explode("\n", $requestData[$insertId]);
 				$data = array_filter($data);
@@ -21,7 +25,7 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 			}
 			$data = array_unique($data);
 		} else {
-			$relations = TikiLib::lib('relation')->get_relations_from('trackeritem', $this->getItemId(), $this->getOption(0));
+			$relations = TikiLib::lib('relation')->get_relations_from('trackeritem', $this->getItemId(), $this->getOption(self::OPT_RELATION));
 			foreach ($relations as $rel) {
 				$data[] = $rel['type'] . ':' . $rel['itemId'];
 			}
@@ -36,6 +40,10 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 
 	function renderInput($context = array())
 	{
+		if ($this->getOption(self::OPT_READONLY)) {
+			return tra('Read only');
+		}
+
 		$context['labels'] = array();
 		foreach ($this->getConfiguration('relations') as $rel) {
 			list($type, $id) = explode(':', $rel, 2);
@@ -52,8 +60,14 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 
 	function handleSave($value, $oldValue)
 	{
+		if ($this->getOption(self::OPT_READONLY)) {
+			return array(
+				'value' => $value,
+			);
+		}
+
 		$relationlib = TikiLib::lib('relation');
-		$current = $relationlib->get_relations_from('trackeritem', $this->getItemId(), $this->getOption(0));
+		$current = $relationlib->get_relations_from('trackeritem', $this->getItemId(), $this->getOption(self::OPT_RELATION));
 		$map = array();
 		foreach ($current as $rel) {
 			$key = $rel['type'] . ':' . $rel['itemId'];
@@ -74,7 +88,7 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 		foreach ($toAdd as $key) {
 			list($type, $id) = explode(':', $key, 2);
 
-			$relationlib->add_relation($this->getOption(0), 'trackeritem', $this->getItemId(), $type, $id);
+			$relationlib->add_relation($this->getOption(self::OPT_RELATION), 'trackeritem', $this->getItemId(), $type, $id);
 		}
 
 		return array(
@@ -88,7 +102,7 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 
 	private function buildFilter()
 	{
-		parse_str($this->getOption(1), $filter);
+		parse_str($this->getOption(self::OPT_FILTER), $filter);
 		return $filter;
 	}
 }
