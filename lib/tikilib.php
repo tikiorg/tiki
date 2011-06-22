@@ -4918,7 +4918,7 @@ if( \$('#$id') ) {
 		$data = $this->htmldecode($data);
 		$data = $filter->filter($data);
 
-		if (isset($options) && !$options['is_html']) {
+		if (isset($parseOptions) && !$parseOptions['is_html']) {
 			$data = str_replace(array('<', '>'), array('&lt;', '&gt;'), $data);
 		}
 
