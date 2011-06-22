@@ -51,7 +51,7 @@ function wikiplugin_perspective($data, $params)
 		$perspectives = array();
 		foreach (explode('|', $params['perspectives']) as $p) {
 			$perspectives[] = (!is_numeric($p))
-				? $perspectivelib->get_perspectives_with_given_name($p)
+				? $perspectivelib->get_perspective_with_given_name($p)
 				: $p;
 		}
 	}
@@ -60,7 +60,7 @@ function wikiplugin_perspective($data, $params)
 		$notperspectives = array();
 		foreach (explode('|', $params['notperspectives']) as $p) {
 			$notperspectives[] = (!is_numeric($p))
-				? $perspectivelib->get_perspectives_with_given_name($p)
+				? $perspectivelib->get_perspective_with_given_name($p)
 				: $p;
 		}
 	}

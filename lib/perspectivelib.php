@@ -200,15 +200,13 @@ class PerspectiveLib
 		return $list;
 	}
 
-	//Returns a list of perspectives with the given name, filtered by perms
-	function get_perspectives_with_given_name ( $name ) {
+	// Returns one of the perspectives with the given name
+	function get_perspective_with_given_name ( $name ) {
 	    $db = TikiDb::get();
 
-	    $list = $db->getOne( "SELECT perspectiveId FROM tiki_perspectives WHERE name = ?", array ( $name ) );
+	    return $db->getOne( "SELECT perspectiveId FROM tiki_perspectives WHERE name = ?", array ( $name ) );
 
 	    //$list = Perms::filter( array ( 'type' => 'perspective'), 'object', $list, array( 'object' => 'perspectiveId' ), 'perspective_view' );
-
-	    return $list;
 	}
 }
 
