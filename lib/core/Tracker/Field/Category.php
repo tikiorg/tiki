@@ -20,6 +20,8 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 
 		if (isset($requestData[$key]) && is_array($requestData[$key])) {
 			$selected = $requestData[$key];
+		} elseif (!empty($requestData)) {
+			$selected = array();		
 		} else {
 			$selected = $this->getCategories();
 		}
