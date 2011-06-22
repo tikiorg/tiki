@@ -3217,6 +3217,7 @@ class FileGalLib extends TikiLib
 
 	function upload_single_file($gal_info, $name, $size, $type, $data)
 	{
+		global $user;
 		$this->convert_from_data($gal_info, $fhash, $data);
 
 		return $this->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $user, $fhash, '');
