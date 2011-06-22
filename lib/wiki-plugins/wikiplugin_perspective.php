@@ -9,7 +9,7 @@ function wikiplugin_perspective_info() {
 	return array(
 		'name' => tra('Perspective'),
 		'documentation' => 'PluginPerspective',
-		'description' => tra('Display content based on the user\'s current perspective'),
+		'description' => tra('Display content based on the reader\'s current perspective'),
 		'prefs' => array( 'feature_perspective', 'wikiplugin_perspective' ),
 		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed to users not matching the condition.'),
 		'filter' => 'wikicontent',
@@ -17,14 +17,14 @@ function wikiplugin_perspective_info() {
 			'perspectives' => array(
 				'required' => false,
 				'name' => tra('Allowed Perspectives'),
-				'description' => tra('Pipe separated list of Ids for perspectives in which the block is shown. ex: 2|3|5'),
+				'description' => tra('Pipe-separated list of identifiers of perspectives in which the block is shown.') . tra('Example value:') . '2|3|5',
 				'filter' => 'text',
 				'default' => ''
 			),
 			'notperspectives' => array(
 				'required' => false,
 				'name' => tra('Denied Perspectives'),
-				'description' => tra('Pipe separated list of Ids for perspectives in which the block is not shown. ex: 3|5|8'),
+				'description' => tra('Pipe-separated list of identifiers of perspectives in which the block is not shown.') . tra('Example value:') . '3|5|8',
 				'filter' => 'text',
 				'default' => ''
 			),
