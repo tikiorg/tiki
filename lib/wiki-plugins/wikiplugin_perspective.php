@@ -12,20 +12,19 @@ function wikiplugin_perspective_info() {
 		'description' => tra('Display content based on the user\'s current perspective'),
 		'prefs' => array( 'feature_perspective', 'wikiplugin_perspective' ),
 		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed to users not matching the condition.'),
-		'prefs' => array('wikiplugin_perspective'),
 		'filter' => 'wikicontent',
 		'params' => array(
 			'perspectives' => array(
 				'required' => false,
 				'name' => tra('Allowed Perspectives'),
-				'description' => tra('Pipe separated list of perspectives allowed to view the block. Perspectives may be specified by name or id. ex: Admins|2|Managers'),
+				'description' => tra('Pipe separated list of Ids for perspectives in which the block is shown. ex: 2|3|5'),
 				'filter' => 'text',
 				'default' => ''
 			),
 			'notperspectives' => array(
 				'required' => false,
 				'name' => tra('Denied Perspectives'),
-				'description' => tra('Pipe separated list of perspectives denied from viewing the block. Perspectives may be specified by name or id. ex: Anonymous|Managers|1'),
+				'description' => tra('Pipe separated list of Ids for perspectives in which the block is not shown. ex: 3|5|8'),
 				'filter' => 'text',
 				'default' => ''
 			),
@@ -35,11 +34,7 @@ function wikiplugin_perspective_info() {
 
 function wikiplugin_perspective($data, $params)
 {
-	global $access, $prefs, $perspectivelib;
-	$access->check_feature('feature_perspective');
-
-	require_once 'lib/perspectivelib.php';
-	$currentPerspective = $perspectivelib->get_current_perspective( $prefs );
+	global $prefs, $perspectivelib;
 
 	$dataelse = '';
 	if (strpos($data,'{ELSE}')) {
@@ -48,27 +43,24 @@ function wikiplugin_perspective($data, $params)
 	}
 
 	if (!empty($params['perspectives'])) {
-		$perspectives = array();
-		foreach (explode('|', $params['perspectives']) as $p) {
-			$perspectives[] = (!is_numeric($p))
-				? $perspectivelib->get_perspective_with_given_name($p)
-				: $p;
-		}
+		$perspectives = explode('|', $params['perspectives']);
 	}
-
 	if (!empty($params['notperspectives'])) {
-		$notperspectives = array();
-		foreach (explode('|', $params['notperspectives']) as $p) {
-			$notperspectives[] = (!is_numeric($p))
-				? $perspectivelib->get_perspective_with_given_name($p)
-				: $p;
-		}
+		$notperspectives = explode('|', $params['notperspectives']);
+	}
+	if (empty($perspectives) && empty($notperspectives)) {
+		return '';
 	}
 
+	require_once 'lib/perspectivelib.php';
+	$currentPerspective = $perspectivelib->get_current_perspective( $prefs );
+
+	// if the current perspective is not an allowed perspective, return the content after the "{ELSE}"
 	if (!empty($perspectives) && !in_array($currentPerspective, $perspectives)) {
 		return $dataelse;
 	}
 
+	// if the current perspective is a denied perspective, return the content after the "{ELSE}"
 	if (!empty($notperspectives) && in_array($currentPerspective, $notperspectives)) {
 		return $dataelse;
 	}
