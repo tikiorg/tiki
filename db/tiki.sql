@@ -2910,6 +2910,8 @@ INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Re
 INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Categorized', 'wiki page', 'n');
 INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Uncategorized', 'wiki page', 'n');
 INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Flagged', 'wiki page', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Fetch', 'url', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Refresh', 'url', 'n');
 
 DROP TABLE IF EXISTS `tiki_freetags`;
 CREATE TABLE `tiki_freetags` (

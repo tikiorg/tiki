@@ -3253,6 +3253,8 @@ class FileGalLib extends TikiLib
 
 	private function get_info_from_http($url, $lastCheck, $eTag)
 	{
+		$action = $lastCheck ? 'Refresh' : 'Fetch';
+
 		try {
 			$client = TikiLib::lib('tiki')->get_http_client($url);
 
@@ -3266,6 +3268,12 @@ class FileGalLib extends TikiLib
 
 			$response = TikiLib::lib('tiki')->http_perform_request($client);
 
+			if ($response->isError()) {
+				TikiLib::lib('logs')->add_action($action, $url, 'url', 'error=' . $response->getStatus());
+				return false;
+			}
+
+			// 300 code, likely not modified or other non-critical error
 			if (! $response->isSuccessful()) {
 				return false;
 			}
@@ -3305,6 +3313,7 @@ class FileGalLib extends TikiLib
 				$name = tr('unknown');
 			}
 
+			TikiLib::lib('logs')->add_action($action, $url, 'url', 'success=' . $response->getStatus());
 			return array(
 				'data' => $result,
 				'size' => $size,
@@ -3314,6 +3323,7 @@ class FileGalLib extends TikiLib
 				'etag' => $response->getHeader('Etag'),
 			);
 		} catch (Zend_Http_Exception $e) {
+			TikiLib::lib('logs')->add_action($action, $url, 'url', 'error=' . $e->getMessage());
 			return false;
 		}
 	}
