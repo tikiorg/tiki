@@ -565,8 +565,8 @@ select {
 	right: 10px;
 	bottom: -5px;
 	width: 10em;
-	height: 26px;
-	line-height: 26px;
+/*	height: 26px;*/
+	line-height: 1;
 	z-index: 1;
 }
 
@@ -644,7 +644,7 @@ a.login_link {
 	font-weight: bold;
 	font-size: 12px;
 	text-transform: uppercase;
-	margin-bottom: -1px !important;
+/*	margin-bottom: -1px !important;*/
 }
 .siteloginbar_popup .cssmenu_horiz ul {
 	margin-top: -5px;
