@@ -53,7 +53,7 @@ if (count($filter)) {
 
 	$dataSource = $unifiedsearchlib->getDataSource('formatting');
 
-	if ($access->is_serializable_request()) {
+	if ($access->is_serializable_request(true)) {
 		$results = $dataSource->getInformation($results, array('title', 'modification_date', 'url'));
 
 		require_once 'lib/smarty_tiki/function.object_link.php';
@@ -64,7 +64,14 @@ if (count($filter)) {
 				'title' => $res['title'],
 			), $smarty);
 		}
-		$access->output_serialized($results);
+		$access->output_serialized($results, array(
+			'feedTitle' => tr('%0: Results for "%1"', $prefs['sitetitle'], $request['filter']['content']),
+			'feedDescription' => tr('Search Results'),
+			'entryTitleKey' => 'title',
+			'entryUrlKey' => 'url',
+			'entryModificationKey' => 'modification_date',
+			'entryObjectDescriptors' => array('object_type', 'object_id'),
+		));
 		exit;
 	} else {
 		$plugin = new Search_Formatter_Plugin_SmartyTemplate(realpath('templates/searchresults-plain.tpl'));

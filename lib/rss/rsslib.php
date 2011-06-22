@@ -635,6 +635,51 @@ class RSSLib extends TikiDb_Bridge
 
 		return $default;
 	}
+
+	function generate_feed_from_data($data, $feed_descriptor)
+	{
+		require_once 'lib/smarty_tiki/modifier.sefurl.php';
+
+		$tikilib = TikiLib::lib('tiki');
+		$writer = new Zend_Feed_Writer_Feed;
+		$writer->setTitle($feed_descriptor['feedTitle']);
+		$writer->setDescription($feed_descriptor['feedDescription']);
+		$writer->setLink($tikilib->tikiUrl(''));
+		$writer->setDateModified(time());
+
+		foreach ($data as $row) {
+			$titleKey = $feed_descriptor['entryTitleKey'];
+			$url = $row[$feed_descriptor['entryUrlKey']];
+			$title = $row[$titleKey];
+
+			if (isset($feed_descriptor['entryObjectDescriptors'])) {
+				list($typeKey, $objectKey) = $feed_descriptor['entryObjectDescriptors'];
+				$object = $row[$objectKey];
+				$type = $row[$typeKey];
+
+				if (empty($url)) {
+					$url = smarty_modifier_sefurl($object, $type);
+				}
+
+				if (empty($title)) {
+					$title = TikiLib::lib('object')->get_title($type, $object);
+				}
+			}
+
+			if (empty($url)) {
+				//continue;
+			}
+
+			$entry = $writer->createEntry();
+			$entry->setTitle($title ? $title : tra('Unspecified'));
+			$entry->setLink($tikilib->tikiUrl($url));
+			$entry->setDateModified($row[$feed_descriptor['entryModificationKey']]);
+
+			$writer->addEntry($entry);
+		}
+		
+		return $writer;
+	}
 }
 global $rsslib;
 $rsslib = new RSSLib;

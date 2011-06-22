@@ -190,6 +190,9 @@ class TikiLib extends TikiDb_Bridge
 		case 'validators':
 			global $validatorslib; include_once('lib/validatorslib.php');
 			return $libraries[$name] = $validatorslib;
+		case 'rss':
+			global $rsslib; include_once('lib/rss/rsslib.php');
+			return $libraries[$name] = $rsslib;
 		case 'unifiedsearch':
 			global $unifiedsearchlib; include_once('lib/search/searchlib-unified.php');
 			return $libraries[$name] = $unifiedsearchlib;
