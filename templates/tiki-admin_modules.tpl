@@ -1,4 +1,4 @@
-ti{strip}
+{strip}
 {title help="Modules" admpage="module"}{tr}Admin Modules{/tr}{/title}
 
 <div class="navbar">
