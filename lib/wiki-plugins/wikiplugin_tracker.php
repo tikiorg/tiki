@@ -1052,7 +1052,7 @@ function wikiplugin_tracker($data, $params)
 					$customvalidation .= 'return $("#name").val(); ';
 					$customvalidation .= '} } } ';
 					$customvalidation .= '}, ';
-					if ($prefs['feature_antibot'] == 'y' && empty($user) && false && $prefs['recaptcha_enabled'] != 'y') {
+					if ($prefs['feature_antibot'] == 'y' && empty($user) && $prefs['recaptcha_enabled'] != 'y') {
 						// antibot validation   
 						$customvalidation .= '"captcha[input]": { ';
 						$customvalidation .= 'required: true, ';
