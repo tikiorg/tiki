@@ -1,4 +1,4 @@
-{strip}
+ti{strip}
 {title help="Modules" admpage="module"}{tr}Admin Modules{/tr}{/title}
 
 <div class="navbar">
@@ -11,6 +11,7 @@
 	{else}
 		{button show_hidden_modules="" _text="{tr}Hide hidden modules{/tr}"}
 	{/if}
+	{button href="./" _text="{tr}Exit Modules{/tr}"}
 	{button save_modules="y" _text="{tr}Save{/tr}" _style="display:none;" _id="save_modules" _ajax="n"}
 </div>
 
