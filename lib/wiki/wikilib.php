@@ -756,11 +756,11 @@ class WikiLib extends TikiLib
 		if (!empty($user)) {
 			$info = $tikilib->get_page_info($page);
 
-			$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)";
-			$result = $this->query($query,array($page,(int) $info['version'],(int) $info['lastModif'],$info['user'],$info['ip'],$info['comment'],$info['data'],$info['description']));
-
 			$query = "update `tiki_pages` set `user`=?, `comment`=?, `version`=? where `pageName`=?";
 			$result = $this->query($query, array($user, tra('Page locked'), $info['version'] + 1, $page));
+			
+			$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)";
+			$result = $this->query($query,array($page,(int) $info['version'] + 1,(int) $info['lastModif'],$user,$info['ip'],tra('Page locked'),$info['data'],$info['description']));
 		}
 
 		return true;
@@ -774,12 +774,12 @@ class WikiLib extends TikiLib
 
 		if (isset($user)) {
 			$info = $tikilib->get_page_info($page);
-
-			$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)";
-			$result = $this->query($query,array($page,(int) $info['version'],(int) $info['lastModif'],$info['user'],$info['ip'],$info['comment'],$info['data'],$info['description']));
-
+			
 			$query = "update `tiki_pages` set `user`=?, `comment`=?, `version`=? where `pageName`=?";
 			$result = $this->query($query, array($user, tra('Page unlocked'), $info['version'] + 1, $page));
+			
+			$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)";
+			$result = $this->query($query,array($page,(int) $info['version'] + 1,(int) $info['lastModif'],$user,$info['ip'],tra('Page unlocked'),$info['data'],$info['description']));
 		}
 
 		return true;
