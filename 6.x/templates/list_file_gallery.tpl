@@ -56,6 +56,7 @@
 			<form name="fgalformid" id="fgalform" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}" enctype="multipart/form-data">
 				<input type="hidden" name="galleryId" value="{$gal_info.galleryId|escape}" />
 				<input type="hidden" name="find" value="{$find|escape}" />
+				{if !empty($smarty.request.show_details)}<input type="hidden" name="show_details" value="{$smarty.request.show_details}" />{/if}
 
 				{if $prefs.fgal_asynchronous_indexing eq 'y'}<input type="hidden" name="fast" value="y" />{/if}
 				{if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
@@ -75,7 +76,8 @@
 					{include file='list_file_gallery_content.tpl'}
 				{/if}
 
-				{if $files and $gal_info.show_checked neq 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y')}
+				{if $files and $gal_info.show_checked neq 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y')
+						and ($prefs.fgal_show_thumbactions eq 'y' or $show_details eq 'y')}
 					<div id="sel">
 						<div>
 							{tr}Perform action with checked:{/tr}
