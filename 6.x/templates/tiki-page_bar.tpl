@@ -46,11 +46,11 @@
 				{/if}
 			{/if}
 
-			{if $prefs.feature_wiki_usrlock eq 'y' and ( $tiki_p_admin_wiki eq 'y' or ($user and $user eq $page_user and $tiki_p_lock eq 'y') )}
-				{if $lock}
-					{button href="tiki-index.php?page=$thispage&amp;action=unlock" _text="{tr}Unlock{/tr}"}
-				{else}
+			{if $prefs.feature_wiki_usrlock eq 'y' and $user and $tiki_p_lock eq 'y'}
+				{if !$lock}
 					{button href="tiki-index.php?page=$thispage&amp;action=lock" _text="{tr}Lock{/tr}"}
+				{elseif $tiki_p_admin_wiki eq 'y' or $user eq $page_user}
+					{button href="tiki-index.php?page=$thispage&amp;action=unlock" _text="{tr}Unlock{/tr}"}
 				{/if}
 			{/if}
 
