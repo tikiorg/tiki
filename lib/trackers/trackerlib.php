@@ -3807,7 +3807,7 @@ class TrackerLib extends TikiLib
 		return $this->fields()->fetchOne('fieldId', array('isMain' => 'y', 'trackerId' => $trackerId));
 	}
 
-	function categorized_item($trackerId, $itemId, $mainfield, $ins_categs) {
+	function categorized_item($trackerId, $itemId, $mainfield, $ins_categs, $parent_categs_only = array()) {
 		$categlib = TikiLib::lib('categ');
 		$cat_type = "trackeritem";
 		$cat_objid = $itemId;
@@ -3827,6 +3827,25 @@ class TrackerLib extends TikiLib
 					'value' => '',
 				), true);
 			}
+		}
+		$old_categs = $categlib->get_object_categories('trackeritem', $itemId);
+		if (is_array($ins_categs)) {
+			$new_categs = array_diff($ins_categs, $old_categs);
+			$del_categs = array_diff($old_categs, $ins_categs);
+			if (!empty($parent_categs_only)) {
+				// put back categories that were not meant to be deleted (e.g. Tracker plugin)
+				foreach($del_categs as $d) {
+					$parentId = $categlib->get_category_parent($d);
+					if (!in_array($parentId, $parent_categs_only)) {
+						$undel_categs[] = $d;
+					}
+				}
+				if (isset($undel_categs)) {
+					$del_categs = array_diff($del_categs, $undel_categs);
+				}
+			}
+			$remain_categs = array_diff($old_categs, $new_categs, $del_categs);
+			$ins_categs = array_merge($remain_categs, $new_categs);
 		}
 		$categlib->update_object_categories($ins_categs, $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href);
 	}
