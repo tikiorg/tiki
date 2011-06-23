@@ -682,16 +682,28 @@ function wikiplugin_tracker($data, $params)
 				if ($embedded == 'y' && isset($_REQUEST['page'])) {
 					$ins_fields["data"][] = array('fieldId' => $embeddedId, 'value' => $_REQUEST['page']);
 				}
-				$ins_categs = array();
+				$ins_categs = 0; // important: non-array ins_categs means categories should remain unchanged
 				$categorized_fields = array();
 				while (list($postVar, $postVal) = each($_REQUEST)) {
 					if(preg_match("/^ins_cat_([0-9]+)/", $postVar, $m)) {
 						foreach ($postVal as $v) {
+							if (!is_array($ins_categs)) {
+								$ins_categs = array();
+							}
  	   						$ins_categs[] = $v;
 							$categorized_fields[] = $m[1];
 						}
 					}
 		 		}
+		 		$parent_categs_only = array();
+				foreach ($ins_fields['data'] as $current_field) {
+					if ($current_field['type'] == 'e') {
+						$parent_categs_only[] = $current_field['options_array'][0];
+						if (!is_array($ins_categs)) {
+							$ins_categs = array(); // to unset categories of this field if none clicked
+						}
+					}
+				}
 				/* ------------------------------------- End recup all values from REQUEST -------------- */
 
 				/* ------------------------------------- Check field values for each type and presence of mandatory ones ------------------- */
@@ -742,7 +754,9 @@ function wikiplugin_tracker($data, $params)
 						$status = '';
 					}
 					$rid = $trklib->replace_item($trackerId, $itemId, $ins_fields, $status, $ins_categs);
-					$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs);
+					if (is_array($ins_categs)) {
+						$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs, $parent_categs_only);
+					}
 					if (isset($newItemRate)) {
 						$trklib->replace_rating($trackerId, $rid, $newItemRateField, $user, $newItemRate);
 					}
