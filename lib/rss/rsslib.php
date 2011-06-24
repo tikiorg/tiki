@@ -483,31 +483,32 @@ class RSSLib extends TikiDb_Bridge
 			'rssId' => $rssId,
 		));
 
-		foreach( $feed as $entry ) {
+		foreach( $feed as $entry ) { // TODO: optimize. Atom entries have an 'updated' element which can be used to only update updated entries
 			$guid = $guidFilter->filter( $entry->getId() );
 
 			$count = $this->items->fetchCount(array('rssId' => $rssId, 'guid' => $guid));
-			if( 0 == $count ) {
-				$authors = $entry->getAuthors();
-
-				$data = $filter->filter( array(
-					'title' => $entry->getTitle(),
-					'url' => $entry->getLink(),
-					'description' => $entry->getDescription(),
-					'content' => $entry->getContent(),
-					'author' => $authors ? implode( ', ', $authors->getValues() ) : '', 
-				) );
-
-				$data['guid'] = $guid;
-				if( method_exists( $entry, 'getDateCreated' ) && $createdDate = $entry->getDateCreated() ) {
-					$data['publication_date'] = $createdDate->get( Zend_Date::TIMESTAMP );
-				} else {
-					global $tikilib;
-					$data['publication_date'] = $tikilib->now;
-				}
-
-				$this->insert_item( $rssId, $data, $actions );
+			if( 1 == $count ) {
+				$this->query("delete from `tiki_rss_items` where `rssId`=? and `guid`=?", array($rssId, $guid));
 			}
+			$authors = $entry->getAuthors();
+
+			$data = $filter->filter( array(
+				'title' => $entry->getTitle(),
+				'url' => $entry->getLink(),
+				'description' => $entry->getDescription(),
+				'content' => $entry->getContent(),
+				'author' => $authors ? implode( ', ', $authors->getValues() ) : '', 
+			) );
+
+			$data['guid'] = $guid;
+			if( method_exists( $entry, 'getDateCreated' ) && $createdDate = $entry->getDateCreated() ) {
+				$data['publication_date'] = $createdDate->get( Zend_Date::TIMESTAMP );
+			} else {
+				global $tikilib;
+				$data['publication_date'] = $tikilib->now;
+			}
+
+			$this->insert_item( $rssId, $data, $actions );
 		}
 	}
 

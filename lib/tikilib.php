@@ -5023,7 +5023,7 @@ if( \$('#$id') ) {
 		$data = $this->htmldecode($data);
 		$data = $filter->filter($data);
 
-		if (isset($options) && !$options['is_html']) {
+		if (isset($parseOptions) && !$parseOptions['is_html']) {
 			$data = str_replace(array('<', '>'), array('&lt;', '&gt;'), $data);
 		}
 
@@ -5935,6 +5935,8 @@ if( \$('#$id') ) {
 		if ($need_maketoc && $prefs["feature_wysiwyg"] == 'y' && $prefs["wysiwyg_htmltowiki"] != 'y') {
 			// Header needs to start at beginning of line (wysiwyg does not necessary obey)
 			$data = preg_replace('/<\/([a-z]+)><h([1-6])>/im', "</\\1>\n<h\\2>", $data);
+			$data = preg_replace('/^\s+<h([1-6])>/im', "<h\\1>", $data); // headings with leading spaces
+			$data = preg_replace('/\/><h([1-6])>/im', "/>\n<h\\1>", $data); // headings after /> tag
 			$htmlheadersearch = '/<h([1-6])>\s*([^<]+)\s*<\/h[1-6]>/im';
 			preg_match_all($htmlheadersearch, $data, $htmlheaders);
 			$nbhh=count($htmlheaders[1]);
@@ -7017,9 +7019,9 @@ if( \$('#$id') ) {
 					$contributionlib->change_assigned_contributions($pageName, 'wiki page', $historyId, 'history', '', $pageName.'/'.$old_version, "tiki-pagehistory.php?page=$pageName&preview=$old_version");
 				}
 			}
+			include('lib/diff/difflib.php');
 			if (strtolower($pageName) != 'sandbox') {
 				$logslib = TikiLib::lib('logs');
-				include_once('lib/diff/difflib.php');
 				$bytes = diff2($data , $edit_data, 'bytes');
 				$logslib->add_action('Updated', $pageName, 'wiki page', $bytes, $edit_user, $edit_ip, '', $this->now, $hash['contributions'], $hash2);
 				if ($prefs['feature_contribution'] == 'y') {
@@ -7045,7 +7047,6 @@ if( \$('#$id') ) {
 				$old = $histlib->get_version($pageName, $old_version);
 				$foo = parse_url($_SERVER["REQUEST_URI"]);
 				$machine = $this->httpPrefix( true ). dirname( $foo["path"] );
-				require_once('lib/diff/difflib.php');
 				$diff = diff2($old["data"] , $edit_data, "unidiff");
 				sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, $diff, $edit_minor, $hash['contributions'], 0, 0, $lang);
 			}

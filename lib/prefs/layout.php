@@ -32,8 +32,8 @@ function prefs_layout_list() {
 		),
 		'layout_add_body_group_class' => array(
 			'name' => tra('Add group CSS info'),
-			'hint' => tra('Add a class to the page BODY tag to indicate group membership'),
-			'description' => tra('Either grp_Anonymous or grp_Registered and possibly grp_Admin as well'),
+			'hint' => tra('Add classes to the page BODY tag to indicate group membership'),
+			'description' => tra('Either grp_Anonymous or grp_Registered and possibly grp_Admins as well'),
 			'type' => 'flag',
 		),
 	);

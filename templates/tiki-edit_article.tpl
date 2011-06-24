@@ -264,7 +264,7 @@
 		<tr id='show_expdate' {if $types.$type.show_expdate eq 'y' || $types.$type.show_post_expire ne 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Expiration Date{/tr}</td>
 			<td>
-				{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order}
+				{html_select_date prefix="expire_" time=$expireDateSite start_year="-10" end_year="+10" field_order=$prefs.display_field_order}
 				{tr}at{/tr} 
 				<span dir="ltr">
 					{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false use_24_hours=$use_24hr_clock}

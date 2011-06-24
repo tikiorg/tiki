@@ -56,7 +56,7 @@ class Tracker_Definition
 		return $this->getConfiguration($key) === 'y';
 	}
 
-	function getFields()
+	function getFields($outf = '')
 	{
 		if ($this->fields) {
 			return $this->fields;
@@ -64,7 +64,7 @@ class Tracker_Definition
 
 		$trklib = TikiLib::lib('trk');
 		$trackerId = $this->trackerInfo['trackerId'];
-		$fields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc');
+		$fields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $outf);
 
 		return $this->fields = $fields['data'];
 	}

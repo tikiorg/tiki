@@ -202,9 +202,9 @@
 			</fieldset>
 		{/tab}
 
-		{tab name="{tr}External groups{/tr}"}
+		{tab name="{tr}LDAP external groups{/tr}"}
 			<fieldset>
-				<legend>External groups</legend>
+				<legend>LDAP external groups</legend>
 
 				{preference name=auth_ldap_group_external}
 			</fieldset>
