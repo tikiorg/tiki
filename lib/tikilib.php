@@ -252,7 +252,7 @@ class TikiLib extends TikiDb_Bridge
 		if ($url) {
 			$client = $this->prepare_http_client($client, $url);
 
-			$client->setUri($url);
+			$client->setUri($this->take_away_accent($url));	// Zend_Http_Client seems to fail with accents in urls (jb june 2011)
 		}
 
 		return $client;
