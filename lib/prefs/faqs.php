@@ -8,7 +8,7 @@
 function prefs_faqs_list() {
 	return array(
 		'faqs_feature_copyrights' => array(
-			'name' => tra('Faqs'),
+			'name' => tra('FAQs'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_faqs',
