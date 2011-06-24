@@ -92,7 +92,7 @@
 	{* -------------------------------------------------- tab with comments --- *}
 	{if $tracker_info.useComments eq 'y' and ($tiki_p_tracker_view_comments ne 'n' or $tiki_p_comment_tracker_items ne 'n')}
 
-		{tab name=$tabcomment_vtrackit}
+		{tab name="{tr}Comments{/tr}"}
 
 			<div id="comment-container" data-target="tiki-ajax_services.php?controller=comment&amp;action=list&amp;type=trackeritem&amp;objectId={$itemId|escape:'url'}"></div>
 			{jq}
