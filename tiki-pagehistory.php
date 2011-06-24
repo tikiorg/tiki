@@ -391,11 +391,11 @@ $not_comparing = empty($_REQUEST['compare']) ? 'true' : 'false';
 
 $headerlib->add_jq_onready(<<<JS
 \$("input[name=oldver], input[name=newver]").change(function () {
-	var ver = \$(this).val(), ver2;
+	var ver = parseInt(\$(this).val(), 10), ver2;
 	if (ver == 0) { ver = $current_version; }
 	if (\$(this).attr("name") == "oldver") {
 		\$("input[name=newver]").each(function () {
-			ver2 = \$(this).val();
+			ver2 = parseInt(\$(this).val(), 10);
 			if (ver2 == 0) { ver2 = $current_version; }
 			if (ver2 <= ver) {
 				\$(this).attr("disabled", "disabled");
@@ -405,7 +405,7 @@ $headerlib->add_jq_onready(<<<JS
 		});
 	} else if (\$(this).attr("name") == "newver") {
 		\$("input[name=oldver]").each(function () {
-			ver2 = \$(this).val();
+			ver2 = parseInt(\$(this).val(), 10);
 			if (ver2 == 0) { ver2 = $current_version; }
 			if (ver2 >= ver) {
 				\$(this).attr("disabled", "disabled");
