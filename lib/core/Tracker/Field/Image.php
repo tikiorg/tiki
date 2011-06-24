@@ -16,8 +16,8 @@ class Tracker_field_Image extends Tracker_Field_File
 	private $imgMimeTypes;
 	private $imgMaxSize;
 
-	function __construct() {
-		parent::__construct();
+	function __construct($fieldInfo, $itemData, $trackerDefinition) {
+		parent::__construct($fieldInfo, $itemData, $trackerDefinition);
 		$this->imgMimeTypes = array('image/jpeg', 'image/gif', 'image/png', 'image/pjpeg', 'image/bmp');
 		$this->imgMaxSize = (1048576 * 4); // 4Mo
 	}
