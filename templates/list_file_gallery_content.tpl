@@ -400,4 +400,6 @@
 	{/if}
 
 </table>
-{jq}$('a.fgalbacklink').cluetip({showTitle:false, sticky:true});{/jq}
+{if $prefs.feature_jquery_tooltips eq 'y'}
+	{jq}$('a.fgalbacklink').cluetip({showTitle:false, sticky:true});{/jq}
+{/if}

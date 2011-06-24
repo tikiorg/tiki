@@ -390,7 +390,9 @@
 </div>
 
 {if ! $editFileId}
-	{jq}$('.datePicker').datepicker({minDate: 0, maxDate: '+1m', dateFormat: 'dd/mm/yy'});{/jq}
+	{if $prefs.feature_jquery_ui eq 'y'}
+		{jq}$('.datePicker').datepicker({minDate: 0, maxDate: '+1m', dateFormat: 'dd/mm/yy'});{/jq}
+	{/if}
 
 	{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
 		{jq notonready=true}
