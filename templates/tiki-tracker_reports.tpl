@@ -2,7 +2,7 @@
 {button _class="view_button" _text="{tr}View{/tr}" _htmlelement="role_main" _template="tiki-tracker_export_join_designer.tpl" _auto_args="*" _title="{tr}View Tracker Report{/tr}"|cat:$uWarning}
 <br />
 <br />
-<div id="trackerElements">
+<div id="trackerElements" style="display:none;">
 	<select class="trackerList">
 		<option value="">{tr}Pick tracker to join{/tr}</option>
 		{foreach from=$trackers item=tracker}

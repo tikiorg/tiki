@@ -59,7 +59,7 @@ $headerlib->add_jq_onready('
 					trackerFieldDDL.html("");
 					set.prevAll().find(".trackerList_active").each(function() {
 						trackerFieldDDL
-							.append(elements.find(".tracker_option_" + $(this).val() + ",:first").clone());
+							.append(elements.find(".trackerFieldList > .tracker_option_" + $(this).val()).clone());
 					});
 					
 					trackerFieldDDL.val(val);
