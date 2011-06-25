@@ -4896,7 +4896,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_tracker_dump',
-				'description' => tra('Can save a .CSV backup of entire tracekrs'),
+				'description' => tra('Can save a .CSV backup of entire trackers'),
 				'level' => 'admin',
 				'type' => 'trackers',
 				'admin' => false,
