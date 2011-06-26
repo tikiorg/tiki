@@ -192,7 +192,7 @@
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td><input type="submit" name="metric_submit" value="{if !isset($metric_id)}Create Metric{else}Edit Metric{/if}" /></td>
+			<td><input type="submit" name="metric_submit" value="{if !isset($metric_id)}{tr}Create Metric{/tr}{else}{tr}Edit Metric{/tr}{/if}" /></td>
 		</tr>
 	</table>
 	<input type="hidden" name="metric_id" value="{$metric_id|escape}">
@@ -224,7 +224,7 @@
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td><input type="submit" name="tab_submit" value="{if !isset($tab_id)}Create Tab{else}Edit Tab{/if}" /></td>
+			<td><input type="submit" name="tab_submit" value="{if !isset($tab_id)}{tr}Create Tab{/tr}{else}{tr}Edit Tab{/tr}{/if}" /></td>
 		</tr>
 	</table>
 	<input type="hidden" name="tab_id" value="{$tab_id|escape}">
