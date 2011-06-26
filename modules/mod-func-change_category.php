@@ -41,7 +41,7 @@ function module_change_category_info() {
 			),
 			'shy' => array(
 				'name' => tra('Shy'),
-				'description' => tra('If set to "y", the module is not shown on pages which are not already categorized.' . " " . tra('Not set by default.')),
+				'description' => tra('If set to "y", the module is not shown on pages which are not already categorized.') . " " . tra('Not set by default.'),
 			),
 			'detail' => array(
 				'name' => tra('Detailed'),
