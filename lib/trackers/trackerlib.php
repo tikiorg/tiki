@@ -2832,7 +2832,7 @@ class TrackerLib extends TikiLib
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Allows a selection from the list of pages.
-				<dt>Usage: <strong>auto-assign, size, create</strong>
+				<dt>Usage: <strong>auto-assign,size,create,link</strong>
 				<dt>Example: 1
 				<dt>Description:
 				<dd><strong>[auto-assign]</strong> will auto-assign the creator of the item if set to 1
@@ -2958,7 +2958,7 @@ class TrackerLib extends TikiLib
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Provides a way to choose a value from another tracker (eventually with a link).
-				<dt>Usage: <strong>trackerId,fieldId,linkToItem,displayedFieldsList</strong>
+				<dt>Usage: <strong>trackerId,fieldId,linkToItem,displayedFieldsList,status,linkpage</strong>
 				<dt>Example: 3,5,0,6|8,opc,PageName
 				<dt>Description:
 				<dd><strong>[trackerId]</strong> is the tracker ID of the fields you want to display;
@@ -2974,7 +2974,7 @@ class TrackerLib extends TikiLib
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Displays a list of field values from another tracker that has a relation with this tracker(eventually with a link).
-				<dt>Usage: <strong>trackerId,fieldIdThere,fieldIdHere,displayFieldIdThere,linkToItems</strong>
+				<dt>Usage: <strong>trackerId,fieldIdThere,fieldIdHere,displayFieldIdThere,linkToItems,status</strong>
 				<dt>Example: 5,3,4,10|11
 				<dt>Description:
 				<dd><strong>[trackerId]</strong> is the tracker ID of the fields you want to display;
