@@ -21,12 +21,13 @@
 {jq}
 $('.pref-reset')
 	.change( function() {
+		var c = $(this).attr('checked') === "checked";
 		var $el = $(this).closest('.adminoptionbox').find('input:not(:hidden),select,textarea')
-			.not('.system').attr( 'disabled', $(this).attr('checked') ? "disabled" : "" )
-			.css("opacity", $(this).attr('checked') ? .6 : 1 );
+			.not('.system').attr( 'disabled', c )
+			.css("opacity", c ? .6 : 1 );
 		var defval = $("#" + $(this).val() + "_default").val();
 		if ($el.attr("type") == "checkbox") {
-			$el.attr('checked', $(this).attr('checked') ? (defval == "y" ? "checked" : "") : ($el.attr('checked') ? "" : "checked" ));
+			$el.attr('checked', defval === "y" ? c : !c);
 		} else {
 			var temp = $("[name=" + $(this).val() + "]").val();
 			$el.val( defval );

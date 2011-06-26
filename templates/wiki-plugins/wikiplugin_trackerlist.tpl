@@ -40,7 +40,7 @@
 		{initials_filter_links _initial='tr_initial'}
 	{/if}
 
-	{if $checkbox && $items|@count gt 0 && empty($tpl)}<form method="post" action="{if empty($checkbox.action)}#{else}$checkbox.action{/if}">{/if}
+	{if $checkbox && $items|@count gt 0 && empty($tpl)}<form method="post" action="{if empty($checkbox.action)}#{else}{$checkbox.action}{/if}">{/if}
 
 	{if $trackerlistmapview}
 		{wikiplugin _name="googlemap" name=$trackerlistmapname type="objectlist" width="400" height="400"}{/wikiplugin}

@@ -397,21 +397,13 @@ $headerlib->add_jq_onready(<<<JS
 		\$("input[name=newver]").each(function () {
 			ver2 = parseInt(\$(this).val(), 10);
 			if (ver2 == 0) { ver2 = $current_version; }
-			if (ver2 <= ver) {
-				\$(this).attr("disabled", "disabled");
-			} else {
-				\$(this).attr("disabled", "");
-			}
+			\$(this).attr("disabled", (ver2 <= ver));
 		});
 	} else if (\$(this).attr("name") == "newver") {
 		\$("input[name=oldver]").each(function () {
 			ver2 = parseInt(\$(this).val(), 10);
 			if (ver2 == 0) { ver2 = $current_version; }
-			if (ver2 >= ver) {
-				\$(this).attr("disabled", "disabled");
-			} else {
-				\$(this).attr("disabled", "");
-			}
+			\$(this).attr("disabled", (ver2 >= ver));
 		});
 	}
 });
