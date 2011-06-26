@@ -386,7 +386,7 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('List Mode'),
 				'description' => tra('Set output format. Yes (y) displays tracker list view with truncated values (default); 
-										No (n) displays in tracker item view; Comma Separated Values (csv) outpits without any HTML formatting.'),
+										No (n) displays in tracker item view; Comma Separated Values (csv) outputs without any HTML formatting.'),
 				'filter' => 'alpha',
 				'default' => 'y',
 				'options' => array(
