@@ -318,7 +318,7 @@ $plugins_loaded = false;
 if (empty($tracker_info)) {
 	$item_info = array();
 }
-$fieldFactory = new Tracker_Field_Factory($definition, $item_info);
+$fieldFactory = new Tracker_Field_Factory($definition);
 
 foreach($xfields["data"] as $i => $current_field) {
 	$fid = $current_field["fieldId"];
@@ -345,7 +345,7 @@ foreach($xfields["data"] as $i => $current_field) {
 		$current_field_ins = $current_field;
 		$current_field_fields = $current_field;
 
-		$handler = $fieldFactory->getHandler($current_field);
+		$handler = $fieldFactory->getHandler($current_field, $item_info);
 
 		if ($handler) {
 			$insert_values = $handler->getFieldData($_REQUEST);
@@ -514,13 +514,13 @@ if ($_REQUEST["itemId"]) {
 	$lst = '';
 	$tracker_item_main_value = '';
 
-	$fieldFactory = new Tracker_Field_Factory($definition, $info);
+	$fieldFactory = new Tracker_Field_Factory($definition);
 
 	foreach($xfields["data"] as $i => $current_field) {
 		$current_field_fields = null;
 		$current_field_ins = array();
 
-		$handler = $fieldFactory->getHandler($current_field);
+		$handler = $fieldFactory->getHandler($current_field, $info);
 
 		if ($current_field['isHidden'] == 'n' or $current_field['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($current_field['type'] == 's' and $xfields[$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y') or ($current_field['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
 			$current_field_fields = $current_field;

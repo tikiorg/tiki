@@ -13,6 +13,30 @@
  */
 class Tracker_Field_File extends Tracker_Field_Abstract
 {
+	public static function getTypes()
+	{
+		return array(
+			'A' => array(
+				'name' => tr('Attachment'),
+				'description' => tr('Allows a file to be attached to the tracker item.'),
+				'params' => array(
+					'listview' => array(
+						'name' => tr('List View'),
+						'description' => tr('Defines how attachements will be displayed within the field.'),
+						'options' => array(
+							'n' => tr('name'),
+							't' => tr('type'),
+							'ns' => tr('name, size'),
+							'nts' => tr('name, type, size'),
+							'u' => tr('uploader'),
+							'm' => tr('mediaplayer'),
+						),
+					),
+				),
+			),
+		);
+	}
+
 	function getFieldData(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();

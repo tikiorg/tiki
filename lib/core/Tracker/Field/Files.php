@@ -7,6 +7,33 @@
 
 class Tracker_Field_Files extends Tracker_Field_Abstract
 {
+	public static function getTypes()
+	{
+		return array(
+			'FG' => array(
+				'name' => tr('Files'),
+				'description' => tr('Attached and upload files stored in the file galleries to the tracker item.'),
+				'params' => array(
+					'galleryId' => array(
+						'name' => tr('Gallery ID'),
+						'description' => tr('File gallery to upload new files into.'),
+						'filter' => 'int',
+					),
+					'filter' => array(
+						'name' => tr('Mime Type Filter'),
+						'description' => tr('Mask for accepted mime types in the field'),
+						'filter' => 'text',
+					),
+					'count' => array(
+						'name' => tr('File Count'),
+						'description' => tr('Maximum amount of files to be attached on the field.'),
+						'filter' => 'int',
+					),
+				),
+			),
+		);
+	}
+
 	function getFieldData(array $requestData = array())
 	{
 		$galleryId = (int) $this->getOption(0);

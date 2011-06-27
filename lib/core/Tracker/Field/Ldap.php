@@ -13,6 +13,35 @@
  */
 class Tracker_Field_Ldap extends Tracker_Field_Abstract
 {
+	public static function getTypes()
+	{
+		return array(
+			'P' => array(
+				'name' => tr('LDAP'),
+				'description' => tr('Display a field value from a specific user in LDAP'),
+				'readonly' => true,
+				'params' => array(
+					'filter' => array(
+						'name' => tr('Filter'),
+						'description' => tr('LDAP filter, can contain the %field_name% placeholder to be replaced with the current field\'s name'),
+						'example' => '(&(mail=%field_name%)(objectclass=posixaccount))',
+						'filter' => 'none',
+					),
+					'field' => array(
+						'name' => tr('Field'),
+						'description' => tr('Field name returned by LDAP'),
+						'filter' => 'text',
+					),
+					'dsn' => array(
+						'name' => tr('DSN'),
+						'description' => tr('Data source name registered in Tiki'),
+						'filter' => 'text',
+					),
+				),
+			),
+		);
+	}
+
 	function getFieldData(array $requestData = array())
 	{
 		if ($this->getOption(2)) {

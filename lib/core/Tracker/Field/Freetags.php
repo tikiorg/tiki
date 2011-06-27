@@ -13,6 +13,43 @@
  */
 class Tracker_Field_Freetags extends Tracker_Field_Abstract
 {
+	public static function getTypes()
+	{
+		return array(
+			'F' => array(
+				'name' => tr('Freetags'),
+				'description' => tr('Allows freetags to be shown or added for tracker items.'),
+				'params' => array(
+					'size' => array(
+						'name' => tr('Size'),
+						'description' => tr('Visible size of the input field'),
+						'filter' => 'int',
+					),
+					'hidehelp' => array(
+						'name' => tr('Help'),
+						'description' => tr('Hide or show the input help'),
+						'default' => '',
+						'filter' => 'alpha',
+						'options' => array(
+							'' => tr('Show'),
+							'y' => tr('Hide'),
+						),
+					),
+					'hidesuggest' => array(
+						'name' => tr('Suggest'),
+						'description' => tr('Hide or show the freetag suggestions'),
+						'default' => '',
+						'filter' => 'alpha',
+						'options' => array(
+							'' => tr('Show'),
+							'y' => tr('Hide'),
+						),
+					),
+				),
+			),
+		);
+	}
+
 	function getFieldData(array $requestData = array())
 	{	
 		$data = array();

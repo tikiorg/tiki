@@ -11,6 +11,37 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 	const OPT_FILTER = 1;
 	const OPT_READONLY = 2;
 
+	public static function getTypes()
+	{
+		return array(
+			'REL' => array(
+				'name' => tr('Relations'),
+				'description' => tr('Allows to create arbitrary relations between the trackers and other objects in the system.'),
+				'params' => array(
+					'relation' => array(
+						'name' => tr('Relation'),
+						'description' => tr('Relation qualifier. Must be a three-part qualifier containing letters and separated by dots.'),
+						'filter' => 'attribute_type',
+					),
+					'filter' => array(
+						'name' => tr('Filter'),
+						'description' => tr('URL-encoded list of filters to be applied on object selection.'),
+						'filter' => 'url',
+					),
+					'readonly' => array(
+						'name' => tr('Read-only'),
+						'description' => tr('Only display the incoming relations instead of manipulating them.'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('No'),
+							1 => tr('Yes'),
+						),
+					),
+				),
+			),
+		);
+	}
+
 	function getFieldData(array $requestData = array())
 	{
 		$insertId = $this->getInsertId();

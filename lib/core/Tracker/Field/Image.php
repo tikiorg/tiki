@@ -16,6 +16,63 @@ class Tracker_field_Image extends Tracker_Field_File
 	private $imgMimeTypes;
 	private $imgMaxSize;
 
+	public static function getTypes()
+	{
+		return array(
+			'i' => array(
+				'name' => tr('Image'),
+				'description' => tr('Allow users to upload images on the tracker item.'),
+				'params' => array(
+					'xListSize' => array(
+						'name' => tr('List image width'),
+						'description' => tr('Display size in pixels'),
+						'filter' => 'int',
+						'default' => 30,
+					),
+					'yListSize' => array(
+						'name' => tr('List image height'),
+						'description' => tr('Display size in pixels'),
+						'filter' => 'int',
+						'default' => 30,
+					),
+					'xDetailSize' => array(
+						'name' => tr('Detail image width'),
+						'description' => tr('Display size in pixels'),
+						'filter' => 'int',
+						'default' => 300,
+					),
+					'yDefailSize' => array(
+						'name' => tr('Detail image height'),
+						'description' => tr('Display size in pixels'),
+						'filter' => 'int',
+						'default' => 300,
+					),
+					'uploadLimitScale' => array(
+						'name' => tr('Maximum image size'),
+						'description' => tr('Maximum image width or height in pixels.'),
+						'filter' => 'int',
+						'default' => '1000',
+					),
+					'shadowbox' => array(
+						'name' => tr('Shadowbox'),
+						'description' => tr('Shadowbox usage on this field'),
+						'filter' => 'alpha',
+						'options' => array(
+							'' => tr('Do not use'),
+							'individual' => tr('One box per item'),
+							'group' => tr('Use the same box for all images'),
+						),
+					),
+					'imageMissingIcon' => array(
+						'name' => tr('Missing Icon'),
+						'description' => tr('Icon to use when no images have been uplaoded.'),
+						'filter' => 'url',
+					),
+				),
+			),
+		);
+	}
+
 	function __construct($fieldInfo, $itemData, $trackerDefinition) {
 		parent::__construct($fieldInfo, $itemData, $trackerDefinition);
 		$this->imgMimeTypes = array('image/jpeg', 'image/gif', 'image/png', 'image/pjpeg', 'image/bmp');

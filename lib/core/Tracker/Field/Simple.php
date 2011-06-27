@@ -14,6 +14,72 @@
 class Tracker_Field_Simple extends Tracker_Field_Abstract
 {
 	private $type;
+
+	public static function getTypes()
+	{
+		return array(
+			'm' => array(
+				'name' => tr('Email'),
+				'description' => tr('Allows to input an email address with options of making it active.'),
+				'params' => array(
+					'link' => array(
+						'name' => tr('Link Type'),
+						'description' => tr('How the email address will be rendered.'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('Plain text'),
+							1 => tr('Encoded mailto link'),
+							2 => tr('Simple mailto link'),
+						),
+					),
+					'watchopen' => array(
+						'name' => tr('Watch Open'),
+						'description' => tr('Notify this address every time the status changes to open.'),
+						'filter' => 'alpha',
+						'options' => array(
+							'' => tr('No'),
+							'o' => tr('Yes'),
+						),
+					),
+					'watchpending' => array(
+						'name' => tr('Watch Pending'),
+						'description' => tr('Notify this address every time the status changes to pending.'),
+						'filter' => 'alpha',
+						'options' => array(
+							'' => tr('No'),
+							'p' => tr('Yes'),
+						),
+					),
+					'watchopen' => array(
+						'name' => tr('Watch Closed'),
+						'description' => tr('Notify this address every time the status changes to closed.'),
+						'filter' => 'alpha',
+						'options' => array(
+							'' => tr('No'),
+							'c' => tr('Yes'),
+						),
+					),
+				),
+			),
+			'I' => array(
+				'name' => tr('IP Selector'),
+				'description' => tr('IP address input field.'),
+				'params' => array(
+					'autoassign' => array(
+						'name' => tr('Auto-assign'),
+						'description' => tr('Automatically assign the value on creation or edit.'),
+						'filter' => 'int',
+						'default' => 0,
+						'options' => array(
+							0 => tr('None'),
+							1 => tr('Creator'),
+							2 => tr('Modifier'),
+						),
+					),
+				),
+			),
+		);
+	}
 	
 	function __construct($fieldInfo, $itemData, $trackerDefinition, $type)
 	{

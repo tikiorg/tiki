@@ -13,6 +13,44 @@
  */
 class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract
 {
+	public static function getTypes()
+	{
+		return array(
+			'q' => array(
+				'name' => tr('Auto-Increment'),
+				'description' => tr('Allows an incrementing value field, or itemId field.'),
+				'readonly' => true,
+				'params' => array(
+					'start' => array(
+						'name' => tr('Start'),
+						'description' => tr('The starting value for the field'),
+						'default' => 1,
+						'filter' => 'int',
+					),
+					'prepend' => array(
+						'name' => tr('Prepend'),
+						'description' => tr('Text that will be displayed before the field'),
+						'filter' => 'text',
+					),
+					'append' => array(
+						'name' => tr('Append'),
+						'description' => tr('Text that will be displayed after the field'),
+						'filter' => 'text',
+					),
+					'itemId' => array(
+						'name' => tr('Item ID'),
+						'description' => tr('If set to "itemId", will set this field  to match the value of the actual database itemId field value'),
+						'filter' => 'alpha',
+						'options' => array(
+							'' => '',
+							'itemId' => 'itemId',
+						),
+					),
+				),
+			),
+		);
+	}
+
 	function getFieldData(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();

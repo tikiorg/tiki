@@ -13,6 +13,62 @@
  */
 class Tracker_Field_Category extends Tracker_Field_Abstract
 {
+	public static function getTypes()
+	{
+		return array(
+			'e' => array(
+				'name' => tr('Category'),
+				'description' => tr('Allows for one or multiple categories under the specified main category to be affected to the tracker item.'),
+				'params' => array(
+					'parentId' => array(
+						'name' => tr('Parent Category'),
+						'description' => tr('Child categories will be provided as options for the field.'),
+						'filter' => 'int',
+					),
+					'inputtype' => array(
+						'name' => tr('Input Type'),
+						'description' => tr('User interface control to be used.'),
+						'default' => 'd',
+						'filter' => 'alpha',
+						'options' => array(
+							'd' => tr('Drop Down'),
+							'radio' => tr('Radio buttons'),
+							'm' => tr('Multi-selection drop-down'),
+							'checkbox' => tr('Multiple-selection check-boxes'),
+						),
+					),
+					'selectall' => array(
+						'name' => tr('Select All'),
+						'description' => tr('Includes a control to select all available options for multi-selection controls.'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('No controls'),
+							1 => tr('Include controls'),
+						),
+					),
+					'descendants' => array(
+						'name' => tr('All descendants'),
+						'description' => tr('Display all descendants instead of only first-level ones'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('First level only'),
+							1 => tr('All descendants'),
+						),
+					),
+					'help' => array(
+						'name' => tr('Help'),
+						'description' => tr('Displays the field description in a help pop-up.'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('No help'),
+							1 => tr('Pop-up'),
+						),
+					),
+				),
+			),
+		);
+	}
+
 	function getFieldData(array $requestData = array())
 	{
 		$key = 'ins_' . $this->getConfiguration('fieldId');

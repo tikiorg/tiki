@@ -1271,7 +1271,7 @@ class TrackerLib extends TikiLib
 
 		$definition = Tracker_Definition::get($trackerId);
 		$info = $this->get_tracker_item((int) $itemId);
-		$factory = new Tracker_Field_Factory($definition, $info);
+		$factory = new Tracker_Field_Factory($definition);
 
 		foreach ( $listfields as $fieldId =>$fopt ) {
 			if (empty($fopt['fieldId'])) { // to accept listfield as a simple table
@@ -1280,7 +1280,7 @@ class TrackerLib extends TikiLib
 
 			$fopt['trackerId'] = $trackerId;
 
-			$handler = $factory->getHandler($fopt);
+			$handler = $factory->getHandler($fopt, $info);
 			if ($handler) {
 				$fopt = array_merge($fopt, $handler->getFieldData());
 				$fields[] = $fopt;
@@ -2655,558 +2655,48 @@ class TrackerLib extends TikiLib
 
 	function field_types() {
 
-		$userlib = TikiLib::lib('user');
+		$types = array();
 
-		$tmp = $userlib->list_all_users();
-		$all_users = array_combine($tmp, $tmp);
+		$factory = new Tracker_Field_Factory(false);
+		foreach ($factory->getFieldTypes() as $key => $info) {
+			$types[$key] = array(
+				'label' => $info['name'],
+				'opt' => false,
+				'help' => $this->build_help_for_type($info),
+			);
+		}
 
-		$tmp = $userlib->list_all_groups();
-		$all_groups = array_combine($tmp, $tmp);
+		return $types;
+	}
 
-		unset($tmp);
+	private function build_help_for_type($info)
+	{
+		$function = tr('Function');
+		$text = "<p><strong>$function:</strong> {$info['description']}</p>";
 
-		// 'label' => represents what shows up in the field type drop-down selector
-		// 'opt' => true|false - not sure what this does
-		// 'options' => not quite sure what this does either
-		// 'help' => help text that appears in the left side of the field type selector
-		$type['t'] = array(
-			'label'=>tra('text field'),
-			'opt'=>true,
-			'options'=>array(
-				'half'=>array('type'=>'bool','label'=>tra('half column')),
-				'size'=>array('type'=>'int','label'=>tra('size')),
-				'prepend'=>array('type'=>'str','label'=>tra('prepend')),
-				'append'=>array('type'=>'str','label'=>tra('append')),
-				'max'=>array('type'=>'int','label'=>tra('max')),
-			),
-			'help'=>tra('<dl>
-				<dt>Function: Allows alphanumeric text input in a one-line field of arbitrary size.
-				<dt>Usage: <strong>samerow,size,prepend,append,max,autocomplete</strong>
-				<dt>Example: 0,80,$,,80
-				<dt>Description:
-				<dd><strong>[samerow]</strong> will display the next field or checkbox in the same row if a 1 is specified;
-				<dd><strong>[size]</strong> is the visible length of the field in characters;
-				<dd><strong>[prepend]</strong> is text that will be displayed before the field;
-				<dd><strong>[append]</strong> is text that will be displayed just after the field;
-				<dd><strong>[max]</strong> is the maximum number of characters that can be saved;
-				<dd><strong>[autocomplete]</strong> if y autocomplete while typing;
-				<dd>multiple options must appear in the order specified, separated by commas.
-				</dl>'));
-		$type['a'] = array(
-			'label'=>tra('textarea'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Allows alphanumeric text input in a multi-line field of arbitrary size.
-				<dt>Usage: <strong>toolbars,width,height,max,listmax,wordmax,distinct,wysiwyg</strong>
-				<dt>Example: 0,80,5,200,30,n
-				<dt>Description:
-				<dd><strong>[toolbars]</strong> enables toolbars if a 1 is specified;
-				<dd><strong>[width]</strong> is the width of the box, in chars;
-				<dd><strong>[height]</strong> is the number of visible lines in the box;
-				<dd><strong>[max]</strong> is the maximum number of characters that can be saved;
-				<dd><strong>[listmax]</strong> is the maximum number of characters that are displayed in list mode;
-				<dd><strong>[wordmax]</strong> will alert if word count exceeded with a positive number (1+) or display a word count with a negative number (-1);
-				<dd><strong>[distinct]</strong> is y or n. y = all values of the field must be different
-				<dd><strong>[wysiwyg]</strong>is y use a wysiwyg editor - default n
-				<dd>multiple options must appear in the order specified, separated by commas.
-				</dl>'));
-		$type['c'] = array(
-			'label'=>tra('checkbox'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Provides a checkbox field for yes/no, on/off input.
-				<dt>Usage: <strong>samerow</strong>
-				<dt>Example: 1
-				<dt>Description:
-				<dd><strong>[samerow]</strong> will display the next field on the same row if a 1 is specified.
-				</dl>'));
-		$type['n'] = array(
-			'label'=>tra('numeric field'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Provides a one-line field for numeric input only.  Prepend or append values may be alphanumeric.
-				<dt>Usage: <strong>samerow,size,prepend,append,decimals,dec_point,thousands</strong>
-				<dt>Example: 0,60,,hours
-				<dt>Description:
-				<dd><strong>[samerow]</strong> will display the next field or checkbox in the same row if a 1 is specified;
-				<dd><strong>[size]</strong> is the visible size of the field in characters;
-				<dd><strong>[prepend]</strong> is text that will be displayed before the field;
-				<dd><strong>[append]</strong> is text that will be displayed just after the field;
-				<dd><strong>[decimals]</strong> sets the number of decimal places;
-				<dd><strong>[dec_point]</strong> sets the separator for the decimal point (decimals must also be set). Use c for comma and s for space;
-				<dd><strong>[thousands]</strong> sets the thousands separator. Use c for comma and s for space. Setting only commas will result in no decimals 
-													and commas as the thousands seprator;<br/><br/>
-				<dd>multiple options must appear in the order specified, separated by commas.
-				</dl>'));
-		$type['b'] = array(
-			'label'=>tra('currency amount'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Provides a one-line field for numeric input only.  Prepend or append values may be alphanumeric.
-				<dt>Usage: <strong>samerow,size,prepend,append,locale,symbol,first</strong>
-				<dt>Example: 0,60,,per item
-				<dt>Description:
-				<dd><strong>[samerow]</strong> will display the next field or checkbox in the same row if a 1 is specified;
-				<dd><strong>[size]</strong> is the visible size of the field in characters;
-				<dd><strong>[prepend]</strong> is text that will be displayed before the field;
-				<dd><strong>[append]</strong> is text that will be displayed just after the field;
-				<dd><strong>[locale]</strong> set locale for currency formatting, for example en_US or en_US.UTF-8 or en_US.ISO-8559-1 (default=en_US);
-				<dd><strong>[currency]</strong> The 3-letter ISO 4217 currency code indicating the currency to use (default=USD);
-				<dd><strong>[symbol]</strong> i for international symbol, n for local (default=n);
-				<dd><strong>[all_symbol]</strong> set to 1 to show symbol for every item (default only shows currency symbol on first item in a list) ;
-				<br/><br/>
-				<dd>multiple options must appear in the order specified, separated by commas.
-				</dl>'));
-		$type['d'] = array(
-			'label'=>tra('drop down'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Allows users to select only from a specified set of options in a drop-down bar.
-				<dt>Usage: <strong>list_of_items</strong>
-				<dt>Example: yes,no
-				<dt>Description:
-				<dd><strong>[list_of_items]</strong> is the list of all values you want in the drop-down, separated by commas;
-				<dd>if you wish to specify a default value other than the first item, enter the value twice, consecutively, and it will appear once in the list as the default selection.
-				</dl>'));
-		$type['D'] = array(
-			'label'=>tra('drop down with other textfield'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Allows users to select from a specified set of options in a drop-down bar, or provide an alternate selection in a one-line text field.
-				<dt>Usage: <strong>list_of_items</strong>
-				<dt>Example: yes,no
-				<dt>Description:
-				<dd><strong>[list_of_items]</strong> is the list of all values you want in the drop-down, separated by commas;
-				<dd>if you wish to specify a default value other than the first item, enter the value twice, consecutively, and it will appear once in the list as the default selection.
-				</dl>'));
-		$type['R'] = array(
-			'label'=>tra('radio buttons'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Provides a multiple-choice-style set of options from which a user may only choose one.
-				<dt>Usage: <strong>list_of_items</strong>
-				<dt>Example: yes,no
-				<dt>Description:
-				<dd><strong>[list of items]</strong> is the list of all values you want in the set, separated by commas;
-				<dd>if you wish to specify a default value other than the first item, enter the value twice, consecutively, and it will appear as the one selected.
-				<dd>If first option is &lt;br&gt;, options will be separated with a carriage return
-				</dl>'));
-		$type['u'] = array(
-			'label'=>tra('user selector'),
-			'opt'=>true,
-			'itemChoicesList' => $all_users,
-			'help'=>tra('<dl>
-				<dt>Function: Allows a selection from a specified list of usernames.
-				<dt>Usage: <strong>auto-assign,email_notify</strong>
-				<dt>Example: 1,1
-				<dt>Description:
-				<dd><strong>[auto-assign]</strong> will auto-assign the creator of the item if set to 1, or will set the selection to the user who last modified the item if set to 2, or will give the choice between all the users for other values;
-				<dd><strong>[email_notify]</strong> will send an email to the assigned user when the item is saved;
-				<dd>multiple options must appear in the order specified, separated by commas.
-				</dl>'));
-		$type['g'] = array(
-			'label'=>tra('group selector'),
-			'opt'=>true,
-			'itemChoicesList' => $all_groups,
-			'help'=>tra('<dl>
-				<dt>Function: Allows a selection from a specified list of usergroups.
-				<dt>Usage: <strong>auto-assign, groupId</strong>
-				<dt>Example: 1
-				<dt>Description:
-				<dd><strong>[auto-assign]</strong> will auto-assign the field to the usergroup of the creator if set to 1, or will set the selection to the group of the user who last modified the item if set to 2, or will give the choice between all the groups for other values;
-				<dd>if the user does not have a default group set, the first group the user belongs to will be chosen, otherwise Registered group will be used.
-				<dd><strong>groupId</strong> will limit the groups including this group
-				</dl>'));
-		$type['I'] = array(
-			'label'=>tra('IP selector'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Provides a field for entering an IP address.
-				<dt>Usage: <strong>auto-assign</strong>
-				<dt>Example: 1
-				<dt>Description:
-				<dd><strong>[auto-assign]</strong> will auto-populate the field with the IP address of the user who created the item if set to 1, or will set the field to the IP of the user who last modified the item if set to 2, or will be a free IP for other values.
-				</dl>'));
-		$type['k'] = array(
-			'label'=>tra('page selector'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Allows a selection from the list of pages.
-				<dt>Usage: <strong>auto-assign,size,create,link</strong>
-				<dt>Example: 1
-				<dt>Description:
-				<dd><strong>[auto-assign]</strong> will auto-assign the creator of the item if set to 1
-				<dd><strong>[size]</strong> is the visible input length of the field in characters (<=0 not limited);
-				<dd><strong>[create]</strong> will create the page if not exits copy of the page with name value of this param.which pagename is the value of this param
-				<dd><strong>[link]</strong> will not display the link to the page if equals to n 
-				<dd>
-				</dl>'));
-		$type['y'] = array(
-			'label'=>tra('country selector'),
-			'opt'=>true,
-			'itemChoicesList' => $this->get_flags(true, true, true),
-			'help'=>tra('<dl>
-				<dt>Function: Allows a selection from a specified list of countries.
-				<dt>Usage: <strong>name_flag,sort</strong>
-				<dt>Example: 1,0
-				<dt>Description:
-				<dd><strong>[name_flag]</strong> default is 0 and will display both the country name and its flag, 1 will display only the country name, while 2 will show only the country flag;
-				<dd><strong>[sortorder]</strong> specifies the order the country list should be displayed in, where 0 is the default and sorts according to the translated name, and 1 sorts according to the english name;
-				<dd>if the country names are translated and option 1 is selected for the sort order, the countries will still appear translated, but will merely be in english order.
-				</dl>'));
-		$type['f'] = array(
-			'label'=>tra('date and time'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Provides drop-down options to accurately select a date and/or time.
-				<dt>Usage: <strong>datetime,startyear,endyear,blankdate</strong>
-				<dt>Example: d,2000,,blank
-				<dt>Description:
-				<dd><strong>[datetime]</strong> will only allow a date to be selected if set to "d", and allows a full date and time selection if set to "dt", defaulting to "dt";
-				<dd><strong>[startyear]</strong> allows you to specify a custom first year in the date range (eg. 1987), default is current year;
-				<dd><strong>[endyear]</strong> allows you to specify a custom end year in the date range (eg. 2020), default is 4 years from now;
-				<dd><strong>[blankdate]</strong> when set to "blank" will default the initial date field to an empty date, and allow selection of empty dates;
-				<dd>blankdate is overridden if the field isMandatory;
-				<dd>when set to "empty" will allow selection of empty date but default to current date
-				<dd>multiple options must appear in the order specified, separated by commas.
-				<dt>Example: "d,2000,2009,blank"
-				<dd>sets a date only field from 2000 through 2009, allowing blank dates.
-				</dl>'));
-		$type['j'] = array(
-			'label'=>tra('jscalendar'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Provides a javascript graphical date selector to select a date and/or time.
-				<dt>Usage: <strong>datetime</strong>
-				<dt>Example: dt
-				<dt>Description:
-				<dd><strong>[datetime]</strong> will only allow a date to be selected if set to "d", and allows a full date and time selection if set to "dt", defaulting to "dt".
-				</dl>'));
-		$type['i'] = array(
-			'label'=>tra('image'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Allows user to upload an image into the tracker item.
-				<dt>Usage: <strong>xListSize,yListSize,xDetailsSize,yDetailsSize,uploadLimitScale,shadowBox,imageMissingIcon</strong>
-				<dt>Example: 30,30,100,100,1000,item
-				<dt>Description:
-				<dd><strong>[xListSize]</strong> sets the pixel width of the image in the list view;
-				<dd><strong>[yListSize]</strong> sets the pixel height of the image in the list view;
-				<dd><strong>[xDetailSize]</strong> sets the pixel width of the image in the item view;
-				<dd><strong>[yDetailSize]</strong> sets the pixel height of the image in the item view;
-				<dd><strong>[uploadLimitScale]</strong> sets the maximum total size of the image, in pixels (width or height);
-				<dd><strong>[shadowbox]</strong> actives a shadowbox(if feature on) = \'item\': to use the same shadowbox for an item, =\'individual\': to use a shadowbox only for this image, other value= to set the group of images of the shadowbox ;
-				<dd><strong>[imageMissingIcon]</strong> use and icon for missing images - e.g. img/icons/na_pict.gif;
-				<dd>images are stored in img/trackers;
-				<dd>multiple options must appear in the order specified, separated by commas.
-				</dl>'));
-		$type['x'] = array(
-			'label'=>tra('action'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: ?
-				<dt>Usage: <strong>label,post,tiki-index.php,page:fieldname,highlight=test</strong>
-				<dt>Example:
-				<dt>Description:
-				<dd><strong>[label]</strong> needs explanation;
-				<dd><strong>[post]</strong> needs explanation;
-				<dd><strong>[tiki-index.php]</strong> needs explanation;
-				<dd><strong>[page:fieldname]</strong> needs explanation;
-				<dd><strong>[highlight=test]</strong> needs explanation;
-				<dd>multiple options must appear in the order specified, separated by commas.
-				</dl>'));
-		$type['h'] = array(
-			'label'=>tra('header'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: will display the field name as a html header h2;
-				<dt>Usage: <strong>level,toggle</strong>
-				<dt>Example: 2,o
-				<dt>Description:
-				<dd><strong>[level]</strong> level of the html header (default 2)
-				<dd><strong>[toggle]</strong> if "o" or "c" will toggle, "c" close by default, "o" open be default
-				</dl>'));
-		$type['S'] = array(
-			'label'=>tra('static text'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Allows insertion of a static block of text into a tracker to augment input fields. (non-editable)
-				<dt>Usage: <strong>wikiparse,max</strong>
-				<dt>Example: 1,20
-				<dt>Description:
-				<dd><strong>[wikiparse]</strong> will allow wiki syntax to be parsed if set to 1, otherwise default is 0 to only support line-breaks;
-				<dd><strong>[max]</strong> is the maximum number of characters that are displayed in list mode;
-				<dd>multiple options must appear in the order specified, separated by commas.
-				</dl>'));
-		$type['e'] = array(
-			'label'=>tra('category'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Allows one or more categories under a main category to be assigned to the tracker item.
-				<dt>Usage: <strong>parentId,inputtype,selectall,descendants,help</strong>
-				<dt>Example: 12,radio,1
-				<dt>Description:
-				<dd><strong>[parentId]</strong> is the ID of the main category, categories in the list will be children of this;
-				<dd><strong>[inputtype]</strong> is one of [d|m|radio|checkbox], where d is a drop-down list, m is a multiple-selection drop-down list, radio and checkbox are self-explanatory;
-				<dd><strong>[selectall]</strong> will provide a checkbox to automatically select all categories in the list if set to 1, default is 0;
-				<dd><strong>[descendants]</strong> All descendant categories (not just first level children) will be included if set to 1, default is 0;
-				<dd><strong>[help]</strong> will display the description in a popup in the input if set to 1, default is 0; only for checkbox or radio
-				<dd>multiple options must appear in the order specified, separated by commas.
-				</dl>'));
-		$type['r'] = array(
-			'label'=>tra('item link'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Provides a way to choose a value from another tracker (eventually with a link).
-				<dt>Usage: <strong>trackerId,fieldId,linkToItem,displayedFieldsList,status,linkpage</strong>
-				<dt>Example: 3,5,0,6|8,opc,PageName
-				<dt>Description:
-				<dd><strong>[trackerId]</strong> is the tracker ID of the fields you want to display;
-				<dd><strong>[fieldId]</strong> is the field in [trackerId] from which you can select a value among all the field values of the items of [trackerId];
-				<dd><strong>[linkToItem]</strong> if set to 0 will simply display the value, but if set to 1 will provide a link directly to the item in the other tracker;
-				<dd><strong>[displayedFieldsList]</strong> is a list of fields in [trackerId] to display instead of [fieldId], multiple fields can be separated with a |;
-				<dd><strong>[status]</strong> filter on status (o, p, c, op, oc, pc or opc);
-				<dd><strong>[linkPage]</strong> is the name of the wiki page to link to with trackerlist plugin in it; 
-				<dd>multiple options must appear in the order specified, separated by commas.
-				</dl>'));
-		$type['l'] = array(
-			'label'=>tra('items list'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Displays a list of field values from another tracker that has a relation with this tracker(eventually with a link).
-				<dt>Usage: <strong>trackerId,fieldIdThere,fieldIdHere,displayFieldIdThere,linkToItems,status</strong>
-				<dt>Example: 5,3,4,10|11
-				<dt>Description:
-				<dd><strong>[trackerId]</strong> is the tracker ID of the fields you want to display;
-				<dd><strong>[fieldIdThere]</strong> the fieldId of the item link in the other tracker
-				<dd><strong>[fieldIdHere]</strong> used only if the remote field is not an item link
-				<dd><strong>[displayFieldIdThere]</strong> the field(s) in [trackerId] you want to display, multiple fields can be separated by "|";
-				<dd><strong>[linkToItems]</strong> if set to 0 will simply display the value, but if set to 1 will provide a link directly to that values item in the other tracker;
-				<dd><strong>[status]</strong> filter on status (o, p, c, op, oc, pc or opc);
-				<dd>multiple options must appear in the order specified, separated by commas.
-				</dl>'));
-		$type['w'] = array(
-			'label'=>tra('dynamic items list'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Dynamically updates a selection list based on linked data from another tracker.
-				<dt>Usage: <strong>trackerId,filterFieldIdThere,filterFieldIdHere,listFieldIdThere,statusThere</strong>
-				<dt>Description:
-				<dd><strong>[trackerId]</strong> is the ID of the tracker to link with;
-				<dd><strong>[filterFieldIdThere]</strong> is the field you want to link with in that tracker;
-				<dd><strong>[filterFieldIdHere]</strong> is the field you want to link with in the current tracker;
-				<dd><strong>[listFieldIdThere]</strong> is the field ID you wish to pull the selection list from, based on the value selected in fiterFieldIdHere matching field(s) in filterFieldIdThere;
-				<dd><strong>[statusThere]</strong> restricts values appearing in the list to those coming from records in the other tracker that meet specified statuses of [o|p|c] or in combination (op, opc);
-				<dd>multiple options must appear in the order specified, separated by commas.
-				</dl>'));
-		$type['m'] = array(
-			'label'=>tra('email'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Allows users to enter an email address with option of making it active.
-				<dt>Usage: <strong>link,watchopen,watchpending,watchclosed</strong>
-				<dt>Example: 0,o
-				<dt>Description:
-				<dd><strong>[link]</strong> may be one of [0|1|2] and specifies how to display the email address, defaulting to 0 as plain text, 1 as an encoded hex mailto link, or 2 as a standard mailto link;
-				<dd><strong>[watchopen]</strong> if set to "o" will email the address every time the status of the item changes to open;
-				<dd><strong>[watchpending]</strong> if set to "p" will email the address every time the status of the item changes to pending;
-				<dd><strong>[watchclosed]</strong> if set to "c" will email the address every time the status of the item changes to closed;
-				<dd>multiple options must appear in the order specified, separated by commas.
-				</dl>'));
-		$type['L'] = array(
-			'label'=>tra('url'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Allows users to enter an url in a wiki syntax.
-				</dl>'));
-		$type['q'] = array(
-			'label'=>tra('auto-increment'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Allows an incrementing value field, or itemId field. (non-editable)
-				<dt>Usage: <strong>start,prepend,append,itemId</strong>
-				<dt>Example: 1,,,itemId
-				<dt>Description:
-				<dd><strong>[start]</strong> is the starting value for the field, defaults to 1;
-				<dd><strong>[prepend]</strong> is text that will be displayed before the field;
-				<dd><strong>[append]</strong> is text that will be displayed after the field;
-				<dd><strong>[itemId]</strong> if set to "itemId" will set this field to match the value of the actual database itemId field value;
-				<dd>multiple options must appear in the order specified, separated by commas.
-				</dl>'));
-		$type['U'] = array(
-			'label'=>tra('user subscription'),
-			'opt'=>false,
-			'help'=>tra('<dl>
-				<dt>Function: Allow registered users to subscribe themselves to a tracker item (think Evite.com).
-				<dt>Description:
-				<dd>Use this field as you would to have people sign up for an event. It is best if the tracker is only editable by its creator or the admin.  To set the max number of subscribers, edit the tracker item and put the number at the beginning of the field.
-				<dt>Example:
-				<dd>Old field may have "#" or "#2[0]" in it.  Making it "20#2[0]" will set the max number to 20.
-				</dl>'));
-		$type['G'] = array(
-			'label'=>tra('Location'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Use geolocation.
-				<dt>Will display a map around a point.
-				<dt>Usage: <strong>use_as_item_location</strong>
-				<dt>Example: y
-				<dt>Description:
-				<dd><strong>[use_as_item_location]</strong> if set to y, this google map field will be used as item location and object geo attributes are set when field value is changed.
-				</dl>'));
-		$type['s'] = array(
-			'label'=>tra('system'),
-			'opt'=>false,
-			'help'=>tra('<dl>
-				<dt>Function: System only.
-				<dt>Usage: None
-				<dt>Description:
-				<dd>Needs a description.
-				</dl>'));
-		$type['C'] = array(
-			'label'=>tra('computed field'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Provides a computed value based on numeric field values.
-				<dt>Usage: <strong>formula</strong>
-				<dt>Description:
-				<dd><strong>[formula]</strong> is the formula you wish to compute, using numeric values, operators "+ - * / ( )", and tracker fields identified with a leading #;
-				<dt>Example: "#3*(#4+5)"
-				<dd>adds the numeric value in item 4 by 5, and multiplies it by the numeric value in item 3.
-				</dl>'));
-		$type['p'] = array(
-			'label'=>tra('user preference'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Allows user preference changes from a tracker.
-				<dt>Usage: <strong>type</strong>
-				<dt>Example: password
-				<dt>Description:
-				<dd><strong>[type]</strong> if value is password, will allow to change the user password, if value is email, will display/allow to change the user email, other values possible: language;
-				</dl>'));
-		$type['usergroups'] = array(
-			'label'=>tra('user groups'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Allows to display the user groups.
-				</dl>'));
-		$type['A'] = array(
-			'label'=>tra('attachment'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Allows a file to be attached to the tracker item.
-				<dt>Usage: <strong>listview</strong>
-				<dt>Example: nu
-				<dt>Description:
-				<dd><strong>[listview]</strong> may be one of [n|t|s|u|m] on their own or in any combination (n, t, ns, nts), allowing you to see the attachment in the item list view as its name (n), its type (t), its size (n), the username of the uploader (u), or the mediaplayer plugin(m);
-				note that this option will cost an extra query to the database for each attachment and can severely impact performance with several attachments.
-				<dd>
-				</dl>'));
-		$type['F'] = array(
-			'label'=>tra('freetags'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Allows freetags to be shown or added for tracker item
-				<dt>Usage: <strong>size</strong>
-				<dt>Example: 80,n,n
-				<dt>Description:
-				<dd><strong>[size]</strong> is the visible length of the field in characters;
-				<dd><strong>[hidehelp]</strong> if y, do not show help text when entering tags;
-				<dd><strong>[hidesuggest]</strong> if y, do not show suggested tags when entering tags;  
-				<dd>multiple options must appear in the order specified, separated by commas.
-				</dl>'));
-		$type['N'] = array(
-			'label'=>tra('in group'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Allows to display if a item user is in a group and when he was assigned to the group (needs a user selector field)
-				<dt>Usage: <strong>groupName,date</strong>
-				<dt>Example: Members,date
-				<dt>Description:
-				<dd><strong>GroupName</strong> Group to test. <strong>date</strong> displays the date the user was assigned in the group (if known), otherwise will display yes/no.
-				<dd>
-				</dl>'));
-		$type['*'] = array(
-			'label'=>tra('stars'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Display stars
-				<dt>Usage: <strong>list options (positive increasing numbers</strong>
-				<dt>Example: 1,2,3,4
-				<dt>Description:
-				<dd>Like the rating
-				<dd>
-				</dl>'));
-		$type['P'] = array(
-			'label'=>tra('ldap'),
-			'opt'=>true,
-			'options'=>array(
-				'filter'=>array('type'=>'str','label'=>tra('LDAP Filter')),
-				'field'=>array('type'=>'str','label'=>tra('Returned field')),
-				'dsn'=>array('type'=>'str','label'=>tra('DSN name')),
-			),
-			'help'=>tra('<dl>
-				<dt>Function: Display a field value from a specific user in LDAP
-				<dt>Usage: <strong>filter,field,dsn</strong>
-				<dt>Example: (&(mail=%field_name%)(objectclass=posixaccount)),displayName, authldap
-				<dt>Description:
-				<dd><strong>[filter]</strong> LDAP Filter, without commas. %field_name% can be used, and will be replaced by the tracker field %field_name% current value.;
-				<dd><strong>[field]</strong> LDAP returned field;
-				<dd><strong>[dsn]</strong> DSN name in Tiki;
-				</dl>'));
-		$type['W'] = array(
-			'label'=>tra('webservice'),
-			'opt'=>true,
-			'options'=>array(
-				'service'=>array('type'=>'str','label'=>tra('Registred service name')),
-                                'template'=>array('type'=>'str','label'=>tra('Registred template name')),
-                                'params'=>array('type'=>'str','label'=>tra('Parameters')),
-			),
-			'help'=>tra('<dl>
-				<dt>Function: Displays the result of a webservice call
-				<dt>Usage: <strong>service,template,parameter</strong>
-				<dt>Example: list_books,book_template,order=name_desc&limit=10
-				<dt>Description:
-				<dd><strong>[service]</strong> The service name, from the Tiki webservice admin;
-				<dd><strong>[template]</strong> The template name;
-                                <dd><strong>[params]</strong> List of parameters, formated like a query. %field_name% can be used, and will be replaced by the tracker field %field_name% current value.
-				</dl>'));
-		$type['FG'] = array(
-			'label' => tra('files'),
-			'opt' => true,
-			'options' => array(
-				'galleryId' => array('type' => 'int', 'label' => tra('Gallery ID')),
-				'filter' => array('type' => 'str', 'label' => tra('Mime Type Filter')),
-				'count' => array('type' => 'int', 'label' => tra('Maximum File Count')),
-			),
-			'help' => tra('<dl>
-				<dt>Function: Attach files from the file gallery on the item</dt>
-				<dt>Usage: Example: 2,image/*,4</dt>
-				<dt>Description:</dt>
-				<dd><strong>[galleryId]</strong> Gallery ID</dd>
-				<dd><strong>[filter]</strong> Accepted mime type</dd>
-				<dd><strong>[count]</strong> Accepted amount of files</dd>
-			</dl>'),
-		);
-		$type['REL'] = array(
-			'label' => tra('relations'),
-			'opt' => true,
-			'options' => array(
-				'relation' => array('type' => 'str', 'label' => tra('Relation')),
-				'filter' => array('type' => 'str', 'label' => tra('Filters')),
-				'readonly' => array('type' => 'int', 'label' => tra('Read-only')),
-			),
-			'help' => tra('<dl>
-				<dt>Function: Record relations between the tracker item and other objects</dt>
-				<dt>Usage: Example: mysite.people.friend</dt>
-				<dt>Description:</dt>
-				<dd><strong>[relation]</strong> Unique identifier for the relation, use translation afterwards to render the label</dd>
-				<dd><strong>[filter]</strong> URL-encoded list of filters to be used for the drop list</dd>
-				<dd><strong>[readonly]</strong> 0|1, default 0</dd>
-			</dl>'),
-		);
+		if (count($info['params'])) {
+			$text .= '<dl>';
+			foreach ($info['params'] as $key => $param) {
+				if (isset($param['count'])) {
+					$text .= "<dt>{$param['name']}[{$param['count']}]</dt>";
+				} else {
+					$text .= "<dt>{$param['name']}</dt>";
+				}
 
-		return $type;
+				$text .= "<dd>{$param['description']}</dd>";
+
+				if (isset($param['options'])) {
+					$text .= "<dd><ol>";
+					foreach ($param['options'] as $k => $label) {
+						$text .= "<li><strong>{$k}</strong> = <em>$label</em></li>";
+					}
+					$text .= "</ol></dd>";
+				}
+			}
+			$text .= '</dl>';
+		}
+
+		return "<div>{$text}</div>";
 	}
 
 	function status_types() {
@@ -4093,9 +3583,9 @@ class TrackerLib extends TikiLib
 
 		$definition = Tracker_Definition::get($trackerId);
 
-		$factory = new Tracker_Field_Factory($definition, $item);
+		$factory = new Tracker_Field_Factory($definition);
 
-		return $factory->getHandler($field);
+		return $factory->getHandler($field, $item);
 	}
 
 	function get_field_value($field, $item)

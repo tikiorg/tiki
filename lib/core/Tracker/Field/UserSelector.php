@@ -10,17 +10,41 @@
  * 
  * Letter key: ~u~
  *
- *	Options:
- *		0: auto-assign =
- *			0 = general
- *			1 = creator
- *			2 = modifier
- *
- *		1: email_notify
- *			0/1
  */
 class Tracker_Field_UserSelector extends Tracker_Field_Abstract
 {
+	public static function getTypes()
+	{
+		return array(
+			'u' => array(
+				'name' => tr('User Selector'),
+				'description' => tr('Allows the selection of a user from a list.'),
+				'params' => array(
+					'autoassign' => array(
+						'name' => tr('Auto-Assign'),
+						'description' => tr('Assign the value based on the creator or modifier.'),
+						'filter' => 'int',
+						'default' => 0,
+						'options' => array(
+							0 => tr('None'),
+							1 => tr('Creator'),
+							2 => tr('Modifier'),
+						),
+					),
+					'notify' => array(
+						'name' => tr('Email Notification'),
+						'description' => tr('Send an email notification to the user every time the item is modified.'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('No'),
+							1 => tr('Yes'),
+						),
+					),
+				),
+			),
+		);
+	}
+
 	function getFieldData(array $requestData = array())
 	{
 		global $tiki_p_admin_trackers, $user;

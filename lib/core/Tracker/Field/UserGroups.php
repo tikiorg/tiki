@@ -13,6 +13,18 @@
  */
 class Tracker_Field_UserGroups extends Tracker_Field_Abstract
 {
+	public static function getTypes()
+	{
+		return array(
+			'usergroups' => array(
+				'name' => tr('User Groups'),
+				'description' => tr('Displays the list of groups for the user associated with the tracker items.'),
+				'params' => array(
+				),
+			),
+		);
+	}
+
 	function getFieldData(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();

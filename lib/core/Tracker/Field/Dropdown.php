@@ -14,6 +14,48 @@
 class Tracker_Field_Dropdown extends Tracker_Field_Abstract
 {
 	private $type;
+
+	public static function getTypes()
+	{
+		return array(
+			'd' => array(
+				'name' => tr('Drop Down'),
+				'description' => tr('Allows users to select only from a specified set of options'),
+				'params' => array(
+					'options' => array(
+						'name' => tr('Option'),
+						'description' => tr('An option'),
+						'filter' => 'text',
+						'count' => '*',
+					),
+				),
+			),
+			'D' => array(
+				'name' => tr('Drop Down with Other field'),
+				'description' => tr('Allows users to select from a specified set of options or to enter an alternate option'),
+				'params' => array(
+					'options' => array(
+						'name' => tr('Option'),
+						'description' => tr('An option'),
+						'filter' => 'text',
+						'count' => '*',
+					),
+				),
+			),
+			'R' => array(
+				'name' => tr('Radio Buttons'),
+				'description' => tr('Allows users to select only from a specified set of options'),
+				'params' => array(
+					'options' => array(
+						'name' => tr('Option'),
+						'description' => tr('An option'),
+						'filter' => 'text',
+						'count' => '*',
+					),
+				),
+			),
+		);
+	}
 	
 	function __construct($fieldInfo, $itemData, $trackerDefinition, $type = '')
 	{

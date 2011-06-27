@@ -7,6 +7,7 @@
 
 interface Tracker_Field_Interface
 {
+	public static function getTypes();
 
 	/**
 	 * return the values of a field (not necessarily the html that will be displayed) for input or output

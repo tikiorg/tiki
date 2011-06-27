@@ -13,6 +13,33 @@
  */
 class Tracker_Field_InGroup extends Tracker_Field_Abstract
 {
+	public static function getTypes()
+	{
+		return array(
+			'N' => array(
+				'name' => tr('In Group'),
+				'description' => tr('Indicates if the user associated to the item is member of a specified group.'),
+				'readonly' => true,
+				'params' => array(
+					'groupName' => array(
+						'name' => tr('Group Name'),
+						'description' => tr('Name of the group to verify'),
+						'filter' => 'groupname'
+					),
+					'type' => array(
+						'name' => tr('Display'),
+						'description' => tr('How to display the result'),
+						'filter' => 'alpha',
+						'options' => array(
+							'' => tr('Yes/No'),
+							'date' => tr('Join date'),
+						),
+					),
+				),
+			),
+		);
+	}
+
 	function getFieldData(array $requestData = array())
 	{
 		return array();

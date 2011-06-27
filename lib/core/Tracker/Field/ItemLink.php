@@ -13,6 +13,61 @@
  */
 class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 {
+	public static function getTypes()
+	{
+		return array(
+			'r' => array(
+				'name' => tr('Item Link'),
+				'description' => tr('Link to an other item, similar to a foreign key.'),
+				'params' => array(
+					'trackerId' => array(
+						'name' => tr('Tracker ID'),
+						'description' => tr('Tracker to link to'),
+						'filter' => 'int',
+					),
+					'fieldId' => array(
+						'name' => tr('Field ID'),
+						'description' => tr('Default field to display'),
+						'filter' => 'int',
+					),
+					'linkToItem' => array(
+						'name' => tr('Display'),
+						'description' => tr('How the link to the item should be rendered'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('Value'),
+							1 => tr('Link'),
+						),
+					),
+					'displayFieldsList' => array(
+						'name' => tr('Multiple Fields'),
+						'description' => tr('Display the values from multiple fields instead of a single one.'),
+						'separator' => '|',
+						'filter' => 'int',
+					),
+					'status' => array(
+						'name' => tr('Status Filter'),
+						'description' => tr('Limit the available items to a selected set'),
+						'filter' => 'alpha',
+						'options' => array(
+							'opc' => tr('all'),
+							'o' => tr('open'),
+							'p' => tr('pending'),
+							'c' => tr('closed'),
+							'op' => tr('open, pending'),
+							'pc' => tr('pending, closed'),
+						),
+					),
+					'linkPage' => array(
+						'name' => tr('Link Page'),
+						'description' => tr('Link to a wiki page instead of directly to the item'),
+						'filter' => 'pagename',
+					),
+				),
+			),
+		);
+	}
+
 	function getFieldData(array $requestData = array())
 	{
 		$data = $this->getLinkData($requestData, $this->getInsertId());

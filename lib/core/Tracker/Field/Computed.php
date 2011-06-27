@@ -13,6 +13,24 @@
  */
 class Tracker_Field_Computed extends Tracker_Field_Abstract
 {
+	public static function getTypes()
+	{
+		return array(
+			'C' => array(
+				'name' => tr('Computed Field'),
+				'description' => tr('Provides a computed value based on numeric field values.'),
+				'params' => array(
+					'formula' => array(
+						'name' => tr('Formula'),
+						'description' => tr('The formula to be computed supporting various operators (+ - * / and parenthesis), references to other field made using the field id preceeded by #.'),
+						'example' => '#3*(#4+5)',
+						'filter' => 'text',
+					),
+				),
+			),
+		);
+	}
+
 	function getFieldData(array $requestData = array())
 	{
 		global $prefs;

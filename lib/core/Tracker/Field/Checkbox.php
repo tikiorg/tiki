@@ -13,6 +13,18 @@
  */
 class Tracker_Field_Checkbox extends Tracker_Field_Abstract
 {
+	public static function getTypes()
+	{
+		return array(
+			'c' => array(
+				'name' => tr('Checkbox'),
+				'description' => tr('Provides a cehckbox field for yes/no, on/off input.'),
+				'params' => array(
+				),
+			),
+		);
+	}
+
 	function getFieldData(array $requestData = array())
 	{
 		$ins_id = $this->getInsertId();

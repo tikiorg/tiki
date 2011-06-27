@@ -13,6 +13,18 @@
  */
 class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 {
+	public static function getTypes()
+	{
+		return array(
+			'U' => array(
+				'name' => tr('User Subscription'),
+				'description' => tr('Allows registered users to subscribe themselves to a tracker item. Think evite.com. The item should ideally only be editable by the creator or administrators. Prepend the maximum amount of subscribers to the field value if such a limit is desired.'),
+				'params' => array(
+				),
+			),
+		);
+	}
+
 	function getFieldData(array $requestData = array())
 	{
 		global $user;

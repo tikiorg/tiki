@@ -512,7 +512,8 @@ function wikiplugin_tracker($data, $params)
 			}
 
 			$definition = Tracker_Definition::get($trackerId);
-			$factory = new Tracker_Field_Factory($definition, isset($item_info) ? $item_info : array());
+			$item_info = isset($item_info) ? $item_info : array();
+			$factory = new Tracker_Field_Factory($definition);
 			$flds = array('data' => $definition->getFields($outf));
 			$bad = array();
 			$embeddedId = false;
@@ -555,7 +556,7 @@ function wikiplugin_tracker($data, $params)
 					}
 				}
 				foreach ($flds['data'] as $k => $field) {
-					$handler = $factory->getHandler($field);
+					$handler = $factory->getHandler($field, $item_info);
 
 					if ($handler) {
 						$ins_fields['data'][$k] = array_merge($field, $handler->getFieldData($_REQUEST));

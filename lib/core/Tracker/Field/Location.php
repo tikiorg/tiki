@@ -13,6 +13,27 @@
  */
 class Tracker_Field_Location extends Tracker_Field_Abstract
 {
+	public static function getTypes()
+	{
+		return array(
+			'G' => array(
+				'name' => tr('Location'),
+				'description' => tr('Allows to select a geolocation for the item and displays it on a map.'),
+				'params' => array(
+					'use_as_item_location' => array(
+						'name' => tr('Use as item location'),
+						'description' => tr('When enabled, records the field\'s value as the item\'s geolocation to be displayed on locator maps.'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('No'),
+							1 => tr('Yes'),
+						),
+					),
+				),
+			),
+		);
+	}
+
 	function getFieldData(array $requestData = array())
 	{
 		if (isset($requestData[$this->getInsertId()])) {
