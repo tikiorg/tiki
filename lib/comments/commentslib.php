@@ -205,11 +205,13 @@ class Comments extends TikiLib
 	}
 
 	function get_thread_attachment($attId) {
-		$forumId = $this->table('tiki_forum_attachments')->fetchOne('forumId', array('attId' => $attId));
-		$forum_info = $this->get_forum($forumId);
+		$attachments = $this->table('tiki_forum_attachments');
+		$res = $attachments->fetchAll($attachments->all(), array('attId' => $attId));
+		if (empty($res[0]))
+			return $res;
 
-		$res['forum_info'] = $forum_info;
-		return $res;
+		$res[0]['forum_info'] = $this->get_forum($res['forumId']);
+		return $res[0];
 	}
 
 	function remove_thread_attachment($attId) {
