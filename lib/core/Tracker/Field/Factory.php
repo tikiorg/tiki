@@ -22,6 +22,16 @@ class Tracker_Field_Factory
 
 	private function buildTypeMap($paths)
 	{
+		global $prefs;
+		$cachelib = TikiLib::lib('cache');
+		$cacheKey = 'fieldtypes.' . $prefs['language'];
+
+		if ($data = $cachelib->getSerialized($cacheKey)) {
+			$this->typeMap = $data['typeMap'];
+			$this->infoMap = $data['infoMap'];
+			return;
+		}
+
 		foreach ($paths as $path => $prefix) {
 			foreach (glob("$path/*.php") as $file) {
 				$class = $prefix . substr($file, strlen($path) + 1, -4);
@@ -37,6 +47,11 @@ class Tracker_Field_Factory
 				}
 			}
 		}
+
+		$cachelib->cacheItem($cacheKey, serialize(array(
+			'typeMap' => $this->typeMap,
+			'infoMap' => $this->infoMap,
+		)));
 	}
 
 	public static function build($type, $trackerDefinition, $fieldInfo, $itemData)
