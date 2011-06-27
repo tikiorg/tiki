@@ -56,6 +56,18 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract
 			),
 		);
 	}
+
+	public static function build($type, $trackerDefinition, $fieldInfo, $itemData)
+	{
+		switch ($type) {
+			case 'd':
+				return new Tracker_Field_Dropdown($field_info, $itemData, $trackerDefinition);
+			case 'D':
+				return new Tracker_Field_Dropdown($field_info, $itemData, $trackerDefinition, 'other');
+			case 'R':
+				return new Tracker_Field_Dropdown($field_info, $itemData, $trackerDefinition, 'radio');
+		}
+	}
 	
 	function __construct($fieldInfo, $itemData, $trackerDefinition, $type = '')
 	{

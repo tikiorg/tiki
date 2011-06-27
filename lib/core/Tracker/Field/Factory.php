@@ -39,6 +39,11 @@ class Tracker_Field_Factory
 		}
 	}
 
+	public static function build($type, $trackerDefinition, $fieldInfo, $itemData)
+	{
+		return new self($fieldInfo, $itemData, $trackerDefinition);
+	}
+
 	function getFieldTypes()
 	{
 		return $this->infoMap;
@@ -46,85 +51,12 @@ class Tracker_Field_Factory
 
 	function getHandler($field_info, $itemData = array())
 	{
-		switch ($field_info['type']) {
-			case 'A':
-				return new Tracker_Field_File($field_info, $itemData, $this->trackerDefinition);
-			case 'a':
-				return new Tracker_Field_TextArea($field_info, $itemData, $this->trackerDefinition);
-			case 'C':
-				return new Tracker_Field_Computed($field_info, $itemData, $this->trackerDefinition);
-			case 'c':
-				return new Tracker_Field_Checkbox($field_info, $itemData, $this->trackerDefinition);
-			case 'd':
-				return new Tracker_Field_Dropdown($field_info, $itemData, $this->trackerDefinition);
-			case 'D':
-				return new Tracker_Field_Dropdown($field_info, $itemData, $this->trackerDefinition, 'other');
-			case 'R':
-				return new Tracker_Field_Dropdown($field_info, $itemData, $this->trackerDefinition, 'radio');
-			case 'e':
-				return new Tracker_Field_Category($field_info, $itemData, $this->trackerDefinition);
-			case 'FG':
-				return new Tracker_Field_Files($field_info, $itemData, $this->trackerDefinition);
-			case 'F':
-				return new Tracker_Field_Freetags($field_info, $itemData, $this->trackerDefinition);
-			case 'f':
-				return new Tracker_Field_DateTime($field_info, $itemData, $this->trackerDefinition);
-			case 'G':
-				return new Tracker_Field_Location($field_info, $itemData, $this->trackerDefinition);
-			case 'g':
-				return new Tracker_Field_GroupSelector($field_info, $itemData, $this->trackerDefinition);
-			case 'h':
-				return new Tracker_Field_Header($field_info, $itemData, $this->trackerDefinition);
-			case 'i':
-				return new Tracker_Field_Image($field_info, $itemData, $this->trackerDefinition);
-			case 'j':
-				return new Tracker_Field_JsCalendar($field_info, $itemData, $this->trackerDefinition);
-			case 'I':
-				return new Tracker_Field_Simple($field_info, $itemData, $this->trackerDefinition, 'ip');
-			case 'L':
-				return new Tracker_Field_Url($field_info, $itemData, $this->trackerDefinition);
-			case 'k':
-				return new Tracker_Field_PageSelector($field_info, $itemData, $this->trackerDefinition);
-			case 'l':
-				return new Tracker_Field_ItemsList($field_info, $itemData, $this->trackerDefinition);
-			case 'm':
-				return new Tracker_Field_Simple($field_info, $itemData, $this->trackerDefinition, 'email');
-			case 'N':
-				return new Tracker_Field_InGroup($field_info, $itemData, $this->trackerDefinition);
-			case 'n':
-			case 'b':
-				return new Tracker_Field_Numeric($field_info, $itemData, $this->trackerDefinition);
-			case 'P':
-				return new Tracker_Field_Ldap($field_info, $itemData, $this->trackerDefinition);
-			case 'p':
-				return new Tracker_Field_UserPreference($field_info, $itemData, $this->trackerDefinition);			
-			case 'q':
-				return new Tracker_Field_AutoIncrement($field_info, $itemData, $this->trackerDefinition);
-			case 'r':
-				return new Tracker_Field_ItemLink($field_info, $itemData, $this->trackerDefinition);
-			case 's':
-			case '*':
-				return new Tracker_Field_Rating($field_info, $itemData, $this->trackerDefinition);
-			case 'S':
-				return new Tracker_Field_StaticText($field_info, $itemData, $this->trackerDefinition);
-			case 't':
-				return new Tracker_Field_Text($field_info, $itemData, $this->trackerDefinition);
-			case 'u':
-				return new Tracker_Field_UserSelector($field_info, $itemData, $this->trackerDefinition);
-			case 'usergroups':
-				return new Tracker_Field_UserGroups($field_info, $itemData, $this->trackerDefinition);
-			case 'x':
-				return new Tracker_Field_Action($field_info, $itemData, $this->trackerDefinition);
-			case 'y':
-				return new Tracker_Field_CountrySelector($field_info, $itemData, $this->trackerDefinition);
-			case 'U':
-				return new Tracker_Field_UserSubscription($field_info, $itemData, $this->trackerDefinition);
-			case 'W':
-				return new Tracker_Field_WebService($field_info, $itemData, $this->trackerDefinition);
-			case 'w':
-				return new Tracker_Field_DynamicList($field_info, $itemData, $this->trackerDefinition);
-			case 'REL':
-				return new Tracker_Field_Relation($field_info, $itemData, $this->trackerDefinition);
+		$type = $field_info['type'];
+
+		if (isset($this->typeMap[$type])) {
+			$class = $this->typeMap[$type];
+
+			return $class::build($type, $this->trackerDefinition, $field_info, $itemData);
 		}
 	}
 }

@@ -73,6 +73,11 @@ class Tracker_field_Image extends Tracker_Field_File
 		);
 	}
 
+	public static function build($type, $trackerDefinition, $fieldInfo, $itemData)
+	{
+		return new self($fieldInfo, $itemData, $trackerDefinition);
+	}
+
 	function __construct($fieldInfo, $itemData, $trackerDefinition) {
 		parent::__construct($fieldInfo, $itemData, $trackerDefinition);
 		$this->imgMimeTypes = array('image/jpeg', 'image/gif', 'image/png', 'image/pjpeg', 'image/bmp');

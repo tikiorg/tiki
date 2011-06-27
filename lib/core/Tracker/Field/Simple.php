@@ -81,6 +81,16 @@ class Tracker_Field_Simple extends Tracker_Field_Abstract
 		);
 	}
 	
+	public static function build($type, $trackerDefinition, $fieldInfo, $itemData)
+	{
+		switch ($type) {
+			case 'm':
+				return new Tracker_Field_Dropdown($field_info, $itemData, $trackerDefinition, 'email');
+			case 'I':
+				return new Tracker_Field_Dropdown($field_info, $itemData, $trackerDefinition, 'ip');
+		}
+	}
+	
 	function __construct($fieldInfo, $itemData, $trackerDefinition, $type)
 	{
 		$this->type = $type;

@@ -9,6 +9,8 @@ interface Tracker_Field_Interface
 {
 	public static function getTypes();
 
+	public static function build($type, $trackerDefinition, $fieldInfo, $itemData);
+
 	/**
 	 * return the values of a field (not necessarily the html that will be displayed) for input or output
 	 * The values come from either the requestData if defined, the database if defined or the default
