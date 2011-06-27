@@ -13,6 +13,7 @@ function wikiplugin_center_info() {
 		'prefs' => array('wikiplugin_center'),
 		'body' => tra('text'),
 		'icon' => 'pics/icons/text_align_center.png',
+		'filter' => 'wikicontent',
 		'params' => array(
 		),
 	);
