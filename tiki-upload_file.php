@@ -63,6 +63,11 @@ if ( ! empty( $_REQUEST['fileId'] ) ) {
 
 if (isset($_REQUEST['galleryId'][0])) {
 	$gal_info = $filegallib->get_file_gallery((int)$_REQUEST['galleryId'][0]);
+	if (empty($gal_info)) {
+		$smarty->assign('msg', tra('Incorrect file gallery'));
+		$smarty->display('error.tpl');
+		die;
+	}
 	$tikilib->get_perm_object($_REQUEST['galleryId'][0], 'file gallery', $gal_info, true);
 	$smarty->assign_by_ref('gal_info', $gal_info);
 }
