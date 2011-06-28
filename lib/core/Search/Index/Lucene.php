@@ -140,7 +140,7 @@ class Search_Index_Lucene implements Search_Index_Interface
 		);
 		foreach ($data as $key => $value) {
 			$luceneType = $typeMap[get_class($value)];
-			$field = Zend_Search_Lucene_Field::$luceneType($key, $value->getValue());
+			$field = Zend_Search_Lucene_Field::$luceneType($key, $value->getValue(), 'UTF-8');
 			$document->addField($field);
 		}
 
