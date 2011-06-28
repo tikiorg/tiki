@@ -148,8 +148,6 @@ function wikiplugin_code($data, $params) {
 			$out = trim($out);
 		}
 
-		if ( ! $escape_html ) $out = TikiLib::htmldecode($out);
-
 	} elseif ( isset($colors) && ( $colors == 'highlights' || $colors == 'php' ) ) {
 
 		$out = highlight_string($code, true);
@@ -165,8 +163,6 @@ function wikiplugin_code($data, $params) {
 		$out = preg_replace("/^\s*(<[^>]+>)\n/", '\\1', $out);
 		$out = trim($out);
 
-		if ( ! $escape_html ) $out = TikiLib::htmldecode($out);
-
 	} else {
 
 		$out = trim($code);
@@ -181,9 +177,9 @@ function wikiplugin_code($data, $params) {
 		} else {
 			$out = $code;
 		}
-
-		if ( $escape_html ) $out = htmlentities($out,ENT_COMPAT,"utf-8");
 	}
+
+	if ( ! $escape_html ) $out = TikiLib::htmldecode($out);
 
 	if ( isset($wrap) && $wrap == 1 ) {
 		// Force wrapping in <pre> tag through a CSS hack
