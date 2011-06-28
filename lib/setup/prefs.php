@@ -183,7 +183,7 @@ function get_default_prefs() {
 		'wikiapproval_combine_freetags' => 'n',
 		'wiki_edit_section' => 'y',
 		'wiki_edit_section_level' => '0',
-		'wiki_edit_icons_toggle' => 'y',
+		'wiki_edit_icons_toggle' => 'n',
 		'wiki_edit_plugin' => 'y',
 		'wiki_validate_plugin' => 'y',
 		'wiki_edit_minor' => 'n',
