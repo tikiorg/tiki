@@ -2220,10 +2220,6 @@ class TrackerLib extends TikiLib
 	function replace_tracker($trackerId, $name, $description, $options, $descriptionIsParsed) {
 		$trackers = $this->trackers();
 
-		if ($trackerId === false && !empty($name)) {	// called from profiles - update not replace
-			$trackerId = $trackers->fetchOne($trackers->max('trackerId'), array('name' => $name));
-		}
-
 		$data = array(
 			'name' => $name,
 			'description' => $description,
@@ -2312,10 +2308,6 @@ class TrackerLib extends TikiLib
 		}
 
 		$fields = $this->fields();
-
-		if ($fieldId === false && $trackerId && !empty($name)) {	// called from profiles - update not replace
-			$fieldId = $this->get_field_id($trackerId, $name);
-		}
 
 		$data = array(
 			'name' => $name,

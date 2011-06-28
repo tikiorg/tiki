@@ -539,12 +539,10 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 			$options[$key] = $value;
 		}
 
-		global $trklib;
-		if( ! $trklib )
-			require_once 'lib/trackers/trackerlib.php';
+		$trklib = TikiLib::lib('trk');
 		
-		// using false as trackerId stops multiple trackers of same name being created
-		return $trklib->replace_tracker( false, $name, $description, $options, 'y' );
+		$trackerId = $trklib->get_tracker_by_name($name);
+		return $trklib->replace_tracker( $trackerId, $name, $description, $options, 'y' );
 	} // }}}
 
 	function _export($trackerId) // {{{
@@ -727,13 +725,13 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 
 		$data = array_merge( $this->getDefaultValues(), $data );
 
-		global $trklib;
-		if( ! $trklib )
-			require_once 'lib/trackers/trackerlib.php';
+		$trklib = TikiLib::lib('trk');
+
+		$fieldId = $trklib->get_field_id($data['tracker'], $data['name']);
 
 		return $trklib->replace_tracker_field(
 			$data['tracker'],
-			false,
+			$fieldId,
 			$data['name'],
 			$data['type'],
 			$data['link'],
