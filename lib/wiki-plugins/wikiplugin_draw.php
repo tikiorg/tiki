@@ -20,7 +20,7 @@ function wikiplugin_draw_info() {
 				'filter' => 'digits',
 				'accepted' => ' ID number',
 				'default' => '',
-				'since' => '8.0'
+				'since' => '7.1'
 			),
 			'width' => array(
 				'required' => false,
@@ -29,7 +29,7 @@ function wikiplugin_draw_info() {
 				'filter' => 'striptags',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
 				'default' => 'Image width',
-				'since' => '8.0'
+				'since' => '7.1'
 			),
 			'height' => array(
 				'required' => false,
@@ -38,14 +38,16 @@ function wikiplugin_draw_info() {
 				'filter' => 'striptags',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
 				'default' => 'Image height',
-				'since' => '8.0'
+				'since' => '7.1'
 			),
 		),
 	);
 }
 
 function wikiplugin_draw($data, $params) {
-	global $dbTiki, $tiki_p_edit, $tiki_p_admin, $prefs, $user, $page, $tikilib, $smarty;
+	global $dbTiki, $tiki_p_edit, $tiki_p_admin, $prefs, $user, $page, $tikilib, $smarty, $headerlib;
+	global $filegallib; include_once ('lib/filegals/filegallib.php');
+	
 	extract ($params,EXTR_SKIP);
 	
 	static $index = 0;
@@ -56,11 +58,23 @@ function wikiplugin_draw($data, $params) {
 		$page = htmlentities($page);
 		$content = htmlentities($data);
 		$formId = "form$index";
+		$gals=$filegallib->list_file_galleries(0,-1,'name_desc',$user);
+		
+		$galHtml = "";
+		foreach($gals['data'] as $gal) {
+			if ($gal['name'] != "Wiki Attachments" && $gal['name'] != "Users File Galleries")
+				$galHtml .= "<option value='".$gal['id']."'>".$gal['name']."</option>";
+		}
+		
 		return <<<EOF
 		~np~
-		<form method="post" action="tiki-edit_draw.php?galleryId=1">
+		<form method="post" action="tiki-edit_draw.php">
 			<p>
-				<input type="submit" name="label" value="$label"/>
+				<input type="submit" name="label" value="$label" class="newSvgButton" />
+				<select name="galleryId">
+					<option>Select Gallery For Image To Be In</option>
+					$galHtml
+				</select>
 				<input type="hidden" name="index" value="$index"/>
 				<input type="hidden" name="page" value="$page"/>
 			</p>
