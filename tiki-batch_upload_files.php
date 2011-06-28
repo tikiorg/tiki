@@ -14,7 +14,7 @@ $access->check_feature(array('feature_file_galleries', 'feature_file_galleries_b
 $access->check_permission('tiki_p_batch_upload_file_dir');
 
 // check directory path
-if (!isset($prefs['fgal_batch_dir']) or !is_dir($prefs['fgal_batch_dir'])) {
+if (!isset($prefs['fgal_batch_dir']) or !is_dir($prefs['fgal_batch_dir']) && $_REQUEST['batch_upload'] != 'svg') {
 	$msg = tra("Incorrect directory chosen for batch upload of files.") . "<br />";
 	if ($tiki_p_admin == 'y') {
 		$msg.= tra("Please setup that dir on ") . '<a href="tiki-admin.php?page=fgal">' . tra('File Galleries Admin Panel') . '</a>.';
@@ -198,7 +198,23 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 			}
 		}
 	}
+} elseif (isset($_REQUEST["batch_upload"]) && $_REQUEST["batch_upload"] == 'svg') {
+	$tmpGalId = (int)$_REQUEST["galleryId"];
+	$file = $_REQUEST['name'].'.svg';
+	if (isset($_REQUEST["subToDesc"])) {
+		// get last subdir 'last' from 'some/path/last'
+		$tmpDesc = preg_replace('/.*([^\/]*)\/([^\/]+)$/U', '$1', $file);
+	} else {
+		$tmpDesc = '';
+	}
+	include_once ('lib/mime/mimetypes.php');
+	$type = $mimetypes["svg"];
+	
+	$fileId = $filegallib->insert_file($tmpGalId, $_REQUEST['name'], $tmpDesc, $file, $_REQUEST['data'], strlen($_REQUEST['data']), $type, $user, date());
+	echo $fileId;
+	die;
 }
+
 $a_file = array();
 $a_path = array();
 buildFileList();
