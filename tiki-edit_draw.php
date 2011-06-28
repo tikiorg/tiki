@@ -16,25 +16,42 @@ include_once ('tiki-section_options.php');
 ask_ticket('draw');
 
 //Obtain fileId, DO NOT LET ANYTHING OTHER THAN NUMBERS BY (for injection free code)
-if (
-		isset($_REQUEST['fileId']) && 
-		is_numeric($_REQUEST['fileId']) &&
-		isset($_REQUEST['galleryId']) && 
-		is_numeric($_REQUEST['galleryId'])
-	) {
+if (is_numeric($_REQUEST['fileId']) == false) $_REQUEST['fileId'] = 0; 
+if (is_numeric($_REQUEST['galleryId']) == false) die;
 	
-	$fileId = $_REQUEST['fileId'];
-	$galleryId = $_REQUEST['galleryId'];
-	
-	$smarty->assign( "fileId", $fileId );
-	$smarty->assign( "galleryId", $galleryId );
-	
-} else {
-	die;
-}
+$fileId = $_REQUEST['fileId'];
+$galleryId = $_REQUEST['galleryId'];
+
+$label = $_REQUEST['label'];
+$index = $_REQUEST['index'];
+$page = $_REQUEST['page'];
+
+$smarty->assign( "page", $page );
+$smarty->assign( "isFromPage", isset($page) );
+
+$smarty->assign( "fileId", $fileId );
+$smarty->assign( "galleryId", $galleryId );
 
 $headerlib->add_jsfile("lib/svg-edit/embedapi.js");
+
+if (
+	isset($_REQUEST['label']) && 
+	isset($_REQUEST['index']) &&
+	isset($_REQUEST['page'])
+) {
+	$headerlib->add_jq_onready("	
+		window.wikiTracking = {
+			label: '$label',
+			index: '$index',
+			page: '$page',
+			type: 'draw',
+			content: ''
+		};
+	");
+}
+
 $headerlib->add_jq_onready("
+	window.svgFileId = $fileId;
 	var win = $(window);
 	win
 		.resize(function() {
@@ -45,22 +62,46 @@ $headerlib->add_jq_onready("
 		.resize();
 	
 	$('body').css('overflow', 'hidden');
-
+	
 	window.svgCanvas = null;
 	
-	window.handleSvgData = function(data, error) {
+	window.handleSvgDataUpdate = function(data, error) {
 		if (error) {
 			alert('error ' + error);
 		} else {
 			$.post('tiki-list_file_gallery.php', {
-				fileId: $fileId,
+				fileId: window.svgFileId,
 				galleryId: $galleryId,
 				data: data,
 				edit: true,
-				file: $fileId,
+				file: window.svgFileId,
 				edit_mode: 'y'
 			}, function(o) {
 				alert('".tr("Saved!")."');
+			});
+		}			
+	}
+
+	window.handleSvgDataNew = function(data, error) {
+		if (error) {
+			alert('error ' + error);
+		} else {
+			$.post('tiki-batch_upload_files.php', {
+				batch_upload: 'svg',
+				galleryId: $galleryId,
+				name: 'New Svg Image',
+				data: data
+			}, function(id) {
+				alert('".tr("Saved file id ' + id + '!")."');
+				window.svgFileId = id;
+				
+				if (window.wikiTracking) {
+					window.wikiTracking['params[id]'] = id;
+					
+					$.post('tiki-wikiplugin_edit.php', window.wikiTracking, function() {
+						window.wikiTracking = null;
+					});
+				}
 			});
 		}			
 	}
@@ -70,7 +111,7 @@ $headerlib->add_jq_onready("
 	};
 	
 	window.saveSvg = function() {
-		window.svgCanvas.getSvgString()(window.handleSvgData);
+		window.svgCanvas.getSvgString()(window.svgFileId ? window.handleSvgDataUpdate : window.handleSvgDataNew);
 	};
 	
 	$('#svgedit').load(function() {
@@ -87,9 +128,11 @@ $headerlib->add_jq_onready("
 		
 		$('#main_button', doc).css('display', 'none');
 		
-		$('<div />').load('tiki-download_file.php?fileId=$fileId&r=' + Math.floor(Math.random() * 9999999999), function(o) {
-			window.loadSvg(o);
-		});
+		if (window.svgFileId) {
+			$('<div />').load('tiki-download_file.php?fileId=$fileId&r=' + Math.floor(Math.random() * 9999999999), function(o) {
+				window.loadSvg(o);
+			});
+		}
 	});
 ");
 // Display the template
