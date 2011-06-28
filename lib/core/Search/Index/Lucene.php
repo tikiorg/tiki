@@ -62,7 +62,6 @@ class Search_Index_Lucene implements Search_Index_Interface
 	function find(Search_Expr_Interface $query, Search_Query_Order $sortOrder, $resultStart, $resultCount)
 	{
 		$query = $this->buildQuery($query);
-		$query = Zend_Search_Lucene_Search_QueryParser::parse($query, 'UTF-8');
 
 		$hits = $this->lucene->find($query, $this->getSortField($sortOrder), $this->getSortType($sortOrder), $this->getSortOrder($sortOrder));
 		$result = array();
@@ -150,7 +149,8 @@ class Search_Index_Lucene implements Search_Index_Interface
 
 	private function buildQuery($expr)
 	{
-		return (string) $expr->walk(array($this, 'walkCallback'));
+		$query = (string) $expr->walk(array($this, 'walkCallback'));
+		return Zend_Search_Lucene_Search_QueryParser::parse($query, 'UTF-8');
 	}
 
 	function walkCallback($node, $childNodes)
@@ -242,7 +242,7 @@ class Search_Index_Lucene_HighlightHelper implements Zend_Filter_Interface
 
 	function __construct($query)
 	{
-		$this->query = Zend_Search_Lucene_Search_QueryParser::parse($query);
+		$this->query = $query;
 	}
 
 	function filter($content)
