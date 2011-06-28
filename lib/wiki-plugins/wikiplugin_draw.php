@@ -51,29 +51,27 @@ function wikiplugin_draw($data, $params) {
 	static $index = 0;
 	++$index;
 	
-	if (!isset($id) && !isset($url)) {
-		if( $tiki_p_edit != 'y' ) {
-			return ("<b>missing id parameter for plugin</b><br />");
-		} else {
-			$intro = tra('Incomplete call to plugin: No target svg image.');
-			$label = tra('Draw New SVG Image');
-			$page = htmlentities($page);
-			$content = htmlentities($data);
-			$formId = "form$index";
-			return <<<EOF
-			~np~
-			<form method="post" action="tiki-edit_draw.php?galleryId=1">
-				<p>$intro</p>
-				<p>
-					<input type="submit" name="label" value="$label"/>
-					<input type="hidden" name="index" value="$index"/>
-					<input type="hidden" name="page" value="$page"/>
-				</p>
-			</form>
-			~/np~
+	if (!isset($id)) {
+		$label = tra('Draw New SVG Image');
+		$page = htmlentities($page);
+		$content = htmlentities($data);
+		$formId = "form$index";
+		return <<<EOF
+		~np~
+		<form method="post" action="tiki-edit_draw.php?galleryId=1">
+			<p>
+				<input type="submit" name="label" value="$label"/>
+				<input type="hidden" name="index" value="$index"/>
+				<input type="hidden" name="page" value="$page"/>
+			</p>
+		</form>
+		~/np~
 EOF;
-		}
 	}
 	
-	return '~np~' . "<img src='tiki-download_file.php?fileId=$id' />" . '~/np~';
+	$label = tra('Edit SVG Image');
+	return '~np~' . "<img src='tiki-download_file.php?fileId=$id' />
+		<a href='tiki-edit_draw.php?galleryId=1&fileId=$id'>
+			<img src='pics/icons/page_edit.png' alt='Edit SVG Image' width='16' height='16' title='Edit SVG Image' class='icon' />
+		</a>" . '~/np~';
 }
