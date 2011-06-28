@@ -5585,8 +5585,10 @@ if( \$('#$id') ) {
 		}
 
 		// Handle double square brackets. to display [foo] use [[foo] -rlpowell. Improved by sylvieg to avoid replacing them in [[code]] cases.
-		$data = preg_replace( "/\[\[([^\]]*)\](?!\])/", "[$1]", $data );
-		$data = preg_replace( "/\[\[([^\]]*)$/", "[$1", $data );
+		if (empty($options['process_double_brackets']) || $options['process_double_brackets'] != 'n') {
+			$data = preg_replace( "/\[\[([^\]]*)\](?!\])/", "[$1]", $data );
+			$data = preg_replace( "/\[\[([^\]]*)$/", "[$1", $data );
+		}
 
 		return $data;
 	}
