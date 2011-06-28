@@ -162,11 +162,11 @@ class TikiImporter_Wiki extends TikiImporter
                 if ($first) {
                     $tikilib->create_page($page['name'], 0, $rev['data'], $rev['lastModif'],
 						$rev['comment'], $rev['user'], $rev['ip'], '', '',
-						isset($rev['is_html']) ? $rev['is_html'] : false);
+						isset($rev['is_html']) ? $rev['is_html'] : true);
                 } else {
                     $tikilib->cache_page_info = null;
                     $tikilib->update_page($page['name'], $rev['data'], $rev['comment'], $rev['user'],
-                        $rev['ip'], '', $rev['minor'], '', false, null, $rev['lastModif']);
+                        $rev['ip'], '', $rev['minor'], '', isset($rev['is_html']) ? $rev['is_html'] : true, null, $rev['lastModif']);
                 }
                 $first = false;
             }

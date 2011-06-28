@@ -5379,7 +5379,7 @@ if( \$('#$id') ) {
 		// Converts &lt;x&gt; (<x> tag using HTML entities) into the tag <x>. This tag comes from the input sanitizer (XSS filter).
 		// This is not HTML valid and avoids using <x> in a wiki text,
 		//   but hide '<x>' text inside some words like 'style' that are considered as dangerous by the sanitizer.
-		$data = str_replace( array( '&lt;x&gt;', '~np~', '~/np~' ), array( '<x>', ' ~np~', '~/np~ ' ), $data );
+		$data = str_replace( array( '&lt;x&gt;', '~np~', '~/np~' ), array( '<x>', '~np~', '~/np~' ), $data );
 
 		// Fix false positive in wiki syntax
 		//   It can't be done in the sanitizer, that can't know if the input will be wiki parsed or not
@@ -5690,8 +5690,10 @@ if( \$('#$id') ) {
 		}
 
 		// Handle double square brackets. to display [foo] use [[foo] -rlpowell. Improved by sylvieg to avoid replacing them in [[code]] cases.
-		$data = preg_replace( "/\[\[([^\]]*)\](?!\])/", "[$1]", $data );
-		$data = preg_replace( "/\[\[([^\]]*)$/", "[$1", $data );
+		if (empty($options['process_double_brackets']) || $options['process_double_brackets'] != 'n') {
+			$data = preg_replace( "/\[\[([^\]]*)\](?!\])/", "[$1]", $data );
+			$data = preg_replace( "/\[\[([^\]]*)$/", "[$1", $data );
+		}
 
 		return $data;
 	}

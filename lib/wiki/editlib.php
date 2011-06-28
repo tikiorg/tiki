@@ -215,7 +215,8 @@ class EditLib
 		
 		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true,
 														'ck_editor' => true, 'is_html' => ($prefs['wysiwyg_htmltowiki'] === 'n' && !$fromWiki),
-														'process_wiki_paragraphs' => ($prefs['wysiwyg_htmltowiki'] === 'y' || $fromWiki)));
+														'process_wiki_paragraphs' => ($prefs['wysiwyg_htmltowiki'] === 'y' || $fromWiki),
+														'process_double_brackets' => 'n'));
 		
 		if ($prefs['wysiwyg_htmltowiki'] === 'n' && $fromWiki) {
 			$parsed = preg_replace('/^\s*<p>&nbsp;[\s]*<\/p>\s*/iu','', $parsed);						// remove added empty <p>
