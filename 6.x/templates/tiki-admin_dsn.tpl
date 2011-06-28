@@ -1,10 +1,10 @@
-{title help="Admin+DSN"}{tr}Admin dsn{/tr}{/title}
+{title help="Admin+DSN"}{tr}Admin DSN{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 	{tr}Use Admin DSN to define the database to be used by the SQL plugin.{/tr}
 {/remarksbox}
 
-<h2>{tr}Create/edit dsn{/tr}</h2>
+<h2>{tr}Create/edit DSN{/tr}</h2>
 <form action="tiki-admin_dsn.php" method="post">
 	<input type="hidden" name="dsnId" value="{$dsnId|escape}" />
 	<table class="formcolor">
