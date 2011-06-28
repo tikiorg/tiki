@@ -242,7 +242,7 @@ class Search_Index_Lucene_HighlightHelper implements Zend_Filter_Interface
 
 	function __construct($query)
 	{
-		$this->query = Zend_Search_Lucene_Search_QueryParser::parse($query, 'UTF-8');
+		$this->query = $query;
 	}
 
 	function filter($content)
