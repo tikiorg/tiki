@@ -1563,4 +1563,17 @@ label.error {
 	min-height: 100px;
 }
 
+.ui-dialog .simple label {
+	clear: both;
+}
+
+.ui-dialog .simple textarea,
+.ui-dialog .simple input[type="text"],
+.ui-dialog .simple select
+{
+	display: block;
+	clear: left;
+	width: 100%;
+}
+
 /* End of file */

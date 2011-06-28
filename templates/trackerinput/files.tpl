@@ -87,8 +87,7 @@ var handleFiles = function (files) {
 						});
 					},
 					error: function (jqxhr) {
-						var data = $.parseJSON(jqxhr.responseText);
-						$fileinput.showError(data.message);
+						$fileinput.showError(jqxhr);
 						li.remove();
 					},
 					complete: function () {
@@ -159,7 +158,7 @@ $fileinput.change(function () {
 $url.keypress(function (e) {
 	if (e.which === 13) {
 		var url = $(this).val();
-		$(this).attr('disabled', 1).clearError();
+		$(this).attr('disabled', true).clearError();
 
 		$.ajax({
 			type: 'POST',
@@ -186,11 +185,10 @@ $url.keypress(function (e) {
 				$url.val('');
 			},
 			error: function (jqxhr) {
-				var data = $.parseJSON(jqxhr.responseText);
-				$url.showError(data.message);
+				$url.showError(jqxhr);
 			},
 			complete: function () {
-				$url.attr('disabled', 0);
+				$url.removeAttr('disabled');
 			}
 		});
 
@@ -201,7 +199,7 @@ $url.keypress(function (e) {
 $search.keypress(function (e) {
 	if (e.which === 13) {
 		var results = $(this).parent().find('.results');
-		$search.attr('disabled', 1);
+		$search.attr('disabled', true);
 		results.empty();
 
 		$.getJSON('tiki-searchindex.php', {
@@ -210,7 +208,7 @@ $search.keypress(function (e) {
 			"filter~filetype": "{{$field.filter|escape}}",
 			"filter~gallery_id": "{{$field.galleryId|escape}}",
 		}, function (data) {
-			$search.attr('disabled', 0).clearError();
+			$search.removeAttr('disabled').clearError();
 			$.each(data, function () {
 				var item = $('<li/>').append(this.link), icon = $('<label>{{icon _id=add}}</label>'), data = this;
 				item.append(icon);

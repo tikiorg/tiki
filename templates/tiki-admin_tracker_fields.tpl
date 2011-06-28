@@ -107,6 +107,28 @@
 		</form>
 		
 		{pagination_links cant=$cant step=$max offset=$offset}{/pagination_links}
+
+		<form class="add-field" method="post" action="tiki-ajax_services.php?controller=tracker&amp;action=addfield">
+			<input type="hidden" name="trackerId" value="{$trackerId|escape}"/>
+			<input type="submit" value="Add Field"/>
+			{remarksbox type=info title="{tr}The list is not dynamic{/tr}"}
+				<p>{tr}At this stage, the list above is not dynamic. After adding the fields, you will need to refresh the page.{/tr}</p>
+				<p>{self_link}{tr}Reload Field List{/tr}{/self_link}</p>
+			{/remarksbox}
+		</form>
+		{jq}
+			$('.add-field').submit(function () {
+				var form = this;
+				$(form).tracker_add_field({
+					trackerId: $(form.trackerId).val(),
+					success: function (data) {
+						$(this).append($('<p/>').text(tr('Recently Added: ') + data.name))
+					}
+				});
+
+				return false;
+			});
+		{/jq}
 	{/tab}
 	
 	{if $fieldId eq "0"}

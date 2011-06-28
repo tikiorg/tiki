@@ -345,6 +345,10 @@ if( ! empty( $prefs['header_custom_js'] ) ) {
 	$headerlib->add_js( $prefs['header_custom_js'] );
 }
 
+if ($prefs['feature_trackers'] == 'y') {
+	$headerlib->add_jsfile('lib/jquery_tiki/tiki-trackers.js');
+}
+
 if( session_id() ) {
 	if( $prefs['tiki_cachecontrol_session'] ) {
 		header( 'Cache-Control: ' . $prefs['tiki_cachecontrol_session'] );

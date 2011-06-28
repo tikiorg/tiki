@@ -18,6 +18,7 @@ $controllerMap = array(
 	'comment' => 'Services_Comment_Controller',
 	'file' => 'Services_File_Controller',
 	'auth_source' => 'Services_AuthSource_Controller',
+	'tracker' => 'Services_Tracker_Controller',
 );
 
 $inputConfiguration = array(array(

@@ -339,9 +339,9 @@ class TrackerLib extends TikiLib
 		);
 	}
 
-	function get_last_position($id) {
+	function get_last_position($trackerId) {
 		$fields = $this->fields();
-		return $fields->fetchOne($fields->max('position'), array('trackerId' => (int) $id));
+		return $fields->fetchOne($fields->max('position'), array('trackerId' => (int) $trackerId));
 	}
 
 	function get_tracker_item($itemId) {
@@ -2314,10 +2314,7 @@ class TrackerLib extends TikiLib
 		$fields = $this->fields();
 
 		if ($fieldId === false && $trackerId && !empty($name)) {	// called from profiles - update not replace
-			$fieldId = $fields->fetchOne($fields->max('fieldId'), array(
-				'trackerId' => (int) $trackerId,
-				'name' => $name,
-			));
+			$fieldId = $this->get_field_id($trackerId, $name);
 		}
 
 		$data = array(
@@ -2661,7 +2658,7 @@ class TrackerLib extends TikiLib
 		foreach ($factory->getFieldTypes() as $key => $info) {
 			$types[$key] = array(
 				'label' => $info['name'],
-				'opt' => false,
+				'opt' => count($info['params']) === 0,
 				'help' => $this->build_help_for_type($info),
 			);
 		}
@@ -2686,11 +2683,11 @@ class TrackerLib extends TikiLib
 				$text .= "<dd>{$param['description']}</dd>";
 
 				if (isset($param['options'])) {
-					$text .= "<dd><ol>";
+					$text .= "<dd><ul>";
 					foreach ($param['options'] as $k => $label) {
 						$text .= "<li><strong>{$k}</strong> = <em>$label</em></li>";
 					}
-					$text .= "</ol></dd>";
+					$text .= "</ul></dd>";
 				}
 			}
 			$text .= '</dl>';
