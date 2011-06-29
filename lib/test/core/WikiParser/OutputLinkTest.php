@@ -128,7 +128,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		) );
 		
 		$this->assertXmlStringEqualsXmlString(
-			'<a href="http://example.com/Test" class="wiki external">Test</a>',
+			'<a href="http://example.com/Test" class="wiki external out">Test</a>',
 			$link->getHtml() );
 	}
 
@@ -142,7 +142,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		) );
 		
 		$this->assertXmlStringEqualsXmlString(
-			'<a href="http://example.com/Test" class="wiki external">ABC</a>',
+			'<a href="http://example.com/Test" class="wiki external out">ABC</a>',
 			$link->getHtml() );
 	}
 
