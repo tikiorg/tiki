@@ -101,6 +101,7 @@ class Services_Tracker_Controller
 			$fieldId = (int) $key;
 			$fields[$fieldId] = array(
 				'position' => $value->position->int(),
+				'isTblVisible' => $value->isTblVisible->int() ? 'y' : 'n',
 			);
 
 			$this->updateField($trackerId, $fieldId, $fields[$fieldId]);
@@ -155,7 +156,7 @@ class Services_Tracker_Controller
 			$field['type'],
 			$field['isMain'],
 			$field['isSearchable'],
-			$field['isTblVisible'],
+			isset($properties['isTblVisible']) ? $properties['isTblVisible'] : $field['isTblVisible'],
 			$field['isPublic'],
 			$field['isHidden'],
 			$field['isMandatory'],

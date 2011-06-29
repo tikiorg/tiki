@@ -115,6 +115,7 @@
 						<th>{tr}ID{/tr}</th>
 						<th>{tr}Name{/tr}</th>
 						<th>{tr}Type{/tr}</th>
+						<th>{tr}List{/tr}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -181,6 +182,10 @@
 						.append($('<input type="hidden" name="field~' + field.fieldId + '~position"/>').val(k * 10)));
 					$row.append($('<td/>').text(field.name));
 					$row.append($('<td/>').text(data.types[field.type].name));
+					$row.append($('<td/>').append(
+						$('<input type="checkbox" name="field~' + field.fieldId + '~isTblVisible" value="1"/>')
+							.attr('checked', field.isTblVisible === 'y')
+					));
 
 					$container.append($row);
 				});
