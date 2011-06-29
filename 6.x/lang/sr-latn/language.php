@@ -12136,7 +12136,7 @@ $lang=Array(
 "Remove all cookies" => "Ukloni sve kolačiće",
 "cookie" => "kolačić",
 "Expiration Date" => "Datum isticanja",
-"Admin dsn" => "Administracija dsn",
+"Admin DSN" => "Administracija dsn",
 "Create/edit dsn" => "Napravi/izmeni dsn",
 "Create/Edit External Wiki" => "Napravi/Izmeni eksterni Wiki",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)" => "URL (koristite \$page da se zameni sa nazivom stranice u URL primeru: http://www.example.com/tiki-index.php?page=\$page)",

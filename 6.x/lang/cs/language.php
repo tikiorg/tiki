@@ -10868,7 +10868,7 @@ $lang=Array(
 "Upload" => "Nahrát",
 "Remove all cookies" => "Odstranit všechny cookies",
 "Expiration Date" => "Datum expirace",
-"Admin dsn" => "Administrace dsn",
+"Admin DSN" => "Administrace dsn",
 "Create/edit dsn" => "Vytvořit/upravit dsn",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)" => "URL (použijte \$page pro nahrazení názvem stránky v URL: http://www.example.com/tiki-index.php?page=\$page)",
 "ExtWiki" => "Extwiki",

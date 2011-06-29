@@ -12154,7 +12154,7 @@ $lang=Array(
 "Upload" => "上傳",
 "Remove all cookies" => "移除所有cookies",
 "filter" => "過濾器",
-"Admin dsn" => "管理 dsn",
+"Admin DSN" => "管理 dsn",
 "Create/edit dsn" => "建立/編輯 dsn",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)" => "URL (在URL中使用 \$page 來取代 page, 例如: http://www.example.com/tiki-index.php?page=\$page)",
 "ExtWiki" => "外部wiki",

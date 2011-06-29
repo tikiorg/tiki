@@ -12042,7 +12042,7 @@ $lang=Array(
 "Upload from disk:" => "Nahrať z disku:",
 "Remove all cookies" => "Odstrániť všetky cookies",
 "filter" => "filtrovať",
-"Admin dsn" => "Administrácia dsn",
+"Admin DSN" => "Administrácia dsn",
 "Create/edit dsn" => "Vytvoriť/upraviť dsn",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)" => "URL (použite \$page pre výmenu za názov stránky v URL; napr.: http://www.example.com/tiki-index.php?page=\$page)",
 "ExtWiki" => "Extwiki",

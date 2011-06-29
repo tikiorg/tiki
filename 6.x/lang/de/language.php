@@ -11117,7 +11117,7 @@ $lang=Array(
 "Expiration Date" => "Ablaufdatum",
 "all types" => "alle Typen",
 "filter" => "filtern",
-"Admin dsn" => "DSN verwalten",
+"Admin DSN" => "DSN verwalten",
 "Create/edit dsn" => "DSN hinzufügen/bearbeiten",
 "Create/Edit External Wiki" => "Externes Wiki erstellen/bearbeiten",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)" => "URL (\$page benutzen und mit dem Wiki Seitennamen ersetzen, z.B.: http://qum74.mms-dresden.telekom.de/tiki/tiki-index.php?page=\$page)",

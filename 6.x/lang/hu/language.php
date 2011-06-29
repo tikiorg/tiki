@@ -11612,7 +11612,7 @@ $lang=Array(
 "Restore" => "Visszaállítás",
 "all types" => "összes típus",
 "filter" => "szűrés",
-"Admin dsn" => "DSN adatbáziskapcsolatok beállítása",
+"Admin DSN" => "DSN adatbáziskapcsolatok beállítása",
 "Use Admin DSN to define the database to be used by the SQL plugin." => "DSN (Data Source Name - Adatforrás neve) adatbáziskapcsolatok megadásával lehet megadni az SQL plugin által használt adatbázisokat",
 "Create/edit dsn" => "DSN létrehozása/szerkesztése",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)" => "URL (használjon \$lap kifejezést a lap nevével, mint az alábbi példában: http://www.example.com/tiki-index.php?page=\$page)",
