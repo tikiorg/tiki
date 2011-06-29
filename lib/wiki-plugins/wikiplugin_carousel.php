@@ -10,10 +10,8 @@ function wikiplugin_carousel_info()
 	return array(
 		'name' => tra('Carousel'),
 		'documentation' => 'PluginCarousel',
-		'description' => tra('Create a link that shows/hides initially hidden content'),
+		'description' => tra('Carousel on a file gallery'),
 		'prefs' => array('wikiplugin_carousel', 'feature_file_galleries', 'feature_jquery_carousel'),
-		'body' => tra('Wiki syntax containing the content that can be hidden or shown.'),
-		'filter' => 'wikicontent',
 		'icon' => 'pics/icons/wand.png',
 		'params' => array(
 			'fgalId' => array(
@@ -23,6 +21,14 @@ function wikiplugin_carousel_info()
 				'filter' => 'digits',
 				'accepted' => 'ID',
 				'default' => '',
+			),
+			'sort_mode' => array(
+				'required' => false,
+				'name' => tra('Sort Mode'),
+				'description' => tra('Sort by database table field name, ascending or descending. Examples: fileId_asc or name_desc.'),
+				'filter' => 'word',
+				'accepted' => 'fieldname_asc or fieldname_desc with actual table field name in place of \'fieldname\'.',
+				'default' => 'created_desc',
 			),
 			'transitionSpeed' => array(
 				'required' => false,
@@ -130,7 +136,7 @@ function wikiplugin_carousel( $body, $params )
 	$unique = 'wpcarousel-' . ++$id;
 		
 	$filegallib = TikiLib::lib('filegal');
-	$files = $filegallib->get_files(0, -1, $params['sort_mode'], '', $params['fgalId'], false, false, false, true, false, false, false, false, '', true, false, false, $filter);
+	$files = $filegallib->get_files(0, -1, $params['sort_mode'], '', $params['fgalId']);
 	if (empty($files['cant'])) {
 		return '';
 	}
@@ -146,8 +152,7 @@ function wikiplugin_carousel( $body, $params )
 	$headerlib->add_jq_onready($jq);
 	$html = '<div id="'.$unique.'" class="clearfix"><ul>';
 	foreach ($files['data'] as $file) {
-		echo $file['fileId'].' '.$unique;
-		$html .= '<li><img src="tiki-download_file.php?fileId='.$file['fileId'].'&display" alt="'.$file['description'].'" /></li>';
+		$html .= '<li><img src="tiki-download_file.php?fileId='.$file['fileId'].'&display" alt="'.htmlentities($file['description']).'" /></li>';
 	}
 	$html .= '</ul></div>';
 	return "~np~$html~/np~";
