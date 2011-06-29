@@ -10,7 +10,7 @@ function wikiplugin_draw_info() {
 		'name' => tra('Draw'),
 		'documentation' => 'PluginDraw',
 		'description' => tra('Display or create a drawing that is stored in the File Gallery'),
-		'prefs' => array( 'feature_draw' ),
+		'prefs' => array( 'feature_draw', 'wikiplugin_draw' ),
 		'icon' => 'pics/icons/shape_square_edit.png',
 		'params' => array(
 			'id' => array(
