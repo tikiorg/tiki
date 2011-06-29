@@ -43,7 +43,7 @@ function wikiplugin_carousel_info()
 			'textholderHeight' => array(
 				'required' => false,
 				'name' => tra('Caption height'),
-				'description' => tra('The height of the caption. This is a fraction of the height of the images. '),
+				'description' => tra('The height of the caption. This is a fraction of the height of the images.'),
 				'filter' => 'striptags',
 				'accepted' => tra('real'),
 				'default' => '.2',
@@ -94,14 +94,14 @@ function wikiplugin_carousel_info()
 			),
 			'thumbnailWidth' => array(
 				'required' => false,
-				'name' => tra('Width of thumbnail box'),
+				'name' => tra('Thumbnail box width'),
 				'description' => tra('Width of thumbnail box in pixels'),
 				'filter' => 'digits',
 				'default' => '20',
 			),
 			'thumbnailHeight' => array(
 				'required' => false,
-				'name' => tra('Height of thumbanil box'),
+				'name' => tra('Thumbnail box height'),
 				'description' => tra('Height of thumbnail box in pixels'),
 				'filter' => 'digits',
 				'accepted' => tra(''),
@@ -109,8 +109,8 @@ function wikiplugin_carousel_info()
 			),
 			'thumbnailFontSize' => array(
 				'required' => false,
-				'name' => tra('Font size thumbanil box'),
-				'description' => tra('Font size thumbanil box in em.'),
+				'name' => tra('Thumbnail box font size'),
+				'description' => tra('Font size of thumbnail box in em.'),
 				'filter' => 'striptags',
 				'default' => '.7',
 			),
