@@ -668,7 +668,7 @@ function get_default_prefs() {
 		'fgal_list_ratio_hits' => 'n',
 		'fgal_display_properties' => 'y',
 		'fgal_display_replace' => 'y',
-		'fgal_display_zip_option' => 'y',
+		'fgal_display_zip_option' => 'n',
 		'fgal_checked' => 'y',
 		'fgal_upload_progressbar' => 'n',
 		'fgal_show_checked' => 'y',
