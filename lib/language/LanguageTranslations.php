@@ -159,7 +159,7 @@ class LanguageTranslations extends TikiDb_Bridge
 				}
 			}
 
-			// convert every entry in the array $dbTrans (translation that are not presente in language.php)
+			// convert every entry in the array $dbTrans (translations that are not present in language.php)
 			// to a string in the format '"original string" => "translation"'
 			$newTrans = array();
 			foreach ($dbTrans as $orig => $trans) {
