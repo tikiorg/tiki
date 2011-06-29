@@ -836,7 +836,7 @@ function prefs_feature_list($partial = false) {
 			'tags' => array('basic'),			
 		),
 		'feature_draw' => array(
-			'name' => tra('Draw - (SVG-edit)'),
+			'name' => tra('Draw (SVG-edit)'),
 			'description' => tra('Draw gives you the ability to edit SVG images all around Tiki'),
 			'help' => 'Draw',
 			'type' => 'flag',
