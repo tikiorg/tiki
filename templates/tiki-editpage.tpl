@@ -187,7 +187,7 @@
 					<input type="hidden" name="page" value="{$page|escape}" /> 
 					{* the above hidden field is needed for auto-save to work *}
 				{/if}
-				{tabset name='tabs_editpage'}
+				{tabset name='tabs_editpage' cookietab=1}
 					{tab name="{tr}Edit page{/tr}"}
 						{if $translation_mode == 'y'}
 							<div class="translation_message">

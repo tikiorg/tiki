@@ -62,6 +62,11 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 			setCookieSection( $smarty_tabset_name, $cookietab, 'tabs' );	// too late to set it here as output has started
 		}
 
+		// If the tabset specifies the tab, override any kind of memory
+		if (isset($params['cookietab'])) {
+			$cookietab = $params['cookietab'];
+		}
+
 		$smarty_tabset_i_tab = 1;
 
 		return;
