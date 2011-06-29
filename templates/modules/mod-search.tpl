@@ -57,7 +57,6 @@
 							onclick = "$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.search_action}').attr('page_selected','');" />
 				{/if}
 			{if $smod_params.show_go_button eq 'y'}
-					<input type="hidden" name="exact_match" />
 					<input type = "submit" class = "wikiaction tips{if $smod_params.default_button eq 'go'} button_default{/if}"
 						   name = "go" value = "{$smod_params.go_submit}"
 							title="{tr}Search{/tr}|{tr}Go directly to a page, or search in page titles if exact match is not found.{/tr}"
