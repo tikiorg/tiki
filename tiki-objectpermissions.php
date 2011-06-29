@@ -436,32 +436,48 @@ foreach( $groupNames as $groupName ) {
 		}
 	}
 
-	$js .= "
-\$('input[name=\"perm[$groupName][]\"]').eachAsync({
+	$js .= <<< JS
+\$('input[name="perm[$groupName][]"]').eachAsync({
 			delay: 10,
 			bulk: 0,
-";
+JS;
 	if ($i == count($groupNames)-1) {
-		$js .= "
+		$js .= <<< JS
+
 			end: function () {
 				\$('#perms_busy').hide();
 			},
-";
+JS;
 	}
-	$js .= "
+	$js .= <<< JS
+
 			loop: function() { 		// each one of this group
 
+	if (\$(this).attr('checked')) {
+		\$('input[value="'+\$(this).val()+'"]').					// other checkboxes of same value (perm)
+			filter('$beneficiaries').									// which inherit from this
+			attr('checked',\$(this).attr('checked')).					// check and disable
+			attr('disabled',\$(this).attr('checked'));
+	}
+		
 	\$(this).change( function() {									// bind click event
-		var c = \$(this).attr('checked') === 'checked';
-		\$('input[value=\"'+\$(this).val()+'\"]').			// same...
-			filter('$beneficiaries').
-			attr('checked', c).		// check?
-			attr('disabled', c);		// disable
-	}).change();
+	
+		if (\$(this).attr('checked')) {
+			\$('input[value="'+\$(this).val()+'"]').			// same...
+				filter('$beneficiaries').
+				attr('checked',true).							// check?
+				attr('disabled',true);						// disable
+		} else {
+			\$('input[value="'+\$(this).val()+'"]').			// same...
+				filter('$beneficiaries').
+				attr('checked',false).									// check?
+				attr('disabled',false);								// disable
 }
+	});
+			}
 });
 
-";
+JS;
 	$i++;
 }	// end of for $groupNames loop
 
