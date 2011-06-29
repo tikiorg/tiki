@@ -72,6 +72,7 @@ function prefs_feature_list($partial = false) {
 		'feature_trackers' => array(
 			'name' => tra('Trackers'),
 			'description' => tra('Database & form generator'),
+			'hint' => tr('Trackers need to be [%0|configured].', 'tiki-admin_trackers.php'),
 			'help' => 'Trackers',
 			'type' => 'flag',
 			'keywords' => 'CRUD',
