@@ -116,6 +116,10 @@
 						<th>{tr}Name{/tr}</th>
 						<th>{tr}Type{/tr}</th>
 						<th>{tr}List{/tr}</th>
+						<th>{tr}Title{/tr}</th>
+						<th>{tr}Search{/tr}</th>
+						<th>{tr}Public{/tr}</th>
+						<th>{tr}Mandatory{/tr}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -182,10 +186,19 @@
 						.append($('<input type="hidden" name="field~' + field.fieldId + '~position"/>').val(k * 10)));
 					$row.append($('<td/>').text(field.name));
 					$row.append($('<td/>').text(data.types[field.type].name));
-					$row.append($('<td/>').append(
-						$('<input type="checkbox" name="field~' + field.fieldId + '~isTblVisible" value="1"/>')
-							.attr('checked', field.isTblVisible === 'y')
-					));
+
+					var addCheckbox = function (name) {
+						$row.append($('<td/>').append(
+							$('<input type="checkbox" name="field~' + field.fieldId + '~' + name + '" value="1"/>')
+								.attr('checked', field[name] === 'y')
+						));
+					};
+
+					addCheckbox('isTblVisible');
+					addCheckbox('isMain');
+					addCheckbox('isSearchable');
+					addCheckbox('isPublic');
+					addCheckbox('isMandatory');
 
 					$container.append($row);
 				});

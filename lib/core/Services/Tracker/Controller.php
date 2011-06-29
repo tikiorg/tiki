@@ -102,6 +102,10 @@ class Services_Tracker_Controller
 			$fields[$fieldId] = array(
 				'position' => $value->position->int(),
 				'isTblVisible' => $value->isTblVisible->int() ? 'y' : 'n',
+				'isMain' => $value->isMain->int() ? 'y' : 'n',
+				'isSearchable' => $value->isSearchable->int() ? 'y' : 'n',
+				'isPublic' => $value->isPublic->int() ? 'y' : 'n',
+				'isMandatory' => $value->isMandatory->int() ? 'y' : 'n',
 			);
 
 			$this->updateField($trackerId, $fieldId, $fields[$fieldId]);
@@ -154,12 +158,12 @@ class Services_Tracker_Controller
 			$fieldId,
 			$field['name'],
 			$field['type'],
-			$field['isMain'],
-			$field['isSearchable'],
+			isset($properties['isMain']) ? $properties['isMain'] : $field['isMain'],
+			isset($properties['isSearchable']) ? $properties['isSearchable'] : $field['isSearchable'],
 			isset($properties['isTblVisible']) ? $properties['isTblVisible'] : $field['isTblVisible'],
-			$field['isPublic'],
+			isset($properties['isPublic']) ? $properties['isPublic'] : $field['isPublic'],
 			$field['isHidden'],
-			$field['isMandatory'],
+			isset($properties['isMandatory']) ? $properties['isMandatory'] : $field['isMandatory'],
 			isset($properties['position']) ? $properties['position'] : $field['position'],
 			$field['options'],
 			$field['description'],
