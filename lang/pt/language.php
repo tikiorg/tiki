@@ -13053,7 +13053,7 @@ $lang=Array(
 "Expiration Date" => "Validade",
 "all types" => "todos os tipos",
 "filter" => "filtro",
-"Admin dsn" => "Administrar DSN",
+"Admin DSN" => "Administrar DSN",
 "Create/edit dsn" => "Criar/editar DSN",
 "Create/Edit External Wiki" => "Criar/editar Wiki Externo",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)" => "Endereço (use \$page para substituir pelo nome da página na URl. Exemplo: http://www.exemplo.com.br/tiki-index.php?page=\$page)",

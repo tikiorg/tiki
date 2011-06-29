@@ -12894,7 +12894,7 @@ $lang=Array(
 "Creation Date" => "Aanmaakdatum",
 "Expiration Date" => "Verloopdatum",
 "all types" => "alle types",
-"Admin dsn" => "Beheer dsn",
+"Admin DSN" => "Beheer dsn",
 "Create/edit dsn" => "Aanmaken/bewerken dsn",
 "Create/Edit External Wiki" => "Maak aan/Bewerk Extern Wiki",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)" => "URL (gebruik \$pagina om deze te laten vervangen door de pagina in de URL, bijv http://www.example.com/tiki-index.php?page=\$pagina)",

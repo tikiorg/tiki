@@ -11843,7 +11843,7 @@ $lang=Array(
 "Upload from disk:" => "Upload from disk:",
 "Remove all cookies" => "Remove all cookies",
 "cookie" => "cookie",
-"Admin dsn" => "Admin dsn",
+"Admin DSN" => "Admin DSN",
 "Create/edit dsn" => "Create/edit dsn",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)" => "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)",
 "Coms" => "Coms",

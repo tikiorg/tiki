@@ -13038,7 +13038,7 @@ $lang=Array(
 "Expiration Date" => "تاريخ انقضا",
 "all types" => "تمام موارد",
 "filter" => "فيلتر",
-"Admin dsn" => "مديريت DSNها",
+"Admin DSN" => "مديريت DSNها",
 "Create/edit dsn" => "ايجاد/ويرايش dsn",
 "Create/Edit External Wiki" => "ايجاد/تغيير ويكي‌هاي خارجي‌",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)" => "URL (از \$page براي جايگزيني نام صفحه در URL استفاده كنيد، مانند: http://www.example.com/tiki-index.php?page=\$page)",
