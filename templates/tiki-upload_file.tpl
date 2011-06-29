@@ -352,7 +352,6 @@
 {if $prefs.javascript_enabled eq 'y' and !$editFileId}
 	<div id="multi_1">
 	</div>
-	<hr class="clear" />
 	<div id="page_bar">
 		<input type="submit"
 			{if $prefs.fgal_upload_progressbar eq 'n'}
@@ -363,12 +362,13 @@
 			{/if}
 			id="btnUpload"
 			name="upload"
-			value="{tr}Upload{/tr}"
+			value="{tr}Upload File(s){/tr}"
 		/>
+		<hr class="clear" />
 		{if $prefs.fgal_upload_progressbar eq 'ajax_flash'}
 			<input type="submit" id="btnCancel" style="display:none" value="{tr}Cancel Upload{/tr}" onClick="return false" />
 		{elseif $simpleMode neq 'y'}
-			<input type="submit" onClick="javascript:add_upload_file('multiple_upload'); return false" value="{tr}Add File{/tr}"/>
+			<input type="submit" onClick="javascript:add_upload_file('multiple_upload'); return false" value="{tr}Add Another File{/tr}"/>
 		{/if}
 	</div>
 {/if}
