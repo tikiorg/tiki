@@ -51,8 +51,9 @@ function s_f_attachments_actionshandler( $params ) {
 					global $smarty;
 					require_once $smarty->_get_plugin_filepath('function', 'query');
 
+					$galleryId = $filegallib->get_attachment_gallery( $params['page'], 'wiki page' );
 					$filegallib->actionHandler( 'uploadFile', array(
-						'galleryId' => $filegallib->get_attachment_gallery( $params['page'], 'wiki page' ),
+						'galleryId' => array($galleryId),
 						'comment' => $params['comment'],
 						'returnUrl' => smarty_function_query( array(
 								'_type' => 'absolute_path',
