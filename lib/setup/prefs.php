@@ -277,7 +277,7 @@ function get_default_prefs() {
 		'wikiplugin_jq' => 'n',
 		'wikiplugin_lang' => 'y',
 		'wikiplugin_lastmod' => 'n',
-		'wikiplugin_list' => 'n',
+		'wikiplugin_list' => 'y',
 		'wikiplugin_listpages' => 'n',
 		'wikiplugin_lsdir' => 'n',
 		'wikiplugin_mail' => 'n',
