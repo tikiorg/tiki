@@ -1514,7 +1514,7 @@ function prefs_feature_list($partial = false) {
 			'default' => 'y',				// include UI lib for more effects
 		),
 		'feature_jquery_ui_theme' => array(
-			'name' => tra('JQuery UI Theme'),
+			'name' => tra('jQuery UI Theme'),
 			'help' => 'JQuery#UI',
 			'type' => 'list',
 			'description' => tra('jQuery UI Theme. Used in spreadsheet, for example.'),
@@ -1554,21 +1554,21 @@ function prefs_feature_list($partial = false) {
 			'default' => 'y',		// validation on Trackers etc
 		),
 		'feature_jquery_carousel' => array(
-			'name' => tra('JQuery Infinite Carousel'),
+			'name' => tra('jQuery Infinite Carousel'),
 			'type' => 'flag',
 			'help' => 'JQuery#Carousel',
 			'description' => tra('Image "carousel" plugin (coming soon)'),
 			'default' => 'n',		// slideshow/carousel for file gals etc
 		),
 		'feature_jquery_tablesorter' => array(
-			'name' => tra('JQuery Sortable Tables'),
+			'name' => tra('jQuery Sortable Tables'),
 			'type' => 'flag',
 			'help' => 'JQuery#TableSorter',
 			'description' => tra('Sort in fancytable plugin'),
 			'default' => 'n',	// sortable tables ([will] override existing)
 		),
 		'feature_jquery_media' => array(
-			'name' => tra('JQuery Media'),
+			'name' => tra('jQuery Media'),
 			'type' => 'flag',
 			'help' => 'JQuery#Media',
 			'description' => tra('Media player'),
