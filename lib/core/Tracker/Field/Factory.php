@@ -38,7 +38,7 @@ class Tracker_Field_Factory
 				$reflected = new ReflectionClass($class);
 
 				if ($reflected->isInstantiable() && $reflected->implementsInterface('Tracker_Field_Interface')) {
-					$providedFields = $class::getTypes();
+					$providedFields = call_user_func(array($class, 'getTypes'));
 
 					foreach ($providedFields as $key => $info) {
 						$this->typeMap[$key] = $class;
@@ -71,7 +71,7 @@ class Tracker_Field_Factory
 		if (isset($this->typeMap[$type])) {
 			$class = $this->typeMap[$type];
 
-			return $class::build($type, $this->trackerDefinition, $field_info, $itemData);
+			return call_user_func(array($class, 'build'), $type, $this->trackerDefinition, $field_info, $itemData); 
 		}
 	}
 }
