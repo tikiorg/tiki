@@ -9,7 +9,7 @@ function wikiplugin_draw_info() {
 	return array(
 		'name' => tra('Draw'),
 		'documentation' => 'PluginDraw',
-		'description' => tra('Display or create an image from TikiDraw that is stored into the File Gallery'),
+		'description' => tra('Display or create a drawing that is stored in the File Gallery'),
 		'prefs' => array( 'feature_draw' ),
 		'icon' => 'pics/icons/shape_square_edit.png',
 		'params' => array(
@@ -28,7 +28,7 @@ function wikiplugin_draw_info() {
 				'description' => tra('Width in pixels or percentage. Default value is page width. e.g. "200px" or "100%"'),
 				'filter' => 'striptags',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
-				'default' => 'Image width',
+				'default' => 'Drawing width',
 				'since' => '7.1'
 			),
 			'height' => array(
@@ -37,7 +37,7 @@ function wikiplugin_draw_info() {
 				'description' => tra('Height in pixels or percentage. Default value is complete drawing height.'),
 				'filter' => 'striptags',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
-				'default' => 'Image height',
+				'default' => 'Drawing height',
 				'since' => '7.1'
 			),
 		),
@@ -54,7 +54,7 @@ function wikiplugin_draw($data, $params) {
 	++$index;
 	
 	if (!isset($id)) {
-		$label = tra('Draw New SVG Image');
+		$label = tra('Create a new SVG drawing');
 		$page = htmlentities($page);
 		$content = htmlentities($data);
 		$formId = "form$index";
@@ -72,7 +72,7 @@ function wikiplugin_draw($data, $params) {
 			<p>
 				<input type="submit" name="label" value="$label" class="newSvgButton" />
 				<select name="galleryId">
-					<option>Select Gallery For Image To Be In</option>
+					<option>Where will this drawing be stored?</option>
 					$galHtml
 				</select>
 				<input type="hidden" name="index" value="$index"/>
@@ -83,9 +83,9 @@ function wikiplugin_draw($data, $params) {
 EOF;
 	}
 	
-	$label = tra('Edit SVG Image');
+	$label = tra('Edit SVG drawing');
 	return '~np~' . "<img src='tiki-download_file.php?fileId=$id' />
 		<a href='tiki-edit_draw.php?galleryId=1&fileId=$id'>
-			<img src='pics/icons/page_edit.png' alt='Edit SVG Image' width='16' height='16' title='Edit SVG Image' class='icon' />
+			<img src='pics/icons/page_edit.png' alt='Edit SVG drawing' width='16' height='16' title='Edit SVG drawing' class='icon' />
 		</a>" . '~/np~';
 }
