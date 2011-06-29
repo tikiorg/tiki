@@ -49,43 +49,6 @@
 									</td>
 								</tr>
 								<tr>
-									<td>{tr}Sections:{/tr}</td>
-									<td colspan="3">
-										<input id="menu_section" type="text" name="section" value="{$section|escape}" size="34" /><br />
-										<em>{tr}Separate multiple sections with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</em>
-									</td>
-								</tr>
-								<tr>
-									<td>{tr}Permissions:{/tr}</td>
-									<td colspan="3">
-										<input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34" /><br />
-										<em>{tr}Separate multiple permissions with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</em>
-									</td>
-								</tr>
-								<tr>
-									<td>{tr}Group:{/tr}</td>
-									<td colspan="3">
-										<select id="menu_groupname" name="groupname[]" size="4" multiple="multiple">
-											<option value="">&nbsp;</option>
-											{foreach key=k item=i from=$option_groups}<option value="{$k|escape}" {$i}>{$k|escape}</option>{/foreach}
-										</select>
-										{if $option_groups|@count ge '2'}
-										{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}<br />{tr}Selecting 2 groups means that the option will be seen if the user belongs to the 2 groups. If you want the 2 groups to see the option, create 2 options with one group each.{/tr}<br />{tr}If the url is ((PageName)), you do not need to put the groups, the option will be displayed only if the page can be displayed.{/tr}{/remarksbox}
-										{/if}
-									</td>
-								</tr>
-								{if $prefs.feature_userlevels eq 'y'}
-								<tr>
-									<td>{tr}Level:{/tr}</td>
-									<td colspan="3">
-										<select name="level">
-											<option value="0"{if $level eq 0} selected="selected"{/if}>{tr}All{/tr}</option>
-											{foreach key=levn item=lev from=$prefs.userlevels}<option value="{$levn}"{if $userlevel eq $levn} selected="selected"{/if}>{$lev}</option>{/foreach}
-										</select>
-									</td>
-								</tr>
-								{/if}
-								<tr>
 									<td>{tr}Type:{/tr}</td>
 									<td>
 										<select name="type">
@@ -103,6 +66,43 @@
 										<input type="text" name="position" value="{$position|escape}" size="6" />
 									</td>
 								</tr>
+								<tr>
+									<td>{tr}Group:{/tr}</td>
+									<td colspan="3">
+										<select id="menu_groupname" name="groupname[]" size="4" multiple="multiple">
+											<option value="">&nbsp;</option>
+											{foreach key=k item=i from=$option_groups}<option value="{$k|escape}" {$i}>{$k|escape}</option>{/foreach}
+										</select>
+										{if $option_groups|@count ge '2'}
+										{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}<br />{tr}Selecting 2 groups means that the option will be seen if the user belongs to the 2 groups. If you want the 2 groups to see the option, create 2 options with one group each.{/tr}<br />{tr}If the url is ((PageName)), you do not need to put the groups, the option will be displayed only if the page can be displayed.{/tr}{/remarksbox}
+										{/if}
+									</td>
+								</tr>
+								<tr>
+									<td>{tr}Sections:{/tr}</td>
+									<td colspan="3">
+										<input id="menu_section" type="text" name="section" value="{$section|escape}" size="34" /><br />
+										<em>{tr}Separate multiple sections with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</em>
+									</td>
+								</tr>
+								<tr>
+									<td>{tr}Permissions:{/tr}</td>
+									<td colspan="3">
+										<input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34" /><br />
+										<em>{tr}Separate multiple permissions with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</em>
+									</td>
+								</tr>
+								{if $prefs.feature_userlevels eq 'y'}
+								<tr>
+									<td>{tr}Level:{/tr}</td>
+									<td colspan="3">
+										<select name="level">
+											<option value="0"{if $level eq 0} selected="selected"{/if}>{tr}All{/tr}</option>
+											{foreach key=levn item=lev from=$prefs.userlevels}<option value="{$levn}"{if $userlevel eq $levn} selected="selected"{/if}>{$lev}</option>{/foreach}
+										</select>
+									</td>
+								</tr>
+								{/if}
 								{if $prefs.menus_items_icons eq 'y'}
 									<tr><td>{tr}Icon:{/tr}</td><td colspan="3"><input type="text" name="icon" value="{$icon|escape}" size="20" /></td></tr>
 								{/if}
