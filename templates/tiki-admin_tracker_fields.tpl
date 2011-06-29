@@ -10,7 +10,72 @@
 	<!-- {$plug} -->
 	<a name="list"></a>
 	{tab name="{tr}Tracker fields{/tr}"}
-		<table class="findtable">
+		<form class="save-fields" method="post" action="tiki-ajax_services.php">
+			<table id="fields" class="normal">
+				<thead>
+					<tr>
+						<th>{tr}ID{/tr}</th>
+						<th>{tr}Name{/tr}</th>
+						<th>{tr}Type{/tr}</th>
+						<th>{tr}List{/tr}</th>
+						<th>{tr}Title{/tr}</th>
+						<th>{tr}Search{/tr}</th>
+						<th>{tr}Public{/tr}</th>
+						<th>{tr}Mandatory{/tr}</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+			<div>
+				<input type="submit" name="submit" value="{tr}Save{/tr}"/>
+				<input type="hidden" name="controller" value="tracker"/>
+				<input type="hidden" name="action" value="save_fields"/>
+				<input type="hidden" name="trackerId" value="{$trackerId|escape}"/>
+			</div>
+		</form>
+
+		<form class="add-field" method="post" action="tiki-ajax_services.php?controller=tracker&amp;action=addfield">
+			<input type="hidden" name="trackerId" value="{$trackerId|escape}"/>
+			<input type="submit" value="Add Field"/>
+		</form>
+		{jq}
+			var trackerId = {{$trackerId|escape}};
+			$('.save-fields').submit(function () {
+				var form = this;
+				$.ajax('tiki-ajax_services.php', {
+					method: 'POST',
+					data: $(form).serialize(),
+					dataType: 'json'
+				});
+				return false;
+			});
+			var $container = $('.save-fields tbody')
+				.sortable({
+					update: function () {
+						$('td.id :hidden', this).each(function (k) {
+							$(this).val(k * 10);
+						});
+					}
+				})
+				.disableSelection()
+				.css('cursor', 'move');
+
+			$container.tracker_load_fields(trackerId);
+
+			$('.add-field').submit(function () {
+				var form = this;
+				$(form).tracker_add_field({
+					trackerId: trackerId,
+					success: function (data) {
+						$container.tracker_load_fields(trackerId);
+					}
+				});
+
+				return false;
+			});
+		{/jq}
+			<table class="findtable">
 			<tr>
 				<td>{tr}Find{/tr}</td>
 				<td>
@@ -108,103 +173,7 @@
 		
 		{pagination_links cant=$cant step=$max offset=$offset}{/pagination_links}
 
-		<form class="save-fields" method="post" action="tiki-ajax_services.php">
-			<table id="fields" class="normal">
-				<thead>
-					<tr>
-						<th>{tr}ID{/tr}</th>
-						<th>{tr}Name{/tr}</th>
-						<th>{tr}Type{/tr}</th>
-						<th>{tr}List{/tr}</th>
-						<th>{tr}Title{/tr}</th>
-						<th>{tr}Search{/tr}</th>
-						<th>{tr}Public{/tr}</th>
-						<th>{tr}Mandatory{/tr}</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-			<div>
-				<input type="submit" name="submit" value="{tr}Save{/tr}"/>
-				<input type="hidden" name="controller" value="tracker"/>
-				<input type="hidden" name="action" value="save_fields"/>
-				<input type="hidden" name="trackerId" value="{$trackerId|escape}"/>
-			</div>
-		</form>
-
-		<form class="add-field" method="post" action="tiki-ajax_services.php?controller=tracker&amp;action=addfield">
-			<input type="hidden" name="trackerId" value="{$trackerId|escape}"/>
-			<input type="submit" value="Add Field"/>
-			{remarksbox type=info title="{tr}The list is not dynamic{/tr}"}
-				<p>{tr}At this stage, the list above is not dynamic. After adding the fields, you will need to refresh the page.{/tr}</p>
-				<p>{self_link}{tr}Reload Field List{/tr}{/self_link}</p>
-			{/remarksbox}
-		</form>
-		{jq}
-			var trackerId = {{$trackerId|escape}};
-			$('.add-field').submit(function () {
-				var form = this;
-				$(form).tracker_add_field({
-					trackerId: trackerId,
-					success: function (data) {
-						$(this).append($('<p/>').text(tr('Recently Added: ') + data.name))
-					}
-				});
-
-				return false;
-			});
-			$('.save-fields').submit(function () {
-				var form = this;
-				$.ajax('tiki-ajax_services.php', {
-					method: 'POST',
-					data: $(form).serialize(),
-					dataType: 'json'
-				});
-				return false;
-			});
-			var $container = $('.save-fields tbody')
-				.sortable({
-					update: function () {
-						$('td.id :hidden', this).each(function (k) {
-							$(this).val(k * 10);
-						});
-					}
-				})
-				.disableSelection()
-				.css('cursor', 'move');
-
-			$.getJSON('tiki-ajax_services.php', {
-				controller: 'tracker',
-				action: 'list_fields',
-				trackerId: trackerId
-			}, function (data) {
-				$.each(data.fields, function (k, field) {
-					var $row = $('<tr/>');
-					$row.append($('<td class="id"/>')
-						.text(field.fieldId)
-						.append($('<input type="hidden" name="field~' + field.fieldId + '~position"/>').val(k * 10)));
-					$row.append($('<td/>').text(field.name));
-					$row.append($('<td/>').text(data.types[field.type].name));
-
-					var addCheckbox = function (name) {
-						$row.append($('<td/>').append(
-							$('<input type="checkbox" name="field~' + field.fieldId + '~' + name + '" value="1"/>')
-								.attr('checked', field[name] === 'y')
-						));
-					};
-
-					addCheckbox('isTblVisible');
-					addCheckbox('isMain');
-					addCheckbox('isSearchable');
-					addCheckbox('isPublic');
-					addCheckbox('isMandatory');
-
-					$container.append($row);
-				});
-			});
-		{/jq}
-	{/tab}
+{/tab}
 	
 	{if $fieldId eq "0"}
 		{assign var='tabtitle' value="{tr}New tracker field{/tr}"}
