@@ -91,7 +91,7 @@ if ($("#assignstructure").attr("checked")) {
 		<h3>{tr}Permissions{/tr}</h3>
 
 		<div>
-		{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames _checkboxColumnIndex=$permGroupCols _valueColumnIndex="permName" _columns="\"label\"=\"{tr}Permission{/tr}\"" _sortColumn='type' _openall='y' _showSelected='y' _columnsContainHtml='y'}
+		{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames _checkboxColumnIndex=$permGroupCols _valueColumnIndex="permName" _columns="\"label\"=\"{tr}Permission{/tr}\"" _groupColumn='type' _openall='y' _showSelected='y' _columnsContainHtml='y'}
 		</div>
 
 		{if ($perms|@count) eq '0'}{remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}You must select at least one feature{/tr}.{/remarksbox}{/if}
