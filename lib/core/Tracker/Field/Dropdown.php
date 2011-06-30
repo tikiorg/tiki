@@ -61,11 +61,11 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract
 	{
 		switch ($type) {
 			case 'd':
-				return new Tracker_Field_Dropdown($field_info, $itemData, $trackerDefinition);
+				return new Tracker_Field_Dropdown($fieldInfo, $itemData, $trackerDefinition);
 			case 'D':
-				return new Tracker_Field_Dropdown($field_info, $itemData, $trackerDefinition, 'other');
+				return new Tracker_Field_Dropdown($fieldInfo, $itemData, $trackerDefinition, 'other');
 			case 'R':
-				return new Tracker_Field_Dropdown($field_info, $itemData, $trackerDefinition, 'radio');
+				return new Tracker_Field_Dropdown($fieldInfo, $itemData, $trackerDefinition, 'radio');
 		}
 	}
 	
