@@ -111,8 +111,11 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 			$map[$key] = $id;
 		}
 
-		$target = explode("\n", $value);
-
+		if ($value) {
+			$target = explode("\n", $value);
+		} else {
+			$target = array();
+		}
 		$toRemove = array_diff(array_keys($map), $target);
 		$toAdd = array_diff($target, array_keys($map));
 
