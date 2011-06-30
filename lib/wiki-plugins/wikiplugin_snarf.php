@@ -141,7 +141,7 @@ function wikiplugin_snarf($data, $params)
 			if (!empty($params['href'])) {
 				$params['href'] .= '&';
 			}
-			$params['href'] .= $key.'='.$value;
+			$params['href'] .= $key.'='.urlencode($value);
 		}
 		$smarty->assign('snarfParams', $params);
 		return $smarty->fetch('wiki-plugins/wikiplugin_snarf.tpl');
