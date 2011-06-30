@@ -15,5 +15,11 @@ function prefs_email_list() {
 			'shorthint' => tra('days'),
 			'hint' => tra('Use "-1" for never'),
 		),
+		'email_footer' => array(
+			'name' => tra('Email footer'),
+			'description' => tra('Text to append to outgoing emails.'),
+			'type' => 'textarea',
+			'size' => 5,
+		),
 	);
 }

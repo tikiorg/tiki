@@ -1643,6 +1643,7 @@ function get_default_prefs() {
 		'ip_can_be_checked' => 'n',
 		'sender_email' => '',
 		'feature_site_report_email' => '',
+		'email_footer' => '',
 		'session_storage' => 'default',
 		'session_lifetime' => 0,
 		'session_silent' => 'n',

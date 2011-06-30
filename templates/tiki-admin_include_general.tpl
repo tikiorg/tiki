@@ -70,6 +70,7 @@
 					<label for="testMail">{tr}Email to send a test mail{/tr}</label>
 					<input type="text" name="testMail" id="testMail" />
 				</div>
+					{preference name="email_footer"}
 			</fieldset>
 
 			<fieldset>
