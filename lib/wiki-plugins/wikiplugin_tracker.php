@@ -1263,7 +1263,8 @@ function wikiplugin_tracker($data, $params)
 						if (!empty($outputPretty) && in_array($f['fieldId'], $outputPretty)) {
 							$smarty->assign('f_'.$f['fieldId'], '<span class="outputPretty" id="track_'.$f['fieldId'].'" name="track_'.$f['fieldId'].'">'. wikiplugin_tracker_render_value($f, $item) . '</span>');
 						} else {
-							$smarty->assign('f_'.$f['fieldId'], wikiplugin_tracker_render_input($f, $item));
+							$mand =  ($showmandatory == 'y' and $f['isMandatory'] == 'y')? "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;":'';
+							$smarty->assign('f_'.$f['fieldId'], wikiplugin_tracker_render_input($f, $item).$mand);
 						}
 					} else {
 						if (in_array($f['fieldId'], $optional)) {
