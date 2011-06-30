@@ -23,6 +23,45 @@ function handleWebmailRedirect($inUrl) {		// AJAX_TODO
 
 $access->check_user($user);
 
+// check category permissions on group accounts
+if (isset($_REQUEST['locSection']) && $_REQUEST['locSection'] == 'settings') {
+	$id = false;
+	if (isset($_REQUEST['accountId'])) {
+		$id = $_REQUEST['accountId'];
+	} else if (isset($_REQUEST['remove'])) {
+		$id = $_REQUEST['remove'];
+	} else if (isset($_REQUEST['current'])) {
+		$id = $_REQUEST['current'];
+	}
+	if ($id) {
+		$objectperms = Perms::get( array( 'type' => 'webmail account', 'object' => $id ) );
+		$acct = $webmaillib->get_webmail_account($user, $id);
+		if (!isset($_REQUEST['current']))
+		{
+			if ($acct['flagsPublic'] == 'y' && !$objectperms->admin_group_webmail) {
+				handleWebmailRedirect('locSection=settings&msg=' . tra('You do not have permission to admin the requested webmail account.'));
+				exit();
+			}
+		} else {
+			if ($acct['flagsPublic'] == 'y' && !$objectperms->use_group_webmail) {
+				handleWebmailRedirect('locSection=settings&msg=' . tra('You do not have permission to use the requested webmail account.'));
+				exit();
+			}
+		}
+	}
+} else
+{
+	$acct = $webmaillib->get_current_webmail_account($user);
+	if ($acct)
+	{
+		$objectperms = Perms::get( array( 'type' => 'webmail account', 'object' => $acct['accountId'] ) );
+		if ($acct['flagsPublic'] == 'y' && !$objectperms->use_group_webmail) {
+			handleWebmailRedirect('locSection=settings&msg=' . tra('You no longer have permission to use your active webmail account.'));
+			exit();
+		}
+	}
+}
+
 $auto_query_args = array(
     'msgid',
 	'locSection',
@@ -579,6 +618,14 @@ END;
 					$_REQUEST['smtpPort'], $_REQUEST['flagsPublic'], $_REQUEST['autoRefresh'],
 					$_REQUEST['imap'], $_REQUEST['mbox'], $_REQUEST['maildir'], isset($_REQUEST['useSSL']) ? $_REQUEST['useSSL'] : 'n', $_REQUEST['fromEmail']);
 		}
+
+		$cat_type = 'webmail account';
+		$cat_objid = $_REQUEST['accountId'];
+		$cat_name = $_REQUEST['account'];
+		$cat_href = 'tiki-webmail.php?locSection=settings&accountId=' . $cat_objid;
+		$cat_object_exists = (bool) $_REQUEST['accountId'];
+		include_once ('categorize.php');
+
 		unset($_REQUEST['accountId']);
 	}
 	
@@ -597,6 +644,13 @@ END;
 
 	$smarty->assign('accountId', empty($_REQUEST['accountId']) ? 0 : $_REQUEST['accountId']);
 	$smarty->assign('userEmail', trim($userlib->get_user_email($user)));
+
+	$cat_type = 'webmail account';
+	$cat_objid = (int) $_REQUEST['accountId'];
+	$categories = array();
+	$cat_object_exists = (bool) $_REQUEST['accountId'];
+	include_once ('lib/categories/categlib.php');
+	include_once ('categorize_list.php');
 
 	if (!empty($_REQUEST['accountId'])) {
 		$info = $webmaillib->get_webmail_account($user, $_REQUEST['accountId']);
@@ -626,7 +680,18 @@ END;
 	$smarty->assign('accounts', $accounts['data']);
 	
 	$pubAccounts = $webmaillib->list_webmail_group_accounts($user, 0, -1, 'account_asc', '');
-	$smarty->assign('pubAccounts', $pubAccounts['data']);
+	$accounts = array();
+	foreach ($pubAccounts['data'] as $acct) {
+		$objectperms = Perms::get( array( 'type' => 'webmail account', 'object' => $acct['accountId'] ) );
+		if ($objectperms->use_group_webmail || $objectperms->admin_group_webmail) {
+			$accounts[] = $acct;
+		}
+	}
+	$smarty->assign('pubAccounts', $accounts);
+
+	if (isset($_GET['msg'])) {
+		$smarty->assign( 'display_msg', $_GET['msg'] );
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
