@@ -26,10 +26,6 @@ $smarty->assign('headtitle', tra('Search'));
 $access->check_feature('feature_search');
 $access->check_permission('tiki_p_search');
 
-header('Cache-Control: max-age=300');
-header('Pragma:');
-header('Expires:');
-
 //ini_set('display_errors', true);
 //error_reporting(E_ALL);
 
