@@ -18,7 +18,7 @@
 			<div class="adminoptionboxchild">
 				{preference name=wiki_feature_copyrights}
 				{preference name=articles_feature_copyrights}
-				{preference name=blogues_feature_copyrights}
+				{preference name=blogs_feature_copyrights}
 				{preference name=faqs_feature_copyrights}
 			</div>
 		</div>
