@@ -43,7 +43,7 @@ if (count($filter)) {
 
 	$query = $unifiedsearchlib->buildQuery($filter);
 
-	$query->setRange(isset($_REQUEST['offset']) ? $_REQUEST['offset'] : 0, $prefs['maxRecords']);
+	$query->setRange(isset($_REQUEST['offset']) ? $_REQUEST['offset'] : 0, empty($_REQUEST['maxRecords'])?$prefs['maxRecords']: $_REQUEST['maxRecords']);
 
 	$results = $query->search($unifiedsearchlib->getIndex());
 
