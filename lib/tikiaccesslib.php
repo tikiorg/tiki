@@ -515,7 +515,7 @@ class TikiAccessLib extends TikiLib
 			switch( $name ) {
 			case 'json':
 				header( "Content-Type: $full" );
-				$data = json_encode( $data, JSON_NUMERIC_CHECK );
+				$data = json_encode( $data );
 				if (isset($_REQUEST['callback'])) {
 					$data = $_REQUEST['callback'] . '(' . $data . ')';
 				}
