@@ -139,7 +139,7 @@ function wikiplugin_snarf($data, $params)
 				continue;
 			}
 			if (!empty($params['href'])) {
-				$params['href'] .= '&';
+				$params['href'] .= '&amp;';
 			}
 			$params['href'] .= $key.'='.urlencode($value);
 		}
