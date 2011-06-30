@@ -85,7 +85,7 @@ EOF;
 	
 	$label = tra('Edit SVG Image');
 	return '~np~' . "<img src='tiki-download_file.php?fileId=$id' />
-		<a href='tiki-edit_draw.php?galleryId=1&fileId=$id'>
+		<a href='tiki-edit_draw.php?fileId=$id&page=$page'>
 			<img src='pics/icons/page_edit.png' alt='Edit SVG Image' width='16' height='16' title='Edit SVG Image' class='icon' />
 		</a>" . '~/np~';
 }

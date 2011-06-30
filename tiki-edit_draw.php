@@ -17,8 +17,8 @@ ask_ticket('draw');
 
 //Obtain fileId, DO NOT LET ANYTHING OTHER THAN NUMBERS BY (for injection free code)
 if (is_numeric($_REQUEST['fileId']) == false) $_REQUEST['fileId'] = 0; 
-if (is_numeric($_REQUEST['galleryId']) == false) die;
-	
+if (is_numeric($_REQUEST['galleryId']) == false) $_REQUEST['galleryId'] = 0;
+
 $fileId = $_REQUEST['fileId'];
 $galleryId = $_REQUEST['galleryId'];
 
@@ -28,6 +28,8 @@ $page = $_REQUEST['page'];
 
 $smarty->assign( "page", $page );
 $smarty->assign( "isFromPage", isset($page) );
+
+$backLocation = (isset($page) ? "tiki-index.php?page=$page" : "tiki-list_file_gallery.php?galleryId=$galleryId");
 
 $smarty->assign( "fileId", $fileId );
 $smarty->assign( "galleryId", $galleryId );
@@ -126,7 +128,21 @@ $headerlib->add_jq_onready("
 			doc = frame.contentWindow.document;
 		}
 		
-		$('#main_button', doc).css('display', 'none');
+		var mainButton = $(doc).find('#main_button').hide();
+		
+		$('#tiki-draw_save')
+			//.prependTo($(doc).find('#editor_panel'))
+			.click(function() {
+				window.saveSvg();
+			});
+		
+		var thisDoc = document;
+		
+		$('#svg-editHeaderRight')
+			//.appendTo($(doc).find('#tools_top'))
+			.click(function() {
+				thisDoc.location = '$backLocation';
+			});
 		
 		if (window.svgFileId) {
 			$('<div />').load('tiki-download_file.php?fileId=$fileId&r=' + Math.floor(Math.random() * 9999999999), function(o) {
