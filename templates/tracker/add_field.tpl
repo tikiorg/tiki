@@ -10,6 +10,7 @@
 				<option value="{$k|escape}"
 					{if $type eq $k}selected="selected"{/if}>
 					{$info.name|escape}
+					{if $info.deprecated}- Deprecated{/if}
 				</option>
 			{/foreach}
 		</select>

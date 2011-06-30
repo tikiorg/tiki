@@ -1567,6 +1567,11 @@ label.error {
 
 .ui-dialog .simple label {
 	clear: both;
+	padding-bottom: 1em;
+}
+
+.ui-dialog .simple label .description {
+	padding-left: 20px;
 }
 
 .ui-dialog .simple textarea,

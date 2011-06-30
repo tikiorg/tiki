@@ -116,6 +116,79 @@ class Services_Tracker_Controller
 		);
 	}
 
+	function action_edit_field($input)
+	{
+		if (! Perms::get()->admin_trackers) {
+			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
+		}
+
+		$trackerId = $input->trackerId->int();
+		$fieldId = $input->fieldId->int();
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception(tr('Tracker does not exist'), 404);
+		}
+
+		$field = $definition->getField($fieldId);
+		if (! $field) {
+			throw new Services_Exception(tr('Tracker field not found in specified tracker'), 404);
+		}
+
+		$types = $this->getFieldTypes($description);
+		$typeInfo = $types[$field['type']];
+
+		if ($input->name->text()) {
+			$this->updateField($trackerId, $fieldId, array(
+				'name' => $input->name->text(),
+				'description' => $input->description->text(),
+				'descriptionIsParsed' => $input->description_parse->int() ? 'y' : 'n',
+				'options' => $this->buildOptions($input->option, $typeInfo),
+			));
+		}
+
+		return array(
+			'field' => $field,
+			'info' => $typeInfo,
+			'options' => $this->parseOptions($field['options_array'], $typeInfo),
+		);
+	}
+
+	private function buildOptions($input, $typeInfo)
+	{
+		$parts = array();
+
+		foreach ($typeInfo['params'] as $key => $info) {
+			$filter = $info['filter'];
+
+			$value = $input->$key->$filter();
+
+			if (isset($info['options']) && ! isset($info['options'][$value])) {
+				$value = null;
+			}
+
+			$parts[] = $value;
+		}
+
+		$rawOptions = implode(',', $parts);
+		return rtrim($rawOptions, ',');
+	}
+
+	private function parseOptions($raw, $typeInfo)
+	{
+		$out = array();
+
+		foreach ($typeInfo['params'] as $key => $info) {
+			if (isset($info['count']) && $info['count'] === '*') {
+				$out[$key] = $raw;
+			} else {
+				$out[$key] = array_shift($raw);
+			}
+		}
+
+		return $out;
+	}
+
 	private function getFieldTypes($description)
 	{
 		$factory = new Tracker_Field_Factory($description);
@@ -156,7 +229,7 @@ class Services_Tracker_Controller
 		$trklib->replace_tracker_field(
 			$trackerId,
 			$fieldId,
-			$field['name'],
+			isset($properties['name']) ? $properties['name'] : $field['name'],
 			$field['type'],
 			isset($properties['isMain']) ? $properties['isMain'] : $field['isMain'],
 			isset($properties['isSearchable']) ? $properties['isSearchable'] : $field['isSearchable'],
@@ -165,14 +238,14 @@ class Services_Tracker_Controller
 			$field['isHidden'],
 			isset($properties['isMandatory']) ? $properties['isMandatory'] : $field['isMandatory'],
 			isset($properties['position']) ? $properties['position'] : $field['position'],
-			$field['options'],
-			$field['description'],
+			isset($properties['options']) ? $properties['options'] : $field['options'],
+			isset($properties['description']) ? $properties['description'] : $field['description'],
 			$field['isMultilingual'],
 			$field['itemChoices'],
 			$field['errorMsg'],
 			$field['visibleBy'],
 			$field['editableBy'],
-			$field['descriptionIsParsed'],
+			isset($properties['descriptionIsParsed']) ? $properties['descriptionIsParsed'] : $field['descriptionIsParsed'],
 			$field['validation'],
 			$field['validationParam'],
 			$field['validationMessage']
