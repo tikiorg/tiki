@@ -161,13 +161,22 @@ class Services_Tracker_Controller
 		foreach ($typeInfo['params'] as $key => $info) {
 			$filter = $info['filter'];
 
-			$value = $input->$key->$filter();
-
-			if (isset($info['options']) && ! isset($info['options'][$value])) {
-				$value = null;
+			if (isset($info['count']) && $info['count'] === '*') {
+				$values = explode(',', $input->$key->none());
+				$filter = TikiFilter::get($filter);
+				$values = array_map(array($filter, 'filter'), $values);
+				$values = array_filter($values);
+			} else {
+				$values = array($input->$key->$filter());
 			}
 
-			$parts[] = $value;
+			foreach ($values as $value) {
+				if (isset($info['options']) && ! isset($info['options'][$value])) {
+					$value = null;
+				}
+
+				$parts[] = $value;
+			}
 		}
 
 		$rawOptions = implode(',', $parts);
@@ -180,7 +189,7 @@ class Services_Tracker_Controller
 
 		foreach ($typeInfo['params'] as $key => $info) {
 			if (isset($info['count']) && $info['count'] === '*') {
-				$out[$key] = $raw;
+				$out[$key] = implode(',', $raw);
 			} else {
 				$out[$key] = array_shift($raw);
 			}
