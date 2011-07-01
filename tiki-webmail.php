@@ -19,6 +19,7 @@ include_once ('lib/webmail/tikimaillib.php');
 
 function handleWebmailRedirect($inUrl) {		// AJAX_TODO
 	header ('location: tiki-webmail.php?'.$inUrl);
+	exit;
 }
 
 $access->check_user($user);
@@ -40,12 +41,10 @@ if (isset($_REQUEST['locSection']) && $_REQUEST['locSection'] == 'settings') {
 		{
 			if ($acct['flagsPublic'] == 'y' && !$objectperms->admin_group_webmail) {
 				handleWebmailRedirect('locSection=settings&msg=' . tra('You do not have permission to admin the requested webmail account.'));
-				exit();
 			}
 		} else {
 			if ($acct['flagsPublic'] == 'y' && !$objectperms->use_group_webmail) {
 				handleWebmailRedirect('locSection=settings&msg=' . tra('You do not have permission to use the requested webmail account.'));
-				exit();
 			}
 		}
 	}
@@ -57,7 +56,6 @@ if (isset($_REQUEST['locSection']) && $_REQUEST['locSection'] == 'settings') {
 		$objectperms = Perms::get( array( 'type' => 'webmail account', 'object' => $acct['accountId'] ) );
 		if ($acct['flagsPublic'] == 'y' && !$objectperms->use_group_webmail) {
 			handleWebmailRedirect('locSection=settings&msg=' . tra('You no longer have permission to use your active webmail account.'));
-			exit();
 		}
 	}
 }
@@ -319,7 +317,6 @@ END;
 
 		$urlq = http_build_query(array('locSection'=>'settings', 'conmsg'=>$err),'','&');
 		handleWebmailRedirect($urlq);
-		return;
 	}
 
 	// connecting with Zend
@@ -389,7 +386,6 @@ END;
 	
 			$urlq = http_build_query(array('locSection'=>'settings', 'conmsg'=>$err),'','&');
 			handleWebmailRedirect($urlq);
-			return;
 		}
 
 	}
