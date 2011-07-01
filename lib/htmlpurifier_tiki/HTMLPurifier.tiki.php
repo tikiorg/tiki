@@ -55,6 +55,8 @@ function getHTMLPurifierTikiConfig() {
 
 		// Add usemap attribute to img tag
 		$def->addAttribute('img', 'usemap', 'CDATA');
+		// rel attribute for anchors
+		$def->addAttribute('a', 'rel', 'CDATA');
 
 		// Add map tag
 		$map = $def->addElement(
