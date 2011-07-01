@@ -156,7 +156,11 @@ class LogsLib extends TikiLib
 			$ip = $this->get_ip_address();
 		}
 		if ($client == '') {
-			$client = NULL;
+			if (!empty($_SERVER['HTTP_USER_AGENT'])) {
+				$client = substr($_SERVER['HTTP_USER_AGENT'],0,200);
+			} else {
+				$client = NULL;
+			}
 		} else {
 			$client = substr($client,0,200);
 		}
