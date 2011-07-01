@@ -61,6 +61,7 @@
 						   name = "go" value = "{$smod_params.go_submit}"
 							title="{tr}Search{/tr}|{tr}Go directly to a page, or search in page titles if exact match is not found.{/tr}"
 							onclick = "$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.go_action}').attr('page_selected','');" />
+					<input type="hidden" name="exact_match" value="" />
 				{/if}
 			{if $smod_params.show_edit_button eq 'y' and $tiki_p_edit eq 'y'}
 					<input type = "submit" class = "wikiaction tips{if $smod_params.default_button eq 'edit'} button_default{/if}"
@@ -97,7 +98,7 @@ function submitSearch{{$search_mod_usage_counter}}() {
     {/jq}
 	{if $smod_params.use_autocomplete eq 'y'}
 		{capture name="selectFn"}select: function(event, item) {ldelim}
-	$('#search-module-form{$search_mod_usage_counter}').attr('page_selected', item.item.value);
+	$('#search-module-form{$search_mod_usage_counter}').attr('page_selected', item.item.value).find("input[name=exact_match]").val("On");
 {rdelim}, open: function(event, item) {ldelim}
 	$(".search_mod_buttons", "#search-module-form{$search_mod_usage_counter}").hide();
 {rdelim}, close: function(event, item) {ldelim}
