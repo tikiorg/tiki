@@ -645,7 +645,6 @@ END;
 	$cat_objid = (int) $_REQUEST['accountId'];
 	$categories = array();
 	$cat_object_exists = (bool) $_REQUEST['accountId'];
-	include_once ('lib/categories/categlib.php');
 	include_once ('categorize_list.php');
 
 	if (!empty($_REQUEST['accountId'])) {
