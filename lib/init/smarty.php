@@ -130,7 +130,7 @@ class Smarty_Tiki extends Smarty
 				if ($script_name != 'tiki-admin.php' && strpos($script_name, 'tiki-admin') === 0) {
 					$str = substr($script_name, 10, strpos($script_name, '.php') - 10);
 					$str = ucwords(trim(str_replace('_', ' ', $str)));
-					$this->assign('headtitle', tra('Admin ' . $str));
+					$this->assign('headtitle', 'Admin ' . $str);
 					// get_strings tra('Admin Calendar') tra('Admin Actionlog') tra('Admin Banners') tra('Admin Calendars') tra('Admin Categories') tra('Admin Content Templates')
 					//			tra('Admin Contribution') tra('Admin Cookies') tra('Admin Dsn') tra('Admin External Wikis') tra('Admin Forums') tra('Admin Hotwords') tra('Admin Html Page Content')
 					//			tra('Admin Html Pages') tra('Admin Integrator Rules') tra('Admin Integrator') tra('Admin Keywords') tra('Admin Layout') tra('Admin Links') tra('Admin Mailin')
@@ -140,14 +140,14 @@ class Smarty_Tiki extends Smarty
 				} else if (strpos($script_name, 'tiki-list') === 0) {
 					$str = substr($script_name, 9, strpos($script_name, '.php') - 9);
 					$str = ucwords(trim(str_replace('_', ' ', $str)));
-					$this->assign('headtitle', tra('List ' . $str));
+					$this->assign('headtitle', 'List ' . $str);
 					// get_strings tra('List Articles') tra('List Banners') tra('List Blogs') tra('List Cache') tra('List Comments') tra('List Contents') tra('List Faqs') tra('List File Gallery')
 					//			tra('List Gallery') tra('List Integrator Repositories') tra('List Kaltura Entries') tra('List Object Permissions') tra('List Posts') tra('List Quizzes') tra('List Submissions')
 					//			tra('List Surveys') tra('List Trackers') tra('List Users') tra('List Pages')
 				} else if (strpos($script_name, 'tiki-view') === 0) {
 					$str = substr($script_name, 9, strpos($script_name, '.php') - 9);
 					$str = ucwords(trim(str_replace('_', ' ', $str)));
-					$this->assign('headtitle', tra('View ' . $str));
+					$this->assign('headtitle', 'View ' . $str);
 					// get_strings tra('View Articles') tra('View Banner') tra('View Blog Post Image') tra('View Blog Post') tra('View Blog') tra('View Cache') tra('View Faq') tra('View Forum Thread')
 					//			 tra('View Minical Topic') tra('View Sheets') tra('View Tracker Item') tra('View Tracker More Info') tra('View Tracker')
 				} else { // still not set? guess...
