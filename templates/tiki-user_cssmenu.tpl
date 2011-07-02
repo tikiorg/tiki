@@ -35,7 +35,7 @@
 					{if $translate eq 'n'}
 						{if $prefs.menus_item_names_raw eq 'n'}{$chdata.name|escape}{else}{$chdata.name}{/if}
 					{else}
-						{tr}{if $prefs.menus_item_names_raw eq 'n'}{$chdata.name|escape}{else}{$chdata.name}{/if}{/tr}
+						{if $prefs.menus_item_names_raw eq 'n'}{$chdata.name|escape}{else}{$chdata.name}{/if}
 					{/if}
 				{/capture}
 				<span class="menuText">{$smarty.capture.chdataName}</span>
