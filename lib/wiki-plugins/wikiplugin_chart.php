@@ -52,22 +52,22 @@ function wikiplugin_chart_info() {
 			'y1' => array(
 				'required' => false,
 				'name' => tra('Dependant series'),
-				'description' => tra(''),
+				'description' => tra('Description needed'),
 			),
 			'y2' => array(
 				'required' => false,
 				'name' => tra('Dependant series'),
-				'description' => tra(''),
+				'description' => tra('Description needed'),
 			),
 			'y3' => array(
 				'required' => false,
 				'name' => tra('Dependant series'),
-				'description' => tra(''),
+				'description' => tra('Description needed'),
 			),
 			'y4' => array(
 				'required' => false,
 				'name' => tra('Dependant series'),
-				'description' => tra(''),
+				'description' => tra('Description needed'),
 			),
 			'color' => array(
 				'required' => false,
