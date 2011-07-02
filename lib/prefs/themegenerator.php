@@ -41,7 +41,7 @@ function prefs_themegenerator_list($partial = false) {
 		),
 		'themegenerator_theme' => array(
 			'name' => tra('Custom Theme'),
-			'description' => tra(''),
+			'description' => tra('Description needed'),
 			'type' => 'list',
 			'options' => $themes,
 			'dependencies' => 'themegenerator_feature',
