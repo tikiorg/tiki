@@ -121,7 +121,7 @@
 				{cycle values="even,odd" print=false}
 				{if $customfields[ir].show}
 								<div class="clearfix {cycle}">
-									<div class="floatleft">{tr}{$customfields[ir].label}:{/tr}</div>
+									<div class="floatleft">{$customfields[ir].label}:</div>
 									<div class="floatright">{$customfields[ir].value}</div>
 								</div>
 				{/if}
