@@ -173,7 +173,7 @@
 			{foreach item=itemField from=$userItem.field_values}
 				{if $itemField.value ne '' or !empty($itemField.categs) or !empty($itemField.links)}
 		<div class="clearfix {cycle}">
-			<div class="floatleft" style="width: 25%">{tr}{$itemField.name}:{/tr}</div>
+			<div class="floatleft" style="width: 25%">{$itemField.name}:</div>
 			<div class="floatright" style="width: 75%">{trackeroutput field=$itemField item=$itemField}</div>
 		</div>
 				{/if}
