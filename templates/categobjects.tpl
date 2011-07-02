@@ -17,7 +17,7 @@
    {foreach key=t item=i from=$listcat}
    	{if $params.showtype ne 'n'}
       <li>
-      {tr}{$t}:{/tr}
+      {$t}:
       <ul class="{if $params.one eq 'y'}catitemsone{else}catitems{/if}">
 	{/if}
         {section name=o loop=$i}
