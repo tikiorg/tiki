@@ -108,7 +108,7 @@
 					{if $article_attributes}
 						<div class="articleattributes">
 							{foreach from=$article_attributes key=attname item=attvalue}
-							{tr}{$attname|escape}:{/tr} {$attvalue|escape}<br />
+							{$attname|escape}: {$attvalue|escape}<br />
 							{/foreach}
 						</div>
 					{/if}
