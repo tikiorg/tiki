@@ -576,31 +576,31 @@ class ToolbarInline extends Toolbar
 		switch( $tagName ) {
 		case 'bold':
 			$label = tra('Bold');
-			$icon = tra('pics/icons/text_bold.png');
+			$icon = 'pics/icons/text_bold.png';
 			$wysiwyg = 'Bold';
 			$syntax = '__text__';
 			break;
 		case 'italic':
 			$label = tra('Italic');
-			$icon = tra('pics/icons/text_italic.png');
+			$icon = 'pics/icons/text_italic.png';
 			$wysiwyg = 'Italic';
 			$syntax = "''text''";
 			break;
 		case 'underline':
 			$label = tra('Underline');
-			$icon = tra('pics/icons/text_underline.png');
+			$icon = 'pics/icons/text_underline.png';
 			$wysiwyg = 'Underline';
 			$syntax = "===text===";
 			break;
 		case 'strike':
 			$label = tra('Strikethrough');
-			$icon = tra('pics/icons/text_strikethrough.png');
+			$icon = 'pics/icons/text_strikethrough.png';
 			$wysiwyg = 'Strike';
 			$syntax = '--text--';
 			break;
 		case 'nonparsed':
 			$label = tra('Non-parsed (Wiki syntax does not apply)');
-			$icon = tra('pics/icons/noparse.png');
+			$icon = 'pics/icons/noparse.png';
 			$wysiwyg = null;
 			$syntax = '~np~text~/np~';
 			break;
@@ -654,7 +654,7 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 		switch( $tagName ) {
 		case 'center':
 			$label = tra('Align Center');
-			$icon = tra('pics/icons/text_align_center.png');
+			$icon = 'pics/icons/text_align_center.png';
 			$wysiwyg = 'JustifyCenter';
 			if ($prefs['feature_use_three_colon_centertag'] == 'y') {
 				$syntax = ":::text:::";
@@ -664,25 +664,25 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			break;
 		case 'rule':
 			$label = tra('Horizontal Bar');
-			$icon = tra('pics/icons/page.png');
+			$icon = 'pics/icons/page.png';
 			$wysiwyg = 'HorizontalRule';
 			$syntax = '---';
 			break;
 		case 'pagebreak':
 			$label = tra('Page Break');
-			$icon = tra('pics/icons/page_break.png');
+			$icon = 'pics/icons/page_break.png';
 			$wysiwyg = 'PageBreak';
 			$syntax = '...page...';
 			break;
 		case 'box':
 			$label = tra('Box');
-			$icon = tra('pics/icons/box.png');
+			$icon = 'pics/icons/box.png';
 			$wysiwyg = 'Box';
 			$syntax = '^text^';
 			break;
 		case 'email':
 			$label = tra('Email');
-			$icon = tra('pics/icons/email.png');
+			$icon = 'pics/icons/email.png';
 			$wysiwyg = null;			
 			$syntax = '[mailto:email@example.com|text]';
 			break;				
@@ -702,7 +702,7 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			break;
 		case 'toc':
 			$label = tra('Table of contents');
-			$icon = tra('pics/icons/book.png');
+			$icon = 'pics/icons/book.png';
 			$wysiwyg = 'TOC';
 			$syntax = '{maketoc}';
 			break;
@@ -742,13 +742,13 @@ class ToolbarLineBased extends ToolbarInline // Will change in the future
 		switch( $tagName ) {
 		case 'list':
 			$label = tra('Unordered List');
-			$icon = tra('pics/icons/text_list_bullets.png');
+			$icon = 'pics/icons/text_list_bullets.png';
 			$wysiwyg =  'BulletedList';
 			$syntax = '*text';
 			break;
 		case 'numlist':
 			$label = tra('Ordered List');
-			$icon = tra('pics/icons/text_list_numbers.png');
+			$icon = 'pics/icons/text_list_numbers.png';
 			$wysiwyg =  'NumberedList';
 			$syntax = '#text';
 			break;
@@ -812,7 +812,7 @@ class ToolbarPicker extends Toolbar
 		case 'color':
 			$wysiwyg = 'TextColor';
 			$label = tra('Foreground color');
-			$icon = tra('pics/icons/palette.png');
+			$icon = 'pics/icons/palette.png';
 			$rawList = array();
 			$styleType = 'color';
 			
@@ -841,7 +841,7 @@ class ToolbarPicker extends Toolbar
 
 		case 'bgcolor':
 			$label = tra('Background Color');
-			$icon = tra('pics/icons/palette_bg.png');
+			$icon = 'pics/icons/palette_bg.png';
 			$wysiwyg = 'BGColor';
 			$styleType = 'background-color';
 			
@@ -968,7 +968,7 @@ class ToolbarDialog extends Toolbar
 		switch( $tagName ) {
 		case 'tikilink':
 			$label = tra('Wiki Link');
-			$icon = tra('pics/icons/page_link.png');
+			$icon = 'pics/icons/page_link.png';
 			$wysiwyg = '';	// cke link dialog now adapted for wiki links
 			$list = array('Wiki Link',
 						'<label for="tbWLinkDesc">Show this text</label>',
@@ -988,7 +988,7 @@ class ToolbarDialog extends Toolbar
 		case 'link':
 			$wysiwyg = 'Link';
 			$label = tra('External Link');
-			$icon = tra('pics/icons/world_link.png');
+			$icon = 'pics/icons/world_link.png';
 			$list = array('External Link',
 						'<label for="tbLinkDesc">Show this text</label>',
 						'<input type="text" id="tbLinkDesc" class="ui-widget-content ui-corner-all" style="width: 98%" />',
@@ -1005,7 +1005,7 @@ class ToolbarDialog extends Toolbar
 			break;
 
 		case 'table':
-			$icon = tra('pics/icons/table.png');
+			$icon = 'pics/icons/table.png';
 			$wysiwyg = 'Table';
 			$label = tra('Table Builder');
 			$list = array('Table Builder',
@@ -1016,7 +1016,7 @@ class ToolbarDialog extends Toolbar
 			break;
 
 		case 'find':
-			$icon = tra('pics/icons/find.png');
+			$icon = 'pics/icons/find.png';
 			$wysiwyg = 'Find';
 			$label = tra('Find Text');
 			$list = array('Find Text',
@@ -1033,7 +1033,7 @@ class ToolbarDialog extends Toolbar
 			break;
 
 		case 'replace':
-			$icon = tra('pics/icons/text_replace.png');
+			$icon = 'pics/icons/text_replace.png';
 			$wysiwyg = 'Replace';
 			$label = tra('Text Replace');
 			$tool_prefs[] = 'feature_wiki_replace';
@@ -1260,7 +1260,7 @@ class ToolbarFileGallery extends Toolbar
 	function __construct() // {{{
 	{
 		$this->setLabel( tra('Choose or upload images') )
-			->setIcon( tra('pics/icons/pictures.png') )
+			->setIcon( 'pics/icons/pictures.png' )
 				->setWysiwygToken( '' )	/* disabling this by default for wysiwyg - make a custom tool with tikiimage as the wysiwyg token to override */
 					->setType('FileGallery')
 						->addRequiredPreference('feature_filegals_manager');
@@ -1300,7 +1300,7 @@ class ToolbarSwitchEditor extends Toolbar
 	function __construct() // {{{
 	{
 		$this->setLabel( tra('Switch Editor (wiki or WYSIWYG)') )
-			->setIcon( tra('pics/icons/pencil_go.png') )
+			->setIcon( 'pics/icons/pencil_go.png' )
 				->setWysiwygToken( 'tikiswitch' )
 					->setType('SwitchEditor')
 						->addRequiredPreference('feature_wysiwyg');
@@ -1452,7 +1452,7 @@ class ToolbarSheet extends Toolbar
 		switch( $tagName ) {
 			case 'sheetsave':
 				$label = tra('Save Sheet');
-				$icon = tra('pics/icons/disk.png');
+				$icon = 'pics/icons/disk.png';
 				$syntax = '
 					$("#saveState").hide();
 					$.sheet.saveSheet($.sheet.tikiSheet, function() {
@@ -1461,91 +1461,91 @@ class ToolbarSheet extends Toolbar
 				break;
 			case 'addrow':
 				$label = tra('Add Row After Selection Or To End If No Selection');
-				$icon = tra('pics/icons/sheet_row_add.png');
+				$icon = 'pics/icons/sheet_row_add.png';
 				$syntax = 'sheetInstance.controlFactory.addRow();';	// add row after end to workaround bug in jquery.sheet.js 1.0.2
 				break;														// TODO fix properly for 5.1
 			case 'addrowmulti':
 				$label = tra('Add Multiple Rows After Selection Or To End If No Selection');
-				$icon = tra('pics/icons/sheet_row_add_multi.png');
+				$icon = 'pics/icons/sheet_row_add_multi.png';
 				$syntax = 'sheetInstance.controlFactory.addRowMulti();';
 				break;
 			case 'addrowbefore':
 				$label = tra('Add Row Before Selection Or To End If No Selection');
-				$icon = tra('pics/icons/sheet_row_add.png');
+				$icon = 'pics/icons/sheet_row_add.png';
 				$syntax = 'sheetInstance.controlFactory.addRow(null, true);';	// add row after end to workaround bug in jquery.sheet.js 1.0.2
 				break;	
 			case 'deleterow':
 				$label = tra('Delete Selected Row');
-				$icon = tra('pics/icons/sheet_row_delete.png');
+				$icon = 'pics/icons/sheet_row_delete.png';
 				$syntax = 'sheetInstance.deleteRow();';
 				break;
 			case 'addcolumn':
 				$label = tra('Add Column After Selection Or To End If No Selection');
-				$icon = tra('pics/icons/sheet_col_add.png');
+				$icon = 'pics/icons/sheet_col_add.png';
 				$syntax = 'sheetInstance.controlFactory.addColumn();';	// add col before current or at end if none selected
 				break;
 			case 'deletecolumn':
 				$label = tra('Delete Selected Column');
-				$icon = tra('pics/icons/sheet_col_delete.png');
+				$icon = 'pics/icons/sheet_col_delete.png';
 				$syntax = 'sheetInstance.deleteColumn();';
 				break;
 			case 'addcolumnmulti':
 				$label = tra('Add Multiple Columns After Selection Or To End If No Selection');
-				$icon = tra('pics/icons/sheet_col_add_multi.png');
+				$icon = 'pics/icons/sheet_col_add_multi.png';
 				$syntax = 'sheetInstance.controlFactory.addColumnMulti();';
 				break;
 			case 'addcolumnbefore':
 				$label = tra('Add Column Before Selection Or To End If No Selection');
-				$icon = tra('pics/icons/sheet_col_add.png');
+				$icon = 'pics/icons/sheet_col_add.png';
 				$syntax = 'sheetInstance.controlFactory.addColumn(null, true);';	// add col before current or at end if none selected
 				break;
 			case 'sheetgetrange':
 				$label = tra('Get Cell Range');
-				$icon = tra('pics/icons/sheet_get_range.png');
+				$icon = 'pics/icons/sheet_get_range.png';
 				$syntax = 'sheetInstance.getTdRange(null, sheetInstance.obj.formula().val()); return false;';
 				break;
 			case 'sheetfind':
 				$label = tra('Find');
-				$icon = tra('pics/icons/find.png');
+				$icon = 'pics/icons/find.png';
 				$syntax = 'sheetInstance.cellFind();';
 				break;
 			case 'sheetrefresh':
 				$label = tra('Refresh Calculations');
-				$icon = tra('pics/icons/arrow_refresh.png');
+				$icon = 'pics/icons/arrow_refresh.png';
 				$syntax = 'sheetInstance.calc();';
 				break;
 			case 'sheetclose':
 				$label = tra('Finish Editing');
-				$icon = tra('pics/icons/close.png');
+				$icon = 'pics/icons/close.png';
 				$syntax = '$.sheet.manageState(sheetInstance.obj.parent(), true);';	// temporary workaround TODO properly
 				break;
 			case 'bold':
 				$label = tra('Bold');
-				$icon = tra('pics/icons/text_bold.png');
+				$icon = 'pics/icons/text_bold.png';
 				$wysiwyg = 'Bold';
 				$syntax = 'sheetInstance.cellStyleToggle("styleBold");';
 				break;
 			case 'italic':
 				$label = tra('Italic');
-				$icon = tra('pics/icons/text_italic.png');
+				$icon = 'pics/icons/text_italic.png';
 				$wysiwyg = 'Italic';
 				$syntax = 'sheetInstance.cellStyleToggle("styleItalics");';
 				break;
 			case 'underline':
 				$label = tra('Underline');
-				$icon = tra('pics/icons/text_underline.png');
+				$icon = 'pics/icons/text_underline.png';
 				$wysiwyg = 'Underline';
 				$syntax = 'sheetInstance.cellStyleToggle("styleUnderline");';
 				break;
 			case 'strike':
 				$label = tra('Strikethrough');
-				$icon = tra('pics/icons/text_strikethrough.png');
+				$icon = 'pics/icons/text_strikethrough.png';
 				$wysiwyg = 'Strike';
 				$syntax = 'sheetInstance.cellStyleToggle("styleLineThrough");';
 				break;
 			case 'center':
 				$label = tra('Align Center');
-				$icon = tra('pics/icons/text_align_center.png');
+				$icon = 'pics/icons/text_align_center.png';
 				$syntax = 'sheetInstance.cellStyleToggle("styleCenter");';
 				break;
 			default:
