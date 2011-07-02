@@ -155,8 +155,8 @@ function prefs_global_list($partial = false) {
 			'type' => 'list',
 			'help' => 'Maps',
 			'options' => array(
-				'180' => tra('[-180 180]'),
-				'360' => tra('[0 360]'),
+				'180' => '[-180 180]',
+				'360' => '[0 360]',
 			),
 			'default' => '180',
 		),
