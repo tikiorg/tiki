@@ -50,8 +50,8 @@ function wikiplugin_carousel_info()
 				'required' => false,
 				'name' => tra('Caption height'),
 				'description' => tra('The height of the caption. This is a fraction of the height of the images.'),
-				'filter' => 'striptags',
-				'accepted' => tra('real'),
+				'filter' => 'alnum',
+				'accepted' => tra('real between 0 and 1'),
 				'default' => '.2',
 			),
 			'displayProgressBar' => array(
@@ -110,14 +110,14 @@ function wikiplugin_carousel_info()
 				'name' => tra('Thumbnail box height'),
 				'description' => tra('Height of thumbnail box in pixels'),
 				'filter' => 'digits',
-				'accepted' => tra(''),
 				'default' => '20',
 			),
 			'thumbnailFontSize' => array(
 				'required' => false,
 				'name' => tra('Thumbnail box font size'),
 				'description' => tra('Font size of thumbnail box in em.'),
-				'filter' => 'striptags',
+				'filter' => 'alnum',
+				'accepted' => tra('real between 0 and 1'),				
 				'default' => '.7',
 			),
 		),
@@ -142,6 +142,7 @@ function wikiplugin_carousel( $body, $params )
 	}
 	$jqparams = array();
 	foreach ($params as $param=>$value) {
+		if ($param == 'sort_mode' || $param == 'fgalId') continue;
 		$jqparams[] = "$param : $value";
 	}
 	$jq = '
@@ -152,7 +153,11 @@ function wikiplugin_carousel( $body, $params )
 	$headerlib->add_jq_onready($jq);
 	$html = '<div id="'.$unique.'" class="clearfix"><ul>';
 	foreach ($files['data'] as $file) {
-		$html .= '<li><img src="tiki-download_file.php?fileId='.$file['fileId'].'&display" alt="'.htmlentities($file['description']).'" /></li>';
+		$html .= '<li><img src="tiki-download_file.php?fileId='.$file['fileId'].'&amp;display" alt="'.htmlentities($file['description']).'" />';
+		if (!empty($file['description'])) {
+			$html .= '<p>'.htmlentities($file['description']).'</p>';
+		}
+		$html .= '</li>';
 	}
 	$html .= '</ul></div>';
 	return "~np~$html~/np~";
