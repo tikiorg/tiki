@@ -13,7 +13,7 @@ function prefs_print_list() {
 			'type' => 'list',
 			'options' => array(
 				'none' => tra('Disabled'),
-				'webkit' => tra('Webkit (wkhtmltopdf)'),
+				'webkit' => tra('WebKit (wkhtmltopdf)'),
 				'webservice' => tra('Webservice'),
 			),
 			'default' => 'none',
@@ -26,7 +26,7 @@ function prefs_print_list() {
 			'default' => '',
 		),
 		'print_pdf_webkit_path' => array(
-			'name' => tra('Webkit path'),
+			'name' => tra('WebKit path'),
 			'description' => tra('Full path to the wkhtmltopdf executable to generate the PDF document with.'),
 			'type' => 'text',
 			'size' => 50,
