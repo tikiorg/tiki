@@ -44,7 +44,7 @@ chdir($tikiPath);
 require_once('tiki-setup.php');
 require_once('lang/langmapping.php');
 
-if (!$tikilib->page_exists($wikiPage)) {
+if (isset($wikiPage) && !$tikilib->page_exists($wikiPage)) {
 	die("\nERROR: $wikiPage doesn't exist\n\n");
 }
 
