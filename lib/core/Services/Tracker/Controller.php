@@ -254,6 +254,81 @@ class Services_Tracker_Controller
 		);
 	}
 
+	function action_import_fields($input)
+	{
+		if (! Perms::get()->admin_trackers) {
+			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
+		}
+
+		$trackerId = $input->trackerId->int();
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception(tr('Tracker not found'), 404);
+		}
+		
+		$raw = $input->raw->none();
+		$preserve = $input->preserve_ids->int();
+
+		$data = TikiLib::lib('tiki')->read_raw($raw);
+
+		if (! $data) {
+			throw new Services_Exception(tr('Invalid data provided'), 400);
+		}
+
+		foreach ($data as $info) {
+			$this->importField($trackerId, new JitFilter($info), $preserve);
+		}
+
+		return array(
+			'trackerId' => $trackerId,
+		);
+	}
+
+	private function importField($trackerId, $field, $preserve)
+	{
+		$fieldId = $field->fieldId->int();
+
+		if (! $preserve) {
+			$fieldId = 0;
+		}
+
+		$description = $field->descriptionStaticText->text();
+		if (! $description) {
+			$description = $field->description->text();
+		}
+
+		$data = array(
+			'name' => $field->name->text(),
+			'type' => $field->type->word(),
+			'position' => $field->position->int(),
+			'options' => $field->options->none(),
+
+			'isMain' => $field->isMain->alpha(),
+			'isSearchable' => $field->isSearchable->alpha(),
+			'isTblVisible' => $field->isTblVisible->alpha(),
+			'isPublic' => $field->isPublic->alpha(),
+			'isHidden' => $field->isHidden->alpha(),
+			'isMandatory' => $field->isMandatory->alpha(),
+			'isMultilingual' => $field->isMultilingual->alpha(),
+
+			'description' => $description,
+			'descriptionIsParsed' => $field->descriptionIsParsed->alpha(),
+
+			'validation' => $field->validation->word(),
+			'validationParam' => $field->validationParam->none(),
+			'validationMessage' => $field->validationMessage->text(),
+
+			'itemChoices' => '',
+
+			'editableBy' => $field->editableBy->groupname(),
+			'visibleBy' => $field->visibleBy->groupname(),
+			'errorMsg' => $field->errorMsg->text(),
+		);
+
+		$this->updateField($trackerId, $fieldId, $data);
+	}
+
 	private function exportField($field)
 	{
 		return <<<EXPORT
@@ -360,7 +435,7 @@ EXPORT;
 			$trackerId,
 			$fieldId,
 			isset($properties['name']) ? $properties['name'] : $field['name'],
-			$field['type'],
+			isset($properties['type']) ? $properties['type'] : $field['type'],
 			isset($properties['isMain']) ? $properties['isMain'] : $field['isMain'],
 			isset($properties['isSearchable']) ? $properties['isSearchable'] : $field['isSearchable'],
 			isset($properties['isTblVisible']) ? $properties['isTblVisible'] : $field['isTblVisible'],
@@ -371,7 +446,7 @@ EXPORT;
 			isset($properties['options']) ? $properties['options'] : $field['options'],
 			isset($properties['description']) ? $properties['description'] : $field['description'],
 			isset($properties['isMultilingual']) ? $properties['isMultilingual'] : $field['isMultilingual'],
-			$field['itemChoices'],
+			'', // itemChoices
 			isset($properties['errorMsg']) ? $properties['errorMsg'] : $field['errorMsg'],
 			isset($properties['visibleBy']) ? $properties['visibleBy'] : $field['visibleBy'],
 			isset($properties['editableBy']) ? $properties['editableBy'] : $field['editableBy'],
