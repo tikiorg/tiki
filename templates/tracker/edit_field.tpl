@@ -74,6 +74,38 @@
 		<input type="text" name="validation_message" value="{$field.validationMessage|escape}"/>
 	</label>
 
+	<h4>{tr}Permissions{/tr}</h4>
+
+	<label>
+		{tr}Visibility{/tr}
+		<select name="visibility">
+			<option value="n"{if $field.isHidden eq 'n'} selected="selected"{/if}>{tr}Visible by all{/tr}</option>
+			<option value="y"{if $field.isHidden eq 'y'} selected="selected"{/if}>{tr}Visible by administrators only{/tr}</option>
+			<option value="p"{if $field.isHidden eq 'p'} selected="selected"{/if}>{tr}Editable by administrators only{/tr}</option>
+			<option value="c"{if $field.isHidden eq 'c'} selected="selected"{/if}>{tr}Editable by administrators and creator only{/tr}</option>
+		</select>
+		<div class="description">
+			{tr}Creator requires a user field with auto-assign to creator (1){/tr}
+		</div>
+	</label>
+
+	<label>
+		{tr}Visible by{/tr}
+		<input type="text" class="groupselector" name="visible_by"
+			value="{foreach from=$field.visibleBy item=group}{$group|escape}, {/foreach}"/>
+	</label>
+
+	<label>
+		{tr}Editable by{/tr}
+		<input type="text" class="groupselector" name="editable_by"
+			value="{foreach from=$field.editableBy item=group}{$group|escape}, {/foreach}"/>
+	</label>
+	
+	<label>
+		{tr}Error Message{/tr}
+		<input type="text" name="error_message" value="{$field.errorMsg|escape}"/>
+	</label>
+
 	<div>
 		<input type="submit" name="submit" value="{tr}Save{/tr}"/>
 		<input type="hidden" name="controller" value="tracker"/>

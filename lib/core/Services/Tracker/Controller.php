@@ -143,6 +143,12 @@ class Services_Tracker_Controller
 		$typeInfo = $types[$field['type']];
 
 		if ($input->name->text()) {
+			$input->replaceFilters(array(
+				'visible_by' => 'groupname',
+				'editable_by' => 'groupname',
+			));
+			$visibleBy = $input->asArray('visible_by', ',');
+			$editableBy = $input->asArray('editable_by', ',');
 			$this->updateField($trackerId, $fieldId, array(
 				'name' => $input->name->text(),
 				'description' => $input->description->text(),
@@ -152,6 +158,10 @@ class Services_Tracker_Controller
 				'validationParam' => $input->validation_parameter->none(),
 				'validationMessage' => $input->validation_message->text(),
 				'isMultilingual' => $input->multilingual->int() ? 'y' : 'n',
+				'visibleBy' => array_filter(array_map('trim', $visibleBy)),
+				'editableBy' => array_filter(array_map('trim', $editableBy)),
+				'isHidden' => $input->visibility->alpha(),
+				'errorMsg' => $input->error_message->text(),
 			));
 		}
 
@@ -301,16 +311,16 @@ class Services_Tracker_Controller
 			isset($properties['isSearchable']) ? $properties['isSearchable'] : $field['isSearchable'],
 			isset($properties['isTblVisible']) ? $properties['isTblVisible'] : $field['isTblVisible'],
 			isset($properties['isPublic']) ? $properties['isPublic'] : $field['isPublic'],
-			$field['isHidden'],
+			isset($properties['isHidden']) ? $properties['isHidden'] : $field['isHidden'],
 			isset($properties['isMandatory']) ? $properties['isMandatory'] : $field['isMandatory'],
 			isset($properties['position']) ? $properties['position'] : $field['position'],
 			isset($properties['options']) ? $properties['options'] : $field['options'],
 			isset($properties['description']) ? $properties['description'] : $field['description'],
 			isset($properties['isMultilingual']) ? $properties['isMultilingual'] : $field['isMultilingual'],
 			$field['itemChoices'],
-			$field['errorMsg'],
-			$field['visibleBy'],
-			$field['editableBy'],
+			isset($properties['errorMsg']) ? $properties['errorMsg'] : $field['errorMsg'],
+			isset($properties['visibleBy']) ? $properties['visibleBy'] : $field['visibleBy'],
+			isset($properties['editableBy']) ? $properties['editableBy'] : $field['editableBy'],
 			isset($properties['descriptionIsParsed']) ? $properties['descriptionIsParsed'] : $field['descriptionIsParsed'],
 			isset($properties['validation']) ? $properties['validation'] : $field['validation'],
 			isset($properties['validationParam']) ? $properties['validationParam'] : $field['validationParam'],
