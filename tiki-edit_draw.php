@@ -19,12 +19,12 @@ ask_ticket('draw');
 if (is_numeric($_REQUEST['fileId']) == false) $_REQUEST['fileId'] = 0; 
 if (is_numeric($_REQUEST['galleryId']) == false) $_REQUEST['galleryId'] = 0;
 
-$fileId = $_REQUEST['fileId'];
-$galleryId = $_REQUEST['galleryId'];
+$fileId = htmlspecialchars($_REQUEST['fileId']);
+$galleryId = htmlspecialchars($_REQUEST['galleryId']);
 
-$label = $_REQUEST['label'];
-$index = $_REQUEST['index'];
-$page = $_REQUEST['page'];
+$label = htmlspecialchars($_REQUEST['label']);
+$index = htmlspecialchars($_REQUEST['index']);
+$page = htmlspecialchars($_REQUEST['page']);
 
 $smarty->assign( "page", $page );
 $smarty->assign( "isFromPage", isset($page) );
@@ -108,17 +108,16 @@ $headerlib->add_jq_onready("
 		}			
 	}
 	
-	window.loadSvg = function(svg) {
-		window.svgCanvas.setSvgString(svg);
-	};
-	
 	window.saveSvg = function() {
 		window.svgCanvas.getSvgString()(window.svgFileId ? window.handleSvgDataUpdate : window.handleSvgDataNew);
+		
+		window.svgWindow.svgCanvas.undoMgr.resetUndoStack();
 	};
 	
 	$('#svgedit').load(function() {
-		var frame = document.getElementById('svgedit');
+		var frame = window.svgFrame = document.getElementById('svgedit');
 		window.svgCanvas = new embedded_svg_edit(frame);
+		window.svgWindow = frame.contentWindow;
 		
 		// Hide main button, as we will be controlling new/load/save etc from the host document
 		var doc;
@@ -146,9 +145,16 @@ $headerlib->add_jq_onready("
 		
 		if (window.svgFileId) {
 			$('<div />').load('tiki-download_file.php?fileId=$fileId&r=' + Math.floor(Math.random() * 9999999999), function(o) {
-				window.loadSvg(o);
+				window.svgCanvas.setSvgString(o);
 			});
 		}
+		
+		window.svgWindow.onbeforeunload = function() {};
+		window.onbeforeunload = function() {
+			if ( window.svgWindow.svgCanvas.undoMgr.getUndoStackSize() > 1 ) {
+				return '".tra("There are unsaved changes, leave page?")."';
+			}
+		};
 	});
 ");
 // Display the template
