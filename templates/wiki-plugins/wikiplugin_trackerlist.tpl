@@ -193,7 +193,8 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 		{assign var=itemoff value=$itemoff+1}
 		{else}{* a pretty tpl *}
 {* ------------------------------------ *}
-   			{include file='tracker_pretty_item.tpl' fields=$items[user].field_values item=$items[user] wiki=$tpl}
+   			{assign var=itemoff value=$itemoff+1}
+			{include file='tracker_pretty_item.tpl' fields=$items[user].field_values item=$items[user] wiki=$tpl}
 			{trackerheader level=-1 title='' inTable=''}
 		{/if}
 	{/section}
