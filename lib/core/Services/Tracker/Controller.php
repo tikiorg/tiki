@@ -167,7 +167,6 @@ class Services_Tracker_Controller
 		$trackerId = $input->trackerId->int();
 		$fields = $input->fields->int();
 
-
 		$definition = Tracker_Definition::get($trackerId);
 
 		if (! $definition) {
@@ -180,16 +179,23 @@ class Services_Tracker_Controller
 			}
 		}
 
-		$trklib = TikiLib::lib('trk');
-		foreach ($fields as $fieldId) {
-			$trklib->remove_tracker_field($fieldId, $trackerId);
-		}
+		if ($input->confirm->int()) {
+			$trklib = TikiLib::lib('trk');
+			foreach ($fields as $fieldId) {
+				$trklib->remove_tracker_field($fieldId, $trackerId);
+			}
 
-		return array(
-			'status' => 'DONE',
-			'trackerId' => $trackerId,
-			'fields' => $fields,
-		);
+			return array(
+				'status' => 'DONE',
+				'trackerId' => $trackerId,
+				'fields' => $fields,
+			);
+		} else {
+			return array(
+				'trackerId' => $trackerId,
+				'fields' => $fields,
+			);
+		}
 	}
 
 	private function buildOptions($input, $typeInfo)
