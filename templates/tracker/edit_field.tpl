@@ -19,6 +19,15 @@
 	
 	<p>{$info.description|escape}</p>
 
+	{if $field.type eq 't' or $field.type eq 'a'}
+		{* Pretend the field attribute is just an option as it only exists for two field types *}
+		<label>
+			<input type="checkbox" name="multilingual" value="1"
+				{if $field.isMultilingual eq 'y'}checked="checked"{/if}/>
+			{tr}Multilingual{/tr}
+		</label>
+	{/if}
+
 	{foreach from=$info.params key=param item=def}
 		<label>
 			{$def.name|escape}

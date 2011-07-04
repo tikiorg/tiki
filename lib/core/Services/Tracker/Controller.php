@@ -151,6 +151,7 @@ class Services_Tracker_Controller
 				'validation' => $input->validation_type->word(),
 				'validationParam' => $input->validation_parameter->none(),
 				'validationMessage' => $input->validation_message->text(),
+				'isMultilingual' => $input->multilingual->int() ? 'y' : 'n',
 			));
 		}
 
@@ -305,7 +306,7 @@ class Services_Tracker_Controller
 			isset($properties['position']) ? $properties['position'] : $field['position'],
 			isset($properties['options']) ? $properties['options'] : $field['options'],
 			isset($properties['description']) ? $properties['description'] : $field['description'],
-			$field['isMultilingual'],
+			isset($properties['isMultilingual']) ? $properties['isMultilingual'] : $field['isMultilingual'],
 			$field['itemChoices'],
 			$field['errorMsg'],
 			$field['visibleBy'],
