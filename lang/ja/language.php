@@ -11964,7 +11964,7 @@ $lang=Array(
 "Edit this template:" => "Edit this template:",
 "Create new template" => "Create new template",
 "Templates" => "Templates",
-"Admin dsn" => "Admin dsn",
+"Admin DSN" => "Admin DSN",
 "Create/edit dsn" => "Create/edit dsn",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)" => "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)",
 "Admin Hotwords" => "Admin Hotwords",

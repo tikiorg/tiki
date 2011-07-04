@@ -50,7 +50,7 @@ if (isset($_REQUEST["rollback"])) {
 	die;
 }
 $version = $histlib->get_version($page, $version);
-$version["data"] = $tikilib->parse_data($version["data"], array('preview_mode' => true));
+$version["data"] = $tikilib->parse_data($version["data"], array('preview_mode' => true, 'is_html' => $version['is_html']));
 $smarty->assign_by_ref('preview', $version);
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

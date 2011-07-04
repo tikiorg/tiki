@@ -78,11 +78,13 @@ class HistLib extends TikiLib
 		
 		$query = "update `tiki_pages` set `data`=?,`lastModif`=?,`user`=?,`comment`=?,`version`=`version`+1,`ip`=?, `description`=?, `is_html`=?";
 		$bindvars = array($res['data'], $res['lastModif'], $res['user'], $res['comment'], $res['ip'], $res['description'], $res['is_html']);
-		
+
 		// handle rolling back once page has been edited in a different editor (wiki or wysiwyg) based on is_html in history
 		if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_optional'] == 'y' && $prefs['wysiwyg_memo'] == 'y') {
 			if ($res['is_html'] == 1) {
-				$bindvars[] = 'y';
+				// big hack: when you move to wysiwyg you do not come back usually -> wysiwyg should be a column in tiki_history
+				$info = $this->get_page_info($page);
+				$bindvars[] = $info['wysiwyg'];
 			} else {
 				$bindvars[] = 'n';
 			}

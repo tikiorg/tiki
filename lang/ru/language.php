@@ -12559,7 +12559,7 @@ $lang=Array(
 "Upload" => "Закачать",
 "Remove all cookies" => "Убрать все cookies",
 "filter" => "фильтр",
-"Admin dsn" => "Управлять DSN",
+"Admin DSN" => "Управлять DSN",
 "Create/edit dsn" => "Создать/редактировать DSN",
 "Create/Edit External Wiki" => "Создать/Редактировать внешние Wiki",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)" => "URL (Используйте  чтобы заменить именем страницы URL пример: http://www.example.com/tiki-index.php?page=)",

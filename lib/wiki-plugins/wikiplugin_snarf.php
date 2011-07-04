@@ -26,12 +26,14 @@ function wikiplugin_snarf_info() {
 				'name' => tra('Regular Expression Pattern'),
 				'description' => tra('PCRE-compliant regular expression pattern to find the parts you want changed'),
 				'default' => '',
+				'filter' => 'striptags'
 			),
 			'regexres' => array(
 				'required' => false,
 				'name' => tra('Regular Expression Replacement'),
 				'description' => tra('PCRE-compliant regular expression replacement syntax showing what the content should be changed to'),
 				'default' => '',
+				'filter' => 'striptags'
 			),
 			'wrap' => array(
 				'required' => false,
@@ -42,13 +44,15 @@ function wikiplugin_snarf_info() {
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
 					array('text' => tra('No'), 'value' => 0)
-				)
+				),
+				'filter' => 'int',
 			),
 			'colors' => array(
 				'required' => false,
 				'name' => tra('Colors'),
 				'description' => tra('Syntax highlighting to use for code snippets. Available: php, html, sql, javascript, css, java, c, doxygen, delphi, ...'),
-				'default' => NULL
+				'default' => NULL,
+				'filter' => 'striptags'
 			),
 			'ln' => array(
 				'required' => false,
@@ -59,7 +63,8 @@ function wikiplugin_snarf_info() {
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
 					array('text' => tra('No'), 'value' => 0)
-				)
+				),
+				'filter' => 'int'
 			),
 			'wiki' => array(
 				'required' => false,
@@ -70,7 +75,8 @@ function wikiplugin_snarf_info() {
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
 					array('text' => tra('No'), 'value' => 0)
-				)
+				),
+				'filter' => 'int',
 			),
 			'rtl' => array(
 				'required' => false,
@@ -81,7 +87,8 @@ function wikiplugin_snarf_info() {
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
 					array('text' => tra('No'), 'value' => 0)
-				)
+				),
+				'filter' => 'int'
 			),
 			'ishtml' => array(
 				'required' => false,
@@ -92,19 +99,22 @@ function wikiplugin_snarf_info() {
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
 					array('text' => tra('No'), 'value' => 0)
-				)
+				),
+				'filter' => 'int'
 			),
 			'cache' => array(
 				'required' => false,
 				'name' => tra('Cache Url'),
 				'description' => tra('Cache time in minutes. Default is to use site preference, Set to 0 for no cache.'),
 				'default' => '',
+				'filter' => 'int'
 			),
 			'ajax' => array(
 				'required' => false,
 				'name' => tra('Label'),
 				'description' => tra('Text to click on to fetch the url via ajax'),
 				'default' => '',
+				'filter' => 'striptags'
 			),
 		),
 	);
@@ -129,9 +139,9 @@ function wikiplugin_snarf($data, $params)
 				continue;
 			}
 			if (!empty($params['href'])) {
-				$params['href'] .= '&';
+				$params['href'] .= '&amp;';
 			}
-			$params['href'] .= $key.'='.$value;
+			$params['href'] .= $key.'='.urlencode($value);
 		}
 		$smarty->assign('snarfParams', $params);
 		return $smarty->fetch('wiki-plugins/wikiplugin_snarf.tpl');
