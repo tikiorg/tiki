@@ -1,4 +1,4 @@
-<form method="post" action="tiki-ajax_services.php">
+<form class="simple" method="post" action="tiki-ajax_services.php">
 	<label>
 		{tr}Name:{/tr}
 		<input type="text" name="name" value="{$name|escape}"/>
@@ -14,6 +14,11 @@
 				</option>
 			{/foreach}
 		</select>
+		{foreach from=$types item=info key=k}
+			<div class="description {$k|escape}" style="display: none;">
+				{$info.description|escape}
+			</div>
+		{/foreach}
 	</label>
 	<label>
 		{tr}Description:{/tr}

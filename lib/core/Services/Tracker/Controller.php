@@ -37,7 +37,11 @@ class Services_Tracker_Controller
 			throw new Services_Exception(tr('Type does not exist'), 400);
 		}
 
-		if (! empty($name)) {
+		if ($input->type->word()) {
+			if (empty($name)) {
+				throw new Services_Exception(tr('Field name cannot be empty'), 409);
+			}
+
 			if ($trklib->get_field_id($trackerId, $name)) {
 				throw new Services_Exception(tr('Field name already exists in the tracker'), 409);
 			}
