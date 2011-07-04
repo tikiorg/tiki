@@ -7,6 +7,11 @@ require_once('lib/language/FileType/Tpl.php');
 require_once('lib/language/GetStrings.php');
 require_once('lib/language/WriteFile.php');
 
+require_once('lib/setup/timer.class.php');
+
+$timer = new timer();
+$timer->start();
+
 $getStrings = new Language_GetStrings(new Language_CollectFiles, new Language_WriteFile);
 
 if (isset($_GET['lang']) && !empty($_GET['lang'])) {
@@ -32,3 +37,4 @@ $getStrings->collectFiles->setIncludeFiles(array(
 
 $getStrings->run();
 
+echo "\nTotal time spent: " . $timer->stop() . " seconds\n";
