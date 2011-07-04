@@ -47,6 +47,24 @@ class Language_WriteFileTest extends TikiTestCase
 		$this->assertEquals(file_get_contents(__DIR__ . '/fixtures/language_simple.php'), file_get_contents($this->filePath));
 	}
 
+	public function testWriteStringsToFile_shouldKeepTranslationsEvenIfTheyAreEqualToEnglishString()
+	{
+		$obj = $this->getMock('Language_WriteFile', array('getCurrentTranslations'));
+		$obj->expects($this->exactly(1))->method('getCurrentTranslations')->will($this->returnValue(
+			array(
+				'Unused string' => 'Some translation',
+				'Used string' => 'Another translation',
+				'Translation is the same as English string' => 'Translation is the same as English string',
+			)
+		));
+		
+		$strings = array('First string', 'Second string', 'Used string', 'Translation is the same as English string', 'etc');
+		
+		$obj->writeStringsToFile($strings, $this->filePath);
+		
+		$this->assertEquals(file_get_contents(__DIR__ . '/fixtures/language_with_translations.php'), file_get_contents($this->filePath));
+	}
+	
 	public function testWriteStringsToFile_shouldIgnoreUnusedStrings()
 	{
 		$obj = $this->getMock('Language_WriteFile', array('getCurrentTranslations'));
@@ -54,10 +72,11 @@ class Language_WriteFileTest extends TikiTestCase
 			array(
 				'Unused string' => 'Some translation',
 				'Used string' => 'Another translation',
+				'Translation is the same as English string' => 'Translation is the same as English string',
 			)
 		));
 		
-		$strings = array('First string', 'Second string', 'Used string', 'etc');
+		$strings = array('First string', 'Second string', 'Used string', 'Translation is the same as English string', 'etc');
 		
 		$obj->writeStringsToFile($strings, $this->filePath);
 		

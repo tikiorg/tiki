@@ -12,6 +12,12 @@ class Language_WriteFile
 	protected $filePath;
 	
 	/**
+	 * Current language translations.
+	 * @var array
+	 */
+	protected $translations;
+	
+	/**
 	 * Update language.php file with new strings.
 	 * 
 	 * @param array $strings English strings collected from source files
@@ -30,9 +36,10 @@ class Language_WriteFile
 		
 		$this->filePath = $filePath;
 		
-		$translations = $this->getCurrentTranslations();
+		$this->translations = $this->getCurrentTranslations();
+		// format collected strings as array equal to language.php array
 		$strings = array_combine($strings, $strings);
-		$entries = $this->mergeStringsWithTranslations($strings, $translations);
+		$entries = $this->mergeStringsWithTranslations($strings, $this->translations);
 		
 		$handle = fopen($this->filePath, 'w');
 		
@@ -85,7 +92,8 @@ class Language_WriteFile
 		$source = Language::addPhpSlashes($source);
 		$trans = Language::addPhpSlashes($trans);
 
-		if ($source == $trans) {
+		if ($source == $trans
+			&& !in_array($trans, $this->translations)) { // keep string as translated even if translation is equal to source English string
 			return "// \"$source\" => \"$trans\",\n";
 		} else {
 			return "\"$source\" => \"$trans\",\n";
