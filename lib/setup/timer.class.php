@@ -7,30 +7,30 @@
 
 class timer
 {
-    function parseMicro($micro)
-		{
-        list($micro, $sec) = explode(' ', microtime());
+	function parseMicro($micro)
+	{
+		list($micro, $sec) = explode(' ', microtime());
 
-        return $sec + $micro;
-    }
+		return $sec + $micro;
+	}
 
-    function start($timer = 'default', $restart = FALSE)
-		{
-        //if (isset($this->timer[$timer]) && !$restart) {
-            // report error - timer already exists
-        //}
-        $this->timer[$timer] = $this->parseMicro(microtime());
-    }
+	function start($timer = 'default', $restart = FALSE)
+	{
+		//if (isset($this->timer[$timer]) && !$restart) {
+			// report error - timer already exists
+		//}
+		$this->timer[$timer] = $this->parseMicro(microtime());
+	}
 
-    function stop($timer = 'default')
-		{
-        $result = $this->elapsed($timer);
-        unset ($this->timer[$timer]);
-        return $result;
-    }
+	function stop($timer = 'default')
+	{
+		$result = $this->elapsed($timer);
+		unset ($this->timer[$timer]);
+		return $result;
+	}
 
-    function elapsed($timer = 'default')
-		{
-        return $this->parseMicro(microtime()) - $this->timer[$timer];
-    }
+	function elapsed($timer = 'default')
+	{
+		return $this->parseMicro(microtime()) - $this->timer[$timer];
+	}
 }
