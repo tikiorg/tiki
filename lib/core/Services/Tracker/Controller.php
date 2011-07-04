@@ -221,6 +221,60 @@ class Services_Tracker_Controller
 		}
 	}
 
+	function action_export_fields($input)
+	{
+		if (! Perms::get()->admin_trackers) {
+			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
+		}
+		
+		$trackerId = $input->trackerId->int();
+		$fields = $input->fields->int();
+
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception(tr('Tracker not found'), 404);
+		}
+
+		$data = "";
+		foreach ($fields as $fieldId) {
+			$field = $field = $definition->getField($fieldId);
+
+			if (! $field) {
+				throw new Services_Exception(tr('Field does not exist in tracker'), 404);
+			}
+
+			$data .= $this->exportField($field);
+		}
+
+		return array(
+			'trackerId' => $trackerId,
+			'fields' => $fields,
+			'export' => $data,
+		);
+	}
+
+	private function exportField($field)
+	{
+		return <<<EXPORT
+[FIELD{$field['fieldId']}]
+fieldId = {$field['fieldId']}
+name = {$field['name']}
+position = {$field['position']}
+type = {$field['type']}
+options = {$field['options']}
+isMain = {$field['isMain']}
+isTblVisible = {$field['isTblVisible']}
+isSearchable = {$field['isSearchable']}
+isPublic = {$field['isPublic']}
+isHidden = {$field['isHidden']}
+isMandatory = {$field['isMandatory']}
+description = {$field['description']}
+descriptionIsParsed = {$field['descriptionIsParsed']}
+
+EXPORT;
+	}
+
 	private function buildOptions($input, $typeInfo)
 	{
 		$parts = array();

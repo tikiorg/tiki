@@ -14,6 +14,7 @@
 			<table id="fields" class="normal">
 				<thead>
 					<tr>
+						<th></th>
 						<th>{tr}ID{/tr}</th>
 						<th>{tr}Name{/tr}</th>
 						<th>{tr}Type{/tr}</th>
@@ -29,10 +30,15 @@
 				</tbody>
 			</table>
 			<div>
-				<input type="submit" name="submit" value="{tr}Save{/tr}"/>
+				<select name="action">
+					<option value="save_fields">{tr}Save All{/tr}</option>
+					<option value="remove_fields">{tr}Remove Selected{/tr}</option>
+					<option value="export_fields">{tr}Export Selected{/tr}</option>
+				</select>
+				<input type="submit" name="submit" value="{tr}Go{/tr}"/>
 				<input type="hidden" name="controller" value="tracker"/>
-				<input type="hidden" name="action" value="save_fields"/>
 				<input type="hidden" name="trackerId" value="{$trackerId|escape}"/>
+				<input type="hidden" name="confirm" value="0"/>
 			</div>
 		</form>
 
@@ -43,12 +49,35 @@
 		{jq}
 			var trackerId = {{$trackerId|escape}};
 			$('.save-fields').submit(function () {
-				var form = this;
-				$.ajax('tiki-ajax_services.php', {
-					method: 'POST',
-					data: $(form).serialize(),
-					dataType: 'json'
-				});
+				var form = this, confirmed = false
+
+				if ($(form.action).val() === 'remove_fields') {
+					confirmed = confirm(tr('Do you really want to delete the selected fields?'));
+					$(form.confirm).val(confirmed ? '1' : '0');
+
+					if (! confirmed) {
+						return false;
+					}
+				}
+
+				if ($(form.action).val() === 'export_fields') {
+					$(form).tracker_service_dialog({
+						title: tr('Export'),
+						data: $(form).serialize(),
+						load: function () {
+							$('textarea', this).select();
+						}
+					});
+				} else {
+					$.ajax('tiki-ajax_services.php', {
+						type: 'POST',
+						data: $(form).serialize(),
+						dataType: 'json',
+						success: function () {
+							$container.tracker_load_fields(trackerId);
+						}
+					});
+				}
 				return false;
 			});
 			var $container = $('.save-fields tbody')
