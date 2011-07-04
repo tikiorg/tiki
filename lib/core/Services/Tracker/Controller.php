@@ -158,6 +158,40 @@ class Services_Tracker_Controller
 		);
 	}
 
+	function action_remove_fields($input)
+	{
+		if (! Perms::get()->admin_trackers) {
+			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
+		}
+		
+		$trackerId = $input->trackerId->int();
+		$fields = $input->fields->int();
+
+
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception(tr('Tracker not found'), 404);
+		}
+
+		foreach ($fields as $fieldId) {
+			if (! $definition->getField($fieldId)) {
+				throw new Services_Exception(tr('Field does not exist in tracker'), 404);
+			}
+		}
+
+		$trklib = TikiLib::lib('trk');
+		foreach ($fields as $fieldId) {
+			$trklib->remove_tracker_field($fieldId, $trackerId);
+		}
+
+		return array(
+			'status' => 'DONE',
+			'trackerId' => $trackerId,
+			'fields' => $fields,
+		);
+	}
+
 	private function buildOptions($input, $typeInfo)
 	{
 		$parts = array();

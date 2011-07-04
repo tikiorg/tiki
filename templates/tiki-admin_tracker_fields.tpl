@@ -22,6 +22,7 @@
 						<th>{tr}Search{/tr}</th>
 						<th>{tr}Public{/tr}</th>
 						<th>{tr}Mandatory{/tr}</th>
+						<th>{tr}Actions{/tr}</th>
 					</tr>
 				</thead>
 				<tbody>
