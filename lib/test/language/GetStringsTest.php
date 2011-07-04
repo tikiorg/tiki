@@ -104,7 +104,20 @@ class Language_GetStringsTest extends TikiTestCase
 	public function testRun_shouldReturnCollectedStrings()
 	{
 		$files = array('file1', 'file2', 'file3');
-		$strings = array('string1', 'string2', 'string3', 'string4');
+		
+		$string1 = new stdClass;
+		$string1->name = 'string1';
+		
+		$string2 = new stdClass;
+		$string2->name = 'string2';
+		
+		$string3 = new stdClass;
+		$string3->name = 'string3';
+		
+		$string4 = new stdClass;
+		$string4->name = 'string4';
+		
+		$strings = array($string1->name => $string1, $string2->name => $string2, $string3->name => $string3, $string4->name => $string4);
 		
 		$this->collectFiles->expects($this->exactly(1))->method('setExtensions');
 		$this->collectFiles->expects($this->exactly(1))->method('run')->will($this->returnValue($files));

@@ -169,13 +169,28 @@ class Language_GetStrings
 	{
 		$strings = array();
 		
+		// strings collected per file
+		$filesStrings = array();
+		
 		if (!empty($files)) {
 			foreach ($files as $file) {
-				$strings = array_merge($strings, $this->collectStrings($file));
+				$filesStrings[$file] = $this->collectStrings($file);
 			}
 		}
 
-		return array_values(array_unique($strings));
+		// join strings collected per file into a single array
+		// and remove duplicated strings
+		foreach ($filesStrings as $file => $fileStrings) {
+			foreach ($fileStrings as $str) {
+				if (!isset($strings[$str])) {
+					$string = new stdClass;
+					$string->name = $str;
+					$strings[$str] = $string;
+				}
+			}
+		}
+				
+		return $strings;
 	}
 	
 	public function writeToFiles($strings)
@@ -199,7 +214,8 @@ class Language_GetStrings
 		}
 
 		foreach ($languages as $lang) {
-			$this->writeFile->writeStringsToFile($strings, __DIR__ . '/../../lang/' . $lang . '/language.php');
+			$langPath = __DIR__ . '/../../lang/' . $lang . '/language.php';
+			$this->writeFile->writeStringsToFile($strings, $langPath);
 		}
 	}
 	
@@ -208,7 +224,7 @@ class Language_GetStrings
 		if (empty($this->fileTypes)) {
 			throw new Language_Exception('No Language_FileType found.');
 		}
-				
+		
 		$this->collectFiles->setExtensions($this->extensions);
 		$files = $this->collectFiles->run('.');
 		$strings = $this->scanFiles($files);

@@ -42,12 +42,47 @@ class Language_WriteFileTest extends TikiTestCase
 	
 	public function testWriteStringsToFile_shouldWriteSimpleStrings()
 	{
-		$strings = array('First string', 'Second string', 'etc');
+		$string1 = new stdClass;
+		$string1->name = 'First string';
+		
+		$string2 = new stdClass;
+		$string2->name = 'Second string';
+		
+		$string3 = new stdClass;
+		$string3->name = 'etc';
+		
+		$strings = array($string1->name => $string1, $string2->name => $string2, $string3->name => $string3);
+		
 		$this->obj->writeStringsToFile($strings, $this->filePath);
 		$this->assertEquals(file_get_contents(__DIR__ . '/fixtures/language_simple.php'), file_get_contents($this->filePath));
 	}
 
-	public function testWriteStringsToFile_shouldKeepTranslationsEvenIfTheyAreEqualToEnglishString()
+	public function writeStringsToFile_provider()
+	{
+		$string1 = new stdClass;
+		$string1->name = 'First string';
+		
+		$string2 = new stdClass;
+		$string2->name = 'Second string';
+		
+		$string3 = new stdClass;
+		$string3->name = 'Used string';
+		
+		$string4 = new stdClass;
+		$string4->name = 'Translation is the same as English string';
+		
+		$string5 = new stdClass;
+		$string5->name = 'etc';
+		
+		$strings = array($string1->name => $string1, $string2->name => $string2, $string3->name => $string3, $string4->name => $string4, $string5->name => $string5);
+		
+		return array(array($strings));
+	}
+	
+	/**
+	 * @dataProvider writeStringsToFile_provider
+	 */
+	public function testWriteStringsToFile_shouldKeepTranslationsEvenIfTheyAreEqualToEnglishString($strings)
 	{
 		$obj = $this->getMock('Language_WriteFile', array('getCurrentTranslations'));
 		$obj->expects($this->exactly(1))->method('getCurrentTranslations')->will($this->returnValue(
@@ -57,15 +92,16 @@ class Language_WriteFileTest extends TikiTestCase
 				'Translation is the same as English string' => 'Translation is the same as English string',
 			)
 		));
-		
-		$strings = array('First string', 'Second string', 'Used string', 'Translation is the same as English string', 'etc');
-		
+				
 		$obj->writeStringsToFile($strings, $this->filePath);
 		
 		$this->assertEquals(file_get_contents(__DIR__ . '/fixtures/language_with_translations.php'), file_get_contents($this->filePath));
 	}
 	
-	public function testWriteStringsToFile_shouldIgnoreUnusedStrings()
+	/**
+	 * @dataProvider writeStringsToFile_provider
+	 */
+	public function testWriteStringsToFile_shouldIgnoreUnusedStrings($strings)
 	{
 		$obj = $this->getMock('Language_WriteFile', array('getCurrentTranslations'));
 		$obj->expects($this->exactly(1))->method('getCurrentTranslations')->will($this->returnValue(
@@ -75,11 +111,25 @@ class Language_WriteFileTest extends TikiTestCase
 				'Translation is the same as English string' => 'Translation is the same as English string',
 			)
 		));
-		
-		$strings = array('First string', 'Second string', 'Used string', 'Translation is the same as English string', 'etc');
-		
+				
 		$obj->writeStringsToFile($strings, $this->filePath);
 		
 		$this->assertEquals(file_get_contents(__DIR__ . '/fixtures/language_with_translations.php'), file_get_contents($this->filePath));
+	}
+	
+	/**
+	 * @dataProvider writeStringsToFile_provider
+	 */
+	public function testWriteStringsToFile_shouldUnsetTranslationFromStringObjects($strings)
+	{
+		$obj = $this->getMock('Language_WriteFile', array('getCurrentTranslations'));
+		$obj->expects($this->exactly(1))->method('getCurrentTranslations')->will($this->returnValue(
+			array(
+				'First string' => 'Some translation',
+			)
+		));
+		
+		$obj->writeStringsToFile($strings, $this->filePath);
+		$this->assertFalse(isset($strings['First string']->translation));
 	}
 }

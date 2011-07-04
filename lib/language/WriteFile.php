@@ -37,22 +37,22 @@ class Language_WriteFile
 		$this->filePath = $filePath;
 		
 		$this->translations = $this->getCurrentTranslations();
-		// format collected strings as array equal to language.php array
-		$strings = array_combine($strings, $strings);
 		$entries = $this->mergeStringsWithTranslations($strings, $this->translations);
-		
+
 		$handle = fopen($this->filePath, 'w');
 		
 		if ($handle) {
 			fwrite($handle, "<?php\n");
 			fwrite($handle, "\$lang = array(\n");
 			
-			foreach ($entries as $source => $trans) {
-				fwrite($handle, $this->formatString($source, $trans));
+			foreach ($entries as $entry) {
+				fwrite($handle, $this->formatString($entry));
 			}
 			
 			fwrite($handle, ");\n");
 		}
+		
+		fclose($handle);
 	}
 	
 	/**
@@ -69,10 +69,11 @@ class Language_WriteFile
 		$entries = array();
 		
 		foreach ($strings as $string) {
-			if (isset($translations[$string])) {
-				$entries[$string] = $translations[$string];
+			if (isset($translations[$string->name])) {
+				$string->translation = $translations[$string->name];
+				$entries[$string->name] = $string;
 			} else {
-				$entries[$string] = $string;
+				$entries[$string->name] = $string;
 			} 
 		}
 		
@@ -83,20 +84,21 @@ class Language_WriteFile
 	 * Format a pair source and translation as
 	 * a string to be written to a language.php file
 	 * 
-	 * @param string $source the source string in English
-	 * @param string $trans the translation
+	 * @param stdClass $entry an object with the English source string and the translation if any 
 	 * @return string
 	 */
-	protected function formatString($source, $trans)
+	protected function formatString(stdClass $entry)
 	{
-		$source = Language::addPhpSlashes($source);
-		$trans = Language::addPhpSlashes($trans);
-
-		if ($source == $trans
-			&& !in_array($trans, $this->translations)) { // keep string as translated even if translation is equal to source English string
-			return "// \"$source\" => \"$trans\",\n";
-		} else {
+		$source = Language::addPhpSlashes($entry->name);
+		
+		if (isset($entry->translation)) {
+			$trans = Language::addPhpSlashes($entry->translation);
+			// make sure translation is unset since each $entry is a object
+			// passed by reference for every call of $this->writeStringsToFile()
+			unset($entry->translation);
 			return "\"$source\" => \"$trans\",\n";
+		} else {
+			return "// \"$source\" => \"$source\",\n";
 		}
 	}
 	

@@ -15,8 +15,7 @@ $timer->start();
 $getStrings = new Language_GetStrings(new Language_CollectFiles, new Language_WriteFile);
 
 if (isset($_GET['lang']) && !empty($_GET['lang'])) {
-	$lang = filter_input(INPUT_GET, 'lang', FILTER_SANITIZE_STRING);
-	$getStrings->setLanguages($lang);
+	$getStrings->setLanguages($_GET['lang']);
 }
 
 $getStrings->addFileType(new Language_FileType_Php);
