@@ -148,6 +148,9 @@ class Services_Tracker_Controller
 				'description' => $input->description->text(),
 				'descriptionIsParsed' => $input->description_parse->int() ? 'y' : 'n',
 				'options' => $this->buildOptions($input->option, $typeInfo),
+				'validation' => $input->validation_type->word(),
+				'validationParam' => $input->validation_parameter->none(),
+				'validationMessage' => $input->validation_message->text(),
 			));
 		}
 
@@ -155,6 +158,15 @@ class Services_Tracker_Controller
 			'field' => $field,
 			'info' => $typeInfo,
 			'options' => $this->parseOptions($field['options_array'], $typeInfo),
+			'validation_types' => array(
+				'' => tr('None'),
+				'captcha' => tr('Captcha'),
+				'distinct' => tr('Distinct'),
+				'pagename' => tr('Page Name'),
+				'password' => tr('Password'),
+				'regex' => tr('Regular Expression (Pattern)'),
+				'username' => tr('User Name'),
+			),
 		);
 	}
 
@@ -299,9 +311,9 @@ class Services_Tracker_Controller
 			$field['visibleBy'],
 			$field['editableBy'],
 			isset($properties['descriptionIsParsed']) ? $properties['descriptionIsParsed'] : $field['descriptionIsParsed'],
-			$field['validation'],
-			$field['validationParam'],
-			$field['validationMessage']
+			isset($properties['validation']) ? $properties['validation'] : $field['validation'],
+			isset($properties['validationParam']) ? $properties['validationParam'] : $field['validationParam'],
+			isset($properties['validationMessage']) ? $properties['validationMessage'] : $field['validationMessage']
 		);
 	}
 }

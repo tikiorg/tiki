@@ -40,6 +40,31 @@
 			{/if}
 		</label>
 	{/foreach}
+
+	<h4>{tr}Validation{/tr}</h4>
+
+	<label>
+		{tr}Type{/tr}
+		<select name="validation_type">
+			{foreach from=$validation_types key=type item=label}
+				<option value="{$type|escape}"
+					{if $type eq $field.validation} selected="selected"{/if}>
+					{$label|escape}
+				</option>
+			{/foreach}
+		</select>
+	</label>
+
+	<label>
+		{tr}Parameters{/tr}
+		<input type="text" name="validation_parameter" value="{$field.validationParam|escape}"/>
+	</label>
+
+	<label>
+		{tr}Error Message{/tr}
+		<input type="text" name="validation_message" value="{$field.validationMessage|escape}"/>
+	</label>
+
 	<div>
 		<input type="submit" name="submit" value="{tr}Save{/tr}"/>
 		<input type="hidden" name="controller" value="tracker"/>
