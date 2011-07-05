@@ -33,6 +33,18 @@ function wikiplugin_relations_info()
 				'default' => null,
 				'since' => '8.0',
 			),
+			'singlelist' => array(
+				'required' => false,
+				'name' => tr('Single List'),
+				'description' => tr('Render all qualifiers into a single list without displaying the qualifier name.'),
+				'filter' => 'int',
+				'since' => '8.0',
+				'default' => 0,
+				'options' => array(
+					array('text' => tr('No'), 'value' => 0),
+					array('text' => tr('Yes'), 'value' => 1),
+				),
+			),
 		),
 	);
 }
@@ -49,11 +61,17 @@ function wikiplugin_relations($data, $params)
 		return WikiParser_PluginOutput::argumentError(array('qualifiers'));
 	}
 
+	$singlelist = false;
+	if (isset($params['singlelist']) && $params['singlelist']) {
+		$singlelist = true;
+	}
+
 	$data = array();
 
 	$relationlib = TikiLib::lib('relation');
 	foreach ($params['qualifiers'] as $qualifier) {
-		$name = tra($qualifier);
+		$name = $singlelist ? 'singlelist' : tra($qualifier);
+
 		$found = $relationlib->get_relations_from($object['type'], $object['object'], $qualifier);
 		
 		foreach ($found as $relation) {
@@ -65,6 +83,7 @@ function wikiplugin_relations($data, $params)
 
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('wp_relations', $data);
+	$smarty->assign('wp_singlelist', $singlelist);
 	return $smarty->fetch('wiki-plugins/wikiplugin_relations.tpl');
 }
 
