@@ -44,6 +44,10 @@ if ( !empty($prefs['style_option'])) {
 	}
 }
 
+// include GS960 16 column css file on pref
+if ( $prefs['style_gs960'] == 'y')
+$headerlib->add_cssfile("css/960_16_col.css",54);
+
 // include optional "custom" cascading stylesheet if there
 $custom_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'custom.css');;
 if ( !empty($custom_css)) {

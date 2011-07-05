@@ -33,7 +33,7 @@
 					</div>
 				</div>
 			{/if}							
-
+			{preference name=style_gs960}
 			{preference name=feature_fixed_width}
 			<div class="adminoptionboxchild" id="feature_fixed_width_childcontainer">
 				{preference name=layout_fixed_width}
