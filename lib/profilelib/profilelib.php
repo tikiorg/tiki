@@ -149,7 +149,7 @@ class Tiki_Profile
 		if( $profile->analyseMeta( $url ) ) {
 
 			// Obtain the page export
-			$content = TikiLib::httprequest( $url );
+			$content = TikiLib::lib('tiki')->httprequest( $url );
 			$content = html_entity_decode( $content );
 			$content = str_replace( "\r", '', $content );
 
@@ -337,7 +337,7 @@ class Tiki_Profile
 		$exportUrl = dirname( $this->url ) . '/tiki-export_wiki_pages.php?'
 			. http_build_query( array( 'page' => $pageName ) );
 
-		$content = TikiLib::httprequest( $exportUrl );
+		$content = TikiLib::lib('tiki')->httprequest( $exportUrl );
 		$content = str_replace( "\r", '', $content );
 		$begin = strpos( $content, "\n\n" );
 
@@ -361,7 +361,7 @@ class Tiki_Profile
 		$pageUrl = dirname( $this->url ) . '/tiki-index_raw.php?'
 			. http_build_query( array( 'page' => $pageName ) );
 
-		$content = TikiLib::httprequest( $pageUrl );
+		$content = TikiLib::lib('tiki')->httprequest( $pageUrl );
 		// index_raw replaces index.php with itself, so undo that here
 		$content = str_replace( 'tiki-index_raw.php', 'tiki-index.php', $content );
 
