@@ -274,7 +274,7 @@ class OIntegrate_Response
 				$files = (array) $files;
 
 				foreach( $files as $file ) {
-					$content = TikiLib::httprequest( $file );
+					$content = TikiLib::lib('tiki')->httprequest( $file );
 
 					$templates[] = array(
 						'engine' => $engine,
