@@ -41,10 +41,42 @@ class Language_GetStrings
 	 */
 	public $writeFile;
 	
-	public function __construct(Language_CollectFiles $collectFiles, Language_WriteFile $writeFile)
+	/**
+	 * Whether file paths where the string was found
+	 * is included or not in langauge.php files. Default
+	 * is false.
+	 * 
+	 * @var bool
+	 */
+	protected $outputFiles = false;
+	
+	/**
+	 * Class construct.
+	 * 
+	 * The following are valid $options:
+	 *   - 'outputFiles' => true: will write to language.php file the path
+	 *     to the files where the string was found. Default is false.
+	 *   - 'lang' => 'langCode' or 'lang' => array(list of lang codes):
+	 *     language code or list of language codes whose language.php will be
+	 *     updated. If empty, all language.php files are updated.
+	 * 
+	 * @param Language_CollectFiles $collectFiles
+	 * @param Language_WriteFile $writeFile
+	 * @param array $options list of options to control object behavior (see above)
+	 * @return null
+	 */
+	public function __construct(Language_CollectFiles $collectFiles, Language_WriteFile $writeFile, array $options = null)
 	{
 		$this->collectFiles = $collectFiles;
 		$this->writeFile = $writeFile;
+		
+		if (isset($options['outputFiles']) && $options['outputFiles'] == true) {
+			$this->outputFiles = true;
+		}
+		
+		if (isset($options['lang'])) {
+			$this->setLanguages($options['lang']);
+		}
 	}
 	
 	/**
@@ -165,7 +197,7 @@ class Language_GetStrings
 	 * @param array $files
 	 * @return array $strings translatable strings found in scanned files
 	 */
-	protected function scanFiles($files)
+	public function scanFiles($files)
 	{
 		$strings = array();
 		
@@ -185,7 +217,17 @@ class Language_GetStrings
 				if (!isset($strings[$str])) {
 					$string = new stdClass;
 					$string->name = $str;
+					
+					if ($this->outputFiles) {
+						// $string->files is an array with all the files where the string was found
+						$string->files = array($file);
+					}
+					
 					$strings[$str] = $string;
+				} else {
+					if ($this->outputFiles) {
+						$strings[$str]->files[] = $file;
+					}
 				}
 			}
 		}
@@ -215,7 +257,7 @@ class Language_GetStrings
 
 		foreach ($languages as $lang) {
 			$langPath = __DIR__ . '/../../lang/' . $lang . '/language.php';
-			$this->writeFile->writeStringsToFile($strings, $langPath);
+			$this->writeFile->writeStringsToFile($strings, $langPath, $this->outputFiles);
 		}
 	}
 	

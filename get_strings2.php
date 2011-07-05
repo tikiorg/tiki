@@ -12,11 +12,17 @@ require_once('lib/setup/timer.class.php');
 $timer = new timer();
 $timer->start();
 
-$getStrings = new Language_GetStrings(new Language_CollectFiles, new Language_WriteFile);
+$options = array();
 
 if (isset($_GET['lang']) && !empty($_GET['lang'])) {
-	$getStrings->setLanguages($_GET['lang']);
+	$options['lang'] = $_GET['lang'];
 }
+
+if (isset($_GET['outputFiles'])) {
+	$options['outputFiles'] = true;
+}
+
+$getStrings = new Language_GetStrings(new Language_CollectFiles, new Language_WriteFile, $options);
 
 $getStrings->addFileType(new Language_FileType_Php);
 $getStrings->addFileType(new Language_FileType_Tpl);

@@ -22,9 +22,10 @@ class Language_WriteFile
 	 * 
 	 * @param array $strings English strings collected from source files
 	 * @param string path to language.php file
+	 * @param bool $outputFiles whether file paths were string was found should be included or not in the output
 	 * @return null
 	 */
-	public function writeStringsToFile(array $strings, $filePath)
+	public function writeStringsToFile(array $strings, $filePath, $outputFiles = false)
 	{
 		if (empty($strings)) {
 			return false;
@@ -46,7 +47,7 @@ class Language_WriteFile
 			fwrite($handle, "\$lang = array(\n");
 			
 			foreach ($entries as $entry) {
-				fwrite($handle, $this->formatString($entry));
+				fwrite($handle, $this->formatString($entry, $outputFiles));
 			}
 			
 			fwrite($handle, ");\n");
@@ -85,10 +86,18 @@ class Language_WriteFile
 	 * a string to be written to a language.php file
 	 * 
 	 * @param stdClass $entry an object with the English source string and the translation if any 
+	 * @param bool $outputFiles whether file paths were string was found should be included or not in the output
 	 * @return string
 	 */
-	protected function formatString(stdClass $entry)
+	protected function formatString(stdClass $entry, $outputFiles = false)
 	{
+		// final formated string
+		$string = '';
+		
+		if ($outputFiles && (isset($entry->files) && !empty($entry->files))) {
+			$string .= '/* ' . join(', ', $entry->files) . " */\n";
+		}
+		
 		$source = Language::addPhpSlashes($entry->name);
 		
 		if (isset($entry->translation)) {
@@ -96,10 +105,12 @@ class Language_WriteFile
 			// make sure translation is unset since each $entry is a object
 			// passed by reference for every call of $this->writeStringsToFile()
 			unset($entry->translation);
-			return "\"$source\" => \"$trans\",\n";
+			$string .= "\"$source\" => \"$trans\",\n";
 		} else {
-			return "// \"$source\" => \"$source\",\n";
+			$string .= "// \"$source\" => \"$source\",\n";
 		}
+		
+		return $string;
 	}
 	
 	/**

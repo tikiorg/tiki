@@ -184,4 +184,86 @@ class Language_GetStringsTest extends TikiTestCase
 		
 		$this->obj->writeToFiles($strings);
 	}
+	
+	public function testWriteToFiles_shouldCallWriteStringsWithOutputFileParam()
+	{
+		$strings = array('string1', 'string2', 'string3', 'string4');
+				
+		$this->writeFile->expects($this->atLeastOnce())->method('writeStringsToFile')->with($strings, $this->stringContains('language.php'), true);
+		
+		$obj = new Language_GetStrings($this->collectFiles, $this->writeFile, array('outputFiles' => true));
+		
+		$obj->writeToFiles($strings);
+	}
+	
+	public function testWriteToFiles_shouldCallWriteStringsWithoutOutputFileParam()
+	{
+		$strings = array('string1', 'string2', 'string3', 'string4');
+				
+		$this->writeFile->expects($this->atLeastOnce())->method('writeStringsToFile')->with($strings, $this->stringContains('language.php'), false);
+		
+		$obj = new Language_GetStrings($this->collectFiles, $this->writeFile);
+		$obj->writeToFiles($strings);
+		
+		$obj = new Language_GetStrings($this->collectFiles, $this->writeFile, array('outputFiles' => false));
+		$obj->writeToFiles($strings);
+	}
+	
+	public function testScanFiles_shouldReturnStringsFromFiles()
+	{
+		$files = array('file1', 'file2', 'file3');
+		
+		$string1 = new stdClass;
+		$string1->name = 'string1';
+		
+		$string2 = new stdClass;
+		$string2->name = 'string2';
+		
+		$string3 = new stdClass;
+		$string3->name = 'string3';
+		
+		$string4 = new stdClass;
+		$string4->name = 'string4';
+		
+		$strings = array($string1->name => $string1, $string2->name => $string2, $string3->name => $string3, $string4->name => $string4);
+		
+		$obj = $this->getMock('Language_GetStrings', array('collectStrings'), array($this->collectFiles, $this->writeFile));
+		
+		$obj->expects($this->at(0))->method('collectStrings')->with('file1')->will($this->returnValue(array('string1', 'string2')));
+		$obj->expects($this->at(1))->method('collectStrings')->with('file2')->will($this->returnValue(array('string2', 'string3')));
+		$obj->expects($this->at(2))->method('collectStrings')->with('file3')->will($this->returnValue(array('string3', 'string4')));
+		
+		$this->assertEquals($strings, $obj->scanFiles($files));
+	}
+	
+	public function testScanFiles_shouldReturnInformationAboutTheFilesWhereTheStringsWereFound()
+	{
+		$files = array('file1', 'file2', 'file3');
+		
+		$string1 = new stdClass;
+		$string1->name = 'string1';
+		$string1->files = array('file1');
+		
+		$string2 = new stdClass;
+		$string2->name = 'string2';
+		$string2->files = array('file1', 'file2');
+		
+		$string3 = new stdClass;
+		$string3->name = 'string3';
+		$string3->files = array('file2', 'file3');
+		
+		$string4 = new stdClass;
+		$string4->name = 'string4';
+		$string4->files = array('file3');
+		
+		$strings = array($string1->name => $string1, $string2->name => $string2, $string3->name => $string3, $string4->name => $string4);
+		
+		$obj = $this->getMock('Language_GetStrings', array('collectStrings'), array($this->collectFiles, $this->writeFile, array('outputFiles' => true)));
+		
+		$obj->expects($this->at(0))->method('collectStrings')->with('file1')->will($this->returnValue(array('string1', 'string2')));
+		$obj->expects($this->at(1))->method('collectStrings')->with('file2')->will($this->returnValue(array('string2', 'string3')));
+		$obj->expects($this->at(2))->method('collectStrings')->with('file3')->will($this->returnValue(array('string3', 'string4')));
+		
+		$this->assertEquals($strings, $obj->scanFiles($files));
+	}
 }
