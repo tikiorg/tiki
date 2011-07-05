@@ -14,7 +14,7 @@ class Language_FileType_Tpl extends Language_FileType
 	protected $regexes = array(
 		// Only extract {tr} ... {/tr} in .tpl-files
 		// Also match {tr [args]} ...{/tr}
-		'/(?s)\{tr[^\}]*\}(.+?)\{\/tr\}/',
+		'/\{tr(?:\s+[^\}]*)?\}(.+?)\{\/tr\}/s',
 	);
 	
 	protected $extensions = array('.tpl');
@@ -22,7 +22,7 @@ class Language_FileType_Tpl extends Language_FileType
 	protected $cleanupRegexes = array(
 		// Do not translate text in Smarty comments: {* Smarty comment *}
 		// except if it is an string marked {*get_strings {tr}string{/tr} *}
-		'/(?s)\{\*get_strings(.*?)\*\}/' => '$1',
-		'/(?s)\{\*.*?\*\}/' => '', // Smarty comment
+		'/\{\*get_strings(.*?)\*\}/s' => '$1',
+		'/\{\*.*?\*\}/s' => '', // Smarty comment
 	);
 }

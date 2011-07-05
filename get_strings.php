@@ -485,7 +485,7 @@ foreach ($languages as $ksel => $sel) {
 
 			// Only extract {tr} ... {/tr} in .tpl-files
 			// Also match {tr [args]} ...{/tr}
-			preg_match_all ('/(?s)\{tr[^\}]*\}(.+?)\{\/tr\}/', $data, $uqwords);
+			preg_match_all ('/\{tr(?:\s+[^\}]*)?\}(.+?)\{\/tr\}/s', $data, $uqwords);
 		}
 
 		// Transfer unquoted words (if any) to the words array

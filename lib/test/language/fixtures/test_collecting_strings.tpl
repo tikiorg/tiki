@@ -25,3 +25,22 @@
 				{tr}Bytecode cache is not used. Using a bytecode cache (APC, XCache) is highly recommended for production environments.{/tr}
 			{/if}
 		{/tab}
+
+		{foreach from=$ins_fields key=ix item=cur_field}
+			{if ($cur_field.isHidden ne 'y' or $tiki_p_admin_trackers eq 'y') and !($tracker_info.doNotShowEmptyField eq 'y' and empty($cur_field.value) and empty($cur_field.cat) and empty($cur_field.links) and $cur_field.type ne 's' and $cur_field.type ne 'h') and ($cur_field.options_array[0] ne 'password') and (empty($cur_field.visibleBy) or in_array($default_group, $cur_field.visibleBy) or $tiki_p_admin_trackers eq 'y')}
+				<tr class="field{$cur_field.fieldId}">
+					<td class="formlabel" >
+						{$cur_field.name|escape}
+					</td>
+					<td class="formcontent">
+						{trackeroutput field=$cur_field item=$item_info showlinks=n list_mode=n inTable=y}
+					</td>
+				</tr>
+			{/if}
+		{/foreach}
+		{if $tracker_info.showCreatedView eq 'y'}
+			<tr>
+				<td class="formlabel">{tr}Created{/tr}</td>
+				<td colspan="3" class="formcontent">{$info.created|tiki_long_datetime}{if $tracker_info.showCreatedBy eq 'y'}<br />by {if $prefs.user_show_realnames eq 'y'}{if empty($info.createdBy)}Unknown{else}{$info.createdBy|username}{/if}{else}{if empty($info.createdBy)}Unknown{else}{$info.createdBy}{/if}{/if}{/if}</td>
+			</tr>
+		{/if}

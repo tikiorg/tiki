@@ -89,7 +89,7 @@ class Language_GetStringsTest extends TikiTestCase
 			'Configuration setting <em>xcache.admin.enable_auth</em> prevents from accessing statistics. This will also prevent the cache from being cleared when clearing template cache.',
 			'Used', 'Available', 'Memory', 'Hit', 'Miss', 'Cache Hits', 'Few hits recorded. Statistics may not be representative.',
 			'Low hit ratio. %0 may be misconfigured and not used.',
-			'Bytecode cache is not used. Using a bytecode cache (APC, XCache) is highly recommended for production environments.'
+			'Bytecode cache is not used. Using a bytecode cache (APC, XCache) is highly recommended for production environments.', 'Created',
 		);
 		
 		$this->assertEquals($expectedResult, $strings);
