@@ -10,6 +10,7 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 	const OPT_RELATION = 0;
 	const OPT_FILTER = 1;
 	const OPT_READONLY = 2;
+	const OPT_INVERT = 3;
 
 	public static function getTypes()
 	{
@@ -31,6 +32,15 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 					'readonly' => array(
 						'name' => tr('Read-only'),
 						'description' => tr('Only display the incoming relations instead of manipulating them.'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('No'),
+							1 => tr('Yes'),
+						),
+					),
+					'invert' => array(
+						'name' => tr('Include Invert'),
+						'description' => tr('Include invert relations in the list'),
 						'filter' => 'int',
 						'options' => array(
 							0 => tr('No'),
@@ -61,16 +71,22 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 			}
 			$data = array_unique($data);
 		} else {
-			$relations = TikiLib::lib('relation')->get_relations_from('trackeritem', $this->getItemId(), $this->getOption(self::OPT_RELATION));
-			foreach ($relations as $rel) {
-				$data[] = $rel['type'] . ':' . $rel['itemId'];
-			}
+			$data = $this->getRelations($this->getOption(self::OPT_RELATION));
 		}
 
-		sort($data);
+		if ($this->getOption(self::OPT_INVERT)) {
+			$inverts = array_diff(
+				$this->getRelations($this->getOption(self::OPT_RELATION) . '.invert'),
+				$data
+			);
+		} else {
+			$inverts = array();
+		}
+
 		return array(
 			'value' => implode("\n", $data),
 			'relations' => $data,
+			'inverts' => $inverts,
 		);
 	}
 
@@ -82,6 +98,10 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 
 		$context['labels'] = array();
 		foreach ($this->getConfiguration('relations') as $rel) {
+			list($type, $id) = explode(':', $rel, 2);
+			$context['labels'][$rel] = TikiLib::lib('object')->get_title($type, $id);
+		}
+		foreach ($this->getConfiguration('inverts') as $rel) {
 			list($type, $id) = explode(':', $rel, 2);
 			$context['labels'][$rel] = TikiLib::lib('object')->get_title($type, $id);
 		}
@@ -143,6 +163,17 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 	{
 		parse_str($this->getOption(self::OPT_FILTER), $filter);
 		return $filter;
+	}
+
+	private function getRelations($relation)
+	{
+		$data = array();
+		$relations = TikiLib::lib('relation')->get_relations_from('trackeritem', $this->getItemId(), $relation);
+		foreach ($relations as $rel) {
+			$data[] = $rel['type'] . ':' . $rel['itemId'];
+		}
+
+		return $data;
 	}
 }
 

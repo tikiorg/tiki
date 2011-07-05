@@ -9,24 +9,28 @@
 </div>
 {jq}
 (function () {
+	var inverts = {{$field.inverts|@json_encode}};
 	var container = $('#{{$field.ins_id}}_container')[0];
+
 	var createItem = function (id, label) {
 		var item = $('<li/>')
 			.text(label);
 
-		item.prepend(
-			$('<input type="hidden"/>')
-				.attr('name', "{{$field.ins_id|escape}}[]")
-				.val(id)
-		);
+		if (-1 === $.inArray(id, inverts)) {
+			item.prepend(
+				$('<input type="hidden"/>')
+					.attr('name', "{{$field.ins_id|escape}}[]")
+					.val(id)
+			);
 
-		item.append(
-			$('{{icon _id=cross}}')
-				.css('cursor', 'pointer')
-				.click(function () {
-					$(this).closest('li').remove();
-				})
-		);
+			item.append(
+				$('{{icon _id=cross}}')
+					.css('cursor', 'pointer')
+					.click(function () {
+						$(this).closest('li').remove();
+					})
+			);
+		}
 
 		$('ul', container).append(item);
 	};
@@ -35,8 +39,11 @@
 	$('textarea', container).remove();
 	var labels = {{$context.labels|@json_encode}};
 	$.each(labels, createItem);
+
+	$('ul', container).sortList();
 	$('.selector', container).change(function () {
 		createItem($(this).val(), $(this).data('label'));
+		$('ul', container).sortList();
 	});
 }());
 {/jq}
