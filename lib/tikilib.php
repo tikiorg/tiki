@@ -5462,7 +5462,7 @@ if( \$('#$id') ) {
 		$data = $this->parse_smileys($data);
 
 		// linebreaks using %%%
-		$data = str_replace("%%%", "<br />", $data);
+		$data = preg_replace("/\n?%%%/", "<br />", $data);
 
 		$data = $this->parse_data_dynamic_variables( $data, $options['language'] );
 
