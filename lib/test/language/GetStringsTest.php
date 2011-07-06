@@ -22,10 +22,17 @@ class Language_GetStringsTest extends TikiTestCase
 	
 	protected function setUp()
 	{
+		$this->baseDir = __DIR__ . '/../../../';
 		$this->collectFiles = $this->getMock('Language_CollectFiles');
 		$this->fileType = $this->getMock('Language_FileType_Php');
 		$this->writeFile = $this->getMock('Language_WriteFile', array(), array(), '', false);
-		$this->obj = new Language_GetStrings($this->collectFiles, $this->writeFile);
+		$this->obj = new Language_GetStrings($this->collectFiles, $this->writeFile, array('baseDir' => $this->baseDir));
+	}
+	
+	public function testConstruct_shouldRaiseExceptionForInvalidBaseDir()
+	{
+		$this->setExpectedException('Language_Exception');
+		$obj = new Language_GetStrings($this->collectFiles, $this->writeFile, array('baseDir' => 'invalidDir'));
 	}
 	
 	public function testAddFileType() {
@@ -120,9 +127,9 @@ class Language_GetStringsTest extends TikiTestCase
 		$strings = array($string1->name => $string1, $string2->name => $string2, $string3->name => $string3, $string4->name => $string4);
 		
 		$this->collectFiles->expects($this->exactly(1))->method('setExtensions');
-		$this->collectFiles->expects($this->exactly(1))->method('run')->will($this->returnValue($files));
-		
-		$obj = $this->getMock('Language_GetStrings', array('collectStrings', 'writeToFiles'), array($this->collectFiles, $this->writeFile));
+		$this->collectFiles->expects($this->exactly(1))->method('run')->with($this->baseDir)->will($this->returnValue($files));
+
+		$obj = $this->getMock('Language_GetStrings', array('collectStrings', 'writeToFiles'), array($this->collectFiles, $this->writeFile, array('baseDir' => $this->baseDir)));
 		
 		$obj->expects($this->exactly(1))->method('writeToFiles')->with($strings);
 		$obj->expects($this->at(0))->method('collectStrings')->with('file1')->will($this->returnValue(array('string1', 'string2')));
@@ -159,9 +166,10 @@ class Language_GetStringsTest extends TikiTestCase
 	public function testWriteToFiles_shouldCallWriteStringsToFileOnce()
 	{
 		$strings = array('string1', 'string2', 'string3', 'string4');
-				
-		$this->obj->setLanguages('en');
-		$this->writeFile->expects($this->exactly(1))->method('writeStringsToFile')->with($strings);
+		$lang = 'en';
+		
+		$this->obj->setLanguages($lang);
+		$this->writeFile->expects($this->exactly(1))->method('writeStringsToFile')->with($strings, $this->baseDir . "/lang/$lang/language.php", false);
 		
 		$this->obj->writeToFiles($strings);
 	}
@@ -191,7 +199,7 @@ class Language_GetStringsTest extends TikiTestCase
 				
 		$this->writeFile->expects($this->atLeastOnce())->method('writeStringsToFile')->with($strings, $this->stringContains('language.php'), true);
 		
-		$obj = new Language_GetStrings($this->collectFiles, $this->writeFile, array('outputFiles' => true));
+		$obj = new Language_GetStrings($this->collectFiles, $this->writeFile, array('outputFiles' => true, 'baseDir' => $this->baseDir));
 		
 		$obj->writeToFiles($strings);
 	}
@@ -202,10 +210,10 @@ class Language_GetStringsTest extends TikiTestCase
 				
 		$this->writeFile->expects($this->atLeastOnce())->method('writeStringsToFile')->with($strings, $this->stringContains('language.php'), false);
 		
-		$obj = new Language_GetStrings($this->collectFiles, $this->writeFile);
+		$obj = new Language_GetStrings($this->collectFiles, $this->writeFile, array('baseDir' => $this->baseDir));
 		$obj->writeToFiles($strings);
 		
-		$obj = new Language_GetStrings($this->collectFiles, $this->writeFile, array('outputFiles' => false));
+		$obj = new Language_GetStrings($this->collectFiles, $this->writeFile, array('outputFiles' => false, 'baseDir' => $this->baseDir));
 		$obj->writeToFiles($strings);
 	}
 	

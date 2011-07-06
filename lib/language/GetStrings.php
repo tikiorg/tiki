@@ -51,6 +51,13 @@ class Language_GetStrings
 	protected $outputFiles = false;
 	
 	/**
+	 * Directory used as base to search for strings
+	 * and to construct paths to language.php files.
+	 * @var string
+	 */
+	protected $baseDir;
+	
+	/**
 	 * Class construct.
 	 * 
 	 * The following are valid $options:
@@ -72,6 +79,16 @@ class Language_GetStrings
 		
 		if (isset($options['outputFiles']) && $options['outputFiles'] == true) {
 			$this->outputFiles = true;
+		}
+		
+		if (isset($options['baseDir'])) {
+			if (!is_dir($options['baseDir'])) {
+				throw new Language_Exception("Invalid directory {$options['baseDir']}.");
+			}
+			
+			$this->baseDir = $options['baseDir'];
+		} else {
+			$this->baseDir = getcwd();
 		}
 		
 		if (isset($options['lang'])) {
@@ -130,7 +147,7 @@ class Language_GetStrings
 		}
 		
 		foreach ($languages as $lang) {
-			if (!file_exists(__DIR__ . '/../../lang/' . $lang)) {
+			if (!file_exists($this->baseDir . '/lang/' . $lang)) {
 				throw new Language_Exception('Invalid language code.');
 			}
 		}
@@ -241,7 +258,7 @@ class Language_GetStrings
 		
 		// if $this->languages is empty use all available languages
 		if (empty($languages)) {
-			$dirs = dir(__DIR__ . '/../../lang');
+			$dirs = dir($this->baseDir . '/lang');
 			
 			while (false !== ($entry = $dirs->read())) {
 				if ($entry == '.' || $entry == '..') {
@@ -256,7 +273,7 @@ class Language_GetStrings
 		}
 
 		foreach ($languages as $lang) {
-			$langPath = __DIR__ . '/../../lang/' . $lang . '/language.php';
+			$langPath = $this->baseDir . '/lang/' . $lang . '/language.php';
 			$this->writeFile->writeStringsToFile($strings, $langPath, $this->outputFiles);
 		}
 	}
@@ -268,7 +285,7 @@ class Language_GetStrings
 		}
 		
 		$this->collectFiles->setExtensions($this->extensions);
-		$files = $this->collectFiles->run('.');
+		$files = $this->collectFiles->run($this->baseDir);
 		$strings = $this->scanFiles($files);
 		$this->writeToFiles($strings);
 	}
