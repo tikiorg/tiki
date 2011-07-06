@@ -59,7 +59,7 @@ class ShippingProvider_Ups implements ShippingProvider
 		return array(
 			'provider' => 'UPS',
 			'service' => 'UPS_CODE_' . $xp->query( 'Service/Code', $node )->item(0)->textContent,
-			'readable' => tra( 'UPS_CODE_' . $xp->query( 'Service/Code', $node )->item(0)->textContent ),
+			'readable' => tr( 'UPS_CODE_%0', $xp->query( 'Service/Code', $node )->item(0)->textContent ),
 			'cost' => $xp->query( 'TotalCharges/MonetaryValue', $node )->item(0)->textContent,
 			'currency' => $xp->query( 'TotalCharges/CurrencyCode', $node )->item(0)->textContent,
 		);
