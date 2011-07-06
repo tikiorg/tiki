@@ -16,13 +16,6 @@ function prefs_fgal_list() {
 			'perspective' => false,
 			'default' => 'files/',
 		),
-		'fgal_use_dir' => array(
-			'name' => tra('Path'),
-			'type' => 'text',
-			'help' => 'File+Gallery',
-			'perspective' => false,
-			'default' => '',
-		),
 		'fgal_batch_dir' => array(
 			'name' => tra('Path'),
 			'type' => 'text',
