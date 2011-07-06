@@ -12,8 +12,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 // Lib for user administration, groups and permissions
-// This lib uses pear so the constructor requieres
-// a pear DB object
 
 // some definitions for helping with authentication
 define("USER_VALID", 2);
