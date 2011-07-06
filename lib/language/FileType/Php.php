@@ -14,8 +14,6 @@ class Language_FileType_Php extends Language_FileType
 	protected $regexes = array(
 		'|\Wtra?\s*\(\s*\'(.+?)\'\s*[\),]|s',
 		'|\Wtra?\s*\(\s*"(.+?)"\s*[\),]|s'
-		// The regex below probably can replace the two regexes above
-		//'|\Wtra?\s*\(\s*["\'](.+?)["\']\s*[\),]|s'
 	);
 	
 	protected $extensions = array('.php');

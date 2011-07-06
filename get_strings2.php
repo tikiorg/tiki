@@ -1,5 +1,10 @@
 <?php
 
+if (php_sapi_name() != 'cli') {
+	require_once('tiki-setup.php');
+	$access->check_permission('tiki_p_admin');
+}
+
 require_once('lib/language/CollectFiles.php');
 require_once('lib/language/FileType.php');
 require_once('lib/language/FileType/Php.php');
@@ -36,6 +41,7 @@ $getStrings->collectFiles->setExcludeDirs(array(
 	'./temp/cache',	'./templates_c'
 ));
 
+// manually add the following files from skipped directories
 $getStrings->collectFiles->setIncludeFiles(array(
 	'./lang/langmapping.php', './img/flags/flagnames.php'
 ));
