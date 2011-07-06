@@ -12,8 +12,16 @@ require_once('lib/importer/tikiimporter_wiki.php');
 $access->check_permission('tiki_p_admin_importer');
 
 if (!empty($_POST['importerClassName'])) {
-    $importerClassName = $_POST['importerClassName'];
-    require_once('lib/importer/' . $importerClassName . '.php');
+    $importerClassName = filter_input(INPUT_POST, 'importerClassName', FILTER_SANITIZE_STRING);
+    
+    switch ($importerClassName) {
+    	case 'TikiImporter_Wiki_Mediawiki':
+    		require_once('lib/importer/tikiimporter_wiki_mediawiki.php');
+    		break;
+    	case 'default':
+    		break;
+    }
+    
     $importer = new $importerClassName();
     $smarty->assign('softwareName', $importer->softwareName);
 
@@ -49,7 +57,7 @@ if (isset($_SESSION['tiki_importer_feedback'])) {
     die;
 } else if (!empty($_POST['importerClassName'])) {
     // second step: display import options for the software previously chosen
-    if (!file_exists('lib/importer/' . $importerClassName . '.php')) {
+    if (!class_exists($importerClassName)) {
         $smarty->assign('msg', tra("Invalid software name"));
         $smarty->display("error.tpl");
         die;
@@ -62,10 +70,13 @@ if (isset($_SESSION['tiki_importer_feedback'])) {
     $smarty->assign('importerClassName', $importerClassName);
 } else {
     // first step: display the list of available software importers
-
-    // $availableSoftwares is an array thtat control the list of available software importers.
-    // The array key is the name of the importer class and the value is the name of the software
-    $availableSoftwares = array('tikiimporter_wiki_mediawiki' => 'Mediawiki');
+    
+	// $availableSoftwares is an array that control the list of available software importers.
+	// The array key is the name of the importer class and the value is the name of the software
+	$availableSoftwares = array(
+		'TikiImporter_Wiki_Mediawiki' => 'Mediawiki',
+	);
+	
     $smarty->assign('availableSoftwares', $availableSoftwares);
     $smarty->assign('chooseSoftware', true);
 }
