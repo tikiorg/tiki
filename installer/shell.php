@@ -6,12 +6,12 @@
 // $Id$
 
 if( ! isset( $_SERVER['argc'] ) )
-	die( "Usage: php installer/shell.php\n" );
+	die( "Usage: php installer/shell.php <domain>\n" );
 if( ! file_exists( 'db/local.php' ) )
 	die( "Tiki is not installed yet.\n" );
 
 if( isset( $_SERVER['argv'][1] ) && $_SERVER['argv'][1] != 'install' && $_SERVER['argv'][1] != 'skiperrors' ) {
-	$multi = basename( $_SERVER['argv'][1] );
+	$_SERVER['TIKI_VIRTUAL'] = basename( $_SERVER['argv'][1] );
 }
 
 require_once('lib/init/initlib.php');
