@@ -14,7 +14,7 @@
 			<table id="fields" class="normal">
 				<thead>
 					<tr>
-						<th></th>
+						<th>{select_all checkbox_names="fields[]"}</th>
 						<th>{tr}ID{/tr}</th>
 						<th>{tr}Name{/tr}</th>
 						<th>{tr}Type{/tr}</th>
