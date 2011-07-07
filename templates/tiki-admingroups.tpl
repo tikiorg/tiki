@@ -14,6 +14,9 @@
 		{/if}
 	{/if}
 	{button href="tiki-objectpermissions.php" _text="{tr}Manage permissions{/tr}"}
+	{if $prefs.feature_invite eq 'y' and $tiki_p_invite eq 'y'}
+		{button href="tiki-list_invite.php" _text="{tr}Invitation List{/tr}"}
+	{/if}
 </div>
 
 {tabset name='tabs_admingroups'}

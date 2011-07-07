@@ -10,6 +10,9 @@
 	{if $userinfo.userId}
 		{button href="?add=1" _text="{tr}Add a New User{/tr}"}
 	{/if}
+	{if $prefs.feature_invite eq 'y' and $tiki_p_invite eq 'y'}
+		{button href="tiki-list_invite.php" _text="{tr}Invitation List{/tr}"}
+	{/if}
 </div>
 
 {if $prefs.feature_intertiki eq 'y' and ($prefs.feature_intertiki_import_groups eq 'y' or $prefs.feature_intertiki_import_preferences eq 'y')}
