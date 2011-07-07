@@ -3278,7 +3278,7 @@ class FileGalLib extends TikiLib
 				return false;
 			}
 			
-			$name = basename($this->urldecode_accent($client->getUri()->getPath()));
+			$name = basename($client->getUri()->getPath());
 			$expiryDate = time();
 
 			$result = $response->getBody();
@@ -3288,6 +3288,7 @@ class FileGalLib extends TikiLib
 				}
 			}
 
+			$name = rawurldecode($name);
 			// Check expires
 			if ($expires = $response->getHeader('Expires')) {
 				$potential = strtotime($expires);
