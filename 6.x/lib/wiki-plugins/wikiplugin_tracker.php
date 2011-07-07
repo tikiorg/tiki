@@ -874,7 +874,7 @@ function wikiplugin_tracker($data, $params)
 								$url[$key] = str_replace('itemId', 'itemId='.$rid, $url[$key]);
 							}
 						}
-						header('Location: '.urlencode($url[$key]));
+						header('Location: '.$url[$key]);
 						die;
 					}
 					/* ------------------------------------- end save the item ---------------------------------- */
