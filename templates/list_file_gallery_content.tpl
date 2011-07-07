@@ -387,10 +387,6 @@
 			{/if}
 		</tr>
 	{/if}
-	{sectionelse}
-		{norecords _colspan=$nbCols}
-	{/section}
-
 	{if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y' and $prefs.javascript_enabled eq 'y'}
 		<tr>
 			<td colspan="{$nbCols}">
@@ -398,6 +394,10 @@
 			</td>
 		</tr>
 	{/if}
+	{sectionelse}
+		{norecords _colspan=$nbCols}
+	{/section}
+
 
 </table>
 {if $prefs.feature_jquery_tooltips eq 'y'}
