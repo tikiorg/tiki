@@ -4,7 +4,7 @@
 	<tr>
 		{if $gal_info.show_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
 			{assign var=nbCols value=$nbCols+1}
-			<th style="width:1%">&nbsp;</th>
+			<th class="checkbox">{select_all checkbox_names='file[],subgal[]'}</th>
 		{/if}
 
 		{if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' ) and $gal_info.show_action neq 'n' and $prefs.javascript_enabled eq 'y'}
@@ -215,7 +215,7 @@
 		<tr class="{cycle}">
 
 			{if $gal_info.show_checked neq 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
-				<td style="text-align:center;">
+				<td class="checkbox">
 					{if $files[changes].isgal eq 1}
 						{assign var='checkname' value='subgal'}
 					{else}
@@ -387,6 +387,9 @@
 			{/if}
 		</tr>
 	{/if}
+	{sectionelse}
+		{norecords _colspan=$nbCols}
+	{/section}
 	{if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y' and $prefs.javascript_enabled eq 'y'}
 		<tr>
 			<td colspan="{$nbCols}">
@@ -394,9 +397,6 @@
 			</td>
 		</tr>
 	{/if}
-	{sectionelse}
-		{norecords _colspan=$nbCols}
-	{/section}
 
 
 </table>
