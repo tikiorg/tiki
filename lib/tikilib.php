@@ -7995,12 +7995,12 @@ if( \$('#$id') ) {
 		return str_replace($accents, $convs, $str);
 	}
 
-	function urlencode_accent($str, $reencode = false) {
+	function urlencode_accent($str, $decode = false) {
 		$accents = explode(' ', 'À Á Â Ã Ä Å Ç È É Ê Ë Ì Í Î Ï Ð Ñ Ò Ó Ô Õ Ö Ù Ú Û Ü Ý ß à á â ã ä å ç è é ê ë ì í î ï ñ ò ó ô õ ö ù ú û ü ý Æ æ');
 		foreach ($accents as $a) {
 			$convs[] = urlencode($a);
 		}
-		if ($reencode) {
+		if ($decode) {
 			return str_replace($convs, $accents, $str);
 		} else {
 			return str_replace($accents, $convs, $str);
