@@ -197,12 +197,6 @@
 	adjustThumbnails()	
 {/jq}
 
-<br clear="all" />
-
-	{if $gal_info.show_checked neq 'n' and $tiki_p_admin_file_galleries eq 'y' and ( !isset($show_selectall) or $show_selectall eq 'y' )
-				and ($prefs.fgal_show_thumbactions eq 'y' or $show_details eq 'y')}
-		{select_all checkbox_names='file[],subgal[]' label="{tr}Select All{/tr}"}
-	{/if}
   {sectionelse}
     <div>
       <b>{tr}No records found{/tr}</b>
@@ -210,3 +204,8 @@
   {/section}
 
 </div>
+<br clear="all" />
+{if $gal_info.show_checked neq 'n' and $tiki_p_admin_file_galleries eq 'y' and ( !isset($show_selectall) or $show_selectall eq 'y' )
+			and ($prefs.fgal_show_thumbactions eq 'y' or $show_details eq 'y')}
+	{select_all checkbox_names='file[],subgal[]' label="{tr}Select All{/tr}"}
+{/if}
