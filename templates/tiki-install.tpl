@@ -424,13 +424,20 @@
 
 <div id="sql_failed_log" style="display:none">
  <p>{tr}During an upgrade, it is normal to have SQL failures resulting with <strong>Table already exists</strong> messages.{/tr}</p>
-{assign var='patch' value=''} 
+{assign var='patch' value=''}
 {foreach from=$installer->failures item=item}
-{if $patch ne $item[2]}{if $patch ne ''}</textarea>{/if}<p><input type="checkbox" name="validPatches[]" value="{$item[2]|escape}" id="ignore_{$item[2]|escape}" /><label for="ignore_{$item[2]|escape}">{$item[2]|escape}</label></p>
-<textarea rows="6" cols="80">{assign var='patch' value=$item[2]}{/if}
-{$item[0]}
-{$item[1]}
-
+	{if $patch ne $item[2]}
+		{if $patch ne ''}
+			</textarea>
+		{/if}
+		<p>
+			<input type="checkbox" name="validPatches[]" value="{$item[2]|escape}" id="ignore_{$item[2]|escape}" />
+			<label for="ignore_{$item[2]|escape}">{$item[2]|escape}</label>
+		</p>
+		<textarea rows="6" cols="80">{assign var='patch' value=$item[2]}
+	{/if}
+	{$item[0]}
+	{$item[1]}
 {/foreach}
 </textarea>
 <p>If you think that the errors of a patch can be ignored, please check the checkbox associated to it before clicking on continue.</p>
