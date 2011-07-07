@@ -8004,10 +8004,6 @@ if( \$('#$id') ) {
 		return str_replace($accents, $convs, $str); 
 	}
 
-	function urldecode_accent($str) {
-		return $this->urlencode_accent($str, true);
-	}
-
 	/* return the positions in data where the hdr-nth header is find
 	 */
 function get_wiki_section($data, $hdr) {
