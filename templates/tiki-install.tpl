@@ -441,7 +441,7 @@
 {/foreach}
 </textarea>
 <p>If you think that the errors of a patch can be ignored, please check the checkbox associated to it before clicking on continue.</p>
-
+<p>{select_all checkbox_names='validPatches[]' label="{tr}Check all errors{/tr}"}</p>
 </div>
 {/if}
 
