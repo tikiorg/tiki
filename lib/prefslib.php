@@ -265,7 +265,7 @@ class PreferencesLib
 	}
 
 	private function loadData( $name ) {
-		if (in_array( $name , $this->system_modified) or in_array( $name , $this->system_info)) return null;
+		if (in_array( $name , $this->system_modified)) return null;
 		if( false !== $pos = strpos( $name, '_' ) ) {
 			$file = substr( $name, 0, $pos );
 		} else {
