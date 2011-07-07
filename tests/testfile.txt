@@ -12,3 +12,4 @@ trying netbeans
 certificate accept
 start merge for 7.x
 Change by omstefanov during TikiFestStrasbourg 7 July 2011. olaf's 2nd test edit. 7 jul 2011
+Testfile changed from Torsten at 07 th of July 2011
