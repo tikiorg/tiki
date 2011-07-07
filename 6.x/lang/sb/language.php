@@ -11858,7 +11858,7 @@ $lang=Array(
 "WikiDiff::apply: line count mismatch: %s != %s" => "WikiDiff::apply: namba blong olketa line ino semsem: %s != %s",
 "WikiDiff::_check: edit sequence is non-optimal" => "WikiDiff::_check: sequence long mekem senis hemi non-optimal",
 "WikiDiff Okay: LCS = %s" => "WikiDiff Okei: LCS = %s",
-"File Galleries" => "File Gallery",
+"File Galleries" => "File gallery",
 "Home" => "Hom",
 "previous page" => "previous pej",
 "next page" => "next pej",

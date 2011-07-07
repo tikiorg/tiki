@@ -11314,7 +11314,7 @@ $lang=Array(
 "WikiDiff::_check: failed" => "WikiDigg::_provera: neuspeo",
 "WikiDiff::_check: edit sequence is non-optimal" => "WikiDiff::_provera: sekvenca izmene nije optimalna",
 "WikiDiff Okay: LCS = %s" => "WikiDiff u redu: LCS = %s",
-"File Galleries" => "Fajl galerije",
+"File Galleries" => "Galerije fajlova",
 "Wiki Home" => "Glavna Wiki strana",
 "Home" => "Glavna strana",
 "previous page" => "prošla strana",

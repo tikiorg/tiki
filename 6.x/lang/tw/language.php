@@ -11422,7 +11422,7 @@ $lang=Array(
 "WikiDiff::apply: line count mismatch: %s != %s" => "WikiDiff::apply: 行數不符: %s != %s",
 "WikiDiff::_check: failed" => "WikiDiff::_check: 失敗",
 "WikiDiff::_check: edit sequence is non-optimal" => "WikiDiff::_check: 編輯序列並非最佳",
-"File Galleries" => "檔案庫",
+"File Galleries" => "檔案總覽",
 "Wiki Home" => "Wiki 首頁",
 "Home" => "首頁",
 "previous page" => "前一頁",
