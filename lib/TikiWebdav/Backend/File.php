@@ -603,7 +603,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 	protected function performCopy( $fromPath, $toPath, $depth = ezcWebdavRequest::DEPTH_INFINITY )
 	{
-		global $prefs, $filegallib, $tikilib;
+		global $prefs, $filegallib, $tikilib, $user;
 
 		$infos = array( 'source' => array(), 'dest' => array() );
 		$infos['dest']['name'] = basename( $toPath );
