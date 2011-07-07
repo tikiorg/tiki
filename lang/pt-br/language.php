@@ -14224,7 +14224,7 @@ $lang=Array(
 "Install" => "Instalar",
 "This install will populate (or upgrade) the database" => "Nesta página você pode criar (ou atualizar) a base de dados do Tiki",
 "If you want to upgrade from a previous Tiki release, ensure that you have read and understood the <a href=\"http://doc.tiki.org/Upgrade\" target=\"_blank\">Upgrade instructions</a>" => "Se quer atualizar a sua base de dados de uma versão anterior, verifique se você entendeu as <a href=\"http://doc.tiki.org/Upgrade\" target=\"_blank\">instruções de atualização</a>",
-"A new install will populate the database" => "Uma nova instalação irá popular a base de dadosA new install will populate the database",
+"A new install will populate the database" => "Uma nova instalação irá popular a base de dados",
 "Encoding Issue" => "Problema de codificação de caracteres",
 "<p>Your database encoding is <strong>not</strong> in UTF-8.</p><p>Current encoding is <em>%0</em>. The languages that will be available for content on the site will be limited. If you plan on using languages not covered by the character set, you should re-create or alter the database so the default encoding is <em>utf8</em>.</p>" => "<p>O mapa de caracteres de sua base de dados <strong>não</strong> é UTF-8.</p><p>O mapa atual é <em>%0</em>. Os idiomas disponíveis para o conteúdo do site será limitado. Se você planeja usar um idioma que não seja suportado pelo mapa de caracteres em uso, você deve recriar ou alterar a base de dados para que o mapa de caracteres padrão seja <em>utf8</em>.</p>",
 "Character Set Conversion" => "Conversor do mapa de caracteres",
