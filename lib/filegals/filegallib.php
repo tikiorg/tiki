@@ -3277,8 +3277,8 @@ class FileGalLib extends TikiLib
 			if (! $response->isSuccessful()) {
 				return false;
 			}
-
-			$name = basename($client->getUri()->getPath());
+			
+			$name = basename($this->urldecode_accent($client->getUri()->getPath()));
 			$expiryDate = time();
 
 			$result = $response->getBody();

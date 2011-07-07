@@ -252,7 +252,7 @@ class TikiLib extends TikiDb_Bridge
 		if ($url) {
 			$client = $this->prepare_http_client($client, $url);
 
-			$client->setUri($this->take_away_accent($url));	// Zend_Http_Client seems to fail with accents in urls (jb june 2011)
+			$client->setUri($this->urlencode_accent($url));	// Zend_Http_Client seems to fail with accents in urls (jb june 2011)
 		}
 
 		return $client;
@@ -309,7 +309,7 @@ class TikiLib extends TikiDb_Bridge
 		$url = $arguments['url'];
 
 		$client->setCookieJar();
-		$client->setUri($url);
+		$client->setUri($this->urlencode_accent($url)); // Zend_Http_Client seems to fail with accents in urls	
 		$response = $client->request(Zend_Http_Client::GET);
 		$client->resetParameters();
 
@@ -322,11 +322,11 @@ class TikiLib extends TikiDb_Bridge
 		unset($arguments['post_url']);
 
 		$client->setCookieJar();
-		$client->setUri($url);
+		$client->setUri($this->urlencode_accent($url)); // Zend_Http_Client seems to fail with accents in urls	
 		$response = $client->request(Zend_Http_Client::GET);
 		$client->resetParameters();
 
-		$client->setUri($url);
+		$client->setUri($this->urlencode_accent($url)); // Zend_Http_Client seems to fail with accents in urls	
 		$client->setParameterPost($arguments);
 		$response = $client->request(Zend_Http_Client::POST);
 		$client->resetParameters();
@@ -361,7 +361,7 @@ class TikiLib extends TikiDb_Bridge
 					foreach ($frames as $f) {
 						// Request with the first frame where scrolling is not disabled (likely to be a menu or some other web 2.0 helper)
 						if ($f->getAttribute('scrolling') != 'no') {
-							$client->setUri($this->http_get_uri($client->getUri(), $f->getAttribute('src')));
+							$client->setUri($this->http_get_uri($client->getUri(), $this->urlencode_accent($f->getAttribute('src'))));
 							return $client->request();
 						}
 					}
@@ -7993,6 +7993,22 @@ if( \$('#$id') ) {
 		$accents = explode(' ', 'À Á Â Ã Ä Å Ç È É Ê Ë Ì Í Î Ï Ð Ñ Ò Ó Ô Õ Ö Ù Ú Û Ü Ý ß à á â ã ä å ç è é ê ë ì í î ï ñ ò ó ô õ ö ù ú û ü ý Æ æ');
 		$convs =   explode(' ', 'A A A A A A C E E E E I I I I D N O O O O O U U U U Y s a a a a a a c e e e e i i i i n o o o o o u u u u y AE ae');
 		return str_replace($accents, $convs, $str);
+	}
+
+	function urlencode_accent($str, $reencode = false) {
+		$accents = explode(' ', 'À Á Â Ã Ä Å Ç È É Ê Ë Ì Í Î Ï Ð Ñ Ò Ó Ô Õ Ö Ù Ú Û Ü Ý ß à á â ã ä å ç è é ê ë ì í î ï ñ ò ó ô õ ö ù ú û ü ý Æ æ');
+		foreach ($accents as $a) {
+			$convs[] = urlencode($a);
+		}
+		if ($reencode) {
+			return str_replace($convs, $accents, $str);
+		} else {
+			return str_replace($accents, $convs, $str);
+		}
+	}
+
+	function urldecode_accent($str) {
+		return $this->urlencode_accent($str, true);
 	}
 
 	/* return the positions in data where the hdr-nth header is find
