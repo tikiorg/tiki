@@ -10,4 +10,5 @@ start merge for 5.x
 start merge 6.x
 trying netbeans
 certificate accept
-Change by omstefanov during TikiFestStrasbourg 7 July 2011. olaf's 2nd test edit. 7 jul 2011
+Change by omstefanov during TikiFestStrasbourg 7 July 2011. olaf's 2nd test edit. 7 jul 2011. olaf's 3rd test edit. 7 jul 2011.
+
