@@ -10,7 +10,7 @@
 	{if $forumId > 0}
 		{button href="tiki-view_forum.php?forumId=$forumId" _text="{tr}View this forum{/tr}"}
 	{/if}
-	{if $tiki_p_admin eq 'y'}
+	{if $tiki_p_admin_forum eq 'y'}
 		{button href="tiki-forum_import.php" _text="{tr}Import forums{/tr}"}
 	{/if}
 	{if $tiki_p_forum_read eq 'y'}
