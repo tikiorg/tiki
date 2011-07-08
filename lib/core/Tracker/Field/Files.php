@@ -26,7 +26,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 					),
 					'count' => array(
 						'name' => tr('File Count'),
-						'description' => tr('Maximum amount of files to be attached on the field.'),
+						'description' => tr('Maximum number of files to be attached on the field.'),
 						'filter' => 'int',
 					),
 				),
