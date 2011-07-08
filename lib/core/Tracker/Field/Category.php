@@ -33,7 +33,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 						'options' => array(
 							'd' => tr('Drop Down'),
 							'radio' => tr('Radio buttons'),
-							'm' => tr('Multi-selection drop-down'),
+							'm' => tr('List box'),
 							'checkbox' => tr('Multiple-selection check-boxes'),
 						),
 					),
