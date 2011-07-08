@@ -20,8 +20,8 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 						'filter' => 'int',
 					),
 					'filter' => array(
-						'name' => tr('Mime Type Filter'),
-						'description' => tr('Mask for accepted mime types in the field'),
+						'name' => tr('MIME Type Filter'),
+						'description' => tr('Mask for accepted MIME types in the field'),
 						'filter' => 'text',
 					),
 					'count' => array(
