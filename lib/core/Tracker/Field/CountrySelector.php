@@ -32,7 +32,7 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract
 					),
 					'sortorder' => array(
 						'name' => tr('Sort Order'),
-						'description' => tr('Determines of the ordering should be based on the translated name or the English name.'),
+						'description' => tr('Determines whether the ordering should be based on the translated name or the English name.'),
 						'filter' => 'int',
 						'options' => array(
 							0 => tr('Translated name'),
