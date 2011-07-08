@@ -6,7 +6,7 @@
 // $Id$
 
 require_once('lib/language/CollectFiles.php');
-include_once('vfsStream/vfsStream.php');
+@include_once('vfsStream/vfsStream.php');
 
 /**
  * Class for tests methods that uses vfsStream, if available,

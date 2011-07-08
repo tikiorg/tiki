@@ -7,7 +7,7 @@
 
 require_once('lib/language/Exception.php');
 require_once('lib/language/WriteFile.php');
-include_once('vfsStream/vfsStream.php');
+@include_once('vfsStream/vfsStream.php');
 
 class Language_WriteFileTest extends TikiTestCase
 {
