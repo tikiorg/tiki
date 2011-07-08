@@ -9,6 +9,10 @@
 	{/if}
 
 	{capture assign=page_bar}
+		{if $prefs.user_favorites eq 'y' and $user}
+			{button _class="favorite-toggle" href="tiki-ajax_services.php?controller=favorite&amp;action=toggle&amp;type=wiki+page&amp;object=`$thispage`" _text="{tr}Toggle Favorite{/tr}"}
+		{/if}
+
 		{if $edit_page neq 'y'}
 			{* Check that page is not locked and edit permission granted. SandBox can be edited w/o perm *}
 			{if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') or ((!isset($user) or !$user) and $prefs.wiki_encourage_contribution eq 'y')) or $tiki_p_admin_wiki eq 'y' or (isset($canEditStaging) and $canEditStaging eq 'y')}

@@ -209,6 +209,12 @@ function prefs_user_list($partial = false) {
 			'dependencies' => array('feature_jquery_autocomplete', 'user_show_realnames', 'feature_messages'),
 			'default' => 'n',
 		),
+		'user_favorites' => array(
+			'name' => tra('User Favorites'),
+			'description' => tra('Allows for users to flag content as their favorite.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }
 

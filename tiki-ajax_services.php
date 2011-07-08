@@ -19,6 +19,7 @@ $controllerMap = array(
 	'file' => 'Services_File_Controller',
 	'auth_source' => 'Services_AuthSource_Controller',
 	'tracker' => 'Services_Tracker_Controller',
+	'favorite' => 'Services_Favorite_Controller',
 );
 
 $inputConfiguration = array(array(
