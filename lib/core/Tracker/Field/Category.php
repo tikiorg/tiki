@@ -57,11 +57,11 @@ class Tracker_Field_Category extends Tracker_Field_Abstract
 					),
 					'help' => array(
 						'name' => tr('Help'),
-						'description' => tr('Displays the field description in a help pop-up.'),
+						'description' => tr('Displays the field description in a help tooltip.'),
 						'filter' => 'int',
 						'options' => array(
 							0 => tr('No help'),
-							1 => tr('Pop-up'),
+							1 => tr('Tooltip'),
 						),
 					),
 				),
