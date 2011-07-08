@@ -22,7 +22,7 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 				'params' => array(
 					'listview' => array(
 						'name' => tr('List View'),
-						'description' => tr('Defines how attachements will be displayed within the field.'),
+						'description' => tr('Defines how attachments will be displayed within the field.'),
 						'options' => array(
 							'n' => tr('name'),
 							't' => tr('type'),
