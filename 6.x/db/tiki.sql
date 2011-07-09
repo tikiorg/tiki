@@ -229,8 +229,8 @@ CREATE TABLE `tiki_banning` (
   `ip3` char(3) default NULL,
   `ip4` char(3) default NULL,
   `user` varchar(200) default '',
-  `date_from` timestamp(14) NOT NULL,
-  `date_to` timestamp(14) NOT NULL,
+  `date_from` timestamp NOT NULL,
+  `date_to` timestamp NOT NULL,
   `use_dates` char(1) default NULL,
   `created` int(14) default NULL,
   `message` text,
@@ -1658,7 +1658,7 @@ CREATE TABLE `tiki_polls` (
   `active` char(1) default NULL,
   `publishDate` int(14) default NULL,
   `voteConsiderationSpan` int(4) default 0,
-	`anonym` ENUM( 'a', 'u', 'i', 'c' ) NOT NULL DEFAULT 'u',
+    `anonym` ENUM( 'a', 'u', 'i', 'c' ) NOT NULL DEFAULT 'u',
   PRIMARY KEY (`pollId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 ALTER TABLE tiki_polls ADD INDEX tiki_poll_lookup ( active , title );
@@ -3080,7 +3080,7 @@ DROP TABLE IF EXISTS `tiki_friendship_requests`;
 CREATE TABLE `tiki_friendship_requests` (
   `userFrom` varchar(200) NOT NULL default '',
   `userTo` varchar(200) NOT NULL default '',
-  `tstamp` timestamp(14) NOT NULL,
+  `tstamp` timestamp NOT NULL,
   PRIMARY KEY (`userFrom`(120),`userTo`(120))
 ) ENGINE=MyISAM;
 
@@ -3128,7 +3128,7 @@ CREATE TABLE `tiki_users_score` (
   `user` char(200) NOT NULL default '',
   `event_id` char(200) NOT NULL default '',
   `expire` int(14) NOT NULL default '0',
-  `tstamp` timestamp(14) NOT NULL,
+  `tstamp` timestamp NOT NULL,
   PRIMARY KEY (`user`(110),`event_id`(110)),
   KEY `user` (user(110),event_id(110),expire)
 ) ENGINE=MyISAM;
