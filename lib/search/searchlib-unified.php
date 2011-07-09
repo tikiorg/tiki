@@ -217,6 +217,7 @@ class UnifiedSearchLib
 
 		if ($mode == 'indexing') {
 			$aggregator->addGlobalSource(new Search_GlobalSource_PermissionSource(Perms::getInstance()));
+			$aggregator->addGlobalSource(new Search_GlobalSource_RelationSource);
 		}
 	}
 

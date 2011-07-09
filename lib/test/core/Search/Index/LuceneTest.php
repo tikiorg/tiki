@@ -31,6 +31,12 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 			'categories' => $typeFactory->multivalue(array(1, 2, 5, 6)),
 			'allowed_groups' => $typeFactory->multivalue(array('Project Lead', 'Editor', 'Admins')),
 			'contents' => $typeFactory->plaintext('a description for the page Hello world!'),
+			'relations' => $typeFactory->multivalue(array(
+				Search_Query_Relation::token('tiki.content.link', 'wiki page', 'About'),
+				Search_Query_Relation::token('tiki.content.link', 'wiki page', 'Contact'),
+				Search_Query_Relation::token('tiki.content.link.invert', 'wiki page', 'Product'),
+				Search_Query_Relation::token('tiki.user.favorite.invert', 'user', 'bob'),
+			)),
 		));
 
 		$this->index = $index;
@@ -158,6 +164,26 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 		$this->assertResultCount(0, 'filterInitial', 'Fuzzy');
 		$this->assertResultCount(0, 'filterInitial', 'Ham');
 		$this->assertResultCount(0, 'filterInitial', 'HomePagd');
+	}
+
+	function testFilterRelations()
+	{
+		$about = new Search_Query_Relation('tiki.content.link', 'wiki page', 'About');
+		$contact = new Search_Query_Relation('tiki.content.link', 'wiki page', 'Contact');
+		$product = new Search_Query_Relation('tiki.content.link.invert', 'wiki page', 'Product');
+		$user = new Search_Query_Relation('tiki.user.favorite.invert', 'user', 'bob');
+		$nothing = new Search_Query_Relation('foo.bar.baz', 'trackeritem', '2');
+
+		$invert_product = new Search_Query_Relation('tiki.content.link', 'wiki page', 'Product');
+		$invert_user = new Search_Query_Relation('tiki.user.favorite', 'user', 'bob');
+
+		$this->assertResultCount(0, 'filterRelation', "$nothing");
+		$this->assertResultCount(1, 'filterRelation', "$about");
+		$this->assertResultCount(1, 'filterRelation', "$about or $product");
+		$this->assertResultCount(1, 'filterRelation', "$user and not $nothing");
+		$this->assertResultCount(0, 'filterRelation', "$user and not $about");
+
+		$this->assertResultCount(1, 'filterRelation', "$invert_product and $invert_user", array('tiki.content.link', 'tiki.user.favorite'));
 	}
 
 	private function assertResultCount($count, $filterMethod, $argument)

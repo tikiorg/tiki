@@ -92,6 +92,14 @@ class Search_Query
 		$this->expr->addPart(new Search_Expr_Range($initial, substr($initial, 0, -1) . chr(ord(substr($initial, -1)) + 1), 'plaintext', $field));
 	}
 
+	function filterRelation($query, array $invertable = array())
+	{
+		$query = $this->parse($query);
+		$replacer = new Search_Query_RelationReplacer($invertable);
+		$query = $query->walk(array($replacer, 'visit'));
+		$this->addPart($query, 'multivalue', 'relations');
+	}
+
 	private function addPart($query, $type, $field)
 	{
 		$parts = array();
