@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_draw.php 35094 2011-06-28 21:09:03Z robertplummer $
+// $Id$
 
 function wikiplugin_draw_info() {
 	return array(
