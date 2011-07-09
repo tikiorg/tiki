@@ -3,9 +3,9 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: FreeTagSource.php 33195 2011-03-02 17:43:40Z changi67 $
+// $Id$
 
-class Search_GlobalSource_FileAttachment implements Search_GlobalSource_Interface
+class Search_GlobalSource_FileAttachmentSource implements Search_GlobalSource_Interface
 {
 	private $relationlib;
 	private $fileSource;
