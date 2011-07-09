@@ -1247,7 +1247,7 @@ class AccountingLib extends LogsLib
 		$cols = explode($defs['bankDelimeter'], $header);
 		$columns = array();
 
-		for ($i=0, $isizeof_cols = sizeof($cols); $i < $isizeof_cols; $i++) {
+		for ($i=0, $isizeof_cols = count($cols); $i < $isizeof_cols; $i++) {
 			switch($cols[$i]) {
 				case $defs['fieldNameAccount'] : $columns['accountId'] = $i;
 													break;

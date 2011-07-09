@@ -29,7 +29,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class TrackerQueryLib extends TikiLib {
+class TrackerQueryLib extends TikiLib
+{
 	
 	/* In the construct we put the field options for "items list" (type 'l') into a table to be joined upon, 
 	 * so instead of running a query for every row, we use simple joins to get the job done.  We use a temporary

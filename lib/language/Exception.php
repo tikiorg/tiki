@@ -8,4 +8,6 @@
 /**
  * Exception class for language related classes 
  */
-class Language_Exception extends Exception {}
+class Language_Exception extends Exception
+{
+}

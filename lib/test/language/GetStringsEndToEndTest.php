@@ -15,7 +15,7 @@ require_once('lib/language/FileType/Tpl.php');
 @include_once('vfsStream/vfsStream.php');
 
 class Language_GetStringsEndToEndTest extends TikiTestCase
-{	
+{
 	protected function setUp()
 	{
 		if (!class_exists('vfsStream')) {
