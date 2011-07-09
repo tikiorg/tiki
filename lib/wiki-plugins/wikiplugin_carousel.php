@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_carousel.php 34433 2011-05-15 18:54:24Z chealer $
+// $Id$
 
 function wikiplugin_carousel_info()
 {
