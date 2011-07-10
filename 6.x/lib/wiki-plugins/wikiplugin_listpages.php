@@ -55,10 +55,9 @@ function wikiplugin_listpages_info() {
 			),
 			'categId' => array(
 				'required' => false,
-				'name' => tra('Category'),
-				'description' => tra('Enter a category ID to filter list by a certain category'),
-				'filter' => 'digits',
-				'default' => '',
+				'name' => tra('Category filter'),
+				 'description' => tra('If set to a category identifier, restrict the pages displayed to those in the specified category.').' ' . tra('Example value:') . ' 42. ' . tra('If set to a list of category identifiers separated by colons (:), restrict the pages to those in any of the specified categories.') . ' ' . tra('Example value:') . ' 1:2. ' . tra('If set to a list of category identifiers separated by plus signs (+), only display a page if it is in all of the specified categories.') . ' ' . tra('Example value:') . ' 1+2. ' .  tra('If set to a list of category identifiers separated by minus signs (-), only display a page if it is in the first specified category and not in any of the following categories.') . ' ' . tra('Example value:') . ' 1-2-3.', 
+				'filter' => 'striptags',
 			),
 			'structHead' => array(
 				'required' => false,
@@ -165,6 +164,7 @@ function wikiplugin_listpages_info() {
 				'required' => false,
 				'name' => tra('Length'),
 				'description' => tra('Number of characters to display'),
+				'filter' => 'int',
 				'default' => '',
 			)
 		)
@@ -199,7 +199,13 @@ function wikiplugin_listpages($data, $params) {
 		}
 	}
 	if (!empty($categId)) {
-		$filter['categId'] = $categId;
+		if (strstr($categId, ':')) {
+			$filter['categId'] = explode(':', $categId);
+		} elseif (strstr($categId, '+')) {
+			$filter['andCategId'] = explode('+', $categId);
+		} else {
+			$filter['categId'] = $categId;
+		}
 	}
 	if (!empty($structHead) && $structHead == 'y') {
 		$filter['structHead'] = $structHead;

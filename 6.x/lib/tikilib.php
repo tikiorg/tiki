@@ -3538,7 +3538,15 @@ class TikiLib extends TikiDb_Bridge
 		if (!empty($filter)) {
 			$tmp_mid = array();
 			foreach ($filter as $type=>$val) {
-				if ($type == 'categId') {
+				if ($type == 'andCategId') {
+					$categories = $categlib->get_jailed( (array) $val );
+					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) ";
+					$join_bindvars[] = 'wiki page';
+					foreach ($categories as $i=>$categId) {
+						$join_tables .= " inner join `tiki_category_objects` as tc$i on (tc$i.`catObjectId`=tob.`objectId` and tc$i.`categId` =?) ";
+						$join_bindvars[] = $categId;
+					}
+				} elseif ($type == 'categId') {
 					$categories = $categlib->get_jailed( (array) $val );
 					$categories[] = -1;
 
