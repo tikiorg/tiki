@@ -161,7 +161,7 @@
 				<tr id="autoCreateGroupOptions5"{if ($info.autoCreateGroup ne 'y' or $info.autoAssignGroupItem ne 'y') and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
 					<td></td>
 					<td>
-						<label for="autoCopyGroup">{tr}But copy the default group in this fiedlId before updating the group{/tr}</label>
+						<label for="autoCopyGroup">{tr}But copy the default group in this fieldId before updating the group{/tr}</label>
 						<input type="text" name="autoCopyGroup" id="autoCopyGroup" value="{$info.autoCopyGroup}" />
 					</td>
 				</tr>
