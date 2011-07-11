@@ -462,6 +462,7 @@ foreach ($languages as $ksel => $sel) {
 			$data = preg_replace ("!^\s*//get_strings(.*)\$!m", "$1", $data);
 			$data = preg_replace ("!^\s*//.*\$!m", "", $data); // C++ comments
 			$data = preg_replace ("!^\s*\#.*\$!m", "", $data); // shell comments
+			$data = preg_replace('/\Wtra?\s*\((["\'])\1\)/', '', $data); // remove empty calls to tra() (tra('') or tra(""))
 
 			// Only extract tra () and hawtra () in .php-files
 			// tr() function also exists for strings with arguments

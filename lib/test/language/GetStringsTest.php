@@ -102,6 +102,40 @@ class Language_GetStringsTest extends TikiTestCase
 		$this->assertEquals($expectedResult, $strings);
 	}
 	
+	public function testCollectString_shouldNotConsiderEmptyCallsToTra()
+	{
+		@include_once('vfsStream/vfsStream.php');
+		
+		if (!class_exists('vfsStream')) {
+			$this->markTestSkipped('vfsStream class not available');
+		}
+		
+		$this->obj->addFileType(new Language_FileType_Php);
+		
+		$fileName = 'file1.php';
+		
+		$root = vfsStream::setup('root');
+		
+		$file = new vfsStreamFile($fileName);
+		$file->setContent("'sub' => array(
+                'required' => false,
+                'default' => 'n',
+                'filter' => 'alpha',
+                'options' => array(
+                    array('text' => tra(''), 'value' => ''),
+                    array('text' => tra('Yes'), 'value' => 'y'),
+                    array('text' => tra('No'), 'value' => 'n')
+                ),
+            ),
+		");
+		
+		$root->addChild($file);
+		
+		$expectedResult = array('Yes', 'No');
+		
+		$this->assertEquals($expectedResult, $this->obj->collectStrings(vfsStream::url('root/' . $fileName)));
+	}
+	
 	public function testRun_shouldRaiseExceptionIfEmptyFileTypes()
 	{
 		$this->setExpectedException('Language_Exception');

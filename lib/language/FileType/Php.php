@@ -23,5 +23,6 @@ class Language_FileType_Php extends Language_FileType
 		"!^\s*//get_strings(.*)\$!m" => '$1', // the "unused strings" - the strings that will be translated later through a variable are marked with //get_strings tra("string")
 		"!^\s*//.*\$!m" => '', // C++ comments
 		"!^\s*\#.*\$!m" => '', // shell comments
+		'/\Wtra?\s*\((["\'])\1\)/' => '', // remove empty calls to tra() (tra('') or tra(""))
 	);
 }

@@ -3808,7 +3808,6 @@ $lang=Array(
 // "Product Class ID" => "Product Class ID",
 // "List of object types to include in the list separated by plus signs. ex: article+blog+faq+fgal<br />+forum+igal+newsletter<br />+event+poll+quiz+survey<br />+tracker+wiki+img" => "List of object types to include in the list separated by plus signs. ex: article+blog+faq+fgal<br />+forum+igal+newsletter<br />+event+poll+quiz+survey<br />+tracker+wiki+img",
 // "Sort ascending or descending based on various attributes (sorted ascending by name by default)" => "Sort ascending or descending based on various attributes (sorted ascending by name by default)",
-// "'), 'value' => '" => "'), 'value' => '",
 // "Item ID Ascending" => "Item ID Ascending",
 // "Item ID Descending" => "Item ID Descending",
 // "Name Descending" => "Name Descending",
