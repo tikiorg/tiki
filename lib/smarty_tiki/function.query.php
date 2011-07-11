@@ -130,7 +130,7 @@ function smarty_function_query($params, &$smarty) {
       $php_self = $params['_script'];
 
       // If _script does not already specifies the directory and if there is one in PHP_SELF server var, use it
-      if ( $php_self != 'javascript:void(0)' && strpos($php_self, '/') === false && $_SERVER['PHP_SELF'][0] == '/' ) {
+      if ( $php_self != 'javascript:void(0)' && strpos($php_self, '/') === false && $_SERVER['PHP_SELF'][0] == '/' && stripos($params['_script'], 'mailto:') !== 0) {
         $php_self = str_replace('\\','/',dirname($_SERVER['PHP_SELF'])).'/'.$php_self;
       }
 
