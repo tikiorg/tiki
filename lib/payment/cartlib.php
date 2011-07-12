@@ -12,6 +12,8 @@ class CartLib
 		global $prefs;
 		$this->init_cart();
 
+		$current = $this->get_quantity( $code );
+		
 		if ($parentCode) {
 			$this->init_product( $code, $info, $parentCode, $quantity );
 			if ($prefs['payment_cart_inventory'] == 'y') {
@@ -22,11 +24,10 @@ class CartLib
 				}
 			}
 			return false;
-		} else {
+		} elseif (!$current) {
 			$this->init_product( $code, $info, $parentCode );
 		}
 
-		$current = $this->get_quantity( $code );
 		$current += $quantity;
 		
 		$this->add_bundle( $code, $quantity, $info );
