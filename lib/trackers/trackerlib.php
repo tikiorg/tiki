@@ -2938,7 +2938,7 @@ class TrackerLib extends TikiLib
 			// -------------------------------------
 			// remove images when needed
 			$old_field = $this->get_tracker_field($fieldId);
-			if ($old_field) {
+			if (!empty($old_field['fieldId'])) {
 				if( $old_field['type'] == 'i' && $type != 'i' ) {
 					$this->remove_field_images( $fieldId );
 				}
