@@ -14,7 +14,7 @@ class Search_Type_Factory_Lucene implements Search_Type_Factory_Interface
 
 	function wikitext($value)
 	{
-		return new Search_Type_WikiText($value);
+		return new Search_Type_WikiText(preg_replace('/[^(\x20-\x7F)]*/','', $value));
 	}
 
 	function timestamp($value)
