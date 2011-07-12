@@ -38,9 +38,5 @@ function prefs_style_list($partial = false) {
 			'options' => $style_options,
 			'default' => '',
 		),
-		'style_gs960' => array(
-		'name' => tra('Use 960GS CSS Template (see tiki.tpl)'),
-		'type' => 'flag',
-		),		
 	);	
 }

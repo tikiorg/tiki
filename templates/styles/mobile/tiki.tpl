@@ -28,7 +28,26 @@
 			{include file='tiki-ajax_header.tpl'}
 		{/if}
  end mobile *}
-		<div id="fixedwidth"> {* enables fixed-width layouts *}
+		<div id="ajaxLoadingBG" style="
+				height: 100%;
+				width: 100%;
+				position: absolute;
+				z-index: 9999;
+			">
+			<div id="ajaxLoading" style="
+				z-index: 10000;
+				text-align: center;
+				position: relative;
+				margin: 30% 0;
+				width: 100%;
+				font-size: 2em;
+				font-weight: bold;
+				color: #333;
+				cursor: wait;
+				background: transparent url('img/loading-light.gif') no-repeat 50% 50%;">
+		{tr}Loading...{/tr}<br /><br /><br />
+		</div></div>{* inline loading div for page load for mobile *}
+		<div id="fixedwidth" style="display: none;"> {* enables fixed-width layouts *}
 			{if $prefs.feature_layoutshadows eq 'y'}<div id="main-shadow">{eval var=$prefs.main_shadow_start}{/if}
 			<div id="main" data-role="page">{* mobile *}
 				{if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y')}

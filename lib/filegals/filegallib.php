@@ -421,7 +421,9 @@ class FileGalLib extends TikiLib
 
 		$filesTable = $this->table('tiki_files');
 
-		if ($prefs['fgal_keep_fileId'] == 'y') {
+		// fgal_keep_fileId == n means that the archive will keep the same fileId and the latest version will have a new fileId
+		// fgal_keep_fileId = y the new version will keep the current fileId, the archive will have a new fileId
+		if ($prefs['fgal_keep_fileId'] == 'y') { // insert the old file with a new fileId
 			$res = $filesTable->fetchFullRow(array('fileId' => $id));
 			$res['archiveId'] = $id;
 			$res['user'] = $creator;
@@ -431,7 +433,7 @@ class FileGalLib extends TikiLib
 			$filesTable->insert($res);
 		}
 
-		// Insert and index (for search) the new file
+		// Insert or update and index (for search) the new file 
 		$idNew = $this->insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment, $author, $created, $lockedby, NULL, $prefs['fgal_keep_fileId']=='y'?$id:0);
 
 		if ($count_archives > 0) {
@@ -534,7 +536,7 @@ class FileGalLib extends TikiLib
 	}
 
 	function move_file_gallery($galleryId, $new_parent_id) {
-		if ( (int)$galleryId <= 0 || (int)$new_parent_id == 0 ) return false;
+		if ( (int)$galleryId <= 0 || (int)$new_parent_id == 0 || $galleryId == $new_parent_id ) return false;
 
 		$cachelib = TikiLib::lib('cache');
 		$cachelib->empty_type_cache($this->get_all_galleries_cache_type());

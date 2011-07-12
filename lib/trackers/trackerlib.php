@@ -978,7 +978,7 @@ class TrackerLib extends TikiLib
 					$bindvars[] = $ff;
 				}
 
-				if ( $filter['type'] == 'e' && $prefs['feature_categories'] == 'y' ) { //category
+				if ( $filter['type'] == 'e' && $prefs['feature_categories'] == 'y' && (!empty($ev) || !empty($fv)) ) { //category
 
 					$value = empty($fv) ? $ev : $fv;
 					if ( ! is_array($value) && $value != '' ) {
