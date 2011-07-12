@@ -200,6 +200,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 	}
 } elseif (isset($_REQUEST["batch_upload"]) && $_REQUEST["batch_upload"] == 'svg') {
 	$tmpGalId = (int)$_REQUEST["galleryId"];
+	$tmpFileId = (int)$_REQUEST["fileId"];
 	$file = $_REQUEST['name'].'.svg';
 	if (isset($_REQUEST["subToDesc"])) {
 		// get last subdir 'last' from 'some/path/last'
@@ -210,7 +211,13 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 	include_once ('lib/mime/mimetypes.php');
 	$type = $mimetypes["svg"];
 	
+	if (empty($tmpFileId) == false) {
+		$fileInfo = $filegallib->get_file_info( $tmpFileId );
+		$filegallib->save_archive($tmpFileId, $fileInfo['galleryId'], 0, $fileInfo['name'], $fileInfo['description'], $fileInfo['filename'], $_REQUEST['data'], strlen($_REQUEST['data']), $type, $fileInfo['user'], null, null, $user, date());
+	}
+	
 	$fileId = $filegallib->insert_file($tmpGalId, $_REQUEST['name'], $tmpDesc, $file, $_REQUEST['data'], strlen($_REQUEST['data']), $type, $user, date());
+	
 	echo $fileId;
 	die;
 }

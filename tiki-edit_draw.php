@@ -7,13 +7,32 @@
 $section = "draw";
 require_once ('tiki-setup.php');
 require_once ('lib/svg-edit_tiki/draw.php');
+include_once ('lib/filegals/filegallib.php');
 
 $access->check_feature('feature_draw');
+$access->check_feature('feature_file_galleries');
 
 include_once ("categorize_list.php");
 include_once ('tiki-section_options.php');
 
 ask_ticket('draw');
+
+if (empty($_REQUEST['fileId']) || !($fileInfo = $filegallib->get_file_info($_REQUEST['fileId']))) {
+	$smarty->assign('msg', tra("Incorrect param"));
+	$smarty->display('error.tpl');
+	die;
+}
+
+$gal_info = $filegallib->get_file_gallery($fileInfo['galleryId']);
+
+$tikilib->get_perm_object($fileInfo['galleryId'], 'file gallery', $gal_info, true);
+
+if (!($tiki_p_admin_file_galleries == 'y' || $tiki_p_view_file_gallery == 'y')) {
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra("You do not have permission to edit this file"));
+	$smarty->display("error.tpl");
+	die;
+}
 
 //Obtain fileId, DO NOT LET ANYTHING OTHER THAN NUMBERS BY (for injection free code)
 if (is_numeric($_REQUEST['fileId']) == false) $_REQUEST['fileId'] = 0; 
@@ -29,7 +48,7 @@ $page = htmlspecialchars($_REQUEST['page']);
 $smarty->assign( "page", $page );
 $smarty->assign( "isFromPage", isset($page) );
 
-$backLocation = (isset($page) ? "tiki-index.php?page=$page" : "tiki-list_file_gallery.php?galleryId=$galleryId");
+$backLocation = ($page ? "tiki-index.php?page=$page" : "tiki-list_file_gallery.php?galleryId=$galleryId");
 
 $smarty->assign( "fileId", $fileId );
 $smarty->assign( "galleryId", $galleryId );
@@ -71,16 +90,7 @@ $headerlib->add_jq_onready("
 		if (error) {
 			alert('error ' + error);
 		} else {
-			$.post('tiki-list_file_gallery.php', {
-				fileId: window.svgFileId,
-				galleryId: $galleryId,
-				data: data,
-				edit: true,
-				file: window.svgFileId,
-				edit_mode: 'y'
-			}, function(o) {
-				alert('".tr("Saved!")."');
-			});
+			window.handleSvgDataNew(data, error);
 		}			
 	}
 
@@ -91,14 +101,19 @@ $headerlib->add_jq_onready("
 			$.post('tiki-batch_upload_files.php', {
 				batch_upload: 'svg',
 				galleryId: $galleryId,
+				fileId: (window.svgFileId ? window.svgFileId : ''),
 				name: 'New Svg Image',
 				data: data
 			}, function(id) {
-				alert('".tr("Saved file id ' + id + '!")."');
-				window.svgFileId = id;
+				if (id) {
+					alert('".tr("Saved file id:")." ' + id + '!');
+					window.svgFileId = id;
+				} else {
+					alert('".tr("Saved file id")." ' + window.svgFileId + '!');
+				}
 				
 				if (window.wikiTracking) {
-					window.wikiTracking['params[id]'] = id;
+					window.wikiTracking['params[id]'] = window.svgFileId;
 					
 					$.post('tiki-wikiplugin_edit.php', window.wikiTracking, function() {
 						window.wikiTracking = null;
@@ -109,7 +124,7 @@ $headerlib->add_jq_onready("
 	}
 	
 	window.saveSvg = function() {
-		window.svgCanvas.getSvgString()(window.svgFileId ? window.handleSvgDataUpdate : window.handleSvgDataNew);
+		window.svgCanvas.getSvgString()(window.handleSvgDataNew);
 		
 		window.svgWindow.svgCanvas.undoMgr.resetUndoStack();
 	};
