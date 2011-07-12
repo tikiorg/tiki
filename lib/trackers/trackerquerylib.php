@@ -229,7 +229,7 @@ class TrackerQueryLib extends TikiLib
 	 * 		)
 	 * )
 	 */
-	function tracker_query($trackerId, $start, $end, $itemId, $equals, $search, $fields, $status = "opc", $sort, $limit, $offset, $delimiter = "[{|!|}]") {
+	function tracker_query($tracker, $start, $end, $itemId, $equals, $search, $fields, $status = "opc", $sort, $limit, $offset, $byName, $includeTrackerDetails = true, $delimiter = "[{|!|}]") {
 		global $tikilib;
 		$debug = false;
 		$params = array();
@@ -237,7 +237,7 @@ class TrackerQueryLib extends TikiLib
 		$status_safe = "";
 		$isSearch = false;
 		
-		$params[] = $trackerId;
+		$params[] = $tracker;
 		
 		if ($start && !$search) $params[] = $start;
 		if ($end && !$search) $params[] = $end;
@@ -246,7 +246,7 @@ class TrackerQueryLib extends TikiLib
 		if (count($fields) > 0 && (count($equals) > 0 || count($search) > 0)) {
 			for($i = 0; $i < count($fields); $i++) {
 				if (strlen($fields[$i]) > 0) {
-					$fields_safe .= " ( search_item_fields.fieldId = ? ";
+					$fields_safe .= " ( ".(isset($byName) ? "search_item_fields.name" : "search_item_fields.fieldId")." = ? ";
 					$params[] = $fields[$i];
 					
 					if (strlen($equals[$i]) > 0) {
@@ -297,8 +297,9 @@ class TrackerQueryLib extends TikiLib
 				tiki_tracker_items.status,
 				tiki_tracker_item_fields.itemId,
 				tiki_tracker_fields.trackerId,
-				GROUP_CONCAT(tiki_tracker_item_fields.fieldId 								SEPARATOR '$delimiter') AS item_fieldIds,
-				GROUP_CONCAT(IFNULL(items_right.value, tiki_tracker_item_fields.value) 	SEPARATOR '$delimiter') AS item_values
+				GROUP_CONCAT(tiki_tracker_fields.name 			SEPARATOR '$delimiter') AS fieldNames,
+				GROUP_CONCAT(tiki_tracker_item_fields.fieldId	SEPARATOR '$delimiter') AS fieldIds,
+				GROUP_CONCAT(IFNULL(items_right.value, tiki_tracker_item_fields.value) 										SEPARATOR '$delimiter') AS item_values
 						
 			FROM tiki_tracker_item_fields ".($isSearch == true ? " AS search_item_fields " : "")."
 			
@@ -333,7 +334,8 @@ class TrackerQueryLib extends TikiLib
 			)
 			 
 			
-			WHERE tiki_trackers.trackerId = ?
+			WHERE
+			".(isset($byName) ? "tiki_trackers.name" : "tiki_trackers.trackerId")." = ?
 			
 			".(isset($start) && !$search ? 								" AND tiki_tracker_items.lastModif > ? " : "")."
 			".(isset($end) && !$search ? 								" AND tiki_tracker_items.lastModif < ? " : "")."
@@ -361,28 +363,37 @@ class TrackerQueryLib extends TikiLib
 		$newResult = array();
 		foreach($result as $key => $row) {
 			$newRow = array();
-			$fieldIds = explode($delimiter, $row['item_fieldIds']); 
+			$fieldNames = explode($delimiter, $row['fieldNames']);
+			$fieldIds = explode($delimiter, $row['fieldIds']); 
 			$itemValues = explode($delimiter, $row['item_values']);
 			
 			foreach($fieldIds as $key => $fieldId) {
-				if (isset($newRow[$fieldId])) {
-					if (is_array($newRow[$fieldId]) == false) {
-						$newRow[$fieldId] = array($newRow[$fieldId]);
+				$field = (isset($byName) ? $fieldNames[$key] : $fieldId);
+				if (isset($newRow[$field])) {
+					if (is_array($newRow[$field]) == false) {
+						$newRow[$field] = array($newRow[$field]);
 					}
 					
-					$newRow[$fieldId][] = $itemValues[$key];
+					$newRow[$field][] = $itemValues[$key];
 				} else {
-					$newRow[$fieldId] = $itemValues[$key];
+					$newRow[$field] = $itemValues[$key];
 				}
 			}
-			
-			$newRow['status'.$trackerId] = $row['status']; 
-			$newRow['trackerId'] = $row['trackerId'];
-			$newRow['itemId'] = $row['itemId'];
+			if (isset($includeTrackerDetails) && $includeTrackerDetails == true) {
+				$newRow['status'.$trackerId] = $row['status']; 
+				$newRow['trackerId'] = $row['trackerId'];
+				$newRow['itemId'] = $row['itemId'];
+			}
 			$newResult[$row['itemId']] = $newRow;
 		}
 		unset($result);
 		return $newResult;
+	}
+	
+	/*Does the same thing as tracker_query, but uses tracker and field names rather than ids, a bit slower, but probably not noticed
+	*/
+	function tracker_query_by_names($tracker, $start, $end, $itemId, $equals, $search, $field, $status, $sort, $limit, $offset) {
+		return $tracker = $this->tracker_query($tracker, $start, $end, $itemId, $equals, $search, $field, $status, $sort, $limit, $offset, true, false);
 	}
 	
 	/*Removes fields from an array of items, can use either fields to show, or fields to remove, but not both
