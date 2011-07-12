@@ -32,6 +32,7 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 		$prefs['feature_layoutshadows'] = 'n';
 		$prefs['feature_sefurl'] = 'n';
 		$prefs['feature_wysiwyg'] = 'n';
+		$prefs['themegenerator_feature'] = 'n';
 		$prefs['ajax_autosave'] = 'n';
 		$prefs['change_theme'] = 'n';
 
@@ -39,7 +40,7 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 
 		// a few requirements
 		$prefs['feature_html_head_base_tag'] = 'y';
-		$prefs['style'] = 'mobile.css'; // set in prespective but seems to need a nudge here
+		$prefs['style'] = 'mobile.css'; // set in perspectives but seems to need a nudge here
 		//$_SESSION['s_prefs']['style'] = 'mobile.css';
 
 		if (!is_array($prefs['mobile_perspectives'])) {
