@@ -167,6 +167,11 @@ function prefs_payment_list() {
 			'name' => tra('User can only see his own past or cancelled payments'),
 			'description' => tra('Unless with administer payment permissions, a user can only see his own past or cancelled payments'),
 			'type' => 'flag',
+		),
+		'payment_cart_inventory' => array(
+			'name' => tra('Manage product inventory'),
+			'description' => tra('Activate product inventory feature, needs Products tracker to be set up properly'),
+			'type' => 'flag',
 		), 
 	);
 }

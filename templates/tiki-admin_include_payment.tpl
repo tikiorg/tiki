@@ -65,6 +65,10 @@ if ($.ui) {
 		</div>
 	</fieldset>
 	<fieldset>
+		<legend>{tr}Advanced Shopping Cart{/tr}</legend>
+		{preference name=payment_cart_inventory}
+	</fieldset>
+	<fieldset>
 		<legend>{tr}Shipping{/tr}</legend>
 		{preference name=shipping_service}
 

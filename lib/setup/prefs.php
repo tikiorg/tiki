@@ -1883,6 +1883,7 @@ function get_default_prefs() {
 		'payment_cclite_hashing_algorithm' => 'sha1',
 		'payment_manual' => '',
 		'payment_invoice_prefix' => '',
+		'payment_cart_inventory' => 'n',
 
 		// Rating
 		'rating_advanced' => 'n',

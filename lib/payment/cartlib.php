@@ -9,14 +9,17 @@ class CartLib
 {
 	//Used for putting new items in the cart, to modify an already existing item in the cart, use update_quantity
 	function add_product( $code, $quantity, $info, $parentCode = 0 ) {
+		global $prefs;
 		$this->init_cart();
 
 		if ($parentCode) {
 			$this->init_product( $code, $info, $parentCode, $quantity );
-			$currentInventory = $this->get_inventory($code);	
-			if ($currentInventory < $quantity) {
-				// Abort entire bundle if one of the child products is out of stock
-				$this->update_quantity( $parentCode, 0, $info );
+			if ($prefs['payment_cart_inventory'] == 'y') {
+				$currentInventory = $this->get_inventory($code);	
+				if ($currentInventory < $quantity) {
+					// Abort entire bundle if one of the child products is out of stock
+					$this->update_quantity( $parentCode, 0, $info );
+				}
 			}
 			return false;
 		} else {
@@ -406,43 +409,47 @@ class CartLib
 	}
 	
  	//Used for adjusting already added items in the cart
-	function update_quantity( $code, $quantity, $info = array('exchangetoproductid' => 0, 'exchangeorderamount' => 0) ) {		
+	function update_quantity( $code, $quantity, $info = array('exchangetoproductid' => 0, 'exchangeorderamount' => 0) ) {
+		global $prefs;		
 		$currentQuantity = $this->get_quantity( $code );
-		// Prevent going below 0 inventory TODO check feature
-		$currentInventory = $this->get_inventory($code);
-		if ($quantity - $currentQuantity > $currentInventory) {
-			if ($currentQuantity == 0) {
-				unset( $_SESSION['cart'][ $code ] );
+		if ($prefs['feature_cart_inventory'] == 'y') {
+			// Prevent going below 0 inventory
+			$currentInventory = $this->get_inventory($code);
+			if ($quantity - $currentQuantity > $currentInventory) {
+				if ($currentQuantity == 0) {
+					unset( $_SESSION['cart'][ $code ] );
+				}
+				global $access;
+				
+				$access->redirect( $_SERVER['REQUEST_URI'], tra('There is not enough inventory left for your request') );
 			}
-			global $access;
-			
-			$access->redirect( $_SERVER['REQUEST_URI'], tra('There is not enough inventory left for your request') );
-		}
-
-		if ($currentQuantity > 0) {
-			if ($this->unhold_inventory($code, $currentQuantity)) {
-				$this->remove_from_onhold_list($code);
+	
+			if ($currentQuantity > 0) {
+				if ($this->unhold_inventory($code, $currentQuantity)) {
+					$this->remove_from_onhold_list($code);
+				}
+				if ($info['exchangetoproductid'] && $info['exchangeorderamount']) {
+					if ($this->unhold_inventory($info['exchangetoproductid'], $info['exchangeorderamount'])) { 
+						$this->remove_from_onhold_list('XC' . $info['exchangetoproductid']);
+					}
+				}
 			}
-			if ($info['exchangetoproductid'] && $info['exchangeorderamount']) {
-				if ($this->unhold_inventory($info['exchangetoproductid'], $info['exchangeorderamount'])) { 
-					$this->remove_from_onhold_list('XC' . $info['exchangetoproductid']);
+			if ($quantity > 0) {
+				if ($prefs['feature_cart_inventory'] == 'y') {
+					if ($quantity > $currentInventory) {
+						$quantity = $currentInventory;
+					}
+					if ($this->hold_inventory($code, $quantity)) {
+						$this->add_to_onhold_list($code, $quantity);
+					}
+				}
+				if ($info['exchangetoproductid'] && $info['exchangeorderamount']) {
+					if ($this->hold_inventory($info['exchangetoproductid'], $info['exchangeorderamount'])) {
+	                                	$this->add_to_onhold_list('XC' . $info['exchangetoproductid'], $info['exchangeorderamount']);
+					}
 				}
 			}
 		}
-		if ($quantity > 0) {
-			// TODO check feature
-                	if ($quantity > $currentInventory) {
-                        	$quantity = $currentInventory;
-			}
-			if ($this->hold_inventory($code, $quantity)) {
-				$this->add_to_onhold_list($code, $quantity);
-			}
-			if ($info['exchangetoproductid'] && $info['exchangeorderamount']) {
-				if ($this->hold_inventory($info['exchangetoproductid'], $info['exchangeorderamount'])) {
-                                	$this->add_to_onhold_list('XC' . $info['exchangetoproductid'], $info['exchangeorderamount']);
-				}
-			}
-                }
 		$this->init_cart();
 
 		if( isset( $_SESSION['cart'][ $code ] ) && $quantity != 0  ) {
@@ -758,6 +765,10 @@ class CartLib
 	}
 
 	function change_inventory( $productId, $amount = 1, $changeLessHold = true) {
+		global $prefs;
+		if ($prefs['feature_cart_inventory'] != 'y') {
+			return false;
+		}
 		$inventoryType = $this->get_inventory_type( $productId );
 		if ($inventoryType == 'none') {
 			return false;
