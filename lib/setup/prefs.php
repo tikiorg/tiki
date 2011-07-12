@@ -1884,11 +1884,17 @@ function get_default_prefs() {
 		'payment_manual' => '',
 		'payment_invoice_prefix' => '',
 		'payment_cart_inventory' => 'n',
+		'payment_cart_bundles' => 'n',
 		'payment_cart_product_tracker' => '',
+		'payment_cart_product_tracker_name' => '',
 		'payment_cart_inventory_type_field' => 'none',
 		'payment_cart_inventory_total_field' => '',
 		'payment_cart_inventory_lesshold_field' => '',
-
+		'payment_cart_product_name_fieldname' => '',
+		'payment_cart_products_inbundle_fieldname' => '',
+		'payment_cart_associated_event_fieldname' => '',
+		'payment_cart_product_classid_fieldname' => '',		
+	
 		// Rating
 		'rating_advanced' => 'n',
 		'rating_recalculation' => 'vote',

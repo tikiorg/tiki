@@ -26,7 +26,7 @@
 				{foreach from=$item.bundledproducts item=child_item}
 					<tr class="{cycle}">
 						<td colspan="3">
-							{tr}Bundled Product{/tr} - {$child_item.description|escape}
+							{tr}Bundled Product{/tr} - {$child_item.description|escape} {if $child_item.quantity > 1}(x{$child_item.quantity|escape}){/if}
 						</td>
 					</tr>
 				{/foreach}

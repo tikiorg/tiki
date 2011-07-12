@@ -36,26 +36,35 @@ class CartLib
 	}
 	
 	function get_product_info( $code ) {
-		$productId = $this->get_tracker_item_id_custom( "Products", "Product ID", $code );
-		$array = $this->get_tracker_values_custom( "Products", $productId);
+		// This function is used by several advanced cart features (e.g. bundled products, associated events)
+		global $prefs;
+		if (empty($prefs['payment_cart_product_tracker_name'])) {
+			return array();
+		}
+	
+		$array = $this->get_tracker_values_custom( $prefs['payment_cart_product_tracker_name'], $code);
 		
 		$info = array();		
 		$info['code'] = $code;
 		while($result = current($array)) {
-			$key = str_replace(" ", "", strtolower(key($array)));
+			$key = key($array);
 			switch ($key) {
-				case "productname": $key = "description"; break;	
-				case "associatedeventid": $key = "eventcode"; break;
-				case "productclassid": $key = "productclass"; break;
+				case $prefs['payment_cart_product_name_fieldname']: $key = "description"; break;	
+				case $prefs['payment_cart_associated_event_fieldname']: $key = "eventcode"; break;
+				case $prefs['payment_cart_product_classid_fieldname']: $key = "productclass"; break;
+				case $prefs['payment_cart_products_inbundle_fieldname']: $key = "productsinbundle"; break;
 			}
 			$info[$key] = $result;
 			next($array);
 		}
-		
 		return $info;
 	}
 	
 	function add_bundle( $code, $quantity, $info ) {
+		global $prefs;
+		if ($prefs['payment_cart_bundles'] != 'y') {
+			return false;
+		}
 		$moreInfo = $this->get_product_info( $code );
 		if (!empty($moreInfo['productsinbundle'])) {
 			$products = explode(",", $moreInfo['productsinbundle']);
