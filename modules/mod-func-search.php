@@ -235,6 +235,8 @@ function module_search( $mod_reference, $smod_params ) {	// modifies $smod_param
 		$smod_params['input_value'] = $_REQUEST['words'];
 	} else if (!empty($_REQUEST['find'])) {
 		$smod_params['input_value'] = $_REQUEST['find'];
+	} else if (!empty($_REQUEST['filter']['content'])) {
+		$smod_params['input_value'] = $_REQUEST['filter']['content'];
 	} else {
 		$smod_params['input_value'] = '';
 	}
