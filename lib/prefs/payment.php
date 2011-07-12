@@ -170,9 +170,38 @@ function prefs_payment_list() {
 		),
 		'payment_cart_inventory' => array(
 			'name' => tra('Manage product inventory'),
-			'description' => tra('Activate product inventory feature, needs Products tracker to be set up properly'),
+			'description' => tra('Activate product inventory feature, needs Products tracker to be set up properly, the itemId must be the product code'),
 			'type' => 'flag',
-		), 
+			'dependencies' => array( 'payment_cart_product_tracker', 'payment_cart_inventory_type_field', 'payment_cart_inventory_total_field', 'payment_cart_inventory_lesshold_field' ),
+		),
+		'payment_cart_product_tracker' => array(
+			'name' => tra('Products Tracker ID'),
+			'description' => tra('Tracker ID of tracker that is the Products tracker, needed for advanced cart features, the itemId will be the product code'),
+			'type' => 'text',
+			'filter' => 'digits',
+			'size' => 3,
+		),
+		'payment_cart_inventory_type_field' => array(
+			'name' => tra('Inventory Type Field ID'),
+			'description' => tra('Field ID in Products tracker to store the inventory type, the value of the field must be "none" or "internal"'),
+			'type' => 'text',
+			'filter' => 'digits',
+			'size' => 3,
+		),
+		'payment_cart_inventory_total_field' => array(
+			'name' => tra('Inventory Total Field ID'),
+			'description' => tra('Field ID in Products tracker to store the total inventory of product'),
+			'type' => 'text',
+			'filter' => 'digits',
+			'size' => 3,
+		),
+		'payment_cart_inventory_lesshold_field' => array(
+			'name' => tra('Inventory Total Less Hold Field ID'),
+			'description' => tra('Field ID in Products tracker to store the total inventory of product less the amount on hold because they are currently in carts'),
+			'type' => 'text',
+			'filter' => 'digits',
+			'size' => 3,		
+		),
 	);
 }
 

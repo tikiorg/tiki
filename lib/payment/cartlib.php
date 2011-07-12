@@ -412,7 +412,7 @@ class CartLib
 	function update_quantity( $code, $quantity, $info = array('exchangetoproductid' => 0, 'exchangeorderamount' => 0) ) {
 		global $prefs;		
 		$currentQuantity = $this->get_quantity( $code );
-		if ($prefs['feature_cart_inventory'] == 'y') {
+		if ($prefs['payment_cart_inventory'] == 'y') {
 			// Prevent going below 0 inventory
 			$currentInventory = $this->get_inventory($code);
 			if ($quantity - $currentQuantity > $currentInventory) {
@@ -435,7 +435,7 @@ class CartLib
 				}
 			}
 			if ($quantity > 0) {
-				if ($prefs['feature_cart_inventory'] == 'y') {
+				if ($prefs['payment_cart_inventory'] == 'y') {
 					if ($quantity > $currentInventory) {
 						$quantity = $currentInventory;
 					}
@@ -732,27 +732,27 @@ class CartLib
 	// TODO Inventory functions need to check for feature before doing anything
 
 	function get_inventory_type( $productId ) {
-		// TODO get trackerId etc. of products tracker from profile tokens in db, should be object properties
-		$productTrackerId = 3;
-		$inventoryTypeFieldId = 11;
+		global $prefs;
+		$productTrackerId = $prefs['payment_cart_product_tracker'];
+		$inventoryTypeFieldId = $prefs['payment_cart_inventory_type_field'];
 		global $trklib;
 		require_once('lib/trackers/trackerlib.php');
 		return $trklib->get_item_value($productTrackerId, $productId, $inventoryTypeFieldId); 
 	}
 
 	function get_inventory( $productId, $less_hold = true ) {
+		global $prefs;
 		$inventoryType = $this->get_inventory_type( $productId );
 		if ($inventoryType == 'none') {
 			return 999999999;
 		}
 		if ($inventoryType == 'shared') {
-			// TODO
+			// TODO: shared inventory feature not yet exist
 			return 0;
 		}
-		// TODO get trackerId etc. of products tracker from profile tokens in db, should be object properties
-		$productTrackerId = 3;
-		$inventoryTotalFieldId = 7;
-		$inventoryLessHoldFieldId = 8;
+		$productTrackerId = $prefs['payment_cart_product_tracker'];
+		$inventoryTotalFieldId = $prefs['payment_cart_inventory_total_field'];
+		$inventoryLessHoldFieldId = $prefs['payment_cart_inventory_lesshold_field'];
 		if ($less_hold) {
 			$this->expire_onhold_list( $productId );
 			$inventoryFieldId = $inventoryLessHoldFieldId;
@@ -766,7 +766,7 @@ class CartLib
 
 	function change_inventory( $productId, $amount = 1, $changeLessHold = true) {
 		global $prefs;
-		if ($prefs['feature_cart_inventory'] != 'y') {
+		if ($prefs['payment_cart_inventory'] != 'y') {
 			return false;
 		}
 		$inventoryType = $this->get_inventory_type( $productId );
@@ -818,24 +818,23 @@ class CartLib
 	}
 
 	private function set_inventory( $productId, $amount, $less_hold = true ) {
+		global $prefs;
 		$inventoryType = $this->get_inventory_type( $productId );
 		if ($inventoryType == 'none') {
 			return false;
 		}
 		if ($inventoryType == 'shared') {
-			// TODO
+			// TODO: shared inventory feature not existing yet
 			return false;
 		}
-		// TODO get trackerId etc. of products tracker from profile tokens in db, should be object properties
-                $productTrackerId = 3;
-                $inventoryTotalFieldId = 7;
-                $inventoryLessHoldFieldId = 8;
-
-                if ($less_hold) {
-                        $inventoryFieldId = $inventoryLessHoldFieldId; 
-                } else {
-                        $inventoryFieldId = $inventoryTotalFieldId;
-                }
+		$productTrackerId = $prefs['payment_cart_product_tracker'];
+		$inventoryTotalFieldId = $prefs['payment_cart_inventory_total_field'];
+		$inventoryLessHoldFieldId = $prefs['payment_cart_inventory_lesshold_field'];
+		if ($less_hold) {
+			$inventoryFieldId = $inventoryLessHoldFieldId; 
+		} else {
+			$inventoryFieldId = $inventoryTotalFieldId;
+		}
 		$trackerFields = array();
 		$trackerFields[] = array('fieldId' => $inventoryFieldId, 'value' => $amount);
                	$this->modify_tracker_item( $productTrackerId, $productId, $trackerFields ); 

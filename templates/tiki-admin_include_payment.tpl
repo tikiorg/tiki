@@ -67,6 +67,13 @@ if ($.ui) {
 	<fieldset>
 		<legend>{tr}Advanced Shopping Cart{/tr}</legend>
 		{preference name=payment_cart_inventory}
+		<fieldset>
+			<legend>{tr}Products Tracker Setup{/tr}</legend>	
+			{preference name=payment_cart_product_tracker}
+			{preference name=payment_cart_inventory_type_field}
+			{preference name=payment_cart_inventory_total_field}
+			{preference name=payment_cart_inventory_lesshold_field}
+		</fieldset>	
 	</fieldset>
 	<fieldset>
 		<legend>{tr}Shipping{/tr}</legend>
