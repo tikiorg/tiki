@@ -17,12 +17,6 @@ include_once ('tiki-section_options.php');
 
 ask_ticket('draw');
 
-if (empty($_REQUEST['fileId']) || !($fileInfo = $filegallib->get_file_info($_REQUEST['fileId']))) {
-	$smarty->assign('msg', tra("Incorrect param"));
-	$smarty->display('error.tpl');
-	die;
-}
-
 $gal_info = $filegallib->get_file_gallery($fileInfo['galleryId']);
 
 $tikilib->get_perm_object($fileInfo['galleryId'], 'file gallery', $gal_info, true);
