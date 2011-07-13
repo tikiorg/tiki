@@ -156,7 +156,11 @@ class ObjectLib extends TikiLib
 				return ( array('title' => $info['title']));
 			case 'forum':
 				$info = TikiLib::lib('comments')->get_forum($object);
-				return ( array('title' => $info['name']));		}
+				return ( array('title' => $info['name']));
+			case 'tracker':
+				$info = TikiLib::lib('trk')->get_tracker($object);
+				return ( array('title' => $info['name']));
+		}
 		return (array('error'=>'true'));
 	}
 	function set_data($objectType, $object, $data) {
