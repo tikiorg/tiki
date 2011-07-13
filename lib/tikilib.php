@@ -7153,8 +7153,8 @@ if( \$('#$id') ) {
 		$object = $objectlib->get_object($context['type'], $context['object']);
 		
 		$mail = new TikiMail(null, $prefs['sender_email']);
-		$mail->setSubject(tra("Plugin $plugin_name pending approval"));
-		$mail->setHtml(tra("Plugin $plugin_name is pending approval on <a href='$base_url{$object['href']}'>{$object['name']}</a>"));
+		$mail->setSubject(tr("Plugin %0 pending approval", $plugin_name));
+		$mail->setHtml(tr("Plugin %0 is pending approval on %1", $plugin_name, "<a href='$base_url{$object['href']}'>{$object['name']}</a>"));
 		
 		$allGroups = $userlib->get_groups();
 		$accessor = Perms::get($context);

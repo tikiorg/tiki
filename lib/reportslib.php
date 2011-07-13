@@ -132,9 +132,19 @@ class reportsLib extends TikiLib
 
 				} elseif ($change['event']=="category_changed") {
 					if ($change['data']['action']=="object entered category") {
-						$body .= "<u>".$change['data']['user']."</u> ".tra("added the ".$change['data']['objectType'])." <a href=\"$tikiUrl/".$change['data']['objectUrl']."\">".$change['data']['objectName']."</a> ".tra("to the category")." <a href=\"$tikiUrl/tiki-browse_categories.php?parentId=".$change['data']['categoryId']."&deep=off\">".$change['data']['categoryName']."</a>.";
+						$body .= "<u>".$change['data']['user']."</u> ".
+							tr("added the %0 %1 to the category %2",
+								$change['data']['objectType'],
+								"<a href=\"$tikiUrl/{$change['data']['objectUrl']}\">{$change['data']['objectName']}</a>",
+								"<a href=\"$tikiUrl/tiki-browse_categories.php?parentId={$change['data']['categoryId']}&deep=off\">{$change['data']['categoryName']}</a>"
+							);
 					} elseif ($change['data']['action']=="object leaved category") {
-						$body .= "<u>".$change['data']['user']."</u> ".tra("removed the ".$change['data']['objectType'])." <a href=\"$tikiUrl/".$change['data']['objectUrl']."\">".$change['data']['objectName']."</a> ".tra("from the category")." <a href=\"$tikiUrl/tiki-browse_categories.php?parentId=".$change['data']['categoryId']."&deep=off\">".$change['data']['categoryName']."</a>.";
+						$body .= "<u>".$change['data']['user']."</u> ".
+							tr("removed the %0 %1 from the category",
+								$change['data']['objectType'],
+								"<a href=\"$tikiUrl/{$change['data']['objectUrl']}\">{$change['data']['objectName']}</a>",
+								"<a href=\"$tikiUrl/tiki-browse_categories.php?parentId={$change['data']['categoryId']}&deep=off\">{$change['data']['categoryName']}</a>."
+							);
 					} elseif ($change['data']['action']=="category created") {
 						$body .= "<u>".$change['data']['user']."</u> ".tra("created the subcategory")." <a href=\"$tikiUrl/tiki-browse_categories.php?parentId=".$change['data']['categoryId']."&deep=off\">".$change['data']['categoryName']."</a> ".tra("in")." <a href=\"$tikiUrl/tiki-browse_categories.php?parentId=".$change['data']['parentId']."&deep=off\">".$change['data']['parentName']."</a>.";
 					} elseif ($change['data']['action']=="category removed") {

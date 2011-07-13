@@ -19,7 +19,7 @@ if ($_REQUEST["msgId"]) {
 	$info = $shoutboxlib->get_shoutbox($_REQUEST["msgId"]);
 	$owner = $info["user"];
 	if ($tiki_p_admin_shoutbox != 'y' && $owner != $user) {
-		$smarty->assign('msg', tra("You do not have permission to edit messages $owner"));
+		$smarty->assign('msg', tr("You do not have permission to edit messages %0", $owner));
 		$smarty->display("error.tpl");
 		die;
 	}

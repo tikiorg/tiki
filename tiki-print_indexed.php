@@ -329,7 +329,7 @@ case 'glossary':
 
 		$indexPages[] = array(
 			'key' => $key,
-			'indextitle' => tra('Index (' . $code . ')'),
+			'indextitle' => tr('Index (%0)', $code),
 			'options' => array(
 				'decorator' => 'indexrow',
 				'display' => 'title',

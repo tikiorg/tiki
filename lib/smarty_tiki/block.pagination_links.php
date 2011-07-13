@@ -154,10 +154,10 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 	// Handle next/prev images
 	if ( $params['noimg'] == 'n' ) {
 		$tmp = array(
-			'first' => tra("First {$params['itemname']}"),
-			'last' => tra("Last {$params['itemname']}"),
-			'next' => tra("Next {$params['itemname']}"),
-			'previous' => tra("Prev {$params['itemname']}"),
+			'first' => tr("First %0", $params['itemname']),
+			'last' => tr("Last %0", $params['itemname']),
+			'next' => tr("Next %0", $params['itemname']),
+			'previous' => tr("Prev %0", $params['itemname']),
 			'next_fast' => tra('Fast Next'),
 			'previous_fast' => tra('Fast Prev'),
 		);

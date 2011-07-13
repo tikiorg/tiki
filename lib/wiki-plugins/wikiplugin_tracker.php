@@ -627,7 +627,7 @@ function wikiplugin_tracker($data, $params)
 						$page_badchars = "/[:\/?#\[\]@!$&'()*+,;=<>]/";
 						$matches = preg_match($page_badchars, $newpagename);
 						if ($matches) {
-							$field_errors['err_outputwiki'] = tra("The page to output the results to contains the following prohibited characters: $page_badchars_display. Try another name.");
+							$field_errors['err_outputwiki'] = tr("The page to output the results to contains the following prohibited characters: %0. Try another name.", $page_badchars_display);
 						} 
 					} else {
 						unset($outputtowiki);

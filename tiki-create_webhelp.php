@@ -66,8 +66,8 @@ if (isset($_REQUEST['create'])) {
 	$top = $_REQUEST['top'];
 	$output = '';
 	$output .= tra('TikiHelp WebHelp generation engine. Generating WebHelp using:');
-	$output .= '<ul><li>' . tra("Index: <strong>$name</strong>") . '</li>';
-	$output .= '<li>' . tra("Directory: <strong>$dir</strong>") . '</li></ul>';
+	$output .= '<ul><li>' . tr("Index: <strong>%0</strong>", $name) . '</li>';
+	$output .= '<li>' . tr("Directory: <strong>%0</strong>", $dir) . '</li></ul>';
 	$base = "whelp/$dir";
 
 	if (!is_writeable('whelp')) {
@@ -77,7 +77,7 @@ if (isset($_REQUEST['create'])) {
 	}
 
 	if(!is_dir("whelp/$dir")) {
-		$output .= '<p>' . tra("Creating directory structure in <strong>$base</strong>.") . '</p>';
+		$output .= '<p>' . tr("Creating directory structure in <strong>%0</strong>.", $base) . '</p>';
 		mkdir("whelp/$dir");
 		mkdir("$base/js");
 		mkdir("$base/css");

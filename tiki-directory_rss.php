@@ -14,7 +14,7 @@ if ($prefs['feed_directories'] != 'y') {
 	require_once ('tiki-rss_error.php');
 }
 if ($prefs['feature_directory'] != 'y') {
-	$errmsg = tra("This feature is disabled") . ": feature_directory";
+	$errmsg = tr("This feature is disabled: %0", 'feature_directory');
 	require_once ('tiki-rss_error.php');
 }
 if ($tiki_p_view_directory != 'y') {
@@ -32,7 +32,7 @@ $output = $rsslib->get_from_cache($uniqueid);
 if ($output["data"] == "EMPTY") {
 	$title = tra("Tiki RSS feed for directory sites");
 	$rc = $dirlib->dir_get_category($_REQUEST["parent"]);
-	$desc = tra("Last sites of directory " . $rc["name"] . " .");
+	$desc = tr("Last sites of directory %0.", $rc["name"]);
 	$id = "siteId";
 	$titleId = "name";
 	$descId = "description";

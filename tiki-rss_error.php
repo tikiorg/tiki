@@ -7,7 +7,7 @@
 
 $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 $feed = tra("Error Message");
-$title = tra("Tiki RSS Feed Error Message: $errmsg");
+$title = tr("Tiki RSS Feed Error Message: %0", $errmsg);
 $desc = $errmsg;
 $id = "errorMessage";
 $titleId = "title";

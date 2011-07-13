@@ -453,7 +453,7 @@ if (isset($_REQUEST['page'])) {
 	if (!$helpUrl) {
 		$helpUrl = ucfirst($adminPage) . '+Config';
 	}
-	$helpDescription = "Help on $admintitle Config"; //get_strings tra("Help on $admintitle Config")
+	$helpDescription = tr("Help on %0 Config", $admintitle);
 	
 } else {
 	$smarty->assign('admintitle', 'Admin Home');
