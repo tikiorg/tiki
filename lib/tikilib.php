@@ -5046,13 +5046,11 @@ if( \$('#$id') ) {
 
 				if( isset($paramInfo['separator']) ) {
 					$vals = array();
-
-					foreach( explode( $paramInfo['separator'], $argValue ) as $val ) {
-						$vals[] = $filter->filter($val);
-					}
-
-					$vals = array_map( 'trim', $vals );
-					//$vals = array_filter( $vals );
+					
+					$vals = $this->array_apply_filter(
+						$this->multi_explode( $paramInfo['separator'], $argValue),
+						$filter
+					);
 
 					$argValue = array_values( $vals );
 				} else {
@@ -8282,6 +8280,31 @@ JS;
 
 		$menulib = TikiLib::lib('menu');
 		$menulib->rename_wiki_page($old, $new);
+	}
+
+	function multi_explode($delimiters, $string) {
+		if (is_array($delimiters) == false) $delimiters = array($delimiters);
+		
+	    $array = explode($delimiters[0], $string);
+	    array_shift($delimiters);
+	    if($delimiters != NULL) {
+	        foreach($array as $key => $val) {
+	             $array[$key] = $this->multi_explode($delimiters, $val);
+	        }
+	    }
+		
+	    return $array;
+	}
+	
+	function array_apply_filter($vals, $filter) {
+		if (is_array($vals) == true) {
+			foreach($vals as $key => $val) {
+				$vals[$key] = $this->array_apply_filter($val, $filter);
+			}
+			return $vals;
+		} else {
+			return trim($filter->filter($vals));
+		}
 	}
 }
 // end of class ------------------------------------------------------
