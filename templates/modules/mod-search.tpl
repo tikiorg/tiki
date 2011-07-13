@@ -27,7 +27,7 @@
 				    {if $prefs.feature_trackers eq 'y'}<option value="trackers"{if $smod_params.where eq "trackers"} selected="selected"{/if}>{tr}Trackers{/tr}</option>{/if}
 			    </select>
 			{elseif !empty($prefs.search_default_where)}
-				<input type="hidden" name="{if $smod_params.search_action eq 'tiki-searchindex.php'}filter~content{else}where{/if}" value="{$prefs.search_default_where|escape}" />
+				<input type="hidden" name="{if $smod_params.search_action eq 'tiki-searchindex.php'}filter~type{else}where{/if}" value="{$prefs.search_default_where|escape}" />
 		    {/if}
 		    
 			{if $smod_params.tiki_search neq 'y'}
