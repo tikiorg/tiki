@@ -47,7 +47,6 @@ $langmapping = array(
     'lt' => array(  'Lithuanian',   tra("Lithuanian")   ),
     'nl' => array(  'Nederlands',   tra("Dutch")        ),
     'no' => array(  'Norwegian',    tra("Norwegian")    ),
-    'nn-NO' => array(  'Norwegian Nynorsk',    tra("Norwegian Nynorsk")    ),
     'pl' => array(  'Polish',       tra("Polish")       ),
     'pt' => array(  'Portuguese',       tra("Português")       ),
     'pt-br' => array(  'Português Brasileiro',  tra("Brazilian Portuguese")  ),
