@@ -1894,6 +1894,7 @@ function get_default_prefs() {
 		'payment_cart_inventoryhold_expiry' => 15,
 		'payment_cart_product_name_fieldname' => '',
 		'payment_cart_products_inbundle_fieldname' => '',
+		'payment_cart_product_price_fieldname' => '',
 		'payment_cart_associated_event_fieldname' => '',
 		'payment_cart_product_classid_fieldname' => '',
 		'payment_cart_orders_profile' => '',
@@ -1911,6 +1912,10 @@ function get_default_prefs() {
 		'payment_cart_eventend_fieldname' => '',
 		'payment_cart_exchange' => 'n',
 		'payment_cart_orderitems_tracker' => '',
+		'payment_cart_giftcerts' => '',
+		'payment_cart_giftcert_tracker' => '',
+		'payment_cart_giftcert_tracker_name' => '',
+		'payment_cart_giftcerttemplate_fieldname' => '',
 	
 		// Rating
 		'rating_advanced' => 'n',

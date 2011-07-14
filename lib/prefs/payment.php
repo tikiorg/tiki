@@ -218,7 +218,7 @@ function prefs_payment_list() {
 			'name' => tra('Bundled products feature for cart'),
 			'description' => tra('Activate bundled products feature, needs Products tracker to be set up properly, the itemId must be the product code'),
 			'type' => 'flag',
-			'dependencies' => array( 'payment_cart_product_name_fieldname', 'payment_cart_products_inbundle_fieldname' ),
+			'dependencies' => array( 'payment_cart_product_name_fieldname', 'payment_cart_products_inbundle_fieldname', 'payment_cart_product_price_fieldname' ),
 		),
 		'payment_cart_product_name_fieldname' => array(
 			'name' => tra('Product Name Field Name'),
@@ -230,6 +230,11 @@ function prefs_payment_list() {
 			'description' => tra('Field Name in Products tracker of a comma separated list of product IDs of products in the bundle (i.e. if the field contains anything, then this product is a bundle), you can also specify the number of the sub-products, e.g. 23:("colon")2,24 means item 23 (x2) + item 24 (x1)'),
 			'type' => 'text',
 		),
+		'payment_cart_product_price_fieldname' => array(
+			'name' => tra('Product Price Field Name'),
+			'description' => tra('Field Name in Products tracker of the product price.'),
+			'type' => 'text',
+		),
 		'payment_cart_associated_event_fieldname' => array(
 			'name' => tra('Associated Event ID Field Name'),
 			'description' => tra('Field Name in Products tracker of the Associated Event ID, needed for the Associated Events cart feature, requires an Events tracker to be setup where the item ID there is the event ID to associate to'),
@@ -239,6 +244,11 @@ function prefs_payment_list() {
 			'name' => tra('Product Class ID Field Name'),
 			'description' => tra('Field Name in Products tracker of the Product Class ID, needed for the Gift Certificates cart feature.'),
 			'type' => 'text',		
+		),
+		'payment_cart_giftcerttemplate_fieldname' => array(
+			'name' => tra('Gift Certificate Template Field Name'),
+			'description' => tra('Field Name in Products tracker of the Gift Cert Template, needed for the Gift Certificates cart feature.'),
+			'type' => 'text',
 		),
 		'payment_cart_orders' => array(
 			'name' => tra('Record cart orders in trackers (registered users)'),
@@ -335,6 +345,25 @@ function prefs_payment_list() {
 			'type' => 'text',
 			'filter' => 'digits',
 			'size' => 3,
+		),
+		'payment_cart_giftcerts' => array(
+			'name' => tra('Gift certificates'),
+			'description' => tra('Gift Certificates'),
+			'help' => 'Shopping Cart',
+			'dependencies' => array( 'payment_cart_giftcert_tracker', 'payment_cart_giftcert_tracker_name', 'payment_cart_giftcerttemplate_fieldname', 'payment_cart_product_classid_fieldname' ),
+			'type' => 'flag',
+		),
+		'payment_cart_giftcert_tracker' => array(
+			'name' => tra('Gift Certificate Tracker ID'),
+			'description' => tra('Tracker ID of tracker that is the Gift Certificate tracker'),
+			'type' => 'text',
+			'filter' => 'digits',
+			'size' => 3,
+		),
+		'payment_cart_giftcert_tracker_name' => array(
+			'name' => tra('Gift Certificate Tracker Name'),
+			'description' => tra('Name of tracker that is the Gift Certificate tracker'),
+			'type' => 'text',
 		),
 	);
 }

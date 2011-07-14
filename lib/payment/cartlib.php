@@ -53,6 +53,7 @@ class CartLib
 				case $prefs['payment_cart_associated_event_fieldname']: $key = "eventcode"; break;
 				case $prefs['payment_cart_product_classid_fieldname']: $key = "productclass"; break;
 				case $prefs['payment_cart_products_inbundle_fieldname']: $key = "productsinbundle"; break;
+				case $prefs['payment_cart_product_price_fieldname']: $key = "price"; break;
 			}
 			$info[$key] = $result;
 			next($array);
@@ -80,7 +81,7 @@ class CartLib
 				if (is_numeric($productId)) {
 					$infoProduct = $this->get_product_info($productId);
 					if ($childInputedPrice == '') {
-						$childInputedPrice = $bundlePrice / count($products) / $productQuantity;
+						$childInputedPrice = $info['price'] / count($products) / $productQuantity;
 						// default evenly split between products in the bundle (regardless of individual quantities)
 					}
 					$infoProduct['price'] = 0;
@@ -184,6 +185,7 @@ class CartLib
 	}
 	
 	function update_gift_certificate( $invoice ) {
+		global $prefs;
 		//if total is more than 0 the gift card is less than the order total, otherwise the giftcard is as much as the order total
 		$this->get_gift_certificate();
 		
@@ -192,14 +194,14 @@ class CartLib
 		$balanceCurrent = $this->gift_certificate_amount - $this->gift_certificate_discount;
 		
 		if ($this->gift_certificate_amount_original == 0) { //if original balance isn't set, go ahead and set it, it is just for reference
-			$this->set_tracker_value_custom( "Gift Certificates", "Original Balance or Percentage", $this->gift_certificate_id, $this->gift_certificate_amount );
+			$this->set_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], "Original Balance or Percentage", $this->gift_certificate_id, $this->gift_certificate_amount );
 		}
 		
 		if ($this->gift_certificate_mode == "Percentage" || $this->gift_certificate_mode == "Coupon Percentage" || $this->gift_certificate_mode == "Coupon") {
 			$balanceCurrent = 0;	
 		}
 		
-		$this->set_tracker_value_custom( "Gift Certificates", "Current Balance or Percentage", $this->gift_certificate_id, $balanceCurrent );
+		$this->set_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], "Current Balance or Percentage", $this->gift_certificate_id, $balanceCurrent );
 
 		if (!$invoice) return false;
 		//makes the order display a discount, and ensures it is linked correctly
@@ -334,23 +336,24 @@ class CartLib
 	}
 	
 	function get_gift_certificate( $code = null ) {
+		global $prefs;
 		$this->gift_certificate_code = $code = ( $code ? $code : $this->get_gift_certificate_code() );
 		if (!$code) return false;
 		
-		$this->gift_certificate_id = $this->get_tracker_item_id_custom( "Gift Certificates", "Redeem Code", $code );
+		$this->gift_certificate_id = $this->get_tracker_item_id_custom( $prefs['payment_cart_giftcert_tracker_name'], "Redeem Code", $code );
 		
 		$this->gift_certificate_amount = floatval( 
-			$this->get_tracker_value_custom( "Gift Certificates", "Current Balance or Percentage", $this->gift_certificate_id)
+			$this->get_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], "Current Balance or Percentage", $this->gift_certificate_id)
 		);
 		
 		$this->gift_certificate_amount_original = floatval(
-			$this->get_tracker_value_custom( "Gift Certificates", "Original Balance or Percentage", $this->gift_certificate_id )
+			$this->get_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], "Original Balance or Percentage", $this->gift_certificate_id )
 		);
 		
-		$this->gift_certificate_type = $this->get_tracker_value_custom( "Gift Certificates", "Type", $this->gift_certificate_id );
-		$this->gift_certificate_type_reference = $this->get_tracker_value_custom( "Gift Certificates", "Type Reference", $this->gift_certificate_id );
-		$this->gift_certificate_name = $this->get_tracker_value_custom( "Gift Certificates", "Name", $this->gift_certificate_id );
-		$this->gift_certificate_mode = $this->get_tracker_value_custom( "Gift Certificates", "Mode", $this->gift_certificate_id );
+		$this->gift_certificate_type = $this->get_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], "Type", $this->gift_certificate_id );
+		$this->gift_certificate_type_reference = $this->get_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], "Type Reference", $this->gift_certificate_id );
+		$this->gift_certificate_name = $this->get_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], "Name", $this->gift_certificate_id );
+		$this->gift_certificate_mode = $this->get_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], "Mode", $this->gift_certificate_id );
 		
 		switch ( $this->gift_certificate_mode ) {
 			case "Percentage":
@@ -382,9 +385,9 @@ class CartLib
 	}
 	
 	function has_gift_certificate() {
-		global $trklib;
+		global $trklib, $prefs;
 		require_once('lib/trackers/trackerlib.php');
-		return ( $trklib->get_tracker_by_name( "Gift Certificates" ) ? true : false );
+		return ( $trklib->get_tracker_by_name( $prefs['payment_cart_giftcert_tracker_name'] ) ? true : false );
 	}
 	
 	function discount_from_total( $total ) { //ensures that the discount being had isn't less that the total resulting in a negative value
@@ -1200,14 +1203,15 @@ class CartLib
 	}
 
 	function get_gift_certificate_cost( $id = 0 ) {
+		global $prefs;
 		if (!$id) {
 			$id = $this->gift_certificate_id;
 		}
-		$inputedPrice = $this->get_tracker_value_custom( 'Gift Certificates', 'Gift Certificate Inputed Price', $id);
+		$inputedPrice = $this->get_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], 'Gift Certificate Inputed Price', $id);
 		if ($inputedPrice > 0) {
 			return $inputedPrice;
 		}
-		$orderItemId = $this->get_tracker_value_custom( 'Gift Certificates', 'Order Item ID', $id);
+		$orderItemId = $this->get_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], 'Order Item ID', $id);
 		if (!$orderItemId) {
 			return 0;
 		}
