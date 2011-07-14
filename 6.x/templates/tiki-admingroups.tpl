@@ -44,7 +44,6 @@
 				<a href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}groupDesc_asc{else}groupDesc_desc{/if}">{tr}Description{/tr}</a>
 			</th>
 			<th>{tr}Inherits Permissions from{/tr}</th>
-			<th>{tr}Homepage{/tr}</th>
 			<th>{tr}User Choice{/tr}</th>
 			<th>{tr}Permissions{/tr}</th>
 			<th style="width: 20px;">&nbsp;</th>
@@ -64,9 +63,6 @@
 					{section name=ix loop=$users[user].included}
 						{$users[user].included[ix]|escape}<br />
 					{/section}
-				</td>
-				<td>
-					<a class="link" href="tiki-index.php?page={$users[user].groupHome|escape:"url"}" title="{tr}Group Homepage{/tr}">{tr}{$users[user].groupHome}{/tr}</a>
 				</td>
 				<td>{tr}{$users[user].userChoice}{/tr}</td>
 				<td>
