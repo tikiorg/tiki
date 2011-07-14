@@ -5037,6 +5037,15 @@ class UsersLib extends TikiLib
 				'prefs' => array('flaggedrev_approval'),
 				'scope' => 'global',
 			),
+			array(
+				'name' => 'tiki_p_edit_switch_mode',
+				'description' => tra('Can switch between wiki and WYSIWYG modes while editing'),
+				'level' => 'editor',
+				'type' => 'tiki',
+				'admin' => false,
+				'prefs' => array('feature_wysiwyg'),
+				'scope' => 'global',
+			),
 		);
 
 		$cachelib->cacheItem('rawpermissions' . $prefs['language'], serialize($permissions));
