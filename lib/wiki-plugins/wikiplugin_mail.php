@@ -18,9 +18,10 @@ function wikiplugin_mail_info() {
 			'group' => array(
 				'required' => false,
 				'name' => tra('Group'),
-				'description' => tra('Limit the group to the groups including this group'),
+				'description' => tra('Limit the list of groups to the groups including each group'),
 				'filter' => 'groupname',
 				'default' => '',
+				'separator' => ':',
 			),
 			'showgroupdd' => array(
 				'required' => false,
@@ -78,9 +79,12 @@ function wikiplugin_mail($data, $params) {
 	global $userlib, $smarty, $tikilib, $user;
 	static $ipluginmail=0;
 	$smarty->assign_by_ref('ipluginmail', $ipluginmail);
-	$default = array('showuser' => 'y', 'showuserdd' => 'n', 'showrealnamedd' => 'n', 'showgroupdd' => 'n', 'group' => '');
+	$default = array('showuser' => 'y', 'showuserdd' => 'n', 'showrealnamedd' => 'n', 'showgroupdd' => 'n', 'group' => array());
 	$params = array_merge($default, $params);
+	$default = array('mail_subject' =>'', 'mail_mess' => '', 'mail_user_dd' => '', 'mail_group_dd' => array());
+	$_REQUEST = array_merge($default, $_REQUEST);
 	$mail_error = false;
+	$preview = false;
 	if ($params['showrealnamedd'] == 'y') {
 		$users = $tikilib->list_users(0, -1, 'pref:realName_asc', '', true);
 		$smarty->assign('names', $users['data']);
@@ -92,32 +96,23 @@ function wikiplugin_mail($data, $params) {
 	
 	if ($params['showgroupdd'] == 'y') {
 		if (!empty($params['group'])) {
-			$groups = $userlib->get_including_groups($params['group'], 'y');
+			foreach ($params['group'] as $g) {
+				$groups[$g] = $userlib->get_including_groups($g, 'y');
+			}
 		} else {
-			$groups = $userlib->list_all_groups();
+			$groups[] = $userlib->list_all_groups();
 		}
 		$smarty->assign_by_ref('groups', $groups);
 	}
+	if (isset($_REQUEST["mail_preview$ipluginmail"])) {
+		$to = wikiplugin_mail_to($_REQUEST);
+		$_SESSION['to'] = $to;
+		$preview = true;
+		$smarty->assign('preview', $preview);
+		$smarty->assign('nbTo', count($to));
+	}
 	if (isset($_REQUEST["mail_send$ipluginmail"])) { // send something
-		$to = array();
-		if (!empty($_REQUEST['mail_user_dd'])) {
-			$to = array_merge($to, $_REQUEST['mail_user_dd']);
-		}
-		if (!empty($_REQUEST['mail_group_dd'])) {
-			foreach ($_REQUEST['mail_group_dd'] as $mgroup) {
-				if (!empty($mgroup)) {
-					$to = array_merge($to, $userlib->get_group_users($mgroup, 0, -1, 'userId'));
-				}
-			}
-		}
-		$to = array_unique($to);
-		if (!empty($to)) {
-			$to = $userlib->get_userId_what($to);
-		}
-		if (!empty($_REQUEST['mail_user'])) {
-			$to = array_merge($to, preg_split('/ *, */', $_REQUEST['mail_user']));
-		}
-		$to = array_unique($to);
+		$to = $_SESSION['to'];
 		if (!empty($to)) {
 			include_once ('lib/webmail/tikimaillib.php');
 			$mail = new TikiMail(null, $userlib->get_user_email($user));
@@ -130,11 +125,41 @@ function wikiplugin_mail($data, $params) {
 				$mail_error = true;
 			}
 		}
+		unset($_SESSION['to']);
 	}
 	$smarty->assign_by_ref('mail_error', $mail_error);
-	$smarty->assign('mail_user', ($mail_error && isset($_REQUEST['mail_user']))? $_REQUEST['mail_user']:'');
-	$smarty->assign('mail_user_dd', ($mail_error && isset($_REQUEST['mail_user_dd']))? $_REQUEST['mail_user_dd']:array());
-	$smarty->assign('mail_group_dd', ($mail_error && isset($_REQUEST['mail_group_dd']))? $_REQUEST['mail_group_dd']:array());
+	if ($preview || $mail_error) {
+		$smarty->assign('mail_user', isset($_REQUEST['mail_user'])? $_REQUEST['mail_user']:'');
+		$smarty->assign('mail_user_dd', isset($_REQUEST['mail_user_dd'])? $_REQUEST['mail_user_dd']:array());
+		$smarty->assign('mail_group_dd', isset($_REQUEST['mail_group_dd'])? $_REQUEST['mail_group_dd']:array());
+		$smarty->assign('mail_subject', $_REQUEST['mail_subject']);
+		$smarty->assign('mail_mess', $_REQUEST['mail_mess']);
+	}
+	
 	$smarty->assign_by_ref('params', $params);
 	return '~np~'.$smarty->fetch('wiki-plugins/wikiplugin_mail.tpl').'~/np~';
+}
+function wikiplugin_mail_to($params) {
+	global $userlib;
+	$to = array();
+	if (!empty($params['mail_user_dd'])) {
+		$to = array_merge($to, $params['mail_user_dd']);
+	}
+	if (!empty($params['mail_group_dd'])) {
+		foreach ($params['mail_group_dd'] as $mgp) {
+			foreach ($mgp as $mgroup) {
+				if (!empty($mgroup)) {
+					$to = array_merge($to, $userlib->get_group_users($mgroup, 0, -1, 'userId'));
+				}
+			}
+		}
+	}
+	$to = array_unique($to);
+	if (!empty($to)) {
+		$to = $userlib->get_userId_what($to);
+	}
+	if (!empty($params['mail_user'])) {
+		$to = array_merge($to, preg_split('/ *, */', $params['mail_user']));
+	}
+	return (array_unique($to));
 }
