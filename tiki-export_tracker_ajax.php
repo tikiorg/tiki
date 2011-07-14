@@ -21,7 +21,11 @@ include_once 'tiki-export_tracker_monitor.php';
 $monitor_filename = $prefs['tmpDir'].'/tracker_'.$_REQUEST['trackerId'].'_monitor.json';
 if (is_file($monitor_filename)) {
 	$stat_array = unserialize(file_get_contents($monitor_filename));
-} else {
+	if ($stat_array['status'] === 'finish') {
+		unset($stat_array);
+	}
+}
+if (empty($stat_array)) {
 	$stat_array = array();
 	saveStatus(array('user' => $user, 'status' => 'init', 'msg' => 'Starting...'));
 }
@@ -316,12 +320,11 @@ while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $chunkSize
 							if (is_array($data)) {			// TODO handle other types of field better here (preferably in a function in $trklib)
 								$data = implode('%%%', $data);
 							}
-							$data = str_replace(array("\r\n", "\n", '<br />', $delimitorL, $delimitorR), array($CR, $CR, $CR, $delimitorL.$delimitorL, $delimitorR.$delimitorR), $data);
 							break;
 					default: 
 						$data = $smarty->fetch('tracker_item_field_value.tpl');
 					}
-
+				$data = str_replace(array("\r\n", "\n", '<br />', $delimitorL, $delimitorR), array($CR, $CR, $CR, $delimitorL.$delimitorL, $delimitorR.$delimitorR), $data);
 				}
 				$str .= needs_separator($str) ? '' : $separator;
 				$str .= $delimitorL.$data.$delimitorR;

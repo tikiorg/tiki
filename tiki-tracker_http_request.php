@@ -18,7 +18,7 @@ if ($prefs['feature_trackers'] != 'y') {
 }
 $arrayTrackerId = explode(',', $_GET["trackerIdList"]);
 $arrayMandatory = explode(',', $_GET["mandatory"]);
-if (isset($_GET['selected'])) $arraySelected = explode(',', utf8_encode(rawurldecode($_GET["selected"])));
+if (isset($_GET['selected'])) $arraySelected = explode(',', rawurldecode($_GET["selected"]));
 $arrayFieldlist = explode(',', $_GET["fieldlist"]);
 $arrayFilterfield = explode(',', $_GET["filterfield"]);
 $arrayStatus = explode(',', $_GET["status"]);

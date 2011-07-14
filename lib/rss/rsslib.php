@@ -483,27 +483,28 @@ class RSSLib extends TikiDb_Bridge
 		foreach( $feed as $entry ) {
 			$guid = $guidFilter->filter( $entry->getId() );
 
-			if( $this->getOne( 'SELECT COUNT(*) FROM `tiki_rss_items` WHERE `rssId` = ? AND `guid` = ?', array( $rssId, $guid ) ) == 0 ) {
-				$authors = $entry->getAuthors();
-
-				$data = $filter->filter( array(
-					'title' => $entry->getTitle(),
-					'url' => $entry->getLink(),
-					'description' => $entry->getDescription(),
-					'content' => $entry->getContent(),
-					'author' => $authors ? implode( ', ', $authors->getValues() ) : '', 
-				) );
-
-				$data['guid'] = $guid;
-				if( method_exists( $entry, 'getDateCreated' ) && $createdDate = $entry->getDateCreated() ) {
-					$data['publication_date'] = $createdDate->get( Zend_Date::TIMESTAMP );
-				} else {
-					global $tikilib;
-					$data['publication_date'] = $tikilib->now;
-				}
-
-				$this->insert_item( $rssId, $data, $actions );
+			if( $this->getOne( 'SELECT COUNT(*) FROM `tiki_rss_items` WHERE `rssId` = ? AND `guid` = ?', array( $rssId, $guid ) ) == 1 ) {
+				$this->query("delete from `tiki_rss_items` where `rssId`=? and `guid`=?", array($rssId, $guid));
 			}
+			$authors = $entry->getAuthors();
+	
+			$data = $filter->filter( array(
+				'title' => $entry->getTitle(),
+				'url' => $entry->getLink(),
+				'description' => $entry->getDescription(),
+				'content' => $entry->getContent(),
+				'author' => $authors ? implode( ', ', $authors->getValues() ) : '', 
+			) );
+	
+			$data['guid'] = $guid;
+			if( method_exists( $entry, 'getDateCreated' ) && $createdDate = $entry->getDateCreated() ) {
+				$data['publication_date'] = $createdDate->get( Zend_Date::TIMESTAMP );
+			} else {
+				global $tikilib;
+				$data['publication_date'] = $tikilib->now;
+			}
+	
+			$this->insert_item( $rssId, $data, $actions );
 		}
 	}
 

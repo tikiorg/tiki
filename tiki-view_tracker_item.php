@@ -459,12 +459,9 @@ foreach($xfields["data"] as $i => $array) {
 				$fields["data"][$i]["value"] = '';
 			}
 		} elseif ($fields["data"][$i]["type"] == 'a') {
-			if (isset($_REQUEST["$ins_id"])) {
-				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
-			} else {
-				$ins_fields["data"][$i]["value"] = '';
-			}
-			if (isset($_REQUEST["$ins_id"])) {
+			if (!empty($ins_fields['data'][$i]['editableBy']) && !in_array($default_group, $ins_fields['data'][$i]['editableBy'])) {
+				$ins_fields["data"][$i]["value"] = $trklib->get_item_value($_REQUEST['trackerId'], $_REQUEST['itemId'], $ins_fields['data'][$i]['fieldId']);
+			} elseif (isset($_REQUEST["$ins_id"])) {
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 			} else {
 				$ins_fields["data"][$i]["value"] = '';
@@ -509,7 +506,9 @@ foreach($xfields["data"] as $i => $array) {
 
 			}
 		} else {
-			if (isset($_REQUEST["$ins_id"])) {
+			if (!empty($ins_fields['data'][$i]['editableBy']) && !in_array($default_group, $ins_fields['data'][$i]['editableBy'])) {
+				$ins_fields["data"][$i]["value"] = $trklib->get_item_value($_REQUEST['trackerId'], $_REQUEST['itemId'], $ins_fields['data'][$i]['fieldId']);
+			} elseif (isset($_REQUEST["$ins_id"])) {
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 			} else {
 				$ins_fields["data"][$i]["value"] = '';
@@ -1139,11 +1138,11 @@ if ($tracker_info["useAttachments"] == 'y') {
 				}
 			}
 			while (!feof($fp)) {
-				if ($prefs['t_use_db'] == 'y') {
-					$data.= fread($fp, 8192 * 16);
-				} else {
+				if ($prefs['t_use_db'] == 'n') {
 					$data = fread($fp, 8192 * 16);
 					fwrite($fw, $data);
+				} else {
+					$data.= fread($fp, 8192 * 16);
 				}
 			}
 			fclose($fp);
@@ -1210,8 +1209,10 @@ if ($prefs['ajax_xajax'] == 'y') {
 	require_once ("lib/ajax/ajaxlib.php");
 	$ajaxlib->registerTemplate('tiki-view_tracker_item.tpl');
 }
-global $logslib; include_once('lib/logs/logslib.php');
-$logslib->add_action('Viewed', $_REQUEST['itemId'], 'trackeritem');
+if ($prefs['feature_actionlog'] == 'y') {
+	global $logslib; include_once('lib/logs/logslib.php');
+	$logslib->add_action('Viewed', $_REQUEST['itemId'], 'trackeritem');
+}
 
 // Generate validation js
 if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_validation'] == 'y') {

@@ -825,6 +825,10 @@ a.tikihelp:hover {
 	color: white;
 }
 
+.ac_input {
+	color: whiteSmoke;	
+}
+
 /**infinite carousel**/
 #carousel {
         color: #black;
@@ -841,7 +845,7 @@ a.tikihelp:hover {
 }
 
 /** input widget **/
-.ui-widget input {
+input.ui-widget-content {
 	color: #000;
 }
 
@@ -1073,7 +1077,8 @@ td.form {
 	border: solid 1px #666 !important;
 }
 
-.tabmark {
+.tabmark,
+.statuson {
 	font-size: 10px;
 	background: #4e4e4e url(darkroom/button.png);
 	border: 1px solid #666;

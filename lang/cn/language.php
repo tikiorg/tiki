@@ -14341,7 +14341,7 @@ $lang=Array(
 "Remove all cookies" => "移除所有cookies",
 "Expiration Date" => "到期日",
 "filter" => "过滤器",
-"Admin dsn" => "管理 dsn",
+"Admin DSN" => "管理 dsn",
 "Create/edit dsn" => "创建/编辑 dsn",
 "Create/Edit External Wiki" => "创建/编辑外部 Wiki",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)" => "URL (在URL中使用 \$page 来取代 page, 例如: http://www.example.com/tiki-index.php?page=\$page)",

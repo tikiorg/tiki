@@ -48,7 +48,11 @@ function getHTMLPurifierTikiConfig() {
 		if ($prefs['feature_wysiwyg'] == 'y' || $prefs['popupLinks'] == 'y') { 
 			$conf->set('HTML.DefinitionID', 'allow target');
 			$conf->set('HTML.DefinitionRev', 1); 
-			$conf->set('HTML.Doctype', 'XHTML 1.0 Transitional');
+			if ( $prefs['feature_custom_doctype'] === 'y' and !empty($prefs['feature_custom_doctype_content']) ) {
+				$conf->set('HTML.Doctype', $prefs['feature_custom_doctype_content']);
+			} else {
+				$conf->set('HTML.Doctype', 'XHTML 1.0 Transitional');
+			}
 			$conf->set('HTML.TidyLevel', 'light');
 			$def = $conf->getHTMLDefinition(true);
 			$def->addAttribute('a', 'target', 'Enum#_blank,_self,_target,_top');

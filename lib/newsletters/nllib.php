@@ -925,7 +925,7 @@ class NlLib extends TikiLib
 				preg_match('/[a-z0-9\-_.]+?@[\w\-\.]+/i', $a, $m);
 				if (count($m) > 0) {
 					if (validate_email($m[0])) {
-						$emails[] = $m[0];
+						$emails[] = strtolower($m[0]);
 					}
 				}
 			}
@@ -998,7 +998,7 @@ class NlLib extends TikiLib
 		}
 
 		if ($nl_info['allowArticleClip'] == 'y' && $nl_info['autoArticleClip'] == 'y') {
-			$articleClip = $tis->clip_articles($nl_info['nlId']);
+			$articleClip = $this->clip_articles($nl_info['nlId']);
 			$txtArticleClip = generateTxtVersion($articleClip);
 			$info['datatxt'] = str_replace('~~~articleclip~~~', $txtArticleClip, $info['datatxt']);
 			$html = str_replace('~~~articleclip~~~', $articleClip, $html);

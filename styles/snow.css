@@ -709,7 +709,10 @@ td.heading,
 
 .admin #content1 .tabcontent .cbox {background: transparent}
 
-
+.statuson {
+	background: url(snow/flakesptn.jpg);
+	border: 1px inset #6c7b8c;	
+}
 
 /***** Wiki *****/
 body.tiki_wiki #c1c2 #wrapper #col1 > .content {

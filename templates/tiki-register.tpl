@@ -109,7 +109,7 @@
 		</fieldset>
 		
 		{remarksbox type="note"  title="{tr}Note{/tr}"}
-			{tr 0=$prefs.sender_email|default:"{tr}this domain{/tr}"|escape}If you use an email filter, be sure to add %0 to your accepted list{/tr}
+			{tr 0=$prefs.sender_email|default:"this domain"|escape}If you use an email filter, be sure to add %0 to your accepted list{/tr}
 		{/remarksbox}
 	{/if}
 	

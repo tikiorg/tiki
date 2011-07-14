@@ -13685,7 +13685,7 @@ $lang=Array(
 "Upload" => "Lägg in",
 "Remove all cookies" => "Ta bort alla kakor",
 "Expiration Date" => "Förfallodatum",
-"Admin dsn" => "Admin. dsn",
+"Admin DSN" => "Admin. dsn",
 "Create/edit dsn" => "Skapa/redigera dsn",
 "Create/Edit External Wiki" => "Skapa/Redigera extern Wiki",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)" => "URL (använd \$page för att ersatta URL exemplet: http://www.example.com/tiki-index.php?page=\$page)",

@@ -867,8 +867,12 @@ class TrackerLib extends TikiLib
 				} elseif ($ev) {
 					if (is_array($ev)) {
 						$keys = array_keys($ev);
-						if (in_array((string)$keys[0], array('<', '>', '<=', '>='))) {
-							$mid .= " AND ttif$i.`value`".$keys[0].'?';
+						if (in_array((string)$keys[0], array('<', '>'))) {
+							$mid .= " AND ttif$i.`value`".$keys[0]."? + 0";
+							$bindvars[] = $ev[$keys[0]];
+						} elseif (in_array((string)$keys[0], array('<=', '>='))) {
+							$mid .= " AND (ttif$i.`value`".$keys[0]."? + 0 OR ttif$i.`value` = ?)";
+							$bindvars[] = $ev[$keys[0]];
 							$bindvars[] = $ev[$keys[0]];
 						} elseif ($keys[0] == 'not') {
 							$mid .= " AND ttif$i.`value` not in (".implode(',', array_fill(0,count($ev),'?')).")";
@@ -2859,7 +2863,7 @@ class TrackerLib extends TikiLib
 	}
 	function update_star_field($trackerId, $itemId, &$field) {
 		global $user;
-		if ($field['type'] == 's' && $field['name'] == 'Rating') { // global rating to an item - value is the sum of the votes
+		if ($field['type'] == 's' && $field['name'] == tra('Rating')) { // global rating to an item - value is the sum of the votes
 			$key = 'tracker.'.$trackerId.'.'.$itemId;
 			$field['numvotes'] = $this->getOne('select count(*) from `tiki_user_votings` where `id` = ?', array($key));
 			$field['voteavg'] = ( $field['numvotes'] > 0 ) ? round(($field['value'] / $field['numvotes'])) : '';
@@ -3587,7 +3591,7 @@ class TrackerLib extends TikiLib
 		return $this->getOne($query, array('y', $trackerId));
 	}
 
-	function categorized_item($trackerId, $itemId, $mainfield, $ins_categs) {
+	function categorized_item($trackerId, $itemId, $mainfield, $ins_categs, $parent_categs_only = array()) {
 		global $categlib; include_once('lib/categories/categlib.php');
 		$cat_type = "trackeritem";
 		$cat_objid = $itemId;
@@ -3603,6 +3607,25 @@ class TrackerLib extends TikiLib
 			if ( $t['type'] == 'e' ) {
 				$this->query("insert ignore into `tiki_tracker_item_fields` (`itemId`,`fieldId`,`value`) values(?,?,?)", array($itemId, $t['fieldId'], ''));
 			}
+		}
+		$old_categs = $categlib->get_object_categories('trackeritem', $itemId);
+		if (is_array($ins_categs)) {
+			$new_categs = array_diff($ins_categs, $old_categs);
+			$del_categs = array_diff($old_categs, $ins_categs);
+			if (!empty($parent_categs_only)) {
+				// put back categories that were not meant to be deleted (e.g. Tracker plugin)
+				foreach($del_categs as $d) {
+					$parentId = $categlib->get_category_parent($d);
+					if (!in_array($parentId, $parent_categs_only)) {
+						$undel_categs[] = $d;
+					}
+				}
+				if (isset($undel_categs)) {
+					$del_categs = array_diff($del_categs, $undel_categs);
+				}
+			}
+			$remain_categs = array_diff($old_categs, $new_categs, $del_categs);
+			$ins_categs = array_merge($remain_categs, $new_categs);
 		}
 		$categlib->update_object_categories($ins_categs, $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href);
 	}

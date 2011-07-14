@@ -26,7 +26,7 @@ class TWVersion
 		$this->branch 	= 'stable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '6.3';
+		$this->version 	= '6.4';
 		$this->star	= 'Rigel';
 		$this->releases	= array();
 

@@ -95,7 +95,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 			$key = $this->objectKey( array_merge( $baseContext, array( 'object' => $v ) ) );
 
 			if( ! isset( $this->knownObjects[$key] ) ) {
-				$objects[strtolower($v)] = $key;
+				$objects[$this->cleanObject($v)] = $key;
 				$this->knownObjects[$key] = array();
 			}
 		}
@@ -112,7 +112,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 
 		foreach( $result as $row ) {
 			$category = (int) $row['categId'];
-			$object = strtolower($row['itemId']);
+			$object = $this->cleanObject($row['itemId']);
 			$key = $objects[$object];
 			
 			$this->knownObjects[$key][] = $category;
@@ -201,6 +201,10 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 	}
 
 	private function objectKey( $context ) {
-		return $context['type'] . strtolower( $context['object'] );
+		return $context['type'] . $this->cleanObject( $context['object'] );
+	}
+
+	private function cleanObject($name) {
+		return strtolower(trim($name));
 	}
 }

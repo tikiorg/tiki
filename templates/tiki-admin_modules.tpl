@@ -546,7 +546,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" class="odd">{tr}Data{/tr}<br />
-					{textarea name='um_data' id='um_data' rows="6" cols="80" _toolbars='y' _zoom='n' _previewConfirmExit='n'}{$um_data}{/textarea}
+					{textarea name='um_data' id='um_data' rows="6" cols="80" _toolbars='y' _zoom='n' _previewConfirmExit='n' _wysiwyg="n"}{$um_data}{/textarea}
 					<br />
 					<input type="submit" name="um_update" value="{if $um_title eq ''}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" onclick="needToConfirm=false" />
 				</td>

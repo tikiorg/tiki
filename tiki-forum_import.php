@@ -45,7 +45,7 @@
 require_once ('tiki-setup.php');
 
 $access->check_feature('feature_forums');
-$access->check_permission('tiki_p_admin');
+$access->check_permission('tiki_p_admin_forum');
 
 include_once ('lib/importerlib.php');
 $import = new Importer($dbTiki);

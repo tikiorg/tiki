@@ -894,6 +894,10 @@ tr.diffheader {
 	background: transparent;
 }
 
+.statuson {
+	border: 1px solid #225566;
+}
+
 /*** Feature-specific selectors ***/
 /***** Wiki *****/
 h1 a.pagetitle,

@@ -13625,7 +13625,7 @@ $lang=Array(
 "Upload" => "Prenesi",
 "Remove all cookies" => "Ukloni sve kolačiće",
 "cookie" => "kolačić",
-"Admin dsn" => "Administracija dsn",
+"Admin DSN" => "Administracija dsn",
 "Create/edit dsn" => "Napravi/izmijeni dsn",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)" => "URL (koristite \$page da se zamijeni sa nazivom stranice u URL, primjer: http://www.example.com/tiki-index.php?page=\$page)",
 "ExtWiki" => "Vanjski tiki",

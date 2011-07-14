@@ -412,6 +412,11 @@ tr.even:hover {
 	border: /*tabcontent_border*/ !important;
 	border-top: none !important;}
 
+.statuson {
+	background: #424242;
+	border: 1px inset #b1b299;
+}
+
 .article h2,
 h1.pagetitle {
 	font-size: 24px;

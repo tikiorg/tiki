@@ -169,20 +169,6 @@ function wikiplugin_include($data, $params, $offset) {
 			$text = implode("\n", $explText);
 		}
 	}
-	$text = $tikilib->parse_data($text, array('suppress_icons' => true));	// don't show edit icons (they don't work on included pages - yet)
-	// append an edit button
-	if ($perms['tiki_p_edit'] === 'y') {
-		global $smarty;
-		require_once $smarty->_get_plugin_filepath('block', 'ajax_href');
-		require_once $smarty->_get_plugin_filepath('function', 'icon');
-		$text .= '<a class="editplugin" title="'.tra('Edit this page').'" '.	// ironically smarty_block_self_link doesn't work for this! ;)
-				smarty_block_ajax_href( array('template' => 'tiki-editpage.tpl'), 'tiki-editpage.php?page='.urlencode($page).'&returnto='.urlencode($GLOBALS['page']),$smarty, false) .
-				smarty_function_icon(array( '_id' => 'page_edit', 'alt' => tra('Edit this page')), $smarty) . '</a>';
-	}
-	if ($tikilib->contains_html_block($text)) {	// add an identifying wrapper element
-		$text = '<div class="wikiplugin_include" id="plugin_include_' . $offset . '">' . $text . '</div>';
-	} else {
-		$text = '<span class="wikiplugin_include" id="plugin_include_' . $offset . '">' . $text . '</span>';
-	} 
-	return '~np~' . $text . '~/np~';			// wrap in noparse tags as it already has been
+	$tikilib->parse_wiki_argvariable($text);
+	return $text;
 }

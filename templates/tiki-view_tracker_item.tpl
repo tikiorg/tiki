@@ -132,7 +132,7 @@
 {if $tiki_p_tracker_view_comments ne 'n'}
 	{assign var=tabcomment_vtrackit value="{tr}Comments{/tr} (`$commentCount`)"}
 {else}
-	{assign var=tabcomment_vtrackit value="{tr}Comments{/tr}}
+	{assign var=tabcomment_vtrackit value="{tr}Comments{/tr}"}
 {/if}
 
 {tab name=$tabcomment_vtrackit}

@@ -51,8 +51,8 @@
 		{foreach key=id item=one from=$field_value.list}
 			{if ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($one, $field_value.itemChoices) )}
 				<option value="{$one|escape}"
-				{if empty($item.itemId) and $one eq $user}
-					selected="selected"
+				{if empty($item.itemId)}
+					{if ($field_value.options_array[0] eq 1 or $field_value.options_array[0] eq 2) and $one eq $user} selected="selected"{/if}
 				{elseif $field_value.options_array[0] eq 2 and $one eq $user}
 					selected="selected"
 				{elseif $one eq $field_value.value}
@@ -387,7 +387,7 @@
 		{/if}
 		{if !$smarty.section.jx.first or $sepR ne '<br />'}
 			<input type="radio" name="{$field_value.ins_id}" value="{$field_value.options_array[jx]|escape}" {if $field_value.value eq $field_value.options_array[jx] or $field_value.defaultvalue eq $field_value.options_array[jx]}checked="checked"{/if} id="{$field_value.ins_id[jx]}" />
-			<label {*for="{$field_value.ins_id[jx]}"*}>{$field_value.options_array[jx]|tr_if}</label>
+			<label for="{$field_value.ins_id[jx]}">{$field_value.options_array[jx]|tr_if}</label>
 			{if !$smarty.section.jx.last}{$sepR}{/if}
 		{/if}
 	{/section}

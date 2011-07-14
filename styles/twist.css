@@ -852,6 +852,11 @@ a.sortheader:visited {
 	border: 1px solid #abcdef;
 }
 
+.statuson {
+	background: #abcdef;,
+	border: 1px inset #abcdef
+}
+
 /***** Wiki *****/
 h1 a.pagetitle,
 h1 a.pagetitle:visited  {

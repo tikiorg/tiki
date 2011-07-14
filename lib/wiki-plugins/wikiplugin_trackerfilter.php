@@ -433,8 +433,10 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 			$filters[] = $filter;
 			continue;
 		}
-		$field = &$fields['data'][$iField];
-		++$iField;
+		foreach ($fields['data'] as $iField=> $field) {
+			if ($field['fieldId'] == $fieldId)
+				break;
+		}
 		if (($field['isHidden'] == 'y' || $field['isHidden'] == 'c') && $tiki_p_admin_trackers != 'y') {
 			continue;
 		}

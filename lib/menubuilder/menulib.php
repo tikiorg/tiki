@@ -236,7 +236,7 @@ class MenuLib extends TikiLib
 		if (empty($option['url'])) {
 			return false;
 		}
-		$url = urldecode($_SERVER['REQUEST_URI']);
+		$url = str_replace('+', ' ', str_replace('&amp;', '&', urldecode($_SERVER['REQUEST_URI'])));
 		$option['url'] = str_replace('+', ' ', str_replace('&amp;', '&', urldecode($option['url'])));
 		if (strstr($option['url'], 'structure=') && !strstr($url, 'structure=')) { // try to find al the occurence of the page in structures
 			$option['url'] = preg_replace('/&structure=.*/', '', $option['url']);
@@ -245,6 +245,11 @@ class MenuLib extends TikiLib
 			global $wikilib; include_once('lib/wiki/wikilib.php');
 			$homePage = $wikilib->get_default_wiki_page();
 			$url .= "?page=$homePage";
+		}
+		if (preg_match('/.*tiki.index.php$/', $option['url'])) {
+			global $wikilib; include_once('lib/wiki/wikilib.php');
+			$homePage = $wikilib->get_default_wiki_page();
+			$option['url'] .= "?page=$homePage";
 		}
 		if ($prefs['feature_sefurl'] == 'y' && !empty($option['sefurl'])) {
 			$pos = strpos($url, '/'. str_replace('&amp;', '&', urldecode($option['sefurl']))); // position in $url
@@ -363,18 +368,16 @@ class MenuLib extends TikiLib
 			$channels = array('data'=>$subMenu, 'cant'=>$cant);
 		}
 		// set sections open/close according to cookie
-		if (!empty($params['id'])) {
-			global $prefs;
-			foreach ($channels['data'] as $position => &$option) {
-				$option['open'] = false;
-				if (!empty($params['menu_cookie']) && $params['menu_cookie'] == 'n') {
-					if (!empty($option['selected']) || !empty($option['selectedAscendant'])) {
-						$option['open'] = true;
-					}
-				} elseif ($option['type'] == 's') {
-					$ck = getCookie('menu'.$params['id'].'__'.$option['position'], 'menu', 'o');
-					$option['open'] = ($prefs['javascript_enabled'] == 'n' || $ck == 'o');
+		global $prefs;
+		foreach ($channels['data'] as $position => &$option) {
+			$option['open'] = false;
+			if (!empty($params['menu_cookie']) && $params['menu_cookie'] == 'n') {
+				if (!empty($option['selected']) || !empty($option['selectedAscendant'])) {
+					$option['open'] = true;
 				}
+			} elseif ($option['type'] == 's') {
+				$ck = getCookie('menu'.$params['id'].'__'.$option['position'], 'menu', 'o');
+				$option['open'] = ($prefs['javascript_enabled'] == 'n' || $ck == 'o');
 			}
 		}
 		return $channels;

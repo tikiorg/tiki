@@ -51,7 +51,8 @@ if (isset($_REQUEST['editor_id'])) {
 			$res = $editlib->parseToWysiwyg(urldecode($_REQUEST['data']));
 		} else if ($_REQUEST['command'] == 'auto_save') {
 			include_once 'lib/ajax/autosave.php';
-			$res = auto_save( $_REQUEST['editor_id'], $_REQUEST['data'], $_REQUEST['referer'] );
+			$data = $_REQUEST['allowHtml'] || $_SESSION['wysiwyg'] === 'y' ? $_REQUEST['data'] : htmlspecialchars($_REQUEST['data']);
+			$res = auto_save( $_REQUEST['editor_id'], $data, $_REQUEST['referer'] );
 		} else if ($_REQUEST['command'] == 'auto_remove') {
 			include_once 'lib/ajax/autosave.php';
 			remove_save($_REQUEST['editor_id'], $_REQUEST['referer'] );
@@ -62,7 +63,6 @@ if (isset($_REQUEST['editor_id'])) {
 		send_ajax_response( $_REQUEST['command'], $res );
 	} else if (isset($_REQUEST['autoSaveId'])) {	// wiki page previews
 		
-		$_REQUEST['autoSaveId'] = urldecode($_REQUEST['autoSaveId']);
 		$autoSaveIdParts = explode(':', $_REQUEST['autoSaveId']);	// user, section, object id
 		
 		if (count($autoSaveIdParts) === 3 && !empty($user) && $user === $autoSaveIdParts[0] && $autoSaveIdParts[1] === 'wiki_page') {

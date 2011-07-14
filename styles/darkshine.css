@@ -816,6 +816,10 @@ td.even {
 	border-bottom-width: 0;
 }
 
+.statuson {
+	background: #dcdcdc;
+}
+
 .tabcontent {
 	border: 1px solid #7c7b7d;
 	background: #ececec;

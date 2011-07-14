@@ -500,7 +500,7 @@ function wikiplugin_googlemap($data, $params) {
 						if ($markertext) {
 							$markertext .= '<br /><br />';	
 						}
-						$markertext .= preg_replace("/[\r\n|\r|\n]/", "<br />", htmlspecialchars($item[$m]));					
+						$markertext .= preg_replace("/[\r\n|\r|\n]/", "<br />", htmlspecialchars($item[$m], ENT_QUOTES));					
 					}
 				}
 			}
@@ -562,7 +562,7 @@ function wikiplugin_googlemap($data, $params) {
 			if (!empty($obj['href'])) {
 				$popup .= '<a href="' . $obj['href']  . '">';
 			}
-			$popup .= htmlspecialchars($obj['title']);
+			$popup .= htmlspecialchars($obj['title'], ENT_QUOTES);
 			if (!empty($obj['href'])) {
 				$popup .= '</a>';	
 			}

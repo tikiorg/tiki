@@ -61,9 +61,9 @@ if (isset($_REQUEST['send'])) {
 		die;
 	}
 	// Parse the to, cc and bcc fields into an array
-	$arr_to = preg_split('/\s*(?<!\\\);\s*/', $_REQUEST['to']);
-	$arr_cc = preg_split('/\s*(?<!\\\);\s*/', $_REQUEST['cc']);
-	$arr_bcc = preg_split('/\s*(?<!\\\);\s*/', $_REQUEST['bcc']);
+	$arr_to = preg_split('/\s*(?<!\\\)[;,]\s*/', $_REQUEST['to']);
+	$arr_cc = preg_split('/\s*(?<!\\\)[;,]\s*/', $_REQUEST['cc']);
+	$arr_bcc = preg_split('/\s*(?<!\\\)[;,]\s*/', $_REQUEST['bcc']);
 	if ($prefs['user_selector_realnames_messu'] == 'y') {
 		$groups = '';
 		$arr_to = $userlib->find_best_user($arr_to, $groups, 'login');

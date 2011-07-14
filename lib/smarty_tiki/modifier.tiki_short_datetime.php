@@ -22,6 +22,7 @@ function smarty_modifier_tiki_short_datetime($string, $intro='', $same='y') {
 		//tra('on') tra('on:') tra('at') tra('at:')
 		return empty($intro)? $time: str_replace(array('on', 'On'), array('at', 'At'), $intro).' '.$time;
 	} else {
+		// if you change the separator do not forget to change the translation instruction in lib/prefs/short.php
 		$time = $date . ' ' . $time;
 		return empty($intro)? $time: tra($intro).' '.$time;
 	}

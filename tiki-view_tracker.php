@@ -472,7 +472,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$mainfield = $fields["data"][$i]["value"];
 	}
 }
-if (!$orderkey) {
+if (!$orderkey && $sort_mode == '') {
 	$sort_mode = 'lastModif_asc';
 }
 if (!empty($_REQUEST['remove'])) {

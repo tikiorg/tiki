@@ -13753,7 +13753,7 @@ $lang=Array(
 "Upload Cookies from textfile" => "Upload Cookies fra tekstfil",
 "Upload from disk:" => "Upload fra harddisk",
 "Remove all cookies" => "Fjern alle cookies",
-"Admin dsn" => "Administrér dsn",
+"Admin DSN" => "Administrér dsn",
 "Create/edit dsn" => "Opret/rediger dsn",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)" => "URL (brug \$page til at få sidens navn i URL eksempel: http://www.eksempel.dk/tiki-index.php?page=\$page)",
 "ExtWiki" => "Eksternwiki",

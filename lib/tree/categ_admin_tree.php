@@ -64,6 +64,9 @@ class CatAdminTreeMaker extends TreeMaker
 		return '<div class="treenode"><table width="100%"><tr>';
 	}
 
+	function node_start_code_flip($nodeinfo) {
+		return $this->node_start_code($nodeinfo);
+	}
 	//
 	function node_flipper_code($nodeinfo) {
 		$this->itemID = $this->prefix . 'id' . $nodeinfo["id"];

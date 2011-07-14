@@ -14,6 +14,9 @@
 		{/if}
 	{/if}
 	{button href="tiki-objectpermissions.php" _text="{tr}Manage permissions{/tr}"}
+	{if $prefs.feature_invite eq 'y' and $tiki_p_invite eq 'y'}
+		{button href="tiki-list_invite.php" _text="{tr}Invitation List{/tr}"}
+	{/if}
 </div>
 
 {tabset name='tabs_admingroups'}
@@ -41,7 +44,6 @@
 				<a href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}groupDesc_asc{else}groupDesc_desc{/if}">{tr}Description{/tr}</a>
 			</th>
 			<th>{tr}Inherits Permissions from{/tr}</th>
-			<th>{tr}Homepage{/tr}</th>
 			<th>{tr}User Choice{/tr}</th>
 			<th>{tr}Permissions{/tr}</th>
 			<th style="width: 20px;">&nbsp;</th>
@@ -62,7 +64,6 @@
 						{$users[user].included[ix]|escape}<br />
 					{/section}
 				</td>
-				<td>{tr}{$users[user].groupHome}{/tr}</td>
 				<td>{tr}{$users[user].userChoice}{/tr}</td>
 				<td>
 					<a class="link" href="tiki-objectpermissions.php?group={$users[user].groupName|escape:"url"}" title="{tr}Permissions{/tr}">{icon _id='key' alt="{tr}Permissions{/tr}"} {$users[user].permcant}</a>

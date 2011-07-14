@@ -209,13 +209,14 @@ class TikiLib extends TikiDb_Bridge
 		if ($user == 'admin')
 			return false;
 
-		$ips = $this->get_ip_address();
-		$query = "select tb.`message`,tb.`user`,tb.`ip1`,tb.`ip2`,tb.`ip3`,tb.`ip4`,tb.`mode` from `tiki_banning` tb, `tiki_banning_sections` tbs where tbs.`banId`=tb.`banId` and tbs.`section`=? and ( (tb.`use_dates` = ?) or (tb.`date_from` <= ? and tb.`date_to` >= ?))";
+		$fullip = $this->get_ip_address();
+		$ips = explode(".", $fullip);
+		$query = "select tb.`message`,tb.`user`,tb.`ip1`,tb.`ip2`,tb.`ip3`,tb.`ip4`,tb.`mode` from `tiki_banning` tb, `tiki_banning_sections` tbs where tbs.`banId`=tb.`banId` and tbs.`section`=? and ( (tb.`use_dates` = ?) or (tb.`date_from` <= FROM_UNIXTIME(?) and tb.`date_to` >= FROM_UNIXTIME(?)))";
 		$result = $this->fetchAll($query,array($section,'n',(int)$this->now,(int)$this->now));
 
 		foreach ( $result as $res ) {
 			if (!$res['message']) {
-				$res['message'] = tra('You are banned from'). ':' . $section;
+				$res['message'] = tra('You are banned from'). ': ' . $section;
 			}
 
 			if ($user && $res['mode'] == 'user') {
@@ -1483,7 +1484,14 @@ class TikiLib extends TikiDb_Bridge
 //			$ret[] = "Anonymous";
 
 			if (isset($_SESSION["groups_are_emulated"]) && $_SESSION["groups_are_emulated"]=="y"){
-				$ret = array_intersect($ret,unserialize($_SESSION['groups_emulated']));
+				if (in_array('Admins',$ret)) {
+					// Members of group 'Admins' can emulate being in any list of groups
+					$ret = unserialize($_SESSION['groups_emulated']);
+				}else{
+					// For security purposes, user can only emulate a subset of user's list of groups
+					// This prevents privilege escalation
+					$ret = array_intersect($ret,unserialize($_SESSION['groups_emulated']));
+				}
 			}
 			$ret = array_values(array_unique($ret));
 			$this->usergroups_cache[$user] = $ret;
@@ -3530,7 +3538,15 @@ class TikiLib extends TikiDb_Bridge
 		if (!empty($filter)) {
 			$tmp_mid = array();
 			foreach ($filter as $type=>$val) {
-				if ($type == 'categId') {
+				if ($type == 'andCategId') {
+					$categories = $categlib->get_jailed( (array) $val );
+					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) ";
+					$join_bindvars[] = 'wiki page';
+					foreach ($categories as $i=>$categId) {
+						$join_tables .= " inner join `tiki_category_objects` as tc$i on (tc$i.`catObjectId`=tob.`objectId` and tc$i.`categId` =?) ";
+						$join_bindvars[] = $categId;
+					}
+				} elseif ($type == 'categId') {
 					$categories = $categlib->get_jailed( (array) $val );
 					$categories[] = -1;
 
@@ -4933,6 +4949,10 @@ class TikiLib extends TikiDb_Bridge
 	
 					if( ! $skip ) {
 						// Handle pre- & no-parse sections and plugins inserted by this plugin
+
+						//Suppress plugin edit for plugins within an include since edit doesn't work for these
+						$options['suppress_icons'] = $plugin_name == 'include' ? true : $options['suppress_icons'];
+
 						$this->parse_first($ret, $preparsed, $noparsed, $options);
 						//$ret = $this->parse_data($ret);
 	
@@ -5384,7 +5404,7 @@ class TikiLib extends TikiDb_Bridge
 			$ck_editor_plugin .= '}';
 		}
 		// work out if I'm a nested plugin and return empty if so
-		$stack = debug_backtrace(true);
+		$stack = debug_backtrace();
 		$plugin_nest_level = 0;
 		foreach ($stack as $st) {
 			if ($st['function'] === 'parse_first') {
@@ -5885,7 +5905,9 @@ class TikiLib extends TikiDb_Bridge
 		if (!$simple_wiki) {
 			$this->parse_htmlchar($data);
 		}
-
+		//needs to be before text color syntax because of use of htmlentities in lib/core/WikiParser/OutputLink.php
+		$data = $this->parse_data_wikilinks( $data, $simple_wiki );
+		
 		if (!$simple_wiki) {
 			// Replace colors ~~foreground[,background]:text~~
 			// must be done before []as the description may contain color change
@@ -5940,8 +5962,6 @@ class TikiLib extends TikiDb_Bridge
 				$data = preg_replace("/::(.+?)::/", "<div style=\"text-align: center;\">$1</div>", $data);
 			}
 		}
-
-		$data = $this->parse_data_wikilinks( $data, $simple_wiki );
 
 		// reinsert hash-replaced links into page
 		foreach ($noparsedlinks as $np) {
@@ -6386,6 +6406,8 @@ class TikiLib extends TikiDb_Bridge
 		if ($need_maketoc && $prefs["feature_wysiwyg"] == 'y' && $prefs["wysiwyg_htmltowiki"] != 'y') {
 			// Header needs to start at beginning of line (wysiwyg does not necessary obey)
 			$data = preg_replace('/<\/([a-z]+)><h([1-6])>/im', "</\\1>\n<h\\2>", $data);
+			$data = preg_replace('/^\s+<h([1-6])>/im', "<h\\1>", $data); // headings with leading spaces
+			$data = preg_replace('/\/><h([1-6])>/im', "/>\n<h\\1>", $data); // headings after /> tag
 			$htmlheadersearch = '/<h([1-6])>\s*([^<]+)\s*<\/h[1-6]>/im';
 			preg_match_all($htmlheadersearch, $data, $htmlheaders);
 			for ($i = 0; $i < count($htmlheaders[1]); $i++) {

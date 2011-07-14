@@ -298,6 +298,18 @@ function wikiplugin_tracker_info()
 				'filter' => 'pagename',
 				'default' => '',
 			),
+			'formtag' => array(
+				'required' => false,
+				'name' => tra('Embed the tracker in a form tag'),
+				'description' => tra('If set to Yes, the tracker is contained in a <form> tag and has action buttons'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
 		),
 	);
 }
@@ -389,6 +401,10 @@ function wikiplugin_tracker($data, $params)
 	}
 	$smarty->assign('showmandatory',  empty($wiki) && empty($tpl)? 'n': $showmandatory); 
 	if (!empty($wiki)) $wiki = trim($wiki);
+
+	if (!isset($params['formtag'])) {
+		$params['formtag'] = 'y';
+	}
 
 	if (isset($values)) {
 		if (!is_array($values)) {
@@ -666,16 +682,28 @@ function wikiplugin_tracker($data, $params)
 				if ($embedded == 'y' && isset($_REQUEST['page'])) {
 					$ins_fields["data"][] = array('fieldId' => $embeddedId, 'value' => $_REQUEST['page']);
 				}
-				$ins_categs = array();
+				$ins_categs = 0; // important: non-array ins_categs means categories should remain unchanged
 				$categorized_fields = array();
 				while (list($postVar, $postVal) = each($_REQUEST)) {
 					if(preg_match("/^ins_cat_([0-9]+)/", $postVar, $m)) {
 						foreach ($postVal as $v) {
+							if (!is_array($ins_categs)) {
+								$ins_categs = array();
+							}
  	   						$ins_categs[] = $v;
 							$categorized_fields[] = $m[1];
 						}
 					}
 		 		}
+		 		$parent_categs_only = array();
+				foreach ($ins_fields['data'] as $current_field) {
+					if ($current_field['type'] == 'e') {
+						$parent_categs_only[] = $current_field['options_array'][0];
+						if (!is_array($ins_categs)) {
+							$ins_categs = array(); // to unset categories of this field if none clicked
+						}
+					}
+				}
 				/* ------------------------------------- End recup all values from REQUEST -------------- */
 
 				/* ------------------------------------- Check field values for each type and presence of mandatory ones ------------------- */
@@ -726,7 +754,9 @@ function wikiplugin_tracker($data, $params)
 						$status = '';
 					}
 					$rid = $trklib->replace_item($trackerId, $itemId, $ins_fields, $status, $ins_categs);
-					$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs);
+					if (is_array($ins_categs)) {
+						$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs, $parent_categs_only);
+					}
 					if (isset($newItemRate)) {
 						$trklib->replace_rating($trackerId, $rid, $newItemRateField, $user, $newItemRate);
 					}
@@ -1027,9 +1057,11 @@ function wikiplugin_tracker($data, $params)
 				$smarty->assign('validationjs', $validationjs);
 				$back .= $smarty->fetch('tracker_validator.tpl');
 			}
-			$back .= '<form name="editItemForm' . $iTRACKER . '" id="editItemForm' . $iTRACKER . '" enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').' action="'. $_SERVER['REQUEST_URI'] .'"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
+			if ($params['formtag'] == 'y') {
+				$back .= '<form name="editItemForm' . $iTRACKER . '" id="editItemForm' . $iTRACKER . '" enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').' action="'. $_SERVER['REQUEST_URI'] .'"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
+				$back .= '<input type="hidden" name="refresh" value="1" />';
+			}
 			$back .= '<input type="hidden" name="iTRACKER" value="'.$iTRACKER.'" />';
-			$back .= '<input type="hidden" name="refresh" value="1" />';
 			if (isset($_REQUEST['page']))
 				$back.= '<input type="hidden" name="page" value="'.$_REQUEST["page"].'" />';
 			 // for registration
@@ -1283,7 +1315,7 @@ function wikiplugin_tracker($data, $params)
 				$smarty->security = true;
 				$back .= $smarty->fetch('wiki:'.$wiki);
 			}
-			if ($prefs['feature_antibot'] == 'y' && empty($user)) {
+			if ($prefs['feature_antibot'] == 'y' && empty($user) && $formtag != 'n') {
 				// in_tracker session var checking is for tiki-register.php
 				$smarty->assign('showmandatory', $showmandatory);
 				$smarty->assign('antibot_table', empty($wiki) && empty($tpl)?'n': 'y');
@@ -1294,22 +1326,26 @@ function wikiplugin_tracker($data, $params)
 			} else {
 				$back .= '</div>';
 			}
-			$back .= '<div class="input_submit_container">';
+			if ($params['formtag'] == 'y') {
+				$back .= '<div class="input_submit_container">';
 			
-			if (!empty($reset)) {
-				$back .= '<input class="button submit preview" type="reset" name="tr_reset" value="'.tra($reset).'" />';
+				if (!empty($reset)) {
+					$back .= '<input class="button submit preview" type="reset" name="tr_reset" value="'.tra($reset).'" />';
+				}
+				if (!empty($preview)) {
+					$back .= '<input class="button submit preview" type="submit" name="tr_preview" value="'.tra($preview).'" />';
+				}
+				foreach ($action as $key=>$act) {
+					$back .= '<input class="button submit" type="submit" name="action'.$key.'" value="'.tra($act).'" onclick="needToConfirm=false" />';
+				}
+				$back .= '</div>';
 			}
-			if (!empty($preview)) {
-				$back .= '<input class="button submit preview" type="submit" name="tr_preview" value="'.tra($preview).'" />';
-			}
-			foreach ($action as $key=>$act) {
-				$back .= '<input class="button submit" type="submit" name="action'.$key.'" value="'.tra($act).'" onclick="needToConfirm=false" />';
-			}
-			$back .= '</div>';
 			if ($showmandatory == 'y' and $onemandatory) {
 				$back.= "<em class='mandatory_note'>".tra("Fields marked with a * are mandatory.")."</em>";
 			}
-			$back.= '</form>';
+			if ($params['formtag'] == 'y') {
+				$back.= '</form>';
+			}
 			if (!empty($js)) {
 				$back .= '<script type="text/javascript">'.$js.'</script>';
 			}
