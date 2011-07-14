@@ -66,6 +66,32 @@ if ($.ui) {
 		</div>
 	</fieldset>
 	<fieldset>
+		<legend>{tr}Advanced Shopping Cart{/tr}</legend>
+		{preference name=payment_cart_inventory}
+		{preference name=payment_cart_bundles}
+		<fieldset>
+			<legend>{tr}Products Tracker Setup{/tr}</legend>	
+			{preference name=payment_cart_product_tracker}
+			{preference name=payment_cart_product_tracker_name}
+			{preference name=payment_cart_inventory_type_field}
+			{preference name=payment_cart_inventory_total_field}
+			{preference name=payment_cart_inventory_lesshold_field}
+			{preference name=payment_cart_product_name_fieldname}
+			{preference name=payment_cart_products_inbundle_fieldname}
+			{preference name=payment_cart_associated_event_fieldname}
+			{preference name=payment_cart_product_classid_fieldname}
+		</fieldset>	
+		{preference name=payment_cart_orders}
+		<div class="adminoptionboxchild" id="payment_cart_orders_childcontainer">
+
+		</div>
+		<fieldset>
+		<legend>{tr}Orders Tracker Setup{/tr}</legend>	
+		{preference name=payment_cart_orders_profile}
+		{preference name=payment_cart_orderitems_profile}
+		</fieldset>
+	</fieldset>
+	<fieldset>
 		<legend>{tr}Shipping{/tr}</legend>
 		{preference name=shipping_service}
 

@@ -92,7 +92,9 @@ class CatBrowseTreeMaker extends TreeMaker
 
 	//
 	function node_child_start_code($nodeinfo) {
-		return '<ul class="tree" id="' . $this->itemID . '">';
+		$style = getCookie($nodeinfo['id'], $this->prefix) !== 'o' ? ' style="display:none"' : '';
+		return '<ul class="tree" data-catid="' . $nodeinfo['id'] .
+			   		'" data-prefix="' . $this->prefix . '"' . $style .'>';
 	}
 
 	//

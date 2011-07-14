@@ -1261,7 +1261,7 @@ class ToolbarFileGallery extends Toolbar
 	{
 		$this->setLabel( tra('Choose or upload images') )
 			->setIcon( tra('pics/icons/pictures.png') )
-				->setWysiwygToken( '' )	/* disabling this by default for wysiwyg - make a custom tool with tikiimage as the wysiwyg token to override */
+				->setWysiwygToken( 'tikiimage' )
 					->setType('FileGallery')
 						->addRequiredPreference('feature_filegals_manager');
 	} // }}}
@@ -1351,7 +1351,12 @@ JS
 	
 	function isAccessible() // {{{
 	{
-		return parent::isAccessible() && ! isset($_REQUEST['zoom']) && ! isset($_REQUEST['hdr']);	// no switch editor if zoom of section edit
+		global $tiki_p_edit_switch_mode;
+
+		return parent::isAccessible() &&
+				! isset($_REQUEST['zoom']) &&		// no switch editor if zoom of section edit (dead - remove)
+				! isset($_REQUEST['hdr']) &&		// or in section edit
+				$tiki_p_edit_switch_mode === 'y';	// or no perm (new in 7.1)
 	} // }}}
 	
 /*	function getLabel() // {{{

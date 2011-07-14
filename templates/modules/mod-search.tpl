@@ -5,11 +5,11 @@
 {if $smod_params.tiki_search neq 'none'}
     <form id="search-module-form{$search_mod_usage_counter}" method="get" action="#"{if $smod_params.use_autocomplete eq 'y'} onsubmit="return submitSearch{$search_mod_usage_counter}()"{/if}>
     	<div>
-		    <input id="search_mod_input_{$search_mod_usage_counter}" name="find"{if !empty($smod_params.input_size)} style="width:{$smod_params.input_size}em"{/if} type="text" accesskey="s" value="{$smod_params.input_value}" />
+		    <input id="search_mod_input_{$search_mod_usage_counter}" name="{if $smod_params.search_action eq 'tiki-searchindex.php'}filter~content{else}find{/if}"{if !empty($smod_params.input_size)} style="width:{$smod_params.input_size}em"{/if} type="text" accesskey="s" value="{$smod_params.input_value}" />
 			
 		 	{if $smod_params.show_object_filter eq 'y'}
 				{tr}in:{/tr}
-			    <select name="where" style="width:{$smod_params.select_size}em;">
+			    <select name="{if $smod_params.search_action eq 'tiki-searchindex.php'}filter~type{else}where{/if}" style="width:{$smod_params.select_size}em;">
 				    <option value="pages">{tr}Entire Site{/tr}</option>
 				    {if $prefs.feature_wiki eq 'y'}<option value="wikis"{if $smod_params.where eq "wikis"} selected="selected"{/if}>{tr}Wiki Pages{/tr}</option>{/if}
 				    {if $prefs.feature_directory eq 'y'}<option value="directory"{if $smod_params.where eq "directory"} selected="selected"{/if}>{tr}Directory{/tr}</option>{/if}
@@ -28,7 +28,7 @@
 				    {if $prefs.feature_trackers eq 'y'}<option value="trackers"{if $smod_params.where eq "trackers"} selected="selected"{/if}>{tr}Trackers{/tr}</option>{/if}
 			    </select>
 			{elseif !empty($prefs.search_default_where)}
-				<input type="hidden" name="where" value="{$prefs.search_default_where|escape}" />
+				<input type="hidden" name="{if $smod_params.search_action eq 'tiki-searchindex.php'}filter~type{else}where{/if}" value="{$prefs.search_default_where|escape}" />
 		    {/if}
 		    
 			{if $smod_params.tiki_search neq 'y'}
