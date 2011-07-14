@@ -2659,7 +2659,7 @@ $lang=Array(
 "Your account request have been stored and will be activated by the admin as soon as possible." => "Votre demande de compte a été enregistrée et va être traitée dès que possible par un administrateur.",
 "Your admin password has been changed" => "Votre mot de passe administrateur a été changé",
 "Your authentication credentials are" => "Vos informations de connexion sont",
-"Your comment will have to be approved by the moderator before it is displayed" => "Votre commentaire doit être approuvé par le modérateur avant d'être afficher",
+"Your comment will have to be approved by the moderator before it is displayed" => "Votre commentaire doit être approuvé par le modérateur avant d'être affiché",
 "Your database has been configured and Tiki is ready to run" => "Votre connexion à la base de données fonctionne et Tiki est prêt",
 "Your database requires an update to match the current TikiWiki version. Please proceed to <a href=\"tiki-install.php\">the installer</a>. Using Tiki with an incorrect database version usually provoke errors" => "Your database requires an update to match the current TikiWiki version. Please proceed to <a href=\"tiki-install.php\">the installer</a>. Using Tiki with an incorrect database version usually provoke errors",
 "Your database requires an update to match the current TikiWiki version. Please proceed to <a href=\"tiki-install.php\">the installer</a>. Using TikiWiki with an incorrect database version usually causes errors" => "Votre base de données a besoin d'une mise à niveau pour correspondre à la version actuelle de Tiki. Merci d'utiliser <a href=\"tiki-install.php\">l'installeur</a>. L'utilisation de Tiki avec une mauvaise base de données peut provoquer des erreurs",
