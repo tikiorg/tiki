@@ -1904,6 +1904,13 @@ function get_default_prefs() {
 		'payment_cart_anonshopper_profile' => '',
 		'payment_cart_anon_reviewpage' => '',
 		'payment_cart_anon_group' => '',
+		'payment_cart_associatedevent' => 'n',
+		'payment_cart_event_tracker' => '',
+		'payment_cart_event_tracker_name' => '',
+		'payment_cart_eventstart_fieldname' => '',
+		'payment_cart_eventend_fieldname' => '',
+		'payment_cart_exchange' => 'n',
+		'payment_cart_orderitems_tracker' => '',
 	
 		// Rating
 		'rating_advanced' => 'n',

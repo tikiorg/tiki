@@ -293,6 +293,49 @@ function prefs_payment_list() {
 			'description' => tra('Group name of group with perms to access review page via token'),
 			'type' => 'text',
 		),
+		'payment_cart_associatedevent' => array(
+			'name' => tra('Allow association of product orders to events (or projects etc...)'),
+			'description' => tra('Allow association of products to events (or projects etc...)'),
+			'help' => 'Shopping Cart',
+			'dependencies' => array( 'payment_cart_orders', 'payment_cart_associated_event_fieldname', 'payment_cart_event_tracker', 'payment_cart_event_tracker_name', 'payment_cart_eventstart_fieldname', 'payment_cart_eventend_fieldname' ),
+			'type' => 'flag',
+		),
+		'payment_cart_event_tracker' => array(
+			'name' => tra('Events Tracker ID'),
+			'description' => tra('Tracker ID of tracker that is the Events tracker'),
+			'type' => 'text',
+			'filter' => 'digits',
+			'size' => 3,
+		),
+		'payment_cart_event_tracker_name' => array(
+			'name' => tra('Events Tracker Name'),
+			'description' => tra('Name of tracker that is the Events tracker'),
+			'type' => 'text',
+		),
+		'payment_cart_eventstart_fieldname' => array(
+			'name' => tra('Event Start Field Name'),
+			'description' => tra('Field Name in Events tracker of start date/time'),
+			'type' => 'text',
+		),
+		'payment_cart_eventend_fieldname' => array(
+			'name' => tra('Event End Field Name'),
+			'description' => tra('Field Name in Events tracker of end date/time'),
+			'type' => 'text',
+		),
+		'payment_cart_exchange' => array(
+			'name' => tra('Allow exchange of products'),
+			'description' => tra('Allow exchange of products'),
+			'help' => 'Shopping Cart',
+			'dependencies' => array( 'payment_cart_orderitems_tracker', 'payment_cart_product_tracker', 'payment_cart_product_classid_fieldname' ),
+			'type' => 'flag',
+		),
+		'payment_cart_orderitems_tracker' => array(
+			'name' => tra('Order Items Tracker ID'),
+			'description' => tra('Tracker ID of tracker that is the Order Items tracker'),
+			'type' => 'text',
+			'filter' => 'digits',
+			'size' => 3,
+		),
 	);
 }
 

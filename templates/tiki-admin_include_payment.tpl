@@ -96,6 +96,17 @@ if ($.ui) {
 			{preference name=payment_cart_anon_reviewpage}
 			{preference name=payment_cart_anon_group}
 		</div>
+		{preference name=payment_cart_associatedevent}
+		<div class="adminoptionboxchild" id="payment_cart_exchange_childcontainer">
+			{preference name=payment_cart_event_tracker}
+			{preference name=payment_cart_event_tracker_name}
+			{preference name=payment_cart_eventstart_fieldname}
+			{preference name=payment_cart_eventend_fieldname}
+		</div>
+		{preference name=payment_cart_exchange}
+		<div class="adminoptionboxchild" id="payment_cart_exchange_childcontainer">
+			{preference name=payment_cart_orderitems_tracker}
+		</div>
 	</fieldset>
 	<fieldset>
 		<legend>{tr}Shipping{/tr}</legend>

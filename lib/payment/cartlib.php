@@ -816,8 +816,8 @@ class CartLib
 			'inputedprice' => $info['inputedprice'],
 			'eventcode' => $info['eventcode'],
 			'parentcode' => $parentCode,
-			'eventstart' => $this->get_tracker_value_custom('Events','Event Date',$info['eventcode']),
-			'eventend' => $this->get_tracker_value_custom('Events','Event End Date',$info['eventcode']),
+			'eventstart' => $this->get_tracker_value_custom($prefs['payment_cart_event_tracker_name'],$prefs['payment_cart_eventstart_fieldname'],$info['eventcode']),
+			'eventend' => $this->get_tracker_value_custom($prefs['payment_cart_event_tracker_name'],$prefs['payment_cart_eventend_fieldname'],$info['eventcode']),
 		);
 		if ($user && $prefs['payment_cart_orders'] == 'y' || !$user && $prefs['payment_cart_anonymous'] == 'y') {
 			$profileinstaller->setUserData( $userInput );	
