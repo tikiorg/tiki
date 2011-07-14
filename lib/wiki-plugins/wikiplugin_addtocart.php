@@ -203,7 +203,6 @@ function wikiplugin_addtocart( $data, $params ) {
 	$add_label = $params['label'];
 	$ajax_add_to_cart = $params['ajaxaddtocart'];
 	
-// Custom2
 	global $smarty;
 	$smarty->assign('code', $code);
 	$smarty->assign('productclass', $product_class );
@@ -264,7 +263,7 @@ function wikiplugin_addtocart( $data, $params ) {
 		if( $jitPost->code->text() == $params['code'] && $quantity > 0 && $correct_exchange ) {
 
 			$behaviors = array();
-			// Custom++ If not logged in require to submit user information before shopping
+
 			if ((!$user || $params['forceanon'] == 'y') && empty($_SESSION['shopperinfo'])) {
 				$access->redirect( $_SERVER['REQUEST_URI'], tr('Please enter your shopper information first') );   
 			} // There needs to be a shopperinfo plugin on the page
@@ -337,7 +336,7 @@ function wikiplugin_addtocart( $data, $params ) {
 						$tokenlib = AuthTokens::build( $prefs );
 						$tokenpaymenturl = $tokenlib->includeToken( $paymenturl, array('Temporary Shopper','Anonymous') ); 
 					} 
-					if (Perms::get('payment', $invoice)->manual_payment) {
+					if ($globalperms->payment_admin || Perms::get('payment', $invoice)->manual_payment) {
 						// if able to do manual payment it means it is admin and don't need token
 						$access->redirect( $paymenturl, tr('The order was recorded and is now awaiting payment. Reference number is %0.', $invoice) );
 					} else {
