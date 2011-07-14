@@ -67,29 +67,64 @@ if ($.ui) {
 	</fieldset>
 	<fieldset>
 		<legend>{tr}Advanced Shopping Cart{/tr}</legend>
-		{preference name=payment_cart_inventory}
-		{preference name=payment_cart_bundles}
 		<fieldset>
-			<legend>{tr}Products Tracker Setup{/tr}</legend>	
-			{preference name=payment_cart_product_tracker}
+			<legend>{tr}Advanced Cart Tracker Names Setup{/tr}</legend>
 			{preference name=payment_cart_product_tracker_name}
+			{preference name=payment_cart_orders_tracker_name}
+			{preference name=payment_cart_orderitems_tracker_name}
+			{preference name=payment_cart_productclasses_tracker_name}
+		</fieldset>
+		<fieldset>
+			<legend>{tr}Products Tracker Setup{/tr}</legend>
+			{remarksbox title="{tr}Choose payment system{/tr}"}
+				{tr}Depending on which feature you are using, you may need some or all of the following fields to be setup{/tr}
+			{/remarksbox}	
+			{preference name=payment_cart_product_tracker}
 			{preference name=payment_cart_inventory_type_field}
 			{preference name=payment_cart_inventory_total_field}
 			{preference name=payment_cart_inventory_lesshold_field}
 			{preference name=payment_cart_product_name_fieldname}
+			{preference name=payment_cart_product_price_fieldname}
 			{preference name=payment_cart_products_inbundle_fieldname}
 			{preference name=payment_cart_associated_event_fieldname}
 			{preference name=payment_cart_product_classid_fieldname}
-		</fieldset>	
+			{preference name=payment_cart_giftcerttemplate_fieldname}
+		</fieldset>
+		{preference name=payment_cart_inventory}
+			<div class="adminoptionboxchild" id="payment_cart_inventory_childcontainer">
+			{preference name=payment_cart_inventoryhold_expiry}
+			</div>
+		{preference name=payment_cart_bundles}	
 		{preference name=payment_cart_orders}
 		<div class="adminoptionboxchild" id="payment_cart_orders_childcontainer">
-
+			{preference name=payment_cart_orders_profile}
+			{preference name=payment_cart_orderitems_profile}
 		</div>
-		<fieldset>
-		<legend>{tr}Orders Tracker Setup{/tr}</legend>	
-		{preference name=payment_cart_orders_profile}
-		{preference name=payment_cart_orderitems_profile}
-		</fieldset>
+		{preference name=payment_cart_anonymous}
+		<div class="adminoptionboxchild" id="payment_cart_anonymous_childcontainer">
+			{preference name=payment_cart_anonorders_profile}
+			{preference name=payment_cart_anonorderitems_profile}
+			{preference name=payment_cart_anonshopper_profile}
+			{preference name=payment_cart_anon_reviewpage}
+			{preference name=payment_cart_anon_group}
+		</div>
+		{preference name=payment_cart_associatedevent}
+		<div class="adminoptionboxchild" id="payment_cart_associatedevent_childcontainer">
+			{preference name=payment_cart_event_tracker}
+			{preference name=payment_cart_event_tracker_name}
+			{preference name=payment_cart_eventstart_fieldname}
+			{preference name=payment_cart_eventend_fieldname}
+		</div>
+		{preference name=payment_cart_exchange}
+		<div class="adminoptionboxchild" id="payment_cart_exchange_childcontainer">
+			{preference name=payment_cart_orderitems_tracker}
+		</div>
+		{preference name=payment_cart_giftcerts}
+		<div class="adminoptionboxchild" id="payment_cart_giftcerts_childcontainer">
+			{preference name=payment_cart_giftcert_tracker}
+			{preference name=payment_cart_giftcert_tracker_name}
+		</div>
+		
 	</fieldset>
 	<fieldset>
 		<legend>{tr}Shipping{/tr}</legend>

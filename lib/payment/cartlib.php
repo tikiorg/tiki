@@ -53,6 +53,7 @@ class CartLib
 				case $prefs['payment_cart_associated_event_fieldname']: $key = "eventcode"; break;
 				case $prefs['payment_cart_product_classid_fieldname']: $key = "productclass"; break;
 				case $prefs['payment_cart_products_inbundle_fieldname']: $key = "productsinbundle"; break;
+				case $prefs['payment_cart_product_price_fieldname']: $key = "price"; break;
 			}
 			$info[$key] = $result;
 			next($array);
@@ -80,7 +81,7 @@ class CartLib
 				if (is_numeric($productId)) {
 					$infoProduct = $this->get_product_info($productId);
 					if ($childInputedPrice == '') {
-						$childInputedPrice = $bundlePrice / count($products) / $productQuantity;
+						$childInputedPrice = $info['price'] / count($products) / $productQuantity;
 						// default evenly split between products in the bundle (regardless of individual quantities)
 					}
 					$infoProduct['price'] = 0;
@@ -184,6 +185,7 @@ class CartLib
 	}
 	
 	function update_gift_certificate( $invoice ) {
+		global $prefs;
 		//if total is more than 0 the gift card is less than the order total, otherwise the giftcard is as much as the order total
 		$this->get_gift_certificate();
 		
@@ -192,20 +194,20 @@ class CartLib
 		$balanceCurrent = $this->gift_certificate_amount - $this->gift_certificate_discount;
 		
 		if ($this->gift_certificate_amount_original == 0) { //if original balance isn't set, go ahead and set it, it is just for reference
-			$this->set_tracker_value_custom( "Gift Certificates", "Original Balance or Percentage", $this->gift_certificate_id, $this->gift_certificate_amount );
+			$this->set_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], "Original Balance or Percentage", $this->gift_certificate_id, $this->gift_certificate_amount );
 		}
 		
 		if ($this->gift_certificate_mode == "Percentage" || $this->gift_certificate_mode == "Coupon Percentage" || $this->gift_certificate_mode == "Coupon") {
 			$balanceCurrent = 0;	
 		}
 		
-		$this->set_tracker_value_custom( "Gift Certificates", "Current Balance or Percentage", $this->gift_certificate_id, $balanceCurrent );
+		$this->set_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], "Current Balance or Percentage", $this->gift_certificate_id, $balanceCurrent );
 
 		if (!$invoice) return false;
 		//makes the order display a discount, and ensures it is linked correctly
-		$orderId = $this->get_tracker_item_id_custom( "Orders", "Tiki Payment ID", $invoice );
-		$this->set_tracker_value_custom( "Orders", "Gift Certificate ID", $orderId, $this->gift_certificate_id );
-		$this->set_tracker_value_custom( "Orders", "Gift Certificate Amount Applied", $orderId, $this->gift_certificate_discount );
+		$orderId = $this->get_tracker_item_id_custom( $prefs['payment_cart_orders_tracker_name'], "Tiki Payment ID", $invoice );
+		$this->set_tracker_value_custom( $prefs['payment_cart_orders_tracker_name'], "Gift Certificate ID", $orderId, $this->gift_certificate_id );
+		$this->set_tracker_value_custom( $prefs['payment_cart_orders_tracker_name'], "Gift Certificate Amount Applied", $orderId, $this->gift_certificate_discount );
 
 		//now we link the products
 		$productTotal = 0;
@@ -299,13 +301,13 @@ class CartLib
 
 			// Now save Price Paid
 			foreach ($actual_prices_paid as $productId => $amountPaid) {
-				$this->set_tracker_value_custom( "Order Items", "Price paid", $order_product_itemIds[$productId], $amountPaid ); 
+				$this->set_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], "Price paid", $order_product_itemIds[$productId], $amountPaid ); 
 			}
 			foreach ($inputed_giftcert_prices as $productId => $amountInputed) {
-				$this->set_tracker_value_custom( "Order Items", "Inputed Price From Gift Cert", $order_product_itemIds[$productId], $amountInputed );
+				$this->set_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], "Inputed Price From Gift Cert", $order_product_itemIds[$productId], $amountInputed );
 			}
 			foreach ($inputed_bundle_prices as $productId => $amountInputed) {
-				$this->set_tracker_value_custom( "Order Items", "Inputed Price From Bundle", $order_product_itemIds[$productId], $amountInputed );
+				$this->set_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], "Inputed Price From Bundle", $order_product_itemIds[$productId], $amountInputed );
 			}
 		}
 		// set refunding in the event of cancellation
@@ -314,14 +316,15 @@ class CartLib
 	}
 
 	function get_orderitems_of_order( $orderId ) {
+		global $prefs;
 		$result = array();
-		$productItemIds = $this->get_tracker_item_ids_custom( "Order Items", "Order ID", $orderId );
+		$productItemIds = $this->get_tracker_item_ids_custom( $prefs['payment_cart_orderitems_tracker_name'], "Order ID", $orderId );
 		
 		foreach($productItemIds as $productItemId) {
 			$result[] = array(
 				"itemId" => $productItemId["itemId"],
-				"productId" => $this->get_tracker_value_custom( "Order Items", "Product ID", $productItemId["itemId"] ),
-				"parentCode" => $this->get_tracker_value_custom( "Order Items", "Parent Code", $productItemId["itemId"] )
+				"productId" => $this->get_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], "Product ID", $productItemId["itemId"] ),
+				"parentCode" => $this->get_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], "Parent Code", $productItemId["itemId"] )
 			);
 		}
 		
@@ -334,23 +337,24 @@ class CartLib
 	}
 	
 	function get_gift_certificate( $code = null ) {
+		global $prefs;
 		$this->gift_certificate_code = $code = ( $code ? $code : $this->get_gift_certificate_code() );
 		if (!$code) return false;
 		
-		$this->gift_certificate_id = $this->get_tracker_item_id_custom( "Gift Certificates", "Redeem Code", $code );
+		$this->gift_certificate_id = $this->get_tracker_item_id_custom( $prefs['payment_cart_giftcert_tracker_name'], "Redeem Code", $code );
 		
 		$this->gift_certificate_amount = floatval( 
-			$this->get_tracker_value_custom( "Gift Certificates", "Current Balance or Percentage", $this->gift_certificate_id)
+			$this->get_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], "Current Balance or Percentage", $this->gift_certificate_id)
 		);
 		
 		$this->gift_certificate_amount_original = floatval(
-			$this->get_tracker_value_custom( "Gift Certificates", "Original Balance or Percentage", $this->gift_certificate_id )
+			$this->get_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], "Original Balance or Percentage", $this->gift_certificate_id )
 		);
 		
-		$this->gift_certificate_type = $this->get_tracker_value_custom( "Gift Certificates", "Type", $this->gift_certificate_id );
-		$this->gift_certificate_type_reference = $this->get_tracker_value_custom( "Gift Certificates", "Type Reference", $this->gift_certificate_id );
-		$this->gift_certificate_name = $this->get_tracker_value_custom( "Gift Certificates", "Name", $this->gift_certificate_id );
-		$this->gift_certificate_mode = $this->get_tracker_value_custom( "Gift Certificates", "Mode", $this->gift_certificate_id );
+		$this->gift_certificate_type = $this->get_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], "Type", $this->gift_certificate_id );
+		$this->gift_certificate_type_reference = $this->get_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], "Type Reference", $this->gift_certificate_id );
+		$this->gift_certificate_name = $this->get_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], "Name", $this->gift_certificate_id );
+		$this->gift_certificate_mode = $this->get_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], "Mode", $this->gift_certificate_id );
 		
 		switch ( $this->gift_certificate_mode ) {
 			case "Percentage":
@@ -382,9 +386,9 @@ class CartLib
 	}
 	
 	function has_gift_certificate() {
-		global $trklib;
+		global $trklib, $prefs;
 		require_once('lib/trackers/trackerlib.php');
-		return ( $trklib->get_tracker_by_name( "Gift Certificates" ) ? true : false );
+		return ( $trklib->get_tracker_by_name( $prefs['payment_cart_giftcert_tracker_name'] ) ? true : false );
 	}
 	
 	function discount_from_total( $total ) { //ensures that the discount being had isn't less that the total resulting in a negative value
@@ -632,12 +636,17 @@ class CartLib
 		global $prefs, $user, $tikilib;
 		global $paymentlib; require_once 'lib/payment/paymentlib.php';
 
+		if (!$user && $prefs['payment_cart_anonymous'] != 'y') {
+				global $access;				
+				$access->redirect( $_SERVER['REQUEST_URI'], tra('Anonymous shopping feature is not enabled. Please log in to shop.') );
+		}
+				
 		$total = $this->get_total();
 
 		if( $total > 0 || $this->total_no_discount ) {
 			// if anonymous shopping to set pref as to which shopperinfo to show in description
 			if (empty($user)) {
-				$shopperinfo_descvar = 'email'; // this needs to be a pref
+				$shopperinfo_descvar = 'email'; // TODO: make this a pref
 				if (!empty($_SESSION['shopperinfo'][$shopperinfo_descvar])) {
 					$shopperinfo_desc = $_SESSION['shopperinfo'][$shopperinfo_descvar];
 					$description = tra('Registration Check-Out') . " ($shopperinfo_desc)";
@@ -674,7 +683,7 @@ class CartLib
 				if (!empty($_SESSION['shopperinfoprofile'])) {
 					$shopper_profile_name = $_SESSION['shopperinfoprofile'];
 				} else {
-					$shopper_profile_name = 'shopper_prf';
+					$shopper_profile_name = $prefs['payment_cart_anonshopper_profile'];
 				}
 				$shopperprofile = Tiki_Profile::fromDb( $shopper_profile_name );
 				$profileinstaller = new Tiki_Profile_Installer();
@@ -705,7 +714,7 @@ class CartLib
 			$orderprofile = Tiki_Profile::fromDb( $prefs['payment_cart_orders_profile'] );
 			$orderitemprofile = Tiki_Profile::fromDb( $prefs['payment_cart_orderitems_profile'] );
 		}
-		if ($prefs['payment_cart_orders'] == 'y') {
+		if ($user && $prefs['payment_cart_orders'] == 'y' || !$user && $prefs['payment_cart_anonymous'] == 'y') {
 			$profileinstaller = new Tiki_Profile_Installer();
 			$profileinstaller->forget( $orderprofile ); // profile can be installed multiple times
 			$profileinstaller->setUserData( $userInput );
@@ -715,7 +724,7 @@ class CartLib
 		global $record_profile_items_created;
 		$record_profile_items_created = array();
 
-		if ($prefs['payment_cart_orders'] == 'y') {
+		if ($user && $prefs['payment_cart_orders'] == 'y' || !$user && $prefs['payment_cart_anonymous'] == 'y') {
 			$profileinstaller->install( $orderprofile );
 		}
 		
@@ -729,7 +738,7 @@ class CartLib
 		$email_template_ids = array();
 		$product_classes = array_unique($process_info['product_classes']);
 		foreach ($product_classes as $pc) {
-			if ($email_template_id = $this->get_tracker_value_custom( 'Product Classes', 'Email Template ID', $pc)) {
+			if ($email_template_id = $this->get_tracker_value_custom( $prefs['payment_cart_productclasses_tracker_name'], 'Email Template ID', $pc)) {
 				$email_template_ids[] = $email_template_id;
 			} 
 		}
@@ -749,15 +758,15 @@ class CartLib
 				}
 			}
 		}
-		// Additional feature, needs to be optional, setting a page (which should be configurable) as a token access page for the anonymous user, this feature depends on token feature to be activated
+
 		if (!$user || isset($_SESSION['forceanon']) && $_SESSION['forceanon'] == 'y') {
-			$shopperurl = 'tiki-index.php?page=My+Ticket&shopper=' . intval( $cartuser );
+			$shopperurl = 'tiki-index.php?page=' . $prefs['payment_cart_anon_reviewpage'] . '&shopper=' . intval( $cartuser );
 			global $tikiroot, $prefs;
 			$shopperurl = $tikilib->httpPrefix( true ) . $tikiroot . $shopperurl;
 			require_once 'lib/auth/tokens.php';
 			$tokenlib = AuthTokens::build( $prefs );
-			$shopperurl = $tokenlib->includeToken( $shopperurl, array('Temporary Shopper','Anonymous') );
-			// Need a pref for send email feature
+			$shopperurl = $tokenlib->includeToken( $shopperurl, array($prefs['payment_cart_anon_group'], 'Anonymous') );
+			
 			if ( !empty($_SESSION['shopperinfo']['email']) ) {
 				require_once('lib/webmail/tikimaillib.php');
 				global $smarty;
@@ -778,13 +787,13 @@ class CartLib
 		}
 		$this->update_gift_certificate( $invoice );
 		$this->update_group_discount( $invoice );
-		// end Additional feature
+
 		$this->empty_cart(); 
 		return $invoice;
 	}
 
 	function process_item($invoice, $total, $info, $userInput, $cartuser, $profileinstaller, $orderitemprofile, $parentQuantity = 0, $parentCode = 0 ) {
-		global $user, $userlib, $paymentlib;
+		global $user, $userlib, $paymentlib, $prefs;
 		if ($bundledProducts = $this->get_bundled_products( $info['code'] ) ) {
 			foreach ($bundledProducts as $i) {
 				$this->process_item($invoice, $total, $i, $userInput, $cartuser, $profileinstaller, $orderitemprofile, $info['quantity'], $info['code'] );
@@ -811,10 +820,10 @@ class CartLib
 			'inputedprice' => $info['inputedprice'],
 			'eventcode' => $info['eventcode'],
 			'parentcode' => $parentCode,
-			'eventstart' => $this->get_tracker_value_custom('Events','Event Date',$info['eventcode']),
-			'eventend' => $this->get_tracker_value_custom('Events','Event End Date',$info['eventcode']),
+			'eventstart' => $this->get_tracker_value_custom($prefs['payment_cart_event_tracker_name'],$prefs['payment_cart_eventstart_fieldname'],$info['eventcode']),
+			'eventend' => $this->get_tracker_value_custom($prefs['payment_cart_event_tracker_name'],$prefs['payment_cart_eventend_fieldname'],$info['eventcode']),
 		);
-		if ($prefs['payment_cart_orders'] == 'y') {
+		if ($user && $prefs['payment_cart_orders'] == 'y' || !$user && $prefs['payment_cart_anonymous'] == 'y') {
 			$profileinstaller->setUserData( $userInput );	
 			$profileinstaller->forget( $orderitemprofile );
 			$profileinstaller->install( $orderitemprofile );
@@ -1057,9 +1066,8 @@ class CartLib
 	}
 
 	private function expire_onhold_list( $productId ) {
-		global $tikilib;
-		// TODO: set pref for expiry time
-		$expiry = 15 * 60; // 15 minutes
+		global $tikilib, $prefs;
+		$expiry = $prefs['payment_cart_inventoryhold_expiry'] * 60;
 		$hash = $this->get_hash($productId);
 		$query = "select sum(`quantity`) from `tiki_cart_inventory_hold` where `productId` = ? and `timeHeld` < ?";
 		$bindvars = array($productId, $tikilib->now - $expiry);
@@ -1080,9 +1088,8 @@ class CartLib
 	}
 
 	function extend_onhold_list() {
-		global $tikilib;
-		// TODO: set pref for time after last setting to extend 
-		$extend = 5 * 60; // 5 minutes
+		global $tikilib, $prefs; 
+		$extend = $prefs['payment_cart_inventoryhold_expiry'] * 60;
 		$hashes = array();
 		foreach( $this->get_content() as $item ) {
 			$hashes[] = $item['hash'];
@@ -1120,13 +1127,13 @@ class CartLib
 	}
 
 	function get_missing_user_information_fields( $product_class_id, $type = 'required' ) {
-		global $user;
+		global $user, $prefs;
 		global $trklib;
 		require_once('lib/trackers/trackerlib.php');
 		if ($type == 'required') {
-			$fields_str = $this->get_tracker_value_custom( 'Product Classes', 'Required Field IDs', $product_class_id);
+			$fields_str = $this->get_tracker_value_custom( $prefs['payment_cart_productclasses_tracker_name'], 'Required Field IDs', $product_class_id);
 		} else if ($type == 'postpurchase') {
-			$fields_str = $this->get_tracker_value_custom( 'Product Classes', 'Postpurchase Field IDs', $product_class_id);
+			$fields_str = $this->get_tracker_value_custom( $prefs['payment_cart_productclasses_tracker_name'], 'Postpurchase Field IDs', $product_class_id);
 		}
 		$fields = explode(',', str_replace(' ', '', $fields_str));
 		$tocheck = array();
@@ -1152,15 +1159,17 @@ class CartLib
 	}
 
 	function get_missing_user_information_form( $product_class_id, $type = 'required' ) {
+		global $prefs;
 		if ($type == 'required') {
-			return $this->get_tracker_value_custom( 'Product Classes', 'Associated Required Form', $product_class_id );
+			return $this->get_tracker_value_custom( $prefs['payment_cart_productclasses_tracker_name'], 'Associated Required Form', $product_class_id );
 		} else {
-			return $this->get_tracker_value_custom( 'Product Classes', 'Associated Postpurchase Form', $product_class_id );
+			return $this->get_tracker_value_custom( $prefs['payment_cart_productclasses_tracker_name'], 'Associated Postpurchase Form', $product_class_id );
 		}
 	}
 
 	function skip_user_information_form_if_not_missing( $product_class_id ) {
-		if ($this->get_tracker_value_custom( 'Product Classes', 'Skip Required Form if Filled', $product_class_id ) == 'Yes') {
+		global $prefs;
+		if ($this->get_tracker_value_custom( $prefs['payment_cart_productclasses_tracker_name'], 'Skip Required Form if Filled', $product_class_id ) == 'Yes') {
 			return true;
 		} else {
 			return false;
@@ -1179,39 +1188,41 @@ class CartLib
 	}
 
 	function update_group_discount( $invoice ) {
+		global $prefs;
 		// Now to take into account group discount as well
 		if (!$invoice) return false;
 		if ($groupDiscount = $this->get_group_discount()) {
-			$orderId = $this->get_tracker_item_id_custom( "Orders", "Tiki Payment ID", $invoice ); 
+			$orderId = $this->get_tracker_item_id_custom( $prefs['payment_cart_orders_tracker_name'], "Tiki Payment ID", $invoice ); 
 			$orderitems = $this->get_orderitems_of_order( $orderId );
 			foreach ($orderitems as $o) {
 				$order_product_itemIds[$o['productId']] = $o['itemId'];
-				$orig_prices_paid[$o['productId']] = $this->get_tracker_value_custom( "Order Items", "Price paid", $o['itemId'] );
+				$orig_prices_paid[$o['productId']] = $this->get_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], "Price paid", $o['itemId'] );
 			}
 			// Now save Price Paid
 			foreach ($orig_prices_paid as $productId => $origPrice) {
 				$amountPaid = (1 - $groupDiscount) * $origPrice;
-				$this->set_tracker_value_custom( "Order Items", "Price paid", $order_product_itemIds[$productId], $amountPaid );
+				$this->set_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], "Price paid", $order_product_itemIds[$productId], $amountPaid );
 			} 
 		} 
 	}
 
 	function get_gift_certificate_cost( $id = 0 ) {
+		global $prefs;
 		if (!$id) {
 			$id = $this->gift_certificate_id;
 		}
-		$inputedPrice = $this->get_tracker_value_custom( 'Gift Certificates', 'Gift Certificate Inputed Price', $id);
+		$inputedPrice = $this->get_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], 'Gift Certificate Inputed Price', $id);
 		if ($inputedPrice > 0) {
 			return $inputedPrice;
 		}
-		$orderItemId = $this->get_tracker_value_custom( 'Gift Certificates', 'Order Item ID', $id);
+		$orderItemId = $this->get_tracker_value_custom( $prefs['payment_cart_giftcert_tracker_name'], 'Order Item ID', $id);
 		if (!$orderItemId) {
 			return 0;
 		}
-		if ($parentCode = $this->get_tracker_value_custom( 'Order Items', 'Parent Code', $orderItemId)) {
-			$cost = $this->get_tracker_value_custom( 'Order Items', 'Inputed Price From Bundle', $orderItemId);
+		if ($parentCode = $this->get_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], 'Parent Code', $orderItemId)) {
+			$cost = $this->get_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], 'Inputed Price From Bundle', $orderItemId);
 		} else {
-			$cost = $this->get_tracker_value_custom( 'Order Items', 'Price paid', $orderItemId);
+			$cost = $this->get_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], 'Price paid', $orderItemId);
 		}	
 		return $cost;
 	} 
