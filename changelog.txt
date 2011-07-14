@@ -25,6 +25,839 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 6.4
+<http://tiki.org/ReleaseNotes64>
+------------------
+
+----------------------------------------------
+r35384 | sept_7 | 2011-07-15 00:36:39 +0200 (Fri, 15 Jul 2011) | 603 lines
+
+[QT] Quality Team backport
+
+----------------------------------------------
+r33330 | eromneg | 2011-03-11 18:15:47 +0100 (ven. 11 mars 2011) | 1 ligne
+
+[bp r33329] [ENH] updates previous bp33317: further enhancement to add new Homepage column to the Group table listing - making the table entry a link instead of simple text - thanks luci
+----------------------------------------------
+r33334 | jonnybradley | 2011-03-11 23:09:24 +0100 (ven. 11 mars 2011) | 1 ligne
+
+[bp/r32548][FIX] preview: Curiously missing JS for magnifier toggle preview button
+----------------------------------------------
+r33340 | sylvieg | 2011-03-12 01:00:49 +0100 (sam. 12 mars 2011) | 1 ligne
+
+[FIX]case
+----------------------------------------------
+r33343 | chibaguy | 2011-03-12 14:45:06 +0100 (sam. 12 mars 2011) | 1 ligne
+
+[bp/r33342][FIX] z-indexes added for IE7 to keep cssmenus on top of other content such as tabcontent.
+----------------------------------------------
+r33346 | xavidp | 2011-03-12 19:01:49 +0100 (sam. 12 mars 2011) | 1 ligne
+
+[FIX][bp/r33345]This nested smarty tr tag prevented the string to show up in the localized language.php. Better to show 'default' in English (when no default email) and the rest always localized, than showing always the whole string in English. If someone has a better fix, please do, but ensure we don't loose this translated string (I remember I had this translated in the past, and probably a few times).
+----------------------------------------------
+r33348 | xavidp | 2011-03-12 19:24:12 +0100 (sam. 12 mars 2011) | 1 ligne
+
+Comitting the same file as in branch/6x, since it's a little bit tricky to fix i18n-related things in proposals with an outdated file of strings
+----------------------------------------------
+r33351 | xavidp | 2011-03-13 02:12:49 +0100 (dim. 13 mars 2011) | 1 ligne
+
+[FIX][bp/r33350]Re-Added basic style to spreadsheet cells when shown in simple mode (to have wide columns shown completely in the page, like in documentation pages, such as our own http://doc.tiki.org/Spreadsheet+jq ) 
+----------------------------------------------
+r33374 | nkoth | 2011-03-14 18:12:59 +0100 (lun. 14 mars 2011) | 1 ligne
+
+[bp/r33372][FIX] Invalid user error when registering email like "onstoppel@whatever.com" since "onstop" is filtered by default.
+----------------------------------------------
+r33388 | sylvieg | 2011-03-15 18:41:02 +0100 (mar. 15 mars 2011) | 1 ligne
+
+[bp/r33387][FIX]preview: preview must show the same thing than display: non html page with characters like &nbsp; or html tags in non wysiwyg editor-thx jonnyb
+----------------------------------------------
+r33466 | chealer | 2011-03-17 18:33:13 +0100 (jeu. 17 mars 2011) | 2 lignes
+
+[bp/r31339] Partial backport
+[FIX] Fatal error: Call to undefined method Net_LDAP2_Error::getEntry() in [...] lib/auth/ldap.php on line 257
+----------------------------------------------
+r33469 | nkoth | 2011-03-17 18:45:26 +0100 (jeu. 17 mars 2011) | 1 ligne
+
+[bp/r33468][FIX] Prevent double html entity encoding as certain things (e.g. description) could be html entity encoded already on saving
+----------------------------------------------
+r33479 | nkoth | 2011-03-17 21:48:04 +0100 (jeu. 17 mars 2011) | 1 ligne
+
+[bp/r33478][FIX] Prevent quotes in item description to be in popup from causing map error
+----------------------------------------------
+r33507 | sylvieg | 2011-03-18 12:58:11 +0100 (ven. 18 mars 2011) | 1 ligne
+
+[bp/r33506][FIX]TRACKERITEMFIELD: perm denied if not in an allowed group
+----------------------------------------------
+r33512 | sylvieg | 2011-03-18 15:34:14 +0100 (ven. 18 mars 2011) | 1 ligne
+
+[bp/r33511]FIX]calendar: wysiwyg + tiki_p_view_events should be enough to export an event
+----------------------------------------------
+r33535 | nkoth | 2011-03-18 22:50:10 +0100 (ven. 18 mars 2011) | 1 ligne
+
+[bp/r33534][FIX] greaterequal and other comparisons doing only string comparison resulting in 11 being smaller than 9
+----------------------------------------------
+r33562 | sylvieg | 2011-03-21 16:20:21 +0100 (lun. 21 mars 2011) | 1 ligne
+
+[bp/r33561]notice
+----------------------------------------------
+r33583 | chibaguy | 2011-03-23 03:43:25 +0100 (mer. 23 mars 2011) | 1 ligne
+
+[bp/r33582][FIX] Menustructure module's .box needs overflow:visible for cssmenu dropdowns to display outside the module.
+----------------------------------------------
+r33595 | jonnybradley | 2011-03-23 18:30:11 +0100 (mer. 23 mars 2011) | 1 ligne
+
+[p/r33589 & r33594][FIX] search module: correct actions for titles and edit buttons & correct action also needed for search button
+----------------------------------------------
+r33597 | nkoth | 2011-03-23 21:55:59 +0100 (mer. 23 mars 2011) | 1 ligne
+
+[FIX][bp/r33596] Prevent usernames with stripped words such as "onstop" from not being able to login
+----------------------------------------------
+r33612 | eromneg | 2011-03-24 13:47:33 +0100 (jeu. 24 mars 2011) | 1 ligne
+
+[bp r33611] [FIX] mis-match of permission checking for import function so tpl changed to align with main php code to decide if Import button is shown
+----------------------------------------------
+r33614 | jonnybradley | 2011-03-24 14:16:56 +0100 (jeu. 24 mars 2011) | 3 lignes
+
+[bp/33286][FIX] timezones: Rewrite for JS timezone detection.
+Move code from tiki-js.js to js_detect.php and use the php timezone list for valid abbreviations.
+Partial fallback for IE not reporting the zone correctly, should be ok everywhere that has a whole hour GMT offset.
+----------------------------------------------
+r33616 | jonnybradley | 2011-03-24 14:27:43 +0100 (jeu. 24 mars 2011) | 1 ligne
+
+[bp/33400][FIX] Make sure the datetime libraries are not called multiple time, saving a big chunk of execution time
+----------------------------------------------
+r33617 | jonnybradley | 2011-03-24 14:58:08 +0100 (jeu. 24 mars 2011) | 2 lignes
+
+[bp/33590 (sort of)][FIX] category picker: Make rows full width for better layout
+Actually quite a different fix here as the category picker in trunk now uses a totally different system, but 6.x was having all sorts of bother with these recently, even producing non-valid html due to the missing node_start_code() call in node_flipper_code() (resulting in unbalanced </li> tags)
+----------------------------------------------
+r33618 | jonnybradley | 2011-03-24 15:03:08 +0100 (jeu. 24 mars 2011) | 1 ligne
+
+[bp/33592][FIX] modules admin: Non-wysiwyg editor for user modules
+----------------------------------------------
+r33626 | jonnybradley | 2011-03-24 17:59:28 +0100 (jeu. 24 mars 2011) | 2 lignes
+
+[bp/none][FIX] auto_save/preview: Quick fix for wysiwyg preview getting htmlspecialchars encoded as there is no allowHtml checkbox when in wysiwyg mode.
+Not needed in trunk due to changes in parse_data that takes care of decoding downstream.
+----------------------------------------------
+r33660 | nkoth | 2011-03-25 19:46:21 +0100 (ven. 25 mars 2011) | 1 ligne
+
+[ROLLBACK] Rollback r33469 a fix required php 5.2.3
+----------------------------------------------
+r33679 | chealer | 2011-03-27 06:50:55 +0200 (dim. 27 mars 2011) | 2 lignes
+
+[FIX] Fatal error when date is not present (on PHP 5.1, r33614 regression)
+fallback to previous hardcoded list
+----------------------------------------------
+r33682 | nkoth | 2011-03-28 15:11:40 +0200 (lun. 28 mars 2011) | 1 ligne
+
+[FIX] Fix missing starting LI tag in category picker due to bug introduced in r31198. (these files are no longer in trunk/tiki 7)
+----------------------------------------------
+r33685 | jonnybradley | 2011-03-28 17:32:28 +0200 (lun. 28 mars 2011) | 1 ligne
+
+[FIX] Rollback r33617 - nkoth's fix in r33682 is better and the styling differences were trivial.
+----------------------------------------------
+r33689 | jonnybradley | 2011-03-28 19:37:56 +0200 (lun. 28 mars 2011) | 2 lignes
+
+[bp/r33688][FIX] IE didn't like the object "parent" being reassigned, so declare (and use) a var. Also convert $.find() call to context selector.
+
+----------------------------------------------
+r33695 | chealer | 2011-03-28 22:23:03 +0200 (lun. 28 mars 2011) | 1 ligne
+
+[FIX] date seems unreliable before PHP 5.2, check for that instead of just the date extension (ref: r33679)
+----------------------------------------------
+r33700 | jonnybradley | 2011-03-29 19:17:03 +0200 (mar. 29 mars 2011) | 2 lignes
+
+[bp/r33696][FIX] IE: Don't hide overflow on all dialogs (was making plugin edit unusable)
+
+----------------------------------------------
+r33725 | jonnybradley | 2011-03-30 18:00:56 +0200 (mer. 30 mars 2011) | 3 lignes
+
+[bp/various: mainly r33072, r33073, r33074, r33085 and then r33694, r33697, r33698, r33701, r33702, r33704]
+[FIX] Combined fixes for IE selection problems - please test test test
+
+----------------------------------------------
+r33748 | chealer | 2011-04-01 08:13:02 +0200 (ven. 01 avril 2011) | 2 lignes
+
+PHP 5.1 JSON compatibility: remove stray space outside PHP output on inclusion
+[FIX] Broken dynamic downloads of binary files such as article images due to leading space on PHP 5.1
+----------------------------------------------
+r33798 | chealer | 2011-04-03 23:53:47 +0200 (dim. 03 avril 2011) | 6 lignes
+
+[FIX] LDAP: Do not ignore value of options with space. Fixes attempts to login with a password with spaces trying the empty string as a password
+Some options shouln't contain spaces, but quietly ignoring them can't help
+Ref: http://article.gmane.org/gmane.comp.cms.tiki.cvs/64174
+http://irc.tiki.org/irclogger_log/tikiwiki?date=2011-04-03,Sun&sel=194#l190
+
+quietly done on trunk in r31339
+----------------------------------------------
+r33799 | ripero | 2011-04-04 00:12:43 +0200 (lun. 04 avril 2011) | 4 lignes
+
+[bp/r33677][FIX] Function check_rules corrected:
+* Banning by IP was broken, IP is now split into bytes before the comparisons.
+* Minor change: space added between the colon and the section name in the ban message.
+[bp/r33681][FIX] Call to php function split, introduced in function check_rules at r33677, has been replaced by a call to php function explode (split deprecated in php 5.3).  Thanks pkdille.
+----------------------------------------------
+r33807 | chibaguy | 2011-04-04 08:51:48 +0200 (lun. 04 avril 2011) | 2 lignes
+
+[bp/r33803][FIX] Missing Tracker statuson class property.
+
+----------------------------------------------
+r33974 | jonnybradley | 2011-04-14 20:43:06 +0200 (jeu. 14 avril 2011) | 2 lignes
+
+[bp/r33972][FIX] wysiwyg: Fix IE breakage trying to get selection from textarea "using" ckeditor (thanks Geoff)
+
+----------------------------------------------
+r33992 | xavidp | 2011-04-16 14:22:12 +0200 (sam. 16 avril 2011) | 1 ligne
+
+[MOD]Added userlink for the user field in trackers. Did commit to 7x because I can't find this tpl file
+----------------------------------------------
+r33994 | lindonb | 2011-04-16 23:07:15 +0200 (sam. 16 avril 2011) | 1 ligne
+
+[bp/r33993][FIX] Suppress plugin edit icons on the including page for plugins on the included page since plugin edit doesn't work for these. Rolls back r29321 made to wikiplufin_include which introduced bugs causing odd spacing around the include and messed up {maketoc}, always putting included part at the top. Tikilib change a little different than originl commit due to changes in 7x.
+----------------------------------------------
+r33998 | lindonb | 2011-04-17 01:04:57 +0200 (dim. 17 avril 2011) | 1 ligne
+
+[b/p r33997 sort of][FIX] Improve contrast for text in input widgets for the darkroom theme. Different from 7x commit (r33997) due to other changes in the meantime.
+----------------------------------------------
+r34000 | lindonb | 2011-04-17 08:57:11 +0200 (dim. 17 avril 2011) | 1 ligne
+
+[bp/r33999][FIX] Fix inability to use wiki syntax to color text for wikilink descriptions - a bug that apparently appeared with creation of lib/core/WikiParser/OutputLink.php. Fixed by moving wikilinks parsing to be before text color tiki syntax parsing in tikilib.
+----------------------------------------------
+r34003 | jonnybradley | 2011-04-18 12:33:44 +0200 (lun. 18 avril 2011) | 2 lignes
+
+[bp/r34002][NEW] Option for Ohia theme: Cornflower
+Initially committed as a 6.x theme to be back-ported as is, then adapted to 7.x (top module zone mostly)
+----------------------------------------------
+r34076 | luciash | 2011-04-22 14:31:25 +0200 (ven. 22 avril 2011) | 1 ligne
+
+[TRA] czech: js translations
+----------------------------------------------
+r34122 | sylvieg | 2011-04-26 00:29:50 +0200 (mar. 26 avril 2011) | 1 ligne
+
+[bp/r34121][FIX]registration: fix 27388/fill up the user tracker item if multiple groups choice with different trackers
+----------------------------------------------
+r34124 | nkoth | 2011-04-26 05:07:36 +0200 (mar. 26 avril 2011) | 1 ligne
+
+[bp/r34123][FIX] spaces in button text were being stripped out
+----------------------------------------------
+r34167 | marclaporte | 2011-04-28 01:02:27 +0200 (jeu. 28 avril 2011) | 1 ligne
+
+removing weird translations
+----------------------------------------------
+r34201 | sylvieg | 2011-05-02 15:19:33 +0200 (lun. 02 mai 2011) | 1 ligne
+
+[bp/r34200][FIX]menu: match url find the selected 1/ with url with &amp; 2/ with option =tiki-index.php
+----------------------------------------------
+r34209 | sylvieg | 2011-05-02 17:57:57 +0200 (lun. 02 mai 2011) | 1 ligne
+
+[bp/r34208][FIX]menu fix 25503: menu_cookie must also apply for structure
+----------------------------------------------
+r34218 | sylvieg | 2011-05-03 15:18:52 +0200 (mar. 03 mai 2011) | 1 ligne
+
+[FIX]tracker: a field with limited editable groups can not be modified by other groups - different fix to be done in 7
+----------------------------------------------
+r34227 | sylvieg | 2011-05-03 19:03:17 +0200 (mar. 03 mai 2011) | 1 ligne
+
+[bp/r34226][FIX]TRACKERFILTER: do not url encode option as it is a POST and create problem with option with space for instance (spaces are transformed into %20
+----------------------------------------------
+r34243 | sylvieg | 2011-05-04 16:25:37 +0200 (mer. 04 mai 2011) | 1 ligne
+
+[bp/r34153,34154][FIX]tracker: user selector with no options default to none
+----------------------------------------------
+r34246 | sylvieg | 2011-05-04 19:27:25 +0200 (mer. 04 mai 2011) | 1 ligne
+
+[bp/r34245][FIX]smarty: multibyte for truncate - thx yoni and  Gil Shwartz)
+----------------------------------------------
+r34251 | sylvieg | 2011-05-05 00:11:22 +0200 (jeu. 05 mai 2011) | 1 ligne
+
+[bp/r32401 partial] include : in translation to have the French space
+----------------------------------------------
+r34257 | sylvieg | 2011-05-05 16:13:38 +0200 (jeu. 05 mai 2011) | 1 ligne
+
+[bp/r34255][FIX]i18n: add instructions for get_strings to translate the date formats
+----------------------------------------------
+r34258 | sylvieg | 2011-05-05 16:15:05 +0200 (jeu. 05 mai 2011) | 1 ligne
+
+datetime translation
+----------------------------------------------
+r34286 | jonnybradley | 2011-05-06 16:53:35 +0200 (ven. 06 mai 2011) | 2 lignes
+
+[bp/r34285][FIX] wysiwyg: Catch preg_replace error returning null when too many plugins cause a PREG_BACKTRACK_LIMIT_ERROR resulting in empty editor (thanks Geoff)
+
+----------------------------------------------
+r34355 | xavidp | 2011-05-10 17:25:25 +0200 (mar. 10 mai 2011) | 1 ligne
+
+[MOD][bp/r34353] Avoid potential confusion between proxy host name and proxy host url. Thanks lph for feedback
+----------------------------------------------
+r34361 | jonnybradley | 2011-05-10 18:10:35 +0200 (mar. 10 mai 2011) | 2 lignes
+
+[bp/r34359][FIX] wysiwyg: Better fix than in r34285 using preg_last_error() which fails on php < 5.2 (mainly for backporting to 6.x but it's a cleaner fix anyway)
+
+----------------------------------------------
+r34364 | jonnybradley | 2011-05-10 18:24:36 +0200 (mar. 10 mai 2011) | 2 lignes
+
+[bp/r34363][FIX] wysiwyg: Remove unnecessary parameter for debug_backtrace (causes errors on php < 5.2 so mainly for backporting to 6.x)
+
+----------------------------------------------
+r34389 | sylvieg | 2011-05-12 22:01:45 +0200 (jeu. 12 mai 2011) | 1 ligne
+
+[bp/r34388][FIX]ARTICLES: perm can be check only on individual article and not globally
+----------------------------------------------
+r34403 | jonnybradley | 2011-05-13 20:47:06 +0200 (ven. 13 mai 2011) | 2 lignes
+
+[bp/r34402][FIX] autosave/preview: Don't double encode and decode the autoSaveId - was breaking preview etc on pages with accented chars in the pagename. (thanks Burghard and devels)
+
+----------------------------------------------
+r34435 | sylvieg | 2011-05-15 23:56:52 +0200 (dim. 15 mai 2011) | 1 ligne
+
+[FIX]tracker: change also the CR and quote for any field (especially textarea)
+----------------------------------------------
+r34445 | sylvieg | 2011-05-16 18:32:24 +0200 (lun. 16 mai 2011) | 1 ligne
+
+[FIX]missing to 34122[bp/r34121][FIX]registration: fix 27388/fill up the user tracker item if multiple groups choice with different trackers
+----------------------------------------------
+r34472 | luciash | 2011-05-18 16:44:52 +0200 (mer. 18 mai 2011) | 1 ligne
+
+[bp/r34459][FIX] tracker items sorted by created and lastModif columns again
+----------------------------------------------
+r34475 | sylvieg | 2011-05-18 17:56:08 +0200 (mer. 18 mai 2011) | 1 ligne
+
+[FIX]tracker: fix in view item textarea only editable by group+ better fix for text -> todo for 7 where editable by is ignored
+----------------------------------------------
+r34502 | sylvieg | 2011-05-19 15:00:15 +0200 (jeu. 19 mai 2011) | 1 ligne
+
+[bp/r34501][FIX]wiki: cache time can be redefined for a page
+----------------------------------------------
+r34511 | jonnybradley | 2011-05-19 19:00:14 +0200 (jeu. 19 mai 2011) | 2 lignes
+
+[bp/r34510][FIX] Remove UTF-8 BOM from hoverIntent included JS file in third_party
+(added as a new file in jquery_tiki/6.x_only to get round fixed revision on lib/jquery svn external)
+----------------------------------------------
+r34530 | yonixxx | 2011-05-19 22:09:41 +0200 (jeu. 19 mai 2011) | 1 ligne
+
+[bp/34529][FIX]Autoclipping feature - Error in typo
+----------------------------------------------
+r34534 | changi67 | 2011-05-19 23:18:17 +0200 (jeu. 19 mai 2011) | 1 ligne
+
+[bp/34533][FIX] Don't log if feature actionlog is not enabled
+----------------------------------------------
+r34552 | jonnybradley | 2011-05-20 14:41:31 +0200 (ven. 20 mai 2011) | 2 lignes
+
+[bp/r34551][FIX] user prefs: Merge the first two tabs into one form, otherwise things on the hidden tab get reset to their defaults, making the page unusable (thanks SiL3NC3-de)
+
+----------------------------------------------
+r34556 | sylvieg | 2011-05-20 17:14:29 +0200 (ven. 20 mai 2011) | 1 ligne
+
+[bp/r34555][FIX]TRACKERFILTER: preserve order of fields of the filter param
+----------------------------------------------
+r34569 | eromneg | 2011-05-21 23:04:05 +0200 (sam. 21 mai 2011) | 1 ligne
+
+[FIX] locator fields not being shown when editing a googlemap tracker field for the case where writeCanModify is used as a permission exemption
+----------------------------------------------
+r34577 | sylvieg | 2011-05-23 20:14:24 +0200 (lun. 23 mai 2011) | 1 ligne
+
+[bp/r34575][FIX]tracker: attachment : if the pref t_use_db is by error not n and not y, long attachments were truncated
+----------------------------------------------
+r34584 | sampaioprimo | 2011-05-23 23:28:00 +0200 (lun. 23 mai 2011) | 3 lignes
+
+[bp/34580][FIX] filter content when updating a blog post
+[bp/34583][FIX] filter blog post excerpt
+
+----------------------------------------------
+r34592 | sylvieg | 2011-05-24 20:01:32 +0200 (mar. 24 mai 2011) | 1 ligne
+
+[FIX]wrong copy paste to 34435
+----------------------------------------------
+r34594 | jonnybradley | 2011-05-24 20:16:25 +0200 (mar. 24 mai 2011) | 1 ligne
+
+[bp/r34112][FIX] tracker export (ajax): Reset status on finished exports (cures erroneous "another user" message)
+----------------------------------------------
+r34603 | luciash | 2011-05-25 13:33:07 +0200 (mer. 25 mai 2011) | 1 ligne
+
+[bp/r34505][FIX] Freetags: the clear button link onclick attribute needed "return false" to prevent going away from the page (while it just should clear the form input)
+----------------------------------------------
+r34631 | eromneg | 2011-05-26 19:36:26 +0200 (jeu. 26 mai 2011) | 1 ligne
+
+[FIX] [bp34630] Convert emails to lower case when using a wiki page subscription in newsletters so that the same emails in different cases can be de-duped even when in multiple wiki pages
+----------------------------------------------
+r34652 | lphuberdeau | 2011-05-27 16:20:58 +0200 (ven. 27 mai 2011) | 1 ligne
+
+[FIX] bp/34751 Trailing spaces in page names can cause permissions not to apply as expected
+----------------------------------------------
+r34654 | jonnybradley | 2011-05-27 16:28:54 +0200 (ven. 27 mai 2011) | 2 lignes
+
+[bp/r34650][FIX] fgal_picker: Fix for IE click on image thumbnail when selecting file gallery files in img plugin editor
+
+----------------------------------------------
+r34657 | lphuberdeau | 2011-05-27 17:10:23 +0200 (ven. 27 mai 2011) | 1 ligne
+
+[FIX] bp/34656?\194?\160Send notifications when categorizing from the category module
+----------------------------------------------
+r34659 | lphuberdeau | 2011-05-27 17:49:32 +0200 (ven. 27 mai 2011) | 1 ligne
+
+[FIX] Missing include for trklib, fixed in other branches already
+----------------------------------------------
+r34685 | jonnybradley | 2011-05-28 19:06:53 +0200 (sam. 28 mai 2011) | 2 lignes
+
+[bp/r34684][FIX] plugin split: Protect some other plugins apart from {SPLIT}s from processing
+
+----------------------------------------------
+r34687 | chealer | 2011-05-29 08:01:35 +0200 (dim. 29 mai 2011) | 3 lignes
+
+[bp/r34686] Installer: Step 4: offer conversion if some tables are not UTF-8, even if the schema's default encoding is
+[FIX] Step 8: Do not offer double encoding fix if all tables are not UTF-8 (despite schema default encoding being UTF-8)
+Avoids corruption of non-UTF8 data when moving a non-UTF8 database to a UTF-8 database
+----------------------------------------------
+r34692 | jyhem | 2011-05-29 17:53:34 +0200 (dim. 29 mai 2011) | 1 ligne
+
+[FIX BP34691] Make the feature also usable for members of the Admins group
+----------------------------------------------
+r34713 | dabright | 2011-05-31 05:08:24 +0200 (mar. 31 mai 2011) | 1 ligne
+
+[bp/r34698,r34699][FIX] FILES plugin: Make list_file_gallery_content.tpl permission checking consistent with the plugin and the context menu template
+----------------------------------------------
+r34730 | sylvieg | 2011-06-02 16:40:58 +0200 (jeu. 02 juin 2011) | 1 ligne
+
+[bp/r34729][FIX]comments: fix for FF4
+----------------------------------------------
+r34758 | jonnybradley | 2011-06-04 15:22:12 +0200 (sam. 04 juin 2011) | 2 lignes
+
+[bp/r34757][FIX] category plugin: Allow "plus" characters required for multiple object types
+
+----------------------------------------------
+r34761 | jonnybradley | 2011-06-04 17:31:52 +0200 (sam. 04 juin 2011) | 3 lignes
+
+[bp/r34759+60][FIX] categories: Fix getting multiple categories in "and" mode and stop ignoring maxRecords in get_categoryobjects (previous workaround)
+Also partial bp/r32018 to handle an array of types
+
+----------------------------------------------
+r34763 | yonixxx | 2011-06-04 18:45:22 +0200 (sam. 04 juin 2011) | 1 ligne
+
+[bp/31188]Added the share this feature to list file gallery
+----------------------------------------------
+r34767 | sylvieg | 2011-06-04 21:27:46 +0200 (sam. 04 juin 2011) | 1 ligne
+
+[bp/r34766][FIX]tracker: fix system rating for other lang than En
+----------------------------------------------
+r34812 | sylvieg | 2011-06-07 17:02:29 +0200 (mar. 07 juin 2011) | 1 ligne
+
+[bp/r34811][FIX]sefurl: mising another sefurl for group homepage
+----------------------------------------------
+r34825 | sylvieg | 2011-06-08 15:52:39 +0200 (mer. 08 juin 2011) | 1 ligne
+
+[FIX]tracker: dynamic field with hebrew value need not to be encoded to return the correct selected value in view item
+----------------------------------------------
+r34844 | chealer | 2011-06-09 04:37:05 +0200 (jeu. 09 juin 2011) | 2 lignes
+
+[FIX] tiki-list_file_gallery. reverts r34763 (backport of r34764)
+
+----------------------------------------------
+r34864 | jonnybradley | 2011-06-09 20:21:47 +0200 (jeu. 09 juin 2011) | 1 ligne
+
+[FIX] Missing closing quote (no corresponding line in 7.x)
+----------------------------------------------
+r34882 | chealer | 2011-06-10 07:20:07 +0200 (ven. 10 juin 2011) | 2 lignes
+
+[bp/r34881][FIX] cleanup mess with tiki_sefurl_regex_out UNIQUE INDEX left
+
+----------------------------------------------
+r34942 | xavidp | 2011-06-15 15:03:13 +0200 (mer. 15 juin 2011) | 1 ligne
+
+[bp/r34939][FIX]structures: received structures generated a null alias .. and alias can be null. This bugfix is needed to have the feature to send structures between tikis work again. Thanks sylvieg.
+----------------------------------------------
+r34956 | chealer | 2011-06-17 04:21:55 +0200 (ven. 17 juin 2011) | 2 lignes
+
+[bp/r34955][FIX] Parsing: missing line breaks when Allow HTML is enabled. reverts r27355
+Ref: http://article.gmane.org/gmane.comp.cms.tiki.cvs/64930
+----------------------------------------------
+r34973 | xen216 | 2011-06-17 19:44:37 +0200 (ven. 17 juin 2011) | 1 ligne
+
+[bp/r34614] [FIX] #3850 fixed sql syntax error when using sort and group parameters together
+----------------------------------------------
+r35000 | nkoth | 2011-06-22 03:12:13 +0200 (mer. 22 juin 2011) | 1 ligne
+
+[bp/r34998][FIX] More wysiwyg maketoc handling to avoid missed out headers
+----------------------------------------------
+r35017 | nkoth | 2011-06-23 05:59:17 +0200 (jeu. 23 juin 2011) | 1 ligne
+
+[bp/r35016][FIX]Prevent categories that are in the fields omitted from a particular TRACKER plugin from being wiped, and effect correct clearing of categories when none are clicked.
+----------------------------------------------
+r35020 | chealer | 2011-06-23 08:25:47 +0200 (jeu. 23 juin 2011) | 1 ligne
+
+[bp/r35019][FIX] External feeds: cached entries not updating on refresh
+----------------------------------------------
+r35021 | jonnybradley | 2011-06-23 13:37:21 +0200 (jeu. 23 juin 2011) | 2 lignes
+
+[bp/r34976][FIX] filegals: Don't show "select all" and "perform with checked" icons when checkboxes are not showing, also propagate show_details param to actions form
+
+----------------------------------------------
+r35025 | chealer | 2011-06-23 22:01:38 +0200 (jeu. 23 juin 2011) | 1 ligne
+
+[bp/r35023+r35024][FIX] Wiki: lock button only showing to last page editor
+----------------------------------------------
+r35050 | xavidp | 2011-06-25 11:54:57 +0200 (sam. 25 juin 2011) | 1 ligne
+
+[bp/r35049][FIX]Smarty variable has to be surrounded by angle brackets. Regression fixed which allows sending messages to users again through plugintrackerlist There is another bug around still somewhere else which prevents comma to be used as separators for multiple users, and through this plugintrackerlist, users in messu-compose.php end up getting commas between usernames instead of semicolons (help needed to fix this other issue). 
+----------------------------------------------
+r35052 | xavidp | 2011-06-25 13:11:49 +0200 (sam. 25 juin 2011) | 1 ligne
+
+[bp/r35051][FIX]Allow intra-tiki messaging to understand multiple usernames (in to, cc or bcc ) separated with commas also, besides semicolon, so that it works by default with the usernames given by plugin trackerlist with the checkbox param. http://doc.tiki.org/PluginTrackerList upated also recovering the lost information about that checkbox feature, which is not fully bug free, but it just works (at least) with these last two fixes. Thanks luciash (sorry, forgot acknowledge your help in the previous commit message)
+----------------------------------------------
+r35076 | ricks99 | 2011-06-28 03:13:54 +0200 (mar. 28 juin 2011) | 1 ligne
+
+[TYPO]abbreviation should be all capitalized for english. backport of 35075
+----------------------------------------------
+r35078 | jonnybradley | 2011-06-28 13:49:40 +0200 (mar. 28 juin 2011) | 3 lignes
+
+[bp/r35077][MOD] filegals batch: Default to removing the file extension from batch uploaded files (it's so dull when you forget)
+But do not improve label as in original commit in 7.x
+
+----------------------------------------------
+r35106 | chibaguy | 2011-06-29 04:06:06 +0200 (mer. 29 juin 2011) | 1 ligne
+
+bp/r[35104][FIX] Keep language files consistent with case change in r35076 (Admin DSN).
+----------------------------------------------
+r35142 | sylvieg | 2011-06-30 13:38:27 +0200 (jeu. 30 juin 2011) | 1 ligne
+
+[bp/r 35131 35132 35140 35141]multiple fix on snarf
+----------------------------------------------
+r35151 | marclaporte | 2011-07-01 00:34:26 +0200 (ven. 01 juil. 2011) | 1 ligne
+
+[bp/r35100] [MOD] change default for wiki_edit_icons_toggle as discussed at http://thread.gmane.org/gmane.comp.cms.tiki.devel/20948 
+----------------------------------------------
+r35156 | lindonb | 2011-07-01 03:59:57 +0200 (ven. 01 juil. 2011) | 1 ligne
+
+[bp/r35155][FIX] Check http_user_agent for client also when logging an action. Many items in action log were not showing a client.
+----------------------------------------------
+r35163 | jonnybradley | 2011-07-01 22:25:07 +0200 (ven. 01 juil. 2011) | 1 ligne
+
+[bp/r35162][FIX] ckeditor: Clean &amp; escaped &'s from image url
+----------------------------------------------
+r35223 | sylvieg | 2011-07-06 14:52:58 +0200 (mer. 06 juil. 2011) | 1 ligne
+
+[bp/r35222][FIX]invite: missing link to invite
+----------------------------------------------
+r35228 | sampaioprimo | 2011-07-06 15:45:03 +0200 (mer. 06 juil. 2011) | 2 lignes
+
+[bp/35226][FIX] sanitize user input in tiki-importer.php
+
+----------------------------------------------
+r35230 | sylvieg | 2011-07-06 16:32:12 +0200 (mer. 06 juil. 2011) | 1 ligne
+
+[bp/r35229][FIX]multitiki: fix sqlupgrade.sh
+----------------------------------------------
+r35239 | jonnybradley | 2011-07-07 11:44:30 +0200 (jeu. 07 juil. 2011) | 2 lignes
+
+[bp/r35238[FIX] Better fix for [6.x r33612/bp r33611][FIX] mis-match of permission checking for import function so tpl changed to align with main php code to decide if Import button is shown
+thanks sept_7
+----------------------------------------------
+r35245 | sylvieg | 2011-07-07 16:03:49 +0200 (jeu. 07 juil. 2011) | 1 ligne
+
+[FIX]rollback partial 34445 - this line was not in tiki7 - Thx xavi
+----------------------------------------------
+r35265 | sampaioprimo | 2011-07-07 21:35:32 +0200 (jeu. 07 juil. 2011) | 2 lignes
+
+merging translations done on trunk using doc/devtools/mergelang.pl
+
+----------------------------------------------
+r35290 | sylvieg | 2011-07-09 20:21:54 +0200 (sam. 09 juil. 2011) | 1 ligne
+
+[bp/r35289 partiel][FIX]fgal: do not move a fgal under itself - otherwise internal server error
+----------------------------------------------
+r35293 | chealer | 2011-07-09 23:27:02 +0200 (sam. 09 juil. 2011) | 2 lignes
+
+[bp/r32346]MySQL 5.5: don't use removed TIMESTAMP(N), just TIMESTAMP.
+sorry, Aptana messing with indentation a bit
+----------------------------------------------
+r35297 | sylvieg | 2011-07-10 17:47:46 +0200 (dim. 10 juil. 2011) | 1 ligne
+
+[bp/r30012, 31415][NEW]LISTPAGES: possibility to select pages in a AND of categories or a OR of categories
+----------------------------------------------
+r35331 | jonnybradley | 2011-07-14 11:24:52 +0200 (jeu. 14 juil. 2011) | 1 ligne
+
+[bp/r35330][FIX] wysiwyg: Restore tikiimage tool for wysiwyg (was a mistake to disable it i see now, far too useful!)
+----------------------------------------------
+r35334 | sylvieg | 2011-07-14 13:37:58 +0200 (jeu. 14 juil. 2011) | 1 ligne
+
+[bp/r35231][FIX]invite: button also in admin group
+----------------------------------------------
+r35353 | sept_7 | 2011-07-14 20:35:36 +0200 (jeu. 14 juil. 2011) | 2 lignes
+
+[FIX] fix 33231 with lucia remarks...
+
+----------------------------------------------
+r35363 | pkdille | 2011-07-14 22:18:59 +0200 (jeu. 14 juil. 2011) | 2 lignes
+
+[QT] Rollback rejected proposition r33060
+
+----------------------------------------------
+r35376 | nyloth | 2011-07-14 23:14:13 +0200 (jeu. 14 juil. 2011) | 2 lignes
+
+[QT] Rollback rejected proposition r34956
+
+----------------------------------------------
+r35377 | nyloth | 2011-07-14 23:20:10 +0200 (jeu. 14 juil. 2011) | 2 lignes
+
+[QT] Rollback rejected proposition r34569
+
+----------------------------------------------
+r35381 | nyloth | 2011-07-14 23:42:52 +0200 (jeu. 14 juil. 2011) | 2 lignes
+
+[QT] Rollback rejected proposition r33612
+
+----------------------------------------------
+r35382 | nyloth | 2011-07-14 23:45:38 +0200 (jeu. 14 juil. 2011) | 2 lignes
+
+[QT] Rollback rejected proposition r33318
+
+----------------------------------------------
+r35375 | pkdille | 2011-07-14 23:02:44 +0200 (Thu, 14 Jul 2011) | 20 lines
+
+[QT] Quality Team Backport
+
+r33306 | sylvieg | 2011-03-10 15:13:07 +0100 (Thu, 10 Mar 2011) | 1 line
+[bp/r33305][FIX]category: better fix for 29936 + 33178. fix change_categ param id + sort with categ name with accent
+r33307 | sylvieg | 2011-03-10 15:20:53 +0100 (Thu, 10 Mar 2011) | 1 line
+oops debug
+r33313 | sylvieg | 2011-03-10 21:36:43 +0100 (Thu, 10 Mar 2011) | 1 line
+typo
+r33315 | sylvieg | 2011-03-10 22:34:54 +0100 (Thu, 10 Mar 2011) | 1 line
+[bp/r33314]FIX]category: to have a pagination if a lot of wiki pages
+r33318 | eromneg | 2011-03-11 12:30:29 +0100 (Fri, 11 Mar 2011) | 1 line
+[bp r33317] [ENH] minor enhancement to add new Homepage column to the Group table listing
+r33324 | sylvieg | 2011-03-11 15:38:32 +0100 (Fri, 11 Mar 2011) | 1 line
+[bp/r33323][FIX]tracker: do not use autocomplete as can be null for a user field creator or modificator for an admin
+r33326 | sylvieg | 2011-03-11 17:30:07 +0100 (Fri, 11 Mar 2011) | 1 line
+[bp/r33325][FIX]category: fix the title (if people does not use {title} in the tpl
+r33328 | sylvieg | 2011-03-11 17:50:27 +0100 (Fri, 11 Mar 2011) | 1 line
+[bp/r33327][FIX]menu: fix back toggle tiki menu
+
+
+----------------------------------------------
+r35374 | pkdille | 2011-07-14 23:00:47 +0200 (Thu, 14 Jul 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r33236 | sylvieg | 2011-03-04 17:26:47 +0100 (Fri, 04 Mar 2011) | 1 line
+[bp/r33235][FIX]categ: try to fix 29936 - that returns no categs in categ tracker fields
+
+
+----------------------------------------------
+r35372 | pkdille | 2011-07-14 22:33:11 +0200 (Thu, 14 Jul 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r33304 | sylvieg | 2011-03-10 00:13:23 +0100 (Thu, 10 Mar 2011) | 1 line
+[QT] rollback 33179 ... need the sort whenn using path
+
+
+----------------------------------------------
+r35371 | pkdille | 2011-07-14 22:32:50 +0200 (Thu, 14 Jul 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r33273 | sylvieg | 2011-03-07 15:20:07 +0100 (Mon, 07 Mar 2011) | 1 line
+[bp/r33271][FIX]newsletters: cahnge the label to including to follow commit 27707
+
+
+----------------------------------------------
+r35370 | pkdille | 2011-07-14 22:31:20 +0200 (Thu, 14 Jul 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r33249 | chibaguy | 2011-03-05 12:17:29 +0100 (Sat, 05 Mar 2011) | 1 line
+[bp/r33210][MOD] Second try (thanks, luci). Text style shouldn't be hardcoded in the template (<small></small> removed, replaced with property in design.css).
+
+
+----------------------------------------------
+r35369 | pkdille | 2011-07-14 22:30:59 +0200 (Thu, 14 Jul 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r33248 | chibaguy | 2011-03-05 12:08:11 +0100 (Sat, 05 Mar 2011) | 1 line
+[] Rollback of r33211. Will resubmit with CSS change as per cvs list discussion.
+
+
+----------------------------------------------
+r35368 | pkdille | 2011-07-14 22:30:30 +0200 (Thu, 14 Jul 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r33238 | sylvieg | 2011-03-04 18:52:40 +0100 (Fri, 04 Mar 2011) | 1 line
+[bp/r33237][FIX]newsletter: do not add <br> for newsletter using wysiwyg
+
+
+----------------------------------------------
+r35367 | pkdille | 2011-07-14 22:22:13 +0200 (Thu, 14 Jul 2011) | 12 lines
+
+[QT] Quality Team Backport
+
+r33211 | chibaguy | 2011-03-03 05:41:42 +0100 (Thu, 03 Mar 2011) | 1 line
+[bp/r33210][MOD] Text style shouldn't be hardcoded in the template (<small></small> removed).
+r33213 | chibaguy | 2011-03-03 05:52:59 +0100 (Thu, 03 Mar 2011) | 1 line
+[bp/r33212][FIX] In IE6, narrower right column in fixed-width mode caused modules to not display (fixed-width right-column box width reduced to 178px). Thanks, Marc.
+r33215 | nkoth | 2011-03-03 06:43:54 +0100 (Thu, 03 Mar 2011) | 1 line
+[bp/r33214][FIX] Multi day events not showing on correct cells
+r33232 | sept_7 | 2011-03-03 21:16:18 +0100 (Thu, 03 Mar 2011) | 2 lines
+[FIX/bp 33231] HTMLPurifier : allow <map> tag in page
+
+
+----------------------------------------------
+r35366 | pkdille | 2011-07-14 22:21:30 +0200 (Thu, 14 Jul 2011) | 36 lines
+
+[QT] Quality Team Backport
+
+r33157 | sylvieg | 2011-02-28 21:51:41 +0100 (Mon, 28 Feb 2011) | 1 line
+[bp/r33156]notice
+r33159 | sylvieg | 2011-02-28 22:11:08 +0100 (Mon, 28 Feb 2011) | 1 line
+rollback 33157
+r33160 | sylvieg | 2011-02-28 22:12:35 +0100 (Mon, 28 Feb 2011) | 1 line
+[bp/r33156 33158]notice
+r33163 | sylvieg | 2011-02-28 22:48:30 +0100 (Mon, 28 Feb 2011) | 1 line
+[bp/r33161][FIX]categories: keep the category order of the param categParentIds
+r33165 | sylvieg | 2011-03-01 00:30:17 +0100 (Tue, 01 Mar 2011) | 1 line
+[bp/r33164 32350 32327][FIX]fivealive: to have IE to behave with edit tracker item
+r33176 | sylvieg | 2011-03-01 16:43:57 +0100 (Tue, 01 Mar 2011) | 1 line
+[bp/r30328][MOD]log: usability log the old value too to be able to rollback
+r33179 | sylvieg | 2011-03-01 17:44:40 +0100 (Tue, 01 Mar 2011) | 1 line
+[bp/r33178][FIX]categories: ksort does not respect accents. the sort is already done correctly on the name
+r33181 | sylvieg | 2011-03-01 18:44:34 +0100 (Tue, 01 Mar 2011) | 1 line
+[bp/r33180][FIX]categories: allow url with maxRecords=-1 + fix pagination if maxRecords in url
+r33182 | sylvieg | 2011-03-01 19:31:42 +0100 (Tue, 01 Mar 2011) | 1 line
+[FIX]singular
+r33183 | jonnybradley | 2011-03-01 20:06:41 +0100 (Tue, 01 Mar 2011) | 2 lines
+[no bp, file no longer in trunk][FIX] footer: Missing </div>
+r33184 | jonnybradley | 2011-03-01 20:26:24 +0100 (Tue, 01 Mar 2011) | 1 line
+[FIX] footer: Oops, rollback last commit
+r33185 | jonnybradley | 2011-03-01 20:31:02 +0100 (Tue, 01 Mar 2011) | 1 line
+[no backport again][FIX] footer: Missing div but enclosed in the {if} this time
+r33188 | sylvieg | 2011-03-01 21:26:28 +0100 (Tue, 01 Mar 2011) | 1 line
+[bp/r32360][FIX] browser title: fix HEAD tag title for filegals (especially for user files galleries) and set headtitle by default in the title smarty plugin for any pages + show Category XXXX when browsing category
+r33189 | sylvieg | 2011-03-01 21:29:25 +0100 (Tue, 01 Mar 2011) | 1 line
+[bp/r31471][FIX] site title: warnings when not on wiki page + display category XXX in browse categ
+r33193 | jonnybradley | 2011-03-02 16:11:58 +0100 (Wed, 02 Mar 2011) | 1 line
+[bp/r33192][FIX] page title: Use page title for when $prefs.site_title_breadcrumb is set to use description, but the page description is empty.
+r33196 | sylvieg | 2011-03-02 19:00:28 +0100 (Wed, 02 Mar 2011) | 1 line
+[bp/r33194][FIX]tracker: homogeneize itemlink field + do not check categ perm on it - because bugged
+
+
+----------------------------------------------
+r35364 | pkdille | 2011-07-14 22:20:04 +0200 (Thu, 14 Jul 2011) | 44 lines
+
+[QT] Quality Team Backport
+
+r33063 | chealer | 2011-02-24 07:47:49 +0100 (Thu, 24 Feb 2011) | 1 line
+[FIX] French: Admin Login fixes
+r33066 | sylvieg | 2011-02-24 16:38:20 +0100 (Thu, 24 Feb 2011) | 1 line
+[bp/r33065][FIX]trackerfilter: do not overwrite param max if given
+r33067 | nyloth | 2011-02-24 18:18:39 +0100 (Thu, 24 Feb 2011) | 2 lines
+[bp/r33064][FIX] Catch more possibility : Multi-line / ignore case / point can substitute a carriage return
+r33077 | sylvieg | 2011-02-24 21:42:49 +0100 (Thu, 24 Feb 2011) | 1 line
+[bp/r33066][FIX]newsletter: send attachments
+r33087 | jonnybradley | 2011-02-25 15:06:05 +0100 (Fri, 25 Feb 2011) | 2 lines
+[bp/r33074][FIX] selection: Correct for IE line-ends and selection loss.
+(Doesn't seem to work as well as in trunk, possibly due to doctype quirks - but improves some toolbar operations for IE7 especially)
+r33088 | jonnybradley | 2011-02-25 15:13:09 +0100 (Fri, 25 Feb 2011) | 2 lines
+[bp/r33074][FIX] selection: Correct for IE line-ends and selection loss.
+Missing file from r33087
+r33090 | sylvieg | 2011-02-25 15:25:34 +0100 (Fri, 25 Feb 2011) | 1 line
+[bp/r33089][FIX]tracker: avoid empty lines
+r33100 | sylvieg | 2011-02-25 22:29:52 +0100 (Fri, 25 Feb 2011) | 1 line
+[bp/r33099][FIX]newsletter: do not send newsletter to invalid or unsubscribe users
+r33105 | sylvieg | 2011-02-25 23:09:54 +0100 (Fri, 25 Feb 2011) | 1 line
+[bp/r33104][FIX]newsletter: in subscribers'list do not show those from included newsletters + show the unsubscribed ones
+r33107 | sylvieg | 2011-02-25 23:18:23 +0100 (Fri, 25 Feb 2011) | 1 line
+[bp/r33106] fix commit 33105
+r33109 | changi67 | 2011-02-26 17:16:08 +0100 (Sat, 26 Feb 2011) | 1 line
+[FIX] Fix display of search bar in IE* - could not [BP] because this attribute doesn't exist anymore in trunk
+r33112 | dabright | 2011-02-26 21:16:46 +0100 (Sat, 26 Feb 2011) | 1 line
+[bp/r33111] [ENH] Add maxRecords URL parameter to tiki-calendar_export_ical
+r33113 | jonnybradley | 2011-02-26 21:24:30 +0100 (Sat, 26 Feb 2011) | 1 line
+[bp/r33103][FIX] IE7: Fix for superfish menus going behind stuff, and remove random scrollbars from ui dialogs.
+r33114 | dabright | 2011-02-26 21:34:56 +0100 (Sat, 26 Feb 2011) | 1 line
+[bp/r32183] [FIX] Fixed typo in FILES wikiplugin template; /Tile/ => /Title/
+r33139 | jonnybradley | 2011-02-27 17:27:36 +0100 (Sun, 27 Feb 2011) | 1 line
+[bp/r33137][ENH] wysiwyg: Add BidiLtr and BidiRtl buttons to toolbars lib (thanks Yonixxx)
+r33142 | sylvieg | 2011-02-27 18:03:13 +0100 (Sun, 27 Feb 2011) | 1 line
+[bp/r33141][FIX]TRACKER: do not set empty date field to now for field not in the input for an existing item
+r33149 | jonnybradley | 2011-02-28 17:14:50 +0100 (Mon, 28 Feb 2011) | 1 line
+[bp/r33148][FIX] trackerfilter: Fix prevnext onclick events as the plugin structure had changed (the form is no longer inside the results div)
+r33151 | sylvieg | 2011-02-28 19:20:22 +0100 (Mon, 28 Feb 2011) | 1 line
+[bp/r33150][FIX]search: pcre callback function does not work for larger strings than the php setting - better to return the string with no highlight than an empty string
+r33154 | jonnybradley | 2011-02-28 20:41:10 +0100 (Mon, 28 Feb 2011) | 1 line
+[bp/r33153][FIX] trackerfilter: Only bind onclick events to prevnext anchors
+
+
+----------------------------------------------
+r35362 | pkdille | 2011-07-14 22:17:20 +0200 (Thu, 14 Jul 2011) | 8 lines
+
+[QT] Quality Team Backport
+
+r33048 | sylvieg | 2011-02-22 20:51:50 +0100 (Tue, 22 Feb 2011) | 1 line
+[bp/r33047][FIX]youtube module: fix 30803: a module is not wiki parsed
+r33056 | chealer | 2011-02-23 09:51:33 +0100 (Wed, 23 Feb 2011) | 1 line
+[bp/r33055][FIX] Wiki: Pages overriding global cache to avoid caching are cached
+
+
+----------------------------------------------
+r35361 | pkdille | 2011-07-14 22:15:07 +0200 (Thu, 14 Jul 2011) | 10 lines
+
+[QT] Quality Team Backport
+
+r33029 | sylvieg | 2011-02-22 00:48:45 +0100 (Tue, 22 Feb 2011) | 1 line
+[bp/r33028][FIX]tracker: do not duplicate trackerId in url to item view of tracker view (in any case itemId param is enough
+r33034 | jonnybradley | 2011-02-22 13:55:10 +0100 (Tue, 22 Feb 2011) | 1 line
+[FIX] index_raw: Process parse_wiki_argvariable before parsing page data so args work inside plugins (works ok in trunk as index_raw is totally different there, so no backport possible)
+r33038 | sylvieg | 2011-02-22 17:45:28 +0100 (Tue, 22 Feb 2011) | 1 line
+[bp/r33037][FIX]CATEGORY: the shuffle sort was lost: repalce par random for homogeneity
+
+
+----------------------------------------------
+r35360 | pkdille | 2011-07-14 22:11:54 +0200 (Thu, 14 Jul 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r33019 | sylvieg | 2011-02-21 20:52:09 +0100 (Mon, 21 Feb 2011) | 1 line
+[bp/r33017][FIX]ARTICLES: if usePagination, send in the pagination url all the filters
+
+
+----------------------------------------------
+r35359 | pkdille | 2011-07-14 22:11:34 +0200 (Thu, 14 Jul 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r33012 | luciash | 2011-02-21 19:12:46 +0100 (Mon, 21 Feb 2011) | 1 line
+[bp/r33004][FIX] webmail: same fix as r32301 but for the filtered list (unread and flagged msgs) + commented code cleanup
+
+
+----------------------------------------------
+r35358 | pkdille | 2011-07-14 22:11:11 +0200 (Thu, 14 Jul 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r33011 | luciash | 2011-02-21 18:57:33 +0100 (Mon, 21 Feb 2011) | 1 line
+[bp/r32265][FIX] webmail: slightli bettar inglish error messages
+
+
+----------------------------------------------
+r35133 | sylvieg | 2011-06-30 01:20:42 +0200 (Thu, 30 Jun 2011) | 1 line
+
+[bp/r 35131 35132][FIX]snarf: filter params + escape
+----------------------------------------------
+r34529 | yonixxx | 2011-05-19 21:35:13 +0200 (Thu, 19 May 2011) | 1 line
+
+[ROLLBACK] wrong branch commit
+----------------------------------------------
+r34524 | yonixxx | 2011-05-19 20:56:04 +0200 (Thu, 19 May 2011) | 1 line
+
+[FIX]Autoclipping feature - Error in typo
+----------------------------------------------
+r34431 | gregmartin | 2011-05-15 19:06:22 +0200 (Sun, 15 May 2011) | 2 lines
+
+truncate log messages to 200 chars; causes recursion error when logging ldap calls.
+fixes bugs 3629, 3661, 3710
+----------------------------------------------
 Version 6.3
 <http://tiki.org/ReleaseNotes63>
 ------------------
