@@ -285,7 +285,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;
 		{include file='tracker_item_field_value.tpl' field_value=$cur_field}
 	{else}
 		{include file='tracker_item_field_input.tpl' field_value=$cur_field}
-		{if $cur_field.options_array[0] == 'password'}<br /><i>Leave empty if password is to remain unchanged</i>{/if}
+		{if $cur_field.options_array[0] == 'password'}<br /><i>Let empty to not change it</i>{/if}
 	{/if}
 {elseif $cur_field.type eq 'A' or $cur_field.type eq 'm' or $cur_field.type eq 'L'}
 	{include file='tracker_item_field_input.tpl' field_value=$cur_field}
