@@ -76,7 +76,7 @@ function wikiplugin_subscribegroup($data, $params) {
 	$groups = $userlib->get_user_groups_inclusion($user);
 
 	if (!empty($_REQUEST['subscribeGroup']) && $_REQUEST['group'] == $group) {
-		if (isset($groups[$group])) {
+		if (isset($groups[$group]) and $groups[$group] != 'included') {
 			$userlib->remove_user_from_group($user, $group);
 			unset($groups[$group]);
 		} else {
@@ -85,10 +85,7 @@ function wikiplugin_subscribegroup($data, $params) {
 		}
 	}
 
-	if (isset($groups[$group])) {//user already in the group->
-		if ($groups[$group] == 'included') {
-			return tra('Incorrect param');
-		}
+	if (isset($groups[$group]) and $groups[$group] != 'included') {//user already in the group->
 		$text = isset($unsubscribe)? $unsubscribe: 'Unsubscribe %s';
 		if (!isset($unsubscribe_action)) {
 			$unsubscribe_action = 'OK';
