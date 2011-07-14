@@ -1783,6 +1783,7 @@ class UsersLib extends TikiLib
 				$res['permcant'] = count($perms);
 				$groups = $this->get_included_groups($res['groupName']);
 				$res['included'] = $groups;
+				$res['included_direct'] = $this->get_included_groups($res['groupName'], false);
 			}
 		}
 
