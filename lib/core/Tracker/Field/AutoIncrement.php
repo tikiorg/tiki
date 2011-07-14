@@ -39,7 +39,7 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract
 					),
 					'itemId' => array(
 						'name' => tr('Item ID'),
-						'description' => tr('If set to "itemId", will set this field  to match the value of the actual database itemId field value'),
+						'description' => tr('If set to "itemId", will set this field to match the value of the actual database itemId field value'),
 						'filter' => 'alpha',
 						'options' => array(
 							'' => '',
