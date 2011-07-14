@@ -232,7 +232,25 @@ function prefs_payment_list() {
 			'name' => tra('Product Class ID Field Name'),
 			'description' => tra('Field Name in Products tracker of the Product Class ID, needed for the Gift Certificates cart feature.'),
 			'type' => 'text',		
-		),		
+		),
+		'payment_cart_orders' => array(
+			'name' => tra('Record cart orders in trackers'),
+			'description' => tra('This feature requires 2 trackers, and Orders tracker and an Orders Item tracker to be configured. It also needs profiles to be configured to do the recording.'),
+			'type' => 'flag',
+			'dependencies' => array( 'payment_cart_orders_profile', 'payment_cart_orderitems_profile' ),
+		),
+		'payment_cart_orders_profile' => array(
+			'name' => tra('Orders Profile'),
+			'description' => tra('Wiki page where the profile for creating orders is (page name must be without spaces)'),
+			'help' => 'Order Profile',
+			'type' => 'text',
+		),
+		'payment_cart_orderitems_profile' => array(
+			'name' => tra('Order Item Profile'),
+			'description' => tra('Wiki page where the profile for creating orders items is (page name must be without spaces)'),
+			'help' => 'Order Item Profile',
+			'type' => 'text',
+		),
 	);
 }
 

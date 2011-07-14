@@ -663,7 +663,6 @@ class CartLib
 				}
 			} 
 		}
-		// Custom++ TODO: check cart feature existence   Record order TODO: should have some error checking on missing profiles
 		require_once 'lib/profilelib/installlib.php';
 		require_once 'lib/profilelib/profilelib.php';
 		// Handle anonymous user (not logged in) shopping that require only email 
@@ -700,20 +699,25 @@ class CartLib
 			'invoice' => $invoice, 
 		);
 		if (!$user || isset($_SESSION['forceanon']) && $_SESSION['forceanon'] == 'y') {
-			$orderprofile = Tiki_Profile::fromDb( 'anon_order_prf' );
-			$orderitemprofile = Tiki_Profile::fromDb( 'anon_orderitem_prf' );
+			$orderprofile = Tiki_Profile::fromDb( $prefs['payment_cart_anonorders_profile'] );
+			$orderitemprofile = Tiki_Profile::fromDb( $prefs['payment_cart_anonorderitems_profile'] );
 		} else {
-			$orderprofile = Tiki_Profile::fromDb( 'order_prf' );
-			$orderitemprofile = Tiki_Profile::fromDb( 'orderitem_prf' );
+			$orderprofile = Tiki_Profile::fromDb( $prefs['payment_cart_orders_profile'] );
+			$orderitemprofile = Tiki_Profile::fromDb( $prefs['payment_cart_orderitems_profile'] );
 		}
-		$profileinstaller = new Tiki_Profile_Installer();
-		$profileinstaller->forget( $orderprofile ); // profile can be installed multiple times
-		$profileinstaller->setUserData( $userInput );
-		
+		if ($prefs['payment_cart_orders'] == 'y') {
+			$profileinstaller = new Tiki_Profile_Installer();
+			$profileinstaller->forget( $orderprofile ); // profile can be installed multiple times
+			$profileinstaller->setUserData( $userInput );
+		} else {
+			$profileinstaller = '';
+		}		
 		global $record_profile_items_created;
 		$record_profile_items_created = array();
 
-		$profileinstaller->install( $orderprofile );
+		if ($prefs['payment_cart_orders'] == 'y') {
+			$profileinstaller->install( $orderprofile );
+		}
 		
 		$content = $this->get_content();
 
@@ -745,7 +749,6 @@ class CartLib
 				}
 			}
 		}
-		// end Custom++
 		// Additional feature, needs to be optional, setting a page (which should be configurable) as a token access page for the anonymous user, this feature depends on token feature to be activated
 		if (!$user || isset($_SESSION['forceanon']) && $_SESSION['forceanon'] == 'y') {
 			$shopperurl = 'tiki-index.php?page=My+Ticket&shopper=' . intval( $cartuser );
@@ -811,9 +814,12 @@ class CartLib
 			'eventstart' => $this->get_tracker_value_custom('Events','Event Date',$info['eventcode']),
 			'eventend' => $this->get_tracker_value_custom('Events','Event End Date',$info['eventcode']),
 		);
-		$profileinstaller->setUserData( $userInput );	
-		$profileinstaller->forget( $orderitemprofile );
-		$profileinstaller->install( $orderitemprofile );
+		if ($prefs['payment_cart_orders'] == 'y') {
+			$profileinstaller->setUserData( $userInput );	
+			$profileinstaller->forget( $orderitemprofile );
+			$profileinstaller->install( $orderitemprofile );
+		}
+
 		$this->change_inventory($info['code'], -1 * $info['quantity'], false);
 		if ($info['exchangetoproductid'] && $info['exchangeorderamount']) {	
 			$this->change_inventory($info['exchangetoproductid'], -1 * $info['exchangeorderamount'], false);

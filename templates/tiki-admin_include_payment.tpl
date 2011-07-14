@@ -80,6 +80,15 @@ if ($.ui) {
 			{preference name=payment_cart_associated_event_fieldname}
 			{preference name=payment_cart_product_classid_fieldname}
 		</fieldset>	
+		{preference name=payment_cart_orders}
+		<div class="adminoptionboxchild" id="payment_cart_orders_childcontainer">
+
+		</div>
+		<fieldset>
+		<legend>{tr}Orders Tracker Setup{/tr}</legend>	
+		{preference name=payment_cart_orders_profile}
+		{preference name=payment_cart_orderitems_profile}
+		</fieldset>
 	</fieldset>
 	<fieldset>
 		<legend>{tr}Shipping{/tr}</legend>
