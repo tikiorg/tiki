@@ -189,6 +189,7 @@ function prefs_payment_list() {
 			'description' => tra('Activate product inventory feature, needs Products tracker to be set up properly, the itemId must be the product code'),
 			'type' => 'flag',
 			'dependencies' => array( 'payment_cart_product_tracker', 'payment_cart_inventory_type_field', 'payment_cart_inventory_total_field', 'payment_cart_inventory_lesshold_field' ),
+			'default' => 'n',
 		),
 		'payment_cart_product_tracker' => array(
 			'name' => tra('Products Tracker ID'),
@@ -196,11 +197,13 @@ function prefs_payment_list() {
 			'type' => 'text',
 			'filter' => 'digits',
 			'size' => 3,
+			'default' => '',
 		),
 		'payment_cart_product_tracker_name' => array(
 			'name' => tra('Products Tracker Name'),
 			'description' => tra('Name of tracker that is the Products tracker, needed for advanced cart features, the itemId will be the product code'),
 			'type' => 'text',
+			'default' => '',
 		),
 		'payment_cart_inventory_type_field' => array(
 			'name' => tra('Inventory Type Field ID'),
@@ -208,6 +211,7 @@ function prefs_payment_list() {
 			'type' => 'text',
 			'filter' => 'digits',
 			'size' => 3,
+			'default' => 'none',
 		),
 		'payment_cart_inventory_total_field' => array(
 			'name' => tra('Inventory Total Field ID'),
@@ -215,6 +219,7 @@ function prefs_payment_list() {
 			'type' => 'text',
 			'filter' => 'digits',
 			'size' => 3,
+			'default' => '',
 		),
 		'payment_cart_inventory_lesshold_field' => array(
 			'name' => tra('Inventory Total Less Hold Field ID'),
@@ -222,50 +227,58 @@ function prefs_payment_list() {
 			'type' => 'text',
 			'filter' => 'digits',
 			'size' => 3,		
+			'default' => '',
 		),
 		'payment_cart_bundles' => array(
 			'name' => tra('Bundled products feature for cart'),
 			'description' => tra('Activate bundled products feature, needs Products tracker to be set up properly, the itemId must be the product code'),
 			'type' => 'flag',
 			'dependencies' => array( 'payment_cart_product_name_fieldname', 'payment_cart_products_inbundle_fieldname' ),
+			'default' => 'n',
 		),
 		'payment_cart_product_name_fieldname' => array(
 			'name' => tra('Product Name Field Name'),
 			'description' => tra('Field Name in Products tracker of the product name that will be used as the label of the product, e.g. in a bundle.'),
 			'type' => 'text',
+			'default' => '',
 		),
 		'payment_cart_products_inbundle_fieldname' => array(
 			'name' => tra('Items in Bundle Field Name'),
-			'description' => tra('Field Name in Products tracker of a comma separated list of product IDs of products in the bundle (i.e. if the field contains anything, then this product is a bundle), you can also specify the number of the sub-products, e.g. 23:("colon")2,24 means item 23 (x2) + item 24 (x1)'),
+			'denscription' => tra('Field Name in Products tracker of a comma separated list of product IDs of products in the bundle (i.e. if the field contains anything, then this product is a bundle), you can also specify the number of the sub-products, e.g. 23:("colon")2,24 means item 23 (x2) + item 24 (x1)'),
 			'type' => 'text',
 		),
 		'payment_cart_associated_event_fieldname' => array(
 			'name' => tra('Associated Event ID Field Name'),
 			'description' => tra('Field Name in Products tracker of the Associated Event ID, needed for the Associated Events cart feature, requires an Events tracker to be setup where the item ID there is the event ID to associate to'),
 			'type' => 'text',
+			'default' => '',
 		),
 		'payment_cart_product_classid_fieldname' => array(
 			'name' => tra('Product Class ID Field Name'),
 			'description' => tra('Field Name in Products tracker of the Product Class ID, needed for the Gift Certificates cart feature.'),
 			'type' => 'text',		
+			'default' => '',
 		),
 		'payment_cart_orders' => array(
 			'name' => tra('Record cart orders in trackers'),
 			'description' => tra('This feature requires 2 trackers, and Orders tracker and an Orders Item tracker to be configured. It also needs profiles to be configured to do the recording.'),
 			'type' => 'flag',
 			'dependencies' => array( 'payment_cart_orders_profile', 'payment_cart_orderitems_profile' ),
+			'default' => '',
 		),
 		'payment_cart_orders_profile' => array(
 			'name' => tra('Orders Profile'),
 			'description' => tra('Wiki page where the profile for creating orders is (page name must be without spaces)'),
 			'help' => 'Order Profile',
 			'type' => 'text',
+			'default' => '',
 		),
 		'payment_cart_orderitems_profile' => array(
 			'name' => tra('Order Item Profile'),
 			'description' => tra('Wiki page where the profile for creating orders items is (page name must be without spaces)'),
 			'help' => 'Order Item Profile',
 			'type' => 'text',
+			'default' => '',
 		),
 	);
 }
