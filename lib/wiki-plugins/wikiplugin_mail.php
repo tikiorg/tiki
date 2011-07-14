@@ -35,6 +35,18 @@ function wikiplugin_mail_info() {
 					array('text' => tra('No'), 'value' => 'n')
 				)
 			),
+			'recurse' => array(
+				'required' => false,
+				'name' => tra('Recurse on groups'),
+				'description' => tra('Recurse on groups'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
 			'showuserdd' => array(
 				'required' => false,
 				'name' => tra('Show User Dropdown'),
@@ -79,7 +91,7 @@ function wikiplugin_mail($data, $params) {
 	global $userlib, $smarty, $tikilib, $user;
 	static $ipluginmail=0;
 	$smarty->assign_by_ref('ipluginmail', $ipluginmail);
-	$default = array('showuser' => 'y', 'showuserdd' => 'n', 'showrealnamedd' => 'n', 'showgroupdd' => 'n', 'group' => array());
+	$default = array('showuser' => 'y', 'showuserdd' => 'n', 'showrealnamedd' => 'n', 'showgroupdd' => 'n', 'group' => array(), 'recurse' => 'y');
 	$params = array_merge($default, $params);
 	$default = array('mail_subject' =>'', 'mail_mess' => '', 'mail_user_dd' => '', 'mail_group_dd' => array());
 	$_REQUEST = array_merge($default, $_REQUEST);
@@ -97,7 +109,7 @@ function wikiplugin_mail($data, $params) {
 	if ($params['showgroupdd'] == 'y') {
 		if (!empty($params['group'])) {
 			foreach ($params['group'] as $g) {
-				$groups[$g] = $userlib->get_including_groups($g, 'y');
+				$groups[$g] = $userlib->get_including_groups($g, $params['recurse']);
 			}
 		} else {
 			$groups[] = $userlib->list_all_groups();
