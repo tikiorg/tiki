@@ -288,7 +288,7 @@ class NlLib extends TikiLib
 			if ( $r['valid'] == 'y' ) $return[] = $r;
 		}
 		
-		$return = array_merge($all_users, $page_included_emails);
+		$return = array_merge($return, $page_included_emails);
 
 		return $return;
 	}
@@ -693,10 +693,10 @@ class NlLib extends TikiLib
 		$bindvars = array((int)$nlId);
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			$mid = " where `nlId`=? and `isUser`!='g' and `email` like ?";
+			$mid = " where `nlId`=? and (`valid` != 'y' or (`isUser` != 'g' and `included` != 'y')) and `email` like ?";
 			$bindvars[] = $findesc;
-		} else {
-			$mid = " where `nlId`=? and `isUser`!='g' ";
+		} else { // show all except valid by group or include newsletters
+			$mid = " where `nlId`=?  and (`valid` != 'y' or (`isUser` != 'g' and `included` != 'y')) ";
 		}
 
 		$query = "select * from `tiki_newsletter_subscriptions` $mid order by ".$this->convertSortMode("$sort_mode").", email asc";

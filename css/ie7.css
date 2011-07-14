@@ -48,3 +48,12 @@ h3.box-title {
 .cssmenu_vert ul li {
 	width: inherit;
 }
+
+#wrapper {
+	z-index: auto; /* fixes IE7 'z-index bug' for suckerfish menus etc */
+	position: relative;
+}
+
+.ui-dialog .ui-dialog-content {
+	overflow: hidden !important;
+}

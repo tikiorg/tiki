@@ -146,7 +146,7 @@ function wikiplugin_code($data, $params) {
 
 		// Remove first <pre> tag
 		if ( $out != '' ) {
-			$out = preg_replace('/^<pre[^>]*>(.*)<\/pre>$/', '\\1', $out);
+			$out = preg_replace('/^<pre[^>]*>(.*)<\/pre>$/mis', '\\1', $out);
 			$out = trim($out);
 		}
 
