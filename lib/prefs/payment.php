@@ -207,6 +207,13 @@ function prefs_payment_list() {
 			'filter' => 'digits',
 			'size' => 3,		
 		),
+		'payment_cart_inventoryhold_expiry' => array(
+			'name' => tra('Inventory Hold Timeout (minutes)'),
+			'description' => tra('Minutes to hold inventory before making it available again when there is no user cart action'),
+			'type' => 'text',
+			'filter' => 'digits',
+			'size' => 3,
+		),
 		'payment_cart_bundles' => array(
 			'name' => tra('Bundled products feature for cart'),
 			'description' => tra('Activate bundled products feature, needs Products tracker to be set up properly, the itemId must be the product code'),
@@ -234,7 +241,7 @@ function prefs_payment_list() {
 			'type' => 'text',		
 		),
 		'payment_cart_orders' => array(
-			'name' => tra('Record cart orders in trackers'),
+			'name' => tra('Record cart orders in trackers (registered users)'),
 			'description' => tra('This feature requires 2 trackers, and Orders tracker and an Orders Item tracker to be configured. It also needs profiles to be configured to do the recording.'),
 			'type' => 'flag',
 			'dependencies' => array( 'payment_cart_orders_profile', 'payment_cart_orderitems_profile' ),
@@ -242,13 +249,48 @@ function prefs_payment_list() {
 		'payment_cart_orders_profile' => array(
 			'name' => tra('Orders Profile'),
 			'description' => tra('Wiki page where the profile for creating orders is (page name must be without spaces)'),
-			'help' => 'Order Profile',
+			'help' => 'OrderProfile',
 			'type' => 'text',
 		),
 		'payment_cart_orderitems_profile' => array(
 			'name' => tra('Order Item Profile'),
 			'description' => tra('Wiki page where the profile for creating orders items is (page name must be without spaces)'),
-			'help' => 'Order Item Profile',
+			'help' => 'OrderItemProfile',
+			'type' => 'text',
+		),
+		'payment_cart_anonymous' => array(
+			'name' => tra('Allow anonymous shopping and record their orders in trackers'),
+			'description' => tra('Allows shopping as anonymous user'),
+			'help' => 'Shopping Cart',
+			'dependencies' => array( 'auth_token_access', 'payment_cart_anonshopper_profile', 'payment_cart_anonorders_profile', 'payment_cart_anonorderitems_profile', 'payment_cart_anon_reviewpage', 'payment_cart_anon_group' ),
+			'type' => 'flag',
+		),
+		'payment_cart_anonorders_profile' => array(
+			'name' => tra('Anonymous Orders Profile'),
+			'description' => tra('Wiki page where the profile for creating orders for Anonymous users is (page name must be without spaces)'),
+			'help' => 'AnonOrderProfile',
+			'type' => 'text',
+		),
+		'payment_cart_anonorderitems_profile' => array(
+			'name' => tra('Anonymous Order Item Profile'),
+			'description' => tra('Wiki page where the profile for creating orders items for Anonymous users is (page name must be without spaces)'),
+			'help' => 'AnonOrderItemProfile',
+			'type' => 'text',
+		),
+		'payment_cart_anonshopper_profile' => array(
+			'name' => tra('Anonymous Shopper Info Profile'),
+			'description' => tra('Wiki page where the profile for creating orders items for Anonymous users is (page name must be without spaces)'),
+			'help' => 'AnonShopperProfile',
+			'type' => 'text',
+		),
+		'payment_cart_anon_reviewpage' => array(
+			'name' => tra('Anonymous Users Order Review Page'),
+			'description' => tra('Wiki page where Anonymous users can review their orders)'),
+			'type' => 'text',
+		),
+		'payment_cart_anon_group' => array(
+			'name' => tra('Temporary Shopper Group to Access Review Page via Token'),
+			'description' => tra('Group name of group with perms to access review page via token'),
 			'type' => 'text',
 		),
 	);

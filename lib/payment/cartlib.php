@@ -632,12 +632,17 @@ class CartLib
 		global $prefs, $user, $tikilib;
 		global $paymentlib; require_once 'lib/payment/paymentlib.php';
 
+		if (!$user && $prefs['payment_cart_anonymous'] != 'y') {
+				global $access;				
+				$access->redirect( $_SERVER['REQUEST_URI'], tra('Anonymous shopping feature is not enabled. Please log in to shop.') );
+		}
+				
 		$total = $this->get_total();
 
 		if( $total > 0 || $this->total_no_discount ) {
 			// if anonymous shopping to set pref as to which shopperinfo to show in description
 			if (empty($user)) {
-				$shopperinfo_descvar = 'email'; // this needs to be a pref
+				$shopperinfo_descvar = 'email'; // TODO: make this a pref
 				if (!empty($_SESSION['shopperinfo'][$shopperinfo_descvar])) {
 					$shopperinfo_desc = $_SESSION['shopperinfo'][$shopperinfo_descvar];
 					$description = tra('Registration Check-Out') . " ($shopperinfo_desc)";
@@ -674,7 +679,7 @@ class CartLib
 				if (!empty($_SESSION['shopperinfoprofile'])) {
 					$shopper_profile_name = $_SESSION['shopperinfoprofile'];
 				} else {
-					$shopper_profile_name = 'shopper_prf';
+					$shopper_profile_name = $prefs['payment_cart_anonshopper_profile'];
 				}
 				$shopperprofile = Tiki_Profile::fromDb( $shopper_profile_name );
 				$profileinstaller = new Tiki_Profile_Installer();
@@ -705,7 +710,7 @@ class CartLib
 			$orderprofile = Tiki_Profile::fromDb( $prefs['payment_cart_orders_profile'] );
 			$orderitemprofile = Tiki_Profile::fromDb( $prefs['payment_cart_orderitems_profile'] );
 		}
-		if ($prefs['payment_cart_orders'] == 'y') {
+		if ($user && $prefs['payment_cart_orders'] == 'y' || !$user && $prefs['payment_cart_anonymous'] == 'y') {
 			$profileinstaller = new Tiki_Profile_Installer();
 			$profileinstaller->forget( $orderprofile ); // profile can be installed multiple times
 			$profileinstaller->setUserData( $userInput );
@@ -715,7 +720,7 @@ class CartLib
 		global $record_profile_items_created;
 		$record_profile_items_created = array();
 
-		if ($prefs['payment_cart_orders'] == 'y') {
+		if ($user && $prefs['payment_cart_orders'] == 'y' || !$user && $prefs['payment_cart_anonymous'] == 'y') {
 			$profileinstaller->install( $orderprofile );
 		}
 		
@@ -749,15 +754,15 @@ class CartLib
 				}
 			}
 		}
-		// Additional feature, needs to be optional, setting a page (which should be configurable) as a token access page for the anonymous user, this feature depends on token feature to be activated
+
 		if (!$user || isset($_SESSION['forceanon']) && $_SESSION['forceanon'] == 'y') {
-			$shopperurl = 'tiki-index.php?page=My+Ticket&shopper=' . intval( $cartuser );
+			$shopperurl = 'tiki-index.php?page=' . $prefs['payment_cart_anon_reviewpage'] . '&shopper=' . intval( $cartuser );
 			global $tikiroot, $prefs;
 			$shopperurl = $tikilib->httpPrefix( true ) . $tikiroot . $shopperurl;
 			require_once 'lib/auth/tokens.php';
 			$tokenlib = AuthTokens::build( $prefs );
-			$shopperurl = $tokenlib->includeToken( $shopperurl, array('Temporary Shopper','Anonymous') );
-			// Need a pref for send email feature
+			$shopperurl = $tokenlib->includeToken( $shopperurl, array($prefs['payment_cart_anon_group'], 'Anonymous') );
+			
 			if ( !empty($_SESSION['shopperinfo']['email']) ) {
 				require_once('lib/webmail/tikimaillib.php');
 				global $smarty;
@@ -778,13 +783,13 @@ class CartLib
 		}
 		$this->update_gift_certificate( $invoice );
 		$this->update_group_discount( $invoice );
-		// end Additional feature
+
 		$this->empty_cart(); 
 		return $invoice;
 	}
 
 	function process_item($invoice, $total, $info, $userInput, $cartuser, $profileinstaller, $orderitemprofile, $parentQuantity = 0, $parentCode = 0 ) {
-		global $user, $userlib, $paymentlib;
+		global $user, $userlib, $paymentlib, $prefs;
 		if ($bundledProducts = $this->get_bundled_products( $info['code'] ) ) {
 			foreach ($bundledProducts as $i) {
 				$this->process_item($invoice, $total, $i, $userInput, $cartuser, $profileinstaller, $orderitemprofile, $info['quantity'], $info['code'] );
@@ -814,7 +819,7 @@ class CartLib
 			'eventstart' => $this->get_tracker_value_custom('Events','Event Date',$info['eventcode']),
 			'eventend' => $this->get_tracker_value_custom('Events','Event End Date',$info['eventcode']),
 		);
-		if ($prefs['payment_cart_orders'] == 'y') {
+		if ($user && $prefs['payment_cart_orders'] == 'y' || !$user && $prefs['payment_cart_anonymous'] == 'y') {
 			$profileinstaller->setUserData( $userInput );	
 			$profileinstaller->forget( $orderitemprofile );
 			$profileinstaller->install( $orderitemprofile );
@@ -1057,9 +1062,8 @@ class CartLib
 	}
 
 	private function expire_onhold_list( $productId ) {
-		global $tikilib;
-		// TODO: set pref for expiry time
-		$expiry = 15 * 60; // 15 minutes
+		global $tikilib, $prefs;
+		$expiry = $prefs['payment_cart_inventoryhold_expiry'] * 60;
 		$hash = $this->get_hash($productId);
 		$query = "select sum(`quantity`) from `tiki_cart_inventory_hold` where `productId` = ? and `timeHeld` < ?";
 		$bindvars = array($productId, $tikilib->now - $expiry);
@@ -1080,9 +1084,8 @@ class CartLib
 	}
 
 	function extend_onhold_list() {
-		global $tikilib;
-		// TODO: set pref for time after last setting to extend 
-		$extend = 5 * 60; // 5 minutes
+		global $tikilib, $prefs; 
+		$extend = $prefs['payment_cart_inventoryhold_expiry'] * 60;
 		$hashes = array();
 		foreach( $this->get_content() as $item ) {
 			$hashes[] = $item['hash'];

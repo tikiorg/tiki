@@ -67,6 +67,9 @@ if ($.ui) {
 	<fieldset>
 		<legend>{tr}Advanced Shopping Cart{/tr}</legend>
 		{preference name=payment_cart_inventory}
+			<div class="adminoptionboxchild" id="payment_cart_inventory_childcontainer">
+			{preference name=payment_cart_inventoryhold_expiry}
+			</div>
 		{preference name=payment_cart_bundles}
 		<fieldset>
 			<legend>{tr}Products Tracker Setup{/tr}</legend>	
@@ -82,13 +85,17 @@ if ($.ui) {
 		</fieldset>	
 		{preference name=payment_cart_orders}
 		<div class="adminoptionboxchild" id="payment_cart_orders_childcontainer">
-
+			{preference name=payment_cart_orders_profile}
+			{preference name=payment_cart_orderitems_profile}
 		</div>
-		<fieldset>
-		<legend>{tr}Orders Tracker Setup{/tr}</legend>	
-		{preference name=payment_cart_orders_profile}
-		{preference name=payment_cart_orderitems_profile}
-		</fieldset>
+		{preference name=payment_cart_anonymous}
+		<div class="adminoptionboxchild" id="payment_cart_anonymous_childcontainer">
+			{preference name=payment_cart_anonorders_profile}
+			{preference name=payment_cart_anonorderitems_profile}
+			{preference name=payment_cart_anonshopper_profile}
+			{preference name=payment_cart_anon_reviewpage}
+			{preference name=payment_cart_anon_group}
+		</div>
 	</fieldset>
 	<fieldset>
 		<legend>{tr}Shipping{/tr}</legend>
