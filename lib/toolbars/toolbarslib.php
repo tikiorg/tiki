@@ -1261,7 +1261,7 @@ class ToolbarFileGallery extends Toolbar
 	{
 		$this->setLabel( tra('Choose or upload images') )
 			->setIcon( tra('pics/icons/pictures.png') )
-				->setWysiwygToken( '' )	/* disabling this by default for wysiwyg - make a custom tool with tikiimage as the wysiwyg token to override */
+				->setWysiwygToken( 'tikiimage' )
 					->setType('FileGallery')
 						->addRequiredPreference('feature_filegals_manager');
 	} // }}}
