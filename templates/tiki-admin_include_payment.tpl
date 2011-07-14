@@ -67,12 +67,18 @@ if ($.ui) {
 	<fieldset>
 		<legend>{tr}Advanced Shopping Cart{/tr}</legend>
 		<fieldset>
+			<legend>{tr}Advanced Cart Tracker Names Setup{/tr}</legend>
+			{preference name=payment_cart_product_tracker_name}
+			{preference name=payment_cart_orders_tracker_name}
+			{preference name=payment_cart_orderitems_tracker_name}
+			{preference name=payment_cart_productclasses_tracker_name}
+		</fieldset>
+		<fieldset>
 			<legend>{tr}Products Tracker Setup{/tr}</legend>
 			{remarksbox title="{tr}Choose payment system{/tr}"}
 				{tr}Depending on which feature you are using, you may need some or all of the following fields to be setup{/tr}
 			{/remarksbox}	
 			{preference name=payment_cart_product_tracker}
-			{preference name=payment_cart_product_tracker_name}
 			{preference name=payment_cart_inventory_type_field}
 			{preference name=payment_cart_inventory_total_field}
 			{preference name=payment_cart_inventory_lesshold_field}

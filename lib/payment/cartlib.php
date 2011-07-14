@@ -205,9 +205,9 @@ class CartLib
 
 		if (!$invoice) return false;
 		//makes the order display a discount, and ensures it is linked correctly
-		$orderId = $this->get_tracker_item_id_custom( "Orders", "Tiki Payment ID", $invoice );
-		$this->set_tracker_value_custom( "Orders", "Gift Certificate ID", $orderId, $this->gift_certificate_id );
-		$this->set_tracker_value_custom( "Orders", "Gift Certificate Amount Applied", $orderId, $this->gift_certificate_discount );
+		$orderId = $this->get_tracker_item_id_custom( $prefs['payment_cart_orders_tracker_name'], "Tiki Payment ID", $invoice );
+		$this->set_tracker_value_custom( $prefs['payment_cart_orders_tracker_name'], "Gift Certificate ID", $orderId, $this->gift_certificate_id );
+		$this->set_tracker_value_custom( $prefs['payment_cart_orders_tracker_name'], "Gift Certificate Amount Applied", $orderId, $this->gift_certificate_discount );
 
 		//now we link the products
 		$productTotal = 0;
@@ -301,13 +301,13 @@ class CartLib
 
 			// Now save Price Paid
 			foreach ($actual_prices_paid as $productId => $amountPaid) {
-				$this->set_tracker_value_custom( "Order Items", "Price paid", $order_product_itemIds[$productId], $amountPaid ); 
+				$this->set_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], "Price paid", $order_product_itemIds[$productId], $amountPaid ); 
 			}
 			foreach ($inputed_giftcert_prices as $productId => $amountInputed) {
-				$this->set_tracker_value_custom( "Order Items", "Inputed Price From Gift Cert", $order_product_itemIds[$productId], $amountInputed );
+				$this->set_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], "Inputed Price From Gift Cert", $order_product_itemIds[$productId], $amountInputed );
 			}
 			foreach ($inputed_bundle_prices as $productId => $amountInputed) {
-				$this->set_tracker_value_custom( "Order Items", "Inputed Price From Bundle", $order_product_itemIds[$productId], $amountInputed );
+				$this->set_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], "Inputed Price From Bundle", $order_product_itemIds[$productId], $amountInputed );
 			}
 		}
 		// set refunding in the event of cancellation
@@ -316,14 +316,15 @@ class CartLib
 	}
 
 	function get_orderitems_of_order( $orderId ) {
+		global $prefs;
 		$result = array();
-		$productItemIds = $this->get_tracker_item_ids_custom( "Order Items", "Order ID", $orderId );
+		$productItemIds = $this->get_tracker_item_ids_custom( $prefs['payment_cart_orderitems_tracker_name'], "Order ID", $orderId );
 		
 		foreach($productItemIds as $productItemId) {
 			$result[] = array(
 				"itemId" => $productItemId["itemId"],
-				"productId" => $this->get_tracker_value_custom( "Order Items", "Product ID", $productItemId["itemId"] ),
-				"parentCode" => $this->get_tracker_value_custom( "Order Items", "Parent Code", $productItemId["itemId"] )
+				"productId" => $this->get_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], "Product ID", $productItemId["itemId"] ),
+				"parentCode" => $this->get_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], "Parent Code", $productItemId["itemId"] )
 			);
 		}
 		
@@ -737,7 +738,7 @@ class CartLib
 		$email_template_ids = array();
 		$product_classes = array_unique($process_info['product_classes']);
 		foreach ($product_classes as $pc) {
-			if ($email_template_id = $this->get_tracker_value_custom( 'Product Classes', 'Email Template ID', $pc)) {
+			if ($email_template_id = $this->get_tracker_value_custom( $prefs['payment_cart_productclasses_tracker_name'], 'Email Template ID', $pc)) {
 				$email_template_ids[] = $email_template_id;
 			} 
 		}
@@ -1126,13 +1127,13 @@ class CartLib
 	}
 
 	function get_missing_user_information_fields( $product_class_id, $type = 'required' ) {
-		global $user;
+		global $user, $prefs;
 		global $trklib;
 		require_once('lib/trackers/trackerlib.php');
 		if ($type == 'required') {
-			$fields_str = $this->get_tracker_value_custom( 'Product Classes', 'Required Field IDs', $product_class_id);
+			$fields_str = $this->get_tracker_value_custom( $prefs['payment_cart_productclasses_tracker_name'], 'Required Field IDs', $product_class_id);
 		} else if ($type == 'postpurchase') {
-			$fields_str = $this->get_tracker_value_custom( 'Product Classes', 'Postpurchase Field IDs', $product_class_id);
+			$fields_str = $this->get_tracker_value_custom( $prefs['payment_cart_productclasses_tracker_name'], 'Postpurchase Field IDs', $product_class_id);
 		}
 		$fields = explode(',', str_replace(' ', '', $fields_str));
 		$tocheck = array();
@@ -1158,15 +1159,17 @@ class CartLib
 	}
 
 	function get_missing_user_information_form( $product_class_id, $type = 'required' ) {
+		global $prefs;
 		if ($type == 'required') {
-			return $this->get_tracker_value_custom( 'Product Classes', 'Associated Required Form', $product_class_id );
+			return $this->get_tracker_value_custom( $prefs['payment_cart_productclasses_tracker_name'], 'Associated Required Form', $product_class_id );
 		} else {
-			return $this->get_tracker_value_custom( 'Product Classes', 'Associated Postpurchase Form', $product_class_id );
+			return $this->get_tracker_value_custom( $prefs['payment_cart_productclasses_tracker_name'], 'Associated Postpurchase Form', $product_class_id );
 		}
 	}
 
 	function skip_user_information_form_if_not_missing( $product_class_id ) {
-		if ($this->get_tracker_value_custom( 'Product Classes', 'Skip Required Form if Filled', $product_class_id ) == 'Yes') {
+		global $prefs;
+		if ($this->get_tracker_value_custom( $prefs['payment_cart_productclasses_tracker_name'], 'Skip Required Form if Filled', $product_class_id ) == 'Yes') {
 			return true;
 		} else {
 			return false;
@@ -1185,19 +1188,20 @@ class CartLib
 	}
 
 	function update_group_discount( $invoice ) {
+		global $prefs;
 		// Now to take into account group discount as well
 		if (!$invoice) return false;
 		if ($groupDiscount = $this->get_group_discount()) {
-			$orderId = $this->get_tracker_item_id_custom( "Orders", "Tiki Payment ID", $invoice ); 
+			$orderId = $this->get_tracker_item_id_custom( $prefs['payment_cart_orders_tracker_name'], "Tiki Payment ID", $invoice ); 
 			$orderitems = $this->get_orderitems_of_order( $orderId );
 			foreach ($orderitems as $o) {
 				$order_product_itemIds[$o['productId']] = $o['itemId'];
-				$orig_prices_paid[$o['productId']] = $this->get_tracker_value_custom( "Order Items", "Price paid", $o['itemId'] );
+				$orig_prices_paid[$o['productId']] = $this->get_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], "Price paid", $o['itemId'] );
 			}
 			// Now save Price Paid
 			foreach ($orig_prices_paid as $productId => $origPrice) {
 				$amountPaid = (1 - $groupDiscount) * $origPrice;
-				$this->set_tracker_value_custom( "Order Items", "Price paid", $order_product_itemIds[$productId], $amountPaid );
+				$this->set_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], "Price paid", $order_product_itemIds[$productId], $amountPaid );
 			} 
 		} 
 	}
@@ -1215,10 +1219,10 @@ class CartLib
 		if (!$orderItemId) {
 			return 0;
 		}
-		if ($parentCode = $this->get_tracker_value_custom( 'Order Items', 'Parent Code', $orderItemId)) {
-			$cost = $this->get_tracker_value_custom( 'Order Items', 'Inputed Price From Bundle', $orderItemId);
+		if ($parentCode = $this->get_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], 'Parent Code', $orderItemId)) {
+			$cost = $this->get_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], 'Inputed Price From Bundle', $orderItemId);
 		} else {
-			$cost = $this->get_tracker_value_custom( 'Order Items', 'Price paid', $orderItemId);
+			$cost = $this->get_tracker_value_custom( $prefs['payment_cart_orderitems_tracker_name'], 'Price paid', $orderItemId);
 		}	
 		return $cost;
 	} 

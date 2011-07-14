@@ -218,7 +218,7 @@ function prefs_payment_list() {
 			'name' => tra('Bundled products feature for cart'),
 			'description' => tra('Activate bundled products feature, needs Products tracker to be set up properly, the itemId must be the product code'),
 			'type' => 'flag',
-			'dependencies' => array( 'payment_cart_product_name_fieldname', 'payment_cart_products_inbundle_fieldname', 'payment_cart_product_price_fieldname' ),
+			'dependencies' => array( 'payment_cart_product_name_fieldname', 'payment_cart_products_inbundle_fieldname', 'payment_cart_product_price_fieldname', 'payment_cart_orders_tracker_name', 'payment_cart_orderitems_tracker_name' ),
 		),
 		'payment_cart_product_name_fieldname' => array(
 			'name' => tra('Product Name Field Name'),
@@ -336,7 +336,7 @@ function prefs_payment_list() {
 			'name' => tra('Allow exchange of products'),
 			'description' => tra('Allow exchange of products'),
 			'help' => 'Shopping Cart',
-			'dependencies' => array( 'payment_cart_orderitems_tracker', 'payment_cart_product_tracker', 'payment_cart_product_classid_fieldname' ),
+			'dependencies' => array( 'payment_cart_orderitems_tracker', 'payment_cart_product_tracker', 'payment_cart_product_classid_fieldname', 'payment_cart_productclasses_tracker_name' ),
 			'type' => 'flag',
 		),
 		'payment_cart_orderitems_tracker' => array(
@@ -350,7 +350,7 @@ function prefs_payment_list() {
 			'name' => tra('Gift certificates'),
 			'description' => tra('Gift Certificates'),
 			'help' => 'Shopping Cart',
-			'dependencies' => array( 'payment_cart_giftcert_tracker', 'payment_cart_giftcert_tracker_name', 'payment_cart_giftcerttemplate_fieldname', 'payment_cart_product_classid_fieldname' ),
+			'dependencies' => array( 'payment_cart_giftcert_tracker', 'payment_cart_giftcert_tracker_name', 'payment_cart_giftcerttemplate_fieldname', 'payment_cart_product_classid_fieldname', 'payment_cart_productclasses_tracker_name' ),
 			'type' => 'flag',
 		),
 		'payment_cart_giftcert_tracker' => array(
@@ -363,6 +363,21 @@ function prefs_payment_list() {
 		'payment_cart_giftcert_tracker_name' => array(
 			'name' => tra('Gift Certificate Tracker Name'),
 			'description' => tra('Name of tracker that is the Gift Certificate tracker'),
+			'type' => 'text',
+		),
+		'payment_cart_orders_tracker_name' => array(
+			'name' => tra('Orders Tracker Name'),
+			'description' => tra('Name of tracker that is the Orders tracker'),
+			'type' => 'text',
+		),
+		'payment_cart_orderitems_tracker_name' => array(
+			'name' => tra('Order Items Tracker Name'),
+			'description' => tra('Name of tracker that is the Order Items tracker'),
+			'type' => 'text',
+		),
+		'payment_cart_productclasses_tracker_name' => array(
+			'name' => tra('Product Classes Tracker Name'),
+			'description' => tra('Name of tracker that is the Product Classes tracker'),
 			'type' => 'text',
 		),
 	);

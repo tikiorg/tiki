@@ -1916,6 +1916,9 @@ function get_default_prefs() {
 		'payment_cart_giftcert_tracker' => '',
 		'payment_cart_giftcert_tracker_name' => '',
 		'payment_cart_giftcerttemplate_fieldname' => '',
+		'payment_cart_orders_tracker_name' => '',
+		'payment_cart_orderitems_tracker_name' => '',
+		'payment_cart_productclasses_tracker_name' => '',
 	
 		// Rating
 		'rating_advanced' => 'n',
