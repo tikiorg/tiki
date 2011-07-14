@@ -118,7 +118,7 @@ function module_categories( $mod_reference, &$module_params ) {
 			"data" => '<a class="catname" href="'.$url.'">' . $cat['name'] . '</a><br />'
 		);
 	}
-	$tm = new CatBrowseTreeMaker("mod_categ");
+	$tm = new CatBrowseTreeMaker('mod_categ' . $module_params['module_position'] . $module_params['module_ord']);
 	$res = $tm->make_tree($categId, $tree_nodes);
 	$smarty->assign('tree', $res);
 
