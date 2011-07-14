@@ -18,6 +18,43 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 3.9
+<http://tikiwiki.org/ReleaseNotes39>
+------------------
+
+----------------------------------------------
+r35345 | pkdille | 2011-07-14 19:15:27 +0200 (Thu, 14 Jul 2011) | 1 line
+
+Preparing 3.9 release - remove old secdb files
+----------------------------------------------
+r35344 | pkdille | 2011-07-14 19:08:26 +0200 (Thu, 14 Jul 2011) | 7 lines
+
+[QT] Quality Team Backport
+
+r33937 | chealer | 2011-04-13 04:20:58 +0200 (Wed, 13 Apr 2011) | 3 lines
+[bp/r33865][SEC] LDAP: reject invalid empty passwords instead of attempting an unauthenticated bind
+backport untested
+
+
+----------------------------------------------
+r35343 | pkdille | 2011-07-14 19:07:30 +0200 (Thu, 14 Jul 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r31379 | Jyhem | 2010-12-13 11:51:39 +0100 (Mon, 13 Dec 2010) | 1 line
+[FIX] Being in an included group is not incorrect, and can be handled
+
+
+----------------------------------------------
+r35342 | pkdille | 2011-07-14 19:06:45 +0200 (Thu, 14 Jul 2011) | 6 lines
+
+[QT] Quality Team Backport
+
+r30187 | jonnybradley | 2010-10-21 19:18:31 +0200 (Thu, 21 Oct 2010) | 1 line
+[bp/r23854][FIX] newsletters: display also the newsletter that have not been sent
+
+
+----------------------------------------------
 Version 3.8
 <http://tikiwiki.org/ReleaseNotes38>
 ------------------
