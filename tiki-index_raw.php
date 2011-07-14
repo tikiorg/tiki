@@ -100,6 +100,7 @@ if ($tiki_p_admin_wiki == 'y') {
 	$smarty->assign('canundo', 'y');
 }
 
+$tikilib->parse_wiki_argvariable($info['data']);
 // Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
 $preparsed = array();
 $noparsed = array();

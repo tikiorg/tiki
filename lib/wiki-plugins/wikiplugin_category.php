@@ -64,6 +64,7 @@ function wikiplugin_category_info() {
 					array('text' => tra('Name Descending'), 'value' => 'name_desc'),
 					array('text' => tra('Type Ascending'), 'value' => 'type_asc'),
 					array('text' => tra('Type Descending'), 'value' => 'type_desc'),
+					array('text' => tra('Random'), 'value' => 'random'),
 				),
 			),
 			'split' => array(
@@ -231,7 +232,7 @@ function wikiplugin_category($data, $params) {
 	if (isset($sort)) {
 		$list = explode(',', $sort);
 		foreach ($list as $l) {
-			if (!in_array($l, array('name_asc', 'name_desc', 'hits_asc', 'hits_desc', 'type_asc', 'type_desc', 'created_asc', 'created_desc', 'itemId_asc', 'itemId_desc'))) {
+			if (!in_array($l, array('name_asc', 'name_desc', 'hits_asc', 'hits_desc', 'type_asc', 'type_desc', 'created_asc', 'created_desc', 'itemId_asc', 'itemId_desc', 'random'))) {
 				return tra('Incorrect parameter:').' sort';
 			}
 		}
