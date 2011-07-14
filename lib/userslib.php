@@ -720,6 +720,9 @@ class UsersLib extends TikiLib {
 
     // validate the user in the PEAR::Auth system
     function validate_user_auth($user, $pass) {
+		if (!$pass) {
+			return PASSWORD_INCORRECT;
+		}
 	global $tikilib, $user_ldap_attributes, $prefs;
 
 	include_once ("Auth/Auth.php");
