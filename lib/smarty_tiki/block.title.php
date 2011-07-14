@@ -35,6 +35,9 @@ function smarty_block_title($params, $content, &$smarty, $repeat) {
 	  require_once $smarty->_get_plugin_filepath('function', 'query');
 	  $params['url'] = smarty_function_query(array('_type' => 'absolute_path'), $smarty);
   }
+
+	// Set the variable for the HTML title tag
+	$smarty->assign( 'headtitle', $content );
   
   $html = '<h1>';
   $html .= '<a class="pagetitle" href="' . $params['url'] . '">' . $content . "</a>\n";

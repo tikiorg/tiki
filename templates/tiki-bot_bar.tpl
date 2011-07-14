@@ -90,8 +90,9 @@
 {/if}
 
 {if !empty($lastup)}
-<div class="cvsup" style="font-size:x-small;text-align:center;color:#999;">{tr}Last update from SVN{/tr} ({$tiki_version}): {$lastup|tiki_long_datetime}
-{/if}
-{if !empty($svnrev)}
- - REV {$svnrev}
+	<div class="cvsup" style="font-size:x-small;text-align:center;color:#999;">{tr}Last update from SVN{/tr} ({$tiki_version}): {$lastup|tiki_long_datetime}
+		{if !empty($svnrev)}
+		 - REV {$svnrev}
+		{/if}
+	</div>
 {/if}

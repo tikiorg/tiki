@@ -46,8 +46,13 @@
 {* --- tiki block --- *}
 <title>{strip}
 	{if $prefs.site_title_location eq 'before'}{$prefs.browsertitle|tr_if|escape} {$prefs.site_nav_seper} {/if}
-	{if ($prefs.feature_breadcrumbs eq 'y' && isset($trail)) or $prefs.site_title_breadcrumb eq "desc"}
-		{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
+	{capture assign="page_description_title"}{strip}
+		{if ($prefs.feature_breadcrumbs eq 'y' or $prefs.site_title_breadcrumb eq "desc") && isset($trail)}
+			{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
+		{/if}
+	{/strip}{/capture}
+	{if !empty($page_description_title)}
+		{$page_description_title}
 	{else}
 		{if !empty($tracker_item_main_value)}
 			{$tracker_item_main_value|escape}
@@ -73,8 +78,6 @@
 			{$userinfo.login|username}
 		{elseif !empty($tracker_info.name)}
 			{$tracker_info.name|escape}
-		{elseif !empty($gal_info.name)}
-			{$gal_info.name|escape}
 		{elseif !empty($headtitle)}
 			{$headtitle|tr_if|escape}{* use $headtitle last if feature specific title not found *}
 		{/if}

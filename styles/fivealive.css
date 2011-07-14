@@ -372,6 +372,12 @@ input[type="text"],
 select {
 	margin: 2px;
 }
+#newItemForm input[type="text"], #editItemForm input[type="text"], .wikiplugin_tracker  input[type="text"] {
+        width: 99%;
+}
+.wikiplugin_tracker, #editItemForm .formcolor {width: 100%;}
+#editItemForm .formcontent {width: 70%;}
+#editItemForm .formlabel {width: 30%;}
 
 /***** Site Header & Identity *****/
 

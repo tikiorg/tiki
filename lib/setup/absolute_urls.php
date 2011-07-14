@@ -54,7 +54,7 @@ $smarty->assign('base_uri', $base_uri);
 
 if ( isset($_REQUEST['stay_in_ssl_mode_present']) || isset($_REQUEST['stay_in_ssl_mode']) ) {
 	// We stay in HTTPS / SSL mode if 'stay_in_ssl_mode' has an 'y' or 'on' value
-	$stay_in_ssl_mode = ( $_REQUEST['stay_in_ssl_mode'] == 'y' || $_REQUEST['stay_in_ssl_mode'] == 'on' ) ? 'y' : 'n';
+	$stay_in_ssl_mode = ( (isset($_REQUEST['stay_in_ssl_mode']) && $_REQUEST['stay_in_ssl_mode'] == 'y') || (isset($_REQUEST['stay_in_ssl_mode']) && $_REQUEST['stay_in_ssl_mode'] == 'on' ) ) ? 'y' : 'n';
 } else {
 	// Set default value of 'stay_in_ssl_mode' to the current mode state
 	$stay_in_ssl_mode = $https_mode ? 'y' : 'n';

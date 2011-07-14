@@ -76,7 +76,7 @@ function simple_set_value($feature, $pref = '', $isMultiple = false) {
 	}
 	if (isset($_REQUEST[$feature]) && $old != $_REQUEST[$feature]) {
 		add_feedback( $feature, ($_REQUEST[$feature]) ? tr('%0 set', $feature) : tr('%0 unset', $feature), 2 );
-		$logslib->add_action('feature', $feature, 'system', isset($_REQUEST['feature'])?$_REQUEST['feature']:'');
+		$logslib->add_action('feature', $feature, 'system', $old .'=>'.isset($_REQUEST['feature'])?$_REQUEST['feature']:'');
 	}
 	global $cachelib;
 	require_once ("lib/cache/cachelib.php");
@@ -89,7 +89,7 @@ function simple_set_int($feature) {
 		if ($old != $_REQUEST[$feature]) {
 			$tikilib->set_preference($feature, $_REQUEST[$feature]);
 			add_feedback( $feature, tr('%0 set', $feature), 2 );
-			$logslib->add_action('feature', $feature, 'system', $_REQUEST['feature']);
+			$logslib->add_action('feature', $feature, 'system',  $old .'=>'.$_REQUEST['feature']);
 		}
 	}
 }
@@ -109,7 +109,8 @@ global $prefslib; require_once 'lib/prefslib.php';
 if( isset( $_REQUEST['lm_preference'] ) ) {
 	
 	$changes = $prefslib->applyChanges( (array) $_REQUEST['lm_preference'], $_REQUEST );
-	foreach( $changes as $pref => $value ) {
+	foreach( $changes as $pref => $val ) {
+		$value = $val['new'];
 		if( $value == 'y' ) {
 			add_feedback( $pref, tr('%0 enabled', $pref), 1, 1 );
 			$logslib->add_action('feature', $pref, 'system', 'enabled');
@@ -118,7 +119,7 @@ if( isset( $_REQUEST['lm_preference'] ) ) {
 			$logslib->add_action('feature', $pref, 'system', 'disabled');
 		} else {
 			add_feedback( $pref, tr('%0 set', $pref), 1, 1 );
-			$logslib->add_action('feature', $pref, 'system', is_array($value)?implode($value, ','):$value);
+			$logslib->add_action('feature', $pref, 'system', (is_array($val['old'])?implode($val['old'], ','):$val['old']).'=>'.(is_array($value)?implode($value, ','):$value));
 		}
 	}
 }
