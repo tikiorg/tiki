@@ -214,7 +214,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 	if (empty($tmpFileId) == false) {
 		//existing file
 		$fileInfo = $filegallib->get_file_info( $tmpFileId );
-		$filegallib->save_archive($tmpFileId, $fileInfo['galleryId'], 0, $fileInfo['name'], $fileInfo['description'], $fileInfo['filename'], $_REQUEST['data'], strlen($_REQUEST['data']), $type, $fileInfo['user'], null, null, $user, date());
+		$fileId = $filegallib->save_archive($tmpFileId, $fileInfo['galleryId'], 0, $fileInfo['name'], $fileInfo['description'], $fileInfo['filename'], $_REQUEST['data'], strlen($_REQUEST['data']), $type, $fileInfo['user'], null, null, $user, date());
 	} else {
 		//new file
 		$fileId = $filegallib->insert_file($tmpGalId, $_REQUEST['name'], $tmpDesc, $file, $_REQUEST['data'], strlen($_REQUEST['data']), $type, $user, date());
