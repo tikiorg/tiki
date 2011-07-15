@@ -8,6 +8,8 @@
 // This page should not load tiki-setup.php. Environment loading and access checking is done within the webservice.
 
 require_once 'lib/videogals/watershedlib.php';
+
+$access->check_feature('feature_watershed');
 	
 $server = new SoapServer ( "http://watershed-user.ustream.tv/webservice/watershed_user.php?wsdl", array( 
 	'classmap' => Watershed_SoapServer::getClassMap(),

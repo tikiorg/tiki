@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+$access->check_feature('allowRegister', 'feature_ajax');
+
 function chkRegName($name) // AJAX_TODO
 {
 	global $smarty, $userlib;

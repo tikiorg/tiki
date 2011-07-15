@@ -5,6 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 require_once('tiki-setup.php');
+
+$access->check_feature('feature_tracker', 'feature_ajax', 'wikiplugin_tracker');
+
 include_once ('lib/wiki-plugins/wikiplugin_tracker.php');
 $json_data = array();
 $re = $userlib->get_group_info(isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : 'Registered');

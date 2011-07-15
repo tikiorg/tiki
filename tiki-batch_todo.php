@@ -8,6 +8,8 @@
 include('tiki-setup.php');
 include_once('lib/todolib.php');
 
+$access->check_feature('feature_tracker');	// TODO add more features as the lib does more
+
 $todos = $todolib->listTodoObject();
 foreach ($todos as $todo) {
 	$todolib->applyTodo($todo);

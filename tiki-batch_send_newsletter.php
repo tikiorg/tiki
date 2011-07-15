@@ -9,6 +9,10 @@ if (empty($argv)) { // can only be used in a cron or line command
 }
 
 include('tiki-setup.php');
+
+$access->check_feature('feature_newsletters');
+$access->check_permission('tiki_p_send_newsletters');
+
 global $nllib; include_once('lib/newsletters/nllib.php');
 
 function display_usage() {

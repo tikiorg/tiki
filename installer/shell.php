@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+if( isset( $_SERVER['REQUEST_METHOD'] ) ) die;
+
 if( ! isset( $_SERVER['argc'] ) )
 	die( "Usage: php installer/shell.php <domain>\n" );
 if( ! file_exists( 'db/local.php' ) )
