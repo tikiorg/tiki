@@ -67,15 +67,32 @@ class Language_WriteFile
 	 */
 	protected function mergeStringsWithTranslations(array $strings, array $translations)
 	{
+		$punctuations = array(':', '!', ';', '.', ',', '?'); // Modify lib/init/tra.php accordingly
+		
 		$entries = array();
 		
 		foreach ($strings as $string) {
 			if (isset($translations[$string->name])) {
 				$string->translation = $translations[$string->name];
-				$entries[$string->name] = $string;
 			} else {
-				$entries[$string->name] = $string;
-			} 
+				// Handle punctuations at the end of the string (cf. comments in lib/init/tra.php)
+				// For example, if $string->name == 'Login:', we don't keep it if we also have a string 'Log In'
+				// (except if we already have an explicit translation for 'Log In:')
+				$stringLength = strlen($string->name);
+				$stringLastChar = $string->name[$stringLength - 1];
+				
+				if (in_array($stringLastChar, $punctuations) ) {
+					$trimmedString = substr($string->name, 0, $stringLength - 1);
+					// clone the object here to avoid changing $string->name for other languages 
+					$string = clone $string;
+					$string->name = $trimmedString;
+					if (isset($translations[$trimmedString])) {
+						$string->translation = $translations[$trimmedString]; 
+					}
+				}
+			}
+			
+			$entries[$string->name] = $string;	
 		}
 		
 		return $entries;

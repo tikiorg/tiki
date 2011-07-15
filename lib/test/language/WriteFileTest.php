@@ -156,4 +156,38 @@ class Language_WriteFileTest extends TikiTestCase
 		
 		$this->assertEquals(file_get_contents(__DIR__ . '/fixtures/language_with_translations_and_file_paths.php'), file_get_contents($this->filePath));
 	}
+	
+	/**
+	 * @dataProvider writeStringsToFile_provider
+	 */
+	public function testWriteStringsToFile_shouldConsiderStringsWithPunctuationInEndASpecialCase($strings)
+	{
+		$obj = $this->getMock('Language_WriteFile', array('getCurrentTranslations'));
+		$obj->expects($this->exactly(1))->method('getCurrentTranslations')->will($this->returnValue(
+			array(
+				'Unused string' => 'Some translation',
+				'Used string' => 'Another translation',
+				'Translation is the same as English string' => 'Translation is the same as English string',
+				'Login' => 'Another translation',
+				'Add user:' => 'Translation',
+			)
+		));
+		
+		$string1 = new stdClass;
+		$string1->name = 'Login:';
+		
+		$string2 = new stdClass;
+		$string2->name = 'Add user:';
+		
+		$string3 = new stdClass;
+		$string3->name = 'All users:';
+		
+		$strings[$string1->name] = $string1;
+		$strings[$string2->name] = $string2;
+		$strings[$string3->name] = $string3;
+		
+		$obj->writeStringsToFile($strings, $this->filePath);
+		
+		$this->assertEquals(file_get_contents(__DIR__ . '/fixtures/language_punctuations.php'), file_get_contents($this->filePath));
+	}
 }
