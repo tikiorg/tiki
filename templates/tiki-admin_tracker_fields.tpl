@@ -44,7 +44,7 @@
 
 		<form class="add-field" method="post" action="tiki-ajax_services.php?controller=tracker&amp;action=addfield">
 			<input type="hidden" name="trackerId" value="{$trackerId|escape}"/>
-			<input type="submit" value="Add Field"/>
+			<input type="submit" value="{tr}Add Field{/tr}"/>
 		</form>
 		{jq}
 			var trackerId = {{$trackerId|escape}};
