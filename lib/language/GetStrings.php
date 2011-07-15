@@ -93,6 +93,8 @@ class Language_GetStrings
 		
 		if (isset($options['lang'])) {
 			$this->setLanguages($options['lang']);
+		} else {
+			$this->setLanguages();
 		}
 	}
 	
@@ -140,15 +142,19 @@ class Language_GetStrings
 	 * @param array|string $languages
 	 * @return null
 	 */
-	public function setLanguages($languages)
+	public function setLanguages($languages = null)
 	{
-		if (is_string($languages)) {
-			$languages = array($languages);
-		}
-		
-		foreach ($languages as $lang) {
-			if (!file_exists($this->baseDir . '/lang/' . $lang)) {
-				throw new Language_Exception('Invalid language code.');
+		if (is_null($languages)) {
+			$languages = $this->getAllLanguages();
+		} else {
+			if (is_string($languages)) {
+				$languages = array($languages);
+			}
+			
+			foreach ($languages as $lang) {
+				if (!file_exists($this->baseDir . '/lang/' . $lang)) {
+					throw new Language_Exception('Invalid language code.');
+				}
 			}
 		}
 
@@ -256,26 +262,33 @@ class Language_GetStrings
 	{
 		$languages = $this->languages;
 		
-		// if $this->languages is empty use all available languages
-		if (empty($languages)) {
-			$dirs = dir($this->baseDir . '/lang');
-			
-			while (false !== ($entry = $dirs->read())) {
-				if ($entry == '.' || $entry == '..') {
-					continue;
-				}
-				
-				$path = $dirs->path . '/' . $entry;
-				if (is_dir($path) && file_exists($path . '/language.php')) {
-					$languages[] = $entry;
-				}
-			}
-		}
-
 		foreach ($languages as $lang) {
 			$langPath = $this->baseDir . '/lang/' . $lang . '/language.php';
 			$this->writeFile->writeStringsToFile($strings, $langPath, $this->outputFiles);
 		}
+	}
+	
+	/**
+	 * Return all available languages (check for the
+	 * existence of a language.php file).
+	 * @return array all language codes
+	 */
+	protected function getAllLanguages()
+	{
+		$dirs = dir($this->baseDir . '/lang');
+		
+		while (false !== ($entry = $dirs->read())) {
+			if ($entry == '.' || $entry == '..') {
+				continue;
+			}
+			
+			$path = $dirs->path . '/' . $entry;
+			if (is_dir($path) && file_exists($path . '/language.php')) {
+				$languages[] = $entry;
+			}
+		}
+		
+		return $languages;
 	}
 	
 	public function run()

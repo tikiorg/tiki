@@ -197,6 +197,13 @@ class Language_GetStringsTest extends TikiTestCase
 		$this->obj->setLanguages($languages);
 	}
 	
+	public function testSetLanguages_shouldCallGetAllLanguagesIfLanguageParamIsNull()
+	{
+		$obj = $this->getMock('Language_GetStrings', array('getAllLanguages'), array($this->collectFiles, $this->writeFile));
+		$obj->expects($this->once())->method('getAllLanguages');
+		$obj->setLanguages();
+	}
+	
 	public function testWriteToFiles_shouldCallWriteStringsToFileOnce()
 	{
 		$strings = array('string1', 'string2', 'string3', 'string4');
@@ -269,7 +276,7 @@ class Language_GetStringsTest extends TikiTestCase
 		
 		$strings = array($string1->name => $string1, $string2->name => $string2, $string3->name => $string3, $string4->name => $string4);
 		
-		$obj = $this->getMock('Language_GetStrings', array('collectStrings'), array($this->collectFiles, $this->writeFile));
+		$obj = $this->getMock('Language_GetStrings', array('collectStrings', 'setLanguages'), array($this->collectFiles, $this->writeFile));
 		
 		$obj->expects($this->at(0))->method('collectStrings')->with('file1')->will($this->returnValue(array('string1', 'string2')));
 		$obj->expects($this->at(1))->method('collectStrings')->with('file2')->will($this->returnValue(array('string2', 'string3')));
@@ -300,7 +307,7 @@ class Language_GetStringsTest extends TikiTestCase
 		
 		$strings = array($string1->name => $string1, $string2->name => $string2, $string3->name => $string3, $string4->name => $string4);
 		
-		$obj = $this->getMock('Language_GetStrings', array('collectStrings'), array($this->collectFiles, $this->writeFile, array('outputFiles' => true)));
+		$obj = $this->getMock('Language_GetStrings', array('collectStrings', 'setLanguages'), array($this->collectFiles, $this->writeFile, array('outputFiles' => true)));
 		
 		$obj->expects($this->at(0))->method('collectStrings')->with('file1')->will($this->returnValue(array('string1', 'string2')));
 		$obj->expects($this->at(1))->method('collectStrings')->with('file2')->will($this->returnValue(array('string2', 'string3')));

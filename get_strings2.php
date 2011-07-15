@@ -46,6 +46,17 @@ $getStrings->collectFiles->setIncludeFiles(array(
 	'./lang/langmapping.php', './img/flags/flagnames.php'
 ));
 
+echo formatOutput("Languages: " . implode(' ', $getStrings->getLanguages()) . "\n");
+
 $getStrings->run();
 
-echo "\nTotal time spent: " . $timer->stop() . " seconds\n";
+echo formatOutput("\nTotal time spent: " . $timer->stop() . " seconds\n");
+
+function formatOutput($string)
+{
+	if (php_sapi_name() == 'cli') {
+		return $string;
+	} else {
+		return nl2br($string);
+	}
+}

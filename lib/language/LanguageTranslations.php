@@ -13,6 +13,11 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 require_once('Exception.php');
 
+/**
+ * Provides methods to update translations in the database and
+ * to export translations from the database to language.php
+ * files. Used by Interactive Translation and tiki-edit_languages.php 
+ */
 class LanguageTranslations extends TikiDb_Bridge
 {
 	/**
