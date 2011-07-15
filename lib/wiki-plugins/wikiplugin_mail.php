@@ -38,7 +38,7 @@ function wikiplugin_mail_info() {
 			'recurse' => array(
 				'required' => false,
 				'name' => tra('Recurse on groups'),
-				'description' => tra('Recurse on groups'),
+				'description' => tra('show each group and each group included in this group'),
 				'filter' => 'alpha',
 				'default' => 'y',
 				'options' => array(
@@ -46,6 +46,13 @@ function wikiplugin_mail_info() {
 					array('text' => tra('Yes'), 'value' => 'y'), 
 					array('text' => tra('No'), 'value' => 'n')
 				)
+			),
+			'recurseuser' => array(
+				'required' => false,
+				'name' => tra('Recurse on groups to have the users'),
+				'description' => tra('Collect the users of a selected group and the users of each included groups. If 0 do not recurse, if 1, recurse one time, 2 two times....'),
+				'filter' => 'int',
+				'default' => '0',
 			),
 			'showuserdd' => array(
 				'required' => false,
@@ -91,7 +98,7 @@ function wikiplugin_mail($data, $params) {
 	global $userlib, $smarty, $tikilib, $user;
 	static $ipluginmail=0;
 	$smarty->assign_by_ref('ipluginmail', $ipluginmail);
-	$default = array('showuser' => 'y', 'showuserdd' => 'n', 'showrealnamedd' => 'n', 'showgroupdd' => 'n', 'group' => array(), 'recurse' => 'y');
+	$default = array('showuser' => 'y', 'showuserdd' => 'n', 'showrealnamedd' => 'n', 'showgroupdd' => 'n', 'group' => array(), 'recurse' => 'y', 'recurseuser' => 0);
 	$params = array_merge($default, $params);
 	$default = array('mail_subject' =>'', 'mail_mess' => '', 'mail_user_dd' => '', 'mail_group_dd' => array());
 	$_REQUEST = array_merge($default, $_REQUEST);
@@ -117,7 +124,7 @@ function wikiplugin_mail($data, $params) {
 		$smarty->assign_by_ref('groups', $groups);
 	}
 	if (isset($_REQUEST["mail_preview$ipluginmail"])) {
-		$to = wikiplugin_mail_to($_REQUEST);
+		$to = wikiplugin_mail_to(array_merge($_REQUEST, $params));
 		$_SESSION['to'] = $to;
 		$preview = true;
 		$smarty->assign('preview', $preview);
@@ -161,7 +168,7 @@ function wikiplugin_mail_to($params) {
 		foreach ($params['mail_group_dd'] as $mgp) {
 			foreach ($mgp as $mgroup) {
 				if (!empty($mgroup)) {
-					$to = array_merge($to, $userlib->get_group_users($mgroup, 0, -1, 'userId'));
+					$to = array_merge($to, $userlib->get_recur_group_users($mgroup, $params['recurseuser'], 'userId'));
 				}
 			}
 		}

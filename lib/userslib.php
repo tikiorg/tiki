@@ -2191,7 +2191,17 @@ class UsersLib extends TikiLib
 		}
 		return $ret;
 	}
-
+	function get_recur_group_users($group, $recur = 0, $what='login') {
+		$users = $this->get_group_users($group, 0, -1, $what);
+		if ($recur > 0) {
+			$includings = $this->get_including_groups($group, 'n');
+			--$recur;
+			foreach ($includings as $including) {
+				$users = array_merge($users, $this->get_recur_group_users($including, $recur, $what));
+			}
+		}
+		return $users;
+	}
 	function get_user_info($user, $inclusion = false, $field = 'login') {
 		global $prefs;
 		if ( $field == 'userId' ) $user = (int)$user;
