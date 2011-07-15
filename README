@@ -1,16 +1,16 @@
 Tiki! The wiki with a lot of features!
-Version 7.0
+Version 7.1RC1
 
 
 DOCUMENTATION
 
-* The documentation for 7.0 version is ever evolving at http://doc.tiki.org.
+* The documentation for 7.1 version is ever evolving at http://doc.tiki.org.
   You're encouraged to contribute.
 
 * It is highly recommended that you refer to the online documentation:
 * http://doc.tiki.org/Installation for a setup guide
 
-* Notes about this release are accessible from http://tiki.org/ReleaseNotes70
+* Notes about this release are accessible from http://tiki.org/ReleaseNotes71
 * Tikiwiki has an active IRC channel, #tikiwiki on irc.freenode.net
 
 INSTALLATION
