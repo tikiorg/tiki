@@ -10,5 +10,7 @@
 		<button id="tiki-draw_back">{tr}Back{/tr}</button>
 	</div>
 	
+	<div id="svg-data" style="display: none;">{$data}</div>
+	
 	<iframe src="lib/svg-edit/svg-editor.html" id="svgedit"></iframe>
 </div>    

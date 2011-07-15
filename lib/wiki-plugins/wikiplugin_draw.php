@@ -45,9 +45,8 @@ function wikiplugin_draw_info() {
 }
 
 function wikiplugin_draw($data, $params) {
-	global $dbTiki, $tiki_p_edit, $tiki_p_admin, $prefs, $user, $page, $tikilib, $smarty, $headerlib;
+	global $dbTiki, $tiki_p_edit, $tiki_p_admin, $prefs, $user, $page, $tikilib, $smarty, $headerlib, $globalperms;
 	global $filegallib; include_once ('lib/filegals/filegallib.php');
-	
 	extract ($params,EXTR_SKIP);
 	
 	static $index = 0;
@@ -65,7 +64,7 @@ function wikiplugin_draw($data, $params) {
 			if ($gal['name'] != "Wiki Attachments" && $gal['name'] != "Users File Galleries")
 				$galHtml .= "<option value='".$gal['id']."'>".$gal['name']."</option>";
 		}
-		
+				
 		return <<<EOF
 		~np~
 		<form method="post" action="tiki-edit_draw.php">
@@ -82,10 +81,32 @@ function wikiplugin_draw($data, $params) {
 		~/np~
 EOF;
 	}
+	$fileInfo = $filegallib->get_file_info( $id );
+	if (!isset($fileInfo['created'])) {
+		return tra("File not found.");
+	} else {
+		$globalperms = Perms::get( array( 'type' => 'file galleries', 'object' => $fileInfo['galleryId'] ) );
+		
+		if (!$globalperms->view_file_gallery == 'y') {
+			$smarty->assign('errortype', 401);
+			$smarty->assign('msg', tra("You do not have permission to view this file"));
+			$smarty->display("error.tpl");
+			die;
+		}
+		
+		$label = tra('Edit SVG Image');
+		$ret = "<img src='tiki-download_file.php?fileId=$id' style='".
+			(isset($height) ? "height: $height;" : "" ).
+			(isset($width) ? "width: $width;" : "" ).
+		"' />";
 	
-	$label = tra('Edit SVG Image');
-	return '~np~' . "<img src='tiki-download_file.php?fileId=$id' />
-		<a href='tiki-edit_draw.php?fileId=$id&page=$page'>
-			<img src='pics/icons/page_edit.png' alt='Edit SVG Image' width='16' height='16' title='Edit SVG Image' class='icon' />
-		</a>" . '~/np~';
+		if ($globalperms->admin_file_galleries == 'y') {
+			$ret .= "<a href='tiki-edit_draw.php?fileId=$id&page=$page&index=$index&label=$label&width=$width&height=$height'>
+					<img src='pics/icons/page_edit.png' alt='$label' width='16' height='16' title='$label' class='icon' />
+				</a>";
+		}
+		
+		
+		return '~np~' . $ret . '~/np~';
+	}
 }
