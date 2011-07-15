@@ -25,6 +25,512 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 7.1
+<http://tiki.org/ReleaseNotes71>
+------------------
+
+----------------------------------------------
+r35405 | jonnybradley | 2011-07-15 20:01:37 +0200 (Fri, 15 Jul 2011) | 1 line
+
+[FIX] Missing features and perms checks and update test script.
+----------------------------------------------
+r35396 | sylvieg | 2011-07-15 16:22:00 +0200 (Fri, 15 Jul 2011) | 1 line
+
+[FIX]FGAL: fix archive when keep_same_fileId is off
+----------------------------------------------
+r35373 | nkoth | 2011-07-14 22:45:45 +0200 (Thu, 14 Jul 2011) | 1 line
+
+[FIX] Final set of prefs for advanced cart features, should be ok for 7.1 now
+----------------------------------------------
+r35365 | nkoth | 2011-07-14 22:20:13 +0200 (Thu, 14 Jul 2011) | 1 line
+
+[FIX]  Missing prefs and files for advanced cart gift cert feature
+----------------------------------------------
+r35354 | nkoth | 2011-07-14 20:50:46 +0200 (Thu, 14 Jul 2011) | 1 line
+
+[FIX] Missing prefs and file for advanced cart associated events and product exchanges feature
+----------------------------------------------
+r35338 | nkoth | 2011-07-14 18:36:18 +0200 (Thu, 14 Jul 2011) | 1 line
+
+[FIX] More prefs for advanced cart (anonymous shopping and inventory hold timeout)
+----------------------------------------------
+r35337 | nkoth | 2011-07-14 17:23:41 +0200 (Thu, 14 Jul 2011) | 1 line
+
+[FIX] Make optional and add prefs for recording orders advanced cart feature
+----------------------------------------------
+r35336 | jonnybradley | 2011-07-14 16:59:49 +0200 (Thu, 14 Jul 2011) | 1 line
+
+[FIX] category tree: Store state in cookie and render open or closed server-side
+----------------------------------------------
+r35330 | jonnybradley | 2011-07-14 11:22:31 +0200 (Thu, 14 Jul 2011) | 1 line
+
+[FIX] wysiwyg: Restore tikiimage tool for wysiwyg (was a mistake to disable it i see now, far too useful!)
+----------------------------------------------
+r35329 | jonnybradley | 2011-07-14 10:24:55 +0200 (Thu, 14 Jul 2011) | 1 line
+
+[FIX] calendar: Link to correct tab to create calendar
+----------------------------------------------
+r35326 | nkoth | 2011-07-13 18:09:57 +0200 (Wed, 13 Jul 2011) | 1 line
+
+[FIX] Merge in a variety of latest fixes for advanced cart features
+----------------------------------------------
+r35325 | jonnybradley | 2011-07-13 17:07:22 +0200 (Wed, 13 Jul 2011) | 1 line
+
+[ENH] wysiwyg: Add a perm to allow users to switch - depends on feature_wysiwyg
+----------------------------------------------
+r35324 | sylvieg | 2011-07-13 15:32:25 +0200 (Wed, 13 Jul 2011) | 1 line
+
+[FIX]search module: oops wrong where to 35309
+----------------------------------------------
+r35318 | nkoth | 2011-07-13 01:27:05 +0200 (Wed, 13 Jul 2011) | 1 line
+
+[FIX] Importing tracker fields when including field ID was not working before (broken between 6 and 7)
+----------------------------------------------
+r35317 | nkoth | 2011-07-12 22:55:24 +0200 (Tue, 12 Jul 2011) | 1 line
+
+[FIX] Add missing files for advanced cart feature: Record orders in trackers
+----------------------------------------------
+r35316 | sylvieg | 2011-07-12 22:42:24 +0200 (Tue, 12 Jul 2011) | 1 line
+
+[FIX]lucene: rollback 35414 that creates seg fault
+----------------------------------------------
+r35315 | nkoth | 2011-07-12 21:35:38 +0200 (Tue, 12 Jul 2011) | 1 line
+
+[FIX] Cleanup... necessary prefs for Bundled Products advanced cart feature
+----------------------------------------------
+r35314 | sylvieg | 2011-07-12 20:50:21 +0200 (Tue, 12 Jul 2011) | 1 line
+
+[FIX]lucene: lucene indexation bugs if non utf8 characters in the text: TODO perhaps a more generic place for lucene to do that
+----------------------------------------------
+r35313 | nkoth | 2011-07-12 19:27:59 +0200 (Tue, 12 Jul 2011) | 1 line
+
+[FIX] If there is already amount of item in cart, adding should increase the amount, not replace the amount that was there before.
+----------------------------------------------
+r35312 | nkoth | 2011-07-12 19:19:11 +0200 (Tue, 12 Jul 2011) | 1 line
+
+[FIX] Necessary prefs needed for product inventory feature for advanced cart
+----------------------------------------------
+r35311 | nkoth | 2011-07-12 18:24:19 +0200 (Tue, 12 Jul 2011) | 1 line
+
+[FIX] Make product inventory feature in cart optional
+----------------------------------------------
+r35309 | sylvieg | 2011-07-12 16:30:59 +0200 (Tue, 12 Jul 2011) | 1 line
+
+[FIX]search module: quick patch to have the search module working on doc.tiki.org: the tpl code could probably be cleaned up now
+----------------------------------------------
+r35307 | jonnybradley | 2011-07-12 15:38:43 +0200 (Tue, 12 Jul 2011) | 1 line
+
+[SVN] Add .idea to ignore list (another IDE's project definitions)
+----------------------------------------------
+r35306 | jonnybradley | 2011-07-12 15:24:13 +0200 (Tue, 12 Jul 2011) | 1 line
+
+[ENH] mobile: Hide ugly css-less html during page load and display pretty loading animation and text instead (plus a couple of other tiny fixes).
+----------------------------------------------
+r35305 | marclaporte | 2011-07-12 00:46:49 +0200 (Tue, 12 Jul 2011) | 1 line
+
+[FIX] when editing an old article (ex.: 2004), make sure it doesn't reset to current year minus 5 years
+----------------------------------------------
+r35304 | sylvieg | 2011-07-12 00:31:28 +0200 (Tue, 12 Jul 2011) | 1 line
+
+[FIX]button: fix {button href=xx@xx.com"}
+----------------------------------------------
+r35301 | sylvieg | 2011-07-11 20:34:46 +0200 (Mon, 11 Jul 2011) | 1 line
+
+[FIX]tracker: better test to avoid sql error when the value of a category filter has been forgotten
+----------------------------------------------
+r35294 | sept_7 | 2011-07-10 00:29:27 +0200 (Sun, 10 Jul 2011) | 2 lines
+
+[FIX} fix missing svn property 'Id'
+
+----------------------------------------------
+r35289 | sylvieg | 2011-07-09 20:15:46 +0200 (Sat, 09 Jul 2011) | 1 line
+
+[FIX]fgal: do not move a fgal under itself - otherwise internal server error + some comments
+----------------------------------------------
+r35286 | sylvieg | 2011-07-09 00:07:50 +0200 (Sat, 09 Jul 2011) | 1 line
+
+[FIX]history: label the column not to have an empty column
+----------------------------------------------
+r35261 | changi67 | 2011-07-07 21:15:19 +0200 (Thu, 07 Jul 2011) | 1 line
+
+[BP/35259][MOD] Give the possibility to check all errors in one click
+----------------------------------------------
+r35260 | changi67 | 2011-07-07 21:14:16 +0200 (Thu, 07 Jul 2011) | 1 line
+
+[BP/35258] ~INDENT~ Easier to read
+----------------------------------------------
+r35257 | sampaioprimo | 2011-07-07 20:37:41 +0200 (Thu, 07 Jul 2011) | 2 lines
+
+merging translations done on trunk using doc/devtools/mergelang.pl
+
+----------------------------------------------
+r35256 | sampaioprimo | 2011-07-07 20:14:31 +0200 (Thu, 07 Jul 2011) | 2 lines
+
+updating language.php files to remove invalid strings
+
+----------------------------------------------
+r35255 | sampaioprimo | 2011-07-07 20:07:51 +0200 (Thu, 07 Jul 2011) | 2 lines
+
+[bp/35220][FIX] invalid strings collected by get_strings.php (bug #3881)
+
+----------------------------------------------
+r35254 | sampaioprimo | 2011-07-07 19:59:54 +0200 (Thu, 07 Jul 2011) | 2 lines
+
+updating language.php files before backporting fix to get_strings.php (r35220)
+
+----------------------------------------------
+r35251 | jonnybradley | 2011-07-07 18:17:16 +0200 (Thu, 07 Jul 2011) | 1 line
+
+[FIX] Rollback r33611 so this perm test now matches the test in tiki-forum_import.php (fixed in r35238 and will be rolled-back by QT in 6.x)
+----------------------------------------------
+r35248 | omstefanov | 2011-07-07 17:13:33 +0200 (Thu, 07 Jul 2011) | 1 line
+
+[test] olaf's 3rd test commit
+----------------------------------------------
+r35247 | omstefanov | 2011-07-07 17:10:47 +0200 (Thu, 07 Jul 2011) | 1 line
+
+[test] olaf's 2nd test commit
+----------------------------------------------
+r35246 | omstefanov | 2011-07-07 17:01:04 +0200 (Thu, 07 Jul 2011) | 1 line
+
+[test] olaf's test commit
+----------------------------------------------
+r35238 | jonnybradley | 2011-07-07 11:43:14 +0200 (Thu, 07 Jul 2011) | 4 lines
+
+[FIX] Better fix for [6.x r33612/bp r33611][FIX] mis-match of permission checking for import function
+so tpl changed to align with main php code to decide if Import button
+is shown
+thanks sept_7
+----------------------------------------------
+r35231 | sylvieg | 2011-07-06 17:33:20 +0200 (Wed, 06 Jul 2011) | 1 line
+
+[FIX]invite: button also in admin group
+----------------------------------------------
+r35229 | sylvieg | 2011-07-06 16:30:53 +0200 (Wed, 06 Jul 2011) | 1 line
+
+[FIX]multitiki: fix sqlupgrade.sh
+----------------------------------------------
+r35227 | sampaioprimo | 2011-07-06 15:41:51 +0200 (Wed, 06 Jul 2011) | 2 lines
+
+[bp/35226][FIX] sanitize user input in tiki-importer.php
+
+----------------------------------------------
+r35222 | sylvieg | 2011-07-06 14:50:43 +0200 (Wed, 06 Jul 2011) | 1 line
+
+[FIX]invite: missing link to invite
+----------------------------------------------
+r35212 | lphuberdeau | 2011-07-05 16:21:11 +0200 (Tue, 05 Jul 2011) | 1 line
+
+[FIX]?\194?\160Can no longer be called statically
+----------------------------------------------
+r35187 | jean-lucnavarro | 2011-07-04 13:19:11 +0200 (Mon, 04 Jul 2011) | 1 line
+
+[bp/r35186][TRA] more French translations
+----------------------------------------------
+r35162 | jonnybradley | 2011-07-01 22:22:31 +0200 (Fri, 01 Jul 2011) | 1 line
+
+[FIX] ckeditor: Clean &amp; escaped &'s from image url
+----------------------------------------------
+r35161 | jonnybradley | 2011-07-01 21:43:00 +0200 (Fri, 01 Jul 2011) | 1 line
+
+[FIX] HTMLPurifier: Allow rel attributes (now ckeditor let's you set them)
+----------------------------------------------
+r35158 | jonnybradley | 2011-07-01 21:03:17 +0200 (Fri, 01 Jul 2011) | 1 line
+
+[FIX] search module: Try and get exact page title again when picked off autocomplete list (not 100% still)
+----------------------------------------------
+r35157 | sylvieg | 2011-07-01 16:10:08 +0200 (Fri, 01 Jul 2011) | 1 line
+
+[FIX]fgal: more precise explanation for fgal_keep_fileId
+----------------------------------------------
+r35155 | lindonb | 2011-07-01 03:51:32 +0200 (Fri, 01 Jul 2011) | 1 line
+
+[FIX] Check http_user_agent for client also when logging an action. Many items in action log were not showing a client.
+----------------------------------------------
+r35150 | sylvieg | 2011-07-01 00:00:09 +0200 (Fri, 01 Jul 2011) | 1 line
+
+[FIX]TRACKER: show mandatory when using pretty tracker
+----------------------------------------------
+r35145 | sylvieg | 2011-06-30 14:56:24 +0200 (Thu, 30 Jun 2011) | 1 line
+
+[FIX]rollback: big hack for wysiwyg/tiki rollback to preserve tiki html page. Usually when you go for wysiwyg you do not get back - so if the latest version is tiki, probably the rollback is tiki : TODO a column wysiwyg in tiki_history
+----------------------------------------------
+r35144 | sylvieg | 2011-06-30 14:34:59 +0200 (Thu, 30 Jun 2011) | 1 line
+
+[FIX]rollback: display correctly an html page
+----------------------------------------------
+r35143 | sylvieg | 2011-06-30 14:33:51 +0200 (Thu, 30 Jun 2011) | 1 line
+
+[ENH]search: accept maxRecords in url for debug
+----------------------------------------------
+r35141 | sylvieg | 2011-06-30 13:33:46 +0200 (Thu, 30 Jun 2011) | 1 line
+
+[FIX]snarf: feature check
+----------------------------------------------
+r35136 | xen216 | 2011-06-30 02:26:06 +0200 (Thu, 30 Jun 2011) | 1 line
+
+[bp/34996] [NEW] email footer preference
+----------------------------------------------
+r35134 | xen216 | 2011-06-30 01:59:54 +0200 (Thu, 30 Jun 2011) | 1 line
+
+[NEW] backport of perspective wiki plugin: displays content based on the user's current perspective.
+----------------------------------------------
+r35132 | sylvieg | 2011-06-30 01:17:45 +0200 (Thu, 30 Jun 2011) | 1 line
+
+escape
+----------------------------------------------
+r35131 | sylvieg | 2011-06-30 01:08:23 +0200 (Thu, 30 Jun 2011) | 1 line
+
+[FIX]snarf: filter params
+----------------------------------------------
+r35126 | marclaporte | 2011-06-29 20:56:50 +0200 (Wed, 29 Jun 2011) | 1 line
+
+[MOD] removing zip option on fresh installs to make interface simpler 
+----------------------------------------------
+r35119 | lphuberdeau | 2011-06-29 17:44:10 +0200 (Wed, 29 Jun 2011) | 1 line
+
+[FIX]?\194?\160Prevent tab memory on tiki-editpage.php
+----------------------------------------------
+r35117 | lphuberdeau | 2011-06-29 17:34:10 +0200 (Wed, 29 Jun 2011) | 1 line
+
+[FIX] File attachments in file gallery stored the file in the wrong gallery, leaving the impression that the file did not upload at all.
+----------------------------------------------
+r35113 | jonnybradley | 2011-06-29 11:31:43 +0200 (Wed, 29 Jun 2011) | 2 lines
+
+[FIX] perms: Simpler fix and partial revert of 35060 - jQuery 1.6 seems to now interpret an empty string as being true for boolean attributes
+Restores previous behaviour (shows perms set)
+----------------------------------------------
+r35112 | marclaporte | 2011-06-29 08:20:21 +0200 (Wed, 29 Jun 2011) | 1 line
+
+[MOD] http://doc.tiki.org/PluginList is a rising star so activating by default
+----------------------------------------------
+r35111 | marclaporte | 2011-06-29 07:59:55 +0200 (Wed, 29 Jun 2011) | 1 line
+
+[FIX] If I search for a string and click title, it will only give me that exact result instead of all page names which contain that string. User is confused into thinking no page exists containing that string. Since AJAX auto-complete of pages names is offered, users wanting exact result can easily do so. Module could perhaps have an additional param to determine if exact match should be checked but I wonder if it's of any use. I wonder if exact_match on tiki-listpages.php shouldn't be removed completely 
+----------------------------------------------
+r35110 | marclaporte | 2011-06-29 06:17:37 +0200 (Wed, 29 Jun 2011) | 1 line
+
+fix perm check
+----------------------------------------------
+r35109 | marclaporte | 2011-06-29 05:43:53 +0200 (Wed, 29 Jun 2011) | 1 line
+
+[MOD] turn off search within the file gallery on a fresh install, to make a leaner first experience.
+----------------------------------------------
+r35108 | marclaporte | 2011-06-29 05:37:16 +0200 (Wed, 29 Jun 2011) | 1 line
+
+[MOD] Moving more-often used menu options towars the top. TODO in Tiki8: hide the lesser used ones like sections and permissions to an advanced section. Feedback please.
+----------------------------------------------
+r35107 | marclaporte | 2011-06-29 05:06:06 +0200 (Wed, 29 Jun 2011) | 1 line
+
+[MOD] Making file upload interface clearer because as of now, it's confusing which button is to add a new file to upload and which button is to start the upload. Feedback please
+----------------------------------------------
+r35104 | chibaguy | 2011-06-29 03:43:15 +0200 (Wed, 29 Jun 2011) | 1 line
+
+[FIX] Keep language files consistent with case change in r35075 (Admin DSN).
+----------------------------------------------
+r35103 | lindonb | 2011-06-29 03:25:11 +0200 (Wed, 29 Jun 2011) | 1 line
+
+[FIX] Set default status upon setup for new plugins to avoid preferences from setting unexpectedly
+----------------------------------------------
+r35102 | marclaporte | 2011-06-29 03:14:05 +0200 (Wed, 29 Jun 2011) | 1 line
+
+[MOD] changing image to drawing to make it clear that it's not the same thing 
+----------------------------------------------
+r35100 | marclaporte | 2011-06-29 00:44:30 +0200 (Wed, 29 Jun 2011) | 1 line
+
+[MOD] change default for wiki_edit_icons_toggle as discussed at http://thread.gmane.org/gmane.comp.cms.tiki.devel/20948
+----------------------------------------------
+r35099 | robertplummer | 2011-06-29 00:22:26 +0200 (Wed, 29 Jun 2011) | 1 line
+
+[FIX] Backporting of selectable file gallery for svg edit
+----------------------------------------------
+r35097 | robertplummer | 2011-06-29 00:00:16 +0200 (Wed, 29 Jun 2011) | 1 line
+
+[NEW] Backport of the ability to create new svg images from trunk
+----------------------------------------------
+r35096 | robertplummer | 2011-06-28 23:48:10 +0200 (Tue, 28 Jun 2011) | 1 line
+
+[NEW] Backport of create new wiki image from svg trunk
+----------------------------------------------
+r35095 | robertplummer | 2011-06-28 23:10:10 +0200 (Tue, 28 Jun 2011) | 1 line
+
+[FIX] Backport of draw fixes from trunk
+----------------------------------------------
+r35093 | robertplummer | 2011-06-28 22:43:51 +0200 (Tue, 28 Jun 2011) | 1 line
+
+[NEW] Edit features for image backport from trunk
+----------------------------------------------
+r35092 | robertplummer | 2011-06-28 22:36:22 +0200 (Tue, 28 Jun 2011) | 1 line
+
+[NEW] Backport of draw plugin
+----------------------------------------------
+r35090 | lphuberdeau | 2011-06-28 22:09:27 +0200 (Tue, 28 Jun 2011) | 1 line
+
+[FIX] Oops, not to highlight
+----------------------------------------------
+r35089 | lphuberdeau | 2011-06-28 22:06:24 +0200 (Tue, 28 Jun 2011) | 1 line
+
+[FIX] Also needed to be applied to highlight and invalidation
+----------------------------------------------
+r35087 | lphuberdeau | 2011-06-28 21:53:29 +0200 (Tue, 28 Jun 2011) | 1 line
+
+[FIX] An other case of different behavior between CLI and Apache
+----------------------------------------------
+r35084 | sylvieg | 2011-06-28 19:56:20 +0200 (Tue, 28 Jun 2011) | 1 line
+
+[FIX]wysiwyg: to have [[xxx] not changing when going from tiki->wysiwyg editor
+----------------------------------------------
+r35083 | lphuberdeau | 2011-06-28 19:53:49 +0200 (Tue, 28 Jun 2011) | 1 line
+
+[FIX] Force index encoding to UTF-8 to avoid relying on the system locale
+----------------------------------------------
+r35082 | marclaporte | 2011-06-28 18:44:48 +0200 (Tue, 28 Jun 2011) | 1 line
+
+[DOC] adding a link to search index rebuilding from the clear cache interface
+----------------------------------------------
+r35079 | lphuberdeau | 2011-06-28 14:19:52 +0200 (Tue, 28 Jun 2011) | 1 line
+
+[FIX] Same escape methods for all of the possible code display methods
+----------------------------------------------
+r35077 | jonnybradley | 2011-06-28 13:47:00 +0200 (Tue, 28 Jun 2011) | 1 line
+
+[MOD] filegals batch: Default to removing the file extension from batch uploaded files (it's so dull when you forget) and improve label
+----------------------------------------------
+r35075 | ricks99 | 2011-06-28 02:42:58 +0200 (Tue, 28 Jun 2011) | 1 line
+
+[TYPO]abbreviation should be all capitalized for english
+----------------------------------------------
+r35074 | sylvieg | 2011-06-27 23:26:20 +0200 (Mon, 27 Jun 2011) | 1 line
+
+[FIX]fgal: a warning if incorrect fgalId
+----------------------------------------------
+r35068 | sylvieg | 2011-06-27 17:02:32 +0200 (Mon, 27 Jun 2011) | 1 line
+
+[FIX]parse: ~np~ and ~/np~ was introducing a space
+----------------------------------------------
+r35067 | sylvieg | 2011-06-27 15:14:28 +0200 (Mon, 27 Jun 2011) | 1 line
+
+[FIX]forum: attachment download was broken
+----------------------------------------------
+r35066 | jonnybradley | 2011-06-27 14:53:08 +0200 (Mon, 27 Jun 2011) | 1 line
+
+[ENH] center plugin: Add wikicontent filter (thanks lph)
+----------------------------------------------
+r35065 | sylvieg | 2011-06-26 18:08:01 +0200 (Sun, 26 Jun 2011) | 1 line
+
+[FIX]mediawiki: by default put the page in html mode - as mediawiki accepts by default html tags
+----------------------------------------------
+r35063 | jean-lucnavarro | 2011-06-26 17:30:23 +0200 (Sun, 26 Jun 2011) | 1 line
+
+[bp/r35062][TRA] more french translations
+----------------------------------------------
+r35061 | jonnybradley | 2011-06-26 15:46:04 +0200 (Sun, 26 Jun 2011) | 1 line
+
+[FIX] prefs: jQuery 1.6 now interprets an empty string as being true for boolean attributes
+----------------------------------------------
+r35060 | jonnybradley | 2011-06-26 15:09:46 +0200 (Sun, 26 Jun 2011) | 1 line
+
+[FIX] perms: jQuery 1.6 seems to now interpret an empty string as being true for boolean attributes - also remove untidy heredoc syntax
+----------------------------------------------
+r35058 | jonnybradley | 2011-06-26 14:34:44 +0200 (Sun, 26 Jun 2011) | 1 line
+
+[FIX] page history: jQuery 1.6 seems to now interpret an empty string as being true for boolean attributes - others will need fixing
+----------------------------------------------
+r35051 | xavidp | 2011-06-25 13:06:53 +0200 (Sat, 25 Jun 2011) | 1 line
+
+[FIX]Allow intra-tiki messaging to understand multiple usernames (in to, cc or bcc ) separated with commas also, besides semicolon, so that it works by default with the usernames given by plugin trackerlist with the checkbox param. http://doc.tiki.org/PluginTrackerList upated also recovering the lost information about that checkbox feature, which is not fully bug free, but it just works (at least) with these last two fixes.
+----------------------------------------------
+r35049 | xavidp | 2011-06-25 11:51:13 +0200 (Sat, 25 Jun 2011) | 1 line
+
+[FIX]Smarty variable has to be surrounded by angle brackets. Regression fixed which allows sending messages to users again through plugintrackerlist There is another bug around still somewhere else which prevents comma to be used as separators for multiple users, and through this plugintrackerlist, users in messu-compose.php end up getting commas between usernames instead of semicolons (help needed to fix this other issue). 
+----------------------------------------------
+r35038 | jonnybradley | 2011-06-24 15:39:54 +0200 (Fri, 24 Jun 2011) | 1 line
+
+[FIX] filegals: Missing feature checks
+----------------------------------------------
+r35037 | jonnybradley | 2011-06-24 15:34:43 +0200 (Fri, 24 Jun 2011) | 1 line
+
+[MOD] jquery: Update CDN to v1.6.1
+----------------------------------------------
+r35035 | jonnybradley | 2011-06-24 15:11:45 +0200 (Fri, 24 Jun 2011) | 1 line
+
+[ENH] ohia theme: Additional monochrome option "planet"
+----------------------------------------------
+r35034 | jonnybradley | 2011-06-24 14:58:47 +0200 (Fri, 24 Jun 2011) | 1 line
+
+[MOD] unfix jquery external lib revision (updates to come)
+----------------------------------------------
+r35030 | jonnybradley | 2011-06-24 14:02:21 +0200 (Fri, 24 Jun 2011) | 1 line
+
+[FIX] page history: Correct "wonky" radio button enabling (ensure we do an integer compare instead of string) thanks marclaporte
+----------------------------------------------
+r35028 | chibaguy | 2011-06-24 04:02:25 +0200 (Fri, 24 Jun 2011) | 1 line
+
+[ENH] Give a unique CSS class to each event displayed in calendar, for styling.
+----------------------------------------------
+r35027 | ricks99 | 2011-06-24 03:14:56 +0200 (Fri, 24 Jun 2011) | 1 line
+
+[TYPO] fixed 2 minor typos on the admin: copyright page. no contextual changes
+----------------------------------------------
+r35026 | chealer | 2011-06-23 22:07:20 +0200 (Thu, 23 Jun 2011) | 2 lines
+
+[FIX] Wiki: SQL error "Duplicate key" locking/unlocking (r31737 regression)
+Thanks Rick Sapir
+----------------------------------------------
+r35024 | chealer | 2011-06-23 21:58:01 +0200 (Thu, 23 Jun 2011) | 1 line
+
+[FIX] Wiki: admin can't unlock page (r35023 regression). oops
+----------------------------------------------
+r35023 | chealer | 2011-06-23 21:31:17 +0200 (Thu, 23 Jun 2011) | 1 line
+
+[FIX] Wiki: lock button only showing to last page editor (r15504 regression)
+----------------------------------------------
+r35019 | chealer | 2011-06-23 08:24:19 +0200 (Thu, 23 Jun 2011) | 3 lines
+
+[FIX] External feeds: cached entries not updating on refresh (r25074 regression)
+Use fairly brutal update of all entries still in the feed. This can be optimized for Atom feeds.
+Thanks Rick Sapir
+----------------------------------------------
+r35018 | ricks99 | 2011-06-23 06:17:25 +0200 (Thu, 23 Jun 2011) | 1 line
+
+fixed unintentional typo from 35015. (tx marc)
+----------------------------------------------
+r35016 | nkoth | 2011-06-23 05:10:48 +0200 (Thu, 23 Jun 2011) | 1 line
+
+[FIX] Prevent categories that are not in the fields omitted from a particular TRACKER plugin to be wiped
+----------------------------------------------
+r35015 | ricks99 | 2011-06-23 03:43:47 +0200 (Thu, 23 Jun 2011) | 1 line
+
+[MOD]added EXIT button to navbar, more intuitive way to exit the admin: modules page (especially if the remarksbox is closed)
+----------------------------------------------
+r35014 | nkoth | 2011-06-23 02:48:50 +0200 (Thu, 23 Jun 2011) | 1 line
+
+[FIX] remove stray code that sneaked into previous commit (sorry).
+----------------------------------------------
+r35013 | nkoth | 2011-06-23 02:45:31 +0200 (Thu, 23 Jun 2011) | 1 line
+
+[FIX] Prevent fields that are not supposed to be modified to be changed (esp checkbox field clearing etc) - gets back tiki 6 behavior
+----------------------------------------------
+r35012 | nkoth | 2011-06-23 01:33:00 +0200 (Thu, 23 Jun 2011) | 1 line
+
+[FIX] Clearing all the category checkboxes in category field did not clear categories before
+----------------------------------------------
+r35003 | chibaguy | 2011-06-22 05:05:52 +0200 (Wed, 22 Jun 2011) | 1 line
+
+[FIX] Removed height rule for login tab, to allow text size and padding to determine height (keeps tab bottom flush with menu background).
+----------------------------------------------
+r35002 | chibaguy | 2011-06-22 05:02:29 +0200 (Wed, 22 Jun 2011) | 1 line
+
+[FIX] Line-height set to a specific dimension seems arbitrary in view of theme menus having various text sizes.
+----------------------------------------------
+r34999 | nkoth | 2011-06-22 03:10:48 +0200 (Wed, 22 Jun 2011) | 1 line
+
+[FIX] More wysiwyg maketoc handling to avoid missed out headers
+----------------------------------------------
+r34998 | lphuberdeau | 2011-06-22 03:06:02 +0200 (Wed, 22 Jun 2011) | 1 line
+
+[FIX]?\194?\160Plugin body not escaped properly due to misnamed variable
+----------------------------------------------
 Version 7.0
 <http://tiki.org/ReleaseNotes70>
 ------------------
