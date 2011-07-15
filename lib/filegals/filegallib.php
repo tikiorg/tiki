@@ -457,7 +457,7 @@ class FileGalLib extends TikiLib
 			}
 		}
 		if ($prefs['fgal_keep_fileId'] != 'y') {
-			$filesTable->update(array(
+			$filesTable->updateMultiple(array(
 				'archiveId' => $idNew,
 				'search_data' => '',
 				'user' => $creator,
