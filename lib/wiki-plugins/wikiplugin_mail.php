@@ -13,6 +13,7 @@ function wikiplugin_mail_info() {
 		'documentation' => 'PluginMail',
 		'description' => tra('Directly mail other users or groups'),
 		'validate' => 'all',
+		'prefs' => array('wikiplugin_mail'),
 		'icon' => 'pics/icons/email.png',
 		'params' => array(
 			'group' => array(
