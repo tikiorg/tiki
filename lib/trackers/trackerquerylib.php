@@ -254,7 +254,7 @@ class TrackerQueryLib extends TikiLib
 						$params[] = $equals[$i];
 					} elseif (strlen($search[$i]) > 0) {
 						$fields_safe .= " AND search_item_fields.value LIKE ? ";
-						$params[] = '%' . $equals[$i] . '%';
+						$params[] = '%' . $search[$i] . '%';
 					}
 					
 					$fields_safe .= " ) ";
@@ -392,8 +392,8 @@ class TrackerQueryLib extends TikiLib
 	
 	/*Does the same thing as tracker_query, but uses tracker and field names rather than ids, a bit slower, but probably not noticed
 	*/
-	function tracker_query_by_names($tracker, $start, $end, $itemId, $equals, $search, $field, $status, $sort, $limit, $offset) {
-		return $tracker = $this->tracker_query($tracker, $start, $end, $itemId, $equals, $search, $field, $status, $sort, $limit, $offset, true, false);
+	function tracker_query_by_names($tracker, $start, $end, $itemId, $equals, $search, $field, $status, $sort, $limit, $offset, $includeTrackerDetails = true) {
+		return $tracker = $this->tracker_query($tracker, $start, $end, $itemId, $equals, $search, $field, $status, $sort, $limit, $offset, true, $includeTrackerDetails);
 	}
 	
 	/*Removes fields from an array of items, can use either fields to show, or fields to remove, but not both
