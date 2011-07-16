@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="$helpUrl"}{tr}{$admintitle}{/tr}{/title}
+{title help="$helpUrl"}{$admintitle}{/title}
 
 <form method="post" action="">
 	<fieldset>
