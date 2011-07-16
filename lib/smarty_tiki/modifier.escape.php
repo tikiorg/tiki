@@ -37,6 +37,8 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'UTF-8'
             $return = htmlspecialchars($string, ENT_QUOTES, $char_set);
 	    // Convert back sanitization tags into real tags to avoid them to be displayed
             $return = str_replace('&lt;x&gt;', '<x>', $return);
+            // Convert back sanitization tags into real tags for no wrap space
+            $return = str_replace('&amp;nbsp;', '&nbsp;', $return);
 	    return $return;
 
         case 'htmlall':
