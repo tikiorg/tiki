@@ -145,7 +145,7 @@ function byref_set_value($feature, $pref = '')
 
 $crumbs[] = new Breadcrumb(tra('Administration'), tra('Sections'), 'tiki-admin.php', 'Admin+Home', tra('Help on Configuration Sections', '', true));
 // Default values for AdminHome
-$admintitle = 'Administration';
+$admintitle = tra('Administration');
 $helpUrl = 'Admin+Home';
 $helpDescription = $description = '';
 $url = 'tiki-admin.php';
@@ -202,248 +202,248 @@ $smarty->assign('indexNeedsRebuilding', $prefslib->indexNeedsRebuilding());
 if (isset($_REQUEST['page'])) {
 	$adminPage = $_REQUEST['page'];
 	if ($adminPage == 'features') {
-		$admintitle = 'Features'; //get_strings tra('Features')
-		$description = 'Enable/disable Tiki features here, but configure them elsewhere'; //get_strings tra('Enable/disable Tiki features here, but configure them elsewhere')
+		$admintitle = tra('Features');
+		$description = tra('Enable/disable Tiki features here, but configure them elsewhere'); 
 		$helpUrl = 'Features+Admin';
 		include_once ('tiki-admin_include_features.php');
 	} else if ($adminPage == 'general') {
-		$admintitle = 'General'; //get_strings tra('General')
-		$description = 'General preferences and settings'; //get_strings tra('General preferences and settings')
+		$admintitle = tra('General');
+		$description = tra('General preferences and settings');
 		$helpUrl = 'General+Admin';
 		include_once ('tiki-admin_include_general.php');
 	} else if ($adminPage == 'login') {
-		$admintitle = 'Login'; //get_strings tra('Login')
-		$description = 'User registration, login and authentication'; //get_strings tra('User registration, login and authentication')
+		$admintitle = tra('Login');
+		$description = tra('User registration, login and authentication');
 		$helpUrl = 'Login+Config';
 		include_once ('tiki-admin_include_login.php');
 	} else if ($adminPage == 'wiki') {
-		$admintitle = 'Wiki'; //get_strings tra('Wiki')
-		$description = 'Wiki settings'; //get_strings tra('Wiki settings')
+		$admintitle = tra('Wiki');
+		$description = tra('Wiki settings');
 		$helpUrl = 'Wiki+Config';
 		include_once ('tiki-admin_include_wiki.php');
 	} else if ($adminPage == 'wikiatt') {
-		$admintitle = 'Wiki Attachments'; //get_strings tra('Wiki Attachments')
-		$description = 'Wiki attachments'; //get_strings tra('Wiki attachments')
+		$admintitle = tra('Wiki Attachments');
+		$description = tra('Wiki attachments');
 		$helpUrl = 'Wiki+Config';
 		include_once ('tiki-admin_include_wikiatt.php');
 	} else if ($adminPage == 'gal') {
-		$admintitle = 'Image Galleries'; //get_strings tra('Image Galleries')
-		$description = 'Image galleries'; //get_strings tra('Image galleries')
+		$admintitle = tra('Image Galleries');
+		$description = tra('Image galleries');
 		$helpUrl = 'Image+Gallery';
 		include_once ('tiki-admin_include_gal.php');
 	} else if ($adminPage == 'fgal') {
-		$admintitle = 'File Galleries'; //get_strings tra('File Galleries')
-		$description = 'File Galleries'; //get_strings tra('File Galleries')
+		$admintitle = tra('File Galleries');
+		$description = tra('File Galleries');
 		$helpUrl = 'File+Gallery';
 		include_once ('tiki-admin_include_fgal.php');
 	} else if ($adminPage == 'cms') {
-		$admintitle = 'Articles'; //get_strings tra('Articles')
-		$description = 'Article/CMS settings'; //get_strings tra('Article/CMS settings')
+		$admintitle = tra('Articles');
+		$description = tra('Article/CMS settings');
 		$helpUrl = 'Articles';
 		include_once ('tiki-admin_include_cms.php');
 	} else if ($adminPage == 'polls') {
-		$admintitle = 'Polls'; //get_strings tra('Polls')
-		$description = 'Poll comments settings'; //get_strings tra('Poll comments settings')
+		$admintitle = tra('Polls');
+		$description = tra('Poll comments settings');
 		$helpUrl = 'Polls';
 		include_once ('tiki-admin_include_polls.php');
 	} else if ($adminPage == 'blogs') {
-		$admintitle = 'Blogs'; //get_strings tra('Blogs')
-		$description = 'Configuration options for all blogs on your site'; //get_strings tra('Configuration options for all blogs on your site')
+		$admintitle = tra('Blogs');
+		$description = tra('Configuration options for all blogs on your site');
 		$helpUrl = 'Blog';
 		include_once ('tiki-admin_include_blogs.php');
 	} else if ($adminPage == 'forums') {
-		$admintitle = 'Forums'; //get_strings tra('Forums')
-		$description = 'Forums settings'; //get_strings tra('Forums settings')
+		$admintitle = tra('Forums');
+		$description = tra('Forums settings');
 		$helpUrl = 'Forum';
 		include_once ('tiki-admin_include_forums.php');
 	} else if ($adminPage == 'faqs') {
-		$admintitle = 'FAQs'; //get_strings tra('FAQs')
-		$description = 'FAQ comments settings'; //get_strings tra('FAQ comments settings')
+		$admintitle = tra('FAQs');
+		$description = tra('FAQ comments settings');
 		$helpUrl = 'FAQ';
 		include_once ('tiki-admin_include_faqs.php');
 	} else if ($adminPage == 'trackers') {
-		$admintitle = 'Trackers'; //get_strings tra('Trackers')
-		$description = 'Trackers settings'; //get_strings tra('Trackers settings')
+		$admintitle = tra('Trackers');
+		$description = tra('Trackers settings');
 		$helpUrl = 'Trackers';
 		include_once ('tiki-admin_include_trackers.php');
 	} else if ($adminPage == 'webmail') {
-		$admintitle = 'Webmail'; //get_strings tra('Webmail')
-		$description = 'Webmail';
+		$admintitle = tra('Webmail');
+		$description = tra('Webmail');
 		$helpUrl = 'Webmail';
 		include_once ('tiki-admin_include_webmail.php');
 	} else if ($adminPage == 'comments') {
-		$admintitle = 'Comments'; //get_strings tra('Comments')
-		$description = 'Comments settings'; //get_strings tra('Comments settings')
+		$admintitle = tra('Comments');
+		$description = tra('Comments settings');
 		$helpUrl = 'Comments';
 		include_once ('tiki-admin_include_comments.php');
 	} else if ($adminPage == 'rss') {
-		$admintitle = 'Feeds'; //get_strings tra('Feeds')
-		$description = 'Feeds settings'; //get_strings tra('Feeds settings')
+		$admintitle = tra('Feeds');
+		$description = tra('Feeds settings');
 		$helpUrl = 'Feeds User';
 		include_once ('tiki-admin_include_rss.php');
 	} else if ($adminPage == 'directory') {
-		$admintitle = 'Directory'; //get_strings tra('Directory')
-		$description = 'Directory settings'; //get_strings tra('Directory settings')
+		$admintitle = tra('Directory');
+		$description = tra('Directory settings');
 		$helpUrl = 'Directory';
 		include_once ('tiki-admin_include_directory.php');
 	} else if ($adminPage == 'userfiles') {
-		$admintitle = 'User Files'; //get_strings tra('User files')
-		$description = 'User files'; //get_strings tra('User files')
+		$admintitle = tra('User Files');
+		$description = tra('User files');
 		$helpUrl = 'User+Files';
 		include_once ('tiki-admin_include_userfiles.php');
 	} else if ($adminPage == 'maps') {
-		$admintitle = 'Maps'; //get_strings tra('Maps')
-		$description = 'Maps configuration'; //get_strings tra('Maps configuration')
+		$admintitle = tra('Maps');
+		$description = tra('Maps configuration');
 		$helpUrl = 'Maps';
 		include_once ('tiki-admin_include_maps.php');
 	} else if ($adminPage == 'metatags') {
-		$admintitle = 'Meta Tags'; //get_strings tra('Meta Tags')
-		$description = 'Meta Tags settings'; //get_strings tra('Meta Tags settings')
+		$admintitle = tra('Meta Tags');
+		$description = tra('Meta Tags settings');
 		$helpUrl = 'Meta+Tags';
 		include_once ('tiki-admin_include_metatags.php');
 	} else if ($adminPage == 'performance') {
-		$admintitle = 'Performance'; //get_strings tra('Performance')
-		$description = 'Speed & Performance'; // get_strings('Speed & Performance')
+		$admintitle = tra('Performance');
+		$description = tra('Speed & Performance');
 		$helpUrl = 'Performance';
 		include_once ('tiki-admin_include_performance.php');
 	} else if ($adminPage == 'security') {
-		$admintitle = 'Security'; //get_strings tra('Security')
-		$description = 'Security'; //get_strings tra('Security')
+		$admintitle = tra('Security');
+		$description = tra('Security');
 		$helpUrl = 'Security';
 		include_once ('tiki-admin_include_security.php');
 	} else if ($adminPage == 'search') {
-		$admintitle = 'Search'; //get_strings tra('Search')
-		$description = 'Search settings'; //get_strings tra('Search settings')
+		$admintitle = tra('Search');
+		$description = tra('Search settings');
 		$helpUrl = 'Search';
 		include_once ('tiki-admin_include_search.php');
 	} else if ($adminPage == 'score') {
-		$admintitle = 'Score'; //get_strings tra('Score')
-		$description = 'Score settings'; //get_strings tra('Score settings')
+		$admintitle = tra('Score');
+		$description = tra('Score settings');
 		$helpUrl = 'Score';
 		include_once ('tiki-admin_include_score.php');
 	} else if ($adminPage == 'community') {
-		$admintitle = 'Community'; //get_strings tra('Community')
-		$description = 'Community settings'; //get_strings tra('Community settings')
+		$admintitle = tra('Community');
+		$description = tra('Community settings');
 		$helpUrl = 'Community';
 		include_once ('tiki-admin_include_community.php');
 	} else if ($adminPage == 'messages') {
-		$admintitle = 'Messages'; //get_strings tra('Site Identity')
-		$description = 'User Messages'; // already translated
+		$admintitle = tra('Messages');
+		$description = tra('User Messages');
 		$helpUrl = 'Inter-User+Messages';
 		include_once ('tiki-admin_include_messages.php');
 	} else if ($adminPage == 'calendar') {
-		$admintitle = 'Calendar'; //get_strings tra('Calendar')
-		$description = 'Calendar settings'; //get_strings tra('Calendar settings')
+		$admintitle = tra('Calendar');
+		$description = tra('Calendar settings');
 		$helpUrl = 'Calendar';
 		include_once ('tiki-admin_include_calendar.php');
 	} else if ($adminPage == 'intertiki') {
-		$admintitle = 'Intertiki'; //get_strings tra('Intertiki')
-		$description = 'Intertiki settings'; //get_strings tra('Intertiki settings')
+		$admintitle = tra('Intertiki');
+		$description = tra('Intertiki settings');
 		$helpUrl = 'InterTiki';
 		include_once ('tiki-admin_include_intertiki.php');
 	} else if ($adminPage == 'freetags') {
-		$admintitle = 'Freetags'; //get_strings tra('Freetags')
-		$description = 'Freetags settings'; //get_strings tra('Freetags settings')
+		$admintitle = tra('Freetags');
+		$description = tra('Freetags settings');
 		$helpUrl = 'Tags';
 		include_once ('tiki-admin_include_freetags.php');
 	} else if ($adminPage == 'gmap') {
-		$admintitle = 'Google Maps'; //get_strings tra('Google Maps')
-		$description = 'Google Maps'; //get_strings tra('Google Maps')
+		$admintitle = tra('Google Maps');
+		$description = tra('Google Maps');
 		$helpUrl = 'gmap';
 		include_once ('tiki-admin_include_gmap.php');
 	} else if ($adminPage == 'i18n') {
-		$admintitle = 'i18n'; //get_strings tra('i18n')
-		$description = 'Internationalization'; //get_strings tra('i18n')
+		$admintitle = tra('i18n');
+		$description = tra('Internationalization');
 		$helpUrl = 'i18n';
 		include_once ('tiki-admin_include_i18n.php');
 	} else if ($adminPage == 'wysiwyg') {
-		$admintitle = 'wysiwyg'; //get_strings tra('i18n')
-		$description = 'Wysiwyg editor'; //get_strings tra('i18n')
+		$admintitle = tra('wysiwyg');
+		$description = tra('Wysiwyg editor');
 		$helpUrl = 'Wysiwyg';
 		include_once ('tiki-admin_include_wysiwyg.php');
 	} else if ($adminPage == 'copyright') {
-		$admintitle = 'Copyright'; //get_strings tra('i18n')
-		$description = 'Copyright management'; //get_strings tra('i18n')
+		$admintitle = tra('Copyright');
+		$description = tra('Copyright management');
 		$helpUrl = 'Copyright';
 		include_once ('tiki-admin_include_copyright.php');
 	} else if ($adminPage == 'category') {
-		$admintitle = 'Category'; //get_strings tra('Category')
-		$description = 'Category'; //get_strings tra('Category')
+		$admintitle = tra('Category');
+		$description = tra('Category');
 		$helpUrl = 'Category';
 		include_once ('tiki-admin_include_category.php');
 	} else if ($adminPage == 'module') {
-		$admintitle = 'Module'; //get_strings tra('Module')
-		$description = 'Module'; //get_strings tra('Module')
+		$admintitle = tra('Module');
+		$description = tra('Module');
 		$helpUrl = 'Module';
 		include_once ('tiki-admin_include_module.php');
 	} else if ($adminPage == 'look') {
-		$admintitle = 'Look & Feel'; //get_strings tra('Look & Feel')
-		$description = 'Customize look and feel of your Tiki'; //get_strings tra('Customize look and feel of your Tiki')
+		$admintitle = tra('Look & Feel');
+		$description = tra('Customize look and feel of your Tiki');
 		$helpUrl = 'Look+and+Feel';
 		include_once ('tiki-admin_include_look.php');
 	} else if ($adminPage == 'textarea') {
-		$admintitle = 'Text area'; //get_strings tra('Text area')
-		$description = 'Text area'; //get_strings tra('Text area')
+		$admintitle = tra('Text area');
+		$description = tra('Text area');
 		$helpUrl = 'Text+area';
 		include_once ('tiki-admin_include_textarea.php');
 	} else if ($adminPage == 'ads') {
-		$admintitle = 'Site Ads and Banners'; // get_strings('Site Ads and Banners');
-		$description = 'Configure Site Ads and Banners'; //get_strings tra('Configure Site Ads and Banners')
+		$admintitle = tra('Site Ads and Banners');
+		$description = tra('Configure Site Ads and Banners');
 		$helpUrl = 'Look+and+Feel';
 		include_once ('tiki-admin_include_ads.php');
 	} else if ($adminPage == 'profiles') {
-		$admintitle = 'Profiles';		// get_strings('Profiles')
-		$description = 'Install predefined configuration profiles and add-ons.';		// get_strings('Install predefined configuration profiles and add-ons.')
+		$admintitle = tra('Profiles');
+		$description = tra('Install predefined configuration profiles and add-ons.');
 		$helpUrl = 'Profiles';
 		include_once ('tiki-admin_include_profiles.php');
 	} else if ($adminPage == 'plugins') {
-		$admintitle = 'Plugin Alias';		// get_strings('Plugin Alias')
-		$description = 'Create shortcut syntaxes to plugins.';		// get_strings('Create shortcut syntaxes to plugins.')
+		$admintitle = tra('Plugin Alias');
+		$description = tra('Create shortcut syntaxes to plugins.');
 		$helpUrl = 'Plugin+Alias';
 		include_once ('tiki-admin_include_plugins.php');
 	} else if ($adminPage == 'semantic') {
-		$admintitle = 'Semantic Wiki Links';		// get_strings('Semantic Wiki Links')
-		$description = 'Manage semantic tokens used throughout the wiki.';		// get_strings('Manage semantic tokens used throughout the wiki.')
+		$admintitle = tra('Semantic Wiki Links');
+		$description = tra('Manage semantic tokens used throughout the wiki.');
 		$helpUrl = 'Semantic+Admin';
 		include_once ('tiki-admin_include_semantic.php');
 	} else if ($adminPage == 'webservices') {
-		$admintitle = 'Webservice Registration';		// get_strings('Webservice Registration')
-		$description = 'Discover and register web services to allow direct use in wiki pages.';		// get_strings('Discover and register web services to allow direct use in wiki pages.')
+		$admintitle = tra('Webservice Registration');
+		$description = tra('Discover and register web services to allow direct use in wiki pages.');
 		$helpUrl = 'WebServices';
 		include_once ('tiki-admin_include_webservices.php');
 	} else if ($adminPage == 'sefurl') {
-		$admintitle = 'Search engine friendly url';		// get_strings('Search engine friendly url')
-		$description = 'Search engine friendly url';		// get_strings('Search engine friendly url')
+		$admintitle = tra('Search engine friendly url');
+		$description = tra('Search engine friendly url');
 		$helpUrl = 'Rewrite+Rules';
 		include_once ('tiki-admin_include_sefurl.php');
 	} else if ($adminPage == 'video') {
-		$admintitle = 'Video';		//get_strings tra('Video')
-		$description = 'Settings for video streaming integration';		//get_strings tra('Settings for video streaming integration')
+		$admintitle = tra('Video');
+		$description = tra('Settings for video streaming integration');
 		$helpUrl = 'Kaltura+Config';
 		include_once ('tiki-admin_include_video.php');
 	} else if ($adminPage == 'connect') {
-		$admintitle = 'Connect';		// get_strings('Connect')
-		$description = 'Connect';		// get_strings('Connect')
+		$admintitle = tra('Connect');
+		$description = tra('Connect');
 		$helpUrl = 'Connect';
 		include_once ('tiki-admin_include_connect.php');
 	} else if ($adminPage == 'rating') {
-		$admintitle = 'Advanced Rating';		// get_strings('Advanced Rating')
-		$description = 'Advanced Rating';		// get_strings('Advanced Rating')
+		$admintitle = tra('Advanced Rating');
+		$description = tra('Advanced Rating');
 		$helpUrl = 'Advanced+Rating';
 		include_once ('tiki-admin_include_rating.php');
 	} else if ($adminPage == 'payment') {
-		$admintitle = 'Payment';		// get_strings('Payment')
-		$description = 'Payment';		// get_strings('Payment')
+		$admintitle = tra('Payment');
+		$description = tra('Payment');
 		$helpUrl = 'Payment';
 		include_once ('tiki-admin_include_payment.php');
 	} else if ($adminPage == 'socialnetworks') {
-		$admintitle = 'Social Networks';		// get_strings('Social Networks')
-		$description = 'Settings for social networks integration';		// get_strings('Settings for social networks integration')
+		$admintitle = tra('Social Networks');
+		$description = tra('Settings for social networks integration');
 		$helpUrl = 'Social+Networks';
 		include_once ('tiki-admin_include_socialnetworks.php');
 	} else if ($adminPage == 'share') {
-		$admintitle = 'Share';		// get_strings('Share')
-		$description = 'Settings for share preferences';		// get_strings('Settings for share preferences')
+		$admintitle = tra('Share');
+		$description = tra('Settings for share preferences');
 		$helpUrl = 'share';
 		include_once ('tiki-admin_include_share.php');
 	} else {
@@ -462,8 +462,7 @@ if (isset($_REQUEST['page'])) {
 	$smarty->assign('description', $crumbs[0]->description);
 }
 $headerlib->add_cssfile('css/admin.css');
-if (isset($admintitle)) {
-	$admintitle = tra($admintitle);
+if (isset($admintitle) && isset($description)) {
 	$crumbs[] = new Breadcrumb($admintitle, $description, $url, $helpUrl, $helpDescription);
 	$smarty->assign_by_ref('admintitle', $admintitle);
 	$headtitle = breadcrumb_buildHeadTitle($crumbs);
@@ -537,8 +536,6 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('adminpage', $adminPage);
 $smarty->assign('mid', 'tiki-admin.tpl');
-if (isset($helpUrl)) $smarty->assign_by_ref('sectionhelp', $helpUrl);
-if (isset($description)) $smarty->assign('description', $description);
 $smarty->assign('trail', $crumbs);
 $smarty->assign('crumb', count($crumbs) - 1);
 include_once ('installer/installlib.php');
