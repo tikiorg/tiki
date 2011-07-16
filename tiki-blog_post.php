@@ -229,7 +229,7 @@ if (isset($_REQUEST['save']) && !$contribution_needed) {
 	// TAG Stuff
 	$cat_type = 'blog post';
 	$cat_objid = $postId;
-	$cat_desc = substr($edit_data, 0, 200);
+	$cat_desc = TikiFilter::get('purifier')->filter(substr($edit_data, 0, 200));
 	$cat_name = $title;
 	$cat_href = "tiki-view_blog_post.php?postId=" . urlencode($postId);
 	$cat_lang = $_REQUEST['lang'];
