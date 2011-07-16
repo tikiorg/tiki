@@ -243,10 +243,27 @@ class TrackerQueryLib extends TikiLib
 		if ($end && !$search) $params[] = $end;
 		if ($itemId && !$search) $params[] = $itemId;
 		
+		if(isset($byName)) {
+			$fieldIds = array();
+			foreach($fields as $field) {
+				$fields[] = $tikilib->getOne("
+					SELECT fieldId
+					FROM tiki_tracker_fields
+					LEFT JOIN tiki_trackers ON (
+						tiki_trackers.trackerId = tiki_tracker_fields.trackerId
+					)
+					WHERE
+						tiki_trackers.name = ? AND
+						tiki_tracker_fields.name = ?
+				", array($tracker, $field));
+			}
+			$fields = $fieldIds;
+		}
+		
 		if (count($fields) > 0 && (count($equals) > 0 || count($search) > 0)) {
 			for($i = 0; $i < count($fields); $i++) {
 				if (strlen($fields[$i]) > 0) {
-					$fields_safe .= " ( ".(isset($byName) ? "search_item_fields.name" : "search_item_fields.fieldId")." = ? ";
+					$fields_safe .= " ( search_item_fields.fieldId = ? ";
 					$params[] = $fields[$i];
 					
 					if (strlen($equals[$i]) > 0) {
@@ -392,8 +409,8 @@ class TrackerQueryLib extends TikiLib
 	
 	/*Does the same thing as tracker_query, but uses tracker and field names rather than ids, a bit slower, but probably not noticed
 	*/
-	function tracker_query_by_names($tracker, $start, $end, $itemId, $equals, $search, $field, $status, $sort, $limit, $offset, $includeTrackerDetails = true) {
-		return $tracker = $this->tracker_query($tracker, $start, $end, $itemId, $equals, $search, $field, $status, $sort, $limit, $offset, true, $includeTrackerDetails);
+	function tracker_query_by_names($tracker, $start, $end, $itemId, $equals, $search, $fields, $status, $sort, $limit, $offset, $includeTrackerDetails = true) {
+		return $tracker = $this->tracker_query($tracker, $start, $end, $itemId, $equals, $search, $fields, $status, $sort, $limit, $offset, true, $includeTrackerDetails);
 	}
 	
 	/*Removes fields from an array of items, can use either fields to show, or fields to remove, but not both
