@@ -140,7 +140,7 @@ class reportsLib extends TikiLib
 							);
 					} elseif ($change['data']['action']=="object leaved category") {
 						$body .= "<u>".$change['data']['user']."</u> ".
-							tr("removed the %0 %1 from the category",
+							tr("removed the %0 %1 from the category %2",
 								$change['data']['objectType'],
 								"<a href=\"$tikiUrl/{$change['data']['objectUrl']}\">{$change['data']['objectName']}</a>",
 								"<a href=\"$tikiUrl/tiki-browse_categories.php?parentId={$change['data']['categoryId']}&deep=off\">{$change['data']['categoryName']}</a>."
