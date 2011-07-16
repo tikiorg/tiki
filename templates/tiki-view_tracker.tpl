@@ -55,7 +55,7 @@
 				{include file='tracker_filter.tpl'}
 			{/if}
 			
-			{if $cant_pages > 1 or $initial}{initials_filter_links}{/if}
+			{if (isset($cant_pages) && $cant_pages > 1) or $initial}{initials_filter_links}{/if}
 			
 			<div align='left'>{tr}Items found:{/tr} {$item_count}</div>
 			
@@ -231,7 +231,7 @@
 				{include file='antibot.tpl' tr_style="formcolor" showmandatory=y}
 			{/if}
 			
-			{if $groupforalert ne ''}
+			{if isset($groupforalert) && $groupforalert ne ''}
 				{if $showeachuser eq 'y'}
 					<tr>
 						<td>{tr}Choose users to alert{/tr}</td>
@@ -271,7 +271,7 @@
 
 {foreach from=$fields key=ix item=field_value}
 	{assign var=fid value=$field_value.fieldId}
-	{if $listfields.$fid.http_request}
+	{if isset($listfields.$fid.http_request) && $listfields.$fid.http_request}
 		{jq}
 			selectValues('trackerIdList={{$listfields.$fid.http_request[0]}}&fieldlist={{$listfields.$fid.http_request[3]}}&filterfield={{$listfields.$fid.http_request[1]}}&status={{$listfields.$fid.http_request[4]}}&mandatory={{$listfields.$fid.http_request[6]}}','{{$listfields.$fid.http_request[5]}}','{{$field_value.ins_id}}')
 		{/jq}

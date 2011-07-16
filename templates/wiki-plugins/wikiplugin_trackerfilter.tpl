@@ -1,12 +1,12 @@
 {*param :  $msgTrackerFilter, $line, $open, $iTrackerFilter, $trackerId, $filters(array(name, format, fieldId, selected, opts)), $showFieldId *}
 {strip}
-{if $msgTrackerFilter}
+{if isset($msgTrackerFilter) && $msgTrackerFilter}
 <div class="simplebox highlight">{$msgTrackerFilter|escape}</div>
 {/if}
-{if $line ne 'y' and $prefs.javascript_enabled eq 'y' and $noflipflop ne 'y'}
+{if (isset($line) && $line ne 'y') and $prefs.javascript_enabled eq 'y' and $noflipflop ne 'y'}
 {button _text="{tr}Filters{/tr}" _flip_id="trackerFilter$iTrackerFilter"}
 {/if}
-<div id="trackerFilter{$iTrackerFilter}" class="trackerfilter" style="display:{if $open eq 'y'}block{else}none{/if}">
+<div id="trackerFilter{$iTrackerFilter}" class="trackerfilter" style="display:{if isset($open) && $open eq 'y'}block{else}none{/if}">
 {if empty($inForm)}
 	{if empty($export_action)}
 		<form action="{$smarty.server.PHP_SELF}?{query}" method="post">
@@ -24,7 +24,7 @@ function tf_export_submit(fm) {
 			{/foreach}
 	{/if}
 {/if}
-{if $mapview}
+{if isset($mapview) && $mapview}
 <input type="hidden" name="mapview" value="y" />
 {else}
 <input type="hidden" name="mapview" value="n" />
@@ -33,14 +33,14 @@ function tf_export_submit(fm) {
 <input type="hidden" name="iTrackerFilter" value="{$iTrackerFilter}" />
 {if !empty($count_item)}<input type="hidden" name="count_item" value="{$count_item}" />{/if}
 <table class="normal">
-{if $line eq 'y'}<tr>{/if}
+{if isset($line) && $line eq 'y'}<tr>{/if}
 {cycle values="even,odd" print=false}
 {foreach from=$filters item=filter}
-	{if $line ne 'y'}<tr class="{cycle}">{/if}
+	{if isset($line) && $line ne 'y'}<tr class="{cycle}">{/if}
 		<td>
 		<label for="f_{$filter.fieldId}">{$filter.name|tr_if}</label>
 		{if $showFieldId eq 'y'} -- {$filter.fieldId}{/if}
-		{if $line ne 'y'}</td><td>{else}:{/if}
+		{if isset($line) && $line ne 'y'}</td><td>{else}:{/if}
 {*------drop-down, multiple *}
 		{if $filter.format eq 'd' or  $filter.format eq 'm'}
 			<select id="f_{$filter.fieldId}" name="f_{$filter.fieldId}{if $filter.format eq "m"}[]{/if}" {if $filter.format eq "m"} size="5" multiple="multiple"{/if}> 
@@ -91,21 +91,21 @@ function tf_export_submit(fm) {
 			<input {if $filter.format eq "c"}type="checkbox"{else}type="radio"{/if}
 					name="f_{$filter.fieldId}{if $filter.format eq "c"}[]{/if}"
 					value=""{if !$filter.selected} checked="checked"{/if} />
-			{tr}Any{/tr}{if $line ne 'y'}<br />{/if}
+			{tr}Any{/tr}{if isset($line) && $line ne 'y'}<br />{/if}
 			{section name=io loop=$filter.opts}
 				<input {if $filter.format eq "c"}type="checkbox"{else}type="radio"{/if}
 						name="f_{$filter.fieldId}{if $filter.format eq "c"}[]{/if}"
 						value="{$filter.opts[io].id|escape:url}"
 						{if $filter.opts[io].selected eq "y"} checked="checked"{/if} />
 				{$filter.opts[io].name|tr_if}
-				{if $line ne 'y'}<br />{/if}
+				{if isset($line) && $line ne 'y'}<br />{/if}
 			{/section}
 		{/if}
 		</td>
-		{if $line ne 'y'}</tr>{else} {/if}
+		{if isset($line) && $line ne 'y'}</tr>{else} {/if}
 {/foreach}
-{if $line ne 'y' and $action and $action neq " "}<tr>{/if}
-{if ($action and $action neq " ") or !empty($export_action)}
+{if (isset($line) && $line ne 'y') and (isset($action) and $action neq " ")}<tr>{/if}
+{if (isset($action) and $action neq " ") or !empty($export_action)}
 <td>&nbsp;</td>
 <td>
 	{if !empty($export_action)}
@@ -117,7 +117,7 @@ function tf_export_submit(fm) {
 		&nbsp;
 	{/if}
 	{if $googlemapButtons && $googlemapButtons eq 'y'}
-        {if $mapview}
+        {if isset($mapview) && $mapview}
         <br /><input class="button submit" type="submit" name="searchlist" value="{tr}List View{/tr}" />
         {else}
         <br /><input class="button submit" type="submit" name="searchmap" value="{tr}Map View{/tr}" />
@@ -129,9 +129,9 @@ function tf_export_submit(fm) {
 	{if $line ne 'y'}<tr>{/if}
 	<td>{tr}Sort{/tr}</td>
 	<td>{include file='tracker_sort_input.tpl' iTRACKERLIST=$iTrackerFilter}
-	{if $line ne 'y'}</tr>{/if}
+	{if isset($line) && $line ne 'y'}</tr>{/if}
 {/if}
-{if $line ne 'y' and $action}</tr>{/if}
+{if (isset($line) && $line ne 'y' ) and $action}</tr>{/if}
 </table>
 {if empty($inForm)}</form>{/if}
 </div>

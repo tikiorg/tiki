@@ -7,7 +7,6 @@
 </div>
 
 {tabset}
-	<!-- {$plug} -->
 	<a name="list"></a>
 	{tab name="{tr}Tracker fields{/tr}"}
 		<form class="save-fields" method="post" action="tiki-ajax_services.php">

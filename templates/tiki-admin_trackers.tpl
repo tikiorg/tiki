@@ -176,7 +176,7 @@
 				<td>{tr}Default status displayed in list mode{/tr}</td>
 				<td>
 					{foreach key=st item=stdata from=$status_types}
-						<input type="checkbox" name="defaultStatus[]" value="{$st}"{if $defaultStatusList.$st} checked="checked"{/if} />
+						<input type="checkbox" name="defaultStatus[]" value="{$st}"{if isset($defaultStatusList.$st)} checked="checked"{/if} />
 						{$stdata.label}
 						<br />
 					{/foreach}
@@ -401,15 +401,15 @@
 							<td>{tr}User{/tr}</td>
 						</tr>
 						<tr>
-							<td><input type="text" size="2" name="ui[filename]" value="{$ui.filename}" /></td>
-							<td><input type="text" size="2" name="ui[created]" value="{$ui.created}" /></td>
-							<td><input type="text" size="2" name="ui[hits]" value="{$ui.hits}" /></td>
-							<td><input type="text" size="2" name="ui[comment]" value="{$ui.comment}" /></td>
-							<td><input type="text" size="2" name="ui[filesize]" value="{$ui.filesize}" /></td>
-							<td><input type="text" size="2" name="ui[version]" value="{$ui.version}" /></td>
-							<td><input type="text" size="2" name="ui[filetype]" value="{$ui.filetype}" /></td>
-							<td><input type="text" size="2" name="ui[longdesc]" value="{$ui.longdesc}" /></td>
-							<td><input type="text" size="2" name="ui[user]" value="{$ui.user}" /></td>
+							<td><input type="text" size="2" name="ui[filename]" value="{if isset($ui.filename)}{$ui.filename}{/if}" /></td>
+							<td><input type="text" size="2" name="ui[created]" value="{if isset($ui.created)}{$ui.created}{/if}" /></td>
+							<td><input type="text" size="2" name="ui[hits]" value="{if isset($ui.hits)}{$ui.hits}{/if}" /></td>
+							<td><input type="text" size="2" name="ui[comment]" value="{if isset($ui.comment)}{$ui.comment}{/if}" /></td>
+							<td><input type="text" size="2" name="ui[filesize]" value="{if isset($ui.filesize)}{$ui.filesize}{/if}" /></td>
+							<td><input type="text" size="2" name="ui[version]" value="{if isset($ui.version)}{$ui.version}{/if}" /></td>
+							<td><input type="text" size="2" name="ui[filetype]" value="{if isset($ui.filetype)}{$ui.filetype}{/if}" /></td>
+							<td><input type="text" size="2" name="ui[longdesc]" value="{if isset($ui.longdesc)}{$ui.longdesc}{/if}" /></td>
+							<td><input type="text" size="2" name="ui[user]" value="{if isset($ui.user)}{$ui.user}{/if}" /></td>
 						</tr>
 					</table>
 				</td>
@@ -422,13 +422,13 @@
 					<input type="checkbox" name="start"{if $info.start} checked="checked"{/if} /> 
 					{html_select_date prefix="start_" time=$info.start start_year="0" end_year="+10" field_order=$prefs.display_field_order} 
 					<span dir="ltr">{html_select_time prefix="start_" time=$info.start display_seconds=false use_24_hours=$use_24hr_clock}</span>
-					&nbsp;{$siteTimeZone}
+					&nbsp;{if isset($siteTimeZone)}{$siteTimeZone}{/if}
 					<br />
 					{tr}Before:{/tr}
 					<input type="checkbox" name="end"{if $info.end} checked="checked"{/if} /> 
 					{html_select_date prefix="end_" time=$info.end start_year="0" end_year="+10" field_order=$prefs.display_field_order} 
 					<span dir="ltr">{html_select_time prefix="end_" time=$info.end display_seconds=false use_24_hours=$use_24hr_clock}</span>
-					&nbsp;{$siteTimeZone}
+					&nbsp;{if isset($siteTimeZone)}{$siteTimeZone}{/if}
 				</td>
 			</tr>
 
