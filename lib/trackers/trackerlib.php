@@ -319,7 +319,7 @@ class TrackerLib extends TikiLib
 			}
 
 			$query = "select t.*, t.object itemId, a.`trackerId` from `tiki_comments` t left join `tiki_tracker_items` a on t.`object`=a.`itemId` where $mid AND t.`objectType` = 'trackeritem' order by `commentDate` desc";
-			$query_cant = "select count(*) from `tiki_comments` where $mid AND t.`objectType` = 'trackeritem'";
+			$query_cant = "select count(*) from `tiki_comments` where $mid AND `objectType` = 'trackeritem'";
 	    }
 
 	    $ret = $this->fetchAll($query,$bindvars,$maxRecords,$offset);
