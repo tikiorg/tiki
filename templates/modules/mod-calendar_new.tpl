@@ -43,7 +43,7 @@
 							{assign var=over value=$cell[w][d].items[0].over}{else}{assign var=over value=""}
 						{/if}
 						{if isset($cell[w][d].items[0]) and ($cell[w][d].items[0].modifiable eq "y" || $cell[w][d].items[0].visible eq 'y')}
-							{if $prefs.calendar_popup eq "y"}
+							{if empty($calendar_popup) or $calendar_popup eq "y"}
 								<a style="text-decoration: underline; font-weight: bold" href="{$myurl}?todate={$date}&amp;viewmode={$viewmodelink}" 
 								{if $sticky_popup eq 'y' or ($prefs.calendar_sticky_popup eq "y" and $cell[w][d].items[0].calitemId)}
 									{popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
