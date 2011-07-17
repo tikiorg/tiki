@@ -13,7 +13,7 @@
 	{/if}
 </div>
 
-{if $category_needed eq 'y'}
+{if isset($category_needed) && $category_needed eq 'y'}
 	{remarksbox type='Warning' title="{tr}Warning{/tr}"}
 	<div class="highlight"><em class='mandatory_note'>{tr}A category is mandatory{/tr}</em></div>
 	{/remarksbox}
