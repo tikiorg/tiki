@@ -30,9 +30,9 @@
 	
 	<div class="trackerStatusType">
 		<h5>Tracker Status</h5>
-		<input type="checkbox" checked="true" class="tracker_status_type" value="o" name="Tracker - Open" /> Tracker - Open<br />
-		<input type="checkbox" checked="true" class="tracker_status_type" value="p" name="Tracker - Pending" /> Tracker - Pending<br />
-		<input type="checkbox" checked="true" class="tracker_status_type" value="c" name="Tracker - Closed" /> Tracker - Closed
+		<input type="checkbox" checked="true" class="tracker_status_type" value="o" name="Tracker - Open" /> {tr}Tracker - Open{/tr}<br />
+		<input type="checkbox" checked="true" class="tracker_status_type" value="p" name="Tracker - Pending" /> {tr}Tracker - Pending{/tr}<br />
+		<input type="checkbox" checked="true" class="tracker_status_type" value="c" name="Tracker - Closed" /> {tr}Tracker - Closed{/tr}
 	</div>
 </div>
 <div id="reportDesigner">
