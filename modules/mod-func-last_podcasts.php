@@ -50,7 +50,7 @@ function module_last_podcasts_info() {
 				'required' => false,
 				'name' => tra('Bottom Link URL Text'),
 				'description' => tra('Text for link if Bottom Link URL is set. Default is "More Podcasts"'),
-				'default' => 'More Podcasts',
+				'default' => tra('More Podcasts'),
 				'filter' => 'striptags'
 			),
 			'verbose' => array(
