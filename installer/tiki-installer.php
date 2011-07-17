@@ -408,7 +408,7 @@ function list_disable_accounts() {
 }
 
 function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_charset, &$dbTiki ) {
-	global $tikifeedback;
+	global $tikifeedback, $smarty;
 	$dbcon = false;
 
 	if ( ( isset($api) && $api == 'adodb' ) || ! extension_loaded('pdo') ) {
@@ -446,6 +446,8 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 		}
 
 		TikiDb::set($db);
+
+		$smarty->assign('dbname', $dbname);
 	}
 
 	return $dbcon;
