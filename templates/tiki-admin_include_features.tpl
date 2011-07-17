@@ -221,6 +221,7 @@
 					{preference name=feature_draw}
 					{preference name=feature_slideshow}
 					{preference name=mobile_feature}
+					{preference name=feature_invoice}
 					<div class="adminoptionboxchild" id="mobile_feature_childcontainer">
 						{preference name=mobile_perspectives}
 						<fieldset>

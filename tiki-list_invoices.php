@@ -4,6 +4,7 @@ include('lib/trackers/trackerquerylib.php');
 
 global $tikilib, $trkqrylib;
 
+$access->check_feature('feature_invoice');
 $access->check_permission('tiki_p_admin');
 
 $invoices = $trkqrylib->tracker_query_by_names("Invoices");

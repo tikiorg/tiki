@@ -483,6 +483,15 @@ function prefs_feature_list($partial = false) {
 			'keywords' => 'slide slides presentation',
 			'default' => 'n',
 		),
+		'feature_invoice' => array(
+			'name' => tra('Invoice'),
+			'description' => tra('Invoice system'),
+			'help' => 'Invoice',
+			'type' => 'flag',
+			'keywords' => 'invoice contractor invoicing',
+			'default' => 'n',
+			'tags' => array('basic'),			
+		),
 		'feature_wysiwyg' => array(
 			'name' => tra('Wysiwyg editor'),
 			'description' => tra('WYSIWYG is an acronym for What You See Is What You Get. Uses CKEditor.'),
