@@ -50,7 +50,7 @@
 								{else}
 									{popup fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
 								{/if}
-									
+								>
 								{$day_cursor}
 								</a>
 							{else}
