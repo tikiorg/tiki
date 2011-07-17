@@ -110,7 +110,7 @@
 					<td>{tr}Join with Spreadsheet:{/tr}</td>
 					<td>
 						<select name="parentSheetId">
-							<option value="">{tr}None{/tr}</option>
+							<option value="0">{tr}None{/tr}</option>
 							{section name=sheet loop=$sheets}
 								{if not $sheets[sheet].parentSheetId}
 								<option value="{$sheets[sheet].sheetId}"{if $parentSheetId eq $sheets[sheet].sheetId} selected="selected"{/if}>
