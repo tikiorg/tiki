@@ -31,13 +31,13 @@
 });{/jq}
 {/if}
 {if $translation_mode eq 'n'}
-	{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{assign var=pp value=$approvedPageName}{else}{assign var=pp value=$page}{/if}
+	{if (isset($beingStaged) && $beingStaged eq 'y') and $prefs.wikiapproval_hideprefix == 'y'}{assign var=pp value=$approvedPageName}{else}{assign var=pp value=$page}{/if}
 	{title}{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}{tr}Edit Section{/tr}{else}{tr}Edit{/tr}{/if}: {$pp}{if $pageAlias ne ''}&nbsp;({$pageAlias}){/if}{/title}
 {else}
    {title}{tr}Update '{$page}'{/tr}{/title}
 {/if}
    
-{if $beingStaged eq 'y'}
+{if isset($beingStaged) && $beingStaged eq 'y'}
 	<div class="tocnav">{icon _id=information style="vertical-align:middle" align="left"} 
 		{if $approvedPageExists}
 			{tr}You are editing the staging copy of the approved version of this page. Changes will be merged in after approval.{/tr}
@@ -52,7 +52,7 @@
 		{/if}
 	</div>
 {/if}
-{if $needsStaging eq 'y'}
+{if isset($needsStaging) && $needsStaging eq 'y'}
 	<div class="tocnav">
 		{icon _id=information style="vertical-align:middle" align="left"} 
 		{tr}You are editing the approved copy of this page.{/tr}
@@ -83,7 +83,7 @@
 	<div class="highlight"><em class='mandatory_note'>{tr}A contribution is mandatory{/tr}</em></div>
 	{/remarksbox}
 {/if}
-{if $summary_needed eq 'y'}
+{if isset($summary_needed) && $summary_needed eq 'y'}
 	{remarksbox type='Warning' title="{tr}Warning{/tr}"}
 	<div class="highlight"><em class='mandatory_note'>{tr}An edit summary is mandatory{/tr}</em></div>
 	{/remarksbox}
@@ -113,7 +113,7 @@
 {if $preview or $prefs.ajax_autosave eq "y"}
 	{include file='tiki-preview.tpl'}
 {/if}
-{if $diff_style}
+{if isset($diff_style)}
 	<div id="diff_outer">
 		<div style="overflow:auto;height:20ex;" id="diff_history">
 			{if $translation_mode == 'y'}		
@@ -148,11 +148,11 @@
 
 	<input type="hidden" name="no_bl" value="y" />
 	{if !empty($smarty.request.returnto)}<input type="hidden" name="returnto" value="{$smarty.request.returnto}" />{/if}
-	{if $diff_style}
+	{if isset($diff_style)}
 		<select name="diff_style" class="wikiaction"title="{tr}Edit wiki page{/tr}|{tr}Select the style used to display differences to be translated.{/tr}">
-			<option value="htmldiff"{if $diff_style eq "htmldiff"} selected="selected"{/if}>{tr}html{/tr}</option>
-			<option value="inlinediff"{if $diff_style eq "inlinediff"} selected="selected"{/if} >{tr}text{/tr}</option>			  
-			<option value="inlinediff-full"{if $diff_style eq "inlinediff-full"} selected="selected"{/if} >{tr}text full{/tr}</option>			  
+			<option value="htmldiff"{if isset($diff_style) && $diff_style eq "htmldiff"} selected="selected"{/if}>{tr}html{/tr}</option>
+			<option value="inlinediff"{if isset($diff_style) && $diff_style eq "inlinediff"} selected="selected"{/if} >{tr}text{/tr}</option>			  
+			<option value="inlinediff-full"{if isset($diff_style) && $diff_style eq "inlinediff-full"} selected="selected"{/if} >{tr}text full{/tr}</option>			  
 		</select>
 		<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Change the style used to display differences to be translated.{/tr}" name="preview" value="{tr}Change diff styles{/tr}" onclick="needToConfirm=false;" />
 	{/if}
@@ -201,7 +201,7 @@
 							<fieldset>
 								<label for="comment">{tr}Describe the change you made:{/tr} {help url='Editing+Wiki+Pages' desc="{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}"}</label>
 								<input style="width:98%;" class="wikiedit" type="text" id="comment" name="comment" value="{$commentdata|escape}" />
-								{if $show_watch eq 'y'}
+								{if isset($show_watch) && $show_watch eq 'y'}
 									<label for="watch">{tr}Monitor this page:{/tr}</label>
 									<input type="checkbox" id="watch" name="watch" value="1"{if $watch_checked eq 'y'} checked="checked"{/if} />
 								{/if}
@@ -214,7 +214,7 @@
 									</table>
 								</fieldset>
 							{/if}
-							{if $wysiwyg neq 'y' and $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y' and $prefs.feature_filegals_manager neq 'y'}
+							{if (isset($wysiwyg) && $wysiwyg neq 'y') and $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y' and $prefs.feature_filegals_manager neq 'y'}
 								<fieldset>
 									<legend>{tr}Upload picture:{/tr}</legend>
 									<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
@@ -310,7 +310,7 @@ $("#allowhtml").change(function() {
 								</fieldset>
 							{/if}
 							
-							{if $wysiwyg neq 'y'}
+							{if isset($wysiwyg) && $wysiwyg neq 'y'}
 								{if $prefs.feature_wiki_attachments == 'y' and ($tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y')}
 									<fieldset>
 										<legend>{tr}Upload file:{/tr}</legend>
@@ -507,7 +507,7 @@ $("#allowhtml").change(function() {
 		
 		
 		{if $page|lower ne 'sandbox'}
-			{if $prefs.feature_antibot eq 'y' && $anon_user eq 'y'}
+			{if $prefs.feature_antibot eq 'y' && (isset($anon_user) && $anon_user eq 'y')}
 				{include file='antibot.tpl' tr_style="formcolor"}
 			{/if}
 		{/if}{* sandbox *}

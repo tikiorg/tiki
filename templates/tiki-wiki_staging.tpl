@@ -1,5 +1,5 @@
 {* $Id$ *}
-{if $beingStaged eq 'y'}
+{if isset($beingStaged) && $beingStaged eq 'y'}
 <div class="tocnav">
 {tr}This is the staging copy of{/tr} <a class="link" href="tiki-index.php?page={$approvedPageName|escape:'url'}">{tr}the approved version of this page.{/tr}</a>
 {if $outOfSync eq 'y'}

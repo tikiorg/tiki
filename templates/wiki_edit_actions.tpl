@@ -12,7 +12,7 @@ return false;
 });{/jq}
 {/if}
 {if $page|lower neq 'sandbox' or $tiki_p_admin eq 'y'}
-	{if ! $page_badchars_display or $prefs.wiki_badchar_prevent neq 'y'}
+	{if ! isset($page_badchars_display) or $prefs.wiki_badchar_prevent neq 'y'}
 		{if $translation_mode eq 'y'}
 			<input type="hidden" name="source_page" value="{$source_page|escape}"/>
 			<input type="hidden" name="target_page" value="{$target_page|escape}"/>

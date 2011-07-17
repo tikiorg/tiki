@@ -269,7 +269,7 @@ function CKeditor_OnComplete() {
 	$js_editconfirm = '';
 	$js_editlock = '';
 
-	if ($params['_simple'] == 'n' && $params['comments'] !== 'y') {
+	if ($params['_simple'] == 'n' && (isset($params['comments']) && $params['comments'] !== 'y')) {
 // Display edit time out
 
 		$js_editlock .= "

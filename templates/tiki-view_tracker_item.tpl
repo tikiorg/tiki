@@ -1,7 +1,7 @@
 {* $Id$ *}
 {title help="trackers"}{$tracker_info.name}{/title}
 
-{if $print_page ne 'y'}
+{if isset($print_page) && $print_page ne 'y'}
 
 	{* --------- navigation ------ *}
 	<div class="navbar">
@@ -111,7 +111,7 @@
 {/if}
 
 {* --------------------------------------------------------------- tab with edit --- *}
-{if $print_page ne 'y' && ($tiki_p_modify_tracker_items eq 'y' and $item_info.status ne 'p' and $item_info.status ne 'c') or ($tiki_p_modify_tracker_items_pending eq 'y' and $item_info.status eq 'p') or ($tiki_p_modify_tracker_items_closed eq 'y' and $item_info.status eq 'c') or $special}
+{if (isset($print_page) && $print_page ne 'y') && ($tiki_p_modify_tracker_items eq 'y' and $item_info.status ne 'p' and $item_info.status ne 'c') or ($tiki_p_modify_tracker_items_pending eq 'y' and $item_info.status eq 'p') or ($tiki_p_modify_tracker_items_closed eq 'y' and $item_info.status eq 'c') or $special}
 	{capture name="editTitle"}{if ($tiki_p_remove_tracker_items eq 'y' and $item_info.status ne 'p' and $item_info.status ne 'c') or ($tiki_p_remove_tracker_items_pending eq 'y' and $item_info.status eq 'p') or ($tiki_p_remove_tracker_items_closed eq 'y' and $item_info.status eq 'c')}{tr}Edit/Delete{/tr}{else}{tr}Edit{/tr}{/if}{/capture}
 	{tab name=$smarty.capture.editTitle}
 		<h2>{tr}Edit Item{/tr}</h2>
@@ -288,7 +288,7 @@
 {/tabset}
 <br /><br />
 
-{if $print_page eq 'y'}
+{if isset($print_page) && $print_page eq 'y'}
 	{capture name=url}{$base_url}{$itemId|sefurl:trackeritem}{/capture}
 	{tr}The original document is available at{/tr} <a href="{$smarty.capture.url}">{$smarty.capture.url}</a>
 {/if}

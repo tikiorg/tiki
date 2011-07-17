@@ -4,8 +4,8 @@
 	<div style="float:right;">
 		<select name="diff_style" id="preview_diff_style">
 			<option value="" {if empty($diff_style)}selected="selected"{/if}>{tr}Preview{/tr}</option>
-			<option value="htmldiff" {if $diff_style == "htmldiff"}selected="selected"{/if}>{tr}HTML diff{/tr}</option>
-			<option value="sidediff" {if $diff_style == "sidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
+			<option value="htmldiff" {if isset($diff_style) && $diff_style == "htmldiff"}selected="selected"{/if}>{tr}HTML diff{/tr}</option>
+			<option value="sidediff" {if isset($diff_style) && $diff_style == "sidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
 		</select>
 		{jq}
 $("#preview_diff_style").change(function(){
@@ -37,11 +37,11 @@ $('#autosave_preview').resizable({
 }).height(getCookie("wiki", "preview", ""));
 $("#autosave_preview>div").height(getCookie("wiki", "preview", ""));
 {/jq}{/if}
-<h2>{tr}Preview{/tr} {if $staging_preview eq 'y'}of current staging copy{/if}: {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if}</h2>
+<h2>{tr}Preview{/tr} {if isset($staging_preview) && $staging_preview eq 'y'}of current staging copy{/if}: {if isset($beingStaged) && $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if}</h2>
 {if $prefs.feature_wiki_description eq 'y'}
 <small>{$description}</small>
 {/if}
-{if $staging_preview neq 'y'}
+{if isset($staging_preview) && $staging_preview neq 'y'}
 <div align="center" class="attention" style="font-weight:bold">{tr}Note: Remember that this is only a preview, and has not yet been saved!{/tr}</div>
 {/if}
 <div  class="wikitext">
