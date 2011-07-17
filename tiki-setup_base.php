@@ -62,6 +62,12 @@ $needed_prefs = array(
 	'min_pass_length' => 5,
 	'pass_chr_special' => 'n'
 );
+// check that tiki_preferences is there
+if (empty($tikilib->query("SHOW TABLES LIKE 'tiki_preferences'")->numrows)) {
+	// smarty not initialised at this point to do a polite message, sadly
+	header('location: tiki-install.php');
+	exit;
+}
 $tikilib->get_preferences($needed_prefs, true, true);
 if (!isset($prefs['lastUpdatePrefs']) || $prefs['lastUpdatePrefs'] == - 1) {
 	$tikilib->query('delete from `tiki_preferences` where `name`=?', array('lastUpdatePrefs'));
