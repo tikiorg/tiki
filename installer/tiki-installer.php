@@ -446,8 +446,6 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 		}
 
 		TikiDb::set($db);
-
-		$smarty->assign('dbname', $dbname);
 	}
 
 	return $dbcon;
@@ -720,6 +718,7 @@ if (
 
 if ( $dbcon ) {
 	$smarty->assign('dbcon', 'y');
+	$smarty->assign('dbname', $dbs_tiki);
 } else {
 	$smarty->assign('dbcon', 'n');
 }
