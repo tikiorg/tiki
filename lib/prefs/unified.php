@@ -39,7 +39,7 @@ function prefs_unified_list()
 		'unified_field_weight' => array(
 			'name' => tra('Field Weights'),
 			'description' => tra('Allows to set the field weights that apply when ranking the pages for search listing. The weight only applies when the field is in the query. To nullify the value of a field, use an insignificant amount, not 0, which may lead to unexpected behaviors, such as stripping results.'),
-			'hint' => tra('One field per line, \'\'field_name\'\'__:__\'\'5.3\'\''),
+			'hint' => tra('One field per line, field_name__:__5.3'),
 			'type' => 'textarea',
 			'size' => 5,
 			'filter' => 'text',
