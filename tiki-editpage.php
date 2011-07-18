@@ -419,7 +419,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 							$info = $tikilib->get_page_info($pagename);
 							if ($info['lang'] !== $pageLang) {
 								include_once("lib/multilingual/multilinguallib.php");
-								if ($multilinguallib->updatePageLang('wiki page', $info['page_id'], $pageLang, true)){
+								if ($multilinguallib->updateObjectLang('wiki page', $info['page_id'], $pageLang, true)){
 									$pageLang = $info['lang'];
 									$smarty->assign('msg', tra("The language can't be changed as its set of translations has already this language"));
 									$smarty->display("error.tpl");
@@ -781,7 +781,7 @@ if ($prefs['wiki_comments_allow_per_page'] !== 'n') {
 if (isset($_REQUEST["lang"])) {
 	if ($prefs['feature_multilingual'] === 'y' && isset($info["lang"]) && $info['lang'] !== $_REQUEST["lang"]) {
 		include_once("lib/multilingual/multilinguallib.php");
-		if ($multilinguallib->updatePageLang('wiki page', $info['page_id'], $_REQUEST["lang"], true)) {
+		if ($multilinguallib->updateObjectLang('wiki page', $info['page_id'], $_REQUEST["lang"], true)) {
 			$pageLang = $info['lang'];
 			$smarty->assign('msg', tra("The language can't be changed as its set of translations has already this language"));
 			$smarty->display("error.tpl");

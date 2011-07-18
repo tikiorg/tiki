@@ -120,7 +120,7 @@ $smarty->assign('staging_page', $staging_page);
 if ($prefs['feature_multilingual'] == 'y') {
 	include_once("lib/multilingual/multilinguallib.php");
 	if (isset($info["lang"]) && $info['lang'] != $staging_info['lang'])
-		$multilinguallib->updatePageLang('wiki page', $info['page_id'], $staging_info['lang'], true);
+		$multilinguallib->updateObjectLang('wiki page', $info['page_id'], $staging_info['lang'], true);
 }
 
 // make sure approved page has approved category set, and sync categories

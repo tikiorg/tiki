@@ -184,7 +184,7 @@ class MultilingualLib extends TikiLib
 	/**
 	 * @brief: update lang in all tiki pages
 	 */
-	function updatePageLang($type, $objId, $lang, $optimisation = false)
+	function updateObjectLang($type, $objId, $lang, $optimisation = false)
 	{
 		if ($this->getTranslation($type, $objId, $lang)) {
 			return 'alreadyTrad';
@@ -193,14 +193,14 @@ class MultilingualLib extends TikiLib
 		if (!$optimisation) {
 			if ($type == 'wiki page') {
 				$query = "update `tiki_pages` set `lang`=? where `page_id`=?";
-			} else {
+			} elseif ($type == 'article') {
 				$query = "update `tiki_articles` set `lang`=? where `articleId`=?";
 			}
 			$this->query($query,array($lang, $objId));
 		}
 
-		$query = "update `tiki_translated_objects` set `lang`=? where `objId`=?";
-		$this->query($query,array($lang, $objId));
+		$query = "update `tiki_translated_objects` set `lang`=? where `objId`=? and `type`=?";
+		$this->query($query,array($lang, $objId, $type));
 		return null;
 	}
 

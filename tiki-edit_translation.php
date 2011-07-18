@@ -108,7 +108,7 @@ include_once 'categorize_list.php';
 if (isset($_REQUEST['langpage']) && !empty($_REQUEST['langpage']) && $_REQUEST['langpage'] != "NULL"
 				&& $langpage != $_REQUEST['langpage']) { // update the language
 
-	$error = $multilinguallib->updatePageLang($type, $objId, $_REQUEST['langpage']);
+	$error = $multilinguallib->updateObjectLang($type, $objId, $_REQUEST['langpage']);
 	if ($error)
 		$smarty->assign('error', $error);
 	else {

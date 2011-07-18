@@ -422,7 +422,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 
 	if ($prefs['feature_multilingual'] == 'y' && $_REQUEST['lang'] && isset($article_data) && $article_data['lang'] != $_REQUEST["lang"]) {
 		include_once("lib/multilingual/multilinguallib.php");
-		if ($multilinguallib->updatePageLang('article', $article_data['articleId'], $_REQUEST["lang"], true)) {
+		if ($multilinguallib->updateObjectLang('article', $article_data['articleId'], $_REQUEST["lang"], true)) {
 			$_REQUEST['lang'] = $article_data['lang'];
 			$smarty->assign('msg', tra("The language can't be changed as its set of translations has already this language"));
 			$smarty->display("error.tpl");
