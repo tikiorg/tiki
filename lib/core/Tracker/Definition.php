@@ -166,6 +166,16 @@ class Tracker_Definition
 		}
 	}
 
+	function getLanguageField()
+	{
+		foreach ($this->getFields() as $field) {
+			if ($field['type'] == 'LANG'
+				&& isset($field['options'][0]) && $field['options'][0] == 1) {
+				return $field['fieldId'];
+			}
+		}
+	}
+
 	function getCategorizedFields()
 	{
 		$out = array();

@@ -7469,6 +7469,18 @@ if( \$('#$id') ) {
 		return TikiLib::format_language_list($languages, $short, $all);
 	}
 
+	static function get_language_map()
+	{
+		$languages = self::list_languages();
+
+		$map = array();
+		foreach ($languages as $lang) {
+			$map[$lang['value']] = $lang['name'];
+		}
+
+		return $map;
+	}
+
 	function is_valid_language( $language ) {
 		return preg_match("/^[a-zA-Z-_]*$/", $language)
 			&& file_exists('lang/' . $language . '/language.php');
