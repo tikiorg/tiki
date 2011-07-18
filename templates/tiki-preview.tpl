@@ -41,7 +41,7 @@ $("#autosave_preview>div").height(getCookie("wiki", "preview", ""));
 {if $prefs.feature_wiki_description eq 'y'}
 <small>{$description}</small>
 {/if}
-{if isset($staging_preview) && $staging_preview neq 'y'}
+{if !isset($staging_preview) || $staging_preview neq 'y'}
 <div align="center" class="attention" style="font-weight:bold">{tr}Note: Remember that this is only a preview, and has not yet been saved!{/tr}</div>
 {/if}
 <div  class="wikitext">

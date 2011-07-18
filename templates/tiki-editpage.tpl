@@ -214,7 +214,7 @@
 									</table>
 								</fieldset>
 							{/if}
-							{if (isset($wysiwyg) && $wysiwyg neq 'y') and $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y' and $prefs.feature_filegals_manager neq 'y'}
+							{if (!isset($wysiwyg) || $wysiwyg neq 'y') and $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y' and $prefs.feature_filegals_manager neq 'y'}
 								<fieldset>
 									<legend>{tr}Upload picture:{/tr}</legend>
 									<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
@@ -310,7 +310,7 @@ $("#allowhtml").change(function() {
 								</fieldset>
 							{/if}
 							
-							{if isset($wysiwyg) && $wysiwyg neq 'y'}
+							{if !isset($wysiwyg) || $wysiwyg neq 'y'}
 								{if $prefs.feature_wiki_attachments == 'y' and ($tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y')}
 									<fieldset>
 										<legend>{tr}Upload file:{/tr}</legend>
