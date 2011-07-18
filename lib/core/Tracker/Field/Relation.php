@@ -127,7 +127,7 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 		}
 
 		if ($value) {
-			$target = explode("\n", $value);
+			$target = explode("\n", trim($value));
 		} else {
 			$target = array();
 		}

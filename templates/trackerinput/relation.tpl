@@ -1,4 +1,5 @@
 <div id="{$field.ins_id|escape}_container">
+	<input type="hidden" name="{$field.ins_id|escape}[]" value="" />
 	<ul>
 		{foreach from=$context.labels item=label key=id}
 			<li>{$label|escape}</li>
@@ -13,8 +14,8 @@
 	var container = $('#{{$field.ins_id}}_container')[0];
 
 	var createItem = function (id, label) {
-		var item = $('<li/>')
-			.text(label);
+		var item = $('<li/>');
+		item.text(label);
 
 		if (-1 === $.inArray(id, inverts)) {
 			item.prepend(
