@@ -1,6 +1,8 @@
 <?php
 require_once('tiki-setup.php');
-include('lib/trackers/trackerquerylib.php');
+require_once('lib/profilelib/installlib.php');
+require_once('lib/profilelib/profilelib.php');
+require_once('lib/trackers/trackerquerylib.php');
 
 global $tikilib, $trkqrylib;
 
