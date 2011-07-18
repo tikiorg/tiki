@@ -13,7 +13,7 @@ $access->check_permission('tiki_p_admin');
 $installer = new Tiki_Profile_Installer();
 $profile = Tiki_Profile::fromNames( "profiles.tiki.org","Invoice" );
 if (!$installer->isInstalled( $profile )) {
-	$smarty->assign('msg', tra('You need to install the "Invoice" profile'));
+	$smarty->assign('msg', tra('You need to apply the "Invoice" profile'));
 	$smarty->display("error.tpl");
 	die;
 }
