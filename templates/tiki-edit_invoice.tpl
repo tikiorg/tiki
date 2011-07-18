@@ -26,8 +26,6 @@ Client <select>
 </table>
 <hr />
 
-<h2>{$client.Name}</h2>
-
 <table class='invoiceItems'>
 	<tr>
 		<th>{tr}Quantity{/tr}</th>

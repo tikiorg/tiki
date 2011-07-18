@@ -18,10 +18,14 @@ if (!$installer->isInstalled( $profile )) {
 	die;
 }
 
-$smarty->assign("invoice", end($trkqrylib->tracker_query_by_names("Invoices", null, null, $_REQUEST['invoice'])));
 $smarty->assign("clients", $trkqrylib->tracker_query_by_names("Invoice Clients"));
 $smarty->assign("setting", end($trkqrylib->tracker_query_by_names("Invoice Settings")));
-$smarty->assign("invoiceItems", $trkqrylib->tracker_query_by_names("Invoice Items", null, null, null, array($_REQUEST['invoice']), null, array("Invoice Id")));
+
+//we are editing an invoice here
+if (isset($_REQUEST['invoice'])) {
+	$smarty->assign("invoice", end($trkqrylib->tracker_query_by_names("Invoices", null, null, $_REQUEST['invoice'])));
+	$smarty->assign("invoiceItems", $trkqrylib->tracker_query_by_names("Invoice Items", null, null, null, array($_REQUEST['invoice']), null, array("Invoice Id")));
+}
 
 // Display the template
 $smarty->assign('mid', 'tiki-edit_invoice.tpl');
