@@ -381,7 +381,7 @@ class WikiLib extends TikiLib
 		$wiki_cache = !is_null($info['wiki_cache']) ? $info['wiki_cache'] : $prefs['wiki_cache']; 
 		if ($wiki_cache > 0 && empty($user) ) {
 			$cache_info = $this->get_cache_info($page);
-			if (!empty($cache_info['cache_timestamp']) && $cache_info['cache_timestamp'] + $wiki_cache > $this->now) {
+			if (!empty($cache_info['cache_timestamp']) && $cache_info['cache_timestamp'] + $wiki_cache >= $this->now) {
 				$content = $cache_info['cache'];
 				// get any cached JS and add to headerlib JS
 				$headerlib->add_js( implode( "\n", $headerlib->getJsFromHTML( $content )));
