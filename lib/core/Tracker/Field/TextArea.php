@@ -79,11 +79,6 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 		);
 	}
 
-	public static function build($type, $trackerDefinition, $fieldInfo, $itemData)
-	{
-		return new self($fieldInfo, $itemData, $trackerDefinition);
-	}
-
 	function getFieldData(array $requestData = array())
 	{
 		$data = $this->processMultilingual($requestData, $this->getInsertId());

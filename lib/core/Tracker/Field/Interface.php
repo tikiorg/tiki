@@ -9,7 +9,11 @@ interface Tracker_Field_Interface
 {
 	public static function getTypes();
 
-	public static function build($type, $trackerDefinition, $fieldInfo, $itemData);
+	/**
+	 * Optional method for implementations supporting multiple implementations or needing custom construction.
+	 *
+	 * public static function build($type, $trackerDefinition, $fieldInfo, $itemData);
+	 */
 
 	/**
 	 * return the values of a field (not necessarily the html that will be displayed) for input or output

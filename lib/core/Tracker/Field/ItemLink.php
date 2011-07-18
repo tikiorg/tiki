@@ -68,11 +68,6 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract
 		);
 	}
 
-	public static function build($type, $trackerDefinition, $fieldInfo, $itemData)
-	{
-		return new self($fieldInfo, $itemData, $trackerDefinition);
-	}
-
 	function getFieldData(array $requestData = array())
 	{
 		$data = $this->getLinkData($requestData, $this->getInsertId());

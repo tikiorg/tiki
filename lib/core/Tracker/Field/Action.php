@@ -42,11 +42,6 @@ class Tracker_Field_Action implements Tracker_Field_Interface
 		);
 	}
 
-	public static function build($type, $trackerDefinition, $fieldInfo, $itemData)
-	{
-		return new self($fieldInfo, $itemData, $trackerDefinition);
-	}
-
 	function getFieldData(array $requestData = array())
 	{
 		return array();

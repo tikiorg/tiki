@@ -54,11 +54,6 @@ class Tracker_Field_Factory
 		)));
 	}
 
-	public static function build($type, $trackerDefinition, $fieldInfo, $itemData)
-	{
-		return new self($fieldInfo, $itemData, $trackerDefinition);
-	}
-
 	function getFieldTypes()
 	{
 		return $this->infoMap;
@@ -71,7 +66,11 @@ class Tracker_Field_Factory
 		if (isset($this->typeMap[$type])) {
 			$class = $this->typeMap[$type];
 
-			return call_user_func(array($class, 'build'), $type, $this->trackerDefinition, $field_info, $itemData); 
+			if (is_callable(array($class, $build))) {
+				return call_user_func(array($class, 'build'), $type, $this->trackerDefinition, $field_info, $itemData); 
+			} else {
+				return new $class($field_info, $itemData, $this->trackerDefinition);
+			}
 		}
 	}
 }
