@@ -3,7 +3,7 @@
 {if isset($msgTrackerFilter) && $msgTrackerFilter}
 <div class="simplebox highlight">{$msgTrackerFilter|escape}</div>
 {/if}
-{if (isset($line) && $line ne 'y') and $prefs.javascript_enabled eq 'y' and $noflipflop ne 'y'}
+{if (!isset($line) || $line ne 'y') and $prefs.javascript_enabled eq 'y' and $noflipflop ne 'y'}
 {button _text="{tr}Filters{/tr}" _flip_id="trackerFilter$iTrackerFilter"}
 {/if}
 <div id="trackerFilter{$iTrackerFilter}" class="trackerfilter" style="display:{if isset($open) && $open eq 'y'}block{else}none{/if}">
@@ -36,11 +36,11 @@ function tf_export_submit(fm) {
 {if isset($line) && $line eq 'y'}<tr>{/if}
 {cycle values="even,odd" print=false}
 {foreach from=$filters item=filter}
-	{if isset($line) && $line ne 'y'}<tr class="{cycle}">{/if}
+	{if !isset($line) || $line ne 'y'}<tr class="{cycle}">{/if}
 		<td>
 		<label for="f_{$filter.fieldId}">{$filter.name|tr_if}</label>
 		{if $showFieldId eq 'y'} -- {$filter.fieldId}{/if}
-		{if isset($line) && $line ne 'y'}</td><td>{else}:{/if}
+		{if !isset($line) || $line ne 'y'}</td><td>{else}:{/if}
 {*------drop-down, multiple *}
 		{if $filter.format eq 'd' or  $filter.format eq 'm'}
 			<select id="f_{$filter.fieldId}" name="f_{$filter.fieldId}{if $filter.format eq "m"}[]{/if}" {if $filter.format eq "m"} size="5" multiple="multiple"{/if}> 
@@ -91,21 +91,21 @@ function tf_export_submit(fm) {
 			<input {if $filter.format eq "c"}type="checkbox"{else}type="radio"{/if}
 					name="f_{$filter.fieldId}{if $filter.format eq "c"}[]{/if}"
 					value=""{if !$filter.selected} checked="checked"{/if} />
-			{tr}Any{/tr}{if isset($line) && $line ne 'y'}<br />{/if}
+			{tr}Any{/tr}{if !isset($line) || $line ne 'y'}<br />{/if}
 			{section name=io loop=$filter.opts}
 				<input {if $filter.format eq "c"}type="checkbox"{else}type="radio"{/if}
 						name="f_{$filter.fieldId}{if $filter.format eq "c"}[]{/if}"
 						value="{$filter.opts[io].id|escape:url}"
 						{if $filter.opts[io].selected eq "y"} checked="checked"{/if} />
 				{$filter.opts[io].name|tr_if}
-				{if isset($line) && $line ne 'y'}<br />{/if}
+				{if !isset($line) || $line ne 'y'}<br />{/if}
 			{/section}
 		{/if}
 		</td>
-		{if isset($line) && $line ne 'y'}</tr>{else} {/if}
+		{if !isset($line) || $line ne 'y'}</tr>{else} {/if}
 {/foreach}
-{if (isset($line) && $line ne 'y') and (isset($action) and $action neq " ")}<tr>{/if}
-{if (isset($action) and $action neq " ") or !empty($export_action)}
+{if (!isset($line) || $line ne 'y') and (!isset($action) || $action neq " ")}<tr>{/if}
+{if (!isset($action) || $action neq " ") or !empty($export_action)}
 <td>&nbsp;</td>
 <td>
 	{if !empty($export_action)}
@@ -129,9 +129,9 @@ function tf_export_submit(fm) {
 	{if $line ne 'y'}<tr>{/if}
 	<td>{tr}Sort{/tr}</td>
 	<td>{include file='tracker_sort_input.tpl' iTRACKERLIST=$iTrackerFilter}
-	{if isset($line) && $line ne 'y'}</tr>{/if}
+	{if !isset($line) || $line ne 'y'}</tr>{/if}
 {/if}
-{if (isset($line) && $line ne 'y' ) and $action}</tr>{/if}
+{if (!isset($line) || $line ne 'y' ) and $action}</tr>{/if}
 </table>
 {if empty($inForm)}</form>{/if}
 </div>

@@ -32,7 +32,7 @@
 
 <div class="clearfix">
 		<form method="post" action="{$smarty.server.PHP_SELF}" class="findtable">
-		{if isset($filegals_manager) && $filegals_manager neq ''}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}" />{/if}
+		{if !isset($filegals_manager) || $filegals_manager neq ''}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}" />{/if}
 
 		{query _type='form_input' maxRecords='NULL' type='NULL' types='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' cat_categories='NULL' filegals_manager='NULL' save='NULL' offset='NULL' searchlist='NULL' searchmap='NULL'}
 

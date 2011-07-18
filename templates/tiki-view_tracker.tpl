@@ -231,7 +231,7 @@
 				{include file='antibot.tpl' tr_style="formcolor" showmandatory=y}
 			{/if}
 			
-			{if isset($groupforalert) && $groupforalert ne ''}
+			{if !isset($groupforalert) || $groupforalert ne ''}
 				{if $showeachuser eq 'y'}
 					<tr>
 						<td>{tr}Choose users to alert{/tr}</td>
