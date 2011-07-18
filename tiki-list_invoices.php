@@ -9,6 +9,7 @@ global $tikilib, $trkqrylib;
 $access->check_feature('feature_invoice');
 $access->check_permission('tiki_p_admin');
 
+//check if profile is created
 $installer = new Tiki_Profile_Installer();
 $profile = Tiki_Profile::fromNames( "profiles.tiki.org","Invoice" );
 if (!$installer->isInstalled( $profile )) {

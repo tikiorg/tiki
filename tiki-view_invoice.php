@@ -9,6 +9,15 @@ global $tikilib, $trkqrylib;
 $access->check_feature('feature_invoice');
 $access->check_permission('tiki_p_admin');
 
+//check if profile is created
+$installer = new Tiki_Profile_Installer();
+$profile = Tiki_Profile::fromNames( "profiles.tiki.org","Invoice" );
+if (!$installer->isInstalled( $profile )) {
+	$smarty->assign('msg', tra('You need to install the "Invoice" profile'));
+	$smarty->display("error.tpl");
+	die;
+}
+
 $invoice = end($trkqrylib->tracker_query_by_names("Invoices", null, null, $_REQUEST['invoice']));
 $amount = 0;
 if (is_array($invoice["Item Amounts"])) {
