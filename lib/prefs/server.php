@@ -6,8 +6,7 @@
 // $Id$
 
 function prefs_server_list($partial = false) {
-	global $prefs, $tikilib;
-	
+
 	// Skipping the getTimeZoneList() from tikidate which just emulates the pear date format
 	// Generating it is extremely costly in terms of memory.
 	if( class_exists( 'DateTimeZone' ) ) {
@@ -20,10 +19,6 @@ function prefs_server_list($partial = false) {
 	}
 
 	sort( $timezones );
-
-	if (! $partial && $prefs['server_timezone'] == 'GMT' && !in_array('GMT', $timezones) && in_array('UTC', $timezones)) {
-		$tikilib->set_preference( 'server_timezone', 'UTC' );
-	}
 
 	global $tikidate;
 	

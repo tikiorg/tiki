@@ -270,7 +270,11 @@ class TikiDate
 	}
 
 	function getTimezoneId() {
-		return $this->date->format("e");
+		$tz = $this->date->format("e");
+		if ($tz === 'GMT') {
+			$tz = 'UTC';	// timezone list from DateTimeZone::listIdentifiers() only has UTC, no GMT any more
+		}
+		return $tz;
 	}
 
 	// Checks that the string is either a timezone identifier or an abbreviation. display_timezone can be manually set to an identifier in preferences but will be an [uppercase] abbreviation if auto-detected by JavaScript.
