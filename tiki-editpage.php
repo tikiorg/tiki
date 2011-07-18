@@ -50,7 +50,7 @@ function create_staging($cats, $cat_type, $cat_name, $cat_objid, $edit, $descrip
 		if ($prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $newstaging_cats)) {	
 			$newstaging_cats = array_diff($newstaging_cats,Array($prefs['wikiapproval_approved_category']));	
 		}
-		$categlib->update_object_categories($newstaging_cats, $newstaging_cat_objid, $cat_type, $cat_desc, $newstaging_cat_name, $newstaging_cat_href);
+		$categlib->update_object_categories($newstaging_cats, $newstaging_cat_objid, $cat_type, $description, $newstaging_cat_name, $newstaging_cat_href);
 		//now to link in translations if any
 		if ($prefs['feature_multilingual'] === 'y') {
 			include_once("lib/multilingual/multilinguallib.php");
