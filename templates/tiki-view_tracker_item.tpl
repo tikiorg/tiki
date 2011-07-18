@@ -1,7 +1,7 @@
 {* $Id$ *}
 {title help="trackers"}{$tracker_info.name}{/title}
 
-{if isset($print_page) && $print_page ne 'y'}
+{if ! isset($print_page) || $print_page ne 'y'}
 
 	{* --------- navigation ------ *}
 	<div class="navbar">
