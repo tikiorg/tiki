@@ -368,10 +368,12 @@ class UsersLib extends TikiLib
 		// if we are using tiki auth or if we're using an alternative auth except for admin
 		if ((!$auth_ldap && !$auth_pam && !$auth_cas && !$auth_shib && !$auth_phpbb) || ((($auth_ldap && $skip_admin) || ($auth_shib && $shib_skip_admin) || ($auth_pam && $pam_skip_admin) || ($auth_cas && $cas_skip_admin) || ($auth_phpbb && $phpbb_skip_admin)) && $user == "admin") || ($auth_ldap && ($prefs['auth_ldap_permit_tiki_users']=='y' && $userTiki))) { // todo: bad hack. better search for a more general solution here
 			// if the user verified ok, log them in
-			if ($userTiki) //user validated in tiki, update lastlogin and be done
+			if ($userTiki) {//user validated in tiki, update lastlogin and be done
+				if ($auth_ldap)
+					return array($this->sync_and_update_lastlogin($user, $pass), $user, $result, 'tiki');
 				return array($this->sync_and_update_lastlogin($user, $pass), $user, $result);
 			// if the user password was incorrect but the account was there, give an error
-			elseif ($userTikiPresent) //user ixists in tiki but bad password
+			} elseif ($userTikiPresent) //user ixists in tiki but bad password
 				return array(false, $user, $result);
 			// if the user was not found, give an error
 			// this could be for future uses
@@ -5560,10 +5562,13 @@ class UsersLib extends TikiLib
 		return $pass;
 	}
 
-	function is_due($user) {
+	function is_due($user, $method=null) {
 		global $prefs;
+		if (empty($method)) {
+			$method = $prefs['auth_method'];
+		}
 		// if CAS auth is enabled, don't check if password is due since CAS does not use local Tiki passwords
-		if ( $prefs['auth_method'] == 'cas' || $prefs['change_password'] != 'y') {
+		if ( $method == 'cas' || $method == 'ldap' || $prefs['change_password'] != 'y') {
 			return false;
 		}
 		$confirm = $this->getOne("select `pass_confirm` from `users_users` where binary `login`=?", array($user));

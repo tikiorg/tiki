@@ -185,12 +185,15 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 	}
 } else {
 	// Verify user is valid
-	list($isvalid, $user, $error) = $userlib->validate_user($user, $pass, $challenge, $response);
+	$ret = $userlib->validate_user($user, $pass, $challenge, $response);
+	if (count($ret) == 3)
+		$ret[] = null;
+	list($isvalid, $user, $error, $method) = $ret;
 	// If the password is valid but it is due then force the user to change the password by
 	// sending the user to the new password change screen without letting him use tiki
 	// The user must re-nter the old password so no security risk here
 	if ($isvalid) {
-		$isdue = $userlib->is_due($user);
+		$isdue = $userlib->is_due($user, $method);
 		if ($user != 'admin') { // admin has not necessarely an email
 			$isEmailDue = $userlib->is_email_due($user, 'email');
 			// Update some user details from LDAP
