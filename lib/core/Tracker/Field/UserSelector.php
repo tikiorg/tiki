@@ -40,6 +40,12 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract
 							1 => tr('Yes'),
 						),
 					),
+					'groupIds' => array(
+						'name' => tr('Group IDs'),
+						'description' => tr('Limit the list of users to members of specific groups.'),
+						'separator' => '|',
+						'filter' => 'int',
+					),
 				),
 			),
 		);
@@ -88,6 +94,11 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract
 		}
 		
 		if ($this->getOption(0) == 0 || $tiki_p_admin_trackers === 'y') {
+			$groupIds = '';
+			if ($this->getOption(2)) {
+				$groupIds = $this->getOption(2);
+			}
+
 			require_once $smarty->_get_plugin_filepath('function', 'user_selector');
 			return smarty_function_user_selector(
 					array(	'user' => $value,
@@ -96,6 +107,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract
 							'name' => $this->getInsertId(),
 							'editable' => 'y',
 							'allowNone' => $this->getConfiguration('isMandatory') === 'y' ? 'n' : 'y',
+							'groupIds' => $groupIds,
 					), $smarty);
 		} else {
 			require_once $smarty->_get_plugin_filepath('modifier', 'username');
