@@ -89,20 +89,25 @@
 									<a href="tiki-object_watches.php?objectId={$page_info.page_ref_id|escape:"url"}&amp;watch_event=structure_changed&amp;objectType=structure&amp;objectName={$page|escape:"url"}&amp;objectHref={'tiki-index.php?page_ref_id='|cat:$page_ref_id|escape:"url"}" class="icon">{icon _id=eye_group_arrow_down alt="{tr}Group Monitor on Structure{/tr}"}</a>
 								{/if}
 							{/if}
+							{if $prefs.feature_backlinks eq 'y' and $backlinks and $tiki_p_view_backlink eq 'y'}
+								<div class="backlinks_button">
+									<ul class="clearfix cssmenu_horiz">
+										<li>
+											{icon _id=arrow_turn_left title="{tr}Backlinks{/tr}"}
+											<ul class="backlinks_poppedup">
+												<li class="tabcontent">
+													{section name=back loop=$backlinks}
+													<a title="{tr}Backlinks{/tr}" href="{$backlinks[back].fromPage}" title="{$backlinks[back].fromPage}">
+														{if $prefs.wiki_backlinks_name_len ge '1'}{$backlinks[back].fromPage|truncate:$prefs.wiki_backlinks_name_len:"...":true}{else}{$backlinks[back].fromPage}{/if}
+													</a>			
+													{/section}
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</div>		
+							{/if}
 						</div><!-- END of icons -->
-
-						{if $prefs.feature_backlinks eq 'y' and $backlinks and $tiki_p_view_backlink eq 'y'}
-							<form action="tiki-index.php" method="get" style="display: block; float: left">
-								<select name="page" onchange="this.form.submit()" title="{tr}Backlinks{/tr}">
-									<option>{tr}Backlinks{/tr}...</option>
-									{section name=back loop=$backlinks}
-												<option value="{$backlinks[back].fromPage}" title="{$backlinks[back].fromPage}">
-												{if $prefs.wiki_backlinks_name_len ge '1'}{$backlinks[back].fromPage|truncate:$prefs.wiki_backlinks_name_len:"...":true}{else}{$backlinks[back].fromPage}{/if}
-												</option>
-									{/section}
-								</select>
-							</form>
-						{/if}
 			
 						{if ( $structure eq 'y' and count($showstructs) gt 1 ) or ( $structure eq 'n' and count($showstructs) neq 0 )}
 							<form action="tiki-index.php" method="post" style="float: left">
