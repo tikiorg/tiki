@@ -680,7 +680,12 @@ class ModLib extends TikiLib
 	}
 
 	function execute_module( $mod_reference ) {
-		$module_params = array_merge( array( 'style' => '' ), $mod_reference['params']);	// not sure why style doesn't get set sometime but is used in the tpl
+		$defaults = array(
+			'style' => '',
+			'nonums' => 'n',
+		);
+		$module_params = isset($mod_reference['params']) ? (array) $mod_reference['params'] : array();
+		$module_params = array_merge( $defaults, $module_params ); // not sure why style doesn't get set sometime but is used in the tpl
 
 		if ( empty($mod_reference['rows']) ) {
 			$mod_reference['rows'] = 10;
@@ -702,7 +707,7 @@ class ModLib extends TikiLib
 			if ( $info['type'] == "function") // Use the module name as default module title. This can be overriden later. A module can opt-out of this in favor of a dynamic default title set in the TPL using clear_assign in the main module function. It can also be overwritten in the main module function.
 				$smarty->assign('tpl_module_title', tra( $info['name'] ) );
 
-			$smarty->assign('nonums', isset( $module_params['nonums'] ) ? $module_params['nonums'] : "n" );
+			$smarty->assign('nonums', $module_params['nonums']);
 			
 			if( $info['type'] == 'include' ) {
 				$phpfile = 'modules/mod-' . $mod_reference['name'] . '.php';
