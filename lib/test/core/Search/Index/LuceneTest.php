@@ -115,6 +115,8 @@ class Search_Index_LuceneTest extends PHPUnit_Framework_TestCase
 		$this->assertResultCount(1, 'filterLanguage', 'en or fr');
 		$this->assertResultCount(0, 'filterLanguage', 'en and fr');
 		$this->assertResultCount(0, 'filterLanguage', 'fr');
+		$this->assertResultCount(0, 'filterLanguage', 'NOT en');
+		$this->assertResultCount(0, 'filterLanguage', 'NOT en');
 	}
 
 	function testFilterPermissions()

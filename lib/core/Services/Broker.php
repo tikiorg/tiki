@@ -21,6 +21,17 @@ class Services_Broker
 		try {
 			$output = $this->attemptProcess($controller, $action, $request);
 
+			if (isset($output['FORWARD'])) {
+				$arguments = array_merge(array(
+					'controller' => $controller,
+					'action' => $action,
+				), $output['FORWARD']);
+
+				$loc = $_SERVER['PHP_SELF'];
+				header("Location: $loc?" . http_build_query($arguments, '', '&'));
+				exit;
+			}
+
 			if ($access->is_serializable_request()) {
 				echo $access->output_serialized($output);
 			} else {

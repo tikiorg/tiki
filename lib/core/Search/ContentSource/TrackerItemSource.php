@@ -53,6 +53,10 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 			return $data;
 		}
 
+		if ($languageField = $definition->getLanguageField()) {
+			$data['language'] = $typeFactory->identifier($itemData[$languageField]);
+		}
+
 		$fields = $definition->getFields();
 
 		$title = '';

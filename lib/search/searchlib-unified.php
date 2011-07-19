@@ -292,10 +292,13 @@ class UnifiedSearchLib
 		}
 
 		if (isset($filter['language']) && $filter['language']) {
-			$q = "\"{$filter['language']}\"";
+			$q = $filter['language'];
+			if (preg_match("/^\w+\-\w+$/", $q)) {
+				$q = "\"$q\"";
+			}
 
 			if (isset($filter['language_unspecified'])) {
-				$q .= ' or unknown';
+				$q = "($q) or unknown";
 			}
 
 			$query->filterLanguage($q);
