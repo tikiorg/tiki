@@ -17,17 +17,29 @@ function wikiplugin_memberlist_info() {
 			'groups' => array(
 				'required' => true,
 				'name' => tra('Groups'),
-				'description' => tra('List of groups to handle through the interface. Colon separated.'),
+				'description' => tra('List of groups to handle through the interface (use "*" for all). Colon separated.'),
 				'separator' => ':',
 				'filter' => 'groupname',
 				'default' => '',
+			),
+			'showDescriptions' => array(
+				'required' => false,
+				'name' => tra('Show Descriptions'),
+				'description' => tra('Display group descriptions below list name.'),
+				'filter' => 'alpha',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				),
+				'default' => 'n',
 			),
 		),
 	);
 }
 
 function wikiplugin_memberlist( $data, $params ) {
-	global $prefs;
+	global $prefs, $userlib;
 	static $execution = 0;
 	$key = 'memberlist-execution-' . ++ $execution;
 
@@ -36,6 +48,17 @@ function wikiplugin_memberlist( $data, $params ) {
 	}
 
 	$groups = $params['groups'];
+
+	$defaults = array();
+	$plugininfo = wikiplugin_memberlist_info();
+	foreach ($plugininfo['params'] as $key => $param) {
+		$defaults["$key"] = $param['default'];
+	}
+	$params = array_merge($defaults, $params);
+
+	if (count($groups) === 1 && $groups[0] === '*') {	// all available
+		$groups = $userlib->list_all_groups();
+	}
 
 	Perms::bulk( array( 'type' => 'group' ), 'object', $groups );
 
@@ -80,6 +103,12 @@ function wikiplugin_memberlist( $data, $params ) {
 		}
 	}
 
+	if ($params['showDescriptions'] === 'y') {
+		foreach( $validGroups as $name => &$group ) {
+			$group['info'] = $userlib->get_group_info($name);
+		}
+	}
+
 	global $smarty;
 	$smarty->assign( 'execution_key', $key );
 	$smarty->assign( 'can_apply', $canApply );
@@ -93,8 +122,10 @@ function wikiplugin_memberlist_get_members( $groupName ) {
 	$raw = $userlib->get_users( 0, -1, 'login_asc', '', '', false, $groupName );
 	$users = array();
 
-	foreach( $raw['data'] as $user ) {
-		$users[] = $user['login'];
+	if (isset($raw['data'])) {
+		foreach( $raw['data'] as $user ) {
+			$users[] = $user['login'];
+		}
 	}
 
 	return $users;
