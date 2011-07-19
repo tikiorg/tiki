@@ -15,7 +15,7 @@ function capLock(e, el){
 {tikimodule error=$module_params.error title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	{if $mode eq "header"}<div class="siteloginbar{if $user} logged-in{/if}">{/if}
 	{if isset($user) and $user}
-		{if $mode eq "module"}
+		{if empty($mode) or $mode eq "module"}
 			<div>{tr}Logged in as:{/tr} <span style="white-space: nowrap">{$user|userlink}</span></div>
 			<div style="text-align: center;">
 				{button href="tiki-logout.php" _text="{tr}Log out{/tr}"}
