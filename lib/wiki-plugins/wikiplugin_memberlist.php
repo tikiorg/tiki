@@ -56,6 +56,13 @@ function wikiplugin_memberlist_info() {
 				'default' => 100,
 				'filter' => 'digits',
 			),
+			'membersOnly' => array(
+				'required' => false,
+				'name' => tra('Members Only'),
+				'description' => tra('Only shows groups containing a certain user. Enter "%user%" to show groups for the current logged in user.'),
+				'default' => '',
+				'filter' => 'username',
+			),
 		),
 	);
 }
@@ -80,6 +87,21 @@ function wikiplugin_memberlist( $data, $params ) {
 
 	if (count($groups) === 1 && $groups[0] === '*') {	// all available
 		$groups = $userlib->list_all_groups();
+	}
+
+	if (!empty($params['membersOnly'])) {
+		if ($params['membersOnly'] === '%user%') {
+			$params['membersOnly'] = $GLOBALS['user'];
+		}
+		$usergroups = $userlib->get_user_groups($params['membersOnly']);
+		$in_group = array();
+		foreach ($groups as $group) {
+			if (in_array($group, $usergroups) && $group != 'Anonymous') {
+				$in_group[] = $group;
+			}
+		}
+		$groups = $in_group;
+		unset($in_group);
 	}
 
 	Perms::bulk( array( 'type' => 'group' ), 'object', $groups );
