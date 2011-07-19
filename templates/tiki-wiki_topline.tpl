@@ -3,7 +3,7 @@
 		{if !isset($hide_page_header) or !$hide_page_header}
 			<div class="wikiinfo" style="float: left">
 				{if $prefs.wiki_page_name_above eq 'y' and $print_page ne 'y'}
-				    <a href="javascript:self.location=self.location;" class="titletop" title="{tr}refresh{/tr}">{$page}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{* The hard-coded spaces help selecting the page name for inclusion in a wiki link *}
+				    <a href="javascript:self.location=self.location;" class="titletop" title="{tr}refresh{/tr}">{$page|escape}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{* The hard-coded spaces help selecting the page name for inclusion in a wiki link *}
 				{/if}
 				
 				{if $prefs.feature_wiki_pageid eq 'y' and $print_page ne 'y'}
@@ -97,8 +97,8 @@
 											<ul class="backlinks_poppedup">
 												<li class="tabcontent">
 													{section name=back loop=$backlinks}
-													<a title="{tr}Backlinks{/tr}" href="{$backlinks[back].fromPage}" title="{$backlinks[back].fromPage}">
-														{if $prefs.wiki_backlinks_name_len ge '1'}{$backlinks[back].fromPage|truncate:$prefs.wiki_backlinks_name_len:"...":true}{else}{$backlinks[back].fromPage}{/if}
+													<a title="{tr}Backlinks{/tr}" href="{$backlinks[back].fromPage}" title="{$backlinks[back].fromPage|escape}">
+														{if $prefs.wiki_backlinks_name_len ge '1'}{$backlinks[back].fromPage|truncate:$prefs.wiki_backlinks_name_len:"...":true|escape}{else}{$backlinks[back].fromPage|escape}{/if}
 													</a>			
 													{/section}
 												</li>
