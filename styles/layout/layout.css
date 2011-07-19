@@ -2212,5 +2212,17 @@ div.aclabel, span.aclabel, label.aclabel {
 	position: absolute;
 	z-index: 2;
 }
-
+/* tiki-wiki_topline.tpl Backlinks button */
+.backlinks_button {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+}
+.backlinks_button .cssmenu_horiz ul li {
+	border: 1px solid #999;
+	background: white;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+}
 /* End of File */
