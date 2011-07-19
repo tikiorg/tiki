@@ -34,6 +34,21 @@ function wikiplugin_memberlist_info() {
 				),
 				'default' => 'n',
 			),
+			'displayMode' => array(
+				'required' => false,
+				'name' => tra('Display mode'),
+				'description' => tra('How to show the member lists.'),
+				'filter' => 'text',
+				'options' => array(
+					array('text' => 'Default (plain)', 'value' => ''),
+					array('text' => tra('Tabs (requires feature_jquery_ui)'), 'value' => 'tabs'),
+					// more soon...
+				),
+				'default' => '',
+				'dependencies' => array(	// unused as yet i think - jb: tiki 8 trunk july 2011
+					'feature_jquery_ui',
+				),
+			),
 		),
 	);
 }
@@ -41,7 +56,7 @@ function wikiplugin_memberlist_info() {
 function wikiplugin_memberlist( $data, $params ) {
 	global $prefs, $userlib;
 	static $execution = 0;
-	$key = 'memberlist-execution-' . ++ $execution;
+	$exec_key = 'memberlist-execution-' . ++ $execution;
 
 	if( ! isset( $params['groups'] ) ) {
 		return "^Missing group list^";
@@ -64,7 +79,7 @@ function wikiplugin_memberlist( $data, $params ) {
 
 	$validGroups = wikiplugin_memberlist_get_group_details( $groups );
 
-	if( isset($_POST[$key]) ) {
+	if( isset($_POST[$exec_key]) ) {
 		if( isset( $_POST['join'] ) ) {
 			wikiplugin_memberlist_join( $validGroups, $_POST['join'] );
 		}
@@ -110,9 +125,16 @@ function wikiplugin_memberlist( $data, $params ) {
 	}
 
 	global $smarty;
-	$smarty->assign( 'execution_key', $key );
+	$smarty->assign( 'execution_key', $exec_key );
 	$smarty->assign( 'can_apply', $canApply );
 	$smarty->assign( 'memberlist_groups', $validGroups );
+	$smarty->assign('displayMode', $params['displayMode']);
+
+	if (!empty($params['displayMode']) && $params['displayMode'] === 'tabs') {
+		global $access, $headerlib;
+		$access->check_feature('feature_jquery_ui');
+		$headerlib->add_js('$("#' . $exec_key . '_form > div:first").tabs();', 50);
+	}
 	return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_memberlist.tpl' ) . '~/np~';
 }
 
