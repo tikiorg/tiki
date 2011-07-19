@@ -335,7 +335,11 @@ function wikiplugin_trackerfilter_build_trackerlist_filter($input, $formats, &$f
 					$exactValues[] = '';
 					$values[] = ($formats[$fieldId] == 'i')? "$val%": $val;
 				} else {
-					$exactValues[] = $val;
+					if (!empty($formats[$fieldId]) && preg_match('/[\>\<]+/', $formats[$fieldId]) ) {
+						$exactValues[] = array($formats[$fieldId]=>$val);
+					} else {
+						$exactValues[] = $val;
+					}
 					$values[] = '';
 				}
 			}
