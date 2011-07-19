@@ -205,7 +205,7 @@ class RegistrationLib extends TikiLib
 	 *  @returns ?
 	 */
 	/*private*/
-	function local_check_registration($registration) {
+	function local_check_registration($registration, $from_intertiki = false) {
 		global $_SESSION, $prefs, $userlib, $captchalib;
         
 		if (empty($registration['name']))
