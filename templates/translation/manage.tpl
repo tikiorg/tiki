@@ -2,7 +2,12 @@
 	<p>{tr}Current translation set:{/tr}</p>
 	<ul>
 		{foreach from=$translations item=trans}
-			<li>{object_link type=$type id=$trans.objId}, {$trans.language|escape}</li>
+			<li>
+				{object_link type=$type id=$trans.objId}, {$trans.language|escape}
+				{permission type=$type object=$trans.objId name=detach_translation}
+					<a href="tiki-ajax_services.php?controller=translation&amp;action=detach&amp;type={$type|escape:'url'}&amp;source={$source|escape:'url'}&amp;target={$trans.objId|escape:'url'}">{icon _id=cross}</a>
+				{/permission}
+			</li>
 		{/foreach}
 	</ul>
 {else}

@@ -34,6 +34,7 @@ class Services_Language_TranslationController
 			'filters' => $this->getSearchFilters($type, $object),
 			'translations' => $this->getTranslations($type, $object),
 			'canAttach' => $this->canAttach($type, $object),
+			'canDetach' => $this->canDetach($type, $object),
 		);
 	}
 
@@ -70,6 +71,43 @@ class Services_Language_TranslationController
 		if (! $succeeded) {
 			throw new Services_Exception(tr('Could not attach the translations.'), 409);
 		}
+
+		return array(
+			'FORWARD' => array(
+				'action' => 'manage',
+				'type' => $type,
+				'source' => $source,
+			),
+		);
+	}
+
+	function action_detach($input)
+	{
+		global $prefs;
+
+		if ($prefs['feature_multilingual'] != 'y') {
+			throw new Services_Exception(tr('Feature Disabled'), 403);
+		}
+
+		$type = $input->type->text();
+		$objectFilter = $this->getObjectFilter($type);
+
+		if (! $objectFilter) {
+			throw new Services_Exception(tr('Translation not supported for the specified object type'), 400);
+		}
+
+		$source = $input->source->$objectFilter();
+		$target = $input->target->$objectFilter();
+
+		if (! $source || ! $target) {
+			throw new Services_Exception(tr('No source or target provided'), 400);
+		}
+
+		if (! $this->canDetach($type, $source) || ! $this->canDetach($type, $target)) {
+			throw new Services_Exception(tr('Not allowed to detach the selected translations'), 403);
+		}
+
+		$this->detachTranslation($type, $source, $target);
 
 		return array(
 			'FORWARD' => array(
@@ -178,6 +216,12 @@ class Services_Language_TranslationController
 		return $perms->admin;
 	}
 
+	private function canDetach($type, $object)
+	{
+		$perms = Perms::get($type, $object);
+		return $perms->detach_translation;
+	}
+
 	private function insertTranslation($type, $source, $target)
 	{
 		$multilinguallib = TikiLib::lib('multilingual');
@@ -190,6 +234,14 @@ class Services_Language_TranslationController
 		$out = $multilinguallib->insertTranslation($type, $sourceId, $sourceLang, $targetId, $targetLang);
 
 		return ! $out;
+	}
+
+	private function detachTranslation($type, $source, $target)
+	{
+		$multilinguallib = TikiLib::lib('multilingual');
+		$targetId = $this->toInternalId($type, $target);
+
+		$multilinguallib->detachTranslation($type, $targetId);
 	}
 
 	private function getLanguage($type, $object)
