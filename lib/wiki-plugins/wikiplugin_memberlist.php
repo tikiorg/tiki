@@ -49,6 +49,13 @@ function wikiplugin_memberlist_info() {
 					'feature_jquery_ui',
 				),
 			),
+			'max' => array(
+				'required' => false,
+				'name' => tra('Maximum'),
+				'description' => tra('Maximum number of users to list in each group (default 100).'),
+				'default' => 100,
+				'filter' => 'digits',
+			),
 		),
 	);
 }
@@ -77,7 +84,7 @@ function wikiplugin_memberlist( $data, $params ) {
 
 	Perms::bulk( array( 'type' => 'group' ), 'object', $groups );
 
-	$validGroups = wikiplugin_memberlist_get_group_details( $groups );
+	$validGroups = wikiplugin_memberlist_get_group_details( $groups, $params['max'] );
 
 	if( isset($_POST[$exec_key]) ) {
 		if( isset( $_POST['join'] ) ) {
@@ -138,10 +145,10 @@ function wikiplugin_memberlist( $data, $params ) {
 	return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_memberlist.tpl' ) . '~/np~';
 }
 
-function wikiplugin_memberlist_get_members( $groupName ) {
+function wikiplugin_memberlist_get_members( $groupName, $maxRecords = -1) {
 	global $userlib;
 
-	$raw = $userlib->get_users( 0, -1, 'login_asc', '', '', false, $groupName );
+	$raw = $userlib->get_users( 0, $maxRecords, 'login_asc', '', '', false, $groupName );
 	$users = array();
 
 	if (isset($raw['data'])) {
@@ -153,7 +160,7 @@ function wikiplugin_memberlist_get_members( $groupName ) {
 	return $users;
 }
 
-function wikiplugin_memberlist_get_group_details( $groups ) {
+function wikiplugin_memberlist_get_group_details( $groups, $maxRecords = -1 ) {
 	global $user, $prefs, $userlib;
 	$validGroups = array();
 	foreach( $groups as $groupName ) {
@@ -175,7 +182,7 @@ function wikiplugin_memberlist_get_group_details( $groups ) {
 			);
 
 			if( $perms->group_view_members ) {
-				$validGroups[$groupName]['members'] = wikiplugin_memberlist_get_members( $groupName );
+				$validGroups[$groupName]['members'] = wikiplugin_memberlist_get_members( $groupName, $maxRecords );
 
 				if( $prefs['feature_group_transition'] == 'y' ) {
 					require_once 'lib/transitionlib.php';
