@@ -102,7 +102,12 @@ class PreferencesLib
 				}
 			}
 
-			$info['modified'] = str_replace("\r\n", "\n", $info['value']) != $info['default'];
+			if (!isset($info['default'])) {	// missing default in prefs definition file?
+				$info['modified'] = false;
+				trigger_error(tr('Missing default for preference "%0"', $name), E_USER_WARNING);
+			} else {
+				$info['modified'] = str_replace("\r\n", "\n", $info['value']) != $info['default'];
+			}
 			
 			if ($get_pages) {
 				$info['pages'] = $this->getPreferenceLocations( $name );
