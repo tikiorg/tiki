@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 		$fileId = $filegallib->save_archive($_REQUEST["fileId"], $fileInfo['galleryId'], 0, $_REQUEST['name'], $fileInfo['description'], $_REQUEST['name'].".svg", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $fileInfo['user'], null, null, $user, date());
 	} else {
 		//new file
-		$fileId = $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST['name'], $_REQUEST['description'], $file, $_REQUEST['data'], strlen($_REQUEST['data']), $type, $user, date());
+		$fileId = $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST['name'], $_REQUEST['description'], $_REQUEST['name'].".svg", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $user, date());
 	}
 	
 	echo $fileId;
@@ -195,6 +195,9 @@ $headerlib->add_jq_onready("
 				name: $('#svg_file_name').val(),
 				data: data
 			}, function(id) {
+				//update title
+				$('.pagetitle,title').text($('#svg_file_name').val());
+				
 				if (id) {
 					$.modal('".tr("Saved file id:")." ' + id + '!');
 					$('#svg_file_id').val(id);
