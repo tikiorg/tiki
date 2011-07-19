@@ -1561,8 +1561,13 @@ class UsersLib extends TikiLib
 	function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $initial = '', $inclusion=false, $group='', $email='') {
 
 		global $tiki_p_list_users, $tiki_p_admin;
-		
-		if ($tiki_p_list_users	!== 'y' && $tiki_p_admin != 'y') { 
+
+		$perms = Perms::get( array(
+			'type' => 'group',
+			'object' => $group,
+		));
+
+		if (!$perms->group_view_members && $tiki_p_list_users	!== 'y' && $tiki_p_admin != 'y') {
 			return array();
 		}
 
