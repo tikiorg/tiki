@@ -101,7 +101,7 @@
 				{button _text="{tr}Upload File{/tr}" href="tiki-upload_file.php?galleryId=$galleryId"}
 			{/if}
 			
-			{if $tiki_p_upload_files eq 'y' and $prefs.feature_file_galleries_batch eq "y"}
+			{if $prefs.feature_draw eq 'y'}
 				{button _text="{tr}Create a drawing{/tr}" href="tiki-edit_draw.php?galleryId=$galleryId"}
 			{/if}
 			

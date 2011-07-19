@@ -22,10 +22,40 @@ $gal_info = $filegallib->get_file_gallery( $_REQUEST['galleryId'] );
 
 $globalperms = Perms::get( array( 'type' => 'file galleries', 'object' => $fileInfo['galleryId'] ) );
 
+//check permissions
 if (!($globalperms->admin_file_galleries == 'y' || $globalperms->view_file_gallery == 'y')) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to edit this file"));
 	$smarty->display("error.tpl");
+	die;
+}
+
+if (!empty($_REQUEST['name']) || !empty($fileInfo['name'])) {
+	$_REQUEST['name'] = (!empty($_REQUEST['name']) ? $_REQUEST['name'] : $fileInfo['name']);
+} else {
+	$_REQUEST['name'] = "New Svg Image";
+}
+
+$_REQUEST['name'] = htmlspecialchars(str_replace(".svg", "", $_REQUEST['name']));
+
+//Upload to file gallery
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
+	$_REQUEST["galleryId"] = (int)$_REQUEST["galleryId"];
+	$_REQUEST["fileId"] = (int)$_REQUEST["fileId"];
+	$_REQUEST['description'] = htmlspecialchars(isset($_REQUEST['description']) ? $_REQUEST['description'] : $_REQUEST['name']);
+	
+	include_once ('lib/mime/mimetypes.php');
+	$type = $mimetypes["svg"];
+	$fileId = '';
+	if (empty($_REQUEST["fileId"]) == false) {
+		//existing file
+		$fileId = $filegallib->save_archive($_REQUEST["fileId"], $fileInfo['galleryId'], 0, $_REQUEST['name'], $fileInfo['description'], $_REQUEST['name'].".svg", $_REQUEST['data'], strlen($_REQUEST['data']), $type, $fileInfo['user'], null, null, $user, date());
+	} else {
+		//new file
+		$fileId = $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST['name'], $_REQUEST['description'], $file, $_REQUEST['data'], strlen($_REQUEST['data']), $type, $user, date());
+	}
+	
+	echo $fileId;
 	die;
 }
 
@@ -36,6 +66,7 @@ if (is_numeric($_REQUEST['galleryId']) == false) $_REQUEST['galleryId'] = 0;
 
 $fileId = htmlspecialchars($_REQUEST['fileId']);
 $galleryId = htmlspecialchars($_REQUEST['galleryId']);
+$name = htmlspecialchars($_REQUEST['name']);
 
 $index = htmlspecialchars($_REQUEST['index']);
 $page = htmlspecialchars($_REQUEST['page']);
@@ -50,6 +81,9 @@ $backLocation = ($page ? "tiki-index.php?page=$page" : "tiki-list_file_gallery.p
 
 $smarty->assign( "fileId", $fileId );
 $smarty->assign( "galleryId", $galleryId );
+$smarty->assign( "width", $width );
+$smarty->assign( "height", $width );
+$smarty->assign( "name", $name);
 
 $headerlib->add_jsfile("lib/svg-edit/embedapi.js");
 
@@ -69,18 +103,76 @@ if (
 	");
 }
 
-$headerlib->add_jq_onready("	
-	window.svgFileId = $fileId;
+$headerlib->add_jq_onready("
 	var win = $(window);
-	win
-		.resize(function() {
-			$('#svgedit')
-				.height(win.height())
-				.width(win.width());
-		})
-		.resize();
 	
-	$('body').css('overflow', 'hidden');
+	$('body').append('<style>' +
+		'#fullscreen {' +
+			'left: 0px;' +
+			'top: 0px;' +
+			'position: absolute;' +
+			'z-index: 9999;' +
+			'background-color: white;' +
+			'text-align: center;' +
+		'}' +
+		'#fullscreen #tiki_draw_editor{' +
+			'width: inherit ! important;' +
+			'height: inherit ! important;' +
+		'}' +
+		'#fullscreen #svg-menu{' +
+			'position: absolute;' +
+			'z-index: 99991;' +
+		'}' +
+		'#fullscreen iframe {' +
+			'width: 100%;' +
+			'border: none ! important;' +
+		'}' +
+		'#tiki_draw iframe {' +
+			'width: 100%;' +
+			'height: ' + (win.height() * 0.8) + 'px;' +
+			'border: none ! important;' +
+		'#tiki_draw_editor iframe {' +
+			'border: none ! important;' +
+		'}' +
+		'.full_screen_body {' +
+			'overflow: hidden;' +
+		'}' +
+	'</style>');
+	
+	$('#tiki-draw_fullscreen').click(function() {
+		window.saveSvg();
+		var tiki_draw = $('#tiki_draw');
+		var fullscreen = $('#fullscreen');
+		var menuHeight = $('#svg-menu').height();
+		
+		if (fullscreen.length == 0) {
+			$('body').addClass('full_screen_body');
+			fullscreen = $('<div />').attr('id', 'fullscreen')
+				.html(tiki_draw.find('#tiki_draw_editor'))
+				.prependTo('body');
+			
+			var fullscreenIframe = fullscreen.find('iframe');
+			
+			win
+				.resize(function() {
+					fullscreen
+						.height(win.height())
+						.width(win.width());
+						
+					fullscreenIframe.height((fullscreen.height() - menuHeight));
+				})
+				.resize() //we do it double here to make sure it is all resized right
+				.resize();
+				
+		} else {
+			tiki_draw.append(fullscreen.find('#tiki_draw_editor'));
+			win.unbind('resize');
+			fullscreen.remove();
+			$('body').removeClass('full_screen_body');
+		}
+		
+		return false;
+	});
 	
 	window.svgCanvas = null;
 	
@@ -97,24 +189,23 @@ $headerlib->add_jq_onready("
 			alert('error ' + error);
 		} else {
 			$.modal('".tra("Saving...")."');
-			$.post('tiki-batch_upload_files.php', {
-				batch_upload: 'svg',
-				galleryId: $galleryId,
-				fileId: (window.svgFileId ? window.svgFileId : ''),
-				name: 'New Svg Image',
+			$.post('tiki-edit_draw.php', {
+				galleryId: $('#svg_gallery_id').val(),
+				fileId: $('#svg_file_id').val(),
+				name: $('#svg_file_name').val(),
 				data: data
 			}, function(id) {
 				if (id) {
 					$.modal('".tr("Saved file id:")." ' + id + '!');
-					window.svgFileId = id;
+					$('#svg_file_id').val(id);
 				} else {
-					$.modal('".tr("Saved file id")." ' + window.svgFileId + '!');
+					$.modal('".tr("Saved file id")." ' + $('#svg_file_id').val() + '!');
 				}
 				
 				if (window.wikiTracking) {
-					window.wikiTracking['params[id]'] = window.svgFileId;
-					window.wikiTracking['params[width]'] = '$width';
-					window.wikiTracking['params[height]'] = '$height';
+					window.wikiTracking['params[id]'] = $('#svg_file_id').val();
+					window.wikiTracking['params[width]'] =  $('#svg_file_width').val();
+					window.wikiTracking['params[height]'] =  $('#svg_file_height').val();
 					
 					$.modal('".tr("Updating Wiki Page")."');
 					$.post('tiki-wikiplugin_edit.php', window.wikiTracking, function() {
@@ -147,20 +238,18 @@ $headerlib->add_jq_onready("
 		var mainButton = $(doc).find('#main_button').hide();
 		
 		$('#tiki-draw_save')
-			//.prependTo($(doc).find('#editor_panel'))
 			.click(function() {
 				window.saveSvg();
 			});
 		
 		var thisDoc = document;
 		
-		$('#svg-editHeaderRight')
-			//.appendTo($(doc).find('#tools_top'))
+		$('#tiki-draw_back')
 			.click(function() {
 				thisDoc.location = '$backLocation';
 			});
 		
-		if (window.svgFileId) {
+		if ($('#svg_file_id').val()) {
 			window.svgCanvas.setSvgString($('#svg-data').html());
 		}
 		
@@ -171,9 +260,20 @@ $headerlib->add_jq_onready("
 			}
 		};
 	});
+	
+	$('#tiki-draw_rename').click(function() {
+		var name = $('#svg_file_name').val();
+		var newName = prompt('".tra("Enter new name")."', name);
+		if (newName) {
+			if (newName != name) {
+				$('#svg_file_name').val(newName);
+				window.saveSvg();
+			}
+		}
+		return false;
+	});
 ");
 // Display the template
 $smarty->assign('mid', 'tiki-edit_draw.tpl');
 // use tiki_full to include include CSS and JavaScript
-$smarty->display("tiki_full.tpl");
-
+$smarty->display("tiki.tpl");
