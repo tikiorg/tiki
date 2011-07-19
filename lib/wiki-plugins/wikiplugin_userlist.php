@@ -90,7 +90,7 @@ function wikiplugin_userlist_info() {
 }
 
 function wikiplugin_userlist($data, $params) {
-    global $tikilib, $userlib, $prefs, $tiki_p_admin, $tiki_p_admin_users;
+    global $tikilib, $userlib, $prefs, $tiki_p_admin, $tiki_p_admin_users, $user;
 
     extract ($params,EXTR_SKIP);
 
