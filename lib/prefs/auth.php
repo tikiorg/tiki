@@ -31,6 +31,7 @@ function prefs_auth_list() {
 			'help' => 'Token+Access',
 			'perspective' => false,
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'auth_token_access_maxtimeout' => array(
 			'name' => tra('Token Access Max Timeout'),

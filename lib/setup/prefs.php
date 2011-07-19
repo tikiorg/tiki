@@ -128,7 +128,6 @@ function get_default_prefs() {
 		'gal_list_user' => 'n',
 		'gal_list_imgs' => 'y',
 		'gal_list_visits' => 'y',
-		'feature_image_gallery_mandatory_category' => '-1',
 		'preset_galleries_info' =>'n',
 		'gal_image_mouseover' => 'n',
 
@@ -147,9 +146,6 @@ function get_default_prefs() {
 		// user
 		'userlevels' => function_exists('tra') ? array('1'=>tra('Simple'),'2'=>tra('Advanced')) : array('1'=>'Simple','2'=>'Advanced'),
 		'userbreadCrumb' => 4,
-		'w_use_db' => 'y',
-		'w_use_dir' => '',
-		'w_displayed_default' => 'n',
 		'uf_use_db' => 'y',
 		'uf_use_dir' => '',
 		'userfiles_quota' => 30,
@@ -406,6 +402,3 @@ function initialize_prefs() {
 	$prefs = array_merge($prefs, $systemConfiguration->preference->toArray());
 }
 
-// PHP fonctionnalities
-$prefs['php_libxml'] = class_exists('DOMDocument') ? 'y' :'n';
-$prefs['php_datetime'] = class_exists('DateTime') ? 'y' :'n';

@@ -436,6 +436,7 @@ function prefs_wiki_list($partial = false) {
 				'feature_polls',
 				'feature_wiki_ratings',
 			),
+			'default' => 'n',
 		),
 		'wiki_feature_3d' => array(
 			'name' => tra('Enable wiki 3D browser'),

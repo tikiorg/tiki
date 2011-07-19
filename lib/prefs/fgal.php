@@ -124,6 +124,7 @@ function prefs_fgal_list() {
 			'type' => 'text',
 			'size' => 50,
 			'perspective' => false,
+			'default' => '',
 		),
 		'fgal_search_in_content' => array(
 			'name' => tra('Include the search box on the current gallery files just after the find div'),

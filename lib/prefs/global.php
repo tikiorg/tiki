@@ -76,6 +76,7 @@ function prefs_global_list($partial = false) {
 				'useGroupHome',
 			),
 			'keywords' => 'group home page pages',
+			'default' => 'n',
 		),
 		'language' => array(
 			'name' => tra('Default language'),
@@ -173,6 +174,7 @@ function prefs_global_list($partial = false) {
 		'modhideanonadmin' => array(
 			'name' => tra('Hide anonymous-only modules from Admins'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 		'maxArticles' => array(
 			'name' => tra('Maximum number of articles on articles home page'),
@@ -388,6 +390,7 @@ function prefs_global_list($partial = false) {
 			'type' => 'text',
 			'size' => 45,
 			'filter' => 'alnum',
+			'default' => '',
 		),
 		'adminSecret' => array(
 			'name' => tra('Admin secret'),

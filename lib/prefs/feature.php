@@ -1875,6 +1875,7 @@ function prefs_feature_list($partial = false) {
 				'feature_categories',
 				'feature_galleries',
 			),
+			'default' => -1,
 		),
 		'feature_wiki_show_hide_before' => array(
 			'name' => tra('Display show/hide icon displayed before headings'),
@@ -2019,6 +2020,7 @@ function prefs_feature_list($partial = false) {
 		'feature_community_mouseover_country' => array(
 			'name' => tra('Country'),
 			'type' => 'flag',
+			'default' => 'y',
 		),
 		'feature_community_mouseover_email' => array(
 			'name' => tra('E-mail'),

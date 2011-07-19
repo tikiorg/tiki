@@ -35,6 +35,7 @@ function prefs_layout_list() {
 			'hint' => tra('Add classes to the page BODY tag to indicate group membership'),
 			'description' => tra('Either grp_Anonymous or grp_Registered and possibly grp_Admins as well'),
 			'type' => 'flag',
+			'default' => 'n',
 		),
 	);
 }

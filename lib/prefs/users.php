@@ -34,6 +34,7 @@ function prefs_users_list($partial = false) {
 				'change_language',
 			),
 			'tags' => array('basic'),
+			'default' => '',
 		),
 		'users_serve_avatar_static' => array(
 			'name' => tra('Serve avatar images statically'),

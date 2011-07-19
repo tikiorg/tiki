@@ -84,6 +84,7 @@ function prefs_user_list($partial = false) {
 			'dependencies' => array(
 				'feature_actionlog',
 			),
+			'default' => 'n',
 		),
 		'user_who_viewed_my_stuff_days' => array(
 			'name' => tra('Number of days to consider who viewed my stuff'),
@@ -143,6 +144,7 @@ function prefs_user_list($partial = false) {
 			'dependencies' => array(
 				'userTracker',
 			),
+			'default' => '',
 		),
 		'user_trackersync_realname' => array(
 			'name' => tra('Tracker field IDs to sync Real Name pref from'),
@@ -174,6 +176,7 @@ function prefs_user_list($partial = false) {
 				'user_trackersync_trackers',
 				'feature_categories',
 			),
+			'default' => 'n',
 		),
 		'user_trackersync_parentgroup' => array(
 			'name' => tra('Put user in group only if categorized within'),

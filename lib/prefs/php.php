@@ -15,6 +15,7 @@ This means that passing in --enable-libxml is also required, although this is
 implicitly accomplished because libxml is enabled by default.'),
 			'type' => 'flag',
 			'help' => 'WebDAV',
+			'default' => class_exists('DOMDocument') ? 'y' :'n',
 		),
 		'php_datetime' => array(
 			'name' => tra('PHP DateTime'),
@@ -24,7 +25,7 @@ by default since PHP 5.2.0, it is possible to add experimental support into PHP
 CFLAGS=-DEXPERIMENTAL_DATE_SUPPORT=1'),
 			'type' => 'flag',
 			'help' => 'WebDAV',
+			'default' => class_exists('DateTime') ? 'y' :'n',
 		),
 	);
 }
-	
