@@ -902,7 +902,7 @@ class NlLib extends TikiLib
 		if (!function_exists('cmp')) {
 			function cmp($a,$b) {
 				if ($a['publishDate'] == $b['publishDate']) return 0;
-				return ($a['publishDate'] < $b['publishDate']) ? -1 : 1;
+				return ($a['publishDate'] > $b['publishDate']) ? -1 : 1;
 			}
 		} 
 		foreach ($articleClipTypes as $articleType) {

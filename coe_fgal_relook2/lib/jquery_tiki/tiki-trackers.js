@@ -90,34 +90,65 @@
 					}
 				});
 
-				$dialog.load('tiki-ajax_services.php', options.data, function () {
-					$dialog.find('form').submit(function (e) {
-						var form = this;
-						$.ajax('tiki-ajax_services.php', {
-							type: 'POST',
-							dataType: 'json',
-							data: $(form).serialize(),
-							success: function (data) {
+				$dialog.tracker_load_service(options.data, $.extend(options, {origin: origin}));
+			});
+
+			return this;
+		},
+		tracker_load_service: function (data, options) {
+			var $dialog = this;
+			$dialog.load('tiki-ajax_services.php', data, function () {
+				$dialog.find('form').submit(function (e) {
+					var form = this;
+					$.ajax('tiki-ajax_services.php', {
+						type: 'POST',
+						dataType: 'json',
+						data: $(form).serialize(),
+						success: function (data) {
+							if (data.FORWARD) {
+								$dialog.tracker_load_service(data.FORWARD, options);
+							} else {
 								$dialog.dialog('destroy');
 								if (options.success) {
-									options.success.apply(origin, [data]);
+									options.success.apply(options.origin, [data]);
+								}
+							}
+						},
+						error: function (jqxhr) {
+							$(form.name).showError(jqxhr);
+						}
+					});
+
+					return false;
+				});
+
+				if (options.load) {
+					options.load.apply($dialog[0], []);
+				}
+
+				$('.confirm-prompt', this).click(function () {
+					if (confirm ($(this).data('confirm'))) {
+						$.ajax($(this).attr('href'), {
+							type: 'POST',
+							dataType: 'json',
+							data: {
+								'confirm': 1
+							},
+							success: function (data) {
+								if (data.FORWARD) {
+									$dialog.tracker_load_service(data.FORWARD, options);
+								} else {
+									$dialog.tracker_load_service(options.data, options);
 								}
 							},
 							error: function (jqxhr) {
 								$(form.name).showError(jqxhr);
 							}
 						});
-
-						return false;
-					});
-
-					if (options.load) {
-						options.load.apply($dialog[0], []);
 					}
+					return false;
 				});
 			});
-
-			return this;
 		},
 		tracker_load_fields: function (trackerId) {
 			this.each(function () {

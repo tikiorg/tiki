@@ -2305,7 +2305,6 @@ function dialogReplaceReplace( area_id ) {
 				});
 
 				$('.confirm-prompt', this).click(function () {
-					var link = this;
 					if (confirm ($(this).data('confirm'))) {
 						$.post($(this).attr('href'), { "confirm": 1 }, function (data) {
 							if (data.status === 'DONE') {
