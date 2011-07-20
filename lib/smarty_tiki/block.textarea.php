@@ -48,6 +48,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$params['id'] = isset($params['id']) ? $params['id'] : 'editwiki';
 	$params['area_id'] = isset($params['area_id']) ? $params['area_id'] : $params['id'];	// legacy param for toolbars?
 	$params['class'] = isset($params['class']) ? $params['class'] : 'wikiedit';
+	$params['comments'] = isset($params['comments']) ? $params['comments'] : 'n';
 
 	//codemirror integration
 	if ($prefs['feature_syntax_highlighter'] === 'y') {
@@ -255,7 +256,7 @@ function CKeditor_OnComplete() {
 			$smarty->assign('textarea_attributes', $textarea_attributes);
 		}
 		$smarty->assign_by_ref('pagedata', htmlspecialchars($content));
-		$smarty->assign('comments', isset($params['comments']) ? $params['comments'] : $params['_simple'] === 'y' ? 'y' : 'n');
+		$smarty->assign('comments', $params['comments']);	// jb removed fallback to using _simple here if comments not set 110720
 		$smarty->assign('switcheditor', isset($params['switcheditor']) ? $params['switcheditor'] : 'n');
 		$smarty->assign('toolbar_section', $params['section']);
 		$html .= $smarty->fetch('wiki_edit.tpl');
@@ -269,7 +270,7 @@ function CKeditor_OnComplete() {
 	$js_editconfirm = '';
 	$js_editlock = '';
 
-	if ($params['_simple'] == 'n' && (isset($params['comments']) && $params['comments'] !== 'y')) {
+	if ($params['_simple'] == 'n' && $params['comments'] !== 'y') {
 // Display edit time out
 
 		$js_editlock .= "
