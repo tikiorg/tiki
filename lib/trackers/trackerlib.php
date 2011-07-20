@@ -3222,7 +3222,7 @@ class TrackerLib extends TikiLib
 
 	function nbComments($user) {
 		return $this->comments()->fetchCount(array(
-			'user' => $user,
+			'userName' => $user,
 			'objectType' => 'trackeritem',
 		));
 	}
