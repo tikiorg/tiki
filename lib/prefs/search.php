@@ -17,7 +17,7 @@ function prefs_search_list() {
 			'name' => tra('Default where'),
 			'description' => tra('When object filter is not on, limit to search one type of object'),
 			'type' => 'list',
-			'options' => $prefs['feature_search_fulltext'] === 'y' ?
+			'options' => isset($prefs['feature_search_fulltext']) && $prefs['feature_search_fulltext'] === 'y' ?
 					array(
 						'' => tra('Entire site'),
 						'wikis' => tra('Wiki Pages'),
