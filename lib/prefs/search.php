@@ -18,8 +18,8 @@ function prefs_search_list() {
 			'type' => 'list',
 			'options' => array(
 				'' => tra('Entire site'),
-				'wikis' => tra('Wiki Pages'),
-				'trackers' => tra('Trackers'),
+				'wiki page' => tra('Wiki Pages'),
+				'trackeritem' => tra('Tracker Items'),
 			),
 		),
 		'search_default_interface_language' => array(
