@@ -3565,7 +3565,30 @@ class TrackerLib extends TikiLib
 	function get_tracker_by_name($name) {
 		return $this->trackers()->fetchOne('trackerId', array('name' => $name));
 	}
-
+	
+	function get_field_by_name($trackerId, $fieldName) {
+		return $this->fields()->fetchOne('fieldId', array(
+			'trackerId' => $trackerId,
+			'name' => $fieldName
+		));
+	}
+	
+	function get_field_by_names($trackerName, $fieldName) {
+		$trackerId = $this->trackers()->fetchOne('trackerId', array('name' => $trackerName));
+		return $fieldId = $this->fields()->fetchOne('fieldId', array(
+			'trackerId' => $trackerId,
+			'name' => $fieldName
+		));
+	}
+	
+	function get_fields_by_names($trackerName, $fieldNames) {
+		$fields = array();
+		foreach($fieldNames as $fieldName) {
+			$fields[$fieldName] = $this->get_field_by_names($trackerName, $fieldName);
+		}
+		return $fields;
+	}
+	
 	function get_field_handler($field, $item = array())
 	{
 		$trackerId = (int) $field['trackerId'];
