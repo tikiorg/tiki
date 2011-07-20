@@ -1,1 +1,0 @@
-{tr}New forum post in <{$mail_forum|truncate:20:"..."}> by {$mail_author}:{/tr} {$mail_title|truncate:20:"..."}

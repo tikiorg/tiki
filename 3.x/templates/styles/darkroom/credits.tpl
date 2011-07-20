@@ -1,1 +1,0 @@
- | {tr}Theme{/tr}: Darkroom

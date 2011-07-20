@@ -1,8 +1,0 @@
-/*
-$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.8to1.10.css,v 1.1 2005-12-15 22:31:05 sylvieg Exp $
-
-The following CSS classes were added to Tiki between v1.9 and v3.0
-They should be added to themes (possibly with tweaks) to make the theme v3.0 ready
-*/
-@import "1.9to2.2.css";
-@import "2.0to3.0.css";

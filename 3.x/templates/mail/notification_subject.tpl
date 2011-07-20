@@ -1,1 +1,0 @@
-{tr}Email notification{/tr}
