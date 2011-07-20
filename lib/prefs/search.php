@@ -6,6 +6,7 @@
 // $Id$
 
 function prefs_search_list() {
+	global $prefs;
 	return array (
 		'search_parsed_snippet' => array(
 			'name' => tra('Parse the results'),
@@ -16,11 +17,21 @@ function prefs_search_list() {
 			'name' => tra('Default where'),
 			'description' => tra('When object filter is not on, limit to search one type of object'),
 			'type' => 'list',
-			'options' => array(
-				'' => tra('Entire site'),
-				'wiki page' => tra('Wiki Pages'),
-				'trackeritem' => tra('Tracker Items'),
-			),
+			'options' => $prefs['feature_search_fulltext'] === 'y' ?
+					array(
+						'' => tra('Entire site'),
+						'wikis' => tra('Wiki Pages'),
+						'trackers' => tra('Trackers'),
+					) : array(
+						'' => tra('Entire site'),
+						'wiki page' => tra('Wiki Pages'),
+						'blog post' => tra('Blog Posts'),
+						'article' => tra('Articles'),
+						'file' => tra('Files'),
+						'forum post' => tra('Forums'),
+						'trackeritem' => tra('Tracker Items'),
+						'sheet' => tra('Spreadsheets'),
+					),
 		),
 		'search_default_interface_language' => array(
 			'name' => tra('Restrict search language by default'),
