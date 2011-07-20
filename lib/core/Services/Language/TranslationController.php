@@ -91,6 +91,7 @@ class Services_Language_TranslationController
 
 		$type = $input->type->text();
 		$objectFilter = $this->getObjectFilter($type);
+		$confirmed = $input->confirm->int();
 
 		if (! $objectFilter) {
 			throw new Services_Exception(tr('Translation not supported for the specified object type'), 400);
@@ -105,6 +106,14 @@ class Services_Language_TranslationController
 
 		if (! $this->canDetach($type, $source) || ! $this->canDetach($type, $target)) {
 			throw new Services_Exception(tr('Not allowed to detach the selected translations'), 403);
+		}
+
+		if (! $confirmed) {
+			return array(
+				'type' => $type,
+				'source' => $source,
+				'target' => $target,
+			);
 		}
 
 		$this->detachTranslation($type, $source, $target);
