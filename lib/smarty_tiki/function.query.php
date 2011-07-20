@@ -16,7 +16,7 @@ function smarty_function_query($params, &$smarty) {
 	static $request = NULL;
 
 	// Modify explicit params to be prefixed if they need to (used in a plugin, module, ...)
-	if ( $smarty->url_overriding_prefix !== null ) {
+	if ( ! empty($smarty->url_overriding_prefix) ) {
 		foreach ( $smarty->url_overriding_prefix[1] as $v ) {
 			if ( isset( $params[ $v ] ) ) {
 				$params[ $smarty->url_overriding_prefix[0] . $v ] = $params[ $v ];
