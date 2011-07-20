@@ -2403,6 +2403,7 @@ class FileGalLib extends TikiLib
 
 			if ( $galleryId_str != '' ) {
 				$g_query .= ' AND tfg.`parentId`'.$galleryId_str;
+				if (is_array($galleryId)) $bindvars = array_merge($bindvars, $galleryId);
 			}
 			$g_query .= $g_mid;
 
