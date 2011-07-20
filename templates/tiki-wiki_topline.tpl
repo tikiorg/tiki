@@ -97,7 +97,7 @@
 											<ul class="backlinks_poppedup">
 												<li class="tabcontent">
 													{section name=back loop=$backlinks}
-													<a title="{tr}Backlinks{/tr}" href="{$backlinks[back].fromPage}" title="{$backlinks[back].fromPage|escape}">
+													<a href="{$backlinks[back].fromPage}" title="{$backlinks[back].fromPage|escape}">
 														{if $prefs.wiki_backlinks_name_len ge '1'}{$backlinks[back].fromPage|truncate:$prefs.wiki_backlinks_name_len:"...":true|escape}{else}{$backlinks[back].fromPage|escape}{/if}
 													</a>			
 													{/section}
