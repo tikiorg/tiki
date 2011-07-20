@@ -436,6 +436,34 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 			$dbcon = false;
 			$tikifeedback[] = array( 'num' => 1, 'mes'=> $e->getMessage() );
 		}
+
+		if ( ! $dbcon ) {
+			try {
+				$dbh = new PDO("$driver:$db_hoststring", $user, $pass);
+				$dbname_clean = preg_replace('/[^a-z0-9$_]/',"",$dbname);
+				$sql="CREATE DATABASE IF NOT EXISTS `$dbname_clean` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
+				$dbcon=$dbh->exec($sql);
+				if ( $dbcon ) {
+					$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Database `$dbname_clean` was created.") );
+				} else {
+					$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Database `$dbname_clean` creation failed. You need to create the database.") );
+				}
+			} catch ( PDOException $e ) {
+				$dbcon = false;
+				$tikifeedback[] = array( 'num' => 1, 'mes'=> $e->getMessage() );
+			}
+
+			if ( $dbcon ) {
+				try {
+					$dbTiki = new PDO( "$driver:$db_hoststring;dbname=$dbname", $user, $pass );
+					$db = new TikiDb_Pdo( $dbTiki );
+				} catch ( PDOException $e ) {
+					$dbcon = false;
+					$tikifeedback[] = array( 'num' => 1, 'mes'=> $e->getMessage() );
+				}
+			}
+
+		}
 	}
 
 	if ( $dbcon ) {
