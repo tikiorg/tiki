@@ -322,6 +322,13 @@ class HeaderLib
 		return $back;
 
 	}
+
+	function clear_js()
+	{
+		$this->js = array();
+		$this->jq_onready = array();
+	}
+
 	function output_js($wrap = true) {	// called in tiki.tpl - JS output at end of file now (pre 5.0)
 		global $prefs;
 

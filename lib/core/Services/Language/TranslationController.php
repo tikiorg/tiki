@@ -138,6 +138,8 @@ class Services_Language_TranslationController
 			unset($languages[$trans['lang']]);
 		}
 
+		unset($languages[$this->getLanguage($type, $object)]);
+
 		$language = '"' . implode('" OR "', array_keys($languages)) . '"';
 		if ($language == '""') {
 			$language = null;
@@ -150,7 +152,7 @@ class Services_Language_TranslationController
 
 		if ($type == 'trackeritem') {
 			$info = TikiLib::lib('trk')->get_tracker_item($object);
-			$filters['tracker_id'] = $info['tracker_id'];
+			$filters['tracker_id'] = $info['trackerId'];
 		}
 
 		return $filters;
