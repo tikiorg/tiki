@@ -334,9 +334,8 @@ function wikiplugin_files($data, $params) {
 		return('');
 	}
 	global $filegallib; include_once('lib/filegals/filegallib.php');
-	$default = array('showfind'=>'n', 'showtitle'=>'y', 'showupload' => 'n');
+	$default = array('showfind'=>'n', 'showtitle'=>'y', 'showupload' => 'n', 'showgallery' => 'n');
 	$params = array_merge($default, $params);
-
 	$filter = '';
 	extract($params, EXTR_SKIP);
 
@@ -356,6 +355,13 @@ function wikiplugin_files($data, $params) {
 	if (isset($_REQUEST["wp_files_sort_mode$iplugin"])) {
 		$sort = $_REQUEST["wp_files_sort_mode$iplugin"];
 	}
+	if (empty($showgallery)) {
+		$show_parentName = empty($galleryId)? 'y': 'n';
+	} else {
+		$show_parentName = $showgallery;
+	}
+	$smarty->assign('show_parentName', $show_parentName);
+
 	$filter = empty($creator)?'':array('creator'=>$creator);
 	if (!isset($sort))
 		$sort = 'name_asc';
@@ -386,7 +392,7 @@ function wikiplugin_files($data, $params) {
 			return "~np~<a onclick=\"javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId&find_creator=$creator&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');\" href=\"#\">".tra($data).'</a>~/np~';
 		}
 		$find = isset($_REQUEST['find'])?  $_REQUEST['find']: '';
-		$fs = $tikilib->get_files(0, -1, $sort, $find, $galleryId, false, true, true, true, false, false, true, false, '', true, false, false, $filter);
+		$fs = $tikilib->get_files(0, -1, $sort, $find, $galleryId, false, true, true, true, false,  $show_parentName=='y, true, false, '', true, false, false, $filter);
 		if (isset($categId)) {
 			$objects = $categlib->list_category_objects($categId, 0, -1, 'itemId_asc', 'file');
 			$objects_in_categs = array();
@@ -428,7 +434,7 @@ function wikiplugin_files($data, $params) {
 				$p_edit_gallery_file = 'y';
 			}
 
-			$fs = $tikilib->get_files(0, -1, $sort, '', $og['itemId'], false, true, false, true, false, true, true, false, '', true, false, false, $filter);			                                                      
+			$fs = $tikilib->get_files(0, -1, $sort, '', $og['itemId'], false, true, false, true, false, $show_parentName=='y', true, false, '', true, false, false, $filter);			                                                      
 			if ($fs['cant']) {
 				for ($i = 0; $i < $fs['cant']; ++$i) {
 					$fs['data'][$i]['gallery'] = $gal_info['name'];
@@ -485,13 +491,6 @@ function wikiplugin_files($data, $params) {
 	if (!empty($showname) && $showname == 'n' && !empty($showfilename) && $showfilename == 'y') $gal_info['show_name'] = 'f';
 
 	$smarty->assign_by_ref('gal_info', $gal_info);
-
-	if (empty($showgallery)) {
-		$show_parentName = empty($galleryId)? 'y': 'n';
-	} else {
-		$show_parentName = $showgallery;
-	}
-	$smarty->assign('show_parentName', $show_parentName);
 
 	if (isset($categId)) {
 		if (is_array($categId)) {
