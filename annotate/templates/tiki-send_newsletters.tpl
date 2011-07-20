@@ -261,6 +261,11 @@
 					<td id="clipcol2" >
 						{tr}To include the article clipping into your newsletter, cut and paste it into the contents.{/tr}
 						<br />{tr}If autoclipping is enabled, you can also enter "~~~articleclip~~~" which will be replaced with the latest	clip when sending.{/tr}
+						{if !empty($articleClip)}
+						{remarksbox type="warning" title="{tr}Notice{/tr}"}
+							{tr}Be careful not to paste articles that must not be seen by the recipients{/tr} 
+						{/remarksbox}
+						{/if}
 						<textarea id='articlecliptxt' name="articleClip" rows="{$rows}" cols="{$cols}" readonly="readonly">{$articleClip}</textarea>		
 					</td>
 				</tr>				

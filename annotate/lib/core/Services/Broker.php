@@ -22,14 +22,10 @@ class Services_Broker
 			$output = $this->attemptProcess($controller, $action, $request);
 
 			if (isset($output['FORWARD'])) {
-				$arguments = array_merge(array(
+				$output['FORWARD'] = array_merge(array(
 					'controller' => $controller,
 					'action' => $action,
 				), $output['FORWARD']);
-
-				$loc = $_SERVER['PHP_SELF'];
-				header("Location: $loc?" . http_build_query($arguments, '', '&'));
-				exit;
 			}
 
 			if ($access->is_serializable_request()) {
@@ -61,6 +57,13 @@ class Services_Broker
 
 	private function render($controller, $action, $output)
 	{
+		if (isset($output['FORWARD'])) {
+			$loc = $_SERVER['PHP_SELF'];
+			$arguments = $output['FORWARD'];
+			header("Location: $loc?" . http_build_query($arguments, '', '&'));
+			exit;
+		}
+
 		$template = "$controller/$action.tpl";
 
 		$smarty = TikiLib::lib('smarty');
@@ -70,7 +73,12 @@ class Services_Broker
 		}
 
 		if ($access->is_xml_http_request()) {
-			return $smarty->fetch($template);
+			$headerlib = TikiLib::lib('header');
+			$headerlib->clear_js(); // Only need the partials
+			$content = $smarty->fetch($template);
+			$content .= $headerlib->output_js();
+
+			return $content;
 		} else {
 			$smarty->assign('mid', $template);
 			return $smarty->fetch('tiki.tpl');

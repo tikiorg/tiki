@@ -9,51 +9,59 @@
 {assign var=dateIssued value="Date Issued"}
 {assign var=invoiceNote value="Invoice Note"}
 
-Client <select>
-	{foreach from=$clients key=k item=client}
-		<option value='{$client.$clientId}' {if $client.$clientId eq $invoice.$clientId} selected='true' {/if}>{$client.Name}</option>
-	{/foreach}
-</select>
+<form action="tiki-edit_invoice.php" method="post" id="InvoiceForm">
+	{tr}Client{/tr} <select name="ClientId" class="InvoiceClientId">
+		{foreach from=$clients key=k item=client}
+			<option value='{$client.$clientId}' {if $client.$clientId eq $invoice.$clientId} selected='true' {/if}>{$client.Name}</option>
+		{/foreach}
+	</select>
 
-<table class='invoiceDetails'>
-	<tr>
-		<td>
-			Invoice Number <input name='invoiceNumber' id='invoiceNumber' type='text' value='{$invoice.$invoiceNumber}' />
-			<br />
-			Date Issued <input name='dateIssued' id='dateIssued' class='invoiceDate' value='{$invoice.$dateIssued}' />
-		</td>
-	</tr>
-</table>
-<hr />
-
-<table class='invoiceItems'>
-	<tr>
-		<th>{tr}Quantity{/tr}</th>
-		<th>{tr}Work Description{/tr}</th>
-		<th>{tr}Taxable{/tr}</th>
-		<th>{tr}Amount{/tr}</th>
-	</tr>
-
-	{foreach from=$invoiceItems item=invoiceItem}
+	<table class='InvoiceDetails'>
 		<tr>
-			<td><input name='quantity' class='quantity' type='text' value='{$invoiceItem.Quantity}' /></td>
-			<td><teaxtarea>{$invoiceItem.$workDescription}</teaxtarea></td>
-			<td><input name='taxable' class='taxable' type='checkbox' value='y' {if $invoiceItem.Taxable eq 'y'} checked='true' {/if} /></td>
-			<td><input name='amount' class='quantity' type='text' value='{$invoiceItem.Amount}' /></td>
+			<td>
+				{tr}Invoice Number{/tr} <input name='InvoiceNumber' id='InvoiceNumber' type='text' value='{$invoice.$invoiceNumber}' />
+				<br />
+				{tr}Date Issued{/tr} <input name='DateIssued' id='DateIssued' value='{$invoice.$dateIssued}' />
+			</td>
 		</tr>
-	{/foreach}
+	</table>
+	<hr />
 
-	<tr>
-		<td colspan='4'>
-		<input type='button' value='New Item' class='invoiceNewItem' />
-		</td>
-	</tr>
+	<table id='InvoiceItems'>
+		<tr>
+			<th>{tr}Quantity{/tr}</th>
+			<th>{tr}Work Description{/tr}</th>
+			<th>{tr}Taxable{/tr}</th>
+			<th>{tr}Amount{/tr}</th>
+			<th></th>
+		</tr>
 
-</table>
+		{foreach from=$invoiceItems item=invoiceItem}
+			<tr class='InvoiceItem'>
+				<td><input name='Quantity[]' class='InvoiceQuantity' type='text' value='{$invoiceItem.Quantity}' /></td>
+				<td><textarea name='Work Description[]' class='InvoiceWorkDescription'>{$invoiceItem.$workDescription}</textarea></td>
+				<td><input name='Taxable[]' class='InvoiceTaxable' type='checkbox' value='y' {if $invoiceItem.Taxable eq 'y'} checked='true' {/if} /></td>
+				<td><input name='Amount[]' class='InvoiceAmount' type='text' value='{$invoiceItem.Amount}' /></td>
+				<td>
+					<a href="#" class="DeleteItem">Delete</a>
+				</td>
+			</tr>
+		{/foreach}
 
-Amount: <span id='amount'></span><br />
-Total: <span id='total'></span><br />
+		<tr>
+			<td colspan='4'>
+				<input type='button' value='{tr}New Item{/tr}' id='InvoiceNewItem' />
+			</td>
+		</tr>
 
-Invoice Note
-<br />
-<textarea>{$invoice.$invoiceNote}</textarea>
+	</table>
+
+	{tr}Amount:{/tr} <span id='Amount'></span><br />
+	{tr}Total:{/tr} <span id='Total'></span><br />
+
+	{tr}Invoice Note{/tr}
+	<br />
+	<textarea name="InvoiceNote" id="InvoiceNote">{$invoice.$invoiceNote}</textarea>
+	<br />
+	<input type="submit" value="{tr}Save Invoice{/tr}" name="submit" />
+</form>

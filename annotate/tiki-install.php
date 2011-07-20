@@ -132,7 +132,7 @@ function createPage($title, $content){
 								</h1>
 							</div>
 				</div>
-					<div id="tiki-center" style="display: table; width: 990px; text-align: center;">
+					<div id="middle" style="width: 990px; text-align: center;">
 						$content
 					</div>
 				</div>

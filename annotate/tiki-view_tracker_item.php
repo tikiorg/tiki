@@ -143,6 +143,7 @@ if (!isset($_REQUEST["trackerId"]) || !$_REQUEST["trackerId"]) {
 
 $definition = Tracker_Definition::get($_REQUEST['trackerId']);
 $xfields = array('data' => $definition->getFields());
+$smarty->assign('tracker_is_multilingual', $prefs['feature_multilingual'] == 'y' && $definition->getLanguageField());
 
 if (!isset($utid) and !isset($gtid) and (!isset($_REQUEST["itemId"]) or !$_REQUEST["itemId"]) and !isset($_REQUEST["offset"])) {
 	$smarty->assign('msg', tra("No item indicated"));

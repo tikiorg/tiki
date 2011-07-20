@@ -47,6 +47,26 @@
 		{* --- tab with view ------------------------------------------------------------------------- *}
 		{if empty($tracker_info.viewItemPretty)}
 			<h2>{tr}View Item{/tr}</h2>
+			{if $tracker_is_multilingual}
+				<div class="translations">
+					<a href="tiki-ajax_services.php?controller=translation&amp;action=manage&amp;type=trackeritem&amp;source={$itemId|escape:'url'}">{tr}Translations{/tr}</a>
+				</div>
+				{jq}
+					$('.translations a').click(function () {
+						var link = this;
+						$(this).tracker_service_dialog({
+							title: $(link).text(),
+							data: {
+								controller: 'translation',
+								action: 'manage',
+								type: 'trackeritem',
+								source: "{{$itemId|escape}}"
+							}
+						});
+						return false;
+					});
+				{/jq}
+			{/if}
 			<table class="formcolor">
 				{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
 					{assign var=ustatus value=$info.status|default:"p"}

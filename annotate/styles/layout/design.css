@@ -1576,6 +1576,7 @@ form.simple label .description {
 
 form.simple textarea,
 form.simple input[type="text"],
+form.simple input[type="file"],
 form.simple select
 {
 	display: block;

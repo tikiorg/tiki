@@ -157,7 +157,7 @@ function setup_options(&$tpl)
 	$optionsShowScore[] = "after expire date";
 	$optionsShowScore[] = "never";
 	$tpl['optionsShowScore'] = $optionsShowScore;
-	// FIXME - This needs to be limited to the session timeout in php.ini
+	// FIXED - This needs to be limited to the session timeout in php.ini
 	$limit = ini_get('max_execution_time');
 	$mins = array();
 	for ($i = 1; $i <= $limit; $i++) {
